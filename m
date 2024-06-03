@@ -4,89 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85C5AC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 16:41:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 969E7C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:08:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEAjq-00027o-Jw; Mon, 03 Jun 2024 12:40:50 -0400
+	id 1sEB95-0001Z8-Ut; Mon, 03 Jun 2024 13:06:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEAjn-00027G-Eo
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 12:40:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sEB93-0001XJ-MV; Mon, 03 Jun 2024 13:06:53 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEAjk-0002Js-0n
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 12:40:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717432841;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Jm7/c17pCmhKplPGMl3cwEXH8vw38dSXlJDxmUHGtRk=;
- b=PnCExvQHorqZPLW7MGFowR6Aupu2arl2AkuxIn76UChQiSbKFMmj2sCPqWOe2ZkuGtvG0c
- wQRrv8lv7iUUrwqOTME9b+8vGpND5RMw1GRj5Uom1I2nTkcI0sVYGOHIlCPrrOi0vNutq+
- VVJfw/JITPBJj8tEBfgSgUni2/xDORU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-ZlasAvw9PB2kvt7AiGdbWw-1; Mon, 03 Jun 2024 12:40:40 -0400
-X-MC-Unique: ZlasAvw9PB2kvt7AiGdbWw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4212ddfb1acso19651245e9.1
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 09:40:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717432839; x=1718037639;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Jm7/c17pCmhKplPGMl3cwEXH8vw38dSXlJDxmUHGtRk=;
- b=MHk39HIcdilxqIxueWSPeD1CCqWx9gZbAToiDR1RWeFRDQfwHZiVk9NdGJAyjftPYT
- l1mkSoVi6Lk1BvxmsgSDNGA5Lh74vBQtdWuDfXFY6EZrhI7ZuLDF201J8xOlp2ukmKp0
- Zoo8qqR7k3j47PV9m7e5VrjbO74PT1/YoCQoS8+h927zjHf845PxLe00zVcVr/YGlKTJ
- BzYeey9Rrx0KHbgpU+DDQS49oQi2Qn2hvkYen9jf1R4x5Zdbv8xSgpnOrx1ayW9OgcZ7
- FbqvR/eciTS9K3hw8TVWKy9x3979prM9yox1hG8+bA3IHHtfSDHm1IgnTMVkHgn1+RE6
- uFOA==
-X-Gm-Message-State: AOJu0YwSldKhwTko0uXksFTdccF16mxZhNNW3up5VgBFTfbiieTXP+/7
- wUWq37m1M1rygEvJkr9H5JhF+h/ercPUvHXiPozLYYIOLaudRr0/TlMPz114mr5Kq2MunbKsanH
- xfeFmDI2QpCu5ggLNA7EsXVizcFioiMuvpGL2i3Ufb3EqEb+WgJZ63AftUiLT++/C2dStCVgkXS
- gcsCcPKOLKgzyjwD3bVN7HWGaABGU=
-X-Received: by 2002:a05:600c:1550:b0:420:1fd2:e611 with SMTP id
- 5b1f17b1804b1-4212e0adf99mr60328265e9.27.1717432838851; 
- Mon, 03 Jun 2024 09:40:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG0OaZUjle2CBmUTaxDO5pAhAzccE8SUD4WBEM3Sf6D+m3qdtOlZmCF1c68CcaK1UjrqLEqPFSKkqLATUb41gc=
-X-Received: by 2002:a05:600c:1550:b0:420:1fd2:e611 with SMTP id
- 5b1f17b1804b1-4212e0adf99mr60328105e9.27.1717432838505; Mon, 03 Jun 2024
- 09:40:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sEB91-0001uj-7v; Mon, 03 Jun 2024 13:06:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=hIhvFG904StDLDEXs02aTwGPPyUmkI3bpXgRnoN+kU8=; b=ELrkcLY/6EwMu8Ty
+ Eb52QEPH5cfiek1zT/RZ45JAm4u/p/wvFE03eS1QtjWA5U7XsdGL+Qj7NNtHTMIe6xIy3983dXjsP
+ v9jrevej3+AhJB0GTLi56AKUomd61zdrltr4a0PoKtybCt5Bwgfuu0YnYJBjGkD0CyXByGoq7Br+V
+ icQiRkgjJ3L83iOhXz9yEws9cPVdu7i3F8gP6yHLqAPYdSYNVrE5k/mAim1pLkpyPWP8tsQGhZusZ
+ F9xH9DV3JwgZv9L4cGqoeWkb5t9p7OdcPoSVqELZnMiav/Y3U4Phrrfd06t7f/qa83kI5k/Iz8DS2
+ X1fVlrzKuDNGJXQGPQ==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1sEB8o-003zgA-1o;
+ Mon, 03 Jun 2024 17:06:38 +0000
+Date: Mon, 3 Jun 2024 17:06:38 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-s390x@nongnu.org, devel@lists.libvirt.org,
+ Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Anton Johansson <anjo@rev.ng>, qemu-arm <qemu-arm@nongnu.org>
+Subject: Re: [PATCH 0/4] hw/s390x: Alias @dump-skeys -> @dump-s390-skey and
+ deprecate
+Message-ID: <Zl34HkNkeWnVhssP@gallifrey>
+References: <20240530074544.25444-1-philmd@linaro.org>
+ <cb4028fc-9596-47f3-9468-f8912dd48aed@redhat.com>
+ <ZlnYkt9sLgDbQqVT@gallifrey>
+ <6fec1c49-c6a6-4e96-bc44-5dc7feb843e6@redhat.com>
 MIME-Version: 1.0
-References: <20240603131141.834241-1-pbonzini@redhat.com>
- <20240603131141.834241-4-pbonzini@redhat.com>
- <874jaam30g.fsf@redhat.com>
- <CABgObfaROVKsGD1sLk=ry4PSRzBbEHe9GZzew7F6Pqf6QLBDwQ@mail.gmail.com>
- <871q5em1si.fsf@redhat.com>
-In-Reply-To: <871q5em1si.fsf@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 3 Jun 2024 18:40:24 +0200
-Message-ID: <CABgObfZiORJVO5pfsGeXKTsNz3rQjQA+PPeXp=xr-Yt+eMGSFw@mail.gmail.com>
-Subject: Re: [PATCH 3/4] linux-headers: Update to current kvm/next
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-devel@nongnu.org, thuth@redhat.com, 
- Pankaj Gupta <pankaj.gupta@amd.com>, Michael Roth <michael.roth@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6fec1c49-c6a6-4e96-bc44-5dc7feb843e6@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 17:00:10 up 26 days, 4:14, 1 user, load average: 0.02, 0.01, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,36 +84,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 3, 2024 at 6:25=E2=80=AFPM Cornelia Huck <cohuck@redhat.com> wr=
-ote:
->
-> On Mon, Jun 03 2024, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> > On Mon, Jun 3, 2024 at 5:58=E2=80=AFPM Cornelia Huck <cohuck@redhat.com=
-> wrote:
-> >> Hm, I'm not sure updating to kvm/next is a good idea ("current kvm/nex=
-t"
-> >> does not mean anything without a commit hash anyway.) I think we shoul=
-d
-> >> only update to something that's in Linus' tree already... how stable i=
-s
-> >> kvm/next?
-> >
-> > It is stable, things are only applied there once UAPI is set. Even
-> > rebasing is very rare.
-> >
-> > The problem here is that if (as is the case for 6.11) the merge window
-> > only opens once QEMU is in freeze, waiting for it would delay merging
-> > the QEMU side by 4 months. In this case, the patches barely missed
-> > 6.10.
->
-> If we're confident that it's stable, can we please mention a hash?
+* Thomas Huth (thuth@redhat.com) wrote:
+> On 31/05/2024 16.02, Dr. David Alan Gilbert wrote:
+> > * Thomas Huth (thuth@redhat.com) wrote:
+> > > On 30/05/2024 09.45, Philippe Mathieu-Daudé wrote:
+> > > > We are trying to unify all qemu-system-FOO to a single binary.
+> > > > In order to do that we need to remove QAPI target specific code.
+> > > > 
+> > > > @dump-skeys is only available on qemu-system-s390x. This series
+> > > > rename it as @dump-s390-skey, making it available on other
+> > > > binaries. We take care of backward compatibility via deprecation.
+> > > > 
+> > > > Philippe Mathieu-Daudé (4):
+> > > >     hw/s390x: Introduce the @dump-s390-skeys QMP command
+> > > >     hw/s390x: Introduce the 'dump_s390_skeys' HMP command
+> > > >     hw/s390x: Deprecate the HMP 'dump_skeys' command
+> > > >     hw/s390x: Deprecate the QMP @dump-skeys command
+> > > 
+> > > Why do we have to rename the command? Just for the sake of it? I think
+> > > renaming HMP commands is maybe ok, but breaking the API in QMP is something
+> > > you should consider twice.
+> > > 
+> > > And even if we decide to rename ... maybe we should discuss whether it makes
+> > > sense to come up with a generic command instead: As far as I know, ARM also
+> > > has something similar, called MTE. Maybe we also want to dump MTE keys one
+> > > day? So the new command should maybe be called "dump-memory-keys" instead?
+> > 
+> > I think there are at least two different concepts; but I agree it would be
+> > nice to keep a single command for matching concepts across different architectures;
+> > I can't say I know the details of any, but:
+> > 
+> >    a) Page table things - I think x86 PKRU/PKEY (???) is a page table thing
+> >      where pages marked a special way are associated with keys.
+> >      That sounds similar to what the skeys are???
+> 
+> Sounds a little bit similar, but s390 storage keys are independent from page
+> tables. It's rather that each page (4096 bytes) of RAM has an additional
+> 7-bit value that contains the storage key and some additional bits. It's
+> also usable when page tables are still disabled.
+> 
+> > I'm not sure the two fit in the same command.
+> 
+> Does it make sense to dump all the MTE or x86 keys all at once? If so, we
+> could maybe come up with an unified command. Otherwise it might not make
+> sense, indeed.
 
-Sure, it's commit 6f627b425378915b6eda30908bedefc21b70b8c4.
+So they're all really different granularities:
+    s390 - one key/physical page
+    ARM MTE - one tag/16 bytes physical
+    x86 - per virtual page; then a current register with 16 permission
+         sets
 
-Paolo
+For x86 I guess it would be easy to dump the register, and then the
+values for a range of virtual addresses.
+But then if you dumped a range of physical addresses on ARM MTE you'd
+get hundreds times more output than for the equivalent s390.
 
-> "current" is not very descriptive :)
->
+Dave
 
+>  Thomas
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
