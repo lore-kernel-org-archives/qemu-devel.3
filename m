@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21A2CC25B76
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6AF8C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5ho-0007jR-Kz; Mon, 03 Jun 2024 07:18:24 -0400
+	id 1sE5i9-0001KF-3o; Mon, 03 Jun 2024 07:18:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5hf-0007LH-Lb; Mon, 03 Jun 2024 07:18:15 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1sE5i3-0000zR-Pd; Mon, 03 Jun 2024 07:18:39 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5hU-0006Rp-Ra; Mon, 03 Jun 2024 07:18:15 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1f661450af5so11830975ad.3; 
- Mon, 03 Jun 2024 04:18:03 -0700 (PDT)
+ id 1sE5ht-0006ZT-UQ; Mon, 03 Jun 2024 07:18:39 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1f44b5d0c50so32800045ad.2; 
+ Mon, 03 Jun 2024 04:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717413481; x=1718018281; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717413504; x=1718018304; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Xv5zByHXrMR6OVpxVCKjSat3U6+gmlv5WCvdVnmoelg=;
- b=PLLuZeRoHwHSCj6Uts4cFUte5U9zNkCACpHAvlxRxKDIChsmP95unziJzt0+URSvGR
- dHSSV/RUB+yB4zIuTVRqvolPFxhLfbFFn+oZ0qt+TD86x8h+NhvQTgUuPPOrVcrmuAPG
- 9T8D9Kf7YMHYSPr95XChueblx82tDBqOVxsz25F7nm5qKOxx8ri59thpIEBK0e2pNf9r
- GBcx1dC0PfwGQuDKjUVNEH7TlxxU6q+3LSNtgTOfo8HokYjOMGPceOOaP5KhduyDapBI
- eeN466gkqVLO2r5gLvr0siVmV1P8X1aE7dF4SMy8TgFQWFx12A7U5zPXT8mye1H6GHtB
- KQkQ==
+ bh=J5jhBOyEYmtoTJBDh000o1EH0VVoye2sH2+Q4KCgR/U=;
+ b=gJAJd3oZzfJ47PsVKVTFimNohC6P08xVldq9yxmbRNOYc1QZ0j0w2BPlFmqEP8LPhq
+ 5pA2HeJg5RSofow4kcrg2vfHSnD1UGTAq1K6YSneVb3OvnYVGA1w0YYZtJK6uatPhC2Z
+ xxoB+qYzNtup23UW5RksX1EfU8ZxF7yI+mkLF0j1CdY4kbeYy75Dma3rDRENaiY5EVho
+ 98NONICNqgYELzTeNrMNMuFf5PNxIFp9uT7VCu1j6or5TWDZyy14PYUNzTqmzNvLXSx2
+ gWekoDJUTrijxxEEr7drdiyPPP8gbZCJqBSZutzfDnafDVEOTP9Pt/ZrcyL7vKVbz9wy
+ fniw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717413481; x=1718018281;
+ d=1e100.net; s=20230601; t=1717413504; x=1718018304;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Xv5zByHXrMR6OVpxVCKjSat3U6+gmlv5WCvdVnmoelg=;
- b=IbfaHSJOodnpcg0kT28ONeKHO+4VqJ5m2vVe/vVqZwNdzZ8WfjxjUfNPkUCyzQpoRs
- zer0oJIPx60FU0jqlMW+98KIDv+fkK0+N6arhtGZvPUfeaPGOu4iACVJ09lHf2HG58jO
- EdY2s83c0KZ1L3d+uRGB06IXTyZUKNAKIV3N8KsqsKtbXZCNXbmlvYKHQbhMMeKJBwF3
- tjq6dSSKxNsifkKdaA4Pqr6EoOpD0r8i1VgfkTG5+rWBT073aqKh7qELVy6y5ZiooMe0
- /MOs53oKFoEwKtexFkEdKj87crbYNDaLlhczBg33QsVy7jZ38a0LOP2UilkBkRgN0Uzh
- z8Qg==
+ bh=J5jhBOyEYmtoTJBDh000o1EH0VVoye2sH2+Q4KCgR/U=;
+ b=bS5LUCl9kaKOiAvvN6G/ktaqhY1W96yLvVUyH3qfoBhL533yAlu88DSHA1cQBvjnTl
+ MwDB0rWC9U3FNL0w83KLQbi/ZVHnFvwxo8UPNZdx4ju3uRTNRFIIjPuZ8lvvY3xDAEd0
+ xdLhlRm2tVuUR8mod42mse4HvNJTkzpfHco1lPbUd962NlJ0UByldKfwAZeNFrZ2IOnU
+ u7uZIdTtt1iPEWP42jtlCRRnA9HY3ohSDeLe7DIZrfbmWdj22H0KKXD89xMSTmJPpWDP
+ XqKncqpGVoHH/2nW57mAGejdxJFBbRtGfgje97uJmr44pzKoezotzFyy2H7n8igqjIMA
+ K+Lw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVpE4CX32xA28zE1RCtxX6J3wQSIkkrsyiMYcKLxZ62G7nK/ZMbop18ZuTS9wLLvfWZlMqGXaR1jx94+XhBFm6unuzotgJ
-X-Gm-Message-State: AOJu0Yx6VVrQ+VZT+B/ajNeicLR8CWFbX+TI1jCwGY0ou+mXBWivXEzv
- nVlXfgCOBOtT+vUVm0/kt0ZVVZ7EL502ArSag2lbDQlKvy5RxEFjLOOipA==
-X-Google-Smtp-Source: AGHT+IHKwWGWoQHsxhWagjo7ZnQo3SwqkkTjEh+26LfSs4UJqiKELfvl72tIAeikFFjwMw62tofcBg==
-X-Received: by 2002:a17:902:f549:b0:1f6:8ae4:50de with SMTP id
- d9443c01a7336-1f68ae45481mr4404815ad.61.1717413481461; 
- Mon, 03 Jun 2024 04:18:01 -0700 (PDT)
+ AJvYcCWFbkMEs9VvTluqDEcHlFIOz7QwkTOpRRUspGEoSxF9d9nv94dnMTlpdjueBvkYLlpNTVlNmhj+VdX9ck/kxpAslRJn8cxN
+X-Gm-Message-State: AOJu0Yz1V40meMw/KIRRtrr18DdabZtjh0iG9DpHN8gTQvzJP9XPO5Eh
+ Wi/k8rIJwUSP1pDsoN/YX/cHc1m+tbRHRQ02I4vwYmQtD8Q9c5YUrgJsuQ==
+X-Google-Smtp-Source: AGHT+IGprzGl40Bl/5JMeynK43PtUtsZ/Pihfxau7fetzUeQPNf7sTL5U6SNNppvDYZ7e1w7GebpIg==
+X-Received: by 2002:a17:902:d4c7:b0:1f6:8ae2:4dd9 with SMTP id
+ d9443c01a7336-1f68ae25231mr4307715ad.66.1717413504285; 
+ Mon, 03 Jun 2024 04:18:24 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.17.58
+ d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.18.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 04:18:00 -0700 (PDT)
+ Mon, 03 Jun 2024 04:18:23 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Joseph Chan <jchan@ventanamicro.com>,
+Cc: alistair23@gmail.com, Eric DeVolder <eric_devolder@yahoo.com>,
  Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  qemu-stable <qemu-stable@nongnu.org>
-Subject: [PULL v2 21/27] target/riscv: prioritize pmp errors in
- raise_mmu_exception()
-Date: Mon,  3 Jun 2024 21:16:37 +1000
-Message-ID: <20240603111643.258712-22-alistair.francis@wdc.com>
+Subject: [PULL v2 27/27] disas/riscv: Decode all of the pmpcfg and pmpaddr CSRs
+Date: Mon,  3 Jun 2024 21:16:43 +1000
+Message-ID: <20240603111643.258712-28-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240603111643.258712-1-alistair.francis@wdc.com>
 References: <20240603111643.258712-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,88 +99,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
 
-raise_mmu_exception(), as is today, is prioritizing guest page faults by
-checking first if virt_enabled && !first_stage, and then considering the
-regular inst/load/store faults.
+Previously we only listed a single pmpcfg CSR and the first 16 pmpaddr
+CSRs. This patch fixes this to list all 16 pmpcfg and all 64 pmpaddr
+CSRs are part of the disassembly.
 
-There's no mention in the spec about guest page fault being a higher
-priority that PMP faults. In fact, privileged spec section 3.7.1 says:
-
-"Attempting to fetch an instruction from a PMP region that does not have
-execute permissions raises an instruction access-fault exception.
-Attempting to execute a load or load-reserved instruction which accesses
-a physical address within a PMP region without read permissions raises a
-load access-fault exception. Attempting to execute a store,
-store-conditional, or AMO instruction which accesses a physical address
-within a PMP region without write permissions raises a store
-access-fault exception."
-
-So, in fact, we're doing it wrong - PMP faults should always be thrown,
-regardless of also being a first or second stage fault.
-
-The way riscv_cpu_tlb_fill() and get_physical_address() work is
-adequate: a TRANSLATE_PMP_FAIL error is immediately reported and
-reflected in the 'pmp_violation' flag. What we need is to change
-raise_mmu_exception() to prioritize it.
-
-Reported-by: Joseph Chan <jchan@ventanamicro.com>
-Fixes: 82d53adfbb ("target/riscv/cpu_helper.c: Invalid exception on MMU translation stage")
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240413105929.7030-1-alexei.filippov@syntacore.com>
+Reported-by: Eric DeVolder <eric_devolder@yahoo.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Fixes: ea10325917 ("RISC-V Disassembler")
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-stable <qemu-stable@nongnu.org>
+Message-ID: <20240514051615.330979-1-alistair.francis@wdc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_helper.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ disas/riscv.c | 65 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 64 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index d71245a8cb..574886a694 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1177,28 +1177,30 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
- 
-     switch (access_type) {
-     case MMU_INST_FETCH:
--        if (env->virt_enabled && !first_stage) {
-+        if (pmp_violation) {
-+            cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
-+        } else if (env->virt_enabled && !first_stage) {
-             cs->exception_index = RISCV_EXCP_INST_GUEST_PAGE_FAULT;
-         } else {
--            cs->exception_index = pmp_violation ?
--                RISCV_EXCP_INST_ACCESS_FAULT : RISCV_EXCP_INST_PAGE_FAULT;
-+            cs->exception_index = RISCV_EXCP_INST_PAGE_FAULT;
-         }
-         break;
-     case MMU_DATA_LOAD:
--        if (two_stage && !first_stage) {
-+        if (pmp_violation) {
-+            cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
-+        } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
-         } else {
--            cs->exception_index = pmp_violation ?
--                RISCV_EXCP_LOAD_ACCESS_FAULT : RISCV_EXCP_LOAD_PAGE_FAULT;
-+            cs->exception_index = RISCV_EXCP_LOAD_PAGE_FAULT;
-         }
-         break;
-     case MMU_DATA_STORE:
--        if (two_stage && !first_stage) {
-+        if (pmp_violation) {
-+            cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
-+        } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
-         } else {
--            cs->exception_index = pmp_violation ?
--                RISCV_EXCP_STORE_AMO_ACCESS_FAULT :
--                RISCV_EXCP_STORE_PAGE_FAULT;
-+            cs->exception_index = RISCV_EXCP_STORE_PAGE_FAULT;
-         }
-         break;
-     default:
+diff --git a/disas/riscv.c b/disas/riscv.c
+index e236c8b5b7..297cfa2f63 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -2190,7 +2190,22 @@ static const char *csr_name(int csrno)
+     case 0x0383: return "mibound";
+     case 0x0384: return "mdbase";
+     case 0x0385: return "mdbound";
+-    case 0x03a0: return "pmpcfg3";
++    case 0x03a0: return "pmpcfg0";
++    case 0x03a1: return "pmpcfg1";
++    case 0x03a2: return "pmpcfg2";
++    case 0x03a3: return "pmpcfg3";
++    case 0x03a4: return "pmpcfg4";
++    case 0x03a5: return "pmpcfg5";
++    case 0x03a6: return "pmpcfg6";
++    case 0x03a7: return "pmpcfg7";
++    case 0x03a8: return "pmpcfg8";
++    case 0x03a9: return "pmpcfg9";
++    case 0x03aa: return "pmpcfg10";
++    case 0x03ab: return "pmpcfg11";
++    case 0x03ac: return "pmpcfg12";
++    case 0x03ad: return "pmpcfg13";
++    case 0x03ae: return "pmpcfg14";
++    case 0x03af: return "pmpcfg15";
+     case 0x03b0: return "pmpaddr0";
+     case 0x03b1: return "pmpaddr1";
+     case 0x03b2: return "pmpaddr2";
+@@ -2207,6 +2222,54 @@ static const char *csr_name(int csrno)
+     case 0x03bd: return "pmpaddr13";
+     case 0x03be: return "pmpaddr14";
+     case 0x03bf: return "pmpaddr15";
++    case 0x03c0: return "pmpaddr16";
++    case 0x03c1: return "pmpaddr17";
++    case 0x03c2: return "pmpaddr18";
++    case 0x03c3: return "pmpaddr19";
++    case 0x03c4: return "pmpaddr20";
++    case 0x03c5: return "pmpaddr21";
++    case 0x03c6: return "pmpaddr22";
++    case 0x03c7: return "pmpaddr23";
++    case 0x03c8: return "pmpaddr24";
++    case 0x03c9: return "pmpaddr25";
++    case 0x03ca: return "pmpaddr26";
++    case 0x03cb: return "pmpaddr27";
++    case 0x03cc: return "pmpaddr28";
++    case 0x03cd: return "pmpaddr29";
++    case 0x03ce: return "pmpaddr30";
++    case 0x03cf: return "pmpaddr31";
++    case 0x03d0: return "pmpaddr32";
++    case 0x03d1: return "pmpaddr33";
++    case 0x03d2: return "pmpaddr34";
++    case 0x03d3: return "pmpaddr35";
++    case 0x03d4: return "pmpaddr36";
++    case 0x03d5: return "pmpaddr37";
++    case 0x03d6: return "pmpaddr38";
++    case 0x03d7: return "pmpaddr39";
++    case 0x03d8: return "pmpaddr40";
++    case 0x03d9: return "pmpaddr41";
++    case 0x03da: return "pmpaddr42";
++    case 0x03db: return "pmpaddr43";
++    case 0x03dc: return "pmpaddr44";
++    case 0x03dd: return "pmpaddr45";
++    case 0x03de: return "pmpaddr46";
++    case 0x03df: return "pmpaddr47";
++    case 0x03e0: return "pmpaddr48";
++    case 0x03e1: return "pmpaddr49";
++    case 0x03e2: return "pmpaddr50";
++    case 0x03e3: return "pmpaddr51";
++    case 0x03e4: return "pmpaddr52";
++    case 0x03e5: return "pmpaddr53";
++    case 0x03e6: return "pmpaddr54";
++    case 0x03e7: return "pmpaddr55";
++    case 0x03e8: return "pmpaddr56";
++    case 0x03e9: return "pmpaddr57";
++    case 0x03ea: return "pmpaddr58";
++    case 0x03eb: return "pmpaddr59";
++    case 0x03ec: return "pmpaddr60";
++    case 0x03ed: return "pmpaddr61";
++    case 0x03ee: return "pmpaddr62";
++    case 0x03ef: return "pmpaddr63";
+     case 0x0780: return "mtohost";
+     case 0x0781: return "mfromhost";
+     case 0x0782: return "mreset";
 -- 
 2.45.1
 
