@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212AEC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 15:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70561C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 15:12:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE9Ka-0002yP-Bl; Mon, 03 Jun 2024 11:10:40 -0400
+	id 1sE9M9-0003tl-3f; Mon, 03 Jun 2024 11:12:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9KZ-0002yH-Iu
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:10:39 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9M7-0003tc-59
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:12:15 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9KX-0004Rg-Ss
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:10:39 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2ea9386cde0so42715921fa.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 08:10:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9M5-0004eO-NU
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:12:14 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a68bf84d747so213234166b.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 08:12:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717427435; x=1718032235; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717427532; x=1718032332; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/8jfXPQPGP/SL17Kpxbl/YGKr8yJT/3WSYPRxt1CfC0=;
- b=oHdOmJnRJneRpCUHv+EGvhNzcoBJNBb4vllRYRnLESgElmJZxb7m9cSad8+Ird1gdq
- 8ZpaXS5DET/uU/QV9zSdfvBOCPS4LiiMnpyIp2QZJ6nhCoDQqJpogtUkNIU9aJuPs63X
- fInNJfJPBGpNCRgXjdTE0TwtJWdpqwzFO+uB5p5gLDaKWh4iQMB0fcAEIVqpS2DuXtLn
- ILCRIDRelHWsc4xYn4Gln2EIOxEP6G7sh2uI1i85pE+fR5fWgxSAHNFviXcx0RnpRS3O
- BLEQjwvBdQudRSgswCc7+ocbjbjf/eWgZUrC3A7hQVRXoiulx2gPHhcWfV6hzKz++PLs
- Zwow==
+ bh=gJTnu+2WLNzpxM8IQO3KBrYbT8thwVeyVSBd9MOjLwk=;
+ b=yihnvRFvB2gWRHzkAi9pcoA9dbJMXH1Y2KjCXDm8xX4xKMd22Hioi9s5+wHrKnxm77
+ NWU5eCIa8HmlpZGtoBgqWNTYlACCYGEr5otOu59SrO+JjasMx3J4vOS26zn9qEVfh4r8
+ 1+dg9TlNNtsmMKPQGVWu1mQQjCeyNgYDl6Eb/CclNc5CLzfeKYvJhv/0Ve6irqbLKj55
+ YfXi0DWRq01XnHkg1mbHi8P4GKZRHXUWq66aNcBDPV7qxUgQw00xMjI06SbZKMzxaBR9
+ pmRxxfrR8FDSQCT84ZTWsv7CUPIr37xFlZwmqGYmv4kpnuiErzNrQmWGs0HpQAaLqTMl
+ DjEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717427435; x=1718032235;
+ d=1e100.net; s=20230601; t=1717427532; x=1718032332;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/8jfXPQPGP/SL17Kpxbl/YGKr8yJT/3WSYPRxt1CfC0=;
- b=ppjzRjSioclo1XeINejPzjSfdZRT6CO9fAnsZVLW2H7Uh10txKIMEBVNzyGECJmbi4
- cCuheze7wJW9xcILDJ+PxDIxaeNxVU32UYgwHGKzhcwkMUUnDTcX6rv27+6YaIuTsId0
- M2Lkc9OkcNKCGzg7mynE+xIirY/xunUX6Rq5fI22gZr3FDsXb7sADYNj0/5H1qeC7qZ8
- n40JNJ7/I4kfSOjMMuW89Xmdy2RuMYR22M/8guIKm/UPbGA+6aKv5KB2Sm3Fnz5g2nwC
- U7vaageY6XtKPbJk5QLHazwD1g7Or2labKu8rcfeYPbT8ZQZZHTfilu50FzACZ+Hurpr
- EbPw==
+ bh=gJTnu+2WLNzpxM8IQO3KBrYbT8thwVeyVSBd9MOjLwk=;
+ b=U4ICeHaYqxy90n/uvFdK94B/gyk9Har1KG/V2rfKomnvm7/jG28gwQEUHDwhJxTe9K
+ lXfqDHFaC/Rc6XVWhc/O7A1qpTaqIZ267jFyKwaciRW3rHbyjq8MB7Eba18hexdzgFhP
+ qKvq0oRx04yWsy/q3Ye02d17s5EJfJRiXZweibV5hm3zBdAtfMYDZfbSNZbs52fc6hyc
+ 4vESJO0ZpVYKxl4JwtBh2Yp92NJyYzZ+yeU67ZH4CnwFkgbyQMiO60JVieuyqOHIKnZ8
+ aVof503ysUtnOMoKrNR3aTCbYjaMCoUduaq7LRh1ttZHyOZE3f68OLOeghPkkxZ+RVSx
+ o0ew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW9KleSLcbJzNRoflo0vcTB7quxFY7lPIHzPd25/f3IrDvDTugyc6IoC2hiDgwXbdyTesaltVXw7kwc1plpVidiDzCO6sQ=
-X-Gm-Message-State: AOJu0YxVja5VXuFJGU4iThNTGcfSl/k5qzmZ/O7k4lJ1FjBDQEUK3q1w
- 4rRtBALNPOtL9CMewYIq9VGO61rApeKE9+aEGFkI3olR6972/nCv7cqoYcJM2RE=
-X-Google-Smtp-Source: AGHT+IFf/ykBLoQpidyG6mGKuGR7sbF781HloysYbE/Z4pOOr7V3+UN+7veHAcdSXx2DX/Bxr+BpdA==
-X-Received: by 2002:a2e:91c7:0:b0:2e1:ebec:1ded with SMTP id
- 38308e7fff4ca-2ea95122002mr56102921fa.25.1717427435429; 
- Mon, 03 Jun 2024 08:10:35 -0700 (PDT)
+ AJvYcCVqLwtVrxPTBKVAE7E3EVaec4ejcGEFkKJCZoiiqrW5vZuWNvMaSOqmfZ5fuhz6bUBDmhGPDp4yEE+P9A18hJeyai7KNU8=
+X-Gm-Message-State: AOJu0YywK4I8kDA334c1t1HpiY4oVAAgZ/RWc1sicZZAOqQaUE6ChxZW
+ s4NbZOCXiBXDzxzlXnB2IUoKW59pVq4wH40dq71NnVZZAcbiCF6BFvYBG7IyVak=
+X-Google-Smtp-Source: AGHT+IFMHfxDJN2aiox9hGsOoCnyp/xRzkT1zH7H+p9ZlV4Vkg/f6GYNnB2f7B39iMrgzXh+MFYE5A==
+X-Received: by 2002:a17:906:b044:b0:a63:cb4e:9a10 with SMTP id
+ a640c23a62f3a-a6822049c19mr558040366b.77.1717427531781; 
+ Mon, 03 Jun 2024 08:12:11 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.177.241])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57a468ebb00sm4248390a12.52.2024.06.03.08.10.34
+ a640c23a62f3a-a68b66c0c87sm361942266b.73.2024.06.03.08.12.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 08:10:34 -0700 (PDT)
-Message-ID: <c53d4f3f-6279-4100-8006-29e191e2c01f@linaro.org>
-Date: Mon, 3 Jun 2024 17:10:33 +0200
+ Mon, 03 Jun 2024 08:12:11 -0700 (PDT)
+Message-ID: <9e39ddbd-6075-4d1d-af0f-a12d982e9559@linaro.org>
+Date: Mon, 3 Jun 2024 17:12:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/cxl: Fix read from bogus memory
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Ira Weiny <ira.weiny@intel.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, qemu-devel@nongnu.org,
- Fan Ni <fan.ni@samsung.com>, Peter Maydell <peter.maydell@linaro.org>
-References: <20240531-fix-poison-set-cacheline-v1-1-e3bc7e8f1158@intel.com>
- <48ebd16f-3eda-4292-9257-bcac9c82cc5c@linaro.org>
- <20240603110458-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH v2 2/4] usb: add config options for the hub and hid devices
+To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+References: <20240530112718.1752905-1-kraxel@redhat.com>
+ <20240530112718.1752905-3-kraxel@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240603110458-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240530112718.1752905-3-kraxel@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,43 +99,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/24 17:05, Michael S. Tsirkin wrote:
-> On Mon, Jun 03, 2024 at 02:53:35PM +0200, Philippe Mathieu-Daudé wrote:
->> On 31/5/24 18:22, Ira Weiny wrote:
->>> Peter and coverity report:
->>>
->>> 	We've passed '&data' to address_space_write(), which means "read
->>> 	from the address on the stack where the function argument 'data'
->>> 	lives", so instead of writing 64 bytes of data to the guest ,
->>> 	we'll write 64 bytes which start with a host pointer value and
->>> 	then continue with whatever happens to be on the host stack
->>> 	after that.
->>>
->>> Indeed the intention was to write 64 bytes of data at the address given.
->>>
->>> Fix the parameter to address_space_write().
->>>
->>> Reported-by: Peter Maydell <peter.maydell@linaro.org>
->>> Link: https://lore.kernel.org/all/CAFEAcA-u4sytGwTKsb__Y+_+0O2-WwARntm3x8WNhvL1WfHOBg@mail.gmail.com/
->>> Fixes: 6bda41a69bdc ("hw/cxl: Add clear poison mailbox command support.")
->>> Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
->>> Signed-off-by: Ira Weiny <ira.weiny@intel.com>
->>> ---
->>> Compile tested only.  Jonathan please double check me.
->>> ---
->>>    hw/mem/cxl_type3.c | 2 +-
->>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> Thanks, patch queued.
-> 
-> Had it queued too but sure, I can drop.
+On 30/5/24 13:27, Gerd Hoffmann wrote:
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   hw/usb/Kconfig     | 10 ++++++++++
+>   hw/usb/meson.build |  4 ++--
+>   2 files changed, 12 insertions(+), 2 deletions(-)
 
-Sorry I didn't notice that along with your R-b tag, my bad.
-
-Don't modify your branch, I'm dropping it.
-
-Regards,
-
-Phil.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
