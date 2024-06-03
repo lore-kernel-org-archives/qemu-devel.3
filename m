@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3834C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3201C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 13:01:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE7Fv-0000zA-5q; Mon, 03 Jun 2024 08:57:43 -0400
+	id 1sE7IM-00032j-62; Mon, 03 Jun 2024 09:00:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sE7Ft-0000yU-N1
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:57:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sE7IC-0002o1-UP
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:00:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sE7Fr-0002IF-Rz
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:57:41 -0400
+ id 1sE7IB-0002hv-3o
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:00:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717419458;
+ s=mimecast20190719; t=1717419602;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CvJZuIxuEPJUSu9dcM8tRPjCjWv7YhKj1hgSmVA1AoI=;
- b=GVt3jg1sbsuJR/RP25sttsJK8HSaIs3zXkQ+1Ce3SrIFMuomqfCBe4ROdZXEiLW01ydPgc
- XmYbQOj6RJzwcl4U2fNadWc5sCes8/EpCqmGMKLsIZViXb2Uh9Jy7UCPCGb9PHTdYBui9u
- /si+SY8T9WozR0Xp4zlK+RPFVHuQ2dY=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eYBhP00Ndcpi8ZbrIRy3Ymj3tx3br+ER/qltOcBHsHE=;
+ b=Hi9JSUYKO8RsI0UJXQ2MJ/+k6SQx5rnIwq8SjskziI2Y5hhdjV04+51kvi4R6Noi7EbSYU
+ fYDLH672nadOJBeAcDrhlv5fA0EacEGduOVDOChKTJuR2fpNmnyGtDxTuccRt8mQ5u4l66
+ WO5qf+CopCbATJ7CBAYx3+/WiBB6Kf0=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-5LPzdKnMMbWSzo--dU450g-1; Mon, 03 Jun 2024 08:57:36 -0400
-X-MC-Unique: 5LPzdKnMMbWSzo--dU450g-1
-Received: by mail-ot1-f69.google.com with SMTP id
- 46e09a7af769-6f8e2181c5dso5070541a34.1
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 05:57:36 -0700 (PDT)
+ us-mta-134-vK1OCRFAM_SjKxtsdvg7dA-1; Mon, 03 Jun 2024 09:00:01 -0400
+X-MC-Unique: vK1OCRFAM_SjKxtsdvg7dA-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-43fb0949d28so73078731cf.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 06:00:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717419456; x=1718024256;
+ d=1e100.net; s=20230601; t=1717419600; x=1718024400;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CvJZuIxuEPJUSu9dcM8tRPjCjWv7YhKj1hgSmVA1AoI=;
- b=Z/vm/J3tUozpFFeYSyK9qla7sDHoZLEV8HGTBSJGEw+c/7PFLgvlIpu8nm7TV1ympd
- ILmHzamlgeABM70aAt34pQsPiJHcvSmTJAcDbR/AX+/qygmyfXfC62Jsh6lpLkdCsR2x
- ppPiqPDHfTl0XitDWau7iV7VfrBwzwySh+Q255YRrLBX2BcPSw3RUL+nwcoW+y2577ra
- mwJNLYl26ce0/nSw2GlokGbXbXfVvMO0QamcNnkg+4HY0Ntb0ajjiImiS8Ip2nFeIciM
- QUjpNOJzBuI5pkvZK4DjurzRpCeToHgYg7Scj8lZchvanVT53/JRGLT63tvDecw3lapy
- PPOw==
+ bh=eYBhP00Ndcpi8ZbrIRy3Ymj3tx3br+ER/qltOcBHsHE=;
+ b=fSeLGdgWoHmG/LGmPQsfjjcV66SP+yoyrfEoocwQ4a7R/+NsoahOGImqeyKySkpge1
+ ijY1CIH7SiZaPVNwlNMWrZJbOJXcQHGkJsmmgF100Dvdmy43fsbAsX+pIG1wEcj5Pl/G
+ OErhN6LI3fr6Jaj2LI2PH+qhyyR72EDEfhjCQ9GrsTXvzEH7PGZZjdUBtXqKYz8zJ9EY
+ oJHugs3c2f5hqvuil8o/7NnUboKBQas+4Z7DPboxeNE8laGxtpfDkyKIz5hP69MXodVc
+ UUd8Vti/wLjH2pRRUDR7wPc94Txmn615hTCs3R8KuRxp/qYuAUlkzuW5Bt0IDOR3YhYz
+ JpuQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUxuHQbYHlORtxkQyp1t+Nmphj38UEjYabXdAdkU6huDijkHvLDEBdWEO1bWOtDWVJz6yMttH0Ebo9n7WdEvJupSItZgXY=
-X-Gm-Message-State: AOJu0Yx1tuHxfizDGtVeqpIxQTqjeR9v8sS3h3lnnKIILr/IMpbjP8Kb
- o5xlTLoODvRaDdWsOM/dGyjwiRlZMHod7O/KxXvaapmEBd8HUAUFIYfQBUi06TlbjYBRRbJmK/a
- j/KN/bYkbQnb6L5UAH95lN13n7xB9Rh0I3GPPDgywxVJx8KcgJX91
-X-Received: by 2002:a05:6830:1da2:b0:6f0:ad78:1b75 with SMTP id
- 46e09a7af769-6f911f489fcmr8933248a34.22.1717419456171; 
- Mon, 03 Jun 2024 05:57:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEC3mE3aWMWbbUry8kQc0SqWZMneqBwFIRbCv1FBtqSb/dfB5AXPFt1WXwoJMI7iwtQi3W2Qg==
-X-Received: by 2002:a05:6830:1da2:b0:6f0:ad78:1b75 with SMTP id
- 46e09a7af769-6f911f489fcmr8933215a34.22.1717419455574; 
- Mon, 03 Jun 2024 05:57:35 -0700 (PDT)
+ AJvYcCWMmV1a/SbueHe957jluaQ/4u56BC9fdi+Q7wksPCFu8vLZlGJcdzwv6fi7SrwlLS5597/tS0qmiliH+PdL0ANO/pl49Fs=
+X-Gm-Message-State: AOJu0YzSR1HnSe/PkMumXxTIotkBsFD836mF0upDDg8oxTSpkWiVYpQa
+ s9Cby8NTB3FIWbFAgF8vJwDNjtbyE7q2/5TuB5PCFl1KILkX5Z5WTvjwlbnDK3Eb86KnvZESPj3
+ mRBGeZ3vFPlf0g6yNQiexycGNb0sbonGUZRVBHru673O7s0YjH2XS
+X-Received: by 2002:a05:622a:199a:b0:43b:9f:5ac8 with SMTP id
+ d75a77b69052e-43ff366db05mr163226671cf.31.1717419600343; 
+ Mon, 03 Jun 2024 06:00:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEtLTsiqmo8Da9/bxLyv/qpHCFIV0tI5IrSi8NISwc5iRsKdaXbpkWYrVTo1KJpJWIOk/7ogQ==
+X-Received: by 2002:a05:622a:199a:b0:43b:9f:5ac8 with SMTP id
+ d75a77b69052e-43ff366db05mr163226131cf.31.1717419599875; 
+ Mon, 03 Jun 2024 05:59:59 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-43ff23a1774sm39119931cf.11.2024.06.03.05.57.32
+ d75a77b69052e-4400810b022sm19962681cf.93.2024.06.03.05.59.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 05:57:35 -0700 (PDT)
-Message-ID: <c5b45d45-97ca-4c82-87ca-3b85fffb2795@redhat.com>
-Date: Mon, 3 Jun 2024 14:57:31 +0200
+ Mon, 03 Jun 2024 05:59:59 -0700 (PDT)
+Message-ID: <70b5f291-7615-4aa5-9f89-c84339dba9a5@redhat.com>
+Date: Mon, 3 Jun 2024 14:59:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 06/19] range: Introduce range_get_last_bit()
+Subject: Re: [PATCH v6 13/19] vfio: Create host IOMMU device instance
 Content-Language: en-US
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
@@ -82,21 +82,21 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
 References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
- <20240603061023.269738-7-zhenzhong.duan@intel.com>
+ <20240603061023.269738-14-zhenzhong.duan@intel.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240603061023.269738-7-zhenzhong.duan@intel.com>
+In-Reply-To: <20240603061023.269738-14-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,50 +113,74 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
+Hi Zhenzhong,
 
 On 6/3/24 08:10, Zhenzhong Duan wrote:
-> This helper get the highest 1 bit position of the upper bound.
->
-> If the range is empty or upper bound is zero, -1 is returned.
+> Create host IOMMU device instance in vfio_attach_device() and call
+> .realize() to initialize it further.
+
+I would squash this with the previous patch
+
+Eric
 >
 > Suggested-by: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
 > ---
->  include/qemu/range.h | 11 +++++++++++
->  1 file changed, 11 insertions(+)
+>  include/hw/vfio/vfio-common.h |  1 +
+>  hw/vfio/common.c              | 16 +++++++++++++++-
+>  2 files changed, 16 insertions(+), 1 deletion(-)
 >
-> diff --git a/include/qemu/range.h b/include/qemu/range.h
-> index 205e1da76d..4ce694a398 100644
-> --- a/include/qemu/range.h
-> +++ b/include/qemu/range.h
-> @@ -20,6 +20,8 @@
->  #ifndef QEMU_RANGE_H
->  #define QEMU_RANGE_H
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index 56d1717211..c0851e83bb 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -127,6 +127,7 @@ typedef struct VFIODevice {
+>      OnOffAuto pre_copy_dirty_page_tracking;
+>      bool dirty_pages_supported;
+>      bool dirty_tracking;
+> +    HostIOMMUDevice *hiod;
+>      int devid;
+>      IOMMUFDBackend *iommufd;
+>  } VFIODevice;
+> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+> index f9619a1dfb..f20a7b5bba 100644
+> --- a/hw/vfio/common.c
+> +++ b/hw/vfio/common.c
+> @@ -1528,6 +1528,7 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+>  {
+>      const VFIOIOMMUClass *ops =
+>          VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
+> +    HostIOMMUDevice *hiod;
 >  
-> +#include "qemu/bitops.h"
+>      if (vbasedev->iommufd) {
+>          ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
+> @@ -1535,7 +1536,19 @@ bool vfio_attach_device(char *name, VFIODevice *vbasedev,
+>  
+>      assert(ops);
+>  
+> -    return ops->attach_device(name, vbasedev, as, errp);
+> +    if (!ops->attach_device(name, vbasedev, as, errp)) {
+> +        return false;
+> +    }
 > +
->  /*
->   * Operations on 64 bit address ranges.
->   * Notes:
-> @@ -217,6 +219,15 @@ static inline int ranges_overlap(uint64_t first1, uint64_t len1,
->      return !(last2 < first1 || last1 < first2);
+> +    hiod = HOST_IOMMU_DEVICE(object_new(ops->hiod_typename));
+> +    if (!HOST_IOMMU_DEVICE_GET_CLASS(hiod)->realize(hiod, vbasedev, errp)) {
+> +        object_unref(hiod);
+> +        ops->detach_device(vbasedev);
+> +        return false;
+> +    }
+> +    vbasedev->hiod = hiod;
+> +
+> +    return true;
 >  }
 >  
-> +/* Get highest non-zero bit position of a range */
-> +static inline int range_get_last_bit(Range *range)
-> +{
-> +    if (range_is_empty(range)) {
-> +        return -1;
-> +    }
-> +    return 63 - clz64(range->upb);
-> +}
-> +
->  /*
->   * Return -1 if @a < @b, 1 @a > @b, and 0 if they touch or overlap.
->   * Both @a and @b must not be empty.
+>  void vfio_detach_device(VFIODevice *vbasedev)
+> @@ -1543,5 +1556,6 @@ void vfio_detach_device(VFIODevice *vbasedev)
+>      if (!vbasedev->bcontainer) {
+>          return;
+>      }
+> +    object_unref(vbasedev->hiod);
+>      vbasedev->bcontainer->ops->detach_device(vbasedev);
+>  }
 
 
