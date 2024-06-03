@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C9A2C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 14:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EE6CC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 14:12:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE8P9-0004eM-U7; Mon, 03 Jun 2024 10:11:19 -0400
+	id 1sE8Pv-0005lf-Tn; Mon, 03 Jun 2024 10:12:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE8P8-0004dn-58
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:11:18 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE8Pt-0005lJ-Ec
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:12:05 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE8P6-0000ir-Fd
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:11:17 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a6269885572so784644366b.1
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 07:11:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE8Pr-0000pI-E4
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:12:05 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-57a32b0211aso3895061a12.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 07:11:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717423874; x=1718028674; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717423918; x=1718028718; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:references
  :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
  :cc:subject:date:message-id:reply-to;
- bh=dRaDiAL64sssMvTWiBBzGvj163oLeurAnHe5X3Opa24=;
- b=EhKU00jEOuveSIKZrSc/rIhIUdlj4b9hfEvMyrFobcaHYJ+qtDaA/HoTqJvjGZg47V
- 7OXiAwEMwKQjoFdj/BKvvnoasteFPhYYjlUkorc+F2XjHfZZisVyYGtQ4sQ3UOwZyeUv
- 98e9JURnS735xC2/yK22qAg6v2Q0fAC7VAA+ZwdTiM0vRtCyWaYOiC8f57La9u2VwcKJ
- H5svNp//qm1xYC7eBXSAry0PfFdOPT72BIfl6wrYgTi4b9Sjohqd/97GJ/Leab7D/cOD
- MXTQxiwokGdo1pdrWmIvODbsw+r4V+AF38yM0Aob0NRkkplYpFLPqwPC4vaukQ8AXP/U
- G/mA==
+ bh=DlSUWfEVLvtJdjyRCcCPS1n94AQWY9Us2l2aMVIJj7Y=;
+ b=SzMNJx8KSWQlogLtdH66hLxHIocYgiCThTzJuf8Gw/q+a1NVbbYlDuSDvy7mMgc1Ye
+ Z3znz+k7356hZZssvQVzR5Ke70/ldPg5MgkK4TQDfafcFvwoGmsNhbCAMFD4xm2g3NKz
+ z/g633F3SkTGgbmvsNI3GYYNjmiRGwXq+MKyJRPTjlKaeSTR3pguBeEvNeIfwj8d0LF+
+ SZrJnsmWeBeftxGrlp3ag5IjbKQGPtMC9hO3miouJRBADAcVqPyI7NsC2ONfwhQJIwoW
+ tQ6I+vAqxWe3Xsd/YAm6XSU4KTGLo+3Y0sa7/Am9YaeJ9ZqJqp2FR88k2H2FOeRpCLxc
+ ZLqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717423874; x=1718028674;
+ d=1e100.net; s=20230601; t=1717423918; x=1718028718;
  h=content-transfer-encoding:in-reply-to:content-language:references
  :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dRaDiAL64sssMvTWiBBzGvj163oLeurAnHe5X3Opa24=;
- b=renRUV5Tx7JtsnzvDPlyW2RKGwXtmherSYcGxdOAloy7Zjsf62DlcPLFWLZoB2sdWo
- RVtcvOGAzpymHDgymCh73ShAmzm41OOYqI0Pk2mjXhq69Nrh6Tzu8YSrtoafpyepazEK
- sScWNJA3qId3d2eyjaHX26nq6c4zTe5jU2JTk1EjPlsf5SPcWDiTyosEluzVw57yHuRB
- 4gv5Sb3h2ebDY1E3dgQ6hwe8NHnb3QGqXwT5Tn1+xLggLykUXLYnCzgrq+GTkU/0s7NW
- zbYKRkDFtY+GgBGpPaQUNilDNi35o3SX36C+vxTAlk8Gvw02n2oPuCC3mIQUelFr0ynV
- t5eg==
+ bh=DlSUWfEVLvtJdjyRCcCPS1n94AQWY9Us2l2aMVIJj7Y=;
+ b=JGGjiR50q7w79XgcU1XgboEIgOH6lI8Dq98Gdw1e3AKexoYIa6kbT+wG7J1GuhoDUc
+ 8rwEGcgF2YNakwZp86e2LTqOmsOPKF0iQrQgH3/wCqDKMeOs+pEhIHduUp0aREuv+d2z
+ /VJT0ye0NvHDeUb/vmbf+aD6TOBVoIrYTfa2v4zzgrdoBzBy9du/vUJ7hfJL5mE9Wmh7
+ M3BwTBjIsDgVWrtGwE+iSMhjl4AYjCy+8W6ecyippxCPd0louUoDA1u6d0gBiioU8zSt
+ pkkJUp5h7ILi2WGrR8jc9z/G2r1vbOvYsPrb/As8bs1GGq31QsxS/pstEcnsiBrfuu/6
+ Dkuw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEx07NcL+b3zt9LmnFAVcUtwIwUV6o6elqehuyIxsVOikR38+QBMba7frDCtSVGYWXBJ7y+4SH62aPe1QnbNOsla1rowY=
-X-Gm-Message-State: AOJu0YxLoL9RoksXM3K32Vx85KWDbLr09NCfXMonMTtisUIPUFePT24s
- cwPFELWwV5+vXkePFmHyymurFpMimyTaSMuxLiV61Ion6GBSrDPE4c62AjR5QY8=
-X-Google-Smtp-Source: AGHT+IEoRgPQWyBF9W1moLh8VT4BX2L5l2kefHO9O6pdlrBS8/sUQ5nmxIPLbYEDqFdEuHeLaWcadw==
-X-Received: by 2002:a17:906:36cf:b0:a68:5fb6:1a7f with SMTP id
- a640c23a62f3a-a685fb61d23mr728743066b.21.1717423874419; 
- Mon, 03 Jun 2024 07:11:14 -0700 (PDT)
+ AJvYcCVGaf23DRcTijqxxPWvuuWeShEUEcag1S6lqUVEnT6bTxZSvHXX5o1RAzV1jWTRxIg+mKYhsYVJ6yjYYc8dNP8dgQxkiNU=
+X-Gm-Message-State: AOJu0YzPpUzjv6KuTptRzH6w7QgNBp3+JmrvTmzJmIyi/pYx50kIKSTw
+ kbCAMVznDC2H5QcAAGC+RXraNtOd9DvK/YhKpgksRhHhDbsM8iJFfmud81qdXUA=
+X-Google-Smtp-Source: AGHT+IGdr5CBYOZFF6Lat26v/7tlPWLGgyXS6UBb1RiZVlrTdk8rnBJQ5k0EYqfvZ4PIW3CG1qkc9A==
+X-Received: by 2002:a50:bac6:0:b0:572:6846:b899 with SMTP id
+ 4fb4d7f45d1cf-57a3658b28fmr5068095a12.41.1717423917639; 
+ Mon, 03 Jun 2024 07:11:57 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.177.241])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a67eac7a340sm489040666b.159.2024.06.03.07.11.12
+ 4fb4d7f45d1cf-57a61b4e36dsm1653858a12.75.2024.06.03.07.11.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 07:11:14 -0700 (PDT)
-Message-ID: <329a02e4-724a-4579-ade2-99e3ad2688de@linaro.org>
-Date: Mon, 3 Jun 2024 16:11:11 +0200
+ Mon, 03 Jun 2024 07:11:57 -0700 (PDT)
+Message-ID: <750b1cd7-6b16-464d-8229-46a4b5f4e022@linaro.org>
+Date: Mon, 3 Jun 2024 16:11:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] cpus: a few tweaks to CPU realization
+Subject: Re: [PATCH 4/5] plugins: remove special casing for cpu->realized
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
@@ -77,13 +77,14 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  <reinoud@netbsd.org>, kvm@vger.kernel.org,
  Roman Bolshakov <rbolshakov@ddn.com>
 References: <20240530194250.1801701-1-alex.bennee@linaro.org>
- <988e580d-6121-4f7f-b7b8-d12cee39be35@linaro.org>
+ <20240530194250.1801701-5-alex.bennee@linaro.org>
+ <0a76250f-db5b-4c94-941a-cbec1f2e1db6@linaro.org>
 Content-Language: en-US
-In-Reply-To: <988e580d-6121-4f7f-b7b8-d12cee39be35@linaro.org>
+In-Reply-To: <0a76250f-db5b-4c94-941a-cbec1f2e1db6@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,25 +107,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/24 14:47, Philippe Mathieu-Daudé wrote:
+On 3/6/24 13:31, Philippe Mathieu-Daudé wrote:
 > On 30/5/24 21:42, Alex Bennée wrote:
->> The recent IPS plugin exposed a race condition between vcpu_init
->> callbacks and the other vcpu state callbacks. I originally thought
->> there was some wider re-factoring to be done to clean this up but it
->> turns out things are broadly where they should be. However some of the
->> stuff allocated in the vCPU threads can clearly be done earlier so
->> I've moved enough from cpu_common_realizefn to cpu_common_initfn to
->> allow plugins to queue work before the threads start solving the race.
+>> Now the condition variable is initialised early on we don't need to go
+>> through hoops to avoid calling async_run_on_cpu.
 >>
->> Please review.
+>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>> ---
+>>   plugins/core.c | 6 +-----
+>>   1 file changed, 1 insertion(+), 5 deletions(-)
 >>
->> Alex Bennée (5):
->>    hw/core: expand on the alignment of CPUState
->>    cpu: move Qemu[Thread|Cond] setup into common code
->>    cpu-target: don't set cpu->thread_id to bogus value
->>    plugins: remove special casing for cpu->realized
+>> diff --git a/plugins/core.c b/plugins/core.c
+>> index 0726bc7f25..badede28cf 100644
+>> --- a/plugins/core.c
+>> +++ b/plugins/core.c
+>> @@ -65,11 +65,7 @@ static void plugin_cpu_update__locked(gpointer k, 
+>> gpointer v, gpointer udata)
+>>       CPUState *cpu = container_of(k, CPUState, cpu_index);
+>>       run_on_cpu_data mask = RUN_ON_CPU_HOST_ULONG(*plugin.mask);
+>> -    if (DEVICE(cpu)->realized) {
 > 
-> Thanks, patches 1-4 queued so far.
+> We could assert() this to protect future refactors.
 
-Now patch 5 also queued ;)
+(No we can't because vCPU can still be unrealized at this point).
+
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+>> -        async_run_on_cpu(cpu, plugin_cpu_update__async, mask);
+>> -    } else {
+>> -        plugin_cpu_update__async(cpu, mask);
+>> -    }
+>> +    async_run_on_cpu(cpu, plugin_cpu_update__async, mask);
+>>   }
+>>   void plugin_unregister_cb__locked(struct qemu_plugin_ctx *ctx,
+> 
+
 
