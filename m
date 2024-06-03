@@ -4,87 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86CADC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 14:22:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C12C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 14:23:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE8a3-0003X2-M8; Mon, 03 Jun 2024 10:22:35 -0400
+	id 1sE8aL-0003dH-LF; Mon, 03 Jun 2024 10:22:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sE8a1-0003Wu-Ll
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:22:33 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sE8aI-0003Y1-Lx
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:22:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sE8Zz-00035W-WC
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:22:33 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sE8aG-00036f-6a
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:22:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717424550;
+ s=mimecast20190719; t=1717424567;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=efLqh7H5R1H2MCstarX4MnmJFfDoGl/LnoB3y6f71Jo=;
- b=N4S3r5qJNltr6PlveBVYG5AjITPoQARpdIx7Va1mRS47EIHkVR8xKNnBIHqp1og47hOdY8
- cGP4QaWo2m+0pXtbgZ6Iz833fO5jT1zqjNKQTtV3/dEfA/lDxOD9dJb+7Z86jynLlwC8Pq
- z2i8Sv134f5mz4uL28IO6DkxX3WSO5Y=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YnruYBBBdA9Oe8gL91INL662nm0pO2g3Q1Z56AOjdoI=;
+ b=PPAUQHTNtLErqPfnK8Frn9JJoolgrIwPr6ojwFvxckcMgtcYuxEk0bis8M0h0AGpcsarTu
+ 3v//tbJkmlyTQpf+jRXsMjKkQG0OvxG6+cyXbAYckFxH0CYZqwx0bk6bddZtTuhCYaSS5t
+ 59zuE4p/Ciupo/Fs4dTtEcDAZzwpZDg=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-392-4PV8XSSIMZSB5cgSRxX3fA-1; Mon, 03 Jun 2024 10:22:25 -0400
-X-MC-Unique: 4PV8XSSIMZSB5cgSRxX3fA-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-35dbf83bb20so2566664f8f.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 07:22:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717424544; x=1718029344;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=efLqh7H5R1H2MCstarX4MnmJFfDoGl/LnoB3y6f71Jo=;
- b=ghzT9ECdU4vExqzu8GDX563zToNlukSvCAwH4UAYiev3mbV54R18Ff5fWh4kAmWAzo
- ySoS9cZhBaq7Tw5NT+ggt3IHTM/0ea5r5O2+7S+74h8w/jpqGkPnDNMi85eIqbLTRt8H
- 8whWBI77fXZB9bkntatDtqq3Bbe4upZtMM0D2dg1P9pnBhGz0UsOAQNThmOAgg++Mk53
- J9jVHwMxyj9JagVyxAqbba5KZoq/6FfjAnhm0Y19QmHIhD7luh8cr7Xulxeq6xNQUD7P
- XS5wMMGSpvBdBnqUFpXmaNn8Ve4wxo9ciRXaeVBSEcvXxXYuIp22o9XhK/H4CXiK3PKk
- riqg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXspksnjurxSnbMaRSXjL7wsT0Z60BwCZ3AZ/Gby4ZdaCLDTIUD+iVVV8wbip1Z20s+ILu2wrT8e4ecj+L5pWjSnbnJkJ4=
-X-Gm-Message-State: AOJu0YzmTWhlgZUF+deHf5ikA4VfA6nVdVDBjCUGrV9HUiAHMQWRa3iU
- JndrhrRLdX30Mz8OamRPnBUxC0Pl/PTURLfu9DHULVbnlCmDtg+NOheIL7wc7mrmHbfnoy3VEDs
- B/vUO2wF3jPomibW0Xn65/OkHOlI7GOwpyfYDE5qDkWNCNLg4gfWlX7JKjXGeDq/HrnAZWEtgTR
- lAq5DKz6PalJd3AcswsBHpttrP0Bw=
-X-Received: by 2002:adf:fecb:0:b0:357:ff92:aae7 with SMTP id
- ffacd0b85a97d-35e0f25c3e6mr6739800f8f.2.1717424544722; 
- Mon, 03 Jun 2024 07:22:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH67uOr9eOqicMCPNEhJhZpPzutpMuvtEFRvQ9siWY62a4sbnmkxWF/LwmjxcRZntnhm0yGRx+NDnbedJ/adBI=
-X-Received: by 2002:adf:fecb:0:b0:357:ff92:aae7 with SMTP id
- ffacd0b85a97d-35e0f25c3e6mr6739776f8f.2.1717424544320; Mon, 03 Jun 2024
- 07:22:24 -0700 (PDT)
+ us-mta-530-Q5K3Dm2lOo6kIJfvMb_m8A-1; Mon, 03 Jun 2024 10:22:44 -0400
+X-MC-Unique: Q5K3Dm2lOo6kIJfvMb_m8A-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EF952101A52C;
+ Mon,  3 Jun 2024 14:22:43 +0000 (UTC)
+Received: from green.redhat.com (unknown [10.2.16.55])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 4746B1C008BB;
+ Mon,  3 Jun 2024 14:22:43 +0000 (UTC)
+From: Eric Blake <eblake@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-stable@nongnu.org
+Subject: [PULL v2 1/2] qio: Inherit follow_coroutine_ctx across TLS
+Date: Mon,  3 Jun 2024 09:21:42 -0500
+Message-ID: <20240603142240.22679-5-eblake@redhat.com>
+In-Reply-To: <20240603142240.22679-4-eblake@redhat.com>
+References: <20240603142240.22679-4-eblake@redhat.com>
 MIME-Version: 1.0
-References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
- <CABgObfYFryXwEtVkMH-F6kw8hrivpQD6USMQ9=7fVikn5-mAhQ@mail.gmail.com>
- <CABgObfbwr6CJK1XCmmVhp83AsC2YcQfSsfuPFWDuxzCB_R4GoQ@mail.gmail.com>
- <621a8792-5b19-0861-0356-fb2d05caffa1@amd.com>
- <CABgObfbrWNB4-UzHURF-iO9dTTS4CkJXODE0wNEKOA_fk790_w@mail.gmail.com>
- <05d89881-bdbd-8b85-3330-37eae03e6632@amd.com>
- <3j2llxlh3gzyn33n6uo7o5jdx4dmi4rzbax5buluof5ru2paii@2ze452jtocth>
-In-Reply-To: <3j2llxlh3gzyn33n6uo7o5jdx4dmi4rzbax5buluof5ru2paii@2ze452jtocth>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 3 Jun 2024 16:22:10 +0200
-Message-ID: <CABgObfa5Bnm2vNcHqyo+DbXET2aZrmH5C6h7HV=6Qio7bKVTsw@mail.gmail.com>
-Subject: Re: [PATCH v4 00/31] Add AMD Secure Nested Paging (SEV-SNP) support
-To: Michael Roth <michael.roth@amd.com>
-Cc: "Gupta, Pankaj" <pankaj.gupta@amd.com>, qemu-devel@nongnu.org,
- brijesh.singh@amd.com, 
- dovmurik@linux.ibm.com, armbru@redhat.com, xiaoyao.li@intel.com, 
- thomas.lendacky@amd.com, isaku.yamahata@intel.com, berrange@redhat.com, 
- kvm@vger.kernel.org, anisinha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -93,7 +66,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,52 +82,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 3, 2024 at 4:16=E2=80=AFPM Michael Roth <michael.roth@amd.com> =
-wrote:
-> Paolo mentioned he dropped the this hunk from:
->
->   hw/i386: Add support for loading BIOS using guest_memfd
->
->   diff --git a/hw/i386/x86.c b/hw/i386/x86.c
->   index de606369b0..d076b30ccb 100644
->   --- a/hw/i386/x86.c
->   +++ b/hw/i386/x86.c
->   @@ -1147,10 +1147,18 @@ void x86_bios_rom_init(MachineState *ms, const =
-char *default_firmware,
->        }
->        if (bios_size <=3D 0 ||
->            (bios_size % 65536) !=3D 0) {
->   -        goto bios_error;
->   +        if (!machine_require_guest_memfd(ms)) {
->   +            g_warning("%s: Unaligned BIOS size %d", __func__, bios_siz=
-e);
->   +            goto bios_error;
->   +        }
->
-> without that, OVMF with split CODE/VARS won't work because the CODE
-> portion is not 64KB aligned.
->
-> If I add that back the split builds work for qemu-coco-queue as well.
->
-> We need to understand why the 64KB alignment exists in the first place, w=
-hy
-> it's not necessary for SNP, and then resubmit the above change with prope=
-r
-> explanation.
+Since qemu 8.2, the combination of NBD + TLS + iothread crashes on an
+assertion failure:
 
-I think it was only needed to make sure that people weren't using
-"unpadded" BIOS (not OVMF) binaries. I think we can delete it
-altogether, and it can be submitted separately from this series.
+qemu-kvm: ../io/channel.c:534: void qio_channel_restart_read(void *): Assertion `qemu_get_current_aio_context() == qemu_coroutine_get_aio_context(co)' failed.
 
-> However, if based on Daniel's comments we decide not to support split
-> CODE/VARS for SNP, then the above change won't be needed. But if we do,
-> then it goes make sense that the above change is grouped with (or
-> submitted as a fix-up for):
+It turns out that when we removed AioContext locking, we did so by
+having NBD tell its qio channels that it wanted to opt in to
+qio_channel_set_follow_coroutine_ctx(); but while we opted in on the
+main channel, we did not opt in on the TLS wrapper channel.
+qemu-iotests has coverage of NBD+iothread and NBD+TLS, but apparently
+no coverage of NBD+TLS+iothread, or we would have noticed this
+regression sooner.  (I'll add that in the next patch)
 
-Yes, I think we want to go for a variable store that is not "right
-below BIOS". The advantage of something that isn't pflash-based is
-that it can be used by any code-only firmware binary.
+But while we could manually opt in to the TLS channel in nbd/server.c
+(a one-line change), it is more generic if all qio channels that wrap
+other channels inherit the follow status, in the same way that they
+inherit feature bits.
 
-Paolo
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+CC: Daniel P. Berrangé <berrange@redhat.com>
+CC: qemu-stable@nongnu.org
+Fixes: https://issues.redhat.com/browse/RHEL-34786
+Fixes: 06e0f098 ("io: follow coroutine AioContext in qio_channel_yield()", v8.2.0)
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20240518025246.791593-5-eblake@redhat.com>
+---
+ io/channel-tls.c     | 26 +++++++++++++++-----------
+ io/channel-websock.c |  1 +
+ 2 files changed, 16 insertions(+), 11 deletions(-)
+
+diff --git a/io/channel-tls.c b/io/channel-tls.c
+index 1d9c9c72bfb..67b97000060 100644
+--- a/io/channel-tls.c
++++ b/io/channel-tls.c
+@@ -69,37 +69,40 @@ qio_channel_tls_new_server(QIOChannel *master,
+                            const char *aclname,
+                            Error **errp)
+ {
+-    QIOChannelTLS *ioc;
++    QIOChannelTLS *tioc;
++    QIOChannel *ioc;
+
+-    ioc = QIO_CHANNEL_TLS(object_new(TYPE_QIO_CHANNEL_TLS));
++    tioc = QIO_CHANNEL_TLS(object_new(TYPE_QIO_CHANNEL_TLS));
++    ioc = QIO_CHANNEL(tioc);
+
+-    ioc->master = master;
++    tioc->master = master;
++    ioc->follow_coroutine_ctx = master->follow_coroutine_ctx;
+     if (qio_channel_has_feature(master, QIO_CHANNEL_FEATURE_SHUTDOWN)) {
+-        qio_channel_set_feature(QIO_CHANNEL(ioc), QIO_CHANNEL_FEATURE_SHUTDOWN);
++        qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
+     }
+     object_ref(OBJECT(master));
+
+-    ioc->session = qcrypto_tls_session_new(
++    tioc->session = qcrypto_tls_session_new(
+         creds,
+         NULL,
+         aclname,
+         QCRYPTO_TLS_CREDS_ENDPOINT_SERVER,
+         errp);
+-    if (!ioc->session) {
++    if (!tioc->session) {
+         goto error;
+     }
+
+     qcrypto_tls_session_set_callbacks(
+-        ioc->session,
++        tioc->session,
+         qio_channel_tls_write_handler,
+         qio_channel_tls_read_handler,
+-        ioc);
++        tioc);
+
+-    trace_qio_channel_tls_new_server(ioc, master, creds, aclname);
+-    return ioc;
++    trace_qio_channel_tls_new_server(tioc, master, creds, aclname);
++    return tioc;
+
+  error:
+-    object_unref(OBJECT(ioc));
++    object_unref(OBJECT(tioc));
+     return NULL;
+ }
+
+@@ -116,6 +119,7 @@ qio_channel_tls_new_client(QIOChannel *master,
+     ioc = QIO_CHANNEL(tioc);
+
+     tioc->master = master;
++    ioc->follow_coroutine_ctx = master->follow_coroutine_ctx;
+     if (qio_channel_has_feature(master, QIO_CHANNEL_FEATURE_SHUTDOWN)) {
+         qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
+     }
+diff --git a/io/channel-websock.c b/io/channel-websock.c
+index a12acc27cf2..de39f0d182d 100644
+--- a/io/channel-websock.c
++++ b/io/channel-websock.c
+@@ -883,6 +883,7 @@ qio_channel_websock_new_server(QIOChannel *master)
+     ioc = QIO_CHANNEL(wioc);
+
+     wioc->master = master;
++    ioc->follow_coroutine_ctx = master->follow_coroutine_ctx;
+     if (qio_channel_has_feature(master, QIO_CHANNEL_FEATURE_SHUTDOWN)) {
+         qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
+     }
+-- 
+2.45.1
 
 
