@@ -4,84 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0636C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 15:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FBC3C27C50
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 15:19:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE9Mi-0004IW-8g; Mon, 03 Jun 2024 11:12:52 -0400
+	id 1sE9SJ-0006jG-5G; Mon, 03 Jun 2024 11:18:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sE9Mf-0004F7-Hq
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:12:50 -0400
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sE9Md-0004ip-UE
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:12:49 -0400
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-52b894021cbso3839175e87.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 08:12:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717427566; x=1718032366; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CFUcXpOs8LuKXpB3xp1QT8gFCh40XjLHsjXXilpajs8=;
- b=po4xbwkOwoM1QPSJmnRLYG+yNpmE/88wpSxscLJAoB3oI6NfjsJL5tFQI3/IFEM04J
- feIY2LEzbaT42QvOL2Uu8514yVBqDTQLWrDqNBDk1Zf/LV7+ZhccfIIGiOuFvEOu5HwO
- x7gXupt8kX3sQQalAP9ncwsJK10ZvPs2wTu33WVdPRCQoVCtSeDu9udOxltmnTMV+oPi
- fbBCfrzYlOlyDmHmDq0Dur1cwR9nEM/fZFG35kTcd64KQiSA4a06Ag9WG3UKKQIQE7V4
- Z2jiF9UfxymSNBJKaRtpXp8/3ydDPVh4i0yW0S2eQZCEzBAsqbu/GxSN/pMYCZWkr14U
- YCxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717427566; x=1718032366;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CFUcXpOs8LuKXpB3xp1QT8gFCh40XjLHsjXXilpajs8=;
- b=pa5xC0QDNspmd/kXugMoW7hfFsurjb542G3uvAOoQrYgB6Z4RmaH/PSvY47t/f3FIZ
- d8XRnbY/EMTdhT/5/quYnGWMNAi6XV9UXV8bHe2CMjV1quayx8fxeUTo93r0dzm92htO
- Yc0ya/fbaAVuOPN4nOg/J2pFHwXK+K1KoGigcGi8TAzW2DJonEnCb69nphYfq3/W2kgL
- AiegJQElQHBQeqK180knvFWdnaGjQRjGuu6tkAuvJ6Scr8C+88D5UXN7pF6/d15Gn89a
- AwUfP2xphPrBSy+xRR85KOTCnHifRlbJkpxUIi5Qu+j7GXJ5GQNnKkd6RSE0gJsCpcGO
- V0ZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWdW9sWAVPK36pMXj/PenANGuMqp+88Ylv8Aj3bxkqwB9+FL8XunR1DtGYnBWoAyYP6z2QenrMPrnSgU+NsdFgnatlrzek=
-X-Gm-Message-State: AOJu0YzhGR8IWxJ1IMYfqsE5PNCUY9z56EZYlP4CDEpcwtWiSoFHcON1
- dJXkhf5GgSE8dEFKeNaORLBZE51lTc59kv9nd+hhz2RIyOAopYWzI9l15Pp//Ec2pyKY2T3LVJW
- LW4hIbFwQz5UyRIFPwAgsslI4wMRf8jz7BdcagQwtHoEnl6p0
-X-Google-Smtp-Source: AGHT+IGF3RQ6/gcXnucJvEqL++Dv/CC5Ck7dKEkOpBDMEm/H3ScxQ5/9Unho7ZcPInyoDxXMiM/lUbRKeLwNSYblbrQ=
-X-Received: by 2002:a05:6512:2385:b0:51e:147d:bd2d with SMTP id
- 2adb3069b0e04-52b896b47f5mr8367070e87.39.1717427565777; Mon, 03 Jun 2024
- 08:12:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sE9SH-0006ig-JD
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:18:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sE9SE-0005r6-FE
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:18:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717427912;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=2Ot+g6unzuYazgp1aGNy1K4xrxxsPWswKLjbLi14qio=;
+ b=UyeFU7L0i5hvo+nAxeigqOU01idI97IQTJ2B3nfCJ/Ifrv6eldBK0WMnC90I7HvX/V2iYW
+ Mu/JWa3BXEPzHCfoELJc+gvEE/AvzBlxqIFeVGbni7ZFcXQemp3Tj9Q48buK4IQLsjyQrU
+ odhTYvug6hJgMtkzulvBc2PN7VXUp7s=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-269-YU-I1tivMFSQruzegKHrDA-1; Mon, 03 Jun 2024 11:18:28 -0400
+X-MC-Unique: YU-I1tivMFSQruzegKHrDA-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4AB06101A525;
+ Mon,  3 Jun 2024 15:18:28 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.192.239])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id DC5C140AD3DE;
+ Mon,  3 Jun 2024 15:18:26 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id F27C61800985; Mon,  3 Jun 2024 17:18:25 +0200 (CEST)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Anthony PERARD <anthony@xenproject.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paul Durrant <paul@xen.org>, xen-devel@lists.xenproject.org,
+ Stefano Stabellini <sstabellini@kernel.org>
+Subject: [PATCH v2 0/3] stdvga: fix screen blanking
+Date: Mon,  3 Jun 2024 17:18:22 +0200
+Message-ID: <20240603151825.188353-1-kraxel@redhat.com>
 MIME-Version: 1.0
-References: <20240529133106.1224866-1-thuth@redhat.com>
- <CAFEAcA8yOgGS8VdFRmJJKaUZe9Q=jDDh7itK6Q7vUH4TtEbFnw@mail.gmail.com>
- <Zl27orDnp8hOqgKo@redhat.com>
- <844ed2cb-9f91-439f-bd6a-73003acfdef1@redhat.com>
- <Zl3YBQQ5yWdQoH4y@redhat.com>
- <CAFEAcA_kkM6VgeVKxbSB_=UHOn0a6aFFUTUOeNP4otEoboYtvg@mail.gmail.com>
-In-Reply-To: <CAFEAcA_kkM6VgeVKxbSB_=UHOn0a6aFFUTUOeNP4otEoboYtvg@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 3 Jun 2024 16:12:34 +0100
-Message-ID: <CAFEAcA_QPwi093sB3jSD9EcJ43q2vvZMHwJ58NWqWL2-4soo8Q@mail.gmail.com>
-Subject: Re: [PATCH] io/channel-socket: Fix -fsanitize=undefined problem with
- latest Clang
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12b.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,43 +82,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 3 Jun 2024 at 15:58, Peter Maydell <peter.maydell@linaro.org> wrote=
-:
->
-> On Mon, 3 Jun 2024 at 15:49, Daniel P. Berrang=C3=A9 <berrange@redhat.com=
-> wrote:
-> > We can't rely on the sanitizers to catch all cases where we're casting
-> > functions, as we don't have good enough code coverage in tests to
-> > identify all places that way.
-> >
-> > Unless there's a warning flag we can use to get diagnosis of this
-> > problem at compile time and then fix all reported issues, I won't have
-> > any confidence in our ability to remove -fsanitize-cfi-icall-generalize=
--pointers
-> > for CFI.
->
-> You might think that -Wcast-function-type would detect them at compile
-> time, but that has two loopholes:
->  1. void(*) (void)  matches everything
->  2. any parameter of pointer type matches any other pointer type
->
-> It seems to me rather inconsistent that the sanitizers do
-> not match up with the warning semantics here. I think I
-> would vote for raising that with the compiler folks --
-> either the sanitizer should be made looser so it matches
-> the -Wcast-function-type semantics, or else a new tighter
-> warning option that matches the sanitizer should be
-> provided. Ideally both, I think. But it's definitely silly
-> to have a runtime check that flags up things that the
-> compiler perfectly well could detect at compile time but
-> is choosing not to.
 
-Slightly further investigation suggests clang 16 and later
-have -Wcast-function-type-strict for the "report all the
-same casts that the sanitizer does". gcc doesn't I think have
-that yet. I didn't spot any option in the sanitizer to
-loosen the set of things it considers mismatched function
-pointers.
 
--- PMM
+Gerd Hoffmann (3):
+  stdvga: fix screen blanking
+  ui+display: rename is_buffer_shared() -> surface_is_borrowed()
+  ui+display: rename is_placeholder -> surface_is_placeholder
+
+ include/ui/surface.h    |  4 ++--
+ hw/display/qxl-render.c |  2 +-
+ hw/display/vga.c        | 14 ++++++++++----
+ hw/display/xenfb.c      |  4 ++--
+ ui/console.c            |  2 +-
+ ui/sdl2-2d.c            |  2 +-
+ ui/sdl2-gl.c            |  2 +-
+ 7 files changed, 18 insertions(+), 12 deletions(-)
+
+-- 
+2.45.1
+
 
