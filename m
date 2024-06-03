@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E956C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 15:46:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AC8CC25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 15:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE9s8-0002j9-39; Mon, 03 Jun 2024 11:45:20 -0400
+	id 1sE9tm-0003na-AX; Mon, 03 Jun 2024 11:47:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9s6-0002hy-3j
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:45:18 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9tj-0003m7-7M
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:47:00 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9s4-00037L-2W
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:45:17 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2e73359b8fbso63123421fa.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 08:45:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9th-0003Ru-5F
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:46:58 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-35dd0c06577so3273887f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 08:46:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717429511; x=1718034311; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717429615; x=1718034415; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=G0zQ4HredofNILHiULg4J4DPS8C6yyIAW9Yckq18Fc8=;
- b=co0s3evUMXAKAhXjySyt28Nnka6yOKVL2H6a/cPQtQ61/hBURWr+Ok1QBoEadA2MOs
- eQ6ti5gPys7aIWeM+45aBXM8/6cpdB4UA7EjCYLRIi4cnCsN4EhxRE2gRp6rrS4nJPDx
- rqc7Ucxb7Al1TXOr4lRIrjBYqb3BPnUZvuMzqYf9yLz/YzoB9K3FrrJjBQjlalEHeKUC
- tSf2GrKr3Zf0ZDavQYy+47GZScT3zszOxuHM1TGHT7ohA4tcP13c4lxLxqSjKcBUkMip
- nWYoij8T0ZnEnF3X15sjLQYk3HsKHp/yyWkVFZxxgIjliwxE4CMYX/F13AeYAY67G/3a
- oweA==
+ bh=vehZwDyfXOECyz+NLuGckWo2fAsupAGi9Nm1cgeCJgY=;
+ b=RzM+vfEtttWdYZApIzxdTz2/09mhV64rGI9azZ1mZ1cD99AnyWskoFhSPwHwre8Kin
+ i3btXF8d4cCuDy8sQhlf1O/oRVYHDjOlw0WaeNfEqgx3xWGvxrb/UgUKOQtPwdq5hjpG
+ nfEsLX+sQBkeh3qNMaITSEX/dWfemPhCygGKbKhMhUrgFRlv1q+rNIBxcB1H1S706k9D
+ 8N4SP71FOxDYRa441G6pa14nLPKAl0+OabGnLuFExvMGyru22wj1iORIrFsyY5LAVAmJ
+ ZEDhGzGXoF/nmlON+GKwi0OPGnFyBcyvN0S4HfYrenqo1MXWFY3mwpsfhOXhDBjR2KfH
+ Cqcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717429511; x=1718034311;
+ d=1e100.net; s=20230601; t=1717429615; x=1718034415;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=G0zQ4HredofNILHiULg4J4DPS8C6yyIAW9Yckq18Fc8=;
- b=Qbnu5mtWJE+qKt5+b/koC3PP7KXgJL13bFYoM+xXOs/Asl/Roz1djvbE/E1gFcXlJu
- ZermyXxHfsBI8Bml7E4TKT8kqa02+DruUWnFVCZbrX43X6sYYoCJiIWvsLAHGgG/TG9D
- +I9hswoh/KGwSRmJO5ZCcSozP8N7wufQ+TIYDAQuDbDtu8TIJi5FpcwRJSKmrnF6VD1T
- cAUKNsSRcyMMfbuRF0pKgjiy6hCBC+VNm4b2fxoj1UQtxCAlW0VpoAx0xP8aM5z0ua+3
- Gy90P2wT4I6oXuoeX3fr5iK2H+X3x6RHXq5bufRaQKbuV7VU7JuU4MkyvNGw7odEBYK/
- lBCw==
+ bh=vehZwDyfXOECyz+NLuGckWo2fAsupAGi9Nm1cgeCJgY=;
+ b=H2aAZYA1FpbK4OuINDIwE39X4mmOWnYriRrC9VqqkzSgHiTUp4HLzns7hHrq72BOwC
+ Y0/KF1badMs411Znsg09EYYpLPqu6KgSLpPanCLPLoUhtuCDGd+6Ya7NYIV4/aJ87RTy
+ +xrjkk7v/1Bm8bYWljoXDCcNeHGy4ECq3cBYjPGzpfY2Sj+x7u/OlR+k0JOLiHo3IieJ
+ wNzGuhVvWtH8k5Gje22lhmODIXxVYD9+ZGjL1jvhj4oAF0VxkRllmF/E6Q+c5RTsG2V9
+ jqH37E1qtN/bCrMK5bjtAGyOhq6jak2ejb1OOkJx6oilHbHNJaw2Wb+9I8axaTmg9BY7
+ BocQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX4m8E2orRkeFxywjJON5aDRJua5Wz4IHSx/BTOWLLNEO13zHR+9Fm7WDrk6ugUEAxG5m+QuwoX7oGP2QrIcw99EqML+qs=
-X-Gm-Message-State: AOJu0YzchQJHsRL2LbAaq9042roUhNoEA7RMYXJjCA7gOORllsJC/qDD
- UqIWUWpZO3tWghaFDoIYyqKO+6JUopGwvzia1UuE+VKjo0TqZYq6bdbGz2k6K9o=
-X-Google-Smtp-Source: AGHT+IFbrzF2exHYmVkyxM5R+kEj3FxMKNVto5itK5euvNV2+7VzEwe0T0dhVA5WvkH2G8VdopDMhw==
-X-Received: by 2002:a05:651c:211f:b0:2dd:ccb6:e836 with SMTP id
- 38308e7fff4ca-2ea9516177bmr89307731fa.25.1717429510864; 
- Mon, 03 Jun 2024 08:45:10 -0700 (PDT)
+ AJvYcCUUVfbXiVu4JRH4O8B7E/TjD0dreEmdtHl3i2QoKYTiXhP9+6y+tSJn9CcOaUye/72+KpkuM7ylRFsZGdGYUr7+m0K4L8s=
+X-Gm-Message-State: AOJu0YxOJFW9eEgnEPbkrb/HsTPfT491SIuYMqZR9D9RGRehbBydNz7Y
+ LWJohQKD0n+MYeyT0abNrIVlKmlGKGwvWJ4Mu2iew2z0j7aOAZ0aVPd7f/Mr7gA=
+X-Google-Smtp-Source: AGHT+IFdFhbIGoSY366jRenf8MShLYqBZSZimsRe61Zbciv0ZI2FNv9CLLH8oNGPwWj9e7HchTlWaQ==
+X-Received: by 2002:a05:6000:1754:b0:34d:7f9a:ecbd with SMTP id
+ ffacd0b85a97d-35e0f25e11amr5966514f8f.1.1717429614697; 
+ Mon, 03 Jun 2024 08:46:54 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.177.241])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35e4f0fd15esm6275047f8f.68.2024.06.03.08.45.09
+ ffacd0b85a97d-35dd04cad5bsm9132217f8f.38.2024.06.03.08.46.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 08:45:10 -0700 (PDT)
-Message-ID: <a3700c0c-889e-4bae-8a91-e374f8a5e03a@linaro.org>
-Date: Mon, 3 Jun 2024 17:45:08 +0200
+ Mon, 03 Jun 2024 08:46:54 -0700 (PDT)
+Message-ID: <f2e61128-003c-48c9-bab4-20422d195145@linaro.org>
+Date: Mon, 3 Jun 2024 17:46:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] hw/intc/loongson_ipi: Implement IOCSR address space
- for MIPS
+Subject: Re: [PATCH 5/5] hw/mips/loongson3_virt: Wire up loongson_ipi device
 To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
 Cc: Huacai Chen <chenhuacai@kernel.org>, Song Gao <gaosong@loongson.cn>
 References: <20240508-loongson3-ipi-v1-0-1a7b67704664@flygoat.com>
- <20240508-loongson3-ipi-v1-3-1a7b67704664@flygoat.com>
+ <20240508-loongson3-ipi-v1-5-1a7b67704664@flygoat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240508-loongson3-ipi-v1-3-1a7b67704664@flygoat.com>
+In-Reply-To: <20240508-loongson3-ipi-v1-5-1a7b67704664@flygoat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x233.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,60 +97,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/5/24 15:06, Jiaxun Yang wrote:
-> Implement IOCSR address space get functions for MIPS/Loongson CPUs.
-> 
-> For MIPS/Loongson without IOCSR (i.e. Loongson-3A1000), get_cpu_iocsr_as
-> will return as null, and send_ipi_data will fail with MEMTX_DECODE_ERROR,
-> which matches expected behavior on hardware.
+> Wire up loongson_ipi device for loongson3_virt machine, so we
+> can have SMP support for TCG backend as well.
 > 
 > Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 > ---
-> I understand that there was a review comment stating that I shouldn't
-> use TARGET_* macros in device drivers. But I still think this is the
-> best way to handle architectural difference. There are many TARGET_*
-> usages in hw/virtio for similiar purpose.
-> ---
->   hw/intc/loongson_ipi.c | 39 ++++++++++++++++++++++++++++++---------
->   1 file changed, 30 insertions(+), 9 deletions(-)
+>   hw/mips/Kconfig           |  1 +
+>   hw/mips/loongson3_bootp.c |  2 --
+>   hw/mips/loongson3_bootp.h |  3 +++
+>   hw/mips/loongson3_virt.c  | 39 +++++++++++++++++++++++++++++++++++++--
+>   4 files changed, 41 insertions(+), 4 deletions(-)
 
 
->   static MemTxResult loongson_ipi_readl(void *opaque, hwaddr addr,
-> @@ -56,18 +61,35 @@ static MemTxResult loongson_ipi_readl(void *opaque, hwaddr addr,
->       return MEMTX_OK;
->   }
+> @@ -534,12 +553,28 @@ static void mips_loongson3_virt_init(MachineState *machine)
+>           cpu_mips_clock_init(cpu);
+>           qemu_register_reset(main_cpu_reset, cpu);
 >   
-> -static void send_ipi_data(CPULoongArchState *env, uint64_t val, hwaddr addr,
-> +static AddressSpace *get_cpu_iocsr_as(CPUState *cpu)
-> +{
-> +#ifdef TARGET_LOONGARCH64
-> +    return LOONGARCH_CPU(cpu)->env.address_space_iocsr;
-> +#endif
-> +#ifdef TARGET_MIPS
-> +    if (ase_lcsr_available(&MIPS_CPU(cpu)->env)) {
-> +        return &MIPS_CPU(cpu)->env.iocsr.as;
-> +    }
-> +#endif
-> +    return NULL;
-> +}
+> -        if (i >= 4) {
+> +        if (ipi) {
+> +            hwaddr base = ((hwaddr)node << 44) + virt_memmap[VIRT_IPI].base;
+> +            base += core * 0x100;
+> +            qdev_connect_gpio_out(ipi, i, cpu->env.irq[6]);
+> +            sysbus_mmio_map(SYS_BUS_DEVICE(ipi), i + 2, base);
+> +        }
 > +
-> +static MemTxResult send_ipi_data(CPUState *cpu, uint64_t val, hwaddr addr,
->                             MemTxAttrs attrs)
->   {
->       int i, mask = 0, data = 0;
-> +    AddressSpace *iocsr_as = get_cpu_iocsr_as(cpu);
+> +        if (ase_lcsr_available(&MIPS_CPU(cpu)->env)) {
+> +            MemoryRegion *core_iocsr = g_new(MemoryRegion, 1);
+> +            g_autofree char *name = g_strdup_printf("loongson3.core%d_iocsr", i);
+> +            memory_region_init_alias(core_iocsr, OBJECT(machine), name,
 
-LoongsonIPI should have an array of CPUState[] and MemoryRegion[].
-(Or maybe add them to IPICore.)
-Expose them as QOM link properties.
+Region owner should be vCPU (core) IMO, not machine. But maybe need
+another approach (see my comment on patch #3), although not sure if
+easy with KVM.
 
-Caller wire them while creating the LoongsonIPI.
-Then loongson_ipi_realize() resolves them once.
-No need to call get_cpu_iocsr_as() and ipi_getcpu() for each MMIO
-access IMO.
-
+> +                                     iocsr, 0, UINT32_MAX);
+> +            memory_region_add_subregion(&MIPS_CPU(cpu)->env.iocsr.mr,
+> +                                        0, core_iocsr);
+> +        }
 > +
-> +    if (!iocsr_as) {
-> +        return MEMTX_DECODE_ERROR;
-> +    }
+> +        if (node > 0) {
+>               continue; /* Only node-0 can be connected to LIOINTC */
+>           }
+>   
+>           for (ip = 0; ip < 4 ; ip++) {
+> -            int pin = i * 4 + ip;
+> +            int pin = core * LOONGSON3_CORE_PER_NODE + ip;
+>               sysbus_connect_irq(SYS_BUS_DEVICE(liointc),
+>                                  pin, cpu->env.irq[ip + 2]);
+>           }
+> 
 
 
