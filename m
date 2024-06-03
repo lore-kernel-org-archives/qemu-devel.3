@@ -4,206 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F138AC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:59:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACEF7C41513
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:04:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE6Ld-0005c2-1o; Mon, 03 Jun 2024 07:59:33 -0400
+	id 1sE6PS-0007lv-Ns; Mon, 03 Jun 2024 08:03:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sE6La-0005bV-Um
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:59:31 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sE6LX-0007Eq-67
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:59:30 -0400
-Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45320Slv025774; Mon, 3 Jun 2024 11:59:16 GMT
-DKIM-Signature: =?UTF-8?Q?v=3D1; _a=3Drsa-sha256; _c=3Drelaxed/relaxed;
- _d=3Doracle.com; _h?=
- =?UTF-8?Q?=3Dcc:content-transfer-encoding:content-type:date:from:in-reply?=
- =?UTF-8?Q?-to:message-id:mime-version:references:subject:to;_s=3Dcorp-202?=
- =?UTF-8?Q?3-11-20;_bh=3D2sJMscAK0X18XLjyVFiOGO2WMPth+dJwyNKTrVFhKRg=3D;_b?=
- =?UTF-8?Q?=3DVvgx4MHC7aSXEzAt4rpnfcMxGDKWiuhqh/alvDB5wRe5Rl9uWBZfUw9NnB26?=
- =?UTF-8?Q?SkcxFywU_uQW4W6j8t3nReRibHYR/pRfhoB9RPTeQTVbKt6e6t/ux3+D9evokMR?=
- =?UTF-8?Q?oOM4/DRxVKDMJK_Z+8BY4TuiRHLFltJM0pOs1nviehrZ+MpTwcYUGuZNI/DIQWl?=
- =?UTF-8?Q?yOHdOJe4LVKciFabtJSB_AiBBlqIB7gKYJZY7prT+VHKyLOPZxub22AoMA9pWvc?=
- =?UTF-8?Q?pxr7A7o53qC3+7zpvuhGGJpME1_RzahePjcEDMfToAgIXH6a85AlIqde3gDz7o9?=
- =?UTF-8?Q?U35pCyvZK0HLLynWFgAldObUnyvn3TFV_Qg=3D=3D_?=
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3yfv3ntnde-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 03 Jun 2024 11:59:16 +0000
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 453ANVCs030972; Mon, 3 Jun 2024 11:59:15 GMT
-Received: from nam02-sn1-obe.outbound.protection.outlook.com
- (mail-sn1nam02lp2040.outbound.protection.outlook.com [104.47.57.40])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3ygrmc27e7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 03 Jun 2024 11:59:15 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=CQ9PrfBdNQ4x9DGa+0j2BY3EJCsrDKbqy5mImr/39mH+xy5ozeT9osBllf8cFh468Th4bmrlQ78IjQ9cnIUp6BJpigVU6kdbhGy8Z2UtU6+dIBbFtoMB8AH8Pj6qMwg9EOTL8Un2RyD02PJpIcPq31OqlwL5hyc1CTl+Wsga8HSJ1A7c7NBsecu5npXxUl7Lc0VgsXP6la1dde3OFWoZ0xqacw3Ft9VEnT7xu1FRFiMzcFyBOyFvOKpKtMi/hgGPNmnZRfP/5MyGPE/omXnY108OOlRgjMVpIvOskslci3AqcQ3jwmD959m+0mAFJU9nngF7O4rO60BT2wFQDfOQAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2sJMscAK0X18XLjyVFiOGO2WMPth+dJwyNKTrVFhKRg=;
- b=URpqpkiH7CgbYpolFRrKoL8K0jhkEtur3G8bJ+EUApS21SUCLU5XB6fpRQv1sOIHg6ucIVLX4y3ltBoT6yQ8D4geldFPLVPhAjOkKOH/gfwGQfXmp4+C3NBVwkMNo7szr692pYUNXHUveJN0HCGYZyiQ6na5949AAfmpXiUakptatzgyGaAYsnXFJk4SBLGHx3iAp7ERV4G8RqQGOKXAP0uZTEYI+9yYTLpAmU3MA0byzLGtak+x72crXHL88K0sv5YIYaFjbx+2mpmP197aTQZEFwku+fbISQ2lKdnpmbn7Yj0szCYIkV2MIKqy08noyGB5ljtAnydEga+r5ow4+g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sE6PH-0007je-0U
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:03:19 -0400
+Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sE6PE-00007o-BR
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:03:18 -0400
+Received: by mail-qt1-x834.google.com with SMTP id
+ d75a77b69052e-43fd2809723so21806711cf.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 05:03:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2sJMscAK0X18XLjyVFiOGO2WMPth+dJwyNKTrVFhKRg=;
- b=ZFmmGlQKf3a13vjUEgOSWeD1RFXo5Rm0LzzzQ5XFXrE+rox2/qwtMcx92Rx7sof8IjDd1JTIuQUtnmFakLtTI87QYABi6g7G9zT7Lq9U1KhWH0Qk7mEFPWQmaAF1goPuMWFJqD5/mwKEOHEy1bsAbDCZgpwq1Qi0+7Js1M98jMY=
-Received: from SA2PR10MB4684.namprd10.prod.outlook.com (2603:10b6:806:119::14)
- by SN7PR10MB6666.namprd10.prod.outlook.com (2603:10b6:806:298::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.21; Mon, 3 Jun
- 2024 11:59:13 +0000
-Received: from SA2PR10MB4684.namprd10.prod.outlook.com
- ([fe80::e06f:6709:57b4:91a2]) by SA2PR10MB4684.namprd10.prod.outlook.com
- ([fe80::e06f:6709:57b4:91a2%5]) with mapi id 15.20.7633.021; Mon, 3 Jun 2024
- 11:59:13 +0000
-Message-ID: <2b4bc907-902e-438c-ae0b-a8260721106b@oracle.com>
-Date: Mon, 3 Jun 2024 07:59:09 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 17/26] machine: memfd-alloc option
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-18-git-send-email-steven.sistare@oracle.com>
- <ZlZIoiH5Dj4XBbLO@x1n> <79a8023d-2e19-4d80-821d-a03818a5372e@oracle.com>
- <Zl2YQhv97Ez3_FGn@redhat.com>
-Content-Language: en-US
-Organization: Oracle Corporation
-In-Reply-To: <Zl2YQhv97Ez3_FGn@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BL1P222CA0012.NAMP222.PROD.OUTLOOK.COM
- (2603:10b6:208:2c7::17) To SA2PR10MB4684.namprd10.prod.outlook.com
- (2603:10b6:806:119::14)
+ d=gmail.com; s=20230601; t=1717416194; x=1718020994; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=IWuLq3TcXaQD7Y2Zf+LHPPBXzys+zKnX+kbt4rkttxg=;
+ b=FlxRpNkci+4mLcoKsFUz8vX+S+ZFhv0oRi+AKu2HE5LiruTijVHAdseeGW1HMRb5gi
+ C7Rjdcg8t9ghyojZpCOY4HEVpzDuukXYaqG6M75NesLf8rMfETcVI8XSHQaPuHss4Xd/
+ w53fZdp8iGHT9y8pMZUvmgm/0yVsdUGDpP6A+AvFlMlNrlFyQ4L6cyXYqszjbidiNSNL
+ WIM9bcQymEg6xsPRWqe4EhrgLYfqKIqdaPkekuqF24U0l3TVKUxPI1N8VP++T4Ldg4Nn
+ MU9g+ASldWdMZzrKvxJgpojMT4VX0m4FXhAKllJe4UtFj1iGHu4ov85KG6nLe3nErtaD
+ /lGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717416194; x=1718020994;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IWuLq3TcXaQD7Y2Zf+LHPPBXzys+zKnX+kbt4rkttxg=;
+ b=i7O6jIyGr4H7utjsuWmmA11nw9DF2AYalgMknFDPSGsoZV8g/r0NQm+eoxOjS9+V4Y
+ 1onNSQwrnN4UkmTBGC8Xhw5o9zBv6cmanuScB0w0+Gy9wbR8XN2ZSq8mlIT2ypzZZo0E
+ 1R/ih5jVHgS8lic8DJUjUSaDFmpgZvwUGdupIUD3gy7/QzxOCJ4SQDccy20ExF1C420e
+ PSVZUS27wHN1A1WFeo7fktsiWXVjyTHQBDYF+irl/iz8qYu3xECNh/YaUTf1tOF9LdiF
+ vzwqv0sH6VLtMtdWdlsHExwY3lpn6Dqh/ZoZ4BQIhTEp34UFBEFVoCe5l4Nd0VlNBRDO
+ 5h1A==
+X-Gm-Message-State: AOJu0YzvArMx2F0TOfDERIIVfPCUEbzxaRpP02dTcudAHZLgJEM5NJEV
+ AN/QGr2Pt5u7jcPiGduHfUaxDbzybBGAd/78vA5wV8Q2cMhsSWz+0vvGnmPizewsIUhuwgnINEH
+ Uhr6MES9aZVfZdVb4C/rRD0EHrDo=
+X-Google-Smtp-Source: AGHT+IHErLzYK+rYSwMqsLGHPdLfxb6Hqh0dobac79yQ6rd7v4pwuw71hza8iUKIwyudeR9OMW6FohLdGhq9ntTfHJA=
+X-Received: by 2002:ac8:7f4a:0:b0:43a:f4cf:566d with SMTP id
+ d75a77b69052e-43ff5238c52mr99096891cf.11.1717416193328; Mon, 03 Jun 2024
+ 05:03:13 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PR10MB4684:EE_|SN7PR10MB6666:EE_
-X-MS-Office365-Filtering-Correlation-Id: 39273b28-5955-4043-3436-08dc83c49600
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|376005|7416005|1800799015|366007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?NEwyb25vSUtNd1Y0RUdJY0dPU090VFNJT1JBeklXQXBBMDI0UVA5K3VIU0tm?=
- =?utf-8?B?dldXdFJyYUJJNlk3aTVjTUFPb1RsQTZMRFh5Z1F6SmlMV21rL0VBUlBDREVV?=
- =?utf-8?B?ZVFvbmZKWTYwNGVJVUVrNEZMZGVqUlQ2QW05d1BNSVYrSUJoaHdvRHZMLzZV?=
- =?utf-8?B?TXJnUGR3OVh5ekI4ZUZPcXd4MlRCc0pvQjA3WUFiUVRBQlI5SytuMFFnNzdo?=
- =?utf-8?B?SGlXUmltKzNzVG8ySHVTWlhWSFA3UnFTZWtJUmZkRUlkODNQWjBTWDhaYXpP?=
- =?utf-8?B?ZlNMOC9PQ3JWY2VHTDljSXZIUTBzTFRsVlo0NmUvUlpZaU5DdGFxdXVwT04x?=
- =?utf-8?B?cktrTVVBanhsdTN0VHA3c2JrK1RCZGRpdllDN1ZQVDdScC9JWkRybWp1OW1M?=
- =?utf-8?B?M0EyMy91OWJXdUpvb2NjT0hSc2RIY3NrcFFoWW9Mb0N5ZVNQNTRWbWcwSjNP?=
- =?utf-8?B?S2E2OVF0NmdNb2s1cTZnSTBSNkZxUmxaUWFZZzRQMDNjRktlTmU0eGZXUEJB?=
- =?utf-8?B?WkRUdWFGZjJrdDJ1ejVOTHdPcDZLU2kyaUhTTXhQVGJtZ3FvRXRzdkhQVkt0?=
- =?utf-8?B?dCtvNWxhQXl3OXEwTUR6YkxDS1R5SnMvaTRNR3dNZW1uV0VGQzg3dUhFazAv?=
- =?utf-8?B?bXhUTExVUjYvRWg1TnkwM3NnTk9GNFFjeTAwVG01MXV5MTFUQmxIRWhpclhH?=
- =?utf-8?B?L29NcHlhT0Y2TGM5RHBuQkZsODErL1JMM3Y1KzB0cVhoUHZldFhEbnA4SmU3?=
- =?utf-8?B?UzlBTFgzc0R6VUpQTGNVZWhGaVhmUU0wL1AzcWRYR0RRdjZmZGtRbzlSb2t6?=
- =?utf-8?B?a3ZSS0RBQ2JqMW0wQlBDVGtDYmp3bmhsTjAwRE9XWTNiaElTcVVIY1JRWWh5?=
- =?utf-8?B?ZGx2SEFib0FSYlV0Snh1NnV5Q0lzRmtqUTlrZGFoa3BFTHROb01iYWo4SEZN?=
- =?utf-8?B?NUxKZW9WOStwSUZJVUdpcGp1bjh3SUFVKzRSWm1QMkFGbGgyK2o2MUc2UC9i?=
- =?utf-8?B?azZEUWtvNFF4MGw0OEdaVFUyR0thM09hTHd4TUF4U1cyd3N2T0N4Q3FVdmRo?=
- =?utf-8?B?TThzSG1sN2lhVUc4dk1ZaDM2U0FEVGJIdjZzZ2UxOUxrS1VuZ2lLanNpN05w?=
- =?utf-8?B?c0VSM0lHbnVoRENyeFpYZUFKVVhBNVhrVDFhdHBKa0tZTkUzdkFnZXo3TGVh?=
- =?utf-8?B?c2pablpvcW5mN0NTVDZad2xLa2l3Nlc1WDczWVZXSVIvSFZvS0pOZXJJNGtB?=
- =?utf-8?B?TFZvRXNPR0ZiWEw0Y0xLVjFFS29oaTZWcktkYXQ5b1JSQ1hjUVFxcVVIL1d3?=
- =?utf-8?B?MUNkdFFnbGpyWjhtejZiRE5RcXUvYlAvSC9NaXRrUHo4d0RIYndCZWx5ZllU?=
- =?utf-8?B?a3NFZGsrSUVCV0ZkTDlrQnRuQS9FT3gvbVQ0TitBcWFQMGZYOGFDdXA3QWox?=
- =?utf-8?B?Tm9jK0MyeEpiZWlRNEJQOWU4OUZ6VWxraEV1QXhrYkdMUy84TXhEYjR4dGFj?=
- =?utf-8?B?OFE3b3MyeHF4dXQxTjdSVEZYbTc4eUxVcmlxOFRKSmE2bFZNTldyRVRrU3dV?=
- =?utf-8?B?RTRUekdEN3llWXV3YUNGUXBQT1N1dGpheGlrRTh3eU9pZ2xyNnlqZHNybmdT?=
- =?utf-8?B?Njl0ODMvTWJNa0YwVXdOQWlsWm4yZllaSjIyVmpraHVscXhVL1MxVTkrSTdI?=
- =?utf-8?B?WVhuK1lTdE5DajYzZVUyTHJwdStTaDlNL1RLK1dxc1hPTjhJS0FYSFhRPT0=?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA2PR10MB4684.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(7416005)(1800799015)(366007); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UHVlV1dxN0R2NzN1ZlAzMDVmUmt1c09xTVpWTlhYOWRINExNNDBrY0M4UkZs?=
- =?utf-8?B?bUgzeDVNdmU1NWd2d0ZTTVZ1ZWNsbHlNRlZNdTBhamk0UTBvd0Yrdkx5djN1?=
- =?utf-8?B?MS9SeFEvUGkrTE95L0hPcnRUbC84amp5YVdOdEk0eHJtbW9ZYko5YmFtT1Nl?=
- =?utf-8?B?NEo5cnpFSlQ1UFNqVkFvMUNkS3B5L05qYmxjQllLWFRzSkJXWSt1TVdzTTdl?=
- =?utf-8?B?T1U4RWZRckVuUXVWbmMzT2Z4d01iQSthL1VodS9GWU5vMklaSTduMVFoNEdp?=
- =?utf-8?B?c1lEVndZdVJKbXBIUmVmL1YxTVM5cjgzQ0xabUliTFY5RzJlQ3FNRmhrYitF?=
- =?utf-8?B?V1FHOFN6TFliZ0dXeFRhb3JNeEM2dnZLZ0JVelpmUlVQNDJHZUI0dmY3ejlQ?=
- =?utf-8?B?THZkWTUvVmxJZm1VYm1ES1d2MC83N1MwNWVFL0o0YnNjMHorNDZiRE1uWnMz?=
- =?utf-8?B?d243VlJMYVFVbDM4dHlCQnV4ZEZKVjJiM3FRVjdEWWhRNS9IK043WWFndHdp?=
- =?utf-8?B?WTJUL1hYMCtISW5zNmFJYVdPMUYwQzFCMXphQjJ3NTVRWVBKcHZwbXp0NVBa?=
- =?utf-8?B?U2dTOXZvblBiQ09PKytYL0JVdE80bEVGTncwRXMrUFByd2RDMzlob3p0UDA4?=
- =?utf-8?B?d2FzQ3lyYjJHNWcvQVVhZ0NKbXBaUjlNWUlPNmNGWmptRTNuNk5TbXlYeGpM?=
- =?utf-8?B?dVRqc0hFMVJ1cnBzTmpRWStjcm96akRXOENwakRmRzhiak4rb0U1Ym45MWpt?=
- =?utf-8?B?SnpIRXkvc2pTUUx6REVyeWJLODhvcEd6Y1ZTMDNWRnZLUDRNNElSQjl2QlJI?=
- =?utf-8?B?VEl0ejhsU2lXcWN0cE0yaHlXaFdqTHk4U0VKVVJoQzJwLzBPbjlYVnhxZmNr?=
- =?utf-8?B?V0FWUUZaQytFQUlxeG9va3NYZHZYRGM5d2NQQmNJZ0x1dS9QS3BKT3RueGR0?=
- =?utf-8?B?dG1yajdodTZKN1VrZEtlQktqTGpmSXBGM0djSkhFbzVTVVlJU3IwcE5hY00y?=
- =?utf-8?B?N2UxZ0ZESy8rVDRJYzZ0b0NITFYxbnIySkxRb1Fya0dqLzdjZ1Z5SGlYaGdi?=
- =?utf-8?B?MnYwam80ZExsTnhUbWhhZXZuOWNFSlh6OTZvWTVpSk5RY3gza2RiNmRIb3Na?=
- =?utf-8?B?VjFTZmVkdEZuNlRKNnY4TFZXd2YraEJRSWhPM2hVTTNlL29acGVCVXZTNTdq?=
- =?utf-8?B?Y0UwZ0hsS2ZJNWI1clFjQjJFLzA4MzhjWEhMTkF2WkpzcDNTZHdvWGNJOUUr?=
- =?utf-8?B?VUUwOS9scUlQczcwakRyMks5RHV1Q200K0k2QzExR0VMQUFvZGM1N3hlcXB4?=
- =?utf-8?B?TERVTXowTWR5d0hpbWVXelo4V29qRG54RnZNQVRHbnd5UFhOTUYrWllXWDM3?=
- =?utf-8?B?QnlKczB5YlVoK3VNVHJUQUw2dU53VFNtSWVoc3lDU2g3VlNCc1Z1OFZjNWxy?=
- =?utf-8?B?Rkk2aTRhNGprVkhWa2cwUDdBNDlZQnJjbjlONm9uWkJrRk4zTUQxZXBMK3do?=
- =?utf-8?B?cDRMZ3lid0Nvd2JIeHc2ZzhlVXpMdjFBMk1oVEgvV29FTXU4R0dPNHVEcFJI?=
- =?utf-8?B?RXdkd1l0OEcvS1pvYThDNlEwR2xobnpnWTlSS2xuN0RlTkhHRStaVEJVVjlF?=
- =?utf-8?B?K3V1cWs2bVlmMUV4T1h3MWVvNmZOM3lxZWlMa0F2TUYrR2VyY1huRXNaU2c4?=
- =?utf-8?B?dk9iZkdrUTVtblNFZmxzWTNOcWpxaHhkbkR1MXV2U2dCYVl6bWpZRDg1YkhQ?=
- =?utf-8?B?TVZHWmtsV0dhdTc5eStkNDBHb1pzTEtFbFQxM0lIa0RHbzJPNzA3dFNPTkY1?=
- =?utf-8?B?MFgvZjBoYk04M3hTcFMxTGowdFZKK0Q0aVczVVp6L1NzbVlnbHd2OTJxRVN0?=
- =?utf-8?B?YmZwN2pnY2dZRDU0MWhTcVVrWGsvSzdGQ0RMVU1WL3c2UURBenVpUEdObk93?=
- =?utf-8?B?b0hzWjE2WWtRYzBWbm96TjYxazN0dDF3MHQ3eXFDQ2xJV2UzcnRLVVhYdFR6?=
- =?utf-8?B?OW5KWDFITlNMNjExckFOVUx1ckI5OXBmYk5HOEdXV3IzTi9LUU9qWTQxVm1I?=
- =?utf-8?B?Nmc0SWNSWnEraFI3djZYMEx6aDV0Z3kxTTB6VFRIZ0tqdmRsbDdtQytacWVi?=
- =?utf-8?B?aEpLeEU4bFE2NmNqeGhvVXZjOHU1aFRpNnBoNWtCNWpDaGhRU1hsaXNDR2J5?=
- =?utf-8?B?NVE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: KqZVSUH5kjrCK19tW5W38/sFhIrVEJzKEsqE2UXBncdg3AUyouHvSoGKEIGAaEPDPRW/VT62EB3zi608tTVjiAIZhcp3B0025i1HvczI728oU0C+sf08BgmPTWyC9qvNG2RhJVkoa49uSODxddr2GKtkrCNHMhnFLWoZLh/E6DNP34Owg2A6uksmyJA9+JYMqxblvKAsj03HLCovf9SWJcQR4jzTrbRN7JGPd46zjSI5LMGdN6sobKkLM0H5SPaIgPIOgiEzB9Li99VF+Pk/3AI1T0dmSpjniCWI3LLDpzr5+h5Yj4awWjuIn52/V3sAYR50sQfL5iCjKlW8KbukZYzhf+wDaZaADzmg5bF0yHMscZqfWDEx8r2oAsAnJ9LPj377c08Uy0M4CSeZn/8+uk29R5QQtsfUFnMI7hLOuwXLOxQVpkvoIyhlb9BGlDohOI4+ZOyaciJq4uKSSr2blgf4wod/qg5xCrU8e/nds04mOtG/ra10JnSh02SEeKm9K3bNDn73e+LVqDY9LqZi2SUydWe+mqC0dSx4QRLXsFIKuL3kfC2NE2ProJoezmdhzU7g0UN3myuHOyLyytXqRQbiceN+aQOuHbN/+DhGfdY=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 39273b28-5955-4043-3436-08dc83c49600
-X-MS-Exchange-CrossTenant-AuthSource: SA2PR10MB4684.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2024 11:59:13.4277 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TtKDyjLftfo9+H8/PdTKKh+QZ1su49jdquSquy57VO/JzlM1Am1K+5BDKRoWzkiR7JzZ+O4VrQ+uFk3C3uIh6xUXpgV+wPnD1B4/ho7ACJo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR10MB6666
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-06-03_08,2024-05-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- mlxscore=0 malwarescore=0
- suspectscore=0 spamscore=0 mlxlogscore=999 adultscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2405010000
- definitions=main-2406030100
-X-Proofpoint-ORIG-GUID: 3tn0Iyk2XoWkK2tlR-nPPV4nXgGLaxAJ
-X-Proofpoint-GUID: 3tn0Iyk2XoWkK2tlR-nPPV4nXgGLaxAJ
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240531175153.2716309-1-tavip@google.com>
+In-Reply-To: <20240531175153.2716309-1-tavip@google.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 3 Jun 2024 16:03:01 +0400
+Message-ID: <CAJ+F1C+bBypgH4+HTbXNHRijNV-eYacs83-W0GbW_D7L_BKHyg@mail.gmail.com>
+Subject: Re: [PATCH] chardev: add path option for pty backend
+To: Octavian Purdila <tavip@google.com>
+Cc: qemu-devel@nongnu.org, eblake@redhat.com, armbru@redhat.com, 
+ Paulo Neves <ptsneves@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000228d3b0619fb1ec5"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x834.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -216,119 +85,497 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Steven Sistare <steven.sistare@oracle.com>
-From:  Steven Sistare via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/2024 6:17 AM, Daniel P. Berrangé wrote:
-> On Wed, May 29, 2024 at 01:31:38PM -0400, Steven Sistare wrote:
->> On 5/28/2024 5:12 PM, Peter Xu wrote:
->>> On Mon, Apr 29, 2024 at 08:55:26AM -0700, Steve Sistare wrote:
->>>> Allocate anonymous memory using memfd_create if the memfd-alloc machine
->>>> option is set.
->>>>
->>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>>> ---
->>>>    hw/core/machine.c   | 22 ++++++++++++++++++++++
->>>>    include/hw/boards.h |  1 +
->>>>    qemu-options.hx     |  6 ++++++
->>>>    system/memory.c     |  9 ++++++---
->>>>    system/physmem.c    | 18 +++++++++++++++++-
->>>>    system/trace-events |  1 +
->>>>    6 files changed, 53 insertions(+), 4 deletions(-)
-> 
->>>> diff --git a/qemu-options.hx b/qemu-options.hx
->>>> index cf61f6b..f0dfda5 100644
->>>> --- a/qemu-options.hx
->>>> +++ b/qemu-options.hx
->>>> @@ -32,6 +32,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->>>>        "                vmport=on|off|auto controls emulation of vmport (default: auto)\n"
->>>>        "                dump-guest-core=on|off include guest memory in a core dump (default=on)\n"
->>>>        "                mem-merge=on|off controls memory merge support (default: on)\n"
->>>> +    "                memfd-alloc=on|off controls allocating anonymous guest RAM using memfd_create (default: off)\n"
->>>>        "                aes-key-wrap=on|off controls support for AES key wrapping (default=on)\n"
->>>>        "                dea-key-wrap=on|off controls support for DEA key wrapping (default=on)\n"
->>>>        "                suppress-vmdesc=on|off disables self-describing migration (default=off)\n"
->>>> @@ -79,6 +80,11 @@ SRST
->>>>            supported by the host, de-duplicates identical memory pages
->>>>            among VMs instances (enabled by default).
->>>> +    ``memfd-alloc=on|off``
->>>> +        Enables or disables allocation of anonymous guest RAM using
->>>> +        memfd_create.  Any associated memory-backend objects are created with
->>>> +        share=on.  The memfd-alloc default is off.
->>>> +
->>>>        ``aes-key-wrap=on|off``
->>>>            Enables or disables AES key wrapping support on s390-ccw hosts.
->>>>            This feature controls whether AES wrapping keys will be created
->>>> diff --git a/system/memory.c b/system/memory.c
->>>> index 49f1cb2..ca04a0e 100644
->>>> --- a/system/memory.c
->>>> +++ b/system/memory.c
->>>> @@ -1552,8 +1552,9 @@ bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
->>>>                                          uint64_t size,
->>>>                                          Error **errp)
->>>>    {
->>>> +    uint32_t flags = current_machine->memfd_alloc ? RAM_SHARED : 0;
->>>
->>> If there's a machine option to "use memfd for allocations", then it's
->>> shared mem... Hmm..
->>>
->>> It is a bit confusing to me in quite a few levels:
->>>
->>>     - Why memory allocation method will be defined by a machine property,
->>>       even if we have memory-backend-* which should cover everything?
->>
->> Some memory regions are implicitly created, and have no explicit representation
->> on the qemu command line.  memfd-alloc affects those.
->>
->> More generally, memfd-alloc affects all ramblock allocations that are
->> not explicitly represented by memory-backend object.  Thus the simple
->> command line "qemu -m 1G" does not explicitly describe an object, so it
->> goes through the anonymous allocation path, and is affected by memfd-alloc.
->>
->> Internally, create_default_memdev does create a memory-backend object.
->> That is what my doc comment above refers to:
->>    Any associated memory-backend objects are created with share=on
->>
->> An explicit "qemu -object memory-backend-*" is not affected by memfd-alloc.
->>
->> The qapi comments in patch "migration: cpr-exec mode" attempt to say all that:
->>
->> +#     Memory backend objects must have the share=on attribute, and
->> +#     must be mmap'able in the new QEMU process.  For example,
->> +#     memory-backend-file is acceptable, but memory-backend-ram is
->> +#     not.
->> +#
->> +#     The VM must be started with the '-machine memfd-alloc=on'
->> +#     option.  This causes implicit ram blocks -- those not explicitly
->> +#     described by a memory-backend object -- to be allocated by
->> +#     mmap'ing a memfd.  Examples include VGA, ROM, and even guest
->> +#     RAM when it is specified without a memory-backend object.
->>
->>>     - Even if we have such a machine property, why setting "memfd" will
->>>       always imply shared?  why not private?  After all it's not called
->>>       "memfd-shared-alloc", and we can create private mappings using
->>>       e.g. memory-backend-memfd,share=off.
->>
->> There is no use case for memfd-alloc with share=off, so no point IMO in
->> making the option more verbose.  For cpr, the mapping with all its modifications
->> must be visible to new qemu when qemu mmaps it.
-> 
-> 
-> So IIUC, cpr doesn't care about the use of 'memfd' as the specific impl,
-> it only cares that the memory is share=on.
-> 
-> Rather than having a machine type option "memfd-alloc" which is named after
-> a Linux specific impl detail, how about having a machine type option
-> "mem-share=on", which just happens to trigger use of memfd internally on
-> Linux ? That gives us freedom to use non-memfd options if appropriate in
-> the future.
+--000000000000228d3b0619fb1ec5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-That would be fine.  Internally we still need a mechanism to preserve the
-memory and name it so qemu can mmap it post-exec, but in theory we could
-invent some other mechanism to do so, such as creating /dev/shm files with
-canonical names.
+Hi
 
-- Steve
+On Sat, Jun 1, 2024 at 1:21=E2=80=AFAM Octavian Purdila <tavip@google.com> =
+wrote:
+
+> Add path option to the pty char backend which will create a symbolic
+> link to the given path that points to the allocated PTY.
+>
+> Based on patch from Paulo Neves:
+>
+>
+> https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsneves@gmail=
+.com/
+>
+> Tested with the following invocations that the link is created and
+> removed when qemu stops:
+>
+>   qemu-system-x86_64 -nodefaults -mon chardev=3Dcompat_monitor \
+>   -chardev pty,path=3Dtest,id=3Dcompat_monitor0
+>
+>   qemu-system-x86_64 -nodefaults -monitor pty:test
+>
+> Also tested that when a link path is not passed invocations still work,
+> e.g.:
+>
+>   qemu-system-x86_64 -monitor pty
+>
+> Co-authored-by: Paulo Neves <ptsneves@gmail.com>
+> Signed-off-by: Octavian Purdila <tavip@google.com>
+> ---
+>  chardev/char-pty.c | 34 ++++++++++++++++++++++++++++++++++
+>  chardev/char.c     |  5 +++++
+>  qapi/char.json     |  4 ++--
+>  qemu-options.hx    | 14 ++++++++++----
+>  4 files changed, 51 insertions(+), 6 deletions(-)
+>
+> diff --git a/chardev/char-pty.c b/chardev/char-pty.c
+> index cc2f7617fe..7cd5d34851 100644
+> --- a/chardev/char-pty.c
+> +++ b/chardev/char-pty.c
+> @@ -29,6 +29,7 @@
+>  #include "qemu/sockets.h"
+>  #include "qemu/error-report.h"
+>  #include "qemu/module.h"
+> +#include "qemu/option.h"
+>  #include "qemu/qemu-print.h"
+>
+>  #include "chardev/char-io.h"
+> @@ -41,6 +42,7 @@ struct PtyChardev {
+>
+>      int connected;
+>      GSource *timer_src;
+> +    char *symlink_path;
+>  };
+>  typedef struct PtyChardev PtyChardev;
+>
+> @@ -204,6 +206,12 @@ static void char_pty_finalize(Object *obj)
+>      Chardev *chr =3D CHARDEV(obj);
+>      PtyChardev *s =3D PTY_CHARDEV(obj);
+>
+> +    /* unlink symlink */
+> +    if (s->symlink_path) {
+> +        unlink(s->symlink_path);
+> +        g_free(s->symlink_path);
+> +    }
+> +
+>      pty_chr_state(chr, 0);
+>      object_unref(OBJECT(s->ioc));
+>      pty_chr_timer_cancel(s);
+> @@ -330,6 +338,7 @@ static void char_pty_open(Chardev *chr,
+>      int master_fd, slave_fd;
+>      char pty_name[PATH_MAX];
+>      char *name;
+> +    char *symlink_path =3D backend->u.pty.data->device;
+>
+>      master_fd =3D qemu_openpty_raw(&slave_fd, pty_name);
+>      if (master_fd < 0) {
+> @@ -354,12 +363,37 @@ static void char_pty_open(Chardev *chr,
+>      g_free(name);
+>      s->timer_src =3D NULL;
+>      *be_opened =3D false;
+> +
+> +    /* create symbolic link */
+> +    if (symlink_path) {
+> +        int res =3D symlink(pty_name, symlink_path);
+> +
+> +        if (res !=3D 0) {
+> +            error_setg_errno(errp, errno, "Failed to create PTY symlink"=
+);
+> +            close(master_fd);
+>
+
+The fd is owned by s->ioc at this point: this will end up in double-close
+in finalize.
+
+
+> +        } else {
+> +            s->symlink_path =3D g_strdup(symlink_path);
+> +        }
+> +    }
+> +}
+> +
+> +static void char_pty_parse(QemuOpts *opts, ChardevBackend *backend,
+> +                           Error **errp)
+> +{
+> +    const char *path =3D qemu_opt_get(opts, "path");
+> +    ChardevHostdev *dev;
+> +
+> +    backend->type =3D CHARDEV_BACKEND_KIND_PTY;
+> +    dev =3D backend->u.pty.data =3D g_new0(ChardevHostdev, 1);
+> +    qemu_chr_parse_common(opts, qapi_ChardevHostdev_base(dev));
+> +    dev->device =3D path ? g_strdup(path) : NULL;
+>  }
+>
+>  static void char_pty_class_init(ObjectClass *oc, void *data)
+>  {
+>      ChardevClass *cc =3D CHARDEV_CLASS(oc);
+>
+> +    cc->parse =3D char_pty_parse;
+>      cc->open =3D char_pty_open;
+>      cc->chr_write =3D char_pty_chr_write;
+>      cc->chr_update_read_handler =3D pty_chr_update_read_handler;
+> diff --git a/chardev/char.c b/chardev/char.c
+> index 3c43fb1278..404c6b8a4f 100644
+> --- a/chardev/char.c
+> +++ b/chardev/char.c
+> @@ -428,6 +428,11 @@ QemuOpts *qemu_chr_parse_compat(const char *label,
+> const char *filename,
+>          qemu_opt_set(opts, "path", p, &error_abort);
+>          return opts;
+>      }
+> +    if (strstart(filename, "pty:", &p)) {
+> +        qemu_opt_set(opts, "backend", "pty", &error_abort);
+> +        qemu_opt_set(opts, "path", p, &error_abort);
+> +        return opts;
+> +    }
+>
+
+I am not sure we want to expand compat parsing here, but probably ok.
+
+
+>      if (strstart(filename, "tcp:", &p) ||
+>          strstart(filename, "telnet:", &p) ||
+>          strstart(filename, "tn3270:", &p) ||
+> diff --git a/qapi/char.json b/qapi/char.json
+> index 777dde55d9..4c74bfc437 100644
+> --- a/qapi/char.json
+> +++ b/qapi/char.json
+> @@ -509,7 +509,7 @@
+>  ##
+>  # @ChardevHostdevWrapper:
+>  #
+> -# @data: Configuration info for device and pipe chardevs
+> +# @data: Configuration info for device, pty and pipe chardevs
+>  #
+>  # Since: 1.4
+>  ##
+> @@ -650,7 +650,7 @@
+>              'pipe': 'ChardevHostdevWrapper',
+>              'socket': 'ChardevSocketWrapper',
+>              'udp': 'ChardevUdpWrapper',
+> -            'pty': 'ChardevCommonWrapper',
+> +            'pty': 'ChardevHostdevWrapper',
+>              'null': 'ChardevCommonWrapper',
+>              'mux': 'ChardevMuxWrapper',
+>              'msmouse': 'ChardevCommonWrapper',
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index 8ca7f34ef0..5eec194242 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -3569,7 +3569,7 @@ DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
+>      "-chardev
+> console,id=3Did[,mux=3Don|off][,logfile=3DPATH][,logappend=3Don|off]\n"
+>      "-chardev
+> serial,id=3Did,path=3Dpath[,mux=3Don|off][,logfile=3DPATH][,logappend=3Do=
+n|off]\n"
+>  #else
+> -    "-chardev pty,id=3Did[,mux=3Don|off][,logfile=3DPATH][,logappend=3Do=
+n|off]\n"
+> +    "-chardev
+> pty,id=3Did[,path=3Dpath][,mux=3Don|off][,logfile=3DPATH][,logappend=3Don=
+|off]\n"
+>      "-chardev
+> stdio,id=3Did[,mux=3Don|off][,signal=3Don|off][,logfile=3DPATH][,logappen=
+d=3Don|off]\n"
+>  #endif
+>  #ifdef CONFIG_BRLAPI
+> @@ -3808,12 +3808,16 @@ The available backends are:
+>
+>      ``path`` specifies the name of the serial device to open.
+>
+> -``-chardev pty,id=3Did``
+> +``-chardev pty,id=3Did[,path=3Dpath]``
+>      Create a new pseudo-terminal on the host and connect to it. ``pty``
+>      does not take any options.
+>
+>      ``pty`` is not available on Windows hosts.
+>
+> +    ``path`` specifies the symbolic link path to be created that
+> +    points to the pty device.
+> +
+> +
+>  ``-chardev stdio,id=3Did[,signal=3Don|off]``
+>      Connect to standard input and standard output of the QEMU process.
+>
+> @@ -4171,8 +4175,10 @@ SRST
+>
+>              vc:80Cx24C
+>
+> -    ``pty``
+> -        [Linux only] Pseudo TTY (a new PTY is automatically allocated)
+> +    ``pty[:path]``
+> +        [Linux only] Pseudo TTY (a new PTY is automatically allocated).
+> +        Optionally a path can be given to create a symbolic link to
+> +        the allocated PTY.
+>
+>      ``none``
+>          No device is allocated. Note that for machine types which
+> --
+> 2.45.1.288.g0e0cd299f1-goog
+>
+>
+>
+thanks
+
+--=20
+Marc-Andr=C3=A9 Lureau
+
+--000000000000228d3b0619fb1ec5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_=
+quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Jun 1, 2024 at 1:21=E2=
+=80=AFAM Octavian Purdila &lt;<a href=3D"mailto:tavip@google.com">tavip@goo=
+gle.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
+margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
+t:1ex">Add path option to the pty char backend which will create a symbolic=
+<br>
+link to the given path that points to the allocated PTY.<br>
+<br>
+Based on patch from Paulo Neves:<br>
+<br>
+<a href=3D"https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsne=
+ves@gmail.com/" rel=3D"noreferrer" target=3D"_blank">https://patchew.org/QE=
+MU/1548509635-15776-1-git-send-email-ptsneves@gmail.com/</a><br>
+<br>
+Tested with the following invocations that the link is created and<br>
+removed when qemu stops:<br>
+<br>
+=C2=A0 qemu-system-x86_64 -nodefaults -mon chardev=3Dcompat_monitor \<br>
+=C2=A0 -chardev pty,path=3Dtest,id=3Dcompat_monitor0<br>
+<br>
+=C2=A0 qemu-system-x86_64 -nodefaults -monitor pty:test<br>
+<br>
+Also tested that when a link path is not passed invocations still work, e.g=
+.:<br>
+<br>
+=C2=A0 qemu-system-x86_64 -monitor pty<br>
+<br>
+Co-authored-by: Paulo Neves &lt;<a href=3D"mailto:ptsneves@gmail.com" targe=
+t=3D"_blank">ptsneves@gmail.com</a>&gt;<br>
+Signed-off-by: Octavian Purdila &lt;<a href=3D"mailto:tavip@google.com" tar=
+get=3D"_blank">tavip@google.com</a>&gt;<br>
+---<br>
+=C2=A0chardev/char-pty.c | 34 ++++++++++++++++++++++++++++++++++<br>
+=C2=A0chardev/char.c=C2=A0 =C2=A0 =C2=A0|=C2=A0 5 +++++<br>
+=C2=A0qapi/char.json=C2=A0 =C2=A0 =C2=A0|=C2=A0 4 ++--<br>
+=C2=A0qemu-options.hx=C2=A0 =C2=A0 | 14 ++++++++++----<br>
+=C2=A04 files changed, 51 insertions(+), 6 deletions(-)<br>
+<br>
+diff --git a/chardev/char-pty.c b/chardev/char-pty.c<br>
+index cc2f7617fe..7cd5d34851 100644<br>
+--- a/chardev/char-pty.c<br>
++++ b/chardev/char-pty.c<br>
+@@ -29,6 +29,7 @@<br>
+=C2=A0#include &quot;qemu/sockets.h&quot;<br>
+=C2=A0#include &quot;qemu/error-report.h&quot;<br>
+=C2=A0#include &quot;qemu/module.h&quot;<br>
++#include &quot;qemu/option.h&quot;<br>
+=C2=A0#include &quot;qemu/qemu-print.h&quot;<br>
+<br>
+=C2=A0#include &quot;chardev/char-io.h&quot;<br>
+@@ -41,6 +42,7 @@ struct PtyChardev {<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0int connected;<br>
+=C2=A0 =C2=A0 =C2=A0GSource *timer_src;<br>
++=C2=A0 =C2=A0 char *symlink_path;<br>
+=C2=A0};<br>
+=C2=A0typedef struct PtyChardev PtyChardev;<br>
+<br>
+@@ -204,6 +206,12 @@ static void char_pty_finalize(Object *obj)<br>
+=C2=A0 =C2=A0 =C2=A0Chardev *chr =3D CHARDEV(obj);<br>
+=C2=A0 =C2=A0 =C2=A0PtyChardev *s =3D PTY_CHARDEV(obj);<br>
+<br>
++=C2=A0 =C2=A0 /* unlink symlink */<br>
++=C2=A0 =C2=A0 if (s-&gt;symlink_path) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 unlink(s-&gt;symlink_path);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(s-&gt;symlink_path);<br>
++=C2=A0 =C2=A0 }<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0pty_chr_state(chr, 0);<br>
+=C2=A0 =C2=A0 =C2=A0object_unref(OBJECT(s-&gt;ioc));<br>
+=C2=A0 =C2=A0 =C2=A0pty_chr_timer_cancel(s);<br>
+@@ -330,6 +338,7 @@ static void char_pty_open(Chardev *chr,<br>
+=C2=A0 =C2=A0 =C2=A0int master_fd, slave_fd;<br>
+=C2=A0 =C2=A0 =C2=A0char pty_name[PATH_MAX];<br>
+=C2=A0 =C2=A0 =C2=A0char *name;<br>
++=C2=A0 =C2=A0 char *symlink_path =3D backend-&gt;u.pty.data-&gt;device;<br=
+>
+<br>
+=C2=A0 =C2=A0 =C2=A0master_fd =3D qemu_openpty_raw(&amp;slave_fd, pty_name)=
+;<br>
+=C2=A0 =C2=A0 =C2=A0if (master_fd &lt; 0) {<br>
+@@ -354,12 +363,37 @@ static void char_pty_open(Chardev *chr,<br>
+=C2=A0 =C2=A0 =C2=A0g_free(name);<br>
+=C2=A0 =C2=A0 =C2=A0s-&gt;timer_src =3D NULL;<br>
+=C2=A0 =C2=A0 =C2=A0*be_opened =3D false;<br>
++<br>
++=C2=A0 =C2=A0 /* create symbolic link */<br>
++=C2=A0 =C2=A0 if (symlink_path) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 int res =3D symlink(pty_name, symlink_path);<b=
+r>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (res !=3D 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, errno, &q=
+uot;Failed to create PTY symlink&quot;);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 close(master_fd);<br></blockquot=
+e><div><br></div><div>The fd is owned by s-&gt;ioc at this point: this will=
+ end up in double-close in finalize.<br></div><div>=C2=A0<br></div><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
+ solid rgb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;symlink_path =3D g_strdup(=
+symlink_path);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++static void char_pty_parse(QemuOpts *opts, ChardevBackend *backend,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0Error **errp)<br>
++{<br>
++=C2=A0 =C2=A0 const char *path =3D qemu_opt_get(opts, &quot;path&quot;);<b=
+r>
++=C2=A0 =C2=A0 ChardevHostdev *dev;<br>
++<br>
++=C2=A0 =C2=A0 backend-&gt;type =3D CHARDEV_BACKEND_KIND_PTY;<br>
++=C2=A0 =C2=A0 dev =3D backend-&gt;u.pty.data =3D g_new0(ChardevHostdev, 1)=
+;<br>
++=C2=A0 =C2=A0 qemu_chr_parse_common(opts, qapi_ChardevHostdev_base(dev));<=
+br>
++=C2=A0 =C2=A0 dev-&gt;device =3D path ? g_strdup(path) : NULL;<br>
+=C2=A0}<br>
+<br>
+=C2=A0static void char_pty_class_init(ObjectClass *oc, void *data)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0ChardevClass *cc =3D CHARDEV_CLASS(oc);<br>
+<br>
++=C2=A0 =C2=A0 cc-&gt;parse =3D char_pty_parse;<br>
+=C2=A0 =C2=A0 =C2=A0cc-&gt;open =3D char_pty_open;<br>
+=C2=A0 =C2=A0 =C2=A0cc-&gt;chr_write =3D char_pty_chr_write;<br>
+=C2=A0 =C2=A0 =C2=A0cc-&gt;chr_update_read_handler =3D pty_chr_update_read_=
+handler;<br>
+diff --git a/chardev/char.c b/chardev/char.c<br>
+index 3c43fb1278..404c6b8a4f 100644<br>
+--- a/chardev/char.c<br>
++++ b/chardev/char.c<br>
+@@ -428,6 +428,11 @@ QemuOpts *qemu_chr_parse_compat(const char *label, con=
+st char *filename,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_opt_set(opts, &quot;path&quot;, p, &=
+amp;error_abort);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return opts;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
++=C2=A0 =C2=A0 if (strstart(filename, &quot;pty:&quot;, &amp;p)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_opt_set(opts, &quot;backend&quot;, &quot;=
+pty&quot;, &amp;error_abort);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_opt_set(opts, &quot;path&quot;, p, &amp;e=
+rror_abort);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return opts;<br>
++=C2=A0 =C2=A0 }<br></blockquote><div><br></div><div>I am not sure we want =
+to expand compat parsing here, but probably ok.</div><div>=C2=A0<br></div><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">
+=C2=A0 =C2=A0 =C2=A0if (strstart(filename, &quot;tcp:&quot;, &amp;p) ||<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0strstart(filename, &quot;telnet:&quot;, &=
+amp;p) ||<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0strstart(filename, &quot;tn3270:&quot;, &=
+amp;p) ||<br>
+diff --git a/qapi/char.json b/qapi/char.json<br>
+index 777dde55d9..4c74bfc437 100644<br>
+--- a/qapi/char.json<br>
++++ b/qapi/char.json<br>
+@@ -509,7 +509,7 @@<br>
+=C2=A0##<br>
+=C2=A0# @ChardevHostdevWrapper:<br>
+=C2=A0#<br>
+-# @data: Configuration info for device and pipe chardevs<br>
++# @data: Configuration info for device, pty and pipe chardevs<br>
+=C2=A0#<br>
+=C2=A0# Since: 1.4<br>
+=C2=A0##<br>
+@@ -650,7 +650,7 @@<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;pipe&#39;: &#39;Charde=
+vHostdevWrapper&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;socket&#39;: &#39;Char=
+devSocketWrapper&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;udp&#39;: &#39;Chardev=
+UdpWrapper&#39;,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;pty&#39;: &#39;ChardevCommo=
+nWrapper&#39;,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;pty&#39;: &#39;ChardevHostd=
+evWrapper&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;null&#39;: &#39;Charde=
+vCommonWrapper&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;mux&#39;: &#39;Chardev=
+MuxWrapper&#39;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&#39;msmouse&#39;: &#39;Cha=
+rdevCommonWrapper&#39;,<br>
+diff --git a/qemu-options.hx b/qemu-options.hx<br>
+index 8ca7f34ef0..5eec194242 100644<br>
+--- a/qemu-options.hx<br>
++++ b/qemu-options.hx<br>
+@@ -3569,7 +3569,7 @@ DEF(&quot;chardev&quot;, HAS_ARG, QEMU_OPTION_chardev=
+,<br>
+=C2=A0 =C2=A0 =C2=A0&quot;-chardev console,id=3Did[,mux=3Don|off][,logfile=
+=3DPATH][,logappend=3Don|off]\n&quot;<br>
+=C2=A0 =C2=A0 =C2=A0&quot;-chardev serial,id=3Did,path=3Dpath[,mux=3Don|off=
+][,logfile=3DPATH][,logappend=3Don|off]\n&quot;<br>
+=C2=A0#else<br>
+-=C2=A0 =C2=A0 &quot;-chardev pty,id=3Did[,mux=3Don|off][,logfile=3DPATH][,=
+logappend=3Don|off]\n&quot;<br>
++=C2=A0 =C2=A0 &quot;-chardev pty,id=3Did[,path=3Dpath][,mux=3Don|off][,log=
+file=3DPATH][,logappend=3Don|off]\n&quot;<br>
+=C2=A0 =C2=A0 =C2=A0&quot;-chardev stdio,id=3Did[,mux=3Don|off][,signal=3Do=
+n|off][,logfile=3DPATH][,logappend=3Don|off]\n&quot;<br>
+=C2=A0#endif<br>
+=C2=A0#ifdef CONFIG_BRLAPI<br>
+@@ -3808,12 +3808,16 @@ The available backends are:<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0``path`` specifies the name of the serial device to ope=
+n.<br>
+<br>
+-``-chardev pty,id=3Did``<br>
++``-chardev pty,id=3Did[,path=3Dpath]``<br>
+=C2=A0 =C2=A0 =C2=A0Create a new pseudo-terminal on the host and connect to=
+ it. ``pty``<br>
+=C2=A0 =C2=A0 =C2=A0does not take any options.<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0``pty`` is not available on Windows hosts.<br>
+<br>
++=C2=A0 =C2=A0 ``path`` specifies the symbolic link path to be created that=
+<br>
++=C2=A0 =C2=A0 points to the pty device.<br>
++<br>
++<br>
+=C2=A0``-chardev stdio,id=3Did[,signal=3Don|off]``<br>
+=C2=A0 =C2=A0 =C2=A0Connect to standard input and standard output of the QE=
+MU process.<br>
+<br>
+@@ -4171,8 +4175,10 @@ SRST<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0vc:80Cx24C<br>
+<br>
+-=C2=A0 =C2=A0 ``pty``<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 [Linux only] Pseudo TTY (a new PTY is automati=
+cally allocated)<br>
++=C2=A0 =C2=A0 ``pty[:path]``<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 [Linux only] Pseudo TTY (a new PTY is automati=
+cally allocated).<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 Optionally a path can be given to create a sym=
+bolic link to<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 the allocated PTY.<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0``none``<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0No device is allocated. Note that for mac=
+hine types which<br>
+-- <br>
+2.45.1.288.g0e0cd299f1-goog<br>
+<br>
+<br>
+</blockquote></div><br clear=3D"all"></div><div>thanks</div><div><br></div>=
+<div><span class=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" =
+class=3D"gmail_signature">Marc-Andr=C3=A9 Lureau<br></div></div></div>
+
+--000000000000228d3b0619fb1ec5--
 
