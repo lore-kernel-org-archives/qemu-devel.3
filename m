@@ -4,81 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04246C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 08:39:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E9A2C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 08:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE3CL-0007Jq-Mm; Mon, 03 Jun 2024 04:37:45 -0400
+	id 1sE3Iy-0003Fr-Sw; Mon, 03 Jun 2024 04:44:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sE3CK-0007JW-MQ; Mon, 03 Jun 2024 04:37:44 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sE3CI-0001FC-Qu; Mon, 03 Jun 2024 04:37:44 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-702548b056aso1453727b3a.1; 
- Mon, 03 Jun 2024 01:37:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717403859; x=1718008659; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZI3aQe+3NCl7TYdk0QhMrQ77IoRzmkb0sJWAqE2N5M8=;
- b=aCCl8SZGq3PjmF2GaUk2aFuyLqZ4XAnusQUT/s/VwuzVjsjP78kdxc3nG5MIto5Sj5
- CJaKpUm4Ktxo6DA92/jYBrZkkxegbbcRp7+6IHfCCBwZrZTbQfF1FBc1ULvzPxLuJ2rt
- z/8gYuLpj7iQsTJ/1EYYP6LVZ6tMcOhlG70Np7SWTJqi1zZjY6d7ABJ+eg2ID6pEwu9K
- qR8jAVvi6qLl2xcWZNCCq//aqpjYRrmXT/NU+o5NOTBZfk7Tsw1RO+sADFdImoHyoLNH
- z6PzNIfxzzbwxTnUWgFxVw+qvSAYKNJnQDku/1P8MyMDo2S9b+NyUEt20X4o6ho8Bh5S
- jfzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717403859; x=1718008659;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZI3aQe+3NCl7TYdk0QhMrQ77IoRzmkb0sJWAqE2N5M8=;
- b=CdPCd0wAjwdhviIGhN0Ma/n7lZDJBED7eRJPqcGLupCjNVT8xFZkQ1bNZch3pEThtG
- kxPffnQhxgN5emeyNwtGTvbgpvhhDo3XSTJv1MzA0JonPysfEBZbGnOzZDu6VUjJA2KZ
- tNky449ZW9tfaASjZ0j60Y55j7w7LRmpQMR0kUfeOyGSl7RSChAOFAI2wOijM0RlNazo
- ETdEAhGc4ahzRDO4JoXKdsAkFHYTiD6iE/3yDW1eN5Nq5FaYfgC9jIMBVW7fXxlVc7Um
- mP5ALLtR53d4GUoy2aatSBcqDfwUxKtH8bLUbYAuO27C2F83cu0wRvTrWdxchcMVGcg4
- hD3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2pqrXcjt5YjYmqaCmw2hcK8V21VMtLQCCbv7PQuIOjvoBs0WXmjqvl+T9ETgWWlBTjNn9sauHZaW8/LwbCTkHEw9rRDs=
-X-Gm-Message-State: AOJu0YwOdv7U6ImqVKgbsgQbL6SOV9MbOaf2sidVh24eWklT7bbVIeJu
- LzJA4IxYgY49SOJnDT6pT0Mj1Js6KlYyzDXFlQFTb45HqnbLjkTGLlzZyg==
-X-Google-Smtp-Source: AGHT+IFUvrPqlaZfIrf1H0qGFPSquKnLTTV4VcO9iXH3Xv9JekMbQKav32l7styMHjq3KS90p3gqEg==
-X-Received: by 2002:a05:6a00:1acf:b0:6ed:caf6:6e54 with SMTP id
- d2e1a72fcca58-702478f8449mr7722861b3a.28.1717403859460; 
- Mon, 03 Jun 2024 01:37:39 -0700 (PDT)
-Received: from jeuk-MS-7D42.. ([210.223.46.112])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-702425e0c6dsm5020762b3a.89.2024.06.03.01.37.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 01:37:39 -0700 (PDT)
-From: Jeuk Kim <jeuk20.kim@gmail.com>
-To: qemu-devel@nongnu.org,
-	richard.henderson@linaro.org
-Cc: fam@euphon.net, pbonzini@redhat.com, qemu-block@nongnu.org,
- jeuk20.kim@samsung.com, j-young.choi@samsung.com, minwoo.im@samsung.com
-Subject: [PULL v2 1/2] hw/ufs: Update MCQ-related fields to block/ufs.h
-Date: Mon,  3 Jun 2024 17:37:24 +0900
-Message-Id: <cdba3b901ac0b480eb9d940219113f0be80cc4e1.1717403572.git.jeuk20.kim@samsung.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1717403572.git.jeuk20.kim@samsung.com>
-References: <cover.1717403572.git.jeuk20.kim@samsung.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sE3Iw-0003FG-MJ
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 04:44:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sE3Iv-0002KP-4V
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 04:44:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717404271;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=wJUXvNhRMqBqfqb25jLGhqzSKH5XYAv3TIGqsziQ8eg=;
+ b=J68P7NjvdgqZpK0z/A5nolVjwoJyU83fFFoletaqPkCG1U3Zogntjj1V7La5DfHSthfvVS
+ 1nFjH/8Avqs/ShnzLW7DURBDSXew8/O++97viBhNiVcyvOeM+ul54KuGy+o879Oq7QxIdi
+ zpMn5XtXvvsAh3pMfbNt2K9VH3DGjWQ=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-189-vnd4G63EPPyVyzo2UPPx4w-1; Mon, 03 Jun 2024 04:44:27 -0400
+X-MC-Unique: vnd4G63EPPyVyzo2UPPx4w-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EA0298058D5;
+ Mon,  3 Jun 2024 08:44:26 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id A289D1C0654B;
+ Mon,  3 Jun 2024 08:44:26 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8464C21E6757; Mon,  3 Jun 2024 10:44:25 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>,  Zide Chen <zide.chen@intel.com>,
+ qemu-devel@nongnu.org,  pbonzini@redhat.com,  mst@redhat.com,
+ cfontana@suse.de,  xiaoyao.li@intel.com,  qemu-trivial@nongnu.org
+Subject: Re: [PATCH V2 1/3] vl: Allow multiple -overcommit commands
+In-Reply-To: <4d9c15c6-cfe7-4535-b41a-fbfcb1e5f970@redhat.com> (Thomas Huth's
+ message of "Fri, 31 May 2024 06:57:31 +0200")
+References: <20240524200017.150339-1-zide.chen@intel.com>
+ <20240524200017.150339-2-zide.chen@intel.com>
+ <e86c1913-a1ff-4c31-9915-d66c269b7e10@redhat.com>
+ <ZliGoM9Hy3Q2qthQ@intel.com>
+ <4d9c15c6-cfe7-4535-b41a-fbfcb1e5f970@redhat.com>
+Date: Mon, 03 Jun 2024 10:44:25 +0200
+Message-ID: <87bk4ie7py.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,197 +88,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Minwoo Im <minwoo.im@samsung.com>
+Thomas Huth <thuth@redhat.com> writes:
 
-This patch is a prep patch for the following MCQ support patch for
-hw/ufs.  This patch updated minimal mandatory fields to support MCQ
-based on UFSHCI 4.0.
+> On 30/05/2024 16.01, Zhao Liu wrote:
+>> Hi Thomas,
+>> BTW, do you think it's a good idea to define the overcommit via QAPI way
+>> (defined in a json file)? ;-)
+>> My rough understanding is that all APIs are better to be defined via
+>> QAPI to go JSON compatible.
+>
+> Sorry, no clue whether it makes sense here... CC:-ing Markus for recommendations.
 
-Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
-Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
-Message-Id: <20240528023106.856777-2-minwoo.im@samsung.com>
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
----
- include/block/ufs.h | 108 +++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 106 insertions(+), 2 deletions(-)
+I'd love to have a machine-friendly, QAPI-based CLI with a
+human-friendly CLI layered on top, similar to machine-friendly,
+QAPI-based QMP / human-friendly HMP.
 
-diff --git a/include/block/ufs.h b/include/block/ufs.h
-index d61598b8f3..3513b6e772 100644
---- a/include/block/ufs.h
-+++ b/include/block/ufs.h
-@@ -7,7 +7,7 @@
- 
- typedef struct QEMU_PACKED UfsReg {
-     uint32_t cap;
--    uint32_t rsvd0;
-+    uint32_t mcqcap;
-     uint32_t ver;
-     uint32_t rsvd1;
-     uint32_t hcpid;
-@@ -46,6 +46,13 @@ typedef struct QEMU_PACKED UfsReg {
-     uint32_t rsvd7[4];
-     uint32_t rsvd8[16];
-     uint32_t ccap;
-+    uint32_t rsvd9[127];
-+    uint32_t config;
-+    uint32_t rsvd10[3];
-+    uint32_t rsvd11[28];
-+    uint32_t mcqconfig;
-+    uint32_t esilba;
-+    uint32_t esiuba;
- } UfsReg;
- 
- REG32(CAP, offsetof(UfsReg, cap))
-@@ -57,6 +64,15 @@ REG32(CAP, offsetof(UfsReg, cap))
-     FIELD(CAP, OODDS, 25, 1)
-     FIELD(CAP, UICDMETMS, 26, 1)
-     FIELD(CAP, CS, 28, 1)
-+    FIELD(CAP, LSDBS, 29, 1)
-+    FIELD(CAP, MCQS, 30, 1)
-+REG32(MCQCAP, offsetof(UfsReg, mcqcap))
-+    FIELD(MCQCAP, MAXQ, 0, 8)
-+    FIELD(MCQCAP, SP, 8, 1)
-+    FIELD(MCQCAP, RRP, 9, 1)
-+    FIELD(MCQCAP, EIS, 10, 1)
-+    FIELD(MCQCAP, QCFGPTR, 16, 8)
-+    FIELD(MCQCAP, MIAG, 24, 8)
- REG32(VER, offsetof(UfsReg, ver))
- REG32(HCPID, offsetof(UfsReg, hcpid))
- REG32(HCMID, offsetof(UfsReg, hcmid))
-@@ -78,6 +94,7 @@ REG32(IS, offsetof(UfsReg, is))
-     FIELD(IS, HCFES, 16, 1)
-     FIELD(IS, SBFES, 17, 1)
-     FIELD(IS, CEFES, 18, 1)
-+    FIELD(IS, CQES, 20, 1)
- REG32(IE, offsetof(UfsReg, ie))
-     FIELD(IE, UTRCE, 0, 1)
-     FIELD(IE, UDEPRIE, 1, 1)
-@@ -95,6 +112,7 @@ REG32(IE, offsetof(UfsReg, ie))
-     FIELD(IE, HCFEE, 16, 1)
-     FIELD(IE, SBFEE, 17, 1)
-     FIELD(IE, CEFEE, 18, 1)
-+    FIELD(IE, CQEE, 20, 1)
- REG32(HCS, offsetof(UfsReg, hcs))
-     FIELD(HCS, DP, 0, 1)
-     FIELD(HCS, UTRLRDY, 1, 1)
-@@ -128,6 +146,10 @@ REG32(UCMDARG1, offsetof(UfsReg, ucmdarg1))
- REG32(UCMDARG2, offsetof(UfsReg, ucmdarg2))
- REG32(UCMDARG3, offsetof(UfsReg, ucmdarg3))
- REG32(CCAP, offsetof(UfsReg, ccap))
-+REG32(CONFIG, offsetof(UfsReg, config))
-+    FIELD(CONFIG, QT, 0, 1)
-+REG32(MCQCONFIG, offsetof(UfsReg, mcqconfig))
-+    FIELD(MCQCONFIG, MAC, 8, 8)
- 
- #define UFS_INTR_MASK                                    \
-     ((1 << R_IS_CEFES_SHIFT) | (1 << R_IS_SBFES_SHIFT) | \
-@@ -157,6 +179,69 @@ REG32(CCAP, offsetof(UfsReg, ccap))
-     ((be32_to_cpu(dword2) >> UFS_UPIU_HEADER_DATA_SEGMENT_LENGTH_SHIFT) & \
-      UFS_UPIU_HEADER_DATA_SEGMENT_LENGTH_MASK)
- 
-+typedef struct QEMU_PACKED UfsMcqReg {
-+    uint32_t sqattr;
-+    uint32_t sqlba;
-+    uint32_t squba;
-+    uint32_t sqdao;
-+    uint32_t sqisao;
-+    uint32_t sqcfg;
-+    uint32_t rsvd0[2];
-+    uint32_t cqattr;
-+    uint32_t cqlba;
-+    uint32_t cquba;
-+    uint32_t cqdao;
-+    uint32_t cqisao;
-+    uint32_t cqcfg;
-+    uint32_t rsvd1[2];
-+} UfsMcqReg;
-+
-+REG32(SQATTR, offsetof(UfsMcqReg, sqattr))
-+    FIELD(SQATTR, SIZE, 0, 16)
-+    FIELD(SQATTR, CQID, 16, 8)
-+    FIELD(SQATTR, SQPL, 28, 3)
-+    FIELD(SQATTR, SQEN, 31, 1)
-+REG32(SQLBA, offsetof(UfsMcqReg, sqlba))
-+REG32(SQUBA, offsetof(UfsMcqReg, squba))
-+REG32(SQDAO, offsetof(UfsMcqReg, sqdao))
-+REG32(SQISAO, offsetof(UfsMcqReg, sqisao))
-+REG32(SQCFG, offsetof(UfsMcqReg, sqcfg))
-+REG32(CQATTR, offsetof(UfsMcqReg, cqattr))
-+    FIELD(CQATTR, SIZE, 0, 16)
-+    FIELD(CQATTR, CQEN, 31, 1)
-+REG32(CQLBA, offsetof(UfsMcqReg, cqlba))
-+REG32(CQUBA, offsetof(UfsMcqReg, cquba))
-+REG32(CQDAO, offsetof(UfsMcqReg, cqdao))
-+REG32(CQISAO, offsetof(UfsMcqReg, cqisao))
-+REG32(CQCFG, offsetof(UfsMcqReg, cqcfg))
-+
-+typedef struct QEMU_PACKED UfsMcqSqReg {
-+    uint32_t hp;
-+    uint32_t tp;
-+    uint32_t rtc;
-+    uint32_t cti;
-+    uint32_t rts;
-+} UfsMcqSqReg;
-+
-+typedef struct QEMU_PACKED UfsMcqCqReg {
-+    uint32_t hp;
-+    uint32_t tp;
-+} UfsMcqCqReg;
-+
-+typedef struct QEMU_PACKED UfsMcqSqIntReg {
-+    uint32_t is;
-+    uint32_t ie;
-+} UfsMcqSqIntReg;
-+
-+typedef struct QEMU_PACKED UfsMcqCqIntReg {
-+    uint32_t is;
-+    uint32_t ie;
-+    uint32_t iacr;
-+} UfsMcqCqIntReg;
-+
-+REG32(CQIS, offsetof(UfsMcqCqIntReg, is))
-+    FIELD(CQIS, TEPS, 0, 1)
-+
- typedef struct QEMU_PACKED DeviceDescriptor {
-     uint8_t length;
-     uint8_t descriptor_idn;
-@@ -1064,9 +1149,26 @@ typedef struct QEMU_PACKED UtpUpiuRsp {
-     };
- } UtpUpiuRsp;
- 
-+/*
-+ * MCQ Completion Queue Entry
-+ */
-+typedef UtpTransferReqDesc UfsSqEntry;
-+typedef struct QEMU_PACKED UfsCqEntry {
-+    uint64_t utp_addr;
-+    uint16_t resp_len;
-+    uint16_t resp_off;
-+    uint16_t prdt_len;
-+    uint16_t prdt_off;
-+    uint8_t status;
-+    uint8_t error;
-+    uint16_t rsvd1;
-+    uint32_t rsvd2[3];
-+} UfsCqEntry;
-+
- static inline void _ufs_check_size(void)
- {
--    QEMU_BUILD_BUG_ON(sizeof(UfsReg) != 0x104);
-+    QEMU_BUILD_BUG_ON(sizeof(UfsReg) != 0x38C);
-+    QEMU_BUILD_BUG_ON(sizeof(UfsMcqReg) != 64);
-     QEMU_BUILD_BUG_ON(sizeof(DeviceDescriptor) != 89);
-     QEMU_BUILD_BUG_ON(sizeof(GeometryDescriptor) != 87);
-     QEMU_BUILD_BUG_ON(sizeof(UnitDescriptor) != 45);
-@@ -1086,5 +1188,7 @@ static inline void _ufs_check_size(void)
-     QEMU_BUILD_BUG_ON(sizeof(UtpTaskReqDesc) != 80);
-     QEMU_BUILD_BUG_ON(sizeof(UtpCmdRsp) != 40);
-     QEMU_BUILD_BUG_ON(sizeof(UtpUpiuRsp) != 288);
-+    QEMU_BUILD_BUG_ON(sizeof(UfsSqEntry) != 32);
-+    QEMU_BUILD_BUG_ON(sizeof(UfsCqEntry) != 32);
- }
- #endif
--- 
-2.34.1
+To get this with reasonable effort, we need better infrastructure.  We
+have done a few complex options manually, such as -blockdev.  I
+recommend this only when there's a clear need for JSON on the command
+line.
+
+I doubt this is the case for -overcommit.
 
 
