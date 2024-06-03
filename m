@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A1F3C41513
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 13:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E125AC25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 13:13:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE7Tj-0000Ag-Ne; Mon, 03 Jun 2024 09:11:59 -0400
+	id 1sE7Tl-0000BH-6Z; Mon, 03 Jun 2024 09:12:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sE7Ti-0000A7-7S
+ id 1sE7Ti-0000AK-Gm
  for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:11:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sE7Td-0005hY-SK
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:11:57 -0400
+ id 1sE7Tf-0005j3-Iz
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:11:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717420310;
+ s=mimecast20190719; t=1717420313;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=sCaqbMzfZgKieszL9uZZLkr+VTRMFuQvJdzKizDv27M=;
- b=iIdmD/9mOAAu5m1X7AA1YWY7E9RWnu6Rm+31ALwyDBeU2udkD+aO2gDPompLX44bmNKfac
- 2/QlHLr1Wma2bth6p5FXMeQN/bG1LaAmCpFvhT4GbqCA1KiUph6M2QGXPZ7jwmXNQGy5ps
- g+n9omaEipwz1+Ava+t0y9rXfFowN2Y=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5owbhz2WQol3DxPAYYlnJH90VodwM8bU2nN3YGvfIjo=;
+ b=Jl1RUtRn7YeaFIqvFxSzFCXqRR4XTnymAKrXLywjWbGl/SjVn+2H9woKAJvy4ycII1HQu+
+ sj2ZvloYuoapCLDBCRtl7EcN2mqKaWlF7MnkkupRlLHD0Ndbn2tUz504vBxl72A9sqff4C
+ Q04CxlPN8UQr+w/2T4p9aq1K6BENAf4=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-Lb5Gs_Q0NhCE5IhwCKL6Aw-1; Mon, 03 Jun 2024 09:11:47 -0400
-X-MC-Unique: Lb5Gs_Q0NhCE5IhwCKL6Aw-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a592c35ac06so359909766b.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 06:11:46 -0700 (PDT)
+ us-mta-46--tWpTLG9Nju5SX51ASwFTw-1; Mon, 03 Jun 2024 09:11:52 -0400
+X-MC-Unique: -tWpTLG9Nju5SX51ASwFTw-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a68ce57fb14so87241066b.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 06:11:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717420305; x=1718025105;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sCaqbMzfZgKieszL9uZZLkr+VTRMFuQvJdzKizDv27M=;
- b=BotclONm7HtdjZn151EO+d/haDPwhO7BZq4YyfSGtsPBhh8LLZZO0es6Sz/fZCdSSt
- Ty5w2PEvh/Axg9paRS4goVow0RYW6ihF7B4JMXnz5Izc3I2ILdZ7Ycl79f67k71A7PI7
- RGq7V1dTQb6WJZsNTkTU9DTLnLJiFAEWAm1iKA+4HyMa40EuNL2e/phF5YfLybMYiUOJ
- r6Zx/sDDnKpv6tlTBlhadGlBmvPfI+vBuapd7WAn3zQnctAC8091ojR9E7vbFmgrNAJH
- R9y7KE/R5p+F8vEb6zej7FPd7qIZREGhqOD8hWuHTCeeb0PJfz5Rw+KtUOoPBPOVErvz
- JO9A==
-X-Gm-Message-State: AOJu0Yy6RkTbpJdOKdYE38O00s1KeJ706HeIMmMjiFq2hRPCRIwU886B
- xpPzBPHQVeHcVfV2vQpRbaH55oNgxcGC+mefrR34UEZpTAS+Mg8dFYCAK8yyKqW4LU/+0daH6E4
- kI8NZo43Xi0f8SawqSB0aSXZrU6KloNj3PujxenZ603NLJRFu5YXW3iI477WCNqGm2LoUrJfz2h
- zL/E3MRRv3Wwn/Xy997DmrCJRPU7H1ZpmKP2Cg
-X-Received: by 2002:a17:906:bfe7:b0:a59:a3ad:c3f6 with SMTP id
- a640c23a62f3a-a681867280dmr758875666b.3.1717420304981; 
- Mon, 03 Jun 2024 06:11:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFcAszKQWPg566eBiZ/xFJTzyQZKJZFM6xTmWflD9sp4fnGjiAtQ9cBz13MT182bloYf1MFVg==
-X-Received: by 2002:a17:906:bfe7:b0:a59:a3ad:c3f6 with SMTP id
- a640c23a62f3a-a681867280dmr758872466b.3.1717420304399; 
- Mon, 03 Jun 2024 06:11:44 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717420311; x=1718025111;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5owbhz2WQol3DxPAYYlnJH90VodwM8bU2nN3YGvfIjo=;
+ b=vpgWOoa6aNtRgMoFyD/b91+oCq4EYwJXVSRyDl3n7QQYZOfBrrQDMtKXHThBVl6lFP
+ O0JEojHk0KMF8cDXFLmps2rR1T37yZgTT9p6e6AmvTPi0EkvipvWa7jKjZ/bryUIQmRV
+ bUzixxADzADxuRPgdCGBRl9hS0SB18Cfg1khNVtYtPduQsxlDG55xb5D7Uv1WT9Palfo
+ BOhHXnhpnvmWc9LcQ9hPBXZPC6QnI1ZegERlAjjTEuc7zKahFu5Uawss3xpSsSu/j0Ko
+ BFhS0bUpCz+IAKMwUvkW4MjwXto9K4n4qVrTE2z6uJgOQvgq9eW1gIadpmO3EHP2QfhV
+ bAvg==
+X-Gm-Message-State: AOJu0YyOgnBkMhXT85rqi7ky9LkldLkDOU4PSrZxmFh24DXQdLWpUIMy
+ Ll/Nj3n3C8yxt/S0xmt2Gs+yeL3TK9TN+oP7LyIPnrQwsAtd/1BKYZ7mBJ9zAv0ASmYisxXvFN8
+ JI1W8XNzb/ootgSLixh4kRy7RkcCN2wgc6xQR8Ymv7HtdZLvAs6Rb3xrgT8HiKieYFPWsI4zBcK
+ TpjqQp4UfgwKIV2TXXLMhUaAY89yCJsUr8rbc4
+X-Received: by 2002:a17:906:a90:b0:a69:edd:3339 with SMTP id
+ a640c23a62f3a-a690edd35c8mr159128566b.10.1717420310773; 
+ Mon, 03 Jun 2024 06:11:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF2VRvtp93tGzOLFf2wTo3xi3rWLyaX5HdVGZkWFMEVzlog42Vgdn+ICwoNzmLiAR9d5anpQQ==
+X-Received: by 2002:a17:906:a90:b0:a69:edd:3339 with SMTP id
+ a640c23a62f3a-a690edd35c8mr159126566b.10.1717420310317; 
+ Mon, 03 Jun 2024 06:11:50 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68e3ff633fsm284126766b.14.2024.06.03.06.11.43
+ a640c23a62f3a-a68ce706436sm293420066b.119.2024.06.03.06.11.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 06:11:43 -0700 (PDT)
+ Mon, 03 Jun 2024 06:11:49 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: thuth@redhat.com,
 	cohuck@redhat.com
-Subject: [PATCH 0/4] update-linux-headers: prepare for updating to 6.9+ and
- for SNP patches
-Date: Mon,  3 Jun 2024 15:11:37 +0200
-Message-ID: <20240603131141.834241-1-pbonzini@redhat.com>
+Subject: [PATCH 2/4] update-linux-headers: move pvpanic.h to correct directory
+Date: Mon,  3 Jun 2024 15:11:39 +0200
+Message-ID: <20240603131141.834241-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240603131141.834241-1-pbonzini@redhat.com>
+References: <20240603131141.834241-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -102,59 +104,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series contains a few cleanups and fixes to update-linux-headers.sh,
-which I needed or found in order to pass CI for the SEV-SNP patches.
+Linux has <misc/pvpanic.h>, not <linux/pvpanic.h>.  Use the same
+directory for QEMU's include/standard-headers/ copy.
 
-First, updating linux-headers/ fails due to the lack of
-arch/loongarch/include/uapi/asm/bitsperlong.h.  I am not sure if I am
-doing something wrong but it is caused by commit 3efc75ad9d9
-("scripts/update-linux-headers.sh: Remove temporary directory inbetween",
-2024-05-29); if so, I guess I'm 1-1 with Thomas given my own bug in
-commit 66210a1a30 that he fixed.
-
-Before commit 3efc75ad9d9, the missing file would incorrectly cause stale
-files to be included in linux-headers/.  The files were never committed
-to qemu.git, but were wrong nevertheless. The build would just use
-the system version of the files, which is opposite to the idea of
-importing Linux header files into QEMU's tree.
-
-Second, pvpanic.h was incorrectly included in a slightly different
-path than what is used in Linux.
-
-Third, SNP host-side patches will need linux/kvm_para.h, because some
-of the supported distros do not have a definition for KVM_HC_MAP_GPA_RANGE.
-Including it is a bit complicated because we also have a version of
-x86's kvm_para.h under include/standard-headers/; linux/kvm_para.h
-tries to include <asm/kvm_para.h> and that could cause conflicts.
-So, the linux/kvm_para.h is also placed in include/standard-headers
-(patch 4).
-
-Pankaj Gupta (1):
-  linux-headers: Update to current kvm/next
-
-Paolo Bonzini (3):
-  update-linux-headers: fix forwarding to asm-generic headers
-  update-linux-headers: move pvpanic.h to correct directory
-  update-linux-headers: import linux/kvm_para.h header
-
- include/standard-headers/linux/kvm_para.h     | 38 ++++++++++++++
- .../{linux => misc}/pvpanic.h                 |  0
- linux-headers/asm-loongarch/kvm.h             |  4 ++
- linux-headers/asm-riscv/kvm.h                 |  1 +
- linux-headers/asm-x86/kvm.h                   | 52 ++++++++++++++++++-
- linux-headers/asm-x86/kvm_para.h              |  1 +
- linux-headers/linux/kvm_para.h                |  2 +
- linux-headers/linux/vhost.h                   | 15 +++---
- hw/misc/pvpanic-isa.c                         |  2 +-
- hw/misc/pvpanic-pci.c                         |  2 +-
- hw/misc/pvpanic.c                             |  2 +-
- scripts/update-linux-headers.sh               | 37 +++++++++++--
- 12 files changed, 141 insertions(+), 15 deletions(-)
- create mode 100644 include/standard-headers/linux/kvm_para.h
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ include/standard-headers/{linux => misc}/pvpanic.h | 0
+ hw/misc/pvpanic-isa.c                              | 2 +-
+ hw/misc/pvpanic-pci.c                              | 2 +-
+ hw/misc/pvpanic.c                                  | 2 +-
+ scripts/update-linux-headers.sh                    | 6 ++++--
+ 5 files changed, 7 insertions(+), 5 deletions(-)
  rename include/standard-headers/{linux => misc}/pvpanic.h (100%)
- create mode 100644 linux-headers/asm-x86/kvm_para.h
- create mode 100644 linux-headers/linux/kvm_para.h
 
+diff --git a/include/standard-headers/linux/pvpanic.h b/include/standard-headers/misc/pvpanic.h
+similarity index 100%
+rename from include/standard-headers/linux/pvpanic.h
+rename to include/standard-headers/misc/pvpanic.h
+diff --git a/hw/misc/pvpanic-isa.c b/hw/misc/pvpanic-isa.c
+index ccec50f61bb..b4f84c41109 100644
+--- a/hw/misc/pvpanic-isa.c
++++ b/hw/misc/pvpanic-isa.c
+@@ -21,7 +21,7 @@
+ #include "hw/misc/pvpanic.h"
+ #include "qom/object.h"
+ #include "hw/isa/isa.h"
+-#include "standard-headers/linux/pvpanic.h"
++#include "standard-headers/misc/pvpanic.h"
+ #include "hw/acpi/acpi_aml_interface.h"
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(PVPanicISAState, PVPANIC_ISA_DEVICE)
+diff --git a/hw/misc/pvpanic-pci.c b/hw/misc/pvpanic-pci.c
+index 83be95d0d24..4d44a881dad 100644
+--- a/hw/misc/pvpanic-pci.c
++++ b/hw/misc/pvpanic-pci.c
+@@ -21,7 +21,7 @@
+ #include "hw/misc/pvpanic.h"
+ #include "qom/object.h"
+ #include "hw/pci/pci_device.h"
+-#include "standard-headers/linux/pvpanic.h"
++#include "standard-headers/misc/pvpanic.h"
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(PVPanicPCIState, PVPANIC_PCI_DEVICE)
+ 
+diff --git a/hw/misc/pvpanic.c b/hw/misc/pvpanic.c
+index 1540e9091a4..80289ecf5fe 100644
+--- a/hw/misc/pvpanic.c
++++ b/hw/misc/pvpanic.c
+@@ -21,7 +21,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/misc/pvpanic.h"
+ #include "qom/object.h"
+-#include "standard-headers/linux/pvpanic.h"
++#include "standard-headers/misc/pvpanic.h"
+ 
+ static void handle_event(int event)
+ {
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index ae34d18572b..7b39cc426e0 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -231,10 +231,12 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
+          "$hdrdir/include/linux/const.h" \
+          "$hdrdir/include/linux/kernel.h" \
+          "$hdrdir/include/linux/vhost_types.h" \
+-         "$hdrdir/include/linux/sysinfo.h" \
+-         "$hdrdir/include/misc/pvpanic.h"; do
++         "$hdrdir/include/linux/sysinfo.h"; do
+     cp_portable "$i" "$output/include/standard-headers/linux"
+ done
++mkdir -p "$output/include/standard-headers/misc"
++cp_portable "$hdrdir/include/misc/pvpanic.h" \
++            "$output/include/standard-headers/misc"
+ mkdir -p "$output/include/standard-headers/drm"
+ cp_portable "$hdrdir/include/drm/drm_fourcc.h" \
+             "$output/include/standard-headers/drm"
 -- 
 2.45.1
 
