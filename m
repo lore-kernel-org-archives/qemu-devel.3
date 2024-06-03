@@ -4,59 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7001AC41513
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 06:15:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E4DC27C4F
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 06:15:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE0x1-0004rJ-6Z; Mon, 03 Jun 2024 02:13:47 -0400
+	id 1sE0xT-0005UI-9D; Mon, 03 Jun 2024 02:14:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sE0wy-0004q4-Mk
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 02:13:45 -0400
+ id 1sE0xS-0005Tg-5v
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 02:14:14 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sE0wx-0000uQ-0H
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 02:13:44 -0400
+ id 1sE0xQ-0000xl-FY
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 02:14:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1717395223; x=1748931223;
+ t=1717395252; x=1748931252;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=AknpX//QEXoR/eoy9ob0jTnGeHApPRu1pEWY3rPhxXg=;
- b=FJC7bVapkashx1kBtdnYPPUHeyIV3l/g+Ests/MlEvjnRYvBEawC+nQD
- TNrKzoyxIY9hEmaZ7OPg/Veo1QiFdpHb3vBpx0crnfajjWAooZv3SvA03
- T2hn5dEVXISI+8MX87d/jMUk9o/VdpdgYafktSx9cMjPeEHCqE94ZDG/7
- kEeFQcybgx+iwevZ7IqXw9nPKb4vTilpeHY+ebnUYaJL3GkQ/apL3re5U
- JNhDMQ57HUg7CYnNI+LQYWYOsemFwla+DNHurYjh426SAC0yzhKX6mdoQ
- DQPpBkgMHstor07a+13q4efK6spvMpj5mak4HktMs3Ler0nN5gutxPvnc g==;
-X-CSE-ConnectionGUID: DiHgjnhWQw+Wyn32Nm5UTA==
-X-CSE-MsgGUID: zRaktsT7Ty+4DrQgAw8zOQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11091"; a="25277667"
-X-IronPort-AV: E=Sophos;i="6.08,210,1712646000"; d="scan'208";a="25277667"
+ bh=lOqDt9v6x0LF0QRt0dafkaMf+eapZI59zjmfrdfGr4k=;
+ b=gZ8KofgIatSVzhGtZQMl7I1UV1b1e9rb7zcQJsoKWpjWaBVQK7ySZcK2
+ RW2OQ1IFPnD/Wuvf81IaDIoOXH3veLtN9uXewuCPAe+veHwjI4vzB7oqQ
+ M81nyoDpPL5QDvQSKPSCeQA6N7IzKV20tGLyk5Im89Z4DWWO3hbkPTE8z
+ zkLUn2fvJjKyXoYRhF7w022OySVvEKtTnzPKk9clMQZC8TZEXQ0YmITNk
+ 3OldL+CqI6G7IDtj+r+2I730Px8GVEW0p45S3QxgAkgUbR+8HxNApQib1
+ TSIcuIf2S/CZunrmOIJ4uSSXUSgcpzmsA5lhJAZY4Vod18RQFlaweEiV9 Q==;
+X-CSE-ConnectionGUID: AYsTM9uwSi+WX5NeoAl2dw==
+X-CSE-MsgGUID: 5E1UBGBgSASfzgk8CCVkNg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11091"; a="25277743"
+X-IronPort-AV: E=Sophos;i="6.08,210,1712646000"; d="scan'208";a="25277743"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jun 2024 23:13:41 -0700
-X-CSE-ConnectionGUID: 6hqObsIVTt6gRj+TAOnVAA==
-X-CSE-MsgGUID: j/6bUBTMRYOvsC4dm8fB3w==
+ 02 Jun 2024 23:14:11 -0700
+X-CSE-ConnectionGUID: NeqPSDyVTZm/VxymN3xtnQ==
+X-CSE-MsgGUID: BbodyjcQSB+vr4/lP+v8YA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,210,1712646000"; d="scan'208";a="36855876"
+X-IronPort-AV: E=Sophos;i="6.08,210,1712646000"; d="scan'208";a="36855967"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.127])
  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jun 2024 23:13:37 -0700
+ 02 Jun 2024 23:14:07 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v6 07/19] vfio/container: Implement
- HostIOMMUDeviceClass::realize() handler
-Date: Mon,  3 Jun 2024 14:10:11 +0800
-Message-Id: <20240603061023.269738-8-zhenzhong.duan@intel.com>
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Yi Sun <yi.y.sun@linux.intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v6 14/19] hw/pci: Introduce helper function
+ pci_device_get_iommu_bus_devfn()
+Date: Mon,  3 Jun 2024 14:10:18 +0800
+Message-Id: <20240603061023.269738-15-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240603061023.269738-1-zhenzhong.duan@intel.com>
 References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
@@ -86,58 +88,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Utilize range_get_last_bit() to get host IOMMU address width and
-package it in HostIOMMUDeviceCaps for query with .get_cap().
+Extract out pci_device_get_iommu_bus_devfn() from
+pci_device_iommu_address_space() to facilitate
+implementation of pci_device_[set|unset]_iommu_device()
+in following patch.
 
+No functional change intended.
+
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/vfio/container.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ hw/pci/pci.c | 48 +++++++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 45 insertions(+), 3 deletions(-)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index c4fca2dfca..48800fe92f 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -1136,6 +1136,31 @@ static void vfio_iommu_legacy_class_init(ObjectClass *klass, void *data)
-     vioc->pci_hot_reset = vfio_legacy_pci_hot_reset;
- };
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 324c1302d2..02a4bb2af6 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2648,11 +2648,27 @@ static void pci_device_class_base_init(ObjectClass *klass, void *data)
+     }
+ }
  
-+static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
-+                                     Error **errp)
-+{
-+    VFIODevice *vdev = opaque;
-+    /* iova_ranges is a sorted list */
-+    GList *l = g_list_last(vdev->bcontainer->iova_ranges);
+-AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
++/*
++ * Get IOMMU root bus, aliased bus and devfn of a PCI device
++ *
++ * IOMMU root bus is needed by all call sites to call into iommu_ops.
++ * For call sites which don't need aliased BDF, passing NULL to
++ * aliased_[bus|devfn] is allowed.
++ *
++ * @piommu_bus: return root #PCIBus backed by an IOMMU for the PCI device.
++ *
++ * @aliased_bus: return aliased #PCIBus of the PCI device, optional.
++ *
++ * @aliased_devfn: return aliased devfn of the PCI device, optional.
++ */
++static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
++                                           PCIBus **piommu_bus,
++                                           PCIBus **aliased_bus,
++                                           int *aliased_devfn)
+ {
+     PCIBus *bus = pci_get_bus(dev);
+     PCIBus *iommu_bus = bus;
+-    uint8_t devfn = dev->devfn;
++    int devfn = dev->devfn;
+ 
+     while (iommu_bus && !iommu_bus->iommu_ops && iommu_bus->parent_dev) {
+         PCIBus *parent_bus = pci_get_bus(iommu_bus->parent_dev);
+@@ -2693,7 +2709,33 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+ 
+         iommu_bus = parent_bus;
+     }
+-    if (!pci_bus_bypass_iommu(bus) && iommu_bus->iommu_ops) {
 +
-+    /* Only support query HOST_IOMMU_DEVICE_CAP_AW_BITS with legacy backend */
-+    if (l) {
-+        Range *range = l->data;
-+        hiod->caps.aw_bits = range_get_last_bit(range) + 1;
-+    } else {
-+        hiod->caps.aw_bits = 0xff;
++    assert(0 <= devfn && devfn < PCI_DEVFN_MAX);
++    assert(iommu_bus);
++
++    if (pci_bus_bypass_iommu(bus) || !iommu_bus->iommu_ops) {
++        iommu_bus = NULL;
 +    }
 +
-+    return true;
++    *piommu_bus = iommu_bus;
++
++    if (aliased_bus) {
++        *aliased_bus = bus;
++    }
++
++    if (aliased_devfn) {
++        *aliased_devfn = devfn;
++    }
 +}
 +
-+static void hiod_legacy_vfio_class_init(ObjectClass *oc, void *data)
++AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
 +{
-+    HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
++    PCIBus *bus;
++    PCIBus *iommu_bus;
++    int devfn;
 +
-+    hioc->realize = hiod_legacy_vfio_realize;
-+};
-+
- static const TypeInfo types[] = {
-     {
-         .name = TYPE_VFIO_IOMMU_LEGACY,
-@@ -1144,6 +1169,7 @@ static const TypeInfo types[] = {
-     }, {
-         .name = TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO,
-         .parent = TYPE_HOST_IOMMU_DEVICE,
-+        .class_init = hiod_legacy_vfio_class_init,
++    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, &bus, &devfn);
++    if (iommu_bus) {
+         return iommu_bus->iommu_ops->get_address_space(bus,
+                                  iommu_bus->iommu_opaque, devfn);
      }
- };
- 
 -- 
 2.34.1
 
