@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26506C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 05:49:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFC4AC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 05:49:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE0Xx-0008Sf-NX; Mon, 03 Jun 2024 01:47:53 -0400
+	id 1sE0YL-0000BT-84; Mon, 03 Jun 2024 01:48:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1sE0Xw-0008RY-6z
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 01:47:52 -0400
+ id 1sE0YK-0000B9-C0
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 01:48:16 -0400
 Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1sE0Xt-0005BK-JY
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 01:47:51 -0400
+ id 1sE0YI-0005OH-Sq
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 01:48:16 -0400
 Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1f47f07aceaso23721075ad.0
- for <qemu-devel@nongnu.org>; Sun, 02 Jun 2024 22:47:49 -0700 (PDT)
+ d9443c01a7336-1f62fae8c1aso24071915ad.3
+ for <qemu-devel@nongnu.org>; Sun, 02 Jun 2024 22:48:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1717393668; x=1717998468; darn=nongnu.org;
+ d=sifive.com; s=google; t=1717393693; x=1717998493; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GEhvW8mMXGFmnN1YikczckSrxHyJV9SouAqt0p1mFPM=;
- b=OV7FobpQpqeLVKtgsJn72Byc/xzLgtjGYN+WnypUL0sG5fIMo+0ECDssba+g4AcKTK
- Jgsolf2cHA+v9u0nGAQYjkiHk/wzvH3/7SvCabVLrRxBABkW6QfVZiFC4vTDBoxhFs5l
- YzW9M4fD6J4rW7sRx2nMDBZEGW1z0IxlvLN5sgcKz97uYbFHXrurQicKSi7M+WXbIq8R
- Col/+CO43qqUqDtsW3vbiY+LXLYrQefnAAgZ3lU3cc7RRDUiC5YxId3g3FbAXsFoz8CP
- 44CBb+hLKvUFCgHKy7ggNepaj9nPSDztk5OpHRzO8jvCuzY5DxFtrn6LALtQp+i53+OW
- hc2w==
+ bh=GVZpJhKtEcd9YCJGkGQF9gaW6VhHFLErv6FyXahbmsc=;
+ b=DtdQalAwp3XkTppTR1nIifPAc7lC7PDZiJeVE07pXmA+CGa0cMTIvfBQbgA9XXZu9C
+ GqHXtXB8JgU5ShZLZCdVIRb2HdxdQb5VzZ9u/0VK1XK6BNgjqEVIhfSLfkXZq47lLBwM
+ z63zjrwJ/dkr8yWEwKEcN9IPa6Lb2PPaer6zHcq1/axOHlDqy+HYd+WZN86qd8PFoM6y
+ lUCv1bC8wkAmYIzQGzoppTbN1Ao7wIuLc2qqdz7Pjvb8srdCSdPyIqn1up3wC0KrgVia
+ p8pyhokf9JyuMZEz+VjExw1KGDYb16TstlsQI+omQpIWTTDg9LSudc4UxUaRPBqAlHrJ
+ E6mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717393668; x=1717998468;
+ d=1e100.net; s=20230601; t=1717393693; x=1717998493;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GEhvW8mMXGFmnN1YikczckSrxHyJV9SouAqt0p1mFPM=;
- b=ZmDxRyNMUg0JAAr0cEUbo06hdKdcRnYwrqozgVjZC6ap1UUltLAbBomZWM2cLUbaPG
- NE/0x012MeIICHfxeMcqIM9LUQIP3tBhpGF5PwNmlGcIFNGlyXzy5h2h9kiKdBWdadzq
- JUlh/W5EoBhTgX77bbRgNEzVSjHjpDaEcxYLO2z94neKDDnOM+bzYjFc1cHEUj/9MWVs
- 9YPj9pGGEUQyz5TXKQF4/YKdngaYE41ogDBHD61AP4PxOQTkBXwL+uX3GiYRfYrdf/jK
- 0eBXWrnsaotA2LAsqBykFIHTiEru9TALdosPnKY3UkJLro+GpqBzEqYVcIrtI6wrbsKe
- ELKg==
-X-Gm-Message-State: AOJu0YxTvBAsxP4+9MhCb4HOTDYyTGPr7n1iOC7DqqFT9XMZyAZN6kOu
- iRYh1eTdge2AOLRP5t3kByQztiLrVMDg2avqh6vV/yoOgFsEKYso5d7fcECrQJuAqz+TWavw2xO
- papFLGHNW7wCpYAeBZVlZfhGY5r9o4pJ6bn/k8s/IauxpIhYck5mb1X+lpI/NYk/Zl7pK2z1LdR
- YHu9jBdlV97qE/M1Ect2mSUMyqp2bnFSAoeE8=
-X-Google-Smtp-Source: AGHT+IHmdBM6KFnJn5VK2xewRuucEsqZ8fKEK414IFJ+RE/5x+5oq1s2Q8A+zMWE3drGYrCkgzyjgA==
-X-Received: by 2002:a17:902:ea03:b0:1f4:a45b:8429 with SMTP id
- d9443c01a7336-1f636ffde39mr95009475ad.27.1717393667593; 
- Sun, 02 Jun 2024 22:47:47 -0700 (PDT)
+ bh=GVZpJhKtEcd9YCJGkGQF9gaW6VhHFLErv6FyXahbmsc=;
+ b=aob6qz7VoTMUFC+dhkAYV7GXhHVQeXlB1fiZAU4ixPZUV/yJ2xZPqhZaJE3RTRuuYO
+ ERk3UXwC/x+gz1zfwVFy7MnzB4PJ8M6Esn0MQuGoF3mqBC6FF994xNlpSpAGsdOFLyuF
+ W6DNdb3EYmNy9dVKsQaohbAilSguJSoDHU5EjcWpycluQWW3Zc1EyrGptvM+7bSDNs52
+ AWHjrTZ2NQnkD/5eksBzX+C21T6v0ydPl0atUUplpzFnvZV7MBa2Gj3Go/1B6kRIX7oF
+ Fee/b1Ss7Ws2Wt4No9Db8u8IcdqNLa07Pe9UQae1wapOeLI2o2nOpXiE/E+2sKvak4fW
+ hM2g==
+X-Gm-Message-State: AOJu0YzD6VogInyun3bgjR//uR4Vs5RynIqBGDpK0NGLauj3Eza75ptu
+ JY4rCSnDq6xXgv09JilC0pLNcNBKC5R7+AyxaFmDLhxA1p7Nu60wa2RELGm/e8wO61qT6Aw1ua2
+ UlrWibZv3J99qQyZ8sV0KMMWOk7X/PyCLJSAam3GfLPeeYjYQxRlULfG2bU6ajkABZkTwpks/tC
+ k+lp6VaGtSP3ZPYTM8IfpEQNr0mIDhVS3qhwU=
+X-Google-Smtp-Source: AGHT+IF/NhAHUv5NOzJAxHVrM0NCdw27QFO4bXQgcjKCUBHyY61JMxxZUcQGLtEgnjIVyb5Iua3rDg==
+X-Received: by 2002:a17:902:f908:b0:1f4:8faa:cd68 with SMTP id
+ d9443c01a7336-1f63702346cmr69194085ad.29.1717393693229; 
+ Sun, 02 Jun 2024 22:48:13 -0700 (PDT)
 Received: from hsinchu36-syssw02.internal.sifive.com
  (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f63241e085sm55824135ad.299.2024.06.02.22.47.45
+ d9443c01a7336-1f63241e085sm55824135ad.299.2024.06.02.22.48.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 02 Jun 2024 22:47:47 -0700 (PDT)
+ Sun, 02 Jun 2024 22:48:12 -0700 (PDT)
 From: "Fea.Wang" <fea.wang@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -69,9 +69,9 @@ Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
  qemu-arm@nongnu.org (open list:Xilinx Zynq),
  "Fea.Wang" <fea.wang@sifive.com>
-Subject: [PATCH 1/4] hw/dma: Enhance error handling in loading description
-Date: Mon,  3 Jun 2024 13:52:45 +0800
-Message-Id: <20240603055248.3928469-2-fea.wang@sifive.com>
+Subject: [PATCH 4/4] hw/net: Fix the transmission return size
+Date: Mon,  3 Jun 2024 13:52:48 +0800
+Message-Id: <20240603055248.3928469-5-fea.wang@sifive.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240603055248.3928469-1-fea.wang@sifive.com>
 References: <20240603055248.3928469-1-fea.wang@sifive.com>
@@ -101,60 +101,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Loading a description from memory may cause a bus-error. In this
-case, the DMA should stop working, set the error flag, and return
-the error value.
+Fix the transmission return size because not all bytes could be
+transmitted successfully. So, return a successful length instead of a
+constant value.
 
 Signed-off-by: Fea.Wang <fea.wang@sifive.com>
 ---
- hw/dma/xilinx_axidma.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ hw/net/xilinx_axienet.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
-index 0ae056ed06..4b475e5484 100644
---- a/hw/dma/xilinx_axidma.c
-+++ b/hw/dma/xilinx_axidma.c
-@@ -71,8 +71,10 @@ enum {
- enum {
-     DMASR_HALTED = 1,
-     DMASR_IDLE  = 2,
-+    DMASR_SLVERR = 1 << 5,
-     DMASR_IOC_IRQ  = 1 << 12,
-     DMASR_DLY_IRQ  = 1 << 13,
-+    DMASR_ERR_IRQ  = 1 << 14,
+diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
+index 7d1fd37b4a..05d41bd548 100644
+--- a/hw/net/xilinx_axienet.c
++++ b/hw/net/xilinx_axienet.c
+@@ -847,7 +847,7 @@ static ssize_t eth_rx(NetClientState *nc, const uint8_t *buf, size_t size)
+     axienet_eth_rx_notify(s);
  
-     DMASR_IRQ_MASK = 7 << 12
- };
-@@ -190,17 +192,27 @@ static inline int streamid_from_addr(hwaddr addr)
-     return sid;
+     enet_update_irq(s);
+-    return size;
++    return s->rxpos;
  }
  
--static void stream_desc_load(struct Stream *s, hwaddr addr)
-+static MemTxResult stream_desc_load(struct Stream *s, hwaddr addr)
- {
-     struct SDesc *d = &s->desc;
- 
--    address_space_read(&s->dma->as, addr, MEMTXATTRS_UNSPECIFIED, d, sizeof *d);
-+    MemTxResult result = address_space_read(&s->dma->as,
-+                                            addr, MEMTXATTRS_UNSPECIFIED,
-+                                            d, sizeof *d);
-+    if (result != MEMTX_OK) {
-+        s->regs[R_DMACR] &= ~DMACR_RUNSTOP;
-+        s->regs[R_DMASR] |= DMASR_HALTED;
-+        s->regs[R_DMASR] |= DMASR_SLVERR;
-+        s->regs[R_DMASR] |= DMASR_ERR_IRQ;
-+        return result;
-+    }
- 
-     /* Convert from LE into host endianness.  */
-     d->buffer_address = le64_to_cpu(d->buffer_address);
-     d->nxtdesc = le64_to_cpu(d->nxtdesc);
-     d->control = le32_to_cpu(d->control);
-     d->status = le32_to_cpu(d->status);
-+    return result;
- }
- 
- static void stream_desc_store(struct Stream *s, hwaddr addr)
+ static size_t
 -- 
 2.34.1
 
