@@ -4,104 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BCFBC25B76
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 14:23:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D87C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 14:28:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE8bE-00060c-OS; Mon, 03 Jun 2024 10:23:48 -0400
+	id 1sE8fS-0008CH-A2; Mon, 03 Jun 2024 10:28:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sE8bC-0005sE-Sw
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:23:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1sE8fP-0008C5-Nb
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:28:08 -0400
+Received: from mail-bn8nam12on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2418::600]
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sE8bB-0003Go-6s
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:23:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717424624;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=t4dOFUGvuWUT6GfEY9yJdHEE3meFeaBpFGLzxbYoJA4=;
- b=jCDI+l8YZCPwHpUG4rhslg+He7E8A7b4kKAbji+A0zjD3x1Xq7uuMoFTBbAQSMGzPFGflu
- lx0+S7PZWKjmJDz0K2cpTB608SwGd8hQem890BbVDR0UO44DKfPJFdjOloBp+fgoH5wYCD
- n1yNjR6Myjj6lg2+hRux7plaj6mF7nE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-439-vsfcmJbiNfupUUxQuWIGCQ-1; Mon, 03 Jun 2024 10:23:42 -0400
-X-MC-Unique: vsfcmJbiNfupUUxQuWIGCQ-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-35e0f8bcc3cso1648665f8f.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 07:23:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717424622; x=1718029422;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=t4dOFUGvuWUT6GfEY9yJdHEE3meFeaBpFGLzxbYoJA4=;
- b=KDaLchbAngiiHbvDs2fSZMx612qKfdd6TPB8tuGSRxEIerDjn3nBha8lz8U1Roa7+J
- bJgHjNeLZCxAOivrkoOdg8FDRfPGcrBf563VtveGI/ERIBPDKLSWq8Mre61yxZwH+yfh
- iGGdDTvqj9JEw4D0S/B4iR4qg7dhGjQ9kb9GkurmhOW1SttIfD1P1T1uL7qqc4jJZY+L
- OXucB5c7JDwydsW2XOFNzNSHcNH4o6vhVHU1GD2tdlMSY1TOHesLM1mCNwcLBVsXZN85
- nQyhlLjSdgeKpFZ3WwDNDDoS4GU04tXq0k1AjDBLiKSUpCwu6Z3nlHGmrHQfbyrDT/Xd
- H/TA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJSHbwuXB45UKyvA324xvAWK+mQ/n6efjRAuPI3kmxjdMMV9HII2t7egt8fpzeA8paD3Bx07sy9lJ8tgrKw0tg2x211bA=
-X-Gm-Message-State: AOJu0YxKx91Pt4RS+LKDgzyaEpVRC9wLoW9G33LOfR/YIpi31PljVIKJ
- tvoWgIgjYwez1GAR4cJizAMLrmR7VgJdp83pZOSFKP3NHu9qIALJyzJoD59PAzihrhmmDkQxB2q
- FekdCE0o8P64UDCDGk1379RrgWKDes/dv+bLVeE+TZS6li/5Dx7/M
-X-Received: by 2002:a5d:6d05:0:b0:354:fbb6:1b16 with SMTP id
- ffacd0b85a97d-35e0f30a906mr8973382f8f.52.1717424621805; 
- Mon, 03 Jun 2024 07:23:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHNgZyzg4Vrawz/lVNivWG/YU165NivQhUTt1Ba51w9/Or6Ji7NbMNU3PGwWZc/o3/dH2IyVw==
-X-Received: by 2002:a5d:6d05:0:b0:354:fbb6:1b16 with SMTP id
- ffacd0b85a97d-35e0f30a906mr8973350f8f.52.1717424621409; 
- Mon, 03 Jun 2024 07:23:41 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35e57474921sm3922411f8f.80.2024.06.03.07.23.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 07:23:41 -0700 (PDT)
-Message-ID: <0d612695-09ed-4ef1-8994-4091803779fb@redhat.com>
-Date: Mon, 3 Jun 2024 16:23:39 +0200
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1sE8fN-0004ML-0V
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 10:28:07 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=PdTHxS62v9KwkpZIwbfErFKEgUmhb4itQlGynRvNlTziD6xqbc9PkRRiujzQSMqBnfcCa6hUvIBYSMbZEq50riX4lJ+DhHbt1RFwz4qGhNgaHOtu9Zx6YGnZHYB+pcVhtMsSGe6ZawzZpElXVBS5yO+X9f3FJ/wwmB8R+9IgjDeRg9wvoZV7dfbkV0zTsg9oUyX8lp0WBXqCO8jrbb45VovGrHgYEAkUe8c7RQ3ZMLpPjFzoJUJ6nh85JnIejrRdLqh6Y1YoaphYRx+ZBF+8ROvziifACWotSqe+LlwILHicM6L1R3sBwBmYO/wZAgIfRms33TdPnZZyTF43mdsfkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ckUToxqsPpM77NODzw4ZqJhD7wXURHF7xAye3qu+Moc=;
+ b=VsmIAipN2bNsuwYbX46eo0Dm4pDPqw6DyXvIot+YpQTlNlKwl7B5mZWVYJ0AA/1JzHtbxEKWmb2Rxpmk88J9woLbvKPMnGYIZy+jdF7QVPttWLpFCOoo72l25AkGFRyDNu2zOoEbrXcgFa4OJ2OjnXBvRG4MCdF2/qZ11nhfQQstQVYAmdvbhFX5rAR4XwCL0eN7zdHVhYVKXiKNQKoaFqyAAaQyHc8XP9UaozjQxjS0BSX7Wghx7yggGFfhPnWdz+s+zZNyfEd98WSOucIa++cGEpzf43zyanIflvF8rg+cDK/OPsAbmMHXY58kMZ6hNsXCZ6mS4DOQPJt/v+/06g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ckUToxqsPpM77NODzw4ZqJhD7wXURHF7xAye3qu+Moc=;
+ b=d+i0YfuFOyTc6zRGrW1b4dPI7kYuAtpYjMZGIieRQnec6zleEUQcRW7HvNtlxI5GETVoI7l16SeC53TItwytUPyB3bmR007gkORPaJPEpY5KbwzBqFJO/SsVazF29xSuh75dLzJpOjIhZthOzPxfRTIq3GQoO5RDg5KHdPn8uNU=
+Received: from BL1PR13CA0165.namprd13.prod.outlook.com (2603:10b6:208:2bd::20)
+ by IA0PR12MB8893.namprd12.prod.outlook.com (2603:10b6:208:484::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.21; Mon, 3 Jun
+ 2024 14:27:58 +0000
+Received: from BL02EPF0001A0FE.namprd03.prod.outlook.com
+ (2603:10b6:208:2bd:cafe::a8) by BL1PR13CA0165.outlook.office365.com
+ (2603:10b6:208:2bd::20) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7656.14 via Frontend
+ Transport; Mon, 3 Jun 2024 14:27:58 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BL02EPF0001A0FE.mail.protection.outlook.com (10.167.242.105) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7633.15 via Frontend Transport; Mon, 3 Jun 2024 14:27:58 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Mon, 3 Jun
+ 2024 09:27:57 -0500
+Date: Mon, 3 Jun 2024 09:27:44 -0500
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+CC: Pankaj Gupta <pankaj.gupta@amd.com>, <qemu-devel@nongnu.org>,
+ <brijesh.singh@amd.com>, <dovmurik@linux.ibm.com>, <armbru@redhat.com>,
+ <xiaoyao.li@intel.com>, <pbonzini@redhat.com>, <thomas.lendacky@amd.com>,
+ <isaku.yamahata@intel.com>, <kvm@vger.kernel.org>, <anisinha@redhat.com>
+Subject: Re: [PATCH v4 29/31] hw/i386/sev: Allow use of pflash in conjunction
+ with -bios
+Message-ID: <wfu7az7ofb5lxciw2ewxoyf5xggex5npr7j2qookddfuaioikk@3lf2nzapab5c>
+References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
+ <20240530111643.1091816-30-pankaj.gupta@amd.com>
+ <Zl2vP9hohrgaPMTs@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 19/19] intel_iommu: Check compatibility with host IOMMU
- capabilities
-Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
- peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
- <20240603061023.269738-20-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240603061023.269738-20-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zl2vP9hohrgaPMTs@redhat.com>
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A0FE:EE_|IA0PR12MB8893:EE_
+X-MS-Office365-Filtering-Correlation-Id: d96aa5c8-6ee1-422a-b906-08dc83d95ded
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230031|82310400017|36860700004|376005|1800799015; 
+X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?YgdQaNQs8Hv22k80MJXxhAvkj/AuOZkd539jKstls9oZ/HAGomUf9ARSAz?=
+ =?iso-8859-1?Q?jynWm7PX5Jk2T1InRByLcAsv/gmDxt8eTCjbvQUMTH5rAwuMXJWykA0mmc?=
+ =?iso-8859-1?Q?yU4Q0sRLlKjDfUQEj3G4awddnvbzDpGdKYzZnHPzHAyItSpSOW7gnlQj5D?=
+ =?iso-8859-1?Q?LL3wyZzJ9eLEpw9Kl4icpgUE0z4zqePCinP+aApyS1FQa7WYVveRiQaMjC?=
+ =?iso-8859-1?Q?wDwN99duh4KQAfr8+pXfaPYc41jFccxk53uRPQW8KaPyz69MA2V266Caab?=
+ =?iso-8859-1?Q?aDVp2VLGk0Wxgz2UTrc4Fkri9ZY4fjuEJfEuhPzTm7IpUcNWafIEUj4mwJ?=
+ =?iso-8859-1?Q?e2ecfKmPytU7zfX/esQgturGZeAtvX/bowCGI/GMinovBh/+jPAuycEYS+?=
+ =?iso-8859-1?Q?ah6qOb/2n4fwGxOekHVmtvkcuGEPilXYjOVhuS6QWkguocZLjqdW9Gaejb?=
+ =?iso-8859-1?Q?Vi2ZPBaU9YFD9X0VuLK2cTGvZ+M9/16Tqd9ZrHoESELLBTTaYpEJOL/rD6?=
+ =?iso-8859-1?Q?IbvMjZxrbKC5LqlVTmbEI9ZSjxEf9s4892X5O59TKnt029+tD9wn7NJcvX?=
+ =?iso-8859-1?Q?2K2ERFfd2DxvcJulK9umR7v7Q83LBaprPIOgIBy6Cz2SiHd2gy9DiQYa1m?=
+ =?iso-8859-1?Q?fR79is3ReVAzjnf0yte5/fiuzIiCs5kevUtJySCO25UUMgTUTBjagW0iU3?=
+ =?iso-8859-1?Q?kZC1rlqUvwRFryvnOasCm3byirW8YcrJ/aAO3Y9d/t1RK4iNf3HTxu3R/z?=
+ =?iso-8859-1?Q?f+xG9Yrx7Kd7tRa0No47Y+tg1TlpmDJl4zRzHmkHujokqHC8mQub6vdc3T?=
+ =?iso-8859-1?Q?REbfj00j5tUujvUT/FYpVatVR00cza4+VNV1VFtTXm3qvEWe5e9PF4xthw?=
+ =?iso-8859-1?Q?pVe89XfpeoLfM6R6DtwXlawDQqSQ4C163Y5cJuU0RxYIwxmDOxUoW8Zg7I?=
+ =?iso-8859-1?Q?9SoM6m8paLLXtqw1Y2OJ033ScPke7lQlS5NNF53oNJ/TnD6BggI2pC2q64?=
+ =?iso-8859-1?Q?IO4zChrTz6UvFAs6iemJ/9JOuIB+g71jfxzMtyGpIEx5N3QbAuMEUB9zcB?=
+ =?iso-8859-1?Q?RTNJz29/oA8wTz3QsnH2nqgiOHgN16Ssb8spArNq45CZLHa3fi4ehuuJbT?=
+ =?iso-8859-1?Q?GGmQhEJuMthOpoQyyodUJ6NgXDG66BkcFaHUtyiQSani4KIZgmNYph6m6Z?=
+ =?iso-8859-1?Q?0puwhge6mnu49pp51wSYIRmfQsEm2ufK96ldyQ0YZifSWZZlgk7jQEUrVW?=
+ =?iso-8859-1?Q?dWi7qujlemb0RheYdtsKv4Vf3EQZ6lm/VKNLpcHNfYGw610YcyXpw6uZXO?=
+ =?iso-8859-1?Q?uUJA79UCEKNVjLCsgP8VOJbPxa5ZmljtD0+wSxmtcb4/jVNKBxx99wZLlk?=
+ =?iso-8859-1?Q?8egHztEAYt?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(82310400017)(36860700004)(376005)(1800799015); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2024 14:27:58.6301 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d96aa5c8-6ee1-422a-b906-08dc83d95ded
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A0FE.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8893
+Received-SPF: permerror client-ip=2a01:111:f403:2418::600;
+ envelope-from=Michael.Roth@amd.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,74 +148,179 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-to:  Michael Roth <michael.roth@amd.com>
+From:  Michael Roth via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
+On Mon, Jun 03, 2024 at 12:55:43PM +0100, Daniel P. Berrangé wrote:
+> On Thu, May 30, 2024 at 06:16:41AM -0500, Pankaj Gupta wrote:
+> > From: Michael Roth <michael.roth@amd.com>
+> > 
+> > SEV-ES and SEV-SNP support OVMF images with non-volatile storage in
+> > cases where the storage area is generated as a separate image as part
+> > of the OVMF build process.
+> 
+> IIUC, right now all OVMF builds for SEV/-ES/-SNP should be done as so
+> called "stateless" image. ie *without* any separate NVRAM image, because
+> that image will not be covered by the VM boot measurement and thus the
+> NVRAM state is liable to undermine  trust of the VM.
 
-On 6/3/24 08:10, Zhenzhong Duan wrote:
-> If check fails, host device (either VFIO or VDPA device) is not
-> compatible with current vIOMMU config and should not be passed to
-> guest.
->
-> Only aw_bits is checked for now, we don't care other capabilities
-we don't care about other caps
-> before scalable modern mode is introduced.
->
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  hw/i386/intel_iommu.c | 29 +++++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
->
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 747c988bc4..d8202a77dd 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -3819,6 +3819,30 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->      return vtd_dev_as;
->  }
->  
-> +static bool vtd_check_hdev(IntelIOMMUState *s, HostIOMMUDevice *hiod,
-> +                           Error **errp)
-> +{
-> +    HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
-> +    int ret;
-> +
-> +    if (!hiodc->get_cap) {
-> +        error_setg(errp, ".get_cap() not implemented");
-> +        return false;
-> +    }
-> +
-> +    /* Common checks */
-> +    ret = hiodc->get_cap(hiod, HOST_IOMMU_DEVICE_CAP_AW_BITS, errp);
-> +    if (ret < 0) {
-> +        return false;
-> +    }
-> +    if (s->aw_bits > ret) {
-> +        error_setg(errp, "aw-bits %d > host aw-bits %d", s->aw_bits, ret);
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->  static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
->                                       HostIOMMUDevice *hiod, Error **errp)
->  {
-> @@ -3842,6 +3866,11 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
->          return false;
->      }
->  
-> +    if (!vtd_check_hdev(s, hiod, errp)) {
-> +        vtd_iommu_unlock(s);
-> +        return false;
-> +    }
-> +
->      vtd_hdev = g_malloc0(sizeof(VTDHostIOMMUDevice));
->      vtd_hdev->bus = bus;
->      vtd_hdev->devfn = (uint8_t)devfn;
-Eric
+Technically both stateless and stateful are supported for SEV-ES, so
+this is mainly to provide similar support for SNP. Unfortunately we
+can't re-use the existing QEMU topology because of the limitations are
+using read-only ROMs.
 
+But I'm not sure it's something we have a hard requirement for, and even
+then maybe there are other alternatives to consider that would offer
+better security.
+
+In any case, I think it makes total sense to decouple this from the
+series and re-submit this as a separate patchset if we determine that
+it's truly necessary (and if so, address Paolo's comments, and handle the
+64K-alignment thing in the context of that work).
+
+So for now maybe we should plan to drop it from qemu-coco-queue and
+focus on the stateless builds for the initial code merge.
+
+-Mike
+
+> 
+> Using NVRAM for SNP is theoretically possible in future but would be
+> reliant on SVSM providing a secure encryption mechanism on the storage.
+> 
+> 
+> 
+> > 
+> > Currently these are exposed with unit=0 corresponding to the actual BIOS
+> > image, and unit=1 corresponding to the storage image. However, pflash
+> > images are mapped guest memory using read-only memslots, which are not
+> > allowed in conjunction with guest_memfd-backed ranges. This makes that
+> > approach unusable for SEV-SNP, where the BIOS range will be encrypted
+> > and mapped as private guest_memfd-backed memory. For this reason,
+> > SEV-SNP will instead rely on -bios to handle loading the BIOS image.
+> > 
+> > To allow for pflash to still be used for the storage image, rework the
+> > existing logic to remove assumptions that unit=0 contains the BIOS image
+> > when SEV-SNP, so that it can instead be used to handle only the storage
+> > image.
+> 
+> Mixing both BIOS and pflash is pretty undesirable, not least because
+> that setup cannot be currently represented by the firmware descriptor
+> format described by docs/interop/firmware.json.
+> 
+> So at the very least this patch is incomplete, as it would need to
+> propose changes to the firmware.json to allow this setup to be expressed.
+> 
+> I really wish we didn't have to introduce this though - is there really
+> no way to make it possible to use pflash for both CODE & VARS with SNP,
+> as is done with traditional VMs, so we don't diverge in setup, needing
+> yet more changes up the mgmt stack ?
+> 
+> > 
+> > Signed-off-by: Michael Roth <michael.roth@amd.com>
+> > Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
+> > ---
+> >  hw/i386/pc_sysfw.c | 47 +++++++++++++++++++++++++++++-----------------
+> >  1 file changed, 30 insertions(+), 17 deletions(-)
+> > 
+> > diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+> > index def77a442d..7f97e62b16 100644
+> > --- a/hw/i386/pc_sysfw.c
+> > +++ b/hw/i386/pc_sysfw.c
+> > @@ -125,21 +125,10 @@ void pc_system_flash_cleanup_unused(PCMachineState *pcms)
+> >      }
+> >  }
+> >  
+> > -/*
+> > - * Map the pcms->flash[] from 4GiB downward, and realize.
+> > - * Map them in descending order, i.e. pcms->flash[0] at the top,
+> > - * without gaps.
+> > - * Stop at the first pcms->flash[0] lacking a block backend.
+> > - * Set each flash's size from its block backend.  Fatal error if the
+> > - * size isn't a non-zero multiple of 4KiB, or the total size exceeds
+> > - * pcms->max_fw_size.
+> > - *
+> > - * If pcms->flash[0] has a block backend, its memory is passed to
+> > - * pc_isa_bios_init().  Merging several flash devices for isa-bios is
+> > - * not supported.
+> > - */
+> > -static void pc_system_flash_map(PCMachineState *pcms,
+> > -                                MemoryRegion *rom_memory)
+> > +static void pc_system_flash_map_partial(PCMachineState *pcms,
+> > +                                        MemoryRegion *rom_memory,
+> > +                                        hwaddr offset,
+> > +                                        bool storage_only)
+> >  {
+> >      X86MachineState *x86ms = X86_MACHINE(pcms);
+> >      PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+> > @@ -154,6 +143,8 @@ static void pc_system_flash_map(PCMachineState *pcms,
+> >  
+> >      assert(PC_MACHINE_GET_CLASS(pcms)->pci_enabled);
+> >  
+> > +    total_size = offset;
+> > +
+> >      for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
+> >          hwaddr gpa;
+> >  
+> > @@ -192,7 +183,7 @@ static void pc_system_flash_map(PCMachineState *pcms,
+> >          sysbus_realize_and_unref(SYS_BUS_DEVICE(system_flash), &error_fatal);
+> >          sysbus_mmio_map(SYS_BUS_DEVICE(system_flash), 0, gpa);
+> >  
+> > -        if (i == 0) {
+> > +        if (i == 0 && !storage_only) {
+> >              flash_mem = pflash_cfi01_get_memory(system_flash);
+> >              if (pcmc->isa_bios_alias) {
+> >                  x86_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem,
+> > @@ -211,6 +202,25 @@ static void pc_system_flash_map(PCMachineState *pcms,
+> >      }
+> >  }
+> >  
+> > +/*
+> > + * Map the pcms->flash[] from 4GiB downward, and realize.
+> > + * Map them in descending order, i.e. pcms->flash[0] at the top,
+> > + * without gaps.
+> > + * Stop at the first pcms->flash[0] lacking a block backend.
+> > + * Set each flash's size from its block backend.  Fatal error if the
+> > + * size isn't a non-zero multiple of 4KiB, or the total size exceeds
+> > + * pcms->max_fw_size.
+> > + *
+> > + * If pcms->flash[0] has a block backend, its memory is passed to
+> > + * pc_isa_bios_init().  Merging several flash devices for isa-bios is
+> > + * not supported.
+> > + */
+> > +static void pc_system_flash_map(PCMachineState *pcms,
+> > +                                MemoryRegion *rom_memory)
+> > +{
+> > +    pc_system_flash_map_partial(pcms, rom_memory, 0, false);
+> > +}
+> > +
+> >  void pc_system_firmware_init(PCMachineState *pcms,
+> >                               MemoryRegion *rom_memory)
+> >  {
+> > @@ -238,9 +248,12 @@ void pc_system_firmware_init(PCMachineState *pcms,
+> >          }
+> >      }
+> >  
+> > -    if (!pflash_blk[0]) {
+> > +    if (!pflash_blk[0] || sev_snp_enabled()) {
+> >          /* Machine property pflash0 not set, use ROM mode */
+> >          x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, false);
+> > +        if (sev_snp_enabled()) {
+> > +            pc_system_flash_map_partial(pcms, rom_memory, 3653632, true);
+> > +        }
+> >      } else {
+> >          if (kvm_enabled() && !kvm_readonly_mem_enabled()) {
+> >              /*
+> > -- 
+> > 2.34.1
+> > 
+> 
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> 
 
