@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8947C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:55:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1442DC27C50
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:55:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEBsb-0007A1-Ra; Mon, 03 Jun 2024 13:53:57 -0400
+	id 1sEBse-0007DE-Tv; Mon, 03 Jun 2024 13:54:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sEBsI-0006zc-Ui
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:40 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1sEBsQ-00074K-7O
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:46 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sEBsF-00008c-2j
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:38 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-35dc9cef36dso3806445f8f.3
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 10:53:33 -0700 (PDT)
+ id 1sEBsK-0000CF-87
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:45 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4212f0444efso1036005e9.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 10:53:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717437212; x=1718042012; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717437219; x=1718042019; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nwO5Xk/JBsiCE4LMX0EusCkO9JTloZRZc0GlJ2FQNxg=;
- b=S6JV52Q4deEVTgCgnFc0zBWfQA32ss4/k6GSiy5q4dkeBN4nSq07UOqhEMZZoZBgd2
- QgxCWPDGS23/izh0EakrOUf2/I52ZAYn5vyEhDxQMYUIwR51FxUM2t2IeohvlfZmWWbx
- XU6VQGMFhg+4QuKma7faYE50nZ+u7afJjXIuvIlk641mxQkyaKTSsSd19stLmuquGsUY
- n/fHC1lQbExp0lpeYIuto8wjluyzgZdRHN+2IkQGRYbK4Vnfgy0jr7MomSoIziAvKcHx
- iF+4oFnHJfSxMxqFvHO38YbUqjc9M8LO7NMoV+qeRR5HZonfcDJzz1Q0vyvm1281TP9S
- BmBA==
+ bh=eyETGJ7FAfbleq050QORjF2RnGfBN+QWuLIy+JDRMVY=;
+ b=B9WqJp7T5qewCUqi19y/YaV+ywFqQWyX3UK/Blp0V676VWR02k+sPCvlYgAsXu0fHs
+ vkAhawMpk4gY7RM1Y9IKESfbTVR3eXFJgguv3EHJ4RLkFTXrFu6mbi6RNp5XMDv25y1C
+ hBVgvQaVfpP/iGQ3Qllg6duSlWfJ2OyFSI7VmfGSBRr6+FZ2TpgKYmjHAqe/9oy15NM6
+ LtJ7PFmfWt4plzEeYBEY/zYujxFfF/gg20NDaip2EQ3NBAwtkOzQTgr4RRCh2xPv1Hhh
+ CRBRvhbAUHn+jBraVsqbi1Lgf4JDTDTukQ00pniVGknuc1zKoYrIa4riMG/0UrbBXCYq
+ /J7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717437212; x=1718042012;
+ d=1e100.net; s=20230601; t=1717437219; x=1718042019;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nwO5Xk/JBsiCE4LMX0EusCkO9JTloZRZc0GlJ2FQNxg=;
- b=CALDIrlO/fJpgDQrow3eoeP5M4BkC/PiuHMGIw84wYB680uv+4E1hfyZEQ4rcCfm+A
- fElyg9dTcUvN5g9392fmo6CiCM+xB+x2PzogpTtH72PQ+dsIVfiqoq1wXZi4XtaMhIV2
- SltIufNQalIvNWwt0lbe+r9vTRmjm/zM1FRWr29NWm/9WPfkBZj+ppO2ybnx5u2MDeEn
- NO9IGAIEx6MtbUROupIIk6sqfF1WHkXf+ScR416PCxYfSgAJwBT/AxeTVEzzA+yoCXO8
- +wHDWzxHo1WP3bvaJ4ViSkX0kApQnV9zpy0PqJGBisz/2m/BIvJEKYqX824oiSxa4Vtk
- m5xA==
-X-Gm-Message-State: AOJu0YywnQ/7M5sFguzLPeoSi0g0Q/AL+KX+7Lgpp/0epblWpCfIA04P
- ER71LDvIBHJl9oAmYXxMwBy6ouUuHdQRlATeVSdIMvWhGeNpWpXEAgCJkCTUQlI=
-X-Google-Smtp-Source: AGHT+IF1PCBb2CO9/Ha0W0kFzU945k4om4tTwmp9tb4scoZqYEgQk/JoA5gdXNQKPLn7IBQz8Mqlwg==
-X-Received: by 2002:a05:6000:1282:b0:354:f944:11de with SMTP id
- ffacd0b85a97d-35e0f2869f4mr6834901f8f.28.1717437212642; 
- Mon, 03 Jun 2024 10:53:32 -0700 (PDT)
+ bh=eyETGJ7FAfbleq050QORjF2RnGfBN+QWuLIy+JDRMVY=;
+ b=Iiv3+PvodorO3BSRJCLLwsyhOebfD/f2afPCpf360dfBUSni6HR6i6xVNs3+zDURbe
+ mK7B4Xd94U0Q4m2FDEBx5U9N1s579bW0CVXD5uhHpQFZM0F0O7+FyRfsheH+8HhKGzU7
+ FI4x1WtHgTnXL9Mby0K7MULTFvpYFZZa+D0hv0EBMNRY0tBi2X9ffxo6AmQ97sPOZGWB
+ G/+xJSV79AdkLVDEkcBRHtiBTTP4JP730yGEKeGdFe+he28UEZLx0/KucpXcGQjznRwe
+ xbQn1VJhufuUhI/cSE2lWtYZyWKbAeBSPFx9qML3o0uBoEakZYCb/horCb+qbqvcuKGL
+ er8A==
+X-Gm-Message-State: AOJu0Yx5HVrW0kNvIfNp3jk8uoPOqQ+LzhpQjQ1YtActAQKzEWUbFjjp
+ i8YScEvubQP9plGsBNNfWoCACcw+16eJikN1Vq9T7pzDDBNhrv/F9B9cHL2HwNs=
+X-Google-Smtp-Source: AGHT+IEyp+ZrDRNNl/KP8P+0KowrfxCqSN2VJeEl+AQYVMYb3ZClGVFJFksOCYAbPlWBeetPd4V1Rw==
+X-Received: by 2002:a5d:68cf:0:b0:354:f92f:fd00 with SMTP id
+ ffacd0b85a97d-35e0f30c6b5mr6594420f8f.52.1717437218915; 
+ Mon, 03 Jun 2024 10:53:38 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd064bbb1sm9295671f8f.101.2024.06.03.10.53.29
+ ffacd0b85a97d-35dd04d9c89sm9324185f8f.60.2024.06.03.10.53.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 10:53:31 -0700 (PDT)
+ Mon, 03 Jun 2024 10:53:35 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1C8CB5F9FB;
+ by draig.lan (Postfix) with ESMTP id C10975FA08;
  Mon,  3 Jun 2024 18:53:29 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -82,17 +82,18 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  qemu-s390x@nongnu.org, Beraldo Leal <bleal@redhat.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Radoslaw Biernacki <rad@semihalf.com>
-Subject: [PATCH v3 06/12] docs/ci: clean-up references for consistency
-Date: Mon,  3 Jun 2024 18:53:22 +0100
-Message-Id: <20240603175328.3823123-7-alex.bennee@linaro.org>
+Subject: [PATCH v3 12/12] scripts/ci: drive ubuntu/build-environment.yml from
+ lcitool
+Date: Mon,  3 Jun 2024 18:53:28 +0100
+Message-Id: <20240603175328.3823123-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240603175328.3823123-1-alex.bennee@linaro.org>
 References: <20240603175328.3823123-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,87 +116,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Document we have split up build-environment by distro and update the
-references that exist in the code base to be correct.
+Now lcitool can write the package list for us we no longer need to
+duplicate the information directly in build-environment.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240529160934.982373-7-alex.bennee@linaro.org>
+Message-Id: <20240529160934.982373-10-alex.bennee@linaro.org>
 ---
- docs/devel/ci-runners.rst.inc                       | 13 ++++++-------
- .../custom-runners/ubuntu-22.04-aarch32.yml         |  2 +-
- .../custom-runners/ubuntu-22.04-aarch64.yml         |  2 +-
- .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml  |  2 +-
- scripts/ci/setup/{ => ubuntu}/build-environment.yml |  0
- 5 files changed, 9 insertions(+), 10 deletions(-)
- rename scripts/ci/setup/{ => ubuntu}/build-environment.yml (100%)
+ scripts/ci/setup/ubuntu/build-environment.yml | 131 +-----------------
+ 1 file changed, 7 insertions(+), 124 deletions(-)
 
-diff --git a/docs/devel/ci-runners.rst.inc b/docs/devel/ci-runners.rst.inc
-index 7817001fb2..67b23d3719 100644
---- a/docs/devel/ci-runners.rst.inc
-+++ b/docs/devel/ci-runners.rst.inc
-@@ -41,19 +41,18 @@ those hosts.  This would look like::
- Build environment
- ~~~~~~~~~~~~~~~~~
+diff --git a/scripts/ci/setup/ubuntu/build-environment.yml b/scripts/ci/setup/ubuntu/build-environment.yml
+index e82097b465..edf1900b3e 100644
+--- a/scripts/ci/setup/ubuntu/build-environment.yml
++++ b/scripts/ci/setup/ubuntu/build-environment.yml
+@@ -32,135 +32,18 @@
+       when:
+         - ansible_facts['distribution'] == 'Ubuntu'
  
--The ``scripts/ci/setup/build-environment.yml`` Ansible playbook will
--set up machines with the environment needed to perform builds and run
--QEMU tests.  This playbook consists on the installation of various
--required packages (and a general package update while at it).  It
--currently covers a number of different Linux distributions, but it can
--be expanded to cover other systems.
-+The ``scripts/ci/setup/$DISTRO/build-environment.yml`` Ansible
-+playbook will set up machines with the environment needed to perform
-+builds and run QEMU tests. This playbook consists on the installation
-+of various required packages (and a general package update while at
-+it).
+-    # lcitool variables -f json ubuntu-2204 qemu | jq -r '.pkgs[]' | xargs -n 1 echo "-"
+-    - name: Install basic packages to build QEMU on Ubuntu 22.04
+-      package:
+-        name:
+-          - bash
+-          - bc
+-          - bison
+-          - bsdextrautils
+-          - bzip2
+-          - ca-certificates
+-          - ccache
+-          - clang
+-          - dbus
+-          - debianutils
+-          - diffutils
+-          - exuberant-ctags
+-          - findutils
+-          - flex
+-          - g++
+-          - gcc
+-          - gcovr
+-          - genisoimage
+-          - gettext
+-          - git
+-          - hostname
+-          - libaio-dev
+-          - libasan5
+-          - libasound2-dev
+-          - libattr1-dev
+-          - libbpf-dev
+-          - libbrlapi-dev
+-          - libbz2-dev
+-          - libc6-dev
+-          - libcacard-dev
+-          - libcap-ng-dev
+-          - libcapstone-dev
+-          - libcmocka-dev
+-          - libcurl4-gnutls-dev
+-          - libdaxctl-dev
+-          - libdrm-dev
+-          - libepoxy-dev
+-          - libfdt-dev
+-          - libffi-dev
+-          - libgbm-dev
+-          - libgcrypt20-dev
+-          - libglib2.0-dev
+-          - libglusterfs-dev
+-          - libgnutls28-dev
+-          - libgtk-3-dev
+-          - libibumad-dev
+-          - libibverbs-dev
+-          - libiscsi-dev
+-          - libjemalloc-dev
+-          - libjpeg-turbo8-dev
+-          - libjson-c-dev
+-          - liblttng-ust-dev
+-          - liblzo2-dev
+-          - libncursesw5-dev
+-          - libnfs-dev
+-          - libnuma-dev
+-          - libpam0g-dev
+-          - libpcre2-dev
+-          - libpixman-1-dev
+-          - libpng-dev
+-          - libpulse-dev
+-          - librbd-dev
+-          - librdmacm-dev
+-          - libsasl2-dev
+-          - libsdl2-dev
+-          - libsdl2-image-dev
+-          - libseccomp-dev
+-          - libslirp-dev
+-          - libsnappy-dev
+-          - libspice-protocol-dev
+-          - libssh-dev
+-          - libsystemd-dev
+-          - libtasn1-6-dev
+-          - libubsan1
+-          - libudev-dev
+-          - liburing-dev
+-          - libusb-1.0-0-dev
+-          - libusbredirhost-dev
+-          - libvdeplug-dev
+-          - libvirglrenderer-dev
+-          - libvte-2.91-dev
+-          - libxml2-dev
+-          - libzstd-dev
+-          - llvm
+-          - locales
+-          - make
+-          - meson
+-          - multipath-tools
+-          - ncat
+-          - nettle-dev
+-          - ninja-build
+-          - openssh-client
+-          - pkgconf
+-          - python3
+-          - python3-numpy
+-          - python3-opencv
+-          - python3-pillow
+-          - python3-pip
+-          - python3-sphinx
+-          - python3-sphinx-rtd-theme
+-          - python3-venv
+-          - python3-yaml
+-          - rpm2cpio
+-          - sed
+-          - sparse
+-          - systemtap-sdt-dev
+-          - tar
+-          - tesseract-ocr
+-          - tesseract-ocr-eng
+-          - texinfo
+-          - xfslibs-dev
+-          - zlib1g-dev
+-        state: present
++    # the package lists are updated by "make lcitool-refresh"
++    - name: Include package lists based on OS and architecture
++      include_vars:
++        file: "ubuntu-2204-{{ ansible_facts['architecture'] }}.yaml"
+       when:
+         - ansible_facts['distribution'] == 'Ubuntu'
+         - ansible_facts['distribution_version'] == '22.04'
++        - ansible_facts['architecture'] == 'aarch64' or ansible_facts['architecture'] == 'x86_64'
  
- The minimum required version of Ansible successfully tested in this
- playbook is 2.8.0 (a version check is embedded within the playbook
- itself).  To run the playbook, execute::
- 
-   cd scripts/ci/setup
--  ansible-playbook -i inventory build-environment.yml
-+  ansible-playbook -i inventory $DISTRO/build-environment.yml
- 
- Please note that most of the tasks in the playbook require superuser
- privileges, such as those from the ``root`` account or those obtained
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml b/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml
-index b8a0d75162..8727687e2b 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch32.yml
-@@ -1,5 +1,5 @@
- # All ubuntu-22.04 jobs should run successfully in an environment
--# setup by the scripts/ci/setup/qemu/build-environment.yml task
-+# setup by the scripts/ci/setup/ubuntu/build-environment.yml task
- # "Install basic packages to build QEMU on Ubuntu 22.04"
- 
- ubuntu-22.04-aarch32-all:
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml b/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
-index 374b0956c3..263a3c2140 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
-@@ -1,5 +1,5 @@
- # All ubuntu-22.04 jobs should run successfully in an environment
--# setup by the scripts/ci/setup/qemu/build-environment.yml task
-+# setup by the scripts/ci/setup/ubuntu/build-environment.yml task
- # "Install basic packages to build QEMU on Ubuntu 22.04"
- 
- ubuntu-22.04-aarch64-all-linux-static:
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-index 25935048e2..69ddd3e7d5 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-@@ -1,5 +1,5 @@
- # All ubuntu-22.04 jobs should run successfully in an environment
--# setup by the scripts/ci/setup/build-environment.yml task
-+# setup by the scripts/ci/setup/ubuntu/build-environment.yml task
- # "Install basic packages to build QEMU on Ubuntu 22.04"
- 
- ubuntu-22.04-s390x-all-linux:
-diff --git a/scripts/ci/setup/build-environment.yml b/scripts/ci/setup/ubuntu/build-environment.yml
-similarity index 100%
-rename from scripts/ci/setup/build-environment.yml
-rename to scripts/ci/setup/ubuntu/build-environment.yml
+-    # not all packages are available for all architectures
+-    - name: Install additional packages to build QEMU on Ubuntu 22.04
++    - name: Install packages for QEMU on Ubuntu 22.04
+       package:
+-        name:
+-          - libpmem-dev
+-          - libspice-server-dev
+-          - libxen-dev
+-        state: present
++        name: "{{ packages }}"
+       when:
+         - ansible_facts['distribution'] == 'Ubuntu'
+         - ansible_facts['distribution_version'] == '22.04'
 -- 
 2.39.2
 
