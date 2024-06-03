@@ -4,75 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B182C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE92C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE6Vn-0002S1-VY; Mon, 03 Jun 2024 08:10:04 -0400
+	id 1sE6cZ-00051O-ET; Mon, 03 Jun 2024 08:17:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sE6Vm-0002Rf-Id
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:10:02 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sE6cP-0004zS-P2
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:16:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sE6Vj-0001HZ-MR
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:10:02 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 626406CA5C;
- Mon,  3 Jun 2024 15:10:41 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 690F1DE5F5;
- Mon,  3 Jun 2024 15:09:54 +0300 (MSK)
-Message-ID: <fedb5321-a4e8-407b-bf4d-678be0c00d93@tls.msk.ru>
-Date: Mon, 3 Jun 2024 15:09:54 +0300
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sE6cM-0002yK-6c
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:16:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717417007;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=khm7CsJRM8Y9X5kFUTCtue9EJoYIFQEkaCB1J9W/xbk=;
+ b=cEufK3VfiZJ7wIuCz+KrjJIKJPxz3j1PkpghtDxKhLeme+cIXSDw+0mxEum9vEi22mC4FQ
+ MIEv3wLmwKE0U3z+bRWtKIhBZ4ssqjCiuQcx+HV0cDkeZW04QXnLVdYEP6LOx7E/CNIZvS
+ 0Ohb0la/NAZ0g6Oq9/Z1LpskHpwVMoY=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-462-LEsjrs4lPXe4L42ewqBgAg-1; Mon, 03 Jun 2024 08:16:45 -0400
+X-MC-Unique: LEsjrs4lPXe4L42ewqBgAg-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-43ff7b96a3fso33042531cf.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 05:16:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717417005; x=1718021805;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=khm7CsJRM8Y9X5kFUTCtue9EJoYIFQEkaCB1J9W/xbk=;
+ b=YtPRjoUVDSYh+TkNY72F101HkDVrBZRjnDGYBxuCmUyj9WZ2Q4WuhXbeh+EDMwaaPc
+ TGgQkoE5Bk2zgtlfuvRVataj0GNTzvbCr3vhybMRLHxdtAeV2pfkJVMFL/Ya8b1YbN0n
+ u5q2Pahl9cRPDfWgoOfFAIK9DkuLlfo3krxgviLhNOaCD/Q6vennDqWH/cvJVz085sNM
+ lA/5lm8z16mbWRrM2rtB/ZeyDeWXrz5bfC6We8fFPDJm+iGMEUGw5u5Pi7943GkEmDEr
+ c7qfj4taDuP69rnyqmVJYcGIwT9RoJC8nGnR6J64dgHoo5y91TqkDbebg9RwWJqbQ9Ya
+ yRKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVLnbEjlJVtZqtU5ZN7uKgLNH3R178sRT9qovvxoXz5MLyRp4hXw2ErhD/hfxIj9HTCu6hpjZ+su+l0+R++DZ1ZJ56g68M=
+X-Gm-Message-State: AOJu0YwetKk3dibqttSVsa+DqJmcdr/lBxXtpw6dKRUZJPLRHWI0qEjt
+ IAl1I95iDQpuT+jAjZiw6AdFWkdHWGVv6/7SI7n1AXueJofRbx1uHvmtPNLrjbCqd6wxGihzTzb
+ gAKDuiQwAtTwr5+gznm1iC52iRJK4Yv94gTWQ7UXKRJmwSMV5alRd
+X-Received: by 2002:ac8:5e54:0:b0:43a:ed56:4c86 with SMTP id
+ d75a77b69052e-43ff550b0c3mr125929911cf.56.1717417004908; 
+ Mon, 03 Jun 2024 05:16:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1E5BtGp/rMWlaqFiGqGfgRcOQhz2hAE+8faqdY/5SDxGrrNrxoMFDoAZKJbunMliPWfM1lw==
+X-Received: by 2002:ac8:5e54:0:b0:43a:ed56:4c86 with SMTP id
+ d75a77b69052e-43ff550b0c3mr125929621cf.56.1717417004500; 
+ Mon, 03 Jun 2024 05:16:44 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-43ff23a419asm38646031cf.15.2024.06.03.05.16.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Jun 2024 05:16:44 -0700 (PDT)
+Message-ID: <753187fa-d165-46da-ba0c-f74683f5d850@redhat.com>
+Date: Mon, 3 Jun 2024 14:16:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: qemu CI & ccache: cache size is too small
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <4ccbaa65-41cf-4317-9dfb-2c9ab17296d0@tls.msk.ru>
- <5d4de3b2-a940-44e1-bde9-77e8389fb58c@redhat.com>
- <61ae842e-179e-453a-b109-e8801354b9e4@tls.msk.ru>
- <Zl2pAiLgHQWVAYln@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <Zl2pAiLgHQWVAYln@redhat.com>
+Subject: Re: [PATCH v6 01/19] backends: Introduce HostIOMMUDevice abstract
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
+ <20240603061023.269738-2-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240603061023.269738-2-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,34 +109,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-03.06.2024 14:29, Daniel P. Berrangé wrote:
+On 6/3/24 08:10, Zhenzhong Duan wrote:
+> Introduce HostIOMMUDevice as an abstraction of host IOMMU device.
+> 
+> Introduce .realize() to initialize HostIOMMUDevice further after
+> instance init.
+> 
+> Introduce a macro CONFIG_HOST_IOMMU_DEVICE to define the usage
+> for VFIO, and VDPA in the future.
+> 
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   MAINTAINERS                        |  2 ++
+>   include/sysemu/host_iommu_device.h | 51 ++++++++++++++++++++++++++++++
+>   backends/host_iommu_device.c       | 30 ++++++++++++++++++
+>   backends/Kconfig                   |  5 +++
+>   backends/meson.build               |  1 +
+>   5 files changed, 89 insertions(+)
+>   create mode 100644 include/sysemu/host_iommu_device.h
+>   create mode 100644 backends/host_iommu_device.c
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 448dc951c5..1cf2b25beb 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2196,6 +2196,8 @@ M: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>   S: Supported
+>   F: backends/iommufd.c
+>   F: include/sysemu/iommufd.h
+> +F: backends/host_iommu_device.c
+> +F: include/sysemu/host_iommu_device.h
+>   F: include/qemu/chardev_open.h
+>   F: util/chardev_open.c
+>   F: docs/devel/vfio-iommufd.rst
+> diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+> new file mode 100644
+> index 0000000000..2b58a94d62
+> --- /dev/null
+> +++ b/include/sysemu/host_iommu_device.h
+> @@ -0,0 +1,51 @@
+> +/*
+> + * Host IOMMU device abstract declaration
+> + *
+> + * Copyright (C) 2024 Intel Corporation.
+> + *
+> + * Authors: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2.  See
+> + * the COPYING file in the top-level directory.
+> + */
+> +
+> +#ifndef HOST_IOMMU_DEVICE_H
+> +#define HOST_IOMMU_DEVICE_H
+> +
+> +#include "qom/object.h"
+> +#include "qapi/error.h"
+> +
+> +#define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
+> +OBJECT_DECLARE_TYPE(HostIOMMUDevice, HostIOMMUDeviceClass, HOST_IOMMU_DEVICE)
+> +
+> +struct HostIOMMUDevice {
+> +    Object parent_obj;
+> +};
+> +
+> +/**
+> + * struct HostIOMMUDeviceClass - The base class for all host IOMMU devices.
+> + *
+> + * Different type of host devices (e.g., VFIO or VDPA device) or devices
+> + * with different backend (e.g., VFIO legacy container or IOMMUFD backend)
+> + * can have different sub-classes.
+> + */
+> +struct HostIOMMUDeviceClass {
+> +    ObjectClass parent_class;
+> +
+> +    /**
+> +     * @realize: initialize host IOMMU device instance further.
+> +     *
+> +     * Mandatory callback.
+> +     *
+> +     * @hiod: pointer to a host IOMMU device instance.
+> +     *
+> +     * @opaque: pointer to agent device of this host IOMMU device,
+> +     *          i.e., for VFIO, pointer to VFIODevice
+> +     *
+> +     * @errp: pass an Error out when realize fails.
+> +     *
+> +     * Returns: true on success, false on failure.
+> +     */
+> +    bool (*realize)(HostIOMMUDevice *hiod, void *opaque, Error **errp);
+> +};
+> +#endif
+> diff --git a/backends/host_iommu_device.c b/backends/host_iommu_device.c
+> new file mode 100644
+> index 0000000000..41f2fdce20
+> --- /dev/null
+> +++ b/backends/host_iommu_device.c
+> @@ -0,0 +1,30 @@
+> +/*
+> + * Host IOMMU device abstract
+> + *
+> + * Copyright (C) 2024 Intel Corporation.
+> + *
+> + * Authors: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2.  See
+> + * the COPYING file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "sysemu/host_iommu_device.h"
+> +
+> +OBJECT_DEFINE_ABSTRACT_TYPE(HostIOMMUDevice,
+> +                            host_iommu_device,
+> +                            HOST_IOMMU_DEVICE,
+> +                            OBJECT)
+> +
+> +static void host_iommu_device_class_init(ObjectClass *oc, void *data)
+> +{
+> +}
+> +
+> +static void host_iommu_device_init(Object *obj)
+> +{
+> +}
+> +
+> +static void host_iommu_device_finalize(Object *obj)
+> +{
+> +}
+> diff --git a/backends/Kconfig b/backends/Kconfig
+> index 2cb23f62fa..34ab29e994 100644
+> --- a/backends/Kconfig
+> +++ b/backends/Kconfig
+> @@ -3,3 +3,8 @@ source tpm/Kconfig
+>   config IOMMUFD
+>       bool
+>       depends on VFIO
+> +
+> +config HOST_IOMMU_DEVICE
+> +    bool
+> +    default y
+> +    depends on VFIO
 
-> Given your original job had cache of 447 MB, and new cache is 654 MB, the
-> old cache is 68% of size of the new cache. So effectively your 63% is
-> high 90's cache hit rate of what was present.
+And you can drop HOST_IOMMU_DEVICE config
 
-Don't forget the way how old items are evicted from the cache.  If we have
-N files to compile but the cache can only fit N-1 files, the cache hit ratio
-might be near zero - provided we compile files in the same order and oldest
-files gets evicted.
+> diff --git a/backends/meson.build b/backends/meson.build
+> index 8b2b111497..2e975d641e 100644
+> --- a/backends/meson.build
+> +++ b/backends/meson.build
+> @@ -25,6 +25,7 @@ if have_vhost_user
+>   endif
+>   system_ss.add(when: 'CONFIG_VIRTIO_CRYPTO', if_true: files('cryptodev-vhost.c'))
+>   system_ss.add(when: 'CONFIG_IOMMUFD', if_true: files('iommufd.c'))
+> +system_ss.add(when: 'CONFIG_HOST_IOMMU_DEVICE', if_true: files('host_iommu_device.c'))
 
-When doing the compiles I forgot to reset cache stats before the second run
-(with larger cache), - the hit ratio should've been about 100% there.
+and I would move host_iommu_device.c build under host_os == 'linux'
 
-So we need the cache size not less than to hold WHOLE compilation plus a fine
-bit more so it wont evict things which can be reused in favor of changed
-files.
+Thanks,
 
-> This would suggest a cache size of 700 MB is more appropriate, unless some
-> other jobs have even high usage needs.
+C.
 
-Yes, that seems right.  I'd keep it at 800MB if possible.
 
-/mjt
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+>   if have_vhost_user_crypto
+>     system_ss.add(when: 'CONFIG_VIRTIO_CRYPTO', if_true: files('cryptodev-vhost-user.c'))
+>   endif
 
 
