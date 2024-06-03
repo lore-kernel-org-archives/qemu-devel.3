@@ -4,85 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78405C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 16:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B31CC25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 16:05:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEAAD-0007yW-7z; Mon, 03 Jun 2024 12:04:01 -0400
+	id 1sEABO-0000T6-VZ; Mon, 03 Jun 2024 12:05:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEAAA-0007xW-Hs
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 12:03:58 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEAA6-00081M-MT
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 12:03:58 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-421208c97a2so39485045e9.1
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 09:03:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717430626; x=1718035426; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=aTeMr4eeY8fj0ynHQMMfkBwzZ3Vx4ycWTYmNURe5QaY=;
- b=F9z7KYCok0JEZVnUMQPHQKapSyNs6p2nJgu5THfjkmZdZO8ElblvtpJ1OiroVGXKnP
- yXZeOTib/FhSedHc3yP8FWF2vNL2aSZQDCS4Jh/k2dfUZS01Nx+V7Z85SLDRepI7dulC
- K925g7S+u7gmPttUFtb7X0HueXaGEUqhSt+UL4+bVsr30VRh/BxrfKHoj0CWwLohGJN5
- 9s/WGyXUvzScDP4kqsNiUTbhzKbhmOkpZvjVokrUwcogXRzOEGz6Isn/093g+F/p3glt
- YN32qEU6/2NcJMIEaRp1OhqdyW+O9IC5zWtoslKyIq8NX/EVGmDn7fjGwi6SZz+cCZjr
- 1Nsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717430626; x=1718035426;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aTeMr4eeY8fj0ynHQMMfkBwzZ3Vx4ycWTYmNURe5QaY=;
- b=eqCoZgcEaUAyZy9gw47kAG+CqWfnUdhmRKvxNBSakBS8TMg/Ww/kpaVz6FDHxHFHFS
- 0UqY5a7QSaWi4B93QyfS0i5j3EKNd755Aj5enTPjt2pLz51UP3j4dAVWhIw+KVigpMbb
- 85sTLVG8h8puOfzZ1hAYYbUx+MxYkRiJuhewMwV3N0InCUzCB/6cl6zNp99TTGaCe4n7
- L7uWZh0gcHWFReNN8appvipavugRg3sFgMQ2NpWfbvjFpS9h37rK3lIqvb5iaYn2+V6C
- tQhmt8r2rs/tJdq+W5P5FvQ1BXBvgxKVKPon5MYRtUtB5eobGzaQp3dVCT4lV0KPFnPI
- tE8Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVbC+iX2DUhEhn1gP8ClZAoWHRG6/ylBD5LmhhGG5ESBYiRe0EX2jiUiOqyhbtG/mPQLX5Y/FQMm1CsfQ20D5XrIL4Wd58=
-X-Gm-Message-State: AOJu0YytlIvh0MgRxXZzXI2JmOEeM/XVPrEHGyuOm96e3Y+kmLUDWLTj
- ZVMMcCAtVzNnUOSAsT0/BslH+zZ6sj7eWZWMbXotbEvttPubpFnMcVMmwQ+9ZOhsepViz9qGiLZ
- 7
-X-Google-Smtp-Source: AGHT+IGk09ZwvE4PXglQyJK/Nb7H/KwG0mhB5xgC8OT+bIz/QVKrgAmIDtUBsuciT5R98Og6fWWdKA==
-X-Received: by 2002:a05:600c:524d:b0:421:3a4a:478b with SMTP id
- 5b1f17b1804b1-4213a4a4d72mr27993845e9.41.1717430626430; 
- Mon, 03 Jun 2024 09:03:46 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.177.241])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35e56669a23sm4262184f8f.83.2024.06.03.09.03.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 09:03:46 -0700 (PDT)
-Message-ID: <aed7e019-771a-4359-bc12-8156c3405d1c@linaro.org>
-Date: Mon, 3 Jun 2024 18:03:44 +0200
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sEABL-0000Rt-7F
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 12:05:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sEABI-0008AC-Bp
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 12:05:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717430702;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bIxO9GF1Z6Wt6+sy8+1Wt4+ugx5LdwMO4ZYGGKBPb5c=;
+ b=cUqiGzJVyhlT/31k1dxnTLQEoP9zWivEPD48zQK8Cz6XvMLxPpiN3VW4XUmJIeeer/u7Mq
+ /cXWRMRGHfYz6/Ehtk5Z4n8iFZiL35hNya/UT0bKqGp41XD8pZnv3R2phAMnvNn4T7eayb
+ aDWX8U2Fl8HPnX+yeVuRifDhm3K+GiA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-_GtZeEX9MSSA7ePMeajUdw-1; Mon,
+ 03 Jun 2024 12:04:43 -0400
+X-MC-Unique: _GtZeEX9MSSA7ePMeajUdw-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 967F13800090;
+ Mon,  3 Jun 2024 16:04:38 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.193.235])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id CD56C4087041;
+ Mon,  3 Jun 2024 16:04:36 +0000 (UTC)
+Date: Mon, 3 Jun 2024 18:04:34 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [PATCH 0/2] block/crypto: do not require number of threads upfront
+Message-ID: <Zl3pkvsXwaOY-J8r@redhat.com>
+References: <20240527155851.892885-1-stefanha@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 0/8] xen: Support grant mappings
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org,
- Anthony PERARD <anthony@xenproject.org>
-Cc: sstabellini@kernel.org, jgross@suse.com,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-References: <20240529140739.1387692-1-edgar.iglesias@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240529140739.1387692-1-edgar.iglesias@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240527155851.892885-1-stefanha@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,40 +81,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+Anthony who wasn't Cc'ed.
+Am 27.05.2024 um 17:58 hat Stefan Hajnoczi geschrieben:
+> The block layer does not know how many threads will perform I/O. It is possible
+> to exceed the number of threads that is given to qcrypto_block_open() and this
+> can trigger an assertion failure in qcrypto_block_pop_cipher().
+> 
+> This patch series removes the n_threads argument and instead handles an
+> arbitrary number of threads.
 
-On 29/5/24 16:07, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> 
-> Hi,
-> 
-> Grant mappings are a mechanism in Xen for guests to grant each other
-> permissions to map and share pages. These grants can be temporary
-> so both map and unmaps must be respected. See here for more info:
-> https://github.com/xen-project/xen/blob/master/docs/misc/grant-tables.txt
-> 
-> Currently, the primary use-case for grants in QEMU, is with VirtIO backends.
-> Grant mappings will only work with models that use the address_space_map/unmap
-> interfaces, any other access will fail with appropriate error messages.
-> 
-> In response to feedback we got on v3, later version switch approach
-> from adding new MemoryRegion types and map/unmap hooks to instead reusing
-> the existing xen_map_cache() hooks (with extensions). Almost all of the
-> changes are now contained to the Xen modules.
-> 
-> This approach also refactors the mapcache to support multiple instances
-> (one for existing foreign mappings and another for grant mappings).
-> 
-> I've only enabled grants for the ARM PVH machine since that is what
-> I can currently test on.
+Thanks, applied to the block branch.
 
-Anthony, I don't have an easy way to test patches 7 and 8.
+Kevin
 
-I can merge patches 1-6 to reduce burden on Edgar (Stefano
-reviewed this series), but if you are busy I can send a PR
-for it.
-
-Regards,
-
-Phil.
 
