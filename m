@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD697C41513
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 13:21:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32694C27C50
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 13:21:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEU5w-0001je-UR; Tue, 04 Jun 2024 09:20:56 -0400
+	id 1sEU5h-0001Wc-Td; Tue, 04 Jun 2024 09:20:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1sEU5v-0001j7-Ex
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:20:55 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ id 1sEU5e-0001IE-Hd
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:20:38 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1sEU5s-0000a6-RY
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:20:55 -0400
+ id 1sEU5c-0000Wu-6p
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:20:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1717507253; x=1749043253;
+ t=1717507237; x=1749043237;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ufN1NxQHDmf3MvXfley11lubXpfkb74YWqLeoINJ1Cw=;
- b=eU52exLThgiSVPSPjHRpdN9pptTFC6PaO1tU1ENa3N1uILBbuPEP7xf3
- kn8ZsHe5QdeHpqxbidUybuudwM1Cg4xfkTHwByrTggeLDIHOSQpi1A/px
- 37F5c4PZPisOb6qrFTQSRYaTCr04hhxzLXMRkA6JMHwfFdurXpcoAX8HR
- f6VjCehmf7T3gh5Fp7/lHpbAoZ9/5sq+592NyLJuaEIlTjbXY+UIcQ38C
- uEwrDy0P6mVuTz+kqCOOGBGlT0NHs8AKbOhvj3/NtraZ/l4I7Ov8Mt+0v
- VUOKvHCSj6NFXj6M/tn+AgGkIk4YFZEuwhyaRtQilVDeD3u6FujfQQ/7A A==;
-X-CSE-ConnectionGUID: yxsapZEETOikHBU/Jra3TQ==
-X-CSE-MsgGUID: rV2zbT7FR6KG7Y3cMj7vSw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11093"; a="17890688"
-X-IronPort-AV: E=Sophos;i="6.08,213,1712646000"; d="scan'208";a="17890688"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jun 2024 06:20:51 -0700
-X-CSE-ConnectionGUID: U6oIOGSkS+KlQNBlBOG8Fw==
-X-CSE-MsgGUID: /j25eATHSaKmqhsVj1oWSw==
+ bh=XL3qUJ/s4JKxW1z/Q1moGl6f6RxBIByPE7Pu6LcLU94=;
+ b=oI9c8JZz6RhouNSWOLip8ciyw9UUpmdByB7o0u+J1orcFv687ep6+CVh
+ aIwG/he/Tbdie+eN9p0eB3NGzM3jTkcaBV7J7r4hegddkypjibTEeSSSc
+ NMre3ZP1/NoFBDKsqz4IFutEC4b2DI3BcEYNq96guENvg7YGf3Tkq63Vu
+ S5rh+KZ1q+SIjSH3gRrBFRidhRZ1MtI4T8MVC+BhiILqX57UjVGbRXdhh
+ 7Tc+ZTS6q8lsJuMud5N6k040DvkVUBl7+JEuAQ6XPb6IyDP6TDOImCOqj
+ mkN+WNiTgZTyieEkCXng6ZUB7ve3NTieXTXS00yHQJzYGZ1OB821+nfIa Q==;
+X-CSE-ConnectionGUID: llt3+7WkT3GD4crlWnxIPg==
+X-CSE-MsgGUID: eoDW5JoQTzSPYlTWrLIYQg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11093"; a="24628640"
+X-IronPort-AV: E=Sophos;i="6.08,213,1712646000"; d="scan'208";a="24628640"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jun 2024 06:20:35 -0700
+X-CSE-ConnectionGUID: SNLlnWlYRpmKjdFVEObI0w==
+X-CSE-MsgGUID: zmN9E6odTz+azEp7MIMQRQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,213,1712646000"; d="scan'208";a="37315783"
+X-IronPort-AV: E=Sophos;i="6.08,213,1712646000"; d="scan'208";a="37246864"
 Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
- by fmviesa010.fm.intel.com with ESMTP; 04 Jun 2024 06:20:47 -0700
+ by fmviesa006.fm.intel.com with ESMTP; 04 Jun 2024 06:20:32 -0700
 From: Yuan Liu <yuan1.liu@intel.com>
 To: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com,
  marcandre.lureau@redhat.com, berrange@redhat.com, thuth@redhat.com,
  philmd@linaro.org
 Cc: qemu-devel@nongnu.org, yuan1.liu@intel.com, nanhai.zou@intel.com,
  shameerali.kolothum.thodi@huawei.com
-Subject: [PATCH v7 6/7] migration/multifd: implement qpl compression and
- decompression
-Date: Mon,  3 Jun 2024 23:41:05 +0800
-Message-ID: <20240603154106.764378-7-yuan1.liu@intel.com>
+Subject: [PATCH v7 2/7] migration/multifd: put IOV initialization into
+ compression method
+Date: Mon,  3 Jun 2024 23:41:01 +0800
+Message-ID: <20240603154106.764378-3-yuan1.liu@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240603154106.764378-1-yuan1.liu@intel.com>
 References: <20240603154106.764378-1-yuan1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=yuan1.liu@intel.com;
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=yuan1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
@@ -84,471 +84,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QPL compression and decompression will use IAA hardware first.
-If IAA hardware is not available, it will automatically fall
-back to QPL software path, if the software job also fails,
-the uncompressed page is sent directly.
+Different compression methods may require different numbers of IOVs.
+Based on streaming compression of zlib and zstd, all pages will be
+compressed to a data block, so two IOVs are needed for packet header
+and compressed data block.
 
 Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
 Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- migration/multifd-qpl.c | 412 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 408 insertions(+), 4 deletions(-)
+ migration/multifd-zlib.c |  7 +++++++
+ migration/multifd-zstd.c |  8 +++++++-
+ migration/multifd.c      | 22 ++++++++++++----------
+ 3 files changed, 26 insertions(+), 11 deletions(-)
 
-diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
-index 6791a204d5..18b3384bd5 100644
---- a/migration/multifd-qpl.c
-+++ b/migration/multifd-qpl.c
-@@ -13,9 +13,14 @@
- #include "qemu/osdep.h"
- #include "qemu/module.h"
- #include "qapi/error.h"
-+#include "qapi/qapi-types-migration.h"
-+#include "exec/ramblock.h"
- #include "multifd.h"
- #include "qpl/qpl.h"
+diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
+index 737a9645d2..2ced69487e 100644
+--- a/migration/multifd-zlib.c
++++ b/migration/multifd-zlib.c
+@@ -70,6 +70,10 @@ static int zlib_send_setup(MultiFDSendParams *p, Error **errp)
+         goto err_free_zbuff;
+     }
+     p->compress_data = z;
++
++    /* Needs 2 IOVs, one for packet header and one for compressed data */
++    p->iov = g_new0(struct iovec, 2);
++
+     return 0;
  
-+/* Maximum number of retries to resubmit a job if IAA work queues are full */
-+#define MAX_SUBMIT_RETRY_NUM (3)
-+
- typedef struct {
-     /* the QPL hardware path job */
-     qpl_job *job;
-@@ -260,6 +265,219 @@ static void multifd_qpl_send_cleanup(MultiFDSendParams *p, Error **errp)
-     p->iov = NULL;
- }
- 
-+/**
-+ * multifd_qpl_prepare_job: prepare the job
-+ *
-+ * Set the QPL job parameters and properties.
-+ *
-+ * @job: pointer to the qpl_job structure
-+ * @is_compression: indicates compression and decompression
-+ * @input: pointer to the input data buffer
-+ * @input_len: the length of the input data
-+ * @output: pointer to the output data buffer
-+ * @output_len: the length of the output data
-+ */
-+static void multifd_qpl_prepare_job(qpl_job *job, bool is_compression,
-+                                    uint8_t *input, uint32_t input_len,
-+                                    uint8_t *output, uint32_t output_len)
-+{
-+    job->op = is_compression ? qpl_op_compress : qpl_op_decompress;
-+    job->next_in_ptr = input;
-+    job->next_out_ptr = output;
-+    job->available_in = input_len;
-+    job->available_out = output_len;
-+    job->flags = QPL_FLAG_FIRST | QPL_FLAG_LAST | QPL_FLAG_OMIT_VERIFY;
-+    /* only supports compression level 1 */
-+    job->level = 1;
-+}
-+
-+/**
-+ * multifd_qpl_prepare_job: prepare the compression job
-+ *
-+ * Set the compression job parameters and properties.
-+ *
-+ * @job: pointer to the qpl_job structure
-+ * @input: pointer to the input data buffer
-+ * @input_len: the length of the input data
-+ * @output: pointer to the output data buffer
-+ * @output_len: the length of the output data
-+ */
-+static void multifd_qpl_prepare_comp_job(qpl_job *job, uint8_t *input,
-+                                         uint32_t input_len, uint8_t *output,
-+                                         uint32_t output_len)
-+{
-+    multifd_qpl_prepare_job(job, true, input, input_len, output, output_len);
-+}
-+
-+/**
-+ * multifd_qpl_prepare_job: prepare the decompression job
-+ *
-+ * Set the decompression job parameters and properties.
-+ *
-+ * @job: pointer to the qpl_job structure
-+ * @input: pointer to the input data buffer
-+ * @input_len: the length of the input data
-+ * @output: pointer to the output data buffer
-+ * @output_len: the length of the output data
-+ */
-+static void multifd_qpl_prepare_decomp_job(qpl_job *job, uint8_t *input,
-+                                           uint32_t input_len, uint8_t *output,
-+                                           uint32_t output_len)
-+{
-+    multifd_qpl_prepare_job(job, false, input, input_len, output, output_len);
-+}
-+
-+/**
-+ * multifd_qpl_fill_iov: fill in the IOV
-+ *
-+ * Fill in the QPL packet IOV
-+ *
-+ * @p: Params for the channel being used
-+ * @data: pointer to the IOV data
-+ * @len: The length of the IOV data
-+ */
-+static void multifd_qpl_fill_iov(MultiFDSendParams *p, uint8_t *data,
-+                                 uint32_t len)
-+{
-+    p->iov[p->iovs_num].iov_base = data;
-+    p->iov[p->iovs_num].iov_len = len;
-+    p->iovs_num++;
-+    p->next_packet_size += len;
-+}
-+
-+/**
-+ * multifd_qpl_fill_packet: fill the compressed page into the QPL packet
-+ *
-+ * Fill the compressed page length and IOV into the QPL packet
-+ *
-+ * @idx: The index of the compressed length array
-+ * @p: Params for the channel being used
-+ * @data: pointer to the compressed page buffer
-+ * @len: The length of the compressed page
-+ */
-+static void multifd_qpl_fill_packet(uint32_t idx, MultiFDSendParams *p,
-+                                    uint8_t *data, uint32_t len)
-+{
-+    QplData *qpl = p->compress_data;
-+
-+    qpl->zlen[idx] = cpu_to_be32(len);
-+    multifd_qpl_fill_iov(p, data, len);
-+}
-+
-+/**
-+ * multifd_qpl_submit_job: submit a job to the hardware
-+ *
-+ * Submit a QPL hardware job to the IAA device
-+ *
-+ * Returns true if the job is submitted successfully, otherwise false.
-+ *
-+ * @job: pointer to the qpl_job structure
-+ */
-+static bool multifd_qpl_submit_job(qpl_job *job)
-+{
-+    qpl_status status;
-+    uint32_t num = 0;
-+
-+retry:
-+    status = qpl_submit_job(job);
-+    if (status == QPL_STS_QUEUES_ARE_BUSY_ERR) {
-+        if (num < MAX_SUBMIT_RETRY_NUM) {
-+            num++;
-+            goto retry;
-+        }
-+    }
-+    return (status == QPL_STS_OK);
-+}
-+
-+/**
-+ * multifd_qpl_compress_pages_slow_path: compress pages using slow path
-+ *
-+ * Compress the pages using software. If compression fails, the page will
-+ * be sent directly.
-+ *
-+ * @p: Params for the channel being used
-+ */
-+static void multifd_qpl_compress_pages_slow_path(MultiFDSendParams *p)
-+{
-+    QplData *qpl = p->compress_data;
-+    uint32_t size = p->page_size;
-+    qpl_job *job = qpl->sw_job;
-+    uint8_t *zbuf = qpl->zbuf;
-+    uint8_t *buf;
-+
-+    for (int i = 0; i < p->pages->normal_num; i++) {
-+        buf = p->pages->block->host + p->pages->offset[i];
-+        /* Set output length to less than the page to reduce decompression */
-+        multifd_qpl_prepare_comp_job(job, buf, size, zbuf, size - 1);
-+        if (qpl_execute_job(job) == QPL_STS_OK) {
-+            multifd_qpl_fill_packet(i, p, zbuf, job->total_out);
-+        } else {
-+            /* send the page directly */
-+            multifd_qpl_fill_packet(i, p, buf, size);
-+        }
-+        zbuf += size;
-+    }
-+}
-+
-+/**
-+ * multifd_qpl_compress_pages: compress pages
-+ *
-+ * Submit the pages to the IAA hardware for compression. If hardware
-+ * compression fails, it falls back to software compression. If software
-+ * compression also fails, the page is sent directly
-+ *
-+ * @p: Params for the channel being used
-+ */
-+static void multifd_qpl_compress_pages(MultiFDSendParams *p)
-+{
-+    QplData *qpl = p->compress_data;
-+    MultiFDPages_t *pages = p->pages;
-+    uint32_t size = p->page_size;
-+    QplHwJob *hw_job;
-+    uint8_t *buf;
-+    uint8_t *zbuf;
-+
-+    for (int i = 0; i < pages->normal_num; i++) {
-+        buf = pages->block->host + pages->offset[i];
-+        zbuf = qpl->zbuf + (size * i);
-+        hw_job = &qpl->hw_jobs[i];
-+        /* Set output length to less than the page to reduce decompression */
-+        multifd_qpl_prepare_comp_job(hw_job->job, buf, size, zbuf, size - 1);
-+        if (multifd_qpl_submit_job(hw_job->job)) {
-+            hw_job->fallback_sw_path = false;
-+        } else {
-+            hw_job->fallback_sw_path = true;
-+            /* Set output length less than page size to reduce decompression */
-+            multifd_qpl_prepare_comp_job(qpl->sw_job, buf, size, zbuf,
-+                                         size - 1);
-+            if (qpl_execute_job(qpl->sw_job) == QPL_STS_OK) {
-+                hw_job->sw_output = zbuf;
-+                hw_job->sw_output_len = qpl->sw_job->total_out;
-+            } else {
-+                hw_job->sw_output = buf;
-+                hw_job->sw_output_len = size;
-+            }
-+        }
-+    }
-+
-+    for (int i = 0; i < pages->normal_num; i++) {
-+        buf = pages->block->host + pages->offset[i];
-+        zbuf = qpl->zbuf + (size * i);
-+        hw_job = &qpl->hw_jobs[i];
-+        if (hw_job->fallback_sw_path) {
-+            multifd_qpl_fill_packet(i, p, hw_job->sw_output,
-+                                    hw_job->sw_output_len);
-+            continue;
-+        }
-+        if (qpl_wait_job(hw_job->job) == QPL_STS_OK) {
-+            multifd_qpl_fill_packet(i, p, zbuf, hw_job->job->total_out);
-+        } else {
-+            /* send the page directly */
-+            multifd_qpl_fill_packet(i, p, buf, size);
-+        }
-+    }
-+}
-+
- /**
-  * multifd_qpl_send_prepare: prepare data to be able to send
-  *
-@@ -273,8 +491,26 @@ static void multifd_qpl_send_cleanup(MultiFDSendParams *p, Error **errp)
-  */
- static int multifd_qpl_send_prepare(MultiFDSendParams *p, Error **errp)
- {
--    /* Implement in next patch */
--    return -1;
-+    QplData *qpl = p->compress_data;
-+    uint32_t len = 0;
-+
-+    if (!multifd_send_prepare_common(p)) {
-+        goto out;
-+    }
-+
-+    /* The first IOV is used to store the compressed page lengths */
-+    len = p->pages->normal_num * sizeof(uint32_t);
-+    multifd_qpl_fill_iov(p, (uint8_t *) qpl->zlen, len);
-+    if (qpl->hw_avail) {
-+        multifd_qpl_compress_pages(p);
-+    } else {
-+        multifd_qpl_compress_pages_slow_path(p);
-+    }
-+
-+out:
-+    p->flags |= MULTIFD_FLAG_QPL;
-+    multifd_send_fill_packet(p);
-+    return 0;
- }
- 
- /**
-@@ -312,6 +548,134 @@ static void multifd_qpl_recv_cleanup(MultiFDRecvParams *p)
+ err_free_zbuff:
+@@ -101,6 +105,9 @@ static void zlib_send_cleanup(MultiFDSendParams *p, Error **errp)
+     z->buf = NULL;
+     g_free(p->compress_data);
      p->compress_data = NULL;
++
++    g_free(p->iov);
++    p->iov = NULL;
  }
  
-+/**
-+ * multifd_qpl_process_and_check_job: process and check a QPL job
-+ *
-+ * Process the job and check whether the job output length is the
-+ * same as the specified length
-+ *
-+ * Returns true if the job execution succeeded and the output length
-+ * is equal to the specified length, otherwise false.
-+ *
-+ * @job: pointer to the qpl_job structure
-+ * @is_hardware: indicates whether the job is a hardware job
-+ * @len: Specified output length
-+ * @errp: pointer to an error
-+ */
-+static bool multifd_qpl_process_and_check_job(qpl_job *job, bool is_hardware,
-+                                              uint32_t len, Error **errp)
-+{
-+    qpl_status status;
-+
-+    status = (is_hardware ? qpl_wait_job(job) : qpl_execute_job(job));
-+    if (status != QPL_STS_OK) {
-+        error_setg(errp, "qpl_execute_job failed with error %d", status);
-+        return false;
-+    }
-+    if (job->total_out != len) {
-+        error_setg(errp, "qpl decompressed len %u, expected len %u",
-+                   job->total_out, len);
-+        return false;
-+    }
-+    return true;
-+}
-+
-+/**
-+ * multifd_qpl_decompress_pages_slow_path: decompress pages using slow path
-+ *
-+ * Decompress the pages using software
-+ *
-+ * Returns 0 on success or -1 on error
-+ *
-+ * @p: Params for the channel being used
-+ * @errp: pointer to an error
-+ */
-+static int multifd_qpl_decompress_pages_slow_path(MultiFDRecvParams *p,
-+                                                  Error **errp)
-+{
-+    QplData *qpl = p->compress_data;
-+    uint32_t size = p->page_size;
-+    qpl_job *job = qpl->sw_job;
-+    uint8_t *zbuf = qpl->zbuf;
-+    uint8_t *addr;
-+    uint32_t len;
-+
-+    for (int i = 0; i < p->normal_num; i++) {
-+        len = qpl->zlen[i];
-+        addr = p->host + p->normal[i];
-+        /* the page is uncompressed, load it */
-+        if (len == size) {
-+            memcpy(addr, zbuf, size);
-+            zbuf += size;
-+            continue;
-+        }
-+        multifd_qpl_prepare_decomp_job(job, zbuf, len, addr, size);
-+        if (!multifd_qpl_process_and_check_job(job, false, size, errp)) {
-+            return -1;
-+        }
-+        zbuf += len;
-+    }
-+    return 0;
-+}
-+
-+/**
-+ * multifd_qpl_decompress_pages: decompress pages
-+ *
-+ * Decompress the pages using the IAA hardware. If hardware
-+ * decompression fails, it falls back to software decompression.
-+ *
-+ * Returns 0 on success or -1 on error
-+ *
-+ * @p: Params for the channel being used
-+ * @errp: pointer to an error
-+ */
-+static int multifd_qpl_decompress_pages(MultiFDRecvParams *p, Error **errp)
-+{
-+    QplData *qpl = p->compress_data;
-+    uint32_t size = p->page_size;
-+    uint8_t *zbuf = qpl->zbuf;
-+    uint8_t *addr;
-+    uint32_t len;
-+    qpl_job *job;
-+
-+    for (int i = 0; i < p->normal_num; i++) {
-+        addr = p->host + p->normal[i];
-+        len = qpl->zlen[i];
-+        /* the page is uncompressed if received length equals the page size */
-+        if (len == size) {
-+            memcpy(addr, zbuf, size);
-+            zbuf += size;
-+            continue;
-+        }
-+
-+        job = qpl->hw_jobs[i].job;
-+        multifd_qpl_prepare_decomp_job(job, zbuf, len, addr, size);
-+        if (multifd_qpl_submit_job(job)) {
-+            qpl->hw_jobs[i].fallback_sw_path = false;
-+        } else {
-+            qpl->hw_jobs[i].fallback_sw_path = true;
-+            job = qpl->sw_job;
-+            multifd_qpl_prepare_decomp_job(job, zbuf, len, addr, size);
-+            if (!multifd_qpl_process_and_check_job(job, false, size, errp)) {
-+                return -1;
-+            }
-+        }
-+        zbuf += len;
-+    }
-+
-+    for (int i = 0; i < p->normal_num; i++) {
-+        /* ignore pages that have already been processed */
-+        if (qpl->zlen[i] == size || qpl->hw_jobs[i].fallback_sw_path) {
-+            continue;
-+        }
-+
-+        job = qpl->hw_jobs[i].job;
-+        if (!multifd_qpl_process_and_check_job(job, true, size, errp)) {
-+            return -1;
-+        }
-+    }
-+    return 0;
-+}
  /**
-  * multifd_qpl_recv: read the data from the channel into actual pages
-  *
-@@ -325,8 +689,48 @@ static void multifd_qpl_recv_cleanup(MultiFDRecvParams *p)
-  */
- static int multifd_qpl_recv(MultiFDRecvParams *p, Error **errp)
- {
--    /* Implement in next patch */
--    return -1;
-+    QplData *qpl = p->compress_data;
-+    uint32_t in_size = p->next_packet_size;
-+    uint32_t flags = p->flags & MULTIFD_FLAG_COMPRESSION_MASK;
-+    uint32_t len = 0;
-+    uint32_t zbuf_len = 0;
-+    int ret;
+diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
+index 256858df0a..ca17b7e310 100644
+--- a/migration/multifd-zstd.c
++++ b/migration/multifd-zstd.c
+@@ -52,7 +52,6 @@ static int zstd_send_setup(MultiFDSendParams *p, Error **errp)
+     struct zstd_data *z = g_new0(struct zstd_data, 1);
+     int res;
+ 
+-    p->compress_data = z;
+     z->zcs = ZSTD_createCStream();
+     if (!z->zcs) {
+         g_free(z);
+@@ -77,6 +76,10 @@ static int zstd_send_setup(MultiFDSendParams *p, Error **errp)
+         error_setg(errp, "multifd %u: out of memory for zbuff", p->id);
+         return -1;
+     }
++    p->compress_data = z;
 +
-+    if (flags != MULTIFD_FLAG_QPL) {
-+        error_setg(errp, "multifd %u: flags received %x flags expected %x",
-+                   p->id, flags, MULTIFD_FLAG_QPL);
-+        return -1;
-+    }
-+    multifd_recv_zero_page_process(p);
-+    if (!p->normal_num) {
-+        assert(in_size == 0);
-+        return 0;
-+    }
-+
-+    /* read compressed page lengths */
-+    len = p->normal_num * sizeof(uint32_t);
-+    assert(len < in_size);
-+    ret = qio_channel_read_all(p->c, (void *) qpl->zlen, len, errp);
-+    if (ret != 0) {
-+        return ret;
-+    }
-+    for (int i = 0; i < p->normal_num; i++) {
-+        qpl->zlen[i] = be32_to_cpu(qpl->zlen[i]);
-+        assert(qpl->zlen[i] <= p->page_size);
-+        zbuf_len += qpl->zlen[i];
-+    }
-+
-+    /* read compressed pages */
-+    assert(in_size == len + zbuf_len);
-+    ret = qio_channel_read_all(p->c, (void *) qpl->zbuf, zbuf_len, errp);
-+    if (ret != 0) {
-+        return ret;
-+    }
-+
-+    if (qpl->hw_avail) {
-+        return multifd_qpl_decompress_pages(p, errp);
-+    }
-+    return multifd_qpl_decompress_pages_slow_path(p, errp);
++    /* Needs 2 IOVs, one for packet header and one for compressed data */
++    p->iov = g_new0(struct iovec, 2);
+     return 0;
  }
  
- static MultiFDMethods multifd_qpl_ops = {
+@@ -98,6 +101,9 @@ static void zstd_send_cleanup(MultiFDSendParams *p, Error **errp)
+     z->zbuff = NULL;
+     g_free(p->compress_data);
+     p->compress_data = NULL;
++
++    g_free(p->iov);
++    p->iov = NULL;
+ }
+ 
+ /**
+diff --git a/migration/multifd.c b/migration/multifd.c
+index f317bff077..d82885fdbb 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -137,6 +137,13 @@ static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
+         p->write_flags |= QIO_CHANNEL_WRITE_FLAG_ZERO_COPY;
+     }
+ 
++    if (multifd_use_packets()) {
++        /* We need one extra place for the packet header */
++        p->iov = g_new0(struct iovec, p->page_count + 1);
++    } else {
++        p->iov = g_new0(struct iovec, p->page_count);
++    }
++
+     return 0;
+ }
+ 
+@@ -150,6 +157,8 @@ static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
+  */
+ static void nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
+ {
++    g_free(p->iov);
++    p->iov = NULL;
+     return;
+ }
+ 
+@@ -228,6 +237,7 @@ static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
+  */
+ static int nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
+ {
++    p->iov = g_new0(struct iovec, p->page_count);
+     return 0;
+ }
+ 
+@@ -240,6 +250,8 @@ static int nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
+  */
+ static void nocomp_recv_cleanup(MultiFDRecvParams *p)
+ {
++    g_free(p->iov);
++    p->iov = NULL;
+ }
+ 
+ /**
+@@ -783,8 +795,6 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
+     p->packet_len = 0;
+     g_free(p->packet);
+     p->packet = NULL;
+-    g_free(p->iov);
+-    p->iov = NULL;
+     multifd_send_state->ops->send_cleanup(p, errp);
+ 
+     return *errp == NULL;
+@@ -1179,11 +1189,6 @@ bool multifd_send_setup(void)
+             p->packet = g_malloc0(p->packet_len);
+             p->packet->magic = cpu_to_be32(MULTIFD_MAGIC);
+             p->packet->version = cpu_to_be32(MULTIFD_VERSION);
+-
+-            /* We need one extra place for the packet header */
+-            p->iov = g_new0(struct iovec, page_count + 1);
+-        } else {
+-            p->iov = g_new0(struct iovec, page_count);
+         }
+         p->name = g_strdup_printf("multifdsend_%d", i);
+         p->page_size = qemu_target_page_size();
+@@ -1353,8 +1358,6 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
+     p->packet_len = 0;
+     g_free(p->packet);
+     p->packet = NULL;
+-    g_free(p->iov);
+-    p->iov = NULL;
+     g_free(p->normal);
+     p->normal = NULL;
+     g_free(p->zero);
+@@ -1602,7 +1605,6 @@ int multifd_recv_setup(Error **errp)
+             p->packet = g_malloc0(p->packet_len);
+         }
+         p->name = g_strdup_printf("multifdrecv_%d", i);
+-        p->iov = g_new0(struct iovec, page_count);
+         p->normal = g_new0(ram_addr_t, page_count);
+         p->zero = g_new0(ram_addr_t, page_count);
+         p->page_count = page_count;
 -- 
 2.43.0
 
