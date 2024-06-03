@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A3CC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CD8AC25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:56:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEBse-0007DT-Uq; Mon, 03 Jun 2024 13:54:00 -0400
+	id 1sEBsa-00078E-BK; Mon, 03 Jun 2024 13:53:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sEBsJ-0006zf-Hd
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:40 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1sEBsH-0006yk-HH
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:37 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sEBsF-00008n-2z
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:39 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-35dca73095aso3880319f8f.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 10:53:34 -0700 (PDT)
+ id 1sEBsD-000082-Q3
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:37 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-42134bb9677so30891995e9.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 10:53:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717437213; x=1718042013; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717437211; x=1718042011; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WgDjv/yNA+r/3CuM/gO8/vu8/drYzlHihSkbPO1TE7o=;
- b=t5753XUMbTFw+hSKdA4HaNFXFx3KYwt4ytY3SDbC55yma5FCRVUSZQ0ZBCAPGorkpR
- g4hdMCxeg4BwD18sYzVDrl1nuwnOYzLfS5oss2CQ+M5S3tK2L5v0kedz+byletTRpr65
- SsgcK1xKwMyRfufqdY/rvPVnlx82oWD6cugWnbWTV/QmN2cZ0A0XColf0ECw0oYPrL/e
- gyJNvLOFOmLDr9euv80MbOE9W7Xv65keG5H2Y5J04SNJSbraLzLFK76Xhq0vAt4iFIco
- 4AV7gLcK0q7u+mHYU/sz5+lgqNHXgpsKlfdhNezFUUep7HQqWo/88N92VJSCTkaXiPAa
- im7A==
+ bh=w8/BJyXyrU77noN4L93DWeN1oQ/59GUmwfEPrUYZCUU=;
+ b=f2II2XO8HgHaNZq4UMojs/6smd4EqcAuvoe/qgrocubgkrBKyCC6oSpzYkJMLb4W0o
+ FcykFkqFgCH3ScXSzIoOM9oGO1PmwlKpMDdVl+1KR2h7TwcnI+RbVlVU9HAkguj8NXe8
+ tNC/chHKucIGtn8yuou9bmpuiG+M4V0VkijLXu6cxjIzMKH49orUA/j7I+A9f9AK10Tf
+ OWoDI9RjlC74/ZD20ODC8xnYW1SN7loMTBDtOSHBchJCDIKcGzYtvcqn3t3B6sSCyhsf
+ r+ooZ9XF9kaL7NM6mHZog6z6VGaCvEx31Q2G0fDjCVvXy/pSxgaODH0D9iiRANvsPSkt
+ BzXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717437213; x=1718042013;
+ d=1e100.net; s=20230601; t=1717437211; x=1718042011;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WgDjv/yNA+r/3CuM/gO8/vu8/drYzlHihSkbPO1TE7o=;
- b=OJIbRU+qauaJOUCc5QKPPtF4iX3H26D/+4ZkcnVr/7nu29H6HcfY2qCQb3cbmGwxfo
- JyiQRIzwSViOp0h9CK7dsBzVg5FwpVt73gug98GfpfKUFS3HVco5TPhGRJYHh7kypwaO
- 2MdurtybrVFmmQgEAcrm4gWDPJL0KNioTUF5Rv+pVxqd1vPmJHtI8kVaUB0nkWsPmTnY
- o/bZduvkM1pBLkdojwTGwsOMrNTN0x54S/qGsrbjxa6UL7ftqoKi9CtniEYrNAl/788v
- JL9mOAbI5md8AnHtLKNkrqciL8QkMmU8yTCxKr0lq7/sjFYSbAKSGzR7iLrGNSJDuIxH
- k5/g==
-X-Gm-Message-State: AOJu0YzxLK+ckVxnkC2brC7Y4huJttT62It+McqPuvT6Uf7fNqlruCmE
- r2R8TX2ndp3Pt7sDTY5xFmka4iEdnVnZnUHZj4gBT+V88D28bIPQmAlH0f1GsiM=
-X-Google-Smtp-Source: AGHT+IFPMVOs0cZxyUpMZWaqXcWqMLE7CRhMxhhqYX/DOQFE7h+Us9X/uZj47qK5TckI4QVw4nXhDQ==
-X-Received: by 2002:a05:600c:4753:b0:41a:9fc2:a6b1 with SMTP id
- 5b1f17b1804b1-4212e075ed3mr85037035e9.22.1717437212889; 
- Mon, 03 Jun 2024 10:53:32 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4212278b24dsm85913135e9.0.2024.06.03.10.53.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=w8/BJyXyrU77noN4L93DWeN1oQ/59GUmwfEPrUYZCUU=;
+ b=B0HfzcM+/wl9iCyENaxY8vio2gmtBoGfu9cjRGKrNy5u/zG+tF+LEiJF6aOrtH+hSI
+ UL4sd3i2F0Qh/k2FpgzrNqHoynl28rKP7gn0HgfPIyy7wHwiRUosS/j/Ijs4bCSwoSLr
+ tcOtjlgYYB65m7IrmTKjpOthOkgkUrkCxr5MtAkJIUafPUAPrff4fEoifW71sas/cLPJ
+ 99izzoULe+20WnBBNzNnK7ijhqsq0CGEV9t32rFNLhS90M8nZ7edwvBz5tkIw6xXXxUc
+ BEMNsP1a07PBkBojCY4dG9VAhkHLtSJbtUfd+omhRNdhOMFCKefuqknJUzVTqD3zK84R
+ sEKA==
+X-Gm-Message-State: AOJu0YxdVRfmIGa2bhsMpBU5oATSnlouqkCE9UAfne4R3FcKeL+IGm7V
+ Hm9kupDc1oj6ums71aeLh+Yo3nUBe1Wuzj4zBHlluQQlTEdosLqi7IGkbxRexGQ=
+X-Google-Smtp-Source: AGHT+IG15AeO1aPjVnU9qyxTMBNIMtIAMWvRDUW2vwFY1/R5hr0KrpEJY0PbI2uHtzG7N7HQM5qFLw==
+X-Received: by 2002:a05:600c:4595:b0:421:1717:2cf0 with SMTP id
+ 5b1f17b1804b1-4212e08b5f9mr101285805e9.24.1717437211033; 
  Mon, 03 Jun 2024 10:53:31 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35dd04ca9b0sm9261489f8f.26.2024.06.03.10.53.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Jun 2024 10:53:29 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 327DB5F9FF;
- Mon,  3 Jun 2024 18:53:29 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id C3EAD5F8F9;
+ Mon,  3 Jun 2024 18:53:28 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -82,25 +82,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  qemu-s390x@nongnu.org, Beraldo Leal <bleal@redhat.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Radoslaw Biernacki <rad@semihalf.com>
-Subject: [PATCH v3 07/12] tests/lcitool: Delete obsolete centos-stream-8.yml
- file
-Date: Mon,  3 Jun 2024 18:53:23 +0100
-Message-Id: <20240603175328.3823123-8-alex.bennee@linaro.org>
+Subject: [PATCH v3 03/12] tests/vm: update centos.aarch64 image to 9
+Date: Mon,  3 Jun 2024 18:53:19 +0100
+Message-Id: <20240603175328.3823123-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240603175328.3823123-1-alex.bennee@linaro.org>
 References: <20240603175328.3823123-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,30 +115,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+As Centos Stream 8 goes out of support we need to update. To do this
+powertools is replaced by crb and we don't over specify the python3 we
+want.
 
-We've missed to delete this file when removing support for CentOS 8.
-Since the current upstream version of the lcitool removed support
-for CentOS 8 now, too, we have to remove the file before updating.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20240521125314.1255403-4-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240601070543.37786-2-thuth@redhat.com>
+Message-Id: <20240529160934.982373-4-alex.bennee@linaro.org>
 ---
- tests/lcitool/targets/centos-stream-8.yml | 3 ---
- 1 file changed, 3 deletions(-)
- delete mode 100644 tests/lcitool/targets/centos-stream-8.yml
+ tests/vm/centos.aarch64 | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tests/lcitool/targets/centos-stream-8.yml b/tests/lcitool/targets/centos-stream-8.yml
-deleted file mode 100644
-index 6b11160fd1..0000000000
---- a/tests/lcitool/targets/centos-stream-8.yml
-+++ /dev/null
-@@ -1,3 +0,0 @@
--paths:
--  pip3: /usr/bin/pip3.8
--  python: /usr/bin/python3.8
+diff --git a/tests/vm/centos.aarch64 b/tests/vm/centos.aarch64
+index 3f58de1e64..fcf9e08c87 100755
+--- a/tests/vm/centos.aarch64
++++ b/tests/vm/centos.aarch64
+@@ -25,9 +25,9 @@ DEFAULT_CONFIG = {
+     'cpu'          : "max",
+     'machine'      : "virt,gic-version=max",
+     'install_cmds' : (
+-        "dnf config-manager --set-enabled powertools, "
++        "dnf config-manager --enable crb, "
+         "dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo, "
+-        "dnf install -y make ninja-build git python38 gcc gcc-c++ flex bison "\
++        "dnf install -y make ninja-build git python3 gcc gcc-c++ flex bison "\
+             "glib2-devel pixman-devel zlib-devel docker-ce.aarch64, "
+         "systemctl enable docker, "
+     ),
+@@ -38,10 +38,10 @@ DEFAULT_CONFIG = {
+ 
+ 
+ class CentosAarch64VM(basevm.BaseVM):
+-    name = "centos8.aarch64"
++    name = "centos9.aarch64"
+     arch = "aarch64"
+-    image_name = "CentOS-Stream-GenericCloud-8-20220125.1.aarch64.qcow2"
+-    image_link = "https://cloud.centos.org/centos/8-stream/aarch64/images/"
++    image_name = "CentOS-Stream-GenericCloud-9-20230501.0.aarch64.qcow2"
++    image_link = "https://cloud.centos.org/centos/9-stream/aarch64/images/"
+     image_link += image_name
+     BUILD_SCRIPT = """
+         set -e;
 -- 
 2.39.2
 
