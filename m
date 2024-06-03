@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 298F1C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 19:18:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 118A3C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 19:19:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEDBw-00070J-L7; Mon, 03 Jun 2024 15:18:00 -0400
+	id 1sEDCn-0007zP-UI; Mon, 03 Jun 2024 15:18:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sEDBp-0006xQ-2k
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 15:17:53 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1sEDCl-0007z1-Tf
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 15:18:51 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sEDBm-0003xb-VI
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 15:17:52 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-6819b3c92bbso3758347a12.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 12:17:50 -0700 (PDT)
+ id 1sEDCk-00043S-5q
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 15:18:51 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-70276322ad8so336731b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 12:18:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717442269; x=1718047069; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717442328; x=1718047128; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
  bh=27qdUYCHQFKaGhjhGbFvYF5MWE8U+uU+ch+nxLcwjfE=;
- b=o+MuTft+Prp83rjxgOHkzonMkzdIBVubuD6UARwBg5IyLiyC2+18Ha0Oni7X3NkNf0
- f5A7aTpEk5sK+TQBVUtXvH354CqfYBYo7EGDd2M5XoFMpqgmb/btUo2K7icIOVJ6bPzr
- jtbGYak7fBAEWL/+b38FUKk85ixPwKNagDr5NRLKS+LvXj2/luE+dc/j3wO64gAqDG05
- 7TRqo6JjSMN5o+6NdywqXIUlrHIOBvPqw8chhRpkvs+NF3O7Bwry1/UDFyLIPbYWuk6t
- WWpH8Ev8DP37x75QjQlvGnmvv8HWFXtKIqj+CI1C3fDZdcNZC5NrMP/2chthU2l6cpmN
- M84w==
+ b=irvwt47D+O0x7HaL0ytJHmFtBWhiJOeDvt+2karQg1Jrb73JpFr1gSBXL3seXucIqv
+ /GCHOCNiv27FGklphHx2txN3DAH6NVdl3eqiY0wvu7AxfpR/eCHktSqr1IaEMy6/zZJ+
+ WpYnafcLND3Gcob6R2AGGI7Y6DIk55lUTsG8W0kmZV/rLKgXSHC+moPvnSQk4xwvcqEU
+ MQD/7nDutvfIEsP8PlWHp5uph2PV4pBGD0Z4PpI6YKA46gr807Yx1oqRVXMSuvqPYZFO
+ 4TkQjofCY7hs9ZmJEgeYeX5IcADhhHHSS+ukKStFb7uoRHsepikjRtkB4enz7bsGfdnq
+ t/+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717442269; x=1718047069;
+ d=1e100.net; s=20230601; t=1717442329; x=1718047129;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
  bh=27qdUYCHQFKaGhjhGbFvYF5MWE8U+uU+ch+nxLcwjfE=;
- b=IfVSqa41TGLq2wwj/6iyI61+2kRPtD0kVCTE1wob4clcrthCA6JPjIy2Kyq6Ugu9sm
- SerYei/mU/ComNIrTM4vwXWsGmFBNpWVXislm9ATEvNhy3+fcRGVlW1Ta0ewCKdPdryJ
- pN/IruRHwYXPR1L6rvjTj525hSP0fRU5Axf4Y7vQpvNC7LfhgBg9IYNWqBJz7HvXpeno
- SH3Sq6Qz3NljdfebusEhtfUinIsSWp4OGu/ltKESCHXEE89oeB+4jRGsqr1svi5OEnhe
- k7QFqKQbASWPLEkSCSxRRy0XfMxDuqePjWOfZMDujaNCdOdfWya5g8XCTTlLqQUHYhi+
- J59A==
+ b=DqQvBwFbu1kjGiahYSz+SYmOOHlBsHPllnONIAIaqs1+js6TsztaeTlGAd6C9Vdxc6
+ GlYIhooWy+DDVSVWaoFHSdDNhrYC1d8AhWTYXSU6VQF0FrJGulwsZZW7ZUsYYy1wNbu1
+ QmNWD0vhCgP0pF5AIOl0z+on1QzH2MZBfgcrAn/ZeoeJjf5464JWcCZA7qV1Miji6qUh
+ j3hAHeJYntko3deYYTVpH00qiC//Zz9SQX0zko8Vgc1bSR//bnhcU0/GV4Xmjckm0Md7
+ Pz9/9ym8hiHYujq1pju/IUQOPZgpYLXyRjOULrqEVAk6pWuXQU1ajBI8Jf7cixpopqR7
+ fOsA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUtGVMLjLLYOCb7Hd6jW1r2qupEpwnB1I7RuIoo6nOXjefmeHebEasvbU3WjesVXmmOkRmvurAi4OJFmhVSyAaSBmYyX/c=
-X-Gm-Message-State: AOJu0Yxb80lB5Ke8nGIX8JxFE6/iLyZIQJVculPaxajuA+HQ12bu/Xgz
- Fv848VqvM+w9Dyzhr2M4l6Uj05U4/2kRpQxyaBGkQCkEJTp8qUe/BfIGHElZ49A=
-X-Google-Smtp-Source: AGHT+IELFyLf4j3BzSwIr/eGfKfqZ5lUMA7lJlOfQsluHVSFc3uAFFnXoLO3LfGyj8djpzJWRtn55Q==
-X-Received: by 2002:a17:90a:b788:b0:2c1:424c:1759 with SMTP id
- 98e67ed59e1d1-2c1dc5bf275mr9906781a91.36.1717442269473; 
- Mon, 03 Jun 2024 12:17:49 -0700 (PDT)
+ AJvYcCW0jS9x4jWOHm3obIG2/xLT2x9fXoXHpDqXountsh4CzMjjjjqIJZIobiKbkfkeggdgIyDQ9IA2RxGVRWQh5jEoAdVEI+M=
+X-Gm-Message-State: AOJu0Ywd+iA9q9u4zoxml87MTuX/S3mNTd22Ch7OVKratB1XzwpX5REC
+ XaNWK1DdZEp43pCLpgMQun3jKbhrx/S7k9lBS7DpOVfL/QQojLJBEXpn+T7F/plPizHaCahs8FG
+ z
+X-Google-Smtp-Source: AGHT+IFJSPdaOS3ZLVvmp5EYQCpwGEjTaY9laOlaorTcrpSfG+t0zA5v3I6ZyOyeeb36PodtWlwxFw==
+X-Received: by 2002:a05:6a21:6d9e:b0:1b2:8c50:f10e with SMTP id
+ adf61e73a8af0-1b28c50f55dmr5035963637.38.1717442328607; 
+ Mon, 03 Jun 2024 12:18:48 -0700 (PDT)
 Received: from ?IPV6:2604:3d08:9384:1d00::e697? ([2604:3d08:9384:1d00::e697])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c1c6482dc7sm6793620a91.44.2024.06.03.12.17.48
+ d2e1a72fcca58-702423c69e0sm5854398b3a.26.2024.06.03.12.18.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 12:17:49 -0700 (PDT)
-Message-ID: <d3763a0c-272b-4ea5-a998-692ae931618b@linaro.org>
-Date: Mon, 3 Jun 2024 12:17:48 -0700
+ Mon, 03 Jun 2024 12:18:48 -0700 (PDT)
+Message-ID: <7194f714-9681-4161-922f-700e3ecfda27@linaro.org>
+Date: Mon, 3 Jun 2024 12:18:47 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 19/27] disas/microblaze: Print registers directly with
@@ -74,8 +75,8 @@ From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 In-Reply-To: <20240412073346.458116-20-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
