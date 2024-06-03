@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F008CC27C52
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED397C25B76
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5hg-0007NZ-IW; Mon, 03 Jun 2024 07:18:16 -0400
+	id 1sE5gx-0003xR-Co; Mon, 03 Jun 2024 07:17:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5ha-0006yR-3P; Mon, 03 Jun 2024 07:18:10 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1sE5gb-0003Kp-Ge
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:17:11 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5hY-0006UT-7x; Mon, 03 Jun 2024 07:18:09 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-70264bcb631so861219b3a.2; 
- Mon, 03 Jun 2024 04:18:07 -0700 (PDT)
+ id 1sE5gW-0006AY-SL
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:17:08 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1f32a3b9491so31627075ad.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 04:17:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717413486; x=1718018286; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717413423; x=1718018223; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hxijtPcNuNAmolOxSVas1wwngjgg5P1pW7tz7cm2XA8=;
- b=dQVwjhvlkJpBpRLKRLWvfKs413DjBUF+Dc02PMW40xsIsM/mlyuo/tpUM0fGuv2oIw
- EPa35z5vvNQVuTLsWuFZSqzK2GfjDYA99zD3ZADCA0Mpl36FhBYI41WcE1qC/9MK1N4L
- oW2g1DJnF8TBNYWgdsDFhHKxpdADOiP3fxQ3UrS7ZUv8R3F5+BxKw9NgAm3m8+g54zu4
- G5fJFM5DKchD7DOGu+cno9ud58DsmH1Bb143TqLQix2N+pCjgibjEbgSQWQIf3aygQV1
- oRjUkGkyAIX+r+8kNaGdCURg9GpmQs6r8bIBbrNGNvyweKxZBvnnkqRfHN1kqMXhM0vt
- PIRQ==
+ bh=IQJJohChSJ2PfThq4oGFFdMUA1uJJ98Ep3im4MVkieI=;
+ b=YkNByRgFLkSqqVR39eEOVsKaWCEHX2h11jbHza2IAu3iH6wLMZBzicEivo+G9968JY
+ Sojctz3pF1jtMOCcjZVkffwDGon9X0bJ5p05vamJG7VMm8D+QXl10mEIJDZ8Q0sGHjoU
+ gNT1VttppscY9kzMiToWqu/ZHDJ9gDO43Me2Qb1TSAg+aYKc1pvj8p55hSAjrijGw7j6
+ 2zD0n3ir5RpoCWl/7k3n6oKf+J656G8DMzwPe7dxJgo4dm+sVR/4XF8WFPQlnHOlvFKN
+ BlF9E6BsXdjn7bS3pPWIcUusXm882giECWixe3DfASY29YeAAwc3QqYd3DgMHGV0BZnp
+ hyMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717413486; x=1718018286;
+ d=1e100.net; s=20230601; t=1717413423; x=1718018223;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hxijtPcNuNAmolOxSVas1wwngjgg5P1pW7tz7cm2XA8=;
- b=kCA41cPp2CRoYTDXZPDhXPghyuYwkeeohScrQZyvYQvYUHWbw35oKQErEv8mswNtTq
- OnVffMgMG74lmOO4tZypypfqRsFdVogZiB3KFJunuBHeGvBwHugK4OTPAr7QjiaRvpUc
- 2B6HiorWixGVtosw08jjStb0ahpHI2KPEZio9yE6tpam+GOT/IsGULhlm0tuYpFjzHQa
- tM7jr6jGiVSJHafoco6xl1YPjDfss3ecWRwC1Lu7seN7SgQA5aHLsaNuFomZBmCV7hBI
- lOPklVpiYbQnQ5OZWUP5bJfv91sTYNwMecuik8mlY2Qze9d46cW5l+pNueQGtJFMWwqo
- Y5yg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhe1LAULb2w2gibor8OJev7EwwNfZm80y40rj87afgbTgIkGSOrZoPjzlygX1CMAPKXojSPVFSVCfuphzqmDtYtKJxNdPX
-X-Gm-Message-State: AOJu0YxN2qSI4cTi3eMWT5pJNKQJP9QCDLKKrwRQ2BHmnUR20k1cHCRY
- YVQlwOfXmMxamZrLSpMmzm7Z6/PLF1+8QHRwq2y7bWzJJb8RP6G4pOHRfg==
-X-Google-Smtp-Source: AGHT+IGTX3sVXNmCpwF4evW2ehWf0+K4fA+ODjk/VIUvCoS+0aDVSP2VlhPBc2Tpu0+NAEMEdpVrSw==
-X-Received: by 2002:a05:6a20:a115:b0:1b1:e7de:4d36 with SMTP id
- adf61e73a8af0-1b26f0f1b28mr9232152637.2.1717413484743; 
- Mon, 03 Jun 2024 04:18:04 -0700 (PDT)
+ bh=IQJJohChSJ2PfThq4oGFFdMUA1uJJ98Ep3im4MVkieI=;
+ b=v4s1KEKGkgZCqoB+kqA5JvuiiYcGcnQDbZhXhqGG33Hr0GeAShVb6L0oMdmmWp+vWd
+ MYdhiWb+tT/3cTuvb69tszBZv45XKo+rMT4ihqJDtMcxG4Lv8zxgEY8lnLKPQ+x6A89C
+ 4Tc0mxcFq/3HaMmsBVY6LqAbMOJ+jkMXrmSD5QbfXBVKvSFcmqlJUdBKySluBZ5iYWFm
+ ybszQU0/TjLHh8IB8VRzETWouh1tOZ74EKUvm2or5j3tFHmPw8TInK3TQ45mDE03YMi4
+ hr2u5VU+s3wMVq7FceHKxjB3UoybiJAAqobQ0RT88LeNVVbhyjQB82hZO2hrBrADOdsK
+ vScA==
+X-Gm-Message-State: AOJu0Yyig1tLYxDHLaQ+2KyQHPUt//k2GND8Y9rY1Ft/zrBb6eeYc1uv
+ QhQdqqV2unRYI88Rq750ggj2kAX8MO8rMZKCrw/YyzurSbqdknKISQ9JYw==
+X-Google-Smtp-Source: AGHT+IFDcVN/Zi24+mlDpaNxKCLv7t6flHKhup9IN1B89YiNfP8b+LZ5Yk8tVoiNNf/93DuP1nas2Q==
+X-Received: by 2002:a17:902:ea09:b0:1f6:677b:ea17 with SMTP id
+ d9443c01a7336-1f6677bec49mr46363865ad.51.1717413423272; 
+ Mon, 03 Jun 2024 04:17:03 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.18.01
+ d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.17.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 04:18:04 -0700 (PDT)
+ Mon, 03 Jun 2024 04:17:02 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Alexei Filippov <alexei.filippov@syntacore.com>,
+Cc: alistair23@gmail.com, Andrew Jones <ajones@ventanamicro.com>,
+ =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- qemu-stable <qemu-stable@nongnu.org>
-Subject: [PULL v2 22/27] target/riscv: do not set mtval2 for non guest-page
- faults
-Date: Mon,  3 Jun 2024 21:16:38 +1000
-Message-ID: <20240603111643.258712-23-alistair.francis@wdc.com>
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 03/27] target/riscv: Raise exceptions on wrs.nto
+Date: Mon,  3 Jun 2024 21:16:19 +1000
+Message-ID: <20240603111643.258712-4-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240603111643.258712-1-alistair.francis@wdc.com>
 References: <20240603111643.258712-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,58 +101,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexei Filippov <alexei.filippov@syntacore.com>
+From: Andrew Jones <ajones@ventanamicro.com>
 
-Previous patch fixed the PMP priority in raise_mmu_exception() but we're still
-setting mtval2 incorrectly. In riscv_cpu_tlb_fill(), after pmp check in 2 stage
-translation part, mtval2 will be set in case of successes 2 stage translation but
-failed pmp check.
+Implementing wrs.nto to always just return is consistent with the
+specification, as the instruction is permitted to terminate the
+stall for any reason, but it's not useful for virtualization, where
+we'd like the guest to trap to the hypervisor in order to allow
+scheduling of the lock holding VCPU. Change to always immediately
+raise exceptions when the appropriate conditions are present,
+otherwise continue to just return. Note, immediately raising
+exceptions is also consistent with the specification since the
+time limit that should expire prior to the exception is
+implementation-specific.
 
-In this case we gonna set mtval2 via env->guest_phys_fault_addr in context of
-riscv_cpu_tlb_fill(), as this was a guest-page-fault, but it didn't and mtval2
-should be zero, according to RISCV privileged spec sect. 9.4.4: When a guest
-page-fault is taken into M-mode, mtval2 is written with either zero or guest
-physical address that faulted, shifted by 2 bits. *For other traps, mtval2
-is set to zero...*
-
-Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Christoph Müllner <christoph.muellner@vrull.eu>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240503103052.6819-1-alexei.filippov@syntacore.com>
-Cc: qemu-stable <qemu-stable@nongnu.org>
+Message-ID: <20240424142808.62936-2-ajones@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_helper.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ target/riscv/helper.h                       |  1 +
+ target/riscv/op_helper.c                    | 11 ++++++++
+ target/riscv/insn_trans/trans_rvzawrs.c.inc | 29 ++++++++++++++-------
+ 3 files changed, 32 insertions(+), 9 deletions(-)
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 574886a694..a02497d778 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1376,17 +1376,17 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                               __func__, pa, ret, prot_pmp, tlb_size);
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 8a63523851..451261ce5a 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -132,6 +132,7 @@ DEF_HELPER_6(csrrw_i128, tl, env, int, tl, tl, tl, tl)
+ DEF_HELPER_1(sret, tl, env)
+ DEF_HELPER_1(mret, tl, env)
+ DEF_HELPER_1(wfi, void, env)
++DEF_HELPER_1(wrs_nto, void, env)
+ DEF_HELPER_1(tlb_flush, void, env)
+ DEF_HELPER_1(tlb_flush_all, void, env)
+ /* Native Debug */
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index f414aaebdb..2baf5bc3ca 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -380,6 +380,17 @@ void helper_wfi(CPURISCVState *env)
+     }
+ }
  
-                 prot &= prot_pmp;
--            }
--
--            if (ret != TRANSLATE_SUCCESS) {
-+            } else {
-                 /*
-                  * Guest physical address translation failed, this is a HS
-                  * level exception
-                  */
-                 first_stage_error = false;
--                env->guest_phys_fault_addr = (im_address |
--                                              (address &
--                                               (TARGET_PAGE_SIZE - 1))) >> 2;
-+                if (ret != TRANSLATE_PMP_FAIL) {
-+                    env->guest_phys_fault_addr = (im_address |
-+                                                  (address &
-+                                                   (TARGET_PAGE_SIZE - 1))) >> 2;
-+                }
-             }
-         }
-     } else {
++void helper_wrs_nto(CPURISCVState *env)
++{
++    if (env->virt_enabled && (env->priv == PRV_S || env->priv == PRV_U) &&
++        get_field(env->hstatus, HSTATUS_VTW) &&
++        !get_field(env->mstatus, MSTATUS_TW)) {
++        riscv_raise_exception(env, RISCV_EXCP_VIRT_INSTRUCTION_FAULT, GETPC());
++    } else if (env->priv != PRV_M && get_field(env->mstatus, MSTATUS_TW)) {
++        riscv_raise_exception(env, RISCV_EXCP_ILLEGAL_INST, GETPC());
++    }
++}
++
+ void helper_tlb_flush(CPURISCVState *env)
+ {
+     CPUState *cs = env_cpu(env);
+diff --git a/target/riscv/insn_trans/trans_rvzawrs.c.inc b/target/riscv/insn_trans/trans_rvzawrs.c.inc
+index 32efbff4d5..0eef033838 100644
+--- a/target/riscv/insn_trans/trans_rvzawrs.c.inc
++++ b/target/riscv/insn_trans/trans_rvzawrs.c.inc
+@@ -16,7 +16,7 @@
+  * this program.  If not, see <http://www.gnu.org/licenses/>.
+  */
+ 
+-static bool trans_wrs(DisasContext *ctx)
++static bool trans_wrs_sto(DisasContext *ctx, arg_wrs_sto *a)
+ {
+     if (!ctx->cfg_ptr->ext_zawrs) {
+         return false;
+@@ -40,12 +40,23 @@ static bool trans_wrs(DisasContext *ctx)
+     return true;
+ }
+ 
+-#define GEN_TRANS_WRS(insn)                                     \
+-static bool trans_ ## insn(DisasContext *ctx, arg_ ## insn *a)  \
+-{                                                               \
+-    (void)a;                                                    \
+-    return trans_wrs(ctx);                                      \
+-}
++static bool trans_wrs_nto(DisasContext *ctx, arg_wrs_nto *a)
++{
++    if (!ctx->cfg_ptr->ext_zawrs) {
++        return false;
++    }
+ 
+-GEN_TRANS_WRS(wrs_nto)
+-GEN_TRANS_WRS(wrs_sto)
++    /*
++     * Depending on the mode of execution, mstatus.TW and hstatus.VTW, wrs.nto
++     * should raise an exception when the implementation-specific bounded time
++     * limit has expired. Our time limit is zero, so we either return
++     * immediately, as does our implementation of wrs.sto, or raise an
++     * exception, as handled by the wrs.nto helper.
++     */
++#ifndef CONFIG_USER_ONLY
++    gen_helper_wrs_nto(tcg_env);
++#endif
++
++    /* We only get here when helper_wrs_nto() doesn't raise an exception. */
++    return trans_wrs_sto(ctx, NULL);
++}
 -- 
 2.45.1
 
