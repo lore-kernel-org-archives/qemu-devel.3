@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21B14C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21A2CC25B76
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:19:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5hG-0005BA-Nn; Mon, 03 Jun 2024 07:17:50 -0400
+	id 1sE5ho-0007jR-Kz; Mon, 03 Jun 2024 07:18:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5hB-0004km-HD; Mon, 03 Jun 2024 07:17:47 -0400
+ id 1sE5hf-0007LH-Lb; Mon, 03 Jun 2024 07:18:15 -0400
 Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5h4-0006IB-2I; Mon, 03 Jun 2024 07:17:45 -0400
+ id 1sE5hU-0006Rp-Ra; Mon, 03 Jun 2024 07:18:15 -0400
 Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1f6134df05fso38297945ad.1; 
- Mon, 03 Jun 2024 04:17:36 -0700 (PDT)
+ d9443c01a7336-1f661450af5so11830975ad.3; 
+ Mon, 03 Jun 2024 04:18:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717413455; x=1718018255; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717413481; x=1718018281; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Rwx0SPD4bR7zPO/4n31t9fpXIatcICjktSL4UeCf/R8=;
- b=H/40aWslX9Eu/Nv67P1tQvFFfG3s/KsXZuvpMA9DlcqLQxP9X5JHFRwEjF537fq5JR
- Pm2ARSgMVaIf1y4bDYERfp5TmNQoTMzQPVjPnVXfQNvCW11Q6KkbPZxyNm5LKSFh9Ajq
- DICDAZHffFDw9Xmo8RlgpHV2qIhQ0lsfbf9HMjvPHG8OLMwyEje+OZrqLyO0giqkDCTL
- 91pyZsCuiO13xdwAIS8e1lrqJc+F9ABUcrXj9iJvYQoBimooohpfa7XW5RxYSKePzVbw
- oEod74REZ6Sz1iayyn5nrgggtiZomlGU9Y4AvFlKOwwOvvM2OYm8aFhBL47scIMycmDt
- /vqQ==
+ bh=Xv5zByHXrMR6OVpxVCKjSat3U6+gmlv5WCvdVnmoelg=;
+ b=PLLuZeRoHwHSCj6Uts4cFUte5U9zNkCACpHAvlxRxKDIChsmP95unziJzt0+URSvGR
+ dHSSV/RUB+yB4zIuTVRqvolPFxhLfbFFn+oZ0qt+TD86x8h+NhvQTgUuPPOrVcrmuAPG
+ 9T8D9Kf7YMHYSPr95XChueblx82tDBqOVxsz25F7nm5qKOxx8ri59thpIEBK0e2pNf9r
+ GBcx1dC0PfwGQuDKjUVNEH7TlxxU6q+3LSNtgTOfo8HokYjOMGPceOOaP5KhduyDapBI
+ eeN466gkqVLO2r5gLvr0siVmV1P8X1aE7dF4SMy8TgFQWFx12A7U5zPXT8mye1H6GHtB
+ KQkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717413455; x=1718018255;
+ d=1e100.net; s=20230601; t=1717413481; x=1718018281;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Rwx0SPD4bR7zPO/4n31t9fpXIatcICjktSL4UeCf/R8=;
- b=X84OdSJbHrkUaALalO9eNM5kHaoxrG3d6LAmyFKRSC5tBI1T/Kpll/2f5ppOeAxXRE
- 1HX5RMAKpk7DN7USQT9/jRB3uT11LwIA17/yr/e+YqWNq/d+lXbrYGf46T8ZSYpjD6XE
- +Et+xku6KkI1tkmKOUE2tzyIgZmMqZ/P+QJKk0Vs2pwl4a0N7GnYnepWDJjeHMXiZse4
- 4eLI8VLsMGGjRfCHrtBS7KtQ+xMAwLWcmPMHbVl8YRlk7Fi2KpCN61dXpsyhKwrwL7/3
- g0+v8EvAnuL1US3DT83l0AuoEI2o8ty47BH8GLDGX0WgE97YymBavEiQI/0w/xWFYsEK
- /sSg==
+ bh=Xv5zByHXrMR6OVpxVCKjSat3U6+gmlv5WCvdVnmoelg=;
+ b=IbfaHSJOodnpcg0kT28ONeKHO+4VqJ5m2vVe/vVqZwNdzZ8WfjxjUfNPkUCyzQpoRs
+ zer0oJIPx60FU0jqlMW+98KIDv+fkK0+N6arhtGZvPUfeaPGOu4iACVJ09lHf2HG58jO
+ EdY2s83c0KZ1L3d+uRGB06IXTyZUKNAKIV3N8KsqsKtbXZCNXbmlvYKHQbhMMeKJBwF3
+ tjq6dSSKxNsifkKdaA4Pqr6EoOpD0r8i1VgfkTG5+rWBT073aqKh7qELVy6y5ZiooMe0
+ /MOs53oKFoEwKtexFkEdKj87crbYNDaLlhczBg33QsVy7jZ38a0LOP2UilkBkRgN0Uzh
+ z8Qg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVh9lXOX7KbWYOZkdQXJnrx4Vz4l7yeRY3Onf6+mw3+oDoohTPIe/l20/LCKIRPAzNmC3lV8lEOtlC3axBAcKewj6H2ThpV
-X-Gm-Message-State: AOJu0YzgWoPo1R3LUcMxiSnTnuFB7YH0Npztkbn2joJISP1dRqsgqgE+
- e2h7MAabNNK33EVu5N5Mdd0cHaNG5lV2x2+IyVNjPwPYNeJ1P530DaKycg==
-X-Google-Smtp-Source: AGHT+IG5UvPfbBB0v2XrQ3gefMLp1whTssZ+CYnpJJKKoRrcvhbjWsuWTe53y6bjWbt5ByzLVbCNhA==
-X-Received: by 2002:a17:902:d548:b0:1f4:7a5c:65bf with SMTP id
- d9443c01a7336-1f6370320dbmr109693475ad.38.1717413455174; 
- Mon, 03 Jun 2024 04:17:35 -0700 (PDT)
+ AJvYcCUVpE4CX32xA28zE1RCtxX6J3wQSIkkrsyiMYcKLxZ62G7nK/ZMbop18ZuTS9wLLvfWZlMqGXaR1jx94+XhBFm6unuzotgJ
+X-Gm-Message-State: AOJu0Yx6VVrQ+VZT+B/ajNeicLR8CWFbX+TI1jCwGY0ou+mXBWivXEzv
+ nVlXfgCOBOtT+vUVm0/kt0ZVVZ7EL502ArSag2lbDQlKvy5RxEFjLOOipA==
+X-Google-Smtp-Source: AGHT+IHKwWGWoQHsxhWagjo7ZnQo3SwqkkTjEh+26LfSs4UJqiKELfvl72tIAeikFFjwMw62tofcBg==
+X-Received: by 2002:a17:902:f549:b0:1f6:8ae4:50de with SMTP id
+ d9443c01a7336-1f68ae45481mr4404815ad.61.1717413481461; 
+ Mon, 03 Jun 2024 04:18:01 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.17.32
+ d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.17.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 04:17:34 -0700 (PDT)
+ Mon, 03 Jun 2024 04:18:00 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Huang Tao <eric.huang@linux.alibaba.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-stable <qemu-stable@nongnu.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 13/27] target/riscv: Fix the element agnostic function
- problem
-Date: Mon,  3 Jun 2024 21:16:29 +1000
-Message-ID: <20240603111643.258712-14-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Joseph Chan <jchan@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+Subject: [PULL v2 21/27] target/riscv: prioritize pmp errors in
+ raise_mmu_exception()
+Date: Mon,  3 Jun 2024 21:16:37 +1000
+Message-ID: <20240603111643.258712-22-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240603111643.258712-1-alistair.francis@wdc.com>
 References: <20240603111643.258712-1-alistair.francis@wdc.com>
@@ -102,58 +101,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Huang Tao <eric.huang@linux.alibaba.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-In RVV and vcrypto instructions, the masked and tail elements are set to 1s
-using vext_set_elems_1s function if the vma/vta bit is set. It is the element
-agnostic policy.
+raise_mmu_exception(), as is today, is prioritizing guest page faults by
+checking first if virt_enabled && !first_stage, and then considering the
+regular inst/load/store faults.
 
-However, this function can't deal the big endian situation. This patch fixes
-the problem by adding handling of such case.
+There's no mention in the spec about guest page fault being a higher
+priority that PMP faults. In fact, privileged spec section 3.7.1 says:
 
-Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+"Attempting to fetch an instruction from a PMP region that does not have
+execute permissions raises an instruction access-fault exception.
+Attempting to execute a load or load-reserved instruction which accesses
+a physical address within a PMP region without read permissions raises a
+load access-fault exception. Attempting to execute a store,
+store-conditional, or AMO instruction which accesses a physical address
+within a PMP region without write permissions raises a store
+access-fault exception."
+
+So, in fact, we're doing it wrong - PMP faults should always be thrown,
+regardless of also being a first or second stage fault.
+
+The way riscv_cpu_tlb_fill() and get_physical_address() work is
+adequate: a TRANSLATE_PMP_FAIL error is immediately reported and
+reflected in the 'pmp_violation' flag. What we need is to change
+raise_mmu_exception() to prioritize it.
+
+Reported-by: Joseph Chan <jchan@ventanamicro.com>
+Fixes: 82d53adfbb ("target/riscv/cpu_helper.c: Invalid exception on MMU translation stage")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240413105929.7030-1-alexei.filippov@syntacore.com>
 Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240325021654.6594-1-eric.huang@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/vector_internals.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ target/riscv/cpu_helper.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
-index 996c21eb31..05b2d01e58 100644
---- a/target/riscv/vector_internals.c
-+++ b/target/riscv/vector_internals.c
-@@ -30,6 +30,28 @@ void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
-     if (tot - cnt == 0) {
-         return ;
-     }
-+
-+    if (HOST_BIG_ENDIAN) {
-+        /*
-+         * Deal the situation when the elements are insdie
-+         * only one uint64 block including setting the
-+         * masked-off element.
-+         */
-+        if (((tot - 1) ^ cnt) < 8) {
-+            memset(base + H1(tot - 1), -1, tot - cnt);
-+            return;
-+        }
-+        /*
-+         * Otherwise, at least cross two uint64_t blocks.
-+         * Set first unaligned block.
-+         */
-+        if (cnt % 8 != 0) {
-+            uint32_t j = ROUND_UP(cnt, 8);
-+            memset(base + H1(j - 1), -1, j - cnt);
-+            cnt = j;
-+        }
-+        /* Set other 64bit aligend blocks */
-+    }
-     memset(base + cnt, -1, tot - cnt);
- }
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index d71245a8cb..574886a694 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1177,28 +1177,30 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
  
+     switch (access_type) {
+     case MMU_INST_FETCH:
+-        if (env->virt_enabled && !first_stage) {
++        if (pmp_violation) {
++            cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
++        } else if (env->virt_enabled && !first_stage) {
+             cs->exception_index = RISCV_EXCP_INST_GUEST_PAGE_FAULT;
+         } else {
+-            cs->exception_index = pmp_violation ?
+-                RISCV_EXCP_INST_ACCESS_FAULT : RISCV_EXCP_INST_PAGE_FAULT;
++            cs->exception_index = RISCV_EXCP_INST_PAGE_FAULT;
+         }
+         break;
+     case MMU_DATA_LOAD:
+-        if (two_stage && !first_stage) {
++        if (pmp_violation) {
++            cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
++        } else if (two_stage && !first_stage) {
+             cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
+         } else {
+-            cs->exception_index = pmp_violation ?
+-                RISCV_EXCP_LOAD_ACCESS_FAULT : RISCV_EXCP_LOAD_PAGE_FAULT;
++            cs->exception_index = RISCV_EXCP_LOAD_PAGE_FAULT;
+         }
+         break;
+     case MMU_DATA_STORE:
+-        if (two_stage && !first_stage) {
++        if (pmp_violation) {
++            cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
++        } else if (two_stage && !first_stage) {
+             cs->exception_index = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
+         } else {
+-            cs->exception_index = pmp_violation ?
+-                RISCV_EXCP_STORE_AMO_ACCESS_FAULT :
+-                RISCV_EXCP_STORE_PAGE_FAULT;
++            cs->exception_index = RISCV_EXCP_STORE_PAGE_FAULT;
+         }
+         break;
+     default:
 -- 
 2.45.1
 
