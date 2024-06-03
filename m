@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32265C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09C04C27C52
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:55:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEBsZ-00077a-Fb; Mon, 03 Jun 2024 13:53:55 -0400
+	id 1sEBsg-0007EV-Ks; Mon, 03 Jun 2024 13:54:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sEBsL-000705-4M
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:41 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1sEBsN-00072p-RC
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:44 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sEBsG-00009b-JC
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:40 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4210aa00c94so41514825e9.1
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 10:53:35 -0700 (PDT)
+ id 1sEBsH-0000AT-SY
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:53:43 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2eaa794eb9fso29804011fa.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 10:53:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717437214; x=1718042014; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717437216; x=1718042016; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=z5yTiW/q6L2Y5+9xKegtFmhr3gYrS8eAtYlk7YpU4Hg=;
- b=dwOy2DhGhm358ZPC3ixduSxJtJwpPDfVyG5gkrSmy4V5HfJENTKQBtsrnPW/kW0ebH
- FpSuUmI6eooMTSq7y7NSr8amdQ3wDxjx7FdZf09rQH8ULF0u3VoPtVN4IKPgQBDuzfv0
- oJxqlwRRwuH4KXb4z6yu+ou1EIOtgrA3oIdhNHNZP9owuJEVHmoFrpwhfG2NIHp9E7uk
- po2198Qi03WkEbUsgH9ER7ssRfcvClJrsuXuH8wbhTFFfNuiS5orQ3C1ngL9+LWqTLSJ
- A3ISzXCXQHDomPyvIN3es7GE5fMsOlZcGBegut/QiyVtSY07hGfdOMmui+VL2Ln7bUQM
- nDuw==
+ bh=evivfxd//u248pB/wuxxX0v0kMcuc3vdhqbsfwPCZNI=;
+ b=RyXIO6Y5e8KhEzltBeuuoMCmSYoE9Mcpemgqc9teOOt6z6Mr9ioGH8nOnl42JieRfe
+ fIZNEb1gQJ1LwvcRv4wDxam/aVvIj27ufdV2TMwr71igV0F9bIgayhD3J+abXx6QwVMy
+ uVFAtxEVmcQ/HFJUODFwMTd0tL6/WQfdOkeUKST7oA/3DGBlFxdhHtC70AEsBPskUa4P
+ Drj8gC1/CAc4+wkc3czi8lNwwe1xjE7mRoxE5L8rv/TDzzZDfgBDB8xAV+kCqA5U9K39
+ vibq8h7/3wnPWQHyaL3Ih/JQolNbHifNdXgdu7zNDjRkxQ5VufGYqFoHv8NzB9Kbn2OJ
+ hMnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717437214; x=1718042014;
+ d=1e100.net; s=20230601; t=1717437216; x=1718042016;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=z5yTiW/q6L2Y5+9xKegtFmhr3gYrS8eAtYlk7YpU4Hg=;
- b=Gx20mj/1qz/MgntPMtlCi2Mv0ChCN96L9l8XHl/PMUWHffDJ8ZyvEP2K++JKLuUZp/
- Ss8c+bV7O3gwoEPDIs9g+oqjQE8fEytNXJbp1WSaVl6XN9SHLN2tTOwWBASMW9enyjEM
- UI12bhT85Ia4cn5b4102CIDXlKKVqe9+fwkyRlsrphbU6FIUa2oriZuMP9tRDWGPp64z
- jmEBaEsssDSdTDlu5Qgx2G5hzPvBE1gFBZhhGv6VQ/AgS/7JBdpckwUjqTRoOT0Xzvar
- 2UODabYAJVB9vhI+hRo50G+n/Vqz5Y/e7n7d/NgPvAEGcJnjdupeKAGu9HdzJObJ/u/c
- 85DQ==
-X-Gm-Message-State: AOJu0YwVYVbBuZSmKDMIC/YGEek5G5F+3Tl5V455A8IiqCiHvBw0yVfA
- hUhQxw8yQiZhtcVUbBauyhEkGwg3Sl69qiZSGc7ARAJJFu56EmhWLOnOxfEQE6c=
-X-Google-Smtp-Source: AGHT+IFYPjC9GNDwaenBfWpzyHfu6l1S2cX3DZjw9jgZLDYESoxjMB/FEmKa7Uh6CAWhJ1+74oy5KQ==
-X-Received: by 2002:a05:600c:4705:b0:421:ad:f104 with SMTP id
- 5b1f17b1804b1-4212e0502dcmr93390755e9.10.1717437214623; 
- Mon, 03 Jun 2024 10:53:34 -0700 (PDT)
+ bh=evivfxd//u248pB/wuxxX0v0kMcuc3vdhqbsfwPCZNI=;
+ b=U+R1BVHI98I7+2690t01Xs8f8ZNQ3R5fAm72C5krwsA8heXaPMZpj0MGZtnVXc5hVF
+ wxd1uVTlFiNM/vgodSsr5YHw5EX9oMuuVnnUGAa+5hKnUF2ylQXWi3h2bpyIATZwUnDD
+ NSg2a88BSTiNhShbLAE0OSFTbOSM1BxbeomDoq6P+cUFNil7K+tn56Za9LjMQC2/MWTT
+ W+oBVtAD5b+PjscsRc0bdew0ojrhlciTbf6EcvU3SnVza7+CdzWFHqRYcXX0gBcVAxpv
+ USh+EQig+Dg4BERMPYKFl82zOntKQg+61q8WV8FIy+gR20/rZRZBQ6zwrM2YEphTICwT
+ iLAg==
+X-Gm-Message-State: AOJu0YwU1d4jZhNAh+hQeQd0LZASN8wzMbMkw5NYFFV0zecU5CISEa3W
+ ZbZWHJgbCXYwv0fMJYdVPiqW4bzky/QVm4NdShL+n9ZYxyOfWSnHR7zHBZa03bA=
+X-Google-Smtp-Source: AGHT+IFEIfuFuMp1xHbLpdG8zfFz9rbX1l/B55wAXshfTwRuhblQvD4KXsTwkty8ro1cRvZSpevneA==
+X-Received: by 2002:a05:651c:1504:b0:2ea:b956:db2b with SMTP id
+ 38308e7fff4ca-2eab956e51amr10220441fa.7.1717437215945; 
+ Mon, 03 Jun 2024 10:53:35 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4212f9b9ef1sm114083595e9.9.2024.06.03.10.53.29
+ ffacd0b85a97d-35dd04d943esm9298741f8f.47.2024.06.03.10.53.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 10:53:31 -0700 (PDT)
+ Mon, 03 Jun 2024 10:53:34 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F2F595F9F4;
- Mon,  3 Jun 2024 18:53:28 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 67B055FA03;
+ Mon,  3 Jun 2024 18:53:29 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -82,18 +82,18 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  qemu-s390x@nongnu.org, Beraldo Leal <bleal@redhat.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Radoslaw Biernacki <rad@semihalf.com>
-Subject: [PATCH v3 05/12] scripts/ci: remove CentOS bits from common
- build-environment
-Date: Mon,  3 Jun 2024 18:53:21 +0100
-Message-Id: <20240603175328.3823123-6-alex.bennee@linaro.org>
+Subject: [PATCH v3 09/12] tests/lcitool: Bump to latest libvirt-ci and update
+ Fedora and Alpine version
+Date: Mon,  3 Jun 2024 18:53:25 +0100
+Message-Id: <20240603175328.3823123-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240603175328.3823123-1-alex.bennee@linaro.org>
 References: <20240603175328.3823123-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,122 +116,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Although I've just removed the CentOS specific build-environment its
-probably a bit too confusing to have multiple distros mixed up in one
-place. Prior to moving clean-up what will be just for ubuntu.
+From: Thomas Huth <thuth@redhat.com>
 
+Update to the latest version of lcitool. It dropped support for Fedora 38
+and Alpine 3.18, so we have to update these to newer versions here, too.
+
+Python 3.12 dropped the "imp" module which we still need for running
+Avocado. Fortunately Fedora 40 still ships with a work-around package
+that we can use until somebody updates our Avocado to a newer version.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20240601070543.37786-3-thuth@redhat.com>
+[AJB: regen on rebase]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240529160934.982373-6-alex.bennee@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- scripts/ci/setup/build-environment.yml | 98 --------------------------
- 1 file changed, 98 deletions(-)
+ tests/docker/dockerfiles/alpine.docker             | 4 ++--
+ tests/docker/dockerfiles/fedora-win64-cross.docker | 5 +++--
+ tests/docker/dockerfiles/fedora.docker             | 5 +++--
+ tests/lcitool/libvirt-ci                           | 2 +-
+ tests/lcitool/projects/qemu.yml                    | 1 +
+ tests/lcitool/refresh                              | 6 +++---
+ 6 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/scripts/ci/setup/build-environment.yml b/scripts/ci/setup/build-environment.yml
-index de0d866a1e..e82097b465 100644
---- a/scripts/ci/setup/build-environment.yml
-+++ b/scripts/ci/setup/build-environment.yml
-@@ -184,101 +184,3 @@
-         - ansible_facts['distribution_version'] == '22.04'
-         - ansible_facts['architecture'] == 'aarch64'
+diff --git a/tests/docker/dockerfiles/alpine.docker b/tests/docker/dockerfiles/alpine.docker
+index 554464f31e..b079a83fe2 100644
+--- a/tests/docker/dockerfiles/alpine.docker
++++ b/tests/docker/dockerfiles/alpine.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all alpine-318 qemu
++#  $ lcitool dockerfile --layers all alpine-319 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
  
--    - name: Enable EPEL repo on EL8
--      dnf:
--        name:
--          - epel-release
--        state: present
--      when:
--        - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_major_version'] == '8'
--
--    - name: Enable PowerTools repo on CentOS 8
--      ini_file:
--        path: /etc/yum.repos.d/CentOS-Stream-PowerTools.repo
--        section: powertools
--        option: enabled
--        value: "1"
--      when:
--        - ansible_facts['distribution_file_variety'] == 'CentOS'
--        - ansible_facts['distribution_major_version'] == '8'
--
--    - name: Install basic packages to build QEMU on EL8
--      dnf:
--        # This list of packages start with tests/docker/dockerfiles/centos8.docker
--        # but only include files that are common to all distro variants and present
--        # in the standard repos (no add-ons)
--        name:
--          - bzip2
--          - bzip2-devel
--          - capstone-devel
--          - dbus-daemon
--          - device-mapper-multipath-devel
--          - diffutils
--          - gcc
--          - gcc-c++
--          - genisoimage
--          - gettext
--          - git
--          - glib2-devel
--          - glusterfs-api-devel
--          - gnutls-devel
--          - libaio-devel
--          - libcap-ng-devel
--          - libcurl-devel
--          - libepoxy-devel
--          - libfdt-devel
--          - libgcrypt-devel
--          - libiscsi-devel
--          - libpmem-devel
--          - librados-devel
--          - librbd-devel
--          - libseccomp-devel
--          - libssh-devel
--          - libxkbcommon-devel
--          - lzo-devel
--          - make
--          - mesa-libEGL-devel
--          - nettle-devel
--          - ninja-build
--          - nmap-ncat
--          - numactl-devel
--          - pixman-devel
--          - python38
--          - python3-sphinx
--          - rdma-core-devel
--          - redhat-rpm-config
--          - snappy-devel
--          - spice-glib-devel
--          - systemd-devel
--          - systemtap-sdt-devel
--          - tar
--          - zlib-devel
--        state: present
--      when:
--        - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_version'] == '8'
--
--    - name: Install packages only available on x86 and aarch64
--      dnf:
--        # Spice server not available in ppc64le
--        name:
--          - spice-server
--          - spice-server-devel
--        state: present
--      when:
--        - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_version'] == '8'
--        - ansible_facts['architecture'] == 'aarch64' or ansible_facts['architecture'] == 'x86_64'
--
--    - name: Check whether the Python runtime version is managed by alternatives
--      stat:
--        path: /etc/alternatives/python3
--      register: python3
--
--    - name: Set default Python runtime to 3.8 on EL8
--      command: alternatives --set python3 /usr/bin/python3.8
--      when:
--        - ansible_facts['distribution_file_variety'] in ['RedHat', 'CentOS']
--        - ansible_facts['distribution_version'] == '8'
--        - python3.stat.islnk and python3.stat.lnk_target != '/usr/bin/python3.8'
+-FROM docker.io/library/alpine:3.18
++FROM docker.io/library/alpine:3.19
+ 
+ RUN apk update && \
+     apk upgrade && \
+diff --git a/tests/docker/dockerfiles/fedora-win64-cross.docker b/tests/docker/dockerfiles/fedora-win64-cross.docker
+index 0f78711876..fef846d5a6 100644
+--- a/tests/docker/dockerfiles/fedora-win64-cross.docker
++++ b/tests/docker/dockerfiles/fedora-win64-cross.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all --cross-arch mingw64 fedora-38 qemu,qemu-win-installer
++#  $ lcitool dockerfile --layers all --cross-arch mingw64 fedora-40 qemu,qemu-win-installer
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
+ 
+-FROM registry.fedoraproject.org/fedora:38
++FROM registry.fedoraproject.org/fedora:40
+ 
+ RUN dnf install -y nosync && \
+     printf '#!/bin/sh\n\
+@@ -51,6 +51,7 @@ exec "$@"\n' > /usr/bin/nosync && \
+                python3-pip \
+                python3-sphinx \
+                python3-sphinx_rtd_theme \
++               python3-zombie-imp \
+                sed \
+                socat \
+                sparse \
+diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
+index 098c894d10..44f239c088 100644
+--- a/tests/docker/dockerfiles/fedora.docker
++++ b/tests/docker/dockerfiles/fedora.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all fedora-38 qemu
++#  $ lcitool dockerfile --layers all fedora-40 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
+ 
+-FROM registry.fedoraproject.org/fedora:38
++FROM registry.fedoraproject.org/fedora:40
+ 
+ RUN dnf install -y nosync && \
+     printf '#!/bin/sh\n\
+@@ -110,6 +110,7 @@ exec "$@"\n' > /usr/bin/nosync && \
+                python3-pip \
+                python3-sphinx \
+                python3-sphinx_rtd_theme \
++               python3-zombie-imp \
+                rdma-core-devel \
+                sed \
+                snappy-devel \
+diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
+index cec6703971..0e9490cebc 160000
+--- a/tests/lcitool/libvirt-ci
++++ b/tests/lcitool/libvirt-ci
+@@ -1 +1 @@
+-Subproject commit cec67039719becbfbab866f9c23574f389cf9559
++Subproject commit 0e9490cebc726ef772b6c9e27dac32e7ae99f9b2
+diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
+index 7511ec7ccb..070d7f4706 100644
+--- a/tests/lcitool/projects/qemu.yml
++++ b/tests/lcitool/projects/qemu.yml
+@@ -89,6 +89,7 @@ packages:
+  - pkg-config
+  - pulseaudio
+  - python3
++ - python3-imp
+  - python3-numpy
+  - python3-opencv
+  - python3-pillow
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 789acefb75..9d8e9c6a4a 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -124,11 +124,11 @@ try:
+     #
+     # Standard native builds
+     #
+-    generate_dockerfile("alpine", "alpine-318")
++    generate_dockerfile("alpine", "alpine-319")
+     generate_dockerfile("centos9", "centos-stream-9")
+     generate_dockerfile("debian", "debian-12",
+                         trailer="".join(debian12_extras))
+-    generate_dockerfile("fedora", "fedora-38")
++    generate_dockerfile("fedora", "fedora-40")
+     generate_dockerfile("opensuse-leap", "opensuse-leap-15")
+     generate_dockerfile("ubuntu2204", "ubuntu-2204")
+ 
+@@ -191,7 +191,7 @@ try:
+                         trailer=cross_build("s390x-linux-gnu-",
+                                             "s390x-softmmu,s390x-linux-user"))
+ 
+-    generate_dockerfile("fedora-win64-cross", "fedora-38",
++    generate_dockerfile("fedora-win64-cross", "fedora-40",
+                         project='qemu,qemu-win-installer',
+                         cross="mingw64",
+                         trailer=cross_build("x86_64-w64-mingw32-",
 -- 
 2.39.2
 
