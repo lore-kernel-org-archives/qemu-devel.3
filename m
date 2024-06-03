@@ -4,84 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95486C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 08:47:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16961C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 08:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE3LP-0004dQ-3e; Mon, 03 Jun 2024 04:47:08 -0400
+	id 1sE3OW-00063I-D1; Mon, 03 Jun 2024 04:50:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE3LI-0004Zx-KZ
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 04:47:02 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sE3OU-00061M-JG
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 04:50:18 -0400
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE3LG-0002qk-DQ
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 04:46:59 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4213373568dso20225075e9.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 01:46:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sE3OS-0003M0-Aw
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 04:50:18 -0400
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-6f361af4cb6so1243844a34.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 01:50:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717404416; x=1718009216; darn=nongnu.org;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717404614; x=1718009414;
+ darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=LY3WpWuYpcyY3Py2xT9CgoOQWRCKpg8NMhoOciOHDWw=;
- b=SB3DXKJJqlsDXgHMMlu3ralV97vbGtSmSzMyVh9OaipmtewKkbGwFKz8++s9Ucsu0s
- tdFLRiOokduoXB6MB/5UDK77L5LhyEoLP071enhyFZB8vbVZgJBAfl/I4qqRHKj1Oesw
- 5JsSrW4eQ2+034mB5fGelmuWGyt/Wy1/wlMQzOe9GUYWw1KHWd2R7+Evm48nMSwZBWSm
- 1XJ9T/HDMo7vsJq13i0w3XgKRmKM+evlfhdnmlNatWJ7blev+iG7S7pihdLqvrLMljLa
- 4Aurjz+nxBB2FSI0PZF7ElYM515UdWORfFWvZB5YMK5lcHjr0ZoMDpmYax2jxwL0MGhE
- RRjg==
+ bh=0+InOUYYh0unNoXVbk3mH+fM4gOws4eW9rSF3AdbcNI=;
+ b=O8SOubFOmBmHypy8zYAFZ5+rukD8gGcY2I+7a0UTKZEbUGI65mCr0BuWtzx2ccUjzp
+ WZrUNA99CAh7amjGPvM+N15FRlBQKXwE7BrXuNZxwOS3QUvuM/fAw1PHXwyajxTnnoPK
+ nB0FWM/LtRgihEPAcG2XAJtI7oFCcC30Bo7wL0mC/1+fhKT5dT2DAiSBUPukHmAInAfN
+ QaxSnyJRcI62boqWM2/SIiSYL0JOeySuUXUrNWaLkh1gD0Ha1Mzj72Quh93yaxYqp27u
+ uJstTPSGP+yvWpmCpabNJpBqNTw7whDCM5eGD9wL+7k75SHF017u19A18bl6qE1zNako
+ I9tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717404416; x=1718009216;
+ d=1e100.net; s=20230601; t=1717404614; x=1718009414;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LY3WpWuYpcyY3Py2xT9CgoOQWRCKpg8NMhoOciOHDWw=;
- b=iJdOGiEDA8ph7EuEcuF+sFih0DLAC4gYmq8z49QfCrLUHY/8YUZTnfQsVCdVJirs4e
- f3sdaYlyvkMXIAavlvVOocIiMn/DzjoVc+r2qoGbvT1OKDTnjtEixNotMshVApOe2ZLX
- 7rHoy5MEJRaP0k/74ZW0hw2fo5BFSDPlE0ZHqs/3S3UfFM3+/ShXs0Q7Aaw5WJJWTcMF
- SFhzEbMrKvEQNQ8AMISJ71AiJ1tbGUPj0aZd6RzVu4ImzYhgk3hr03925saP7n32tnnX
- VRcIcC7SEFx3n8Ea04ySWgwanqXmsZ14DoB05BQ7bOTtX/mJ1N9vzw5ljVcj80YspH5l
- XhAA==
-X-Gm-Message-State: AOJu0Yx/ujts5um8wMp8XUA3NbGqfKYvwZ6P5z/Cku7Cs6XMKTijgQIa
- f8CcWI4gVUQFsAXk7gaSsRzgXpKeJYvJo5mpQZc6PJXT0LVG6xVziVabgIVWF3A=
-X-Google-Smtp-Source: AGHT+IG9T1XT6mriX6omnS7HYRjP6yaCbrvRp2v3AbYwi33JZ5Oj+Oo4zqBmvkaCD5Ub4YBy915C9g==
-X-Received: by 2002:a05:600c:3b0d:b0:41b:aa11:29b3 with SMTP id
- 5b1f17b1804b1-4212e0b54c4mr58960575e9.35.1717404416442; 
- Mon, 03 Jun 2024 01:46:56 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.177.241])
+ bh=0+InOUYYh0unNoXVbk3mH+fM4gOws4eW9rSF3AdbcNI=;
+ b=K1bz9aNbBZFwMIfFiPYAVJ1QSYdhp/2fsOAMM2y0vDJxGNtWsEEKhpzt+qpPyTly5G
+ DpWswhk31HPYkChONhXokLcQ6Hxz/+Ykkqo9E4CBWUipEOh12sB5Gg5tdTVqqrvBblFR
+ VRf+DwxWqytvvM0GmCaaZmPB4iyFZrQH2mmxcIax1otfafHAidyCx8QKnaMbFUgcrhvV
+ 2F0gA19AUpKWMQdIweqpnQz8onFswTGTuAcfUZoTKQ8lCcd1VUpU2a+0hrD0+Sd7xLDQ
+ cMm5qrYPjBVcNecXbzhpK/9zFnzglJ4dfbqpT8eWZ88Wr3tlX6lXnwdeJp3wzhuMSFnH
+ 37Pw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVVOZA23d0sSs5ivAD6cbtYFiwU7R+p4lgimITessmAgWCA4xKOLfvxsXxhfvETV+hfh0n5pllFatwHnwE0VqZabOBEEvo=
+X-Gm-Message-State: AOJu0YwG58kyq7aawT9577gRAz0L3Ccv3GIltSBYPmDBX/oEstQPIb+q
+ R1zpuwsWcTctB85+YpmFoMVhTkJToL1OBcLfNLtOQsEEl7EUXvOIHqnRuMQaqu8=
+X-Google-Smtp-Source: AGHT+IEg2krSzVvBwi/3Pxj7rmzcKOiKJGPSR5w6Hrp07bdyTB5Z/3ZLjSYC00+iFm+A7b0TTmr1EQ==
+X-Received: by 2002:a05:6830:2713:b0:6ed:7c7e:1bce with SMTP id
+ 46e09a7af769-6f911f26f70mr13753914a34.3.1717404613963; 
+ Mon, 03 Jun 2024 01:50:13 -0700 (PDT)
+Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4212b84de44sm108963615e9.11.2024.06.03.01.46.54
+ 41be03b00d2f7-6c35937a4a1sm4662781a12.57.2024.06.03.01.50.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 01:46:55 -0700 (PDT)
-Message-ID: <1bafa185-25bd-44d2-8f4b-51ca28125115@linaro.org>
-Date: Mon, 3 Jun 2024 10:46:53 +0200
+ Mon, 03 Jun 2024 01:50:13 -0700 (PDT)
+Message-ID: <22e6b199-a23f-4b5d-ad80-86e82a232c8c@daynix.com>
+Date: Mon, 3 Jun 2024 17:50:11 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] Add an "info pg" command that prints the current
- page tables
-To: "Dr. David Alan Gilbert" <dave@treblig.org>, Don Porter <porter@cs.unc.edu>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
- richard.henderson@linaro.org
-References: <ZiKkWCjreGOMFX5p@gallifrey>
- <20240524170748.1842030-1-porter@cs.unc.edu>
- <20240524170748.1842030-2-porter@cs.unc.edu> <ZlnajZpUHyGDTgNx@gallifrey>
+Subject: Re: [PATCH v3 1/4] osdep: Make qemu_madvise() to set errno in all
+ cases
+To: =?UTF-8?B?TWljaGFsIFByw612b3puw61r?= <mprivozn@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Cameron Esfahani <dirty@apple.com>
+References: <cover.1717168113.git.mprivozn@redhat.com>
+ <393c7b26302cb445f1a086a2c80b1d718c31a071.1717168113.git.mprivozn@redhat.com>
+ <4b146ec6-bec2-4191-8c95-fc30d8307ef6@linaro.org>
+ <08ff19ed-9d1b-4fa3-8a40-3fe10d1f9bfa@daynix.com>
+ <d32e3ea3-32fb-4893-a950-91e60c9778d2@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZlnajZpUHyGDTgNx@gallifrey>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <d32e3ea3-32fb-4893-a950-91e60c9778d2@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::333;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x333.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,70 +104,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/5/24 16:11, Dr. David Alan Gilbert wrote:
-> * Don Porter (porter@cs.unc.edu) wrote:
->> The new "info pg" monitor command prints the current page table,
->> including virtual address ranges, flag bits, and snippets of physical
->> page numbers.  Completely filled regions of the page table with
->> compatible flags are "folded", with the result that the complete
->> output for a freshly booted x86-64 Linux VM can fit in a single
->> terminal window.  The output looks like this:
+On 2024/06/03 16:56, Michal Prívozník wrote:
+> On 6/2/24 08:26, Akihiko Odaki wrote:
+>> On 2024/06/01 0:46, Philippe Mathieu-Daudé wrote:
+>>> On 31/5/24 17:10, Michal Privoznik wrote:
+>>>> The unspoken premise of qemu_madvise() is that errno is set on
+>>>> error. And it is mostly the case except for posix_madvise() which
+>>>> is documented to return either zero (on success) or a positive
+>>>> error number. This means, we must set errno ourselves. And while
+>>>> at it, make the function return a negative value on error, just
+>>>> like other error paths do.
+>>>>
+>>>> Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+>>>> ---
+>>>>    util/osdep.c | 14 +++++++++++++-
+>>>>    1 file changed, 13 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/util/osdep.c b/util/osdep.c
+>>>> index e996c4744a..1345238a5c 100644
+>>>> --- a/util/osdep.c
+>>>> +++ b/util/osdep.c
+>>>> @@ -57,7 +57,19 @@ int qemu_madvise(void *addr, size_t len, int advice)
+>>>>    #if defined(CONFIG_MADVISE)
+>>>>        return madvise(addr, len, advice);
+>>>>    #elif defined(CONFIG_POSIX_MADVISE)
+>>>> -    return posix_madvise(addr, len, advice);
+>>>> +    /*
+>>>> +     * On Darwin posix_madvise() has the same return semantics as
+>>>> +     * plain madvise, i.e. errno is set and -1 is returned. Otherwise,
+>>>> +     * a positive error number is returned.
+>>>> +     */
+>>>
+>>> Alternative is to guard with #ifdef CONFIG_DARWIN ... #else ... #endif
+>>> which might be clearer.
+>>>
+>>> Although this approach seems reasonable, so:
+>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >>
->> VPN range             Entry         Flags            Physical page
->> [7f0000000-7f0000000] PML4[0fe]     ---DA--UWP
->>    [7f28c0000-7f28fffff]  PDP[0a3]     ---DA--UWP
->>      [7f28c4600-7f28c47ff]  PDE[023]     ---DA--UWP
->>        [7f28c4655-7f28c4656]  PTE[055-056] X--D---U-P 0000007f14-0000007f15
->>        [7f28c465b-7f28c465b]  PTE[05b]     ----A--U-P 0000001cfc
->> ...
->> [ff8000000-ff8000000] PML4[1ff]     ---DA--UWP
->>    [ffff80000-ffffbffff]  PDP[1fe]     ---DA---WP
->>      [ffff81000-ffff81dff]  PDE[008-00e] -GSDA---WP 0000001000-0000001dff
->>    [ffffc0000-fffffffff]  PDP[1ff]     ---DA--UWP
->>      [ffffff400-ffffff5ff]  PDE[1fa]     ---DA--UWP
->>        [ffffff5fb-ffffff5fc]  PTE[1fb-1fc] XG-DACT-WP 00000fec00 00000fee00
->>      [ffffff600-ffffff7ff]  PDE[1fb]     ---DA--UWP
->>        [ffffff600-ffffff600]  PTE[000]     -G-DA--U-P 0000001467
+>> We should use plain madvise() if posix_madvise() is broken. In fact,
+>> QEMU detects the availability of plain madvise() and use it instead of
+>> posix_madvise() on my MacBook.
 >>
->> This draws heavy inspiration from Austin Clements' original patch.
+>> Perhaps it may be better to stop defining CONFIG_POSIX_MADVISE on Darwin
+>> to ensure we never use the broken implementation.
 >>
->> This also adds a generic page table walker, which other monitor
->> and execution commands will be migrated to in subsequent patches.
->>
->> Signed-off-by: Don Porter <porter@cs.unc.edu>
->> ---
->>   hmp-commands-info.hx              |  26 ++
->>   include/monitor/hmp-target.h      |   1 +
->>   target/i386/arch_memory_mapping.c | 486 +++++++++++++++++++++++++++++-
->>   target/i386/cpu.h                 |  16 +
->>   target/i386/monitor.c             | 380 +++++++++++++++++++++++
->>   5 files changed, 908 insertions(+), 1 deletion(-)
->>
->> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
->> index 20a9835ea8..918b82015c 100644
->> --- a/hmp-commands-info.hx
->> +++ b/hmp-commands-info.hx
->> @@ -237,6 +237,32 @@ ERST
->>           .cmd        = hmp_info_mtree,
->>       },
->>   
->> +#if defined(TARGET_I386)
-
-FYI in order to unify all QEMU system binaries as a single
-one, we are trying to remove target-specific bits in monitor.
-
-How 'info pg' should work in a binary supporting heterogeneous
-emulation?
-
->> +    {
->> +        .name       = "pg",
->> +        .args_type  = "",
->> +        .params     = "",
->> +        .help       = "show the page table",
->> +        .cmd        = hmp_info_pg,
->> +    },
->> +#endif
 > 
-> So that looks OK
+> Well, doesn't Darwin have madvise() in the first place?
+> 
+> https://opensource.apple.com/source/xnu/xnu-7195.81.3/bsd/man/man2/madvise.2.auto.html
+> 
+> I thought that's the reason for posix_madvise() to behave the same as madvise() there.
 
+It does have madvise() and QEMU on my MacBook uses it instead of 
+posix_madvise().
+
+The behavior of posix_madvise() is probably just a bug (and perhaps it 
+is too late for them to fix).
 
