@@ -4,85 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D04DC25B76
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:46:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 101BFC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:46:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE74J-0004kV-SF; Mon, 03 Jun 2024 08:45:44 -0400
+	id 1sE74b-0004vJ-0X; Mon, 03 Jun 2024 08:46:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE74F-0004jr-D3
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:45:39 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE74Y-0004uT-HT
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:45:59 -0400
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE74C-0008W4-Im
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:45:39 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-57a677d3d79so1145052a12.1
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 05:45:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE74V-00007k-8t
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:45:57 -0400
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-52b894021cbso3605993e87.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 05:45:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717418733; x=1718023533; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717418753; x=1718023553; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gmlkuNgEbbjNjB7ePZ9ooFXi1CZ3KjLC2lfwCL3kOtQ=;
- b=N/AkO976uAPgtOU6Nx3OMmwoTAjfix+bWjkV045iIAbJXRp5+D3aERMabH6SAO/4wM
- 8TZyyThWPJC5SopnUrLV9nGTSrbFUFpayIZ5hr/YGSOY9bolz0efbuJMhSPXhPSoLFrv
- +DAavocGgdNK+pu7tJ28mHCNBDUs7gFtKVB0oA7/N/OO/ND04VsoggUNyzlXJoiSlu9x
- bF0Yk/CRueLCrB7ahhfi4EndAnP39yMgnLpmrc0hfnhppCS1eTSsfbNWNqx2JN9yzv2L
- y4eUYBwIjEXDJWSm61I3Mx0sU6KvH00MImmrj8o8tv4aBpDvPrcXSaET5b6InM6Bo22h
- ajog==
+ bh=y9/kdvEy1zFeE8qYjhl8QzY0Lg7rForBZ7KDGI6Dbo8=;
+ b=kQHl/tjfhoJPSN8A5IzijoAVH217vz85sbm7vBDCNcdJQI5n2BaDhncf7YJckGOr9B
+ bekbTgn+BklVg1M6bN4kgHTordJvLWUab/+S+s+WCjIWdrKR+yKdydd9RH+bxcdgfbE1
+ 9vBBXVPWzrWVMHk2X9EJTpyWa5yVc1WjYTjETI2nh9jMOJ/xPt/FdbbZLgseM392ak8s
+ a7+sjBOMNBw0mmhGXxq7wqiCfYUQlPK+Vq8DB7b3AZDZJwteKdJHt6UEw4IcSAUWfZv4
+ aN6UNejpOo7n52q7/2+M9ixZb/qcBTQ36xR496uMKVbni/hs7CIoTHjRxkkhZ7I8QGRP
+ romg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717418733; x=1718023533;
+ d=1e100.net; s=20230601; t=1717418753; x=1718023553;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gmlkuNgEbbjNjB7ePZ9ooFXi1CZ3KjLC2lfwCL3kOtQ=;
- b=WYVa+UC/nloKM0tMI7WXPfhvet7w9irfKx5BylwXRKapvXBBLqFZxrOiEXeYpdVgqS
- P6uXROgaRL8M88dUfCmcySfGY3mG2kUqCJsJKlfuSRuo7U228VYawfcAbItIIboRYnF9
- /NRe84LFxIAFFfqS4RX2jGoIyAb6M6BU3wc78vRgPu8qPaHzaVetAPTmo2ZxRvjxUJCH
- 6raNS+BypqbT3UeaxT94ImCMzzZda59FecuSAKUW+XOTbHPKfJWroFXywNETDosfE8qb
- 4B9RomlqePAcYGRcX3YXATa44dtRNA8kMP65BVi2gp1kgf8I7yc/U7qgi1s6oR9/2OMX
- Klrw==
-X-Gm-Message-State: AOJu0YxufYWU2d8JgyRXUbRs4Gbmr0HoPdxRJdKH/LIn8sMMD5aZw7Wu
- gk8YCuC5D18QigV9Uk5SmvNfFIQrSc2YoJyaJ9/WWRiSJi2xUkqfdZqGqeHZguK5I0Apx44vjio
- z
-X-Google-Smtp-Source: AGHT+IFPyTy40M2l3vvYWeXduv45DuHHkZDrsu9AUfF72sRwGlI/yJRq6AnVEs3hpY98jX2d2kAmJw==
-X-Received: by 2002:a17:907:502:b0:a5a:5b1a:e2e4 with SMTP id
- a640c23a62f3a-a68193354ebmr672230966b.20.1717418732918; 
- Mon, 03 Jun 2024 05:45:32 -0700 (PDT)
+ bh=y9/kdvEy1zFeE8qYjhl8QzY0Lg7rForBZ7KDGI6Dbo8=;
+ b=EerNERiM4FaSi5jwPNYH75gNkA0e/OC3OlH7g54VNvFvQYmdhm9BncfQ/ZeqxX1SeY
+ USMdToYZk1ZI8BamDnsF0Pf7WJFVPeupj839FlmiZXc6sKorEKRHWoGkcp4kIo9yW4oB
+ 8Sif1TyVi84TIvvnOEFA3fTs77cvaQI4Bouf1iCJlG++kdo2qKLpAaJTMcIKTSW62UEa
+ qfFCqBlhr9Wcy8hsvCj+Z91TpLR7YhFf9D/mrkn/GL0sOdDlTcTyOpyuvXvvEPJm/W2P
+ /D02orHi8/WxOzwG05gCfZE4Fn+xqcD7Cn9LDnPBbdatI0wSFcIo0VEUoW106LKoi765
+ +7Qg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWuFYIlT2cEbdp/mGYajfDf3nXRUm08Ma6OB4rbEcW6YGNPP0BHGvsPyuTpYovmxzA/TPSE2y8roMFnAittY4M7NxtbDqc=
+X-Gm-Message-State: AOJu0YxLxCecuH5HbcvWcERsj/f39btsqM+nGltmq2UXkLUZpIMUmqwe
+ DTPNgLZNSdCbn+cXsERuDqGOLOt5nDosInjdtIo59o9kmU0qFBZjtbOCLESSnM8=
+X-Google-Smtp-Source: AGHT+IG+b+abFigqP3HVVy+bYOonRXbsW1B8x30UABQS3BrjhWLXfiyKWQtLN8kepCqgYOL3palQxQ==
+X-Received: by 2002:a05:6512:33cf:b0:52b:9064:2e6c with SMTP id
+ 2adb3069b0e04-52b9064316fmr5451574e87.3.1717418753330; 
+ Mon, 03 Jun 2024 05:45:53 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.177.241])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68c9ea107fsm311345766b.12.2024.06.03.05.45.30
+ a640c23a62f3a-a68f25610a2sm240519866b.193.2024.06.03.05.45.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 05:45:32 -0700 (PDT)
-Message-ID: <d27a5741-5b5b-4a0f-9b4f-875321da0fe3@linaro.org>
-Date: Mon, 3 Jun 2024 14:45:29 +0200
+ Mon, 03 Jun 2024 05:45:52 -0700 (PDT)
+Message-ID: <044212d1-d267-41eb-96c8-e2e6ab3bd558@linaro.org>
+Date: Mon, 3 Jun 2024 14:45:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] qapi: Remove deprecated events
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- David Gibson <david@gibson.dropbear.id.au>,
- Nicholas Piggin <npiggin@gmail.com>, devel@lists.libvirt.org,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Mads Ynddal <mads@ynddal.dk>,
- Markus Armbruster <armbru@redhat.com>, Stefan Hajnoczi
- <stefanha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Igor Mammedov <imammedo@redhat.com>, Greg Kurz <groug@kaod.org>,
- Yanan Wang <wangyanan55@huawei.com>, qemu-ppc@nongnu.org,
- Eric Blake <eblake@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Ani Sinha <anisinha@redhat.com>
-References: <20240530071548.20074-1-philmd@linaro.org>
+Subject: Re: [PATCH] accel/kvm: Fix two lines with hard-coded tabs
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-trivial@nongnu.org
+References: <20240531170952.505323-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240530071548.20074-1-philmd@linaro.org>
+In-Reply-To: <20240531170952.505323-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,13 +95,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/5/24 09:15, Philippe Mathieu-Daudé wrote:
-> Remove MEM_UNPLUG_ERROR and 'vcpu' field in TRACE events,
-> all deprecated since long enough.
+On 31/5/24 19:09, Peter Maydell wrote:
+> In kvm-all.c, two lines have been accidentally indented with
+> hard-coded tabs rather than spaces. Normalise to match the rest
+> of the file.
 > 
-> Philippe Mathieu-Daudé (2):
->    hw/acpi: Remove the deprecated QAPI MEM_UNPLUG_ERROR event
->    trace: Remove deprecated 'vcpu' field from QMP trace events
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   accel/kvm/kvm-all.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks, series queued.
+Thanks, patch queued.
+
 
