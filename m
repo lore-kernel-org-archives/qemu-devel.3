@@ -4,90 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E125AC25B76
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 13:13:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3103C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 13:32:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE7Tl-0000BH-6Z; Mon, 03 Jun 2024 09:12:01 -0400
+	id 1sE7mc-0007K7-00; Mon, 03 Jun 2024 09:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sE7Ti-0000AK-Gm
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:11:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sE7Tf-0005j3-Iz
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:11:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717420313;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5owbhz2WQol3DxPAYYlnJH90VodwM8bU2nN3YGvfIjo=;
- b=Jl1RUtRn7YeaFIqvFxSzFCXqRR4XTnymAKrXLywjWbGl/SjVn+2H9woKAJvy4ycII1HQu+
- sj2ZvloYuoapCLDBCRtl7EcN2mqKaWlF7MnkkupRlLHD0Ndbn2tUz504vBxl72A9sqff4C
- Q04CxlPN8UQr+w/2T4p9aq1K6BENAf4=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-46--tWpTLG9Nju5SX51ASwFTw-1; Mon, 03 Jun 2024 09:11:52 -0400
-X-MC-Unique: -tWpTLG9Nju5SX51ASwFTw-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a68ce57fb14so87241066b.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 06:11:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sE7mY-0007Ih-Q3
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:31:27 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sE7mV-00015P-Iw
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:31:25 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-57a4ce82f30so2069906a12.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 06:31:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717421476; x=1718026276; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+ZCVT82nhfwXqrAaiCBiAvu4YxaTxST48DeF5/boYwA=;
+ b=yTJaC8hJPR9k1VsJhgUe5nl9YSZg06yGL+XhQNTX0jQx620cARU0hI5639Irl+wxcs
+ nY1ym8lk/TyP3QXG6pehQpZnGLj2YM8/FkRnY9H3XRYE4YxRnhcAVHuZ7nE+CDevjPjv
+ V4eEbBb151qrXm15dxCANB4ENxotoR1gHIpR1YHcg7B9ShALz8zwNn+6GRYCpVLxjpYH
+ JG5HRp8m9uN7Grfbhfbg7jcsRvAwgty5ii8m3OCoP0nz8mu84BLawcWAXol/h0gOiXCu
+ WVE2+rgLXeE7vyGs4cxGFpjANR/cknco0kH3IFBU4lsNb5XqiGimHhtZsEDU0i5d01vM
+ q1TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717420311; x=1718025111;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1717421476; x=1718026276;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5owbhz2WQol3DxPAYYlnJH90VodwM8bU2nN3YGvfIjo=;
- b=vpgWOoa6aNtRgMoFyD/b91+oCq4EYwJXVSRyDl3n7QQYZOfBrrQDMtKXHThBVl6lFP
- O0JEojHk0KMF8cDXFLmps2rR1T37yZgTT9p6e6AmvTPi0EkvipvWa7jKjZ/bryUIQmRV
- bUzixxADzADxuRPgdCGBRl9hS0SB18Cfg1khNVtYtPduQsxlDG55xb5D7Uv1WT9Palfo
- BOhHXnhpnvmWc9LcQ9hPBXZPC6QnI1ZegERlAjjTEuc7zKahFu5Uawss3xpSsSu/j0Ko
- BFhS0bUpCz+IAKMwUvkW4MjwXto9K4n4qVrTE2z6uJgOQvgq9eW1gIadpmO3EHP2QfhV
- bAvg==
-X-Gm-Message-State: AOJu0YyOgnBkMhXT85rqi7ky9LkldLkDOU4PSrZxmFh24DXQdLWpUIMy
- Ll/Nj3n3C8yxt/S0xmt2Gs+yeL3TK9TN+oP7LyIPnrQwsAtd/1BKYZ7mBJ9zAv0ASmYisxXvFN8
- JI1W8XNzb/ootgSLixh4kRy7RkcCN2wgc6xQR8Ymv7HtdZLvAs6Rb3xrgT8HiKieYFPWsI4zBcK
- TpjqQp4UfgwKIV2TXXLMhUaAY89yCJsUr8rbc4
-X-Received: by 2002:a17:906:a90:b0:a69:edd:3339 with SMTP id
- a640c23a62f3a-a690edd35c8mr159128566b.10.1717420310773; 
- Mon, 03 Jun 2024 06:11:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF2VRvtp93tGzOLFf2wTo3xi3rWLyaX5HdVGZkWFMEVzlog42Vgdn+ICwoNzmLiAR9d5anpQQ==
-X-Received: by 2002:a17:906:a90:b0:a69:edd:3339 with SMTP id
- a640c23a62f3a-a690edd35c8mr159126566b.10.1717420310317; 
- Mon, 03 Jun 2024 06:11:50 -0700 (PDT)
-Received: from avogadro.local ([151.81.115.112])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68ce706436sm293420066b.119.2024.06.03.06.11.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 06:11:49 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com,
-	cohuck@redhat.com
-Subject: [PATCH 2/4] update-linux-headers: move pvpanic.h to correct directory
-Date: Mon,  3 Jun 2024 15:11:39 +0200
-Message-ID: <20240603131141.834241-3-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240603131141.834241-1-pbonzini@redhat.com>
-References: <20240603131141.834241-1-pbonzini@redhat.com>
+ bh=+ZCVT82nhfwXqrAaiCBiAvu4YxaTxST48DeF5/boYwA=;
+ b=DQp5ZY1bKJkZrgPK95zDjPj0j+Md0lSojw9zAE1uY7lK0vu7LqD72uB20nlxYYse0P
+ hnrpUQ+jeJUO83iNZzRU7sb8X/srliCXjb87ypLcdfrAtBblF3U77pA6O5GJtGZ2+M2I
+ vQGi9tHrJ5ri4BCBSOyjnhcwc279wEFMokhSx+XHDviz2XntAsydakw46QYeJCHRDqkP
+ yGDey+OsCUcuNiNGjSh7ChWuKm4qzjCWPIKH0wcvXoASBWE5Gi0CXblgztwK6Bxnc83h
+ sHy4PxQ/xgNyB+4q6NYJOKvoXd8NpWMzDRjXgVszkHlQibmE1YaPxkbc3N44/3Z1ooT7
+ tN9w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXT7YTUqcZPRzduehpFhSK8gq+VqFJqEkMSVREjMlwWS4N3T3RIldMsArYcwgf64RL+oAca9rzqjI4O7Qbs7NPfrjltODA=
+X-Gm-Message-State: AOJu0Yzg/guX/mVczZUCNjn15XWrF04iXvpZsmsO5e12+o/FwaO3OZrS
+ BL7WgVwUY4SevZh5sSAy5qSQas0g5aC7hFnNvAQSqIIyb3Bz5SgseNZXIFIlHQ+s6b+FvJnQSHl
+ OdIOf8lyYOQ+rvB432zfzferhNDuXM6bNby9xYpIkuRYDzqMu
+X-Google-Smtp-Source: AGHT+IGOgaZnIfPUyQgiePo29oQKElJu8/o2eWA3Y5XnZygalhWlufN0xHcDgYsl0k96SCu4RGicK9zRY1mwtkcyDGA=
+X-Received: by 2002:a50:9e05:0:b0:57a:2400:3a56 with SMTP id
+ 4fb4d7f45d1cf-57a3651f208mr6279249a12.23.1717421475733; Mon, 03 Jun 2024
+ 06:31:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240531175153.2716309-1-tavip@google.com>
+ <CAFEAcA_zPR=gd95tkhi8cXaZMf+M2OO2WpF=ZfO1vKhsO9=1cA@mail.gmail.com>
+ <Zl29b8osUIBUICSm@redhat.com>
+In-Reply-To: <Zl29b8osUIBUICSm@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 3 Jun 2024 14:31:04 +0100
+Message-ID: <CAFEAcA-EGC4WyRDCq7QtxyuVgy-q25AejJ03Mb4O6caLOOGF-Q@mail.gmail.com>
+Subject: Re: [PATCH] chardev: add path option for pty backend
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Octavian Purdila <tavip@google.com>, qemu-devel@nongnu.org,
+ marcandre.lureau@redhat.com, 
+ eblake@redhat.com, armbru@redhat.com, Paulo Neves <ptsneves@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,82 +95,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Linux has <misc/pvpanic.h>, not <linux/pvpanic.h>.  Use the same
-directory for QEMU's include/standard-headers/ copy.
+On Mon, 3 Jun 2024 at 13:56, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
+wrote:
+>
+> On Mon, Jun 03, 2024 at 01:23:00PM +0100, Peter Maydell wrote:
+> > On Fri, 31 May 2024 at 22:21, Octavian Purdila <tavip@google.com> wrote=
+:
+> > >
+> > > Add path option to the pty char backend which will create a symbolic
+> > > link to the given path that points to the allocated PTY.
+> > >
+> > > Based on patch from Paulo Neves:
+> > >
+> > > https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsneves@g=
+mail.com/
+> > >
+> > > Tested with the following invocations that the link is created and
+> > > removed when qemu stops:
+> > >
+> > >   qemu-system-x86_64 -nodefaults -mon chardev=3Dcompat_monitor \
+> > >   -chardev pty,path=3Dtest,id=3Dcompat_monitor0
+> > >
+> > >   qemu-system-x86_64 -nodefaults -monitor pty:test
+> > >
+> > > Also tested that when a link path is not passed invocations still wor=
+k, e.g.:
+> > >
+> > >   qemu-system-x86_64 -monitor pty
+> >
+> > Could we have some justification here for why the new
+> > functionality is useful, please? (e.g. what new use cases
+> > it permits).
+>
+> The PTY paths are dynamically allocated so you can't predict them
+> as an app launching QEMU. You need to connect to the monitor and
+> interogate QEMU to find the path. So supporting a symlink simplifies
+> usage.
+>
+> This was explained in the original patches' commit message, and
+> that description should have been kept.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/standard-headers/{linux => misc}/pvpanic.h | 0
- hw/misc/pvpanic-isa.c                              | 2 +-
- hw/misc/pvpanic-pci.c                              | 2 +-
- hw/misc/pvpanic.c                                  | 2 +-
- scripts/update-linux-headers.sh                    | 6 ++++--
- 5 files changed, 7 insertions(+), 5 deletions(-)
- rename include/standard-headers/{linux => misc}/pvpanic.h (100%)
+Sounds good. We could add that to the documentation also:
 
-diff --git a/include/standard-headers/linux/pvpanic.h b/include/standard-headers/misc/pvpanic.h
-similarity index 100%
-rename from include/standard-headers/linux/pvpanic.h
-rename to include/standard-headers/misc/pvpanic.h
-diff --git a/hw/misc/pvpanic-isa.c b/hw/misc/pvpanic-isa.c
-index ccec50f61bb..b4f84c41109 100644
---- a/hw/misc/pvpanic-isa.c
-+++ b/hw/misc/pvpanic-isa.c
-@@ -21,7 +21,7 @@
- #include "hw/misc/pvpanic.h"
- #include "qom/object.h"
- #include "hw/isa/isa.h"
--#include "standard-headers/linux/pvpanic.h"
-+#include "standard-headers/misc/pvpanic.h"
- #include "hw/acpi/acpi_aml_interface.h"
- 
- OBJECT_DECLARE_SIMPLE_TYPE(PVPanicISAState, PVPANIC_ISA_DEVICE)
-diff --git a/hw/misc/pvpanic-pci.c b/hw/misc/pvpanic-pci.c
-index 83be95d0d24..4d44a881dad 100644
---- a/hw/misc/pvpanic-pci.c
-+++ b/hw/misc/pvpanic-pci.c
-@@ -21,7 +21,7 @@
- #include "hw/misc/pvpanic.h"
- #include "qom/object.h"
- #include "hw/pci/pci_device.h"
--#include "standard-headers/linux/pvpanic.h"
-+#include "standard-headers/misc/pvpanic.h"
- 
- OBJECT_DECLARE_SIMPLE_TYPE(PVPanicPCIState, PVPANIC_PCI_DEVICE)
- 
-diff --git a/hw/misc/pvpanic.c b/hw/misc/pvpanic.c
-index 1540e9091a4..80289ecf5fe 100644
---- a/hw/misc/pvpanic.c
-+++ b/hw/misc/pvpanic.c
-@@ -21,7 +21,7 @@
- #include "hw/qdev-properties.h"
- #include "hw/misc/pvpanic.h"
- #include "qom/object.h"
--#include "standard-headers/linux/pvpanic.h"
-+#include "standard-headers/misc/pvpanic.h"
- 
- static void handle_event(int event)
- {
-diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
-index ae34d18572b..7b39cc426e0 100755
---- a/scripts/update-linux-headers.sh
-+++ b/scripts/update-linux-headers.sh
-@@ -231,10 +231,12 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
-          "$hdrdir/include/linux/const.h" \
-          "$hdrdir/include/linux/kernel.h" \
-          "$hdrdir/include/linux/vhost_types.h" \
--         "$hdrdir/include/linux/sysinfo.h" \
--         "$hdrdir/include/misc/pvpanic.h"; do
-+         "$hdrdir/include/linux/sysinfo.h"; do
-     cp_portable "$i" "$output/include/standard-headers/linux"
- done
-+mkdir -p "$output/include/standard-headers/misc"
-+cp_portable "$hdrdir/include/misc/pvpanic.h" \
-+            "$output/include/standard-headers/misc"
- mkdir -p "$output/include/standard-headers/drm"
- cp_portable "$hdrdir/include/drm/drm_fourcc.h" \
-             "$output/include/standard-headers/drm"
--- 
-2.45.1
+> > >      ``pty`` is not available on Windows hosts.
+> > >
+> > > +    ``path`` specifies the symbolic link path to be created that
+> > > +    points to the pty device.
+> >
+> > I think we could usefully make this a little less terse. Perhaps
+> >    If ``path`` is specified, QEMU will create a symbolic link at
+> >    that location which points to the new PTY device.
+> > ?
 
+       This allows you to avoid having to make a query via the QMP
+       or HMP monitor to find out what the new PTY device path is.
+
+thanks
+-- PMM
 
