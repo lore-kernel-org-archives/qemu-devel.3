@@ -4,92 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE46BC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DB53C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5vv-0002Qi-Bq; Mon, 03 Jun 2024 07:32:59 -0400
+	id 1sE5wi-0003KO-FS; Mon, 03 Jun 2024 07:33:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sE5vs-0002Q6-RP
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:32:56 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sE5wb-0003Em-K9
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:33:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sE5vh-0001t2-0k
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:32:56 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sE5wN-0001w3-Oa
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:33:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717414364;
+ s=mimecast20190719; t=1717414402;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IddhYRwfNp0Iv6OVqlMM8dW7bdY2npUpHIFGUauKeoA=;
- b=ZFcndT5deiTM1nOMANKAdRfwwNwZ+v7sEa5RPxDyfgBnRWyG94WDevhW1Ja3ebGkLXMGzK
- 7czVC5zhvTXPBXWatLOPvrTlpyXtZLSABNbZBT3oQYeBOZeki9340WVxVAmVX4y6r4XWyE
- CEaf6tsSi9qViscxVyyWKpJvQCoKvjk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-450-TYMHOflDNEyaq2PcDRh4fw-1; Mon, 03 Jun 2024 07:32:43 -0400
-X-MC-Unique: TYMHOflDNEyaq2PcDRh4fw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42120e123beso37561405e9.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 04:32:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717414362; x=1718019162;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IddhYRwfNp0Iv6OVqlMM8dW7bdY2npUpHIFGUauKeoA=;
- b=aSYPwSBb0itLEhI5qLT+KHJvADq/Nyszl3tiBvPRrrf/baHVb8VzLsF8rsLathX/BB
- 1lNc0yKMcnNPLXPLhikOLwJPu8Nml1OvVKyUg9inuh9prXkug/qGHGUKGcj94ldJOknp
- RlL633VcLyL6fBE1kwUCMF2CGoEN5zoxFWPW57AaMG25BirQCr/uMQf30E8Dq9ktu0FV
- mbN30HeoOQ03gt59wKeHVRxhjmo75p+9njGjOZANbvD32SwfIJqGzica7IXqav5C+Mxd
- 8exBbzom1Mt+NG+Wh7X9CkFackvFeHaIp0GHpe6wiKkPchsKDiwjGvqHEfvQIgmyQsV8
- JowQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXeCMRWe1ZnO1kdYA+7bVE7V7ciIEkzpannlwOM1acI6T1RFaR0ji/wJMuEIo/x+JjNvum6KyoIXPRGt0Z/xuOEs0CTz2c=
-X-Gm-Message-State: AOJu0Yzo7WBwEqAH+bwCka5nevXs5CPd7LlQu6+p+RTdip5ugfoXx/Al
- fZuR4WGGdbQ+BBJUgSndGWYofs8Wnx+toZ/2Z2T1VqzAP1fTgD8gnG4v7sJmFDxzKa9LHUsUVuX
- j8MbWW1DMisq4tV0bkb6bd0cVn/aAl1qEYBFDQEKne9GdkO7ZhqAe
-X-Received: by 2002:a05:600c:4744:b0:421:2990:7f9b with SMTP id
- 5b1f17b1804b1-4212e050597mr92771395e9.14.1717414361884; 
- Mon, 03 Jun 2024 04:32:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHtqTdEYm3rApdycw42Nu4OrKrShGiDK3mZ+oVY+AHZ55KgaAFBBS678LScviNqVRlX7bOZBg==
-X-Received: by 2002:a05:600c:4744:b0:421:2990:7f9b with SMTP id
- 5b1f17b1804b1-4212e050597mr92771195e9.14.1717414361536; 
- Mon, 03 Jun 2024 04:32:41 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4212f0f9660sm104391905e9.39.2024.06.03.04.32.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 04:32:41 -0700 (PDT)
-Message-ID: <d25fc439-c201-4331-9fb2-d62b37d371b1@redhat.com>
-Date: Mon, 3 Jun 2024 13:32:39 +0200
+ bh=3ifeBcbzcNaUiW17x9AStbdBuru9W+DOKH8MEfuNjRk=;
+ b=CudgUu0vbiV6AmmuVBxF/Il7jC+6EXCv5fD63ZQ1QYScO62IXCnQ4MVN2+v8eUfpjvk9FM
+ zk3lSH6RZD6hjJg4xWmTR28eil/GOe/iaBAx77I+cP3z6jIUvJ5+bmvz03qCdH7PmaK5QQ
+ s3sWtEQdPW8sWVWhcQfQQQwn5PTfKC4=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-Q7W_4dlQMs2IUYB7p7towQ-1; Mon,
+ 03 Jun 2024 07:33:21 -0400
+X-MC-Unique: Q7W_4dlQMs2IUYB7p7towQ-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DA0411C0512C;
+ Mon,  3 Jun 2024 11:33:20 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.80])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 9367F5623;
+ Mon,  3 Jun 2024 11:33:19 +0000 (UTC)
+Date: Mon, 3 Jun 2024 12:33:17 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v5 21/23] hw/i386/pc: Simplify DEFINE_I440FX_MACHINE()
+ macro
+Message-ID: <Zl2p_QURAjCRfZ43@redhat.com>
+References: <20240529051539.71210-1-philmd@linaro.org>
+ <20240529051539.71210-22-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 11/19] backends/iommufd: Implement
- HostIOMMUDeviceClass::get_cap() handler
-Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
- peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
-References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
- <20240603061023.269738-12-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240603061023.269738-12-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <20240529051539.71210-22-philmd@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,65 +84,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/3/24 08:10, Zhenzhong Duan wrote:
-> Suggested-by: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+On Wed, May 29, 2024 at 07:15:37AM +0200, Philippe Mathieu-Daudé wrote:
+> Last commit removed the last non-NULL use of DEFINE_I440FX_MACHINE
+> 3rd parameter. 'compatfn' is now obsolete, remove it.
+> 
+> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  backends/iommufd.c | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
->
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index c7e969d6f7..f2f7a762a0 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -230,6 +230,28 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
->      return true;
->  }
->  
-> +static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
-> +{
-> +    HostIOMMUDeviceCaps *caps = &hiod->caps;
-> +
-> +    switch (cap) {
-> +    case HOST_IOMMU_DEVICE_CAP_IOMMU_TYPE:
-> +        return caps->type;
-> +    case HOST_IOMMU_DEVICE_CAP_AW_BITS:
-> +        return caps->aw_bits;
-> +    default:
-> +        error_setg(errp, "Not support get cap %x", cap);
-can't you add details about the faulting HostIOMMUDevice by tracing the
-devid for instance?
+>  hw/i386/pc_piix.c | 62 ++++++++++++++++++++++-------------------------
+>  1 file changed, 29 insertions(+), 33 deletions(-)
 
-I would rephrase the error message into No support for capability 0x%x
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Eric
-> +        return -EINVAL;
-> +    }
-> +}
-> +
-> +static void hiod_iommufd_class_init(ObjectClass *oc, void *data)
-> +{
-> +    HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
-> +
-> +    hioc->get_cap = hiod_iommufd_get_cap;
-> +};
-> +
->  static const TypeInfo types[] = {
->      {
->          .name = TYPE_IOMMUFD_BACKEND,
-> @@ -246,6 +268,7 @@ static const TypeInfo types[] = {
->      }, {
->          .name = TYPE_HOST_IOMMU_DEVICE_IOMMUFD,
->          .parent = TYPE_HOST_IOMMU_DEVICE,
-> +        .class_init = hiod_iommufd_class_init,
->          .abstract = true,
->      }
->  };
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
