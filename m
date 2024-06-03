@@ -4,87 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F122C27C44
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:20:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0EECC25B76
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:20:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5ho-0007jE-Ki; Mon, 03 Jun 2024 07:18:24 -0400
+	id 1sE5hw-0008C2-8E; Mon, 03 Jun 2024 07:18:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5hl-0007Zl-EV; Mon, 03 Jun 2024 07:18:21 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1sE5hs-0007vS-Ds; Mon, 03 Jun 2024 07:18:28 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5hg-0006Wr-Kf; Mon, 03 Jun 2024 07:18:21 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1f44b45d6abso29776055ad.0; 
- Mon, 03 Jun 2024 04:18:15 -0700 (PDT)
+ id 1sE5ho-0006Xd-EJ; Mon, 03 Jun 2024 07:18:27 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1f44b5d0c50so32799735ad.2; 
+ Mon, 03 Jun 2024 04:18:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717413494; x=1718018294; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717413501; x=1718018301; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Tj+xbQPw1aTPPkVQS9cYzQUJajn8RHcrOCksv3MTYMs=;
- b=DwOpcmCGes3PI+YWKRpzaGGK3BSN/ZuXH1Ml7kWrC10ueqKA/so0klJ+T2cBeoiDpM
- KBLNIShNQDKjVPW4uu+wbwVw5sGswaRfVZ3ZVRefyqadIic9uKfZ855Y77u926D0U30y
- zJXyjoCXpTxr5VDy7+tjaOgnO3pToCfTezhyGo2AGJrOfgdlGKpszGm+y0Xw+Ld5qXMf
- qdlvLd/uVyiOdbV1lLDwxBsiqk/XQLzfAv0n8hcoqbbB269GcEgBgfrAv60VAZOfS8lo
- X8wZw5Y0cIib3JDBmPj6fnw0SfRRA8DnW94Inxcf6wJ6zBjh61boaaGPPWgQ/r4XPTnO
- v3wA==
+ bh=yN3SL80ZeNYtdgHnSA4EmYhdmlHM54QOJLaD6qM4+6Q=;
+ b=hJCsjFK+q7C4DoKQAyv5VwRmUBolLS9gxFzK8qAE1J2zSW90qdaOBYcnDTASdlQz1A
+ WVFiMzslDUpKGxo/Uwswhuc61Ob9xQeoPDpZcv8yOvIQXeudURcVmz5vv9xHWDhlJWPg
+ 9g2iofVsioDZVBb3a6TF/agwpLpDFA066xl2FOrZ2CCgfyexabAMGClSIgpgz7ZHvtLI
+ 5M6f/O4VZQw4pfDpam9SgS6ARlISpnKWoZ2QCO5X8vt+f3lOiXCFuErymAO4p3XcppdJ
+ ijacddsQxuLc22wiGiGPwkDJTvSuJzCzfeupiYUWY4IcnQkXTXD9Xsc35ZEyyJaFnGY9
+ fgWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717413494; x=1718018294;
+ d=1e100.net; s=20230601; t=1717413501; x=1718018301;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Tj+xbQPw1aTPPkVQS9cYzQUJajn8RHcrOCksv3MTYMs=;
- b=IiQDitK85Q25sAEFKRVf+h2rn5cX4xCn2piJ6dKA4c3jY7YVq1Ag2hqNrqKfvNj1+8
- eN1/7slacpRcGk1BgQzm8jQZ3YTeK3tj6yOPpbinwMohd60xn2DaD31oYW9upcsdHoTO
- 4p8mcGmrZ9wQkVXlG9ofZwlf836Y8lBo7pegxhNzIkz75xxLfCSGYK7uNKRWOpK5qw1g
- fft5rgqzd8wAh3DmCaHLtndiC2uhmH50G6ZEGeCvxbQ3oNkVMQwqT3aygf7K/kO2Ml2F
- nhSuOKSCiK9kFsDVQiDEpaWyIAmHrlbBCV10RzAzXxYieOlae5YLexIw+R1uN9BKV629
- zeoQ==
+ bh=yN3SL80ZeNYtdgHnSA4EmYhdmlHM54QOJLaD6qM4+6Q=;
+ b=YYqTIypQ3XCmG4TtIgtxletb9X+jQNiEiuodHGxtinQgA2JfvbmbLhRz3m2taRW/SS
+ bNuLGKpMHCPiJiUVcQ//6wXll64vtL+1YYp0dTV5aaqmYwONa/r0v4W7aOyBdI5mRRwD
+ JsSD3veOLmlN+O/cOw9V9ks238etL2JmlWr8CccWg+6svdj1Bu1yS9n4wbTjRtRsLRg/
+ 9Wkuh8wfbn6qSsB/BF7s1lkWHv/v0pNK93mT79w+ECGCUiTXEUEbEO4Uj44ogLWnXVyD
+ 5r4J1fh8nqytXLVMK73VBeFbblVFp67mJvdM1PZaFoVVnx0JzLKZ3mm+dBfRMvwY5MiZ
+ SQfA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV6ltbyULYFlHbszYs2rTZ/9NyuTNS4fIKhmcls6wAVz3BUCD1dL0FsYl5ZJQSMgXBUn+SCJAI5Pv1rMzmr7/8DgK6h5eHb
-X-Gm-Message-State: AOJu0YzVgfY4C0oqnt7jsvIdGoqn9flaWbXwLerAEoqy8s3wYLEBOiex
- XbN5ZGtDt0qcYQ6G7vojachB48JKFqyE/HN5nRcVIq/TfSWIszOjWNk1IQ==
-X-Google-Smtp-Source: AGHT+IGKrY8IagvVVSdQaol6lJys9GgQbHEbjGT0vStfWyb+ZlyPi+R8qVjEdKVhSam3BWg1iSDWog==
-X-Received: by 2002:a17:903:32c2:b0:1f3:2e5d:902d with SMTP id
- d9443c01a7336-1f636fd9704mr98098505ad.4.1717413493552; 
- Mon, 03 Jun 2024 04:18:13 -0700 (PDT)
+ AJvYcCUN7xgKElj8yyEcboT5B3YU3LSBfhQU+guO9MNfAuFfAls2b42zA6a6/JOIjtnjJOeW09Dtsls9MiopVa4yNKKGnqx0XRBW
+X-Gm-Message-State: AOJu0YwGcIXDxbRFTzbPC6BsYnVTdP69TIkFMeK/8VYNFlvlTZiQjuEo
+ 17MgD2HKf62YFiMhM3ROUBPO+jEzMA1g9pg9m4VhcHhqeduJ7TIYqBEOhA==
+X-Google-Smtp-Source: AGHT+IH/KHWBocNyxzQqDylreZ+Eh2C6FavYssab9/L+y2dGp9guVUitn+08JLVQUt3xBOnDJcFShw==
+X-Received: by 2002:a17:902:bb87:b0:1f6:3429:69d7 with SMTP id
+ d9443c01a7336-1f63709e4ffmr79931185ad.52.1717413501040; 
+ Mon, 03 Jun 2024 04:18:21 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.18.10
+ d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.18.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 04:18:13 -0700 (PDT)
+ Mon, 03 Jun 2024 04:18:20 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Alistair Francis <alistair.francis@wdc.com>,
- Fabian Thomas <fabian.thomas@cispa.de>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Robin Dapp <rdapp.gcc@gmail.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  qemu-stable <qemu-stable@nongnu.org>
-Subject: [PULL v2 24/27] target/riscv: rvzicbo: Fixup CBO extension register
- calculation
-Date: Mon,  3 Jun 2024 21:16:40 +1000
-Message-ID: <20240603111643.258712-25-alistair.francis@wdc.com>
+Subject: [PULL v2 26/27] riscv,
+ gdbstub.c: fix reg_width in ricsv_gen_dynamic_vector_feature()
+Date: Mon,  3 Jun 2024 21:16:42 +1000
+Message-ID: <20240603111643.258712-27-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240603111643.258712-1-alistair.francis@wdc.com>
 References: <20240603111643.258712-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,87 +105,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair23@gmail.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-When running the instruction
+Commit 33a24910ae changed 'reg_width' to use 'vlenb', i.e. vector length
+in bytes, when in this context we want 'reg_width' as the length in
+bits.
 
-```
-    cbo.flush 0(x0)
-```
+Fix 'reg_width' back to the value in bits like 7cb59921c05a
+("target/riscv/gdbstub.c: use 'vlenb' instead of shifting 'vlen'") set
+beforehand.
 
-QEMU would segfault.
+While we're at it, rename 'reg_width' to 'bitsize' to provide a bit more
+clarity about what the variable represents. 'bitsize' is also used in
+riscv_gen_dynamic_csr_feature() with the same purpose, i.e. as an input to
+gdb_feature_builder_append_reg().
 
-The issue was in cpu_gpr[a->rs1] as QEMU does not have cpu_gpr[0]
-allocated.
-
-In order to fix this let's use the existing get_address()
-helper. This also has the benefit of performing pointer mask
-calculations on the address specified in rs1.
-
-The pointer masking specificiation specifically states:
-
-"""
-Cache Management Operations: All instructions in Zicbom, Zicbop and Zicboz
-"""
-
-So this is the correct behaviour and we previously have been incorrectly
-not masking the address.
-
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reported-by: Fabian Thomas <fabian.thomas@cispa.de>
-Fixes: e05da09b7cfd ("target/riscv: implement Zicbom extension")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Reported-by: Robin Dapp <rdapp.gcc@gmail.com>
+Fixes: 33a24910ae ("target/riscv: Use GDBFeature for dynamic XML")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Acked-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240514023910.301766-1-alistair.francis@wdc.com>
+Message-ID: <20240517203054.880861-2-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/insn_trans/trans_rvzicbo.c.inc | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ target/riscv/gdbstub.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/riscv/insn_trans/trans_rvzicbo.c.inc b/target/riscv/insn_trans/trans_rvzicbo.c.inc
-index d5d7095903..15711c3140 100644
---- a/target/riscv/insn_trans/trans_rvzicbo.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicbo.c.inc
-@@ -31,27 +31,35 @@
- static bool trans_cbo_clean(DisasContext *ctx, arg_cbo_clean *a)
+diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+index d0cc5762c2..c07df972f1 100644
+--- a/target/riscv/gdbstub.c
++++ b/target/riscv/gdbstub.c
+@@ -288,7 +288,7 @@ static GDBFeature *riscv_gen_dynamic_csr_feature(CPUState *cs, int base_reg)
+ static GDBFeature *ricsv_gen_dynamic_vector_feature(CPUState *cs, int base_reg)
  {
-     REQUIRE_ZICBOM(ctx);
--    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
-+    TCGv src = get_address(ctx, a->rs1, 0);
-+
-+    gen_helper_cbo_clean_flush(tcg_env, src);
-     return true;
- }
+     RISCVCPU *cpu = RISCV_CPU(cs);
+-    int reg_width = cpu->cfg.vlenb;
++    int bitsize = cpu->cfg.vlenb << 3;
+     GDBFeatureBuilder builder;
+     int i;
  
- static bool trans_cbo_flush(DisasContext *ctx, arg_cbo_flush *a)
- {
-     REQUIRE_ZICBOM(ctx);
--    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
-+    TCGv src = get_address(ctx, a->rs1, 0);
-+
-+    gen_helper_cbo_clean_flush(tcg_env, src);
-     return true;
- }
+@@ -298,7 +298,7 @@ static GDBFeature *ricsv_gen_dynamic_vector_feature(CPUState *cs, int base_reg)
  
- static bool trans_cbo_inval(DisasContext *ctx, arg_cbo_inval *a)
- {
-     REQUIRE_ZICBOM(ctx);
--    gen_helper_cbo_inval(tcg_env, cpu_gpr[a->rs1]);
-+    TCGv src = get_address(ctx, a->rs1, 0);
-+
-+    gen_helper_cbo_inval(tcg_env, src);
-     return true;
- }
+     /* First define types and totals in a whole VL */
+     for (i = 0; i < ARRAY_SIZE(vec_lanes); i++) {
+-        int count = reg_width / vec_lanes[i].size;
++        int count = bitsize / vec_lanes[i].size;
+         gdb_feature_builder_append_tag(
+             &builder, "<vector id=\"%s\" type=\"%s\" count=\"%d\"/>",
+             vec_lanes[i].id, vec_lanes[i].gdb_type, count);
+@@ -316,7 +316,7 @@ static GDBFeature *ricsv_gen_dynamic_vector_feature(CPUState *cs, int base_reg)
+     /* Define vector registers */
+     for (i = 0; i < 32; i++) {
+         gdb_feature_builder_append_reg(&builder, g_strdup_printf("v%d", i),
+-                                       reg_width, i, "riscv_vector", "vector");
++                                       bitsize, i, "riscv_vector", "vector");
+     }
  
- static bool trans_cbo_zero(DisasContext *ctx, arg_cbo_zero *a)
- {
-     REQUIRE_ZICBOZ(ctx);
--    gen_helper_cbo_zero(tcg_env, cpu_gpr[a->rs1]);
-+    TCGv src = get_address(ctx, a->rs1, 0);
-+
-+    gen_helper_cbo_zero(tcg_env, src);
-     return true;
- }
+     gdb_feature_builder_end(&builder);
 -- 
 2.45.1
 
