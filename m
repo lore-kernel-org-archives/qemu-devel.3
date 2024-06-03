@@ -4,108 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A097DC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3834C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 12:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE7FL-000077-VF; Mon, 03 Jun 2024 08:57:08 -0400
+	id 1sE7Fv-0000zA-5q; Mon, 03 Jun 2024 08:57:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sE7FK-0008TR-T6
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:57:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sE7Ft-0000yU-N1
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:57:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sE7FI-0002EO-Hr
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:57:06 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sE7Fr-0002IF-Rz
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 08:57:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717419423;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1717419458;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uJgF4prksJTHhKe1OAA3+KwVurXP/KwVHaakDnrdJ6U=;
- b=eAxuZ4J9/ozVJ4pexxbrLWbZh8JK+FDqoj0WNCsFjjTMLvtSKPGBiruKLP0jU+1B5BnSF1
- Ipf4wdZBKJlhs9+dbX2CzHZBNpeClA3YRBw8ZPY28IyWagz18Aj4g7E4JSHoFYmzGv13wg
- 1mTPTwq4sUqiHw180NgRQY7iAhW6QFQ=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CvJZuIxuEPJUSu9dcM8tRPjCjWv7YhKj1hgSmVA1AoI=;
+ b=GVt3jg1sbsuJR/RP25sttsJK8HSaIs3zXkQ+1Ce3SrIFMuomqfCBe4ROdZXEiLW01ydPgc
+ XmYbQOj6RJzwcl4U2fNadWc5sCes8/EpCqmGMKLsIZViXb2Uh9Jy7UCPCGb9PHTdYBui9u
+ /si+SY8T9WozR0Xp4zlK+RPFVHuQ2dY=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-UX9XwdYAMxG52bLecgjjXA-1; Mon, 03 Jun 2024 08:57:02 -0400
-X-MC-Unique: UX9XwdYAMxG52bLecgjjXA-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-794ab0a4c4cso551935485a.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 05:57:02 -0700 (PDT)
+ us-mta-553-5LPzdKnMMbWSzo--dU450g-1; Mon, 03 Jun 2024 08:57:36 -0400
+X-MC-Unique: 5LPzdKnMMbWSzo--dU450g-1
+Received: by mail-ot1-f69.google.com with SMTP id
+ 46e09a7af769-6f8e2181c5dso5070541a34.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 05:57:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717419422; x=1718024222;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uJgF4prksJTHhKe1OAA3+KwVurXP/KwVHaakDnrdJ6U=;
- b=MOQJDY7He8oJ0eDtJnhg0FYWXISTmejoSO6uW72JhjAWOGEBBgsOKy5aJeevNkhfdX
- I9rm3IGr4mqTgh//zGpv2GQ5Jek6Br5CqwxxIIYIMS9+dElY9i1s6O/EIpkBeHG2roUN
- 2xgoE6c7hyzfknpFdr8gUhoRoqOxTqawAwTqXz7CWID6CPluSNu9HGlVmFVZWrUbvSP5
- 2xn1BKYlQ9fgzHxEygUtB2Tq20kUMWxax406RlxY0H9HocY/cofPf5zIH8nbceJHz9RX
- Tcjxw4y6Lsw/cBnHyyYybGAgsJFAG1csZ0/Aid/KiHHAViCIkrUpZfdRwxKNr45sSLxf
- ROXA==
+ d=1e100.net; s=20230601; t=1717419456; x=1718024256;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CvJZuIxuEPJUSu9dcM8tRPjCjWv7YhKj1hgSmVA1AoI=;
+ b=Z/vm/J3tUozpFFeYSyK9qla7sDHoZLEV8HGTBSJGEw+c/7PFLgvlIpu8nm7TV1ympd
+ ILmHzamlgeABM70aAt34pQsPiJHcvSmTJAcDbR/AX+/qygmyfXfC62Jsh6lpLkdCsR2x
+ ppPiqPDHfTl0XitDWau7iV7VfrBwzwySh+Q255YRrLBX2BcPSw3RUL+nwcoW+y2577ra
+ mwJNLYl26ce0/nSw2GlokGbXbXfVvMO0QamcNnkg+4HY0Ntb0ajjiImiS8Ip2nFeIciM
+ QUjpNOJzBuI5pkvZK4DjurzRpCeToHgYg7Scj8lZchvanVT53/JRGLT63tvDecw3lapy
+ PPOw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+a+L0YF+Z5hYviB6l/1fn1pzd9MTlgqzB09VEooTVl/ILjTLj9R40b4fy1j3dwcnBSySIiCW+K6EP2ihDjQRAHeVafVA=
-X-Gm-Message-State: AOJu0YzD+YZvnH8qcS8DrAJFodJ2inawE/LUP751fuqyJvUMROwC81LW
- xoz5tNL29pqc9uKJWO808Xx7+qC8G7rcVU0MwTZmsjsySL2QofJ45wCwc9TRf9ATdboPiuxwexF
- IL0J2LW8L0TutLzrwlTHhA/Nj//MpVLCJxq3dTWYXFUPm3C4VnE1W
-X-Received: by 2002:a05:620a:8101:b0:793:1c64:131e with SMTP id
- af79cd13be357-794f5ebe42emr844159785a.50.1717419421573; 
- Mon, 03 Jun 2024 05:57:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEo6smrqfm2O1hxsJzqqV0QdHsasdfd4VhzUqCMcCO3cf9iuUfQoeKBvZfdNhEnWitdc/hhRA==
-X-Received: by 2002:a05:620a:8101:b0:793:1c64:131e with SMTP id
- af79cd13be357-794f5ebe42emr844157285a.50.1717419421135; 
- Mon, 03 Jun 2024 05:57:01 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ AJvYcCUxuHQbYHlORtxkQyp1t+Nmphj38UEjYabXdAdkU6huDijkHvLDEBdWEO1bWOtDWVJz6yMttH0Ebo9n7WdEvJupSItZgXY=
+X-Gm-Message-State: AOJu0Yx1tuHxfizDGtVeqpIxQTqjeR9v8sS3h3lnnKIILr/IMpbjP8Kb
+ o5xlTLoODvRaDdWsOM/dGyjwiRlZMHod7O/KxXvaapmEBd8HUAUFIYfQBUi06TlbjYBRRbJmK/a
+ j/KN/bYkbQnb6L5UAH95lN13n7xB9Rh0I3GPPDgywxVJx8KcgJX91
+X-Received: by 2002:a05:6830:1da2:b0:6f0:ad78:1b75 with SMTP id
+ 46e09a7af769-6f911f489fcmr8933248a34.22.1717419456171; 
+ Mon, 03 Jun 2024 05:57:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEC3mE3aWMWbbUry8kQc0SqWZMneqBwFIRbCv1FBtqSb/dfB5AXPFt1WXwoJMI7iwtQi3W2Qg==
+X-Received: by 2002:a05:6830:1da2:b0:6f0:ad78:1b75 with SMTP id
+ 46e09a7af769-6f911f489fcmr8933215a34.22.1717419455574; 
+ Mon, 03 Jun 2024 05:57:35 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-794f317073fsm281044385a.112.2024.06.03.05.56.58
+ d75a77b69052e-43ff23a1774sm39119931cf.11.2024.06.03.05.57.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 05:57:00 -0700 (PDT)
-Message-ID: <f07bd445-f1f8-4395-baf4-ddcc847d428d@redhat.com>
-Date: Mon, 3 Jun 2024 14:56:55 +0200
+ Mon, 03 Jun 2024 05:57:35 -0700 (PDT)
+Message-ID: <c5b45d45-97ca-4c82-87ca-3b85fffb2795@redhat.com>
+Date: Mon, 3 Jun 2024 14:57:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 18/19] intel_iommu: Implement
- [set|unset]_iommu_device() callbacks
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH v6 06/19] range: Introduce range_get_last_bit()
+Content-Language: en-US
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
 References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
- <20240603061023.269738-19-zhenzhong.duan@intel.com>
- <6cfdde68-a138-4ac3-ab3c-29f6a94a1045@eviden.com>
- <SJ0PR11MB6744E89A1A959BE312ECE5B592FF2@SJ0PR11MB6744.namprd11.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <SJ0PR11MB6744E89A1A959BE312ECE5B592FF2@SJ0PR11MB6744.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ <20240603061023.269738-7-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20240603061023.269738-7-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,218 +109,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/24 13:02, Duan, Zhenzhong wrote:
-> 
-> 
->> -----Original Message-----
->> From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
->> Subject: Re: [PATCH v6 18/19] intel_iommu: Implement
->> [set|unset]_iommu_device() callbacks
->>
->>
->> On 03/06/2024 08:10, Zhenzhong Duan wrote:
->>> Caution: External email. Do not open attachments or click links, unless this
->> email comes from a known sender and you know the content is safe.
->>>
->>>
->>> From: Yi Liu <yi.l.liu@intel.com>
->>>
->>> Implement [set|unset]_iommu_device() callbacks in Intel vIOMMU.
->>> In set call, a new structure VTDHostIOMMUDevice which holds
->>> a reference to HostIOMMUDevice is stored in hash table
->>> indexed by PCI BDF.
->>>
->>> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
->>> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
->>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->>> ---
->>>    hw/i386/intel_iommu_internal.h |  9 ++++
->>>    include/hw/i386/intel_iommu.h  |  2 +
->>>    hw/i386/intel_iommu.c          | 76
->> ++++++++++++++++++++++++++++++++++
->>>    3 files changed, 87 insertions(+)
->>>
->>> diff --git a/hw/i386/intel_iommu_internal.h
->> b/hw/i386/intel_iommu_internal.h
->>> index f8cf99bddf..b800d62ca0 100644
->>> --- a/hw/i386/intel_iommu_internal.h
->>> +++ b/hw/i386/intel_iommu_internal.h
->>> @@ -28,6 +28,7 @@
->>>    #ifndef HW_I386_INTEL_IOMMU_INTERNAL_H
->>>    #define HW_I386_INTEL_IOMMU_INTERNAL_H
->>>    #include "hw/i386/intel_iommu.h"
->>> +#include "sysemu/host_iommu_device.h"
->>>
->>>    /*
->>>     * Intel IOMMU register specification
->>> @@ -537,4 +538,12 @@ typedef struct VTDRootEntry VTDRootEntry;
->>>    #define VTD_SL_IGN_COM              0xbff0000000000000ULL
->>>    #define VTD_SL_TM                   (1ULL << 62)
->>>
->>> +
->>> +typedef struct VTDHostIOMMUDevice {
->>> +    IntelIOMMUState *iommu_state;
->>> +    PCIBus *bus;
->>> +    uint8_t devfn;
->>> +    HostIOMMUDevice *dev;
->>> +    QLIST_ENTRY(VTDHostIOMMUDevice) next;
->>> +} VTDHostIOMMUDevice;
->>>    #endif
->>> diff --git a/include/hw/i386/intel_iommu.h
->> b/include/hw/i386/intel_iommu.h
->>> index 7d694b0813..2bbde41e45 100644
->>> --- a/include/hw/i386/intel_iommu.h
->>> +++ b/include/hw/i386/intel_iommu.h
->>> @@ -293,6 +293,8 @@ struct IntelIOMMUState {
->>>        /* list of registered notifiers */
->>>        QLIST_HEAD(, VTDAddressSpace) vtd_as_with_notifiers;
->>>
->>> +    GHashTable *vtd_host_iommu_dev;             /* VTDHostIOMMUDevice
->> */
->>> +
->>>        /* interrupt remapping */
->>>        bool intr_enabled;              /* Whether guest enabled IR */
->>>        dma_addr_t intr_root;           /* Interrupt remapping table pointer */
->>> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
->>> index 519063c8f8..747c988bc4 100644
->>> --- a/hw/i386/intel_iommu.c
->>> +++ b/hw/i386/intel_iommu.c
->>> @@ -237,6 +237,13 @@ static gboolean vtd_as_equal(gconstpointer v1,
->> gconstpointer v2)
->>>               (key1->pasid == key2->pasid);
->>>    }
->>>
->>> +static gboolean vtd_as_idev_equal(gconstpointer v1, gconstpointer v2)
->>> +{
->>> +    const struct vtd_as_key *key1 = v1;
->>> +    const struct vtd_as_key *key2 = v2;
->>> +
->>> +    return (key1->bus == key2->bus) && (key1->devfn == key2->devfn);
->>> +}
->>>    /*
->>>     * Note that we use pointer to PCIBus as the key, so hashing/shifting
->>>     * based on the pointer value is intended. Note that we deal with
->>> @@ -3812,6 +3819,70 @@ VTDAddressSpace
->> *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->>>        return vtd_dev_as;
->>>    }
->>>
->>> +static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int
->> devfn,
->>> +                                     HostIOMMUDevice *hiod, Error **errp)
->>> +{
->>> +    IntelIOMMUState *s = opaque;
->>> +    VTDHostIOMMUDevice *vtd_hdev;
->>> +    struct vtd_as_key key = {
->>> +        .bus = bus,
->>> +        .devfn = devfn,
->>> +    };
->>> +    struct vtd_as_key *new_key;
->>> +
->>> +    assert(hiod);
->>> +
->>> +    vtd_iommu_lock(s);
->>> +
->>> +    vtd_hdev = g_hash_table_lookup(s->vtd_host_iommu_dev, &key);
->>> +
->>> +    if (vtd_hdev) {
->>> +        error_setg(errp, "IOMMUFD device already exist");
->>> +        vtd_iommu_unlock(s);
->>> +        return false;
->>> +    }
->>> +
->>> +    vtd_hdev = g_malloc0(sizeof(VTDHostIOMMUDevice));
->>> +    vtd_hdev->bus = bus;
->>> +    vtd_hdev->devfn = (uint8_t)devfn;
->>> +    vtd_hdev->iommu_state = s;
->>> +    vtd_hdev->dev = hiod;
->>> +
->>> +    new_key = g_malloc(sizeof(*new_key));
->>> +    new_key->bus = bus;
->>> +    new_key->devfn = devfn;
->>> +
->>> +    object_ref(hiod);
->>> +    g_hash_table_insert(s->vtd_host_iommu_dev, new_key, vtd_hdev);
->>> +
->>> +    vtd_iommu_unlock(s);
->>> +
->>> +    return true;
->>> +}
->>> +
->>> +static void vtd_dev_unset_iommu_device(PCIBus *bus, void *opaque, int
->> devfn)
->>> +{
->>> +    IntelIOMMUState *s = opaque;
->>> +    VTDHostIOMMUDevice *vtd_hdev;
->>> +    struct vtd_as_key key = {
->>> +        .bus = bus,
->>> +        .devfn = devfn,
->>> +    };
->>> +
->>> +    vtd_iommu_lock(s);
->>> +
->>> +    vtd_hdev = g_hash_table_lookup(s->vtd_host_iommu_dev, &key);
->>> +    if (!vtd_hdev) {
->>> +        vtd_iommu_unlock(s);
->>> +        return;
->>> +    }
->>> +
->>> +    g_hash_table_remove(s->vtd_host_iommu_dev, &key);
->>> +    object_unref(vtd_hdev->dev);
->> Not sure but isn't that a potential use after free?
-> 
-> Good catch! Will fix. Should be:
-> 
-> object_unref(vtd_hdev->dev);
-> g_hash_table_remove(s->vtd_host_iommu_dev, &key);
-
-you could also implement a custom destroy hash function.
 
 
-Thanks,
+On 6/3/24 08:10, Zhenzhong Duan wrote:
+> This helper get the highest 1 bit position of the upper bound.
+>
+> If the range is empty or upper bound is zero, -1 is returned.
+>
+> Suggested-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-C.
-
-
-> 
-> Thanks
-> Zhenzhong
-> 
->>> +
->>> +    vtd_iommu_unlock(s);
->>> +}
->>> +
->>>    /* Unmap the whole range in the notifier's scope. */
->>>    static void vtd_address_space_unmap(VTDAddressSpace *as,
->> IOMMUNotifier *n)
->>>    {
->>> @@ -4116,6 +4187,8 @@ static AddressSpace
->> *vtd_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
->>>
->>>    static PCIIOMMUOps vtd_iommu_ops = {
->>>        .get_address_space = vtd_host_dma_iommu,
->>> +    .set_iommu_device = vtd_dev_set_iommu_device,
->>> +    .unset_iommu_device = vtd_dev_unset_iommu_device,
->>>    };
->>>
->>>    static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
->>> @@ -4235,6 +4308,9 @@ static void vtd_realize(DeviceState *dev, Error
->> **errp)
->>>                                         g_free, g_free);
->>>        s->vtd_address_spaces = g_hash_table_new_full(vtd_as_hash,
->> vtd_as_equal,
->>>                                          g_free, g_free);
->>> +    s->vtd_host_iommu_dev = g_hash_table_new_full(vtd_as_hash,
->>> +                                                  vtd_as_idev_equal,
->>> +                                                  g_free, g_free);
->>>        vtd_init(s);
->>>        pci_setup_iommu(bus, &vtd_iommu_ops, dev);
->>>        /* Pseudo address space under root PCI bus. */
->>> --
->>> 2.34.1
->>>
+Eric
+> ---
+>  include/qemu/range.h | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+>
+> diff --git a/include/qemu/range.h b/include/qemu/range.h
+> index 205e1da76d..4ce694a398 100644
+> --- a/include/qemu/range.h
+> +++ b/include/qemu/range.h
+> @@ -20,6 +20,8 @@
+>  #ifndef QEMU_RANGE_H
+>  #define QEMU_RANGE_H
+>  
+> +#include "qemu/bitops.h"
+> +
+>  /*
+>   * Operations on 64 bit address ranges.
+>   * Notes:
+> @@ -217,6 +219,15 @@ static inline int ranges_overlap(uint64_t first1, uint64_t len1,
+>      return !(last2 < first1 || last1 < first2);
+>  }
+>  
+> +/* Get highest non-zero bit position of a range */
+> +static inline int range_get_last_bit(Range *range)
+> +{
+> +    if (range_is_empty(range)) {
+> +        return -1;
+> +    }
+> +    return 63 - clz64(range->upb);
+> +}
+> +
+>  /*
+>   * Return -1 if @a < @b, 1 @a > @b, and 0 if they touch or overlap.
+>   * Both @a and @b must not be empty.
 
 
