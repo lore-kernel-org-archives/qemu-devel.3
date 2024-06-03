@@ -4,80 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FBE4C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 16:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE40C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 16:11:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEAFo-00021J-6n; Mon, 03 Jun 2024 12:09:48 -0400
+	id 1sEAHC-0004u5-RZ; Mon, 03 Jun 2024 12:11:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sEAFh-00020B-JM
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 12:09:41 -0400
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sEAFe-0000ZP-UU
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 12:09:41 -0400
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-52b992fd796so69143e87.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 09:09:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717430976; x=1718035776; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B+y2VUAaODGRx6I5aA9+iua3n6PE+xKIoh7aOmqQq9M=;
- b=LGshqUeL/1fb2cUS0ALjPU2MUlJ2sRnTHc2qQa0Tyfh3kTwFCNhlHrRLraRt4nDnyP
- tatm/bVL9NurrIS2NQ6Mqz0lkSxzlei27SBDQFZj57cl8Sf2y/jli+uMesa8RXdLkdN8
- THy8m11wjPW31dHXftNL09LY9rfzyWgaE8yE3hJW3iDw6tHObKr0+TKp+/PA6ynRoH6Q
- dR6Ess3iaAKpsw/EzYySP43z4ywGhnHplrgpl+A6PV3afGIpuVznyqWQDVq54743PFSf
- 2W6bDjqG3HdAS7lbd9p8oAZd+j7Fu2V3bl7sYt2hWzAa1FONSZ9Hx7d6HQy9fFd83siz
- oCow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717430976; x=1718035776;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=B+y2VUAaODGRx6I5aA9+iua3n6PE+xKIoh7aOmqQq9M=;
- b=GmTvLmc8loq2Mc9byrJsJ3U+UI9BJdQOgkW+tVZ0B9t7l+3kb/dr2L8irK8bBGXKs2
- LR6X+oi6KgNj3Suk8lln1XqDoqEyPe7lCMVeyWnnwRgLoXeRUvq7n4IADTYH8a6f4fQT
- zugNSu1dXu1lt+5TM+XPwFfQL7YT1Bt2wb1MQn7ER6SKkvmz0DUFh6yIwMJcNy8+qp2b
- EBfmWJyLj56WRKJHJlQpUj1+MzrgrH7ms129H7eW2GCpMe3TZYvrak31/v6mjNZV1OQQ
- /ZxVztUgYZAoWFchVNqS91uGQwWooN94WFNR4THm8ReonhxgP3oXSRniiTdNDngsbfgr
- EnnA==
-X-Gm-Message-State: AOJu0YwtlNjyCCxbfqJQqH558AqR1bs4aDPunwnylM/aAzMmsvUEBi9v
- +1Y0fTE3SM1Lrl6nTY84tT7fKgytp0d5RsGjQrk797Ly6kQeE/NXnvDLafcI/42A60wk3ftE4i0
- i
-X-Google-Smtp-Source: AGHT+IGfkuAGvac7mXyR0LWyUEdUCK2v84cqTqDJiP/QGmCOk5s6a5BJ9q3LbjiJl8UeGA/oDBRN0w==
-X-Received: by 2002:ac2:4853:0:b0:52b:8877:30f2 with SMTP id
- 2adb3069b0e04-52b8980aca3mr5781191e87.59.1717430976365; 
- Mon, 03 Jun 2024 09:09:36 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd0649fb5sm8975858f8f.94.2024.06.03.09.09.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 09:09:36 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 3/3] accel/tcg: Make TCGCPUOps::cpu_exec_halt mandatory
-Date: Mon,  3 Jun 2024 17:09:33 +0100
-Message-Id: <20240603160933.1141717-4-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240603160933.1141717-1-peter.maydell@linaro.org>
-References: <20240603160933.1141717-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sEAHA-0004hk-EO
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 12:11:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sEAH0-0000zN-HZ
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 12:11:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717431049;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UiER9LDxLkGMSdM6dYuG6GePJmgaWgqzbS30dVwDdDA=;
+ b=OkhQpd8tZvwjlolmGeTOEQPbm+rJTsFnkUdk3cuC5z5eS32JKsrBkxzKtIYSuh3g2YOpwE
+ cwEOaKfGJF6HCo3JDmiFepr5WrejpyaGAacVJol1KV/YhHN4pTPV2/RI7ee9vpTvElgwa5
+ YNij1cw6eI6XMBHEDoNl6itd+Iyf7g4=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-447--Rp3PegROwiAwzwDn00YZQ-1; Mon, 03 Jun 2024 12:10:12 -0400
+X-MC-Unique: -Rp3PegROwiAwzwDn00YZQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BC947180D92F;
+ Mon,  3 Jun 2024 16:10:00 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.193.235])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 7349C200D8FD;
+ Mon,  3 Jun 2024 16:09:58 +0000 (UTC)
+Date: Mon, 3 Jun 2024 18:09:57 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-stable@nongnu.org,
+ hreitz@redhat.com, vsementsov@yandex-team.ru, jsnow@redhat.com,
+ f.weber@proxmox.com
+Subject: Re: [PATCH] block/copy-before-write: use uint64_t for timeout in
+ nanoseconds
+Message-ID: <Zl3q1ccjpIOdOR_D@redhat.com>
+References: <20240429141934.442154-1-f.ebner@proxmox.com>
+ <ZlYA9QXVaDSfjxOT@redhat.com>
+ <ea2c0988-9c29-44d0-828e-aa1d8f011ef1@proxmox.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x132.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ea2c0988-9c29-44d0-828e-aa1d8f011ef1@proxmox.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,56 +84,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that all targets set TCGCPUOps::cpu_exec_halt, we can make it
-mandatory and remove the fallback handling that calls cpu_has_work.
+Am 03.06.2024 um 16:45 hat Fiona Ebner geschrieben:
+> Am 28.05.24 um 18:06 schrieb Kevin Wolf:
+> > Am 29.04.2024 um 16:19 hat Fiona Ebner geschrieben:
+> >> rather than the uint32_t for which the maximum is slightly more than 4
+> >> seconds and larger values would overflow. The QAPI interface allows
+> >> specifying the number of seconds, so only values 0 to 4 are safe right
+> >> now, other values lead to a much lower timeout than a user expects.
+> >>
+> >> The block_copy() call where this is used already takes a uint64_t for
+> >> the timeout, so no change required there.
+> >>
+> >> Fixes: 6db7fd1ca9 ("block/copy-before-write: implement cbw-timeout option")
+> >> Reported-by: Friedrich Weber <f.weber@proxmox.com>
+> >> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+> > 
+> > Thanks, applied to the block branch.
+> > 
+> > But I don't think our job is done yet with this. Increasing the limit is
+> > good and useful, but even if it's now unlikely to hit with sane values,
+> > we should still catch integer overflows in cbw_open() and return an
+> > error on too big values instead of silently wrapping around.
+> 
+> NANOSECONDS_PER_SECOND is 10^9 and the QAPI type for cbw-timeout is
+> uint32_t, so even with the maximum allowed value, there is no overflow.
+> Should I still add such a check?
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- include/hw/core/tcg-cpu-ops.h | 9 ++++++---
- accel/tcg/cpu-exec.c          | 7 +------
- 2 files changed, 7 insertions(+), 9 deletions(-)
+You're right, I missed that cbw_timeout is uint32_t. So uint64_t will be
+always be enough to hold the result, and the calculation is also done in
+64 bits because NANOSECONDS_PER_SECOND is long long. Then we don't need
+a check.
 
-diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
-index 099de3375e3..34318cf0e60 100644
---- a/include/hw/core/tcg-cpu-ops.h
-+++ b/include/hw/core/tcg-cpu-ops.h
-@@ -122,10 +122,13 @@ struct TCGCPUOps {
-      * to do when the CPU is in the halted state.
-      *
-      * Return true to indicate that the CPU should now leave halt, false
--     * if it should remain in the halted state.
-+     * if it should remain in the halted state. (This should generally
-+     * be the same value that cpu_has_work() would return.)
-      *
--     * If this method is not provided, the default is to do nothing, and
--     * to leave halt if cpu_has_work() returns true.
-+     * This method must be provided. If the target does not need to
-+     * do anything special for halt, the same function used for its
-+     * CPUClass::has_work method can be used here, as they have the
-+     * same function signature.
-      */
-     bool (*cpu_exec_halt)(CPUState *cpu);
-     /**
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 6711b58e0b2..8be4d2a1330 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -682,13 +682,8 @@ static inline bool cpu_handle_halt(CPUState *cpu)
- #ifndef CONFIG_USER_ONLY
-     if (cpu->halted) {
-         const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
--        bool leave_halt;
-+        bool leave_halt = tcg_ops->cpu_exec_halt(cpu);
- 
--        if (tcg_ops->cpu_exec_halt) {
--            leave_halt = tcg_ops->cpu_exec_halt(cpu);
--        } else {
--            leave_halt = cpu_has_work(cpu);
--        }
-         if (!leave_halt) {
-             return true;
-         }
--- 
-2.34.1
+Kevin
 
 
