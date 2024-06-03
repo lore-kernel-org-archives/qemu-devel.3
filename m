@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E0BAC25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB0AC27C44
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:18:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5hl-0007aD-RR; Mon, 03 Jun 2024 07:18:21 -0400
+	id 1sE5gu-0003lJ-Nf; Mon, 03 Jun 2024 07:17:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5hf-0007LB-Jb
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:18:15 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1sE5ge-0003MH-Bb
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:17:14 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5hd-0006Vs-Cn
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:18:15 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1f44b42d1caso31643175ad.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 04:18:12 -0700 (PDT)
+ id 1sE5ga-0006BH-2m
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 07:17:11 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-702342c60dfso2726562b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 04:17:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717413490; x=1718018290; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717413426; x=1718018226; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w6AzoFo8JUHoIoVJzS9JZAaDEbHq/fZUj2l7V7rYL/A=;
- b=jzS1loQ4JxEszbqBmTCY3OU9rmtWKcDO88YqnDJ8ASEluDOPxuwXLsJL8RYu1ZdfnQ
- lF/C74Eog1pxTBXj/+KqOmdnF7YOx9kd7DuTeWQwKY6f5rkaEWvuDmybW8yWbmtNALIP
- gN1WlF8pZorZRrOJ7jBlJ7CNuKJSercX4/DIlvrxPy/8bstq7RV+VLM4u/S49KkTUSXQ
- JP/s5+Hv60mCkAzaRH+MDqWdHg1X6DcQypaDiTIegolOYOkJljuX3a/TgacZBbZC+HlZ
- UQpAv+JG4z/vPm5lWGv3pLP0LGWPZQ6J3P/UxszSYsp7nqj3UHUIrG8dOXzFhLTV58qe
- 7IRw==
+ bh=BYkKX6SyHTy9ybNO6w9asZ98c6YU/EoDeMWCewzI1/4=;
+ b=AJa1GhyyhU6WgakOFxhLHhq3t+eLs4G1nV0ktiDpTK/VCtLV4UnvlLJ4iBpkF91Mgo
+ InUBsResb0/lBtVAXu1pODb8Cnwm92oNe8FY3QK9rXa0n33cmt0cGZkWJHzi96PDYPL0
+ PMUDHa/ok7y3WRJAJjVeCz3eZOK8viEHsQQdF9voTsiAD8Oi+dHhNyDg51YyWJVyegUu
+ xPpV4xdZVR3lwrFmsxOoRRtKElKHuIEL5F9R3lVj6fZpHv24WNyZfrET52kT/o3uacO7
+ XsWwJBMxwWeaVox60pVJG38QO8aLftJ0jzXtDR+N5arbHXF1r5dU3yA0Fhu9jBeyyBX7
+ RxGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717413490; x=1718018290;
+ d=1e100.net; s=20230601; t=1717413426; x=1718018226;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w6AzoFo8JUHoIoVJzS9JZAaDEbHq/fZUj2l7V7rYL/A=;
- b=TaKXrkYs/BL71JYmx2VoVNsUyPof+YzutSUG8lhzx9A+4dpU3Tyn+h8Xe3u77lystB
- G82LDubNN5lJuZGYoakGEc9IjeplWLbnvBjxjz76bX3MWgfAuXrm6iHvoCGDSNM49cr/
- XefYZ6gBRlGkBatq9veRUEIgOdRU5Ru0p7M7w8t99Os0J0fDiyllONHO9cZI+Qt5J/3Q
- hZCprjya8waVbaEzBNk+EuUC3o77tYyoeRaxh2xVGouNscpxYvm3BEtaIkiFEr4q+b+7
- pSQXCyo+KIgQCz252aKnYZTg0nv4Cj4EG3qEfqesCuN2H8yuqrFQrSF5mhloPdIQp9Rz
- AGqQ==
-X-Gm-Message-State: AOJu0YwGqWV1nvJlF6eGCBA5xa28/Kda4n2RF/zU8lO3a7Cuv+UMewTA
- daqDOLWX5CcBGACi9Vm4277asqm3B7x1Xk11G6K/IzSBCKa8vtszbTC9/A==
-X-Google-Smtp-Source: AGHT+IELaqT5zsTCVytn5m1fuR1ae7RyOQ50dgeEuwEobS4zVRBZCz8GOun5O9EVZd/EJLC1jA2Lkg==
-X-Received: by 2002:a17:902:cec7:b0:1f2:eff9:cd4 with SMTP id
- d9443c01a7336-1f63696304dmr77153385ad.0.1717413490306; 
- Mon, 03 Jun 2024 04:18:10 -0700 (PDT)
+ bh=BYkKX6SyHTy9ybNO6w9asZ98c6YU/EoDeMWCewzI1/4=;
+ b=F1xSasOyJAr6EvX/8pF47wOFxG7u6veaA7x939J9VBzxwrypUasecWG5o/BR14brCo
+ LWmenr74tpxspDr8ClgFAodp/ci0r3nRbQcQLAecF0Mn8S40FMERp5Wt79fkjoiNYj4i
+ W58U1O8z4kpFrI89LtV1xqNtGDxBbe3CNoYJW8PLJpqWlRi2zbPEbAqdyp/0F0lG61gB
+ Q82l1s8BiO3Ixw6fHVjhhjXIEdNkZHagV1uRiafbUs3OIvfuBYVq8NyfA9m+sRXWNXBB
+ 0DizTpe/mDykf09B5zj3zrD8iyatZjfMqb1kpePIle5lZ6+8kUcbWwDfNZZCLVKB9ulL
+ sXww==
+X-Gm-Message-State: AOJu0Yz2TBk76VSOtLi7hjOpYlMX5+jNgakAQLeICNkh6c8Dfu1fIdux
+ iMpIq/zs+eXkpjy0LXNKAcXsIjKm7TTjnkxPrJz3+MlbRMTo4v9kOvUpNA==
+X-Google-Smtp-Source: AGHT+IFrvqL1aUFbYyqWr2D9vRGFnKuv3I6pPyrwKTwIuCt/blS8LP+VRTv53DTjn395J7FOWv5uzA==
+X-Received: by 2002:a05:6a20:974c:b0:1af:8e8d:cefd with SMTP id
+ adf61e73a8af0-1b26f286855mr7820851637.51.1717413426329; 
+ Mon, 03 Jun 2024 04:17:06 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.18.06
+ d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.17.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 04:18:08 -0700 (PDT)
+ Mon, 03 Jun 2024 04:17:05 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Rob Bradford <rbradford@rivosinc.com>,
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Andrew Jones <ajones@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PULL v2 23/27] target/riscv: Remove experimental prefix from "B"
- extension
-Date: Mon,  3 Jun 2024 21:16:39 +1000
-Message-ID: <20240603111643.258712-24-alistair.francis@wdc.com>
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 04/27] target/riscv/kvm: implement SBI debug console (DBCN)
+ calls
+Date: Mon,  3 Jun 2024 21:16:20 +1000
+Message-ID: <20240603111643.258712-5-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240603111643.258712-1-alistair.francis@wdc.com>
 References: <20240603111643.258712-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -102,53 +100,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rob Bradford <rbradford@rivosinc.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-This extension has now been ratified:
-https://jira.riscv.org/browse/RVS-2006 so the "x-" prefix can be
-removed.
+SBI defines a Debug Console extension "DBCN" that will, in time, replace
+the legacy console putchar and getchar SBI extensions.
 
-Since this is now a ratified extension add it to the list of extensions
-included in the "max" CPU variant.
+The appeal of the DBCN extension is that it allows multiple bytes to be
+read/written in the SBI console in a single SBI call.
 
-Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
+As far as KVM goes, the DBCN calls are forwarded by an in-kernel KVM
+module to userspace. But this will only happens if the KVM module
+actually supports this SBI extension and we activate it.
+
+We'll check for DBCN support during init time, checking if get-reg-list
+is advertising KVM_RISCV_SBI_EXT_DBCN. In that case, we'll enable it via
+kvm_set_one_reg() during kvm_arch_init_vcpu().
+
+Finally, change kvm_riscv_handle_sbi() to handle the incoming calls for
+SBI_EXT_DBCN, reading and writing as required.
+
+A simple KVM guest with 'earlycon=sbi', running in an emulated RISC-V
+host, takes around 20 seconds to boot without using DBCN. With this
+patch we're taking around 14 seconds to boot due to the speed-up in the
+terminal output.  There's no change in boot time if the guest isn't
+using earlycon.
+
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Message-ID: <20240514110217.22516-1-rbradford@rivosinc.com>
+Message-ID: <20240425155012.581366-1-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c         | 2 +-
- target/riscv/tcg/tcg-cpu.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ target/riscv/sbi_ecall_interface.h |  17 +++++
+ target/riscv/kvm/kvm-cpu.c         | 111 +++++++++++++++++++++++++++++
+ 2 files changed, 128 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 2946ac298a..cee6fc4a9a 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1400,7 +1400,7 @@ static const MISAExtInfo misa_ext_info_arr[] = {
-     MISA_EXT_INFO(RVJ, "x-j", "Dynamic translated languages"),
-     MISA_EXT_INFO(RVV, "v", "Vector operations"),
-     MISA_EXT_INFO(RVG, "g", "General purpose (IMAFD_Zicsr_Zifencei)"),
--    MISA_EXT_INFO(RVB, "x-b", "Bit manipulation (Zba_Zbb_Zbs)")
-+    MISA_EXT_INFO(RVB, "b", "Bit manipulation (Zba_Zbb_Zbs)")
+diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_interface.h
+index 43899d08f6..7dfe5f72c6 100644
+--- a/target/riscv/sbi_ecall_interface.h
++++ b/target/riscv/sbi_ecall_interface.h
+@@ -12,6 +12,17 @@
+ 
+ /* clang-format off */
+ 
++#define SBI_SUCCESS                      0
++#define SBI_ERR_FAILED                  -1
++#define SBI_ERR_NOT_SUPPORTED           -2
++#define SBI_ERR_INVALID_PARAM           -3
++#define SBI_ERR_DENIED                  -4
++#define SBI_ERR_INVALID_ADDRESS         -5
++#define SBI_ERR_ALREADY_AVAILABLE       -6
++#define SBI_ERR_ALREADY_STARTED         -7
++#define SBI_ERR_ALREADY_STOPPED         -8
++#define SBI_ERR_NO_SHMEM                -9
++
+ /* SBI Extension IDs */
+ #define SBI_EXT_0_1_SET_TIMER           0x0
+ #define SBI_EXT_0_1_CONSOLE_PUTCHAR     0x1
+@@ -27,6 +38,7 @@
+ #define SBI_EXT_IPI                     0x735049
+ #define SBI_EXT_RFENCE                  0x52464E43
+ #define SBI_EXT_HSM                     0x48534D
++#define SBI_EXT_DBCN                    0x4442434E
+ 
+ /* SBI function IDs for BASE extension */
+ #define SBI_EXT_BASE_GET_SPEC_VERSION   0x0
+@@ -57,6 +69,11 @@
+ #define SBI_EXT_HSM_HART_STOP           0x1
+ #define SBI_EXT_HSM_HART_GET_STATUS     0x2
+ 
++/* SBI function IDs for DBCN extension */
++#define SBI_EXT_DBCN_CONSOLE_WRITE      0x0
++#define SBI_EXT_DBCN_CONSOLE_READ       0x1
++#define SBI_EXT_DBCN_CONSOLE_WRITE_BYTE 0x2
++
+ #define SBI_HSM_HART_STATUS_STARTED     0x0
+ #define SBI_HSM_HART_STATUS_STOPPED     0x1
+ #define SBI_HSM_HART_STATUS_START_PENDING   0x2
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index b8136c7ef8..d2491d84e2 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -409,6 +409,12 @@ static KVMCPUConfig kvm_v_vlenb = {
+                    KVM_REG_RISCV_VECTOR_CSR_REG(vlenb)
  };
  
- static void riscv_cpu_validate_misa_mxl(RISCVCPUClass *mcc)
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index f59b5d7f2d..683f604d9f 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1301,7 +1301,7 @@ static void riscv_init_max_cpu_extensions(Object *obj)
-     const RISCVCPUMultiExtConfig *prop;
++static KVMCPUConfig kvm_sbi_dbcn = {
++    .name = "sbi_dbcn",
++    .kvm_reg_id = KVM_REG_RISCV | KVM_REG_SIZE_U64 |
++                  KVM_REG_RISCV_SBI_EXT | KVM_RISCV_SBI_EXT_DBCN
++};
++
+ static void kvm_riscv_update_cpu_cfg_isa_ext(RISCVCPU *cpu, CPUState *cs)
+ {
+     CPURISCVState *env = &cpu->env;
+@@ -1037,6 +1043,20 @@ static int uint64_cmp(const void *a, const void *b)
+     return 0;
+ }
  
-     /* Enable RVG, RVJ and RVV that are disabled by default */
--    riscv_cpu_set_misa_ext(env, env->misa_ext | RVG | RVJ | RVV);
-+    riscv_cpu_set_misa_ext(env, env->misa_ext | RVB | RVG | RVJ | RVV);
++static void kvm_riscv_check_sbi_dbcn_support(RISCVCPU *cpu,
++                                             KVMScratchCPU *kvmcpu,
++                                             struct kvm_reg_list *reglist)
++{
++    struct kvm_reg_list *reg_search;
++
++    reg_search = bsearch(&kvm_sbi_dbcn.kvm_reg_id, reglist->reg, reglist->n,
++                         sizeof(uint64_t), uint64_cmp);
++
++    if (reg_search) {
++        kvm_sbi_dbcn.supported = true;
++    }
++}
++
+ static void kvm_riscv_read_vlenb(RISCVCPU *cpu, KVMScratchCPU *kvmcpu,
+                                  struct kvm_reg_list *reglist)
+ {
+@@ -1142,6 +1162,8 @@ static void kvm_riscv_init_multiext_cfg(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
+     if (riscv_has_ext(&cpu->env, RVV)) {
+         kvm_riscv_read_vlenb(cpu, kvmcpu, reglist);
+     }
++
++    kvm_riscv_check_sbi_dbcn_support(cpu, kvmcpu, reglist);
+ }
  
-     for (prop = riscv_cpu_extensions; prop && prop->name; prop++) {
-         isa_ext_update_enabled(cpu, prop->offset, true);
+ static void riscv_init_kvm_registers(Object *cpu_obj)
+@@ -1316,6 +1338,17 @@ static int kvm_vcpu_set_machine_ids(RISCVCPU *cpu, CPUState *cs)
+     return ret;
+ }
+ 
++static int kvm_vcpu_enable_sbi_dbcn(RISCVCPU *cpu, CPUState *cs)
++{
++    target_ulong reg = 1;
++
++    if (!kvm_sbi_dbcn.supported) {
++        return 0;
++    }
++
++    return kvm_set_one_reg(cs, kvm_sbi_dbcn.kvm_reg_id, &reg);
++}
++
+ int kvm_arch_init_vcpu(CPUState *cs)
+ {
+     int ret = 0;
+@@ -1333,6 +1366,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     kvm_riscv_update_cpu_misa_ext(cpu, cs);
+     kvm_riscv_update_cpu_cfg_isa_ext(cpu, cs);
+ 
++    ret = kvm_vcpu_enable_sbi_dbcn(cpu, cs);
++
+     return ret;
+ }
+ 
+@@ -1390,6 +1425,79 @@ bool kvm_arch_stop_on_emulation_error(CPUState *cs)
+     return true;
+ }
+ 
++static void kvm_riscv_handle_sbi_dbcn(CPUState *cs, struct kvm_run *run)
++{
++    g_autofree uint8_t *buf = NULL;
++    RISCVCPU *cpu = RISCV_CPU(cs);
++    target_ulong num_bytes;
++    uint64_t addr;
++    unsigned char ch;
++    int ret;
++
++    switch (run->riscv_sbi.function_id) {
++    case SBI_EXT_DBCN_CONSOLE_READ:
++    case SBI_EXT_DBCN_CONSOLE_WRITE:
++        num_bytes = run->riscv_sbi.args[0];
++
++        if (num_bytes == 0) {
++            run->riscv_sbi.ret[0] = SBI_SUCCESS;
++            run->riscv_sbi.ret[1] = 0;
++            break;
++        }
++
++        addr = run->riscv_sbi.args[1];
++
++        /*
++         * Handle the case where a 32 bit CPU is running in a
++         * 64 bit addressing env.
++         */
++        if (riscv_cpu_mxl(&cpu->env) == MXL_RV32) {
++            addr |= (uint64_t)run->riscv_sbi.args[2] << 32;
++        }
++
++        buf = g_malloc0(num_bytes);
++
++        if (run->riscv_sbi.function_id == SBI_EXT_DBCN_CONSOLE_READ) {
++            ret = qemu_chr_fe_read_all(serial_hd(0)->be, buf, num_bytes);
++            if (ret < 0) {
++                error_report("SBI_EXT_DBCN_CONSOLE_READ: error when "
++                             "reading chardev");
++                exit(1);
++            }
++
++            cpu_physical_memory_write(addr, buf, ret);
++        } else {
++            cpu_physical_memory_read(addr, buf, num_bytes);
++
++            ret = qemu_chr_fe_write_all(serial_hd(0)->be, buf, num_bytes);
++            if (ret < 0) {
++                error_report("SBI_EXT_DBCN_CONSOLE_WRITE: error when "
++                             "writing chardev");
++                exit(1);
++            }
++        }
++
++        run->riscv_sbi.ret[0] = SBI_SUCCESS;
++        run->riscv_sbi.ret[1] = ret;
++        break;
++    case SBI_EXT_DBCN_CONSOLE_WRITE_BYTE:
++        ch = run->riscv_sbi.args[0];
++        ret = qemu_chr_fe_write(serial_hd(0)->be, &ch, sizeof(ch));
++
++        if (ret < 0) {
++            error_report("SBI_EXT_DBCN_CONSOLE_WRITE_BYTE: error when "
++                         "writing chardev");
++            exit(1);
++        }
++
++        run->riscv_sbi.ret[0] = SBI_SUCCESS;
++        run->riscv_sbi.ret[1] = 0;
++        break;
++    default:
++        run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
++    }
++}
++
+ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+ {
+     int ret = 0;
+@@ -1408,6 +1516,9 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+         }
+         ret = 0;
+         break;
++    case SBI_EXT_DBCN:
++        kvm_riscv_handle_sbi_dbcn(cs, run);
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP,
+                       "%s: un-handled SBI EXIT, specific reasons is %lu\n",
 -- 
 2.45.1
 
