@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3DB7C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:40:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC3BC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:43:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEBeg-0007Ky-Fn; Mon, 03 Jun 2024 13:39:34 -0400
+	id 1sEBhX-0000m3-CL; Mon, 03 Jun 2024 13:42:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sEBed-0007JJ-Ua
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:39:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sEBec-0002vz-7w
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:39:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717436368;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=J3mmBXxRD3sAijr/TQMRqGzv+b4qbrBxDC/fQXXPUak=;
- b=LOcMGnKII3fTbzUfiOS0J+rftE/sfb+eNxfQVXowlIjAcsj1JCAc4n7lwkYASDLaqAQ6sA
- HJ6ObbwoEqfIDuOx9lKOivI5/UXnJ2quZ4bjU5Xdz4M7NBmN7JlPT/2z7YDNXb6PsL1X2M
- dhSTrazcXjNptgrxD/x1TpYKfG3G2Mk=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-92-zqGgBa_sP_62897_2Cqi1A-1; Mon,
- 03 Jun 2024 13:39:24 -0400
-X-MC-Unique: zqGgBa_sP_62897_2Cqi1A-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B4F853C025A1;
- Mon,  3 Jun 2024 17:39:23 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.31])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0B2B11C0D105;
- Mon,  3 Jun 2024 17:39:20 +0000 (UTC)
-Date: Mon, 3 Jun 2024 18:39:19 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Zhao Liu <zhao1.liu@linux.intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>, Ani Sinha <anisinha@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-Subject: Re: [PATCH-for-9.0?] docs: i386: pc: Update maximum CPU numbers for
- PC Q35
-Message-ID: <Zl3_x-HIuzcTwXlw@redhat.com>
-References: <20240412085358.731560-1-zhao1.liu@linux.intel.com>
- <305d659b-d4d6-4681-bdad-cd869e552333@linaro.org>
- <20240602092857-mutt-send-email-mst@kernel.org>
- <77840065-1ad4-42bc-a19c-181ac7d63cf1@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEBhQ-0000ka-FA
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:42:24 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEBhN-0003ti-Rs
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:42:24 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a68c8b90c85so248935866b.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 10:42:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717436539; x=1718041339; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0yUodIpQXH79Sdxh5ICQjlD3Cg+bsodUH2Y8XUimSH8=;
+ b=CfpxUsAottAq3NX1pHhcofrI99ENrln9R5vpbUVX+zazjnP8xEq929i/b3fKcVHtf2
+ wDnjawIuwWhBd9Ns9C6vvdlC6X2lxtokFJQZWsnl2lczNfQRiH1d6o5jnzSedfqFHG9L
+ RxHuAZ55OAgkyQsvxcxjleh/RXsDjp1HsqCyY9JtMmBfvBcf7DZ0I7EIbi84yfaHP5PP
+ z7XmHYdq11MeCjTapSb94QmLEHxhikNUsSEdXk85qgzmUwePmi0YRlPebT7gaFegHkL/
+ +Amnl7ytbE7vZYr6RcNhXwvEBCZqfd1W72FQKUUXXYOw3P3BuEwRuJOoDG29ndfj5Hcf
+ iGyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717436539; x=1718041339;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0yUodIpQXH79Sdxh5ICQjlD3Cg+bsodUH2Y8XUimSH8=;
+ b=YXbBeMFT9gmcb7F2Y93DXlcG4rfvF9o5BPUlZKOiRMl/nqGyLWqfhVF9sBnhTmwza3
+ UkRn+EWWsbeWOEDUO0TiPSyhQ3wz7RxnF1xQ8yZBjiuBFKpTOCVY8m4phrX/Pgt3TknI
+ plniWVXEb394szFwp8bZdcwbstnZ+dg/dYRFR2l8aiEQTZ44VK4/LDvu9V9hYFLQnYqo
+ FWvhtEEamQ26jjn4nJBq3UEqwloVeIAbVTvcaytaCMsQek2+BP80IFO1Dn4r2uZ4EFNe
+ ksxn0+KHk3PTQGvpM7uTCHfxNFY/r7XOuHCNRhGvqQ+gl2/GKZKF+ckYeNS+nOfgbAZZ
+ uRag==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVOHeCRwDa9gznkp5T7vCJjrjzCmRYaannwRHfifoItyN5LAoPu/Vct+o/dX7zKndb8hIBKVsPiqQ8PoEY0xOa455xLH+A=
+X-Gm-Message-State: AOJu0YxzIKqxdq/fD5RzzhuYzmKn304P9x6rLZZLt/kbXZA9+TiTwQ1U
+ B98jCz9BGtpeon0KBcxG3uwXDN8RhzwlAAB9Oz8OQ1K4FLRWBf1ZqydIVrRmbME=
+X-Google-Smtp-Source: AGHT+IF+XxgwoSpBKdJnVecqtsDzJ+MS/5rxV41Lgl5WPZmL9uopHVal7NhjD1/SYL2FvUGDNkmE8A==
+X-Received: by 2002:a17:906:8902:b0:a62:b36a:eafa with SMTP id
+ a640c23a62f3a-a6821d62a7amr692074066b.57.1717436539078; 
+ Mon, 03 Jun 2024 10:42:19 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.177.241])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a68f4191cfdsm263113066b.137.2024.06.03.10.42.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 03 Jun 2024 10:42:18 -0700 (PDT)
+Message-ID: <cff2db06-0c63-4084-a9d1-631a3b578b71@linaro.org>
+Date: Mon, 3 Jun 2024 19:42:17 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <77840065-1ad4-42bc-a19c-181ac7d63cf1@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 02/27] util/hexdump: Remove ascii parameter from
+ qemu_hexdump_line
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240412073346.458116-1-richard.henderson@linaro.org>
+ <20240412073346.458116-3-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240412073346.458116-3-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,67 +93,166 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 03, 2024 at 07:31:47PM +0200, Philippe Mathieu-Daudé wrote:
-> Hi Michael,
+On 12/4/24 09:33, Richard Henderson wrote:
+> Split out asciidump_line as a separate function, local to hexdump.c,
+> for use by qemu_hexdump.  Use "%-*s" to generate the alignment
+> between the hex and the ascii, rather than explicit spaces.
 > 
-> On 2/6/24 15:30, Michael S. Tsirkin wrote:
-> > On Fri, Apr 12, 2024 at 11:57:35AM +0200, Philippe Mathieu-Daudé wrote:
-> > > Hi Zhao,
-> > > 
-> > > On 12/4/24 10:53, Zhao Liu wrote:
-> > > > From: Zhao Liu <zhao1.liu@intel.com>
-> > > > 
-> > > > Commit e4e98c7eebfa ("pc: q35: Bump max_cpus to 4096 vcpus") increases
-> > > > the supported CPUs for PC Q35 machine.
-> > > > 
-> > > > Update maximum CPU numbers for PC Q35 in the document.
-> > > > 
-> > > > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > > > ---
-> > > >    docs/system/target-i386-desc.rst.inc | 2 +-
-> > > >    1 file changed, 1 insertion(+), 1 deletion(-)
-> > > > 
-> > > > diff --git a/docs/system/target-i386-desc.rst.inc b/docs/system/target-i386-desc.rst.inc
-> > > > index 5ebbcda9db4c..319e540573d3 100644
-> > > > --- a/docs/system/target-i386-desc.rst.inc
-> > > > +++ b/docs/system/target-i386-desc.rst.inc
-> > > > @@ -36,7 +36,7 @@ The QEMU PC System emulator simulates the following peripherals:
-> > > >    -  PCI UHCI, OHCI, EHCI or XHCI USB controller and a virtual USB-1.1
-> > > >       hub.
-> > > > -SMP is supported with up to 255 CPUs.
-> > > > +SMP is supported with up to 255 CPUs (and 4096 CPUs for PC Q35 machine).
-> > > 
-> > > This comment is not accurate since a while, IIUC:
-> > > 
-> > > Up to q35-2.7: 255
-> > > q35-2.8: 288
-> > > q35-8.0+: 1024
-> > > q35-9.0: 4096
-> > 
-> > 
-> > What are you saying here, Philippe? I don't think compat
-> > machine types matter enough to bother with more detail.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/qemu/cutils.h  |  3 +--
+>   hw/virtio/vhost-vdpa.c |  2 +-
+>   util/hexdump.c         | 54 ++++++++++++++++++++++++------------------
+>   3 files changed, 33 insertions(+), 26 deletions(-)
 > 
-> My point is I find this description confusing w.r.t. how QEMU behaves:
+> diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
+> index 3415f5d249..d0c5386e6c 100644
+> --- a/include/qemu/cutils.h
+> +++ b/include/qemu/cutils.h
+> @@ -257,8 +257,7 @@ int parse_debug_env(const char *name, int max, int initial);
+>    */
+>   #define QEMU_HEXDUMP_LINE_BYTES 16 /* Number of bytes to dump */
+>   #define QEMU_HEXDUMP_LINE_LEN 75   /* Number of characters in line */
+> -void qemu_hexdump_line(char *line, const void *bufptr,
+> -                       unsigned int len, bool ascii);
+> +void qemu_hexdump_line(char *line, const void *bufptr, size_t len);
+>   
+>   /*
+>    * Hexdump a buffer to a file. An optional string prefix is added to every line
+> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+> index b4afa142f6..32bad5ce68 100644
+> --- a/hw/virtio/vhost-vdpa.c
+> +++ b/hw/virtio/vhost-vdpa.c
+> @@ -946,7 +946,7 @@ static void vhost_vdpa_dump_config(struct vhost_dev *dev, const uint8_t *config,
+>   
+>       for (b = 0; b < config_len; b += 16) {
+>           len = config_len - b;
+> -        qemu_hexdump_line(line, config + b, len, false);
+> +        qemu_hexdump_line(line, config + b, len);
+>           trace_vhost_vdpa_dump_config(dev, b, line);
+>       }
+>   }
+> diff --git a/util/hexdump.c b/util/hexdump.c
+> index 7324e7b126..dbc536fe84 100644
+> --- a/util/hexdump.c
+> +++ b/util/hexdump.c
+> @@ -16,8 +16,7 @@
+>   #include "qemu/osdep.h"
+>   #include "qemu/cutils.h"
+>   
+> -void qemu_hexdump_line(char *line, const void *bufptr,
+> -                       unsigned int len, bool ascii)
+> +void qemu_hexdump_line(char *line, const void *bufptr, size_t len)
+>   {
+>       const char *buf = bufptr;
+>       int i, c;
 
-  snip
+'c' ...
 
-I think the docs should simply avoid mentioning any limit at all. ie
+> @@ -26,39 +25,48 @@ void qemu_hexdump_line(char *line, const void *bufptr,
+>           len = QEMU_HEXDUMP_LINE_BYTES;
+>       }
+>   
+> -    for (i = 0; i < QEMU_HEXDUMP_LINE_BYTES; i++) {
+> +    for (i = 0; i < len; i++) {
+>           if (i != 0 && (i % 4) == 0) {
+>               *line++ = ' ';
+>           }
+> -        if (i < len) {
+> -            line += sprintf(line, " %02x", (unsigned char)buf[i]);
+> -        } else {
+> -            line += sprintf(line, "   ");
+> -        }
+> -    }
+> -    if (ascii) {
+> -        *line++ = ' ';
+> -        for (i = 0; i < len; i++) {
+> -            c = buf[i];
+> -            if (c < ' ' || c > '~') {
+> -                c = '.';
+> -            }
+> -            *line++ = c;
 
-   -SMP is supported with up to 255 CPUs.
-   +SMP is supported with a large number of virtual CPUs (upper limit is
-    configuration dependent)
+... is no more used;
 
+> -        }
+> +        line += sprintf(line, " %02x", (unsigned char)buf[i]);
+>       }
+>       *line = '\0';
+>   }
+>   
+> +static void asciidump_line(char *line, const void *bufptr, size_t len)
+> +{
+> +    const char *buf = bufptr;
+> +
+> +    for (size_t i = 0; i < len; i++) {
+> +        char c = buf[i];
+> +
+> +        if (c < ' ' || c > '~') {
+> +            c = '.';
+> +        }
+> +        *line++ = c;
+> +    }
+> +    *line = '\0';
+> +}
+> +
+> +#define QEMU_HEXDUMP_LINE_WIDTH \
+> +    (QEMU_HEXDUMP_LINE_BYTES * 2 + QEMU_HEXDUMP_LINE_BYTES / 4)
+> +
+>   void qemu_hexdump(FILE *fp, const char *prefix,
+>                     const void *bufptr, size_t size)
+>   {
+> -    unsigned int b, len;
+>       char line[QEMU_HEXDUMP_LINE_LEN];
+> +    char ascii[QEMU_HEXDUMP_LINE_BYTES + 1];
+> +    size_t b, len;
+>   
+> -    for (b = 0; b < size; b += QEMU_HEXDUMP_LINE_BYTES) {
+> -        len = size - b;
+> -        qemu_hexdump_line(line, bufptr + b, len, true);
+> -        fprintf(fp, "%s: %04x: %s\n", prefix, b, line);
+> +    for (b = 0; b < size; b += len) {
+> +        len = MIN(size - b, QEMU_HEXDUMP_LINE_BYTES);
+> +
+> +        qemu_hexdump_line(line, bufptr + b, len);
+> +        asciidump_line(ascii, bufptr + b, len);
+> +
+> +        fprintf(fp, "%s: %04x: %-*s %s\n",
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+'b' is size_t.
 
+> +                prefix, b, QEMU_HEXDUMP_LINE_WIDTH, line, ascii);
+>       }
+>   
+>   }
+
+Queued squashing:
+
+-- >8 --
+diff --git a/util/hexdump.c b/util/hexdump.c
+index dbc536fe84..0f943e31e5 100644
+--- a/util/hexdump.c
++++ b/util/hexdump.c
+@@ -19,7 +19,7 @@
+  void qemu_hexdump_line(char *line, const void *bufptr, size_t len)
+  {
+      const char *buf = bufptr;
+-    int i, c;
++    int i;
+
+      if (len > QEMU_HEXDUMP_LINE_BYTES) {
+          len = QEMU_HEXDUMP_LINE_BYTES;
+@@ -65,7 +65,7 @@ void qemu_hexdump(FILE *fp, const char *prefix,
+          qemu_hexdump_line(line, bufptr + b, len);
+          asciidump_line(ascii, bufptr + b, len);
+
+-        fprintf(fp, "%s: %04x: %-*s %s\n",
++        fprintf(fp, "%s: %04zx: %-*s %s\n",
+                  prefix, b, QEMU_HEXDUMP_LINE_WIDTH, line, ascii);
+      }
+
+---
 
