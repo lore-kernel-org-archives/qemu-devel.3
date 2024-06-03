@@ -4,55 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E05C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 09:42:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEE8FC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 09:43:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE4Ca-0002T0-N1; Mon, 03 Jun 2024 05:42:04 -0400
+	id 1sE4DS-0002xl-19; Mon, 03 Jun 2024 05:42:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixinyu20s@ict.ac.cn>)
- id 1sE4CY-0002SZ-6m
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 05:42:02 -0400
-Received: from smtp83.cstnet.cn ([159.226.251.83] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <lixinyu20s@ict.ac.cn>)
- id 1sE4CU-0003w3-OX
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 05:42:01 -0400
-Received: from lixinyu20s$ict.ac.cn ( [114.242.206.180] ) by
- ajax-webmail-APP-09 (Coremail) ; Mon, 3 Jun 2024 17:41:40 +0800 (GMT+08:00)
-X-Originating-IP: [114.242.206.180]
-Date: Mon, 3 Jun 2024 17:41:40 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: =?UTF-8?B?5p2O5qyj5a6H?= <lixinyu20s@ict.ac.cn>
-To: "Paolo Bonzini" <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, eduardo@habkost.net, 
- "Xinyu Li" <lixinyu@loongson.cn>
-Subject: Re: Re: [PATCH] target/i386: fix memory opsize for Mov to/from Seg
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.15 build 20240418(6ec7583a)
- Copyright (c) 2002-2024 www.mailtech.cn cnic.cn
-In-Reply-To: <38cded80-7454-4630-a1a0-e92727e127e8@redhat.com>
-References: <20240602100528.2135717-1-lixinyu20s@ict.ac.cn>
- <38cded80-7454-4630-a1a0-e92727e127e8@redhat.com>
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sE4DL-0002r8-OR
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 05:42:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sE4DJ-00049h-JE
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 05:42:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717407768;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/ao7swtyu4ZU8QzrEvGHNN1jN5cc6q03oM8E2HYtkxI=;
+ b=Rnq+WFTfYbSt+QUWVh5dA7MBC3X8k97qNT+lTD1VYNn592AhDF4jPmdBHfGMwtfWlU+w8y
+ FOwtIHk8clN80Ps3UA8CEzabFc3819k4+VQ/pGTD7RloKqF/AcfsFtB3TXPNVfHQUGoGm1
+ hlyNlZ/fPyrWbYrzgj+ed5UQctjAoP4=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-604-L9DKp922NXOTwrzxisqp1Q-1; Mon, 03 Jun 2024 05:42:38 -0400
+X-MC-Unique: L9DKp922NXOTwrzxisqp1Q-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1B264101A525;
+ Mon,  3 Jun 2024 09:42:37 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id B9B07402EB0;
+ Mon,  3 Jun 2024 09:42:36 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D667021E681D; Mon,  3 Jun 2024 11:42:35 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org,  Hanna Reitz <hreitz@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  gmaglione@redhat.com,  Raphael Norwitz
+ <raphael@enfabrica.net>,  Laurent Vivier <lvivier@redhat.com>,  Brad Smith
+ <brad@comstyle.com>,  slp@redhat.com,  stefanha@redhat.com,  Igor Mammedov
+ <imammedo@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  David
+ Hildenbrand <david@redhat.com>,  qemu-block@nongnu.org,  Kevin Wolf
+ <kwolf@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Coiby Xu
+ <Coiby.Xu@gmail.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Jason
+ Wang <jasowang@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v6 10/12] hostmem: add a new memory backend based on
+ POSIX shm_open()
+In-Reply-To: <xxu5zcocmr6jkwot2lq4atvbozjjykqnvlb5m3fofadzffmxmh@6n43s2i5cjge>
+ (Stefano Garzarella's message of "Wed, 29 May 2024 17:07:39 +0200")
+References: <20240528103543.145412-1-sgarzare@redhat.com>
+ <20240528103823.146231-1-sgarzare@redhat.com>
+ <87sey0k6z7.fsf@pond.sub.org>
+ <xxu5zcocmr6jkwot2lq4atvbozjjykqnvlb5m3fofadzffmxmh@6n43s2i5cjge>
+Date: Mon, 03 Jun 2024 11:42:35 +0200
+Message-ID: <87zfs2z7jo.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Message-ID: <c7388b8.2e0f5.18fdd79d5e8.Coremail.lixinyu20s@ict.ac.cn>
-X-Coremail-Locale: en_US
-X-CM-TRANSID: swCowABHqKrUj11mYTIEAA--.46898W
-X-CM-SenderInfo: pol0x0t1xsi2g6lf3hldfou0/
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
- CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
- daVFxhVjvjDU=
-Received-SPF: pass client-ip=159.226.251.83; envelope-from=lixinyu20s@ict.ac.cn;
- helo=cstnet.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,126 +99,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VGhlIEludGVsIG1hbnVhbCBzdGF0ZXMsICJNb3ZlIGxvd2VyIDE2IGJpdHMgb2Ygci9tNjQgdG8g
-c2VnbWVudCByZWdpc3RlciwiCndoaWNoIGlzIHNvbWV3aGF0IGFtYmlndW91cy4gVGhlcmVmb3Jl
-LCBJIGhhdmUgd3JpdHRlbiB0aGUgZm9sbG93aW5nIHRlc3QgdG8KdmVyaWZ5IHRoaXMuCgojaW5j
-bHVkZSA8c3RkaW8uaD4KI2luY2x1ZGUgPHN0ZGludC5oPgojaW5jbHVkZSA8c3RkbGliLmg+CiNp
-bmNsdWRlIDx1bmlzdGQuaD4KI2luY2x1ZGUgPHN5cyBtbWFuLmg9IiI+CgppbnQgbWFpbiAoaW50
-IGFyZ2MsIGNoYXIqKiBhcmd2KSB7CiAgICB1aW50MTZfdCBnczsKICAgIGludCBwcyA9IGdldHBh
-Z2VzaXplKCk7CiAgICBfX2FzbV9fKCJtb3YgJSVncywgJTAiIDogIj1yIiAoZ3MpKTsKICAgIHZv
-aWQqIHAgPSBtbWFwKE5VTEwsIHBzICogMiwgUFJPVF9OT05FLCBNQVBfQU5PTllNT1VTIHwgTUFQ
-X1BSSVZBVEUsIC0xLCAwKTsKICAgIGlmIChwID09IE1BUF9GQUlMRUQpIHsKICAgICAgICBwZXJy
-b3IoIm1tYXAiKTsKICAgICAgICBhYm9ydCgpOwogICAgfQogICAgaWYgKG1wcm90ZWN0KHAsIHBz
-LCBQUk9UX1JFQUQgfCBQUk9UX1dSSVRFKSAhPSAwKSB7CiAgICAgICAgcGVycm9yKCJtcHJvdGVj
-dCIpOwogICAgICAgIGFib3J0KCk7CiAgICB9CgogICAgdWludDE2X3QqIHBhZ2VfYm5kID0gKHVp
-bnQxNl90KikocCArIHBzIC0gMik7CiAgICAqcGFnZV9ibmQgPSBnczsKICAgIF9fYXNtX18gdm9s
-YXRpbGUgKCJtb3YgKCUwKSwgJSVncyIgOjogInIiIChwYWdlX2JuZCkpOwogICAgX19hc21fXyB2
-b2xhdGlsZSAoIi5ieXRlIDB4NDggXG5cdCBtb3YgKCUwKSwgJSVncyIgOjogInIiIChwYWdlX2Ju
-ZCkpOwogICAgcmV0dXJuIDA7Cn0KClRoZSBsb2FkaW5nIG9mIGEgMi1ieXRlIHNlZ21lbnQgYXQg
-dGhlIHBhZ2UgYm91bmRhcnkgZGlkIG5vdCB0cmlnZ2VyIGFuIGV4Y2VwdGlvbiwKaW5kaWNhdGlu
-ZyB0aGF0IHRoZSBwcm9jZXNzb3IgYWN0dWFsbHkgcGVyZm9ybWVkIG9ubHkgYSAyLWJ5dGUgbG9h
-ZC4KCkFkZGl0aW9uYWxseSwgdGhlIHByZXZpb3VzIHRyYW5zbGF0aW9uIGFsc28gb25seSBpbnZv
-bHZlZCBhIHR3by1ieXRlIGxvYWQuCgogICAgY2FzZSAweDhlOiAvKiBtb3Ygc2VnLCBHdiAqLwog
-ICAgICAgIG1vZHJtID0geDg2X2xkdWJfY29kZShlbnYsIHMpOwogICAgICAgIHJlZyA9IChtb2Ry
-bSAmZ3Q7Jmd0OyAzKSAmYW1wOyA3OwogICAgICAgIGlmIChyZWcgJmd0Oz0gNiB8fCByZWcgPT0g
-Ul9DUykKICAgICAgICAgICAgZ290byBpbGxlZ2FsX29wOwogICAgICAgIGdlbl9sZHN0X21vZHJt
-KGVudiwgcywgbW9kcm0sIE1PXzE2LCBPUl9UTVAwLCAwKTsKICAgICAgICBnZW5fbW92bF9zZWdf
-VDAocywgcmVnKTsKICAgICAgICBicmVhazsKClRoZXJlZm9yZSwgYSB0d28tYnl0ZSBsb2FkIHNl
-ZW1zIHJlYXNvbmFibGUgYW5kIHNob3VsZCBub3QgY2F1c2UgYW55IGVycm9ycy4KCgpUaGFuayB5
-b3UhCgpYaW55dSBMaQoKCiZndDsgLS0tLS1PcmlnaW5hbCBNZXNzYWdlcy0tLS0tCiZndDsgRnJv
-bTogIlBhb2xvIEJvbnppbmkiIDxwYm9uemluaUByZWRoYXQuY29tPgomZ3Q7IFNlbnQgVGltZTog
-MjAyNC0wNi0wMyAxNTozNDo0NyAoTW9uZGF5KQomZ3Q7IFRvOiBsaXhpbnl1MjBzQGljdC5hYy5j
-biwgcWVtdS1kZXZlbEBub25nbnUub3JnCiZndDsgQ2M6IHJpY2hhcmQuaGVuZGVyc29uQGxpbmFy
-by5vcmcsIGVkdWFyZG9AaGFia29zdC5uZXQsICJYaW55dSBMaSIgPGxpeGlueXVAbG9vbmdzb24u
-Y24+CiZndDsgU3ViamVjdDogUmU6IFtQQVRDSF0gdGFyZ2V0L2kzODY6IGZpeCBtZW1vcnkgb3Bz
-aXplIGZvciBNb3YgdG8vZnJvbSBTZWcKJmd0OyAKJmd0OyBPbiA2LzIvMjQgMTI6MDUsIGxpeGlu
-eXUyMHNAaWN0LmFjLmNuIHdyb3RlOgomZ3Q7ICZndDsgRnJvbTogWGlueXUgTGkgPGxpeGlueXVA
-bG9vbmdzb24uY24+CiZndDsgJmd0OyAKJmd0OyAmZ3Q7IFRoaXMgY29tbWl0IGZpeGVzIGFuIGlz
-c3VlIHdpdGggTU9WIGluc3RydWN0aW9ucyAoMHg4QyBhbmQgMHg4RSkKJmd0OyAmZ3Q7IGludm9s
-dmluZyBzZWdtZW50IHJlZ2lzdGVycyBieSBleHBsaWNpdGx5IHNldHRpbmcgdGhlIG1lbW9yeSBv
-cGVyYW5kCiZndDsgJmd0OyBzaXplIHRvIDE2IGJpdHMuIEl0IGludHJvZHVjZXMgYSBuZXcgZmxh
-ZyBYODZfU1BFQ0lBTF9Nb3ZTZWcgdG8gaGFuZGxlCiZndDsgJmd0OyB0aGlzIHNwZWNpZmljYXRp
-b24gY29ycmVjdGx5LgomZ3Q7ICZndDsgCiZndDsgJmd0OyBTaWduZWQtb2ZmLWJ5OiBYaW55dSBM
-aSA8bGl4aW55dTIwc0BpY3QuYWMuY24+CiZndDsgJmd0OyAtLS0KJmd0OyAmZ3Q7ICAgdGFyZ2V0
-L2kzODYvdGNnL2RlY29kZS1uZXcuYy5pbmMgfCAxMiArKysrKysrKysrLS0KJmd0OyAmZ3Q7ICAg
-dGFyZ2V0L2kzODYvdGNnL2RlY29kZS1uZXcuaCAgICAgfCAgMiArKwomZ3Q7ICZndDsgICAyIGZp
-bGVzIGNoYW5nZWQsIDEyIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCiZndDsgJmd0OyAK
-Jmd0OyAmZ3Q7IGRpZmYgLS1naXQgYS90YXJnZXQvaTM4Ni90Y2cvZGVjb2RlLW5ldy5jLmluYyBi
-L3RhcmdldC9pMzg2L3RjZy9kZWNvZGUtbmV3LmMuaW5jCiZndDsgJmd0OyBpbmRleCAwZWM4NDli
-MDAzLi5hYjdkYmI0NWY5IDEwMDY0NAomZ3Q7ICZndDsgLS0tIGEvdGFyZ2V0L2kzODYvdGNnL2Rl
-Y29kZS1uZXcuYy5pbmMKJmd0OyAmZ3Q7ICsrKyBiL3RhcmdldC9pMzg2L3RjZy9kZWNvZGUtbmV3
-LmMuaW5jCiZndDsgJmd0OyBAQCAtMjAyLDYgKzIwMiw3IEBACiZndDsgJmd0OyAgICNkZWZpbmUg
-YXZ4X21vdnggLnNwZWNpYWwgPSBYODZfU1BFQ0lBTF9BVlhFeHRNb3YsCiZndDsgJmd0OyAgICNk
-ZWZpbmUgc2V4dFQwIC5zcGVjaWFsID0gWDg2X1NQRUNJQUxfU0V4dFQwLAomZ3Q7ICZndDsgICAj
-ZGVmaW5lIHpleHRUMCAuc3BlY2lhbCA9IFg4Nl9TUEVDSUFMX1pFeHRUMCwKJmd0OyAmZ3Q7ICsj
-ZGVmaW5lIG1vdnNlZyAuc3BlY2lhbCA9IFg4Nl9TUEVDSUFMX01vdlNlZywKJmd0OyAmZ3Q7ICAg
-CiZndDsgJmd0OyAgICNkZWZpbmUgdmV4MSAudmV4X2NsYXNzID0gMSwKJmd0OyAmZ3Q7ICAgI2Rl
-ZmluZSB2ZXgxX3JlcDMgLnZleF9jbGFzcyA9IDEsIC52ZXhfc3BlY2lhbCA9IFg4Nl9WRVhfUkVQ
-U2NhbGFyLAomZ3Q7ICZndDsgQEAgLTE1NzYsOSArMTU3Nyw5IEBAIHN0YXRpYyBjb25zdCBYODZP
-cEVudHJ5IG9wY29kZXNfcm9vdFsyNTZdID0gewomZ3Q7ICZndDsgICAgICAgWzB4ODldID0gWDg2
-X09QX0VOVFJZMyhNT1YsIEUsdiwgRyx2LCBOb25lLCBOb25lKSwKJmd0OyAmZ3Q7ICAgICAgIFsw
-eDhBXSA9IFg4Nl9PUF9FTlRSWTMoTU9WLCBHLGIsIEUsYiwgTm9uZSwgTm9uZSksCiZndDsgJmd0
-OyAgICAgICBbMHg4Ql0gPSBYODZfT1BfRU5UUlkzKE1PViwgRyx2LCBFLHYsIE5vbmUsIE5vbmUp
-LAomZ3Q7ICZndDsgLSAgICBbMHg4Q10gPSBYODZfT1BfRU5UUlkzKE1PViwgRSx2LCBTLHcsIE5v
-bmUsIE5vbmUpLAomZ3Q7ICZndDsgKyAgICBbMHg4Q10gPSBYODZfT1BfRU5UUlkzKE1PViwgRSx2
-LCBTLHcsIE5vbmUsIE5vbmUsIG1vdnNlZyksCiZndDsgCiZndDsgSW5kZWVkIHRoaXMgd2FzIGEg
-bWlzdGFrZSwgdGhhbmtzISAgVGhlIG1hbnVhbCBkb2Vzbid0IGxpc3QgaXQKJmd0OyBpbiBUYWJs
-ZSBBLTIsIGJ1dCB0aGUgZGVzY3JpcHRpb24gb2YgdGhlIGluc3RydWN0aW9uIG1lbnRpb25zCiZn
-dDsgInIxNi9yMzIvbTE2IiB3aGljaCBpcyB3aGF0IHlvdSBhcmUgaW1wbGVtZW50aW5nIGl0Lgom
-Z3Q7IAomZ3Q7ICZndDsgICAgICAgWzB4OERdID0gWDg2X09QX0VOVFJZMyhMRUEsIEcsdiwgTSx2
-LCBOb25lLCBOb25lLCBub3NlZyksCiZndDsgJmd0OyAtICAgIFsweDhFXSA9IFg4Nl9PUF9FTlRS
-WTMoTU9WLCBTLHcsIEUsdiwgTm9uZSwgTm9uZSksCiZndDsgJmd0OyArICAgIFsweDhFXSA9IFg4
-Nl9PUF9FTlRSWTMoTU9WLCBTLHcsIEUsdiwgTm9uZSwgTm9uZSwgbW92c2VnKSwKJmd0OyAKJmd0
-OyBUaGlzIGlzIGFsc28gd3JvbmcsIGJ1dCBoZXJlIHRoZSBtYW51YWwgaXMgY29ycmVjdC4gIEl0
-IGNhbiBiZQomZ3Q7IHdyaXR0ZW4gYXMgIlMsdywgRSx3IiBpbnN0ZWFkIHdpdGhvdXQgc3BlY2lh
-bCBjYXNpbmcgaXQuCiZndDsgCiZndDsgVGhlcmVmb3JlIHRoZSBuZXcgWDg2SW5zblNwZWNpYWwg
-b25seSBuZWVkcyB0byBjb3ZlciBvcFswXS4uLgomZ3Q7IAomZ3Q7ICZndDsgKyAgICAvKiBNZW1v
-cnkgb3BlcmFuZCBzaXplIG9mIE1vdiB0by9mcm9tIFNlZyBpcyBNT18xNiAqLwomZ3Q7ICZndDsg
-KyAgICBYODZfU1BFQ0lBTF9Nb3ZTZWcsCiZndDsgCiZndDsgLi4uIGFuZCBJIHdvdWxkIGNhbGwg
-aXQgT3AwX013LCBmb3IgY29uc2lzdGVuY3kgd2l0aCBvdGhlciBzaW1pbGFyCiZndDsgZW50cmll
-cyBvZiBYODZJbnNuU3BlY2lhbC4KJmd0OyAKJmd0OyBTbyBJIHF1ZXVlZCB5b3VyIHBhdGNoIHdp
-dGggYSBmZXcgc21hbGwgY2hhbmdlczoKJmd0OyAKJmd0OyBkaWZmIC0tZ2l0IGEvdGFyZ2V0L2kz
-ODYvdGNnL2RlY29kZS1uZXcuaCBiL3RhcmdldC9pMzg2L3RjZy9kZWNvZGUtbmV3LmgKJmd0OyBp
-bmRleCA1MWVmMGU2MjFiOS4uZDYzMzU1OTdhMTMgMTAwNjQ0CiZndDsgLS0tIGEvdGFyZ2V0L2kz
-ODYvdGNnL2RlY29kZS1uZXcuaAomZ3Q7ICsrKyBiL3RhcmdldC9pMzg2L3RjZy9kZWNvZGUtbmV3
-LmgKJmd0OyBAQCAtMjAzLDYgKzIwMyw4IEBAIHR5cGVkZWYgZW51bSBYODZJbnNuU3BlY2lhbCB7
-CiZndDsgICAgICAgLyogV2hlbiBsb2FkZWQgaW50byBzLSZndDtUMCwgcmVnaXN0ZXIgb3BlcmFu
-ZCAxIGlzIHplcm8vc2lnbiBleHRlbmRlZC4gICovCiZndDsgICAgICAgWDg2X1NQRUNJQUxfU0V4
-dFQwLAomZ3Q7ICAgICAgIFg4Nl9TUEVDSUFMX1pFeHRUMCwKJmd0OyArICAgIC8qIE1lbW9yeSBv
-cGVyYW5kIHNpemUgb2YgTU9WIGZyb20gc2VnbWVudCByZWdpc3RlciBpcyBNT18xNiAqLwomZ3Q7
-ICsgICAgWDg2X1NQRUNJQUxfT3AwX013LAomZ3Q7ICAgfSBYODZJbnNuU3BlY2lhbDsKJmd0OyAg
-IAomZ3Q7ICAgLyoKJmd0OyBkaWZmIC0tZ2l0IGEvdGFyZ2V0L2kzODYvdGNnL2RlY29kZS1uZXcu
-Yy5pbmMgYi90YXJnZXQvaTM4Ni90Y2cvZGVjb2RlLW5ldy5jLmluYwomZ3Q7IGluZGV4IDBlYzg0
-OWIwMDM1Li41OTkwNDdkZjk0YSAxMDA2NDQKJmd0OyAtLS0gYS90YXJnZXQvaTM4Ni90Y2cvZGVj
-b2RlLW5ldy5jLmluYwomZ3Q7ICsrKyBiL3RhcmdldC9pMzg2L3RjZy9kZWNvZGUtbmV3LmMuaW5j
-CiZndDsgQEAgLTIwMiw2ICsyMDIsNyBAQAomZ3Q7ICAgI2RlZmluZSBhdnhfbW92eCAuc3BlY2lh
-bCA9IFg4Nl9TUEVDSUFMX0FWWEV4dE1vdiwKJmd0OyAgICNkZWZpbmUgc2V4dFQwIC5zcGVjaWFs
-ID0gWDg2X1NQRUNJQUxfU0V4dFQwLAomZ3Q7ICAgI2RlZmluZSB6ZXh0VDAgLnNwZWNpYWwgPSBY
-ODZfU1BFQ0lBTF9aRXh0VDAsCiZndDsgKyNkZWZpbmUgb3AwX013IC5zcGVjaWFsID0gWDg2X1NQ
-RUNJQUxfT3AwX013LAomZ3Q7ICAgCiZndDsgICAjZGVmaW5lIHZleDEgLnZleF9jbGFzcyA9IDEs
-CiZndDsgICAjZGVmaW5lIHZleDFfcmVwMyAudmV4X2NsYXNzID0gMSwgLnZleF9zcGVjaWFsID0g
-WDg2X1ZFWF9SRVBTY2FsYXIsCiZndDsgQEAgLTE1NzYsOSArMTU3Nyw5IEBAIHN0YXRpYyBjb25z
-dCBYODZPcEVudHJ5IG9wY29kZXNfcm9vdFsyNTZdID0gewomZ3Q7ICAgICAgIFsweDg5XSA9IFg4
-Nl9PUF9FTlRSWTMoTU9WLCBFLHYsIEcsdiwgTm9uZSwgTm9uZSksCiZndDsgICAgICAgWzB4OEFd
-ID0gWDg2X09QX0VOVFJZMyhNT1YsIEcsYiwgRSxiLCBOb25lLCBOb25lKSwKJmd0OyAgICAgICBb
-MHg4Ql0gPSBYODZfT1BfRU5UUlkzKE1PViwgRyx2LCBFLHYsIE5vbmUsIE5vbmUpLAomZ3Q7IC0g
-ICAgWzB4OENdID0gWDg2X09QX0VOVFJZMyhNT1YsIEUsdiwgUyx3LCBOb25lLCBOb25lKSwKJmd0
-OyArICAgIFsweDhDXSA9IFg4Nl9PUF9FTlRSWTMoTU9WLCBFLHYsIFMsdywgTm9uZSwgTm9uZSwg
-b3AwX013KSwKJmd0OyAgICAgICBbMHg4RF0gPSBYODZfT1BfRU5UUlkzKExFQSwgRyx2LCBNLHYs
-IE5vbmUsIE5vbmUsIG5vc2VnKSwKJmd0OyAtICAgIFsweDhFXSA9IFg4Nl9PUF9FTlRSWTMoTU9W
-LCBTLHcsIEUsdiwgTm9uZSwgTm9uZSksCiZndDsgKyAgICBbMHg4RV0gPSBYODZfT1BfRU5UUlkz
-KE1PViwgUyx3LCBFLHcsIE5vbmUsIE5vbmUpLAomZ3Q7ICAgICAgIFsweDhGXSA9IFg4Nl9PUF9H
-Uk9VUHcoZ3JvdXAxQSwgRSx2KSwKJmd0OyAgIAomZ3Q7ICAgICAgIFsweDk4XSA9IFg4Nl9PUF9F
-TlRSWTEoQ0JXLCAgICAwLHYpLCAvKiByQVggKi8KJmd0OyBAQCAtMjUxNCw2ICsyNTE1LDEzIEBA
-IHN0YXRpYyB2b2lkIGRpc2FzX2luc24oRGlzYXNDb250ZXh0ICpzLAomZ3Q7ICAgICAgICAgICBz
-LSZndDtvdmVycmlkZSA9IC0xOwomZ3Q7ICAgICAgICAgICBicmVhazsKJmd0OyAgIAomZ3Q7ICsg
-ICAgY2FzZSBYODZfU1BFQ0lBTF9PcDBfTXc6CiZndDsgKyAgICAgICAgYXNzZXJ0KGRlY29kZS5v
-cFswXS51bml0ID09IFg4Nl9PUF9JTlQpOwomZ3Q7ICsgICAgICAgIGlmIChkZWNvZGUub3BbMF0u
-aGFzX2VhKSB7CiZndDsgKyAgICAgICAgICAgIGRlY29kZS5vcFswXS5vdCA9IE1PXzE2OwomZ3Q7
-ICsgICAgICAgIH0KJmd0OyArICAgICAgICBicmVhazsKJmd0OyArCiZndDsgICAgICAgZGVmYXVs
-dDoKJmd0OyAgICAgICAgICAgYnJlYWs7CiZndDsgICAgICAgfQomZ3Q7IAomZ3Q7IFRoYW5rIHlv
-dSB2ZXJ5IG11Y2ghCiZndDsgCiZndDsgUGFvbG8KCgo8L2xpeGlueXUyMHNAaWN0LmFjLmNuPjwv
-bGl4aW55dUBsb29uZ3Nvbi5jbj48L2xpeGlueXVAbG9vbmdzb24uY24+PC9wYm9uemluaUByZWRo
-YXQuY29tPjwvc3lzPjwvdW5pc3RkLmg+PC9zdGRsaWIuaD48L3N0ZGludC5oPjwvc3RkaW8uaD4=
+Stefano Garzarella <sgarzare@redhat.com> writes:
+
+> On Wed, May 29, 2024 at 04:50:20PM GMT, Markus Armbruster wrote:
+>>Stefano Garzarella <sgarzare@redhat.com> writes:
+>>
+>>> shm_open() creates and opens a new POSIX shared memory object.
+>>> A POSIX shared memory object allows creating memory backend with an
+>>> associated file descriptor that can be shared with external processes
+>>> (e.g. vhost-user).
+>>>
+>>> The new `memory-backend-shm` can be used as an alternative when
+>>> `memory-backend-memfd` is not available (Linux only), since shm_open()
+>>> should be provided by any POSIX-compliant operating system.
+>>>
+>>> This backend mimics memfd, allocating memory that is practically
+>>> anonymous. In theory shm_open() requires a name, but this is allocated
+>>> for a short time interval and shm_unlink() is called right after
+>>> shm_open(). After that, only fd is shared with external processes
+>>> (e.g., vhost-user) as if it were associated with anonymous memory.
+>>>
+>>> In the future we may also allow the user to specify the name to be
+>>> passed to shm_open(), but for now we keep the backend simple, mimicking
+>>> anonymous memory such as memfd.
+>>>
+>>> Acked-by: David Hildenbrand <david@redhat.com>
+>>> Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+>>> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+>>> ---
+>>> v5
+>>> - fixed documentation in qapi/qom.json and qemu-options.hx [Markus]
+>>> v4
+>>> - fail if we find "share=off" in shm_backend_memory_alloc() [David]
+>>> v3
+>>> - enriched commit message and documentation to highlight that we
+>>>   want to mimic memfd (David)
+>>> ---
+>>>  docs/system/devices/vhost-user.rst |   5 +-
+>>>  qapi/qom.json                      |  19 +++++
+>>>  backends/hostmem-shm.c             | 123 +++++++++++++++++++++++++++++
+>>>  backends/meson.build               |   1 +
+>>>  qemu-options.hx                    |  16 ++++
+>>>  5 files changed, 162 insertions(+), 2 deletions(-)
+>>>  create mode 100644 backends/hostmem-shm.c
+>>>
+>>> diff --git a/docs/system/devices/vhost-user.rst b/docs/system/devices/vhost-user.rst
+>>> index 9b2da106ce..35259d8ec7 100644
+>>> --- a/docs/system/devices/vhost-user.rst
+>>> +++ b/docs/system/devices/vhost-user.rst
+>>> @@ -98,8 +98,9 @@ Shared memory object
+>>>
+>>>  In order for the daemon to access the VirtIO queues to process the
+>>>  requests it needs access to the guest's address space. This is
+>>> -achieved via the ``memory-backend-file`` or ``memory-backend-memfd``
+>>> -objects. A reference to a file-descriptor which can access this object
+>>> +achieved via the ``memory-backend-file``, ``memory-backend-memfd``, or
+>>> +``memory-backend-shm`` objects.
+>>> +A reference to a file-descriptor which can access this object
+>>>  will be passed via the socket as part of the protocol negotiation.
+>>>
+>>>  Currently the shared memory object needs to match the size of the main
+>>> diff --git a/qapi/qom.json b/qapi/qom.json
+>>> index 38dde6d785..d40592d863 100644
+>>> --- a/qapi/qom.json
+>>> +++ b/qapi/qom.json
+>>> @@ -721,6 +721,21 @@
+>>>              '*hugetlbsize': 'size',
+>>>              '*seal': 'bool' } }
+>>>
+>>> +##
+>>> +# @MemoryBackendShmProperties:
+>>> +#
+>>> +# Properties for memory-backend-shm objects.
+>>> +#
+>>> +# The @share boolean option is true by default with shm. Setting it to false
+>>> +# will cause a failure during allocation because it is not supported by this
+>>> +# backend.
+>>
+>>docs/devel/qapi-code-gen.rst:
+>>
+>>    For legibility, wrap text paragraphs so every line is at most 70
+>>    characters long.
+>>
+>>    Separate sentences with two spaces.
+>>
+>>Result:
+>>
+>>   # Properties for memory-backend-shm objects.
+>>   #
+>>   # The @share boolean option is true by default with shm.  Setting it
+>>   # to false will cause a failure during allocation because it is not
+>>   # supported by this backend.
+>
+> Ops, sorry, I'll fix!
+>
+>>
+>>However, this contradicts the doc comment for @share:
+>>
+>>   # @share: if false, the memory is private to QEMU; if true, it is
+>>   #     shared (default: false)
+>>
+>>Your intention is to override that text.  But that's less than clear.
+>>Moreover, the documentation of @share is pretty far from this override.
+>>John Snow is working on patches that'll pull it closer.
+>>
+>>Hmm, MemoryBackendMemfdProperties has the same override.
+>>
+>>I think we should change the doc comment for @share to something like
+>>
+>>   # @share: if false, the memory is private to QEMU; if true, it is
+>>   #     shared (default depends on the backend type)
+>>
+>>and then document the actual default with each backend type.
+>
+> Yes, I had already seen your comment to an earlier version and sent another separate patch:
+> https://patchew.org/QEMU/20240523133302.103858-1-sgarzare@redhat.com/
+>
+> Is that okay?
+
+Looks like I'm going through my post-vacation review backlog in
+suboptimal order...
+
+Replied there!
+
+>>> +#
+>>> +# Since: 9.1
+>>> +##
+>>> +{ 'struct': 'MemoryBackendShmProperties',
+>>> +  'base': 'MemoryBackendProperties',
+>>> +  'data': { } }
+>>
+>>Let's add 'if': 'CONFIG_POSIX' here.
+>>
+>
+> I think my response to your review at v4 fell through a crack :-)
+> https://patchew.org/QEMU/20240508074457.12367-1-sgarzare@redhat.com/20240508074457.12367-11-sgarzare@redhat.com/#z3lbtmkn6zlwdhdea7owav3mblttxr3asrmlilwxmkla67tdby@732gn3uuupoq
+
+Dang, it did %-}
+
+> I'll bring back my doubts here:
+>
+>   Do you mean something like this:
+>
+>   { 'struct': 'MemoryBackendShmProperties',
+>      'if': 'CONFIG_POSIX',
+>      'base': 'MemoryBackendProperties',
+>      'data': { } }
+>
+>   I didn't because for MemoryBackendMemfdProperties and
+>   MemoryBackendEpcProperties we have 'if': 'CONFIG_POSIX' only later in
+>   the ObjectOptions union, so I did the same.
+>
+>   Should we fix them as well?
+
+Yes, please.
+
+The QAPI schema's primary purpose is to define the QMP interface.  The
+tooling lets you define QAPI types that aren't actually used in the QMP
+interface.  We use this intentionally, e.g. to generate types & visitors
+for complex QOM properties.  Accidental use is also possible, say when
+we define a type unconditionally, but use it only conditionally.  We
+then end up generating dead code.  No big deal, but let's avoid it
+whenever practical.
+
+[...]
 
 
