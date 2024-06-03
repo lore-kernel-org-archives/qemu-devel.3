@@ -4,87 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C90CBC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 05:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26318C41513
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 05:23:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE09J-0004Mf-HF; Mon, 03 Jun 2024 01:22:25 -0400
+	id 1sE09p-0004X7-QJ; Mon, 03 Jun 2024 01:22:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sE09F-0004Lr-RI; Mon, 03 Jun 2024 01:22:21 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sE09D-0000ox-ML; Mon, 03 Jun 2024 01:22:21 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2c1b45206abso2599372a91.1; 
- Sun, 02 Jun 2024 22:22:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717392138; x=1717996938; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=50PsFvdLF7bdSbuNtcJy1+VFwwSBLbidgP4uHWniyt8=;
- b=PGLF5JRWBw+9AkRUtdMqEf/XhNFT7FFAtmk0e4qJC66wFsOwfmhIRyYGDeWckoLVP0
- fIdji4QjyAjvkDPV3XcLY9LMNKavgW89cIAD2vARbfb2eFdDY4ZRnMfvp7gv7Dkph3tI
- RjSL1zeI3z53GfD2+v5xsDetkUbMxWMXb4m9T/1JFHS571RiMt4DsFzIy5H0UNpWRC2M
- H5oZ0U2624xt2JVmHWpLrZgCobIFIBmwkQ5iV0QSlSMOibcoQ5vL7n+vkWRfCsUyjHPP
- PNLsd8pCh06jUcEq83OpjgUgyCHaerjWLQb8wMBpxqY7rPWewou822mkOUKKYb0zwm4Z
- p6Rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717392138; x=1717996938;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=50PsFvdLF7bdSbuNtcJy1+VFwwSBLbidgP4uHWniyt8=;
- b=chY82U1abXvlZhM8WCZw5VdiO4AcUBiMq+E3cwaDVwDKaBv8Ne+a53NKRrjW4Vzt+p
- kS2pEH2mKDX4f2LXujCXcrDT50xArDhnMFGRvDN0d+jgxg5mR6EQ8YMv+fff5tEjHCnV
- zegDDu7yxT6sXY/MUB2N7bmGKgrja+/l95uafljexRKvOvqS3XUkswKUhdVnYaWCHWV1
- 1PknKegjnmjDljnQ5ik7pQpVN91m5cKOgUTQvjBluoIGajpvfv3q1jP/3EZrzTYhZcRr
- y9YcbsEJU/E2qoq1zeN0n2aO3pTs9rPsV1XAOCO3hDfS/x8lLd+/8fu6G/wGZkElZK+E
- 5IbQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0Tf16kFNcjl+YtdABK/IlBjtzy+6eqSfsRiZw7BlpCk1/dBpptaGxHOxozh3ov5O2rS8d4/AUe5/Hq1skK0TPZKXhUphghY4GPpLacyARhVlAdV46DgxQjaU=
-X-Gm-Message-State: AOJu0YyWjpSSIAyf1HbuvX9tw8oDkdlLIEZ7gnWkUCnbjFbT2fWgZjnw
- 2XX+zezXP0kVk3/puXGb6qSY6opy2MTFrOuDzjVIlVaV/Lw8vAEkTMc5YQ==
-X-Google-Smtp-Source: AGHT+IFOP5drahW5TZermHLBfmYkYFktFkyJsKNpnT9/1P0mhvITG/LkYTM2oUFq69Rsx6gV+MNFIg==
-X-Received: by 2002:a17:90a:c305:b0:2c0:17b4:85aa with SMTP id
- 98e67ed59e1d1-2c1dc58f906mr6846764a91.22.1717392137616; 
- Sun, 02 Jun 2024 22:22:17 -0700 (PDT)
-Received: from localhost ([1.128.202.37]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c1c25e0775sm5261263a91.0.2024.06.02.22.22.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 02 Jun 2024 22:22:16 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 03 Jun 2024 15:22:09 +1000
-Message-Id: <D1Q4P8RRPIBQ.5ZLVIGLV532L@gmail.com>
-Cc: "Caleb Schlossin" <calebs@linux.vnet.ibm.com>,
- =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?= <fbarrat@linux.ibm.com>, "Daniel
- Henrique Barboza" <danielhb413@gmail.com>, <qemu-devel@nongnu.org>
-Subject: Re: [RFC PATCH 08/10] ppc/pnv: Invert the design for big-core
- machine modelling
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <20240526122612.473476-1-npiggin@gmail.com>
- <20240526122612.473476-9-npiggin@gmail.com>
- <eb04e4c8-26ca-4330-ae32-a58737d2a78b@kaod.org>
- <D1MS4B4OOMP2.URZ3Y2R98BC8@gmail.com>
- <a124af35-7ff0-487c-9a9d-ae352e9f359f@kaod.org>
-In-Reply-To: <a124af35-7ff0-487c-9a9d-ae352e9f359f@kaod.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <Shivasagar.Myana@amd.com>)
+ id 1sE09m-0004W7-Rm
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 01:22:54 -0400
+Received: from mail-dm6nam10on2046.outbound.protection.outlook.com
+ ([40.107.93.46] helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Shivasagar.Myana@amd.com>)
+ id 1sE09k-0000vR-5y
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 01:22:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Gqf7a+AmZCtm+rTdEJd9VTX1le/BkfCiOmO4i24xuAHRm2jizMcxhkei9XNmwy17rNtZvVOWIChzZHjw0upxUrqOIi7LA+8E86bJDD559/I++i0QwPObbqntll13+aYUF/KuJwDJPluBE5k5sse79dPepLU5BC8dZqea9QEb98pBzqlH8p6DKItV5OELS86oy8DgOopIcHm/lDUKURNYWnt173DLCKJj7ZeKlnTEmBkB0sbtmlJYCERkpvgMzYg+7WgZ5kAZZ9ZaT3LDaA3C/l2GPAjYIfkzl3XRk+mlRvMOpcAonaPhkL3d7Ge28WV9WgSB35QmvEbkeBB5xlwK9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZFJrrdDgUxmJG+fhMLgr0y4da+l8OpIwBifKFxEymjg=;
+ b=kk3BI4Rc0nIQDWi2VSoKad9i7EY+s0QzN80POKFhiTIqudvpYWfOsioM/WnXpKz66iVmeQsNo86I6jc6v5M5NNP2Mvc+iuAa7YluQ6ZHDbLOQm7F6zIgEyf8ueGcQ2nyh9kd+uXLjFcAqPZ4t6AcsTJ+ezCQGlR6jyZPRXsMkSsyEyARbEJFH7GhzvrROK983eQzmVOmPZLimUDYSzo0uq8M9SnQZKQ2OucG5cNYvniZ4IcWvO0lTJX6DQyKj1IxPbh4475BW2elK77Mwcf5xgCdAbdDpOjjdMqNxWM/Q1Wyz1+Tb0i2k5Tn59//pMq0Rrfp90vHnDeVHYt5lGF/cw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZFJrrdDgUxmJG+fhMLgr0y4da+l8OpIwBifKFxEymjg=;
+ b=gjw2j3VPH9vTc8L+m8USRp/txmCSUHTMxyVmJFRjZ3UqaAXHI/TGj8cuH4N3doKAFZWbfgFbP1JJ2EF3fB+XaouR9o3B8QMr5tljbIQJ9APsUr+paopQD/5Ae6TYqBtM/g+7nSQXEATQ7yuws0g+9JC9dP7hCjRNlLSsjbvBVSs=
+Received: from BL1PR13CA0131.namprd13.prod.outlook.com (2603:10b6:208:2bb::16)
+ by MW3PR12MB4425.namprd12.prod.outlook.com (2603:10b6:303:5e::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.25; Mon, 3 Jun
+ 2024 05:17:44 +0000
+Received: from BL02EPF00021F68.namprd02.prod.outlook.com
+ (2603:10b6:208:2bb:cafe::ac) by BL1PR13CA0131.outlook.office365.com
+ (2603:10b6:208:2bb::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7656.13 via Frontend
+ Transport; Mon, 3 Jun 2024 05:17:43 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BL02EPF00021F68.mail.protection.outlook.com (10.167.249.4) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7633.15 via Frontend Transport; Mon, 3 Jun 2024 05:17:43 +0000
+Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Mon, 3 Jun
+ 2024 00:17:42 -0500
+Received: from xhdsaipava41.xilinx.com (10.180.168.240) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server id 15.1.2507.35 via
+ Frontend Transport; Mon, 3 Jun 2024 00:17:40 -0500
+From: Shiva sagar Myana <Shivasagar.Myana@amd.com>
+To: <francisco.iglesias@amd.com>, <jasowang@redhat.com>,
+ <qemu-devel@nongnu.org>, <pisa@cmp.felk.cvut.cz>
+CC: <peter.maydell@linaro.org>, <sai.pavan.boddu@amd.com>,
+ <Shivasagar.Myana@amd.com>
+Subject: [QEMU][PATCH v3 1/1] hw/net/can/xlnx-versal-canfd: Fix sorting of the
+ tx queue
+Date: Mon, 3 Jun 2024 10:47:32 +0530
+Message-ID: <20240603051732.3334571-1-Shivasagar.Myana@amd.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Received-SPF: None (SATLEXMB04.amd.com: Shivasagar.Myana@amd.com does not
+ designate permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF00021F68:EE_|MW3PR12MB4425:EE_
+X-MS-Office365-Filtering-Correlation-Id: db0c18a0-6e1c-4a49-36e2-08dc838c7f94
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230031|376005|82310400017|1800799015|36860700004; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?3Nn0FnjNUGsvRzOIQDbxrAWe3HnTfRWk+1502H8uYPTEjV74L0jWe4Lv2aLi?=
+ =?us-ascii?Q?RpxkyRon/eMBPUNJCUeZMj6NjOLRv21HXBuf3uSjWVe+BquCqssehXeQTfXc?=
+ =?us-ascii?Q?Vha/we8oQQvIKdBWMtobMndUINjiB6DWH/XrLe8BBatXQsbcUrMkZIeTF3fu?=
+ =?us-ascii?Q?JtbJlCX7cIPI182QehKqaZ+8YAoY0Rf3K673exifC8nl01LkkOjz97OmZkXc?=
+ =?us-ascii?Q?BIyGsS31wOXzmENjJIPRP4QZudiEmjiyMmdnfmr7twIwN3oOO6vjig8vRvL0?=
+ =?us-ascii?Q?O/lDbVWCgd6osuPu4hq/OSHnzQP3OSAaLkOFbD9gy73oAQOEjbLqiJkR2qo5?=
+ =?us-ascii?Q?l1XTwlyIElncWgNkzkBziGPW8iSH693a0RpPezNvFfS2jM5KpjkX2zg43BOu?=
+ =?us-ascii?Q?q/JkBFHcnW8iM92LQ/A8eWLf5Qe5llxKe+b3NL9UgbXr3W8k/HHyV1kH16e3?=
+ =?us-ascii?Q?NB3MFBBQpVkW1qbvL1oe9mw0DPBzm4NRxTjWhjltgm4918pMGOHxqpLUV1le?=
+ =?us-ascii?Q?L4avAmPNV2O3HxwuxBHBw6EceJnnSEkfL3A2PHAr3G0fTHqUIRHy4SQ7fZPk?=
+ =?us-ascii?Q?DtSrhbfoMfGmoAl1+wL9LDII6rExiQMR+uxThltGlgwc9xWEMzCLqTglA4HQ?=
+ =?us-ascii?Q?L2kC+CghjDD+Tbl9hrLOUSOs79+FGM4d6/RjIp9p85/PV8tr39fObIwPSqCz?=
+ =?us-ascii?Q?IS2Wn8xZtV2B8LIr5KBrcR7smPd8MenZzyoJw9dvoZDx/USk9eNbmH+DdMKe?=
+ =?us-ascii?Q?hBN2NQaJq8OfMSDtUvY1d59hByz98mxMHfiOLR5Ue0K6Kf9AhMUIFVzF+rPR?=
+ =?us-ascii?Q?QWjltDqUQ9GDZfUMV+qtksISdvhroDxejB+SCploFhLo/Vh4ZPqjN/gYoGrN?=
+ =?us-ascii?Q?MG4E+3moF3w9J8TOEefqngg9fuUEgGud5Zv2nCeo535RqLRPV48hv60c6NTR?=
+ =?us-ascii?Q?xifSVEtpC1iI7Myy2tcCFR5XQ0Jod3tKSO9CVfuz4d7t96/Hcqkfnr/sQtZE?=
+ =?us-ascii?Q?cVJWvOGJr26MyWOL7wbP1suaR1pWnpObYV09qknB7A7YJTaGXqrnufrUxTt/?=
+ =?us-ascii?Q?9UuH7yG931CfoNlQ7EPBQ76X5zNLc6qoAwuG21MREIhi0RonOpOcr+P6pUIW?=
+ =?us-ascii?Q?6xASU6cFfRES4PNuHBcc7at8ZBW1C0l9kmShBZiwIdClbBQn9wZeg6qjaa/2?=
+ =?us-ascii?Q?J8CVhdHZxq6L251LnuOEolwQtayjxSbp4FnXHgNpy5ZPr3kBHncJr3GQgvlQ?=
+ =?us-ascii?Q?95Widpi4qnpwtXy74Irg7+kJ6pqqrjwuUvclLVpzN/+KDobCJB9SbOwiBB35?=
+ =?us-ascii?Q?jSMcvu6hWNjgIw0O5k9vs+Ww47N4Oyzbl8pwmnB/6l5yNJ5PPCGK6698CjBW?=
+ =?us-ascii?Q?2pqTTd9ISm65+QNf0KU0DkA63Ici?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(376005)(82310400017)(1800799015)(36860700004); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2024 05:17:43.8378 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: db0c18a0-6e1c-4a49-36e2-08dc838c7f94
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF00021F68.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR12MB4425
+Received-SPF: permerror client-ip=40.107.93.46;
+ envelope-from=Shivasagar.Myana@amd.com;
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,118 +149,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 30, 2024 at 5:46 PM AEST, C=C3=A9dric Le Goater wrote:
->
-> >>> @@ -157,6 +157,14 @@ static int pnv_dt_core(PnvChip *chip, PnvCore *p=
-c, void *fdt)
-> >>>   =20
-> >>>        pnv_cc->processor_id(chip, pc->hwid, 0, &pir, &tir);
-> >>>   =20
-> >>> +    /* Only one DT node per (big) core */
-> >>> +    if (tir !=3D 0) {
-> >>> +        g_assert(pc->big_core);
-> >>> +        g_assert(tir =3D=3D 1);
-> >>> +        g_assert(pc->hwid & 1);
-> >>> +        return -1;
-> >>
-> >> return is -1 but it's not an error. right ?
-> >=20
-> > Not an error just a "no CPU node to insert".
-> >=20
-> > It's a bit ugly. Could return bool for yes/no and take a *offset
-> > maybe?
->
-> or we could pass the pa_features array  ?
+Returning an uint32_t casted to a gint from g_cmp_ids causes the tx queue to
+become wrongly sorted when executing g_slist_sort. Fix this by always
+returning -1 or 1 from g_cmp_ids based on the ID comparison instead.
+Also, if two message IDs are the same, sort them by using their index and
+transmit the message at the lowest index first.
 
-That might work better. I'll try it.
+Signed-off-by: Shiva sagar Myana <Shivasagar.Myana@amd.com>
+Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+---
+Changelog:
+v1 -> v2 : subject line is modified.
+v2 -> v3 : subject line is modified from "[QEMU][master][PATCH" to
+"[QEMU][PATCH".
 
-> >>> +        if (machine->smp.threads > 8) {
-> >>> +            error_report("Cannot support more than 8 threads/core "
-> >>> +                         "on a powernv9/10  machine");
-> >>> +            exit(1);
-> >>> +        }
-> >>> +        if (machine->smp.threads % 2 =3D=3D 1) {
-> >>
-> >> is_power_of_2()
-> >=20
-> > It does have that check later in pnv_init(), but I wanted
-> > to be careful that we're dividing by 2 below I think it makes
-> > it more obvious (and big-core can't have 1 thread per big core).
->
-> ok
->
->
-> >=20
-> >>> @@ -1099,6 +1157,8 @@ static void pnv_power9_init(MachineState *machi=
-ne)
-> >>>   =20
-> >>>    static void pnv_power10_init(MachineState *machine)
-> >>>    {
-> >>> +    PnvMachineState *pnv =3D PNV_MACHINE(machine);
-> >>> +    pnv->big_core_tbst_quirk =3D true;
-> >>>        pnv_power9_init(machine);
-> >>>    }
-> >>>   =20
-> >>> @@ -1169,9 +1229,15 @@ static void pnv_processor_id_p9(PnvChip *chip,
-> >>>                                    uint32_t core_id, uint32_t thread_=
-id,
-> >>>                                    uint32_t *pir, uint32_t *tir)
-> >>>    {
-> >>> -    if (chip->nr_threads =3D=3D 8) {
-> >>> -        *pir =3D (chip->chip_id << 8) | ((thread_id & 1) << 2) | (co=
-re_id << 3) |
-> >>> -               (thread_id >> 1);
-> >>> +    PnvMachineState *pnv =3D PNV_MACHINE(qdev_get_machine());
-> >>
-> >> arg. We should avoid these qdev_get_machine() calls. Could big_core be=
- a
-> >> chip property instead ?
-> >=20
-> > We could, but per machine probably makes more sense. It's
-> > funny there seems to be no good way to get machine from CPU.
-> > Maybe we can just add a machine pointer in PnvChip?
->
->
-> It would be easier/cleaner to propagate the machine settings to
-> the chip unit and subunits. If I remember correctly, real HW has a
-> scan init sequence doing something similar.
+ hw/net/can/xlnx-versal-canfd.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-Sure. There wll be logic inside the core and chip that controls the
-switch so it is not incorrect to model that way.
+diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
+index 47a14cfe63..5f083c21e9 100644
+--- a/hw/net/can/xlnx-versal-canfd.c
++++ b/hw/net/can/xlnx-versal-canfd.c
+@@ -1312,7 +1312,10 @@ static gint g_cmp_ids(gconstpointer data1, gconstpointer data2)
+     tx_ready_reg_info *tx_reg_1 = (tx_ready_reg_info *) data1;
+     tx_ready_reg_info *tx_reg_2 = (tx_ready_reg_info *) data2;
+ 
+-    return tx_reg_1->can_id - tx_reg_2->can_id;
++    if (tx_reg_1->can_id == tx_reg_2->can_id) {
++        return (tx_reg_1->reg_num < tx_reg_2->reg_num) ? -1 : 1;
++    }
++    return (tx_reg_1->can_id < tx_reg_2->can_id) ? -1 : 1;
+ }
+ 
+ static void free_list(GSList *list)
+-- 
+2.34.1
 
->
-> > I'l probably leave that for another series and try to convert
-> > most things.
-> >=20
-> >>> +static bool pnv_machine_get_hb(Object *obj, Error **errp)
-> >>> +{
-> >>> +    PnvMachineState *pnv =3D PNV_MACHINE(obj);
-> >>> +
-> >>> +    return !!pnv->fw_load_addr;
-> >>> +}
-> >>> +
-> >>> +static void pnv_machine_set_hb(Object *obj, bool value, Error **errp=
-)
-> >>> +{
-> >>> +    PnvMachineState *pnv =3D PNV_MACHINE(obj);
-> >>> +
-> >>> +    if (value) {
-> >>> +        pnv->fw_load_addr =3D 0x8000000;
-> >>> +    }
-> >>> +}
-> >>
-> >> we might want to get rid of the hostboot mode oneday. This was really
-> >> experimental stuff.
-> >=20
-> > Okay sure, I don't use it. Although we may want to run the
-> > open source hostboot part of the firmware on QEMU one day,
-> > we can always add back some options for it.
->
-> It's not invasive either. Let's keep it. It use to work with a
-> trimdown Linux image.
-
-We'll keep it for now.
-
-Thanks,
-Nick
 
