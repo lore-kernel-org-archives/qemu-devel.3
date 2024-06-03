@@ -4,70 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 969E7C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:08:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A4EBC25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 17:08:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEB95-0001Z8-Ut; Mon, 03 Jun 2024 13:06:55 -0400
+	id 1sEBAS-0002ac-T6; Mon, 03 Jun 2024 13:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1sEB93-0001XJ-MV; Mon, 03 Jun 2024 13:06:53 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sEBAQ-0002Zq-DO
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:08:18 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1sEB91-0001uj-7v; Mon, 03 Jun 2024 13:06:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=hIhvFG904StDLDEXs02aTwGPPyUmkI3bpXgRnoN+kU8=; b=ELrkcLY/6EwMu8Ty
- Eb52QEPH5cfiek1zT/RZ45JAm4u/p/wvFE03eS1QtjWA5U7XsdGL+Qj7NNtHTMIe6xIy3983dXjsP
- v9jrevej3+AhJB0GTLi56AKUomd61zdrltr4a0PoKtybCt5Bwgfuu0YnYJBjGkD0CyXByGoq7Br+V
- icQiRkgjJ3L83iOhXz9yEws9cPVdu7i3F8gP6yHLqAPYdSYNVrE5k/mAim1pLkpyPWP8tsQGhZusZ
- F9xH9DV3JwgZv9L4cGqoeWkb5t9p7OdcPoSVqELZnMiav/Y3U4Phrrfd06t7f/qa83kI5k/Iz8DS2
- X1fVlrzKuDNGJXQGPQ==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1sEB8o-003zgA-1o;
- Mon, 03 Jun 2024 17:06:38 +0000
-Date: Mon, 3 Jun 2024 17:06:38 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-s390x@nongnu.org, devel@lists.libvirt.org,
- Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Anton Johansson <anjo@rev.ng>, qemu-arm <qemu-arm@nongnu.org>
-Subject: Re: [PATCH 0/4] hw/s390x: Alias @dump-skeys -> @dump-s390-skey and
- deprecate
-Message-ID: <Zl34HkNkeWnVhssP@gallifrey>
-References: <20240530074544.25444-1-philmd@linaro.org>
- <cb4028fc-9596-47f3-9468-f8912dd48aed@redhat.com>
- <ZlnYkt9sLgDbQqVT@gallifrey>
- <6fec1c49-c6a6-4e96-bc44-5dc7feb843e6@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sEBAN-00029q-8D
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 13:08:18 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VtKn94qRzz6K6nt;
+ Tue,  4 Jun 2024 01:03:41 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id E472E140A79;
+ Tue,  4 Jun 2024 01:08:11 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 3 Jun
+ 2024 18:08:11 +0100
+Date: Mon, 3 Jun 2024 18:08:10 +0100
+To: Nam Cao <namcao@linutronix.de>
+CC: Alex Williamson <alex.williamson@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ <qemu-devel@nongnu.org>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>
+Subject: Re: [PATCH v2] pci-bridge/xio3130_downstream: fix invalid link
+ speed and link width
+Message-ID: <20240603180810.0000751b@Huawei.com>
+In-Reply-To: <20240531103635.x9vzCtCv@linutronix.de>
+References: <20240529201744.15420-1-namcao@linutronix.de>
+ <20240531111400.000064f7@Huawei.com>
+ <20240531103635.x9vzCtCv@linutronix.de>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6fec1c49-c6a6-4e96-bc44-5dc7feb843e6@redhat.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
-X-Uptime: 17:00:10 up 26 days, 4:14, 1 user, load average: 0.02, 0.01, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,72 +71,97 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Thomas Huth (thuth@redhat.com) wrote:
-> On 31/05/2024 16.02, Dr. David Alan Gilbert wrote:
-> > * Thomas Huth (thuth@redhat.com) wrote:
-> > > On 30/05/2024 09.45, Philippe Mathieu-Daudé wrote:
-> > > > We are trying to unify all qemu-system-FOO to a single binary.
-> > > > In order to do that we need to remove QAPI target specific code.
-> > > > 
-> > > > @dump-skeys is only available on qemu-system-s390x. This series
-> > > > rename it as @dump-s390-skey, making it available on other
-> > > > binaries. We take care of backward compatibility via deprecation.
-> > > > 
-> > > > Philippe Mathieu-Daudé (4):
-> > > >     hw/s390x: Introduce the @dump-s390-skeys QMP command
-> > > >     hw/s390x: Introduce the 'dump_s390_skeys' HMP command
-> > > >     hw/s390x: Deprecate the HMP 'dump_skeys' command
-> > > >     hw/s390x: Deprecate the QMP @dump-skeys command
+On Fri, 31 May 2024 12:36:35 +0200
+Nam Cao <namcao@linutronix.de> wrote:
+
+> On Fri, May 31, 2024 at 11:14:00AM +0100, Jonathan Cameron wrote:
+> > On Wed, 29 May 2024 22:17:44 +0200
+> > Nam Cao <namcao@linutronix.de> wrote:
+> >   
+> > > Set link width to x1 and link speed to 2.5 Gb/s as specified by the
+> > > datasheet. Without this, these fields in the link status register read
+> > > zero, which is incorrect.
 > > > 
-> > > Why do we have to rename the command? Just for the sake of it? I think
-> > > renaming HMP commands is maybe ok, but breaking the API in QMP is something
-> > > you should consider twice.
+> > > This problem appeared since 3d67447fe7c2 ("pcie: Fill PCIESlot link fields
+> > > to support higher speeds and widths"), which allows PCIe slot to set link
+> > > width and link speed. However, if PCIe slot does not explicitly set these
+> > > properties, they will be zero. Before this commit, the width and speed
+> > > default to x1 and 2.5 Gb/s.
 > > > 
-> > > And even if we decide to rename ... maybe we should discuss whether it makes
-> > > sense to come up with a generic command instead: As far as I know, ARM also
-> > > has something similar, called MTE. Maybe we also want to dump MTE keys one
-> > > day? So the new command should maybe be called "dump-memory-keys" instead?
+> > > Fixes: 3d67447fe7c2 ("pcie: Fill PCIESlot link fields to support higher speeds and widths")
+> > > Signed-off-by: Nam Cao <namcao@linutronix.de>  
+> > Hi Nam,
 > > 
-> > I think there are at least two different concepts; but I agree it would be
-> > nice to keep a single command for matching concepts across different architectures;
-> > I can't say I know the details of any, but:
+> > I'm feeling a bit guilty about this one a known it was there for a while.
 > > 
-> >    a) Page table things - I think x86 PKRU/PKEY (???) is a page table thing
-> >      where pages marked a special way are associated with keys.
-> >      That sounds similar to what the skeys are???
+> > I was lazy when fixing the equivalent CXL case a while back on
+> > basis no one had noticed and unlike CXL (where migration is broken for a lot
+> > of reasons) fixing this may need to take into account migration from broken to
+> > fixed versions.  Have you tested that?  
 > 
-> Sounds a little bit similar, but s390 storage keys are independent from page
-> tables. It's rather that each page (4096 bytes) of RAM has an additional
-> 7-bit value that contains the storage key and some additional bits. It's
-> also usable when page tables are still disabled.
+
+I've run into problems in the past around updating config space registers
+because when we migrate from a prepatch QEMU instance to a post patch 1 the
+config space registers are compared. I'm not sure if LNKCAP is included
+in that.  LNKSTA is explicitly ruled out I think.
+
+For examples see all the machine version checks in
+hw/core/machine.c
+
+The one that bit me was fixed with x-pcie-err-unc-mask
+when I was fixing a register that didn't match the spec defined values.
+
+
+> I tested this patch with Linux kernel.
 > 
-> > I'm not sure the two fit in the same command.
+> I noticed this bug when Linux complained that the PCI link was broken.
+> Linux determines weather a link is up by checking if these speed/width
+> fields have valid value.
 > 
-> Does it make sense to dump all the MTE or x86 keys all at once? If so, we
-> could maybe come up with an unified command. Otherwise it might not make
-> sense, indeed.
-
-So they're all really different granularities:
-    s390 - one key/physical page
-    ARM MTE - one tag/16 bytes physical
-    x86 - per virtual page; then a current register with 16 permission
-         sets
-
-For x86 I guess it would be easy to dump the register, and then the
-values for a range of virtual addresses.
-But then if you dumped a range of physical addresses on ARM MTE you'd
-get hundreds times more output than for the equivalent s390.
-
-Dave
-
->  Thomas
+> Repro:
+> 	qemu-system-x86_64 \
+> 	-machine pc-q35-2.10 \
+> 	-kernel bzImage \
+> 	-drive "file=img,format=raw" \
+> 	-m 2048 -smp 1 -enable-kvm \
+> 	-append "console=ttyS0 root=/dev/sda debug" \
+> 	-nographic \
+> 	-device pcie-root-port,bus=pcie.0,slot=1,id=rp1,bus-reserve=253 \
+> 	-device x3130-upstream,id=up1,bus=rp1 \
+> 	-device xio3130-downstream,id=dp1,bus=up1,chassis=1,slot=1
 > 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+> Then after Linux has booted:
+> 	device_add device_add e1000,bus=dp1,id=eth0
+> 
+> Then Linux complains that something is wrong with the link:
+> pcieport 0000:02:00.0: pciehp: Slot(1-1): Cannot train link: status 0x2000
+>  
+> This patch gets rid of Linux's complain, and the hot-plug now works fine.
+> 
+> > I did the CXL fix slightly differently.  Can't remember why though - looking
+> > at the fact it uses an instance_post_init, is there an issue with accidentally
+> > overwriting the parameters?  Or did I just over engineer the fix?  
+> 
+> I would say over engineer. I think CXL does not take link speed and link
+> width as parameters.
+
+I've implemented control but this still ends up over engineered because
+the reason I want to control this is to vary access parameters for calculating
+latency and bandwidth.  That is easiest done by controlling the EP status
+to degrade the link.  For that I just set the CAP register on the switch DSP
+to allow suitably high values and let pcie_sync_bridge() match this to
+the status of the EP (which I have properties to contro).
+There seems to be only one way 'negotiation' of these parameters so it
+needs to be EP driven.
+
+Jonathan
+> 
+> Best regards,
+> Nam
+
 
