@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1FADC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:18:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B57C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 11:18:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE5he-0007K7-Qs; Mon, 03 Jun 2024 07:18:15 -0400
+	id 1sE5gl-0003V3-Ta; Mon, 03 Jun 2024 07:17:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5hR-0006G2-RZ; Mon, 03 Jun 2024 07:18:01 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1sE5gY-0003Fq-Ag; Mon, 03 Jun 2024 07:17:11 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sE5hN-0006PW-0y; Mon, 03 Jun 2024 07:18:01 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1f661450af5so11830245ad.3; 
- Mon, 03 Jun 2024 04:17:56 -0700 (PDT)
+ id 1sE5gU-0006A4-7S; Mon, 03 Jun 2024 07:17:05 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1f661450af5so11825095ad.3; 
+ Mon, 03 Jun 2024 04:17:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717413475; x=1718018275; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717413420; x=1718018220; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yJgBJ0EmldlUzQtT/aivgrSis6Y1lAdujHeTStRACnA=;
- b=LbyP06f/AuQHpU3Uj6E0P67Djq4UPhwdT46a2MqCxqLzx21ycqovCryA9QQjWETZAe
- eDTMYHcNIYOgFw+VNPW67rbyftBdTbOaHZx3RQ0LwmI3axEFi+tw8C20eO4+oIauzIXa
- kccDygjoBHCIu5zruAd2pRxRvY7BKbkdBFSF4l2S89tJZfWOoppntAmXdGqwAKvrwZmJ
- 5P8NnhiZS8rVttvxonDMnI/gcRKLRETG7VcPoXqxt4a5mo+Db2YyB1GQ9Hl9J+cqVdtR
- 1QnFzf01HkjgiKlOzm0OWPH7ADRKKT1WJfanIL03R21q8fxoy1DF60yyU4atK3/NH3Ea
- xu6Q==
+ bh=D8UK8uAVTnW82lBqc0PHDyOOwY4BUuAnWYWQniDrcpo=;
+ b=dIONXo/MPyygUVBBdUZc0jGe2FSl4xWBTRyoe+8kzaqDmGc9W+rINqWwn5e/MdRNvW
+ ygmy9Kl6gODcwLYW6jPNOCc9pgqWD8zms2VuPQ4PD5eWBUvvAF8GsgCvb0pN2blm0Dy5
+ 6N+2ZelwgwgNLicxWC9HVPCdHJ3yOWtUtPW61jxQJtx46jCoevI4E5LNG0LwJep8MDQR
+ fwTtJnXUsDODuuDtKVh3Icoo5OzZeSIINFy81xLW0oxhbnwZnp2k4ju3j/qwUUCEwM1p
+ yx4LT7InADs3mqy/BK6ILBCarPrvwITyPR18O7fVzTqxSUkps9k4ENn6grPeQGlBaen4
+ 8kOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717413475; x=1718018275;
+ d=1e100.net; s=20230601; t=1717413420; x=1718018220;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yJgBJ0EmldlUzQtT/aivgrSis6Y1lAdujHeTStRACnA=;
- b=M/3Pc1bvsqefNdRYz4iIWZ+S0Dn9SI3tTNuAcw/DgMxw1kY/VIf4hCptIAte3aTyu/
- SBtJFjwsE2Fx3X3mxSegHxxpC70D3iHWa/Emy0NFZdVDWIsy4vyPD4mQHM4J7cx29hrg
- 38XP7CK/CEIYzkm+gjXtf3AHBNpDheFIGj95AV4lo3sA3/GynXQHNmWK1ayvVjz/xTP0
- vPNEyIBR3sNUABFUIrlNGYeDUlkxKLqF11CvBMKEm6VK4Afqgb3nfNZgzkVA5qdX0Y+e
- 95TOFNS5LliLxuo9Klti+SNqQeuKH3k7mmGmHWzAQnr25fMw/+FdHzdUNJI/Qz5vc/1o
- ftyA==
+ bh=D8UK8uAVTnW82lBqc0PHDyOOwY4BUuAnWYWQniDrcpo=;
+ b=VEMsa/XHQlTuCMOX9JE3AYtNpppdoVjsXKOpcuIhKneRSZcZfYPHnprlAQIAfnFZTP
+ djktL/5eAobliaN7mzvwak73G3Tf/GvvEvlB3lJruQHz+b2oIRe8WleD1ZJwA37/cpga
+ WU/N34oUt2NVbDuD0vK3YzF6RlcBMDj+cjjfy4bU0Dvd7LLANbI3QniDuwm8psosD86W
+ kHWR4iA3/rVJl31cgHmBSmepYjsl9uXqibHOn0oDksNi6+ZVmerU3RRsrFgKQ1/nOlTl
+ VX2aEdC8hxt01NCgwjYzSBswgKiHVFKoVj3UOl55I+Rl0vEYa78s9J2B6+6PQ1wGjEUM
+ K4yw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQJg2MN27Hhb/pm4BwpZQM/ThLPeqkmKqp4XYNxCIoYZw8Nw7cL9dlOqV/SVjK83y1yitxzn1p4KL0EiqZyU4wD+sKgsqL
-X-Gm-Message-State: AOJu0YygYoB2O30CsPzImcOMfeFn4v56OofTAbhbGCMvvVJSwEZjhJTF
- RmkZHfTvdKWWZDV9tnDET0Xo4XsK6nFkqflEhiOz0mkfEu30yuiBA41v6A==
-X-Google-Smtp-Source: AGHT+IGjSEWzb2DIRxiHUVGSTXYUmXPklETtPgdPbXcK3CUpyLhoKN0NHNRPd9wEQz/Td1wyQGGs2Q==
-X-Received: by 2002:a17:903:603:b0:1f4:6986:720a with SMTP id
- d9443c01a7336-1f6370277f2mr70877095ad.31.1717413474888; 
- Mon, 03 Jun 2024 04:17:54 -0700 (PDT)
+ AJvYcCV5hW3oVahghoQ2iN4pKA0gptxQOVOcSVg1hEJ35R5M+GsZD9J4RRX6TeTnOpAHqegl07kbiBUBKGTnznwzugjVg6AqNAH6
+X-Gm-Message-State: AOJu0Yzx2Es30fc1Bcl3IvOMNjgZk7evpx6j5g10G1cvN+TmmuirJNm/
+ ekX/9jg5v7C8+XemHQetcv8vp66nnjs+aJr2O8u7OJWaHgvL1AK3nWE82Q==
+X-Google-Smtp-Source: AGHT+IEMqijZiWaLRZNjSfdKxl7igKi7G+sP2Bl2QPAekDn36KTtqEhJSbB9MuPlHmq6up2dIxWQeQ==
+X-Received: by 2002:a17:903:41d1:b0:1f6:6426:8da8 with SMTP id
+ d9443c01a7336-1f664269316mr61143105ad.9.1717413420026; 
+ Mon, 03 Jun 2024 04:17:00 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.17.52
+ d9443c01a7336-1f6323e18c7sm62375435ad.177.2024.06.03.04.16.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 04:17:54 -0700 (PDT)
+ Mon, 03 Jun 2024 04:16:59 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
+Cc: alistair23@gmail.com, Andrew Jones <ajones@ventanamicro.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  qemu-stable <qemu-stable@nongnu.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 19/27] target/riscv: rvv: Check single width operator for
- vfncvt.rod.f.f.w
-Date: Mon,  3 Jun 2024 21:16:35 +1000
-Message-ID: <20240603111643.258712-20-alistair.francis@wdc.com>
+Subject: [PULL v2 02/27] target/riscv/kvm: Fix exposure of Zkr
+Date: Mon,  3 Jun 2024 21:16:18 +1000
+Message-ID: <20240603111643.258712-3-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240603111643.258712-1-alistair.francis@wdc.com>
 References: <20240603111643.258712-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,32 +100,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Andrew Jones <ajones@ventanamicro.com>
 
-The opfv_narrow_check needs to check the single width float operator by
-require_rvf.
+The Zkr extension may only be exposed to KVM guests if the VMM
+implements the SEED CSR. Use the same implementation as TCG.
 
-Signed-off-by: Max Chou <max.chou@sifive.com>
+Without this patch, running with a KVM which does not forward the
+SEED CSR access to QEMU will result in an ILL exception being
+injected into the guest (this results in Linux guests crashing on
+boot). And, when running with a KVM which does forward the access,
+QEMU will crash, since QEMU doesn't know what to do with the exit.
+
+Fixes: 3108e2f1c69d ("target/riscv/kvm: update KVM exts to Linux 6.8")
+Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240322092600.1198921-4-max.chou@sifive.com>
+Message-ID: <20240422134605.534207-2-ajones@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/insn_trans/trans_rvv.c.inc | 1 +
- 1 file changed, 1 insertion(+)
+ target/riscv/cpu.h         |  3 +++
+ target/riscv/csr.c         | 18 ++++++++++++++----
+ target/riscv/kvm/kvm-cpu.c | 25 +++++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 4 deletions(-)
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index a7217aed4e..c3af38af80 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -2817,6 +2817,7 @@ static bool opffv_narrow_check(DisasContext *s, arg_rmr *a)
- static bool opffv_rod_narrow_check(DisasContext *s, arg_rmr *a)
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 2d0c02c35b..746efd099a 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -819,6 +819,9 @@ void riscv_set_csr_ops(int csrno, riscv_csr_operations *ops);
+ 
+ void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
+ 
++target_ulong riscv_new_csr_seed(target_ulong new_value,
++                                target_ulong write_mask);
++
+ uint8_t satp_mode_max_from_map(uint32_t map);
+ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
+ 
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 726096444f..829d8346ed 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -4267,10 +4267,8 @@ static RISCVException write_upmbase(CPURISCVState *env, int csrno,
+ #endif
+ 
+ /* Crypto Extension */
+-static RISCVException rmw_seed(CPURISCVState *env, int csrno,
+-                               target_ulong *ret_value,
+-                               target_ulong new_value,
+-                               target_ulong write_mask)
++target_ulong riscv_new_csr_seed(target_ulong new_value,
++                                target_ulong write_mask)
  {
-     return opfv_narrow_check(s, a) &&
-+           require_rvf(s) &&
-            require_scale_rvf(s) &&
-            (s->sew != MO_8);
+     uint16_t random_v;
+     Error *random_e = NULL;
+@@ -4294,6 +4292,18 @@ static RISCVException rmw_seed(CPURISCVState *env, int csrno,
+         rval = random_v | SEED_OPST_ES16;
+     }
+ 
++    return rval;
++}
++
++static RISCVException rmw_seed(CPURISCVState *env, int csrno,
++                               target_ulong *ret_value,
++                               target_ulong new_value,
++                               target_ulong write_mask)
++{
++    target_ulong rval;
++
++    rval = riscv_new_csr_seed(new_value, write_mask);
++
+     if (ret_value) {
+         *ret_value = rval;
+     }
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index eaa36121c7..b8136c7ef8 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1418,6 +1418,28 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+     return ret;
  }
+ 
++static int kvm_riscv_handle_csr(CPUState *cs, struct kvm_run *run)
++{
++    target_ulong csr_num = run->riscv_csr.csr_num;
++    target_ulong new_value = run->riscv_csr.new_value;
++    target_ulong write_mask = run->riscv_csr.write_mask;
++    int ret = 0;
++
++    switch (csr_num) {
++    case CSR_SEED:
++        run->riscv_csr.ret_value = riscv_new_csr_seed(new_value, write_mask);
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP,
++                      "%s: un-handled CSR EXIT for CSR %lx\n",
++                      __func__, csr_num);
++        ret = -1;
++        break;
++    }
++
++    return ret;
++}
++
+ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+ {
+     int ret = 0;
+@@ -1425,6 +1447,9 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+     case KVM_EXIT_RISCV_SBI:
+         ret = kvm_riscv_handle_sbi(cs, run);
+         break;
++    case KVM_EXIT_RISCV_CSR:
++        ret = kvm_riscv_handle_csr(cs, run);
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: un-handled exit reason %d\n",
+                       __func__, run->exit_reason);
 -- 
 2.45.1
 
