@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECF75C25B76
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 15:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D756C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 15:36:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE9fk-0005WS-H6; Mon, 03 Jun 2024 11:32:32 -0400
+	id 1sE9ij-0006i7-UR; Mon, 03 Jun 2024 11:35:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9ff-0005Vo-GS
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:32:30 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9ii-0006gB-5h
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:35:36 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9fd-0000PX-J4
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:32:27 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-421392b8156so13412915e9.3
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 08:32:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sE9ig-0000xT-Ii
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 11:35:35 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-52965199234so5095032e87.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 08:35:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717428744; x=1718033544; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717428932; x=1718033732; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kttWk285TmQlKiM54Fl/VNgnRVpdriyOBrecjCQJlxY=;
- b=paDn2Eblos8RiiXhsxe3WF72/UsfXmnNc5bX0sL14Bj53NMawT30R7QA+Jldm0Nf9N
- BGaCKM8o5DdZQl51ORYo/8gIr4lNlv/uMYnRtS3nGUQTNZscQ86c9qaBuuaFxG2sLZXZ
- b0t0tEb81DP/9W1W7rOLzAH9biW3nO52dUDokN98u5WS9B/KSNSDfJaCz42Iv1pXHT4L
- P52EZanwKXHe477UeP42uTVSuBPgSWu8b70PATinP6BApRx2ZHNgq0T/mjy0INDLzFam
- UywOX6PuJCg0riuvg7fnhdzZk8TKqJThnKJ+ASf/bpGMYff2vQKRQ82iHkAKM2zoKR+a
- G3Cw==
+ bh=JEAvTofJ18KoArWousPRtr8oanbKJHLd6FS1aHQbHUs=;
+ b=KUmnf64K6/Wk2b32YqkCOGJ/ra8wfQAGByH16wAt501S1YmxV8QDnnOX+UBIFQidBl
+ MlK3Cu+dsjBbYh7cTjtvSZq0NFk73dMCZORmYxCujNEOby7q7TcNNFixW3LVi17C7d+v
+ 7N1qKUTJTuquyW4z0O0jaX7x5XnfuSinHcEeyw6T1RW6wWdHt+hzfm5eHnR59PWrnZv5
+ +hl9yr2ASPPCdUHYFmH1au9CrWO5PN6E+cfRGyWX7Ncx5ORaPy/gAa0tGGkXPr+vqwm9
+ dRVtXdtWXGvydZdSkTJG1VQpRyKKfLXwjE3nq+0ilZCLNRPp7EkVYg/3ShBIQ4AHViNg
+ 4aIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717428744; x=1718033544;
+ d=1e100.net; s=20230601; t=1717428932; x=1718033732;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kttWk285TmQlKiM54Fl/VNgnRVpdriyOBrecjCQJlxY=;
- b=Gxnhnd5Om9Qudnxd1ScvQK/oSIfqC4ZJTnNhIcTVCVNEFVh2nuZCMlXQkwGoiHPhsD
- ixJeWQuZLhCKWRiR39ZyIcDi/OTUOpRKPFTM6QX6c1rnpVk+7VCz5P/NyTQpCHlSayqi
- vCEzNM7ziVh5ZUTO7GrXnq2FkDf+cBd2r9zHRwEUGEup746IlHkR6bSTe3TnaE53waiK
- bMqqAdMIzYWsi/KudiG+tIv1dm7mplQUxkOdMm2P65VRcFPvYGjJfZAI7XeDMwLV2YpP
- GnOMXWrOTWhuIlItX1+3HJi6X+oyZQWVXH699SnedSOnlBMzClEPEO3z2bRbhyXjCvHW
- 5c/w==
+ bh=JEAvTofJ18KoArWousPRtr8oanbKJHLd6FS1aHQbHUs=;
+ b=wY+vEkvH9nA4kKNO/NUlr5KzX+4VWk28EjqcBt1t5+i/kNTSuPNRxYAnYwKD/O6Ndp
+ Q8F/BMNt8IzEG+RiykY3gXMd/JrH6oQG/z5pvBFjueTUFQ+uXpihibcceQa/2LQvDk9M
+ Z6sGTuNEdWPNbe8gl78Kbg1+7thuFke2fjIZURrid0xZAIVQWmwv7OK3v9ldXPI20IAb
+ yqklCtx5Vmb7JWHEEntDDeEZCK3zxhHz7hX85gozWKJH9QQgVEy7/pOZ36sjoeHrEkUd
+ vmWczw9L9vbvYEfYQj7+ObICzFe3MmZwyMDqt68MvlgyVumMBQiqmLR6clMcEJK9A0Lq
+ Z17Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVh2xbtepYmzFsKQLD+oeKMgsruVVSZM5V7jGNYHFOXqdx7DWZLE+N9sWpsEr+kwy3bGPz5hj6cv3wWvgDHKbFZa1JwLz4=
-X-Gm-Message-State: AOJu0YzOakrpboxnoB1n9FyWGbYycILIi5/KV0fKkXn58JCHPlziPbQc
- FkP2AeZWgIv5xzsx072uaIdHU95bf2zYRBb1PXzRcFPpJvwdhobVfigwW50odMo=
-X-Google-Smtp-Source: AGHT+IH6om7N+0vFQd82bSP5LWS2wIE47XJ8T38nfsW+/Lg7jPuuZOuDWbKu7N3P5Zl0k1aTNofNOQ==
-X-Received: by 2002:a05:600c:1d25:b0:421:2a54:2f1d with SMTP id
- 5b1f17b1804b1-4212e061399mr85571975e9.17.1717428743516; 
- Mon, 03 Jun 2024 08:32:23 -0700 (PDT)
+ AJvYcCVfK91QZ5t2GCYFuDTCzeL/xHg1gi5iDnWqAdFAcu0y2cgaIZIbYm0MVoYs5tDlSecvGxfNDUbTPAeqt6de/Y1QSHFmXT0=
+X-Gm-Message-State: AOJu0YxZkBOQnCnC/WSwRynU4A5/44JPMxjdQ3Q5baR3zCtJrUrDF7gi
+ es6X+8S3TaznaR9mkZt9+Pt9P84oP+YXiP2Wk8yUhVT74O6Vrl4aHEKHI0qyIl8=
+X-Google-Smtp-Source: AGHT+IEiY7DFhLsc9/O8P2yvSSCoW5BRnA8l+gt5fAGam8RBUQwgZJsrU/X7ZjiExSEYfihrVvx/cg==
+X-Received: by 2002:ac2:5e68:0:b0:523:899f:c63d with SMTP id
+ 2adb3069b0e04-52b896bfd2amr5790185e87.47.1717428932154; 
+ Mon, 03 Jun 2024 08:35:32 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.177.241])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4212b84de44sm120383785e9.11.2024.06.03.08.32.22
+ ffacd0b85a97d-35dd04d94e6sm8981451f8f.51.2024.06.03.08.35.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 08:32:22 -0700 (PDT)
-Message-ID: <6c1de896-c2fb-4772-b3f9-bd2b6175090e@linaro.org>
-Date: Mon, 3 Jun 2024 17:32:21 +0200
+ Mon, 03 Jun 2024 08:35:31 -0700 (PDT)
+Message-ID: <96870199-5782-4d87-ba10-f4b886936a96@linaro.org>
+Date: Mon, 3 Jun 2024 17:35:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/mips/loongson3_virt: Implement node counter timer
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Cc: Huacai Chen <chenhuacai@kernel.org>
-References: <20240512-loongson3_hpt-v1-1-5cb9cbae649b@flygoat.com>
+Subject: Re: [PATCH 0/5] hw/mips/loongson3_virt: Implement IPI support
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, QEMU devel <qemu-devel@nongnu.org>
+Cc: Huacai Chen <chenhuacai@kernel.org>, Song Gao <gaosong@loongson.cn>
+References: <20240508-loongson3-ipi-v1-0-1a7b67704664@flygoat.com>
+ <a9717e72-9de2-469f-89c1-8ae969b0031e@linaro.org>
+ <75c78b9e-4a18-4faf-9b80-a497d3401dba@app.fastmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240512-loongson3_hpt-v1-1-5cb9cbae649b@flygoat.com>
+In-Reply-To: <75c78b9e-4a18-4faf-9b80-a497d3401dba@app.fastmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,52 +97,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jiaxun,
-
-On 12/5/24 14:20, Jiaxun Yang wrote:
-> Node counter is a timer presents on Loongson-3 chips, which runs
-> as fast as CPU clock. It's being mapped into a MMIO location.
+On 16/5/24 12:53, Jiaxun Yang wrote:
 > 
-> Emulate this for loongson3_virt machine, in hope that kernel can
-> use it as a better clock source.
 > 
-> Hardware's behavior on 32-bit read/write is also emulated in case
-> legacy kernel is trying to use it with hi/lo splitted read.
+> 在2024年5月8日五月 下午10:41，Philippe Mathieu-Daudé写道：
+>> On 8/5/24 15:06, Jiaxun Yang wrote:
+>>> Hi all,
+>>>
+>>> This series enabled IPI support for loongson3 virt board, loosely
+>>> based on my previous work[1].
+>>> It generalized loongarch_ipi device to share among both loongarch
+>>> and MIPS machines.
+>>
+>>
+>>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>>> ---
+>>> Jiaxun Yang (5):
+>>>         hw/intc/loongarch_ipi: Remove pointless MAX_CPU check
+>>>         hw/intc/loongarch_ipi: Rename as loongson_ipi
+>>>         hw/intc/loongson_ipi: Implement IOCSR address space for MIPS
+>>
+>> So far patches 1-3 queued to hw-misc tree, thanks.
 > 
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> ---
->   hw/mips/loongson3_bootp.h |  1 +
->   hw/mips/loongson3_virt.c  | 38 ++++++++++++++++++++++++++++++++++----
->   2 files changed, 35 insertions(+), 4 deletions(-)
+> Hi Philippe,
+> 
+> Thanks! What's your plan with the rest of the series
 
+Patches LGTM, but I'd like an Acked-by from Song Gao ;)
 
-> +static uint64_t loongson3_nodecnt_read(void *opaque,
-> +                                        hwaddr addr, unsigned size)
-> +{
-> +    LoongsonMachineState *s = opaque;
-> +    int64_t now_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-> +    uint64_t ticks = clock_ns_to_ticks(s->cpuclk, now_ns);
-> +
-> +    if (addr == 0x4) {
-> +        return ticks >> 32;
+> and earlier MIPS CPS SMP series?
 
-Does that imply .endianness = DEVICE_BIG_ENDIAN?
+No plan, just lack of time :/
 
-It could be simpler to let the core MMIO code do the hi/lo
-bits management using ".impl.min_access_size = 8".
-
-> +    }
-> +
-> +    return ticks;
-> +}
-> +
-> +static const MemoryRegionOps loongson3_nodecnt_ops = {
-> +    .read  = loongson3_nodecnt_read,
-> +    .endianness = DEVICE_NATIVE_ENDIAN,
-> +    .valid.min_access_size = 4,
-> +    .valid.max_access_size = 8,
-> +    .impl.min_access_size = 4,
-> +    .impl.max_access_size = 8,
-> +};
+> Let me know if you need help on testing etc.
+> 
+> Thanks
 
 
