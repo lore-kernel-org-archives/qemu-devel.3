@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A485C25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 10:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 358C3C41513
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 10:32:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE4td-0004yz-CQ; Mon, 03 Jun 2024 06:26:33 -0400
+	id 1sE4yo-0006R4-61; Mon, 03 Jun 2024 06:31:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sE4tc-0004yb-0w
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 06:26:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sE4ta-000470-Ck
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 06:26:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717410389;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3+NbPhl9WSk1+71l74SlAReWUmh6OfvLAcMJQhj8g4g=;
- b=DiVGYf0juaolhL8hSR967vqovF6viiJyQaTUypBj+GdL0vnpJoaW1jLPDtG7N4Ob+UMGy9
- i2IwwY/qBiJ9tGNBiKkA3RBYPkdURw4jE/qbFGQPqfncPPttIEdUkSZRu4Q20plwVIqEZf
- y7WExNlghoIWaOjWYFg7kjGbfHA3UTM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-32-lw9vUNZhO7q1Z9GdSh6IJQ-1; Mon, 03 Jun 2024 06:26:25 -0400
-X-MC-Unique: lw9vUNZhO7q1Z9GdSh6IJQ-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4D2F58058D5;
- Mon,  3 Jun 2024 10:26:25 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.80])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 3F484491037;
- Mon,  3 Jun 2024 10:26:23 +0000 (UTC)
-Date: Mon, 3 Jun 2024 11:26:21 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 04/18] monitor: Drop monitor_fdset_dup_fd_add()
-Message-ID: <Zl2aTbNHdB_NGEwW@redhat.com>
-References: <20240523190548.23977-1-farosas@suse.de>
- <20240523190548.23977-5-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sE4yj-0006QO-KJ; Mon, 03 Jun 2024 06:31:50 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sE4yU-0005EO-5o; Mon, 03 Jun 2024 06:31:49 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-57a50ac2ca1so1777493a12.0; 
+ Mon, 03 Jun 2024 03:31:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1717410690; x=1718015490; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=SvLRwyIBI3cbGGaqHKdWaAaofQdbiKv1o3OWz8axq+8=;
+ b=gLF67TKU6xgZXFDWk1RtUcAaO81qpK6abrS/is92vw0eXs2ngHw81iFsY/xTdunKdC
+ auOLcEIHcIZ+PGeS0vSFMgovzGUdfQyWOik6UK1syhullApojLn/FLAXzOI2v/OrD8zZ
+ shhsd6rcSD8PM9ti21fsvHRwae74TQk3h5SWoC6MjmO3qVC34MVzpTaoL8W5lYBezvOs
+ UxZ01Ibn/QGHS9m8zOdUyHJ8X8xi7jH3woVD+6jXcDwhwn14W4gugNVOinc57+NyGe+V
+ 6THsWw9g9NO0Iir7pPdMHaEdzku9mtMirMhsa8jvVSB1Ar+nrkp4AGtpUaHR+Bywz4Dy
+ 5G3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717410690; x=1718015490;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SvLRwyIBI3cbGGaqHKdWaAaofQdbiKv1o3OWz8axq+8=;
+ b=KzT0uTIQRNIYIUnKzMpC4cbRQrT0nrX+6/gNklzTF86PD1tI8oP/gXH3FioI1J9jHN
+ yxH/VfNwKLHLRW3Dru3sny2LYPXtPd3p9eFdFB/MfDOAfQHblFa9APO30ADG6lyCSllx
+ ZqK1X7jhhfFNIyZ9jVkDMlMhoZPwyhlqb+5zR/sEwKgjxu58JxSr1AHpt+txJu8iDq0t
+ GIkJTDWeo1aD+6G+p5M6oYHGLlHul+SpFJDdYi4v/4SvTOiClncb22XZ1Vx5frV5CSJO
+ +k0wJ6FahLlz4pCiP6LVgcq/aq4PNFp85m6QyDsRFC4UsUggnHKqeq23Nvh3uDM1Ljak
+ z7pg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWARpT3N32RCdzMgXHInWH+FLFFqP7lALlKz003IXvFKf+/kHCJqwAnUJg8jS+ZDQm2lJpPFrfodmnyoQM9kWLfi46EaqymhkWPdW7/5Ds7OkXVzObRQRSQ+fI=
+X-Gm-Message-State: AOJu0YwdST54e/enIHbgpSH4tIZo+2ju5N3kaa6WQJnwOjtdAIlaDUxt
+ Gjk/46Gp2UKUjg2E4zeNfI+ikP2D9HWZIuhGEzR/rGdb/7jzoluZaQnGNIKJJ6iIKhm9rreRmNw
+ +pETIJOU17vyFj2nE3HBc/ywA5mo=
+X-Google-Smtp-Source: AGHT+IGPzoBlIp1geNtRipM04zjzqaIysllMNv/eS4i2kqiaSJulT3gJeQHUXRRxEevLooMLu/mz6/8z+PpSy0MeAHg=
+X-Received: by 2002:a50:8e04:0:b0:57a:1ef8:da99 with SMTP id
+ 4fb4d7f45d1cf-57a365400d4mr5742455a12.32.1717410690204; Mon, 03 Jun 2024
+ 03:31:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240523190548.23977-5-farosas@suse.de>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240603055248.3928469-1-fea.wang@sifive.com>
+ <20240603055248.3928469-5-fea.wang@sifive.com>
+In-Reply-To: <20240603055248.3928469-5-fea.wang@sifive.com>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Mon, 3 Jun 2024 12:31:18 +0200
+Message-ID: <CAJy5ezocZnmYec5TenZNtOe6+2-OxzaRaSXLW1XYHL5X0Xd8dw@mail.gmail.com>
+Subject: Re: [PATCH 4/4] hw/net: Fix the transmission return size
+To: "Fea.Wang" <fea.wang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Jason Wang <jasowang@redhat.com>, "open list:Xilinx Zynq" <qemu-arm@nongnu.org>
+Content-Type: multipart/alternative; boundary="0000000000001f8d350619f9d604"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,48 +88,96 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Incorrect $SUBJECT - it claims to be removing monitor_fdset_dup_fd_add
-but actually removes monitor_fdset_dup_fd_find.
+--0000000000001f8d350619f9d604
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 23, 2024 at 04:05:34PM -0300, Fabiano Rosas wrote:
-> From: Peter Xu <peterx@redhat.com>
-> 
-> This function is not needed, one remove function should already work.
-> Clean it up.
-> 
-> Here the code doesn't really care about whether we need to keep that dupfd
-> around if close() failed: when that happens something got very wrong,
-> keeping the dup_fd around the fdsets may not help that situation so far.
-> 
-> Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> Cc: Markus Armbruster <armbru@redhat.com>
-> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> [add missing return statement, removal during traversal is not safe]
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+On Mon, Jun 3, 2024 at 7:48=E2=80=AFAM Fea.Wang <fea.wang@sifive.com> wrote=
+:
+
+> Fix the transmission return size because not all bytes could be
+> transmitted successfully. So, return a successful length instead of a
+> constant value.
+>
+>
+How did you test this patch, on Linux or something else? I have some
+memory that we had some trouble with similar patches before.
+
+Anyway, the change looks good to me:
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+
+
+
+> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
 > ---
->  include/monitor/monitor.h |  1 -
->  monitor/fds.c             | 28 ++++++----------------------
->  stubs/fdset.c             |  5 -----
->  util/osdep.c              | 15 +--------------
->  4 files changed, 7 insertions(+), 42 deletions(-)
+>  hw/net/xilinx_axienet.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
+> index 7d1fd37b4a..05d41bd548 100644
+> --- a/hw/net/xilinx_axienet.c
+> +++ b/hw/net/xilinx_axienet.c
+> @@ -847,7 +847,7 @@ static ssize_t eth_rx(NetClientState *nc, const
+> uint8_t *buf, size_t size)
+>      axienet_eth_rx_notify(s);
+>
+>      enet_update_irq(s);
+> -    return size;
+> +    return s->rxpos;
+>  }
+>
+>  static size_t
+> --
+> 2.34.1
+>
+>
 
-With $SUBJECT fixed
+--0000000000001f8d350619f9d604
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
- Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
- 
+<div dir=3D"ltr"><div dir=3D"ltr">On Mon, Jun 3, 2024 at 7:48=E2=80=AFAM Fe=
+a.Wang &lt;<a href=3D"mailto:fea.wang@sifive.com">fea.wang@sifive.com</a>&g=
+t; wrote:<br></div><div class=3D"gmail_quote"><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
+4);padding-left:1ex">Fix the transmission return size because not all bytes=
+ could be<br>
+transmitted successfully. So, return a successful length instead of a<br>
+constant value.<br>
+<br></blockquote><div><br></div><div>How did you test this patch, on Linux =
+or something else? I have some</div><div>memory that we had some trouble wi=
+th similar patches before.</div><div><br></div><div>Anyway, the change look=
+s good to me:</div><div>Reviewed-by: Edgar E. Iglesias &lt;<a href=3D"mailt=
+o:edgar.iglesias@amd.com">edgar.iglesias@amd.com</a>&gt;<br></div><div><br>=
+</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+Signed-off-by: Fea.Wang &lt;<a href=3D"mailto:fea.wang@sifive.com" target=
+=3D"_blank">fea.wang@sifive.com</a>&gt;<br>
+---<br>
+=C2=A0hw/net/xilinx_axienet.c | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c<br>
+index 7d1fd37b4a..05d41bd548 100644<br>
+--- a/hw/net/xilinx_axienet.c<br>
++++ b/hw/net/xilinx_axienet.c<br>
+@@ -847,7 +847,7 @@ static ssize_t eth_rx(NetClientState *nc, const uint8_t=
+ *buf, size_t size)<br>
+=C2=A0 =C2=A0 =C2=A0axienet_eth_rx_notify(s);<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0enet_update_irq(s);<br>
+-=C2=A0 =C2=A0 return size;<br>
++=C2=A0 =C2=A0 return s-&gt;rxpos;<br>
+=C2=A0}<br>
+<br>
+=C2=A0static size_t<br>
+-- <br>
+2.34.1<br>
+<br>
+</blockquote></div></div>
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--0000000000001f8d350619f9d604--
 
