@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2563FC25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E4A0C27C53
 	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 13:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sE7Tn-0000Bl-JU; Mon, 03 Jun 2024 09:12:03 -0400
+	id 1sE7Tv-0000Dz-SZ; Mon, 03 Jun 2024 09:12:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sE7Tl-0000BI-Cv
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:12:01 -0400
+ id 1sE7Tu-0000DH-CC
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:12:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sE7Tj-0005lI-Jd
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:12:01 -0400
+ id 1sE7Tp-0005mL-IX
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 09:12:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717420318;
+ s=mimecast20190719; t=1717420324;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kLSuZeF439eAv0ilLv6JJM82PKPH9U+0Ab0u79jWo8g=;
- b=dZT683RcbUoPLsgy9KNhckqFG4bQKm3hmPuT8/umH65k+xyhTnmJNSfZB1Hg/s7UTeIUpU
- eW1S96cuctzZz/1oJMkn9INu8VHdrz/TNlyYVOirVECmaOr/gZiy9zOqLQ3mlMJFvmdDjk
- eG9lrADYvnHJ0EgX9nvvq7LS/0PUD+s=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bAbTQiE2UullwqM571jhJ789C54wVSiU4cOvdft1ch8=;
+ b=DuE+ZV1wvv/6iu+YYdeVjPLhXF6vCzprK7DLs2qnIUJ6tCr1DOcnAtBvX63LUXT713lqY+
+ 79J2tHcSZYSyY5pU2eiUptOWs/T3+iSNdFPDGlPe4uvmjLOQljYe7ZKAnlwDmW2jInkXul
+ gKn4zTdEde0VnuP4ORo94JD1ERtK3uY=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-266-XKAv_PDGM7iieBOGTijD3w-1; Mon, 03 Jun 2024 09:11:55 -0400
-X-MC-Unique: XKAv_PDGM7iieBOGTijD3w-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-57a57b954c8so469224a12.1
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 06:11:55 -0700 (PDT)
+ us-mta-452-qChUGvWBMHqB6xO4IPviiQ-1; Mon, 03 Jun 2024 09:11:57 -0400
+X-MC-Unique: qChUGvWBMHqB6xO4IPviiQ-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a68ea01c455so63924366b.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 06:11:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717420313; x=1718025113;
+ d=1e100.net; s=20230601; t=1717420316; x=1718025116;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kLSuZeF439eAv0ilLv6JJM82PKPH9U+0Ab0u79jWo8g=;
- b=WRzM+gpYq+un+Ig/s0niOamEzWZCGqNJXP1pjYdC4KiyTOrHJj9hBsd/9+Dsstmwk3
- WjNKepcWACN6fIOC4QXKLC19r3uaYhBSpYaBv3+tkdQu/1s+QVdpDHGojN1gHm8gy1pZ
- IfDVyOgNPc+H+mmUOBZ3SyZJN6F4R6m79ThcDMy8fSctVzwwdUikydTar7kAs9a9sP6t
- ah49WO7wTUf1KJItqLKI5FpfiC7aYVjNfOsH4HUu+MirJdQ43ol19NR3oKShtFFfmux0
- qvxf2JN7izxaHBNGr8FPjk93/3+q0vRp13W0gFd6a9lbkJ54hUImwhgna26loM9dtOmJ
- 56Mw==
-X-Gm-Message-State: AOJu0YytrlD5UZQJZBwJEvfTjwgTHasXDg/a2MEOJST8nu1SttFXvXwY
- xypYOvf8pAm5FSXFzRB2+ciWz5ljMuhuecSYgOuevJ3DmgiQF4GuqerremrApt7jWF08+1TdbuG
- RB0ImHatIJ6cfoo07Op92u46UStfgwgYTTqgyfaVc4/+mPn39PZoXHvnCTPJFJfly1MsnwHbDM7
- 5Tj1s8ZOyWKgy8/i0k9ON+30XJ1KJk+2EW9Jmh
-X-Received: by 2002:a50:c312:0:b0:579:c3f8:5923 with SMTP id
- 4fb4d7f45d1cf-57a36411f10mr7389793a12.13.1717420313514; 
- Mon, 03 Jun 2024 06:11:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGD/+ZHGpGiipw6kc8YFY+7Ql2K/0+MMdUCrJnNYO8T4DxaLqaZYkvGYStaJ0IlryAvbcIwcQ==
-X-Received: by 2002:a50:c312:0:b0:579:c3f8:5923 with SMTP id
- 4fb4d7f45d1cf-57a36411f10mr7389767a12.13.1717420312993; 
- Mon, 03 Jun 2024 06:11:52 -0700 (PDT)
+ bh=bAbTQiE2UullwqM571jhJ789C54wVSiU4cOvdft1ch8=;
+ b=oYMGBs24wfdOa4Tme2dX4W8swjRKXef/c1lV0yJ1iKqwal0K8SwlhHCNNToKuLccdj
+ yk9ExfbMmkc4MMjQRtyYCF2qxOI/tpPsfMhzHLM93tKMIRFOltXSfoQh4EK/TRM7264V
+ JpnXE/L9ir0sX/gjAsUWRED7gLKyvn+SnKa4PnFG3+F9TjdoAqn5izWf6w4P13HOUzJh
+ ZfVBfH3MtKA0wxSCHyJzZSeuOLSzn6gPfu/p4vfcryQPzl/EFSAwL5JRocSIJQb0L0wW
+ t8IjxwpvyhKDMg3CAeIrpY613DSYPFh5HINXb9U2Ez6yXwXbhYduMYEkd266/8ll8LUU
+ ZT9w==
+X-Gm-Message-State: AOJu0YyK1J+Wf1k7NJRWCNxkpxnSWol2ylECxpAx+goDaUVdq6L3cM4l
+ UCpA38yQIHgO65So+YCOPa8Ki4fBy859HrpEvtxI+htpGTSm5/vI8lfwqbo5mj+FGfOlV6hj2aJ
+ 4hdJe23KTbm0WmIFNEWKNsxEG1Ockc+67p3xwKZ58hkww1dfK8P7dw2qUu1yrPlJ6tpHpb88in9
+ Ier0pIqC2usMikDLfzOGvG9tfYYN+P3uwuKUih
+X-Received: by 2002:a17:907:6d1d:b0:a68:c721:1c7a with SMTP id
+ a640c23a62f3a-a68c7212bc9mr456252366b.22.1717420316158; 
+ Mon, 03 Jun 2024 06:11:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGLkjYtdrxqgKd/MdJGvlIQxm30fXy+bSIuDybsGqCFgGfPUnG4wqgotyeFM6KqlIRI+xVN5Q==
+X-Received: by 2002:a17:907:6d1d:b0:a68:c721:1c7a with SMTP id
+ a640c23a62f3a-a68c7212bc9mr456248366b.22.1717420315446; 
+ Mon, 03 Jun 2024 06:11:55 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57a31c9cc44sm5328798a12.84.2024.06.03.06.11.52
+ a640c23a62f3a-a68e007620csm288532066b.91.2024.06.03.06.11.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 06:11:52 -0700 (PDT)
+ Mon, 03 Jun 2024 06:11:54 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com, cohuck@redhat.com, Pankaj Gupta <pankaj.gupta@amd.com>,
- Michael Roth <michael.roth@amd.com>
-Subject: [PATCH 3/4] linux-headers: Update to current kvm/next
-Date: Mon,  3 Jun 2024 15:11:40 +0200
-Message-ID: <20240603131141.834241-4-pbonzini@redhat.com>
+Cc: thuth@redhat.com,
+	cohuck@redhat.com
+Subject: [PATCH 4/4] update-linux-headers: import linux/kvm_para.h header
+Date: Mon,  3 Jun 2024 15:11:41 +0200
+Message-ID: <20240603131141.834241-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240603131141.834241-1-pbonzini@redhat.com>
 References: <20240603131141.834241-1-pbonzini@redhat.com>
@@ -84,8 +84,8 @@ Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
@@ -104,175 +104,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pankaj Gupta <pankaj.gupta@amd.com>
+Right now QEMU is importing arch/x86/include/uapi/asm/kvm_para.h
+because it includes definitions for kvmclock and for KVM CPUID
+bits.  However, other definitions for KVM hypercall values and return
+codes are included in include/uapi/linux/kvm_para.h and they will be
+used by SEV-SNP.
 
-Also brings in an linux-headers/linux/vhost.h fix from v6.9-rc4.
+To ensure that it is possible to include both <linux/kvm_para.h> and
+"standard-headers/asm-x86/kvm_para.h" without conflicts, include
+linux/kvm_para.h as a portable header too, and forward linux-headers/
+files to those in include/standard-headers.  Note that <linux/kvm_para.h>
+will include architecture-specific definitions as well, but
+"standard-headers/linux/kvm_para.h" will not because it can be used in
+architecture-independent files.
 
-Co-developed-by: Michael Roth <michael.roth@amd.com>
-Signed-off-by: Michael Roth <michael.roth@amd.com>
-Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Message-ID: <20240530111643.1091816-3-pankaj.gupta@amd.com>
+This could easily be extended to other architectures, but right now
+they do not need any symbol in their specific kvm_para.h files.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- linux-headers/asm-loongarch/kvm.h |  4 +++
- linux-headers/asm-riscv/kvm.h     |  1 +
- linux-headers/asm-x86/kvm.h       | 52 ++++++++++++++++++++++++++++++-
- linux-headers/linux/vhost.h       | 15 ++++-----
- 4 files changed, 64 insertions(+), 8 deletions(-)
+ include/standard-headers/linux/kvm_para.h | 38 +++++++++++++++++++++++
+ linux-headers/asm-x86/kvm_para.h          |  1 +
+ linux-headers/linux/kvm_para.h            |  2 ++
+ scripts/update-linux-headers.sh           | 22 ++++++++++++-
+ 4 files changed, 62 insertions(+), 1 deletion(-)
+ create mode 100644 include/standard-headers/linux/kvm_para.h
+ create mode 100644 linux-headers/asm-x86/kvm_para.h
+ create mode 100644 linux-headers/linux/kvm_para.h
 
-diff --git a/linux-headers/asm-loongarch/kvm.h b/linux-headers/asm-loongarch/kvm.h
-index 109785922cf..f9abef38231 100644
---- a/linux-headers/asm-loongarch/kvm.h
-+++ b/linux-headers/asm-loongarch/kvm.h
-@@ -17,6 +17,8 @@
- #define KVM_COALESCED_MMIO_PAGE_OFFSET	1
- #define KVM_DIRTY_LOG_PAGE_OFFSET	64
- 
-+#define KVM_GUESTDBG_USE_SW_BP		0x00010000
+diff --git a/include/standard-headers/linux/kvm_para.h b/include/standard-headers/linux/kvm_para.h
+new file mode 100644
+index 00000000000..015c1663021
+--- /dev/null
++++ b/include/standard-headers/linux/kvm_para.h
+@@ -0,0 +1,38 @@
++/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
++#ifndef __LINUX_KVM_PARA_H
++#define __LINUX_KVM_PARA_H
 +
- /*
-  * for KVM_GET_REGS and KVM_SET_REGS
-  */
-@@ -72,6 +74,8 @@ struct kvm_fpu {
- 
- #define KVM_REG_LOONGARCH_COUNTER	(KVM_REG_LOONGARCH_KVM | KVM_REG_SIZE_U64 | 1)
- #define KVM_REG_LOONGARCH_VCPU_RESET	(KVM_REG_LOONGARCH_KVM | KVM_REG_SIZE_U64 | 2)
-+/* Debugging: Special instruction for software breakpoint */
-+#define KVM_REG_LOONGARCH_DEBUG_INST	(KVM_REG_LOONGARCH_KVM | KVM_REG_SIZE_U64 | 3)
- 
- #define LOONGARCH_REG_SHIFT		3
- #define LOONGARCH_REG_64(TYPE, REG)	(TYPE | KVM_REG_SIZE_U64 | (REG << LOONGARCH_REG_SHIFT))
-diff --git a/linux-headers/asm-riscv/kvm.h b/linux-headers/asm-riscv/kvm.h
-index b1c503c2959..e878e7cc397 100644
---- a/linux-headers/asm-riscv/kvm.h
-+++ b/linux-headers/asm-riscv/kvm.h
-@@ -167,6 +167,7 @@ enum KVM_RISCV_ISA_EXT_ID {
- 	KVM_RISCV_ISA_EXT_ZFA,
- 	KVM_RISCV_ISA_EXT_ZTSO,
- 	KVM_RISCV_ISA_EXT_ZACAS,
-+	KVM_RISCV_ISA_EXT_SSCOFPMF,
- 	KVM_RISCV_ISA_EXT_MAX,
- };
- 
-diff --git a/linux-headers/asm-x86/kvm.h b/linux-headers/asm-x86/kvm.h
-index 31c95c2dfe4..1c8f9182348 100644
---- a/linux-headers/asm-x86/kvm.h
-+++ b/linux-headers/asm-x86/kvm.h
-@@ -695,6 +695,11 @@ enum sev_cmd_id {
- 	/* Second time is the charm; improved versions of the above ioctls.  */
- 	KVM_SEV_INIT2,
- 
-+	/* SNP-specific commands */
-+	KVM_SEV_SNP_LAUNCH_START = 100,
-+	KVM_SEV_SNP_LAUNCH_UPDATE,
-+	KVM_SEV_SNP_LAUNCH_FINISH,
++/*
++ * This header file provides a method for making a hypercall to the host
++ * Architectures should define:
++ * - kvm_hypercall0, kvm_hypercall1...
++ * - kvm_arch_para_features
++ * - kvm_para_available
++ */
 +
- 	KVM_SEV_NR_MAX,
- };
- 
-@@ -709,7 +714,9 @@ struct kvm_sev_cmd {
- struct kvm_sev_init {
- 	__u64 vmsa_features;
- 	__u32 flags;
--	__u32 pad[9];
-+	__u16 ghcb_version;
-+	__u16 pad1;
-+	__u32 pad2[8];
- };
- 
- struct kvm_sev_launch_start {
-@@ -820,6 +827,48 @@ struct kvm_sev_receive_update_data {
- 	__u32 pad2;
- };
- 
-+struct kvm_sev_snp_launch_start {
-+	__u64 policy;
-+	__u8 gosvw[16];
-+	__u16 flags;
-+	__u8 pad0[6];
-+	__u64 pad1[4];
-+};
++/* Return values for hypercalls */
++#define KVM_ENOSYS		1000
++#define KVM_EFAULT		EFAULT
++#define KVM_EINVAL		EINVAL
++#define KVM_E2BIG		E2BIG
++#define KVM_EPERM		EPERM
++#define KVM_EOPNOTSUPP		95
 +
-+/* Kept in sync with firmware values for simplicity. */
-+#define KVM_SEV_SNP_PAGE_TYPE_NORMAL		0x1
-+#define KVM_SEV_SNP_PAGE_TYPE_ZERO		0x3
-+#define KVM_SEV_SNP_PAGE_TYPE_UNMEASURED	0x4
-+#define KVM_SEV_SNP_PAGE_TYPE_SECRETS		0x5
-+#define KVM_SEV_SNP_PAGE_TYPE_CPUID		0x6
++#define KVM_HC_VAPIC_POLL_IRQ		1
++#define KVM_HC_MMU_OP			2
++#define KVM_HC_FEATURES			3
++#define KVM_HC_PPC_MAP_MAGIC_PAGE	4
++#define KVM_HC_KICK_CPU			5
++#define KVM_HC_MIPS_GET_CLOCK_FREQ	6
++#define KVM_HC_MIPS_EXIT_VM		7
++#define KVM_HC_MIPS_CONSOLE_OUTPUT	8
++#define KVM_HC_CLOCK_PAIRING		9
++#define KVM_HC_SEND_IPI		10
++#define KVM_HC_SCHED_YIELD		11
++#define KVM_HC_MAP_GPA_RANGE		12
 +
-+struct kvm_sev_snp_launch_update {
-+	__u64 gfn_start;
-+	__u64 uaddr;
-+	__u64 len;
-+	__u8 type;
-+	__u8 pad0;
-+	__u16 flags;
-+	__u32 pad1;
-+	__u64 pad2[4];
-+};
++/*
++ * hypercalls use architecture specific
++ */
 +
-+#define KVM_SEV_SNP_ID_BLOCK_SIZE	96
-+#define KVM_SEV_SNP_ID_AUTH_SIZE	4096
-+#define KVM_SEV_SNP_FINISH_DATA_SIZE	32
-+
-+struct kvm_sev_snp_launch_finish {
-+	__u64 id_block_uaddr;
-+	__u64 id_auth_uaddr;
-+	__u8 id_block_en;
-+	__u8 auth_key_en;
-+	__u8 vcek_disabled;
-+	__u8 host_data[KVM_SEV_SNP_FINISH_DATA_SIZE];
-+	__u8 pad0[3];
-+	__u16 flags;
-+	__u64 pad1[4];
-+};
-+
- #define KVM_X2APIC_API_USE_32BIT_IDS            (1ULL << 0)
- #define KVM_X2APIC_API_DISABLE_BROADCAST_QUIRK  (1ULL << 1)
++#endif /* __LINUX_KVM_PARA_H */
+diff --git a/linux-headers/asm-x86/kvm_para.h b/linux-headers/asm-x86/kvm_para.h
+new file mode 100644
+index 00000000000..1d3e0e0b07a
+--- /dev/null
++++ b/linux-headers/asm-x86/kvm_para.h
+@@ -0,0 +1 @@
++#include "standard-headers/asm-x86/kvm_para.h"
+diff --git a/linux-headers/linux/kvm_para.h b/linux-headers/linux/kvm_para.h
+new file mode 100644
+index 00000000000..6a1e672259c
+--- /dev/null
++++ b/linux-headers/linux/kvm_para.h
+@@ -0,0 +1,2 @@
++#include "standard-headers/linux/kvm_para.h"
++#include <asm/kvm_para.h>
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index 7b39cc426e0..e579c348959 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -63,6 +63,7 @@ cp_portable() {
+                                      -e 'linux/kernel' \
+                                      -e 'linux/sysinfo' \
+                                      -e 'asm/setup_data.h' \
++                                     -e 'asm/kvm_para.h' \
+                                      > /dev/null
+     then
+         echo "Unexpected #include in input file $f".
+@@ -70,6 +71,15 @@ cp_portable() {
+     fi
  
-@@ -870,5 +919,6 @@ struct kvm_hyperv_eventfd {
- #define KVM_X86_SW_PROTECTED_VM	1
- #define KVM_X86_SEV_VM		2
- #define KVM_X86_SEV_ES_VM	3
-+#define KVM_X86_SNP_VM		4
- 
- #endif /* _ASM_X86_KVM_H */
-diff --git a/linux-headers/linux/vhost.h b/linux-headers/linux/vhost.h
-index bea69739061..b95dd84eef2 100644
---- a/linux-headers/linux/vhost.h
-+++ b/linux-headers/linux/vhost.h
-@@ -179,12 +179,6 @@
- /* Get the config size */
- #define VHOST_VDPA_GET_CONFIG_SIZE	_IOR(VHOST_VIRTIO, 0x79, __u32)
- 
--/* Get the count of all virtqueues */
--#define VHOST_VDPA_GET_VQS_COUNT	_IOR(VHOST_VIRTIO, 0x80, __u32)
--
--/* Get the number of virtqueue groups. */
--#define VHOST_VDPA_GET_GROUP_NUM	_IOR(VHOST_VIRTIO, 0x81, __u32)
--
- /* Get the number of address spaces. */
- #define VHOST_VDPA_GET_AS_NUM		_IOR(VHOST_VIRTIO, 0x7A, unsigned int)
- 
-@@ -228,10 +222,17 @@
- #define VHOST_VDPA_GET_VRING_DESC_GROUP	_IOWR(VHOST_VIRTIO, 0x7F,	\
- 					      struct vhost_vring_state)
- 
+     header=$(basename "$f");
 +
-+/* Get the count of all virtqueues */
-+#define VHOST_VDPA_GET_VQS_COUNT	_IOR(VHOST_VIRTIO, 0x80, __u32)
++    if test -z "$arch"; then
++        # Let users of include/standard-headers/linux/ headers pick the
++        # asm-* header that they care about
++        arch_cmd='/<asm\/\([^>]*\)>/d'
++    else
++        arch_cmd='s/<asm\/\([^>]*\)>/"standard-headers\/asm-'$arch'\/\1"/'
++    fi
 +
-+/* Get the number of virtqueue groups. */
-+#define VHOST_VDPA_GET_GROUP_NUM	_IOR(VHOST_VIRTIO, 0x81, __u32)
+     sed -e 's/__aligned_u64/__u64 __attribute__((aligned(8)))/g' \
+         -e 's/__u\([0-9][0-9]*\)/uint\1_t/g' \
+         -e 's/u\([0-9][0-9]*\)/uint\1_t/g' \
+@@ -78,7 +88,7 @@ cp_portable() {
+         -e 's/__be\([0-9][0-9]*\)/uint\1_t/g' \
+         -e 's/"\(input-event-codes\.h\)"/"standard-headers\/linux\/\1"/' \
+         -e 's/<linux\/\([^>]*\)>/"standard-headers\/linux\/\1"/' \
+-        -e 's/<asm\/\([^>]*\)>/"standard-headers\/asm-'$arch'\/\1"/' \
++        -e "$arch_cmd" \
+         -e 's/__bitwise//' \
+         -e 's/__attribute__((packed))/QEMU_PACKED/' \
+         -e 's/__inline__/inline/' \
+@@ -158,7 +168,12 @@ EOF
+         cp "$hdrdir/include/asm/unistd_32.h" "$output/linux-headers/asm-x86/"
+         cp "$hdrdir/include/asm/unistd_x32.h" "$output/linux-headers/asm-x86/"
+         cp "$hdrdir/include/asm/unistd_64.h" "$output/linux-headers/asm-x86/"
 +
- /* Get the queue size of a specific virtqueue.
-  * userspace set the vring index in vhost_vring_state.index
-  * kernel set the queue size in vhost_vring_state.num
-  */
--#define VHOST_VDPA_GET_VRING_SIZE	_IOWR(VHOST_VIRTIO, 0x80,	\
-+#define VHOST_VDPA_GET_VRING_SIZE	_IOWR(VHOST_VIRTIO, 0x82,	\
- 					      struct vhost_vring_state)
- #endif
+         cp_portable "$hdrdir/include/asm/kvm_para.h" "$output/include/standard-headers/asm-$arch"
++        cat <<EOF >$output/linux-headers/asm-$arch/kvm_para.h
++#include "standard-headers/asm-$arch/kvm_para.h"
++EOF
++
+         # Remove everything except the macros from bootparam.h avoiding the
+         # unnecessary import of several video/ist/etc headers
+         sed -e '/__ASSEMBLY__/,/__ASSEMBLY__/d' \
+@@ -208,6 +223,10 @@ if [ -d "$linux/LICENSES" ]; then
+     done
+ fi
+ 
++cat <<EOF >$output/linux-headers/linux/kvm_para.h
++#include "standard-headers/linux/kvm_para.h"
++#include <asm/kvm_para.h>
++EOF
+ cat <<EOF >$output/linux-headers/linux/virtio_config.h
+ #include "standard-headers/linux/virtio_config.h"
+ EOF
+@@ -230,6 +249,7 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
+          "$hdrdir/include/linux/ethtool.h" \
+          "$hdrdir/include/linux/const.h" \
+          "$hdrdir/include/linux/kernel.h" \
++         "$hdrdir/include/linux/kvm_para.h" \
+          "$hdrdir/include/linux/vhost_types.h" \
+          "$hdrdir/include/linux/sysinfo.h"; do
+     cp_portable "$i" "$output/include/standard-headers/linux"
 -- 
 2.45.1
 
