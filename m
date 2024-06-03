@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FB76C25B78
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 21:49:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0282C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 22:30:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEFXq-0004Lc-F1; Mon, 03 Jun 2024 17:48:46 -0400
+	id 1sEGBU-0004jf-Q7; Mon, 03 Jun 2024 18:29:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEFXo-0004LK-Gy
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 17:48:44 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEGBT-0004hY-2m
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 18:29:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEFXl-0003rh-Q8
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 17:48:44 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEGBQ-00021U-EB
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 18:29:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717451320;
+ s=mimecast20190719; t=1717453779;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=16AaxwBcMhp1OdxPvVWu5SgrYUkkn1eg4g4mtgI7QnU=;
- b=CA91SV+2Z0t6Pkzu/hI5gQcfuY6Q3GbdzhWbAX8ms6dMRyNQJ5VL8HeFWM1VVg3DvgS48G
- qxfLm6MxoNrURiIuF3R2pldMFXImxvdzCbEV7EnBBaWzIcrsS0KFcPrgO9wpxQNtOsvQyv
- /DxjHdIf6dfHB0HNC0PwRtn024YIbHk=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8eoR9GczqPu92gsNPUA/Z+EXuzTW6110CSPi145a7EI=;
+ b=KAkPLNVsNx9d1BJbigFWnat1J6qn7tPPe/d0iqLGl6TY/vh8A4oFcyHjJmanBeNDTTovRR
+ OamcEefAbxgAl6x1woCK7XoSKMVpSzOK7VrJrioN/fj23UVNKxcvr9/BIxI/81f6vmnp2n
+ 54Hg1v4siXUwnnjYydL+v524aehHSxg=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-53-UzlFQxxaPhGR_BD5ApQOFw-1; Mon, 03 Jun 2024 17:48:39 -0400
-X-MC-Unique: UzlFQxxaPhGR_BD5ApQOFw-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-43e2c5354f9so4123631cf.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 14:48:38 -0700 (PDT)
+ us-mta-257-f33dLEiHOImOf2xA_4rKuA-1; Mon, 03 Jun 2024 18:29:37 -0400
+X-MC-Unique: f33dLEiHOImOf2xA_4rKuA-1
+Received: by mail-ot1-f69.google.com with SMTP id
+ 46e09a7af769-6f908f002c2so395212a34.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 15:29:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717451317; x=1718056117;
+ d=1e100.net; s=20230601; t=1717453777; x=1718058577;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=16AaxwBcMhp1OdxPvVWu5SgrYUkkn1eg4g4mtgI7QnU=;
- b=LIOnp6xh4JbefmFbz8IATS407Ir0zj9rjFOGZtuD9wS64JiZo+FaVY7YpBcmYfEqBT
- 4ggwhuSFmusvRlwEAL/qmcU6YSHX52oiJ/iaELqgx2lgvH2LnW7QjCoR192+z5XRqPbi
- FnaJkOasuG2JIHFRJhqOfvuIFpUoM0r95L4qdbNHF8NSEkeAmhiCiLINfE2m0ha8TJOd
- AFOPBH/GPQLY5SVg1w2/YxkTDqWAO3JVcVlW5ve+eggnw/iq7O3JW3EC4YlIiG4kZGp6
- VXnAHaWqig3F9Ie1yFqVmSmAwI00xd2MCj8eJTfrULW3zjWpQK8/Voy0DguqvL78aPK1
- iX5Q==
-X-Gm-Message-State: AOJu0YwMknwzzHG3M52cBaVdf97D8+g7GaS/YJ8fNeGg734A764zAMEC
- yjhSn1G650jF2a/Pl29xLEDKqQ7h1SYPTbX7nzdC6eCczmVJc3Jx5aD/aibF2c1PneKtsygR7J3
- +7sD/R6aPlqbiDh14F6tY3NBMbGRJhMgdJ8wPsXTCuTEG6zt2/wZQ
-X-Received: by 2002:a05:620a:2403:b0:794:eccb:69c5 with SMTP id
- af79cd13be357-794f5ccc8b4mr1184118185a.3.1717451316817; 
- Mon, 03 Jun 2024 14:48:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMzNZBmseaW3SphdF2GbO310dtgLuvRcb4TiH9tZVMhCfVlMcNfh5wFGWyr+UlE6Qk76Zdkg==
-X-Received: by 2002:a05:620a:2403:b0:794:eccb:69c5 with SMTP id
- af79cd13be357-794f5ccc8b4mr1184114285a.3.1717451315776; 
- Mon, 03 Jun 2024 14:48:35 -0700 (PDT)
+ bh=8eoR9GczqPu92gsNPUA/Z+EXuzTW6110CSPi145a7EI=;
+ b=OmFIt0Y+DBwjOhPbT3eGy7Xs48XeZ4HUkwemnCSCcunQutnp+z54714Ml5dFfyAkdD
+ ZkLgRd45IJpVLEV4oeo3ZFV6VnAFSgNY5fEkp2ZdAcGBjXjSwQsoDLy4fyOvwcN38Tb4
+ /TvnqTgNQ3BMK789ag35auUnkuqxFL7M+YWEK0ilgd37oJ3lq1CUcPmrwpefHAJmngl6
+ n+OX1wPa1RZ/4HRqm+S9Tka1ULlbB/g/p1vTW8wSY9Ou9V4p97kNTX5VGz8OerlfMX2R
+ TbKR2h1F2H6iCPsb2qOSp+63Ll436Mejo2X97XxBFYf02IuAW0TRessqv1f022EToAT2
+ 5XJQ==
+X-Gm-Message-State: AOJu0Yy5wCVqd/Q0oRPD/3C7JEcTsb313eakxuA+71NcqxdSar/ONrBL
+ L1AxLpG1j3GMwgHoVzDMCrgV0LrkGoktfSR41ZZXrIzkKcMm8zwr6Qx1iLnwKelUw24NtyGHoEf
+ bOV/j44CfeG99xVNNup4s+cfqlWiWGTOz2ctjyI1gEN0y0zzzOon/
+X-Received: by 2002:a05:6830:c8e:b0:6f9:37d8:c057 with SMTP id
+ 46e09a7af769-6f937d8c380mr712465a34.3.1717453776254; 
+ Mon, 03 Jun 2024 15:29:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEoP8WGnwrQ/UItG9bcf4XVu3Nn8pcDa9Cs5di2QRLlWDKiQre86tTeGfSwnT4kPJ6NNAGsww==
+X-Received: by 2002:a05:6830:c8e:b0:6f9:37d8:c057 with SMTP id
+ 46e09a7af769-6f937d8c380mr712443a34.3.1717453775544; 
+ Mon, 03 Jun 2024 15:29:35 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-794f30614afsm315862885a.97.2024.06.03.14.48.34
+ af79cd13be357-794f30614afsm317866185a.97.2024.06.03.15.29.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 14:48:35 -0700 (PDT)
-Date: Mon, 3 Jun 2024 17:48:32 -0400
+ Mon, 03 Jun 2024 15:29:35 -0700 (PDT)
+Date: Mon, 3 Jun 2024 18:29:32 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Steven Sistare <steven.sistare@oracle.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
@@ -73,20 +73,20 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V1 17/26] machine: memfd-alloc option
-Message-ID: <Zl46MIO30mGrtsQk@x1n>
+Subject: Re: [PATCH V1 19/26] physmem: preserve ram blocks for cpr
+Message-ID: <Zl5DzHDsBlk5BhHZ@x1n>
 References: <1714406135-451286-1-git-send-email-steven.sistare@oracle.com>
- <1714406135-451286-18-git-send-email-steven.sistare@oracle.com>
- <ZlZIoiH5Dj4XBbLO@x1n>
- <79a8023d-2e19-4d80-821d-a03818a5372e@oracle.com>
- <Zld-iWfa3_yEWgn6@x1n>
- <ea8eb67e-583d-41cd-a545-ab18c032a99b@oracle.com>
- <ZljCHgwJhGcFiP1J@x1n>
- <e6d5f123-37ad-4d77-8536-f7f85213073d@oracle.com>
+ <1714406135-451286-20-git-send-email-steven.sistare@oracle.com>
+ <ZlZQVijf2weEmzYK@x1n>
+ <c3f23e83-81d7-469a-aa04-29785fa6f8d7@oracle.com>
+ <ZleBOx6pN6KCn0a2@x1n>
+ <e0cb49da-9799-4a26-8844-f5055b6ae45b@oracle.com>
+ <ZljH1zbqisK6VowI@x1n>
+ <22df3040-bc08-46d4-bbbf-378a278476ff@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <e6d5f123-37ad-4d77-8536-f7f85213073d@oracle.com>
+In-Reply-To: <22df3040-bc08-46d4-bbbf-378a278476ff@oracle.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -112,245 +112,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 31, 2024 at 03:32:05PM -0400, Steven Sistare wrote:
-> On 5/30/2024 2:14 PM, Peter Xu wrote:
-> > On Thu, May 30, 2024 at 01:11:09PM -0400, Steven Sistare wrote:
-> > > On 5/29/2024 3:14 PM, Peter Xu wrote:
-> > > > On Wed, May 29, 2024 at 01:31:38PM -0400, Steven Sistare wrote:
-> > > > > > > diff --git a/system/memory.c b/system/memory.c
-> > > > > > > index 49f1cb2..ca04a0e 100644
-> > > > > > > --- a/system/memory.c
-> > > > > > > +++ b/system/memory.c
-> > > > > > > @@ -1552,8 +1552,9 @@ bool memory_region_init_ram_nomigrate(MemoryRegion *mr,
-> > > > > > >                                           uint64_t size,
-> > > > > > >                                           Error **errp)
-> > > > > > >     {
-> > > > > > > +    uint32_t flags = current_machine->memfd_alloc ? RAM_SHARED : 0;
+On Fri, May 31, 2024 at 03:32:11PM -0400, Steven Sistare wrote:
+> On 5/30/2024 2:39 PM, Peter Xu wrote:
+> > On Thu, May 30, 2024 at 01:12:40PM -0400, Steven Sistare wrote:
+> > > On 5/29/2024 3:25 PM, Peter Xu wrote:
+> > > > On Wed, May 29, 2024 at 01:31:53PM -0400, Steven Sistare wrote:
+> > > > > On 5/28/2024 5:44 PM, Peter Xu wrote:
+> > > > > > On Mon, Apr 29, 2024 at 08:55:28AM -0700, Steve Sistare wrote:
+> > > > > > > Preserve fields of RAMBlocks that allocate their host memory during CPR so
+> > > > > > > the RAM allocation can be recovered.
 > > > > > > 
-> > > > > > If there's a machine option to "use memfd for allocations", then it's
-> > > > > > shared mem... Hmm..
+> > > > > > This sentence itself did not explain much, IMHO.  QEMU can share memory
+> > > > > > using fd based memory already of all kinds, as long as the memory backend
+> > > > > > is path-based it can be shared by sharing the same paths to dst.
 > > > > > > 
-> > > > > > It is a bit confusing to me in quite a few levels:
+> > > > > > This reads very confusing as a generic concept.  I mean, QEMU migration
+> > > > > > relies on so many things to work right.  We mostly asks the users to "use
+> > > > > > exactly the same cmdline for src/dst QEMU unless you know what you're
+> > > > > > doing", otherwise many things can break.  That should also include ramblock
+> > > > > > being matched between src/dst due to the same cmdlines provided on both
+> > > > > > sides.  It'll be confusing to mention this when we thought the ramblocks
+> > > > > > also rely on that fact.
 > > > > > > 
-> > > > > >      - Why memory allocation method will be defined by a machine property,
-> > > > > >        even if we have memory-backend-* which should cover everything?
+> > > > > > So IIUC this sentence should be dropped in the real patch, and I'll try to
+> > > > > > guess the real reason with below..
 > > > > > 
-> > > > > Some memory regions are implicitly created, and have no explicit representation
-> > > > > on the qemu command line.  memfd-alloc affects those.
+> > > > > The properties of the implicitly created ramblocks must be preserved.
+> > > > > The defaults can and do change between qemu releases, even when the command-line
+> > > > > parameters do not change for the explicit objects that cause these implicit
+> > > > > ramblocks to be created.
+> > > > 
+> > > > AFAIU, QEMU relies on ramblocks to be the same before this series.  Do you
+> > > > have an example?  Would that already cause issue when migrate?
+> > > 
+> > > Alignment has changed, and used_length vs max_length changed when
+> > > resizeable ramblocks were introduced.  I have dealt with these issues
+> > > while supporting cpr for our internal use, and the learned lesson is to
+> > > explicitly communicate the creation-time parameters to new qemu.
+> > 
+> > Why used_length can change?  I'm looking at ram_mig_ram_block_resized():
+> > 
+> >      if (!migration_is_idle()) {
+> >          /*
+> >           * Precopy code on the source cannot deal with the size of RAM blocks
+> >           * changing at random points in time - especially after sending the
+> >           * RAM block sizes in the migration stream, they must no longer change.
+> >           * Abort and indicate a proper reason.
+> >           */
+> >          error_setg(&err, "RAM block '%s' resized during precopy.", rb->idstr);
+> >          migration_cancel(err);
+> >          error_free(err);
+> >      }
+> > 
+> > We sent used_length upfront of a migration during SETUP phase.  Looks like
+> > what you're describing can be something different, though?
+> 
+> I was imprecise.  used_length did not change; it was introduced as being
+> different than max_length when resizeable ramblocks were introduced.
+> 
+> The max_length is not sent.  It is an implicit property of the implementation,
+> and can change.  It is the size of the memfd mapping, so we need to know it
+> and preserve it.
+> 
+> used_length is indeed sent during SETUP.  We could also send max_length
+> at that time, and store both in the struct ramblock, and *maybe* that would
+> be safe, but that is more fragile and less future proof than setting both
+> properties to the correct value when the ramblock struct is created.
+> 
+> And BTW, the ramblock properties are sent using ad-hoc code in setup.
+> I send them using nice clean vmstate.
+
+Right, I agree that's not pretty at all... I wished we have had something
+better, but that was just there for years.
+
+When you said max_length can change, could you give an example?  I want to
+know whether it means we have bug already, and bug fixing can even be done
+before the rest.
+
+Thinking now, maybe max_length is indeed fine to be changed acorss
+migration?
+
+Consider the fact that only used_length is used in both src/dst for
+e.g. migration, dirty tracking, etc. purposes.  Basically we assumed that's
+the "real size" of RAM irrelevant of "how large it used to be before
+migration", or "how large it can grow after migration completes", while
+max_length is "possible max value" here but isn't really important for
+migration.
+
+E.g., mem resize can allow a larger range after migration if the user
+specifies max_length on dest to be larger than src max_length somehow, and
+logically migration should still work indeed.  I just don't know whether
+there'll be people using it like that.
+
+> 
+> > Regarding to rb->align: isn't that mostly a constant, reflecting the MR's
+> > alignment?  It's set when ramblock is created IIUC:
+> > 
+> >      rb->align = mr->align;
+> > 
+> > When will the alignment change?
+> 
+> The alignment specified by the mr to allocate a new block is an implicit property
+> of the implementation, and has changed before, from one qemu release to another.
+> Not often, but it did, and could again in the future.  Communicating the alignment
+> from old qemu to new qemu is future proof.
+
+Same on this one; do you have examples around and share?
+
+I hope we don't introduce things without good reasons.  If we're talking
+about "alignment can change", it'll be very helpful to know what we're
+fixing against (before CPR's need).
+
+> 
+> > > These are not an issue for migration because the ramblock is re-created
+> > > and the data copied into the new memory.
+> > > 
+> > > > > > > Mirror the mr->align field in the RAMBlock to simplify the vmstate.
+> > > > > > > Preserve the old host address, even though it is immediately discarded,
+> > > > > > > as it will be needed in the future for CPR with iommufd.  Preserve
+> > > > > > > guest_memfd, even though CPR does not yet support it, to maintain vmstate
+> > > > > > > compatibility when it becomes supported.
+> > > > > > 
+> > > > > > .. It could be about the vfio vaddr update feature that you mentioned and
+> > > > > > only for iommufd (as IIUC vfio still relies on iova ranges, then it won't
+> > > > > > help here)?
+> > > > > > 
+> > > > > > If so, IMHO we should have this patch (or any variance form) to be there
+> > > > > > for your upcoming vfio support.  Keeping this around like this will make
+> > > > > > the series harder to review.  Or is it needed even before VFIO?
 > > > > > 
-> > > > > More generally, memfd-alloc affects all ramblock allocations that are
-> > > > > not explicitly represented by memory-backend object.  Thus the simple
-> > > > > command line "qemu -m 1G" does not explicitly describe an object, so it
-> > > > > goes through the anonymous allocation path, and is affected by memfd-alloc.
-> > > > 
-> > > > Can we simply now allow "qemu -m 1G" to work for cpr-exec?
-> > > 
-> > > I assume you meant "simply not allow".
-> > > 
-> > > Yes, I could do that, but I would need to explicitly add code to exclude this
-> > > case, and add a blocker.  Right now it "just works" for all paths that lead to
-> > > ram_block_alloc_host, without any special logic at the memory-backend level.
-> > > And, I'm not convinced that simplifies the docs, as now I would need to tell
-> > > the user that "-m 1G" and similar constructions do not work with cpr.
-> > > 
-> > > I can try to clarify the doc for -memfd-alloc as currently defined.
-> > 
-> > Why do we need to keep cpr working for existing qemu cmdlines?  We'll
-> > already need to add more new cmdline options already anyway, right?
-> > 
-> > cpr-reboot wasn't doing it, and that made sense to me, so that new features
-> > will require the user to opt-in for it, starting with changing its
-> > cmdlines.
-> 
-> I agree.  We need a new option to opt-in to cpr-friendly memory allocation, and I
-> am proposing -machine memfd-alloc. I am simply saying that I can try to do a better
-> job explaining the functionality in my proposed text for memfd-alloc, instead of
-> changing the functionality to exclude "-m 1G".  I believe excluding "-m 1G" is the
-> wrong approach, for the reasons I stated - messier implementation *and* documentation.
-> 
-> I am open to different syntax for opting in.
-
-If the machine property is the only way to go then I agree that might be a
-good idea, even though the name can be further discussed.  But I still want
-to figure out something below.
-
-> 
-> > > > AFAIU that's
-> > > > what we do with cpr-reboot: we ask the user to specify the right things to
-> > > > make other thing work.  Otherwise it won't.
-> > > > 
+> > > > > This patch is needed independently of vfio or iommufd.
 > > > > > 
-> > > > > Internally, create_default_memdev does create a memory-backend object.
-> > > > > That is what my doc comment above refers to:
-> > > > >     Any associated memory-backend objects are created with share=on
-> > > > > 
-> > > > > An explicit "qemu -object memory-backend-*" is not affected by memfd-alloc.
-> > > > > 
-> > > > > The qapi comments in patch "migration: cpr-exec mode" attempt to say all that:
-> > > > > 
-> > > > > +#     Memory backend objects must have the share=on attribute, and
-> > > > > +#     must be mmap'able in the new QEMU process.  For example,
-> > > > > +#     memory-backend-file is acceptable, but memory-backend-ram is
-> > > > > +#     not.
-> > > > > +#
-> > > > > +#     The VM must be started with the '-machine memfd-alloc=on'
-> > > > > +#     option.  This causes implicit ram blocks -- those not explicitly
-> > > > > +#     described by a memory-backend object -- to be allocated by
-> > > > > +#     mmap'ing a memfd.  Examples include VGA, ROM, and even guest
-> > > > > +#     RAM when it is specified without a memory-backend object.
+> > > > > guest_memfd is independent of vfio or iommufd.  It is a recent addition
+> > > > > which I have not tried to support, but I added this placeholder field
+> > > > > to it can be supported in the future without adding a new field later
+> > > > > and maintaining backwards compatibility.
 > > > > 
-> > > > VGA is IIRC 16MB chunk, ROM is even smaller.  If the user specifies -object
-> > > > memory-backend-file,share=on propertly, these should be the only outliers?
-> > > > 
-> > > > Are these important enough for the downtime?  Can we put them into the
-> > > > migrated image alongside with the rest device states?
+> > > > Is guest_memfd the only user so far, then?  If so, would it be possible we
+> > > > split it as a separate effort on top of the base cpr-exec support?
 > > > 
-> > > It's not about downtime.  vfio, vdpa, and iommufd pin all guest pages.
-> > > The pages must remain pinned during CPR to support ongoing DMA activity
-> > > which could target those pages (which we do not quiesce), and the same
-> > > physical pages must be used for the ramblocks in the new qemu process.
+> > > I don't understand the question.  I am indeed deferring support for guest_memfd
+> > > to a future time.  For now, I am adding a blocker, and reserving a field for
+> > > it in the preserved ramblock attributes, to avoid adding a subsection later.
 > > 
-> > Ah ok, yes DMA can happen on the fly.
+> > I meant I'm thinking whether the new ramblock vmsd may not be required for
+> > the initial implementation.
 > > 
-> > Guest mem is definitely the major DMA target and that can be covered by
-> > -object memory-backend-*,shared=on cmdlines.
+> > E.g., IIUC vaddr is required by iommufd, and so far that's not part of the
+> > initial support.
 > > 
-> > ROM is definitely not a DMA target.  So is VGA ram a target for, perhaps,
-> > an assigned vGPU device?  Do we have a list of things that will need that?
-> > Can we make them work somehow by sharing them like guest mem?
+> > Then I think a major thing is about the fds to be managed that will need to
+> > be shared.  If we put guest_memfd aside, it can be really, mostly, about
+> > VFIO fds.
 > 
-> The pass-through devices map and pin all memory accessible to the guest.
-> We cannot make exceptions based on our intuition of how the memory will
-> and will not be used.
+> The block->fd must be preserved.  That is the fd of the memfd_create used
+> by cpr.
 
-True, but if you see my whole point is trying to see whether we can get rid
-of the machine property completely, and it's also because we're just so
-close to getting rid of it.. which I feel.
+Right, cpr needs all fds be passed over and I think that's a great idea.
 
-QEMU memory layout can be complicated across all the platforms, but I doubt
-whether that's true for CPR's purpose and archs that it plans to support.
-A generic VM's memory topology shouldn't be that complicated at all,
-e.g. on x86:
+It could be a matter of how do we mark those fds, how to pass them over,
+and whether do we need to manage them one by one, or in a batch.
 
-              Block Name    PSize              Offset               Used              Total                HVA  RO
-                  pc.ram    4 KiB  0x0000000000000000 0x0000000008000000 0x0000000008000000 0x00007f684fe00000  rw
-   0000:00:02.0/vga.vram    4 KiB  0x0000000008080000 0x0000000001000000 0x0000000001000000 0x00007f684e800000  rw
-    /rom@etc/acpi/tables    4 KiB  0x0000000009100000 0x0000000000020000 0x0000000000200000 0x00007f684dc00000  ro
-                 pc.bios    4 KiB  0x0000000008000000 0x0000000000040000 0x0000000000040000 0x00007f68dc200000  ro
-  0000:00:03.0/e1000.rom    4 KiB  0x00000000090c0000 0x0000000000040000 0x0000000000040000 0x00007f684e000000  ro
-                  pc.rom    4 KiB  0x0000000008040000 0x0000000000020000 0x0000000000020000 0x00007f684fa00000  ro
-    0000:00:02.0/vga.rom    4 KiB  0x0000000009080000 0x0000000000010000 0x0000000000010000 0x00007f684e400000  ro
-   /rom@etc/table-loader    4 KiB  0x0000000009300000 0x0000000000001000 0x0000000000010000 0x00007f684d800000  ro
-      /rom@etc/acpi/rsdp    4 KiB  0x0000000009340000 0x0000000000001000 0x0000000000001000 0x00007f684d400000  ro
+E.g., in my mind now I'm picturing something, I probably shared it bit by
+bit in my previous replies when trying to review your series, but in
+general, a cleaner approach may look like this:
 
-It's simply the major ram, ROMs, and VGA.
+  - QEMU provides a fd-manager, managing all relevant fds.  It can be
+    ramblock fds, vfio fds, vhost fds, or whatever fds.  We "name" these
+    fds in some way, so that we know how to recover on the other side.  We
+    don't differenciate them with different vmsds: no need to migrate a fd
+    in ramblock vmsd, then a fd in vfio vmsd, then a fd in vhost fd.  We
+    migrate them all, then modules can try to fetch them on dest qemu,
+    perhaps transparently (like qemu_open_internal() on /dev/fdsets), maybe
+    not.  I haven't thought about that details.
 
-I hoped it can work without it, I'll mention one more reason below.
+  - FDs need to be passed over _before_ VM starts.  It might be easier to
+    not attach that to a "pre" phase of "migration", but it might be doable
+    in such way that: when cpr-xxx mode is supported, Libvirt can use a new
+    QMP command to fetch all the FDs in one shot using scm rights (e.g.,
+    "fd-manager-fetch"), then apply those list of fds _before_ dest QEMU
+    try to initialize using another QMP command (e.g.,
+    "fd-manager-apply"). QEMU src/dst don't talk at all on the FDs; they
+    rely on Libvirt to set them up.  This will greatly simplify migration
+    code on fd passovers; either using execve() or scm rights.
 
-So if we're going to have this machine property, can I still request a
-possible list of things that can be the target of this property besides
-guest mem?  I just want to know where it can be used "for real".  I know it
-might be complicated, but maybe not.  I really can only think of VGA, and I
-doubt whether that should be DMAed at all.
-
-> 
-> Also, we cannot simply abandon the old pinned ramblocks, owned by an mm_struct
-> that will become a zombie.  We would actually need to write additional code
-> to call device ioctls to unmap the oddball ramblocks.  It is far cleaner
-> and more correct to preserve them all.
-> 
-> > It'll be a complete tragedy if we introduced this whole thing only because
-> > of some minority.  I want to understand whether there's any generic way to
-> > solve this problem rather than this magical machine property.  IMHO it's
-> > very not trivial to maintain.
-> 
-> The machine property is the generic way.
-> 
-> A single opt-in option to call memfd_create() is an elegant and effective solution.
-> The code is small and not hard to maintain.  This is the option patch.  Most of it
-> is the boiler plate that any option has, and the single code location that formerly
-> called qemu_anon_ram_alloc now optionally calls qemu_memfd_create:
-> 
->   machine: memfd-alloc option             25 insertions(+), 28 deletions(-)
-> 
-> These patches are simply stylistic and modularity improvements for ramblock,
-> valuable in their own right, which allows the previous patch to be small and clean.
-> 
->   physmem: ram_block_create               29 insertions(+), 21 deletions(-)
->   physmem: hoist guest_memfd creation     48 insertions(+), 37 deletions(-)
->   physmem: hoist host memory allocation   36 insertions(+), 44 deletions(-)
->   physmem: set ram block idstr earlier    25 insertions(+), 28 deletions(-)
-
-Let me explain the other reason why I don't want to have that machine
-property..
-
-That property, irrelevant of what it is called (and I doubt whether Dan's
-suggestion on "shared-ram" is good, e.g. mmap(MAP_SHARED) doesn't have user
-visible fd but it's shared-ram for sure..), is yet another way to specify
-guest mem types.
-
-What if the user specified this property but specified something else in
-the -object parameters?  E.g. -machine share-ram=on -object
-memory-backend-ram,share=off.  What should we do?
-
-Fundamentally that's also why I "hope" we can avoid adding yet one more
-place configure guest mem, and stick with -objects.
+In this picture, neither execve() nor new migration protocol change needed.
+Migration stream keeps just like a normal migration stream.
 
 > 
-> > > > > >      - Even if we have such a machine property, why setting "memfd" will
-> > > > > >        always imply shared?  why not private?  After all it's not called
-> > > > > >        "memfd-shared-alloc", and we can create private mappings using
-> > > > > >        e.g. memory-backend-memfd,share=off.
-> > > > > 
-> > > > > There is no use case for memfd-alloc with share=off, so no point IMO in
-> > > > > making the option more verbose.
-> > > > 
-> > > > Unfortunately this fact doesn't make the property easier to understand. :-( >
-> > > > > For cpr, the mapping with all its modifications must be visible to new
-> > > > > qemu when qemu mmaps it.
-> > > > 
-> > > > So this might be the important part - do you mean migrating
-> > > > VGA/ROM/... small ramblocks won't work (besides any performance concerns)?
-> > > > Could you elaborate?
-> > > 
-> > > Pinning.
-> > > 
-> > > > Cpr-reboot already introduced lots of tricky knobs to QEMU.  We may need to
-> > > > restrict that specialty to minimal, making the interfacing as clear as
-> > > > possible, or (at least migration) maintainers will start to be soon scared
-> > > > and running away, if such proposal was not shot down.
-> > > > 
-> > > > In short, I hope when we introduce new knobs for cpr, we shouldn't always
-> > > > keep cpr-* modes in mind, but consider whenever the user can use it without
-> > > > cpr-*.  I'm not sure whether it'll be always possible, but we should try.
-> > > 
-> > > I agree in principle.  FWIW, I have tried to generalize the functionality needed
-> > > by cpr so it can be used in other ways: per-mode blockers, per-mode notifiers,
-> > > precreate vmstate, factory objects; to base it on migration internals with
-> > > minimal change (vmstate); and to make minimal changes in the migration control
-> > > paths.
+> > For that, I'm wondering whether you looked into something like
+> > this:
 > > 
-> > Thanks.
+> > commit da3e04b26fd8d15b344944504d5ffa9c5f20b54b
+> > Author: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> > Date:   Tue Nov 21 16:44:10 2023 +0800
 > > 
-> > For this one I think reusing -object interface (hopefully without
-> > introducing a knob) would be a great step if that can fully describe what
-> > cpr-exec is looking for.  E.g., when cpr-exec mode enabled it can sanity
-> > check the memory backends making sure all things satisfy its need, and fail
-> > migration otherwise upfront.
+> >      vfio/pci: Make vfio cdev pre-openable by passing a file handle
+> > 
+> > I just notice this when I was thinking of a way where it might be possible
+> > to avoid QEMU vfio-pci open the device at all, then I found we have
+> > something like that already..
+> > 
+> > Then if the mgmt wants, IIUC that fd can be passed down from Libvirt
+> > cleanly to dest qemu in a no-exec context.  Would this work too, and
+> > cleaner / reusing existing infrastructures?
 > 
-> For '-object memory-backend-*', I can tell whether cpr is allowed or not
-> without additional knobs.  See the blocker patches for examples where cpr
-> is blocked.
+> That capability as currently defined would not work for cpr.  The fd is
+> pre-created, but qemu still calls the kernel to configure it.  cpr skips
+> all kernel configuration calls.
+
+It's just an idea.  I didn't look into the details of it, but I suppose
+from this part it might be similar to what cpr-exec would need when using a
+new fd-manager or similar approach.  Basically we allow fds to be passed
+over too, not from original qemu using exec() but from libvirt.  Would that
+work for us?
+
 > 
-> The problem is the implicit ramblocks that currently call qemu_ram_alloc_internal.
+> > I think it's nice to always have libvirt managing most, or possible, all
+> > fds that qemu uses, then we don't even need scm_rights.  But I didn't look
+> > deeper into this, just a thought.
+> 
+> One could imagine a solution where the manager extracts internal properties
+> of vfio, ramblock, etc and passes them as creation time parameters on the
+> new qemu command line.  And, the manager pre-creates all fd's so they
+> can be passed to old and new qemu. Lots of code required in qemu and in the
+> manager, and all implicitly created objects would need to me made explicit.
+> Yuck. The precreate vmstate approach is much simpler for all.
 
-I hope it won't ever happen that we introduced this property because "we
-don't know", then when we know we found no real RAM regions are using it if
-properly specify -object.  So I hope at least we know what we're doing, and
-for explicitly what reason..
+So please correct me here if I misunderstood, but isn't this a shared
+problem with/without precreate vmsd?
 
-Let me know if you think I'm asking too much (which is possible.. :).  But I
-hope in case that might be interesting to you too to know the real answer.
+IIUC we always need a way to pass over the fds in this case, either by
+exec() or scm right or other approaches.  It looks to me that here
+precreate is only the transport to deliver those fds, or am I wrong?
+
+> 
+> > When thinking about this, I also wonder how cpr-exec handles the limited
+> > environments like cgroups and especially seccomps.  I'm not sure what's the
+> > status of that in most cloud environments, but I think exec() / fork() is
+> > definitely not always on the seccomp whitelist, and I think that's also
+> > another reason why we can think about avoid using them.
+> 
+> Exec must be allowed to use cpr-exec mode.  Fork can remain blocked.   Currently
+> the qemu sandbox option can block 'spawn', which blocks both exec and fork. I have
+> a patch in my next series that makes this more fine grained, so one or the other
+> can be blocked. Those unwilling to allow exec can wait for cpr-scm mode :)
+
+The question is what cpr-scm will be different from cpr-exec, and whether
+we'd like them both!  As a maintainer, I definitely want to maintain as
+"less" as possible.. :-(
+
+If they play similar role, I suggest we stick with one for sure and discuss
+the design.  If cpr-exec will be accepted, I hope it's because we decided
+to give up seccomp, rather than waiting for cpr-scm. :)
 
 Thanks,
 
