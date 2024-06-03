@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A1EC25B75
-	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 16:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FBE4C25B75
+	for <qemu-devel@archiver.kernel.org>; Mon,  3 Jun 2024 16:11:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEAFo-00021E-6A; Mon, 03 Jun 2024 12:09:48 -0400
+	id 1sEAFo-00021J-6n; Mon, 03 Jun 2024 12:09:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sEAFh-000206-JJ
+ id 1sEAFh-00020B-JM
  for qemu-devel@nongnu.org; Mon, 03 Jun 2024 12:09:41 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sEAFd-0000Yz-Kq
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 12:09:40 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-42108856c33so26756105e9.1
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 09:09:36 -0700 (PDT)
+ id 1sEAFe-0000ZP-UU
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 12:09:41 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-52b992fd796so69143e87.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 09:09:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717430975; x=1718035775; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HODORKgU1EFXIaunqKu4Lfl93imSbojPrOim6zkduVg=;
- b=RvON31FF28fp+aOh+lPcBLs3URwdkmfj9/kuA6us7kY8PHlp/Q9MZc9gtuCYwUbfyz
- XRfzBfK0zjgFxZoZGuhuchnzY6nDFNeKxbZfmvwqI4eg08PYwAuFmu6k/NQE4TX8ILfy
- IAFTaxz9jx+hKrvqvceh1uEOESPKvTXCXIs1iAIQgmYdY0VVrEBdTcCDHp1EJdi7vJBP
- kzIdPfj50I5m7uXZc1jpfz8DDhy2o1SgrM197z86o06+4iMNTPx1w7m5tTNq96Oh/1lz
- 5fvK/8GA71JpPW4k5/ayAxGSeLrgzPXZoWceFo3lAw4stvzsf9qBvO95HAOBd33p0bLm
- 98GQ==
+ d=linaro.org; s=google; t=1717430976; x=1718035776; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=B+y2VUAaODGRx6I5aA9+iua3n6PE+xKIoh7aOmqQq9M=;
+ b=LGshqUeL/1fb2cUS0ALjPU2MUlJ2sRnTHc2qQa0Tyfh3kTwFCNhlHrRLraRt4nDnyP
+ tatm/bVL9NurrIS2NQ6Mqz0lkSxzlei27SBDQFZj57cl8Sf2y/jli+uMesa8RXdLkdN8
+ THy8m11wjPW31dHXftNL09LY9rfzyWgaE8yE3hJW3iDw6tHObKr0+TKp+/PA6ynRoH6Q
+ dR6Ess3iaAKpsw/EzYySP43z4ywGhnHplrgpl+A6PV3afGIpuVznyqWQDVq54743PFSf
+ 2W6bDjqG3HdAS7lbd9p8oAZd+j7Fu2V3bl7sYt2hWzAa1FONSZ9Hx7d6HQy9fFd83siz
+ oCow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717430975; x=1718035775;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HODORKgU1EFXIaunqKu4Lfl93imSbojPrOim6zkduVg=;
- b=DDqzcMaubSZwNHavL3kKBZSnnXsLcJ7WdTLYA0Z3K1AHjEKbfoQoLVJAi9yPgCKYjd
- K6oKy+tmRmI+mdM+LvrO85CGJ141Z6SQn5CAmXzDbmZ7evOlUxaDACAbJfCNwGTeswsU
- oWK0ww4cAWzSHPytH25VPSQRDcqOfxd7lBvYStx7KUHA03J7MGNoEXVKaFDC/Ss/pDsz
- Rh+fZ+ihXhNaw6VdHHOn7yHuU7Li347hCfICn3NLjUpT1I9ZY9voDO0D7tCIoL2xCXmB
- iNCzFEuZ5x3WJXismhZ+eShrSwLeEQa9Ge9m2ZdDd55KYJ4czPWXEo1wjFtIBiUHP5ww
- 2WhA==
-X-Gm-Message-State: AOJu0Yykfqgo/O8rqz6yuB/jqhQ5+3pt8jdRcKMcbhi1VnqgzVpERJhP
- vB1uj/IuUL4TgMYELUS9aj87Gkqaa8h/y0Bg9ydgfmpNUcWVF3dKViDrmwP0/b2hEBGN+tbvUgv
- L
-X-Google-Smtp-Source: AGHT+IH1BPbR32cBOiPggxnZeD6z90NU0b429j3zoFxAR2hrKia+FxyYZbv9cHyKUyTOB7EqC3NAzQ==
-X-Received: by 2002:a5d:5310:0:b0:34d:8d11:f8c0 with SMTP id
- ffacd0b85a97d-35e7c55a0e8mr112728f8f.18.1717430974915; 
- Mon, 03 Jun 2024 09:09:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717430976; x=1718035776;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=B+y2VUAaODGRx6I5aA9+iua3n6PE+xKIoh7aOmqQq9M=;
+ b=GmTvLmc8loq2Mc9byrJsJ3U+UI9BJdQOgkW+tVZ0B9t7l+3kb/dr2L8irK8bBGXKs2
+ LR6X+oi6KgNj3Suk8lln1XqDoqEyPe7lCMVeyWnnwRgLoXeRUvq7n4IADTYH8a6f4fQT
+ zugNSu1dXu1lt+5TM+XPwFfQL7YT1Bt2wb1MQn7ER6SKkvmz0DUFh6yIwMJcNy8+qp2b
+ EBfmWJyLj56WRKJHJlQpUj1+MzrgrH7ms129H7eW2GCpMe3TZYvrak31/v6mjNZV1OQQ
+ /ZxVztUgYZAoWFchVNqS91uGQwWooN94WFNR4THm8ReonhxgP3oXSRniiTdNDngsbfgr
+ EnnA==
+X-Gm-Message-State: AOJu0YwtlNjyCCxbfqJQqH558AqR1bs4aDPunwnylM/aAzMmsvUEBi9v
+ +1Y0fTE3SM1Lrl6nTY84tT7fKgytp0d5RsGjQrk797Ly6kQeE/NXnvDLafcI/42A60wk3ftE4i0
+ i
+X-Google-Smtp-Source: AGHT+IGfkuAGvac7mXyR0LWyUEdUCK2v84cqTqDJiP/QGmCOk5s6a5BJ9q3LbjiJl8UeGA/oDBRN0w==
+X-Received: by 2002:ac2:4853:0:b0:52b:8877:30f2 with SMTP id
+ 2adb3069b0e04-52b8980aca3mr5781191e87.59.1717430976365; 
+ Mon, 03 Jun 2024 09:09:36 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd0649fb5sm8975858f8f.94.2024.06.03.09.09.34
+ ffacd0b85a97d-35dd0649fb5sm8975858f8f.94.2024.06.03.09.09.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 09:09:34 -0700 (PDT)
+ Mon, 03 Jun 2024 09:09:36 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 0/3] cpu_exec_halt: make method mandatory
-Date: Mon,  3 Jun 2024 17:09:30 +0100
-Message-Id: <20240603160933.1141717-1-peter.maydell@linaro.org>
+Subject: [PATCH 3/3] accel/tcg: Make TCGCPUOps::cpu_exec_halt mandatory
+Date: Mon,  3 Jun 2024 17:09:33 +0100
+Message-Id: <20240603160933.1141717-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240603160933.1141717-1-peter.maydell@linaro.org>
+References: <20240603160933.1141717-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,57 +94,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset makes the TCGCPUOps::cpu_exec_halt method
-mandatory, which is a cleanup that RTH asked for when we
-were discussing my FEAT_WFxT series.
+Now that all targets set TCGCPUOps::cpu_exec_halt, we can make it
+mandatory and remove the fallback handling that calls cpu_has_work.
 
-I'm not 100% convinced about this, because if we ever find we
-need to change the cpu_exec_halt method so it's no longer the
-exact same function signature as the has_work method then
-we'll have to undo this change. But I don't feel very strongly
-about it, and it does mean we can skip a runtime check for
-whether the method exists.
-
-We probably want patch 1 anyway; I didn't notice at the
-time that M-profile has its own TCGCPUOps, and it's less
-confusing if A and M both use the same arm_cpu_exec_halt().
-(This isn't a bug in the FEAT_WFxT commit, though -- the
-behaviour is the same.)
-
-thanks
--- PMM
-
-Peter Maydell (3):
-  target/arm: Set arm_v7m_tcg_ops cpu_exec_halt to arm_cpu_exec_halt()
-  target: Set TCGCPUOps::cpu_exec_halt to target's has_work
-    implementation
-  accel/tcg: Make TCGCPUOps::cpu_exec_halt mandatory
-
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
  include/hw/core/tcg-cpu-ops.h | 9 ++++++---
- target/arm/internals.h        | 3 +++
- target/riscv/internals.h      | 3 +++
  accel/tcg/cpu-exec.c          | 7 +------
- target/alpha/cpu.c            | 1 +
- target/arm/cpu.c              | 2 +-
- target/arm/tcg/cpu-v7m.c      | 1 +
- target/avr/cpu.c              | 1 +
- target/cris/cpu.c             | 2 ++
- target/hppa/cpu.c             | 1 +
- target/loongarch/cpu.c        | 1 +
- target/m68k/cpu.c             | 1 +
- target/microblaze/cpu.c       | 1 +
- target/mips/cpu.c             | 1 +
- target/openrisc/cpu.c         | 1 +
- target/ppc/cpu_init.c         | 2 ++
- target/riscv/cpu.c            | 2 +-
- target/riscv/tcg/tcg-cpu.c    | 2 ++
- target/rx/cpu.c               | 1 +
- target/s390x/cpu.c            | 1 +
- target/sh4/cpu.c              | 1 +
- target/sparc/cpu.c            | 1 +
- target/xtensa/cpu.c           | 1 +
- 23 files changed, 35 insertions(+), 11 deletions(-)
+ 2 files changed, 7 insertions(+), 9 deletions(-)
 
+diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
+index 099de3375e3..34318cf0e60 100644
+--- a/include/hw/core/tcg-cpu-ops.h
++++ b/include/hw/core/tcg-cpu-ops.h
+@@ -122,10 +122,13 @@ struct TCGCPUOps {
+      * to do when the CPU is in the halted state.
+      *
+      * Return true to indicate that the CPU should now leave halt, false
+-     * if it should remain in the halted state.
++     * if it should remain in the halted state. (This should generally
++     * be the same value that cpu_has_work() would return.)
+      *
+-     * If this method is not provided, the default is to do nothing, and
+-     * to leave halt if cpu_has_work() returns true.
++     * This method must be provided. If the target does not need to
++     * do anything special for halt, the same function used for its
++     * CPUClass::has_work method can be used here, as they have the
++     * same function signature.
+      */
+     bool (*cpu_exec_halt)(CPUState *cpu);
+     /**
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 6711b58e0b2..8be4d2a1330 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -682,13 +682,8 @@ static inline bool cpu_handle_halt(CPUState *cpu)
+ #ifndef CONFIG_USER_ONLY
+     if (cpu->halted) {
+         const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
+-        bool leave_halt;
++        bool leave_halt = tcg_ops->cpu_exec_halt(cpu);
+ 
+-        if (tcg_ops->cpu_exec_halt) {
+-            leave_halt = tcg_ops->cpu_exec_halt(cpu);
+-        } else {
+-            leave_halt = cpu_has_work(cpu);
+-        }
+         if (!leave_halt) {
+             return true;
+         }
 -- 
 2.34.1
 
