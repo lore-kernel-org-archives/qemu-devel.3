@@ -4,86 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9A6C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 14:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15340C27C50
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 14:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEVNt-0003dl-LH; Tue, 04 Jun 2024 10:43:33 -0400
+	id 1sEVPA-0004bd-Qa; Tue, 04 Jun 2024 10:44:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEVNr-0003d2-9S
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:43:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEVNp-0008Tw-FZ
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:43:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717512208;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=MljoZq4BH8QxLlBqtWXVKGqv4ZMUGgELH/ir9Z89O2U=;
- b=Czx/HoTVWTG4UbJ9X6ndqhuHYkNOZ9qwNS82ZOUhjVW4p7xOtoeYFmYOs80Q9dBFIBCTQB
- LTn3dUnoWvLuQwXgbcDv7baz27FPHr3llsO2Xx6Y4ZHlV3yFeEUdtO5lJSfTeBNeCP3jzg
- 0w9Gh70VaIV8JcUCAqy3cGXPi/hLh/w=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-3se5XxUJNLG2KMiP_InRMw-1; Tue, 04 Jun 2024 10:43:26 -0400
-X-MC-Unique: 3se5XxUJNLG2KMiP_InRMw-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a68c70ab413so298459366b.1
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 07:43:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sEVP9-0004b9-BZ
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:44:51 -0400
+Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sEVP7-0000B9-Hq
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:44:51 -0400
+Received: by mail-oi1-x22c.google.com with SMTP id
+ 5614622812f47-3d1fd55081fso523062b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 07:44:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1717512288; x=1718117088; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=2ZAYJRfvgdK00JilvMEzvKdm1UtIiVs7VYUy0HFhxG4=;
+ b=EMb3yXxxXt6pFXz5d6bkGGCcFsFO/SJMla8n4YPNdUw67YGMykKIkPk0GYxJIyEVlt
+ mAlvGvVDs6XgDZce6MgbQ+rUhnwf9qFQNT26j79CkpiJxZZHwp6SbnqsRyk9DVWMxXm8
+ 49As3xKj14Go0l/A12flilead6ZsGOZUrEaqPSjorOWP+M04CZq73wszrK99eaU05jF1
+ ZIBE1SH4UvIPyAKTHKHEjtUGNEJNw0soi+fYt73ScgHO2VshCS3zq5KWl4tiPY+3T1cm
+ 2XRbHK8iBOK0Dq4GAiOM44LJhBfAxf8FzjNaeo/bhoDh1QPhP7IUQ1bdDFKBWtC2o2S0
+ omDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717512204; x=1718117004;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MljoZq4BH8QxLlBqtWXVKGqv4ZMUGgELH/ir9Z89O2U=;
- b=hhk3KqUo29uHLFNH5ElDEbZ6nXxf1oek3oreCYVUgh1TjWYbDbCUTZaGuvBhH6V/Ro
- EhowrZUw319ZqnGVbxSmmolIlWfU+ZbHSvHAEgL4S+MkpllNZ3p2CwgC9RJP8o1/z6Cv
- jX9F5BOyd1e/ZQ23bCYQQ5vhq042+c1yCgPpTSgrClBAYYmvm0PdzbOC/L7L2uHwJfjs
- V9Vsm7WboXuxf5x4eMvO1ah+D47k99iQ33XATtQNeDvzNs3ZFvhLFzlPgl9KZN7v0Qrv
- DC1gllJ4WsZ3oFJXekwoTCM3npOtUeZ3tFRwRsjXybk5zIu/OAVHF4HEdaj2UYuDN4Cp
- 5qew==
-X-Gm-Message-State: AOJu0Yw5wnRysz0L0vpDYDCpHIB55d2s86bMyddOo0tztYMzTprNPdWW
- zNGaCagkLjnRY4azoJPY2TSOj/3fUC2taSyMrKAuuydMq54KUI3DPq8G149rGW52D+aa6m4w9r6
- 2LIzAqsS/9jF1W0QtO1s7s3fhls4cyP15gKBtjj/BKvTQXv+c7YNQfZmfDCRujzJekWQgN+uSVP
- HwgfvDub2SwsJoIyTeS0cIC791ddWP7DYnb44V
-X-Received: by 2002:a17:906:1919:b0:a66:4045:2c52 with SMTP id
- a640c23a62f3a-a695441f1ccmr206653866b.28.1717512204552; 
- Tue, 04 Jun 2024 07:43:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH0VAy0cSj3CRhfb6/CRki8ckd1Hg2EIIEacizAPns/Pd28gKUbmpALy9Mz72usRS8KAoaoqQ==
-X-Received: by 2002:a17:906:1919:b0:a66:4045:2c52 with SMTP id
- a640c23a62f3a-a695441f1ccmr206651966b.28.1717512204001; 
- Tue, 04 Jun 2024 07:43:24 -0700 (PDT)
-Received: from [192.168.10.116] ([151.81.115.112])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a690d29f52csm294503166b.44.2024.06.04.07.43.22
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 07:43:22 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] docs, tests: do not specify scsi=off for virtio-blk-pci
-Date: Tue,  4 Jun 2024 16:43:20 +0200
-Message-ID: <20240604144320.1044464-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.1
+ d=1e100.net; s=20230601; t=1717512288; x=1718117088;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2ZAYJRfvgdK00JilvMEzvKdm1UtIiVs7VYUy0HFhxG4=;
+ b=PnD4SGrsooOcjdpu2vSdXxFfJ2AdljRCK2GyR2o6YykJOsbvdc/flUOwAonRnqg38i
+ HUoA5jbwSHN/xef4niyxhN/3OvXHZ2LPWl8FLk4f8p4KTARIcSfHGE5opxKFi4dEfTLY
+ Uvpark6S81bqRTP7YsDKv+PWneMcaVH5mUfGSSI8ctoH/WksWn+6ZD04DJIl7N3F8fH4
+ gi6dQEMuGZ7bU2S7JfZmuiIYxXYFXEEz6yv1oC5W6ey/8qdmxZWLDJQtV8PdXbOFbcLR
+ rBhKbgD8MMysmpJpvkocitcEE/bwL8WESYV9hZeBgiQgBOXboIx+zA/SNkkdvcAAJZWJ
+ s21g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5/nie4WJ9VOVZoADDGnSbqarV9MwKD9FAFmspV9IGZs+TTxxEGXa6nw8MArJKJzpLg80hZwOgAKmt7TrvNO8R2tlKTtc=
+X-Gm-Message-State: AOJu0Yz9+BF0AP0r9l/gbq7MUMc6PUh3J6vQ43B1iiOG03ZuQRP/gIGe
+ oqc17jWFvVuBQ0TQOKSBWtrlgEeY0Ac84ZLgG8bAzIbof8w0F9lkMXzray046iU12Jylub+Y7Or
+ iosXlxy8XTG7pExYfhSqZq7IpYuM=
+X-Google-Smtp-Source: AGHT+IH/0s2i7hYmDDhxfrc/imD9PmHRfpznJHlcWdoaG68Z323TjBNL4hFIqRXvEYpbm90yIzqQ61HZfaf5gfiH2b8=
+X-Received: by 2002:aca:180d:0:b0:3c9:66f2:69c0 with SMTP id
+ 5614622812f47-3d1e35cf455mr10825777b6e.55.1717512287901; Tue, 04 Jun 2024
+ 07:44:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240527030233.3775514-1-dmitry.osipenko@collabora.com>
+ <20240527030233.3775514-11-dmitry.osipenko@collabora.com>
+In-Reply-To: <20240527030233.3775514-11-dmitry.osipenko@collabora.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 4 Jun 2024 18:44:36 +0400
+Message-ID: <CAJ+F1C+mMKR_bU3HiJP+v9PdGXS+4qfmkoydaEC3MAzmS3TkHg@mail.gmail.com>
+Subject: Re: [PATCH v13 10/13] virtio-gpu: Support suspension of commands
+ processing
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>, 
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>, 
+ Gert Wollny <gert.wollny@collabora.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>, 
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>, 
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>, 
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, 
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>, 
+ Yiwei Zhang <zzyiwei@chromium.org>
+Content-Type: multipart/alternative; boundary="000000000000d15feb061a117d42"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-oi1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,83 +110,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This has been the default forever.
+--000000000000d15feb061a117d42
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- docs/pci_expander_bridge.txt      | 2 +-
- docs/specs/tpm.rst                | 2 +-
- tests/avocado/intel_iommu.py      | 2 +-
- tests/avocado/smmu.py             | 2 +-
- tests/avocado/tuxrun_baselines.py | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+Hi
 
-diff --git a/docs/pci_expander_bridge.txt b/docs/pci_expander_bridge.txt
-index 36750273bb8..540191f5e04 100644
---- a/docs/pci_expander_bridge.txt
-+++ b/docs/pci_expander_bridge.txt
-@@ -25,7 +25,7 @@ A detailed command line would be:
- -object memory-backend-ram,size=1024M,policy=bind,host-nodes=1,id=ram-node1 -numa node,nodeid=1,cpus=1,memdev=ram-node1
- -device pxb,id=bridge1,bus=pci.0,numa_node=1,bus_nr=4 -netdev user,id=nd -device e1000,bus=bridge1,addr=0x4,netdev=nd
- -device pxb,id=bridge2,bus=pci.0,numa_node=0,bus_nr=8 -device e1000,bus=bridge2,addr=0x3
---device pxb,id=bridge3,bus=pci.0,bus_nr=40 -drive if=none,id=drive0,file=[img] -device virtio-blk-pci,drive=drive0,scsi=off,bus=bridge3,addr=1
-+-device pxb,id=bridge3,bus=pci.0,bus_nr=40 -drive if=none,id=drive0,file=[img] -device virtio-blk-pci,drive=drive0,bus=bridge3,addr=1
- 
- Here you have:
-  - 2 NUMA nodes for the guest, 0 and 1. (both mapped to the same NUMA node in host, but you can and should put it in different host NUMA nodes)
-diff --git a/docs/specs/tpm.rst b/docs/specs/tpm.rst
-index 68cb8cf7e65..1ad36ad7099 100644
---- a/docs/specs/tpm.rst
-+++ b/docs/specs/tpm.rst
-@@ -336,7 +336,7 @@ In case a pSeries machine is emulated, use the following command line:
-     -tpmdev emulator,id=tpm0,chardev=chrtpm \
-     -device tpm-spapr,tpmdev=tpm0 \
-     -device spapr-vscsi,id=scsi0,reg=0x00002000 \
--    -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x3,drive=drive-virtio-disk0,id=virtio-disk0 \
-+    -device virtio-blk-pci,bus=pci.0,addr=0x3,drive=drive-virtio-disk0,id=virtio-disk0 \
-     -drive file=test.img,format=raw,if=none,id=drive-virtio-disk0
- 
- In case an Arm virt machine is emulated, use the following command line:
-diff --git a/tests/avocado/intel_iommu.py b/tests/avocado/intel_iommu.py
-index f04ee1cf9d9..09e694bd403 100644
---- a/tests/avocado/intel_iommu.py
-+++ b/tests/avocado/intel_iommu.py
-@@ -32,7 +32,7 @@ class IntelIOMMU(LinuxTest):
- 
-     def set_up_boot(self):
-         path = self.download_boot()
--        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,scsi=off,' +
-+        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
-                          'drive=drv0,id=virtio-disk0,bootindex=1,'
-                          'werror=stop,rerror=stop' + self.IOMMU_ADDON)
-         self.vm.add_args('-device', 'virtio-gpu-pci' + self.IOMMU_ADDON)
-diff --git a/tests/avocado/smmu.py b/tests/avocado/smmu.py
-index 21ff030ca72..4ebfa7128c7 100644
---- a/tests/avocado/smmu.py
-+++ b/tests/avocado/smmu.py
-@@ -32,7 +32,7 @@ class SMMU(LinuxTest):
- 
-     def set_up_boot(self):
-         path = self.download_boot()
--        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,scsi=off,' +
-+        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
-                          'drive=drv0,id=virtio-disk0,bootindex=1,'
-                          'werror=stop,rerror=stop' + self.IOMMU_ADDON)
-         self.vm.add_args('-drive',
-diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
-index a936a3b7809..736e4aa289c 100644
---- a/tests/avocado/tuxrun_baselines.py
-+++ b/tests/avocado/tuxrun_baselines.py
-@@ -235,7 +235,7 @@ def ppc64_common_tuxrun(self, sums, prefix):
-             self.vm.add_args('-drive', 'file=' + qcow2.name +
-                          ',format=qcow2,if=none,id='
-                          'drive-virtio-disk1',
--                         '-device', 'virtio-blk-pci,scsi=off,bus=pci.0,'
-+                         '-device', 'virtio-blk-pci,bus=pci.0,'
-                          'addr=0xb,drive=drive-virtio-disk1,id=virtio-disk1'
-                          ',bootindex=2')
-             self.common_tuxrun(csums=sums, drive="scsi-hd")
--- 
-2.45.1
+On Mon, May 27, 2024 at 7:03=E2=80=AFAM Dmitry Osipenko <
+dmitry.osipenko@collabora.com> wrote:
 
+> Check whether command processing has been finished; otherwise, stop
+> processing commands and retry the command again next time. This allows
+> us to support asynchronous execution of non-fenced commands needed for
+> unmapping host blobs safely.
+>
+> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>  hw/display/virtio-gpu.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> index f3d2def9a49f..8e05a2d0c7c5 100644
+> --- a/hw/display/virtio-gpu.c
+> +++ b/hw/display/virtio-gpu.c
+> @@ -1054,6 +1054,11 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
+>          /* process command */
+>          vgc->process_cmd(g, cmd);
+>
+> +        /* command suspended */
+> +        if (!cmd->finished && !(cmd->cmd_hdr.flags &
+> VIRTIO_GPU_FLAG_FENCE)) {
+>
+
+Since this is not tracked in "inflight" debugging, it would be worth adding
+a trace for this early break.
+
+Btw, if you could replace the fprintf below with a trace as well, this
+would be a nice cleanup too
+
+
+
+> +            break;
+> +        }
+> +
+>          QTAILQ_REMOVE(&g->cmdq, cmd, next);
+>          if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+>              g->stats.requests++;
+> --
+> 2.44.0
+>
+>
+
+--=20
+Marc-Andr=C3=A9 Lureau
+
+--000000000000d15feb061a117d42
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_quote=
+"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 27, 2024 at 7:03=E2=80=
+=AFAM Dmitry Osipenko &lt;<a href=3D"mailto:dmitry.osipenko@collabora.com">=
+dmitry.osipenko@collabora.com</a>&gt; wrote:<br></div><blockquote class=3D"=
+gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
+4,204,204);padding-left:1ex">Check whether command processing has been fini=
+shed; otherwise, stop<br>
+processing commands and retry the command again next time. This allows<br>
+us to support asynchronous execution of non-fenced commands needed for<br>
+unmapping host blobs safely.<br>
+<br>
+Suggested-by: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com"=
+ target=3D"_blank">akihiko.odaki@daynix.com</a>&gt;<br>
+Signed-off-by: Dmitry Osipenko &lt;<a href=3D"mailto:dmitry.osipenko@collab=
+ora.com" target=3D"_blank">dmitry.osipenko@collabora.com</a>&gt;<br>
+---<br>
+=C2=A0hw/display/virtio-gpu.c | 5 +++++<br>
+=C2=A01 file changed, 5 insertions(+)<br>
+<br>
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c<br>
+index f3d2def9a49f..8e05a2d0c7c5 100644<br>
+--- a/hw/display/virtio-gpu.c<br>
++++ b/hw/display/virtio-gpu.c<br>
+@@ -1054,6 +1054,11 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* process command */<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0vgc-&gt;process_cmd(g, cmd);<br>
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* command suspended */<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!cmd-&gt;finished &amp;&amp; !(cmd-&gt;cmd=
+_hdr.flags &amp; VIRTIO_GPU_FLAG_FENCE)) {<br>
+</blockquote><div><br></div><div>Since this is not tracked in &quot;infligh=
+t&quot; debugging, it would be worth adding a trace for this early break.</=
+div><div><br></div><div>Btw, if you could replace the fprintf below with a =
+trace as well, this would be a nice cleanup too</div><div><br></div><div>=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">+=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0QTAILQ_REMOVE(&amp;g-&gt;cmdq, cmd, next)=
+;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (virtio_gpu_stats_enabled(g-&gt;parent=
+_obj.conf)) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0g-&gt;stats.requests++;<br>
+-- <br>
+2.44.0<br>
+<br>
+</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
+=A9 Lureau<br></div></div>
+
+--000000000000d15feb061a117d42--
 
