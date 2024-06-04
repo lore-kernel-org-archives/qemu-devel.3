@@ -4,89 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5A6BC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 21:01:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3208EC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 21:04:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEbGU-0000Wp-2B; Tue, 04 Jun 2024 17:00:18 -0400
+	id 1sEbJv-0001eh-EB; Tue, 04 Jun 2024 17:03:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEbGO-0000UU-7G
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 17:00:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEbGG-0005LQ-Eb
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 17:00:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717534802;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1sEbJu-0001eQ-Kn; Tue, 04 Jun 2024 17:03:50 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>)
+ id 1sEbJt-0006qy-2v; Tue, 04 Jun 2024 17:03:50 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 7BCC91F44F;
+ Tue,  4 Jun 2024 21:03:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1717535025; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2Cpc7IFjk1BQk2P3eQhLXtN1E2+HZNERO9loUC5Wat0=;
- b=HkFncog+eArI7RLyi8b3vFPPkhuINP72hqCyM9lXtmIKyajYXpXMhWyBxx+ZnE5UHbe4js
- 0gR2N22LbPq/CmXwpgW1g5gRsvu4FZ4cbsEyBVjBWvzLw8DfA/vPA64/Zq8kJnGqF8QO8R
- rvSS395DdQ85CRWDnNRTZDSSrmTIMNg=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-543-PA65m0AtPGOJiwtAUpueFw-1; Tue, 04 Jun 2024 17:00:00 -0400
-X-MC-Unique: PA65m0AtPGOJiwtAUpueFw-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6ad5ebfaa68so17055976d6.0
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 14:00:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717534800; x=1718139600;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2Cpc7IFjk1BQk2P3eQhLXtN1E2+HZNERO9loUC5Wat0=;
- b=auKdyvaWBRQQVp5deW6Awg3D24bqqTDj+hMSTpCWO7yP2py36mZhwQ9w9feHadCWMS
- GTU83zJAK42XcuwMpvWrtJXrj1DPjCrLbtLCph8li7nT9/Lfc7gTbxv/X5kOjs0LNoBN
- 1CIhJTNDEPJjJytRb2E0VnWRxeN7JueTrYUS5+bC0CC/jTGJHWvWldzpVDP0nIulTDU7
- 3KKFQJ8RIg/f5/X1LXZVYYcDsKp55zREGqPIrgr9NfCYuX3GBmNh+RGQmIKW8au4pm4J
- i5GkoQ1tjmrTUVkByhcivV47a1LoXBrniwc3VDKT0cvUgqmFLsWISHW0Y2IcYKBj18wj
- rZyA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWGd9aHhAAR7uieqzT5yUHMqF7rcIyewqNkLO/47BnrtDj3q2MW0hs4ef7sO1bm4SWRu+tTbFOOdKhx5Gn6oEWcprGRRt0=
-X-Gm-Message-State: AOJu0YxSUTSrFegX9OxMUTYevvfFCMI4wweIKrh6/adXaw15EnqbSCy2
- 9ejCV44rmJ1PZFw/TFIsDhep1K+aK/u85XGXnr68TIBqyA1cs+lgDDDvtH5+v4EIob5HTpUBbUA
- TMeOvvyfe2fnrJqUuubA96I2Phz8+f0dezDKxcobnZ9rhizycKXa4
-X-Received: by 2002:a05:620a:2886:b0:794:edc7:1566 with SMTP id
- af79cd13be357-795240df187mr49496585a.4.1717534799921; 
- Tue, 04 Jun 2024 13:59:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFClCt7GUi+NhTV+OJUKLF8VC0dTTUpjQJnIQD2vkqfF7z+T8+mIfn1C18jEwb/RNewejKf5A==
-X-Received: by 2002:a05:620a:2886:b0:794:edc7:1566 with SMTP id
- af79cd13be357-795240df187mr49493085a.4.1717534799349; 
- Tue, 04 Jun 2024 13:59:59 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79524c12485sm8170485a.87.2024.06.04.13.59.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 13:59:58 -0700 (PDT)
-Date: Tue, 4 Jun 2024 16:59:56 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Cc: farosas@suse.de, yuan1.liu@intel.com, qemu-devel@nongnu.org,
- linuxarm@huawei.com, linwenkai6@hisilicon.com,
- zhangfei.gao@linaro.org, huangchenghai2@huawei.com
-Subject: Re: [PATCH 0/7] Live migration acceleration with UADK
-Message-ID: <Zl-ATAeH-hZ6IFHz@x1n>
-References: <20240529094435.11140-1-shameerali.kolothum.thodi@huawei.com>
+ bh=kH0mS4SKSUxteeJelptiqqOdF/sO094uT6rLFS4jqKg=;
+ b=T+MRG+XbETSlrnOhVgkVkRINRqRmlvJgAMJK4Pb0L5b+ifx2ggh2PHgX5OTFW5GIJD+slv
+ b+wRLXIP+CKgWpYr9SUzkHa0AMKbDLvKwohNQlp8OEBQByyCcvtWmP9TKL6Fn1IM1DX5o7
+ v20OZ90/9yDJYBQatrVr7tu21dJ+4/g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1717535025;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kH0mS4SKSUxteeJelptiqqOdF/sO094uT6rLFS4jqKg=;
+ b=JNSCIhr0VlKwN4v4+0WRHGJqTntDndGNK3i8OH+n/dr5yUDAH9ZpWiqdlbfYM7ScqgNilc
+ NPzqthLhd4DIYOAg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1717535025; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kH0mS4SKSUxteeJelptiqqOdF/sO094uT6rLFS4jqKg=;
+ b=T+MRG+XbETSlrnOhVgkVkRINRqRmlvJgAMJK4Pb0L5b+ifx2ggh2PHgX5OTFW5GIJD+slv
+ b+wRLXIP+CKgWpYr9SUzkHa0AMKbDLvKwohNQlp8OEBQByyCcvtWmP9TKL6Fn1IM1DX5o7
+ v20OZ90/9yDJYBQatrVr7tu21dJ+4/g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1717535025;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kH0mS4SKSUxteeJelptiqqOdF/sO094uT6rLFS4jqKg=;
+ b=JNSCIhr0VlKwN4v4+0WRHGJqTntDndGNK3i8OH+n/dr5yUDAH9ZpWiqdlbfYM7ScqgNilc
+ NPzqthLhd4DIYOAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5906813A93;
+ Tue,  4 Jun 2024 21:03:43 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id nH9FCC+BX2ZWfwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 04 Jun 2024 21:03:43 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org,
+	Nicholas Piggin <npiggin@gmail.com>
+Cc: Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-ppc@nongnu.org
+Subject: Re: [PATCH v3 0/4] tests/qtest/migration-test: Improve and enable on
+ ppc64
+Date: Tue,  4 Jun 2024 18:03:14 -0300
+Message-Id: <171753456568.27553.9082737478668904950.b4-ty@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240530074453.21780-1-npiggin@gmail.com>
+References: <20240530074453.21780-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240529094435.11140-1-shameerali.kolothum.thodi@huawei.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spamd-Result: default: False [-4.24 / 50.00]; BAYES_HAM(-2.94)[99.76%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ FREEMAIL_TO(0.00)[nongnu.org,gmail.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[7]; MIME_TRACE(0.00)[0:+];
+ MID_RHS_MATCH_FROM(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,33 +124,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 29, 2024 at 10:44:20AM +0100, Shameer Kolothum via wrote:
-> Hi,
+On Thu, 30 May 2024 17:44:48 +1000, Nicholas Piggin wrote:
+> Since v2:
+> - Fixed subject typo noticed by Thomas.
+> - Drop the non-ppc patches from the series.
 > 
-> This series adds support for UADK library based hardware acceleration
-> for live migration. UADK[0] is a general-purpose user space accelerator
-> framework that uses shared virtual addressing (SVA) to provide a unified
-> programming interface for hardware acceleration of cryptographic and
-> compression algorithms.
+> Thanks,
+> Nick
 > 
-> UADK makes use of the UACCE(Unified/User-space-access-intended Accelerator
-> Framework) Linux kernel module which enables hardware accelerators from
-> different vendors that support SVA to adapt to UADK. Linux kernel from
-> v5.9 has support for UACCE and SVA on ARM64 platforms.
-> 
-> Currently, HiSilicon Kunpeng hardware accelerators have been registered with
-> UACCE and the Zip accelerator on these platforms can be used for compression
-> which can  free up CPU computing power and improve computing performance.
-> 
-> This series is on top of Intel IAA accelerator live migration support
-> series[1] from Yuan Liu. Many thanks for doing this.
+> [...]
 
-Just looked at the IAA series too, I didn't read multifd-*.[ch] much on
-both sides but both the series look pretty clean to me.
-
-Thanks,
-
--- 
-Peter Xu
-
+Queued, thanks!
 
