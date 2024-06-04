@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF677C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 13:52:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E3C0C27C54
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 13:52:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEUY8-00066w-Gp; Tue, 04 Jun 2024 09:50:04 -0400
+	id 1sEUY7-000668-DA; Tue, 04 Jun 2024 09:50:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sEUY3-0005yb-T6
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:50:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sEUY5-00063D-QP
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:50:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sEUY0-0002mn-Ic
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:49:59 -0400
+ id 1sEUY1-0002mx-Fz
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:50:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717508995;
+ s=mimecast20190719; t=1717508996;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/fh6OWzA0tCtf32dsesC220yACnTIpr6dXCwZv5/JP0=;
- b=LClIj5ll4Ug4O09HcFLbzWQo9F2RJM0EAa9QTmGKEwrJR46UBbEeGBUAc83MSUjuiYD7c5
- R/WJKIcc6gVaPuegbYBWqwMUWjxNYiwEIMb8lpCmJzTV2whonUi8AUXXrCcksffHMlqDM2
- bTiEOU8+hnpEoLa1C7JANVupX+aKYUc=
+ bh=F7NWPJ5tSLT3jMnEYRzuJWc85IGXbTO8E5f2b8b0qV4=;
+ b=Xgf+wMg0auHsIqQETYTIOzTM5oh8Fv0W9zmFaAwZa/dOfcG71G16og/38FlgrEOLCrr3XZ
+ sKyCi3q/cc14j+VnY1+fGmyPla5QnFbxnYnQobNRFYk6S5Au0tWHVqdaB85X1JyQrEQY/S
+ jRrFoHojd7y2tiMB/QbPSWx8Mqex7GU=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-351-JoMvGB9KOBOn4OaV2b7_Ag-1; Tue, 04 Jun 2024 09:49:52 -0400
-X-MC-Unique: JoMvGB9KOBOn4OaV2b7_Ag-1
+ us-mta-424-1hGTl76cOoiBiXUO0Ut_QA-1; Tue, 04 Jun 2024 09:49:55 -0400
+X-MC-Unique: 1hGTl76cOoiBiXUO0Ut_QA-1
 Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
  [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id AB2A98038E3;
- Tue,  4 Jun 2024 13:49:50 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 23DA4101A523;
+ Tue,  4 Jun 2024 13:49:55 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.39.194.137])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 5A391C15C41;
- Tue,  4 Jun 2024 13:49:48 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id C2F6BC15C40;
+ Tue,  4 Jun 2024 13:49:52 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Konstantin Kostiuk <kkostiuk@redhat.com>,
@@ -53,17 +53,17 @@ Cc: Thomas Huth <thuth@redhat.com>, Konstantin Kostiuk <kkostiuk@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 06/20] qga: move linux memory block command impls to
- commands-linux.c
-Date: Tue,  4 Jun 2024 14:49:19 +0100
-Message-ID: <20240604134933.220112-7-berrange@redhat.com>
+Subject: [PATCH 08/20] qga: conditionalize schema for commands unsupported on
+ Windows
+Date: Tue,  4 Jun 2024 14:49:21 +0100
+Message-ID: <20240604134933.220112-9-berrange@redhat.com>
 In-Reply-To: <20240604134933.220112-1-berrange@redhat.com>
 References: <20240604134933.220112-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -88,660 +88,270 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The qmp_guest_{set,get}_{memory_blocks,block_info} command impls in
-commands-posix.c are surrounded by '#ifdef __linux__' so should
-instead live in commands-linux.c
+Rather than creating stubs for every command that just return
+QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
+fully exclude generation of the commands on Windows.
 
-This also removes a "#ifdef CONFIG_LINUX" that was nested inside
-a "#ifdef __linux__".
+The command will be rejected at QMP dispatch time instead,
+avoiding reimplementing rejection by blocking the stub commands.
+
+This fixes inconsistency where some commands are implemented
+as stubs, yet not added to the blockedrpc list.
+
+This has the additional benefit that the QGA protocol reference
+now documents what conditions enable use of the command.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qga/commands-linux.c | 308 ++++++++++++++++++++++++++++++++++++++++++
- qga/commands-posix.c | 311 +------------------------------------------
- 2 files changed, 309 insertions(+), 310 deletions(-)
+ qga/commands-win32.c | 56 +-------------------------------------------
+ qga/qapi-schema.json | 45 +++++++++++++++++++++++------------
+ 2 files changed, 31 insertions(+), 70 deletions(-)
 
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-index c0e8bd4062..73b13fbaf6 100644
---- a/qga/commands-linux.c
-+++ b/qga/commands-linux.c
-@@ -1595,6 +1595,314 @@ int64_t qmp_guest_set_vcpus(GuestLogicalProcessorList *vcpus, Error **errp)
-     return processed;
+diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+index 9fe670d5b4..2533e4c748 100644
+--- a/qga/commands-win32.c
++++ b/qga/commands-win32.c
+@@ -1494,11 +1494,6 @@ out:
+     }
  }
  
-+
-+static void ga_read_sysfs_file(int dirfd, const char *pathname, char *buf,
-+                               int size, Error **errp)
-+{
-+    int fd;
-+    int res;
-+
-+    errno = 0;
-+    fd = openat(dirfd, pathname, O_RDONLY);
-+    if (fd == -1) {
-+        error_setg_errno(errp, errno, "open sysfs file \"%s\"", pathname);
-+        return;
-+    }
-+
-+    res = pread(fd, buf, size, 0);
-+    if (res == -1) {
-+        error_setg_errno(errp, errno, "pread sysfs file \"%s\"", pathname);
-+    } else if (res == 0) {
-+        error_setg(errp, "pread sysfs file \"%s\": unexpected EOF", pathname);
-+    }
-+    close(fd);
-+}
-+
-+static void ga_write_sysfs_file(int dirfd, const char *pathname,
-+                                const char *buf, int size, Error **errp)
-+{
-+    int fd;
-+
-+    errno = 0;
-+    fd = openat(dirfd, pathname, O_WRONLY);
-+    if (fd == -1) {
-+        error_setg_errno(errp, errno, "open sysfs file \"%s\"", pathname);
-+        return;
-+    }
-+
-+    if (pwrite(fd, buf, size, 0) == -1) {
-+        error_setg_errno(errp, errno, "pwrite sysfs file \"%s\"", pathname);
-+    }
-+
-+    close(fd);
-+}
-+
-+/* Transfer online/offline status between @mem_blk and the guest system.
-+ *
-+ * On input either @errp or *@errp must be NULL.
-+ *
-+ * In system-to-@mem_blk direction, the following @mem_blk fields are accessed:
-+ * - R: mem_blk->phys_index
-+ * - W: mem_blk->online
-+ * - W: mem_blk->can_offline
-+ *
-+ * In @mem_blk-to-system direction, the following @mem_blk fields are accessed:
-+ * - R: mem_blk->phys_index
-+ * - R: mem_blk->online
-+ *-  R: mem_blk->can_offline
-+ * Written members remain unmodified on error.
-+ */
-+static void transfer_memory_block(GuestMemoryBlock *mem_blk, bool sys2memblk,
-+                                  GuestMemoryBlockResponse *result,
-+                                  Error **errp)
-+{
-+    char *dirpath;
-+    int dirfd;
-+    char *status;
-+    Error *local_err = NULL;
-+
-+    if (!sys2memblk) {
-+        DIR *dp;
-+
-+        if (!result) {
-+            error_setg(errp, "Internal error, 'result' should not be NULL");
-+            return;
-+        }
-+        errno = 0;
-+        dp = opendir("/sys/devices/system/memory/");
-+         /* if there is no 'memory' directory in sysfs,
-+         * we think this VM does not support online/offline memory block,
-+         * any other solution?
-+         */
-+        if (!dp) {
-+            if (errno == ENOENT) {
-+                result->response =
-+                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_NOT_SUPPORTED;
-+            }
-+            goto out1;
-+        }
-+        closedir(dp);
-+    }
-+
-+    dirpath = g_strdup_printf("/sys/devices/system/memory/memory%" PRId64 "/",
-+                              mem_blk->phys_index);
-+    dirfd = open(dirpath, O_RDONLY | O_DIRECTORY);
-+    if (dirfd == -1) {
-+        if (sys2memblk) {
-+            error_setg_errno(errp, errno, "open(\"%s\")", dirpath);
-+        } else {
-+            if (errno == ENOENT) {
-+                result->response = GUEST_MEMORY_BLOCK_RESPONSE_TYPE_NOT_FOUND;
-+            } else {
-+                result->response =
-+                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;
-+            }
-+        }
-+        g_free(dirpath);
-+        goto out1;
-+    }
-+    g_free(dirpath);
-+
-+    status = g_malloc0(10);
-+    ga_read_sysfs_file(dirfd, "state", status, 10, &local_err);
-+    if (local_err) {
-+        /* treat with sysfs file that not exist in old kernel */
-+        if (errno == ENOENT) {
-+            error_free(local_err);
-+            if (sys2memblk) {
-+                mem_blk->online = true;
-+                mem_blk->can_offline = false;
-+            } else if (!mem_blk->online) {
-+                result->response =
-+                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_NOT_SUPPORTED;
-+            }
-+        } else {
-+            if (sys2memblk) {
-+                error_propagate(errp, local_err);
-+            } else {
-+                error_free(local_err);
-+                result->response =
-+                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;
-+            }
-+        }
-+        goto out2;
-+    }
-+
-+    if (sys2memblk) {
-+        char removable = '0';
-+
-+        mem_blk->online = (strncmp(status, "online", 6) == 0);
-+
-+        ga_read_sysfs_file(dirfd, "removable", &removable, 1, &local_err);
-+        if (local_err) {
-+            /* if no 'removable' file, it doesn't support offline mem blk */
-+            if (errno == ENOENT) {
-+                error_free(local_err);
-+                mem_blk->can_offline = false;
-+            } else {
-+                error_propagate(errp, local_err);
-+            }
-+        } else {
-+            mem_blk->can_offline = (removable != '0');
-+        }
-+    } else {
-+        if (mem_blk->online != (strncmp(status, "online", 6) == 0)) {
-+            const char *new_state = mem_blk->online ? "online" : "offline";
-+
-+            ga_write_sysfs_file(dirfd, "state", new_state, strlen(new_state),
-+                                &local_err);
-+            if (local_err) {
-+                error_free(local_err);
-+                result->response =
-+                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;
-+                goto out2;
-+            }
-+
-+            result->response = GUEST_MEMORY_BLOCK_RESPONSE_TYPE_SUCCESS;
-+            result->has_error_code = false;
-+        } /* otherwise pretend successful re-(on|off)-lining */
-+    }
-+    g_free(status);
-+    close(dirfd);
-+    return;
-+
-+out2:
-+    g_free(status);
-+    close(dirfd);
-+out1:
-+    if (!sys2memblk) {
-+        result->has_error_code = true;
-+        result->error_code = errno;
-+    }
-+}
-+
-+GuestMemoryBlockList *qmp_guest_get_memory_blocks(Error **errp)
-+{
-+    GuestMemoryBlockList *head, **tail;
-+    Error *local_err = NULL;
-+    struct dirent *de;
-+    DIR *dp;
-+
-+    head = NULL;
-+    tail = &head;
-+
-+    dp = opendir("/sys/devices/system/memory/");
-+    if (!dp) {
-+        /* it's ok if this happens to be a system that doesn't expose
-+         * memory blocks via sysfs, but otherwise we should report
-+         * an error
-+         */
-+        if (errno != ENOENT) {
-+            error_setg_errno(errp, errno, "Can't open directory"
-+                             "\"/sys/devices/system/memory/\"");
-+        }
-+        return NULL;
-+    }
-+
-+    /* Note: the phys_index of memory block may be discontinuous,
-+     * this is because a memblk is the unit of the Sparse Memory design, which
-+     * allows discontinuous memory ranges (ex. NUMA), so here we should
-+     * traverse the memory block directory.
-+     */
-+    while ((de = readdir(dp)) != NULL) {
-+        GuestMemoryBlock *mem_blk;
-+
-+        if ((strncmp(de->d_name, "memory", 6) != 0) ||
-+            !(de->d_type & DT_DIR)) {
-+            continue;
-+        }
-+
-+        mem_blk = g_malloc0(sizeof *mem_blk);
-+        /* The d_name is "memoryXXX",  phys_index is block id, same as XXX */
-+        mem_blk->phys_index = strtoul(&de->d_name[6], NULL, 10);
-+        mem_blk->has_can_offline = true; /* lolspeak ftw */
-+        transfer_memory_block(mem_blk, true, NULL, &local_err);
-+        if (local_err) {
-+            break;
-+        }
-+
-+        QAPI_LIST_APPEND(tail, mem_blk);
-+    }
-+
-+    closedir(dp);
-+    if (local_err == NULL) {
-+        /* there's no guest with zero memory blocks */
-+        if (head == NULL) {
-+            error_setg(errp, "guest reported zero memory blocks!");
-+        }
-+        return head;
-+    }
-+
-+    qapi_free_GuestMemoryBlockList(head);
-+    error_propagate(errp, local_err);
-+    return NULL;
-+}
-+
-+GuestMemoryBlockResponseList *
-+qmp_guest_set_memory_blocks(GuestMemoryBlockList *mem_blks, Error **errp)
-+{
-+    GuestMemoryBlockResponseList *head, **tail;
-+    Error *local_err = NULL;
-+
-+    head = NULL;
-+    tail = &head;
-+
-+    while (mem_blks != NULL) {
-+        GuestMemoryBlockResponse *result;
-+        GuestMemoryBlock *current_mem_blk = mem_blks->value;
-+
-+        result = g_malloc0(sizeof(*result));
-+        result->phys_index = current_mem_blk->phys_index;
-+        transfer_memory_block(current_mem_blk, false, result, &local_err);
-+        if (local_err) { /* should never happen */
-+            goto err;
-+        }
-+
-+        QAPI_LIST_APPEND(tail, result);
-+        mem_blks = mem_blks->next;
-+    }
-+
-+    return head;
-+err:
-+    qapi_free_GuestMemoryBlockResponseList(head);
-+    error_propagate(errp, local_err);
-+    return NULL;
-+}
-+
-+GuestMemoryBlockInfo *qmp_guest_get_memory_block_info(Error **errp)
-+{
-+    Error *local_err = NULL;
-+    char *dirpath;
-+    int dirfd;
-+    char *buf;
-+    GuestMemoryBlockInfo *info;
-+
-+    dirpath = g_strdup_printf("/sys/devices/system/memory/");
-+    dirfd = open(dirpath, O_RDONLY | O_DIRECTORY);
-+    if (dirfd == -1) {
-+        error_setg_errno(errp, errno, "open(\"%s\")", dirpath);
-+        g_free(dirpath);
-+        return NULL;
-+    }
-+    g_free(dirpath);
-+
-+    buf = g_malloc0(20);
-+    ga_read_sysfs_file(dirfd, "block_size_bytes", buf, 20, &local_err);
-+    close(dirfd);
-+    if (local_err) {
-+        g_free(buf);
-+        error_propagate(errp, local_err);
-+        return NULL;
-+    }
-+
-+    info = g_new0(GuestMemoryBlockInfo, 1);
-+    info->size = strtol(buf, NULL, 16); /* the unit is bytes */
-+
-+    g_free(buf);
-+
-+    return info;
-+}
-+
- #define MAX_NAME_LEN 128
- static GuestDiskStatsInfoList *guest_get_diskstats(Error **errp)
+-void qmp_guest_suspend_hybrid(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-}
+-
+ static IP_ADAPTER_ADDRESSES *guest_get_adapters_addresses(Error **errp)
  {
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 5da60e65ab..2a3bef7445 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -887,316 +887,7 @@ void qmp_guest_set_user_password(const char *username,
+     IP_ADAPTER_ADDRESSES *adptr_addrs = NULL;
+@@ -1862,12 +1857,6 @@ GuestLogicalProcessorList *qmp_guest_get_vcpus(Error **errp)
+     return NULL;
  }
- #endif /* __linux__ || __FreeBSD__ */
  
--#ifdef __linux__
--static void ga_read_sysfs_file(int dirfd, const char *pathname, char *buf,
--                               int size, Error **errp)
+-int64_t qmp_guest_set_vcpus(GuestLogicalProcessorList *vcpus, Error **errp)
 -{
--    int fd;
--    int res;
--
--    errno = 0;
--    fd = openat(dirfd, pathname, O_RDONLY);
--    if (fd == -1) {
--        error_setg_errno(errp, errno, "open sysfs file \"%s\"", pathname);
--        return;
--    }
--
--    res = pread(fd, buf, size, 0);
--    if (res == -1) {
--        error_setg_errno(errp, errno, "pread sysfs file \"%s\"", pathname);
--    } else if (res == 0) {
--        error_setg(errp, "pread sysfs file \"%s\": unexpected EOF", pathname);
--    }
--    close(fd);
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return -1;
 -}
 -
--static void ga_write_sysfs_file(int dirfd, const char *pathname,
--                                const char *buf, int size, Error **errp)
--{
--    int fd;
--
--    errno = 0;
--    fd = openat(dirfd, pathname, O_WRONLY);
--    if (fd == -1) {
--        error_setg_errno(errp, errno, "open sysfs file \"%s\"", pathname);
--        return;
--    }
--
--    if (pwrite(fd, buf, size, 0) == -1) {
--        error_setg_errno(errp, errno, "pwrite sysfs file \"%s\"", pathname);
--    }
--
--    close(fd);
--}
--
--/* Transfer online/offline status between @mem_blk and the guest system.
-- *
-- * On input either @errp or *@errp must be NULL.
-- *
-- * In system-to-@mem_blk direction, the following @mem_blk fields are accessed:
-- * - R: mem_blk->phys_index
-- * - W: mem_blk->online
-- * - W: mem_blk->can_offline
-- *
-- * In @mem_blk-to-system direction, the following @mem_blk fields are accessed:
-- * - R: mem_blk->phys_index
-- * - R: mem_blk->online
-- *-  R: mem_blk->can_offline
-- * Written members remain unmodified on error.
-- */
--static void transfer_memory_block(GuestMemoryBlock *mem_blk, bool sys2memblk,
--                                  GuestMemoryBlockResponse *result,
--                                  Error **errp)
--{
--    char *dirpath;
--    int dirfd;
--    char *status;
--    Error *local_err = NULL;
--
--    if (!sys2memblk) {
--        DIR *dp;
--
--        if (!result) {
--            error_setg(errp, "Internal error, 'result' should not be NULL");
--            return;
--        }
--        errno = 0;
--        dp = opendir("/sys/devices/system/memory/");
--         /* if there is no 'memory' directory in sysfs,
--         * we think this VM does not support online/offline memory block,
--         * any other solution?
--         */
--        if (!dp) {
--            if (errno == ENOENT) {
--                result->response =
--                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_NOT_SUPPORTED;
--            }
--            goto out1;
--        }
--        closedir(dp);
--    }
--
--    dirpath = g_strdup_printf("/sys/devices/system/memory/memory%" PRId64 "/",
--                              mem_blk->phys_index);
--    dirfd = open(dirpath, O_RDONLY | O_DIRECTORY);
--    if (dirfd == -1) {
--        if (sys2memblk) {
--            error_setg_errno(errp, errno, "open(\"%s\")", dirpath);
--        } else {
--            if (errno == ENOENT) {
--                result->response = GUEST_MEMORY_BLOCK_RESPONSE_TYPE_NOT_FOUND;
--            } else {
--                result->response =
--                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;
--            }
--        }
--        g_free(dirpath);
--        goto out1;
--    }
--    g_free(dirpath);
--
--    status = g_malloc0(10);
--    ga_read_sysfs_file(dirfd, "state", status, 10, &local_err);
--    if (local_err) {
--        /* treat with sysfs file that not exist in old kernel */
--        if (errno == ENOENT) {
--            error_free(local_err);
--            if (sys2memblk) {
--                mem_blk->online = true;
--                mem_blk->can_offline = false;
--            } else if (!mem_blk->online) {
--                result->response =
--                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_NOT_SUPPORTED;
--            }
--        } else {
--            if (sys2memblk) {
--                error_propagate(errp, local_err);
--            } else {
--                error_free(local_err);
--                result->response =
--                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;
--            }
--        }
--        goto out2;
--    }
--
--    if (sys2memblk) {
--        char removable = '0';
--
--        mem_blk->online = (strncmp(status, "online", 6) == 0);
--
--        ga_read_sysfs_file(dirfd, "removable", &removable, 1, &local_err);
--        if (local_err) {
--            /* if no 'removable' file, it doesn't support offline mem blk */
--            if (errno == ENOENT) {
--                error_free(local_err);
--                mem_blk->can_offline = false;
--            } else {
--                error_propagate(errp, local_err);
--            }
--        } else {
--            mem_blk->can_offline = (removable != '0');
--        }
--    } else {
--        if (mem_blk->online != (strncmp(status, "online", 6) == 0)) {
--            const char *new_state = mem_blk->online ? "online" : "offline";
--
--            ga_write_sysfs_file(dirfd, "state", new_state, strlen(new_state),
--                                &local_err);
--            if (local_err) {
--                error_free(local_err);
--                result->response =
--                    GUEST_MEMORY_BLOCK_RESPONSE_TYPE_OPERATION_FAILED;
--                goto out2;
--            }
--
--            result->response = GUEST_MEMORY_BLOCK_RESPONSE_TYPE_SUCCESS;
--            result->has_error_code = false;
--        } /* otherwise pretend successful re-(on|off)-lining */
--    }
--    g_free(status);
--    close(dirfd);
--    return;
--
--out2:
--    g_free(status);
--    close(dirfd);
--out1:
--    if (!sys2memblk) {
--        result->has_error_code = true;
--        result->error_code = errno;
--    }
--}
--
+ static gchar *
+ get_net_error_message(gint error)
+ {
+@@ -1969,46 +1958,15 @@ done:
+     g_free(rawpasswddata);
+ }
+ 
 -GuestMemoryBlockList *qmp_guest_get_memory_blocks(Error **errp)
 -{
--    GuestMemoryBlockList *head, **tail;
--    Error *local_err = NULL;
--    struct dirent *de;
--    DIR *dp;
--
--    head = NULL;
--    tail = &head;
--
--    dp = opendir("/sys/devices/system/memory/");
--    if (!dp) {
--        /* it's ok if this happens to be a system that doesn't expose
--         * memory blocks via sysfs, but otherwise we should report
--         * an error
--         */
--        if (errno != ENOENT) {
--            error_setg_errno(errp, errno, "Can't open directory"
--                             "\"/sys/devices/system/memory/\"");
--        }
--        return NULL;
--    }
--
--    /* Note: the phys_index of memory block may be discontinuous,
--     * this is because a memblk is the unit of the Sparse Memory design, which
--     * allows discontinuous memory ranges (ex. NUMA), so here we should
--     * traverse the memory block directory.
--     */
--    while ((de = readdir(dp)) != NULL) {
--        GuestMemoryBlock *mem_blk;
--
--        if ((strncmp(de->d_name, "memory", 6) != 0) ||
--            !(de->d_type & DT_DIR)) {
--            continue;
--        }
--
--        mem_blk = g_malloc0(sizeof *mem_blk);
--        /* The d_name is "memoryXXX",  phys_index is block id, same as XXX */
--        mem_blk->phys_index = strtoul(&de->d_name[6], NULL, 10);
--        mem_blk->has_can_offline = true; /* lolspeak ftw */
--        transfer_memory_block(mem_blk, true, NULL, &local_err);
--        if (local_err) {
--            break;
--        }
--
--        QAPI_LIST_APPEND(tail, mem_blk);
--    }
--
--    closedir(dp);
--    if (local_err == NULL) {
--        /* there's no guest with zero memory blocks */
--        if (head == NULL) {
--            error_setg(errp, "guest reported zero memory blocks!");
--        }
--        return head;
--    }
--
--    qapi_free_GuestMemoryBlockList(head);
--    error_propagate(errp, local_err);
+-    error_setg(errp, QERR_UNSUPPORTED);
 -    return NULL;
 -}
 -
 -GuestMemoryBlockResponseList *
 -qmp_guest_set_memory_blocks(GuestMemoryBlockList *mem_blks, Error **errp)
 -{
--    GuestMemoryBlockResponseList *head, **tail;
--    Error *local_err = NULL;
--
--    head = NULL;
--    tail = &head;
--
--    while (mem_blks != NULL) {
--        GuestMemoryBlockResponse *result;
--        GuestMemoryBlock *current_mem_blk = mem_blks->value;
--
--        result = g_malloc0(sizeof(*result));
--        result->phys_index = current_mem_blk->phys_index;
--        transfer_memory_block(current_mem_blk, false, result, &local_err);
--        if (local_err) { /* should never happen */
--            goto err;
--        }
--
--        QAPI_LIST_APPEND(tail, result);
--        mem_blks = mem_blks->next;
--    }
--
--    return head;
--err:
--    qapi_free_GuestMemoryBlockResponseList(head);
--    error_propagate(errp, local_err);
+-    error_setg(errp, QERR_UNSUPPORTED);
 -    return NULL;
 -}
 -
 -GuestMemoryBlockInfo *qmp_guest_get_memory_block_info(Error **errp)
 -{
--    Error *local_err = NULL;
--    char *dirpath;
--    int dirfd;
--    char *buf;
--    GuestMemoryBlockInfo *info;
--
--    dirpath = g_strdup_printf("/sys/devices/system/memory/");
--    dirfd = open(dirpath, O_RDONLY | O_DIRECTORY);
--    if (dirfd == -1) {
--        error_setg_errno(errp, errno, "open(\"%s\")", dirpath);
--        g_free(dirpath);
--        return NULL;
--    }
--    g_free(dirpath);
--
--    buf = g_malloc0(20);
--    ga_read_sysfs_file(dirfd, "block_size_bytes", buf, 20, &local_err);
--    close(dirfd);
--    if (local_err) {
--        g_free(buf);
--        error_propagate(errp, local_err);
--        return NULL;
--    }
--
--    info = g_new0(GuestMemoryBlockInfo, 1);
--    info->size = strtol(buf, NULL, 16); /* the unit is bytes */
--
--    g_free(buf);
--
--    return info;
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
 -}
 -
--
--#else /* defined(__linux__) */
-+#ifndef __linux__
- 
- void qmp_guest_suspend_disk(Error **errp)
+ /* add unsupported commands to the list of blocked RPCs */
+ GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
  {
+-    const char *list_unsupported[] = {
+-        "guest-suspend-hybrid",
+-        "guest-set-vcpus",
+-        "guest-get-memory-blocks", "guest-set-memory-blocks",
+-        "guest-get-memory-block-info",
+-        NULL};
+-    char **p = (char **)list_unsupported;
+-
+-    while (*p) {
+-        blockedrpcs = g_list_append(blockedrpcs, g_strdup(*p++));
+-    }
+-
+     if (!vss_init(true)) {
+         g_debug("vss_init failed, vss commands are going to be disabled");
+         const char *list[] = {
+             "guest-get-fsinfo", "guest-fsfreeze-status",
+             "guest-fsfreeze-freeze", "guest-fsfreeze-thaw", NULL};
+-        p = (char **)list;
++        char **p = (char **)list;
+ 
+         while (*p) {
+             blockedrpcs = g_list_append(blockedrpcs, g_strdup(*p++));
+@@ -2505,15 +2463,3 @@ char *qga_get_host_name(Error **errp)
+ 
+     return g_utf16_to_utf8(tmp, size, NULL, NULL, NULL);
+ }
+-
+-GuestDiskStatsInfoList *qmp_guest_get_diskstats(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+-
+-GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
+-{
+-    error_setg(errp, QERR_UNSUPPORTED);
+-    return NULL;
+-}
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index b3de1fb6b3..b91456e9ad 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -636,7 +636,8 @@
+ #
+ # Since: 1.1
+ ##
+-{ 'command': 'guest-suspend-hybrid', 'success-response': false }
++{ 'command': 'guest-suspend-hybrid', 'success-response': false,
++  'if': 'CONFIG_POSIX' }
+ 
+ ##
+ # @GuestIpAddressType:
+@@ -806,7 +807,8 @@
+ ##
+ { 'command': 'guest-set-vcpus',
+   'data':    {'vcpus': ['GuestLogicalProcessor'] },
+-  'returns': 'int' }
++  'returns': 'int',
++  'if': 'CONFIG_POSIX' }
+ 
+ ##
+ # @GuestDiskBusType:
+@@ -1099,7 +1101,8 @@
+ { 'struct': 'GuestMemoryBlock',
+   'data': {'phys-index': 'uint64',
+            'online': 'bool',
+-           '*can-offline': 'bool'} }
++           '*can-offline': 'bool'},
++  'if': 'CONFIG_POSIX' }
+ 
+ ##
+ # @guest-get-memory-blocks:
+@@ -1115,7 +1118,8 @@
+ # Since: 2.3
+ ##
+ { 'command': 'guest-get-memory-blocks',
+-  'returns': ['GuestMemoryBlock'] }
++  'returns': ['GuestMemoryBlock'],
++  'if': 'CONFIG_POSIX' }
+ 
+ ##
+ # @GuestMemoryBlockResponseType:
+@@ -1138,7 +1142,8 @@
+ ##
+ { 'enum': 'GuestMemoryBlockResponseType',
+   'data': ['success', 'not-found', 'operation-not-supported',
+-           'operation-failed'] }
++           'operation-failed'],
++  'if': 'CONFIG_POSIX' }
+ 
+ ##
+ # @GuestMemoryBlockResponse:
+@@ -1156,7 +1161,8 @@
+ { 'struct': 'GuestMemoryBlockResponse',
+   'data': { 'phys-index': 'uint64',
+             'response': 'GuestMemoryBlockResponseType',
+-            '*error-code': 'int' }}
++            '*error-code': 'int' },
++  'if': 'CONFIG_POSIX'}
+ 
+ ##
+ # @guest-set-memory-blocks:
+@@ -1187,7 +1193,8 @@
+ ##
+ { 'command': 'guest-set-memory-blocks',
+   'data':    {'mem-blks': ['GuestMemoryBlock'] },
+-  'returns': ['GuestMemoryBlockResponse'] }
++  'returns': ['GuestMemoryBlockResponse'],
++  'if': 'CONFIG_POSIX' }
+ 
+ ##
+ # @GuestMemoryBlockInfo:
+@@ -1199,7 +1206,8 @@
+ # Since: 2.3
+ ##
+ { 'struct': 'GuestMemoryBlockInfo',
+-  'data': {'size': 'uint64'} }
++  'data': {'size': 'uint64'},
++  'if': 'CONFIG_POSIX' }
+ 
+ ##
+ # @guest-get-memory-block-info:
+@@ -1211,7 +1219,8 @@
+ # Since: 2.3
+ ##
+ { 'command': 'guest-get-memory-block-info',
+-  'returns': 'GuestMemoryBlockInfo' }
++  'returns': 'GuestMemoryBlockInfo',
++  'if': 'CONFIG_POSIX' }
+ 
+ ##
+ # @GuestExecStatus:
+@@ -1702,7 +1711,8 @@
+   'data': {'name': 'str',
+            'major': 'uint64',
+            'minor': 'uint64',
+-           'stats': 'GuestDiskStats' } }
++           'stats': 'GuestDiskStats' },
++  'if': 'CONFIG_POSIX' }
+ 
+ ##
+ # @guest-get-diskstats:
+@@ -1714,7 +1724,8 @@
+ # Since: 7.1
+ ##
+ { 'command': 'guest-get-diskstats',
+-  'returns': ['GuestDiskStatsInfo']
++  'returns': ['GuestDiskStatsInfo'],
++  'if': 'CONFIG_POSIX'
+ }
+ 
+ ##
+@@ -1727,7 +1738,8 @@
+ # Since: 7.1
+ ##
+ { 'enum': 'GuestCpuStatsType',
+-  'data': [ 'linux' ] }
++  'data': [ 'linux' ],
++  'if': 'CONFIG_POSIX' }
+ 
+ 
+ ##
+@@ -1772,7 +1784,8 @@
+            '*steal': 'uint64',
+            '*guest': 'uint64',
+            '*guestnice': 'uint64'
+-           } }
++           },
++  'if': 'CONFIG_POSIX' }
+ 
+ ##
+ # @GuestCpuStats:
+@@ -1786,7 +1799,8 @@
+ { 'union': 'GuestCpuStats',
+   'base': { 'type': 'GuestCpuStatsType' },
+   'discriminator': 'type',
+-  'data': { 'linux': 'GuestLinuxCpuStats' } }
++  'data': { 'linux': 'GuestLinuxCpuStats' },
++  'if': 'CONFIG_POSIX' }
+ 
+ ##
+ # @guest-get-cpustats:
+@@ -1798,5 +1812,6 @@
+ # Since: 7.1
+ ##
+ { 'command': 'guest-get-cpustats',
+-  'returns': ['GuestCpuStats']
++  'returns': ['GuestCpuStats'],
++  'if': 'CONFIG_POSIX'
+ }
 -- 
 2.45.1
 
