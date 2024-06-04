@@ -4,79 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00301C27C53
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1C05C25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:45:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sENtB-00015C-TH; Tue, 04 Jun 2024 02:43:21 -0400
+	id 1sENuJ-0001wD-MD; Tue, 04 Jun 2024 02:44:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sENt9-000149-Hv; Tue, 04 Jun 2024 02:43:19 -0400
-Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sENt7-00079O-L2; Tue, 04 Jun 2024 02:43:19 -0400
-Received: by mail-ua1-x933.google.com with SMTP id
- a1e0cc1a2514c-80aca0fbcffso220711241.1; 
- Mon, 03 Jun 2024 23:43:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717483396; x=1718088196; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=K3ql2cT4nN5lj0/lXbbPlUzDIUcijp2aoILioVyJGN0=;
- b=idNQMLfBrSYcEen9BoUe+w5/OW9CjJfsFPu9D4pBF5zAFHhgpMlueLGndz6tFuVLPn
- vcCU+aPX+uBgx3bNgD+KJFCLp8JkD2Qzcg/9gz8a3p/idSKJuELxrGJF/AsOqFprMoIR
- f8jHtL7KnFhgNTOSnRK4/R/Q7NDdJXHXHkRLKhtSuDZMj856u5Qy6A/TJePNZeHHLfxJ
- LR0cA5OTFa5FHpJQPt/89QaEOD9rqz4GmfooMmV8C9zr5evFfPrWppuCrmakHlqr5iTo
- Rtxx4J5cst4xXkqBAdSOYahDs9CknfxLtCRUQ8h3nsV4WE1Me78BqYi/7m65TG+GwS8P
- 7Y2g==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sENuF-0001vk-Fy
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sENuE-0007F2-1m
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717483465;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GddOmQhfFORfG9tr7FCmbGqF9ZpbvN878cxtrbolbpk=;
+ b=AvXKQ8l2kMrwdO665qkJ6STkNgliTMwuvYtX4hCZ6Tg2n+Gpj5ymzxoOA2E8SXZdoc/5rs
+ WYpuEz4y3mxxErsMdnVMIsKrDdDhERXSfMWcscKhDzBsCGDCVUN5cHT58pVthAQwW90YFd
+ kaaBYW2hrQNNkF6nCDSBeQDC5jyWVyI=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-126-dLELeqeDMimLeNR7P8DAyw-1; Tue, 04 Jun 2024 02:44:21 -0400
+X-MC-Unique: dLELeqeDMimLeNR7P8DAyw-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-57a2fb28a23so364397a12.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:44:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717483396; x=1718088196;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1717483459; x=1718088259;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=K3ql2cT4nN5lj0/lXbbPlUzDIUcijp2aoILioVyJGN0=;
- b=CelAuZklZCFYPxtB1il89crLVRNWuFkmtGkB9gsSAFcKDFBUts5nzo0ZqVyF0ha/lt
- 80DBY0tQ8MmuAtebSN8w1Ci35xZllaeFpeVnJ3kP0ndWEu2cdZUWCAjDaSuvC4VkY3g7
- J7KoEuQ81VYFBel7mSHjGI9uuTMTH1fVhrO/8zYLCqhpw1+/peHdYIvjXBQEAmugmicm
- a8HiaFHILqzn0j6VDQYa/C4hNzVgCnLDiKJI4VufzpVidC0A8DqrJ3qlWoE4GuCPWTRA
- xB6VbFgLX+0EZRguEvM/u230+xsXyCXBdPG3Adtm02MCzA/t03kdlRW90o4dWNEyF5NM
- 8QGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXOrlZyljflMMsIina949kk1aJaNGAtTrkX49nhp23NOfqB7rieJwvumxhB4wn8rJhuEbOYPFdLS8efWuj14KNIofPZuEY=
-X-Gm-Message-State: AOJu0YxFGlj2fEf6BXtpX+0CQn+bQcPaZUu0r0Unul4sKHZrzjPP9Vox
- JEWflb5mhnuKcOeuP5EMidCR5ho5nbDzoRFLwWcSKHJwkjGKJ0EiCgE7GqWPbQrT4rkr6MEoUY4
- 0NY/JzNko4XaowUyMgIn2x16NOC8=
-X-Google-Smtp-Source: AGHT+IFioAP5C37fR4cW9FHBWcCCXZ08FWzJLTVRzMO0cGWjCqp0cCRuhJUJhieKnlP7EUHi5UZWM36wwNVDAZWbx8E=
-X-Received: by 2002:a67:e355:0:b0:48b:ad6a:c7c6 with SMTP id
- ada2fe7eead31-48bc231d445mr9764622137.24.1717483395876; Mon, 03 Jun 2024
- 23:43:15 -0700 (PDT)
+ bh=GddOmQhfFORfG9tr7FCmbGqF9ZpbvN878cxtrbolbpk=;
+ b=eezPfgQKxprucopD+lcAylV/6CWXOq/UUJB8dQK5EaVhN277btNTQXTFyM7tkTV3tK
+ ld0LAr1akozAlUh5RFWrCnQJUHChDZV6NP/1+LCS6PA98OsqqcsRnMx1aNmtUD0Ve8ml
+ I3+7zExOqqT+jx6upIMdYFccZQRIesHp0cOHaNmAfaO9nDnJz6ikhUIBucJ5iCfdINpo
+ mtfA0MP1zz6SvYpNokvwzKW+I/BiK2fVBcuPwgGOsv02/3xPDcckpZBxa8MQqtKYd6qu
+ K6JtKrK5eIyPKWfn1On7I5CPPVpyGrQBm1V35UeWzjgAPhcQZof5WNfiUhaJ1UaKH9XI
+ 173w==
+X-Gm-Message-State: AOJu0YxeC+hyejwx/Gtupg1mbBVMqtj/Y6HZjqffcylwtLzVvHoxeCZZ
+ gAV2Ftx9ciT+XEIlQP3AzCNFlO/yDA+Gn/NbtQMJ5PS7UIORv+A1t7HKBWm3CHW+F1FlsWK7Or4
+ WuBqvXLxucaM/pBOCBccSiI0Hvl3rLF6tlNaRsv7AiDmKtaGbBzhYyruQDRt4DI9OStoroMmOpA
+ OvvQ0DuzKpro3tkbpu1BGdBM7NY32hAgwXKpzR
+X-Received: by 2002:a50:d657:0:b0:57a:33a5:9b78 with SMTP id
+ 4fb4d7f45d1cf-57a364496famr6712362a12.34.1717483459105; 
+ Mon, 03 Jun 2024 23:44:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE6qTOubZSr3iChSRpbVUfHkF1qu7yCO0E5Unc72e0Mhg1Q1E2SpwpSkCHAFe0ltklZoaeigA==
+X-Received: by 2002:a50:d657:0:b0:57a:33a5:9b78 with SMTP id
+ 4fb4d7f45d1cf-57a364496famr6712350a12.34.1717483458700; 
+ Mon, 03 Jun 2024 23:44:18 -0700 (PDT)
+Received: from avogadro.local ([151.81.115.112])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-57a31c6d301sm6675233a12.76.2024.06.03.23.44.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 03 Jun 2024 23:44:17 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 02/45] host/i386: nothing looks at CPUINFO_SSE4
+Date: Tue,  4 Jun 2024 08:43:26 +0200
+Message-ID: <20240604064409.957105-3-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240604064409.957105-1-pbonzini@redhat.com>
+References: <20240604064409.957105-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20240604041445.244768-1-alvinga@andestech.com>
-In-Reply-To: <20240604041445.244768-1-alvinga@andestech.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 4 Jun 2024 16:42:48 +1000
-Message-ID: <CAKmqyKOTqvzkukT+864qbbs8qY9td7LsqNaXE=bUjra740SKOw@mail.gmail.com>
-Subject: Re: [PATCH v5 0/4] RISC-V: Modularize common match conditions for
- trigger
-To: Alvin Chang <alvinga@andestech.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x933.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,58 +105,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 4, 2024 at 2:42=E2=80=AFPM Alvin Chang via <qemu-devel@nongnu.o=
-rg> wrote:
->
-> According to RISC-V Debug specification ratified version 0.13 [1]
-> (also applied to version 1.0 [2] but it has not been ratified yet), the
-> enabled privilege levels of the trigger is common match conditions for
-> all the types of the trigger.
->
-> This series modularize the code for checking the privilege levels of
-> type 2/3/6 triggers by implementing functions trigger_common_match()
-> and trigger_priv_match().
->
-> Additional match conditions, such as CSR tcontrol and textra, can be
-> further implemented into trigger_common_match() in the future.
->
-> [1]: https://github.com/riscv/riscv-debug-spec/releases/tag/task_group_vo=
-te
-> [2]: https://github.com/riscv/riscv-debug-spec/releases/tag/1.0.0-rc1-asc=
-iidoc
->
-> Changes from v4:
-> - Rebasing on riscv-to-apply.next
->
-> Changes from v3:
-> - Change this series to target Debug Spec. version 0.13
->
-> Changes from v2:
-> - Explicitly mention the targeting version of RISC-V Debug Spec.
->
-> Changes from v1:
-> - Fix typo
-> - Add commit description for changing behavior of looping the triggers
->   when we check type 2 triggers.
->
-> Alvin Chang (4):
->   target/riscv: Add functions for common matching conditions of trigger
->   target/riscv: Apply modularized matching conditions for breakpoint
->   target/riscv: Apply modularized matching conditions for watchpoint
->   target/riscv: Apply modularized matching conditions for icount trigger
+The only user was the SSE4.1 variant of buffer_is_zero, which has
+been removed; code to compute CPUINFO_SSE4 is dead.
 
-Thanks!
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ host/include/i386/host/cpuinfo.h | 1 -
+ util/cpuinfo-i386.c              | 1 -
+ 2 files changed, 2 deletions(-)
 
-Applied to riscv-to-apply.next
+diff --git a/host/include/i386/host/cpuinfo.h b/host/include/i386/host/cpuinfo.h
+index b89e6d2e55a..9386c749881 100644
+--- a/host/include/i386/host/cpuinfo.h
++++ b/host/include/i386/host/cpuinfo.h
+@@ -16,7 +16,6 @@
+ #define CPUINFO_BMI1            (1u << 5)
+ #define CPUINFO_BMI2            (1u << 6)
+ #define CPUINFO_SSE2            (1u << 7)
+-#define CPUINFO_SSE4            (1u << 8)
+ #define CPUINFO_AVX1            (1u << 9)
+ #define CPUINFO_AVX2            (1u << 10)
+ #define CPUINFO_AVX512F         (1u << 11)
+diff --git a/util/cpuinfo-i386.c b/util/cpuinfo-i386.c
+index 9fddb18303d..18ab747a6d2 100644
+--- a/util/cpuinfo-i386.c
++++ b/util/cpuinfo-i386.c
+@@ -36,7 +36,6 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+ 
+         info |= (d & bit_CMOV ? CPUINFO_CMOV : 0);
+         info |= (d & bit_SSE2 ? CPUINFO_SSE2 : 0);
+-        info |= (c & bit_SSE4_1 ? CPUINFO_SSE4 : 0);
+         info |= (c & bit_MOVBE ? CPUINFO_MOVBE : 0);
+         info |= (c & bit_POPCNT ? CPUINFO_POPCNT : 0);
+         info |= (c & bit_PCLMUL ? CPUINFO_PCLMUL : 0);
+-- 
+2.45.1
 
-Alistair
-
->
->  target/riscv/debug.c | 129 ++++++++++++++++++++++++++++---------------
->  1 file changed, 85 insertions(+), 44 deletions(-)
->
-> --
-> 2.34.1
->
->
 
