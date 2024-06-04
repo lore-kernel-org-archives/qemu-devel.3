@@ -4,41 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E25BDC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 09:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 880D7C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 09:15:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEQDM-0005ln-Ug; Tue, 04 Jun 2024 05:12:20 -0400
+	id 1sEQG5-0006bo-S8; Tue, 04 Jun 2024 05:15:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1sEQDL-0005la-GK; Tue, 04 Jun 2024 05:12:19 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <yumin686@andestech.com>)
+ id 1sEQFw-0006ag-Q4; Tue, 04 Jun 2024 05:15:01 -0400
+Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
+ helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1sEQDJ-0001eN-BG; Tue, 04 Jun 2024 05:12:19 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id D030A42A29;
- Tue,  4 Jun 2024 11:12:13 +0200 (CEST)
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, crosa@redhat.com, jsnow@redhat.com,
- hreitz@redhat.com, kwolf@redhat.com
-Subject: [RFC PATCH] block-coroutine-wrapper: support generating wrappers for
- functions without arguments
-Date: Tue,  4 Jun 2024 11:12:08 +0200
-Message-Id: <20240604091208.39677-1-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <yumin686@andestech.com>)
+ id 1sEQFt-0003QL-ED; Tue, 04 Jun 2024 05:15:00 -0400
+Received: from Atcsqr.andestech.com (localhost [127.0.0.2] (may be forged))
+ by Atcsqr.andestech.com with ESMTP id 45494wWf090663;
+ Tue, 4 Jun 2024 17:04:58 +0800 (+08)
+ (envelope-from yumin686@andestech.com)
+Received: from mail.andestech.com (ATCPCS16.andestech.com [10.0.1.222])
+ by Atcsqr.andestech.com with ESMTP id 45494epg090481;
+ Tue, 4 Jun 2024 17:04:40 +0800 (+08)
+ (envelope-from yumin686@andestech.com)
+Received: from lubuntu-vb.andestech.com (10.0.12.32) by ATCPCS16.andestech.com
+ (10.0.1.222) with Microsoft SMTP Server id 14.3.498.0;
+ Tue, 4 Jun 2024 17:04:40 +0800
+To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, <yumin686@andestech.com>, Alvin Chang
+ <alvinga@andestech.com>
+Subject: [PATCH v4] target/riscv: raise an exception when CSRRS/CSRRC writes a
+ read-only CSR
+Date: Tue, 4 Jun 2024 17:04:34 +0800
+Message-ID: <20240604090434.37136-1-yumin686@andestech.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.0.12.32]
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 45494wWf090663
+Received-SPF: pass client-ip=60.248.80.70; envelope-from=yumin686@andestech.com;
+ helo=Atcsqr.andestech.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RDNS_DYNAMIC=0.982,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, TVD_RCVD_IP=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -51,95 +66,187 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Yu-Ming Chang <yumin686@andestech.com>
+From:  Yu-Ming Chang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Both CSRRS and CSRRC always read the addressed CSR and cause any read side
+effects regardless of rs1 and rd fields. Note that if rs1 specifies a register
+holding a zero value other than x0, the instruction will still attempt to write
+the unmodified value back to the CSR and will cause any attendant side effects.
+
+So if CSRRS or CSRRC tries to write a read-only CSR with rs1 which specifies
+a register holding a zero value, an illegal instruction exception should be
+raised.
+
+Signed-off-by: Yu-Ming Chang <yumin686@andestech.com>
+Signed-off-by: Alvin Chang <alvinga@andestech.com>
 ---
+Hi Alistair,
+    This fixed the issue of riscv_csrrw_debug().
 
-An alternative would be to detect whether the argument list is 'void'
-in FuncDecl's __init__, assign the empty list to self.args there and
-special case based on that in the rest of the code.
+Best regards,
+Yuming
 
-Not super happy about the introduction of the 'void_value' parameter,
-but the different callers seem to make something like it necessary.
-Could be avoided if there were a nice way to map a format which
-contains no other keys besides '{name}' to the empty list if the
-argument's 'name' is 'None'. At least until there is a format that
-contains both '{name}' and another key which would require special
-handling again.
+ target/riscv/cpu.h       |  4 +++
+ target/riscv/csr.c       | 57 ++++++++++++++++++++++++++++++++++++----
+ target/riscv/op_helper.c |  6 ++---
+ 3 files changed, 58 insertions(+), 9 deletions(-)
 
-The generated code unfortunately does contain a few extra blank lines.
-Avoiding that would require turning some of the (currently static)
-formatting surrounding gen_block() dynamic based upon whether the
-argument list is 'void'.
-
-Happy about any feedback/suggestions!
-
- scripts/block-coroutine-wrapper.py | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
-
-diff --git a/scripts/block-coroutine-wrapper.py b/scripts/block-coroutine-wrapper.py
-index dbbde99e39..533f6dbe12 100644
---- a/scripts/block-coroutine-wrapper.py
-+++ b/scripts/block-coroutine-wrapper.py
-@@ -54,6 +54,11 @@ class ParamDecl:
-                           r')')
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 2d0c02c35b..72921bafc0 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -708,6 +708,8 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+ void riscv_cpu_update_mask(CPURISCVState *env);
+ bool riscv_cpu_is_32bit(RISCVCPU *cpu);
  
-     def __init__(self, param_decl: str) -> None:
-+        if param_decl.strip() == 'void':
-+            self.decl = 'void'
-+            self.type = 'void'
-+            self.name = None
-+            return
-         m = self.param_re.match(param_decl.strip())
-         if m is None:
-             raise ValueError(f'Wrong parameter declaration: "{param_decl}"')
-@@ -114,10 +119,14 @@ def gen_ctx(self, prefix: str = '') -> str:
-         else:
-             return 'qemu_get_aio_context()'
++RISCVException riscv_csrr(CPURISCVState *env, int csrno,
++                          target_ulong *ret_value);
+ RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+                            target_ulong *ret_value,
+                            target_ulong new_value, target_ulong write_mask);
+@@ -740,6 +742,8 @@ typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
+                                           target_ulong new_value,
+                                           target_ulong write_mask);
  
--    def gen_list(self, format: str) -> str:
-+    def gen_list(self, format: str, void_value='') -> str:
-+        if len(self.args) == 1 and self.args[0].type == 'void':
-+            return void_value
-         return ', '.join(format.format_map(arg.__dict__) for arg in self.args)
++RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
++                               Int128 *ret_value);
+ RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
+                                 Int128 *ret_value,
+                                 Int128 new_value, Int128 write_mask);
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 726096444f..aa765678b9 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -4312,7 +4312,7 @@ static RISCVException rmw_seed(CPURISCVState *env, int csrno,
  
-     def gen_block(self, format: str) -> str:
-+        if len(self.args) == 1 and self.args[0].type == 'void':
-+            return ''
-         return '\n'.join(format.format_map(arg.__dict__) for arg in self.args)
+ static inline RISCVException riscv_csrrw_check(CPURISCVState *env,
+                                                int csrno,
+-                                               bool write_mask)
++                                               bool write)
+ {
+     /* check privileges and return RISCV_EXCP_ILLEGAL_INST if check fails */
+     bool read_only = get_field(csrno, 0xC00) == 3;
+@@ -4334,7 +4334,7 @@ static inline RISCVException riscv_csrrw_check(CPURISCVState *env,
+     }
  
+     /* read / write check */
+-    if (write_mask && read_only) {
++    if (write && read_only) {
+         return RISCV_EXCP_ILLEGAL_INST;
+     }
  
-@@ -158,7 +167,7 @@ def create_mixed_wrapper(func: FuncDecl) -> str:
-     graph_assume_lock = 'assume_graph_lock();' if func.graph_rdlock else ''
+@@ -4421,11 +4421,22 @@ static RISCVException riscv_csrrw_do64(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
  
-     return f"""\
--{func.return_type} {func.name}({ func.gen_list('{decl}') })
-+{func.return_type} {func.name}({ func.gen_list('{decl}', 'void') })
- {{
-     if (qemu_in_coroutine()) {{
-         {graph_assume_lock}
-@@ -186,7 +195,7 @@ def create_co_wrapper(func: FuncDecl) -> str:
-     name = func.target_name
-     struct_name = func.struct_name
-     return f"""\
--{func.return_type} {func.name}({ func.gen_list('{decl}') })
-+{func.return_type} {func.name}({ func.gen_list('{decl}', 'void') })
- {{
-     {struct_name} s = {{
-         .poll_state.ctx = qemu_get_current_aio_context(),
-@@ -284,7 +293,7 @@ def gen_no_co_wrapper(func: FuncDecl) -> str:
-     aio_co_wake(s->co);
- }}
++RISCVException riscv_csrr(CPURISCVState *env, int csrno,
++                           target_ulong *ret_value)
++{
++    RISCVException ret = riscv_csrrw_check(env, csrno, false);
++    if (ret != RISCV_EXCP_NONE) {
++        return ret;
++    }
++
++    return riscv_csrrw_do64(env, csrno, ret_value, 0, 0);
++}
++
+ RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+                            target_ulong *ret_value,
+                            target_ulong new_value, target_ulong write_mask)
+ {
+-    RISCVException ret = riscv_csrrw_check(env, csrno, write_mask);
++    RISCVException ret = riscv_csrrw_check(env, csrno, true);
+     if (ret != RISCV_EXCP_NONE) {
+         return ret;
+     }
+@@ -4473,13 +4484,45 @@ static RISCVException riscv_csrrw_do128(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
  
--{func.return_type} coroutine_fn {func.name}({ func.gen_list('{decl}') })
-+{func.return_type} coroutine_fn {func.name}({ func.gen_list('{decl}', 'void') })
- {{
-     {struct_name} s = {{
-         .co = qemu_coroutine_self(),
++RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
++                               Int128 *ret_value)
++{
++    RISCVException ret;
++
++    ret = riscv_csrrw_check(env, csrno, false);
++    if (ret != RISCV_EXCP_NONE) {
++        return ret;
++    }
++
++    if (csr_ops[csrno].read128) {
++        return riscv_csrrw_do128(env, csrno, ret_value,
++                                 int128_zero(), int128_zero());
++    }
++
++    /*
++     * Fall back to 64-bit version for now, if the 128-bit alternative isn't
++     * at all defined.
++     * Note, some CSRs don't need to extend to MXLEN (64 upper bits non
++     * significant), for those, this fallback is correctly handling the
++     * accesses
++     */
++    target_ulong old_value;
++    ret = riscv_csrrw_do64(env, csrno, &old_value,
++                           (target_ulong)0,
++                           (target_ulong)0);
++    if (ret == RISCV_EXCP_NONE && ret_value) {
++        *ret_value = int128_make64(old_value);
++    }
++    return ret;
++}
++
+ RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
+                                 Int128 *ret_value,
+                                 Int128 new_value, Int128 write_mask)
+ {
+     RISCVException ret;
+ 
+-    ret = riscv_csrrw_check(env, csrno, int128_nz(write_mask));
++    ret = riscv_csrrw_check(env, csrno, true);
+     if (ret != RISCV_EXCP_NONE) {
+         return ret;
+     }
+@@ -4518,7 +4561,11 @@ RISCVException riscv_csrrw_debug(CPURISCVState *env, int csrno,
+ #if !defined(CONFIG_USER_ONLY)
+     env->debugger = true;
+ #endif
+-    ret = riscv_csrrw(env, csrno, ret_value, new_value, write_mask);
++    if (!write_mask) {
++        ret = riscv_csrr(env, csrno, ret_value);
++    } else {
++        ret = riscv_csrrw(env, csrno, ret_value, new_value, write_mask);
++    }
+ #if !defined(CONFIG_USER_ONLY)
+     env->debugger = false;
+ #endif
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index f414aaebdb..b95d47e9ac 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -51,7 +51,7 @@ target_ulong helper_csrr(CPURISCVState *env, int csr)
+     }
+ 
+     target_ulong val = 0;
+-    RISCVException ret = riscv_csrrw(env, csr, &val, 0, 0);
++    RISCVException ret = riscv_csrr(env, csr, &val);
+ 
+     if (ret != RISCV_EXCP_NONE) {
+         riscv_raise_exception(env, ret, GETPC());
+@@ -84,9 +84,7 @@ target_ulong helper_csrrw(CPURISCVState *env, int csr,
+ target_ulong helper_csrr_i128(CPURISCVState *env, int csr)
+ {
+     Int128 rv = int128_zero();
+-    RISCVException ret = riscv_csrrw_i128(env, csr, &rv,
+-                                          int128_zero(),
+-                                          int128_zero());
++    RISCVException ret = riscv_csrr_i128(env, csr, &rv);
+ 
+     if (ret != RISCV_EXCP_NONE) {
+         riscv_raise_exception(env, ret, GETPC());
 -- 
-2.39.2
-
+2.34.1
 
 
