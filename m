@@ -4,74 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89A3AC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 13:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D9B7C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 13:58:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEUYP-0006ZZ-KE; Tue, 04 Jun 2024 09:50:21 -0400
+	id 1sEUez-0003kB-17; Tue, 04 Jun 2024 09:57:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sEUYI-0006Sj-T7
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:50:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sEUYH-00039Q-8A
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:50:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717509012;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=A8RFNKgyFIcY7EBRYpleoUXFOia91EodAg+WIEAdwmA=;
- b=ZQAYOIC2YhEsuxFfkGao4kRYgX8VnHinco6aggiusQ82naaxeJk74hA14LCdtB1Mj0VkRz
- GGA9OaX+FHf//gcCXA94K8QVxaJuVkwc/JD4Cb7bPGeOEynmorukYkoQXvHzMgbkrjpHxg
- V0ji51yYu1okTx33OaoFPfQJsiCHL20=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-546-GxJHj2IkMGKre3lZnE4e3g-1; Tue, 04 Jun 2024 09:50:07 -0400
-X-MC-Unique: GxJHj2IkMGKre3lZnE4e3g-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 20AAE101A521;
- Tue,  4 Jun 2024 13:50:07 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.39.194.137])
- by smtp.corp.redhat.com (Postfix) with ESMTP id E4CC0C15C16;
- Tue,  4 Jun 2024 13:50:04 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Konstantin Kostiuk <kkostiuk@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 13/20] qga: conditionalize schema for commands requiring
- fsfreeze
-Date: Tue,  4 Jun 2024 14:49:26 +0100
-Message-ID: <20240604134933.220112-14-berrange@redhat.com>
-In-Reply-To: <20240604134933.220112-1-berrange@redhat.com>
-References: <20240604134933.220112-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEUex-0003jZ-3z
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:57:07 -0400
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEUev-0006Jz-CV
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:57:06 -0400
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-6f361af4cb6so1898171a34.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 06:57:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717509424; x=1718114224; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=HSWsv7qSs1aLESk5MC50gsqG5FLzpbPwKWUfTKJLtgM=;
+ b=uZv2/q459olv/doY2qs93l9yEpADYpX7YuHmaZj+aKZeCKrpQMuc34msclnytyisMr
+ ap3AnZGpfEtDMrQONKmfEq9SGWF8wjGdt1MtxedD2KQ+6zSA08Q3I6mqbu9JOLnZttUu
+ 4Ap4d3J5w4mYKUyhy4ie03/D6+IVOLbvgyTPO6gJv6sARECgcR1l1MT51a30T9RKRLjm
+ QXcYVhzJWdOki0rU4LjiMBhzgY4DbCSwuW8MHqhy03msI7wshmIloM3G7pMfMTW5v3AX
+ H5Bv02xv5X9TQDAUR0CrkZR2MD9mQ3Olw9zaiEUGnEVX60XJGFTFaJYuNjNgtvoPEu+z
+ v/4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717509424; x=1718114224;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HSWsv7qSs1aLESk5MC50gsqG5FLzpbPwKWUfTKJLtgM=;
+ b=ZzwDv9npsKuqMt9sbbzWkN5LqEWTMEeHFCqAHov7LX7StNEpETLncpfaHWePgyAkAF
+ N0ORme5UEjohMOz587e/0G3BEXt1qpcK+fcKE5EFE+qTDFDuAHC99D1EOKv3egtqkH4E
+ dr/3W2R3ypHI6WDyoSosfgLOyIhkP8fA9w9VWcmRbB63gFvUH8ZizTOkx4ERa3FwNC/q
+ B1Bi3F6MtqwlbbqI0dIGnnk2malmaxOEb/6W3QRaYOXY0KlrA7uZaOXj6mUXuC4Nh1la
+ Bn/sbwW1kr7S3yO6UvgCUzxlPu6rQVaB3iiFqSGo+90NNO+rKzpWgji0+6//+6l5RS0I
+ pMTg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXIxRh40mR3DbVvcNJrwA9dPNviBTmbAgX3y+RESANBo4o/hVIOARAh5OjU9VlfZck31ETwKqI+iB8I9JQxoKiNIyFdSE0=
+X-Gm-Message-State: AOJu0Ywoa0kJ1GX3p16USGBJUy4ltmTfxZyKKZHCQIlK5uM5e0qW/BKL
+ qeQsFNqITvx1/YxG6M+l3AOIKKWqk1+J/RVNJ6TpW3kiuMbLQruiVAUAIM+78Jlld5c7ZleJsFx
+ O
+X-Google-Smtp-Source: AGHT+IES0pHxJ7XtaQPjTCN6qlLtMccfO5Il+PpuW9KajmXOhlXHTdv9DQpZxy2pLFv2DNJX0530dw==
+X-Received: by 2002:a05:6830:4b1:b0:6f9:3b16:2b4 with SMTP id
+ 46e09a7af769-6f93b161c03mr2061380a34.8.1717509423761; 
+ Tue, 04 Jun 2024 06:57:03 -0700 (PDT)
+Received: from ?IPV6:2607:fb91:1aca:c697:b7cb:e0ad:8679:2c14?
+ ([2607:fb91:1aca:c697:b7cb:e0ad:8679:2c14])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-6f9105a9f1fsm1944983a34.73.2024.06.04.06.57.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Jun 2024 06:57:03 -0700 (PDT)
+Message-ID: <d784a37b-39d1-43d3-9f13-18c92c788608@linaro.org>
+Date: Tue, 4 Jun 2024 08:57:00 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/11] target/i386: document incorrect semantics of
+ watchpoint following MOV/POP SS
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240604071833.962574-1-pbonzini@redhat.com>
+ <20240604071833.962574-11-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240604071833.962574-11-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,143 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than creating stubs for every command that just return
-QERR_UNSUPPORTED, use 'if' conditions in the schema to fully
-exclude generation of the filesystem freezing commands on POSIX
-platforms lacking the required APIs.
+On 6/4/24 02:18, Paolo Bonzini wrote:
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   target/i386/tcg/sysemu/bpt_helper.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/target/i386/tcg/sysemu/bpt_helper.c b/target/i386/tcg/sysemu/bpt_helper.c
+> index c1d5fce250c..b29acf41c38 100644
+> --- a/target/i386/tcg/sysemu/bpt_helper.c
+> +++ b/target/i386/tcg/sysemu/bpt_helper.c
+> @@ -215,6 +215,12 @@ void breakpoint_handler(CPUState *cs)
+>           if (cs->watchpoint_hit->flags & BP_CPU) {
+>               cs->watchpoint_hit = NULL;
+>               if (check_hw_breakpoints(env, false)) {
+> +                /*
+> +                 * FIXME: #DB should be delayed by one instruction if
+> +                 * INHIBIT_IRQ is set (STI cannot trigger a watchpoint).
+> +                 * The delayed #DB should also fuse with one generated
+> +                 * by ICEBP (aka INT1).
+> +                 */
+>                   raise_exception(env, EXCP01_DB);
+>               } else {
+>                   cpu_loop_exit_noexc(cs);
 
-The command will be rejected at QMP dispatch time instead,
-avoiding reimplementing rejection by blocking the stub commands.
+Should be fixable with some sort of state machine initiated with 
+TCGCPUOps.debug_check_watchpoint, but not easy.
 
-This has the additional benefit that the QGA protocol reference
-now documents what conditions enable use of the command.
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- qga/commands-posix.c | 47 --------------------------------------------
- qga/qapi-schema.json | 15 +++++++++-----
- 2 files changed, 10 insertions(+), 52 deletions(-)
 
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index b7f96aa005..9207cb7a8f 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -1144,39 +1144,6 @@ error:
- 
- #endif /* HAVE_GETIFADDRS */
- 
--#if !defined(CONFIG_FSFREEZE)
--
--GuestFsfreezeStatus qmp_guest_fsfreeze_status(Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--
--    return 0;
--}
--
--int64_t qmp_guest_fsfreeze_freeze(Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--
--    return 0;
--}
--
--int64_t qmp_guest_fsfreeze_freeze_list(bool has_mountpoints,
--                                       strList *mountpoints,
--                                       Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--
--    return 0;
--}
--
--int64_t qmp_guest_fsfreeze_thaw(Error **errp)
--{
--    error_setg(errp, QERR_UNSUPPORTED);
--
--    return 0;
--}
--#endif /* CONFIG_FSFREEZE */
--
- #if !defined(CONFIG_FSTRIM)
- GuestFilesystemTrimResponse *
- qmp_guest_fstrim(bool has_minimum, int64_t minimum, Error **errp)
-@@ -1189,20 +1156,6 @@ qmp_guest_fstrim(bool has_minimum, int64_t minimum, Error **errp)
- /* add unsupported commands to the list of blocked RPCs */
- GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
- {
--#if !defined(CONFIG_FSFREEZE)
--    {
--        const char *list[] = {
--            "guest-fsfreeze-status",
--            "guest-fsfreeze-freeze", "guest-fsfreeze-freeze-list",
--            "guest-fsfreeze-thaw", NULL};
--        char **p = (char **)list;
--
--        while (*p) {
--            blockedrpcs = g_list_append(blockedrpcs, g_strdup(*p++));
--        }
--    }
--#endif
--
- #if !defined(CONFIG_FSTRIM)
-     blockedrpcs = g_list_append(blockedrpcs, g_strdup("guest-fstrim"));
- #endif
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index 2704b814ab..098fa7a08b 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -412,7 +412,8 @@
- # Since: 0.15.0
- ##
- { 'enum': 'GuestFsfreezeStatus',
--  'data': [ 'thawed', 'frozen' ] }
-+  'data': [ 'thawed', 'frozen' ],
-+  'if': { 'any': ['CONFIG_WIN32', 'CONFIG_FSFREEZE'] } }
- 
- ##
- # @guest-fsfreeze-status:
-@@ -428,7 +429,8 @@
- # Since: 0.15.0
- ##
- { 'command': 'guest-fsfreeze-status',
--  'returns': 'GuestFsfreezeStatus' }
-+  'returns': 'GuestFsfreezeStatus',
-+  'if': { 'any': ['CONFIG_WIN32', 'CONFIG_FSFREEZE'] } }
- 
- ##
- # @guest-fsfreeze-freeze:
-@@ -450,7 +452,8 @@
- # Since: 0.15.0
- ##
- { 'command': 'guest-fsfreeze-freeze',
--  'returns': 'int' }
-+  'returns': 'int',
-+  'if': { 'any': ['CONFIG_WIN32', 'CONFIG_FSFREEZE'] } }
- 
- ##
- # @guest-fsfreeze-freeze-list:
-@@ -470,7 +473,8 @@
- ##
- { 'command': 'guest-fsfreeze-freeze-list',
-   'data':    { '*mountpoints': ['str'] },
--  'returns': 'int' }
-+  'returns': 'int',
-+  'if': { 'any': ['CONFIG_WIN32', 'CONFIG_FSFREEZE'] } }
- 
- ##
- # @guest-fsfreeze-thaw:
-@@ -487,7 +491,8 @@
- # Since: 0.15.0
- ##
- { 'command': 'guest-fsfreeze-thaw',
--  'returns': 'int' }
-+  'returns': 'int',
-+  'if': { 'any': ['CONFIG_WIN32', 'CONFIG_FSFREEZE'] } }
- 
- ##
- # @GuestFilesystemTrimResult:
--- 
-2.45.1
-
+r~
 
