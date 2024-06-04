@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C1BC25B75
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 02:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F45EC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 02:26:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEJqY-0005Kk-JI; Mon, 03 Jun 2024 22:24:22 -0400
+	id 1sEJsU-0006fu-C7; Mon, 03 Jun 2024 22:26:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEJqW-0005Jr-To; Mon, 03 Jun 2024 22:24:20 -0400
-Received: from mail-vs1-xe2e.google.com ([2607:f8b0:4864:20::e2e])
+ id 1sEJsP-0006fD-Fr; Mon, 03 Jun 2024 22:26:18 -0400
+Received: from mail-vk1-xa36.google.com ([2607:f8b0:4864:20::a36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEJqV-0004R3-Cc; Mon, 03 Jun 2024 22:24:20 -0400
-Received: by mail-vs1-xe2e.google.com with SMTP id
- ada2fe7eead31-48bdacabb43so146996137.3; 
- Mon, 03 Jun 2024 19:24:18 -0700 (PDT)
+ id 1sEJsM-0005L5-RG; Mon, 03 Jun 2024 22:26:17 -0400
+Received: by mail-vk1-xa36.google.com with SMTP id
+ 71dfb90a1353d-4e4f0020ca3so189541e0c.2; 
+ Mon, 03 Jun 2024 19:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717467858; x=1718072658; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717467971; x=1718072771; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AW5CbtxuaoZows9bWqiQvmFoorN0d9bgv4iT+dlfljk=;
- b=Ya6cmN2vPhZi9hE4ZRM0FDLYkaTvx2Zi+IcSKX0AAJoMlt1A5frxyi3yo7NdxOH5p+
- fQtvU0NXVpqaNlAb++nzr+FaFsdeqE1XLsMknTfEdLVTYLlC9AGAAc26Mf89xP9EJD/8
- m+KHqKrjH+qK3OobT6hkpaJCUvgM8kN/6ln6HCEsg7XsSk7dS3YuVtYm+P0CxzjsA1IH
- QO10pcmHC6j6zZbeVzNoJ5epr9hhJ5bl5BeahS4OOnqlTqWUefcO/Hdq2qxAA3WksH16
- hjO6uL6YULN5rCLWJxQdqrBnW/33OhALZrN/kyC7aM27u0k+nfNZYwEggD5gEQpBu9Fs
- anwg==
+ bh=xvK0QffcDHRsp9PYk9sQNjHP6ZWfdM0jvowCQmYhotA=;
+ b=J5Mv1Q+I5Nbq0VNSu57UKvol/nbVRnk32eoWc5ohsSj5pAjleUDMEcDbjZ6DLHF13C
+ RkmFgC7MSzaWk9q+kt5KLiZseLWQpw4DM8nAzNsF02dic40UxBeCz9Wf5lwqkcn+ito/
+ Anlkn8Ro9J3DcIdIvAx6ambtUZLfh03WVXHJrB60sPolttXkZMLq1tM/TSxKocATktc/
+ byv1LuYztlpXK4+GM8+W1azCFF3hg+kKPA/5Ve/BzssYHYAQDiFs/CVlF6OweyAn8rPy
+ 6xZd9xV20Y9whvHICf/ZyMcl1IOq9VSLaz92FLqPhLM1L7q+qlBI0k1NK9iU2/p69ijS
+ 1xng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717467858; x=1718072658;
+ d=1e100.net; s=20230601; t=1717467971; x=1718072771;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AW5CbtxuaoZows9bWqiQvmFoorN0d9bgv4iT+dlfljk=;
- b=DXxBMAnTw3OKVnyMIR3xifuXgDUdxaIEby2BRbEOuhGHr1keaovRjqEp4A9b8/R3Vv
- auA11y9QEXFPy6MVRHVJKeb/OYFDK7hVcXQuC7p7Pcp6dIqGtATeBILBho+rElV8wdqe
- QehIfMJgbWIrx6eFr/qNIuIvZLVIbIVtTDV8Fcb0ND3xSXyTjKXA0H/Hz+RwMydl9sj5
- rovmbWKxPE/LgVbLonuHCxxes3h1NP5ppThRP6lnj2kKd7DZ4njcq8yFXATk/e7vVsiU
- 80ZVLg7VZ/F59L127rdH2s/qXNskNSMSvoDtSFDBG8NLbGDfSEnGOLGWt2pQyQrjjk2g
- n3xQ==
+ bh=xvK0QffcDHRsp9PYk9sQNjHP6ZWfdM0jvowCQmYhotA=;
+ b=rRBH52tAFWrXctms4IWC0Qe/QikneFZ2L0H5dnsqN/7dCTEOh96ISPqNuIsdSCYqxx
+ NrhGFuZ1Up3zO8w7UE5WtZLPn0HVSGhzE8+rze7n0ePnMzbP7MgP1DDpJC6valuTrtBU
+ 75zScAjwVxNQ9FoRZzw11PTGdU6ibvGFyQGNUmdSZCkHDD+T44feftSlU3egGBQndi+l
+ +Ppau7OPdHNaZalfbAz/YbWfIQj+Szk4tfM9Jav7RMQ2OlUuJFgFIqmRL113W/z48HrA
+ kyT3m2P5vbCn9gbOHAQrllbXKmIFVVausCP9bbqDFoF5FwsDhpEUPxoljqG4Ev1DZrDf
+ EYzQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVqddY9ymRuxCLYx/k2e4gvve8JEMOnIg9cjacGi4eXp1ilknZIpjx6dRwRRJrh3NGppOHFZ8C1xW+GjBt+5lLWmav2Uuk=
-X-Gm-Message-State: AOJu0YzD8Vs8owyj8SuXgcDRNfj6hEqrN7Uc+wfMh0dDX3RlipkcsNdL
- JlZuD+rd/WmdWaVmgtkq4kLVF1wgFLdqLWm1s0xwL9eGhkX9qtiBko9Kp16qtcUUIo4JBsEdl9/
- 6De7l2iX30YAam9h2y8VUtBFyJ2clPw==
-X-Google-Smtp-Source: AGHT+IG4MAVGD9p8mxF50/GL+OqqaVwBpSIIcu67qAhSTn/Ulq8f7ZVD9dSIAixc0fky6TSvuJfOtXu6EzjfUW2rAwQ=
-X-Received: by 2002:a05:6102:5f61:b0:47e:f540:f461 with SMTP id
- ada2fe7eead31-48bc214d47fmr8493231137.11.1717467857813; Mon, 03 Jun 2024
- 19:24:17 -0700 (PDT)
+ AJvYcCVmnso/Ko2c8y7qHq74+V7iavmllnoaDQJ0RT+J08Usy8AMh/jPo7kXNEWqnnzL2RgHcVyYVCL+bQLm5wpWkMpNYGWWlwc=
+X-Gm-Message-State: AOJu0YxuKDmnyZIm1W6v+tJbWIFKxtpjQstuq1PjNsh458hKzf9jCwKd
+ vZOlaRJuqWBM5Hm+4aXzSAKobMJ0JOtQkiF9KU8umnJe3rEWj+nu8sHdVDDNN6YRLfr8lDo6FVY
+ 6YpUGL8nUTsZ2GsbOF/cWs6d0V6I=
+X-Google-Smtp-Source: AGHT+IFZGOtL7LO80ExbhV0xRcA6ewRFuIt9j2erWksw8F/11s9K3lFitmILFqMuxr4uggB78gmyb7zytbh3EcadHEI=
+X-Received: by 2002:a05:6122:98f:b0:4eb:1be0:3398 with SMTP id
+ 71dfb90a1353d-4eb1be03428mr5049713e0c.5.1717467970694; Mon, 03 Jun 2024
+ 19:26:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240522062905.1799-1-zhiwei_liu@linux.alibaba.com>
- <20240522062905.1799-5-zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240522062905.1799-5-zhiwei_liu@linux.alibaba.com>
+References: <20240523124045.1964-1-zhiwei_liu@linux.alibaba.com>
+ <20240523124045.1964-2-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240523124045.1964-2-zhiwei_liu@linux.alibaba.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 4 Jun 2024 12:23:51 +1000
-Message-ID: <CAKmqyKOYTz4muba1mrGUSRDk+2-H+pkq9PyFeTJa7X1_aiNVig@mail.gmail.com>
-Subject: Re: [PATCH 4/4] disas/riscv: Support zcmop disassemble
+Date: Tue, 4 Jun 2024 12:25:44 +1000
+Message-ID: <CAKmqyKOgdRPdmBu=a=pM7hrtZqTGxuU6-sPogWiG5Hw-1MVxxA@mail.gmail.com>
+Subject: Re: [PATCH 1/6] target/riscv: Move gen_amo before implement Zabha
 To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
  Alistair.Francis@wdc.com, dbarboza@ventanamicro.com, bmeng.cn@gmail.com, 
- iwei1518@gmail.com
+ liwei1518@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2e;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a36;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa36.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -93,13 +93,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 22, 2024 at 4:33=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibab=
-a.com> wrote:
->
-> Although in QEMU disassemble, we usually lift compressed instruction
-> to an normal format when display the instruction name. For C.MOP.n,
-> it is more reasonable to directly display its compressed name, because
-> its behavior can be redefined by later extension.
+On Thu, May 23, 2024 at 10:43=E2=80=AFPM LIU Zhiwei
+<zhiwei_liu@linux.alibaba.com> wrote:
 >
 > Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
@@ -108,58 +103,77 @@ Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  disas/riscv.c | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
+>  target/riscv/insn_trans/trans_rva.c.inc | 21 ---------------------
+>  target/riscv/translate.c                | 21 +++++++++++++++++++++
+>  2 files changed, 21 insertions(+), 21 deletions(-)
 >
-> diff --git a/disas/riscv.c b/disas/riscv.c
-> index 4cd769f165..41050246f3 100644
-> --- a/disas/riscv.c
-> +++ b/disas/riscv.c
-> @@ -946,6 +946,14 @@ typedef enum {
->      rv_mop_rr_5    =3D 915,
->      rv_mop_rr_6    =3D 916,
->      rv_mop_rr_7    =3D 917,
-> +    rv_c_mop_1     =3D 918,
-> +    rv_c_mop_3     =3D 919,
-> +    rv_c_mop_5     =3D 920,
-> +    rv_c_mop_7     =3D 921,
-> +    rv_c_mop_9     =3D 922,
-> +    rv_c_mop_11    =3D 923,
-> +    rv_c_mop_13    =3D 924,
-> +    rv_c_mop_15    =3D 925,
->  } rv_op;
+> diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_=
+trans/trans_rva.c.inc
+> index eb080baddd..39bbf60f3c 100644
+> --- a/target/riscv/insn_trans/trans_rva.c.inc
+> +++ b/target/riscv/insn_trans/trans_rva.c.inc
+> @@ -96,27 +96,6 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, M=
+emOp mop)
+>      return true;
+>  }
 >
->  /* register names */
-> @@ -2176,6 +2184,14 @@ const rv_opcode_data rvi_opcode_data[] =3D {
->      { "mop.rr.5", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
->      { "mop.rr.6", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
->      { "mop.rr.7", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-> +    { "c.mop.1",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-> +    { "c.mop.3",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-> +    { "c.mop.5",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-> +    { "c.mop.7",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-> +    { "c.mop.9",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-> +    { "c.mop.11", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-> +    { "c.mop.13", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-> +    { "c.mop.15", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
->  };
+> -static bool gen_amo(DisasContext *ctx, arg_atomic *a,
+> -                    void(*func)(TCGv, TCGv, TCGv, TCGArg, MemOp),
+> -                    MemOp mop)
+> -{
+> -    TCGv dest =3D dest_gpr(ctx, a->rd);
+> -    TCGv src1, src2 =3D get_gpr(ctx, a->rs2, EXT_NONE);
+> -
+> -    if (ctx->cfg_ptr->ext_zama16b) {
+> -        mop |=3D MO_ATOM_WITHIN16;
+> -    } else {
+> -        mop |=3D MO_ALIGN;
+> -    }
+> -
+> -    decode_save_opc(ctx);
+> -    src1 =3D get_address(ctx, a->rs1, 0);
+> -    func(dest, src1, src2, ctx->mem_idx, mop);
+> -
+> -    gen_set_gpr(ctx, a->rd, dest);
+> -    return true;
+> -}
+> -
+>  static bool trans_lr_w(DisasContext *ctx, arg_lr_w *a)
+>  {
+>      REQUIRE_A_OR_ZALRSC(ctx);
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index 51dfb03685..b160bcbfe0 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -1075,6 +1075,27 @@ static bool gen_unary_per_ol(DisasContext *ctx, ar=
+g_r2 *a, DisasExtend ext,
+>      return gen_unary(ctx, a, ext, f_tl);
+>  }
 >
->  /* CSR names */
-> @@ -2469,6 +2485,13 @@ static void decode_inst_opcode(rv_decode *dec, rv_=
-isa isa)
->              break;
->          case 2: op =3D rv_op_c_li; break;
->          case 3:
-> +            if (dec->cfg->ext_zcmop) {
-> +                if ((((inst >> 2) & 0b111111) =3D=3D 0b100000) &&
-> +                    (((inst >> 11) & 0b11) =3D=3D 0b0)) {
-> +                    op =3D rv_c_mop_1 + ((inst >> 8) & 0b111);
-> +                    break;
-> +                }
-> +            }
->              switch ((inst >> 7) & 0b11111) {
->              case 2: op =3D rv_op_c_addi16sp; break;
->              default: op =3D rv_op_c_lui; break;
+> +static bool gen_amo(DisasContext *ctx, arg_atomic *a,
+> +                    void(*func)(TCGv, TCGv, TCGv, TCGArg, MemOp),
+> +                    MemOp mop)
+> +{
+> +    TCGv dest =3D dest_gpr(ctx, a->rd);
+> +    TCGv src1, src2 =3D get_gpr(ctx, a->rs2, EXT_NONE);
+> +
+> +    if (ctx->cfg_ptr->ext_zama16b) {
+> +        mop |=3D MO_ATOM_WITHIN16;
+> +    } else {
+> +        mop |=3D MO_ALIGN;
+> +    }
+> +
+> +    decode_save_opc(ctx);
+> +    src1 =3D get_address(ctx, a->rs1, 0);
+> +    func(dest, src1, src2, ctx->mem_idx, mop);
+> +
+> +    gen_set_gpr(ctx, a->rd, dest);
+> +    return true;
+> +}
+> +
+>  static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+>  {
+>      DisasContext *ctx =3D container_of(dcbase, DisasContext, base);
 > --
 > 2.25.1
 >
