@@ -4,65 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC23DC25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 03:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E636C25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 03:30:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEKqr-00069f-57; Mon, 03 Jun 2024 23:28:45 -0400
+	id 1sEKsB-0007Le-6k; Mon, 03 Jun 2024 23:30:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEKqp-000698-HH; Mon, 03 Jun 2024 23:28:43 -0400
-Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
+ id 1sEKs3-0007Kj-Hc; Mon, 03 Jun 2024 23:30:00 -0400
+Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEKqn-0003sa-QO; Mon, 03 Jun 2024 23:28:43 -0400
-Received: by mail-vs1-xe30.google.com with SMTP id
- ada2fe7eead31-48bcadbd790so1529687137.1; 
- Mon, 03 Jun 2024 20:28:40 -0700 (PDT)
+ id 1sEKs1-0004Fd-3x; Mon, 03 Jun 2024 23:29:59 -0400
+Received: by mail-ua1-x92e.google.com with SMTP id
+ a1e0cc1a2514c-80ad0bb602eso1548528241.1; 
+ Mon, 03 Jun 2024 20:29:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717471720; x=1718076520; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717471795; x=1718076595; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HZwwHuuvB97XosNx34W+gJN3A58SgWLSaycWvV/9O88=;
- b=FJk65/rrop2GIDPOWGVifcmgdzbXnff9ENwrZlpnGgUbYA/ZB49+u+er2awVX0AHpt
- p1a5v+VfO8VOzWsgmobshbCJxRpNBlxN3iQZIYVXPl9BlFIxqJjLvt/jHaDqy2VeXBah
- 6iIrXu9lTyO8ngRyEuX9H1I6gaGWWdFvOL6ZMU48If+ZzsyfIJqJ2z6bMkkly8ChLO9O
- EClykSfssUIvRIJkOIhp0y+15hUm9hIFkHXGg/VCzRhOBq8gVCWXjwWPDWYKrYKrqu5D
- Xux9e+ulx+IhZYemWUAY0J4Ub7mWEWG9wnUHXUM92OhgIqT0k23dPqYuL1RJmEJxgeza
- rDRA==
+ bh=CXB5nqjIpJ9CripEswHXbDBXna3nIZo6vZiUyZYXBj8=;
+ b=H+NANRVyZvJbe/al1leEQunIYNFwXELeO2BtZUwozzUP/J6SihruITDVWS6Pte14hx
+ u083MaT/h6MWq8Vhw7Tqqg7PrsaFmmxoHB4J9wgkg8xxo2Tvc0uzbpvq51gxcn3+SDEA
+ BvMGUacek5bxxNiqRBjop2nmrkJFzem6xafW0Gn0fxtZdbGfFsgNMOcVdVWH+oryWDNf
+ m184ps2AZsvsw0QUCL7s2vaIW1rIDMn+ku4w1qhd6LJ+jHNlHhvjaPSsqgFpWHKebPNG
+ vL83PJsH03m5uARccBMl1NBrgdOMaZbUq+zmznNYGxFKzecgSHUr9BLcBXbQFs6uu5/h
+ SLsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717471720; x=1718076520;
+ d=1e100.net; s=20230601; t=1717471795; x=1718076595;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HZwwHuuvB97XosNx34W+gJN3A58SgWLSaycWvV/9O88=;
- b=MJaLK+cgUA4f8joTnBXtSE//yovFs1mLg5OImXm3wlx5y48/LubtOKXNmRj+WZNXEi
- Uf/eSpBSft6ffMMz7pbZTyUhmHzzAUDrOq56MFQQ/z2H0eerWS3dxzuUtKNLUoUBOiZq
- 1mPvHjs/evIURKyxDxpS3bt2NRr+f+FkLh4K5GYFEEV7gT/nNxjnpu7K0VrVSsoa6RUp
- nvGcxPCgK8P+ISY/po0APE0dxjCuDut70xGoulzkvKTEYEX41S/1QCkvvpts7BXq6rG2
- 70KdfkleZpbQDEd9dTwT9OhLzUg9IivJ4xkG+7aqr7qv+/br5n+/EbdlYea+SZU7Giq5
- IAKA==
+ bh=CXB5nqjIpJ9CripEswHXbDBXna3nIZo6vZiUyZYXBj8=;
+ b=mOn5MEDKWqBjwKriVYd5eAG6SqB9lTTClagRb4Gb656ITDXOhmoBAozuIhsbOT/cuT
+ Bedh1s+6C4h2F6Rw06heMf6zv6nyOB668oOqWQDZS1sNfRhMmPYuk5WFl61H7X7T+BTv
+ 0dREWszloLY6eDG2IVGpNc3ePiUcXbkX6gpd6cf+ELmdxwyBDeS6NeS/XciE9Bye98Lp
+ E3K2g71zQl1M7bb8VqZVysEackgYbvClDOJRkYq5TcCM5bJWlBLp1/BjPsdsHXwgjEfv
+ u3nul0VIrBWvIgjZbWudvJo3gJrRDk0mkfDlBKWes2Xo7tQ9iLl5RkkVBTD1ym0eJImM
+ Pq9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWFIpSYEBO7heilm+lltDtPwIH6jqS6sjhKuhjH0bny7U5I4Aw4M9JZ7obzAI1ecIEnl5Nz+OIDrq2QGk/2+eHmI7B9Pir20R8qC3lgQcLCek7YmsVVKs/vo88=
-X-Gm-Message-State: AOJu0YyCka3tPgRzYC+bdPPAAXjbx7OzWeq8OO9NHsHXi3MbN8J/9Bv1
- QaI7QOtg9reEkRJfOZOnGfYNYfumi7ZyCQZIGHwXCbMnxz0EouFRW4h8yzRRxa0KPVs1onu5eDj
- LanlcnaCf98/TTCwtPtQH1qJb0mA=
-X-Google-Smtp-Source: AGHT+IHvvhLZXa2Q8dzFahb2XYXupKYleSkIqwFuILEjISd5kRIhAdqq2t6r6q9uFC/eIt0uJzFCVZIf0VV+prCBE10=
-X-Received: by 2002:a05:6102:5113:b0:48b:d13d:a0d3 with SMTP id
- ada2fe7eead31-48bf23546a3mr1559321137.11.1717471719895; Mon, 03 Jun 2024
- 20:28:39 -0700 (PDT)
+ AJvYcCW1tcgQcnrJ2BAwKJJUI20NPpbi0c8diCi4tRDwhmM7p7NTYfA+10Prk5NdQGRsYfTul0Erqk4GvRyD7JxPZf+ad2Qt46vt4LXkf7/DL6l1hr8EVD72BezpW9o=
+X-Gm-Message-State: AOJu0YxScEWB4PM7+vYovFpE9wFotSOxDOXahT7l5lELi8B2c8avQR/u
+ dSr8rq91LM08mcvj3wBjljpKeLqaBocLm2+C4zWNqm5nCGVyG2f/afYfIc4zNkHx2xCbyySx5Kx
+ LhGLvx10KrmNSsWMiZBUxAQvI6s81MEmJ
+X-Google-Smtp-Source: AGHT+IEIj3XqkDMRx+1OTxRnOBuIMsCB7lyVcknWRLgAzu1GWNKZ503fGLYMtPJjIHeCiYjDMdJvjvmXohKtJ/cRLz4=
+X-Received: by 2002:a05:6102:3112:b0:48b:9296:762c with SMTP id
+ ada2fe7eead31-48bc20801b4mr10831609137.2.1717471794808; Mon, 03 Jun 2024
+ 20:29:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240524061411.341599-1-sunilvl@ventanamicro.com>
- <20240524061411.341599-13-sunilvl@ventanamicro.com>
-In-Reply-To: <20240524061411.341599-13-sunilvl@ventanamicro.com>
+In-Reply-To: <20240524061411.341599-1-sunilvl@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 4 Jun 2024 13:28:13 +1000
-Message-ID: <CAKmqyKOVJpD6r6-v8QPf7Nd=DNWjqAo5t9UF1K0K7AF-BacqHg@mail.gmail.com>
-Subject: Re: [PATCH v2 12/12] tests/qtest/bios-tables-test: Add expected ACPI
- data files for RISC-V
+Date: Tue, 4 Jun 2024 13:29:28 +1000
+Message-ID: <CAKmqyKPQDpo541dF_inV1imL4i6U3KgpeOTPf7TcD-qUwe_O=w@mail.gmail.com>
+Subject: Re: [PATCH v2 00/12] Add support for RISC-V ACPI tests
 To: Sunil V L <sunilvl@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org, 
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -81,8 +79,8 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -106,142 +104,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 24, 2024 at 4:15=E2=80=AFPM Sunil V L <sunilvl@ventanamicro.com=
+On Fri, May 24, 2024 at 4:14=E2=80=AFPM Sunil V L <sunilvl@ventanamicro.com=
 > wrote:
 >
-> As per the step 5 in the process documented in bios-tables-test.c,
-> generate the expected ACPI AML data files for RISC-V using the
-> rebuild-expected-aml.sh script and update the
-> bios-tables-test-allowed-diff.h.
+> Currently, bios-table-test doesn't support RISC-V. This series enables
+> the framework changes required and basic testing. Things like NUMA
+> related test cases will be added later.
 >
-> These are all new files being added for the first time. Hence, iASL diff
-> output is not added.
+> This needs refactoring/renaming of ARM64 bios table tests. Importantly,
+> the test cases now look for the expected AML files under
+> tests/data/acpi/virt/aarch64 path instead of directly under
+> tests/data/acpi/virt. To keep test cases not to fail because of this
+> movement, they are updated to look for both paths first.
 >
-> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+> As part of this effort, it is found that uefi-test-tools is currently
+> broken to build. So, updated its Makefile as well to use python based
+> edk2 build script.
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+It would be great to get someone who knows the UEFI world better than I
+do to ack these changes, especially the first few patches
+
 
 Alistair
 
-> ---
->  tests/data/acpi/virt/riscv64/APIC           | Bin 0 -> 116 bytes
->  tests/data/acpi/virt/riscv64/DSDT           | Bin 0 -> 3518 bytes
->  tests/data/acpi/virt/riscv64/FACP           | Bin 0 -> 276 bytes
->  tests/data/acpi/virt/riscv64/MCFG           | Bin 0 -> 60 bytes
->  tests/data/acpi/virt/riscv64/RHCT           | Bin 0 -> 314 bytes
->  tests/data/acpi/virt/riscv64/SPCR           | Bin 0 -> 80 bytes
->  tests/qtest/bios-tables-test-allowed-diff.h |   6 ------
->  7 files changed, 6 deletions(-)
 >
-> diff --git a/tests/data/acpi/virt/riscv64/APIC b/tests/data/acpi/virt/ris=
-cv64/APIC
-> index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..66a25dfd2d6ea2b607c024722=
-b2eab95873a01e9 100644
-> GIT binary patch
-> literal 116
-> zcmZ<^@N_O=3DU|?X|;^gn_5v<@85#X!<1dKp25F13pfP@Mo12P{Zj?R|`s)2!c7=3Ds}J
-> I#NvT*0o0BN0RR91
+> The changes are also available at branch
+> https://gitlab.com/vlsunil/qemu/-/tree/riscv_bios_table_test_v2
 >
-> literal 0
-> HcmV?d00001
+> Changes since v1:
+>         1) Addressed feedback from Gerd and Alistair
+>         2) Rebased and added tags received
 >
-> diff --git a/tests/data/acpi/virt/riscv64/DSDT b/tests/data/acpi/virt/ris=
-cv64/DSDT
-> index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..0fb2d5e0e389541209b765d50=
-92d0706f40298f6 100644
-> GIT binary patch
-> literal 3518
-> zcmZvf%WvaU6vnR;w@IBxlQexl(t(j!ppl%0(ryq<oOYV3X-%9`q=3D14{b;M9K6c~^O
-> zgcx<fqhd2ti4B_~D)B!c1W2sdvE#L7!#}_>eCJ*}oI`D?w!iChKA+$9t$orAn%(bn
-> zN+n)t?0eh6a^of6TgGN7rRbcFh1Tyc_k%{iceZVNuIr}z+pT7<?)fc<HI?okw3^tr
-> z>)qm0&dr&dmZB`a{a^Ra*0&D5Eo1b;X8Qm}E3gQ<btjYVdtTkbz7rISPX6ODvMUs3
-> zVE91w&KfCiza7@#@A>YkTOF1_DRa)WNl^t#{A^TNmZNji{btZCtt5&QPNDqU;E!+b
-> zecnEQ^xc;~?0jvN=3DB?69B6sx0n@1<N?!0~c*1N~|jvlD2+E~Xu>-LMCh<kUhvyXCD
-> z|GVk1+UV8=3D+`16nn$W3iZBaGE(t=3DR0Su8V)L_|(iti)M3i8v3Jc_g_<E!HC$=3Ddr;&
-> zZ0_+)tcM-v;WLjB?y(x{F%swTD)SiS9?!;ljK+DKGLIDZSc~;Y#d$nr9_i3y=3DNsQ^
-> zu@zZ&*ReP}{EyK3th+T@*_*eqZ#4FX%O>b{iWO(USDtFAW3{YY{55g*p1P}!a8zWX
-> z7lz;IPVBzpJS=3D7G%wV8y2Q62ba|`EHRm#%1lYm%>L=3DvK=3DN;x|_7+?*WxKL3R0`umY
-> z&O>M<DHHxW7E8~>hKe$y(1g;N2-TU8l!<C|EEb%J4HacZp-Gd8P@M@$nW#v|VwsuP
-> zP=3D$;-)Haz>@sOMoiwl`i1tW@cj+o4-cu3BPCB-VhD+4MD9hIDroD&Pl#Oi8OIy2%-
-> zNlr-4iRFXLXr|LTGn$gL<b>p$V}cX!M^n3=3Dp)tt`$vN>NG_kr`M{qil6Owag1ZPHY
-> zW+W#h=3DgbPutl-Q_PDsv)?-Htwo@Y*Q<|HR1=3DgbSvyx`1BPDsu<E;z>p=3DeXpA<eYfp
-> zv*(GAkEvZhm4f7i<eWvpSrnW_$qC6hOM<f`I7^Zfl5<W7&I!ReAvqyAXIXHT1!q}u
-> zLUPVY!8s{7CnYB&=3DbRFpQ-X6!azb*>X~8)yIHx5iB<DoK!Jg-g;GB`1keqW?aLx+O
-> zS;+~>Ip+lDoZy_3oRFMzUU1F}&UwiR$vGDU=3DYrr|kera5b5U?E3eH8z3CTH^1m}|A
-> zT#}rSoU<Z0D}u8kIUx;a@2q9hqcop+`Y3zu*6>5@qiM`L8Qmx@>rXnqyVu6bqy3;0
-> zSfN$e$O$X-aop-gjFlN1TJ2C(VM8aZsGs9rPsDhcG3gaHcG3%d9rt=3DN#><R_Ugd1x
-> zYt+>h-rEXOMpLn!a_)bcQwbVUYCt>d6Z~go(OKwiV=3Dx$e6rJOWm8FJLZ)jL(gSOQ9
-> z(=3D101Q%{N90rg{iGreXyIPiUy_PU*2Ro)uw?+2cJexkhQVfAu5b@3W?^1b$-wSOuL
-> z8($pWumAYmuXoN*92)^EIHqx|osu9QI;oM>2efl4w7)DozPM|Bh$~ecUA>%od=3DbT&
-> z;R0PerC=3DJrI{7MZ#_1;2tCR9A{Hkc%mp4o`zpVZISFrki`_c5@?b)Ba_T|{c>*}hQ
-> pv@F`;cR<_jYzAT_(hnb+<eKANn;)0v1k>|8pBtRxTSGr9{slF`>K_0A
+> Sunil V L (12):
+>   uefi-test-tools/UefiTestToolsPkg: Add RISC-V support
+>   uefi-test-tools: Add support for python based build script
+>   tests/data/uefi-boot-images: Add RISC-V ISO image
+>   qtest: bios-tables-test: Rename aarch64 tests with aarch64 in them
+>   tests/qtest/bios-tables-test.c: Add support for arch in path
+>   tests/data/acpi/virt: Move ACPI tables under aarch64
+>   meson.build: Add RISC-V to the edk2-target list
+>   pc-bios/meson.build: Add support for RISC-V in unpack_edk2_blobs
+>   tests/data/acpi/rebuild-expected-aml.sh: Add RISC-V
+>   tests/qtest/bios-tables-test: Add empty ACPI data files for RISC-V
+>   tests/qtest/bios-tables-test.c: Enable basic testing for RISC-V
+>   tests/qtest/bios-tables-test: Add expected ACPI data files for RISC-V
 >
-> literal 0
-> HcmV?d00001
+>  meson.build                                   |   2 +-
+>  pc-bios/meson.build                           |   2 +
+>  tests/data/acpi/rebuild-expected-aml.sh       |   5 +-
+>  tests/data/acpi/virt/{ =3D> aarch64}/APIC       | Bin
+>  .../acpi/virt/{ =3D> aarch64}/APIC.acpihmatvirt | Bin
+>  .../acpi/virt/{ =3D> aarch64}/APIC.topology     | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/DBG2       | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/DSDT       | Bin
+>  .../acpi/virt/{ =3D> aarch64}/DSDT.acpihmatvirt | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/DSDT.memhp | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/DSDT.pxb   | Bin
+>  .../acpi/virt/{ =3D> aarch64}/DSDT.topology     | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/FACP       | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/GTDT       | Bin
+>  .../acpi/virt/{ =3D> aarch64}/HMAT.acpihmatvirt | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/IORT       | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/MCFG       | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/NFIT.memhp | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/PPTT       | Bin
+>  .../acpi/virt/{ =3D> aarch64}/PPTT.acpihmatvirt | Bin
+>  .../acpi/virt/{ =3D> aarch64}/PPTT.topology     | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/SLIT.memhp | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/SPCR       | Bin
+>  .../acpi/virt/{ =3D> aarch64}/SRAT.acpihmatvirt | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/SRAT.memhp | Bin
+>  .../data/acpi/virt/{ =3D> aarch64}/SRAT.numamem | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/SSDT.memhp | Bin
+>  tests/data/acpi/virt/{ =3D> aarch64}/VIOT       | Bin
+>  tests/data/acpi/virt/riscv64/APIC             | Bin 0 -> 116 bytes
+>  tests/data/acpi/virt/riscv64/DSDT             | Bin 0 -> 3518 bytes
+>  tests/data/acpi/virt/riscv64/FACP             | Bin 0 -> 276 bytes
+>  tests/data/acpi/virt/riscv64/MCFG             | Bin 0 -> 60 bytes
+>  tests/data/acpi/virt/riscv64/RHCT             | Bin 0 -> 314 bytes
+>  tests/data/acpi/virt/riscv64/SPCR             | Bin 0 -> 80 bytes
+>  .../bios-tables-test.riscv64.iso.qcow2        | Bin 0 -> 16896 bytes
+>  tests/qtest/bios-tables-test.c                |  93 ++++++++++++++----
+>  tests/qtest/meson.build                       |   3 +
+>  tests/uefi-test-tools/Makefile                |  19 ++--
+>  .../UefiTestToolsPkg/UefiTestToolsPkg.dsc     |   6 +-
+>  tests/uefi-test-tools/uefi-test-build.config  |  52 ++++++++++
+>  40 files changed, 147 insertions(+), 35 deletions(-)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/APIC (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/APIC.acpihmatvirt (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/APIC.topology (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/DBG2 (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/DSDT (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/DSDT.acpihmatvirt (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/DSDT.memhp (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/DSDT.pxb (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/DSDT.topology (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/FACP (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/GTDT (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/HMAT.acpihmatvirt (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/IORT (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/MCFG (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/NFIT.memhp (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/PPTT (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/PPTT.acpihmatvirt (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/PPTT.topology (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/SLIT.memhp (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/SPCR (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/SRAT.acpihmatvirt (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/SRAT.memhp (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/SRAT.numamem (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/SSDT.memhp (100%)
+>  rename tests/data/acpi/virt/{ =3D> aarch64}/VIOT (100%)
+>  create mode 100644 tests/data/acpi/virt/riscv64/APIC
+>  create mode 100644 tests/data/acpi/virt/riscv64/DSDT
+>  create mode 100644 tests/data/acpi/virt/riscv64/FACP
+>  create mode 100644 tests/data/acpi/virt/riscv64/MCFG
+>  create mode 100644 tests/data/acpi/virt/riscv64/RHCT
+>  create mode 100644 tests/data/acpi/virt/riscv64/SPCR
+>  create mode 100644 tests/data/uefi-boot-images/bios-tables-test.riscv64.=
+iso.qcow2
+>  create mode 100644 tests/uefi-test-tools/uefi-test-build.config
 >
-> diff --git a/tests/data/acpi/virt/riscv64/FACP b/tests/data/acpi/virt/ris=
-cv64/FACP
-> index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..a5276b65ea8ce46cc9b40d96d=
-98f0669c9089ed4 100644
-> GIT binary patch
-> literal 276
-> zcmZ>BbPf<<WME(ucJg=3Dj2v%^42yj*a0-z8Bhz+8t3k1-OV?`GjD1M-;Zz#xa0OIBc
-> A0RR91
->
-> literal 0
-> HcmV?d00001
->
-> diff --git a/tests/data/acpi/virt/riscv64/MCFG b/tests/data/acpi/virt/ris=
-cv64/MCFG
-> index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..37eb923a9320f5573c0c2cdb9=
-0bd98409cc7eb6f 100644
-> GIT binary patch
-> literal 60
-> rcmeZuc5}C3U|?Y6aq@Te2v%^42yj*a0!E-1hz+8VfB}^KA4CHH3`GY4
->
-> literal 0
-> HcmV?d00001
->
-> diff --git a/tests/data/acpi/virt/riscv64/RHCT b/tests/data/acpi/virt/ris=
-cv64/RHCT
-> index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..beaa961bbf0f0486c0dee25f5=
-43377c928354f84 100644
-> GIT binary patch
-> literal 314
-> zcmXAlu}%Xq42FGxD#XNyI`tt=3DC&buWx`A2-wkXNvbP-K1O46&8iKjrk6)SI3ey5h~
-> z@3-SPa`wCa{iPvl)b_RC9X8vKw|)adiC8n)zP^7d?+~A>`lE(^DK1@Wog4=3D(iq&1K
-> z7;1J`gewX|OE=3D3Z>{xM3wM)ljIQKa+635YaZ7jrOeGc+eJEnks*|jl=3DGEUBVQ8WhX
-> zK@<flJgso_nMF!k2aE&flg}m^e@2oQd6bm~m(n5!gJ?a<U{EgOALs#2D_Y&qJuA9g
-> Pp1|9>GjINg;u`)Bd);9H
->
-> literal 0
-> HcmV?d00001
->
-> diff --git a/tests/data/acpi/virt/riscv64/SPCR b/tests/data/acpi/virt/ris=
-cv64/SPCR
-> index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..4da9daf65f71a13ac2b488d4e=
-9728f194b569a43 100644
-> GIT binary patch
-> literal 80
-> zcmWFza1IJ!U|?X{>E!S15v<@85#X!<1dKp25F12;fdT`FDF9*%FmM4$c8~z`e;@#f
-> G!2kgKJqrN<
->
-> literal 0
-> HcmV?d00001
->
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bi=
-os-tables-test-allowed-diff.h
-> index d8610c8d72..dfb8523c8b 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1,7 +1 @@
->  /* List of comma-separated changed AML files to ignore */
-> -"tests/data/acpi/virt/riscv64/APIC",
-> -"tests/data/acpi/virt/riscv64/DSDT",
-> -"tests/data/acpi/virt/riscv64/FACP",
-> -"tests/data/acpi/virt/riscv64/MCFG",
-> -"tests/data/acpi/virt/riscv64/RHCT",
-> -"tests/data/acpi/virt/riscv64/SPCR",
 > --
 > 2.40.1
 >
