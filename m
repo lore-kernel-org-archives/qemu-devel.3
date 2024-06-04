@@ -4,89 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 185BBC25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD66FC25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sENuP-0001yF-8v; Tue, 04 Jun 2024 02:44:37 -0400
+	id 1sEO1p-0003eH-NS; Tue, 04 Jun 2024 02:52:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENuN-0001xX-Ea
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENuM-0007Fl-0K
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717483473;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jnre2UF7/f5unB3VrXj0N5RhP/b8i4wPnG8jXCu2p4Y=;
- b=AW64SsAgfvD3RkLNSxu9ET1rq2xamIP5Fl+kSlLQwgnm1O937V+4A4qQsWRqVrPCJUklQA
- HpkPxjPjcZPCgIuQz4zviYlZUNvHdsEau56LKyOwVJivFHwktq+PTZCli+YO3JR8vsRng5
- oAcbop8j7lki3v9zf9yPPzXT+AWcuAI=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-222-Vw_6IhouPZ66uwKiy1hPzg-1; Tue, 04 Jun 2024 02:44:30 -0400
-X-MC-Unique: Vw_6IhouPZ66uwKiy1hPzg-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a68f654dc69so107864566b.1
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:44:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
+ id 1sEO1o-0003dU-Kh
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:52:16 -0400
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
+ id 1sEO1m-0000kh-SH
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:52:16 -0400
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-80ac76f1226so3136399241.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:52:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1717483934; x=1718088734; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=qOC+SmDoNN1U0JhGwR655j1DQHHhWuybDBkRY9+XO30=;
+ b=apTcDJpzFak7yzm+44gkag06lDgpW+mxT8XqSkwZctWlluK9qt3dsT98BksD0nqyPW
+ 9BRay0RLgwrmw2vSK0lpVpp/mhKeERnlK4lQk+asLn1MzVOIist/nmJo26ljda/yub7s
+ SnomYrTsuTdhpllr6aJ5tR55r+79Bue/EKzBiBWnnP+g56S+tvlQCMvGWwndNsP+cyT2
+ 7/OFIvDisM2Z/GohDyM1ZJsEli1Z+egR7Foi9WUMBBc1dgFJnRlAB6YcjBBJAchqrIl/
+ qfDgCmhRVWBvpkNKzvskkrLsi6VOUvn9cUynUm0z9kXEQX5VUc5mdCbM/7cD7WYC9Coe
+ 669w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717483469; x=1718088269;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jnre2UF7/f5unB3VrXj0N5RhP/b8i4wPnG8jXCu2p4Y=;
- b=UE9g4/xGbt063dIpT2jW/laDComxRRrxi2eEC7SSll864Xr3SsjtTpNxBB2BmJSPKl
- tvx6ifkRGTC2pusPYfunmvtuL+IwPgaslUr3hTuAvfrU/E/QWttOl5ICXntFHbHCpJ1p
- B+nWXKfxgAUORMhBhVpy0eLcu2hGzbT17Bsv6TN5eV/AvPaaeXyF9H7PDTHIP2W1hfGy
- 60DEvLesPbC2wpRcKOYVjkoSEpJo+F8kL+2MP3RyOq4NOqkfhZurT5f+lxvzhHkDC1jR
- 9OWk6ymrSERuPJGiWmB5dBKE2aRgwpZC3xpezqbFxMdJqO+0UCf7ncoa7L6Wz5j+edlM
- Mdiw==
-X-Gm-Message-State: AOJu0Yx5CvkVYg8rcRbaFHb7A8IPbhA2/2M5vNxRmyNFmOBSJgmuQa42
- JWwhGuM+HtBLA+AL0zoc/t2rSZBDeeUdsZGnDGFKGlDfnpUv9S4+d0uPV3jNEE/btwFwCT+vYb/
- 4IX81Na3k1v1/9EHrNVzrBe4ZktK0/2yGswngFw+9dmYm8b7hYUA/QAooR6wUyp+CxFwqhP/3qA
- ba8HhMYfJ9AqAvDBo9j/UQm8S79IpKUMAsI5Hh
-X-Received: by 2002:a17:907:940b:b0:a69:2bce:e41e with SMTP id
- a640c23a62f3a-a692bcee4bemr282320466b.9.1717483468929; 
- Mon, 03 Jun 2024 23:44:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFw9YQl6f71DA6i9PendEh30fTQFobGQh5qPn6O5dlLLub2Q9COeoYRVKF2PJC1BZkNCizNFw==
-X-Received: by 2002:a17:907:940b:b0:a69:2bce:e41e with SMTP id
- a640c23a62f3a-a692bcee4bemr282319766b.9.1717483468608; 
- Mon, 03 Jun 2024 23:44:28 -0700 (PDT)
-Received: from avogadro.local ([151.81.115.112])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a691122859esm233259166b.224.2024.06.03.23.44.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 23:44:28 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 05/45] host/i386: assume presence of SSE2
-Date: Tue,  4 Jun 2024 08:43:29 +0200
-Message-ID: <20240604064409.957105-6-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240604064409.957105-1-pbonzini@redhat.com>
-References: <20240604064409.957105-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1717483934; x=1718088734;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qOC+SmDoNN1U0JhGwR655j1DQHHhWuybDBkRY9+XO30=;
+ b=uQRDjKq06h92z78k4tjIjiatKk0vU+Jcx5M0dUoKrldzX4pS8kiiY1NaEtJ9PgCggG
+ eW/0usbzoWduu3DaqlChRExuxtXx9OcPlvD7Si1Vgx5BmulFYQRjV87JGHwAjDwnzV+y
+ ehwt/7ndyDfO+xOcdLI5H8X8vs2mjHV5z+IMMH5fQZ0U+hG5dbAeaZqcnk7gLNbyfD0H
+ ujusX6xpRDN1AIsar+p2CZf1xt510B1UBUiZ3kTQ4WbzVSkVXfJJyvHaGw6EgFwI0L2l
+ 4GvF8RH2j5Q9M/wY7Yt+8pRaZcu3n5Dss0W8L5XIXM+tiqoWttK/pNnyP0j5Y3aIuppS
+ 31bQ==
+X-Gm-Message-State: AOJu0YzsxdQciTFbvfb3A8+X1OfeeW4U9bIzru2yUsSMRCL4unwTsk9W
+ 6OmVmIUfELFDwKPnjgzIyalKSjHqdNqF7PPFqMifhvbBrK01TPOmv2+LlpA0FbLB0C+IDE2zVZ4
+ KVEIrR5b0b7P8gDdE8hvcD2D9XZ5qn6T+TzjqHHwFqWK0fcgv
+X-Google-Smtp-Source: AGHT+IFpD9REoOSyGBCtFrKsRux05QLO7+XljyJHp2lp7l94jwIxicQ+CM4IkZIQUjOCTuqSsuRvw4lVhckeaW029zk=
+X-Received: by 2002:a05:6122:d23:b0:4eb:177c:a815 with SMTP id
+ 71dfb90a1353d-4eb2bc02c7dmr1538446e0c.2.1717483933150; Mon, 03 Jun 2024
+ 23:52:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240603055248.3928469-1-fea.wang@sifive.com>
+ <20240603055248.3928469-3-fea.wang@sifive.com>
+ <CAJy5ezp6pkpEqCHc+ggXi+-VR+u+3HKyn5inzasyqBR9FaGiog@mail.gmail.com>
+In-Reply-To: <CAJy5ezp6pkpEqCHc+ggXi+-VR+u+3HKyn5inzasyqBR9FaGiog@mail.gmail.com>
+From: Fea Wang <fea.wang@sifive.com>
+Date: Tue, 4 Jun 2024 14:52:02 +0800
+Message-ID: <CAKhCfsfnDK9A0hpV4cUQMfhg3VBS7_tzbZy783Q3xcePGZefJA@mail.gmail.com>
+Subject: Re: [PATCH 2/4] hw/dma: Break the loop when loading descriptions fails
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Jason Wang <jasowang@redhat.com>, "open list:Xilinx Zynq" <qemu-arm@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000be4b35061a0ae3f7"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=fea.wang@sifive.com; helo=mail-ua1-x935.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,63 +92,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU now requires an x86-64-v2 host, which has SSE2.
-Use it freely in buffer_is_zero.
+--000000000000be4b35061a0ae3f7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- host/include/i386/host/cpuinfo.h | 1 -
- util/bufferiszero.c              | 4 ++--
- util/cpuinfo-i386.c              | 1 -
- 3 files changed, 2 insertions(+), 4 deletions(-)
+Hi Edgar,
+thank you for the advice, I will squash them in the next version of the
+patch series.
 
-diff --git a/host/include/i386/host/cpuinfo.h b/host/include/i386/host/cpuinfo.h
-index 81771733eaa..72f6fad61e5 100644
---- a/host/include/i386/host/cpuinfo.h
-+++ b/host/include/i386/host/cpuinfo.h
-@@ -14,7 +14,6 @@
- #define CPUINFO_POPCNT          (1u << 4)
- #define CPUINFO_BMI1            (1u << 5)
- #define CPUINFO_BMI2            (1u << 6)
--#define CPUINFO_SSE2            (1u << 7)
- #define CPUINFO_AVX1            (1u << 9)
- #define CPUINFO_AVX2            (1u << 10)
- #define CPUINFO_AVX512F         (1u << 11)
-diff --git a/util/bufferiszero.c b/util/bufferiszero.c
-index 74864f7b782..11c080e02cf 100644
---- a/util/bufferiszero.c
-+++ b/util/bufferiszero.c
-@@ -188,14 +188,14 @@ static biz_accel_fn const accel_table[] = {
- 
- static unsigned best_accel(void)
- {
-+#ifdef CONFIG_AVX2_OPT
-     unsigned info = cpuinfo_init();
- 
--#ifdef CONFIG_AVX2_OPT
-     if (info & CPUINFO_AVX2) {
-         return 2;
-     }
- #endif
--    return info & CPUINFO_SSE2 ? 1 : 0;
-+    return 1;
- }
- 
- #elif defined(__aarch64__) && defined(__ARM_NEON)
-diff --git a/util/cpuinfo-i386.c b/util/cpuinfo-i386.c
-index 90f92a42dc8..ca74ef04f54 100644
---- a/util/cpuinfo-i386.c
-+++ b/util/cpuinfo-i386.c
-@@ -34,7 +34,6 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
-     if (max >= 1) {
-         __cpuid(1, a, b, c, d);
- 
--        info |= (d & bit_SSE2 ? CPUINFO_SSE2 : 0);
-         info |= (c & bit_MOVBE ? CPUINFO_MOVBE : 0);
-         info |= (c & bit_POPCNT ? CPUINFO_POPCNT : 0);
-         info |= (c & bit_PCLMUL ? CPUINFO_PCLMUL : 0);
--- 
-2.45.1
+Sincerely,
+Fea
 
+On Mon, Jun 3, 2024 at 6:21=E2=80=AFPM Edgar E. Iglesias <edgar.iglesias@gm=
+ail.com>
+wrote:
+
+> On Mon, Jun 3, 2024 at 7:48=E2=80=AFAM Fea.Wang <fea.wang@sifive.com> wro=
+te:
+>
+>> When calling the loading a description function, it should be noticed
+>> that the function may return a failure value. Breaking the loop is one
+>> of the possible ways to handle it.
+>>
+>> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+>>
+>
+>
+> Looks good, a nitpick comment, I would either squash this with patch #1
+> or move the change to return of error code in stream_desc_load() to this
+> patch.
+>
+>
+>
+>
+>> ---
+>>  hw/dma/xilinx_axidma.c | 8 ++++++--
+>>  1 file changed, 6 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
+>> index 4b475e5484..b8ab5a423d 100644
+>> --- a/hw/dma/xilinx_axidma.c
+>> +++ b/hw/dma/xilinx_axidma.c
+>> @@ -291,7 +291,9 @@ static void stream_process_mem2s(struct Stream *s,
+>> StreamSink *tx_data_dev,
+>>      }
+>>
+>>      while (1) {
+>> -        stream_desc_load(s, s->regs[R_CURDESC]);
+>> +        if (MEMTX_OK !=3D stream_desc_load(s, s->regs[R_CURDESC])) {
+>> +            break;
+>> +        }
+>>
+>>          if (s->desc.status & SDESC_STATUS_COMPLETE) {
+>>              s->regs[R_DMASR] |=3D DMASR_HALTED;
+>> @@ -348,7 +350,9 @@ static size_t stream_process_s2mem(struct Stream *s,
+>> unsigned char *buf,
+>>      }
+>>
+>>      while (len) {
+>> -        stream_desc_load(s, s->regs[R_CURDESC]);
+>> +        if (MEMTX_OK !=3D stream_desc_load(s, s->regs[R_CURDESC])) {
+>> +            break;
+>> +        }
+>>
+>>          if (s->desc.status & SDESC_STATUS_COMPLETE) {
+>>              s->regs[R_DMASR] |=3D DMASR_HALTED;
+>> --
+>> 2.34.1
+>>
+>>
+
+--000000000000be4b35061a0ae3f7
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi Edgar,<div>thank you for the advice, I will squash them=
+ in the next version of the patch series.</div><div><br></div><div>Sincerel=
+y,</div><div>Fea</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr"=
+ class=3D"gmail_attr">On Mon, Jun 3, 2024 at 6:21=E2=80=AFPM Edgar E. Igles=
+ias &lt;<a href=3D"mailto:edgar.iglesias@gmail.com">edgar.iglesias@gmail.co=
+m</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin=
+:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"=
+><div dir=3D"ltr"><div dir=3D"ltr">On Mon, Jun 3, 2024 at 7:48=E2=80=AFAM F=
+ea.Wang &lt;<a href=3D"mailto:fea.wang@sifive.com" target=3D"_blank">fea.wa=
+ng@sifive.com</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex">When calling the loading a descript=
+ion function, it should be noticed<br>
+that the function may return a failure value. Breaking the loop is one<br>
+of the possible ways to handle it.<br>
+<br>
+Signed-off-by: Fea.Wang &lt;<a href=3D"mailto:fea.wang@sifive.com" target=
+=3D"_blank">fea.wang@sifive.com</a>&gt;<br></blockquote><div><br></div><div=
+><br></div><div>Looks good, a nitpick comment, I would either squash this w=
+ith patch #1</div><div>or move the change to return of error code in stream=
+_desc_load() to this patch.</div><div><br></div><div><br></div><div>=C2=A0<=
+/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
+rder-left:1px solid rgb(204,204,204);padding-left:1ex">
+---<br>
+=C2=A0hw/dma/xilinx_axidma.c | 8 ++++++--<br>
+=C2=A01 file changed, 6 insertions(+), 2 deletions(-)<br>
+<br>
+diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c<br>
+index 4b475e5484..b8ab5a423d 100644<br>
+--- a/hw/dma/xilinx_axidma.c<br>
++++ b/hw/dma/xilinx_axidma.c<br>
+@@ -291,7 +291,9 @@ static void stream_process_mem2s(struct Stream *s, Stre=
+amSink *tx_data_dev,<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0while (1) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 stream_desc_load(s, s-&gt;regs[R_CURDESC]);<br=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (MEMTX_OK !=3D stream_desc_load(s, s-&gt;re=
+gs[R_CURDESC])) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (s-&gt;desc.status &amp; SDESC_STATUS_=
+COMPLETE) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;regs[R_DMASR] |=3D DM=
+ASR_HALTED;<br>
+@@ -348,7 +350,9 @@ static size_t stream_process_s2mem(struct Stream *s, un=
+signed char *buf,<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0while (len) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 stream_desc_load(s, s-&gt;regs[R_CURDESC]);<br=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (MEMTX_OK !=3D stream_desc_load(s, s-&gt;re=
+gs[R_CURDESC])) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (s-&gt;desc.status &amp; SDESC_STATUS_=
+COMPLETE) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;regs[R_DMASR] |=3D DM=
+ASR_HALTED;<br>
+-- <br>
+2.34.1<br>
+<br>
+</blockquote></div></div>
+</blockquote></div>
+
+--000000000000be4b35061a0ae3f7--
 
