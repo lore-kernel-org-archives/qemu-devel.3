@@ -4,69 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B0A7C25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:00:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96738C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:01:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEQwP-0007vL-Er; Tue, 04 Jun 2024 05:58:53 -0400
+	id 1sEQwa-0000Ho-Vs; Tue, 04 Jun 2024 05:59:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQwO-0007oK-Cu
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:52 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQwY-00005r-WE
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:59:03 -0400
 Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQwL-0002N0-SX
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:51 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQwW-0002Nw-LS
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:59:02 -0400
 Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-35dce610207so3378663f8f.2
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:58:49 -0700 (PDT)
+ ffacd0b85a97d-35e4aaa0f33so2674293f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:59:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717495127; x=1718099927; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717495139; x=1718099939; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TGqa4LCtUPmfqT7FCKxDXiSWjLBqv6GKh2fc2iPwQg4=;
- b=Urb4x7Qt7N3XyuJxgXhZbii6bOtI0Sk3xMOqO5B5DlVLF4BntRwNHOW7B1XZfsnQRJ
- 18HlzU+aKV3giCPdW3If1j/m/DC16YoEklXrl2tYXoyXiKjYcKP9GbrO0a/WAYAvdg9E
- e6ZmYE2YaH6wvMSHkAek757cqajdJwTN4L+ng+/Crlf0rAWSiH14w1vXLZJAaUORNt3A
- q1Mlh0qsZT6N10hN1drLa+qp0lQWiUgj2kbIZQk/cLhzgWIed2xQ7m33z1s/5/7aHhx7
- iQl5trgOYlfSw2uegTVSpnxzL1kq6CSuvP6stNa3E5H6X99fhstGXcpI6avsHK9fI/hx
- fV1Q==
+ bh=9IPOKJ4bfj8H7u0AOUJYW14UBzQ/mD/AN0ShzwkJT0k=;
+ b=VgZEP1IYaLhEiCZmyujtyr86zlGWl+CP/mOsP8mykez41DaUhSulyycGdr6MuAB6b8
+ xftFDoiUqK+gGSiy/gJ6GwwY8JNU3hXOPbzUgU5Ud6gAavqktLqu/qB1y43ihNIR/D5y
+ vna/D9AjX24NNvjYWrMCkwCJvjV4kqHLQCCFCzAMimfKwX5BrcvgGZfMSIpvOrh/o9WG
+ 0nMH4O/d3hxv1AW+u3B8fTJsPH38TYUPWjJ83DizooQuL2xElGadac6l5F5ui/BTYzdj
+ k+4z7Im43hBQZv63dlcWGq5vfUD8vPWj0XMb7KxQNpmYgkyQhpjg3zO1ovaWI48j04Za
+ HxlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717495127; x=1718099927;
+ d=1e100.net; s=20230601; t=1717495139; x=1718099939;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TGqa4LCtUPmfqT7FCKxDXiSWjLBqv6GKh2fc2iPwQg4=;
- b=YrIQjH9lvC+JCNnzlrOgxg/94sD867u/k78jlppmulhbbzqN8u2YMKMLsfbcXC831j
- UmsYvRpfk/FrJHSoOYRkkPaKZ2wDozQssqAefXleMHJZicDNWlM/MrRpCRGKuJ/ZSuWh
- oaJXmAavgMtWL4sAjkyvn+rSYd5/HZHFmunZBkapLjU5NRGloAVydne+YuD1G2dZ+08d
- Nzas5EP/3Zx+9ToT2Utkac8e5W6YgYP2z44BBWv++T38lxW/zmxRby6TPzoFytHileui
- LHdnwcgOVFuDyUdZTz/Ss3VwwUOQCeE2qzXOUdFh4YAu7H//TM5KBjC//mZ1Fke9nXxF
- R75w==
-X-Gm-Message-State: AOJu0Yw3MoLluuSJPFGe5oopj+sEKxw0+AOCLh1ChuY3VpFoK/kjhbj/
- giechi7eG6aQzcBO21Xo3toUjWoTpotcmDm1CwIS0RcOUJmavbqRXHStYD/BDHqfAy7mCm75q6f
- z
-X-Google-Smtp-Source: AGHT+IG94P5WWPomVHoZIPdJKM7vpl6wDv2k1eL81l1TaEoE4MJF3s2yBYxpESSwDCnW58uEBYVcVQ==
-X-Received: by 2002:adf:e88d:0:b0:351:c960:b5a2 with SMTP id
- ffacd0b85a97d-35e0f254f8amr10288142f8f.6.1717495127353; 
- Tue, 04 Jun 2024 02:58:47 -0700 (PDT)
+ bh=9IPOKJ4bfj8H7u0AOUJYW14UBzQ/mD/AN0ShzwkJT0k=;
+ b=LVVLaHKXxrTjrtFGDYS0OTbg32lZnxO0DVI9/IAJ8pQSKevKMawfJAAHr+oYEJH6oy
+ VrbUNirKwnpf0QPVBx3yqp9c6jptEtTZjCVrKo+iSbONCeVErEHFyaMQkQpDbQ8GYfQi
+ 2JWIRGdYS8iAW6RTa51vlnJljWqVJn8EXbdjiJYtJgbW293XNQUJHks/Tu7EzWBZsRVK
+ eB9+RnjaFaPLuaIpexOJDnxWao7AvHS7uOZwGrMdjafo93dBs2SOlsym7n9hBkNgn/rC
+ ln/RHpOKjCMs8Tsv9RVbkPnHb7DL4f/cCpzcelbkNGKZTOC7AiFWvJIFwDWb3NTth1fv
+ X3aw==
+X-Gm-Message-State: AOJu0YxtKbiHDKaGwUt/TriDlf0XA1D18/MM/mh06NqwBKp7jzDLHG9b
+ QIGoMEAvJCKhsqXjrU9IoWZ88e5IyySOiG1o1Ism3oOziW4Mn0kAxVwNnDKHqkhgGnz5X6MxYia
+ E
+X-Google-Smtp-Source: AGHT+IEsMCMfNlTLfFoGlaytIalXtFxe3kWoNTZLNJxbNmBvUg8YBI4KAfdppRGBrANGXYplZqOpJw==
+X-Received: by 2002:adf:f68b:0:b0:354:e729:c101 with SMTP id
+ ffacd0b85a97d-35e0f2551f3mr9370060f8f.12.1717495138820; 
+ Tue, 04 Jun 2024 02:58:58 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.159.34])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd062ecd3sm11240886f8f.74.2024.06.04.02.58.46
+ ffacd0b85a97d-35dd04c0f7esm11074701f8f.22.2024.06.04.02.58.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Jun 2024 02:58:46 -0700 (PDT)
+ Tue, 04 Jun 2024 02:58:58 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 29/32] hw/acpi: Remove the deprecated QAPI MEM_UNPLUG_ERROR
- event
-Date: Tue,  4 Jun 2024 11:56:05 +0200
-Message-ID: <20240604095609.12285-30-philmd@linaro.org>
+ Konstantin Kostiuk <kkostiuk@redhat.com>
+Subject: [PULL 31/32] qga: Remove deprecated 'blacklist' argument / config key
+Date: Tue,  4 Jun 2024 11:56:07 +0200
+Message-ID: <20240604095609.12285-32-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240604095609.12285-1-philmd@linaro.org>
 References: <20240604095609.12285-1-philmd@linaro.org>
@@ -97,147 +94,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MEM_UNPLUG_ERROR event is deprecated since commit d43f1670c7
-("qapi/qdev.json: add DEVICE_UNPLUG_GUEST_ERROR QAPI event"),
-time to remove it.
+The 'blacklist' argument / config key are deprecated since commit
+582a098e6c ("qga: Replace 'blacklist' command line and config file
+options by 'block-rpcs'"), time to remove them.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-Id: <20240530071548.20074-2-philmd@linaro.org>
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+Message-Id: <20240530070413.19181-1-philmd@linaro.org>
 ---
- docs/about/deprecated.rst       |  5 -----
- docs/about/removed-features.rst |  9 +++++++++
- qapi/machine.json               | 28 ----------------------------
- hw/acpi/memory_hotplug.c        |  8 --------
- hw/ppc/spapr.c                  | 11 +----------
- 5 files changed, 10 insertions(+), 51 deletions(-)
+ docs/about/deprecated.rst       | 18 ------------------
+ docs/about/removed-features.rst | 18 ++++++++++++++++++
+ qga/main.c                      |  6 ------
+ 3 files changed, 18 insertions(+), 24 deletions(-)
 
 diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 40585ca7d5..4a61894db6 100644
+index 187c8a3f97..a6f4655a3a 100644
 --- a/docs/about/deprecated.rst
 +++ b/docs/about/deprecated.rst
-@@ -151,11 +151,6 @@ property types.
- QEMU Machine Protocol (QMP) events
- ----------------------------------
+@@ -462,24 +462,6 @@ versions, aliases will point to newer CPU model versions
+ depending on the machine type, so management software must
+ resolve CPU model aliases before starting a virtual machine.
  
--``MEM_UNPLUG_ERROR`` (since 6.2)
--''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+-QEMU guest agent
+-----------------
 -
--Use the more generic event ``DEVICE_UNPLUG_GUEST_ERROR`` instead.
+-``--blacklist`` command line option (since 7.2)
+-'''''''''''''''''''''''''''''''''''''''''''''''
 -
- ``vcpu`` trace events (since 8.1)
- '''''''''''''''''''''''''''''''''
+-``--blacklist`` has been replaced by ``--block-rpcs`` (which is a better
+-wording for what this option does). The short form ``-b`` still stays
+-the same and thus is the preferred way for scripts that should run with
+-both, older and future versions of QEMU.
+-
+-``blacklist`` config file option (since 7.2)
+-''''''''''''''''''''''''''''''''''''''''''''
+-
+-The ``blacklist`` config file option has been renamed to ``block-rpcs``
+-(to be in sync with the renaming of the corresponding command line
+-option).
+-
+ Migration
+ ---------
  
 diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index fba0cfb0b0..f1e70263e2 100644
+index 1e64c27cd8..210a90bee8 100644
 --- a/docs/about/removed-features.rst
 +++ b/docs/about/removed-features.rst
-@@ -671,6 +671,15 @@ Use ``multifd-channels`` instead.
+@@ -1144,4 +1144,22 @@ stable for some time and is now widely used.
+ The command line and feature set is very close to the removed
+ C implementation.
  
- Use ``multifd-compression`` instead.
- 
-+QEMU Machine Protocol (QMP) events
-+----------------------------------
++QEMU guest agent
++----------------
 +
-+``MEM_UNPLUG_ERROR`` (removed in 9.1)
-+'''''''''''''''''''''''''''''''''''''
++``--blacklist`` command line option (removed in 9.1)
++''''''''''''''''''''''''''''''''''''''''''''''''''''
 +
-+MEM_UNPLUG_ERROR has been replaced by the more generic ``DEVICE_UNPLUG_GUEST_ERROR`` event.
++``--blacklist`` has been replaced by ``--block-rpcs`` (which is a better
++wording for what this option does). The short form ``-b`` still stays
++the same and thus is the preferred way for scripts that should run with
++both, older and future versions of QEMU.
 +
++``blacklist`` config file option (removed in 9.1)
++'''''''''''''''''''''''''''''''''''''''''''''''''
 +
- Human Monitor Protocol (HMP) commands
- -------------------------------------
++The ``blacklist`` config file option has been renamed to ``block-rpcs``
++(to be in sync with the renaming of the corresponding command line
++option).
++
+ .. _Intel discontinuance notification: https://www.intel.com/content/www/us/en/content-details/781327/intel-is-discontinuing-ip-ordering-codes-listed-in-pdn2312-for-nios-ii-ip.html
+diff --git a/qga/main.c b/qga/main.c
+index bdf5344584..f4d5f15bb3 100644
+--- a/qga/main.c
++++ b/qga/main.c
+@@ -1071,11 +1071,6 @@ static void config_load(GAConfig *config)
+             g_key_file_get_boolean(keyfile, "general", "retry-path", &gerr);
+     }
  
-diff --git a/qapi/machine.json b/qapi/machine.json
-index bce6e1bbc4..453feb9347 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1607,34 +1607,6 @@
- { 'event': 'MEMORY_DEVICE_SIZE_CHANGE',
-   'data': { '*id': 'str', 'size': 'size', 'qom-path' : 'str'} }
- 
--##
--# @MEM_UNPLUG_ERROR:
--#
--# Emitted when memory hot unplug error occurs.
--#
--# @device: device name
--#
--# @msg: Informative message
--#
--# Features:
--#
--# @deprecated: This event is deprecated.  Use
--#     @DEVICE_UNPLUG_GUEST_ERROR instead.
--#
--# Since: 2.4
--#
--# Example:
--#
--#     <- { "event": "MEM_UNPLUG_ERROR",
--#          "data": { "device": "dimm1",
--#                    "msg": "acpi: device unplug for unsupported device"
--#          },
--#          "timestamp": { "seconds": 1265044230, "microseconds": 450486 } }
--##
--{ 'event': 'MEM_UNPLUG_ERROR',
--  'data': { 'device': 'str', 'msg': 'str' },
--  'features': ['deprecated'] }
--
- ##
- # @BootConfiguration:
- #
-diff --git a/hw/acpi/memory_hotplug.c b/hw/acpi/memory_hotplug.c
-index de6f974ebb..9b974b7274 100644
---- a/hw/acpi/memory_hotplug.c
-+++ b/hw/acpi/memory_hotplug.c
-@@ -178,14 +178,6 @@ static void acpi_memory_hotplug_write(void *opaque, hwaddr addr, uint64_t data,
-             hotplug_handler_unplug(hotplug_ctrl, dev, &local_err);
-             if (local_err) {
-                 trace_mhp_acpi_pc_dimm_delete_failed(mem_st->selector);
--
--                /*
--                 * Send both MEM_UNPLUG_ERROR and DEVICE_UNPLUG_GUEST_ERROR
--                 * while the deprecation of MEM_UNPLUG_ERROR is
--                 * pending.
--                 */
--                qapi_event_send_mem_unplug_error(dev->id ? : "",
--                                                 error_get_pretty(local_err));
-                 qapi_event_send_device_unplug_guest_error(dev->id,
-                                                           dev->canonical_path);
-                 error_free(local_err);
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 4345764bce..81a187f126 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -3786,7 +3786,6 @@ void spapr_memory_unplug_rollback(SpaprMachineState *spapr, DeviceState *dev)
-     SpaprDrc *drc;
-     uint32_t nr_lmbs;
-     uint64_t size, addr_start, addr;
--    g_autofree char *qapi_error = NULL;
-     int i;
- 
-     if (!dev) {
-@@ -3823,16 +3822,8 @@ void spapr_memory_unplug_rollback(SpaprMachineState *spapr, DeviceState *dev)
- 
-     /*
-      * Tell QAPI that something happened and the memory
--     * hotunplug wasn't successful. Keep sending
--     * MEM_UNPLUG_ERROR even while sending
--     * DEVICE_UNPLUG_GUEST_ERROR until the deprecation of
--     * MEM_UNPLUG_ERROR is due.
-+     * hotunplug wasn't successful.
-      */
--    qapi_error = g_strdup_printf("Memory hotunplug rejected by the guest "
--                                 "for device %s", dev->id);
--
--    qapi_event_send_mem_unplug_error(dev->id ? : "", qapi_error);
--
-     qapi_event_send_device_unplug_guest_error(dev->id,
-                                               dev->canonical_path);
- }
+-    if (g_key_file_has_key(keyfile, "general", "blacklist", NULL)) {
+-        g_warning("config using deprecated 'blacklist' key, should be replaced"
+-                  " with the 'block-rpcs' key.");
+-        blockrpcs_key = "blacklist";
+-    }
+     if (g_key_file_has_key(keyfile, "general", blockrpcs_key, NULL)) {
+         config->bliststr =
+             g_key_file_get_string(keyfile, "general", blockrpcs_key, &gerr);
+@@ -1190,7 +1185,6 @@ static void config_parse(GAConfig *config, int argc, char **argv)
+         { "path", 1, NULL, 'p' },
+         { "daemonize", 0, NULL, 'd' },
+         { "block-rpcs", 1, NULL, 'b' },
+-        { "blacklist", 1, NULL, 'b' },  /* deprecated alias for 'block-rpcs' */
+         { "allow-rpcs", 1, NULL, 'a' },
+ #ifdef _WIN32
+         { "service", 1, NULL, 's' },
 -- 
 2.41.0
 
