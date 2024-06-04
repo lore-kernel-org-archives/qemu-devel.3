@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52316C27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCD00C25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:41:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEOlA-0001xX-5t; Tue, 04 Jun 2024 03:39:08 -0400
+	id 1sEOkT-0008LJ-61; Tue, 04 Jun 2024 03:38:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOl7-0001jc-R8
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:39:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sEOkR-0008L1-Lb
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOl5-0006Pb-QZ
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:39:05 -0400
+ id 1sEOkQ-0006K5-3N
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717486743;
+ s=mimecast20190719; t=1717486701;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wNP3v399FEuLCNKjKz1Hgq6Vv7Mh17NVRy0U2xtE/8s=;
- b=WKeNd70ZGdVW4wNL0x1HyA+IWjy7LFHwhdtYB496Uzt5Uh8VpUiJ18fNXHY9DtvAgRD3Id
- hlGqk/t+v28b1TyC0LYE3fQDBjVvTmhjZ6NTQGKLaIlouECHH6RUuyNY7WW/9ZYR1Gmet2
- IHaII/dFlNabQL0KLLr65hdjQixyenQ=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-20-wf9Nkx07NQS0rE2w2BTJpA-1; Tue,
- 04 Jun 2024 03:38:58 -0400
-X-MC-Unique: wf9Nkx07NQS0rE2w2BTJpA-1
+ bh=6eWp1nR7cePuserjyHYyDpdrl8p1rvahw3nr6DvzmSw=;
+ b=ZI9x82gm3ocsp00AdYxlRsEeKC7eaOnKyyTNE7vKp6LK+7nKM1ETNWv6ac8FGti1a6wPuG
+ CSrWoeKGhhHeTIjdFahiVKAfcJ4mdT8VfhChhIgk6/Iq5uMNqvOLdcuBTd064Cdr41YEbc
+ 67wFZGhAOToUlv/Ww3RN4V2n0Ox3akg=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-531-j5Mkj26eMS-V_EyoaH55mw-1; Tue, 04 Jun 2024 03:38:17 -0400
+X-MC-Unique: j5Mkj26eMS-V_EyoaH55mw-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9FEA33C0262C;
- Tue,  4 Jun 2024 07:38:57 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7F6A885A5BA;
+ Tue,  4 Jun 2024 07:38:17 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.238])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 146FC492BD4;
- Tue,  4 Jun 2024 07:38:54 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 0839C492BD4;
+ Tue,  4 Jun 2024 07:38:14 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
-Cc: Alexey Dobriyan <adobriyan@yandex-team.ru>,
- Jason Wang <jasowang@redhat.com>
-Subject: [PULL 19/20] virtio-net: drop too short packets early
-Date: Tue,  4 Jun 2024 15:37:54 +0800
-Message-ID: <20240604073755.1859-20-jasowang@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ "Zhang, Chen" <chen.zhang@intel.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 05/20] tap: Call tap_receive_iov() from tap_receive()
+Date: Tue,  4 Jun 2024 15:37:40 +0800
+Message-ID: <20240604073755.1859-6-jasowang@redhat.com>
 In-Reply-To: <20240604073755.1859-1-jasowang@redhat.com>
 References: <20240604073755.1859-1-jasowang@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,89 +84,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexey Dobriyan <adobriyan@yandex-team.ru>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Reproducer from https://gitlab.com/qemu-project/qemu/-/issues/1451
-creates small packet (1 segment, len = 10 == n->guest_hdr_len),
-then destroys queue.
+This will save duplicate logic found in both of tap_receive_iov() and
+tap_receive().
 
-"if (n->host_hdr_len != n->guest_hdr_len)" is triggered, if body creates
-zero length/zero segment packet as there is nothing after guest header.
-
-qemu_sendv_packet_async() tries to send it.
-
-slirp discards it because it is smaller than Ethernet header,
-but returns 0 because tx hooks are supposed to return total length of data.
-
-0 is propagated upwards and is interpreted as "packet has been sent"
-which is terrible because queue is being destroyed, nobody is waiting for TX
-to complete and assert it triggered.
-
-Fix is discard such empty packets instead of sending them.
-
-Length 1 packets will go via different codepath:
-
-	virtqueue_push(q->tx_vq, elem, 0);
-	virtio_notify(vdev, q->tx_vq);
-	g_free(elem);
-
-and aren't problematic.
-
-Signed-off-by: Alexey Dobriyan <adobriyan@yandex-team.ru>
+Suggested-by: "Zhang, Chen" <chen.zhang@intel.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- hw/net/virtio-net.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ net/tap.c | 35 +++++------------------------------
+ 1 file changed, 5 insertions(+), 30 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 666a4e2a03..9c7e85caea 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2708,18 +2708,14 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
-         out_sg = elem->out_sg;
-         if (out_num < 1) {
-             virtio_error(vdev, "virtio-net header not in first element");
--            virtqueue_detach_element(q->tx_vq, elem, 0);
--            g_free(elem);
--            return -EINVAL;
-+            goto detach;
-         }
- 
-         if (n->needs_vnet_hdr_swap) {
-             if (iov_to_buf(out_sg, out_num, 0, &vhdr, sizeof(vhdr)) <
-                 sizeof(vhdr)) {
-                 virtio_error(vdev, "virtio-net header incorrect");
--                virtqueue_detach_element(q->tx_vq, elem, 0);
--                g_free(elem);
--                return -EINVAL;
-+                goto detach;
-             }
-             virtio_net_hdr_swap(vdev, &vhdr);
-             sg2[0].iov_base = &vhdr;
-@@ -2747,6 +2743,11 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
-                              n->guest_hdr_len, -1);
-             out_num = sg_num;
-             out_sg = sg;
-+
-+            if (out_num < 1) {
-+                virtio_error(vdev, "virtio-net nothing to send");
-+                goto detach;
-+            }
-         }
- 
-         ret = qemu_sendv_packet_async(qemu_get_subqueue(n->nic, queue_index),
-@@ -2767,6 +2768,11 @@ drop:
-         }
-     }
-     return num_packets;
-+
-+detach:
-+    virtqueue_detach_element(q->tx_vq, elem, 0);
-+    g_free(elem);
-+    return -EINVAL;
+diff --git a/net/tap.c b/net/tap.c
+index 99c59ee468..9825518ff1 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -133,39 +133,14 @@ static ssize_t tap_receive_iov(NetClientState *nc, const struct iovec *iov,
+     return tap_write_packet(s, iovp, iovcnt);
  }
  
- static void virtio_net_tx_timer(void *opaque);
+-static ssize_t tap_receive_raw(NetClientState *nc, const uint8_t *buf, size_t size)
+-{
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
+-    struct iovec iov[2];
+-    int iovcnt = 0;
+-    struct virtio_net_hdr_mrg_rxbuf hdr = { };
+-
+-    if (s->host_vnet_hdr_len) {
+-        iov[iovcnt].iov_base = &hdr;
+-        iov[iovcnt].iov_len  = s->host_vnet_hdr_len;
+-        iovcnt++;
+-    }
+-
+-    iov[iovcnt].iov_base = (char *)buf;
+-    iov[iovcnt].iov_len  = size;
+-    iovcnt++;
+-
+-    return tap_write_packet(s, iov, iovcnt);
+-}
+-
+ static ssize_t tap_receive(NetClientState *nc, const uint8_t *buf, size_t size)
+ {
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
+-    struct iovec iov[1];
+-
+-    if (s->host_vnet_hdr_len && !s->using_vnet_hdr) {
+-        return tap_receive_raw(nc, buf, size);
+-    }
+-
+-    iov[0].iov_base = (char *)buf;
+-    iov[0].iov_len  = size;
++    struct iovec iov = {
++        .iov_base = (void *)buf,
++        .iov_len = size
++    };
+ 
+-    return tap_write_packet(s, iov, 1);
++    return tap_receive_iov(nc, &iov, 1);
+ }
+ 
+ #ifndef __sun__
 -- 
 2.42.0
 
