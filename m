@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16D49C27C53
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A057C41513
 	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:49:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sENxZ-0000SE-DD; Tue, 04 Jun 2024 02:47:53 -0400
+	id 1sENwn-0006Tw-S4; Tue, 04 Jun 2024 02:47:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENw5-0004vP-B4
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:46:22 -0400
+ id 1sENvT-0004Ka-Om
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENw2-0007ex-V5
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:46:21 -0400
+ id 1sENvR-0007ar-RZ
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717483578;
+ s=mimecast20190719; t=1717483541;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/X80aa+kiFbSRDqQh6cNU/i3xHWccd9vQvylfLP0Pq4=;
- b=DypvTpz4R+ESuz7aFqQIKi5u/UV3ezgwsUSUZNO51IlCXWmr6card/xH0cAHKs1zwKnzk8
- QoqPmLn/mq2uzOkBVhUGuCah/BQvDvukv9nT0IfoshtfQQyX8/k0E1yF9gm/dHzdfaCW9M
- 7W34GtyrrNxQteeM42j1zC2TyCRglkA=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vMPOLamSRHQE7IaaVLuvYJHjbkszPghyVoT4hxWvYC4=;
+ b=ek+jKqaauw2NZ3q9SOp/6VrBwK2oQj7uBwwHVdxOfh/s0pSRLr+Phg67jMDNhD72wIMSPm
+ r64dcn/sM6KwiRusTp5X2MRq0Od2+OozJ+W5WObO4u3RwzyfdTLogf4oWXcCG0PUax0iD1
+ WNFPpcnSkiMDEXjPwb0x5lZpsHp0lF4=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-128-H3k53xJmOAiZb3DkpB1-WQ-1; Tue, 04 Jun 2024 02:46:16 -0400
-X-MC-Unique: H3k53xJmOAiZb3DkpB1-WQ-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-579c69260bbso1661620a12.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:46:16 -0700 (PDT)
+ us-mta-604-ydpJTyzvMMKKsquPwGO5iA-1; Tue, 04 Jun 2024 02:45:40 -0400
+X-MC-Unique: ydpJTyzvMMKKsquPwGO5iA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a68cc214ac7so103219166b.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:45:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717483574; x=1718088374;
+ d=1e100.net; s=20230601; t=1717483538; x=1718088338;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/X80aa+kiFbSRDqQh6cNU/i3xHWccd9vQvylfLP0Pq4=;
- b=nNpJm7a+DZS0hVUGPyKHC7BWpuhtNgPDjuQAvZUro8qiUKlB6btMcuhAOXlQyAAz13
- 6n3lVtsDJAoZkt0r+Lx7zJqwPb49ZB/dRz58pBkn84kiZ75sCi83QanNmp7l67bMqJLx
- 0x7kF4L+DQXpiaElTQfiRcFvP9FCYxtr2MNlh2G8mqr+7o+6B9svCKAHxgm9hnmx7v2W
- dXCG7CbyuwNNBsYvvDRBCL6w2PggnatWP0gTu131gi6V9NBKh2BAcPU/byk4gNzCCIhY
- BEIqQKQW2m7/UUhuaDl+0RWkBbv+0zo/cOwjAEMGXqtpEhtEA1L3nafWmMWN0JwS3Hln
- Dzmw==
-X-Gm-Message-State: AOJu0YzuHkcXSD5xS9EPQ77ysWYTVYiy4n0e3tn63Dy95G2vJjCuF+IA
- iObQkklk+qyE8rJyT0Ko5eef7TL1ILKX6T0Rtai93Kw6u9C2QlstzpSl1SWLVXWHL1bcB/57YSf
- HaNKs8qQlF0Shf3S+zf8RnlDfVJZN+NxoSbCQQeg9JNrit1XgZvDDSWeCaRsQ77l+npZDyEaWib
- YP7PvTZk/rfAg60+bFBBHyquddhnPnkfngRITD
-X-Received: by 2002:a17:906:3285:b0:a67:403a:4bf7 with SMTP id
- a640c23a62f3a-a682022f933mr897204766b.26.1717483574707; 
- Mon, 03 Jun 2024 23:46:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEFhZZ3IAIa1VY2AK974K/c76EJgSIV6kg8wrA+8gChW6UPanqzZKiaAGTjXpHifjvpPnKmBA==
-X-Received: by 2002:a17:906:3285:b0:a67:403a:4bf7 with SMTP id
- a640c23a62f3a-a682022f933mr897203666b.26.1717483574389; 
- Mon, 03 Jun 2024 23:46:14 -0700 (PDT)
+ bh=vMPOLamSRHQE7IaaVLuvYJHjbkszPghyVoT4hxWvYC4=;
+ b=UE16a5tHuH8/2IbM1yOpBnWKp1E1w0B4WO5gsltoWCkQS9D2RxeaZzS5CGd6osDToB
+ TDHLk34GPM3bYmOg9GBe+1EFE+QVkPFy8LCvN/fbKcsno6VwNifYk2vK2eO1lfaCDFdK
+ beb/4oQtuQ98gaW6gK1EnXTBCkdq0VFa1z13r6GUOyLLHQUEtMEVhsmrfE3+GEe2ZhzH
+ 8KHU/CaV1yfiuaOVMBBOlM2FVf3OvqsoBdLABpOXjwRT8v8Q/JFhFUg/yrtvx/oy6CLr
+ kfOHmiwoS+8oRSigI9w0wqLxcZTgZFPEsOwsKcDCwIZGLYtHXeftiFRG9iqB0oBN8+4n
+ Ts/w==
+X-Gm-Message-State: AOJu0YxjqLAfk1qf/WFKke+YLWJd6IaOtM417WutXQO2YDk4fXSPdBZc
+ wHdBqObuKkft8DdfZ870eaLOTZw9ffxUAPhQio5oJkS/i+DHQQhd0p9l1lI4huKrMzifRsuhcPi
+ k3JUgGtrlKTeOUNG9ua2HD/lDqSZg95al9Ex41CDxFXmy00V2MhOs9th0FdQUFZX2T2YDbNvK9K
+ 4HYrtzFiFGhs4bxwdMyRTwEC21Gm+DzCbm85zy
+X-Received: by 2002:a17:906:f585:b0:a68:f0ce:9f2e with SMTP id
+ a640c23a62f3a-a68f0cea079mr433530666b.44.1717483538240; 
+ Mon, 03 Jun 2024 23:45:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKle5H+3DrBU9+OF2gPlcaVM44gOko9Z9cDrlWegkVah7ZgLJD1D73IM3Sb43xe69JS89bCg==
+X-Received: by 2002:a17:906:f585:b0:a68:f0ce:9f2e with SMTP id
+ a640c23a62f3a-a68f0cea079mr433528566b.44.1717483537829; 
+ Mon, 03 Jun 2024 23:45:37 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68b5e8b0fasm441448066b.214.2024.06.03.23.46.13
+ a640c23a62f3a-a69043af942sm277148966b.72.2024.06.03.23.45.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 23:46:14 -0700 (PDT)
+ Mon, 03 Jun 2024 23:45:37 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>,
-	Pankaj Gupta <pankaj.gupta@amd.com>
-Subject: [PULL 44/45] hw/i386/sev: Use guest_memfd for legacy ROMs
-Date: Tue,  4 Jun 2024 08:44:08 +0200
-Message-ID: <20240604064409.957105-45-pbonzini@redhat.com>
+Cc: Brijesh Singh <brijesh.singh@amd.com>, Michael Roth <michael.roth@amd.com>,
+ Pankaj Gupta <pankaj.gupta@amd.com>
+Subject: [PULL 30/45] i386/sev: Add handling to encrypt/finalize guest launch
+ data
+Date: Tue,  4 Jun 2024 08:43:54 +0200
+Message-ID: <20240604064409.957105-31-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240604064409.957105-1-pbonzini@redhat.com>
 References: <20240604064409.957105-1-pbonzini@redhat.com>
@@ -104,113 +105,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Roth <michael.roth@amd.com>
+From: Brijesh Singh <brijesh.singh@amd.com>
 
-Current SNP guest kernels will attempt to access these regions with
-with C-bit set, so guest_memfd is needed to handle that. Otherwise,
-kvm_convert_memory() will fail when the guest kernel tries to access it
-and QEMU attempts to call KVM_SET_MEMORY_ATTRIBUTES to set these ranges
-to private.
+Process any queued up launch data and encrypt/measure it into the SNP
+guest instance prior to initial guest launch.
 
-Whether guests should actually try to access ROM regions in this way (or
-need to deal with legacy ROM regions at all), is a separate issue to be
-addressed on kernel side, but current SNP guest kernels will exhibit
-this behavior and so this handling is needed to allow QEMU to continue
-running existing SNP guest kernels.
+This also updates the KVM_SEV_SNP_LAUNCH_UPDATE call to handle partial
+update responses.
 
+Signed-off-by: Brijesh Singh <brijesh.singh@amd.com>
+Co-developed-by: Michael Roth <michael.roth@amd.com>
 Signed-off-by: Michael Roth <michael.roth@amd.com>
-[pankaj: Added sev_snp_enabled() check]
+Co-developed-by: Pankaj Gupta <pankaj.gupta@amd.com>
 Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Message-ID: <20240530111643.1091816-28-pankaj.gupta@amd.com>
+Message-ID: <20240530111643.1091816-17-pankaj.gupta@amd.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/i386/pc.c       | 14 ++++++++++----
- hw/i386/pc_sysfw.c | 19 +++++++++++++------
- 2 files changed, 23 insertions(+), 10 deletions(-)
+ target/i386/sev.c        | 112 ++++++++++++++++++++++++++++++++++++++-
+ target/i386/trace-events |   2 +
+ 2 files changed, 113 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 7b638da7aaa..0469af00a78 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -62,6 +62,7 @@
- #include "hw/mem/memory-device.h"
- #include "e820_memory_layout.h"
- #include "trace.h"
-+#include "sev.h"
- #include CONFIG_DEVICES
- 
- #ifdef CONFIG_XEN_EMU
-@@ -1022,10 +1023,15 @@ void pc_memory_init(PCMachineState *pcms,
-     pc_system_firmware_init(pcms, rom_memory);
- 
-     option_rom_mr = g_malloc(sizeof(*option_rom_mr));
--    memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
--                           &error_fatal);
--    if (pcmc->pci_enabled) {
--        memory_region_set_readonly(option_rom_mr, true);
-+    if (machine_require_guest_memfd(machine)) {
-+        memory_region_init_ram_guest_memfd(option_rom_mr, NULL, "pc.rom",
-+                                           PC_ROM_SIZE, &error_fatal);
-+    } else {
-+        memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
-+                               &error_fatal);
-+        if (pcmc->pci_enabled) {
-+            memory_region_set_readonly(option_rom_mr, true);
-+        }
-     }
-     memory_region_add_subregion_overlap(rom_memory,
-                                         PC_ROM_MIN_VGA,
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index 7cdbafc8d22..ef80281d28b 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -40,8 +40,8 @@
- 
- #define FLASH_SECTOR_SIZE 4096
- 
--static void pc_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *rom_memory,
--                             MemoryRegion *flash_mem)
-+static void pc_isa_bios_init(PCMachineState *pcms, MemoryRegion *isa_bios,
-+                             MemoryRegion *rom_memory, MemoryRegion *flash_mem)
- {
-     int isa_bios_size;
-     uint64_t flash_size;
-@@ -51,8 +51,13 @@ static void pc_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *rom_memory,
- 
-     /* map the last 128KB of the BIOS in ISA space */
-     isa_bios_size = MIN(flash_size, 128 * KiB);
--    memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
--                           &error_fatal);
-+    if (machine_require_guest_memfd(MACHINE(pcms))) {
-+        memory_region_init_ram_guest_memfd(isa_bios, NULL, "isa-bios",
-+                                           isa_bios_size, &error_fatal);
-+    } else {
-+        memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
-+                               &error_fatal);
-+    }
-     memory_region_add_subregion_overlap(rom_memory,
-                                         0x100000 - isa_bios_size,
-                                         isa_bios,
-@@ -65,7 +70,9 @@ static void pc_isa_bios_init(MemoryRegion *isa_bios, MemoryRegion *rom_memory,
-            ((uint8_t*)flash_ptr) + (flash_size - isa_bios_size),
-            isa_bios_size);
- 
--    memory_region_set_readonly(isa_bios, true);
-+    if (!machine_require_guest_memfd(current_machine)) {
-+        memory_region_set_readonly(isa_bios, true);
-+    }
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index e89b87d2f55..ef2e592ca76 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -756,6 +756,76 @@ out:
+     return ret;
  }
  
- static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
-@@ -191,7 +198,7 @@ static void pc_system_flash_map(PCMachineState *pcms,
-                 x86_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem,
-                                   true);
-             } else {
--                pc_isa_bios_init(&x86ms->isa_bios, rom_memory, flash_mem);
-+                pc_isa_bios_init(pcms, &x86ms->isa_bios, rom_memory, flash_mem);
-             }
++static const char *
++snp_page_type_to_str(int type)
++{
++    switch (type) {
++    case KVM_SEV_SNP_PAGE_TYPE_NORMAL: return "Normal";
++    case KVM_SEV_SNP_PAGE_TYPE_ZERO: return "Zero";
++    case KVM_SEV_SNP_PAGE_TYPE_UNMEASURED: return "Unmeasured";
++    case KVM_SEV_SNP_PAGE_TYPE_SECRETS: return "Secrets";
++    case KVM_SEV_SNP_PAGE_TYPE_CPUID: return "Cpuid";
++    default: return "unknown";
++    }
++}
++
++static int
++sev_snp_launch_update(SevSnpGuestState *sev_snp_guest,
++                      SevLaunchUpdateData *data)
++{
++    int ret, fw_error;
++    struct kvm_sev_snp_launch_update update = {0};
++
++    if (!data->hva || !data->len) {
++        error_report("SNP_LAUNCH_UPDATE called with invalid address"
++                     "/ length: %p / %lx",
++                     data->hva, data->len);
++        return 1;
++    }
++
++    update.uaddr = (__u64)(unsigned long)data->hva;
++    update.gfn_start = data->gpa >> TARGET_PAGE_BITS;
++    update.len = data->len;
++    update.type = data->type;
++
++    /*
++     * KVM_SEV_SNP_LAUNCH_UPDATE requires that GPA ranges have the private
++     * memory attribute set in advance.
++     */
++    ret = kvm_set_memory_attributes_private(data->gpa, data->len);
++    if (ret) {
++        error_report("SEV-SNP: failed to configure initial"
++                     "private guest memory");
++        goto out;
++    }
++
++    while (update.len || ret == -EAGAIN) {
++        trace_kvm_sev_snp_launch_update(update.uaddr, update.gfn_start <<
++                                        TARGET_PAGE_BITS, update.len,
++                                        snp_page_type_to_str(update.type));
++
++        ret = sev_ioctl(SEV_COMMON(sev_snp_guest)->sev_fd,
++                        KVM_SEV_SNP_LAUNCH_UPDATE,
++                        &update, &fw_error);
++        if (ret && ret != -EAGAIN) {
++            error_report("SNP_LAUNCH_UPDATE ret=%d fw_error=%d '%s'",
++                         ret, fw_error, fw_error_to_str(fw_error));
++            break;
++        }
++    }
++
++out:
++    if (!ret && update.gfn_start << TARGET_PAGE_BITS != data->gpa + data->len) {
++        error_report("SEV-SNP: expected update of GPA range %lx-%lx,"
++                     "got GPA range %lx-%llx",
++                     data->gpa, data->gpa + data->len, data->gpa,
++                     update.gfn_start << TARGET_PAGE_BITS);
++        ret = -EIO;
++    }
++
++    return ret;
++}
++
+ static int
+ sev_launch_update_data(SevGuestState *sev_guest, uint8_t *addr, uint64_t len)
+ {
+@@ -901,6 +971,46 @@ sev_launch_finish(SevCommonState *sev_common)
+     migrate_add_blocker(&sev_mig_blocker, &error_fatal);
+ }
  
-             /* Encrypt the pflash boot ROM */
++static void
++sev_snp_launch_finish(SevCommonState *sev_common)
++{
++    int ret, error;
++    Error *local_err = NULL;
++    SevLaunchUpdateData *data;
++    SevSnpGuestState *sev_snp = SEV_SNP_GUEST(sev_common);
++    struct kvm_sev_snp_launch_finish *finish = &sev_snp->kvm_finish_conf;
++
++    QTAILQ_FOREACH(data, &launch_update, next) {
++        ret = sev_snp_launch_update(sev_snp, data);
++        if (ret) {
++            exit(1);
++        }
++    }
++
++    trace_kvm_sev_snp_launch_finish(sev_snp->id_block, sev_snp->id_auth,
++                                    sev_snp->host_data);
++    ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_SNP_LAUNCH_FINISH,
++                    finish, &error);
++    if (ret) {
++        error_report("SNP_LAUNCH_FINISH ret=%d fw_error=%d '%s'",
++                     ret, error, fw_error_to_str(error));
++        exit(1);
++    }
++
++    sev_set_guest_state(sev_common, SEV_STATE_RUNNING);
++
++    /* add migration blocker */
++    error_setg(&sev_mig_blocker,
++               "SEV-SNP: Migration is not implemented");
++    ret = migrate_add_blocker(&sev_mig_blocker, &local_err);
++    if (local_err) {
++        error_report_err(local_err);
++        error_free(sev_mig_blocker);
++        exit(1);
++    }
++}
++
++
+ static void
+ sev_vm_state_change(void *opaque, bool running, RunState state)
+ {
+@@ -1832,10 +1942,10 @@ sev_snp_guest_class_init(ObjectClass *oc, void *data)
+     X86ConfidentialGuestClass *x86_klass = X86_CONFIDENTIAL_GUEST_CLASS(oc);
+ 
+     klass->launch_start = sev_snp_launch_start;
++    klass->launch_finish = sev_snp_launch_finish;
+     klass->kvm_init = sev_snp_kvm_init;
+     x86_klass->kvm_type = sev_snp_kvm_type;
+ 
+-
+     object_class_property_add(oc, "policy", "uint64",
+                               sev_snp_guest_get_policy,
+                               sev_snp_guest_set_policy, NULL, NULL);
+diff --git a/target/i386/trace-events b/target/i386/trace-events
+index cb26d8a9257..06b44ead2e2 100644
+--- a/target/i386/trace-events
++++ b/target/i386/trace-events
+@@ -12,3 +12,5 @@ kvm_sev_launch_finish(void) ""
+ kvm_sev_launch_secret(uint64_t hpa, uint64_t hva, uint64_t secret, int len) "hpa 0x%" PRIx64 " hva 0x%" PRIx64 " data 0x%" PRIx64 " len %d"
+ kvm_sev_attestation_report(const char *mnonce, const char *data) "mnonce %s data %s"
+ kvm_sev_snp_launch_start(uint64_t policy, char *gosvw) "policy 0x%" PRIx64 " gosvw %s"
++kvm_sev_snp_launch_update(uint64_t src, uint64_t gpa, uint64_t len, const char *type) "src 0x%" PRIx64 " gpa 0x%" PRIx64 " len 0x%" PRIx64 " (%s page)"
++kvm_sev_snp_launch_finish(char *id_block, char *id_auth, char *host_data) "id_block %s id_auth %s host_data %s"
 -- 
 2.45.1
 
