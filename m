@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB34C25B7E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73885C41513
 	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:19:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEORc-0003Bb-UP; Tue, 04 Jun 2024 03:18:56 -0400
+	id 1sEORR-0002z8-9g; Tue, 04 Jun 2024 03:18:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEORc-0003BI-7o
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:18:56 -0400
+ id 1sEORP-0002yU-Kt
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:18:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEORa-0005cX-LG
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:18:55 -0400
+ id 1sEORN-0005a5-Vh
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:18:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717485533;
+ s=mimecast20190719; t=1717485521;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3+poIGky4GSqhFlE6pkBG1pa6bXFWkqUUf8ylZXVgw0=;
- b=W20a+jufyofXBt+KDIkybKd/tsazj1Xlck8JMzJpo3jN2Eot6qBgfK+0mxhmBPabqzEd6+
- 9oOe6C/sOg/teXeNl1A1b9LqpcYsjynb22lshNTQ7ovu/iTXWrC+GjAKwuup/nxpMiRFkD
- QjJLb1UoX40zDbL9MTlGPFRUWjPclJQ=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=j2Q6D9JPUfjrmD+mXpvg9+z9gfSpPmY0my6bb3YqFcY=;
+ b=Sli6RggGT5/VZCUYkaWfdnNKKHGyzRCjTzpGjmbPsOLtH6nzBQrwBqMoJMOWOQPRPz0u6+
+ vWSqMGX9jqxvxekhhE5nWRA3Crfhgp1+EXRgyEPIeH7GJY62v8FkKlPeOL71Oo7eR2BkaP
+ aNrA81tnkaRlar6pSJMuTVg3NljFC6c=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-ze5qarTvPYCinkPjVbE8hQ-1; Tue, 04 Jun 2024 03:18:49 -0400
-X-MC-Unique: ze5qarTvPYCinkPjVbE8hQ-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-57a24dac048so2179637a12.0
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:18:49 -0700 (PDT)
+ us-mta-324-JLO43MkQMC2BrJBgO-MxmA-1; Tue, 04 Jun 2024 03:18:39 -0400
+X-MC-Unique: JLO43MkQMC2BrJBgO-MxmA-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-57a79421a14so456591a12.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:18:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717485527; x=1718090327;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3+poIGky4GSqhFlE6pkBG1pa6bXFWkqUUf8ylZXVgw0=;
- b=GciWqtLOkx9d2NFvXYZUfVdIwt2obuihHFa2BQ9GbcSQ0o/67Gf/N0rxRs1n0/xHsR
- PRhdnMvAb5cnNoBTbyeYxU3/97Q2tc5vSbNRxIxhBcRL64HCGoIz13cFaBhxd2nNQyaE
- tkyLkk2ZjQAumfoc9/vgRXx7EhH9H4oXWua7uEV+G7eGVOpgTMzDz6frHTx6FY+GI2gA
- uCMlnmR5+vvpFn2EdPmG5C1JeMd8GRzpVoTJh5MWprTRn9Tuv6ZZm3bqdvGFSor7llrT
- 7uuaZ+8i3eoU6biqOV9jXddWrlGEuHQuIxqiY09/Wng36ps67/9je1PhsXXe63IKiqng
- FylQ==
-X-Gm-Message-State: AOJu0YwXc2gh4+7E+Mgxiu6wrT0BKWRbEUljS6PmBrvPiFwt2/JB4rtY
- BzAOsn/XAjEd7ZWtjmcX6FUMYXtXAQxMmwkf4mE80OHgW1Ci8xwWZ5uySp8yoA2lTXBUaInf0ZO
- 8cE4W0+XK78F8tMATRlJ7qclNgtRt8kNiNaqQv7BaGjW6gBI+R6KWKO869jgf86uO9ssAVSQ5Ct
- tQ8/pjYCIxkHrk1shDOYDTlkxxfn2drstEPYci
-X-Received: by 2002:a50:ba89:0:b0:57a:321f:cc4f with SMTP id
- 4fb4d7f45d1cf-57a3f55eb7emr7394309a12.19.1717485527376; 
- Tue, 04 Jun 2024 00:18:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHDlyGHizdRw6inPRoPSe2Ub88yvUi1oKW9DNURVkz2VD/rdI026ySJVII7f+mRWqCng5ft2w==
-X-Received: by 2002:a50:ba89:0:b0:57a:321f:cc4f with SMTP id
- 4fb4d7f45d1cf-57a3f55eb7emr7394293a12.19.1717485526957; 
- Tue, 04 Jun 2024 00:18:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717485517; x=1718090317;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=j2Q6D9JPUfjrmD+mXpvg9+z9gfSpPmY0my6bb3YqFcY=;
+ b=JfH26MqVss3LCRJ2AmnqLWwTD2StVtUP18HpMqcTHJHR8zk6z65Uv6cRO+eDuer9CT
+ gq5t+AoAmDUtsLwm9MaQtIW7+vNXNNf9+JFI7jbaKLy67lm7mqDTbtnCMam4ZqWi8qD+
+ +/hfsZNxLFhgMpoOqdx3rYk03HmXmimrb2Tbw10tfPxi8LVRh6kBlg+xHKl46wtSX1lv
+ n3ySsQzf5vDFE3TB/lZ9G+56E61Fl+B0X9gPxoR2iIU/GO9XsObvt/Q+983rirnp9fMv
+ k1tLWcRv++WLItKV9O5Aqa9H4zvi+1dliKLj40WN7AOu1w4ePzykYjv3Spze2xMf15TT
+ cJTw==
+X-Gm-Message-State: AOJu0YwPwtMk4mzpn1fizXUg2fnn5vw287WDTVO2toXeKO5QnWpRp9Oj
+ fJ+uCssk0A/Ok/E1UEz11rpCqcrqP+Jc+XCud2Mel2PlWNGl4EB7UBQUgxeFbXbtXupTUjICgo8
+ dW2FpaLE9LwB/RzDVt0WMHEdOkP9e2fDeHZ7oKtjA8r38km5R0uq7vmwQBp3BTv+M0w1zk+1MQA
+ tazZACsLSEu4fyQTPsS7DFmj3u1czr8GyHmAJQ
+X-Received: by 2002:a17:906:3b47:b0:a69:68db:6f39 with SMTP id
+ a640c23a62f3a-a6968db7112mr35914766b.32.1717485516869; 
+ Tue, 04 Jun 2024 00:18:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHk7TcXXrAmQ33rfiXi2rlewgRa4HiDzoDzI+EswbhYPXj8N004cAdf4x7bBSQ+y/Du7KI38w==
+X-Received: by 2002:a17:906:3b47:b0:a69:68db:6f39 with SMTP id
+ a640c23a62f3a-a6968db7112mr35913566b.32.1717485516364; 
+ Tue, 04 Jun 2024 00:18:36 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57a790f1c95sm1565969a12.50.2024.06.04.00.18.45
+ a640c23a62f3a-a68aa120a6esm475865866b.95.2024.06.04.00.18.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 00:18:45 -0700 (PDT)
+ Tue, 04 Jun 2024 00:18:35 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org
-Subject: [PATCH 03/11] target/i386: cleanup HLT helpers
-Date: Tue,  4 Jun 2024 09:18:25 +0200
-Message-ID: <20240604071833.962574-4-pbonzini@redhat.com>
+Subject: [PATCH 00/11] target/i386: fixes for INHIBIT_IRQ, TF and RF
+Date: Tue,  4 Jun 2024 09:18:22 +0200
+Message-ID: <20240604071833.962574-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240604071833.962574-1-pbonzini@redhat.com>
-References: <20240604071833.962574-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -103,105 +100,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use decode.c's support for intercepts, doing the check in TCG-generated
-code rather than the helper.  This is cleaner because it allows removing
-the eip_addend argument to helper_hlt().
+While Richard pointed out that there _are_ good reasons to use
+DISAS_NORETURN in the TCG x86 frontend, most instructions that
+use it (VMRUN, HLT, MWAIT, PAUSE) are broken because they do
+not do the work that gen_eob() does on INHIBIT_IRQ, EFLAGS.TF
+and EFLAGS.RF.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/helper.h                 |  2 +-
- target/i386/tcg/sysemu/misc_helper.c | 13 ++-----------
- target/i386/tcg/decode-new.c.inc     |  4 ++--
- target/i386/tcg/emit.c.inc           |  4 ++--
- 4 files changed, 7 insertions(+), 16 deletions(-)
+This series tackles this, plus it has a few more fixes for
+failures in kvm-unit-tests debug.flat and svm.flat.  Note that
+neither of the two completely pass, but the situation is
+improved a lot.  Comments are added when things are more
+complicated and probably deserve their own series.
 
-diff --git a/target/i386/helper.h b/target/i386/helper.h
-index 8f291a5f66f..c244dbb4812 100644
---- a/target/i386/helper.h
-+++ b/target/i386/helper.h
-@@ -90,7 +90,7 @@ DEF_HELPER_2(vmsave, void, env, int)
- DEF_HELPER_1(stgi, void, env)
- DEF_HELPER_1(clgi, void, env)
- DEF_HELPER_FLAGS_2(flush_page, TCG_CALL_NO_RWG, void, env, tl)
--DEF_HELPER_FLAGS_2(hlt, TCG_CALL_NO_WG, noreturn, env, int)
-+DEF_HELPER_FLAGS_1(hlt, TCG_CALL_NO_WG, noreturn, env)
- DEF_HELPER_FLAGS_2(monitor, TCG_CALL_NO_WG, void, env, tl)
- DEF_HELPER_FLAGS_2(mwait, TCG_CALL_NO_WG, noreturn, env, int)
- DEF_HELPER_1(rdmsr, void, env)
-diff --git a/target/i386/tcg/sysemu/misc_helper.c b/target/i386/tcg/sysemu/misc_helper.c
-index edb7c3d8940..e41c88346cb 100644
---- a/target/i386/tcg/sysemu/misc_helper.c
-+++ b/target/i386/tcg/sysemu/misc_helper.c
-@@ -516,8 +516,7 @@ void helper_flush_page(CPUX86State *env, target_ulong addr)
-     tlb_flush_page(env_cpu(env), addr);
- }
- 
--static G_NORETURN
--void do_hlt(CPUX86State *env)
-+G_NORETURN void helper_hlt(CPUX86State *env)
- {
-     CPUState *cs = env_cpu(env);
- 
-@@ -527,14 +526,6 @@ void do_hlt(CPUX86State *env)
-     cpu_loop_exit(cs);
- }
- 
--G_NORETURN void helper_hlt(CPUX86State *env, int next_eip_addend)
--{
--    cpu_svm_check_intercept_param(env, SVM_EXIT_HLT, 0, GETPC());
--    env->eip += next_eip_addend;
--
--    do_hlt(env);
--}
--
- void helper_monitor(CPUX86State *env, target_ulong ptr)
- {
-     if ((uint32_t)env->regs[R_ECX] != 0) {
-@@ -558,6 +549,6 @@ G_NORETURN void helper_mwait(CPUX86State *env, int next_eip_addend)
-     if (cs->cpu_index != 0 || CPU_NEXT(cs) != NULL) {
-         do_pause(env);
-     } else {
--        do_hlt(env);
-+        helper_hlt(env);
-     }
- }
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 0ff0866e8f3..376d2bdabe1 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1496,7 +1496,7 @@ static const X86OpEntry opcodes_root[256] = {
-     [0xE7] = X86_OP_ENTRYrr(OUT,   0,v, I_unsigned,b), /* AX/EAX */
- 
-     [0xF1] = X86_OP_ENTRY0(INT1,   svm(ICEBP)),
--    [0xF4] = X86_OP_ENTRY0(HLT,    chk(cpl0)),
-+    [0xF4] = X86_OP_ENTRY0(HLT,    chk(cpl0) svm(HLT)),
-     [0xF5] = X86_OP_ENTRY0(CMC),
-     [0xF6] = X86_OP_GROUP1(group3, E,b),
-     [0xF7] = X86_OP_GROUP1(group3, E,v),
-@@ -2539,7 +2539,7 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
- 
-     /*
-      * Checks that result in #GP or VMEXIT come second.  Intercepts are
--     * generally checked after non-memory exceptions (i.e. before all
-+     * generally checked after non-memory exceptions (i.e. after all
-      * exceptions if there is no memory operand).  Exceptions are
-      * vm86 checks (INTn, IRET, PUSHF/POPF), RSM and XSETBV (!).
-      *
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 36127d99943..2e94e8ec56f 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -1638,8 +1638,8 @@ static void gen_HLT(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
- {
- #ifdef CONFIG_SYSTEM_ONLY
-     gen_update_cc_op(s);
--    gen_update_eip_cur(s);
--    gen_helper_hlt(tcg_env, cur_insn_len_i32(s));
-+    gen_update_eip_next(s);
-+    gen_helper_hlt(tcg_env);
-     s->base.is_jmp = DISAS_NORETURN;
- #endif
- }
+Paolo
+
+Paolo Bonzini (11):
+  target/i386: fix pushed value of EFLAGS.RF
+  target/i386: fix implementation of ICEBP
+  target/i386: cleanup HLT helpers
+  target/i386: cleanup PAUSE helpers
+  target/i386: implement DR7.GD
+  target/i386: disable/enable breakpoints on vmentry/vmexit
+  target/i386: fix INHIBIT_IRQ/TF/RF handling for VMRUN
+  target/i386: fix INHIBIT_IRQ/TF/RF handling for PAUSE
+  target/i386: fix TF/RF handling for HLT
+  target/i386: document incorrect semantics of watchpoint following
+    MOV/POP SS
+  target/i386: document use of DISAS_NORETURN
+
+ include/hw/core/tcg-cpu-ops.h        | 15 +++++-
+ target/i386/helper.h                 |  5 +-
+ target/i386/tcg/helper-tcg.h         |  6 ++-
+ accel/tcg/cpu-exec.c                 |  7 ++-
+ target/i386/tcg/bpt_helper.c         |  6 +++
+ target/i386/tcg/excp_helper.c        | 20 ++++++++
+ target/i386/tcg/misc_helper.c        | 14 ++----
+ target/i386/tcg/seg_helper.c         | 49 +++++++++++++++++--
+ target/i386/tcg/sysemu/bpt_helper.c  | 18 +++++++
+ target/i386/tcg/sysemu/misc_helper.c | 17 ++-----
+ target/i386/tcg/sysemu/seg_helper.c  | 18 +++++--
+ target/i386/tcg/sysemu/svm_helper.c  | 71 +++++++++++++++++++---------
+ target/i386/tcg/translate.c          | 37 +++++++++++++++
+ target/i386/tcg/decode-new.c.inc     | 19 ++++++--
+ target/i386/tcg/emit.c.inc           | 29 ++++++------
+ 15 files changed, 252 insertions(+), 79 deletions(-)
+
 -- 
 2.45.1
 
