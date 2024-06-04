@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 658B5C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:11:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB9FDC27C53
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEZV2-0007FR-Uz; Tue, 04 Jun 2024 15:07:13 -0400
+	id 1sEZWZ-0000ys-0Q; Tue, 04 Jun 2024 15:08:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZV0-00072k-OT
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:07:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZWX-0000tO-Do
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:08:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZUy-0000ru-Cg
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:07:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZWU-00013H-TM
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:08:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717528026;
+ s=mimecast20190719; t=1717528121;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=I7oOBawQ17ekJGPjTeJH6qenvWsB1BSkAwbq0wuPpCg=;
- b=H4Fo7o4HJ8CdaTzhpvb8OG7THpgxeESoeyK+e1nYqkO07SktYxarrF2+9MwRVBJ2QrDlE2
- ZCPR7ygab3UQ3BK3534t0lPslHEqATkPbAXB6yvxaYGgSklp+MAWoTgO14nUYNgq7xyWpR
- 8xF5tNBAFaj+y+m8e08l8ZkfdBUQbZY=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kgYXT9TqVXX9/BRZFmbWBgRNk9wpbHrKyLXkpZBaJss=;
+ b=EnJkXZZPclbYdRsqvaeCeVLP48/YcMbeV5loyYOyLoV0zN7byl1hBUYmUlna2tFFmiH6CA
+ w0vaBIfFrfAaPOu4knsQGnRr4VznkOnTTgVrX/XJfQyR9rJJ5U9VHmllTOIrgBCYYsa9A/
+ G11+Rq8fWNZuC+3+sBIBXIHIjtAsEx4=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-rHcltf5COm2oKxeyvbtN6Q-1; Tue, 04 Jun 2024 15:07:05 -0400
-X-MC-Unique: rHcltf5COm2oKxeyvbtN6Q-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2ea892f8441so43935501fa.1
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:07:04 -0700 (PDT)
+ us-mta-616-ZtwBgnGhN6GU57Z4FZky6w-1; Tue, 04 Jun 2024 15:08:39 -0400
+X-MC-Unique: ZtwBgnGhN6GU57Z4FZky6w-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2eaaae3e600so26692211fa.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:08:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717528023; x=1718132823;
+ d=1e100.net; s=20230601; t=1717528116; x=1718132916;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I7oOBawQ17ekJGPjTeJH6qenvWsB1BSkAwbq0wuPpCg=;
- b=JgiL03ZsLT4ZaPI/qhCrg3VaWioiBaBXn/THDAP77VhqeG/wgknNGb7WNa4ZaWTzdA
- +rU3TZIBwO/+SB7dYf7G+gUwn9EvIt9DryJivETWn3YbG9R7cfcYDIHGs07aEVVV0CEA
- q7EogL5NjohhWaKPNhAjIaUcsfhAGYdRDFnjA+QlzbSefiOhV4iV+ufbDa+8cPnPe6bJ
- bFerMbhKey0RHM+wG/FaTe57lS6F7k+yYnes37oAOm+FLAprTftguji822Nseo511ijX
- LNA1Dt9lACpfSjYq+WIJerRtpqOWXI7k0Aus7b3Ryinh/j0v5nMY2hU/xXhlxLip+Ndq
- 7rWA==
-X-Gm-Message-State: AOJu0YzAE9pb2eq2fxLs1ylCcE0ftVjNPjKOQ8ZZSLChkFbMNo8iSd7S
- J7HMAYfcGqzLt60jovS5Y+2pK76eYkwO5YwxtmyXEwhDPAvyxjHjuPMa7TzO2UkTZ0eJSSLpn5X
- veC/S7YwpFPEFd2RtW88LZnNcodap//0/sdzeIX60BsZC2Tbo2YSxRW+T/EwTali4B/mwC7xcCT
- HX8uLKcc7npgZ06ZSZBGfAQXz0bNSuiA==
-X-Received: by 2002:a05:651c:3c2:b0:2e9:8c28:3358 with SMTP id
- 38308e7fff4ca-2eac79f18bcmr881041fa.20.1717528023220; 
- Tue, 04 Jun 2024 12:07:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLmjgCiUF8C0mi2kPyB9h0Xdw4I3njHCZaSoymo5J+K0aMRM/YWUg+8SZYXg74Ux/MPdtiUA==
-X-Received: by 2002:a05:651c:3c2:b0:2e9:8c28:3358 with SMTP id
- 38308e7fff4ca-2eac79f18bcmr880841fa.20.1717528022551; 
- Tue, 04 Jun 2024 12:07:02 -0700 (PDT)
+ bh=kgYXT9TqVXX9/BRZFmbWBgRNk9wpbHrKyLXkpZBaJss=;
+ b=YAexYWbnQklFubyFmHZjXLiIxM0m8qQ7IwSixQm2Vw2/ZTrbj6v5+cxiR2wxFyccJJ
+ 7WBXxEkUx8L5tjwHbrUyldi5GXIRAWGuynA3mnHtIZfvxnDyaoa1gIHfT8mgacybBbBF
+ INeL+RozeMLsvw4RSH8z9WxQtCDh5eAEP7ocVVhunR4tyytLUdxgRfDeOH82q2mPIwHF
+ K9kaKYrb/8LLRuKAcZZ+b79G5iFSAvuGU+Aou9uRLnSU3ZuZJ0QGDgVvEA4WadOjsf3V
+ K8PIQeHwpm/qGRBLA8hiXz4uA+ZHfnrkQryoiBHvdM0wcyeKtoUW/gsAf8A3McUkvRQl
+ 040w==
+X-Gm-Message-State: AOJu0YyPZo4geEp8oylucwDQNRdgO6gDK/CVr+vIbYmVDRiUSIb+2nj+
+ 3uc9AuuQFiJiHAHHpf0PnKgwYdllITnwlcq6GKCdWPCr1/tORlGUfyNEGbJB7fQ+nwsUIO8/S+x
+ YIXBShfFHyDCTe1zSD9ctoW2p+zp/dj+AX307FHchMI1OM/wVHD7hx5BPoyVLMBMqj3z/6kV8fk
+ BbZ+7TwFywBj0jqTVE5ljnS8xMeHIgBQ==
+X-Received: by 2002:a05:651c:551:b0:2ea:89f6:258f with SMTP id
+ 38308e7fff4ca-2eac77a26a9mr1667241fa.0.1717528116148; 
+ Tue, 04 Jun 2024 12:08:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHM7rQ/o1HEVzNpueFxB0aE3Ec2r1CJndkFhkB0tYUJe3mvY4lCzbPz7MSZytDrzy+H1EVuCw==
+X-Received: by 2002:a05:651c:551:b0:2ea:89f6:258f with SMTP id
+ 38308e7fff4ca-2eac77a26a9mr1666951fa.0.1717528115620; 
+ Tue, 04 Jun 2024 12:08:35 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:552:cf5c:2b13:215c:b9df:f231])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42138260c5asm122254205e9.41.2024.06.04.12.07.00
+ 5b1f17b1804b1-4212b838a41sm165672925e9.1.2024.06.04.12.08.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 12:07:02 -0700 (PDT)
-Date: Tue, 4 Jun 2024 15:06:59 -0400
+ Tue, 04 Jun 2024 12:08:35 -0700 (PDT)
+Date: Tue, 4 Jun 2024 15:08:32 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gregory Price <gourry.memverge@gmail.com>,
- Gregory Price <gregory.price@memverge.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL 18/46] hw/cxl/mailbox: interface to add CCI commands to an
- existing CCI
-Message-ID: <5b02e8711374f760215075524ee413a1cbaead6b.1717527933.git.mst@redhat.com>
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 42/46] pvpanic: Emit GUEST_PVSHUTDOWN QMP event on pvpanic
+ shutdown signal
+Message-ID: <ed36d88dc9b5428df88cf4e3c1b7371d796902f9.1717527933.git.mst@redhat.com>
 References: <cover.1717527933.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -105,86 +105,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gregory Price <gourry.memverge@gmail.com>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-This enables wrapper devices to customize the base device's CCI
-(for example, with custom commands outside the specification)
-without the need to change the base device.
+Emit a QMP event on receiving a PVPANIC_SHUTDOWN event. Even though a typical
+SHUTDOWN event will be sent, it will be indistinguishable from a shutdown
+originating from other cases (e.g. KVM exit due to KVM_SYSTEM_EVENT_SHUTDOWN)
+that also issue the guest-shutdown cause.
+A management layer application can detect the new GUEST_PVSHUTDOWN event to
+determine if the guest is using the pvpanic interface to request shutdowns.
 
-The also enabled the base device to dispatch those commands without
-requiring additional driver support.
-
-Heavily edited by Jonathan Cameron to increase code reuse
-
-Signed-off-by: Gregory Price <gregory.price@memverge.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-3-nifan.cxl@gmail.com>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Message-Id: <20240527-pvpanic-shutdown-v8-6-5a28ec02558b@t-8ch.de>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/cxl/cxl_device.h |  2 ++
- hw/cxl/cxl-mailbox-utils.c  | 19 +++++++++++++++++--
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ qapi/run-state.json | 14 ++++++++++++++
+ system/runstate.c   |  1 +
+ 2 files changed, 15 insertions(+)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index ccc4611875..a5f8e25020 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -301,6 +301,8 @@ void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max);
- void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
-                                   DeviceState *d, size_t payload_max);
- void cxl_init_cci(CXLCCI *cci, size_t payload_max);
-+void cxl_add_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmd_set)[256],
-+                          size_t payload_max);
- int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
-                             size_t len_in, uint8_t *pl_in,
-                             size_t *len_out, uint8_t *pl_out,
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 2c9f50f0f9..2a64c58e2f 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1424,9 +1424,9 @@ static void bg_timercb(void *opaque)
-     }
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index f8773f23b2..5ac0fec852 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -462,6 +462,20 @@
+ { 'event': 'GUEST_CRASHLOADED',
+   'data': { 'action': 'GuestPanicAction', '*info': 'GuestPanicInformation' } }
+ 
++##
++# @GUEST_PVSHUTDOWN:
++#
++# Emitted when guest submits a shutdown request via pvpanic interface
++#
++# Since: 9.1
++#
++# Example:
++#
++#     <- { "event": "GUEST_PVSHUTDOWN",
++#          "timestamp": { "seconds": 1648245259, "microseconds": 893771 } }
++##
++{ 'event': 'GUEST_PVSHUTDOWN' }
++
+ ##
+ # @GuestPanicAction:
+ #
+diff --git a/system/runstate.c b/system/runstate.c
+index 83055f3278..c149b1ab4b 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -587,6 +587,7 @@ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
+ 
+ void qemu_system_guest_pvshutdown(void)
+ {
++    qapi_event_send_guest_pvshutdown();
+     qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
  }
  
--void cxl_init_cci(CXLCCI *cci, size_t payload_max)
-+static void cxl_rebuild_cel(CXLCCI *cci)
- {
--    cci->payload_max = payload_max;
-+    cci->cel_size = 0; /* Reset for a fresh build */
-     for (int set = 0; set < 256; set++) {
-         for (int cmd = 0; cmd < 256; cmd++) {
-             if (cci->cxl_cmd_set[set][cmd].handler) {
-@@ -1440,6 +1440,13 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
-             }
-         }
-     }
-+}
-+
-+void cxl_init_cci(CXLCCI *cci, size_t payload_max)
-+{
-+    cci->payload_max = payload_max;
-+    cxl_rebuild_cel(cci);
-+
-     cci->bg.complete_pct = 0;
-     cci->bg.starttime = 0;
-     cci->bg.runtime = 0;
-@@ -1458,6 +1465,14 @@ static void cxl_copy_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmds)[
-     }
- }
- 
-+void cxl_add_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmd_set)[256],
-+                                 size_t payload_max)
-+{
-+    cci->payload_max = MAX(payload_max, cci->payload_max);
-+    cxl_copy_cci_commands(cci, cxl_cmd_set);
-+    cxl_rebuild_cel(cci);
-+}
-+
- void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
-                                   DeviceState *d, size_t payload_max)
- {
 -- 
 MST
 
