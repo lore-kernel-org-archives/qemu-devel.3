@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3E84C25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:40:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1117DC27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:40:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEOkn-0000En-Ud; Tue, 04 Jun 2024 03:38:45 -0400
+	id 1sEOks-0000WM-KS; Tue, 04 Jun 2024 03:38:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOke-0000BM-6a
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:36 -0400
+ id 1sEOkl-0000Ee-Dd
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOkc-0006LE-Kk
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:35 -0400
+ id 1sEOkj-0006N6-W4
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717486713;
+ s=mimecast20190719; t=1717486720;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0355VJVyNQ+og3MeEaoZS3COabkY3dh5g5p6DrOXJCo=;
- b=RosEzdoCA6eTmpT4h32VjIEQXb64QQN4GP0tb3J2gn9GU7+rf054CmAItE4Re/Yum6nx+R
- 4lyvQdhaUTUDr+ds2txvsJ9wHTSoNPIAd5zFfyWSYJxezlbptPunlxF0L8DiFHsYX3htug
- b6G35JPB4l5eSf48nORzqecEQAthn+o=
+ bh=IsyLwVZVxWxHrX3jGYudQ5ImXmAgf92EkX7A08FG4nY=;
+ b=EOPUvTEkE+1zDpU2TXxXP7cON6CW4WGuoRba4NMUfav6/9pAkt7AoFX4VwdbZhRaMskp+q
+ O6agtxN7Sh3H2Y5XhAl8ymzcICWfx2BRTPBGkqVbx4LbxfM+oLPCAzPOJmlFYYFxucylqP
+ JMHAhCBnmY/q2l5COBui2Nxw8/4Alnc=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-590-mM4xLXfBOTibr93PCx0CAg-1; Tue, 04 Jun 2024 03:38:30 -0400
-X-MC-Unique: mM4xLXfBOTibr93PCx0CAg-1
+ us-mta-448-BMHq_EqIOJC98UpFWDXTRw-1; Tue, 04 Jun 2024 03:38:39 -0400
+X-MC-Unique: BMHq_EqIOJC98UpFWDXTRw-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2496D80027F;
- Tue,  4 Jun 2024 07:38:30 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 06A4085A5BA;
+ Tue,  4 Jun 2024 07:38:39 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.238])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 407A7492BD4;
- Tue,  4 Jun 2024 07:38:27 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 26179492BD4;
+ Tue,  4 Jun 2024 07:38:36 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
 Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 10/20] virtio-net: Shrink header byte swapping buffer
-Date: Tue,  4 Jun 2024 15:37:45 +0800
-Message-ID: <20240604073755.1859-11-jasowang@redhat.com>
+Subject: [PULL 13/20] virtio-net: Always set populate_hash
+Date: Tue,  4 Jun 2024 15:37:48 +0800
+Message-ID: <20240604073755.1859-14-jasowang@redhat.com>
 In-Reply-To: <20240604073755.1859-1-jasowang@redhat.com>
 References: <20240604073755.1859-1-jasowang@redhat.com>
 MIME-Version: 1.0
@@ -85,64 +85,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Byte swapping is only performed for the part of header shared with the
-legacy standard and the buffer only needs to cover it.
+The member is not cleared during reset so may have a stale value.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- hw/net/virtio-net.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ hw/net/virtio-net.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 13a17a1e5a..dabfa6e7d7 100644
+index 8464eb4082..b423169a48 100644
 --- a/hw/net/virtio-net.c
 +++ b/hw/net/virtio-net.c
-@@ -676,11 +676,6 @@ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
+@@ -651,6 +651,7 @@ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
+         n->guest_hdr_len = n->mergeable_rx_bufs ?
+             sizeof(struct virtio_net_hdr_mrg_rxbuf) :
+             sizeof(struct virtio_net_hdr);
++        n->rss_data.populate_hash = false;
+     }
  
-     n->mergeable_rx_bufs = mergeable_rx_bufs;
- 
--    /*
--     * Note: when extending the vnet header, please make sure to
--     * change the vnet header copying logic in virtio_net_flush_tx()
--     * as well.
--     */
-     if (version_1) {
-         n->guest_hdr_len = hash_report ?
-             sizeof(struct virtio_net_hdr_v1_hash) :
-@@ -2736,7 +2731,7 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
-         ssize_t ret;
-         unsigned int out_num;
-         struct iovec sg[VIRTQUEUE_MAX_SIZE], sg2[VIRTQUEUE_MAX_SIZE + 1], *out_sg;
--        struct virtio_net_hdr_v1_hash vhdr;
-+        struct virtio_net_hdr vhdr;
- 
-         elem = virtqueue_pop(q->tx_vq, sizeof(VirtQueueElement));
-         if (!elem) {
-@@ -2753,18 +2748,18 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
-         }
- 
-         if (n->needs_vnet_hdr_swap) {
--            if (iov_to_buf(out_sg, out_num, 0, &vhdr, n->guest_hdr_len) <
--                n->guest_hdr_len) {
-+            if (iov_to_buf(out_sg, out_num, 0, &vhdr, sizeof(vhdr)) <
-+                sizeof(vhdr)) {
-                 virtio_error(vdev, "virtio-net header incorrect");
-                 virtqueue_detach_element(q->tx_vq, elem, 0);
-                 g_free(elem);
-                 return -EINVAL;
-             }
--            virtio_net_hdr_swap(vdev, (void *) &vhdr);
-+            virtio_net_hdr_swap(vdev, &vhdr);
-             sg2[0].iov_base = &vhdr;
--            sg2[0].iov_len = n->guest_hdr_len;
-+            sg2[0].iov_len = sizeof(vhdr);
-             out_num = iov_copy(&sg2[1], ARRAY_SIZE(sg2) - 1, out_sg, out_num,
--                               n->guest_hdr_len, -1);
-+                               sizeof(vhdr), -1);
-             if (out_num == VIRTQUEUE_MAX_SIZE) {
-                 goto drop;
-             }
+     for (i = 0; i < n->max_queue_pairs; i++) {
 -- 
 2.42.0
 
