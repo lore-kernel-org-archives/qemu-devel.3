@@ -4,85 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1033C27C50
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 13:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACD6AC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 13:59:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEUgP-0004nC-Mu; Tue, 04 Jun 2024 09:58:38 -0400
+	id 1sEUhA-0005tb-Et; Tue, 04 Jun 2024 09:59:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEUgF-0004fj-Nb
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:58:27 -0400
-Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEUgE-0006Wx-2N
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:58:27 -0400
-Received: by mail-oo1-xc2a.google.com with SMTP id
- 006d021491bc7-5b9f9e7176eso2742191eaf.2
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 06:58:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717509504; x=1718114304; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=KEC9fpeDrz37Rzj5tLAF4x1LuDmyKDhziIcW1V6mTLY=;
- b=FuBY1m+wEtrThy6NwX7CD/Bz+y+KYGY14KcEK6nvjDUl+YDQBra5M5bs/qkuzzAeUU
- OsT6lw0fgLm6mMskFL/oYKuOaWGK9QV6Hcn/cymXbDmz04jS+VdH1BhvXwLxg5qO9BOL
- 4Z2D2iRGe0XgpwLJInansxv/kjU2Jz1J1twxM2WSCYWLd5bp5vGURP8BTvI/4//P0Q6y
- RgFfKvJiV6ISBF3LTy1W76WGwg+5IUs9J/RHnkG3KfnH9JSQHPMgREVAQhzGsxeLHFfB
- y65e6k2swV1pu/4UDcQ/G6YNd0bT8pCjFmARS3LISezdBmGgXkItQtSHUSxbDLsMdsy7
- o1Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717509504; x=1718114304;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KEC9fpeDrz37Rzj5tLAF4x1LuDmyKDhziIcW1V6mTLY=;
- b=mT9h9dpMNe72Q9+J5L+4tzWLDuLP3tJsUkxGCCdp8aT/g1ws2kcPbURaDTZf+6GVfo
- tqq46Q5yIANoXag5GKDB8X6j2erf4wlOHR1Fk9mIifgWHQALDdPacfeMOGx1jg5wEoH8
- 9x8qo9pui83gUrq/4ahJaQrc+SBIgQVf2KBIw9qkN4i4mbW5JkFVfrzBcfF9ycPMecqR
- KHXUYDmS2ujsISz901PTqFsFOFYZyAbBKhHFrAfWAhW6a/DMO7d5RVQL3rBP/+cWmX95
- GPdKBWY330Hir9y/ubzJEHrgOPLX3JKKOmge6qcdCUIsJ58EErUcoeC9H4CiZedKMroN
- zNfw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWOyVGuQIfa5DjM1RYfoQ2HoGDxkoFNNxlGaot+IvS9K9S+XmAcEAQpn6mIHXbdckmtnB82cEX064D5eEFRFYpDXRS7BMg=
-X-Gm-Message-State: AOJu0YxxBQaYN8QhSCsvCnG66n1aPtihEQvEBHHuJ7L6F0M0fHJCmOaH
- bCUuB9bgLPeDiu/W+hg9tuQq7EcHzvqivrZm3YpCCNctx5zgOWsekqbNI5w1lg4RFrup9m3KUDb
- P
-X-Google-Smtp-Source: AGHT+IHOdbQXt2kZePHUZGBC/WyqSyFpFViOkPEApXOZczfpZRYkodwTm0W7ianhBGNMLo4Va8mSVw==
-X-Received: by 2002:a4a:e9ae:0:b0:5ba:6b7b:66fe with SMTP id
- 006d021491bc7-5ba6b7b69ecmr1119632eaf.8.1717509504220; 
- Tue, 04 Jun 2024 06:58:24 -0700 (PDT)
-Received: from ?IPV6:2607:fb91:1aca:c697:b7cb:e0ad:8679:2c14?
- ([2607:fb91:1aca:c697:b7cb:e0ad:8679:2c14])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5ba6e9650f4sm153087eaf.47.2024.06.04.06.58.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Jun 2024 06:58:23 -0700 (PDT)
-Message-ID: <1f29d6af-7f39-4fd3-add0-1710734f01c8@linaro.org>
-Date: Tue, 4 Jun 2024 08:58:21 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sEUh7-0005qW-Tb
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:59:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sEUh5-0006bu-VR
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:59:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717509558;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KxZPYF87FmrxCwqmN5MY/xGLhuyludxMEYxLRtPB7bY=;
+ b=DO9rql/yD26bQzcT7C5wOHxNDPvvIzsdz+WCoG9CKP72UjuwYyy4D6QkAX7TUnYltlssyR
+ lDnE/jpTDZ8H40NOI7gM5mVyZG3TGg16W6yr5SvgGuw1Gv5/+P1GoZIBAALzdrEwjVMvmX
+ NpzN6u2295LsvkzBvI0RMCrjZtnk9Ls=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-332-phpX-zSdM1aIZZsrf9LheA-1; Tue, 04 Jun 2024 09:59:12 -0400
+X-MC-Unique: phpX-zSdM1aIZZsrf9LheA-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 157A78007BA;
+ Tue,  4 Jun 2024 13:59:12 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 7EE3640D1B69;
+ Tue,  4 Jun 2024 13:59:11 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A0C8E21E6687; Tue,  4 Jun 2024 15:59:10 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: <mst@redhat.com>,  <qemu-devel@nongnu.org>,  <ankita@nvidia.com>,
+ <marcel.apfelbaum@gmail.com>,  <philmd@linaro.org>,  Dave Jiang
+ <dave.jiang@intel.com>,  Huang Ying <ying.huang@intel.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  <eduardo@habkost.net>,  <imammedo@redhat.com>,
+ <linux-cxl@vger.kernel.org>,  <linuxarm@huawei.com>,  Michael Roth
+ <michael.roth@amd.com>,  Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v2 3/6] hw/acpi: Generic Port Affinity Structure support
+In-Reply-To: <20240524100507.32106-4-Jonathan.Cameron@huawei.com> (Jonathan
+ Cameron's message of "Fri, 24 May 2024 11:05:04 +0100")
+References: <20240524100507.32106-1-Jonathan.Cameron@huawei.com>
+ <20240524100507.32106-4-Jonathan.Cameron@huawei.com>
+Date: Tue, 04 Jun 2024 15:59:10 +0200
+Message-ID: <87zfs06c7l.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/11] target/i386: document use of DISAS_NORETURN
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240604071833.962574-1-pbonzini@redhat.com>
- <20240604071833.962574-12-pbonzini@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240604071833.962574-12-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2a.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,16 +88,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/24 02:18, Paolo Bonzini wrote:
-> DISAS_NORETURN suppresses the work normally done by gen_eob(), and therefore
-> must be used in special cases only.  Document them.
-> 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+Jonathan Cameron <Jonathan.Cameron@huawei.com> writes:
+
+> These are very similar to the recently added Generic Initiators
+> but instead of representing an initiator of memory traffic they
+> represent an edge point beyond which may lie either targets or
+> initiators.  Here we add these ports such that they may
+> be targets of hmat_lb records to describe the latency and
+> bandwidth from host side initiators to the port.  A descoverable
+
+I figure your mean "discoverable", and ...
+
+> mechanism such as UEFI CDAT read from CXL devices and switches
+> is used to discover the remainder fo the path and the OS can build
+
+... " of the path, and the OS".
+
+> up full latency and bandwidth numbers as need for work and data
+> placement decisions.
+>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > ---
->   target/i386/tcg/translate.c | 11 +++++++++++
->   1 file changed, 11 insertions(+)
+> v2: Updates to QMP documentation to provide a lot more information
+>     on the parameters.
+> ---
+>  qapi/qom.json                            |  35 ++++++
+>  include/hw/acpi/acpi_generic_initiator.h |  18 ++-
+>  include/hw/pci/pci_bridge.h              |   1 +
+>  hw/acpi/acpi_generic_initiator.c         | 141 +++++++++++++++++------
+>  hw/pci-bridge/pci_expander_bridge.c      |   1 -
+>  5 files changed, 158 insertions(+), 38 deletions(-)
+>
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 38dde6d785..9d1d86bdad 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -826,6 +826,39 @@
+>    'data': { 'pci-dev': 'str',
+>              'node': 'uint32' } }
+>  
+> +
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Extra blank line.
 
-r~
+> +##
+> +# @AcpiGenericPortProperties:
+> +#
+> +# Properties for acpi-generic-port objects.
+> +#
+> +# @pci-bus: QOM path of the PCI bus of the hostbridge associated with
+> +#     this SRAT Generic Port Affinity Structure.  This is the same as
+> +#     the bus parameter for the root ports attached to this host bridge.
+> +#     The resulting SRAT Generic Port Affinity Structure will refer to
+> +#     the ACPI object in DSDT that represents the host bridge (e.g.
+> +#     ACPI0016 for CXL host bridges.) See ACPI 6.5 Section 5.2.16.7 for
+
+I'd put the period behind the parenthesis: "bridges).  See ACPI"
+
+> +#     more information.
+> +#
+> +# @node: Similar to a NUMA node ID, but instead of providing a reference
+> +#     point used for defining NUMA distances and access characteristics
+> +#     to memory or from an initiator (e.g. CPU), this node defines the
+> +#     boundary point between non-discoverable system buses which must be
+> +#     described by firmware, and a discoverable bus.  NUMA distances
+> +#     and access characteristics are defined to and from that point.
+> +#     For system software to establish full initiator to target
+> +#     characteristics this information must be combined with information
+> +#     retrieved from the discoverable part of the path.  An example would
+> +#     use CDAT (see UEFI.org) information read from devices and switches
+> +#     in conjunction with link characteristics read from PCIe
+> +#     Configuration space.
+
+Lines are slightly wide in places.  
+
+Together:
+
+   # @pci-bus: QOM path of the PCI bus of the hostbridge associated with
+   #     this SRAT Generic Port Affinity Structure.  This is the same as
+   #     the bus parameter for the root ports attached to this host
+   #     bridge.  The resulting SRAT Generic Port Affinity Structure will
+   #     refer to the ACPI object in DSDT that represents the host bridge
+   #     (e.g. ACPI0016 for CXL host bridges).  See ACPI 6.5 Section
+   #     5.2.16.7 for more information.
+   #
+   # @node: Similar to a NUMA node ID, but instead of providing a
+   #     reference point used for defining NUMA distances and access
+   #     characteristics to memory or from an initiator (e.g. CPU), this
+   #     node defines the boundary point between non-discoverable system
+   #     buses which must be described by firmware, and a discoverable
+   #     bus.  NUMA distances and access characteristics are defined to
+   #     and from that point.  For system software to establish full
+   #     initiator to target characteristics this information must be
+   #     combined with information retrieved from the discoverable part
+   #     of the path.  An example would use CDAT (see UEFI.org)
+   #     information read from devices and switches in conjunction with
+   #     link characteristics read from PCIe Configuration space.
+
+> +#
+> +# Since: 9.1
+> +##
+> +{ 'struct': 'AcpiGenericPortProperties',
+> +  'data': { 'pci-bus': 'str',
+> +            'node': 'uint32' } }
+> +
+>  ##
+>  # @RngProperties:
+>  #
+> @@ -953,6 +986,7 @@
+>  { 'enum': 'ObjectType',
+>    'data': [
+>      'acpi-generic-initiator',
+> +    'acpi-generic-port',
+>      'authz-list',
+>      'authz-listfile',
+>      'authz-pam',
+> @@ -1025,6 +1059,7 @@
+>    'discriminator': 'qom-type',
+>    'data': {
+>        'acpi-generic-initiator':     'AcpiGenericInitiatorProperties',
+> +      'acpi-generic-port':          'AcpiGenericPortProperties',
+>        'authz-list':                 'AuthZListProperties',
+>        'authz-listfile':             'AuthZListFileProperties',
+>        'authz-pam':                  'AuthZPAMProperties',
+
+Preferably with these touch-ups
+Acked-by: Markus Armbruster <armbru@redhat.com>
+
+[...]
+
 
