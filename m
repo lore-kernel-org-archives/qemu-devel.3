@@ -4,81 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C02BC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 00:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C66C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 00:30:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEI2h-0007Yg-2O; Mon, 03 Jun 2024 20:28:47 -0400
+	id 1sEI3o-00016y-Sl; Mon, 03 Jun 2024 20:29:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEI2d-0007MI-3M; Mon, 03 Jun 2024 20:28:43 -0400
-Received: from mail-vk1-xa36.google.com ([2607:f8b0:4864:20::a36])
+ (Exim 4.90_1) (envelope-from
+ <3_l9eZgYKCnEhTPcYRVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--seanjc.bounces.google.com>)
+ id 1sEI3n-00016N-3W
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 20:29:55 -0400
+Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEI2a-0003Cj-P4; Mon, 03 Jun 2024 20:28:42 -0400
-Received: by mail-vk1-xa36.google.com with SMTP id
- 71dfb90a1353d-4eb0089b4a2so166065e0c.2; 
- Mon, 03 Jun 2024 17:28:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <3_l9eZgYKCnEhTPcYRVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--seanjc.bounces.google.com>)
+ id 1sEI3l-0003IQ-Ew
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 20:29:54 -0400
+Received: by mail-pl1-x649.google.com with SMTP id
+ d9443c01a7336-1f4f00cff60so25901785ad.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 17:29:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717460917; x=1718065717; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1XlkvZagI0/biGibflFteTod8KWoRms0TIY5VStJWzk=;
- b=PrKMT025cm0OgEM3PUWgG46CqSvw4j82eZEHRK7K9J6/tkeWNDT+gzb4zJ/614svKW
- WD3HIJ2u6ZrknhTThbES//yeci0YCIXCSwXy7w3BPd2FAQcNAlX4tUxF8PYud+6x7o+B
- In3/x8ddKMWa5MQuCxTbAgiW9tVJMhUWmXWVd6ZmE8hEHWxELFkaMuOhsZTaWy15COHm
- DEOnECghL23Nb/wij8FXp1xYp9hNgQ9+Zcbe2xgwgTD+q9SjfQ7CN/QKS+SZAqOWJuOV
- gJ36B9a/gkk9sS9zN5JOdDCi0n+EnG13GFPYjeNnrvNU4GH1LoeCCZlLyxod37PMcyMg
- IB4g==
+ d=google.com; s=20230601; t=1717460991; x=1718065791; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+ :reply-to; bh=QxIMQXFvRFWSOBKMLO/Pb11VLx9FgWxOAKpcjqg1q6M=;
+ b=3IGHVtNW5BaApW/bHq64DKv3YYXtiJPoMtZ9f1yEtH3XKBz52j6Y0ROPxQG0Z4mVIh
+ TVyfVN9sQFf5nkkMb0pruRvZrMozWOb15Mgg4tludRr8UkQcVK+Lj70VMR6cGLchap+z
+ xX/Fp6jliU/5VKH4QXgi1v19CO0TYhkHBTOd1QDtYhyEQVDNHYEcJLgOcynYPCPXv/D0
+ qpB3sN1UZyARF3cjietP+Z4v0KgQvBteP9CIvyJpOsBDOYMsL0bmy8e+beW6Ji3e4QB+
+ sYHjwR234EWZuEBcerXLsLcT8+ct3xkPQbDnZmIqWFAq+rOratjSHM9gLZjuftMl+Yqc
+ Mtqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717460917; x=1718065717;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1XlkvZagI0/biGibflFteTod8KWoRms0TIY5VStJWzk=;
- b=PkSjsqBrPAvr5mBRR7uGLgdTlWYTQhS4EH737iL0f9fU/vE8jKryA8eII7j9ggKEfs
- KDfNY6cHGV+Wo/+6f3O16ULdcnajIT1c6D3InwfKGKa0N3TSBckDcMxrK97HmpKhEm6P
- A9arXoyGTeseRd+D6W8Ni9kErlzwsB4vgVWB0eJsoKyWXL7cyTddbc4dFqXa5BgWzP06
- T0YfRlBWl9g+VYraGuGFrcmTXmvg2OR8owE+kx89jhWbiDubZ/e6otWlaKGP7vVo+Eo7
- sXmrKOyu07Ha2At3AEUPFUHjdaeFLfgWxQk+dIp3esB14qSKhrpWEVNmfgYAXCvVLHTM
- NhbQ==
+ d=1e100.net; s=20230601; t=1717460991; x=1718065791;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=QxIMQXFvRFWSOBKMLO/Pb11VLx9FgWxOAKpcjqg1q6M=;
+ b=kNz3SWrTwW9Xt6xwwJrjj1DpQnfWIV6ZmxAUT2iYr3NaaxxcDCGTSK+PeQZfhoX8C7
+ RX0z5h24VUY2KhBsicc7OTA9eZRQOltNUUDbhNE4BB+g3Z4nitzLmIsAQlNwGCGKDmmY
+ awsXAgKC7j1HNlKsyaMhsFA6maPU3H4USHdlMszJz0dQJYa9tL//boFu8vqwSF7QNZz0
+ JX/XoCWbFiMwaEGd0BY39aQo2LCQcYq+oUj47FsAv7i1WBg1/TDKxjJvnWnoFwcRBLvp
+ KLUr4ctz5M+iWvIhXuIpre2Bh+7BkRFszcMqdIOjBJ5FVgMv6wuM0Q+uw8ZoLyLW1VEl
+ LKFQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKe+49nzvoEU74V4LWuqYa/XdNVF39FCPEmxP6gU7JkNtJo8DAvPS/Olw9TGJKGQYhIgkdRPU8TpGLG+AbfrdSlSCq7TY=
-X-Gm-Message-State: AOJu0YzcnVF6ueU0otO9sn0uEAVQyVVYkfvHe8tA7ongEB2JeGOR9IvD
- uqHfCW08M3GSQfnBdFpEDvHHbTGHjfLA/YPFtj7E5b+Vzozmrn663YPbmgcp5XYh3W9hNjd0Yd2
- TVjjIPrMXYFyuAAKySHxpONQNqEg9Wg==
-X-Google-Smtp-Source: AGHT+IG4jCGP2yVq4UlbVy+/dAFqMEG3EEGMkY4ng3VGxa8Jf+uUbbHnd9lMhid0iYkoWw1KNkNQotWI9BC8UhPq9X0=
-X-Received: by 2002:a1f:f847:0:b0:4ea:fe74:fe4a with SMTP id
- 71dfb90a1353d-4eb02e0962cmr10047722e0c.1.1717460915351; Mon, 03 Jun 2024
- 17:28:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240227012405.71650-1-alvinga@andestech.com>
- <20240227012405.71650-2-alvinga@andestech.com>
-In-Reply-To: <20240227012405.71650-2-alvinga@andestech.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 4 Jun 2024 10:28:09 +1000
-Message-ID: <CAKmqyKNgRvkFr0Tp2E4P_LB08XZFQ18xKZSZ471fXm-=JXzbeQ@mail.gmail.com>
-Subject: Re: [PATCH v4 1/4] target/riscv: Add functions for common matching
- conditions of trigger
-To: Alvin Chang <alvinga@andestech.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com
-Content-Type: text/plain; charset="UTF-8"
+ AJvYcCXAgcJ/Q/Z7TKq/NXbsE8NE0n+6f8F6TN1LSrB4/Cjn7e8MF3B715h72GDis+sS9ooRBzes3z39o7qSRBjrjgivQu8VkrY=
+X-Gm-Message-State: AOJu0YyCS+kaI4tJkAFZmvp9+rFNPbKKuyihZr0ofqD5Dw6Sq/aOhXME
+ xyGlpmCYG/96HpIeYI9s8CY8TUdfqOgwHhI083dSL6m0rutBKiHx8Etjj4rxR++oXbI1YU5U52T
+ hPA==
+X-Google-Smtp-Source: AGHT+IENLGEaWbs37HwWar6l9tfsoGWg6m42nFsyoTQfIezFlKVeE9IraziAYhpEU9jmdwNYoPJqg3Pzh8c=
+X-Received: from zagreus.c.googlers.com
+ ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
+ (user=seanjc job=sendgmr) by 2002:a17:902:f7c1:b0:1f4:620b:6a47 with SMTP id
+ d9443c01a7336-1f6370524bemr2945395ad.4.1717460990723; Mon, 03 Jun 2024
+ 17:29:50 -0700 (PDT)
+Date: Mon, 3 Jun 2024 17:29:49 -0700
+In-Reply-To: <20240514.OoPohLaejai6@digikod.net>
+Mime-Version: 1.0
+References: <20240503131910.307630-1-mic@digikod.net>
+ <20240503131910.307630-4-mic@digikod.net>
+ <ZjTuqV-AxQQRWwUW@google.com> <20240506.ohwe7eewu0oB@digikod.net>
+ <ZjmFPZd5q_hEBdBz@google.com> <20240507.ieghomae0UoC@digikod.net>
+ <ZjpTxt-Bxia3bRwB@google.com> <20240514.OoPohLaejai6@digikod.net>
+Message-ID: <Zl5f_T7Nb-Fk8Y1o@google.com>
+Subject: Re: [RFC PATCH v3 3/5] KVM: x86: Add notifications for Heki policy
+ configuration and violation
+From: Sean Christopherson <seanjc@google.com>
+To: "=?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?=" <mic@digikod.net>
+Cc: Nicolas Saenz Julienne <nsaenz@amazon.com>, Borislav Petkov <bp@alien8.de>,
+ Dave Hansen <dave.hansen@linux.intel.com>, "H . Peter Anvin" <hpa@zytor.com>, 
+ Ingo Molnar <mingo@redhat.com>, Kees Cook <keescook@chromium.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Gleixner <tglx@linutronix.de>, 
+ Vitaly Kuznetsov <vkuznets@redhat.com>, Wanpeng Li <wanpengli@tencent.com>, 
+ Rick P Edgecombe <rick.p.edgecombe@intel.com>, Alexander Graf <graf@amazon.com>,
+ Angelina Vu <angelinavu@linux.microsoft.com>, 
+ Anna Trikalinou <atrikalinou@microsoft.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, 
+ Forrest Yuan Yu <yuanyu@google.com>, James Gowans <jgowans@amazon.com>, 
+ James Morris <jamorris@linux.microsoft.com>,
+ John Andersen <john.s.andersen@intel.com>, 
+ "Madhavan T . Venkataraman" <madvenka@linux.microsoft.com>,
+ Marian Rotariu <marian.c.rotariu@gmail.com>, 
+ "Mihai =?utf-8?B?RG9uyJt1?=" <mdontu@bitdefender.com>, 
+ "=?utf-8?B?TmljdciZb3IgQ8OuyJt1?=" <nicu.citu@icloud.com>,
+ Thara Gopinath <tgopinath@microsoft.com>, 
+ Trilok Soni <quic_tsoni@quicinc.com>, Wei Liu <wei.liu@kernel.org>, 
+ Will Deacon <will@kernel.org>, Yu Zhang <yu.c.zhang@linux.intel.com>, 
+ "=?utf-8?Q?=C8=98tefan_=C8=98icleru?=" <ssicleru@bitdefender.com>,
+ dev@lists.cloudhypervisor.org, 
+ kvm@vger.kernel.org, linux-hardening@vger.kernel.org, 
+ linux-hyperv@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-security-module@vger.kernel.org, qemu-devel@nongnu.org, 
+ virtualization@lists.linux-foundation.org, x86@kernel.org, 
+ xen-devel@lists.xenproject.org
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a36;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa36.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
+ envelope-from=3_l9eZgYKCnEhTPcYRVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--seanjc.bounces.google.com;
+ helo=mail-pl1-x649.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,123 +126,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 27, 2024 at 11:26=E2=80=AFAM Alvin Chang via <qemu-devel@nongnu=
-.org> wrote:
->
-> According to RISC-V Debug specification version 0.13 [1] (also applied
-> to version 1.0 [2] but it has not been ratified yet), there are several
-> common matching conditions before firing a trigger, including the
-> enabled privilege levels of the trigger.
->
-> This commit adds trigger_common_match() to prepare the common matching
-> conditions for the type 2/3/6 triggers. For now, we just implement
-> trigger_priv_match() to check if the enabled privilege levels of the
-> trigger match CPU's current privilege level.
->
-> [1]: https://github.com/riscv/riscv-debug-spec/releases/tag/task_group_vo=
-te
-> [2]: https://github.com/riscv/riscv-debug-spec/releases/tag/1.0.0-rc1-asc=
-iidoc
->
-> Signed-off-by: Alvin Chang <alvinga@andestech.com>
+On Tue, May 14, 2024, Micka=C3=ABl Sala=C3=BCn wrote:
+> On Tue, May 07, 2024 at 09:16:06AM -0700, Sean Christopherson wrote:
+> > On Tue, May 07, 2024, Micka=C3=ABl Sala=C3=BCn wrote:
+> > > If yes, that would indeed require a *lot* of work for something we're=
+ not
+> > > sure will be accepted later on.
+> >=20
+> > Yes and no.  The AWS folks are pursuing VSM support in KVM+QEMU, and SV=
+SM support
+> > is trending toward the paired VM+vCPU model.  IMO, it's entirely feasib=
+le to
+> > design KVM support such that much of the development load can be shared=
+ between
+> > the projects.  And having 2+ use cases for a feature (set) makes it _mu=
+ch_ more
+> > likely that the feature(s) will be accepted.
+> >=20
+> > And similar to what Paolo said regarding HEKI not having a complete sto=
+ry, I
+> > don't see a clear line of sight for landing host-defined policy enforce=
+ment, as
+> > there are many open, non-trivial questions that need answers. I.e. upst=
+reaming
+> > HEKI in its current form is also far from a done deal, and isn't guaran=
+teed to
+> > be substantially less work when all is said and done.
+>=20
+> I'm not sure to understand why "Heki not having a complete story".  The
+> goal is the same as the current kernel self-protection mechanisms.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+HEKI doesn't have a complete story for how it's going to play nice with kex=
+ec(),
+emulated RESET, etc.  The kernel's existing self-protection mechanisms Just=
+ Work
+because the protections are automatically disabled/lost on such transitions=
+.
+They are obviously significant drawbacks to that behavior, but they are acc=
+epted
+drawbacks, i.e. solving those problems isn't in scope (yet) for the kernel.=
+  And
+the "failure" mode is also loss of hardening, not an unusable guest.
 
-Alistair
-
-> ---
->  target/riscv/debug.c | 70 ++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 70 insertions(+)
->
-> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-> index e30d99cc2f..3891236b82 100644
-> --- a/target/riscv/debug.c
-> +++ b/target/riscv/debug.c
-> @@ -241,6 +241,76 @@ static void do_trigger_action(CPURISCVState *env, ta=
-rget_ulong trigger_index)
->      }
->  }
->
-> +/*
-> + * Check the privilege level of specific trigger matches CPU's current p=
-rivilege
-> + * level.
-> + */
-> +static bool trigger_priv_match(CPURISCVState *env, trigger_type_t type,
-> +                               int trigger_index)
-> +{
-> +    target_ulong ctrl =3D env->tdata1[trigger_index];
-> +
-> +    switch (type) {
-> +    case TRIGGER_TYPE_AD_MATCH:
-> +        /* type 2 trigger cannot be fired in VU/VS mode */
-> +        if (env->virt_enabled) {
-> +            return false;
-> +        }
-> +        /* check U/S/M bit against current privilege level */
-> +        if ((ctrl >> 3) & BIT(env->priv)) {
-> +            return true;
-> +        }
-> +        break;
-> +    case TRIGGER_TYPE_AD_MATCH6:
-> +        if (env->virt_enabled) {
-> +            /* check VU/VS bit against current privilege level */
-> +            if ((ctrl >> 23) & BIT(env->priv)) {
-> +                return true;
-> +            }
-> +        } else {
-> +            /* check U/S/M bit against current privilege level */
-> +            if ((ctrl >> 3) & BIT(env->priv)) {
-> +                return true;
-> +            }
-> +        }
-> +        break;
-> +    case TRIGGER_TYPE_INST_CNT:
-> +        if (env->virt_enabled) {
-> +            /* check VU/VS bit against current privilege level */
-> +            if ((ctrl >> 25) & BIT(env->priv)) {
-> +                return true;
-> +            }
-> +        } else {
-> +            /* check U/S/M bit against current privilege level */
-> +            if ((ctrl >> 6) & BIT(env->priv)) {
-> +                return true;
-> +            }
-> +        }
-> +        break;
-> +    case TRIGGER_TYPE_INT:
-> +    case TRIGGER_TYPE_EXCP:
-> +    case TRIGGER_TYPE_EXT_SRC:
-> +        qemu_log_mask(LOG_UNIMP, "trigger type: %d is not supported\n", =
-type);
-> +        break;
-> +    case TRIGGER_TYPE_NO_EXIST:
-> +    case TRIGGER_TYPE_UNAVAIL:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "trigger type: %d does not exist\=
-n",
-> +                      type);
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +
-> +    return false;
-> +}
-> +
-> +/* Common matching conditions for all types of the triggers. */
-> +static bool trigger_common_match(CPURISCVState *env, trigger_type_t type=
-,
-> +                                 int trigger_index)
-> +{
-> +    return trigger_priv_match(env, type, trigger_index);
-> +}
-> +
->  /* type 2 trigger */
->
->  static uint32_t type2_breakpoint_size(CPURISCVState *env, target_ulong c=
-trl)
-> --
-> 2.34.1
->
->
+In other words, the kernel's hardening is firmly best effort at this time,
+whereas HEKI likely needs to be much more than "best effort" in order to ju=
+stify
+the extra complexity.  And that means having answers to the various interop=
+erability
+questions.
 
