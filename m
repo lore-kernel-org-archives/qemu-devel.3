@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FBAC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 15:00:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 207F1C27C50
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 15:00:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEVdY-0001fJ-JY; Tue, 04 Jun 2024 10:59:44 -0400
+	id 1sEVdX-0001eZ-U4; Tue, 04 Jun 2024 10:59:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sEVdW-0001dD-OC
+ id 1sEVdW-0001d5-Ev
  for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:59:42 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sEVdS-0005C0-U8
+ id 1sEVdT-0005CE-Cb
  for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:59:42 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-42133f8432aso24168695e9.3
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 07:59:38 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-35dcd5377c4so4749831f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 07:59:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717513177; x=1718117977; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717513178; x=1718117978; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=m4bZgUY9V+0kKWae7i+NFy4rFQRdggOPXTna/u1168M=;
- b=Rlee3hIhU0/0oxfqFUgiWy61y/cLgcQONCVPg9Dryx/GtW/wKV1BsD3QpbMv2GE/Ey
- juC8jCvh5PTqYT/8fjOhXfcSrBrjUUDoNLRg06OZADG48YRHP/DQQlpLvyJ+JEUoOzFi
- WjRue7nbVHflDhJsD+MIvpeqwVKnc+aATsHpGnCDiwobgz3y5kxaVyT57ejofqONp2ri
- 4SF793YTW9e6RIPuk6QtRJVpbZLDM7F+WTo6YH/HwE2LlbF2xSCv5rT7mjKPlU/EOyqV
- ZcnIMdhWk79Z+1h64KgwEOmGmlbc/UGb/TuW8O/g20t3em+QacMOsg8nOGpSfikUDVlq
- rREQ==
+ bh=8A5GBY6RBxkhaAlIyTmqKtiXMHCA3RDVhMBok/swKuk=;
+ b=EKZ0rx8IOvebugpXEC+5Qw9LgInpB2UfsnJENSCGmGYSmr3aog9Z3N4hmZuQ9yH3D2
+ fAWZJJxhdnjWPr7rElRhAzchD4BktneojRY2loXpO8mYj8lCRFwz/hRss15AHlkdiL1f
+ v+gytQVykueJ4kcnOxSi/M4Ulk8UBuiTfiA3AMvCT00Jkr5GxKYsU2oYqLPLqes2J/cF
+ 1pX0vPtNrd/3hudxkz+GtFs0o5IhU0iZhQElIB/blvDs3NZmZwEY9zr+vphzkptJjn7b
+ w0RVDvdSErtIVEeer8MG19so124O9eRWw8XP+swf+PLWVphVb/CVxGOApdp+5axnEbaw
+ j/4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717513177; x=1718117977;
+ d=1e100.net; s=20230601; t=1717513178; x=1718117978;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=m4bZgUY9V+0kKWae7i+NFy4rFQRdggOPXTna/u1168M=;
- b=kzT8aBAtpBmAKmEE8bhQXAqxnOQt+vHi8SS0glBm2BR67nRlF12pCiSl67cDaf68Ya
- XXkzdCTKBQY0ybuDpKSV6uwaRfY4KwzlHNxO63q1bC/nwBgnIa1k7MgA2HW3UlouDlDD
- 44sxHVXZQHLK3j5OB6sfefiYliKA/9lpEJw/pjaHqDQhDuMDZDP/yVN+ldQqgvox/w1x
- O4GMhrqdHd9pWxs/MmFbnRYBzqKLaCAUxA6KRGPcRNV3HUSw5cp2Qqg3QuEj2p3bW6pS
- /cYp7REalBUyClihkKxtwD3LdrVMhZwRlJmklk6TzU32jBnFx5k2sIU8jv4yZEUF4xh2
- pz2Q==
-X-Gm-Message-State: AOJu0YzvoyI/oUC4aghFidEzLYoId/V5C/VAqLmU7gxMB4dZAHkEO2Xc
- FEPF+bNdo6upAt1bSmuVnmXNJ/0siYEvtW4LDOhSmqI0inFyLhBFc/P+by9Dp7R+RgrLZvtha5J
- n
-X-Google-Smtp-Source: AGHT+IG99QVCExKSz+aNCEWqZDPJhs9fcrm8QQCPoofLvdREIr22QfztX1BZ1zsWYCcV/k4+nxkhTA==
-X-Received: by 2002:a05:600c:3d15:b0:41b:f979:e19b with SMTP id
- 5b1f17b1804b1-4212e0c1435mr111984605e9.39.1717513177132; 
+ bh=8A5GBY6RBxkhaAlIyTmqKtiXMHCA3RDVhMBok/swKuk=;
+ b=ise4Cc3kFClH9yx+6KGD8Qqw1/QD5HSgN19si68d12BTeuADywrj3iHEZdJy7OCjXd
+ lCZSgG7x/Bnb0Q0zG1j6UwXsWFtcy6CPZ/mOwgvgChNXQFskHk4WD2XFQVqdKhSgg7Yd
+ M4RkwtMpVpsf/VcjTbNM5aMIGOKgRHYg6fUl3PR8iqIyihjCteRnXUsPCCsCu/U7Pjd7
+ KBZNfZ8tth3a7baMweHY4EX1DMAA4RHZgLQaK8S4lSA4DlwJwPeBVUFPRCiOnOIVRr4d
+ VBm7oVyfbgeOUC0ww/PFt5LpTz1B46e1RPlVncJdwzongd5XTryhzEuqyo7cYbti7Inh
+ LMnw==
+X-Gm-Message-State: AOJu0YyXeQnXU8KIjvbMeCWwPBg4qGcM82oIKuUX/D/Z1GKCil/HbEG8
+ dvkiwCrmEmoJxE7rWImQS33mw/k79ydOniGr4MVYSpi84XYzupqHA/DLhwLlI7ahI54T0j+w8F9
+ S
+X-Google-Smtp-Source: AGHT+IFs/KitqhxahR5fQChYFnG0LYuBLhKXw4q0k93vlehoNygVViKdMKCQkJLpzB2vKKn8f9ze8Q==
+X-Received: by 2002:adf:e386:0:b0:355:2db:a0d with SMTP id
+ ffacd0b85a97d-35e0f2589d3mr8959035f8f.13.1717513177922; 
  Tue, 04 Jun 2024 07:59:37 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd064bbb1sm11767869f8f.101.2024.06.04.07.59.36
+ ffacd0b85a97d-35dd064bbb1sm11767869f8f.101.2024.06.04.07.59.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 07:59:36 -0700 (PDT)
+ Tue, 04 Jun 2024 07:59:37 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/5] scripts/coverity-scan/COMPONENTS.md: Fix 'char'
+Subject: [PATCH v2 4/5] scripts/coverity-scan/COMPONENTS.md: Fix monitor
  component
-Date: Tue,  4 Jun 2024 15:59:31 +0100
-Message-Id: <20240604145934.1230583-3-peter.maydell@linaro.org>
+Date: Tue,  4 Jun 2024 15:59:33 +0100
+Message-Id: <20240604145934.1230583-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240604145934.1230583-1-peter.maydell@linaro.org>
 References: <20240604145934.1230583-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,37 +96,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'char' component:
- * includes the no-longer-present qemu-char.c, which has been
-   long since split into the chardev/ backend code
- * also includes the hw/char devices
-
-Split it into two components:
- * char is the hw/char devices
- * chardev is the chardev backends
-with regexes matching our current sources.
+Update the 'monitor' component:
+ * qapi/ and monitor/ are now subdirectories
+ * add job-qmp.c
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- scripts/coverity-scan/COMPONENTS.md | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ scripts/coverity-scan/COMPONENTS.md | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/coverity-scan/COMPONENTS.md b/scripts/coverity-scan/COMPONENTS.md
-index 98d4bcd6a50..fb081a59265 100644
+index 205ab23b280..3864f8eda07 100644
 --- a/scripts/coverity-scan/COMPONENTS.md
 +++ b/scripts/coverity-scan/COMPONENTS.md
-@@ -73,7 +73,10 @@ block
-   ~ .*/qemu(/block.*|(/include?)/(block|storage-daemon)/.*|(/include)?/hw/(block|ide|nvme)/.*|/qemu-(img|io).*|/util/(aio|async|thread-pool).*)
+@@ -97,7 +97,7 @@ migration
+   ~ .*/qemu((/include)?/migration/.*)
  
- char
--  ~ .*/qemu(/qemu-char\.c|/include/sysemu/char\.h|(/include)?/hw/char/.*)
-+  ~ .*/qemu((/include)?/hw/char/.*)
-+
-+chardev
-+  ~ .*/qemu((/include)?/chardev/.*)
+ monitor
+-  ~ .*/qemu(/qapi.*|/qobject/.*|/monitor\..*|/[hq]mp\..*)
++  ~ .*/qemu((/include)?/(qapi|qobject|monitor)/.*|/job-qmp.c)
  
- crypto
-   ~ .*/qemu((/include)?/crypto/.*|/hw/.*/.*crypto.*|(/include/sysemu|/backends)/cryptodev.*)
+ nbd
+   ~ .*/qemu(/nbd/.*|/include/block/nbd.*|/qemu-nbd\.c)
 -- 
 2.34.1
 
