@@ -4,63 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E70FDC25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 12:56:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AFA1C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 13:16:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEThR-0006Pr-HK; Tue, 04 Jun 2024 08:55:37 -0400
+	id 1sEU0R-0007NC-Jj; Tue, 04 Jun 2024 09:15:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lanyanzhi22b@ict.ac.cn>)
- id 1sEOks-0000Wj-Lf
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:50 -0400
-Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <lanyanzhi22b@ict.ac.cn>)
- id 1sEOkp-0006LJ-EL
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:50 -0400
-Received: from loongson-kernel.loongson.cn (unknown [114.242.206.180])
- by APP-01 (Coremail) with SMTP id qwCowAD3_5t3xF5m6flOCQ--.12118S2;
- Tue, 04 Jun 2024 15:38:31 +0800 (CST)
-From: lanyanzhi22b@ict.ac.cn
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEU0Q-0007Mu-G1
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:15:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEU0N-0006aa-Lw
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 09:15:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717506910;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=V1QnxpcnqZoff3m+x0fvjD7H3C7n4tPU30jZRp1eW8o=;
+ b=Xv9wknKKgUqN0ZDcH5g/6CS3VU3sAoQCKYEapBi+bIeSHzyKtMNvEV9iFgyZuVmq1xdjLR
+ 0cs/niptxMOlhBGhChB9A6LJqkVHUGs6e+P75b2gwPzdG9YtDFn0vBk/sy10CElH16LtKn
+ Wkb2RYlyWSZRcEHmMmjM4rhj9gcC5zA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-508-LcsIwTcuMkKH6-Q0Xsjq-Q-1; Tue, 04 Jun 2024 09:15:08 -0400
+X-MC-Unique: LcsIwTcuMkKH6-Q0Xsjq-Q-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-35e114d0befso791853f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 06:15:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717506907; x=1718111707;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=V1QnxpcnqZoff3m+x0fvjD7H3C7n4tPU30jZRp1eW8o=;
+ b=F3mvs6Cn+JF25cvOKDbLIVU5ouTb7jNSyrwFSJoyv5sinYc2mdWHzLDkxP0qAos7om
+ mfE1q4um/C98r/2BOFkNQpsxTDHo82zfzFSsDsmOqXOWIJKgAKGO48y/rlrfBAvq+LAy
+ 0r4Aa1/DM6E0psvwrrulZ7DFcFNvBlHLFfyqe2W55NupCGWCfX0O7RQJzi2920jaZ8/9
+ 6W21znbdB5ulv6bPyO+KkQoFkichtHKJwm4Fkunn0zt8pmkTxYkk4oXanmRAPDkptGid
+ 3CqVljioR+WNupYhyDyiI4wnOFtpMNJF4/gi8PLXIViHoNXcCmSIdjEwbR8pggji+mzR
+ Fehw==
+X-Gm-Message-State: AOJu0YxPMD+Ei/p77hPs3I3yT/QhKlUfQbODxcKHbWEyqLXLduFttwqv
+ +GF5l1rfmG8QyKIML/uMyMhFMlVx10+iu3EzHUmTxOwI/eIxST3DZ2uI635zfjeqlMValxlu0Ng
+ W7lEyDNc1DssLz5Df2GqOyPCM7IHVi3vsd40VXxK1ytAsuzF3lw6HM1CZJDd/Wu6iQTgYddSuzP
+ vdvQTXfkud3UYYg6K9aV069wbHxS4HnA==
+X-Received: by 2002:a05:6000:1b09:b0:357:ca29:f1ca with SMTP id
+ ffacd0b85a97d-35e0f2869c8mr9150934f8f.32.1717506907001; 
+ Tue, 04 Jun 2024 06:15:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF/zAR84qLgfVZkP/xjqSOodXOIDh00BUI7wX3NYG+FR4F++0m9k4xxI58Ju1KwzaNlZX2Z8g==
+X-Received: by 2002:a05:6000:1b09:b0:357:ca29:f1ca with SMTP id
+ ffacd0b85a97d-35e0f2869c8mr9150903f8f.32.1717506906413; 
+ Tue, 04 Jun 2024 06:15:06 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc7:552:cf5c:2b13:215c:b9df:f231])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35dd04d94f1sm11447735f8f.49.2024.06.04.06.15.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Jun 2024 06:15:05 -0700 (PDT)
+Date: Tue, 4 Jun 2024 09:15:02 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: gaosong@loongson.cn,
-	lanyanzhi <lanyanzhi22b@ict.ac.cn>
-Subject: [PATCH] target/loongarch: fix a wrong print in cpu dump
-Date: Tue,  4 Jun 2024 15:38:31 +0800
-Message-Id: <20240604073831.666690-1-lanyanzhi22b@ict.ac.cn>
-X-Mailer: git-send-email 2.39.2
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gregory Price <gourry.memverge@gmail.com>,
+ Gregory Price <gregory.price@memverge.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: Re: [PULL 25/53] hw/cxl/mailbox: interface to add CCI commands to an
+ existing CCI
+Message-ID: <20240604091451-mutt-send-email-mst@kernel.org>
+References: <cover.1717506831.git.mst@redhat.com>
+ <2010f46e48229ec29146c4941768db61fd21fa76.1717506831.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowAD3_5t3xF5m6flOCQ--.12118S2
-X-Coremail-Antispam: 1UD129KBjvdXoWrtFWkZF4ruFWrGw1kCr48Zwb_yoWkXFX_Ka
- s3Xr1xKrW8ua42qF4avry5A390yF4rtw4a9a1xuFs3Wr1UJF15Cwsaq3Z3AF4Iq3y7GFnx
- Aay7JryrZw15AjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUIcSsGvfJTRUUUb2AFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2IYs7xG
- 6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
- A2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
- Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v26F4UJV
- W0owAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
- I7IYx2IY67AKxVWUAVWUtwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
- 4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwAKzVCY07xG64k0F24l
- 42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJV
- WUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MIIYrxkI7VAK
- I48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r
- 4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY
- 6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x0JUqD73UUUUU=
-X-Originating-IP: [114.242.206.180]
-X-CM-SenderInfo: 5odq5tpq2kxj0se6xunwoduhdfq/
-Received-SPF: pass client-ip=159.226.251.21;
- envelope-from=lanyanzhi22b@ict.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2010f46e48229ec29146c4941768db61fd21fa76.1717506831.git.mst@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 04 Jun 2024 08:55:32 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,32 +104,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: lanyanzhi <lanyanzhi22b@ict.ac.cn>
+On Tue, Jun 04, 2024 at 09:13:26AM -0400, Michael S. Tsirkin wrote:
+> From: Gregory Price <gourry.memverge@gmail.com>
+> 
+> This enables wrapper devices to customize the base device's CCI
+> (for example, with custom commands outside the specification)
+> without the need to change the base device.
+> 
+> The also enabled the base device to dispatch those commands without
+> requiring additional driver support.
+> 
+> Signed-off-by: Gregory Price <gregory.price@memverge.com>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Fan Ni <fan.ni@samsung.com>
+> 
+> --
+> Heavily edited by Jonathan Cameron to increase code reuse
+> Message-Id: <20240523174651.1089554-3-nifan.cxl@gmail.com>
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+>  include/hw/cxl/cxl_device.h |  2 ++
+>  hw/cxl/cxl-mailbox-utils.c  | 19 +++++++++++++++++--
+>  2 files changed, 19 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index ccc4611875..a5f8e25020 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -301,6 +301,8 @@ void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max);
+>  void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+>                                    DeviceState *d, size_t payload_max);
+>  void cxl_init_cci(CXLCCI *cci, size_t payload_max);
+> +void cxl_add_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmd_set)[256],
+> +                          size_t payload_max);
+>  int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
+>                              size_t len_in, uint8_t *pl_in,
+>                              size_t *len_out, uint8_t *pl_out,
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 2c9f50f0f9..4bcd727f4c 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -1424,9 +1424,9 @@ static void bg_timercb(void *opaque)
+>      }
+>  }
+>  
+> -void cxl_init_cci(CXLCCI *cci, size_t payload_max)
+> +static void cxl_rebuild_cel(CXLCCI *cci)
+>  {
+> -    cci->payload_max = payload_max;
+> +    cci->cel_size = 0; /* Reset for a fresh build */
+>      for (int set = 0; set < 256; set++) {
+>          for (int cmd = 0; cmd < 256; cmd++) {
+>              if (cci->cxl_cmd_set[set][cmd].handler) {
+> @@ -1440,6 +1440,13 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
+>              }
+>          }
+>      }
+> +}
+> +
+> +void cxl_init_cci(CXLCCI *cci, size_t payload_max)
+> +{
+> +    cci->payload_max = payload_max;
+> +    cxl_rebuild_cel(cci);
+> +
+>      cci->bg.complete_pct = 0;
+>      cci->bg.starttime = 0;
+>      cci->bg.runtime = 0;
+> @@ -1458,6 +1465,14 @@ static void cxl_copy_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmds)[
+>      }
+>  }
+>  
+> +void cxl_add_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmd_set)[256],
+> +                                 size_t payload_max)
+> +{
+> +    cci->payload_max = payload_max > cci->payload_max ? payload_max : cci->payload_max;
 
-description:
-    loongarch_cpu_dump_state() want to dump all loongarch cpu
-state registers, but there is a tiny typographical error when
-printing "PRCFG2".
+Line too long.
 
-Signed-off-by: lanyanzhi <lanyanzhi22b@ict.ac.cn>
----
- target/loongarch/cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index b5c1ec94af..270f711f11 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -707,7 +707,7 @@ void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-     qemu_fprintf(f, "EENTRY=%016" PRIx64 "\n", env->CSR_EENTRY);
-     qemu_fprintf(f, "PRCFG1=%016" PRIx64 ", PRCFG2=%016" PRIx64 ","
-                  " PRCFG3=%016" PRIx64 "\n",
--                 env->CSR_PRCFG1, env->CSR_PRCFG3, env->CSR_PRCFG3);
-+                 env->CSR_PRCFG1, env->CSR_PRCFG2, env->CSR_PRCFG3);
-     qemu_fprintf(f, "TLBRENTRY=%016" PRIx64 "\n", env->CSR_TLBRENTRY);
-     qemu_fprintf(f, "TLBRBADV=%016" PRIx64 "\n", env->CSR_TLBRBADV);
-     qemu_fprintf(f, "TLBRERA=%016" PRIx64 "\n", env->CSR_TLBRERA);
--- 
-2.39.2
+> +    cxl_copy_cci_commands(cci, cxl_cmd_set);
+> +    cxl_rebuild_cel(cci);
+> +}
+> +
+>  void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+>                                    DeviceState *d, size_t payload_max)
+>  {
+> -- 
+> MST
 
 
