@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EF4EC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 09:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5685C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 09:59:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEQvk-0002Ae-EC; Tue, 04 Jun 2024 05:58:12 -0400
+	id 1sEQvN-0000if-5L; Tue, 04 Jun 2024 05:57:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQvh-0001yA-5R
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:09 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQvM-0000aq-62
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:57:48 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQvf-0002IA-IJ
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:08 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-35dc1d8867eso4586640f8f.0
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:58:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQvK-0002GC-Id
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:57:47 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-354f14bd80cso664836f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:57:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717495086; x=1718099886; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717495064; x=1718099864; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EzcgxKBZLi25ReeoipJxRQhlgzmQ34yT5acRrJVoGcE=;
- b=t+ZvpSx6qgJu3ED/DV2fWT0biIqpcOuJhlQgafd6ojqnMkClXtMmVvRkta4mqKjMk9
- f3Pemt9qzscPdMJNIlAVJ6oi1xY0yaxoOrZfldjT1mp3BIX4z7S02ggpi0ngzX8pQAHK
- oYvpYxYa673LPP9uudfQrLJ8Qp9yJqWKPoMqs1bc9N8E+1zshwR86cVVuqH8PnPO+Qrr
- IiMzNMVaQYMqBzbs6NpQIVe9LoBNCE8iKd9GJynXdFisQbf+lCzf0jFqRg/XXBH/PE9g
- HmpTRbbOYoFAlQ47D1IdYhRo+HVszDP+sVPCj+OPF6LtyELJmOfR3hFHJyLZ1OlW1rzx
- MRDQ==
+ bh=Maqg614wB6IQJrQoZvf0lrAnLMpTuuWUZ3NE8tvuj7U=;
+ b=SuOeEavAjG+sdjApvbmzVNN+BA1o6s+ZqildnXCUUgGwJA5UGE3sNbskVLIbMXaNcz
+ BfEXHv8Far743LZ/viGzDGiLdju6QIaLBFYcecBZxFSTiN+qgFYAl0cz+BgPX4AbQZ/0
+ MrzLqwhihHHUo3elpHfYDzueMycsI4S84yOvfMU15Bt6uZw68erdgVeH/5N0/YbrRNTi
+ //r2uoE3p0C6SlP6ZCcOv25/5F41JxBw0oinEN0I++aXZB+sQzn2gZFgd8KXzdBcZXjw
+ 6XQbqRNqNmzpkV8BnplgsrPEoRG69tInLGUprYG8fzrgmjgEk1T//MJ+wnN//wzncSZb
+ XT9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717495086; x=1718099886;
+ d=1e100.net; s=20230601; t=1717495064; x=1718099864;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EzcgxKBZLi25ReeoipJxRQhlgzmQ34yT5acRrJVoGcE=;
- b=gpMXivvgCEeOhbCxxfM745R6o9AwXpgB3v7ZSn7znuXJpJjlbmXt1hoR7tqoNBecot
- qwfGTpUAy1pTClIJESJhFKHwgz91HLHX+eexdkwrWXJQHvb21rct+tvHsiB6YSYT1mAN
- 0iW81xEiDO79BW3wMElo4lWcgj5ijR1gVB4LqwmolZLXCS7Te+2IiGspqGaukaKN5msx
- yg6aAjWyGgmdLCynfuz3qC9VwVmKqZ2cjLTL8wifXY9j4REghAmMa8Tz2hKHmj/L5b45
- C771KUhHBcNN++74xhtoLngzktr8gvXePfC746YfqCveFlHtvJWB9BmOHDay8ZPrW9x7
- KQ1Q==
-X-Gm-Message-State: AOJu0YzQfSJdJnszK1zdjjwK6Trx+E+jgy/9VqO1K8aVbihjdW1H7j7s
- hftEBgbN9P8T9n6QMT8bMpIvCpXFTPJCc//xC2G4oZZ4WUlO5lHCRip8RTTJcXsJEba9RkmXOOB
- t
-X-Google-Smtp-Source: AGHT+IEUm9fBDg4Kslt2mW3Mzccqzt+Wmlaj0QsdjnC/1eN1V8dDWzeponpQmbJdsTb+vPMYrEY9vA==
-X-Received: by 2002:a5d:5186:0:b0:354:f467:c149 with SMTP id
- ffacd0b85a97d-35e0f36dca9mr7275991f8f.59.1717495085822; 
- Tue, 04 Jun 2024 02:58:05 -0700 (PDT)
+ bh=Maqg614wB6IQJrQoZvf0lrAnLMpTuuWUZ3NE8tvuj7U=;
+ b=a9foHtwAT+xAoGp8J/cYCZo/IFkHiImvbxgBMpiAm/Zv2Sj63O710wblTbg0d2XqvQ
+ i3tf0H1+hIQYm570W8Ni2ODmXMcl8kwpyx3yCUwo7XATVAbnfAVWGzygjE3SVVQLbe4Z
+ fO7XieR6dRY0xCDVaWyruJ3YkrcinaVBG3ESWgjwkozz0qqoJfyDhYSCKWLburIRXvHs
+ D+gAlZr+ncMndHNYJT1fLVB8nnPbBbvtv8AWRygCaKFG2VF9BzoxDBQMWsiFKVDUFFI0
+ tLhwb4RBkSDgMrFhW/yn77FFUWxVZh8DuG8GsmSjxKEBWlNLhyOopJyNqp7J5GiAlwEA
+ snag==
+X-Gm-Message-State: AOJu0YzfGjPosnQbjHzCdxw4/e/CksER0wmX8EfDViW4Yz/2hyEaAHFK
+ pOqpb3C1y7R0FmmgQjNQI8UaFYQMdafgZ6JYpvs6eFVqfxjugy8SEFwnQupauTnQo2+YhE4ocBz
+ Q
+X-Google-Smtp-Source: AGHT+IFzseSKmBMsrErO0w7gvhlDM7DV7/ZOnmum0sFQowJRB5MOtgh6TIfpudOka8cP2kJpPxhm8Q==
+X-Received: by 2002:adf:e2c2:0:b0:357:ff92:ab06 with SMTP id
+ ffacd0b85a97d-35e0f25b2e3mr8934642f8f.2.1717495064467; 
+ Tue, 04 Jun 2024 02:57:44 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.159.34])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd066d317sm10999710f8f.113.2024.06.04.02.58.04
+ ffacd0b85a97d-35dd04c0f57sm11125532f8f.12.2024.06.04.02.57.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Jun 2024 02:58:05 -0700 (PDT)
+ Tue, 04 Jun 2024 02:57:44 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- David Hildenbrand <david@redhat.com>,
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 21/32] physmem: Always pass offset + addr to xen_map_cache
-Date: Tue,  4 Jun 2024 11:55:57 +0200
-Message-ID: <20240604095609.12285-22-philmd@linaro.org>
+Subject: [PULL 17/32] cpu-target: don't set cpu->thread_id to bogus value
+Date: Tue,  4 Jun 2024 11:55:53 +0200
+Message-ID: <20240604095609.12285-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240604095609.12285-1-philmd@linaro.org>
 References: <20240604095609.12285-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,38 +95,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Always pass address with offset to xen_map_cache().
-This is in preparation for support for grant mappings.
+The thread_id isn't valid until the threads are created. There is no
+point setting it here. The only thing that cares about the thread_id
+is qmp_query_cpus_fast.
 
-Since this is within a block that checks for offset == 0,
-this has no functional changes.
-
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240529140739.1387692-5-edgar.iglesias@gmail.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20240530194250.1801701-4-alex.bennee@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- system/physmem.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ cpu-target.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 342b7a8fd4..5e6257ef65 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2230,7 +2230,8 @@ static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
-          * In that case just map the requested area.
-          */
-         if (block->offset == 0) {
--            return xen_map_cache(block->mr, addr, len, lock, lock,
-+            return xen_map_cache(block->mr, block->offset + addr,
-+                                 len, lock, lock,
-                                  is_write);
-         }
+diff --git a/cpu-target.c b/cpu-target.c
+index 5af120e8aa..499facf774 100644
+--- a/cpu-target.c
++++ b/cpu-target.c
+@@ -241,7 +241,6 @@ void cpu_exec_initfn(CPUState *cpu)
+     cpu->num_ases = 0;
  
+ #ifndef CONFIG_USER_ONLY
+-    cpu->thread_id = qemu_get_thread_id();
+     cpu->memory = get_system_memory();
+     object_ref(OBJECT(cpu->memory));
+ #endif
 -- 
 2.41.0
 
