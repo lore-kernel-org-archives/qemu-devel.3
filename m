@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 095AAC25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C899BC25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:48:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sENuj-0002xf-DD; Tue, 04 Jun 2024 02:44:57 -0400
+	id 1sENuA-0001tT-8X; Tue, 04 Jun 2024 02:44:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENuf-0002v4-QJ
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:53 -0400
+ id 1sENu8-0001tE-Dw
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENue-0007HX-An
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:53 -0400
+ id 1sENu6-0007DE-Ce
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717483491;
+ s=mimecast20190719; t=1717483457;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pZD7vE8gF0Y5V60aNmYypp+fbL0TaGRRhrBUq5pD118=;
- b=W0J8LUcG+pzyuaE0oCbEoFAd+vYNj7+xcncCQMX7jne5xkegytVRgGKTkUbsxbhV4iYKJA
- umUIq4KeOn+1NIzd9j5OVUvc6nBPsShnK3nxlyKG3mDdbVmZdDESp9MXKg87tD63tP2X1o
- gVWGiGPjZX8TqDt7i9HicNYZY5bIcLI=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=5tfVh19Jz3v9eHuHwUJ7uxqcc0LIdrHQjN+tlfZic74=;
+ b=BWyocOEkFaKiyaEO7vEWhCkRbvd/+69FVl4DE9IqhSWB+idVQN3z4rs7qcMNwz1wDpfxWf
+ fdkAlJcUnt215RoKJzn8yUMDEFWkI7V9oZzIbCdfVfnFx7HcZIzItLbUZfG4fwqiScH2GY
+ BtOBPLaT3ZiWLED8dAtmB8Wb7kFbIFI=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-477--zeLSUPGOkuo_YpRDpFGOQ-1; Tue, 04 Jun 2024 02:44:49 -0400
-X-MC-Unique: -zeLSUPGOkuo_YpRDpFGOQ-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a68ee264225so92309566b.1
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:44:49 -0700 (PDT)
+ us-mta-29-z7GRM_-SNwK5lmnLWHGaFA-1; Tue, 04 Jun 2024 02:44:15 -0400
+X-MC-Unique: z7GRM_-SNwK5lmnLWHGaFA-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-57a22ad0d04so935534a12.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:44:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717483487; x=1718088287;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pZD7vE8gF0Y5V60aNmYypp+fbL0TaGRRhrBUq5pD118=;
- b=Wa0UElhzy6NkttQ1UukY+W2sDGI5rtc+wghzEJlndLvrR9LVNaiPPOipEfTG9oPpOn
- 1ewKr0e/X7aXfRQxQI5sNx1twoiE3I7TecusLtbb47MmYHF7n6t/uako+DCWKrXCBGHD
- PVNw/rTEnKiwlsKnQ+tFYQDK6SM7xL2VrCJKmBe6srd/SunWlbZDmoaWqdUK0j8zcXxV
- tASVuxvqJNrbsBCCEYxO8tVnjHNJVSnMucw9q0Jyf3sSBiydVB4ZkPgfgYIASPniPmhc
- VRa77KUwPQa4Og+G9LuNKPYFGqA3uW51+kX9772K35+ayRkrA3/5Thcl4Hz6rZHgiI90
- 4DJA==
-X-Gm-Message-State: AOJu0YzYzyBaoTVSSVs6IkJu9GLl+i0zGUZ1FWHIN0UmR0fRQHSxYYUX
- hqXJ3Z77bEUe2oaOcQJvlz62GnrYZD6zGx7ra2a6no6PxKgFnAdxB9JSczsxK/G3A8glrC6FLYM
- hD42tZ7Ch6qEFKaMPEMsxkP6cUqy3RjI+9BZXics1R453DLM5VXR5ATGNs9UQdoy+HlrO9e77NU
- wcY+oolIeKFc8TMmYLaF6mjJv4qISGu2abpRBo
-X-Received: by 2002:a17:906:2a91:b0:a68:689e:db4c with SMTP id
- a640c23a62f3a-a68689ee2bbmr623275566b.55.1717483487691; 
- Mon, 03 Jun 2024 23:44:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHawltmXHutgxyWDFfJ1efGdkkpjDIfu12XRUbKoZlS462Y24DI7nx7gWSwhO8jRNOv5/v3BQ==
-X-Received: by 2002:a17:906:2a91:b0:a68:689e:db4c with SMTP id
- a640c23a62f3a-a68689ee2bbmr623274166b.55.1717483487291; 
- Mon, 03 Jun 2024 23:44:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717483453; x=1718088253;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5tfVh19Jz3v9eHuHwUJ7uxqcc0LIdrHQjN+tlfZic74=;
+ b=volxz6fxApL84R96oO2Yq3M2ATG1fAwo/vNKPUbghX70505AfC7Bx9h35qatLOtntQ
+ 47Bi4FaGuVrdWfmRNJai4cxkFKWzWgL5tC/PC0gwWDn1kMrUj0CGdZnnfCCuu/0rUK6Q
+ c5NiROCY31wSfEQdmmxvQZVyajd+FoYxpe0I3izrRRuNxKUVNrNEEHfTZLbxPFj9uLkq
+ 8K+GVdyO0AujCKQhjWXeek6gMjqh2MszJqT3GjorY3O9GnCeiokQbgFoPIQR1X/y6R4I
+ cPsr5QeopDsbwB0NIwkzLhJZvrQg80pNDVO1PCMdAFL5ia2NlA5fOjhX7F7OPAlvdaQm
+ /KOQ==
+X-Gm-Message-State: AOJu0Ywj68RPQqP805vulJ4VKWakn2RxMuVt/EgxxrEZuoNfituqDJ4R
+ uzvQ45iAvuRav2kZgAEIflCpOH5ZhBNdohKcuA9i8GbqNPHceA2qGv9Y5JbIq84/bjWWEWt8Kq/
+ u9NnVcQsYtFHDtUfi3Trob87wCbuzovF6niHLTH10DWud3yk6QKICQ1zn8883eSfBWun8yzqXzR
+ qnxfgxlLfYotrwW8sOwSBY5CVv4YotK4WKiYrt
+X-Received: by 2002:a50:d756:0:b0:57a:6eb4:101a with SMTP id
+ 4fb4d7f45d1cf-57a6eb41079mr2230150a12.39.1717483453218; 
+ Mon, 03 Jun 2024 23:44:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IECbXUT/WrwkW1vU3oOmCctUVjTEnHyiN7Lv6Lm7l2HRfUQVotXiLegdYxXfEV+BxgApe6ObQ==
+X-Received: by 2002:a50:d756:0:b0:57a:6eb4:101a with SMTP id
+ 4fb4d7f45d1cf-57a6eb41079mr2230139a12.39.1717483452624; 
+ Mon, 03 Jun 2024 23:44:12 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68e1bcfb95sm382718966b.107.2024.06.03.23.44.46
+ 4fb4d7f45d1cf-57a31bb83f0sm6688651a12.35.2024.06.03.23.44.12
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 23:44:46 -0700 (PDT)
+ Mon, 03 Jun 2024 23:44:12 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-Subject: [PULL 12/45] update-linux-headers: fix forwarding to asm-generic
- headers
-Date: Tue,  4 Jun 2024 08:43:36 +0200
-Message-ID: <20240604064409.957105-13-pbonzini@redhat.com>
+Subject: [PULL 00/45] mostly i386 patches for 2024-06-04
+Date: Tue,  4 Jun 2024 08:43:24 +0200
+Message-ID: <20240604064409.957105-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240604064409.957105-1-pbonzini@redhat.com>
-References: <20240604064409.957105-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -104,49 +100,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Afer commit 3efc75ad9d9 ("scripts/update-linux-headers.sh: Remove
-temporary directory inbetween", 2024-05-29), updating linux-headers/
-results in errors such as
+The following changes since commit 3b2fe44bb7f605f179e5e7feb2c13c2eb3abbb80:
 
-   cp: cannot stat '/tmp/tmp.1A1Eejh1UE/headers/include/asm/bitsperlong.h': No such file or directory
+  Merge tag 'pull-request-2024-05-29' of https://gitlab.com/thuth/qemu into staging (2024-05-29 08:38:20 -0700)
 
-because Loongarch does not have an asm/bitsperlong.h file and uses the
-generic version.  Before commit 3efc75ad9d9, the missing file would
-incorrectly cause stale files to be included in linux-headers/.  The files
-were never committed to qemu.git, but were wrong nevertheless. The build
-would just use the system version of the files, which is opposite to
-the idea of importing Linux header files into QEMU's tree.
+are available in the Git repository at:
 
-Create forwarding headers, resembling the ones that are generated during a
-kernel build by scripts/Makefile.asm-generic, if a file is only installed
-under include/asm-generic/.
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- scripts/update-linux-headers.sh | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+for you to fetch changes up to ba849076b6fc2290275ce7491547f6ae831cd2aa:
 
-diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
-index 23afe8c08ad..57a48837aa4 100755
---- a/scripts/update-linux-headers.sh
-+++ b/scripts/update-linux-headers.sh
-@@ -118,7 +118,14 @@ for arch in $ARCHLIST; do
-     rm -rf "$output/linux-headers/asm-$arch"
-     mkdir -p "$output/linux-headers/asm-$arch"
-     for header in kvm.h unistd.h bitsperlong.h mman.h; do
--        cp "$hdrdir/include/asm/$header" "$output/linux-headers/asm-$arch"
-+        if test -f "$hdrdir/include/asm/$header"; then
-+            cp "$hdrdir/include/asm/$header" "$output/linux-headers/asm-$arch"
-+        elif test -f "$hdrdir/include/asm-generic/$header"; then
-+            # not installed as <asm/$header>, but used as such in kernel sources
-+            cat <<EOF >$output/linux-headers/asm-$arch/$header
-+#include <asm-generic/$header>
-+EOF
-+        fi
-     done
- 
-     if [ $arch = mips ]; then
+  hw/i386: Add support for loading BIOS using guest_memfd (2024-06-04 08:40:46 +0200)
+
+----------------------------------------------------------------
+* virtio-blk: remove SCSI passthrough functionality
+* require x86-64-v2 baseline ISA
+* SEV-SNP host support
+* fix xsave.flat with TCG
+* fixes for CPUID checks done by TCG
+
+----------------------------------------------------------------
+Brijesh Singh (6):
+      i386/sev: Introduce 'sev-snp-guest' object
+      i386/sev: Add the SNP launch start context
+      i386/sev: Add handling to encrypt/finalize guest launch data
+      hw/i386/sev: Add function to get SEV metadata from OVMF header
+      i386/sev: Add support for populating OVMF metadata pages
+      hw/i386/sev: Add support to encrypt BIOS when SEV-SNP is enabled
+
+Dov Murik (3):
+      i386/sev: Extract build_kernel_loader_hashes
+      i386/sev: Reorder struct declarations
+      i386/sev: Allow measured direct kernel boot on SNP
+
+Michael Roth (11):
+      i386/sev: Introduce "sev-common" type to encapsulate common SEV state
+      i386/sev: Add a sev_snp_enabled() helper
+      i386/cpu: Set SEV-SNP CPUID bit when SNP enabled
+      i386/sev: Don't return launch measurements for SEV-SNP guests
+      i386/sev: Update query-sev QAPI format to handle SEV-SNP
+      i386/sev: Set CPU state to protected once SNP guest payload is finalized
+      i386/sev: Add support for SNP CPUID validation
+      i386/kvm: Add KVM_EXIT_HYPERCALL handling for KVM_HC_MAP_GPA_RANGE
+      i386/sev: Enable KVM_HC_MAP_GPA_RANGE hcall for SNP guests
+      hw/i386/sev: Use guest_memfd for legacy ROMs
+      hw/i386: Add support for loading BIOS using guest_memfd
+
+Pankaj Gupta (7):
+      linux-headers: Update to current kvm/next
+      i386/sev: Replace error_report with error_setg
+      i386/sev: Move sev_launch_update to separate class method
+      i386/sev: Move sev_launch_finish to separate class method
+      i386/sev: Add sev_kvm_init() override for SEV class
+      i386/sev: Add snp_kvm_init() override for SNP class
+      i386/sev: Invoke launch_updata_data() for SNP class
+
+Paolo Bonzini (14):
+      virtio-blk: remove SCSI passthrough functionality
+      host/i386: nothing looks at CPUINFO_SSE4
+      meson: assume x86-64-v2 baseline ISA
+      host/i386: assume presence of CMOV
+      host/i386: assume presence of SSE2
+      host/i386: assume presence of SSSE3
+      host/i386: assume presence of POPCNT
+      target/i386: fix xsave.flat from kvm-unit-tests
+      update-linux-headers: fix forwarding to asm-generic headers
+      update-linux-headers: move pvpanic.h to correct directory
+      update-linux-headers: import linux/kvm_para.h header
+      machine: allow early use of machine_require_guest_memfd
+      i386/sev: Add a class method to determine KVM VM type for SNP guests
+      i386/sev: Invoke launch_updata_data() for SEV class
+
+Xiaoyao Li (1):
+      memory: Introduce memory_region_init_ram_guest_memfd()
+
+Xinyu Li (2):
+      target/i386: fix SSE and SSE2 feature check
+      target/i386: fix memory opsize for Mov to/from Seg
+
+Zhao Liu (1):
+      target/i386/tcg: Fix RDPID feature check
+
+ docs/about/deprecated.rst                          |   10 -
+ docs/about/removed-features.rst                    |    8 +
+ docs/system/i386/amd-memory-encryption.rst         |   70 +-
+ meson.build                                        |   10 +-
+ qapi/misc-target.json                              |   72 +-
+ qapi/qom.json                                      |   98 +-
+ host/include/i386/host/cpuinfo.h                   |    4 -
+ include/exec/confidential-guest-support.h          |    5 +
+ include/exec/memory.h                              |    6 +
+ include/hw/boards.h                                |    1 -
+ include/hw/i386/pc.h                               |   28 +
+ include/hw/i386/x86.h                              |    2 +-
+ include/standard-headers/linux/kvm_para.h          |   38 +
+ include/standard-headers/{linux => misc}/pvpanic.h |    0
+ linux-headers/asm-loongarch/kvm.h                  |    4 +
+ linux-headers/asm-riscv/kvm.h                      |    1 +
+ linux-headers/asm-x86/kvm.h                        |   52 +-
+ linux-headers/asm-x86/kvm_para.h                   |    1 +
+ linux-headers/linux/kvm_para.h                     |    2 +
+ linux-headers/linux/vhost.h                        |   15 +-
+ target/i386/kvm/kvm_i386.h                         |    1 +
+ target/i386/sev.h                                  |   13 +-
+ target/i386/tcg/decode-new.h                       |    3 +
+ tcg/i386/tcg-target.h                              |    5 +-
+ hw/block/virtio-blk.c                              |  166 +-
+ hw/core/machine.c                                  |    4 +-
+ hw/i386/pc.c                                       |   14 +-
+ hw/i386/pc_sysfw.c                                 |   35 +-
+ hw/i386/x86-common.c                               |   19 +-
+ hw/misc/pvpanic-isa.c                              |    2 +-
+ hw/misc/pvpanic-pci.c                              |    2 +-
+ hw/misc/pvpanic.c                                  |    2 +-
+ system/memory.c                                    |   24 +
+ target/i386/cpu.c                                  |    1 +
+ target/i386/kvm/kvm.c                              |   56 +
+ target/i386/sev-sysemu-stub.c                      |    6 +-
+ target/i386/sev.c                                  | 1581 +++++++++++++++-----
+ target/i386/tcg/fpu_helper.c                       |    5 +
+ target/i386/tcg/translate.c                        |    2 +-
+ util/bufferiszero.c                                |    4 +-
+ util/cpuinfo-i386.c                                |    8 +-
+ target/i386/tcg/decode-new.c.inc                   |   17 +-
+ tcg/i386/tcg-target.c.inc                          |   15 +-
+ scripts/update-linux-headers.sh                    |   37 +-
+ target/i386/kvm/trace-events                       |    1 +
+ target/i386/trace-events                           |    3 +
+ 46 files changed, 1844 insertions(+), 609 deletions(-)
+ create mode 100644 include/standard-headers/linux/kvm_para.h
+ rename include/standard-headers/{linux => misc}/pvpanic.h (100%)
+ create mode 100644 linux-headers/asm-x86/kvm_para.h
+ create mode 100644 linux-headers/linux/kvm_para.h
 -- 
 2.45.1
 
