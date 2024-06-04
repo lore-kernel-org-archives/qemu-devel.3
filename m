@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CCC2C27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:19:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C341EC25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:19:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEORp-0003JG-UV; Tue, 04 Jun 2024 03:19:10 -0400
+	id 1sEORk-0003GG-Hp; Tue, 04 Jun 2024 03:19:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEORo-0003Ii-54
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:19:08 -0400
+ id 1sEORj-0003Fu-93
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:19:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEORm-0005e8-Ec
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:19:07 -0400
+ id 1sEORh-0005dt-Kq
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:19:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717485545;
+ s=mimecast20190719; t=1717485541;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jd1l2qesW2ZIZOnZQq5rLZIMm8vL0i3PnwLlc9wF0HE=;
- b=aZGB/hjyP+6ZeapqcoLTRbLarwWO9j9lF9j4QIsHeC+pNNc4vxCLgli/VNr3JxKoGKePNo
- Y+Cr/cd7xLRaXo74ptJidhTYWV7TYKxzkntV169PlEizcTRnKH3uk0DZz1HTHcFw8mWwlJ
- F/F+ApIXUT+c8XERQV34Kg3OIlYbHY0=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aHLLmdM1T47s1VBxMQynaNLfQGaY0mg7XaNcdIi3/jE=;
+ b=efhTdAymb0TMMJdPeZtGRQRnPIdBGScx3IHZcNQVsKb2WFVuHM0Xhfi/EduHp52ySEYotD
+ Ud/GzcmqpBhfmIRYdIr/Pe2ObePXikCIz6XghyPeVWme5toRgQl5wu9o8XIfYRJCZUIDss
+ VQqW0+bFAWMoo2edMatNX3x4FprrGG4=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-172-qKODYWeuMCy_Ew_yBHChpQ-1; Tue, 04 Jun 2024 03:19:01 -0400
-X-MC-Unique: qKODYWeuMCy_Ew_yBHChpQ-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-57a4d24a479so625961a12.2
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:19:01 -0700 (PDT)
+ us-mta-634-JmLhD4cwN9aHzLJtN2dPKw-1; Tue, 04 Jun 2024 03:18:58 -0400
+X-MC-Unique: JmLhD4cwN9aHzLJtN2dPKw-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a68e0faf1f6so91954566b.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:18:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717485539; x=1718090339;
+ d=1e100.net; s=20230601; t=1717485536; x=1718090336;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jd1l2qesW2ZIZOnZQq5rLZIMm8vL0i3PnwLlc9wF0HE=;
- b=Wl0fiimJ7ObZW9rZ1zCZsxRWQZC6LFGSOZWX/2lUCaMmmwHgTLNsQ2KaRIy8wDodRj
- Nfsxbyv5akaI/qBfRVSUYc1ord5wL+iC0bDSGVZZQQO5o/aCSyF5liMOAwDKqZgLN1aW
- VHLz+U8yTbm/Zb1fgkLe8tJqUtUz9/wjOQkQTAP69Ctka+1im9HHkFCS3JtmWeLukLjd
- FrzwiDaiuzM3m3ib5IxmQcXEWjHjav8210ZtVksdZvFFgjaZZlzfUk/hv6hEPJRTr3HK
- UepM6ZtmEHlkzd2RgHSVqnJRB9Geu/IIcJkSvKEnSNfUVilq84o8R9EtMbZU8c1OucX6
- SjbA==
-X-Gm-Message-State: AOJu0YxPdBoWBjqYZviLdqS+Geomzp8tEdY/s3wSswdii9JOs9LJH3Ey
- RnOl7pPJSrmHtRxiY6aCKi9MuVfV3akaitYqhhgt4wfPWO0/290frJGvFD5ZsQGc9Ajqt2neeWc
- DAXXoQ9Fos0p95OTcor7aHATof4npnjYvzHduLfegUuJJOdOlz0S/g/Gw8fY7riraI9OcADgXOd
- yGoj7YGUaUJMIqM11XEwr+NUSrpwYZwKYpfoWv
-X-Received: by 2002:a50:9b19:0:b0:56e:238e:372c with SMTP id
- 4fb4d7f45d1cf-57a3653a3d7mr6317057a12.26.1717485539453; 
- Tue, 04 Jun 2024 00:18:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEO0u2buUys//GDCQkPASoTC85cdAxlXiBbEDw9TLP/QXn/YYBULWdqRoYv2d33dS4yPgCfKw==
-X-Received: by 2002:a50:9b19:0:b0:56e:238e:372c with SMTP id
- 4fb4d7f45d1cf-57a3653a3d7mr6317043a12.26.1717485538985; 
- Tue, 04 Jun 2024 00:18:58 -0700 (PDT)
+ bh=aHLLmdM1T47s1VBxMQynaNLfQGaY0mg7XaNcdIi3/jE=;
+ b=GidKJJWEnP32gxLclhF9ClCy1+lbDNGdE1zU+UHU6kz4VJfHEAsFySFT3OqaDlowQw
+ qofOvh6zf2Wo1FGmzXaIytJO+DXMgrC44CyHonc5YUm/cWwv3alPlffnRPBrugRvfAZj
+ cHs9cutqi7ENOtWVkCo5Y7yu1J4My72+nrNty/mAeQyEIKoNIq0tj3B8hqJrm0kWN1MM
+ SeErNbAYETOJDgN+dOVyP7L+MJNuMQRgOYwbLiwfd0SUjNAArrDm6A9fNDVwUXXz2j5b
+ VfaP6Fje3bKyeuSsJXrJhm9L5eutHopaYHoo3+hqvgnLyXhY5jD+/rweVe3K0VA17s+7
+ oWPA==
+X-Gm-Message-State: AOJu0Yxk3S4hO5n5AFa27r2iJl7cJq0XO5+sPQGsMkWS7skoZOM68oLU
+ DT2sYy4hB4OFuWH2/Nw5U9eGu+wuYrEJjYvOhNlMKdA9VOtd4MTeU0+C+2ae1yOxfd6EZkoYQJi
+ mkSzYuRuE5OF92GKPl0L7gxpMcOFDb4Jl4ACYCXDUtB+LJ+q3oYbJuS9gDxnA21HzvdxIi/2iBC
+ 2v/NAowW24Azv3XCDFwmfNkk6zTG2ZsbImptyq
+X-Received: by 2002:a17:906:1314:b0:a68:f02d:755e with SMTP id
+ a640c23a62f3a-a68f02d75ffmr367376266b.33.1717485536209; 
+ Tue, 04 Jun 2024 00:18:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEiDKlwyMKl0NsNRRK1YIeDVRXuTckOHGSViOkixZOCxkXtftRfzpQTqPq38EA02n+X/FiQ3A==
+X-Received: by 2002:a17:906:1314:b0:a68:f02d:755e with SMTP id
+ a640c23a62f3a-a68f02d75ffmr367374766b.33.1717485535681; 
+ Tue, 04 Jun 2024 00:18:55 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57a81f1dbd9sm633269a12.93.2024.06.04.00.18.57
+ a640c23a62f3a-a68c7892dd5sm415290966b.43.2024.06.04.00.18.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 00:18:57 -0700 (PDT)
+ Tue, 04 Jun 2024 00:18:54 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org
-Subject: [PATCH 07/11] target/i386: fix INHIBIT_IRQ/TF/RF handling for VMRUN
-Date: Tue,  4 Jun 2024 09:18:29 +0200
-Message-ID: <20240604071833.962574-8-pbonzini@redhat.com>
+Subject: [PATCH 06/11] target/i386: disable/enable breakpoints on
+ vmentry/vmexit
+Date: Tue,  4 Jun 2024 09:18:28 +0200
+Message-ID: <20240604071833.962574-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240604071833.962574-1-pbonzini@redhat.com>
 References: <20240604071833.962574-1-pbonzini@redhat.com>
@@ -103,132 +104,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From vm entry to exit, VMRUN is handled as a single instruction.  It
-uses DISAS_NORETURN in order to avoid processing TF or RF before
-the first instruction executes in the guest.  However, the corresponding
-handling is missing in vmexit.  Add it, and at the same time reorganize
-the comments with quotes from the manual about the tasks performed
-by a #VMEXIT.
+If the required DR7 (either from the VMCB or from the host save
+area) disables a breakpoint that was enabled prior to vmentry
+or vmexit, it is left enabled and will trigger EXCP_DEBUG.
+This causes a spurious #DB on the next crossing of the breakpoint.
 
-Another gen_eob() task that is missing in VMRUN is preparing the
-HF_INHIBIT_IRQ flag for the next instruction, in this case by loading
-it from the VMCB control state.
+To disable it, vmentry/vmexit must use cpu_x86_update_dr7
+to load DR7.
+
+Because cpu_x86_update_dr7 takes a 32-bit argument, check
+reserved bits prior to calling cpu_x86_update_dr7, and do the
+same for DR6 as well for consistency.
+
+This scenario is tested by the "host_rflags" test in kvm-unit-tests.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/sysemu/svm_helper.c | 46 +++++++++++++++++++++--------
- target/i386/tcg/translate.c         |  5 ++++
- 2 files changed, 38 insertions(+), 13 deletions(-)
+ target/i386/tcg/sysemu/svm_helper.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
 diff --git a/target/i386/tcg/sysemu/svm_helper.c b/target/i386/tcg/sysemu/svm_helper.c
-index 922d8964f8e..9db8ad62a01 100644
+index 5d6de2294fa..922d8964f8e 100644
 --- a/target/i386/tcg/sysemu/svm_helper.c
 +++ b/target/i386/tcg/sysemu/svm_helper.c
-@@ -254,6 +254,13 @@ void helper_vmrun(CPUX86State *env, int aflag, int next_eip_addend)
-                                                   control.intercept_exceptions
-                                                   ));
+@@ -163,6 +163,8 @@ void helper_vmrun(CPUX86State *env, int aflag, int next_eip_addend)
+     uint64_t new_cr0;
+     uint64_t new_cr3;
+     uint64_t new_cr4;
++    uint64_t new_dr6;
++    uint64_t new_dr7;
  
-+    env->hflags &= ~HF_INHIBIT_IRQ_MASK;
-+    if (x86_ldl_phys(cs, env->vm_vmcb +
-+                offsetof(struct vmcb, control.int_state)) &
-+                 SVM_INTERRUPT_SHADOW_MASK) {
-+        env->hflags |= HF_INHIBIT_IRQ_MASK;
-+    }
+     if (aflag == 2) {
+         addr = env->regs[R_EAX];
+@@ -361,20 +363,22 @@ void helper_vmrun(CPUX86State *env, int aflag, int next_eip_addend)
+                                 env->vm_vmcb + offsetof(struct vmcb, save.rsp));
+     env->regs[R_EAX] = x86_ldq_phys(cs,
+                                 env->vm_vmcb + offsetof(struct vmcb, save.rax));
+-    env->dr[7] = x86_ldq_phys(cs,
+-                          env->vm_vmcb + offsetof(struct vmcb, save.dr7));
+-    env->dr[6] = x86_ldq_phys(cs,
+-                          env->vm_vmcb + offsetof(struct vmcb, save.dr6));
 +
-     nested_ctl = x86_ldq_phys(cs, env->vm_vmcb + offsetof(struct vmcb,
-                                                           control.nested_ctl));
-     asid = x86_ldq_phys(cs, env->vm_vmcb + offsetof(struct vmcb,
-@@ -815,8 +822,12 @@ void do_vmexit(CPUX86State *env)
-     env->hflags &= ~HF_GUEST_MASK;
-     env->intercept = 0;
-     env->intercept_exceptions = 0;
++    new_dr7 = x86_ldq_phys(cs, env->vm_vmcb + offsetof(struct vmcb, save.dr7));
++    new_dr6 = x86_ldq_phys(cs, env->vm_vmcb + offsetof(struct vmcb, save.dr6));
+ 
+ #ifdef TARGET_X86_64
+-    if (env->dr[6] & DR_RESERVED_MASK) {
++    if (new_dr7 & DR_RESERVED_MASK) {
+         cpu_vmexit(env, SVM_EXIT_ERR, 0, GETPC());
+     }
+-    if (env->dr[7] & DR_RESERVED_MASK) {
++    if (new_dr6 & DR_RESERVED_MASK) {
+         cpu_vmexit(env, SVM_EXIT_ERR, 0, GETPC());
+     }
+ #endif
+ 
++    cpu_x86_update_dr7(env, new_dr7);
++    env->dr[6] = new_dr6;
 +
-+    /* Clears the V_IRQ and V_INTR_MASKING bits inside the processor. */
-     cs->interrupt_request &= ~CPU_INTERRUPT_VIRQ;
-     env->int_ctl = 0;
+     if (is_efer_invalid_state(env)) {
+         cpu_vmexit(env, SVM_EXIT_ERR, 0, GETPC());
+     }
+@@ -864,8 +868,11 @@ void do_vmexit(CPUX86State *env)
+ 
+     env->dr[6] = x86_ldq_phys(cs,
+                           env->vm_hsave + offsetof(struct vmcb, save.dr6));
+-    env->dr[7] = x86_ldq_phys(cs,
+-                          env->vm_hsave + offsetof(struct vmcb, save.dr7));
 +
-+    /* Clears the TSC_OFFSET inside the processor. */
-     env->tsc_offset = 0;
++    /* Disables all breakpoints in the host DR7 register. */
++    cpu_x86_update_dr7(env,
++             x86_ldq_phys(cs,
++                          env->vm_hsave + offsetof(struct vmcb, save.dr7)) & ~0xff);
  
-     env->gdt.base  = x86_ldq_phys(cs, env->vm_hsave + offsetof(struct vmcb,
-@@ -836,6 +847,15 @@ void do_vmexit(CPUX86State *env)
-     cpu_x86_update_cr4(env, x86_ldq_phys(cs,
-                                      env->vm_hsave + offsetof(struct vmcb,
-                                                               save.cr4)));
-+
-+    /*
-+     * Resets the current ASID register to zero (host ASID; TLB flush).
-+     *
-+     * If the host is in PAE mode, the processor reloads the host's PDPEs
-+     * from the page table indicated the host's CR3. FIXME: If the PDPEs
-+     * contain illegal state, the processor causes a shutdown (QEMU does
-+     * not implement PDPTRs).
-+     */
-     cpu_x86_update_cr3(env, x86_ldq_phys(cs,
-                                      env->vm_hsave + offsetof(struct vmcb,
-                                                               save.cr3)));
-@@ -843,12 +863,14 @@ void do_vmexit(CPUX86State *env)
-        set properly */
-     cpu_load_efer(env, x86_ldq_phys(cs, env->vm_hsave + offsetof(struct vmcb,
-                                                          save.efer)));
-+
-+    /* Completion of the VMRUN instruction clears the host EFLAGS.RF bit.  */
-     env->eflags = 0;
-     cpu_load_eflags(env, x86_ldq_phys(cs,
-                                   env->vm_hsave + offsetof(struct vmcb,
-                                                            save.rflags)),
-                     ~(CC_O | CC_S | CC_Z | CC_A | CC_P | CC_C | DF_MASK |
--                      VM_MASK));
-+                      RF_MASK | VM_MASK));
+     /* other setups */
+     x86_stl_phys(cs,
+@@ -891,8 +898,6 @@ void do_vmexit(CPUX86State *env)
+        from the page table indicated the host's CR3. If the PDPEs contain
+        illegal state, the processor causes a shutdown. */
  
-     svm_load_seg_cache(env, MMU_PHYS_IDX,
-                        env->vm_hsave + offsetof(struct vmcb, save.es), R_ES);
-@@ -888,19 +910,17 @@ void do_vmexit(CPUX86State *env)
- 
-     env->hflags2 &= ~HF2_GIF_MASK;
-     env->hflags2 &= ~HF2_VGIF_MASK;
--    /* FIXME: Resets the current ASID register to zero (host ASID). */
- 
--    /* Clears the V_IRQ and V_INTR_MASKING bits inside the processor. */
- 
--    /* Clears the TSC_OFFSET inside the processor. */
-+    /* FIXME: Checks the reloaded host state for consistency. */
- 
--    /* If the host is in PAE mode, the processor reloads the host's PDPEs
--       from the page table indicated the host's CR3. If the PDPEs contain
--       illegal state, the processor causes a shutdown. */
+-    /* Disables all breakpoints in the host DR7 register. */
 -
--    /* Checks the reloaded host state for consistency. */
--
--    /* If the host's rIP reloaded by #VMEXIT is outside the limit of the
--       host's code segment or non-canonical (in the case of long mode), a
--       #GP fault is delivered inside the host. */
-+    /*
-+     * EFLAGS.TF causes a #DB trap after the VMRUN completes on the host
-+     * side (i.e., after the #VMEXIT from the guest). Since we're running
-+     * in the main loop, call do_interrupt_all directly.
-+     */
-+    if ((env->eflags & TF_MASK) != 0) {
-+        env->dr[6] |= DR6_BS;
-+        do_interrupt_all(X86_CPU(cs), EXCP01_DB, 0, 0, env->eip, 0);
-+    }
- }
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 77ed9c1db47..a9c6424c7df 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -3745,6 +3745,11 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-             }
-             gen_update_cc_op(s);
-             gen_update_eip_cur(s);
-+            /*
-+             * Reloads INHIBIT_IRQ mask as well as TF and RF with guest state.
-+             * The usual gen_eob() handling is performed on vmexit after
-+             * host state is reloaded.
-+             */
-             gen_helper_vmrun(tcg_env, tcg_constant_i32(s->aflag - 1),
-                              cur_insn_len_i32(s));
-             tcg_gen_exit_tb(NULL, 0);
+     /* Checks the reloaded host state for consistency. */
+ 
+     /* If the host's rIP reloaded by #VMEXIT is outside the limit of the
 -- 
 2.45.1
 
