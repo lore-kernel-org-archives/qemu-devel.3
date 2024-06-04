@@ -4,101 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B437EC25B75
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 03:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F805C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 03:11:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEKRK-0005gB-UI; Mon, 03 Jun 2024 23:02:22 -0400
+	id 1sEKZ2-0007H6-SB; Mon, 03 Jun 2024 23:10:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sEKRJ-0005fw-Vy
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 23:02:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sEKRH-0002ZZ-TS
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 23:02:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717470138;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=X4caMMEs04BIN2gFo1aaUNUVWiGoKOv1S6GuO5UnMGw=;
- b=D+RH27PZVib80HFPiZtKcIkpewVoG/YVJwBKyQ5hnON1CawBXGDY2RyJGA6eOa9uV+5blm
- +KgaOFtno2IM5Nx9gaUYwZ1PkegeSAzguZ2vQ52xnBK2TkqfANGtqipyiZHHUXd3kTNQT1
- t9jwba0+yK/PqMhzRmLs6GzV9nEDnR4=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-164-iTSki3-hNpGv1han03UW8A-1; Mon, 03 Jun 2024 23:02:17 -0400
-X-MC-Unique: iTSki3-hNpGv1han03UW8A-1
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-1f6810e43e0so10371145ad.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 20:02:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sEKZ1-0007Gf-9f; Mon, 03 Jun 2024 23:10:19 -0400
+Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sEKYz-0004dV-2v; Mon, 03 Jun 2024 23:10:19 -0400
+Received: by mail-vk1-xa32.google.com with SMTP id
+ 71dfb90a1353d-4eb270d92eeso452975e0c.1; 
+ Mon, 03 Jun 2024 20:10:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1717470615; x=1718075415; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=phxOgEhIvFafXP9D4K8fApCkyVK8rdLJ9u0IJP/kP4M=;
+ b=OSlvx0k88tNx452gvYIl2z2oK7z5OK3IPG6MMAuow2oBoDeKqKGmNKWdV1wxY38K4m
+ SCiwTQG9EHsNH0mUwiCQy3skb/f5Ed0z4MgXvAq/Ec+CA/Zv0golUPLgE75Uuoxbt/WU
+ OLcjolkTFMVPNm097o29VDVXHuOfCREvgWfcKtVZJ2bGGX8nXTGH+xYF2OEY3v4SbuXo
+ /drTWS187DmbSCgPG16DgX+lV8gMEfhbyUzsMr3aMRwCbawK5RhR6Dh8X1H16/0qUzUf
+ L0v8nmYc4xeYwCIYP87LwGMFAQipOERG574X/AU4l2pgI+2J4qGaFF1KSUzMO0kOGSa3
+ EftQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717470135; x=1718074935;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=X4caMMEs04BIN2gFo1aaUNUVWiGoKOv1S6GuO5UnMGw=;
- b=WvV2Qtiq5CntjdxmEHhQ9TejNJWHwxIHEtrJzN+OQsna0xz/9rab9hymy81J/RQgSy
- qMsmjMcEMnbY4toWCd/soBL35EOzBnnecWcg13OBaK4eOLNcFcdtjnbJXW552BA18Bim
- G0P+SsUAoZugtbZMEkZcDDAX4RNUbBbsZb4qBFmFecD2YPud2LPRD5dXIqs6/poYB9fQ
- w3MUjk2f4K/aQcqRm2pUYS0H3NdkNx0NJ1ma83dXsSOzCes2Tpc2zyJcuJxUPmS1GgtB
- 5QXvyRiiCNJlvxMZ8fg3g7UGE/PCojJafD/A8jL+SOvVZalVSi6aCjPdTLC3INmEADDA
- gpaw==
+ d=1e100.net; s=20230601; t=1717470615; x=1718075415;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=phxOgEhIvFafXP9D4K8fApCkyVK8rdLJ9u0IJP/kP4M=;
+ b=Oe2fD8oVf/jhLN3i7zTk6FVJm544BuWJNEdPiAUQQHsDM59ctPrdurCG7+m3Va2Jw1
+ Ok8dAbwUnv5EUFtaahOwzVf38/rBuqh86NGUOnKvadvKwNCymyBB4yahBiV3llRtQ+L+
+ Xy77A78+HJF08Vvc12QhKs2oMKLRb5Fxd4Cdblm9/amII3sFYfMLy1M6cWHdsGJFgpnX
+ NuTAHEvqSFDTatq0YR2b4E9qzzoiBhHJ96IWenpAkRX6B8lMmhhwrAdUvaw9BUbPowaQ
+ scnObQ2Uhn8zL6JTJfnWmp7pB8sJYg0od707Mf8T3ASU8Zz/Il1euADagCp07ICnP/ne
+ 4Bgw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWcYw+HME2YQTTBrO9U+HOo9Z1bt5U1vTrX6p82nC8h9sIk04I6H3JOct21WZXs4eUk9suPPlzyKrfyhMfZsa+mHQBtT4s=
-X-Gm-Message-State: AOJu0Yy6UJomzhi1FlSVUU3g16SK46Dr3+8mgHTCUlXBCBEhFtpSAoIB
- ovZz9AaIe0lxpPuAneXc2gr55M1H+l2w/ugJHBrABdV3Sd/3LWeTHJdwn4/6T6a2ikCZnVp97fZ
- 7ShTCK8o1iY/e9suvrNBENkr1wFT5s8RzdzI9YC6QX+s2e5GWTiHHmgOx1Akb
-X-Received: by 2002:a17:902:cecb:b0:1f2:f8b7:60cf with SMTP id
- d9443c01a7336-1f69390b9b3mr23415475ad.27.1717470134703; 
- Mon, 03 Jun 2024 20:02:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEgjFdsB5muAC+B/VP27Th2nDAUL+T2KAw5wvrM0MeaxZa6k90zVyOWPwsB/aH5oOF+hJawgA==
-X-Received: by 2002:a17:902:cecb:b0:1f2:f8b7:60cf with SMTP id
- d9443c01a7336-1f69390b9b3mr23415185ad.27.1717470134223; 
- Mon, 03 Jun 2024 20:02:14 -0700 (PDT)
-Received: from [192.168.68.50] ([103.210.27.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323f6da2sm71867115ad.227.2024.06.03.20.02.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 20:02:13 -0700 (PDT)
-Message-ID: <2c81cb47-b9bc-4875-a7fb-49c3a8ab6713@redhat.com>
-Date: Tue, 4 Jun 2024 13:02:08 +1000
+ AJvYcCUu2z5eF4kMtiLw6p6sEEXXPNY/20KJUHIzZEhfehK4S3p2h7cohjLw23AqbtWOo+Q9Q4MqIDqV558X8cn/KF2OW5+vOiE=
+X-Gm-Message-State: AOJu0YzUp9mCscql7AJmNIO3zffFq30iKaTgt5DO93hFZVqMGahpGCz+
+ deRlDj9akpgYcPKKs2Q++HEj++X7xIWu0kWHW+aoY+K3kJWpqT26eKF6TTlkoa/u/RxmJony+4U
+ RUe3YlJsk3Pcuj+PXcllfXbjtsTA=
+X-Google-Smtp-Source: AGHT+IE1uxXIa8NcXIQ9WZQDWABtYbkm5672RIF6k87qlFJ+36k+jyM8BMotoHGoLHVliMgO4riDQHnrBgd8XI1/X2I=
+X-Received: by 2002:ac5:cbc6:0:b0:4d3:39c3:717c with SMTP id
+ 71dfb90a1353d-4eb02d7623dmr9831589e0c.1.1717470613878; Mon, 03 Jun 2024
+ 20:10:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Unexpected error in rme_configure_one() at
- ../target/arm/kvm-rme.c:159
-To: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Cc: Itaru Kitayama <itaru.kitayama@linux.dev>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-arm <qemu-arm@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ard Biesheuvel <ardb@kernel.org>
-References: <0C6F517A-5686-4BCE-8D08-1CED02CB470E@linux.dev>
- <4e7aa598-1a5d-47e1-aaa3-78af05947eeb@linaro.org>
- <CB05CAA2-9301-45F6-8AE3-A2E27A160CDF@linux.dev>
- <cbd630d7-01e8-49ba-9c8b-a6514d898ed2@redhat.com>
- <20240531150922.GA83195@myrica>
- <bd1f84bd-e23c-4f4b-bc0b-a2a1b70081f4@redhat.com>
- <20240603082402.GA25688@myrica>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20240603082402.GA25688@myrica>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240523124045.1964-1-zhiwei_liu@linux.alibaba.com>
+ <20240523124045.1964-3-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240523124045.1964-3-zhiwei_liu@linux.alibaba.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 4 Jun 2024 13:09:47 +1000
+Message-ID: <CAKmqyKOe5GdCy4eDxP4v+uGoOQU19pYF2dOGQyCX97ByV4dEkA@mail.gmail.com>
+Subject: Re: [PATCH 2/6] target/riscv: Add AMO instructions for Zabha
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ Alistair.Francis@wdc.com, dbarboza@ventanamicro.com, bmeng.cn@gmail.com, 
+ liwei1518@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,128 +93,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jean,
+On Thu, May 23, 2024 at 10:44=E2=80=AFPM LIU Zhiwei
+<zhiwei_liu@linux.alibaba.com> wrote:
+>
+> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-On 6/3/24 18:24, Jean-Philippe Brucker wrote:
-> On Sat, Jun 01, 2024 at 08:14:46PM +1000, Gavin Shan wrote:
->> ---> guest edk2
->>
->> # git clone https://git.codelinaro.org/linaro/dcap/edk2.git edk2-guest
->> # cd edk2-guest; git checkout origin/cca/v2 -b cca/v2
->> # git submodule update --init --recursive;  \
->>    source edksetup.sh; make -j -C BaseTools; \
->>    export GCC5_AARCH64_PREFIX=;              \
-> 
-> Doesn't this needs a cross-compiler, something like "aarch64-linux-gnu-" ?
-> 
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-No, I was building everything using a native compiler instead of a cross compiler.
-All packages were compiled on a NVidia's grace-hopper machine.
+Alistair
 
-[root@nvidia-grace-hopper-05 ~]# cat /etc/system-release
-Red Hat Enterprise Linux release 9.5 Beta (Plow)
-[root@nvidia-grace-hopper-05 ~]# uname -r
-6.7.0-rc2-gavin+
-[root@nvidia-grace-hopper-05 ~]# gcc --version
-gcc (GCC) 11.4.1 20231218 (Red Hat 11.4.1-3)
-Copyright (C) 2021 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-I tried the cross compiler and encountered the same build error.
-
-[root@nvidia-grace-hopper-05 edk2-guest]# export | grep GCC5_AARCH64_PREFIX
-declare -x GCC5_AARCH64_PREFIX="aarch64-linux-gnu-"
-[root@nvidia-grace-hopper-05 edk2-guest]# build -b DEBUG -a AARCH64 -t GCC5 -p ArmVirtPkg/ArmVirtQemu.dsc
-   :
---add-gnu-debuglink=/home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.debug /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll
-cp -p -f /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.debug /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPrePeiCore.debug
-"GenFw" -e SEC -o /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/OUTPUT/ArmPlatformPrePeiCore.efi /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll
-GenFw: ERROR 3000: Invalid
-   WriteSections64(): /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll AARCH64 small code model requires identical ELF and PE/COFF section offsets modulo 4 KB.
-GenFw: ERROR 3000: Invalid
-   :
-
->>    build -b DEBUG -a AARCH64 -t GCC5 -p ArmVirtPkg/ArmVirtQemu.dsc
->>     :
->>    WriteSections64(): /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll AARCH64 small code model requires identical ELF and PE/COFF section offsets modulo 4 KB.
->> cp -p -f /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/OvmfPkg/VirtioFsDxe/VirtioFsDxe/DEBUG/VirtioFsDxe.dll /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/OvmfPkg/VirtioFsDxe/VirtioFsDxe/DEBUG/VirtioFsDxe.debug
->> cp -p -f /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Universal/Disk/PartitionDxe/PartitionDxe/DEBUG/PartitionDxe.debug /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/PartitionDxe.debug
->> "gcc" -MMD -MF /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/CryptoPkg/Library/OpensslLib/OpensslLibCrypto/OUTPUT/openssl/crypto/asn1/x_sig.obj.deps @/home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/CryptoPkg/Library/OpensslLib/OpensslLibCrypto/OUTPUT/cc_resp.txt  -c -o /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/CryptoPkg/Library/OpensslLib/OpensslLibCrypto/OUTPUT/openssl/crypto/asn1/x_sig.obj  /home/gavin/sandbox/CCA/edk2-guest/CryptoPkg/Library/OpensslLib/openssl/crypto/asn1/x_sig.c
->> "GenFw" -e DXE_CORE -o /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Core/Dxe/DxeMain/OUTPUT/DxeCore.efi /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Core/Dxe/DxeMain/DEBUG/DxeCore.dll
->> GenSec -s EFI_SECTION_USER_INTERFACE -n ArmCpuDxe -o /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/FV/Ffs/B8D9777E-D72A-451F-9BDB-BAFB52A68415ArmCpuDxe/B8D9777E-D72A-451F-9BDB-BAFB52A68415SEC3.ui
->> cp -p -f /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Universal/DisplayEngineDxe/DisplayEngineDxe/DEBUG/*.map /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Universal/DisplayEngineDxe/DisplayEngineDxe/OUTPUT
->> cp -p -f /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Universal/Disk/UdfDxe/UdfDxe/OUTPUT/UdfDxe.efi /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Universal/Disk/UdfDxe/UdfDxe/DEBUG
->> GenFw: ERROR 3000: Invalid
->>    :
->> build.py...
->>   : error 7000: Failed to execute command
->> 	make tbuild [/home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore]
->>
->>
->> build.py...
->>   : error F002: Failed to build module
->> 	/home/gavin/sandbox/CCA/edk2-guest/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore.inf [AARCH64, GCC5, DEBUG]
->>
->> - Failed -
->> Build end time: 05:42:19, Jun.01 2024
->> Build total time: 00:00:31
->>
->> ---> Use the edk2 image from the latest QEMU source
-> 
-> Unfortunately this can't work at the moment because edk2 needs several
-> changes in order to run in a Realm
-> 
->>
->> # cd /home/gavin/sandbox/CCA
->> # cp /home/gavin/sandbox/qemu.main/build/pc-bios/edk2-aarch64-code.fd ./
->>
->> ---> Start the guest and no output from the console
->>
->> host# mount | grep 9p
->> shr0 on /mnt/shr0 type 9p (rw,relatime,access=client,trans=virtio)
->> host# export SHR_DIR="/mnt/shr0"
->> host# qemu-system-aarch64 -accel kvm                              \
->>        -machine virt,gic-version=3,confidential-guest-support=rme0 \
->>        -cpu host -smp 2 -m 512M                                    \
->>        -object 'rme-guest,id=rme0,measurement-algo=sha512'         \
->>        -monitor none -serial mon:stdio -nographic                  \
->>        -bios /mnt/edk2-aarch64-code.fd                             \
->>        -kernel ${SHR_DIR}/linux/arch/arm64/boot/Image              \
->>        -initrd ${SHR_DIR}/buildroot/output/images/rootfs.cpio      \
->>        -append 'console=ttyAMA0'
->>          :
->>        <no output from the console>
->>          :
->>        (QEMU) q
->>
->> There are some messages from host's console indicating RMI/RMM servicing
->> states when the guest is running at background. After the guest is terminated,
->> the host crashes.
->>
->> SMC_RMM_RTT_CREATE            102dff000 122c2e000 1e00000 3 > RMI_SUCCESS
->> SMC_RMM_RTT_CREATE            102dff000 1234a7000 2000000 3 > RMI_SUCCESS
->> SMC_RMM_RTT_CREATE            102dff000 1235bd000 2200000 3 > RMI_SUCCESS
->> SMC_RMM_RTT_CREATE            102dff000 12387c000 2400000 3 > RMI_SUCCESS
->> SMC_RMM_RTT_CREATE            102dff000 123a5a000 2600000 3 > RMI_SUCCESS
->> SMC_RMM_RTT_CREATE            102dff000 12407d000 2800000 3 > RMI_SUCCESS
->> SMC_RMM_RTT_CREATE            102dff000 124109000 2a00000 3 > RMI_SUCCESS
->> SMC_RMM_RTT_CREATE            102dff000 123e49000 2c00000 3 > RMI_SUCCESS
->> SMC_RMM_RTT_CREATE            102dff000 124275000 2e00000 3 > RMI_SUCCESS
->> SMC_RMM_RTT_CREATE            102dff000 123138000 3000000 3 > RMI_SUCCESS
->> SMC_RMM_RTT_CREATE            102dff000 124d07000 3200000 3 > RMI_SUCCESS
->>   :
->>   :
->> [22768.994481] rcu: INFO: rcu_preempt self-detected stall on CPU
-> 
-> This is a warning rather than a crash. The current KVM patches spend too
-> much time tearing down guest page tables (SMC calls to RMM) while holding
-> the mmu lock. Not very nice but harmless.
-> 
-
-Ok, I can look into this deeply after I can bring up the guest successfully.
-
-Thanks,
-Gavin
-
+> ---
+>  target/riscv/cpu_cfg.h                      |   1 +
+>  target/riscv/insn32.decode                  |  20 +++
+>  target/riscv/insn_trans/trans_rvzabha.c.inc | 131 ++++++++++++++++++++
+>  target/riscv/translate.c                    |   4 +-
+>  4 files changed, 155 insertions(+), 1 deletion(-)
+>  create mode 100644 target/riscv/insn_trans/trans_rvzabha.c.inc
+>
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index b327b144d7..f241b0b173 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -84,6 +84,7 @@ struct RISCVCPUConfig {
+>      bool ext_zaamo;
+>      bool ext_zacas;
+>      bool ext_zama16b;
+> +    bool ext_zabha;
+>      bool ext_zalrsc;
+>      bool ext_zawrs;
+>      bool ext_zfa;
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index 972a1e8fd1..8a4801d442 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -1021,3 +1021,23 @@ amocas_q    00101 . . ..... ..... 100 ..... 010111=
+1 @atom_st
+>  # *** Zimop may-be-operation extension ***
+>  mop_r_n     1 . 00 .. 0111 .. ..... 100 ..... 0111011 @mop5
+>  mop_rr_n    1 . 00 .. 1 ..... ..... 100 ..... 0111011 @mop3
+> +
+> +# *** Zabhb Standard Extension ***
+> +amoswap_b  00001 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amoadd_b   00000 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amoxor_b   00100 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amoand_b   01100 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amoor_b    01000 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amomin_b   10000 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amomax_b   10100 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amominu_b  11000 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amomaxu_b  11100 . . ..... ..... 000 ..... 0101111 @atom_st
+> +amoswap_h  00001 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amoadd_h   00000 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amoxor_h   00100 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amoand_h   01100 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amoor_h    01000 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amomin_h   10000 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amomax_h   10100 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amominu_h  11000 . . ..... ..... 001 ..... 0101111 @atom_st
+> +amomaxu_h  11100 . . ..... ..... 001 ..... 0101111 @atom_st
+> diff --git a/target/riscv/insn_trans/trans_rvzabha.c.inc b/target/riscv/i=
+nsn_trans/trans_rvzabha.c.inc
+> new file mode 100644
+> index 0000000000..9093a1cfc1
+> --- /dev/null
+> +++ b/target/riscv/insn_trans/trans_rvzabha.c.inc
+> @@ -0,0 +1,131 @@
+> +/*
+> + * RISC-V translation routines for the Zabha Standard Extension.
+> + *
+> + * Copyright (c) 2024 Alibaba Group
+> + *
+> + * This program is free software; you can redistribute it and/or modify =
+it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOU=
+T
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
+ for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License alo=
+ng with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#define REQUIRE_ZABHA(ctx) do {           \
+> +    if (!ctx->cfg_ptr->ext_zabha) {       \
+> +        return false;                     \
+> +    }                                     \
+> +} while (0)
+> +
+> +static bool trans_amoswap_b(DisasContext *ctx, arg_amoswap_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amoadd_b(DisasContext *ctx, arg_amoadd_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_add_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amoxor_b(DisasContext *ctx, arg_amoxor_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_xor_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amoand_b(DisasContext *ctx, arg_amoand_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_and_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amoor_b(DisasContext *ctx, arg_amoor_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_or_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amomin_b(DisasContext *ctx, arg_amomin_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smin_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amomax_b(DisasContext *ctx, arg_amomax_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smax_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amominu_b(DisasContext *ctx, arg_amominu_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umin_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amomaxu_b(DisasContext *ctx, arg_amomaxu_b *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, MO_SB);
+> +}
+> +
+> +static bool trans_amoswap_h(DisasContext *ctx, arg_amoswap_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_xchg_tl, MO_TESW);
+> +}
+> +
+> +static bool trans_amoadd_h(DisasContext *ctx, arg_amoadd_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_add_tl, MO_TESW);
+> +}
+> +
+> +static bool trans_amoxor_h(DisasContext *ctx, arg_amoxor_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_xor_tl, MO_TESW);
+> +}
+> +
+> +static bool trans_amoand_h(DisasContext *ctx, arg_amoand_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_and_tl, MO_TESW);
+> +}
+> +
+> +static bool trans_amoor_h(DisasContext *ctx, arg_amoor_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_or_tl, MO_TESW);
+> +}
+> +
+> +static bool trans_amomin_h(DisasContext *ctx, arg_amomin_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smin_tl, MO_TESW);
+> +}
+> +
+> +static bool trans_amomax_h(DisasContext *ctx, arg_amomax_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_smax_tl, MO_TESW);
+> +}
+> +
+> +static bool trans_amominu_h(DisasContext *ctx, arg_amominu_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umin_tl, MO_TESW);
+> +}
+> +
+> +static bool trans_amomaxu_h(DisasContext *ctx, arg_amomaxu_h *a)
+> +{
+> +    REQUIRE_ZABHA(ctx);
+> +    return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, MO_TESW);
+> +}
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index b160bcbfe0..f597542f1c 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -1081,8 +1081,9 @@ static bool gen_amo(DisasContext *ctx, arg_atomic *=
+a,
+>  {
+>      TCGv dest =3D dest_gpr(ctx, a->rd);
+>      TCGv src1, src2 =3D get_gpr(ctx, a->rs2, EXT_NONE);
+> +    MemOp size =3D mop & MO_SIZE;
+>
+> -    if (ctx->cfg_ptr->ext_zama16b) {
+> +    if (ctx->cfg_ptr->ext_zama16b && size >=3D MO_32) {
+>          mop |=3D MO_ATOM_WITHIN16;
+>      } else {
+>          mop |=3D MO_ALIGN;
+> @@ -1116,6 +1117,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase,=
+ target_ulong pc)
+>  #include "insn_trans/trans_rvb.c.inc"
+>  #include "insn_trans/trans_rvzicond.c.inc"
+>  #include "insn_trans/trans_rvzacas.c.inc"
+> +#include "insn_trans/trans_rvzabha.c.inc"
+>  #include "insn_trans/trans_rvzawrs.c.inc"
+>  #include "insn_trans/trans_rvzicbo.c.inc"
+>  #include "insn_trans/trans_rvzimop.c.inc"
+> --
+> 2.25.1
+>
+>
 
