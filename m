@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 797B4C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:33:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D2FFC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEZtX-0008NJ-TI; Tue, 04 Jun 2024 15:32:32 -0400
+	id 1sEaDA-0007Aq-Ji; Tue, 04 Jun 2024 15:52:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEZtV-0008Ml-IS
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:32:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEZtS-0000vA-MO
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:32:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717529545;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Nn8VVvMg5S3LrLJ8kYp1BIeEBqdiypMdX4uLq+yvay8=;
- b=dumDalFbO3/mTTicyfpkBmO0VQEN36GWY3PYLGcVOIc1jxTHGEpxG8S/OtbLjC0b0FWI7U
- gZ0CY52aJvBEVYibQg8EkgatKZkImlox/pqpHcqx9BwwwvSPIV/4yxi8lxQgCfiJF98R3U
- A2s6eZQUKA1wF1vEUx4i5MXJT0/WsPc=
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
- [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-551-PNnHJ_ZXMs-x0i6Lm-DLmQ-1; Tue, 04 Jun 2024 15:32:24 -0400
-X-MC-Unique: PNnHJ_ZXMs-x0i6Lm-DLmQ-1
-Received: by mail-oo1-f71.google.com with SMTP id
- 006d021491bc7-5b970b125fcso1318063eaf.0
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:32:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEaD9-0007AL-3D
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:52:47 -0400
+Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEaD7-0007AB-H3
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:52:46 -0400
+Received: by mail-oo1-xc2b.google.com with SMTP id
+ 006d021491bc7-5b9778bb7c8so3369660eaf.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:52:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717530764; x=1718135564; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=zisOd2FXRld0oo3UDLNzFRd7bcHsRdxky1rEPxhG8n4=;
+ b=SofcIDuBc26RMSNsbt0E0b4rjuIa08WNlNMdKamEtQIME3A73u7+r2bEKKoL4FPggU
+ PnTggmWjqW1eTQB7jrlRPvNmIIh+HSet1aKWe2QgaZkRySD6eBP2EApBjGAHZSVPNUX0
+ n6APduZZ943JhBEVGYXLwdVMnaWJiD7rqpXQMgNZ8G4ABrWR7/0yvIC5O1H3l4IAppB9
+ aF93WWosR21DVii7TGTBC6WE3ko3QwWETLEreq7T3aZ70P0QA1xvzSyCkEp2Lk7pjXLT
+ fOanRy/r56yL3ZXcUHpRpUXOM1NBsd0wseDpyDeLcDWHrrx602r570og1kxA6535abdT
+ ejFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717529543; x=1718134343;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Nn8VVvMg5S3LrLJ8kYp1BIeEBqdiypMdX4uLq+yvay8=;
- b=YagQVhdTRXvEOvPY3O2BIPhUSmKE+aW3nAgcHKZrCcdpawavTIOZWMlS+UMuIKzECt
- /ZAHHUB2lEfFZDa9SZ4zbceqecCjhlIv4cTtb3Bo6g1tgsmnxUUUKrUG+1KLAN0OXczs
- 0HS9GMNZZBxj5Ded6kAtze4tRhPq+ULjSWdVZ12rqVTd0qM4k3re1QnScRtb4jCmNbvG
- jDN9YPSLlpdKMWU/cfPVa251+5zdm+5B4wu6cXW/Hvvs3qkvenMPwO8alVWHWqWBtW5I
- C+o9KIKqNVsRuMQ0HfbaFPUfTxlMle0Ft0gUnjlqLU5LCNkx/tsCpdTx+s+w7VjMs6be
- OFNA==
-X-Gm-Message-State: AOJu0Yw5Uzm2r2h/UuuaOvasOODFREgbSrMUNuDa3ULVCix21nNTpXuQ
- KmYbfXL9G8zdTKlmPqxzsR0DqfMGPWvJlgAcPEGumhNZ7Equ7Uspi/vlTaIXYnT/9zH6g98s7GE
- bwEbsNmNsKQfbIxZI0RsCs1gclzK8sYqZpLC+wBr37nPXNf0IkUXw
-X-Received: by 2002:a05:6870:55ca:b0:24f:ee85:2c9e with SMTP id
- 586e51a60fabf-251222b7943mr498800fac.5.1717529543058; 
- Tue, 04 Jun 2024 12:32:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG1gB4iI0JHGmExhph7ALHiOFQaV0SHQGCAABO67v817/arMccef/BuXa4ll/7UITsy6Fjpzw==
-X-Received: by 2002:a05:6870:55ca:b0:24f:ee85:2c9e with SMTP id
- 586e51a60fabf-251222b7943mr498722fac.5.1717529542415; 
- Tue, 04 Jun 2024 12:32:22 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-795183f9dbesm74190685a.132.2024.06.04.12.32.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 12:32:21 -0700 (PDT)
-Date: Tue, 4 Jun 2024 15:32:19 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Gonglei <arei.gonglei@huawei.com>
-Cc: qemu-devel@nongnu.org, yu.zhang@ionos.com, mgalaxy@akamai.com,
- elmar.gerdes@ionos.com, zhengchuan@huawei.com, berrange@redhat.com,
- armbru@redhat.com, lizhijian@fujitsu.com, pbonzini@redhat.com,
- mst@redhat.com, xiexiangyou@huawei.com, linux-rdma@vger.kernel.org,
- lixiao91@huawei.com, jinpu.wang@ionos.com,
- Jialin Wang <wangjialin23@huawei.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
-Message-ID: <Zl9rw3Q9Z9A0iMYV@x1n>
-References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
+ d=1e100.net; s=20230601; t=1717530764; x=1718135564;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zisOd2FXRld0oo3UDLNzFRd7bcHsRdxky1rEPxhG8n4=;
+ b=jeKv6GwecJ3o/2Lbeu0+wjLr154ltRIweFWRSASLR61nGQaqT6n5ngogfP5Rsy0ppY
+ 4imjBSdlCI9bW5infJxUElgB+QNJ6eM7h3MKXB3zrKy8vfBelReOofblgABxBvYoTGjA
+ BwC9x26eNtnrMIdffvoCKgYf4vQnvCkRBocOIkMddNCKQWJf8h7outsBCsoJ4Np58T3d
+ a0isyHcqpMxGMvH8AK5gPqNreqWshuHvdSBbRbMKNyeNVoFC1kDs5KLy7ssQS8vhoWc1
+ jtVNfdsJBWJghqY9MQIIxGE8tHvKgksiLE4jWFsXJ5P/1uzPF9WBIj7ASGg0U+VNJM4l
+ zdSA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUPUP4UomPWwJfndOc5C2h8qCU6l+iwwz+jQVTTbb6rnARNEIIPgF2ORwUKRC9/JSUwS7s0o+IuQLtsep6xcjVXFYFVFYA=
+X-Gm-Message-State: AOJu0Yyzku5H+1iRTVlVCLJz/h5qaxl9xsTvTEeKrPVBm6B/54Pt+45w
+ qfpxp5UhrnZ1QsonLQpkwS0o6UXKONDlQ/P8U9KILDeEdDy/vxH1mMnw0GkssaA=
+X-Google-Smtp-Source: AGHT+IFkRU6UIwKKIPMyHnJvFuviGiMhV+7QpKPgF/JpDgd8b4V4FFOZMXcfjqlx3PaT1oa5pDWU9w==
+X-Received: by 2002:a05:6820:1607:b0:5b1:bf03:d1c6 with SMTP id
+ 006d021491bc7-5ba78f2cf7amr674426eaf.1.1717530764060; 
+ Tue, 04 Jun 2024 12:52:44 -0700 (PDT)
+Received: from ?IPV6:2607:fb90:4563:8160:73fd:f139:21f2:408e?
+ ([2607:fb90:4563:8160:73fd:f139:21f2:408e])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5ba7aa54866sm50615eaf.35.2024.06.04.12.52.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Jun 2024 12:52:43 -0700 (PDT)
+Message-ID: <17a5e0df-73bc-498e-825c-d3cfd66cab92@linaro.org>
+Date: Tue, 4 Jun 2024 14:52:41 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/20] Net patches
+To: Jason Wang <jasowang@redhat.com>, peter.maydell@linaro.org,
+ qemu-devel@nongnu.org
+References: <20240604073755.1859-1-jasowang@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240604073755.1859-1-jasowang@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,74 +98,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Lei, Jialin,
-
-Thanks a lot for working on this!
-
-I think we'll need to wait a bit on feedbacks from Jinpu and his team on
-RDMA side, also Daniel for iochannels.  Also, please remember to copy
-Fabiano Rosas in any relevant future posts.  We'd also like to know whether
-he has any comments too.  I have him copied in this reply.
-
-On Tue, Jun 04, 2024 at 08:14:06PM +0800, Gonglei wrote:
-> From: Jialin Wang <wangjialin23@huawei.com>
+On 6/4/24 02:37, Jason Wang wrote:
+> The following changes since commit 3ab42e46acf867c45bc929fcc37693e327a35a24:
 > 
-> Hi,
+>    Merge tag 'pull-ufs-20240603' ofhttps://gitlab.com/jeuk20.kim/qemu  into staging (2024-06-03 08:18:14 -0500)
 > 
-> This patch series attempts to refactor RDMA live migration by
-> introducing a new QIOChannelRDMA class based on the rsocket API.
+> are available in the Git repository at:
 > 
-> The /usr/include/rdma/rsocket.h provides a higher level rsocket API
-> that is a 1-1 match of the normal kernel 'sockets' API, which hides the
-> detail of rdma protocol into rsocket and allows us to add support for
-> some modern features like multifd more easily.
+>    https://github.com/jasowang/qemu.git  tags/net-pull-request
 > 
-> Here is the previous discussion on refactoring RDMA live migration using
-> the rsocket API:
+> for you to fetch changes up to dcab53611191f50cf4feabc1d8794d04afe53407:
 > 
-> https://lore.kernel.org/qemu-devel/20240328130255.52257-1-philmd@linaro.org/
+>    ebpf: Added traces back. Changed source set for eBPF to 'system'. (2024-06-04 15:14:26 +0800)
 > 
-> We have encountered some bugs when using rsocket and plan to submit them to
-> the rdma-core community.
-> 
-> In addition, the use of rsocket makes our programming more convenient,
-> but it must be noted that this method introduces multiple memory copies,
-> which can be imagined that there will be a certain performance degradation,
-> hoping that friends with RDMA network cards can help verify, thank you!
+> -----------------------
 
-It'll be good to elaborate if you tested it in-house. What people should
-expect on the numbers exactly?  Is that okay from Huawei's POV?
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-Besides that, the code looks pretty good at a first glance to me.  Before
-others chim in, here're some high level comments..
 
-Firstly, can we avoid using coroutine when listen()?  Might be relevant
-when I see that rdma_accept_incoming_migration() runs in a loop to do
-raccept(), but would that also hang the qemu main loop even with the
-coroutine, before all channels are ready?  I'm not a coroutine person, but
-I think the hope is that we can make dest QEMU run in a thread in the
-future just like the src QEMU, so the less coroutine the better in this
-path.
-
-I think I also left a comment elsewhere on whether it would be possible to
-allow iochannels implement their own poll() functions to avoid the
-per-channel poll thread that is proposed in this series.
-
-https://lore.kernel.org/r/ZldY21xVExtiMddB@x1n
-
-Personally I think even with the thread proposal it's better than the old
-rdma code, but I just still want to double check with you guys.  E.g.,
-maybe that just won't work at all?  Again, that'll also be based on the
-fact that we move migration incoming into a thread first to keep the dest
-QEMU main loop intact, I think, but I hope we will reach that irrelevant of
-rdma, IOW it'll be nice to happen even earlier if possible.
-
-Another nitpick is that qio_channel_rdma_listen_async() doesn't look used
-and may prone to removal.
-
-Thanks,
-
--- 
-Peter Xu
+r~
 
 
