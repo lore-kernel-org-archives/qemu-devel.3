@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A8F7C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 15:16:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 604CFC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 15:16:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEV63-0003ud-Jf; Tue, 04 Jun 2024 10:25:07 -0400
+	id 1sEVtc-0005Hr-EX; Tue, 04 Jun 2024 11:16:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEV61-0003u1-5x
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:25:05 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEV5z-0000MM-IU
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:25:04 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a68b54577aaso357617666b.3
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 07:25:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717511101; x=1718115901; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yTmKZg3CoJGtoh9Amocye8ceQAZCifXakhS9aJZgX3w=;
- b=oApUvDoJs+29v1FYB/WWhWPLR3v7KncmXlsuKnsyeGjdh0daTieMP1FkNCKlul58KU
- D451v74ILdhIFfmhk4a+h1Fohd2DrFlJ6boRBuTaG11PVZVGWbeUECKp7o42ORthELsF
- J5u08b6gi78AKaZy6vZUGSPg9ax/Zn23q4xhuL0cILVi3J9jBuqH8ewfVBE9tGJNVvwG
- 1UC7l0wTTo8M6oAb/NBsOJNPvVlcTVPjZHxYxn8hkMa/o5ESECKv+VO4BvSd4/020DD2
- lvKrfg1MpFD7ebp25a3IoO7TGPqoYDmSx/CuVt72q65ymieM8N1LsMpOhiTCj8wOrpaU
- oxmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717511101; x=1718115901;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yTmKZg3CoJGtoh9Amocye8ceQAZCifXakhS9aJZgX3w=;
- b=VpWQZaZXpMC2/jgpUGgeDlaIlmTVtlxdmCcTySUnXU90MVGkQ5Zw34yr+ccKLltl0F
- g6vaSvBhM1RwgtyHk2+zRbiZ+wZuBkA+UvZ+S1jhSVwd2gRl02ZUsTLMbei2zGjwC44t
- ZjBqvmODT7XpyMj6n4WDF5tr4CKnSApQ8YAKHEGBEYqsl+K1jvuc0zK2AktvfK3uh7Qh
- 7Tg/SAq+HN1JdxnBcEYdeKwQyiRNLRIbbfFa0SWfTqygmSgBIbkSpYo25oSPBfXOEjT9
- MXJCotGJzB81LDNbTI7Ctaj0p+liQBf0c1ynceSI6ryB14i8SFdrM6ZBTrIYp+Bl0JfL
- UNVA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWI+bTeFuFK1gksWVjo6VIhy/H/s9y8eQ7BfF2NIPDjeiq+zM6rDYIFED1EbCH2HU+dEBHld9dX+htpGFBZYGWczqEiLUQ=
-X-Gm-Message-State: AOJu0YyUv8WiOw84M88C3spTWdME/bJ8iBKdyFxwupAFUjayNhXUjXiw
- P3Ei01cOUMx+92GLpoGp3XXKTkCQnCWoFxr//Bzb2FKcjJ0WxbJbvuuUTiXcviA=
-X-Google-Smtp-Source: AGHT+IHRfw8w8oQ7IsvYJ0H/aXNJRK7M5wNgBbYHtuSIROj+lvSNNNX1GOwHmCc38M10zM7wsoSR9A==
-X-Received: by 2002:a17:906:60b:b0:a68:afbb:c010 with SMTP id
- a640c23a62f3a-a68afbbec4amr542661066b.10.1717511101521; 
- Tue, 04 Jun 2024 07:25:01 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.159.34])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68e728b92fsm415329766b.60.2024.06.04.07.25.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Jun 2024 07:25:00 -0700 (PDT)
-Message-ID: <1f4daf4d-980b-47c6-ab3c-f7ec5852d423@linaro.org>
-Date: Tue, 4 Jun 2024 16:24:58 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sEVtR-0005BM-Em; Tue, 04 Jun 2024 11:16:10 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sEVtJ-0003VX-Tu; Tue, 04 Jun 2024 11:16:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1717514162; x=1749050162;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=qXPxwp4Krxnak53hDhODVhsVAD6HPOWoEFdGvkvs9S0=;
+ b=ITCDR9R/kixH+XcT0vbniTdIRW8kFDmoWFLKsSuYIS60lPmyPxmjhC5g
+ jTbuyQzfos245Qqw1l/4P3WSLCrAKY+ml/TCCbSnfjy/HSLLCjTCmUeDC
+ gQg7I+eM5+qtYtwdgTZu6giNRrwkdFfN9YzCsFvHlYt7SL9ghZlJYUd+j
+ Gu1MR6Tgl0U+xzNsPwyKz39ZLHOmqhJaX/NMvJV3ZLQZuaOIgIg/sNm+9
+ vx1H9+N6ktt9BCdUVgw+6YN4oe9w3XGtwDo79r+WdF4aY2jaWDrHHaRs2
+ VaNzHMvQMYBDwmtDazuTP9sm3u68drMeZjW3ZsRWitaysNF0hBz5vvIEv w==;
+X-CSE-ConnectionGUID: S50ujfx8Si+QFaaQmX2AGg==
+X-CSE-MsgGUID: Ag4eX3cqTk6URpCssrFP2Q==
+X-IronPort-AV: E=McAfee;i="6600,9927,11093"; a="25468255"
+X-IronPort-AV: E=Sophos;i="6.08,214,1712646000"; d="scan'208";a="25468255"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jun 2024 08:15:50 -0700
+X-CSE-ConnectionGUID: zIy4auewSF6TmnhNZjiSLg==
+X-CSE-MsgGUID: rDc0TgSUTsGt7J+8QTX8CA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,214,1712646000"; d="scan'208";a="42379247"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa004.jf.intel.com with ESMTP; 04 Jun 2024 08:15:45 -0700
+Date: Tue, 4 Jun 2024 23:31:11 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
+Subject: Re: [RFC v2 0/7] Introduce SMP Cache Topology
+Message-ID: <Zl8zP4pXjRmVs3VP@intel.com>
+References: <20240530101539.768484-1-zhao1.liu@intel.com>
+ <Zl7ea2o2aaxXMj9X@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] hw/mips/loongson3_virt: Implement IPI support
-To: gaosong <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- QEMU devel <qemu-devel@nongnu.org>
-Cc: Huacai Chen <chenhuacai@kernel.org>
-References: <20240508-loongson3-ipi-v1-0-1a7b67704664@flygoat.com>
- <a9717e72-9de2-469f-89c1-8ae969b0031e@linaro.org>
- <75c78b9e-4a18-4faf-9b80-a497d3401dba@app.fastmail.com>
- <96870199-5782-4d87-ba10-f4b886936a96@linaro.org>
- <3836d4b2-ed2d-3a4c-7092-54d0d9e1429d@loongson.cn>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <3836d4b2-ed2d-3a4c-7092-54d0d9e1429d@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=gb2312
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <Zl7ea2o2aaxXMj9X@redhat.com>
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ MIME_CHARSET_FARAWAY=2.45, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,44 +96,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/6/24 14:55, gaosong wrote:
-> åœ¨ 2024/6/3 ä¸‹åˆ11:35, Philippe Mathieu-DaudÃ© å†™é“:
->> On 16/5/24 12:53, Jiaxun Yang wrote:
->>> åœ¨2024å¹´5æœˆ8æ—¥äº”æœˆ ä¸‹åˆ10:41ï¼ŒPhilippe Mathieu-DaudÃ©å†™é“ï¼š
->>>> On 8/5/24 15:06, Jiaxun Yang wrote:
->>>>> Hi all,
->>>>>
->>>>> This series enabled IPI support for loongson3 virt board, loosely
->>>>> based on my previous work[1].
->>>>> It generalized loongarch_ipi device to share among both loongarch
->>>>> and MIPS machines.
->>>>
->>>>
->>>>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
->>>>> ---
->>>>> Jiaxun Yang (5):
->>>>> Â Â Â Â Â Â Â  hw/intc/loongarch_ipi: Remove pointless MAX_CPU check
->>>>> Â Â Â Â Â Â Â  hw/intc/loongarch_ipi: Rename as loongson_ipi
->>>>> Â Â Â Â Â Â Â  hw/intc/loongson_ipi: Implement IOCSR address space for MIPS
->>>>
->>>> So far patches 1-3 queued to hw-misc tree, thanks.
->>>
->>> Hi Philippe,
->>>
->>> Thanks! What's your plan with the rest of the series
->>
->> Patches LGTM, but I'd like an Acked-by from Song Gao ;)
->>
-> Patch 1 - 4:
-> Acked-by: Song Gao <gaosong@loongson.cn>
+Hi Daniel,
 
-Thanks!
+On Tue, Jun 04, 2024 at 10:29:15AM +0100, Daniel P. Berrang¨¦ wrote:
+> Date: Tue, 4 Jun 2024 10:29:15 +0100
+> From: "Daniel P. Berrang¨¦" <berrange@redhat.com>
+> Subject: Re: [RFC v2 0/7] Introduce SMP Cache Topology
+> 
+> On Thu, May 30, 2024 at 06:15:32PM +0800, Zhao Liu wrote:
+> > Hi,
+> > 
+> > Now that the i386 cache model has been able to define the topology
+> > clearly, it's time to move on to discussing/advancing this feature about
+> > configuring the cache topology with -smp as the following example:
+> > 
+> > -smp 32,sockets=2,dies=2,modules=2,cores=2,threads=2,maxcpus=32,\
+> >      l1d-cache=core,l1i-cache=core,l2-cache=core,l3-cache=die
+> > 
+> > With the new cache topology options ("l1d-cache", "l1i-cache",
+> > "l2-cache" and "l3-cache"), we could adjust the cache topology via -smp.
+> 
+> Switching to QAPI for a second, your proposal is effectively
+> 
+>     { 'enum': 'SMPCacheTopo',
+>       'data': [ 'default','socket','die','cluster','module','core','thread'] }
+> 
+>    { 'struct': 'SMPConfiguration',
+>      'data': {
+>        '*cpus': 'int',
+>        '*drawers': 'int',
+>        '*books': 'int',
+>        '*sockets': 'int',
+>        '*dies': 'int',
+>        '*clusters': 'int',
+>        '*modules': 'int',
+>        '*cores': 'int',
+>        '*threads': 'int',
+>        '*maxcpus': 'int',
+>        '*l1d-cache': 'SMPCacheTopo',
+>        '*l1i-cache': 'SMPCacheTopo',
+>        '*l2-cache': 'SMPCacheTopo',
+>        '*l3-cache': 'SMPCacheTopo',
+>      } }
+> 
+> I think that would be more natural to express as an array of structs
+> thus:
+> 
+>     { 'enum': 'SMPCacheTopo',
+>       'data': [ 'default','socket','die','cluster','module','core','thread'] }
+> 
+>     { 'enum': 'SMPCacheType',
+>       'data': [ 'l1d', 'l1i', 'l2', 'l3' ] }
+>      
+>     { 'struct': 'SMPCache',
+>       'data': {
+>         'type': 'SMPCacheType',
+>         'topo': 'SMPCacheTopo',
+>       } }
+> 
+>    { 'struct': 'SMPConfiguration',
+>      'data': {
+>        '*cpus': 'int',
+>        '*drawers': 'int',
+>        '*books': 'int',
+>        '*sockets': 'int',
+>        '*dies': 'int',
+>        '*clusters': 'int',
+>        '*modules': 'int',
+>        '*cores': 'int',
+>        '*threads': 'int',
+>        '*maxcpus': 'int',
+>        'caches': [ 'SMPCache' ]
+>      } }
+> 
+> Giving an example in (hypothetical) JSON cli syntax of:
+> 
+>   -smp  "{'cpus':32,'sockets':2,'dies':2,'modules':2,
+>           'cores':2,'threads':2,'maxcpus':32,'caches': [
+> 	    {'type':'l1d','topo':'core' },
+> 	    {'type':'l1i','topo':'core' },
+> 	    {'type':'l2','topo':'core' },
+> 	    {'type':'l3','topo':'die' },
+> 	  ]}"
+ 
+Thanks! Looks clean to me and I think it is ok.
 
-> and patch2 missed to delete the file loongarch_ipi.c.
+Just one further question, for this case where it must be expressed in a
+raw JSON string, is there any requirement in QEMU that a simple
+command-line friendly variant must be provided that corresponds to it?
 
-Jiaxun, I can not apply this series anymore, could you respin?
+> > Open about How to Handle the Default Options
+> > ============================================
+> > 
+> > (For the detailed description of this series, pls skip this "long"
+> > section and review the subsequent content.)
+> > 
+> > 
+> > Background of OPEN
+> > ------------------
+> > 
+> > Daniel and I discussed initial thoughts on cache topology, and there was
+> > an idea that the default *cache_topo is on the CORE level [3]:
+> > 
+> > > simply preferring "cores" for everything is a reasonable
+> > > default long term plan for everything, unless the specific
+> > > architecture target has no concept of "cores".
+> 
+> FYI, when I wrote that I wasn't specifically thinking about cache
+> mappings. I just meant that when exposing SMP topology to guests,
+> 'cores' is a good default, compared to 'sockets', or 'threads',etc.
+> 
+> Defaults for cache <-> topology  mappings should be whatever makes
+> most sense to the architecture target/cpu.
 
-Regards,
+Thank you for the additional clarification!
 
-Phil.
+> > Problem with this OPEN
+> > ----------------------
+> > 
+> > Some arches have their own arch-specific cache topology, such as l1 per
+> > core/l2 per core/l3 per die for i386. And as Jeehang proposed for
+> > RISC-V, the cache topologies are like: l1/l2 per core and l3 per
+> > cluster. 
+> > 
+> > Taking L3 as an example, logically there is a difference between the two
+> > starting points of user-specified core level and with the default core
+> > level.
+> > 
+> > For example,
+> > 
+> > "(user-specified) l3-cache-topo=core" should override i386's default l3
+> > per core, but i386's default l3 per core should also override
+> > "(default) l3-cache-topo=core" because this default value is like a
+> > placeholder that specifies nothing.
+> > 
+> > However, from a command line parsing perspective, it's impossible to
+> > tell what the ¡°l3-cache-topo=core¡± setting is for...
+> 
+> Yes, we need to explicitly distinguish built-in defaults from
+> user specified data, otherwise we risk too many mistakes.
+> 
+> > Options to solve OPEN
+> > ---------------------
+> > 
+> > So, I think we have the following options:
+> > 
+> > 
+> > 1. Can we avoid such default parameters?
+> > ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > 
+> > This would reduce the pain in QEMU, but I'm not sure if it's possible to
+> > make libvirt happy?
+> 
+> I think having an explicit "defualt" value is inevitable, not simply
+> because of libvirt. Long experiance with QEMU shows that we need to
+> be able to reliably distinguish direct user input from  built-in
+> defaults in cases like this.
+
+Thanks, that gives me an answer to that question!
+
+> > 
+> > It is also possible to expose Cache topology information as the CPU
+> > properties in ¡°query-cpu-model-expansion type=full¡±, but that adds
+> > arch-specific work.
+> > 
+> > If omitted, I think it's just like omitting ¡°cores¡±/¡°sockets¡±,
+> > leaving it up to the machine to decide based on the specific CPU model
+> > (and now the cache topology is indeed determined by the CPU model as
+> > well).
+> > 
+> > 
+> > 2. If default is required, can we use a specific abstract word?
+> > ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > 
+> > That is, is it possible to use a specific word like ¡°auto¡±/¡°invalid¡±
+> > /¡°default¡± and avoid a specific topology level?
+> 
+> "invalid" feels a bit wierd, but 'auto' or 'default' are fine,
+> and possibly "unspecified"
+
+I prefer the "default" like you listed in your QAPI example. :)
+
+> > Like setting ¡°l3-cache-topo=invalid¡± (since I've only added the invalid
+> > hierarchy so far ;-) ).
+> > 
+> > I found the cache topology of arches varies so much that I'm sorry to
+> > say it's hard to have a uniform default cache topology.
+> > 
+> > 
+> > I apologize for the very lengthy note and appreciate you reviewing it
+> > here as well as your time!
+
+Thanks,
+Zhao
+
 
