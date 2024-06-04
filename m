@@ -4,74 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99E3FC41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76556C25B78
 	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 12:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEThH-0006GP-Jz; Tue, 04 Jun 2024 08:55:27 -0400
+	id 1sEThO-0006PC-FR; Tue, 04 Jun 2024 08:55:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sEThE-0006FA-T8
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 08:55:24 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sEThB-0007ZV-F8
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 08:55:24 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxUPCyDl9mRmQDAA--.14701S3;
- Tue, 04 Jun 2024 20:55:14 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Axw8SwDl9m_0IUAA--.40003S3; 
- Tue, 04 Jun 2024 20:55:14 +0800 (CST)
-Subject: Re: [PATCH 0/5] hw/mips/loongson3_virt: Implement IPI support
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, QEMU devel <qemu-devel@nongnu.org>
-Cc: Huacai Chen <chenhuacai@kernel.org>
-References: <20240508-loongson3-ipi-v1-0-1a7b67704664@flygoat.com>
- <a9717e72-9de2-469f-89c1-8ae969b0031e@linaro.org>
- <75c78b9e-4a18-4faf-9b80-a497d3401dba@app.fastmail.com>
- <96870199-5782-4d87-ba10-f4b886936a96@linaro.org>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <3836d4b2-ed2d-3a4c-7092-54d0d9e1429d@loongson.cn>
-Date: Tue, 4 Jun 2024 20:55:12 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <paulo@myneves.com>) id 1sEQTR-0002Vq-HL
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:28:57 -0400
+Received: from mail-40136.proton.ch ([185.70.40.136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <paulo@myneves.com>) id 1sEQTN-0006sp-OC
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:28:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=myneves.com;
+ s=protonmail; t=1717493328; x=1717752528;
+ bh=wf7VFZjlXfP13nMHEyUKTvdayBGhwsPjWQbZbUS1kK8=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=jYQ42JOoYBKdDxpOTKK6ZMl2mS6+tRsflq1KvCFZIOkAXBz3uaHLj4Epw4GdSoheK
+ eFdsGy3hmXar6ODzWRcHpnY8j17DSYUkDiH6IYkwf4/MRLnOdjOIAbH4pDzl6PlxHD
+ xn8oKbC/zPKElnKV1/JNht0eA/onlcSd7HA7y8JnUAuX8S5cYvglC3CLTs9tSwtmCR
+ N0mlYB3dwVPqBdiF/LLdK/jv4ugMaybwRPG1iI0fwPOanPA2QCd2RJpLLuVVZpVqmi
+ a01wNmz1xfVR2VPbV5YAmlhLLRCJb3rJM8Tq3zrWFbCVfl8UOF1g6L+72pxrm1Z8QQ
+ fVvjVmLQRJvrg==
+Date: Tue, 04 Jun 2024 09:28:44 +0000
+To: =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Octavian Purdila <tavip@google.com>
+From: Paulo Neves <paulo@myneves.com>
+Cc: qemu-devel@nongnu.org, eblake@redhat.com, armbru@redhat.com,
+ peter.maydell@linaro.org, berrange@redhat.com,
+ Paulo Neves <ptsneves@gmail.com>
+Subject: Re: [PATCH v2] chardev: add path option for pty backend
+Message-ID: <37acc23a-821a-4f83-9c04-30bdc55538c8@myneves.com>
+In-Reply-To: <CAMxuvaw=PXk-5yuBwPLS4WUygwbXz1qOJTwrA_EEhNJJuoMGsg@mail.gmail.com>
+References: <20240603212228.3878836-1-tavip@google.com>
+ <CAMxuvaw=PXk-5yuBwPLS4WUygwbXz1qOJTwrA_EEhNJJuoMGsg@mail.gmail.com>
+Feedback-ID: 59941854:user:proton
+X-Pm-Message-ID: 32ff171ff9126033da644dfb624ada9bbd61a9c0
 MIME-Version: 1.0
-In-Reply-To: <96870199-5782-4d87-ba10-f4b886936a96@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8Axw8SwDl9m_0IUAA--.40003S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWrZry5Kw18GrW3Cw15Gw1Utwc_yoW8JrW7pr
- 9ay3WFyF47Gr18Crs7t345WFyjk3ykZw12qFnagFy8Wrn0qr10gr1kWF1qgas8Zws5Gr12
- 9F43KasruF4UJrcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
- 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8vA
- pUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.522,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=185.70.40.136; envelope-from=paulo@myneves.com;
+ helo=mail-40136.proton.ch
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 04 Jun 2024 08:55:32 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,48 +72,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2024/6/3 下午11:35, Philippe Mathieu-Daudé 写道:
-> On 16/5/24 12:53, Jiaxun Yang wrote:
->>
->>
->> 在2024年5月8日五月 下午10:41，Philippe Mathieu-Daudé写道：
->>> On 8/5/24 15:06, Jiaxun Yang wrote:
->>>> Hi all,
->>>>
->>>> This series enabled IPI support for loongson3 virt board, loosely
->>>> based on my previous work[1].
->>>> It generalized loongarch_ipi device to share among both loongarch
->>>> and MIPS machines.
->>>
->>>
->>>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
->>>> ---
->>>> Jiaxun Yang (5):
->>>>         hw/intc/loongarch_ipi: Remove pointless MAX_CPU check
->>>>         hw/intc/loongarch_ipi: Rename as loongson_ipi
->>>>         hw/intc/loongson_ipi: Implement IOCSR address space for MIPS
->>>
->>> So far patches 1-3 queued to hw-misc tree, thanks.
->>
->> Hi Philippe,
->>
->> Thanks! What's your plan with the rest of the series
->
-> Patches LGTM, but I'd like an Acked-by from Song Gao ;)
->
-Patch 1 - 4:
-Acked-by: Song Gao <gaosong@loongson.cn>
+Really happy somebody found the patch useful. I forgot to look at the=20
+review comments at the time
+and never got it merged.
+@Octavian thanks for bringing it up to shape.
 
-and patch2 missed to delete the file loongarch_ipi.c.
+Cheers
+Paulo Neves
 
-Thanks.
-Song Gao
->> and earlier MIPS CPS SMP series?
->
-> No plan, just lack of time :/
->
->> Let me know if you need help on testing etc.
+On 04/06/2024 07:50, Marc-Andr=C3=A9 Lureau wrote:
+> On Tue, Jun 4, 2024 at 1:22=E2=80=AFAM Octavian Purdila <tavip@google.com=
+> wrote:
+>> Add path option to the pty char backend which will create a symbolic
+>> link to the given path that points to the allocated PTY.
 >>
->> Thanks
+>> This avoids having to make QMP or HMP monitor queries to find out what
+>> the new PTY device path is.
+>>
+>> Based on patch from Paulo Neves:
+>>
+>> https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsneves@gmai=
+l.com/
+>>
+>> Tested with the following invocations that the link is created and
+>> removed when qemu stops:
+>>
+>>    qemu-system-x86_64 -nodefaults -mon chardev=3Dcompat_monitor \
+>>    -chardev pty,path=3Dtest,id=3Dcompat_monitor0
+>>
+>>    qemu-system-x86_64 -nodefaults -monitor pty:test
+>>
+>> Also tested that when a link path is not passed invocations still work, =
+e.g.:
+>>
+>>    qemu-system-x86_64 -monitor pty
+>>
+>> Co-authored-by: Paulo Neves <ptsneves@gmail.com>
+>> Signed-off-by: Paulo Neves <ptsneves@gmail.com>
+>> [OP: rebase and address original patch review comments]
+>> Signed-off-by: Octavian Purdila <tavip@google.com>
+>> ---
+>> Changes since v1:
+>>
+>>   * Keep the original Signed-off-by from Paulo and add one line
+>>      description with further changes
+>>
+>>   * Update commit message with justification for why the new
+>>      functionality is useful
+>>
+>>   * Don't close master_fd when symlink creation fails to avoid double
+>>      close
+>>
+>>   * Update documentation for clarity
+>>
+>>   chardev/char-pty.c | 33 +++++++++++++++++++++++++++++++++
+>>   chardev/char.c     |  5 +++++
+>>   qapi/char.json     |  4 ++--
+>>   qemu-options.hx    | 24 ++++++++++++++++++------
+>>   4 files changed, 58 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/chardev/char-pty.c b/chardev/char-pty.c
+>> index cc2f7617fe..b5a4eb59fc 100644
+>> --- a/chardev/char-pty.c
+>> +++ b/chardev/char-pty.c
+>> @@ -29,6 +29,7 @@
+>>   #include "qemu/sockets.h"
+>>   #include "qemu/error-report.h"
+>>   #include "qemu/module.h"
+>> +#include "qemu/option.h"
+>>   #include "qemu/qemu-print.h"
+>>
+>>   #include "chardev/char-io.h"
+>> @@ -41,6 +42,7 @@ struct PtyChardev {
+>>
+>>       int connected;
+>>       GSource *timer_src;
+>> +    char *symlink_path;
+>>   };
+>>   typedef struct PtyChardev PtyChardev;
+>>
+>> @@ -204,6 +206,12 @@ static void char_pty_finalize(Object *obj)
+>>       Chardev *chr =3D CHARDEV(obj);
+>>       PtyChardev *s =3D PTY_CHARDEV(obj);
+>>
+>> +    /* unlink symlink */
+>> +    if (s->symlink_path) {
+>> +        unlink(s->symlink_path);
+>> +        g_free(s->symlink_path);
+>> +    }
+>> +
+>>       pty_chr_state(chr, 0);
+>>       object_unref(OBJECT(s->ioc));
+>>       pty_chr_timer_cancel(s);
+>> @@ -330,6 +338,7 @@ static void char_pty_open(Chardev *chr,
+>>       int master_fd, slave_fd;
+>>       char pty_name[PATH_MAX];
+>>       char *name;
+>> +    char *symlink_path =3D backend->u.pty.data->device;
+>>
+>>       master_fd =3D qemu_openpty_raw(&slave_fd, pty_name);
+>>       if (master_fd < 0) {
+>> @@ -354,12 +363,36 @@ static void char_pty_open(Chardev *chr,
+>>       g_free(name);
+>>       s->timer_src =3D NULL;
+>>       *be_opened =3D false;
+>> +
+>> +    /* create symbolic link */
+>> +    if (symlink_path) {
+>> +        int res =3D symlink(pty_name, symlink_path);
+>> +
+>> +        if (res !=3D 0) {
+>> +            error_setg_errno(errp, errno, "Failed to create PTY symlink=
+");
+>> +        } else {
+>> +            s->symlink_path =3D g_strdup(symlink_path);
+>> +        }
+>> +    }
+>> +}
+>> +
+>> +static void char_pty_parse(QemuOpts *opts, ChardevBackend *backend,
+>> +                           Error **errp)
+>> +{
+>> +    const char *path =3D qemu_opt_get(opts, "path");
+>> +    ChardevHostdev *dev;
+>> +
+>> +    backend->type =3D CHARDEV_BACKEND_KIND_PTY;
+>> +    dev =3D backend->u.pty.data =3D g_new0(ChardevHostdev, 1);
+>> +    qemu_chr_parse_common(opts, qapi_ChardevHostdev_base(dev));
+>> +    dev->device =3D path ? g_strdup(path) : NULL;
+> minor nit, g_strdup(NULL) returns NULL. Get rid of "?:" if you send a v3.
+Indeed the original patch did not have the ternary.
+>>   }
+>>
+>>   static void char_pty_class_init(ObjectClass *oc, void *data)
+>>   {
+>>       ChardevClass *cc =3D CHARDEV_CLASS(oc);
+>>
+>> +    cc->parse =3D char_pty_parse;
+>>       cc->open =3D char_pty_open;
+>>       cc->chr_write =3D char_pty_chr_write;
+>>       cc->chr_update_read_handler =3D pty_chr_update_read_handler;
+>> diff --git a/chardev/char.c b/chardev/char.c
+>> index 3c43fb1278..404c6b8a4f 100644
+>> --- a/chardev/char.c
+>> +++ b/chardev/char.c
+>> @@ -428,6 +428,11 @@ QemuOpts *qemu_chr_parse_compat(const char *label, =
+const char *filename,
+>>           qemu_opt_set(opts, "path", p, &error_abort);
+>>           return opts;
+>>       }
+>> +    if (strstart(filename, "pty:", &p)) {
+>> +        qemu_opt_set(opts, "backend", "pty", &error_abort);
+>> +        qemu_opt_set(opts, "path", p, &error_abort);
+>> +        return opts;
+>> +    }
+>>       if (strstart(filename, "tcp:", &p) ||
+>>           strstart(filename, "telnet:", &p) ||
+>>           strstart(filename, "tn3270:", &p) ||
+>> diff --git a/qapi/char.json b/qapi/char.json
+>> index 777dde55d9..4c74bfc437 100644
+>> --- a/qapi/char.json
+>> +++ b/qapi/char.json
+>> @@ -509,7 +509,7 @@
+>>   ##
+>>   # @ChardevHostdevWrapper:
+>>   #
+>> -# @data: Configuration info for device and pipe chardevs
+>> +# @data: Configuration info for device, pty and pipe chardevs
+>>   #
+>>   # Since: 1.4
+>>   ##
+>> @@ -650,7 +650,7 @@
+>>               'pipe': 'ChardevHostdevWrapper',
+>>               'socket': 'ChardevSocketWrapper',
+>>               'udp': 'ChardevUdpWrapper',
+>> -            'pty': 'ChardevCommonWrapper',
+>> +            'pty': 'ChardevHostdevWrapper',
+>>               'null': 'ChardevCommonWrapper',
+>>               'mux': 'ChardevMuxWrapper',
+>>               'msmouse': 'ChardevCommonWrapper',
+>> diff --git a/qemu-options.hx b/qemu-options.hx
+>> index 8ca7f34ef0..94ffb1a605 100644
+>> --- a/qemu-options.hx
+>> +++ b/qemu-options.hx
+>> @@ -3569,7 +3569,7 @@ DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
+>>       "-chardev console,id=3Did[,mux=3Don|off][,logfile=3DPATH][,logappe=
+nd=3Don|off]\n"
+>>       "-chardev serial,id=3Did,path=3Dpath[,mux=3Don|off][,logfile=3DPAT=
+H][,logappend=3Don|off]\n"
+>>   #else
+>> -    "-chardev pty,id=3Did[,mux=3Don|off][,logfile=3DPATH][,logappend=3D=
+on|off]\n"
+>> +    "-chardev pty,id=3Did[,path=3Dpath][,mux=3Don|off][,logfile=3DPATH]=
+[,logappend=3Don|off]\n"
+>>       "-chardev stdio,id=3Did[,mux=3Don|off][,signal=3Don|off][,logfile=
+=3DPATH][,logappend=3Don|off]\n"
+>>   #endif
+>>   #ifdef CONFIG_BRLAPI
+>> @@ -3808,12 +3808,18 @@ The available backends are:
+>>
+>>       ``path`` specifies the name of the serial device to open.
+>>
+>> -``-chardev pty,id=3Did``
+>> -    Create a new pseudo-terminal on the host and connect to it. ``pty``
+>> -    does not take any options.
+>> +``-chardev pty,id=3Did[,path=3Dpath]``
+>> +    Create a new pseudo-terminal on the host and connect to it.
+>>
+>>       ``pty`` is not available on Windows hosts.
+>>
+>> +    If ``path`` is specified, QEMU will create a symbolic link at
+>> +    that location which points to the new PTY device.
+>> +
+>> +    This avoids having to make QMP or HMP monitor queries to find out
+>> +    what the new PTY device path is.
+>> +
+>> +
+>>   ``-chardev stdio,id=3Did[,signal=3Don|off]``
+>>       Connect to standard input and standard output of the QEMU process.
+>>
+>> @@ -4171,8 +4177,14 @@ SRST
+>>
+>>               vc:80Cx24C
+>>
+>> -    ``pty``
+>> -        [Linux only] Pseudo TTY (a new PTY is automatically allocated)
+>> +    ``pty[:path]``
+>> +        [Linux only] Pseudo TTY (a new PTY is automatically allocated).
+>> +
+>> +        If ``path`` is specified, QEMU will create a symbolic link at
+>> +        that location which points to the new PTY device.
+>> +
+>> +        This avoids having to make QMP or HMP monitor queries to find
+>> +        out what the new PTY device path is.
+>>
+>>       ``none``
+>>           No device is allocated. Note that for machine types which
+>> --
+>> 2.45.1.288.g0e0cd299f1-goog
+>>
 
 
