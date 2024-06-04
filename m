@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80FDBC27C50
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:00:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C4DFC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:00:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEQwW-0008Ol-Vx; Tue, 04 Jun 2024 05:59:01 -0400
+	id 1sEQvt-0003j1-Id; Tue, 04 Jun 2024 05:58:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQwV-0008E4-1A
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:59 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQvr-0003U6-Qo
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:19 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQwR-0002Nd-3T
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:57 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-42120fc8cbfso41562405e9.2
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:58:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQvp-0002JR-Vd
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:19 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-421338c4c3bso8559625e9.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:58:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717495133; x=1718099933; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717495096; x=1718099896; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/VTJJ/3m83pWTt3riL5Bvq0vb1UCAyg2JZO38z+luX4=;
- b=KvpsUzmjeAIsoBkpuFu0LsS9A2O6+YycXDc7FJpCAkAkAPxb8Zl+wJywdqkQCpkSJ6
- NBYEkDHCn95PeK9mi32Y7eFNWMSCc5pLPjB4qbmENOdRM5T55L4TP7PTN6L7S2Zfynvj
- lc4whVD+oAa1A6ifPn8esKu1gp9ktP8567XOsX3D5tbIMCu6gID0sn+jri3LI5os5dvI
- BvVVIW0EZCjUrZrTVahCSoS3RkkLpEw3h5IjWO5AjuQXY8/Dqc4QL9nbgCbzr8FjfB+z
- DaiWmPg+s1WOjbTz53M/DsnKfPlP2wHvTnbOi6DSI2wFgCnYKTyiI/wNnT36NPP7w2SN
- 9f4w==
+ bh=UMNBQrBvKQfv4Dl+hKP/TPgBc1DhyAHhW2w6Yei3CGk=;
+ b=qGm3eQ+frIAk25ighZiIiPxdPwjGeOO55nOBu8D/Imyhe5V5uH7XQU0XtAojxRFvGj
+ FBNQ+WzE4nlIwLR2TnLm9Ec0FzhMINvwESuGi1U5a3cS4GjSjG6P/Sovl8UD4s8BLx4u
+ jOadOL2nLHHlPxCgwqsgz+bhpUAVO1aATwSYqpx9CW4T/080oIEDtw9bSKTXS9U5/cYX
+ TEJXHWKbAiTZKhPIWHvewbZFf6Fi4N7NeW6Hq6GUD65MpvU/4Gg8IXbnQ4F2gjRydBb3
+ F89UUMKIEuB1N5yJiaDOS3p4VWJESqFIwc3/fsaab+8qCYXfKiT75/OUedlwKoz8K8oT
+ iWOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717495133; x=1718099933;
+ d=1e100.net; s=20230601; t=1717495096; x=1718099896;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/VTJJ/3m83pWTt3riL5Bvq0vb1UCAyg2JZO38z+luX4=;
- b=LiThmH5aI3AwIbWl54S2kZ1u6j9DBg/30UgJ8fzETfe/1L+/gUqMLY9yyAkeuyjDM0
- WkK7atpiyBpCe3fkM2Ab/mThhv+4woWEm6haEqKb6G74BXCyirH5he9sAUKDiX5p/RY8
- 3tb2CT68jW8nwXtKjFuwX4k4lAtnfUeJvBJBaILe5ffX1w/zeowJrWm/p5G0OcjW8/vM
- iAsFj34nprvc1KUG+nbnBzoWsGtnkw78hA63EEMvqTpWge1xkQSkzfwl8kKqJxllWI1T
- XTDBfCLIyOGN5DQLO1GBrmQ9tCE6qlV8VwhXBUJm2VCnUeeATRvdzaerxzG61BOCQfzL
- mvzA==
-X-Gm-Message-State: AOJu0YwPfC13Vc/icIq+j2YuILe/wNLAUol0lbQXOLSRb+Qgvd9EQWKz
- ybEa7NVyCQ4VrcrbktYClYik3ff7vMCn7e+X8Tmj/kANf2aKAHXICEhnLeoNKGIpIGmwHuHpqwq
- 9
-X-Google-Smtp-Source: AGHT+IGAgCk1ZFYpPc2Dl/YiWidc0JYy6Mxgj63pxZhDA+Wefk4eYItmYH6Av1iHM1qW4pxQocE91w==
-X-Received: by 2002:a05:600c:5488:b0:421:3464:dc7a with SMTP id
- 5b1f17b1804b1-4213464df71mr84635205e9.39.1717495133228; 
- Tue, 04 Jun 2024 02:58:53 -0700 (PDT)
+ bh=UMNBQrBvKQfv4Dl+hKP/TPgBc1DhyAHhW2w6Yei3CGk=;
+ b=oDjxC4BdvwuZ1l7O+kQ+lyozAyO6KdZvh8/fkEppte4O/JBKiaZfFea2GuoN9i+/c/
+ IgDwxgBybmmzuakzxZW0OVc6s5ON0goupVMxM8ZtTtaECUoqUcZOVPGU04slj1/DKpkZ
+ /LeaSl9k6A5A6RcDGLmkinG65R6EKhpNOSp0bZpK4cWzrXePnXQGtZw39Of2fpUHeQz6
+ K617eaDwJlzd2eOVK8F9YJFeEAeRx+IfJKkKovEekFubULw1HyTpTGZxcRyPGP7kN6AJ
+ /0z9m7+5fYDDs/5K5jseX0CcleKBvVW5iNjR41vGal4pNYmic/Z07rM2eU2EnjB+hKZ8
+ H2GQ==
+X-Gm-Message-State: AOJu0YynXb7De9qTTbxHDEgftWTzOxCwPLxkI2EVW1QQGPAGO4CvymFM
+ X61a6hfZEZ2wU0IuOWDFpatg0g1qZRWuKMajEGkMPOk7OGQdjZvY/DTMx4qiXZq7RDkflnf2WD6
+ r
+X-Google-Smtp-Source: AGHT+IHGdggg5ewx0/2n3Lu8hrxRYSTHdGkSS5iyyrnz+QbRSHoncf7/+uzqUAg7gR3BPYSgZQK9OA==
+X-Received: by 2002:a05:600c:35d5:b0:419:f3f9:8ed6 with SMTP id
+ 5b1f17b1804b1-4212e044bffmr110122735e9.4.1717495096202; 
+ Tue, 04 Jun 2024 02:58:16 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.159.34])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4214a9ff986sm19161995e9.42.2024.06.04.02.58.52
+ 5b1f17b1804b1-42135c9dc18sm112972305e9.1.2024.06.04.02.58.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Jun 2024 02:58:52 -0700 (PDT)
+ Tue, 04 Jun 2024 02:58:15 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 30/32] trace: Remove deprecated 'vcpu' field from QMP trace
- events
-Date: Tue,  4 Jun 2024 11:56:06 +0200
-Message-ID: <20240604095609.12285-31-philmd@linaro.org>
+ Paul Durrant <paul@xen.org>
+Subject: [PULL 23/32] hw/xen: Constify XenLegacyDevice::XenDevOps
+Date: Tue,  4 Jun 2024 11:55:59 +0200
+Message-ID: <20240604095609.12285-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240604095609.12285-1-philmd@linaro.org>
 References: <20240604095609.12285-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,169 +94,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'vcpu' fields are deprecated since commit 5485e52a33
-("qapi: make the vcpu parameters deprecated for 8.1"),
-time to remove them.
+XenDevOps @ops is not updated, mark it const.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-Id: <20240530071548.20074-3-philmd@linaro.org>
+Reviewed-by: Paul Durrant <paul@xen.org>
+Message-Id: <20240510104908.76908-3-philmd@linaro.org>
 ---
- docs/about/deprecated.rst       | 11 -----------
- docs/about/removed-features.rst |  6 ++++++
- qapi/trace.json                 | 27 +++------------------------
- trace/qmp.c                     |  2 --
- trace/trace-hmp-cmds.c          |  4 ++--
- 5 files changed, 11 insertions(+), 39 deletions(-)
+ include/hw/xen/xen_pvdev.h  | 2 +-
+ hw/xen/xen-legacy-backend.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 4a61894db6..187c8a3f97 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -148,17 +148,6 @@ accepted incorrect commands will return an error. Users should make sure that
- all arguments passed to ``device_add`` are consistent with the documented
- property types.
+diff --git a/include/hw/xen/xen_pvdev.h b/include/hw/xen/xen_pvdev.h
+index fdf84f47af..0c98444047 100644
+--- a/include/hw/xen/xen_pvdev.h
++++ b/include/hw/xen/xen_pvdev.h
+@@ -52,7 +52,7 @@ struct XenLegacyDevice {
+     xenevtchn_handle   *evtchndev;
+     xengnttab_handle   *gnttabdev;
  
--QEMU Machine Protocol (QMP) events
------------------------------------
--
--``vcpu`` trace events (since 8.1)
--'''''''''''''''''''''''''''''''''
--
--The ability to instrument QEMU helper functions with vCPU-aware trace
--points was removed in 7.0. However QMP still exposed the vcpu
--parameter. This argument has now been deprecated and the remaining
--remaining trace points that used it are selected just by name.
--
- Host Architectures
- ------------------
+-    struct XenDevOps   *ops;
++    const struct XenDevOps *ops;
+     QTAILQ_ENTRY(XenLegacyDevice) next;
+ };
  
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index f1e70263e2..1e64c27cd8 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -679,6 +679,12 @@ QEMU Machine Protocol (QMP) events
- 
- MEM_UNPLUG_ERROR has been replaced by the more generic ``DEVICE_UNPLUG_GUEST_ERROR`` event.
- 
-+``vcpu`` trace events (removed in 9.1)
-+''''''''''''''''''''''''''''''''''''''
-+
-+The ability to instrument QEMU helper functions with vCPU-aware trace
-+points was removed in 7.0.
-+
- 
- Human Monitor Protocol (HMP) commands
- -------------------------------------
-diff --git a/qapi/trace.json b/qapi/trace.json
-index 043d12f83e..9ebb6d9eaf 100644
---- a/qapi/trace.json
-+++ b/qapi/trace.json
-@@ -35,17 +35,10 @@
- #
- # @state: Tracing state.
- #
--# @vcpu: Whether this is a per-vCPU event (since 2.7).
--#
--# Features:
--#
--# @deprecated: Member @vcpu is deprecated, and always ignored.
--#
- # Since: 2.2
- ##
- { 'struct': 'TraceEventInfo',
--  'data': {'name': 'str', 'state': 'TraceEventState',
--           'vcpu': { 'type': 'bool', 'features': ['deprecated'] } } }
-+  'data': {'name': 'str', 'state': 'TraceEventState' } }
- 
- ##
- # @trace-event-get-state:
-@@ -54,12 +47,6 @@
- #
- # @name: Event name pattern (case-sensitive glob).
- #
--# @vcpu: The vCPU to query (since 2.7).
--#
--# Features:
--#
--# @deprecated: Member @vcpu is deprecated, and always ignored.
--#
- # Returns: a list of @TraceEventInfo for the matching events
- #
- # Since: 2.2
-@@ -71,8 +58,7 @@
- #     <- { "return": [ { "name": "qemu_memalign", "state": "disabled", "vcpu": false } ] }
- ##
- { 'command': 'trace-event-get-state',
--  'data': {'name': 'str',
--           '*vcpu': {'type': 'int', 'features': ['deprecated'] } },
-+  'data': {'name': 'str' },
-   'returns': ['TraceEventInfo'] }
- 
- ##
-@@ -86,12 +72,6 @@
- #
- # @ignore-unavailable: Do not match unavailable events with @name.
- #
--# @vcpu: The vCPU to act upon (all by default; since 2.7).
--#
--# Features:
--#
--# @deprecated: Member @vcpu is deprecated, and always ignored.
--#
- # Since: 2.2
- #
- # Example:
-@@ -101,5 +81,4 @@
- #     <- { "return": {} }
- ##
- { 'command': 'trace-event-set-state',
--  'data': {'name': 'str', 'enable': 'bool', '*ignore-unavailable': 'bool',
--           '*vcpu': {'type': 'int', 'features': ['deprecated'] } } }
-+  'data': {'name': 'str', 'enable': 'bool', '*ignore-unavailable': 'bool' } }
-diff --git a/trace/qmp.c b/trace/qmp.c
-index 3e3971c6a8..074a27b204 100644
---- a/trace/qmp.c
-+++ b/trace/qmp.c
-@@ -48,7 +48,6 @@ static bool check_events(bool ignore_unavailable, bool is_pattern,
- }
- 
- TraceEventInfoList *qmp_trace_event_get_state(const char *name,
--                                              bool has_vcpu, int64_t vcpu,
-                                               Error **errp)
+diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
+index 6f0b300a42..33620fe42e 100644
+--- a/hw/xen/xen-legacy-backend.c
++++ b/hw/xen/xen-legacy-backend.c
+@@ -170,7 +170,7 @@ int xen_be_copy_grant_refs(struct XenLegacyDevice *xendev,
+  */
+ static struct XenLegacyDevice *xen_be_get_xendev(const char *type, int dom,
+                                                  int dev,
+-                                                 struct XenDevOps *ops)
++                                                 const struct XenDevOps *ops)
  {
-     TraceEventInfoList *events = NULL;
-@@ -86,7 +85,6 @@ TraceEventInfoList *qmp_trace_event_get_state(const char *name,
+     struct XenLegacyDevice *xendev;
  
- void qmp_trace_event_set_state(const char *name, bool enable,
-                                bool has_ignore_unavailable, bool ignore_unavailable,
--                               bool has_vcpu, int64_t vcpu,
-                                Error **errp)
- {
-     TraceEventIter iter;
-diff --git a/trace/trace-hmp-cmds.c b/trace/trace-hmp-cmds.c
-index 86211fce27..d38dd600de 100644
---- a/trace/trace-hmp-cmds.c
-+++ b/trace/trace-hmp-cmds.c
-@@ -40,7 +40,7 @@ void hmp_trace_event(Monitor *mon, const QDict *qdict)
-     Error *local_err = NULL;
- 
-     qmp_trace_event_set_state(tp_name, new_state,
--                              true, true, false, 0, &local_err);
-+                              true, true, &local_err);
-     if (local_err) {
-         error_report_err(local_err);
-     }
-@@ -82,7 +82,7 @@ void hmp_info_trace_events(Monitor *mon, const QDict *qdict)
-         name = "*";
-     }
- 
--    events = qmp_trace_event_get_state(name, false, 0, &local_err);
-+    events = qmp_trace_event_get_state(name, &local_err);
-     if (local_err) {
-         error_report_err(local_err);
-         return;
 -- 
 2.41.0
 
