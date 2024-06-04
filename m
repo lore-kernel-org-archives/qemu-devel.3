@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3135AC27C53
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:19:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CCC2C27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:19:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEORU-00033j-Tx; Tue, 04 Jun 2024 03:18:48 -0400
+	id 1sEORp-0003JG-UV; Tue, 04 Jun 2024 03:19:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEORS-0002zc-WB
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:18:47 -0400
+ id 1sEORo-0003Ii-54
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:19:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEORQ-0005ai-Ox
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:18:46 -0400
+ id 1sEORm-0005e8-Ec
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:19:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717485524;
+ s=mimecast20190719; t=1717485545;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kSWUo4sCXjrNOR0yu+FmZCYBkQr0GiAN238dsmBJ6yo=;
- b=PKISnDKgsXsTfFJ4sgDNGFt9X/FukJ4ILSk7nzYhR/3JEY5bQn3rxFF+Im5dwzW/p0amv8
- hq654eDgpIsVtR+SdQC/2FHBZCWoC82XEVO3Zl7TI+wCLU9YzdFunclBCnFY51vexodOa6
- Da1P60w7E5JS1erfP04/xC3a39Lp/3k=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jd1l2qesW2ZIZOnZQq5rLZIMm8vL0i3PnwLlc9wF0HE=;
+ b=aZGB/hjyP+6ZeapqcoLTRbLarwWO9j9lF9j4QIsHeC+pNNc4vxCLgli/VNr3JxKoGKePNo
+ Y+Cr/cd7xLRaXo74ptJidhTYWV7TYKxzkntV169PlEizcTRnKH3uk0DZz1HTHcFw8mWwlJ
+ F/F+ApIXUT+c8XERQV34Kg3OIlYbHY0=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-QlqoyUdePouWqsE8TZtvMQ-1; Tue, 04 Jun 2024 03:18:43 -0400
-X-MC-Unique: QlqoyUdePouWqsE8TZtvMQ-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a68f2d64342so15791466b.1
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:18:42 -0700 (PDT)
+ us-mta-172-qKODYWeuMCy_Ew_yBHChpQ-1; Tue, 04 Jun 2024 03:19:01 -0400
+X-MC-Unique: qKODYWeuMCy_Ew_yBHChpQ-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-57a4d24a479so625961a12.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:19:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717485520; x=1718090320;
+ d=1e100.net; s=20230601; t=1717485539; x=1718090339;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kSWUo4sCXjrNOR0yu+FmZCYBkQr0GiAN238dsmBJ6yo=;
- b=EoNSKnvwAKm1ZuR/JC94XStrepcEKs2U2XhOmbyjzZjmSljs52veknUD/iN3kgBnTJ
- 13qV86859rGPjddjuCiAI50JmqalVWwSL6abBx26dKItJsb3Wxr9ANnEebQqabWo04r0
- kzf/9yL+w9P8leReKNNdq4hmDMra2hvB5o128UI6AvhrNWSaSXpTQI+Er9Bhw6zRn+BR
- OiCmi3/BfJxctjEAxv8vaHgXOzWh6SZyC82UdSvrtOAdUNzocgxsINa2zP35orhh5KuB
- Hs9XEY2+jyr2r7JVoSRrYqgeYmN2JsoMqMD8rNr7wvkzt79i6WbTVEyCRtKaXgxQA9Ux
- 6VTA==
-X-Gm-Message-State: AOJu0Yzwz9KqEMCX+chvaeyoMCPJj/MWral5KsKePMttKPZLubO2Gu0H
- V9wiIMNSRLwacxo6OjC5cWxqiedB3FD42uhInX0ST0owq4BEUhyAT9ofmu242FyeaRvcdwz9R9Q
- +EcrzCk1ewcrI+JE1a+jWAfNiSG2lZCdP+2s+eoYgU+/mAW/wU4iBpuap9tU9YGdpm3gU1M1qXL
- uO2m1RMrnn60un8uU2K87tr3sbSxNQXDGj+2wG
-X-Received: by 2002:a17:906:ae8f:b0:a63:4ed6:beac with SMTP id
- a640c23a62f3a-a681fe4d9a1mr722276766b.8.1717485520597; 
- Tue, 04 Jun 2024 00:18:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFp5zJ6aPDe1MZBE4mtzCzWtAok5a9J4jipTW0LaLYuKzVRBhQwqJH3Oq0/B7U+NRHTP6sOVA==
-X-Received: by 2002:a17:906:ae8f:b0:a63:4ed6:beac with SMTP id
- a640c23a62f3a-a681fe4d9a1mr722275066b.8.1717485520124; 
- Tue, 04 Jun 2024 00:18:40 -0700 (PDT)
+ bh=jd1l2qesW2ZIZOnZQq5rLZIMm8vL0i3PnwLlc9wF0HE=;
+ b=Wl0fiimJ7ObZW9rZ1zCZsxRWQZC6LFGSOZWX/2lUCaMmmwHgTLNsQ2KaRIy8wDodRj
+ Nfsxbyv5akaI/qBfRVSUYc1ord5wL+iC0bDSGVZZQQO5o/aCSyF5liMOAwDKqZgLN1aW
+ VHLz+U8yTbm/Zb1fgkLe8tJqUtUz9/wjOQkQTAP69Ctka+1im9HHkFCS3JtmWeLukLjd
+ FrzwiDaiuzM3m3ib5IxmQcXEWjHjav8210ZtVksdZvFFgjaZZlzfUk/hv6hEPJRTr3HK
+ UepM6ZtmEHlkzd2RgHSVqnJRB9Geu/IIcJkSvKEnSNfUVilq84o8R9EtMbZU8c1OucX6
+ SjbA==
+X-Gm-Message-State: AOJu0YxPdBoWBjqYZviLdqS+Geomzp8tEdY/s3wSswdii9JOs9LJH3Ey
+ RnOl7pPJSrmHtRxiY6aCKi9MuVfV3akaitYqhhgt4wfPWO0/290frJGvFD5ZsQGc9Ajqt2neeWc
+ DAXXoQ9Fos0p95OTcor7aHATof4npnjYvzHduLfegUuJJOdOlz0S/g/Gw8fY7riraI9OcADgXOd
+ yGoj7YGUaUJMIqM11XEwr+NUSrpwYZwKYpfoWv
+X-Received: by 2002:a50:9b19:0:b0:56e:238e:372c with SMTP id
+ 4fb4d7f45d1cf-57a3653a3d7mr6317057a12.26.1717485539453; 
+ Tue, 04 Jun 2024 00:18:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEO0u2buUys//GDCQkPASoTC85cdAxlXiBbEDw9TLP/QXn/YYBULWdqRoYv2d33dS4yPgCfKw==
+X-Received: by 2002:a50:9b19:0:b0:56e:238e:372c with SMTP id
+ 4fb4d7f45d1cf-57a3653a3d7mr6317043a12.26.1717485538985; 
+ Tue, 04 Jun 2024 00:18:58 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68f4191cfdsm332559566b.137.2024.06.04.00.18.38
+ 4fb4d7f45d1cf-57a81f1dbd9sm633269a12.93.2024.06.04.00.18.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 00:18:38 -0700 (PDT)
+ Tue, 04 Jun 2024 00:18:57 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org
-Subject: [PATCH 01/11] target/i386: fix pushed value of EFLAGS.RF
-Date: Tue,  4 Jun 2024 09:18:23 +0200
-Message-ID: <20240604071833.962574-2-pbonzini@redhat.com>
+Subject: [PATCH 07/11] target/i386: fix INHIBIT_IRQ/TF/RF handling for VMRUN
+Date: Tue,  4 Jun 2024 09:18:29 +0200
+Message-ID: <20240604071833.962574-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240604071833.962574-1-pbonzini@redhat.com>
 References: <20240604071833.962574-1-pbonzini@redhat.com>
@@ -103,160 +103,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When preparing an exception stack frame for a fault exception, the value
-pushed for RF is 1.  Take that into account.  The same should be true
-of interrupts for repeated string instructions, but the situation there
-is complicated.
+From vm entry to exit, VMRUN is handled as a single instruction.  It
+uses DISAS_NORETURN in order to avoid processing TF or RF before
+the first instruction executes in the guest.  However, the corresponding
+handling is missing in vmexit.  Add it, and at the same time reorganize
+the comments with quotes from the manual about the tasks performed
+by a #VMEXIT.
+
+Another gen_eob() task that is missing in VMRUN is preparing the
+HF_INHIBIT_IRQ flag for the next instruction, in this case by loading
+it from the VMCB control state.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/seg_helper.c | 49 ++++++++++++++++++++++++++++++++----
- target/i386/tcg/translate.c  |  8 ++++++
- 2 files changed, 52 insertions(+), 5 deletions(-)
+ target/i386/tcg/sysemu/svm_helper.c | 46 +++++++++++++++++++++--------
+ target/i386/tcg/translate.c         |  5 ++++
+ 2 files changed, 38 insertions(+), 13 deletions(-)
 
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 0301459004e..715db1f2326 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -526,6 +526,24 @@ static inline unsigned int get_sp_mask(unsigned int e2)
-     }
- }
+diff --git a/target/i386/tcg/sysemu/svm_helper.c b/target/i386/tcg/sysemu/svm_helper.c
+index 922d8964f8e..9db8ad62a01 100644
+--- a/target/i386/tcg/sysemu/svm_helper.c
++++ b/target/i386/tcg/sysemu/svm_helper.c
+@@ -254,6 +254,13 @@ void helper_vmrun(CPUX86State *env, int aflag, int next_eip_addend)
+                                                   control.intercept_exceptions
+                                                   ));
  
-+static int exception_is_fault(int intno)
-+{
-+    switch (intno) {
-+        /*
-+         * #DB can be both fault- and trap-like, but it never sets RF=1
-+         * in the RFLAGS value pushed on the stack.
-+         */
-+    case EXCP01_DB:
-+    case EXCP03_INT3:
-+    case EXCP04_INTO:
-+    case EXCP08_DBLE:
-+    case EXCP12_MCHK:
-+        return 0;
++    env->hflags &= ~HF_INHIBIT_IRQ_MASK;
++    if (x86_ldl_phys(cs, env->vm_vmcb +
++                offsetof(struct vmcb, control.int_state)) &
++                 SVM_INTERRUPT_SHADOW_MASK) {
++        env->hflags |= HF_INHIBIT_IRQ_MASK;
 +    }
-+    /* Everything else including reserved exception is a fault.  */
-+    return 1;
-+}
 +
- int exception_has_error_code(int intno)
- {
-     switch (intno) {
-@@ -605,8 +623,9 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-     int type, dpl, selector, ss_dpl, cpl;
-     int has_error_code, new_stack, shift;
-     uint32_t e1, e2, offset, ss = 0, esp, ss_e1 = 0, ss_e2 = 0;
--    uint32_t old_eip, sp_mask;
-+    uint32_t old_eip, sp_mask, eflags;
-     int vm86 = env->eflags & VM_MASK;
-+    bool set_rf;
+     nested_ctl = x86_ldq_phys(cs, env->vm_vmcb + offsetof(struct vmcb,
+                                                           control.nested_ctl));
+     asid = x86_ldq_phys(cs, env->vm_vmcb + offsetof(struct vmcb,
+@@ -815,8 +822,12 @@ void do_vmexit(CPUX86State *env)
+     env->hflags &= ~HF_GUEST_MASK;
+     env->intercept = 0;
+     env->intercept_exceptions = 0;
++
++    /* Clears the V_IRQ and V_INTR_MASKING bits inside the processor. */
+     cs->interrupt_request &= ~CPU_INTERRUPT_VIRQ;
+     env->int_ctl = 0;
++
++    /* Clears the TSC_OFFSET inside the processor. */
+     env->tsc_offset = 0;
  
-     has_error_code = 0;
-     if (!is_int && !is_hw) {
-@@ -614,8 +633,10 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-     }
-     if (is_int) {
-         old_eip = next_eip;
-+        set_rf = false;
-     } else {
-         old_eip = env->eip;
-+        set_rf = exception_is_fault(intno);
-     }
- 
-     dt = &env->idt;
-@@ -748,6 +769,15 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-     }
-     push_size <<= shift;
- #endif
-+    eflags = cpu_compute_eflags(env);
+     env->gdt.base  = x86_ldq_phys(cs, env->vm_hsave + offsetof(struct vmcb,
+@@ -836,6 +847,15 @@ void do_vmexit(CPUX86State *env)
+     cpu_x86_update_cr4(env, x86_ldq_phys(cs,
+                                      env->vm_hsave + offsetof(struct vmcb,
+                                                               save.cr4)));
++
 +    /*
-+     * AMD states that code breakpoint #DBs clear RF=0, Intel leaves it
-+     * as is.  AMD behavior could be implemented in check_hw_breakpoints().
++     * Resets the current ASID register to zero (host ASID; TLB flush).
++     *
++     * If the host is in PAE mode, the processor reloads the host's PDPEs
++     * from the page table indicated the host's CR3. FIXME: If the PDPEs
++     * contain illegal state, the processor causes a shutdown (QEMU does
++     * not implement PDPTRs).
 +     */
-+    if (set_rf) {
-+        eflags |= RF_MASK;
-+    }
+     cpu_x86_update_cr3(env, x86_ldq_phys(cs,
+                                      env->vm_hsave + offsetof(struct vmcb,
+                                                               save.cr3)));
+@@ -843,12 +863,14 @@ void do_vmexit(CPUX86State *env)
+        set properly */
+     cpu_load_efer(env, x86_ldq_phys(cs, env->vm_hsave + offsetof(struct vmcb,
+                                                          save.efer)));
 +
-     if (shift == 1) {
-         if (new_stack) {
-             if (vm86) {
-@@ -759,7 +789,7 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-             PUSHL(ssp, esp, sp_mask, env->segs[R_SS].selector);
-             PUSHL(ssp, esp, sp_mask, env->regs[R_ESP]);
-         }
--        PUSHL(ssp, esp, sp_mask, cpu_compute_eflags(env));
-+        PUSHL(ssp, esp, sp_mask, eflags);
-         PUSHL(ssp, esp, sp_mask, env->segs[R_CS].selector);
-         PUSHL(ssp, esp, sp_mask, old_eip);
-         if (has_error_code) {
-@@ -776,7 +806,7 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-             PUSHW(ssp, esp, sp_mask, env->segs[R_SS].selector);
-             PUSHW(ssp, esp, sp_mask, env->regs[R_ESP]);
-         }
--        PUSHW(ssp, esp, sp_mask, cpu_compute_eflags(env));
-+        PUSHW(ssp, esp, sp_mask, eflags);
-         PUSHW(ssp, esp, sp_mask, env->segs[R_CS].selector);
-         PUSHW(ssp, esp, sp_mask, old_eip);
-         if (has_error_code) {
-@@ -868,8 +898,9 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
-     target_ulong ptr;
-     int type, dpl, selector, cpl, ist;
-     int has_error_code, new_stack;
--    uint32_t e1, e2, e3, ss;
-+    uint32_t e1, e2, e3, ss, eflags;
-     target_ulong old_eip, esp, offset;
-+    bool set_rf;
++    /* Completion of the VMRUN instruction clears the host EFLAGS.RF bit.  */
+     env->eflags = 0;
+     cpu_load_eflags(env, x86_ldq_phys(cs,
+                                   env->vm_hsave + offsetof(struct vmcb,
+                                                            save.rflags)),
+                     ~(CC_O | CC_S | CC_Z | CC_A | CC_P | CC_C | DF_MASK |
+-                      VM_MASK));
++                      RF_MASK | VM_MASK));
  
-     has_error_code = 0;
-     if (!is_int && !is_hw) {
-@@ -877,8 +908,10 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
-     }
-     if (is_int) {
-         old_eip = next_eip;
-+        set_rf = false;
-     } else {
-         old_eip = env->eip;
-+        set_rf = exception_is_fault(intno);
-     }
+     svm_load_seg_cache(env, MMU_PHYS_IDX,
+                        env->vm_hsave + offsetof(struct vmcb, save.es), R_ES);
+@@ -888,19 +910,17 @@ void do_vmexit(CPUX86State *env)
  
-     dt = &env->idt;
-@@ -950,9 +983,15 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
-     }
-     esp &= ~0xfLL; /* align stack */
+     env->hflags2 &= ~HF2_GIF_MASK;
+     env->hflags2 &= ~HF2_VGIF_MASK;
+-    /* FIXME: Resets the current ASID register to zero (host ASID). */
  
-+    /* See do_interrupt_protected.  */
-+    eflags = cpu_compute_eflags(env);
-+    if (set_rf) {
-+        eflags |= RF_MASK;
+-    /* Clears the V_IRQ and V_INTR_MASKING bits inside the processor. */
+ 
+-    /* Clears the TSC_OFFSET inside the processor. */
++    /* FIXME: Checks the reloaded host state for consistency. */
+ 
+-    /* If the host is in PAE mode, the processor reloads the host's PDPEs
+-       from the page table indicated the host's CR3. If the PDPEs contain
+-       illegal state, the processor causes a shutdown. */
+-
+-    /* Checks the reloaded host state for consistency. */
+-
+-    /* If the host's rIP reloaded by #VMEXIT is outside the limit of the
+-       host's code segment or non-canonical (in the case of long mode), a
+-       #GP fault is delivered inside the host. */
++    /*
++     * EFLAGS.TF causes a #DB trap after the VMRUN completes on the host
++     * side (i.e., after the #VMEXIT from the guest). Since we're running
++     * in the main loop, call do_interrupt_all directly.
++     */
++    if ((env->eflags & TF_MASK) != 0) {
++        env->dr[6] |= DR6_BS;
++        do_interrupt_all(X86_CPU(cs), EXCP01_DB, 0, 0, env->eip, 0);
 +    }
-+
-     PUSHQ(esp, env->segs[R_SS].selector);
-     PUSHQ(esp, env->regs[R_ESP]);
--    PUSHQ(esp, cpu_compute_eflags(env));
-+    PUSHQ(esp, eflags);
-     PUSHQ(esp, env->segs[R_CS].selector);
-     PUSHQ(esp, old_eip);
-     if (has_error_code) {
+ }
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 0486ab69112..d438f8f76f7 100644
+index 77ed9c1db47..a9c6424c7df 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -4630,6 +4630,14 @@ static void i386_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
-      * If jmp_opt, we want to handle each string instruction individually.
-      * For icount also disable repz optimization so that each iteration
-      * is accounted separately.
-+     *
-+     * FIXME: this is messy; it makes REP string instructions a lot less
-+     * efficient than they should be and it gets in the way of correct
-+     * handling of RF (interrupts or traps arriving after any iteration
-+     * of a repeated string instruction but the last should set RF to 1).
-+     * Perhaps it would be more efficient if REP string instructions were
-+     * always at the beginning of the TB, or even their own TB?  That
-+     * would even allow accounting up to 64k iterations at once for icount.
-      */
-     dc->repz_opt = !dc->jmp_opt && !(cflags & CF_USE_ICOUNT);
- 
+@@ -3745,6 +3745,11 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
+             }
+             gen_update_cc_op(s);
+             gen_update_eip_cur(s);
++            /*
++             * Reloads INHIBIT_IRQ mask as well as TF and RF with guest state.
++             * The usual gen_eob() handling is performed on vmexit after
++             * host state is reloaded.
++             */
+             gen_helper_vmrun(tcg_env, tcg_constant_i32(s->aflag - 1),
+                              cur_insn_len_i32(s));
+             tcg_gen_exit_tb(NULL, 0);
 -- 
 2.45.1
 
