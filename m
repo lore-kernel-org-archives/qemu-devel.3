@@ -4,71 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE838C25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 08:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47B71C27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 08:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEPZs-0006No-Uv; Tue, 04 Jun 2024 04:31:32 -0400
+	id 1sEPac-0006fM-8A; Tue, 04 Jun 2024 04:32:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sEPZh-0006Hl-AM
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 04:31:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sEPZe-0001z8-Rv
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 04:31:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717489877;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WT8HZchqd4jmOTeFJ01MQqLaw3ZiES2eoNiqjfMO8I0=;
- b=CFMDZER1jOPXHGU5W7med6Dq9KM3g3zHuevQGUDfkD9MlmHAMu70jJ6ZVSo0M1DSVa4pfD
- 4N/mntmCkE26SnPmnNZzJOvP+zLbUI2tVtvkVjomU1dYiboZzsYjSz7CFwTu/Nn2GeOUdP
- 2lzd/ZFMNyyy3GwbYzbMjMD/sZtrZWI=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-Vsdb2mSOP9KDnTpdqQY3eA-1; Tue, 04 Jun 2024 04:31:08 -0400
-X-MC-Unique: Vsdb2mSOP9KDnTpdqQY3eA-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8652B811E8D
- for <qemu-devel@nongnu.org>; Tue,  4 Jun 2024 08:31:08 +0000 (UTC)
-Received: from localhost (dhcp-192-239.str.redhat.com [10.33.192.239])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 2D670112C06B;
- Tue,  4 Jun 2024 08:31:08 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: thuth@redhat.com
-Subject: Re: [PATCH 0/4] update-linux-headers: prepare for updating to 6.9+
- and for SNP patches
-In-Reply-To: <20240603131141.834241-1-pbonzini@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20240603131141.834241-1-pbonzini@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Tue, 04 Jun 2024 10:31:07 +0200
-Message-ID: <87y17lkt2s.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEPaa-0006cj-2X
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 04:32:16 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEPaX-00023l-VG
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 04:32:15 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52b88740a93so4340419e87.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 01:32:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717489925; x=1718094725; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/1a337iNofICn0QfdhI1pB964tcmSA9D/L4nvkO2Y4Y=;
+ b=sY3UnUd+/Gpun8ceWGbVo7xZnj0DgRUYFci8F/Uy4ING5ccRMcUhRJLIyh5LoCDXyX
+ +NJ3iNZ5VeJs4LN9tdBWKOqh1LN8m1qK2xkl21s8cnIDClvYLhKnNZQsXHh6nZZZqgeZ
+ bnMzJfAoK6UeJ/09SW1Jk8jqosvyi3ujN8MsK4NNbEjZyaegQTCL5rfhEwxF8eq7OzU/
+ alPO0jUnFABlGw4bZYohn59qkR6spw1OwUtMMaNehqr3Iyb2BMt0DnwRhGGR4Z5Dsbyg
+ 4acX2CqxlEraf1uzyh4rf4NUByoiMg4okhDtAr2MFpwjDKyTtC08EGWxxrqzGqplS23X
+ 4Oxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717489925; x=1718094725;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/1a337iNofICn0QfdhI1pB964tcmSA9D/L4nvkO2Y4Y=;
+ b=kyxeeuJr6d2VkprkVNelw83vYCpCAkr3kLp6ScwT3Hm6z6k/yTrIHdRKCOMAgPPLn4
+ eWuCtFXIcITMpNUR5UcHrssbGLO8ISzkoty5AAA1g38IdDA6EX4bpFhyLbo5EK1eqiMc
+ +8Onw+Ch5fDZIL0dTo+rtwe2XGZ4Cl45e5UZlLvOca4K92iR7plYaQalztwXi6/12JOJ
+ W1tK++NnQsnHIhcEKGLaVirjys63a1knw6HWIIXwkC+Xz6d+ZN88rtyrxueu1OE0Gli3
+ DBfC0zO7ZpL4frRZlYiz3/cyUUdnbS8lIoc7YLQEiuCxc0MI96DkWNnEYjRtLXfZs5kY
+ 4K7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCy2v910NlVFq4UNWx8e3Or9Ttmu/5+OFkg0RNMcfYmLnBPr/BpImXCR+2xs3NN5f2b9uvLMpE2v2oqpEQW6S+FG19rcI=
+X-Gm-Message-State: AOJu0YyKvZoTVkEW38fR8VvSbsb+1pr95idrCCFf6Q6Oj8oSVlTJBLj7
+ ACMEDefI1PdhzuSFrBdIiakfF+zltrbrHPcZNN4MoT7OtP8zNQuYiZ7ev39IhN8=
+X-Google-Smtp-Source: AGHT+IH2iKrNHyHJGPlbkNij/pGgxYAsxPkOf0mZDqaTEoh4unGnA7rUYo+QTFHpw64W/rU811ETHQ==
+X-Received: by 2002:a05:6512:54e:b0:52b:81de:1126 with SMTP id
+ 2adb3069b0e04-52b896bfb5fmr6616015e87.49.1717489924947; 
+ Tue, 04 Jun 2024 01:32:04 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.159.34])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35dd04d954fsm10728778f8f.52.2024.06.04.01.32.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Jun 2024 01:32:04 -0700 (PDT)
+Message-ID: <681cf91c-dec7-44ab-91a3-efb6decc98e1@linaro.org>
+Date: Tue, 4 Jun 2024 10:32:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: rvzicbo: Fixup CBO extension register
+ calculation
+To: Alistair Francis <alistair23@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-riscv@nongnu.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@dabbelt.com, bin.meng@windriver.com, qemu-devel@nongnu.org,
+ Alistair Francis <alistair.francis@wdc.com>, fabian.thomas@cispa.de,
+ Bin Meng <bmeng.cn@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240514023910.301766-1-alistair.francis@wdc.com>
+ <14e88990-963c-45ef-bf51-662d54857c6e@ventanamicro.com>
+ <CAKmqyKP5dwLnvuXDbJkDV=CCGAsoVuyES7m+NB=7KceFEHoKzQ@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAKmqyKP5dwLnvuXDbJkDV=CCGAsoVuyES7m+NB=7KceFEHoKzQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,65 +103,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 03 2024, Paolo Bonzini <pbonzini@redhat.com> wrote:
+On 16/5/24 07:09, Alistair Francis wrote:
+> On Tue, May 14, 2024 at 7:11 PM Daniel Henrique Barboza
+> <dbarboza@ventanamicro.com> wrote:
+>>
+>>
+>>
+>> On 5/13/24 23:39, Alistair Francis wrote:
+>>> When running the instruction
+>>>
+>>> ```
+>>>       cbo.flush 0(x0)
+>>> ```
+>>>
+>>> QEMU would segfault.
+>>>
+>>> The issue was in cpu_gpr[a->rs1] as QEMU does not have cpu_gpr[0]
+>>> allocated.
+>>>
+>>> In order to fix this let's use the existing get_address()
+>>> helper. This also has the benefit of performing pointer mask
+>>> calculations on the address specified in rs1.
+>>>
+>>> The pointer masking specificiation specifically states:
+>>>
+>>> """
+>>> Cache Management Operations: All instructions in Zicbom, Zicbop and Zicboz
+>>> """
+>>>
+>>> So this is the correct behaviour and we previously have been incorrectly
+>>> not masking the address.
+>>>
+>>> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+>>> Reported-by: Fabian Thomas <fabian.thomas@cispa.de>
+>>> Fixes: e05da09b7cfd ("target/riscv: implement Zicbom extension")
 
-> This series contains a few cleanups and fixes to update-linux-headers.sh,
-> which I needed or found in order to pass CI for the SEV-SNP patches.
->
-> First, updating linux-headers/ fails due to the lack of
-> arch/loongarch/include/uapi/asm/bitsperlong.h.  I am not sure if I am
-> doing something wrong but it is caused by commit 3efc75ad9d9
-> ("scripts/update-linux-headers.sh: Remove temporary directory inbetween",
-> 2024-05-29); if so, I guess I'm 1-1 with Thomas given my own bug in
-> commit 66210a1a30 that he fixed.
->
-> Before commit 3efc75ad9d9, the missing file would incorrectly cause stale
-> files to be included in linux-headers/.  The files were never committed
-> to qemu.git, but were wrong nevertheless. The build would just use
-> the system version of the files, which is opposite to the idea of
-> importing Linux header files into QEMU's tree.
->
-> Second, pvpanic.h was incorrectly included in a slightly different
-> path than what is used in Linux.
->
-> Third, SNP host-side patches will need linux/kvm_para.h, because some
-> of the supported distros do not have a definition for KVM_HC_MAP_GPA_RANGE.
-> Including it is a bit complicated because we also have a version of
-> x86's kvm_para.h under include/standard-headers/; linux/kvm_para.h
-> tries to include <asm/kvm_para.h> and that could cause conflicts.
-> So, the linux/kvm_para.h is also placed in include/standard-headers
-> (patch 4).
->
-> Pankaj Gupta (1):
->   linux-headers: Update to current kvm/next
->
-> Paolo Bonzini (3):
->   update-linux-headers: fix forwarding to asm-generic headers
->   update-linux-headers: move pvpanic.h to correct directory
->   update-linux-headers: import linux/kvm_para.h header
->
->  include/standard-headers/linux/kvm_para.h     | 38 ++++++++++++++
->  .../{linux => misc}/pvpanic.h                 |  0
->  linux-headers/asm-loongarch/kvm.h             |  4 ++
->  linux-headers/asm-riscv/kvm.h                 |  1 +
->  linux-headers/asm-x86/kvm.h                   | 52 ++++++++++++++++++-
->  linux-headers/asm-x86/kvm_para.h              |  1 +
->  linux-headers/linux/kvm_para.h                |  2 +
->  linux-headers/linux/vhost.h                   | 15 +++---
->  hw/misc/pvpanic-isa.c                         |  2 +-
->  hw/misc/pvpanic-pci.c                         |  2 +-
->  hw/misc/pvpanic.c                             |  2 +-
->  scripts/update-linux-headers.sh               | 37 +++++++++++--
->  12 files changed, 141 insertions(+), 15 deletions(-)
->  create mode 100644 include/standard-headers/linux/kvm_para.h
->  rename include/standard-headers/{linux => misc}/pvpanic.h (100%)
->  create mode 100644 linux-headers/asm-x86/kvm_para.h
->  create mode 100644 linux-headers/linux/kvm_para.h
+Reported-by: Zhiwei Jiang (姜智伟) <jiangzw@tecorigin.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-With the hash added to the headers update,
+>>> ---
+>>
+>> LGTM but I wonder if this is the same fix as this one sent by Phil a month
+>> ago or so:
+>>
+>> https://lore.kernel.org/qemu-riscv/20240419110514.69697-1-philmd@linaro.org/
+>> ("[PATCH] target/riscv: Use get_address() to get address with Zicbom extensions")
+> 
+> It is the same fix!
+> 
+> I somehow missed that patch at the time. Sorry Philippe!
+> 
+> I'm going to merge this one as it includes the details about pointer
+> masking, which I think is useful as that's why we are using
+> get_address() instead of get_gpr()
 
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+Fine by me :)
 
-for the series.
+> Alistair
+> 
+>>
+>>
+>> Thanks,
+>>
+>> Daniel
+>>
+>>>    target/riscv/insn_trans/trans_rvzicbo.c.inc | 16 ++++++++++++----
+>>>    1 file changed, 12 insertions(+), 4 deletions(-)
 
 
