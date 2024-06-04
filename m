@@ -4,78 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB8E8C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 01:59:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1464AC25B75
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 02:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEJRm-0007Su-QZ; Mon, 03 Jun 2024 21:58:46 -0400
+	id 1sEJih-0002Mc-GT; Mon, 03 Jun 2024 22:16:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEJRl-0007Se-Pg; Mon, 03 Jun 2024 21:58:45 -0400
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ id 1sEJif-0002M2-OY; Mon, 03 Jun 2024 22:16:13 -0400
+Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEJRk-0004jS-4g; Mon, 03 Jun 2024 21:58:45 -0400
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-4eb0c729c2eso166886e0c.3; 
- Mon, 03 Jun 2024 18:58:43 -0700 (PDT)
+ id 1sEJia-0006cl-6A; Mon, 03 Jun 2024 22:16:13 -0400
+Received: by mail-ua1-x929.google.com with SMTP id
+ a1e0cc1a2514c-80aca73c536so190039241.2; 
+ Mon, 03 Jun 2024 19:16:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717466322; x=1718071122; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717467367; x=1718072167; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bJuj2RFH0dFtelfSdxHxxfez/21ZSAxFzVTSpj1uwm4=;
- b=U1ksQg8/0JuPHTnxYftgC09v3EvoynexGmDUrvY6L3OZGEvCu7LLR/yrUgaE3Yh6pJ
- tdJoYvAqW/DPsOfIA3YbcukTVQSTTH72tlL2bxSbiImaGdR6FvzTVccuCNmaAbzG1QjA
- y7QSvcy28rZfN49Okt7IyagnXvZQXaanGc/uvJnlF6i090eQmtSpcMLisqtMGe+AHAmW
- 5tAswmsmr9OSFP0v48VbiWopM5K0GYnAQDg47JAy5sk3RMGyygiwOIqgG6IusE4X20gD
- 047jE/vKzuwqOQ2b5TZTjaxp9U7cEijcQl3KoXhs6G8ZoaGVsyzhIQWvvv4aJRbx7Fac
- RxrQ==
+ bh=gVySxBZOuEzMBTtH8x3eH/6YCkfLGhjrRpdkzckfXlo=;
+ b=hXR5RcokMRT6/L/X4bYXGO+fl7w3+3qOX6I1mfcC7J+tuGIDTFpNkN92m1ffmn9nPp
+ P3E3xYAQ6blPCo8LMA9LWYrkMv6XGuC4T9ldt8cKdN0fdySWKMawabNia8uL/295mT3b
+ CELmNLL0h0w6ozYJLm6ujJoZZVEJCaLIuOt9tg2apeBUuwLwRxqlZYpNSGcMw5pjt/MS
+ WCTVL5jMtGeZGG1vrKObvIO5NLa+89LrhuwaMSlTj1Uq/pAz0gXZzSN8JEtvXtcJZtxf
+ Mi8Gm3U7aflX0nVKP19teaDz9eglaZzhpKtZX4DjBnw3FZKFCpZhh3GBcD0tlLdKVp4S
+ tGDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717466322; x=1718071122;
+ d=1e100.net; s=20230601; t=1717467367; x=1718072167;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bJuj2RFH0dFtelfSdxHxxfez/21ZSAxFzVTSpj1uwm4=;
- b=Uk+GiMRu3tnifHA7Em7JP/1CZC3Pnhthcc/YzS1BpcrOLpnjjypjQ15OKI7TiGMHb0
- OJbzHGcSOIgUP/udcKfrRu4/hqmUInAGDIXM4Y7aArsMVWYipoMZytoi7oSs9amJzuWE
- 6PvPYCCx5b7doTA9keC0q9jV4QlCpELVfGx886cW5WrB6XcqmKSjB98RvCUlowgEmBth
- uoczZOkeUrWIcp04nazhcqCD6eRfZ+jP2rka6jnPn+I/Zi3h45xYeBRYEQAkVm+qHW77
- 7fkrv+xNHBhRkOwh8VfOHEDP4mtp223tl27CDL7+R6AVUegXFUsntOCXLjMJxu+FD1kp
- ciFg==
+ bh=gVySxBZOuEzMBTtH8x3eH/6YCkfLGhjrRpdkzckfXlo=;
+ b=CFoxqy50Xn/2f3bQQqV6xVJppc91AwPzAgk3E7cq7P40GvL48KSz39VuGW7CU4ENKg
+ 2dDrkIC9P1DEjRDOOYHYd0mx8Vk9NVT7KWh0/IvJVSI12dqILzKqY1GBcu672YgWWNhp
+ fEMOPID++28LbxM3tK7U365hKvqBx9d5BteJ2flL8OLyLFHy+i6ZzijwunjIDgGOhU3Z
+ I7XmUM5/gVekXvCnIvZciWVFCzy3nHAYZ/AGi63cxkuSsVDoE7uOn8Dz2+C1WKUR4cC8
+ vTGDKwac8gK44mWeUuH369xvIES0HsftVRQHCJ5AsldAM9FwjOJTH6410lvv27lS+0rG
+ gChQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWrkEN2VKhOElWuX+6iC8NBtMKfB/XAMpWU8DAJDYTPcMs0mH+LUHlh8PKqn5xk3tunfrZuDEMbzTUzQVWzN3CDHHIr7sQ=
-X-Gm-Message-State: AOJu0YySdmrZwHRcFI4+VvXJJOutbgnzQiTUDuGNxohu/hQ7WrODKMmi
- 9pqooLg6yZvl17akMNjJX+oZ/JFz775TBLWMDqq5e+AR0zNLhI/hIIUwIP2lyQvkCRT4a4D+OV4
- HME2DUzSjDpVjWcOys/XKtnslXGA=
-X-Google-Smtp-Source: AGHT+IHvg3iO3Of846QvT1bukC9j240Ohyb+a9kkm5pKCBK6p/c5e9Xv/e58sCehz33Q89V3itQZzIJunlXEWR5gEZU=
-X-Received: by 2002:a1f:fc0b:0:b0:4d3:36b9:2c26 with SMTP id
- 71dfb90a1353d-4eb02f45d3emr10352373e0c.14.1717466322476; Mon, 03 Jun 2024
- 18:58:42 -0700 (PDT)
+ AJvYcCW7Hs8ZcwNCEcWW3AjuskGP8HbIRd1Z2Itght++nynGJHTJ5vlSj8svSGNJIh7hazCTpGkvt65dlp7RthgIeJ7b/auJjTE=
+X-Gm-Message-State: AOJu0YzuySOeIJl8NPrEvziKOn6usKdxtANotslY1uNz5GZhWJsT2hxK
+ oVGEELsIQBo1+AYuz9PtZIK5nrFcSwvYeqPXv3+v09Vqy0NM+OZcOTkDd7AXFvwHOysKki1yEHj
+ VRXf/PPmLaNYGHig+XesfNHrTzkQ=
+X-Google-Smtp-Source: AGHT+IEUHfgiJ0/goY65ukSrJc8meR0Sg2SlIC/S0vpFx1gXJF0yx3t9UnwrrI6tBoWtFm6EhMV1Zylpdt9mjOhtEKk=
+X-Received: by 2002:a05:6102:2920:b0:48b:da28:97ee with SMTP id
+ ada2fe7eead31-48bda28bac3mr5364503137.17.1717467366608; Mon, 03 Jun 2024
+ 19:16:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240227012405.71650-1-alvinga@andestech.com>
- <SEYPR03MB6700853CCA2198D3E7DA7E7DA8202@SEYPR03MB6700.apcprd03.prod.outlook.com>
-In-Reply-To: <SEYPR03MB6700853CCA2198D3E7DA7E7DA8202@SEYPR03MB6700.apcprd03.prod.outlook.com>
+References: <20240520125157.311503-1-rkanwal@rivosinc.com>
+In-Reply-To: <20240520125157.311503-1-rkanwal@rivosinc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 4 Jun 2024 11:58:16 +1000
-Message-ID: <CAKmqyKPT35UqF3xFqKbGgOx7ba_nDBVWjg20czMeJYfsJY8zvw@mail.gmail.com>
-Subject: Re: [PATCH v4 0/4] RISC-V: Modularize common match conditions for
- trigger
-To: =?UTF-8?B?QWx2aW4gQ2hlLUNoaWEgQ2hhbmco5by15ZOy5ZiJKQ==?=
- <alvinga@andestech.com>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "alistair.francis@wdc.com" <alistair.francis@wdc.com>, 
- "bin.meng@windriver.com" <bin.meng@windriver.com>,
- "liwei1518@gmail.com" <liwei1518@gmail.com>, 
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>, 
- "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>
+Date: Tue, 4 Jun 2024 12:15:40 +1000
+Message-ID: <CAKmqyKNWUXfg6q_Ku8dGDwpu2DTgkAmHr8JcZFtTCzfp+J2P_Q@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] target/riscv: Minor fixes and improvements for
+ Virtual IRQs
+To: Rajnesh Kanwal <rkanwal@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
+ bin.meng@windriver.com, liweiwei@iscas.ac.cn, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com, apatel@ventanamicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,93 +93,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 7, 2024 at 12:36=E2=80=AFPM Alvin Che-Chia Chang(=E5=BC=B5=E5=
-=93=B2=E5=98=89)
-<alvinga@andestech.com> wrote:
+On Mon, May 20, 2024 at 10:52=E2=80=AFPM Rajnesh Kanwal <rkanwal@rivosinc.c=
+om> wrote:
 >
-> Hi Alistair,
+> This series contains few miscellaneous fixes related to Virtual IRQs
+> and related code. The first patch changes CSR mask widths to 64bit
+> as AIA introduces half CSRs in case of 32bit systems.
 >
-> Please also take a look at this series, I guess it is ready to be applied=
-, thanks!
+> Second patch fixes guest and core local IRQ overlap. Qemu creates
+> a single IRQ range which is shared between core local interrupts
+> and guests in riscv_cpu_init(). Even though, in the current state
+> there is no device generating interrupts in the 13:63 range, and
+> virtual IRQ logic in Qemu also doesn't go through riscv_cpu_set_irq()
+> path, it's better to keep local and guest range separate to avoid
+> confusion and any future issues.
+>
+> Patches can be found here on github [0] and v1 of the series
+> can be found here [1].
+>
+> Patches are based on alistair/riscv-to-apply.next.
+>
+> [0] https://github.com/rajnesh-kanwal/qemu/tree/dev/rkanwal/irq_fixes_v2
+> [1] https://lore.kernel.org/all/20240513114602.72098-1-rkanwal@rivosinc.c=
+om/
+>
+> Changes from v1->v2:
+> 1. Check patch fixes.
+> 2. Removed commit title split from Fixes tags.
+>
+> Rajnesh Kanwal (2):
+>   target/riscv: Extend virtual irq csrs masks to be 64 bit wide.
+>   target/riscv: Move Guest irqs out of the core local irqs range.
 
-This is all acked now, do you mind rebasing on
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next and
-sending a new version
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
 >
+>  target/riscv/cpu_bits.h |  3 ++-
+>  target/riscv/csr.c      | 23 +++++++++++++++--------
+>  2 files changed, 17 insertions(+), 9 deletions(-)
 >
-> BRs,
-> Alvin
+> --
+> 2.34.1
 >
-> > -----Original Message-----
-> > From: Alvin Che-Chia Chang(=E5=BC=B5=E5=93=B2=E5=98=89) <alvinga@andest=
-ech.com>
-> > Sent: Tuesday, February 27, 2024 9:24 AM
-> > To: qemu-riscv@nongnu.org; qemu-devel@nongnu.org
-> > Cc: alistair.francis@wdc.com; bin.meng@windriver.com;
-> > liwei1518@gmail.com; dbarboza@ventanamicro.com;
-> > zhiwei_liu@linux.alibaba.com; Alvin Che-Chia Chang(=E5=BC=B5=E5=93=B2=
-=E5=98=89)
-> > <alvinga@andestech.com>
-> > Subject: [PATCH v4 0/4] RISC-V: Modularize common match conditions for
-> > trigger
-> >
-> > According to RISC-V Debug specification ratified version 0.13 [1] (also=
- applied
-> > to version 1.0 [2] but it has not been ratified yet), the enabled privi=
-lege levels
-> > of the trigger is common match conditions for all the types of the trig=
-ger.
-> >
-> > This series modularize the code for checking the privilege levels of ty=
-pe 2/3/6
-> > triggers by implementing functions trigger_common_match() and
-> > trigger_priv_match().
-> >
-> > Additional match conditions, such as CSR tcontrol and textra, can be fu=
-rther
-> > implemented into trigger_common_match() in the future.
-> >
-> > [1]: https://github.com/riscv/riscv-debug-spec/releases/tag/task_group_=
-vote
-> > [2]: https://github.com/riscv/riscv-debug-spec/releases/tag/1.0.0-rc1-a=
-sciidoc
-> >
-> > Changes from v3:
-> > - Change this series to target Debug Spec. version 0.13
-> >
-> > Changes from v2:
-> > - Explicitly mention the targeting version of RISC-V Debug Spec.
-> >
-> > Changes from v1:
-> > - Fix typo
-> > - Add commit description for changing behavior of looping the triggers
-> >   when we check type 2 triggers.
-> >
-> > Alvin Chang (4):
-> >   target/riscv: Add functions for common matching conditions of trigger
-> >   target/riscv: Apply modularized matching conditions for breakpoint
-> >   target/riscv: Apply modularized matching conditions for watchpoint
-> >   target/riscv: Apply modularized matching conditions for icount trigge=
-r
-> >
-> >  target/riscv/debug.c | 124 +++++++++++++++++++++++++++++--------------
-> >  1 file changed, 83 insertions(+), 41 deletions(-)
-> >
-> > --
-> > 2.34.1
 >
-> CONFIDENTIALITY NOTICE:
->
-> This e-mail (and its attachments) may contain confidential and legally pr=
-ivileged information or information protected from disclosure. If you are n=
-ot the intended recipient, you are hereby notified that any disclosure, cop=
-ying, distribution, or use of the information contained herein is strictly =
-prohibited. In this case, please immediately notify the sender by return e-=
-mail, delete the message (and any accompanying documents) and destroy all p=
-rinted hard copies. Thank you for your cooperation.
->
-> Copyright ANDES TECHNOLOGY CORPORATION - All Rights Reserved.
 
