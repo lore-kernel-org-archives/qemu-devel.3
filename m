@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E31C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 02:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 991F3C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 02:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEJmY-0003Ir-NE; Mon, 03 Jun 2024 22:20:14 -0400
+	id 1sEJno-00045v-OL; Mon, 03 Jun 2024 22:21:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEJmW-0003I0-Gy; Mon, 03 Jun 2024 22:20:12 -0400
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ id 1sEJnm-00045d-TM; Mon, 03 Jun 2024 22:21:30 -0400
+Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEJmU-0008JB-2L; Mon, 03 Jun 2024 22:20:12 -0400
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-4eb1b9865e4so675914e0c.1; 
- Mon, 03 Jun 2024 19:20:09 -0700 (PDT)
+ id 1sEJnl-0000XK-4u; Mon, 03 Jun 2024 22:21:30 -0400
+Received: by mail-vk1-xa29.google.com with SMTP id
+ 71dfb90a1353d-4eb12b7702cso769067e0c.3; 
+ Mon, 03 Jun 2024 19:21:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717467608; x=1718072408; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717467687; x=1718072487; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+lThJhnBBmNFKxHJh8bfIc5pc4E0Of3hJvdr8r7d4uw=;
- b=bkaNTSe3l6IdZoBFiCwJ5UaV7l5CzLiVcrvxoY2UISbZscXYKzye8Ph+aOtYeodt0y
- OqqjBVSnlAMnPxnbqdUhvPJF+2aKw95eMONOA6RnjlMn1ztNBVsyQr/8wCifO9HnLvXn
- AIHsQDJaRl51BOrrOHmKJzV5d0maNu6FqCAxcB9hlEhOyRHLmju6rZXueeG8o5MYJviZ
- VBS9DCNBD453HvOFuJ60TnHXGdjp9HT+zsL+SBY3TMSiBhz+cBnHV67HxBlA/TUlLDlH
- QLQZ6pWErpeAIPjcFhg05SLAEsgH4DT/3HhGV1/r88JQ6p/x8rM6CdQMeqUA8NfV1nPy
- 6Mvg==
+ bh=8K+yVMVB24tc1lMIu2xf7mahJxQWZmItAt1xkXshoA8=;
+ b=jfDLbKKbBIwn0fCKoAGISWEHTETygcDuZPA6hi7ZSqKM5EH4w4kClGo6+LGhLYJ13r
+ FLonyAP6keBl+Zbvv5QzZcgMZsqBeCg0pS4LBUNUZchLVe5A2Am06bmNTJjH0ICENGPz
+ FYLTqkXdcvWkO8390L9vwizGjirPO7UobpLK1kiA0EvgTKMsVg/DQX6b7HgdEefmCog7
+ 4XK8ba6cx/K517yo3uYgUv+w3CWGAlRfnbaLYM5exvXp0T5bZ5Q4eRbGVQWOhvz3yXru
+ EHEAcvtiOaMLpFMia2l+3tYWFMhbb+om577rGuCL7FXSSx/HKn4psA6TU9hSikzIS+bw
+ BYdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717467608; x=1718072408;
+ d=1e100.net; s=20230601; t=1717467687; x=1718072487;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+lThJhnBBmNFKxHJh8bfIc5pc4E0Of3hJvdr8r7d4uw=;
- b=SUuEbFS8Vh7ltAp+izfvupWarHbeXVkEPC1V4Ugn/gdFyCigb2VjBYnq8wBC+mhC2D
- sGGETTfF9jYh996ExO0Kqhm/LqX9T9HhVRguRuuIyJuPRJPRzSg4EDIO0L61EGYYec08
- wYQ3YOgcpas4rMxhVgKI6GjJaYPQAg5juUNzGWB+v5MTuNFCcV3SQiskcxYwQUtbhYKL
- 7bCO4IZ9Jh8G+OwVi3co4z1gmO8hjw2WEMDysmIJOPAepKmdmCT5GX32tB/0pXkoXRSO
- k6QNylUMrRpg5hj++qVoc2YtxiO3d8XmJNfHqjRI2kJ3u7X27O5f6q1T1mCaP/rvEU6J
- s20Q==
+ bh=8K+yVMVB24tc1lMIu2xf7mahJxQWZmItAt1xkXshoA8=;
+ b=cisbQF8ZI3ZUHY4Xo04/boEXicFnA78Dmq1M/ykvYjY1/9Ktc2N4m0ls2kipVONae8
+ HDgQ6sW4Lb+3vnn1ENbsZyRJ6vqLAQCgTp0pq3nQ8o9DzgeRlrQjmTSHos+kln81n2im
+ sSo8cfQzzZwqUZbiBC/XXaT3MRkhNVdCe+HSgMmpwrfDL+6tmht7DB2gy+So+VSDZdV8
+ 5RF//iFmMPqkkOTOms4ZY0tIg9W4sZ1KIiDe6rtiL+TAVe4M/z3BGAqSVhFAHACPS8/z
+ FKBG+CghmQ3UtmXEGANu3AVGVBkaMAVSA31geJr3MhsikEuSKkJz0lW113lHZoCVvxim
+ OMuA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUKeYBW9GYzF/mConz39Pt1AjyrCmkb+oPV6QG1a6czT2/MUTlUbki1dhoFIJ+64K+Tk2/LV6NhQ9EGfsoNh0wTBzChnHQ=
-X-Gm-Message-State: AOJu0Yw25fyCieDRvONZoerU1hI4NkPQbXx1Bg6n2veRfHUTy4EKx0My
- yX5xcE5WNxkubbiUNewugJxrAMsSt6z1/jUULOGmyDNf6ZGs2F4/BkNqwaWyXg5723xXGAuS/9L
- AKlFCQLJvOM5RrVcl2vhNHbn0+FU=
-X-Google-Smtp-Source: AGHT+IFZBJkbXp//a0KXijvumZcRcwBSSFUcOdklh8zjMuHE5wsj50DWIX7aBZJVkIcxgIWh6PK7Dq2aBIwC2cfalKE=
-X-Received: by 2002:a05:6122:d8b:b0:4d1:34a1:c892 with SMTP id
- 71dfb90a1353d-4eb02e7ba68mr11071500e0c.13.1717467607007; Mon, 03 Jun 2024
- 19:20:07 -0700 (PDT)
+ AJvYcCXrwKGZWID+FkSHQgj3Mil1tdsDHW48nOvQDOkqjVikWvO2zJQLkDo1NRhr60qsCTTs48AKqTwdDfB/BNCwKYpYArcPBs0=
+X-Gm-Message-State: AOJu0YxvTSUFhwGiJUT5AbUBfSdvMqHJiVXnHxtqg4pG5bnzArXTR1PB
+ gvRCJFseFxsYrDeL40gjuGCh/5hH5o2bZ6OkqmTcByFlXq6Ju8QVs1QYukZFB2bxL4pa2bw8v6t
+ HM1NKyFft8eV/ByJlcoCOEncAEAY=
+X-Google-Smtp-Source: AGHT+IG282pFSBwzJtVlUbsLqWTn7KNZvjovf8mYNh6d96xHHwpOZN4WmPYME0OMSA5TFnu6Eo5FHW5Ettz52owyYs8=
+X-Received: by 2002:a05:6122:3113:b0:4eb:12b1:2ea6 with SMTP id
+ 71dfb90a1353d-4eb12b12f86mr7188252e0c.13.1717467687454; Mon, 03 Jun 2024
+ 19:21:27 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240522062905.1799-1-zhiwei_liu@linux.alibaba.com>
- <20240522062905.1799-2-zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240522062905.1799-2-zhiwei_liu@linux.alibaba.com>
+ <20240522062905.1799-3-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240522062905.1799-3-zhiwei_liu@linux.alibaba.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 4 Jun 2024 12:19:41 +1000
-Message-ID: <CAKmqyKNoNcjah6FspUOtd0sdp2E3QtsZxhYRU3kVpgqe2Lo9jQ@mail.gmail.com>
-Subject: Re: [PATCH 1/4] target/riscv: Add zimop extension
+Date: Tue, 4 Jun 2024 12:21:01 +1000
+Message-ID: <CAKmqyKOMEKPd2BPP9AQy7dRqAuM1DsDs9DaOToF94Ujvj4d92w@mail.gmail.com>
+Subject: Re: [PATCH 2/4] disas/riscv: Support zimop disassemble
 To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
  Alistair.Francis@wdc.com, dbarboza@ventanamicro.com, bmeng.cn@gmail.com, 
  iwei1518@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,172 +96,146 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, May 22, 2024 at 4:32=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibab=
 a.com> wrote:
 >
-> Zimop extension defines an encoding space for 40 MOPs.The Zimop
-> extension defines 32 MOP instructions named MOP.R.n, where n is
-> an integer between 0 and 31, inclusive. The Zimop extension
-> additionally defines 8 MOP instructions named MOP.RR.n, where n
-> is an integer between 0 and 7.
->
-> These 40 MOPs initially are defined to simply write zero to x[rd],
-> but are designed to be redefined by later extensions to perform some
-> other action.
->
 > Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/cpu.c                          |  2 ++
->  target/riscv/cpu_cfg.h                      |  1 +
->  target/riscv/insn32.decode                  | 11 ++++++
->  target/riscv/insn_trans/trans_rvzimop.c.inc | 37 +++++++++++++++++++++
->  target/riscv/translate.c                    |  1 +
->  5 files changed, 52 insertions(+)
->  create mode 100644 target/riscv/insn_trans/trans_rvzimop.c.inc
+>  disas/riscv.c | 100 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 100 insertions(+)
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index eb1a2e7d6d..c1ac521142 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -175,6 +175,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
->      ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
->      ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
-> +    ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_12_0, ext_zimop),
->      ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
->      ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
->      ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
-> @@ -1463,6 +1464,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[]=
- =3D {
->      MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
->      MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
->      MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
-> +    MULTI_EXT_CFG_BOOL("zimop", ext_zimop, false),
->      MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
->      MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
->      MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index cb750154bd..b547fbba9d 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -71,6 +71,7 @@ struct RISCVCPUConfig {
->      bool ext_zihintntl;
->      bool ext_zihintpause;
->      bool ext_zihpm;
-> +    bool ext_zimop;
->      bool ext_ztso;
->      bool ext_smstateen;
->      bool ext_sstc;
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index f22df04cfd..972a1e8fd1 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -38,6 +38,8 @@
->  %imm_bs   30:2                   !function=3Dex_shift_3
->  %imm_rnum 20:4
->  %imm_z6   26:1 15:5
-> +%imm_mop5 30:1 26:2 20:2
-> +%imm_mop3 30:1 26:2
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index e236c8b5b7..4cd769f165 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -906,6 +906,46 @@ typedef enum {
+>      rv_op_amocas_w =3D 875,
+>      rv_op_amocas_d =3D 876,
+>      rv_op_amocas_q =3D 877,
+> +    rv_mop_r_0     =3D 878,
+> +    rv_mop_r_1     =3D 879,
+> +    rv_mop_r_2     =3D 880,
+> +    rv_mop_r_3     =3D 881,
+> +    rv_mop_r_4     =3D 882,
+> +    rv_mop_r_5     =3D 883,
+> +    rv_mop_r_6     =3D 884,
+> +    rv_mop_r_7     =3D 885,
+> +    rv_mop_r_8     =3D 886,
+> +    rv_mop_r_9     =3D 887,
+> +    rv_mop_r_10    =3D 888,
+> +    rv_mop_r_11    =3D 889,
+> +    rv_mop_r_12    =3D 890,
+> +    rv_mop_r_13    =3D 891,
+> +    rv_mop_r_14    =3D 892,
+> +    rv_mop_r_15    =3D 893,
+> +    rv_mop_r_16    =3D 894,
+> +    rv_mop_r_17    =3D 895,
+> +    rv_mop_r_18    =3D 896,
+> +    rv_mop_r_19    =3D 897,
+> +    rv_mop_r_20    =3D 898,
+> +    rv_mop_r_21    =3D 899,
+> +    rv_mop_r_22    =3D 900,
+> +    rv_mop_r_23    =3D 901,
+> +    rv_mop_r_24    =3D 902,
+> +    rv_mop_r_25    =3D 903,
+> +    rv_mop_r_26    =3D 904,
+> +    rv_mop_r_27    =3D 905,
+> +    rv_mop_r_28    =3D 906,
+> +    rv_mop_r_29    =3D 907,
+> +    rv_mop_r_30    =3D 908,
+> +    rv_mop_r_31    =3D 909,
+> +    rv_mop_rr_0    =3D 910,
+> +    rv_mop_rr_1    =3D 911,
+> +    rv_mop_rr_2    =3D 912,
+> +    rv_mop_rr_3    =3D 913,
+> +    rv_mop_rr_4    =3D 914,
+> +    rv_mop_rr_5    =3D 915,
+> +    rv_mop_rr_6    =3D 916,
+> +    rv_mop_rr_7    =3D 917,
+>  } rv_op;
 >
->  # Argument sets:
->  &empty
-> @@ -56,6 +58,8 @@
->  &r2nfvm    vm rd rs1 nf
->  &rnfvm     vm rd rs1 rs2 nf
->  &k_aes     shamt rs2 rs1 rd
-> +&mop5 imm rd rs1
-> +&mop3 imm rd rs1 rs2
+>  /* register names */
+> @@ -2096,6 +2136,46 @@ const rv_opcode_data rvi_opcode_data[] =3D {
+>      { "amocas.w", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+>      { "amocas.d", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+>      { "amocas.q", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+> +    { "mop.r.0", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.1", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.2", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.3", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.4", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.5", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.6", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.7", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.8", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.9", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.10", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.11", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.12", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.13", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.14", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.15", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.16", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.17", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.18", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.19", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.20", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.21", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.22", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.23", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.24", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.25", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.26", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.27", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.28", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.29", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.30", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.r.31", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0 },
+> +    { "mop.rr.0", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+> +    { "mop.rr.1", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+> +    { "mop.rr.2", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+> +    { "mop.rr.3", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+> +    { "mop.rr.4", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+> +    { "mop.rr.5", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+> +    { "mop.rr.6", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+> +    { "mop.rr.7", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
+>  };
 >
->  # Formats 32:
->  @r       .......   ..... ..... ... ..... ....... &r                %rs2 =
-%rs1 %rd
-> @@ -98,6 +102,9 @@
->  @k_aes   .. ..... ..... .....  ... ..... ....... &k_aes  shamt=3D%imm_bs=
-   %rs2 %rs1 %rd
->  @i_aes   .. ..... ..... .....  ... ..... ....... &i      imm=3D%imm_rnum=
-        %rs1 %rd
->
-> +@mop5 . . .. .. .... .. ..... ... ..... ....... &mop5 imm=3D%imm_mop5 %r=
-d %rs1
-> +@mop3 . . .. .. . ..... ..... ... ..... ....... &mop3 imm=3D%imm_mop3 %r=
-d %rs1 %rs2
-> +
->  # Formats 64:
->  @sh5     .......  ..... .....  ... ..... ....... &shift  shamt=3D%sh5   =
-   %rs1 %rd
->
-> @@ -1010,3 +1017,7 @@ amocas_w    00101 . . ..... ..... 010 ..... 0101111=
- @atom_st
->  amocas_d    00101 . . ..... ..... 011 ..... 0101111 @atom_st
->  # *** RV64 Zacas Standard Extension ***
->  amocas_q    00101 . . ..... ..... 100 ..... 0101111 @atom_st
-> +
-> +# *** Zimop may-be-operation extension ***
-> +mop_r_n     1 . 00 .. 0111 .. ..... 100 ..... 0111011 @mop5
-> +mop_rr_n    1 . 00 .. 1 ..... ..... 100 ..... 0111011 @mop3
-> diff --git a/target/riscv/insn_trans/trans_rvzimop.c.inc b/target/riscv/i=
-nsn_trans/trans_rvzimop.c.inc
-> new file mode 100644
-> index 0000000000..165aacd2b6
-> --- /dev/null
-> +++ b/target/riscv/insn_trans/trans_rvzimop.c.inc
-> @@ -0,0 +1,37 @@
-> +/*
-> + * RISC-V translation routines for May-Be-Operation(zimop).
-> + *
-> + * Copyright (c) 2024 Alibaba Group.
-> + *
-> + * This program is free software; you can redistribute it and/or modify =
-it
-> + * under the terms and conditions of the GNU General Public License,
-> + * version 2 or later, as published by the Free Software Foundation.
-> + *
-> + * This program is distributed in the hope it will be useful, but WITHOU=
-T
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
- for
-> + * more details.
-> + *
-> + * You should have received a copy of the GNU General Public License alo=
-ng with
-> + * this program.  If not, see <http://www.gnu.org/licenses/>.
-> + */
-> +
-> +#define REQUIRE_ZIMOP(ctx) do {           \
-> +    if (!ctx->cfg_ptr->ext_zimop) {       \
-> +        return false;                     \
-> +    }                                     \
-> +} while (0)
-> +
-> +static bool trans_mop_r_n(DisasContext *ctx, arg_mop_r_n *a)
-> +{
-> +    REQUIRE_ZIMOP(ctx);
-> +    gen_set_gpr(ctx, a->rd, ctx->zero);
-> +    return true;
-> +}
-> +
-> +static bool trans_mop_rr_n(DisasContext *ctx, arg_mop_rr_n *a)
-> +{
-> +    REQUIRE_ZIMOP(ctx);
-> +    gen_set_gpr(ctx, a->rd, ctx->zero);
-> +    return true;
-> +}
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index 2c27fd4ce1..77c6564834 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -1097,6 +1097,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase,=
- target_ulong pc)
->  #include "insn_trans/trans_rvzacas.c.inc"
->  #include "insn_trans/trans_rvzawrs.c.inc"
->  #include "insn_trans/trans_rvzicbo.c.inc"
-> +#include "insn_trans/trans_rvzimop.c.inc"
->  #include "insn_trans/trans_rvzfa.c.inc"
->  #include "insn_trans/trans_rvzfh.c.inc"
->  #include "insn_trans/trans_rvk.c.inc"
+>  /* CSR names */
+> @@ -2945,6 +3025,26 @@ static void decode_inst_opcode(rv_decode *dec, rv_=
+isa isa)
+>              break;
+>          case 13: op =3D rv_op_lui; break;
+>          case 14:
+> +            if (dec->cfg->ext_zimop) {
+> +                int imm_mop5, imm_mop3;
+> +                if (extract32(inst, 12, 3) =3D=3D 0b100) {
+> +                    if ((extract32(inst, 22, 10) & 0b1011001111)
+> +                        =3D=3D 0b1000000111) {
+> +                        imm_mop5 =3D deposit32(deposit32(extract32(inst,=
+ 20, 2),
+> +                                                       2, 2,
+> +                                                       extract32(inst, 2=
+6, 2)),
+> +                                             4, 1, extract32(inst, 30, 1=
+));
+> +                        op =3D rv_mop_r_0 + imm_mop5;
+> +                        break;
+> +                    } else if ((extract32(inst, 25, 7) & 0b1011001)
+> +                               =3D=3D 0b1000001) {
+> +                        imm_mop3 =3D deposit32(extract32(inst, 26, 2),
+> +                                             2, 1, extract32(inst, 30, 1=
+));
+> +                        op =3D rv_mop_rr_0 + imm_mop3;
+> +                        break;
+> +                    }
+> +                }
+> +            }
+>              switch (((inst >> 22) & 0b1111111000) |
+>                      ((inst >> 12) & 0b0000000111)) {
+>              case 0: op =3D rv_op_addw; break;
 > --
 > 2.25.1
 >
