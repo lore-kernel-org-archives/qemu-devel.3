@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EB70C25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:11:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5069DC25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:11:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEOJW-0005I1-56; Tue, 04 Jun 2024 03:10:34 -0400
+	id 1sEOJY-0005JV-OW; Tue, 04 Jun 2024 03:10:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1sEOJP-0005D3-LU
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:10:27 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1sEOJU-0005FP-EL
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:10:33 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1sEOJN-0000SQ-3k
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:10:27 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-2c19bba897bso3964889a91.2
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:10:24 -0700 (PDT)
+ id 1sEOJR-0000Us-Hb
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:10:32 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-6c4926bf9bbso2619509a12.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:10:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1717485023; x=1718089823; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=GTd7iSqY+2K6omhWKf9ip5yUDCYSOtXHjx/sKNx+FFs=;
- b=Dfh9tRe+AiAXqw57l/8jx8CXbAOnrEbA41vMkpWSFaN5OqImauc3GIiQk97EYTjSsl
- C3kveBsySxd9qVv+En2kEnpLXrKoKf2BqhK2yWSp/O3OV8BgDVJ095GQpSlYfk/Q1KOt
- mO2RWtH3NHyskgagl+lH0TGE7nb3yWUBzbtrJg17dl6GArRwUpEnQN+o0Ja66On4mWwp
- i9q/f3hudU0IE8hd60RwI7ZtNkYhjaTH2NPHdiVPf23fMzsjy8EyAYdKmlncu2e7ZyF2
- oEEnDIv2G6F7jj07e9tWsUuQqWv732So73xpeVLv4foT3fPdlcTNtzNpBOBSNkCdFcXQ
- dVVA==
+ d=sifive.com; s=google; t=1717485027; x=1718089827; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pKkT300tlD3TQh5kFCyDOARg3WfWGx7ttZZNCCqlZ5k=;
+ b=FutteiJlNQtowCt3mYu3lbQkFyvXJgv5grMA5BEiJGehaMgYLGq6GC6wJOuVqMld4N
+ 0IR8YtF4CyarysAdwvjRb2flTf3W/HOsWwJQkSBYXPOa/k6oUBVUAkYpnOvbq+KFgUdI
+ AMhfiVBSNvuoglswVZ58pLaOSjCq+D/XLlhIIhiYvdtP9zbw8yCoXfzMXO6MNLvf5kCc
+ hdpon7LEcyUvpyyhrPWvQXsX7J5hFb+pTf311FyVmZygOOS3/eB0NAjmtOh6+8C5n8iW
+ DbHiB1W7HILSqBVcmBDUyhIaYf5Pxu72CX50dbX80to/Q9CI6TIwBl4KSAYjqBvjmzF1
+ ZLYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717485023; x=1718089823;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GTd7iSqY+2K6omhWKf9ip5yUDCYSOtXHjx/sKNx+FFs=;
- b=gck7k/M947wH4PemqzRC5B/vdmzzq2fUwPipIoT5lGTvjXG8d5JeXpgOCFHVP923aQ
- WOWR9+blfTtADbqELJn8IofhUoGOiJ2pwYcUlUN84Xl/aIWwURMBs7BqH9/Scos7y8Z7
- Q0f+q6d+Qz+iuHQm1pxaSeosc3La6d4WQ9cgCBXoWifkbhdczZLoD+5w7mfHVIGheAmy
- 7IE7QY8/Bi6dnuyVlUAXHnUbZAV4SZl2ndSdwnc+aL68bQg16mlwWU0q0rxKSrYhFMv2
- 8aUXVRkC33MI/nPbHhDhl6vEVqYTZtabZ3Dt23YUsMxETxc+ZVOczeI5hZlf3hXmlmju
- siJA==
-X-Gm-Message-State: AOJu0YzCN7Le8Pz15F8wvU2Xg4Gl7utjHdaN17o/M9OFXR2ame2pFyGP
- lrWQfTbJo9ztqIwn2M7oEaWtkuWOVngSzZ0I8eMSMi7tmizHRN2YtZQaLjNv/FB3dVNt5yChk5z
- hPouN8EK/eSUvT6wTfB25UAZpvmjOHb9ppjDjntZMdi5bJhFhax+gpCPc+nAM2z4M/FVuMuIbEB
- nLiOCNfV/qzLBNq+ev7JL6sa3FNzNogVLqZH0=
-X-Google-Smtp-Source: AGHT+IEc8YChFGXhtlTncs1wQaNEk8JezE0ddEBEFVt1gXzSX++KyXecYneCLrVrXjtA5uyLz1ACLw==
-X-Received: by 2002:a17:90a:db42:b0:2b4:fe80:1b1b with SMTP id
- 98e67ed59e1d1-2c1dc5cd183mr8783856a91.43.1717485022768; 
- Tue, 04 Jun 2024 00:10:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717485027; x=1718089827;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pKkT300tlD3TQh5kFCyDOARg3WfWGx7ttZZNCCqlZ5k=;
+ b=BufPlgZ4Dz9djSwwvsT1cb6ghNnt1goQdeWHigDP1dKNRXmQyRoYGlDbhQ4RmHvr5X
+ POZf5qk/770hMl5TXmYP109Ua3mlRM3/5qaWcaTxTn8ae1yPnn8khMnNAiRe0lbBUDNe
+ kawBU/4k/ERZcobOxUGgxemZ4VHJRVFfCYyeMpkh/IR8XzPHQ5UKfhUnceaQdS80ayt0
+ owmF27a/WMdTBtpPiggN3eDegGMuTUGOez08aERrItSCw1XHh6vHUeNeh0GHrAzFqgOP
+ +nPPi7sompSrhoQq4XWPj4YY1I0Pr/ore4eW9HLmAt1x2+owu554iQKkSIFocsCpEcOv
+ JFWA==
+X-Gm-Message-State: AOJu0YzlG68Ed+0aTEZewYLIwDLk+0XUXcmBfWWs878w7EErZeslD5xL
+ qNrhAzizq1YTzsEDk2fR5n6Z+9Dm1XX7A3lBCp0qNMdkD92y7b3uIeRjRIFGyyvEmRO+sAOD/fB
+ iUvflW/R+DC0JalhOOLevMyc7SxQxen05mJkHpx9edlsGVmMlvnRt6nYVo0ItVTzBqjE8UdgMwc
+ WkkeKMWtn1KPf99MrnZf1LSajrftQfXJXdrFc=
+X-Google-Smtp-Source: AGHT+IEph1ovAjNTcsGX4Cf4PHFeYX4SzRN+q4nOM1RvaPQvCCKXZiDzk89z1LY4LiTEyOYTqMkOTg==
+X-Received: by 2002:a17:90b:4ac9:b0:2bd:ebd5:8bf0 with SMTP id
+ 98e67ed59e1d1-2c1dc5d8bbemr10451632a91.42.1717485026681; 
+ Tue, 04 Jun 2024 00:10:26 -0700 (PDT)
 Received: from hsinchu36-syssw02.internal.sifive.com
  (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c1a775d68dsm9237943a91.6.2024.06.04.00.10.21
+ 98e67ed59e1d1-2c1a775d68dsm9237943a91.6.2024.06.04.00.10.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 00:10:22 -0700 (PDT)
+ Tue, 04 Jun 2024 00:10:26 -0700 (PDT)
 From: "Fea.Wang" <fea.wang@sifive.com>
 To: qemu-devel@nongnu.org
 Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Alistair Francis <alistair@alistair23.me>,
  Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
  qemu-arm@nongnu.org (open list:Xilinx Zynq),
- "Fea.Wang" <fea.wang@sifive.com>
-Subject: [PATCH v2 0/3] hw/dma: Add error handling for loading descriptions
- failing
-Date: Tue,  4 Jun 2024 15:15:37 +0800
-Message-Id: <20240604071540.18138-1-fea.wang@sifive.com>
+ "Fea.Wang" <fea.wang@sifive.com>, Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH v2 1/3] hw/dma: Enhance error handling in loading description
+Date: Tue,  4 Jun 2024 15:15:38 +0800
+Message-Id: <20240604071540.18138-2-fea.wang@sifive.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240604071540.18138-1-fea.wang@sifive.com>
+References: <20240604071540.18138-1-fea.wang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=fea.wang@sifive.com; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=fea.wang@sifive.com; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,32 +100,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The original code assumes that memory transmission is always successful,
-but in some cases, it gets bus-error.
+Loading a description from memory may cause a bus-error. In this
+case, the DMA should stop working, set the error flag, and return
+the failure value.
 
-Add error handling for DMA reading description failures. Do some
-reasonable settings, and return the corrected transmission size.
-Finally, return the error status.
+When calling the loading a description function, it should be noticed
+that the function may return a failure value. Breaking the loop in this
+case is one of the possible ways to handle it.
 
-* Add DMASR_DECERR case
-* Squash the two commits to one
+Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+---
+ hw/dma/xilinx_axidma.c | 30 ++++++++++++++++++++++++++----
+ 1 file changed, 26 insertions(+), 4 deletions(-)
 
-base-commit: 915758c537b5fe09575291f4acd87e2d377a93de
-
-
-[v1]
-base-commit: 1806da76cb81088ea026ca3441551782b850e393
-
-Fea.Wang (3):
-  hw/dma: Enhance error handling in loading description
-  hw/dma: Add a trace log for a description loading failure
-  hw/net: Fix the transmission return size
-
- hw/dma/trace-events     |  3 +++
- hw/dma/xilinx_axidma.c  | 33 +++++++++++++++++++++++++++++----
- hw/net/xilinx_axienet.c |  2 +-
- 3 files changed, 33 insertions(+), 5 deletions(-)
-
+diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
+index 0ae056ed06..ad307994c2 100644
+--- a/hw/dma/xilinx_axidma.c
++++ b/hw/dma/xilinx_axidma.c
+@@ -71,8 +71,11 @@ enum {
+ enum {
+     DMASR_HALTED = 1,
+     DMASR_IDLE  = 2,
++    DMASR_SLVERR = 1 << 5,
++    DMASR_DECERR = 1 << 6,
+     DMASR_IOC_IRQ  = 1 << 12,
+     DMASR_DLY_IRQ  = 1 << 13,
++    DMASR_ERR_IRQ  = 1 << 14,
+ 
+     DMASR_IRQ_MASK = 7 << 12
+ };
+@@ -190,17 +193,32 @@ static inline int streamid_from_addr(hwaddr addr)
+     return sid;
+ }
+ 
+-static void stream_desc_load(struct Stream *s, hwaddr addr)
++static MemTxResult stream_desc_load(struct Stream *s, hwaddr addr)
+ {
+     struct SDesc *d = &s->desc;
+ 
+-    address_space_read(&s->dma->as, addr, MEMTXATTRS_UNSPECIFIED, d, sizeof *d);
++    MemTxResult result = address_space_read(&s->dma->as,
++                                            addr, MEMTXATTRS_UNSPECIFIED,
++                                            d, sizeof *d);
++    if (result != MEMTX_OK) {
++        if (result == MEMTX_DECODE_ERROR) {
++            s->regs[R_DMASR] |= DMASR_DECERR;
++        } else {
++            s->regs[R_DMASR] |= DMASR_SLVERR;
++        }
++
++        s->regs[R_DMACR] &= ~DMACR_RUNSTOP;
++        s->regs[R_DMASR] |= DMASR_HALTED;
++        s->regs[R_DMASR] |= DMASR_ERR_IRQ;
++        return result;
++    }
+ 
+     /* Convert from LE into host endianness.  */
+     d->buffer_address = le64_to_cpu(d->buffer_address);
+     d->nxtdesc = le64_to_cpu(d->nxtdesc);
+     d->control = le32_to_cpu(d->control);
+     d->status = le32_to_cpu(d->status);
++    return result;
+ }
+ 
+ static void stream_desc_store(struct Stream *s, hwaddr addr)
+@@ -279,7 +297,9 @@ static void stream_process_mem2s(struct Stream *s, StreamSink *tx_data_dev,
+     }
+ 
+     while (1) {
+-        stream_desc_load(s, s->regs[R_CURDESC]);
++        if (MEMTX_OK != stream_desc_load(s, s->regs[R_CURDESC])) {
++            break;
++        }
+ 
+         if (s->desc.status & SDESC_STATUS_COMPLETE) {
+             s->regs[R_DMASR] |= DMASR_HALTED;
+@@ -336,7 +356,9 @@ static size_t stream_process_s2mem(struct Stream *s, unsigned char *buf,
+     }
+ 
+     while (len) {
+-        stream_desc_load(s, s->regs[R_CURDESC]);
++        if (MEMTX_OK != stream_desc_load(s, s->regs[R_CURDESC])) {
++            break;
++        }
+ 
+         if (s->desc.status & SDESC_STATUS_COMPLETE) {
+             s->regs[R_DMASR] |= DMASR_HALTED;
 -- 
 2.34.1
 
