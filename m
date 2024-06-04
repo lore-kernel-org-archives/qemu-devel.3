@@ -4,84 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47447C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 00:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE510C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 01:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEIVi-0001p6-FH; Mon, 03 Jun 2024 20:58:46 -0400
+	id 1sEIaY-0002uI-G6; Mon, 03 Jun 2024 21:03:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEIVg-0001od-KC
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 20:58:44 -0400
-Received: from mail-qv1-xf33.google.com ([2607:f8b0:4864:20::f33])
+ id 1sEIaT-0002u6-Cq
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 21:03:41 -0400
+Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEIVf-0006NO-6W
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 20:58:44 -0400
-Received: by mail-qv1-xf33.google.com with SMTP id
- 6a1803df08f44-6aebdea932aso17702446d6.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 17:58:42 -0700 (PDT)
+ id 1sEIaR-0001zC-Oh
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 21:03:41 -0400
+Received: by mail-ot1-x335.google.com with SMTP id
+ 46e09a7af769-6f12eda7c7fso2528098a34.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 18:03:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717462721; x=1718067521; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717463018; x=1718067818; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Vh7xajWIzJcjEBubxVNtUm3KBGkSzVrBLiILMOlErNw=;
- b=AcuzsjwhUMqbDYvH+yLCk3Wg6ZwCauee5aKnL40FWPDUS/FldrXOdfjsCdGlqWOfTi
- tSLRE6NGPLcap6mczCon5YU8IaOzXQ/zVgbaIgeVTXCGV3N/yKE3WMlYUSrGvwU6Ko3u
- QgfMnyldfpUNXxvs2XHgOh/O83rYcjmzQZ/SWZ6hc2SSDSYOgen5X9DYx7p4BJM9rvGE
- 2Iryl1oTZMttfbZi42a9ALXSL/Qcrp0c1z2WOLM1n9jROVtXx6hj5+TTeAdsbgkknSQM
- q1W9sbnECXOUA9XKUrSEPK4jBh8Fc13D9mcURnprjVQDPAm159tgBoHLM/qTj88hZgTV
- Mn0Q==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=loueSisvW3AJs/KkMGbDRG6jAUTVL3hMxtj77+JfEec=;
+ b=pjYXkY9SaV9Yi4H3Q8ayaL46HdrI8iIbJNrRoUVvb/oSz0LlMN774xuVxS3ZkB0aQE
+ sr+ThJz+FPpTLHTqGh16VvIZYCFeBpNwIFFnpl/RrbuRrKmS8NSIgW4a3jBhG3NA4RSb
+ 9WiesG0iW46SZvlyzyaqUCj651c5aSHdRdBkMAMHbfXE7hfghVFU7ibO7XicxhMYEStR
+ LEXR/oRP0cqwmyevf93Mk+BoOJ17ziUk/oXE78wU3T6rBSdnBrY7XntdtIo7vcC48wFC
+ cooNGkoN7nzosyOKyxIGW3RdR+Bu1WFgRZXUUe3oWFgTQ/+YhA5iMP28aPcNBIpzt2CJ
+ HC4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717462721; x=1718067521;
+ d=1e100.net; s=20230601; t=1717463018; x=1718067818;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Vh7xajWIzJcjEBubxVNtUm3KBGkSzVrBLiILMOlErNw=;
- b=G0Tit8NNDX4LO4PExQLMT9A3UpSnvc7bOUCp7YZ+kT5tf1YYxVrsYVohXmOzuBvR//
- N/OFbk4rLSFUO8XGZGaZRpDtjmjQgrVo1An/Wp9s0/v5hK2fraxRjutzst1Me+9jT1Iy
- Az7D1/3NFtGJvlTbKL2LvmTVoTyhk3uYPnCLOmTH2xC25Nwi2rVDHz9G0Xuec0BwTqbA
- Mm38IY4ncEAM6fbe3pi1HqskQQqTIjHSapD0PrAJZVJTbepuJs0ExSRiY0QBfeFP1Non
- pea/CnkoYIp35sWeB7OFepekIscJEeiNFTn6i0JVKLo6LMszgZOAU+t5bE0RsSYGs/Q0
- 8u4w==
+ bh=loueSisvW3AJs/KkMGbDRG6jAUTVL3hMxtj77+JfEec=;
+ b=raMi0Js9QUHCbKY8oBgbiame2M+XFIGVX3yUSwWo8tJlbb9dwBKnyE87wKP9a1TW+7
+ IkgvTEOjz/aSj3eF2j1ZmLqOhS3skYn6BcCsgbknoUgg2YOzR/PP7fyfpBwoYWM46mnP
+ qUJFwyFP/Ip8xn64YgOhwa26qO8imUMW3myP7peQ/+ZxSczLGJSZkHL3+0z7D5u+wWFW
+ MyEe+MMl3XVVAS8ljXoHtUGffFFwOSKtnld7R2hx6Z9zxQKotW/OXfhyNzadNLvfjEfj
+ URvaSjyTyYP6vrXjvS9bTlfue9T+3K7ZQIZEXDrL3tIJc0ReQvy5uk+F+ACzUiJfltgd
+ jSHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNXQ6Dj3dhyyx70FrVuH7jTkCUj9qXI/6KREDXa5H8vq6xWvU5CRPV9oC1I0KAzwvBxhK9JFeqjEpK/itOQUrkuGI8ESE=
-X-Gm-Message-State: AOJu0Yx9mI5NCmgF46gAoBBV5k73rnzgNJtBXH8MtubJqlN2JLSo99Yj
- o544tbYFzVeng1HcZ7dhlT0pd5oTIHuJoGyknabS2uDZ1M9a4KkKkpa5OZA5JpQ=
-X-Google-Smtp-Source: AGHT+IGmVJBejy4nHB879aK5sGFMhG/ZhjQ/DxduC8RM3rMqWyy7Mk11b3cNgfibAL0ku1pk+fgIOw==
-X-Received: by 2002:a05:6214:3911:b0:6ad:79e7:fe43 with SMTP id
- 6a1803df08f44-6aecd6fff08mr105722866d6.55.1717462721614; 
- Mon, 03 Jun 2024 17:58:41 -0700 (PDT)
+ AJvYcCU5iU2zDC7CTdqUQ+PTwU0qyHXWxrkXbpYJpqyIh7xwNGi1xlkYk8kF00yAbgC/zmSDkmibJNbICwMpZ76Y8s3K9dOeI9o=
+X-Gm-Message-State: AOJu0YyJdCMim+1eOO96KLh5Rhw84hH390teD89XVBMm0wstvCo3/n8b
+ F00BfLtWXXQABlc01o1HG4tqLrlVLaPiVxB+9wlX8cPCHrqmGyJVrTMnC3zQrMdTbNp3n3sHxTx
+ j
+X-Google-Smtp-Source: AGHT+IHAgHVa0DVftObdUcjQRpztCH78Di24ZF+zivMEHYLaWGabJTa271jy8BBMZ9sh/SSiNyGCiA==
+X-Received: by 2002:a05:6830:e15:b0:6f9:3b54:28ef with SMTP id
+ 46e09a7af769-6f93b5435bamr273881a34.25.1717463018226; 
+ Mon, 03 Jun 2024 18:03:38 -0700 (PDT)
 Received: from [192.168.223.227] ([50.233.235.3])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6af3d644efbsm23646676d6.19.2024.06.03.17.58.40
+ d75a77b69052e-43ff25947b0sm44492911cf.91.2024.06.03.18.03.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 17:58:41 -0700 (PDT)
-Message-ID: <aa04be33-02fe-4f80-84b7-fd463bf150a4@linaro.org>
-Date: Mon, 3 Jun 2024 19:58:38 -0500
+ Mon, 03 Jun 2024 18:03:37 -0700 (PDT)
+Message-ID: <8305cf6e-01a0-4e65-99f9-286a7b42be7d@linaro.org>
+Date: Mon, 3 Jun 2024 20:03:35 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 5/6] target/riscv: rvv: Optimize v[l|s]e8.v with
- limitations
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: dbarboza@ventanamicro.com, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20240531174504.281461-1-max.chou@sifive.com>
- <20240531174504.281461-6-max.chou@sifive.com>
- <1016c817-d1e0-4dbd-8fd9-921bcdc23a0a@linaro.org>
- <595c3be7-7a33-4812-a80c-975b2eaaf5a6@sifive.com>
+Subject: Re: [PATCH 0/3] cpu_exec_halt: make method mandatory
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20240603160933.1141717-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <595c3be7-7a33-4812-a80c-975b2eaaf5a6@sifive.com>
+In-Reply-To: <20240603160933.1141717-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f33;
- envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x335.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,16 +97,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/24 10:50, Max Chou wrote:
-> Hi Richart,
-> 
-> Thank you for your feedback.
-> This version is created by referencing the gen_sve_ldr translation function with the 
-> similar assumptions that no mask(predication)/no tail agnostic/continuous load & store.
+On 6/3/24 11:09, Peter Maydell wrote:
+> Peter Maydell (3):
+>    target/arm: Set arm_v7m_tcg_ops cpu_exec_halt to arm_cpu_exec_halt()
+>    target: Set TCGCPUOps::cpu_exec_halt to target's has_work
+>      implementation
+>    accel/tcg: Make TCGCPUOps::cpu_exec_halt mandatory
 
-Except that gen_sve_ldr has a compile-time constant for the vector length, which is always 
-a multiple of 16, and so has no extra special cases like you needed.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
