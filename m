@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C4DFC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CF86C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:00:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEQvt-0003j1-Id; Tue, 04 Jun 2024 05:58:21 -0400
+	id 1sEQvy-0004nK-Sc; Tue, 04 Jun 2024 05:58:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQvr-0003U6-Qo
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:19 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQvx-0004aC-9o
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:25 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQvp-0002JR-Vd
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:19 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-421338c4c3bso8559625e9.1
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:58:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQvv-0002Jk-G5
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:24 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-421392b8156so8492835e9.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:58:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717495096; x=1718099896; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717495101; x=1718099901; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UMNBQrBvKQfv4Dl+hKP/TPgBc1DhyAHhW2w6Yei3CGk=;
- b=qGm3eQ+frIAk25ighZiIiPxdPwjGeOO55nOBu8D/Imyhe5V5uH7XQU0XtAojxRFvGj
- FBNQ+WzE4nlIwLR2TnLm9Ec0FzhMINvwESuGi1U5a3cS4GjSjG6P/Sovl8UD4s8BLx4u
- jOadOL2nLHHlPxCgwqsgz+bhpUAVO1aATwSYqpx9CW4T/080oIEDtw9bSKTXS9U5/cYX
- TEJXHWKbAiTZKhPIWHvewbZFf6Fi4N7NeW6Hq6GUD65MpvU/4Gg8IXbnQ4F2gjRydBb3
- F89UUMKIEuB1N5yJiaDOS3p4VWJESqFIwc3/fsaab+8qCYXfKiT75/OUedlwKoz8K8oT
- iWOg==
+ bh=KWEiLSLjPrxtWwEuDW5HmfeuH1N7C8mHb/ZvIjGfjz4=;
+ b=Lzrg3/QZ7NNp6WK00x5y/n2tK8OOCalAoxhHZGkVV5p0bkXwKx2DORImveSx2h4z2I
+ 3MAvFKogOfA9AHNBUT3VV63t9A1D54RYTGe9emSHM3xInHIhpo+xpcbUZEkCZVDy4UOe
+ WqGSm+HeGvTJGkSgkRrfPrUD55i2jmZFj0MACwsjpteNFniLj1/15dNGhzTrlvfOzEhx
+ /hWCQ1wM4vtTEmixxpCRNnDYR5yymI24omoe7z09zyL/uuES4qcTiJ/ByeHbZZ4QUiXg
+ SW2mXAiIX9u/wBBd6hODw2pv2f5YjuwghdvK9NPe+4jcQpqZwRl97t5KSleYb75XIB6C
+ Enaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717495096; x=1718099896;
+ d=1e100.net; s=20230601; t=1717495101; x=1718099901;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UMNBQrBvKQfv4Dl+hKP/TPgBc1DhyAHhW2w6Yei3CGk=;
- b=oDjxC4BdvwuZ1l7O+kQ+lyozAyO6KdZvh8/fkEppte4O/JBKiaZfFea2GuoN9i+/c/
- IgDwxgBybmmzuakzxZW0OVc6s5ON0goupVMxM8ZtTtaECUoqUcZOVPGU04slj1/DKpkZ
- /LeaSl9k6A5A6RcDGLmkinG65R6EKhpNOSp0bZpK4cWzrXePnXQGtZw39Of2fpUHeQz6
- K617eaDwJlzd2eOVK8F9YJFeEAeRx+IfJKkKovEekFubULw1HyTpTGZxcRyPGP7kN6AJ
- /0z9m7+5fYDDs/5K5jseX0CcleKBvVW5iNjR41vGal4pNYmic/Z07rM2eU2EnjB+hKZ8
- H2GQ==
-X-Gm-Message-State: AOJu0YynXb7De9qTTbxHDEgftWTzOxCwPLxkI2EVW1QQGPAGO4CvymFM
- X61a6hfZEZ2wU0IuOWDFpatg0g1qZRWuKMajEGkMPOk7OGQdjZvY/DTMx4qiXZq7RDkflnf2WD6
- r
-X-Google-Smtp-Source: AGHT+IHGdggg5ewx0/2n3Lu8hrxRYSTHdGkSS5iyyrnz+QbRSHoncf7/+uzqUAg7gR3BPYSgZQK9OA==
-X-Received: by 2002:a05:600c:35d5:b0:419:f3f9:8ed6 with SMTP id
- 5b1f17b1804b1-4212e044bffmr110122735e9.4.1717495096202; 
- Tue, 04 Jun 2024 02:58:16 -0700 (PDT)
+ bh=KWEiLSLjPrxtWwEuDW5HmfeuH1N7C8mHb/ZvIjGfjz4=;
+ b=cOlsV36jdqr++7ift2uypVD7RqHcCP3aBiIDDVkcx57+W6vhhMTa36LdohqrTpG4U4
+ qdNhiP3ZOzwIJukLY1VEJgLjWs6GAjizbue3LN7E9BqSnGIjU+oCk7WJPEbKLzOJC8Lu
+ pSjm27ylcyMG1Fg861DSOkaPaYbADOZhICgMIXvJNSlGXZ4jlbjf70p0J/gKGXejf2K6
+ keu4Eu6mnaf0I0mLXM+PT2Wlk1iDToAptWYaOOhDgGcVkFzePjB7sgmvTTFTA/upN9CD
+ uhbY5Mhy18gMLUa12s1+FzWv5bDpjMxXIJ0bI4LEOdcNA0+7x4sj4ywhBM1WmJyqtzQd
+ DCLA==
+X-Gm-Message-State: AOJu0YxNPwzDkMnBYNe/4TQMiDauombdzv5Xc42L13SwvKkwRFl8woD2
+ 7alOFyKaupbrHC4P0zdcTxoFR/bSUwmvNZtFi6s75DDDjbtyp17tQ0bZXRXK5Z7PBInjWjdOmFo
+ T
+X-Google-Smtp-Source: AGHT+IF4t3Ptbt+sQoQi7/KPrImQE6KI2L2BTH13Sordg4RJXSyTY5Whek96aSR7UiPNBQn/BhIXcg==
+X-Received: by 2002:a05:600c:3b0d:b0:41b:fc3a:f1ef with SMTP id
+ 5b1f17b1804b1-4212e0b08f7mr98344425e9.33.1717495101344; 
+ Tue, 04 Jun 2024 02:58:21 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.159.34])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42135c9dc18sm112972305e9.1.2024.06.04.02.58.15
+ 5b1f17b1804b1-4212b83d469sm147380125e9.9.2024.06.04.02.58.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Jun 2024 02:58:15 -0700 (PDT)
+ Tue, 04 Jun 2024 02:58:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paul Durrant <paul@xen.org>
-Subject: [PULL 23/32] hw/xen: Constify XenLegacyDevice::XenDevOps
-Date: Tue,  4 Jun 2024 11:55:59 +0200
-Message-ID: <20240604095609.12285-24-philmd@linaro.org>
+Subject: [PULL 24/32] hw/xen: Constify xenstore_be::XenDevOps
+Date: Tue,  4 Jun 2024 11:56:00 +0200
+Message-ID: <20240604095609.12285-25-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240604095609.12285-1-philmd@linaro.org>
 References: <20240604095609.12285-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,37 +98,55 @@ XenDevOps @ops is not updated, mark it const.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Paul Durrant <paul@xen.org>
-Message-Id: <20240510104908.76908-3-philmd@linaro.org>
+Message-Id: <20240510104908.76908-4-philmd@linaro.org>
 ---
- include/hw/xen/xen_pvdev.h  | 2 +-
- hw/xen/xen-legacy-backend.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ include/hw/xen/xen-legacy-backend.h | 2 +-
+ hw/xen/xen-legacy-backend.c         | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/xen/xen_pvdev.h b/include/hw/xen/xen_pvdev.h
-index fdf84f47af..0c98444047 100644
---- a/include/hw/xen/xen_pvdev.h
-+++ b/include/hw/xen/xen_pvdev.h
-@@ -52,7 +52,7 @@ struct XenLegacyDevice {
-     xenevtchn_handle   *evtchndev;
-     xengnttab_handle   *gnttabdev;
+diff --git a/include/hw/xen/xen-legacy-backend.h b/include/hw/xen/xen-legacy-backend.h
+index 979c4ea04c..62623ecb30 100644
+--- a/include/hw/xen/xen-legacy-backend.h
++++ b/include/hw/xen/xen-legacy-backend.h
+@@ -40,7 +40,7 @@ void xen_be_check_state(struct XenLegacyDevice *xendev);
  
--    struct XenDevOps   *ops;
-+    const struct XenDevOps *ops;
-     QTAILQ_ENTRY(XenLegacyDevice) next;
- };
- 
+ /* xen backend driver bits */
+ void xen_be_init(void);
+-int xen_be_register(const char *type, struct XenDevOps *ops);
++int xen_be_register(const char *type, const struct XenDevOps *ops);
+ int xen_be_set_state(struct XenLegacyDevice *xendev, enum xenbus_state state);
+ int xen_be_bind_evtchn(struct XenLegacyDevice *xendev);
+ void xen_be_set_max_grant_refs(struct XenLegacyDevice *xendev,
 diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
-index 6f0b300a42..33620fe42e 100644
+index 33620fe42e..5514184f9c 100644
 --- a/hw/xen/xen-legacy-backend.c
 +++ b/hw/xen/xen-legacy-backend.c
-@@ -170,7 +170,7 @@ int xen_be_copy_grant_refs(struct XenLegacyDevice *xendev,
-  */
- static struct XenLegacyDevice *xen_be_get_xendev(const char *type, int dom,
-                                                  int dev,
--                                                 struct XenDevOps *ops)
-+                                                 const struct XenDevOps *ops)
+@@ -520,7 +520,7 @@ void xen_be_check_state(struct XenLegacyDevice *xendev)
+ struct xenstore_be {
+     const char *type;
+     int dom;
+-    struct XenDevOps *ops;
++    const struct XenDevOps *ops;
+ };
+ 
+ static void xenstore_update_be(void *opaque, const char *watch)
+@@ -557,7 +557,7 @@ static void xenstore_update_be(void *opaque, const char *watch)
+     }
+ }
+ 
+-static int xenstore_scan(const char *type, int dom, struct XenDevOps *ops)
++static int xenstore_scan(const char *type, int dom, const struct XenDevOps *ops)
  {
      struct XenLegacyDevice *xendev;
+     char path[XEN_BUFSIZE];
+@@ -624,7 +624,7 @@ void xen_be_init(void)
+     xen_set_dynamic_sysbus();
+ }
+ 
+-int xen_be_register(const char *type, struct XenDevOps *ops)
++int xen_be_register(const char *type, const struct XenDevOps *ops)
+ {
+     char path[50];
  
 -- 
 2.41.0
