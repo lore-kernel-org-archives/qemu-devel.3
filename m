@@ -4,54 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85CC3C27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:39:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B880AC27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:39:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEOl4-0001T9-UG; Tue, 04 Jun 2024 03:39:02 -0400
+	id 1sEOl9-0001tL-O9; Tue, 04 Jun 2024 03:39:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOl3-0001Ih-Df
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:39:01 -0400
+ id 1sEOl7-0001kU-Tv
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:39:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOl1-0006Oy-LO
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:39:01 -0400
+ id 1sEOl6-0006Ph-AN
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:39:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717486738;
+ s=mimecast20190719; t=1717486743;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5d5y2FC6cxEygSgk8M5FRyNF5zASCRyu9uDVXcrDPpE=;
- b=V6zJ+5oFLHvqD11c57htm9uSi+a7o6MAcg1JXH3CfPsFZbfn9oTiH7mTo1pt2Vqt5KQPoR
- pQDsfmsVkRp5ijAet4uuWpt9PIrWJ19YKZ0zuFmQN3Q4VVDLXEEtieTOB4vGDWlylFSkVs
- 0EQWvtEtndh7y6UXQTKXbSypi2LXCYY=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-424-nBttRGmdPT2XDNfdHyNUqg-1; Tue, 04 Jun 2024 03:38:54 -0400
-X-MC-Unique: nBttRGmdPT2XDNfdHyNUqg-1
+ bh=V6wYF6GPmM8OuwJc/pDx6VAk3DsnwPDADPmu8GjwvG8=;
+ b=eL/1j9yt0UzsxrTn1f4YZMz2dRKgeqvEg5hZTAlFa/WaC4oSIwGb0pbAyM+svPiMOIXRUU
+ MF7EhvIXRZAesVyAwb+2LRi7tZHr2tTUNMHIj1vl+psKMUPSjVuvcVuoyxClt+8+SzPtOT
+ CYQ3I4vlEBZln7FXJAD2u9B6SIUItJ0=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-IBMTlIoxOICa7CZTbjgGaQ-1; Tue,
+ 04 Jun 2024 03:39:00 -0400
+X-MC-Unique: IBMTlIoxOICa7CZTbjgGaQ-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 74C7980027F;
- Tue,  4 Jun 2024 07:38:54 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 051843C0262D;
+ Tue,  4 Jun 2024 07:39:00 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.238])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 94AA9492BD4;
- Tue,  4 Jun 2024 07:38:52 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 40EC6492BD4;
+ Tue,  4 Jun 2024 07:38:57 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 18/20] ebpf: Add a separate target for skeleton
-Date: Tue,  4 Jun 2024 15:37:53 +0800
-Message-ID: <20240604073755.1859-19-jasowang@redhat.com>
+Cc: Andrew Melnychenko <andrew@daynix.com>,
+	Jason Wang <jasowang@redhat.com>
+Subject: [PULL 20/20] ebpf: Added traces back. Changed source set for eBPF to
+ 'system'.
+Date: Tue,  4 Jun 2024 15:37:55 +0800
+Message-ID: <20240604073755.1859-21-jasowang@redhat.com>
 In-Reply-To: <20240604073755.1859-1-jasowang@redhat.com>
 References: <20240604073755.1859-1-jasowang@redhat.com>
 MIME-Version: 1.0
@@ -83,53 +85,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Andrew Melnychenko <andrew@daynix.com>
 
-This generalizes the rule to generate the skeleton and allows to add
-another.
+There was an issue with Qemu build with "--disable-system".
+The traces could be generated and the build fails.
+The traces were 'cut out' for previous patches, and overall,
+the 'system' source set should be used like in pre-'eBPF blob' patches.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Signed-off-by: Andrew Melnychenko <andrew@daynix.com>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- tools/ebpf/Makefile.ebpf | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ ebpf/ebpf_rss.c | 7 +++++++
+ ebpf/trace.h    | 1 +
+ 2 files changed, 8 insertions(+)
+ create mode 100644 ebpf/trace.h
 
-diff --git a/tools/ebpf/Makefile.ebpf b/tools/ebpf/Makefile.ebpf
-index 3391e7ce08..572ca5987a 100755
---- a/tools/ebpf/Makefile.ebpf
-+++ b/tools/ebpf/Makefile.ebpf
-@@ -1,23 +1,24 @@
--OBJS = rss.bpf.o
-+SKELETONS = rss.bpf.skeleton.h
+diff --git a/ebpf/ebpf_rss.c b/ebpf/ebpf_rss.c
+index d102f3dd09..87f0714910 100644
+--- a/ebpf/ebpf_rss.c
++++ b/ebpf/ebpf_rss.c
+@@ -25,6 +25,8 @@
+ #include "ebpf/rss.bpf.skeleton.h"
+ #include "ebpf/ebpf.h"
  
- LLVM_STRIP ?= llvm-strip
- CLANG ?= clang
- INC_FLAGS = `$(CLANG) -print-file-name=include`
- EXTRA_CFLAGS ?= -O2 -g -target bpf
- 
--all: $(OBJS)
-+all: $(SKELETONS)
- 
- .PHONY: clean
- 
- clean:
--	rm -f $(OBJS)
--	rm -f rss.bpf.skeleton.h
-+	rm -f $(SKELETONS) $(SKELETONS:%.skeleton.h=%.o)
- 
--$(OBJS):  %.o:%.c
-+%.o: %.c
- 	$(CLANG) $(INC_FLAGS) \
-                 -D__KERNEL__ -D__ASM_SYSREG_H \
-                 -I../include $(LINUXINCLUDE) \
-                 $(EXTRA_CFLAGS) -c $< -o $@
- 	$(LLVM_STRIP) -g $@
--	bpftool gen skeleton rss.bpf.o > rss.bpf.skeleton.h
--	cp rss.bpf.skeleton.h ../../ebpf/
++#include "trace.h"
 +
-+%.skeleton.h: %.o
-+	bpftool gen skeleton $< > $@
-+	cp $@ ../../ebpf/
+ void ebpf_rss_init(struct EBPFRSSContext *ctx)
+ {
+     if (ctx != NULL) {
+@@ -55,18 +57,21 @@ static bool ebpf_rss_mmap(struct EBPFRSSContext *ctx)
+                                    PROT_READ | PROT_WRITE, MAP_SHARED,
+                                    ctx->map_configuration, 0);
+     if (ctx->mmap_configuration == MAP_FAILED) {
++        trace_ebpf_error("eBPF RSS", "can not mmap eBPF configuration array");
+         return false;
+     }
+     ctx->mmap_toeplitz_key = mmap(NULL, qemu_real_host_page_size(),
+                                    PROT_READ | PROT_WRITE, MAP_SHARED,
+                                    ctx->map_toeplitz_key, 0);
+     if (ctx->mmap_toeplitz_key == MAP_FAILED) {
++        trace_ebpf_error("eBPF RSS", "can not mmap eBPF toeplitz key");
+         goto toeplitz_fail;
+     }
+     ctx->mmap_indirections_table = mmap(NULL, qemu_real_host_page_size(),
+                                    PROT_READ | PROT_WRITE, MAP_SHARED,
+                                    ctx->map_indirections_table, 0);
+     if (ctx->mmap_indirections_table == MAP_FAILED) {
++        trace_ebpf_error("eBPF RSS", "can not mmap eBPF indirection table");
+         goto indirection_fail;
+     }
+ 
+@@ -108,12 +113,14 @@ bool ebpf_rss_load(struct EBPFRSSContext *ctx)
+ 
+     rss_bpf_ctx = rss_bpf__open();
+     if (rss_bpf_ctx == NULL) {
++        trace_ebpf_error("eBPF RSS", "can not open eBPF RSS object");
+         goto error;
+     }
+ 
+     bpf_program__set_type(rss_bpf_ctx->progs.tun_rss_steering_prog, BPF_PROG_TYPE_SOCKET_FILTER);
+ 
+     if (rss_bpf__load(rss_bpf_ctx)) {
++        trace_ebpf_error("eBPF RSS", "can not load RSS program");
+         goto error;
+     }
+ 
+diff --git a/ebpf/trace.h b/ebpf/trace.h
+new file mode 100644
+index 0000000000..abefc46ab1
+--- /dev/null
++++ b/ebpf/trace.h
+@@ -0,0 +1 @@
++#include "trace/trace-ebpf.h"
 -- 
 2.42.0
 
