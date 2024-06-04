@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8870C25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:45:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95302C27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:46:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sENv6-0003kg-Ow; Tue, 04 Jun 2024 02:45:20 -0400
+	id 1sENuk-0002yU-Pf; Tue, 04 Jun 2024 02:44:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENv4-0003e8-0T
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sENui-0002xe-UD
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENv2-0007WN-0M
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:17 -0400
+ id 1sENuh-0007Hm-Aa
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717483515;
+ s=mimecast20190719; t=1717483494;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=igvy5MjawADq4B5bigVhVsctbwF1BmPBU2i5wDuvoNw=;
- b=PqhylQH+VFbscby68iNn1zZJf6f4az8WOJOmoGiNOgP5oYcLEHYgv6tttUMQ95Eq9RZY79
- H5osreajzmKFPl8KK5dIArZo/m/21XwygeL1wErHBAb3IyFnazKyEoURQ+QiDPuwp05KG2
- vWkBUirzMaYkXnLYlc4TkVtEqM8VbFg=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kdwTvsCx7edNSXKoA8pOZOCc+yJ4yzpVxsliOREE4sg=;
+ b=R5pDZ9KMhYsTksuElkIy7KD16j78dearu89iWjx/7nwVDNQfU55RPIXtMBgHqRLBvi5sfd
+ mCN4AkCLBTFNnxT6b5Bzu/QLvkXh12oc/m6EPI9NvBwXVp9RfTDnmuEwAQG/wA9tvkXHRV
+ aBihqS2wejfk5zNb3HZKPXoJWtK7oUc=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-509-gd1mdqT8On-wuXyIuVmGdA-1; Tue, 04 Jun 2024 02:45:13 -0400
-X-MC-Unique: gd1mdqT8On-wuXyIuVmGdA-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a6905050583so97003266b.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:45:13 -0700 (PDT)
+ us-mta-594-8mIpo79APAqC-0mAFPQIlw-1; Tue, 04 Jun 2024 02:44:53 -0400
+X-MC-Unique: 8mIpo79APAqC-0mAFPQIlw-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a6929fc5b52so44951466b.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:44:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717483512; x=1718088312;
+ d=1e100.net; s=20230601; t=1717483491; x=1718088291;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=igvy5MjawADq4B5bigVhVsctbwF1BmPBU2i5wDuvoNw=;
- b=WwWWQ3NoxQdfNW0Aar5XEDueZyJQI1PUBsTYtK9aTDwaINDefm/7dBfnPBtJ5P5dIf
- 6rxAuIqEg9b4Fd3cI5uUGtV4CFBkl6KvsxI/BPh8iG3xvYpRcbgqTWdD4LFQ4VcOKfaY
- ZntX74UgkojwcqYOKfG6Y2ghUTPB7708z/POrtUHuombP0VhDdocdJ7v9AnQien3eIGS
- SG6oOk4innlBWgOxu9ymffvzwvQemPJe69mMIHcqF7nGlsopw1J+S56eqVJq1JidEWbP
- 4CjCd7natGwmW9ut82xaJWHU71RLPQfsApwO3HpXYURCMkdSByHr3gveswTA2kVNA+r8
- +CsA==
-X-Gm-Message-State: AOJu0Yx3OCRp05ZxGz7xb/x9cAuEjtk6C0tmF7mbctp/OquaGmbjIdOX
- lrTWF3ya3Qu0XH1cY8lLMY2+o3lym4J1/gAwVSPVtN55I1SqNpGdWlIVwZrYmQRkeWbK5OqVQNw
- W8R9Fz0oFIsY88AA4lVYSq6LsECMG27fsJSXXytglC7XuGdNxMbQdT7KfTv7fHAl5jDW9+DJtzy
- S4x+1670N9Lu73sF3SfU2qGDmVL5wnnAC0oki9
-X-Received: by 2002:a17:906:670b:b0:a69:67e3:57e6 with SMTP id
- a640c23a62f3a-a6967e35b07mr29309566b.49.1717483511879; 
- Mon, 03 Jun 2024 23:45:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvvOW3MRqpYvtIdHt86T6NL8grWnMNUUd4UEAaWtrQYlS+xr2n0F69nabah24Ifu5bNckVXQ==
-X-Received: by 2002:a17:906:670b:b0:a69:67e3:57e6 with SMTP id
- a640c23a62f3a-a6967e35b07mr29308566b.49.1717483511478; 
- Mon, 03 Jun 2024 23:45:11 -0700 (PDT)
+ bh=kdwTvsCx7edNSXKoA8pOZOCc+yJ4yzpVxsliOREE4sg=;
+ b=soyQDz34opwCE+iRt1VKXiwps7yGs5NPohOds1Zdu7Mh48pz4qIdBcsnfy95YhMTL3
+ qFEKUo2AJVXmq0vhwCPW+f9VXExaCKR+M+33ZFXDXOf0RC5qOvK7T3jkJrnK1hSxakCa
+ iEAgtqxzZmdwAAU5bSr/YmECv0XUpOMbyNpde1p7zqmHpdtTW8myvN/9SgclvtwVLPzX
+ 6giF2LKFi4bH7r4tzT9y70dUz++p9lqFUKj/SiJR9EIl4HzOfaVOoJdr3b6Ds+8X/zen
+ /MPd/XTwWyOBIAiUFokNQdrXoGZzN0G1jSKeiVsRM+sdJNtWzw2D1lQdLCJTMPDPzrZp
+ ETCA==
+X-Gm-Message-State: AOJu0Yxz+TnlN85UixkoPuWvzcNZzs3qyyiYiwi/rN6TOrcke5hWmjW3
+ poKmSFY5OIe9tDr/l0aLvqq8uG8p7EPgxcycmuFqJbxOudrp4m8/nJb2N0pS+jCFPgiYxS7UMc2
+ hd97T4Bk2/P1+tX87nce4O0d7hhnBYpT31SREIF+yN/MJfF+Qik8kc7yh1tMKEHlsMPVeT2NCEI
+ HBBerxVNjU8+8bi2UZGFFoPFWcZ30HckH2YUOb
+X-Received: by 2002:a17:906:a1c3:b0:a66:dca6:43f6 with SMTP id
+ a640c23a62f3a-a6820136b23mr805614366b.27.1717483490725; 
+ Mon, 03 Jun 2024 23:44:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEhSl8mchuuOuzv0kfTTNNk0cmtjRedJIyrDvbhGeRrQwb5iUytSzd1Zw39dHKuBeRFGk0j5g==
+X-Received: by 2002:a17:906:a1c3:b0:a66:dca6:43f6 with SMTP id
+ a640c23a62f3a-a6820136b23mr805612666b.27.1717483490387; 
+ Mon, 03 Jun 2024 23:44:50 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68aa93dfbdsm467308966b.196.2024.06.03.23.45.10
+ a640c23a62f3a-a68b59e925csm443122366b.220.2024.06.03.23.44.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 23:45:10 -0700 (PDT)
+ Mon, 03 Jun 2024 23:44:49 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Pankaj Gupta <pankaj.gupta@amd.com>
-Subject: [PULL 20/45] i386/sev: Move sev_launch_finish to separate class method
-Date: Tue,  4 Jun 2024 08:43:44 +0200
-Message-ID: <20240604064409.957105-21-pbonzini@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>
+Subject: [PULL 13/45] update-linux-headers: move pvpanic.h to correct directory
+Date: Tue,  4 Jun 2024 08:43:37 +0200
+Message-ID: <20240604064409.957105-14-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240604064409.957105-1-pbonzini@redhat.com>
 References: <20240604064409.957105-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,77 +103,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pankaj Gupta <pankaj.gupta@amd.com>
+Linux has <misc/pvpanic.h>, not <linux/pvpanic.h>.  Use the same
+directory for QEMU's include/standard-headers/ copy.
 
-When sev-snp-guest objects are introduced there will be a number of
-differences in how the launch finish is handled compared to the existing
-sev-guest object. Move sev_launch_finish() to a class method to make it
-easier to implement SNP-specific launch update functionality later.
-
-Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Message-ID: <20240530111643.1091816-7-pankaj.gupta@amd.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/sev.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ include/standard-headers/{linux => misc}/pvpanic.h | 0
+ hw/misc/pvpanic-isa.c                              | 2 +-
+ hw/misc/pvpanic-pci.c                              | 2 +-
+ hw/misc/pvpanic.c                                  | 2 +-
+ scripts/update-linux-headers.sh                    | 6 ++++--
+ 5 files changed, 7 insertions(+), 5 deletions(-)
+ rename include/standard-headers/{linux => misc}/pvpanic.h (100%)
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index b2aa0d6f99b..28a018ed833 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -71,6 +71,7 @@ struct SevCommonStateClass {
+diff --git a/include/standard-headers/linux/pvpanic.h b/include/standard-headers/misc/pvpanic.h
+similarity index 100%
+rename from include/standard-headers/linux/pvpanic.h
+rename to include/standard-headers/misc/pvpanic.h
+diff --git a/hw/misc/pvpanic-isa.c b/hw/misc/pvpanic-isa.c
+index ccec50f61bb..b4f84c41109 100644
+--- a/hw/misc/pvpanic-isa.c
++++ b/hw/misc/pvpanic-isa.c
+@@ -21,7 +21,7 @@
+ #include "hw/misc/pvpanic.h"
+ #include "qom/object.h"
+ #include "hw/isa/isa.h"
+-#include "standard-headers/linux/pvpanic.h"
++#include "standard-headers/misc/pvpanic.h"
+ #include "hw/acpi/acpi_aml_interface.h"
  
-     /* public */
-     int (*launch_start)(SevCommonState *sev_common);
-+    void (*launch_finish)(SevCommonState *sev_common);
- };
+ OBJECT_DECLARE_SIMPLE_TYPE(PVPanicISAState, PVPANIC_ISA_DEVICE)
+diff --git a/hw/misc/pvpanic-pci.c b/hw/misc/pvpanic-pci.c
+index 83be95d0d24..4d44a881dad 100644
+--- a/hw/misc/pvpanic-pci.c
++++ b/hw/misc/pvpanic-pci.c
+@@ -21,7 +21,7 @@
+ #include "hw/misc/pvpanic.h"
+ #include "qom/object.h"
+ #include "hw/pci/pci_device.h"
+-#include "standard-headers/linux/pvpanic.h"
++#include "standard-headers/misc/pvpanic.h"
  
- /**
-@@ -801,12 +802,12 @@ static Notifier sev_machine_done_notify = {
- };
+ OBJECT_DECLARE_SIMPLE_TYPE(PVPanicPCIState, PVPANIC_PCI_DEVICE)
  
- static void
--sev_launch_finish(SevGuestState *sev_guest)
-+sev_launch_finish(SevCommonState *sev_common)
+diff --git a/hw/misc/pvpanic.c b/hw/misc/pvpanic.c
+index 1540e9091a4..80289ecf5fe 100644
+--- a/hw/misc/pvpanic.c
++++ b/hw/misc/pvpanic.c
+@@ -21,7 +21,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/misc/pvpanic.h"
+ #include "qom/object.h"
+-#include "standard-headers/linux/pvpanic.h"
++#include "standard-headers/misc/pvpanic.h"
+ 
+ static void handle_event(int event)
  {
-     int ret, error;
- 
-     trace_kvm_sev_launch_finish();
--    ret = sev_ioctl(SEV_COMMON(sev_guest)->sev_fd, KVM_SEV_LAUNCH_FINISH, 0,
-+    ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_LAUNCH_FINISH, 0,
-                     &error);
-     if (ret) {
-         error_report("%s: LAUNCH_FINISH ret=%d fw_error=%d '%s'",
-@@ -814,7 +815,7 @@ sev_launch_finish(SevGuestState *sev_guest)
-         exit(1);
-     }
- 
--    sev_set_guest_state(SEV_COMMON(sev_guest), SEV_STATE_RUNNING);
-+    sev_set_guest_state(sev_common, SEV_STATE_RUNNING);
- 
-     /* add migration blocker */
-     error_setg(&sev_mig_blocker,
-@@ -826,10 +827,11 @@ static void
- sev_vm_state_change(void *opaque, bool running, RunState state)
- {
-     SevCommonState *sev_common = opaque;
-+    SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(opaque);
- 
-     if (running) {
-         if (!sev_check_state(sev_common, SEV_STATE_RUNNING)) {
--            sev_launch_finish(SEV_GUEST(sev_common));
-+            klass->launch_finish(sev_common);
-         }
-     }
- }
-@@ -1457,6 +1459,7 @@ sev_guest_class_init(ObjectClass *oc, void *data)
-     SevCommonStateClass *klass = SEV_COMMON_CLASS(oc);
- 
-     klass->launch_start = sev_launch_start;
-+    klass->launch_finish = sev_launch_finish;
- 
-     object_class_property_add_str(oc, "dh-cert-file",
-                                   sev_guest_get_dh_cert_file,
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index 57a48837aa4..7e93acb3b5f 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -231,10 +231,12 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
+          "$hdrdir/include/linux/const.h" \
+          "$hdrdir/include/linux/kernel.h" \
+          "$hdrdir/include/linux/vhost_types.h" \
+-         "$hdrdir/include/linux/sysinfo.h" \
+-         "$hdrdir/include/misc/pvpanic.h"; do
++         "$hdrdir/include/linux/sysinfo.h"; do
+     cp_portable "$i" "$output/include/standard-headers/linux"
+ done
++mkdir -p "$output/include/standard-headers/misc"
++cp_portable "$hdrdir/include/misc/pvpanic.h" \
++            "$output/include/standard-headers/misc"
+ mkdir -p "$output/include/standard-headers/drm"
+ cp_portable "$hdrdir/include/drm/drm_fourcc.h" \
+             "$output/include/standard-headers/drm"
 -- 
 2.45.1
 
