@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCAD9C27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 360ACC27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:10:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEZVD-00008c-8L; Tue, 04 Jun 2024 15:07:23 -0400
+	id 1sEZVa-0002JI-P3; Tue, 04 Jun 2024 15:07:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZVA-0008GS-Kw
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:07:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZVX-0001zC-AX
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:07:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZV8-0000u1-1d
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:07:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZVR-0000vw-3E
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:07:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717528036;
+ s=mimecast20190719; t=1717528055;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=/tkdF9wBgRXJ0C7b2uR1oP4dL+2Be2HPdzcygUpss9I=;
- b=P31I74B2igfBHPWo1hGZn/BT0rGP8cCipJ7HPzs42rgWjkKFmlvaOV1+BtXglTdWqhEfH+
- 7dUrbdg8m/eGKh5pgPJerZPkYOJUZRtbE3MmaJ421vTh+WKxozoXeLiDbhKpYO9KBbEd+Z
- bRARjBx+EVOTIJfjFfqjUSIUStxVpeo=
+ bh=Y6BvONQ3xHQ5Uc0x7v2hZbGWG9V5fJeg5muDy0KhuLY=;
+ b=XayJ8H10dUdraALq4v6QNiDIbGknU9/GGPWXR8Uf1getD9Eagxs//hudFuD6/N3VNSl/VJ
+ 16CtVkyRTDY+04JthIaSvS+oMumj0Mcpslw3u+5V2X3+S/oPD6BxvpLQtDKulykxMxOF7/
+ 6U4OJ6gl95mI7MPLoD0YKXrQSOiUHZc=
 Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
  [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-1vIcTpz5O1SP2rNDg5wq-Q-1; Tue, 04 Jun 2024 15:07:15 -0400
-X-MC-Unique: 1vIcTpz5O1SP2rNDg5wq-Q-1
+ us-mta-326-z2Z7ZwCKMXqboMxbhBoUAQ-1; Tue, 04 Jun 2024 15:07:32 -0400
+X-MC-Unique: z2Z7ZwCKMXqboMxbhBoUAQ-1
 Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-35e7d4f4243so938465f8f.1
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:07:15 -0700 (PDT)
+ ffacd0b85a97d-35e0f445846so3151002f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:07:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717528033; x=1718132833;
+ d=1e100.net; s=20230601; t=1717528051; x=1718132851;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/tkdF9wBgRXJ0C7b2uR1oP4dL+2Be2HPdzcygUpss9I=;
- b=usdo3tG9K+wnReeUw0DGRONYYEGdRtK3gLqOx6vC1kqGgE7JcbvRY+cBPZ7pSQMhYo
- 9thKLNOhZFdIB+i3Ll8Lx1SeCx4XbfN4D3vwnETF8y7Rn64YoD2VFY1rjuWrb2XStqLk
- QNfPcBFEayI17QJFWxzfZx2YHXOtpAuWZj/7vD8AkFQsxf3LcZOkwssgXzB45OypQBDa
- 3Z9iSdZj7AVwBTfeSfQ6P4cZiuFIfujF5wxcsHBwq3i9ccBc0GsjbfFoCGqSj4jZZPMA
- FdIVVgptJZyxHRrtrUlTbZkIQNyjpDJxuxfE07WlvJAleSDx0iBJzo4u4CYhTTnaLNaS
- TxAw==
-X-Gm-Message-State: AOJu0Yx9mUorRqH5tIuRQxBdSnFDOyofO5Wsn5WLMiV5weTHT/iVWJt0
- EBLEGA6AazlxkMZIMP53CijGJ/qVDwr8+ZXTsQiMZ1Git8+S6yKl03sw7AHwG4oxrP/0l+VreM5
- XFlJmCt466IC2ap7xsDwGIAWRTOCDpPUQ+4QcFhAI4koWLHSZMqTG6YC0YXFZq7rKvVTdxRcapY
- aYhPEf6Pd1vK0eBOP22qBVomZpA9AWUg==
-X-Received: by 2002:a5d:534f:0:b0:357:3e5a:6c90 with SMTP id
- ffacd0b85a97d-35e8ef937e8mr212466f8f.57.1717528033425; 
- Tue, 04 Jun 2024 12:07:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE50QDKE/gRangmWH8LkkYrAFSCb9KqjPg9SXl0IFeQxipVCfhEEfcHr+IXEmuqoRplgQqHwQ==
-X-Received: by 2002:a5d:534f:0:b0:357:3e5a:6c90 with SMTP id
- ffacd0b85a97d-35e8ef937e8mr212450f8f.57.1717528032951; 
- Tue, 04 Jun 2024 12:07:12 -0700 (PDT)
+ bh=Y6BvONQ3xHQ5Uc0x7v2hZbGWG9V5fJeg5muDy0KhuLY=;
+ b=lwpDIyGxG+PRaBMtDfwVnMwVAqK1YqMKftsZVZBZ5uUnr/ZgdObzck+JFIFdrj9Uv2
+ P695LoKkpXBK+MJh0ETZ6fpHRRT+l52qFFVLH9jmFziUQkrk2Dv8jWaAe/ex/qqmsYMb
+ Yeh3NsgBrNn0+2AIG6n2LuGs+AogINatUltrasS82A0g46yJHYvyawxmHQh6chOwcJPR
+ Sx40XWk8c3hz/pTY+uscQnFLn+o3YBua/dcs51oRbLCQ+O9hqfRrmnr+pzRW8MUJp+KK
+ 8CbGkZvQM+VBubHAWa/O5VKsdYLhjaR8j/mtIX0vaxWzmqx3tjauG3Z8VDDzCYrEzMkj
+ bNRw==
+X-Gm-Message-State: AOJu0YzzaPOeYk7fnQMhYVYvDe4usfPd3Bl1vdsmd3LGfWizRO2y8AZa
+ hTHsw1P1DcpHeAiW2G4mQnYCL2enhIF3J0tj8bDt7Wodtjkt1VpXJCEo920lHGHalzL3EcasOFd
+ uDSPWMuKsBLMqauN4O9VjfAPFCA0+JczUGsaJunKbwJg9kWzDr460XUnnyj3c3r856PzUqyF6hp
+ nNWQQca8NkNjg8oaO6bQ34qYOV45TCWQ==
+X-Received: by 2002:a5d:64e4:0:b0:35e:8099:67f with SMTP id
+ ffacd0b85a97d-35e840677edmr343292f8f.16.1717528050625; 
+ Tue, 04 Jun 2024 12:07:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHk7GOlvD4VyYtyvjKwZMfAFHn+w/Xh395gtGN1TymCNT1yEv/KWkah2W4lFzP4i/oFM7EWuQ==
+X-Received: by 2002:a5d:64e4:0:b0:35e:8099:67f with SMTP id
+ ffacd0b85a97d-35e840677edmr343260f8f.16.1717528050142; 
+ Tue, 04 Jun 2024 12:07:30 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:552:cf5c:2b13:215c:b9df:f231])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd064aa6csm12364718f8f.93.2024.06.04.12.07.10
+ ffacd0b85a97d-35dd04d9c89sm12353243f8f.60.2024.06.04.12.07.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 12:07:12 -0700 (PDT)
-Date: Tue, 4 Jun 2024 15:07:09 -0400
+ Tue, 04 Jun 2024 12:07:29 -0700 (PDT)
+Date: Tue, 4 Jun 2024 15:07:25 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
- Gregory Price <gregory.price@memverge.com>,
+ Svetly Todorov <svetly.todorov@memverge.com>,
  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL 21/46] include/hw/cxl/cxl_device: Rename mem_size as
- static_mem_size for type3 memory devices
-Message-ID: <ff443a23b262378bd438719c087b68809b6abcee.1717527933.git.mst@redhat.com>
+Subject: [PULL 25/46] hw/mem/cxl_type3: Add DC extent list representative and
+ get DC extent list mailbox support
+Message-ID: <b03d2097e6d18a6b89ad9ed52941cec138160135.1717527933.git.mst@redhat.com>
 References: <cover.1717527933.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -106,97 +106,179 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Fan Ni <fan.ni@samsung.com>
 
-Rename mem_size as static_mem_size for type3 memdev to cover static RAM and
-pmem capacity, preparing for the introduction of dynamic capacity to support
-dynamic capacity devices.
+Add dynamic capacity extent list representative to the definition of
+CXLType3Dev and implement get DC extent list mailbox command per
+CXL.spec.3.1:.8.2.9.9.9.2.
 
-Reviewed-by: Gregory Price <gregory.price@memverge.com>
+Tested-by: Svetly Todorov <svetly.todorov@memverge.com>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-6-nifan.cxl@gmail.com>
+Message-Id: <20240523174651.1089554-10-nifan.cxl@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/cxl/cxl_device.h | 2 +-
- hw/cxl/cxl-mailbox-utils.c  | 4 ++--
- hw/mem/cxl_type3.c          | 8 ++++----
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ include/hw/cxl/cxl_device.h | 22 +++++++++++
+ hw/cxl/cxl-mailbox-utils.c  | 73 ++++++++++++++++++++++++++++++++++++-
+ hw/mem/cxl_type3.c          |  1 +
+ 3 files changed, 95 insertions(+), 1 deletion(-)
 
 diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index e839370266..f7f56b44e3 100644
+index c2c3df0d2a..6aec6ac983 100644
 --- a/include/hw/cxl/cxl_device.h
 +++ b/include/hw/cxl/cxl_device.h
-@@ -234,7 +234,7 @@ typedef struct cxl_device_state {
-     } timestamp;
+@@ -424,6 +424,25 @@ typedef QLIST_HEAD(, CXLPoison) CXLPoisonList;
  
-     /* memory region size, HDM */
--    uint64_t mem_size;
-+    uint64_t static_mem_size;
-     uint64_t pmem_size;
-     uint64_t vmem_size;
+ #define DCD_MAX_NUM_REGION 8
  
++typedef struct CXLDCExtentRaw {
++    uint64_t start_dpa;
++    uint64_t len;
++    uint8_t tag[0x10];
++    uint16_t shared_seq;
++    uint8_t rsvd[0x6];
++} QEMU_PACKED CXLDCExtentRaw;
++
++typedef struct CXLDCExtent {
++    uint64_t start_dpa;
++    uint64_t len;
++    uint8_t tag[0x10];
++    uint16_t shared_seq;
++    uint8_t rsvd[0x6];
++
++    QTAILQ_ENTRY(CXLDCExtent) node;
++} CXLDCExtent;
++typedef QTAILQ_HEAD(, CXLDCExtent) CXLDCExtentList;
++
+ typedef struct CXLDCRegion {
+     uint64_t base;       /* aligned to 256*MiB */
+     uint64_t decode_len; /* aligned to 256*MiB */
+@@ -474,6 +493,9 @@ struct CXLType3Dev {
+          * memory region size.
+          */
+         uint64_t total_capacity; /* 256M aligned */
++        CXLDCExtentList extents;
++        uint32_t total_extent_count;
++        uint32_t ext_list_gen_seq;
+ 
+         uint8_t num_regions; /* 0-8 regions */
+         CXLDCRegion regions[DCD_MAX_NUM_REGION];
 diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index bede28e3c8..b592473587 100644
+index 6ad227f112..7872d2f3e6 100644
 --- a/hw/cxl/cxl-mailbox-utils.c
 +++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -803,7 +803,7 @@ static CXLRetCode cmd_identify_memory_device(const struct cxl_cmd *cmd,
-     snprintf(id->fw_revision, 0x10, "BWFW VERSION %02d", 0);
+@@ -84,6 +84,7 @@ enum {
+         #define CLEAR_POISON           0x2
+     DCD_CONFIG  = 0x48,
+         #define GET_DC_CONFIG          0x0
++        #define GET_DYN_CAP_EXT_LIST   0x1
+     PHYSICAL_SWITCH = 0x51,
+         #define IDENTIFY_SWITCH_DEVICE      0x0
+         #define GET_PHYSICAL_PORT_STATE     0x1
+@@ -1322,7 +1323,8 @@ static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
+      * to use.
+      */
+     stl_le_p(&extra_out->num_extents_supported, CXL_NUM_EXTENTS_SUPPORTED);
+-    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED);
++    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED -
++             ct3d->dc.total_extent_count);
+     stl_le_p(&extra_out->num_tags_supported, CXL_NUM_TAGS_SUPPORTED);
+     stl_le_p(&extra_out->num_tags_available, CXL_NUM_TAGS_SUPPORTED);
  
-     stq_le_p(&id->total_capacity,
--             cxl_dstate->mem_size / CXL_CAPACITY_MULTIPLIER);
-+             cxl_dstate->static_mem_size / CXL_CAPACITY_MULTIPLIER);
-     stq_le_p(&id->persistent_capacity,
-              cxl_dstate->pmem_size / CXL_CAPACITY_MULTIPLIER);
-     stq_le_p(&id->volatile_capacity,
-@@ -1179,7 +1179,7 @@ static CXLRetCode cmd_media_clear_poison(const struct cxl_cmd *cmd,
-     struct clear_poison_pl *in = (void *)payload_in;
+@@ -1330,6 +1332,72 @@ static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
+     return CXL_MBOX_SUCCESS;
+ }
  
-     dpa = ldq_le_p(&in->dpa);
--    if (dpa + CXL_CACHE_LINE_SIZE > cxl_dstate->mem_size) {
-+    if (dpa + CXL_CACHE_LINE_SIZE > cxl_dstate->static_mem_size) {
-         return CXL_MBOX_INVALID_PA;
-     }
++/*
++ * CXL r3.1 section 8.2.9.9.9.2:
++ * Get Dynamic Capacity Extent List (Opcode 4801h)
++ */
++static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
++                                               uint8_t *payload_in,
++                                               size_t len_in,
++                                               uint8_t *payload_out,
++                                               size_t *len_out,
++                                               CXLCCI *cci)
++{
++    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
++    struct {
++        uint32_t extent_cnt;
++        uint32_t start_extent_id;
++    } QEMU_PACKED *in = (void *)payload_in;
++    struct {
++        uint32_t count;
++        uint32_t total_extents;
++        uint32_t generation_num;
++        uint8_t rsvd[4];
++        CXLDCExtentRaw records[];
++    } QEMU_PACKED *out = (void *)payload_out;
++    uint32_t start_extent_id = in->start_extent_id;
++    CXLDCExtentList *extent_list = &ct3d->dc.extents;
++    uint16_t record_count = 0, i = 0, record_done = 0;
++    uint16_t out_pl_len, size;
++    CXLDCExtent *ent;
++
++    if (start_extent_id > ct3d->dc.total_extent_count) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    record_count = MIN(in->extent_cnt,
++                       ct3d->dc.total_extent_count - start_extent_id);
++    size = CXL_MAILBOX_MAX_PAYLOAD_SIZE - sizeof(*out);
++    record_count = MIN(record_count, size / sizeof(out->records[0]));
++    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
++
++    stl_le_p(&out->count, record_count);
++    stl_le_p(&out->total_extents, ct3d->dc.total_extent_count);
++    stl_le_p(&out->generation_num, ct3d->dc.ext_list_gen_seq);
++
++    if (record_count > 0) {
++        CXLDCExtentRaw *out_rec = &out->records[record_done];
++
++        QTAILQ_FOREACH(ent, extent_list, node) {
++            if (i++ < start_extent_id) {
++                continue;
++            }
++            stq_le_p(&out_rec->start_dpa, ent->start_dpa);
++            stq_le_p(&out_rec->len, ent->len);
++            memcpy(&out_rec->tag, ent->tag, 0x10);
++            stw_le_p(&out_rec->shared_seq, ent->shared_seq);
++
++            record_done++;
++            if (record_done == record_count) {
++                break;
++            }
++        }
++    }
++
++    *len_out = out_pl_len;
++    return CXL_MBOX_SUCCESS;
++}
++
+ #define IMMEDIATE_CONFIG_CHANGE (1 << 1)
+ #define IMMEDIATE_DATA_CHANGE (1 << 2)
+ #define IMMEDIATE_POLICY_CHANGE (1 << 3)
+@@ -1377,6 +1445,9 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+ static const struct cxl_cmd cxl_cmd_set_dcd[256][256] = {
+     [DCD_CONFIG][GET_DC_CONFIG] = { "DCD_GET_DC_CONFIG",
+         cmd_dcd_get_dyn_cap_config, 2, 0 },
++    [DCD_CONFIG][GET_DYN_CAP_EXT_LIST] = {
++        "DCD_GET_DYNAMIC_CAPACITY_EXTENT_LIST", cmd_dcd_get_dyn_cap_ext_list,
++        8, 0 },
+ };
  
+ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
 diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 3e42490b6c..7194c8f902 100644
+index 658570aa1a..2075846b1b 100644
 --- a/hw/mem/cxl_type3.c
 +++ b/hw/mem/cxl_type3.c
-@@ -608,7 +608,7 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
-         }
-         address_space_init(&ct3d->hostvmem_as, vmr, v_name);
-         ct3d->cxl_dstate.vmem_size = memory_region_size(vmr);
--        ct3d->cxl_dstate.mem_size += memory_region_size(vmr);
-+        ct3d->cxl_dstate.static_mem_size += memory_region_size(vmr);
-         g_free(v_name);
+@@ -673,6 +673,7 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
+         };
+         ct3d->dc.total_capacity += region->len;
      }
++    QTAILQ_INIT(&ct3d->dc.extents);
  
-@@ -631,7 +631,7 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
-         }
-         address_space_init(&ct3d->hostpmem_as, pmr, p_name);
-         ct3d->cxl_dstate.pmem_size = memory_region_size(pmr);
--        ct3d->cxl_dstate.mem_size += memory_region_size(pmr);
-+        ct3d->cxl_dstate.static_mem_size += memory_region_size(pmr);
-         g_free(p_name);
-     }
- 
-@@ -837,7 +837,7 @@ static int cxl_type3_hpa_to_as_and_dpa(CXLType3Dev *ct3d,
-         return -EINVAL;
-     }
- 
--    if (*dpa_offset > ct3d->cxl_dstate.mem_size) {
-+    if (*dpa_offset > ct3d->cxl_dstate.static_mem_size) {
-         return -EINVAL;
-     }
- 
-@@ -1010,7 +1010,7 @@ static bool set_cacheline(CXLType3Dev *ct3d, uint64_t dpa_offset, uint8_t *data)
-         return false;
-     }
- 
--    if (dpa_offset + CXL_CACHE_LINE_SIZE > ct3d->cxl_dstate.mem_size) {
-+    if (dpa_offset + CXL_CACHE_LINE_SIZE > ct3d->cxl_dstate.static_mem_size) {
-         return false;
-     }
- 
+     return true;
+ }
 -- 
 MST
 
