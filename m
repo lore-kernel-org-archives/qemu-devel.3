@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFE4BC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:00:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B0A7C25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:00:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEQwD-00063G-N9; Tue, 04 Jun 2024 05:58:41 -0400
+	id 1sEQwP-0007vL-Er; Tue, 04 Jun 2024 05:58:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQw8-0005qZ-ES
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:36 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQwO-0007oK-Cu
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:52 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQw5-0002KT-GI
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:36 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4214fe0067fso3750185e9.1
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:58:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQwL-0002N0-SX
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:58:51 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-35dce610207so3378663f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:58:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717495111; x=1718099911; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717495127; x=1718099927; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JSS7Auq4rjMzsXWfz5GZCQIt8zRmJ+DnGC7DTwkUw/o=;
- b=gt9SidZVNko3upKcRpipSjF5pYz7twkzxZhDl2BhJ+xZ5usTBIp91e5cKQJu2Ntd3s
- ylKi07E9O5MkCu/dNNhdp6wI27ALTXvLtLsAxnD3rXy39tDsVEq9rLBsBjPTQ2NjJNFc
- 96EHK5/NyQUUbCYIpM/DqqF3uj+4BMWl9j3WIaa+51KkoIa18bcIVZJDpb8TLYprfD6d
- 5Y9BdjpH5SEtZlbs45Rq2y+z06OfSUtFmpjJzxlpltKVRetfE1VelvZiygR4H1aVLqmK
- Ha63BdIwOKwxlmNZzsvvGY6yMJRrfMnYO5JXP2QhFpy4N3MCXpb8H8JHkk6nIczsxhEY
- mLCw==
+ bh=TGqa4LCtUPmfqT7FCKxDXiSWjLBqv6GKh2fc2iPwQg4=;
+ b=Urb4x7Qt7N3XyuJxgXhZbii6bOtI0Sk3xMOqO5B5DlVLF4BntRwNHOW7B1XZfsnQRJ
+ 18HlzU+aKV3giCPdW3If1j/m/DC16YoEklXrl2tYXoyXiKjYcKP9GbrO0a/WAYAvdg9E
+ e6ZmYE2YaH6wvMSHkAek757cqajdJwTN4L+ng+/Crlf0rAWSiH14w1vXLZJAaUORNt3A
+ q1Mlh0qsZT6N10hN1drLa+qp0lQWiUgj2kbIZQk/cLhzgWIed2xQ7m33z1s/5/7aHhx7
+ iQl5trgOYlfSw2uegTVSpnxzL1kq6CSuvP6stNa3E5H6X99fhstGXcpI6avsHK9fI/hx
+ fV1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717495111; x=1718099911;
+ d=1e100.net; s=20230601; t=1717495127; x=1718099927;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JSS7Auq4rjMzsXWfz5GZCQIt8zRmJ+DnGC7DTwkUw/o=;
- b=ZuAW6sHaoppCTKXyHyOc89ffR8UexJLKODs6dYkbPYVVIeYTgMqN68yrMWkhbPwaUC
- MRjBY2LKyPiW61RaPcyRUHvU0x4iUPF8+UQBrWlyrQ4VgH23GBR2VDbWS4bCSj7hE7Pz
- 93gHG7v1uP3v7hYDL4xNVnC3SeI7ZoTn6LvOS0/WYEKW6QHgcFvrWNSIApbYQUif9v+0
- or1RUUmie+jdCUf97CXdlU7UWWVqiKD/rpg2Z/Z9iZf6PoSPM5H1Cs0iuiY0j2Cr/ejR
- +YMtRILFqrDURyNmjsrzqGtRP/fPLq6Jt0ybBVWNnd4KBWTthwgEElaM2ezOuk7zdcWd
- X11A==
-X-Gm-Message-State: AOJu0YxAtNrDvoq94+kZ1YVzkhQcCluj3lNw9sK1z2RqQHoqUlAZ73zr
- KfHmGLDgG4B5+vAP0HvVnaszqVPV8RU3ofvvL0lE6M/z36iPHi+PYA7ib04xFb1Lubh8pLspXRK
- h
-X-Google-Smtp-Source: AGHT+IEqZw8J1TvbFkkIzX9qRVJETCTGRQ2hTRyRRgoRWNi9EdONdKrG6MB2qGUfMV36SucEB1WWkA==
-X-Received: by 2002:a5d:58c3:0:b0:35e:81b0:e28f with SMTP id
- ffacd0b85a97d-35e81b0e4efmr299450f8f.40.1717495111682; 
- Tue, 04 Jun 2024 02:58:31 -0700 (PDT)
+ bh=TGqa4LCtUPmfqT7FCKxDXiSWjLBqv6GKh2fc2iPwQg4=;
+ b=YrIQjH9lvC+JCNnzlrOgxg/94sD867u/k78jlppmulhbbzqN8u2YMKMLsfbcXC831j
+ UmsYvRpfk/FrJHSoOYRkkPaKZ2wDozQssqAefXleMHJZicDNWlM/MrRpCRGKuJ/ZSuWh
+ oaJXmAavgMtWL4sAjkyvn+rSYd5/HZHFmunZBkapLjU5NRGloAVydne+YuD1G2dZ+08d
+ Nzas5EP/3Zx+9ToT2Utkac8e5W6YgYP2z44BBWv++T38lxW/zmxRby6TPzoFytHileui
+ LHdnwcgOVFuDyUdZTz/Ss3VwwUOQCeE2qzXOUdFh4YAu7H//TM5KBjC//mZ1Fke9nXxF
+ R75w==
+X-Gm-Message-State: AOJu0Yw3MoLluuSJPFGe5oopj+sEKxw0+AOCLh1ChuY3VpFoK/kjhbj/
+ giechi7eG6aQzcBO21Xo3toUjWoTpotcmDm1CwIS0RcOUJmavbqRXHStYD/BDHqfAy7mCm75q6f
+ z
+X-Google-Smtp-Source: AGHT+IG94P5WWPomVHoZIPdJKM7vpl6wDv2k1eL81l1TaEoE4MJF3s2yBYxpESSwDCnW58uEBYVcVQ==
+X-Received: by 2002:adf:e88d:0:b0:351:c960:b5a2 with SMTP id
+ ffacd0b85a97d-35e0f254f8amr10288142f8f.6.1717495127353; 
+ Tue, 04 Jun 2024 02:58:47 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.159.34])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd04c0d6csm11105972f8f.1.2024.06.04.02.58.30
+ ffacd0b85a97d-35dd062ecd3sm11240886f8f.74.2024.06.04.02.58.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Jun 2024 02:58:31 -0700 (PDT)
+ Tue, 04 Jun 2024 02:58:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paul Durrant <paul@xen.org>
-Subject: [PULL 26/32] hw/xen: Register framebuffer backend via
- xen_backend_init()
-Date: Tue,  4 Jun 2024 11:56:02 +0200
-Message-ID: <20240604095609.12285-27-philmd@linaro.org>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 29/32] hw/acpi: Remove the deprecated QAPI MEM_UNPLUG_ERROR
+ event
+Date: Tue,  4 Jun 2024 11:56:05 +0200
+Message-ID: <20240604095609.12285-30-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240604095609.12285-1-philmd@linaro.org>
 References: <20240604095609.12285-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,75 +97,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Align the framebuffer backend with the other legacy ones,
-register it via xen_backend_init() when '-vga xenfb' is
-used. It is safe because MODULE_INIT_XEN_BACKEND is called
-in xen_bus_realize(), long after CLI processing initialized
-the vga_interface_type variable.
+The MEM_UNPLUG_ERROR event is deprecated since commit d43f1670c7
+("qapi/qdev.json: add DEVICE_UNPLUG_GUEST_ERROR QAPI event"),
+time to remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Paul Durrant <paul@xen.org>
-Message-Id: <20240510104908.76908-8-philmd@linaro.org>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Message-Id: <20240530071548.20074-2-philmd@linaro.org>
 ---
- include/hw/xen/xen-legacy-backend.h | 3 ---
- hw/display/xenfb.c                  | 9 +++++++--
- hw/xenpv/xen_machine_pv.c           | 2 --
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ docs/about/deprecated.rst       |  5 -----
+ docs/about/removed-features.rst |  9 +++++++++
+ qapi/machine.json               | 28 ----------------------------
+ hw/acpi/memory_hotplug.c        |  8 --------
+ hw/ppc/spapr.c                  | 11 +----------
+ 5 files changed, 10 insertions(+), 51 deletions(-)
 
-diff --git a/include/hw/xen/xen-legacy-backend.h b/include/hw/xen/xen-legacy-backend.h
-index e55a14057f..943732b8d1 100644
---- a/include/hw/xen/xen-legacy-backend.h
-+++ b/include/hw/xen/xen-legacy-backend.h
-@@ -66,9 +66,6 @@ static inline void xen_be_unmap_grant_ref(struct XenLegacyDevice *xendev,
-     return xen_be_unmap_grant_refs(xendev, ptr, &ref, 1);
- }
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 40585ca7d5..4a61894db6 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -151,11 +151,6 @@ property types.
+ QEMU Machine Protocol (QMP) events
+ ----------------------------------
  
--/* backend drivers not included in all machines */
--extern const struct XenDevOps xen_framebuffer_ops;  /* xenfb.c */
+-``MEM_UNPLUG_ERROR`` (since 6.2)
+-''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 -
- /* configuration (aka xenbus setup) */
- void xen_config_cleanup(void);
- int xen_config_dev_vfb(int vdev, const char *type);
-diff --git a/hw/display/xenfb.c b/hw/display/xenfb.c
-index b6d370bdf6..ff442ced1a 100644
---- a/hw/display/xenfb.c
-+++ b/hw/display/xenfb.c
-@@ -29,6 +29,7 @@
+-Use the more generic event ``DEVICE_UNPLUG_GUEST_ERROR`` instead.
+-
+ ``vcpu`` trace events (since 8.1)
+ '''''''''''''''''''''''''''''''''
  
- #include "ui/input.h"
- #include "ui/console.h"
-+#include "sysemu/sysemu.h"
- #include "hw/xen/xen-legacy-backend.h"
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index fba0cfb0b0..f1e70263e2 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -671,6 +671,15 @@ Use ``multifd-channels`` instead.
  
- #include "hw/xen/interface/io/fbif.h"
-@@ -996,8 +997,12 @@ static const GraphicHwOps xenfb_ops = {
-     .ui_info     = xenfb_ui_info,
- };
+ Use ``multifd-compression`` instead.
  
--static void xen_vkbd_register_backend(void)
-+static void xen_ui_register_backend(void)
- {
-     xen_be_register("vkbd", &xen_kbdmouse_ops);
++QEMU Machine Protocol (QMP) events
++----------------------------------
 +
-+    if (vga_interface_type == VGA_XENFB) {
-+        xen_be_register("vfb", &xen_framebuffer_ops);
-+    }
- }
--xen_backend_init(xen_vkbd_register_backend);
-+xen_backend_init(xen_ui_register_backend);
-diff --git a/hw/xenpv/xen_machine_pv.c b/hw/xenpv/xen_machine_pv.c
-index b500ce0989..24395f42cb 100644
---- a/hw/xenpv/xen_machine_pv.c
-+++ b/hw/xenpv/xen_machine_pv.c
-@@ -50,8 +50,6 @@ static void xen_init_pv(MachineState *machine)
-         break;
-     }
++``MEM_UNPLUG_ERROR`` (removed in 9.1)
++'''''''''''''''''''''''''''''''''''''
++
++MEM_UNPLUG_ERROR has been replaced by the more generic ``DEVICE_UNPLUG_GUEST_ERROR`` event.
++
++
+ Human Monitor Protocol (HMP) commands
+ -------------------------------------
  
--    xen_be_register("vfb", &xen_framebuffer_ops);
+diff --git a/qapi/machine.json b/qapi/machine.json
+index bce6e1bbc4..453feb9347 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1607,34 +1607,6 @@
+ { 'event': 'MEMORY_DEVICE_SIZE_CHANGE',
+   'data': { '*id': 'str', 'size': 'size', 'qom-path' : 'str'} }
+ 
+-##
+-# @MEM_UNPLUG_ERROR:
+-#
+-# Emitted when memory hot unplug error occurs.
+-#
+-# @device: device name
+-#
+-# @msg: Informative message
+-#
+-# Features:
+-#
+-# @deprecated: This event is deprecated.  Use
+-#     @DEVICE_UNPLUG_GUEST_ERROR instead.
+-#
+-# Since: 2.4
+-#
+-# Example:
+-#
+-#     <- { "event": "MEM_UNPLUG_ERROR",
+-#          "data": { "device": "dimm1",
+-#                    "msg": "acpi: device unplug for unsupported device"
+-#          },
+-#          "timestamp": { "seconds": 1265044230, "microseconds": 450486 } }
+-##
+-{ 'event': 'MEM_UNPLUG_ERROR',
+-  'data': { 'device': 'str', 'msg': 'str' },
+-  'features': ['deprecated'] }
 -
-     /* configure framebuffer */
-     if (vga_interface_type == VGA_XENFB) {
-         xen_config_dev_vfb(0, "vnc");
+ ##
+ # @BootConfiguration:
+ #
+diff --git a/hw/acpi/memory_hotplug.c b/hw/acpi/memory_hotplug.c
+index de6f974ebb..9b974b7274 100644
+--- a/hw/acpi/memory_hotplug.c
++++ b/hw/acpi/memory_hotplug.c
+@@ -178,14 +178,6 @@ static void acpi_memory_hotplug_write(void *opaque, hwaddr addr, uint64_t data,
+             hotplug_handler_unplug(hotplug_ctrl, dev, &local_err);
+             if (local_err) {
+                 trace_mhp_acpi_pc_dimm_delete_failed(mem_st->selector);
+-
+-                /*
+-                 * Send both MEM_UNPLUG_ERROR and DEVICE_UNPLUG_GUEST_ERROR
+-                 * while the deprecation of MEM_UNPLUG_ERROR is
+-                 * pending.
+-                 */
+-                qapi_event_send_mem_unplug_error(dev->id ? : "",
+-                                                 error_get_pretty(local_err));
+                 qapi_event_send_device_unplug_guest_error(dev->id,
+                                                           dev->canonical_path);
+                 error_free(local_err);
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 4345764bce..81a187f126 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -3786,7 +3786,6 @@ void spapr_memory_unplug_rollback(SpaprMachineState *spapr, DeviceState *dev)
+     SpaprDrc *drc;
+     uint32_t nr_lmbs;
+     uint64_t size, addr_start, addr;
+-    g_autofree char *qapi_error = NULL;
+     int i;
+ 
+     if (!dev) {
+@@ -3823,16 +3822,8 @@ void spapr_memory_unplug_rollback(SpaprMachineState *spapr, DeviceState *dev)
+ 
+     /*
+      * Tell QAPI that something happened and the memory
+-     * hotunplug wasn't successful. Keep sending
+-     * MEM_UNPLUG_ERROR even while sending
+-     * DEVICE_UNPLUG_GUEST_ERROR until the deprecation of
+-     * MEM_UNPLUG_ERROR is due.
++     * hotunplug wasn't successful.
+      */
+-    qapi_error = g_strdup_printf("Memory hotunplug rejected by the guest "
+-                                 "for device %s", dev->id);
+-
+-    qapi_event_send_mem_unplug_error(dev->id ? : "", qapi_error);
+-
+     qapi_event_send_device_unplug_guest_error(dev->id,
+                                               dev->canonical_path);
+ }
 -- 
 2.41.0
 
