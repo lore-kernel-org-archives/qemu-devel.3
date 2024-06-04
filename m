@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0BC2C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE17C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEZVr-0004eU-3f; Tue, 04 Jun 2024 15:08:03 -0400
+	id 1sEZVI-0000nT-0t; Tue, 04 Jun 2024 15:07:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZVp-0004U6-MM
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:08:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZVF-0000YX-Rx
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:07:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZVn-0000yd-9S
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:08:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZVD-0000ui-Cy
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:07:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717528078;
+ s=mimecast20190719; t=1717528042;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Rl1nDigpJRwgGE3w/iYUa7vmMKH4nemfm7NPNL/7aBE=;
- b=UHqJL4RY6avWa7rRnEOMMzFzpbK6Q3eNPnW22DDk79fCgD+py6EXhbrj/jyE9yumJttu9t
- FIC4T8ogkDJrremBqo2aWIKgs9hvW9RNXwY/MmFJwXpQ15LQAib6JN2eyMIfO9rM5C4xLx
- 7hOcEJCKD1sTBf4dDlGypCGV3pghFN0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1ElU1S3yGZ4jv6gdF/qOH23dlnO7FdnAYenskxuOvWI=;
+ b=JNUGcnrSdMV1gyApcINwGNmEDZ/ZsF/mvj23YDKbYonMwpPRcHlwsJcb6SGg7TuH4FuVOU
+ l6F5x5f2Q0tmg7e2+zXa+2ME2ye3K96lVE9zKBcr/qa9wEH/EHixbKtMLbA32nfwN3tInz
+ /8eTdI5rgZGCRxHf6xm7Ld8UZtNlJbA=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-202-17VZsbEUMYO1oAQ7B5Pvkg-1; Tue, 04 Jun 2024 15:07:57 -0400
-X-MC-Unique: 17VZsbEUMYO1oAQ7B5Pvkg-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42133ebdf24so30286115e9.1
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:07:57 -0700 (PDT)
+ us-mta-119-tYgUC-slOaS70RMKhRQKdw-1; Tue, 04 Jun 2024 15:07:20 -0400
+X-MC-Unique: tYgUC-slOaS70RMKhRQKdw-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-35dc5934390so3106313f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:07:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717528075; x=1718132875;
+ d=1e100.net; s=20230601; t=1717528038; x=1718132838;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Rl1nDigpJRwgGE3w/iYUa7vmMKH4nemfm7NPNL/7aBE=;
- b=UWV4WuLz4I3ezLn3XEYf+I7m0fFzd1BKB8+Rib/+96Y5pt/2wyN2XvoO4GuPLf4lLd
- HkBOox0E7lFM+Oj3qPQ5S+4v6+wwcOlIrOrps3Q61LwTqIfnmHNQlhFU0g3KbdD0LMhk
- VLE6VFuWQnC1ekW1uC4lm/uDXuPe4NFM+taIpUToHnb9FY9lxcI+seIoWtp4g43NfCPj
- ml0hVbWYa57T/YYq/oaJExXuiArNIoI43r2/EjstENrv7aLH5ltcDDH69mkbH8UNu+D6
- Bd2MubjbXHT342/2yMMtrnI1Nza7C3mprsSc8l2fJvyRFI4X+JqyCgZSkKuNpDLJH0Il
- Y82w==
-X-Gm-Message-State: AOJu0YxHD0apQ+Va6hDnAJY2XW4h20/Cx/d6okXAOh+f/Gab3cL946Q2
- aQDz5/wPFyZTRe952kdhEeXpFjamxMnohihMWcaIbUNWkwOrhJQvDddLpvG/VuJnCo6ylVd484+
- q++mttFNz9Q4bZi/4bCUoyXmybIYtGbB3PyqI1S30MLCE2FC5B+AJdBApcmZFsRSTprX2LvGeiN
- AWBXJGUoL9yrjXSr7Bi2yxKVBh5PSP7w==
-X-Received: by 2002:a05:600c:2046:b0:421:5329:235 with SMTP id
- 5b1f17b1804b1-421562ef808mr3990145e9.24.1717528075180; 
- Tue, 04 Jun 2024 12:07:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGuCmM5mGleOgdSRGd5SU56p9w4IVBX6xPBJuDgSdN42IOxS7twoLXmUvSU2nj+Ti6ZdFHhxA==
-X-Received: by 2002:a05:600c:2046:b0:421:5329:235 with SMTP id
- 5b1f17b1804b1-421562ef808mr3989995e9.24.1717528074695; 
- Tue, 04 Jun 2024 12:07:54 -0700 (PDT)
+ bh=1ElU1S3yGZ4jv6gdF/qOH23dlnO7FdnAYenskxuOvWI=;
+ b=iC1bkkQg6RWCqjwatiYeh/fgIsN7qvW2UOHHKmJeisTt5+WLRzZ51d7M1x/YyzjEsg
+ gQeSIB4bg8Mq25ZxnvEvcFGyXONuNOXg1BVLGe7kgLfh//osJySLdyeqO1wOK3eXaLqq
+ IhBk3IqmjyQsNEa72lPFf43Tw99FwAkWBpSifKhcFMPkv+GVVZOVK4Cbzy2EjvV2h9BB
+ 3ukCXjXt+Jf1T7pVIy4Hz6A0U+wlkNgENx2/Vfgtse2mMHWitQVkDg2lnLNPOOwn6+9L
+ 9YxydKX1XkL22RfDD27kAKiiNXApNFCHJu+YOA8elNVK16FFz+HrWuGf21LiG3c6CELT
+ p74Q==
+X-Gm-Message-State: AOJu0YzWXEkTUVOkzEUHISN8C9UuoKCCItaGQp/sdMtGaOpF1l2g3gvm
+ aG4VRpQp1SDEMbKb85hGYX7CmvoZDIdbJQbcs5ufZOTTpu2V1t6aMEi+ATf3AuGPEeWRqg98O91
+ gZgk/dabZMcPjLcoiZo4J+h6XAHAQJSP41RfKfd6rq0zmoud8j0FtrekkZsCl5ig7YFOpabAStP
+ l84CCYjfkeW/qctdZbgMDNjOWv/nED9Q==
+X-Received: by 2002:adf:f552:0:b0:35e:5b3f:3954 with SMTP id
+ ffacd0b85a97d-35e8d07a1famr255227f8f.21.1717528037998; 
+ Tue, 04 Jun 2024 12:07:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IETKaLoMDbKOvc029PhA7jBf1mQtFNjqHI7mm3boCu216JE12cqj2Q0GOIno40kmm0IttyT/g==
+X-Received: by 2002:adf:f552:0:b0:35e:5b3f:3954 with SMTP id
+ ffacd0b85a97d-35e8d07a1famr255201f8f.21.1717528037536; 
+ Tue, 04 Jun 2024 12:07:17 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:552:cf5c:2b13:215c:b9df:f231])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4213837673csm119049435e9.31.2024.06.04.12.07.53
+ ffacd0b85a97d-35e5047f75esm9465264f8f.35.2024.06.04.12.07.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 12:07:54 -0700 (PDT)
-Date: Tue, 4 Jun 2024 15:07:51 -0400
+ Tue, 04 Jun 2024 12:07:16 -0700 (PDT)
+Date: Tue, 4 Jun 2024 15:07:13 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
+Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
+ Gregory Price <gregory.price@memverge.com>,
  Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 32/46] hw/acpi: Insert an acpi-generic-node base under
- acpi-generic-initiator
-Message-ID: <e786b417b7bb2207ad1833d0d64abe57043de8f5.1717527933.git.mst@redhat.com>
+ Li Zhijian <lizhijian@fujitsu.com>
+Subject: [PULL 22/46] hw/mem/cxl_type3: Add support to create DC regions to
+ type3 memory devices
+Message-ID: <fd34c6938b78872b63ae56793e6d54158b435448.1717527933.git.mst@redhat.com>
 References: <cover.1717527933.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -79,7 +80,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1717527933.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -104,209 +105,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Fan Ni <fan.ni@samsung.com>
 
-This will simplify reuse when adding acpi-generic-port.
-Note that some error_printf() messages will now print acpi-generic-node
-whereas others will move to type specific cases in next patch so
-are left alone for now.
+With the change, when setting up memory for type3 memory device, we can
+create DC regions.
+A property 'num-dc-regions' is added to ct3_props to allow users to pass the
+number of DC regions to create. To make it easier, other region parameters
+like region base, length, and block size are hard coded. If needed,
+these parameters can be added easily.
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240524100507.32106-3-Jonathan.Cameron@huawei.com>
+With the change, we can create DC regions with proper kernel side
+support like below:
+
+region=$(cat /sys/bus/cxl/devices/decoder0.0/create_dc_region)
+echo $region > /sys/bus/cxl/devices/decoder0.0/create_dc_region
+echo 256 > /sys/bus/cxl/devices/$region/interleave_granularity
+echo 1 > /sys/bus/cxl/devices/$region/interleave_ways
+
+echo "dc0" >/sys/bus/cxl/devices/decoder2.0/mode
+echo 0x40000000 >/sys/bus/cxl/devices/decoder2.0/dpa_size
+
+echo 0x40000000 > /sys/bus/cxl/devices/$region/size
+echo  "decoder2.0" > /sys/bus/cxl/devices/$region/target0
+echo 1 > /sys/bus/cxl/devices/$region/commit
+echo $region > /sys/bus/cxl/drivers/cxl_region/bind
+
+Reviewed-by: Gregory Price <gregory.price@memverge.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Message-Id: <20240523174651.1089554-7-nifan.cxl@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
 ---
- include/hw/acpi/acpi_generic_initiator.h | 15 ++++-
- hw/acpi/acpi_generic_initiator.c         | 80 +++++++++++++++---------
- 2 files changed, 63 insertions(+), 32 deletions(-)
+ hw/mem/cxl_type3.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
 
-diff --git a/include/hw/acpi/acpi_generic_initiator.h b/include/hw/acpi/acpi_generic_initiator.h
-index a304bad73e..dd4be19c8f 100644
---- a/include/hw/acpi/acpi_generic_initiator.h
-+++ b/include/hw/acpi/acpi_generic_initiator.h
-@@ -8,15 +8,26 @@
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 7194c8f902..06c6f9bb78 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -30,6 +30,7 @@
+ #include "hw/pci/msix.h"
  
- #include "qom/object_interfaces.h"
+ #define DWORD_BYTE 4
++#define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
  
--#define TYPE_ACPI_GENERIC_INITIATOR "acpi-generic-initiator"
+ /* Default CDAT entries for a memory region */
+ enum {
+@@ -567,6 +568,50 @@ static void ct3d_reg_write(void *opaque, hwaddr offset, uint64_t value,
+     }
+ }
+ 
 +/*
-+ * Abstract type to be used as base for
-+ * - acpi-generic-initiator
-+ * - acpi-generic-port
++ * TODO: dc region configuration will be updated once host backend and address
++ * space support is added for DCD.
 + */
-+#define TYPE_ACPI_GENERIC_NODE "acpi-generic-node"
- 
--typedef struct AcpiGenericInitiator {
-+typedef struct AcpiGenericNode {
-     /* private */
-     Object parent;
- 
-     /* public */
-     char *pci_dev;
-     uint16_t node;
-+} AcpiGenericNode;
-+
-+#define TYPE_ACPI_GENERIC_INITIATOR "acpi-generic-initiator"
-+
-+typedef struct AcpiGenericInitiator {
-+    AcpiGenericNode parent;
- } AcpiGenericInitiator;
- 
- /*
-diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-index 18a939b0e5..c054e0e27d 100644
---- a/hw/acpi/acpi_generic_initiator.c
-+++ b/hw/acpi/acpi_generic_initiator.c
-@@ -10,45 +10,61 @@
- #include "hw/pci/pci_device.h"
- #include "qemu/error-report.h"
- 
--typedef struct AcpiGenericInitiatorClass {
-+typedef struct AcpiGenericNodeClass {
-     ObjectClass parent_class;
-+} AcpiGenericNodeClass;
-+
-+typedef struct AcpiGenericInitiatorClass {
-+     AcpiGenericNodeClass parent_class;
- } AcpiGenericInitiatorClass;
- 
-+OBJECT_DEFINE_ABSTRACT_TYPE(AcpiGenericNode, acpi_generic_node,
-+                            ACPI_GENERIC_NODE, OBJECT)
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericNode, ACPI_GENERIC_NODE)
-+
- OBJECT_DEFINE_TYPE_WITH_INTERFACES(AcpiGenericInitiator, acpi_generic_initiator,
--                   ACPI_GENERIC_INITIATOR, OBJECT,
-+                   ACPI_GENERIC_INITIATOR, ACPI_GENERIC_NODE,
-                    { TYPE_USER_CREATABLE },
-                    { NULL })
- 
- OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericInitiator, ACPI_GENERIC_INITIATOR)
- 
-+static void acpi_generic_node_init(Object *obj)
++static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
 +{
-+    AcpiGenericNode *gn = ACPI_GENERIC_NODE(obj);
++    int i;
++    uint64_t region_base = 0;
++    uint64_t region_len =  2 * GiB;
++    uint64_t decode_len = 2 * GiB;
++    uint64_t blk_size = 2 * MiB;
++    CXLDCRegion *region;
++    MemoryRegion *mr;
 +
-+    gn->node = MAX_NODES;
-+    gn->pci_dev = NULL;
++    if (ct3d->hostvmem) {
++        mr = host_memory_backend_get_memory(ct3d->hostvmem);
++        region_base += memory_region_size(mr);
++    }
++    if (ct3d->hostpmem) {
++        mr = host_memory_backend_get_memory(ct3d->hostpmem);
++        region_base += memory_region_size(mr);
++    }
++    if (region_base % CXL_CAPACITY_MULTIPLIER != 0) {
++        error_setg(errp, "DC region base not aligned to 0x%lx",
++                   CXL_CAPACITY_MULTIPLIER);
++        return false;
++    }
++
++    for (i = 0, region = &ct3d->dc.regions[0];
++         i < ct3d->dc.num_regions;
++         i++, region++, region_base += region_len) {
++        *region = (CXLDCRegion) {
++            .base = region_base,
++            .decode_len = decode_len,
++            .len = region_len,
++            .block_size = blk_size,
++            /* dsmad_handle set when creating CDAT table entries */
++            .flags = 0,
++        };
++    }
++
++    return true;
 +}
 +
- static void acpi_generic_initiator_init(Object *obj)
+ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
  {
--    AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
-+}
+     DeviceState *ds = DEVICE(ct3d);
+@@ -635,6 +680,13 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+         g_free(p_name);
+     }
  
--    gi->node = MAX_NODES;
--    gi->pci_dev = NULL;
-+static void acpi_generic_node_finalize(Object *obj)
-+{
-+    AcpiGenericNode *gn = ACPI_GENERIC_NODE(obj);
++    if (ct3d->dc.num_regions > 0) {
++        if (!cxl_create_dc_regions(ct3d, errp)) {
++            error_append_hint(errp, "setup DC regions failed");
++            return false;
++        }
++    }
 +
-+    g_free(gn->pci_dev);
+     return true;
  }
  
- static void acpi_generic_initiator_finalize(Object *obj)
- {
--    AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
--
--    g_free(gi->pci_dev);
- }
+@@ -930,6 +982,7 @@ static Property ct3_props[] = {
+                      HostMemoryBackend *),
+     DEFINE_PROP_UINT64("sn", CXLType3Dev, sn, UI64_NULL),
+     DEFINE_PROP_STRING("cdat", CXLType3Dev, cxl_cstate.cdat.filename),
++    DEFINE_PROP_UINT8("num-dc-regions", CXLType3Dev, dc.num_regions, 0),
+     DEFINE_PROP_END_OF_LIST(),
+ };
  
--static void acpi_generic_initiator_set_pci_device(Object *obj, const char *val,
--                                                  Error **errp)
-+static void acpi_generic_node_set_pci_device(Object *obj, const char *val,
-+                                             Error **errp)
- {
--    AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
-+    AcpiGenericNode *gn = ACPI_GENERIC_NODE(obj);
- 
--    gi->pci_dev = g_strdup(val);
-+    gn->pci_dev = g_strdup(val);
- }
--
--static void acpi_generic_initiator_set_node(Object *obj, Visitor *v,
--                                            const char *name, void *opaque,
--                                            Error **errp)
-+static void acpi_generic_node_set_node(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
- {
--    AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
-+    AcpiGenericNode *gn = ACPI_GENERIC_NODE(obj);
-     MachineState *ms = MACHINE(qdev_get_machine());
-     uint32_t value;
- 
-@@ -58,20 +74,24 @@ static void acpi_generic_initiator_set_node(Object *obj, Visitor *v,
- 
-     if (value >= MAX_NODES) {
-         error_printf("%s: Invalid NUMA node specified\n",
--                     TYPE_ACPI_GENERIC_INITIATOR);
-+                     TYPE_ACPI_GENERIC_NODE);
-         exit(1);
-     }
- 
--    gi->node = value;
--    ms->numa_state->nodes[gi->node].has_gi = true;
-+    gn->node = value;
-+    ms->numa_state->nodes[gn->node].has_gi = true;
-+}
-+
-+static void acpi_generic_node_class_init(ObjectClass *oc, void *data)
-+{
-+    object_class_property_add_str(oc, "pci-dev", NULL,
-+        acpi_generic_node_set_pci_device);
-+    object_class_property_add(oc, "node", "int", NULL,
-+        acpi_generic_node_set_node, NULL, NULL);
- }
- 
- static void acpi_generic_initiator_class_init(ObjectClass *oc, void *data)
- {
--    object_class_property_add_str(oc, "pci-dev", NULL,
--        acpi_generic_initiator_set_pci_device);
--    object_class_property_add(oc, "node", "int", NULL,
--        acpi_generic_initiator_set_node, NULL, NULL);
- }
- 
- /*
-@@ -104,9 +124,9 @@ build_srat_generic_pci_initiator_affinity(GArray *table_data, int node,
- static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
- {
-     MachineState *ms = MACHINE(qdev_get_machine());
--    AcpiGenericInitiator *gi;
-     GArray *table_data = opaque;
-     PCIDeviceHandle dev_handle;
-+    AcpiGenericNode *gn;
-     PCIDevice *pci_dev;
-     Object *o;
- 
-@@ -114,14 +134,14 @@ static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
-         return 0;
-     }
- 
--    gi = ACPI_GENERIC_INITIATOR(obj);
--    if (gi->node >= ms->numa_state->num_nodes) {
-+    gn = ACPI_GENERIC_NODE(obj);
-+    if (gn->node >= ms->numa_state->num_nodes) {
-         error_printf("%s: Specified node %d is invalid.\n",
--                     TYPE_ACPI_GENERIC_INITIATOR, gi->node);
-+                     TYPE_ACPI_GENERIC_INITIATOR, gn->node);
-         exit(1);
-     }
- 
--    o = object_resolve_path_type(gi->pci_dev, TYPE_PCI_DEVICE, NULL);
-+    o = object_resolve_path_type(gn->pci_dev, TYPE_PCI_DEVICE, NULL);
-     if (!o) {
-         error_printf("%s: Specified device must be a PCI device.\n",
-                      TYPE_ACPI_GENERIC_INITIATOR);
-@@ -135,7 +155,7 @@ static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
-                                    pci_dev->devfn);
- 
-     build_srat_generic_pci_initiator_affinity(table_data,
--                                              gi->node, &dev_handle);
-+                                              gn->node, &dev_handle);
- 
-     return 0;
- }
 -- 
 MST
 
