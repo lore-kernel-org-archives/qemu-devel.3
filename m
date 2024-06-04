@@ -4,135 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3867C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 14:03:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5CBFC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 14:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEUjk-0008CZ-5t; Tue, 04 Jun 2024 10:02:04 -0400
+	id 1sEUjd-0008B0-NC; Tue, 04 Jun 2024 10:01:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sEUjh-0008C5-GO
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:02:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEUja-00088l-EL
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:01:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sEUjg-0008RJ-0b
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:02:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEUjW-0008Pv-E0
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:01:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717509712;
+ s=mimecast20190719; t=1717509705;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=V1HiMJVZKeLJ34xIsQNw2KBua11As1yeTY2iuJA/sU0=;
- b=K0B9ApL3psNw8eJ0rKZ2zh41hgcvbQoLo9YrbbyIFTuAxhhlvcdnZihx9w1QEQXRxXz81S
- eZ4N6CB+zFRjrsexEEKDMD47USiaiH4sKS5CZaVqxmQIV8CSaDvIuim81jzXNotpgFwrNd
- PICDEIWRcG0NQUXe4U9zMH1FrKXEJIQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=D8JcBLTS/0XWvXrHGHJk1vqRXL1q+7K7VrzMy2BA33g=;
+ b=EeuiVOE9UI+jvXxdJMHkt2yFRRHDtZuXheJwrn3L9I0CMrBbzofdWxwGSRLLRgj67FNOVi
+ WMZuT22lKaBtx9eg04rIOzjddgampUkT4u/ScZJjjn21UmsUc6AkJq5nZUd4Ie4Jws6OkF
+ n0J9dwReq2EYAsMVOOEBaw+yTZt+pkE=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-385-IJ-z9ySqNpeNGWhRb2EdWg-1; Tue, 04 Jun 2024 10:01:50 -0400
-X-MC-Unique: IJ-z9ySqNpeNGWhRb2EdWg-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42133728a50so33063395e9.2
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 07:01:50 -0700 (PDT)
+ us-mta-266-Qsgp4s6vMvyvVEbrxKIEbA-1; Tue, 04 Jun 2024 10:01:40 -0400
+X-MC-Unique: Qsgp4s6vMvyvVEbrxKIEbA-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2ea9aeae4e6so33446961fa.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 07:01:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717509709; x=1718114509;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=V1HiMJVZKeLJ34xIsQNw2KBua11As1yeTY2iuJA/sU0=;
- b=tK2tXommSxSDeAELD8uTPtKq+F2WT529C/OruYpoz5C3ljDvgDNXfbAzZi/MtL7Kdn
- P8rmpc+t70ccVLh/JYYOto2hHcl6dIPvOFy4F4cT04L3Np3Q7KdxpIcI0tMXK53N9b6M
- mtcOEvZJAYESIXHWOaAyQoXiwLJtadu6AZ24LvloSIorbkEibDUlF/9Hrt3hPPW/Z+DH
- mnJADYhOxoz0JsjUetgIwKFALBASfzOY+wxBUqXfs5L8myG2gOP2rRu7wQ2HAq0cDeJ4
- 1MwcLP9T0uf1xwkqTiY6TFkmwCfbykr9Pw2nT3RXUjg+nQDqMyT/tLDSPg5499kUjdxD
- G6mw==
+ d=1e100.net; s=20230601; t=1717509698; x=1718114498;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=D8JcBLTS/0XWvXrHGHJk1vqRXL1q+7K7VrzMy2BA33g=;
+ b=ejBpj4jlVxYWusmpzFeS+c6YOAhoGll0k8tCavwwIoQJXHCwUMvtdr9McB4FY5L15I
+ V55wClI7kf3CFqOevxHqDddlRtFnMm36yHCGgfyLgciY46cMW0J/tvNnQl9dIw8jxoPd
+ F0vwSMlaKElcPMljOZBiKDrkbNh/OUgnkBI2cZvZ6CQXgCr8251UOYQcD+VSDxvacmHW
+ wn0DBTUH0hsfVHIPzNMwEIO3N9R5HBi3o0yCLhzWsjiwfIeCCbMBwLrIJtKxdnRXSEA8
+ iqSQBDTt5WNceUeHJbqDUlnzB5S22cdSEGORXrKDlBXuriQudSP/O1f/3P5pbqmcMxfV
+ AfQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmAkMj6dBECdWpb4e0K7QP8genJaBx3F52V4NAWIFrFmG9fItBEth3Gq+Z5GDnHoMaZwUc/YzpUvct3NxF6y+D8xzNAEE=
-X-Gm-Message-State: AOJu0YwZrJrwu1wClKV6HuWKBhR7hFcOGicOqlLnNal1EH6dZOgltuib
- X3rar0O8cbgt3v0XWd/imMsTHE66njNEwqRsnxs57fRJlC0RU46Jth3ur0wF0Kw6dIwz1NYrPw5
- eQBLG/hs3ygrIajNQz510Ym0ZsxXCcSylRYK8c6UGKFdMzW3ujoi9
-X-Received: by 2002:a05:600c:34d2:b0:421:10ce:8aff with SMTP id
- 5b1f17b1804b1-4212e075629mr132627605e9.19.1717509709368; 
- Tue, 04 Jun 2024 07:01:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3tWPgJcoE45F7MGvr4dXYk5T6TU/GGE6NzwHluA1EiTYAb9UJYSUpPF8NK6vLJsw2R8vH7Q==
-X-Received: by 2002:a05:600c:34d2:b0:421:10ce:8aff with SMTP id
- 5b1f17b1804b1-4212e075629mr132627225e9.19.1717509708899; 
- Tue, 04 Jun 2024 07:01:48 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c73a:3a00:a025:9b06:549e:c16b?
- (p200300cbc73a3a00a0259b06549ec16b.dip0.t-ipconnect.de.
- [2003:cb:c73a:3a00:a025:9b06:549e:c16b])
+ AJvYcCUWIARQZxsetu+eEFBB1i+zuHdjs/FjkBjLhaDw5rInlOS5Rv1OIQGEQa5DtUkO2/MYsrwk8yYEK9dRL+vnzGM0ttRTZSM=
+X-Gm-Message-State: AOJu0YxSdM5f0zvTPEClzFI6y8FzUSTBVKS7PXIuH6QFXwkAzXT8gofH
+ Wdms1HLQduphM+9wz/prjSUsPAV9lkWCrrBk5YLdOBQ8ol2WIcESp0QRWbKSHZyBH4wT8+fRYrS
+ an18Ti9cMiZY8ha42KY7qR8MF7q2Xcb677FYGZaqMpGfQLptOEkx2
+X-Received: by 2002:a2e:3202:0:b0:2ea:83b1:bf70 with SMTP id
+ 38308e7fff4ca-2ea951df832mr100334771fa.37.1717509698373; 
+ Tue, 04 Jun 2024 07:01:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFT1hBdn/5KK3fauTXAXGHe2swfXEXy0HhgitZNzAlAgSOd7NUqRTXQz/usCnY1dttJ3lJAcA==
+X-Received: by 2002:a2e:3202:0:b0:2ea:83b1:bf70 with SMTP id
+ 38308e7fff4ca-2ea951df832mr100334391fa.37.1717509697759; 
+ Tue, 04 Jun 2024 07:01:37 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc7:552:cf5c:2b13:215c:b9df:f231])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4212c0fb7c2sm152943105e9.26.2024.06.04.07.01.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Jun 2024 07:01:48 -0700 (PDT)
-Message-ID: <11017c4b-e0db-4f2e-af1d-54bc2c416e5e@redhat.com>
-Date: Tue, 4 Jun 2024 16:01:47 +0200
+ 5b1f17b1804b1-421535bc543sm17291135e9.43.2024.06.04.07.01.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Jun 2024 07:01:37 -0700 (PDT)
+Date: Tue, 4 Jun 2024 10:01:31 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, qemu-stable@nongnu.org
+Subject: Re: [PATCH v8 00/15] hw/pci: SR-IOV related fixes and improvements
+Message-ID: <20240604100020-mutt-send-email-mst@kernel.org>
+References: <20240228-reuse-v8-0-282660281e60@daynix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] migration: remove RDMA live migration temporarily
-To: Gonglei <arei.gonglei@huawei.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, yu.zhang@ionos.com, mgalaxy@akamai.com,
- elmar.gerdes@ionos.com, zhengchuan@huawei.com, berrange@redhat.com,
- armbru@redhat.com, lizhijian@fujitsu.com, pbonzini@redhat.com,
- mst@redhat.com, xiexiangyou@huawei.com, linux-rdma@vger.kernel.org,
- lixiao91@huawei.com, jinpu.wang@ionos.com,
- Jialin Wang <wangjialin23@huawei.com>
-References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
- <1717503252-51884-2-git-send-email-arei.gonglei@huawei.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <1717503252-51884-2-git-send-email-arei.gonglei@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240228-reuse-v8-0-282660281e60@daynix.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -141,7 +97,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,34 +113,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.06.24 14:14, Gonglei via wrote:
-> From: Jialin Wang <wangjialin23@huawei.com>
+On Wed, Feb 28, 2024 at 08:33:11PM +0900, Akihiko Odaki wrote:
+> I submitted a RFC series[1] to add support for SR-IOV emulation to
+> virtio-net-pci. During the development of the series, I fixed some
+> trivial bugs and made improvements that I think are independently
+> useful. This series extracts those fixes and improvements from the RFC
+> series.
 > 
-> The new RDMA live migration will be introduced in the upcoming
-> few commits.
+> [1]: https://patchew.org/QEMU/20231210-sriov-v2-0-b959e8a6dfaf@daynix.com/
 > 
-> Signed-off-by: Jialin Wang <wangjialin23@huawei.com>
-> Signed-off-by: Gonglei <arei.gonglei@huawei.com>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+
+
+Applying these:
+
+pcie_sriov: Register VFs after migration
+pcie_sriov: Remove num_vfs from PCIESriovPF
+pcie_sriov: Release VFs failed to realize
+pcie_sriov: Reuse SR-IOV VF device instances
+pcie_sriov: Ensure VF function number does not overflow
+pcie_sriov: Do not manually unrealize
+pci: Rename has_power to enabled
+
+
+Triggers a CI failure:
+
+https://gitlab.com/mstredhat/qemu/-/jobs/7013886604
+
+
+qemu-system-ppc64: ../hw/pci/pci.c:276: pci_bar: Assertion `!pci_is_vf(d)' failed.
+Broken pipe
+../tests/qtest/libqtest.c:204: kill_qemu() detected QEMU death from signal 6 (Aborted) (core dumped)
+(test program exited with status code -6)
+TAP parsing error: Too few tests run (expected 127, got 41)
+
+
+Pls fix and repost.
+
+
 > ---
-
-[...]
-
-> -
-> -    /* Avoid ram_block_discard_disable(), cannot change during migration. */
-> -    if (ram_block_discard_is_required()) {
-> -        error_setg(errp, "RDMA: cannot disable RAM discard");
-> -        return;
-> -    }
-
-I'm particularly interested in the interaction with 
-virtio-balloon/virtio-mem.
-
-Do we still have to disable discarding of RAM, and where would you do 
-that in the rewrite?
-
--- 
-Cheers,
-
-David / dhildenb
+> Changes in v8:
+> - Clarified that "hw/pci: Replace -1 with UINT32_MAX for romsize" is
+>   not a bug fix. (Markus Armbruster)
+> - Squashed patch "vfio: Avoid inspecting option QDict for rombar" into
+>   "hw/pci: Determine if rombar is explicitly enabled".
+>   (Markus Armbruster)
+> - Noted the minor semantics change for patch "hw/pci: Determine if
+>   rombar is explicitly enabled". (Markus Armbruster)
+> - Link to v7: https://lore.kernel.org/r/20240224-reuse-v7-0-29c14bcb952e@daynix.com
+> 
+> Changes in v7:
+> - Replaced -1 with UINT32_MAX when expressing uint32_t.
+>   (Markus Armbruster)
+> - Added patch "hw/pci: Replace -1 with UINT32_MAX for romsize".
+> - Link to v6: https://lore.kernel.org/r/20240220-reuse-v6-0-2e42a28b0cf2@daynix.com
+> 
+> Changes in v6:
+> - Fixed migration.
+> - Added patch "pcie_sriov: Do not manually unrealize".
+> - Restored patch "pcie_sriov: Release VFs failed to realize" that was
+>   missed in v5.
+> - Link to v5: https://lore.kernel.org/r/20240218-reuse-v5-0-e4fc1c19b5a9@daynix.com
+> 
+> Changes in v5:
+> - Added patch "hw/pci: Always call pcie_sriov_pf_reset()".
+> - Added patch "pcie_sriov: Reset SR-IOV extended capability".
+> - Removed a reference to PCI_SRIOV_CTRL_VFE in hw/nvme.
+>   (Michael S. Tsirkin)
+> - Noted the impact on the guest of patch "pcie_sriov: Do not reset
+>   NumVFs after unregistering VFs". (Michael S. Tsirkin)
+> - Changed to use pcie_sriov_num_vfs().
+> - Restored pci_set_power() and changed it to call pci_set_enabled() only
+>   for PFs with an expalanation. (Michael S. Tsirkin)
+> - Reordered patches.
+> - Link to v4: https://lore.kernel.org/r/20240214-reuse-v4-0-89ad093a07f4@daynix.com
+> 
+> Changes in v4:
+> - Reverted the change to pci_rom_bar_explicitly_enabled().
+>   (Michael S. Tsirkin)
+> - Added patch "pcie_sriov: Do not reset NumVFs after unregistering VFs".
+> - Added patch "hw/nvme: Refer to dev->exp.sriov_pf.num_vfs".
+> - Link to v3: https://lore.kernel.org/r/20240212-reuse-v3-0-8017b689ce7f@daynix.com
+> 
+> Changes in v3:
+> - Extracted patch "hw/pci: Use -1 as a default value for rombar" from
+>   patch "hw/pci: Determine if rombar is explicitly enabled"
+>   (Philippe Mathieu-Daudé)
+> - Added an audit result of PCIDevice::rom_bar to the message of patch
+>   "hw/pci: Use -1 as a default value for rombar"
+>   (Philippe Mathieu-Daudé)
+> - Link to v2: https://lore.kernel.org/r/20240210-reuse-v2-0-24ba2a502692@daynix.com
+> 
+> Changes in v2:
+> - Reset after enabling a function so that NVMe VF state gets updated.
+> - Link to v1: https://lore.kernel.org/r/20240203-reuse-v1-0-5be8c5ce6338@daynix.com
+> 
+> ---
+> Akihiko Odaki (15):
+>       hw/nvme: Use pcie_sriov_num_vfs()
+>       pcie_sriov: Validate NumVFs
+>       pcie_sriov: Reset SR-IOV extended capability
+>       pcie_sriov: Do not reset NumVFs after disabling VFs
+>       hw/pci: Always call pcie_sriov_pf_reset()
+>       hw/pci: Rename has_power to enabled
+>       pcie_sriov: Do not manually unrealize
+>       pcie_sriov: Reuse SR-IOV VF device instances
+>       pcie_sriov: Release VFs failed to realize
+>       pcie_sriov: Remove num_vfs from PCIESriovPF
+>       pcie_sriov: Register VFs after migration
+>       hw/pci: Replace -1 with UINT32_MAX for romsize
+>       hw/pci: Use UINT32_MAX as a default value for rombar
+>       hw/pci: Determine if rombar is explicitly enabled
+>       hw/qdev: Remove opts member
+> 
+>  docs/pcie_sriov.txt         |   8 ++-
+>  include/hw/pci/pci.h        |   2 +-
+>  include/hw/pci/pci_device.h |  22 +++++-
+>  include/hw/pci/pcie_sriov.h |  13 ++--
+>  include/hw/qdev-core.h      |   4 --
+>  hw/core/qdev.c              |   1 -
+>  hw/net/igb.c                |  15 ++--
+>  hw/nvme/ctrl.c              |  54 +++++++-------
+>  hw/pci/pci.c                |  32 +++++----
+>  hw/pci/pci_host.c           |   4 +-
+>  hw/pci/pcie_sriov.c         | 170 ++++++++++++++++++++++++--------------------
+>  hw/vfio/pci.c               |   3 +-
+>  hw/xen/xen_pt_load_rom.c    |   2 +-
+>  system/qdev-monitor.c       |  12 ++--
+>  hw/pci/trace-events         |   2 +-
+>  15 files changed, 194 insertions(+), 150 deletions(-)
+> ---
+> base-commit: 5005aed8a7e728d028efb40e243ecfc2b4f3df3a
+> change-id: 20240129-reuse-faae22b11934
+> 
+> Best regards,
+> -- 
+> Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
