@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82560C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 23:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B965C27C50
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 23:10:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEdHU-000141-Po; Tue, 04 Jun 2024 19:09:28 -0400
+	id 1sEdHz-0001Oi-WA; Tue, 04 Jun 2024 19:10:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEdHS-00013h-Da; Tue, 04 Jun 2024 19:09:26 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1sEdHy-0001O2-HV; Tue, 04 Jun 2024 19:09:58 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEdHQ-0003Jz-BD; Tue, 04 Jun 2024 19:09:26 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-57a677d3d79so557287a12.1; 
- Tue, 04 Jun 2024 16:09:23 -0700 (PDT)
+ id 1sEdHu-0003OT-H3; Tue, 04 Jun 2024 19:09:58 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2e95a883101so79218251fa.3; 
+ Tue, 04 Jun 2024 16:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717542562; x=1718147362; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717542590; x=1718147390; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=khhHDbkr9jnGUfgdHG000CJi2KQFxKz1Q2IzqMtO9o8=;
- b=lLo8DrZk0PYrBb9WGQzhM1a5x7/7nWPeltRon0apkNRCEy8JK7YaPnpatiwzUIyuyt
- HwbHKgUwXGnY4bwJzyv0MN6oK7WrPc+Mdu4P+2uf3AXn1Ry0rgdTV7pRvoo2ef9seU68
- NQ4b8R5QI5DFTlWEMQouTaGNADT//BN8JNbOF3mFwzD5upI3640Q9y1Bt49TvsNiWx6F
- EscaE8qGjZsyJCf4wc9bi/hCSFqADHhOaxphExBD29Iwv/saDGcNMIwCD5ZHiw4gL4cD
- o/3tXuh+GkdoS0N+sufNvReGdTtGBD2EI19LH6dO/uhNiIL4s+ZhRtPjjDDVYsIgufuL
- 68pw==
+ bh=rrpdjyQf8pCzn8J8GCatCbCiIcT9arpQz49iDaapx1E=;
+ b=gV6pGhH/emnIGJqQzKcx10eLhOAr6re35SinUaGzKgkxaPWU9hi6qHoO+A3jCpPM1J
+ W5hhqGGNYHU+hsPCqIYHSHfRrE+mA9avSIOLzi8xgoO8dkNHHdObGCk+J+r7ugfJNEKY
+ 2vppnAsN/IfIfNxInrNuTn/q+wQxf61mz21EAL/Vs8sYPF3LyfaAmMBaefFNt3wki2r6
+ 8YR+1wGXpBojJjPiIS/QCK4OFuit/40VJdf9fjKs1ySMV1go7VAgtrRlW6pzrFtve5jl
+ y/hv3vd+thd4WJrzDsgoju9Rmb1EWl8u9+fzYDjsnVdggC9HoOGl02WpLOw7Q45e70XD
+ 6EVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717542562; x=1718147362;
+ d=1e100.net; s=20230601; t=1717542590; x=1718147390;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=khhHDbkr9jnGUfgdHG000CJi2KQFxKz1Q2IzqMtO9o8=;
- b=Ro5GzvIpaQ/j0m5S8xVFJmjZSwUZ7QufU7ZeWsaIJ9JgxeQO0ycPcSsxcMMtMg9Gxz
- AgxIrQDIUunDHADHiOo2OdK29VzpyVNpb0FnSrNoRhBgFLWxBP85qU82bXFIzHVm7ltu
- gvlUnqKPx3ALM9Dm6V4l4NNbrIa8BxLB6CuI4pbZLILWLi4naU3E0lZoOcv4IdNG+BvI
- XyhLHYPcHSlesK6oISB2VcUBoBMVNaD8b9qoRjYT7/op1oQXFrzzJ6zkAiQrBMOjew3E
- w5HPpFtrbZhoOnIgmf7f/t5zOeUblmHSR/hJNmXlO/PP1e+b7gWBIfmTtArJbHSiB+Ws
- q/fw==
+ bh=rrpdjyQf8pCzn8J8GCatCbCiIcT9arpQz49iDaapx1E=;
+ b=XVDFPia7eVUi8Z+ecoeCsBwTgEAiQ/6FyrN/W92sRKUgu5JdmZ4S6VQ/0Hapld89/D
+ gHKLlt06GvE7b4Jgz87X4n3lEuxGPdUCm7q964ZOjJg/Vzegzu6CUCD3/GAaDddd9Pn5
+ 0E53KwIjuysntF1yBkmZRMnJtnuVzlZ0bvCkRlB9oA4eRDROQWByWU2NpMuR1o6w4Lif
+ q5KBbziEa2uVrCFSSICuFMAIMPduLEAdVw7ER1dEt2jta5AOvX+4KVR9ofbRiJ+T71BK
+ ds8XGJcCPXelOPXsE765tvRsQcmWut3uLqLjiI9iz7oCSzeMk6mHyL7Jm2rWuiCxcmvU
+ xU8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXMyXjndTyFgv9HavzIrD8aKwbfyU3eTY/TGKqrXQxPUomkhn/qpttM6PAz++Nl2g6r2uajEf58UCzRzrAFfCNLEGUVKQo=
-X-Gm-Message-State: AOJu0YyLBs7XEL9H0chdoWTFlfW/0rrCNId1sG/hZ9MfjaIWZM78MtBF
- 3w0Dg8ls2XVe+gApS8JTCbxvjq1VOTldraBJaApy5LBPoHGZg9g7tR0Y0b5gplGq360dNSCxVyq
- SINFDaUotqc/5C/1zaQkMp8yqp2I=
-X-Google-Smtp-Source: AGHT+IHffY3fTSX+GpXoB7kJz3BhfnRCsZrDWF9IzakPs1xsGbpbdRcVkA71Bz5JLo7uvAMTo032HC49PUyKbf8CVDk=
-X-Received: by 2002:a50:c055:0:b0:573:1e9e:2d71 with SMTP id
- 4fb4d7f45d1cf-57a8bccb3b9mr697786a12.19.1717542561775; Tue, 04 Jun 2024
- 16:09:21 -0700 (PDT)
+ AJvYcCXJ0LE1w+xy588tv6IL+oYcnyi2/UZcPG5RiQcPGft4w1tV68Ic6ZQT6jF7T05AFLpGhcCXqNTrw2zql9rRWZEJ3DZvxC0=
+X-Gm-Message-State: AOJu0Yx4nFk/Dqa+6MohLu24IpsksG6iL/+tIT85WdWDwfWfwz/iS/bh
+ coud9B7x4ey1YzMHFpxQUfsFC7+mPuH56+5cuh5toi2Ak7DLR02wF2LqYrA4tKclqTmf/UJGX7R
+ tyW2ST5qdwtHGPXWJUlBnkmiSh+o=
+X-Google-Smtp-Source: AGHT+IE8Y4O3jfplr7D+6qK64u8tjppA3lq+RF/Et9C/s3N8WjChHhm9mD+4c3G+wY9EGSoKN3br/GjC5CX2ZJIhA5g=
+X-Received: by 2002:a2e:99c5:0:b0:2e0:c689:f8cd with SMTP id
+ 38308e7fff4ca-2eac7a122d0mr3403401fa.29.1717542589673; Tue, 04 Jun 2024
+ 16:09:49 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240528073103.1075812-1-sunilvl@ventanamicro.com>
- <20240528073103.1075812-3-sunilvl@ventanamicro.com>
-In-Reply-To: <20240528073103.1075812-3-sunilvl@ventanamicro.com>
+ <20240528073103.1075812-4-sunilvl@ventanamicro.com>
+In-Reply-To: <20240528073103.1075812-4-sunilvl@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 5 Jun 2024 09:08:53 +1000
-Message-ID: <CAKmqyKOsm9BLdzUw_vG4Uc5OqO=dA9zVyuKj7ZAknb750kukXw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] hw/riscv/virt-acpi-build.c: Add namespace devices for
- PLIC and APLIC
+Date: Wed, 5 Jun 2024 09:09:22 +1000
+Message-ID: <CAKmqyKM6T2z2VAa4=RoyrK-_p5TUgvS3noHT4jKr76rSHPsCrQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] hw/riscv/virt-acpi-build.c: Update the HID of RISC-V
+ UART
 To: Sunil V L <sunilvl@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
@@ -73,8 +73,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  Andrew Jones <ajones@ventanamicro.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=alistair23@gmail.com; helo=mail-lj1-x236.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,8 +101,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, May 28, 2024 at 5:32=E2=80=AFPM Sunil V L <sunilvl@ventanamicro.com=
 > wrote:
 >
-> PLIC and APLIC should be in namespace as well. So, add them using the
-> defined HID.
+> RISC-V is going to use new HID RSCV0003 for generi UART. So, update the
+> HID.
 >
 > Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
 
@@ -111,79 +111,23 @@ Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/riscv/virt-acpi-build.c | 47 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 47 insertions(+)
+>  hw/riscv/virt-acpi-build.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
 > diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 832a3acb8d..47ec78e432 100644
+> index 47ec78e432..7f80368415 100644
 > --- a/hw/riscv/virt-acpi-build.c
 > +++ b/hw/riscv/virt-acpi-build.c
-> @@ -141,6 +141,52 @@ static void acpi_dsdt_add_cpus(Aml *scope, RISCVVirt=
-State *s)
->      }
->  }
->
-> +static void acpi_dsdt_add_plic_aplic(Aml *scope, RISCVVirtState *s)
-> +{
-> +    MachineState *ms =3D MACHINE(s);
-> +    uint64_t plic_aplic_addr;
-> +    uint32_t gsi_base;
-> +    uint8_t  socket;
-> +
-> +    if (s->aia_type =3D=3D VIRT_AIA_TYPE_NONE) {
-> +        /* PLICs */
-> +        for (socket =3D 0; socket < riscv_socket_count(ms); socket++) {
-> +            plic_aplic_addr =3D s->memmap[VIRT_PLIC].base +
-> +                         s->memmap[VIRT_PLIC].size * socket;
-> +            gsi_base =3D VIRT_IRQCHIP_NUM_SOURCES * socket;
-> +            Aml *dev =3D aml_device("IC%.02X", socket);
-> +            aml_append(dev, aml_name_decl("_HID", aml_string("RSCV0001")=
-));
-> +            aml_append(dev, aml_name_decl("_UID", aml_int(socket)));
-> +            aml_append(dev, aml_name_decl("_GSB", aml_int(gsi_base)));
-> +
-> +            Aml *crs =3D aml_resource_template();
-> +            aml_append(crs, aml_memory32_fixed(plic_aplic_addr,
-> +                                               s->memmap[VIRT_PLIC].size=
-,
-> +                                               AML_READ_WRITE));
-> +            aml_append(dev, aml_name_decl("_CRS", crs));
-> +            aml_append(scope, dev);
-> +        }
-> +    } else {
-> +        /* APLICs */
-> +        for (socket =3D 0; socket < riscv_socket_count(ms); socket++) {
-> +            plic_aplic_addr =3D s->memmap[VIRT_APLIC_S].base +
-> +                             s->memmap[VIRT_APLIC_S].size * socket;
-> +            gsi_base =3D VIRT_IRQCHIP_NUM_SOURCES * socket;
-> +            Aml *dev =3D aml_device("IC%.02X", socket);
-> +            aml_append(dev, aml_name_decl("_HID", aml_string("RSCV0002")=
-));
-> +            aml_append(dev, aml_name_decl("_UID", aml_int(socket)));
-> +            aml_append(dev, aml_name_decl("_GSB", aml_int(gsi_base)));
-> +
-> +            Aml *crs =3D aml_resource_template();
-> +            aml_append(crs, aml_memory32_fixed(plic_aplic_addr,
-> +                                               s->memmap[VIRT_APLIC_S].s=
-ize,
-> +                                               AML_READ_WRITE));
-> +            aml_append(dev, aml_name_decl("_CRS", crs));
-> +            aml_append(scope, dev);
-> +        }
-> +    }
-> +}
-> +
->  static void
->  acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
+> @@ -192,7 +192,7 @@ acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uar=
+t_memmap,
 >                      uint32_t uart_irq)
-> @@ -411,6 +457,7 @@ static void build_dsdt(GArray *table_data,
+>  {
+>      Aml *dev =3D aml_device("COM0");
+> -    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0501")));
+> +    aml_append(dev, aml_name_decl("_HID", aml_string("RSCV0003")));
+>      aml_append(dev, aml_name_decl("_UID", aml_int(0)));
 >
->      socket_count =3D riscv_socket_count(ms);
->
-> +    acpi_dsdt_add_plic_aplic(scope, s);
->      acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0], UART0_IRQ);
->
->      if (socket_count =3D=3D 1) {
+>      Aml *crs =3D aml_resource_template();
 > --
 > 2.40.1
 >
