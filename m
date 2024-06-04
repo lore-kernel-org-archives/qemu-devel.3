@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98D8C27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:42:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00301C27C53
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:43:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sENrR-00087W-5c; Tue, 04 Jun 2024 02:41:33 -0400
+	id 1sENtB-00015C-TH; Tue, 04 Jun 2024 02:43:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1sENrL-00086P-A8
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:41:27 -0400
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sENt9-000149-Hv; Tue, 04 Jun 2024 02:43:19 -0400
+Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
- id 1sENrH-0006X8-RF
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:41:27 -0400
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-4eb14c1a15aso858343e0c.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:41:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sENt7-00079O-L2; Tue, 04 Jun 2024 02:43:19 -0400
+Received: by mail-ua1-x933.google.com with SMTP id
+ a1e0cc1a2514c-80aca0fbcffso220711241.1; 
+ Mon, 03 Jun 2024 23:43:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1717483281; x=1718088081; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=zm2gmNUyLiYeot720PZVrFYl2KkhT9X1YFFONMEoscE=;
- b=ayjLK7LKa1k70BmfAAxATqmdQQBzhZeO+u1Y53YubpL1V63mj+4tVk3UYP3qfE7W1j
- 5ArF3i7k0zEM4gBGz+8LcvmrdeoTUN+XL5X2oPKXqw7E3pSwuhyaHjr7hWtVH0zsvoUl
- 34+gaO1B6RbyWNeHlZ2Y6KkpkuanNlXgxPgOb4eLGaeImBjVYFbH4JGtAtQcOT4HKY8q
- ty7G+j2uj416EmtfheJMv8Lp1mk627xDgVmYMdT9GNJoHlKDsRYg4GEcVHSEVMGvnKkc
- TYMZuN8T+ZgdExr0kadDKzc5S8NE9A/OckimY3doK7km9S0Ilc+BbOozleRP4weKI2yE
- 7Hrg==
+ d=gmail.com; s=20230601; t=1717483396; x=1718088196; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=K3ql2cT4nN5lj0/lXbbPlUzDIUcijp2aoILioVyJGN0=;
+ b=idNQMLfBrSYcEen9BoUe+w5/OW9CjJfsFPu9D4pBF5zAFHhgpMlueLGndz6tFuVLPn
+ vcCU+aPX+uBgx3bNgD+KJFCLp8JkD2Qzcg/9gz8a3p/idSKJuELxrGJF/AsOqFprMoIR
+ f8jHtL7KnFhgNTOSnRK4/R/Q7NDdJXHXHkRLKhtSuDZMj856u5Qy6A/TJePNZeHHLfxJ
+ LR0cA5OTFa5FHpJQPt/89QaEOD9rqz4GmfooMmV8C9zr5evFfPrWppuCrmakHlqr5iTo
+ Rtxx4J5cst4xXkqBAdSOYahDs9CknfxLtCRUQ8h3nsV4WE1Me78BqYi/7m65TG+GwS8P
+ 7Y2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717483281; x=1718088081;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zm2gmNUyLiYeot720PZVrFYl2KkhT9X1YFFONMEoscE=;
- b=JqNnsP3GN8ixr+zTb90iEDVTlLtWnC2x9nfdn0j76KDntAWQuhnlsHM1J0K1KwRMQN
- hSMX1goVLeBIHn9gVO9G42F4YfPxg1SPENGYRi+50v+nqPNY/3/x9xubIgaSXpRUg9xk
- oGi+VDIW++QWPm4qiNhvxvKUS7CqO5q4CwN3q6hEVOywo/cNHK2lJAX8uVBOPMS1xzSS
- qi6JvQnKR9hOzAm/hNj8Ra1tPtCYLrws3vW6lNC0PXUjOyYJitVwzrsmco2Sms1b2Dmd
- ETyBHmAxG7hIv2TwC9TO3h3C6WppN20QVz2aYJPR/GbTCb9wrjJ2dJdNvguYdliQ9inY
- vZRA==
-X-Gm-Message-State: AOJu0YyuffI798HWijc5SOZNSjVUEbOoW8fLe1XApA2ARn6UQPbLHrLt
- 0rnPcXlI8GErECwcKorCU0nnDHZzPy++6JQK7hIT4LSEoQny6uDuRdwC5oPPs3734Vss6zUXI5T
- lXQ8/+bSsRLwaXhZYn7uek7vFvhSAMPUzIGdJVA==
-X-Google-Smtp-Source: AGHT+IG45rJsRmI49kOjiXKUIYqrAnz2yUq+LkPMrhma6QwCgLxIkt+fFFcgzvwKsK7E0s+tYFTK5w+IrtGzbqthfrE=
-X-Received: by 2002:a05:6122:910:b0:4eb:1b53:47a8 with SMTP id
- 71dfb90a1353d-4eb1b5357bdmr4491058e0c.15.1717483281356; Mon, 03 Jun 2024
- 23:41:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717483396; x=1718088196;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=K3ql2cT4nN5lj0/lXbbPlUzDIUcijp2aoILioVyJGN0=;
+ b=CelAuZklZCFYPxtB1il89crLVRNWuFkmtGkB9gsSAFcKDFBUts5nzo0ZqVyF0ha/lt
+ 80DBY0tQ8MmuAtebSN8w1Ci35xZllaeFpeVnJ3kP0ndWEu2cdZUWCAjDaSuvC4VkY3g7
+ J7KoEuQ81VYFBel7mSHjGI9uuTMTH1fVhrO/8zYLCqhpw1+/peHdYIvjXBQEAmugmicm
+ a8HiaFHILqzn0j6VDQYa/C4hNzVgCnLDiKJI4VufzpVidC0A8DqrJ3qlWoE4GuCPWTRA
+ xB6VbFgLX+0EZRguEvM/u230+xsXyCXBdPG3Adtm02MCzA/t03kdlRW90o4dWNEyF5NM
+ 8QGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXOrlZyljflMMsIina949kk1aJaNGAtTrkX49nhp23NOfqB7rieJwvumxhB4wn8rJhuEbOYPFdLS8efWuj14KNIofPZuEY=
+X-Gm-Message-State: AOJu0YxFGlj2fEf6BXtpX+0CQn+bQcPaZUu0r0Unul4sKHZrzjPP9Vox
+ JEWflb5mhnuKcOeuP5EMidCR5ho5nbDzoRFLwWcSKHJwkjGKJ0EiCgE7GqWPbQrT4rkr6MEoUY4
+ 0NY/JzNko4XaowUyMgIn2x16NOC8=
+X-Google-Smtp-Source: AGHT+IFioAP5C37fR4cW9FHBWcCCXZ08FWzJLTVRzMO0cGWjCqp0cCRuhJUJhieKnlP7EUHi5UZWM36wwNVDAZWbx8E=
+X-Received: by 2002:a67:e355:0:b0:48b:ad6a:c7c6 with SMTP id
+ ada2fe7eead31-48bc231d445mr9764622137.24.1717483395876; Mon, 03 Jun 2024
+ 23:43:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240603055248.3928469-1-fea.wang@sifive.com>
- <20240603055248.3928469-2-fea.wang@sifive.com>
- <CAJy5ezr-_xnjXqtZnqaWSagMD8pGgU2bDUD0TsHxfkYvQYeHpw@mail.gmail.com>
-In-Reply-To: <CAJy5ezr-_xnjXqtZnqaWSagMD8pGgU2bDUD0TsHxfkYvQYeHpw@mail.gmail.com>
-From: Fea Wang <fea.wang@sifive.com>
-Date: Tue, 4 Jun 2024 14:41:10 +0800
-Message-ID: <CAKhCfscTZ7PVosWxoozYOpJUhVj=vYPChnEZzK0SYrd6KORi_g@mail.gmail.com>
-Subject: Re: [PATCH 1/4] hw/dma: Enhance error handling in loading description
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Jason Wang <jasowang@redhat.com>, "open list:Xilinx Zynq" <qemu-arm@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000e4b1c2061a0abc6e"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=fea.wang@sifive.com; helo=mail-vk1-xa31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+References: <20240604041445.244768-1-alvinga@andestech.com>
+In-Reply-To: <20240604041445.244768-1-alvinga@andestech.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 4 Jun 2024 16:42:48 +1000
+Message-ID: <CAKmqyKOTqvzkukT+864qbbs8qY9td7LsqNaXE=bUjra740SKOw@mail.gmail.com>
+Subject: Re: [PATCH v5 0/4] RISC-V: Modularize common match conditions for
+ trigger
+To: Alvin Chang <alvinga@andestech.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x933.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,207 +93,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e4b1c2061a0abc6e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Jun 4, 2024 at 2:42=E2=80=AFPM Alvin Chang via <qemu-devel@nongnu.o=
+rg> wrote:
+>
+> According to RISC-V Debug specification ratified version 0.13 [1]
+> (also applied to version 1.0 [2] but it has not been ratified yet), the
+> enabled privilege levels of the trigger is common match conditions for
+> all the types of the trigger.
+>
+> This series modularize the code for checking the privilege levels of
+> type 2/3/6 triggers by implementing functions trigger_common_match()
+> and trigger_priv_match().
+>
+> Additional match conditions, such as CSR tcontrol and textra, can be
+> further implemented into trigger_common_match() in the future.
+>
+> [1]: https://github.com/riscv/riscv-debug-spec/releases/tag/task_group_vo=
+te
+> [2]: https://github.com/riscv/riscv-debug-spec/releases/tag/1.0.0-rc1-asc=
+iidoc
+>
+> Changes from v4:
+> - Rebasing on riscv-to-apply.next
+>
+> Changes from v3:
+> - Change this series to target Debug Spec. version 0.13
+>
+> Changes from v2:
+> - Explicitly mention the targeting version of RISC-V Debug Spec.
+>
+> Changes from v1:
+> - Fix typo
+> - Add commit description for changing behavior of looping the triggers
+>   when we check type 2 triggers.
+>
+> Alvin Chang (4):
+>   target/riscv: Add functions for common matching conditions of trigger
+>   target/riscv: Apply modularized matching conditions for breakpoint
+>   target/riscv: Apply modularized matching conditions for watchpoint
+>   target/riscv: Apply modularized matching conditions for icount trigger
 
-Hi Edgar,
-Thank you for recommending to me. I will make the change in the next
-version of the patch series.
+Thanks!
 
-Sincerely,
-Fea
+Applied to riscv-to-apply.next
 
-On Mon, Jun 3, 2024 at 6:19=E2=80=AFPM Edgar E. Iglesias <edgar.iglesias@gm=
-ail.com>
-wrote:
+Alistair
 
-> On Mon, Jun 3, 2024 at 7:47=E2=80=AFAM Fea.Wang <fea.wang@sifive.com> wro=
-te:
 >
->> Loading a description from memory may cause a bus-error. In this
->> case, the DMA should stop working, set the error flag, and return
->> the error value.
->>
->> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
->>
+>  target/riscv/debug.c | 129 ++++++++++++++++++++++++++++---------------
+>  1 file changed, 85 insertions(+), 44 deletions(-)
+>
+> --
+> 2.34.1
 >
 >
-> Hi Fea,
->
-> I've got a couple of small comments:
->
->
-> ---
->>  hw/dma/xilinx_axidma.c | 16 ++++++++++++++--
->>  1 file changed, 14 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
->> index 0ae056ed06..4b475e5484 100644
->> --- a/hw/dma/xilinx_axidma.c
->> +++ b/hw/dma/xilinx_axidma.c
->> @@ -71,8 +71,10 @@ enum {
->>  enum {
->>      DMASR_HALTED =3D 1,
->>      DMASR_IDLE  =3D 2,
->> +    DMASR_SLVERR =3D 1 << 5,
->>
->
-> We should also add DMASR_DECERR =3D 1 << 6
->
->
->>      DMASR_IOC_IRQ  =3D 1 << 12,
->>      DMASR_DLY_IRQ  =3D 1 << 13,
->> +    DMASR_ERR_IRQ  =3D 1 << 14,
->>
->>      DMASR_IRQ_MASK =3D 7 << 12
->>  };
->> @@ -190,17 +192,27 @@ static inline int streamid_from_addr(hwaddr addr)
->>      return sid;
->>  }
->>
->> -static void stream_desc_load(struct Stream *s, hwaddr addr)
->> +static MemTxResult stream_desc_load(struct Stream *s, hwaddr addr)
->>  {
->>      struct SDesc *d =3D &s->desc;
->>
->> -    address_space_read(&s->dma->as, addr, MEMTXATTRS_UNSPECIFIED, d,
->> sizeof *d);
->> +    MemTxResult result =3D address_space_read(&s->dma->as,
->> +                                            addr, MEMTXATTRS_UNSPECIFIE=
-D,
->> +                                            d, sizeof *d);
->> +    if (result !=3D MEMTX_OK) {
->> +        s->regs[R_DMACR] &=3D ~DMACR_RUNSTOP;
->> +        s->regs[R_DMASR] |=3D DMASR_HALTED;
->> +        s->regs[R_DMASR] |=3D DMASR_SLVERR;
->>
->
-> ... and map MEMTX_DECODE_ERROR to DMASR_DECERR and everything else to
-> SLVERR, for example:
-> if (result =3D=3D MEMTX_DECODE_ERROR) {
->     s->regs[R_DMASR] |=3D DMASR_DECERR;
-> } else {
->     s->regs[R_DMASR] |=3D DMASR_SLVERR;
-> }
->
->
->> +        s->regs[R_DMASR] |=3D DMASR_ERR_IRQ;
->> +        return result;
->> +    }
->>
->>      /* Convert from LE into host endianness.  */
->>      d->buffer_address =3D le64_to_cpu(d->buffer_address);
->>      d->nxtdesc =3D le64_to_cpu(d->nxtdesc);
->>      d->control =3D le32_to_cpu(d->control);
->>      d->status =3D le32_to_cpu(d->status);
->> +    return result;
->>  }
->>
->>  static void stream_desc_store(struct Stream *s, hwaddr addr)
->> --
->> 2.34.1
->>
->>
-
---000000000000e4b1c2061a0abc6e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi=C2=A0Edgar,<div>Thank you for recommending to me. I wil=
-l make the change in the next version of the patch series.</div><div><br></=
-div><div>Sincerely,</div><div>Fea</div></div><br><div class=3D"gmail_quote"=
-><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 3, 2024 at 6:19=E2=80=AF=
-PM Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.iglesias@gmail.com">edgar.=
-iglesias@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
-" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
-padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr">On Mon, Jun 3, 2024 at =
-7:47=E2=80=AFAM Fea.Wang &lt;<a href=3D"mailto:fea.wang@sifive.com" target=
-=3D"_blank">fea.wang@sifive.com</a>&gt; wrote:<br></div><div class=3D"gmail=
-_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
-;border-left:1px solid rgb(204,204,204);padding-left:1ex">Loading a descrip=
-tion from memory may cause a bus-error. In this<br>
-case, the DMA should stop working, set the error flag, and return<br>
-the error value.<br>
-<br>
-Signed-off-by: Fea.Wang &lt;<a href=3D"mailto:fea.wang@sifive.com" target=
-=3D"_blank">fea.wang@sifive.com</a>&gt;<br></blockquote><div><br></div><div=
-><br></div><div>Hi Fea,</div><div><br></div><div>I&#39;ve got a couple of s=
-mall comments:</div><div>=C2=A0</div><div><br></div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">
----<br>
-=C2=A0hw/dma/xilinx_axidma.c | 16 ++++++++++++++--<br>
-=C2=A01 file changed, 14 insertions(+), 2 deletions(-)<br>
-<br>
-diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c<br>
-index 0ae056ed06..4b475e5484 100644<br>
---- a/hw/dma/xilinx_axidma.c<br>
-+++ b/hw/dma/xilinx_axidma.c<br>
-@@ -71,8 +71,10 @@ enum {<br>
-=C2=A0enum {<br>
-=C2=A0 =C2=A0 =C2=A0DMASR_HALTED =3D 1,<br>
-=C2=A0 =C2=A0 =C2=A0DMASR_IDLE=C2=A0 =3D 2,<br>
-+=C2=A0 =C2=A0 DMASR_SLVERR =3D 1 &lt;&lt; 5,<br></blockquote><div><br></di=
-v><div>We should also add DMASR_DECERR =3D 1 &lt;&lt; 6</div><div>=C2=A0</d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex">
-=C2=A0 =C2=A0 =C2=A0DMASR_IOC_IRQ=C2=A0 =3D 1 &lt;&lt; 12,<br>
-=C2=A0 =C2=A0 =C2=A0DMASR_DLY_IRQ=C2=A0 =3D 1 &lt;&lt; 13,<br>
-+=C2=A0 =C2=A0 DMASR_ERR_IRQ=C2=A0 =3D 1 &lt;&lt; 14,<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0DMASR_IRQ_MASK =3D 7 &lt;&lt; 12<br>
-=C2=A0};<br>
-@@ -190,17 +192,27 @@ static inline int streamid_from_addr(hwaddr addr)<br>
-=C2=A0 =C2=A0 =C2=A0return sid;<br>
-=C2=A0}<br>
-<br>
--static void stream_desc_load(struct Stream *s, hwaddr addr)<br>
-+static MemTxResult stream_desc_load(struct Stream *s, hwaddr addr)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0struct SDesc *d =3D &amp;s-&gt;desc;<br>
-<br>
--=C2=A0 =C2=A0 address_space_read(&amp;s-&gt;dma-&gt;as, addr, MEMTXATTRS_U=
-NSPECIFIED, d, sizeof *d);<br>
-+=C2=A0 =C2=A0 MemTxResult result =3D address_space_read(&amp;s-&gt;dma-&gt=
-;as,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 addr, MEMTXATTRS_UNSPECIFIED,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 d, sizeof *d);<br>
-+=C2=A0 =C2=A0 if (result !=3D MEMTX_OK) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;regs[R_DMACR] &amp;=3D ~DMACR_RUNSTOP;<b=
-r>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;regs[R_DMASR] |=3D DMASR_HALTED;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;regs[R_DMASR] |=3D DMASR_SLVERR;<br></bl=
-ockquote><div><br></div><div>... and map MEMTX_DECODE_ERROR to DMASR_DECERR=
- and everything else to SLVERR, for example:</div><div>if (result =3D=3D ME=
-MTX_DECODE_ERROR) {</div><div>=C2=A0 =C2=A0 s-&gt;regs[R_DMASR] |=3D DMASR_=
-DECERR;</div><div>} else {<br><div>=C2=A0 =C2=A0 s-&gt;regs[R_DMASR] |=3D D=
-MASR_SLVERR;</div></div><div>}</div><div>=C2=A0</div><blockquote class=3D"g=
-mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
-,204,204);padding-left:1ex">
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;regs[R_DMASR] |=3D DMASR_ERR_IRQ;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return result;<br>
-+=C2=A0 =C2=A0 }<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0/* Convert from LE into host endianness.=C2=A0 */<br>
-=C2=A0 =C2=A0 =C2=A0d-&gt;buffer_address =3D le64_to_cpu(d-&gt;buffer_addre=
-ss);<br>
-=C2=A0 =C2=A0 =C2=A0d-&gt;nxtdesc =3D le64_to_cpu(d-&gt;nxtdesc);<br>
-=C2=A0 =C2=A0 =C2=A0d-&gt;control =3D le32_to_cpu(d-&gt;control);<br>
-=C2=A0 =C2=A0 =C2=A0d-&gt;status =3D le32_to_cpu(d-&gt;status);<br>
-+=C2=A0 =C2=A0 return result;<br>
-=C2=A0}<br>
-<br>
-=C2=A0static void stream_desc_store(struct Stream *s, hwaddr addr)<br>
--- <br>
-2.34.1<br>
-<br>
-</blockquote></div></div>
-</blockquote></div>
-
---000000000000e4b1c2061a0abc6e--
 
