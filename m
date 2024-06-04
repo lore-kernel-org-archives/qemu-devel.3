@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E88C25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07583C25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:01:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEOA5-0006nD-R8; Tue, 04 Jun 2024 03:00:49 -0400
+	id 1sEOAU-0007AY-4s; Tue, 04 Jun 2024 03:01:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1sEOA5-0006mR-25
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:00:49 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ id 1sEOAM-0006vc-BQ
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:01:11 -0400
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1sEOA2-0005gX-3p
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:00:48 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-52b9d062526so1701305e87.3
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:00:45 -0700 (PDT)
+ id 1sEOAJ-0005i7-Ia
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:01:06 -0400
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-52b976b5d22so2214892e87.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:01:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1717484444; x=1718089244; darn=nongnu.org;
+ d=sifive.com; s=google; t=1717484462; x=1718089262; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EVFS1V1Jr3n4q5IrQ6sWamwvxjqhFYZLkf5F/jnZC2A=;
- b=dZi1/UN/qyzPOH6+P+mvb+3wrvm2JFbVHSjtZUqEPdtY+XyALZzBqz2aKB5gESKMbE
- xF+tWoXBcO3+Ttbkp1iZBMbDCQl39acXEtLX9fhTcUlq0k4YcJhNDIA8D2LhNvjkLUbi
- YMvo9KAm+NF3C3Va0AtsMoBqsJcwiTuuvP9K4eNK4y5M0H+tAJM4tiRxQsDp3u2q3S1V
- UyxCdODcN8UtV/QZB66bq84vYoCMNDKq9OuvgV4O2ZjYilmo6uLjzBo+qAgJWOr/UWHr
- U1w6uI0bWrYm3XF771+vNuCJJfnCIMwiVwnahhd0czryCVteoI3WhD1VkNgrnqe4hKp3
- Jejg==
+ bh=EEd2aHyq//5kCa93gnoLSFnczPLMT6qnXjplmrHppI8=;
+ b=Ku2vn66ux5hFg0lhlKr1Tv9Fu2M2HIcwrF6XGUxKnPhlvWl60xp9vJbvGbIkX56x2N
+ dRmKlqVG12gBMiBAux92AQnyxPf+rArtDgA5tadYZnZFhadXf54YEXjyxp1rM5MI6c0J
+ 5cX0w4lsbHI89HYiLvaMWSet7w1sFCalBUZZ40Zh38cGR22IE30ilrK3bhrggv/PuUcF
+ Ab2w0G66i42Wl7E3gyHaOePU4j7tF5lQtx+L8SEMdmI1W7nE2vlqUqz5eonKj43Dn96e
+ svyya4OTl2TI4MSPC+suXHZ5WnsRfciZZ4+a7tgnlBifAXEcZPHx+zNUF1ot9ZJimlzs
+ kKrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717484444; x=1718089244;
+ d=1e100.net; s=20230601; t=1717484462; x=1718089262;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EVFS1V1Jr3n4q5IrQ6sWamwvxjqhFYZLkf5F/jnZC2A=;
- b=ucFPPxmNOL68fy2v+UNgxlTSYmgXdLSRUm6tj5tlebq/Km1gInusLOUm4VdD9caDda
- ZHNApq8tEBTnKLcAWvmBMfrsKz/dnhSCJMrk31PTyAshtBdv5MJzGYkUj23PwjwlwBVl
- S1atnkuDZfd6wqSo4rDAKhrIseam/VctchQnIIOIZKLnRkHyUj3c39xH72XyK1MgRoyT
- 8wIIXJmxYiR+1jQVclLIw2TxNOLw54sLs8ta/FUfOS0gCYg4Hg1GDiGPX1+yM8t8hKXA
- yVPPH8MOZirAOTrgYx1M0UcEQMgDxnzx/HE6MUlLPwVyL1s+zVDckb83nhNNiLLqM7V0
- eiMw==
-X-Gm-Message-State: AOJu0YwYjldJe/ZPw/JCf5m91tVJRfqQ78Yi8pIgNmdurEGjLVypC7lz
- m0nZIWADpQBSU/62Ot9pcjdeJ13A3kUjVQoT8af4ah2aKCoHWocSSbRi/9qxzvADQuSgR5zJp1S
- CTZrTeKxdEdZTJ17Bq7kK9ZldJ7NtgHF1kf0fcH8tqdHah7bmTwq7qr9OBmJ+qS6WdLvRgmxeqR
- uoDeS7CQkDJs8VjgcCt1JT0fC0Qdm115DDc+50eFM=
-X-Google-Smtp-Source: AGHT+IG4tlGM2QIEQ/+dKRQSFGGUNpaW4pxAtTid+diZ2ZmkUdz0VsBRPVXmK+G8onCwIozEfuHGGg==
-X-Received: by 2002:ac2:48ae:0:b0:51e:245a:8ed3 with SMTP id
- 2adb3069b0e04-52b8958d8f8mr7422869e87.28.1717484442873; 
- Tue, 04 Jun 2024 00:00:42 -0700 (PDT)
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com.
- [209.85.208.171]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-52ba00e0b74sm187261e87.295.2024.06.04.00.00.42
+ bh=EEd2aHyq//5kCa93gnoLSFnczPLMT6qnXjplmrHppI8=;
+ b=ZkuvNv2OutWjf4M99MONMX87tsp6zvXHNzKLMCtDEcKtkFLt9SZt/+UP/bbqvo7wcs
+ zq4fpF1Mnw8ePe1TK+DdlbKYC0mxgQyajhNsJTz1kmYGTSFti/5jcJtvdxsRcKn0ZokJ
+ lsNJAgvwlyJxwcICm44lUKLvZHWHV9W+OT7A5PETmtVq7NEn5j5qpbq+2QWqEneVYkZ/
+ x8h/eCMZDbYvzNCVRBYW0D5S9Rpef0vqcBzh7aHVdvsvdFgtOeKbeCwSc4nnP8CtuQYJ
+ iDVRt17yrhe9CZN+z8H69mpwNTzMXC60bU0yTVyqacebTfpsDd0PQLnxiKMxlQMaqkfa
+ CWjg==
+X-Gm-Message-State: AOJu0YwQix241jkgTMMmLqxgZko4+wioRYGAvoBorzfndDqo0GDSJV/7
+ nR34zMAFiRUMri0Hi+kURpZ+MXhY0Zb2OOK+1WKCwyTOaGrrcRAYT+2Kgyw7mGTHKJ/39hfwwPz
+ UJS5+3H0GBG7AO/BFhhLIunUNc3oKg5Tn/2YH0gKdpjdwKSk2WeDxsmUdDXUd2kcpliL1QE9bzg
+ 7bFxzoTJNg86qJEy4vbg5smrS45fbcTfdJPYjhVaf+Yw==
+X-Google-Smtp-Source: AGHT+IEC6z3TDDwJiYPuT9rChZssilc53+zDsESYoZQK2/4dtE3EL5wY6Ljzli+8c5NfJ3AIIdbX/w==
+X-Received: by 2002:a05:6512:3b25:b0:52a:d87f:60e3 with SMTP id
+ 2adb3069b0e04-52b896f7eebmr9616137e87.57.1717484461608; 
+ Tue, 04 Jun 2024 00:01:01 -0700 (PDT)
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com.
+ [209.85.208.181]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-52b9b812641sm441130e87.39.2024.06.04.00.01.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Jun 2024 00:00:42 -0700 (PDT)
-Received: by mail-lj1-f171.google.com with SMTP id
- 38308e7fff4ca-2eab0bc74cdso20404821fa.3; 
- Tue, 04 Jun 2024 00:00:42 -0700 (PDT)
+ Tue, 04 Jun 2024 00:01:01 -0700 (PDT)
+Received: by mail-lj1-f181.google.com with SMTP id
+ 38308e7fff4ca-2eaa80cb573so36462941fa.1; 
+ Tue, 04 Jun 2024 00:01:01 -0700 (PDT)
 X-Forwarded-Encrypted: i=1;
- AJvYcCVsBcjO/ZzQxTScbu9V1PzZXTR025imM7DzMtLBN0BkynL+WJiml2GJ3a1wCq5gm5ngSDhLZ9vCQ8zIfr+HvcQczfShBLLsS26ZolGuwCO+87wZ/0jIKx+5CGs=
-X-Received: by 2002:a2e:b54b:0:b0:2ea:7ccd:10a7 with SMTP id
- 38308e7fff4ca-2ea951d85ffmr63070621fa.45.1717484442103; Tue, 04 Jun 2024
- 00:00:42 -0700 (PDT)
+ AJvYcCUYqttBAhF1umPjV0M8XmmpnObEaNLc56xaiqLqxNfpMDZeTlUTkri3JQYgUSvvYTzYEhHGfLWoHi69XblA2Tszi6rvvAL8F1jpcHZa88gL88XRXsTX43mtAEg=
+X-Received: by 2002:a05:651c:233:b0:2ea:aca0:2769 with SMTP id
+ 38308e7fff4ca-2eaaca02a6fmr34880401fa.1.1717484460050; Tue, 04 Jun 2024
+ 00:01:00 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240603055248.3928469-1-fea.wang@sifive.com>
- <20240603055248.3928469-2-fea.wang@sifive.com>
-In-Reply-To: <20240603055248.3928469-2-fea.wang@sifive.com>
+ <20240603055248.3928469-3-fea.wang@sifive.com>
+In-Reply-To: <20240603055248.3928469-3-fea.wang@sifive.com>
 From: Frank Chang <frank.chang@sifive.com>
-Date: Tue, 4 Jun 2024 15:00:30 +0800
-X-Gmail-Original-Message-ID: <CANzO1D3u9cvOtEGmUorq3FwBNn71ana5prOTx_=oEFOHDB=kLQ@mail.gmail.com>
-Message-ID: <CANzO1D3u9cvOtEGmUorq3FwBNn71ana5prOTx_=oEFOHDB=kLQ@mail.gmail.com>
-Subject: Re: [PATCH 1/4] hw/dma: Enhance error handling in loading description
+Date: Tue, 4 Jun 2024 15:00:48 +0800
+X-Gmail-Original-Message-ID: <CANzO1D0LK82JxLnARyamRTW0xd7sY-bYga=d8kqnuBzJ5fYEGg@mail.gmail.com>
+Message-ID: <CANzO1D0LK82JxLnARyamRTW0xd7sY-bYga=d8kqnuBzJ5fYEGg@mail.gmail.com>
+Subject: Re: [PATCH 2/4] hw/dma: Break the loop when loading descriptions fails
 To: "Fea.Wang" <fea.wang@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
@@ -85,8 +85,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  "open list:Xilinx Zynq" <qemu-arm@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=frank.chang@sifive.com; helo=mail-lf1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=frank.chang@sifive.com; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,62 +114,43 @@ Reviewed-by: Frank Chang <frank.chang@sifive.com>
 Fea.Wang <fea.wang@sifive.com> =E6=96=BC 2024=E5=B9=B46=E6=9C=883=E6=97=A5 =
 =E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=881:48=E5=AF=AB=E9=81=93=EF=BC=9A
 >
-> Loading a description from memory may cause a bus-error. In this
-> case, the DMA should stop working, set the error flag, and return
-> the error value.
+> When calling the loading a description function, it should be noticed
+> that the function may return a failure value. Breaking the loop is one
+> of the possible ways to handle it.
 >
 > Signed-off-by: Fea.Wang <fea.wang@sifive.com>
 > ---
->  hw/dma/xilinx_axidma.c | 16 ++++++++++++++--
->  1 file changed, 14 insertions(+), 2 deletions(-)
+>  hw/dma/xilinx_axidma.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
 >
 > diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
-> index 0ae056ed06..4b475e5484 100644
+> index 4b475e5484..b8ab5a423d 100644
 > --- a/hw/dma/xilinx_axidma.c
 > +++ b/hw/dma/xilinx_axidma.c
-> @@ -71,8 +71,10 @@ enum {
->  enum {
->      DMASR_HALTED =3D 1,
->      DMASR_IDLE  =3D 2,
-> +    DMASR_SLVERR =3D 1 << 5,
->      DMASR_IOC_IRQ  =3D 1 << 12,
->      DMASR_DLY_IRQ  =3D 1 << 13,
-> +    DMASR_ERR_IRQ  =3D 1 << 14,
+> @@ -291,7 +291,9 @@ static void stream_process_mem2s(struct Stream *s, St=
+reamSink *tx_data_dev,
+>      }
 >
->      DMASR_IRQ_MASK =3D 7 << 12
->  };
-> @@ -190,17 +192,27 @@ static inline int streamid_from_addr(hwaddr addr)
->      return sid;
->  }
+>      while (1) {
+> -        stream_desc_load(s, s->regs[R_CURDESC]);
+> +        if (MEMTX_OK !=3D stream_desc_load(s, s->regs[R_CURDESC])) {
+> +            break;
+> +        }
 >
-> -static void stream_desc_load(struct Stream *s, hwaddr addr)
-> +static MemTxResult stream_desc_load(struct Stream *s, hwaddr addr)
->  {
->      struct SDesc *d =3D &s->desc;
+>          if (s->desc.status & SDESC_STATUS_COMPLETE) {
+>              s->regs[R_DMASR] |=3D DMASR_HALTED;
+> @@ -348,7 +350,9 @@ static size_t stream_process_s2mem(struct Stream *s, =
+unsigned char *buf,
+>      }
 >
-> -    address_space_read(&s->dma->as, addr, MEMTXATTRS_UNSPECIFIED, d, siz=
-eof *d);
-> +    MemTxResult result =3D address_space_read(&s->dma->as,
-> +                                            addr, MEMTXATTRS_UNSPECIFIED=
-,
-> +                                            d, sizeof *d);
-> +    if (result !=3D MEMTX_OK) {
-> +        s->regs[R_DMACR] &=3D ~DMACR_RUNSTOP;
-> +        s->regs[R_DMASR] |=3D DMASR_HALTED;
-> +        s->regs[R_DMASR] |=3D DMASR_SLVERR;
-> +        s->regs[R_DMASR] |=3D DMASR_ERR_IRQ;
-> +        return result;
-> +    }
+>      while (len) {
+> -        stream_desc_load(s, s->regs[R_CURDESC]);
+> +        if (MEMTX_OK !=3D stream_desc_load(s, s->regs[R_CURDESC])) {
+> +            break;
+> +        }
 >
->      /* Convert from LE into host endianness.  */
->      d->buffer_address =3D le64_to_cpu(d->buffer_address);
->      d->nxtdesc =3D le64_to_cpu(d->nxtdesc);
->      d->control =3D le32_to_cpu(d->control);
->      d->status =3D le32_to_cpu(d->status);
-> +    return result;
->  }
->
->  static void stream_desc_store(struct Stream *s, hwaddr addr)
+>          if (s->desc.status & SDESC_STATUS_COMPLETE) {
+>              s->regs[R_DMASR] |=3D DMASR_HALTED;
 > --
 > 2.34.1
 >
