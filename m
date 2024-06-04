@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 783CCC27C53
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 15:17:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03040C27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 15:17:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEUvR-0007JX-90; Tue, 04 Jun 2024 10:14:09 -0400
+	id 1sEVu9-0005go-5F; Tue, 04 Jun 2024 11:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEUvP-0007IT-Ac
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:14:07 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEVu7-0005eq-NC
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 11:16:51 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEUvN-0004cn-NC
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:14:07 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-6f9415b5e8dso137074a34.2
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 07:14:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEVu6-0003aa-3K
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 11:16:51 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a634e03339dso643621266b.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 08:16:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717510444; x=1718115244; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717514208; x=1718119008; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=u4I2jI3skLqdAHJv2/DYas8VxTh3Bt9qot4hvrYdWk0=;
- b=CwO1fIABfKMwj+BzfLI/8r0BV2OHoBXRvxhZcZfLPXp/5z6GUT8tbn4NtuOAIX1sDy
- eBPNPfyiVNulXbn0kqXu4W8L/78CcOw6lYD/plYEvl7rEmEMg2jEQRtAJ1fDB+A78Krq
- jBSUol/0tlkpfVuT48AM3Cmexbqprd2G+n6g60b05ps5pMBoo8yeYQqagyIo/VBogELj
- Wglh/QU3fgYwymEIFSCeqo3k0ygdG8e4vZq+qMV8Y9pKTxfqm93TZAOyOqOJA+fr0S3j
- DAUR5+d+qCeKFKcnSCQofNRSXRakje0QQY24mLU9uAl/j5sFn88X1kshGKotQpc3bMIv
- nO7A==
+ bh=6S5svVme6jmsHGdrnGv5XcfKvAPAa5t/G7UCBLirySs=;
+ b=ov3Iz3yB09iHGawuq1+/mk2ZRjOfi/4fqgZpUhSm8fWt/qsgsjyvbQ1gdS39sSO+fy
+ ngoz4GZawumm8nHDLggiJFZj88T4BZ+MzUGRYHMX6diF112pAKU9O0MGWF4a3dhiU7Uv
+ j0DRpbSoAVn64Th7QQMkLypJv9EHL0BHTqXZpEHmLnwdhT6L7pssxwNZuodRD4/MmABg
+ vg3yDXI65d3sYQBiVL8OnsLgaAQsVfqJqUsXJsIt+lnpsTXdHeowVrpRGOKZReyt4T+3
+ j8mE/rc2knKCuj7XACAVl37dTiejIBs94LrBcV8MjY6ndSVdvIxp5DKNXMSzKVKG6MlQ
+ RLFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717510444; x=1718115244;
+ d=1e100.net; s=20230601; t=1717514208; x=1718119008;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=u4I2jI3skLqdAHJv2/DYas8VxTh3Bt9qot4hvrYdWk0=;
- b=Rm5tRRgcZhNIDfdlC+VgjJfq6gpF+fCPgggx9v38n8zRj/c5mLXuicvAOdXKA1lzS+
- G+Yhk5EeJ9jrgDGeCF2NXF8GWsxlxJi9LQi93FdFwge1RF/VYKbPkdwtNI4/3InXc8nj
- 5l+dFvmN19hCBAru3eHzfFLBQFtF9/7mx7VgP/zB4dccy7euOg4/TsuUP4+OsJG4jiHP
- Ya6AUpSqBMxCLjW+y1ckZ9DKmGF4zvzUjwNeptMG1sr24w+T9rGbTzWOTxcBT9IbosGp
- 0ONL6ytUWl86NIc5YrBj/+GIDU4xSysZWpJSaZZtqYp3TBQRmj9Qyiu72gJ++hOFHef2
- xUUw==
-X-Gm-Message-State: AOJu0YzUtMl7brqitVMFKYuuISy1Lw7lRt/VJM1BgukEeB3o6BRjf61g
- tsEnTyF1HydHenyu7n4qyIlYr9muKs+67NmFqOglqjpQzsWqNl/chlFOna1myfTuhv/igXwb3Ex
- 4
-X-Google-Smtp-Source: AGHT+IEMtTUWddAnyoi62KWUOeTdJZjvzQ9PaqUxTii3ZtcBbWTTQVu/LmanIXBvIkdW5PQ7/gQX9w==
-X-Received: by 2002:a9d:6755:0:b0:6f8:d23e:78e0 with SMTP id
- 46e09a7af769-6f911fc9917mr11780869a34.38.1717510444089; 
- Tue, 04 Jun 2024 07:14:04 -0700 (PDT)
-Received: from ?IPV6:2607:fb91:1aca:c697:b7cb:e0ad:8679:2c14?
- ([2607:fb91:1aca:c697:b7cb:e0ad:8679:2c14])
+ bh=6S5svVme6jmsHGdrnGv5XcfKvAPAa5t/G7UCBLirySs=;
+ b=h6kofLO2HbiXa7eS0tvDxUZ/aYGjYYebjzySyF/oJxtjIrketUnn3kHtpxdN2s+vG1
+ FnzP9upgAAX9E5NCnYL9dR3Pd5AQMW5LaNB2S0QIbcWmSOLo6CwDb75ieFYqpbNB8UJ4
+ 1SAu/0IJQeLaRaRGzK0sQNBdAJgn8im6JD6tSHG2RARhDk+IiJ7pAg7RcqGk9oyJJZ6R
+ h1fqHqvXUvVrv3l9318jZpWoeImB5UK2TR3CMPhCC8mMakTD3fPqwLnbvuxPsGTEgMzf
+ Dp965Z2WX5e+6pFsWS7aqZX7IiVMmC3kgnqRemM74VH6djP6MY7EqedgOdJ8vFf7yqz1
+ KRbQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUN3sq/Rdp0Tn7fH0cmrHH8ZlXlacrHqYGxmjqxYIcDpm4BI7gdnqYKcay8bzNvjpSZ+N5x6q/avjFqaDms8df+WueQwh0=
+X-Gm-Message-State: AOJu0YwWae0so6wXAQY0AGEvy4rY7j0rxXNm/5Fzt3G3+iib5sD66Vbg
+ 6669+xW/Zs0xAu1DfTJt12/m0n/d4CiPUGJEQzFcAwGSUx0gySUzVNyCGKgm9pk=
+X-Google-Smtp-Source: AGHT+IG5Uh+UrFLty23z8Mdkc8dV5jX+Tlz2t+NWzpvteweWs4QXx+kqz29kFH5M5ATs/zYrsiczKg==
+X-Received: by 2002:a17:906:b20a:b0:a68:ab53:50e7 with SMTP id
+ a640c23a62f3a-a68ab53545bmr516836566b.69.1717514207675; 
+ Tue, 04 Jun 2024 08:16:47 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.159.34])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-6f938b44e77sm415912a34.55.2024.06.04.07.14.02
+ a640c23a62f3a-a68b143ce90sm507172266b.182.2024.06.04.08.16.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Jun 2024 07:14:03 -0700 (PDT)
-Message-ID: <78de6c80-2d40-49e8-b118-9fa7e364573c@linaro.org>
-Date: Tue, 4 Jun 2024 09:14:00 -0500
+ Tue, 04 Jun 2024 08:16:47 -0700 (PDT)
+Message-ID: <ad67aa17-90b9-4621-8ac4-f117d6294e19@linaro.org>
+Date: Tue, 4 Jun 2024 17:16:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/11] target/i386: fix INHIBIT_IRQ/TF/RF handling for
- PAUSE
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20240604071833.962574-1-pbonzini@redhat.com>
- <20240604071833.962574-9-pbonzini@redhat.com>
- <0dc2521f-7d7c-48c1-943e-b71566284450@linaro.org>
- <8855bd45-9b9c-485d-b737-2f23f0da6406@linaro.org>
- <CABgObfak+jqkr=wQvxfz9D9CHt3fgRzu4L5tcZbmOJabtEBTxg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5] scripts/coverity-scan/COMPONENTS.md: Fix 'char'
+ component
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+References: <20240604145934.1230583-1-peter.maydell@linaro.org>
+ <20240604145934.1230583-3-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CABgObfak+jqkr=wQvxfz9D9CHt3fgRzu4L5tcZbmOJabtEBTxg@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240604145934.1230583-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,18 +97,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/24 09:10, Paolo Bonzini wrote:
-> On Tue, Jun 4, 2024 at 3:49 PM Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->> Oh, based on the next patch, it would appear that PAUSE does not single-step properly
->> because it sets EXCP_INTERRUPT, and end-of-insn single-step depends on exception_index ==
->> -1.  I'm thinking of the bottom of cpu_tb_exec().
+On 4/6/24 16:59, Peter Maydell wrote:
+> The 'char' component:
+>   * includes the no-longer-present qemu-char.c, which has been
+>     long since split into the chardev/ backend code
+>   * also includes the hw/char devices
 > 
-> I'm not sure we're talking of the same thing, but that's why I'm
-> calling helper_rechecking_single_step() before setting EXCP_INTERRUPT.
+> Split it into two components:
+>   * char is the hw/char devices
+>   * chardev is the chardev backends
+> with regexes matching our current sources.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   scripts/coverity-scan/COMPONENTS.md | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
 
-Oh yes, that does it.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-
-r~
 
