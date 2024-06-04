@@ -4,89 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 436AAC27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 17:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3952EC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 17:17:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEXdB-0003lh-EB; Tue, 04 Jun 2024 13:07:29 -0400
+	id 1sEXmQ-0006H2-NQ; Tue, 04 Jun 2024 13:17:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1sEXdA-0003lO-6x
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 13:07:28 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1sEXd8-0001yE-1S
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 13:07:27 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-6cc3e134f88so1058756a12.0
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 10:07:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1717520844; x=1718125644; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W4/hXIl2upNsIk+PSBjoDEplaMxj2H1I6IAo7dmUw1A=;
- b=BOnfn3eOwG+6vvqlxBMSk2A5ujkoba71kWQm4xy/GTZ0VifSdhdllw5B8Anjqwb0bf
- VZkHsTvp0Sod1AI6pEg7Ic7AXarIJ9XzMXG1BPkVN9V6dETLgXvUIFSCp/astd0R+fNV
- DoUSHQvIDWUgr/2VL5afbYLrkxXA8mzFq7W6mRSz/V5NYrj05RHr0PX+f/K9xSRZWSpP
- 8Qk3UQRU5Uok69owMxzzeNaD4XXHScRy3O6uKTIezPxrbsV/qSmgVIhTbjP0eKBD7zFv
- V5nY1I+ULrSgv6mzQMjq6va+IhrZPrAOy45lO3SazT/rgJ/+fYvV+E8wRY69nmlgbeE/
- VN3Q==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sEXmO-0006GC-Hf
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 13:17:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sEXmM-0004dG-Aq
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 13:17:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717521417;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=5Q1sAzqT9Tey5hzfdSzaIG87VUujCNXMP+Rvog1oGFU=;
+ b=D5ir7EtKWeP2ydEIkyCBkDbl9y/R0i5xV+lFBDuhskpzmEJGxfxFKVYGlns8kVPXxFtuvp
+ cUblx72VCEF2bs1TqzOgywaAVVgB7da5DQI+olZfxWCIDafEjfV3SPj5+vdSyCSkLl93h6
+ ayqkQbhYxMZzG5G65k03Z98qhsgTzgE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-681-rs7xKTVIPoyFCCdaaSSlcw-1; Tue, 04 Jun 2024 13:16:55 -0400
+X-MC-Unique: rs7xKTVIPoyFCCdaaSSlcw-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-35dcd39c6ebso13686f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 10:16:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717520844; x=1718125644;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=W4/hXIl2upNsIk+PSBjoDEplaMxj2H1I6IAo7dmUw1A=;
- b=okL/mq/tyYJKNFsrh2Yxv2dpKekBmHsHSeI3+RCDulNpZuoKaPjbKC8TEu/WWo2QwU
- hUt8BtXHydNF3RUqO41dPRIM3/pBB8wzr3oBIG/eXHpglKPQouA7q8WUzzl3JSOgu3F5
- uobtUh+7bG5YLmBMNpJcLWwAyH5NprYIOj0OhMxB74LI0g4TTymt6+mN9OdXQdRARtVu
- YTNrOzY8I4EzJ7IKClJYTMynl4rcXvvt9+C5j3YmXZhtY2wDBo7q03WyRmhwV8FyHyTJ
- RYzSa6rk04WCRB7OHCwqgZE7I6vaLPySMC4QVOuby3/vjJOnVW/jQ38HNQZ3h6YpHVTN
- VJvA==
+ d=1e100.net; s=20230601; t=1717521414; x=1718126214;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=5Q1sAzqT9Tey5hzfdSzaIG87VUujCNXMP+Rvog1oGFU=;
+ b=PPIbEexDnxqi+gZqqR7bWTYS7PLkl5djjBkrtewNns9Jk8gqERslfaE6jqvvX6Q3Uj
+ ciag9vXWjvTirj+9uaxT6448ydxaqtjXfWV+QNC3LphG+Aq2gljvPQNHkGp3Z7pMhPt3
+ p5hva6EchVgPTlEHBroMUBYpL4sM5uQaZK26C5HYVeUw/BoprJ7JsRBQvavS8P4flnqw
+ 44jHHwdsdj9Jq4lfRa7vdaAOq7KSBAucKQYOn5KozIsZZrG/7U4KxZwrUEaf8kac0eKd
+ aYMJDKn07Jdt+GYg2JwNuq/VNRCgUOub2FRwi5tvru/sUNBf6mJvUnMshGgQiFW4TTcK
+ n7DA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVG2LrOLeIHQUcL3w+WH/xzGKWttc18YivubG0xdTl5IsagYhqMvAgRHFiiNdzkAjQ3NQu0P10eTraXzrU9Be5l5lWa+v8=
-X-Gm-Message-State: AOJu0Yw/MjCeHAfaFLFPdUrCyqmlv850onZ7h0LSFiuLrKRBjsB7QPgl
- 5j+DgqkUEj77y74uAsHp62elp0NhwEPeErZ/pFGBXIvhkBjaNqNyTj0msTisDp8=
-X-Google-Smtp-Source: AGHT+IHB4w1qcpuGdwRvkgoDXO42/dRiWKMAJSvG/U+2T1wu4qIStiwEGQRYrXs/ljRc69ttofFyoQ==
-X-Received: by 2002:a17:90b:68b:b0:2bd:7935:a14e with SMTP id
- 98e67ed59e1d1-2c27db4fb41mr44329a91.30.1717520844222; 
- Tue, 04 Jun 2024 10:07:24 -0700 (PDT)
-Received: from [192.168.100.252] (59-124-168-89.hinet-ip.hinet.net.
- [59.124.168.89]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c1a775f8cbsm10185098a91.11.2024.06.04.10.07.21
+ AJvYcCUPBK8Bqr/WqRdyDzILgJpsk0M/7CpddcpDTtp3SlxK8MvAn70bkxQdoMH6Wv9Wx6K3IrVWE9hcQqa/Af4W3rs7vKKWSr4=
+X-Gm-Message-State: AOJu0YwOCh6G2vZEB0nl3kWfwUHtosjRiktRr6LdRP05bmKqvJuefaga
+ 7LQSTXU7/xREUQjk7baxh1JUDDEN63XhNWifbmJfPh4UuT5E52i+WCCZtLkYri9sdkHaucv+biL
+ hJll+2NacBba6nrhbZabZ8w0Ao6bnyYAq1pcI1mJtbDDzct2oj1MU
+X-Received: by 2002:a05:6000:a88:b0:34d:8ed4:ca3b with SMTP id
+ ffacd0b85a97d-35e838e6749mr324558f8f.0.1717521414178; 
+ Tue, 04 Jun 2024 10:16:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGvAQUcAHLSTVBtxWMsnT6mJjSxPTNp6b3iVfWoALz36JKiKvcN19lRVaIzhtvmqHye0xmhPA==
+X-Received: by 2002:a05:6000:a88:b0:34d:8ed4:ca3b with SMTP id
+ ffacd0b85a97d-35e838e6749mr324540f8f.0.1717521413773; 
+ Tue, 04 Jun 2024 10:16:53 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c73a:3a00:a025:9b06:549e:c16b?
+ (p200300cbc73a3a00a0259b06549ec16b.dip0.t-ipconnect.de.
+ [2003:cb:c73a:3a00:a025:9b06:549e:c16b])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35dd064b684sm12337153f8f.100.2024.06.04.10.16.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Jun 2024 10:07:23 -0700 (PDT)
-Message-ID: <09c0cefe-efd4-4d82-b1c3-fb17d8fbe84e@sifive.com>
-Date: Wed, 5 Jun 2024 01:07:20 +0800
+ Tue, 04 Jun 2024 10:16:53 -0700 (PDT)
+Message-ID: <9477a417-a95a-4413-8dd5-3a913abaa41c@redhat.com>
+Date: Tue, 4 Jun 2024 19:16:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] target/riscv: Add support to access ctrsource,
- ctrtarget, ctrdata regs.
-To: Rajnesh Kanwal <rkanwal@rivosinc.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- atishp@rivosinc.com, apatel@ventanamicro.com, beeman@rivosinc.com,
- tech-control-transfer-records@lists.riscv.org
-References: <20240529160950.132754-1-rkanwal@rivosinc.com>
- <20240529160950.132754-7-rkanwal@rivosinc.com>
+Subject: Re: [PATCH V1 17/26] machine: memfd-alloc option
+To: Peter Xu <peterx@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Igor Mammedov <imammedo@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <ZlZIoiH5Dj4XBbLO@x1n>
+ <79a8023d-2e19-4d80-821d-a03818a5372e@oracle.com> <Zld-iWfa3_yEWgn6@x1n>
+ <ea8eb67e-583d-41cd-a545-ab18c032a99b@oracle.com> <ZljCHgwJhGcFiP1J@x1n>
+ <e6d5f123-37ad-4d77-8536-f7f85213073d@oracle.com> <Zl46MIO30mGrtsQk@x1n>
+ <Zl6-f245q-M7A62J@redhat.com> <Zl85o3w6ncv63zG5@x1n>
+ <1b06eb8d-f6be-4e2b-929b-2f65edf16237@redhat.com> <Zl9DqCLvOgUDqGKW@x1n>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-From: Jason Chien <jason.chien@sifive.com>
-In-Reply-To: <20240529160950.132754-7-rkanwal@rivosinc.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
+ dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
+ QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
+ XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
+ Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
+ PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
+ WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
+ UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
+ jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
+ B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
+ ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
+ 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
+ rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
+ wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
+ 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
+ pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
+ KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
+ BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
+ 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
+ 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
+ M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
+ Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
+ T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
+ 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
+ CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
+ NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
+ 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
+ 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
+ lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
+ AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
+ N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
+ AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
+ boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
+ 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
+ XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
+ a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
+ Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
+ 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
+ kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
+ th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
+ jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <Zl9DqCLvOgUDqGKW@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=jason.chien@sifive.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,258 +162,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 04.06.24 18:41, Peter Xu wrote:
+> On Tue, Jun 04, 2024 at 06:14:08PM +0200, David Hildenbrand wrote:
+>> On 04.06.24 17:58, Peter Xu wrote:
+>>> On Tue, Jun 04, 2024 at 08:13:26AM +0100, Daniel P. Berrangé wrote:
+>>>> On Mon, Jun 03, 2024 at 05:48:32PM -0400, Peter Xu wrote:
+>>>>> That property, irrelevant of what it is called (and I doubt whether Dan's
+>>>>> suggestion on "shared-ram" is good, e.g. mmap(MAP_SHARED) doesn't have user
+>>>>> visible fd but it's shared-ram for sure..), is yet another way to specify
+>>>>> guest mem types.
+>>>>>
+>>>>> What if the user specified this property but specified something else in
+>>>>> the -object parameters?  E.g. -machine share-ram=on -object
+>>>>> memory-backend-ram,share=off.  What should we do?
+>>>>
+>>>> The machine property would only apply to memory regions that are
+>>>> *NOT* being created via -object. The memory-backend objects would
+>>>> always honour their own share settnig.
+>>>
+>>> In that case we may want to rename that to share-ram-by-default=on.
+>>> Otherwise it's not clear which one would take effect from an user POV, even
+>>> if we can define it like that in the code.
+>>>
+>>> Even with share-ram-by-default=on, it can be still confusing in some form
+>>> or another. Consider this cmdline:
+>>>
+>>>     -machine q35,share-ram-by-default=on -object memory-backend-ram,id=mem1
+>>>
+>>> Then is mem1 shared or not?  From reading the cmdline, if share ram by
+>>> default it should be ON if we don't specify it, but it's actually off?
+>>> It's because -object has its own default values.
+>>
+>> We do have something similar with "merge" and "dump" properties. See
+>> machine_mem_merge() / machine_dump_guest_core().
+>>
+>> These correspond to the "mem-merge" and "dump-guest-core" machine
+>> properties.
+> 
+> These look fine so far, as long as -object cmdline doesn't allow to specify
+> the same thing again.
+> 
 
-Rajnesh Kanwal 於 2024/5/30 上午 12:09 寫道:
-> CTR entries are accessed using ctrsource, ctrtarget and ctrdata
-> registers using smcsrind/sscsrind extension. This commits extends
-> the csrind extension to support CTR registers.
->
-> ctrsource is accessible through xireg CSR, ctrtarget is accessible
-> through xireg1 and ctrdata is accessible through xireg2 CSR.
->
-> CTR supports maximum depth of 256 entries which are accessed using
-> xiselect range 0x200 to 0x2ff.
->
-> This commits also adds properties to enable CTR extension. CTR can be
-> enabled using smctr=true and ssctr=true now.
->
-> Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
-> ---
->   target/riscv/cpu.c |   4 ++
->   target/riscv/csr.c | 153 ++++++++++++++++++++++++++++++++++++++++++++-
->   2 files changed, 156 insertions(+), 1 deletion(-)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 30bdfc22ae..a77b1d5caf 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -193,6 +193,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
->       ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
->       ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
->       ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
-> +    ISA_EXT_DATA_ENTRY(smctr, PRIV_VERSION_1_12_0, ext_smctr),
-> +    ISA_EXT_DATA_ENTRY(ssctr, PRIV_VERSION_1_12_0, ext_ssctr),
->       ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
->       ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
->       ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
-> @@ -1473,6 +1475,8 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
->       MULTI_EXT_CFG_BOOL("sscsrind", ext_sscsrind, false),
->       MULTI_EXT_CFG_BOOL("smcdeleg", ext_smcdeleg, false),
->       MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
-> +    MULTI_EXT_CFG_BOOL("smctr", ext_smctr, false),
-> +    MULTI_EXT_CFG_BOOL("ssctr", ext_ssctr, false),
->       MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
->       MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
->       MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 888084d8e5..15b953f268 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -2291,6 +2291,11 @@ static bool xiselect_cd_range(target_ulong isel)
->       return (ISELECT_CD_FIRST <= isel && isel <= ISELECT_CD_LAST);
->   }
->   
-> +static bool xiselect_ctr_range(target_ulong isel)
-> +{
-> +    return (CTR_ENTRIES_FIRST <= isel && isel <= CTR_ENTRIES_LAST);
-> +}
-> +
->   static int rmw_iprio(target_ulong xlen,
->                        target_ulong iselect, uint8_t *iprio,
->                        target_ulong *val, target_ulong new_val,
-> @@ -2336,6 +2341,118 @@ static int rmw_iprio(target_ulong xlen,
->       return 0;
->   }
->   
-> +static int rmw_xctrsource(CPURISCVState *env, int isel, target_ulong *val,
-> +                          target_ulong new_val, target_ulong wr_mask)
-I prefer naming the function as rmw_ctrsource(), since this register 
-name does not have a mode prefix.
-> +{
-> +    /*
-> +     * CTR arrays are treated as circular buffers and TOS always points to next
-> +     * empty slot, keeping TOS - 1 always pointing to latest entry. Given entry
-> +     * 0 is always the latest one, traversal is a bit different here. See the
-> +     * below example.
-> +     *
-> +     * Depth = 16.
-> +     *
-> +     * idx    [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] [F]
-> +     * TOS                                 H
-> +     * entry   6   5   4   3   2   1   0   F   E   D   C   B   A   9   8   7
-> +     */
-> +    const uint64_t entry = isel - CTR_ENTRIES_FIRST;
-> +    const uint64_t depth = 16 << get_field(env->sctrdepth, SCTRDEPTH_MASK);
-> +    uint64_t idx;
-> +
-> +    /* Entry greater than depth-1 is read-only zero */
-> +    if (entry >= depth) {
-> +        *val = 0;
-val may be NULL.
-> +        return 0;
-> +    }
-> +
-> +    idx = get_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK);
-> +    idx = (idx - entry - 1) & (depth - 1);
-> +
-> +    if (val) {
-> +        *val = env->ctr_src[idx];
-> +    }
-> +
-> +    env->ctr_src[idx] = (env->ctr_src[idx] & ~wr_mask) | (new_val & wr_mask);
-> +
-> +    return 0;
-> +}
-> +
-> +static int rmw_xctrtarget(CPURISCVState *env, int isel, target_ulong *val,
-> +                          target_ulong new_val, target_ulong wr_mask)
-I prefer naming the function as rmw_ctrtarget(), since this register 
-name does not have a mode prefix.
-> +{
-> +    /*
-> +     * CTR arrays are treated as circular buffers and TOS always points to next
-> +     * empty slot, keeping TOS - 1 always pointing to latest entry. Given entry
-> +     * 0 is always the latest one, traversal is a bit different here. See the
-> +     * below example.
-> +     *
-> +     * Depth = 16.
-> +     *
-> +     * idx    [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] [F]
-> +     * head                                H
-> +     * entry   6   5   4   3   2   1   0   F   E   D   C   B   A   9   8   7
-> +     */
-> +    const uint64_t entry = isel - CTR_ENTRIES_FIRST;
-> +    const uint64_t depth = 16 << get_field(env->sctrdepth, SCTRDEPTH_MASK);
-> +    uint64_t idx;
-> +
-> +    /* Entry greater than depth-1 is read-only zero */
-> +    if (entry >= depth) {
-> +        *val = 0;
-val may be NULL.
-> +        return 0;
-> +    }
-> +
-> +    idx = get_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK);
-> +    idx = (idx - entry - 1) & (depth - 1);
-> +
-> +    if (val) {
-> +        *val = env->ctr_dst[idx];
-> +    }
-> +
-> +    env->ctr_dst[idx] = (env->ctr_dst[idx] & ~wr_mask) | (new_val & wr_mask);
-> +
-> +    return 0;
-> +}
-> +
-> +static int rmw_xctrdata(CPURISCVState *env, int isel, target_ulong *val,
-> +                        target_ulong new_val, target_ulong wr_mask)
-I prefer naming the function as rmw_ctrdata(), since this register name 
-does not have a mode prefix.
-> +{
-> +    /*
-> +     * CTR arrays are treated as circular buffers and TOS always points to next
-> +     * empty slot, keeping TOS - 1 always pointing to latest entry. Given entry
-> +     * 0 is always the latest one, traversal is a bit different here. See the
-> +     * below example.
-> +     *
-> +     * Depth = 16.
-> +     *
-> +     * idx    [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] [F]
-> +     * head                                H
-> +     * entry   6   5   4   3   2   1   0   F   E   D   C   B   A   9   8   7
-> +     */
-> +    const uint64_t entry = isel - CTR_ENTRIES_FIRST;
-> +    const uint64_t mask = wr_mask & CTRDATA_MASK;
-> +    const uint64_t depth = 16 << get_field(env->sctrdepth, SCTRDEPTH_MASK);
-> +    uint64_t idx;
-> +
-> +    /* Entry greater than depth-1 is read-only zero */
-> +    if (entry >= depth) {
-> +        *val = 0;
-val may be NULL.
-> +        return 0;
-> +    }
-> +
-> +    idx = get_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK);
-> +    idx = (idx - entry - 1) & (depth - 1);
-> +
-> +    if (val) {
-> +        *val = env->ctr_data[idx];
-> +    }
-> +
-> +    env->ctr_data[idx] = (env->ctr_data[idx] & ~mask) | (new_val & mask);
-> +
-> +    return 0;
-> +}
-> +
->   static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
->                            target_ulong isel, target_ulong *val,
->                            target_ulong new_val, target_ulong wr_mask)
-> @@ -2486,6 +2603,38 @@ done:
->       return ret;
->   }
->   
-> +static int rmw_xireg_ctr(CPURISCVState *env, int csrno,
-> +                        target_ulong isel, target_ulong *val,
-> +                        target_ulong new_val, target_ulong wr_mask)
-> +{
-> +    bool ext_sxctr = false;
-> +    int ret = -EINVAL;
-> +
-> +    if (CSR_MIREG <= csrno && csrno <= CSR_MIREG3) {
-> +        ext_sxctr = riscv_cpu_cfg(env)->ext_smctr;
-> +    } else if (CSR_SIREG <= csrno && csrno <= CSR_SIREG3) {
-> +        ext_sxctr = riscv_cpu_cfg(env)->ext_ssctr;
-> +    } else if (CSR_VSIREG <= csrno && csrno <= CSR_VSIREG3) {
-> +        ext_sxctr = riscv_cpu_cfg(env)->ext_ssctr;
-> +    }
-> +
-> +    if (!ext_sxctr) {
+You can. The mem-merge / dump-guest-core set the default that can be 
+modified per memory backend (merge / dump properties).
 
-I think [s|vs]ireg4/5/6 are read-only 0 and accesses on them should not 
-trigger exceptions.
+>>
+>> But ...
+>>
+>>>
+>>> IMHO fundamentally it's just controversial to have two ways to configure
+>>> guest memory.  If '-object' is the preferred and complete way to configure
+>>> it, I prefer sticking with it if possible and see what is missing.
+>>
+>> ... I agree with that. With vhost-user we also require a reasonable
+>> configuration (using proper fd-based shared memory) for it to work.
+>>
+>>>
+>>> I think I raised that as the other major reason too, that I think it's so
+>>> far only about the vram that is out of the picture here.  We don't and
+>>> shouldn't have complicated RW RAMs floating around that we want this
+>>> property to cover.
+>>
+>> Agreed. And maybe we can still keep migration of any MAP_PRIVATE thing
+>> working by migrating that memory? CPR will be "slightly less fast".
+>>
+>> But the biggest piece -- guest RAM -- will be migrated via the fd directly.
+> 
+> I think it should work but only without VFIO.  When with VFIO there must
+> have no private pages at all or migrating is racy with concurrent DMAs
+> (yes, AFAICT CPR can run migration with DMA running..).
 
-Please refer to chapter 3.
+Understood. For these we could fail migration. Thanks for the pointer.
 
-Exceptions should be triggered when both smctr and ssctr are disabled.
+-- 
+Cheers,
 
-> +        return -EINVAL;
-> +    }
-> +
-> +    if (csrno == CSR_MIREG || csrno == CSR_SIREG || csrno == CSR_VSIREG) {
-MIREG* are not used by CTR.
-> +        ret = rmw_xctrsource(env, isel, val, new_val, wr_mask);
-> +    } else if (csrno == CSR_MIREG2 || csrno == CSR_SIREG2 ||
-> +               csrno == CSR_VSIREG2) {
-MIREG* are not used by CTR.
-> +        ret = rmw_xctrtarget(env, isel, val, new_val, wr_mask);
-> +    } else if (csrno == CSR_MIREG3 || csrno == CSR_SIREG3 ||
-> +               csrno == CSR_VSIREG3) {
-MIREG* are not used by CTR.
-> +        ret = rmw_xctrdata(env, isel, val, new_val, wr_mask);
-> +    }
-> +
-> +    return ret;
-> +}
-> +
->   /*
->    * rmw_xireg_sxcsrind: Perform indirect access to xireg and xireg2-xireg6
->    *
-> @@ -2497,11 +2646,13 @@ static int rmw_xireg_sxcsrind(CPURISCVState *env, int csrno,
->                                 target_ulong isel, target_ulong *val,
->                                 target_ulong new_val, target_ulong wr_mask)
->   {
-> -    int ret = -EINVAL;
->       bool virt = csrno == CSR_VSIREG ? true : false;
-> +    int ret = -EINVAL;
->   
->       if (xiselect_cd_range(isel)) {
->           ret = rmw_xireg_cd(env, csrno, isel, val, new_val, wr_mask);
-> +    } else if (xiselect_ctr_range(isel)) {
-MIREG* are not used by CTR. We can check:
-else if (csrno < CSR_MIREG && xiselect_ctr_range(isel))
-> +        ret = rmw_xireg_ctr(env, csrno, isel, val, new_val, wr_mask);
->       } else {
->           /*
->            * As per the specification, access to unimplented region is undefined
+David / dhildenb
+
 
