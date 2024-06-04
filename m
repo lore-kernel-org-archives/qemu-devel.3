@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C66C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 00:30:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8575C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 00:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEI3o-00016y-Sl; Mon, 03 Jun 2024 20:29:56 -0400
+	id 1sEI4C-0001Q5-P7; Mon, 03 Jun 2024 20:30:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3_l9eZgYKCnEhTPcYRVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--seanjc.bounces.google.com>)
- id 1sEI3n-00016N-3W
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 20:29:55 -0400
-Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
+ <3FmBeZgYKCok5rn0wpt11tyr.p1z3rz7-qr8ry010t07.14t@flex--seanjc.bounces.google.com>)
+ id 1sEI4B-0001PO-50
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 20:30:19 -0400
+Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3_l9eZgYKCnEhTPcYRVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--seanjc.bounces.google.com>)
- id 1sEI3l-0003IQ-Ew
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 20:29:54 -0400
-Received: by mail-pl1-x649.google.com with SMTP id
- d9443c01a7336-1f4f00cff60so25901785ad.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 17:29:52 -0700 (PDT)
+ <3FmBeZgYKCok5rn0wpt11tyr.p1z3rz7-qr8ry010t07.14t@flex--seanjc.bounces.google.com>)
+ id 1sEI49-0003XS-En
+ for qemu-devel@nongnu.org; Mon, 03 Jun 2024 20:30:18 -0400
+Received: by mail-pj1-x1049.google.com with SMTP id
+ 98e67ed59e1d1-2c1aa8d19bbso4423835a91.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 17:30:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1717460991; x=1718065791; darn=nongnu.org;
+ d=google.com; s=20230601; t=1717461015; x=1718065815; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:from:subject:message-id:references
  :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
- :reply-to; bh=QxIMQXFvRFWSOBKMLO/Pb11VLx9FgWxOAKpcjqg1q6M=;
- b=3IGHVtNW5BaApW/bHq64DKv3YYXtiJPoMtZ9f1yEtH3XKBz52j6Y0ROPxQG0Z4mVIh
- TVyfVN9sQFf5nkkMb0pruRvZrMozWOb15Mgg4tludRr8UkQcVK+Lj70VMR6cGLchap+z
- xX/Fp6jliU/5VKH4QXgi1v19CO0TYhkHBTOd1QDtYhyEQVDNHYEcJLgOcynYPCPXv/D0
- qpB3sN1UZyARF3cjietP+Z4v0KgQvBteP9CIvyJpOsBDOYMsL0bmy8e+beW6Ji3e4QB+
- sYHjwR234EWZuEBcerXLsLcT8+ct3xkPQbDnZmIqWFAq+rOratjSHM9gLZjuftMl+Yqc
- Mtqw==
+ :reply-to; bh=qxZAvQthUOLtrgNKYUD6oiL7rAnsVeqwoSoZowsNkW0=;
+ b=Z1ZELQzIzR8v+vj/OQ2Qt1Dq88s2zDS4mGVTHjmI2nm4YZLWs5/O45cPD8I5s2+g1s
+ juZHYfYVxmaKBHbqvZIT2HWdZ3Gr3AWvVE+LFCS9H+1vp/iAPD516iL/ta2gpKuSlfRh
+ gEmqbeGYc1PMM47/sLkVAj0vZIi+6IlC/TJcmPNV583BHcXslsgJ+jVn+f/rRWf4vlz1
+ /93duqw7AEJ0oiM/64amh/MKo5ZwS6CtDFvBUbIPdBgkxF3RZnPD7SK2LqLonZDvNYUC
+ 8arl/JQsbAt56cCF9kDYfOD0gV5VExgzo/CZvP4XVpB8pL31txZxNqIp33+eiLiHKWLM
+ N4sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717460991; x=1718065791;
+ d=1e100.net; s=20230601; t=1717461015; x=1718065815;
  h=content-transfer-encoding:cc:to:from:subject:message-id:references
  :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=QxIMQXFvRFWSOBKMLO/Pb11VLx9FgWxOAKpcjqg1q6M=;
- b=kNz3SWrTwW9Xt6xwwJrjj1DpQnfWIV6ZmxAUT2iYr3NaaxxcDCGTSK+PeQZfhoX8C7
- RX0z5h24VUY2KhBsicc7OTA9eZRQOltNUUDbhNE4BB+g3Z4nitzLmIsAQlNwGCGKDmmY
- awsXAgKC7j1HNlKsyaMhsFA6maPU3H4USHdlMszJz0dQJYa9tL//boFu8vqwSF7QNZz0
- JX/XoCWbFiMwaEGd0BY39aQo2LCQcYq+oUj47FsAv7i1WBg1/TDKxjJvnWnoFwcRBLvp
- KLUr4ctz5M+iWvIhXuIpre2Bh+7BkRFszcMqdIOjBJ5FVgMv6wuM0Q+uw8ZoLyLW1VEl
- LKFQ==
+ bh=qxZAvQthUOLtrgNKYUD6oiL7rAnsVeqwoSoZowsNkW0=;
+ b=tFtsSfE3OAViEfiWlBKfeDKm+pKZ0dyuqGLBl51O2bTBqyMmzwVCDXo+yjz/qiJa2h
+ yNPj7NZfrhM1vt6lJUR2GHstxRkDYW5uHmmgu7irmumOODzM3Dh+V4b89GM9+OsDkK3Q
+ 7oI0vTKHpIuOVEnjKoYzRk1CXCy0uMd/4qTewBvOQFDfhZgieEbl3wvWu1lDseudc7xh
+ jxBsQzMKrziZkbXzKIrLYYq04tjps5PiR91nZU+A/nAvao/NBXbUu9/evDihhERmb+Vb
+ rtxLPmm41TLyYdaQEetqKpbh18pwyTcKLEqqRsck29VUuIdSP/7tj3Gp4na91t9vylQR
+ pZ6g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXAgcJ/Q/Z7TKq/NXbsE8NE0n+6f8F6TN1LSrB4/Cjn7e8MF3B715h72GDis+sS9ooRBzes3z39o7qSRBjrjgivQu8VkrY=
-X-Gm-Message-State: AOJu0YyCS+kaI4tJkAFZmvp9+rFNPbKKuyihZr0ofqD5Dw6Sq/aOhXME
- xyGlpmCYG/96HpIeYI9s8CY8TUdfqOgwHhI083dSL6m0rutBKiHx8Etjj4rxR++oXbI1YU5U52T
- hPA==
-X-Google-Smtp-Source: AGHT+IENLGEaWbs37HwWar6l9tfsoGWg6m42nFsyoTQfIezFlKVeE9IraziAYhpEU9jmdwNYoPJqg3Pzh8c=
+ AJvYcCXmWqNIlRwvKWjsyYbRbC0rE5fdQixzRzBiGrOoMIGJyRh3tp0b+lJ83aV3mBu4ww76AEqhUEvvL63izcZWPjWU+lVJYYI=
+X-Gm-Message-State: AOJu0YwvPeKxbJoEt/U7+PYtjzWcRShlhafmmvpxc2PYnP2+YBD0Hj7M
+ i2STfztstSwZLE8KHIeS8u0lUecaySMAqdgLtaSODWwQHQNKHRDTbAxuLGiVcmoez9xmPDYrYNl
+ WYA==
+X-Google-Smtp-Source: AGHT+IHQGaBTeBmAnXtOHPKtCDExst6sxM2uUbRh6POZbhCe3IxNIvO17m1N9WlbQ/aSMCylqTV+FPzEOtI=
 X-Received: from zagreus.c.googlers.com
  ([fda3:e722:ac3:cc00:7f:e700:c0a8:5c37])
- (user=seanjc job=sendgmr) by 2002:a17:902:f7c1:b0:1f4:620b:6a47 with SMTP id
- d9443c01a7336-1f6370524bemr2945395ad.4.1717460990723; Mon, 03 Jun 2024
- 17:29:50 -0700 (PDT)
-Date: Mon, 3 Jun 2024 17:29:49 -0700
-In-Reply-To: <20240514.OoPohLaejai6@digikod.net>
+ (user=seanjc job=sendgmr) by 2002:a17:90a:2c86:b0:2c1:aa8e:13cb with SMTP id
+ 98e67ed59e1d1-2c1dc5e0ab2mr29758a91.9.1717461014195; Mon, 03 Jun 2024
+ 17:30:14 -0700 (PDT)
+Date: Mon, 3 Jun 2024 17:30:12 -0700
+In-Reply-To: <20240603.ahNg8waif6Fu@digikod.net>
 Mime-Version: 1.0
-References: <20240503131910.307630-1-mic@digikod.net>
- <20240503131910.307630-4-mic@digikod.net>
- <ZjTuqV-AxQQRWwUW@google.com> <20240506.ohwe7eewu0oB@digikod.net>
- <ZjmFPZd5q_hEBdBz@google.com> <20240507.ieghomae0UoC@digikod.net>
- <ZjpTxt-Bxia3bRwB@google.com> <20240514.OoPohLaejai6@digikod.net>
-Message-ID: <Zl5f_T7Nb-Fk8Y1o@google.com>
+References: <20240503131910.307630-4-mic@digikod.net>
+ <ZjTuqV-AxQQRWwUW@google.com>
+ <20240506.ohwe7eewu0oB@digikod.net> <ZjmFPZd5q_hEBdBz@google.com>
+ <20240507.ieghomae0UoC@digikod.net> <ZjpTxt-Bxia3bRwB@google.com>
+ <D15VQ97L5M8J.1TDNQE6KLW6JO@amazon.com> <20240514.mai3Ahdoo2qu@digikod.net>
+ <ZkUb2IWj4Z9FziCb@google.com> <20240603.ahNg8waif6Fu@digikod.net>
+Message-ID: <Zl5gFMJp3nECJVW-@google.com>
 Subject: Re: [RFC PATCH v3 3/5] KVM: x86: Add notifications for Heki policy
  configuration and violation
 From: Sean Christopherson <seanjc@google.com>
@@ -100,9 +101,9 @@ Cc: Nicolas Saenz Julienne <nsaenz@amazon.com>, Borislav Petkov <bp@alien8.de>,
  xen-devel@lists.xenproject.org
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
- envelope-from=3_l9eZgYKCnEhTPcYRVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--seanjc.bounces.google.com;
- helo=mail-pl1-x649.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
+ envelope-from=3FmBeZgYKCok5rn0wpt11tyr.p1z3rz7-qr8ry010t07.14t@flex--seanjc.bounces.google.com;
+ helo=mail-pj1-x1049.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -126,52 +127,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 14, 2024, Micka=C3=ABl Sala=C3=BCn wrote:
-> On Tue, May 07, 2024 at 09:16:06AM -0700, Sean Christopherson wrote:
-> > On Tue, May 07, 2024, Micka=C3=ABl Sala=C3=BCn wrote:
-> > > If yes, that would indeed require a *lot* of work for something we're=
- not
-> > > sure will be accepted later on.
+On Mon, Jun 03, 2024, Micka=C3=ABl Sala=C3=BCn wrote:
+> On Wed, May 15, 2024 at 01:32:24PM -0700, Sean Christopherson wrote:
+> > On Tue, May 14, 2024, Micka=C3=ABl Sala=C3=BCn wrote:
+> > > On Fri, May 10, 2024 at 10:07:00AM +0000, Nicolas Saenz Julienne wrot=
+e:
+> > > > Development happens
+> > > > https://github.com/vianpl/{linux,qemu,kvm-unit-tests} and the vsm-n=
+ext
+> > > > branch, but I'd advice against looking into it until we add some or=
+der
+> > > > to the rework. Regardless, feel free to get in touch.
+> > >=20
+> > > Thanks for the update.
+> > >=20
+> > > Could we schedule a PUCK meeting to synchronize and help each other?
+> > > What about June 12?
 > >=20
-> > Yes and no.  The AWS folks are pursuing VSM support in KVM+QEMU, and SV=
-SM support
-> > is trending toward the paired VM+vCPU model.  IMO, it's entirely feasib=
-le to
-> > design KVM support such that much of the development load can be shared=
- between
-> > the projects.  And having 2+ use cases for a feature (set) makes it _mu=
-ch_ more
-> > likely that the feature(s) will be accepted.
-> >=20
-> > And similar to what Paolo said regarding HEKI not having a complete sto=
-ry, I
-> > don't see a clear line of sight for landing host-defined policy enforce=
-ment, as
-> > there are many open, non-trivial questions that need answers. I.e. upst=
-reaming
-> > HEKI in its current form is also far from a done deal, and isn't guaran=
-teed to
-> > be substantially less work when all is said and done.
+> > June 12th works on my end.
 >=20
-> I'm not sure to understand why "Heki not having a complete story".  The
-> goal is the same as the current kernel self-protection mechanisms.
+> Can you please send an invite?
 
-HEKI doesn't have a complete story for how it's going to play nice with kex=
-ec(),
-emulated RESET, etc.  The kernel's existing self-protection mechanisms Just=
- Work
-because the protections are automatically disabled/lost on such transitions=
-.
-They are obviously significant drawbacks to that behavior, but they are acc=
-epted
-drawbacks, i.e. solving those problems isn't in scope (yet) for the kernel.=
-  And
-the "failure" mode is also loss of hardening, not an unusable guest.
+I think this is all the info?
 
-In other words, the kernel's hardening is firmly best effort at this time,
-whereas HEKI likely needs to be much more than "best effort" in order to ju=
-stify
-the extra complexity.  And that means having answers to the various interop=
-erability
-questions.
+Time:  6am PDT
+Video: https://meet.google.com/vdb-aeqo-knk
+Phone: https://tel.meet/vdb-aeqo-knk?pin=3D3003112178656
+
+Calendar: https://calendar.google.com/calendar/u/0?cid=3DY182MWE1YjFmNjQ0Nz=
+M5YmY1YmVkN2U1ZWE1ZmMzNjY5Y2UzMmEyNTQ0YzVkYjFjN2M4OTE3MDJjYTUwOTBjN2Q1QGdyb=
+3VwLmNhbGVuZGFyLmdvb2dsZS5jb20
+Drive:    https://drive.google.com/drive/folders/1aTqCrvTsQI9T4qLhhLs_l986S=
+ngGlhPH?resourcekey=3D0-FDy0ykM3RerZedI8R-zj4A&usp=3Ddrive_link
 
