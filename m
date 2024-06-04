@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A4E9C27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F334C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:10:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEZU4-0004xl-Hh; Tue, 04 Jun 2024 15:06:12 -0400
+	id 1sEZUP-0005oz-Gl; Tue, 04 Jun 2024 15:06:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZU2-0004x3-7D
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:06:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZUK-0005j7-UR
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:06:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZU0-0000gl-0J
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:06:09 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZUJ-0000jz-C4
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:06:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717527965;
+ s=mimecast20190719; t=1717527984;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=t5wmX3gtPAYrXQoXBdWTHoluf1os2NoQT8NoHpilReI=;
- b=Cwxgri6FAo1KpBoiKfl9rVbAkMPci3Iy+O1MoRQQlZnG0yOK1Lt5zeb9OtapIiBtn6IqpV
- z3lcH92hVMc7XGavtOYyU3v/QA2x5JxIuyI/ZFxdOWMpX7vF0+X6PMb+OtGOXurctDZQNU
- 82aNk8ymHtsNPWj/n6so5/SNktjngV4=
+ in-reply-to:in-reply-to:references:references;
+ bh=czI6QAqPz2gxBOi54M6w2CiDVJgkcwfGVW3OGis4Be4=;
+ b=hE6FYKzDC667y/6z06qVEU4c2Lc4Xmn5Cczhjdz6cdWzgyKWLrik37jnZndMidQHPsaTeM
+ pZaCYgG7QCcO7uRnDUIA18Qtt/1I0Rt5WbUQnDqhuV6MgFrscoB8NqzI/qxTlJUQE3Lyru
+ LoFJ0qS3nsT4LOXO/NxLTT6Hx0G2oQ4=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-304-Wqp3u9y5NEuc7nN6PAMhXw-1; Tue, 04 Jun 2024 15:06:03 -0400
-X-MC-Unique: Wqp3u9y5NEuc7nN6PAMhXw-1
+ us-mta-131-umM9Qt1dMomw87cg1k3CTA-1; Tue, 04 Jun 2024 15:06:23 -0400
+X-MC-Unique: umM9Qt1dMomw87cg1k3CTA-1
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4212a921370so45106615e9.3
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:06:03 -0700 (PDT)
+ 5b1f17b1804b1-42135f6012fso26193965e9.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:06:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717527962; x=1718132762;
- h=content-transfer-encoding:content-disposition:mime-version
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=t5wmX3gtPAYrXQoXBdWTHoluf1os2NoQT8NoHpilReI=;
- b=pgktQ0Hvh/MrrXFED+XHxMUZx1BfgVr5uLVVW0XfxTd39cSXBGPXbf+pwVWRouTpXS
- qgt3PGhcwkTKXEuCTCoy3DhahFucd2+ujLSEC/iuenu0ftZztExKswYMGn1CZ47PwyYY
- jBIgJ5SgNm92IVsHCDEKexPD6UzUz0l9CkEu8uRZsIl++uwl1hlO9dTBcnhNzgcwlbeX
- 8CAPW+u8104h5E0Ym2BuNrE8sbP/0fNQy3dLLSXiIh7RDzc5kMfYsAQYksH3UcHTNs+U
- z3gsZOCxY6408Bk4gqqKkZTzyJMoLOHgN8oX5iWhm+Cx3ukIlQpfu8qiMoJvs2nO9FxY
- oWzA==
-X-Gm-Message-State: AOJu0YwBzhG9i2BOmCi23ZehRPchuEvPo2eTWY3FlGOhiLvyU1tVmRTf
- kFEsrCEJYcXJCRIcPUoRh3ZzP7M3H4PckbM/WuhtwlWW/hoh3S41JIMEfIwhwSWDBAgLt2BNTPN
- 3LbBg6Es+8kvShgul2GEBIRB2bJ0n4yy4zyAsWZo3oR+it3H20N8DIw3fSdksLZBex5I8pGxqPB
- +JvaIM05Yc6xju4HkZUt2nHO0AO8Glkw==
-X-Received: by 2002:a05:600c:458c:b0:41f:e7e6:7f27 with SMTP id
- 5b1f17b1804b1-4215633a0f5mr3944265e9.26.1717527961916; 
- Tue, 04 Jun 2024 12:06:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSSNAKCjN7+qT7aZXHu7SAU/uiL/psBfDwHlM0y6lOaUfnH65VMLsxo16k4WBkXIJHD8A/CA==
-X-Received: by 2002:a05:600c:458c:b0:41f:e7e6:7f27 with SMTP id
- 5b1f17b1804b1-4215633a0f5mr3944005e9.26.1717527961317; 
- Tue, 04 Jun 2024 12:06:01 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717527982; x=1718132782;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=czI6QAqPz2gxBOi54M6w2CiDVJgkcwfGVW3OGis4Be4=;
+ b=WpnhbJOvEyq3MB35dUSz+0e0qejBjQE8NPPzCODhqdQeB+hPTYxIrR05VuQi5RD4qQ
+ EYhSprtvIU3Vo3RmgiNnzLrcyxSw8v0pqjmzyE1lVUrRoHuCbkNwiF8l8pi/Ocsec/P4
+ 81UFvLa0wVr0OtieoMEYkz2rRxDXRYN6yCMm2fpT35oonOyrKmzW1qApP6UVWH4cATAC
+ Iw0eEOj6hcg4ck6d0TOjBrOPpqVn0vTRIq2fONKpc7QjgZDKt3uwutVj6qwWiWG3gZoB
+ ZXbRY904csxIVYF3F5XSNFY746wWd8rMpw5nQBGH9CWKPYaOEZYP94jNtWFAI1tPOqW4
+ wWlA==
+X-Gm-Message-State: AOJu0YyI2YQ9YbSp5aa4nTvbuPFceRLEnexe8CuqovyefY9Tp2de0AMn
+ 8ueJuhMLdSnCOZGaYk4hzPOQ3Or5kqDVbNm9iNh22xGSVPsnszBtGETYkFRU9y10LVwrK0UU2Sk
+ GHY/9tLF4xBiH0QoC9MP0tMbKFWCX/6mfAP6/b094VExR+Q9hCbtcmlJwATmYOp9xjIPioskyoR
+ A6zWU591Y9ayLl59CUsFBuNKW/hNITjw==
+X-Received: by 2002:a05:600c:4503:b0:421:1e47:f80a with SMTP id
+ 5b1f17b1804b1-4215635c0a1mr3063715e9.41.1717527981746; 
+ Tue, 04 Jun 2024 12:06:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHB886PrhILTURkp9QKh0LH8D3iJNhV0Pb0rydXzO/KNMcw+3s+1DZnhJHdghmNemRMjZo5Ng==
+X-Received: by 2002:a05:600c:4503:b0:421:1e47:f80a with SMTP id
+ 5b1f17b1804b1-4215635c0a1mr3063525e9.41.1717527981187; 
+ Tue, 04 Jun 2024 12:06:21 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:552:cf5c:2b13:215c:b9df:f231])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42127062f0dsm193813275e9.17.2024.06.04.12.05.59
+ 5b1f17b1804b1-4213cd1c075sm87369035e9.0.2024.06.04.12.06.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 12:06:00 -0700 (PDT)
-Date: Tue, 4 Jun 2024 15:05:58 -0400
+ Tue, 04 Jun 2024 12:06:20 -0700 (PDT)
+Date: Tue, 4 Jun 2024 15:06:18 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 00/46] virtio: features,fixes
-Message-ID: <cover.1717527933.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Jonah Palmer <jonah.palmer@oracle.com>
+Subject: [PULL 06/46] virtio: Prevent creation of device using
+ notification-data with ioeventfd
+Message-ID: <1c854365ece00579e5bfe19c1ce04e80a76f4a0b.1717527933.git.mst@redhat.com>
+References: <cover.1717527933.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1717527933.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -100,187 +103,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 60b54b67c63d8f076152e0f7dccf39854dfc6a77:
+From: Jonah Palmer <jonah.palmer@oracle.com>
 
-  Merge tag 'pull-lu-20240526' of https://gitlab.com/rth7680/qemu into staging (2024-05-26 17:51:00 -0700)
+Prevent the realization of a virtio device that attempts to use the
+VIRTIO_F_NOTIFICATION_DATA transport feature without disabling
+ioeventfd.
 
-are available in the Git repository at:
+Due to ioeventfd not being able to carry the extra data associated with
+this feature, having both enabled is a functional mismatch and therefore
+Qemu should not continue the device's realization process.
 
-  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+Although the device does not yet know if the feature will be
+successfully negotiated, many devices using this feature wont actually
+work without this extra data and would fail FEATURES_OK anyway.
 
-for you to fetch changes up to bfcacf81d63a3d95f128bce3faf3564e7f98ea8b:
+If ioeventfd is able to work with the extra notification data in the
+future, this compatibility check can be removed.
 
-  hw/cxl: Fix read from bogus memory (2024-06-04 15:05:03 -0400)
-
-----------------------------------------------------------------
-virtio: features,fixes
-
-A bunch of improvements:
-- vhost dirty log is now only scanned once, not once per device
-- virtio and vhost now support VIRTIO_F_NOTIFICATION_DATA
-- cxl gained DCD emulation support
-- pvpanic gained shutdown support
-- acpi now supports Generic Port Affinity Structure
-- new tests
-- bugfixes
-
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Message-Id: <20240315165557.26942-3-jonah.palmer@oracle.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ hw/virtio/virtio.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-----------------------------------------------------------------
-Alejandro Jimenez (1):
-      pvpanic: Emit GUEST_PVSHUTDOWN QMP event on pvpanic shutdown signal
-
-Christian Pötzsch (1):
-      Fix vhost user assertion when sending more than one fd
-
-Cindy Lu (2):
-      virtio-pci: Fix the use of an uninitialized irqfd.
-      virtio-pci: Fix the failure process in kvm_virtio_pci_vector_use_one()
-
-Fan Ni (12):
-      hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output payload of identify memory device command
-      hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative and mailbox command support
-      include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for type3 memory devices
-      hw/mem/cxl_type3: Add support to create DC regions to type3 memory devices
-      hw/mem/cxl-type3: Refactor ct3_build_cdat_entries_for_mr to take mr size instead of mr as argument
-      hw/mem/cxl_type3: Add host backend and address space handling for DC regions
-      hw/mem/cxl_type3: Add DC extent list representative and get DC extent list mailbox support
-      hw/cxl/cxl-mailbox-utils: Add mailbox commands to support add/release dynamic capacity response
-      hw/cxl/events: Add qmp interfaces to add/release dynamic capacity extents
-      hw/mem/cxl_type3: Add DPA range validation for accesses to DC regions
-      hw/cxl/cxl-mailbox-utils: Add superset extent release mailbox support
-      hw/mem/cxl_type3: Allow to release extent superset in QMP interface
-
-Gregory Price (2):
-      hw/cxl/mailbox: change CCI cmd set structure to be a member, not a reference
-      hw/cxl/mailbox: interface to add CCI commands to an existing CCI
-
-Halil Pasic (1):
-      vhost-vsock: add VIRTIO_F_RING_PACKED to feature_bits
-
-Ira Weiny (1):
-      hw/cxl: Fix read from bogus memory
-
-Jiqian Chen (1):
-      virtio-pci: only reset pm state during resetting
-
-Jonah Palmer (5):
-      virtio/virtio-pci: Handle extra notification data
-      virtio: Prevent creation of device using notification-data with ioeventfd
-      virtio-mmio: Handle extra notification data
-      virtio-ccw: Handle extra notification data
-      vhost/vhost-user: Add VIRTIO_F_NOTIFICATION_DATA to vhost feature bits
-
-Jonathan Cameron (6):
-      hw/acpi/GI: Fix trivial parameter alignment issue.
-      hw/acpi: Insert an acpi-generic-node base under acpi-generic-initiator
-      hw/acpi: Generic Port Affinity Structure support
-      bios-tables-test: Allow for new acpihmat-generic-x test data.
-      bios-tables-test: Add complex SRAT / HMAT test for GI GP
-      bios-tables-test: Add data for complex numa test (GI, GP etc)
-
-Li Feng (2):
-      Revert "vhost-user: fix lost reconnect"
-      vhost-user: fix lost reconnect again
-
-Marc-André Lureau (1):
-      vhost-user-gpu: fix import of DMABUF
-
-Si-Wei Liu (2):
-      vhost: dirty log should be per backend type
-      vhost: Perform memory section dirty scans once per iteration
-
-Stefano Garzarella (1):
-      vhost-vdpa: check vhost_vdpa_set_vring_ready() return value
-
-Thomas Weißschuh (7):
-      scripts/update-linux-headers: Copy setup_data.h to correct directory
-      linux-headers: update to 6.10-rc1
-      hw/misc/pvpanic: centralize definition of supported events
-      tests/qtest/pvpanic: use centralized definition of supported events
-      hw/misc/pvpanic: add support for normal shutdowns
-      tests/qtest/pvpanic: add tests for pvshutdown event
-      Revert "docs/specs/pvpanic: mark shutdown event as not implemented"
-
-Wafer (1):
-      hw/virtio: Fix obtain the buffer id from the last descriptor
-
- qapi/cxl.json                               | 143 ++++++
- qapi/qom.json                               |  35 ++
- qapi/run-state.json                         |  14 +
- include/hw/acpi/acpi_generic_initiator.h    |  33 +-
- include/hw/cxl/cxl_device.h                 |  85 +++-
- include/hw/cxl/cxl_events.h                 |  18 +
- include/hw/misc/pvpanic.h                   |   6 +
- include/hw/pci/pci_bridge.h                 |   1 +
- include/hw/virtio/vhost-user.h              |   3 +-
- include/hw/virtio/vhost.h                   |   1 +
- include/hw/virtio/virtio.h                  |   2 +
- include/standard-headers/linux/ethtool.h    |  55 +++
- include/standard-headers/linux/pci_regs.h   |   6 +
- include/standard-headers/linux/pvpanic.h    |   7 +-
- include/standard-headers/linux/virtio_bt.h  |   1 -
- include/standard-headers/linux/virtio_mem.h |   2 +
- include/standard-headers/linux/virtio_net.h | 143 ++++++
- include/sysemu/runstate.h                   |   1 +
- linux-headers/asm-generic/unistd.h          |   5 +-
- linux-headers/asm-loongarch/kvm.h           |   4 +
- linux-headers/asm-mips/unistd_n32.h         |   1 +
- linux-headers/asm-mips/unistd_n64.h         |   1 +
- linux-headers/asm-mips/unistd_o32.h         |   1 +
- linux-headers/asm-powerpc/unistd_32.h       |   1 +
- linux-headers/asm-powerpc/unistd_64.h       |   1 +
- linux-headers/asm-riscv/kvm.h               |   1 +
- linux-headers/asm-s390/unistd_32.h          |   1 +
- linux-headers/asm-s390/unistd_64.h          |   1 +
- linux-headers/asm-x86/kvm.h                 |   4 +-
- linux-headers/asm-x86/unistd_32.h           |   1 +
- linux-headers/asm-x86/unistd_64.h           |   1 +
- linux-headers/asm-x86/unistd_x32.h          |   2 +
- linux-headers/linux/kvm.h                   |   4 +-
- linux-headers/linux/stddef.h                |   8 +
- linux-headers/linux/vhost.h                 |  15 +-
- hw/acpi/acpi_generic_initiator.c            | 209 ++++++---
- hw/block/vhost-user-blk.c                   |   6 +-
- hw/cxl/cxl-mailbox-utils.c                  | 658 +++++++++++++++++++++++++++-
- hw/display/vhost-user-gpu.c                 |   5 +-
- hw/mem/cxl_type3.c                          | 637 +++++++++++++++++++++++++--
- hw/mem/cxl_type3_stubs.c                    |  25 ++
- hw/misc/pvpanic-isa.c                       |   3 +-
- hw/misc/pvpanic-pci.c                       |   3 +-
- hw/misc/pvpanic.c                           |   8 +-
- hw/net/vhost_net.c                          |   2 +
- hw/pci-bridge/pci_expander_bridge.c         |   1 -
- hw/s390x/s390-virtio-ccw.c                  |  17 +-
- hw/scsi/vhost-scsi.c                        |   1 +
- hw/scsi/vhost-user-scsi.c                   |   7 +-
- hw/virtio/vhost-user-base.c                 |   5 +-
- hw/virtio/vhost-user-fs.c                   |   2 +-
- hw/virtio/vhost-user-vsock.c                |   1 +
- hw/virtio/vhost-user.c                      |  18 +-
- hw/virtio/vhost-vsock-common.c              |   1 +
- hw/virtio/vhost.c                           | 112 ++++-
- hw/virtio/virtio-mmio.c                     |  11 +-
- hw/virtio/virtio-pci.c                      |  45 +-
- hw/virtio/virtio.c                          |  45 ++
- net/vhost-vdpa.c                            |  16 +-
- subprojects/libvhost-user/libvhost-user.c   |   2 +-
- system/runstate.c                           |   6 +
- tests/qtest/bios-tables-test.c              |  92 ++++
- tests/qtest/pvpanic-pci-test.c              |  44 +-
- tests/qtest/pvpanic-test.c                  |  34 +-
- docs/specs/pvpanic.rst                      |   2 +-
- scripts/update-linux-headers.sh             |   2 +-
- tests/data/acpi/q35/APIC.acpihmat-generic-x | Bin 0 -> 136 bytes
- tests/data/acpi/q35/CEDT.acpihmat-generic-x | Bin 0 -> 68 bytes
- tests/data/acpi/q35/DSDT.acpihmat-generic-x | Bin 0 -> 10400 bytes
- tests/data/acpi/q35/HMAT.acpihmat-generic-x | Bin 0 -> 360 bytes
- tests/data/acpi/q35/SRAT.acpihmat-generic-x | Bin 0 -> 520 bytes
- 71 files changed, 2407 insertions(+), 221 deletions(-)
- create mode 100644 tests/data/acpi/q35/APIC.acpihmat-generic-x
- create mode 100644 tests/data/acpi/q35/CEDT.acpihmat-generic-x
- create mode 100644 tests/data/acpi/q35/DSDT.acpihmat-generic-x
- create mode 100644 tests/data/acpi/q35/HMAT.acpihmat-generic-x
- create mode 100644 tests/data/acpi/q35/SRAT.acpihmat-generic-x
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index f7c99e3a96..28cd406e16 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2980,6 +2980,20 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
+     return ret;
+ }
+ 
++static void virtio_device_check_notification_compatibility(VirtIODevice *vdev,
++                                                           Error **errp)
++{
++    VirtioBusState *bus = VIRTIO_BUS(qdev_get_parent_bus(DEVICE(vdev)));
++    VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(bus);
++    DeviceState *proxy = DEVICE(BUS(bus)->parent);
++
++    if (virtio_host_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA) &&
++        k->ioeventfd_enabled(proxy)) {
++        error_setg(errp,
++                   "notification_data=on without ioeventfd=off is not supported");
++    }
++}
++
+ size_t virtio_get_config_size(const VirtIOConfigSizeParams *params,
+                               uint64_t host_features)
+ {
+@@ -3740,6 +3754,14 @@ static void virtio_device_realize(DeviceState *dev, Error **errp)
+         }
+     }
+ 
++    /* Devices should not use both ioeventfd and notification data feature */
++    virtio_device_check_notification_compatibility(vdev, &err);
++    if (err != NULL) {
++        error_propagate(errp, err);
++        vdc->unrealize(dev);
++        return;
++    }
++
+     virtio_bus_device_plugged(vdev, &err);
+     if (err != NULL) {
+         error_propagate(errp, err);
+-- 
+MST
 
 
