@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73A84C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 09:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2B5AC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 09:58:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEQur-0006MT-3T; Tue, 04 Jun 2024 05:57:17 -0400
+	id 1sEQvE-0008IN-Ti; Tue, 04 Jun 2024 05:57:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQup-00069a-BG
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:57:15 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQvB-00088O-GA
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:57:37 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQun-000272-Mb
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:57:15 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-5295eb47b48so917137e87.1
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:57:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQv9-00029I-HA
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:57:37 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-42134bb9735so29701175e9.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:57:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717495032; x=1718099832; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717495053; x=1718099853; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ImVmefo1MlwAmY4FNzose8vP9/wMtnxVjazWG/n/+Lw=;
- b=Iips2Im6vBwTDCb3WLOsaVMwPyunx4KfWRy+1oLXKorwGVn213VOO9u9oluQ2I+MfY
- Rw4+0cp2pJ2P6gvnlMXxn3cSpy6HB220pKPUglwiU1EPqN3NjM1wFyx7IujrD1G5J1Os
- 3htD8d1ktaDGm4Gen4jFqm/MkZSuMFfpmMsBA3o8Sx7VCKuueaGXgJVENAs7HF+WoKhC
- 35lS+0sG9GhzBS3zAzSQqK310k2qT12LKo9MjUePSkvrBc22WxJ1PYbd+Bxf19RTgydX
- jl200G4uJF9fkF4keDXjTYGB51v2sumtmEKx6X8wbYWlbHx76EBpeiXt5wUNmOzBdI1c
- RTDw==
+ bh=obtEpkiAsJdiWpm7zcpgW5liQ303qrBraj3NKulpnrg=;
+ b=GFdAoyoylMNQ+DPpBG7JKcNmY3lHNdn28Djst9t6qFiZvtlDq31TMKz84dv9aFqDq6
+ EkTHHe7N0V5xddDaXzbgGhi0tyAwuQZ8gYBpyRv8WainUeecqXVHjVF6Vn3HUP9qLYdn
+ MsiIzhNs4Ne7LU5ELTKVD1Hu0Ku0zA6frSEnheHXUpbFLecd/EqUrUJLrmZkqdsljJ5l
+ YMgZSEYiQqhWFYyvWXCeGvT9qatJR99xiILgtFai8tmdHPMVFb+Gh1Zt7K7zNTrYWXEq
+ 3paZgbVMp5Ue7O6VnUo7SCAC7CKbcGQMAn1jmjOr2k/vuMflCSgOif4oCqNSbtBUPA5Q
+ zXXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717495032; x=1718099832;
+ d=1e100.net; s=20230601; t=1717495053; x=1718099853;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ImVmefo1MlwAmY4FNzose8vP9/wMtnxVjazWG/n/+Lw=;
- b=JG0tA+dQFfrjmrDzqqfddra1d841qx8wKAQ0qrB1JPQPsAht7lEPQ9Gg5IaZYR2tIT
- /aKQ3k5tAwOpfcIxT6djskzYprqdz+tmtXviv1wUViVuKdcMbmgPu7DyOGO71rk1vtyj
- zpUq6plaIFGdfwIqT76/memVrG2F+AjN+0R7/XZRWMsvfBRcQqcDmOTKrRLPRsgDjJrx
- TjPoTjOo9C9oGdDlajuD+/q1wmqpGQBRTI07wleJn+J8CEEqwApk1rSc+Tca+dP2DI8X
- PDEZWvYNOLSAE+9YHdX9Y/Zw4UYWeYvo4F0VwhPhqaf/8xVeRdS7QeyTyIqlmKfBLUov
- YucQ==
-X-Gm-Message-State: AOJu0YxbD6y9k1I5qQkci6DDSMlTINu4vr+nzVtWxoMf7PSjh23w8jh5
- jhQKgPYbmW+f0bTaLD4f8r0ZusIbN6BNelvhIA0Jvy/VlG+dcy4BLMpeaebdMFZfSSL5yhBoQC6
- Y
-X-Google-Smtp-Source: AGHT+IEnB+OfoGZGHL7izD1AQ0ApPkEpicQlRTfCoLwEG1OAbzt/sn1ZXy9I33G2SdxSt0XWdH62nQ==
-X-Received: by 2002:ac2:5b5d:0:b0:51d:68fb:5d73 with SMTP id
- 2adb3069b0e04-52b8956932dmr7798641e87.8.1717495031553; 
- Tue, 04 Jun 2024 02:57:11 -0700 (PDT)
+ bh=obtEpkiAsJdiWpm7zcpgW5liQ303qrBraj3NKulpnrg=;
+ b=du6/2Yjre1hPNqDpiTPTjmAMHObpxj5wERncHAll42XxdCAPcAXePjTJqAgRRbgMo5
+ ICQqc4NZg1fXx5Q/dSqoui276GzNYx31ABdqX+PV3Ae50t2ONSt+wkhmyrGTuNolFuwj
+ bmTS+90FbOGgRGev4Gni/YGQFoJETqaGrI9AVy5lxxSf0a7tWlqMOSfbgvnrby1uQs7R
+ hd0PII4EW1241qdlMlSPTw1fAtqGc0GWr7h0+uaNIVbIS88Lvy419+eQG38FyL6+P0pk
+ 6EjvGmHybxaf7g9j5yohqJ1r2Q9jIh6jziIox9BiISxp8qbfAygvQ6dmx1aCcTqHiFB3
+ byeQ==
+X-Gm-Message-State: AOJu0YzcuosbtAe1CuyZ14j/NXJahjS2aAL0R/ekqhPg+J9IvDarmBBP
+ WZP7JR4Z1Ee/7GObJQUAf6YjUNAXX8ysIWyHfFjcOmZC+Q1hQdwq+ZyEPZANn0Gmc242+BnQnW7
+ +
+X-Google-Smtp-Source: AGHT+IEktRku/zcyjNjox8mle+MVL2eSRUmZfkMxGn7inNrwYrFDVMmbgJ88UHcLC5Jj+skWlhrSOA==
+X-Received: by 2002:a05:600c:4e8b:b0:421:3a41:5428 with SMTP id
+ 5b1f17b1804b1-4213a4157bcmr44589875e9.41.1717495053637; 
+ Tue, 04 Jun 2024 02:57:33 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.159.34])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd04c0de3sm11095383f8f.9.2024.06.04.02.57.10
+ 5b1f17b1804b1-4215447035bsm7234385e9.13.2024.06.04.02.57.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Jun 2024 02:57:11 -0700 (PDT)
+ Tue, 04 Jun 2024 02:57:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 11/32] MAINTAINERS: drop usb maintainership
-Date: Tue,  4 Jun 2024 11:55:47 +0200
-Message-ID: <20240604095609.12285-12-philmd@linaro.org>
+Subject: [PULL 15/32] hw/core: expand on the alignment of CPUState
+Date: Tue,  4 Jun 2024 11:55:51 +0200
+Message-ID: <20240604095609.12285-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240604095609.12285-1-philmd@linaro.org>
 References: <20240604095609.12285-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,41 +95,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Remove myself from usb entries.
-Flip status to "Orphan" for entries which have nobody else listed.
+Make the relationship between CPUState, ArchCPU and cpu_env a bit
+clearer in the kdoc comments.
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-ID: <20240528083858.836262-3-kraxel@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20240530194250.1801701-2-alex.bennee@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ include/hw/core/cpu.h | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 448dc951c5..5bc478f7ff 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2141,8 +2141,7 @@ F: tests/qtest/fuzz-sdcard-test.c
- F: tests/qtest/sdhci-test.c
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index bb398e8237..be44746d24 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -391,7 +391,8 @@ struct qemu_work_item;
+ #define CPU_UNSET_NUMA_NODE_ID -1
  
- USB
--M: Gerd Hoffmann <kraxel@redhat.com>
--S: Odd Fixes
-+S: Orphan
- F: hw/usb/*
- F: stubs/usb-dev-stub.c
- F: tests/qtest/usb-*-test.c
-@@ -2151,7 +2150,6 @@ F: include/hw/usb.h
- F: include/hw/usb/
- 
- USB (serial adapter)
--R: Gerd Hoffmann <kraxel@redhat.com>
- M: Samuel Thibault <samuel.thibault@ens-lyon.org>
- S: Maintained
- F: hw/usb/dev-serial.c
+ /**
+- * CPUState:
++ * struct CPUState - common state of one CPU core or thread.
++ *
+  * @cpu_index: CPU index (informative).
+  * @cluster_index: Identifies which cluster this CPU is in.
+  *   For boards which don't define clusters or for "loose" CPUs not assigned
+@@ -439,10 +440,15 @@ struct qemu_work_item;
+  * @kvm_fetch_index: Keeps the index that we last fetched from the per-vCPU
+  *    dirty ring structure.
+  *
+- * State of one CPU core or thread.
++ * @neg_align: The CPUState is the common part of a concrete ArchCPU
++ * which is allocated when an individual CPU instance is created. As
++ * such care is taken is ensure there is no gap between between
++ * CPUState and CPUArchState within ArchCPU.
+  *
+- * Align, in order to match possible alignment required by CPUArchState,
+- * and eliminate a hole between CPUState and CPUArchState within ArchCPU.
++ * @neg: The architectural register state ("cpu_env") immediately follows
++ * CPUState in ArchCPU and is passed to TCG code. The @neg structure holds
++ * some common TCG CPU variables which are accessed with a negative offset
++ * from cpu_env.
+  */
+ struct CPUState {
+     /*< private >*/
 -- 
 2.41.0
 
