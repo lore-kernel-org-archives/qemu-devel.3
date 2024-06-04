@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB534C27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 185BBC25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:52:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sENwm-0006MH-Dn; Tue, 04 Jun 2024 02:47:04 -0400
+	id 1sENuP-0001yF-8v; Tue, 04 Jun 2024 02:44:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENvm-0004Yl-Qc
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:46:04 -0400
+ id 1sENuN-0001xX-Ea
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENvk-0007ci-SB
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:46:02 -0400
+ id 1sENuM-0007Fl-0K
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717483559;
+ s=mimecast20190719; t=1717483473;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8bt9EMAvb2uqqlG2EVvh0go+BINiKLQvUIsp6j0IIbQ=;
- b=RRLpxGdGoYEraUWprkwGdxZuSjWRN7HnG6fdhVeReie4DhKCL7m1N2Uam9gIGZ3c7wnH+Z
- pneZN4QAmTadgUWWRKVPPIPP4UuFzsooLGVms9EJzZizgR6EEyP+xTTfg99NPFyou/W7hy
- VX+7bWBQj299SWWkHHoY2r8Y/MCle7o=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jnre2UF7/f5unB3VrXj0N5RhP/b8i4wPnG8jXCu2p4Y=;
+ b=AW64SsAgfvD3RkLNSxu9ET1rq2xamIP5Fl+kSlLQwgnm1O937V+4A4qQsWRqVrPCJUklQA
+ HpkPxjPjcZPCgIuQz4zviYlZUNvHdsEau56LKyOwVJivFHwktq+PTZCli+YO3JR8vsRng5
+ oAcbop8j7lki3v9zf9yPPzXT+AWcuAI=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-Q_ngoZHJOIyKbhFsJP2nVQ-1; Tue, 04 Jun 2024 02:45:52 -0400
-X-MC-Unique: Q_ngoZHJOIyKbhFsJP2nVQ-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-52b950b3dc7so2001850e87.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:45:52 -0700 (PDT)
+ us-mta-222-Vw_6IhouPZ66uwKiy1hPzg-1; Tue, 04 Jun 2024 02:44:30 -0400
+X-MC-Unique: Vw_6IhouPZ66uwKiy1hPzg-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a68f654dc69so107864566b.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:44:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717483551; x=1718088351;
+ d=1e100.net; s=20230601; t=1717483469; x=1718088269;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8bt9EMAvb2uqqlG2EVvh0go+BINiKLQvUIsp6j0IIbQ=;
- b=MOVxU4gdg6NH2c6VaA/4EtynysBeTYVX+hAPV0xAhUasQQJ1HPwwiHtsyQNz2kzV69
- VMJZGiYXBj1S92+GvGar4NIw8BBC4qUlZ6IkCHZsXI666FYRZ3Gb099C4mFFRQVajnaP
- 6Wd0Jm8k7bLbkfJdNkYPOFcXUo6uUtKI0tBngQ7NEuY1t9isW0WcYGS+3qcr0HD5+wbF
- AbDQ8joo17uwxaNa4U7oz3xRT1rgeLUg6DgLLcmzv0zdCMr9gyNTfDYapw7yp9FRqQ0p
- 8k0OIVFZOqs/Rek9XpWbIWFYrjThTjEkDRqlqM6voObY3WhoXdTkDnWpLn2E+3bWCBdv
- kXJw==
-X-Gm-Message-State: AOJu0Yzc3tWUdJGSO3w5L3RnH/gR3I+zhm5A4W4SEp2uA2pj1NvxXGMa
- 63C4wlNDJ5Jnu8quSiX9N9Q+vUJaPN+MvU+3HJpQsgfmqZ21Koean1kv2vyuTm9cOSZ2zIIEXKD
- kzvUWXhGMSF/WVz8LBtoyH06D+Du9M1hlzx8tq0lNspjgcSK2W8vMmGRILK1Zu4aa6M+aR7wYDY
- uDd1AIXiDoLSNmXvgOTzk6CzhZMnXPa42Rop6l
-X-Received: by 2002:a19:2d1b:0:b0:52b:8c88:2d73 with SMTP id
- 2adb3069b0e04-52b8c882e43mr7124679e87.52.1717483550811; 
- Mon, 03 Jun 2024 23:45:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEbRr9D2dml/HvZIidIMaZJD6E+zQe2s0UM/Pv4pblvRIT+bBNC3JoJAXdOHQwA2XV0XBB7GA==
-X-Received: by 2002:a19:2d1b:0:b0:52b:8c88:2d73 with SMTP id
- 2adb3069b0e04-52b8c882e43mr7124665e87.52.1717483550382; 
- Mon, 03 Jun 2024 23:45:50 -0700 (PDT)
+ bh=jnre2UF7/f5unB3VrXj0N5RhP/b8i4wPnG8jXCu2p4Y=;
+ b=UE9g4/xGbt063dIpT2jW/laDComxRRrxi2eEC7SSll864Xr3SsjtTpNxBB2BmJSPKl
+ tvx6ifkRGTC2pusPYfunmvtuL+IwPgaslUr3hTuAvfrU/E/QWttOl5ICXntFHbHCpJ1p
+ B+nWXKfxgAUORMhBhVpy0eLcu2hGzbT17Bsv6TN5eV/AvPaaeXyF9H7PDTHIP2W1hfGy
+ 60DEvLesPbC2wpRcKOYVjkoSEpJo+F8kL+2MP3RyOq4NOqkfhZurT5f+lxvzhHkDC1jR
+ 9OWk6ymrSERuPJGiWmB5dBKE2aRgwpZC3xpezqbFxMdJqO+0UCf7ncoa7L6Wz5j+edlM
+ Mdiw==
+X-Gm-Message-State: AOJu0Yx5CvkVYg8rcRbaFHb7A8IPbhA2/2M5vNxRmyNFmOBSJgmuQa42
+ JWwhGuM+HtBLA+AL0zoc/t2rSZBDeeUdsZGnDGFKGlDfnpUv9S4+d0uPV3jNEE/btwFwCT+vYb/
+ 4IX81Na3k1v1/9EHrNVzrBe4ZktK0/2yGswngFw+9dmYm8b7hYUA/QAooR6wUyp+CxFwqhP/3qA
+ ba8HhMYfJ9AqAvDBo9j/UQm8S79IpKUMAsI5Hh
+X-Received: by 2002:a17:907:940b:b0:a69:2bce:e41e with SMTP id
+ a640c23a62f3a-a692bcee4bemr282320466b.9.1717483468929; 
+ Mon, 03 Jun 2024 23:44:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFw9YQl6f71DA6i9PendEh30fTQFobGQh5qPn6O5dlLLub2Q9COeoYRVKF2PJC1BZkNCizNFw==
+X-Received: by 2002:a17:907:940b:b0:a69:2bce:e41e with SMTP id
+ a640c23a62f3a-a692bcee4bemr282319766b.9.1717483468608; 
+ Mon, 03 Jun 2024 23:44:28 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68ce1e4462sm394866466b.197.2024.06.03.23.45.49
+ a640c23a62f3a-a691122859esm233259166b.224.2024.06.03.23.44.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 23:45:49 -0700 (PDT)
+ Mon, 03 Jun 2024 23:44:28 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Brijesh Singh <brijesh.singh@amd.com>, Michael Roth <michael.roth@amd.com>,
- Pankaj Gupta <pankaj.gupta@amd.com>
-Subject: [PULL 35/45] hw/i386/sev: Add support to encrypt BIOS when SEV-SNP is
- enabled
-Date: Tue,  4 Jun 2024 08:43:59 +0200
-Message-ID: <20240604064409.957105-36-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 05/45] host/i386: assume presence of SSE2
+Date: Tue,  4 Jun 2024 08:43:29 +0200
+Message-ID: <20240604064409.957105-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240604064409.957105-1-pbonzini@redhat.com>
 References: <20240604064409.957105-1-pbonzini@redhat.com>
@@ -105,154 +103,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Brijesh Singh <brijesh.singh@amd.com>
+QEMU now requires an x86-64-v2 host, which has SSE2.
+Use it freely in buffer_is_zero.
 
-As with SEV, an SNP guest requires that the BIOS be part of the initial
-encrypted/measured guest payload. Extend sev_encrypt_flash() to handle
-the SNP case and plumb through the GPA of the BIOS location since this
-is needed for SNP.
-
-Signed-off-by: Brijesh Singh <brijesh.singh@amd.com>
-Signed-off-by: Michael Roth <michael.roth@amd.com>
-Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Message-ID: <20240530111643.1091816-25-pankaj.gupta@amd.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/i386/x86.h         |  2 +-
- target/i386/sev.h             |  2 +-
- hw/i386/pc_sysfw.c            | 12 +++++++-----
- hw/i386/x86-common.c          |  2 +-
- target/i386/sev-sysemu-stub.c |  2 +-
- target/i386/sev.c             |  5 +++--
- 6 files changed, 14 insertions(+), 11 deletions(-)
+ host/include/i386/host/cpuinfo.h | 1 -
+ util/bufferiszero.c              | 4 ++--
+ util/cpuinfo-i386.c              | 1 -
+ 3 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
-index b006f16b8d3..d43cb3908e6 100644
---- a/include/hw/i386/x86.h
-+++ b/include/hw/i386/x86.h
-@@ -154,6 +154,6 @@ void ioapic_init_gsi(GSIState *gsi_state, Object *parent);
- DeviceState *ioapic_init_secondary(GSIState *gsi_state);
+diff --git a/host/include/i386/host/cpuinfo.h b/host/include/i386/host/cpuinfo.h
+index 81771733eaa..72f6fad61e5 100644
+--- a/host/include/i386/host/cpuinfo.h
++++ b/host/include/i386/host/cpuinfo.h
+@@ -14,7 +14,6 @@
+ #define CPUINFO_POPCNT          (1u << 4)
+ #define CPUINFO_BMI1            (1u << 5)
+ #define CPUINFO_BMI2            (1u << 6)
+-#define CPUINFO_SSE2            (1u << 7)
+ #define CPUINFO_AVX1            (1u << 9)
+ #define CPUINFO_AVX2            (1u << 10)
+ #define CPUINFO_AVX512F         (1u << 11)
+diff --git a/util/bufferiszero.c b/util/bufferiszero.c
+index 74864f7b782..11c080e02cf 100644
+--- a/util/bufferiszero.c
++++ b/util/bufferiszero.c
+@@ -188,14 +188,14 @@ static biz_accel_fn const accel_table[] = {
  
- /* pc_sysfw.c */
--void x86_firmware_configure(void *ptr, int size);
-+void x86_firmware_configure(hwaddr gpa, void *ptr, int size);
+ static unsigned best_accel(void)
+ {
++#ifdef CONFIG_AVX2_OPT
+     unsigned info = cpuinfo_init();
  
+-#ifdef CONFIG_AVX2_OPT
+     if (info & CPUINFO_AVX2) {
+         return 2;
+     }
  #endif
-diff --git a/target/i386/sev.h b/target/i386/sev.h
-index cc12824dd65..858005a119c 100644
---- a/target/i386/sev.h
-+++ b/target/i386/sev.h
-@@ -59,7 +59,7 @@ uint32_t sev_get_cbit_position(void);
- uint32_t sev_get_reduced_phys_bits(void);
- bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp);
- 
--int sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp);
-+int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp);
- int sev_inject_launch_secret(const char *hdr, const char *secret,
-                              uint64_t gpa, Error **errp);
- 
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index 9b8671c4412..7cdbafc8d22 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -148,6 +148,8 @@ static void pc_system_flash_map(PCMachineState *pcms,
-     assert(PC_MACHINE_GET_CLASS(pcms)->pci_enabled);
- 
-     for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
-+        hwaddr gpa;
-+
-         system_flash = pcms->flash[i];
-         blk = pflash_cfi01_get_blk(system_flash);
-         if (!blk) {
-@@ -177,11 +179,11 @@ static void pc_system_flash_map(PCMachineState *pcms,
-         }
- 
-         total_size += size;
-+        gpa = 0x100000000ULL - total_size; /* where the flash is mapped */
-         qdev_prop_set_uint32(DEVICE(system_flash), "num-blocks",
-                              size / FLASH_SECTOR_SIZE);
-         sysbus_realize_and_unref(SYS_BUS_DEVICE(system_flash), &error_fatal);
--        sysbus_mmio_map(SYS_BUS_DEVICE(system_flash), 0,
--                        0x100000000ULL - total_size);
-+        sysbus_mmio_map(SYS_BUS_DEVICE(system_flash), 0, gpa);
- 
-         if (i == 0) {
-             flash_mem = pflash_cfi01_get_memory(system_flash);
-@@ -196,7 +198,7 @@ static void pc_system_flash_map(PCMachineState *pcms,
-             if (sev_enabled()) {
-                 flash_ptr = memory_region_get_ram_ptr(flash_mem);
-                 flash_size = memory_region_size(flash_mem);
--                x86_firmware_configure(flash_ptr, flash_size);
-+                x86_firmware_configure(gpa, flash_ptr, flash_size);
-             }
-         }
-     }
-@@ -249,7 +251,7 @@ void pc_system_firmware_init(PCMachineState *pcms,
-     pc_system_flash_cleanup_unused(pcms);
+-    return info & CPUINFO_SSE2 ? 1 : 0;
++    return 1;
  }
  
--void x86_firmware_configure(void *ptr, int size)
-+void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
- {
-     int ret;
+ #elif defined(__aarch64__) && defined(__ARM_NEON)
+diff --git a/util/cpuinfo-i386.c b/util/cpuinfo-i386.c
+index 90f92a42dc8..ca74ef04f54 100644
+--- a/util/cpuinfo-i386.c
++++ b/util/cpuinfo-i386.c
+@@ -34,7 +34,6 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+     if (max >= 1) {
+         __cpuid(1, a, b, c, d);
  
-@@ -270,6 +272,6 @@ void x86_firmware_configure(void *ptr, int size)
-             exit(1);
-         }
- 
--        sev_encrypt_flash(ptr, size, &error_fatal);
-+        sev_encrypt_flash(gpa, ptr, size, &error_fatal);
-     }
- }
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index ee9046d9a80..f41cb0a6a8b 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -1013,7 +1013,7 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
-          */
-         void *ptr = memory_region_get_ram_ptr(&x86ms->bios);
-         load_image_size(filename, ptr, bios_size);
--        x86_firmware_configure(ptr, bios_size);
-+        x86_firmware_configure(0x100000000ULL - bios_size, ptr, bios_size);
-     } else {
-         memory_region_set_readonly(&x86ms->bios, !isapc_ram_fw);
-         ret = rom_add_file_fixed(bios_name, (uint32_t)(-bios_size), -1);
-diff --git a/target/i386/sev-sysemu-stub.c b/target/i386/sev-sysemu-stub.c
-index fc1c57c4113..d5bf886e799 100644
---- a/target/i386/sev-sysemu-stub.c
-+++ b/target/i386/sev-sysemu-stub.c
-@@ -42,7 +42,7 @@ void qmp_sev_inject_launch_secret(const char *packet_header, const char *secret,
-     error_setg(errp, "SEV is not available in this QEMU");
- }
- 
--int sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp)
-+int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
- {
-     g_assert_not_reached();
- }
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 06401f0526f..7b5c4b4874d 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1484,7 +1484,7 @@ static int sev_snp_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
- }
- 
- int
--sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp)
-+sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
- {
-     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
- 
-@@ -1841,7 +1841,8 @@ bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp)
-     /* zero the excess data so the measurement can be reliably calculated */
-     memset(padded_ht->padding, 0, sizeof(padded_ht->padding));
- 
--    if (sev_encrypt_flash((uint8_t *)padded_ht, sizeof(*padded_ht), errp) < 0) {
-+    if (sev_encrypt_flash(area->base, (uint8_t *)padded_ht,
-+                          sizeof(*padded_ht), errp) < 0) {
-         ret = false;
-     }
- 
+-        info |= (d & bit_SSE2 ? CPUINFO_SSE2 : 0);
+         info |= (c & bit_MOVBE ? CPUINFO_MOVBE : 0);
+         info |= (c & bit_POPCNT ? CPUINFO_POPCNT : 0);
+         info |= (c & bit_PCLMUL ? CPUINFO_PCLMUL : 0);
 -- 
 2.45.1
 
