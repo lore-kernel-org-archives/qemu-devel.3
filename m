@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16BD4C27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D6D9C27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:46:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sENum-00032O-TC; Tue, 04 Jun 2024 02:45:00 -0400
+	id 1sENv3-0003cb-Rm; Tue, 04 Jun 2024 02:45:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENul-00030p-L4
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:59 -0400
+ id 1sENv1-0003RI-28
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENuj-0007Ib-Uv
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:59 -0400
+ id 1sENuz-0007W6-5M
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717483497;
+ s=mimecast20190719; t=1717483512;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MDyhAP+n0w/5RDBBwdEvijayFSHRRMGqLWqQctd9oMc=;
- b=WTII0MYhZujVTVN5ioWhI55M+yLTXneqtpcs0MRP/YBV97+i9OCZI/0X8YeyXLYg7IqCpU
- 3KxFeFayfPFO+z7P+RmurLqvjdPONf59RWZVOnrP9aYcHVI0E1OP3fGzd7A0HtkpfG+fNH
- /XlMaCNsmf1Ld2psIIEcifjS3bLwmNA=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9eBpKMwv8ZIHObCcWR1NvCyq4TOAmQm+iQ+YMChwrck=;
+ b=MkYG3Wb0D53OimwVV3W5oVCymjL4E1uS4Zd7U42jue1+JAg/ET9rFnR4FzlzIvEzapB2UO
+ m4m9gmqg7ICJaqSyBmx0C7fIWxrQNZSCweHGyVyQH8woeQL7lX6tHiHHYDXCXdDHTA1/Wn
+ RVQgs/aFODaIrLCUKFKfQCUON9jtZ4o=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-660-BGbOoF6wPSutT3NGIIL2cA-1; Tue, 04 Jun 2024 02:44:56 -0400
-X-MC-Unique: BGbOoF6wPSutT3NGIIL2cA-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a6861bb1c0bso193836566b.3
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:44:56 -0700 (PDT)
+ us-mta-686-Ue3BDUaDOUCyD4Q7JtO6cQ-1; Tue, 04 Jun 2024 02:45:11 -0400
+X-MC-Unique: Ue3BDUaDOUCyD4Q7JtO6cQ-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a6912c4ddb1so13735266b.1
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:45:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717483494; x=1718088294;
+ d=1e100.net; s=20230601; t=1717483509; x=1718088309;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MDyhAP+n0w/5RDBBwdEvijayFSHRRMGqLWqQctd9oMc=;
- b=t/ILoPpgx9K/jyjEJPXEiI0912ymTD+XaNuOpuXOLXVUM9cX6CbqtNR5F1/Nm5qUNC
- i88H1Ax2Pv3qYygznUUEsG3F0O8ca9LABYK3YAGa3pMESc+ZVdz0ch8/7SPjGb3UWO1e
- QIVcpPjDhahO425SS1wZDP3bKKPcB1O6TKK1AsSOkYcgJU3vStHdn0V+2z8mO1WVspA3
- u0+cqN0AC+2NIHgt5fbiYG9DVsxNTysUyXsjONl73QtUb5aKajRENmvpldpnMeH6Ze0M
- GtqIWe1r6lEiFp24U+W/TnyPsv+FXTzo5Z1FsOJtj5sDz48RT0DdIr8m1LcO/YhYc0Yd
- LHSQ==
-X-Gm-Message-State: AOJu0YwObO/CD9GO2sPF0EdD2vTUFhga6l+pWh894/vz8A+Fl1Ym2HVP
- bTkn/PScx/YK2ijQ5GP0n1lRxlb8GfwdCoD9W6LiJMpxCEejhzM/vaURu4tTFHkvfXLsOHrtth/
- FzMeCUF8c6Ur74bEAkPpl5qQia0SYc0YVETfd0EzpBV1xlJBieX/mR8bA3CreFsx7ZPKOL0mpoL
- /e9Ovut2XvtFUE/h0fg+n0l6yxgOftH1Xhy1q4
-X-Received: by 2002:a17:906:408a:b0:a68:43a6:fbdf with SMTP id
- a640c23a62f3a-a6843a6febfmr619271366b.49.1717483493975; 
- Mon, 03 Jun 2024 23:44:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFwFiU7ge6+oSqyQqtrFCqjNNzq0vu3U4tNqhRRWyXNnN09yLxvqIvNyWQTlmusU803vi6lnQ==
-X-Received: by 2002:a17:906:408a:b0:a68:43a6:fbdf with SMTP id
- a640c23a62f3a-a6843a6febfmr619270166b.49.1717483493508; 
- Mon, 03 Jun 2024 23:44:53 -0700 (PDT)
+ bh=9eBpKMwv8ZIHObCcWR1NvCyq4TOAmQm+iQ+YMChwrck=;
+ b=GFStmx6umkMwwParbRwuArcs8oXcB+BLhgED3iTbp8P76LtXAJUt/yethFHw7lDort
+ do3SsDJIoZmjbTl8kgyfAOCX9JYuaAow/N0Js4YRizhxQZxPNpJJTtPGwDhOH01ZsMcz
+ wNKOv9MHG60pAQ9KCiRbDLijl6i7hsu0G5Lofbwt5dMMRxLqVL3w3kTXhK0AL7Q846dZ
+ f7QYhj605cFJZGhzfi8Pfdhn7oPbJw1F9TbR+SkI4DikbEFawQb9lH8985LZp+s7nlRy
+ z9KPMhFPXaFxtwwXMJVqqMqGXpvpDIAr8zMQmx/+YLAIq66WnkzIKL7hxjaHeQ/aNe/7
+ tVeQ==
+X-Gm-Message-State: AOJu0Yyqpr9zge/apwBOth+YsIUKuw9H8AGBWDAE5cGShJpA5n7FHAzI
+ G1oZraI355qdLAhDaxPPNCjfUZkz9ozzioAc3pfFHYyqhSjgHVxkQ5nHVR2nNzNQ7Y965gDQQFd
+ /gE8sHDd9+zroLRHmXNSf9c7MdP1Il9AVDxQ9oKHQDgQ73eU1StccFMMgOWrhR9eYB5xJb3BRCN
+ KJCPDXdvn2GDFnmvypt+FW3As2KV+PRSxR5a5B
+X-Received: by 2002:a17:907:830f:b0:a59:ba2b:590e with SMTP id
+ a640c23a62f3a-a6821d64589mr532735166b.48.1717483508837; 
+ Mon, 03 Jun 2024 23:45:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG6fnb4LHOMoAN/4J1za5ggJwAH9edSZdn6z6CuQWbYHIormQLr3eHTJR50hLMcuLdcaAb33A==
+X-Received: by 2002:a17:907:830f:b0:a59:ba2b:590e with SMTP id
+ a640c23a62f3a-a6821d64589mr532734166b.48.1717483508447; 
+ Mon, 03 Jun 2024 23:45:08 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68e9eed9b1sm354950666b.131.2024.06.03.23.44.52
+ a640c23a62f3a-a68b59e925csm443157166b.220.2024.06.03.23.45.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 23:44:52 -0700 (PDT)
+ Mon, 03 Jun 2024 23:45:07 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Pankaj Gupta <pankaj.gupta@amd.com>,
-	Michael Roth <michael.roth@amd.com>
-Subject: [PULL 14/45] linux-headers: Update to current kvm/next
-Date: Tue,  4 Jun 2024 08:43:38 +0200
-Message-ID: <20240604064409.957105-15-pbonzini@redhat.com>
+Cc: Pankaj Gupta <pankaj.gupta@amd.com>
+Subject: [PULL 19/45] i386/sev: Move sev_launch_update to separate class method
+Date: Tue,  4 Jun 2024 08:43:43 +0200
+Message-ID: <20240604064409.957105-20-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240604064409.957105-1-pbonzini@redhat.com>
 References: <20240604064409.957105-1-pbonzini@redhat.com>
@@ -106,177 +105,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pankaj Gupta <pankaj.gupta@amd.com>
 
-This updates kernel headers to commit 6f627b425378 ("KVM: SVM: Add module
-parameter to enable SEV-SNP", 2024-05-12).  The SNP host patches will
-be included in Linux 6.11, to be released next July.
+When sev-snp-guest objects are introduced there will be a number of
+differences in how the launch data is handled compared to the existing
+sev-guest object. Move sev_launch_start() to a class method to make it
+easier to implement SNP-specific launch update functionality later.
 
-Also brings in an linux-headers/linux/vhost.h fix from v6.9-rc4.
-
-Co-developed-by: Michael Roth <michael.roth@amd.com>
-Signed-off-by: Michael Roth <michael.roth@amd.com>
 Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Message-ID: <20240530111643.1091816-3-pankaj.gupta@amd.com>
+Message-ID: <20240530111643.1091816-6-pankaj.gupta@amd.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- linux-headers/asm-loongarch/kvm.h |  4 +++
- linux-headers/asm-riscv/kvm.h     |  1 +
- linux-headers/asm-x86/kvm.h       | 52 ++++++++++++++++++++++++++++++-
- linux-headers/linux/vhost.h       | 15 ++++-----
- 4 files changed, 64 insertions(+), 8 deletions(-)
+ target/i386/sev.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/linux-headers/asm-loongarch/kvm.h b/linux-headers/asm-loongarch/kvm.h
-index 109785922cf..f9abef38231 100644
---- a/linux-headers/asm-loongarch/kvm.h
-+++ b/linux-headers/asm-loongarch/kvm.h
-@@ -17,6 +17,8 @@
- #define KVM_COALESCED_MMIO_PAGE_OFFSET	1
- #define KVM_DIRTY_LOG_PAGE_OFFSET	64
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 33e606eea00..b2aa0d6f99b 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -69,6 +69,8 @@ struct SevCommonState {
+ struct SevCommonStateClass {
+     X86ConfidentialGuestClass parent_class;
  
-+#define KVM_GUESTDBG_USE_SW_BP		0x00010000
-+
- /*
-  * for KVM_GET_REGS and KVM_SET_REGS
-  */
-@@ -72,6 +74,8 @@ struct kvm_fpu {
- 
- #define KVM_REG_LOONGARCH_COUNTER	(KVM_REG_LOONGARCH_KVM | KVM_REG_SIZE_U64 | 1)
- #define KVM_REG_LOONGARCH_VCPU_RESET	(KVM_REG_LOONGARCH_KVM | KVM_REG_SIZE_U64 | 2)
-+/* Debugging: Special instruction for software breakpoint */
-+#define KVM_REG_LOONGARCH_DEBUG_INST	(KVM_REG_LOONGARCH_KVM | KVM_REG_SIZE_U64 | 3)
- 
- #define LOONGARCH_REG_SHIFT		3
- #define LOONGARCH_REG_64(TYPE, REG)	(TYPE | KVM_REG_SIZE_U64 | (REG << LOONGARCH_REG_SHIFT))
-diff --git a/linux-headers/asm-riscv/kvm.h b/linux-headers/asm-riscv/kvm.h
-index b1c503c2959..e878e7cc397 100644
---- a/linux-headers/asm-riscv/kvm.h
-+++ b/linux-headers/asm-riscv/kvm.h
-@@ -167,6 +167,7 @@ enum KVM_RISCV_ISA_EXT_ID {
- 	KVM_RISCV_ISA_EXT_ZFA,
- 	KVM_RISCV_ISA_EXT_ZTSO,
- 	KVM_RISCV_ISA_EXT_ZACAS,
-+	KVM_RISCV_ISA_EXT_SSCOFPMF,
- 	KVM_RISCV_ISA_EXT_MAX,
++    /* public */
++    int (*launch_start)(SevCommonState *sev_common);
  };
  
-diff --git a/linux-headers/asm-x86/kvm.h b/linux-headers/asm-x86/kvm.h
-index 31c95c2dfe4..1c8f9182348 100644
---- a/linux-headers/asm-x86/kvm.h
-+++ b/linux-headers/asm-x86/kvm.h
-@@ -695,6 +695,11 @@ enum sev_cmd_id {
- 	/* Second time is the charm; improved versions of the above ioctls.  */
- 	KVM_SEV_INIT2,
+ /**
+@@ -632,16 +634,16 @@ sev_read_file_base64(const char *filename, guchar **data, gsize *len)
+ }
  
-+	/* SNP-specific commands */
-+	KVM_SEV_SNP_LAUNCH_START = 100,
-+	KVM_SEV_SNP_LAUNCH_UPDATE,
-+	KVM_SEV_SNP_LAUNCH_FINISH,
-+
- 	KVM_SEV_NR_MAX,
- };
+ static int
+-sev_launch_start(SevGuestState *sev_guest)
++sev_launch_start(SevCommonState *sev_common)
+ {
+     gsize sz;
+     int ret = 1;
+     int fw_error, rc;
++    SevGuestState *sev_guest = SEV_GUEST(sev_common);
+     struct kvm_sev_launch_start start = {
+         .handle = sev_guest->handle, .policy = sev_guest->policy
+     };
+     guchar *session = NULL, *dh_cert = NULL;
+-    SevCommonState *sev_common = SEV_COMMON(sev_guest);
  
-@@ -709,7 +714,9 @@ struct kvm_sev_cmd {
- struct kvm_sev_init {
- 	__u64 vmsa_features;
- 	__u32 flags;
--	__u32 pad[9];
-+	__u16 ghcb_version;
-+	__u16 pad1;
-+	__u32 pad2[8];
- };
+     if (sev_guest->session_file) {
+         if (sev_read_file_base64(sev_guest->session_file, &session, &sz) < 0) {
+@@ -862,6 +864,7 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+     uint32_t ebx;
+     uint32_t host_cbitpos;
+     struct sev_user_data_status status = {};
++    SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(cgs);
  
- struct kvm_sev_launch_start {
-@@ -820,6 +827,48 @@ struct kvm_sev_receive_update_data {
- 	__u32 pad2;
- };
+     ret = ram_block_discard_disable(true);
+     if (ret) {
+@@ -952,7 +955,7 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+         goto err;
+     }
  
-+struct kvm_sev_snp_launch_start {
-+	__u64 policy;
-+	__u8 gosvw[16];
-+	__u16 flags;
-+	__u8 pad0[6];
-+	__u64 pad1[4];
-+};
+-    sev_launch_start(SEV_GUEST(sev_common));
++    ret = klass->launch_start(sev_common);
+     if (ret) {
+         error_setg(errp, "%s: failed to create encryption context", __func__);
+         goto err;
+@@ -1451,6 +1454,10 @@ static void sev_guest_set_legacy_vm_type(Object *obj, bool value, Error **errp)
+ static void
+ sev_guest_class_init(ObjectClass *oc, void *data)
+ {
++    SevCommonStateClass *klass = SEV_COMMON_CLASS(oc);
 +
-+/* Kept in sync with firmware values for simplicity. */
-+#define KVM_SEV_SNP_PAGE_TYPE_NORMAL		0x1
-+#define KVM_SEV_SNP_PAGE_TYPE_ZERO		0x3
-+#define KVM_SEV_SNP_PAGE_TYPE_UNMEASURED	0x4
-+#define KVM_SEV_SNP_PAGE_TYPE_SECRETS		0x5
-+#define KVM_SEV_SNP_PAGE_TYPE_CPUID		0x6
++    klass->launch_start = sev_launch_start;
 +
-+struct kvm_sev_snp_launch_update {
-+	__u64 gfn_start;
-+	__u64 uaddr;
-+	__u64 len;
-+	__u8 type;
-+	__u8 pad0;
-+	__u16 flags;
-+	__u32 pad1;
-+	__u64 pad2[4];
-+};
-+
-+#define KVM_SEV_SNP_ID_BLOCK_SIZE	96
-+#define KVM_SEV_SNP_ID_AUTH_SIZE	4096
-+#define KVM_SEV_SNP_FINISH_DATA_SIZE	32
-+
-+struct kvm_sev_snp_launch_finish {
-+	__u64 id_block_uaddr;
-+	__u64 id_auth_uaddr;
-+	__u8 id_block_en;
-+	__u8 auth_key_en;
-+	__u8 vcek_disabled;
-+	__u8 host_data[KVM_SEV_SNP_FINISH_DATA_SIZE];
-+	__u8 pad0[3];
-+	__u16 flags;
-+	__u64 pad1[4];
-+};
-+
- #define KVM_X2APIC_API_USE_32BIT_IDS            (1ULL << 0)
- #define KVM_X2APIC_API_DISABLE_BROADCAST_QUIRK  (1ULL << 1)
- 
-@@ -870,5 +919,6 @@ struct kvm_hyperv_eventfd {
- #define KVM_X86_SW_PROTECTED_VM	1
- #define KVM_X86_SEV_VM		2
- #define KVM_X86_SEV_ES_VM	3
-+#define KVM_X86_SNP_VM		4
- 
- #endif /* _ASM_X86_KVM_H */
-diff --git a/linux-headers/linux/vhost.h b/linux-headers/linux/vhost.h
-index bea69739061..b95dd84eef2 100644
---- a/linux-headers/linux/vhost.h
-+++ b/linux-headers/linux/vhost.h
-@@ -179,12 +179,6 @@
- /* Get the config size */
- #define VHOST_VDPA_GET_CONFIG_SIZE	_IOR(VHOST_VIRTIO, 0x79, __u32)
- 
--/* Get the count of all virtqueues */
--#define VHOST_VDPA_GET_VQS_COUNT	_IOR(VHOST_VIRTIO, 0x80, __u32)
--
--/* Get the number of virtqueue groups. */
--#define VHOST_VDPA_GET_GROUP_NUM	_IOR(VHOST_VIRTIO, 0x81, __u32)
--
- /* Get the number of address spaces. */
- #define VHOST_VDPA_GET_AS_NUM		_IOR(VHOST_VIRTIO, 0x7A, unsigned int)
- 
-@@ -228,10 +222,17 @@
- #define VHOST_VDPA_GET_VRING_DESC_GROUP	_IOWR(VHOST_VIRTIO, 0x7F,	\
- 					      struct vhost_vring_state)
- 
-+
-+/* Get the count of all virtqueues */
-+#define VHOST_VDPA_GET_VQS_COUNT	_IOR(VHOST_VIRTIO, 0x80, __u32)
-+
-+/* Get the number of virtqueue groups. */
-+#define VHOST_VDPA_GET_GROUP_NUM	_IOR(VHOST_VIRTIO, 0x81, __u32)
-+
- /* Get the queue size of a specific virtqueue.
-  * userspace set the vring index in vhost_vring_state.index
-  * kernel set the queue size in vhost_vring_state.num
-  */
--#define VHOST_VDPA_GET_VRING_SIZE	_IOWR(VHOST_VIRTIO, 0x80,	\
-+#define VHOST_VDPA_GET_VRING_SIZE	_IOWR(VHOST_VIRTIO, 0x82,	\
- 					      struct vhost_vring_state)
- #endif
+     object_class_property_add_str(oc, "dh-cert-file",
+                                   sev_guest_get_dh_cert_file,
+                                   sev_guest_set_dh_cert_file);
 -- 
 2.45.1
 
