@@ -4,89 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3386C25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:30:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 293D7C25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:31:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEOc5-0004Iu-8c; Tue, 04 Jun 2024 03:29:45 -0400
+	id 1sEOdf-0005VG-Jc; Tue, 04 Jun 2024 03:31:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1sEOc3-0004IL-MJ
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:29:43 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1sEOc1-0001uF-Pc
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:29:43 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-6c53a315c6eso2883793a12.3
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:29:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1717486180; x=1718090980; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=9Pc9B4z1dxBoTcAKe6NCLiUY6SZ9pFTORrY9zIAuuS8=;
- b=O+BhGiKOTBMhS5Oq6DpHtz4k/RIym+AzSSZsjfowy+zW4AmLoPRBMqfhNgiGHyMxGR
- ALU++0BDt6KHdFS8hOLGOA510yB9dk7Pj7p9Mr/hprnowEGDqUtcvLEgYALvyiYyPic5
- lwWDIHjKBj/FaH+EotRPpsK1tIghrN6UsI5+k+xvxMTs3RzxrJVknBn74dT/yvqEoROM
- SBNa5ZDdD+e29LaYH0gyHQ3Lp6k8xOHHxqWOx0lksLRroFtjRYQOMcPXBYIW0tjUqbRl
- x+YtRaPw5FvfFpx1asZ/VDTaJGpn2dcX/kGKEogfjIOdt04hbuj53BhHibit8gywJ5Fx
- YdGg==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sEOdc-0005S4-2Y
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:31:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sEOdZ-0002L9-P4
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:31:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717486276;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kOe5HAyE0xfr3Cspq6gCWkXVKkXlYloeCN+g5nEU/iI=;
+ b=hyMwwkuIKah6sNWT9Tny5XV4h+ZLWm2WgoQ/KRwPgooZAsodPi1ylr7fUtVJpAJg1x0LsR
+ qhy5f5cK1V5HBQi/YdjYGI1wYCvr79+05zkMCPiC9dBdMx+NFgP6PFp47fQNy8ueLe84sY
+ g4UG5kv58di0COuxcWnBM9RbdF9Vias=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-272-0_eZ4bgqM9GEvXTyCTjbBA-1; Tue, 04 Jun 2024 03:31:05 -0400
+X-MC-Unique: 0_eZ4bgqM9GEvXTyCTjbBA-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-35dc7e6e859so3406531f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:31:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717486180; x=1718090980;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9Pc9B4z1dxBoTcAKe6NCLiUY6SZ9pFTORrY9zIAuuS8=;
- b=JVbhAgeLmmQdrbQzrl4+hPGTNljcy5yIS9umMNMdkEJVS8dfz16CIMXpap+VozQPWV
- 44Y+FmGA9mbFz6i2vAIxjLBBrT825Kk+ix30NJZa0QXwi0YItGd8Pu5w7xcjHtwZvXeT
- B0viZbhS9TxMb+xmWAf1xTUk7YTTC/Tlj2naj0w/1ja4G5To8GH97MxCyT1c8yW2q02y
- sgFgq2qn9gN1PDu1O5p/mKFatYp5gJ8PRQN56TCCgo29F58Q2jT5rUUbxDh5i1lRVZEl
- uS7/RQaSf5V3IbAMMqnEfqGEfbGLhaRQ8zEha1Gjb+I/Vawv3I8VoepL2qjIZPnQR9/T
- sATQ==
+ d=1e100.net; s=20230601; t=1717486264; x=1718091064;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kOe5HAyE0xfr3Cspq6gCWkXVKkXlYloeCN+g5nEU/iI=;
+ b=CuFQrsxyM7C5dvF/TDZu6eNSmhxZuWWPPqF0WMwBnwdW+s/fY/xxjBpn11/GjVzaB4
+ SWYmibTufHcXIsK64NDf4C3OppPKU68C7vjcUpjhv7Qc3BpVhexZQwAJ0Ao3BkYW3/QX
+ SQroArbN40/pSwSLwiBWVSchyzyGE9+6oOpIxRkdqq43ARKyK9AZpsk4rRiwEALn54uU
+ M5KofXEQ6WHyj42oUWpd6wKWTLAWaGd5gv9Up5uYHXw7twD2tvdr7Dd8UvNdjVYZcXCx
+ ZEkfeHZBGMt235wHlzv5y9BDqE2Bjd4/ui8T4GR34wCP5WjyYFQBWLnSLVqdhctKFF+T
+ nUZA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUB6OFJtCREwVkqOwzvI9NR+Q0efUeyailg/TH/USPb2x81M2ONg0GNko3Sjck9BV8QfbMInjtmulkQ2ZKkpkVDBrZ/fKM=
-X-Gm-Message-State: AOJu0Yz5PAao2fC0LDdHhznv4I0/O9F6PEcdHIT+evSw+LMiib8iv4YC
- n12g+pcdUrV1bo3IuiMBVzh4CIGSiZkj/iC+nkAjSuEOHvoWj6GEcADvozTLkc0=
-X-Google-Smtp-Source: AGHT+IGtK739R2sA2XcetuC9PBqp1vi5u6xiXYsbkvw1am9n4mculNSfLASTLBDhYHQR4TjWu4bxIQ==
-X-Received: by 2002:a05:6a21:6d8a:b0:1af:d07a:37c8 with SMTP id
- adf61e73a8af0-1b26f22b0e3mr12776843637.37.1717486179607; 
- Tue, 04 Jun 2024 00:29:39 -0700 (PDT)
-Received: from [192.168.100.252] (59-124-168-89.hinet-ip.hinet.net.
- [59.124.168.89]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6323e3c33sm76452725ad.176.2024.06.04.00.29.36
+ AJvYcCVEX+9DMpioA+VVLujoWzr0t+KURChOeTBu8Ef4JzVPI6T+UTNLfxtesEfwmWrWn6lB3C7hkMXudTRsX7MkykgnQtMHXn0=
+X-Gm-Message-State: AOJu0YyonbKUC/cVma9inorFv71akBV8VFNuLQbhnZvnUA473RKQJFEV
+ HiTLp8S9nW85OLfAjC2AXZfMaOKL03u0aEwtjhDjIiFKY8k26JohYVOymPO0d/dBis/5JvnTmtK
+ ftV4GkC7azTl25e5P1O6PIPz+shMhJ1pqDkDZluIjiqazj77zqOe9
+X-Received: by 2002:adf:f7c4:0:b0:349:8ba8:e26d with SMTP id
+ ffacd0b85a97d-35e0f25ade5mr8174966f8f.13.1717486264570; 
+ Tue, 04 Jun 2024 00:31:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEYcvB1+0fgppTR2Jw5Mk2G4taz4okM9GGD3IpPcTlLSJn2d0qujqWFn1LQaqxUUqC2xqIrew==
+X-Received: by 2002:adf:f7c4:0:b0:349:8ba8:e26d with SMTP id
+ ffacd0b85a97d-35e0f25ade5mr8174937f8f.13.1717486264056; 
+ Tue, 04 Jun 2024 00:31:04 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35dd04cafb8sm10605914f8f.37.2024.06.04.00.31.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Jun 2024 00:29:39 -0700 (PDT)
-Message-ID: <da896d6b-7b7f-4246-9750-f7bc11e54d3b@sifive.com>
-Date: Tue, 4 Jun 2024 15:29:34 +0800
+ Tue, 04 Jun 2024 00:31:02 -0700 (PDT)
+Message-ID: <999a8b13-61e9-4c5d-a02b-a608487f7114@redhat.com>
+Date: Tue, 4 Jun 2024 09:31:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Jason Chien <jason.chien@sifive.com>
-Subject: Re: [PATCH 0/6] target/riscv: Add support for Control Transfer
- Records Ext.
-To: Rajnesh Kanwal <rkanwal@rivosinc.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- atishp@rivosinc.com, apatel@ventanamicro.com, beeman@rivosinc.com,
- tech-control-transfer-records@lists.riscv.org
-References: <20240529160950.132754-1-rkanwal@rivosinc.com>
+Subject: Re: [PATCH v6 09/19] vfio/iommufd: Implement
+ HostIOMMUDeviceClass::realize() handler
 Content-Language: en-US
-In-Reply-To: <20240529160950.132754-1-rkanwal@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=jason.chien@sifive.com; helo=mail-pg1-x529.google.com
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
+ "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
+ <20240603061023.269738-10-zhenzhong.duan@intel.com>
+ <e20c3fce-5a5a-4efb-9383-9ed7c9c6ef32@redhat.com>
+ <SJ0PR11MB67441F9E6629728ABBF7655092F82@SJ0PR11MB6744.namprd11.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <SJ0PR11MB67441F9E6629728ABBF7655092F82@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,79 +119,145 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Smctr depends on the Smcsrind extension, Ssctr depends on the Sscsrind 
-extension, and both Smctr and Ssctr depend upon implementation of S-mode.
-There should be a dependency check in riscv_cpu_validate_set_extensions().
 
-Rajnesh Kanwal 於 2024/5/30 上午 12:09 寫道:
-> This series enables Control Transfer Records extension support on riscv
-> platform. This extension is similar to Arch LBR in x86 and BRBE in ARM.
-> The Extension has been stable and the latest release can be found here [0]
+
+On 6/4/24 04:58, Duan, Zhenzhong wrote:
 >
-> CTR extension depends on couple of other extensions:
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Subject: Re: [PATCH v6 09/19] vfio/iommufd: Implement
+>> HostIOMMUDeviceClass::realize() handler
+>>
+>> Hi Zhenzhong,
+>>
+>> On 6/3/24 08:10, Zhenzhong Duan wrote:
+>>> It calls iommufd_backend_get_device_info() to get host IOMMU
+>>> related information and translate it into HostIOMMUDeviceCaps
+>>> for query with .get_cap().
+>>>
+>>> Introduce macro VTD_MGAW_FROM_CAP to get MGAW which equals to
+>>> (aw_bits - 1).
+>>>
+>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>> ---
+>>>  include/hw/i386/intel_iommu.h |  1 +
+>>>  hw/vfio/iommufd.c             | 37
+>> +++++++++++++++++++++++++++++++++++
+>>>  2 files changed, 38 insertions(+)
+>>>
+>>> diff --git a/include/hw/i386/intel_iommu.h
+>> b/include/hw/i386/intel_iommu.h
+>>> index 7fa0a695c8..7d694b0813 100644
+>>> --- a/include/hw/i386/intel_iommu.h
+>>> +++ b/include/hw/i386/intel_iommu.h
+>>> @@ -47,6 +47,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(IntelIOMMUState,
+>> INTEL_IOMMU_DEVICE)
+>>>  #define VTD_HOST_AW_48BIT           48
+>>>  #define VTD_HOST_ADDRESS_WIDTH      VTD_HOST_AW_39BIT
+>>>  #define VTD_HAW_MASK(aw)            ((1ULL << (aw)) - 1)
+>>> +#define VTD_MGAW_FROM_CAP(cap)      ((cap >> 16) & 0x3fULL)
+>>>
+>>>  #define DMAR_REPORT_F_INTR          (1)
+>>>
+>>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>>> index e4a507d55c..9d2e95e20e 100644
+>>> --- a/hw/vfio/iommufd.c
+>>> +++ b/hw/vfio/iommufd.c
+>>> @@ -25,6 +25,7 @@
+>>>  #include "qemu/cutils.h"
+>>>  #include "qemu/chardev_open.h"
+>>>  #include "pci.h"
+>>> +#include "hw/i386/intel_iommu_internal.h"
+>>>
+>>>  static int iommufd_cdev_map(const VFIOContainerBase *bcontainer,
+>> hwaddr iova,
+>>>                              ram_addr_t size, void *vaddr, bool readonly)
+>>> @@ -619,6 +620,41 @@ static void
+>> vfio_iommu_iommufd_class_init(ObjectClass *klass, void *data)
+>>>      vioc->pci_hot_reset = iommufd_cdev_pci_hot_reset;
+>>>  };
+>>>
+>>> +static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void
+>> *opaque,
+>>> +                                      Error **errp)
+>>> +{
+>>> +    VFIODevice *vdev = opaque;
+>>> +    HostIOMMUDeviceCaps *caps = &hiod->caps;
+>>> +    enum iommu_hw_info_type type;
+>>> +    union {
+>>> +        struct iommu_hw_info_vtd vtd;
+>>> +    } data;
+>>> +
+>>> +    if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
+>>> +                                         &type, &data, sizeof(data), errp)) {
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    caps->type = type;
+>>> +
+>>> +    switch (type) {
+>>> +    case IOMMU_HW_INFO_TYPE_INTEL_VTD:
+>>> +        caps->aw_bits = VTD_MGAW_FROM_CAP(data.vtd.cap_reg) + 1;
+>> Please can you remind me of why you can't reuse the iova_ranges method.
+>> isn't it generic enough?
+> Yes, iova_ranges method is only for iova_ranges, we want to make
+> HostIOMMUDevice.get_cap() a common interface.
 >
-> 1. S[m|s]csrind : The indirect CSR extension [1] which defines additional
->     ([M|S|VS]IREG2-[M|S|VS]IREG6) register to address size limitation of
->     RISC-V CSR address space. CTR access ctrsource, ctrtartget and ctrdata
->     CSRs using sscsrind extension.
+> When we want to pass iova_ranges, we can add HOST_IOMMU_DEVICE_CAP_IOVA_RANGES
+> and HostIOMMUDevice.iova_ranges.
+
+I rather meant that iova_ranges is part of VFIOContainerBase and you
+could reuse the technics used in hiod_legacy_vfio_realize, relying on a
+common helper instead of using
+
+VTD_MGAW_FROM_CAP(data.vtd.cap_reg). Doesn't it work? 
+
+
 >
-> 2. Smstateen: The mstateen bit[54] controls the access to the CTR ext to
->     S-mode.
+>>> +        break;
+>>> +    case IOMMU_HW_INFO_TYPE_NONE:
+>> so what about other types?
+> There is no other types for now. When there is, we can easily add the code
+
+Thanks
+
+Eric
+
 >
-> 3. Sscofpmf: Counter overflow and privilege mode filtering. [2]
+> case IOMMU_HW_INFO_TYPE_ARM_SMMU:
+>     caps->aw_bits = xxx;
 >
-> The series is based on Smcdeleg/Ssccfg counter delegation extension [3]
-> patches. CTR itself doesn't depend on counter delegation support. This
-> rebase is basically to include the Smcsrind patches.
+> Thanks
+> Zhenzhong
 >
-> Due to the dependency of these extensions, the following extensions must be
-> enabled to use the control transfer records feature.
->
-> "smstateen=true,sscofpmf=true,smcsrind=true,sscsrind=true,smctr=true,ssctr=true"
->
-> Here is the link to a quick guide [5] to setup and run a basic perf demo on
-> Linux to use CTR Ext.
->
-> The Qemu patches can be found here:
-> https://github.com/rajnesh-kanwal/qemu/tree/ctr_upstream
->
-> The opensbi patch can be found here:
-> https://github.com/rajnesh-kanwal/opensbi/tree/ctr_upstream
->
-> The Linux kernel patches can be found here:
-> https://github.com/rajnesh-kanwal/linux/tree/ctr_upstream
->
-> [0]:https://github.com/riscv/riscv-control-transfer-records/release
-> [1]:https://github.com/riscv/riscv-indirect-csr-access
-> [2]:https://github.com/riscvarchive/riscv-count-overflow/tree/main
-> [3]:https://github.com/riscv/riscv-smcdeleg-ssccfg
-> [4]:https://lore.kernel.org/all/20240217000134.3634191-1-atishp@rivosinc.com/
-> [5]:https://github.com/rajnesh-kanwal/linux/wiki/Running-CTR-basic-demo-on-QEMU-RISC%E2%80%90V-Virt-machine
->
-> Rajnesh Kanwal (6):
->    target/riscv: Remove obsolete sfence.vm instruction
->    target/riscv: Add Control Transfer Records CSR definitions.
->    target/riscv: Add support for Control Transfer Records extension CSRs.
->    target/riscv: Add support to record CTR entries.
->    target/riscv: Add CTR sctrclr instruction.
->    target/riscv: Add support to access ctrsource, ctrtarget, ctrdata
->      regs.
->
->   target/riscv/cpu.c                            |   4 +
->   target/riscv/cpu.h                            |  14 +
->   target/riscv/cpu_bits.h                       | 154 +++++++++
->   target/riscv/cpu_cfg.h                        |   2 +
->   target/riscv/cpu_helper.c                     | 213 ++++++++++++
->   target/riscv/csr.c                            | 312 +++++++++++++++++-
->   target/riscv/helper.h                         |   8 +-
->   target/riscv/insn32.decode                    |   2 +-
->   .../riscv/insn_trans/trans_privileged.c.inc   |  21 +-
->   target/riscv/insn_trans/trans_rvi.c.inc       |  27 ++
->   target/riscv/op_helper.c                      | 117 ++++++-
->   target/riscv/translate.c                      |   9 +
->   12 files changed, 870 insertions(+), 13 deletions(-)
->
+>> Eric
+>>> +        break;
+>>> +    }
+>>> +
+>>> +    return true;
+>>> +}
+>>> +
+>>> +static void hiod_iommufd_vfio_class_init(ObjectClass *oc, void *data)
+>>> +{
+>>> +    HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_CLASS(oc);
+>>> +
+>>> +    hiodc->realize = hiod_iommufd_vfio_realize;
+>>> +};
+>>> +
+>>>  static const TypeInfo types[] = {
+>>>      {
+>>>          .name = TYPE_VFIO_IOMMU_IOMMUFD,
+>>> @@ -627,6 +663,7 @@ static const TypeInfo types[] = {
+>>>      }, {
+>>>          .name = TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO,
+>>>          .parent = TYPE_HOST_IOMMU_DEVICE_IOMMUFD,
+>>> +        .class_init = hiod_iommufd_vfio_class_init,
+>>>      }
+>>>  };
+>>>
+
 
