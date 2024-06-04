@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D6D9C27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:46:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE9CFC25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:47:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sENv3-0003cb-Rm; Tue, 04 Jun 2024 02:45:17 -0400
+	id 1sENw9-00050E-IC; Tue, 04 Jun 2024 02:46:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENv1-0003RI-28
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:15 -0400
+ id 1sENvH-0004Dg-QQ
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENuz-0007W6-5M
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:14 -0400
+ id 1sENvE-0007ZF-Uk
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717483512;
+ s=mimecast20190719; t=1717483527;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9eBpKMwv8ZIHObCcWR1NvCyq4TOAmQm+iQ+YMChwrck=;
- b=MkYG3Wb0D53OimwVV3W5oVCymjL4E1uS4Zd7U42jue1+JAg/ET9rFnR4FzlzIvEzapB2UO
- m4m9gmqg7ICJaqSyBmx0C7fIWxrQNZSCweHGyVyQH8woeQL7lX6tHiHHYDXCXdDHTA1/Wn
- RVQgs/aFODaIrLCUKFKfQCUON9jtZ4o=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GA/y1DfJBKS/73xmbANVgak1mNgSJBh5Ul2xMCcB2+g=;
+ b=NpfkNyK0qyl6o+OWXxgTPzVratYw6zFlDWxDSiBLRWv90UMuSW8gsGc43DyFxlpfuakxaI
+ 2hHDKQ0lB+tcXkzZq4VCoP1Q4Fgb5wKck3krxxNtxJKbl7swudG8qbwXULVcQlTRfn2pIG
+ mVE8WOLJb5My8jsiaEDWcxOzjwlLtFU=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-Ue3BDUaDOUCyD4Q7JtO6cQ-1; Tue, 04 Jun 2024 02:45:11 -0400
-X-MC-Unique: Ue3BDUaDOUCyD4Q7JtO6cQ-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a6912c4ddb1so13735266b.1
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:45:10 -0700 (PDT)
+ us-mta-130--a3WzyhcPp2vnlZVXKd3Pg-1; Tue, 04 Jun 2024 02:45:25 -0400
+X-MC-Unique: -a3WzyhcPp2vnlZVXKd3Pg-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-57a50752cd2so2136300a12.0
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:45:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717483509; x=1718088309;
+ d=1e100.net; s=20230601; t=1717483523; x=1718088323;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9eBpKMwv8ZIHObCcWR1NvCyq4TOAmQm+iQ+YMChwrck=;
- b=GFStmx6umkMwwParbRwuArcs8oXcB+BLhgED3iTbp8P76LtXAJUt/yethFHw7lDort
- do3SsDJIoZmjbTl8kgyfAOCX9JYuaAow/N0Js4YRizhxQZxPNpJJTtPGwDhOH01ZsMcz
- wNKOv9MHG60pAQ9KCiRbDLijl6i7hsu0G5Lofbwt5dMMRxLqVL3w3kTXhK0AL7Q846dZ
- f7QYhj605cFJZGhzfi8Pfdhn7oPbJw1F9TbR+SkI4DikbEFawQb9lH8985LZp+s7nlRy
- z9KPMhFPXaFxtwwXMJVqqMqGXpvpDIAr8zMQmx/+YLAIq66WnkzIKL7hxjaHeQ/aNe/7
- tVeQ==
-X-Gm-Message-State: AOJu0Yyqpr9zge/apwBOth+YsIUKuw9H8AGBWDAE5cGShJpA5n7FHAzI
- G1oZraI355qdLAhDaxPPNCjfUZkz9ozzioAc3pfFHYyqhSjgHVxkQ5nHVR2nNzNQ7Y965gDQQFd
- /gE8sHDd9+zroLRHmXNSf9c7MdP1Il9AVDxQ9oKHQDgQ73eU1StccFMMgOWrhR9eYB5xJb3BRCN
- KJCPDXdvn2GDFnmvypt+FW3As2KV+PRSxR5a5B
-X-Received: by 2002:a17:907:830f:b0:a59:ba2b:590e with SMTP id
- a640c23a62f3a-a6821d64589mr532735166b.48.1717483508837; 
- Mon, 03 Jun 2024 23:45:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG6fnb4LHOMoAN/4J1za5ggJwAH9edSZdn6z6CuQWbYHIormQLr3eHTJR50hLMcuLdcaAb33A==
-X-Received: by 2002:a17:907:830f:b0:a59:ba2b:590e with SMTP id
- a640c23a62f3a-a6821d64589mr532734166b.48.1717483508447; 
- Mon, 03 Jun 2024 23:45:08 -0700 (PDT)
+ bh=GA/y1DfJBKS/73xmbANVgak1mNgSJBh5Ul2xMCcB2+g=;
+ b=tStHYDwE+dnCqGbSZ2CbfSvGaKruCxJujGy0aiyt2UnWDRi/PfkAH+aS0QKtHPbq5Y
+ lvlsFMAbbTRnmf/s8txJX2F3fLWyrK0S34lCKCLbzN2+HGljjX4bXxiEovNR/JP9vxCW
+ l1dUbnBKCI7Lv8B6bPT+hXP5b7ATQlxSN1Z6VOLXuMFNzRiM4NRDOLTMM/b0m5m1CwMN
+ lB2mPjTEczitgL2oTUIs9sAQ61iSyZv7JmgRzAXFxbgbivsz89OnrL5MuW7kMMkRA3Ci
+ rUtQpOyP13UNpAv5Ne4RKXNLQHtLvruUsCZ7EbXMX0LaZe3DUYpxiSX0x87REMrMoUzH
+ t95w==
+X-Gm-Message-State: AOJu0YwyWG3CfWZViVFVhznuOE6H8GkwkbiirW20+erJNvQYInQdkuzn
+ VHF5WWAzQnud875V5ceaHdDX51GT19+7Bwtbsqh3PTItZIl4m/3z57xF6TDekqPGm8tpK5kOEZ1
+ tDGviEsOozUhz3/kTTYjKhxcY6W7Be8EdGBfxbihF6p02HXyFIOQ+UxQ24pmwsqG/rTMlVQpevv
+ yPsxnZ8NyaGFtD0ByzKq7SBa6uymASMi4Fk5fB
+X-Received: by 2002:a50:c342:0:b0:57a:27e8:deb with SMTP id
+ 4fb4d7f45d1cf-57a7a6cb931mr1197299a12.12.1717483523330; 
+ Mon, 03 Jun 2024 23:45:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWf0N3cqQxPlLvmtGV2qSglFItVfTZbCr13g4iaCwITCG7HCv+qeJAvA9Ut3biBSuyBP7e7Q==
+X-Received: by 2002:a50:c342:0:b0:57a:27e8:deb with SMTP id
+ 4fb4d7f45d1cf-57a7a6cb931mr1197282a12.12.1717483522711; 
+ Mon, 03 Jun 2024 23:45:22 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68b59e925csm443157166b.220.2024.06.03.23.45.07
+ 4fb4d7f45d1cf-57a31c9c16fsm6803084a12.88.2024.06.03.23.45.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 23:45:07 -0700 (PDT)
+ Mon, 03 Jun 2024 23:45:22 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Pankaj Gupta <pankaj.gupta@amd.com>
-Subject: [PULL 19/45] i386/sev: Move sev_launch_update to separate class method
-Date: Tue,  4 Jun 2024 08:43:43 +0200
-Message-ID: <20240604064409.957105-20-pbonzini@redhat.com>
+Cc: Pankaj Gupta <pankaj.gupta@amd.com>,
+	Michael Roth <michael.roth@amd.com>
+Subject: [PULL 24/45] i386/sev: Add snp_kvm_init() override for SNP class
+Date: Tue,  4 Jun 2024 08:43:48 +0200
+Message-ID: <20240604064409.957105-25-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240604064409.957105-1-pbonzini@redhat.com>
 References: <20240604064409.957105-1-pbonzini@redhat.com>
@@ -105,78 +106,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pankaj Gupta <pankaj.gupta@amd.com>
 
-When sev-snp-guest objects are introduced there will be a number of
-differences in how the launch data is handled compared to the existing
-sev-guest object. Move sev_launch_start() to a class method to make it
-easier to implement SNP-specific launch update functionality later.
+SNP does not support SMM and requires guest_memfd for
+private guest memory, so add SNP specific kvm_init()
+functionality in snp_kvm_init() class method.
 
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+Co-developed-by: Pankaj Gupta <pankaj.gupta@amd.com>
 Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Message-ID: <20240530111643.1091816-6-pankaj.gupta@amd.com>
+Message-ID: <20240530111643.1091816-11-pankaj.gupta@amd.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/sev.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ target/i386/sev.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 33e606eea00..b2aa0d6f99b 100644
+index 5519de1c6b2..6525b3c1a0e 100644
 --- a/target/i386/sev.c
 +++ b/target/i386/sev.c
-@@ -69,6 +69,8 @@ struct SevCommonState {
- struct SevCommonStateClass {
-     X86ConfidentialGuestClass parent_class;
+@@ -885,12 +885,12 @@ out:
  
-+    /* public */
-+    int (*launch_start)(SevCommonState *sev_common);
- };
- 
- /**
-@@ -632,16 +634,16 @@ sev_read_file_base64(const char *filename, guchar **data, gsize *len)
- }
- 
- static int
--sev_launch_start(SevGuestState *sev_guest)
-+sev_launch_start(SevCommonState *sev_common)
+ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
  {
-     gsize sz;
-     int ret = 1;
-     int fw_error, rc;
-+    SevGuestState *sev_guest = SEV_GUEST(sev_common);
-     struct kvm_sev_launch_start start = {
-         .handle = sev_guest->handle, .policy = sev_guest->policy
-     };
-     guchar *session = NULL, *dh_cert = NULL;
--    SevCommonState *sev_common = SEV_COMMON(sev_guest);
- 
-     if (sev_guest->session_file) {
-         if (sev_read_file_base64(sev_guest->session_file, &session, &sz) < 0) {
-@@ -862,6 +864,7 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+-    SevCommonState *sev_common = SEV_COMMON(cgs);
+     char *devname;
+     int ret, fw_error, cmd;
      uint32_t ebx;
      uint32_t host_cbitpos;
      struct sev_user_data_status status = {};
-+    SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(cgs);
++    SevCommonState *sev_common = SEV_COMMON(cgs);
+     SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(cgs);
  
-     ret = ram_block_discard_disable(true);
-     if (ret) {
-@@ -952,7 +955,7 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         goto err;
-     }
+     sev_common->state = SEV_STATE_UNINIT;
+@@ -1030,6 +1030,21 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+     return 0;
+ }
  
--    sev_launch_start(SEV_GUEST(sev_common));
-+    ret = klass->launch_start(sev_common);
-     if (ret) {
-         error_setg(errp, "%s: failed to create encryption context", __func__);
-         goto err;
-@@ -1451,6 +1454,10 @@ static void sev_guest_set_legacy_vm_type(Object *obj, bool value, Error **errp)
++static int sev_snp_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
++{
++    MachineState *ms = MACHINE(qdev_get_machine());
++    X86MachineState *x86ms = X86_MACHINE(ms);
++
++    if (x86ms->smm == ON_OFF_AUTO_AUTO) {
++        x86ms->smm = ON_OFF_AUTO_OFF;
++    } else if (x86ms->smm == ON_OFF_AUTO_ON) {
++        error_setg(errp, "SEV-SNP does not support SMM.");
++        return -1;
++    }
++
++    return 0;
++}
++
+ int
+ sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp)
+ {
+@@ -1752,6 +1767,10 @@ sev_snp_guest_set_host_data(Object *obj, const char *value, Error **errp)
  static void
- sev_guest_class_init(ObjectClass *oc, void *data)
+ sev_snp_guest_class_init(ObjectClass *oc, void *data)
  {
 +    SevCommonStateClass *klass = SEV_COMMON_CLASS(oc);
 +
-+    klass->launch_start = sev_launch_start;
++    klass->kvm_init = sev_snp_kvm_init;
 +
-     object_class_property_add_str(oc, "dh-cert-file",
-                                   sev_guest_get_dh_cert_file,
-                                   sev_guest_set_dh_cert_file);
+     object_class_property_add(oc, "policy", "uint64",
+                               sev_snp_guest_get_policy,
+                               sev_snp_guest_set_policy, NULL, NULL);
+@@ -1778,8 +1797,11 @@ sev_snp_guest_class_init(ObjectClass *oc, void *data)
+ static void
+ sev_snp_guest_instance_init(Object *obj)
+ {
++    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
+     SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(obj);
+ 
++    cgs->require_guest_memfd = true;
++
+     /* default init/start/finish params for kvm */
+     sev_snp_guest->kvm_start_conf.policy = DEFAULT_SEV_SNP_POLICY;
+ }
 -- 
 2.45.1
 
