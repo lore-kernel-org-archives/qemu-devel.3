@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F5E9C25B74
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 05:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D093C25B74
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 05:47:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEMyl-0005bG-Uk; Tue, 04 Jun 2024 01:45:03 -0400
+	id 1sEN0k-0007e3-8E; Tue, 04 Jun 2024 01:47:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sEMyk-0005ax-8u; Tue, 04 Jun 2024 01:45:02 -0400
+ id 1sEMzo-0006su-9K; Tue, 04 Jun 2024 01:46:11 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sEMyi-0008TH-OO; Tue, 04 Jun 2024 01:45:01 -0400
+ id 1sEMzm-0000aq-Ib; Tue, 04 Jun 2024 01:46:08 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 4 Jun
- 2024 13:44:41 +0800
+ 2024 13:44:48 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Tue, 4 Jun 2024 13:44:41 +0800
+ Transport; Tue, 4 Jun 2024 13:44:48 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>,
@@ -35,9 +35,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v5 04/17] aspeed/sdmc: fix coding style
-Date: Tue, 4 Jun 2024 13:44:25 +0800
-Message-ID: <20240604054438.3424349-5-jamin_lin@aspeedtech.com>
+Subject: [PATCH v5 17/17] docs:aspeed: Add AST2700 Evaluation board
+Date: Tue, 4 Jun 2024 13:44:38 +0800
+Message-ID: <20240604054438.3424349-18-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240604054438.3424349-1-jamin_lin@aspeedtech.com>
 References: <20240604054438.3424349-1-jamin_lin@aspeedtech.com>
@@ -68,53 +68,93 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix coding style issues from checkpatch.pl
-
-Test command:
-scripts/checkpatch.pl --no-tree -f hw/misc/aspeed_sdmc.c
+Add AST2700 Evaluation board and its boot command.
 
 Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
 ---
- hw/misc/aspeed_sdmc.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ docs/system/arm/aspeed.rst | 39 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 35 insertions(+), 4 deletions(-)
 
-diff --git a/hw/misc/aspeed_sdmc.c b/hw/misc/aspeed_sdmc.c
-index 74279bbe8e..873d67c592 100644
---- a/hw/misc/aspeed_sdmc.c
-+++ b/hw/misc/aspeed_sdmc.c
-@@ -296,7 +296,8 @@ static void aspeed_2400_sdmc_write(AspeedSDMCState *s, uint32_t reg,
-                                    uint32_t data)
- {
-     if (reg == R_PROT) {
--        s->regs[reg] = (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
-+        s->regs[reg] =
-+            (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
-         return;
-     }
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index b2dea54eed..cd9559e3e2 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -1,11 +1,12 @@
+-Aspeed family boards (``*-bmc``, ``ast2500-evb``, ``ast2600-evb``)
+-==================================================================
++Aspeed family boards (``*-bmc``, ``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``)
++===================================================================================
  
-@@ -354,7 +355,8 @@ static void aspeed_2500_sdmc_write(AspeedSDMCState *s, uint32_t reg,
-                                    uint32_t data)
- {
-     if (reg == R_PROT) {
--        s->regs[reg] = (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
-+        s->regs[reg] =
-+            (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
-         return;
-     }
+ The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+ Aspeed evaluation boards. They are based on different releases of the
+ Aspeed SoC : the AST2400 integrating an ARM926EJ-S CPU (400MHz), the
+-AST2500 with an ARM1176JZS CPU (800MHz) and more recently the AST2600
+-with dual cores ARM Cortex-A7 CPUs (1.2GHz).
++AST2500 with an ARM1176JZS CPU (800MHz), the AST2600
++with dual cores ARM Cortex-A7 CPUs (1.2GHz) and more recently the AST2700
++with quad cores ARM Cortex-A35 64 bits CPUs (1.6GHz)
  
-@@ -434,8 +436,9 @@ static void aspeed_2600_sdmc_write(AspeedSDMCState *s, uint32_t reg,
-     }
+ The SoC comes with RAM, Gigabit ethernet, USB, SD/MMC, USB, SPI, I2C,
+ etc.
+@@ -38,6 +39,10 @@ AST2600 SoC based machines :
+ - ``qcom-dc-scm-v1-bmc``   Qualcomm DC-SCM V1 BMC
+ - ``qcom-firework-bmc``    Qualcomm Firework BMC
  
-     if (s->regs[R_PROT] == PROT_HARDLOCKED) {
--        qemu_log_mask(LOG_GUEST_ERROR, "%s: SDMC is locked until system reset!\n",
--                __func__);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: SDMC is locked until system reset!\n",
-+                      __func__);
-         return;
-     }
++AST2700 SoC based machines :
++
++- ``ast2700-evb``          Aspeed AST2700 Evaluation board (Cortex-A35)
++
+ Supported devices
+ -----------------
+ 
+@@ -66,6 +71,7 @@ Supported devices
+  * eMMC Boot Controller (dummy)
+  * PECI Controller (minimal)
+  * I3C Controller
++ * Internal Bridge Controller (SLI dummy)
+ 
+ 
+ Missing devices
+@@ -95,6 +101,10 @@ or directly from the OpenBMC GitHub release repository :
+ 
+    https://github.com/openbmc/openbmc/releases
+ 
++or directly from the ASPEED Forked OpenBMC GitHub release repository :
++
++   https://github.com/AspeedTech-BMC/openbmc/releases
++
+ To boot a kernel directly from a Linux build tree:
+ 
+ .. code-block:: bash
+@@ -164,6 +174,27 @@ under Linux), use :
+ 
+   -M ast2500-evb,bmc-console=uart3
+ 
++
++Boot the AST2700 machine from the flash image, use an MTD drive :
++
++.. code-block:: bash
++
++  IMGDIR=ast2700-default
++  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
++
++  $ qemu-system-aarch64 -M ast2700-evb \
++       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
++       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
++       -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
++       -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
++       -device loader,cpu-num=0,addr=0x430000000 \
++       -device loader,cpu-num=1,addr=0x430000000 \
++       -device loader,cpu-num=2,addr=0x430000000 \
++       -device loader,cpu-num=3,addr=0x430000000 \
++       -smp 4 \
++       -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
++       -nographic
++
+ Aspeed minibmc family boards (``ast1030-evb``)
+ ==================================================================
  
 -- 
 2.25.1
