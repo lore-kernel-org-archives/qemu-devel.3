@@ -4,74 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7765C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:38:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51C49C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:54:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sERY2-0006lf-K0; Tue, 04 Jun 2024 06:37:46 -0400
+	id 1sERns-0001sD-2Q; Tue, 04 Jun 2024 06:54:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sERY0-0006lN-Gl
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 06:37:44 -0400
-Received: from mail-qk1-x72b.google.com ([2607:f8b0:4864:20::72b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sERnq-0001rs-FE
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 06:54:06 -0400
+Received: from mail-qk1-x72f.google.com ([2607:f8b0:4864:20::72f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sERXs-0002Ik-N9
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 06:37:38 -0400
-Received: by mail-qk1-x72b.google.com with SMTP id
- af79cd13be357-794c3946468so58184485a.1
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 03:37:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sERnp-00007w-11
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 06:54:06 -0400
+Received: by mail-qk1-x72f.google.com with SMTP id
+ af79cd13be357-7951c446fe7so17151085a.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 03:54:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717497455; x=1718102255; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TOnDgupvw3Q5CPgiTXtf+qdjCXkFSFK/HfdTMFR4G9I=;
- b=f/cXPTxaR/G5t8zDZ0h0htQ+Qel5m6tVpMJGnlMJnfirpWcK2iw0s3wxgs7/2sqjrc
- N3fCiRjQvcu2hssNsbqllAD5IfGBieRDiTMaFZyQmkveMnEfweh1c4Uf+26skIwvRR4V
- LOh7BSrqNmEbkA50bbutAWaslQjPY4jtFWyRsZ70sFzLKqTmWXleOnaQFwIa+s5fnxKv
- 7cCsaCIYJ31C6YoCN2rIADo0nVOmOPAwsk7U856AZNXcZtTXECiBKKuMti7AoUEzDvpx
- G5jNdN9PNQJvY4KthTm8+ftKX4wl50JHYanlJmJ80JX7PJ1TupuOqCQod7VCw064qExe
- EN6Q==
+ d=linaro.org; s=google; t=1717498443; x=1718103243; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3sZv0UF9O2GC/qf0yxqXAq56qljVhH/O8oPCOPwaVYs=;
+ b=l3r1DmU0taS+cf6ScfBrLOMu84DLCJpOMkR43vZ9S49PCXZeQty+QnUKfBdkS3FZZb
+ hpGzxsY+7FE9h/Uhg0LBZ2eUymIQVJGe9eFR/+AmY/VOjdFRZuYNXsw68z6WeH8ZhUJE
+ TRThKqESiANPGeAxn81wR/dIHmXIffj/BJQuyl1melQGMG/lap8SmOmpoSTy3zQc8CLi
+ oJxe8AGDYUXeZ9Nx42Ud/4Bs7aeRSzYnRmW7S2iVQ7t85JqJQvdCxrLRP1Y5RyDEQRJ7
+ LHo2Af+dLF+t+m2rtLuwBHHiZVwT+Up7X5ilgj7KifijUXPEmRnQr9w2nWPqKyLVbB7g
+ r7wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717497455; x=1718102255;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TOnDgupvw3Q5CPgiTXtf+qdjCXkFSFK/HfdTMFR4G9I=;
- b=nwOPC8fguwjqWuY8WIOcOkkKJoJzW3ONE2WhBxQzHbqcO+moCyYOlcn31sAWlooc0H
- 7aq0Cd19cNZg1n4jzDdiQJcxxYUuegx2P7MTG3g4s81HMsM19b/CB3UF3KsGzkx2J4+G
- NH4Ss7hy9r2rTzc/IIPmavi4YR0bEBRUq8Gkx06I6iAhxGdWSjo+JGQkk+kyWG874Ttm
- BQPDtIdiBinx9YmSw9NWM9gakgmQRF6f+1TKOuy9FXVN0JIgW3XkfYRNKYUODyvg3ZF3
- WAUDhwJL3eRnOLN/Pc2K8SM+ra8gwZOAZkpryfuth0I7f2zTyKUH5XalDRW8fP/hvEOd
- gpTQ==
-X-Gm-Message-State: AOJu0YxzNA7A2+fxmmX9uPvwtNm6gu26y3hQAW94Pzr8Ic5ynkvSkQxh
- s2NPvM5xGtcOUc4nK639bP25pbnSiZtZI8P259ufKAqrx6hLX4n2Zr93D5AfYWF4yFaD3KwuTih
- ByytF3xLcAs5RyF/b08kcbN554NU=
-X-Google-Smtp-Source: AGHT+IH5xKImrZX/KUbZXHSBkfwID1MZpDA6iLjalm3r++xRfPoRjGz97jKWTSPzamuitS7uv3wHrIlJdTnV+NhJ9HA=
-X-Received: by 2002:a05:620a:40d5:b0:792:e9e4:4a10 with SMTP id
- af79cd13be357-794f5c98081mr1466743785a.34.1717497454712; Tue, 04 Jun 2024
- 03:37:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717498443; x=1718103243;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3sZv0UF9O2GC/qf0yxqXAq56qljVhH/O8oPCOPwaVYs=;
+ b=nqA2qwXZ1nQ/9TEdajhvv9kYbuCGWnyvnWPXBvkTatgAom17x4wN3fAYRbiDmUeGiy
+ 4H0aCKN0YiNmNhttiKFZ9FDGOFyPteW+46qBHvByJQIz/YixLVGpHJNRitEnaKDBRaLH
+ EDVy9s3vByTpr9MAayAUO7JQUrfmQ6E++ohUABMnoZCtnS370yoBG5iQvTZWRocNj84O
+ hhtqr3avi/UeIDnOI3do3RIsh4oDe89TrTLfsbR502epVVKQNm2lhUaxa6sf+hz6Utl5
+ T1xoSfdCMWWRzgoiyKVDMvxcG3qc/yE6M9UYq+Y+rbsVmQyXWp+NimdVuxwaZySjKPwm
+ b83Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVq6IfdfahkloRgY02zwBigJBr/Mx1rmisSgF304n4nYpd1wNsuI39xkjzNZPCp2MNxZK0QAgu/HmiolOAkDUyn7/XMy90=
+X-Gm-Message-State: AOJu0Yya/SJ1vGYgAEaP3oRBtRCotH59v0bkWJWr9coAGwwd4e5oP2Dm
+ dgDEdurSnlOv6C7mz0XkAlzylbeZ+uriQZE/O0RBcfRd/UD2pRxuCaZeemYTF0g=
+X-Google-Smtp-Source: AGHT+IHVeq0o5pN7AN+tTSpiFY4f6CP86jfjAbn0bxgpYyzdriVAC5sCLHufdkHA6LWrR5Sf3/1Faw==
+X-Received: by 2002:a05:620a:47dd:b0:792:c60e:2b10 with SMTP id
+ af79cd13be357-794f5ed15efmr1118532185a.73.1717498443340; 
+ Tue, 04 Jun 2024 03:54:03 -0700 (PDT)
+Received: from [192.168.223.227] ([50.233.235.3])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7951e909b9dsm9763085a.62.2024.06.04.03.54.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Jun 2024 03:54:03 -0700 (PDT)
+Message-ID: <ce5da9ec-0ba8-4d8f-8204-2bfee00f2fbb@linaro.org>
+Date: Tue, 4 Jun 2024 05:51:55 -0500
 MIME-Version: 1.0
-References: <20240531185804.119557-1-dongwon.kim@intel.com>
-In-Reply-To: <20240531185804.119557-1-dongwon.kim@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 4 Jun 2024 14:37:22 +0400
-Message-ID: <CAJ+F1C+PG-Tf-ADFTgBGq5nvJSCEVhFW0Pk6a2Pf7gVurbJeuw@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 0/2] ui/gtk: Introduce new param - Connectors
-To: dongwon.kim@intel.com
-Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000b0e2ef061a0e0919"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72b;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x72b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/11] target/i386: fix pushed value of EFLAGS.RF
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240604071833.962574-1-pbonzini@redhat.com>
+ <20240604071833.962574-2-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240604071833.962574-2-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x72f.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,121 +97,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000b0e2ef061a0e0919
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 6/4/24 02:18, Paolo Bonzini wrote:
+> When preparing an exception stack frame for a fault exception, the value
+> pushed for RF is 1.  Take that into account.  The same should be true
+> of interrupts for repeated string instructions, but the situation there
+> is complicated.
+> 
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> ---
+>   target/i386/tcg/seg_helper.c | 49 ++++++++++++++++++++++++++++++++----
+>   target/i386/tcg/translate.c  |  8 ++++++
+>   2 files changed, 52 insertions(+), 5 deletions(-)
 
-Hi
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 
-On Fri, May 31, 2024 at 11:00=E2=80=AFPM <dongwon.kim@intel.com> wrote:
-
-> From: Dongwon Kim <dongwon.kim@intel.com>
->
-> This patch series is a replacement of
-> https://mail.gnu.org/archive/html/qemu-devel/2023-06/msg03989.html
->
-> There is a need, expressed by several users, to assign ownership of one
-> or more physical monitors/connectors to individual guests. This creates
-> a clear notion of which guest's contents are being displayed on any given
-> monitor. Given that there is always a display server/compositor running
-> on the host, monitor ownership can never truly be transferred to guests.
-> However, the closest approximation is to request the host compositor to
-> fullscreen the guest's windows on individual monitors. This allows for
-> various configurations, such as displaying four different guests' windows
-> on four different monitors, a single guest's windows (or virtual consoles=
-)
-> on four monitors, or any similar combination.
->
-> This patch series attempts to accomplish this by introducing a new
-> parameter named "connector" to assign monitors to the GFX VCs associated
-> with a guest. If the assigned monitor is not connected, the guest's windo=
-w
-> will not be displayed, similar to how a host compositor behaves when
-> connectors are not connected. Once the monitor is hot-plugged, the guest'=
-s
-> window(s) will be positioned on the assigned monitor.
->
-> Usage example:
->
-> -display gtk,gl=3Don,connectors=3DDP-1:eDP-1:HDMI-2...
->
-> In this example, the first graphics virtual console will be placed on the
-> DP-1 display, the second on eDP-1, and the third on HDMI-2.
->
->
-Unfortunately, this approach with GTK is doomed. gtk4 dropped the
-gtk_window_set_position() altogether.
-
-It's not even clear how the different monitors/outputs/connectors are
-actually named, whether they are stable etc (not mentioning the
-portability).
-
-Window placement & geometry is a job for the compositor. Can you discuss
-this issue with GTK devs & the compositor you are targeting?
-
---=20
-Marc-Andr=C3=A9 Lureau
-
---000000000000b0e2ef061a0e0919
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_quote=
-"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, May 31, 2024 at 11:00=E2=80=
-=AFPM &lt;<a href=3D"mailto:dongwon.kim@intel.com">dongwon.kim@intel.com</a=
->&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
- 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Fro=
-m: Dongwon Kim &lt;<a href=3D"mailto:dongwon.kim@intel.com" target=3D"_blan=
-k">dongwon.kim@intel.com</a>&gt;<br>
-<br>
-This patch series is a replacement of<br>
-<a href=3D"https://mail.gnu.org/archive/html/qemu-devel/2023-06/msg03989.ht=
-ml" rel=3D"noreferrer" target=3D"_blank">https://mail.gnu.org/archive/html/=
-qemu-devel/2023-06/msg03989.html</a><br>
-<br>
-There is a need, expressed by several users, to assign ownership of one<br>
-or more physical monitors/connectors to individual guests. This creates<br>
-a clear notion of which guest&#39;s contents are being displayed on any giv=
-en<br>
-monitor. Given that there is always a display server/compositor running<br>
-on the host, monitor ownership can never truly be transferred to guests.<br=
->
-However, the closest approximation is to request the host compositor to<br>
-fullscreen the guest&#39;s windows on individual monitors. This allows for<=
-br>
-various configurations, such as displaying four different guests&#39; windo=
-ws<br>
-on four different monitors, a single guest&#39;s windows (or virtual consol=
-es)<br>
-on four monitors, or any similar combination.<br>
-<br>
-This patch series attempts to accomplish this by introducing a new<br>
-parameter named &quot;connector&quot; to assign monitors to the GFX VCs ass=
-ociated<br>
-with a guest. If the assigned monitor is not connected, the guest&#39;s win=
-dow<br>
-will not be displayed, similar to how a host compositor behaves when<br>
-connectors are not connected. Once the monitor is hot-plugged, the guest&#3=
-9;s<br>
-window(s) will be positioned on the assigned monitor.<br>
-<br>
-Usage example:<br>
-<br>
--display gtk,gl=3Don,connectors=3DDP-1:eDP-1:HDMI-2...<br>
-<br>
-In this example, the first graphics virtual console will be placed on the<b=
-r>
-DP-1 display, the second on eDP-1, and the third on HDMI-2.<br>
-<br>
-</blockquote></div><div><br></div><div>Unfortunately, this approach with GT=
-K is doomed. gtk4 dropped the gtk_window_set_position() altogether.</div><d=
-iv><br></div><div>It&#39;s not even clear how the different monitors/output=
-s/connectors are actually named, whether they are stable etc (not mentionin=
-g the portability).</div><div><br></div><div>Window placement &amp; geometr=
-y is a job for the compositor. Can you discuss this issue with GTK devs &am=
-p; the compositor you are targeting?<br></div><br><span class=3D"gmail_sign=
-ature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc=
--Andr=C3=A9 Lureau<br></div></div>
-
---000000000000b0e2ef061a0e0919--
+r~
 
