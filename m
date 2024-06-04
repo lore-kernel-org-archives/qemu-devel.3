@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30DECC27C55
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5722FC27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:49:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sENut-0003Do-Qc; Tue, 04 Jun 2024 02:45:08 -0400
+	id 1sENwe-0005zJ-RO; Tue, 04 Jun 2024 02:46:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENus-00038p-2m
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:06 -0400
+ id 1sENvo-0004Zl-D3
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:46:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENuq-0007Tx-AX
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:05 -0400
+ id 1sENvm-0007d7-LY
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:46:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717483503;
+ s=mimecast20190719; t=1717483562;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MELx3a4wImL1JG8cbryKCbUuCn7aSkqRfzZzglKDbxQ=;
- b=EsHyXdk+H12fwf7gGkAbpwjMJd++uj1zzw4+ivLXBIW9imEmhccr3rXRPnpM80hqHf7ooo
- LLkn3jpHyrckBxi7Js4kBGxQqkthk2JidQt7UcWm1ggh2pc7mRzL4vU8ZiS/Y6IKm9ufRF
- 7zufxnTS5dOI69ESVv2KYiPXDP4pKlY=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LdwuL9IxTqKpuTaLb6wL129nWEIn7FeiWV2X8h+dwIU=;
+ b=L6JDV/Bn6A1ezdHf6Q8I89SAvYcB0iQI2OfXiaTgF4FLB6X3RQu3B4avrPzrrXkOfUaOTk
+ 9FRTweN1puDR3hQzz3FCEU2yoJXtvc7ac1v2Imc2kRKgX7uGpvRb8LeRm5zwXdVJtN6abB
+ by3Z+NAYRoKCHSTN4hFxhwBFvu+aaJQ=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-604-iSGYBXzwPqu0TDbJh4gRwQ-1; Tue, 04 Jun 2024 02:45:02 -0400
-X-MC-Unique: iSGYBXzwPqu0TDbJh4gRwQ-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a6840dde124so353556566b.1
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:45:01 -0700 (PDT)
+ us-mta-16-BNMr9aWOOWqOweRZhr4qnQ-1; Tue, 04 Jun 2024 02:46:00 -0400
+X-MC-Unique: BNMr9aWOOWqOweRZhr4qnQ-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a68c5f8f523so118549566b.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:46:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717483500; x=1718088300;
+ d=1e100.net; s=20230601; t=1717483558; x=1718088358;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MELx3a4wImL1JG8cbryKCbUuCn7aSkqRfzZzglKDbxQ=;
- b=OJ01sZ186cZGH0x4QkGR2iA8pN2azLGvygWUcnFLkrl7RcWwKDfrgCk7CoW4K0OBRn
- Q0M7jKDyijFuubSFtwDOdy2jZ20LQqDRc7J70YKpAzDOAwbwi13iOSgPq4wDbqat10+L
- jgaBWgMIETlK2XxORXc6ejDk7CCeYv/dBnpnGWs/R5WUPXuufgEjox2NW98ObOtC99A/
- ZgT+wSsby3LPr7grIW1rXZYCWmaZzkEtGqqS5OVWRnk8DRpEgTSphwSfNktfSMrihsv/
- pvDuL2MWVhVdj0dG+NcKaZ6WX33NlNPzhmXA+MOuLLpfDcrDZtQjrRH8tJlHiVPW+alN
- BQ4w==
-X-Gm-Message-State: AOJu0YyriQYHe9are9sj/7ZQZ3TbrjOhPieAIrVhR+L0d8GZYBqTAYfw
- 8S40uHkdoF7kKdGnaGv0i6efyqiROqYGeBkKhlc0OVa/r29KuBj9PHYSTdDYyQWsXbDFUn/FBVe
- Q/OFYIPZNACTiKushqf3E9PK5MF+IJ3BXUJNDVMxtc+EPIBjNYeFhJnQbqpOwSlet/pglMFTk4d
- ajaHtTVW8pocHkta3xK8+eoXtpL6brvAKUnWSx
-X-Received: by 2002:a17:906:f299:b0:a59:c698:41ae with SMTP id
- a640c23a62f3a-a69545681d7mr130022966b.34.1717483500463; 
- Mon, 03 Jun 2024 23:45:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF6Q+VT4oWH8leYvid1PjpB2EftMUvVziXppNecf89ZrhGIrNCKkOarmxQO4X8p/UNG0frFsQ==
-X-Received: by 2002:a17:906:f299:b0:a59:c698:41ae with SMTP id
- a640c23a62f3a-a69545681d7mr130021266b.34.1717483499960; 
- Mon, 03 Jun 2024 23:44:59 -0700 (PDT)
+ bh=LdwuL9IxTqKpuTaLb6wL129nWEIn7FeiWV2X8h+dwIU=;
+ b=jncF7IoboMFZQK36T/XMHSSpJ0hUq4dz+Sc0zC4Oe4oh6xrr8fGf+h+dczNyNQxkII
+ 4joRhsV6JIk+YJSn81Ws9nhLv0j59hRassuOVDHBVqb7hoEu/1RJprck5CUO3yq5Kmk0
+ G+dsYFVS3yyNyj+S1l9JKvrVOA0bOXsMy/mQeUXaFEym1gI+sx0LAz2Kz+2sDenoXdEz
+ iHKtHB91QnFGiyeGobIR6Bj/wd36DE2nvxW2RhUnx696u5f7SsvwI5lIDTXS1xsDagq7
+ 6ttY1x1uneX+j88NZX3c70sSJJKkeb+CJRY5Efjl34mQJWmj5Idh2Bn1NN3/S04MXC+5
+ wJ7w==
+X-Gm-Message-State: AOJu0Yzn7W5n43O0fresD/7/SVWbxN9TdeX2LtWLmjxsY3p1FwKe2IKX
+ W8m86yDdxLp4Yj8NzTNPUBdpGUIeHlhnbpNMWBuoqa/CE9akjbR4JgIR3hfYnROv1MfbMd44uAa
+ bxkHN2b4jHBKJy0Hulp7PmQ5qoxwoc+Imu/c2igfjg8V90dTjcDa95UWYjhUwdyDv6TfNh5Sa1D
+ Rymf74T5w+i9Z37m5J1BzjJUWoiOWooFjgHmmP
+X-Received: by 2002:a17:906:815:b0:a68:a788:edd3 with SMTP id
+ a640c23a62f3a-a68a788ef67mr704938666b.19.1717483558572; 
+ Mon, 03 Jun 2024 23:45:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFnKvD8DnvKl0jhoVlIlKCemuYbWXS8NTUxZwhCxjU8n872CPR8JqtodELcmEGjs/KsEkkedQ==
+X-Received: by 2002:a17:906:815:b0:a68:a788:edd3 with SMTP id
+ a640c23a62f3a-a68a788ef67mr704937266b.19.1717483558142; 
+ Mon, 03 Jun 2024 23:45:58 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a691364322csm228016966b.109.2024.06.03.23.44.59
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-a68bfe84c67sm428104666b.62.2024.06.03.23.45.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 23:44:59 -0700 (PDT)
+ Mon, 03 Jun 2024 23:45:57 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/45] machine: allow early use of machine_require_guest_memfd
-Date: Tue,  4 Jun 2024 08:43:40 +0200
-Message-ID: <20240604064409.957105-17-pbonzini@redhat.com>
+Cc: Michael Roth <michael.roth@amd.com>,
+	Pankaj Gupta <pankaj.gupta@amd.com>
+Subject: [PULL 38/45] i386/kvm: Add KVM_EXIT_HYPERCALL handling for
+ KVM_HC_MAP_GPA_RANGE
+Date: Tue,  4 Jun 2024 08:44:02 +0200
+Message-ID: <20240604064409.957105-39-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240604064409.957105-1-pbonzini@redhat.com>
 References: <20240604064409.957105-1-pbonzini@redhat.com>
@@ -103,58 +105,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ask the ConfidentialGuestSupport object whether to use guest_memfd
-for KVM-backend private memory.  This bool can be set in instance_init
-(or user_complete) so that it is available when the machine is created.
+From: Michael Roth <michael.roth@amd.com>
 
+KVM_HC_MAP_GPA_RANGE will be used to send requests to userspace for
+private/shared memory attribute updates requested by the guest.
+Implement handling for that use-case along with some basic
+infrastructure for enabling specific hypercall events.
+
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Message-ID: <20240530111643.1091816-31-pankaj.gupta@amd.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/exec/confidential-guest-support.h | 5 +++++
- include/hw/boards.h                       | 1 -
- hw/core/machine.c                         | 2 +-
- 3 files changed, 6 insertions(+), 2 deletions(-)
+ target/i386/kvm/kvm_i386.h   |  1 +
+ target/i386/kvm/kvm.c        | 55 ++++++++++++++++++++++++++++++++++++
+ target/i386/kvm/trace-events |  1 +
+ 3 files changed, 57 insertions(+)
 
-diff --git a/include/exec/confidential-guest-support.h b/include/exec/confidential-guest-support.h
-index e5b188cffbf..02dc4e518f0 100644
---- a/include/exec/confidential-guest-support.h
-+++ b/include/exec/confidential-guest-support.h
-@@ -31,6 +31,11 @@ OBJECT_DECLARE_TYPE(ConfidentialGuestSupport,
- struct ConfidentialGuestSupport {
-     Object parent;
+diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
+index 6b44844d95d..34fc60774b8 100644
+--- a/target/i386/kvm/kvm_i386.h
++++ b/target/i386/kvm/kvm_i386.h
+@@ -33,6 +33,7 @@
+ bool kvm_has_smm(void);
+ bool kvm_enable_x2apic(void);
+ bool kvm_hv_vpindex_settable(void);
++bool kvm_enable_hypercall(uint64_t enable_mask);
  
-+    /*
-+     * True if the machine should use guest_memfd for RAM.
-+     */
-+    bool require_guest_memfd;
-+
-     /*
-      * ready: flag set by CGS initialization code once it's ready to
-      *        start executing instructions in a potentially-secure
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 2fa800f11ae..73ad319d7da 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -375,7 +375,6 @@ struct MachineState {
-     char *dt_compatible;
-     bool dump_guest_core;
-     bool mem_merge;
--    bool require_guest_memfd;
-     bool usb;
-     bool usb_disabled;
-     char *firmware;
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 17292b13e62..77a356f232f 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1216,7 +1216,7 @@ bool machine_mem_merge(MachineState *machine)
+ bool kvm_enable_sgx_provisioning(KVMState *s);
+ bool kvm_hyperv_expand_features(X86CPU *cpu, Error **errp);
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 23a003aaa7e..ede3ef1225f 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -21,6 +21,7 @@
+ #include <sys/syscall.h>
  
- bool machine_require_guest_memfd(MachineState *machine)
- {
--    return machine->require_guest_memfd;
-+    return machine->cgs && machine->cgs->require_guest_memfd;
+ #include <linux/kvm.h>
++#include <linux/kvm_para.h>
+ #include "standard-headers/asm-x86/kvm_para.h"
+ #include "hw/xen/interface/arch-x86/cpuid.h"
+ 
+@@ -209,6 +210,13 @@ int kvm_get_vm_type(MachineState *ms)
+     return kvm_type;
  }
  
- static char *cpu_slot_to_string(const CPUArchId *cpu)
++bool kvm_enable_hypercall(uint64_t enable_mask)
++{
++    KVMState *s = KVM_STATE(current_accel());
++
++    return !kvm_vm_enable_cap(s, KVM_CAP_EXIT_HYPERCALL, 0, enable_mask);
++}
++
+ bool kvm_has_smm(void)
+ {
+     return kvm_vm_check_extension(kvm_state, KVM_CAP_X86_SMM);
+@@ -5322,6 +5330,50 @@ static bool host_supports_vmx(void)
+     return ecx & CPUID_EXT_VMX;
+ }
+ 
++/*
++ * Currently the handling here only supports use of KVM_HC_MAP_GPA_RANGE
++ * to service guest-initiated memory attribute update requests so that
++ * KVM_SET_MEMORY_ATTRIBUTES can update whether or not a page should be
++ * backed by the private memory pool provided by guest_memfd, and as such
++ * is only applicable to guest_memfd-backed guests (e.g. SNP/TDX).
++ *
++ * Other other use-cases for KVM_HC_MAP_GPA_RANGE, such as for SEV live
++ * migration, are not implemented here currently.
++ *
++ * For the guest_memfd use-case, these exits will generally be synthesized
++ * by KVM based on platform-specific hypercalls, like GHCB requests in the
++ * case of SEV-SNP, and not issued directly within the guest though the
++ * KVM_HC_MAP_GPA_RANGE hypercall. So in this case, KVM_HC_MAP_GPA_RANGE is
++ * not actually advertised to guests via the KVM CPUID feature bit, as
++ * opposed to SEV live migration where it would be. Since it is unlikely the
++ * SEV live migration use-case would be useful for guest-memfd backed guests,
++ * because private/shared page tracking is already provided through other
++ * means, these 2 use-cases should be treated as being mutually-exclusive.
++ */
++static int kvm_handle_hc_map_gpa_range(struct kvm_run *run)
++{
++    uint64_t gpa, size, attributes;
++
++    if (!machine_require_guest_memfd(current_machine))
++        return -EINVAL;
++
++    gpa = run->hypercall.args[0];
++    size = run->hypercall.args[1] * TARGET_PAGE_SIZE;
++    attributes = run->hypercall.args[2];
++
++    trace_kvm_hc_map_gpa_range(gpa, size, attributes, run->hypercall.flags);
++
++    return kvm_convert_memory(gpa, size, attributes & KVM_MAP_GPA_RANGE_ENCRYPTED);
++}
++
++static int kvm_handle_hypercall(struct kvm_run *run)
++{
++    if (run->hypercall.nr == KVM_HC_MAP_GPA_RANGE)
++        return kvm_handle_hc_map_gpa_range(run);
++
++    return -EINVAL;
++}
++
+ #define VMX_INVALID_GUEST_STATE 0x80000021
+ 
+ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+@@ -5417,6 +5469,9 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+         ret = kvm_xen_handle_exit(cpu, &run->xen);
+         break;
+ #endif
++    case KVM_EXIT_HYPERCALL:
++        ret = kvm_handle_hypercall(run);
++        break;
+     default:
+         fprintf(stderr, "KVM: unknown exit reason %d\n", run->exit_reason);
+         ret = -1;
+diff --git a/target/i386/kvm/trace-events b/target/i386/kvm/trace-events
+index b365a8e8e28..74a6234ff7f 100644
+--- a/target/i386/kvm/trace-events
++++ b/target/i386/kvm/trace-events
+@@ -5,6 +5,7 @@ kvm_x86_fixup_msi_error(uint32_t gsi) "VT-d failed to remap interrupt for GSI %"
+ kvm_x86_add_msi_route(int virq) "Adding route entry for virq %d"
+ kvm_x86_remove_msi_route(int virq) "Removing route entry for virq %d"
+ kvm_x86_update_msi_routes(int num) "Updated %d MSI routes"
++kvm_hc_map_gpa_range(uint64_t gpa, uint64_t size, uint64_t attributes, uint64_t flags) "gpa 0x%" PRIx64 " size 0x%" PRIx64 " attributes 0x%" PRIx64 " flags 0x%" PRIx64
+ 
+ # xen-emu.c
+ kvm_xen_hypercall(int cpu, uint8_t cpl, uint64_t input, uint64_t a0, uint64_t a1, uint64_t a2, uint64_t ret) "xen_hypercall: cpu %d cpl %d input %" PRIu64 " a0 0x%" PRIx64 " a1 0x%" PRIx64 " a2 0x%" PRIx64" ret 0x%" PRIx64
 -- 
 2.45.1
 
