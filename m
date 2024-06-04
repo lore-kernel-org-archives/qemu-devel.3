@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95302C27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E347C25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:46:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sENuk-0002yU-Pf; Tue, 04 Jun 2024 02:44:58 -0400
+	id 1sENuK-0001x1-8P; Tue, 04 Jun 2024 02:44:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENui-0002xe-UD
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:57 -0400
+ id 1sENuJ-0001wl-Hs
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENuh-0007Hm-Aa
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:56 -0400
+ id 1sENuH-0007FQ-3Q
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:44:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717483494;
+ s=mimecast20190719; t=1717483468;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kdwTvsCx7edNSXKoA8pOZOCc+yJ4yzpVxsliOREE4sg=;
- b=R5pDZ9KMhYsTksuElkIy7KD16j78dearu89iWjx/7nwVDNQfU55RPIXtMBgHqRLBvi5sfd
- mCN4AkCLBTFNnxT6b5Bzu/QLvkXh12oc/m6EPI9NvBwXVp9RfTDnmuEwAQG/wA9tvkXHRV
- aBihqS2wejfk5zNb3HZKPXoJWtK7oUc=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mbdPSgBMmEM0sdVEMRqo/qJllKiAjUzu7KbdlzjNJEg=;
+ b=XZn/Wtxy1vLud19l5vwelTba4a8wOkiNxNS5JeGXz/0RXWyASpEz/MM3+WccV+Kc0HSrYN
+ ojh0r4THYXRGSj7IHHvuNHVcgbtkkrMG0Nvm/GCKkAOoznXQJwA9l2F2h6Hs5b2CRMy9P9
+ cK8Sny2vIeYUQDXEd3YGEoYojnsGpX4=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-8mIpo79APAqC-0mAFPQIlw-1; Tue, 04 Jun 2024 02:44:53 -0400
-X-MC-Unique: 8mIpo79APAqC-0mAFPQIlw-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a6929fc5b52so44951466b.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:44:52 -0700 (PDT)
+ us-mta-8-2sWfsubgOVywUv1X9ji8ww-1; Tue, 04 Jun 2024 02:44:24 -0400
+X-MC-Unique: 2sWfsubgOVywUv1X9ji8ww-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-57a69a573a4so299879a12.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:44:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717483491; x=1718088291;
+ d=1e100.net; s=20230601; t=1717483462; x=1718088262;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kdwTvsCx7edNSXKoA8pOZOCc+yJ4yzpVxsliOREE4sg=;
- b=soyQDz34opwCE+iRt1VKXiwps7yGs5NPohOds1Zdu7Mh48pz4qIdBcsnfy95YhMTL3
- qFEKUo2AJVXmq0vhwCPW+f9VXExaCKR+M+33ZFXDXOf0RC5qOvK7T3jkJrnK1hSxakCa
- iEAgtqxzZmdwAAU5bSr/YmECv0XUpOMbyNpde1p7zqmHpdtTW8myvN/9SgclvtwVLPzX
- 6giF2LKFi4bH7r4tzT9y70dUz++p9lqFUKj/SiJR9EIl4HzOfaVOoJdr3b6Ds+8X/zen
- /MPd/XTwWyOBIAiUFokNQdrXoGZzN0G1jSKeiVsRM+sdJNtWzw2D1lQdLCJTMPDPzrZp
- ETCA==
-X-Gm-Message-State: AOJu0Yxz+TnlN85UixkoPuWvzcNZzs3qyyiYiwi/rN6TOrcke5hWmjW3
- poKmSFY5OIe9tDr/l0aLvqq8uG8p7EPgxcycmuFqJbxOudrp4m8/nJb2N0pS+jCFPgiYxS7UMc2
- hd97T4Bk2/P1+tX87nce4O0d7hhnBYpT31SREIF+yN/MJfF+Qik8kc7yh1tMKEHlsMPVeT2NCEI
- HBBerxVNjU8+8bi2UZGFFoPFWcZ30HckH2YUOb
-X-Received: by 2002:a17:906:a1c3:b0:a66:dca6:43f6 with SMTP id
- a640c23a62f3a-a6820136b23mr805614366b.27.1717483490725; 
- Mon, 03 Jun 2024 23:44:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEhSl8mchuuOuzv0kfTTNNk0cmtjRedJIyrDvbhGeRrQwb5iUytSzd1Zw39dHKuBeRFGk0j5g==
-X-Received: by 2002:a17:906:a1c3:b0:a66:dca6:43f6 with SMTP id
- a640c23a62f3a-a6820136b23mr805612666b.27.1717483490387; 
- Mon, 03 Jun 2024 23:44:50 -0700 (PDT)
+ bh=mbdPSgBMmEM0sdVEMRqo/qJllKiAjUzu7KbdlzjNJEg=;
+ b=BcyOC0tHRqP5h8A3vTtOQL0Fy8lEG3A0URqhsYyWbIpVWHV2DlCWyasPOhNa4p6KL0
+ CtbhQtmwN0y+hZGd4uUUYwwmAfx7+2hnazuSWkaKjo/EaawrutJI0Nef20/6cF+VI19R
+ M7MHNebQVeYVML0KBR592jQQUu9G0VsSJwJiJjorlxpsCNSl/tWLvOWuKuZy6a1wl1b0
+ 5+BUWO7rl/P8jusr3UZ4GN+0J1NSJXa68ZuRdICvBHFe/faqoEcxqlLAso8jM4cQ8m3p
+ yKZDpequleZEPN5N2xe6oIejfOfAOwMlCfclDuQulfB78JCnuJtZalu2+/xWi5OPkfUI
+ WuaQ==
+X-Gm-Message-State: AOJu0Yz87X+Ed7kE9dzez1TPzWssIkL9w6uMW1bPzK9O3j1/WEFdVPzi
+ 6ITgClgf3RFPOHd5gG3tlScUqk5oaZEgRGcEz0MMECrv6S58fIS1cr+lrqdZ49OlxxBqtREpyZ9
+ pN3+fx5pxyhevM1LZX3NDPPbjnLf/W3xUbuG4R6dhqoENP/uOl3SUxFACwv/LlEVkJnt/VuEEza
+ 8MrjJ49ZEosK6LkRVpaJkNNNZvKR4eOiERcjvR
+X-Received: by 2002:a50:d64a:0:b0:578:5f1b:421a with SMTP id
+ 4fb4d7f45d1cf-57a36543114mr6806799a12.27.1717483462669; 
+ Mon, 03 Jun 2024 23:44:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHDb3cA0XpT+jwPEXHZBoZm8OlRq6U5je13py0Pf0K7g6DfMHwfxPrUYAsRbS+bwe39U8MyBA==
+X-Received: by 2002:a50:d64a:0:b0:578:5f1b:421a with SMTP id
+ 4fb4d7f45d1cf-57a36543114mr6806786a12.27.1717483462233; 
+ Mon, 03 Jun 2024 23:44:22 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68b59e925csm443122366b.220.2024.06.03.23.44.49
+ 4fb4d7f45d1cf-57a4606f159sm5515256a12.43.2024.06.03.23.44.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 23:44:49 -0700 (PDT)
+ Mon, 03 Jun 2024 23:44:20 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>
-Subject: [PULL 13/45] update-linux-headers: move pvpanic.h to correct directory
-Date: Tue,  4 Jun 2024 08:43:37 +0200
-Message-ID: <20240604064409.957105-14-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 03/45] meson: assume x86-64-v2 baseline ISA
+Date: Tue,  4 Jun 2024 08:43:27 +0200
+Message-ID: <20240604064409.957105-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240604064409.957105-1-pbonzini@redhat.com>
 References: <20240604064409.957105-1-pbonzini@redhat.com>
@@ -103,82 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Linux has <misc/pvpanic.h>, not <linux/pvpanic.h>.  Use the same
-directory for QEMU's include/standard-headers/ copy.
+x86-64-v2 processors were released in 2008, assume that we have one.
+Unfortunately there is no GCC flag to enable all the features
+without disabling what came after; so enable them one by one.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/standard-headers/{linux => misc}/pvpanic.h | 0
- hw/misc/pvpanic-isa.c                              | 2 +-
- hw/misc/pvpanic-pci.c                              | 2 +-
- hw/misc/pvpanic.c                                  | 2 +-
- scripts/update-linux-headers.sh                    | 6 ++++--
- 5 files changed, 7 insertions(+), 5 deletions(-)
- rename include/standard-headers/{linux => misc}/pvpanic.h (100%)
+ meson.build | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/include/standard-headers/linux/pvpanic.h b/include/standard-headers/misc/pvpanic.h
-similarity index 100%
-rename from include/standard-headers/linux/pvpanic.h
-rename to include/standard-headers/misc/pvpanic.h
-diff --git a/hw/misc/pvpanic-isa.c b/hw/misc/pvpanic-isa.c
-index ccec50f61bb..b4f84c41109 100644
---- a/hw/misc/pvpanic-isa.c
-+++ b/hw/misc/pvpanic-isa.c
-@@ -21,7 +21,7 @@
- #include "hw/misc/pvpanic.h"
- #include "qom/object.h"
- #include "hw/isa/isa.h"
--#include "standard-headers/linux/pvpanic.h"
-+#include "standard-headers/misc/pvpanic.h"
- #include "hw/acpi/acpi_aml_interface.h"
+diff --git a/meson.build b/meson.build
+index 63866071445..d80203f1cde 100644
+--- a/meson.build
++++ b/meson.build
+@@ -336,9 +336,13 @@ if host_arch == 'i386' and not cc.links('''
+   qemu_common_flags = ['-march=i486'] + qemu_common_flags
+ endif
  
- OBJECT_DECLARE_SIMPLE_TYPE(PVPanicISAState, PVPANIC_ISA_DEVICE)
-diff --git a/hw/misc/pvpanic-pci.c b/hw/misc/pvpanic-pci.c
-index 83be95d0d24..4d44a881dad 100644
---- a/hw/misc/pvpanic-pci.c
-+++ b/hw/misc/pvpanic-pci.c
-@@ -21,7 +21,7 @@
- #include "hw/misc/pvpanic.h"
- #include "qom/object.h"
- #include "hw/pci/pci_device.h"
--#include "standard-headers/linux/pvpanic.h"
-+#include "standard-headers/misc/pvpanic.h"
- 
- OBJECT_DECLARE_SIMPLE_TYPE(PVPanicPCIState, PVPANIC_PCI_DEVICE)
- 
-diff --git a/hw/misc/pvpanic.c b/hw/misc/pvpanic.c
-index 1540e9091a4..80289ecf5fe 100644
---- a/hw/misc/pvpanic.c
-+++ b/hw/misc/pvpanic.c
-@@ -21,7 +21,7 @@
- #include "hw/qdev-properties.h"
- #include "hw/misc/pvpanic.h"
- #include "qom/object.h"
--#include "standard-headers/linux/pvpanic.h"
-+#include "standard-headers/misc/pvpanic.h"
- 
- static void handle_event(int event)
- {
-diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
-index 57a48837aa4..7e93acb3b5f 100755
---- a/scripts/update-linux-headers.sh
-+++ b/scripts/update-linux-headers.sh
-@@ -231,10 +231,12 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
-          "$hdrdir/include/linux/const.h" \
-          "$hdrdir/include/linux/kernel.h" \
-          "$hdrdir/include/linux/vhost_types.h" \
--         "$hdrdir/include/linux/sysinfo.h" \
--         "$hdrdir/include/misc/pvpanic.h"; do
-+         "$hdrdir/include/linux/sysinfo.h"; do
-     cp_portable "$i" "$output/include/standard-headers/linux"
- done
-+mkdir -p "$output/include/standard-headers/misc"
-+cp_portable "$hdrdir/include/misc/pvpanic.h" \
-+            "$output/include/standard-headers/misc"
- mkdir -p "$output/include/standard-headers/drm"
- cp_portable "$hdrdir/include/drm/drm_fourcc.h" \
-             "$output/include/standard-headers/drm"
+-# ??? Only extremely old AMD cpus do not have cmpxchg16b.
+-# If we truly care, we should simply detect this case at
+-# runtime and generate the fallback to serial emulation.
++# Assume x86-64-v2 (minus CMPXCHG16B for 32-bit code)
++if host_arch == 'i386'
++  qemu_common_flags = ['-mfpmath=sse'] + qemu_common_flags
++endif
++if host_arch in ['i386', 'x86_64']
++  qemu_common_flags = ['-mpopcnt', '-msse4.2'] + qemu_common_flags
++endif
+ if host_arch == 'x86_64'
+   qemu_common_flags = ['-mcx16'] + qemu_common_flags
+ endif
 -- 
 2.45.1
 
