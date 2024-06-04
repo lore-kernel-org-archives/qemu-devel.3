@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C496BC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 12:14:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAF2DC25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 12:15:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sET3n-0003hf-7K; Tue, 04 Jun 2024 08:14:39 -0400
+	id 1sET3q-0003iw-0Z; Tue, 04 Jun 2024 08:14:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
- id 1sET3k-0003fz-Lr
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 08:14:36 -0400
-Received: from szxga03-in.huawei.com ([45.249.212.189])
+ id 1sET3l-0003gk-Rx
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 08:14:37 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
- id 1sET3g-0006wW-3c
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 08:14:36 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.174])
- by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4VtqF41gQQzPpHv;
- Tue,  4 Jun 2024 20:11:04 +0800 (CST)
+ id 1sET3g-0006xF-Qf
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 08:14:37 -0400
+Received: from mail.maildlp.com (unknown [172.19.88.214])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4VtqDf2DGjz2Cjml;
+ Tue,  4 Jun 2024 20:10:42 +0800 (CST)
 Received: from dggpemf200006.china.huawei.com (unknown [7.185.36.61])
- by mail.maildlp.com (Postfix) with ESMTPS id 97E5D14022E;
- Tue,  4 Jun 2024 20:14:20 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id DA27A1A016F;
+ Tue,  4 Jun 2024 20:14:22 +0800 (CST)
 Received: from DESKTOP-8LI8G6S.china.huawei.com (10.173.124.235) by
  dggpemf200006.china.huawei.com (7.185.36.61) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Tue, 4 Jun 2024 20:14:19 +0800
+ 15.2.1544.11; Tue, 4 Jun 2024 20:14:22 +0800
 To: <qemu-devel@nongnu.org>
 CC: <peterx@redhat.com>, <yu.zhang@ionos.com>, <mgalaxy@akamai.com>,
  <elmar.gerdes@ionos.com>, <zhengchuan@huawei.com>, <berrange@redhat.com>,
@@ -37,9 +37,9 @@ CC: <peterx@redhat.com>, <yu.zhang@ionos.com>, <mgalaxy@akamai.com>,
  <mst@redhat.com>, <xiexiangyou@huawei.com>, <linux-rdma@vger.kernel.org>,
  <lixiao91@huawei.com>, <arei.gonglei@huawei.com>, <jinpu.wang@ionos.com>,
  Jialin Wang <wangjialin23@huawei.com>
-Subject: [PATCH 2/6] io: add QIOChannelRDMA class
-Date: Tue, 4 Jun 2024 20:14:08 +0800
-Message-ID: <1717503252-51884-3-git-send-email-arei.gonglei@huawei.com>
+Subject: [PATCH 5/6] migration: introduce new RDMA live migration
+Date: Tue, 4 Jun 2024 20:14:11 +0800
+Message-ID: <1717503252-51884-6-git-send-email-arei.gonglei@huawei.com>
 X-Mailer: git-send-email 2.8.2.windows.1
 In-Reply-To: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
 References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
@@ -48,14 +48,14 @@ Content-Type: text/plain
 X-Originating-IP: [10.173.124.235]
 X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
  dggpemf200006.china.huawei.com (7.185.36.61)
-Received-SPF: pass client-ip=45.249.212.189;
- envelope-from=arei.gonglei@huawei.com; helo=szxga03-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=arei.gonglei@huawei.com; helo=szxga04-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,28 +75,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jialin Wang <wangjialin23@huawei.com>
 
-Implement a QIOChannelRDMA subclass that is based on the rsocket
-API (similar to socket API).
-
 Signed-off-by: Jialin Wang <wangjialin23@huawei.com>
 Signed-off-by: Gonglei <arei.gonglei@huawei.com>
 ---
- include/io/channel-rdma.h | 152 +++++++++++++
- io/channel-rdma.c         | 437 ++++++++++++++++++++++++++++++++++++++
- io/meson.build            |   1 +
- io/trace-events           |  14 ++
- 4 files changed, 604 insertions(+)
- create mode 100644 include/io/channel-rdma.h
- create mode 100644 io/channel-rdma.c
+ migration/meson.build |  2 +
+ migration/migration.c | 11 +++++-
+ migration/rdma.c      | 88 +++++++++++++++++++++++++++++++++++++++++++
+ migration/rdma.h      | 24 ++++++++++++
+ 4 files changed, 124 insertions(+), 1 deletion(-)
+ create mode 100644 migration/rdma.c
+ create mode 100644 migration/rdma.h
 
-diff --git a/include/io/channel-rdma.h b/include/io/channel-rdma.h
+diff --git a/migration/meson.build b/migration/meson.build
+index 4e8a9ccf3e..04e2e16239 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -42,3 +42,5 @@ system_ss.add(when: zstd, if_true: files('multifd-zstd.c'))
+ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
+                 if_true: files('ram.c',
+                                'target.c'))
++
++system_ss.add(when: rdma, if_true: files('rdma.c'))
+diff --git a/migration/migration.c b/migration/migration.c
+index 6b9ad4ff5f..77c301d351 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -25,6 +25,7 @@
+ #include "sysemu/runstate.h"
+ #include "sysemu/sysemu.h"
+ #include "sysemu/cpu-throttle.h"
++#include "rdma.h"
+ #include "ram.h"
+ #include "migration/global_state.h"
+ #include "migration/misc.h"
+@@ -145,7 +146,7 @@ static bool transport_supports_multi_channels(MigrationAddress *addr)
+     } else if (addr->transport == MIGRATION_ADDRESS_TYPE_FILE) {
+         return migrate_mapped_ram();
+     } else {
+-        return false;
++        return addr->transport == MIGRATION_ADDRESS_TYPE_RDMA;
+     }
+ }
+ 
+@@ -644,6 +645,10 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
+         } else if (saddr->type == SOCKET_ADDRESS_TYPE_FD) {
+             fd_start_incoming_migration(saddr->u.fd.str, errp);
+         }
++#ifdef CONFIG_RDMA
++    } else if (addr->transport == MIGRATION_ADDRESS_TYPE_RDMA) {
++        rdma_start_incoming_migration(&addr->u.rdma, errp);
++#endif
+     } else if (addr->transport == MIGRATION_ADDRESS_TYPE_EXEC) {
+         exec_start_incoming_migration(addr->u.exec.args, errp);
+     } else if (addr->transport == MIGRATION_ADDRESS_TYPE_FILE) {
+@@ -2046,6 +2051,10 @@ void qmp_migrate(const char *uri, bool has_channels,
+         } else if (saddr->type == SOCKET_ADDRESS_TYPE_FD) {
+             fd_start_outgoing_migration(s, saddr->u.fd.str, &local_err);
+         }
++#ifdef CONFIG_RDMA
++    } else if (addr->transport == MIGRATION_ADDRESS_TYPE_RDMA) {
++        rdma_start_outgoing_migration(s, &addr->u.rdma, &local_err);
++#endif
+     } else if (addr->transport == MIGRATION_ADDRESS_TYPE_EXEC) {
+         exec_start_outgoing_migration(s, addr->u.exec.args, &local_err);
+     } else if (addr->transport == MIGRATION_ADDRESS_TYPE_FILE) {
+diff --git a/migration/rdma.c b/migration/rdma.c
 new file mode 100644
-index 0000000000..8cab2459e5
+index 0000000000..09a4de7f59
 --- /dev/null
-+++ b/include/io/channel-rdma.h
-@@ -0,0 +1,152 @@
++++ b/migration/rdma.c
+@@ -0,0 +1,88 @@
 +/*
-+ * QEMU I/O channels RDMA driver
++ * QEMU live migration via RDMA
 + *
 + * Copyright (c) 2024 HUAWEI TECHNOLOGIES CO., LTD.
 + *
@@ -104,623 +154,115 @@ index 0000000000..8cab2459e5
 + *  Jialin Wang <wangjialin23@huawei.com>
 + *  Gonglei <arei.gonglei@huawei.com>
 + *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2.1 of the License, or (at your option) any later version.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef QIO_CHANNEL_RDMA_H
-+#define QIO_CHANNEL_RDMA_H
-+
-+#include "io/channel.h"
-+#include "io/task.h"
-+#include "qemu/sockets.h"
-+#include "qom/object.h"
-+
-+#define TYPE_QIO_CHANNEL_RDMA "qio-channel-rdma"
-+OBJECT_DECLARE_SIMPLE_TYPE(QIOChannelRDMA, QIO_CHANNEL_RDMA)
-+
-+/**
-+ * QIOChannelRDMA:
-+ *
-+ * The QIOChannelRDMA object provides a channel implementation
-+ * that discards all writes and returns EOF for all reads.
-+ */
-+struct QIOChannelRDMA {
-+    QIOChannel parent;
-+    /* the rsocket fd */
-+    int fd;
-+
-+    struct sockaddr_storage localAddr;
-+    socklen_t localAddrLen;
-+    struct sockaddr_storage remoteAddr;
-+    socklen_t remoteAddrLen;
-+};
-+
-+/**
-+ * qio_channel_rdma_new:
-+ *
-+ * Create a channel for performing I/O on a rdma
-+ * connection, that is initially closed. After
-+ * creating the rdma, it must be setup as a client
-+ * connection or server.
-+ *
-+ * Returns: the rdma channel object
-+ */
-+QIOChannelRDMA *qio_channel_rdma_new(void);
-+
-+/**
-+ * qio_channel_rdma_connect_sync:
-+ * @ioc: the rdma channel object
-+ * @addr: the address to connect to
-+ * @errp: pointer to a NULL-initialized error object
-+ *
-+ * Attempt to connect to the address @addr. This method
-+ * will run in the foreground so the caller will not regain
-+ * execution control until the connection is established or
-+ * an error occurs.
-+ */
-+int qio_channel_rdma_connect_sync(QIOChannelRDMA *ioc, InetSocketAddress *addr,
-+                                  Error **errp);
-+
-+/**
-+ * qio_channel_rdma_connect_async:
-+ * @ioc: the rdma channel object
-+ * @addr: the address to connect to
-+ * @callback: the function to invoke on completion
-+ * @opaque: user data to pass to @callback
-+ * @destroy: the function to free @opaque
-+ * @context: the context to run the async task. If %NULL, the default
-+ *           context will be used.
-+ *
-+ * Attempt to connect to the address @addr. This method
-+ * will run in the background so the caller will regain
-+ * execution control immediately. The function @callback
-+ * will be invoked on completion or failure. The @addr
-+ * parameter will be copied, so may be freed as soon
-+ * as this function returns without waiting for completion.
-+ */
-+void qio_channel_rdma_connect_async(QIOChannelRDMA *ioc,
-+                                    InetSocketAddress *addr,
-+                                    QIOTaskFunc callback, gpointer opaque,
-+                                    GDestroyNotify destroy,
-+                                    GMainContext *context);
-+
-+/**
-+ * qio_channel_rdma_listen_sync:
-+ * @ioc: the rdma channel object
-+ * @addr: the address to listen to
-+ * @num: the expected amount of connections
-+ * @errp: pointer to a NULL-initialized error object
-+ *
-+ * Attempt to listen to the address @addr. This method
-+ * will run in the foreground so the caller will not regain
-+ * execution control until the connection is established or
-+ * an error occurs.
-+ */
-+int qio_channel_rdma_listen_sync(QIOChannelRDMA *ioc, InetSocketAddress *addr,
-+                                 int num, Error **errp);
-+
-+/**
-+ * qio_channel_rdma_listen_async:
-+ * @ioc: the rdma channel object
-+ * @addr: the address to listen to
-+ * @num: the expected amount of connections
-+ * @callback: the function to invoke on completion
-+ * @opaque: user data to pass to @callback
-+ * @destroy: the function to free @opaque
-+ * @context: the context to run the async task. If %NULL, the default
-+ *           context will be used.
-+ *
-+ * Attempt to listen to the address @addr. This method
-+ * will run in the background so the caller will regain
-+ * execution control immediately. The function @callback
-+ * will be invoked on completion or failure. The @addr
-+ * parameter will be copied, so may be freed as soon
-+ * as this function returns without waiting for completion.
-+ */
-+void qio_channel_rdma_listen_async(QIOChannelRDMA *ioc, InetSocketAddress *addr,
-+                                   int num, QIOTaskFunc callback,
-+                                   gpointer opaque, GDestroyNotify destroy,
-+                                   GMainContext *context);
-+
-+/**
-+ * qio_channel_rdma_accept:
-+ * @ioc: the rdma channel object
-+ * @errp: pointer to a NULL-initialized error object
-+ *
-+ * If the rdma represents a server, then this accepts
-+ * a new client connection. The returned channel will
-+ * represent the connected client rdma.
-+ *
-+ * Returns: the new client channel, or NULL on error
-+ */
-+QIOChannelRDMA *qio_channel_rdma_accept(QIOChannelRDMA *ioc, Error **errp);
-+
-+#endif /* QIO_CHANNEL_RDMA_H */
-diff --git a/io/channel-rdma.c b/io/channel-rdma.c
-new file mode 100644
-index 0000000000..92c362df52
---- /dev/null
-+++ b/io/channel-rdma.c
-@@ -0,0 +1,437 @@
-+/*
-+ * QEMU I/O channels RDMA driver
-+ *
-+ * Copyright (c) 2024 HUAWEI TECHNOLOGIES CO., LTD.
-+ *
-+ * Authors:
-+ *  Jialin Wang <wangjialin23@huawei.com>
-+ *  Gonglei <arei.gonglei@huawei.com>
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2.1 of the License, or (at your option) any later version.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
 + */
 +
 +#include "qemu/osdep.h"
 +#include "io/channel-rdma.h"
 +#include "io/channel.h"
 +#include "qapi/clone-visitor.h"
-+#include "qapi/error.h"
++#include "qapi/qapi-types-sockets.h"
 +#include "qapi/qapi-visit-sockets.h"
++#include "channel.h"
++#include "migration.h"
++#include "rdma.h"
 +#include "trace.h"
-+#include <errno.h>
-+#include <netdb.h>
-+#include <rdma/rsocket.h>
-+#include <stdbool.h>
 +#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <sys/eventfd.h>
-+#include <sys/poll.h>
-+#include <unistd.h>
 +
-+QIOChannelRDMA *qio_channel_rdma_new(void)
-+{
-+    QIOChannelRDMA *rioc;
-+    QIOChannel *ioc;
-+
-+    rioc = QIO_CHANNEL_RDMA(object_new(TYPE_QIO_CHANNEL_RDMA));
-+    ioc = QIO_CHANNEL(rioc);
-+    qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
-+
-+    trace_qio_channel_rdma_new(ioc);
-+
-+    return rioc;
-+}
-+
-+static int qio_channel_rdma_set_fd(QIOChannelRDMA *rioc, int fd, Error **errp)
-+{
-+    if (rioc->fd != -1) {
-+        error_setg(errp, "Socket is already open");
-+        return -1;
-+    }
-+
-+    rioc->fd = fd;
-+    rioc->remoteAddrLen = sizeof(rioc->remoteAddr);
-+    rioc->localAddrLen = sizeof(rioc->localAddr);
-+
-+    if (rgetpeername(fd, (struct sockaddr *)&rioc->remoteAddr,
-+                     &rioc->remoteAddrLen) < 0) {
-+        if (errno == ENOTCONN) {
-+            memset(&rioc->remoteAddr, 0, sizeof(rioc->remoteAddr));
-+            rioc->remoteAddrLen = sizeof(rioc->remoteAddr);
-+        } else {
-+            error_setg_errno(errp, errno,
-+                             "Unable to query remote rsocket address");
-+            goto error;
-+        }
-+    }
-+
-+    if (rgetsockname(fd, (struct sockaddr *)&rioc->localAddr,
-+                     &rioc->localAddrLen) < 0) {
-+        error_setg_errno(errp, errno, "Unable to query local rsocket address");
-+        goto error;
-+    }
-+
-+    return 0;
-+
-+error:
-+    rioc->fd = -1; /* Let the caller close FD on failure */
-+    return -1;
-+}
-+
-+int qio_channel_rdma_connect_sync(QIOChannelRDMA *rioc, InetSocketAddress *addr,
-+                                  Error **errp)
-+{
-+    int ret, fd = -1;
-+    struct rdma_addrinfo *ai;
-+
-+    trace_qio_channel_rdma_connect_sync(rioc, addr);
-+    ret = rdma_getaddrinfo(addr->host, addr->port, NULL, &ai);
-+    if (ret) {
-+        error_setg(errp, "Failed to rdma_getaddrinfo: %s", gai_strerror(ret));
-+        goto out;
-+    }
-+
-+    fd = rsocket(ai->ai_family, SOCK_STREAM, 0);
-+    if (fd < 0) {
-+        error_setg_errno(errp, errno, "Failed to create rsocket");
-+        goto out;
-+    }
-+    qemu_set_cloexec(fd);
-+
-+retry:
-+    ret = rconnect(fd, ai->ai_dst_addr, ai->ai_dst_len);
-+    if (ret) {
-+        if (errno == EINTR) {
-+            goto retry;
-+        }
-+        error_setg_errno(errp, errno, "Failed to rconnect");
-+        goto out;
-+    }
-+
-+    trace_qio_channel_rdma_connect_complete(rioc, fd);
-+    ret = qio_channel_rdma_set_fd(rioc, fd, errp);
-+    if (ret) {
-+        goto out;
-+    }
-+
-+out:
-+    if (ret) {
-+        trace_qio_channel_rdma_connect_fail(rioc);
-+        if (fd >= 0) {
-+            rclose(fd);
-+        }
-+    }
-+    if (ai) {
-+        rdma_freeaddrinfo(ai);
-+    }
-+
-+    return ret;
-+}
-+
-+static void qio_channel_rdma_connect_worker(QIOTask *task, gpointer opaque)
-+{
-+    QIOChannelRDMA *ioc = QIO_CHANNEL_RDMA(qio_task_get_source(task));
-+    InetSocketAddress *addr = opaque;
-+    Error *err = NULL;
-+
-+    qio_channel_rdma_connect_sync(ioc, addr, &err);
-+
-+    qio_task_set_error(task, err);
-+}
-+
-+void qio_channel_rdma_connect_async(QIOChannelRDMA *ioc,
-+                                    InetSocketAddress *addr,
-+                                    QIOTaskFunc callback, gpointer opaque,
-+                                    GDestroyNotify destroy,
-+                                    GMainContext *context)
-+{
-+    QIOTask *task = qio_task_new(OBJECT(ioc), callback, opaque, destroy);
-+    InetSocketAddress *addrCopy;
-+
-+    addrCopy = QAPI_CLONE(InetSocketAddress, addr);
-+
-+    /* rdma_getaddrinfo() blocks in DNS lookups, so we must use a thread */
-+    trace_qio_channel_rdma_connect_async(ioc, addr);
-+    qio_task_run_in_thread(task, qio_channel_rdma_connect_worker, addrCopy,
-+                           (GDestroyNotify)qapi_free_InetSocketAddress,
-+                           context);
-+}
-+
-+int qio_channel_rdma_listen_sync(QIOChannelRDMA *rioc, InetSocketAddress *addr,
-+                                 int num, Error **errp)
-+{
-+    int ret, fd = -1;
-+    struct rdma_addrinfo *ai;
-+    struct rdma_addrinfo ai_hints = { 0 };
-+
-+    trace_qio_channel_rdma_listen_sync(rioc, addr, num);
-+    ai_hints.ai_port_space = RDMA_PS_TCP;
-+    ai_hints.ai_flags |= RAI_PASSIVE;
-+    ret = rdma_getaddrinfo(addr->host, addr->port, &ai_hints, &ai);
-+    if (ret) {
-+        error_setg(errp, "Failed to rdma_getaddrinfo: %s", gai_strerror(ret));
-+        goto out;
-+    }
-+
-+    fd = rsocket(ai->ai_family, SOCK_STREAM, 0);
-+    if (fd < 0) {
-+        error_setg_errno(errp, errno, "Failed to create rsocket");
-+        goto out;
-+    }
-+    qemu_set_cloexec(fd);
-+
-+    ret = rbind(fd, ai->ai_src_addr, ai->ai_src_len);
-+    if (ret) {
-+        error_setg_errno(errp, errno, "Failed to rbind");
-+        goto out;
-+    }
-+
-+    ret = rlisten(fd, num);
-+    if (ret) {
-+        error_setg_errno(errp, errno, "Failed to rlisten");
-+        goto out;
-+    }
-+
-+    ret = qio_channel_rdma_set_fd(rioc, fd, errp);
-+    if (ret) {
-+        goto out;
-+    }
-+
-+    qio_channel_set_feature(QIO_CHANNEL(rioc), QIO_CHANNEL_FEATURE_LISTEN);
-+    trace_qio_channel_rdma_listen_complete(rioc, fd);
-+
-+out:
-+    if (ret) {
-+        trace_qio_channel_rdma_listen_fail(rioc);
-+        if (fd >= 0) {
-+            rclose(fd);
-+        }
-+    }
-+    if (ai) {
-+        rdma_freeaddrinfo(ai);
-+    }
-+
-+    return ret;
-+}
-+
-+struct QIOChannelListenWorkerData {
++static struct RDMAOutgoingArgs {
 +    InetSocketAddress *addr;
-+    int num; /* amount of expected connections */
-+};
++} outgoing_args;
 +
-+static void qio_channel_listen_worker_free(gpointer opaque)
++static void rdma_outgoing_migration(QIOTask *task, gpointer opaque)
 +{
-+    struct QIOChannelListenWorkerData *data = opaque;
++    MigrationState *s = opaque;
++    QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(qio_task_get_source(task));
 +
-+    qapi_free_InetSocketAddress(data->addr);
-+    g_free(data);
++    migration_channel_connect(s, QIO_CHANNEL(rioc), outgoing_args.addr->host,
++                              NULL);
++    object_unref(OBJECT(rioc));
 +}
 +
-+static void qio_channel_rdma_listen_worker(QIOTask *task, gpointer opaque)
++void rdma_start_outgoing_migration(MigrationState *s, InetSocketAddress *iaddr,
++                                   Error **errp)
 +{
-+    QIOChannelRDMA *ioc = QIO_CHANNEL_RDMA(qio_task_get_source(task));
-+    struct QIOChannelListenWorkerData *data = opaque;
-+    Error *err = NULL;
++    QIOChannelRDMA *rioc = qio_channel_rdma_new();
 +
-+    qio_channel_rdma_listen_sync(ioc, data->addr, data->num, &err);
++    /* in case previous migration leaked it */
++    qapi_free_InetSocketAddress(outgoing_args.addr);
++    outgoing_args.addr = QAPI_CLONE(InetSocketAddress, iaddr);
 +
-+    qio_task_set_error(task, err);
++    qio_channel_set_name(QIO_CHANNEL(rioc), "migration-rdma-outgoing");
++    qio_channel_rdma_connect_async(rioc, iaddr, rdma_outgoing_migration, s,
++                                   NULL, NULL);
 +}
 +
-+void qio_channel_rdma_listen_async(QIOChannelRDMA *ioc, InetSocketAddress *addr,
-+                                   int num, QIOTaskFunc callback,
-+                                   gpointer opaque, GDestroyNotify destroy,
-+                                   GMainContext *context)
++static void coroutine_fn rdma_accept_incoming_migration(void *opaque)
 +{
-+    QIOTask *task = qio_task_new(OBJECT(ioc), callback, opaque, destroy);
-+    struct QIOChannelListenWorkerData *data;
-+
-+    data = g_new0(struct QIOChannelListenWorkerData, 1);
-+    data->addr = QAPI_CLONE(InetSocketAddress, addr);
-+    data->num = num;
-+
-+    /* rdma_getaddrinfo() blocks in DNS lookups, so we must use a thread */
-+    trace_qio_channel_rdma_listen_async(ioc, addr, num);
-+    qio_task_run_in_thread(task, qio_channel_rdma_listen_worker, data,
-+                           qio_channel_listen_worker_free, context);
-+}
-+
-+QIOChannelRDMA *qio_channel_rdma_accept(QIOChannelRDMA *rioc, Error **errp)
-+{
++    QIOChannelRDMA *rioc = opaque;
 +    QIOChannelRDMA *cioc;
 +
-+    cioc = qio_channel_rdma_new();
-+    cioc->remoteAddrLen = sizeof(rioc->remoteAddr);
-+    cioc->localAddrLen = sizeof(rioc->localAddr);
++    while (!migration_has_all_channels()) {
++        cioc = qio_channel_rdma_accept(rioc, NULL);
 +
-+    trace_qio_channel_rdma_accept(rioc);
-+retry:
-+    cioc->fd = raccept(rioc->fd, (struct sockaddr *)&cioc->remoteAddr,
-+                       &cioc->remoteAddrLen);
-+    if (cioc->fd < 0) {
-+        if (errno == EINTR) {
-+            goto retry;
-+        }
-+        error_setg_errno(errp, errno, "Unable to accept connection");
-+        goto error;
-+    }
-+    qemu_set_cloexec(cioc->fd);
-+
-+    if (rgetsockname(cioc->fd, (struct sockaddr *)&cioc->localAddr,
-+                     &cioc->localAddrLen) < 0) {
-+        error_setg_errno(errp, errno, "Unable to query local rsocket address");
-+        goto error;
-+    }
-+
-+    trace_qio_channel_rdma_accept_complete(rioc, cioc, cioc->fd);
-+    return cioc;
-+
-+error:
-+    trace_qio_channel_rdma_accept_fail(rioc);
-+    object_unref(OBJECT(cioc));
-+    return NULL;
-+}
-+
-+static void qio_channel_rdma_init(Object *obj)
-+{
-+    QIOChannelRDMA *ioc = QIO_CHANNEL_RDMA(obj);
-+    ioc->fd = -1;
-+}
-+
-+static void qio_channel_rdma_finalize(Object *obj)
-+{
-+    QIOChannelRDMA *ioc = QIO_CHANNEL_RDMA(obj);
-+
-+    if (ioc->fd != -1) {
-+        rclose(ioc->fd);
-+        ioc->fd = -1;
++        qio_channel_set_name(QIO_CHANNEL(cioc), "migration-rdma-incoming");
++        migration_channel_process_incoming(QIO_CHANNEL(cioc));
++        object_unref(OBJECT(cioc));
 +    }
 +}
 +
-+static ssize_t qio_channel_rdma_readv(QIOChannel *ioc, const struct iovec *iov,
-+                                      size_t niov, int **fds G_GNUC_UNUSED,
-+                                      size_t *nfds G_GNUC_UNUSED,
-+                                      int flags G_GNUC_UNUSED, Error **errp)
++void rdma_start_incoming_migration(InetSocketAddress *addr, Error **errp)
 +{
-+    QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(ioc);
-+    ssize_t ret;
++    QIOChannelRDMA *rioc = qio_channel_rdma_new();
++    MigrationIncomingState *mis = migration_incoming_get_current();
++    Coroutine *co;
++    int num = 1;
 +
-+retry:
-+    ret = rreadv(rioc->fd, iov, niov);
-+    if (ret < 0) {
-+        if (errno == EINTR) {
-+            goto retry;
-+        }
-+        error_setg_errno(errp, errno, "Unable to write to rsocket");
-+        return -1;
++    qio_channel_set_name(QIO_CHANNEL(rioc), "migration-rdma-listener");
++
++    if (qio_channel_rdma_listen_sync(rioc, addr, num, errp) < 0) {
++        object_unref(OBJECT(rioc));
++        return;
 +    }
 +
-+    return ret;
++    mis->transport_data = rioc;
++    mis->transport_cleanup = object_unref;
++
++    qio_channel_set_blocking(QIO_CHANNEL(rioc), false, NULL);
++    co = qemu_coroutine_create(rdma_accept_incoming_migration, rioc);
++    aio_co_schedule(qemu_get_current_aio_context(), co);
 +}
+diff --git a/migration/rdma.h b/migration/rdma.h
+new file mode 100644
+index 0000000000..4c3eb9a972
+--- /dev/null
++++ b/migration/rdma.h
+@@ -0,0 +1,24 @@
++/*
++ * QEMU live migration via RDMA
++ *
++ * Copyright (c) 2024 HUAWEI TECHNOLOGIES CO., LTD.
++ *
++ * Authors:
++ *  Jialin Wang <wangjialin23@huawei.com>
++ *  Gonglei <arei.gonglei@huawei.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
 +
-+static ssize_t qio_channel_rdma_writev(QIOChannel *ioc, const struct iovec *iov,
-+                                       size_t niov, int *fds G_GNUC_UNUSED,
-+                                       size_t nfds G_GNUC_UNUSED,
-+                                       int flags G_GNUC_UNUSED, Error **errp)
-+{
-+    QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(ioc);
-+    ssize_t ret;
++#ifndef QEMU_MIGRATION_RDMA_H
++#define QEMU_MIGRATION_RDMA_H
 +
-+retry:
-+    ret = rwritev(rioc->fd, iov, niov);
-+    if (ret <= 0) {
-+        if (errno == EINTR) {
-+            goto retry;
-+        }
-+        error_setg_errno(errp, errno, "Unable to write to rsocket");
-+        return -1;
-+    }
++#include "qemu/sockets.h"
 +
-+    return ret;
-+}
++void rdma_start_outgoing_migration(MigrationState *s, InetSocketAddress *addr,
++                                   Error **errp);
 +
-+static void qio_channel_rdma_set_delay(QIOChannel *ioc, bool enabled)
-+{
-+    QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(ioc);
-+    int v = enabled ? 0 : 1;
++void rdma_start_incoming_migration(InetSocketAddress *addr, Error **errp);
 +
-+    rsetsockopt(rioc->fd, IPPROTO_TCP, TCP_NODELAY, &v, sizeof(v));
-+}
-+
-+static int qio_channel_rdma_close(QIOChannel *ioc, Error **errp)
-+{
-+    QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(ioc);
-+
-+    if (rioc->fd != -1) {
-+        rclose(rioc->fd);
-+        rioc->fd = -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static int qio_channel_rdma_shutdown(QIOChannel *ioc, QIOChannelShutdown how,
-+                                     Error **errp)
-+{
-+    QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(ioc);
-+    int sockhow;
-+
-+    switch (how) {
-+    case QIO_CHANNEL_SHUTDOWN_READ:
-+        sockhow = SHUT_RD;
-+        break;
-+    case QIO_CHANNEL_SHUTDOWN_WRITE:
-+        sockhow = SHUT_WR;
-+        break;
-+    case QIO_CHANNEL_SHUTDOWN_BOTH:
-+    default:
-+        sockhow = SHUT_RDWR;
-+        break;
-+    }
-+
-+    if (rshutdown(rioc->fd, sockhow) < 0) {
-+        error_setg_errno(errp, errno, "Unable to shutdown rsocket");
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+static void qio_channel_rdma_class_init(ObjectClass *klass,
-+                                        void *class_data G_GNUC_UNUSED)
-+{
-+    QIOChannelClass *ioc_klass = QIO_CHANNEL_CLASS(klass);
-+
-+    ioc_klass->io_writev = qio_channel_rdma_writev;
-+    ioc_klass->io_readv = qio_channel_rdma_readv;
-+    ioc_klass->io_close = qio_channel_rdma_close;
-+    ioc_klass->io_shutdown = qio_channel_rdma_shutdown;
-+    ioc_klass->io_set_delay = qio_channel_rdma_set_delay;
-+}
-+
-+static const TypeInfo qio_channel_rdma_info = {
-+    .parent = TYPE_QIO_CHANNEL,
-+    .name = TYPE_QIO_CHANNEL_RDMA,
-+    .instance_size = sizeof(QIOChannelRDMA),
-+    .instance_init = qio_channel_rdma_init,
-+    .instance_finalize = qio_channel_rdma_finalize,
-+    .class_init = qio_channel_rdma_class_init,
-+};
-+
-+static void qio_channel_rdma_register_types(void)
-+{
-+    type_register_static(&qio_channel_rdma_info);
-+}
-+
-+type_init(qio_channel_rdma_register_types);
-diff --git a/io/meson.build b/io/meson.build
-index 283b9b2bdb..e0dbd5183f 100644
---- a/io/meson.build
-+++ b/io/meson.build
-@@ -14,3 +14,4 @@ io_ss.add(files(
-   'net-listener.c',
-   'task.c',
- ), gnutls)
-+io_ss.add(when: rdma, if_true: files('channel-rdma.c'))
-diff --git a/io/trace-events b/io/trace-events
-index d4c0f84a9a..33026a2224 100644
---- a/io/trace-events
-+++ b/io/trace-events
-@@ -67,3 +67,17 @@ qio_channel_command_new_pid(void *ioc, int writefd, int readfd, int pid) "Comman
- qio_channel_command_new_spawn(void *ioc, const char *binary, int flags) "Command new spawn ioc=%p binary=%s flags=%d"
- qio_channel_command_abort(void *ioc, int pid) "Command abort ioc=%p pid=%d"
- qio_channel_command_wait(void *ioc, int pid, int ret, int status) "Command abort ioc=%p pid=%d ret=%d status=%d"
-+
-+# channel-rdma.c
-+qio_channel_rdma_new(void *ioc) "RDMA rsocket new ioc=%p"
-+qio_channel_rdma_connect_sync(void *ioc, void *addr) "RDMA rsocket connect sync ioc=%p addr=%p"
-+qio_channel_rdma_connect_async(void *ioc, void *addr) "RDMA rsocket connect async ioc=%p addr=%p"
-+qio_channel_rdma_connect_fail(void *ioc) "RDMA rsocket connect fail ioc=%p"
-+qio_channel_rdma_connect_complete(void *ioc, int fd) "RDMA rsocket connect complete ioc=%p fd=%d"
-+qio_channel_rdma_listen_sync(void *ioc, void *addr, int num) "RDMA rsocket listen sync ioc=%p addr=%p num=%d"
-+qio_channel_rdma_listen_fail(void *ioc) "RDMA rsocket listen fail ioc=%p"
-+qio_channel_rdma_listen_async(void *ioc, void *addr, int num) "RDMA rsocket listen async ioc=%p addr=%p num=%d"
-+qio_channel_rdma_listen_complete(void *ioc, int fd) "RDMA rsocket listen complete ioc=%p fd=%d"
-+qio_channel_rdma_accept(void *ioc) "Socket accept start ioc=%p"
-+qio_channel_rdma_accept_fail(void *ioc) "RDMA rsocket accept fail ioc=%p"
-+qio_channel_rdma_accept_complete(void *ioc, void *cioc, int fd) "RDMA rsocket accept complete ioc=%p cioc=%p fd=%d"
++#endif /* QEMU_MIGRATION_RDMA_H */
 -- 
 2.43.0
 
