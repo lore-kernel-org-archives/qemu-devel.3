@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03EA6C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCAD9C27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:09:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEZWa-00012I-3g; Tue, 04 Jun 2024 15:08:48 -0400
+	id 1sEZVD-00008c-8L; Tue, 04 Jun 2024 15:07:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZWX-0000uV-O5
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:08:45 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZVA-0008GS-Kw
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:07:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZWV-00013T-DW
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:08:45 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZV8-0000u1-1d
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:07:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717528122;
+ s=mimecast20190719; t=1717528036;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qGhmwqguo7pIYQaZC7WOHDuKcF1Cau7swIzTfVk8co4=;
- b=GlKo5WE5eKkUHJRvWBvZVtjatfq8dsg6nc4jDJMXtpAwjnHaS4PiQvgRJVa3+ZBOt/j1gY
- ZcDKWkoZ2bC0U/5ufc85Gx64g/lvgvIUVKkQRiKsOsfV41K+/jM7TewgvHYQp9KbHLvJon
- ux5185U4apNi+ubOyxJeKf+aufxrKAc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/tkdF9wBgRXJ0C7b2uR1oP4dL+2Be2HPdzcygUpss9I=;
+ b=P31I74B2igfBHPWo1hGZn/BT0rGP8cCipJ7HPzs42rgWjkKFmlvaOV1+BtXglTdWqhEfH+
+ 7dUrbdg8m/eGKh5pgPJerZPkYOJUZRtbE3MmaJ421vTh+WKxozoXeLiDbhKpYO9KBbEd+Z
+ bRARjBx+EVOTIJfjFfqjUSIUStxVpeo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-152-XPZrGImMOpS4tPe_hapZlA-1; Tue, 04 Jun 2024 15:08:41 -0400
-X-MC-Unique: XPZrGImMOpS4tPe_hapZlA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-35e7cce4c32so1055719f8f.3
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:08:41 -0700 (PDT)
+ us-mta-528-1vIcTpz5O1SP2rNDg5wq-Q-1; Tue, 04 Jun 2024 15:07:15 -0400
+X-MC-Unique: 1vIcTpz5O1SP2rNDg5wq-Q-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-35e7d4f4243so938465f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:07:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717528120; x=1718132920;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qGhmwqguo7pIYQaZC7WOHDuKcF1Cau7swIzTfVk8co4=;
- b=pYTP+ThjSUhHk2gJ16Ksf1b0DPUbmRed3ppHA3oFHmJqx4C53mGk9jr4LlhnRd0Tom
- s/XxONXDRgNPMCu6ujsfq8hO3BJfteQWka3nGCuNMEg3UqGMUORFGCe13LVYrlQmHEOZ
- 10lKy2lDhiU+xmSURNd7KGKPdbKlN5uhRi2hMMm7jZOmszveNLqsXe2wx6TxACLEcnhC
- qVmLHlKm9uWcMpf4HQNW3w7sMX6IEPNkrR40tWGLeoATdHWT5PvAOsN2MEdP2oQ4LG8t
- Y4lbGA9zOpDrMcXrcizZZNdeMznPvklqmKFu1gSsmFGuhiAIg4tR8X24xQpb6iXaFNmz
- j4vA==
-X-Gm-Message-State: AOJu0Yy/rCXTKriE12qMvvOe6L4v94DDEXjUGXBX8yKWDXnVw/J34LGq
- os8vrle/UQRepCC7mBixQdc4L3PKxWPA2fBtFN1/MTcdoCH4z0b39HGeczbOBo+WasLd7UDH4Ej
- puY5mAXVwLK+YZzMTmX91/UgqjpRwf/Hpb61OXxDfpaR4FMiOuj4c84v5zFWf/B94PLAG/VZvVJ
- FGJ/2CdWkniAzOVhA5qa4auGttdNs57w==
-X-Received: by 2002:a5d:4b02:0:b0:355:6e4:60e5 with SMTP id
- ffacd0b85a97d-35e8ef0879emr224310f8f.35.1717528119728; 
- Tue, 04 Jun 2024 12:08:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IENQYangbr476tDOUC1skzJUTv+DIBKAUfSQr/E+j3xZpGWb86F92aNTG71pnGt8Ja5Cjqb/A==
-X-Received: by 2002:a5d:4b02:0:b0:355:6e4:60e5 with SMTP id
- ffacd0b85a97d-35e8ef0879emr224289f8f.35.1717528119230; 
- Tue, 04 Jun 2024 12:08:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717528033; x=1718132833;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/tkdF9wBgRXJ0C7b2uR1oP4dL+2Be2HPdzcygUpss9I=;
+ b=usdo3tG9K+wnReeUw0DGRONYYEGdRtK3gLqOx6vC1kqGgE7JcbvRY+cBPZ7pSQMhYo
+ 9thKLNOhZFdIB+i3Ll8Lx1SeCx4XbfN4D3vwnETF8y7Rn64YoD2VFY1rjuWrb2XStqLk
+ QNfPcBFEayI17QJFWxzfZx2YHXOtpAuWZj/7vD8AkFQsxf3LcZOkwssgXzB45OypQBDa
+ 3Z9iSdZj7AVwBTfeSfQ6P4cZiuFIfujF5wxcsHBwq3i9ccBc0GsjbfFoCGqSj4jZZPMA
+ FdIVVgptJZyxHRrtrUlTbZkIQNyjpDJxuxfE07WlvJAleSDx0iBJzo4u4CYhTTnaLNaS
+ TxAw==
+X-Gm-Message-State: AOJu0Yx9mUorRqH5tIuRQxBdSnFDOyofO5Wsn5WLMiV5weTHT/iVWJt0
+ EBLEGA6AazlxkMZIMP53CijGJ/qVDwr8+ZXTsQiMZ1Git8+S6yKl03sw7AHwG4oxrP/0l+VreM5
+ XFlJmCt466IC2ap7xsDwGIAWRTOCDpPUQ+4QcFhAI4koWLHSZMqTG6YC0YXFZq7rKvVTdxRcapY
+ aYhPEf6Pd1vK0eBOP22qBVomZpA9AWUg==
+X-Received: by 2002:a5d:534f:0:b0:357:3e5a:6c90 with SMTP id
+ ffacd0b85a97d-35e8ef937e8mr212466f8f.57.1717528033425; 
+ Tue, 04 Jun 2024 12:07:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE50QDKE/gRangmWH8LkkYrAFSCb9KqjPg9SXl0IFeQxipVCfhEEfcHr+IXEmuqoRplgQqHwQ==
+X-Received: by 2002:a5d:534f:0:b0:357:3e5a:6c90 with SMTP id
+ ffacd0b85a97d-35e8ef937e8mr212450f8f.57.1717528032951; 
+ Tue, 04 Jun 2024 12:07:12 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:552:cf5c:2b13:215c:b9df:f231])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd066b47asm12322567f8f.112.2024.06.04.12.08.37
+ ffacd0b85a97d-35dd064aa6csm12364718f8f.93.2024.06.04.12.07.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 12:08:38 -0700 (PDT)
-Date: Tue, 4 Jun 2024 15:08:35 -0400
+ Tue, 04 Jun 2024 12:07:12 -0700 (PDT)
+Date: Tue, 4 Jun 2024 15:07:09 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 43/46] tests/qtest/pvpanic: add tests for pvshutdown event
-Message-ID: <982077b6957eab867d48feff46be615f217ebb9d.1717527933.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
+ Gregory Price <gregory.price@memverge.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PULL 21/46] include/hw/cxl/cxl_device: Rename mem_size as
+ static_mem_size for type3 memory devices
+Message-ID: <ff443a23b262378bd438719c087b68809b6abcee.1717527933.git.mst@redhat.com>
 References: <cover.1717527933.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1717527933.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -106,121 +104,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Weißschuh <thomas@t-8ch.de>
+From: Fan Ni <fan.ni@samsung.com>
 
-Validate that a shutdown via the pvpanic device emits the correct
-QMP events.
+Rename mem_size as static_mem_size for type3 memdev to cover static RAM and
+pmem capacity, preparing for the introduction of dynamic capacity to support
+dynamic capacity devices.
 
-Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240527-pvpanic-shutdown-v8-7-5a28ec02558b@t-8ch.de>
+Reviewed-by: Gregory Price <gregory.price@memverge.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Message-Id: <20240523174651.1089554-6-nifan.cxl@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/pvpanic-pci-test.c | 39 ++++++++++++++++++++++++++++++++++
- tests/qtest/pvpanic-test.c     | 29 +++++++++++++++++++++++++
- 2 files changed, 68 insertions(+)
+ include/hw/cxl/cxl_device.h | 2 +-
+ hw/cxl/cxl-mailbox-utils.c  | 4 ++--
+ hw/mem/cxl_type3.c          | 8 ++++----
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/tests/qtest/pvpanic-pci-test.c b/tests/qtest/pvpanic-pci-test.c
-index b372caf41d..dc021c2fdf 100644
---- a/tests/qtest/pvpanic-pci-test.c
-+++ b/tests/qtest/pvpanic-pci-test.c
-@@ -85,11 +85,50 @@ static void test_panic(void)
-     qtest_quit(qts);
- }
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index e839370266..f7f56b44e3 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -234,7 +234,7 @@ typedef struct cxl_device_state {
+     } timestamp;
  
-+static void test_pvshutdown(void)
-+{
-+    uint8_t val;
-+    QDict *response, *data;
-+    QTestState *qts;
-+    QPCIBus *pcibus;
-+    QPCIDevice *dev;
-+    QPCIBar bar;
-+
-+    qts = qtest_init("-device pvpanic-pci,addr=04.0");
-+    pcibus = qpci_new_pc(qts, NULL);
-+    dev = qpci_device_find(pcibus, QPCI_DEVFN(0x4, 0x0));
-+    qpci_device_enable(dev);
-+    bar = qpci_iomap(dev, 0, NULL);
-+
-+    qpci_memread(dev, bar, 0, &val, sizeof(val));
-+    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
-+
-+    val = PVPANIC_SHUTDOWN;
-+    qpci_memwrite(dev, bar, 0, &val, sizeof(val));
-+
-+    response = qtest_qmp_eventwait_ref(qts, "GUEST_PVSHUTDOWN");
-+    qobject_unref(response);
-+
-+    response = qtest_qmp_eventwait_ref(qts, "SHUTDOWN");
-+    g_assert(qdict_haskey(response, "data"));
-+    data = qdict_get_qdict(response, "data");
-+    g_assert(qdict_haskey(data, "guest"));
-+    g_assert(qdict_get_bool(data, "guest"));
-+    g_assert(qdict_haskey(data, "reason"));
-+    g_assert_cmpstr(qdict_get_str(data, "reason"), ==, "guest-shutdown");
-+    qobject_unref(response);
-+
-+    g_free(dev);
-+    qpci_free_pc(pcibus);
-+    qtest_quit(qts);
-+}
-+
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
-     qtest_add_func("/pvpanic-pci/panic", test_panic);
-     qtest_add_func("/pvpanic-pci/panic-nopause", test_panic_nopause);
-+    qtest_add_func("/pvpanic-pci/pvshutdown", test_pvshutdown);
+     /* memory region size, HDM */
+-    uint64_t mem_size;
++    uint64_t static_mem_size;
+     uint64_t pmem_size;
+     uint64_t vmem_size;
  
-     return g_test_run();
- }
-diff --git a/tests/qtest/pvpanic-test.c b/tests/qtest/pvpanic-test.c
-index ccc603472f..d49d2ba931 100644
---- a/tests/qtest/pvpanic-test.c
-+++ b/tests/qtest/pvpanic-test.c
-@@ -58,11 +58,40 @@ static void test_panic(void)
-     qtest_quit(qts);
- }
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index bede28e3c8..b592473587 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -803,7 +803,7 @@ static CXLRetCode cmd_identify_memory_device(const struct cxl_cmd *cmd,
+     snprintf(id->fw_revision, 0x10, "BWFW VERSION %02d", 0);
  
-+static void test_pvshutdown(void)
-+{
-+    uint8_t val;
-+    QDict *response, *data;
-+    QTestState *qts;
-+
-+    qts = qtest_init("-device pvpanic");
-+
-+    val = qtest_inb(qts, 0x505);
-+    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
-+
-+    qtest_outb(qts, 0x505, PVPANIC_SHUTDOWN);
-+
-+    response = qtest_qmp_eventwait_ref(qts, "GUEST_PVSHUTDOWN");
-+    qobject_unref(response);
-+
-+    response = qtest_qmp_eventwait_ref(qts, "SHUTDOWN");
-+    g_assert(qdict_haskey(response, "data"));
-+    data = qdict_get_qdict(response, "data");
-+    g_assert(qdict_haskey(data, "guest"));
-+    g_assert(qdict_get_bool(data, "guest"));
-+    g_assert(qdict_haskey(data, "reason"));
-+    g_assert_cmpstr(qdict_get_str(data, "reason"), ==, "guest-shutdown");
-+    qobject_unref(response);
-+
-+    qtest_quit(qts);
-+}
-+
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
-     qtest_add_func("/pvpanic/panic", test_panic);
-     qtest_add_func("/pvpanic/panic-nopause", test_panic_nopause);
-+    qtest_add_func("/pvpanic/pvshutdown", test_pvshutdown);
+     stq_le_p(&id->total_capacity,
+-             cxl_dstate->mem_size / CXL_CAPACITY_MULTIPLIER);
++             cxl_dstate->static_mem_size / CXL_CAPACITY_MULTIPLIER);
+     stq_le_p(&id->persistent_capacity,
+              cxl_dstate->pmem_size / CXL_CAPACITY_MULTIPLIER);
+     stq_le_p(&id->volatile_capacity,
+@@ -1179,7 +1179,7 @@ static CXLRetCode cmd_media_clear_poison(const struct cxl_cmd *cmd,
+     struct clear_poison_pl *in = (void *)payload_in;
  
-     return g_test_run();
- }
+     dpa = ldq_le_p(&in->dpa);
+-    if (dpa + CXL_CACHE_LINE_SIZE > cxl_dstate->mem_size) {
++    if (dpa + CXL_CACHE_LINE_SIZE > cxl_dstate->static_mem_size) {
+         return CXL_MBOX_INVALID_PA;
+     }
+ 
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 3e42490b6c..7194c8f902 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -608,7 +608,7 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+         }
+         address_space_init(&ct3d->hostvmem_as, vmr, v_name);
+         ct3d->cxl_dstate.vmem_size = memory_region_size(vmr);
+-        ct3d->cxl_dstate.mem_size += memory_region_size(vmr);
++        ct3d->cxl_dstate.static_mem_size += memory_region_size(vmr);
+         g_free(v_name);
+     }
+ 
+@@ -631,7 +631,7 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+         }
+         address_space_init(&ct3d->hostpmem_as, pmr, p_name);
+         ct3d->cxl_dstate.pmem_size = memory_region_size(pmr);
+-        ct3d->cxl_dstate.mem_size += memory_region_size(pmr);
++        ct3d->cxl_dstate.static_mem_size += memory_region_size(pmr);
+         g_free(p_name);
+     }
+ 
+@@ -837,7 +837,7 @@ static int cxl_type3_hpa_to_as_and_dpa(CXLType3Dev *ct3d,
+         return -EINVAL;
+     }
+ 
+-    if (*dpa_offset > ct3d->cxl_dstate.mem_size) {
++    if (*dpa_offset > ct3d->cxl_dstate.static_mem_size) {
+         return -EINVAL;
+     }
+ 
+@@ -1010,7 +1010,7 @@ static bool set_cacheline(CXLType3Dev *ct3d, uint64_t dpa_offset, uint8_t *data)
+         return false;
+     }
+ 
+-    if (dpa_offset + CXL_CACHE_LINE_SIZE > ct3d->cxl_dstate.mem_size) {
++    if (dpa_offset + CXL_CACHE_LINE_SIZE > ct3d->cxl_dstate.static_mem_size) {
+         return false;
+     }
+ 
 -- 
 MST
 
