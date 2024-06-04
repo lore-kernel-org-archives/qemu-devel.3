@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E834C27C53
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03EA6C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:09:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEZW5-00066U-Ck; Tue, 04 Jun 2024 15:08:17 -0400
+	id 1sEZWa-00012I-3g; Tue, 04 Jun 2024 15:08:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZW3-0005sS-P8
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:08:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZWX-0000uV-O5
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:08:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZW0-0000zV-Nt
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:08:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZWV-00013T-DW
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:08:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717528091;
+ s=mimecast20190719; t=1717528122;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C/pPfQru8bTuS9+eYSG9NAw/m9gJaYYAeXPgdlqxVn4=;
- b=TRxQhf70lArVHDdYlrrFd7cwllV0Ln34mLK5g0mkGghC/wL9cEbmhjrhoQN08LBxHI3b+j
- m8WhYx74s0KlnG18nZSPgJ+jHGUYi0tPvi7zekL1rFkidU+Qsy0LGVnFXSJZT+vJLc2W/X
- a8QRLfjOPbfrzU210IKLA8E4RSX3UJ8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qGhmwqguo7pIYQaZC7WOHDuKcF1Cau7swIzTfVk8co4=;
+ b=GlKo5WE5eKkUHJRvWBvZVtjatfq8dsg6nc4jDJMXtpAwjnHaS4PiQvgRJVa3+ZBOt/j1gY
+ ZcDKWkoZ2bC0U/5ufc85Gx64g/lvgvIUVKkQRiKsOsfV41K+/jM7TewgvHYQp9KbHLvJon
+ ux5185U4apNi+ubOyxJeKf+aufxrKAc=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-IfsphAAnPzq42slk_WmnLQ-1; Tue, 04 Jun 2024 15:08:10 -0400
-X-MC-Unique: IfsphAAnPzq42slk_WmnLQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-35e50fe93a5so2484664f8f.3
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:08:09 -0700 (PDT)
+ us-mta-152-XPZrGImMOpS4tPe_hapZlA-1; Tue, 04 Jun 2024 15:08:41 -0400
+X-MC-Unique: XPZrGImMOpS4tPe_hapZlA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-35e7cce4c32so1055719f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:08:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717528088; x=1718132888;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=C/pPfQru8bTuS9+eYSG9NAw/m9gJaYYAeXPgdlqxVn4=;
- b=kcOUFv28vpOAuoQ20CrFYks7Z0YSygvdATokcyHc2hEb/JkaBXwoaDszTspw1R05+N
- XTtqf8jK4LVO5kNrXBDwGRKlVeQh4pejIRcNF86ZhqE2LuESKXXEIkl463OteM4KQ85+
- 3hgwu1SJFHtfwpaeZOwNpkRh4N22SKCeLLsAZQibxQN87pmLG38UUZYDaUPr1iG3nGDc
- 8XoQ+EYs9DFj7KXpeSIwu5BLZwBxKK3FU2lAQWv2pKa5Bny8HexqZBzC/lcyMBsTYyrZ
- 4iM04YKcoGqKKYlwTg9liw2jJ+jSZ6En+HA5rwHm2kycU8GUoQU7orWJ2/WzJWotIkId
- AfvQ==
-X-Gm-Message-State: AOJu0Yzocatc57Q29omP0UvWR9AkSi7c+NvcobDWgPXRmPZJ+9cjR8w6
- 8XvtXZBL9uAgyiPAeQWKmdV1K1yU9gKsVxIhBAb9wU68vFTlOGwDnV3SKV/OMfG/DFT4aMmDyiL
- 3zyTnSpNDCbiiZLicw/0ct0Trp/ujnvuhCkrEsSmHB7WFMM8dJlvZbrBB6IvGyACu6B0kdJjaFm
- 2Z+laCa3h8ggPmTjJEivroAP9g+gxKOg==
-X-Received: by 2002:adf:face:0:b0:35a:e90b:5474 with SMTP id
- ffacd0b85a97d-35e840494e7mr235583f8f.2.1717528088331; 
- Tue, 04 Jun 2024 12:08:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFd05LZFHilV3739r92v+dC/xUoybqIfk45A3yOXGdMdDtBbowCxsSsuww+Qx0LEl5JSLGUTA==
-X-Received: by 2002:adf:face:0:b0:35a:e90b:5474 with SMTP id
- ffacd0b85a97d-35e840494e7mr235562f8f.2.1717528087832; 
- Tue, 04 Jun 2024 12:08:07 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717528120; x=1718132920;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qGhmwqguo7pIYQaZC7WOHDuKcF1Cau7swIzTfVk8co4=;
+ b=pYTP+ThjSUhHk2gJ16Ksf1b0DPUbmRed3ppHA3oFHmJqx4C53mGk9jr4LlhnRd0Tom
+ s/XxONXDRgNPMCu6ujsfq8hO3BJfteQWka3nGCuNMEg3UqGMUORFGCe13LVYrlQmHEOZ
+ 10lKy2lDhiU+xmSURNd7KGKPdbKlN5uhRi2hMMm7jZOmszveNLqsXe2wx6TxACLEcnhC
+ qVmLHlKm9uWcMpf4HQNW3w7sMX6IEPNkrR40tWGLeoATdHWT5PvAOsN2MEdP2oQ4LG8t
+ Y4lbGA9zOpDrMcXrcizZZNdeMznPvklqmKFu1gSsmFGuhiAIg4tR8X24xQpb6iXaFNmz
+ j4vA==
+X-Gm-Message-State: AOJu0Yy/rCXTKriE12qMvvOe6L4v94DDEXjUGXBX8yKWDXnVw/J34LGq
+ os8vrle/UQRepCC7mBixQdc4L3PKxWPA2fBtFN1/MTcdoCH4z0b39HGeczbOBo+WasLd7UDH4Ej
+ puY5mAXVwLK+YZzMTmX91/UgqjpRwf/Hpb61OXxDfpaR4FMiOuj4c84v5zFWf/B94PLAG/VZvVJ
+ FGJ/2CdWkniAzOVhA5qa4auGttdNs57w==
+X-Received: by 2002:a5d:4b02:0:b0:355:6e4:60e5 with SMTP id
+ ffacd0b85a97d-35e8ef0879emr224310f8f.35.1717528119728; 
+ Tue, 04 Jun 2024 12:08:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENQYangbr476tDOUC1skzJUTv+DIBKAUfSQr/E+j3xZpGWb86F92aNTG71pnGt8Ja5Cjqb/A==
+X-Received: by 2002:a5d:4b02:0:b0:355:6e4:60e5 with SMTP id
+ ffacd0b85a97d-35e8ef0879emr224289f8f.35.1717528119230; 
+ Tue, 04 Jun 2024 12:08:39 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:552:cf5c:2b13:215c:b9df:f231])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd064afd8sm12314270f8f.95.2024.06.04.12.08.05
+ ffacd0b85a97d-35dd066b47asm12322567f8f.112.2024.06.04.12.08.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 12:08:07 -0700 (PDT)
-Date: Tue, 4 Jun 2024 15:08:04 -0400
+ Tue, 04 Jun 2024 12:08:38 -0700 (PDT)
+Date: Tue, 4 Jun 2024 15:08:35 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 35/46] bios-tables-test: Add complex SRAT / HMAT test for GI GP
-Message-ID: <4c4979cc62f7db9a137c21d64e01766535272fbe.1717527933.git.mst@redhat.com>
+ Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 43/46] tests/qtest/pvpanic: add tests for pvshutdown event
+Message-ID: <982077b6957eab867d48feff46be615f217ebb9d.1717527933.git.mst@redhat.com>
 References: <cover.1717527933.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1717527933.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -103,131 +106,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Thomas Weißschuh <thomas@t-8ch.de>
 
-Add a test with 6 nodes to exercise most interesting corner cases
-of SRAT and HMAT generation including the new Generic Initiator
-and Generic Port Affinity structures.  More details of the
-set up in the following patch adding the table data.
+Validate that a shutdown via the pvpanic device emits the correct
+QMP events.
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240524100507.32106-6-Jonathan.Cameron@huawei.com>
+Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20240527-pvpanic-shutdown-v8-7-5a28ec02558b@t-8ch.de>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/bios-tables-test.c | 92 ++++++++++++++++++++++++++++++++++
- 1 file changed, 92 insertions(+)
+ tests/qtest/pvpanic-pci-test.c | 39 ++++++++++++++++++++++++++++++++++
+ tests/qtest/pvpanic-test.c     | 29 +++++++++++++++++++++++++
+ 2 files changed, 68 insertions(+)
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index d1ff4db7a2..1651d06b7b 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -1862,6 +1862,96 @@ static void test_acpi_q35_tcg_acpi_hmat_noinitiator(void)
-     free_test_data(&data);
+diff --git a/tests/qtest/pvpanic-pci-test.c b/tests/qtest/pvpanic-pci-test.c
+index b372caf41d..dc021c2fdf 100644
+--- a/tests/qtest/pvpanic-pci-test.c
++++ b/tests/qtest/pvpanic-pci-test.c
+@@ -85,11 +85,50 @@ static void test_panic(void)
+     qtest_quit(qts);
  }
  
-+/* Test intended to hit corner cases of SRAT and HMAT */
-+static void test_acpi_q35_tcg_acpi_hmat_generic_x(void)
++static void test_pvshutdown(void)
 +{
-+    test_data data = {};
++    uint8_t val;
++    QDict *response, *data;
++    QTestState *qts;
++    QPCIBus *pcibus;
++    QPCIDevice *dev;
++    QPCIBar bar;
 +
-+    data.machine = MACHINE_Q35;
-+    data.variant = ".acpihmat-generic-x";
-+    test_acpi_one(" -machine hmat=on,cxl=on"
-+                  " -smp 3,sockets=3"
-+                  " -m 128M,maxmem=384M,slots=2"
-+                  " -device virtio-rng-pci,id=gidev"
-+                  " -device pxb-cxl,bus_nr=64,bus=pcie.0,id=cxl.1"
-+                  " -object memory-backend-ram,size=64M,id=ram0"
-+                  " -object memory-backend-ram,size=64M,id=ram1"
-+                  " -numa node,nodeid=0,cpus=0,memdev=ram0"
-+                  " -numa node,nodeid=1"
-+                  " -object acpi-generic-initiator,id=gi0,pci-dev=gidev,node=1"
-+                  " -numa node,nodeid=2"
-+                  " -object acpi-generic-port,id=gp0,pci-bus=cxl.1,node=2"
-+                  " -numa node,nodeid=3,cpus=1"
-+                  " -numa node,nodeid=4,memdev=ram1"
-+                  " -numa node,nodeid=5,cpus=2"
-+                  " -numa hmat-lb,initiator=0,target=0,hierarchy=memory,"
-+                  "data-type=access-latency,latency=10"
-+                  " -numa hmat-lb,initiator=0,target=0,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=800M"
-+                  " -numa hmat-lb,initiator=0,target=2,hierarchy=memory,"
-+                  "data-type=access-latency,latency=100"
-+                  " -numa hmat-lb,initiator=0,target=2,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=0,target=4,hierarchy=memory,"
-+                  "data-type=access-latency,latency=100"
-+                  " -numa hmat-lb,initiator=0,target=4,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=0,target=5,hierarchy=memory,"
-+                  "data-type=access-latency,latency=200"
-+                  " -numa hmat-lb,initiator=0,target=5,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=1,target=0,hierarchy=memory,"
-+                  "data-type=access-latency,latency=500"
-+                  " -numa hmat-lb,initiator=1,target=0,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=100M"
-+                  " -numa hmat-lb,initiator=1,target=2,hierarchy=memory,"
-+                  "data-type=access-latency,latency=50"
-+                  " -numa hmat-lb,initiator=1,target=2,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=1,target=4,hierarchy=memory,"
-+                  "data-type=access-latency,latency=50"
-+                  " -numa hmat-lb,initiator=1,target=4,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=800M"
-+                  " -numa hmat-lb,initiator=1,target=5,hierarchy=memory,"
-+                  "data-type=access-latency,latency=500"
-+                  " -numa hmat-lb,initiator=1,target=5,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=100M"
-+                  " -numa hmat-lb,initiator=3,target=0,hierarchy=memory,"
-+                  "data-type=access-latency,latency=20"
-+                  " -numa hmat-lb,initiator=3,target=0,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=3,target=2,hierarchy=memory,"
-+                  "data-type=access-latency,latency=80"
-+                  " -numa hmat-lb,initiator=3,target=2,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=3,target=4,hierarchy=memory,"
-+                  "data-type=access-latency,latency=80"
-+                  " -numa hmat-lb,initiator=3,target=4,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=3,target=5,hierarchy=memory,"
-+                  "data-type=access-latency,latency=20"
-+                  " -numa hmat-lb,initiator=3,target=5,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=5,target=0,hierarchy=memory,"
-+                  "data-type=access-latency,latency=20"
-+                  " -numa hmat-lb,initiator=5,target=0,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=400M"
-+                  " -numa hmat-lb,initiator=5,target=2,hierarchy=memory,"
-+                  "data-type=access-latency,latency=80"
-+                  " -numa hmat-lb,initiator=5,target=4,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=5,target=4,hierarchy=memory,"
-+                  "data-type=access-latency,latency=80"
-+                  " -numa hmat-lb,initiator=5,target=2,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=200M"
-+                  " -numa hmat-lb,initiator=5,target=5,hierarchy=memory,"
-+                  "data-type=access-latency,latency=10"
-+                  " -numa hmat-lb,initiator=5,target=5,hierarchy=memory,"
-+                  "data-type=access-bandwidth,bandwidth=800M",
-+                  &data);
-+    free_test_data(&data);
++    qts = qtest_init("-device pvpanic-pci,addr=04.0");
++    pcibus = qpci_new_pc(qts, NULL);
++    dev = qpci_device_find(pcibus, QPCI_DEVFN(0x4, 0x0));
++    qpci_device_enable(dev);
++    bar = qpci_iomap(dev, 0, NULL);
++
++    qpci_memread(dev, bar, 0, &val, sizeof(val));
++    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
++
++    val = PVPANIC_SHUTDOWN;
++    qpci_memwrite(dev, bar, 0, &val, sizeof(val));
++
++    response = qtest_qmp_eventwait_ref(qts, "GUEST_PVSHUTDOWN");
++    qobject_unref(response);
++
++    response = qtest_qmp_eventwait_ref(qts, "SHUTDOWN");
++    g_assert(qdict_haskey(response, "data"));
++    data = qdict_get_qdict(response, "data");
++    g_assert(qdict_haskey(data, "guest"));
++    g_assert(qdict_get_bool(data, "guest"));
++    g_assert(qdict_haskey(data, "reason"));
++    g_assert_cmpstr(qdict_get_str(data, "reason"), ==, "guest-shutdown");
++    qobject_unref(response);
++
++    g_free(dev);
++    qpci_free_pc(pcibus);
++    qtest_quit(qts);
 +}
 +
- #ifdef CONFIG_POSIX
- static void test_acpi_erst(const char *machine)
+ int main(int argc, char **argv)
  {
-@@ -2304,6 +2394,8 @@ int main(int argc, char *argv[])
-             qtest_add_func("acpi/q35/nohpet", test_acpi_q35_tcg_nohpet);
-             qtest_add_func("acpi/q35/acpihmat-noinitiator",
-                            test_acpi_q35_tcg_acpi_hmat_noinitiator);
-+            qtest_add_func("acpi/q35/acpihmat-genericx",
-+                           test_acpi_q35_tcg_acpi_hmat_generic_x);
+     g_test_init(&argc, &argv, NULL);
+     qtest_add_func("/pvpanic-pci/panic", test_panic);
+     qtest_add_func("/pvpanic-pci/panic-nopause", test_panic_nopause);
++    qtest_add_func("/pvpanic-pci/pvshutdown", test_pvshutdown);
  
-             /* i386 does not support memory hotplug */
-             if (strcmp(arch, "i386")) {
+     return g_test_run();
+ }
+diff --git a/tests/qtest/pvpanic-test.c b/tests/qtest/pvpanic-test.c
+index ccc603472f..d49d2ba931 100644
+--- a/tests/qtest/pvpanic-test.c
++++ b/tests/qtest/pvpanic-test.c
+@@ -58,11 +58,40 @@ static void test_panic(void)
+     qtest_quit(qts);
+ }
+ 
++static void test_pvshutdown(void)
++{
++    uint8_t val;
++    QDict *response, *data;
++    QTestState *qts;
++
++    qts = qtest_init("-device pvpanic");
++
++    val = qtest_inb(qts, 0x505);
++    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
++
++    qtest_outb(qts, 0x505, PVPANIC_SHUTDOWN);
++
++    response = qtest_qmp_eventwait_ref(qts, "GUEST_PVSHUTDOWN");
++    qobject_unref(response);
++
++    response = qtest_qmp_eventwait_ref(qts, "SHUTDOWN");
++    g_assert(qdict_haskey(response, "data"));
++    data = qdict_get_qdict(response, "data");
++    g_assert(qdict_haskey(data, "guest"));
++    g_assert(qdict_get_bool(data, "guest"));
++    g_assert(qdict_haskey(data, "reason"));
++    g_assert_cmpstr(qdict_get_str(data, "reason"), ==, "guest-shutdown");
++    qobject_unref(response);
++
++    qtest_quit(qts);
++}
++
+ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+     qtest_add_func("/pvpanic/panic", test_panic);
+     qtest_add_func("/pvpanic/panic-nopause", test_panic_nopause);
++    qtest_add_func("/pvpanic/pvshutdown", test_pvshutdown);
+ 
+     return g_test_run();
+ }
 -- 
 MST
 
