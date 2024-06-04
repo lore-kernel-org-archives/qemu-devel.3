@@ -4,62 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8380C27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47833C41513
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:38:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEOkI-0008Hy-W0; Tue, 04 Jun 2024 03:38:15 -0400
+	id 1sEOkE-0008Gr-7o; Tue, 04 Jun 2024 03:38:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOkH-0008HK-BV
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sEOkB-0008G0-9s
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOkF-0006Iw-O1
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:13 -0400
+ id 1sEOk9-0006IM-BG
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717486690;
+ s=mimecast20190719; t=1717486684;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=o46pYk0Rw9qkFji6WQPlc1KLze6u+AQMxjRmZxGygIM=;
- b=cSq+B5h2NsWxKZRgFS65lnZE+Gqy01KxKOmH9ufPuBmGOoQTlCrYZXfwGuK1zGm0xV0CX/
- EMYgD+ylEVs8z0ECg3kbOuEsu99i3vxlZpG+Jp+rKtTuSf3XSv5g21FEUF0HtUX+Jhdqir
- yqeUTZzEFKV63oIhfZbvs85KbWDOlCg=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-6SLO9J5NOXKcV2HAXjD8nQ-1; Tue, 04 Jun 2024 03:38:06 -0400
-X-MC-Unique: 6SLO9J5NOXKcV2HAXjD8nQ-1
+ content-transfer-encoding:content-transfer-encoding;
+ bh=AOt5JHbAMCPIkltxISgzDGnurGl/u+SrTaXFBg2sdGg=;
+ b=grQBr18kvWlVAa7laIRcfacVVwFusO7ut4rKKXdmBYFbaySlx+F3L93mF1rrL8P783tBWe
+ f47pxMe+pHESHKBUKrSYquP6wGcUdhDJd4on/mxDA/zFR6cZg+frl034GtxFfiHsW0XVZd
+ dIaKxOa8tUrStk8Q8Q80RhWUTV8l9Ec=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-nm2lVGr0PiKDauqAXIBmNQ-1; Tue,
+ 04 Jun 2024 03:38:02 -0400
+X-MC-Unique: nm2lVGr0PiKDauqAXIBmNQ-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9BC9080027F;
- Tue,  4 Jun 2024 07:38:06 +0000 (UTC)
-Received: from localhost.localdomain (unknown [10.72.112.238])
- by smtp.corp.redhat.com (Postfix) with ESMTP id B151F492BD2;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 150A23C025CE;
  Tue,  4 Jun 2024 07:38:02 +0000 (UTC)
+Received: from localhost.localdomain (unknown [10.72.112.238])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 0989D492BD2;
+ Tue,  4 Jun 2024 07:37:58 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 01/20] tap: Remove tap_probe_vnet_hdr_len()
-Date: Tue,  4 Jun 2024 15:37:36 +0800
-Message-ID: <20240604073755.1859-2-jasowang@redhat.com>
-In-Reply-To: <20240604073755.1859-1-jasowang@redhat.com>
-References: <20240604073755.1859-1-jasowang@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>
+Subject: [PULL 00/20] Net patches
+Date: Tue,  4 Jun 2024 15:37:35 +0800
+Message-ID: <20240604073755.1859-1-jasowang@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,142 +80,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+The following changes since commit 3ab42e46acf867c45bc929fcc37693e327a35a24:
 
-It was necessary since an Linux older than 2.6.35 may implement the
-virtio-net header but may not allow to change its length. Remove it
-since such an old Linux is no longer supported.
+  Merge tag 'pull-ufs-20240603' of https://gitlab.com/jeuk20.kim/qemu into staging (2024-06-03 08:18:14 -0500)
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
----
- net/tap-bsd.c     |  5 -----
- net/tap-linux.c   | 20 --------------------
- net/tap-solaris.c |  5 -----
- net/tap-stub.c    |  5 -----
- net/tap.c         |  8 ++------
- net/tap_int.h     |  1 -
- 6 files changed, 2 insertions(+), 42 deletions(-)
+are available in the Git repository at:
 
-diff --git a/net/tap-bsd.c b/net/tap-bsd.c
-index 274ea7bd2c..b4c84441ba 100644
---- a/net/tap-bsd.c
-+++ b/net/tap-bsd.c
-@@ -217,11 +217,6 @@ int tap_probe_has_uso(int fd)
-     return 0;
- }
- 
--int tap_probe_vnet_hdr_len(int fd, int len)
--{
--    return 0;
--}
--
- void tap_fd_set_vnet_hdr_len(int fd, int len)
- {
- }
-diff --git a/net/tap-linux.c b/net/tap-linux.c
-index c7e514ecb0..1226d5fda2 100644
---- a/net/tap-linux.c
-+++ b/net/tap-linux.c
-@@ -185,26 +185,6 @@ int tap_probe_has_uso(int fd)
-     return 1;
- }
- 
--/* Verify that we can assign given length */
--int tap_probe_vnet_hdr_len(int fd, int len)
--{
--    int orig;
--    if (ioctl(fd, TUNGETVNETHDRSZ, &orig) == -1) {
--        return 0;
--    }
--    if (ioctl(fd, TUNSETVNETHDRSZ, &len) == -1) {
--        return 0;
--    }
--    /* Restore original length: we can't handle failure. */
--    if (ioctl(fd, TUNSETVNETHDRSZ, &orig) == -1) {
--        fprintf(stderr, "TUNGETVNETHDRSZ ioctl() failed: %s. Exiting.\n",
--                strerror(errno));
--        abort();
--        return -errno;
--    }
--    return 1;
--}
--
- void tap_fd_set_vnet_hdr_len(int fd, int len)
- {
-     if (ioctl(fd, TUNSETVNETHDRSZ, &len) == -1) {
-diff --git a/net/tap-solaris.c b/net/tap-solaris.c
-index 08b13af512..51b7830bef 100644
---- a/net/tap-solaris.c
-+++ b/net/tap-solaris.c
-@@ -221,11 +221,6 @@ int tap_probe_has_uso(int fd)
-     return 0;
- }
- 
--int tap_probe_vnet_hdr_len(int fd, int len)
--{
--    return 0;
--}
--
- void tap_fd_set_vnet_hdr_len(int fd, int len)
- {
- }
-diff --git a/net/tap-stub.c b/net/tap-stub.c
-index 4b24f61e3a..38673434cb 100644
---- a/net/tap-stub.c
-+++ b/net/tap-stub.c
-@@ -52,11 +52,6 @@ int tap_probe_has_uso(int fd)
-     return 0;
- }
- 
--int tap_probe_vnet_hdr_len(int fd, int len)
--{
--    return 0;
--}
--
- void tap_fd_set_vnet_hdr_len(int fd, int len)
- {
- }
-diff --git a/net/tap.c b/net/tap.c
-index baaa2f7a9a..72ae95894f 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -259,11 +259,7 @@ static bool tap_has_vnet_hdr(NetClientState *nc)
- 
- static bool tap_has_vnet_hdr_len(NetClientState *nc, int len)
- {
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
--
--    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
--
--    return !!tap_probe_vnet_hdr_len(s->fd, len);
-+    return tap_has_vnet_hdr(nc);
- }
- 
- static int tap_get_vnet_hdr_len(NetClientState *nc)
-@@ -432,7 +428,7 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
-      * Make sure host header length is set correctly in tap:
-      * it might have been modified by another instance of qemu.
-      */
--    if (tap_probe_vnet_hdr_len(s->fd, s->host_vnet_hdr_len)) {
-+    if (vnet_hdr) {
-         tap_fd_set_vnet_hdr_len(s->fd, s->host_vnet_hdr_len);
-     }
-     tap_read_poll(s, true);
-diff --git a/net/tap_int.h b/net/tap_int.h
-index 9a2175655b..8857ff299d 100644
---- a/net/tap_int.h
-+++ b/net/tap_int.h
-@@ -35,7 +35,6 @@ ssize_t tap_read_packet(int tapfd, uint8_t *buf, int maxlen);
- 
- void tap_set_sndbuf(int fd, const NetdevTapOptions *tap, Error **errp);
- int tap_probe_vnet_hdr(int fd, Error **errp);
--int tap_probe_vnet_hdr_len(int fd, int len);
- int tap_probe_has_ufo(int fd);
- int tap_probe_has_uso(int fd);
- void tap_fd_set_offload(int fd, int csum, int tso4, int tso6, int ecn, int ufo,
--- 
-2.42.0
+  https://github.com/jasowang/qemu.git tags/net-pull-request
+
+for you to fetch changes up to dcab53611191f50cf4feabc1d8794d04afe53407:
+
+  ebpf: Added traces back. Changed source set for eBPF to 'system'. (2024-06-04 15:14:26 +0800)
+
+----------------------------------------------------------------
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCAAdFiEEIV1G9IJGaJ7HfzVi7wSWWzmNYhEFAmZewo4ACgkQ7wSWWzmN
+YhHhxgf/ZaECxru4fP8wi34XdSG/PR+BF+W5M9gZIRGrHg3vIf3/LRTpZTDccbRN
+Qpwtypr9O6/AWG9Os80rn7alsmMDxN8PDDNLa9T3wf5pJUQSyQ87Yy0MiuTNPSKD
+HKYUIfIlbFCM5WUW4huMmg98gKTgnzZMqOoRyMFZitbkR59qCm+Exws4HtXvCH68
+3k4lgvnFccmzO9iIzaOUIPs+Yf04Kw/FrY0Q/6nypvqbF2W80Md6w02JMQuTLwdF
+Guxeg/n6g0NLvCBbkjiM2VWfTaWJYbwFSwRTAMxM/geqh7qAgGsmD0N5lPlgqRDy
+uAy2GvFyrwzcD0lYqf0/fRK0Go0HPA==
+=J70K
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+Akihiko Odaki (18):
+      tap: Remove tap_probe_vnet_hdr_len()
+      tap: Remove qemu_using_vnet_hdr()
+      net: Move virtio-net header length assertion
+      net: Remove receive_raw()
+      tap: Call tap_receive_iov() from tap_receive()
+      tap: Shrink zeroed virtio-net header
+      virtio-net: Do not propagate ebpf-rss-fds errors
+      virtio-net: Add only one queue pair when realizing
+      virtio-net: Copy header only when necessary
+      virtio-net: Shrink header byte swapping buffer
+      virtio-net: Disable RSS on reset
+      virtio-net: Unify the logic to update NIC state for RSS
+      virtio-net: Always set populate_hash
+      virtio-net: Do not write hashes to peer buffer
+      ebpf: Fix RSS error handling
+      ebpf: Return 0 when configuration fails
+      ebpf: Refactor tun_rss_steering_prog()
+      ebpf: Add a separate target for skeleton
+
+Alexey Dobriyan (1):
+      virtio-net: drop too short packets early
+
+Andrew Melnychenko (1):
+      ebpf: Added traces back. Changed source set for eBPF to 'system'.
+
+ ebpf/ebpf_rss.c          |    7 +
+ ebpf/rss.bpf.skeleton.h  | 1558 +++++++++++++++++++++++-----------------------
+ ebpf/trace.h             |    1 +
+ hw/net/e1000e.c          |    1 -
+ hw/net/igb.c             |    1 -
+ hw/net/net_tx_pkt.c      |    4 +-
+ hw/net/virtio-net.c      |  282 ++++-----
+ hw/net/vmxnet3.c         |    2 -
+ include/net/net.h        |    8 -
+ net/dump.c               |    4 +-
+ net/net.c                |   47 +-
+ net/netmap.c             |    5 -
+ net/tap-bsd.c            |    5 -
+ net/tap-linux.c          |   20 -
+ net/tap-solaris.c        |    5 -
+ net/tap-stub.c           |    5 -
+ net/tap.c                |   77 +--
+ net/tap_int.h            |    1 -
+ tools/ebpf/Makefile.ebpf |   15 +-
+ tools/ebpf/rss.bpf.c     |   44 +-
+ 20 files changed, 968 insertions(+), 1124 deletions(-)
+ create mode 100644 ebpf/trace.h
 
 
