@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E094BC27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 08:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E33BC27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 08:17:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEPJc-0006vS-M0; Tue, 04 Jun 2024 04:14:44 -0400
+	id 1sEPMK-0008VI-8c; Tue, 04 Jun 2024 04:17:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sEPJb-0006v7-Gw
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 04:14:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sEPMI-0008Uq-LT
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 04:17:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sEPJZ-0003Ff-LN
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 04:14:43 -0400
+ id 1sEPMG-0004ni-Il
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 04:17:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717488880;
+ s=mimecast20190719; t=1717489047;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pltE4YmOdjx9AYCvJuxzp/4HH2d7IOiOEdOQ1bvIcww=;
- b=eyX/jDyolTBDgoJkOoPi2hjvwyBsFiIpGSX0KfTIVlHaoKAaBI3I8Mc+Cm5w9b2S+n6RXP
- UTiJTPQOLMBpXw4qqRCXSiojIXoEJ9rCwRLVpakugkM0ITP0OvFEE0PCIAJZOprGxlv9UA
- pNCLYHayA+R320nTQFLSy+KfWIP2KCk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VAjOJSXzoksk3d6w9ZAxdP4lH4Nep6545WQmRiiNnms=;
+ b=F1uhg07uKgnfJGBxY7HgsGyzqqZyRAaqiPbsOWhTDTKeJEXGQa0M0MaOOFwChCmZ6zzOgD
+ FeQJKqXnBKD1uJWbQQwOya9S1j7dp/UhFfPWdnGcwWplwg+7mPnCXL/Au1nT9DYa6Pm4ya
+ eYFOgn/bSUtQV08QcxwQgNl9MqIp/SQ=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-422-GbKGiwXePrq71jTfqXDuCg-1; Tue, 04 Jun 2024 04:14:37 -0400
-X-MC-Unique: GbKGiwXePrq71jTfqXDuCg-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42120e123beso47786355e9.0
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 01:14:37 -0700 (PDT)
+ us-mta-557-WeDtnHxoPIGXlSlIHBmO8Q-1; Tue, 04 Jun 2024 04:17:24 -0400
+X-MC-Unique: WeDtnHxoPIGXlSlIHBmO8Q-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2eaa77740deso5791401fa.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 01:17:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717488876; x=1718093676;
+ d=1e100.net; s=20230601; t=1717489043; x=1718093843;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=pltE4YmOdjx9AYCvJuxzp/4HH2d7IOiOEdOQ1bvIcww=;
- b=Iuy0KQ86tJYbKlYAA6EfQS0/GiG7NnW2Nm5wJ9CwtS4eHMS6V/asWiwwOxycDMHqME
- MmYDWzOJhwQ/CBW8uAz0Q07yjDuz81lYWTBy/lt+R4xE3EtSEeGELKd1dXSjIEh6KD2p
- REW1koL7/T6Tf6Wx0pxZPRLDAAJzIaV22gPlZibftgnvjZFxRMJm9tq3RfBigH06z1/M
- 9f00LUq1jyiESJ0sWTZmXSYzs8JcHn5ZNKbT3CcSJjE+y33ISpuoG3lP7gN4q1L++rEL
- WwuXO5PdxjALmsySaFmL06MW1MdzmJrBJATQivDqB0g5iXntqPFF01RSktvogcaCKQ8+
- luxg==
+ bh=VAjOJSXzoksk3d6w9ZAxdP4lH4Nep6545WQmRiiNnms=;
+ b=jNGXmd+JGEFPhsMl6J1vhpLJUMa9mpwwG7/r9Y0ugTd5IFATdXqTZ3jXhv+iPzo7NY
+ r3l++c8O9H4S6yELYIaspx0jydnDEhhmmZuwn1CoJJQikd/90vGelM7vdCNiD+ljwb1I
+ GlegteAH8VkYDC/3z3wEuhjWOrqjHKYldtLN82rUR0w/yyK2sJOC7ESHeJAYTA4kTy1k
+ jLi+iSValnEjHvNqCjMSdSd1JVzxproY1KLjP5ReSirSOzMLM+lkFHDJH+EVCG83gXQO
+ 7ITUN0DaX/xCF8PgFjmKyfpxd5kdQ+PAvVnCV50MMtL/JwPTkOWEHMTIm9hKD6RrgRfR
+ YcAQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXW9ByFsOJl8RnoXuKbd3DQ4CU0E+tHZK0E8lrnG9bWFYL/d6TxGgv7F0RvbAJJyYA3p3ZKzXMxvcXZxLzoleiXlPmvWIs=
-X-Gm-Message-State: AOJu0Yz4E2UalAwoame7CQtV1rOi1Jlr2kXaGoqWo6/Z8D7m655Iy2KS
- gVUmNoq7296FKJ8Wc3po6SMLX0EUmgRAY1aqd5+xPHKZuYYW3H9yoVZKvXCCwiYYi2/YhAZn75A
- nNvmEL7xcS/TuIiCim/7l2Fi1C5ca36CginWFPPhb2FzOC3CR3T0O
-X-Received: by 2002:a05:600c:a03:b0:421:499c:7039 with SMTP id
- 5b1f17b1804b1-421499c71acmr17540455e9.29.1717488876509; 
- Tue, 04 Jun 2024 01:14:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGceLO68J3dEVDCj1SyX/h0O7sbzan7Rcq0svs3/Xu0Y4a/XwdiA3uMssH/u9uoUIsODes2Uw==
-X-Received: by 2002:a05:600c:a03:b0:421:499c:7039 with SMTP id
- 5b1f17b1804b1-421499c71acmr17540145e9.29.1717488875897; 
- Tue, 04 Jun 2024 01:14:35 -0700 (PDT)
+ AJvYcCXuFMI4dLenAOiXB7nlwRmYoiCg7dRxKUGHLZX+Ai+U6DenJobWU3jf8ArxO+99OxpV8BWitNupEBfp7eF4Gt9hC1pfnRI=
+X-Gm-Message-State: AOJu0Ywf+SsqraQpLiOjDxHk1+Oz/bxHkmGXiWRRgX6bs/2Zf7Xxp2nV
+ JOdG4+Ni54nD+YRtrprbeFKFKcq/l4KJEW9miDvgiY7lroUBm2rcQtPJz0xLrmAh7dLm8S0QQ+F
+ EcpEUzsBZBjiKGWSgr1Bv1pqhzVngll0f8emC+wXH5MkYjMNhkwY6
+X-Received: by 2002:a2e:920e:0:b0:2e9:4a5b:b6c2 with SMTP id
+ 38308e7fff4ca-2ea9519b62emr78538211fa.41.1717489043504; 
+ Tue, 04 Jun 2024 01:17:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG736uMi2QiiXv0zGG+qWrOlcj6aam1LoRCebMn9QOnbII8gupvhS/1jlKl2F1B3mHLMWBbhA==
+X-Received: by 2002:a2e:920e:0:b0:2e9:4a5b:b6c2 with SMTP id
+ 38308e7fff4ca-2ea9519b62emr78537971fa.41.1717489043050; 
+ Tue, 04 Jun 2024 01:17:23 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4214fdf4953sm7853895e9.25.2024.06.04.01.14.33
+ 5b1f17b1804b1-4214beb7fa9sm10876275e9.48.2024.06.04.01.17.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Jun 2024 01:14:35 -0700 (PDT)
-Message-ID: <d089e681-5fa3-4f97-8637-76376fd4b4fc@redhat.com>
-Date: Tue, 4 Jun 2024 10:14:32 +0200
+ Tue, 04 Jun 2024 01:17:22 -0700 (PDT)
+Message-ID: <b2995975-5589-406f-bd07-817291ed4404@redhat.com>
+Date: Tue, 4 Jun 2024 10:17:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v6 18/19] intel_iommu: Implement
@@ -94,13 +94,13 @@ Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
  <20240603061023.269738-19-zhenzhong.duan@intel.com>
- <7d5fb5db-8505-469a-a41f-6e18ef8bc77c@redhat.com>
- <SJ0PR11MB67442CF9C141B5C1120CA59092F82@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <fcec6a43-3ac1-46fd-aca2-96097b85175a@redhat.com>
+ <SJ0PR11MB67441662E0FD34AE114217AF92F82@SJ0PR11MB6744.namprd11.prod.outlook.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <SJ0PR11MB67442CF9C141B5C1120CA59092F82@SJ0PR11MB6744.namprd11.prod.outlook.com>
+In-Reply-To: <SJ0PR11MB67441662E0FD34AE114217AF92F82@SJ0PR11MB6744.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -128,14 +128,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 6/4/24 07:40, Duan, Zhenzhong wrote:
+On 6/4/24 07:46, Duan, Zhenzhong wrote:
 >
 >> -----Original Message-----
 >> From: Eric Auger <eric.auger@redhat.com>
 >> Subject: Re: [PATCH v6 18/19] intel_iommu: Implement
 >> [set|unset]_iommu_device() callbacks
 >>
->> Hi Zhenzhong,
+>>
 >>
 >> On 6/3/24 08:10, Zhenzhong Duan wrote:
 >>> From: Yi Liu <yi.l.liu@intel.com>
@@ -144,9 +144,7 @@ On 6/4/24 07:40, Duan, Zhenzhong wrote:
 >>> In set call, a new structure VTDHostIOMMUDevice which holds
 >>> a reference to HostIOMMUDevice is stored in hash table
 >>> indexed by PCI BDF.
->> maybe precise that this is not the aliased one?
-> Sure.
->
+>>>
 >>> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 >>> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
 >>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
@@ -177,22 +175,11 @@ On 6/4/24 07:40, Duan, Zhenzhong wrote:
 >>> +
 >>> +typedef struct VTDHostIOMMUDevice {
 >>> +    IntelIOMMUState *iommu_state;
->> Why do you need the iommu_state?
-> It is used in nesting series.
->
 >>> +    PCIBus *bus;
 >>> +    uint8_t devfn;
 >>> +    HostIOMMUDevice *dev;
 >>> +    QLIST_ENTRY(VTDHostIOMMUDevice) next;
 >>> +} VTDHostIOMMUDevice;
->> How VTD specific is it?
-> In nesting series, it has element iommu_state and errata
-> which are VTD specific.
-
-so at least I would add a comment in the commit message explaining this.
-
-
->
 >>>  #endif
 >>> diff --git a/include/hw/i386/intel_iommu.h
 >> b/include/hw/i386/intel_iommu.h
@@ -225,13 +212,6 @@ so at least I would add a comment in the commit message explaining this.
 >>> +
 >>> +    return (key1->bus == key2->bus) && (key1->devfn == key2->devfn);
 >>> +}
->> can't you reuse the key with pasid?
-> s->vtd_host_iommu_dev isn't indexed by pasid but only BDF.
-> Maybe I'd better to define its own key struct, hash() and equal() functions.
-you could set a default pasid. But up to you
-
-Eric
->
 >>>  /*
 >>>   * Note that we use pointer to PCIBus as the key, so hashing/shifting
 >>>   * based on the pointer value is intended. Note that we deal with
@@ -260,12 +240,6 @@ Eric
 >>> +
 >>> +    if (vtd_hdev) {
 >>> +        error_setg(errp, "IOMMUFD device already exist");
->> s/IOMMUFD/Host IOMMU device?
-> Good catch, will fix.
->
-> Thanks
-> Zhenzhong
->
 >>> +        vtd_iommu_unlock(s);
 >>> +        return false;
 >>> +    }
@@ -275,6 +249,33 @@ Eric
 >>> +    vtd_hdev->devfn = (uint8_t)devfn;
 >>> +    vtd_hdev->iommu_state = s;
 >>> +    vtd_hdev->dev = hiod;
+>> I am still not totally clear about why we couldn't reuse VTDAddressSpace
+>> instance for this bus/devid. Is it a matter of aliased versus non
+>> aliased bus/devfn, or a matter of pasid diff. An AddressSpace could back
+>> an assigned device in which case a HostIOMMUDevice could be added to
+>> this latter. I think this should be explained in the commit msg
+> Yes, as you said, it's a matter of aliased vs non aliased BDF.
+>
+> VTDAddressSpace is per aliased BDF while VTDHostIOMMUDevice is per non aliased BDF.
+> There can be multiple assigned devices under same virtual iommu group and share same 
+> VTDAddressSpace, but they have their own VTDHostIOMMUDevice.
+>
+> Will refine commit msg.
+
+OK thank you for the confirmation. A general concern is this is the kind
+of code we are going to duplicate in each vIOMMU. This is beyond the
+scope of this series but we shall really think about introducing a
+common base object for vIOMMU. Unfortunately there are issues related to
+multiple inheritence that may prevent us from using usual QOM
+inheritence but just as we have done for backends and HostIOMMUDevice we
+may implement inheritence another way.
+
+Eric
+>
+> Thanks
+> Zhenzhong
+>
+>> Eric
 >>> +
 >>> +    new_key = g_malloc(sizeof(*new_key));
 >>> +    new_key->bus = bus;
@@ -337,8 +338,5 @@ Eric
 >>>      vtd_init(s);
 >>>      pci_setup_iommu(bus, &vtd_iommu_ops, dev);
 >>>      /* Pseudo address space under root PCI bus. */
->> Thanks
->>
->> Eric
 
 
