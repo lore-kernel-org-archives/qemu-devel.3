@@ -4,209 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A9D1C25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98D8C27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:42:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sENir-0006RJ-8v; Tue, 04 Jun 2024 02:32:41 -0400
+	id 1sENrR-00087W-5c; Tue, 04 Jun 2024 02:41:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sENiq-0006R4-2m
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:32:40 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sENin-0002kb-Ad
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:32:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1717482757; x=1749018757;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=KvbWUWK4PH5WBnPNpdWHZ0020IVVC7kyKiespahKF8o=;
- b=S3bq940E5GEz8uv3j4X0VA/fZUPySK0iq+xq99bDnlFxxKmKDByoDBq7
- PDcoztLeGreY6hvfKquXrE1BNn1Z2MKNgReDkJGnjw2MnoS74tXFP4w8A
- T+FXHTxTLUX7dKSStuhaMePjfMHZkSuAfsxXl2DIVnfM6CzOilbCiRE0c
- W/6RP6NMWWSzdkhJZMZyPuJ65RY9PM0WkhymXr4NIOVs45effv8JCpOTh
- I3q5NCjXVQwoe2q1KL/UZalpx6X77n5bRpm1aR0PrI48fdxYjC5lZkA4P
- uqd84qko6N49Z3Tpyuajaj/zKBFZus9E3bYUPyLcf0XGnn23KAnW0+h9B w==;
-X-CSE-ConnectionGUID: YmGyHaLgTpiS2jG+mbIgQQ==
-X-CSE-MsgGUID: gKQ6IlAFRY6cUhUBnZUbsg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11092"; a="14131047"
-X-IronPort-AV: E=Sophos;i="6.08,213,1712646000"; d="scan'208";a="14131047"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jun 2024 23:32:33 -0700
-X-CSE-ConnectionGUID: FeiaA29CT+mX4Od4YovWxQ==
-X-CSE-MsgGUID: YM27IljLQCe2LXIitE8WIQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,213,1712646000"; d="scan'208";a="74614848"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
- by orviesa001.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 03 Jun 2024 23:32:32 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Mon, 3 Jun 2024 23:32:32 -0700
-Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Mon, 3 Jun 2024 23:32:32 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.45) by
- edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 3 Jun 2024 23:32:31 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NHr+wdP7oJDTdLalwD0CslkSVUD3nkOVEbkVxMIijBrNeytIOL7Iqm93pUfygwSrtlKfszUGDprc95+7xHSqIeVBEOOCnMLiC0DpOhSpjiT/D1lDRTH+ZfFAr5mEsSfoeHxqZ8CEo8pqTaTx/8e9G+nml8sx7uEadwjyfthGd7+t0vIWWkZ/EBMNSN39MmBy9X5SC34htAGaEfEVpb4O/K9uKtV9beTygXB5clMq0gO6FZGo0zKdFp/FUnJr/fiIBQqll14vkiOkPQSJAiELnBooTd1n1BIur9saKNQ23Bm3GIhg/oay+LMUgNtBwpBwQXiKh0EooorQWR+FMsOZXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SB5to0e7h4ctlQs6hj7RS+LeSF1GNCyzstdIj2hJAhY=;
- b=H2iefdo4Quvkx2SO7h0M3Xa8Sn19pL/Rm0u8r1XlQcTqINVQAKHJAhVQB8/6OWyzapsmnGiEA2xfD829MOWmpfB6gHOLtRtChTyF6iar2CD+El+MUHvtnTE2uqt8/rwvqnLFFXrtSWmBug0V8yM0BB7C/ubLuBhjew65ashtmkMG/YZsZPD4K7vVHfMM+m8fOuWJ9jOj89xpnbR8v/9nM9REQdp7rWIADYyEnAdJYkkFU4P9DE4k5yExxpyDxjwmmJVMw1YJki+ltiUM/lCzT3SOq5PdVFJouuFV2f+A0IBk6A3br0pytRrNu+1yPSCGREWDChQBo93sAaqAq8DVLQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by IA1PR11MB7892.namprd11.prod.outlook.com (2603:10b6:208:3fc::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.21; Tue, 4 Jun
- 2024 06:32:29 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091%7]) with mapi id 15.20.7633.021; Tue, 4 Jun 2024
- 06:32:29 +0000
-Message-ID: <05be79b3-f388-7c12-af60-3a679a63db15@intel.com>
-Date: Tue, 4 Jun 2024 14:32:20 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.0
-Subject: Re: [PATCH v5 37/65] i386/tdvf: Introduce function to parse TDVF
- metadata
-Content-Language: en-US
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
- <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, "Michael S.
- Tsirkin" <mst@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Peter Xu <peterx@redhat.com>, Cornelia Huck
- <cohuck@redhat.com>, =?UTF-8?Q?Daniel_P=2e_Berrang=c3=a9?=
- <berrange@redhat.com>, Eric Blake <eblake@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-CC: <kvm@vger.kernel.org>, <qemu-devel@nongnu.org>, Michael Roth
- <michael.roth@amd.com>, Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann
- <kraxel@redhat.com>, Isaku Yamahata <isaku.yamahata@gmail.com>, Chenyi Qiang
- <chenyi.qiang@intel.com>
-References: <20240229063726.610065-1-xiaoyao.li@intel.com>
- <20240229063726.610065-38-xiaoyao.li@intel.com>
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-In-Reply-To: <20240229063726.610065-38-xiaoyao.li@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TYCP286CA0099.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:2b4::17) To SJ0PR11MB6744.namprd11.prod.outlook.com
- (2603:10b6:a03:47d::10)
+ (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
+ id 1sENrL-00086P-A8
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:41:27 -0400
+Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <fea.wang@sifive.com>)
+ id 1sENrH-0006X8-RF
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:41:27 -0400
+Received: by mail-vk1-xa31.google.com with SMTP id
+ 71dfb90a1353d-4eb14c1a15aso858343e0c.2
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:41:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1717483281; x=1718088081; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=zm2gmNUyLiYeot720PZVrFYl2KkhT9X1YFFONMEoscE=;
+ b=ayjLK7LKa1k70BmfAAxATqmdQQBzhZeO+u1Y53YubpL1V63mj+4tVk3UYP3qfE7W1j
+ 5ArF3i7k0zEM4gBGz+8LcvmrdeoTUN+XL5X2oPKXqw7E3pSwuhyaHjr7hWtVH0zsvoUl
+ 34+gaO1B6RbyWNeHlZ2Y6KkpkuanNlXgxPgOb4eLGaeImBjVYFbH4JGtAtQcOT4HKY8q
+ ty7G+j2uj416EmtfheJMv8Lp1mk627xDgVmYMdT9GNJoHlKDsRYg4GEcVHSEVMGvnKkc
+ TYMZuN8T+ZgdExr0kadDKzc5S8NE9A/OckimY3doK7km9S0Ilc+BbOozleRP4weKI2yE
+ 7Hrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717483281; x=1718088081;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zm2gmNUyLiYeot720PZVrFYl2KkhT9X1YFFONMEoscE=;
+ b=JqNnsP3GN8ixr+zTb90iEDVTlLtWnC2x9nfdn0j76KDntAWQuhnlsHM1J0K1KwRMQN
+ hSMX1goVLeBIHn9gVO9G42F4YfPxg1SPENGYRi+50v+nqPNY/3/x9xubIgaSXpRUg9xk
+ oGi+VDIW++QWPm4qiNhvxvKUS7CqO5q4CwN3q6hEVOywo/cNHK2lJAX8uVBOPMS1xzSS
+ qi6JvQnKR9hOzAm/hNj8Ra1tPtCYLrws3vW6lNC0PXUjOyYJitVwzrsmco2Sms1b2Dmd
+ ETyBHmAxG7hIv2TwC9TO3h3C6WppN20QVz2aYJPR/GbTCb9wrjJ2dJdNvguYdliQ9inY
+ vZRA==
+X-Gm-Message-State: AOJu0YyuffI798HWijc5SOZNSjVUEbOoW8fLe1XApA2ARn6UQPbLHrLt
+ 0rnPcXlI8GErECwcKorCU0nnDHZzPy++6JQK7hIT4LSEoQny6uDuRdwC5oPPs3734Vss6zUXI5T
+ lXQ8/+bSsRLwaXhZYn7uek7vFvhSAMPUzIGdJVA==
+X-Google-Smtp-Source: AGHT+IG45rJsRmI49kOjiXKUIYqrAnz2yUq+LkPMrhma6QwCgLxIkt+fFFcgzvwKsK7E0s+tYFTK5w+IrtGzbqthfrE=
+X-Received: by 2002:a05:6122:910:b0:4eb:1b53:47a8 with SMTP id
+ 71dfb90a1353d-4eb1b5357bdmr4491058e0c.15.1717483281356; Mon, 03 Jun 2024
+ 23:41:21 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR11MB6744:EE_|IA1PR11MB7892:EE_
-X-MS-Office365-Filtering-Correlation-Id: b532ae17-da04-4494-698a-08dc84601b99
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230031|366007|376005|7416005|1800799015|921011; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?WW1pMm1TYlJzeEIvYVFUWVJySUFKNjdNUEdSWFdFMC9VdEFBaVk2Z0UxMjkr?=
- =?utf-8?B?VTFKZG80S1hXS3V3bGx6VWpKcFBzeUNYSThubHJVRjVtME92MkppcTkzTVdD?=
- =?utf-8?B?dFdOMGFhWWFzT0dpNmNpcEIvV3VmNWYzaTZpeWkyYWFRSGY5MGdQODQ0d1RD?=
- =?utf-8?B?RUJYcGVLZW1oTS9CazNkOUtSTlR2MjlOTWZ6NEhHamltNDV5OXA0WVVFTUVh?=
- =?utf-8?B?YnNLZDdhRjdqeWJicXBROUtqSGpJM0FvQW5zUzl5cE5jRU5mcVFIRFZQRjlw?=
- =?utf-8?B?UWp3am43Znk1cEZBdTdrOW04SWF2RkNEQVBLamxWZWc4V29lRGc2NExoRS9y?=
- =?utf-8?B?Sk5JV1kwRWtNM2s1V2FZTkZ2UXQ2QTBmS3E1M2NwOHI2M0E2eVNzSENQU2l6?=
- =?utf-8?B?UkhGZG9ONnR3OERxdlV1MkV4TUFhSGZNdU0vbEhsL0taWDBzTUZkVTRvVGJ3?=
- =?utf-8?B?OEdmalNlZTk2NlB0SUFteXBENHVid0x3S1NCTVcwTmZXVXNnL05hbDlXWFAx?=
- =?utf-8?B?Vjc3RHAyeHFob1cyVlovRHBRYXd1QmozeloyUGdQRkE3NnJHSkFWL0FZZTZY?=
- =?utf-8?B?ejYwdnRqY1RVMVVMK0g1Yyt3YU12eXhDY21kRmM2WlFXRWJBM3pwdlZFWGcr?=
- =?utf-8?B?L0hNT3pESHpCV1d4dG9sSCtOVkJra3RtRXlvVUhlL1hwYmhiVE1Oa2FDZFhD?=
- =?utf-8?B?NWZNeVp6ZVdmQzNrRnc5ZnpmVkhHcEgrV0pUekhTMytjNm9RZFc1M0VPTzZh?=
- =?utf-8?B?dzdmcVB6cHZtcFpSaHgrQ2JsMXhxM25ySzBhNURROFIrNEVGMHBjWENSdU5s?=
- =?utf-8?B?TE9oa3YyQ1VlNDdCVHA0bisySmhka1c4WDBYbkhYRkpBSXF4S2FNcjNUSFR0?=
- =?utf-8?B?SVUxVXRod0tpSmFlbnNMTFB6dGNxRysvKy9lekN3TllzYnFLdjg3VkFPU0d5?=
- =?utf-8?B?b1lnbmEzemU0aUdURTJlUWJQVEsvNDNUMU1LV041ejdGVEUrNitjTk5NT3Vq?=
- =?utf-8?B?U1FlTnpnemg0UkE4MG5Jc1VZbzJOQ0dpZVEwVXh3L3FFekpFdjlDTFUvRmo0?=
- =?utf-8?B?aGhvSUxDYnJQMm9LUjU1WTl3NzBEQXBNVERtaUkwVkFXWFg0NWMzUUE3S3Iw?=
- =?utf-8?B?WjNBZEtjdThFR2tVLzZla2pIVmhuV1FRUDZoWmY3cERsWG5BT2J2Z3pQbVBN?=
- =?utf-8?B?aVBHNDFnaDltWE9jR1hqMFpKTXZMR3c0U1dtN1lxMjRCK1J4eE03K2tnZlZ1?=
- =?utf-8?B?VUQ2eGwraVlIUXBiMVd5UHNENkZFNlE0TWJwSHZMM0tFOVU5aGhXR1FFdU9l?=
- =?utf-8?B?RkF5ZExKTnNuOTRUVFQyUUwyNHdEV0xNUmVxL1hxTnFvZm92RS9HM3Q3OTBK?=
- =?utf-8?B?U1p6RmJqZ1JXZUcvTHFzdTIzZitQa2FNMUh2aktFUGt0Q1RFTE9naEgwVUZy?=
- =?utf-8?B?ZVFFMDh3MUxWQmlvQkZzVGtQV3NuYWpWQlQzcGJtWUU2NGtESVU3NHp0UUd5?=
- =?utf-8?B?eEZodStJYjJWL0l0NFRKQlNuOGZxUjhqZ3BxeE1iYkhZcmplOTNRQm04QWV6?=
- =?utf-8?B?Q0hibTVmdXdPdFJFdW9OVFA1eG04SjVFdHNiQldJV0s0UUlvLzdXaHJrR25w?=
- =?utf-8?B?K25ZcC9NYW8vNGdTOHVTWFl6Z21PVTYwSFhlbW80cUFncWNNbnA0NWhEclFa?=
- =?utf-8?B?TkJ0ZHdNWTlCQnZYbEtyU3BOdkdQbkQ5WGwvR1lhb0huRTF4M2ZTK3FvRHcx?=
- =?utf-8?Q?8gFYJGwW/hT33Bn5PaeNv7Do6B+UdejcdH/iQiC?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(376005)(7416005)(1800799015)(921011); DIR:OUT; SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dVlGREk4OU1mcnhKekpaUDV2OUorc1pYQ1BncTluSWNvS0RyQ3lNM2R5WWZJ?=
- =?utf-8?B?UHpVaVFvc3VEMS9TbFkxMXpNdE1wQThWVHhKMXpCRFUrRTV6WiswZjJvdS9o?=
- =?utf-8?B?TUtETEVQMXpUcmdZcWZLKzlVYmhVYzBEWTBGYlhVOU9HVzhDM1UwV3RiNHJY?=
- =?utf-8?B?bWs3Z29GSkJxODFRS1lUaGEzTjFhdUxaVlBydkk3Q1hneGtYOXN5bTJBaW1R?=
- =?utf-8?B?clUvOUt6eXVnMUwvU09wWi9iYVZCaWlBNDB6VW9ZYlBvTGlmOXVNenpyNVRn?=
- =?utf-8?B?Mnl0ZUVkYk1pTzZIVjdsZ3dUbGpQNG9mQ29GZm9SK1Fxb01reDZnR3MxWERo?=
- =?utf-8?B?dUVnMjhFMGpHaU1TU0FRbXdlSndXYTRhdHcvVTE1WmNmNXZzSThBa2xYbEFX?=
- =?utf-8?B?VWx1YkJISndOOVJVeG1xelF4L0JkNE5WWXA5SUpJaUFYc1RsQitCRllPbmFN?=
- =?utf-8?B?VjhxWGp1a0k5ek15WU44YTZBN3hsTWxJbkRLalJyZFpRbFNheG9aU2REYmRo?=
- =?utf-8?B?M3JRYVpHcGpCOW0vUWJIVmlabndyZWJPWnpnMXduSHoyYUhWTlVrTUtLNnNV?=
- =?utf-8?B?c3dpVFA3M2s1WFBtUy9WMldCc242dGUwZks2ZVU3OTB2c2pRSUFXcGJkamdv?=
- =?utf-8?B?RTJRSmRaTjMwNEJ4SzEyaXkwd1BjNEh3NXBkSTBXcFdWM0tienhpUzNUV0R0?=
- =?utf-8?B?MzNMR0hScmtkNExDT3kxUVZYVXU1SjRoQWVINDhTaSswazQ1VlBFL2ZoUWpk?=
- =?utf-8?B?WFB5Wmk4UVNtWFE5Vk5EVFh1OVB1V2dPUk1UT1RJSVVzeG8vUTR5a2JTMDh0?=
- =?utf-8?B?RXRZYmJuQ3MvL2R0NDIxQjQ4dWFkYXdJTHI0RWxjSHdoQXVIQmZyVk1yelJL?=
- =?utf-8?B?bHNMOUo3c2FGN2UweWIzd3Zyb2wyaXZXd1k4VnNWZ211MVBZeC9jUWRpdVBK?=
- =?utf-8?B?dUpUN2NoZDdtNUw3d24yUUJURVB0SUVxdDVEMHNaZmdZNUY1dDdDUE03aE00?=
- =?utf-8?B?Wlo2LzlzNWhRcXVSQmxSNnczckhlNFNjd3F0cW16MmhUdnlXL3RwV2NmUGxH?=
- =?utf-8?B?aGpxR2VRSXY4T1RpN3ZMKzRBNzVqVUNucEo3MHNLQStycjhwVUtxMTlwMTNZ?=
- =?utf-8?B?UkY0NXVscUt0WmdnbjgvVllCaVhQWTBBUkhxaU1QSHdRd2s5VDVMVEt4dVlo?=
- =?utf-8?B?UzRBTTlsckN0VnUxOGUwQTArZldRZVp0NlJ2L0xZc3hGZkZTbU5mTTBkK1Jo?=
- =?utf-8?B?VW1LeGxWVXlLYVZDaCttS0hNamJNMko0RmpJM0cvRGh2ejBZRktxNDBjQnRI?=
- =?utf-8?B?ZllEUXNYbENkcHlsd3VjM3UwM0s4WWVmSTRlWnZKMm9oeGROaXJ5NXg4OUsy?=
- =?utf-8?B?WXhqK1pPMWF2QnZrb2sza1lFNkdoa0RTWnBSa093SnFwbmFrSnpNNFgzMk9x?=
- =?utf-8?B?K3hZRGoxcG5HRnpaRmp6Y1gzalp3Umd4MWpEalYvOVMyWkpWMUZ4RE00azI4?=
- =?utf-8?B?eDhQUURhU0Y5OUV4MytlNGd5LzN4TjVEM28yM3ZIcGN0dlJ6dU95UU5JQkZS?=
- =?utf-8?B?U1ZhcnNhOTNKSTNjdHBic3Y0Q2NGMGZ4alQ0OXFTMzFHV2JCc3VMc0duZHpE?=
- =?utf-8?B?NnArQ2VBelhRKy83MldBSURoOXcrUWpzUmJ3SzlMV2dTcUw1MXFTbXZ5cGpC?=
- =?utf-8?B?Slc0dW1sVkNnSXZlUFE3Z0o2NVhRbzNWeE42MDFid1lYWWUxSkdGZXZsWXBC?=
- =?utf-8?B?ZWMweStpRDR4bTF4d0pvZEpEeWxXU1BRb1ZmUkM4RnNEUUZJMlJicHZBTUp2?=
- =?utf-8?B?cVl1TzJEUXlvbm5sMU82MFpSbzFiNTh4TDJyZk0yY3Y3QXMwUjIwK1FQUis5?=
- =?utf-8?B?RDY4elB2WWMzZm15amQzUFhFazdId2tuM2dyV3J3Yml4SmNLSWErbWZnajVw?=
- =?utf-8?B?eXBsd1ZickZxUFVtaW9ZTmNmVmhxMUw0eldtSDBDTXdFOURuOEpHUzAyUHJp?=
- =?utf-8?B?bUw1eFVkYlpsNEVyam9SUVpwT0s5OUIxQ21VVm5OVlVIaURoa1A3bzJ4UlZw?=
- =?utf-8?B?K1BIaXFKNTFqWlNSWnA3d1ZFeUdQaXJ4UFg2TjRxN2Z0NnN6b0FnaDZ0V2Zw?=
- =?utf-8?B?dlV0QUFXMldhcjlXaldvRTM1dDQybjJIMnN5M1JoMG9oNTRsajhZZWc5clZK?=
- =?utf-8?B?eUE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: b532ae17-da04-4494-698a-08dc84601b99
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2024 06:32:29.7226 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bF6kp7UEk36lyujR4fHFxbGCWuTBVOewv1G3NsYZALFLlMgetUscQArUl1VgaN1C0cRWPq6nzDI8LN6uvVnSC1cP1K8MEwZGwDE/mBq1l4Q=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB7892
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.16;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- NICE_REPLY_A=-2.522, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240603055248.3928469-1-fea.wang@sifive.com>
+ <20240603055248.3928469-2-fea.wang@sifive.com>
+ <CAJy5ezr-_xnjXqtZnqaWSagMD8pGgU2bDUD0TsHxfkYvQYeHpw@mail.gmail.com>
+In-Reply-To: <CAJy5ezr-_xnjXqtZnqaWSagMD8pGgU2bDUD0TsHxfkYvQYeHpw@mail.gmail.com>
+From: Fea Wang <fea.wang@sifive.com>
+Date: Tue, 4 Jun 2024 14:41:10 +0800
+Message-ID: <CAKhCfscTZ7PVosWxoozYOpJUhVj=vYPChnEZzK0SYrd6KORi_g@mail.gmail.com>
+Subject: Re: [PATCH 1/4] hw/dma: Enhance error handling in loading description
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Jason Wang <jasowang@redhat.com>, "open list:Xilinx Zynq" <qemu-arm@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000e4b1c2061a0abc6e"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
+ envelope-from=fea.wang@sifive.com; helo=mail-vk1-xa31.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -222,280 +92,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000e4b1c2061a0abc6e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 2/29/2024 2:36 PM, Xiaoyao Li wrote:
-> From: Isaku Yamahata <isaku.yamahata@intel.com>
+Hi Edgar,
+Thank you for recommending to me. I will make the change in the next
+version of the patch series.
+
+Sincerely,
+Fea
+
+On Mon, Jun 3, 2024 at 6:19=E2=80=AFPM Edgar E. Iglesias <edgar.iglesias@gm=
+ail.com>
+wrote:
+
+> On Mon, Jun 3, 2024 at 7:47=E2=80=AFAM Fea.Wang <fea.wang@sifive.com> wro=
+te:
 >
-> TDX VM needs to boot with its specialized firmware, Trusted Domain
-> Virtual Firmware (TDVF). QEMU needs to parse TDVF and map it in TD
-> guest memory prior to running the TDX VM.
+>> Loading a description from memory may cause a bus-error. In this
+>> case, the DMA should stop working, set the error flag, and return
+>> the error value.
+>>
+>> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+>>
 >
-> A TDVF Metadata in TDVF image describes the structure of firmware.
-> QEMU refers to it to setup memory for TDVF. Introduce function
-> tdvf_parse_metadata() to parse the metadata from TDVF image and store
-> the info of each TDVF section.
 >
-> TDX metadata is located by a TDX metadata offset block, which is a
-> GUID-ed structure. The data portion of the GUID structure contains
-> only an 4-byte field that is the offset of TDX metadata to the end
-> of firmware file.
+> Hi Fea,
 >
-> Select X86_FW_OVMF when TDX is enable to leverage existing functions
-> to parse and search OVMF's GUID-ed structures.
+> I've got a couple of small comments:
 >
-> Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 >
 > ---
-> Changes in v1:
->   - rename tdvf_parse_section_entry() to
->     tdvf_parse_and_check_section_entry()
-> Changes in RFC v4:
->   - rename TDX_METADATA_GUID to TDX_METADATA_OFFSET_GUID
-> ---
->   hw/i386/Kconfig        |   1 +
->   hw/i386/meson.build    |   1 +
->   hw/i386/tdvf.c         | 199 +++++++++++++++++++++++++++++++++++++++++
->   include/hw/i386/tdvf.h |  51 +++++++++++
->   4 files changed, 252 insertions(+)
->   create mode 100644 hw/i386/tdvf.c
->   create mode 100644 include/hw/i386/tdvf.h
+>>  hw/dma/xilinx_axidma.c | 16 ++++++++++++++--
+>>  1 file changed, 14 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
+>> index 0ae056ed06..4b475e5484 100644
+>> --- a/hw/dma/xilinx_axidma.c
+>> +++ b/hw/dma/xilinx_axidma.c
+>> @@ -71,8 +71,10 @@ enum {
+>>  enum {
+>>      DMASR_HALTED =3D 1,
+>>      DMASR_IDLE  =3D 2,
+>> +    DMASR_SLVERR =3D 1 << 5,
+>>
 >
-> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-> index c0ccf50ac3ef..4e6c8905f077 100644
-> --- a/hw/i386/Kconfig
-> +++ b/hw/i386/Kconfig
-> @@ -12,6 +12,7 @@ config SGX
->   
->   config TDX
->       bool
-> +    select X86_FW_OVMF
->       depends on KVM
->   
->   config PC
-> diff --git a/hw/i386/meson.build b/hw/i386/meson.build
-> index b9c1ca39cb05..f09441c1ea54 100644
-> --- a/hw/i386/meson.build
-> +++ b/hw/i386/meson.build
-> @@ -28,6 +28,7 @@ i386_ss.add(when: 'CONFIG_PC', if_true: files(
->     'port92.c'))
->   i386_ss.add(when: 'CONFIG_X86_FW_OVMF', if_true: files('pc_sysfw_ovmf.c'),
->                                           if_false: files('pc_sysfw_ovmf-stubs.c'))
-> +i386_ss.add(when: 'CONFIG_TDX', if_true: files('tdvf.c'))
->   
->   subdir('kvm')
->   subdir('xen')
-> diff --git a/hw/i386/tdvf.c b/hw/i386/tdvf.c
-> new file mode 100644
-> index 000000000000..ff51f40088f0
-> --- /dev/null
-> +++ b/hw/i386/tdvf.c
-> @@ -0,0 +1,199 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> + * Copyright (c) 2020 Intel Corporation
-> + * Author: Isaku Yamahata <isaku.yamahata at gmail.com>
-> + *                        <isaku.yamahata at intel.com>
-> + *
-> + * This program is free software; you can redistribute it and/or modify
-> + * it under the terms of the GNU General Public License as published by
-> + * the Free Software Foundation; either version 2 of the License, or
-> + * (at your option) any later version.
-> +
-> + * This program is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> + * GNU General Public License for more details.
-> +
-> + * You should have received a copy of the GNU General Public License along
-> + * with this program; if not, see <http://www.gnu.org/licenses/>.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
-> +
-> +#include "hw/i386/pc.h"
-> +#include "hw/i386/tdvf.h"
-> +#include "sysemu/kvm.h"
-> +
-> +#define TDX_METADATA_OFFSET_GUID    "e47a6535-984a-4798-865e-4685a7bf8ec2"
-> +#define TDX_METADATA_VERSION        1
-> +#define TDVF_SIGNATURE              0x46564454 /* TDVF as little endian */
-> +
-> +typedef struct {
-> +    uint32_t DataOffset;
-> +    uint32_t RawDataSize;
-> +    uint64_t MemoryAddress;
-> +    uint64_t MemoryDataSize;
-> +    uint32_t Type;
-> +    uint32_t Attributes;
-> +} TdvfSectionEntry;
-> +
-> +typedef struct {
-> +    uint32_t Signature;
-> +    uint32_t Length;
-> +    uint32_t Version;
-> +    uint32_t NumberOfSectionEntries;
-> +    TdvfSectionEntry SectionEntries[];
-> +} TdvfMetadata;
-> +
-> +struct tdx_metadata_offset {
-> +    uint32_t offset;
-> +};
-> +
-> +static TdvfMetadata *tdvf_get_metadata(void *flash_ptr, int size)
-> +{
-> +    TdvfMetadata *metadata;
-> +    uint32_t offset = 0;
-> +    uint8_t *data;
-> +
-> +    if ((uint32_t) size != size) {
-> +        return NULL;
-> +    }
-> +
-> +    if (pc_system_ovmf_table_find(TDX_METADATA_OFFSET_GUID, &data, NULL)) {
-> +        offset = size - le32_to_cpu(((struct tdx_metadata_offset *)data)->offset);
-> +
-> +        if (offset + sizeof(*metadata) > size) {
-> +            return NULL;
-> +        }
-> +    } else {
-> +        error_report("Cannot find TDX_METADATA_OFFSET_GUID");
-> +        return NULL;
-> +    }
-> +
-> +    metadata = flash_ptr + offset;
-> +
-> +    /* Finally, verify the signature to determine if this is a TDVF image. */
-> +    metadata->Signature = le32_to_cpu(metadata->Signature);
-> +    if (metadata->Signature != TDVF_SIGNATURE) {
-> +        error_report("Invalid TDVF signature in metadata!");
-> +        return NULL;
-> +    }
-> +
-> +    /* Sanity check that the TDVF doesn't overlap its own metadata. */
-> +    metadata->Length = le32_to_cpu(metadata->Length);
-> +    if (offset + metadata->Length > size) {
-> +        return NULL;
-> +    }
-> +
-> +    /* Only version 1 is supported/defined. */
-> +    metadata->Version = le32_to_cpu(metadata->Version);
-> +    if (metadata->Version != TDX_METADATA_VERSION) {
-> +        return NULL;
-> +    }
-> +
-> +    return metadata;
-> +}
-> +
-> +static int tdvf_parse_and_check_section_entry(const TdvfSectionEntry *src,
-> +                                              TdxFirmwareEntry *entry)
-> +{
-> +    entry->data_offset = le32_to_cpu(src->DataOffset);
-> +    entry->data_len = le32_to_cpu(src->RawDataSize);
-> +    entry->address = le64_to_cpu(src->MemoryAddress);
-> +    entry->size = le64_to_cpu(src->MemoryDataSize);
-> +    entry->type = le32_to_cpu(src->Type);
-> +    entry->attributes = le32_to_cpu(src->Attributes);
-> +
-> +    /* sanity check */
-> +    if (entry->size < entry->data_len) {
-> +        error_report("Broken metadata RawDataSize 0x%x MemoryDataSize 0x%lx",
-> +                     entry->data_len, entry->size);
-> +        return -1;
-> +    }
-> +    if (!QEMU_IS_ALIGNED(entry->address, TARGET_PAGE_SIZE)) {
-> +        error_report("MemoryAddress 0x%lx not page aligned", entry->address);
-> +        return -1;
-> +    }
-> +    if (!QEMU_IS_ALIGNED(entry->size, TARGET_PAGE_SIZE)) {
-> +        error_report("MemoryDataSize 0x%lx not page aligned", entry->size);
-> +        return -1;
-> +    }
-> +
-> +    switch (entry->type) {
-> +    case TDVF_SECTION_TYPE_BFV:
-> +    case TDVF_SECTION_TYPE_CFV:
-> +        /* The sections that must be copied from firmware image to TD memory */
-> +        if (entry->data_len == 0) {
-> +            error_report("%d section with RawDataSize == 0", entry->type);
-> +            return -1;
-> +        }
-> +        break;
-> +    case TDVF_SECTION_TYPE_TD_HOB:
-> +    case TDVF_SECTION_TYPE_TEMP_MEM:
-> +        /* The sections that no need to be copied from firmware image */
-> +        if (entry->data_len != 0) {
-> +            error_report("%d section with RawDataSize 0x%x != 0",
-> +                         entry->type, entry->data_len);
-> +            return -1;
-> +        }
-> +        break;
-> +    default:
-> +        error_report("TDVF contains unsupported section type %d", entry->type);
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +int tdvf_parse_metadata(TdxFirmware *fw, void *flash_ptr, int size)
-> +{
-> +    TdvfSectionEntry *sections;
-> +    TdvfMetadata *metadata;
-> +    ssize_t entries_size;
-> +    uint32_t len, i;
-> +
-> +    metadata = tdvf_get_metadata(flash_ptr, size);
-> +    if (!metadata) {
-> +        return -EINVAL;
-> +    }
-> +
-> +    //load and parse metadata entries
-> +    fw->nr_entries = le32_to_cpu(metadata->NumberOfSectionEntries);
-> +    if (fw->nr_entries < 2) {
-> +        error_report("Invalid number of fw entries (%u) in TDVF", fw->nr_entries);
-> +        return -EINVAL;
-> +    }
-> +
-> +    len = le32_to_cpu(metadata->Length);
+> We should also add DMASR_DECERR =3D 1 << 6
+>
+>
+>>      DMASR_IOC_IRQ  =3D 1 << 12,
+>>      DMASR_DLY_IRQ  =3D 1 << 13,
+>> +    DMASR_ERR_IRQ  =3D 1 << 14,
+>>
+>>      DMASR_IRQ_MASK =3D 7 << 12
+>>  };
+>> @@ -190,17 +192,27 @@ static inline int streamid_from_addr(hwaddr addr)
+>>      return sid;
+>>  }
+>>
+>> -static void stream_desc_load(struct Stream *s, hwaddr addr)
+>> +static MemTxResult stream_desc_load(struct Stream *s, hwaddr addr)
+>>  {
+>>      struct SDesc *d =3D &s->desc;
+>>
+>> -    address_space_read(&s->dma->as, addr, MEMTXATTRS_UNSPECIFIED, d,
+>> sizeof *d);
+>> +    MemTxResult result =3D address_space_read(&s->dma->as,
+>> +                                            addr, MEMTXATTRS_UNSPECIFIE=
+D,
+>> +                                            d, sizeof *d);
+>> +    if (result !=3D MEMTX_OK) {
+>> +        s->regs[R_DMACR] &=3D ~DMACR_RUNSTOP;
+>> +        s->regs[R_DMASR] |=3D DMASR_HALTED;
+>> +        s->regs[R_DMASR] |=3D DMASR_SLVERR;
+>>
+>
+> ... and map MEMTX_DECODE_ERROR to DMASR_DECERR and everything else to
+> SLVERR, for example:
+> if (result =3D=3D MEMTX_DECODE_ERROR) {
+>     s->regs[R_DMASR] |=3D DMASR_DECERR;
+> } else {
+>     s->regs[R_DMASR] |=3D DMASR_SLVERR;
+> }
+>
+>
+>> +        s->regs[R_DMASR] |=3D DMASR_ERR_IRQ;
+>> +        return result;
+>> +    }
+>>
+>>      /* Convert from LE into host endianness.  */
+>>      d->buffer_address =3D le64_to_cpu(d->buffer_address);
+>>      d->nxtdesc =3D le64_to_cpu(d->nxtdesc);
+>>      d->control =3D le32_to_cpu(d->control);
+>>      d->status =3D le32_to_cpu(d->status);
+>> +    return result;
+>>  }
+>>
+>>  static void stream_desc_store(struct Stream *s, hwaddr addr)
+>> --
+>> 2.34.1
+>>
+>>
 
-metadata->Length is already CPU endian, any reason to convert again?
+--000000000000e4b1c2061a0abc6e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> +    entries_size = fw->nr_entries * sizeof(TdvfSectionEntry);
-> +    if (len != sizeof(*metadata) + entries_size) {
-> +        error_report("TDVF metadata len (0x%x) mismatch, expected (0x%x)",
-> +                     len, (uint32_t)(sizeof(*metadata) + entries_size));
-> +        return -EINVAL;
-> +    }
-> +
-> +    fw->entries = g_new(TdxFirmwareEntry, fw->nr_entries);
-> +    sections = g_new(TdvfSectionEntry, fw->nr_entries);
-> +
-> +    if (!memcpy(sections, (void *)metadata + sizeof(*metadata), entries_size))  {
-> +        error_report("Failed to read TDVF section entries");
-> +        goto err;
-> +    }
-> +
-> +    for (i = 0; i < fw->nr_entries; i++) {
-> +        if (tdvf_parse_and_check_section_entry(&sections[i], &fw->entries[i])) {
-> +            goto err;
-> +        }
-> +    }
-> +    g_free(sections);
-> +
-> +    return 0;
-> +
-> +err:
-> +    g_free(sections);
+<div dir=3D"ltr">Hi=C2=A0Edgar,<div>Thank you for recommending to me. I wil=
+l make the change in the next version of the patch series.</div><div><br></=
+div><div>Sincerely,</div><div>Fea</div></div><br><div class=3D"gmail_quote"=
+><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 3, 2024 at 6:19=E2=80=AF=
+PM Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.iglesias@gmail.com">edgar.=
+iglesias@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
+padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr">On Mon, Jun 3, 2024 at =
+7:47=E2=80=AFAM Fea.Wang &lt;<a href=3D"mailto:fea.wang@sifive.com" target=
+=3D"_blank">fea.wang@sifive.com</a>&gt; wrote:<br></div><div class=3D"gmail=
+_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
+;border-left:1px solid rgb(204,204,204);padding-left:1ex">Loading a descrip=
+tion from memory may cause a bus-error. In this<br>
+case, the DMA should stop working, set the error flag, and return<br>
+the error value.<br>
+<br>
+Signed-off-by: Fea.Wang &lt;<a href=3D"mailto:fea.wang@sifive.com" target=
+=3D"_blank">fea.wang@sifive.com</a>&gt;<br></blockquote><div><br></div><div=
+><br></div><div>Hi Fea,</div><div><br></div><div>I&#39;ve got a couple of s=
+mall comments:</div><div>=C2=A0</div><div><br></div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
+204,204);padding-left:1ex">
+---<br>
+=C2=A0hw/dma/xilinx_axidma.c | 16 ++++++++++++++--<br>
+=C2=A01 file changed, 14 insertions(+), 2 deletions(-)<br>
+<br>
+diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c<br>
+index 0ae056ed06..4b475e5484 100644<br>
+--- a/hw/dma/xilinx_axidma.c<br>
++++ b/hw/dma/xilinx_axidma.c<br>
+@@ -71,8 +71,10 @@ enum {<br>
+=C2=A0enum {<br>
+=C2=A0 =C2=A0 =C2=A0DMASR_HALTED =3D 1,<br>
+=C2=A0 =C2=A0 =C2=A0DMASR_IDLE=C2=A0 =3D 2,<br>
++=C2=A0 =C2=A0 DMASR_SLVERR =3D 1 &lt;&lt; 5,<br></blockquote><div><br></di=
+v><div>We should also add DMASR_DECERR =3D 1 &lt;&lt; 6</div><div>=C2=A0</d=
+iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
+er-left:1px solid rgb(204,204,204);padding-left:1ex">
+=C2=A0 =C2=A0 =C2=A0DMASR_IOC_IRQ=C2=A0 =3D 1 &lt;&lt; 12,<br>
+=C2=A0 =C2=A0 =C2=A0DMASR_DLY_IRQ=C2=A0 =3D 1 &lt;&lt; 13,<br>
++=C2=A0 =C2=A0 DMASR_ERR_IRQ=C2=A0 =3D 1 &lt;&lt; 14,<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0DMASR_IRQ_MASK =3D 7 &lt;&lt; 12<br>
+=C2=A0};<br>
+@@ -190,17 +192,27 @@ static inline int streamid_from_addr(hwaddr addr)<br>
+=C2=A0 =C2=A0 =C2=A0return sid;<br>
+=C2=A0}<br>
+<br>
+-static void stream_desc_load(struct Stream *s, hwaddr addr)<br>
++static MemTxResult stream_desc_load(struct Stream *s, hwaddr addr)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0struct SDesc *d =3D &amp;s-&gt;desc;<br>
+<br>
+-=C2=A0 =C2=A0 address_space_read(&amp;s-&gt;dma-&gt;as, addr, MEMTXATTRS_U=
+NSPECIFIED, d, sizeof *d);<br>
++=C2=A0 =C2=A0 MemTxResult result =3D address_space_read(&amp;s-&gt;dma-&gt=
+;as,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 addr, MEMTXATTRS_UNSPECIFIED,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 d, sizeof *d);<br>
++=C2=A0 =C2=A0 if (result !=3D MEMTX_OK) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;regs[R_DMACR] &amp;=3D ~DMACR_RUNSTOP;<b=
+r>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;regs[R_DMASR] |=3D DMASR_HALTED;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;regs[R_DMASR] |=3D DMASR_SLVERR;<br></bl=
+ockquote><div><br></div><div>... and map MEMTX_DECODE_ERROR to DMASR_DECERR=
+ and everything else to SLVERR, for example:</div><div>if (result =3D=3D ME=
+MTX_DECODE_ERROR) {</div><div>=C2=A0 =C2=A0 s-&gt;regs[R_DMASR] |=3D DMASR_=
+DECERR;</div><div>} else {<br><div>=C2=A0 =C2=A0 s-&gt;regs[R_DMASR] |=3D D=
+MASR_SLVERR;</div></div><div>}</div><div>=C2=A0</div><blockquote class=3D"g=
+mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
+,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;regs[R_DMASR] |=3D DMASR_ERR_IRQ;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return result;<br>
++=C2=A0 =C2=A0 }<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0/* Convert from LE into host endianness.=C2=A0 */<br>
+=C2=A0 =C2=A0 =C2=A0d-&gt;buffer_address =3D le64_to_cpu(d-&gt;buffer_addre=
+ss);<br>
+=C2=A0 =C2=A0 =C2=A0d-&gt;nxtdesc =3D le64_to_cpu(d-&gt;nxtdesc);<br>
+=C2=A0 =C2=A0 =C2=A0d-&gt;control =3D le32_to_cpu(d-&gt;control);<br>
+=C2=A0 =C2=A0 =C2=A0d-&gt;status =3D le32_to_cpu(d-&gt;status);<br>
++=C2=A0 =C2=A0 return result;<br>
+=C2=A0}<br>
+<br>
+=C2=A0static void stream_desc_store(struct Stream *s, hwaddr addr)<br>
+-- <br>
+2.34.1<br>
+<br>
+</blockquote></div></div>
+</blockquote></div>
 
-This can be g_autofree.
-
-Thanks
-
-Zhenzhong
-
+--000000000000e4b1c2061a0abc6e--
 
