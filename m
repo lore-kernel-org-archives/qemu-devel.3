@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F7E1C27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E834C27C53
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:09:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEZV0-00070R-IZ; Tue, 04 Jun 2024 15:07:10 -0400
+	id 1sEZW5-00066U-Ck; Tue, 04 Jun 2024 15:08:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZUy-0006lZ-7y
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:07:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZW3-0005sS-P8
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:08:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZUu-0000rF-OZ
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:07:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZW0-0000zV-Nt
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:08:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717528023;
+ s=mimecast20190719; t=1717528091;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=2dkENUzfzIIIcUTPF2EEwEXmUV3lpfWAm7D6XMdf5LE=;
- b=d2McZaScrJE+3/kB6scOlG/HEIZ/guTD4BxnNFupXCV5axzWC1NWtH1zRT8g0chY8H6CZL
- OB6UhdTH69HawqXxrxP+fHX2jYW8SOAuG0xQtD9As0iTbxkLlHW6//xzacOKLNK0AOIj/3
- fdJUEhJav4EJXhFwPaMWc6aBsR5Arjo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=C/pPfQru8bTuS9+eYSG9NAw/m9gJaYYAeXPgdlqxVn4=;
+ b=TRxQhf70lArVHDdYlrrFd7cwllV0Ln34mLK5g0mkGghC/wL9cEbmhjrhoQN08LBxHI3b+j
+ m8WhYx74s0KlnG18nZSPgJ+jHGUYi0tPvi7zekL1rFkidU+Qsy0LGVnFXSJZT+vJLc2W/X
+ a8QRLfjOPbfrzU210IKLA8E4RSX3UJ8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-527-N969WC7VOGyjXVsTfZPDoA-1; Tue, 04 Jun 2024 15:07:01 -0400
-X-MC-Unique: N969WC7VOGyjXVsTfZPDoA-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4212aeac0e2so670555e9.1
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:07:01 -0700 (PDT)
+ us-mta-554-IfsphAAnPzq42slk_WmnLQ-1; Tue, 04 Jun 2024 15:08:10 -0400
+X-MC-Unique: IfsphAAnPzq42slk_WmnLQ-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-35e50fe93a5so2484664f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:08:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717528020; x=1718132820;
+ d=1e100.net; s=20230601; t=1717528088; x=1718132888;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2dkENUzfzIIIcUTPF2EEwEXmUV3lpfWAm7D6XMdf5LE=;
- b=rrj69GU8/JNvGovU+Yx1edrJOijN6V1ZnAGM95diWfgwnlRJDNDRWukTa4f+oi3SbQ
- zsiQY8QyZqvgXfy5I5I2EkLWCIPLWeVdrUO7hBjcmoAGuktp3TUGveJoSm5g8eZufwV3
- g2BmZYHAwpvo+yv8mSMfhkDtOvv/De7y5JQmG8OfjVglIEgVIGxGYN5dU29TLwhQux/K
- nzCwVLnymJq/S7Cfj11KgyUVxYV3sR26XEMUUiMRfF41jUoO4kSVOu1QK7LmGzFQIAKi
- 9KUSOYO9rE91M90XUD7oGiAHaW3gYwdvg9f3hkKmRNwdHLnubPIL6seW6V+6Cye7ZwS+
- hgHA==
-X-Gm-Message-State: AOJu0YwjCxYbKqf0Uly9gizaAiCRbWb9CvuKQiwTVQ7mvjTHn9jfgy/Y
- SGGtGJ7jUcaMYZZte+cPVdHGiFryEOZNcPgRchpBIIFyfb9OW0SAaWIHas3AaLQIB8jzjBd2/TP
- AYh3yxjKt1reme7VQOxThML9g8fIl7SWF5+LQFF+QO+Fj4C/sm+uluIYC8DGyRHQmbJOCL4rXIL
- NZ/yqLMFCd6FTulL4CKA8LoP+zqff2Zg==
-X-Received: by 2002:a05:600c:3589:b0:41f:dc27:a7c1 with SMTP id
- 5b1f17b1804b1-421562da803mr4715045e9.5.1717528019822; 
- Tue, 04 Jun 2024 12:06:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+VLGrrKlFVj2OzhlD8Ew6iFdVY76qPENPt7iFHIz7OSYBtzYjKhRNYJ37i2LY30o+4ENsHA==
-X-Received: by 2002:a05:600c:3589:b0:41f:dc27:a7c1 with SMTP id
- 5b1f17b1804b1-421562da803mr4714885e9.5.1717528019397; 
- Tue, 04 Jun 2024 12:06:59 -0700 (PDT)
+ bh=C/pPfQru8bTuS9+eYSG9NAw/m9gJaYYAeXPgdlqxVn4=;
+ b=kcOUFv28vpOAuoQ20CrFYks7Z0YSygvdATokcyHc2hEb/JkaBXwoaDszTspw1R05+N
+ XTtqf8jK4LVO5kNrXBDwGRKlVeQh4pejIRcNF86ZhqE2LuESKXXEIkl463OteM4KQ85+
+ 3hgwu1SJFHtfwpaeZOwNpkRh4N22SKCeLLsAZQibxQN87pmLG38UUZYDaUPr1iG3nGDc
+ 8XoQ+EYs9DFj7KXpeSIwu5BLZwBxKK3FU2lAQWv2pKa5Bny8HexqZBzC/lcyMBsTYyrZ
+ 4iM04YKcoGqKKYlwTg9liw2jJ+jSZ6En+HA5rwHm2kycU8GUoQU7orWJ2/WzJWotIkId
+ AfvQ==
+X-Gm-Message-State: AOJu0Yzocatc57Q29omP0UvWR9AkSi7c+NvcobDWgPXRmPZJ+9cjR8w6
+ 8XvtXZBL9uAgyiPAeQWKmdV1K1yU9gKsVxIhBAb9wU68vFTlOGwDnV3SKV/OMfG/DFT4aMmDyiL
+ 3zyTnSpNDCbiiZLicw/0ct0Trp/ujnvuhCkrEsSmHB7WFMM8dJlvZbrBB6IvGyACu6B0kdJjaFm
+ 2Z+laCa3h8ggPmTjJEivroAP9g+gxKOg==
+X-Received: by 2002:adf:face:0:b0:35a:e90b:5474 with SMTP id
+ ffacd0b85a97d-35e840494e7mr235583f8f.2.1717528088331; 
+ Tue, 04 Jun 2024 12:08:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFd05LZFHilV3739r92v+dC/xUoybqIfk45A3yOXGdMdDtBbowCxsSsuww+Qx0LEl5JSLGUTA==
+X-Received: by 2002:adf:face:0:b0:35a:e90b:5474 with SMTP id
+ ffacd0b85a97d-35e840494e7mr235562f8f.2.1717528087832; 
+ Tue, 04 Jun 2024 12:08:07 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:552:cf5c:2b13:215c:b9df:f231])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4213709a0d2sm125137665e9.26.2024.06.04.12.06.57
+ ffacd0b85a97d-35dd064afd8sm12314270f8f.95.2024.06.04.12.08.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 12:06:58 -0700 (PDT)
-Date: Tue, 4 Jun 2024 15:06:56 -0400
+ Tue, 04 Jun 2024 12:08:07 -0700 (PDT)
+Date: Tue, 4 Jun 2024 15:08:04 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gregory Price <gourry.memverge@gmail.com>,
- Gregory Price <gregory.price@memverge.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL 17/46] hw/cxl/mailbox: change CCI cmd set structure to be a
- member, not a reference
-Message-ID: <69a99663c31fbc854e45b124406987347a87bd41.1717527933.git.mst@redhat.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 35/46] bios-tables-test: Add complex SRAT / HMAT test for GI GP
+Message-ID: <4c4979cc62f7db9a137c21d64e01766535272fbe.1717527933.git.mst@redhat.com>
 References: <cover.1717527933.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -80,7 +78,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1717527933.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,91 +103,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gregory Price <gourry.memverge@gmail.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-This allows devices to have fully customized CCIs, along with complex
-devices where wrapper devices can override or add additional CCI
-commands without having to replicate full command structures or
-pollute a base device with every command that might ever be used.
+Add a test with 6 nodes to exercise most interesting corner cases
+of SRAT and HMAT generation including the new Generic Initiator
+and Generic Port Affinity structures.  More details of the
+set up in the following patch adding the table data.
 
-Signed-off-by: Gregory Price <gregory.price@memverge.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-2-nifan.cxl@gmail.com>
+Message-Id: <20240524100507.32106-6-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/cxl/cxl_device.h |  2 +-
- hw/cxl/cxl-mailbox-utils.c  | 19 +++++++++++++++----
- 2 files changed, 16 insertions(+), 5 deletions(-)
+ tests/qtest/bios-tables-test.c | 92 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 92 insertions(+)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 279b276bda..ccc4611875 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -164,7 +164,7 @@ typedef struct CXLEventLog {
- } CXLEventLog;
- 
- typedef struct CXLCCI {
--    const struct cxl_cmd (*cxl_cmd_set)[256];
-+    struct cxl_cmd cxl_cmd_set[256][256];
-     struct cel_log {
-         uint16_t opcode;
-         uint16_t effect;
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index e5eb97cb91..2c9f50f0f9 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1447,10 +1447,21 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
-                                  bg_timercb, cci);
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index d1ff4db7a2..1651d06b7b 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -1862,6 +1862,96 @@ static void test_acpi_q35_tcg_acpi_hmat_noinitiator(void)
+     free_test_data(&data);
  }
  
-+static void cxl_copy_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmds)[256])
++/* Test intended to hit corner cases of SRAT and HMAT */
++static void test_acpi_q35_tcg_acpi_hmat_generic_x(void)
 +{
-+    for (int set = 0; set < 256; set++) {
-+        for (int cmd = 0; cmd < 256; cmd++) {
-+            if (cxl_cmds[set][cmd].handler) {
-+                cci->cxl_cmd_set[set][cmd] = cxl_cmds[set][cmd];
-+            }
-+        }
-+    }
++    test_data data = {};
++
++    data.machine = MACHINE_Q35;
++    data.variant = ".acpihmat-generic-x";
++    test_acpi_one(" -machine hmat=on,cxl=on"
++                  " -smp 3,sockets=3"
++                  " -m 128M,maxmem=384M,slots=2"
++                  " -device virtio-rng-pci,id=gidev"
++                  " -device pxb-cxl,bus_nr=64,bus=pcie.0,id=cxl.1"
++                  " -object memory-backend-ram,size=64M,id=ram0"
++                  " -object memory-backend-ram,size=64M,id=ram1"
++                  " -numa node,nodeid=0,cpus=0,memdev=ram0"
++                  " -numa node,nodeid=1"
++                  " -object acpi-generic-initiator,id=gi0,pci-dev=gidev,node=1"
++                  " -numa node,nodeid=2"
++                  " -object acpi-generic-port,id=gp0,pci-bus=cxl.1,node=2"
++                  " -numa node,nodeid=3,cpus=1"
++                  " -numa node,nodeid=4,memdev=ram1"
++                  " -numa node,nodeid=5,cpus=2"
++                  " -numa hmat-lb,initiator=0,target=0,hierarchy=memory,"
++                  "data-type=access-latency,latency=10"
++                  " -numa hmat-lb,initiator=0,target=0,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=800M"
++                  " -numa hmat-lb,initiator=0,target=2,hierarchy=memory,"
++                  "data-type=access-latency,latency=100"
++                  " -numa hmat-lb,initiator=0,target=2,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=200M"
++                  " -numa hmat-lb,initiator=0,target=4,hierarchy=memory,"
++                  "data-type=access-latency,latency=100"
++                  " -numa hmat-lb,initiator=0,target=4,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=200M"
++                  " -numa hmat-lb,initiator=0,target=5,hierarchy=memory,"
++                  "data-type=access-latency,latency=200"
++                  " -numa hmat-lb,initiator=0,target=5,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=400M"
++                  " -numa hmat-lb,initiator=1,target=0,hierarchy=memory,"
++                  "data-type=access-latency,latency=500"
++                  " -numa hmat-lb,initiator=1,target=0,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=100M"
++                  " -numa hmat-lb,initiator=1,target=2,hierarchy=memory,"
++                  "data-type=access-latency,latency=50"
++                  " -numa hmat-lb,initiator=1,target=2,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=400M"
++                  " -numa hmat-lb,initiator=1,target=4,hierarchy=memory,"
++                  "data-type=access-latency,latency=50"
++                  " -numa hmat-lb,initiator=1,target=4,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=800M"
++                  " -numa hmat-lb,initiator=1,target=5,hierarchy=memory,"
++                  "data-type=access-latency,latency=500"
++                  " -numa hmat-lb,initiator=1,target=5,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=100M"
++                  " -numa hmat-lb,initiator=3,target=0,hierarchy=memory,"
++                  "data-type=access-latency,latency=20"
++                  " -numa hmat-lb,initiator=3,target=0,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=400M"
++                  " -numa hmat-lb,initiator=3,target=2,hierarchy=memory,"
++                  "data-type=access-latency,latency=80"
++                  " -numa hmat-lb,initiator=3,target=2,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=200M"
++                  " -numa hmat-lb,initiator=3,target=4,hierarchy=memory,"
++                  "data-type=access-latency,latency=80"
++                  " -numa hmat-lb,initiator=3,target=4,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=200M"
++                  " -numa hmat-lb,initiator=3,target=5,hierarchy=memory,"
++                  "data-type=access-latency,latency=20"
++                  " -numa hmat-lb,initiator=3,target=5,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=400M"
++                  " -numa hmat-lb,initiator=5,target=0,hierarchy=memory,"
++                  "data-type=access-latency,latency=20"
++                  " -numa hmat-lb,initiator=5,target=0,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=400M"
++                  " -numa hmat-lb,initiator=5,target=2,hierarchy=memory,"
++                  "data-type=access-latency,latency=80"
++                  " -numa hmat-lb,initiator=5,target=4,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=200M"
++                  " -numa hmat-lb,initiator=5,target=4,hierarchy=memory,"
++                  "data-type=access-latency,latency=80"
++                  " -numa hmat-lb,initiator=5,target=2,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=200M"
++                  " -numa hmat-lb,initiator=5,target=5,hierarchy=memory,"
++                  "data-type=access-latency,latency=10"
++                  " -numa hmat-lb,initiator=5,target=5,hierarchy=memory,"
++                  "data-type=access-bandwidth,bandwidth=800M",
++                  &data);
++    free_test_data(&data);
 +}
 +
- void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
-                                   DeviceState *d, size_t payload_max)
+ #ifdef CONFIG_POSIX
+ static void test_acpi_erst(const char *machine)
  {
--    cci->cxl_cmd_set = cxl_cmd_set_sw;
-+    cxl_copy_cci_commands(cci, cxl_cmd_set_sw);
-     cci->d = d;
-     cci->intf = intf;
-     cxl_init_cci(cci, payload_max);
-@@ -1458,7 +1469,7 @@ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+@@ -2304,6 +2394,8 @@ int main(int argc, char *argv[])
+             qtest_add_func("acpi/q35/nohpet", test_acpi_q35_tcg_nohpet);
+             qtest_add_func("acpi/q35/acpihmat-noinitiator",
+                            test_acpi_q35_tcg_acpi_hmat_noinitiator);
++            qtest_add_func("acpi/q35/acpihmat-genericx",
++                           test_acpi_q35_tcg_acpi_hmat_generic_x);
  
- void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max)
- {
--    cci->cxl_cmd_set = cxl_cmd_set;
-+    cxl_copy_cci_commands(cci, cxl_cmd_set);
-     cci->d = d;
- 
-     /* No separation for PCI MB as protocol handled in PCI device */
-@@ -1476,7 +1487,7 @@ static const struct cxl_cmd cxl_cmd_set_t3_ld[256][256] = {
- void cxl_initialize_t3_ld_cci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
-                                size_t payload_max)
- {
--    cci->cxl_cmd_set = cxl_cmd_set_t3_ld;
-+    cxl_copy_cci_commands(cci, cxl_cmd_set_t3_ld);
-     cci->d = d;
-     cci->intf = intf;
-     cxl_init_cci(cci, payload_max);
-@@ -1496,7 +1507,7 @@ void cxl_initialize_t3_fm_owned_ld_mctpcci(CXLCCI *cci, DeviceState *d,
-                                            DeviceState *intf,
-                                            size_t payload_max)
- {
--    cci->cxl_cmd_set = cxl_cmd_set_t3_fm_owned_ld_mctp;
-+    cxl_copy_cci_commands(cci, cxl_cmd_set_t3_fm_owned_ld_mctp);
-     cci->d = d;
-     cci->intf = intf;
-     cxl_init_cci(cci, payload_max);
+             /* i386 does not support memory hotplug */
+             if (strcmp(arch, "i386")) {
 -- 
 MST
 
