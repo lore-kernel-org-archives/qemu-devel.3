@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3F34C25B75
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 00:55:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B402AC25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 00:57:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEISK-0006oP-MH; Mon, 03 Jun 2024 20:55:16 -0400
+	id 1sEITz-0000Qr-IT; Mon, 03 Jun 2024 20:56:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEISJ-0006nk-7J; Mon, 03 Jun 2024 20:55:15 -0400
-Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ id 1sEITx-0000QO-PK; Mon, 03 Jun 2024 20:56:57 -0400
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEISH-0005EG-RP; Mon, 03 Jun 2024 20:55:14 -0400
-Received: by mail-vk1-xa2d.google.com with SMTP id
- 71dfb90a1353d-4e4efbc3218so2459184e0c.0; 
- Mon, 03 Jun 2024 17:55:13 -0700 (PDT)
+ id 1sEITv-0005Th-1B; Mon, 03 Jun 2024 20:56:57 -0400
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-4eb076bec24so197993e0c.1; 
+ Mon, 03 Jun 2024 17:56:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717462512; x=1718067312; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717462612; x=1718067412; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wY1ESK1H7eHfBgdMXwP1JV5QPjS5/4kwKby93iGFfrQ=;
- b=dyQLWlywNu58Gwj9cciWNX6/YLJV+mwbhJERc3k+zpaSw371Xr3IEhBW7IvUawcg0K
- 9qXptH5vUOtvXTWeibzeSPT8UNrSrGsFzAHiyU07YZEBtclFkuyefTwKRX1LLGg0ACY6
- sRzkgvOcEhGxmqqud0fnok9fgzthVMHXpdks7WqcN1j9o9IFJdPRJl1SFakaHBKXgK46
- WN51Pshf2XvwrNUiJW0BDmSyW4z5mvEVXXh6t5xhXUyJg1SxtGXbE7kt4de9sKVi7r9s
- k/oQid2rkNT/p3Hq0uUQFgfnEJL+3XjFb+WnzYSfr/wuL+pjVnHE0HFxie+/+4EQ0WOd
- gfAQ==
+ bh=Fs/jKuLhldhRhNermI5Eis9VnXKK/yGuBC9o02rNLqY=;
+ b=UHeaCZshrlB8W2/7xM7P/xmVVHi/lBNhmOJlmFY5VIzeqD0S5QsGks4zU5TBg0j28f
+ SljQRR7E6AhEbLcvSXngKg7nR6uxmPMH9gGj18e+42EKbtkjAtNfG2JqY0y9P4atcEbX
+ mfTGWwyY4XrZz7b5dxY0C2+caSkimpGuc2OLUlMjSMYxe9A+X6zDopEBR6Z65WOXEI9a
+ AE3bW0PJy8Cht2CZqBRGw+0IciePUZFOUt8IN0rmnlmtvdVCnPUttjz2Y2t6JyBFbwMZ
+ CAhgEL2Vb4NaqBWSbvHvDbdMPl8JJ9QNb8FXQl55WXzREwCtzJRMO8NBpzcfXDiwBUE+
+ jDBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717462512; x=1718067312;
+ d=1e100.net; s=20230601; t=1717462612; x=1718067412;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wY1ESK1H7eHfBgdMXwP1JV5QPjS5/4kwKby93iGFfrQ=;
- b=IZ9vfyLmd7JEs9mDBaksmMxBcVuuTB46AZQpsvCBfGbeujMcEXu75uw1pfpj9AqX20
- JKNI51M4cPN5A5yep7llx3CNbIK7eIgzFrVFISww9rEqh63zMSBGCukbOi3vPvy82yt/
- QIsQyu1K4PZa7i657/++A01+P8LLsA3S0shtLjyEEajkuC0c/Kj9c7fad2lGKdsboG6p
- Av2kpMapmDxJJ5NzI5Wl7wA8lsnHOAfv9SfcVEpMictAAbY9vgeW4ygchynHz3nFVp0r
- 3drymj2pLnnJy65G49eZgjvzATaR3bxIRUC2fvolOz1FNXGvAx7xCh3MBmryvQmtaZhW
- DHQQ==
+ bh=Fs/jKuLhldhRhNermI5Eis9VnXKK/yGuBC9o02rNLqY=;
+ b=jwgmgbtv8lkJI2pdiLNWNytpAjP79RKwO3AeoEA9vjsgR02ITMKcpMa5n4p0dILbP6
+ XAW+ZcaMe6uH22NL35yEAwK7hN1nY7z57OiIXVn/J69kpnzFk0PNVpTFBbfZX/Ym96KD
+ NK6sZ+7fIqk6RppLsMNO/gUNQaAIup8hzxTXR5PbN7E4DtV636wuAygimv/MD5hWWz5C
+ Jzt4/LYobV47HV3ARL3i5K6hDBJshgt/fGMoVe+PlXH4slZoFsJTPCN14q2jlFazkw9J
+ G2PUaqFKn6iu/+SjHs/KlMSL95qRkIMFQyq0q5RvWw3PM8/cOj4ktt+DU8vJOTr3p1kP
+ N13w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXu4n2zCiPVNse6zCjaXcwBjxzjXhCKIWSStNte2Mcaxma6onBon1HDS2XkqQ8rpanQyzM6mns/6C3nMOuSv0LGwi/X6lU=
-X-Gm-Message-State: AOJu0Yyid6FcYVJBMHg561RQRDPDbfv2Mmk3rklGMv3ExH/s0axd2EJA
- /uIqfSRaEm1Po8cTknY+YQJEvxK989AYz5qU7oFUXLrNlRG7P13iNCOxUiW1pNaGE/oRMth06ur
- 9Vw0TQDqgexiIDRJVuvRVtu40u4o=
-X-Google-Smtp-Source: AGHT+IHZ+PHOro9M7aWSW04Xfqv4do2favBlGvkNgQGV4TWv2ERdPargDNAITWNXoJnh8zgRdBfdwiPTcHqdn1p/pOk=
-X-Received: by 2002:a05:6122:16a5:b0:4e4:eade:1965 with SMTP id
- 71dfb90a1353d-4eb02dad2f4mr11023995e0c.3.1717462510978; Mon, 03 Jun 2024
- 17:55:10 -0700 (PDT)
+ AJvYcCW3xI4WOr+GkcFFjuUAnAHZZd7hFL6IuHsJnJUAs8JxDEZ01+Y746ODgv4yerjzNf/4pbBpc9V6csjds2lwvf8Gv65pvNA=
+X-Gm-Message-State: AOJu0Yz+oysCTwu70cHkRaNybESbICCquSLccdv9vyUzMdcyTz/H2tnb
+ 25JlLt9p1NwG/wWuIIMkqJLP8Fc8aGZVUfepgf5MyHwynBfuPpBhRnEMN77KkZzbcqAYr29pIPw
+ Aje3N9YqvnDwP3aJjOeOQvGyhuck=
+X-Google-Smtp-Source: AGHT+IF7UnWdoQFGJmfNKLkRVv7kD5vylb2GG1CBpRr+ZvaN1qnbWvKD6pGHndencnEjWqMPbSF8WColmkJFMhr3FXY=
+X-Received: by 2002:a1f:7288:0:b0:4d8:797b:94df with SMTP id
+ 71dfb90a1353d-4eb02e09638mr9261229e0c.2.1717462612397; Mon, 03 Jun 2024
+ 17:56:52 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240515080605.2675399-1-fea.wang@sifive.com>
- <20240515080605.2675399-6-fea.wang@sifive.com>
-In-Reply-To: <20240515080605.2675399-6-fea.wang@sifive.com>
+ <20240515080605.2675399-3-fea.wang@sifive.com>
+ <CAKmqyKMPy40UQxvVAyuJ+tvC3-58nMvYB1UqMDcoDOT5_A8u1A@mail.gmail.com>
+In-Reply-To: <CAKmqyKMPy40UQxvVAyuJ+tvC3-58nMvYB1UqMDcoDOT5_A8u1A@mail.gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 4 Jun 2024 10:54:44 +1000
-Message-ID: <CAKmqyKOZXyMtWVWvtEnGSKpj+hm==qijONyBhv37fNB=Wajjfg@mail.gmail.com>
-Subject: Re: [RESEND PATCH v2 5/5] target/riscv: Reserve exception codes for
- sw-check and hw-err
+Date: Tue, 4 Jun 2024 10:56:26 +1000
+Message-ID: <CAKmqyKP4pDZdq7mdouTOSznATuGg7jX4QurVvyVEFFRXF3ab4Q@mail.gmail.com>
+Subject: Re: [RESEND PATCH v2 2/5] target/riscv: Support the version for ss1p13
 To: "Fea.Wang" <fea.wang@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Frank Chang <frank.chang@sifive.com>, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+ Frank Chang <frank.chang@sifive.com>, Weiwei Li <liwei1518@gmail.com>, 
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>, Max Chou <max.chou@sifive.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -97,39 +97,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 15, 2024 at 6:02=E2=80=AFPM Fea.Wang <fea.wang@sifive.com> wrot=
-e:
+On Tue, Jun 4, 2024 at 10:46=E2=80=AFAM Alistair Francis <alistair23@gmail.=
+com> wrote:
 >
-> Based on the priv-1.13.0, add the exception codes for Software-check and
-> Hardware-error.
+> On Wed, May 15, 2024 at 6:02=E2=80=AFPM Fea.Wang <fea.wang@sifive.com> wr=
+ote:
+> >
+> > Add RISC-V privilege 1.13 support.
+> >
+> > Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+> > Reviewed-by: Frank Chang <frank.chang@sifive.com>
+> > Reviewed-by:  Weiwei Li <liwei1518@gmail.com>
+> > Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 >
-> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Whoops, ignore this.
+
+>
+> Alistair
+>
+> > ---
+> >  target/riscv/cpu.c         | 6 +++++-
+> >  target/riscv/cpu.h         | 4 +++-
+> >  target/riscv/cpu_cfg.h     | 1 +
+> >  target/riscv/tcg/tcg-cpu.c | 4 ++++
+> >  4 files changed, 13 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> > index 6dd3d7f4a3..ee2ec4c4e5 100644
+> > --- a/target/riscv/cpu.c
+> > +++ b/target/riscv/cpu.c
+> > @@ -1775,7 +1775,9 @@ static int priv_spec_from_str(const char *priv_sp=
+ec_str)
+> >  {
+> >      int priv_version =3D -1;
+> >
+> > -    if (!g_strcmp0(priv_spec_str, PRIV_VER_1_12_0_STR)) {
+> > +    if (!g_strcmp0(priv_spec_str, PRIV_VER_1_13_0_STR)) {
+> > +        priv_version =3D PRIV_VERSION_1_13_0;
+> > +    } else if (!g_strcmp0(priv_spec_str, PRIV_VER_1_12_0_STR)) {
+
+This patch should be split in half. We only want to expose this to
+user after it has been implemented.
 
 Alistair
 
-> ---
->  target/riscv/cpu_bits.h | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index f888025c59..f037f727d9 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -673,6 +673,8 @@ typedef enum RISCVException {
->      RISCV_EXCP_INST_PAGE_FAULT =3D 0xc, /* since: priv-1.10.0 */
->      RISCV_EXCP_LOAD_PAGE_FAULT =3D 0xd, /* since: priv-1.10.0 */
->      RISCV_EXCP_STORE_PAGE_FAULT =3D 0xf, /* since: priv-1.10.0 */
-> +    RISCV_EXCP_SW_CHECK =3D 0x12, /* since: priv-1.13.0 */
-> +    RISCV_EXCP_HW_ERR =3D 0x13, /* since: priv-1.13.0 */
->      RISCV_EXCP_INST_GUEST_PAGE_FAULT =3D 0x14,
->      RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT =3D 0x15,
->      RISCV_EXCP_VIRT_INSTRUCTION_FAULT =3D 0x16,
-> --
-> 2.34.1
->
->
+> >          priv_version =3D PRIV_VERSION_1_12_0;
+> >      } else if (!g_strcmp0(priv_spec_str, PRIV_VER_1_11_0_STR)) {
+> >          priv_version =3D PRIV_VERSION_1_11_0;
+> > @@ -1795,6 +1797,8 @@ const char *priv_spec_to_str(int priv_version)
+> >          return PRIV_VER_1_11_0_STR;
+> >      case PRIV_VERSION_1_12_0:
+> >          return PRIV_VER_1_12_0_STR;
+> > +    case PRIV_VERSION_1_13_0:
+> > +        return PRIV_VER_1_13_0_STR;
+> >      default:
+> >          return NULL;
+> >      }
+> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> > index 140eb43fcb..f691c7d828 100644
+> > --- a/target/riscv/cpu.h
+> > +++ b/target/riscv/cpu.h
+> > @@ -96,12 +96,14 @@ extern RISCVCPUProfile *riscv_profiles[];
+> >  #define PRIV_VER_1_10_0_STR "v1.10.0"
+> >  #define PRIV_VER_1_11_0_STR "v1.11.0"
+> >  #define PRIV_VER_1_12_0_STR "v1.12.0"
+> > +#define PRIV_VER_1_13_0_STR "v1.13.0"
+> >  enum {
+> >      PRIV_VERSION_1_10_0 =3D 0,
+> >      PRIV_VERSION_1_11_0,
+> >      PRIV_VERSION_1_12_0,
+> > +    PRIV_VERSION_1_13_0,
+> >
+> > -    PRIV_VERSION_LATEST =3D PRIV_VERSION_1_12_0,
+> > +    PRIV_VERSION_LATEST =3D PRIV_VERSION_1_13_0,
+> >  };
+> >
+> >  #define VEXT_VERSION_1_00_0 0x00010000
+> > diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> > index e1e4f32698..fb7eebde52 100644
+> > --- a/target/riscv/cpu_cfg.h
+> > +++ b/target/riscv/cpu_cfg.h
+> > @@ -136,6 +136,7 @@ struct RISCVCPUConfig {
+> >       * TCG always implement/can't be user disabled,
+> >       * based on spec version.
+> >       */
+> > +    bool has_priv_1_13;
+> >      bool has_priv_1_12;
+> >      bool has_priv_1_11;
+> >
+> > diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> > index fa186093fb..f53422d605 100644
+> > --- a/target/riscv/tcg/tcg-cpu.c
+> > +++ b/target/riscv/tcg/tcg-cpu.c
+> > @@ -318,6 +318,10 @@ static void riscv_cpu_update_named_features(RISCVC=
+PU *cpu)
+> >          cpu->cfg.has_priv_1_12 =3D true;
+> >      }
+> >
+> > +    if (cpu->env.priv_ver >=3D PRIV_VERSION_1_13_0) {
+> > +        cpu->cfg.has_priv_1_13 =3D true;
+> > +    }
+> > +
+> >      /* zic64b is 1.12 or later */
+> >      cpu->cfg.ext_zic64b =3D cpu->cfg.cbom_blocksize =3D=3D 64 &&
+> >                            cpu->cfg.cbop_blocksize =3D=3D 64 &&
+> > --
+> > 2.34.1
+> >
+> >
 
