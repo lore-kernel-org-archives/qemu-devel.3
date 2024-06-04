@@ -4,82 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA9DFC25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 12:44:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99E3FC41513
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 12:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sETVf-0003BD-H6; Tue, 04 Jun 2024 08:43:27 -0400
+	id 1sEThH-0006GP-Jz; Tue, 04 Jun 2024 08:55:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sETVd-0003Ay-Qo
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 08:43:26 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sETVb-0002nB-Uu
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 08:43:25 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4212a3e82b6so27183225e9.0
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 05:43:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717505001; x=1718109801; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=iQOQZ9lCHciRwZ8vodyMBMEuOcdnx61nDKZ/B6c0wOo=;
- b=i/D0nSIdrUHhVPdI21p4+jixpQ5lqsTbTXhsa6oMQ9Xyq4Gs/cmgiUhHxmiUp9f2Rt
- xD7lWEDlXt5MJff8pg8M6lmF1J3WD+BFsgIVfXdMINHmVYrZF4BSEo62CbXNjZd3Hcsz
- jqY11yqYiCa3NFo7psg812HGPL3zK8Bl/rHFNLzDv8k7pNlQ1DsH0YJar84rBmcrN/cZ
- LUWEkQjVIW1cXeiv9LH2S/82H/ZXOkYwPOyi72PrbJD/COHs7fbIY0C7ybx0vcPf84N9
- 8mYbpzckRKZu/jvF+4/TIuNf2G7YN0Udt1nuaTOEtwW1V/j3J/bgcj0vEijjKAeeTdyB
- p+FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717505001; x=1718109801;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iQOQZ9lCHciRwZ8vodyMBMEuOcdnx61nDKZ/B6c0wOo=;
- b=O8taQK2U7i2rrAJTMQeEpKLmdgKcLFtzUPEitYoVz6WmemFruBRt4P5OQZVa+r11iO
- 9yylm9MLOdY0CQFHGLdRmpZsmo88P5LU2F3Z3FuIOMWfeNFUmjYceFRgRkZvaY00o8xO
- TowtK5T3WDXCC2QJAn3RXfXVydO6EH6zthaGMb7Ti4wb7QOCYimEkGbA1AgvSWmjcUNR
- /y3tXPhUaZQtvXk816+VCfmgdkCtLD5Cq5ljgEGPGBjHPw4mLRK4GtEvIRmx+68qMpUc
- atw/UeCTe6by42crfchOZVOI0mWrvr577UJfWzbY+LnEBA5T/m0aEhEh0OYO+Wxvjj28
- XZoQ==
-X-Gm-Message-State: AOJu0Yzae2RYeu6DgrCYj0VkM2x4GfBTBqeQgxHXixTWFH/O0op4Dc+6
- U9DFSgLN6OXkczi+T69lojEscby3GM49ycjPYXXCNNgr2zkm4ojiYzHpREHPivs=
-X-Google-Smtp-Source: AGHT+IH16NvasI4yWXyuYMFnhlHNSDETvBoqzl+rps87NhJLLLEFJCRESr6vSPVv0t1yPwOT1dr5+w==
-X-Received: by 2002:a5d:4e83:0:b0:356:4809:1a7e with SMTP id
- ffacd0b85a97d-35e7c57e389mr2259225f8f.34.1717505001263; 
- Tue, 04 Jun 2024 05:43:21 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd066b47asm11390030f8f.112.2024.06.04.05.43.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 05:43:20 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4240C5F839;
- Tue,  4 Jun 2024 13:43:20 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: Re: [PATCH] mips64el-softmmu: Enable MTTCG
-In-Reply-To: <20240511-mips_mttcg-v1-1-1b71d9b85234@flygoat.com> (Jiaxun
- Yang's message of "Sat, 11 May 2024 21:26:35 +0100")
-References: <20240511-mips_mttcg-v1-1-1b71d9b85234@flygoat.com>
-Date: Tue, 04 Jun 2024 13:43:20 +0100
-Message-ID: <87h6e8g9p3.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1sEThE-0006FA-T8
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 08:55:24 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1sEThB-0007ZV-F8
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 08:55:24 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8AxUPCyDl9mRmQDAA--.14701S3;
+ Tue, 04 Jun 2024 20:55:14 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Axw8SwDl9m_0IUAA--.40003S3; 
+ Tue, 04 Jun 2024 20:55:14 +0800 (CST)
+Subject: Re: [PATCH 0/5] hw/mips/loongson3_virt: Implement IPI support
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, QEMU devel <qemu-devel@nongnu.org>
+Cc: Huacai Chen <chenhuacai@kernel.org>
+References: <20240508-loongson3-ipi-v1-0-1a7b67704664@flygoat.com>
+ <a9717e72-9de2-469f-89c1-8ae969b0031e@linaro.org>
+ <75c78b9e-4a18-4faf-9b80-a497d3401dba@app.fastmail.com>
+ <96870199-5782-4d87-ba10-f4b886936a96@linaro.org>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <3836d4b2-ed2d-3a4c-7092-54d0d9e1429d@loongson.cn>
+Date: Tue, 4 Jun 2024 20:55:12 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+In-Reply-To: <96870199-5782-4d87-ba10-f4b886936a96@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8Axw8SwDl9m_0IUAA--.40003S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWrZry5Kw18GrW3Cw15Gw1Utwc_yoW8JrW7pr
+ 9ay3WFyF47Gr18Crs7t345WFyjk3ykZw12qFnagFy8Wrn0qr10gr1kWF1qgas8Zws5Gr12
+ 9F43KasruF4UJrcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
+ 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8vA
+ pUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.522,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,103 +86,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jiaxun Yang <jiaxun.yang@flygoat.com> writes:
+在 2024/6/3 下午11:35, Philippe Mathieu-Daudé 写道:
+> On 16/5/24 12:53, Jiaxun Yang wrote:
+>>
+>>
+>> 在2024年5月8日五月 下午10:41，Philippe Mathieu-Daudé写道：
+>>> On 8/5/24 15:06, Jiaxun Yang wrote:
+>>>> Hi all,
+>>>>
+>>>> This series enabled IPI support for loongson3 virt board, loosely
+>>>> based on my previous work[1].
+>>>> It generalized loongarch_ipi device to share among both loongarch
+>>>> and MIPS machines.
+>>>
+>>>
+>>>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>>>> ---
+>>>> Jiaxun Yang (5):
+>>>>         hw/intc/loongarch_ipi: Remove pointless MAX_CPU check
+>>>>         hw/intc/loongarch_ipi: Rename as loongson_ipi
+>>>>         hw/intc/loongson_ipi: Implement IOCSR address space for MIPS
+>>>
+>>> So far patches 1-3 queued to hw-misc tree, thanks.
+>>
+>> Hi Philippe,
+>>
+>> Thanks! What's your plan with the rest of the series
+>
+> Patches LGTM, but I'd like an Acked-by from Song Gao ;)
+>
+Patch 1 - 4:
+Acked-by: Song Gao <gaosong@loongson.cn>
 
-> MTTCG was disabled in a092a9554771 ("configure: disable MTTCG
-> for MIPS guests") due to test case instability.
->
-> I was able to reproduce this issue with in latest QEMU and look
-> into reason behind that.
->
-> What actually happend is kernel's CP0 timer synchronisation
-> mechanism assumed a consistent latency in memory access between
-> cores, which TCG can't guarantee. Thus there is a huge drift in
-> count value between cores, and in early kernel versions CP0 timer
-> is always used as sched_clock.
->
-> sched_clock drift back on some cores triggered RCU watchdog in
-> some extreme cases.
->
-> This can be resolved by setting clocksource to MIPS, which allows
-> clocksource to drift together with sched_clock. However this will
-> leed to other problems after boot.
->
-> Another option would beupdating kernel to later version, which
-> will use GIC as sched_clock.
+and patch2 missed to delete the file loongarch_ipi.c.
 
-I'm a little uncomfortable about making the success of MTTCG depend on
-the user options passed to the kernel.
+Thanks.
+Song Gao
+>> and earlier MIPS CPS SMP series?
+>
+> No plan, just lack of time :/
+>
+>> Let me know if you need help on testing etc.
+>>
+>> Thanks
 
-How come a non-icount run depends on how many instructions are being run
-on each core? Why is time not based on the wallclock time and by
-definition synced between all cores?
-
-> In non-MTTCG build, the execution is slow enough so kernel won't
-> observe back drifts.
->
-> Test results:
->
-> With clocksource=3DMIPS
-> ```
->  ~/tmp/retry/retry.py -n 100 -c -- ./qemu-system-mips64el \
->     -display none -vga none -serial mon:stdio \
->     -machine malta -kernel ./vmlinux-4.7.0-rc1.I6400 \
->     -cpu I6400 -smp 8 -vga std \
->     -append "printk.time=3D0 clocksource=3DMIPS console=3Dtty0 console=3D=
-ttyS0 panic=3D-1" \
->     --no-reboot
->
-> 100, 0, PASS, 5.258126, 100, 100, -
-> Results summary:
-> 0: 100 times (100.00%), avg time 6.508 (55.53 varience/7.45 deviation)
-> Ran command 100 times, 100 passes
-> ```
->
-> With linux-next:
-> ```
->  ~/tmp/retry/retry.py -n 100 -c -- ./qemu-system-mips64el \
->     -display none -vga none -serial mon:stdio \
->     -machine malta -kernel ~/linux-next/vmlinux \
->     -cpu I6400 -smp 8 -vga std \
->     -append "printk.time=3D0 console=3Dtty0 console=3DttyS0 panic=3D-1" \
->     --no-reboot
->
-> 100, 0, PASS, 4.507921, 100, 100, -
-> Results summary:
-> 0: 100 times (100.00%), avg time 4.233 (0.04 varience/0.21 deviation)
-> Ran command 100 times, 100 passes
-> ```
->
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> ---
-> I'll leave the test case alone as it's already marked as
-> QEMU_TEST_FLAKY_TESTS
-
-We should ensure we have some testing enabled if we switch this on. Was
-the FLAKY test marked for MTTCG issues or something else?
-
-> ---
->  configs/targets/mips64el-softmmu.mak | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/configs/targets/mips64el-softmmu.mak b/configs/targets/mips6=
-4el-softmmu.mak
-> index 8d9ab3ddc4b1..199b1d909a7d 100644
-> --- a/configs/targets/mips64el-softmmu.mak
-> +++ b/configs/targets/mips64el-softmmu.mak
-> @@ -1,3 +1,4 @@
->  TARGET_ARCH=3Dmips64
->  TARGET_BASE_ARCH=3Dmips
-> +TARGET_SUPPORTS_MTTCG=3Dy
->  TARGET_NEED_FDT=3Dy
->
-> ---
-> base-commit: 248f6f62df073a3b4158fd0093863ab885feabb5
-> change-id: 20240511-mips_mttcg-47a6b19074b3
->
-> Best regards,
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
