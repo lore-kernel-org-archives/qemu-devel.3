@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DAEAC25B7E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68DF4C41513
 	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 06:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sENva-0004FE-3P; Tue, 04 Jun 2024 02:45:51 -0400
+	id 1sENwp-0006ho-6T; Tue, 04 Jun 2024 02:47:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENvB-00045j-GY
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:25 -0400
+ id 1sENvw-0004ho-Ti
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:46:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sENvA-0007XL-0m
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:45:25 -0400
+ id 1sENvv-0007eD-8I
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 02:46:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717483523;
+ s=mimecast20190719; t=1717483570;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tsVpLdbmx/uPeSaF81fFP7gyNO79Fr2K1Tb3dOWWZos=;
- b=dN1GTR9nQutqHib0rsmxfMLu8LIPCigmZ4R4V6H7jIqO4Uhv8ZHDfj1DNQQpbLtaG1ig02
- D7kcvysblljQ0hbn2vkU/3ckxsieyR3xZtcyFWR+kXX7BHQBae/apvygSWCWtHecmVFrTy
- CqGSRbKinTi2bCsUTKxtaCE3lX49/OI=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=l8+XYqbQTMPq1BB+V1VrxOpCjz6T/cPUIIwIMJWLfJo=;
+ b=MDULS0ci4k1FnbAJxTswIb5ghYefWkff8eh0XbDIxl43IYhSVgEuMgRYviSIiD0PoM3wlj
+ kZHwfKhdKRFfPvP7/XYiKRgvGRvKu9+/pttKUU7kZQywzHCRZSAV4RsVjBEOk4voixAIga
+ cRBkMBdLIemig4lYmww/Y8Vz8u/OiTo=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-474-8KReu0TsMMqUrVI9AYnB8w-1; Tue, 04 Jun 2024 02:45:19 -0400
-X-MC-Unique: 8KReu0TsMMqUrVI9AYnB8w-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a68b41fb17cso228170966b.0
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:45:19 -0700 (PDT)
+ us-mta-292-4kar3kWoOISHjfII_ZGM6g-1; Tue, 04 Jun 2024 02:46:08 -0400
+X-MC-Unique: 4kar3kWoOISHjfII_ZGM6g-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-52b90dc90easo2143334e87.3
+ for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 23:46:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717483517; x=1718088317;
+ d=1e100.net; s=20230601; t=1717483566; x=1718088366;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tsVpLdbmx/uPeSaF81fFP7gyNO79Fr2K1Tb3dOWWZos=;
- b=V5lyU/uUFw/XgZB9N6xnAlI3ODc9uY6lhR8e0/qRSKK6jyKQovvWoMDbyktYl27niV
- W2acO68bxSDiBO7Vu74QOyKG6iRv2Xg6C7id4S4KIpFO/+Mz8M2S+hdX5hoOe6QzigbO
- lcwYwxn+elturguypuUhpLYnnXxSpIOxDhBYvnQc6i2VsvOJmkuDCbROnxJy0//F94iC
- NT9WQBMT8XnAbdomsNqcjqha+9+996DeZs6eFfsNlT3oPsvNvhMvzhIjpQZjFXQW3Tak
- Kt92SLhCRv6SAw4Mm/YYz1nAp6RpvRdchz/tZbznVJjvHtJmAWJn6NpJlpkQLUuXP47z
- 0gMw==
-X-Gm-Message-State: AOJu0YwTJfiQ1HgAx/9Jrduzqt2YYZ4D/AqPRHYiIwQVrbVj63qIr9d9
- ZkStBeVFIqbYhm71L1gz+Ewb0Olw504mcDc+Mj2f7bARkhEo13BigquyK64S/c2DgXTOhLBxk+/
- cxXJejihk9cbL5N9iypgqNDbaU1ptPKrrl19GFBhbmWdmAGepcOYOhnDNM+8eec/umIzV/snTNX
- SmPs8upCcrUrpYJs5TeFLs8yAViPjsR7Jf/gS0
-X-Received: by 2002:a17:906:16d2:b0:a68:b5ea:171c with SMTP id
- a640c23a62f3a-a69542a0f0bmr128002766b.16.1717483517574; 
- Mon, 03 Jun 2024 23:45:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCkyL+1eb4HhYrUjYTM1c6MEz6bRO5hWqWuOjWTRHopjBThP9l2GzNsYdZE3xRqAfvLdGQ8w==
-X-Received: by 2002:a17:906:16d2:b0:a68:b5ea:171c with SMTP id
- a640c23a62f3a-a69542a0f0bmr128001066b.16.1717483517210; 
- Mon, 03 Jun 2024 23:45:17 -0700 (PDT)
+ bh=l8+XYqbQTMPq1BB+V1VrxOpCjz6T/cPUIIwIMJWLfJo=;
+ b=rSiXVWtYQ26cqWqMMpAGPOECaU32OFuI5rSD1e1+LPvmd1Oo/cOeR+wzyAQy9bUXG3
+ y9UNgg5ERKxad5iE7S1b93UcsU+t3izh+OsdSHM/mmHaZ9C2eqOsY6VLZe8gx7QNlPs0
+ mGWQveHuSIXNZobolCP+krrTb25nn84RJWMUQ2IM3kmgC7wYNn9TuVtf8LaHyxdvmWVu
+ 143vEn3WvTMFQQ//zawwjbBpMJcNfJJlqe1jaPHUPOQkijEPa+htb0hVnq0Vk0TDeDf6
+ HAYqTTG091wAKzHlnVbbnx6dMhX9/ZrK3cMaL96L/4g/RAsE8YYhdbq1jkiHKlYQ5FCD
+ ffAQ==
+X-Gm-Message-State: AOJu0YytkD0fv9gl87cUzSI6edIqor61YWHOUcazrb1sUhpRNFf4Uqdq
+ Ymk9y3dWqTejkTjVcmJjTvEd0NeD2HWY/TN72mCw1YUr35ORwuG/lfDj08BDb5gsQ3YQ1RJWWTX
+ lm3eIX1wuIKg5PhPM7yK/ICBmbK8rIVmfCfejJsSWywUCDjOc+1ILy1mFn9lLMjUtaNv0vU0j6b
+ svJvUETESpsLiGqaNWBZhXt7aBQec4fENTNPdg
+X-Received: by 2002:a05:6512:5d0:b0:524:652e:1696 with SMTP id
+ 2adb3069b0e04-52b896cac46mr7672214e87.60.1717483566388; 
+ Mon, 03 Jun 2024 23:46:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHlywvBJ8xrnNB8E69+mDsuaQjlEWpJxczr73wqULn8rzWPA59KqjG2cvRRXfYW8qt1hmYvdQ==
+X-Received: by 2002:a05:6512:5d0:b0:524:652e:1696 with SMTP id
+ 2adb3069b0e04-52b896cac46mr7672196e87.60.1717483565918; 
+ Mon, 03 Jun 2024 23:46:05 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68ed879eacsm351732466b.99.2024.06.03.23.45.15
+ 4fb4d7f45d1cf-57a31bb8247sm6720784a12.30.2024.06.03.23.46.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 03 Jun 2024 23:45:16 -0700 (PDT)
+ Mon, 03 Jun 2024 23:46:05 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>,
-	Pankaj Gupta <pankaj.gupta@amd.com>
-Subject: [PULL 22/45] i386/sev: Add a sev_snp_enabled() helper
-Date: Tue,  4 Jun 2024 08:43:46 +0200
-Message-ID: <20240604064409.957105-23-pbonzini@redhat.com>
+Cc: Dov Murik <dovmurik@linux.ibm.com>, Michael Roth <michael.roth@amd.com>,
+ Pankaj Gupta <pankaj.gupta@amd.com>
+Subject: [PULL 41/45] i386/sev: Reorder struct declarations
+Date: Tue,  4 Jun 2024 08:44:05 +0200
+Message-ID: <20240604064409.957105-42-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240604064409.957105-1-pbonzini@redhat.com>
 References: <20240604064409.957105-1-pbonzini@redhat.com>
@@ -104,74 +104,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Roth <michael.roth@amd.com>
+From: Dov Murik <dovmurik@linux.ibm.com>
 
-Add a simple helper to check if the current guest type is SNP. Also have
-SNP-enabled imply that SEV-ES is enabled as well, and fix up any places
-where the sev_es_enabled() check is expecting a pure/non-SNP guest.
+Move the declaration of PaddedSevHashTable before SevSnpGuest so
+we can add a new such field to the latter.
 
+No functional change intended.
+
+Signed-off-by: Dov Murik <dovmurik@linux.ibm.com>
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Message-ID: <20240530111643.1091816-9-pankaj.gupta@amd.com>
+Message-ID: <20240530111643.1091816-23-pankaj.gupta@amd.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/sev.h |  2 ++
- target/i386/sev.c | 13 ++++++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ target/i386/sev.c | 84 +++++++++++++++++++++++------------------------
+ 1 file changed, 42 insertions(+), 42 deletions(-)
 
-diff --git a/target/i386/sev.h b/target/i386/sev.h
-index bedc667eeba..94295ee74f7 100644
---- a/target/i386/sev.h
-+++ b/target/i386/sev.h
-@@ -45,9 +45,11 @@ typedef struct SevKernelLoaderContext {
- #ifdef CONFIG_SEV
- bool sev_enabled(void);
- bool sev_es_enabled(void);
-+bool sev_snp_enabled(void);
- #else
- #define sev_enabled() 0
- #define sev_es_enabled() 0
-+#define sev_snp_enabled() 0
- #endif
- 
- uint32_t sev_get_cbit_position(void);
 diff --git a/target/i386/sev.c b/target/i386/sev.c
-index a81b3228d4c..4edfedc1393 100644
+index 73f94067155..3fce4c08ebb 100644
 --- a/target/i386/sev.c
 +++ b/target/i386/sev.c
-@@ -325,12 +325,21 @@ sev_enabled(void)
-     return !!object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON);
- }
+@@ -46,6 +46,48 @@ OBJECT_DECLARE_TYPE(SevCommonState, SevCommonStateClass, SEV_COMMON)
+ OBJECT_DECLARE_TYPE(SevGuestState, SevCommonStateClass, SEV_GUEST)
+ OBJECT_DECLARE_TYPE(SevSnpGuestState, SevCommonStateClass, SEV_SNP_GUEST)
  
-+bool
-+sev_snp_enabled(void)
-+{
-+    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
++/* hard code sha256 digest size */
++#define HASH_SIZE 32
 +
-+    return !!object_dynamic_cast(OBJECT(cgs), TYPE_SEV_SNP_GUEST);
-+}
++typedef struct QEMU_PACKED SevHashTableEntry {
++    QemuUUID guid;
++    uint16_t len;
++    uint8_t hash[HASH_SIZE];
++} SevHashTableEntry;
 +
- bool
- sev_es_enabled(void)
- {
-     ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
++typedef struct QEMU_PACKED SevHashTable {
++    QemuUUID guid;
++    uint16_t len;
++    SevHashTableEntry cmdline;
++    SevHashTableEntry initrd;
++    SevHashTableEntry kernel;
++} SevHashTable;
++
++/*
++ * Data encrypted by sev_encrypt_flash() must be padded to a multiple of
++ * 16 bytes.
++ */
++typedef struct QEMU_PACKED PaddedSevHashTable {
++    SevHashTable ht;
++    uint8_t padding[ROUND_UP(sizeof(SevHashTable), 16) - sizeof(SevHashTable)];
++} PaddedSevHashTable;
++
++QEMU_BUILD_BUG_ON(sizeof(PaddedSevHashTable) % 16 != 0);
++
++#define SEV_INFO_BLOCK_GUID     "00f771de-1a7e-4fcb-890e-68c77e2fb44e"
++typedef struct __attribute__((__packed__)) SevInfoBlock {
++    /* SEV-ES Reset Vector Address */
++    uint32_t reset_addr;
++} SevInfoBlock;
++
++#define SEV_HASH_TABLE_RV_GUID  "7255371f-3a3b-4b04-927b-1da6efa8d454"
++typedef struct QEMU_PACKED SevHashTableDescriptor {
++    /* SEV hash table area guest address */
++    uint32_t base;
++    /* SEV hash table area size (in bytes) */
++    uint32_t size;
++} SevHashTableDescriptor;
++
+ struct SevCommonState {
+     X86ConfidentialGuest parent_obj;
  
--    return sev_enabled() && (SEV_GUEST(cgs)->policy & SEV_POLICY_ES);
-+    return sev_snp_enabled() ||
-+            (sev_enabled() && SEV_GUEST(cgs)->policy & SEV_POLICY_ES);
- }
+@@ -128,48 +170,6 @@ typedef struct SevLaunchUpdateData {
  
- uint32_t
-@@ -946,7 +955,9 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-                        "support", __func__);
-             goto err;
-         }
-+    }
+ static QTAILQ_HEAD(, SevLaunchUpdateData) launch_update;
  
-+    if (sev_es_enabled() && !sev_snp_enabled()) {
-         if (!(status.flags & SEV_STATUS_FLAGS_CONFIG_ES)) {
-             error_setg(errp, "%s: guest policy requires SEV-ES, but "
-                          "host SEV-ES support unavailable",
+-#define SEV_INFO_BLOCK_GUID     "00f771de-1a7e-4fcb-890e-68c77e2fb44e"
+-typedef struct __attribute__((__packed__)) SevInfoBlock {
+-    /* SEV-ES Reset Vector Address */
+-    uint32_t reset_addr;
+-} SevInfoBlock;
+-
+-#define SEV_HASH_TABLE_RV_GUID  "7255371f-3a3b-4b04-927b-1da6efa8d454"
+-typedef struct QEMU_PACKED SevHashTableDescriptor {
+-    /* SEV hash table area guest address */
+-    uint32_t base;
+-    /* SEV hash table area size (in bytes) */
+-    uint32_t size;
+-} SevHashTableDescriptor;
+-
+-/* hard code sha256 digest size */
+-#define HASH_SIZE 32
+-
+-typedef struct QEMU_PACKED SevHashTableEntry {
+-    QemuUUID guid;
+-    uint16_t len;
+-    uint8_t hash[HASH_SIZE];
+-} SevHashTableEntry;
+-
+-typedef struct QEMU_PACKED SevHashTable {
+-    QemuUUID guid;
+-    uint16_t len;
+-    SevHashTableEntry cmdline;
+-    SevHashTableEntry initrd;
+-    SevHashTableEntry kernel;
+-} SevHashTable;
+-
+-/*
+- * Data encrypted by sev_encrypt_flash() must be padded to a multiple of
+- * 16 bytes.
+- */
+-typedef struct QEMU_PACKED PaddedSevHashTable {
+-    SevHashTable ht;
+-    uint8_t padding[ROUND_UP(sizeof(SevHashTable), 16) - sizeof(SevHashTable)];
+-} PaddedSevHashTable;
+-
+-QEMU_BUILD_BUG_ON(sizeof(PaddedSevHashTable) % 16 != 0);
+-
+ static Error *sev_mig_blocker;
+ 
+ static const char *const sev_fw_errlist[] = {
 -- 
 2.45.1
 
