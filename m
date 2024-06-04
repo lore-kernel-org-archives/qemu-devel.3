@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA599C25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:40:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3E84C25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:40:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEOkr-0000Qy-9O; Tue, 04 Jun 2024 03:38:49 -0400
+	id 1sEOkn-0000En-Ud; Tue, 04 Jun 2024 03:38:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOkm-0000Eo-3p
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:45 -0400
+ id 1sEOke-0000BM-6a
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOkk-0006N9-A3
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:43 -0400
+ id 1sEOkc-0006LE-Kk
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717486721;
+ s=mimecast20190719; t=1717486713;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cJVv+oCbFw6Y7FzevSXtTHQbytAJmfbo76uiroB2Js8=;
- b=ZuH7f1kgyR2XRxtwv6NGSpQ6f8AOAe9LTwE88EVjMWoE/ttN/pz+czjbC3w8pCax2LjyQo
- 1HsVvEnXAaumIb2hBqAhdPPEoLwCSIVNd0nSitrvv6lBSuDinNi4PsB6M/VYKSO519tEWW
- saUK2pr/w40l59bXJbakXNgQ5NCZWh8=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-306-F2n0NBu0PrCm5NoMcRRolw-1; Tue,
- 04 Jun 2024 03:38:36 -0400
-X-MC-Unique: F2n0NBu0PrCm5NoMcRRolw-1
+ bh=0355VJVyNQ+og3MeEaoZS3COabkY3dh5g5p6DrOXJCo=;
+ b=RosEzdoCA6eTmpT4h32VjIEQXb64QQN4GP0tb3J2gn9GU7+rf054CmAItE4Re/Yum6nx+R
+ 4lyvQdhaUTUDr+ds2txvsJ9wHTSoNPIAd5zFfyWSYJxezlbptPunlxF0L8DiFHsYX3htug
+ b6G35JPB4l5eSf48nORzqecEQAthn+o=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-590-mM4xLXfBOTibr93PCx0CAg-1; Tue, 04 Jun 2024 03:38:30 -0400
+X-MC-Unique: mM4xLXfBOTibr93PCx0CAg-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 72B5328C9822;
- Tue,  4 Jun 2024 07:38:36 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2496D80027F;
+ Tue,  4 Jun 2024 07:38:30 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.238])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 681E4492BD4;
- Tue,  4 Jun 2024 07:38:34 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 407A7492BD4;
+ Tue,  4 Jun 2024 07:38:27 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
 Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 12/20] virtio-net: Unify the logic to update NIC state for RSS
-Date: Tue,  4 Jun 2024 15:37:47 +0800
-Message-ID: <20240604073755.1859-13-jasowang@redhat.com>
+Subject: [PULL 10/20] virtio-net: Shrink header byte swapping buffer
+Date: Tue,  4 Jun 2024 15:37:45 +0800
+Message-ID: <20240604073755.1859-11-jasowang@redhat.com>
 In-Reply-To: <20240604073755.1859-1-jasowang@redhat.com>
 References: <20240604073755.1859-1-jasowang@redhat.com>
 MIME-Version: 1.0
@@ -85,137 +85,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-The code to attach or detach the eBPF program to RSS were duplicated so
-unify them into one function to save some code.
+Byte swapping is only performed for the part of header shared with the
+legacy standard and the buffer only needs to cover it.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- hw/net/virtio-net.c | 90 ++++++++++++++++++---------------------------
- 1 file changed, 36 insertions(+), 54 deletions(-)
+ hw/net/virtio-net.c | 17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
 diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 345ef9a8fd..8464eb4082 100644
+index 13a17a1e5a..dabfa6e7d7 100644
 --- a/hw/net/virtio-net.c
 +++ b/hw/net/virtio-net.c
-@@ -1232,18 +1232,6 @@ static int virtio_net_handle_announce(VirtIONet *n, uint8_t cmd,
-     }
- }
+@@ -676,11 +676,6 @@ static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_bufs,
  
--static void virtio_net_detach_epbf_rss(VirtIONet *n);
--
--static void virtio_net_disable_rss(VirtIONet *n)
--{
--    if (n->rss_data.enabled) {
--        trace_virtio_net_rss_disable();
--    }
--    n->rss_data.enabled = false;
--
--    virtio_net_detach_epbf_rss(n);
--}
--
- static bool virtio_net_attach_ebpf_to_backend(NICState *nic, int prog_fd)
- {
-     NetClientState *nc = qemu_get_peer(qemu_get_queue(nic), 0);
-@@ -1291,6 +1279,40 @@ static void virtio_net_detach_epbf_rss(VirtIONet *n)
-     virtio_net_attach_ebpf_to_backend(n->nic, -1);
- }
+     n->mergeable_rx_bufs = mergeable_rx_bufs;
  
-+static void virtio_net_commit_rss_config(VirtIONet *n)
-+{
-+    if (n->rss_data.enabled) {
-+        n->rss_data.enabled_software_rss = n->rss_data.populate_hash;
-+        if (n->rss_data.populate_hash) {
-+            virtio_net_detach_epbf_rss(n);
-+        } else if (!virtio_net_attach_epbf_rss(n)) {
-+            if (get_vhost_net(qemu_get_queue(n->nic)->peer)) {
-+                warn_report("Can't load eBPF RSS for vhost");
-+            } else {
-+                warn_report("Can't load eBPF RSS - fallback to software RSS");
-+                n->rss_data.enabled_software_rss = true;
-+            }
-+        }
-+
-+        trace_virtio_net_rss_enable(n->rss_data.hash_types,
-+                                    n->rss_data.indirections_len,
-+                                    sizeof(n->rss_data.key));
-+    } else {
-+        virtio_net_detach_epbf_rss(n);
-+        trace_virtio_net_rss_disable();
-+    }
-+}
-+
-+static void virtio_net_disable_rss(VirtIONet *n)
-+{
-+    if (!n->rss_data.enabled) {
-+        return;
-+    }
-+
-+    n->rss_data.enabled = false;
-+    virtio_net_commit_rss_config(n);
-+}
-+
- static bool virtio_net_load_ebpf_fds(VirtIONet *n)
- {
-     int fds[EBPF_RSS_MAX_FDS] = { [0 ... EBPF_RSS_MAX_FDS - 1] = -1};
-@@ -1455,28 +1477,7 @@ static uint16_t virtio_net_handle_rss(VirtIONet *n,
-         goto error;
-     }
-     n->rss_data.enabled = true;
--
--    if (!n->rss_data.populate_hash) {
--        if (!virtio_net_attach_epbf_rss(n)) {
--            /* EBPF must be loaded for vhost */
--            if (get_vhost_net(qemu_get_queue(n->nic)->peer)) {
--                warn_report("Can't load eBPF RSS for vhost");
--                goto error;
--            }
--            /* fallback to software RSS */
--            warn_report("Can't load eBPF RSS - fallback to software RSS");
--            n->rss_data.enabled_software_rss = true;
--        }
--    } else {
--        /* use software RSS for hash populating */
--        /* and detach eBPF if was loaded before */
--        virtio_net_detach_epbf_rss(n);
--        n->rss_data.enabled_software_rss = true;
--    }
--
--    trace_virtio_net_rss_enable(n->rss_data.hash_types,
--                                n->rss_data.indirections_len,
--                                temp.b);
-+    virtio_net_commit_rss_config(n);
-     return queue_pairs;
- error:
-     trace_virtio_net_rss_error(err_msg, err_value);
-@@ -3076,26 +3077,7 @@ static int virtio_net_post_load_device(void *opaque, int version_id)
+-    /*
+-     * Note: when extending the vnet header, please make sure to
+-     * change the vnet header copying logic in virtio_net_flush_tx()
+-     * as well.
+-     */
+     if (version_1) {
+         n->guest_hdr_len = hash_report ?
+             sizeof(struct virtio_net_hdr_v1_hash) :
+@@ -2736,7 +2731,7 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+         ssize_t ret;
+         unsigned int out_num;
+         struct iovec sg[VIRTQUEUE_MAX_SIZE], sg2[VIRTQUEUE_MAX_SIZE + 1], *out_sg;
+-        struct virtio_net_hdr_v1_hash vhdr;
++        struct virtio_net_hdr vhdr;
+ 
+         elem = virtqueue_pop(q->tx_vq, sizeof(VirtQueueElement));
+         if (!elem) {
+@@ -2753,18 +2748,18 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
          }
-     }
  
--    if (n->rss_data.enabled) {
--        n->rss_data.enabled_software_rss = n->rss_data.populate_hash;
--        if (!n->rss_data.populate_hash) {
--            if (!virtio_net_attach_epbf_rss(n)) {
--                if (get_vhost_net(qemu_get_queue(n->nic)->peer)) {
--                    warn_report("Can't post-load eBPF RSS for vhost");
--                } else {
--                    warn_report("Can't post-load eBPF RSS - "
--                                "fallback to software RSS");
--                    n->rss_data.enabled_software_rss = true;
--                }
--            }
--        }
--
--        trace_virtio_net_rss_enable(n->rss_data.hash_types,
--                                    n->rss_data.indirections_len,
--                                    sizeof(n->rss_data.key));
--    } else {
--        trace_virtio_net_rss_disable();
--    }
-+    virtio_net_commit_rss_config(n);
-     return 0;
- }
- 
+         if (n->needs_vnet_hdr_swap) {
+-            if (iov_to_buf(out_sg, out_num, 0, &vhdr, n->guest_hdr_len) <
+-                n->guest_hdr_len) {
++            if (iov_to_buf(out_sg, out_num, 0, &vhdr, sizeof(vhdr)) <
++                sizeof(vhdr)) {
+                 virtio_error(vdev, "virtio-net header incorrect");
+                 virtqueue_detach_element(q->tx_vq, elem, 0);
+                 g_free(elem);
+                 return -EINVAL;
+             }
+-            virtio_net_hdr_swap(vdev, (void *) &vhdr);
++            virtio_net_hdr_swap(vdev, &vhdr);
+             sg2[0].iov_base = &vhdr;
+-            sg2[0].iov_len = n->guest_hdr_len;
++            sg2[0].iov_len = sizeof(vhdr);
+             out_num = iov_copy(&sg2[1], ARRAY_SIZE(sg2) - 1, out_sg, out_num,
+-                               n->guest_hdr_len, -1);
++                               sizeof(vhdr), -1);
+             if (out_num == VIRTQUEUE_MAX_SIZE) {
+                 goto drop;
+             }
 -- 
 2.42.0
 
