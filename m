@@ -4,89 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7146CC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3E17C25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:19:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sERBb-0006fI-Fh; Tue, 04 Jun 2024 06:14:35 -0400
+	id 1sERG7-00007q-LE; Tue, 04 Jun 2024 06:19:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1sERBZ-0006dA-0f
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 06:14:33 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1sERBW-0000kp-4M
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 06:14:32 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1f47f07acd3so7723675ad.0
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 03:14:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1717496068; x=1718100868; darn=nongnu.org;
- h=in-reply-to:from:content-language:references:cc:to:subject
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ohH2CE4Aa+EFMZj4nIK/fCdlHTNN4SZO7xcBNi8AmYw=;
- b=go0VDM3U3hkgpmwvQY/fa9T2epmMX+IpwvQTREkavQdBFeKkkYKoxN5G/rCrs1bHWO
- MpTkAUeePTsPj/215W7I/U70JM26b/A9qvXiSEwhGaAoRqNTBVnZh2Et543Lq5t+Kl4L
- +KPoNZG7OKIudl29kRcV1I8tyrB/FejpMmx2t2XFSgn5m/0Aptxrz6alRuATP0K1eOwN
- ZcLUyi7+sfq4MXRZUkhMXo+t1m3gNspKhL5QYqRT1Emk5RQPD6hI++BFyPvgSyCSDQXi
- tNeEwqim60LE7/KLNbo0JLsvv0kX+9sPBuBsQXToHIXgRexk/1SMr48PL3x4NdiuxpQU
- OilA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717496068; x=1718100868;
- h=in-reply-to:from:content-language:references:cc:to:subject
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=ohH2CE4Aa+EFMZj4nIK/fCdlHTNN4SZO7xcBNi8AmYw=;
- b=l6MhfPpxNx4Oz3qNCXrDS6xOg5Ta/MmU+51F/NcIbUMHJVgLkBz6oGW47NOzhRzDNJ
- 6K87wtXuHDkZt9wGjkxG8dMF6K9/TKmrbasc4RlJ7XKlch+xyG4k4J1H5C7r6M2kz6j/
- lacv73w+DpStc0PShPgsLeOh0Bxhc/C8vPxhCz/1C5FzUfnEeZ2kfqqcHsKQQmFWaicE
- 31GOTdUchgSRI7FChNQH+CuPsm+Y7W/f398qSQAIX20uet8M60Yu2PBDF8SGZWvT0ptB
- 3X7UinqWBo9HrkDO5zBgeT648Z9oagU2Q/ojn9Mc8xswdzRBb7uSI1MaxUXekeEcSA0o
- 9JVQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXYlyFhoxGaWdptFwMEYlvDR9Fg04/bXNkhMpPwHI5yiKh+vKm7sbQwVwsb9WUT1p3pCNj21WpTdp1IOQgVORYNcTiPlKQ=
-X-Gm-Message-State: AOJu0YwONPtxSxmGbmgmPgJhIRykS2ZPEILXb/EKKHVKRyn1gyNpm0Uy
- 2wRUTf5zbyISyYdAtOOJV+JhnNOmarSMlW1QeG/a6dRrb9Vprn/6XksGSJ+2XGU=
-X-Google-Smtp-Source: AGHT+IHkMwqbboo7QRnJVps70A/GXpg/wteA6CDX26+Fl/ALXcedb5KUXm7FDELvuPBmRBhbe4sUew==
-X-Received: by 2002:a17:902:c94c:b0:1f6:5a50:93b3 with SMTP id
- d9443c01a7336-1f65a509712mr97772515ad.43.1717496068239; 
- Tue, 04 Jun 2024 03:14:28 -0700 (PDT)
-Received: from [192.168.100.252] (59-124-168-89.hinet-ip.hinet.net.
- [59.124.168.89]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f63241c392sm79119095ad.291.2024.06.04.03.14.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 04 Jun 2024 03:14:27 -0700 (PDT)
-Content-Type: multipart/alternative;
- boundary="------------HdwHUJx5fdBvZT0cld0x6xoB"
-Message-ID: <3f3cc0f1-0a56-452a-a934-b3f770056570@sifive.com>
-Date: Tue, 4 Jun 2024 18:14:24 +0800
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sERG5-00006w-Tm
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 06:19:13 -0400
+Received: from wfout3-smtp.messagingengine.com ([64.147.123.146])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sERG3-0003Eq-H7
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 06:19:13 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailfout.west.internal (Postfix) with ESMTP id 905F81C00131;
+ Tue,  4 Jun 2024 06:19:08 -0400 (EDT)
+Received: from imap44 ([10.202.2.94])
+ by compute3.internal (MEProxy); Tue, 04 Jun 2024 06:19:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1717496348;
+ x=1717582748; bh=2F8GYSiR19+6U8AQRqQhZDgSqta7Qx5+P3UAbFzWvvM=; b=
+ Kx9MBl5Q3AzekLAac5GGzlXLKIbrflRSmDdXiXie23aZLazZYSc4Q5//pJswb7Rv
+ 4f4tNYx4oR4PxMO26XIxkRztLzJbWiZcjS+vpqOANcR7iLiwJwQ7/B6F8kEM01Zp
+ RDiAWauBcWMSLcDJj0tt7tHfhpCrpiUlcqI+vLv1erB8UlogdLVfq0ehNl91wR3f
+ ssrfWcn0h5QmLRv/fH/finmHZa8geKTA8b64VVkZEDD9Lpj/Vl2X22l7c/kSK6bQ
+ a76Epmwajd0Da5uGH3u5tfbYYQ/P8OA78CzqxZbZSOqN/fdYx5bW8MEjmbZXrsIA
+ lLx9v1HhUTMbF8BvqahEbQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1717496348; x=
+ 1717582748; bh=2F8GYSiR19+6U8AQRqQhZDgSqta7Qx5+P3UAbFzWvvM=; b=N
+ MdeWCJclTaGhup5uTDeAH21K/i/yMdE075pnY6UwCGwZ0lFLiPhNkCGMzDJobygK
+ ncASxUM9nfdF3xV+1qT8D4O/+wdYezbS+yTwZc/W86YiHy52tb0E0TBtzjRPc+PA
+ +uVUp3dat7M1AvM0hfMydte1WT0Cm1yl2zalGn9eDj6wRqcJ4v0GsuBezPNkJI3n
+ w7SuNTyUcK6rIRgq9xbfIiDaXC5Fs6JZ5nYFdt12fheexo9WsyjY1/XIQcK5FBiB
+ D3g3nwBAEM+f0WOaoDtac1MaZTl5VYa7NsM/6z6XD3GFk+DgxgJejS5+1DYrvTGs
+ n/y1THgTXvk7avBo1iEKg==
+X-ME-Sender: <xms:G-peZmaGokXxS-fxzs0RVsAKRt0WbtStDx6JC4JAUaKAc83ibkCU-g>
+ <xme:G-peZpb58Ez_eDbe3eL4rOaTt1ufZ4x7oDLmKlaU4-1YamaOdt4cKtNgyl0du9UoQ
+ MC195R_8cnOAKiZj1w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelgedgvddvucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfl
+ ihgrgihunhcujggrnhhgfdcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtoh
+ hmqeenucggtffrrghtthgvrhhnpedufeegfeetudeghefftdehfefgveffleefgfehhfej
+ ueegveethfduuddvieehgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+ grihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhm
+X-ME-Proxy: <xmx:HOpeZg9hf2QVldPFbZEH0S3ks0ZR751C1oOgkbO4Yn0uPtfTmWFUwQ>
+ <xmx:HOpeZoo5J_zYfUxqgMpH0zjxxB6fNcbsyA3hmQ1mvu1hN-UzKjDzQQ>
+ <xmx:HOpeZhpA4Y0aITbUY8nn3_eN4_G4Es_x0838O9Amk8x-ypNx3ZiIzw>
+ <xmx:HOpeZmRDXu0TGRbDBikrcV1vcBN7RO9KYwXAvp7dQ77SRiZIvtaLFw>
+ <xmx:HOpeZo12ZlfBBUb9TJKh54PS0aeQlRCtbZAUshFoQ3DUPT5UbTJgoh9Q>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id D43BF36A0074; Tue,  4 Jun 2024 06:19:07 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-497-g97f96844c-fm-20240526.001-g97f96844
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] target/riscv: Add support for Control Transfer
- Records extension CSRs.
-To: Rajnesh Kanwal <rkanwal@rivosinc.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- atishp@rivosinc.com, apatel@ventanamicro.com, beeman@rivosinc.com,
- tech-control-transfer-records@lists.riscv.org
-References: <20240529160950.132754-1-rkanwal@rivosinc.com>
- <20240529160950.132754-4-rkanwal@rivosinc.com>
-Content-Language: en-US
-From: Jason Chien <jason.chien@sifive.com>
-In-Reply-To: <20240529160950.132754-4-rkanwal@rivosinc.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=jason.chien@sifive.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Message-Id: <20434032-e5a7-4f3f-a029-3dba9e4400ee@app.fastmail.com>
+In-Reply-To: <f1e66166-0e06-4a02-8d88-9faad1f0274b@linaro.org>
+References: <20240511-mips_mttcg-v1-1-1b71d9b85234@flygoat.com>
+ <f1e66166-0e06-4a02-8d88-9faad1f0274b@linaro.org>
+Date: Tue, 04 Jun 2024 11:18:49 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>,
+ "QEMU devel" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] mips64el-softmmu: Enable MTTCG
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=64.147.123.146;
+ envelope-from=jiaxun.yang@flygoat.com; helo=wfout3-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,695 +107,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------HdwHUJx5fdBvZT0cld0x6xoB
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
 
 
-Rajnesh Kanwal 於 2024/5/30 上午 12:09 寫道:
-> This commit adds support for [m|s|vs]ctrcontrol, sctrstatus and
-> sctrdepth CSRs handling.
+=E5=9C=A82024=E5=B9=B46=E6=9C=883=E6=97=A5=E5=85=AD=E6=9C=88 =E4=B8=8B=E5=
+=8D=887:15=EF=BC=8CPierrick Bouvier=E5=86=99=E9=81=93=EF=BC=9A
+> On 5/11/24 13:26, Jiaxun Yang wrote:
+>> MTTCG was disabled in a092a9554771 ("configure: disable MTTCG
+>> for MIPS guests") due to test case instability.
+>>=20
+>> I was able to reproduce this issue with in latest QEMU and look
+>> into reason behind that.
+>>=20
+>> What actually happend is kernel's CP0 timer synchronisation
+>> mechanism assumed a consistent latency in memory access between
+>> cores, which TCG can't guarantee. Thus there is a huge drift in
+>> count value between cores, and in early kernel versions CP0 timer
+>> is always used as sched_clock.
+>>=20
+>> sched_clock drift back on some cores triggered RCU watchdog in
+>> some extreme cases.
+>>=20
+>> This can be resolved by setting clocksource to MIPS, which allows
+>> clocksource to drift together with sched_clock. However this will
+>> leed to other problems after boot.
+>>=20
+>> Another option would beupdating kernel to later version, which
+>> will use GIC as sched_clock.
+>>=20
+>> In non-MTTCG build, the execution is slow enough so kernel won't
+>> observe back drifts.
+>>=20
+>> Test results:
+>>=20
+>> With clocksource=3DMIPS
+>> ```
+>>   ~/tmp/retry/retry.py -n 100 -c -- ./qemu-system-mips64el \
+>>      -display none -vga none -serial mon:stdio \
+>>      -machine malta -kernel ./vmlinux-4.7.0-rc1.I6400 \
+>>      -cpu I6400 -smp 8 -vga std \
+>>      -append "printk.time=3D0 clocksource=3DMIPS console=3Dtty0 conso=
+le=3DttyS0 panic=3D-1" \
+>>      --no-reboot
+>>=20
+>> 100, 0, PASS, 5.258126, 100, 100, -
+>> Results summary:
+>> 0: 100 times (100.00%), avg time 6.508 (55.53 varience/7.45 deviation)
+>> Ran command 100 times, 100 passes
+>> ```
+>>=20
+>> With linux-next:
+>> ```
+>>   ~/tmp/retry/retry.py -n 100 -c -- ./qemu-system-mips64el \
+>>      -display none -vga none -serial mon:stdio \
+>>      -machine malta -kernel ~/linux-next/vmlinux \
+>>      -cpu I6400 -smp 8 -vga std \
+>>      -append "printk.time=3D0 console=3Dtty0 console=3DttyS0 panic=3D=
+-1" \
+>>      --no-reboot
+>>=20
+>> 100, 0, PASS, 4.507921, 100, 100, -
+>> Results summary:
+>> 0: 100 times (100.00%), avg time 4.233 (0.04 varience/0.21 deviation)
+>> Ran command 100 times, 100 passes
+>> ```
+>>=20
+>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>> ---
+>> I'll leave the test case alone as it's already marked as QEMU_TEST_FL=
+AKY_TESTS
+>> ---
+>>   configs/targets/mips64el-softmmu.mak | 1 +
+>>   1 file changed, 1 insertion(+)
+>>=20
+>> diff --git a/configs/targets/mips64el-softmmu.mak b/configs/targets/m=
+ips64el-softmmu.mak
+>> index 8d9ab3ddc4b1..199b1d909a7d 100644
+>> --- a/configs/targets/mips64el-softmmu.mak
+>> +++ b/configs/targets/mips64el-softmmu.mak
+>> @@ -1,3 +1,4 @@
+>>   TARGET_ARCH=3Dmips64
+>>   TARGET_BASE_ARCH=3Dmips
+>> +TARGET_SUPPORTS_MTTCG=3Dy
+>>   TARGET_NEED_FDT=3Dy
+>>=20
+>> ---
+>> base-commit: 248f6f62df073a3b4158fd0093863ab885feabb5
+>> change-id: 20240511-mips_mttcg-47a6b19074b3
+>>=20
+>> Best regards,
 >
-> Signed-off-by: Rajnesh Kanwal<rkanwal@rivosinc.com>
-> ---
->   target/riscv/cpu.h     |   5 ++
->   target/riscv/cpu_cfg.h |   2 +
->   target/riscv/csr.c     | 159 +++++++++++++++++++++++++++++++++++++++++
->   3 files changed, 166 insertions(+)
+> Hi Jiaxun,
+> Thanks for your analysis!
 >
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index a185e2d494..3d4d5172b8 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -263,6 +263,11 @@ struct CPUArchState {
->       target_ulong mcause;
->       target_ulong mtval;  /* since: priv-1.10.0 */
->   
-> +    uint64_t mctrctl;
-> +    uint32_t sctrdepth;
-> +    uint32_t sctrstatus;
-> +    uint64_t vsctrctl;
-> +
->       /* Machine and Supervisor interrupt priorities */
->       uint8_t miprio[64];
->       uint8_t siprio[64];
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index d9354dc80a..d329a65811 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -123,6 +123,8 @@ struct RISCVCPUConfig {
->       bool ext_zvfhmin;
->       bool ext_smaia;
->       bool ext_ssaia;
-> +    bool ext_smctr;
-> +    bool ext_ssctr;
->       bool ext_sscofpmf;
->       bool ext_smepmp;
->       bool rvv_ta_all_1s;
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 2f92e4b717..888084d8e5 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -621,6 +621,61 @@ static RISCVException pointer_masking(CPURISCVState *env, int csrno)
->       return RISCV_EXCP_ILLEGAL_INST;
->   }
->   
-> +/*
-> + * M-mode:
-> + * Without ext_smctr raise illegal inst excep.
-> + * Otherwise everything is accessible to m-mode.
-> + *
-> + * S-mode:
-> + * Without ext_ssctr or mstateen.ctr raise illegal inst excep.
-> + * Otherwise everything other than mctrctl is accessible.
-> + *
-> + * VS-mode:
-> + * Without ext_ssctr or mstateen.ctr raise illegal inst excep.
-> + * Without hstateen.ctr raise virtual illegal inst excep.
-> + * Otherwise allow vsctrctl, sctrstatus, 0x200-0x2ff entry range.
-> + * Always raise illegal instruction exception for sctrdepth.
-> + */
-> +static RISCVException ctr_mmode(CPURISCVState *env, int csrno)
-> +{
-> +    /* Check if smctr-ext is present */
-> +    if (riscv_cpu_cfg(env)->ext_smctr) {
-> +        return RISCV_EXCP_NONE;
-> +    }
-> +
-> +    return RISCV_EXCP_ILLEGAL_INST;
-> +}
-> +
-> +static RISCVException ctr_smode(CPURISCVState *env, int csrno)
-> +{
-> +    if ((env->priv == PRV_M && riscv_cpu_cfg(env)->ext_smctr) ||
-> +        (env->priv == PRV_S && !env->virt_enabled &&
-> +         riscv_cpu_cfg(env)->ext_ssctr)) {
-> +        return smstateen_acc_ok(env, 0, SMSTATEEN0_CTR);
-> +    }
-> +
-> +    if (env->priv == PRV_S && env->virt_enabled &&
-> +        riscv_cpu_cfg(env)->ext_ssctr) {
-> +        if (csrno == CSR_SCTRSTATUS) {
-missing sctrctl?
-> +            return smstateen_acc_ok(env, 0, SMSTATEEN0_CTR);
-> +        }
-> +
-> +        return RISCV_EXCP_VIRT_INSTRUCTION_FAULT;
-> +    }
-> +
-> +    return RISCV_EXCP_ILLEGAL_INST;
-> +}
+> We should see to update concerned test in another series.
+> I'm not sure which way is preferred between updating kernel used or=20
+> changing current command line.
+>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-I think there is no need to bind M-mode with ext_smctr, S-mode with 
-ext_ssctr and VS-mode with ext_ssctr, since this predicate function is 
-for S-mode CSRs, which are defined in both smctr and ssctr, we just need 
-to check at least one of ext_ssctr or ext_smctr is true.
+I think updating kernel can prevent further problems.
+Will test with latest Debian kernel.
 
-The spec states that:
-Attempts to access sctrdepth from VS-mode or VU-mode raise a 
-virtual-instruction exception, unless CTR state enable access 
-restrictions apply.
-
-In my understanding, we should check the presence of smstateen extension 
-first, and
-
-if smstateen is implemented:
-
-  * for sctrctl and sctrstatus, call smstateen_acc_ok()
-  * for sctrdepth, call smstateen_acc_ok(), and if there is any
-    exception returned, always report virtual-instruction exception.
-
-If smstateen is not implemented:
-
-  * for sctrctl and sctrstatus, there is no check.
-  * for sctrdepth, I think the spec is ambiguous. What does "CTR state
-    enable access restrictions apply" mean when smstateen is not
-    implemented?
-
-Here is the code to better understand my description.
-
-static RISCVException ctr_smode(CPURISCVState *env, int csrno)
-{
-     const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
-
-     if (!cfg->ext_ssctr && !cfg->ext_smctr) {
-         return RISCV_EXCP_ILLEGAL_INST;
-     }
-
-     if (riscv_cpu_cfg(env)->ext_smstateen) {
-         RISCVException ret = smstateen_acc_ok(env, 0, SMSTATEEN0_CTR);
-         if (ret != RISCV_EXCP_NONE) {
-             if (csrno == CSR_SCTRDEPTH && env->virt_enabled) {
-                 return RISCV_EXCP_VIRT_INSTRUCTION_FAULT;
-             }
-
-             return ret;
-         }
-     } else {
-         /* The spec is ambiguous. */
-         if (csrno == CSR_SCTRDEPTH && env->virt_enabled) {
-             return RISCV_EXCP_VIRT_INSTRUCTION_FAULT;
-         }
-     }
-
-     return RISCV_EXCP_NONE;
-}
-
-> +
-> +static RISCVException ctr_vsmode(CPURISCVState *env, int csrno)
-> +{
-> +    if (env->priv == PRV_S && env->virt_enabled &&
-> +        riscv_cpu_cfg(env)->ext_ssctr) {
-> +        return smstateen_acc_ok(env, 0, SMSTATEEN0_CTR);
-In riscv_csrrw_check(), an virtual-instruction exception is always 
-reported no matter what. Do we need this check?
-> +    }
-> +
-> +    return ctr_smode(env, csrno);
-> +}
-> +
->   static RISCVException aia_hmode(CPURISCVState *env, int csrno)
->   {
->       int ret;
-> @@ -3835,6 +3890,100 @@ static RISCVException write_satp(CPURISCVState *env, int csrno,
->       return RISCV_EXCP_NONE;
->   }
->   
-> +static RISCVException rmw_sctrdepth(CPURISCVState *env, int csrno,
-> +                                    target_ulong *ret_val,
-> +                                    target_ulong new_val, target_ulong wr_mask)
-> +{
-> +    uint64_t mask = wr_mask & SCTRDEPTH_MASK;
-> +
-> +    if (ret_val) {
-> +        *ret_val = env->sctrdepth & SCTRDEPTH_MASK;
-We don't need to do bitwise and with SCTRDEPTH_MASK on read accesses 
-when we always do bitwise and with SCTRDEPTH_MASK on write accesses.
-> +    }
-> +
-> +    env->sctrdepth = (env->sctrdepth & ~mask) | (new_val & mask);
-> +
-> +    /* Correct depth. */
-> +    if (wr_mask & SCTRDEPTH_MASK) {
-> +        uint64_t depth = get_field(env->sctrdepth, SCTRDEPTH_MASK);
-> +
-> +        if (depth > SCTRDEPTH_MAX) {
-> +            env->sctrdepth =
-> +                set_field(env->sctrdepth, SCTRDEPTH_MASK, SCTRDEPTH_MAX);
-> +        }
-> +
-> +        /* Update sctrstatus.WRPTR with a legal value */
-> +        depth = 16 << depth;
-The "depth" on the right side may exceed SCTRDEPTH_MAX.
-> +        env->sctrstatus =
-> +            env->sctrstatus & (~SCTRSTATUS_WRPTR_MASK | (depth - 1));
-> +    }
-> +
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException rmw_mctrctl(CPURISCVState *env, int csrno,
-> +                                    target_ulong *ret_val,
-> +                                    target_ulong new_val, target_ulong wr_mask)
-> +{
-> +    uint64_t mask = wr_mask & MCTRCTL_MASK;
-> +
-> +    if (ret_val) {
-> +        *ret_val = env->mctrctl & MCTRCTL_MASK;
-There is no need to do bitwise and with the mask on read accesses when 
-we always do bitwise and with the mask on write accesses.
-> +    }
-> +
-> +    env->mctrctl = (env->mctrctl & ~mask) | (new_val & mask);
-> +
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException rmw_sctrctl(CPURISCVState *env, int csrno,
-> +                                    target_ulong *ret_val,
-> +                                    target_ulong new_val, target_ulong wr_mask)
-> +{
-> +    uint64_t mask = wr_mask & SCTRCTL_MASK;
-> +    RISCVException ret;
-> +
-> +    ret = rmw_mctrctl(env, csrno, ret_val, new_val, mask);
-When V=1, vsctrctl substitutes for sctrctl.
-> +    if (ret_val) {
-> +        *ret_val &= SCTRCTL_MASK;
-> +    }
-> +
-> +    return ret;
-> +}
-> +
-> +static RISCVException rmw_sctrstatus(CPURISCVState *env, int csrno,
-> +                                     target_ulong *ret_val,
-> +                                     target_ulong new_val, target_ulong wr_mask)
-> +{
-> +    uint32_t depth = 16 << get_field(env->sctrdepth, SCTRDEPTH_MASK);
-> +    uint32_t mask = wr_mask & SCTRSTATUS_MASK;
-> +
-> +    if (ret_val) {
-> +        *ret_val = env->sctrstatus & SCTRSTATUS_MASK;
-There is no need to do bitwise and with the mask on read accesses when 
-we always do bitwise and with the mask on write accesses.
-> +    }
-> +
-> +    env->sctrstatus = (env->sctrstatus & ~mask) | (new_val & mask);
-> +
-> +    /* Update sctrstatus.WRPTR with a legal value */
-> +    env->sctrstatus = env->sctrstatus & (~SCTRSTATUS_WRPTR_MASK | (depth - 1));
-> +
-> +    return RISCV_EXCP_NONE;
-> +}
-> +
-> +static RISCVException rmw_vsctrctl(CPURISCVState *env, int csrno,
-> +                                    target_ulong *ret_val,
-> +                                    target_ulong new_val, target_ulong wr_mask)
-> +{
-> +    uint64_t mask = wr_mask & VSCTRCTL_MASK;
-> +
-> +    if (ret_val) {
-> +        *ret_val = env->vsctrctl & VSCTRCTL_MASK;
-There is no need to do bitwise and with the mask on read accesses when 
-we always do bitwise and with the mask on write accesses.
-> +    }
-> +
-> +    env->vsctrctl = (env->vsctrctl & ~mask) | (new_val & mask);
-> +
-> +    return RISCV_EXCP_NONE;
-> +}
-Is it possible to define rmw_xctrctl() instead of three individual rmw 
-functions and use a switch case to select the mask and the CSR for the 
-purpose of reducing code size?
-> +
->   static RISCVException read_vstopi(CPURISCVState *env, int csrno,
->                                     target_ulong *val)
->   {
-> @@ -5771,6 +5920,16 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
->       [CSR_SPMBASE] =    { "spmbase", pointer_masking, read_spmbase,
->                            write_spmbase                                      },
->   
-> +    [CSR_MCTRCTL]       = { "mctrctl",       ctr_mmode, NULL, NULL,
-> +                                rmw_mctrctl },
-I think this can be one line.
-> +    [CSR_SCTRCTL]       = { "sctrctl",       ctr_smode, NULL, NULL,
-> +                                rmw_sctrctl },
-same here
-> +    [CSR_SCTRDEPTH]       = { "sctrdepth",       ctr_smode, NULL, NULL,
-> +                                rmw_sctrdepth },
-same here
-> +    [CSR_SCTRSTATUS]       = { "sctrstatus",       ctr_smode, NULL, NULL,
-> +                                rmw_sctrstatus },
-same here
-> +    [CSR_VSCTRCTL]      = { "vsctrctl",      ctr_vsmode, NULL, NULL,
-> +                                rmw_vsctrctl },
-same here
->       /* Performance Counters */
->       [CSR_HPMCOUNTER3]    = { "hpmcounter3",    ctr,    read_hpmcounter },
->       [CSR_HPMCOUNTER4]    = { "hpmcounter4",    ctr,    read_hpmcounter },
---------------HdwHUJx5fdBvZT0cld0x6xoB
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">Rajnesh Kanwal 於 2024/5/30 上午 12:09 寫道:<br>
-    </div>
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">This commit adds support for [m|s|vs]ctrcontrol, sctrstatus and
-sctrdepth CSRs handling.
-
-Signed-off-by: Rajnesh Kanwal <a class="moz-txt-link-rfc2396E" href="mailto:rkanwal@rivosinc.com">&lt;rkanwal@rivosinc.com&gt;</a>
----
- target/riscv/cpu.h     |   5 ++
- target/riscv/cpu_cfg.h |   2 +
- target/riscv/csr.c     | 159 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 166 insertions(+)
-
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index a185e2d494..3d4d5172b8 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -263,6 +263,11 @@ struct CPUArchState {
-     target_ulong mcause;
-     target_ulong mtval;  /* since: priv-1.10.0 */
- 
-+    uint64_t mctrctl;
-+    uint32_t sctrdepth;
-+    uint32_t sctrstatus;
-+    uint64_t vsctrctl;
-+
-     /* Machine and Supervisor interrupt priorities */
-     uint8_t miprio[64];
-     uint8_t siprio[64];
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index d9354dc80a..d329a65811 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -123,6 +123,8 @@ struct RISCVCPUConfig {
-     bool ext_zvfhmin;
-     bool ext_smaia;
-     bool ext_ssaia;
-+    bool ext_smctr;
-+    bool ext_ssctr;
-     bool ext_sscofpmf;
-     bool ext_smepmp;
-     bool rvv_ta_all_1s;
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 2f92e4b717..888084d8e5 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -621,6 +621,61 @@ static RISCVException pointer_masking(CPURISCVState *env, int csrno)
-     return RISCV_EXCP_ILLEGAL_INST;
- }
- 
-+/*
-+ * M-mode:
-+ * Without ext_smctr raise illegal inst excep.
-+ * Otherwise everything is accessible to m-mode.
-+ *
-+ * S-mode:
-+ * Without ext_ssctr or mstateen.ctr raise illegal inst excep.
-+ * Otherwise everything other than mctrctl is accessible.
-+ *
-+ * VS-mode:
-+ * Without ext_ssctr or mstateen.ctr raise illegal inst excep.
-+ * Without hstateen.ctr raise virtual illegal inst excep.
-+ * Otherwise allow vsctrctl, sctrstatus, 0x200-0x2ff entry range.
-+ * Always raise illegal instruction exception for sctrdepth.
-+ */
-+static RISCVException ctr_mmode(CPURISCVState *env, int csrno)
-+{
-+    /* Check if smctr-ext is present */
-+    if (riscv_cpu_cfg(env)-&gt;ext_smctr) {
-+        return RISCV_EXCP_NONE;
-+    }
-+
-+    return RISCV_EXCP_ILLEGAL_INST;
-+}
-+
-+static RISCVException ctr_smode(CPURISCVState *env, int csrno)
-+{
-+    if ((env-&gt;priv == PRV_M &amp;&amp; riscv_cpu_cfg(env)-&gt;ext_smctr) ||
-+        (env-&gt;priv == PRV_S &amp;&amp; !env-&gt;virt_enabled &amp;&amp;
-+         riscv_cpu_cfg(env)-&gt;ext_ssctr)) {
-+        return smstateen_acc_ok(env, 0, SMSTATEEN0_CTR);
-+    }
-+
-+    if (env-&gt;priv == PRV_S &amp;&amp; env-&gt;virt_enabled &amp;&amp;
-+        riscv_cpu_cfg(env)-&gt;ext_ssctr) {
-+        if (csrno == CSR_SCTRSTATUS) {</pre>
-    </blockquote>
-    missing sctrctl?<br>
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+            return smstateen_acc_ok(env, 0, SMSTATEEN0_CTR);
-+        }
-+
-+        return RISCV_EXCP_VIRT_INSTRUCTION_FAULT;
-+    }
-+
-+    return RISCV_EXCP_ILLEGAL_INST;
-+}</pre>
-    </blockquote>
-    <p>I think there is no need to bind M-mode with ext_smctr, S-mode
-      with ext_ssctr and VS-mode with ext_ssctr, since this predicate
-      function is for S-mode CSRs, which are defined in both smctr and
-      ssctr, we just need to check at least one of ext_ssctr or
-      ext_smctr is true.</p>
-    <p>The spec states that:<br>
-      Attempts to access sctrdepth from VS-mode or VU-mode raise a
-      virtual-instruction exception, unless CTR state enable access
-      restrictions apply.</p>
-    <p>In my understanding, we should check the presence of smstateen
-      extension first, and</p>
-    <p>if smstateen is implemented:</p>
-    <ul>
-      <li>for sctrctl and sctrstatus, call smstateen_acc_ok()</li>
-      <li>for sctrdepth, call smstateen_acc_ok(), and if there is any
-        exception returned, always report virtual-instruction exception.</li>
-    </ul>
-    <p>If smstateen is not implemented:</p>
-    <ul>
-      <li>for sctrctl and sctrstatus, there is no check.</li>
-      <li>for sctrdepth, I think the spec is ambiguous. What does "CTR
-        state enable access restrictions apply" mean when smstateen is
-        not implemented?<br>
-      </li>
-    </ul>
-    <p>Here is the code to better understand my description.<br>
-    </p>
-    <p>static RISCVException ctr_smode(CPURISCVState *env, int csrno)<br>
-      {<br>
-          const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);<br>
-      <br>
-          if (!cfg-&gt;ext_ssctr &amp;&amp; !cfg-&gt;ext_smctr) {<br>
-              return RISCV_EXCP_ILLEGAL_INST;<br>
-          }<br>
-      <br>
-          if (riscv_cpu_cfg(env)-&gt;ext_smstateen) {<br>
-              RISCVException ret = smstateen_acc_ok(env, 0,
-      SMSTATEEN0_CTR);<br>
-              if (ret != RISCV_EXCP_NONE) {<br>
-                  if (csrno == CSR_SCTRDEPTH &amp;&amp;
-      env-&gt;virt_enabled) {<br>
-                      return RISCV_EXCP_VIRT_INSTRUCTION_FAULT;<br>
-                  }<br>
-      <br>
-                  return ret;<br>
-              }<br>
-          } else {<br>
-              /* The spec is ambiguous. */<br>
-              if (csrno == CSR_SCTRDEPTH &amp;&amp;
-      env-&gt;virt_enabled) {<br>
-                  return RISCV_EXCP_VIRT_INSTRUCTION_FAULT;<br>
-              }<br>
-          }<br>
-      <br>
-          return RISCV_EXCP_NONE;<br>
-      }<br>
-      <br>
-    </p>
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+
-+static RISCVException ctr_vsmode(CPURISCVState *env, int csrno)
-+{
-+    if (env-&gt;priv == PRV_S &amp;&amp; env-&gt;virt_enabled &amp;&amp;
-+        riscv_cpu_cfg(env)-&gt;ext_ssctr) {
-+        return smstateen_acc_ok(env, 0, SMSTATEEN0_CTR);</pre>
-    </blockquote>
-    In riscv_csrrw_check(), an virtual-instruction exception is always
-    reported no matter what. Do we need this check?<br>
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+    }
-+
-+    return ctr_smode(env, csrno);
-+}
-+
- static RISCVException aia_hmode(CPURISCVState *env, int csrno)
- {
-     int ret;
-@@ -3835,6 +3890,100 @@ static RISCVException write_satp(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+static RISCVException rmw_sctrdepth(CPURISCVState *env, int csrno,
-+                                    target_ulong *ret_val,
-+                                    target_ulong new_val, target_ulong wr_mask)
-+{
-+    uint64_t mask = wr_mask &amp; SCTRDEPTH_MASK;
-+
-+    if (ret_val) {
-+        *ret_val = env-&gt;sctrdepth &amp; SCTRDEPTH_MASK;</pre>
-    </blockquote>
-    We don't need to do bitwise and with SCTRDEPTH_MASK on read accesses
-    when we always do bitwise and with SCTRDEPTH_MASK on write accesses.<br>
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+    }
-+
-+    env-&gt;sctrdepth = (env-&gt;sctrdepth &amp; ~mask) | (new_val &amp; mask);
-+
-+    /* Correct depth. */
-+    if (wr_mask &amp; SCTRDEPTH_MASK) {
-+        uint64_t depth = get_field(env-&gt;sctrdepth, SCTRDEPTH_MASK);
-+
-+        if (depth &gt; SCTRDEPTH_MAX) {
-+            env-&gt;sctrdepth =
-+                set_field(env-&gt;sctrdepth, SCTRDEPTH_MASK, SCTRDEPTH_MAX);
-+        }
-+
-+        /* Update sctrstatus.WRPTR with a legal value */
-+        depth = 16 &lt;&lt; depth;</pre>
-    </blockquote>
-    The "depth" on the right side may exceed SCTRDEPTH_MAX.<br>
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+        env-&gt;sctrstatus =
-+            env-&gt;sctrstatus &amp; (~SCTRSTATUS_WRPTR_MASK | (depth - 1));
-+    }
-+
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException rmw_mctrctl(CPURISCVState *env, int csrno,
-+                                    target_ulong *ret_val,
-+                                    target_ulong new_val, target_ulong wr_mask)
-+{
-+    uint64_t mask = wr_mask &amp; MCTRCTL_MASK;
-+
-+    if (ret_val) {
-+        *ret_val = env-&gt;mctrctl &amp; MCTRCTL_MASK;</pre>
-    </blockquote>
-    There is no need to do bitwise and with the mask on read accesses
-    when we always do bitwise and with the mask on write accesses.<br>
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+    }
-+
-+    env-&gt;mctrctl = (env-&gt;mctrctl &amp; ~mask) | (new_val &amp; mask);
-+
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException rmw_sctrctl(CPURISCVState *env, int csrno,
-+                                    target_ulong *ret_val,
-+                                    target_ulong new_val, target_ulong wr_mask)
-+{
-+    uint64_t mask = wr_mask &amp; SCTRCTL_MASK;
-+    RISCVException ret;
-+
-+    ret = rmw_mctrctl(env, csrno, ret_val, new_val, mask);</pre>
-    </blockquote>
-    When V=1, vsctrctl substitutes for sctrctl.<br>
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+    if (ret_val) {
-+        *ret_val &amp;= SCTRCTL_MASK;
-+    }
-+
-+    return ret;
-+}
-+
-+static RISCVException rmw_sctrstatus(CPURISCVState *env, int csrno,
-+                                     target_ulong *ret_val,
-+                                     target_ulong new_val, target_ulong wr_mask)
-+{
-+    uint32_t depth = 16 &lt;&lt; get_field(env-&gt;sctrdepth, SCTRDEPTH_MASK);
-+    uint32_t mask = wr_mask &amp; SCTRSTATUS_MASK;
-+
-+    if (ret_val) {
-+        *ret_val = env-&gt;sctrstatus &amp; SCTRSTATUS_MASK;</pre>
-    </blockquote>
-    There is no need to do bitwise and with the mask on read accesses
-    when we always do bitwise and with the mask on write accesses.<br>
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+    }
-+
-+    env-&gt;sctrstatus = (env-&gt;sctrstatus &amp; ~mask) | (new_val &amp; mask);
-+
-+    /* Update sctrstatus.WRPTR with a legal value */
-+    env-&gt;sctrstatus = env-&gt;sctrstatus &amp; (~SCTRSTATUS_WRPTR_MASK | (depth - 1));
-+
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException rmw_vsctrctl(CPURISCVState *env, int csrno,
-+                                    target_ulong *ret_val,
-+                                    target_ulong new_val, target_ulong wr_mask)
-+{
-+    uint64_t mask = wr_mask &amp; VSCTRCTL_MASK;
-+
-+    if (ret_val) {
-+        *ret_val = env-&gt;vsctrctl &amp; VSCTRCTL_MASK;</pre>
-    </blockquote>
-    There is no need to do bitwise and with the mask on read accesses
-    when we always do bitwise and with the mask on write accesses.
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+    }
-+
-+    env-&gt;vsctrctl = (env-&gt;vsctrctl &amp; ~mask) | (new_val &amp; mask);
-+
-+    return RISCV_EXCP_NONE;
-+}</pre>
-    </blockquote>
-    Is it possible to define rmw_xctrctl() instead of three individual
-    rmw functions and use a switch case to select the mask and the CSR
-    for the purpose of reducing code size?<br>
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+
- static RISCVException read_vstopi(CPURISCVState *env, int csrno,
-                                   target_ulong *val)
- {
-@@ -5771,6 +5920,16 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
-     [CSR_SPMBASE] =    { "spmbase", pointer_masking, read_spmbase,
-                          write_spmbase                                      },
- 
-+    [CSR_MCTRCTL]       = { "mctrctl",       ctr_mmode, NULL, NULL,
-+                                rmw_mctrctl },</pre>
-    </blockquote>
-    I think this can be one line.<br>
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+    [CSR_SCTRCTL]       = { "sctrctl",       ctr_smode, NULL, NULL,
-+                                rmw_sctrctl },</pre>
-    </blockquote>
-    same here<br>
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+    [CSR_SCTRDEPTH]       = { "sctrdepth",       ctr_smode, NULL, NULL,
-+                                rmw_sctrdepth },</pre>
-    </blockquote>
-    same here
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+    [CSR_SCTRSTATUS]       = { "sctrstatus",       ctr_smode, NULL, NULL,
-+                                rmw_sctrstatus },</pre>
-    </blockquote>
-    same here
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-+    [CSR_VSCTRCTL]      = { "vsctrctl",      ctr_vsmode, NULL, NULL,
-+                                rmw_vsctrctl },</pre>
-    </blockquote>
-    same here
-    <blockquote type="cite"
-      cite="mid:20240529160950.132754-4-rkanwal@rivosinc.com">
-      <pre class="moz-quote-pre" wrap="">
-     /* Performance Counters */
-     [CSR_HPMCOUNTER3]    = { "hpmcounter3",    ctr,    read_hpmcounter },
-     [CSR_HPMCOUNTER4]    = { "hpmcounter4",    ctr,    read_hpmcounter },
-</pre>
-    </blockquote>
-  </body>
-</html>
-
---------------HdwHUJx5fdBvZT0cld0x6xoB--
+Thanks!
+--=20
+- Jiaxun
 
