@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BFD0C27C53
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:20:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5BBC27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEORZ-00038x-8v; Tue, 04 Jun 2024 03:18:53 -0400
+	id 1sEORu-0003Nn-2T; Tue, 04 Jun 2024 03:19:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEORX-000368-Fr
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:18:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sEORs-0003Jv-Hl
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:19:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEORV-0005bO-RL
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:18:51 -0400
+ id 1sEORq-0005ea-Lh
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:19:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717485529;
+ s=mimecast20190719; t=1717485549;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=U/nNXKv5w7XsoKaYFhzY0rSXugZeBuJcWZqnC83Ujh0=;
- b=ISxBcOyuKeOZ5q6Ij4Mh6hRMsHkJQ7PeCJXOkPNlPfPwkoNGPS/RntHk24lPIg8cFvJVHB
- yIDUC/nURzL7zmIATWAfTIPxsIRUCNZGr0SY2YVTxvQ1Jr4YIpUHew+OfnhRwrP8pGagFs
- Hl9CKiRXBR5jPpzILZVWlKh8yZyQweE=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JE1l3mnnViu2bSu14FqFVuNS+di8GAj9jPlWPGLObPQ=;
+ b=Dx9CgANCQrw0FWlcDdPVHm3+zjno0Feq6tKAHzMqVEvFFR2cGcAPGNV8ZT7/P2x0VJn5Q9
+ ka9jb47eHbbRy/zvT0LPeMOp1XTvJ8lElWXswdG03nRPSxxnQ/jQAePyv7E5QhX8ORgkwm
+ ExyriNwBESsXwHtwHQwySg7kvTLSEi4=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-18-qqppHs-CNLiIai-j2BHHBg-1; Tue, 04 Jun 2024 03:18:46 -0400
-X-MC-Unique: qqppHs-CNLiIai-j2BHHBg-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-57a52be5f2aso831590a12.3
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:18:46 -0700 (PDT)
+ us-mta-473-4pccu4QMO96Lu7Bxg9Zc6w-1; Tue, 04 Jun 2024 03:19:07 -0400
+X-MC-Unique: 4pccu4QMO96Lu7Bxg9Zc6w-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a6905050583so98639466b.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 00:19:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717485524; x=1718090324;
+ d=1e100.net; s=20230601; t=1717485545; x=1718090345;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=U/nNXKv5w7XsoKaYFhzY0rSXugZeBuJcWZqnC83Ujh0=;
- b=WJfUijtoyiqTG9/lj/CX8k069OjqhRnT/0O4iSziZ1miXzTxQcihiQQ05Zy9n+Ca8o
- A30GGmJBYsGJfCEV3N4hARZZYU1whbGS2Xyc0nvtq4+mFQN3oYLFESjVDfnn3mpJDuvw
- /gVzC3aVZDjtV64Lzd5A2PMqX0hI1zkdxLgeDRW3eHEWJeHV7l4rWfXDYeLVLyoDxSf0
- CG8iK8kPddtbAMmeVA6nDXU8iBjhtVth4nfI9VelzYKMVcQjq1LTvkQl9mUQA6CA6xuO
- WIBySmmz8nUBuGbnhbGmB3mc99cRNpZuQijZeGb+LLIWbl0o9sRx8/QdWkxHsYoioJF8
- QoMQ==
-X-Gm-Message-State: AOJu0Yy7P01M/TLRTjpCC7a901BhaxB6GJWcZ3WM4MFqHgqSL5hMKwms
- fqrVoaCuB9fudhqqY9Z1F31jJcwEVUxvdwximuYo9iX2C/6xdw8xV0WNoGAL2EjL+k2J8gJ1DYc
- 003AnJAAx8oTblh4B+gP5XMVoIT3RUZDyQbrQSX185hzlKJ4D18xpxUj+zS1iEdsfwZjbZk9ZTI
- r84WO81iaC+RK6ximUFtLY/kadnkhhgPz7j/Hl
-X-Received: by 2002:a17:906:6d06:b0:a68:b0f2:1d95 with SMTP id
- a640c23a62f3a-a68b0f21f73mr514339566b.71.1717485524171; 
- Tue, 04 Jun 2024 00:18:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEwfIzW2qIHF45NYhJjYVhuvBsePfnB39ghXQq3gsX5UUvBAEf+++bMCa3NFAFq5n+AMi1O+A==
-X-Received: by 2002:a17:906:6d06:b0:a68:b0f2:1d95 with SMTP id
- a640c23a62f3a-a68b0f21f73mr514338366b.71.1717485523566; 
- Tue, 04 Jun 2024 00:18:43 -0700 (PDT)
+ bh=JE1l3mnnViu2bSu14FqFVuNS+di8GAj9jPlWPGLObPQ=;
+ b=jDvhN5Vkbqxa++MX8vyZ/hIn5ns9wHEybG8sfC3V14R+D4Ei/kNJfWfHpPggZ7CG3O
+ Q7Iy1bLMLd8GaNBlN78LHmUjBPBWNUx4jXtfoRKsx39favC5gHJ0JSbkvIzMsBe5DQsl
+ EuAubcAYTYKqWLNSbHlXqMt9Sg5yD4hsLmtXd2jo9AgksBlqw3k0+CFgn67ZkEuXb2ht
+ GRRJci+Qx71PUKeJ2bbkrfKFEoHqZi5OQN4kPpyQQFJf5xGSaobFRRQQCX4RyNNiX1C7
+ ylU4NmCCy1sO6obI7qkJG2xmeaZXBqpAMD8ikIctKggyGwOLYGgx5MU3PgGVLhYvRp4S
+ JO8g==
+X-Gm-Message-State: AOJu0Yw1g0mS7LhJ2lUHA2tX3nDzmcRfaWrSfl5WPruQESVMILsF63jU
+ oMi4Y8eYu/yl5O9rDTjv/RFgNY2HfX4lVxOKcLcnhC+60PPeUBuBlpCsi3MyNkk0AAHkdqbSip0
+ ATlNrh4/y6Tc3pQ2KebCXdpSxadrLmfBoj2kT2vIGjKxcWRnO3bX2kCK054l37akJK6YYP7JfuK
+ 90ywz81jl6MdSplm6jp3cvaLIh+7RIXs2ZY8zt
+X-Received: by 2002:a17:907:86ab:b0:a68:e6a5:b3ea with SMTP id
+ a640c23a62f3a-a68e6a5b62emr482088466b.5.1717485545486; 
+ Tue, 04 Jun 2024 00:19:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENzK6nQS1tseB7U+OjQCdrGXaLXdU4IzYUBYvuiHaq08HZ1dNBP2xLwrAvziQzb4BvIRSaag==
+X-Received: by 2002:a17:907:86ab:b0:a68:e6a5:b3ea with SMTP id
+ a640c23a62f3a-a68e6a5b62emr482086566b.5.1717485545075; 
+ Tue, 04 Jun 2024 00:19:05 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68ce1e4462sm398245566b.197.2024.06.04.00.18.42
+ a640c23a62f3a-a68f10450besm342684566b.35.2024.06.04.00.19.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 00:18:42 -0700 (PDT)
+ Tue, 04 Jun 2024 00:19:03 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org
-Subject: [PATCH 02/11] target/i386: fix implementation of ICEBP
-Date: Tue,  4 Jun 2024 09:18:24 +0200
-Message-ID: <20240604071833.962574-3-pbonzini@redhat.com>
+Subject: [PATCH 09/11] target/i386: fix TF/RF handling for HLT
+Date: Tue,  4 Jun 2024 09:18:31 +0200
+Message-ID: <20240604071833.962574-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240604071833.962574-1-pbonzini@redhat.com>
 References: <20240604071833.962574-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,131 +103,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ICEBP generates a trap-like exception, while gen_exception() produces
-a fault.  Resurrect gen_update_eip_next() to implement the desired
-semantics.
+HLT uses DISAS_NORETURN because the corresponding helper calls
+cpu_loop_exit().  However, while gen_eob() clears HF_RF_MASK and
+synthesizes a #DB exception if single-step is active, none of this is
+done by HLT.  Note that the single-step trap is generated after the halt
+is finished.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/helper.h          |  1 +
- target/i386/tcg/helper-tcg.h  |  3 +++
- target/i386/tcg/bpt_helper.c  |  6 ++++++
- target/i386/tcg/excp_helper.c | 20 ++++++++++++++++++++
- target/i386/tcg/translate.c   | 13 +++++++++++++
- target/i386/tcg/emit.c.inc    |  5 ++++-
- 6 files changed, 47 insertions(+), 1 deletion(-)
+ target/i386/tcg/sysemu/misc_helper.c |  2 +-
+ target/i386/tcg/sysemu/seg_helper.c  | 17 ++++++++++++++---
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/helper.h b/target/i386/helper.h
-index a52a1bf0f21..8f291a5f66f 100644
---- a/target/i386/helper.h
-+++ b/target/i386/helper.h
-@@ -56,6 +56,7 @@ DEF_HELPER_2(sysret, void, env, int)
- DEF_HELPER_FLAGS_2(pause, TCG_CALL_NO_WG, noreturn, env, int)
- DEF_HELPER_FLAGS_3(raise_interrupt, TCG_CALL_NO_WG, noreturn, env, int, int)
- DEF_HELPER_FLAGS_2(raise_exception, TCG_CALL_NO_WG, noreturn, env, int)
-+DEF_HELPER_FLAGS_1(icebp, TCG_CALL_NO_WG, noreturn, env)
- DEF_HELPER_3(boundw, void, env, tl, int)
- DEF_HELPER_3(boundl, void, env, tl, int)
+diff --git a/target/i386/tcg/sysemu/misc_helper.c b/target/i386/tcg/sysemu/misc_helper.c
+index 093cc2d0f90..7fa0c5a06de 100644
+--- a/target/i386/tcg/sysemu/misc_helper.c
++++ b/target/i386/tcg/sysemu/misc_helper.c
+@@ -520,7 +520,7 @@ G_NORETURN void helper_hlt(CPUX86State *env)
+ {
+     CPUState *cs = env_cpu(env);
  
-diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
-index effc2c1c984..6a5505e7b4c 100644
---- a/target/i386/tcg/helper-tcg.h
-+++ b/target/i386/tcg/helper-tcg.h
-@@ -112,6 +112,9 @@ int exception_has_error_code(int intno);
- void do_smm_enter(X86CPU *cpu);
- 
- /* bpt_helper.c */
-+void do_end_instruction(CPUX86State *env);
-+
-+/* sysemu/bpt_helper.c */
- bool check_hw_breakpoints(CPUX86State *env, bool force_dr6_update);
- 
- #endif /* I386_HELPER_TCG_H */
-diff --git a/target/i386/tcg/bpt_helper.c b/target/i386/tcg/bpt_helper.c
-index bc34ac27fea..9695b9dd041 100644
---- a/target/i386/tcg/bpt_helper.c
-+++ b/target/i386/tcg/bpt_helper.c
-@@ -37,3 +37,9 @@ void helper_rechecking_single_step(CPUX86State *env)
-         helper_single_step(env);
-     }
- }
-+
-+void do_end_instruction(CPUX86State *env)
-+{
-+    env->hflags &= ~HF_INHIBIT_IRQ_MASK; /* needed if sti is just before */
-+    env->eflags &= ~HF_RF_MASK;
-+}
-diff --git a/target/i386/tcg/excp_helper.c b/target/i386/tcg/excp_helper.c
-index 65e37ae2a0c..72387aac24f 100644
---- a/target/i386/tcg/excp_helper.c
-+++ b/target/i386/tcg/excp_helper.c
-@@ -140,6 +140,26 @@ G_NORETURN void raise_exception_ra(CPUX86State *env, int exception_index,
-     raise_interrupt2(env, exception_index, 0, 0, 0, retaddr);
- }
- 
-+G_NORETURN void helper_icebp(CPUX86State *env)
-+{
-+    CPUState *cs = env_cpu(env);
-+
+-    env->hflags &= ~HF_INHIBIT_IRQ_MASK; /* needed if sti is just before */
 +    do_end_instruction(env);
-+
-+    /*
-+     * INT1 aka ICEBP generates a trap-like #DB, but it is pretty special.
-+     *
-+     * "Although the ICEBP instruction dispatches through IDT vector 1,
-+     * that event is not interceptable by means of the #DB exception
-+     * intercept".  Instead there is a separate fault-like ICEBP intercept.
-+     */
-+    cs->exception_index = EXCP01_DB;
-+    env->error_code = 0;
-+    env->exception_is_int = 0;
-+    env->exception_next_eip = env->eip;
-+    cpu_loop_exit(cs);
-+}
-+
- G_NORETURN void handle_unaligned_access(CPUX86State *env, vaddr vaddr,
-                                         MMUAccessType access_type,
-                                         uintptr_t retaddr)
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index d438f8f76f7..77ed9c1db47 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -549,6 +549,19 @@ static inline void gen_op_st_rm_T0_A0(DisasContext *s, int idx, int d)
+     cs->halted = 1;
+     cs->exception_index = EXCP_HLT;
+     cpu_loop_exit(cs);
+diff --git a/target/i386/tcg/sysemu/seg_helper.c b/target/i386/tcg/sysemu/seg_helper.c
+index 9ba94deb3aa..05174a79e73 100644
+--- a/target/i386/tcg/sysemu/seg_helper.c
++++ b/target/i386/tcg/sysemu/seg_helper.c
+@@ -130,15 +130,26 @@ void x86_cpu_do_interrupt(CPUState *cs)
+ 
+ bool x86_cpu_exec_halt(CPUState *cpu)
+ {
+-    if (cpu->interrupt_request & CPU_INTERRUPT_POLL) {
+-        X86CPU *x86_cpu = X86_CPU(cpu);
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
+ 
++    if (cpu->interrupt_request & CPU_INTERRUPT_POLL) {
+         bql_lock();
+         apic_poll_irq(x86_cpu->apic_state);
+         cpu_reset_interrupt(cpu, CPU_INTERRUPT_POLL);
+         bql_unlock();
      }
- }
- 
-+static void gen_update_eip_next(DisasContext *s)
-+{
-+    assert(s->pc_save != -1);
-+    if (tb_cflags(s->base.tb) & CF_PCREL) {
-+        tcg_gen_addi_tl(cpu_eip, cpu_eip, s->pc - s->pc_save);
-+    } else if (CODE64(s)) {
-+        tcg_gen_movi_tl(cpu_eip, s->pc);
-+    } else {
-+        tcg_gen_movi_tl(cpu_eip, (uint32_t)(s->pc - s->cs_base));
-+    }
-+    s->pc_save = s->pc;
-+}
+-    return cpu_has_work(cpu);
 +
- static void gen_update_eip_cur(DisasContext *s)
- {
-     assert(s->pc_save != -1);
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index e990141454b..36127d99943 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -1858,7 +1858,10 @@ static void gen_INT(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
- 
- static void gen_INT1(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
- {
--    gen_exception(s, EXCP01_DB);
-+    gen_update_cc_op(s);
-+    gen_update_eip_next(s);
-+    gen_helper_icebp(tcg_env);
-+    s->base.is_jmp = DISAS_NORETURN;
++    if (!cpu_has_work(cpu)) {
++        return false;
++    }
++
++    /* Complete HLT instruction.  */
++    if (env->eflags & TF_MASK) {
++        env->dr[6] |= DR6_BS;
++        do_interrupt_all(x86_cpu, EXCP01_DB, 0, 0, env->eip, 0);
++    }
++    return true;
  }
  
- static void gen_INT3(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ bool x86_need_replay_interrupt(int interrupt_request)
 -- 
 2.45.1
 
