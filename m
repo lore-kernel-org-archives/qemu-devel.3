@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A0CC27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85CC3C27C52
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:39:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEOkc-00008d-5e; Tue, 04 Jun 2024 03:38:34 -0400
+	id 1sEOl4-0001T9-UG; Tue, 04 Jun 2024 03:39:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOkZ-0008TE-Qw
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:32 -0400
+ id 1sEOl3-0001Ih-Df
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:39:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOkY-0006KZ-5w
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:31 -0400
+ id 1sEOl1-0006Oy-LO
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:39:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717486709;
+ s=mimecast20190719; t=1717486738;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7sfcDD9wsGZpiveUClF4yEEzLk1RGaLngadoEU7p+GQ=;
- b=DTHhXwVHygVRyUe5wvppzPByiCTaRqvBgIvk9ImFnZMxokopQnD4XT/54SFBY+dRXSwrcE
- 7me2EcBo7zzVI9x3KFf9tg2gaTXsNlJLlj6A4BVPjHsfWclKCinOSrElMg1CAhPg4ZvJAg
- byRDmw3o9l9fAJhHzO83LR8FN5W57gc=
+ bh=5d5y2FC6cxEygSgk8M5FRyNF5zASCRyu9uDVXcrDPpE=;
+ b=V6zJ+5oFLHvqD11c57htm9uSi+a7o6MAcg1JXH3CfPsFZbfn9oTiH7mTo1pt2Vqt5KQPoR
+ pQDsfmsVkRp5ijAet4uuWpt9PIrWJ19YKZ0zuFmQN3Q4VVDLXEEtieTOB4vGDWlylFSkVs
+ 0EQWvtEtndh7y6UXQTKXbSypi2LXCYY=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-550-o-h75tCtNkGG-l78eUtWFQ-1; Tue, 04 Jun 2024 03:38:22 -0400
-X-MC-Unique: o-h75tCtNkGG-l78eUtWFQ-1
+ us-mta-424-nBttRGmdPT2XDNfdHyNUqg-1; Tue, 04 Jun 2024 03:38:54 -0400
+X-MC-Unique: nBttRGmdPT2XDNfdHyNUqg-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8225885A5BA;
- Tue,  4 Jun 2024 07:38:22 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 74C7980027F;
+ Tue,  4 Jun 2024 07:38:54 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.238])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 9FE85492BD4;
- Tue,  4 Jun 2024 07:38:20 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 94AA9492BD4;
+ Tue,  4 Jun 2024 07:38:52 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
 Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 07/20] virtio-net: Do not propagate ebpf-rss-fds errors
-Date: Tue,  4 Jun 2024 15:37:42 +0800
-Message-ID: <20240604073755.1859-8-jasowang@redhat.com>
+Subject: [PULL 18/20] ebpf: Add a separate target for skeleton
+Date: Tue,  4 Jun 2024 15:37:53 +0800
+Message-ID: <20240604073755.1859-19-jasowang@redhat.com>
 In-Reply-To: <20240604073755.1859-1-jasowang@redhat.com>
 References: <20240604073755.1859-1-jasowang@redhat.com>
 MIME-Version: 1.0
@@ -85,96 +85,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Propagating ebpf-rss-fds errors has several problems.
+This generalizes the rule to generate the skeleton and allows to add
+another.
 
-First, it makes device realization fail and disables the fallback to the
-conventional eBPF loading.
-
-Second, it leaks memory by making device realization fail without
-freeing memory already allocated.
-
-Third, the convention is to set an error when a function returns false,
-but virtio_net_load_ebpf_fds() and virtio_net_load_ebpf() returns false
-without setting an error, which is confusing.
-
-Remove the propagation to fix these problems.
-
-Fixes: 0524ea0510a3 ("ebpf: Added eBPF initialization by fds.")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- hw/net/virtio-net.c | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
+ tools/ebpf/Makefile.ebpf | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index ff600b3002..3cee2ef3ac 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1329,24 +1329,22 @@ static void virtio_net_detach_epbf_rss(VirtIONet *n)
-     virtio_net_attach_ebpf_to_backend(n->nic, -1);
- }
+diff --git a/tools/ebpf/Makefile.ebpf b/tools/ebpf/Makefile.ebpf
+index 3391e7ce08..572ca5987a 100755
+--- a/tools/ebpf/Makefile.ebpf
++++ b/tools/ebpf/Makefile.ebpf
+@@ -1,23 +1,24 @@
+-OBJS = rss.bpf.o
++SKELETONS = rss.bpf.skeleton.h
  
--static bool virtio_net_load_ebpf_fds(VirtIONet *n, Error **errp)
-+static bool virtio_net_load_ebpf_fds(VirtIONet *n)
- {
-     int fds[EBPF_RSS_MAX_FDS] = { [0 ... EBPF_RSS_MAX_FDS - 1] = -1};
-     int ret = true;
-     int i = 0;
+ LLVM_STRIP ?= llvm-strip
+ CLANG ?= clang
+ INC_FLAGS = `$(CLANG) -print-file-name=include`
+ EXTRA_CFLAGS ?= -O2 -g -target bpf
  
--    ERRP_GUARD();
--
-     if (n->nr_ebpf_rss_fds != EBPF_RSS_MAX_FDS) {
--        error_setg(errp,
--                  "Expected %d file descriptors but got %d",
--                  EBPF_RSS_MAX_FDS, n->nr_ebpf_rss_fds);
-+        warn_report("Expected %d file descriptors but got %d",
-+                    EBPF_RSS_MAX_FDS, n->nr_ebpf_rss_fds);
-        return false;
-    }
+-all: $(OBJS)
++all: $(SKELETONS)
  
-     for (i = 0; i < n->nr_ebpf_rss_fds; i++) {
--        fds[i] = monitor_fd_param(monitor_cur(), n->ebpf_rss_fds[i], errp);
--        if (*errp) {
-+        fds[i] = monitor_fd_param(monitor_cur(), n->ebpf_rss_fds[i],
-+                                  &error_warn);
-+        if (fds[i] < 0) {
-             ret = false;
-             goto exit;
-         }
-@@ -1355,7 +1353,7 @@ static bool virtio_net_load_ebpf_fds(VirtIONet *n, Error **errp)
-     ret = ebpf_rss_load_fds(&n->ebpf_rss, fds[0], fds[1], fds[2], fds[3]);
+ .PHONY: clean
  
- exit:
--    if (!ret || *errp) {
-+    if (!ret) {
-         for (i = 0; i < n->nr_ebpf_rss_fds && fds[i] != -1; i++) {
-             close(fds[i]);
-         }
-@@ -1364,13 +1362,12 @@ exit:
-     return ret;
- }
+ clean:
+-	rm -f $(OBJS)
+-	rm -f rss.bpf.skeleton.h
++	rm -f $(SKELETONS) $(SKELETONS:%.skeleton.h=%.o)
  
--static bool virtio_net_load_ebpf(VirtIONet *n, Error **errp)
-+static bool virtio_net_load_ebpf(VirtIONet *n)
- {
-     bool ret = false;
- 
-     if (virtio_net_attach_ebpf_to_backend(n->nic, -1)) {
--        if (!(n->ebpf_rss_fds
--                && virtio_net_load_ebpf_fds(n, errp))) {
-+        if (!(n->ebpf_rss_fds && virtio_net_load_ebpf_fds(n))) {
-             ret = ebpf_rss_load(&n->ebpf_rss);
-         }
-     }
-@@ -3809,7 +3806,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-     net_rx_pkt_init(&n->rx_pkt);
- 
-     if (virtio_has_feature(n->host_features, VIRTIO_NET_F_RSS)) {
--        virtio_net_load_ebpf(n, errp);
-+        virtio_net_load_ebpf(n);
-     }
- }
- 
+-$(OBJS):  %.o:%.c
++%.o: %.c
+ 	$(CLANG) $(INC_FLAGS) \
+                 -D__KERNEL__ -D__ASM_SYSREG_H \
+                 -I../include $(LINUXINCLUDE) \
+                 $(EXTRA_CFLAGS) -c $< -o $@
+ 	$(LLVM_STRIP) -g $@
+-	bpftool gen skeleton rss.bpf.o > rss.bpf.skeleton.h
+-	cp rss.bpf.skeleton.h ../../ebpf/
++
++%.skeleton.h: %.o
++	bpftool gen skeleton $< > $@
++	cp $@ ../../ebpf/
 -- 
 2.42.0
 
