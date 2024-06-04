@@ -4,96 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBC9AC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:37:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7765C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 10:38:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sERWV-0005s5-4V; Tue, 04 Jun 2024 06:36:11 -0400
+	id 1sERY2-0006lf-K0; Tue, 04 Jun 2024 06:37:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sERWT-0005rw-NR
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 06:36:09 -0400
-Received: from wfhigh6-smtp.messagingengine.com ([64.147.123.157])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sERWO-0001qO-5l
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 06:36:09 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailfhigh.west.internal (Postfix) with ESMTP id A95411800137;
- Tue,  4 Jun 2024 06:36:01 -0400 (EDT)
-Received: from imap44 ([10.202.2.94])
- by compute3.internal (MEProxy); Tue, 04 Jun 2024 06:36:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1717497361;
- x=1717583761; bh=Blt/XI23FU4mJ3yMpYaYq+oPK8Bni4UfoDlflQO8Kk8=; b=
- aSdDrVj0TGnqWVudmUOwQq01g/Ts3YyiRvn4QghzqvXrD0C/jK5vRJh2m5HGnIkk
- 5Q9Dgr5kbP4gYAto+9e6l2Qlbqj6ONS8wHYo9D/xanRizAQsIXvn1ag46TXxMauR
- 2nLs26FptTTWQ7jEEWJh+xIY5QF1pFQQIYvk6AfMIbvk3zuR5cPz9auc9Zw1JVtk
- A7Xhn2DK07K3iATba9U8JRN85pVrHYCr1I4hl+3lppLPJog1iYTrsB06tC9GZBOD
- yXKjwYZaTDz/WLZQHdPBjSHaEzYyK6nOeJu2jwAoVJG6LF4zDAhwbdPYvR6JHtv8
- pWmXD2BdfMXhbhBadiVdxQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1717497361; x=
- 1717583761; bh=Blt/XI23FU4mJ3yMpYaYq+oPK8Bni4UfoDlflQO8Kk8=; b=I
- J+S8hrZiE35rhyReP3Vqo96+WQ2Mlh3gxlMmDAjSvmCu+wIeIyVQ+hCwh0XOMTwp
- O7oysV2Ft/Exms3jFIIfRIyEHfYAVeUXXyg2BYiQZPtWnzdb+TeoymUESFIAXLGl
- F5ct/GcE2V03MiEMnYEZCaAVlCO0yJKvvP32YrbeloZkLzYhaH43PBBEKQIAxg5E
- vHOHdH/gDCJdLO1rgTW/JTuO+qIRy/ujZdfN4+Opdp9hPgY/eSwNXfworZpuCb5X
- Kab9ulSfH+fXQiwwJbbXrnxB/jxZwTsKaB3FyPXL/j6N2GHqravHTGhwQyzVWnCs
- sMnr9iaH1qPXxegJzDitA==
-X-ME-Sender: <xms:EO5eZmtzLQ-ekXTkQDuiQF6QVkvoKoXDDQsTKjZhFx2OYssVuRglDg>
- <xme:EO5eZrdipsSt7hZeHQPw_a954wj8CNHLwCzhitGli66ZV-MvXzb-ABzXJrbGJtgWs
- eWoUfm3qeQWnbAxvRU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelgedgvdeiucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfl
- ihgrgihunhcujggrnhhgfdcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtoh
- hmqeenucggtffrrghtthgvrhhnpedufeegfeetudeghefftdehfefgveffleefgfehhfej
- ueegveethfduuddvieehgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
- grihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhm
-X-ME-Proxy: <xmx:EO5eZhzKnOHcAH9IDf4a30U29Xg3qSKhDJLafOhbzZGWMyRVsSMhmA>
- <xmx:EO5eZhOiCszfoBpC7mT6krWWiBdvhk8bZINPetFSF3AllvdaN3ac0w>
- <xmx:EO5eZm_Y642WqR_7gcGDwwrXdhbOcF2A0ZwOV5fltC13vVWR6afn6A>
- <xmx:EO5eZpV9GZtmdFJB97UkGIaNQviA2IDFL0dLFM44ebdVxmOWwtHpZA>
- <xmx:Ee5eZtYgemrC0HiqjlEd3knIRsh9jTTmY5ztQ8JXHiDjPDoJWZ1aJlPZ>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id A7D5336A0074; Tue,  4 Jun 2024 06:36:00 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-497-g97f96844c-fm-20240526.001-g97f96844
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sERY0-0006lN-Gl
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 06:37:44 -0400
+Received: from mail-qk1-x72b.google.com ([2607:f8b0:4864:20::72b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sERXs-0002Ik-N9
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 06:37:38 -0400
+Received: by mail-qk1-x72b.google.com with SMTP id
+ af79cd13be357-794c3946468so58184485a.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 03:37:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1717497455; x=1718102255; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TOnDgupvw3Q5CPgiTXtf+qdjCXkFSFK/HfdTMFR4G9I=;
+ b=f/cXPTxaR/G5t8zDZ0h0htQ+Qel5m6tVpMJGnlMJnfirpWcK2iw0s3wxgs7/2sqjrc
+ N3fCiRjQvcu2hssNsbqllAD5IfGBieRDiTMaFZyQmkveMnEfweh1c4Uf+26skIwvRR4V
+ LOh7BSrqNmEbkA50bbutAWaslQjPY4jtFWyRsZ70sFzLKqTmWXleOnaQFwIa+s5fnxKv
+ 7cCsaCIYJ31C6YoCN2rIADo0nVOmOPAwsk7U856AZNXcZtTXECiBKKuMti7AoUEzDvpx
+ G5jNdN9PNQJvY4KthTm8+ftKX4wl50JHYanlJmJ80JX7PJ1TupuOqCQod7VCw064qExe
+ EN6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717497455; x=1718102255;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TOnDgupvw3Q5CPgiTXtf+qdjCXkFSFK/HfdTMFR4G9I=;
+ b=nwOPC8fguwjqWuY8WIOcOkkKJoJzW3ONE2WhBxQzHbqcO+moCyYOlcn31sAWlooc0H
+ 7aq0Cd19cNZg1n4jzDdiQJcxxYUuegx2P7MTG3g4s81HMsM19b/CB3UF3KsGzkx2J4+G
+ NH4Ss7hy9r2rTzc/IIPmavi4YR0bEBRUq8Gkx06I6iAhxGdWSjo+JGQkk+kyWG874Ttm
+ BQPDtIdiBinx9YmSw9NWM9gakgmQRF6f+1TKOuy9FXVN0JIgW3XkfYRNKYUODyvg3ZF3
+ WAUDhwJL3eRnOLN/Pc2K8SM+ra8gwZOAZkpryfuth0I7f2zTyKUH5XalDRW8fP/hvEOd
+ gpTQ==
+X-Gm-Message-State: AOJu0YxzNA7A2+fxmmX9uPvwtNm6gu26y3hQAW94Pzr8Ic5ynkvSkQxh
+ s2NPvM5xGtcOUc4nK639bP25pbnSiZtZI8P259ufKAqrx6hLX4n2Zr93D5AfYWF4yFaD3KwuTih
+ ByytF3xLcAs5RyF/b08kcbN554NU=
+X-Google-Smtp-Source: AGHT+IH5xKImrZX/KUbZXHSBkfwID1MZpDA6iLjalm3r++xRfPoRjGz97jKWTSPzamuitS7uv3wHrIlJdTnV+NhJ9HA=
+X-Received: by 2002:a05:620a:40d5:b0:792:e9e4:4a10 with SMTP id
+ af79cd13be357-794f5c98081mr1466743785a.34.1717497454712; Tue, 04 Jun 2024
+ 03:37:34 -0700 (PDT)
 MIME-Version: 1.0
-Message-Id: <78c0f76a-327a-4f67-a016-c9f73560494b@app.fastmail.com>
-In-Reply-To: <a3700c0c-889e-4bae-8a91-e374f8a5e03a@linaro.org>
-References: <20240508-loongson3-ipi-v1-0-1a7b67704664@flygoat.com>
- <20240508-loongson3-ipi-v1-3-1a7b67704664@flygoat.com>
- <a3700c0c-889e-4bae-8a91-e374f8a5e03a@linaro.org>
-Date: Tue, 04 Jun 2024 11:35:41 +0100
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "QEMU devel" <qemu-devel@nongnu.org>, "Song Gao" <gaosong@loongson.cn>
-Cc: "Huacai Chen" <chenhuacai@kernel.org>
-Subject: Re: [PATCH 3/5] hw/intc/loongson_ipi: Implement IOCSR address space
- for MIPS
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=64.147.123.157;
- envelope-from=jiaxun.yang@flygoat.com; helo=wfhigh6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20240531185804.119557-1-dongwon.kim@intel.com>
+In-Reply-To: <20240531185804.119557-1-dongwon.kim@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 4 Jun 2024 14:37:22 +0400
+Message-ID: <CAJ+F1C+PG-Tf-ADFTgBGq5nvJSCEVhFW0Pk6a2Pf7gVurbJeuw@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 0/2] ui/gtk: Introduce new param - Connectors
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000b0e2ef061a0e0919"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72b;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x72b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,34 +87,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000b0e2ef061a0e0919
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi
 
-=E5=9C=A82024=E5=B9=B46=E6=9C=883=E6=97=A5=E5=85=AD=E6=9C=88 =E4=B8=8B=E5=
-=8D=884:45=EF=BC=8CPhilippe Mathieu-Daud=C3=A9=E5=86=99=E9=81=93=EF=BC=9A
-[...]
+On Fri, May 31, 2024 at 11:00=E2=80=AFPM <dongwon.kim@intel.com> wrote:
+
+> From: Dongwon Kim <dongwon.kim@intel.com>
 >
-> LoongsonIPI should have an array of CPUState[] and MemoryRegion[].
-> (Or maybe add them to IPICore.)
-> Expose them as QOM link properties.
+> This patch series is a replacement of
+> https://mail.gnu.org/archive/html/qemu-devel/2023-06/msg03989.html
 >
-> Caller wire them while creating the LoongsonIPI.
-> Then loongson_ipi_realize() resolves them once.
-> No need to call get_cpu_iocsr_as() and ipi_getcpu() for each MMIO
-> access IMO.
-
-I was tempted to do so but realized that arch_id might be discontinuous
-for LoongArch.
-
-@Song, can you confirm if it's viable?
-
-Thanks
-- Jiaxun
+> There is a need, expressed by several users, to assign ownership of one
+> or more physical monitors/connectors to individual guests. This creates
+> a clear notion of which guest's contents are being displayed on any given
+> monitor. Given that there is always a display server/compositor running
+> on the host, monitor ownership can never truly be transferred to guests.
+> However, the closest approximation is to request the host compositor to
+> fullscreen the guest's windows on individual monitors. This allows for
+> various configurations, such as displaying four different guests' windows
+> on four different monitors, a single guest's windows (or virtual consoles=
+)
+> on four monitors, or any similar combination.
 >
->> +
->> +    if (!iocsr_as) {
->> +        return MEMTX_DECODE_ERROR;
->> +    }
+> This patch series attempts to accomplish this by introducing a new
+> parameter named "connector" to assign monitors to the GFX VCs associated
+> with a guest. If the assigned monitor is not connected, the guest's windo=
+w
+> will not be displayed, similar to how a host compositor behaves when
+> connectors are not connected. Once the monitor is hot-plugged, the guest'=
+s
+> window(s) will be positioned on the assigned monitor.
+>
+> Usage example:
+>
+> -display gtk,gl=3Don,connectors=3DDP-1:eDP-1:HDMI-2...
+>
+> In this example, the first graphics virtual console will be placed on the
+> DP-1 display, the second on eDP-1, and the third on HDMI-2.
+>
+>
+Unfortunately, this approach with GTK is doomed. gtk4 dropped the
+gtk_window_set_position() altogether.
+
+It's not even clear how the different monitors/outputs/connectors are
+actually named, whether they are stable etc (not mentioning the
+portability).
+
+Window placement & geometry is a job for the compositor. Can you discuss
+this issue with GTK devs & the compositor you are targeting?
 
 --=20
-- Jiaxun
+Marc-Andr=C3=A9 Lureau
+
+--000000000000b0e2ef061a0e0919
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_quote=
+"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, May 31, 2024 at 11:00=E2=80=
+=AFPM &lt;<a href=3D"mailto:dongwon.kim@intel.com">dongwon.kim@intel.com</a=
+>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Fro=
+m: Dongwon Kim &lt;<a href=3D"mailto:dongwon.kim@intel.com" target=3D"_blan=
+k">dongwon.kim@intel.com</a>&gt;<br>
+<br>
+This patch series is a replacement of<br>
+<a href=3D"https://mail.gnu.org/archive/html/qemu-devel/2023-06/msg03989.ht=
+ml" rel=3D"noreferrer" target=3D"_blank">https://mail.gnu.org/archive/html/=
+qemu-devel/2023-06/msg03989.html</a><br>
+<br>
+There is a need, expressed by several users, to assign ownership of one<br>
+or more physical monitors/connectors to individual guests. This creates<br>
+a clear notion of which guest&#39;s contents are being displayed on any giv=
+en<br>
+monitor. Given that there is always a display server/compositor running<br>
+on the host, monitor ownership can never truly be transferred to guests.<br=
+>
+However, the closest approximation is to request the host compositor to<br>
+fullscreen the guest&#39;s windows on individual monitors. This allows for<=
+br>
+various configurations, such as displaying four different guests&#39; windo=
+ws<br>
+on four different monitors, a single guest&#39;s windows (or virtual consol=
+es)<br>
+on four monitors, or any similar combination.<br>
+<br>
+This patch series attempts to accomplish this by introducing a new<br>
+parameter named &quot;connector&quot; to assign monitors to the GFX VCs ass=
+ociated<br>
+with a guest. If the assigned monitor is not connected, the guest&#39;s win=
+dow<br>
+will not be displayed, similar to how a host compositor behaves when<br>
+connectors are not connected. Once the monitor is hot-plugged, the guest&#3=
+9;s<br>
+window(s) will be positioned on the assigned monitor.<br>
+<br>
+Usage example:<br>
+<br>
+-display gtk,gl=3Don,connectors=3DDP-1:eDP-1:HDMI-2...<br>
+<br>
+In this example, the first graphics virtual console will be placed on the<b=
+r>
+DP-1 display, the second on eDP-1, and the third on HDMI-2.<br>
+<br>
+</blockquote></div><div><br></div><div>Unfortunately, this approach with GT=
+K is doomed. gtk4 dropped the gtk_window_set_position() altogether.</div><d=
+iv><br></div><div>It&#39;s not even clear how the different monitors/output=
+s/connectors are actually named, whether they are stable etc (not mentionin=
+g the portability).</div><div><br></div><div>Window placement &amp; geometr=
+y is a job for the compositor. Can you discuss this issue with GTK devs &am=
+p; the compositor you are targeting?<br></div><br><span class=3D"gmail_sign=
+ature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc=
+-Andr=C3=A9 Lureau<br></div></div>
+
+--000000000000b0e2ef061a0e0919--
 
