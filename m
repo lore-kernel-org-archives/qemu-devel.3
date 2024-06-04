@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD1ABC25B75
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 01:57:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB8E8C25B75
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 01:59:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEJQQ-0006kZ-Fn; Mon, 03 Jun 2024 21:57:22 -0400
+	id 1sEJRm-0007Su-QZ; Mon, 03 Jun 2024 21:58:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEJQP-0006jl-HK
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 21:57:21 -0400
-Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sEJRl-0007Se-Pg; Mon, 03 Jun 2024 21:58:45 -0400
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEJQL-0004WX-Qq
- for qemu-devel@nongnu.org; Mon, 03 Jun 2024 21:57:21 -0400
-Received: by mail-qk1-x734.google.com with SMTP id
- af79cd13be357-794ab13bb88so33039385a.2
- for <qemu-devel@nongnu.org>; Mon, 03 Jun 2024 18:57:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sEJRk-0004jS-4g; Mon, 03 Jun 2024 21:58:45 -0400
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-4eb0c729c2eso166886e0c.3; 
+ Mon, 03 Jun 2024 18:58:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717466237; x=1718071037; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=B/lFT36PutvwPXHDUp2hg1G8h6qJNOMSob5RR41OOsM=;
- b=jBbJatliFMPR/JH/zzZSuaCaJhmSQuJu5GrKzLrfOOr/S6XWwU8llRe8uuQd/GfbwD
- tDuf60NPihooJTRUGSzTuOypdkDvTSwl0hwGS93A462fal0JyaT3IKU1/we68TWNixAs
- FPjnJ5VceM4j/QUlXeP9IVgOAdgshl9B7pZKYmCK3dgaDzDLFxZsigKJGGXyYgEh15fl
- 65yuMOOvampKepqUa5mB/mfuIasa7x3NBAltpZ2QzASJE+mN2l3TVJYGVjMhXU98Px9x
- K/dROJ8F6449+QJTArbsgxxxWU8OOeo+D4EV64jGdyWX5m9tB887BGJv8EXIw7Ahnfqc
- 7YSA==
+ d=gmail.com; s=20230601; t=1717466322; x=1718071122; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bJuj2RFH0dFtelfSdxHxxfez/21ZSAxFzVTSpj1uwm4=;
+ b=U1ksQg8/0JuPHTnxYftgC09v3EvoynexGmDUrvY6L3OZGEvCu7LLR/yrUgaE3Yh6pJ
+ tdJoYvAqW/DPsOfIA3YbcukTVQSTTH72tlL2bxSbiImaGdR6FvzTVccuCNmaAbzG1QjA
+ y7QSvcy28rZfN49Okt7IyagnXvZQXaanGc/uvJnlF6i090eQmtSpcMLisqtMGe+AHAmW
+ 5tAswmsmr9OSFP0v48VbiWopM5K0GYnAQDg47JAy5sk3RMGyygiwOIqgG6IusE4X20gD
+ 047jE/vKzuwqOQ2b5TZTjaxp9U7cEijcQl3KoXhs6G8ZoaGVsyzhIQWvvv4aJRbx7Fac
+ RxrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717466237; x=1718071037;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=B/lFT36PutvwPXHDUp2hg1G8h6qJNOMSob5RR41OOsM=;
- b=g+AEIzfNWblDInAdQbocDYlHD4P1BPIDqsJmiObr0aQEf072k5Iyc2dOXmch7hT76i
- pr951CjAE8IcUWJE56JoQe28o8XLlACMi0gv+pKThACOo4iKmaaNyvNx5C7uiaXAWiV1
- VlukVPRdqARJjqdqD10MWPD88A6tfhsn0AmB9NBfa8sKu04H9aV052zhl1ta4qafm/lt
- AvDC64bs5LwWccg7EnzViI13howXHDlRuXal0ceMN6bXOM6OKUOYM8P9z7Og0p32l9Yd
- 21p467b/kR+/Z+lrVCQgO4sSKjhsHg3m/viHlzTqXZfuPgvBtCJ/eQPdTa/AB3kIozhT
- PFZg==
+ d=1e100.net; s=20230601; t=1717466322; x=1718071122;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bJuj2RFH0dFtelfSdxHxxfez/21ZSAxFzVTSpj1uwm4=;
+ b=Uk+GiMRu3tnifHA7Em7JP/1CZC3Pnhthcc/YzS1BpcrOLpnjjypjQ15OKI7TiGMHb0
+ OJbzHGcSOIgUP/udcKfrRu4/hqmUInAGDIXM4Y7aArsMVWYipoMZytoi7oSs9amJzuWE
+ 6PvPYCCx5b7doTA9keC0q9jV4QlCpELVfGx886cW5WrB6XcqmKSjB98RvCUlowgEmBth
+ uoczZOkeUrWIcp04nazhcqCD6eRfZ+jP2rka6jnPn+I/Zi3h45xYeBRYEQAkVm+qHW77
+ 7fkrv+xNHBhRkOwh8VfOHEDP4mtp223tl27CDL7+R6AVUegXFUsntOCXLjMJxu+FD1kp
+ ciFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXeDQ3uG+b/QfIN3THbXASlfGXCGBle5rS9DgiquMLFsnnYj3Qo2UVDix5+VOx614XjfcHO3aI3ckjE6fWmVJ0BpbPFvvQ=
-X-Gm-Message-State: AOJu0YzeS0qjAE0Sq6t6nuQyvGxt19PgO+lGcF8ByoNdP5Hy6HTybXwH
- JMHY3TMOhp5n1l5K0afvfePzkym0Jls2qluQAKBRraBGdE0SGiASuwfM6eWhwRo=
-X-Google-Smtp-Source: AGHT+IEYH+ZDJuRbX5ig48d3I5/XOOFQpR+UtdLomyQajAJJlnjaGePTUAVnFJF/WqHRC+LVPZUCKQ==
-X-Received: by 2002:a05:620a:22a7:b0:794:f9df:2cd8 with SMTP id
- af79cd13be357-794f9df313bmr877266785a.48.1717466236821; 
- Mon, 03 Jun 2024 18:57:16 -0700 (PDT)
-Received: from [192.168.223.227] ([50.233.235.3])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-794f318857csm326393285a.122.2024.06.03.18.57.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 03 Jun 2024 18:57:16 -0700 (PDT)
-Message-ID: <e5c934e6-6b5a-4fcc-95a5-02b1257d31ad@linaro.org>
-Date: Mon, 3 Jun 2024 20:57:14 -0500
+ AJvYcCWrkEN2VKhOElWuX+6iC8NBtMKfB/XAMpWU8DAJDYTPcMs0mH+LUHlh8PKqn5xk3tunfrZuDEMbzTUzQVWzN3CDHHIr7sQ=
+X-Gm-Message-State: AOJu0YySdmrZwHRcFI4+VvXJJOutbgnzQiTUDuGNxohu/hQ7WrODKMmi
+ 9pqooLg6yZvl17akMNjJX+oZ/JFz775TBLWMDqq5e+AR0zNLhI/hIIUwIP2lyQvkCRT4a4D+OV4
+ HME2DUzSjDpVjWcOys/XKtnslXGA=
+X-Google-Smtp-Source: AGHT+IHvg3iO3Of846QvT1bukC9j240Ohyb+a9kkm5pKCBK6p/c5e9Xv/e58sCehz33Q89V3itQZzIJunlXEWR5gEZU=
+X-Received: by 2002:a1f:fc0b:0:b0:4d3:36b9:2c26 with SMTP id
+ 71dfb90a1353d-4eb02f45d3emr10352373e0c.14.1717466322476; Mon, 03 Jun 2024
+ 18:58:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/12] docs/ci: clean-up references for consistency
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240603175328.3823123-1-alex.bennee@linaro.org>
- <20240603175328.3823123-7-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240603175328.3823123-7-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
- envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x734.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240227012405.71650-1-alvinga@andestech.com>
+ <SEYPR03MB6700853CCA2198D3E7DA7E7DA8202@SEYPR03MB6700.apcprd03.prod.outlook.com>
+In-Reply-To: <SEYPR03MB6700853CCA2198D3E7DA7E7DA8202@SEYPR03MB6700.apcprd03.prod.outlook.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 4 Jun 2024 11:58:16 +1000
+Message-ID: <CAKmqyKPT35UqF3xFqKbGgOx7ba_nDBVWjg20czMeJYfsJY8zvw@mail.gmail.com>
+Subject: Re: [PATCH v4 0/4] RISC-V: Modularize common match conditions for
+ trigger
+To: =?UTF-8?B?QWx2aW4gQ2hlLUNoaWEgQ2hhbmco5by15ZOy5ZiJKQ==?=
+ <alvinga@andestech.com>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "alistair.francis@wdc.com" <alistair.francis@wdc.com>, 
+ "bin.meng@windriver.com" <bin.meng@windriver.com>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>, 
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>, 
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,22 +99,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/24 12:53, Alex Bennée wrote:
-> Document we have split up build-environment by distro and update the
-> references that exist in the code base to be correct.
-> 
-> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
-> Message-Id:<20240529160934.982373-7-alex.bennee@linaro.org>
-> ---
->   docs/devel/ci-runners.rst.inc                       | 13 ++++++-------
->   .../custom-runners/ubuntu-22.04-aarch32.yml         |  2 +-
->   .../custom-runners/ubuntu-22.04-aarch64.yml         |  2 +-
->   .gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml  |  2 +-
->   scripts/ci/setup/{ => ubuntu}/build-environment.yml |  0
->   5 files changed, 9 insertions(+), 10 deletions(-)
->   rename scripts/ci/setup/{ => ubuntu}/build-environment.yml (100%)
+On Thu, Mar 7, 2024 at 12:36=E2=80=AFPM Alvin Che-Chia Chang(=E5=BC=B5=E5=
+=93=B2=E5=98=89)
+<alvinga@andestech.com> wrote:
+>
+> Hi Alistair,
+>
+> Please also take a look at this series, I guess it is ready to be applied=
+, thanks!
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This is all acked now, do you mind rebasing on
+https://github.com/alistair23/qemu/tree/riscv-to-apply.next and
+sending a new version
 
-r~
+Alistair
+
+>
+>
+> BRs,
+> Alvin
+>
+> > -----Original Message-----
+> > From: Alvin Che-Chia Chang(=E5=BC=B5=E5=93=B2=E5=98=89) <alvinga@andest=
+ech.com>
+> > Sent: Tuesday, February 27, 2024 9:24 AM
+> > To: qemu-riscv@nongnu.org; qemu-devel@nongnu.org
+> > Cc: alistair.francis@wdc.com; bin.meng@windriver.com;
+> > liwei1518@gmail.com; dbarboza@ventanamicro.com;
+> > zhiwei_liu@linux.alibaba.com; Alvin Che-Chia Chang(=E5=BC=B5=E5=93=B2=
+=E5=98=89)
+> > <alvinga@andestech.com>
+> > Subject: [PATCH v4 0/4] RISC-V: Modularize common match conditions for
+> > trigger
+> >
+> > According to RISC-V Debug specification ratified version 0.13 [1] (also=
+ applied
+> > to version 1.0 [2] but it has not been ratified yet), the enabled privi=
+lege levels
+> > of the trigger is common match conditions for all the types of the trig=
+ger.
+> >
+> > This series modularize the code for checking the privilege levels of ty=
+pe 2/3/6
+> > triggers by implementing functions trigger_common_match() and
+> > trigger_priv_match().
+> >
+> > Additional match conditions, such as CSR tcontrol and textra, can be fu=
+rther
+> > implemented into trigger_common_match() in the future.
+> >
+> > [1]: https://github.com/riscv/riscv-debug-spec/releases/tag/task_group_=
+vote
+> > [2]: https://github.com/riscv/riscv-debug-spec/releases/tag/1.0.0-rc1-a=
+sciidoc
+> >
+> > Changes from v3:
+> > - Change this series to target Debug Spec. version 0.13
+> >
+> > Changes from v2:
+> > - Explicitly mention the targeting version of RISC-V Debug Spec.
+> >
+> > Changes from v1:
+> > - Fix typo
+> > - Add commit description for changing behavior of looping the triggers
+> >   when we check type 2 triggers.
+> >
+> > Alvin Chang (4):
+> >   target/riscv: Add functions for common matching conditions of trigger
+> >   target/riscv: Apply modularized matching conditions for breakpoint
+> >   target/riscv: Apply modularized matching conditions for watchpoint
+> >   target/riscv: Apply modularized matching conditions for icount trigge=
+r
+> >
+> >  target/riscv/debug.c | 124 +++++++++++++++++++++++++++++--------------
+> >  1 file changed, 83 insertions(+), 41 deletions(-)
+> >
+> > --
+> > 2.34.1
+>
+> CONFIDENTIALITY NOTICE:
+>
+> This e-mail (and its attachments) may contain confidential and legally pr=
+ivileged information or information protected from disclosure. If you are n=
+ot the intended recipient, you are hereby notified that any disclosure, cop=
+ying, distribution, or use of the information contained herein is strictly =
+prohibited. In this case, please immediately notify the sender by return e-=
+mail, delete the message (and any accompanying documents) and destroy all p=
+rinted hard copies. Thank you for your cooperation.
+>
+> Copyright ANDES TECHNOLOGY CORPORATION - All Rights Reserved.
 
