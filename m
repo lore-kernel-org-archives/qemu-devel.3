@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 925ECC25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 14:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 914C3C27C50
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 14:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEVXf-0007at-6O; Tue, 04 Jun 2024 10:53:40 -0400
+	id 1sEVcq-0001N8-PT; Tue, 04 Jun 2024 10:59:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sEVXb-0007aD-9w; Tue, 04 Jun 2024 10:53:36 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sEVcp-0001Ma-7z
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:58:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sEVXX-0003fQ-OO; Tue, 04 Jun 2024 10:53:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1717512812; x=1749048812;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=SGSNBVT24CLgFYh0gmcbAlq8CnGk2lYt6ssX5UVBfmM=;
- b=ZGJrmyPJ+8RpF8zdHSgVr97qUBRHqHTJxRUYjaaP8EOplVeltJUsyuWB
- RbX6IplyL8bX9HPW7ic/rQ+EyGHVuLrUSGjf5p7uGhODotVZsXCW/H5Fh
- 22dac3Y7z6IhErBtGzv8AiFJGHIOH2YMV6jg9Lof6b4WUNCp8tYfrhnPE
- bz+IVkR0SjyNtjgay0PaegWDreCz7fCQTDa5fcpbFHhPLvuMjX2zrd9FF
- D3nHhiUbpp8dR0t5EWpPYm3NYfD0j/9GxCTLQp4t+RaZGr2U0v4iFTU5K
- Md3GFAhwvJFeqVa0u6FMbc/tMdINGYfLomqyFuLNWhEqtvSE6DFklGIEa w==;
-X-CSE-ConnectionGUID: 0YurhFL9QDqqqhbHK7OqLA==
-X-CSE-MsgGUID: t2kH48nGS1GJ+5CreGUuXg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11093"; a="13813233"
-X-IronPort-AV: E=Sophos;i="6.08,214,1712646000"; d="scan'208";a="13813233"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jun 2024 07:53:27 -0700
-X-CSE-ConnectionGUID: +MSLjNmbSHO9xJyMF2SCGw==
-X-CSE-MsgGUID: mt8LKw8XR6ags7DykOk4/Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,214,1712646000"; d="scan'208";a="41702943"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.125.247.52])
- ([10.125.247.52])
- by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jun 2024 07:53:24 -0700
-Message-ID: <e112bdcf-8a38-4def-9ff8-9754d4822eb5@intel.com>
-Date: Tue, 4 Jun 2024 22:53:21 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sEVcn-00052L-G1
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 10:58:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717513135;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VZmEwnMSm8S3niIWGQ4Wbt4HKv4oA4g6fGRw+/0YiZc=;
+ b=NWJQCuE0fHFBQEKpij0cDa+JZ9J3t3VeXkusqe5elGclZWtxa8GsXP3ktLa6UCPMQYmqWO
+ tEqj/zyajS2BxLxe/M5mWAcBReHgY2u9SHkpZJzMzXKJqRmVyY711xErZPlrvSlF26U0ay
+ WGJDL3Ih5z35rYU+XXu7dW61Q4xArcs=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-104-KmaWKtJUP3WA0a8IEtrI-g-1; Tue,
+ 04 Jun 2024 10:58:54 -0400
+X-MC-Unique: KmaWKtJUP3WA0a8IEtrI-g-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA98A18E6E29; Tue,  4 Jun 2024 14:58:52 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E4FA01955D87; Tue,  4 Jun 2024 14:58:51 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CA99421E66E5; Tue,  4 Jun 2024 16:58:49 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Eric
+ Blake <eblake@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] qapi: clarify that the default is backend dependent
+In-Reply-To: <a5rtqdvsqevk2pobqipmfiv5eazr5koffe3tn372i7bojpshhg@q7uxoverycvu>
+ (Stefano Garzarella's message of "Tue, 4 Jun 2024 15:21:15 +0200")
+References: <20240523133302.103858-1-sgarzare@redhat.com>
+ <877cf61ib1.fsf@pond.sub.org>
+ <a5rtqdvsqevk2pobqipmfiv5eazr5koffe3tn372i7bojpshhg@q7uxoverycvu>
+Date: Tue, 04 Jun 2024 16:58:49 +0200
+Message-ID: <875xuo69g6.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] i386/cpu: fixup number of addressable IDs for
- processor cores in the physical package
-To: Zhao Liu <zhao1.liu@intel.com>, Chuang Xu <xuchuangxclwt@bytedance.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, xieyongji@bytedance.com,
- imammedo@redhat.com, qemu-stable@nongnu.org,
- Guixiong Wei <weiguixiong@bytedance.com>,
- Yipeng Yin <yinyipeng@bytedance.com>
-References: <20240603083641.97241-1-xuchuangxclwt@bytedance.com>
- <Zl7hpyutlWN5iE+6@intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <Zl7hpyutlWN5iE+6@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.288, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,92 +88,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/2024 5:43 PM, Zhao Liu wrote:
-> Hi Chuang,
-> 
-> On Mon, Jun 03, 2024 at 04:36:41PM +0800, Chuang Xu wrote:
->> Date: Mon,  3 Jun 2024 16:36:41 +0800
->> From: Chuang Xu <xuchuangxclwt@bytedance.com>
->> Subject: [PATCH v2] i386/cpu: fixup number of addressable IDs for processor
->>   cores in the physical package
->> X-Mailer: git-send-email 2.24.3 (Apple Git-128)
+Stefano Garzarella <sgarzare@redhat.com> writes:
+
+> On Mon, Jun 03, 2024 at 11:34:10AM GMT, Markus Armbruster wrote:
+>>Stefano Garzarella <sgarzare@redhat.com> writes:
 >>
->> When QEMU is started with:
->> -cpu host,host-cache-info=on,l3-cache=off \
->> -smp 2,sockets=1,dies=1,cores=1,threads=2
->> Guest can't acquire maximum number of addressable IDs for processor cores in
->> the physical package from CPUID[04H].
+>>> The default value of the @share option of the @MemoryBackendProperties
+>>> eally depends on the backend type, so let's document it explicitly and
+>>> add the default value where it was missing.
+>>>
+>>> Cc: David Hildenbrand <david@redhat.com>
+>>> Suggested-by: Markus Armbruster <armbru@redhat.com>
+>>> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+>>> ---
+>>> I followed how we document @share in memfd and epc, but I don't like it
+>>> very much, I just can't think of a better way, so if you have a suggestion
+>>> I can change them in all of them.
+>>>
+>>> Thanks,
+>>> Stefano
+>>> ---
+>>>  qapi/qom.json | 4 +++-
+>>>  1 file changed, 3 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/qapi/qom.json b/qapi/qom.json
+>>> index 38dde6d785..8463bd32a2 100644
+>>> --- a/qapi/qom.json
+>>> +++ b/qapi/qom.json
+>>> @@ -600,7 +600,7 @@
+>>   ##
+>>   # @MemoryBackendProperties:
+>>   #
+>>   # Properties for objects of classes derived from memory-backend.
+>>   #
 >>
->> When testing Intel TDX, guest attempts to acquire extended topology from CPUID[0bH],
->> but because the TDX module doesn't provide the emulation of CPUID[0bH],
->> guest will instead acquire extended topology from CPUID[04H]. However,
->> due to QEMU's inaccurate emulation of CPUID[04H], one of the vcpus in 2c TDX
->> guest would be offline.
-> 
-> I guess this case is based on downstream's TDX patches... Since TDX
-> hasn't landed in QEMU yet, it's a bit ahead of the curve to elaborate on
-> TDX-specific case.
-> 
-> Because normal VM will also face the such cache topology error, I think
-> it could be stated a bit more generically like:
-
-yes. it's not TDX specific though it's found by TDX case.
-
-I think We can reproduce it by limiting the "min-level" to less than 0xb 
-and disable "full-cpuid-auto-level". With it, CPUID leaves 0xb are not 
-exposed to guest and guest will use leaves 0x4 to enumerate the CPU 
-topology.
-
-> When creating a CPU topology of 1 core per package, host-cache-info only
-> uses the Host's addressable core IDs field (CPUID.04H.EAX[bits 31-26]),
-> resulting in a conflict (on the multicore Host) between the Guest core
-> topology information in this field and the Guest's actual cores number.
-> 
-> Fix it by removing the unnecessary condition to cover 1 core per package
-> case. This is safe because cores_per_pkg will not be 0 and will be at
-> least 1.
-> 
->> Fix it by removing the unnecessary condition.
+>>[...]
 >>
->> Fixes: d7caf13b5fcf742e5680c1d3448ba070fc811644 ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
-
-yeah. This is the exact commit that introduced the issue. Because it moved
-
-	*eax &= ~0xFC000000;
-
-into the condition of
-
-	cs->nr_cores > 1
-
-> 12 characters (d7caf13b5fcf) is enough. No blank line. ;-)
-> 
->> Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
->> Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
->> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
->> ---
->>   target/i386/cpu.c | 6 ++----
->>   1 file changed, 2 insertions(+), 4 deletions(-)
+>>>  #     preallocation threads (default: none) (since 7.2)
+>>>  #
+>>>  # @share: if false, the memory is private to QEMU; if true, it is
+>>> -#     shared (default: false)
+>>> +#     shared (default depends on the backend type)
 >>
->> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->> index bc2dceb647..b68f7460db 100644
->> --- a/target/i386/cpu.c
->> +++ b/target/i386/cpu.c
->> @@ -6426,10 +6426,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
->>               if (*eax & 31) {
->>                   int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
->>   
->> -                if (cores_per_pkg > 1) {
->> -                    *eax &= ~0xFC000000;
->> -                    *eax |= max_core_ids_in_package(&topo_info) << 26;
->> -                }
->> +                *eax &= ~0xFC000000;
->> +                *eax |= max_core_ids_in_package(&topo_info) << 26;
->>                   if (host_vcpus_per_cache > threads_per_pkg) {
->>                       *eax &= ~0x3FFC000;
->>   
->> -- 
->> 2.20.1
+>>Note for later: the backends are the branches of ObjectOptions that use
+>>MemoryBackendProperties as branch type or as base of their branch type.
+>>These are
 >>
-> 
+>>    memory-backend-epc (uses MemoryBackendEpcProperties)
+>>    memory-backend-file (uses MemoryBackendFileProperties)
+>>    memory-backend-memfd (uses MemoryBackendMemfdProperties)
+>>    memory-backend-ram (uses MemoryBackendProperties)
+>>
+>>>  #
+>>>  # @reserve: if true, reserve swap space (or huge pages) if applicable
+>>>  #     (default: true) (since 6.1)
+>>> @@ -639,6 +639,8 @@
+>>>  #
+>>>  # Properties for memory-backend-file objects.
+>>>  #
+>>> +# The @share boolean option is false by default with file.
+>>> +#
+>>>  # @align: the base address alignment when QEMU mmap(2)s @mem-path.
+>>>  #     Some backend stores specified by @mem-path require an alignment
+>>>  #     different than the default one used by QEMU, e.g. the device DAX
+>>
+>>As stated in the commit message, this matches existing documentation in
+>>memory-backend-epc
+>>
+>>   # The @share boolean option is true by default with epc
+>>
+>>and memory-backend-memfd
+>>
+>>   # The @share boolean option is true by default with memfd.
+>>
+>>I think "with FOO" could be clearer.  Perhaps something like "with
+>>backend 'memory-backend-FOO'.
+>
+> Ack, I'll do.
+>
+>>
+>>However, even with your patch, we're still missing memory-backend-ram.
+>>I can see two solutions:
+>>
+>>1. Create MemoryBackendRamProperties just to have a place for
+>>documenting @share's default.
+>>
+>>2. Document @share's default right where it's defined, roughly like
+>>this:
+>>
+>>   # @share: if false, the memory is private to QEMU; if true, it is
+>>   #     shared (default false for backends memory-backend-file and
+>>   #     memory-backend-ram, true for backends memory-backend-epc and
+>>   #     memory-backend-memfd)
+>>
+>>CON: we need to remember to update this whenever we add another backend.
+>>
+>>PRO: generated documentation is better, in my opinion.
+>>
+>>Thoughts?
+>>
+>
+> Maybe option 2 is slightly better and it's also clearer how to document the default for other backends.
+>
+> When I added a new backend, it was not clear to me how to define the default for an inherited parameter.
+>
+> I would go with 2 if you agree.
+
+I actually like 2 better :)
 
 
