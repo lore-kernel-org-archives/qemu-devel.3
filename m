@@ -4,56 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B880AC27C52
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 951E7C25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 07:39:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEOl9-0001tL-O9; Tue, 04 Jun 2024 03:39:07 -0400
+	id 1sEOkk-0000D4-Nv; Tue, 04 Jun 2024 03:38:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOl7-0001kU-Tv
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:39:05 -0400
+ id 1sEOka-00005Z-UC
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sEOl6-0006Ph-AN
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:39:05 -0400
+ id 1sEOkY-0006Kh-I9
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 03:38:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717486743;
+ s=mimecast20190719; t=1717486710;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V6wYF6GPmM8OuwJc/pDx6VAk3DsnwPDADPmu8GjwvG8=;
- b=eL/1j9yt0UzsxrTn1f4YZMz2dRKgeqvEg5hZTAlFa/WaC4oSIwGb0pbAyM+svPiMOIXRUU
- MF7EhvIXRZAesVyAwb+2LRi7tZHr2tTUNMHIj1vl+psKMUPSjVuvcVuoyxClt+8+SzPtOT
- CYQ3I4vlEBZln7FXJAD2u9B6SIUItJ0=
+ bh=82hqbMYdPr1uYUwb7NUrprcyV37qHF3w3NNm/vFED9o=;
+ b=hxN7/E//J1D9ozrFlH+xDTcmwzUWSUEakrTVYbaqB3F02ywysnQBclO9TZUoBDtUO7bTly
+ J+CNwDaqK5RgLT14BjIl3KVGKy78op1S0wHrTWES1bdC4bRSnK3WoDwjueJ61gs98VIAQ7
+ N3W5h28He9gcRUGeCWb11M3tq55m5VU=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-IBMTlIoxOICa7CZTbjgGaQ-1; Tue,
- 04 Jun 2024 03:39:00 -0400
-X-MC-Unique: IBMTlIoxOICa7CZTbjgGaQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-QzDOPQusNu2CG9fbrSG_aw-1; Tue,
+ 04 Jun 2024 03:38:25 -0400
+X-MC-Unique: QzDOPQusNu2CG9fbrSG_aw-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 051843C0262D;
- Tue,  4 Jun 2024 07:39:00 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F11923806621;
+ Tue,  4 Jun 2024 07:38:24 +0000 (UTC)
 Received: from localhost.localdomain (unknown [10.72.112.238])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 40EC6492BD4;
- Tue,  4 Jun 2024 07:38:57 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 208FD492BD4;
+ Tue,  4 Jun 2024 07:38:22 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
-Cc: Andrew Melnychenko <andrew@daynix.com>,
-	Jason Wang <jasowang@redhat.com>
-Subject: [PULL 20/20] ebpf: Added traces back. Changed source set for eBPF to
- 'system'.
-Date: Tue,  4 Jun 2024 15:37:55 +0800
-Message-ID: <20240604073755.1859-21-jasowang@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 08/20] virtio-net: Add only one queue pair when realizing
+Date: Tue,  4 Jun 2024 15:37:43 +0800
+Message-ID: <20240604073755.1859-9-jasowang@redhat.com>
 In-Reply-To: <20240604073755.1859-1-jasowang@redhat.com>
 References: <20240604073755.1859-1-jasowang@redhat.com>
 MIME-Version: 1.0
@@ -85,78 +83,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Melnychenko <andrew@daynix.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-There was an issue with Qemu build with "--disable-system".
-The traces could be generated and the build fails.
-The traces were 'cut out' for previous patches, and overall,
-the 'system' source set should be used like in pre-'eBPF blob' patches.
+Multiqueue usage is not negotiated yet when realizing. If more than
+one queue is added and the guest never requests to enable multiqueue,
+the extra queues will not be deleted when unrealizing and leak.
 
-Signed-off-by: Andrew Melnychenko <andrew@daynix.com>
+Fixes: f9d6dbf0bf6e ("virtio-net: remove virtio queues if the guest doesn't support multiqueue")
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- ebpf/ebpf_rss.c | 7 +++++++
- ebpf/trace.h    | 1 +
- 2 files changed, 8 insertions(+)
- create mode 100644 ebpf/trace.h
+ hw/net/virtio-net.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/ebpf/ebpf_rss.c b/ebpf/ebpf_rss.c
-index d102f3dd09..87f0714910 100644
---- a/ebpf/ebpf_rss.c
-+++ b/ebpf/ebpf_rss.c
-@@ -25,6 +25,8 @@
- #include "ebpf/rss.bpf.skeleton.h"
- #include "ebpf/ebpf.h"
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 3cee2ef3ac..a8db8bfd9c 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -3743,9 +3743,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+     n->net_conf.tx_queue_size = MIN(virtio_net_max_tx_queue_size(n),
+                                     n->net_conf.tx_queue_size);
  
-+#include "trace.h"
-+
- void ebpf_rss_init(struct EBPFRSSContext *ctx)
- {
-     if (ctx != NULL) {
-@@ -55,18 +57,21 @@ static bool ebpf_rss_mmap(struct EBPFRSSContext *ctx)
-                                    PROT_READ | PROT_WRITE, MAP_SHARED,
-                                    ctx->map_configuration, 0);
-     if (ctx->mmap_configuration == MAP_FAILED) {
-+        trace_ebpf_error("eBPF RSS", "can not mmap eBPF configuration array");
-         return false;
-     }
-     ctx->mmap_toeplitz_key = mmap(NULL, qemu_real_host_page_size(),
-                                    PROT_READ | PROT_WRITE, MAP_SHARED,
-                                    ctx->map_toeplitz_key, 0);
-     if (ctx->mmap_toeplitz_key == MAP_FAILED) {
-+        trace_ebpf_error("eBPF RSS", "can not mmap eBPF toeplitz key");
-         goto toeplitz_fail;
-     }
-     ctx->mmap_indirections_table = mmap(NULL, qemu_real_host_page_size(),
-                                    PROT_READ | PROT_WRITE, MAP_SHARED,
-                                    ctx->map_indirections_table, 0);
-     if (ctx->mmap_indirections_table == MAP_FAILED) {
-+        trace_ebpf_error("eBPF RSS", "can not mmap eBPF indirection table");
-         goto indirection_fail;
-     }
+-    for (i = 0; i < n->max_queue_pairs; i++) {
+-        virtio_net_add_queue(n, i);
+-    }
++    virtio_net_add_queue(n, 0);
  
-@@ -108,12 +113,14 @@ bool ebpf_rss_load(struct EBPFRSSContext *ctx)
- 
-     rss_bpf_ctx = rss_bpf__open();
-     if (rss_bpf_ctx == NULL) {
-+        trace_ebpf_error("eBPF RSS", "can not open eBPF RSS object");
-         goto error;
-     }
- 
-     bpf_program__set_type(rss_bpf_ctx->progs.tun_rss_steering_prog, BPF_PROG_TYPE_SOCKET_FILTER);
- 
-     if (rss_bpf__load(rss_bpf_ctx)) {
-+        trace_ebpf_error("eBPF RSS", "can not load RSS program");
-         goto error;
-     }
- 
-diff --git a/ebpf/trace.h b/ebpf/trace.h
-new file mode 100644
-index 0000000000..abefc46ab1
---- /dev/null
-+++ b/ebpf/trace.h
-@@ -0,0 +1 @@
-+#include "trace/trace-ebpf.h"
+     n->ctrl_vq = virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
+     qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
 -- 
 2.42.0
 
