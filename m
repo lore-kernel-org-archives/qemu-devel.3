@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC43BC25B7E
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 08:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE65EC25B7E
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 08:55:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEPsm-0007p8-H7; Tue, 04 Jun 2024 04:51:04 -0400
+	id 1sEPwc-0000bJ-9r; Tue, 04 Jun 2024 04:55:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sEPsk-0007nU-F3; Tue, 04 Jun 2024 04:51:02 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sEPwb-0000ad-1n
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 04:55:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sEPsh-0002ZG-HR; Tue, 04 Jun 2024 04:51:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1717491059; x=1749027059;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Ap8E/rEAx1h96bUEuIBQzglwJ4IPaipb0Em35hfeCMI=;
- b=ZgQ5ODMYRJA5ogiEGqo68OAdZGOuXkFosYZCqP4YOqO7gd+e8YKeDqfk
- l9PHzZihP+BwGyIkVK4VIrYaPmxpfmsKsjvuEVS6Lxb6B3j2Ixj+AvzuH
- OTvENLEbAsHXQVpgrSEa/jSCo6Je24wRAMGsbCLwsmT38uexegQIxCrKZ
- Nrvta8wMUwkTf1i/7pSfXLDwBPXiycEOCaqsTivrN/zTd0FBKc2eYhD0l
- cWzOzIzxsf4A3oeOgWNqd0EPNg0SQG+Rw9nPD6lFCWLSo9IkL9hJT9SdF
- fafNZvGv61nbhMcK3lx8kL98xcr523jVBgxWVOma+2cIe/TVgLPrMntCv w==;
-X-CSE-ConnectionGUID: MxoCOuMPSCKBfpurCbRG+A==
-X-CSE-MsgGUID: ehPuF1c0R/iAwCLcNuK6lQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11092"; a="24686290"
-X-IronPort-AV: E=Sophos;i="6.08,213,1712646000"; d="scan'208";a="24686290"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jun 2024 01:50:55 -0700
-X-CSE-ConnectionGUID: xgrFahFxRWmNqr5Axiqaqw==
-X-CSE-MsgGUID: 4ZpV1M0jS6m9NzOxuga+5g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,213,1712646000"; d="scan'208";a="68338779"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 04 Jun 2024 01:50:50 -0700
-Date: Tue, 4 Jun 2024 17:06:16 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
-Subject: Re: [RFC v2 1/7] hw/core: Make CPU topology enumeration arch-agnostic
-Message-ID: <Zl7ZCK0SxAFVZckX@intel.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sEPwZ-00032F-HN
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 04:55:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717491299;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7Kh6eB6FJO7y29jcT+D89kAQxKrmCwTX41ilLKqtUEQ=;
+ b=bWJ0Wq10+KYgyx54DE+yvvqSUlbMn8PJlYYOQUfiF87Rj6vkw5Co0kP41dV1EI25fZyWLc
+ G5mNczydJqzMNzgQtGz4DISNnNoTTOaWHWl9Xo23ZhAFH8KUxTfuFdtZ5Y3VGJVjjantQG
+ gjaBGvaKB/SF1cF+1whagMxIbHSyTJk=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-678-m6nBrRR1Plq-R6WoAWdtFA-1; Tue, 04 Jun 2024 04:54:54 -0400
+X-MC-Unique: m6nBrRR1Plq-R6WoAWdtFA-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5831D8025EF;
+ Tue,  4 Jun 2024 08:54:53 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 5656E3C23;
+ Tue,  4 Jun 2024 08:54:52 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6349221E6757; Tue,  4 Jun 2024 10:54:51 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo
+ Habkost
+ <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yanan Wang
+ <wangyanan55@huawei.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Eric Blake <eblake@redhat.com>,  Marcelo
+ Tosatti <mtosatti@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,  Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>,  Sia Jee Heng
+ <jeeheng.sia@starfivetech.com>,  qemu-devel@nongnu.org,
+ kvm@vger.kernel.org,  qemu-riscv@nongnu.org,  qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,  Dapeng Mi
+ <dapeng1.mi@linux.intel.com>,  Yongwei Ma <yongwei.ma@intel.com>
+Subject: Re: [RFC v2 3/7] hw/core: Add cache topology options in -smp
+In-Reply-To: <20240530101539.768484-4-zhao1.liu@intel.com> (Zhao Liu's message
+ of "Thu, 30 May 2024 18:15:35 +0800")
 References: <20240530101539.768484-1-zhao1.liu@intel.com>
- <20240530101539.768484-2-zhao1.liu@intel.com>
- <87plsyfc1r.fsf@pond.sub.org> <Zl7RbLrYUN0cg+t4@intel.com>
- <87zfs19jrj.fsf@pond.sub.org>
+ <20240530101539.768484-4-zhao1.liu@intel.com>
+Date: Tue, 04 Jun 2024 10:54:51 +0200
+Message-ID: <87sext9jfo.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87zfs19jrj.fsf@pond.sub.org>
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,140 +97,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 04, 2024 at 10:47:44AM +0200, Markus Armbruster wrote:
-> Date: Tue, 04 Jun 2024 10:47:44 +0200
-> From: Markus Armbruster <armbru@redhat.com>
-> Subject: Re: [RFC v2 1/7] hw/core: Make CPU topology enumeration
->  arch-agnostic
-> 
-> Zhao Liu <zhao1.liu@intel.com> writes:
-> 
-> > Hi Markus,
-> >
-> > On Mon, Jun 03, 2024 at 02:25:36PM +0200, Markus Armbruster wrote:
-> >> Date: Mon, 03 Jun 2024 14:25:36 +0200
-> >> From: Markus Armbruster <armbru@redhat.com>
-> >> Subject: Re: [RFC v2 1/7] hw/core: Make CPU topology enumeration
-> >>  arch-agnostic
-> >> 
-> >> Zhao Liu <zhao1.liu@intel.com> writes:
-> >> 
-> >> > Cache topology needs to be defined based on CPU topology levels. Thus,
-> >> > define CPU topology enumeration in qapi/machine.json to make it generic
-> >> > for all architectures.
-> >> >
-> >> > To match the general topology naming style, rename CPU_TOPO_LEVEL_SMT
-> >> > and CPU_TOPO_LEVEL_PACKAGE to CPU_TOPO_LEVEL_THREAD and
-> >> > CPU_TOPO_LEVEL_SOCKET.
-> >> >
-> >> > Also, enumerate additional topology levels for non-i386 arches, and add
-> >> > helpers for topology enumeration and string conversion.
-> >> >
-> >> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> >> 
-> >> [...]
-> >> 
-> >> > diff --git a/qapi/machine.json b/qapi/machine.json
-> >> > index bce6e1bbc412..7ac5a05bb9c9 100644
-> >> > --- a/qapi/machine.json
-> >> > +++ b/qapi/machine.json
-> >> > @@ -1667,6 +1667,46 @@
-> >> >       '*reboot-timeout': 'int',
-> >> >       '*strict': 'bool' } }
-> >> >  
-> >> > +##
-> >> > +# @CPUTopoLevel:
-> >> 
-> >> I understand you're moving existing enum CPUTopoLevel into the QAPI
-> >> schema.  I think the idiomatic QAPI name would be CpuTopologyLevel.
-> >> Would you be willing to rename it, or would that be too much churn?
-> >
-> > Sure, I'll rename it as you suggested.
-> >
-> >> > +#
-> >> > +# An enumeration of CPU topology levels.
-> >> > +#
-> >> > +# @invalid: Invalid topology level, used as a placeholder.
-> >> > +#
-> >> > +# @thread: thread level, which would also be called SMT level or logical
-> >> > +#     processor level. The @threads option in -smp is used to configure
-> >> > +#     the topology of this level.
-> >> > +#
-> >> > +# @core: core level. The @cores option in -smp is used to configure the
-> >> > +#     topology of this level.
-> >> > +#
-> >> > +# @module: module level. The @modules option in -smp is used to
-> >> > +#     configure the topology of this level.
-> >> > +#
-> >> > +# @cluster: cluster level. The @clusters option in -smp is used to
-> >> > +#     configure the topology of this level.
-> >> > +#
-> >> > +# @die: die level. The @dies option in -smp is used to configure the
-> >> > +#     topology of this level.
-> >> > +#
-> >> > +# @socket: socket level, which would also be called package level. The
-> >> > +#     @sockets option in -smp is used to configure the topology of this
-> >> > +#     level.
-> >> > +#
-> >> > +# @book: book level. The @books option in -smp is used to configure the
-> >> > +#     topology of this level.
-> >> > +#
-> >> > +# @drawer: drawer level. The @drawers option in -smp is used to
-> >> > +#     configure the topology of this level.
-> >> 
-> >> docs/devel/qapi-code-gen.rst section Documentation markup:
-> >> 
-> >>     For legibility, wrap text paragraphs so every line is at most 70
-> >>     characters long.
-> >> 
-> >>     Separate sentences with two spaces.
-> >
-> > Thank you for pointing this.
-> >
-> > About separating sentences, is this what I should be doing?
-> >
-> > # @drawer: drawer level. The @drawers option in -smp is used to
-> > #  configure the topology of this level.
-> 
-> Like this:
-> 
-> ##
-> # @CPUTopoLevel:
-> #
-> # An enumeration of CPU topology levels.
-> #
-> # @invalid: Invalid topology level.
-> #
-> # @thread: thread level, which would also be called SMT level or
-> #     logical processor level.  The @threads option in -smp is used to
-> #     configure the topology of this level.
-> #
-> # @core: core level.  The @cores option in -smp is used to configure
-> #     the topology of this level.
-> #
-> # @module: module level.  The @modules option in -smp is used to
-> #     configure the topology of this level.
-> #
-> # @cluster: cluster level.  The @clusters option in -smp is used to
-> #     configure the topology of this level.
-> #
-> # @die: die level.  The @dies option in -smp is used to configure the
-> #     topology of this level.
-> #
-> # @socket: socket level, which would also be called package level.
-> #     The @sockets option in -smp is used to configure the topology of
-> #     this level.
-> #
-> # @book: book level.  The @books option in -smp is used to configure
-> #     the topology of this level.
-> #
-> # @drawer: drawer level.  The @drawers option in -smp is used to
-> #     configure the topology of this level.
-> #
-> # Since: 9.1
-> ##
->
+Zhao Liu <zhao1.liu@intel.com> writes:
 
-I see, thanks very much for your patience.
+> Add "l1d-cache", "l1i-cache". "l2-cache", and "l3-cache" options in
+> -smp to define the cache topology for SMP system.
+>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+
+[...]
+
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 7ac5a05bb9c9..8fa5af69b1bf 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -1746,6 +1746,23 @@
+>  #
+>  # @threads: number of threads per core
+>  #
+> +# @l1d-cache: topology hierarchy of L1 data cache. It accepts the CPU
+> +#     topology enumeration as the parameter, i.e., CPUs in the same
+> +#     topology container share the same L1 data cache. (since 9.1)
+> +#
+> +# @l1i-cache: topology hierarchy of L1 instruction cache. It accepts
+> +#     the CPU topology enumeration as the parameter, i.e., CPUs in the
+> +#     same topology container share the same L1 instruction cache.
+> +#     (since 9.1)
+> +#
+> +# @l2-cache: topology hierarchy of L2 unified cache. It accepts the CPU
+> +#     topology enumeration as the parameter, i.e., CPUs in the same
+> +#     topology container share the same L2 unified cache. (since 9.1)
+> +#
+> +# @l3-cache: topology hierarchy of L3 unified cache. It accepts the CPU
+> +#     topology enumeration as the parameter, i.e., CPUs in the same
+> +#     topology container share the same L3 unified cache. (since 9.1)
+> +#
+>  # Since: 6.1
+>  ##
+
+The new members are all optional.  What does "absent" mean?  No such
+cache?  Some default topology?
+
+Is this sufficiently general?  Do all machines of interest have a split
+level 1 cache, a level 2 cache, and a level 3 cache?
+
+Is the CPU topology level the only cache property we'll want to
+configure here?  If the answer isn't "yes", then we should perhaps wrap
+it in an object, so we can easily add more members later.
+
+Two spaces between sentences for consistency, please.
+
+>  { 'struct': 'SMPConfiguration', 'data': {
+> @@ -1758,7 +1775,11 @@
+>       '*modules': 'int',
+>       '*cores': 'int',
+>       '*threads': 'int',
+> -     '*maxcpus': 'int' } }
+> +     '*maxcpus': 'int',
+> +     '*l1d-cache': 'CPUTopoLevel',
+> +     '*l1i-cache': 'CPUTopoLevel',
+> +     '*l2-cache': 'CPUTopoLevel',
+> +     '*l3-cache': 'CPUTopoLevel' } }
+>  
+>  ##
+>  # @x-query-irq:
+> diff --git a/system/vl.c b/system/vl.c
+
+[...]
 
 
