@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52162C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:07:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4CBAC41513
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 19:07:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEZU5-0004xz-H7; Tue, 04 Jun 2024 15:06:13 -0400
+	id 1sEZUM-0005nF-Id; Tue, 04 Jun 2024 15:06:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZU2-0004xH-Us
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:06:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZUL-0005lR-DU
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:06:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZU1-0000gr-Am
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:06:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sEZUJ-0000k1-MD
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 15:06:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717527968;
+ s=mimecast20190719; t=1717527986;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gfd+vfybB3O3+4pkXHRWr1BbxFsd2M2r8td4r0aSbjQ=;
- b=GdHye96uTOtEpCtgGtHa1xVgQ1i7cSXRSSzdb22g475+UHNfO2u2RvySIHWHq799sd9iFA
- PO8B+lL2M7HBpRK2Vs1bsHYMMstXkfVZF4Vz3fmKlr9uIgZPBqRoLajpkSvBa7qwriG63l
- CtO+F9AcrzpxDwUAHG+wusAlxL9n+Qc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dtEoeRDSt/hukSx1+wwR8G88DQKSruaP42MuHd75N3g=;
+ b=M9ceiOLG0+ejlioM8+Cm16buY+3L/s2JmO8aQXSJMYg6lRAoeeD7YfEBpI+FFzliHDcQ3o
+ XTn7rR1+3BBLfh7J2XcM1mK0e2KGkJ0pTB4VgbvQsUC8uAMD2S1KLw1Cb+BxJNIQqpq6E6
+ zEU+TQpfWbTmvF5+XvF6inii5FJtMSg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-470-hArG0UZaOTagcJQ8XjIjYg-1; Tue, 04 Jun 2024 15:06:07 -0400
-X-MC-Unique: hArG0UZaOTagcJQ8XjIjYg-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-35dca355ffaso3517561f8f.1
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:06:07 -0700 (PDT)
+ us-mta-257-yLBNVmXRMUu1GmcSb2HnAQ-1; Tue, 04 Jun 2024 15:06:20 -0400
+X-MC-Unique: yLBNVmXRMUu1GmcSb2HnAQ-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4210d151c5bso45057765e9.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 12:06:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717527965; x=1718132765;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gfd+vfybB3O3+4pkXHRWr1BbxFsd2M2r8td4r0aSbjQ=;
- b=UkdPE7RGMP4Vh/ZW7zd0ttra8G6T8eDeULppt7Hu9wKUwk97SHpWeJWJER/7REp2tr
- SEs08TcG6XERq+VUeRlWJwpbiJtgdboz2yketX+RCyEiuzWCfCyYLFNkYdMaRXnEUohQ
- cfj5vdnvNYEMQZdT6yH5dgvPFbGHfxcYi96kwoLCZLsgy6P1/4am54wCHFWdGic7vmD/
- rkzCZ8BNHBnxX7tEjeZmDxbscB5NeHkefCSITKgRDSu5XqOEZ/nc3rnOslMMNo7jMIpD
- ybZh2AvA2YPHQay686CENtKsRdG04E2McrRKTkW+jnJZTFWfEdkcc97sZsMlD8771dm4
- ZfxQ==
-X-Gm-Message-State: AOJu0YzU/4xnwbEKYKuPIM0bDamQmw/stCR3oRMcjrfps4Fm/LbEVwJI
- HZsdiuiWrLct5ReEjFOTUT55Q5dwpHDPUps6YgUIjj/4Jap3kHiZHe2JdOR8xyFwHnblPtqf4qB
- 8oL7OxXURQ1fZPV1+JcGXqf/dLyR50Qt6crhLjQdDvYhn8Db4qxJopbYkeIErzkHfzwMZXxIMvq
- rcfCsEIDzMnuZF8U/AZBPeen5qMUiT9A==
-X-Received: by 2002:a5d:4e8f:0:b0:35e:5b2a:1191 with SMTP id
- ffacd0b85a97d-35e840678f7mr230996f8f.18.1717527965345; 
- Tue, 04 Jun 2024 12:06:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOlKd+Sx9HuvNacLdaJyPkWeq0f6MFm6oxM6nspWlljSJryAxVZnZo6ksCGJhsM0n5My5Ixg==
-X-Received: by 2002:a5d:4e8f:0:b0:35e:5b2a:1191 with SMTP id
- ffacd0b85a97d-35e840678f7mr230969f8f.18.1717527964668; 
- Tue, 04 Jun 2024 12:06:04 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717527979; x=1718132779;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dtEoeRDSt/hukSx1+wwR8G88DQKSruaP42MuHd75N3g=;
+ b=OnWNk4QM3BfTmunQ6CwzouLS+A/LjVt4+MTwq9f3EWbIkGf2p6pCJjKWb4E4FR3xa4
+ 6d/tCv3IxDgnYi8rbDXPfX09LYvV29z+BGuzpBCC8Vn/+IyQhcJrJTlQvBRjE4tFSRAP
+ 1XE6YzxoCpC0be1U1qQD/wzoBncLarB+eNZEzx0itympkmm2pOFQZS3DpBb33HnCAiwH
+ ADg4pIJFCu9ngFgu3sb5QAUzhsvbbrsuucfyWrKAqMuHhq3kB3H9zhZ9z4H+Qr1VuZ2b
+ wguEyTqpo4yOlFDEDlamj7w03qtdhZfL6CiR+jC4KOc4MdSk0s7ypVolylB+GWEwNf5P
+ P1WQ==
+X-Gm-Message-State: AOJu0Ywcpr26kjznbHPmr5OEMCzNZoDYkAM9GklESGUMxepDRiXJSGFo
+ gKE50JS4R9AbtXNIUuRzGcS+oCSJtKw0Rtg34aW86tX8KBgXfqQQ1JB1gGeM1H17LHt1gdh2xR+
+ BvpnrfF4iPskiwXsQiqZBgJa5jdw9i4WGjTTK77NE821FKpIGlUiZyaFT7VjGwqkgqeuxONXKR8
+ eeB+AFHU63YkPRSSgKbRlLUgrKX8VtTg==
+X-Received: by 2002:a05:600c:1e02:b0:41a:41c8:d8e7 with SMTP id
+ 5b1f17b1804b1-421562df1f7mr3461275e9.3.1717527979007; 
+ Tue, 04 Jun 2024 12:06:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGp44H/nTfoe/dcDLPcW4ennQ5FlRwdnvKJHPvztIvpNJKMenwvWTFpITCNQjOjcw36itU2Bw==
+X-Received: by 2002:a05:600c:1e02:b0:41a:41c8:d8e7 with SMTP id
+ 5b1f17b1804b1-421562df1f7mr3461095e9.3.1717527978459; 
+ Tue, 04 Jun 2024 12:06:18 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:552:cf5c:2b13:215c:b9df:f231])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35e7e07d7besm2777211f8f.18.2024.06.04.12.06.03
+ 5b1f17b1804b1-4212b51082dsm165919005e9.0.2024.06.04.12.06.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 12:06:04 -0700 (PDT)
-Date: Tue, 4 Jun 2024 15:06:01 -0400
+ Tue, 04 Jun 2024 12:06:17 -0700 (PDT)
+Date: Tue, 4 Jun 2024 15:06:15 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Si-Wei Liu <si-wei.liu@oracle.com>
-Subject: [PULL 01/46] vhost: dirty log should be per backend type
-Message-ID: <0b7ca10a059089caef535e86c6523991240e5f29.1717527933.git.mst@redhat.com>
+ Jonah Palmer <jonah.palmer@oracle.com>,
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
+Subject: [PULL 05/46] virtio/virtio-pci: Handle extra notification data
+Message-ID: <a88ab3cfa7548d36eac5a624100a66158a94a514.1717527933.git.mst@redhat.com>
 References: <cover.1717527933.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1717527933.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -102,134 +105,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Si-Wei Liu <si-wei.liu@oracle.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
 
-There could be a mix of both vhost-user and vhost-kernel clients
-in the same QEMU process, where separate vhost loggers for the
-specific vhost type have to be used. Make the vhost logger per
-backend type, and have them properly reference counted.
+Add support to virtio-pci devices for handling the extra data sent
+from the driver to the device when the VIRTIO_F_NOTIFICATION_DATA
+transport feature has been negotiated.
 
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Message-Id: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
+The extra data that's passed to the virtio-pci device when this
+feature is enabled varies depending on the device's virtqueue
+layout.
+
+In a split virtqueue layout, this data includes:
+ - upper 16 bits: shadow_avail_idx
+ - lower 16 bits: virtqueue index
+
+In a packed virtqueue layout, this data includes:
+ - upper 16 bits: 1-bit wrap counter & 15-bit shadow_avail_idx
+ - lower 16 bits: virtqueue index
+
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Message-Id: <20240315165557.26942-2-jonah.palmer@oracle.com>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/vhost.c | 45 +++++++++++++++++++++++++++++++++------------
- 1 file changed, 33 insertions(+), 12 deletions(-)
+ include/hw/virtio/virtio.h |  2 ++
+ hw/virtio/virtio-pci.c     | 12 +++++++++---
+ hw/virtio/virtio.c         | 18 ++++++++++++++++++
+ 3 files changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 4acd77e890..a1e8b79e1a 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -43,8 +43,8 @@
-     do { } while (0)
- #endif
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 7d5ffdc145..1451926a13 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -307,6 +307,8 @@ int virtio_queue_ready(VirtQueue *vq);
  
--static struct vhost_log *vhost_log;
--static struct vhost_log *vhost_log_shm;
-+static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
-+static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
+ int virtio_queue_empty(VirtQueue *vq);
  
- /* Memslots used by backends that support private memslots (without an fd). */
- static unsigned int used_memslots;
-@@ -287,6 +287,10 @@ static int vhost_set_backend_type(struct vhost_dev *dev,
-         r = -1;
-     }
- 
-+    if (r == 0) {
-+        assert(dev->vhost_ops->backend_type == backend_type);
-+    }
++void virtio_queue_set_shadow_avail_idx(VirtQueue *vq, uint16_t idx);
 +
-     return r;
- }
+ /* Host binding interface.  */
  
-@@ -319,16 +323,22 @@ static struct vhost_log *vhost_log_alloc(uint64_t size, bool share)
-     return log;
- }
- 
--static struct vhost_log *vhost_log_get(uint64_t size, bool share)
-+static struct vhost_log *vhost_log_get(VhostBackendType backend_type,
-+                                       uint64_t size, bool share)
+ uint32_t virtio_config_readb(VirtIODevice *vdev, uint32_t addr);
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index a7faee5b33..ad0035952f 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -384,7 +384,7 @@ static void virtio_ioport_write(void *opaque, uint32_t addr, uint32_t val)
  {
--    struct vhost_log *log = share ? vhost_log_shm : vhost_log;
-+    struct vhost_log *log;
-+
-+    assert(backend_type > VHOST_BACKEND_TYPE_NONE);
-+    assert(backend_type < VHOST_BACKEND_TYPE_MAX);
-+
-+    log = share ? vhost_log_shm[backend_type] : vhost_log[backend_type];
+     VirtIOPCIProxy *proxy = opaque;
+     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+-    uint16_t vector;
++    uint16_t vector, vq_idx;
+     hwaddr pa;
  
-     if (!log || log->size != size) {
-         log = vhost_log_alloc(size, share);
-         if (share) {
--            vhost_log_shm = log;
-+            vhost_log_shm[backend_type] = log;
-         } else {
--            vhost_log = log;
-+            vhost_log[backend_type] = log;
+     switch (addr) {
+@@ -408,8 +408,14 @@ static void virtio_ioport_write(void *opaque, uint32_t addr, uint32_t val)
+             vdev->queue_sel = val;
+         break;
+     case VIRTIO_PCI_QUEUE_NOTIFY:
+-        if (val < VIRTIO_QUEUE_MAX) {
+-            virtio_queue_notify(vdev, val);
++        vq_idx = val;
++        if (vq_idx < VIRTIO_QUEUE_MAX && virtio_queue_get_num(vdev, vq_idx)) {
++            if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
++                VirtQueue *vq = virtio_get_queue(vdev, vq_idx);
++
++                virtio_queue_set_shadow_avail_idx(vq, val >> 16);
++            }
++            virtio_queue_notify(vdev, vq_idx);
          }
-     } else {
-         ++log->refcnt;
-@@ -340,11 +350,20 @@ static struct vhost_log *vhost_log_get(uint64_t size, bool share)
- static void vhost_log_put(struct vhost_dev *dev, bool sync)
- {
-     struct vhost_log *log = dev->log;
-+    VhostBackendType backend_type;
- 
-     if (!log) {
-         return;
+         break;
+     case VIRTIO_PCI_STATUS:
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 893a072c9d..f7c99e3a96 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2264,6 +2264,24 @@ void virtio_queue_set_align(VirtIODevice *vdev, int n, int align)
      }
+ }
  
-+    assert(dev->vhost_ops);
-+    backend_type = dev->vhost_ops->backend_type;
-+
-+    if (backend_type == VHOST_BACKEND_TYPE_NONE ||
-+        backend_type >= VHOST_BACKEND_TYPE_MAX) {
++void virtio_queue_set_shadow_avail_idx(VirtQueue *vq, uint16_t shadow_avail_idx)
++{
++    if (!vq->vring.desc) {
 +        return;
 +    }
 +
-     --log->refcnt;
-     if (log->refcnt == 0) {
-         /* Sync only the range covered by the old log */
-@@ -352,13 +371,13 @@ static void vhost_log_put(struct vhost_dev *dev, bool sync)
-             vhost_log_sync_range(dev, 0, dev->log_size * VHOST_LOG_CHUNK - 1);
-         }
- 
--        if (vhost_log == log) {
-+        if (vhost_log[backend_type] == log) {
-             g_free(log->log);
--            vhost_log = NULL;
--        } else if (vhost_log_shm == log) {
-+            vhost_log[backend_type] = NULL;
-+        } else if (vhost_log_shm[backend_type] == log) {
-             qemu_memfd_free(log->log, log->size * sizeof(*(log->log)),
-                             log->fd);
--            vhost_log_shm = NULL;
-+            vhost_log_shm[backend_type] = NULL;
-         }
- 
-         g_free(log);
-@@ -376,7 +395,8 @@ static bool vhost_dev_log_is_shared(struct vhost_dev *dev)
- 
- static inline void vhost_dev_log_resize(struct vhost_dev *dev, uint64_t size)
++    /*
++     * 16-bit data for packed VQs include 1-bit wrap counter and
++     * 15-bit shadow_avail_idx.
++     */
++    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
++        vq->shadow_avail_wrap_counter = (shadow_avail_idx >> 15) & 0x1;
++        vq->shadow_avail_idx = shadow_avail_idx & 0x7FFF;
++    } else {
++        vq->shadow_avail_idx = shadow_avail_idx;
++    }
++}
++
+ static void virtio_queue_notify_vq(VirtQueue *vq)
  {
--    struct vhost_log *log = vhost_log_get(size, vhost_dev_log_is_shared(dev));
-+    struct vhost_log *log = vhost_log_get(dev->vhost_ops->backend_type,
-+                                          size, vhost_dev_log_is_shared(dev));
-     uint64_t log_base = (uintptr_t)log->log;
-     int r;
- 
-@@ -2044,7 +2064,8 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-         uint64_t log_base;
- 
-         hdev->log_size = vhost_get_log_size(hdev);
--        hdev->log = vhost_log_get(hdev->log_size,
-+        hdev->log = vhost_log_get(hdev->vhost_ops->backend_type,
-+                                  hdev->log_size,
-                                   vhost_dev_log_is_shared(hdev));
-         log_base = (uintptr_t)hdev->log->log;
-         r = hdev->vhost_ops->vhost_set_log_base(hdev,
+     if (vq->vring.desc && vq->handle_output) {
 -- 
 MST
 
