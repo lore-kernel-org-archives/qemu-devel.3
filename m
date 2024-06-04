@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B54C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 09:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 452C5C27C50
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 09:57:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEQu8-0005MG-OS; Tue, 04 Jun 2024 05:56:32 -0400
+	id 1sEQuD-0005OQ-Sp; Tue, 04 Jun 2024 05:56:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQu7-0005Kh-4w
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:56:31 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQuC-0005Nm-OU
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:56:36 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQu5-00022m-HN
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:56:30 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-42148c0cb1aso7985225e9.3
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:56:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sEQuB-00023E-8j
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 05:56:36 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-35e0eb3efd0so772108f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 02:56:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717494988; x=1718099788; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717494993; x=1718099793; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zrlTj9cDcahH+eORLITQpITIeYXXxYxxz/PmNCcuvu0=;
- b=wYmf98EERJwEuRcOhDZNCyTq8jvFQMPkD5oQoJI0POrmp8anBRy6I9RzEneDZs3bmk
- kFpOWnZp9gEKxMN7Aw3kr2dFaJdE5HU+QS7MVwrIBeWQZUhbbNoAHIdqpv3rv2RQ6rRV
- 52bip7zC0WGHXGpOJQ5KAYJ8qavFnQr9P+aPwSD9s5xPxP96F+SbsEI98J6cRprx0itZ
- eFbvVMD6AGARdf4Vd2ahsJAtxuzvVtguThAUBx2IILgEuzVP+3BDIlw6Eci0+FJyrX2u
- 2t/6MOfbBEwNO9ugx6+FexFvi4CELiw8Kp457B3aRFPGbLMpUXF3qAaMkwDm43/PKhI6
- QPeg==
+ bh=9Ft5fiyMmdVHsVWcIS5vXcjPxaNkK/GEvLAcOaQ7yGI=;
+ b=Mqe/tJPyL8EKxoRQIqyCbZFppiMfOFrLC1gNneeJ5tABTk/5YGKCr2TkezHVllAM9u
+ ZWPdZBo+dpk+1YRMchwEd3PXyYmD/zMG8P8jOnraLzS5Hv7lpsZN9MtHPjXyAWgsXL7I
+ ePprktmhE+pkEHI2sUn5GY44Sv291g4epRMNOkYSHTQapaoPbq1/be5pqlL61uwQBMS0
+ H89DZCbdMj63KJUaW0CQiunhanEx4DtOR/5Z6zlGzDcRfWyf13oHesSKefXJXJR+atcH
+ bmYdMPgSgRhmuTGXDBSQQlJOUJf8DUZ7pXIy/HAPTx4EM1Ln0q8H9WceOoF2zaVztVny
+ M52w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717494988; x=1718099788;
+ d=1e100.net; s=20230601; t=1717494993; x=1718099793;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zrlTj9cDcahH+eORLITQpITIeYXXxYxxz/PmNCcuvu0=;
- b=b2nB1M4S7U/VKMcpPQu3e8mokd1Qi4HrmRl3yMPqajaq/KAzaHZLKS4vo7fKDSP3ay
- aeil9jzDFGgU6DigS3E/pRtlyWDCt4ZULxWBys05Mrz4rgdxMdujZUW6RPqBqr4GuaPH
- C6+YUxI3NTY+rA9m+jTRiQDQqPfudF6ptGQVH5oMZMRwi5UGz/wCiIj7WXJlQSSZ22vC
- /QEe3UbuNXAMjiw3evH5PPpj8EonNBjDJmSl3DDkh/gubPc61emn3ztzGgc4deB1U5F8
- 3x2ur7eBsJGYvaKt5bGXXFsZGDYh6AM045EYuXQQQB8vQmyv+PQ7Kbk46FATsZZsBuGi
- jnBg==
-X-Gm-Message-State: AOJu0YyVcMtg+NtdoKpdTQhwdOXg4a8eyR1hLe64+UhNFKYB9xo/s25w
- kOhdGpsGrHWKF8ldrCZTh51xJLzY73BgzJ4azW6xoyDGg4yURsVym497nqFwqSA2D4/fOQNoBGX
- E
-X-Google-Smtp-Source: AGHT+IHWs7uPb0NyGUgObjklZI4NgfIFdJpJaHQTqQZCerlzgx2FSVXyMqfc5U3eHBi6nNpdTqRVaA==
-X-Received: by 2002:a05:600c:1550:b0:421:2ac2:d7c8 with SMTP id
- 5b1f17b1804b1-4212e0622afmr103510855e9.18.1717494987865; 
- Tue, 04 Jun 2024 02:56:27 -0700 (PDT)
+ bh=9Ft5fiyMmdVHsVWcIS5vXcjPxaNkK/GEvLAcOaQ7yGI=;
+ b=w/BThb8dqv9J5w32p0lq/hWTgirwsbd3X0g6fIZdM07fw4zwusEH6D6ko/teDdH8zX
+ WzMDSrf29pR/j5iIz2lITmqkRhpFZB4wHHE4fNJMYygOu0+eAYV+cBRCLk9nPeonc74O
+ CRZBzO7yLfnXdYgYbiyHwS14rTcfifJGLNNFU6ce9IdbAsXzEpdA7al6yLY6Bi66rjwa
+ 9+KaOihBtKqfzDYtzey5TT6c1Ezf4dPs/jKtEdD85CTfewgVbRkfi/lOYKyMsRw5cF4o
+ lgc+c7pAHx8vcQDbboa2dGb52Zj2TDcZNDpw+aSPmAqTt2r4duHAfUJGp/HgzH4+w7YK
+ 7bNA==
+X-Gm-Message-State: AOJu0YzYWiTmupciicBGLwrnT7tzKrA24MjXLtlVqNWrBFCHCsNXmhSE
+ 8SUv9zF83WiletMmtRbEWrJPLkgbSko0NyHdlF6tKacLcrWvR8Ae84GqpTiWgWdKKmnzTfEp4Nr
+ d
+X-Google-Smtp-Source: AGHT+IFOUfeIDokwxi3zlwKF8+obQ6Jnb9GzXIStMD9239fgD4ZM/mEnb7wHl1g+Zrr7HhyvARaWpA==
+X-Received: by 2002:adf:b319:0:b0:354:f9f0:a7ed with SMTP id
+ ffacd0b85a97d-35e0f30bd3amr7374057f8f.47.1717494993264; 
+ Tue, 04 Jun 2024 02:56:33 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.159.34])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd064b030sm11067292f8f.105.2024.06.04.02.56.26
+ ffacd0b85a97d-35dd064afd8sm10968444f8f.95.2024.06.04.02.56.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 04 Jun 2024 02:56:27 -0700 (PDT)
+ Tue, 04 Jun 2024 02:56:32 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 03/32] target/riscv: Restrict riscv_cpu_do_interrupt() to sysemu
-Date: Tue,  4 Jun 2024 11:55:39 +0200
-Message-ID: <20240604095609.12285-4-philmd@linaro.org>
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PULL 04/32] target/mips: Remove unused 'hw/misc/mips_itu.h' header
+Date: Tue,  4 Jun 2024 11:55:40 +0200
+Message-ID: <20240604095609.12285-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240604095609.12285-1-philmd@linaro.org>
 References: <20240604095609.12285-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,77 +94,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-riscv_cpu_do_interrupt() is not reachable on user emulation.
+Since commit e1152f8166 ("target/mips: Remove helpers accessing
+SAAR registers") this header is not needed.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-Id: <20230626232007.8933-7-philmd@linaro.org>
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Message-Id: <20240529155216.5574-1-philmd@linaro.org>
 ---
- target/riscv/cpu.h        | 5 +++--
- target/riscv/cpu_helper.c | 7 ++-----
- 2 files changed, 5 insertions(+), 7 deletions(-)
+ target/mips/tcg/sysemu/cp0_helper.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 2d0c02c35b..648e640f22 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -484,7 +484,6 @@ extern const char * const riscv_int_regnamesh[];
- extern const char * const riscv_fpr_regnames[];
+diff --git a/target/mips/tcg/sysemu/cp0_helper.c b/target/mips/tcg/sysemu/cp0_helper.c
+index ded6c78e9a..79a5c833ce 100644
+--- a/target/mips/tcg/sysemu/cp0_helper.c
++++ b/target/mips/tcg/sysemu/cp0_helper.c
+@@ -28,7 +28,6 @@
+ #include "qemu/host-utils.h"
+ #include "exec/helper-proto.h"
+ #include "exec/exec-all.h"
+-#include "hw/misc/mips_itu.h"
  
- const char *riscv_cpu_get_trap_name(target_ulong cause, bool async);
--void riscv_cpu_do_interrupt(CPUState *cpu);
- int riscv_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
-                                int cpuid, DumpState *s);
- int riscv_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cs,
-@@ -514,6 +513,7 @@ int riscv_cpu_max_xlen(RISCVCPUClass *mcc);
- bool riscv_cpu_option_set(const char *optname);
  
- #ifndef CONFIG_USER_ONLY
-+void riscv_cpu_do_interrupt(CPUState *cpu);
- void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename);
- void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
-                                      vaddr addr, unsigned size,
-@@ -539,7 +539,8 @@ void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, uint32_t priv,
-                                    void *rmw_fn_arg);
- 
- RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
--#endif
-+#endif /* !CONFIG_USER_ONLY */
-+
- void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv);
- 
- void riscv_translate_init(void);
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 8ad546a45a..0868357f1c 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1635,7 +1635,6 @@ static target_ulong riscv_transformed_insn(CPURISCVState *env,
- 
-     return xinsn;
- }
--#endif /* !CONFIG_USER_ONLY */
- 
- /*
-  * Handle Traps
-@@ -1645,8 +1644,6 @@ static target_ulong riscv_transformed_insn(CPURISCVState *env,
-  */
- void riscv_cpu_do_interrupt(CPUState *cs)
- {
--#if !defined(CONFIG_USER_ONLY)
--
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     CPURISCVState *env = &cpu->env;
-     bool write_gva = false;
-@@ -1842,6 +1839,6 @@ void riscv_cpu_do_interrupt(CPUState *cs)
- 
-     env->two_stage_lookup = false;
-     env->two_stage_indirect_lookup = false;
--#endif
--    cs->exception_index = RISCV_EXCP_NONE; /* mark handled to qemu */
- }
-+
-+#endif /* !CONFIG_USER_ONLY */
+ /* SMP helpers.  */
 -- 
 2.41.0
 
