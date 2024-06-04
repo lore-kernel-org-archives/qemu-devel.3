@@ -4,94 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 918D9C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 16:42:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27B2C25B78
+	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 17:00:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEXE0-00040M-90; Tue, 04 Jun 2024 12:41:28 -0400
+	id 1sEXVT-0001IB-Rx; Tue, 04 Jun 2024 12:59:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEXDt-0003vN-Ms
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 12:41:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sEXVS-0001I3-S2
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 12:59:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEXDr-0001o6-U0
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 12:41:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sEXVQ-0006qY-Am
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 12:59:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717519278;
+ s=mimecast20190719; t=1717520367;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zFCVtgZs5hohGVSNCDoe+tPbMCNm1GKM+f2almhm8I8=;
- b=KWtZOASHNpY8x0JCN/OFGhzXtnTWJDgoQ8ANCN2S1uCPALUIlyOEcdzh7RJDPcD4oBFOMu
- VA+6GYG0DN39L21pY9erhwO4sCAGBrLnWcei4slrWQau14zhLIBb0tVkOs2lQzUh5f1nqz
- XDJxC4I6xaH0WzG1jdgRmiuBDZ1GOJ4=
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=7t5oM+Eg8d/5fHxDc1fzoxj1cH6/YuKgB7bo9V6GAvE=;
+ b=RAvyPrz2E/Y6s0QT0S+lotLbFgEJeEtEgBG2rQ/8YTv3lm6B/uDh2eDTjk+iWUfHWVZzx9
+ U/QzJR2be+NxEEdf03ZaoKx2mJQWlB4Q/zFOp/nNKpGMKOwf6X2X0iMUCtb7ZjiHmIlAq7
+ swAYRE1GYffCeRaaL1RKLyByDC8SsYg=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-490-tHheh9RhOIK7Gj77kcXFrQ-1; Tue, 04 Jun 2024 12:41:17 -0400
-X-MC-Unique: tHheh9RhOIK7Gj77kcXFrQ-1
-Received: by mail-oi1-f199.google.com with SMTP id
- 5614622812f47-3d1fd81dab0so269998b6e.1
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 09:41:17 -0700 (PDT)
+ us-mta-385-10uFSxkkNzO6P939L-yMcg-1; Tue, 04 Jun 2024 12:59:24 -0400
+X-MC-Unique: 10uFSxkkNzO6P939L-yMcg-1
+Received: by mail-ot1-f69.google.com with SMTP id
+ 46e09a7af769-6f93e498e97so682152a34.1
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 09:59:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717519276; x=1718124076;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zFCVtgZs5hohGVSNCDoe+tPbMCNm1GKM+f2almhm8I8=;
- b=mIogXhQgg/53F8K6qamNU3z2PPIHwjwbby/A15aEyzzCumOO25xo4rLU+5xSHWdn+x
- g4raiOd0TR47oxPDDDIpSUwEMMhvj3klcyP0o391xRe95v2RENEGy9j0qeCJE4WLvq2H
- uat+EXW8X16kuM302pUwxMZTaTdzdAW5IzDoEaW+hTtMHU0SPEgjfGOiw+AJcodhr7+/
- BDBAzuw/Sxaokuyzc1sCY7aUpUJfxmnWlERc5GOXNhjA9waptbBkagmENH9Tnox4rv3B
- kvTX4rZko+SJx4ogolw03DIN2mzHuQlA29+NdHrp+GZdhLW6QNIoncm2GIeTs0BcvXCh
- ja8w==
+ d=1e100.net; s=20230601; t=1717520363; x=1718125163;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7t5oM+Eg8d/5fHxDc1fzoxj1cH6/YuKgB7bo9V6GAvE=;
+ b=kYBwDgXilunJbqHnvrmJnMC0hJGFcwrqunT/WENE+j5QTm/D2SrF6OfxpBNqf8ydZ5
+ Uyl6it5cuqELS6XR1T908OFlhRsBqjcBGFZSy2mQl2kHImTedCINAyKcs4bmZNwODRQP
+ yU04+avzDKUCcubLtZQSDQj1GOTw3fz1WHHI/HvEBGnoVtXEj3jbqKUYTfaWwFMd7q8Z
+ VVpUuEk26A+X8pRhAi2BdlX0m/TBxX9bV65/1OKf8gzSiUE65JktpPuvCBIFYSIrwtzK
+ RYuAATwyWU7l1mDvrtxvqKTWyQJWwBGMp9vgsM+uSuKhuuXlryaVAvU5eCDXiixO++aG
+ hwAw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2Nad2dUuCkJFzpOncO5o8iuWC7oahtmKDTu2AxWcFU2Z19OYoYmOoVRdG6rAS8q1wS4QB4E00p4j4N23cjxDQOnafj+g=
-X-Gm-Message-State: AOJu0YwmpWtWKmlrJ2iZncCHmy7qSLn81L5dhOm2cF1omDQ4o4apNLUK
- HnokF5a4pgQ6YoBuP5yH4jPPzc9+zfg4LCF5tmElPPo5ywseYM7VkRdxb9+dp2JWQLz+QUfRl91
- /eIaDRi30OmUPxTihwyVKSFtg79+7JO2kzmC1zGpqNq4N09fchibM
-X-Received: by 2002:a05:6808:1688:b0:3c8:4e7f:47bd with SMTP id
- 5614622812f47-3d1fbf33e4fmr2552446b6e.5.1717519276129; 
- Tue, 04 Jun 2024 09:41:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IERarWmWaxY2z9MFQyZpFJqYG+Su1TyLaeaDNzgy5uQ0PkL/xqVIJAwtN6mhz2B7J8zNbVaEA==
-X-Received: by 2002:a05:6808:1688:b0:3c8:4e7f:47bd with SMTP id
- 5614622812f47-3d1fbf33e4fmr2552417b6e.5.1717519275575; 
- Tue, 04 Jun 2024 09:41:15 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6afbcf61646sm20673676d6.27.2024.06.04.09.41.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 09:41:15 -0700 (PDT)
-Date: Tue, 4 Jun 2024 12:41:12 -0400
-From: Peter Xu <peterx@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V1 17/26] machine: memfd-alloc option
-Message-ID: <Zl9DqCLvOgUDqGKW@x1n>
-References: <ZlZIoiH5Dj4XBbLO@x1n>
- <79a8023d-2e19-4d80-821d-a03818a5372e@oracle.com>
- <Zld-iWfa3_yEWgn6@x1n>
- <ea8eb67e-583d-41cd-a545-ab18c032a99b@oracle.com>
- <ZljCHgwJhGcFiP1J@x1n>
- <e6d5f123-37ad-4d77-8536-f7f85213073d@oracle.com>
- <Zl46MIO30mGrtsQk@x1n> <Zl6-f245q-M7A62J@redhat.com>
- <Zl85o3w6ncv63zG5@x1n>
- <1b06eb8d-f6be-4e2b-929b-2f65edf16237@redhat.com>
+ AJvYcCWox2tiFiYO7AzYGO/bi/ADSdy+KT9hIFulKQJks3ObUgj/enyRiDdJrhLSsSzip3llgGDtcTfbVaYgHjWZlxnBAeJUrwg=
+X-Gm-Message-State: AOJu0YyZxIEFUcUUEen9kA4z1/YNkxhd5zi8RByMSe7cbmRq6zF/yjbw
+ UhebtnA8LclP+EagibpEa4fluW7IoMDZOWzSJIPlAM8bA0QWMYrl9lb+cayOQONqW3exZfNYzP0
+ GVDbCVK9+trgGgpxQ/JOekWX6d2iQlFJjs/+0piWzRrQK193Tcg5njp3NFLGR
+X-Received: by 2002:a05:6808:3948:b0:3d1:fed9:a644 with SMTP id
+ 5614622812f47-3d1fed9a7afmr1839735b6e.15.1717520363101; 
+ Tue, 04 Jun 2024 09:59:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEr36tJBsBMBP94XhzNFWH+eSH3b5FJgQmMZ6SO2Ic1vaGG+KZBGrf4ng/jQfiFYUid67zWUg==
+X-Received: by 2002:a05:6808:3948:b0:3d1:fed9:a644 with SMTP id
+ 5614622812f47-3d1fed9a7afmr1839720b6e.15.1717520362662; 
+ Tue, 04 Jun 2024 09:59:22 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-178-97.web.vodafone.de.
+ [109.43.178.97]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b003b75f93sm1037776d6.113.2024.06.04.09.59.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Jun 2024 09:59:22 -0700 (PDT)
+Message-ID: <52d3e3df-4326-499c-9ae8-41cf04517288@redhat.com>
+Date: Tue, 4 Jun 2024 18:59:18 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] s390x: Add loadparm to CcwDevice
+To: Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com, nsg@linux.ibm.com
+References: <20240529154311.734548-1-jrossi@linux.ibm.com>
+ <20240529154311.734548-3-jrossi@linux.ibm.com>
+ <8240e6c8-8de1-4529-9479-73e555c1b590@redhat.com>
+ <baf90d34-9894-4174-8888-4ad72c9a8cbc@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <baf90d34-9894-4174-8888-4ad72c9a8cbc@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1b06eb8d-f6be-4e2b-929b-2f65edf16237@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -100,7 +134,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,78 +150,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 04, 2024 at 06:14:08PM +0200, David Hildenbrand wrote:
-> On 04.06.24 17:58, Peter Xu wrote:
-> > On Tue, Jun 04, 2024 at 08:13:26AM +0100, Daniel P. Berrangé wrote:
-> > > On Mon, Jun 03, 2024 at 05:48:32PM -0400, Peter Xu wrote:
-> > > > That property, irrelevant of what it is called (and I doubt whether Dan's
-> > > > suggestion on "shared-ram" is good, e.g. mmap(MAP_SHARED) doesn't have user
-> > > > visible fd but it's shared-ram for sure..), is yet another way to specify
-> > > > guest mem types.
-> > > > 
-> > > > What if the user specified this property but specified something else in
-> > > > the -object parameters?  E.g. -machine share-ram=on -object
-> > > > memory-backend-ram,share=off.  What should we do?
-> > > 
-> > > The machine property would only apply to memory regions that are
-> > > *NOT* being created via -object. The memory-backend objects would
-> > > always honour their own share settnig.
-> > 
-> > In that case we may want to rename that to share-ram-by-default=on.
-> > Otherwise it's not clear which one would take effect from an user POV, even
-> > if we can define it like that in the code.
-> > 
-> > Even with share-ram-by-default=on, it can be still confusing in some form
-> > or another. Consider this cmdline:
-> > 
-> >    -machine q35,share-ram-by-default=on -object memory-backend-ram,id=mem1
-> > 
-> > Then is mem1 shared or not?  From reading the cmdline, if share ram by
-> > default it should be ON if we don't specify it, but it's actually off?
-> > It's because -object has its own default values.
+On 04/06/2024 18.27, Jared Rossi wrote:
+> Hi Thomas,
 > 
-> We do have something similar with "merge" and "dump" properties. See
-> machine_mem_merge() / machine_dump_guest_core().
+> Firstly, thanks for the reviews and I agree with your suggestions about 
+> function names, info messages, simplifications, etc...  I will make those 
+> changes.
 > 
-> These correspond to the "mem-merge" and "dump-guest-core" machine
-> properties.
+> As for the DIAG308_FLAGS_LP_VALID flag...
+> 
+>> [snip...]
+>>> @@ -438,40 +473,20 @@ static bool s390_gen_initial_iplb(S390IPLState *ipl)
+>>>               break;
+>>>           }
+>>>   -        if (!s390_ipl_set_loadparm(ipl->iplb.loadparm)) {
+>>> -            ipl->iplb.flags |= DIAG308_FLAGS_LP_VALID;
+>>> +        /* If the device loadparm is empty use the global machine 
+>>> loadparm */
+>>> +        if (memcmp(lp, "\0\0\0\0\0\0\0\0", 8) == 0) {
+>>> +            lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
+>>>           }
+>>>   +        s390_ipl_set_loadparm((char *)lp, ipl->iplb.loadparm);
+>>> +        ipl->iplb.flags |= DIAG308_FLAGS_LP_VALID; 
+>>
+>> That means DIAG308_FLAGS_LP_VALID is now always set, even if no loadparm 
+>> has been specified? Shouldn't it be omitted if the user did not specify 
+>> the loadparm property?
+> 
+> No, I don't think it should be omitted if the loadparm hasn't been specified 
+> because it is optional and uses a default value if not set. My understanding 
+> is that the flag should, actually, always be set here.
+> 
+> As best as I can tell, the existing check is a redundant validation that 
+> cannot fail and therefore is not needed. Currently the only way 
+> s390_ipl_set_loadparm() can return non-zero is if object_property_get_str() 
+> itself returns NULL pointer when getting the loadparm; however, the loadparm 
+> is already validated at this point because the string is initialized when 
+> the loadparm property is set. If there were a problem with the loadparm 
+> string an error would have already been thrown during initialization.
+> 
+> Furthermore, object_property_get_str() is no longer used here.  As such, 
+> s390_ipl_set_loadparm() is changed to a void function and the check is removed.
 
-These look fine so far, as long as -object cmdline doesn't allow to specify
-the same thing again.
+Ok, makes sense thanks for the explanation!
 
-> 
-> But ...
-> 
-> > 
-> > IMHO fundamentally it's just controversial to have two ways to configure
-> > guest memory.  If '-object' is the preferred and complete way to configure
-> > it, I prefer sticking with it if possible and see what is missing.
-> 
-> ... I agree with that. With vhost-user we also require a reasonable
-> configuration (using proper fd-based shared memory) for it to work.
-> 
-> > 
-> > I think I raised that as the other major reason too, that I think it's so
-> > far only about the vram that is out of the picture here.  We don't and
-> > shouldn't have complicated RW RAMs floating around that we want this
-> > property to cover.
-> 
-> Agreed. And maybe we can still keep migration of any MAP_PRIVATE thing
-> working by migrating that memory? CPR will be "slightly less fast".
-> 
-> But the biggest piece -- guest RAM -- will be migrated via the fd directly.
+  Thomas
 
-I think it should work but only without VFIO.  When with VFIO there must
-have no private pages at all or migrating is racy with concurrent DMAs
-(yes, AFAICT CPR can run migration with DMA running..).
-
-CPR has a pretty tricky way of using VFIO pgtables in that it requires the
-PFNs to not change before/after migration.  Feel free to have a look at
-VFIO_DMA_MAP_FLAG_VADDR in vfio.h then you may get a feeling of it.
-
-Thanks,
-
--- 
-Peter Xu
 
 
