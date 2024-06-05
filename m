@@ -4,114 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2BAFC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 12:33:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0A1DC25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 12:48:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEpoI-0004U9-0U; Wed, 05 Jun 2024 08:32:10 -0400
+	id 1sEq3F-0000Jh-NH; Wed, 05 Jun 2024 08:47:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sEpoE-0004TV-EC
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 08:32:06 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sEpoC-0003VK-4B
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 08:32:06 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 96BAC1F815;
- Wed,  5 Jun 2024 12:32:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717590720; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IpuyefiAyzmfahQo7zkYQ1LLq3u0CKLYJ8FlebyDKwU=;
- b=h5bhOSctZOMpRfelvXHmpL/b1Ixt/HsR6hVG14k8yIAd33MaUrv6OW90pd3TVp01r/5IkZ
- UnwjLNXW4syHLkFb2Qxpw5KjYKA7gdNO5ZbZJIGHuGnlNLtHPVvkasRqd1oJkKZWJ6XWw1
- D5ukrzBpdV+FryUJwR83JcSheNJxS0g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717590720;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IpuyefiAyzmfahQo7zkYQ1LLq3u0CKLYJ8FlebyDKwU=;
- b=XpDn6rFgb+RcXRnIaaQ9MJPaYv54jCAzK1PZ/vSJz2X0wK9Y0dsqjVPENAW4zPVyT8VmR0
- t3a8tnJQt9Hao4CQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=h5bhOSct;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=XpDn6rFg
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717590720; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IpuyefiAyzmfahQo7zkYQ1LLq3u0CKLYJ8FlebyDKwU=;
- b=h5bhOSctZOMpRfelvXHmpL/b1Ixt/HsR6hVG14k8yIAd33MaUrv6OW90pd3TVp01r/5IkZ
- UnwjLNXW4syHLkFb2Qxpw5KjYKA7gdNO5ZbZJIGHuGnlNLtHPVvkasRqd1oJkKZWJ6XWw1
- D5ukrzBpdV+FryUJwR83JcSheNJxS0g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717590720;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IpuyefiAyzmfahQo7zkYQ1LLq3u0CKLYJ8FlebyDKwU=;
- b=XpDn6rFgb+RcXRnIaaQ9MJPaYv54jCAzK1PZ/vSJz2X0wK9Y0dsqjVPENAW4zPVyT8VmR0
- t3a8tnJQt9Hao4CQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2146313AA1;
- Wed,  5 Jun 2024 12:31:59 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id pLYHNr9aYGauCwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 05 Jun 2024 12:31:59 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
- berrange@redhat.com, armbru@redhat.com, Claudio Fontana
- <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH v2 06/18] monitor: Stop removing non-duplicated fds
-In-Reply-To: <Zl-l0U0Azz8lgIw2@gallifrey>
-References: <20240523190548.23977-1-farosas@suse.de>
- <20240523190548.23977-7-farosas@suse.de> <ZljqGitCeG9-Fi9l@x1n>
- <87o78mknpb.fsf@suse.de> <Zl-l0U0Azz8lgIw2@gallifrey>
-Date: Wed, 05 Jun 2024 09:31:57 -0300
-Message-ID: <87a5jzh8oy.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sEq3D-0000JS-5m
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 08:47:36 -0400
+Received: from fhigh6-smtp.messagingengine.com ([103.168.172.157])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sEq3B-0006wC-0N
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 08:47:34 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id 7EF6111401B4;
+ Wed,  5 Jun 2024 08:47:30 -0400 (EDT)
+Received: from imap44 ([10.202.2.94])
+ by compute3.internal (MEProxy); Wed, 05 Jun 2024 08:47:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1717591650;
+ x=1717678050; bh=Bghc2ZVam4PpydRyfm3VG04KuMplJFBqBWRRLlOos5s=; b=
+ owLQIcaKmbp8WLWprGrvZj0AD69G/gL9ajXFxgg8L2J7PohjtPDesQePjbT1KDZt
+ sAXRJOqphxwdg4mxCxZPD5MxJOK81ahR8MhjTg5XiUJHHgzfcLEB9h+TM2SIoZ6F
+ a3rKBJQ/tj6UpVb09AgUFnpnABhsKjzDDRF7crW2t3Kp9Hn6abAe0XFWwZFIVwsA
+ WxxYQX8M/Koo50J4Gc7+dlXesyByyb9eZ6qYVY1eYsKfBrJMeVaNqyjLOnO2/Qcu
+ JlV5jvKAWnZkybZm67GD37iWzvTVxNRj2nsY+aWsS9PP2l6dTG8xqFm+M6MJmmbC
+ 9yzVja1CtFfWmqnYKw3wCw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1717591650; x=
+ 1717678050; bh=Bghc2ZVam4PpydRyfm3VG04KuMplJFBqBWRRLlOos5s=; b=N
+ IPRKoXpQn6T4chSUg8TwznQCSYN0+CTtNpLTg4wF0VedfupCCt/9+M1+ckArpIw3
+ 3nrsGe4uXRtXdfyHdBtoZHScRhT3ol3fUsAIqCufkPw765jlJ/s0gdwru1kLS7VA
+ OP2TQ4T87BgoZeQC0ibedS2dUvHtbHAY1EAwV2+REmSI17Ta8TS/HOUJARjM7E9P
+ IUZZ63U5CrYk8nGSDw3d7HT7LtNfDr5T3XfMhjNYkCtNvWY//reOeKYgYEGrfzzr
+ fxfQGI7J/9F+2szFJpGm+Rq5nHYaDyLUd1y3KFZPURsF61Gn1zT4jHa0dvFCtoxq
+ stsbDSVkb0Z6/RVtBNG+w==
+X-ME-Sender: <xms:Yl5gZhEGyLyTbD1og7QBVXBK28T-b23OVaSa6YO60G_6RLb7AgalPQ>
+ <xme:Yl5gZmX3P7Tr63DIBx5gTgQjRbeiF0FCI3RybpnlaU9SANM35njjzNno42W5426l5
+ iGk12z1Q2dN9yPswbU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeliedgheeiucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfl
+ ihgrgihunhcujggrnhhgfdcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtoh
+ hmqeenucggtffrrghtthgvrhhnpedufeegfeetudeghefftdehfefgveffleefgfehhfej
+ ueegveethfduuddvieehgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+ grihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhm
+X-ME-Proxy: <xmx:Yl5gZjJs_dU9Xs3vnbFtYle3uEXIyf3ukLuP5lLtUBKpSEkgzWDIlw>
+ <xmx:Yl5gZnFpFysXS6YtGQ6qY7hYRu22PI4Nkom7nout89i_ASF3cBc_pg>
+ <xmx:Yl5gZnUvI9CDXP3kFuJx_S6ryh93LX5Zidja_PRvAqZShTwsiIknvw>
+ <xmx:Yl5gZiPvYPKn44HkUqVnYehS8gK-f51krzmihTNGucOic6ioHFU7ew>
+ <xmx:Yl5gZkjWtvI795VqMTznjUXYIGhgse7kVhv0N2mTMkbQKX0hOMLwtncU>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 30A0936A0074; Wed,  5 Jun 2024 08:47:30 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-497-g97f96844c-fm-20240526.001-g97f96844
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 96BAC1F815
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MISSING_XM_UA(0.00)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[7]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Message-Id: <cbc243e6-b77e-4f52-88c5-04b94dad1d20@app.fastmail.com>
+In-Reply-To: <87h6e8g9p3.fsf@draig.linaro.org>
+References: <20240511-mips_mttcg-v1-1-1b71d9b85234@flygoat.com>
+ <87h6e8g9p3.fsf@draig.linaro.org>
+Date: Wed, 05 Jun 2024 13:47:10 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: "QEMU devel" <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] mips64el-softmmu: Enable MTTCG
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=103.168.172.157;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fhigh6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,232 +107,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Dr. David Alan Gilbert" <dave@treblig.org> writes:
 
-> * Fabiano Rosas (farosas@suse.de) wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > On Thu, May 23, 2024 at 04:05:36PM -0300, Fabiano Rosas wrote:
->> >> We've been up until now cleaning up any file descriptors that have
->> >> been passed into QEMU and never duplicated[1,2]. A file descriptor
->> >> without duplicates indicates that no part of QEMU has made use of
->> >> it. This approach is starting to show some cracks now that we're
->> >> starting to consume fds from the migration code:
->> >> 
->> >> - Doing cleanup every time the last monitor connection closes works to
->> >>   reap unused fds, but also has the side effect of forcing the
->> >>   management layer to pass the file descriptors again in case of a
->> >>   disconnect/re-connect, if that happened to be the only monitor
->> >>   connection.
->> >> 
->> >>   Another side effect is that removing an fd with qmp_remove_fd() is
->> >>   effectively delayed until the last monitor connection closes.
->> >> 
->> >>   The reliance on mon_refcount is also problematic because it's racy.
->> >> 
->> >> - Checking runstate_is_running() skips the cleanup unless the VM is
->> >>   running and avoids premature cleanup of the fds, but also has the
->> >>   side effect of blocking the legitimate removal of an fd via
->> >>   qmp_remove_fd() if the VM happens to be in another state.
->> >> 
->> >>   This affects qmp_remove_fd() and qmp_query_fdsets() in particular
->> >>   because requesting a removal at a bad time (guest stopped) might
->> >>   cause an fd to never be removed, or to be removed at a much later
->> >>   point in time, causing the query command to continue showing the
->> >>   supposedly removed fd/fdset.
->> >> 
->> >> Note that file descriptors that *have* been duplicated are owned by
->> >> the code that uses them and will be removed after qemu_close() is
->> >> called. Therefore we've decided that the best course of action to
->> >> avoid the undesired side-effects is to stop managing non-duplicated
->> >> file descriptors.
->> >> 
->> >> 1- efb87c1697 ("monitor: Clean up fd sets on monitor disconnect")
->> >> 2- ebe52b592d ("monitor: Prevent removing fd from set during init")
->> >> 
->> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> >> ---
->> >>  monitor/fds.c              | 15 ++++++++-------
->> >>  monitor/hmp.c              |  2 --
->> >>  monitor/monitor-internal.h |  1 -
->> >>  monitor/qmp.c              |  2 --
->> >>  4 files changed, 8 insertions(+), 12 deletions(-)
->> >> 
->> >> diff --git a/monitor/fds.c b/monitor/fds.c
->> >> index 101e21720d..f7b98814fa 100644
->> >> --- a/monitor/fds.c
->> >> +++ b/monitor/fds.c
->> >> @@ -169,6 +169,11 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
->> >>  
->> >>  static void monitor_fdset_free(MonFdset *mon_fdset)
->> >>  {
->> >> +    /*
->> >> +     * Only remove an empty fdset. The fds are owned by the user and
->> >> +     * should have been removed with qmp_remove_fd(). The dup_fds are
->> >> +     * owned by QEMU and should have been removed with qemu_close().
->> >> +     */
->> >>      if (QLIST_EMPTY(&mon_fdset->fds) && QLIST_EMPTY(&mon_fdset->dup_fds)) {
->> >>          QLIST_REMOVE(mon_fdset, next);
->> >>          g_free(mon_fdset);
->> >> @@ -189,9 +194,7 @@ static void monitor_fdset_cleanup(MonFdset *mon_fdset)
->> >>      MonFdsetFd *mon_fdset_fd_next;
->> >>  
->> >>      QLIST_FOREACH_SAFE(mon_fdset_fd, &mon_fdset->fds, next, mon_fdset_fd_next) {
->> >> -        if ((mon_fdset_fd->removed ||
->> >> -                (QLIST_EMPTY(&mon_fdset->dup_fds) && mon_refcount == 0)) &&
->> >> -                runstate_is_running()) {
->> >> +        if (mon_fdset_fd->removed) {
->> >
->> > I don't know the code well, but I like it.
->> >
->> >>              monitor_fdset_fd_free(mon_fdset_fd);
->> >>          }
->> >>      }
->> >> @@ -206,7 +209,7 @@ void monitor_fdsets_cleanup(void)
->> >>  
->> >>      QEMU_LOCK_GUARD(&mon_fdsets_lock);
->> >>      QLIST_FOREACH_SAFE(mon_fdset, &mon_fdsets, next, mon_fdset_next) {
->> >> -        monitor_fdset_cleanup(mon_fdset);
->> >> +        monitor_fdset_free(mon_fdset);
->> >>      }
->> >>  }
->> >>  
->> >> @@ -479,9 +482,7 @@ void monitor_fdset_dup_fd_remove(int dup_fd)
->> >>              if (mon_fdset_fd_dup->fd == dup_fd) {
->> >>                  QLIST_REMOVE(mon_fdset_fd_dup, next);
->> >>                  g_free(mon_fdset_fd_dup);
->> >> -                if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
->> >> -                    monitor_fdset_cleanup(mon_fdset);
->> >> -                }
->> >> +                monitor_fdset_free(mon_fdset);
->> >
->> > This and above changes are not crystal clear to me where the _cleanup()
->> > does extra check "removed" and clean those fds.
->> >
->> > I think it'll make it easier for me to understand if this one and the next
->> > are squashed together.  But maybe it's simply because I didn't fully
->> > understand.
->> 
->> monitor_fdsets_cleanup() was doing three things previously:
->> 
->> 1- Remove the removed=true fds. This is weird, but ok.
->> 
->> 2- Remove fds from an fdset that has an empty dup_fds list, but only if
->> the guest is not running and the monitor is closed. This is problematic.
->> 
->> 3- Remove/free fdsets that have become empty due to the above
->> removals. This is ok.
->> 
->> This patch covers (2), because that is the only change that has a
->> complex reasoning behind it and we need to document that without
->> conflating it with the rest of the changes.
+
+=E5=9C=A82024=E5=B9=B46=E6=9C=884=E6=97=A5=E5=85=AD=E6=9C=88 =E4=B8=8B=E5=
+=8D=881:43=EF=BC=8CAlex Benn=C3=A9e=E5=86=99=E9=81=93=EF=BC=9A
+[...]
 >
-> The ebe52b592d you reference, makes me think that the only reason for the
-> 'is not running' was as a way to detect when init had finished; and there
-> are certainly better ways to do that (now?).
+> I'm a little uncomfortable about making the success of MTTCG depend on
+> the user options passed to the kernel.
 
-I agree with the perception, however I can't determine what "init" means
-in this scenario. It's not clear from the original change at exactly
-which point we're safe to assume fds have been consumed from some
-subsystem (block probably). This also clashes with the (new) usage we're
-attempting here for migration because the migration code would almost
-certainly only consume the fds after this point.
+Yes, I agree, it sounds awkward.
 
 >
-> However, the efb87c1697 talks about cleaning up non-dup's on all monitors
-> closed, to stop getting left-over fd's that were added but then not used
-> (because a disconnect happened between adding and being used).
-> In your world when do these get cleaned up?
+> How come a non-icount run depends on how many instructions are being r=
+un
+> on each core? Why is time not based on the wallclock time and by
+> definition synced between all cores?
 
-They stay around until after the reconnection. Then either get removed
-via qmp_remove_fd() or when a subsystem dups them and eventually calls
-qemu_close().
+That's the problem of Guest Kernel, the synchronisation mechanism is poo=
+rly
+written that relies on instruction latency too much. I have patch pendin=
+g to
+improve it at guest side, but we can't fix it in existing binary.
 
-The initial assumption seems to have been overly conservative, there
-will always be a monitor connection around, even if it disconnects
-briefly.
-
-Per Daniel's suggestion we're considering a management layer bug if it
-passes fds that QEMU never needs to consume. So QEMU will not attempt
-any cleanup of perceived unused fds since they could be needed at a
-later point (e.g. after qmp_migrate).
+This clock, CP0_Counter, as per ISA spec, is independent between cores a=
+nd
+needs to be synchronized by software. We can emulate it as a monotonic c=
+lock
+source and Linux should be happy with it, but that is violating ISA spec.
 
 >
-> Dave
+>> In non-MTTCG build, the execution is slow enough so kernel won't
+>> observe back drifts.
+>>
+>> Test results:
+>>
+>> With clocksource=3DMIPS
+>> ```
+>>  ~/tmp/retry/retry.py -n 100 -c -- ./qemu-system-mips64el \
+>>     -display none -vga none -serial mon:stdio \
+>>     -machine malta -kernel ./vmlinux-4.7.0-rc1.I6400 \
+>>     -cpu I6400 -smp 8 -vga std \
+>>     -append "printk.time=3D0 clocksource=3DMIPS console=3Dtty0 consol=
+e=3DttyS0 panic=3D-1" \
+>>     --no-reboot
+>>
+>> 100, 0, PASS, 5.258126, 100, 100, -
+>> Results summary:
+>> 0: 100 times (100.00%), avg time 6.508 (55.53 varience/7.45 deviation)
+>> Ran command 100 times, 100 passes
+>> ```
+>>
+>> With linux-next:
+>> ```
+>>  ~/tmp/retry/retry.py -n 100 -c -- ./qemu-system-mips64el \
+>>     -display none -vga none -serial mon:stdio \
+>>     -machine malta -kernel ~/linux-next/vmlinux \
+>>     -cpu I6400 -smp 8 -vga std \
+>>     -append "printk.time=3D0 console=3Dtty0 console=3DttyS0 panic=3D-=
+1" \
+>>     --no-reboot
+>>
+>> 100, 0, PASS, 4.507921, 100, 100, -
+>> Results summary:
+>> 0: 100 times (100.00%), avg time 4.233 (0.04 varience/0.21 deviation)
+>> Ran command 100 times, 100 passes
+>> ```
+>>
+>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>> ---
+>> I'll leave the test case alone as it's already marked as
+>> QEMU_TEST_FLAKY_TESTS
 >
->> Since (3) is still a reasonable thing to do, this patch merely keeps it
->> around, but using the helpers introduced in the previous patch.
->> 
->> The next patch removed the need for (1), making the removal immediate
->> instead of delayed. It has it's own much less complex reasoning, which
->> is: "we don't need to wait to remove the fd".
->> 
->> I hope this clarifies a bit. I would prefer if we kept this and the next
->> patch separate to avoid having a single patch that does too many
->> things. I hope to be as explicit as possible with the reason behind
->> these changes to avoid putting future people in the situation that we
->> are in now, i.e. having to guess at the reasons behind this code.
->> 
->> If you still think we should squash or if you have more questions, let
->> me know.
->> 
->> >>                  return;
->> >>              }
->> >>          }
->> >> diff --git a/monitor/hmp.c b/monitor/hmp.c
->> >> index 69c1b7e98a..460e8832f6 100644
->> >> --- a/monitor/hmp.c
->> >> +++ b/monitor/hmp.c
->> >> @@ -1437,11 +1437,9 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
->> >>              monitor_resume(mon);
->> >>          }
->> >>          qemu_mutex_unlock(&mon->mon_lock);
->> >> -        mon_refcount++;
->> >>          break;
->> >>  
->> >>      case CHR_EVENT_CLOSED:
->> >> -        mon_refcount--;
->> >>          monitor_fdsets_cleanup();
->> >>          break;
->> >>  
->> >> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
->> >> index 252de85681..cb628f681d 100644
->> >> --- a/monitor/monitor-internal.h
->> >> +++ b/monitor/monitor-internal.h
->> >> @@ -168,7 +168,6 @@ extern bool qmp_dispatcher_co_shutdown;
->> >>  extern QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
->> >>  extern QemuMutex monitor_lock;
->> >>  extern MonitorList mon_list;
->> >> -extern int mon_refcount;
->> >>  
->> >>  extern HMPCommand hmp_cmds[];
->> >>  
->> >> diff --git a/monitor/qmp.c b/monitor/qmp.c
->> >> index a239945e8d..5e538f34c0 100644
->> >> --- a/monitor/qmp.c
->> >> +++ b/monitor/qmp.c
->> >> @@ -466,7 +466,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
->> >>          data = qmp_greeting(mon);
->> >>          qmp_send_response(mon, data);
->> >>          qobject_unref(data);
->> >> -        mon_refcount++;
->> >>          break;
->> >>      case CHR_EVENT_CLOSED:
->> >>          /*
->> >> @@ -479,7 +478,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
->> >>          json_message_parser_destroy(&mon->parser);
->> >>          json_message_parser_init(&mon->parser, handle_qmp_command,
->> >>                                   mon, NULL);
->> >> -        mon_refcount--;
->> >>          monitor_fdsets_cleanup();
->> >>          break;
->> >>      case CHR_EVENT_BREAK:
->> >
->> > I like this too when mon_refcount can be dropped.  It turns out I like this
->> > patch and the next a lot, and I hope nothing will break.
->> >
->> > Aside, you seem to have forgot removal of the "int mon_refcount" in
->> > monitor.c.
->> 
->> Yes, I'll fix that. Thanks.
+> We should ensure we have some testing enabled if we switch this on. Was
+> the FLAKY test marked for MTTCG issues or something else?
+
+Tracking history, I think it was because this issue is still popping up =
+after
+disabling MTTCG.
+
+I'll try to upgrade kernel used in this test.
+
+Thanks
+- Jiaxun
+>
+>> ---
+>>  configs/targets/mips64el-softmmu.mak | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/configs/targets/mips64el-softmmu.mak b/configs/targets/m=
+ips64el-softmmu.mak
+>> index 8d9ab3ddc4b1..199b1d909a7d 100644
+>> --- a/configs/targets/mips64el-softmmu.mak
+>> +++ b/configs/targets/mips64el-softmmu.mak
+>> @@ -1,3 +1,4 @@
+>>  TARGET_ARCH=3Dmips64
+>>  TARGET_BASE_ARCH=3Dmips
+>> +TARGET_SUPPORTS_MTTCG=3Dy
+>>  TARGET_NEED_FDT=3Dy
+>>
+>> ---
+>> base-commit: 248f6f62df073a3b4158fd0093863ab885feabb5
+>> change-id: 20240511-mips_mttcg-47a6b19074b3
+>>
+>> Best regards,
+>
+> --=20
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
+
+--=20
+- Jiaxun
 
