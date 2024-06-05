@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B96BCC27C5E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A1AAC25B76
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:38:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF0An-0003zP-LE; Wed, 05 Jun 2024 19:36:05 -0400
+	id 1sF09g-0002pa-Hf; Wed, 05 Jun 2024 19:34:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Al-0003jN-TF
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF09f-0002p2-1v
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:34:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Ad-0005bc-8d
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:35:57 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF09d-0004mw-2g
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:34:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717630554;
+ s=mimecast20190719; t=1717630492;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=I7oOBawQ17ekJGPjTeJH6qenvWsB1BSkAwbq0wuPpCg=;
- b=LwnFSA+RaeLn0Zmjv9H2v8IXRq1ZXaSgtht1501WUAieNeAhdkoKdmMd9Y1NfKGEbssWOy
- MLxGD/NcMUhd/qsMwxSo8wjXOJsuyx1ryaaTsNkwF3j22tXamNT4ZR5CvUnIbQ8tXTLMqB
- u6FtpgprnaXYDV+4idYtmaBQjSO9SbU=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uKK/AiLdjMfeKEPpHLdhaqq0Kf5J8WlC0WD4BsUonqY=;
+ b=RJFC5KL8NlA6DOv2zsw6FG0zN1qNv+g5bzGLkZaLIlnWthOQlHjLULkWPOIDCg9upL41HE
+ mP8yavaLJjp8qPllV3yOaswMPp0HIAl1iZlasIzOFl6/BLUqZ0bp/zFZl0TMo6Xo+/MBjt
+ bLCnGIj6dXm+m2ODGknvp4SfWXIQ7HA=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-626-Rk_BtKQnMSKZ3x2OcstPAg-1; Wed, 05 Jun 2024 19:35:49 -0400
-X-MC-Unique: Rk_BtKQnMSKZ3x2OcstPAg-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-52b998cb52eso210332e87.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:35:49 -0700 (PDT)
+ us-mta-346-NFp6kSUFOQyWVuNcjYNZTg-1; Wed, 05 Jun 2024 19:34:51 -0400
+X-MC-Unique: NFp6kSUFOQyWVuNcjYNZTg-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a6c718150f8so44944266b.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:34:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717630547; x=1718235347;
+ d=1e100.net; s=20230601; t=1717630489; x=1718235289;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I7oOBawQ17ekJGPjTeJH6qenvWsB1BSkAwbq0wuPpCg=;
- b=Z0rVxOo06tX7kJUjgkBJDn01Vdl6eng3dk30nblGGAxvgjdcF77YUEEslWaOoViSKg
- qfFdPd7Gk8PXfap29/f7qEDPnPymAdVLpy20XVFwOvWrtl2G0X2Q8Sb3iv5DNbxWFwyP
- GBfovuK8cJSmFSV54L7Tk4fXoiSR/5ndCciHnejyB3m/+2N8RL1g4G2r/mU/HlVr/0Cm
- ylozFaw+Wa4tAmroIinOWz4xvRjJsoQ7uGtavuMZwFmjcvX9BxBqJg2ubiO0iujj16EF
- Wi5U9dITP3jZIw2yyufvlFcClnqZW9gELy3LdQ+cTDQVb19FYyGTSpTs9Ncuk7mkUEZk
- 6Mqg==
-X-Gm-Message-State: AOJu0Yxs3GS92aIB46GsrMRel2K53MiCtirENd59mZ856srOkdL/4swS
- gyAv1VaIbyOW9XfMUmh8AXTGHyWHWklkrcL2/UPmTU7AaAfJDCuEajlU37j0xlVG6VHx7Ci2sqN
- OyTD/xvBHl4W+nLwbUFUvfokcxfbw9bwpRBLZbR5NUTGI9UQomGcP5xtcTPHGP9I/1aMvyo6CgA
- ZDdiRN8Db3poYwNfiMQCnrma8iYsEuHQ==
-X-Received: by 2002:ac2:4c92:0:b0:52b:84bd:344f with SMTP id
- 2adb3069b0e04-52bab4fa611mr2101390e87.53.1717630547263; 
- Wed, 05 Jun 2024 16:35:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFFR/0LSCc+Uzk+dMIYa4HRFxxbYxU2HeYP4Q5/VGai6gbiuuWGPu/qGmHgIe/1CpJmmsC3xA==
-X-Received: by 2002:ac2:4c92:0:b0:52b:84bd:344f with SMTP id
- 2adb3069b0e04-52bab4fa611mr2101376e87.53.1717630546600; 
- Wed, 05 Jun 2024 16:35:46 -0700 (PDT)
+ bh=uKK/AiLdjMfeKEPpHLdhaqq0Kf5J8WlC0WD4BsUonqY=;
+ b=BJyiyk4DG2Dp/Gqwg/ppTigVwtzhV84ounZODeyrtvT4Eg3EJnwH1YPzVMI9Sz6vBz
+ cUupb8j7GnNH9wlIEvs7aMhNo1upFBFBfW5d93l0/tsoDj7s9Zcv1RbtKugZo7l2h0xt
+ SbODkkStqHK2ofBhumwuLWl3ugqMFAZPfSjf/F+wDT0ei3Op/ppcRvOao+7+WhNUYaNs
+ HpBSXi2W70wqlHCpN3mH8xDWHA+pJ4i3Dd1FKjsD+lOa9f+9VaHVgreVAKHcmFEip7ew
+ 9Lpqx4TTxexCytHjGeenBk91ufRq5AyahokzZw8H7BrqhqmKSCD50U4tVzqmOc4sBmu5
+ vm7A==
+X-Gm-Message-State: AOJu0YwdCn+/mEYIlbIVXhAjUEwg6/jocEwLBfAxTA1U56N6Njxu0jB4
+ GuokQTNhg4WsPOGnk8BBDmOL0xkawqRRBIC6opcwXksCOyv8wmcReJlt4HjPve9OlkZ9WiPBiqs
+ YwmvdRrzZtphcBANEx994P6VrUl5A1r/pD4rp5sRAV1fqMMXGNl3+DoLXO8uVW5Of5TyR78UsgT
+ hJHSTiPNDKUO/7BX6J5iOzTOz2WMcqhg==
+X-Received: by 2002:a17:906:81d3:b0:a63:147b:b2 with SMTP id
+ a640c23a62f3a-a69a002b099mr269871866b.66.1717630489341; 
+ Wed, 05 Jun 2024 16:34:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG0wQKuvphuvhvCen1FHs32H5X+O4eqYGCwupr4EsDkHjqiXUXFfa1eRQJAze0CnjBJKMplWg==
+X-Received: by 2002:a17:906:81d3:b0:a63:147b:b2 with SMTP id
+ a640c23a62f3a-a69a002b099mr269870166b.66.1717630488789; 
+ Wed, 05 Jun 2024 16:34:48 -0700 (PDT)
 Received: from redhat.com ([2.55.56.67]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c806eb641sm6591066b.111.2024.06.05.16.35.44
+ a640c23a62f3a-a6c8058232asm7013366b.6.2024.06.05.16.34.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 16:35:46 -0700 (PDT)
-Date: Wed, 5 Jun 2024 19:35:42 -0400
+ Wed, 05 Jun 2024 16:34:48 -0700 (PDT)
+Date: Wed, 5 Jun 2024 19:34:45 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gregory Price <gourry.memverge@gmail.com>,
- Gregory Price <gregory.price@memverge.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL v3 17/41] hw/cxl/mailbox: interface to add CCI commands to an
- existing CCI
-Message-ID: <7ef5a1800a2b2c0ec2207e32c8409f1214687d2a.1717630437.git.mst@redhat.com>
+ Si-Wei Liu <si-wei.liu@oracle.com>,
+ Joao Martins <joao.m.martins@oracle.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL v3 02/41] vhost: Perform memory section dirty scans once per
+ iteration
+Message-ID: <1775c641d54dcb24bc485ac5c871c97e85f985d8.1717630437.git.mst@redhat.com>
 References: <cover.1717630437.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -104,86 +103,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gregory Price <gourry.memverge@gmail.com>
+From: Si-Wei Liu <si-wei.liu@oracle.com>
 
-This enables wrapper devices to customize the base device's CCI
-(for example, with custom commands outside the specification)
-without the need to change the base device.
+On setups with one or more virtio-net devices with vhost on,
+dirty tracking iteration increases cost the bigger the number
+amount of queues are set up e.g. on idle guests migration the
+following is observed with virtio-net with vhost=on:
 
-The also enabled the base device to dispatch those commands without
-requiring additional driver support.
+48 queues -> 78.11%  [.] vhost_dev_sync_region.isra.13
+8 queues -> 40.50%   [.] vhost_dev_sync_region.isra.13
+1 queue -> 6.89%     [.] vhost_dev_sync_region.isra.13
+2 devices, 1 queue -> 18.60%  [.] vhost_dev_sync_region.isra.14
 
-Heavily edited by Jonathan Cameron to increase code reuse
+With high memory rates the symptom is lack of convergence as soon
+as it has a vhost device with a sufficiently high number of queues,
+the sufficient number of vhost devices.
 
-Signed-off-by: Gregory Price <gregory.price@memverge.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-3-nifan.cxl@gmail.com>
+On every migration iteration (every 100msecs) it will redundantly
+query the *shared log* the number of queues configured with vhost
+that exist in the guest. For the virtqueue data, this is necessary,
+but not for the memory sections which are the same. So essentially
+we end up scanning the dirty log too often.
+
+To fix that, select a vhost device responsible for scanning the
+log with regards to memory sections dirty tracking. It is selected
+when we enable the logger (during migration) and cleared when we
+disable the logger. If the vhost logger device goes away for some
+reason, the logger will be re-selected from the rest of vhost
+devices.
+
+After making mem-section logger a singleton instance, constant cost
+of 7%-9% (like the 1 queue report) will be seen, no matter how many
+queues or how many vhost devices are configured:
+
+48 queues -> 8.71%    [.] vhost_dev_sync_region.isra.13
+2 devices, 8 queues -> 7.97%   [.] vhost_dev_sync_region.isra.14
+
+Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Message-Id: <1710448055-11709-2-git-send-email-si-wei.liu@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 ---
- include/hw/cxl/cxl_device.h |  2 ++
- hw/cxl/cxl-mailbox-utils.c  | 19 +++++++++++++++++--
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ include/hw/virtio/vhost.h |  1 +
+ hw/virtio/vhost.c         | 67 +++++++++++++++++++++++++++++++++++----
+ 2 files changed, 62 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index ccc4611875..a5f8e25020 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -301,6 +301,8 @@ void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max);
- void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
-                                   DeviceState *d, size_t payload_max);
- void cxl_init_cci(CXLCCI *cci, size_t payload_max);
-+void cxl_add_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmd_set)[256],
-+                          size_t payload_max);
- int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
-                             size_t len_in, uint8_t *pl_in,
-                             size_t *len_out, uint8_t *pl_out,
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 2c9f50f0f9..2a64c58e2f 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1424,9 +1424,9 @@ static void bg_timercb(void *opaque)
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 02477788df..d75faf46e9 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -129,6 +129,7 @@ struct vhost_dev {
+     void *opaque;
+     struct vhost_log *log;
+     QLIST_ENTRY(vhost_dev) entry;
++    QLIST_ENTRY(vhost_dev) logdev_entry;
+     QLIST_HEAD(, vhost_iommu) iommu_list;
+     IOMMUNotifier n;
+     const VhostDevConfigOps *config_ops;
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index a1e8b79e1a..06fc71746e 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -45,6 +45,7 @@
+ 
+ static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
+ static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
++static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BACKEND_TYPE_MAX];
+ 
+ /* Memslots used by backends that support private memslots (without an fd). */
+ static unsigned int used_memslots;
+@@ -149,6 +150,47 @@ bool vhost_dev_has_iommu(struct vhost_dev *dev)
      }
  }
  
--void cxl_init_cci(CXLCCI *cci, size_t payload_max)
-+static void cxl_rebuild_cel(CXLCCI *cci)
- {
--    cci->payload_max = payload_max;
-+    cci->cel_size = 0; /* Reset for a fresh build */
-     for (int set = 0; set < 256; set++) {
-         for (int cmd = 0; cmd < 256; cmd++) {
-             if (cci->cxl_cmd_set[set][cmd].handler) {
-@@ -1440,6 +1440,13 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
-             }
++static inline bool vhost_dev_should_log(struct vhost_dev *dev)
++{
++    assert(dev->vhost_ops);
++    assert(dev->vhost_ops->backend_type > VHOST_BACKEND_TYPE_NONE);
++    assert(dev->vhost_ops->backend_type < VHOST_BACKEND_TYPE_MAX);
++
++    return dev == QLIST_FIRST(&vhost_log_devs[dev->vhost_ops->backend_type]);
++}
++
++static inline void vhost_dev_elect_mem_logger(struct vhost_dev *hdev, bool add)
++{
++    VhostBackendType backend_type;
++
++    assert(hdev->vhost_ops);
++
++    backend_type = hdev->vhost_ops->backend_type;
++    assert(backend_type > VHOST_BACKEND_TYPE_NONE);
++    assert(backend_type < VHOST_BACKEND_TYPE_MAX);
++
++    if (add && !QLIST_IS_INSERTED(hdev, logdev_entry)) {
++        if (QLIST_EMPTY(&vhost_log_devs[backend_type])) {
++            QLIST_INSERT_HEAD(&vhost_log_devs[backend_type],
++                              hdev, logdev_entry);
++        } else {
++            /*
++             * The first vhost_device in the list is selected as the shared
++             * logger to scan memory sections. Put new entry next to the head
++             * to avoid inadvertent change to the underlying logger device.
++             * This is done in order to get better cache locality and to avoid
++             * performance churn on the hot path for log scanning. Even when
++             * new devices come and go quickly, it wouldn't end up changing
++             * the active leading logger device at all.
++             */
++            QLIST_INSERT_AFTER(QLIST_FIRST(&vhost_log_devs[backend_type]),
++                               hdev, logdev_entry);
++        }
++    } else if (!add && QLIST_IS_INSERTED(hdev, logdev_entry)) {
++        QLIST_REMOVE(hdev, logdev_entry);
++    }
++}
++
+ static int vhost_sync_dirty_bitmap(struct vhost_dev *dev,
+                                    MemoryRegionSection *section,
+                                    hwaddr first,
+@@ -166,12 +208,14 @@ static int vhost_sync_dirty_bitmap(struct vhost_dev *dev,
+     start_addr = MAX(first, start_addr);
+     end_addr = MIN(last, end_addr);
+ 
+-    for (i = 0; i < dev->mem->nregions; ++i) {
+-        struct vhost_memory_region *reg = dev->mem->regions + i;
+-        vhost_dev_sync_region(dev, section, start_addr, end_addr,
+-                              reg->guest_phys_addr,
+-                              range_get_last(reg->guest_phys_addr,
+-                                             reg->memory_size));
++    if (vhost_dev_should_log(dev)) {
++        for (i = 0; i < dev->mem->nregions; ++i) {
++            struct vhost_memory_region *reg = dev->mem->regions + i;
++            vhost_dev_sync_region(dev, section, start_addr, end_addr,
++                                  reg->guest_phys_addr,
++                                  range_get_last(reg->guest_phys_addr,
++                                                 reg->memory_size));
++        }
+     }
+     for (i = 0; i < dev->nvqs; ++i) {
+         struct vhost_virtqueue *vq = dev->vqs + i;
+@@ -383,6 +427,7 @@ static void vhost_log_put(struct vhost_dev *dev, bool sync)
+         g_free(log);
+     }
+ 
++    vhost_dev_elect_mem_logger(dev, false);
+     dev->log = NULL;
+     dev->log_size = 0;
+ }
+@@ -998,6 +1043,15 @@ static int vhost_dev_set_log(struct vhost_dev *dev, bool enable_log)
+             goto err_vq;
          }
      }
-+}
 +
-+void cxl_init_cci(CXLCCI *cci, size_t payload_max)
-+{
-+    cci->payload_max = payload_max;
-+    cxl_rebuild_cel(cci);
++    /*
++     * At log start we select our vhost_device logger that will scan the
++     * memory sections and skip for the others. This is possible because
++     * the log is shared amongst all vhost devices for a given type of
++     * backend.
++     */
++    vhost_dev_elect_mem_logger(dev, enable_log);
 +
-     cci->bg.complete_pct = 0;
-     cci->bg.starttime = 0;
-     cci->bg.runtime = 0;
-@@ -1458,6 +1465,14 @@ static void cxl_copy_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmds)[
+     return 0;
+ err_vq:
+     for (; i >= 0; --i) {
+@@ -2075,6 +2129,7 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+             VHOST_OPS_DEBUG(r, "vhost_set_log_base failed");
+             goto fail_log;
+         }
++        vhost_dev_elect_mem_logger(hdev, true);
      }
- }
- 
-+void cxl_add_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmd_set)[256],
-+                                 size_t payload_max)
-+{
-+    cci->payload_max = MAX(payload_max, cci->payload_max);
-+    cxl_copy_cci_commands(cci, cxl_cmd_set);
-+    cxl_rebuild_cel(cci);
-+}
-+
- void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
-                                   DeviceState *d, size_t payload_max)
- {
+     if (vrings) {
+         r = vhost_dev_set_vring_enable(hdev, true);
 -- 
 MST
 
