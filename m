@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19813C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48100C27C5F
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:39:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF0By-00045d-Fz; Wed, 05 Jun 2024 19:37:18 -0400
+	id 1sF0AQ-0002zh-4I; Wed, 05 Jun 2024 19:35:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Bw-00042t-S0
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:37:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0AO-0002yu-D2
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:35:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Bu-0005zd-J4
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:37:16 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0AM-0005Od-PE
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:35:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717630633;
+ s=mimecast20190719; t=1717630538;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=PMqT3UA862JsOGcigX9iEr1iG7UpaUmQpd1D/p7t/1Y=;
- b=QPDTphPx5tSPVQlK+rOKgqPz2OFCQLjGxUtb9YnLGUfu0SUyjq93/tKCEesLQhOGijz39N
- 4UVubpW6appNrB4qUF2VUd2fJKL2bYk56ZROcYYJqRtQvsUIRPtqjmSvrDlE120PeH31CR
- pxFWDeGt7GD1DlJIo5gKEi8xVg7quos=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+cVsXdQI2RthGLy7TxkQZRDMuYIrDeTU2bckWSqVXa0=;
+ b=MmSw04r+oide3JfS3720rU8dGivTPcoEp61XPqY8K3LAfi47gt+UEB2+Aycw26f1mmGyiT
+ 0LoN5wJu/z1l6Pgwww0J7vwN2MO7G1w9MW3a9ixsxCdvS5LPnNw7L7WQ+QNPqrIQSpxOcB
+ ZXWyW1dKVyoRr0HZQqKw1iwvCQl4M2g=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-125-QslGs5HEMLaROMgX6DBifA-1; Wed, 05 Jun 2024 19:37:12 -0400
-X-MC-Unique: QslGs5HEMLaROMgX6DBifA-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a6912c4ddb1so13149666b.1
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:37:12 -0700 (PDT)
+ us-mta-448-St8WeufWNtOWh5NxdLzF0w-1; Wed, 05 Jun 2024 19:35:36 -0400
+X-MC-Unique: St8WeufWNtOWh5NxdLzF0w-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-57851ae6090so100895a12.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:35:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717630631; x=1718235431;
+ d=1e100.net; s=20230601; t=1717630535; x=1718235335;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PMqT3UA862JsOGcigX9iEr1iG7UpaUmQpd1D/p7t/1Y=;
- b=YcvdIUtW5SGtNqGLLab53grbJ7VSYfMPdb0BN9NGyH6RM2FAOMGx9CGYVKMTepiDhe
- UvZLLc2X4+Wb8nYg589oMW0jz/qotBIGFnF6MAaH8+bccpyFmtjgd96MyWUICYDEg1C8
- Dy3DoBWtsdOB08gCQ5jyVG1EYNzffO9xag1V3CrLMKfLv8PWDvo+XHoUdJGs8KUr6jch
- a2U5Bb92B/FJVgf/MnX7NvEpQARqDXXs2Oi6k+Vjt8UTZ15ZgAMsiR2UQ2RKz/Rm1Viq
- AYLn/asQxsazzJXdgfqg6ltYUY1SIRolur0UL3EA7+N9xFtj8VbOKZAjM/tV7oI21nD2
- AmYA==
-X-Gm-Message-State: AOJu0YyDpTFdhEJXMngvxRYV5JjIl/A2cCOXAE6xXCEjoZLTF5KKaGDG
- 4HCJLLKHtD2xTEp0lDFz43FK/cQ4w+7sDvlbB//Jlrd6x+OdXCnXtQPim5sHkDzBaj0zINKoXiB
- EPxTgQZEuYoy+kA0nz62zW/xRfByvWmWZ6d8mZlxg+pGGqYqNUEv2AD0Ow5XDSJ6Tp7x8UZJhyO
- PI0fXqWsvd9lMjDMIT0HofI255ohtD0Q==
-X-Received: by 2002:a17:906:d110:b0:a59:9c58:763a with SMTP id
- a640c23a62f3a-a699f88ad1bmr249822066b.46.1717630630905; 
- Wed, 05 Jun 2024 16:37:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFzcKHMzicOsYtJEO7oAR4sTC6yaeh8nAVnUGNsazR6tS0Nqiq+vWPS/M5sOj/96dCNT2aZuw==
-X-Received: by 2002:a17:906:d110:b0:a59:9c58:763a with SMTP id
- a640c23a62f3a-a699f88ad1bmr249821266b.46.1717630630310; 
- Wed, 05 Jun 2024 16:37:10 -0700 (PDT)
+ bh=+cVsXdQI2RthGLy7TxkQZRDMuYIrDeTU2bckWSqVXa0=;
+ b=hAN0NUQU61wjoDW91SFE2ygFLZA+kxHUlk/hJw8z3f53vqkoXfQ3hIckmIcLavD5YR
+ cGPOWcUig70V4gvr5MMTEPo/wOBTeOyUyDduJDrGQvLNq8ulTpkYxHDvNuGcjosRE7uL
+ 5q/6aeAkA0BTMAdQMd4gmsKWAR5sgg6QQoTutNNne+XOlMk7P6vFB5r6/zFYIaXCByVk
+ gP+6pJmOrRAC6xNM1TSd0ywctWiEW8UNK4ljoLTqKWl+di8GEv+j/LGEGbQIUlbZFBAp
+ Ps+IEewXroIq3EBwIaK85mb20IWBw1VhG2RWBKdR6Jh0SdFm2WXC/bQHzb7EazdCA1De
+ 36oQ==
+X-Gm-Message-State: AOJu0Yx6tv0WKfMOox5Zj7aJi/JmfeLSAsYwVcayBrTfKdgJXHj01wly
+ 44ulOtRonukPQSQs2crIEf733bW3+zF0NQNV2gLkQD05UV74qWXVe20WaCV3P+GCDjrnP6Ev1Ly
+ i33G6bjJ+pO/kZHXZ8GCxJW59S4F4YLeyanOtuauH1i2zJEmpZ+Mrfb6c8MmKZaL/PSPtjLnbQM
+ 2RqaILzOGJGL/VAufSVeMAdYXbxF/i3w==
+X-Received: by 2002:a50:a416:0:b0:57a:1aa8:b49e with SMTP id
+ 4fb4d7f45d1cf-57a8b67d88emr2961590a12.3.1717630535089; 
+ Wed, 05 Jun 2024 16:35:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5kPRorPYqkgHcbRBIqEqRrOQX5N+SwIBUn58ZGbZ10emRuaHI7OdCJie3xIsgrkw9XV2F0A==
+X-Received: by 2002:a50:a416:0:b0:57a:1aa8:b49e with SMTP id
+ 4fb4d7f45d1cf-57a8b67d88emr2961575a12.3.1717630534675; 
+ Wed, 05 Jun 2024 16:35:34 -0700 (PDT)
 Received: from redhat.com ([2.55.56.67]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c8058272bsm7331466b.18.2024.06.05.16.37.08
+ 4fb4d7f45d1cf-57aae0c9f88sm100430a12.21.2024.06.05.16.35.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 16:37:09 -0700 (PDT)
-Date: Wed, 5 Jun 2024 19:37:07 -0400
+ Wed, 05 Jun 2024 16:35:34 -0700 (PDT)
+Date: Wed, 5 Jun 2024 19:35:30 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Cindy Lu <lulu@redhat.com>,
- qemu-stable@nongnu.org
-Subject: [PULL v3 40/41] virtio-pci: Fix the failure process in
- kvm_virtio_pci_vector_use_one()
-Message-ID: <07f799c8136c57913223930aed41dc6bef1854a4.1717630437.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Li Feng <fengli@smartx.com>,
+ Raphael Norwitz <raphael@enfabrica.net>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-block@nongnu.org
+Subject: [PULL v3 14/41] Revert "vhost-user: fix lost reconnect"
+Message-ID: <1c40946b1199f25c42057a6a7ed576c5af6d1933.1717630437.git.mst@redhat.com>
 References: <cover.1717630437.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -77,7 +80,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1717630437.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -102,64 +105,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cindy Lu <lulu@redhat.com>
+From: Li Feng <fengli@smartx.com>
 
-In function kvm_virtio_pci_vector_use_one(), the function will only use
-the irqfd/vector for itself. Therefore, in the undo label, the failing
-process is incorrect.
-To fix this, we can just remove this label.
+This reverts commit f02a4b8e6431598612466f76aac64ab492849abf.
 
-Fixes: f9a09ca3ea ("vhost: add support for configure interrupt")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Cindy Lu <lulu@redhat.com>
-Message-Id: <20240528084840.194538-1-lulu@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Since the current patch cannot completely fix the lost reconnect
+problem, there is a scenario that is not considered:
+- When the virtio-blk driver is removed from the guest os,
+  s->connected has no chance to be set to false, resulting in
+  subsequent reconnection not being executed.
+
+The next patch will completely fix this issue with a better approach.
+
+Signed-off-by: Li Feng <fengli@smartx.com>
+Message-Id: <20240516025753.130171-2-fengli@smartx.com>
+Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio-pci.c | 18 ++----------------
- 1 file changed, 2 insertions(+), 16 deletions(-)
+ include/hw/virtio/vhost-user.h |  3 +--
+ hw/block/vhost-user-blk.c      |  2 +-
+ hw/scsi/vhost-user-scsi.c      |  3 +--
+ hw/virtio/vhost-user-base.c    |  2 +-
+ hw/virtio/vhost-user.c         | 10 ++--------
+ 5 files changed, 6 insertions(+), 14 deletions(-)
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 7d62e92365..5941f1a94d 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -898,7 +898,7 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no)
-     }
-     ret = kvm_virtio_pci_vq_vector_use(proxy, vector);
-     if (ret < 0) {
--        goto undo;
-+        return ret;
-     }
-     /*
-      * If guest supports masking, set up irqfd now.
-@@ -908,25 +908,11 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no)
-         ret = kvm_virtio_pci_irqfd_use(proxy, n, vector);
-         if (ret < 0) {
-             kvm_virtio_pci_vq_vector_release(proxy, vector);
--            goto undo;
-+            return ret;
-         }
-     }
+diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
+index d7c09ffd34..324cd8663a 100644
+--- a/include/hw/virtio/vhost-user.h
++++ b/include/hw/virtio/vhost-user.h
+@@ -108,7 +108,6 @@ typedef void (*vu_async_close_fn)(DeviceState *cb);
  
-     return 0;
--undo:
--
--    vector = virtio_queue_vector(vdev, queue_no);
--    if (vector >= msix_nr_vectors_allocated(dev)) {
--        return ret;
--    }
--    if (vdev->use_guest_notifier_mask && k->guest_notifier_mask) {
--        ret = virtio_pci_get_notifier(proxy, queue_no, &n, &vector);
--        if (ret < 0) {
--            return ret;
--        }
--        kvm_virtio_pci_irqfd_release(proxy, n, vector);
--    }
--    return ret;
+ void vhost_user_async_close(DeviceState *d,
+                             CharBackend *chardev, struct vhost_dev *vhost,
+-                            vu_async_close_fn cb,
+-                            IOEventHandler *event_cb);
++                            vu_async_close_fn cb);
+ 
+ #endif
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index bc2677dbef..15cc24d017 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -385,7 +385,7 @@ static void vhost_user_blk_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_CLOSED:
+         /* defer close until later to avoid circular close */
+         vhost_user_async_close(dev, &s->chardev, &s->dev,
+-                               vhost_user_blk_disconnect, vhost_user_blk_event);
++                               vhost_user_blk_disconnect);
+         break;
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
+index 0b050805a8..421cd654f8 100644
+--- a/hw/scsi/vhost-user-scsi.c
++++ b/hw/scsi/vhost-user-scsi.c
+@@ -215,8 +215,7 @@ static void vhost_user_scsi_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_CLOSED:
+         /* defer close until later to avoid circular close */
+         vhost_user_async_close(dev, &vs->conf.chardev, &vsc->dev,
+-                               vhost_user_scsi_disconnect,
+-                               vhost_user_scsi_event);
++                               vhost_user_scsi_disconnect);
+         break;
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+index a83167191e..4b54255682 100644
+--- a/hw/virtio/vhost-user-base.c
++++ b/hw/virtio/vhost-user-base.c
+@@ -254,7 +254,7 @@ static void vub_event(void *opaque, QEMUChrEvent event)
+     case CHR_EVENT_CLOSED:
+         /* defer close until later to avoid circular close */
+         vhost_user_async_close(dev, &vub->chardev, &vub->vhost_dev,
+-                               vub_disconnect, vub_event);
++                               vub_disconnect);
+         break;
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index cdf9af4a4b..c929097e87 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -2776,7 +2776,6 @@ typedef struct {
+     DeviceState *dev;
+     CharBackend *cd;
+     struct vhost_dev *vhost;
+-    IOEventHandler *event_cb;
+ } VhostAsyncCallback;
+ 
+ static void vhost_user_async_close_bh(void *opaque)
+@@ -2791,10 +2790,7 @@ static void vhost_user_async_close_bh(void *opaque)
+      */
+     if (vhost->vdev) {
+         data->cb(data->dev);
+-    } else if (data->event_cb) {
+-        qemu_chr_fe_set_handlers(data->cd, NULL, NULL, data->event_cb,
+-                                 NULL, data->dev, NULL, true);
+-   }
++    }
+ 
+     g_free(data);
  }
- static int kvm_virtio_pci_vector_vq_use(VirtIOPCIProxy *proxy, int nvqs)
+@@ -2806,8 +2802,7 @@ static void vhost_user_async_close_bh(void *opaque)
+  */
+ void vhost_user_async_close(DeviceState *d,
+                             CharBackend *chardev, struct vhost_dev *vhost,
+-                            vu_async_close_fn cb,
+-                            IOEventHandler *event_cb)
++                            vu_async_close_fn cb)
  {
+     if (!runstate_check(RUN_STATE_SHUTDOWN)) {
+         /*
+@@ -2823,7 +2818,6 @@ void vhost_user_async_close(DeviceState *d,
+         data->dev = d;
+         data->cd = chardev;
+         data->vhost = vhost;
+-        data->event_cb = event_cb;
+ 
+         /* Disable any further notifications on the chardev */
+         qemu_chr_fe_set_handlers(chardev,
 -- 
 MST
 
