@@ -4,116 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D160C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 21:19:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E0F4C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 21:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEy23-0007ow-3H; Wed, 05 Jun 2024 17:18:55 -0400
+	id 1sEydk-0001mC-FJ; Wed, 05 Jun 2024 17:57:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEy1z-0007nP-8S
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:18:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEy1t-00043R-Q9
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:18:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717622324;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0qDrUzD2QsqVidyOnu5RGSYDufCOrzbBQ/FVfAKTwKE=;
- b=VksszJ2D4PExCA9/xE2zs0s64OH+j9oFUfHNuYMFuhnrQLV0whEvmhtx+fYAq21ODjAjMQ
- wwZV03aUKbYYi6yYMP+ncvfGc6UoB98dFPXFfq/TiREszNipZoZK2Kfw8IhGQ0liStbwgB
- 57jw/GKCu847M+qCLjRVqTbcFJbxwzY=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-119-7A6sXAoaMdu57JBvUA0rsA-1; Wed, 05 Jun 2024 17:18:42 -0400
-X-MC-Unique: 7A6sXAoaMdu57JBvUA0rsA-1
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-43ffb7cebdbso298481cf.1
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 14:18:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717622322; x=1718227122;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEydj-0001lI-4b
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:57:51 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEydh-0003rV-DC
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:57:50 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6ff6fe215c6so235915b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 14:57:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717624668; x=1718229468; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0qDrUzD2QsqVidyOnu5RGSYDufCOrzbBQ/FVfAKTwKE=;
- b=OpWA0URIfVhOrnpwPJjjEWaKQmV+D1XdimsoMNJgOmw1yoLFQz0iFkgFjv0t9b06D9
- qzqQFnimlEeTTCavhDFRnnzW917jvT9x2ZnHqAeeB7DTRLzt6qNMXM0o5bTd/ovA/7ry
- A/P/B9sPn4gJ6oEid2Q8MWaocqgnDeRvH2NBqRH8g4ASHKIwXJusEsF820vw8KQd7TSy
- kWpslT//Ywf9cTjS1fXI3wfOY707ccuG9ZX7L17ploN8jRVIHdHXBXVbEQnlTdyjkTZk
- fij6Q7VijOqqLDr9hOl1zc+GaNR2lcisO2R8c9EwZ5Th+V+VuqK4PuY24Dhrd9yo9wU/
- BQ3Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWmPSpBADmuZpRN+oaUYB5pdSz40yje+JPlJDniBBo6h4DAhqWGUVjcZeq0TtJdYRefBbGGT3ldasPvAmYM62Sg9UvZEYo=
-X-Gm-Message-State: AOJu0YyD4gxWjmTB84lr8HrA8CWNcE4P77mYcsxvnl/ScjEI+GiDu1P3
- 5ip07CyxV6C0n8oJfCUsm0GMkNX3sFXarIydphHwU4nz+XrHP1FVaG0CZlzPnizGxoHLcgK1X2Z
- qJl0fGznpfCdGefHu6cQ/mTuyJc02HLHeVSOSIg4ckuyiceotTTOz
-X-Received: by 2002:a05:620a:290b:b0:794:c6a0:258a with SMTP id
- af79cd13be357-79523d97230mr397231885a.4.1717622322062; 
- Wed, 05 Jun 2024 14:18:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGm1wvQdZr+RhwdSCkJIusK9ypevr/zgAzD2oNeBLhHd6Zu8G2fCNRq8exjIgmpTZlWS9vjwQ==
-X-Received: by 2002:a05:620a:290b:b0:794:c6a0:258a with SMTP id
- af79cd13be357-79523d97230mr397230285a.4.1717622321457; 
- Wed, 05 Jun 2024 14:18:41 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7952db5fec8sm36278685a.48.2024.06.05.14.18.39
+ bh=jd2ISjYQWsrbk5WgCP4+tpczbqrOBDh2pjdAAZ3A5n0=;
+ b=N7ykA1uPaEUrbp73sXw8wmOOvqFAKpTgu8xu2vxRVHRSZqDRzh3+XdsEbA9O+bM3oA
+ 7gMGlN/DTRma0sM680GhAo8nEgR88aZe3vzrtC/FzO0YBuu7iGPdXtcB2vuTEXyfTchU
+ jVOkgIEXW783Le+k7LjWV5rHy1gWRedA6Q48esHfrc0naUICYRcr9WMfnpPCkYQM4/VZ
+ kuF1UESuMAWNnNKgmJec1fGBYtWsaM27fv5rZGHjRaFc0R12bGSQdNcDPt2WB8ZcCQoJ
+ ywSARYIULZo25WEfPE1yJ1rd3aOG6a0M42MZ7M7vvc6il93GzWYC5tsbHmv/gA+mk2zR
+ yjkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717624668; x=1718229468;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jd2ISjYQWsrbk5WgCP4+tpczbqrOBDh2pjdAAZ3A5n0=;
+ b=pGhh/H695njxZYOoz48ZMD5OIOK+plQHiO9cOCuYkhy2I1KbzoRt2FGaLgbRCtdhmG
+ 1Z0ujRddiD8JU/TAHpqwFuv9E7mO7zzdGHShsUvEJrUiXMNb4orbb2ZjrRuaZp9KI8ih
+ PPpTYBFJCU1/PzvzxbCLqrTYaiizLofmT9UNJIFXOz1zs/JslQ9df8taU1hC55KYTRpz
+ XX088LNzGEEso72WlXcxqzN5XuFXJh6uxiB8MWigUC5uDwNRlQ1Qeuyz5Pe56eoJLlYn
+ 7lif5Tg6d1AOz3YkJoO9/RzvCgbqTT6JNeXa1KAOkfqSHU4Je/Soma1DlZsiSF++fStR
+ V57w==
+X-Gm-Message-State: AOJu0Yw7+x2Mcw4Rbg4Io/HjM7ptgTBHpCd7IkmVlL3B9rvrtiU12pss
+ UY/PF1d/u5XOjIpSFj2Atz+QRkVmn8sL2STIGu/IkPcsj1sb4lfnQawrNj4u3hfjLx5U57SXFa4
+ N
+X-Google-Smtp-Source: AGHT+IEVhq+t+UGBaxBkZiYbrYyzboXhtsnCZUcdE/sNU+MjbnImO7Jt8FIbe1quoDXOrxoHuLt7FQ==
+X-Received: by 2002:a05:6a21:27a8:b0:1b0:3301:337e with SMTP id
+ adf61e73a8af0-1b2b7629136mr3491595637.59.1717624667989; 
+ Wed, 05 Jun 2024 14:57:47 -0700 (PDT)
+Received: from stoup.. ([71.212.132.216]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70242b2ff9dsm9091509b3a.212.2024.06.05.14.57.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 14:18:40 -0700 (PDT)
-Date: Wed, 5 Jun 2024 17:18:38 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: Michael Galaxy <mgalaxy@akamai.com>, Zheng Chuan <zhengchuan@huawei.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Yu Zhang <yu.zhang@ionos.com>,
- "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
- Jinpu Wang <jinpu.wang@ionos.com>, Elmar Gerdes <elmar.gerdes@ionos.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
- Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Prasanna Kumar Kalever <prasanna4324@gmail.com>,
- "integration@gluster.org" <integration@gluster.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
- "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
- Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
- Song Gao <gaosong@loongson.cn>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Pannengyuan <pannengyuan@huawei.com>,
- Xiexiangyou <xiexiangyou@huawei.com>
-Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
-Message-ID: <ZmDWLkBKISvQcA8I@x1n>
-References: <ZjJgQcPQ29HJsTpY@x1n>
- <7e902e4e576a4e199e36d28f99bd55e5@huawei.com>
- <Zjj0xa-3KrFHTK0S@x1n>
- <addaa8d094904315a466533763689ead@huawei.com>
- <ZjpWmG2aUJLkYxJm@x1n>
- <13ce4f9e-1e7c-24a9-0dc9-c40962979663@huawei.com>
- <cd93922f-cf58-4a42-854d-0b39c6941905@akamai.com>
- <Zl-x_Az8i4jOwitt@gallifrey> <ZmBx8UDDmO-C1Oqu@x1n>
- <ZmDPHKLkzBO47XRc@gallifrey>
+ Wed, 05 Jun 2024 14:57:47 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org,
+	Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v2 07/10] target/s390x: Use gen_psw_addr_disp in op_sam
+Date: Wed,  5 Jun 2024 14:57:36 -0700
+Message-Id: <20240605215739.4758-8-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240605215739.4758-1-richard.henderson@linaro.org>
+References: <20240605215739.4758-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZmDPHKLkzBO47XRc@gallifrey>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,62 +94,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 05, 2024 at 08:48:28PM +0000, Dr. David Alan Gilbert wrote:
-> > > I just noticed this thread; some random notes from a somewhat
-> > > fragmented memory of this:
-> > > 
-> > >   a) Long long ago, I also tried rsocket; 
-> > >       https://lists.gnu.org/archive/html/qemu-devel/2015-01/msg02040.html
-> > >      as I remember the library was quite flaky at the time.
-> > 
-> > Hmm interesting.  There also looks like a thread doing rpoll().
-> 
-> Yeh, I can't actually remember much more about what I did back then!
+Complicated because we may now require a runtime jump.
 
-Heh, that's understandable and fair. :)
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/s390x/tcg/translate.c | 39 +++++++++++++++++++++++++-----------
+ 1 file changed, 27 insertions(+), 12 deletions(-)
 
-> > I hope Lei and his team has tested >4G mem, otherwise definitely worth
-> > checking.  Lei also mentioned there're rsocket bugs they found in the cover
-> > letter, but not sure what's that about.
-> 
-> It would probably be a good idea to keep track of what bugs
-> are in flight with it, and try it on a few RDMA cards to see
-> what problems get triggered.
-> I think I reported a few at the time, but I gave up after
-> feeling it was getting very hacky.
-
-Agreed.  Maybe we can have a list of that in the cover letter or even
-QEMU's migration/rmda doc page.
-
-Lei, if you think that makes sense please do so in your upcoming posts.
-There'll need to have a list of things you encountered in the kernel driver
-and it'll be even better if there're further links to read on each problem.
-
-> > > 
-> > >   e) Someone made a good suggestion (sorry can't remember who) - that the
-> > >      RDMA migration structure was the wrong way around - it should be the
-> > >      destination which initiates an RDMA read, rather than the source
-> > >      doing a write; then things might become a LOT simpler; you just need
-> > >      to send page ranges to the destination and it can pull it.
-> > >      That might work nicely for postcopy.
-> > 
-> > I'm not sure whether it'll still be a problem if rdma recv side is based on
-> > zero-copy.  It would be a matter of whether atomicity can be guaranteed so
-> > that we don't want the guest vcpus to see a partially copied page during
-> > on-flight DMAs.  UFFDIO_COPY (or friend) is currently the only solution for
-> > that.
-> 
-> Yes, but even ignoring that (and the UFFDIO_CONTINUE idea you mention), if
-> the destination can issue an RDMA read itself, it doesn't need to send messages
-> to the source to ask for a page fetch; it just goes and grabs it itself,
-> that's got to be good for latency.
-
-Oh, that's pretty internal stuff of rdma to me and beyond my knowledge..
-but from what I can tell it sounds very reasonable indeed!
-
-Thanks!
-
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index 0f0688424f..bce9a0aeb0 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -3805,7 +3805,7 @@ static DisasJumpType op_sacf(DisasContext *s, DisasOps *o)
+ static DisasJumpType op_sam(DisasContext *s, DisasOps *o)
+ {
+     int sam = s->insn->data;
+-    TCGv_i64 tsam;
++    TCGLabel *fault = NULL;
+     uint64_t mask;
+ 
+     switch (sam) {
+@@ -3820,20 +3820,35 @@ static DisasJumpType op_sam(DisasContext *s, DisasOps *o)
+         break;
+     }
+ 
+-    /* Bizarre but true, we check the address of the current insn for the
+-       specification exception, not the next to be executed.  Thus the PoO
+-       documents that Bad Things Happen two bytes before the end.  */
+-    if (s->base.pc_next & ~mask) {
+-        gen_program_exception(s, PGM_SPECIFICATION);
+-        return DISAS_NORETURN;
+-    }
+-    s->pc_tmp &= mask;
++    /*
++     * Bizarre but true, we check the address of the current insn for the
++     * specification exception, not the next to be executed.  Thus the PoO
++     * documents that Bad Things Happen two bytes before the end.
++     */
++    if (mask != -1) {
++        TCGv_i64 t = tcg_temp_new_i64();
++        fault = gen_new_label();
+ 
+-    tsam = tcg_constant_i64(sam);
+-    tcg_gen_deposit_i64(psw_mask, psw_mask, tsam, 31, 2);
++        gen_psw_addr_disp(s, t, 0);
++        tcg_gen_andi_i64(t, t, ~mask);
++        tcg_gen_brcondi_i64(TCG_COND_NE, t, 0, fault);
++    }
++
++    update_cc_op(s);
++
++    tcg_gen_deposit_i64(psw_mask, psw_mask, tcg_constant_i64(sam), 31, 2);
++
++    gen_psw_addr_disp(s, psw_addr, s->ilen);
++    tcg_gen_andi_i64(psw_addr, psw_addr, mask);
+ 
+     /* Always exit the TB, since we (may have) changed execution mode.  */
+-    return DISAS_TOO_MANY;
++    tcg_gen_lookup_and_goto_ptr();
++
++    if (mask != -1) {
++        gen_set_label(fault);
++        gen_program_exception(s, PGM_SPECIFICATION);
++    }
++    return DISAS_NORETURN;
+ }
+ 
+ static DisasJumpType op_sar(DisasContext *s, DisasOps *o)
 -- 
-Peter Xu
+2.34.1
 
 
