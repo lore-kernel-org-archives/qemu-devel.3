@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE9D5C25B78
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 00:36:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F732C25B78
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 00:37:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEedf-00010r-PO; Tue, 04 Jun 2024 20:36:27 -0400
+	id 1sEedy-0001OR-Pb; Tue, 04 Jun 2024 20:36:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEedb-0000k4-6V; Tue, 04 Jun 2024 20:36:25 -0400
-Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
+ id 1sEedw-0001Ju-Ua; Tue, 04 Jun 2024 20:36:44 -0400
+Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEedX-0005jb-1Z; Tue, 04 Jun 2024 20:36:21 -0400
-Received: by mail-vs1-xe2a.google.com with SMTP id
- ada2fe7eead31-48bd101a9c1so979208137.1; 
- Tue, 04 Jun 2024 17:36:17 -0700 (PDT)
+ id 1sEedv-0005ra-27; Tue, 04 Jun 2024 20:36:44 -0400
+Received: by mail-vk1-xa32.google.com with SMTP id
+ 71dfb90a1353d-4eb0089b4a2so608863e0c.2; 
+ Tue, 04 Jun 2024 17:36:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717547777; x=1718152577; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717547800; x=1718152600; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SftFLeiz63fZGbvQLqKgkpnMe4zquwPZ4VdrT1Pu+as=;
- b=c6p0Ktq1rzFoUq0rF63RsXpUzsO8NU5jhE5qQ33VZSBFAp/cnDrSNHOGOjABc+p17t
- Dl9RpH92XMISzmbtdeGrRUAiAGzsGiYlIkR/JHAK6L4BPx+kqPwRzDK1XpiwDcCoGaFx
- B/Av+stNp0rt4lhCNyAQIhU3av1Rt7rfSbU2VdidVfA2D62YZ5ZDtQcyMeSLYe+wnXJP
- TJtzyW9Al0JdHvCMxDYGs9Wf925xoQ90ZVEVag1cxa/Rr62LBSBro4O8buZZQB//4SMv
- NKlWmjO9tdq6gZOgqvNMpjMqFW7wjkVyTZ+9hi80WG35uMvTIwy43qJxoqHKQh9XJ4Ku
- VZPg==
+ bh=0EZ04c60HZkWwTOTASAKGAPRvkH82+UpvsxrCXveySg=;
+ b=JDly1TYgJuSNt6C97PcQZ6VjQNWzy720YuC5uKKSsb/C0tGANTZF4CTc0ZPogFx0EW
+ R1/VaLHtV9oPHfLcjMiP3WgLx+5K11cPfy6BQn11V1eJoI3CIh+STqsUcoTxp3Q4f1To
+ tTkP8rTMks4Zb8g7GNQNGMLxMQnAsEM76Vno5v96j3RlYciZxpAesM34bANzR3qlVZAX
+ gO8PfxmQNBofHM7jmuMZOBAfL3/mzD9wyv2MVL53lKiJ9wgWr2oCw2W11EcxHu8m3i7q
+ 8ZLpvGIUnAhfaYLrD1v5JsU7tuK0Gat5smQlggGRLSl/WI0qVPgKqoBEGzOW3emKX/Kn
+ PgwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717547777; x=1718152577;
+ d=1e100.net; s=20230601; t=1717547800; x=1718152600;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SftFLeiz63fZGbvQLqKgkpnMe4zquwPZ4VdrT1Pu+as=;
- b=UtRDzY1EHtc06vic79bpNAMY8egawo9NYSKZO+FbYzXb7Zcn17L8B3280rVjuUsLQm
- 9dPzmw95IMjV6Yeb+ep3Qy+8wUExDNnEVzi4dAR/QdASBll9LTRZpNHgHIaTtxUNsaek
- SbGsrPLScT/eUQjOYfkXXmYQGd99fWW2EC8GBc4d6Ii6TIMEPmcfALXqOyng3AW8dFo5
- U9dG0xzoaL1Fbwx0DT19OanV24x9E1X7+iUxrYKQpgxe4SCP3CskAAhEhyICBU/DB554
- NI/CnkdxRRkQMaPAXaYyZzQpyhceha2PimP/ERkLI7jEi3IydKKpgA/qQbq3bCSAWopj
- UWzA==
+ bh=0EZ04c60HZkWwTOTASAKGAPRvkH82+UpvsxrCXveySg=;
+ b=Gmj+Dvo/pymTAhxBTrvfe0rYRbVftXGrJtuvTjL2HtZUbIhy7ITtx7jofc/SkddCAg
+ S/EDgwds58O+vl80BevTR6vfR2v3DYTjzdOo6P+v28p5nI7hyVuUhukfbs3c/aIjrY9p
+ DHKT1JQ7SmpubT8cTmrg9NWMroddHJiq6lfKBNvJeOz3qXX9yFF/zw29aL8FYHPJtQ4a
+ 5zakpQJsd/cBPov7jejo+803xDCrFhV0tSGmQNVvvc8gfGI+x9igEWxQPQnGJ/nNV8f9
+ 4cLSd86Q4PFOj01ED3rP1Wt+uwZwxGNtJpBqOgvxstPsQTCfajRya9+NB+pyzND8kvqY
+ SMiA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXUhG6ztb5JoMIeClhnS0lDNSwvD+kphlTb5nQcMLPix+vllEGRHUflV5wQgovXNr6fsd907doEewEZcN6z/vLwUZHTNiw=
-X-Gm-Message-State: AOJu0Yyq99X3nxtj+1lbY/wHE8azDWjfafJ3s/lNwBkgJz8iyoZxgnC2
- kkw/cp9qLSfQHT5KcuvWiDtPaG1vGGtk9GYb6vvHLzsXi4pcRspBdnYL/4NpWdDUJjOtlc+nRuj
- PwVl7nR+h0f96c0QPbdPZn4Vsf78=
-X-Google-Smtp-Source: AGHT+IHqMXzy3+N/l6iP0uAPkqTmbvvj/GWYzPqnxEVRFBWhLVVflhvek2h56la3EB0mQjWUhd/SAvvPWyZrsAldfGI=
-X-Received: by 2002:a67:b109:0:b0:48b:bce7:a80 with SMTP id
- ada2fe7eead31-48c0493aea9mr1375468137.24.1717547776642; Tue, 04 Jun 2024
- 17:36:16 -0700 (PDT)
+ AJvYcCXU5HgqLhCtx+FGiQUFh/bE0z6PTBYZXQeZ2gu0yVI/P/fJUw4feOHY+mypxHxnj3QuVb3VLkLwAbIie0Jn8MlXROJtbGA=
+X-Gm-Message-State: AOJu0YwWza+QsSD2s3nj9ig4ExeKIA9qjwQIWP9bC8ZMsimbVVmB6DY4
+ oD+ldHvLHO98T3C31dklp/Nspg45yrTPfr/h1Fo1/rqV1+QvLPEmSkrGPcHFZ40J3rgXJxUy1kR
+ 7lWt2lzq98xXPb4h2gXgnRmsdFfY=
+X-Google-Smtp-Source: AGHT+IFWcemRNypBv57tHZtpu2+3Jx97obt7JU+ukRB1r+4YneDKhi/8OYJ4UCM3iXHQKqqnOXQhJR+pXQUaClNzacg=
+X-Received: by 2002:a05:6122:1784:b0:4eb:a09:63df with SMTP id
+ 71dfb90a1353d-4eb3a40dcbcmr1437285e0c.7.1717547800117; Tue, 04 Jun 2024
+ 17:36:40 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240531202759.911601-1-dbarboza@ventanamicro.com>
- <20240531202759.911601-8-dbarboza@ventanamicro.com>
-In-Reply-To: <20240531202759.911601-8-dbarboza@ventanamicro.com>
+ <20240531202759.911601-9-dbarboza@ventanamicro.com>
+In-Reply-To: <20240531202759.911601-9-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 5 Jun 2024 10:35:50 +1000
-Message-ID: <CAKmqyKPzTyE8Rnso7Si_6MseB11OROxZjQAAVb-vL27A1ypbGQ@mail.gmail.com>
-Subject: Re: [PATCH v2 7/8] hw/riscv/virt.c: imsics DT: add 'qemu,
- imsics' to 'compatible'
+Date: Wed, 5 Jun 2024 10:36:13 +1000
+Message-ID: <CAKmqyKPSLt_ykvfbJdTzMQz=nFZAzmWwH6dZJp5URkAgdnS-0Q@mail.gmail.com>
+Subject: Re: [PATCH v2 8/8] hw/riscv/virt.c: imsics DT: add '#msi-cells'
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
@@ -70,8 +69,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
  conor@kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,8 +97,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Sat, Jun 1, 2024 at 6:31=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> The DT docs for riscv,imsics [1] predicts a 'qemu,imsics' enum in the
-> 'compatible' property.
+> The DT docs for riscv,imsics [1] requires a 'msi-cell' property. Add one
+> and set it zero.
 >
 > [1] Documentation/devicetree/bindings/interrupt-controller/riscv,imsics.y=
 aml
@@ -114,39 +113,23 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/riscv/virt.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
+>  hw/riscv/virt.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
 > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 56d7e945c6..ac70993679 100644
+> index ac70993679..8675c3a7d1 100644
 > --- a/hw/riscv/virt.c
 > +++ b/hw/riscv/virt.c
-> @@ -515,6 +515,9 @@ static void create_fdt_one_imsic(RISCVVirtState *s, h=
+> @@ -552,6 +552,7 @@ static void create_fdt_one_imsic(RISCVVirtState *s, h=
 waddr base_addr,
->      uint32_t imsic_max_hart_per_socket, imsic_addr, imsic_size;
->      g_autofree uint32_t *imsic_cells =3D NULL;
->      g_autofree uint32_t *imsic_regs =3D NULL;
-> +    static const char * const imsic_compat[2] =3D {
-> +        "qemu,imsics", "riscv,imsics"
-> +    };
->
->      imsic_cells =3D g_new0(uint32_t, ms->smp.cpus * 2);
->      imsic_regs =3D g_new0(uint32_t, socket_count * 4);
-> @@ -541,7 +544,10 @@ static void create_fdt_one_imsic(RISCVVirtState *s, =
-hwaddr base_addr,
->      imsic_name =3D g_strdup_printf("/soc/interrupt-controller@%lx",
->                                   (unsigned long)base_addr);
->      qemu_fdt_add_subnode(ms->fdt, imsic_name);
-> -    qemu_fdt_setprop_string(ms->fdt, imsic_name, "compatible", "riscv,im=
-sics");
-> +    qemu_fdt_setprop_string_array(ms->fdt, imsic_name, "compatible",
-> +                                  (char **)&imsic_compat,
-> +                                  ARRAY_SIZE(imsic_compat));
-> +
->      qemu_fdt_setprop_cell(ms->fdt, imsic_name, "#interrupt-cells",
 >                            FDT_IMSIC_INT_CELLS);
 >      qemu_fdt_setprop(ms->fdt, imsic_name, "interrupt-controller", NULL, =
 0);
+>      qemu_fdt_setprop(ms->fdt, imsic_name, "msi-controller", NULL, 0);
+> +    qemu_fdt_setprop_cell(ms->fdt, imsic_name, "#msi-cells", 0);
+>      qemu_fdt_setprop(ms->fdt, imsic_name, "interrupts-extended",
+>                       imsic_cells, ms->smp.cpus * sizeof(uint32_t) * 2);
+>      qemu_fdt_setprop(ms->fdt, imsic_name, "reg", imsic_regs,
 > --
 > 2.45.1
 >
