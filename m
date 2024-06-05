@@ -4,50 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC3CC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 06:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D570C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 06:25:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEjpz-0000Rv-Uf; Wed, 05 Jun 2024 02:09:31 -0400
+	id 1sEk3z-0005Mh-6Z; Wed, 05 Jun 2024 02:23:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sEjpy-0000Rf-OJ
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 02:09:30 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sEjpv-0000SH-Mt
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 02:09:30 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 5 Jun
- 2024 14:03:10 +0800
-Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 5 Jun 2024 14:03:10 +0800
-To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Thomas Huth
- <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: <steven_lee@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <jamin_lin@aspeedtech.com>
-Subject: [PATCH] MAINTAINERS: Add reviewers for ASPEED BMCs
-Date: Wed, 5 Jun 2024 14:03:10 +0800
-Message-ID: <20240605060310.1946803-1-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sEk3x-0005MS-CI
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 02:23:57 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sEk3u-0004IP-HD
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 02:23:57 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxW+pvBGBmD6kDAA--.15666S3;
+ Wed, 05 Jun 2024 14:23:44 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8AxTcdtBGBmdD8VAA--.53417S3; 
+ Wed, 05 Jun 2024 14:23:43 +0800 (CST)
+Subject: Re: [PATCH v4 2/3] hw/loongarch/virt: Use MemTxAttrs interface for
+ misc ops
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+References: <20240528083855.1912757-1-gaosong@loongson.cn>
+ <20240528083855.1912757-3-gaosong@loongson.cn>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <62f7a92d-9e12-0998-1443-5e6e8ef4fd84@loongson.cn>
+Date: Wed, 5 Jun 2024 14:23:40 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20240528083855.1912757-3-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_FAIL=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-CM-TRANSID: AQAAf8AxTcdtBGBmdD8VAA--.53417S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tryxGFy3WFy5CFW3Ar4UZFc_yoW8tr45pr
+ WrtFnIka1UKw1a939xWFy5XF15Aa97GrZFqF4a9w109FZxAw1Duryjy342yrW2v34DXFsY
+ 9F1kGrZrCF4qqrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CP
+ fJUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.522,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,36 +81,87 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add ASPEED members "Steven Lee", "Troy Lee" and "Jamin Lin"
-to be reviewers of ASPEED BMCs.
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
-Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
----
- MAINTAINERS | 3 +++
- 1 file changed, 3 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 951556224a..0f63bcdc7d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1158,6 +1158,9 @@ F: docs/system/arm/emcraft-sf2.rst
- ASPEED BMCs
- M: Cédric Le Goater <clg@kaod.org>
- M: Peter Maydell <peter.maydell@linaro.org>
-+R: Steven Lee <steven_lee@aspeedtech.com>
-+R: Troy Lee <leetroy@gmail.com>
-+R: Jamin Lin <jamin_lin@aspeedtech.com>
- R: Andrew Jeffery <andrew@codeconstruct.com.au>
- R: Joel Stanley <joel@jms.id.au>
- L: qemu-arm@nongnu.org
--- 
-2.25.1
+On 2024/5/28 下午4:38, Song Gao wrote:
+> Use MemTxAttrs interface read_with_attrs/write_with_attrs
+> for virt_iocsr_misc_ops.
+> 
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   hw/loongarch/virt.c | 36 ++++++++++++++++++++++++------------
+>   1 file changed, 24 insertions(+), 12 deletions(-)
+> 
+> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+> index 4db0d82dbd..a70eeda2fd 100644
+> --- a/hw/loongarch/virt.c
+> +++ b/hw/loongarch/virt.c
+> @@ -899,37 +899,49 @@ static void virt_firmware_init(LoongArchVirtMachineState *lvms)
+>   }
+>   
+>   
+> -static void virt_iocsr_misc_write(void *opaque, hwaddr addr,
+> -                                  uint64_t val, unsigned size)
+> +static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
+> +                                         uint64_t val, unsigned size,
+> +                                         MemTxAttrs attrs)
+>   {
+> +    return MEMTX_OK;
+>   }
+>   
+> -static uint64_t virt_iocsr_misc_read(void *opaque, hwaddr addr, unsigned size)
+> +static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+> +                                        uint64_t *data,
+> +                                        unsigned size, MemTxAttrs attrs)
+>   {
+> -    uint64_t ret;
+> +    uint64_t ret = 0;
+>   
+>       switch (addr) {
+>       case VERSION_REG:
+> -        return 0x11ULL;
+> +        ret = 0x11ULL;
+> +        break;
+>       case FEATURE_REG:
+>           ret = BIT(IOCSRF_MSI) | BIT(IOCSRF_EXTIOI) | BIT(IOCSRF_CSRIPI);
+>           if (kvm_enabled()) {
+>               ret |= BIT(IOCSRF_VM);
+>           }
+> -        return ret;
+> +        break;
+>       case VENDOR_REG:
+> -        return 0x6e6f73676e6f6f4cULL; /* "Loongson" */
+> +        ret = 0x6e6f73676e6f6f4cULL; /* "Loongson" */
+> +        break;
+>       case CPUNAME_REG:
+> -        return 0x303030354133ULL;     /* "3A5000" */
+> +        ret = 0x303030354133ULL;     /* "3A5000" */
+> +        break;
+>       case MISC_FUNC_REG:
+> -        return BIT_ULL(IOCSRM_EXTIOI_EN);
+> +        ret = BIT_ULL(IOCSRM_EXTIOI_EN);
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+>       }
+> -    return 0ULL;
+> +
+> +    *data = ret;
+> +    return MEMTX_OK;
+>   }
+>   
+>   static const MemoryRegionOps virt_iocsr_misc_ops = {
+> -    .read  = virt_iocsr_misc_read,
+> -    .write = virt_iocsr_misc_write,
+> +    .read_with_attrs  = virt_iocsr_misc_read,
+> +    .write_with_attrs = virt_iocsr_misc_write,
+>       .endianness = DEVICE_LITTLE_ENDIAN,
+>       .valid = {
+>           .min_access_size = 4,
+> 
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
 
