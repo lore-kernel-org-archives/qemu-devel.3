@@ -4,81 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C834C27C54
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 01:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3186C25B78
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 01:22:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEf0f-0008Gz-Dl; Tue, 04 Jun 2024 21:00:13 -0400
+	id 1sEfLn-0006rw-V3; Tue, 04 Jun 2024 21:22:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
- id 1sEf0d-0008Fv-Cb; Tue, 04 Jun 2024 21:00:11 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
- id 1sEf0b-0004ST-N5; Tue, 04 Jun 2024 21:00:11 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6ff6fe215c6so5259993b3a.3; 
- Tue, 04 Jun 2024 18:00:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717549207; x=1718154007; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U2pTPMBEIDi5LLLvpu+U97bXLBYJm3PiGfhebQ5qPuw=;
- b=ievh8Syq9WQYk1mFxvN0EvuI6IjJ+xlH/MwZ+XmLUUw4ErTWLCzT+4w/ZSYlRw0rmN
- +36t+uSSR1Nml6TxUsFfodwS5jcujMXbDzrOu7DQPb67KP+9EkHooQ3dO2yyugFDUqe/
- W0LptE3lpM1IfZx4TN6tim2a3baO1FIlfFaEYMH6s1E9dZcJlzDg5QVv7rbAwJKi/OsL
- 1euw32BdKTJDw0Ei3xsRLUKbmMP8MSWcJSPMQvA93Z7i61kcEC/Kg9RT954V8kzxVlFe
- BVodbOxPj+hgqvn9OdJQrGPIqfw8myAWaV2i6UTdtMUAw7nDzEIxMzK3somupry/XZUw
- KQEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717549207; x=1718154007;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=U2pTPMBEIDi5LLLvpu+U97bXLBYJm3PiGfhebQ5qPuw=;
- b=ay1yRoW4NaCOVTQ09eWC41NeJujXyYv2A1dkKG/jwpW+I+w1N6q3aNZ8mNKus0uM4r
- +BgNv6jMnjlL8K0/B0TExk5b9P1UQHE1lqXizYBhZmSe8o6ZhjuPGDNb85PQKtr7Cvhm
- IBSo7kkonlJMFJJuplKLw8iNKsjyMcgAirXbfh5UEXBymURh3MRtFEZxk3PzNXoFaPw0
- w7wpxpye7c/63MW8Uem1j0ep3vOvTYLs+A38VsSLMpio6ikBucso37y6fYPCegLwwdZQ
- LZSptARorjC7h7w6vsGtSXhVIPk/rCHyVp8R1XvLfubNcNumBNVAp33D0FEmALb0YwWD
- pWsg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV0JElCKbWJPEZCTXtz5S69hpDNM8+sGXGYYokkHA7vidLkGG8r0kCJ3efTGV0Tjm3QzYRciG1bSeuNnMow0pqyDZ1a8gg=
-X-Gm-Message-State: AOJu0YwKo5EqedxKKOzN71YfANlQDxs6Uc1wP7ejf/BQee1NNg2c38u1
- UUXjlhRB5msncOncMhObIuUfh5dkyklXyAonZdcZaYJxzOVCR9NsLbmtLzLMldk=
-X-Google-Smtp-Source: AGHT+IGOWv8BgH2GIEPNv595ZPHosUGgyKqJbZ87bqVPbC2O6LZMA8vw+LXX1ev0CpVHMP/inNRPEA==
-X-Received: by 2002:a05:6a00:2292:b0:703:ed39:fbb7 with SMTP id
- d2e1a72fcca58-703ed3a0179mr243439b3a.5.1717549207355; 
- Tue, 04 Jun 2024 18:00:07 -0700 (PDT)
-Received: from amjad-pc.. ([192.228.203.229]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-703ee633e04sm3731b3a.19.2024.06.04.18.00.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 18:00:06 -0700 (PDT)
-From: Amjad Alsharafi <amjadsharafi10@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- "open list:vvfat" <qemu-block@nongnu.org>,
- Amjad Alsharafi <amjadsharafi10@gmail.com>
-Subject: [PATCH v4 2/4] vvfat: Fix usage of `info.file.offset`
-Date: Wed,  5 Jun 2024 08:58:38 +0800
-Message-ID: <a4ae80b8307284a8b30f0267171cca850f12dc42.1717549035.git.amjadsharafi10@gmail.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <cover.1717549035.git.amjadsharafi10@gmail.com>
-References: <cover.1717549035.git.amjadsharafi10@gmail.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1sEfLl-0006rB-JN
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 21:22:01 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1sEfLi-0002Yn-3K
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 21:22:01 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8AxW+qwvV9mbpkDAA--.15420S3;
+ Wed, 05 Jun 2024 09:21:52 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Bx28atvV9mU_sUAA--.52676S3; 
+ Wed, 05 Jun 2024 09:21:52 +0800 (CST)
+Subject: Re: [PATCH] target/loongarch: fix a wrong print in cpu dump
+To: lanyanzhi22b@ict.ac.cn, qemu-devel@nongnu.org
+References: <20240604073831.666690-1-lanyanzhi22b@ict.ac.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <74807a0b-f21f-9c98-c83c-56ba26340341@loongson.cn>
+Date: Wed, 5 Jun 2024 09:21:49 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20240604073831.666690-1-lanyanzhi22b@ict.ac.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=amjadsharafi10@gmail.com; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8Bx28atvV9mU_sUAA--.52676S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7WFWfWw4kAF1rAr15WF4rZwc_yoW8JF4fpw
+ 43CryDCa15GFsrA34xZa45ZFnYq3WxWw1xZa97CFyI9rZ8Xr12qF1vkr9FkF43C3sayr42
+ 9Fn3Ar1YgF1DXFbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-2.522, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,67 +81,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The field is marked as "the offset in the file (in clusters)", but it
-was being used like this
-`cluster_size*(nums)+mapping->info.file.offset`, which is incorrect.
+ÔÚ 2024/6/4 ÏÂÎç3:38, lanyanzhi22b@ict.ac.cn Ð´µÀ:
+> From: lanyanzhi <lanyanzhi22b@ict.ac.cn>
+>
+> description:
+>      loongarch_cpu_dump_state() want to dump all loongarch cpu
+> state registers, but there is a tiny typographical error when
+> printing "PRCFG2".
+>
+> Signed-off-by: lanyanzhi <lanyanzhi22b@ict.ac.cn>
+> ---
+>   target/loongarch/cpu.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-Additionally, removed the `abort` when `first_mapping_index` does not
-match, as this matches the case when adding new clusters for files, and
-its inevitable that we reach this condition when doing that if the
-clusters are not after one another, so there is no reason to `abort`
-here, execution continues and the new clusters are written to disk
-correctly.
-
-Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
----
- block/vvfat.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/block/vvfat.c b/block/vvfat.c
-index 19da009a5b..f0642ac3e4 100644
---- a/block/vvfat.c
-+++ b/block/vvfat.c
-@@ -1408,7 +1408,9 @@ read_cluster_directory:
- 
-         assert(s->current_fd);
- 
--        offset=s->cluster_size*(cluster_num-s->current_mapping->begin)+s->current_mapping->info.file.offset;
-+        offset = s->cluster_size *
-+            ((cluster_num - s->current_mapping->begin)
-+            + s->current_mapping->info.file.offset);
-         if(lseek(s->current_fd, offset, SEEK_SET)!=offset)
-             return -3;
-         s->cluster=s->cluster_buffer;
-@@ -1929,8 +1931,9 @@ get_cluster_count_for_direntry(BDRVVVFATState* s, direntry_t* direntry, const ch
-                         (mapping->mode & MODE_DIRECTORY) == 0) {
- 
-                     /* was modified in qcow */
--                    if (offset != mapping->info.file.offset + s->cluster_size
--                            * (cluster_num - mapping->begin)) {
-+                    if (offset != s->cluster_size
-+                            * ((cluster_num - mapping->begin)
-+                            + mapping->info.file.offset)) {
-                         /* offset of this cluster in file chain has changed */
-                         abort();
-                         copy_it = 1;
-@@ -1944,7 +1947,6 @@ get_cluster_count_for_direntry(BDRVVVFATState* s, direntry_t* direntry, const ch
- 
-                     if (mapping->first_mapping_index != first_mapping_index
-                             && mapping->info.file.offset > 0) {
--                        abort();
-                         copy_it = 1;
-                     }
- 
-@@ -2404,7 +2406,7 @@ static int commit_mappings(BDRVVVFATState* s,
-                         (mapping->end - mapping->begin);
-             } else
-                 next_mapping->info.file.offset = mapping->info.file.offset +
--                        mapping->end - mapping->begin;
-+                        (mapping->end - mapping->begin);
- 
-             mapping = next_mapping;
-         }
--- 
-2.45.1
+Thanks.
+Song Gao
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index b5c1ec94af..270f711f11 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -707,7 +707,7 @@ void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+>       qemu_fprintf(f, "EENTRY=%016" PRIx64 "\n", env->CSR_EENTRY);
+>       qemu_fprintf(f, "PRCFG1=%016" PRIx64 ", PRCFG2=%016" PRIx64 ","
+>                    " PRCFG3=%016" PRIx64 "\n",
+> -                 env->CSR_PRCFG1, env->CSR_PRCFG3, env->CSR_PRCFG3);
+> +                 env->CSR_PRCFG1, env->CSR_PRCFG2, env->CSR_PRCFG3);
+>       qemu_fprintf(f, "TLBRENTRY=%016" PRIx64 "\n", env->CSR_TLBRENTRY);
+>       qemu_fprintf(f, "TLBRBADV=%016" PRIx64 "\n", env->CSR_TLBRBADV);
+>       qemu_fprintf(f, "TLBRERA=%016" PRIx64 "\n", env->CSR_TLBRERA);
 
 
