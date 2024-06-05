@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DA8CC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C76FC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:59:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF0Uc-0007Of-V1; Wed, 05 Jun 2024 19:56:34 -0400
+	id 1sF0Wl-00009S-Tg; Wed, 05 Jun 2024 19:58:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sF0Uc-0007OP-2M
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:56:34 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sF0Wk-00007v-2F; Wed, 05 Jun 2024 19:58:46 -0400
+Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sF0Ua-0000x0-Cb
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:56:33 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1f32a3b9491so3280965ad.0
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:56:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sF0Wi-0001M4-3Y; Wed, 05 Jun 2024 19:58:45 -0400
+Received: by mail-vk1-xa31.google.com with SMTP id
+ 71dfb90a1353d-4eb18095222so135844e0c.2; 
+ Wed, 05 Jun 2024 16:58:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717631791; x=1718236591; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=yg0HxI3SUDSNBfzoISO+f/Qq9JEwkF9/P965VqAPEX4=;
- b=IJpQsksw6mkfel21fIz9xxuDklOl3GL6SGCoKLB3ygd1xUIMdBErFMh5N7O7mFjTEK
- fJp3Qwp9cUyO6brbXFtbuFcIvaLKZeCrEGLpQkQdWuo0QnewxwgKHaJwfD7r1ck8Z5X5
- bQIZiVt2vp9Ufo1yFfhq9jvuwSwLcQGhsnnDrq2NaTYGbxghIDOPaeKY5gSdBqTNRR/l
- z7gvmW/eSrLMySQbkk46fF7NJTblomg/+Ua1QR8kKxGAmjnY4cxnuJ+s7VW/0+UEvxc3
- UweUeJe6JfcNS84Aycz9Q52RqYvNBIbJi85cJqiXi1FkB9IYyqZNBVjykHpJUvCCPsRh
- nmIA==
+ d=gmail.com; s=20230601; t=1717631922; x=1718236722; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9LDArNmgrPeRJ/t84W8+0kxwBm6A6sNEuUzeOnkZ24A=;
+ b=ZFibOhMKyP5nR4Ijhv1dWOadFh+jfgSUbTZ8egAKwHSnZ2wDlRzUHuyUsBQHqrQIcw
+ 9ulCRqi4fyAzhYPpuuhf7SJJB8ugRNtt9jUuKiNN+vq2z8F68YBYKCDcKT0LRDbfGHt9
+ uAX/i2Mag4Nkvfquj7tXSvQ+kx6MlkOq64gJ7RotkaNg7rlURfIfo1woRUCO6ZeLzNbq
+ 4IjQzYztHx8KQqYTf0gHUGnL4Db6Bi5kXOddp+x6TcVbfzcAbrSDfmlK6Nd38SxMiWC8
+ W2qveGDOGWlxwXYxUnXXw4gO8fHAh0lCuaxUsYWVdWVQI/xoOCBdemYYPuKjKpCaz/sW
+ J9gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717631791; x=1718236591;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yg0HxI3SUDSNBfzoISO+f/Qq9JEwkF9/P965VqAPEX4=;
- b=X1wkp6ZKaiHa+5K7vy6986mYAjvz7jyumQg3fDVPRlNAjfpkFLcvX6FtVDylDmPRC4
- MDM98WMvGrh7+A2pfnrr65mZa16l9TLhN1xV5KzGZDL79m9gGp3izF7UYRGZNrSc8Ee8
- zbSiAytLXj3oOo3cGAWfzdG+OxDAqJVpX1hzowiGyopaCvIwenRvIJCJdE3F+v8e9qEn
- J1tq9JY29aqwOGmAN4XY3k7pzp8gWtuOxCdH8taW7H8tXE56W1UyYylRsU3nawLu65Sf
- VZaGpyDinPIpVVIeAmi4HwaXRXKjuF5hfL2Cr7GM+zq0XaB4PRPCkvTQh8d34eCMTVNT
- 8hZw==
-X-Gm-Message-State: AOJu0YwZHxgZp/BiqmvJ7smoNjc2YGOXEYKdpChw0SMlFRwH4RrTLj2K
- jvzCmmCDdY3LVCi0s/dR8ozDEx04UFlTcRSaJvO4KY/n+6sP7hinKLsiw0egB2C0233haGFZbg8
- X
-X-Google-Smtp-Source: AGHT+IHTgGLxmfRmPe4Cz6rF7BvLLeFjUUwnFjkLroUfPuK7lcnwzSWyk72HSfGOupNQoTvWjdHYZA==
-X-Received: by 2002:a17:902:ec83:b0:1f4:ac56:3d15 with SMTP id
- d9443c01a7336-1f6a5a0e83dmr54566105ad.15.1717631790229; 
- Wed, 05 Jun 2024 16:56:30 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.132.216])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6bd81dfd9sm1089505ad.309.2024.06.05.16.56.29
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Jun 2024 16:56:29 -0700 (PDT)
-Message-ID: <4f924ddc-bd55-4e6c-8935-c187ce258864@linaro.org>
-Date: Wed, 5 Jun 2024 16:56:27 -0700
+ d=1e100.net; s=20230601; t=1717631922; x=1718236722;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9LDArNmgrPeRJ/t84W8+0kxwBm6A6sNEuUzeOnkZ24A=;
+ b=Zqh3BXnt8qGiFhio5aKRAm7dHUkB62szkf5avO3xav8GkfqFgJymIAr3yYwkrUJPKE
+ V0rylbjKU/xqPVN+gL7yFfRGNO8Gc7r/GSc9an8RNS0iRw15HrOxShq9YTySiOkLOXKB
+ rTl1phqvO/DYZIUJFaGTKgAT0xwNDj2g77L+RHeJUpu08lHF/gUGmraGxtok1R5PjLbk
+ shJDvf0kpU4qLgT0Qaj+U/iFftP0s3XfAjNcp3WB5g8mRyDFPRSJX5LVDmtHJO5Hs/C5
+ y128qhKzBWPPW8qG+FPO5yrR6uqMUvBZjA9xWakbNR0QNBtL8YD0pjNnysv2tjRdJCHG
+ +LGQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU/Qs5bn0KByy2rMd5GAq45qi+lRfQDHHbS1rpiu8ef/9vS0DZDnj586G53DCFW2EzUbKIopqDkttokpRyKMc5STWNqW+E=
+X-Gm-Message-State: AOJu0YyW+0SVL/4EIqcGOzQEC4YGL6eR55OcS0v397Y3nK1kkxsF/6oT
+ CMZmWouqmLWvE33VHshhx2P/BHwApHWL5/tv2+cA5KW0QKqD/CNPCXQswQdUGfPwK4DN9zLLqHX
+ +qHZVWWzUI3sIpuBQOlC0ZjFUzxForg==
+X-Google-Smtp-Source: AGHT+IHnRqbB0EZ4Qbhj5cUIE7aYSncBn+9w2fE6BBJ/ZO8Qyuae3LsgC4Z+/TMn6eKUQhxp2avc2WjDoa+XH47q49k=
+X-Received: by 2002:a05:6122:45a4:b0:4ea:edfb:8da6 with SMTP id
+ 71dfb90a1353d-4eb3a4f4c6fmr4997264e0c.10.1717631922115; Wed, 05 Jun 2024
+ 16:58:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v3 00/41] virtio: features,fixes
-To: qemu-devel@nongnu.org
-References: <cover.1717630437.git.mst@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <cover.1717630437.git.mst@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240604062747.9212-1-fea.wang@sifive.com>
+ <20240604062747.9212-4-fea.wang@sifive.com>
+In-Reply-To: <20240604062747.9212-4-fea.wang@sifive.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 6 Jun 2024 09:58:16 +1000
+Message-ID: <CAKmqyKM_WQNV2=W=C5xe4wh99sbQUD7AWhYTgOOyqO=0_dW3jA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/6] target/riscv: Support the version for ss1p13
+To: "Fea.Wang" <fea.wang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Frank Chang <frank.chang@sifive.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,47 +97,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/24 16:34, Michael S. Tsirkin wrote:
-> Dropped acpi patches that had endian-ness issues.
-> 
-> The following changes since commit 60b54b67c63d8f076152e0f7dccf39854dfc6a77:
-> 
->    Merge tag 'pull-lu-20240526' of https://gitlab.com/rth7680/qemu into staging (2024-05-26 17:51:00 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
-> 
-> for you to fetch changes up to d23bc95d390a1800198c92a0177240d9e1a1eb66:
-> 
->    hw/cxl: Fix read from bogus memory (2024-06-05 19:33:01 -0400)
-> 
-> ----------------------------------------------------------------
-> virtio: features,fixes
-> 
-> A bunch of improvements:
-> - vhost dirty log is now only scanned once, not once per device
-> - virtio and vhost now support VIRTIO_F_NOTIFICATION_DATA
-> - cxl gained DCD emulation support
-> - pvpanic gained shutdown support
-> - beginning of patchset for Generic Port Affinity Structure
-> - new tests
-> - bugfixes
-> 
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+On Tue, Jun 4, 2024 at 4:23=E2=80=AFPM Fea.Wang <fea.wang@sifive.com> wrote=
+:
+>
+> Add RISC-V privilege 1.13 support.
+>
+> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+> Reviewed-by: Weiwei Li <liwei1518@gmail.com>
+> Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-Sorry to have to require a v4, but
+This should be the last patch in the series. The idea is that we add
+support and then let users enable it.
 
-merging...
-Auto-merging hw/misc/pvpanic-isa.c
-CONFLICT (content): Merge conflict in hw/misc/pvpanic-isa.c
-Auto-merging hw/misc/pvpanic-pci.c
-CONFLICT (content): Merge conflict in hw/misc/pvpanic-pci.c
-Auto-merging hw/misc/pvpanic.c
-CONFLICT (content): Merge conflict in hw/misc/pvpanic.c
+Alistair
 
-Looks like Paolo's pull induced the conflict.
-
-
-r~
+> ---
+>  target/riscv/cpu.c         | 6 +++++-
+>  target/riscv/tcg/tcg-cpu.c | 4 ++++
+>  2 files changed, 9 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index e9e69b9863..02c1e12a03 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1775,7 +1775,9 @@ static int priv_spec_from_str(const char *priv_spec=
+_str)
+>  {
+>      int priv_version =3D -1;
+>
+> -    if (!g_strcmp0(priv_spec_str, PRIV_VER_1_12_0_STR)) {
+> +    if (!g_strcmp0(priv_spec_str, PRIV_VER_1_13_0_STR)) {
+> +        priv_version =3D PRIV_VERSION_1_13_0;
+> +    } else if (!g_strcmp0(priv_spec_str, PRIV_VER_1_12_0_STR)) {
+>          priv_version =3D PRIV_VERSION_1_12_0;
+>      } else if (!g_strcmp0(priv_spec_str, PRIV_VER_1_11_0_STR)) {
+>          priv_version =3D PRIV_VERSION_1_11_0;
+> @@ -1795,6 +1797,8 @@ const char *priv_spec_to_str(int priv_version)
+>          return PRIV_VER_1_11_0_STR;
+>      case PRIV_VERSION_1_12_0:
+>          return PRIV_VER_1_12_0_STR;
+> +    case PRIV_VERSION_1_13_0:
+> +        return PRIV_VER_1_13_0_STR;
+>      default:
+>          return NULL;
+>      }
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 60fe0fd060..595d3b5b8f 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -318,6 +318,10 @@ static void riscv_cpu_update_named_features(RISCVCPU=
+ *cpu)
+>          cpu->cfg.has_priv_1_12 =3D true;
+>      }
+>
+> +    if (cpu->env.priv_ver >=3D PRIV_VERSION_1_13_0) {
+> +        cpu->cfg.has_priv_1_13 =3D true;
+> +    }
+> +
+>      /* zic64b is 1.12 or later */
+>      cpu->cfg.ext_zic64b =3D cpu->cfg.cbom_blocksize =3D=3D 64 &&
+>                            cpu->cfg.cbop_blocksize =3D=3D 64 &&
+> --
+> 2.34.1
+>
+>
 
