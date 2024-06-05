@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC2C1C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 10:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A3D1C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 10:46:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEo8k-0008Ke-BP; Wed, 05 Jun 2024 06:45:10 -0400
+	id 1sEo8k-0008LD-UP; Wed, 05 Jun 2024 06:45:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1sEo8i-0008KL-Po
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 06:45:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sEo8k-0008Kd-7W
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 06:45:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1sEo8h-0007Vj-5p
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 06:45:08 -0400
+ id 1sEo8i-0007Vt-9a
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 06:45:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717584306;
+ s=mimecast20190719; t=1717584307;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uaIwU4JQWNP4grebF1X7VJNsVyzz/dsz0IKLLBSLuyM=;
- b=UuV3XYpbLPfYl7Uzjd2jMIqFoRenzohzOJuh6vgodn5GXQoid6qxW8qCc00+TprB6QtxIn
- ilV4zeXvb0ygnk1sryJlzpNr3ekhqF/gNxTFxHaAn6mzpz5jygk+knAmbdWKtzxrCERzPc
- cdEN3shf5kFncYGj3E1vz57+3rQr0Ew=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=4yvvHCsFGcQy3avS2tqQfsLMqNzxPdKw9AyVqslnxSY=;
+ b=ONu4IcrdCfxD9xUBc1UfwJmQJXfUkGOmGvP5tfk6zKOEzJpdBJvCwNW+jwB2wlosGstSsT
+ wtnWVrhBQ4FQyhccfbEIIx3HB0kzpg9++Cq6gcIxXYRqomyvTfhqbEGJo9f63ktdLXrUth
+ cddrviLs8N0eJx3xZrgKKZg84AVRuGo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-306-CP-rx-ivNUm-Kbs2tWafgw-1; Wed,
- 05 Jun 2024 06:45:04 -0400
-X-MC-Unique: CP-rx-ivNUm-Kbs2tWafgw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-NBgpX8OwM4WoDpad3TMVew-1; Wed,
+ 05 Jun 2024 06:45:05 -0400
+X-MC-Unique: NBgpX8OwM4WoDpad3TMVew-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 87F9C195609E
- for <qemu-devel@nongnu.org>; Wed,  5 Jun 2024 10:45:03 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 91C1A1954B00
+ for <qemu-devel@nongnu.org>; Wed,  5 Jun 2024 10:45:04 +0000 (UTC)
 Received: from maggie.brq.redhat.com (unknown [10.43.3.102])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6888B19560A2
- for <qemu-devel@nongnu.org>; Wed,  5 Jun 2024 10:45:02 +0000 (UTC)
+ id A483E19560A2
+ for <qemu-devel@nongnu.org>; Wed,  5 Jun 2024 10:45:03 +0000 (UTC)
 From: Michal Privoznik <mprivozn@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v4 1/5] meson: Don't even detect posix_madvise() on Darwin
-Date: Wed,  5 Jun 2024 12:44:54 +0200
-Message-ID: <00f71753bdeb8c0f049fda05fb63b84bb5502fb3.1717584048.git.mprivozn@redhat.com>
+Subject: [PATCH v4 2/5] osdep: Make qemu_madvise() to set errno in all cases
+Date: Wed,  5 Jun 2024 12:44:55 +0200
+Message-ID: <af17113e7c1f2cc909ffd36d23f5a411b63b8764.1717584048.git.mprivozn@redhat.com>
 In-Reply-To: <cover.1717584048.git.mprivozn@redhat.com>
 References: <cover.1717584048.git.mprivozn@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mprivozn@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mprivozn@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
@@ -83,43 +83,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Darwin, posix_madvise() has the same return semantics as plain
-madvise() [1]. That's not really what our usage expects.
-Fortunately, madvise() is available and preferred anyways so we
-may stop detecting posix_madvise() on Darwin.
-
-1: https://opensource.apple.com/source/xnu/xnu-7195.81.3/bsd/man/man2/madvise.2.auto.html
+The unspoken premise of qemu_madvise() is that errno is set on
+error. And it is mostly the case except for posix_madvise() which
+is documented to return either zero (on success) or a positive
+error number. This means, we must set errno ourselves. And while
+at it, make the function return a negative value on error, just
+like other error paths do.
 
 Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
 ---
- meson.build | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ util/osdep.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index 6386607144..49962cce88 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2552,10 +2552,16 @@ config_host_data.set('CONFIG_OPEN_BY_HANDLE', cc.links(gnu_source_prefix + '''
-   #else
-   int main(void) { struct file_handle fh; return open_by_handle_at(0, &fh, 0); }
-   #endif'''))
--config_host_data.set('CONFIG_POSIX_MADVISE', cc.links(gnu_source_prefix + '''
--  #include <sys/mman.h>
--  #include <stddef.h>
--  int main(void) { return posix_madvise(NULL, 0, POSIX_MADV_DONTNEED); }'''))
-+
-+# On Darwin posix_madvise() has the same return semantics as plain madvise(),
-+# i.e. errno is set and -1 is returned. That's not really how POSIX defines the
-+# function. On the flip side, it has madvise() which is preferred anyways.
-+if host_os != 'darwin'
-+  config_host_data.set('CONFIG_POSIX_MADVISE', cc.links(gnu_source_prefix + '''
-+    #include <sys/mman.h>
-+    #include <stddef.h>
-+    int main(void) { return posix_madvise(NULL, 0, POSIX_MADV_DONTNEED); }'''))
-+endif
- 
- config_host_data.set('CONFIG_PTHREAD_SETNAME_NP_W_TID', cc.links(gnu_source_prefix + '''
-   #include <pthread.h>
+diff --git a/util/osdep.c b/util/osdep.c
+index e996c4744a..e42f4e8121 100644
+--- a/util/osdep.c
++++ b/util/osdep.c
+@@ -57,7 +57,12 @@ int qemu_madvise(void *addr, size_t len, int advice)
+ #if defined(CONFIG_MADVISE)
+     return madvise(addr, len, advice);
+ #elif defined(CONFIG_POSIX_MADVISE)
+-    return posix_madvise(addr, len, advice);
++    int rc = posix_madvise(addr, len, advice);
++    if (rc) {
++        errno = rc;
++        return -1;
++    }
++    return 0;
+ #else
+     errno = EINVAL;
+     return -1;
 -- 
 2.44.1
 
