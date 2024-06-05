@@ -4,92 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB5FEC27C52
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 08:24:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7F30C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 08:34:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sElvy-0007P6-GL; Wed, 05 Jun 2024 04:23:50 -0400
+	id 1sEm5Y-0001Gg-8M; Wed, 05 Jun 2024 04:33:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sElvv-0007Oa-Ev
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 04:23:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sEm5X-0001GY-Ld
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 04:33:43 -0400
+Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sElvs-0003UB-R5
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 04:23:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717575824;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sTE/OSFzDlK973R5Pf+D79Yh0R4pPjrH99Lr9jmAoTI=;
- b=YUz34OE6TabbV0fS+enj2R1Pe4A5//xG+lEMPOFIbCfdp5ETcqJ/rGpaaV13ABiVMKMeZK
- hPoH/CL/jafTaGqCuHBBzGDqglNMAxQI5lQZcp/ttmJDqdksBpOsXAiMYBDVxpbt8wNFX+
- XoimVhWcOSJTjABHuZHydKyen6tljzI=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-32-q69WdA5VMw-s0kW_prphVA-1; Wed, 05 Jun 2024 04:23:42 -0400
-X-MC-Unique: q69WdA5VMw-s0kW_prphVA-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a68ce57fb14so168528066b.2
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 01:23:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717575821; x=1718180621;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sTE/OSFzDlK973R5Pf+D79Yh0R4pPjrH99Lr9jmAoTI=;
- b=B3dVaGh8EFBNpXaWGrSg8miOl+ggyN/RnIuxBtw1NRNEp+UJDNKUA1/WisF9GJt0lG
- DAQ3YFFRgB2XPPdGhGPyDcHZagOLb/DciVsivPVbmKJIzTebWEfJjVEBhAskFC3cv+aQ
- wQdv9F6OZ48kaVutwM45YhunfnffVDfJV7kdj7lZp2XCfUI+UFRULib6p3NOJ0nFWHG2
- 2/1y1TosbkMBOTwRY5yrlqKKM0s9O3hKKd76sNM1PQcH8GOF82WcjDji80joHtin6neM
- sDm9fPfD4SfmfJsbUmSKk6KqHwRAvxQw/f3bV3kjTrGVGvx6C+fh3loHPYaZr763KNJm
- 1DFA==
-X-Gm-Message-State: AOJu0YxUeULZvjOOQRRa3fymV4L/ChJWvFVb/IQYkHbz83NOwO/SoWqq
- 8TUOapuv14DolxjwrvxjsQFURB7TeW6Rx/MTNkx3VlsRUnOa7oH3wtzWnZ1ZZ+MzBVsXpieleDK
- MvM7P4k8ho+1s9O4rQq6kX6yaoEvh+T+gmFtdac/Mxzf/FJdYf6Flc0OefWJY
-X-Received: by 2002:a17:906:a184:b0:a5a:15b6:25ab with SMTP id
- a640c23a62f3a-a69a0022d7dmr116951666b.61.1717575820923; 
- Wed, 05 Jun 2024 01:23:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEd3IJJUcLMPIO1EJXANKHLqm3Gw8kb/hrIhNSEuwTE0gQzGbBPTpHZH7z2B/qy8gwx9KwasA==
-X-Received: by 2002:a17:906:a184:b0:a5a:15b6:25ab with SMTP id
- a640c23a62f3a-a69a0022d7dmr116949966b.61.1717575820367; 
- Wed, 05 Jun 2024 01:23:40 -0700 (PDT)
-Received: from redhat.com ([2.55.58.53]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68c7882caesm563091266b.27.2024.06.05.01.23.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 01:23:39 -0700 (PDT)
-Date: Wed, 5 Jun 2024 04:23:36 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Sunil V L <sunilvl@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Andrew Jones <ajones@ventanamicro.com>
-Subject: Re: [PATCH 1/3] gpex-acpi: Support PCI link devices outside the host
- bridge
-Message-ID: <20240605041837-mutt-send-email-mst@kernel.org>
-References: <20240528073103.1075812-1-sunilvl@ventanamicro.com>
- <20240528073103.1075812-2-sunilvl@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sEm5V-000630-Uw
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 04:33:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1717576422; x=1749112422;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=ousgHI+YEtUBdC68U5LlOUWWhjsopPIRJoJcDe1y5H4=;
+ b=dAJNBFCxW3YJEQx9l9KxjDYwGLbT/4/B7Fr1844zGPH9mTrl2ZmFv4E5
+ aV1AdbJQVMEfS0Ey8rXPyFJ1atWiz/UMstTmFPnR6bapSdPm34rJRSxV1
+ cNU+qfsTyqTz8tWcsRCV2UWI7Q82pkBs+QvusBXyEg+jH3QRjDpbO76Qk
+ RudmIBmyMZD1iLP9pljcLfe8UuVarRPhMW6bpOp2qUAhLc95/mvbG+yAh
+ quQqOyZ+asx1m6dvYVcF1iJhNXXJHYOpEvSK9pMxaotDyGoLsTaDSItod
+ iySbcvA3FKEpBkHXON97xpiai0KqLc4z/UAfZptgqAei3DqjRhu/r4p+/ A==;
+X-CSE-ConnectionGUID: ZEENami9RDGjQ25MMgerIw==
+X-CSE-MsgGUID: WsTYNrjmR0y1MufkvxlxnA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11093"; a="25575341"
+X-IronPort-AV: E=Sophos;i="6.08,216,1712646000"; d="scan'208";a="25575341"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Jun 2024 01:33:39 -0700
+X-CSE-ConnectionGUID: fx6gk+4hR6+Rrsf/AjRPrQ==
+X-CSE-MsgGUID: 2gcEJWK9SmeoLPDeI2MlVw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,216,1712646000"; d="scan'208";a="37954793"
+Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.127])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Jun 2024 01:33:34 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v7 06/17] vfio/container: Implement
+ HostIOMMUDeviceClass::realize() handler
+Date: Wed,  5 Jun 2024 16:30:32 +0800
+Message-Id: <20240605083043.317831-7-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240605083043.317831-1-zhenzhong.duan@intel.com>
+References: <20240605083043.317831-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240528073103.1075812-2-sunilvl@ventanamicro.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.12;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,177 +86,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 28, 2024 at 01:01:01PM +0530, Sunil V L wrote:
-> Currently, PCI link devices (PNP0C0F) are always created within the
-> scope of the PCI root complex. However, RISC-V needs PCI link devices to
-> be outside the scope of the PCI host bridge to properly enable the probe
-> order. This matches the example given in the ACPI specification section
-> 6.2.13.1 as well.
+The realize function populates the capabilities. For now only the
+aw_bits caps is computed for legacy backend.
 
-Given that, what happens if we do this for all architectures?
+Introduce a helper function vfio_device_get_aw_bits() which calls
+range_get_last_bit() to get host aw_bits and package it in
+HostIOMMUDeviceCaps for query with .get_cap(). This helper will
+also be used by iommufd backend.
 
-> 
-> Enable creating link devices outside the scope of PCI root complex based
-> on the flag which gets set currently only for RISC-V.
-> 
-> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-> ---
->  hw/pci-host/gpex-acpi.c    | 29 ++++++++++++++++++++++++-----
->  hw/riscv/virt-acpi-build.c |  8 +++++---
->  include/hw/pci-host/gpex.h |  5 ++++-
->  3 files changed, 33 insertions(+), 9 deletions(-)
-> 
-> diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
-> index f69413ea2c..cea89a3ed8 100644
-> --- a/hw/pci-host/gpex-acpi.c
-> +++ b/hw/pci-host/gpex-acpi.c
-> @@ -7,7 +7,7 @@
->  #include "hw/pci/pcie_host.h"
->  #include "hw/acpi/cxl.h"
->  
-> -static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq)
-> +static void acpi_dsdt_add_pci_route_table(Aml *scope, Aml *dev, uint32_t irq)
->  {
->      Aml *method, *crs;
->      int i, slot_no;
-> @@ -45,7 +45,17 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq)
->          aml_append(dev_gsi, aml_name_decl("_CRS", crs));
->          method = aml_method("_SRS", 1, AML_NOTSERIALIZED);
->          aml_append(dev_gsi, method);
-> -        aml_append(dev, dev_gsi);
-> +
-> +        /*
-> +         * Some architectures like RISC-V
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ include/hw/vfio/vfio-common.h |  1 +
+ hw/vfio/container.c           | 19 +++++++++++++++++++
+ hw/vfio/helpers.c             | 17 +++++++++++++++++
+ 3 files changed, 37 insertions(+)
 
-
-Just risc-v for now right?
-> need PCI link devices created
-> +         * outside the scope of the PCI host bridge
-
-.. in order to load the drivers in the correct order.
-Others .... .
-
-> similar to the example
-> +         * given in the section 6.2.13.1 of ACPI spec 6.5.
-
-
-This is not how we quote ACPI spec.
-
-First you find the earliest spec version which has it.
-Then you mention that, section/table # and title.
-For example:
-
-	ACPI 6.1: 18.3.2.8 Generic Hardware Error Source
-
-
-> +         */
-> +         if (scope) {
-> +            aml_append(scope, dev_gsi);
-> +        } else {
-> +            aml_append(dev, dev_gsi);
-> +        }
->      }
->  }
->  
-> @@ -174,7 +184,11 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
->                  aml_append(dev, aml_name_decl("_PXM", aml_int(numa_node)));
->              }
->  
-> -            acpi_dsdt_add_pci_route_table(dev, cfg->irq);
-> +            if (cfg->flags & GPEX_FLAGS_EXT_GSI_LINK) {
-> +                acpi_dsdt_add_pci_route_table(scope, dev, cfg->irq);
-> +            } else {
-> +                acpi_dsdt_add_pci_route_table(NULL, dev, cfg->irq);
-> +            }
->  
->              /*
->               * Resources defined for PXBs are composed of the following parts:
-> @@ -205,7 +219,11 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
->      aml_append(dev, aml_name_decl("_STR", aml_unicode("PCIe 0 Device")));
->      aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
->  
-> -    acpi_dsdt_add_pci_route_table(dev, cfg->irq);
-> +    if (cfg->flags & GPEX_FLAGS_EXT_GSI_LINK) {
-> +        acpi_dsdt_add_pci_route_table(scope, dev, cfg->irq);
-> +    } else {
-> +        acpi_dsdt_add_pci_route_table(NULL, dev, cfg->irq);
-> +    }
->  
->      method = aml_method("_CBA", 0, AML_NOTSERIALIZED);
->      aml_append(method, aml_return(aml_int(cfg->ecam.base)));
-> @@ -282,7 +300,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
->      crs_range_set_free(&crs_range_set);
->  }
->  
-> -void acpi_dsdt_add_gpex_host(Aml *scope, uint32_t irq)
-> +void acpi_dsdt_add_gpex_host(Aml *scope, uint32_t irq, uint32_t flags)
->  {
->      bool ambig;
->      Object *obj = object_resolve_path_type("", TYPE_GPEX_HOST, &ambig);
-> @@ -292,5 +310,6 @@ void acpi_dsdt_add_gpex_host(Aml *scope, uint32_t irq)
->      }
->  
->      GPEX_HOST(obj)->gpex_cfg.irq = irq;
-> +    GPEX_HOST(obj)->gpex_cfg.flags = flags;
->      acpi_dsdt_add_gpex(scope, &GPEX_HOST(obj)->gpex_cfg);
->  }
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 0925528160..832a3acb8d 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -417,19 +417,21 @@ static void build_dsdt(GArray *table_data,
->          virtio_acpi_dsdt_add(scope, memmap[VIRT_VIRTIO].base,
->                               memmap[VIRT_VIRTIO].size,
->                               VIRTIO_IRQ, 0, VIRTIO_COUNT);
-> -        acpi_dsdt_add_gpex_host(scope, PCIE_IRQ);
-> +        acpi_dsdt_add_gpex_host(scope, PCIE_IRQ, GPEX_FLAGS_EXT_GSI_LINK);
->      } else if (socket_count == 2) {
->          virtio_acpi_dsdt_add(scope, memmap[VIRT_VIRTIO].base,
->                               memmap[VIRT_VIRTIO].size,
->                               VIRTIO_IRQ + VIRT_IRQCHIP_NUM_SOURCES, 0,
->                               VIRTIO_COUNT);
-> -        acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES);
-> +        acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES,
-> +                                GPEX_FLAGS_EXT_GSI_LINK);
->      } else {
->          virtio_acpi_dsdt_add(scope, memmap[VIRT_VIRTIO].base,
->                               memmap[VIRT_VIRTIO].size,
->                               VIRTIO_IRQ + VIRT_IRQCHIP_NUM_SOURCES, 0,
->                               VIRTIO_COUNT);
-> -        acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES * 2);
-> +        acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES * 2,
-> +                                GPEX_FLAGS_EXT_GSI_LINK);
->      }
->  
->      aml_append(dsdt, scope);
-> diff --git a/include/hw/pci-host/gpex.h b/include/hw/pci-host/gpex.h
-> index dce883573b..bee17d62c5 100644
-> --- a/include/hw/pci-host/gpex.h
-> +++ b/include/hw/pci-host/gpex.h
-> @@ -47,8 +47,11 @@ struct GPEXConfig {
->      MemMapEntry pio;
->      int         irq;
->      PCIBus      *bus;
-> +    uint32_t    flags;
->  };
->  
-> +#define GPEX_FLAGS_EXT_GSI_LINK BIT(0)
-> +
->  struct GPEXHost {
->      /*< private >*/
->      PCIExpressHost parent_obj;
-> @@ -71,7 +74,7 @@ struct GPEXHost {
->  int gpex_set_irq_num(GPEXHost *s, int index, int gsi);
->  
->  void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg);
-> -void acpi_dsdt_add_gpex_host(Aml *scope, uint32_t irq);
-> +void acpi_dsdt_add_gpex_host(Aml *scope, uint32_t irq, uint32_t flags);
->  
->  #define PCI_HOST_PIO_BASE               "x-pio-base"
->  #define PCI_HOST_PIO_SIZE               "x-pio-size"
-> -- 
-> 2.40.1
-> 
-> 
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 56d1717211..105b8b7e80 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -289,4 +289,5 @@ bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
+ void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp);
+ void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
+                       DeviceState *dev, bool ram_discard);
++int vfio_device_get_aw_bits(VFIODevice *vdev);
+ #endif /* HW_VFIO_VFIO_COMMON_H */
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index c4fca2dfca..2f62c13214 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -1136,6 +1136,24 @@ static void vfio_iommu_legacy_class_init(ObjectClass *klass, void *data)
+     vioc->pci_hot_reset = vfio_legacy_pci_hot_reset;
+ };
+ 
++static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
++                                     Error **errp)
++{
++    VFIODevice *vdev = opaque;
++
++    hiod->name = g_strdup(vdev->name);
++    hiod->caps.aw_bits = vfio_device_get_aw_bits(vdev);
++
++    return true;
++}
++
++static void hiod_legacy_vfio_class_init(ObjectClass *oc, void *data)
++{
++    HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
++
++    hioc->realize = hiod_legacy_vfio_realize;
++};
++
+ static const TypeInfo types[] = {
+     {
+         .name = TYPE_VFIO_IOMMU_LEGACY,
+@@ -1144,6 +1162,7 @@ static const TypeInfo types[] = {
+     }, {
+         .name = TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO,
+         .parent = TYPE_HOST_IOMMU_DEVICE,
++        .class_init = hiod_legacy_vfio_class_init,
+     }
+ };
+ 
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index 27ea26aa48..b14edd46ed 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -658,3 +658,20 @@ void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
+ 
+     vbasedev->ram_block_discard_allowed = ram_discard;
+ }
++
++int vfio_device_get_aw_bits(VFIODevice *vdev)
++{
++    /*
++     * iova_ranges is a sorted list. For old kernels that support
++     * VFIO but not support query of iova ranges, iova_ranges is NULL,
++     * in this case HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX(64) is returned.
++     */
++    GList *l = g_list_last(vdev->bcontainer->iova_ranges);
++
++    if (l) {
++        Range *range = l->data;
++        return range_get_last_bit(range) + 1;
++    }
++
++    return HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX;
++}
+-- 
+2.34.1
 
 
