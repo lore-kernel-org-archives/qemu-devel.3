@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D6DDC27C52
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 20:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3F5FC25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 20:19:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEx1h-0003Ro-9a; Wed, 05 Jun 2024 16:14:29 -0400
+	id 1sEx69-0004v4-VL; Wed, 05 Jun 2024 16:19:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sEx1f-0003RO-MP
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 16:14:27 -0400
-Received: from mail-il1-x12c.google.com ([2607:f8b0:4864:20::12c])
+ id 1sEx67-0004uZ-Cn
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 16:19:03 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sEx1d-00065S-3M
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 16:14:27 -0400
-Received: by mail-il1-x12c.google.com with SMTP id
- e9e14a558f8ab-374981661caso948055ab.1
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 13:14:24 -0700 (PDT)
+ id 1sEx64-0006vb-Fw
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 16:19:03 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7025c5e6b94so171281b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 13:18:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717618463; x=1718223263;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717618738; x=1718223538;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XQhYX7vLoEk3suFOzUD1nladi4AnjLy/mr8GItM+3F8=;
- b=EQ6/agGOlsgPOIMAJII3U24nD5oSAYpAzUaP8WPK3tva3T0516+Hn4KOodJNcxCwAz
- DLRgNC7GRknq2AsVVtvIP7qxd3Yog3KCT3z9MfvddNEUa3Wq969kMfrohNhXBIw8lyT7
- loHW47JE6Iexx0XGJDedggTES3Hk8I8KF4YmIUhylVfalhNfOr74075Cd6drEvQoe0DH
- KWbho1yjaI31maGRMvy5jFMCIOVkZeDl4Xic5wQmEfbIt5Tf3zz/x9XSnnigeY73zXbb
- orZITVY86bkZgee/cGDuXCx6EkkRztZ7ZQRF10WR0w3T4uidzfle3fOESbkBrl9lpGdN
- wOzA==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vGmNj5U9s0Ukrms4ASkOuI7wb/P5Lf+WDkeNFyTWwS0=;
+ b=1zFHxvfnABQ5BnbDW3X25tQV+Mrz1z4jkw+JWLcmMb4Gr7YUr1xfd/6zi7Nvd0N465
+ 1R+LvdLw5mPyEqdlM3905iD8erswu++XDPda2AFkZls4rUozOPOdIaYXV5x8+mlcdg9t
+ FdZcbDskg+ujVCPP76qvuNLslRVHOBF5GsrY0jHF0XaPGjVXwT7ECqzQsJ4yjjpkj+EA
+ ReqfbrU3vUANV8pd9Hp8mwzz7Ehet0oZh5ui7y7+DUE27sJlg7Df7EzbaU99P8QXiqTJ
+ ICqyIvo0I7ofNigjbG0rl6WIRA02WsYlUNc8RimpvLpr1kp3WcsnJaKX/YroKWnAEATE
+ EqGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717618463; x=1718223263;
+ d=1e100.net; s=20230601; t=1717618738; x=1718223538;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XQhYX7vLoEk3suFOzUD1nladi4AnjLy/mr8GItM+3F8=;
- b=m5jvIjCurGm3Inqfsch16uLPCNGG+W56B2ql7ufJN5U500s2Yqr+j7+FGdiL/E26m0
- fAjS2bP2aWn7G8CAZUnKrEIbVlgd4gDMoQYijge3peRX7bVcgy1HGJ3G12TQkfqr10bi
- BezBnEf2FBHUsgZEj1rNHfY+k5OKHCfxgPteJlHXXZEYi+TWOforw1l5EGndC+GnGmJe
- 71NGgCx4slnZq1CICIbRr3w1xkojQRz1mUjTpt2Q51X43KKrCk1JplVxMtHOyAvfAzDR
- ZOcNM+mN3+63M4WJAuiDvWp4LbnWyTlXNMSCs/jf8qdYQQkj9uG+ljOAXySKYYEUhbRl
- oLYA==
+ bh=vGmNj5U9s0Ukrms4ASkOuI7wb/P5Lf+WDkeNFyTWwS0=;
+ b=AwUwJW6Kd85A3iB3dDWieRbeghxz3mt5oD+siga5brkcBEUbj6aJUb0KxxFbX13RKA
+ wA7xZRhbnFduX6tHdVJlS2cnfSC3n+ve7+HIh5EnjqfVpeegBM5jvJ+DypQ/gXsI/iLd
+ VMf97YGRLFVDXOK0cbn7ygCuVaXDjtVLbv8kU6WlSuvYoA1kDCOCOLUyBNDOj108btvp
+ 4zrmBOUKakKGT8BrnpLgtG8FDM7EN1kHk+1ropJ6yO0mkB411CFdTzP7Ymp2/8IecyIU
+ ujKVfJNLtt1jTy86elmge0hMciWNsGdJLhKusarCPO0PhrzWfT2vJWqfLM+hHcn2vfx7
+ dRhQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWmBXVvfciamYuIr0qccw+gTLI33eemlp/QPui16LbxLRj0hDb3h9rgQfvjU0A8Nm5Q6w2mdK9YxJ4AnmnXkJHgjWXk9RI=
-X-Gm-Message-State: AOJu0YyYDmi4mQb1XAU8k3zIC5NwvDp01ceCWJZuG2sBiIscggdtwRKb
- pzmRj+T/HYE48XJi7TQu7YgXQkpd88freMeu8ko30WNPLx8yVjqDZ0/RRAXZS/k=
-X-Google-Smtp-Source: AGHT+IFOm9H3Jt+hdhkaGzjmwEzuHyIiyH8CVNhZBWWM3jDKCN/FylRkWoALYcu+Xq6Sat05+ERBUg==
-X-Received: by 2002:a05:6e02:12e6:b0:374:a667:fc06 with SMTP id
- e9e14a558f8ab-374b1ef25a7mr40743905ab.8.1717618463152; 
- Wed, 05 Jun 2024 13:14:23 -0700 (PDT)
+ AJvYcCWfeak35rynJoOQP4md02KF4cVi4zum/NqBiBXCRnf/ndB/I33JMFRw+XVX3ee6ZmpNJZrKTsh8vXI2pkE593c+A4eXCe0=
+X-Gm-Message-State: AOJu0YyDwCj2ae8iSQC5IXhIqVh9DD/qnRF87RAWfuNxjp2ljTSDS/CU
+ FfxtYe96HBh4uS/CgBqeCD/oj8/LWdV2gxylUh+ymiHiXnyo9EmS/24tUvl3idbX+JmEj+GEBva
+ j63w=
+X-Google-Smtp-Source: AGHT+IE4FUcX2Lwrq2oErw5/TwYu8AN3HsPfAoyWJRPDTA+rvg573TqTBYsIhdzVoz8MMW00+yaJGA==
+X-Received: by 2002:a05:6a00:1146:b0:6f8:beb9:c0e1 with SMTP id
+ d2e1a72fcca58-703e56ce879mr4144112b3a.0.1717618738274; 
+ Wed, 05 Jun 2024 13:18:58 -0700 (PDT)
 Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
  ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-6c354b945a8sm8777561a12.23.2024.06.05.13.14.21
+ d2e1a72fcca58-70262c7d382sm5945079b3a.106.2024.06.05.13.18.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Jun 2024 13:14:22 -0700 (PDT)
-Message-ID: <8a2f0c43-1d48-48f3-8ab2-dafebe252ca7@daynix.com>
-Date: Thu, 6 Jun 2024 05:14:20 +0900
+ Wed, 05 Jun 2024 13:18:58 -0700 (PDT)
+Message-ID: <ff768984-4c5b-41eb-b302-ec11a49fb676@daynix.com>
+Date: Thu, 6 Jun 2024 05:18:55 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 07/20] virtio-net: Do not propagate ebpf-rss-fds errors
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Jason Wang <jasowang@redhat.com>
-Cc: peter.maydell@linaro.org, qemu-devel@nongnu.org
+Subject: Re: [PULL 00/20] Net patches
+To: Michael Tokarev <mjt@tls.msk.ru>, Jason Wang <jasowang@redhat.com>,
+ qemu-devel@nongnu.org
 References: <20240604073755.1859-1-jasowang@redhat.com>
- <20240604073755.1859-8-jasowang@redhat.com> <ZmA8r20rrbCxKMEY@redhat.com>
+ <40b59ff0-e3ff-4631-aac2-83a3214d28b6@tls.msk.ru>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <ZmA8r20rrbCxKMEY@redhat.com>
+In-Reply-To: <40b59ff0-e3ff-4631-aac2-83a3214d28b6@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::12c;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-il1-x12c.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::432;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,31 +100,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/06/05 19:23, Daniel P. Berrangé wrote:
-> On Tue, Jun 04, 2024 at 03:37:42PM +0800, Jason Wang wrote:
->> From: Akihiko Odaki <akihiko.odaki@daynix.com>
+On 2024/06/05 19:14, Michael Tokarev wrote:
+> 04.06.2024 10:37, Jason Wang wrote:
+>> Akihiko Odaki (18):
+>>        tap: Remove tap_probe_vnet_hdr_len()
+>>        tap: Remove qemu_using_vnet_hdr()
+>>        net: Move virtio-net header length assertion
+>>        net: Remove receive_raw()
+>>        tap: Call tap_receive_iov() from tap_receive()
+>>        tap: Shrink zeroed virtio-net header
+>>        virtio-net: Do not propagate ebpf-rss-fds errors
+>>        virtio-net: Add only one queue pair when realizing
+>>        virtio-net: Copy header only when necessary
+>>        virtio-net: Shrink header byte swapping buffer
+>>        virtio-net: Disable RSS on reset
+>>        virtio-net: Unify the logic to update NIC state for RSS
+>>        virtio-net: Always set populate_hash
+>>        virtio-net: Do not write hashes to peer buffer
+>>        ebpf: Fix RSS error handling
+>>        ebpf: Return 0 when configuration fails
+>>        ebpf: Refactor tun_rss_steering_prog()
+>>        ebpf: Add a separate target for skeleton
 >>
->> Propagating ebpf-rss-fds errors has several problems.
+>> Alexey Dobriyan (1):
+>>        virtio-net: drop too short packets early
 >>
->> First, it makes device realization fail and disables the fallback to the
->> conventional eBPF loading.
+>> Andrew Melnychenko (1):
+>>        ebpf: Added traces back. Changed source set for eBPF to 'system'.
 > 
-> AFAICT, this is not a bug - this is desired behaviour.
-> 
-> If the user/mgmt app has told QEMU to use FDs it has passed
-> in, then any failure to do this *MUST* be treated as a fatal
-> error. Falling back to other codepaths is ignoring a direct
-> user request.
+> Is there anything in there for qemu-stable?
+> (NOT picking up without explicit mention of stable)
 
-The FD options are more like an assistance rather than a request. When 
-QEMU does not have a permission to load eBPF programs, a user can get 
-the eBPF programs with the request-ebpf command of QMP, load it, and 
-pass the FDs to QEMU.
-
-A user must not to use the option to pass eBPF programs not included in 
-QEMU since we don't have a stable ABI. Nobody should want to do that 
-anyway since the function of the eBPF program is restricted with the 
-virtio spec.
+No for my patches. Some fixes bugs but they are pretty minor and not 
+problems in practice.
 
 Regards,
 Akihiko Odaki
