@@ -4,61 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EAFBC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 16:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86463C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 16:11:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEtC8-0007P4-Bp; Wed, 05 Jun 2024 12:09:00 -0400
+	id 1sEtEI-0008WE-0c; Wed, 05 Jun 2024 12:11:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sEtC6-0007Ov-B8
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 12:08:58 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sEtC2-0001Jm-Gj
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 12:08:57 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VvXMv5t0Yz6HJRn;
- Thu,  6 Jun 2024 00:04:27 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 0F1B1140B39;
- Thu,  6 Jun 2024 00:08:47 +0800 (CST)
-Received: from localhost (10.122.247.231) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 5 Jun
- 2024 17:08:45 +0100
-Date: Wed, 5 Jun 2024 17:08:45 +0100
-To: Richard Henderson <richard.henderson@linaro.org>
-CC: "Michael S. Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>, "Peter
- Maydell" <peter.maydell@linaro.org>, Igor Mammedov <imammedo@redhat.com>, Ani
- Sinha <anisinha@redhat.com>
-Subject: Re: [PULL 36/46] bios-tables-test: Add data for complex numa test
- (GI, GP etc)
-Message-ID: <20240605170845.000000dc@huawei.com>
-In-Reply-To: <3a1c870c-f708-482d-802a-d3230b398c28@linaro.org>
-References: <cover.1717527933.git.mst@redhat.com>
- <61cbf56ef1c5dd9dbe6bd6625f6c8d2a82c5697f.1717527933.git.mst@redhat.com>
- <2eefcbdb-ad41-465a-9c14-1dc15bfff94a@linaro.org>
- <20240605162733.00007d8d@Huawei.com>
- <3a1c870c-f708-482d-802a-d3230b398c28@linaro.org>
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEtEH-0008W5-4X
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 12:11:13 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEtEF-0001qY-De
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 12:11:12 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2c1fccb7557so3548027a91.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 09:11:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717603869; x=1718208669; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kzdUr1TxEpYrUEI64YeD7LZlU+wsD0N91PL2OufUtx4=;
+ b=AgLrlP1BaKxdNtJE/UOePKEeQ73ebDZT/+J0Q6Rf83PyNsBly1AtnSVf/dakbBYU2t
+ 9bVm/TKNjXipdeipuQ7NJAOgpDoInc1T2bTZnqYVxw8BDVQLOwUOxQSARBtiZ7Nghgm2
+ o2FtYqQjGnqTiSrhL+xh9zeGPmfrB3YzV4Dn5bNPhB5Wu3C8+2i4R8teVwQu8twDZABD
+ LrEMp70LfhjY5nNCbaObtTWGUmWrsCV4G9I2/qONwpFFJLwoLbt9jrGQ1H1SxDKWsZ1e
+ ZmXiJIFS0pexGW8xjaYSU+3zPm0N8gZ9acXbaKcXkLYMOR4EP4nuBxH5coecJxrisboi
+ 9jlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717603869; x=1718208669;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kzdUr1TxEpYrUEI64YeD7LZlU+wsD0N91PL2OufUtx4=;
+ b=qjeMGu+b8v+QCaoeAGeo3tS3aiOdOCkuUcfv+0rJz6HM5Oa6OIsaaFIHsjSxdAQHWJ
+ 5sJG4ySBVhEYVAikeg+6YYwIU6vIOQ9F775V+Qu/oZkvlm1jalQlIRbphU27osKUD9JZ
+ VAql1NtBfKVAy/cfWLTFAnMc8I/e0qyIKmg0J7qP/jexc5quRF2LdrFO624HlPiCMZRu
+ UvgJaTgqnJZSN4zXIj6HRt0/gH5hPWuYSRwEUtZrUkcg88cyZDmH2i2ftaJcGOSP+652
+ AYUSSng74ocZXq4WSYeUzlNeNwaTKEkGAPJpU4yjIRLeRLAbwzOYmFoxQdKCcIMsZwse
+ 0p6A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUE4iLDRxt4rdYD+Cg77mBZ4sBiU1/YmznSk0JNKukazp9uxxThhNoBvFUrVcb62jgJdiN3zaXTze7xxB0a4YgwUJliVKg=
+X-Gm-Message-State: AOJu0Yx3B8ihKL3peZqQDUQ/CkCp560KK8mO75DlHxntkEIXGrON0mVo
+ s69MbV1TL/qs5ReZHd2xo5bxzpsQgLRC88GHHuTD4Y2mBWO6KoVDVUXLhGQ/oT4AcH6SyM+EEx9
+ t
+X-Google-Smtp-Source: AGHT+IFlEdP1/TtKEsuIx+QZqv1WV+sNhYhb80OETKvn7kJOKpHR2ngQwzKbIXycv/x95hkZRHWgqw==
+X-Received: by 2002:a17:90b:194e:b0:2c1:424c:1759 with SMTP id
+ 98e67ed59e1d1-2c27db4acbbmr3780097a91.36.1717603869082; 
+ Wed, 05 Jun 2024 09:11:09 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c2806cfa62sm1637151a91.48.2024.06.05.09.11.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Jun 2024 09:11:08 -0700 (PDT)
+Message-ID: <b24f7b87-143b-4ef7-a65d-e1cf0738e4f4@linaro.org>
+Date: Wed, 5 Jun 2024 09:11:06 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.122.247.231]
-X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 35/37] target/sparc: Implement MWAIT
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: mark.cave-ayland@ilande.co.uk
+References: <20240526194254.459395-1-richard.henderson@linaro.org>
+ <20240526194254.459395-36-richard.henderson@linaro.org>
+ <8e2e8cff-fee8-4188-86d8-55dc1ff5520f@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <8e2e8cff-fee8-4188-86d8-55dc1ff5520f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,47 +98,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 5 Jun 2024 09:01:37 -0700
-Richard Henderson <richard.henderson@linaro.org> wrote:
-
-> On 6/5/24 10:27, Jonathan Cameron wrote:
-> >> This fails testing:
-> >>
-> >> https://gitlab.com/qemu-project/qemu/-/jobs/7021105504
-> >>
-> >> acpi-test: Warning! SRAT binary file mismatch. Actual [aml:/tmp/aml-GHR6O2], Expected
-> >> [aml:tests/data/acpi/q35/SRAT.acpihmat-generic-x].
-> >> See source file tests/qtest/bios-tables-test.c for instructions on how to update expected
-> >> files.
-> >> to see ASL diff between mismatched files install IASL, rebuild QEMU from scratch and
-> >> re-run tests with V=1 environment variable set**
-> >> ERROR:../alt/tests/qtest/bios-tables-test.c:550:test_acpi_asl: assertion failed:
-> >> (all_tables_match)
-> >> Bail out! ERROR:../alt/tests/qtest/bios-tables-test.c:550:test_acpi_asl: assertion failed:
-> >> (all_tables_match)
-> >> Aborted (core dumped)
-> >>  
-> > 
-> > s390 and passes on an x86 host, so I guess an endian bug - any chance of a table dump
-> > from someone with access to an s390 host?  
-> 
-> Sure.  By what incantation do I produce a dump?
-
-If you still have the /mnt/aml-GHR602 above then either upload that somewhere or
-iasl -d /mnt/aml-GHR602
-should generate you a suitable text file.  However generic ports are fairly recent
-so you may need a newer iasl from acpica-tools to decode.
-It will moan if it doesn't understand the content.
-
-Jonathan
-
+On 6/5/24 02:27, Philippe Mathieu-Daudé wrote:
+> On 26/5/24 21:42, Richard Henderson wrote:
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/sparc/insns.decode |  1 +
+>>   target/sparc/translate.c  | 11 +++++++++++
+>>   2 files changed, 12 insertions(+)
 > 
 > 
-> r~
+>> +static void do_wrmwait(DisasContext *dc, TCGv src)
+>> +{
+>> +    /*
+>> +     * TODO: This is a stub version of mwait, which merely recognizes
+>> +     * interrupts immediately and does not wait.
+> 
+> If icount is used, do we need to consume some instructions from the budget?
 
+Pardon?  There's nothing special about this.
+One insn will be consumed from the budget.
+
+
+r~
 
