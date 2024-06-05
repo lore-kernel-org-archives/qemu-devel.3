@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D0A3C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 10:10:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED7BCC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 10:15:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEnad-00046U-Rf; Wed, 05 Jun 2024 06:09:56 -0400
+	id 1sEnfP-0005ap-Qw; Wed, 05 Jun 2024 06:14:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
- id 1sEnab-00045s-LJ
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 06:09:53 -0400
-Received: from szxga08-in.huawei.com ([45.249.212.255])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sEnfO-0005aY-IX
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 06:14:50 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
- id 1sEnaZ-0005za-3Q
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 06:09:53 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.48])
- by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4VvNQ34hZ3z1S9P6;
- Wed,  5 Jun 2024 18:05:47 +0800 (CST)
-Received: from kwepemf200001.china.huawei.com (unknown [7.202.181.227])
- by mail.maildlp.com (Postfix) with ESMTPS id 161F718007A;
- Wed,  5 Jun 2024 18:09:44 +0800 (CST)
-Received: from dggpemf200006.china.huawei.com (7.185.36.61) by
- kwepemf200001.china.huawei.com (7.202.181.227) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 5 Jun 2024 18:09:43 +0800
-Received: from dggpemf200006.china.huawei.com ([7.185.36.61]) by
- dggpemf200006.china.huawei.com ([7.185.36.61]) with mapi id 15.02.1544.011;
- Wed, 5 Jun 2024 18:09:43 +0800
-To: Peter Xu <peterx@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "yu.zhang@ionos.com"
- <yu.zhang@ionos.com>, "mgalaxy@akamai.com" <mgalaxy@akamai.com>,
- "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>, zhengchuan
- <zhengchuan@huawei.com>, "berrange@redhat.com" <berrange@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>, "lizhijian@fujitsu.com"
- <lizhijian@fujitsu.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, Xiexiangyou <xiexiangyou@huawei.com>,
- "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>, "lixiao (H)"
- <lixiao91@huawei.com>, "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
- Wangjialin <wangjialin23@huawei.com>, Fabiano Rosas <farosas@suse.de>
-Subject: RE: [PATCH 0/6] refactor RDMA live migration based on rsocket API
-Thread-Topic: [PATCH 0/6] refactor RDMA live migration based on rsocket API
-Thread-Index: AQHatni5B+Psi4bf8k2CmAL8rvKhtrG3eMaAgAF5NUA=
-Date: Wed, 5 Jun 2024 10:09:43 +0000
-Message-ID: <de950e0e2cda4f8dacd15892a6328861@huawei.com>
-References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
- <Zl9rw3Q9Z9A0iMYV@x1n>
-In-Reply-To: <Zl9rw3Q9Z9A0iMYV@x1n>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.173.124.235]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sEnfM-0006wd-Do
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 06:14:50 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 456666D622;
+ Wed,  5 Jun 2024 13:15:28 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id CC8C4E08D6;
+ Wed,  5 Jun 2024 13:14:37 +0300 (MSK)
+Message-ID: <40b59ff0-e3ff-4631-aac2-83a3214d28b6@tls.msk.ru>
+Date: Wed, 5 Jun 2024 13:14:37 +0300
 MIME-Version: 1.0
-Received-SPF: pass client-ip=45.249.212.255;
- envelope-from=arei.gonglei@huawei.com; helo=szxga08-in.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/20] Net patches
+To: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org,
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20240604073755.1859-1-jasowang@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240604073755.1859-1-jasowang@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,86 +81,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Gonglei (Arei)" <arei.gonglei@huawei.com>
-From:  "Gonglei (Arei)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgUGV0ZXIsDQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogUGV0ZXIg
-WHUgW21haWx0bzpwZXRlcnhAcmVkaGF0LmNvbV0NCj4gU2VudDogV2VkbmVzZGF5LCBKdW5lIDUs
-IDIwMjQgMzozMiBBTQ0KPiBUbzogR29uZ2xlaSAoQXJlaSkgPGFyZWkuZ29uZ2xlaUBodWF3ZWku
-Y29tPg0KPiBDYzogcWVtdS1kZXZlbEBub25nbnUub3JnOyB5dS56aGFuZ0Bpb25vcy5jb207IG1n
-YWxheHlAYWthbWFpLmNvbTsNCj4gZWxtYXIuZ2VyZGVzQGlvbm9zLmNvbTsgemhlbmdjaHVhbiA8
-emhlbmdjaHVhbkBodWF3ZWkuY29tPjsNCj4gYmVycmFuZ2VAcmVkaGF0LmNvbTsgYXJtYnJ1QHJl
-ZGhhdC5jb207IGxpemhpamlhbkBmdWppdHN1LmNvbTsNCj4gcGJvbnppbmlAcmVkaGF0LmNvbTsg
-bXN0QHJlZGhhdC5jb207IFhpZXhpYW5neW91DQo+IDx4aWV4aWFuZ3lvdUBodWF3ZWkuY29tPjsg
-bGludXgtcmRtYUB2Z2VyLmtlcm5lbC5vcmc7IGxpeGlhbyAoSCkNCj4gPGxpeGlhbzkxQGh1YXdl
-aS5jb20+OyBqaW5wdS53YW5nQGlvbm9zLmNvbTsgV2FuZ2ppYWxpbg0KPiA8d2FuZ2ppYWxpbjIz
-QGh1YXdlaS5jb20+OyBGYWJpYW5vIFJvc2FzIDxmYXJvc2FzQHN1c2UuZGU+DQo+IFN1YmplY3Q6
-IFJlOiBbUEFUQ0ggMC82XSByZWZhY3RvciBSRE1BIGxpdmUgbWlncmF0aW9uIGJhc2VkIG9uIHJz
-b2NrZXQgQVBJDQo+IA0KPiBIaSwgTGVpLCBKaWFsaW4sDQo+IA0KPiBUaGFua3MgYSBsb3QgZm9y
-IHdvcmtpbmcgb24gdGhpcyENCj4gDQo+IEkgdGhpbmsgd2UnbGwgbmVlZCB0byB3YWl0IGEgYml0
-IG9uIGZlZWRiYWNrcyBmcm9tIEppbnB1IGFuZCBoaXMgdGVhbSBvbiBSRE1BDQo+IHNpZGUsIGFs
-c28gRGFuaWVsIGZvciBpb2NoYW5uZWxzLiAgQWxzbywgcGxlYXNlIHJlbWVtYmVyIHRvIGNvcHkg
-RmFiaWFubw0KPiBSb3NhcyBpbiBhbnkgcmVsZXZhbnQgZnV0dXJlIHBvc3RzLiAgV2UnZCBhbHNv
-IGxpa2UgdG8ga25vdyB3aGV0aGVyIGhlIGhhcyBhbnkNCj4gY29tbWVudHMgdG9vLiAgSSBoYXZl
-IGhpbSBjb3BpZWQgaW4gdGhpcyByZXBseS4NCj4gDQo+IE9uIFR1ZSwgSnVuIDA0LCAyMDI0IGF0
-IDA4OjE0OjA2UE0gKzA4MDAsIEdvbmdsZWkgd3JvdGU6DQo+ID4gRnJvbTogSmlhbGluIFdhbmcg
-PHdhbmdqaWFsaW4yM0BodWF3ZWkuY29tPg0KPiA+DQo+ID4gSGksDQo+ID4NCj4gPiBUaGlzIHBh
-dGNoIHNlcmllcyBhdHRlbXB0cyB0byByZWZhY3RvciBSRE1BIGxpdmUgbWlncmF0aW9uIGJ5DQo+
-ID4gaW50cm9kdWNpbmcgYSBuZXcgUUlPQ2hhbm5lbFJETUEgY2xhc3MgYmFzZWQgb24gdGhlIHJz
-b2NrZXQgQVBJLg0KPiA+DQo+ID4gVGhlIC91c3IvaW5jbHVkZS9yZG1hL3Jzb2NrZXQuaCBwcm92
-aWRlcyBhIGhpZ2hlciBsZXZlbCByc29ja2V0IEFQSQ0KPiA+IHRoYXQgaXMgYSAxLTEgbWF0Y2gg
-b2YgdGhlIG5vcm1hbCBrZXJuZWwgJ3NvY2tldHMnIEFQSSwgd2hpY2ggaGlkZXMNCj4gPiB0aGUg
-ZGV0YWlsIG9mIHJkbWEgcHJvdG9jb2wgaW50byByc29ja2V0IGFuZCBhbGxvd3MgdXMgdG8gYWRk
-IHN1cHBvcnQNCj4gPiBmb3Igc29tZSBtb2Rlcm4gZmVhdHVyZXMgbGlrZSBtdWx0aWZkIG1vcmUg
-ZWFzaWx5Lg0KPiA+DQo+ID4gSGVyZSBpcyB0aGUgcHJldmlvdXMgZGlzY3Vzc2lvbiBvbiByZWZh
-Y3RvcmluZyBSRE1BIGxpdmUgbWlncmF0aW9uDQo+ID4gdXNpbmcgdGhlIHJzb2NrZXQgQVBJOg0K
-PiA+DQo+ID4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvcWVtdS1kZXZlbC8yMDI0MDMyODEzMDI1
-NS41MjI1Ny0xLXBoaWxtZEBsaW5hcg0KPiA+IG8ub3JnLw0KPiA+DQo+ID4gV2UgaGF2ZSBlbmNv
-dW50ZXJlZCBzb21lIGJ1Z3Mgd2hlbiB1c2luZyByc29ja2V0IGFuZCBwbGFuIHRvIHN1Ym1pdA0K
-PiA+IHRoZW0gdG8gdGhlIHJkbWEtY29yZSBjb21tdW5pdHkuDQo+ID4NCj4gPiBJbiBhZGRpdGlv
-biwgdGhlIHVzZSBvZiByc29ja2V0IG1ha2VzIG91ciBwcm9ncmFtbWluZyBtb3JlIGNvbnZlbmll
-bnQsDQo+ID4gYnV0IGl0IG11c3QgYmUgbm90ZWQgdGhhdCB0aGlzIG1ldGhvZCBpbnRyb2R1Y2Vz
-IG11bHRpcGxlIG1lbW9yeQ0KPiA+IGNvcGllcywgd2hpY2ggY2FuIGJlIGltYWdpbmVkIHRoYXQg
-dGhlcmUgd2lsbCBiZSBhIGNlcnRhaW4gcGVyZm9ybWFuY2UNCj4gPiBkZWdyYWRhdGlvbiwgaG9w
-aW5nIHRoYXQgZnJpZW5kcyB3aXRoIFJETUEgbmV0d29yayBjYXJkcyBjYW4gaGVscCB2ZXJpZnks
-DQo+IHRoYW5rIHlvdSENCj4gDQo+IEl0J2xsIGJlIGdvb2QgdG8gZWxhYm9yYXRlIGlmIHlvdSB0
-ZXN0ZWQgaXQgaW4taG91c2UuIFdoYXQgcGVvcGxlIHNob3VsZCBleHBlY3QNCj4gb24gdGhlIG51
-bWJlcnMgZXhhY3RseT8gIElzIHRoYXQgb2theSBmcm9tIEh1YXdlaSdzIFBPVj8NCj4gDQo+IEJl
-c2lkZXMgdGhhdCwgdGhlIGNvZGUgbG9va3MgcHJldHR5IGdvb2QgYXQgYSBmaXJzdCBnbGFuY2Ug
-dG8gbWUuICBCZWZvcmUNCj4gb3RoZXJzIGNoaW0gaW4sIGhlcmUncmUgc29tZSBoaWdoIGxldmVs
-IGNvbW1lbnRzLi4NCj4gDQo+IEZpcnN0bHksIGNhbiB3ZSBhdm9pZCB1c2luZyBjb3JvdXRpbmUg
-d2hlbiBsaXN0ZW4oKT8gIE1pZ2h0IGJlIHJlbGV2YW50IHdoZW4gSQ0KPiBzZWUgdGhhdCByZG1h
-X2FjY2VwdF9pbmNvbWluZ19taWdyYXRpb24oKSBydW5zIGluIGEgbG9vcCB0byBkbyByYWNjZXB0
-KCksIGJ1dA0KPiB3b3VsZCB0aGF0IGFsc28gaGFuZyB0aGUgcWVtdSBtYWluIGxvb3AgZXZlbiB3
-aXRoIHRoZSBjb3JvdXRpbmUsIGJlZm9yZSBhbGwNCj4gY2hhbm5lbHMgYXJlIHJlYWR5PyAgSSdt
-IG5vdCBhIGNvcm91dGluZSBwZXJzb24sIGJ1dCBJIHRoaW5rIHRoZSBob3BlIGlzIHRoYXQNCj4g
-d2UgY2FuIG1ha2UgZGVzdCBRRU1VIHJ1biBpbiBhIHRocmVhZCBpbiB0aGUgZnV0dXJlIGp1c3Qg
-bGlrZSB0aGUgc3JjIFFFTVUsIHNvDQo+IHRoZSBsZXNzIGNvcm91dGluZSB0aGUgYmV0dGVyIGlu
-IHRoaXMgcGF0aC4NCj4gDQoNCkJlY2F1c2UgcnNvY2tldCBpcyBzZXQgdG8gbm9uLWJsb2NraW5n
-LCByYWNjZXB0IHdpbGwgcmV0dXJuIEVBR0FJTiB3aGVuIG5vIGNvbm5lY3Rpb24gDQppcyByZWNl
-aXZlZCwgY29yb3V0aW5lIHdpbGwgeWllbGQsIGFuZCB3aWxsIG5vdCBoYW5nIHRoZSBxZW11IG1h
-aW4gbG9vcC4NCg0KPiBJIHRoaW5rIEkgYWxzbyBsZWZ0IGEgY29tbWVudCBlbHNld2hlcmUgb24g
-d2hldGhlciBpdCB3b3VsZCBiZSBwb3NzaWJsZSB0byBhbGxvdw0KPiBpb2NoYW5uZWxzIGltcGxl
-bWVudCB0aGVpciBvd24gcG9sbCgpIGZ1bmN0aW9ucyB0byBhdm9pZCB0aGUgcGVyLWNoYW5uZWwg
-cG9sbA0KPiB0aHJlYWQgdGhhdCBpcyBwcm9wb3NlZCBpbiB0aGlzIHNlcmllcy4NCj4gDQo+IGh0
-dHBzOi8vbG9yZS5rZXJuZWwub3JnL3IvWmxkWTIxeFZFeHRpTWRkQkB4MW4NCj4gDQoNCldlIG5v
-dGljZWQgdGhhdCwgYW5kIGl0J3MgYSBiaWcgb3BlcmF0aW9uLiBJJ20gbm90IHN1cmUgdGhhdCdz
-IGEgYmV0dGVyIHdheS4NCg0KPiBQZXJzb25hbGx5IEkgdGhpbmsgZXZlbiB3aXRoIHRoZSB0aHJl
-YWQgcHJvcG9zYWwgaXQncyBiZXR0ZXIgdGhhbiB0aGUgb2xkIHJkbWENCj4gY29kZSwgYnV0IEkg
-anVzdCBzdGlsbCB3YW50IHRvIGRvdWJsZSBjaGVjayB3aXRoIHlvdSBndXlzLiAgRS5nLiwgbWF5
-YmUgdGhhdCBqdXN0DQo+IHdvbid0IHdvcmsgYXQgYWxsPyAgQWdhaW4sIHRoYXQnbGwgYWxzbyBi
-ZSBiYXNlZCBvbiB0aGUgZmFjdCB0aGF0IHdlIG1vdmUNCj4gbWlncmF0aW9uIGluY29taW5nIGlu
-dG8gYSB0aHJlYWQgZmlyc3QgdG8ga2VlcCB0aGUgZGVzdCBRRU1VIG1haW4gbG9vcCBpbnRhY3Qs
-DQo+IEkgdGhpbmssIGJ1dCBJIGhvcGUgd2Ugd2lsbCByZWFjaCB0aGF0IGlycmVsZXZhbnQgb2Yg
-cmRtYSwgSU9XIGl0J2xsIGJlIG5pY2UgdG8NCj4gaGFwcGVuIGV2ZW4gZWFybGllciBpZiBwb3Nz
-aWJsZS4NCj4gDQpZZXAuIFRoaXMgaXMgYSBmYWlybHkgYmlnIGNoYW5nZSwgSSB3b25kZXIgd2hh
-dCBvdGhlciBwZW9wbGUncyBzdWdnZXN0aW9ucyBhcmU/DQoNCj4gQW5vdGhlciBuaXRwaWNrIGlz
-IHRoYXQgcWlvX2NoYW5uZWxfcmRtYV9saXN0ZW5fYXN5bmMoKSBkb2Vzbid0IGxvb2sgdXNlZCBh
-bmQNCj4gbWF5IHByb25lIHRvIHJlbW92YWwuDQo+IA0KDQpZZXMuIFRoaXMgaXMgYmVjYXVzZSB3
-aGVuIHdlIHdyb3RlIHRoZSB0ZXN0IGNhc2UsIHdlIHdhbnRlZCB0byB0ZXN0IHFpb19jaGFubmVs
-X3JkbWFfY29ubmVjdF9hc3luYywgDQphbmQgYWxzbyBJIGFkZGVkIHFpb19jaGFubmVsX3JkbWFf
-bGlzdGVuX2FzeW5jLiBJdCBpcyBub3QgdXNlZCBpbiB0aGUgUkRNQSBob3QgbWlncmF0aW9uIGNv
-ZGUuDQoNClJlZ2FyZHMsDQotR29uZ2xlaQ0KDQo=
+04.06.2024 10:37, Jason Wang wrote:
+> Akihiko Odaki (18):
+>        tap: Remove tap_probe_vnet_hdr_len()
+>        tap: Remove qemu_using_vnet_hdr()
+>        net: Move virtio-net header length assertion
+>        net: Remove receive_raw()
+>        tap: Call tap_receive_iov() from tap_receive()
+>        tap: Shrink zeroed virtio-net header
+>        virtio-net: Do not propagate ebpf-rss-fds errors
+>        virtio-net: Add only one queue pair when realizing
+>        virtio-net: Copy header only when necessary
+>        virtio-net: Shrink header byte swapping buffer
+>        virtio-net: Disable RSS on reset
+>        virtio-net: Unify the logic to update NIC state for RSS
+>        virtio-net: Always set populate_hash
+>        virtio-net: Do not write hashes to peer buffer
+>        ebpf: Fix RSS error handling
+>        ebpf: Return 0 when configuration fails
+>        ebpf: Refactor tun_rss_steering_prog()
+>        ebpf: Add a separate target for skeleton
+> 
+> Alexey Dobriyan (1):
+>        virtio-net: drop too short packets early
+> 
+> Andrew Melnychenko (1):
+>        ebpf: Added traces back. Changed source set for eBPF to 'system'.
+
+Is there anything in there for qemu-stable?
+(NOT picking up without explicit mention of stable)
+
+Thanks,
+
+/mjt
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+
 
