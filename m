@@ -4,117 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98D55C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 20:05:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E85C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 20:06:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEwsV-0000Jc-43; Wed, 05 Jun 2024 16:04:59 -0400
+	id 1sEwtU-0000xb-TU; Wed, 05 Jun 2024 16:06:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sEwsT-0000JR-NC
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 16:04:57 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sEwtS-0000x6-3w
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 16:05:58 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sEwsO-0003t8-GO
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 16:04:57 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 9720021AA7;
- Wed,  5 Jun 2024 20:04:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717617889; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nfPmn7QmS039Nt2QwQmtGrir+0U3+QZlVFCfJ7VuYkg=;
- b=gTIYC2uRVddO811Qd7/tTIyW30YDnx7XJCgROYnH/ociQUlWPOXxOv2+cXX6sEzQ41yw79
- +oImtMjMU5Lize8ZGZN5aBF6ZYHNMZvprFG9ENRSRuelQk5Gw1E+oyP1FNQDgqnX+ER7LF
- vsd6d37EBYmd3cgS007zBnmFOvR755c=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717617889;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nfPmn7QmS039Nt2QwQmtGrir+0U3+QZlVFCfJ7VuYkg=;
- b=l7pi04Fz5Royg4FNutdNWqLPrWCQCRuhEbkcjK9Fei2Us73zAq8dvnkkAwtQjVPxgSqfXY
- 1A3L1jQhRZvk6ZCw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=jIL6vCZj;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="NB/stg1u"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717617888; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nfPmn7QmS039Nt2QwQmtGrir+0U3+QZlVFCfJ7VuYkg=;
- b=jIL6vCZjkOxVyen1fuxIsQP3dFEubV4qxKdImEcLZ5oVnl+f/Lr4NpJxHhTuaXGpBoX6BA
- D3QY515OKS5OnwankOLpJqKKFqmQTlwDRLwMjTqx0/1INBDKbVhGkEfP79Vg+m4BnuyD9y
- SQLmx/hAChVGkGvkW//nhsdSADo99wU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717617888;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nfPmn7QmS039Nt2QwQmtGrir+0U3+QZlVFCfJ7VuYkg=;
- b=NB/stg1uu8IQJx2jAVg5boHwl1HokMQwaGpM1W/R+mxNEBmJiej3f1RxcGYg9ma9YmT4a0
- jj+R/qExGwLth3CQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 16A8B13A24;
- Wed,  5 Jun 2024 20:04:47 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id pT6DM9/EYGYgGwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 05 Jun 2024 20:04:47 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Yuan Liu <yuan1.liu@intel.com>, peterx@redhat.com, pbonzini@redhat.com,
- marcandre.lureau@redhat.com, berrange@redhat.com, thuth@redhat.com,
- philmd@linaro.org
-Cc: qemu-devel@nongnu.org, yuan1.liu@intel.com, nanhai.zou@intel.com,
- shameerali.kolothum.thodi@huawei.com
-Subject: Re: [PATCH v7 3/7] configure: add --enable-qpl build option
-In-Reply-To: <20240603154106.764378-4-yuan1.liu@intel.com>
-References: <20240603154106.764378-1-yuan1.liu@intel.com>
- <20240603154106.764378-4-yuan1.liu@intel.com>
-Date: Wed, 05 Jun 2024 17:04:45 -0300
-Message-ID: <87v82nnoki.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sEwtM-0004Jx-HE
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 16:05:57 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1f612d7b0f5so1224805ad.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 13:05:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717617951; x=1718222751;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=didsxEtNNzkO9PRvXUmXSsu0yDBLvUMdPfG+5VrLadw=;
+ b=2ZGcTge3/DcHTKBp6pSmN9aoXKMqIdYiR80arp5Z2az3YLmg/rUAqo3V2Q792fq9PF
+ GSmR3pKHzWzIt+v7pgDovocf/RCT2ZIdExfQ2VK/BXniqO2yDE/V7TfOyvIgNjqW4160
+ SmJ60owXF+jTMOr70tQIZ3MMvdtkAXGZwvZQhJknqrJH6vDfNxcuWarAnEYK791s8U3r
+ 07zSZzMvCgHhvCGqod6AiNXYupDWUDgYeJs9FfPCHicu3e2iT4fFyrhRl/XWOP+wYZua
+ Oh5/3rINGlao24+yclSFPpWfjmdTejtU2HONanzZwfSR7LdBusiuE32aWI3/1SgnMNzy
+ 2k6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717617951; x=1718222751;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=didsxEtNNzkO9PRvXUmXSsu0yDBLvUMdPfG+5VrLadw=;
+ b=euIO0GZzBcaMTSPKlGZdjFNeK1bvcKhvykfn80a3YUkPqCODsxECbflGjzrOF63fZy
+ YP5COtYStiLwIypMXXdyNq1OaJcF2ZxygsU6Vor3lyEVAcq06SUUxh8l/cC6jcHIBcMy
+ hNvOv/9o3+PqWRaaauCEnGuCkZb8cpUQMRvszDTi+m2U1ZADQfwnHQKfM1ZWxtIIlfa4
+ cqwKADf9mmK2pxuLBzkbcEDs5a4k2Sofos+Z4daMDhYlhDwGVfAglrWk1UqZRlDegdmh
+ rMjqm+PKi1K+4RcFxHikvBYPPxGdo9VM2r9Jk1mLEuu7jPV8abHB7CJeHLbkrBZ3cEHu
+ MVGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU2qRthr1qRrh8QI1I5IG3Tf+v45ymDEaefoPqEa5icXoxdS6Bnc7VHJH9yPgS+TFrceIaaqblXloEzKc/x2b7z0ZQOAAg=
+X-Gm-Message-State: AOJu0Yxd3UvGxckiUs31rD4kjqErxx6p/jbYt+7rpsfTdTOAWCxJxK2A
+ JfCrIzIWJXCIoGdkhCoTiBySLOVQJAB/M2KC1Ug4opnRGGftKBbvQvpAGx9qfkM=
+X-Google-Smtp-Source: AGHT+IGywqrp1UBgEm6c9B4TzCp0lzyQ5ISKcBjorH7dn0tw9kVMWwugOk1pBLfi/IrSd0JxxHwnpw==
+X-Received: by 2002:a17:902:ea04:b0:1f6:38ba:ef56 with SMTP id
+ d9443c01a7336-1f6b8ead1efmr9157605ad.18.1717617950625; 
+ Wed, 05 Jun 2024 13:05:50 -0700 (PDT)
+Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
+ ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f6323ddac9sm108997765ad.173.2024.06.05.13.05.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Jun 2024 13:05:50 -0700 (PDT)
+Message-ID: <43f3ae5f-4bb8-4330-a79d-b0a50d2e397a@daynix.com>
+Date: Thu, 6 Jun 2024 05:05:46 +0900
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 9720021AA7
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.56 / 50.00];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- BAYES_HAM(-0.05)[59.64%]; MX_GOOD(-0.01)[];
- FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCPT_COUNT_SEVEN(0.00)[11]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:email,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns, intel.com:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] subprojects: add a wrapper for libvirglrenderer
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20240605133527.529950-1-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240605133527.529950-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,22 +106,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yuan Liu <yuan1.liu@intel.com> writes:
+On 2024/06/05 22:35, Alex Bennée wrote:
+> As the latest features for virtio-gpu need a pretty recent version of
+> libvirglrenderer. When it is not available on the system we can use a
+> meson wrapper and provide it when --download is specified in
+> configure.
+> 
+> We have to take some additional care as currently QEMU will hang
+> libvirglrenderer fails to exec the render server. As the error isn't
+> back propagated we make sure we at least test we have a path to an
+> executable before tweaking the environment.
 
-> add --enable-qpl and --disable-qpl options to enable and disable
-> the QPL compression method for multifd migration.
->
-> The Query Processing Library (QPL) is an open-source library
-> that supports data compression and decompression features. It
-> is based on the deflate compression algorithm and use Intel
-> In-Memory Analytics Accelerator(IAA) hardware for compression
-> and decompression acceleration.
->
-> For more live migration with IAA, please refer to the document
-> docs/devel/migration/qpl-compression.rst
->
-> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
-> Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
+Hi,
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+The intent of this patch sounds good to me. It is the responsibility of 
+users to set up virglrenderer in principle, but we can just be kind for 
+them.
+
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>   meson.build                    |  7 ++++++-
+>   hw/display/virtio-gpu-virgl.c  | 24 ++++++++++++++++++++++++
+>   subprojects/virglrenderer.wrap |  6 ++++++
+>   3 files changed, 36 insertions(+), 1 deletion(-)
+>   create mode 100644 subprojects/virglrenderer.wrap
+> 
+> diff --git a/meson.build b/meson.build
+> index 1d7346b703..e4e270df78 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1203,7 +1203,8 @@ have_vhost_user_gpu = have_tools and host_os == 'linux' and pixman.found()
+>   if not get_option('virglrenderer').auto() or have_system or have_vhost_user_gpu
+>     virgl = dependency('virglrenderer',
+>                        method: 'pkg-config',
+> -                     required: get_option('virglrenderer'))
+> +                     required: get_option('virglrenderer'),
+> +                     default_options: ['default_library=static', 'render-server=true', 'venus=true'])
+
+meson_options.txt of virglrenderer says:
+ > DEPRECATED: render server is enabled by venus automatically
+
+I'm also a bit concerned to enable Venus by default when the upstream 
+virglrenderer doesn't. Why is it disabled by the upstream? Perhaps is it 
+time for upstream to enable it by default?
+
+>   endif
+>   rutabaga = not_found
+>   if not get_option('rutabaga_gfx').auto() or have_system or have_vhost_user_gpu
+> @@ -2314,6 +2315,10 @@ if virgl.version().version_compare('>=1.0.0')
+>     config_host_data.set('HAVE_VIRGL_RESOURCE_BLOB', 1)
+>     config_host_data.set('HAVE_VIRGL_VENUS', 1)
+>   endif
+> +if virgl.type_name().contains('internal')
+> +  config_host_data.set('HAVE_BUNDLED_VIRGL_SERVER', 1)
+> +endif
+> +
+>   config_host_data.set('CONFIG_VIRTFS', have_virtfs)
+>   config_host_data.set('CONFIG_VTE', vte.found())
+>   config_host_data.set('CONFIG_XKBCOMMON', xkbcommon.found())
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index c9d20a8a60..53d6742e79 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -14,6 +14,7 @@
+>   #include "qemu/osdep.h"
+>   #include "qemu/error-report.h"
+>   #include "qemu/iov.h"
+> +#include "qemu/cutils.h"
+>   #include "trace.h"
+>   #include "hw/virtio/virtio.h"
+>   #include "hw/virtio/virtio-gpu.h"
+> @@ -1122,6 +1123,26 @@ void virtio_gpu_virgl_reset(VirtIOGPU *g)
+>       virgl_renderer_reset();
+>   }
+>   
+> +/*
+> + * If we fail to spawn the render server things tend to hang so it is
+> + * important to do our due diligence before then. If QEMU has bundled
+> + * the virgl server we want to ensure we can run it from the build
+> + * directory and if installed.
+
+This comment sounds a bit misleading. The following code does not ensure 
+the render server exists; it just opportunistically sets the path to the 
+bundled render server or let it fail otherwise.
+
+It also sounds like virgl_set_render_env() does an extra step to prevent 
+hangs, but it is actually mandatory for relocated scenarios; the lack of 
+render server always results in a non-functional Venus setup even if the 
+hang is fixed.
+
+The hang is better to be noted in subprojects/virglrenderer.wrap since 
+that is the reason we would want to wrap the project.
+
+> + *
+> + * The principle way we can override the libvirglrenders behaviour is
+> + * by setting environment variables.
+> + */
+> +static void virgl_set_render_env(void)
+> +{
+> +#ifdef HAVE_BUNDLED_VIRGL_SERVER
+> +    g_autofree char *file = get_relocated_path(CONFIG_QEMU_HELPERDIR "/virgl_render_server");
+> +    if (g_file_test(file, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_EXECUTABLE)) {
+
+I think this g_file_test() should be removed; we would not want to let 
+virglrenderer pick a random render server when the bundled server exists 
+since the ABI between them can be different in theory.
+
+> +        g_setenv("RENDER_SERVER_EXEC_PATH", file, false);
+> +    }
+> +#endif
+> +}
+> +
+> +
+>   int virtio_gpu_virgl_init(VirtIOGPU *g)
+>   {
+>       int ret;
+> @@ -1145,6 +1166,9 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>       }
+>   #endif
+>   
+> +    /* Ensure we can find the render server */
+> +    virgl_set_render_env();
+> +
+>       ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
+>       if (ret != 0) {
+>           error_report("virgl could not be initialized: %d", ret);
+> diff --git a/subprojects/virglrenderer.wrap b/subprojects/virglrenderer.wrap
+> new file mode 100644
+> index 0000000000..3656a478c4
+> --- /dev/null
+> +++ b/subprojects/virglrenderer.wrap
+> @@ -0,0 +1,6 @@
+> +[wrap-git]
+> +url = https://gitlab.freedesktop.org/virgl/virglrenderer.git
+> +revision = virglrenderer-1.0.1
+> +
+> +[provide]
+> +virglrenderer = libvirglrenderer_dep
 
