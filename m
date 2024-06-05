@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 183A6C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 07:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58800C27C52
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 07:56:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sElPD-0001as-VU; Wed, 05 Jun 2024 03:49:59 -0400
+	id 1sElUs-0005R2-J4; Wed, 05 Jun 2024 03:55:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jerry.zhangjian@sifive.com>)
- id 1sElPC-0001a0-CQ
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:49:58 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sElUq-0005QW-Nz
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:55:49 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jerry.zhangjian@sifive.com>)
- id 1sElPA-0002q4-Lk
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:49:58 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-70255d5ddc7so3172077b3a.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 00:49:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sElUp-0004hH-14
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:55:48 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-42138eadf64so32204425e9.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 00:55:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1717573794; x=1718178594; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=myve1jAhdqyP+usJqmhOYrzMqhLp4uAXIzu4yEhQwDA=;
- b=N4wBkgYtsTM7lrMY7AdRwRt7nZQsl8mEbVPnpJrs0t07aW/cNvNDSlS3s6q+I/kPkl
- MT6kV0zJHFLS4kK1yYg+N9VH2CEUe8F3em+mv5+E89WqnpAIHDyercBXYiiviUEZxcp8
- u5n2bt0ZKJqJXu5NS4SnpYpoiultujuJaFceVvFvufn8e9w0659dBL11jD7cPbDXD3W8
- rGa1Xxv2lQ3oGUfkajwI+2pssj8L1o6JCHjpFfihRj1/2H8sqGSaz4N1mWEOOGSCX9Di
- Fw1+tcSzimi9vbzGohNJSITsiNWTGqpm3jW1OlU5pRlZrSb01SphS6VmkF1bOxZT6DNS
- /5WA==
+ d=linaro.org; s=google; t=1717574145; x=1718178945; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kW81FqSIjrgQtFVLLzSySnJuhnhJFEbLH9doDm7D07o=;
+ b=EZEoMNuf7ci53m16GpYKu5SBPMnZITEzTlnoruPZh2KSZ1M82M2HWZS2UJc5kIX/m+
+ gyRZ3hPJc75W13oV7cplu0xc2PirVTwhkqVnNGY3HVf1JWUkUTW37cBaC7bRwioyd86j
+ Zt+0uJBjUsRRK+JXTovWR56Wycb8dMmERI9c9HFTI61+gPQmUHtqh5wHhA8Q3qFIERDP
+ TQ5VvvT4DdqTq2TCKk1Gp32ivvkwwUVjhWVItlf8ooBXbc5LgCgBOnVkwFCPuFTDkqTP
+ K9xzaGnYAYr3Oxh9rVrNFs1iXjaQEIHsAITMX7ajQw46k/MGEmqxcuWn/zUWZ1RuSeFF
+ sRzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717573794; x=1718178594;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=myve1jAhdqyP+usJqmhOYrzMqhLp4uAXIzu4yEhQwDA=;
- b=CCMTZhLP/FkAy3EnrNHpCrkZ+7BSFBGQg7f6IRyvu8+xcNhXUfhdUQ/EuPHA69O9FL
- 6AqrZ3MpTL6DmYrbKw6X+9g9PVvTdjDmh5ojCEgQ97DLyZpYKU+6fJyLusnEOFwGBYAs
- RdR1DU30Aq1Uqgnltz32w7UVBZt6ESd5TNWVgLA8SPhHDqeLSVZ71lv6ngPdTjfFJ70V
- 6fHy1Nnm4WS8LfLV7BESAdedECB9sDx0CZpcSqYfN4FuZ4Ca87kWL2mAvlmAtO3ISmWm
- snaVfL+RghdRFxHC/V0z41yHU/DeoMO60Rf0qJ/GKKS3+mD9oCQQ0JzxsNuE01jZZtf0
- 7LYg==
+ d=1e100.net; s=20230601; t=1717574145; x=1718178945;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kW81FqSIjrgQtFVLLzSySnJuhnhJFEbLH9doDm7D07o=;
+ b=kdRreNeXXr4VbDp6xlRr/53IqWkSKDk+dIvZr95yjwR/yUFDPq8rY4HMZo2C+gD7w3
+ reeqTZAaE6ktFSkz4pQxxRdZkAx/u1VaaTpGdlszgmZ0Ju93yIgybGf77IZn5g+Cj0g/
+ TMqMZj4XntXgX18L6gkUKvDQiRZ1g6rwYKXsXspast8+KdOJP9JyoXkJ74qAJMUqfI9j
+ kxfSgM0ZMOYNvTMvRPNpUHwebtbVLxGtnIPUmT+/UX6AyShAc7kRtoF7+U/DyDojNHLD
+ Rny9q5F1M3Nndh44h4mo0lp/Db7El3ZsuKuQVmmscmC9NucFwKGhr/yYzaj+q4M+2+8W
+ IHzA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWPdydkenScA+jb1GsL3hUz4ufBGrW0hGjcA/ItORFgV7Nu8EjdbxIPPkvGJL/7/mJwM9frMH8/4X5GRMiXXDY4Outl1Jc=
-X-Gm-Message-State: AOJu0YwF2D5WXRXgrJRu+AC+bEfuawSI6Q6eFcCiY1EtcF/ghb+PCr09
- 4IE9IrWv4KbDquO0bFGAOSQl3rZfE+OlZmfyPue/xHBRceXCJLUer1DVqPT2gu0=
-X-Google-Smtp-Source: AGHT+IEZNn7xs7/ulzxyGUjj1dj2olw324zv1yvJWyYF0T16x94j9fCgqfjkGVbF2/fofO/U4FpeZQ==
-X-Received: by 2002:a05:6a00:895:b0:6ea:f05d:d2ec with SMTP id
- d2e1a72fcca58-703e592949dmr2156218b3a.2.1717573794181; 
- Wed, 05 Jun 2024 00:49:54 -0700 (PDT)
-Received: from localhost.localdomain (114-34-225-151.hinet-ip.hinet.net.
- [114.34.225.151]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70242b2c438sm8066306b3a.202.2024.06.05.00.49.51
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 05 Jun 2024 00:49:53 -0700 (PDT)
-From: Jerry Zhang Jian <jerry.zhangjian@sifive.com>
-To: alistair.francis@wdc.com, palmer@dabbelt.com, frank.chang@sifive.com,
- bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Cc: Jerry Zhang Jian <jerry.zhangjian@sifive.com>
-Subject: [PATCH RESEND 0/6] Introduce extension implied rules 
-Date: Wed,  5 Jun 2024 15:48:29 +0800
-Message-ID: <20240605074828.91458-2-jerry.zhangjian@sifive.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240605063154.31298-1-frank.chang@sifive.com>
-References: <20240605063154.31298-1-frank.chang@sifive.com>
+ AJvYcCXLIOKqzsQtWIM5dSlsmZ/d1NkPSzm06MvwONJ24NCUARO5YzQvqdqW/EvnEHNvIs30EuUSM6u08bVSiunDhpHNlLiXeFc=
+X-Gm-Message-State: AOJu0YyhZXoG+oRT8ysBSsRiC6cBDFoJAo85UgXvFxf6qizThw0Tz5Qc
+ HbuEHgMq7C3+H+Y1cAbhiAb/6j+TaJdvavohnOAgJlzXT1gc2lK6RYHen452b7q22JADp0jHLij
+ XJNA=
+X-Google-Smtp-Source: AGHT+IHw6BVihu/M2dsu8SIn1txBI3B0MHrAVnzXJHjOQBLsNwyyFzFwGgFHLW/pIRQEZwSqhGk39A==
+X-Received: by 2002:a05:600c:198c:b0:419:f630:57c2 with SMTP id
+ 5b1f17b1804b1-42156354238mr12551485e9.37.1717574144931; 
+ Wed, 05 Jun 2024 00:55:44 -0700 (PDT)
+Received: from [192.168.60.175] (144.red-88-29-107.staticip.rima-tde.net.
+ [88.29.107.144]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4215814f0besm10601905e9.43.2024.06.05.00.55.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Jun 2024 00:55:44 -0700 (PDT)
+Message-ID: <76ba76b0-691f-4bff-b23b-4a7001dabc2a@linaro.org>
+Date: Wed, 5 Jun 2024 09:55:42 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 21/37] target/sparc: Implement LDXEFSR
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: mark.cave-ayland@ilande.co.uk
+References: <20240526194254.459395-1-richard.henderson@linaro.org>
+ <20240526194254.459395-22-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240526194254.459395-22-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=jerry.zhangjian@sifive.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,9 +97,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Jerry Zhang Jian <jerry.zhangjian@sifive.com>
+On 26/5/24 21:42, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/sparc/helper.h     |  1 +
+>   target/sparc/insns.decode |  1 +
+>   target/sparc/fop_helper.c |  6 ++++++
+>   target/sparc/translate.c  | 11 +++++++++--
+>   4 files changed, 17 insertions(+), 2 deletions(-)
 
--- 
-2.44.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
