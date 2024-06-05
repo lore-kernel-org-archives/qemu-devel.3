@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88759C27C54
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 00:44:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D7F8C25B78
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 00:47:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEel9-0004TB-Lv; Tue, 04 Jun 2024 20:44:11 -0400
+	id 1sEenp-0005O4-1V; Tue, 04 Jun 2024 20:46:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEel8-0004Si-44; Tue, 04 Jun 2024 20:44:10 -0400
-Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
+ id 1sEenn-0005Nq-C7; Tue, 04 Jun 2024 20:46:55 -0400
+Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEel6-0008Gq-15; Tue, 04 Jun 2024 20:44:09 -0400
-Received: by mail-vs1-xe2a.google.com with SMTP id
- ada2fe7eead31-48bd4cefe5cso959739137.0; 
- Tue, 04 Jun 2024 17:44:07 -0700 (PDT)
+ id 1sEenl-0000Kl-S5; Tue, 04 Jun 2024 20:46:55 -0400
+Received: by mail-vk1-xa32.google.com with SMTP id
+ 71dfb90a1353d-4eb236e27adso739410e0c.2; 
+ Tue, 04 Jun 2024 17:46:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717548246; x=1718153046; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717548412; x=1718153212; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jOnQhGH+rNrbgwmTuemA85hqYhTTiZIEkEqdvHMaZGg=;
- b=i8RTCP1CN8eFsF7Dpquap/G0O+yB2WknuDXDdfTNUIOmn7pmtJPz/zneZoVBVE72vn
- wmFkIWG+WoIJelv3/Weuir0crC/fA4f+Kz8N0uP39Jl6+3KYFMl4Hl+AtdDR+o1vU3g1
- 8e3CObBaulDDVUbFgJT31ZdI57IAssMhts5MdcihsBUXeqZJ2hUm45SAgiHs80GmxYuU
- DD+wf3gUfmQ6rdSm3/1An5zFJ71zRiDJNinR60FsuRsVv/qyU71edMMR8pqhFvwUbb50
- aqOGF8IchT1Oma/KBCuHn8NrzZc++7oI98MDfowNo/WJ6YjD3GnJGbc1vi4fPyAKGMh9
- mDGg==
+ bh=iEgFU9uSykQB+7rAJWlbo6pxtOhSMzlZQkmbPM4VwGE=;
+ b=f8OdBLYJC15XM9YZ/EewSgKjIbCqKepW0yDUGoOfjf9ZWGtfl84jmPKJWjMpo8pNQL
+ RIzPEmpM3uA/jB9I2E2D/BBSTN6eyY5mT8YFLnNH0hnnxU818m4rdG6FEiw0LHHt2PKC
+ PTPZBxHfAXpbmrzokhSF3C2w8GfToHcWM0cgPqLwhcksCA6Nl/40aEzQ56L/NaFmimzd
+ kBOJGhk+TPTQy3sK0bm9qrddRSeUCOJouRGzrmkG4zQztffbl1ahjJcJLNu2bOGRM05j
+ v0B9x9QRnzRuOtZ2wB8a0p+Mr8wHCaKri6Ykdrwrim2kXH+RSWWB7xBUdXuQA5KINmBD
+ vvdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717548246; x=1718153046;
+ d=1e100.net; s=20230601; t=1717548412; x=1718153212;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jOnQhGH+rNrbgwmTuemA85hqYhTTiZIEkEqdvHMaZGg=;
- b=wJpTf+ksk4LsF5kXUaaGMizDnJCesv4Nesza0/KBzKRBVVFX59tIdfMEjjLUdZNoa0
- 2CAG+oV/9C6g0F6qJwMFzeoRHo3NZCjLAIkenRdrLcCSnyjL1KLyVp6+3Kemo7oC5NIZ
- SKBUgGc6OAQKo8IkJI121HXPFe3Fv6guChQXOMDrzY58HHPg3+Vl8R8gWQQGEmHUHGD/
- DsZdvj+zRT94GdXKJsioKRex18rEk36iqAHHPABMyb4xSdx/wIRVy42IpG+PXiZNX3us
- K2wdGQVsH7R2wc5EDRF13Gm4Ey6UWCDJwzdZ2PkCgbTGSua8ejXI2C97Sbs8tALRGI/s
- inww==
+ bh=iEgFU9uSykQB+7rAJWlbo6pxtOhSMzlZQkmbPM4VwGE=;
+ b=tVBheCoAh2ibt5rgyLxsfNSxQUNb5/hyYTKJbgw8uRJzvn+CIFqgi1l/wA3NSL+zu+
+ vWxblZbyt+N2wtgo/h/o2l0bU1P3acoRoyZUSZHsEw+6K3jYFE0eyBi+K1nwKKHGaTJN
+ sacAqQqDNX4jmC7Zr6JSe2vNG+HE6UwwDFyjLPKg5xBRzRjpoihHecWf6LOgaw0LQIpz
+ 80+9vWB1Ke6rxEJxPBxjkE0Esv/31MN9aqjw6630IRnB3Dv77jgqBoWGPmhIjcb7qXZR
+ J/31POaHw6ANm/NSH0gYS0DAc4zM/Bzhciq4p8KeOOvsoyZmP7kmIFnlxK/1lfF+1qjc
+ 22ww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXozywil+Hc8/BYvmavjdmACHwOIrByLchHNNsrVSHEsi2jnxO2Zmuv31DYr/ZtUUWp4lugHENcr9CoQkvlsxtZjYBCzec=
-X-Gm-Message-State: AOJu0Yzw1OlIjp2GblgZCo7Y5CjlM325IPeROzIxPkKx5aRa73L722u+
- QHDhFhZGfO+AtGbYoeBD3pjMD3NoTJ+m3zCQR12xCjwNvVWTtgR05eg+QNsTxY+euzPOD3FFuAr
- H15AEOKRBswBqbFt3cmfTkZPmhC0=
-X-Google-Smtp-Source: AGHT+IHbclVyWw7PcP7ktcd5wQGHPV6NUh8843i+z18dT22zs0IjQAEcEgFGwRupJ2JV6clRXJBAhn5iFZaradSw1fE=
-X-Received: by 2002:a67:f790:0:b0:48b:ae47:c11 with SMTP id
- ada2fe7eead31-48c047f37d9mr1326150137.4.1717548246219; Tue, 04 Jun 2024
- 17:44:06 -0700 (PDT)
+ AJvYcCV3Ij4daJObv0ZWEtn/l078JONH3NikDNYvAwOaFvd53p9Q18uwHTb5cNxQZkTsEihY6ts1HMTPQLl94CnypyngI38iOhw=
+X-Gm-Message-State: AOJu0YxtaoUt70nuHQqpRzUad/DWsXGvwdnfmkKWFw3rX7a4r4H4yZT9
+ Ztv/205CVU0WSsgYC24MMJkEWC6vX8s6sxDpnv+2+G6i88DhH7SzRzFmatq0tTmr4NdXO09fAqR
+ mIxvmHHNA8UmEcmtgHVF453qTUgk=
+X-Google-Smtp-Source: AGHT+IHMQPHym9z6gSiCfQ0As44hWq888uYSIVv3GS+1YIJ31iiQBGQPGciIEy809htUDZijqW4QcTZn2dhH6Y2VdA4=
+X-Received: by 2002:a05:6122:12f0:b0:4eb:1456:34d3 with SMTP id
+ 71dfb90a1353d-4eb3a4e689dmr1283133e0c.15.1717548411787; Tue, 04 Jun 2024
+ 17:46:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240531202759.911601-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20240531202759.911601-1-dbarboza@ventanamicro.com>
+References: <20240529160950.132754-1-rkanwal@rivosinc.com>
+ <20240529160950.132754-2-rkanwal@rivosinc.com>
+In-Reply-To: <20240529160950.132754-2-rkanwal@rivosinc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 5 Jun 2024 10:43:40 +1000
-Message-ID: <CAKmqyKNidQcVM6Vw07pmOz_7O_=SSZckhxUKKxcjhRN_xhLthQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/8] hw/riscv/virt.c: aplic/imsic DT fixes
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, apatel@ventanamicro.com, ajones@ventanamicro.com, 
- conor@kernel.org
+Date: Wed, 5 Jun 2024 10:46:25 +1000
+Message-ID: <CAKmqyKN5zY=O7A9QhNWKsdE3HoEnQW_SdkmO1+OhscKYx1TR5w@mail.gmail.com>
+Subject: Re: [PATCH 1/6] target/riscv: Remove obsolete sfence.vm instruction
+To: Rajnesh Kanwal <rkanwal@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
+ bin.meng@windriver.com, liweiwei@iscas.ac.cn, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com, apatel@ventanamicro.com, 
+ beeman@rivosinc.com, tech-control-transfer-records@lists.riscv.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -93,107 +94,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jun 1, 2024 at 6:30=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Thu, May 30, 2024 at 2:12=E2=80=AFAM Rajnesh Kanwal <rkanwal@rivosinc.co=
+m> wrote:
 >
-> Hi,
->
-> This is a series that is being spun from the reviews given on patch 1
-> [1]. We'll fix some DT validation issues we have in the 'virt' machine
-> [2] that aren't related to missing extensions in the DT spec.
->
-> I'll leave to maintainers to squash the patches as they see fit. I
-> split it this way to make it easier to bissect possible bugs that these
-> individual changes can cause.
->
-> These are the types of DT warnings solved by this series:
->
-> /home/danielhb/work/qemu/riscv64_virt.dtb: aplic@d000000: $nodename:0: 'a=
-plic@d000000' does not match '^interrupt-controller(@[0-9a-f,]+)*$'
->         from schema $id: http://devicetree.org/schemas/interrupt-controll=
-er/riscv,aplic.yaml#
-> /home/danielhb/work/qemu/riscv64_virt.dtb: aplic@d000000: compatible:0: '=
-riscv,aplic' is not one of ['qemu,aplic']
->         from schema $id: http://devicetree.org/schemas/interrupt-controll=
-er/riscv,aplic.yaml#
-> /home/danielhb/work/qemu/riscv64_virt.dtb: aplic@d000000: compatible: ['r=
-iscv,aplic'] is too short
->         from schema $id: http://devicetree.org/schemas/interrupt-controll=
-er/riscv,aplic.yaml#
-> /home/danielhb/work/qemu/riscv64_virt.dtb: aplic@d000000: Unevaluated pro=
-perties are not allowed ('compatible' was unexpected)
->         from schema $id: http://devicetree.org/schemas/interrupt-controll=
-er/riscv,aplic.yaml#
-> (...)
-> /home/danielhb/work/qemu/riscv64_virt.dtb: imsics@28000000: $nodename:0: =
-'imsics@28000000' does not match '^interrupt-controller(@[0-9a-f,]+)*$'
->         from schema $id: http://devicetree.org/schemas/interrupt-controll=
-er/riscv,imsics.yaml#
-> /home/danielhb/work/qemu/riscv64_virt.dtb: imsics@28000000: compatible:0:=
- 'riscv,imsics' is not one of ['qemu,imsics']
->         from schema $id: http://devicetree.org/schemas/interrupt-controll=
-er/riscv,imsics.yaml#
-> /home/danielhb/work/qemu/riscv64_virt.dtb: imsics@28000000: compatible: [=
-'riscv,imsics'] is too short
->         from schema $id: http://devicetree.org/schemas/interrupt-controll=
-er/riscv,imsics.yaml#
-> /home/danielhb/work/qemu/riscv64_virt.dtb: imsics@28000000: '#msi-cells' =
-is a required property
->         from schema $id: http://devicetree.org/schemas/interrupt-controll=
-er/riscv,imsics.yaml#
-> /home/danielhb/work/qemu/riscv64_virt.dtb: imsics@28000000: Unevaluated p=
-roperties are not allowed ('compatible' was unexpected)
->         from schema $id: http://devicetree.org/schemas/interrupt-controll=
-er/riscv,imsics.yaml#
->
-> [3] explains how to run 'dt-validate' to reproduce them. To generate a
-> 'processed schema' file what I did was:
->
-> - in the Linux kernel tree, run 'make dt_binding_check'. Please note
->   that this might require installation of additional python stuff
->   (e.g.swig, python3-devel)
->
-> - I used the generated file 'Documentation/devicetree/bindings/processed-=
-schema.json'
->   as a 'processed schema'.
->
-> Series applicable on both master and alistair/riscv-to-apply.next.
->
-> Changes from v1:
-> - added patches 2 to 7 to fix the dt-validate warnings on imsics and
->   aplic notes
-> - v1 link: https://lore.kernel.org/qemu-riscv/20240530084949.761034-1-dba=
-rboza@ventanamicro.com/
->
-> [1] https://lore.kernel.org/qemu-riscv/20240530084949.761034-1-dbarboza@v=
-entanamicro.com/
-> [2] https://lore.kernel.org/all/20240529-rust-tile-a05517a6260f@spud/
-> [3] https://lore.kernel.org/qemu-riscv/20240530-landed-shriek-9362981afad=
-e@spud/
->
-> Daniel Henrique Barboza (8):
->   hw/riscv/virt.c: add address-cells in create_fdt_one_aplic()
->   hw/riscv/virt.c: add aplic nodename helper
->   hw/riscv/virt.c: rename aplic nodename to 'interrupt-controller'
->   hw/riscv/virt.c: aplic DT: add 'qemu,aplic' to 'compatible'
->   hw/riscv/virt.c: aplic DT: rename prop to 'riscv,delegation'
->   hw/riscv/virt.c: change imsic nodename to 'interrupt-controller'
->   hw/riscv/virt.c: imsics DT: add 'qemu,imsics' to 'compatible'
->   hw/riscv/virt.c: imsics DT: add '#msi-cells'
+> Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  target/riscv/insn32.decode                     | 1 -
+>  target/riscv/insn_trans/trans_privileged.c.inc | 5 -----
+>  2 files changed, 6 deletions(-)
 >
->  hw/riscv/virt.c         | 36 +++++++++++++++++++++++++++---------
->  include/hw/riscv/virt.h |  1 +
->  2 files changed, 28 insertions(+), 9 deletions(-)
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index f22df04cfd..9cb1a1b4ec 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -112,7 +112,6 @@ sret        0001000    00010 00000 000 00000 1110011
+>  mret        0011000    00010 00000 000 00000 1110011
+>  wfi         0001000    00101 00000 000 00000 1110011
+>  sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
+> -sfence_vm   0001000    00100 ..... 000 00000 1110011 @sfence_vm
 >
+>  # *** RV32I Base Instruction Set ***
+>  lui      ....................       ..... 0110111 @u
+> diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/risc=
+v/insn_trans/trans_privileged.c.inc
+> index bc5263a4e0..4eccdddeaa 100644
+> --- a/target/riscv/insn_trans/trans_privileged.c.inc
+> +++ b/target/riscv/insn_trans/trans_privileged.c.inc
+> @@ -127,8 +127,3 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_s=
+fence_vma *a)
+>  #endif
+>      return false;
+>  }
+> -
+> -static bool trans_sfence_vm(DisasContext *ctx, arg_sfence_vm *a)
+> -{
+> -    return false;
+> -}
 > --
-> 2.45.1
+> 2.34.1
 >
 >
 
