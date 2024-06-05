@@ -4,135 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16572C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 12:14:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2BAFC25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 12:33:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEpWf-0007Gg-L3; Wed, 05 Jun 2024 08:13:57 -0400
+	id 1sEpoI-0004U9-0U; Wed, 05 Jun 2024 08:32:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sEpWd-0007GP-Pz
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 08:13:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sEpWb-00073L-Li
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 08:13:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717589632;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BtdD/GYeOJ96GWTzwwqL7eQrUG0RZ+oWyDBa6ePqoIE=;
- b=FucqGwOGDeQfD4+pUxEZwTdSDTV+BF98q2dHqih13+mEUGilm3D0cx1/cyaZrWuzR4iKpJ
- bVxy+Mxl0cpQvEqRQ4GzFFQMCn+1u6pRHJEo2LQzCWQAlxdtztHLl1yOgJzTBTBcttc9fz
- LE8ketH4NUJB+0D//eQuZ5lXyv2mFMI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-193--ReUBx3PPCKUmd3UU-WmFw-1; Wed, 05 Jun 2024 08:13:51 -0400
-X-MC-Unique: -ReUBx3PPCKUmd3UU-WmFw-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4212a4bb9d7so52682055e9.1
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 05:13:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717589630; x=1718194430;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BtdD/GYeOJ96GWTzwwqL7eQrUG0RZ+oWyDBa6ePqoIE=;
- b=nLUmYEjqeHJYz/wHetVro17ulH3n86sYGDZ7yt8eJqGbeRE0dZXYe+9MCamyMIONGa
- BnXk6puUljHXevYZxiYYDbVlnrysPGE4+uU1UpCvP8kd2U/TQ6RhsGQ9ckf2q5TwkWAt
- ctKnfEM39WZPZDnh28GAhQShKcw/8QyO150QFOhXeedLStWTio0F/4Ni8/VBB16s0D1Z
- fVICPTSHEaPZqinNcq5U25vKF52tQQHlq7s5lAfMnPLH/kKWnnTdZC93i9t/legOmP3n
- dh9PTnLT96XJ2KdghJlYvMKOFjZ+PFkJXyWdA0LSyUjzgLeaURSZYPGp/DIwWkZGbzkA
- 9i3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWHXyvKC2PFg64GUpoE/TzGbo4rCOBEmItigx9igij3KRZ6yIXAKpIkI02UUfsajgehA3CP0yfEC8knSV+j/N6EYQrTeQ0=
-X-Gm-Message-State: AOJu0Yy6Ia1JFMBJQbmroBcOfxlx1uDdcXtzEEEVI+YbPBwM0GnjRvVM
- LtDYESu7XQ4nXc6B9ks+W7YtnlXkBUBecY7DBdlnHvYaeD+MI5BCZFo782HWvmGiYjoNHi3u5hb
- SxF8e1aq2DaZSHk1qgULm5jQFZHlZ1VNJMi8Ljql7T7Xw8UhmqtyT
-X-Received: by 2002:adf:f58a:0:b0:35e:f0e:1ba0 with SMTP id
- ffacd0b85a97d-35e8ef07ccamr1886373f8f.19.1717589630339; 
- Wed, 05 Jun 2024 05:13:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZf7ekgP38xc+IupRJ/jlBPKKOqdcka98i5XWyqDFG1H2FTmC6cf4pn7T4/y/iOwX+4gA3dQ==
-X-Received: by 2002:adf:f58a:0:b0:35e:f0e:1ba0 with SMTP id
- ffacd0b85a97d-35e8ef07ccamr1886353f8f.19.1717589629964; 
- Wed, 05 Jun 2024 05:13:49 -0700 (PDT)
-Received: from [10.33.192.191] (nat-pool-str-t.redhat.com. [149.14.88.106])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd064bba6sm14347863f8f.104.2024.06.05.05.13.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Jun 2024 05:13:49 -0700 (PDT)
-Message-ID: <791e54a9-8426-43aa-a1cc-9d711504ebd0@redhat.com>
-Date: Wed, 5 Jun 2024 14:13:48 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sEpoE-0004TV-EC
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 08:32:06 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sEpoC-0003VK-4B
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 08:32:06 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 96BAC1F815;
+ Wed,  5 Jun 2024 12:32:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1717590720; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IpuyefiAyzmfahQo7zkYQ1LLq3u0CKLYJ8FlebyDKwU=;
+ b=h5bhOSctZOMpRfelvXHmpL/b1Ixt/HsR6hVG14k8yIAd33MaUrv6OW90pd3TVp01r/5IkZ
+ UnwjLNXW4syHLkFb2Qxpw5KjYKA7gdNO5ZbZJIGHuGnlNLtHPVvkasRqd1oJkKZWJ6XWw1
+ D5ukrzBpdV+FryUJwR83JcSheNJxS0g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1717590720;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IpuyefiAyzmfahQo7zkYQ1LLq3u0CKLYJ8FlebyDKwU=;
+ b=XpDn6rFgb+RcXRnIaaQ9MJPaYv54jCAzK1PZ/vSJz2X0wK9Y0dsqjVPENAW4zPVyT8VmR0
+ t3a8tnJQt9Hao4CQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=h5bhOSct;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=XpDn6rFg
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1717590720; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IpuyefiAyzmfahQo7zkYQ1LLq3u0CKLYJ8FlebyDKwU=;
+ b=h5bhOSctZOMpRfelvXHmpL/b1Ixt/HsR6hVG14k8yIAd33MaUrv6OW90pd3TVp01r/5IkZ
+ UnwjLNXW4syHLkFb2Qxpw5KjYKA7gdNO5ZbZJIGHuGnlNLtHPVvkasRqd1oJkKZWJ6XWw1
+ D5ukrzBpdV+FryUJwR83JcSheNJxS0g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1717590720;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IpuyefiAyzmfahQo7zkYQ1LLq3u0CKLYJ8FlebyDKwU=;
+ b=XpDn6rFgb+RcXRnIaaQ9MJPaYv54jCAzK1PZ/vSJz2X0wK9Y0dsqjVPENAW4zPVyT8VmR0
+ t3a8tnJQt9Hao4CQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2146313AA1;
+ Wed,  5 Jun 2024 12:31:59 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id pLYHNr9aYGauCwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 05 Jun 2024 12:31:59 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
+ berrange@redhat.com, armbru@redhat.com, Claudio Fontana
+ <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
+Subject: Re: [PATCH v2 06/18] monitor: Stop removing non-duplicated fds
+In-Reply-To: <Zl-l0U0Azz8lgIw2@gallifrey>
+References: <20240523190548.23977-1-farosas@suse.de>
+ <20240523190548.23977-7-farosas@suse.de> <ZljqGitCeG9-Fi9l@x1n>
+ <87o78mknpb.fsf@suse.de> <Zl-l0U0Azz8lgIw2@gallifrey>
+Date: Wed, 05 Jun 2024 09:31:57 -0300
+Message-ID: <87a5jzh8oy.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] s390x: Add boot device fallback infrastructure
-From: Thomas Huth <thuth@redhat.com>
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: frankja@linux.ibm.com, nsg@linux.ibm.com
-References: <20240529154311.734548-1-jrossi@linux.ibm.com>
- <20240529154311.734548-5-jrossi@linux.ibm.com>
- <86ad1f68-a67e-4c30-9e65-cad8c607352d@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <86ad1f68-a67e-4c30-9e65-cad8c607352d@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 96BAC1F815
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MISSING_XM_UA(0.00)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ MIME_TRACE(0.00)[0:+];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[7]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,121 +128,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/06/2024 10.20, Thomas Huth wrote:
-> On 29/05/2024 17.43, jrossi@linux.ibm.com wrote:
->> From: Jared Rossi <jrossi@linux.ibm.com>
->>
->> Add a routine for loading the next IPLB if a device fails to boot.
->>
->> This includes some minor changes to the List-Directed IPL routine so that the
->> failing device may be retried using the legacy boot pointers before moving 
->> on to
->> the next device.
->>
->> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
->> ---
-> ...
->> diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
->> index a2137449dc..69391557fa 100644
->> --- a/pc-bios/s390-ccw/bootmap.c
->> +++ b/pc-bios/s390-ccw/bootmap.c
->> @@ -144,7 +144,10 @@ static block_number_t 
->> load_eckd_segments(block_number_t blk, bool ldipl,
->>       bool more_data;
->>       memset(_bprs, FREE_SPACE_FILLER, sizeof(_bprs));
->> -    read_block(blk, bprs, "BPRS read failed");
->> +    if (!read_block_nonfatal(blk, bprs)) {
->> +        IPL_assert(ldipl, "BPRS read failed");
->> +        return -1;
->> +    }
->>       do {
->>           more_data = false;
->> @@ -188,7 +191,10 @@ static block_number_t 
->> load_eckd_segments(block_number_t blk, bool ldipl,
->>                    * I.e. the next ptr must point to the unused memory area
->>                    */
->>                   memset(_bprs, FREE_SPACE_FILLER, sizeof(_bprs));
->> -                read_block(block_nr, bprs, "BPRS continuation read failed");
->> +                if (!read_block_nonfatal(block_nr, bprs)) {
->> +                    IPL_assert(ldipl, "BPRS continuation read failed");
->> +                    break;
->> +                }
->>                   more_data = true;
->>                   break;
->>               }
->> @@ -197,7 +203,10 @@ static block_number_t 
->> load_eckd_segments(block_number_t blk, bool ldipl,
->>                * to memory (address).
->>                */
->>               rc = virtio_read_many(block_nr, (void *)(*address), count + 1);
->> -            IPL_assert(rc == 0, "code chunk read failed");
->> +            if (rc != 0) {
->> +                IPL_assert(ldipl, "code chunk read failed");
->> +                break;
->> +            }
->>               *address += (count + 1) * virtio_get_block_size();
->>           }
->> @@ -295,13 +304,22 @@ static void run_eckd_boot_script(block_number_t 
->> bmt_block_nr,
->>                  " maximum number of boot entries allowed");
->>       memset(sec, FREE_SPACE_FILLER, sizeof(sec));
->> -    read_block(bmt_block_nr, sec, "Cannot read Boot Map Table");
->> +    if (!read_block_nonfatal(bmt_block_nr, sec)) {
->> +        IPL_assert(ldipl, "Cannot read Boot Map Table");
->> +        return;
->> +    }
->>       block_nr = gen_eckd_block_num(&bmt->entry[loadparm].xeckd, ldipl);
->> -    IPL_assert(block_nr != -1, "Cannot find Boot Map Table Entry");
->> +    if (block_nr == -1) {
->> +        IPL_assert(ldipl, "Cannot find Boot Map Table Entry");
->> +        return;
->> +    }
->>       memset(sec, FREE_SPACE_FILLER, sizeof(sec));
->> -    read_block(block_nr, sec, "Cannot read Boot Map Script");
->> +    if (!read_block_nonfatal(block_nr, sec)) {
->> +        IPL_assert(ldipl, "Cannot read Boot Map Script");
->> +        return;
->> +    }
->>       for (i = 0; bms->entry[i].type == BOOT_SCRIPT_LOAD ||
->>                   bms->entry[i].type == BOOT_SCRIPT_SIGNATURE; i++) {
->> @@ -319,13 +337,10 @@ static void run_eckd_boot_script(block_number_t 
->> bmt_block_nr,
->>           } while (block_nr != -1);
->>       }
->> -    if (ldipl && bms->entry[i].type != BOOT_SCRIPT_EXEC) {
->> -        /* Abort LD-IPL and retry as CCW-IPL */
->> +    if (bms->entry[i].type != BOOT_SCRIPT_EXEC) {
->> +        IPL_assert(ldipl, "Unknown script entry type");
->>           return;
->>       }
->> -
->> -    IPL_assert(bms->entry[i].type == BOOT_SCRIPT_EXEC,
->> -               "Unknown script entry type");
->>       write_reset_psw(bms->entry[i].address.load_address); /* no return */
->>       jump_to_IPL_code(0); /* no return */
->>   }
->> @@ -492,7 +507,7 @@ static void ipl_eckd(void)
->>               /* LD-IPL does not use the S1B bock, just make it NULL */
->>               run_eckd_boot_script(ldipl_bmt, NULL_BLOCK_NR);
->>               /* Only return in error, retry as CCW-IPL */
->> -            sclp_print("Retrying IPL ");
->> +            sclp_print("LD-IPL failed, retrying device\n");
->>               print_eckd_msg();
->>           }
->>           memset(sec, FREE_SPACE_FILLER, sizeof(sec));
->> @@ -944,5 +959,5 @@ void zipl_load(void)
->>           panic("\n! Unknown IPL device type !\n");
->>       }
->> -    sclp_print("zIPL load failed.\n");
->> +    panic("zIPL load failed.\n");
-> 
-> Why replacing the sclp_print() here? Wouldn't it be nicer to continue 
-> panicking on the calling site instead?
+"Dr. David Alan Gilbert" <dave@treblig.org> writes:
 
-Ok, after looking at the 5th patch, I think I understand it now: panic() is 
-not fatal anymore and might restart with the next boot device... not sure 
-whether I like that, but let's discuss that on patch 5 instead...
+> * Fabiano Rosas (farosas@suse.de) wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > On Thu, May 23, 2024 at 04:05:36PM -0300, Fabiano Rosas wrote:
+>> >> We've been up until now cleaning up any file descriptors that have
+>> >> been passed into QEMU and never duplicated[1,2]. A file descriptor
+>> >> without duplicates indicates that no part of QEMU has made use of
+>> >> it. This approach is starting to show some cracks now that we're
+>> >> starting to consume fds from the migration code:
+>> >> 
+>> >> - Doing cleanup every time the last monitor connection closes works to
+>> >>   reap unused fds, but also has the side effect of forcing the
+>> >>   management layer to pass the file descriptors again in case of a
+>> >>   disconnect/re-connect, if that happened to be the only monitor
+>> >>   connection.
+>> >> 
+>> >>   Another side effect is that removing an fd with qmp_remove_fd() is
+>> >>   effectively delayed until the last monitor connection closes.
+>> >> 
+>> >>   The reliance on mon_refcount is also problematic because it's racy.
+>> >> 
+>> >> - Checking runstate_is_running() skips the cleanup unless the VM is
+>> >>   running and avoids premature cleanup of the fds, but also has the
+>> >>   side effect of blocking the legitimate removal of an fd via
+>> >>   qmp_remove_fd() if the VM happens to be in another state.
+>> >> 
+>> >>   This affects qmp_remove_fd() and qmp_query_fdsets() in particular
+>> >>   because requesting a removal at a bad time (guest stopped) might
+>> >>   cause an fd to never be removed, or to be removed at a much later
+>> >>   point in time, causing the query command to continue showing the
+>> >>   supposedly removed fd/fdset.
+>> >> 
+>> >> Note that file descriptors that *have* been duplicated are owned by
+>> >> the code that uses them and will be removed after qemu_close() is
+>> >> called. Therefore we've decided that the best course of action to
+>> >> avoid the undesired side-effects is to stop managing non-duplicated
+>> >> file descriptors.
+>> >> 
+>> >> 1- efb87c1697 ("monitor: Clean up fd sets on monitor disconnect")
+>> >> 2- ebe52b592d ("monitor: Prevent removing fd from set during init")
+>> >> 
+>> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> >> ---
+>> >>  monitor/fds.c              | 15 ++++++++-------
+>> >>  monitor/hmp.c              |  2 --
+>> >>  monitor/monitor-internal.h |  1 -
+>> >>  monitor/qmp.c              |  2 --
+>> >>  4 files changed, 8 insertions(+), 12 deletions(-)
+>> >> 
+>> >> diff --git a/monitor/fds.c b/monitor/fds.c
+>> >> index 101e21720d..f7b98814fa 100644
+>> >> --- a/monitor/fds.c
+>> >> +++ b/monitor/fds.c
+>> >> @@ -169,6 +169,11 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
+>> >>  
+>> >>  static void monitor_fdset_free(MonFdset *mon_fdset)
+>> >>  {
+>> >> +    /*
+>> >> +     * Only remove an empty fdset. The fds are owned by the user and
+>> >> +     * should have been removed with qmp_remove_fd(). The dup_fds are
+>> >> +     * owned by QEMU and should have been removed with qemu_close().
+>> >> +     */
+>> >>      if (QLIST_EMPTY(&mon_fdset->fds) && QLIST_EMPTY(&mon_fdset->dup_fds)) {
+>> >>          QLIST_REMOVE(mon_fdset, next);
+>> >>          g_free(mon_fdset);
+>> >> @@ -189,9 +194,7 @@ static void monitor_fdset_cleanup(MonFdset *mon_fdset)
+>> >>      MonFdsetFd *mon_fdset_fd_next;
+>> >>  
+>> >>      QLIST_FOREACH_SAFE(mon_fdset_fd, &mon_fdset->fds, next, mon_fdset_fd_next) {
+>> >> -        if ((mon_fdset_fd->removed ||
+>> >> -                (QLIST_EMPTY(&mon_fdset->dup_fds) && mon_refcount == 0)) &&
+>> >> -                runstate_is_running()) {
+>> >> +        if (mon_fdset_fd->removed) {
+>> >
+>> > I don't know the code well, but I like it.
+>> >
+>> >>              monitor_fdset_fd_free(mon_fdset_fd);
+>> >>          }
+>> >>      }
+>> >> @@ -206,7 +209,7 @@ void monitor_fdsets_cleanup(void)
+>> >>  
+>> >>      QEMU_LOCK_GUARD(&mon_fdsets_lock);
+>> >>      QLIST_FOREACH_SAFE(mon_fdset, &mon_fdsets, next, mon_fdset_next) {
+>> >> -        monitor_fdset_cleanup(mon_fdset);
+>> >> +        monitor_fdset_free(mon_fdset);
+>> >>      }
+>> >>  }
+>> >>  
+>> >> @@ -479,9 +482,7 @@ void monitor_fdset_dup_fd_remove(int dup_fd)
+>> >>              if (mon_fdset_fd_dup->fd == dup_fd) {
+>> >>                  QLIST_REMOVE(mon_fdset_fd_dup, next);
+>> >>                  g_free(mon_fdset_fd_dup);
+>> >> -                if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
+>> >> -                    monitor_fdset_cleanup(mon_fdset);
+>> >> -                }
+>> >> +                monitor_fdset_free(mon_fdset);
+>> >
+>> > This and above changes are not crystal clear to me where the _cleanup()
+>> > does extra check "removed" and clean those fds.
+>> >
+>> > I think it'll make it easier for me to understand if this one and the next
+>> > are squashed together.  But maybe it's simply because I didn't fully
+>> > understand.
+>> 
+>> monitor_fdsets_cleanup() was doing three things previously:
+>> 
+>> 1- Remove the removed=true fds. This is weird, but ok.
+>> 
+>> 2- Remove fds from an fdset that has an empty dup_fds list, but only if
+>> the guest is not running and the monitor is closed. This is problematic.
+>> 
+>> 3- Remove/free fdsets that have become empty due to the above
+>> removals. This is ok.
+>> 
+>> This patch covers (2), because that is the only change that has a
+>> complex reasoning behind it and we need to document that without
+>> conflating it with the rest of the changes.
+>
+> The ebe52b592d you reference, makes me think that the only reason for the
+> 'is not running' was as a way to detect when init had finished; and there
+> are certainly better ways to do that (now?).
 
-  Thomas
+I agree with the perception, however I can't determine what "init" means
+in this scenario. It's not clear from the original change at exactly
+which point we're safe to assume fds have been consumed from some
+subsystem (block probably). This also clashes with the (new) usage we're
+attempting here for migration because the migration code would almost
+certainly only consume the fds after this point.
 
+>
+> However, the efb87c1697 talks about cleaning up non-dup's on all monitors
+> closed, to stop getting left-over fd's that were added but then not used
+> (because a disconnect happened between adding and being used).
+> In your world when do these get cleaned up?
+
+They stay around until after the reconnection. Then either get removed
+via qmp_remove_fd() or when a subsystem dups them and eventually calls
+qemu_close().
+
+The initial assumption seems to have been overly conservative, there
+will always be a monitor connection around, even if it disconnects
+briefly.
+
+Per Daniel's suggestion we're considering a management layer bug if it
+passes fds that QEMU never needs to consume. So QEMU will not attempt
+any cleanup of perceived unused fds since they could be needed at a
+later point (e.g. after qmp_migrate).
+
+>
+> Dave
+>
+>> Since (3) is still a reasonable thing to do, this patch merely keeps it
+>> around, but using the helpers introduced in the previous patch.
+>> 
+>> The next patch removed the need for (1), making the removal immediate
+>> instead of delayed. It has it's own much less complex reasoning, which
+>> is: "we don't need to wait to remove the fd".
+>> 
+>> I hope this clarifies a bit. I would prefer if we kept this and the next
+>> patch separate to avoid having a single patch that does too many
+>> things. I hope to be as explicit as possible with the reason behind
+>> these changes to avoid putting future people in the situation that we
+>> are in now, i.e. having to guess at the reasons behind this code.
+>> 
+>> If you still think we should squash or if you have more questions, let
+>> me know.
+>> 
+>> >>                  return;
+>> >>              }
+>> >>          }
+>> >> diff --git a/monitor/hmp.c b/monitor/hmp.c
+>> >> index 69c1b7e98a..460e8832f6 100644
+>> >> --- a/monitor/hmp.c
+>> >> +++ b/monitor/hmp.c
+>> >> @@ -1437,11 +1437,9 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
+>> >>              monitor_resume(mon);
+>> >>          }
+>> >>          qemu_mutex_unlock(&mon->mon_lock);
+>> >> -        mon_refcount++;
+>> >>          break;
+>> >>  
+>> >>      case CHR_EVENT_CLOSED:
+>> >> -        mon_refcount--;
+>> >>          monitor_fdsets_cleanup();
+>> >>          break;
+>> >>  
+>> >> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+>> >> index 252de85681..cb628f681d 100644
+>> >> --- a/monitor/monitor-internal.h
+>> >> +++ b/monitor/monitor-internal.h
+>> >> @@ -168,7 +168,6 @@ extern bool qmp_dispatcher_co_shutdown;
+>> >>  extern QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
+>> >>  extern QemuMutex monitor_lock;
+>> >>  extern MonitorList mon_list;
+>> >> -extern int mon_refcount;
+>> >>  
+>> >>  extern HMPCommand hmp_cmds[];
+>> >>  
+>> >> diff --git a/monitor/qmp.c b/monitor/qmp.c
+>> >> index a239945e8d..5e538f34c0 100644
+>> >> --- a/monitor/qmp.c
+>> >> +++ b/monitor/qmp.c
+>> >> @@ -466,7 +466,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+>> >>          data = qmp_greeting(mon);
+>> >>          qmp_send_response(mon, data);
+>> >>          qobject_unref(data);
+>> >> -        mon_refcount++;
+>> >>          break;
+>> >>      case CHR_EVENT_CLOSED:
+>> >>          /*
+>> >> @@ -479,7 +478,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+>> >>          json_message_parser_destroy(&mon->parser);
+>> >>          json_message_parser_init(&mon->parser, handle_qmp_command,
+>> >>                                   mon, NULL);
+>> >> -        mon_refcount--;
+>> >>          monitor_fdsets_cleanup();
+>> >>          break;
+>> >>      case CHR_EVENT_BREAK:
+>> >
+>> > I like this too when mon_refcount can be dropped.  It turns out I like this
+>> > patch and the next a lot, and I hope nothing will break.
+>> >
+>> > Aside, you seem to have forgot removal of the "int mon_refcount" in
+>> > monitor.c.
+>> 
+>> Yes, I'll fix that. Thanks.
 
