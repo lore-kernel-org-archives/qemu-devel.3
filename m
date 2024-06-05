@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD00EC27C55
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 971ECC25B76
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 21:16:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sExym-0000b2-Rm; Wed, 05 Jun 2024 17:15:33 -0400
+	id 1sExz4-0000gL-E1; Wed, 05 Jun 2024 17:15:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sExyl-0000aV-4I
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:15:31 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1sExyw-0000dR-Km
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:15:44 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sExyf-0003NO-Oj
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:15:30 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-703f1e39c07so220025b3a.0
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 14:15:24 -0700 (PDT)
+ id 1sExyn-0003QR-Fq
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:15:41 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7023b6d810bso199779b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 14:15:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717622123; x=1718226923; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=ZthNw9PbI9iYokm2I4LRNqBbCs0cLjGdyhLxcIkkPF0=;
- b=R5anOzxJlL473dbHshMx+QWJt6TWSrGOnwj1D9YJEKo+xfCC0XEt49ZQ1XOzcxOHNe
- zGEjdrtHpz3YSTqj46gtmCbdoK05rEXqvJRLm6yvqcY0Y4ftOtSLW8dLeTtJ8FKl+pl3
- 1PgC7dUTEGdigwPwIEHP0LqUJwhuVNRxGXG+QdtkTSfEMeB5iPKxpif33Qucsu0oW4dZ
- iWqXY3wwbD8hdfh/lUMCiNzxKIj42PZhE5Lij3YX2bWiuZp5SeOzo3pdxWGx61zCiBu7
- Z090qVwCcpWI8y5r6OKDGBLO8reqVphwD+6I92Lgp+mR4yfWJpMS0Z7OCGwG+w1CIEpO
- THow==
+ d=linaro.org; s=google; t=1717622131; x=1718226931; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NfrVlKNrjZVUEIrdKdz8B/16XtB8Z0PZL9Z34MyohBI=;
+ b=ZK9PEeoEBRpJE7mfuhPf8hFW9pu7yjCaOPwE6xukRk/8YzMsnIURWg2SQ25KTmCSLm
+ YgGI2GEcUh9eCINe98uAq7ygAXheTGwwXe8Z4Q2Y9qHKSCnyPzKLEX1YQTlBPIIvb8Y+
+ 52cdqRIRCOg4hZ7FNP6R6aQUqMXrC3/bBPS8dIm70NNXtcZy4dBPXyUf4N6zSx2gggT0
+ uhI4r/moV05BzofMd2QKdxxdtcERXZqQoriPgraZpnqFWVkG7Bbb/5nStFSHaU2wichf
+ gDsIlQZgi5puiIust6iP/kUf3xNp4VSqXyEv0kdZOYl6d6iqHyYyzOJibhFel58xByg0
+ blzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717622123; x=1718226923;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZthNw9PbI9iYokm2I4LRNqBbCs0cLjGdyhLxcIkkPF0=;
- b=jHjLqgLsCQ4tM2YSX6pE4Mmtcd3cgQNP6ODOJTIlSomc+HU9z0/BzOFvvkktEVtAM2
- mQNptRPQh+zm6711tTjzR05JKMq9Q0MvYbxNtJIENDjV7625Wqownz9htCijnutZZONr
- IGWZ7IvR27Cm2MqxdqsH9A/y6eBE8hwLCXu7oh/KJVZqjVx7HqSAQbEpmiXuuPWWCFVj
- JhaZmK2aZMCfjByUq7nHM96eSREJoeQYpobmalhxyXpuArum+vQj3u6qZDyrsiS+NtgA
- ZYWpbCkS6jDeOiyGKr2QiA5oZtB0RyoVf+rRk0jKDrY2bcKKhAeqsGS8zkU7Uf2p6mBL
- qJdg==
-X-Gm-Message-State: AOJu0Yw64h3vtaKT4RVg5iUkb8lckG1SbP8jg4H9D8mAQHrvNAjRK3Py
- Wm/zKJTWW7lELcVu1wr1ad+CvjPZgDjMYrrS7cOLPR7nK9BvadYhueLBQCZnI8U34mHbRLjSNlS
- B
-X-Google-Smtp-Source: AGHT+IGJjwU+JCGd3+wcF9Zo+XTybU7HSt5hAtjujrNNalXDCDwFJXGnw5duwcpHEw5GVbcTvHMSSA==
-X-Received: by 2002:a05:6a20:3218:b0:1af:fcbf:df28 with SMTP id
- adf61e73a8af0-1b2b712f4d4mr3912331637.41.1717622122729; 
- Wed, 05 Jun 2024 14:15:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717622131; x=1718226931;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NfrVlKNrjZVUEIrdKdz8B/16XtB8Z0PZL9Z34MyohBI=;
+ b=PcQ3aVcIPgm1OQMp7b/xcjKCiodjslc4stHbd0nrOZ/FZFQhcjorn3Rbo5g2BVQ7v4
+ uqOFBsriZAv6h46zG7IjvtDKXdCSEEIeYIMrOdVqtZiL6/KBYzfD9B+20F1CKGWsm3U9
+ 4arzBGFnfMciBO9vZPp8HN0sGnbeI1Pp6fW9EuP6s6mmWLM6WqacPgGgifEqQaIVgEGd
+ fALu6ZzNVh64A+pzy7AdTUCCVi+Xb7I81bXHKT/IUC32bWTcDFAPUyBntPcbLvrZ2hWX
+ m9C6kTLlndELKTu97Dg7brAU6JduAHA/6mWpWUbTRuAY820R8IxHm2JdTRCxHD/vm5Fp
+ zCtw==
+X-Gm-Message-State: AOJu0YxuoCXyGkJrt+Xa1wbP6KD87ydLV9G+0g4I9tZvPBnPkzZhEAQe
+ vcXG1mmdg7kMU3ZvM4BjTNkTcpX8J3MhED5J4S5r72hE5liSSVCHyRq7G4uk5K+RRhQRqGCXzGI
+ 6
+X-Google-Smtp-Source: AGHT+IGAMPLv1AQ8+LSrgYOANzyCMYwp4KhN2e14fARvhZdLnkUWQYM7xNb50oYbdwlkVnEGXL7EwA==
+X-Received: by 2002:a05:6a20:1590:b0:1af:d153:b76a with SMTP id
+ adf61e73a8af0-1b2b6f68b99mr4849695637.18.1717622130797; 
+ Wed, 05 Jun 2024 14:15:30 -0700 (PDT)
 Received: from stoup.. ([71.212.132.216]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70242aec7d0sm9347538b3a.99.2024.06.05.14.15.21
- for <qemu-devel@nongnu.org>
+ d2e1a72fcca58-70242aec7d0sm9347538b3a.99.2024.06.05.14.15.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 14:15:21 -0700 (PDT)
+ Wed, 05 Jun 2024 14:15:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/16] sprintf fixes
-Date: Wed,  5 Jun 2024 14:15:05 -0700
-Message-Id: <20240605211521.577094-1-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 09/16] disas/microblaze: Split out print_immval_addr
+Date: Wed,  5 Jun 2024 14:15:14 -0700
+Message-Id: <20240605211521.577094-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240605211521.577094-1-richard.henderson@linaro.org>
+References: <20240605211521.577094-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,57 +93,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit f1572ab94738bd5787b7badcd4bd93a3657f0680:
+Unify the code blocks that try to print a symbolic address.
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-06-05 07:45:23 -0700)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240412073346.458116-15-richard.henderson@linaro.org>
+---
+ disas/microblaze.c | 89 +++++++++++++++-------------------------------
+ 1 file changed, 29 insertions(+), 60 deletions(-)
 
-are available in the Git repository at:
+diff --git a/disas/microblaze.c b/disas/microblaze.c
+index 49a4c0fd40..3473c94164 100644
+--- a/disas/microblaze.c
++++ b/disas/microblaze.c
+@@ -767,6 +767,24 @@ read_insn_microblaze (bfd_vma memaddr,
+   return inst;
+ }
+ 
++static void print_immval_addr(struct disassemble_info *info, bool immfound,
++                              int immval, unsigned inst, int addend)
++{
++    if (info->print_address_func && info->symbol_at_address_func) {
++        if (immfound) {
++            immval |= get_int_field_imm(inst) & 0x0000ffff;
++        } else {
++            immval = (int16_t)get_int_field_imm(inst);
++        }
++        immval += addend;
++        if (immval != 0 && info->symbol_at_address_func(immval, info)) {
++            info->fprintf_func(info->stream, "\t// ");
++            info->print_address_func (immval, info);
++        } else if (addend) {
++            info->fprintf_func(info->stream, "\t// %x", immval);
++        }
++    }
++}
+ 
+ int 
+ print_insn_microblaze (bfd_vma memaddr, struct disassemble_info * info)
+@@ -821,18 +839,8 @@ print_insn_microblaze (bfd_vma memaddr, struct disassemble_info * info)
+      break;
+         case INST_TYPE_RD_R1_IMM:
+ 	  fprintf_func(stream, "\t%s, %s, %s", get_field_rd(inst), get_field_r1(inst), get_field_imm(inst));
+-	  if (info->print_address_func && get_int_field_r1(inst) == 0 && info->symbol_at_address_func) {
+-	    if (immfound)
+-	      immval |= (get_int_field_imm(inst) & 0x0000ffff);
+-	    else {
+-	      immval = get_int_field_imm(inst);
+-	      if (immval & 0x8000)
+-		immval |= 0xFFFF0000;
+-	    }
+-	    if (immval > 0 && info->symbol_at_address_func(immval, info)) {
+-	      fprintf_func (stream, "\t// ");
+-	      info->print_address_func (immval, info);
+-	    }
++	  if (get_int_field_r1(inst) == 0) {
++              print_immval_addr(info, immfound, immval, inst, 0);
+ 	  }
+ 	  break;
+ 	case INST_TYPE_RD_R1_IMM5:
+@@ -860,61 +868,22 @@ print_insn_microblaze (bfd_vma memaddr, struct disassemble_info * info)
+ 	  fprintf_func(stream, "\t%s, %s", get_field_r1(inst), get_field_imm(inst));
+ 	  /* The non-pc relative instructions are returns, which shouldn't 
+ 	     have a label printed */
+-	  if (info->print_address_func && op->inst_offset_type == INST_PC_OFFSET && info->symbol_at_address_func) {
+-	    if (immfound)
+-	      immval |= (get_int_field_imm(inst) & 0x0000ffff);
+-	    else {
+-	      immval = get_int_field_imm(inst);
+-	      if (immval & 0x8000)
+-		immval |= 0xFFFF0000;
+-	    }
+-	    immval += memaddr;
+-	    if (immval > 0 && info->symbol_at_address_func(immval, info)) {
+-	      fprintf_func (stream, "\t// ");
+-	      info->print_address_func (immval, info);
+-	    } else {
+-	      fprintf_func (stream, "\t\t// ");
+-	      fprintf_func (stream, "%x", immval);
+-	    }
++	  if (op->inst_offset_type == INST_PC_OFFSET) {
++              print_immval_addr(info, immfound, immval, inst, memaddr);
+ 	  }
+ 	  break;
+         case INST_TYPE_RD_IMM:
+ 	  fprintf_func(stream, "\t%s, %s", get_field_rd(inst), get_field_imm(inst));
+-	  if (info->print_address_func && info->symbol_at_address_func) {
+-	    if (immfound)
+-	      immval |= (get_int_field_imm(inst) & 0x0000ffff);
+-	    else {
+-	      immval = get_int_field_imm(inst);
+-	      if (immval & 0x8000)
+-		immval |= 0xFFFF0000;
+-	    }
+-	    if (op->inst_offset_type == INST_PC_OFFSET)
+-	      immval += (int) memaddr;
+-	    if (info->symbol_at_address_func(immval, info)) {
+-	      fprintf_func (stream, "\t// ");
+-	      info->print_address_func (immval, info);
+-	    } 
+-	  }
++          print_immval_addr(info, immfound, immval, inst,
++                            op->inst_offset_type == INST_PC_OFFSET
++                            ? memaddr : 0);
+ 	  break;
+         case INST_TYPE_IMM:
+ 	  fprintf_func(stream, "\t%s", get_field_imm(inst));
+-	  if (info->print_address_func && info->symbol_at_address_func && op->instr != imm) {
+-	    if (immfound)
+-	      immval |= (get_int_field_imm(inst) & 0x0000ffff);
+-	    else {
+-	      immval = get_int_field_imm(inst);
+-	      if (immval & 0x8000)
+-		immval |= 0xFFFF0000;
+-	    }
+-	    if (op->inst_offset_type == INST_PC_OFFSET)
+-	      immval += (int) memaddr;
+-	    if (immval > 0 && info->symbol_at_address_func(immval, info)) {
+-	      fprintf_func (stream, "\t// ");
+-	      info->print_address_func (immval, info);
+-	    } else if (op->inst_offset_type == INST_PC_OFFSET) {
+-	      fprintf_func (stream, "\t\t// ");
+-	      fprintf_func (stream, "%x", immval);
+-	    }
++	  if (op->instr != imm) {
++              print_immval_addr(info, immfound, immval, inst,
++                                op->inst_offset_type == INST_PC_OFFSET
++                                ? memaddr : 0);
+ 	  }
+ 	  break;
+         case INST_TYPE_RD_R2:
+-- 
+2.34.1
 
-  https://gitlab.com/rth7680/qemu.git tags/pull-misc-20240605
-
-for you to fetch changes up to b89fb575fd467ed5dfde4608d51c47c2aa427f30:
-
-  disas/riscv: Use GString in format_inst (2024-06-05 12:29:54 -0700)
-
-----------------------------------------------------------------
-util/hexdump: Use a GString for qemu_hexdump_line.
-system/qtest: Replace sprintf by qemu_hexdump_line
-hw/scsi/scsi-disk: Use qemu_hexdump_line to avoid sprintf
-hw/ide/atapi: Use qemu_hexdump_line to avoid sprintf
-hw/dma/pl330: Use qemu_hexdump_line to avoid sprintf
-disas/microblaze: Reorg to avoid intermediate sprintf
-disas/riscv: Use GString in format_inst
-
-----------------------------------------------------------------
-Philippe Mathieu-Daudé (5):
-      hw/mips/malta: Add re-usable rng_seed_hex_new() method
-      system/qtest: Replace sprintf by qemu_hexdump_line
-      hw/scsi/scsi-disk: Use qemu_hexdump_line to avoid sprintf
-      hw/ide/atapi: Use qemu_hexdump_line to avoid sprintf
-      hw/dma/pl330: Use qemu_hexdump_line to avoid sprintf
-
-Richard Henderson (11):
-      util/hexdump: Use a GString for qemu_hexdump_line
-      util/hexdump: Add unit_len and block_len to qemu_hexdump_line
-      util/hexdump: Inline g_string_append_printf "%02x"
-      disas/microblaze: Split out print_immval_addr
-      disas/microblaze: Re-indent print_insn_microblaze
-      disas/microblaze: Merge op->name output into each fprintf
-      disas/microblaze: Print registers directly with PRIreg
-      disas/microblaze: Print immediates directly with PRIimm
-      disas/microblaze: Print registers directly with PRIrfsl
-      disas/microblaze: Split get_field_special
-      disas/riscv: Use GString in format_inst
-
- include/qemu/cutils.h  |  19 +-
- disas/microblaze.c     | 551 +++++++++++++++++++++----------------------------
- disas/riscv.c          | 209 +++++++++----------
- hw/dma/pl330.c         |  23 +--
- hw/ide/atapi.c         |  12 +-
- hw/mips/malta.c        |  25 +--
- hw/scsi/scsi-disk.c    |  13 +-
- hw/virtio/vhost-vdpa.c |  14 +-
- system/qtest.c         |  12 +-
- util/hexdump.c         |  57 +++--
- 10 files changed, 418 insertions(+), 517 deletions(-)
 
