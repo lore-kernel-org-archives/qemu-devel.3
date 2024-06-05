@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67CA0C27C52
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 17:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33BAC27C52
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 17:24:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEuLm-0005qI-Or; Wed, 05 Jun 2024 13:23:02 -0400
+	id 1sEuLw-0005vG-No; Wed, 05 Jun 2024 13:23:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEuLl-0005nz-Gr
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:23:01 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1sEuLs-0005tX-J4
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:23:08 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEuLj-0003nU-Jq
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:23:01 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2c195eb9af3so62977a91.0
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 10:22:59 -0700 (PDT)
+ id 1sEuLq-0003pb-RH
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:23:08 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7025f4f4572so901778b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 10:23:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717608178; x=1718212978; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717608185; x=1718212985; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9GjOknDfw6CA/cxmtAArnOVpVQknG/Iz5WJ6byoYh9I=;
- b=sX4MfjdygOrBZ/bFh5iWa9DR7zZyf92WvRFkw2elSm7hv923R5OXbTyUTXVrHSmfxX
- NHyG2KeDzB5kroCilJ88kvdqC+jYoj/i+s8GopS6c6D4CHVF6ro6lwfE7r7xqMROC9Pq
- YwOM2+p6fcnuY9NRnih91jRMMRmyJIlyZwpGaq+NbaL4ZG3UDpnmIZGAeN5tynQd8uLv
- ol0kEtBtuHCGc/HJQphfAmRpNMQpdC/7sgZPALU2e6GqeNXK+hYM8INJ2MxZD2Bfl/em
- tG95LFKNphRrfBCOjiFdJ5JeJS8twGzUNM0gvLVp83ZlKeAFCcByy7J3t1GvVj2jsED/
- /q4g==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iHJotesaXwGLwu2EOqL2F77EqNf5qS0c2hknFMUEE6I=;
+ b=dc5mwgRx0SJ67sKHKz6TIcyitWrP5zhXt5ZFGfsaoVFh78heAzKoR2Nej3tw7z2ORr
+ 8ODKt2p9IOnzi9YtEiqhW2vU57uuGyENrijtX4aHyz2JU3qePBejEY7C783zwTU9dodU
+ j2ldCXOjSd3MKFEfGuBbi7W2r9SrbhJ/4AZVVs71ryo/VhZFypsa/Y9GgFs9vDnkuttN
+ 0HWBiVuXwVxuT9S76x0DPcBP5oQ/1Rh+xjn+1gUC6h/JJ+xYOx0CmiD311w/ZnEBHspp
+ TjS99upVv6VOEMRWhsJymy8hMNWcDr5sXs8jnVxvr7ZtARsM/DPb6wwOsPQzl1Qp6NLw
+ 3iqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717608178; x=1718212978;
+ d=1e100.net; s=20230601; t=1717608185; x=1718212985;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9GjOknDfw6CA/cxmtAArnOVpVQknG/Iz5WJ6byoYh9I=;
- b=iqePA/nx7LzdubKRKMjESqoJmEX6U1QurFQ2o57fTQJ3lJcSjO36IPlqWIw08qP503
- DbYYCea/lGXUoa0nGOAR6dcKrx1kFS1kRSd+ZyM9da8kp5eQKT7j27A4Kvx1sBXVWX2a
- t8o0WrXpdwgJnso+od0OC79Cdu29ORRL8fRQ8Rufj2cSdfdkIwdYeburiWdkM49p9+Tg
- KYJMiOyOWhg84TmSQO4d6zpBBdMLsl6ekFy+s4ojnH95duEW3k1ADNkk4V4OjfPJGnUj
- 9qfrOWkQwfw8wG3kNy9pOBFKqyj/3+2KnThzc0H1XUGHLEUHHk/o9PWGIY+Fo54JY/XK
- /FXA==
-X-Gm-Message-State: AOJu0YzTlkwcyGfDIVfErWPl3zT4H8orSuZhd9ERw4thtbPED7oHSQRU
- /XRzENEERdnHph43Wo+iulLKbQ/0LNW177TFg4rij7fE1mqwX7BvJXLgrydk85AK0uJFXvvsr7M
- M
-X-Google-Smtp-Source: AGHT+IEYOWjheSaP0tWriIXzrDJFAPiofAEDVK8I8MiU9BVdp2Nromo+9ykvq2YRL/mURmDaBKZx8g==
-X-Received: by 2002:a17:90a:38c7:b0:2c2:53f9:56fe with SMTP id
- 98e67ed59e1d1-2c27db19ea5mr2759574a91.24.1717608178038; 
- Wed, 05 Jun 2024 10:22:58 -0700 (PDT)
+ bh=iHJotesaXwGLwu2EOqL2F77EqNf5qS0c2hknFMUEE6I=;
+ b=pUBj0KPaY3vBid1onfxS+EKVNt4ChKStN0DNNmhtwCdf3Pv4WKY1f9SRYFk4sKzUDq
+ zh6cP6uU+uSqQTXEDR7aeG+uUgFmYo2BgWim/+amuWBeOoTZtRnQdHDsI+9N9hlagrps
+ kduE5R6kndtlfhO9BBSCIGgyI8eZU2njPssDlc0vExgZi99wgkS6DAoxq+E/lrbV1vVZ
+ f895bos4epeYW5wnpfttV/rrfH44fBNojKtDcxuuEd6IUSYbf88oOzrpGNsCygdMCS1M
+ aQ3BS5dvLuUWOnSVDeMQj+CXyKaOW3MqBj+AGAC3unddGd/9Vus+qJUJGvy7vrpwfXsk
+ Hl5Q==
+X-Gm-Message-State: AOJu0Yy6y0Z2zbPgo96EEZkhS2kW3k9dqqj96JQHKnvj0U/OCdZXUmxm
+ vJ2QNDurasFYisY2KaaFlCOAse14D8E4Q8yrqFR9iSRd1ki39G8mJcnaByIn33s2HEJl5vbvgte
+ k
+X-Google-Smtp-Source: AGHT+IGZ7UJd184z0i7ayZIKGigLyHWYbsnzKmYWuKM/BLRRq8y0KVuKW9t4MACpG41y/dicWLTbbg==
+X-Received: by 2002:a17:90b:1bcd:b0:2bd:f4ba:fc3 with SMTP id
+ 98e67ed59e1d1-2c29998dd5amr399530a91.7.1717608185467; 
+ Wed, 05 Jun 2024 10:23:05 -0700 (PDT)
 Received: from stoup.. ([71.212.132.216]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c28066d511sm1720915a91.9.2024.06.05.10.22.57
- for <qemu-devel@nongnu.org>
+ 98e67ed59e1d1-2c28066d511sm1720915a91.9.2024.06.05.10.23.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 10:22:57 -0700 (PDT)
+ Wed, 05 Jun 2024 10:23:05 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/38] target/sparc: Rewrite gen_edge
-Date: Wed,  5 Jun 2024 10:22:18 -0700
-Message-Id: <20240605172253.356302-4-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 11/38] target/sparc: Add feature bits for VIS 3
+Date: Wed,  5 Jun 2024 10:22:26 -0700
+Message-Id: <20240605172253.356302-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240605172253.356302-1-richard.henderson@linaro.org>
 References: <20240605172253.356302-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,142 +94,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Drop the tables and compute the left and right edges directly.
+The manual separates VIS 3 and VIS 3B, even though they are both
+present in all extant cpus.  For clarity, let the translator
+match the manual but otherwise leave them on the same feature bit.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/sparc/translate.c | 98 +++++++++++++++-------------------------
- 1 file changed, 37 insertions(+), 61 deletions(-)
+ target/sparc/cpu-feature.h.inc | 1 +
+ target/sparc/translate.c       | 4 ++++
+ 2 files changed, 5 insertions(+)
 
+diff --git a/target/sparc/cpu-feature.h.inc b/target/sparc/cpu-feature.h.inc
+index a30b9255b2..3913fb4a54 100644
+--- a/target/sparc/cpu-feature.h.inc
++++ b/target/sparc/cpu-feature.h.inc
+@@ -13,3 +13,4 @@ FEATURE(CACHE_CTRL)
+ FEATURE(POWERDOWN)
+ FEATURE(CASA)
+ FEATURE(FMAF)
++FEATURE(VIS3)
 diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index dca072888a..00c2a11353 100644
+index 5efd09f4f4..59b922c903 100644
 --- a/target/sparc/translate.c
 +++ b/target/sparc/translate.c
-@@ -3519,11 +3519,10 @@ static bool trans_SDIVX(DisasContext *dc, arg_r_r_ri *a)
- }
+@@ -2188,6 +2188,8 @@ static int extract_qfpreg(DisasContext *dc, int x)
+ # define avail_HYPV(C)    ((C)->def->features & CPU_FEATURE_HYPV)
+ # define avail_VIS1(C)    ((C)->def->features & CPU_FEATURE_VIS1)
+ # define avail_VIS2(C)    ((C)->def->features & CPU_FEATURE_VIS2)
++# define avail_VIS3(C)    ((C)->def->features & CPU_FEATURE_VIS3)
++# define avail_VIS3B(C)   avail_VIS3(C)
+ #else
+ # define avail_32(C)      true
+ # define avail_ASR17(C)   ((C)->def->features & CPU_FEATURE_ASR17)
+@@ -2201,6 +2203,8 @@ static int extract_qfpreg(DisasContext *dc, int x)
+ # define avail_HYPV(C)    false
+ # define avail_VIS1(C)    false
+ # define avail_VIS2(C)    false
++# define avail_VIS3(C)    false
++# define avail_VIS3B(C)   false
+ #endif
  
- static bool gen_edge(DisasContext *dc, arg_r_r_r *a,
--                     int width, bool cc, bool left)
-+                     int width, bool cc, bool little_endian)
- {
--    TCGv dst, s1, s2, lo1, lo2;
--    uint64_t amask, tabl, tabr;
--    int shift, imask, omask;
-+    TCGv dst, s1, s2, l, r, t, m;
-+    uint64_t amask = address_mask_i(dc, -8);
- 
-     dst = gen_dest_gpr(dc, a->rd);
-     s1 = gen_load_gpr(dc, a->rs1);
-@@ -3533,75 +3532,52 @@ static bool gen_edge(DisasContext *dc, arg_r_r_r *a,
-         gen_op_subcc(cpu_cc_N, s1, s2);
-     }
- 
--    /*
--     * Theory of operation: there are two tables, left and right (not to
--     * be confused with the left and right versions of the opcode).  These
--     * are indexed by the low 3 bits of the inputs.  To make things "easy",
--     * these tables are loaded into two constants, TABL and TABR below.
--     * The operation index = (input & imask) << shift calculates the index
--     * into the constant, while val = (table >> index) & omask calculates
--     * the value we're looking for.
--     */
-+    l = tcg_temp_new();
-+    r = tcg_temp_new();
-+    t = tcg_temp_new();
-+
-     switch (width) {
-     case 8:
--        imask = 0x7;
--        shift = 3;
--        omask = 0xff;
--        if (left) {
--            tabl = 0x80c0e0f0f8fcfeffULL;
--            tabr = 0xff7f3f1f0f070301ULL;
--        } else {
--            tabl = 0x0103070f1f3f7fffULL;
--            tabr = 0xfffefcf8f0e0c080ULL;
--        }
-+        tcg_gen_andi_tl(l, s1, 7);
-+        tcg_gen_andi_tl(r, s2, 7);
-+        tcg_gen_xori_tl(r, r, 7);
-+        m = tcg_constant_tl(0xff);
-         break;
-     case 16:
--        imask = 0x6;
--        shift = 1;
--        omask = 0xf;
--        if (left) {
--            tabl = 0x8cef;
--            tabr = 0xf731;
--        } else {
--            tabl = 0x137f;
--            tabr = 0xfec8;
--        }
-+        tcg_gen_extract_tl(l, s1, 1, 2);
-+        tcg_gen_extract_tl(r, s2, 1, 2);
-+        tcg_gen_xori_tl(r, r, 3);
-+        m = tcg_constant_tl(0xf);
-         break;
-     case 32:
--        imask = 0x4;
--        shift = 0;
--        omask = 0x3;
--        if (left) {
--            tabl = (2 << 2) | 3;
--            tabr = (3 << 2) | 1;
--        } else {
--            tabl = (1 << 2) | 3;
--            tabr = (3 << 2) | 2;
--        }
-+        tcg_gen_extract_tl(l, s1, 2, 1);
-+        tcg_gen_extract_tl(r, s2, 2, 1);
-+        tcg_gen_xori_tl(r, r, 1);
-+        m = tcg_constant_tl(0x3);
-         break;
-     default:
-         abort();
-     }
- 
--    lo1 = tcg_temp_new();
--    lo2 = tcg_temp_new();
--    tcg_gen_andi_tl(lo1, s1, imask);
--    tcg_gen_andi_tl(lo2, s2, imask);
--    tcg_gen_shli_tl(lo1, lo1, shift);
--    tcg_gen_shli_tl(lo2, lo2, shift);
-+    /* Compute Left Edge */
-+    if (little_endian) {
-+        tcg_gen_shl_tl(l, m, l);
-+        tcg_gen_and_tl(l, l, m);
-+    } else {
-+        tcg_gen_shr_tl(l, m, l);
-+    }
-+    /* Compute Right Edge */
-+    if (little_endian) {
-+        tcg_gen_shr_tl(r, m, r);
-+    } else {
-+        tcg_gen_shl_tl(r, m, r);
-+        tcg_gen_and_tl(r, r, m);
-+    }
- 
--    tcg_gen_shr_tl(lo1, tcg_constant_tl(tabl), lo1);
--    tcg_gen_shr_tl(lo2, tcg_constant_tl(tabr), lo2);
--    tcg_gen_andi_tl(lo1, lo1, omask);
--    tcg_gen_andi_tl(lo2, lo2, omask);
--
--    amask = address_mask_i(dc, -8);
--    tcg_gen_andi_tl(s1, s1, amask);
--    tcg_gen_andi_tl(s2, s2, amask);
--
--    /* Compute dst = (s1 == s2 ? lo1 : lo1 & lo2). */
--    tcg_gen_and_tl(lo2, lo2, lo1);
--    tcg_gen_movcond_tl(TCG_COND_EQ, dst, s1, s2, lo1, lo2);
-+    /* Compute dst = (s1 == s2 under amask ? l : l & r) */
-+    tcg_gen_xor_tl(t, s1, s2);
-+    tcg_gen_and_tl(r, r, l);
-+    tcg_gen_movcond_tl(TCG_COND_TSTEQ, dst, t, tcg_constant_tl(amask), r, l);
- 
-     gen_store_gpr(dc, a->rd, dst);
-     return advance_pc(dc);
+ /* Default case for non jump instructions. */
 -- 
 2.34.1
 
