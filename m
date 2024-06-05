@@ -4,68 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3186C25B78
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 01:22:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4329FC25B78
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 01:30:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEfLn-0006rw-V3; Tue, 04 Jun 2024 21:22:03 -0400
+	id 1sEfSY-0000TU-Cb; Tue, 04 Jun 2024 21:29:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sEfLl-0006rB-JN
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 21:22:01 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sEfLi-0002Yn-3K
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 21:22:01 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxW+qwvV9mbpkDAA--.15420S3;
- Wed, 05 Jun 2024 09:21:52 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Bx28atvV9mU_sUAA--.52676S3; 
- Wed, 05 Jun 2024 09:21:52 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch: fix a wrong print in cpu dump
-To: lanyanzhi22b@ict.ac.cn, qemu-devel@nongnu.org
-References: <20240604073831.666690-1-lanyanzhi22b@ict.ac.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <74807a0b-f21f-9c98-c83c-56ba26340341@loongson.cn>
-Date: Wed, 5 Jun 2024 09:21:49 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sEfSW-0000Sr-O2
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 21:29:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sEfSU-0004VN-IZ
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 21:29:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717550937;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jMtNE9Eow0elFpRE+T+eUuXHnyjNYdQ9KKqLT6dH5gA=;
+ b=QUfzQMER7Q5H4qdWCQX4UycTkiA2Nq8qAcUVE/HDhYcmFzGo9OvHXHQYwKs2yJl7f3hz8T
+ R//IV7Vx6YvJdEjWKtioe29S1hM28909GAPgVrCCg9YQa3bpABZz1HxSl3yAzlDRu+pwbt
+ kk4BbAhm9o/9d03/8EUisJiyIyAg/3U=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-195--wzj32r9PlWSxEDe7GZhhg-1; Tue, 04 Jun 2024 21:28:55 -0400
+X-MC-Unique: -wzj32r9PlWSxEDe7GZhhg-1
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-1f6792bf633so15085385ad.2
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 18:28:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717550933; x=1718155733;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jMtNE9Eow0elFpRE+T+eUuXHnyjNYdQ9KKqLT6dH5gA=;
+ b=jZQ05pCtS040V1z1TJZ3exenPlGHbsv2qKdCOB+cBkFuCFdmG8AVT25jjnFe2a2ao4
+ Z4mR0+/3VIt/WzOorwkQvQhd2gyYVEuCDs90Z5RlFPc5XpgAkXpyRS0OtlpqVi1+yCKu
+ ZUWLrXGCc5Toji59S6gylyvqPIQZacT/0EOebsEf2NI9KrxxDvZdSyP8UlrVWYfLtVkP
+ KCsr66JsJKddf3gMAyyTOxcUDtOxxPCMtFzbBKOK6LZeiAnTPaOpPRdvtk3qF0qj7OTN
+ jb2nRIKn1vxWlSB+cbh4ODe/6wBLZAXPjDSOsKGX+K95MQaBJ83W4BTWq+veIPXWhHnT
+ Bzdg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWlYp4jc1sX2iJNwc5o67Yw42k4TP2RTt9J4ZOnaWYgr11bLEUN6e2QogqMdZAKPnHeC6+bbRiXZovHuUqNMSJjRbm8ESA=
+X-Gm-Message-State: AOJu0YyLWLcHu8B+x82EslEHALmJ3sWO64L62uLczaIpkKyqoaWX8M6G
+ 4RFGSfVJXhKh28cCTIrQJAYkkAZpMvOOdgitkzmd8k/ciYj4mG3WtGANkCYrahOf2jWNHCCjfz1
+ IlSKBT0wEYJTwdGaew0U2NoUQcRw5H9KSYmNxtwJhcOywqNlcyDntxmsfKR2O
+X-Received: by 2002:a17:902:d482:b0:1f3:4d8f:e5f3 with SMTP id
+ d9443c01a7336-1f6a5a10405mr16992325ad.15.1717550933123; 
+ Tue, 04 Jun 2024 18:28:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGcgrrYDUt2pCJR8uE12repLrE76MxHDiOsp4jCC420V+o4b13wURBv7DbdTqJbBFK6TTyDlQ==
+X-Received: by 2002:a17:902:d482:b0:1f3:4d8f:e5f3 with SMTP id
+ d9443c01a7336-1f6a5a10405mr16992015ad.15.1717550932660; 
+ Tue, 04 Jun 2024 18:28:52 -0700 (PDT)
+Received: from [192.168.68.50] ([43.252.112.224])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f683286848sm38107865ad.235.2024.06.04.18.28.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 04 Jun 2024 18:28:52 -0700 (PDT)
+Message-ID: <e7748b25-a01b-49e9-bbeb-cd03abb91cf6@redhat.com>
+Date: Wed, 5 Jun 2024 11:28:47 +1000
 MIME-Version: 1.0
-In-Reply-To: <20240604073831.666690-1-lanyanzhi22b@ict.ac.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: Unexpected error in rme_configure_one() at
+ ../target/arm/kvm-rme.c:159
+To: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Cc: Itaru Kitayama <itaru.kitayama@linux.dev>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-arm <qemu-arm@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ard Biesheuvel <ardb@kernel.org>
+References: <0C6F517A-5686-4BCE-8D08-1CED02CB470E@linux.dev>
+ <4e7aa598-1a5d-47e1-aaa3-78af05947eeb@linaro.org>
+ <CB05CAA2-9301-45F6-8AE3-A2E27A160CDF@linux.dev>
+ <cbd630d7-01e8-49ba-9c8b-a6514d898ed2@redhat.com>
+ <20240531150922.GA83195@myrica>
+ <bd1f84bd-e23c-4f4b-bc0b-a2a1b70081f4@redhat.com>
+ <20240603082402.GA25688@myrica>
+ <2c81cb47-b9bc-4875-a7fb-49c3a8ab6713@redhat.com>
+ <20240604111517.GB875061@myrica>
 Content-Language: en-US
-X-CM-TRANSID: AQAAf8Bx28atvV9mU_sUAA--.52676S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7WFWfWw4kAF1rAr15WF4rZwc_yoW8JF4fpw
- 43CryDCa15GFsrA34xZa45ZFnYq3WxWw1xZa97CFyI9rZ8Xr12qF1vkr9FkF43C3sayr42
- 9Fn3Ar1YgF1DXFbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-2.522, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20240604111517.GB875061@myrica>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,34 +116,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2024/6/4 ÏÂÎç3:38, lanyanzhi22b@ict.ac.cn Ð´µÀ:
-> From: lanyanzhi <lanyanzhi22b@ict.ac.cn>
->
-> description:
->      loongarch_cpu_dump_state() want to dump all loongarch cpu
-> state registers, but there is a tiny typographical error when
-> printing "PRCFG2".
->
-> Signed-off-by: lanyanzhi <lanyanzhi22b@ict.ac.cn>
-> ---
->   target/loongarch/cpu.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+Hi Jean,
 
-Thanks.
-Song Gao
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index b5c1ec94af..270f711f11 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -707,7 +707,7 @@ void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
->       qemu_fprintf(f, "EENTRY=%016" PRIx64 "\n", env->CSR_EENTRY);
->       qemu_fprintf(f, "PRCFG1=%016" PRIx64 ", PRCFG2=%016" PRIx64 ","
->                    " PRCFG3=%016" PRIx64 "\n",
-> -                 env->CSR_PRCFG1, env->CSR_PRCFG3, env->CSR_PRCFG3);
-> +                 env->CSR_PRCFG1, env->CSR_PRCFG2, env->CSR_PRCFG3);
->       qemu_fprintf(f, "TLBRENTRY=%016" PRIx64 "\n", env->CSR_TLBRENTRY);
->       qemu_fprintf(f, "TLBRBADV=%016" PRIx64 "\n", env->CSR_TLBRBADV);
->       qemu_fprintf(f, "TLBRERA=%016" PRIx64 "\n", env->CSR_TLBRERA);
+On 6/4/24 21:15, Jean-Philippe Brucker wrote:
+> On Tue, Jun 04, 2024 at 01:02:08PM +1000, Gavin Shan wrote:
+>> On 6/3/24 18:24, Jean-Philippe Brucker wrote:
+>>> On Sat, Jun 01, 2024 at 08:14:46PM +1000, Gavin Shan wrote:
+>>>> ---> guest edk2
+>>>>
+>>>> # git clone https://git.codelinaro.org/linaro/dcap/edk2.git edk2-guest
+>>>> # cd edk2-guest; git checkout origin/cca/v2 -b cca/v2
+>>>> # git submodule update --init --recursive;  \
+>>>>     source edksetup.sh; make -j -C BaseTools; \
+>>>>     export GCC5_AARCH64_PREFIX=;              \
+>>>
+>>> Doesn't this needs a cross-compiler, something like "aarch64-linux-gnu-" ?
+>>>
+>>
+>> No, I was building everything using a native compiler instead of a cross compiler.
+>> All packages were compiled on a NVidia's grace-hopper machine.
+>>
+>> [root@nvidia-grace-hopper-05 ~]# cat /etc/system-release
+>> Red Hat Enterprise Linux release 9.5 Beta (Plow)
+>> [root@nvidia-grace-hopper-05 ~]# uname -r
+>> 6.7.0-rc2-gavin+
+>> [root@nvidia-grace-hopper-05 ~]# gcc --version
+>> gcc (GCC) 11.4.1 20231218 (Red Hat 11.4.1-3)
+>> Copyright (C) 2021 Free Software Foundation, Inc.
+>> This is free software; see the source for copying conditions.  There is NO
+>> warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+>>
+>> I tried the cross compiler and encountered the same build error.
+>>
+>> [root@nvidia-grace-hopper-05 edk2-guest]# export | grep GCC5_AARCH64_PREFIX
+>> declare -x GCC5_AARCH64_PREFIX="aarch64-linux-gnu-"
+>> [root@nvidia-grace-hopper-05 edk2-guest]# build -b DEBUG -a AARCH64 -t GCC5 -p ArmVirtPkg/ArmVirtQemu.dsc
+>>    :
+>> --add-gnu-debuglink=/home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.debug /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll
+>> cp -p -f /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.debug /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPrePeiCore.debug
+>> "GenFw" -e SEC -o /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/OUTPUT/ArmPlatformPrePeiCore.efi /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll
+>> GenFw: ERROR 3000: Invalid
+>>    WriteSections64(): /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll AARCH64 small code model requires identical ELF and PE/COFF section offsets modulo 4 KB.
+> 
+> Ah I've seen this once but it disappeared as I tried to investigate and
+> I've since changed the implementation, so I don't have many notes about
+> it.
+> 
+> Maybe you could try to bisect from "ArmVirtPkg: ArmCcaIoMmu: Provide an
+> implementation for SetAttribute", but it may give false positives if the
+> error depends on some random linker placement. Could be
+> "ArmVirtPkg/ArmPlatformLibQemu: Setup early UART mapping in a Realm" which
+> adds a 4k page to the data section for the ealy RSI config call, though
+> that has explicit 4kB alignment.
+> 
+> In my notes I also wrote that changing "-z common-page-size=0x20" to 4k in
+> the link flags may have made the error disappear, but I doubt it's the
+> right fix.
+> 
+> I'll try GCC 11 to see if I can reproduce.
+> 
+
+Ok. I run a git-bisect and the first problematic commit is 1153ae939c
+("ArmVirtPkg/ArmPlatformLibQemu: Add a third-level page table for the UART idmap")
+
+I'm not familiar with edk2. The error is raised by BaseTools/Source/C/GenFw/Elf64Convert.c::WriteSections64()
+where the relocatable address isn't properly aligned to 4KB. So I modified the code
+as below, but I have to run two consecutive builds. In the first attempt build, I
+still hit the same error.
+
+---> VirtPkg/Library/ArmPlatformLibQemu/IdMap.S
+
+   .align    12
+   .globl    idmap
+   .globl    uart_pte
+   .section  ".data.idmap", "aw", %progbits
+   .align    12
+
+# source edksetup.sh; export GCC5_AARCH64_PREFIX=
+# make -j -C BaseTools; \                                               <<< Failed on the first attempt
+   build -b DEBUG -a AARCH64 -t GCC5 -p ArmVirtPkg/ArmVirtQemu.dsc
+    :
+WriteSections64(): /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll AARCH64 small code model requires identical ELF and PE/COFF section offsets modulo 4 KB.
+make: *** [GNUmakefile:405: /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/OUTPUT/ArmPlatformPrePeiCore.efi] Error 2
+
+# make -j -C BaseTools; \                                              <<< Succeed on the second attempt
+   build -b DEBUG -a AARCH64 -t GCC5 -p ArmVirtPkg/ArmVirtQemu.dsc
+    :
+Generating FVMAIN FV
+######
+Fd File Name:QEMU_VARS (/home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/FV/QEMU_VARS.fd)
+    :
+- Done -
+Build end time: 21:04:05, Jun.04 2024
+Build total time: 00:00:06
+
+After that, I'm unable to start the guest with the edk2 image successfully.
+
+host# # mount | grep 9p
+shr0 on /mnt/shr0 type 9p (rw,relatime,access=client,trans=virtio)
+host# cat ./realm.sh
+#!/bin/sh
+
+SHR_DIR="/mnt/shr0"
+
+qemu-system-aarch64 -accel kvm                              \
+-machine virt,gic-version=3,confidential-guest-support=rme0 \
+-cpu host -smp 2 -m 512M                                    \
+-object 'rme-guest,id=rme0,measurement-algo=sha512'         \
+-monitor none -serial mon:stdio -nographic                  \
+-bios ${SHR_DIR}/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/FV/QEMU_EFI.fd \
+-kernel ${SHR_DIR}/linux/arch/arm64/boot/Image              \
+-initrd ${SHR_DIR}/buildroot/output/images/rootfs.cpio      \
+-append 'console=ttyAMA0'
+
+host# ./realm.sh
+UEFI firmware (version  built at 19:56:47 on Jun  4 2024)
+add-symbol-file /home/gavin/sandbox/C                              <<< I don't see more output after it
+
+>> GenFw: ERROR 3000: Invalid
+>>    :
+>>
+>>>>     build -b DEBUG -a AARCH64 -t GCC5 -p ArmVirtPkg/ArmVirtQemu.dsc
+>>>>      :
+>>>>     WriteSections64(): /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll AARCH64 small code model requires identical ELF and PE/COFF section offsets modulo 4 KB.
+>>>> cp -p -f /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/OvmfPkg/VirtioFsDxe/VirtioFsDxe/DEBUG/VirtioFsDxe.dll /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/OvmfPkg/VirtioFsDxe/VirtioFsDxe/DEBUG/VirtioFsDxe.debug
+>>>> cp -p -f /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Universal/Disk/PartitionDxe/PartitionDxe/DEBUG/PartitionDxe.debug /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/PartitionDxe.debug
+>>>> "gcc" -MMD -MF /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/CryptoPkg/Library/OpensslLib/OpensslLibCrypto/OUTPUT/openssl/crypto/asn1/x_sig.obj.deps @/home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/CryptoPkg/Library/OpensslLib/OpensslLibCrypto/OUTPUT/cc_resp.txt  -c -o /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/CryptoPkg/Library/OpensslLib/OpensslLibCrypto/OUTPUT/openssl/crypto/asn1/x_sig.obj  /home/gavin/sandbox/CCA/edk2-guest/CryptoPkg/Library/OpensslLib/openssl/crypto/asn1/x_sig.c
+>>>> "GenFw" -e DXE_CORE -o /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Core/Dxe/DxeMain/OUTPUT/DxeCore.efi /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Core/Dxe/DxeMain/DEBUG/DxeCore.dll
+>>>> GenSec -s EFI_SECTION_USER_INTERFACE -n ArmCpuDxe -o /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/FV/Ffs/B8D9777E-D72A-451F-9BDB-BAFB52A68415ArmCpuDxe/B8D9777E-D72A-451F-9BDB-BAFB52A68415SEC3.ui
+>>>> cp -p -f /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Universal/DisplayEngineDxe/DisplayEngineDxe/DEBUG/*.map /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Universal/DisplayEngineDxe/DisplayEngineDxe/OUTPUT
+>>>> cp -p -f /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Universal/Disk/UdfDxe/UdfDxe/OUTPUT/UdfDxe.efi /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Universal/Disk/UdfDxe/UdfDxe/DEBUG
+>>>> GenFw: ERROR 3000: Invalid
+>>>>     :
+>>>> build.py...
+>>>>    : error 7000: Failed to execute command
+>>>> 	make tbuild [/home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore]
+>>>>
+>>>>
+>>>> build.py...
+>>>>    : error F002: Failed to build module
+>>>> 	/home/gavin/sandbox/CCA/edk2-guest/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore.inf [AARCH64, GCC5, DEBUG]
+>>>>
+>>>> - Failed -
+>>>> Build end time: 05:42:19, Jun.01 2024
+>>>> Build total time: 00:00:31
+>>>>
+> 
+> 
+>> Ok, I can look into this deeply after I can bring up the guest successfully.
+> 
+> Note that the guest edk2 is optional and experimental, you can use direct
+> kernel boot to get a working demo quicker.
+> 
+
+I never did this before. Could you please provide the detailed steps on this?
+
+Thanks,
+Gavin
 
 
