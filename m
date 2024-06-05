@@ -4,45 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CF0FC41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 612AEC25B76
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 09:10:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEmeP-0003NQ-74; Wed, 05 Jun 2024 05:09:45 -0400
+	id 1sEmeb-0003QO-B4; Wed, 05 Jun 2024 05:09:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1sEmeM-0003KP-J3
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 05:09:42 -0400
+ id 1sEmeZ-0003Q7-Jo
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 05:09:55 -0400
 Received: from apollo.dupie.be ([51.159.20.238])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1sEmeJ-0007RT-Ur
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 05:09:42 -0400
+ id 1sEmeX-0007Sk-HO
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 05:09:55 -0400
 Received: from localhost.localdomain (unknown
  [IPv6:2a02:a03f:eaf7:ff01:ba43:94d2:9111:d35b])
- by apollo.dupie.be (Postfix) with ESMTPSA id 6D6F61520BCB;
- Wed,  5 Jun 2024 11:09:33 +0200 (CEST)
+ by apollo.dupie.be (Postfix) with ESMTPSA id 1A6B51520F7E;
+ Wed,  5 Jun 2024 11:09:51 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1717578573;
+ t=1717578591;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=xaRh2kDvJmOUpmn9eMQF8FZeFdT0cxw4cSRTquv3wgA=;
- b=jFWB+xnFc7gDtxWiA2iWww/QFzLjYcv3MmlRPhI0y5voncVdFYTLd6utLKm2IDPiPUeMZT
- AfFJ2smXwBoJFJfsIMsYc1W6cF/9xcXRJUPbZIRRcLt0BkEAEN/KUBR6PYcQvIPi8FKkV8
- uKZhjI0XCrF9Z1tYsXtRWzZaCQ1/+RQL/BU+R+GpaTsCGOTMebCX1m21tLm6oSP0CBUqEo
- yOvta9cFq+Vo1PhCg+WjwzYOfVkNU2/iAXDQnoJ4HaRgGjgxXdnIOD5DtClrXe05xQAZkQ
- UZlBF6hYQk8RTyPcsEzCP+a3vsBEauAtHXLtwOBjJ3u1UNdpRq2lrehk8OsR1w==
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=J2vRMGgEtG3Mc3jJIUV+Hm+Gs++97WF++6erVmoVB4U=;
+ b=UgQXjBMJRmU6zagyyvDbjOnYVJB9VEUzr0H4wZQJgaQFh4eBKTFhrCI1crCPGPWH+S/vkf
+ 5RYavL14zEIP5nDrpL1plkHYgco7TflUqoELCXvPmAXhQZkcskx6NzKcxUIWeXLM7kHmHn
+ UXyHpmLYWei7EPxKtiXhCpq1HIV245+OyTl7c6ymuqyn3C5SUleV2Zn7DlS989QMNFE3zL
+ r15WK3LcD6RWyDXdlGImc9xefF8ERGwNBEErnEIUGbLxaijrv/Klw1e3MaCFDdyPxsO0zk
+ O3heEHYNxSANCgj6T0EBBuDJcBnwIokabszyM9Wn48wJz2EAvCrrtKv1juzPxA==
 From: Jean-Louis Dupond <jean-louis@dupond.be>
 To: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
  andrey.drobyshev@virtuozzo.com
 Cc: Jean-Louis Dupond <jean-louis@dupond.be>
-Subject: [PATCH 1/2] qcow2: handle discard-no-unref in measure
-Date: Wed,  5 Jun 2024 11:06:39 +0200
-Message-ID: <20240605090639.3402698-2-jean-louis@dupond.be>
+Subject: [PATCH 2/2] qcow2: don't allow discard-no-unref when discard is not
+ enabled
+Date: Wed,  5 Jun 2024 11:06:41 +0200
+Message-ID: <20240605090639.3402698-4-jean-louis@dupond.be>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240605090639.3402698-2-jean-louis@dupond.be>
+References: <20240605090639.3402698-2-jean-louis@dupond.be>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=51.159.20.238; envelope-from=jean-louis@dupond.be;
@@ -68,83 +72,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When doing a measure on an image with a backing file and
-discard-no-unref is enabled, the code should take this into account.
+When discard is not set to unmap/on, we should not allow setting
+discard-no-unref.
 
-If for example you have a snapshot image with a base, and you do a
-discard within the snapshot, it will be ZERO and ALLOCATED, but without
-host offset.
-Now if we commit this snapshot, and the clusters in the base image were
-allocated, the clusters will only be set to ZERO, but the host offset
-will not be cleared.
-Therefor ZERO & ALLOCATED clusters in the top image need to check the
-base to see if space will be freed or not, to have a correct measure
-output.
-
-Bug-Url: https://gitlab.com/qemu-project/qemu/-/issues/2369
 Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
 ---
- block/qcow2.c | 36 +++++++++++++++++++++++++++++++++---
- 1 file changed, 33 insertions(+), 3 deletions(-)
+ block/qcow2.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/block/qcow2.c b/block/qcow2.c
-index 956128b409..1ce7ebbab4 100644
+index 1ce7ebbab4..54c6b041b1 100644
 --- a/block/qcow2.c
 +++ b/block/qcow2.c
-@@ -5163,9 +5163,16 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
-         } else {
-             int64_t offset;
-             int64_t pnum = 0;
-+            BlockDriverState *parent = bdrv_filter_or_cow_bs(in_bs);
-+            BDRVQcow2State *s = NULL;
-+
-+            if (parent) {
-+                s = parent->opaque;
-+            }
+@@ -1156,6 +1156,12 @@ qcow2_update_options_prepare(BlockDriverState *bs, Qcow2ReopenState *r,
+         ret = -EINVAL;
+         goto fail;
+     }
++    if (r->discard_no_unref && !(flags & BDRV_O_UNMAP)) {
++        error_setg(errp,
++                   "discard-no-unref is only valid with discard=unmap/on");
++        ret = -EINVAL;
++        goto fail;
++    }
  
-             for (offset = 0; offset < ssize; offset += pnum) {
-                 int ret;
-+                int retp = 0;
- 
-                 ret = bdrv_block_status_above(in_bs, NULL, offset,
-                                               ssize - offset, &pnum, NULL,
-@@ -5176,10 +5183,33 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
-                     goto err;
-                 }
- 
--                if (ret & BDRV_BLOCK_ZERO) {
-+                /* If we have a parent in the chain and the current block is zero but allocated,
-+                 * then we want to check the allocation state of the parent block.
-+                 * If it was allocated and now zero, we want
-+                 * to include it into the calculation, cause it will not free space when
-+                 * committing the top into base with discard-no-unref enabled.
-+                 */
-+                if (parent &&
-+                    ((ret & (BDRV_BLOCK_ZERO | BDRV_BLOCK_ALLOCATED)) ==
-+                     (BDRV_BLOCK_ZERO | BDRV_BLOCK_ALLOCATED)) &&
-+                     s->discard_no_unref) {
-+                        int64_t pnum_parent = 0;
-+                        retp = bdrv_block_status_above(parent, NULL, offset,
-+                                              ssize - offset, &pnum_parent, NULL,
-+                                              NULL);
-+                        // Check if parent block has an offset
-+                        if (retp & BDRV_BLOCK_OFFSET_VALID) {
-+                            pnum = retp;
-+                        }
-+                }
-+                if (ret & BDRV_BLOCK_ZERO && !retp) {
-                     /* Skip zero regions (safe with no backing file) */
--                } else if ((ret & (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) ==
--                           (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) {
-+                } else if (((ret & (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) ==
-+                            (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) ||
-+                           (((ret & (BDRV_BLOCK_ZERO | BDRV_BLOCK_ALLOCATED)) ==
-+                             (BDRV_BLOCK_ZERO | BDRV_BLOCK_ALLOCATED)) &&
-+                            s && s->discard_no_unref &&
-+                            retp & BDRV_BLOCK_OFFSET_VALID)) {
-                     /* Extend pnum to end of cluster for next iteration */
-                     pnum = ROUND_UP(offset + pnum, cluster_size) - offset;
- 
+     switch (s->crypt_method_header) {
+     case QCOW_CRYPT_NONE:
 -- 
 2.45.2
 
