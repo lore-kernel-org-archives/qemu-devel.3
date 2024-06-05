@@ -4,88 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D322C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E665DC25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:52:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF0PX-0004PH-Nn; Wed, 05 Jun 2024 19:51:19 -0400
+	id 1sF0QC-0004Sq-Bk; Wed, 05 Jun 2024 19:52:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sF0PW-0004P3-Rj
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:51:18 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sF0QA-0004SP-Up; Wed, 05 Jun 2024 19:51:58 -0400
+Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sF0PU-0000FA-Md
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:51:18 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-7024cd9dd3dso289768b3a.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:51:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sF0Q9-0000KG-BD; Wed, 05 Jun 2024 19:51:58 -0400
+Received: by mail-vk1-xa29.google.com with SMTP id
+ 71dfb90a1353d-4eb2b07f660so126996e0c.0; 
+ Wed, 05 Jun 2024 16:51:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717631475; x=1718236275; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LerrnjzYQ1Rxikp6A6IA7nlrT1ML+Es19vtnFDisKuk=;
- b=v9ObHT6vpoKq8cLxQqqgC/jZF56h09I7XTVt/n5U5f1kIL8N/j2LqBlrWTSshW30Sy
- vTMiGvmnAJVPyaPUiIYSstjq5OR2GRoe43juk3oyUXTzdH7DLTM0nAlTkHHedsdDPm/k
- U1C5nA484uHobKXuvDSffzfpVFlqJThy720ZHYQNYUVFETpt9GL6Ephmauez6t5ZIc7W
- PFXBojgnXBgLAVdfd3beml+/lh+WK3h3TCHlRoB0nX8m96DRCo7jj2dJe5K+x4/xvbnL
- FMEHkxs3eBGLz+FG9fRjSAM+DleFSJQaX06eXRqbcNcFt5oQHyG4prqmIyZjcioQWQdc
- rlAA==
+ d=gmail.com; s=20230601; t=1717631515; x=1718236315; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=h/otAz/3UoNcr66COi2pXQHUN3MAshJlRuUFHqqaOs0=;
+ b=lEAA5pke6o9HQ1OyFpgk+hBHyx5a1CoE62oFU5k5036XL4vOyIdybJfdmSUFVAM7GP
+ r8zjDSGBVI9q5iJE9RCs0PNXJeWoEBzshp9k0QLr4a1KwkhpRVXTrltxQFOZR885YRdf
+ IiNYBUQx8FEEfSQ8iVmUDIG7R2px4typdABrYTTuhR7MnDuxhzbTyibxq7Vayt9icLOe
+ HPjmrS/pBxO6fsz3NNBl1q9QQ5Lhixwcx7cKpaElKuiYsVG1aU8n1+8bd9cZ+mLBvl2w
+ 2JGfJ6cx0lgrB8ZsFjzBU4HjtecOQs03jLN/otvy4gbVh1zTjNp3E0m612++hdqeRUUi
+ Wkqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717631475; x=1718236275;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LerrnjzYQ1Rxikp6A6IA7nlrT1ML+Es19vtnFDisKuk=;
- b=EX3NZhptpB1i3Goh5QaYGvYYUtS7agd+TXlU0J2iRPLrlP8ojiZN2/bM91kR5W7sJG
- PnqcY5oAwJSeAmOhcgVotNzadtvRNCSyGhJrZO94VEN6CP41NCtDuQlIovaw+XLmA+Ct
- HKq+UHw53LRV5T08v63uwDZ3B2KqpBozEwQId5UcV2gNViyncsuDPW/Jc56hooDIV2Q4
- XgQT8PEbBiqc+LVUh+NB8VPYHMHjYiEQfpek++2jeBhKyPqLwxU2RGpMWxtt2V37CX3J
- 5SCShiL3DN575CgPH9Bu28FqbflUJn9oeMR02Jb5xmqKVdEdKiFCJYNvzzznlaX8WxUl
- KmpA==
+ d=1e100.net; s=20230601; t=1717631515; x=1718236315;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=h/otAz/3UoNcr66COi2pXQHUN3MAshJlRuUFHqqaOs0=;
+ b=n+uHirvuX79L8t1DXG2iqkR267ju+2TUHt+oQWXI+rkBCAw7fp4p+1mYUukLoaD5tV
+ y/oUOCVaHec59ibjsAJXwKu0LKyx099H5RCoyEdXqOzRSVJCDJrtP/cYqdb04pBTZDAa
+ nL+lWgd1VyXq71oLRsflhL8/QBrc9KrfCImMzKwvX3iRN6IlbqNxsbCQk+1ZhtR+qh9B
+ Vhc8AGyVkK5YKdWt3ljEtEjZmvd5LdxCFSJF1yLe/nSljJCsh1X6czM7dijdVn6juAbO
+ fKXgMt22gGBZ6ftvI/RKtyq+tF+f5EvWEsetTdYdDsZ120z1CclpsxR6Y8fCur9WDcNZ
+ auHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXUrARzZ7xCoKO2BcVXmC/1mVDciv7bGivUhJph07HQ/C+aiWZo6Cg1avu0oXIABmp29hJWZLweN+/PBxwie+9RTM05OAg=
-X-Gm-Message-State: AOJu0YwWtUYZTR9nzz26PaYLbPHdhpot2sRLULAxKbaK0bNI1BqLQp1b
- Pifl/ky1bCr3oCwQy1CrYcUdgiHEVv4ydve+FTJoSpDzo3wDgoEP0RObkwUI+/k=
-X-Google-Smtp-Source: AGHT+IG39IUwlNERvtwYnOSWY/XFLo1ZQsEVd2yIWPJQoKougX1RvGrfQQJJ0McEnPwJdYI7BqvQXw==
-X-Received: by 2002:a05:6a00:9084:b0:702:7bfa:344c with SMTP id
- d2e1a72fcca58-703e599dc66mr4699253b3a.13.1717631474695; 
- Wed, 05 Jun 2024 16:51:14 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.132.216])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-703fd3954f2sm61134b3a.51.2024.06.05.16.51.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Jun 2024 16:51:14 -0700 (PDT)
-Message-ID: <5d78d82d-a939-4103-8411-507b1a0372ac@linaro.org>
-Date: Wed, 5 Jun 2024 16:51:12 -0700
+ AJvYcCU/S9ny1uIqzVZUUQnil3q9Q7GyOsD8p93XSpFQktqxS+lYg2CWgy/6zh7djRR4qBdpS6zU+htZyYtN4SzIfn/pA6Ovano=
+X-Gm-Message-State: AOJu0YzYgQ+AOZb1o7l+IfEBgm8WOhsxrIRMWIfDvBhqecLWqQ68dZoB
+ NMDBptQ/eafZwC0cCdAvizk1KvnHgVIlAzUJHxkFjBs7yWVYjfnWJuLmY+CloAdKZQtopAJUbS+
+ BzQrRg9XUN6LtrTm/DyTWUb34GDI=
+X-Google-Smtp-Source: AGHT+IGIm7QNkfb8hZiMWXeJYAj/y4lnWIZu4ebxbaGgfzbj6Zi2yi1/kJ4ZQvbSGEl3DTS5pYbCanY5IcabYKTQ5Nk=
+X-Received: by 2002:a05:6122:25dc:b0:4da:ced8:b09a with SMTP id
+ 71dfb90a1353d-4eb3a26beefmr4174896e0c.0.1717631515500; Wed, 05 Jun 2024
+ 16:51:55 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] util/bufferiszero: Add simd acceleration for
- loongarch64
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-devel@nongnu.org
-References: <20240605093213.2191929-1-maobibo@loongson.cn>
- <20240605093213.2191929-3-maobibo@loongson.cn>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240605093213.2191929-3-maobibo@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240605025527.11711-1-duchao@eswincomputing.com>
+In-Reply-To: <20240605025527.11711-1-duchao@eswincomputing.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 6 Jun 2024 09:51:29 +1000
+Message-ID: <CAKmqyKNL5xtB-XPqC1Yma6v7_T=dFp1edDmf6oE0dTr5nctd0g@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] target/riscv/kvm: QEMU support for KVM Guest Debug
+ on RISC-V
+To: Chao Du <duchao@eswincomputing.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com, 
+ ajones@ventanamicro.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
+ anup@brainfault.org, duchao713@qq.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,72 +94,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/24 02:32, Bibo Mao wrote:
-> Different gcc versions have different features, macro CONFIG_LSX_OPT
-> and CONFIG_LASX_OPT is added here to detect whether gcc supports
-> built-in lsx/lasx macro.
-> 
-> Function buffer_zero_lsx() is added for 128bit simd fpu optimization,
-> and function buffer_zero_lasx() is for 256bit simd fpu optimization.
-> 
-> Loongarch gcc built-in lsx/lasx macro can be used only when compiler
-> option -mlsx/-mlasx is added, and there is no separate compiler option
-> for function only. So it is only in effect when qemu is compiled with
-> parameter --extra-cflags="-mlasx"
-> 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   meson.build         |  11 +++++
->   util/bufferiszero.c | 103 ++++++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 114 insertions(+)
-> 
-> diff --git a/meson.build b/meson.build
-> index 6386607144..29bc362d7a 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2855,6 +2855,17 @@ config_host_data.set('CONFIG_ARM_AES_BUILTIN', cc.compiles('''
->       void foo(uint8x16_t *p) { *p = vaesmcq_u8(*p); }
->     '''))
->   
-> +# For Loongarch64, detect if LSX/LASX are available.
-> + config_host_data.set('CONFIG_LSX_OPT', cc.compiles('''
-> +    #include "lsxintrin.h"
-> +    int foo(__m128i v) { return __lsx_bz_v(v); }
-> +  '''))
-> +
-> +config_host_data.set('CONFIG_LASX_OPT', cc.compiles('''
-> +    #include "lasxintrin.h"
-> +    int foo(__m256i v) { return __lasx_xbz_v(v); }
-> +  '''))
+On Wed, Jun 5, 2024 at 1:00=E2=80=AFPM Chao Du <duchao@eswincomputing.com> =
+wrote:
+>
+> This series implements QEMU KVM Guest Debug on RISC-V, with which we
+> could debug RISC-V KVM guest from the host side, using software
+> breakpoints.
+>
+> This series is based on riscv-to-apply.next branch and is also
+> available at:
+> https://github.com/Du-Chao/alistair23-qemu/tree/riscv-to-apply.next.0605
+>
+> The corresponding KVM side patches have been merged already:
+> https://lore.kernel.org/kvm/20240402062628.5425-1-duchao@eswincomputing.c=
+om/
+>
+> A TODO list which will be added later:
+> 1. HW breakpoints support
+> 2. A 'corner case' in which the debug exception is not inserted by the
+> debugger, need to be re-injected to the guest.
+>
+> v2 resend->v3:
+> - rebased.
 
-Both of these are introduced by gcc 14 and llvm 18, so I'm not certain of the utility of 
-separate tests.  We might simplify this with
+I think you rebased on the wrong tree. Do you mind rebasing on
+https://github.com/alistair23/qemu/tree/riscv-to-apply.next
 
-   config_host_data.set('CONFIG_LSX_LASX_INTRIN_H',
-     cc.has_header('lsxintrin.h') && cc.has_header('lasxintrin.h'))
+Alistair
 
-
-As you say, these headers require vector instructions to be enabled at compile-time rather 
-than detecting them at runtime.  This is a point where the compilers could be improved to 
-support __attribute__((target("xyz"))) and the builtins with that.  The i386 port does 
-this, for instance.
-
-In the meantime, it means that you don't need a runtime test.  Similar to aarch64 and the 
-use of __ARM_NEON as a compile-time test for simd support.  Perhaps
-
-#elif defined(CONFIG_LSX_LASX_INTRIN_H) && \
-       (defined(__loongarch_sx) || defined(__loongarch_asx))
-# ifdef __loongarch_sx
-   ...
-# endif
-# ifdef __loongarch_asx
-   ...
-# endif
-
-
-The actual code is perfectly fine, of course, since it follows the pattern from the 
-others.  How much improvement do you see from bufferiszero-bench?
-
-
-r~
+>
+> v2->v2 resend:
+> - add the type conversion in patch #1 to avoid warnings
+>
+> v1->v2:
+> - squash patch #2 into #1
+> - check the instruction length from the tail two bits, instead of passing=
+ the
+>   length information by parameters.
+>
+> RFC->v1:
+> - Rebased on riscv-to-apply.next
+> - use configs/ definition to conditionalize debug support
+>
+> v2 link:
+> https://lore.kernel.org/qemu-riscv/20240528080759.26439-1-duchao@eswincom=
+puting.com/
+> v1 link:
+> https://lore.kernel.org/qemu-riscv/20240527021916.12953-1-duchao@eswincom=
+puting.com/
+> RFC link:
+> https://lore.kernel.org/qemu-riscv/20231221094923.7349-1-duchao@eswincomp=
+uting.com/
+>
+> Chao Du (3):
+>   target/riscv/kvm: add software breakpoints support
+>   target/riscv/kvm: handle the exit with debug reason
+>   target/riscv/kvm: define TARGET_KVM_HAVE_GUEST_DEBUG
+>
+>  configs/targets/riscv64-softmmu.mak |  1 +
+>  target/riscv/kvm/kvm-cpu.c          | 90 +++++++++++++++++++++++++++++
+>  2 files changed, 91 insertions(+)
+>
+> --
+> 2.17.1
+>
 
