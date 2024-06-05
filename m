@@ -4,82 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C05C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 13:51:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2843C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 14:00:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEr2Z-0000ol-4l; Wed, 05 Jun 2024 09:50:59 -0400
+	id 1sErB8-0003R4-1y; Wed, 05 Jun 2024 09:59:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sEr2X-0000nT-V9
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 09:50:58 -0400
-Received: from mail-qt1-x831.google.com ([2607:f8b0:4864:20::831])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sErB7-0003Qr-En
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 09:59:49 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sEr2U-0006zS-UM
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 09:50:57 -0400
-Received: by mail-qt1-x831.google.com with SMTP id
- d75a77b69052e-4402066471cso7936761cf.0
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 06:50:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717595453; x=1718200253; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ZdVHvRs9o4/Aet/GFGJ1aFRizh/u0cmXBzkisDX4onc=;
- b=OxcYH4PEW2cKcLb2nvt4RSdM3C6qq1+2sLHCmvGyzMr3HML2mllOnMt/O6jzxnC4jl
- meAXkGRdbtxDOwfAqCYFQSvbQJGocpz/nfMRcTYsagsbDjrsDHd0Cw+yv4XyT8jIn9Wd
- 7epI6utKd9SMtmCngg6MGLoldpBKRJmSlUS7DpNcbEWYfxNyktUUqs+TpFDau8wHlFUw
- QhepGd6rtlQ7xo2K8DL539e6CgvsMraGZa8KNFf8JPdmPOnKAGfyQWvqiaRVdvNfkra/
- YE9unzLrQa8ueeKh9DYWJaqalI5pQWduB6BOsj7uh4jwNmYQFKY6l1bZQhuJ4ET026Hg
- 2/cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717595453; x=1718200253;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZdVHvRs9o4/Aet/GFGJ1aFRizh/u0cmXBzkisDX4onc=;
- b=bROgYm2DtEHGS01i3IbsUMnZmkJ5RJAap6xXtTojEd72C/R0PLiN9oR38dA5OolJJZ
- k601f2RnXU6XKizQIvbTKjPhYdCA/+om4JvQ76injxHyLdIXYYimTYMQqUTOquSV+lOf
- WGkQw72GyBxxBKwyp0FkdpbHc3BNFf3H9t7He/ytXX10JKFs9B9ZFnEtH+uQRhSbBXtJ
- bmJOhL+u53kBrCtFHaq0TCSa32FlcBuk6+RdYwUy6gv+AyGb44yMls7eXkkaiHq3agk+
- Z+oWvdEfgOwyI6tNzxOlflqoXTx1t6BZKA0O8eXHGsnKCipNTkkjKKtD8X8B4ceEyEZ+
- WoAw==
-X-Gm-Message-State: AOJu0YwVwYzuwMV/ypyAsLOhI6Gb51ubrOSooz4MS8bpQYgiRZiCgyNY
- PgsW535yF3NCqC0qFwhImKSxgMwUuyE1SddH2FezmZTI1OC8nLMLxp8JENOGRFbbJtOrDKbkxwd
- K9BGZMn0e0EyJCkiqow1kug3sYqo=
-X-Google-Smtp-Source: AGHT+IGykfpm1KV8Hd4eoZjNqfOfJTxjj7DqRLUGC6FAGQ9lpCojNc1vbq93nk+4W2R+kJ3l8VLkE4hnmVRlaPCcQHs=
-X-Received: by 2002:ac8:7c50:0:b0:440:1a67:481e with SMTP id
- d75a77b69052e-44029e9f826mr50918211cf.20.1717595453235; Wed, 05 Jun 2024
- 06:50:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sErB5-0000Xl-J4
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 09:59:49 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C58DC1F80B;
+ Wed,  5 Jun 2024 13:59:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1717595985; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IN9jMpKPCKRpVmJ+AQpWXDEUZvPROq9bZ6hrmJXCxlE=;
+ b=KrEj+L5Fv1oCMG8S/gd0UGpHHur+YkYRVP7lNhnlP0QqcuXKGjvB0/Ijylurlo8LmuAl7G
+ q1fZdfKu2j8eF7WvJJgtbVhqtmWWXfjSTedJPhHJdVaO3m4wJAoewobop5d1PJ/di49lEj
+ qivvWB8Q/TktuP5rpgkmmr2aJdB8164=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1717595985;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IN9jMpKPCKRpVmJ+AQpWXDEUZvPROq9bZ6hrmJXCxlE=;
+ b=/ARteBBAFSWebonMet7VzRVCv/YVaYAH7ggtbWBWk8RoIQGTwv9gK34kR9bZrk632TfJF2
+ yhx1ctPMl6XnUdCw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=q67vKBHL;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=7eE+aCKt
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1717595984; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IN9jMpKPCKRpVmJ+AQpWXDEUZvPROq9bZ6hrmJXCxlE=;
+ b=q67vKBHL1HtF3G32wYJH7DjbdPpAzJKw+s/MZTlPPeATT5xTj3GQPqJWf8qxXfPhQKU8rx
+ zi01sumouYjzP4PUsn+ovppk4AX2/SJ7lOePX4aVS198eHD7dPUW82Hu5SeE8Bku5WcOy/
+ f5Ztz7YunMyyNbHtWSBgXMx0DFZ2RMo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1717595984;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IN9jMpKPCKRpVmJ+AQpWXDEUZvPROq9bZ6hrmJXCxlE=;
+ b=7eE+aCKtgmzyJzqWnIFLUQ4Jo5Sq/Tod++NU4IEe+l2/ABM2NflYe5QA4l4X80qYOw1wpC
+ UDsYbDeqpeOEeFBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4E78913A24;
+ Wed,  5 Jun 2024 13:59:44 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id XdeEBVBvYGa4KQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 05 Jun 2024 13:59:44 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, stefanha@redhat.com, pbonzini@redhat.com
+Subject: Re: [RFC PATCH] migration/savevm: do not schedule
+ snapshot_save_job_bh in qemu_aio_context
+In-Reply-To: <20240605120848.358654-1-f.ebner@proxmox.com>
+References: <20240605120848.358654-1-f.ebner@proxmox.com>
+Date: Wed, 05 Jun 2024 10:59:41 -0300
+Message-ID: <874ja7h4mq.fsf@suse.de>
 MIME-Version: 1.0
-References: <20240605133527.529950-1-alex.bennee@linaro.org>
-In-Reply-To: <20240605133527.529950-1-alex.bennee@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 5 Jun 2024 17:50:41 +0400
-Message-ID: <CAJ+F1CKdme8dKCO3iMEZLU-uWLfk-PPCfMNwh6-vCbCLyJvYiw@mail.gmail.com>
-Subject: Re: [RFC PATCH] subprojects: add a wrapper for libvirglrenderer
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000dbaef3061a24da0c"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::831;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x831.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: C58DC1F80B
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, imap1.dmz-prg2.suse.org:helo,
+ imap1.dmz-prg2.suse.org:rdns]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,306 +127,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000dbaef3061a24da0c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Fiona Ebner <f.ebner@proxmox.com> writes:
 
-Hi
-
-On Wed, Jun 5, 2024 at 5:35=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linaro=
-.org> wrote:
-
-> As the latest features for virtio-gpu need a pretty recent version of
-> libvirglrenderer. When it is not available on the system we can use a
-> meson wrapper and provide it when --download is specified in
-> configure.
+> The fact that the snapshot_save_job_bh() is scheduled in the main
+> loop's qemu_aio_context AioContext means that it might get executed
+> during a vCPU thread's aio_poll(). But saving of the VM state cannot
+> happen while the guest or devices are active and can lead to assertion
+> failures. See issue #2111 for two examples. Avoid the problem by
+> scheduling the snapshot_save_job_bh() in the iohandler AioContext,
+> which is not polled by vCPU threads.
 >
-> We have to take some additional care as currently QEMU will hang
-> libvirglrenderer fails to exec the render server. As the error isn't
-> back propagated we make sure we at least test we have a path to an
-> executable before tweaking the environment.
+> Solves Issue #2111.
 >
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+> This change also solves the following issue:
+>
+> Since commit effd60c878 ("monitor: only run coroutine commands in
+> qemu_aio_context"), the 'snapshot-save' QMP call would not respond
+> right after starting the job anymore, but only after the job finished,
+> which can take a long time. The reason is, because after commit
+> effd60c878, do_qmp_dispatch_bh() runs in the iohandler AioContext.
+> When do_qmp_dispatch_bh() wakes the qmp_dispatch() coroutine, the
+> coroutine cannot be entered immediately anymore, but needs to be
+> scheduled to the main loop's qemu_aio_context AioContext. But
+> snapshot_save_job_bh() was scheduled first to the same AioContext and
+> thus gets executed first.
+>
+> Buglink: https://gitlab.com/qemu-project/qemu/-/issues/2111
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 > ---
->  meson.build                    |  7 ++++++-
->  hw/display/virtio-gpu-virgl.c  | 24 ++++++++++++++++++++++++
->  subprojects/virglrenderer.wrap |  6 ++++++
->  3 files changed, 36 insertions(+), 1 deletion(-)
->  create mode 100644 subprojects/virglrenderer.wrap
 >
-> diff --git a/meson.build b/meson.build
-> index 1d7346b703..e4e270df78 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1203,7 +1203,8 @@ have_vhost_user_gpu =3D have_tools and host_os =3D=
-=3D
-> 'linux' and pixman.found()
->  if not get_option('virglrenderer').auto() or have_system or
-> have_vhost_user_gpu
->    virgl =3D dependency('virglrenderer',
->                       method: 'pkg-config',
-> -                     required: get_option('virglrenderer'))
-> +                     required: get_option('virglrenderer'),
-> +                     default_options: ['default_library=3Dstatic',
-> 'render-server=3Dtrue', 'venus=3Dtrue'])
->
+> While initial smoke testing seems fine, I'm not familiar enough with
+> this to rule out any pitfalls with the approach. Any reason why
+> scheduling to the iohandler AioContext could be wrong here?
 
-So the subproject won't be used unless virgl-devel is missing on the
-system. Is it really so useful? maybe, I am just used to installing my
-bleeding edge libraries with stow..
+FWIW, I couldn't find any reason why this would not work. But let's see
+what Stefan and Paolo have to say.
 
 >
+> Should the same be done for the snapshot_load_job_bh and
+> snapshot_delete_job_bh to keep it consistent?
 
->  endif
->  rutabaga =3D not_found
->  if not get_option('rutabaga_gfx').auto() or have_system or
-> have_vhost_user_gpu
-> @@ -2314,6 +2315,10 @@ if virgl.version().version_compare('>=3D1.0.0')
->    config_host_data.set('HAVE_VIRGL_RESOURCE_BLOB', 1)
->    config_host_data.set('HAVE_VIRGL_VENUS', 1)
->  endif
-> +if virgl.type_name().contains('internal')
-> +  config_host_data.set('HAVE_BUNDLED_VIRGL_SERVER', 1)
-> +endif
-> +
->  config_host_data.set('CONFIG_VIRTFS', have_virtfs)
->  config_host_data.set('CONFIG_VTE', vte.found())
->  config_host_data.set('CONFIG_XKBCOMMON', xkbcommon.found())
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.=
-c
-> index c9d20a8a60..53d6742e79 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -14,6 +14,7 @@
->  #include "qemu/osdep.h"
->  #include "qemu/error-report.h"
->  #include "qemu/iov.h"
-> +#include "qemu/cutils.h"
->  #include "trace.h"
->  #include "hw/virtio/virtio.h"
->  #include "hw/virtio/virtio-gpu.h"
-> @@ -1122,6 +1123,26 @@ void virtio_gpu_virgl_reset(VirtIOGPU *g)
->      virgl_renderer_reset();
->  }
->
-> +/*
-> + * If we fail to spawn the render server things tend to hang so it is
-> + * important to do our due diligence before then. If QEMU has bundled
-> + * the virgl server we want to ensure we can run it from the build
-> + * directory and if installed.
-> + *
-> + * The principle way we can override the libvirglrenders behaviour is
-> + * by setting environment variables.
-> + */
-> +static void virgl_set_render_env(void)
-> +{
-> +#ifdef HAVE_BUNDLED_VIRGL_SERVER
-> +    g_autofree char *file =3D get_relocated_path(CONFIG_QEMU_HELPERDIR
-> "/virgl_render_server");
-> +    if (g_file_test(file, G_FILE_TEST_EXISTS |
-> G_FILE_TEST_IS_EXECUTABLE)) {
-> +        g_setenv("RENDER_SERVER_EXEC_PATH", file, false);
-> +    }
-> +#endif
-> +}
-> +
-> +
->  int virtio_gpu_virgl_init(VirtIOGPU *g)
->  {
->      int ret;
-> @@ -1145,6 +1166,9 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
->      }
->  #endif
->
-> +    /* Ensure we can find the render server */
-> +    virgl_set_render_env();
-> +
->      ret =3D virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
->      if (ret !=3D 0) {
->          error_report("virgl could not be initialized: %d", ret);
-> diff --git a/subprojects/virglrenderer.wrap
-> b/subprojects/virglrenderer.wrap
-> new file mode 100644
-> index 0000000000..3656a478c4
-> --- /dev/null
-> +++ b/subprojects/virglrenderer.wrap
-> @@ -0,0 +1,6 @@
-> +[wrap-git]
-> +url =3D https://gitlab.freedesktop.org/virgl/virglrenderer.git
-> +revision =3D virglrenderer-1.0.1
-> +
-> +[provide]
-> +virglrenderer =3D libvirglrenderer_dep
-> --
-> 2.39.2
->
->
->
+Yep, I think it makes sense.
 
---=20
-Marc-Andr=C3=A9 Lureau
-
---000000000000dbaef3061a24da0c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_quote=
-"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jun 5, 2024 at 5:35=E2=80=
-=AFPM Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.b=
-ennee@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">As the latest features for virtio-gpu need a pretty recent =
-version of<br>
-libvirglrenderer. When it is not available on the system we can use a<br>
-meson wrapper and provide it when --download is specified in<br>
-configure.<br>
-<br>
-We have to take some additional care as currently QEMU will hang<br>
-libvirglrenderer fails to exec the render server. As the error isn&#39;t<br=
 >
-back propagated we make sure we at least test we have a path to an<br>
-executable before tweaking the environment.<br>
-<br>
-Signed-off-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.or=
-g" target=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
-Cc: Manos Pitsidianakis &lt;<a href=3D"mailto:manos.pitsidianakis@linaro.or=
-g" target=3D"_blank">manos.pitsidianakis@linaro.org</a>&gt;<br>
-Cc: Dmitry Osipenko &lt;<a href=3D"mailto:dmitry.osipenko@collabora.com" ta=
-rget=3D"_blank">dmitry.osipenko@collabora.com</a>&gt;<br>
-Cc: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com" target=3D=
-"_blank">akihiko.odaki@daynix.com</a>&gt;<br>
----<br>
-=C2=A0meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 |=C2=A0 7 ++++++-<br>
-=C2=A0hw/display/virtio-gpu-virgl.c=C2=A0 | 24 ++++++++++++++++++++++++<br>
-=C2=A0subprojects/virglrenderer.wrap |=C2=A0 6 ++++++<br>
-=C2=A03 files changed, 36 insertions(+), 1 deletion(-)<br>
-=C2=A0create mode 100644 subprojects/virglrenderer.wrap<br>
-<br>
-diff --git a/meson.build b/meson.build<br>
-index 1d7346b703..e4e270df78 100644<br>
---- a/meson.build<br>
-+++ b/meson.build<br>
-@@ -1203,7 +1203,8 @@ have_vhost_user_gpu =3D have_tools and host_os =3D=3D=
- &#39;linux&#39; and pixman.found()<br>
-=C2=A0if not get_option(&#39;virglrenderer&#39;).auto() or have_system or h=
-ave_vhost_user_gpu<br>
-=C2=A0 =C2=A0virgl =3D dependency(&#39;virglrenderer&#39;,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 method: &#39;pkg-config&#39;,<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0required: get_option(&#39;virglrenderer&#39;))<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0required: get_option(&#39;virglrenderer&#39;),<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0default_options: [&#39;default_library=3Dstatic&#39;, &#39;render-server=
-=3Dtrue&#39;, &#39;venus=3Dtrue&#39;])<br></blockquote><div><br></div><div>=
-<div class=3D"gmail_quote">So the subproject won&#39;t be used unless virgl=
--devel is missing on the system. Is it really so useful? maybe, I am just u=
-sed to installing my bleeding edge libraries with stow..<br></div><div clas=
-s=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
- 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-</blockquote></div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
-:1ex">
-=C2=A0endif<br>
-=C2=A0rutabaga =3D not_found<br>
-=C2=A0if not get_option(&#39;rutabaga_gfx&#39;).auto() or have_system or ha=
-ve_vhost_user_gpu<br>
-@@ -2314,6 +2315,10 @@ if virgl.version().version_compare(&#39;&gt;=3D1.0.0=
-&#39;)<br>
-=C2=A0 =C2=A0config_host_data.set(&#39;HAVE_VIRGL_RESOURCE_BLOB&#39;, 1)<br=
+>  migration/savevm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-=C2=A0 =C2=A0config_host_data.set(&#39;HAVE_VIRGL_VENUS&#39;, 1)<br>
-=C2=A0endif<br>
-+if virgl.type_name().contains(&#39;internal&#39;)<br>
-+=C2=A0 config_host_data.set(&#39;HAVE_BUNDLED_VIRGL_SERVER&#39;, 1)<br>
-+endif<br>
-+<br>
-=C2=A0config_host_data.set(&#39;CONFIG_VIRTFS&#39;, have_virtfs)<br>
-=C2=A0config_host_data.set(&#39;CONFIG_VTE&#39;, vte.found())<br>
-=C2=A0config_host_data.set(&#39;CONFIG_XKBCOMMON&#39;, xkbcommon.found())<b=
-r>
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c<=
-br>
-index c9d20a8a60..53d6742e79 100644<br>
---- a/hw/display/virtio-gpu-virgl.c<br>
-+++ b/hw/display/virtio-gpu-virgl.c<br>
-@@ -14,6 +14,7 @@<br>
-=C2=A0#include &quot;qemu/osdep.h&quot;<br>
-=C2=A0#include &quot;qemu/error-report.h&quot;<br>
-=C2=A0#include &quot;qemu/iov.h&quot;<br>
-+#include &quot;qemu/cutils.h&quot;<br>
-=C2=A0#include &quot;trace.h&quot;<br>
-=C2=A0#include &quot;hw/virtio/virtio.h&quot;<br>
-=C2=A0#include &quot;hw/virtio/virtio-gpu.h&quot;<br>
-@@ -1122,6 +1123,26 @@ void virtio_gpu_virgl_reset(VirtIOGPU *g)<br>
-=C2=A0 =C2=A0 =C2=A0virgl_renderer_reset();<br>
-=C2=A0}<br>
-<br>
-+/*<br>
-+ * If we fail to spawn the render server things tend to hang so it is<br>
-+ * important to do our due diligence before then. If QEMU has bundled<br>
-+ * the virgl server we want to ensure we can run it from the build<br>
-+ * directory and if installed.<br>
-+ *<br>
-+ * The principle way we can override the libvirglrenders behaviour is<br>
-+ * by setting environment variables.<br>
-+ */<br>
-+static void virgl_set_render_env(void)<br>
-+{<br>
-+#ifdef HAVE_BUNDLED_VIRGL_SERVER<br>
-+=C2=A0 =C2=A0 g_autofree char *file =3D get_relocated_path(CONFIG_QEMU_HEL=
-PERDIR &quot;/virgl_render_server&quot;);<br>
-+=C2=A0 =C2=A0 if (g_file_test(file, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_EX=
-ECUTABLE)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_setenv(&quot;RENDER_SERVER_EXEC_PATH&quot;, =
-file, false);<br>
-+=C2=A0 =C2=A0 }<br>
-+#endif<br>
-+}<br>
-+<br>
-+<br>
-=C2=A0int virtio_gpu_virgl_init(VirtIOGPU *g)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0int ret;<br>
-@@ -1145,6 +1166,9 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0#endif<br>
-<br>
-+=C2=A0 =C2=A0 /* Ensure we can find the render server */<br>
-+=C2=A0 =C2=A0 virgl_set_render_env();<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0ret =3D virgl_renderer_init(g, flags, &amp;virtio_gpu_3=
-d_cbs);<br>
-=C2=A0 =C2=A0 =C2=A0if (ret !=3D 0) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0error_report(&quot;virgl could not be ini=
-tialized: %d&quot;, ret);<br>
-diff --git a/subprojects/virglrenderer.wrap b/subprojects/virglrenderer.wra=
-p<br>
-new file mode 100644<br>
-index 0000000000..3656a478c4<br>
---- /dev/null<br>
-+++ b/subprojects/virglrenderer.wrap<br>
-@@ -0,0 +1,6 @@<br>
-+[wrap-git]<br>
-+url =3D <a href=3D"https://gitlab.freedesktop.org/virgl/virglrenderer.git"=
- rel=3D"noreferrer" target=3D"_blank">https://gitlab.freedesktop.org/virgl/=
-virglrenderer.git</a><br>
-+revision =3D virglrenderer-1.0.1<br>
-+<br>
-+[provide]<br>
-+virglrenderer =3D libvirglrenderer_dep<br>
--- <br>
-2.39.2<br>
-<br>
-<br>
-</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
-fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
-=A9 Lureau<br></div></div>
-
---000000000000dbaef3061a24da0c--
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index c621f2359b..0086b76ab0 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -3459,7 +3459,7 @@ static int coroutine_fn snapshot_save_job_run(Job *job, Error **errp)
+>      SnapshotJob *s = container_of(job, SnapshotJob, common);
+>      s->errp = errp;
+>      s->co = qemu_coroutine_self();
+> -    aio_bh_schedule_oneshot(qemu_get_aio_context(),
+> +    aio_bh_schedule_oneshot(iohandler_get_aio_context(),
+>                              snapshot_save_job_bh, job);
+>      qemu_coroutine_yield();
+>      return s->ret ? 0 : -1;
 
