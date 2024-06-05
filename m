@@ -4,89 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90539C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 11:44:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A66AC25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 11:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEp37-0004Pa-Iu; Wed, 05 Jun 2024 07:43:25 -0400
+	id 1sEp4B-0004hj-2A; Wed, 05 Jun 2024 07:44:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sEp34-0004PD-FZ
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 07:43:22 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sEp32-0007gl-QJ
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 07:43:22 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1f68834bfdfso17238355ad.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 04:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1717587798; x=1718192598; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ll+ZFM5Q7ocX2TYkiLSI5Ow6QFXl/bg0O6LV2bqlLrQ=;
- b=XbsEgZlpVxkHGF8EdAG/bNNFcV4/IRv/Z6j93LJujiM9TBZQMx+aCnHsmnFtuhWoan
- dh6wZzrATQM0NjOmCrEMg1GGvd2HnpHI1P/gvzxHEWfmtCIlB8bVLFaXJzaNzQ/C2rWO
- bc6qnH3eY2M1VZyM3xCOj2iIUskmXL0xK2GHMnf+0vl62g12pQXQRT9P3lZ8uqEnGdNg
- ThSBmulODZGAmWY98GJj5+fjms7412CjkX+qYTMw8wcJZH7gpJp0ZgmzlknnJQy4jTiY
- KIxZiUlGMU0P7Ls+Olo+QEq8BrVOq/RrKpbSN1NrNLHtuhYqA7cWTFTf92C3cNtTJ8AH
- +ZGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717587798; x=1718192598;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ll+ZFM5Q7ocX2TYkiLSI5Ow6QFXl/bg0O6LV2bqlLrQ=;
- b=ka1VL0N/q2XgPjNq7siZ9Lnqloxyj5m+z8/Dqun+wf9BYiiJYTvZfc9RLoYVCmuU0b
- 80E+DrmqTC5z7Squ55u1Y8fg46GdeSp6oXF1Dsm38Lmgl9lCuF7QDI9gh/SlxiZ8waUS
- WKGNgxw0bf8eoPiaCGojlnGmakBDcFwFp9/oVlUvkm6rFKkIZvlqIRV0MI9gk4YL3bgu
- UApJ8wp2nz91beDZI2vphRHlTmp+aGjK0R8G08y9PxgwUmL98leC0Dr70RYvSSJaCH3Y
- 61TG6qIh6wHx2GxzXIbqP/7dW7izdO7+N5jyjkxhnnCVJS727KgCw5J6+hiITmQRFvaN
- CWrA==
-X-Gm-Message-State: AOJu0YxUjHOpjtdkhioIqMf371fUv90Gj9NaPx+Ss+XslRPmDXbfdRk8
- dKsLmjaB448JigHHSXMDru3kSEwCCcvWE6GNWMZfp9Qq8X8dMBKcfHS9Wiv7VexT4oa4HTXv91M
- ovaY=
-X-Google-Smtp-Source: AGHT+IFDMHgYWXuaTH2bAGbF7UWbNzDB3UUHl6eska5czlDOdjS8FwkRREdE5FQhkM7eQyLD+Jj7LQ==
-X-Received: by 2002:a17:903:18d:b0:1f4:71ef:98f8 with SMTP id
- d9443c01a7336-1f6a5a0f423mr26170845ad.16.1717587798480; 
- Wed, 05 Jun 2024 04:43:18 -0700 (PDT)
-Received: from sunil-laptop ([106.51.187.237])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f676851481sm58687855ad.290.2024.06.05.04.43.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 04:43:17 -0700 (PDT)
-Date: Wed, 5 Jun 2024 17:13:10 +0530
-From: Sunil V L <sunilvl@ventanamicro.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Andrew Jones <ajones@ventanamicro.com>
-Subject: Re: [PATCH 1/3] gpex-acpi: Support PCI link devices outside the host
- bridge
-Message-ID: <ZmBPTgNSHCeex+Qv@sunil-laptop>
-References: <20240528073103.1075812-1-sunilvl@ventanamicro.com>
- <20240528073103.1075812-2-sunilvl@ventanamicro.com>
- <20240605041837-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sEp42-0004fA-Jo; Wed, 05 Jun 2024 07:44:22 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sEp3y-0007oc-Vp; Wed, 05 Jun 2024 07:44:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=oJ0SSFauIGrHm+2hvBfLoe69KArfehtAv7kHKWRi4JA=; b=Q6xWif4WxErxBP4n
+ ncPmqfO6TAH7cYvSx2OMzSCJZuucdSY29gtl0WDPEAFbt1U7pORK0xiezyNnM1io7qWohmdGnKPOY
+ cL3/t9Pa1dmumUnw+J4yMdQha706UolYXkmYPJ1ZsrmJRGBe19O82Q+3IkOYgNZBvwnGcJPAGHUnz
+ 1uPBtQm8V6xGkapI0n9Byb0HBYgvyHaHnS56e2q2sutpL7n3tNC0UiSNopS8a7j6OqyIpq0dRlnAP
+ 14PUr7uJ2S+m7apMdS8jLApbK8Si9zOXSCNJQxlhg1mDDNtjR0vlhIOG3GujeVRNuXVNukAZjTio1
+ YEQ6FdYupZ1KjTP5NQ==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1sEp3o-004PF3-08;
+ Wed, 05 Jun 2024 11:44:08 +0000
+Date: Wed, 5 Jun 2024 11:44:07 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Cornelia Huck <cohuck@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ qemu-s390x@nongnu.org, devel@lists.libvirt.org,
+ Eric Farman <farman@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Anton Johansson <anjo@rev.ng>, qemu-arm <qemu-arm@nongnu.org>
+Subject: Re: [PATCH 0/4] hw/s390x: Alias @dump-skeys -> @dump-s390-skey and
+ deprecate
+Message-ID: <ZmBPhxW85fqQWGSE@gallifrey>
+References: <20240530074544.25444-1-philmd@linaro.org>
+ <cb4028fc-9596-47f3-9468-f8912dd48aed@redhat.com>
+ <Zl20rAjHLJlZkwxE@redhat.com> <Zl4tgFuAdjU2bst6@gallifrey>
+ <87y17lcni7.fsf@pond.sub.org>
+ <fcb6ff5d-fcad-4eb1-9b64-0a8477954a0d@linaro.org>
+ <875xup81u9.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20240605041837-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-pl1-x635.google.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <875xup81u9.fsf@pond.sub.org>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 11:37:42 up 27 days, 22:51, 1 user, load average: 0.00, 0.00, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,87 +85,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
+* Markus Armbruster (armbru@redhat.com) wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+> 
+> > Hi Daniel, Dave, Markus & Thomas.
+> >
+> > On 4/6/24 06:58, Markus Armbruster wrote:
+> >> "Dr. David Alan Gilbert" <dave@treblig.org> writes:
+> >>> * Daniel P. Berrangé (berrange@redhat.com) wrote:
+> >>>> On Fri, May 31, 2024 at 06:47:45AM +0200, Thomas Huth wrote:
+> >>>>> On 30/05/2024 09.45, Philippe Mathieu-Daudé wrote:
+> >>>>>> We are trying to unify all qemu-system-FOO to a single binary.
+> >>>>>> In order to do that we need to remove QAPI target specific code.
+> >>>>>>
+> >>>>>> @dump-skeys is only available on qemu-system-s390x. This series
+> >>>>>> rename it as @dump-s390-skey, making it available on other
+> >>>>>> binaries. We take care of backward compatibility via deprecation.
+> >>>>>>
+> >>>>>> Philippe Mathieu-Daudé (4):
+> >>>>>>     hw/s390x: Introduce the @dump-s390-skeys QMP command
+> >>>>>>     hw/s390x: Introduce the 'dump_s390_skeys' HMP command
+> >>>>>>     hw/s390x: Deprecate the HMP 'dump_skeys' command
+> >>>>>>     hw/s390x: Deprecate the QMP @dump-skeys command
+> >>>>>
+> >>>>> Why do we have to rename the command? Just for the sake of it? I think
+> >>>>> renaming HMP commands is maybe ok, but breaking the API in QMP is something
+> >>>>> you should consider twice.
+> >
+> > I'm looking at how to include this command in the new "single binary".
+> >
+> > Markus explained in an earlier series, just expanding this command as
+> > stub to targets that don't implement it is not backward compatible and
+> > breaks QMP introspection. Currently on s390x we get a result, on other
+> > targets the command doesn't exist. If we add a stubs, then other targets
+> > return something (even if it is an empty list), confusing management
+> > interface.
+> 
+> Loss of introspection precision is a concern, not a hard "no".
+> 
+> We weigh all the concerns, and pick a solution we hate the least :)
+> 
+> > So this approach use to deprecate process to include a new command
+> > which behaves differently on non-s390x targets.
+> >
+> > If we don't care for this particular case, better. However I'd still
+> > like to discuss this approach for other target-specific commands.
+> >
+> >> PRO rename: the command's tie to S390 is them immediately obvious, which
+> >> may be useful when the command becomes available in qemu-systems capable
+> >> of running other targets.
+> >>
+> >> CON rename: users need to adapt.
+> >>
+> >> What are the users?  Not libvirt, as far as I can tell.
+> >
+> > Years ago we said, "all HMP must be based on QMP".
+> 
+> In practice, it's closer to "HMP must be base on QMP when the
+> functionality does or should exist in QMP."
+> 
+> >                                                    Now we realize HMP
+> > became stable because QMP-exposed, although not consumed externally...
+> 
+> I'm afraid I didn't get this part.
+> 
+> > Does the concept of "internal QMP commands" makes sense for HMP debug
+> > ones? (Looking at a way to not expose them). We could use the "x-"
+> > prefix to not care about stable / backward compat, but what is the point
+> > of exposing to QMP commands that will never be accessed there?
+> >
+> >>>> That was going to be my question too. Seems like its possible to simply
+> >>>> stub out the existing command for other targets.
+> >>
+> >> That's going to happen whether we rename the commands or not.
+> >> 
+> >>> Are these commands really supposed to be stable, or are they just debug
+> >>> commands?  If they are debug, then add the x- and don't worry too much.
+> >
+> > OK.
+> >
+> >> docs/devel/qapi-code-gen.rst:
+> >>
+> >>      Names beginning with ``x-`` used to signify "experimental".  This
+> >>      convention has been replaced by special feature "unstable".
+> >>
+> >> Feature "unstable" is what makes something unstable, and is what
+> >> machines should check.
+> >
+> > What I mentioned earlier could be 'Feature "internal" or "debug"'.
+> 
+> What's the difference to "unstable"?
 
-Thank you very much for the review!
+It should be clear *why* something is marked x- - something that's
+marked 'x-' because the feature is still in development is expected to shake
+out at some point, and the interface designed so it can.
+(and at some point the developer should get a prod to be asked whethere the
+x- can be removed).
+That's different from it permenantly being x- because it's expected to
+change as the needs of the people debugging change.
 
-On Wed, Jun 05, 2024 at 04:23:36AM -0400, Michael S. Tsirkin wrote:
-> On Tue, May 28, 2024 at 01:01:01PM +0530, Sunil V L wrote:
-> > Currently, PCI link devices (PNP0C0F) are always created within the
-> > scope of the PCI root complex. However, RISC-V needs PCI link devices to
-> > be outside the scope of the PCI host bridge to properly enable the probe
-> > order. This matches the example given in the ACPI specification section
-> > 6.2.13.1 as well.
-> 
-> Given that, what happens if we do this for all architectures?
-> 
-In theory and from my observation of linux on arm64, this should not
-have any impact. However, I was bit hesitant to change for other
-architectures since I was not sure how namespace changes like this will
-affect different OS/architecture combination.
+Dave
 
-It looks like there is no real concern to make this change generic. That
-should simplify the patch as well. Let me update in next version.
-It would also warrant updating ACPI table blob for bios-table-test.
-
-> > 
-> > Enable creating link devices outside the scope of PCI root complex based
-> > on the flag which gets set currently only for RISC-V.
-> > 
-> > Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-> > ---
-> >  hw/pci-host/gpex-acpi.c    | 29 ++++++++++++++++++++++++-----
-> >  hw/riscv/virt-acpi-build.c |  8 +++++---
-> >  include/hw/pci-host/gpex.h |  5 ++++-
-> >  3 files changed, 33 insertions(+), 9 deletions(-)
-> > 
-> > diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
-> > index f69413ea2c..cea89a3ed8 100644
-> > --- a/hw/pci-host/gpex-acpi.c
-> > +++ b/hw/pci-host/gpex-acpi.c
-> > @@ -7,7 +7,7 @@
-> >  #include "hw/pci/pcie_host.h"
-> >  #include "hw/acpi/cxl.h"
-> >  
-> > -static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq)
-> > +static void acpi_dsdt_add_pci_route_table(Aml *scope, Aml *dev, uint32_t irq)
-> >  {
-> >      Aml *method, *crs;
-> >      int i, slot_no;
-> > @@ -45,7 +45,17 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq)
-> >          aml_append(dev_gsi, aml_name_decl("_CRS", crs));
-> >          method = aml_method("_SRS", 1, AML_NOTSERIALIZED);
-> >          aml_append(dev_gsi, method);
-> > -        aml_append(dev, dev_gsi);
-> > +
-> > +        /*
-> > +         * Some architectures like RISC-V
+> >> An "x-" prefix may still be useful for humans.  Machines should *not*
+> >> key on the prefix.  It's unreliable anyway: InputBarrierProperties
+> >> member @x-origin is stable despite it's name.  Renames to gain or lose
+> >> the prefix may or may not be worth the bother.
+> >
+> > Could follow the rules and be renamed as "origin-coordinate-x".
 > 
+> I don't think it's worth the trouble.  The "x-" prefix is now strictly
+> for humans, and humans can figure out what the x- in @x-origin,
+> @y-origin means.
 > 
-> Just risc-v for now right?
-> > need PCI link devices created
-> > +         * outside the scope of the PCI host bridge
+> [...]
 > 
-> .. in order to load the drivers in the correct order.
-> Others .... .
-> 
-Okay.
-
-> > similar to the example
-> > +         * given in the section 6.2.13.1 of ACPI spec 6.5.
-> 
-> 
-> This is not how we quote ACPI spec.
-> 
-> First you find the earliest spec version which has it.
-> Then you mention that, section/table # and title.
-> For example:
-> 
-> 	ACPI 6.1: 18.3.2.8 Generic Hardware Error Source
-> 
->
-Thanks!. Let me update as you suggested.
-
-Thanks,
-Sunil 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
