@@ -4,59 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 415F1C25B78
-	for <qemu-devel@archiver.kernel.org>; Tue,  4 Jun 2024 23:41:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 035D5C25B78
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 00:08:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEdlE-0001ys-Pw; Tue, 04 Jun 2024 19:40:12 -0400
+	id 1sEeBA-0008Se-GS; Tue, 04 Jun 2024 20:07:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sEdlC-0001y4-GW
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 19:40:10 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sEdl9-00048l-Kd
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 19:40:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=rqfxnwFf2L7kB9JZHRSSJR6MuNWpQOMgV+n1qyCa0NA=; b=pWSQvDCI7xcKnYXG
- 8HrPtDkmKazFpqc1rvmCHUoz544bs9a7zFf4MugnoYX4ks0/Tz4WEpE4Ya1Bkep1VIGjhM4OX53ax
- 81m7ZHPYL03QV6S49gUlel66oATC2HzYZLufYnztaiav8AAgE7SQVShIXDjDTuxQYmSag80eSWijS
- YhN9sQvhxJufVf5RGPKZdgjarrc9y+/8o/p3aWiyRxq+suN+9AVhcMrMR/YkDQELv0GMBanMqhrGg
- sDrlDNh/TvARs3Y9Fh51TQicVMLFIKTpscDljUzljC6ewbFZM5WMK6+B3kiGwqUPyMvnjYvHK2/bF
- VPGUt7btZP/giPNLGQ==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1sEdl3-004JQ4-2U;
- Tue, 04 Jun 2024 23:40:01 +0000
-Date: Tue, 4 Jun 2024 23:40:01 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
- berrange@redhat.com, armbru@redhat.com,
- Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH v2 06/18] monitor: Stop removing non-duplicated fds
-Message-ID: <Zl-l0U0Azz8lgIw2@gallifrey>
-References: <20240523190548.23977-1-farosas@suse.de>
- <20240523190548.23977-7-farosas@suse.de> <ZljqGitCeG9-Fi9l@x1n>
- <87o78mknpb.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sEeB8-0008RA-31; Tue, 04 Jun 2024 20:06:58 -0400
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sEeB6-0004oM-Cr; Tue, 04 Jun 2024 20:06:57 -0400
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-80ae09dce70so166441241.1; 
+ Tue, 04 Jun 2024 17:06:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1717546015; x=1718150815; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=d9zsMbSU8ZghW73psWkJsDDeANBe+TjMsxuf7yQuKw4=;
+ b=MrwgQQ2bOO2eEN/I6dasp8E6pCcheOd4BXqECQzsNA5UaiqY6W/HoAIX7xUCUCR9Sr
+ LPzCXgcmbdO8pK+l3hwhegIveK6xe9wk/kz0PcldZ2j7+ywWp4h0s1920leELMFmmriu
+ 6cp9OOIlL8LN18zSU5BGPldYzu8cZCf038TlK8rhMStDZg87RZhyspQ11LIdz3ia3f9a
+ oH+IlIiXSO77EoN5xHSdZMofEAUZjHzDt96vwKWJx+a6U7LjarnHwELNkun8lBTFthNe
+ /K7TGzcH7DC1QcpefYqRnvhub65v80PiRc75AKZWs0DYuYBj3pLHCAFemsHOabDT9AiA
+ KpXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717546015; x=1718150815;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=d9zsMbSU8ZghW73psWkJsDDeANBe+TjMsxuf7yQuKw4=;
+ b=ZziX44eTl3IR2oT/In1LPvnIMIalyH63J7Mcj0ruR0R3dG+8n+akhY9Amgl5SM1noZ
+ 8HcI5AjgFcPIjMOeNew3LX9g/YKSS0Rmx5aQxdf33GJ8uSNMCfkJ9Iuc6ayB57wJgOwk
+ TjbPx/j7ADtsRtSiJayOy9Almg1YVfXckkmntPNoyv5JYiXyPnMYdIqMu5wUmkjVQSSO
+ NZ5qLSAHAyhLw5ZjUW2XMG1Pl3qE5VkqmU6aI9FhAtWal6c2mt4DlMOvRFyjuIf2cAZY
+ gupQrGsCyTyHKmzVJPECXpJs50+DCSWJ/R2HOiqu3aeAJ4RiYCC1bOS2Uc/LlCpoNc0e
+ RFLA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXEJWrGY9vp+H4UnYHbpbKpWHy21Pi2JOC3xJ1nKgcngirw8TR6CPtvNmzrO4u0XXFC3FRq3sm1Y7nh5ixa6jEnJVtJzjo=
+X-Gm-Message-State: AOJu0Yw9e5RRkobE5YfpI1R6X0RPDsyJb4JD+ISMaHn5ptwp/UmilFSO
+ cXbHAut+qEDF8RH+HZN3AIzLQlWW1pS0NDpSX8Pt0wqqr4pdWoG5swlhhwNA6Ccn9h7cO2lQSQz
+ nuipTgUVjWn2fTGy6Cbo5qh166Cw=
+X-Google-Smtp-Source: AGHT+IGmdzTmAPuGRTRBf8Pm/aJe7ls8ApHkYlFxr59l6zwh2Mzt8+MfH3eIcgqz9s2bmfFW9Y5BYf4577ej6y9y45s=
+X-Received: by 2002:a05:6102:50aa:b0:48b:d69a:abf4 with SMTP id
+ ada2fe7eead31-48bf237e221mr4477280137.16.1717546014959; Tue, 04 Jun 2024
+ 17:06:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <87o78mknpb.fsf@suse.de>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
-X-Uptime: 23:32:19 up 27 days, 10:46, 1 user, load average: 0.01, 0.02, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240531202759.911601-1-dbarboza@ventanamicro.com>
+ <20240531202759.911601-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20240531202759.911601-2-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 5 Jun 2024 10:06:28 +1000
+Message-ID: <CAKmqyKPK42zNL+SznFHcJzR_CBh4GPTmNqPYLovcm7A2ojk_vA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/8] hw/riscv/virt.c: add address-cells in
+ create_fdt_one_aplic()
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, apatel@ventanamicro.com, ajones@ventanamicro.com, 
+ conor@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,213 +95,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Fabiano Rosas (farosas@suse.de) wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Thu, May 23, 2024 at 04:05:36PM -0300, Fabiano Rosas wrote:
-> >> We've been up until now cleaning up any file descriptors that have
-> >> been passed into QEMU and never duplicated[1,2]. A file descriptor
-> >> without duplicates indicates that no part of QEMU has made use of
-> >> it. This approach is starting to show some cracks now that we're
-> >> starting to consume fds from the migration code:
-> >> 
-> >> - Doing cleanup every time the last monitor connection closes works to
-> >>   reap unused fds, but also has the side effect of forcing the
-> >>   management layer to pass the file descriptors again in case of a
-> >>   disconnect/re-connect, if that happened to be the only monitor
-> >>   connection.
-> >> 
-> >>   Another side effect is that removing an fd with qmp_remove_fd() is
-> >>   effectively delayed until the last monitor connection closes.
-> >> 
-> >>   The reliance on mon_refcount is also problematic because it's racy.
-> >> 
-> >> - Checking runstate_is_running() skips the cleanup unless the VM is
-> >>   running and avoids premature cleanup of the fds, but also has the
-> >>   side effect of blocking the legitimate removal of an fd via
-> >>   qmp_remove_fd() if the VM happens to be in another state.
-> >> 
-> >>   This affects qmp_remove_fd() and qmp_query_fdsets() in particular
-> >>   because requesting a removal at a bad time (guest stopped) might
-> >>   cause an fd to never be removed, or to be removed at a much later
-> >>   point in time, causing the query command to continue showing the
-> >>   supposedly removed fd/fdset.
-> >> 
-> >> Note that file descriptors that *have* been duplicated are owned by
-> >> the code that uses them and will be removed after qemu_close() is
-> >> called. Therefore we've decided that the best course of action to
-> >> avoid the undesired side-effects is to stop managing non-duplicated
-> >> file descriptors.
-> >> 
-> >> 1- efb87c1697 ("monitor: Clean up fd sets on monitor disconnect")
-> >> 2- ebe52b592d ("monitor: Prevent removing fd from set during init")
-> >> 
-> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> >> ---
-> >>  monitor/fds.c              | 15 ++++++++-------
-> >>  monitor/hmp.c              |  2 --
-> >>  monitor/monitor-internal.h |  1 -
-> >>  monitor/qmp.c              |  2 --
-> >>  4 files changed, 8 insertions(+), 12 deletions(-)
-> >> 
-> >> diff --git a/monitor/fds.c b/monitor/fds.c
-> >> index 101e21720d..f7b98814fa 100644
-> >> --- a/monitor/fds.c
-> >> +++ b/monitor/fds.c
-> >> @@ -169,6 +169,11 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
-> >>  
-> >>  static void monitor_fdset_free(MonFdset *mon_fdset)
-> >>  {
-> >> +    /*
-> >> +     * Only remove an empty fdset. The fds are owned by the user and
-> >> +     * should have been removed with qmp_remove_fd(). The dup_fds are
-> >> +     * owned by QEMU and should have been removed with qemu_close().
-> >> +     */
-> >>      if (QLIST_EMPTY(&mon_fdset->fds) && QLIST_EMPTY(&mon_fdset->dup_fds)) {
-> >>          QLIST_REMOVE(mon_fdset, next);
-> >>          g_free(mon_fdset);
-> >> @@ -189,9 +194,7 @@ static void monitor_fdset_cleanup(MonFdset *mon_fdset)
-> >>      MonFdsetFd *mon_fdset_fd_next;
-> >>  
-> >>      QLIST_FOREACH_SAFE(mon_fdset_fd, &mon_fdset->fds, next, mon_fdset_fd_next) {
-> >> -        if ((mon_fdset_fd->removed ||
-> >> -                (QLIST_EMPTY(&mon_fdset->dup_fds) && mon_refcount == 0)) &&
-> >> -                runstate_is_running()) {
-> >> +        if (mon_fdset_fd->removed) {
-> >
-> > I don't know the code well, but I like it.
-> >
-> >>              monitor_fdset_fd_free(mon_fdset_fd);
-> >>          }
-> >>      }
-> >> @@ -206,7 +209,7 @@ void monitor_fdsets_cleanup(void)
-> >>  
-> >>      QEMU_LOCK_GUARD(&mon_fdsets_lock);
-> >>      QLIST_FOREACH_SAFE(mon_fdset, &mon_fdsets, next, mon_fdset_next) {
-> >> -        monitor_fdset_cleanup(mon_fdset);
-> >> +        monitor_fdset_free(mon_fdset);
-> >>      }
-> >>  }
-> >>  
-> >> @@ -479,9 +482,7 @@ void monitor_fdset_dup_fd_remove(int dup_fd)
-> >>              if (mon_fdset_fd_dup->fd == dup_fd) {
-> >>                  QLIST_REMOVE(mon_fdset_fd_dup, next);
-> >>                  g_free(mon_fdset_fd_dup);
-> >> -                if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
-> >> -                    monitor_fdset_cleanup(mon_fdset);
-> >> -                }
-> >> +                monitor_fdset_free(mon_fdset);
-> >
-> > This and above changes are not crystal clear to me where the _cleanup()
-> > does extra check "removed" and clean those fds.
-> >
-> > I think it'll make it easier for me to understand if this one and the next
-> > are squashed together.  But maybe it's simply because I didn't fully
-> > understand.
-> 
-> monitor_fdsets_cleanup() was doing three things previously:
-> 
-> 1- Remove the removed=true fds. This is weird, but ok.
-> 
-> 2- Remove fds from an fdset that has an empty dup_fds list, but only if
-> the guest is not running and the monitor is closed. This is problematic.
-> 
-> 3- Remove/free fdsets that have become empty due to the above
-> removals. This is ok.
-> 
-> This patch covers (2), because that is the only change that has a
-> complex reasoning behind it and we need to document that without
-> conflating it with the rest of the changes.
+On Sat, Jun 1, 2024 at 6:31=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> We need #address-cells properties in all interrupt controllers that are
+> referred by an interrupt-map [1]. For the RISC-V machine, both PLIC and
+> APLIC controllers must have this property.
+>
+> PLIC already sets it in create_fdt_socket_plic(). Set the property for
+> APLIC in create_fdt_one_aplic().
+>
+> [1] https://lore.kernel.org/linux-arm-kernel/CAL_JsqJE15D-xXxmELsmuD+JQHZ=
+zxGzdXvikChn6KFWqk6NzPw@mail.gmail.com/
+>
+> Suggested-by: Anup Patel <apatel@ventanamicro.com>
+> Fixes: e6faee65855b ("hw/riscv: virt: Add optional AIA APLIC support to v=
+irt machine")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-The ebe52b592d you reference, makes me think that the only reason for the
-'is not running' was as a way to detect when init had finished; and there
-are certainly better ways to do that (now?).
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-However, the efb87c1697 talks about cleaning up non-dup's on all monitors
-closed, to stop getting left-over fd's that were added but then not used
-(because a disconnect happened between adding and being used).
-In your world when do these get cleaned up?
+Alistair
 
-Dave
-
-> Since (3) is still a reasonable thing to do, this patch merely keeps it
-> around, but using the helpers introduced in the previous patch.
-> 
-> The next patch removed the need for (1), making the removal immediate
-> instead of delayed. It has it's own much less complex reasoning, which
-> is: "we don't need to wait to remove the fd".
-> 
-> I hope this clarifies a bit. I would prefer if we kept this and the next
-> patch separate to avoid having a single patch that does too many
-> things. I hope to be as explicit as possible with the reason behind
-> these changes to avoid putting future people in the situation that we
-> are in now, i.e. having to guess at the reasons behind this code.
-> 
-> If you still think we should squash or if you have more questions, let
-> me know.
-> 
-> >>                  return;
-> >>              }
-> >>          }
-> >> diff --git a/monitor/hmp.c b/monitor/hmp.c
-> >> index 69c1b7e98a..460e8832f6 100644
-> >> --- a/monitor/hmp.c
-> >> +++ b/monitor/hmp.c
-> >> @@ -1437,11 +1437,9 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
-> >>              monitor_resume(mon);
-> >>          }
-> >>          qemu_mutex_unlock(&mon->mon_lock);
-> >> -        mon_refcount++;
-> >>          break;
-> >>  
-> >>      case CHR_EVENT_CLOSED:
-> >> -        mon_refcount--;
-> >>          monitor_fdsets_cleanup();
-> >>          break;
-> >>  
-> >> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-> >> index 252de85681..cb628f681d 100644
-> >> --- a/monitor/monitor-internal.h
-> >> +++ b/monitor/monitor-internal.h
-> >> @@ -168,7 +168,6 @@ extern bool qmp_dispatcher_co_shutdown;
-> >>  extern QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
-> >>  extern QemuMutex monitor_lock;
-> >>  extern MonitorList mon_list;
-> >> -extern int mon_refcount;
-> >>  
-> >>  extern HMPCommand hmp_cmds[];
-> >>  
-> >> diff --git a/monitor/qmp.c b/monitor/qmp.c
-> >> index a239945e8d..5e538f34c0 100644
-> >> --- a/monitor/qmp.c
-> >> +++ b/monitor/qmp.c
-> >> @@ -466,7 +466,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
-> >>          data = qmp_greeting(mon);
-> >>          qmp_send_response(mon, data);
-> >>          qobject_unref(data);
-> >> -        mon_refcount++;
-> >>          break;
-> >>      case CHR_EVENT_CLOSED:
-> >>          /*
-> >> @@ -479,7 +478,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
-> >>          json_message_parser_destroy(&mon->parser);
-> >>          json_message_parser_init(&mon->parser, handle_qmp_command,
-> >>                                   mon, NULL);
-> >> -        mon_refcount--;
-> >>          monitor_fdsets_cleanup();
-> >>          break;
-> >>      case CHR_EVENT_BREAK:
-> >
-> > I like this too when mon_refcount can be dropped.  It turns out I like this
-> > patch and the next a lot, and I hope nothing will break.
-> >
-> > Aside, you seem to have forgot removal of the "int mon_refcount" in
-> > monitor.c.
-> 
-> Yes, I'll fix that. Thanks.
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+> ---
+>  hw/riscv/virt.c         | 2 ++
+>  include/hw/riscv/virt.h | 1 +
+>  2 files changed, 3 insertions(+)
+>
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index 4fdb660525..1a7e1e73c5 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -609,6 +609,8 @@ static void create_fdt_one_aplic(RISCVVirtState *s, i=
+nt socket,
+>      aplic_name =3D g_strdup_printf("/soc/aplic@%lx", aplic_addr);
+>      qemu_fdt_add_subnode(ms->fdt, aplic_name);
+>      qemu_fdt_setprop_string(ms->fdt, aplic_name, "compatible", "riscv,ap=
+lic");
+> +    qemu_fdt_setprop_cell(ms->fdt, aplic_name, "#address-cells",
+> +                          FDT_APLIC_ADDR_CELLS);
+>      qemu_fdt_setprop_cell(ms->fdt, aplic_name,
+>                            "#interrupt-cells", FDT_APLIC_INT_CELLS);
+>      qemu_fdt_setprop(ms->fdt, aplic_name, "interrupt-controller", NULL, =
+0);
+> diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+> index 3db839160f..c0dc41ff9a 100644
+> --- a/include/hw/riscv/virt.h
+> +++ b/include/hw/riscv/virt.h
+> @@ -118,6 +118,7 @@ enum {
+>  #define FDT_PLIC_ADDR_CELLS   0
+>  #define FDT_PLIC_INT_CELLS    1
+>  #define FDT_APLIC_INT_CELLS   2
+> +#define FDT_APLIC_ADDR_CELLS  0
+>  #define FDT_IMSIC_INT_CELLS   0
+>  #define FDT_MAX_INT_CELLS     2
+>  #define FDT_MAX_INT_MAP_WIDTH (FDT_PCI_ADDR_CELLS + FDT_PCI_INT_CELLS + =
+\
+> --
+> 2.45.1
+>
+>
 
