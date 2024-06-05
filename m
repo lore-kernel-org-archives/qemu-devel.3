@@ -4,82 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E54B9C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77293C41513
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:35:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEzqU-00078n-U1; Wed, 05 Jun 2024 19:15:06 -0400
+	id 1sF09k-0002q0-3w; Wed, 05 Jun 2024 19:35:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEzqT-00078d-1f
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:15:05 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEzqR-0001FY-6c
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:15:04 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1f692d6e990so3841805ad.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:15:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717629300; x=1718234100; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vlCLkcY2sncir5x2b+MaLJLG/abK6GNTs+IkP/0Iyhc=;
- b=cGkt6zdbTlMYU/ejuUhh4AmSaOgIgHJP0D+P1ImfgyeYiR3XZlcUn72uzxg9+jHciK
- HFltSM/OtXlgiktZ1tGxWOmJ7Y8r0zpIJwowS8KtdqCuYXlaQ747PujmBeEXHOXqfKiR
- w48d4W1RzzCq4i09KJaf2SQRl+GzUxj/DEYTjHvCO5SKEMRiV+fyoroiobrkdbHJeeIE
- CaR+wIdd72Uc5NQHdpvtRz495AGl0Li6W1RTPkpKlVukz05eq2SJSzl30nq5MQnoKsAT
- d9KZqPJwHvN+7HttVunT5NJ+plt/6Eftbl3XitQWNoDXha6crHto6MBa7Y8oAfOU7y6h
- vDCA==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF09j-0002pd-2a
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:34:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF09h-0004nf-EE
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:34:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717630496;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZMYpex8C2s46cF0GfMcoGvUcCxmqXFvGY/Nt+8TTLHo=;
+ b=aajlcr5V8y7QKPy1F4U+J2hKHsN8OaoTOxCwpfQN1/vxxWmI2aamoVS7rvjz9YhNAVl3t2
+ ec1YXXltm5AcFawMw+PiVYzl4I4412naMDt/i5ks1uAWeVT/+klDynlLvIFjMRVKYraKVu
+ LF3+f41priyky/Tr7YX9nJ9Az3LZj2Y=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-428-EqWCQrpVOk-Z_9V_BLE9cQ-1; Wed, 05 Jun 2024 19:34:55 -0400
+X-MC-Unique: EqWCQrpVOk-Z_9V_BLE9cQ-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2ead17d8db6so1153711fa.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:34:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717629300; x=1718234100;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1717630493; x=1718235293;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vlCLkcY2sncir5x2b+MaLJLG/abK6GNTs+IkP/0Iyhc=;
- b=sNg+UyludR6CqCDpxFJW7iH+8KT6h8JWRs83XVkPIsgmkT3S5AHFFez2Td1lOzi4CF
- Xmiapjqm9tYE7nBnWKBCrigDBDPP4xh4aOSEAum9+OiFR0UTMXGsuq8X5TGpw1GCqZkA
- WTrUO6jGlc/URyJUrQ/6RnfQS3PoHGkVWX4dASDiwj5xe5cReBlBL2e3WpDhVbF4g2t9
- 7hrwrxLVcNmLw5EDmL8oOizGqw2hVoerCGi60Xx/1K1fpc42tsECljiWNrNfdLUpA6og
- 6uHX8mk6XZVUgX1mPfq5LDUiEO8S+imkvQ2KA4QLhgXRYG6hEsx5Bh9YAf4vWsUEkHUA
- Aqiw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUceq1qEzDCEOva9axdepN+EH+vWXQNmYZ0Iox+nj58X8mN6ew+r0FtBIdSVa5OfRCDsUPUWLmzz6xOJFCialuCw5bkJP8=
-X-Gm-Message-State: AOJu0YwAqNZcRdHXeFk/2UOKHdRW3CRxYQW68Mz7V+KykAeWfGjoYODu
- p3CuF8GdP6LD20+kFhLlfMC4NhH1oB5+eK+YzSLPHBsLOwOloVO5nbkaG5c9ZCk=
-X-Google-Smtp-Source: AGHT+IE7qdeYPsFamn6Nv3nnXhcKEf0mLeTh2yNZYsF088K7QjBNEVHGaokBT0+QWkRr7P7oEWgMcA==
-X-Received: by 2002:a17:902:ec8f:b0:1f6:8ae4:50de with SMTP id
- d9443c01a7336-1f6a5a852b4mr49022645ad.61.1717629299940; 
- Wed, 05 Jun 2024 16:14:59 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.132.216])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6bd76c240sm879515ad.89.2024.06.05.16.14.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Jun 2024 16:14:59 -0700 (PDT)
-Message-ID: <a0e9ee6b-fbe6-48af-a122-fbf5d31aa476@linaro.org>
-Date: Wed, 5 Jun 2024 16:14:56 -0700
+ bh=ZMYpex8C2s46cF0GfMcoGvUcCxmqXFvGY/Nt+8TTLHo=;
+ b=E5oDLljQXGanhRiiLu1EANogAnkBfxnkLhUkp1hmysAN1CU2OyidWwUWl9VSqEu6kP
+ VnHCA0D8gRmyJMYWfSAa4fLudE/qRwuY49vcUWWHfORmGpCQLSnI7wETmL0SjSIqfCt3
+ wjQYHV2HHPFtsKkER1wPD1Wgt2j0MEbHHGVOk4ccIvuHqBBGYZZ7uiODpdsMWrtlMXSZ
+ rR5cgt9am1jF4KH4v0XjReqEl3v6zDjljR1QD2l3y16Qb/XTQ8xWs4M6aOTSxeaY3/Zy
+ pbH0wYGoChA/nH3kloZ7RznEfdnjetyZbillWwe/t1M6ar+VwrSnYkzZf1b/lyR3LmOx
+ 7Aqg==
+X-Gm-Message-State: AOJu0Yyr78eHzmsfFvsryF19w0xab1luOgFLVzAjfuZZQq4BLxPEAxFR
+ rIysllq2kbbMVJe6Gmiu4kjVwdqnD9LVr72shoS9iDffDUkUqA1bE8FYlb2/U806tDu/BXkdwbM
+ /zRdKa5ybuH8DkHskQ4kEU4px58iqtR0yVfxlVb5HzpF1EdZ8h4ZgMnmZ5VCez9dm+MwBnFJR5I
+ W9NeHkQEJWgdLQMVZdUAzoTblHSB+4sg==
+X-Received: by 2002:a05:651c:10b3:b0:2ea:adf7:4dd0 with SMTP id
+ 38308e7fff4ca-2eac7a6ee1bmr19386811fa.46.1717630493273; 
+ Wed, 05 Jun 2024 16:34:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHmL3iHUMgRwpDdc9+IuGWPg8k4uVteUcKLSdsswgxsu3F0U+HZN3+19FdUkpvJGkhuKea7gw==
+X-Received: by 2002:a05:651c:10b3:b0:2ea:adf7:4dd0 with SMTP id
+ 38308e7fff4ca-2eac7a6ee1bmr19386641fa.46.1717630492586; 
+ Wed, 05 Jun 2024 16:34:52 -0700 (PDT)
+Received: from redhat.com ([2.55.56.67]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-57aae201a6esm92473a12.71.2024.06.05.16.34.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Jun 2024 16:34:51 -0700 (PDT)
+Date: Wed, 5 Jun 2024 19:34:49 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL v3 03/41] vhost-vdpa: check vhost_vdpa_set_vring_ready()
+ return value
+Message-ID: <982ae85fe81e3849e27d9eacad85c2ffc131d7e3.1717630437.git.mst@redhat.com>
+References: <cover.1717630437.git.mst@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: linux-user emulation hangs during fork
-To: Andreas Schwab <schwab@suse.de>, qemu-devel@nongnu.org
-References: <mvm5xunu4ye.fsf@suse.de>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <mvm5xunu4ye.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1717630437.git.mst@redhat.com>
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,72 +107,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/24 02:14, Andreas Schwab wrote:
-> $ qemu-x86_64 --version
-> qemu-x86_64 version 9.0.50 (v9.0.0-1211-gd16cab541a)
-> Copyright (c) 2003-2024 Fabrice Bellard and the QEMU Project developers
-> $ cat fork.rb
-> begin
->    r, w = IO.pipe
->    if pid1 = fork
->      w.close
->      r.read 1
->      Process.kill "USR1", pid1
->      Process.wait2 pid1
->    else
->      print "child\n"
->      r.close
->      if pid2 = fork
->        trap("USR1") { print "child: kill\n"; Process.kill "USR2", pid2 }
->        w.close
->        print "child: wait\n"
->        Process.wait2 pid2
->      else
->        print "grandchild\n"
->        w.close
->        sleep 0.2
->      end
->    end
-> end
-> $ ruby fork.rb
-> child
-> child: wait
-> grandchild
-> child: kill
-> $ qemu-x86_64 /usr/bin/ruby fork.rb
-> child
-> child: wait
-> ^Z
-> [1]+  Stopped                 qemu-x86_64 /usr/bin/ruby fork.rb
-> $ grep SigB $(for p in $(pidof qemu-x86_64); do echo /proc/$p/status; done | sort)
-> /proc/3221/status:SigBlk:       0000000000000000
-> /proc/3224/status:SigBlk:       0000000000000000
-> /proc/3228/status:SigBlk:       fffffff27ffbfa9f
-> 
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-Works for me:
+vhost_vdpa_set_vring_ready() could already fail, but if Linux's
+patch [1] will be merged, it may fail with more chance if
+userspace does not activate virtqueues before DRIVER_OK when
+VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated.
 
-rth@stoup:~/zz$ ~/qemu/bld/qemu-x86_64 `which ruby` fork.rb
-child
-grandchild
-child: wait
-child: kill
-rth@stoup:~/zz$ ~/qemu/bld/qemu-x86_64 `which ruby` fork.rb
-child
-grandchild
-child: wait
-child: kill
-rth@stoup:~/zz$ ~/qemu/bld/qemu-x86_64 `which ruby` fork.rb
-child
-grandchild
-child: wait
-child: kill
-rth@stoup:~/zz$ ~/qemu/bld/qemu-x86_64 `which ruby` fork.rb
-child
-grandchild
-child: wait
-child: kill
+So better check its return value anyway.
 
+[1] https://lore.kernel.org/virtualization/20240206145154.118044-1-sgarzare@redhat.com/T/#u
 
-r~
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20240322092315.31885-1-sgarzare@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ net/vhost-vdpa.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 85e73dd6a7..eda714d1a4 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -399,7 +399,10 @@ static int vhost_vdpa_net_data_load(NetClientState *nc)
+     }
+ 
+     for (int i = 0; i < v->dev->nvqs; ++i) {
+-        vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
++        int ret = vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
++        if (ret < 0) {
++            return ret;
++        }
+     }
+     return 0;
+ }
+@@ -1238,7 +1241,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState *nc)
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
+ 
+-    vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
++    r = vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
++    if (unlikely(r < 0)) {
++        return r;
++    }
+ 
+     if (v->shadow_vqs_enabled) {
+         n = VIRTIO_NET(v->dev->vdev);
+@@ -1277,7 +1283,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState *nc)
+     }
+ 
+     for (int i = 0; i < v->dev->vq_index; ++i) {
+-        vhost_vdpa_set_vring_ready(v, i);
++        r = vhost_vdpa_set_vring_ready(v, i);
++        if (unlikely(r < 0)) {
++            return r;
++        }
+     }
+ 
+     return 0;
+-- 
+MST
+
 
