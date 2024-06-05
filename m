@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DD49C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 15:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B505CC25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 15:30:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEsZb-0000fC-JB; Wed, 05 Jun 2024 11:29:11 -0400
+	id 1sEsZe-0000fo-8z; Wed, 05 Jun 2024 11:29:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1sEsZa-0000eS-Bg
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 11:29:10 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1sEsZb-0000fF-M9
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 11:29:11 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1sEsZU-0007XJ-KT
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 11:29:10 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-2c1a4192d55so1883460a91.2
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 08:29:04 -0700 (PDT)
+ id 1sEsZY-0007Xm-4a
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 11:29:11 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6f8ec7e054dso4836541b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 08:29:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717601343; x=1718206143; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1717601346; x=1718206146; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=muSU+HuMkQPsObvQhf3lD7P12fVE5VIQ4NmZQsA6m0g=;
- b=HNOCXB6xVxdacRa22KhOY7hG1lpGE+S2Xf/ryk7tbugcUdcy3ZYXdolN1sm3QJ/3U6
- /iaD/La3Fxkx/tlftVqYvGr/ugtaMsB3UyjIQLGW8Ft0kLPfcW5XGO84bPVnH7I89m1K
- Fm2BA/4KsTXv6Cst8NOPlXx0KEFJjS9E4+DdZWNd4Ik8X6l04ZTGNNIYyuhq0oaIoY5R
- pEVkUrw0Kc7PZeoAKnv0zskVlGNqwwMyVXRVB/V4yWrC6QH7xQN/KGUUfgQR9c8Ob/PC
- hcVOxfXn+6/9JvyNQm3nkJ4A3vnvoeQQLl6D9RlKjw1Fr0jPmDjYAFXAhq+R4Ht9dLL8
- 4KWg==
+ bh=1NL/0bUuZW5NfajYFBq9RShKw+LMyCnZCbT2JXrSd7w=;
+ b=E8UCBnS7SjS/0N2a7htKeJetxuBOJxIn4Kt4JN+YvaD9iiazii49tOw1+QGXITZWQL
+ iHjgHpQqg/wVV2M4OgdkGVPZcr38zyQ9XCJo5vtVXqjOP+spfbpAuUmATX3EhjAtVbwM
+ MBv+neYLfAKTY5qobjPd8scvg8/2+1/EgWlw04g+mENgY/Kpss0+pswX3LQ3S6gzOeXX
+ kHGF+4HlxZaUi2iYicZqLcHlvY5vo7lbdvp+fqdWRE4izhR1FjU8SNpnZwF4Z3FUcp1j
+ UMW1QRXTnxGOKzfzvKkD15MAZTvdiEfGcJddEHMFLW49cJU6spMWIzqeIBmJX3DV9iTJ
+ cyIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717601343; x=1718206143;
+ d=1e100.net; s=20230601; t=1717601346; x=1718206146;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=muSU+HuMkQPsObvQhf3lD7P12fVE5VIQ4NmZQsA6m0g=;
- b=w2GOcYCiMWXmpL25lwHdZWMNLP2vGp1XnXzOdm2THP23F4LdWkLNfc3cl2Wn3U4+F/
- huB23A+4OiIqAWz0ju3fhTt1Q+HQKRjjK3giKmnglqZZ8kSRK+qou7iT2CBzozdSwqD8
- jbUUUlzadOn9SOntDWvU5jFlex3YPfHL4EYQVmq3afa1KCrV6O/qZkI9d2SdE7AiuPJs
- i7KbyMJ8iso/UiGdqshHKVsfFRdmkLRTh4gEu4EI2bOlfkmqOedQGznF1HCtQRgmWwFl
- V41PW21d4MYTog5G2KfEjw71HNcBgYqO6o4qMF5PzW/r/ij/zHq3VzF5Lms5WUVJpJ/p
- B7QQ==
-X-Gm-Message-State: AOJu0Yw1+U9q28hs57mvoeTZvwjp5nybjsy+7hzPAYjuy6ZAiL2fcO50
- b0NIDfrBzC2vplKFj9lkGjbxyRooB0yfUtl44rzqVNEGJAmPqBDvVITPepNNTvY=
-X-Google-Smtp-Source: AGHT+IH0VUmOcWnQskUVsFXf+siPRGl4HlLJ66Psc34i7l0h1fB2Gl+Kfr7yhHO16R1XzJ4s85HSZg==
-X-Received: by 2002:a17:90a:ac16:b0:2bf:ac8a:c795 with SMTP id
- 98e67ed59e1d1-2c27db4a1e3mr3250415a91.34.1717601342914; 
- Wed, 05 Jun 2024 08:29:02 -0700 (PDT)
+ bh=1NL/0bUuZW5NfajYFBq9RShKw+LMyCnZCbT2JXrSd7w=;
+ b=pZMdE4WKwZPRzJhp6Jzajq4B3KLtUD7lmT1Fd/Gjx+r8j37qcd30+TsStHClUgnyVH
+ ODS3wu07uLYqWddVEO17Jlzff9b5KKZ9vs+c18QALWz4v59+XfNnhYCSY5Qd9euuSow/
+ KxyDh8Ro5U5NUzI6oRG03vAIG9W6xN2yxckd1s649qljd0Y2rG7wQPu+KOEPK0V9AsBQ
+ 8IwGWfMAxQMZYvJ2/zpjSmWKrEcQYEjrWoIre8Ff7D3LTpAqB3iU/oI3rHKRJlAl6/Hg
+ cJO2D9D0W2KWa1qgLnIp1q8I9eLvc/bu+7MlAthECubM261dg0xgFbpdkovYewHO3Ek1
+ ToPg==
+X-Gm-Message-State: AOJu0YymQuG3z07t1uNhjJ1UMN3VEIROUEy0QucpFykMM4mpf0l/V/fp
+ 1Ac9Ch5/LF7L+2PaNkJnH5j8PLVQOrIWJH5tY1prNSj+NUQVEEY7CVmKpCX8Gyw=
+X-Google-Smtp-Source: AGHT+IFPMAW8IAwSm4ZNYG+dmnq5PaDPTtEB06U9CzGhuEHffFjVEp1M85iwVLKuazg0gzBunycnsA==
+X-Received: by 2002:a05:6a00:2ea9:b0:6f8:c6e4:1829 with SMTP id
+ d2e1a72fcca58-703e5a1bbfdmr3336205b3a.25.1717601346222; 
+ Wed, 05 Jun 2024 08:29:06 -0700 (PDT)
 Received: from localhost ([103.192.227.74]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c28063a485sm1623884a91.3.2024.06.05.08.29.02
+ d2e1a72fcca58-702688e7e3dsm5526712b3a.215.2024.06.05.08.29.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 08:29:02 -0700 (PDT)
+ Wed, 05 Jun 2024 08:29:05 -0700 (PDT)
 From: Weifeng Liu <weifeng.liu.z@gmail.com>
 To: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
@@ -65,16 +65,17 @@ Cc: Weifeng Liu <weifeng.liu.z@gmail.com>,
  Huang Rui <ray.huang@amd.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 2/3] virtio-gpu: rutabaga: Poll rutabaga upon events
-Date: Wed,  5 Jun 2024 23:28:29 +0800
-Message-ID: <20240605152832.11618-3-weifeng.liu.z@gmail.com>
+Subject: [PATCH 3/3] virtio-gpu: rutabaga: Add options to enable virgl and
+ venus contexts
+Date: Wed,  5 Jun 2024 23:28:30 +0800
+Message-ID: <20240605152832.11618-4-weifeng.liu.z@gmail.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240605152832.11618-1-weifeng.liu.z@gmail.com>
 References: <20240605152832.11618-1-weifeng.liu.z@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=weifeng.liu.z@gmail.com; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=weifeng.liu.z@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,151 +98,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To make virglrenderer work properly, we must poll it periodically or
-when the event fd is readable, but this functionality is absent now.
-This change registers the event fd as a gsource to the main loop and
-attaches polling function as callback to the gsource.
+With this change, people will be able to use parameter like the one
+below to add start virglrenderer backed virtio-gpu-rutabaga device:
+
+    -device virtio-vga-rutabaga,venus=on,virgl2=on,wsi=surfaceless
+
+Performance being suboptimal though, this would be the first step.
 
 Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
 ---
- hw/display/virtio-gpu-rutabaga.c | 97 +++++++++++++++++++++++++++++++-
- include/hw/virtio/virtio-gpu.h   |  1 +
- 2 files changed, 97 insertions(+), 1 deletion(-)
+ hw/display/virtio-gpu-rutabaga.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index 2ba6869606..ecb146315a 100644
+index ecb146315a..85bc33af8c 100644
 --- a/hw/display/virtio-gpu-rutabaga.c
 +++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -899,6 +899,93 @@ virtio_gpu_rutabaga_aio_cb(void *opaque)
-     g_free(data);
- }
- 
-+
-+static void
-+virtio_gpu_fence_poll(void *opaque)
-+{
-+    VirtIOGPU *g = opaque;
-+    VirtIOGPURutabaga *vr = VIRTIO_GPU_RUTABAGA(g);
-+
-+    rutabaga_poll(vr->rutabaga);
-+}
-+
-+typedef void (*vu_watch_cb) (VirtIOGPURutabaga *dev, int condition, void *data);
-+
-+static void
-+event_poll_cb(VirtIOGPURutabaga *dev, int condition, void *data)
-+{
-+    virtio_gpu_fence_poll(data);
-+}
-+
-+typedef struct VrSrc {
-+    GSource parent;
-+    VirtIOGPURutabaga *dev;
-+    GPollFD gfd;
-+} VrSrc;
-+
-+static gboolean
-+vr_src_prepare(GSource *gsrc, gint *timeout)
-+{
-+    g_assert(timeout);
-+
-+    *timeout = -1;
-+    return FALSE;
-+}
-+
-+static gboolean
-+vr_src_check(GSource *gsrc)
-+{
-+    VrSrc *src = (VrSrc *)gsrc;
-+
-+    g_assert(src);
-+
-+    return src->gfd.revents & src->gfd.events;
-+}
-+
-+static gboolean
-+vr_src_dispatch(GSource *gsrc, GSourceFunc cb, gpointer data)
-+{
-+    VrSrc *src = (VrSrc *)gsrc;
-+
-+    g_assert(src);
-+
-+    ((vu_watch_cb)cb)(src->dev, src->gfd.revents, data);
-+
-+    return G_SOURCE_CONTINUE;
-+}
-+
-+static GSourceFuncs vug_src_funcs = {
-+    vr_src_prepare,
-+    vr_src_check,
-+    vr_src_dispatch,
-+    NULL
-+};
-+
-+static GSource *
-+vr_source_new(VirtIOGPURutabaga *dev, int fd, GIOCondition cond,
-+              vu_watch_cb vu_cb, gpointer data)
-+{
-+    GSource *gsrc;
-+    VrSrc *src;
-+    guint id;
-+
-+    g_assert(fd >= 0);
-+    g_assert(vu_cb);
-+
-+    gsrc = g_source_new(&vug_src_funcs, sizeof(VrSrc));
-+    g_source_set_callback(gsrc, (GSourceFunc)vu_cb, data, NULL);
-+    src = (VrSrc *)gsrc;
-+    src->dev = dev;
-+    src->gfd.fd = fd;
-+    src->gfd.events = cond;
-+
-+    g_source_add_poll(gsrc, &src->gfd);
-+    id = g_source_attach(gsrc, g_main_context_get_thread_default());
-+    g_assert(id);
-+
-+    return gsrc;
-+}
-+
- static void
- virtio_gpu_rutabaga_fence_cb(uint64_t user_data,
-                              const struct rutabaga_fence *fence)
-@@ -954,6 +1041,7 @@ virtio_gpu_rutabaga_debug_cb(uint64_t user_data,
- static bool virtio_gpu_rutabaga_init(VirtIOGPU *g, Error **errp)
- {
-     int result;
-+    int poll_descriptor;
-     struct rutabaga_builder builder = { 0 };
-     struct rutabaga_channel channel = { 0 };
-     struct rutabaga_channels channels = { 0 };
-@@ -1031,7 +1119,14 @@ static bool virtio_gpu_rutabaga_init(VirtIOGPU *g, Error **errp)
-         error_setg_errno(errp, -result, "Failed to init rutabaga");
-         return false;
-     }
--
-+    result = rutabaga_poll_descriptor(vr->rutabaga, &poll_descriptor);
-+    if (result) {
-+        error_setg_errno(errp, -result, "Failed to get rutabaga poll descriptor");
-+        return false;
-+    }
-+    if (poll_descriptor >= 0)
-+        vr->poll_event_source = vr_source_new(vr, poll_descriptor, G_IO_IN,
-+                                              event_poll_cb, g);
-     return true;
- }
- 
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 7a59379f5a..47a4347a9e 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -261,6 +261,7 @@ struct VirtIOGPURutabaga {
-     char *wsi;
-     bool headless;
-     uint32_t num_capsets;
-+    GSource *poll_event_source;
-     struct rutabaga *rutabaga;
- };
- 
+@@ -1203,6 +1203,10 @@ static Property virtio_gpu_rutabaga_properties[] = {
+                       RUTABAGA_CAPSET_GFXSTREAM_GLES, false),
+     DEFINE_PROP_BIT64("x-gfxstream-composer", VirtIOGPURutabaga, capset_mask,
+                       RUTABAGA_CAPSET_GFXSTREAM_COMPOSER, false),
++    DEFINE_PROP_BIT64("venus", VirtIOGPURutabaga, capset_mask,
++                      RUTABAGA_CAPSET_VENUS, false),
++    DEFINE_PROP_BIT64("virgl2", VirtIOGPURutabaga, capset_mask,
++                      RUTABAGA_CAPSET_VIRGL2, false),
+     DEFINE_PROP_STRING("wayland-socket-path", VirtIOGPURutabaga,
+                        wayland_socket_path),
+     DEFINE_PROP_STRING("wsi", VirtIOGPURutabaga, wsi),
 -- 
 2.45.0
 
