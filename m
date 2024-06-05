@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DB56C25B76
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF7FBC27C5E
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF0Au-0004uo-Rk; Wed, 05 Jun 2024 19:36:12 -0400
+	id 1sF0Bm-0002mh-9X; Wed, 05 Jun 2024 19:37:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0As-0004ec-W2
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:11 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Bl-0002fZ-B2
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:37:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Ar-0005ez-3k
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Bj-0005xc-O0
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:37:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717630568;
+ s=mimecast20190719; t=1717630623;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=FMOgEcAe53x2nl/kUwLBbhwXiRFlv4+KNdbX+UZGPhI=;
- b=K0k400UbUN7WI9mrYGj/Fx4qxVx4/Lt+r5E8KPPfu3zWhQFccycgfcc/vixwh5/iV5312p
- mgPuuQ+6x4cwP1qLxbhtI47T4EeZi7/nrmoKQze7dHAMsFShNqVw8JkS370+9oNsvVeILR
- kwrFl33hrVo1AssRD7wyLqLpWi6l2dQ=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kgYXT9TqVXX9/BRZFmbWBgRNk9wpbHrKyLXkpZBaJss=;
+ b=VqTR4Xs6oE5iHuDABmn2/BjUNETIh10UWLCmvHaPMNn3RB9mPL8hSssJzoVUudTUqOvcEu
+ KYnjPrG83T1eqw6uaDYMZYwbkeGstuhIpqTdE4hYQY3YeTxE1ioe3duGx+xuZJq8vF70mj
+ M/ObOb7N767nBdL96tM6X70cVwT4MfI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-471-Xk3IJwvtPGid_MpDOWADyw-1; Wed, 05 Jun 2024 19:36:06 -0400
-X-MC-Unique: Xk3IJwvtPGid_MpDOWADyw-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-57a941a787dso375830a12.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:36:06 -0700 (PDT)
+ us-mta-345-BUjRHvrkP-CR60Y7VvTODw-1; Wed, 05 Jun 2024 19:37:02 -0400
+X-MC-Unique: BUjRHvrkP-CR60Y7VvTODw-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-35dca0dc826so240591f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:37:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717630565; x=1718235365;
+ d=1e100.net; s=20230601; t=1717630620; x=1718235420;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FMOgEcAe53x2nl/kUwLBbhwXiRFlv4+KNdbX+UZGPhI=;
- b=NStNKOTmTKlQs4U/zcinwaks8dIP3eitk0lNLAyKEaxGirJGhtmEncZSO+z/l25DYQ
- jxReE4w6cCTjV6NIBdxvhmB3XRN9hMYKnJ+JmUT/4dbkrAueFKkjNaUmuU8Z4AxrLve7
- YHFOBTiF9TX+M8MOcPc2gcF3vQz8io6ucZgx+XUSGKEew1O6YRQMXO1psKqIyZ0j/Ji9
- KusTiJY2ML40q5XEDq3AkHz+kEdYltUeCdGV5Mhs9G+vBLha1o4Bm1oBicSCiN1p3qOv
- 085mslkncYnltXcIy44YD0Jkx4f6GpNWC90hmTcC+vv/c/TkEQ/PEnnFkb/viQErzM0h
- GAYg==
-X-Gm-Message-State: AOJu0YwLozg2WvDxMugFyikSuka0jeMLhblkx6VrNtaBPNzpgQl6/paF
- v1rHh+gsfVa3oW1AXWPWroL7FjDiQ8yatlveGea6lvNz3d8OnwP3hrn+83yULOahPb/u2CXZXiT
- jzzEKJhMd8kkcikAdxrX7uH4O7xQ6z9SEU+LJR59btWOensiBdNlDFj2lpcerxA/MUhMAauTHhV
- LtiGalaN5JJ1b1lAcMSFQUxiNEKgpavQ==
-X-Received: by 2002:a50:8d54:0:b0:579:c3f8:5923 with SMTP id
- 4fb4d7f45d1cf-57a8b6a8778mr2886648a12.13.1717630565125; 
- Wed, 05 Jun 2024 16:36:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGKuech8vINIo/RmiFFSd+bz+4xjcWAbx34aRwr59onCtphObcAur87eDhxEcTsXy0+Om8saA==
-X-Received: by 2002:a50:8d54:0:b0:579:c3f8:5923 with SMTP id
- 4fb4d7f45d1cf-57a8b6a8778mr2886626a12.13.1717630564441; 
- Wed, 05 Jun 2024 16:36:04 -0700 (PDT)
+ bh=kgYXT9TqVXX9/BRZFmbWBgRNk9wpbHrKyLXkpZBaJss=;
+ b=RzGPy/wlILB7/YTuWgz6U41OjtTLRzYFhV38klpwj8AwvC8RhpYiQPVAzIxvMBvphr
+ 0CjwtljwfDlYCj/cBgGrD/RttgoW1Ie9wlHS61fVHZDBjvySSnewLonaTKvhfU1tleQv
+ aYJReLdu0M3fupqlnA4rzwYq6kvPaP7gTdAGlwDaJfIUROmiMwTC6qV+5npSSaPb7rLR
+ qlUvWpXp7JipBEUd1DGIbW+JRfrcgQpMCG0fwj+T9utWnQ6DhWJaJ66BOQXooXi9I9ln
+ xEKx9pkEH1cfbfr2dSxGOYD8j9FFnrFtc2MJE1dmGih31yr+P4FuiHqE+CtiN9cSq7f2
+ 0nEA==
+X-Gm-Message-State: AOJu0YwkbzqHmHykyoLfo3ivSmD311zvQSyG+N8QDLMNKmv65vA0BQFp
+ AcM/0x7yq2DoHYpbR3VuEBLYw+K090grtFnUb/W0HozgZRB9+OgWioux1Y/fJtIYM0esUED9ACO
+ bLQzUqxW2/yE9IxJ/nIF9wCLYip5fe4hj6aVLv9gSnEuiZycfihlSvcEdbmozWZ48NU6Y92kXfH
+ asTeZTfKeNgdl+WpnHHW/wwtnrwAvVtA==
+X-Received: by 2002:a5d:64c4:0:b0:354:f7a4:7862 with SMTP id
+ ffacd0b85a97d-35e883383bamr3125921f8f.19.1717630620303; 
+ Wed, 05 Jun 2024 16:37:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGTn7lpYkgyQDTjc4R8v7mottzHj4Tj5yDZvbrsiaRQLlK1AuJmylfDT93c/JbXxLtTg0iWrQ==
+X-Received: by 2002:a5d:64c4:0:b0:354:f7a4:7862 with SMTP id
+ ffacd0b85a97d-35e883383bamr3125907f8f.19.1717630619852; 
+ Wed, 05 Jun 2024 16:36:59 -0700 (PDT)
 Received: from redhat.com ([2.55.56.67]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aae0ff792sm99934a12.40.2024.06.05.16.36.02
+ a640c23a62f3a-a6c80582016sm7121466b.20.2024.06.05.16.36.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 16:36:03 -0700 (PDT)
-Date: Wed, 5 Jun 2024 19:36:01 -0400
+ Wed, 05 Jun 2024 16:36:59 -0700 (PDT)
+Date: Wed, 5 Jun 2024 19:36:55 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
- Gregory Price <gregory.price@memverge.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL v3 22/41] hw/mem/cxl-type3: Refactor
- ct3_build_cdat_entries_for_mr to take mr size instead of mr as argument
-Message-ID: <11c8c0c5281e984b186de1483da7fd934ea388f5.1717630437.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PULL v3 37/41] pvpanic: Emit GUEST_PVSHUTDOWN QMP event on pvpanic
+ shutdown signal
+Message-ID: <7572581002c9b8a74b4c4cf4f775652321068e56.1717630437.git.mst@redhat.com>
 References: <cover.1717630437.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -103,95 +104,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-The function ct3_build_cdat_entries_for_mr only uses size of the passed
-memory region argument, refactor the function definition to make the passed
-arguments more specific.
+Emit a QMP event on receiving a PVPANIC_SHUTDOWN event. Even though a typical
+SHUTDOWN event will be sent, it will be indistinguishable from a shutdown
+originating from other cases (e.g. KVM exit due to KVM_SYSTEM_EVENT_SHUTDOWN)
+that also issue the guest-shutdown cause.
+A management layer application can detect the new GUEST_PVSHUTDOWN event to
+determine if the guest is using the pvpanic interface to request shutdowns.
 
-Reviewed-by: Gregory Price <gregory.price@memverge.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-8-nifan.cxl@gmail.com>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Message-Id: <20240527-pvpanic-shutdown-v8-6-5a28ec02558b@t-8ch.de>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/mem/cxl_type3.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ qapi/run-state.json | 14 ++++++++++++++
+ system/runstate.c   |  1 +
+ 2 files changed, 15 insertions(+)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 06c6f9bb78..51be50ce87 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -44,7 +44,7 @@ enum {
- };
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index f8773f23b2..5ac0fec852 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -462,6 +462,20 @@
+ { 'event': 'GUEST_CRASHLOADED',
+   'data': { 'action': 'GuestPanicAction', '*info': 'GuestPanicInformation' } }
  
- static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
--                                          int dsmad_handle, MemoryRegion *mr,
-+                                          int dsmad_handle, uint64_t size,
-                                           bool is_pmem, uint64_t dpa_base)
++##
++# @GUEST_PVSHUTDOWN:
++#
++# Emitted when guest submits a shutdown request via pvpanic interface
++#
++# Since: 9.1
++#
++# Example:
++#
++#     <- { "event": "GUEST_PVSHUTDOWN",
++#          "timestamp": { "seconds": 1648245259, "microseconds": 893771 } }
++##
++{ 'event': 'GUEST_PVSHUTDOWN' }
++
+ ##
+ # @GuestPanicAction:
+ #
+diff --git a/system/runstate.c b/system/runstate.c
+index 83055f3278..c149b1ab4b 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -587,6 +587,7 @@ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
+ 
+ void qemu_system_guest_pvshutdown(void)
  {
-     CDATDsmas *dsmas;
-@@ -63,7 +63,7 @@ static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
-         .DSMADhandle = dsmad_handle,
-         .flags = is_pmem ? CDAT_DSMAS_FLAG_NV : 0,
-         .DPA_base = dpa_base,
--        .DPA_length = memory_region_size(mr),
-+        .DPA_length = size,
-     };
++    qapi_event_send_guest_pvshutdown();
+     qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+ }
  
-     /* For now, no memory side cache, plausiblish numbers */
-@@ -132,7 +132,7 @@ static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
-          */
-         .EFI_memory_type_attr = is_pmem ? 2 : 1,
-         .DPA_offset = 0,
--        .DPA_length = memory_region_size(mr),
-+        .DPA_length = size,
-     };
- 
-     /* Header always at start of structure */
-@@ -149,6 +149,7 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
-     g_autofree CDATSubHeader **table = NULL;
-     CXLType3Dev *ct3d = priv;
-     MemoryRegion *volatile_mr = NULL, *nonvolatile_mr = NULL;
-+    uint64_t vmr_size = 0, pmr_size = 0;
-     int dsmad_handle = 0;
-     int cur_ent = 0;
-     int len = 0;
-@@ -163,6 +164,7 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
-             return -EINVAL;
-         }
-         len += CT3_CDAT_NUM_ENTRIES;
-+        vmr_size = memory_region_size(volatile_mr);
-     }
- 
-     if (ct3d->hostpmem) {
-@@ -171,21 +173,22 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
-             return -EINVAL;
-         }
-         len += CT3_CDAT_NUM_ENTRIES;
-+        pmr_size = memory_region_size(nonvolatile_mr);
-     }
- 
-     table = g_malloc0(len * sizeof(*table));
- 
-     /* Now fill them in */
-     if (volatile_mr) {
--        ct3_build_cdat_entries_for_mr(table, dsmad_handle++, volatile_mr,
-+        ct3_build_cdat_entries_for_mr(table, dsmad_handle++, vmr_size,
-                                       false, 0);
-         cur_ent = CT3_CDAT_NUM_ENTRIES;
-     }
- 
-     if (nonvolatile_mr) {
--        uint64_t base = volatile_mr ? memory_region_size(volatile_mr) : 0;
-+        uint64_t base = vmr_size;
-         ct3_build_cdat_entries_for_mr(&(table[cur_ent]), dsmad_handle++,
--                                      nonvolatile_mr, true, base);
-+                                      pmr_size, true, base);
-         cur_ent += CT3_CDAT_NUM_ENTRIES;
-     }
-     assert(len == cur_ent);
 -- 
 MST
 
