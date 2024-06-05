@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DBFCC25B78
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 02:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D49C25B78
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 02:16:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEgBW-00038Y-0a; Tue, 04 Jun 2024 22:15:30 -0400
+	id 1sEgBX-00038x-El; Tue, 04 Jun 2024 22:15:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sEgBT-00037e-Ur
+ id 1sEgBU-00037l-Kk
  for qemu-devel@nongnu.org; Tue, 04 Jun 2024 22:15:28 -0400
-Received: from fhigh8-smtp.messagingengine.com ([103.168.172.159])
+Received: from fout1-smtp.messagingengine.com ([103.168.172.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sEgBI-0001gh-FN
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 22:15:27 -0400
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
- by mailfhigh.nyi.internal (Postfix) with ESMTP id F1C5111401FF;
- Tue,  4 Jun 2024 22:15:13 -0400 (EDT)
+ id 1sEgBJ-0001go-HS
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 22:15:28 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+ by mailfout.nyi.internal (Postfix) with ESMTP id F40221380114;
+ Tue,  4 Jun 2024 22:15:14 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Tue, 04 Jun 2024 22:15:13 -0400
+ by compute1.internal (MEProxy); Tue, 04 Jun 2024 22:15:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
  :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1717553713;
- x=1717640113; bh=84HJ4p0kn2I6k5zCPTQUDkUIj3kgHZjO350aurS/Cqk=; b=
- ulaWUlnKJE0z4grdFFmbFfW1wGml0800Jzz4/wJlDooRRmJawdhAAywAoQerO5xP
- 5U5k2Dz5MkP9natghFuikoko1tMp3vYcYC7lMKN/MbI0s7ys5HGX1G8b7lC6MBMt
- QmRhYn0KAArIo91wb56FoJx4cWHa0RwDjMDyF1pDBMvLSVubVWegVcGgvJ/KWWg2
- ++YMihFKn4LKz/n157JoWwV8SGe09mAH/EMaK2OL7qizTRqzPOQIGUnHCGCzoA7y
- yYg0Ed+xVZpPkvQuijE73eniMvU/TyZ/ORV76uXeiU8aZtlpWd9kQV9F4YSb8Ira
- 8xcCR9K5yt1Bp1laO/rNMw==
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1717553714;
+ x=1717640114; bh=6zYI5XmAf6RQjBQ6bZ9aMqq7aDxYp0W8beC3GgKBVA4=; b=
+ AC/Xpr/wIVUJiFzVb6gK7Gxeag5X1InAma3FtCvQsTKcCCf43BqcT8Qai991Mi6+
+ lwBl16f2alW4aT+46s0Po+GtsPnusbDQM+wzcUBwtRzmUtGMrn+jzHAi0ZBPtyLK
+ Ds+j01D3GrBQf4K+9wi97a05HLEktbQbwsf0sTPwDFtsMLmVpAPnTUwf5HQRbWqA
+ oiMYKSHnVlba2fGADXj6KdFIoX/QQmwRZPrZp6botIb9qXslFP3HCbxiHhnxK23F
+ Utn10i4/jzPVstKqYpneW89agtkYSwPaEfncrkvJf+6NIG/TGZrZrMuVhEaIWATI
+ 5pm2ZyN0KwERqKrHvWcEbg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1717553713; x=
- 1717640113; bh=84HJ4p0kn2I6k5zCPTQUDkUIj3kgHZjO350aurS/Cqk=; b=i
- 2v7ZT3mQvU5IHUiJHtWSKlfVBesUBp+jHD/aP4RuHK2e7bVYESe9f3nTzYgvFDLi
- R14Y40IYm1PfkoLcDLb3WWjMXFKhz0ZiXI1biChvvUL5ikqaoRTaPQ5lB2MNW8H+
- MsNvBHO3DeyKpyeGkc7qzQXA8PdRWNWDqlS/zetvNQHbBKw2LKJTREzK3Nlm/Xqw
- 2YjyQekh5DueaN2PqlRBQy7cof1rKq0s4ZFEUq/to5rULx5Sexa6hegb3EY8xysN
- Y3kpuwLe341JszZ/T0/zJ5n+aI+1Pv8dta0o0PhCFynIGB0BkYZOco7behWfNa/Z
- unShgjlLRQ3tQAV2Sug1w==
-X-ME-Sender: <xms:McpfZj9-tSL6862R9CZU1S3pEs0cp8ZbyVWag25v0X-kkqfAHiFQsg>
- <xme:McpfZvt2vSLGxyry9_c58MxFog6hKUMeFQx5qYWacOLayG5Cj-BxvDEk3DlMoJ9Fa
- VZ8k_Oayg5DIqJOZe8>
-X-ME-Received: <xmr:McpfZhCDVVRf_9YLJRhE1omcDUlLV4M25zKuyPxSIp03COV1rm1_cV0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelhedgheejucetufdoteggodetrfdotf
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1717553714; x=
+ 1717640114; bh=6zYI5XmAf6RQjBQ6bZ9aMqq7aDxYp0W8beC3GgKBVA4=; b=G
+ II5I5/3KZogb5FbiJA+rIEsUouM0XVmuokQg+jR4xLTw4RUVBOprLOdCYopcwZTl
+ iWIfo1R2KwloBiDtD3G/vQpDnUZI6e9o8ZXut+z2FQVddCZPDSDzdPZJ0ZDRffKI
+ RQnWqJy2X1eDVWaUBBrJYbDTjoK5Ze2oKymw/OO8ocEdtO2whNxj97CO7R0k7qwR
+ BowDqDoFaa6Yfstu3H6q8mzLM8ZmdlWv8jaBqhzCrHKyZp5zU+bguyG4aMK6r9Rj
+ k03DOy2W068hbgY8/oj9DFjoccPRCZcuhCU3X5ff3HLVXlqPpgK3KxCO/nmeYf2s
+ 62gPoKqW6si+7m4ZR8+mg==
+X-ME-Sender: <xms:MspfZqV-RQnvZ0VAEP_-Jqxp1ViFkAWTHvGsfBbMy7FvSmFGwUVhdQ>
+ <xme:MspfZmlGcYDQ-Die2x2UuLl2388hPHlHgkyRjLa9mUE9xKiciUVpkQhwcmBMflZZC
+ ThNUIYsXCyUk70n0W0>
+X-ME-Received: <xmr:MspfZuaoqWOH1vweqvtqZl4qoHe8r1jNWFIOpbF0TB1he0iVSvO_A9s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelhedgheeiucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
  cujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpeflihgr
  gihunhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomheqne
- cuggftrfgrthhtvghrnhephffgvdfgveelveeutedukedukeekfeevjeeiieeikeehveei
- tefgveduudeuudeknecuffhomhgrihhnpehiohgtshhrrdhmrhenucevlhhushhtvghruf
- hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehf
- lhihghhorghtrdgtohhm
-X-ME-Proxy: <xmx:McpfZveZzLPpHM6jrj9hrIzC31N76mJbwmJnZJzZCgswqwjg0n6_IA>
- <xmx:McpfZoM8ab4CiwsMQ0en60e33opAXWwRKXtKOhWzUDzBi50QkLzfvw>
- <xmx:McpfZhkS14KNJq5HKvazhuO4hyPWmAFLMLo1TOldKrT9Z3c881yp2g>
- <xmx:McpfZiu8fr8CuVsCo-WHss4IrTzuL9k2YRTQgQP2l9t4lUND4-XqXA>
- <xmx:McpfZn2Z4VYCcsQoh1uTpqVUg7t_knQ1ningAfpQgT7zO-Az9yU1_Fmv>
+ cuggftrfgrthhtvghrnhepvdekiefhfeevkeeuveetfeelffekgedugefhtdduudeghfeu
+ veegffegudekjeelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+ hfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
+X-ME-Proxy: <xmx:MspfZhX65knxHAEDpGVdgAa06_pfc8Ig-BLeK272ETQxuSpHiNox8w>
+ <xmx:MspfZkkdp_k07eSGxvcFohiy5JqQFjUagZh7I9GUb3UIwLHMBn4Oag>
+ <xmx:MspfZmeqqT7GIy2fc-mDvFXPU0h_UyzqHhVUnrd3Qy9KLloreELpNg>
+ <xmx:MspfZmGp5_iq_wDKSzHOxImT2CTC_JZ5GDHnZF0Kh9YPJjU-abtj1w>
+ <xmx:MspfZjtflhZAiq1rzsLYD7y6VKt7h0y9UmFquLySKt0wXvBxmggocQwF>
 Feedback-ID: ifd894703:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Jun 2024 22:15:12 -0400 (EDT)
+ 4 Jun 2024 22:15:14 -0400 (EDT)
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date: Wed, 05 Jun 2024 03:15:04 +0100
-Subject: [PATCH v3 3/4] hw/mips/loongson3_virt: Wire up loongson_ipi device
+Date: Wed, 05 Jun 2024 03:15:05 +0100
+Subject: [PATCH v3 4/4] hw/intc/loongson_ipi: Replace ipi_getcpu with
+ cpu_by_arch_id
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240605-loongson3-ipi-v3-3-ddd2c0e03fa3@flygoat.com>
+Message-Id: <20240605-loongson3-ipi-v3-4-ddd2c0e03fa3@flygoat.com>
 References: <20240605-loongson3-ipi-v3-0-ddd2c0e03fa3@flygoat.com>
 In-Reply-To: <20240605-loongson3-ipi-v3-0-ddd2c0e03fa3@flygoat.com>
 To: qemu-devel@nongnu.org
@@ -84,24 +84,24 @@ Cc: Huacai Chen <chenhuacai@kernel.org>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5931;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2400;
  i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=PU0pRzZdrbatFFMu+BeAzyWRMViyfj/mEDg8DqP63O4=;
- b=owGbwMvMwCXmXMhTe71c8zDjabUkhrT4U3pTWL36XyR679h72b9Vb5Z1XMSh2wJf5do6Tnew7
- 6xhVFjZUcrCIMbFICumyBIioNS3ofHigusPsv7AzGFlAhnCwMUpABNJvcHIMDNBqXma1JOfVgxc
- PqonxOdH8C+r4710/5HgPY7j/Ga5GYwM21fb+vx7nFG+5SbnC402FoWCuvPycUGH83/Fl2kaHWD
- lAgA=
+ bh=hnXpsnXQTRb+LSXuPnTPlwPEXPAPRspcFsaf0+IprRM=;
+ b=kA0DAAoWQ3EMfdd3KcMByyZiAGZfyi6hi+qGIs/HuFEuvyHWfNHdZOKdthVyVmMzDmju0SXy0
+ oh1BAAWCgAdFiEEVBAijrCB0aDX4Gr8Q3EMfdd3KcMFAmZfyi4ACgkQQ3EMfdd3KcNGHQD/XzBE
+ +wMCySdrtQRzoDSN9gxYiwGG1MFU2VUhiXuQ1PwBAKKJZWyvVSliNAwIkExZJb7nVS/dSOmmYbE
+ ZTTusUagO
 X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
  fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
-Received-SPF: pass client-ip=103.168.172.159;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh8-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.144;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout1-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,158 +117,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up loongson_ipi device for loongson3_virt machine, so we
-can have SMP support for TCG backend as well.
+cpu_by_arch_id is doing the same thing as our ipi_getcpu logic.
 
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
- hw/mips/Kconfig           |  1 +
- hw/mips/loongson3_bootp.c |  2 --
- hw/mips/loongson3_bootp.h |  3 +++
- hw/mips/loongson3_virt.c  | 39 +++++++++++++++++++++++++++++++++++++--
- 4 files changed, 41 insertions(+), 4 deletions(-)
+ hw/intc/loongson_ipi.c | 39 +++------------------------------------
+ 1 file changed, 3 insertions(+), 36 deletions(-)
 
-diff --git a/hw/mips/Kconfig b/hw/mips/Kconfig
-index a7f26edebe84..692bede538ee 100644
---- a/hw/mips/Kconfig
-+++ b/hw/mips/Kconfig
-@@ -67,6 +67,7 @@ config LOONGSON3V
-     imply USB_OHCI_PCI
-     select SERIAL
-     select GOLDFISH_RTC
-+    select LOONGSON_IPI
-     select LOONGSON_LIOINTC
-     select PCI_EXPRESS_GENERIC_BRIDGE
-     select MSI_NONBROKEN
-diff --git a/hw/mips/loongson3_bootp.c b/hw/mips/loongson3_bootp.c
-index 03a10b63c1b4..b97b81903b74 100644
---- a/hw/mips/loongson3_bootp.c
-+++ b/hw/mips/loongson3_bootp.c
-@@ -25,8 +25,6 @@
- #include "hw/boards.h"
- #include "hw/mips/loongson3_bootp.h"
+diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
+index c8a25b4eb8e2..b3cda5972793 100644
+--- a/hw/intc/loongson_ipi.c
++++ b/hw/intc/loongson_ipi.c
+@@ -118,39 +118,6 @@ static MemTxResult send_ipi_data(CPUState *cpu, uint64_t val, hwaddr addr,
+     return MEMTX_OK;
+ }
  
--#define LOONGSON3_CORE_PER_NODE 4
+-static int archid_cmp(const void *a, const void *b)
+-{
+-   CPUArchId *archid_a = (CPUArchId *)a;
+-   CPUArchId *archid_b = (CPUArchId *)b;
 -
- static void init_cpu_info(void *g_cpuinfo, uint64_t cpu_freq)
+-   return archid_a->arch_id - archid_b->arch_id;
+-}
+-
+-static CPUArchId *find_cpu_by_archid(MachineState *ms, uint32_t id)
+-{
+-    CPUArchId apic_id, *found_cpu;
+-
+-    apic_id.arch_id = id;
+-    found_cpu = bsearch(&apic_id, ms->possible_cpus->cpus,
+-        ms->possible_cpus->len, sizeof(*ms->possible_cpus->cpus),
+-        archid_cmp);
+-
+-    return found_cpu;
+-}
+-
+-static CPUState *ipi_getcpu(int arch_id)
+-{
+-    MachineState *machine = MACHINE(qdev_get_machine());
+-    CPUArchId *archid;
+-
+-    archid = find_cpu_by_archid(machine, arch_id);
+-    if (archid) {
+-        return CPU(archid->cpu);
+-    }
+-
+-    return NULL;
+-}
+-
+ static MemTxResult mail_send(uint64_t val, MemTxAttrs attrs)
  {
-     struct efi_cpuinfo_loongson *c = g_cpuinfo;
-diff --git a/hw/mips/loongson3_bootp.h b/hw/mips/loongson3_bootp.h
-index 1b0dd3b59171..9091265df7fc 100644
---- a/hw/mips/loongson3_bootp.h
-+++ b/hw/mips/loongson3_bootp.h
-@@ -200,6 +200,8 @@ struct boot_params {
-     struct efi_reset_system_t reset_system;
- };
+     uint32_t cpuid;
+@@ -158,7 +125,7 @@ static MemTxResult mail_send(uint64_t val, MemTxAttrs attrs)
+     CPUState *cs;
  
-+#define LOONGSON3_CORE_PER_NODE 4
-+
- /* Overall MMIO & Memory layout */
- enum {
-     VIRT_LOWMEM,
-@@ -211,6 +213,7 @@ enum {
-     VIRT_BIOS_ROM,
-     VIRT_UART,
-     VIRT_LIOINTC,
-+    VIRT_IPI,
-     VIRT_PCIE_MMIO,
-     VIRT_HIGHMEM
- };
-diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
-index 440268a07430..3a4105228c1d 100644
---- a/hw/mips/loongson3_virt.c
-+++ b/hw/mips/loongson3_virt.c
-@@ -36,6 +36,7 @@
- #include "hw/mips/loongson3_bootp.h"
- #include "hw/misc/unimp.h"
- #include "hw/intc/i8259.h"
-+#include "hw/intc/loongson_ipi.h"
- #include "hw/loader.h"
- #include "hw/isa/superio.h"
- #include "hw/pci/msi.h"
-@@ -74,6 +75,7 @@ const MemMapEntry virt_memmap[] = {
-     [VIRT_PCIE_ECAM] =   { 0x1a000000,     0x2000000 },
-     [VIRT_BIOS_ROM] =    { 0x1fc00000,      0x200000 },
-     [VIRT_UART] =        { 0x1fe001e0,           0x8 },
-+    [VIRT_IPI] =         { 0x3ff01000,         0x400 },
-     [VIRT_LIOINTC] =     { 0x3ff01400,          0x64 },
-     [VIRT_PCIE_MMIO] =   { 0x40000000,    0x40000000 },
-     [VIRT_HIGHMEM] =     { 0x80000000,           0x0 }, /* Variable */
-@@ -485,6 +487,7 @@ static void mips_loongson3_virt_init(MachineState *machine)
-     Clock *cpuclk;
-     CPUMIPSState *env;
-     DeviceState *liointc;
-+    DeviceState *ipi = NULL;
-     char *filename;
-     const char *kernel_cmdline = machine->kernel_cmdline;
-     const char *kernel_filename = machine->kernel_filename;
-@@ -494,6 +497,7 @@ static void mips_loongson3_virt_init(MachineState *machine)
-     MemoryRegion *ram = g_new(MemoryRegion, 1);
-     MemoryRegion *bios = g_new(MemoryRegion, 1);
-     MemoryRegion *iomem = g_new(MemoryRegion, 1);
-+    MemoryRegion *iocsr = g_new(MemoryRegion, 1);
+     cpuid = extract32(val, 16, 10);
+-    cs = ipi_getcpu(cpuid);
++    cs = cpu_by_arch_id(cpuid);
+     if (cs == NULL) {
+         return MEMTX_DECODE_ERROR;
+     }
+@@ -176,7 +143,7 @@ static MemTxResult any_send(uint64_t val, MemTxAttrs attrs)
+     CPUState *cs;
  
-     /* TODO: TCG will support all CPU types */
-     if (!kvm_enabled()) {
-@@ -527,6 +531,19 @@ static void mips_loongson3_virt_init(MachineState *machine)
-     create_unimplemented_device("mmio fallback 0", 0x10000000, 256 * MiB);
-     create_unimplemented_device("mmio fallback 1", 0x30000000, 256 * MiB);
- 
-+    memory_region_init(iocsr, OBJECT(machine), "loongson3.iocsr", UINT32_MAX);
-+
-+    /* IPI controller is in kernel for KVM */
-+    if (!kvm_enabled()) {
-+        ipi = qdev_new(TYPE_LOONGSON_IPI);
-+        qdev_prop_set_uint32(ipi, "num-cpu", machine->smp.cpus);
-+        sysbus_realize_and_unref(SYS_BUS_DEVICE(ipi), &error_fatal);
-+        memory_region_add_subregion(iocsr, SMP_IPI_MAILBOX,
-+            sysbus_mmio_get_region(SYS_BUS_DEVICE(ipi), 0));
-+        memory_region_add_subregion(iocsr, MAIL_SEND_ADDR,
-+            sysbus_mmio_get_region(SYS_BUS_DEVICE(ipi), 1));
-+    }
-+
-     liointc = qdev_new("loongson.liointc");
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(liointc), &error_fatal);
- 
-@@ -543,6 +560,8 @@ static void mips_loongson3_virt_init(MachineState *machine)
-     clock_set_hz(cpuclk, DEF_LOONGSON3_FREQ);
- 
-     for (i = 0; i < machine->smp.cpus; i++) {
-+        int node = i / LOONGSON3_CORE_PER_NODE;
-+        int core = i % LOONGSON3_CORE_PER_NODE;
-         int ip;
- 
-         /* init CPUs */
-@@ -553,12 +572,28 @@ static void mips_loongson3_virt_init(MachineState *machine)
-         cpu_mips_clock_init(cpu);
-         qemu_register_reset(main_cpu_reset, cpu);
- 
--        if (i >= 4) {
-+        if (ipi) {
-+            hwaddr base = ((hwaddr)node << 44) + virt_memmap[VIRT_IPI].base;
-+            base += core * 0x100;
-+            qdev_connect_gpio_out(ipi, i, cpu->env.irq[6]);
-+            sysbus_mmio_map(SYS_BUS_DEVICE(ipi), i + 2, base);
-+        }
-+
-+        if (ase_lcsr_available(&MIPS_CPU(cpu)->env)) {
-+            MemoryRegion *core_iocsr = g_new(MemoryRegion, 1);
-+            g_autofree char *name = g_strdup_printf("loongson3.core%d_iocsr", i);
-+            memory_region_init_alias(core_iocsr, OBJECT(cpu), name,
-+                                     iocsr, 0, UINT32_MAX);
-+            memory_region_add_subregion(&MIPS_CPU(cpu)->env.iocsr.mr,
-+                                        0, core_iocsr);
-+        }
-+
-+        if (node > 0) {
-             continue; /* Only node-0 can be connected to LIOINTC */
-         }
- 
-         for (ip = 0; ip < 4 ; ip++) {
--            int pin = i * 4 + ip;
-+            int pin = core * LOONGSON3_CORE_PER_NODE + ip;
-             sysbus_connect_irq(SYS_BUS_DEVICE(liointc),
-                                pin, cpu->env.irq[ip + 2]);
+     cpuid = extract32(val, 16, 10);
+-    cs = ipi_getcpu(cpuid);
++    cs = cpu_by_arch_id(cpuid);
+     if (cs == NULL) {
+         return MEMTX_DECODE_ERROR;
+     }
+@@ -227,7 +194,7 @@ static MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr,
+         cpuid = extract32(val, 16, 10);
+         /* IPI status vector */
+         vector = extract8(val, 0, 5);
+-        cs = ipi_getcpu(cpuid);
++        cs = cpu_by_arch_id(cpuid);
+         if (cs == NULL || cs->cpu_index >= ipi->num_cpu) {
+             return MEMTX_DECODE_ERROR;
          }
 
 -- 
