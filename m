@@ -4,84 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B8D5C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 07:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FA59C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 08:03:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sElWZ-0006qb-HH; Wed, 05 Jun 2024 03:57:35 -0400
+	id 1sElbU-0000lW-Gc; Wed, 05 Jun 2024 04:02:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sElWY-0006qH-72
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:57:34 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sElWW-0004vg-MU
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:57:33 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-42138eadf64so32224335e9.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 00:57:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717574251; x=1718179051; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=egrl/d8rzBTRdPhuc6RcD/PapG2iaIfvjCjdwARZSLA=;
- b=BsTDy75BN6G+P1C0CpdvAaO4mGT0hFpJWpBmvQwdX19LejmLE4VrxUAlXNNSH2SUtL
- 01BlfKTJKbbkAdaxqJ/h2nJMdUjz1bwGSdzBAV8zSlJo0mP9aKIll2RoalyfxLjiINPg
- yp6rgPYJa57akl6eiq0RFfL01ju1b1Pp14AcFVhnYzoyc//gWBo1PHap7V7blXSo99P+
- bPC9WQ9Addn+SjMhbOOzhIkOQZ0Wb4ADe+MreyjX2TLp2z19i89YabeJMxr9S2CUXp2l
- zmL4068PQSOqpjMVTtxvsdDTZHIJifajY/LBKXBXxu7vfZEVn+GqJP5ZwmUr7QWUrUbe
- mYrQ==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sElbO-0000kz-QY
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 04:02:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sElbM-0006wv-Km
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 04:02:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717574551;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=4526JvxEgr5KWaeAkiMVTwUFgEajmky1HZOnGwU2Z1s=;
+ b=R4SBA+oU2eUQ+VSiVxM/v8T+GqwG3RhrYJntWs6Ao9bWXNNvhzV/JDUh9g1g1ncO0IUtBc
+ xkq2GG7usNffwKq3QNe4imw5iAbnt/xfMuu39DZJaoWgcB1PdKbYC8XaWpRWy05Zi/kGB8
+ SXLPa0rnwYuu3kAyw5BTBMQzWfOveUk=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-183-e7IW8RObOHuSQIrKQU3a6A-1; Wed, 05 Jun 2024 04:02:17 -0400
+X-MC-Unique: e7IW8RObOHuSQIrKQU3a6A-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-35e4b4e0260so3204683f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 01:02:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717574251; x=1718179051;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=egrl/d8rzBTRdPhuc6RcD/PapG2iaIfvjCjdwARZSLA=;
- b=Nb+0tDRAfXfZo+RHX2hzfQ/QUTSiKZY6AnAE0BvQNl4lTZLJ5ovr2j8AubM+OQHzyV
- h4K6mL7F9ts22T9g5IyM6JxjX37+bEk8BdNKwp5O6uqut5riExB2DH03BKUWbcu0YI8o
- I3jLCgWprHiL2V2Ls5W8EfkIIK/wbt9Hb/7C7uQGALBePkPTj1Kl4xN9P8saFvu80y6H
- 15uOMZ4lfH8RTc4noPEbepG+EK70eAQdYJI5vOl3dZE010HoV0tbcfFpBRNrI2i2Bf7D
- 29Y3RJ7zNOH5pbGeOk1dAi87o6uPfZ7QISFkXKVvIp9K2uAs6urcDeNo+1hnWm14JMSu
- wm2A==
+ d=1e100.net; s=20230601; t=1717574536; x=1718179336;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4526JvxEgr5KWaeAkiMVTwUFgEajmky1HZOnGwU2Z1s=;
+ b=b1DpRPlbh5NBuRGLZMYuV0h+UdjIYsPaJ6jmXZJo3pbnLT97lzPIhDPitWODQH43SE
+ +bn/HCvAkHjWNxqPWziEoflzgyZyaR8/K2ahqCBg+e4+6EVljtZHFvCl75C7Uwt1MZGD
+ XMszudteB0Zfr1JXge9CMNyqgPXH7D9bsqyGLsS+n72ujHJiKjkYGCP6tQP0GCFUGjJz
+ V6/lgkc2jmSEEWa2gqak0nvcyJ3K2Slp3GDTOGURfkkac+JSMECreta9L/fwzAXU+aMq
+ PO3J9dPPu+0EqrLO/N0qP0omGm2HBabe2MaF8hFTAlny3upwf8qbcffRqwmeKiW+v46J
+ VfBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUdUlJS5znnfSJDpg8/bz3zS1aFCIVHxIarVhcNof3CCKHnIs34qPpgxudDDt44vrGrAlVUdo7Sr6y1RsvIJoNlLMRN4b8=
-X-Gm-Message-State: AOJu0YyhZxP1Ne129a0ZEmayqGmsM9lU87xvSbxbbuUOqucCd68HOUZk
- r8zfdcfljGD/nT4xqDa8Tmx1J1le4aF6srG1ywxaANK0nx3ZEWuzwaKVVANK+8k=
-X-Google-Smtp-Source: AGHT+IGjAHp1inj4UgHzqUbci2IGN2xsLD19xiN/rXBykXqhvKJ5p/X9zo8dIIa9gZ+5xNJQZoI1FQ==
-X-Received: by 2002:a05:600c:458e:b0:420:2986:ccee with SMTP id
- 5b1f17b1804b1-4215633febamr13040875e9.30.1717574250967; 
- Wed, 05 Jun 2024 00:57:30 -0700 (PDT)
-Received: from [192.168.60.175] (144.red-88-29-107.staticip.rima-tde.net.
- [88.29.107.144]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-421581111easm10757595e9.19.2024.06.05.00.57.29
+ AJvYcCXEliGx7SZ/upyqQVVglQM0/Oipg3ihtRhBABqt3o47RxyADBLBGuatoKHwZpMw2Hg+XnDmEP3ILumDWV/2zJ+6c/d2LSI=
+X-Gm-Message-State: AOJu0YxJjEvq7vqPxqqHhxjyKNAcjuwmXKaCGlmNyXPg/o+3JQV3eyt3
+ lgL00pv6MKY8mzGehk0Xua+f8mEwI5k+EppTLR4m1gwEY/3B4xSFM4kt3pDbtgx19VG3I/1mS8C
+ wT+7UeOdYeCDfpXIaH6Ph7rNdjhNJjji8MEvD5OK0/ZyzUgs5Szrv
+X-Received: by 2002:adf:fc8e:0:b0:357:70cc:2c99 with SMTP id
+ ffacd0b85a97d-35e8ef946afmr1511493f8f.44.1717574536831; 
+ Wed, 05 Jun 2024 01:02:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEP2AgLQkyhX6bj0SblVQWAkxviurT2KdmfYkqj+iM4mJ9gK3QyIpZ1vix9JCOu5XB/ob7LYw==
+X-Received: by 2002:adf:fc8e:0:b0:357:70cc:2c99 with SMTP id
+ ffacd0b85a97d-35e8ef946afmr1511475f8f.44.1717574536433; 
+ Wed, 05 Jun 2024 01:02:16 -0700 (PDT)
+Received: from [10.33.192.191] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35e5bb909d1sm7560378f8f.88.2024.06.05.01.02.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Jun 2024 00:57:30 -0700 (PDT)
-Message-ID: <849a91fa-b3fe-4981-a7e3-e174179be26b@linaro.org>
-Date: Wed, 5 Jun 2024 09:57:28 +0200
+ Wed, 05 Jun 2024 01:02:16 -0700 (PDT)
+Message-ID: <24bbebeb-9ce4-4f0f-9ae8-8a8ebf5979ed@redhat.com>
+Date: Wed, 5 Jun 2024 10:02:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 19/37] target/sparc: Implement FPCMPEQ8, FPCMPNE8,
- FPCMPULE8, FPCMPUGT8
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: mark.cave-ayland@ilande.co.uk
-References: <20240526194254.459395-1-richard.henderson@linaro.org>
- <20240526194254.459395-20-richard.henderson@linaro.org>
+Subject: Re: [PATCH 0/5] s390x: Add Full Boot Order Support
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com, nsg@linux.ibm.com
+References: <20240529154311.734548-1-jrossi@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240526194254.459395-20-richard.henderson@linaro.org>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240529154311.734548-1-jrossi@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,32 +146,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/5/24 21:42, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/sparc/helper.h     |  4 ++++
->   target/sparc/insns.decode |  5 +++++
->   target/sparc/translate.c  |  9 +++++++++
->   target/sparc/vis_helper.c | 40 +++++++++++++++++++++++++++++++++++++++
->   4 files changed, 58 insertions(+)
+On 29/05/2024 17.43, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> This patch set primarily adds support for the specification of multiple boot
+> devices, allowing for the guest to automatically use an alternative device on
+> a failed boot without needing to be reconfigured. It additionally provides the
+> ability to define the loadparm attribute on a per-device bases, which allows
+> boot devices to use different loadparm values if needed.
+> 
+> In brief, an IPLB is generated for each designated boot device (up to a maximum
+> of 8) and stored in guest memory immediately before BIOS. If a device fails to
+> boot, the next IPLB is retrieved and we jump back to the start of BIOS.
+> 
+> Devices can be specified using the standard qemu device tag "bootindex" as with
+> other architectures. Lower number indices are tried first, with "bootindex=0"
+> indicating the first device to try.
 
+Is this supposed with multiple scsi-hd devices, too? I tried to boot a guest 
+with two scsi disks (attached to a single virtio-scsi-ccw adapter) where 
+only the second disk had a bootable installation, but that failed...?
 
-> +uint64_t helper_fcmpeq8(uint64_t src1, uint64_t src2)
-> +{
-> +    uint64_t a = src1 ^ src2;
-> +    uint64_t m = 0x7f7f7f7f7f7f7f7fULL;
-> +    uint64_t c = ~(((a & m) + m) | a | m);
-> +
-> +    /* a.......b.......c.......d.......e.......f.......g.......h....... */
-> +    c |= c << 7;
-> +    /* ab......bc......cd......de......ef......fg......gh......h....... */
-> +    c |= c << 14;
-> +    /* abcd....bcde....cdef....defg....efgh....fgh.....gh......h....... */
-> +    c |= c << 28;
-> +    /* abcdefghbcdefgh.cdefgh..defgh...efgh....fgh.....gh......h....... */
-> +    return c >> 56;
-> +}
+  Thomas
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
