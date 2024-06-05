@@ -4,91 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D260FC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 13:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4701FC25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 13:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEqn7-0001xK-AN; Wed, 05 Jun 2024 09:35:01 -0400
+	id 1sEqnl-0002Jk-73; Wed, 05 Jun 2024 09:35:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sEqn5-0001x2-UA
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 09:34:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sEqn4-00031F-FC
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 09:34:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717594497;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JZZPtrDu9x28REqGTPIWhw9vKCAfhpoOi3laR69ZUMY=;
- b=fn7YIntlb/4GwB3s6Ix3v/0gzquNJnkSmwv0zb0TaFWF+rLCOEuCEFJS7gKMBopqqK4Si8
- FEmfMTSGrNYhs4FkPF3Qnyb5juoxMjq8KdYke03NA9IIqrRJRqCjkmw39UBB6hx+CzTGSt
- ChgX811X2nmlcSb+DVEZsaUNEnG97Ig=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-294-IPbZ2-vcO3Wv_9q93Almmg-1; Wed, 05 Jun 2024 09:34:54 -0400
-X-MC-Unique: IPbZ2-vcO3Wv_9q93Almmg-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-35dceae6283so1795092f8f.2
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 06:34:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sEqnk-0002Gh-BV
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 09:35:40 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sEqni-0003N1-CQ
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 09:35:40 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-57a6fcb823fso3347457a12.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 06:35:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717594537; x=1718199337; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=FwE6PA3YucFEKlF5XYjDfDwwa1ZnwXRI6rnHV+Zj+ic=;
+ b=Rgku2IpcdVyIjJprwOElWtYcktspT9Pn616Lssk9wFp1hPVUtWJpgGpJdiwNsv4uA+
+ /EYcbeNBzv5oVPAQ/YtKyAGAxSRL3eitqabt0ujMRZ4YYWD1XJNLttIJ4S/D7zPkx+S1
+ XL8FLhzOOPdFdJr1VxAQdKFqRwqUOUO/YpzhST0jq1Hxg/7jCPILeaiJaV9FIfAAjiLq
+ stp4EofTP8uT58H1++Yw5dx2vaJjv4vax2VKOSxcQCl8qpaxMCXYW8DiueLHR3o8TKiO
+ Ywp3PjHXrmmQyWdZeiKCWG927jwFShxD5YOarTzMqBOZ4mYbKAbptAfg85RTeYyXEgl8
+ a5Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717594493; x=1718199293;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JZZPtrDu9x28REqGTPIWhw9vKCAfhpoOi3laR69ZUMY=;
- b=rKcE6lQ9A2LttBo1LYagAFgPHywwdTqt+DPwSHZQ6elQSvQnsQ0WMjl51fJChMfWa0
- EQmpNf0ga2fg95jZav2dFGXq6XFZ9MLaL6V0hEQvARoYsfyH1vKy3SWpw0KJEwLu3p/N
- thmes59RTJ/MCW+L/Aexnekx1qjR0oA3pvilcPEBUY8J1gQdEhv0jyfR5WdfRc2UpPd9
- hCdJhUJpCNVo+rrPMpQijQDXf/E9Fb6U+q3+mTHNcR33O4vawuGQjrQ0EyFM9gAV7dD1
- kdx+RC0LPlOG7zpf5XEcj4/HBVKgtVmEZoeGvGY09+cwYyACHqZBGEyaz01EHwKpm0v8
- HrRg==
-X-Gm-Message-State: AOJu0YxhvE8/BQjQDc2R1yIuXAWNQYRM7eACYAzFMbQBcLrDWbF8U6HH
- lK2nb1kCZFyKq2y0sXXm0L6hnMs5t7wj173LnIlchO4N8+JvTezVh4WO62IeM14RkHorO3Mguku
- uBj7GuKgLYXfXGD3kn303NJzzVZKoMv9O0gL1ba798oCOfSAtDkZz
-X-Received: by 2002:a5d:53c6:0:b0:35e:7cc6:98fc with SMTP id
- ffacd0b85a97d-35e8405e26cmr1839242f8f.12.1717594493296; 
- Wed, 05 Jun 2024 06:34:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEtZaH7DB2hwXC0W2u7ZsPckXWfoKYcGOmQvBK0l8NtX+l6NDw82TGaOGdWenjhDnbmKjQS4w==
-X-Received: by 2002:a5d:53c6:0:b0:35e:7cc6:98fc with SMTP id
- ffacd0b85a97d-35e8405e26cmr1839229f8f.12.1717594492980; 
- Wed, 05 Jun 2024 06:34:52 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35dd04ca434sm14608816f8f.30.2024.06.05.06.34.52
+ d=1e100.net; s=20230601; t=1717594537; x=1718199337;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FwE6PA3YucFEKlF5XYjDfDwwa1ZnwXRI6rnHV+Zj+ic=;
+ b=QAkf1n/KptSK3Jfus5z4Kw6lKw4I4q7vKndVaH/5mqta9MUIG7VKL9+6ub+2Vh57e1
+ ltYZxWCyO/21mKLr/KdmR4qbUZPMrjOUvMje72ibdr8HPcmaevm57u9ixnkQ5Z6Y+eEa
+ OPJH9IGavetMv5XxmBfOk+6W7677tULOqKwi/8AuAk2jNfO5D7Gnfnr5vUk83ZXtJbUw
+ ee5J3YrVPeeV6SOoxRABriZIeo+hvDTg1YkOUlxxppUpISYrxGmPH8dVXJwsscjtyn/O
+ yklCQ6GZYuPJJll5KLqbzgYWNLzHQWaCCGwvbgPU58x2I6/grK8luKar0bwLhUaDnsif
+ jBBQ==
+X-Gm-Message-State: AOJu0Yz0thOzmRCoptheyfaZbZIByA2WWiSakD6xkxpuLT5IrVV9ODJz
+ 4cMW7EDv27kYj5cFFtjf42+hB4j1aLO/eUthD172E+RR5dueefVMPpVnjsTNN1M=
+X-Google-Smtp-Source: AGHT+IGRYnIQkdeS2elJGqSKHzq8vAImXSCKZZG4iqcEpfc1iakQCXvkbYRxoJHjb4rfwPXphLD+eQ==
+X-Received: by 2002:a50:8d4e:0:b0:57a:76c1:b14e with SMTP id
+ 4fb4d7f45d1cf-57a8b51f11amr1799819a12.0.1717594536672; 
+ Wed, 05 Jun 2024 06:35:36 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-57a8b21ae1csm1731593a12.62.2024.06.05.06.35.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 06:34:52 -0700 (PDT)
-Date: Wed, 5 Jun 2024 15:34:51 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Zide Chen <zide.chen@intel.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mst@redhat.com,
- thuth@redhat.com, cfontana@suse.de, xiaoyao.li@intel.com,
- qemu-trivial@nongnu.org, seanjc@google.com, zhao1.liu@intel.com
-Subject: Re: [PATCH V3 1/2] vl: Allow multiple -overcommit commands
-Message-ID: <20240605153451.5c234180@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240604000222.75065-2-zide.chen@intel.com>
-References: <20240604000222.75065-1-zide.chen@intel.com>
- <20240604000222.75065-2-zide.chen@intel.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ Wed, 05 Jun 2024 06:35:36 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 81DF45F7AE;
+ Wed,  5 Jun 2024 14:35:35 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH] subprojects: add a wrapper for libvirglrenderer
+Date: Wed,  5 Jun 2024 14:35:27 +0100
+Message-Id: <20240605133527.529950-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,55 +102,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon,  3 Jun 2024 17:02:21 -0700
-Zide Chen <zide.chen@intel.com> wrote:
+As the latest features for virtio-gpu need a pretty recent version of
+libvirglrenderer. When it is not available on the system we can use a
+meson wrapper and provide it when --download is specified in
+configure.
 
-> Both cpu-pm and mem-lock are related to system resource overcommit, but
-> they are separate from each other, in terms of how they are realized,
-> and of course, they are applied to different system resources.
-> 
-> It's tempting to use separate command lines to specify their behavior.
-> e.g., in the following example, the cpu-pm command is quietly
-> overwritten, and it's not easy to notice it without careful inspection.
-> 
->   --overcommit mem-lock=on
->   --overcommit cpu-pm=on
-> 
-> Fixes: c8c9dc42b7ca ("Remove the deprecated -realtime option")
-> Suggested-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Zide Chen <zide.chen@intel.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+We have to take some additional care as currently QEMU will hang
+libvirglrenderer fails to exec the render server. As the error isn't
+back propagated we make sure we at least test we have a path to an
+executable before tweaking the environment.
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ meson.build                    |  7 ++++++-
+ hw/display/virtio-gpu-virgl.c  | 24 ++++++++++++++++++++++++
+ subprojects/virglrenderer.wrap |  6 ++++++
+ 3 files changed, 36 insertions(+), 1 deletion(-)
+ create mode 100644 subprojects/virglrenderer.wrap
 
-> ---
-> 
-> V3: added Reviewed-by
-> 
-> v2:
-> Thanks to Thomas' suggestion, changed to this better approach, which
-> is more generic and can handle situations like: "enabled the option in
-> the config file, and now you'd like to disable it on the command line
-> again".
-> 
->  system/vl.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/system/vl.c b/system/vl.c
-> index a3eede5fa5b8..dfa6cdd9283b 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -3545,8 +3545,8 @@ void qemu_init(int argc, char **argv)
->                  if (!opts) {
->                      exit(1);
->                  }
-> -                enable_mlock = qemu_opt_get_bool(opts, "mem-lock", false);
-> -                enable_cpu_pm = qemu_opt_get_bool(opts, "cpu-pm", false);
-> +                enable_mlock = qemu_opt_get_bool(opts, "mem-lock", enable_mlock);
-> +                enable_cpu_pm = qemu_opt_get_bool(opts, "cpu-pm", enable_cpu_pm);
->                  break;
->              case QEMU_OPTION_compat:
->                  {
+diff --git a/meson.build b/meson.build
+index 1d7346b703..e4e270df78 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1203,7 +1203,8 @@ have_vhost_user_gpu = have_tools and host_os == 'linux' and pixman.found()
+ if not get_option('virglrenderer').auto() or have_system or have_vhost_user_gpu
+   virgl = dependency('virglrenderer',
+                      method: 'pkg-config',
+-                     required: get_option('virglrenderer'))
++                     required: get_option('virglrenderer'),
++                     default_options: ['default_library=static', 'render-server=true', 'venus=true'])
+ endif
+ rutabaga = not_found
+ if not get_option('rutabaga_gfx').auto() or have_system or have_vhost_user_gpu
+@@ -2314,6 +2315,10 @@ if virgl.version().version_compare('>=1.0.0')
+   config_host_data.set('HAVE_VIRGL_RESOURCE_BLOB', 1)
+   config_host_data.set('HAVE_VIRGL_VENUS', 1)
+ endif
++if virgl.type_name().contains('internal')
++  config_host_data.set('HAVE_BUNDLED_VIRGL_SERVER', 1)
++endif
++
+ config_host_data.set('CONFIG_VIRTFS', have_virtfs)
+ config_host_data.set('CONFIG_VTE', vte.found())
+ config_host_data.set('CONFIG_XKBCOMMON', xkbcommon.found())
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index c9d20a8a60..53d6742e79 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -14,6 +14,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+ #include "qemu/iov.h"
++#include "qemu/cutils.h"
+ #include "trace.h"
+ #include "hw/virtio/virtio.h"
+ #include "hw/virtio/virtio-gpu.h"
+@@ -1122,6 +1123,26 @@ void virtio_gpu_virgl_reset(VirtIOGPU *g)
+     virgl_renderer_reset();
+ }
+ 
++/*
++ * If we fail to spawn the render server things tend to hang so it is
++ * important to do our due diligence before then. If QEMU has bundled
++ * the virgl server we want to ensure we can run it from the build
++ * directory and if installed.
++ *
++ * The principle way we can override the libvirglrenders behaviour is
++ * by setting environment variables.
++ */
++static void virgl_set_render_env(void)
++{
++#ifdef HAVE_BUNDLED_VIRGL_SERVER
++    g_autofree char *file = get_relocated_path(CONFIG_QEMU_HELPERDIR "/virgl_render_server");
++    if (g_file_test(file, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_EXECUTABLE)) {
++        g_setenv("RENDER_SERVER_EXEC_PATH", file, false);
++    }
++#endif
++}
++
++
+ int virtio_gpu_virgl_init(VirtIOGPU *g)
+ {
+     int ret;
+@@ -1145,6 +1166,9 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     }
+ #endif
+ 
++    /* Ensure we can find the render server */
++    virgl_set_render_env();
++
+     ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
+     if (ret != 0) {
+         error_report("virgl could not be initialized: %d", ret);
+diff --git a/subprojects/virglrenderer.wrap b/subprojects/virglrenderer.wrap
+new file mode 100644
+index 0000000000..3656a478c4
+--- /dev/null
++++ b/subprojects/virglrenderer.wrap
+@@ -0,0 +1,6 @@
++[wrap-git]
++url = https://gitlab.freedesktop.org/virgl/virglrenderer.git
++revision = virglrenderer-1.0.1
++
++[provide]
++virglrenderer = libvirglrenderer_dep
+-- 
+2.39.2
 
 
