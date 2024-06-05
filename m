@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6BECC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 07:13:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24DEAC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 07:25:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEkpp-0004S7-SL; Wed, 05 Jun 2024 03:13:25 -0400
+	id 1sEl1d-0007EO-Ks; Wed, 05 Jun 2024 03:25:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1sEkpn-0004Rm-Us
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:13:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1sEl1b-0007Dv-LZ
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:25:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1sEkpm-000105-8I
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:13:23 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1sEl1a-0004ZR-8k
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:25:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717571601;
+ s=mimecast20190719; t=1717572333;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YJayKCGtx/FVicl0F0SG4EUQVy2KXkM/sK1DmCBFGXM=;
- b=i5Oe008Q1FA1yLXbsjmyfMLDadVoZ4zsTURMEGg9hx/7isWr/sfn3g2zpWeHx9YCKUYhlJ
- rWBVzPgNGZKRxPdODTA7HVu7wM8dhD0T3/G47WXWO8KBLdBIO95pR79gUGSG3s4VUKVQkh
- u6zPs3k9lwErYPReWJGM40E4Nm4cd8A=
-Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
- [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=1sh2IyJdUWGJERi0Eqw48ze6hArP2qCwvSHGaXadPRs=;
+ b=WSyoRb4c0vEblVSX8z9ScEdSUWAjQrUkc3nH9NZV3fDNaKrYHNNcThjYJ8k4OOcXWHoONf
+ 6Nsi38aahJkr/bK1//q0WUEK0OWeYjm1TdBAE27TbXPdN2Nk9HOPavlr8is58MzBmSWo4b
+ jU2xoLNh7T22Js6ejw5zvZ4d6/M0+LI=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-73-kytbG_DFPFCD4WwBPpY_-A-1; Wed, 05 Jun 2024 03:12:13 -0400
-X-MC-Unique: kytbG_DFPFCD4WwBPpY_-A-1
-Received: by mail-lj1-f197.google.com with SMTP id
- 38308e7fff4ca-2ea8f9159f4so39822231fa.0
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 00:12:13 -0700 (PDT)
+ us-mta-527-OwcFbYIfPC-d70SnKhELRA-1; Wed, 05 Jun 2024 03:25:30 -0400
+X-MC-Unique: OwcFbYIfPC-d70SnKhELRA-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2c24109ad3fso2724909a91.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 00:25:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717571532; x=1718176332;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YJayKCGtx/FVicl0F0SG4EUQVy2KXkM/sK1DmCBFGXM=;
- b=kyFbo2XPxlMoYrZDqS+1hGht1ka2Y3HvtmxU4k5W9FOr5LknZ5bhBqxt2P+dQ3eHuj
- L4dgHfMNDNwsBMLLWRReaQVf4jNt7CNniWSeegn6R2Go593DCxZzUcUb9YhNqIJhwjqH
- osUXe4TqrKIGn1PsEHGIwX6YKrTyTGNx/IueDeHX6TwBpX4tapiyh3WEurB/kFNBvPUi
- MuetHKRNKix+3aVRujwe/Y4V6m8TIvrIpeY6cvQ/jA8q3mafiwL0jK/ZUF6hf80iGBOp
- QpcAFT5vU0Bn9ypTPiVJcenUVEYzdQ1bm/QqtAEvXq7KXUT9ojP0KruPHENkbnX5PUla
- MadQ==
-X-Gm-Message-State: AOJu0YxkEACoUtGOPlAGaKIOvhQx4rpyiXYffpUuer8M8S/gIEJ9uk8M
- 80XKhVizCWRJ4gYxtXJHRs+AC6koYEAWOqVp6vwY7C8tVZ2LfYmTTakDWouDpxaZjN3D0tIUVne
- BwOW3f5yWqe0tvlmokg6v2v4vULjwwrsLf4dE8msXdPRhpLGeC5Yo2543GT75nAvGVw6Q5wYrAb
- KJW3hdSo3gQ3/yANa2fMKegLUjzHU=
-X-Received: by 2002:a2e:b703:0:b0:2e9:7417:bb0a with SMTP id
- 38308e7fff4ca-2eac798d18amr8460681fa.3.1717571532012; 
- Wed, 05 Jun 2024 00:12:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFDR4KepibulB/OHJi2+GdWMm0E4lwlFJxjpYHpOOPdECcqppSFvNC4ZWmOgODVPFlFIS2ZdKzp2mCWhIr8oAM=
-X-Received: by 2002:a2e:b703:0:b0:2e9:7417:bb0a with SMTP id
- 38308e7fff4ca-2eac798d18amr8460631fa.3.1717571531640; Wed, 05 Jun 2024
- 00:12:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717572329; x=1718177129;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1sh2IyJdUWGJERi0Eqw48ze6hArP2qCwvSHGaXadPRs=;
+ b=H4xY760n8bAqFrzxlXxSYs5dqk4G5LU5b7h7a2xpSCduMz0qCOBHtOZD8aLd9kr/Q/
+ 1LC9Gc4VFwAqCMGKcSP/iVfJPbaVNeWRx0nuC8joBMZA/9/rvIe5IAJvkESOkiKcBNf2
+ vOptbRqDMG2EdV/RbiIL6P/u49u7UYmYrZ6pj73S7yckWgbvVu/J3UZiZhdCEc7EeVcW
+ 912VjJyokHB9ChKOo/Uw4HlosOWAuCmhuPZuPxYFBba9K56oPMCBBY/LnBFqdnmTrJOS
+ 3s29AV5OqwmRuBR7vnMJntjDm8Z/0Mx0S2q0/PCLUX9XpXxNqHEnPFcctggeuU+XFnCV
+ T+NA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUpTDn5IYSfHBaEW9IC27gi/HYoS14oPug3oilEsiewoU4eLFHwtNjwRjE526p3f4y8l903FluHiBaqbZlajI+fHLqsBQ4=
+X-Gm-Message-State: AOJu0YwZ2SvD21mRkgeasw5QgdJoXv+/rtmVPFYTUgBe7uLyElkHka5D
+ E2g4j0gNNQGhiOSL1H5k8vZd5nUv/pB0E++UPkQQVvC6GTZMtTuvtuvwuHtDm68Zp/k1RL0Cnl6
+ 4mE0VKPrbTGXjumbFA0Vlh2b41iT5aEBOJqJLZhKxCM6nE3Hhzq1T
+X-Received: by 2002:a17:902:f549:b0:1f4:5278:5c19 with SMTP id
+ d9443c01a7336-1f6a5a5ca41mr19608315ad.49.1717572329627; 
+ Wed, 05 Jun 2024 00:25:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEL4ZANc3KsvHwi4jXSR19V7p8O6fRRXQ96U2BCG2iFVxmEFyE31uM6F9SjBENeonJtP3LDjQ==
+X-Received: by 2002:a17:902:f549:b0:1f4:5278:5c19 with SMTP id
+ d9443c01a7336-1f6a5a5ca41mr19608185ad.49.1717572329203; 
+ Wed, 05 Jun 2024 00:25:29 -0700 (PDT)
+Received: from localhost.localdomain ([203.163.232.78])
+ by smtp.googlemail.com with ESMTPSA id
+ d9443c01a7336-1f6703f7673sm56329335ad.210.2024.06.05.00.25.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Jun 2024 00:25:28 -0700 (PDT)
+From: Ani Sinha <anisinha@redhat.com>
+To: 
+Cc: Ani Sinha <anisinha@redhat.com>, thuth@redhat.com, imammedo@redhat.com,
+ qemu-devel@nongnu.org, pbonzini@redhat.com, lvivier@redhat.com
+Subject: [PATCH 0/3] x86 cpu test refactoring
+Date: Wed,  5 Jun 2024 12:55:08 +0530
+Message-ID: <20240605072512.67692-1-anisinha@redhat.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-References: <cover.1717140354.git.mprivozn@redhat.com>
- <58295d1f6c995c0c444e375348436e799689126c.1717140354.git.mprivozn@redhat.com>
-In-Reply-To: <58295d1f6c995c0c444e375348436e799689126c.1717140354.git.mprivozn@redhat.com>
-From: Mario Casquero <mcasquer@redhat.com>
-Date: Wed, 5 Jun 2024 09:12:00 +0200
-Message-ID: <CAMXpfWv7T0wHXgzD8urL+jNMeGJrmObbSCOVqz-ysNUn5Kovzw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] backends/hostmem: Report error when memory size is
- unaligned
-To: Michal Privoznik <mprivozn@redhat.com>
-Cc: qemu-devel@nongnu.org, david@redhat.com, imammedo@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mcasquer@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -99,68 +101,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch has been successfully tested by QE. After allocating some
-hugepages in the host, try to boot up a VM with the memory backed by a
-file and the size unaligned, check now the message displayed by QEMU:
-qemu-system-x86_64: backend memory size must be multiple of 0x200000
+Add a new library api to check for the support of a specific cpu type.
+Used the new api to check support for some older x86 cpu models before
+running the tests.
 
-Tested-by: Mario Casquero <mcasquer@redhat.com>
+CC: thuth@redhat.com
+CC: imammedo@redhat.com
+CC: qemu-devel@nongnu.org
+CC: pbonzini@redhat.com
+CC: lvivier@redhat.com
 
 
-On Fri, May 31, 2024 at 9:29=E2=80=AFAM Michal Privoznik <mprivozn@redhat.c=
-om> wrote:
->
-> If memory-backend-{file,ram} has a size that's not aligned to
-> underlying page size it is not only wasteful, but also may lead
-> to hard to debug behaviour. For instance, in case
-> memory-backend-file and hugepages, madvise() and mbind() fail.
-> Rightfully so, page is the smallest unit they can work with. And
-> even though an error is reported, the root cause it not very
-> clear:
->
->   qemu-system-x86_64: Couldn't set property 'dump' on 'memory-backend-fil=
-e': Invalid argument
->
-> After this commit:
->
->   qemu-system-x86_64: backend memory size must be multiple of 0x200000
->
-> Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
-> ---
->  backends/hostmem.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/backends/hostmem.c b/backends/hostmem.c
-> index 012a8c190f..5f9c9ea8f5 100644
-> --- a/backends/hostmem.c
-> +++ b/backends/hostmem.c
-> @@ -337,6 +337,7 @@ host_memory_backend_memory_complete(UserCreatable *uc=
-, Error **errp)
->      HostMemoryBackendClass *bc =3D MEMORY_BACKEND_GET_CLASS(uc);
->      void *ptr;
->      uint64_t sz;
-> +    size_t pagesize;
->      bool async =3D !phase_check(PHASE_LATE_BACKENDS_CREATED);
->
->      if (!bc->alloc) {
-> @@ -348,6 +349,13 @@ host_memory_backend_memory_complete(UserCreatable *u=
-c, Error **errp)
->
->      ptr =3D memory_region_get_ram_ptr(&backend->mr);
->      sz =3D memory_region_size(&backend->mr);
-> +    pagesize =3D qemu_ram_pagesize(backend->mr.ram_block);
-> +
-> +    if (!QEMU_IS_ALIGNED(sz, pagesize)) {
-> +        error_setg(errp, "backend memory size must be multiple of 0x%"
-> +                   PRIx64, pagesize);
-> +        return;
-> +    }
->
->      if (backend->merge &&
->          qemu_madvise(ptr, sz, QEMU_MADV_MERGEABLE)) {
-> --
-> 2.44.1
->
->
+Ani Sinha (3):
+  qtest/x86/numa-test: do not use the obsolete 'pentium' cpu
+  tests/qtest/libqtest: add qtest_has_cpu() api
+  tests/qtest/x86: check for availability of older cpu models before
+    running tests
+
+ tests/qtest/libqtest.c              |  84 +++++++++++
+ tests/qtest/libqtest.h              |   8 ++
+ tests/qtest/numa-test.c             |   3 +-
+ tests/qtest/test-x86-cpuid-compat.c | 214 +++++++++++++++++-----------
+ 4 files changed, 221 insertions(+), 88 deletions(-)
+
+-- 
+2.42.0
 
 
