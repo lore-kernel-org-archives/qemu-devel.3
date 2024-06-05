@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CB87C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 11:28:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DA48C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 11:28:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEonN-0005ZD-RG; Wed, 05 Jun 2024 07:27:10 -0400
+	id 1sEomv-0005TG-Lv; Wed, 05 Jun 2024 07:26:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sEonM-0005Yz-3b
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 07:27:08 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1sEomt-0005QR-7d
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 07:26:39 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sEonJ-0003Nn-Tn
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 07:27:07 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-578517c7ae9so2678468a12.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 04:27:05 -0700 (PDT)
+ id 1sEomq-0003K6-PN
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 07:26:38 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-57a68b0fbd0so3293188a12.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 04:26:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1717586824; x=1718191624;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1717586795; x=1718191595;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=g0aXqXcmnBCSHTUMGza3JBiKc8v6Yf/pH6Wf+LjvE9A=;
- b=n6MW/lPncgVtUFN25wnvWYkA9o1oKwS6vhC1n/kGuMzdBRB/42SgYAeLPQP7a5ydxJ
- nBnTAAEFyF1fu6MySQIivRfAoX7+hkmHU3YUUN/bUMevy/aS6XP34DhlLETXXXPMNcdT
- zawTDE43nno8+vKs50JqMOEnA5Rk+mxNC8thTRFrHgGHQbjFq5rWiOpGIWU+vIMN771M
- qnBAmwBGNoc4g2DGPbxod3gvM26cXLVgxXuV9aAxA3GAqwajlcD1EDPn8oLjxEMYVzWm
- XgV0wqWZ9OX3SnH6WWWFOvXwUcFcQAVyXVZUuRikDj/H9q5oedNDzcBUYmiLveYUWPEQ
- Adag==
+ bh=Jz+LXvXPAM70EjQQqCu1N8a5rP+u5jvbMbCKW1n/wvc=;
+ b=2WPP6TDEFBXAvd1MKJqxaEn7PSPvvFOgkqouNb8N4T9U2nufVK/cic2XaUVrouU48G
+ I7QDPJiGwBe8ESS2l334gWBGNVgPD1p7QS0cw1B8o+Z/x5NXsKb9/a7Xvyya19y4bd/U
+ u4/0OIbkz4MCV1HxHBoo0KVRpxxZ4RzYxekXS2LJ58vsYvp+5suSZ8EJKJEobieNXZaz
+ CfDWeGeKgWn0CURoR/CMkUHFpIwzoGtRWdTX/0XpGJT40ynIL2HUN+mV1LBPhIKfLy/W
+ +NiHRVgaIIUgPfjZgb6I6SMwJKzm2DO8LznK1Urfmnrw4BLBMtKK6phVYvvk719NmJXl
+ vl5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717586824; x=1718191624;
+ d=1e100.net; s=20230601; t=1717586795; x=1718191595;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=g0aXqXcmnBCSHTUMGza3JBiKc8v6Yf/pH6Wf+LjvE9A=;
- b=Kx++wDRLdsAhCuYnzOIn6+09Oy5F2zyKovwQaVMP1wNMLDNFol7VI/L2JPsSoQ4gN9
- mmlO9NcrAhhsTnAfVfUwOyzl+Z9OptCDTWDUiZMg2slH3i+SP/pP/xmsy1ie4fcCuQEs
- qkNustEyPNCjIPZlWilbBm9sLW5d934EutjxOepldWCyidK6F7+BbuSjjodmk8DU+Utp
- d3Vg5SRfE/9zXzDRtLvwITHAu86NC6erhj8nT0a5drBHbr1NxnxFdybZusBOXyWuleft
- HI9f0dfKmcoDgvCGTP/6qHY+biUpct+AZWAosqX/LGJocXv91pAxFU5o4QTlVyOheXm/
- kwaQ==
-X-Gm-Message-State: AOJu0YyaJL8I8kUQje6KUQZbqH7RgVI9WvWC8O7/PUdYiz3bNG1w9qt6
- ly4MNn20O7wTA5LTATuVIVrYpZCliDz24tIZe+Xz9Di4/8c0w7FXowo40e6W5h9jflvQcjb4m8M
+ bh=Jz+LXvXPAM70EjQQqCu1N8a5rP+u5jvbMbCKW1n/wvc=;
+ b=YvA7dzxntmzzawQvHK/28EafznFqOH+pnsrRhzPPnuWWDb2qLv1FNnmaPaHn9FZam/
+ ElkUVsdb7eo/0vj5SYZ+kUPZeHwYWsn+khbhQZ0EQDddhK1W2XH2cWRh7bE1Bpg2gbee
+ ba3RCWKFpyq+WGhUwhPgNZBCPDD/FS+wS+1ugHJ4+zQtfHBq50TOxZ/g22OwEgXfA1wr
+ uXgZFIrq7uWjorYodW5L8oMXo4EDNwXMhLimQftjQz5M3Q+tUBs+0Ni/pznMXdnLFsE/
+ 58eDMuyF2VdVabBB9weKY+S4o9RBTQxgLtj9ZvZcn4S2b286J/OFh/CWHvLLi1exS+be
+ 5LDQ==
+X-Gm-Message-State: AOJu0Yw/Kq+qE3c93xhyfuvKYeOtTJlpC1mYEDa7cKKnCXluw0cXudhb
+ yiUCXq+XMntT0NOaq1SA9v+Mfi/w5sbR3Dx53SU4CjVcjglseX744Y/nANcU+8uJtfvBBehbcg4
  =
-X-Google-Smtp-Source: AGHT+IH4f6E5RmBELgGtPxvCF3hgAjt/4lQFG5C6R4P9pc8H2wr4y5gUeLgCeObO5Q/2jsrW0MUYMQ==
-X-Received: by 2002:a50:d79b:0:b0:57a:259a:489a with SMTP id
- 4fb4d7f45d1cf-57a8b6a698fmr1355330a12.14.1717586824291; 
- Wed, 05 Jun 2024 04:27:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF7bSB3b1MIka1x5hxtiRau/mQrhq/7XtAxhAWO22OVw1H0TP7TkE4mOa5XT045eDqd2DfMuw==
+X-Received: by 2002:a50:bb44:0:b0:57a:24db:f389 with SMTP id
+ 4fb4d7f45d1cf-57a8b6b664emr1536760a12.21.1717586795393; 
+ Wed, 05 Jun 2024 04:26:35 -0700 (PDT)
 Received: from localhost.localdomain (89-104-8-249.customer.bnet.at.
  [89.104.8.249]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57a51023af4sm7111335a12.29.2024.06.05.04.27.03
+ 4fb4d7f45d1cf-57a51023af4sm7111335a12.29.2024.06.05.04.26.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 04:27:03 -0700 (PDT)
+ Wed, 05 Jun 2024 04:26:34 -0700 (PDT)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
 Cc: dirty@apple.com, rbolshakov@ddn.com, lists@philjordan.eu,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v3 7/7] hvf: Makes assert_hvf_ok report failed expression
-Date: Wed,  5 Jun 2024 13:25:56 +0200
-Message-Id: <20240605112556.43193-8-phil@philjordan.eu>
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Roman Bolshakov <roman@roolebo.dev>
+Subject: [PATCH v3 2/7] i386/hvf: Fixes some compilation warnings
+Date: Wed,  5 Jun 2024 13:25:51 +0200
+Message-Id: <20240605112556.43193-3-phil@philjordan.eu>
 X-Mailer: git-send-email 2.36.1
 In-Reply-To: <20240605112556.43193-1-phil@philjordan.eu>
 References: <20240605112556.43193-1-phil@philjordan.eu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::52d;
- envelope-from=phil@philjordan.eu; helo=mail-ed1-x52d.google.com
+Received-SPF: neutral client-ip=2a00:1450:4864:20::52e;
+ envelope-from=phil@philjordan.eu; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -95,108 +96,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a macOS Hypervisor.framework call fails which is checked by
-assert_hvf_ok(), Qemu exits printing the error value, but not the
-location
-in the code, as regular assert() macro expansions would.
+A bunch of function definitions used empty parentheses instead of (void) syntax, yielding the following warning when building with clang on macOS:
 
-This change turns assert_hvf_ok() into a macro similar to other
-assertions, which expands to a call to the corresponding _impl()
-function together with information about the expression that failed
-the assertion and its location in the code.
+warning: a function declaration without a prototype is deprecated in all versions of C [-Wstrict-prototypes]
 
-Additionally, stringifying the numeric hv_return_t code is factored
-into a helper function that can be reused for diagnostics and debugging
-outside of assertions.
+In addition to fixing these function headers, it also fixes what appears to be a typo causing a variable to be unused after initialisation.
+
+warning: variable 'entry_ctls' set but not used [-Wunused-but-set-variable]
 
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Reviewed-by: Roman Bolshakov <roman@roolebo.dev>
+Tested-by: Roman Bolshakov <roman@roolebo.dev>
 ---
- accel/hvf/hvf-all.c      | 49 +++++++++++++++++-----------------------
- include/sysemu/hvf_int.h |  5 +++-
- 2 files changed, 25 insertions(+), 29 deletions(-)
+ target/i386/hvf/vmx.h        | 3 +--
+ target/i386/hvf/x86_decode.c | 2 +-
+ target/i386/hvf/x86_emu.c    | 4 ++--
+ 3 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-index db05b81be5..c008dc2f1e 100644
---- a/accel/hvf/hvf-all.c
-+++ b/accel/hvf/hvf-all.c
-@@ -13,40 +13,33 @@
- #include "sysemu/hvf.h"
- #include "sysemu/hvf_int.h"
+diff --git a/target/i386/hvf/vmx.h b/target/i386/hvf/vmx.h
+index 0fffcfa46c..3954ef883d 100644
+--- a/target/i386/hvf/vmx.h
++++ b/target/i386/hvf/vmx.h
+@@ -95,8 +95,7 @@ static void enter_long_mode(hv_vcpuid_t vcpu, uint64_t cr0, uint64_t efer)
+     efer |= MSR_EFER_LMA;
+     wvmcs(vcpu, VMCS_GUEST_IA32_EFER, efer);
+     entry_ctls = rvmcs(vcpu, VMCS_ENTRY_CTLS);
+-    wvmcs(vcpu, VMCS_ENTRY_CTLS, rvmcs(vcpu, VMCS_ENTRY_CTLS) |
+-          VM_ENTRY_GUEST_LMA);
++    wvmcs(vcpu, VMCS_ENTRY_CTLS, entry_ctls | VM_ENTRY_GUEST_LMA);
  
--void assert_hvf_ok(hv_return_t ret)
-+const char *hvf_return_string(hv_return_t ret)
- {
--    if (ret == HV_SUCCESS) {
--        return;
--    }
--
-     switch (ret) {
--    case HV_ERROR:
--        error_report("Error: HV_ERROR");
--        break;
--    case HV_BUSY:
--        error_report("Error: HV_BUSY");
--        break;
--    case HV_BAD_ARGUMENT:
--        error_report("Error: HV_BAD_ARGUMENT");
--        break;
--    case HV_NO_RESOURCES:
--        error_report("Error: HV_NO_RESOURCES");
--        break;
--    case HV_NO_DEVICE:
--        error_report("Error: HV_NO_DEVICE");
--        break;
--    case HV_UNSUPPORTED:
--        error_report("Error: HV_UNSUPPORTED");
--        break;
-+    case HV_SUCCESS:      return "HV_SUCCESS";
-+    case HV_ERROR:        return "HV_ERROR";
-+    case HV_BUSY:         return "HV_BUSY";
-+    case HV_BAD_ARGUMENT: return "HV_BAD_ARGUMENT";
-+    case HV_NO_RESOURCES: return "HV_NO_RESOURCES";
-+    case HV_NO_DEVICE:    return "HV_NO_DEVICE";
-+    case HV_UNSUPPORTED:  return "HV_UNSUPPORTED";
- #if defined(MAC_OS_VERSION_11_0) && \
-     MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
--    case HV_DENIED:
--        error_report("Error: HV_DENIED");
--        break;
-+    case HV_DENIED:       return "HV_DENIED";
- #endif
--    default:
--        error_report("Unknown Error");
-+    default:              return "[unknown hv_return value]";
-     }
-+}
-+
-+void assert_hvf_ok_impl(hv_return_t ret, const char *file, unsigned int line,
-+                        const char *exp)
-+{
-+    if (ret == HV_SUCCESS) {
-+        return;
-+    }
-+
-+    error_report("Error: %s = %s (0x%x, at %s:%u)",
-+        exp, hvf_return_string(ret), ret, file, line);
- 
-     abort();
+     uint64_t guest_tr_ar = rvmcs(vcpu, VMCS_GUEST_TR_ACCESS_RIGHTS);
+     if ((efer & MSR_EFER_LME) &&
+diff --git a/target/i386/hvf/x86_decode.c b/target/i386/hvf/x86_decode.c
+index 3728d7705e..a4a28f113f 100644
+--- a/target/i386/hvf/x86_decode.c
++++ b/target/i386/hvf/x86_decode.c
+@@ -2111,7 +2111,7 @@ uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode)
+     return decode->len;
  }
-diff --git a/include/sysemu/hvf_int.h b/include/sysemu/hvf_int.h
-index 30e739a2b5..5b28d17ba1 100644
---- a/include/sysemu/hvf_int.h
-+++ b/include/sysemu/hvf_int.h
-@@ -60,7 +60,10 @@ struct AccelCPUState {
-     bool dirty;
- };
  
--void assert_hvf_ok(hv_return_t ret);
-+void assert_hvf_ok_impl(hv_return_t ret, const char *file, unsigned int line,
-+                        const char *exp);
-+#define assert_hvf_ok(EX) assert_hvf_ok_impl((EX), __FILE__, __LINE__, #EX)
-+const char *hvf_return_string(hv_return_t ret);
- int hvf_arch_init(void);
- int hvf_arch_init_vcpu(CPUState *cpu);
- void hvf_arch_vcpu_destroy(CPUState *cpu);
+-void init_decoder()
++void init_decoder(void)
+ {
+     int i;
+     
+diff --git a/target/i386/hvf/x86_emu.c b/target/i386/hvf/x86_emu.c
+index 3a3f0a50d0..38c782b8e3 100644
+--- a/target/i386/hvf/x86_emu.c
++++ b/target/i386/hvf/x86_emu.c
+@@ -1409,7 +1409,7 @@ static struct cmd_handler {
+ 
+ static struct cmd_handler _cmd_handler[X86_DECODE_CMD_LAST];
+ 
+-static void init_cmd_handler()
++static void init_cmd_handler(void)
+ {
+     int i;
+     for (i = 0; i < ARRAY_SIZE(handlers); i++) {
+@@ -1481,7 +1481,7 @@ bool exec_instruction(CPUX86State *env, struct x86_decode *ins)
+     return true;
+ }
+ 
+-void init_emu()
++void init_emu(void)
+ {
+     init_cmd_handler();
+ }
 -- 
 2.36.1
 
