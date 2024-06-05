@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CEFBC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 17:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95DDFC27C55
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 17:23:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEuLl-0005pk-W0; Wed, 05 Jun 2024 13:23:02 -0400
+	id 1sEuLq-0005rx-E7; Wed, 05 Jun 2024 13:23:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEuLk-0005nR-DE
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:23:00 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1sEuLp-0005rR-2P
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:23:05 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEuLi-0003nH-Im
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:23:00 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2bfff08fc29so54698a91.1
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 10:22:58 -0700 (PDT)
+ id 1sEuLn-0003ob-82
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:23:04 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-6819b3c92bbso24385a12.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 10:23:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717608177; x=1718212977; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717608182; x=1718212982; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QyfYhcDz9GxZwfZD6zLLHvsedkNWvuKT9dIKJJP5Q0E=;
- b=eXK00aHi4NDl+8yUogLgcCKTdEYgw7ZdkfUbYjrCE8JcfXTo9riINwxDvuWUTxbMAf
- kVsWwa+xBHCAhMBNLZPjy/ReFoiOZVArjeomqhDnxQO7Zwfq6Y6mGWG3ZrNJrFHq5zVm
- 0MmrLQY9/Z+Z19Tr7DqDaQyEiE2UJY0w7BZbkaQZDWYZHKNkLRh1jMhWyR+c0r+1nzah
- RYHdaMDk1Jf0PtLZO/I4iv3urXpFMkxElZLr/DM3Znx0Aa3lGVEcA2TbkVFcMTvc3WUI
- hiT2uO6UaIC7KZ2RA+/iKO4IXAPetOoEEpxpwPXSt3/bcttRcx7fBUsgoPGQdpI/hcFB
- z4rg==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Fljjc+vgV8n9jaU2H17cE0qlx4ZtzSc/592LQHPcA70=;
+ b=PyXCOy+hacUZgIeEgUTH17qq6diiiG4Jhw5zvD74VSAWRHQE/ubPBwoHwQGa2vBKSk
+ GVywIfCa/ysjUvJ1wXKXQLZI2m7L/jg+jbWL4a6elsvAC3R1lyHPrlXAgcagGIwYF3uT
+ TXa869Uw1wpGmk1RGs8rLfNZ5HBe2dM42/Av5meJvmRpjSJVsw35sIlegpsp/JPdZAMj
+ jS0/04H1StC8MSsoQDpqCnQs3/q2dsIfCx7maCyBapRLplAgazx2m+6oQta4vqwvltgw
+ nw0kIc0LCV8OyQSf0SW1n2GvZgNtwSNAGJej85J7cK0+nmbmJoybbcXoJsogmySvebUW
+ Aigg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717608177; x=1718212977;
+ d=1e100.net; s=20230601; t=1717608182; x=1718212982;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QyfYhcDz9GxZwfZD6zLLHvsedkNWvuKT9dIKJJP5Q0E=;
- b=T90M8kQ8hkHHMq6NfwPBCvhHqCYbwkvDPJrmKwyEBr8jrRJpE23Ngu6T/855ABR/eg
- dl6Y0+IlYoUTfFhoRs+K1j25vBMSlpba71NqazZoTfVy1kY10avJDy19xGR693PUlLj7
- nMKwIpq45kiBe+OjoxIn0+0LIpeGvBrYAkDBHpYKPjQ+eK8GbP9PumdFL+w1LsVbppu8
- Toj2bEdNs/1dbHIfKl147CeVdHUjptOI5plDIw6hh+/sMpNsGo5Aan21cBjuvjpNV6Cn
- kuYifFYZqnb7rhKbTMcQjT12SxedyjA2TIxK4yOcSIgD4F3dgfXJWobABcDEgQKMlcEp
- dpQg==
-X-Gm-Message-State: AOJu0Yw1w1YwkrGXNGC6EWMeirCw1JVI34mlj8hM04kMpN1KZnSFi0y3
- 4UofTCuKVUeLyWR+/3QVM8poi8hwM7OfhrsJ/Xnz+0Vqx7GAthkl1WkVGU+QglSSrlY2KcSNiUS
- x
-X-Google-Smtp-Source: AGHT+IHvjKhLm2kfYnWFjQPOHh6ib/otYCEMQKaDFddpzivkfwO6RGVbl3EUiYbJuUlMt+n+lmuuMA==
-X-Received: by 2002:a17:90a:590:b0:2bd:d42a:e071 with SMTP id
- 98e67ed59e1d1-2c27db58ee8mr3175942a91.30.1717608177097; 
- Wed, 05 Jun 2024 10:22:57 -0700 (PDT)
+ bh=Fljjc+vgV8n9jaU2H17cE0qlx4ZtzSc/592LQHPcA70=;
+ b=lGWbslF+A5ecXHSF67E0e+KcauBbP/eIiYe8GnfBVtkz2DdZUo82DOIVdtu03PmFLw
+ Sdzat/2jR1ogrmC1J33mlSfWA2d2O6151sA6d/phZ68m5V9lERTSx6m5QLkdbp5MCnYB
+ 35DcYdsKCmCfhvzDUskbVTJRo3Gf+9xnU4BEx2Y1UCUoWxV/xJn8DT3V3qG8qjFADmNA
+ GUmGnfd+tkJ88/+9A8IqK8idsMiPM/WwgLDBUpBuXlFNvWhXVNoV6XYZB/HYre89+Kuy
+ NgoReRkseZ0OG5ArTYNPkcRlAsdppUJrLH5dzQxzTRNUMCKNHCeAUHeciySITt4F+mzd
+ 9SKA==
+X-Gm-Message-State: AOJu0YziQOYaWTqW/+77rCh64ps4GfHJ7sJsNH2JGt5LwQmLtxiElrwJ
+ IrDVEyaO1I6YTo+4bd3JuJt30tf6KpD3xdywky0h7fkTPxtMzRYHl+LOHbJWzP2PTol0C4dDIDy
+ q
+X-Google-Smtp-Source: AGHT+IEyy6ULhG52MpQdX2g3crtUebWcaH+0wZKxuHkQedpdcKOON+lYR+/3zegN/lPe7BlPi5yTKg==
+X-Received: by 2002:a17:90a:ba18:b0:2c2:4129:aeed with SMTP id
+ 98e67ed59e1d1-2c27db49769mr3478487a91.33.1717608181983; 
+ Wed, 05 Jun 2024 10:23:01 -0700 (PDT)
 Received: from stoup.. ([71.212.132.216]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c28066d511sm1720915a91.9.2024.06.05.10.22.56
- for <qemu-devel@nongnu.org>
+ 98e67ed59e1d1-2c28066d511sm1720915a91.9.2024.06.05.10.23.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 10:22:56 -0700 (PDT)
+ Wed, 05 Jun 2024 10:23:01 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/38] target/sparc: Fix ARRAY8
-Date: Wed,  5 Jun 2024 10:22:17 -0700
-Message-Id: <20240605172253.356302-3-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 07/38] target/sparc: Remove gen_dest_fpr_D
+Date: Wed,  5 Jun 2024 10:22:22 -0700
+Message-Id: <20240605172253.356302-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240605172253.356302-1-richard.henderson@linaro.org>
 References: <20240605172253.356302-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,81 +94,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Follow the Oracle Sparc 2015 implementation note and bound
-the input value of N to 5 from the lower 3 bits of rs2.
-Spell out all of the intermediate values, matching the diagram
-in the manual.  Fix extraction of upper_x and upper_y for N=0.
+Replace with tcg_temp_new_i64.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/sparc/vis_helper.c | 53 ++++++++++++++++++++++++++-------------
- 1 file changed, 35 insertions(+), 18 deletions(-)
+ target/sparc/translate.c | 27 +++++++++++----------------
+ 1 file changed, 11 insertions(+), 16 deletions(-)
 
-diff --git a/target/sparc/vis_helper.c b/target/sparc/vis_helper.c
-index e15c6bb34e..f46fcf1f6a 100644
---- a/target/sparc/vis_helper.c
-+++ b/target/sparc/vis_helper.c
-@@ -21,25 +21,42 @@
- #include "cpu.h"
- #include "exec/helper-proto.h"
- 
--/* This function uses non-native bit order */
--#define GET_FIELD(X, FROM, TO)                                  \
--    ((X) >> (63 - (TO)) & ((1ULL << ((TO) - (FROM) + 1)) - 1))
--
--/* This function uses the order in the manuals, i.e. bit 0 is 2^0 */
--#define GET_FIELD_SP(X, FROM, TO)               \
--    GET_FIELD(X, 63 - (TO), 63 - (FROM))
--
--target_ulong helper_array8(target_ulong pixel_addr, target_ulong cubesize)
-+target_ulong helper_array8(target_ulong rs1, target_ulong rs2)
- {
--    return (GET_FIELD_SP(pixel_addr, 60, 63) << (17 + 2 * cubesize)) |
--        (GET_FIELD_SP(pixel_addr, 39, 39 + cubesize - 1) << (17 + cubesize)) |
--        (GET_FIELD_SP(pixel_addr, 17 + cubesize - 1, 17) << 17) |
--        (GET_FIELD_SP(pixel_addr, 56, 59) << 13) |
--        (GET_FIELD_SP(pixel_addr, 35, 38) << 9) |
--        (GET_FIELD_SP(pixel_addr, 13, 16) << 5) |
--        (((pixel_addr >> 55) & 1) << 4) |
--        (GET_FIELD_SP(pixel_addr, 33, 34) << 2) |
--        GET_FIELD_SP(pixel_addr, 11, 12);
-+    /*
-+     * From Oracle SPARC Architecture 2015:
-+     * Architecturally, an illegal R[rs2] value (>5) causes the array
-+     * instructions to produce undefined results. For historic reference,
-+     * past implementations of these instructions have ignored R[rs2]{63:3}
-+     * and have treated R[rs2] values of 6 and 7 as if they were 5.
-+     */
-+    target_ulong n = MIN(rs2 & 7, 5);
-+
-+    target_ulong x_int = (rs1 >> 11) & 0x7ff;
-+    target_ulong y_int = (rs1 >> 33) & 0x7ff;
-+    target_ulong z_int = rs1 >> 55;
-+
-+    target_ulong lower_x = x_int & 3;
-+    target_ulong lower_y = y_int & 3;
-+    target_ulong lower_z = z_int & 1;
-+
-+    target_ulong middle_x = (x_int >> 2) & 15;
-+    target_ulong middle_y = (y_int >> 2) & 15;
-+    target_ulong middle_z = (z_int >> 1) & 15;
-+
-+    target_ulong upper_x = (x_int >> 6) & ((1 << n) - 1);
-+    target_ulong upper_y = (y_int >> 6) & ((1 << n) - 1);
-+    target_ulong upper_z = z_int >> 5;
-+
-+    return (upper_z << (17 + 2 * n))
-+         | (upper_y << (17 + n))
-+         | (upper_x << 17)
-+         | (middle_z << 13)
-+         | (middle_y << 9)
-+         | (middle_x << 5)
-+         | (lower_z << 4)
-+         | (lower_y << 2)
-+         | lower_x;
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index f3c52c7c48..750a3e6554 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -241,11 +241,6 @@ static void gen_store_fpr_D(DisasContext *dc, unsigned int dst, TCGv_i64 v)
+     gen_update_fprs_dirty(dc, dst);
  }
  
- #if HOST_BIG_ENDIAN
+-static TCGv_i64 gen_dest_fpr_D(DisasContext *dc, unsigned int dst)
+-{
+-    return cpu_fpr[dst / 2];
+-}
+-
+ static TCGv_i128 gen_load_fpr_Q(DisasContext *dc, unsigned int src)
+ {
+     TCGv_i128 ret = tcg_temp_new_i128();
+@@ -2020,7 +2015,7 @@ static void gen_fmovs(DisasContext *dc, DisasCompare *cmp, int rd, int rs)
+ static void gen_fmovd(DisasContext *dc, DisasCompare *cmp, int rd, int rs)
+ {
+ #ifdef TARGET_SPARC64
+-    TCGv_i64 dst = gen_dest_fpr_D(dc, rd);
++    TCGv_i64 dst = tcg_temp_new_i64();
+     tcg_gen_movcond_i64(cmp->cond, dst, cmp->c1, tcg_constant_tl(cmp->c2),
+                         gen_load_fpr_D(dc, rs),
+                         gen_load_fpr_D(dc, rd));
+@@ -4345,7 +4340,7 @@ static bool do_dd(DisasContext *dc, arg_r_r *a,
+         return true;
+     }
+ 
+-    dst = gen_dest_fpr_D(dc, a->rd);
++    dst = tcg_temp_new_i64();
+     src = gen_load_fpr_D(dc, a->rs);
+     func(dst, src);
+     gen_store_fpr_D(dc, a->rd, dst);
+@@ -4367,7 +4362,7 @@ static bool do_env_dd(DisasContext *dc, arg_r_r *a,
+         return true;
+     }
+ 
+-    dst = gen_dest_fpr_D(dc, a->rd);
++    dst = tcg_temp_new_i64();
+     src = gen_load_fpr_D(dc, a->rs);
+     func(dst, tcg_env, src);
+     gen_store_fpr_D(dc, a->rd, dst);
+@@ -4407,7 +4402,7 @@ static bool do_env_df(DisasContext *dc, arg_r_r *a,
+         return true;
+     }
+ 
+-    dst = gen_dest_fpr_D(dc, a->rd);
++    dst = tcg_temp_new_i64();
+     src = gen_load_fpr_F(dc, a->rs);
+     func(dst, tcg_env, src);
+     gen_store_fpr_D(dc, a->rd, dst);
+@@ -4498,7 +4493,7 @@ static bool do_env_dq(DisasContext *dc, arg_r_r *a,
+     }
+ 
+     src = gen_load_fpr_Q(dc, a->rs);
+-    dst = gen_dest_fpr_D(dc, a->rd);
++    dst = tcg_temp_new_i64();
+     func(dst, tcg_env, src);
+     gen_store_fpr_D(dc, a->rd, dst);
+     return advance_pc(dc);
+@@ -4613,7 +4608,7 @@ static bool do_dff(DisasContext *dc, arg_r_r_r *a,
+         return true;
+     }
+ 
+-    dst = gen_dest_fpr_D(dc, a->rd);
++    dst = tcg_temp_new_i64();
+     src1 = gen_load_fpr_F(dc, a->rs1);
+     src2 = gen_load_fpr_F(dc, a->rs2);
+     func(dst, src1, src2);
+@@ -4637,7 +4632,7 @@ static bool do_dfd(DisasContext *dc, arg_r_r_r *a,
+         return true;
+     }
+ 
+-    dst = gen_dest_fpr_D(dc, a->rd);
++    dst = tcg_temp_new_i64();
+     src1 = gen_load_fpr_F(dc, a->rs1);
+     src2 = gen_load_fpr_D(dc, a->rs2);
+     func(dst, src1, src2);
+@@ -4656,7 +4651,7 @@ static bool do_ddd(DisasContext *dc, arg_r_r_r *a,
+         return true;
+     }
+ 
+-    dst = gen_dest_fpr_D(dc, a->rd);
++    dst = tcg_temp_new_i64();
+     src1 = gen_load_fpr_D(dc, a->rs1);
+     src2 = gen_load_fpr_D(dc, a->rs2);
+     func(dst, src1, src2);
+@@ -4721,7 +4716,7 @@ static bool do_env_ddd(DisasContext *dc, arg_r_r_r *a,
+         return true;
+     }
+ 
+-    dst = gen_dest_fpr_D(dc, a->rd);
++    dst = tcg_temp_new_i64();
+     src1 = gen_load_fpr_D(dc, a->rs1);
+     src2 = gen_load_fpr_D(dc, a->rs2);
+     func(dst, tcg_env, src1, src2);
+@@ -4746,7 +4741,7 @@ static bool trans_FsMULd(DisasContext *dc, arg_r_r_r *a)
+         return raise_unimpfpop(dc);
+     }
+ 
+-    dst = gen_dest_fpr_D(dc, a->rd);
++    dst = tcg_temp_new_i64();
+     src1 = gen_load_fpr_F(dc, a->rs1);
+     src2 = gen_load_fpr_F(dc, a->rs2);
+     gen_helper_fsmuld(dst, tcg_env, src1, src2);
+@@ -4763,7 +4758,7 @@ static bool do_dddd(DisasContext *dc, arg_r_r_r *a,
+         return true;
+     }
+ 
+-    dst  = gen_dest_fpr_D(dc, a->rd);
++    dst  = tcg_temp_new_i64();
+     src0 = gen_load_fpr_D(dc, a->rd);
+     src1 = gen_load_fpr_D(dc, a->rs1);
+     src2 = gen_load_fpr_D(dc, a->rs2);
 -- 
 2.34.1
 
