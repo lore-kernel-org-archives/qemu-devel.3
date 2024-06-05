@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 249F3C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 22:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E54B9C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:15:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEzMk-0002Po-Hx; Wed, 05 Jun 2024 18:44:22 -0400
+	id 1sEzqU-00078n-U1; Wed, 05 Jun 2024 19:15:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEzMi-0002PR-DI
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 18:44:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEzMe-00041G-P1
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 18:44:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717627455;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=bL9y6zpapumIvS5R8Z26XHh7cawngiLb8cpEUYqF+cA=;
- b=HsnmiM2WTerP1Ap6RYkYSQMk569Hpq8zV7RyQI5jBP36fERE5eVq2WSP1G7QkADZVa5Bro
- a0WP4VCNnbcfx71oL4IBJ4K0USFpi9cK4u5adExHekCzj9lpdGrCeNrhT5IkXs2hGiCtId
- QF85RlQYnSmrxTsDJYwyrAGVwG8op0I=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-395-82w46QM3MoaHq47_Anc3ug-1; Wed, 05 Jun 2024 18:44:14 -0400
-X-MC-Unique: 82w46QM3MoaHq47_Anc3ug-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-57a2fb28a23so152943a12.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 15:44:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEzqT-00078d-1f
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:15:05 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEzqR-0001FY-6c
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:15:04 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1f692d6e990so3841805ad.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:15:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717629300; x=1718234100; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vlCLkcY2sncir5x2b+MaLJLG/abK6GNTs+IkP/0Iyhc=;
+ b=cGkt6zdbTlMYU/ejuUhh4AmSaOgIgHJP0D+P1ImfgyeYiR3XZlcUn72uzxg9+jHciK
+ HFltSM/OtXlgiktZ1tGxWOmJ7Y8r0zpIJwowS8KtdqCuYXlaQ747PujmBeEXHOXqfKiR
+ w48d4W1RzzCq4i09KJaf2SQRl+GzUxj/DEYTjHvCO5SKEMRiV+fyoroiobrkdbHJeeIE
+ CaR+wIdd72Uc5NQHdpvtRz495AGl0Li6W1RTPkpKlVukz05eq2SJSzl30nq5MQnoKsAT
+ d9KZqPJwHvN+7HttVunT5NJ+plt/6Eftbl3XitQWNoDXha6crHto6MBa7Y8oAfOU7y6h
+ vDCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717627452; x=1718232252;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bL9y6zpapumIvS5R8Z26XHh7cawngiLb8cpEUYqF+cA=;
- b=DZcm5+TKDoxtnhgf/M1SaCLXE11pikOYeLCdHRB/vPF8mZcXTrlp/ikI4cBgoQjltO
- tkkMSpObtKLovRH3oLh24+blSoycxHTMov/CWqvugOWYa/tGSVQ0OcYdVBe2X75NloFK
- oO0LKdoSlwK1nab0C8syU0Afj1oMBGzCVwC80QtUAgJhf8PzzSDQZporoUsbyJg+Otaw
- 0UDSRn8QiG/zUC44dhpb1GoWCeUuGFmHA2QRO0H1gnuD/GhbT18e2Wcr4sUrZz4a+3ok
- 1F7dJ9g+f+vX0aBjotmVrZ/7a4s2roeEo3ZB6KqOdzuQkzG/y3Eqfu7YuAO+OfB7dYOW
- sMtQ==
-X-Gm-Message-State: AOJu0YzAc/wcDd3NoB3Rjl8fkaDu8t6xpFPIpXI2kYcSwUYgrkvnTUYp
- 0hL7fTiPP6iR42RPK9VY5AAWjtWDi3dwWfms7TiF4lqYhOINyv8mWxIa0cL1DYq90X3kX4QZ42A
- Y+cq/sChN0fsFKGdBLoxPzmBpMQ/KZkQ4I637dqemLNkQVjayA405Nd5ofMu7vIFJIbqB7/67kx
- sNo9vlXwDca1q8kllebC+woTILRv4QeSbsm+b3
-X-Received: by 2002:a17:907:7783:b0:a69:2553:5806 with SMTP id
- a640c23a62f3a-a699fe00f4cmr247400966b.52.1717627452457; 
- Wed, 05 Jun 2024 15:44:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEfpqX7SRxzPfxnSpVZdzWb8J25rKFgjf7fZ2DQYeLweA/h6HvAMxhSjN7lsUyUL+S5sQ4zqA==
-X-Received: by 2002:a17:907:7783:b0:a69:2553:5806 with SMTP id
- a640c23a62f3a-a699fe00f4cmr247399866b.52.1717627451962; 
- Wed, 05 Jun 2024 15:44:11 -0700 (PDT)
-Received: from avogadro.local ([151.81.115.112])
+ d=1e100.net; s=20230601; t=1717629300; x=1718234100;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vlCLkcY2sncir5x2b+MaLJLG/abK6GNTs+IkP/0Iyhc=;
+ b=sNg+UyludR6CqCDpxFJW7iH+8KT6h8JWRs83XVkPIsgmkT3S5AHFFez2Td1lOzi4CF
+ Xmiapjqm9tYE7nBnWKBCrigDBDPP4xh4aOSEAum9+OiFR0UTMXGsuq8X5TGpw1GCqZkA
+ WTrUO6jGlc/URyJUrQ/6RnfQS3PoHGkVWX4dASDiwj5xe5cReBlBL2e3WpDhVbF4g2t9
+ 7hrwrxLVcNmLw5EDmL8oOizGqw2hVoerCGi60Xx/1K1fpc42tsECljiWNrNfdLUpA6og
+ 6uHX8mk6XZVUgX1mPfq5LDUiEO8S+imkvQ2KA4QLhgXRYG6hEsx5Bh9YAf4vWsUEkHUA
+ Aqiw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUceq1qEzDCEOva9axdepN+EH+vWXQNmYZ0Iox+nj58X8mN6ew+r0FtBIdSVa5OfRCDsUPUWLmzz6xOJFCialuCw5bkJP8=
+X-Gm-Message-State: AOJu0YwAqNZcRdHXeFk/2UOKHdRW3CRxYQW68Mz7V+KykAeWfGjoYODu
+ p3CuF8GdP6LD20+kFhLlfMC4NhH1oB5+eK+YzSLPHBsLOwOloVO5nbkaG5c9ZCk=
+X-Google-Smtp-Source: AGHT+IE7qdeYPsFamn6Nv3nnXhcKEf0mLeTh2yNZYsF088K7QjBNEVHGaokBT0+QWkRr7P7oEWgMcA==
+X-Received: by 2002:a17:902:ec8f:b0:1f6:8ae4:50de with SMTP id
+ d9443c01a7336-1f6a5a852b4mr49022645ad.61.1717629299940; 
+ Wed, 05 Jun 2024 16:14:59 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c8070e2fcsm1532066b.154.2024.06.05.15.44.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 15:44:11 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: pankaj.gupta@amd.com
-Subject: [PATCH] target/i386: SEV: do not assume machine->cgs is SEV
-Date: Thu,  6 Jun 2024 00:44:09 +0200
-Message-ID: <20240605224409.2103109-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.1
+ d9443c01a7336-1f6bd76c240sm879515ad.89.2024.06.05.16.14.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Jun 2024 16:14:59 -0700 (PDT)
+Message-ID: <a0e9ee6b-fbe6-48af-a122-fbf5d31aa476@linaro.org>
+Date: Wed, 5 Jun 2024 16:14:56 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: linux-user emulation hangs during fork
+To: Andreas Schwab <schwab@suse.de>, qemu-devel@nongnu.org
+References: <mvm5xunu4ye.fsf@suse.de>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <mvm5xunu4ye.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,30 +96,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There can be other confidential computing classes that are not derived
-from sev-common.  Avoid aborting when encountering them.
+On 6/5/24 02:14, Andreas Schwab wrote:
+> $ qemu-x86_64 --version
+> qemu-x86_64 version 9.0.50 (v9.0.0-1211-gd16cab541a)
+> Copyright (c) 2003-2024 Fabrice Bellard and the QEMU Project developers
+> $ cat fork.rb
+> begin
+>    r, w = IO.pipe
+>    if pid1 = fork
+>      w.close
+>      r.read 1
+>      Process.kill "USR1", pid1
+>      Process.wait2 pid1
+>    else
+>      print "child\n"
+>      r.close
+>      if pid2 = fork
+>        trap("USR1") { print "child: kill\n"; Process.kill "USR2", pid2 }
+>        w.close
+>        print "child: wait\n"
+>        Process.wait2 pid2
+>      else
+>        print "grandchild\n"
+>        w.close
+>        sleep 0.2
+>      end
+>    end
+> end
+> $ ruby fork.rb
+> child
+> child: wait
+> grandchild
+> child: kill
+> $ qemu-x86_64 /usr/bin/ruby fork.rb
+> child
+> child: wait
+> ^Z
+> [1]+  Stopped                 qemu-x86_64 /usr/bin/ruby fork.rb
+> $ grep SigB $(for p in $(pidof qemu-x86_64); do echo /proc/$p/status; done | sort)
+> /proc/3221/status:SigBlk:       0000000000000000
+> /proc/3224/status:SigBlk:       0000000000000000
+> /proc/3228/status:SigBlk:       fffffff27ffbfa9f
+> 
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/sev.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Works for me:
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 004c667ac14..97e15f8b7a9 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1710,7 +1710,9 @@ void sev_es_set_reset_vector(CPUState *cpu)
- {
-     X86CPU *x86;
-     CPUX86State *env;
--    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-+    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
-+    SevCommonState *sev_common = SEV_COMMON(
-+        object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON));
- 
-     /* Only update if we have valid reset information */
-     if (!sev_common || !sev_common->reset_data_valid) {
--- 
-2.45.1
+rth@stoup:~/zz$ ~/qemu/bld/qemu-x86_64 `which ruby` fork.rb
+child
+grandchild
+child: wait
+child: kill
+rth@stoup:~/zz$ ~/qemu/bld/qemu-x86_64 `which ruby` fork.rb
+child
+grandchild
+child: wait
+child: kill
+rth@stoup:~/zz$ ~/qemu/bld/qemu-x86_64 `which ruby` fork.rb
+child
+grandchild
+child: wait
+child: kill
+rth@stoup:~/zz$ ~/qemu/bld/qemu-x86_64 `which ruby` fork.rb
+child
+grandchild
+child: wait
+child: kill
 
+
+r~
 
