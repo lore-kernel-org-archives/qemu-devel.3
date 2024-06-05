@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 762ACC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BA58C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:39:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF0B7-00067x-0d; Wed, 05 Jun 2024 19:36:25 -0400
+	id 1sF0Bu-0003x2-SA; Wed, 05 Jun 2024 19:37:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0B5-0005tI-0z
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Bs-0003kT-OG
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:37:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Az-0005kC-RF
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:19 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Bq-0005yr-QB
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:37:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717630577;
+ s=mimecast20190719; t=1717630630;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=B0HOmEGBKVd19MvX+tjutWxLYb9ToOXOEpHWAIoWqrE=;
- b=Oao/dyYb8ndGRMBAnNFgXsQVNn5+ZV5HPBBlxeUtmAFzWEHdnkL+vijjwIexh2qMJzr6ND
- 3tyw42LK6cD9zLdqdL+ZgvHyFVl6HBDlOyl1iIrqSqgbfx/HMAGF/rq3OIDZQzpNRivFe0
- GU5jUtSPh6BiNBbcEntk/pp9l+lDpU8=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=g4UiaVaJHqFRMzcgj8Lsoa2O3CKB9KU5Hs0p0vn09PA=;
+ b=W3T3/mYqvI9roFRJFZU6CehW/wI5SpTVksBd9cGp/v8WEgNTuITy/C+SfxCSMzp5gNorHi
+ B5QapFliQVmz+LReKTLChEloTki3uHnADY2kAC3bCEu9mQy/cMZxHLRdsNTruKOBrFZyhY
+ z/VCrfNZkqdqnIQXb/f+RZqbQ9X0dtI=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-141-D9grAe2tMWqsaLh1J-Md3w-1; Wed, 05 Jun 2024 19:35:29 -0400
-X-MC-Unique: D9grAe2tMWqsaLh1J-Md3w-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a68ccd15540so12868166b.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:35:29 -0700 (PDT)
+ us-mta-646-SbfYliuFOvSrKmKgrtaWHg-1; Wed, 05 Jun 2024 19:37:09 -0400
+X-MC-Unique: SbfYliuFOvSrKmKgrtaWHg-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-57a306c4b1eso129320a12.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:37:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717630528; x=1718235328;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B0HOmEGBKVd19MvX+tjutWxLYb9ToOXOEpHWAIoWqrE=;
- b=tc1CFb2WaZsAKTMws+h3tHs1eOJHaII5VU8rFjJfJYAqMkNYqqwzL1xy1RpRNJrV+3
- AQu/6frSD14MKpksBjIa4rofvfKLOaGU/iK9ev8jcih15F7ja4pImyyStSj2b+HPx4C1
- ITStz8Q7g5j9jBLBIjfu+G9xeve68zzZWTdqUWY9yVzC3pLXZNkAJbBugvcKVWuZ73rD
- f83GlhhtmLZnH/7nwFmaH++sON57xHvIFcQa2bQc1z2UpQGuXOSuEd+5Xijem7/E7qm9
- TY28/OFIdwTfS8q68J633vMKPOlQEBo6YGLUDeMN+FMnfOhBH7myfGiODghPbOBSQ3o8
- hVrQ==
-X-Gm-Message-State: AOJu0Yy+ILH378YIb4AALpNiJTKb9jZ0u9GiJnk7US2hD/7ETfO1Teq1
- IdMl5ZJARq6KS/jdwCR8Y52G61eThYV36yM9m91OIyxx2ofcckvenIAVh/Bb6HWmw6XfPhD+O8M
- E+4ZNEG8BeFtVJo2z4p2BQ+/EcWtOE9fDJ9lgceJteQjhifWrzfoNTqQZZo5t+OQFf18XfMao3+
- fDyYYhr6RlsT6LYsxxWMYNbEVb+WIsnA==
-X-Received: by 2002:a50:8716:0:b0:57a:1e0a:379f with SMTP id
- 4fb4d7f45d1cf-57a8b6a7140mr2317180a12.16.1717630527956; 
- Wed, 05 Jun 2024 16:35:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEGJyjFyW6H/Q3W0BkX/oMTwdJK4eQgNH4e/EUTA9DQD+ofKAnk9ESGcTZvMWZAgOwZksdIZQ==
-X-Received: by 2002:a50:8716:0:b0:57a:1e0a:379f with SMTP id
- 4fb4d7f45d1cf-57a8b6a7140mr2317174a12.16.1717630527458; 
- Wed, 05 Jun 2024 16:35:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717630627; x=1718235427;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=g4UiaVaJHqFRMzcgj8Lsoa2O3CKB9KU5Hs0p0vn09PA=;
+ b=haHxiSXh41s3hYwkWEi58wa6hsLJMF43icZLYAbYKe/MDYsmfiOJQlPbUHhxHwR4Pw
+ Zho0TMgBmP13s2Kep8SNUin/qDPYf2irvtWTNo4m5VhnIIU3Z0ggkhcNhwaur76cJ62e
+ 1U2RZtXGAM0UEqKyH6dolFvGu/qWYTtH7S2hK4BgdKcCt73F9N+sbqnQVBQtQ2i+t/iK
+ xdYdIvd87spU+kMwaL8oBhemGlzLejsTnHVZ/FDEG71WuumkYs/RZz5yeT37yc1r4S7P
+ CK2jgGfihmV6w/HhCK7WxUtkT9plEG6rpAm1ouXl+9qp0XVaEj+ePCCnm4U6n8xwB1CU
+ 5NHw==
+X-Gm-Message-State: AOJu0YyteF49wKdzYLyKDTWM1VIkNlY2Kqz8iulERz9cx1E6CicAkz+3
+ bdZ7HpqWj5CjWhaLbQI24kPAd6RLe/82LcKO+oajqqdJXz59xU2gGsDko7mZlEAomtiYBfdI6JX
+ F5ZS8S0e52cNhppusnTA++E8GpK7mQ5ZrOo3N68NGUb3qQ0t6y9Au1gC9WQaXbVj6PmqX9IVv3D
+ itxbKoLEf9sq4sLHeZojbPCFyZZDOmTA==
+X-Received: by 2002:a50:8d1c:0:b0:579:d01e:bc4a with SMTP id
+ 4fb4d7f45d1cf-57a8b6f0fcamr2488076a12.23.1717630627424; 
+ Wed, 05 Jun 2024 16:37:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEbgOibedZ86c6XPLojH5Srm+ffFsLXJaUTl/mdoQQBFjBkzpWcuzjgSZdRCihBWzNlCKiRTQ==
+X-Received: by 2002:a50:8d1c:0:b0:579:d01e:bc4a with SMTP id
+ 4fb4d7f45d1cf-57a8b6f0fcamr2488065a12.23.1717630626888; 
+ Wed, 05 Jun 2024 16:37:06 -0700 (PDT)
 Received: from redhat.com ([2.55.56.67]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aae13faccsm98396a12.54.2024.06.05.16.35.25
+ 4fb4d7f45d1cf-57aae201a6esm94575a12.71.2024.06.05.16.37.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 16:35:26 -0700 (PDT)
-Date: Wed, 5 Jun 2024 19:35:24 -0400
+ Wed, 05 Jun 2024 16:37:06 -0700 (PDT)
+Date: Wed, 5 Jun 2024 19:37:03 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Jiqian Chen <Jiqian.Chen@amd.com>
-Subject: [PULL v3 12/41] virtio-pci: only reset pm state during resetting
-Message-ID: <e4cb9f8957337403b67a4ca22b1fa95290286ff2.1717630437.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL v3 39/41] Revert "docs/specs/pvpanic: mark shutdown event as
+ not implemented"
+Message-ID: <e71399725900a1d4edb0e0fdc61fdcd2bc3e0fff.1717630437.git.mst@redhat.com>
 References: <cover.1717630437.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1717630437.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -100,46 +105,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jiqian Chen <Jiqian.Chen@amd.com>
+From: Thomas Weißschuh <thomas@t-8ch.de>
 
-Fix bug imported by 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
-After this change, observe that QEMU may erroneously clear the power status of the device,
-or may erroneously clear non writable registers, such as NO_SOFT_RESET, etc.
+The missing functionality has been implemented now.
 
-Only state of PM_CTRL is writable.
-Only when flag VIRTIO_PCI_FLAG_INIT_PM is set, need to reset state.
+This reverts commit e739d1935c461d0668057e9dbba9d06f728d29ec.
 
-Fixes: 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
-Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
-Message-Id: <20240515073526.17297-2-Jiqian.Chen@amd.com>
+Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+Message-Id: <20240527-pvpanic-shutdown-v8-8-5a28ec02558b@t-8ch.de>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio-pci.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ docs/specs/pvpanic.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index cffc7efcae..7d62e92365 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2306,10 +2306,16 @@ static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
-     virtio_pci_reset(qdev);
+diff --git a/docs/specs/pvpanic.rst b/docs/specs/pvpanic.rst
+index b0f27860ec..61a80480ed 100644
+--- a/docs/specs/pvpanic.rst
++++ b/docs/specs/pvpanic.rst
+@@ -29,7 +29,7 @@ bit 1
+   a guest panic has happened and will be handled by the guest;
+   the host should record it or report it, but should not affect
+   the execution of the guest.
+-bit 2 (to be implemented)
++bit 2
+   a regular guest shutdown has happened and should be processed by the host
  
-     if (pci_is_express(dev)) {
-+        VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
-+
-         pcie_cap_deverr_reset(dev);
-         pcie_cap_lnkctl_reset(dev);
- 
--        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, 0);
-+        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
-+            pci_word_test_and_clear_mask(
-+                dev->config + dev->exp.pm_cap + PCI_PM_CTRL,
-+                PCI_PM_CTRL_STATE_MASK);
-+        }
-     }
- }
- 
+ PCI Interface
 -- 
 MST
 
