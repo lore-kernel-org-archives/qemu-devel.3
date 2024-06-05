@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718F9C25B76
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAC93C27C5E
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:35:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF09d-0002oZ-QL; Wed, 05 Jun 2024 19:34:53 -0400
+	id 1sF09c-0002oI-Cy; Wed, 05 Jun 2024 19:34:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF09c-0002oA-1n
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:34:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF09a-0002nx-Jf
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:34:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF09a-0004m5-4Y
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:34:51 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF09Y-0004lF-J5
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:34:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717630489;
+ s=mimecast20190719; t=1717630486;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gfd+vfybB3O3+4pkXHRWr1BbxFsd2M2r8td4r0aSbjQ=;
- b=d6v5z41MRLHnIFsaCpiQkTHHtvMn3KaBwQsS/2JIcXwMmN0Y5T6bCCklRVtxJ4REd15w42
- zoAPhGCM9XtB03o6aCCd8sb49VUUMrx3MuO3Qy9uqqz/ljICttVCPdgRSCpQKlg7G5g84P
- 6ZFgDF87KsXMNv86Q9G1Spzb+1LA40Y=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9FT0efaYSrBLlFjmrniKct7+AXD36CTynTe6pFVstwI=;
+ b=i+uHoqwl90fqNnxyCz54Z0hGQlFfcCKam75RCzhoUzIRV2jlOSCg54feWVTpGeboFKvX2a
+ rPKcdqtoEbZPSEgXnV35E+fThPFyZbrkf/h+HDKX8aLMYnJYEIH9KQ4RZ1tK2KaOBgezTT
+ 0a8CcWIHEaXOkbSCjqS1Jv0pOQYbU3Q=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-180-S78EXbO1MUCdYQaMNc0JvQ-1; Wed, 05 Jun 2024 19:34:48 -0400
-X-MC-Unique: S78EXbO1MUCdYQaMNc0JvQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a68ccd15540so12849766b.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:34:48 -0700 (PDT)
+ us-mta-387-Fd5plBB1MfyMibT6hXVyBg-1; Wed, 05 Jun 2024 19:34:45 -0400
+X-MC-Unique: Fd5plBB1MfyMibT6hXVyBg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a68ee264225so11185566b.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:34:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717630486; x=1718235286;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gfd+vfybB3O3+4pkXHRWr1BbxFsd2M2r8td4r0aSbjQ=;
- b=PO5EzIrtMOfftBtDYCT01ER8bd2NPpOThlbi+MR+HK4G/23seX4jRZ15zR/m0qL6yX
- OIc8TJILJWGxuRU/XgsMrn4w6Ij/JIkD9Zfpi5yc7Hsm01CR6Tg5lRfGsRgQZlXiB8EX
- Wd0OXePmoAPFMiniztAR9QXEAUqWk2LSX6i/4aApEdH80FCs9ZFMbWWkHbnDy9Tsz6w9
- mYKvQmzUG4JLA5A3SZiaX7Q4gSk0GOMF3nIWXbx/HHOBr77SK2iv2nVbxu6jTnWcmCyx
- fxJKPAwm1ggul0tPFyNcXXbOc7KeC+pyj3mczPmOevtM2JO5ihHf6RKy5bPlcHDoTlKG
- yn8g==
-X-Gm-Message-State: AOJu0Yw+n5cbXOsFLM1fRb2aFOIiYBCGQqqAsdb8mTs9fWHG40j8BTzM
- q6onNTFQZu5GwXkEMl9EvUdlLQ5I/wbKBsQzF0ESGK5SZGUkwAJFvcT5p17PKQAUKA5focoh/d0
- DvRnJ/hzoaOFATXIGrwQuWSnOYcQ7xg+qsHLYWpgN7GkT9tnePh4hmsJAW2L2ftsX3pOAq0Uaho
- J5yI51UXCDwQR2B+l0M6ynBZ+sdFUdZw==
-X-Received: by 2002:a17:906:bc4e:b0:a61:ab74:413e with SMTP id
- a640c23a62f3a-a699fcf5204mr251953066b.46.1717630486170; 
- Wed, 05 Jun 2024 16:34:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+O/3wFcnF7YSXUbxv1FEuwqXKu/t5TiLfAD0q2kXvwS0arHx/fw6LRwgj43/M7VGzFaK2+Q==
-X-Received: by 2002:a17:906:bc4e:b0:a61:ab74:413e with SMTP id
- a640c23a62f3a-a699fcf5204mr251951866b.46.1717630485592; 
- Wed, 05 Jun 2024 16:34:45 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717630483; x=1718235283;
+ h=content-transfer-encoding:content-disposition:mime-version
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9FT0efaYSrBLlFjmrniKct7+AXD36CTynTe6pFVstwI=;
+ b=Pz0JT3CxZYS0HAmQGbdXdCo6e5ORwCcWeE3jDBDjo/npvKOu7agxXMaz0A6GNP7CII
+ W40dzkYiNLNMaeOaQ6M8m7fMgJUEMUMsJLeakIZsPV/OjrYU8q0sInAMnqsHu4F2tWPf
+ M3nLQPtpYJE0pJqE027ihwYAU+3LRBBKdsxbVtHbuc/SDAN5A1GFJVPIvI3hBEYalkQd
+ gBkaKypcx4vZHTRNhekZ5WWcU3qiopEyibgEG0roCcVMT6ln/yrc8CJdZbbfbh6GtL5A
+ Ba6X2TBtH2ho3ruFdqkBix9GGbEGrK3834FaznXzucUvKs3rFRGzSsS3r+Cws68HKkG7
+ 9cwg==
+X-Gm-Message-State: AOJu0YxVRt2HdaHVDncbEJ0gTQnQ8TC2TuUQhAAc1YnzJs+ypggXybep
+ CEQRAJS4Ho9VZAdGOBaBCLkhPVSR58jpHqBqoDQPjyyrjQfa16j1PeuK1QqDSRScevsEHz4d6ye
+ /5zCos34Yp6udwTz1/KqSZcNP/9lresh3d5h2YYK4EEMd/V6uMk15XrSOLTP4GAaJweFV7Ldehe
+ DaXsmTLeA980uKhjuhInXb7N2yh6iJNg==
+X-Received: by 2002:a17:906:a457:b0:a59:b590:5d71 with SMTP id
+ a640c23a62f3a-a699e9b1215mr232042666b.0.1717630483349; 
+ Wed, 05 Jun 2024 16:34:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHqZE7ECFsjR9+eQcIq2mRaBwbiX+MCKAuZLJsoetcJ2w3i+NMT3vBYow7KznvbPllWGdfuIQ==
+X-Received: by 2002:a17:906:a457:b0:a59:b590:5d71 with SMTP id
+ a640c23a62f3a-a699e9b1215mr232041466b.0.1717630482724; 
+ Wed, 05 Jun 2024 16:34:42 -0700 (PDT)
 Received: from redhat.com ([2.55.56.67]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c80728867sm6209066b.192.2024.06.05.16.34.44
+ a640c23a62f3a-a6c802e62a5sm7997966b.0.2024.06.05.16.34.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 16:34:44 -0700 (PDT)
-Date: Wed, 5 Jun 2024 19:34:42 -0400
+ Wed, 05 Jun 2024 16:34:41 -0700 (PDT)
+Date: Wed, 5 Jun 2024 19:34:38 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Si-Wei Liu <si-wei.liu@oracle.com>
-Subject: [PULL v3 01/41] vhost: dirty log should be per backend type
-Message-ID: <0b7ca10a059089caef535e86c6523991240e5f29.1717630437.git.mst@redhat.com>
-References: <cover.1717630437.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL v3 00/41] virtio: features,fixes
+Message-ID: <cover.1717630437.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1717630437.git.mst@redhat.com>
+Content-Transfer-Encoding: 8bit
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -101,135 +99,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Si-Wei Liu <si-wei.liu@oracle.com>
+Dropped acpi patches that had endian-ness issues.
 
-There could be a mix of both vhost-user and vhost-kernel clients
-in the same QEMU process, where separate vhost loggers for the
-specific vhost type have to be used. Make the vhost logger per
-backend type, and have them properly reference counted.
+The following changes since commit 60b54b67c63d8f076152e0f7dccf39854dfc6a77:
 
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Message-Id: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+  Merge tag 'pull-lu-20240526' of https://gitlab.com/rth7680/qemu into staging (2024-05-26 17:51:00 -0700)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+
+for you to fetch changes up to d23bc95d390a1800198c92a0177240d9e1a1eb66:
+
+  hw/cxl: Fix read from bogus memory (2024-06-05 19:33:01 -0400)
+
+----------------------------------------------------------------
+virtio: features,fixes
+
+A bunch of improvements:
+- vhost dirty log is now only scanned once, not once per device
+- virtio and vhost now support VIRTIO_F_NOTIFICATION_DATA
+- cxl gained DCD emulation support
+- pvpanic gained shutdown support
+- beginning of patchset for Generic Port Affinity Structure
+- new tests
+- bugfixes
+
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- hw/virtio/vhost.c | 45 +++++++++++++++++++++++++++++++++------------
- 1 file changed, 33 insertions(+), 12 deletions(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 4acd77e890..a1e8b79e1a 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -43,8 +43,8 @@
-     do { } while (0)
- #endif
- 
--static struct vhost_log *vhost_log;
--static struct vhost_log *vhost_log_shm;
-+static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
-+static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
- 
- /* Memslots used by backends that support private memslots (without an fd). */
- static unsigned int used_memslots;
-@@ -287,6 +287,10 @@ static int vhost_set_backend_type(struct vhost_dev *dev,
-         r = -1;
-     }
- 
-+    if (r == 0) {
-+        assert(dev->vhost_ops->backend_type == backend_type);
-+    }
-+
-     return r;
- }
- 
-@@ -319,16 +323,22 @@ static struct vhost_log *vhost_log_alloc(uint64_t size, bool share)
-     return log;
- }
- 
--static struct vhost_log *vhost_log_get(uint64_t size, bool share)
-+static struct vhost_log *vhost_log_get(VhostBackendType backend_type,
-+                                       uint64_t size, bool share)
- {
--    struct vhost_log *log = share ? vhost_log_shm : vhost_log;
-+    struct vhost_log *log;
-+
-+    assert(backend_type > VHOST_BACKEND_TYPE_NONE);
-+    assert(backend_type < VHOST_BACKEND_TYPE_MAX);
-+
-+    log = share ? vhost_log_shm[backend_type] : vhost_log[backend_type];
- 
-     if (!log || log->size != size) {
-         log = vhost_log_alloc(size, share);
-         if (share) {
--            vhost_log_shm = log;
-+            vhost_log_shm[backend_type] = log;
-         } else {
--            vhost_log = log;
-+            vhost_log[backend_type] = log;
-         }
-     } else {
-         ++log->refcnt;
-@@ -340,11 +350,20 @@ static struct vhost_log *vhost_log_get(uint64_t size, bool share)
- static void vhost_log_put(struct vhost_dev *dev, bool sync)
- {
-     struct vhost_log *log = dev->log;
-+    VhostBackendType backend_type;
- 
-     if (!log) {
-         return;
-     }
- 
-+    assert(dev->vhost_ops);
-+    backend_type = dev->vhost_ops->backend_type;
-+
-+    if (backend_type == VHOST_BACKEND_TYPE_NONE ||
-+        backend_type >= VHOST_BACKEND_TYPE_MAX) {
-+        return;
-+    }
-+
-     --log->refcnt;
-     if (log->refcnt == 0) {
-         /* Sync only the range covered by the old log */
-@@ -352,13 +371,13 @@ static void vhost_log_put(struct vhost_dev *dev, bool sync)
-             vhost_log_sync_range(dev, 0, dev->log_size * VHOST_LOG_CHUNK - 1);
-         }
- 
--        if (vhost_log == log) {
-+        if (vhost_log[backend_type] == log) {
-             g_free(log->log);
--            vhost_log = NULL;
--        } else if (vhost_log_shm == log) {
-+            vhost_log[backend_type] = NULL;
-+        } else if (vhost_log_shm[backend_type] == log) {
-             qemu_memfd_free(log->log, log->size * sizeof(*(log->log)),
-                             log->fd);
--            vhost_log_shm = NULL;
-+            vhost_log_shm[backend_type] = NULL;
-         }
- 
-         g_free(log);
-@@ -376,7 +395,8 @@ static bool vhost_dev_log_is_shared(struct vhost_dev *dev)
- 
- static inline void vhost_dev_log_resize(struct vhost_dev *dev, uint64_t size)
- {
--    struct vhost_log *log = vhost_log_get(size, vhost_dev_log_is_shared(dev));
-+    struct vhost_log *log = vhost_log_get(dev->vhost_ops->backend_type,
-+                                          size, vhost_dev_log_is_shared(dev));
-     uint64_t log_base = (uintptr_t)log->log;
-     int r;
- 
-@@ -2044,7 +2064,8 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-         uint64_t log_base;
- 
-         hdev->log_size = vhost_get_log_size(hdev);
--        hdev->log = vhost_log_get(hdev->log_size,
-+        hdev->log = vhost_log_get(hdev->vhost_ops->backend_type,
-+                                  hdev->log_size,
-                                   vhost_dev_log_is_shared(hdev));
-         log_base = (uintptr_t)hdev->log->log;
-         r = hdev->vhost_ops->vhost_set_log_base(hdev,
--- 
-MST
+----------------------------------------------------------------
+Alejandro Jimenez (1):
+      pvpanic: Emit GUEST_PVSHUTDOWN QMP event on pvpanic shutdown signal
+
+Christian Pötzsch (1):
+      Fix vhost user assertion when sending more than one fd
+
+Cindy Lu (1):
+      virtio-pci: Fix the failure process in kvm_virtio_pci_vector_use_one()
+
+Fan Ni (12):
+      hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output payload of identify memory device command
+      hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative and mailbox command support
+      include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for type3 memory devices
+      hw/mem/cxl_type3: Add support to create DC regions to type3 memory devices
+      hw/mem/cxl-type3: Refactor ct3_build_cdat_entries_for_mr to take mr size instead of mr as argument
+      hw/mem/cxl_type3: Add host backend and address space handling for DC regions
+      hw/mem/cxl_type3: Add DC extent list representative and get DC extent list mailbox support
+      hw/cxl/cxl-mailbox-utils: Add mailbox commands to support add/release dynamic capacity response
+      hw/cxl/events: Add qmp interfaces to add/release dynamic capacity extents
+      hw/mem/cxl_type3: Add DPA range validation for accesses to DC regions
+      hw/cxl/cxl-mailbox-utils: Add superset extent release mailbox support
+      hw/mem/cxl_type3: Allow to release extent superset in QMP interface
+
+Gregory Price (2):
+      hw/cxl/mailbox: change CCI cmd set structure to be a member, not a reference
+      hw/cxl/mailbox: interface to add CCI commands to an existing CCI
+
+Halil Pasic (1):
+      vhost-vsock: add VIRTIO_F_RING_PACKED to feature_bits
+
+Ira Weiny (1):
+      hw/cxl: Fix read from bogus memory
+
+Jiqian Chen (1):
+      virtio-pci: only reset pm state during resetting
+
+Jonah Palmer (5):
+      virtio/virtio-pci: Handle extra notification data
+      virtio: Prevent creation of device using notification-data with ioeventfd
+      virtio-mmio: Handle extra notification data
+      virtio-ccw: Handle extra notification data
+      vhost/vhost-user: Add VIRTIO_F_NOTIFICATION_DATA to vhost feature bits
+
+Jonathan Cameron (2):
+      hw/acpi/GI: Fix trivial parameter alignment issue.
+      hw/acpi: Insert an acpi-generic-node base under acpi-generic-initiator
+
+Li Feng (2):
+      Revert "vhost-user: fix lost reconnect"
+      vhost-user: fix lost reconnect again
+
+Marc-André Lureau (1):
+      vhost-user-gpu: fix import of DMABUF
+
+Si-Wei Liu (2):
+      vhost: dirty log should be per backend type
+      vhost: Perform memory section dirty scans once per iteration
+
+Stefano Garzarella (1):
+      vhost-vdpa: check vhost_vdpa_set_vring_ready() return value
+
+Thomas Weißschuh (7):
+      scripts/update-linux-headers: Copy setup_data.h to correct directory
+      linux-headers: update to 6.10-rc1
+      hw/misc/pvpanic: centralize definition of supported events
+      tests/qtest/pvpanic: use centralized definition of supported events
+      hw/misc/pvpanic: add support for normal shutdowns
+      tests/qtest/pvpanic: add tests for pvshutdown event
+      Revert "docs/specs/pvpanic: mark shutdown event as not implemented"
+
+Wafer (1):
+      hw/virtio: Fix obtain the buffer id from the last descriptor
+
+ qapi/cxl.json                               | 143 ++++++
+ qapi/run-state.json                         |  14 +
+ include/hw/acpi/acpi_generic_initiator.h    |  15 +-
+ include/hw/cxl/cxl_device.h                 |  85 +++-
+ include/hw/cxl/cxl_events.h                 |  18 +
+ include/hw/misc/pvpanic.h                   |   6 +
+ include/hw/virtio/vhost-user.h              |   3 +-
+ include/hw/virtio/vhost.h                   |   1 +
+ include/hw/virtio/virtio.h                  |   2 +
+ include/standard-headers/linux/ethtool.h    |  55 +++
+ include/standard-headers/linux/pci_regs.h   |   6 +
+ include/standard-headers/linux/pvpanic.h    |   7 +-
+ include/standard-headers/linux/virtio_bt.h  |   1 -
+ include/standard-headers/linux/virtio_mem.h |   2 +
+ include/standard-headers/linux/virtio_net.h | 143 ++++++
+ include/sysemu/runstate.h                   |   1 +
+ linux-headers/asm-generic/unistd.h          |   5 +-
+ linux-headers/asm-loongarch/kvm.h           |   4 +
+ linux-headers/asm-mips/unistd_n32.h         |   1 +
+ linux-headers/asm-mips/unistd_n64.h         |   1 +
+ linux-headers/asm-mips/unistd_o32.h         |   1 +
+ linux-headers/asm-powerpc/unistd_32.h       |   1 +
+ linux-headers/asm-powerpc/unistd_64.h       |   1 +
+ linux-headers/asm-riscv/kvm.h               |   1 +
+ linux-headers/asm-s390/unistd_32.h          |   1 +
+ linux-headers/asm-s390/unistd_64.h          |   1 +
+ linux-headers/asm-x86/kvm.h                 |   4 +-
+ linux-headers/asm-x86/unistd_32.h           |   1 +
+ linux-headers/asm-x86/unistd_64.h           |   1 +
+ linux-headers/asm-x86/unistd_x32.h          |   2 +
+ linux-headers/linux/kvm.h                   |   4 +-
+ linux-headers/linux/stddef.h                |   8 +
+ linux-headers/linux/vhost.h                 |  15 +-
+ hw/acpi/acpi_generic_initiator.c            |  82 ++--
+ hw/block/vhost-user-blk.c                   |   6 +-
+ hw/cxl/cxl-mailbox-utils.c                  | 658 +++++++++++++++++++++++++++-
+ hw/display/vhost-user-gpu.c                 |   5 +-
+ hw/mem/cxl_type3.c                          | 637 +++++++++++++++++++++++++--
+ hw/mem/cxl_type3_stubs.c                    |  25 ++
+ hw/misc/pvpanic-isa.c                       |   3 +-
+ hw/misc/pvpanic-pci.c                       |   3 +-
+ hw/misc/pvpanic.c                           |   8 +-
+ hw/net/vhost_net.c                          |   2 +
+ hw/s390x/s390-virtio-ccw.c                  |  17 +-
+ hw/scsi/vhost-scsi.c                        |   1 +
+ hw/scsi/vhost-user-scsi.c                   |   7 +-
+ hw/virtio/vhost-user-base.c                 |   5 +-
+ hw/virtio/vhost-user-fs.c                   |   2 +-
+ hw/virtio/vhost-user-vsock.c                |   1 +
+ hw/virtio/vhost-user.c                      |  18 +-
+ hw/virtio/vhost-vsock-common.c              |   1 +
+ hw/virtio/vhost.c                           | 112 ++++-
+ hw/virtio/virtio-mmio.c                     |  11 +-
+ hw/virtio/virtio-pci.c                      |  38 +-
+ hw/virtio/virtio.c                          |  45 ++
+ net/vhost-vdpa.c                            |  16 +-
+ subprojects/libvhost-user/libvhost-user.c   |   2 +-
+ system/runstate.c                           |   6 +
+ tests/qtest/pvpanic-pci-test.c              |  44 +-
+ tests/qtest/pvpanic-test.c                  |  34 +-
+ docs/specs/pvpanic.rst                      |   2 +-
+ scripts/update-linux-headers.sh             |   2 +-
+ 62 files changed, 2159 insertions(+), 188 deletions(-)
 
 
