@@ -4,89 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C5EC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 14:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F3C1C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 14:58:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEs50-0000cB-QZ; Wed, 05 Jun 2024 10:57:34 -0400
+	id 1sEs5b-0000j0-Mm; Wed, 05 Jun 2024 10:58:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sEs4z-0000bj-2R
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 10:57:33 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sEs5a-0000iW-Io
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 10:58:10 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sEs4x-00087N-0r
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 10:57:32 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-52961b77655so2620905e87.2
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 07:57:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717599448; x=1718204248; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=d+AS2jlM7XZxMqpSmSdgE/fNC/SG6FZj5pCt+/jdTVE=;
- b=KLIMAU4RG2rI4CMfCBPkh25Lz2PdmqFTJ2ApnwnEK0WO773SgA7QttuDc/NWbNu60H
- oS0BjtbMCnWw+qvgllVninNopmYpnOqYBdd5Kn7wLhPHBm0J7tBn9bZ/8tTNpdQeJz/b
- uPzlkMr2Eu7uEgpxCRBKhTG1wURXqhzSPRRKYk6zCNxuOJ9VHTEovP8xXYlMEVnz1Ffb
- 3BYxNhxZba+kva4JNua6D6kWaN354FzK8q6cYckQ2sGJWAhO6i7EGnc5ZPbXej0HAcV3
- L7jVwmctO/13QIPwMQzEyOyMtqK3kSOOdkOUPG3yRdzgh59IkEaJPuuZBkwxXHfKMSHF
- 1JSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717599448; x=1718204248;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=d+AS2jlM7XZxMqpSmSdgE/fNC/SG6FZj5pCt+/jdTVE=;
- b=FbSOdHSS8sp8XpVOJLwRU1emAANaQ5iLJZpyShqwqkKPl8zLxT4m/EhOJmXXC6lP/U
- fZVy/PMTlZadR62LxHUydzDgBBtjO4BMThKjMBpS3WZ02G5aIAR1V5U+PxSwMqFuxBwB
- 9AcpRCbxYZg0KeOHWSZ6SBgCu2LM6vNd2RTb/sWg2xfYeVGWPtES+lsunJC9xv3URULD
- uhsb8N/3Bi08Joh48ro+e9sHqTzgkXReddpZOJtEpojYtGQe3NCdURKb3KqyCZopwe9r
- iiGCihGZAIIvqaeanVORrsqW4HzUi84DvRbdMNjNEZ/8Pta9OC4ynS0GRbaEydeW9KUY
- myHQ==
-X-Gm-Message-State: AOJu0YxA1ZoPDHTaMQAcD5mnpjboGcmkdkLpQUmOamLJplgZjiopO2T3
- H8psDgaqRc+NHTBa+W5Oy+uGoTf2U1irJA+i0rpt4iYBL1S4jybvqVkeuMkSyFc=
-X-Google-Smtp-Source: AGHT+IFOdYJIWYKXUzCz10DgiKSsFJQNWW2t+Aa+PCPqwAIvA12BuhN1yUaelFZ5FwzMyoR3J40QTQ==
-X-Received: by 2002:a05:6512:402:b0:529:b712:e6d5 with SMTP id
- 2adb3069b0e04-52bab4e7813mr1612004e87.31.1717599448220; 
- Wed, 05 Jun 2024 07:57:28 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57a35e86c36sm9192648a12.54.2024.06.05.07.57.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 07:57:27 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 306155F754;
- Wed,  5 Jun 2024 15:57:27 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,  "Michael S. Tsirkin"
- <mst@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9=20?= <berrange@redhat.com>,  Thomas
- Huth <thuth@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: Re: [RFC PATCH] subprojects: add a wrapper for libvirglrenderer
-In-Reply-To: <em3eg.b7wu81h9k9h@linaro.org> (Manos Pitsidianakis's message of
- "Wed, 05 Jun 2024 17:32:14 +0300")
-References: <20240605133527.529950-1-alex.bennee@linaro.org>
- <em3eg.b7wu81h9k9h@linaro.org>
-Date: Wed, 05 Jun 2024 15:57:27 +0100
-Message-ID: <87zfrze8tk.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sEs5Y-00089R-FV
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 10:58:10 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B093521AC7;
+ Wed,  5 Jun 2024 14:58:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1717599486; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VkKjecMsE5IEeRSvc04idQm3UKbavwFQTLqlMINHX54=;
+ b=vh0p8bhjSx3lcxRu+dxs8e2Mrn6kI4pLUYj3CXw0PqmJf6zCZFXpZopa0bBUObhP3F/37H
+ 8aVDRlxwAcNWW82cPYTj9naULrgnPtCZIMYyGUPUeOwFWN5SxeRPOi68SQASZYsRdMX61w
+ C5eeHF14mhs1V5+MPX/6EKKFw8piG6E=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1717599486;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VkKjecMsE5IEeRSvc04idQm3UKbavwFQTLqlMINHX54=;
+ b=xEPXyZah2OeWAlGurcPFlJxunM71q/9W146ohurBZ13RwE8VQTFg7aHrGzm634EOQE/I1e
+ VGnoPsGuc8sbf/DA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1717599485; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VkKjecMsE5IEeRSvc04idQm3UKbavwFQTLqlMINHX54=;
+ b=TyesXl9fTkFk/Ktx6pVHwuFcXQrD6yvWCM55t2IdFhaz0eFsUveDRsj2J2vPDmWiGK0S8C
+ vF31/UkivQmmXIYhsosax+AhpAQJNfctTumAxe/dD9BejGmSQl5i8jALvTRLV8EJ2gO2Sa
+ zXd0sEzSfMX2E1zHPoMQdZ75TJHsUpo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1717599485;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VkKjecMsE5IEeRSvc04idQm3UKbavwFQTLqlMINHX54=;
+ b=bcaWQ8WCzPBy+bLg1wABTioRd7lUrUb4sneGQwAONaJT8wPv1nYK6NPdcQ/d3ayGY6xibB
+ YciGkC6I2Ld0BhDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3563D13A42;
+ Wed,  5 Jun 2024 14:58:04 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id Ci37Ovx8YGblPAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 05 Jun 2024 14:58:04 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ peterx@redhat.com, yuan1.liu@intel.com
+Cc: qemu-devel@nongnu.org, linuxarm@huawei.com, linwenkai6@hisilicon.com,
+ zhangfei.gao@linaro.org, huangchenghai2@huawei.com
+Subject: Re: [PATCH 4/7] migration/multifd: Add UADK initialization
+In-Reply-To: <20240529094435.11140-5-shameerali.kolothum.thodi@huawei.com>
+References: <20240529094435.11140-1-shameerali.kolothum.thodi@huawei.com>
+ <20240529094435.11140-5-shameerali.kolothum.thodi@huawei.com>
+Date: Wed, 05 Jun 2024 11:58:02 -0300
+Message-ID: <87zfrzfnd1.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[huawei.com:email, imap1.dmz-prg2.suse.org:helo,
+ nongnu.org:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,167 +117,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+Shameer Kolothum via <qemu-devel@nongnu.org> writes:
 
-> On Wed, 05 Jun 2024 16:35, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
->>As the latest features for virtio-gpu need a pretty recent version of
->>libvirglrenderer. When it is not available on the system we can use a
->>meson wrapper and provide it when --download is specified in
->>configure.
->>
->>We have to take some additional care as currently QEMU will hang
->>libvirglrenderer fails to exec the render server. As the error isn't
->>back propagated we make sure we at least test we have a path to an
->>executable before tweaking the environment.
->>
->>Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->>Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
->>---
->> meson.build                    |  7 ++++++-
->> hw/display/virtio-gpu-virgl.c  | 24 ++++++++++++++++++++++++
->> subprojects/virglrenderer.wrap |  6 ++++++
->> 3 files changed, 36 insertions(+), 1 deletion(-)
->> create mode 100644 subprojects/virglrenderer.wrap
->>
->>diff --git a/meson.build b/meson.build
->>index 1d7346b703..e4e270df78 100644
->>--- a/meson.build
->>+++ b/meson.build
->>@@ -1203,7 +1203,8 @@ have_vhost_user_gpu =3D have_tools and host_os =3D=
-=3D 'linux' and pixman.found()
->> if not get_option('virglrenderer').auto() or have_system or have_vhost_u=
-ser_gpu
->>   virgl =3D dependency('virglrenderer',
->>                      method: 'pkg-config',
->>-                     required: get_option('virglrenderer'))
->>+                     required: get_option('virglrenderer'),
->>+                     default_options: ['default_library=3Dstatic', 'rend=
-er-server=3Dtrue', 'venus=3Dtrue'])
->> endif
->> rutabaga =3D not_found
->> if not get_option('rutabaga_gfx').auto() or have_system or have_vhost_us=
-er_gpu
->>@@ -2314,6 +2315,10 @@ if virgl.version().version_compare('>=3D1.0.0')
->>   config_host_data.set('HAVE_VIRGL_RESOURCE_BLOB', 1)
->>   config_host_data.set('HAVE_VIRGL_VENUS', 1)
->> endif
->>+if virgl.type_name().contains('internal')
->>+  config_host_data.set('HAVE_BUNDLED_VIRGL_SERVER', 1)
->>+endif
->>+
->> config_host_data.set('CONFIG_VIRTFS', have_virtfs)
->> config_host_data.set('CONFIG_VTE', vte.found())
->> config_host_data.set('CONFIG_XKBCOMMON', xkbcommon.found())
->>diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
->>index c9d20a8a60..53d6742e79 100644
->>--- a/hw/display/virtio-gpu-virgl.c
->>+++ b/hw/display/virtio-gpu-virgl.c
->>@@ -14,6 +14,7 @@
->> #include "qemu/osdep.h"
->> #include "qemu/error-report.h"
->> #include "qemu/iov.h"
->>+#include "qemu/cutils.h"
->> #include "trace.h"
->> #include "hw/virtio/virtio.h"
->> #include "hw/virtio/virtio-gpu.h"
->>@@ -1122,6 +1123,26 @@ void virtio_gpu_virgl_reset(VirtIOGPU *g)
->>     virgl_renderer_reset();
->> }
->> +/*
->>+ * If we fail to spawn the render server things tend to hang so it is
->>+ * important to do our due diligence before then. If QEMU has bundled
->>+ * the virgl server we want to ensure we can run it from the build
->>+ * directory and if installed.
->>+ *
->>+ * The principle way we can override the libvirglrenders behaviour is
->>+ * by setting environment variables.
->>+ */
->>+static void virgl_set_render_env(void)
->>+{
+> Initialize UADK session and allocate buffers required. The actual
+> compression/decompression will only be done in a subsequent patch.
 >
-> Since it's a few lines we could also inline this in
-> virtio_gpu_virgl_init()
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>  migration/multifd-uadk.c | 207 ++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 206 insertions(+), 1 deletion(-)
+>
+> diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
+> index c2bb07535b..3172e4d5ca 100644
+> --- a/migration/multifd-uadk.c
+> +++ b/migration/multifd-uadk.c
+> @@ -12,9 +12,214 @@
+>  
+>  #include "qemu/osdep.h"
+>  #include "qemu/module.h"
+> +#include "qapi/error.h"
+> +#include "migration.h"
+> +#include "multifd.h"
+> +#include "options.h"
+> +#include "uadk/wd_comp.h"
+> +#include "uadk/wd_sched.h"
+> +
+> +struct wd_data {
+> +    handle_t handle;
+> +    uint8_t *buf;
+> +    uint32_t *buf_hdr;
+> +};
+> +
+> +static bool uadk_hw_initialised(void)
 
-I mainly put it in a helper function to avoid putting a big comment
-block inline ;-)
+The first time this is called it will actually do the initialization,
+no? If so, it should be uadk_hw_init().
 
->
->>+#ifdef HAVE_BUNDLED_VIRGL_SERVER
->>+    g_autofree char *file =3D get_relocated_path(CONFIG_QEMU_HELPERDIR "=
-/virgl_render_server");
->>+    if (g_file_test(file, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_EXECUTABLE=
-)) {
->>+        g_setenv("RENDER_SERVER_EXEC_PATH", file, false);
->
->
->  Return value
->
->  Type: gboolean
->
->  FALSE if the environment variable couldn=E2=80=99t be set.
->
-> Worth adding a check here.
+> +{
+> +    char alg[] = "zlib";
+> +    int ret;
+> +
+> +    ret = wd_comp_init2(alg, SCHED_POLICY_RR, TASK_HW);
+> +    if (ret && ret != -WD_EEXIST) {
+> +        return false;
+> +    } else {
+> +        return true;
+> +    }
+> +}
+> +
+> +static struct wd_data *multifd_uadk_init_sess(uint32_t count,
+> +                                              uint32_t page_size,
+> +                                              bool compress, Error **errp)
+> +{
+> +    struct wd_comp_sess_setup ss = {0};
+> +    struct sched_params param = {0};
+> +    uint32_t size = count * page_size;
+> +    struct wd_data *wd;
+> +
+> +    if (!uadk_hw_initialised()) {
+> +        error_setg(errp, "multifd: UADK hardware not available");
 
-ok.
+Does the lib provide a software fallback path that we could use like QPL
+does?
 
-> Offtopic, but it feels weird to set our environment without creating
-> the process ourselves.
+> +        return NULL;
+> +    }
+> +
+> +    wd = g_new0(struct wd_data, 1);
+> +    ss.alg_type = WD_ZLIB;
+> +    if (compress) {
+> +        ss.op_type = WD_DIR_COMPRESS;
+> +        /* Add an additional page for handling output > input */
+> +        size += page_size;
+> +    } else {
+> +        ss.op_type = WD_DIR_DECOMPRESS;
+> +    }
+> +    param.type = ss.op_type;
+> +    ss.sched_param = &param;
 
-yeah I'm not overly happy with the way the proxy server stuff works
-because its a bit spooky action at a distance (as noted by the failure
-to detect it not working). Not sure if we want to replicate all the
-proxy login in QEMU though.
+What about window size and compression level? Don't we need to set them
+here? What do they default to?
 
-> There's also an option to launch the server in threads, so that if it
-> crashes it pulls qemu down with it. Would that work with our thread
-> setup?
+> +
+> +    wd->handle = wd_comp_alloc_sess(&ss);
+> +    if (!wd->handle) {
+> +        error_setg(errp, "multifd: failed wd_comp_alloc_sess");
+> +        goto out;
+> +    }
+> +
+> +    wd->buf = g_try_malloc(size);
+> +    if (!wd->buf) {
+> +        error_setg(errp, "multifd: out of mem for uadk buf");
+> +        goto out_free_sess;
+> +    }
+> +    wd->buf_hdr = g_new0(uint32_t, count);
+> +    return wd;
+> +
+> +out_free_sess:
+> +    wd_comp_free_sess(wd->handle);
+> +out:
+> +    wd_comp_uninit2();
+> +    g_free(wd);
+> +    return NULL;
+> +}
+> +
+> +static void multifd_uadk_uninit_sess(struct wd_data *wd)
+> +{
+> +    wd_comp_free_sess(wd->handle);
+> +    wd_comp_uninit2();
+> +    g_free(wd->buf);
+> +    g_free(wd->buf_hdr);
+> +    g_free(wd);
+> +}
+> +
+> +/**
+> + * multifd_uadk_send_setup: setup send side
+> + *
+> + * Returns 0 for success or -1 for error
+> + *
+> + * @p: Params for the channel that we are using
+> + * @errp: pointer to an error
+> + */
+> +static int multifd_uadk_send_setup(MultiFDSendParams *p, Error **errp)
+> +{
+> +    struct wd_data *wd;
+> +
+> +    wd = multifd_uadk_init_sess(p->page_count, p->page_size, true, errp);
+> +    if (!wd) {
+> +        return -1;
+> +    }
+> +
+> +    p->compress_data = wd;
+> +    assert(p->iov == NULL);
+> +    /*
+> +     * Each page will be compressed independently and sent using an IOV. The
+> +     * additional two IOVs are used to store packet header and compressed data
+> +     * length
+> +     */
+> +
+> +    p->iov = g_new0(struct iovec, p->page_count + 2);
+> +    return 0;
+> +}
+> +
+> +/**
+> + * multifd_uadk_send_cleanup: cleanup send side
+> + *
+> + * Close the channel and return memory.
+> + *
+> + * @p: Params for the channel that we are using
+> + * @errp: pointer to an error
+> + */
+> +static void multifd_uadk_send_cleanup(MultiFDSendParams *p, Error **errp)
+> +{
+> +    struct wd_data *wd = p->compress_data;
+> +
+> +    multifd_uadk_uninit_sess(wd);
+> +    p->compress_data = NULL;
+> +}
+> +
+> +/**
+> + * multifd_uadk_send_prepare: prepare data to be able to send
+> + *
+> + * Create a compressed buffer with all the pages that we are going to
+> + * send.
+> + *
+> + * Returns 0 for success or -1 for error
+> + *
+> + * @p: Params for the channel that we are using
+> + * @errp: pointer to an error
+> + */
+> +static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error **errp)
+> +{
+> +    return -1;
+> +}
+> +
+> +/**
+> + * multifd_uadk_recv_setup: setup receive side
+> + *
+> + * Create the compressed channel and buffer.
+> + *
+> + * Returns 0 for success or -1 for error
+> + *
+> + * @p: Params for the channel that we are using
+> + * @errp: pointer to an error
+> + */
+> +static int multifd_uadk_recv_setup(MultiFDRecvParams *p, Error **errp)
+> +{
+> +    struct wd_data *wd;
+> +
+> +    wd = multifd_uadk_init_sess(p->page_count, p->page_size, false, errp);
+> +    if (!wd) {
+> +        return -1;
+> +    }
+> +    p->compress_data = wd;
+> +    return 0;
+> +}
+> +
+> +/**
+> + * multifd_uadk_recv_cleanup: setup receive side
+> + *
+> + * For no compression this function does nothing.
 
-Hmm not sure. We could try but I suspect we want to insulate the main
-process from the vagaries of the helper.
+This line makes no sense here.
 
->
->
->>+    }
->>+#endif
->>+}
->>+
->>+
->> int virtio_gpu_virgl_init(VirtIOGPU *g)
->> {
->>     int ret;
->>@@ -1145,6 +1166,9 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
->>     }
->> #endif
->> +    /* Ensure we can find the render server */
->>+    virgl_set_render_env();
->>+
->>     ret =3D virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
->>     if (ret !=3D 0) {
->>         error_report("virgl could not be initialized: %d", ret);
->>diff --git a/subprojects/virglrenderer.wrap b/subprojects/virglrenderer.w=
-rap
->>new file mode 100644
->>index 0000000000..3656a478c4
->>--- /dev/null
->>+++ b/subprojects/virglrenderer.wrap
->>@@ -0,0 +1,6 @@
->>+[wrap-git]
->>+url =3D https://gitlab.freedesktop.org/virgl/virglrenderer.git
->>+revision =3D virglrenderer-1.0.1
->
->
-> Can we say "at least 1.0.1" here? Should we? Dunno.
->
->>+
->>+[provide]
->>+virglrenderer =3D libvirglrenderer_dep
->> -- 2.39.2
->>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> + *
+> + * @p: Params for the channel that we are using
+> + */
+> +static void multifd_uadk_recv_cleanup(MultiFDRecvParams *p)
+> +{
+> +    struct wd_data *wd = p->compress_data;
+> +
+> +    multifd_uadk_uninit_sess(wd);
+> +    p->compress_data = NULL;
+> +}
+> +
+> +/**
+> + * multifd_uadk_recv: read the data from the channel into actual pages
+> + *
+> + * Read the compressed buffer, and uncompress it into the actual
+> + * pages.
+> + *
+> + * Returns 0 for success or -1 for error
+> + *
+> + * @p: Params for the channel that we are using
+> + * @errp: pointer to an error
+> + */
+> +static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
+> +{
+> +    return -1;
+> +}
+> +
+> +static MultiFDMethods multifd_uadk_ops = {
+> +    .send_setup = multifd_uadk_send_setup,
+> +    .send_cleanup = multifd_uadk_send_cleanup,
+> +    .send_prepare = multifd_uadk_send_prepare,
+> +    .recv_setup = multifd_uadk_recv_setup,
+> +    .recv_cleanup = multifd_uadk_recv_cleanup,
+> +    .recv = multifd_uadk_recv,
+> +};
+>  
+>  static void multifd_uadk_register(void)
+>  {
+> -    /* noop for now */
+> +    multifd_register_ops(MULTIFD_COMPRESSION_UADK, &multifd_uadk_ops);
+>  }
+>  migration_init(multifd_uadk_register);
 
