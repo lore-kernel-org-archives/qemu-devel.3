@@ -4,79 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C00AFC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EA38C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:38:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF0C0-0004KY-Ve; Wed, 05 Jun 2024 19:37:20 -0400
+	id 1sF0BU-0000Qa-Fx; Wed, 05 Jun 2024 19:36:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Bz-0004Ck-Ct
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:37:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0BS-0000B4-GM
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Bx-000608-OT
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:37:19 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0BQ-0005ui-KY
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717630637;
+ s=mimecast20190719; t=1717630604;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NEpjbSqv96acXddAF0b5elzpuXpH+2dtKbhhCEe0wtQ=;
- b=dw6mLnElFjyzh2XFScvqDECHKhh0jp/2NSi0pxz6kjGMVYUaqebuh4LpWeUQfgcZDxc4dn
- N11zgTYdfpnaXk4O7Ishbhzmt/hliB3p7Z1roDgb799TUpMbw8t5G2P8bkztKT/xGox2le
- vKZctlUHg9OVmeLHEXahcdQBfNosa7E=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PiQRSKV88pDHIzL/embxb6ck9gnapJtoEwzBqZXK5wg=;
+ b=duYjxbxG54nwpDwG5uETchjcmK0HTWyAKbsB/aaZEBj9hWARKz1B35WSAQIqG/F8OAY/m0
+ ZGQZS1KZ95ufvO3M76JMUmYd6zXZUxxqHDB42U/Z314DXjnHVBReSf4jMkY9Ev5ov6wcgK
+ ufu69UdH6iSwt6Fks9HuqdEIoBsH8WQ=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-395-APeOamKoOwmtussc24GMpw-1; Wed, 05 Jun 2024 19:37:16 -0400
-X-MC-Unique: APeOamKoOwmtussc24GMpw-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-57a5af3e160so123053a12.2
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:37:15 -0700 (PDT)
+ us-mta-660-rLbs8pqIPQ--Yg3SfsG0VQ-1; Wed, 05 Jun 2024 19:36:42 -0400
+X-MC-Unique: rLbs8pqIPQ--Yg3SfsG0VQ-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2eaa806df17so1849121fa.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:36:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717630634; x=1718235434;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NEpjbSqv96acXddAF0b5elzpuXpH+2dtKbhhCEe0wtQ=;
- b=X8ELUM5X8JYC/4jHL3OhZNimEWwwGzdqE3OAL1vfKoWzfb+AavGF6P0axZHCJjVBqq
- w2Dv6ePIjvS1gbO7MGTAFTlMUqTmLhCnklP/mPBB0FYOLNPJKFqTn8MFR0H2jZaXYklO
- XPFd8qMcAT2dcLstg6IERG4Om4srvpcvYj5lU7/fM7O6vAEhMnTMcordfhSaAbzyY8zZ
- 7OoGM2zWytKJcVQJDbaDcYR6R3dAz91X7E4XzLnOFQx5pAfGyEsO6O+TyrDDivBymp3h
- XcTVOUIz9tWAojEv5uOgBnjgELxPI/zp0CPfOXg8mekRcOlitSXumeuIV784JOf2JO3A
- bqSg==
-X-Gm-Message-State: AOJu0YzMTocPyXbo4XzCIiaghPiQ0V0csQ/qXFaLoVrZBgx+5c4cnjSt
- yMhy9HOqTaZ2O/OFl1kbo2xPG1PKPnRls7WEmatHTQQarh8JlJSLmzTK3O10rtutqfiHFz+ADh/
- pJ1hXFYROdUUSDzuKbFp6lNqFX7A9OK6Sw2dBWH6vX+OyTQS9mFatNOhOSCnQYf513FgDXhQwXp
- F5CmLsNOH+Tak735EwaRDdz+iUTTI8cQ==
-X-Received: by 2002:a50:d65c:0:b0:578:6242:d4b0 with SMTP id
- 4fb4d7f45d1cf-57a8bcb4ca9mr2059814a12.40.1717630634418; 
- Wed, 05 Jun 2024 16:37:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHhi2me5gPKMEG9l56JsDuYLeU4ReoKd1933zdsMlTCTE/dDagUJYZgm3KlVapvCJL3Qj72IQ==
-X-Received: by 2002:a50:d65c:0:b0:578:6242:d4b0 with SMTP id
- 4fb4d7f45d1cf-57a8bcb4ca9mr2059805a12.40.1717630633937; 
- Wed, 05 Jun 2024 16:37:13 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717630601; x=1718235401;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PiQRSKV88pDHIzL/embxb6ck9gnapJtoEwzBqZXK5wg=;
+ b=Q/Gr7lg9lBdsXLgTdbcyI5SO33d8jR5sX9WnQCIsyOI1R2c/9NfD7oAAGt4901Jd2d
+ M9OzUjjo2PWU+Y6XNEkUS4J2Ajkqi3OAYIZaXSOIQaYoRl/+GfhHEHF3DjY1RF1x7ep1
+ hTKnWMqLpWlwCBQjdMjxbrGdJeCHajN9/dusxpF+Fs4SQmB49GjaIIpmz924oasvtr7T
+ /OP1/g5lrahExHeWu0BUphkEk+p5WDGN74kcAAAHbm/KaPv219XexaspNWe0Rqa4+o/J
+ q+8ya/MHMEYcWmNS5SRRwe4rEuxGztfC26VLyTulfYxUNUExCRHDN34C6HewDVrMJfkq
+ wYNg==
+X-Gm-Message-State: AOJu0YxNNUEEQUtplZq0FUTbcy1MwcJGrIOhLxQq6Tb9vEW2xgTniEqB
+ ScKDixOPGqbM0P2/t+s/CshYqZpe0u4sNsPg7gIpPfJkxDRaok29ZICCwN+vAATAg4Dso/NAsMh
+ L9Olmr+EcycpL0PGi4EHpIlNcx6AtvKcd12fM2uKHZrWUWgPyxrM82wOvu+apwIOui+8OqACdFF
+ tp56kwMTIQEeUCDKRGJl10ZtxYHvDpEQ==
+X-Received: by 2002:a2e:2c06:0:b0:2ea:bc8d:3a43 with SMTP id
+ 38308e7fff4ca-2eac7aace3bmr20897761fa.43.1717630600926; 
+ Wed, 05 Jun 2024 16:36:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF002q5CRfYJKtGq/CJm/lyEtHjtvPmWOWPb4tSY4hYBp77ZRbkRgyBfE8hfne09EMPbs+wOA==
+X-Received: by 2002:a2e:2c06:0:b0:2ea:bc8d:3a43 with SMTP id
+ 38308e7fff4ca-2eac7aace3bmr20897631fa.43.1717630600454; 
+ Wed, 05 Jun 2024 16:36:40 -0700 (PDT)
 Received: from redhat.com ([2.55.56.67]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aae232981sm94523a12.83.2024.06.05.16.37.11
+ 4fb4d7f45d1cf-57aae201a6esm94218a12.71.2024.06.05.16.36.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 16:37:13 -0700 (PDT)
-Date: Wed, 5 Jun 2024 19:37:10 -0400
+ Wed, 05 Jun 2024 16:36:39 -0700 (PDT)
+Date: Wed, 5 Jun 2024 19:36:37 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Ira Weiny <ira.weiny@intel.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL v3 41/41] hw/cxl: Fix read from bogus memory
-Message-ID: <d23bc95d390a1800198c92a0177240d9e1a1eb66.1717630437.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
+ Thomas Huth <thuth@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL v3 32/41] scripts/update-linux-headers: Copy setup_data.h to
+ correct directory
+Message-ID: <22df9cd2eac6404888df74e9a44f151681f31051.1717630437.git.mst@redhat.com>
 References: <cover.1717630437.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1717630437.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -101,46 +106,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ira Weiny <ira.weiny@intel.com>
+From: Thomas Weißschuh <thomas@t-8ch.de>
 
-Peter and coverity report:
+Add the missing "include/" path component, so the files ends up in the
+correct place like the other headers.
 
-	We've passed '&data' to address_space_write(), which means "read
-	from the address on the stack where the function argument 'data'
-	lives", so instead of writing 64 bytes of data to the guest ,
-	we'll write 64 bytes which start with a host pointer value and
-	then continue with whatever happens to be on the host stack
-	after that.
-
-Indeed the intention was to write 64 bytes of data at the address given.
-
-Fix the parameter to address_space_write().
-
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/all/CAFEAcA-u4sytGwTKsb__Y+_+0O2-WwARntm3x8WNhvL1WfHOBg@mail.gmail.com/
-Fixes: 6bda41a69bdc ("hw/cxl: Add clear poison mailbox command support.")
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
-Message-Id: <20240531-fix-poison-set-cacheline-v1-1-e3bc7e8f1158@intel.com>
+Fixes: 66210a1a30f2 ("scripts/update-linux-headers: Add setup_data.h to import list")
+Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+Message-Id: <20240527-pvpanic-shutdown-v8-1-5a28ec02558b@t-8ch.de>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/mem/cxl_type3.c | 2 +-
+ scripts/update-linux-headers.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 5d4a1276be..3274e5dcbb 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1292,7 +1292,7 @@ static bool set_cacheline(CXLType3Dev *ct3d, uint64_t dpa_offset, uint8_t *data)
-         dpa_offset -= (vmr_size + pmr_size);
-     }
- 
--    address_space_write(as, dpa_offset, MEMTXATTRS_UNSPECIFIED, &data,
-+    address_space_write(as, dpa_offset, MEMTXATTRS_UNSPECIFIED, data,
-                         CXL_CACHE_LINE_SIZE);
-     return true;
- }
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index 8963c39189..a148793bd5 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -158,7 +158,7 @@ for arch in $ARCHLIST; do
+         cp_portable "$hdrdir/bootparam.h" \
+                     "$output/include/standard-headers/asm-$arch"
+         cp_portable "$hdrdir/include/asm/setup_data.h" \
+-                    "$output/standard-headers/asm-x86"
++                    "$output/include/standard-headers/asm-x86"
+     fi
+     if [ $arch = riscv ]; then
+         cp "$hdrdir/include/asm/ptrace.h" "$output/linux-headers/asm-riscv/"
 -- 
 MST
 
