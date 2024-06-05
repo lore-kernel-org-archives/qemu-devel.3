@@ -4,92 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BCE6C27C52
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E33EC41513
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 07:25:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEl1j-0007GW-Fn; Wed, 05 Jun 2024 03:25:43 -0400
+	id 1sEl16-000793-P2; Wed, 05 Jun 2024 03:25:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1sEl1h-0007FN-P2
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:25:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1sEl15-00078k-8k
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:25:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1sEl1g-0004a1-BR
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:25:41 -0400
+ (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
+ id 1sEl13-0004EU-6l
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:25:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717572339;
+ s=mimecast20190719; t=1717572298;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=suuFTwrFjHJhcoeTNEoS5N1Dv16DjnF0P5AMW2D9V90=;
- b=RfmD4C9p0FXSUstT8kwTpY+Cyunpr0d7QKsXX5PtzA5JLYjLr/9ggZ6Y+BQ8AfrPt74G2z
- iVRl552Az1yxrZ6YBXwlkDAusj0tacZ0MmoAGuWIwtvID2AFirTjnvCHyOw0d62rC8gQKH
- 8/Jritr2QE7d6v7MieGzXeSzp9Xs+hY=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rrgJSeCQSOMJFNSDbCmGiaGo4cr8nGAtQOhdYgKypvk=;
+ b=ROH0Wz8ZcEhESjjXsML4CiNZSY8bvVsrwHpp6I/pn+Mx9HJMIr3Ff6NcUsjTwXPJKvQn1A
+ x5zEvjFL5AqSbBtJLjaFzgeWwHGKSK1DQIp4pTfjpW9WLsgCp2mm/1NG7SENguq1BC8F+Z
+ 4Ropkbp8Vg/9IbtXmoLYf6p2oO/6qGk=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-7_mzDBzVP5Gz9N8EoUHq5Q-1; Wed, 05 Jun 2024 03:25:38 -0400
-X-MC-Unique: 7_mzDBzVP5Gz9N8EoUHq5Q-1
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-1f63b8ab0b8so16867675ad.0
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 00:25:38 -0700 (PDT)
+ us-mta-647-9lT5Iy_nNjO8jRCk2uCXYw-1; Wed, 05 Jun 2024 03:24:49 -0400
+X-MC-Unique: 9lT5Iy_nNjO8jRCk2uCXYw-1
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-2c1a9e8d3b0so1905226a91.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 00:24:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717572336; x=1718177136;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=suuFTwrFjHJhcoeTNEoS5N1Dv16DjnF0P5AMW2D9V90=;
- b=WeoEZapKFa0H1TCwCoeCUqOljYuGPIg1/VouXVlK4yaC0XpjRR7k5eG9iZ7hKguV2k
- ZJ2Kyi1JbMcxOPDI78nOTeW/e7G0fMPMO9auCH4P9RBot6O/8NEUKQPVK2nCcP/Jz09x
- djnz5V3cd+UeQhG5oWvLyCCvU+v6tWMixcTtyTR6SZ0H46BHs0aAOZv1hTYIymETuojB
- NS8rQ2IPDBBKITdwqbNpbuZefBi8lLs60d9wTxvPSOzJTRrfQeI+kmHHZKD+9qpRZI8Q
- p8fPBduEF7y2jNSayoorLjnuKAFrmIM8bPkKxGOVfgn3UZXyw2E6m0PMFAYUY/glfglm
- FaeA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXo4KFJeqdBlGm6EzhXYMTahnAP6PHz/+cbgl2odXr2iVuk5k0jQ54f/zwr7MnzE9gjVCys2t6h7AksNJwrGJv1ndUjRKg=
-X-Gm-Message-State: AOJu0YxQZz1zznQFhd6ufktYZ7fnWx7u3SmkL/NH1K0SEegqf89FqFrN
- kN2MweK1Moqa0XYMPErh8q/iuBsaspvTEVaY/iMs2ZErcG/bhbNNniDS6y/4MxgpAgy6fs1RUI6
- iEeHQgEOaZLSF/5gblwgn7KVAnK7PL7wPaniHkZWFqZw4qkeBGjXyaVZqxHg3
-X-Received: by 2002:a17:902:e847:b0:1f6:77e3:774a with SMTP id
- d9443c01a7336-1f6a5a6aee4mr21912565ad.52.1717572336102; 
- Wed, 05 Jun 2024 00:25:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZuAWoehzvOGN0612mi6DwBU0RCtaBt8ymPEA/pAtA63V0DYhEy1xVztWV1PQe27B/RaaRgA==
-X-Received: by 2002:a17:902:e847:b0:1f6:77e3:774a with SMTP id
- d9443c01a7336-1f6a5a6aee4mr21912425ad.52.1717572335662; 
- Wed, 05 Jun 2024 00:25:35 -0700 (PDT)
-Received: from localhost.localdomain ([203.163.232.78])
- by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-1f6703f7673sm56329335ad.210.2024.06.05.00.25.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 00:25:35 -0700 (PDT)
-From: Ani Sinha <anisinha@redhat.com>
-To: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2 1/3] qtest/x86/numa-test: do not use the obsolete 'pentium'
- cpu
-Date: Wed,  5 Jun 2024 12:55:09 +0530
-Message-ID: <20240605072512.67692-2-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20240605072512.67692-1-anisinha@redhat.com>
-References: <20240605072512.67692-1-anisinha@redhat.com>
+ d=1e100.net; s=20230601; t=1717572288; x=1718177088;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rrgJSeCQSOMJFNSDbCmGiaGo4cr8nGAtQOhdYgKypvk=;
+ b=c6I3W0plVNfxWk6EacNNm1L4oBN02ZmLvC46CV1lX1A4gHry4Ws2xvMzsEpChVfhfj
+ A4FyJzRQQCi5ktz6wrsQj8F4SsWnkOMxQeu3ojSXKqLZxnIPfV/z/tQ30p6XJ3DPhokv
+ 9f4D5Ip6P5b9ljNyRrhZ50efk47W6UWFVeWN7vFRSlFsUsm0WyM60hezsRkIeB3XWpOr
+ DqSNE4YYCM9Gzp0SUbWdMr9cqkTxyQhZ/VcaB91FELlRkydbSdX4Y7W2PLeKPkkOhn/R
+ NhwyYvnJp5W9iZdVaNU9xYvczXe4ZjIsiXhZNWhAIvFzEINiKaRDHfEseAAfdr4k7c2H
+ z8sQ==
+X-Gm-Message-State: AOJu0YwnkNzjLniJ3sF9i9wOQltP8bMYRTsfxaVdZiqrIxik33sCyV9G
+ 8PSPpDYyqFufimt4MBcJuZb3+4lP2w2EpxlrQaS6KM6DAObPcFR1QSuS+5usgL3Hbz9KuYHFYga
+ i116cfE56jSE5gwOfqwXH1wbeQEbYHzUcWteGtB485rVHRuoR+Z0y2V71W9mJ4Es+mFwv8ZsgU9
+ r3TrSJhaqt5rsCMXH1MlZ5BisUBRUzVOZsz2A=
+X-Received: by 2002:a17:90a:9f8b:b0:2c1:424c:1721 with SMTP id
+ 98e67ed59e1d1-2c27db002d9mr1574655a91.3.1717572288383; 
+ Wed, 05 Jun 2024 00:24:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFLM+DYlgbJcqOOeoHkowo0cQ1wM3rJ/Rf2l2slbY6x+16KW2eE8Dd94MFKkLYxMUG8NMu5FKPF/JCq8Gtk1F0=
+X-Received: by 2002:a17:90a:9f8b:b0:2c1:424c:1721 with SMTP id
+ 98e67ed59e1d1-2c27db002d9mr1574642a91.3.1717572287983; Wed, 05 Jun 2024
+ 00:24:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+References: <20240530152223.780232-1-aesteve@redhat.com>
+ <20240604181626.GA90471@fedora.redhat.com>
+In-Reply-To: <20240604181626.GA90471@fedora.redhat.com>
+From: Albert Esteve <aesteve@redhat.com>
+Date: Wed, 5 Jun 2024 09:24:36 +0200
+Message-ID: <CADSE00JnHP_kM5GRUkPnvtwUxSmCYd4ko0ScS=EvpJzsSpX+mg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] vhost-user: Add SHMEM_MAP/UNMAP requests
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, slp@redhat.com, jasowang@redhat.com
+Content-Type: multipart/alternative; boundary="0000000000001a0b9a061a1f76cd"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,35 +96,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'pentium' cpu is old and obsolete and should be avoided for running tests if
-its not strictly needed. Use 'max' cpu instead for generic non-cpu specific
-numa test.
+--0000000000001a0b9a061a1f76cd
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-CC: thuth@redhat.com
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- tests/qtest/numa-test.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+On Tue, Jun 4, 2024 at 8:16=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.com=
+> wrote:
 
-changelog:
-review tag added. No other changes.
+> On Thu, May 30, 2024 at 05:22:22PM +0200, Albert Esteve wrote:
+> > Hi all,
+> >
+> > This is an early attempt to have backends
+> > support dynamic fd mapping into shared
+> > memory regions. As such, there are a few
+> > things that need settling, so I wanted to
+> > post this first to have some early feedback.
+> >
+> > The usecase for this is, e.g., to support
+> > vhost-user-gpu RESOURCE_BLOB operations,
+> > or DAX Window request for virtio-fs. In
+> > general, any operation where a backend
+> > would need to mmap an fd to a shared
+> > memory so that the guest can access it.
+>
+> I wanted to mention that this sentence confuses me because:
+>
+> - The frontend will mmap an fd into the guest's memory space so that a
+>   VIRTIO Shared Memory Region is exposed to the guest. The backend
+>   requests the frontend to perform this operation. The backend does not
+>   invoke mmap itself.
+>
 
-diff --git a/tests/qtest/numa-test.c b/tests/qtest/numa-test.c
-index 7aa262dbb9..f01f19592d 100644
---- a/tests/qtest/numa-test.c
-+++ b/tests/qtest/numa-test.c
-@@ -125,7 +125,8 @@ static void pc_numa_cpu(const void *data)
-     QTestState *qts;
-     g_autofree char *cli = NULL;
- 
--    cli = make_cli(data, "-cpu pentium -machine smp.cpus=8,smp.sockets=2,smp.cores=2,smp.threads=2 "
-+    cli = make_cli(data,
-+        "-cpu max -machine smp.cpus=8,smp.sockets=2,smp.cores=2,smp.threads=2 "
-         "-numa node,nodeid=0,memdev=ram -numa node,nodeid=1 "
-         "-numa cpu,node-id=1,socket-id=0 "
-         "-numa cpu,node-id=0,socket-id=1,core-id=0 "
--- 
-2.42.0
+Sorry for the confused wording. It is true that the backend does not
+do the mmap, but requests it to be done. One point of confusion for
+me from your sentence is that I refer to the driver as the frontend,
+and the mapping is done by the VMM (i.e., QEMU).
+
+But yeah, I agree and the scenario you describe is what
+I had in mind. Thanks for pointing it out. I will rephrase it
+in follow-up patches.
+
+
+>
+> - "Shared memory" is ambiguous. Please call it VIRTIO Shared Memory
+>   Region to differentiate from vhost-user shared memory tables/regions.
+>
+
+Ok!
+
+
+>
+> > The request will be processed by the VMM,
+> > that will, in turn, trigger a mmap with
+> > the instructed parameters (i.e., shmid,
+> > shm_offset, fd_offset, fd, lenght).
+> >
+> > As there are already a couple devices
+> > that could benefit of such a feature,
+> > and more could require it in the future,
+> > my intention was to make it generic.
+> >
+> > To that end, I declared the shared
+> > memory region list in `VirtIODevice`.
+> > I could add a couple commodity
+> > functions to add new regions to the list,
+> > so that the devices can use them. But
+> > I wanted to gather some feedback before
+> > refining it further, as I am probably
+> > missing some required steps/or security
+> > concerns that I am not taking into account.
+> >
+> > Albert Esteve (1):
+> >   vhost-user: add shmem mmap request
+> >
+> >  docs/interop/vhost-user.rst |  23 ++++++++
+> >  hw/virtio/vhost-user.c      | 106 ++++++++++++++++++++++++++++++++++++
+> >  hw/virtio/virtio.c          |   2 +
+> >  include/hw/virtio/virtio.h  |   3 +
+> >  4 files changed, 134 insertions(+)
+> >
+> > --
+> > 2.44.0
+> >
+>
+
+--0000000000001a0b9a061a1f76cd
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div><div dir=3D"ltr" class=3D"gmail_sign=
+ature"><div dir=3D"ltr"><br></div></div></div></div><br><div class=3D"gmail=
+_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jun 4, 2024 at 8:16=
+=E2=80=AFPM Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@redhat.com">stef=
+anha@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
+ding-left:1ex">On Thu, May 30, 2024 at 05:22:22PM +0200, Albert Esteve wrot=
+e:<br>
+&gt; Hi all,<br>
+&gt; <br>
+&gt; This is an early attempt to have backends<br>
+&gt; support dynamic fd mapping into shared<br>
+&gt; memory regions. As such, there are a few<br>
+&gt; things that need settling, so I wanted to<br>
+&gt; post this first to have some early feedback.<br>
+&gt; <br>
+&gt; The usecase for this is, e.g., to support<br>
+&gt; vhost-user-gpu RESOURCE_BLOB operations,<br>
+&gt; or DAX Window request for virtio-fs. In<br>
+&gt; general, any operation where a backend<br>
+&gt; would need to mmap an fd to a shared<br>
+&gt; memory so that the guest can access it.<br>
+<br>
+I wanted to mention that this sentence confuses me because:<br>
+<br>
+- The frontend will mmap an fd into the guest&#39;s memory space so that a<=
+br>
+=C2=A0 VIRTIO Shared Memory Region is exposed to the guest. The backend<br>
+=C2=A0 requests the frontend to perform this operation. The backend does no=
+t<br>
+=C2=A0 invoke mmap itself.<br></blockquote><div><br></div><div>Sorry for th=
+e confused wording. It is true that the backend does not</div><div>do the m=
+map, but requests it to be done. One point of confusion for</div><div>me fr=
+om your sentence is that I refer to the=C2=A0driver as the frontend,</div><=
+div>and the mapping is done by the VMM (i.e., QEMU).</div><div><br></div><d=
+iv>But yeah, I agree and the scenario you describe is what</div><div>I had =
+in mind. Thanks for pointing it out. I will rephrase it</div><div>in follow=
+-up patches.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">
+<br>
+- &quot;Shared memory&quot; is ambiguous. Please call it VIRTIO Shared Memo=
+ry<br>
+=C2=A0 Region to differentiate from vhost-user shared memory tables/regions=
+.<br></blockquote><div><br></div><div>Ok!</div><div>=C2=A0</div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; The request will be processed by the VMM,<br>
+&gt; that will, in turn, trigger a mmap with<br>
+&gt; the instructed parameters (i.e., shmid,<br>
+&gt; shm_offset, fd_offset, fd, lenght).<br>
+&gt; <br>
+&gt; As there are already a couple devices<br>
+&gt; that could benefit of such a feature,<br>
+&gt; and more could require it in the future,<br>
+&gt; my intention was to make it generic.<br>
+&gt; <br>
+&gt; To that end, I declared the shared<br>
+&gt; memory region list in `VirtIODevice`.<br>
+&gt; I could add a couple commodity<br>
+&gt; functions to add new regions to the list,<br>
+&gt; so that the devices can use them. But<br>
+&gt; I wanted to gather some feedback before<br>
+&gt; refining it further, as I am probably<br>
+&gt; missing some required steps/or security<br>
+&gt; concerns that I am not taking into account.<br>
+&gt; <br>
+&gt; Albert Esteve (1):<br>
+&gt;=C2=A0 =C2=A0vhost-user: add shmem mmap request<br>
+&gt; <br>
+&gt;=C2=A0 docs/interop/vhost-user.rst |=C2=A0 23 ++++++++<br>
+&gt;=C2=A0 hw/virtio/vhost-user.c=C2=A0 =C2=A0 =C2=A0 | 106 +++++++++++++++=
++++++++++++++++++++++<br>
+&gt;=C2=A0 hw/virtio/virtio.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=
+=A02 +<br>
+&gt;=C2=A0 include/hw/virtio/virtio.h=C2=A0 |=C2=A0 =C2=A03 +<br>
+&gt;=C2=A0 4 files changed, 134 insertions(+)<br>
+&gt; <br>
+&gt; -- <br>
+&gt; 2.44.0<br>
+&gt; <br>
+</blockquote></div></div>
+
+--0000000000001a0b9a061a1f76cd--
 
 
