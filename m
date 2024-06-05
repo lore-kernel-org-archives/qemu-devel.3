@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8E46C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 07:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC07C27C52
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 07:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sElVH-0005VG-6y; Wed, 05 Jun 2024 03:56:15 -0400
+	id 1sElWX-0006px-37; Wed, 05 Jun 2024 03:57:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sElVF-0005TU-H3
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:56:13 -0400
-Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sElVC-0004iB-9Q
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:56:13 -0400
-Received: by mail-qt1-x82f.google.com with SMTP id
- d75a77b69052e-43ffbc0927fso26088911cf.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 00:56:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717574169; x=1718178969; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nkWRUDKSrbRyqIQzS5opt5ecdJLC0lE6XP7Rf4JBl9M=;
- b=ezL9yY/ZESsELBX01cxQ90bpBnZ0OSADJkHALqkQL+E+8KhvuP3P+XOiIAr5NAZ7CR
- AcjFT5usLAoNP0hDw1JkX/XoGJtF4vVi28y9qG2nHYTWIEFaZcIGM9KaMP6UUjDfn+vL
- opAg0gYQWt0a7AlaoKdZLR5yVbPLeV+gz14Vmy3sszoVBM3gTKv0wN9pdPBew/rAGxT1
- 7XWyWO/WeoSPlC6iuRnFyGm/07xoSJUWeoCrFwlkJ1gfJybcUnwgHeIkXIePUtXYTYa6
- AejrSRv9+NNyj+NZQ3LDjPrZ/YxtE0WCXAf1SdvA07gPJNmUHIDiyJ+3Dx7B75ouonCb
- DOIQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sElWV-0006pi-Fe
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:57:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sElWT-0004vE-DI
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:57:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717574248;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9AZEdKeDV6It+lG/VoCMIa73B0kziRqa48QTZ9z2H54=;
+ b=FUnLF2QwONCqyBbg+EoA9LLGJYP6KXUEA9by+hlz4lEp+gwrG6DougfYS0ajbloE237ext
+ JmRcjLA0jLLT+DS05hAqx6mXiwcxA68wAS818Hmcdz70GOMIrB/Rn+YjMiKgVHa3IegcGe
+ R6hYPYFNjuET/TaVw5OOFAato3J3wfg=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-638-Dpi2-SIZOaCHknKO4NP-yw-1; Wed, 05 Jun 2024 03:57:25 -0400
+X-MC-Unique: Dpi2-SIZOaCHknKO4NP-yw-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a592c35ac06so69858966b.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 00:57:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717574169; x=1718178969;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nkWRUDKSrbRyqIQzS5opt5ecdJLC0lE6XP7Rf4JBl9M=;
- b=jJLNK2hOpoq7yfS9ItyGdXll9WXZl0VJo4bIaJfg6KunMhibAE5L9A9AjA3larvnSD
- PKhYUxI0q+gTwNF1hcfxOZkTUo97d7Oj09TLb5ngP/y1lJDI5IL2ccbXuWD0lt0YWqcA
- +U+j3ypxUmVJndDXrgg37ONLHVS2V78c8jFJQvUBJO1icsEefIQbcnpKTKSi46OXTees
- hqxzlHZZ+BXDfEv2Ckgx1n1F2d5i/xvaMVXBARoCBiBazT47YOqtTTUHZzPIekK8T4ca
- c7L/OmviU8DxYv21/c4iSiiGmdZCeiK//BcJlDWCJMZy+cispZNlgLAJ4Xed9e+WCsbk
- QjIQ==
-X-Gm-Message-State: AOJu0YxyGNnuSJXIiW+ratM962Up9UsWzXLdFpN3rhMXDrEoEsizup9n
- vA3Hh5H60V88GJzrW76ZUb0AcX0yUKKYbt+0oKkoJV7YV77jzyT3H6S6COqDUXNU3V3976sYcUf
- Grv+/gLWpYLUFrRZw8QFzDPNclsZ9L24K
-X-Google-Smtp-Source: AGHT+IEDHbqj/2ZuNRY/+2pOwMMw9gYD5qZzl7XsCDMTeQ/ugeH4VbHGqEFqAjYqiPFRwylfiXMm+JWc4z1tQCPpQpU=
-X-Received: by 2002:a05:622a:13d2:b0:440:27db:e855 with SMTP id
- d75a77b69052e-4402b6c8f5amr20378491cf.57.1717574169010; Wed, 05 Jun 2024
- 00:56:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717574244; x=1718179044;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9AZEdKeDV6It+lG/VoCMIa73B0kziRqa48QTZ9z2H54=;
+ b=J3a0+YuW1EXeCMy7OCrjkiQWGbT7GV4u9fHuZ3hG7ddsjk3rcNNDkLh1xqoLsM+MZ6
+ LQ5I7pfgFSCpPc2DQpsHPU8lynKXtvk9470XUVp6Btz3c8KVf1RKBom5BoUOKDTOZarM
+ 59syxxBjfaIWHtzKNFfv32f02f8SjmFFFlaYQLABWM2SVDEFSKhDDciKtklp+lZ2c13t
+ VLMoiD5bmJ7Wq9RLzoz8NTggGi1OfiICJhEYntdZfCnMsaq4aGYnWDK3JOdBifQn77sb
+ iqCB20w1cZo1exnayfowMcbK6iQa4kjh8MysYBpHCdFvssYnfCCkRQJtysARfQMh3vGT
+ URxw==
+X-Gm-Message-State: AOJu0Yx/J4wBQoBwVIWU8ETFPGgSIxsqprJm18vVAyl2oK7FBbwCvhRO
+ XgPfQWJCZb1qHwImvgyc907D3d377juk8W2nS50aHRD0zeCYNzJ4kZOU1lT34GOrpxFsWBN45qK
+ wQX5Vn6H7+QcY0aBxQDYSKxiEl+QwfYvXWH+BK5qwGwEZBkfmSxrz
+X-Received: by 2002:a17:906:e293:b0:a68:b073:14a5 with SMTP id
+ a640c23a62f3a-a695425e2e8mr382008866b.9.1717574244303; 
+ Wed, 05 Jun 2024 00:57:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEo86eY/+NYIWpLgLobm7VEbFCXsxnF8uUvdSLuT2MbMA7sHu6ghdGJJjiI3cCrT2mvWig16w==
+X-Received: by 2002:a17:906:e293:b0:a68:b073:14a5 with SMTP id
+ a640c23a62f3a-a695425e2e8mr382007766b.9.1717574243761; 
+ Wed, 05 Jun 2024 00:57:23 -0700 (PDT)
+Received: from redhat.com ([2.55.8.167]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a68cc45cea7sm548198566b.51.2024.06.05.00.57.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Jun 2024 00:57:23 -0700 (PDT)
+Date: Wed, 5 Jun 2024 03:57:18 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Gonglei <arei.gonglei@huawei.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, yu.zhang@ionos.com,
+ mgalaxy@akamai.com, elmar.gerdes@ionos.com, zhengchuan@huawei.com,
+ berrange@redhat.com, armbru@redhat.com, lizhijian@fujitsu.com,
+ pbonzini@redhat.com, xiexiangyou@huawei.com,
+ linux-rdma@vger.kernel.org, lixiao91@huawei.com,
+ jinpu.wang@ionos.com, Jialin Wang <wangjialin23@huawei.com>
+Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+Message-ID: <20240605035622-mutt-send-email-mst@kernel.org>
+References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
 MIME-Version: 1.0
-References: <20240529224252.80395-1-dongwon.kim@intel.com>
- <CAJ+F1CJFWRtyXvpCJuSVPssJcBx8ecP1HCkWCJ=HBWxXovj+Dw@mail.gmail.com>
- <ed6a1963-b079-4fdc-a6ca-6ba98b95c0de@intel.com>
-In-Reply-To: <ed6a1963-b079-4fdc-a6ca-6ba98b95c0de@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 5 Jun 2024 11:55:57 +0400
-Message-ID: <CAJ+F1CJW3b9D4nU3x4XSjpG=KrBpJMLWqdR3tpdipObODZRvgQ@mail.gmail.com>
-Subject: Re: [PATCH] ui/gtk: Wait until the current guest frame is rendered
- before switching to RUN_STATE_SAVE_VM
-To: "Kim, Dongwon" <dongwon.kim@intel.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000382864061a1fe6c2"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82f.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,335 +102,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000382864061a1fe6c2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Jun 04, 2024 at 08:14:06PM +0800, Gonglei wrote:
+> From: Jialin Wang <wangjialin23@huawei.com>
+> 
+> Hi,
+> 
+> This patch series attempts to refactor RDMA live migration by
+> introducing a new QIOChannelRDMA class based on the rsocket API.
+> 
+> The /usr/include/rdma/rsocket.h provides a higher level rsocket API
+> that is a 1-1 match of the normal kernel 'sockets' API, which hides the
+> detail of rdma protocol into rsocket and allows us to add support for
+> some modern features like multifd more easily.
+> 
+> Here is the previous discussion on refactoring RDMA live migration using
+> the rsocket API:
+> 
+> https://lore.kernel.org/qemu-devel/20240328130255.52257-1-philmd@linaro.org/
+> 
+> We have encountered some bugs when using rsocket and plan to submit them to
+> the rdma-core community.
+> 
+> In addition, the use of rsocket makes our programming more convenient,
+> but it must be noted that this method introduces multiple memory copies,
+> which can be imagined that there will be a certain performance degradation,
+> hoping that friends with RDMA network cards can help verify, thank you!
 
-Hi
-
-On Tue, Jun 4, 2024 at 9:49=E2=80=AFPM Kim, Dongwon <dongwon.kim@intel.com>=
- wrote:
-
-> On 6/4/2024 4:12 AM, Marc-Andr=C3=A9 Lureau wrote:
-> > Hi
-> >
-> > On Thu, May 30, 2024 at 2:44=E2=80=AFAM <dongwon.kim@intel.com
-> > <mailto:dongwon.kim@intel.com>> wrote:
-> >
-> >     From: Dongwon <dongwon.kim@intel.com <mailto:dongwon.kim@intel.com>=
->
-> >
-> >     Make sure rendering of the current frame is finished before switchi=
-ng
-> >     the run state to RUN_STATE_SAVE_VM by waiting for egl-sync object t=
-o
-> be
-> >     signaled.
-> >
-> >
-> > Can you expand on what this solves?
->
-> In current scheme, guest waits for the fence to be signaled for each
-> frame it submits before moving to the next frame. If the guest=E2=80=99s =
-state
-> is saved while it is still waiting for the fence, The guest will
-> continue to  wait for the fence that was signaled while ago when it is
-> restored to the point. One way to prevent it is to get it finish the
-> current frame before changing the state.
->
-
-After the UI sets a fence, hw_ops->gl_block(true) gets called, which will
-block virtio-gpu/virgl from processing commands (until the fence is
-signaled and gl_block/false called again).
-
-But this "blocking" state is not saved. So how does this affect
-save/restore? Please give more details, thanks
+So you didn't test it with an RDMA card?
+You really should test with an RDMA card though, for correctness
+as much as performance.
 
 
-> >
-> >
-> >     Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com
-> >     <mailto:marcandre.lureau@redhat.com>>
-> >     Cc: Vivek Kasireddy <vivek.kasireddy@intel.com
-> >     <mailto:vivek.kasireddy@intel.com>>
-> >     Signed-off-by: Dongwon Kim <dongwon.kim@intel.com
-> >     <mailto:dongwon.kim@intel.com>>
-> >     ---
-> >       ui/egl-helpers.c |  2 --
-> >       ui/gtk.c         | 19 +++++++++++++++++++
-> >       2 files changed, 19 insertions(+), 2 deletions(-)
-> >
-> >     diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-> >     index 99b2ebbe23..dafeb36074 100644
-> >     --- a/ui/egl-helpers.c
-> >     +++ b/ui/egl-helpers.c
-> >     @@ -396,8 +396,6 @@ void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf=
-)
-> >               fence_fd =3D eglDupNativeFenceFDANDROID(qemu_egl_display,
-> >                                                     sync);
-> >               qemu_dmabuf_set_fence_fd(dmabuf, fence_fd);
-> >     -        eglDestroySyncKHR(qemu_egl_display, sync);
-> >     -        qemu_dmabuf_set_sync(dmabuf, NULL);
-> >
-> >
-> > If this function is called multiple times, it will now set a new
-> > fence_fd each time, and potentially leak older fd. Maybe it could first
-> > check if a fence_fd exists instead.
->
-> We can make that change.
->
-> >
-> >           }
-> >       }
-> >
-> >     diff --git a/ui/gtk.c b/ui/gtk.c
-> >     index 93b13b7a30..cf0dd6abed 100644
-> >     --- a/ui/gtk.c
-> >     +++ b/ui/gtk.c
-> >     @@ -600,9 +600,12 @@ void gd_hw_gl_flushed(void *vcon)
-> >
-> >           fence_fd =3D qemu_dmabuf_get_fence_fd(dmabuf);
-> >           if (fence_fd >=3D 0) {
-> >     +        void *sync =3D qemu_dmabuf_get_sync(dmabuf);
-> >               qemu_set_fd_handler(fence_fd, NULL, NULL, NULL);
-> >               close(fence_fd);
-> >               qemu_dmabuf_set_fence_fd(dmabuf, -1);
-> >     +        eglDestroySyncKHR(qemu_egl_display, sync);
-> >     +        qemu_dmabuf_set_sync(dmabuf, NULL);
-> >               graphic_hw_gl_block(vc->gfx.dcl.con, false);
-> >           }
-> >       }
-> >     @@ -682,6 +685,22 @@ static const DisplayGLCtxOps egl_ctx_ops =3D {
-> >       static void gd_change_runstate(void *opaque, bool running,
-> >     RunState state)
-> >       {
-> >           GtkDisplayState *s =3D opaque;
-> >     +    QemuDmaBuf *dmabuf;
-> >     +    int i;
-> >     +
-> >     +    if (state =3D=3D RUN_STATE_SAVE_VM) {
-> >     +        for (i =3D 0; i < s->nb_vcs; i++) {
-> >     +            VirtualConsole *vc =3D &s->vc[i];
-> >     +            dmabuf =3D vc->gfx.guest_fb.dmabuf;
-> >     +            if (dmabuf && qemu_dmabuf_get_fence_fd(dmabuf) >=3D 0)=
- {
-> >     +                /* wait for the rendering to be completed */
-> >     +                eglClientWaitSync(qemu_egl_display,
-> >     +                                  qemu_dmabuf_get_sync(dmabuf),
-> >     +                                  EGL_SYNC_FLUSH_COMMANDS_BIT_KHR,
-> >     +                                  1000000000);
-> >
-> >
-> >   I don't think adding waiting points in the migration path is
-> > appropriate. Perhaps once you explain the actual issue, it will be
-> > easier to help.
-> >
-> >     +            }
-> >     +        }
-> >     +    }
-> >
-> >           gd_update_caption(s);
-> >       }
-> >     --
-> >     2.34.1
-> >
-> >
-> >
-> >
-> > --
-> > Marc-Andr=C3=A9 Lureau
->
->
+> Jialin Wang (6):
+>   migration: remove RDMA live migration temporarily
+>   io: add QIOChannelRDMA class
+>   io/channel-rdma: support working in coroutine
+>   tests/unit: add test-io-channel-rdma.c
+>   migration: introduce new RDMA live migration
+>   migration/rdma: support multifd for RDMA migration
+> 
+>  docs/rdma.txt                     |  420 ---
+>  include/io/channel-rdma.h         |  165 ++
+>  io/channel-rdma.c                 |  798 ++++++
+>  io/meson.build                    |    1 +
+>  io/trace-events                   |   14 +
+>  meson.build                       |    6 -
+>  migration/meson.build             |    3 +-
+>  migration/migration-stats.c       |    5 +-
+>  migration/migration-stats.h       |    4 -
+>  migration/migration.c             |   13 +-
+>  migration/migration.h             |    9 -
+>  migration/multifd.c               |   10 +
+>  migration/options.c               |   16 -
+>  migration/options.h               |    2 -
+>  migration/qemu-file.c             |    1 -
+>  migration/ram.c                   |   90 +-
+>  migration/rdma.c                  | 4205 +----------------------------
+>  migration/rdma.h                  |   67 +-
+>  migration/savevm.c                |    2 +-
+>  migration/trace-events            |   68 +-
+>  qapi/migration.json               |   13 +-
+>  scripts/analyze-migration.py      |    3 -
+>  tests/unit/meson.build            |    1 +
+>  tests/unit/test-io-channel-rdma.c |  276 ++
+>  24 files changed, 1360 insertions(+), 4832 deletions(-)
+>  delete mode 100644 docs/rdma.txt
+>  create mode 100644 include/io/channel-rdma.h
+>  create mode 100644 io/channel-rdma.c
+>  create mode 100644 tests/unit/test-io-channel-rdma.c
+> 
+> -- 
+> 2.43.0
 
---=20
-Marc-Andr=C3=A9 Lureau
-
---000000000000382864061a1fe6c2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_quote=
-"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jun 4, 2024 at 9:49=E2=80=
-=AFPM Kim, Dongwon &lt;<a href=3D"mailto:dongwon.kim@intel.com">dongwon.kim=
-@intel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">On 6/4/2024 4:12 AM, Marc-Andr=C3=A9 Lureau wrote:<br>
-&gt; Hi<br>
-&gt; <br>
-&gt; On Thu, May 30, 2024 at 2:44=E2=80=AFAM &lt;<a href=3D"mailto:dongwon.=
-kim@intel.com" target=3D"_blank">dongwon.kim@intel.com</a> <br>
-&gt; &lt;mailto:<a href=3D"mailto:dongwon.kim@intel.com" target=3D"_blank">=
-dongwon.kim@intel.com</a>&gt;&gt; wrote:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0From: Dongwon &lt;<a href=3D"mailto:dongwon.kim@int=
-el.com" target=3D"_blank">dongwon.kim@intel.com</a> &lt;mailto:<a href=3D"m=
-ailto:dongwon.kim@intel.com" target=3D"_blank">dongwon.kim@intel.com</a>&gt=
-;&gt;<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Make sure rendering of the current frame is finishe=
-d before switching<br>
-&gt;=C2=A0 =C2=A0 =C2=A0the run state to RUN_STATE_SAVE_VM by waiting for e=
-gl-sync object to be<br>
-&gt;=C2=A0 =C2=A0 =C2=A0signaled.<br>
-&gt; <br>
-&gt; <br>
-&gt; Can you expand on what this solves?<br>
-<br>
-In current scheme, guest waits for the fence to be signaled for each <br>
-frame it submits before moving to the next frame. If the guest=E2=80=99s st=
-ate <br>
-is saved while it is still waiting for the fence, The guest will <br>
-continue to=C2=A0 wait for the fence that was signaled while ago when it is=
- <br>
-restored to the point. One way to prevent it is to get it finish the <br>
-current frame before changing the state.<br></blockquote><div><br></div><di=
-v>After the UI sets a fence, hw_ops-&gt;gl_block(true) gets called, which w=
-ill block virtio-gpu/virgl from processing commands (until the fence is sig=
-naled and gl_block/false called again).</div><div><br></div><div>But this &=
-quot;blocking&quot; state is not saved. So how does this affect save/restor=
-e? Please give more details, thanks<br></div><div><br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; <br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Cc: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:ma=
-rcandre.lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a=
-><br>
-&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:marcandre.lureau@redha=
-t.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0Cc: Vivek Kasireddy &lt;<a href=3D"mailto:vivek.kas=
-ireddy@intel.com" target=3D"_blank">vivek.kasireddy@intel.com</a><br>
-&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:vivek.kasireddy@intel.=
-com" target=3D"_blank">vivek.kasireddy@intel.com</a>&gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0Signed-off-by: Dongwon Kim &lt;<a href=3D"mailto:do=
-ngwon.kim@intel.com" target=3D"_blank">dongwon.kim@intel.com</a><br>
-&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:dongwon.kim@intel.com"=
- target=3D"_blank">dongwon.kim@intel.com</a>&gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0---<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ui/egl-helpers.c |=C2=A0 2 --<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ui/gtk.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =
-19 +++++++++++++++++++<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A02 files changed, 19 insertions(+), 2 deletio=
-ns(-)<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c<br=
->
-&gt;=C2=A0 =C2=A0 =C2=A0index 99b2ebbe23..dafeb36074 100644<br>
-&gt;=C2=A0 =C2=A0 =C2=A0--- a/ui/egl-helpers.c<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+++ b/ui/egl-helpers.c<br>
-&gt;=C2=A0 =C2=A0 =C2=A0@@ -396,8 +396,6 @@ void egl_dmabuf_create_fence(Qe=
-muDmaBuf *dmabuf)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fence_fd =3D egl=
-DupNativeFenceFDANDROID(qemu_egl_display,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sync);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_dmabuf_set_=
-fence_fd(dmabuf, fence_fd);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0-=C2=A0 =C2=A0 =C2=A0 =C2=A0 eglDestroySyncKHR(qemu=
-_egl_display, sync);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0-=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_dmabuf_set_sync(d=
-mabuf, NULL);<br>
-&gt; <br>
-&gt; <br>
-&gt; If this function is called multiple times, it will now set a new <br>
-&gt; fence_fd each time, and potentially leak older fd. Maybe it could firs=
-t <br>
-&gt; check if a fence_fd exists instead.<br>
-<br>
-We can make that change.<br>
-<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0diff --git a/ui/gtk.c b/ui/gtk.c<br>
-&gt;=C2=A0 =C2=A0 =C2=A0index 93b13b7a30..cf0dd6abed 100644<br>
-&gt;=C2=A0 =C2=A0 =C2=A0--- a/ui/gtk.c<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+++ b/ui/gtk.c<br>
-&gt;=C2=A0 =C2=A0 =C2=A0@@ -600,9 +600,12 @@ void gd_hw_gl_flushed(void *vc=
-on)<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fence_fd =3D qemu_dmabuf_get_f=
-ence_fd(dmabuf);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (fence_fd &gt;=3D 0) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 void *sync =3D qemu_dm=
-abuf_get_sync(dmabuf);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_set_fd_hand=
-ler(fence_fd, NULL, NULL, NULL);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0close(fence_fd);=
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_dmabuf_set_=
-fence_fd(dmabuf, -1);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 eglDestroySyncKHR(qemu=
-_egl_display, sync);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_dmabuf_set_sync(d=
-mabuf, NULL);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0graphic_hw_gl_bl=
-ock(vc-&gt;gfx.dcl.con, false);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0 =C2=A0@@ -682,6 +685,22 @@ static const DisplayGLCtxOps e=
-gl_ctx_ops =3D {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0static void gd_change_runstate(void *opaque,=
- bool running,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0RunState state)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0{<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0GtkDisplayState *s =3D opaque;=
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 QemuDmaBuf *dmabuf;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 int i;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 if (state =3D=3D RUN_STATE_SAVE_VM) =
-{<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i &lt; s=
--&gt;nb_vcs; i++) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 VirtualC=
-onsole *vc =3D &amp;s-&gt;vc[i];<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 dmabuf =
-=3D vc-&gt;gfx.guest_fb.dmabuf;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (dmab=
-uf &amp;&amp; qemu_dmabuf_get_fence_fd(dmabuf) &gt;=3D 0) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 /* wait for the rendering to be completed */<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 eglClientWaitSync(qemu_egl_display,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_=
-dmabuf_get_sync(dmabuf),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 EGL_S=
-YNC_FLUSH_COMMANDS_BIT_KHR,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 10000=
-00000);<br>
-&gt; <br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0I don&#39;t think adding waiting points in the migration p=
-ath is <br>
-&gt; appropriate. Perhaps once you explain the actual issue, it will be <br=
->
-&gt; easier to help.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0+=C2=A0 =C2=A0 }<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gd_update_caption(s);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0 =C2=A0-- <br>
-&gt;=C2=A0 =C2=A0 =C2=A02.34.1<br>
-&gt; <br>
-&gt; <br>
-&gt; <br>
-&gt; <br>
-&gt; -- <br>
-&gt; Marc-Andr=C3=A9 Lureau<br>
-<br>
-</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
-fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
-=A9 Lureau<br></div></div>
-
---000000000000382864061a1fe6c2--
 
