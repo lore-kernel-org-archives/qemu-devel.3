@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D7F8C25B78
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 00:47:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C38EFC25B78
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 01:00:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEenp-0005O4-1V; Tue, 04 Jun 2024 20:46:57 -0400
+	id 1sEf0k-0008Io-Ca; Tue, 04 Jun 2024 21:00:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEenn-0005Nq-C7; Tue, 04 Jun 2024 20:46:55 -0400
-Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
+ (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
+ id 1sEf0g-0008HG-RR; Tue, 04 Jun 2024 21:00:16 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sEenl-0000Kl-S5; Tue, 04 Jun 2024 20:46:55 -0400
-Received: by mail-vk1-xa32.google.com with SMTP id
- 71dfb90a1353d-4eb236e27adso739410e0c.2; 
- Tue, 04 Jun 2024 17:46:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
+ id 1sEf0e-0004TR-GB; Tue, 04 Jun 2024 21:00:14 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-6819b3c92bbso4935935a12.2; 
+ Tue, 04 Jun 2024 18:00:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717548412; x=1718153212; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1717549209; x=1718154009; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iEgFU9uSykQB+7rAJWlbo6pxtOhSMzlZQkmbPM4VwGE=;
- b=f8OdBLYJC15XM9YZ/EewSgKjIbCqKepW0yDUGoOfjf9ZWGtfl84jmPKJWjMpo8pNQL
- RIzPEmpM3uA/jB9I2E2D/BBSTN6eyY5mT8YFLnNH0hnnxU818m4rdG6FEiw0LHHt2PKC
- PTPZBxHfAXpbmrzokhSF3C2w8GfToHcWM0cgPqLwhcksCA6Nl/40aEzQ56L/NaFmimzd
- kBOJGhk+TPTQy3sK0bm9qrddRSeUCOJouRGzrmkG4zQztffbl1ahjJcJLNu2bOGRM05j
- v0B9x9QRnzRuOtZ2wB8a0p+Mr8wHCaKri6Ykdrwrim2kXH+RSWWB7xBUdXuQA5KINmBD
- vvdg==
+ bh=uC5r2TxjccT79vaaKGZJkjS3ciceRzc4YPA+h7BCu/w=;
+ b=jy0CbmReQE+ChYXCGwGKvCb6Xy3zZLxhT84F7zzMd2lzTMV7u6BEWgXzC3CdfBiBuf
+ TdgaZxtJbhopiz8kJa3A3xT5aSVkPaQcYGwQ6dmYyliHjDHgnAIL75rrsWCtFYqCbRBA
+ KWLDVaDgw2xzHKYtgHSaagBeIIR0jQyhH24/VbkhmQ12p2qJEhlCPKXkkoO9RqsmjaMO
+ A06rwbbEaz4Tjmj07ZTD3HIshUZWbHiLvHOkBR9k591W/s5P2U3w/lkNE5sM+rKcRel3
+ qoJR1OVI0eKTwqAn0lC/nYLeYLzQb5lIwnSuvKM5PINeYLX0BXhaAgwDOb5fvATKp+uJ
+ Bz7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717548412; x=1718153212;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1717549209; x=1718154009;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iEgFU9uSykQB+7rAJWlbo6pxtOhSMzlZQkmbPM4VwGE=;
- b=tVBheCoAh2ibt5rgyLxsfNSxQUNb5/hyYTKJbgw8uRJzvn+CIFqgi1l/wA3NSL+zu+
- vWxblZbyt+N2wtgo/h/o2l0bU1P3acoRoyZUSZHsEw+6K3jYFE0eyBi+K1nwKKHGaTJN
- sacAqQqDNX4jmC7Zr6JSe2vNG+HE6UwwDFyjLPKg5xBRzRjpoihHecWf6LOgaw0LQIpz
- 80+9vWB1Ke6rxEJxPBxjkE0Esv/31MN9aqjw6630IRnB3Dv77jgqBoWGPmhIjcb7qXZR
- J/31POaHw6ANm/NSH0gYS0DAc4zM/Bzhciq4p8KeOOvsoyZmP7kmIFnlxK/1lfF+1qjc
- 22ww==
+ bh=uC5r2TxjccT79vaaKGZJkjS3ciceRzc4YPA+h7BCu/w=;
+ b=VJx7vDFlhkv9J0jSHb+N+jH+hBPAbhQcAMkLEBi4Yeb4IM4L0BaH8LrhZgw/U6bNP1
+ YEX9NRr7utpErDi221zmZTaFhAjalxVhPXml7LBRsZKvOO9QC684u4HTHVJ4PqiHPWKe
+ ANs9f6XlKPXLTJ/xQs+GtH1IGf5M/zvO33GT+VKmXziQzs6SJOvGGH+spsiehrF0pwkC
+ 6GQ6R9vYVXZT3u4Mx+V4OkAExCILIMmbm7xxzASmZ4XxkgIqBLesbqcxY3WybKcb7ZhA
+ PQgGVaZGtjIPIjDDX1jVOxzVpT6IwcfFH4d+9b4q/Klug1dRmfptMP8PpFtCK2KvbkhJ
+ zT0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3Ij4daJObv0ZWEtn/l078JONH3NikDNYvAwOaFvd53p9Q18uwHTb5cNxQZkTsEihY6ts1HMTPQLl94CnypyngI38iOhw=
-X-Gm-Message-State: AOJu0YxtaoUt70nuHQqpRzUad/DWsXGvwdnfmkKWFw3rX7a4r4H4yZT9
- Ztv/205CVU0WSsgYC24MMJkEWC6vX8s6sxDpnv+2+G6i88DhH7SzRzFmatq0tTmr4NdXO09fAqR
- mIxvmHHNA8UmEcmtgHVF453qTUgk=
-X-Google-Smtp-Source: AGHT+IHMQPHym9z6gSiCfQ0As44hWq888uYSIVv3GS+1YIJ31iiQBGQPGciIEy809htUDZijqW4QcTZn2dhH6Y2VdA4=
-X-Received: by 2002:a05:6122:12f0:b0:4eb:1456:34d3 with SMTP id
- 71dfb90a1353d-4eb3a4e689dmr1283133e0c.15.1717548411787; Tue, 04 Jun 2024
- 17:46:51 -0700 (PDT)
+ AJvYcCXnmLJhWhuruQnXwdM/W1T7vCnkppiXiL3UMrifwV5MwBxbPcX12xetebMfUEXZ7YtJVrVBxTI6T/dBqRKxmOilboYdLgU=
+X-Gm-Message-State: AOJu0YxhkLyXnJN4Ej5uPKQnYIoJdGbU6IizvxDG2WEZKkB83OBGHEeA
+ V2zVQhHKy/DYHt0rnb0aZBe7opZNF1NuFL1FTyshmMSiLuRIigpVP/+thjVXCz4=
+X-Google-Smtp-Source: AGHT+IHs3HuwyY+3Y0l34g0k/64gvsddyoIYCT1SYAp/C9U5w7e+qwoEcFy8nF9YJPRWbTw1aPmpow==
+X-Received: by 2002:a05:6a20:914b:b0:1af:f497:8225 with SMTP id
+ adf61e73a8af0-1b2b6fbd251mr1635667637.31.1717549209421; 
+ Tue, 04 Jun 2024 18:00:09 -0700 (PDT)
+Received: from amjad-pc.. ([192.228.203.229]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-703ee633e04sm3731b3a.19.2024.06.04.18.00.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 04 Jun 2024 18:00:09 -0700 (PDT)
+From: Amjad Alsharafi <amjadsharafi10@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ "open list:vvfat" <qemu-block@nongnu.org>,
+ Amjad Alsharafi <amjadsharafi10@gmail.com>
+Subject: [PATCH v4 3/4] vvfat: Fix reading files with non-continuous clusters
+Date: Wed,  5 Jun 2024 08:58:39 +0800
+Message-ID: <3b9536c545c3f472fadc98dddd96a9548adec792.1717549035.git.amjadsharafi10@gmail.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <cover.1717549035.git.amjadsharafi10@gmail.com>
+References: <cover.1717549035.git.amjadsharafi10@gmail.com>
 MIME-Version: 1.0
-References: <20240529160950.132754-1-rkanwal@rivosinc.com>
- <20240529160950.132754-2-rkanwal@rivosinc.com>
-In-Reply-To: <20240529160950.132754-2-rkanwal@rivosinc.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 5 Jun 2024 10:46:25 +1000
-Message-ID: <CAKmqyKN5zY=O7A9QhNWKsdE3HoEnQW_SdkmO1+OhscKYx1TR5w@mail.gmail.com>
-Subject: Re: [PATCH 1/6] target/riscv: Remove obsolete sfence.vm instruction
-To: Rajnesh Kanwal <rkanwal@rivosinc.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
- bin.meng@windriver.com, liweiwei@iscas.ac.cn, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com, apatel@ventanamicro.com, 
- beeman@rivosinc.com, tech-control-transfer-records@lists.riscv.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=amjadsharafi10@gmail.com; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -94,49 +95,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 30, 2024 at 2:12=E2=80=AFAM Rajnesh Kanwal <rkanwal@rivosinc.co=
-m> wrote:
->
-> Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+When reading with `read_cluster` we get the `mapping` with
+`find_mapping_for_cluster` and then we call `open_file` for this
+mapping.
+The issue appear when its the same file, but a second cluster that is
+not immediately after it, imagine clusters `500 -> 503`, this will give
+us 2 mappings one has the range `500..501` and another `503..504`, both
+point to the same file, but different offsets.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+When we don't open the file since the path is the same, we won't assign
+`s->current_mapping` and thus accessing way out of bound of the file.
 
-Alistair
+From our example above, after `open_file` (that didn't open anything) we
+will get the offset into the file with
+`s->cluster_size*(cluster_num-s->current_mapping->begin)`, which will
+give us `0x2000 * (504-500)`, which is out of bound for this mapping and
+will produce some issues.
 
-> ---
->  target/riscv/insn32.decode                     | 1 -
->  target/riscv/insn_trans/trans_privileged.c.inc | 5 -----
->  2 files changed, 6 deletions(-)
->
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index f22df04cfd..9cb1a1b4ec 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -112,7 +112,6 @@ sret        0001000    00010 00000 000 00000 1110011
->  mret        0011000    00010 00000 000 00000 1110011
->  wfi         0001000    00101 00000 000 00000 1110011
->  sfence_vma  0001001    ..... ..... 000 00000 1110011 @sfence_vma
-> -sfence_vm   0001000    00100 ..... 000 00000 1110011 @sfence_vm
->
->  # *** RV32I Base Instruction Set ***
->  lui      ....................       ..... 0110111 @u
-> diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/risc=
-v/insn_trans/trans_privileged.c.inc
-> index bc5263a4e0..4eccdddeaa 100644
-> --- a/target/riscv/insn_trans/trans_privileged.c.inc
-> +++ b/target/riscv/insn_trans/trans_privileged.c.inc
-> @@ -127,8 +127,3 @@ static bool trans_sfence_vma(DisasContext *ctx, arg_s=
-fence_vma *a)
->  #endif
->      return false;
->  }
-> -
-> -static bool trans_sfence_vm(DisasContext *ctx, arg_sfence_vm *a)
-> -{
-> -    return false;
-> -}
-> --
-> 2.34.1
->
->
+Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
+---
+ block/vvfat.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
+
+diff --git a/block/vvfat.c b/block/vvfat.c
+index f0642ac3e4..8b4d162aa1 100644
+--- a/block/vvfat.c
++++ b/block/vvfat.c
+@@ -1360,15 +1360,24 @@ static int open_file(BDRVVVFATState* s,mapping_t* mapping)
+ {
+     if(!mapping)
+         return -1;
++    int new_path = 1;
+     if(!s->current_mapping ||
+-            strcmp(s->current_mapping->path,mapping->path)) {
+-        /* open file */
+-        int fd = qemu_open_old(mapping->path,
++            s->current_mapping->first_mapping_index
++                != mapping->first_mapping_index ||
++            (new_path = strcmp(s->current_mapping->path, mapping->path))) {
++
++        if (new_path) {
++            /* open file */
++            int fd = qemu_open_old(mapping->path,
+                                O_RDONLY | O_BINARY | O_LARGEFILE);
+-        if(fd<0)
+-            return -1;
+-        vvfat_close_current_file(s);
+-        s->current_fd = fd;
++            if (fd < 0) {
++                return -1;
++            }
++            vvfat_close_current_file(s);
++
++            s->current_fd = fd;
++        }
++        assert(s->current_fd);
+         s->current_mapping = mapping;
+     }
+     return 0;
+-- 
+2.45.1
+
 
