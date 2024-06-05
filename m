@@ -4,85 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A12BEC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:37:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFFC6C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:37:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF0Bc-0001cQ-TP; Wed, 05 Jun 2024 19:36:56 -0400
+	id 1sF0AA-0002wn-Oy; Wed, 05 Jun 2024 19:35:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Bb-0001TC-4T
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0A9-0002wf-Bl
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:35:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0BY-0005vo-He
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:54 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0A7-00058I-Q3
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:35:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717630611;
+ s=mimecast20190719; t=1717630523;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=COb9qMgVhyWcfSZ4kcRJbOToHu92CV+3NurJg9nrDAw=;
- b=MyWj2E51GI2DUEBHsXjaLE9F2mXUB+uejiLfUdP0AnpF7p8aSk6oEUnTBeWY4Ig9v57wqG
- /lpXG5jYFCatQEe6fbQyi8tgT7ZLhum8WebT4T34t66t0w4gN3L50C3CV63YVA0syP06Pz
- B2DPjaFKJZpCtHPY1nXScQF8CVk4paI=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QKgBtghpdntZCNxsubdg5dbN8fdbQsXq4OpajtHNP9c=;
+ b=KH3aog82e6y4eMGHrUbQOqqR2WFf3VOxJD/tlM7k4fp7d4mmpGIpmSipmzqI/KVXCUNV6J
+ FuLnczQa7k+vuUB3E22svTx+FxrAZhoGtLY5oxhaBEvRKNuv5LHmuhz8LfNeWMw7ccqLnf
+ FTIUFtrKxdpoN4EmjUUy7SPG5H7DGso=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-605-Pkp3bEDcPhWsChW2toE7Tg-1; Wed, 05 Jun 2024 19:36:50 -0400
-X-MC-Unique: Pkp3bEDcPhWsChW2toE7Tg-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-57a32f2f782so79499a12.1
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:36:50 -0700 (PDT)
+ us-mta-124-vyAoZxVyOeKOASzIWNQM_g-1; Wed, 05 Jun 2024 19:35:22 -0400
+X-MC-Unique: vyAoZxVyOeKOASzIWNQM_g-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-35dca4a8f2dso200592f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:35:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717630609; x=1718235409;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=COb9qMgVhyWcfSZ4kcRJbOToHu92CV+3NurJg9nrDAw=;
- b=pTzAQMfWg6L6q/BpXR1DNsdvvVNbgVkp7ExN1v7KTdQewIjjUsEbT8KC3I/QxbFR4c
- 3aynDqmJ268cPfeDltEmvk8h4ixxJJggQ7A2ud8GyVvACKLTd6JynYx5z0JeZ1OCklSK
- ZGJCMZ64XCf0/AHEls/T+3wqg+QMNNCBH4hwSCZRFROf6g+YlAjV0pEpvDdePTIS72I/
- pjscyWRpCZ3OhBkIC0fw0ZQMrraWstt4DOrll5THS9wasLAKUzbaVeoIdHmlOnqJUsl9
- PIbBIdKk6Hm6Cn5VWx1aaNRNR1ND9bmg+MRDjFVtA+n24kZr19fcvNY2zY+jS1jufWha
- CaJQ==
-X-Gm-Message-State: AOJu0Yyr7kF+lAHKHcClY1NzyQThZuPqFxlZpAwEoyXVQKyKRZYOZfJQ
- UBgSaL8g2umzOJnrDxEceFOxnxRlQx7QRJJs9DJ/K2h34FQzZFYbqQ42jUZ5D/dHzQDvrk+WPcS
- X9fL6sYnSwavai5sQnX+krhdLvl4eus+uGHCUKlyrnEdTbFhggzeACB+Aocox29ut6CSnsUb/8A
- P6N/53SS+IXJVktyK5al/Q4SaeTGXKzA==
-X-Received: by 2002:a50:9984:0:b0:57a:3114:7d04 with SMTP id
- 4fb4d7f45d1cf-57a8b521cf3mr2362960a12.0.1717630608997; 
- Wed, 05 Jun 2024 16:36:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHuimANNW6EivpmFR3ECoQ8t63ipZllWIyVpqQ8sqpB5UyZ/Efvs8mViTqfdZ4WelfNul9cuA==
-X-Received: by 2002:a50:9984:0:b0:57a:3114:7d04 with SMTP id
- 4fb4d7f45d1cf-57a8b521cf3mr2362945a12.0.1717630608376; 
- Wed, 05 Jun 2024 16:36:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717630520; x=1718235320;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QKgBtghpdntZCNxsubdg5dbN8fdbQsXq4OpajtHNP9c=;
+ b=WuzeKIuk0GjHnu/S6O2XoOeDgmzjT3NniHRDyVMMWO8sq50ezI4jxhGIinf4+Flgbo
+ tpGNCceK9rFTk3anXT0O7A91ATS3yPQbf9ErOANMXc4NscPLLttBY5H9vLfyEG+CnJWh
+ 7hoDa96kNzzQpZqWv626tZ+2ysD/dXuXF0dkGmOa3K4KTj7et7h/jVLWAcY+pmsvM8sV
+ Gbbw5irCz8MyQV+ef9zz3EwWFmNBK/sOa7VUScRhECPhH6c860po/Euswe/CVxrmuGGy
+ /kauqUV5KZNtCMlvAe8eZGX/kRwzldRwSGRoVJAKfSBEUrxy+ZPxB3tVb240ZA63ewrj
+ Q8jA==
+X-Gm-Message-State: AOJu0YxWGyTITLlVrhdFemCW6YOIZRPFqkOKTiyM+0Nl1HrarAcigmv0
+ 7kMNp2lDsB1kkPW+eJvW0X2IfEZf8RjRsgZqmmwbtLMpxedPwYu0wzjy4laEwUpEyHMTsjcmxG8
+ tgl4gxAPPzk3erw+9ea9qRgnn4KAc4lloL8c+gh4r5GEOCGMJP9PLuZm/tVhVrKCVlpq6JSaLjr
+ l4QMB1MOrjQstqX5Q/cnuiLd9TZUeNfA==
+X-Received: by 2002:a5d:588e:0:b0:354:f38c:6d0b with SMTP id
+ ffacd0b85a97d-35e8ef087abmr3503896f8f.37.1717630520430; 
+ Wed, 05 Jun 2024 16:35:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHB+qZ4UlcLGNxrDB/PojJu5NSA6tmO9Rl2SWJ+nqO7Kfho39j9GS78xJz0FFrc7RIwogL2/g==
+X-Received: by 2002:a5d:588e:0:b0:354:f38c:6d0b with SMTP id
+ ffacd0b85a97d-35e8ef087abmr3503880f8f.37.1717630520015; 
+ Wed, 05 Jun 2024 16:35:20 -0700 (PDT)
 Received: from redhat.com ([2.55.56.67]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aadcbf568sm115672a12.0.2024.06.05.16.36.46
+ a640c23a62f3a-a6c8070ebeasm6363566b.181.2024.06.05.16.35.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 16:36:47 -0700 (PDT)
-Date: Wed, 5 Jun 2024 19:36:44 -0400
+ Wed, 05 Jun 2024 16:35:19 -0700 (PDT)
+Date: Wed, 5 Jun 2024 19:35:16 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
- Thomas Huth <thuth@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Anthony PERARD <anthony.perard@citrix.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v3 34/41] hw/misc/pvpanic: centralize definition of supported
- events
-Message-ID: <4423917dc920670d8866fc7d835ca4226d4b8cf8.1717630437.git.mst@redhat.com>
+ Halil Pasic <pasic@linux.ibm.com>, Marc Hartmayer <mhartmay@linux.ibm.com>
+Subject: [PULL v3 10/41] vhost-vsock: add VIRTIO_F_RING_PACKED to feature_bits
+Message-ID: <1ca9549c981cf118bc7a52dc7d5cebce75a918fa.1717630437.git.mst@redhat.com>
 References: <cover.1717630437.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1717630437.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -107,101 +101,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Weißschuh <thomas@t-8ch.de>
+From: Halil Pasic <pasic@linux.ibm.com>
 
-The different components of pvpanic duplicate the list of supported
-events. Move it to the shared header file to minimize changes when new
-events are added.
+Not having VIRTIO_F_RING_PACKED in feature_bits[] is a problem when the
+vhost-vsock device does not offer the feature bit VIRTIO_F_RING_PACKED
+but the in QEMU device is configured to try to use the packed layout
+(the virtio property "packed" is on).
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
-Message-Id: <20240527-pvpanic-shutdown-v8-3-5a28ec02558b@t-8ch.de>
+As of today, the  Linux kernel vhost-vsock device does not support the
+packed queue layout (as vhost does not support packed), and does not
+offer VIRTIO_F_RING_PACKED. Thus when for example a vhost-vsock-ccw is
+used with packed=on, VIRTIO_F_RING_PACKED ends up being negotiated,
+despite the fact that the device does not actually support it, and
+one gets to keep the pieces.
+
+Fixes: 74b3e46630 ("virtio: add property to enable packed virtqueue")
+Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
+Message-Id: <20240429113334.2454197-1-pasic@linux.ibm.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/misc/pvpanic.h | 4 ++++
- hw/misc/pvpanic-isa.c     | 3 +--
- hw/misc/pvpanic-pci.c     | 3 +--
- hw/misc/pvpanic.c         | 3 +--
- 4 files changed, 7 insertions(+), 6 deletions(-)
+ hw/virtio/vhost-vsock-common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/hw/misc/pvpanic.h b/include/hw/misc/pvpanic.h
-index fab94165d0..947468b81b 100644
---- a/include/hw/misc/pvpanic.h
-+++ b/include/hw/misc/pvpanic.h
-@@ -18,6 +18,10 @@
- #include "exec/memory.h"
- #include "qom/object.h"
- 
-+#include "standard-headers/linux/pvpanic.h"
-+
-+#define PVPANIC_EVENTS (PVPANIC_PANICKED | PVPANIC_CRASH_LOADED)
-+
- #define TYPE_PVPANIC_ISA_DEVICE "pvpanic"
- #define TYPE_PVPANIC_PCI_DEVICE "pvpanic-pci"
- 
-diff --git a/hw/misc/pvpanic-isa.c b/hw/misc/pvpanic-isa.c
-index ccec50f61b..9a923b7869 100644
---- a/hw/misc/pvpanic-isa.c
-+++ b/hw/misc/pvpanic-isa.c
-@@ -21,7 +21,6 @@
- #include "hw/misc/pvpanic.h"
- #include "qom/object.h"
- #include "hw/isa/isa.h"
--#include "standard-headers/linux/pvpanic.h"
- #include "hw/acpi/acpi_aml_interface.h"
- 
- OBJECT_DECLARE_SIMPLE_TYPE(PVPanicISAState, PVPANIC_ISA_DEVICE)
-@@ -102,7 +101,7 @@ static void build_pvpanic_isa_aml(AcpiDevAmlIf *adev, Aml *scope)
- static Property pvpanic_isa_properties[] = {
-     DEFINE_PROP_UINT16(PVPANIC_IOPORT_PROP, PVPanicISAState, ioport, 0x505),
-     DEFINE_PROP_UINT8("events", PVPanicISAState, pvpanic.events,
--                      PVPANIC_PANICKED | PVPANIC_CRASH_LOADED),
-+                      PVPANIC_EVENTS),
-     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/virtio/vhost-vsock-common.c b/hw/virtio/vhost-vsock-common.c
+index 12ea87d7a7..fd88df2560 100644
+--- a/hw/virtio/vhost-vsock-common.c
++++ b/hw/virtio/vhost-vsock-common.c
+@@ -22,6 +22,7 @@
+ const int feature_bits[] = {
+     VIRTIO_VSOCK_F_SEQPACKET,
+     VIRTIO_F_RING_RESET,
++    VIRTIO_F_RING_PACKED,
+     VHOST_INVALID_FEATURE_BIT
  };
  
-diff --git a/hw/misc/pvpanic-pci.c b/hw/misc/pvpanic-pci.c
-index 83be95d0d2..603c5c7600 100644
---- a/hw/misc/pvpanic-pci.c
-+++ b/hw/misc/pvpanic-pci.c
-@@ -21,7 +21,6 @@
- #include "hw/misc/pvpanic.h"
- #include "qom/object.h"
- #include "hw/pci/pci_device.h"
--#include "standard-headers/linux/pvpanic.h"
- 
- OBJECT_DECLARE_SIMPLE_TYPE(PVPanicPCIState, PVPANIC_PCI_DEVICE)
- 
-@@ -55,7 +54,7 @@ static void pvpanic_pci_realizefn(PCIDevice *dev, Error **errp)
- 
- static Property pvpanic_pci_properties[] = {
-     DEFINE_PROP_UINT8("events", PVPanicPCIState, pvpanic.events,
--                      PVPANIC_PANICKED | PVPANIC_CRASH_LOADED),
-+                      PVPANIC_EVENTS),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/hw/misc/pvpanic.c b/hw/misc/pvpanic.c
-index 1540e9091a..a4982cc592 100644
---- a/hw/misc/pvpanic.c
-+++ b/hw/misc/pvpanic.c
-@@ -21,13 +21,12 @@
- #include "hw/qdev-properties.h"
- #include "hw/misc/pvpanic.h"
- #include "qom/object.h"
--#include "standard-headers/linux/pvpanic.h"
- 
- static void handle_event(int event)
- {
-     static bool logged;
- 
--    if (event & ~(PVPANIC_PANICKED | PVPANIC_CRASH_LOADED) && !logged) {
-+    if (event & ~PVPANIC_EVENTS && !logged) {
-         qemu_log_mask(LOG_GUEST_ERROR, "pvpanic: unknown event %#x.\n", event);
-         logged = true;
-     }
 -- 
 MST
 
