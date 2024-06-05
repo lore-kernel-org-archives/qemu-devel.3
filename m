@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 172CBC27C53
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F08EBC25B76
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 14:40:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEro2-0007OC-Sz; Wed, 05 Jun 2024 10:40:02 -0400
+	id 1sErnz-0007Jq-NT; Wed, 05 Jun 2024 10:39:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sEro1-0007Kk-Bd
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 10:40:01 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sErny-0007JK-Pm
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 10:39:58 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sErnz-0003j9-Hx
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 10:40:01 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-681bc7f50d0so720032a12.0
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 07:39:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sErnw-0003ih-LQ
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 10:39:58 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-35dc0472b7eso6069568f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 07:39:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717598396; x=1718203196; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nSwtMvE5rK81eQRa7ausSIFHp4S37nbALpZccK1YHg8=;
- b=i+a0rpHZ8AIKMN1Y81sp9EtooQjQv8mbNqKcLe+3sKQlo2dEEYNHDgM29FL6HuGqJa
- EiKDWWo1IlXUiZBMuxwVPlmdK9D0jLi/UnKRHNly20XJJW2uF8blcoJrehwH7uzaEeTw
- FzNQKvkQR0SS7Gca+tJQW7XM2FHtGJwlslXopfC1LTBOe8PqDVDtfaOrO46Wbo6HOkX3
- ydFwGYr30UqxrbCkwVuFAcDCzurb0++LJHtLShdxDShfwZK8cWcxmQvPJsaXwQ07HlIX
- pDTzTztnLzSHSrf8EnwiN5bL6gB4fS1m1Tz5iEEqTGwJL+ycwVQBEAAtjM6ZpADVQHVO
- rl6w==
+ d=linaro.org; s=google; t=1717598394; x=1718203194; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=t9uNihjaM4RGHONIp4P8/zFJvF76snLskCcdhKmg4yM=;
+ b=NTTEKLiALlsFaPRzha+woDJMUH6o66wMDNBn0T6RQptOfLA5FqhLbT78R4JgVVqGpw
+ WuePp1FzUg7sGMwsww76PEwjfowzMCIFDgoNyCrMyds6OyoajkXWIG17EtRNTuTUfllc
+ SdJHYjEhjQURigdCELKRrC8t77MPKoHZdRv+NJ+oXOPGwr6N3f1KZXigDhPBbrdWTxaw
+ Nb+t6dqZLaF0ms3P5yUjxfcK+YLvmIWpLoh4KZ34pOQrytINAYFMrlIHSRCA9XE+fk2k
+ pDsC7wUJjSEu2MEiL/hq7Azslyjo6EuKGxVJdXW0BQbEGBSuJj7Yrw6vdGSQoh2LecZm
+ 0uCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717598396; x=1718203196;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nSwtMvE5rK81eQRa7ausSIFHp4S37nbALpZccK1YHg8=;
- b=JInSJwOaZ2mrE4u+EVWrUrAXt8zqIXmJ9j3B6fH3fY1cyuclZWc1fM3PpyvMqYSLr6
- LIxYOo09JhUkBCcWICYWG8S/84V5EsFs8+FBKc6qF9P+YtimvJGmGq4ccFNE4c+9klcf
- 4pRGHpZrIznEi3gL4BLCHJ1QlxCEePEDRnqegcnBMJTFBnrmUuM6XICkffySlkM5YSzL
- uU95ByGzrItDAqMZpJJfT6ehlt6ds/VbvFO1EuWku80wjkdhfY9SbU+OER54M5FQ+wOG
- pKaQfD4FRR75W6kHs5m5ZvpFSNkv6vB3wz6emFvFTBMqMp9HYhvosJLxk8UYj4gRdAQD
- ZHEA==
+ d=1e100.net; s=20230601; t=1717598394; x=1718203194;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=t9uNihjaM4RGHONIp4P8/zFJvF76snLskCcdhKmg4yM=;
+ b=qqScJLUXfWnf35PREsIoh71GJrubhPNw0Cf8mujL9/N6DQieW383uVhGtUxVDEhkSr
+ 9YOsOVXY/CA/LWJaBp0cCLMOD3jHcy3BiQzPUbRYRi+Qt8TkUus1V/nzC6946LJ2JHcg
+ yeA1ntn1XtxxxyHb/Eiz4rKLqt/lEKL84HAVsf7kVMPenAY6B9HGzgXGyopiV20TIRyb
+ lIDaWaru3d4ynSX5JH5/hCUOcI52A7ecmdBCd2YWA1HOgN7R/Tko6dRdzBDAVIc4BpaG
+ RJMsRDeEpBLRroi7dm/LR7QJkDjEEq8pyETkkb1crfOpNAbnivfyHSBKIGal9CM7YdsW
+ VKPw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV44sCPRDYZb4+gFRKhFuk2QeYzd/hH0KOPVUiqPsVRAo1vkNgwK0zPeOUHm8whknKvfDsG00Cnrb+CIuTwHQqpmRHjVB4=
-X-Gm-Message-State: AOJu0YxHsw1KWCPGWYcMogdmU3/2uwtegKqMtgsUlxIVVCwmEE+y7iuf
- JxcHfPw6gw0ELwvCYwG9BUDZril0GeFF2wmHSNVZLTLclyo6j6syANzEzEOK1+o=
-X-Google-Smtp-Source: AGHT+IHXiA2lHdbfMHYiE+6G5vzlV/jvpMWSfoWahI665nBPSHkz7FA1Fh7Vjfz61Nr1CCjaGZ+p0g==
-X-Received: by 2002:a17:90a:b785:b0:2c1:ad50:5e1b with SMTP id
- 98e67ed59e1d1-2c27cbd170dmr4309670a91.8.1717598396532; 
- Wed, 05 Jun 2024 07:39:56 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.132.216])
+ AJvYcCU/qsBllsGWQr2s24JjkN3Zm9t6yViKS8eO9LTIFDA809+hVri+4KhCBDABY5AaWnloMqHBgzlGsgJ4ttTRi3caymFMYNE=
+X-Gm-Message-State: AOJu0YykyarslboTeT8G5i43mmwxnBIMsF25BBzVxe1YL7ExLY5rH3aG
+ pKzdQBkxm8YaIAqki0588v5As30uBl8JjDCFNOyw+UiSCR+mVkqV32g2ILgfARw=
+X-Google-Smtp-Source: AGHT+IFcIKIdeNX+Q06F/N+f405nFNBc3mNhYBPAHxwneshXBdEAuVQH4iZb8a5RLxQJBxbD+levfA==
+X-Received: by 2002:adf:fa82:0:b0:357:dbf1:1d3b with SMTP id
+ ffacd0b85a97d-35e8ef7f4e0mr2090766f8f.59.1717598394266; 
+ Wed, 05 Jun 2024 07:39:54 -0700 (PDT)
+Received: from meli-email.org (adsl-33.37.6.162.tellas.gr. [37.6.162.33])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c2806bd8adsm1533763a91.39.2024.06.05.07.39.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 05 Jun 2024 07:39:56 -0700 (PDT)
-Message-ID: <2eefcbdb-ad41-465a-9c14-1dc15bfff94a@linaro.org>
-Date: Wed, 5 Jun 2024 07:39:53 -0700
+ ffacd0b85a97d-35dd04d96f6sm14889471f8f.61.2024.06.05.07.39.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Jun 2024 07:39:53 -0700 (PDT)
+Date: Wed, 05 Jun 2024 17:32:14 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>, qemu-devel@nongnu.org
+Cc: Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>
+Subject: Re: [RFC PATCH] subprojects: add a wrapper for libvirglrenderer
+User-Agent: meli 0.8.5
+References: <20240605133527.529950-1-alex.bennee@linaro.org>
+In-Reply-To: <20240605133527.529950-1-alex.bennee@linaro.org>
+Message-ID: <em3eg.b7wu81h9k9h@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 36/46] bios-tables-test: Add data for complex numa test
- (GI, GP etc)
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-References: <cover.1717527933.git.mst@redhat.com>
- <61cbf56ef1c5dd9dbe6bd6625f6c8d2a82c5697f.1717527933.git.mst@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <61cbf56ef1c5dd9dbe6bd6625f6c8d2a82c5697f.1717527933.git.mst@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,42 +105,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/24 14:08, Michael S. Tsirkin wrote:
-> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+On Wed, 05 Jun 2024 16:35, Alex Bennée <alex.bennee@linaro.org> wrote:
+>As the latest features for virtio-gpu need a pretty recent version of
+>libvirglrenderer. When it is not available on the system we can use a
+>meson wrapper and provide it when --download is specified in
+>configure.
+>
+>We have to take some additional care as currently QEMU will hang
+>libvirglrenderer fails to exec the render server. As the error isn't
+>back propagated we make sure we at least test we have a path to an
+>executable before tweaking the environment.
+>
+>Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+>---
+> meson.build                    |  7 ++++++-
+> hw/display/virtio-gpu-virgl.c  | 24 ++++++++++++++++++++++++
+> subprojects/virglrenderer.wrap |  6 ++++++
+> 3 files changed, 36 insertions(+), 1 deletion(-)
+> create mode 100644 subprojects/virglrenderer.wrap
+>
+>diff --git a/meson.build b/meson.build
+>index 1d7346b703..e4e270df78 100644
+>--- a/meson.build
+>+++ b/meson.build
+>@@ -1203,7 +1203,8 @@ have_vhost_user_gpu = have_tools and host_os == 'linux' and pixman.found()
+> if not get_option('virglrenderer').auto() or have_system or have_vhost_user_gpu
+>   virgl = dependency('virglrenderer',
+>                      method: 'pkg-config',
+>-                     required: get_option('virglrenderer'))
+>+                     required: get_option('virglrenderer'),
+>+                     default_options: ['default_library=static', 'render-server=true', 'venus=true'])
+> endif
+> rutabaga = not_found
+> if not get_option('rutabaga_gfx').auto() or have_system or have_vhost_user_gpu
+>@@ -2314,6 +2315,10 @@ if virgl.version().version_compare('>=1.0.0')
+>   config_host_data.set('HAVE_VIRGL_RESOURCE_BLOB', 1)
+>   config_host_data.set('HAVE_VIRGL_VENUS', 1)
+> endif
+>+if virgl.type_name().contains('internal')
+>+  config_host_data.set('HAVE_BUNDLED_VIRGL_SERVER', 1)
+>+endif
+>+
+> config_host_data.set('CONFIG_VIRTFS', have_virtfs)
+> config_host_data.set('CONFIG_VTE', vte.found())
+> config_host_data.set('CONFIG_XKBCOMMON', xkbcommon.found())
+>diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+>index c9d20a8a60..53d6742e79 100644
+>--- a/hw/display/virtio-gpu-virgl.c
+>+++ b/hw/display/virtio-gpu-virgl.c
+>@@ -14,6 +14,7 @@
+> #include "qemu/osdep.h"
+> #include "qemu/error-report.h"
+> #include "qemu/iov.h"
+>+#include "qemu/cutils.h"
+> #include "trace.h"
+> #include "hw/virtio/virtio.h"
+> #include "hw/virtio/virtio-gpu.h"
+>@@ -1122,6 +1123,26 @@ void virtio_gpu_virgl_reset(VirtIOGPU *g)
+>     virgl_renderer_reset();
+> }
 > 
-> Given this is a new configuration, there are affects on APIC, CEDT
-> and DSDT, but the key elements are in SRAT (plus related data in
-> HMAT).  The configuration has node to exercise many different combinations.
+>+/*
+>+ * If we fail to spawn the render server things tend to hang so it is
+>+ * important to do our due diligence before then. If QEMU has bundled
+>+ * the virgl server we want to ensure we can run it from the build
+>+ * directory and if installed.
+>+ *
+>+ * The principle way we can override the libvirglrenders behaviour is
+>+ * by setting environment variables.
+>+ */
+>+static void virgl_set_render_env(void)
+>+{
+
+Since it's a few lines we could also inline this in 
+virtio_gpu_virgl_init()
+
+>+#ifdef HAVE_BUNDLED_VIRGL_SERVER
+>+    g_autofree char *file = get_relocated_path(CONFIG_QEMU_HELPERDIR "/virgl_render_server");
+>+    if (g_file_test(file, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_EXECUTABLE)) {
+>+        g_setenv("RENDER_SERVER_EXEC_PATH", file, false);
+
+
+  Return value
+
+  Type: gboolean
+
+  FALSE if the environment variable couldn’t be set.
+
+Worth adding a check here.
+
+Offtopic, but it feels weird to set our environment without creating the 
+process ourselves.
+
+There's also an option to launch the server in threads, so that if it 
+crashes it pulls qemu down with it. Would that work with our thread 
+setup?
+
+
+>+    }
+>+#endif
+>+}
+>+
+>+
+> int virtio_gpu_virgl_init(VirtIOGPU *g)
+> {
+>     int ret;
+>@@ -1145,6 +1166,9 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>     }
+> #endif
 > 
-> 0) CPUs + Memory
-> 1) GI only
-> 2) GP only
-> 3) CPUS only
-> 4) Memory only
-> 5) CPUs + HP memory
-> 
-> GI node, GP Node, Memory only node, hotplug memory
-> only node, latency and bandwidth such that in Linux Access0
-> (any initiator) and Access1 (CPU initiators only) given different
-> answers.  Following cropped to remove details of each entry.
+>+    /* Ensure we can find the render server */
+>+    virgl_set_render_env();
+>+
+>     ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
+>     if (ret != 0) {
+>         error_report("virgl could not be initialized: %d", ret);
+>diff --git a/subprojects/virglrenderer.wrap b/subprojects/virglrenderer.wrap
+>new file mode 100644
+>index 0000000000..3656a478c4
+>--- /dev/null
+>+++ b/subprojects/virglrenderer.wrap
+>@@ -0,0 +1,6 @@
+>+[wrap-git]
+>+url = https://gitlab.freedesktop.org/virgl/virglrenderer.git
+>+revision = virglrenderer-1.0.1
 
 
-This fails testing:
+Can we say "at least 1.0.1" here? Should we? Dunno.
 
-https://gitlab.com/qemu-project/qemu/-/jobs/7021105504
-
-acpi-test: Warning! SRAT binary file mismatch. Actual [aml:/tmp/aml-GHR6O2], Expected 
-[aml:tests/data/acpi/q35/SRAT.acpihmat-generic-x].
-See source file tests/qtest/bios-tables-test.c for instructions on how to update expected 
-files.
-to see ASL diff between mismatched files install IASL, rebuild QEMU from scratch and 
-re-run tests with V=1 environment variable set**
-ERROR:../alt/tests/qtest/bios-tables-test.c:550:test_acpi_asl: assertion failed: 
-(all_tables_match)
-Bail out! ERROR:../alt/tests/qtest/bios-tables-test.c:550:test_acpi_asl: assertion failed: 
-(all_tables_match)
-Aborted (core dumped)
-
-
-r~
+>+
+>+[provide]
+>+virglrenderer = libvirglrenderer_dep
+>-- 
+>2.39.2
+>
 
