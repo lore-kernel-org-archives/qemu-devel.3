@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A710BC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:37:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91219C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:37:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF0BR-0008Ny-8G; Wed, 05 Jun 2024 19:36:45 -0400
+	id 1sF09r-0002rC-N4; Wed, 05 Jun 2024 19:35:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0BP-00088V-8c
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF09p-0002r3-Ud
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:35:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0BN-0005tn-1w
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:42 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF09o-0004w0-BH
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:35:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717630600;
+ s=mimecast20190719; t=1717630503;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Rl1nDigpJRwgGE3w/iYUa7vmMKH4nemfm7NPNL/7aBE=;
- b=eWfJFAHkRJZwt6KeFOoYKYHlhcCfEgX4y8QTPguwD/uil1h3YJ4nOTwYItX5wtpzXWDwZq
- 84PaNdrK2Tl5trxIn6BILcANIJ5BJH1hkNfRK4pMLzCzY04NmHlEo3WoHZP2LmM9+oD1vw
- vFWosFtmanZv0A4c69a9/s0YZz1Urmo=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=czI6QAqPz2gxBOi54M6w2CiDVJgkcwfGVW3OGis4Be4=;
+ b=Q3a4WbZGliQd/g6ukAcJfOlvkVXzNIRUUoIMAFRUWDIu+qPx3xB0aCL8tRGCbMZqalFlNo
+ FPf3njUueSuZEDrK9A/2rvri5Tm3rlS/JVh6AlF8+AE0KmvTHweBb4zQgwN7l9YFC0CI0r
+ fZ8R3nRwDN/etlADE/whyDtHt8erTPE=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-RR7TZH6NP2ypI4J55HhLow-1; Wed, 05 Jun 2024 19:36:39 -0400
-X-MC-Unique: RR7TZH6NP2ypI4J55HhLow-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a68ea01c455so8569566b.0
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:36:39 -0700 (PDT)
+ us-mta-463-pscAqLgpPwWIpG81SfnxVA-1; Wed, 05 Jun 2024 19:35:02 -0400
+X-MC-Unique: pscAqLgpPwWIpG81SfnxVA-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-52b91217fcfso211831e87.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:35:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717630598; x=1718235398;
+ d=1e100.net; s=20230601; t=1717630500; x=1718235300;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Rl1nDigpJRwgGE3w/iYUa7vmMKH4nemfm7NPNL/7aBE=;
- b=YGbyRPdU5VSxoQxtu/8XLqtPIu1+58nNlIc9+ZZk2LZZjOltWtHfeEA/ztkJRZy5xZ
- 0WVllG6pFGuBc/FrCaNPlDaWTzEmdI3LcJRcE0yVhGzF8E6uonNBj4o1pimCQ5TnOQMF
- v980pfXDue0Y9w6glp+uQTudw+aa6kzhkjDst7i4DoiLSLWHYY1elZgWG+8/QIqMq6gc
- MKQTm7uDi1FHLjBRb8ylC5T8yXPIJHvnwLRs/Rw/dN9o/FS1GTKiQdoT6G0cd/894yZV
- DJhlL1sIsU/W36TvtrBf5k2eXamn+GK5kAeXDCv3wBFPpXbEIWzuUaEOAgmRjCw/3psm
- Djsw==
-X-Gm-Message-State: AOJu0YzvIv0SS4ukcxojrPZ9B/MsMBMO3KzarYCCv8a7ISU85IcQdqqt
- qikDVN/qeQnih7hzBDUNl06uMbn7B/Sl5feW3c3fJIlCc8k98O88PJvbflO7OXHUaEvpZ41I6v9
- zF/RLPEcxw02qp8/6tVBz0XfkPLfdz9TWoOicxge3GJlW9s7TjsZwg0OTo12lXsmUoUtrC1QgNR
- t6yJlb4Zkpk3hLZSlUv/eZTLRPDQIXjg==
-X-Received: by 2002:a17:906:25d3:b0:a68:875e:e36f with SMTP id
- a640c23a62f3a-a699f34e209mr257565166b.16.1717630597677; 
- Wed, 05 Jun 2024 16:36:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEKtnOJAAjArcJYUWegX9PtiPKFIEDkLERc8RCRcvJKDga5aXXaTBvyivDjODQAnJ8ho43EGg==
-X-Received: by 2002:a17:906:25d3:b0:a68:875e:e36f with SMTP id
- a640c23a62f3a-a699f34e209mr257564466b.16.1717630597166; 
- Wed, 05 Jun 2024 16:36:37 -0700 (PDT)
+ bh=czI6QAqPz2gxBOi54M6w2CiDVJgkcwfGVW3OGis4Be4=;
+ b=ErruqIlt7L2nFrsLdJEFGknCBFZwA50hvgB+U7Ys3dCdtExPA/lZ8wvJym5ARcjRYy
+ sxBnDm49QqKdlfSkqmabnzIjni+Jw8wh5spCQeslCtH3J04c68z2EBxUqcmcnI2l6wPE
+ ZG2yIDpO8wgrjPbrag/2qUw4JUZwtVGSXmdq3mY6zlj/h/R8kqVe8JgQ0HH3P2WUIbvX
+ Fp8BgkcYfOhGcEENTeo/SeYGkMBw7tjte5WZwCtgg/tVsYmOGwWkcnYK7yvVQf23Cq6v
+ yoKH7U7YwBP6wK0nGl/3OdKPUKYjm9IELEdZL9BveRj5iBwxOfRnPCN6P0yEKlH18dCK
+ ZF/g==
+X-Gm-Message-State: AOJu0YxyPhH+1cy/egj9onWU5NlMev+FsXqA++Wm9vjcCh1pNNmhYUn5
+ wCG7AXmi+QHVwiRV+KLKBDpRUt+1+pHT4ygtiA0Gy3Yg8gjZW1cRiN7YPxpaG97JkxGpmOFiJxX
+ oBRxrsOZEVmRHvWy1cg0mL8RXu7nS5Fe9DPGl32dIcl1/gwqUngF9VZ+hLY6zHb9u8ghwJ57U/s
+ Gk90eNzpswGRs+N5w/3Fe/zwzwX1wvDQ==
+X-Received: by 2002:a05:6512:701:b0:52b:851e:256 with SMTP id
+ 2adb3069b0e04-52bab4c8ea5mr2121686e87.2.1717630500006; 
+ Wed, 05 Jun 2024 16:35:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE4WLXi0bBIL3OT03bJ4+nfahaM13sRo7yMo9FqEV9GAEsx9c5tKE3MUq3g9cAdqUttkIihFw==
+X-Received: by 2002:a05:6512:701:b0:52b:851e:256 with SMTP id
+ 2adb3069b0e04-52bab4c8ea5mr2121679e87.2.1717630499532; 
+ Wed, 05 Jun 2024 16:34:59 -0700 (PDT)
 Received: from redhat.com ([2.55.56.67]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c8072a737sm6378966b.224.2024.06.05.16.36.35
+ a640c23a62f3a-a6c805d0af8sm6914366b.87.2024.06.05.16.34.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 16:36:36 -0700 (PDT)
-Date: Wed, 5 Jun 2024 19:36:34 -0400
+ Wed, 05 Jun 2024 16:34:58 -0700 (PDT)
+Date: Wed, 5 Jun 2024 19:34:56 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL v3 31/41] hw/acpi: Insert an acpi-generic-node base under
- acpi-generic-initiator
-Message-ID: <424d0612ffbb091dbc6bc1f18fb09f71069b3fc3.1717630437.git.mst@redhat.com>
+ Jonah Palmer <jonah.palmer@oracle.com>
+Subject: [PULL v3 05/41] virtio: Prevent creation of device using
+ notification-data with ioeventfd
+Message-ID: <8fdfaf02767748eadab7ad8ab41da78f261824f2.1717630437.git.mst@redhat.com>
 References: <cover.1717630437.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -78,7 +77,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1717630437.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,209 +102,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
 
-This will simplify reuse when adding acpi-generic-port.
-Note that some error_printf() messages will now print acpi-generic-node
-whereas others will move to type specific cases in next patch so
-are left alone for now.
+Prevent the realization of a virtio device that attempts to use the
+VIRTIO_F_NOTIFICATION_DATA transport feature without disabling
+ioeventfd.
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240524100507.32106-3-Jonathan.Cameron@huawei.com>
+Due to ioeventfd not being able to carry the extra data associated with
+this feature, having both enabled is a functional mismatch and therefore
+Qemu should not continue the device's realization process.
+
+Although the device does not yet know if the feature will be
+successfully negotiated, many devices using this feature wont actually
+work without this extra data and would fail FEATURES_OK anyway.
+
+If ioeventfd is able to work with the extra notification data in the
+future, this compatibility check can be removed.
+
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Message-Id: <20240315165557.26942-3-jonah.palmer@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/acpi/acpi_generic_initiator.h | 15 ++++-
- hw/acpi/acpi_generic_initiator.c         | 80 +++++++++++++++---------
- 2 files changed, 63 insertions(+), 32 deletions(-)
+ hw/virtio/virtio.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/include/hw/acpi/acpi_generic_initiator.h b/include/hw/acpi/acpi_generic_initiator.h
-index a304bad73e..dd4be19c8f 100644
---- a/include/hw/acpi/acpi_generic_initiator.h
-+++ b/include/hw/acpi/acpi_generic_initiator.h
-@@ -8,15 +8,26 @@
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index f7c99e3a96..28cd406e16 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2980,6 +2980,20 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
+     return ret;
+ }
  
- #include "qom/object_interfaces.h"
- 
--#define TYPE_ACPI_GENERIC_INITIATOR "acpi-generic-initiator"
-+/*
-+ * Abstract type to be used as base for
-+ * - acpi-generic-initiator
-+ * - acpi-generic-port
-+ */
-+#define TYPE_ACPI_GENERIC_NODE "acpi-generic-node"
- 
--typedef struct AcpiGenericInitiator {
-+typedef struct AcpiGenericNode {
-     /* private */
-     Object parent;
- 
-     /* public */
-     char *pci_dev;
-     uint16_t node;
-+} AcpiGenericNode;
-+
-+#define TYPE_ACPI_GENERIC_INITIATOR "acpi-generic-initiator"
-+
-+typedef struct AcpiGenericInitiator {
-+    AcpiGenericNode parent;
- } AcpiGenericInitiator;
- 
- /*
-diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-index 18a939b0e5..c054e0e27d 100644
---- a/hw/acpi/acpi_generic_initiator.c
-+++ b/hw/acpi/acpi_generic_initiator.c
-@@ -10,45 +10,61 @@
- #include "hw/pci/pci_device.h"
- #include "qemu/error-report.h"
- 
--typedef struct AcpiGenericInitiatorClass {
-+typedef struct AcpiGenericNodeClass {
-     ObjectClass parent_class;
-+} AcpiGenericNodeClass;
-+
-+typedef struct AcpiGenericInitiatorClass {
-+     AcpiGenericNodeClass parent_class;
- } AcpiGenericInitiatorClass;
- 
-+OBJECT_DEFINE_ABSTRACT_TYPE(AcpiGenericNode, acpi_generic_node,
-+                            ACPI_GENERIC_NODE, OBJECT)
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericNode, ACPI_GENERIC_NODE)
-+
- OBJECT_DEFINE_TYPE_WITH_INTERFACES(AcpiGenericInitiator, acpi_generic_initiator,
--                   ACPI_GENERIC_INITIATOR, OBJECT,
-+                   ACPI_GENERIC_INITIATOR, ACPI_GENERIC_NODE,
-                    { TYPE_USER_CREATABLE },
-                    { NULL })
- 
- OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericInitiator, ACPI_GENERIC_INITIATOR)
- 
-+static void acpi_generic_node_init(Object *obj)
++static void virtio_device_check_notification_compatibility(VirtIODevice *vdev,
++                                                           Error **errp)
 +{
-+    AcpiGenericNode *gn = ACPI_GENERIC_NODE(obj);
++    VirtioBusState *bus = VIRTIO_BUS(qdev_get_parent_bus(DEVICE(vdev)));
++    VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(bus);
++    DeviceState *proxy = DEVICE(BUS(bus)->parent);
 +
-+    gn->node = MAX_NODES;
-+    gn->pci_dev = NULL;
++    if (virtio_host_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA) &&
++        k->ioeventfd_enabled(proxy)) {
++        error_setg(errp,
++                   "notification_data=on without ioeventfd=off is not supported");
++    }
 +}
 +
- static void acpi_generic_initiator_init(Object *obj)
+ size_t virtio_get_config_size(const VirtIOConfigSizeParams *params,
+                               uint64_t host_features)
  {
--    AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
-+}
+@@ -3740,6 +3754,14 @@ static void virtio_device_realize(DeviceState *dev, Error **errp)
+         }
+     }
  
--    gi->node = MAX_NODES;
--    gi->pci_dev = NULL;
-+static void acpi_generic_node_finalize(Object *obj)
-+{
-+    AcpiGenericNode *gn = ACPI_GENERIC_NODE(obj);
++    /* Devices should not use both ioeventfd and notification data feature */
++    virtio_device_check_notification_compatibility(vdev, &err);
++    if (err != NULL) {
++        error_propagate(errp, err);
++        vdc->unrealize(dev);
++        return;
++    }
 +
-+    g_free(gn->pci_dev);
- }
- 
- static void acpi_generic_initiator_finalize(Object *obj)
- {
--    AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
--
--    g_free(gi->pci_dev);
- }
- 
--static void acpi_generic_initiator_set_pci_device(Object *obj, const char *val,
--                                                  Error **errp)
-+static void acpi_generic_node_set_pci_device(Object *obj, const char *val,
-+                                             Error **errp)
- {
--    AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
-+    AcpiGenericNode *gn = ACPI_GENERIC_NODE(obj);
- 
--    gi->pci_dev = g_strdup(val);
-+    gn->pci_dev = g_strdup(val);
- }
--
--static void acpi_generic_initiator_set_node(Object *obj, Visitor *v,
--                                            const char *name, void *opaque,
--                                            Error **errp)
-+static void acpi_generic_node_set_node(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
- {
--    AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
-+    AcpiGenericNode *gn = ACPI_GENERIC_NODE(obj);
-     MachineState *ms = MACHINE(qdev_get_machine());
-     uint32_t value;
- 
-@@ -58,20 +74,24 @@ static void acpi_generic_initiator_set_node(Object *obj, Visitor *v,
- 
-     if (value >= MAX_NODES) {
-         error_printf("%s: Invalid NUMA node specified\n",
--                     TYPE_ACPI_GENERIC_INITIATOR);
-+                     TYPE_ACPI_GENERIC_NODE);
-         exit(1);
-     }
- 
--    gi->node = value;
--    ms->numa_state->nodes[gi->node].has_gi = true;
-+    gn->node = value;
-+    ms->numa_state->nodes[gn->node].has_gi = true;
-+}
-+
-+static void acpi_generic_node_class_init(ObjectClass *oc, void *data)
-+{
-+    object_class_property_add_str(oc, "pci-dev", NULL,
-+        acpi_generic_node_set_pci_device);
-+    object_class_property_add(oc, "node", "int", NULL,
-+        acpi_generic_node_set_node, NULL, NULL);
- }
- 
- static void acpi_generic_initiator_class_init(ObjectClass *oc, void *data)
- {
--    object_class_property_add_str(oc, "pci-dev", NULL,
--        acpi_generic_initiator_set_pci_device);
--    object_class_property_add(oc, "node", "int", NULL,
--        acpi_generic_initiator_set_node, NULL, NULL);
- }
- 
- /*
-@@ -104,9 +124,9 @@ build_srat_generic_pci_initiator_affinity(GArray *table_data, int node,
- static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
- {
-     MachineState *ms = MACHINE(qdev_get_machine());
--    AcpiGenericInitiator *gi;
-     GArray *table_data = opaque;
-     PCIDeviceHandle dev_handle;
-+    AcpiGenericNode *gn;
-     PCIDevice *pci_dev;
-     Object *o;
- 
-@@ -114,14 +134,14 @@ static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
-         return 0;
-     }
- 
--    gi = ACPI_GENERIC_INITIATOR(obj);
--    if (gi->node >= ms->numa_state->num_nodes) {
-+    gn = ACPI_GENERIC_NODE(obj);
-+    if (gn->node >= ms->numa_state->num_nodes) {
-         error_printf("%s: Specified node %d is invalid.\n",
--                     TYPE_ACPI_GENERIC_INITIATOR, gi->node);
-+                     TYPE_ACPI_GENERIC_INITIATOR, gn->node);
-         exit(1);
-     }
- 
--    o = object_resolve_path_type(gi->pci_dev, TYPE_PCI_DEVICE, NULL);
-+    o = object_resolve_path_type(gn->pci_dev, TYPE_PCI_DEVICE, NULL);
-     if (!o) {
-         error_printf("%s: Specified device must be a PCI device.\n",
-                      TYPE_ACPI_GENERIC_INITIATOR);
-@@ -135,7 +155,7 @@ static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
-                                    pci_dev->devfn);
- 
-     build_srat_generic_pci_initiator_affinity(table_data,
--                                              gi->node, &dev_handle);
-+                                              gn->node, &dev_handle);
- 
-     return 0;
- }
+     virtio_bus_device_plugged(vdev, &err);
+     if (err != NULL) {
+         error_propagate(errp, err);
 -- 
 MST
 
