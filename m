@@ -4,81 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39FE9C27C52
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 21:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D160C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 21:19:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sExz6-0000hL-TI; Wed, 05 Jun 2024 17:15:52 -0400
+	id 1sEy23-0007ow-3H; Wed, 05 Jun 2024 17:18:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sExyw-0000dS-L4
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:15:44 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sExym-0003QF-T0
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:15:40 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7025b253f64so210725b3a.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 14:15:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717622130; x=1718226930; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L6Mj0yPmK4aF2gdBWUJi8XJKeBX80hKgL2mV428joew=;
- b=X9U12m3ZOWpkFESkavbYaNI0cWJ6ox6wsAwDBdUmcVj7DySqYHVscny641v/NgXxB4
- XPr6pcnCovVesTMDBWgzvVQgLR4L6aLsuSrqOisQ7JWipd7iizvY4lnOy9LV8K4ew4eu
- vwaBM8E3+sSZZ2laPJkiz28l2LEhG7MKRWHEaXS0DDBH41kB+TBRTgHoGtUdWBOamUsN
- N2wqfgVTjpjLzI3unmyHI7lefazyks5uscKkSuY2dxOFR3EeJdQdcRXmzm+mXHGWflle
- /ZEJdQgeIwjNWsRWPrmM4voVVtEbiLCG/GoHywDj6E0We1r9UwYQplkHcr8Uyow/+g8T
- KJRA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEy1z-0007nP-8S
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:18:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEy1t-00043R-Q9
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:18:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717622324;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0qDrUzD2QsqVidyOnu5RGSYDufCOrzbBQ/FVfAKTwKE=;
+ b=VksszJ2D4PExCA9/xE2zs0s64OH+j9oFUfHNuYMFuhnrQLV0whEvmhtx+fYAq21ODjAjMQ
+ wwZV03aUKbYYi6yYMP+ncvfGc6UoB98dFPXFfq/TiREszNipZoZK2Kfw8IhGQ0liStbwgB
+ 57jw/GKCu847M+qCLjRVqTbcFJbxwzY=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-119-7A6sXAoaMdu57JBvUA0rsA-1; Wed, 05 Jun 2024 17:18:42 -0400
+X-MC-Unique: 7A6sXAoaMdu57JBvUA0rsA-1
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-43ffb7cebdbso298481cf.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 14:18:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717622130; x=1718226930;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=L6Mj0yPmK4aF2gdBWUJi8XJKeBX80hKgL2mV428joew=;
- b=aGoktzJvtrpWODXBxutJnupwwHIXwJ/k6BMLhebehCEweeuDsCRYJnWLehCqv7LDZW
- JGqdDRGTo+4Cr8s/k58gjL8paRDiWv3oHzbKO9OkVK37ZT1a5ryILHZbvmrA9Horygb8
- c/B6EIhzyI7UrQFnCI6OwNNB+S+K+3IDIIc4Si3CKZFOkFOWVNaAWdUbj25T+xfvHtgM
- 00TJ5bUrIh03bpKBlxM0B+s9xxjMuF/5J7bApc+MCbVfUz/ukKhtjNssURtDhzmelyb6
- iZ1tdb/LhPBMOw7o5sb8+2BEByE9noULk/q1QhZLsm/o7VpUjXaPfgvo1uS9O5LY4eC+
- 13Xg==
-X-Gm-Message-State: AOJu0YxB/iDkJUiVK48EZyPtRUkXgK0oyXWrf5JQ3kGwh1aBZtoIK/z0
- yZuw8kjfnc63YvXtNLXPDXuOGDFCVVwDB5qAnZBpOSkNBelsq0JmgzCgUogyS6iKVne5rm+gRuF
- c
-X-Google-Smtp-Source: AGHT+IGhr7BRxb3M94JGDbi3Ok9eB/kGHpddidlKChvChFjLt/9uMsIBU4HbxoE28nfTPCCTSkjIsw==
-X-Received: by 2002:a05:6a20:918e:b0:1a7:bb6d:6589 with SMTP id
- adf61e73a8af0-1b2b6fd4af7mr4730011637.29.1717622130022; 
- Wed, 05 Jun 2024 14:15:30 -0700 (PDT)
-Received: from stoup.. ([71.212.132.216]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70242aec7d0sm9347538b3a.99.2024.06.05.14.15.29
+ d=1e100.net; s=20230601; t=1717622322; x=1718227122;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0qDrUzD2QsqVidyOnu5RGSYDufCOrzbBQ/FVfAKTwKE=;
+ b=OpWA0URIfVhOrnpwPJjjEWaKQmV+D1XdimsoMNJgOmw1yoLFQz0iFkgFjv0t9b06D9
+ qzqQFnimlEeTTCavhDFRnnzW917jvT9x2ZnHqAeeB7DTRLzt6qNMXM0o5bTd/ovA/7ry
+ A/P/B9sPn4gJ6oEid2Q8MWaocqgnDeRvH2NBqRH8g4ASHKIwXJusEsF820vw8KQd7TSy
+ kWpslT//Ywf9cTjS1fXI3wfOY707ccuG9ZX7L17ploN8jRVIHdHXBXVbEQnlTdyjkTZk
+ fij6Q7VijOqqLDr9hOl1zc+GaNR2lcisO2R8c9EwZ5Th+V+VuqK4PuY24Dhrd9yo9wU/
+ BQ3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWmPSpBADmuZpRN+oaUYB5pdSz40yje+JPlJDniBBo6h4DAhqWGUVjcZeq0TtJdYRefBbGGT3ldasPvAmYM62Sg9UvZEYo=
+X-Gm-Message-State: AOJu0YyD4gxWjmTB84lr8HrA8CWNcE4P77mYcsxvnl/ScjEI+GiDu1P3
+ 5ip07CyxV6C0n8oJfCUsm0GMkNX3sFXarIydphHwU4nz+XrHP1FVaG0CZlzPnizGxoHLcgK1X2Z
+ qJl0fGznpfCdGefHu6cQ/mTuyJc02HLHeVSOSIg4ckuyiceotTTOz
+X-Received: by 2002:a05:620a:290b:b0:794:c6a0:258a with SMTP id
+ af79cd13be357-79523d97230mr397231885a.4.1717622322062; 
+ Wed, 05 Jun 2024 14:18:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGm1wvQdZr+RhwdSCkJIusK9ypevr/zgAzD2oNeBLhHd6Zu8G2fCNRq8exjIgmpTZlWS9vjwQ==
+X-Received: by 2002:a05:620a:290b:b0:794:c6a0:258a with SMTP id
+ af79cd13be357-79523d97230mr397230285a.4.1717622321457; 
+ Wed, 05 Jun 2024 14:18:41 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7952db5fec8sm36278685a.48.2024.06.05.14.18.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 14:15:29 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 08/16] hw/dma/pl330: Use qemu_hexdump_line to avoid sprintf
-Date: Wed,  5 Jun 2024 14:15:13 -0700
-Message-Id: <20240605211521.577094-9-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240605211521.577094-1-richard.henderson@linaro.org>
-References: <20240605211521.577094-1-richard.henderson@linaro.org>
+ Wed, 05 Jun 2024 14:18:40 -0700 (PDT)
+Date: Wed, 5 Jun 2024 17:18:38 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: Michael Galaxy <mgalaxy@akamai.com>, Zheng Chuan <zhengchuan@huawei.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Yu Zhang <yu.zhang@ionos.com>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ Jinpu Wang <jinpu.wang@ionos.com>, Elmar Gerdes <elmar.gerdes@ionos.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>,
+ "integration@gluster.org" <integration@gluster.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Song Gao <gaosong@loongson.cn>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Pannengyuan <pannengyuan@huawei.com>,
+ Xiexiangyou <xiexiangyou@huawei.com>
+Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+Message-ID: <ZmDWLkBKISvQcA8I@x1n>
+References: <ZjJgQcPQ29HJsTpY@x1n>
+ <7e902e4e576a4e199e36d28f99bd55e5@huawei.com>
+ <Zjj0xa-3KrFHTK0S@x1n>
+ <addaa8d094904315a466533763689ead@huawei.com>
+ <ZjpWmG2aUJLkYxJm@x1n>
+ <13ce4f9e-1e7c-24a9-0dc9-c40962979663@huawei.com>
+ <cd93922f-cf58-4a42-854d-0b39c6941905@akamai.com>
+ <Zl-x_Az8i4jOwitt@gallifrey> <ZmBx8UDDmO-C1Oqu@x1n>
+ <ZmDPHKLkzBO47XRc@gallifrey>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZmDPHKLkzBO47XRc@gallifrey>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,63 +130,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Wed, Jun 05, 2024 at 08:48:28PM +0000, Dr. David Alan Gilbert wrote:
+> > > I just noticed this thread; some random notes from a somewhat
+> > > fragmented memory of this:
+> > > 
+> > >   a) Long long ago, I also tried rsocket; 
+> > >       https://lists.gnu.org/archive/html/qemu-devel/2015-01/msg02040.html
+> > >      as I remember the library was quite flaky at the time.
+> > 
+> > Hmm interesting.  There also looks like a thread doing rpoll().
+> 
+> Yeh, I can't actually remember much more about what I did back then!
 
-sprintf() is deprecated on Darwin since macOS 13.0 / XCode 14.1.
-Using qemu_hexdump_line both fixes the deprecation warning and
-simplifies the code base.
+Heh, that's understandable and fair. :)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240412073346.458116-11-richard.henderson@linaro.org>
----
- hw/dma/pl330.c | 23 ++++++++---------------
- 1 file changed, 8 insertions(+), 15 deletions(-)
+> > I hope Lei and his team has tested >4G mem, otherwise definitely worth
+> > checking.  Lei also mentioned there're rsocket bugs they found in the cover
+> > letter, but not sure what's that about.
+> 
+> It would probably be a good idea to keep track of what bugs
+> are in flight with it, and try it on a few RDMA cards to see
+> what problems get triggered.
+> I think I reported a few at the time, but I gave up after
+> feeling it was getting very hacky.
 
-diff --git a/hw/dma/pl330.c b/hw/dma/pl330.c
-index 70a502d245..5f89295af3 100644
---- a/hw/dma/pl330.c
-+++ b/hw/dma/pl330.c
-@@ -15,6 +15,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/cutils.h"
- #include "hw/irq.h"
- #include "hw/qdev-properties.h"
- #include "hw/sysbus.h"
-@@ -317,22 +318,14 @@ typedef struct PL330InsnDesc {
- 
- static void pl330_hexdump(uint8_t *buf, size_t size)
- {
--    unsigned int b, i, len;
--    char tmpbuf[80];
-+    g_autoptr(GString) str = g_string_sized_new(64);
-+    size_t b, len;
- 
--    for (b = 0; b < size; b += 16) {
--        len = size - b;
--        if (len > 16) {
--            len = 16;
--        }
--        tmpbuf[0] = '\0';
--        for (i = 0; i < len; i++) {
--            if ((i % 4) == 0) {
--                strcat(tmpbuf, " ");
--            }
--            sprintf(tmpbuf + strlen(tmpbuf), " %02x", buf[b + i]);
--        }
--        trace_pl330_hexdump(b, tmpbuf);
-+    for (b = 0; b < size; b += len) {
-+        len = MIN(16, size - b);
-+        g_string_truncate(str, 0);
-+        qemu_hexdump_line(str, buf + b, len, 1, 4);
-+        trace_pl330_hexdump(b, str->str);
-     }
- }
- 
+Agreed.  Maybe we can have a list of that in the cover letter or even
+QEMU's migration/rmda doc page.
+
+Lei, if you think that makes sense please do so in your upcoming posts.
+There'll need to have a list of things you encountered in the kernel driver
+and it'll be even better if there're further links to read on each problem.
+
+> > > 
+> > >   e) Someone made a good suggestion (sorry can't remember who) - that the
+> > >      RDMA migration structure was the wrong way around - it should be the
+> > >      destination which initiates an RDMA read, rather than the source
+> > >      doing a write; then things might become a LOT simpler; you just need
+> > >      to send page ranges to the destination and it can pull it.
+> > >      That might work nicely for postcopy.
+> > 
+> > I'm not sure whether it'll still be a problem if rdma recv side is based on
+> > zero-copy.  It would be a matter of whether atomicity can be guaranteed so
+> > that we don't want the guest vcpus to see a partially copied page during
+> > on-flight DMAs.  UFFDIO_COPY (or friend) is currently the only solution for
+> > that.
+> 
+> Yes, but even ignoring that (and the UFFDIO_CONTINUE idea you mention), if
+> the destination can issue an RDMA read itself, it doesn't need to send messages
+> to the source to ask for a page fetch; it just goes and grabs it itself,
+> that's got to be good for latency.
+
+Oh, that's pretty internal stuff of rdma to me and beyond my knowledge..
+but from what I can tell it sounds very reasonable indeed!
+
+Thanks!
+
 -- 
-2.34.1
+Peter Xu
 
 
