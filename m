@@ -4,70 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B06DC27C52
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 08:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAE5FC25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 09:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEmPF-00075r-Ka; Wed, 05 Jun 2024 04:54:05 -0400
+	id 1sEmXd-0000iu-BW; Wed, 05 Jun 2024 05:02:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sEmPE-00075E-7V
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 04:54:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sEmXa-0000i7-4h
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 05:02:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sEmPB-0003X8-Pm
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 04:54:03 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sEmXY-0005lo-Fq
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 05:02:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717577640;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1717578159;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=S7o+AyQgR2MpRFU0rryvqeWe0qw66x3Zk2WuQ/OVTKE=;
- b=YG4Hkd9rGB/M59oH2DkLfMBO/SjPa/VdEsWbZQ7U/ryUXp48uSFKAI/jRUnFo+ed9PWlc+
- xfy9ZFVnzccTnFonJ98VVC468lQSyHd223FBVVGM5Cn8URLY0tzrtTVQmw2XbfdQ9dh2R+
- ByH0dsPyTRftoV8ZrTWu5xZMPSu6uQ8=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-eIZuSlZnMk-8hBB8PZb6Hw-1; Wed,
- 05 Jun 2024 04:53:57 -0400
-X-MC-Unique: eIZuSlZnMk-8hBB8PZb6Hw-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E96793C025B1;
- Wed,  5 Jun 2024 08:53:56 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.193.183])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 5E0E4FF02;
- Wed,  5 Jun 2024 08:53:55 +0000 (UTC)
-Date: Wed, 5 Jun 2024 09:53:52 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 07/20] qga: move CONFIG_FSFREEZE/TRIM to be meson defined
- options
-Message-ID: <ZmAnoPgv53noaNmk@redhat.com>
-References: <20240604134933.220112-1-berrange@redhat.com>
- <20240604134933.220112-8-berrange@redhat.com>
- <CAJ+F1CLhfHTnivCcCfOSEYw2nNsTrcgqx+iALRsWf9DbKjhmEg@mail.gmail.com>
+ bh=6NFR7P4XUYjs/J4VAY5TRN+jnMtD44mH4gCWVbeIMZ8=;
+ b=ImyVnCpmubQY3Rhf+VvmVw5tcsqcXPorECjPClqakuDrnTnI2AvhcZWGLfNkE3iRIST5v0
+ fqtbeGWhcr0N/ZzdyUGmFBFR16sgeRkIF+4jZ6YZEv+Xwp8WgVpB4AQ6sQJ+dGL+9dFA9d
+ NzDc4OeUkcyt6j6ZlzXfQaQ59kkhNxY=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-316-cZPX_toANSiVt2OKmR4o0Q-1; Wed, 05 Jun 2024 05:02:37 -0400
+X-MC-Unique: cZPX_toANSiVt2OKmR4o0Q-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a68f654dc69so181819266b.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 02:02:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717578156; x=1718182956;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6NFR7P4XUYjs/J4VAY5TRN+jnMtD44mH4gCWVbeIMZ8=;
+ b=kr1A/u5jkWDw3+2AZibv7ag2NjAE28gvU+kPCQcmyf5EpNqLMOWwRMrQNhcIUZvA0I
+ 6bSSWmTojuomwY8haJh9VFwmcmZJQumPCK1z0c4DHvyelgBFfsJOXg4VX8axW5Ohr7EQ
+ MATAFAWC+NoaG2fOeFJLpT37vLn4aa7lyCeorNw2Jv7Pjn60o+bUq8O4yiL+PKZwne8e
+ czfySxNAiO45RQfCFI4OqOkV9ezYDpaNImM4EVMNfP06ZRhkEUsY39Ho6MbG/0vLStzQ
+ IZLfIb5HoO5Y3RVD1c89bIjI+e4JnmMTmZJ8XWmycBYkNTVygAOTLpwOdwTB0OJLW6FG
+ P9pA==
+X-Gm-Message-State: AOJu0Yw1f2AvuSaFIqyQ1mbJfIOsmZ4BpXXwFwRInvE/IKF3LMW6d1oG
+ LL9/yNeKwJneLoM3fShHpTdAB9etxfUP5ITO4xXT2IdwU1UrJwJsKq4t0y11iQ6yVL0PQIY856M
+ ey7H6/Y0/UF3PD6wHCM1HpIZEt4fpZHuZsG8awr2aesh6WgEjcB+PFNK1iQ9uTznZDvG9RHib/O
+ 7ddD3j1JcUOATa+7lno5NgB6i/sBWOPupb1NQr
+X-Received: by 2002:a17:906:3595:b0:a66:713a:5017 with SMTP id
+ a640c23a62f3a-a699f670be7mr144186666b.29.1717578155784; 
+ Wed, 05 Jun 2024 02:02:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEZBYgmWBQPNAOr9cJfOs+Tm7B/035+NKuGxgbNkermLIgikIiILX1NpMTIh2aSX/SSSFkflg==
+X-Received: by 2002:a17:906:3595:b0:a66:713a:5017 with SMTP id
+ a640c23a62f3a-a699f670be7mr144184066b.29.1717578155351; 
+ Wed, 05 Jun 2024 02:02:35 -0700 (PDT)
+Received: from avogadro.local ([151.81.115.112])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a690fe65393sm390014066b.204.2024.06.05.02.02.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Jun 2024 02:02:34 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 01/46] docs, tests: do not specify scsi=off
+Date: Wed,  5 Jun 2024 11:02:28 +0200
+Message-ID: <20240605090229.1704300-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240605090229.1704300-1-pbonzini@redhat.com>
+References: <20240605090229.1704300-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJ+F1CLhfHTnivCcCfOSEYw2nNsTrcgqx+iALRsWf9DbKjhmEg@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -89,116 +100,87 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 05, 2024 at 12:47:39PM +0400, Marc-André Lureau wrote:
-> Hi
-> 
-> On Tue, Jun 4, 2024 at 5:50 PM Daniel P. Berrangé <berrange@redhat.com>
-> wrote:
-> 
-> > Defining these at the meson level allows them to be used a conditional
-> > tests in the QAPI schemas.
-> >
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >  meson.build           | 18 ++++++++++++++++++
-> >  qga/commands-common.h |  9 ---------
-> >  2 files changed, 18 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/meson.build b/meson.build
-> > index 6386607144..356b2a4817 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -2141,6 +2141,22 @@ have_virtfs_proxy_helper =
-> > get_option('virtfs_proxy_helper') \
-> >      .require(libcap_ng.found(), error_message: 'the virtfs proxy helper
-> > requires libcap-ng') \
-> >      .allowed()
-> >
-> > +qga_fsfreeze = false
-> > +qga_fstrim = false
-> > +if host_os == 'windows'
-> > +    qga_fsfreeze = true
-> > +    qga_fstrim = true
-> >
-> 
-> The hook code in qga/main.c compiles for win32, but it is not used. Did you
-> intentionally enabled that?
+This has been the default forever.
 
-Oh whoops, yes, that is an oversight. I was initially thinking
-that CONFIG_FSFREEZE was used in commands-win32.c, since it has
-a freeze impl, but I forgot I later learnt it was unconditional.
-So we don't need to set these for meson vars for windows.
+Acked-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ docs/pci_expander_bridge.txt      | 2 +-
+ docs/specs/tpm.rst                | 2 +-
+ tests/avocado/intel_iommu.py      | 2 +-
+ tests/avocado/smmu.py             | 2 +-
+ tests/avocado/tuxrun_baselines.py | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-> 
-> +elif host_os == 'linux'
-> > +    if cc.has_header_symbol('linux/fs.h', 'FIFREEZE')
-> > +        qga_fsfreeze = true
-> > +    endif
-> > +    if cc.has_header_symbol('linux/fs.h', 'FITRIM')
-> > +        qga_fstrim = true
-> > +    endif
-> > +elif host_os == 'freebsd' and cc.has_header_symbol('ufs/ffs/fs.h',
-> > 'UFSSUSPEND')
-> > +    qga_fsfreeze = true
-> > +endif
-> > +
-> >  if get_option('block_drv_ro_whitelist') == ''
-> >    config_host_data.set('CONFIG_BDRV_RO_WHITELIST', '')
-> >  else
-> > @@ -2375,6 +2391,8 @@ config_host_data.set('CONFIG_DEBUG_TCG',
-> > get_option('debug_tcg'))
-> >  config_host_data.set('CONFIG_DEBUG_REMAP', get_option('debug_remap'))
-> >  config_host_data.set('CONFIG_QOM_CAST_DEBUG',
-> > get_option('qom_cast_debug'))
-> >  config_host_data.set('CONFIG_REPLICATION',
-> > get_option('replication').allowed())
-> > +config_host_data.set('CONFIG_FSFREEZE', qga_fsfreeze)
-> > +config_host_data.set('CONFIG_FSTRIM', qga_fstrim)
-> >
-> >  # has_header
-> >  config_host_data.set('CONFIG_EPOLL', cc.has_header('sys/epoll.h'))
-> > diff --git a/qga/commands-common.h b/qga/commands-common.h
-> > index 8c1c56aac9..263e7c0525 100644
-> > --- a/qga/commands-common.h
-> > +++ b/qga/commands-common.h
-> > @@ -15,19 +15,10 @@
-> >
-> >  #if defined(__linux__)
-> >  #include <linux/fs.h>
-> > -#ifdef FIFREEZE
-> > -#define CONFIG_FSFREEZE
-> > -#endif
-> > -#ifdef FITRIM
-> > -#define CONFIG_FSTRIM
-> > -#endif
-> >  #endif /* __linux__ */
-> >
-> >  #ifdef __FreeBSD__
-> >  #include <ufs/ffs/fs.h>
-> > -#ifdef UFSSUSPEND
-> > -#define CONFIG_FSFREEZE
-> > -#endif
-> >  #endif /* __FreeBSD__ */
-> >
-> >  #if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM)
-> > --
-> > 2.45.1
-> >
-> >
-> >
-> 
-> -- 
-> Marc-André Lureau
-
-With regards,
-Daniel
+diff --git a/docs/pci_expander_bridge.txt b/docs/pci_expander_bridge.txt
+index 36750273bb8..540191f5e04 100644
+--- a/docs/pci_expander_bridge.txt
++++ b/docs/pci_expander_bridge.txt
+@@ -25,7 +25,7 @@ A detailed command line would be:
+ -object memory-backend-ram,size=1024M,policy=bind,host-nodes=1,id=ram-node1 -numa node,nodeid=1,cpus=1,memdev=ram-node1
+ -device pxb,id=bridge1,bus=pci.0,numa_node=1,bus_nr=4 -netdev user,id=nd -device e1000,bus=bridge1,addr=0x4,netdev=nd
+ -device pxb,id=bridge2,bus=pci.0,numa_node=0,bus_nr=8 -device e1000,bus=bridge2,addr=0x3
+--device pxb,id=bridge3,bus=pci.0,bus_nr=40 -drive if=none,id=drive0,file=[img] -device virtio-blk-pci,drive=drive0,scsi=off,bus=bridge3,addr=1
++-device pxb,id=bridge3,bus=pci.0,bus_nr=40 -drive if=none,id=drive0,file=[img] -device virtio-blk-pci,drive=drive0,bus=bridge3,addr=1
+ 
+ Here you have:
+  - 2 NUMA nodes for the guest, 0 and 1. (both mapped to the same NUMA node in host, but you can and should put it in different host NUMA nodes)
+diff --git a/docs/specs/tpm.rst b/docs/specs/tpm.rst
+index 68cb8cf7e65..1ad36ad7099 100644
+--- a/docs/specs/tpm.rst
++++ b/docs/specs/tpm.rst
+@@ -336,7 +336,7 @@ In case a pSeries machine is emulated, use the following command line:
+     -tpmdev emulator,id=tpm0,chardev=chrtpm \
+     -device tpm-spapr,tpmdev=tpm0 \
+     -device spapr-vscsi,id=scsi0,reg=0x00002000 \
+-    -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x3,drive=drive-virtio-disk0,id=virtio-disk0 \
++    -device virtio-blk-pci,bus=pci.0,addr=0x3,drive=drive-virtio-disk0,id=virtio-disk0 \
+     -drive file=test.img,format=raw,if=none,id=drive-virtio-disk0
+ 
+ In case an Arm virt machine is emulated, use the following command line:
+diff --git a/tests/avocado/intel_iommu.py b/tests/avocado/intel_iommu.py
+index f04ee1cf9d9..09e694bd403 100644
+--- a/tests/avocado/intel_iommu.py
++++ b/tests/avocado/intel_iommu.py
+@@ -32,7 +32,7 @@ class IntelIOMMU(LinuxTest):
+ 
+     def set_up_boot(self):
+         path = self.download_boot()
+-        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,scsi=off,' +
++        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
+                          'drive=drv0,id=virtio-disk0,bootindex=1,'
+                          'werror=stop,rerror=stop' + self.IOMMU_ADDON)
+         self.vm.add_args('-device', 'virtio-gpu-pci' + self.IOMMU_ADDON)
+diff --git a/tests/avocado/smmu.py b/tests/avocado/smmu.py
+index 21ff030ca72..4ebfa7128c7 100644
+--- a/tests/avocado/smmu.py
++++ b/tests/avocado/smmu.py
+@@ -32,7 +32,7 @@ class SMMU(LinuxTest):
+ 
+     def set_up_boot(self):
+         path = self.download_boot()
+-        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,scsi=off,' +
++        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
+                          'drive=drv0,id=virtio-disk0,bootindex=1,'
+                          'werror=stop,rerror=stop' + self.IOMMU_ADDON)
+         self.vm.add_args('-drive',
+diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
+index a936a3b7809..736e4aa289c 100644
+--- a/tests/avocado/tuxrun_baselines.py
++++ b/tests/avocado/tuxrun_baselines.py
+@@ -235,7 +235,7 @@ def ppc64_common_tuxrun(self, sums, prefix):
+             self.vm.add_args('-drive', 'file=' + qcow2.name +
+                          ',format=qcow2,if=none,id='
+                          'drive-virtio-disk1',
+-                         '-device', 'virtio-blk-pci,scsi=off,bus=pci.0,'
++                         '-device', 'virtio-blk-pci,bus=pci.0,'
+                          'addr=0xb,drive=drive-virtio-disk1,id=virtio-disk1'
+                          ',bootindex=2')
+             self.common_tuxrun(csums=sums, drive="scsi-hd")
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.45.1
 
 
