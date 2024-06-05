@@ -4,60 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F1E7C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 15:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103E9C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 15:29:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEsYP-0008Sh-CV; Wed, 05 Jun 2024 11:27:57 -0400
+	id 1sEsZU-0000cW-Ky; Wed, 05 Jun 2024 11:29:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sEsYO-0008SH-Dq
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 11:27:56 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sEsYK-0007CF-Vz
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 11:27:56 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VvWSM69w2z6H8xM;
- Wed,  5 Jun 2024 23:23:15 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 8F63E1400D4;
- Wed,  5 Jun 2024 23:27:34 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 5 Jun
- 2024 16:27:34 +0100
-Date: Wed, 5 Jun 2024 16:27:33 +0100
-To: Richard Henderson <richard.henderson@linaro.org>
-CC: "Michael S. Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>, "Peter
- Maydell" <peter.maydell@linaro.org>, Igor Mammedov <imammedo@redhat.com>, Ani
- Sinha <anisinha@redhat.com>
-Subject: Re: [PULL 36/46] bios-tables-test: Add data for complex numa test
- (GI, GP etc)
-Message-ID: <20240605162733.00007d8d@Huawei.com>
-In-Reply-To: <2eefcbdb-ad41-465a-9c14-1dc15bfff94a@linaro.org>
-References: <cover.1717527933.git.mst@redhat.com>
- <61cbf56ef1c5dd9dbe6bd6625f6c8d2a82c5697f.1717527933.git.mst@redhat.com>
- <2eefcbdb-ad41-465a-9c14-1dc15bfff94a@linaro.org>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
+ id 1sEsZT-0000bU-2U
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 11:29:03 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
+ id 1sEsZO-0007WL-E8
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 11:29:02 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6f8ec7e054dso4836398b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 08:28:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1717601336; x=1718206136; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wnvAk+khpr2juqijwqQqqwCt+1oaDBBIFgjTnKucVmw=;
+ b=S1HGTRoHFGy6p9kTSwCZWQ4IeGTMLQL5ZaMAZ/q+Iu39Am20mJHqgEKghoFVCtLOyK
+ lVb8aBEPgJsDoBPu2hcxDUzNMi20pXWwxtOPZb7ofrM6nJNEGRhMo2dP0AbQz96oqC25
+ HjRRDI0GLH7gKdMZ2dH3WZHO+0QeWVS7bWpEcJeVf3wznJs4eXGo1NYua/zgzbCJpA8T
+ U689sE904KSt05c2/oFR2U9PG9fqL1CMi5DRUpRGFx5L0hvzCLMMUQjFQAd6rdxnmhHW
+ ZB9ggqMOsUjlL7AG8VX4MXbukUa6jrm5JAGUQhcPFKmD+/VUi7zSf6/rT1OysEG6eFO/
+ +7Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717601336; x=1718206136;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wnvAk+khpr2juqijwqQqqwCt+1oaDBBIFgjTnKucVmw=;
+ b=e8ecvaK+zWwB+JCl9Xjqdkxylc58NvE6/kRsmgXlzfx3DV/jLM5hNjTzn1zBSesr44
+ /GGtfWl/ASbZh1GEi4orYgiUsM/pwQwUFyuVixaBkcaWVJI4cC1ebg94osrG9LC07cYf
+ 5P65dCOtqocG3Bo+13qMYfgz3wx6ycVhXjm3FkdHUPZbU684/le0sxSSq9wLxkDIA6f2
+ 81FIrLGi9fL3W+RzX8d5Xu/nyN6OQlZDpt1mC9rAlc2KC6ZfgFCupVNeSYTKY3J798yC
+ ZzuBBWKRLM0SLSx4gtOE0yyw+ybdyvIJE56vjrDRqfp48xK0pW9iXADhojcSu2J2kHFE
+ J51g==
+X-Gm-Message-State: AOJu0Yx8e7bHkBy79mj6Ql4Bgq6KIvRlwv04Nvo5/R3BNcNb3lN+kpc4
+ GkRA+QO6Hs06rVK0rTNw9QWROO8VkkSpWkCyjA+Pzqs98nAiQnLAup3Z/3vdGYw=
+X-Google-Smtp-Source: AGHT+IGW5mFxyHEu6KNjm0Xw2zQogC9KWJKPIQ49rdjdrTIrdztDbBT4aljHUfnqEXxmaV2NKFeQkg==
+X-Received: by 2002:a05:6a00:2ea9:b0:6f8:c6e4:1829 with SMTP id
+ d2e1a72fcca58-703e5a1bbfdmr3335658b3a.25.1717601335712; 
+ Wed, 05 Jun 2024 08:28:55 -0700 (PDT)
+Received: from localhost ([103.192.227.74]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-702688e7e3dsm5526536b3a.215.2024.06.05.08.28.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Jun 2024 08:28:55 -0700 (PDT)
+From: Weifeng Liu <weifeng.liu.z@gmail.com>
+To: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+Cc: Weifeng Liu <weifeng.liu.z@gmail.com>,
+ Antonio Caggiano <antonio.caggiano@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH 0/3] virtio-gpu: Enable virglrenderer backend for rutabaga
+Date: Wed,  5 Jun 2024 23:28:27 +0800
+Message-ID: <20240605152832.11618-1-weifeng.liu.z@gmail.com>
+X-Mailer: git-send-email 2.45.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=weifeng.liu.z@gmail.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,64 +91,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 5 Jun 2024 07:39:53 -0700
-Richard Henderson <richard.henderson@linaro.org> wrote:
+Greetings,
 
-> On 6/4/24 14:08, Michael S. Tsirkin wrote:
-> > From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > 
-> > Given this is a new configuration, there are affects on APIC, CEDT
-> > and DSDT, but the key elements are in SRAT (plus related data in
-> > HMAT).  The configuration has node to exercise many different combinations.
-> > 
-> > 0) CPUs + Memory
-> > 1) GI only
-> > 2) GP only
-> > 3) CPUS only
-> > 4) Memory only
-> > 5) CPUs + HP memory
-> > 
-> > GI node, GP Node, Memory only node, hotplug memory
-> > only node, latency and bandwidth such that in Linux Access0
-> > (any initiator) and Access1 (CPU initiators only) given different
-> > answers.  Following cropped to remove details of each entry.  
-> 
-> 
-> This fails testing:
-> 
-> https://gitlab.com/qemu-project/qemu/-/jobs/7021105504
-> 
-> acpi-test: Warning! SRAT binary file mismatch. Actual [aml:/tmp/aml-GHR6O2], Expected 
-> [aml:tests/data/acpi/q35/SRAT.acpihmat-generic-x].
-> See source file tests/qtest/bios-tables-test.c for instructions on how to update expected 
-> files.
-> to see ASL diff between mismatched files install IASL, rebuild QEMU from scratch and 
-> re-run tests with V=1 environment variable set**
-> ERROR:../alt/tests/qtest/bios-tables-test.c:550:test_acpi_asl: assertion failed: 
-> (all_tables_match)
-> Bail out! ERROR:../alt/tests/qtest/bios-tables-test.c:550:test_acpi_asl: assertion failed: 
-> (all_tables_match)
-> Aborted (core dumped)
-> 
+I'd like to introduce you my attempt to enable virglrenderer backend for
+rutabaga empowered virtio-gpu device.  I am aware that there have been
+effort in supporting venus in virtio-gpu-virgl.c [1], but there is no
+reason to prevent us from leveraging the virglrenderer component in
+rutabaga_gfx, especially it being not very hard to add this
+functionality.
 
-s390 and passes on an x86 host, so I guess an endian bug - any chance of a table dump
-from someone with access to an s390 host?
+Generally, the gap is the polling capability, i.e., virglrenderer
+requires the main thread (namely the GPU command handling thread) to
+poll virglrenderer at proper moments, which is not yet supported in
+virtio-gpu-rutabaga device. This patch set try to add this so that
+virglrenderer backend (including virgl and venus) can work as expected.
 
-This test covers some stuff that was previously missing tests
-so may be non trivial to spot.
+Slight change to rutabaga_gfx_ffi is also a requirement, which is
+included in [2].
 
-I'll play guess in the meantime. So far I'm not seeing anything that differs
-from existing ACPI table building code.
+Further effort is required to tune the performance, since copying is
+present before the rendered images get displayed. But I still think this
+patch set could be a good starting point for the pending work.
 
-Jonathan
+For those interested in setting up environment and playing around with
+this patch set, here is guideline in brief:
 
+1. Clone the master/main branch of virglrenderer, compile and install it.
 
-> 
-> r~
+	git clone https://gitlab.freedesktop.org/virgl/virglrenderer
+	cd virglrenderer
+	meson setup builddir \
+	  --prefix=$INSTALL_DIR/virglrenderer \
+	  -Dvenus=true
+	ninja -C builddir install
+
+2. Clone the patched CrosVM, build and install rutabaga_gfx_ffi.
+
+	git clone -b rutabaga_ffi_virgl https://github.com/phreer/crosvm.git
+	cd crosvm/rutabaga_gfx/ffi
+	export PKG_CONFIG_PATH=$INSTALL_DIR/virglrenderer/lib64/pkgconfig/
+	meson setup builddir/ \
+	  --prefix $HOME/install/rutabaga_gfx/rutabaga_gfx_ffi/ \
+	  -Dvirglrenderer=true
+	ninja -C builddir install
+
+3. Applied this patch set to QEMU, build and install it:
+
+	cd qemu	
+	# Apply this patch set atop main branch ...
+	mkdir builddir; cd builddir
+	../configure --prefix=$INSTALL_DIR/qemu \
+	  --target-list=x86_64-softmmu \
+	  --disable-virglrenderer \
+	  --enable-rutabaga_gfx
+	ninja -C builddir install
+
+4. If you are lucky and everything goes fine, you are prepared to launch
+   VM with virglrenderer backed virtio-gpu-rutabaga device:
+
+	export LD_LIBRARY_PATH=$INSTALL_DIR/virglrenderer/lib64/:$LD_LIBRARY_PATH
+	export LD_LIBRARY_PATH=$INSTALL_DIR/rutabaga_gfx_ffi/lib64/:$LD_LIBRARY_PATH
+	$INSTALL_DIR/qemu/bin/qemu-system-x86_64
+	$QEMU -d guest_errors -enable-kvm -M q35 -smp 4 -m $MEM \
+	  -object memory-backend-memfd,id=mem1,size=$MEM \
+	  -machine memory-backend=mem1 \
+	  -device virtio-vga-rutabaga,venus=on,virgl2=on,wsi=surfaceless,hostmem=$MEM \
+
+Note:
+
+- You might need this patch set [3] to avoid KVM bad address error when
+  you are running on a GPU using TTM for memory management.
+
+[1] https://lore.kernel.org/all/dba6eb97-e1d1-4694-bfb6-e72db95715dd@daynix.com/T/
+[2] https://chromium-review.googlesource.com/c/crosvm/crosvm/+/5599645/1
+[3] https://lore.kernel.org/kvm/20240229025759.1187910-1-stevensd@google.com/
+
+Weifeng Liu (3):
+  virtio-gpu: rutabaga: Properly set stride when copying resources
+  virtio-gpu: rutabaga: Poll rutabaga upon events
+  virtio-gpu: rutabaga: Add options to enable virgl and venus contexts
+
+ hw/display/virtio-gpu-rutabaga.c | 104 ++++++++++++++++++++++++++++++-
+ include/hw/virtio/virtio-gpu.h   |   1 +
+ 2 files changed, 104 insertions(+), 1 deletion(-)
+
+-- 
+2.45.0
 
 
