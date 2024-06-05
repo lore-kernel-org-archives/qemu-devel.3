@@ -4,66 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C710AC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 15:18:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44848C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 15:21:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEsP5-0003ec-OK; Wed, 05 Jun 2024 11:18:20 -0400
+	id 1sEsRD-00053d-M3; Wed, 05 Jun 2024 11:20:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1sEsP2-0003eA-WD
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 11:18:17 -0400
-Received: from szxga02-in.huawei.com ([45.249.212.188])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1sEsOw-0004Wv-Ug
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 11:18:16 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.252])
- by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4VvWJY0Tbrzclq4;
- Wed,  5 Jun 2024 23:16:29 +0800 (CST)
-Received: from dggems706-chm.china.huawei.com (unknown [10.3.19.183])
- by mail.maildlp.com (Postfix) with ESMTPS id 44FF218007A;
- Wed,  5 Jun 2024 23:17:53 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (7.191.163.240) by
- dggems706-chm.china.huawei.com (10.3.19.183) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 5 Jun 2024 23:17:47 +0800
-Received: from lhrpeml500005.china.huawei.com ([7.191.163.240]) by
- lhrpeml500005.china.huawei.com ([7.191.163.240]) with mapi id 15.01.2507.039; 
- Wed, 5 Jun 2024 16:17:45 +0100
-To: Fabiano Rosas <farosas@suse.de>, "peterx@redhat.com" <peterx@redhat.com>, 
- "yuan1.liu@intel.com" <yuan1.liu@intel.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Linuxarm
- <linuxarm@huawei.com>, "linwenkai (C)" <linwenkai6@hisilicon.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>, huangchenghai
- <huangchenghai2@huawei.com>
-Subject: RE: [PATCH 4/7] migration/multifd: Add UADK initialization
-Thread-Topic: [PATCH 4/7] migration/multifd: Add UADK initialization
-Thread-Index: AQHasa8ma9zlPdHpIkSgR6GeVHMe97G5PWQAgAAVbqA=
-Date: Wed, 5 Jun 2024 15:17:45 +0000
-Message-ID: <cc603b9630bf4505a308d069ac3a5eac@huawei.com>
-References: <20240529094435.11140-1-shameerali.kolothum.thodi@huawei.com>
- <20240529094435.11140-5-shameerali.kolothum.thodi@huawei.com>
- <87zfrzfnd1.fsf@suse.de>
-In-Reply-To: <87zfrzfnd1.fsf@suse.de>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.202.227.28]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1sEsRA-00052q-DD
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 11:20:28 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1sEsR6-0005Nz-Gr
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 11:20:27 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2eaccc0979eso385301fa.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 08:20:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1717600821; x=1718205621; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pgufYDfr2vSd1Um9j1aWhMIkNPmsx68QKSVorSRWLCU=;
+ b=CgpkRkcGHqL3T7B7a2I38qGAYc9QfR40F4xyKqwYjCeJpaoPZxoqCcS3twnV1qI7HZ
+ UmXvteT9DzK7ZcNPs+oBb6JfeEeN/yHzAnE4lG/Y/z706fQpIfle4fOfBgGUbXZk+oOm
+ YSaOmMpNo8YZY3+HWGgllpcI+aaSx9ACx2zNdcYbIQld584maC5UoZdBPRcx+vwwzz1e
+ 51yr+feoyEOo5Hh4eOuJOeunRp+VJASzeizaEoieVDA3D6MdtodGzTMZmWyWv5mHsLmr
+ bWjZGgQ4Q7g5Ky8nQqlAdcy+4KWtZvAsUMzsVNs0nniZkWFyhRVqYZMinOVXLQZQq+z5
+ c1uA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717600821; x=1718205621;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pgufYDfr2vSd1Um9j1aWhMIkNPmsx68QKSVorSRWLCU=;
+ b=PfomMe0p/HlqKzr9V7vQo9EmYdcwOgY4Otq9qyAwwNXGrTDEBY5TGQrJ77P7iWLHla
+ YsCKOPcmiG3ndXCgrCZOSfBCNcS7vBpWlV+xsNzRLOHEwJv5X5/NFuK6LECsfEQB9gT1
+ rZdCxKs/iFMWBRAFarBIABT7Dmi+3pxpGmeBmjB1qF34DqfIjdsMxYPDKIm6oJiwvU38
+ B5HFvA7/Uj6kqwte7BYqiNbaAnl/zxosfW3ln99mpiEJWoe7j3geZ7vfwPvZNFu0RVCc
+ CW8qxaTSwlAmTSooXSbeAQYQ2aCQJAOZDUmyIYuWn7xaSViMsKyTl1Byl7+6nn/7/nHt
+ IRKQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUtrzwjYTfQZPWZUNdSdP1Sk20mjseuumiOyM5CBjr2PR/ewepeoJaF4tw1AJ2D2CHQxHf9lmerQPWcStSWOaKBhNOE+2I=
+X-Gm-Message-State: AOJu0Yx2/+B8CiVaBaA7ozm+50soWQATyUhHObrZijE/mwfYRBprAk75
+ svV0REv4FyyV8k5JGQFxFxUA+7oehAAiMICpGUbegycAvRnwmRQdRDY/4U6JaKHoHtRNlusyi1K
+ JqYOGl9/NGCaNhRFdN5vz5GyWhC4=
+X-Google-Smtp-Source: AGHT+IGE6GYNMmXUQBguSUuW7NXW16cLFfTY4JjF3bHBZXlJ8225AvsS2VRsp+QiTLN0SdszmIoQLHSe1iF+u9afPoM=
+X-Received: by 2002:a2e:86c6:0:b0:2ea:7def:46d0 with SMTP id
+ 38308e7fff4ca-2eac79ba55cmr16318091fa.9.1717600821125; Wed, 05 Jun 2024
+ 08:20:21 -0700 (PDT)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=45.249.212.188;
- envelope-from=shameerali.kolothum.thodi@huawei.com; helo=szxga02-in.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240530152223.780232-1-aesteve@redhat.com>
+ <20240530152223.780232-2-aesteve@redhat.com>
+ <20240604185416.GB90471@fedora.redhat.com>
+ <CADSE00+yvsOhiJJg0ePgr7AYVCkjm9xWNj7KpAOFMwj2wuEpGg@mail.gmail.com>
+ <20240605142849.GC135899@fedora.redhat.com>
+In-Reply-To: <20240605142849.GC135899@fedora.redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 5 Jun 2024 11:19:57 -0400
+Message-ID: <CAJSP0QUL8VNsYB-D1gaBoE0nrXAQozELU4fwNqoFy5FC9OiEng@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/1] vhost-user: add shmem mmap request
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org, mst@redhat.com, 
+ slp@redhat.com, jasowang@redhat.com, David Hildenbrand <david@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=stefanha@gmail.com; helo=mail-lj1-x234.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,248 +93,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> -----Original Message-----
-> From: Fabiano Rosas <farosas@suse.de>
-> Sent: Wednesday, June 5, 2024 3:58 PM
-> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>;
-> peterx@redhat.com; yuan1.liu@intel.com
-> Cc: qemu-devel@nongnu.org; Linuxarm <linuxarm@huawei.com>; linwenkai
-> (C) <linwenkai6@hisilicon.com>; zhangfei.gao@linaro.org; huangchenghai
-> <huangchenghai2@huawei.com>
-> Subject: Re: [PATCH 4/7] migration/multifd: Add UADK initialization
->=20
-> Shameer Kolothum via <qemu-devel@nongnu.org> writes:
->=20
-> > Initialize UADK session and allocate buffers required. The actual
-> > compression/decompression will only be done in a subsequent patch.
+On Wed, 5 Jun 2024 at 10:29, Stefan Hajnoczi <stefanha@redhat.com> wrote:
+>
+> On Wed, Jun 05, 2024 at 10:13:32AM +0200, Albert Esteve wrote:
+> > On Tue, Jun 4, 2024 at 8:54=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat=
+.com> wrote:
 > >
-> > Signed-off-by: Shameer Kolothum
-> <shameerali.kolothum.thodi@huawei.com>
-> > ---
-> >  migration/multifd-uadk.c | 207
-> ++++++++++++++++++++++++++++++++++++++-
-> >  1 file changed, 206 insertions(+), 1 deletion(-)
+> > > On Thu, May 30, 2024 at 05:22:23PM +0200, Albert Esteve wrote:
+> > > > Add SHMEM_MAP/UNMAP requests to vhost-user.
+> > > >
+> > > > This request allows backends to dynamically map
+> > > > fds into a shared memory region indentified by
+> > >
+> > > Please call this "VIRTIO Shared Memory Region" everywhere (code,
+> > > vhost-user spec, commit description, etc) so it's clear that this is =
+not
+> > > about vhost-user shared memory tables/regions.
+> > >
+> > > > its `shmid`. Then, the fd memory is advertised
+> > > > to the frontend through a BAR+offset, so it can
+> > > > be read by the driver while its valid.
+> > >
+> > > Why is a PCI BAR mentioned here? vhost-user does not know about the
+> > > VIRTIO Transport (e.g. PCI) being used. It's the frontend's job to
+> > > report VIRTIO Shared Memory Regions to the driver.
+> > >
+> > >
+> > I will remove PCI BAR, as it is true that it depends on the
+> > transport. I was trying to explain that the driver
+> > will use the shm_base + shm_offset to access
+> > the mapped memory.
 > >
-> > diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
-> > index c2bb07535b..3172e4d5ca 100644
-> > --- a/migration/multifd-uadk.c
-> > +++ b/migration/multifd-uadk.c
-> > @@ -12,9 +12,214 @@
 > >
-> >  #include "qemu/osdep.h"
-> >  #include "qemu/module.h"
-> > +#include "qapi/error.h"
-> > +#include "migration.h"
-> > +#include "multifd.h"
-> > +#include "options.h"
-> > +#include "uadk/wd_comp.h"
-> > +#include "uadk/wd_sched.h"
-> > +
-> > +struct wd_data {
-> > +    handle_t handle;
-> > +    uint8_t *buf;
-> > +    uint32_t *buf_hdr;
-> > +};
-> > +
-> > +static bool uadk_hw_initialised(void)
->=20
-> The first time this is called it will actually do the initialization,
-> no? If so, it should be uadk_hw_init().
+> > > >
+> > > > Then, the backend can munmap the memory range
+> > > > in a given shared memory region (again, identified
+> > > > by its `shmid`), to free it. After this, the
+> > > > region becomes private and shall not be accessed
+> > > > by the frontend anymore.
+> > >
+> > > What does "private" mean?
+> > >
+> > > The frontend must mmap PROT_NONE to reserve the virtual memory space
+> > > when no fd is mapped in the VIRTIO Shared Memory Region. Otherwise an
+> > > unrelated mmap(NULL, ...) might use that address range and the guest
+> > > would have access to the host memory! This is a security issue and ne=
+eds
+> > > to be mentioned explicitly in the spec.
+> > >
+> >
+> > I mentioned private because it changes the mapping from MAP_SHARED
+> > to MAP_PRIVATE. I will highlight PROT_NONE instead.
+>
+> I see. Then "MAP_PRIVATE" would be clearer. I wasn't sure whether you
+> mean mmap flags or something like the memory range is no longer
+> accessible to the driver.
 
-Ok. Makes sense.
+One more thing: please check whether kvm.ko memory regions need to be
+modified or split to match the SHMEM_MAP mapping's read/write
+permissions.
 
->=20
-> > +{
-> > +    char alg[] =3D "zlib";
-> > +    int ret;
-> > +
-> > +    ret =3D wd_comp_init2(alg, SCHED_POLICY_RR, TASK_HW);
-> > +    if (ret && ret !=3D -WD_EEXIST) {
-> > +        return false;
-> > +    } else {
-> > +        return true;
-> > +    }
-> > +}
-> > +
-> > +static struct wd_data *multifd_uadk_init_sess(uint32_t count,
-> > +                                              uint32_t page_size,
-> > +                                              bool compress, Error **e=
-rrp)
-> > +{
-> > +    struct wd_comp_sess_setup ss =3D {0};
-> > +    struct sched_params param =3D {0};
-> > +    uint32_t size =3D count * page_size;
-> > +    struct wd_data *wd;
-> > +
-> > +    if (!uadk_hw_initialised()) {
-> > +        error_setg(errp, "multifd: UADK hardware not available");
->=20
-> Does the lib provide a software fallback path that we could use like QPL
-> does?
+The VIRTIO Shared Memory Area pages can have PROT_READ, PROT_WRITE,
+PROT_READ|PROT_WRITE, or PROT_NONE.
 
-Unfortunately not. That is why I added patch #6 where we will just send
-raw data to take care the CI test.
+kvm.ko memory regions are read/write or read-only. I'm not sure what
+happens when the guest accesses a kvm.ko memory region containing
+mappings with permissions more restrictive than its kvm.ko memory
+region. In other words, the kvm.ko memory region would allow the
+access but the Linux virtual memory configuration would cause a page
+fault.
 
->=20
-> > +        return NULL;
-> > +    }
-> > +
-> > +    wd =3D g_new0(struct wd_data, 1);
-> > +    ss.alg_type =3D WD_ZLIB;
-> > +    if (compress) {
-> > +        ss.op_type =3D WD_DIR_COMPRESS;
-> > +        /* Add an additional page for handling output > input */
-> > +        size +=3D page_size;
-> > +    } else {
-> > +        ss.op_type =3D WD_DIR_DECOMPRESS;
-> > +    }
-> > +    param.type =3D ss.op_type;
-> > +    ss.sched_param =3D &param;
->=20
-> What about window size and compression level? Don't we need to set them
-> here? What do they default to?
+For example, imagine a QEMU MemoryRegion containing a SHMEM_MAP
+mapping with PROT_READ. The kvm.ko memory region would be read/write
+(unless extra steps were taken to tell kvm.ko about the permissions).
+When the guest stores to the PROT_READ page, kvm.ko will process a
+fault...and I'm not sure what happens next.
 
-Level 1 and 4K. I will add a comment here.
-=20
-> > +
-> > +    wd->handle =3D wd_comp_alloc_sess(&ss);
-> > +    if (!wd->handle) {
-> > +        error_setg(errp, "multifd: failed wd_comp_alloc_sess");
-> > +        goto out;
-> > +    }
-> > +
-> > +    wd->buf =3D g_try_malloc(size);
-> > +    if (!wd->buf) {
-> > +        error_setg(errp, "multifd: out of mem for uadk buf");
-> > +        goto out_free_sess;
-> > +    }
-> > +    wd->buf_hdr =3D g_new0(uint32_t, count);
-> > +    return wd;
-> > +
-> > +out_free_sess:
-> > +    wd_comp_free_sess(wd->handle);
-> > +out:
-> > +    wd_comp_uninit2();
-> > +    g_free(wd);
-> > +    return NULL;
-> > +}
-> > +
-> > +static void multifd_uadk_uninit_sess(struct wd_data *wd)
-> > +{
-> > +    wd_comp_free_sess(wd->handle);
-> > +    wd_comp_uninit2();
-> > +    g_free(wd->buf);
-> > +    g_free(wd->buf_hdr);
-> > +    g_free(wd);
-> > +}
-> > +
-> > +/**
-> > + * multifd_uadk_send_setup: setup send side
-> > + *
-> > + * Returns 0 for success or -1 for error
-> > + *
-> > + * @p: Params for the channel that we are using
-> > + * @errp: pointer to an error
-> > + */
-> > +static int multifd_uadk_send_setup(MultiFDSendParams *p, Error **errp)
-> > +{
-> > +    struct wd_data *wd;
-> > +
-> > +    wd =3D multifd_uadk_init_sess(p->page_count, p->page_size, true, e=
-rrp);
-> > +    if (!wd) {
-> > +        return -1;
-> > +    }
-> > +
-> > +    p->compress_data =3D wd;
-> > +    assert(p->iov =3D=3D NULL);
-> > +    /*
-> > +     * Each page will be compressed independently and sent using an IO=
-V.
-> The
-> > +     * additional two IOVs are used to store packet header and compres=
-sed
-> data
-> > +     * length
-> > +     */
-> > +
-> > +    p->iov =3D g_new0(struct iovec, p->page_count + 2);
-> > +    return 0;
-> > +}
-> > +
-> > +/**
-> > + * multifd_uadk_send_cleanup: cleanup send side
-> > + *
-> > + * Close the channel and return memory.
-> > + *
-> > + * @p: Params for the channel that we are using
-> > + * @errp: pointer to an error
-> > + */
-> > +static void multifd_uadk_send_cleanup(MultiFDSendParams *p, Error
-> **errp)
-> > +{
-> > +    struct wd_data *wd =3D p->compress_data;
-> > +
-> > +    multifd_uadk_uninit_sess(wd);
-> > +    p->compress_data =3D NULL;
-> > +}
-> > +
-> > +/**
-> > + * multifd_uadk_send_prepare: prepare data to be able to send
-> > + *
-> > + * Create a compressed buffer with all the pages that we are going to
-> > + * send.
-> > + *
-> > + * Returns 0 for success or -1 for error
-> > + *
-> > + * @p: Params for the channel that we are using
-> > + * @errp: pointer to an error
-> > + */
-> > +static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error
-> **errp)
-> > +{
-> > +    return -1;
-> > +}
-> > +
-> > +/**
-> > + * multifd_uadk_recv_setup: setup receive side
-> > + *
-> > + * Create the compressed channel and buffer.
-> > + *
-> > + * Returns 0 for success or -1 for error
-> > + *
-> > + * @p: Params for the channel that we are using
-> > + * @errp: pointer to an error
-> > + */
-> > +static int multifd_uadk_recv_setup(MultiFDRecvParams *p, Error **errp)
-> > +{
-> > +    struct wd_data *wd;
-> > +
-> > +    wd =3D multifd_uadk_init_sess(p->page_count, p->page_size, false, =
-errp);
-> > +    if (!wd) {
-> > +        return -1;
-> > +    }
-> > +    p->compress_data =3D wd;
-> > +    return 0;
-> > +}
-> > +
-> > +/**
-> > + * multifd_uadk_recv_cleanup: setup receive side
-> > + *
-> > + * For no compression this function does nothing.
->=20
-> This line makes no sense here.
+A similar scenario occurs when a PROT_NONE mapping exists within a
+kvm.ko memory region. I don't remember how kvm.ko behaves when the
+guest tries to access the pages.
 
-Ok.
+It's worth figuring this out before going further because it could
+become tricky if issues are discovered later. I have CCed David
+Hildenbrand in case he knows.
 
-Thanks,
-Shameer
+Stefan
 
