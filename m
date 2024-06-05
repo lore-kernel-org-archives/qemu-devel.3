@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC07C27C52
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 07:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B8D5C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 07:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sElWX-0006px-37; Wed, 05 Jun 2024 03:57:33 -0400
+	id 1sElWZ-0006qb-HH; Wed, 05 Jun 2024 03:57:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sElWV-0006pi-Fe
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:57:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sElWT-0004vE-DI
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:57:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717574248;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9AZEdKeDV6It+lG/VoCMIa73B0kziRqa48QTZ9z2H54=;
- b=FUnLF2QwONCqyBbg+EoA9LLGJYP6KXUEA9by+hlz4lEp+gwrG6DougfYS0ajbloE237ext
- JmRcjLA0jLLT+DS05hAqx6mXiwcxA68wAS818Hmcdz70GOMIrB/Rn+YjMiKgVHa3IegcGe
- R6hYPYFNjuET/TaVw5OOFAato3J3wfg=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-Dpi2-SIZOaCHknKO4NP-yw-1; Wed, 05 Jun 2024 03:57:25 -0400
-X-MC-Unique: Dpi2-SIZOaCHknKO4NP-yw-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a592c35ac06so69858966b.0
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 00:57:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sElWY-0006qH-72
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:57:34 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sElWW-0004vg-MU
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 03:57:33 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42138eadf64so32224335e9.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 00:57:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717574251; x=1718179051; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=egrl/d8rzBTRdPhuc6RcD/PapG2iaIfvjCjdwARZSLA=;
+ b=BsTDy75BN6G+P1C0CpdvAaO4mGT0hFpJWpBmvQwdX19LejmLE4VrxUAlXNNSH2SUtL
+ 01BlfKTJKbbkAdaxqJ/h2nJMdUjz1bwGSdzBAV8zSlJo0mP9aKIll2RoalyfxLjiINPg
+ yp6rgPYJa57akl6eiq0RFfL01ju1b1Pp14AcFVhnYzoyc//gWBo1PHap7V7blXSo99P+
+ bPC9WQ9Addn+SjMhbOOzhIkOQZ0Wb4ADe+MreyjX2TLp2z19i89YabeJMxr9S2CUXp2l
+ zmL4068PQSOqpjMVTtxvsdDTZHIJifajY/LBKXBXxu7vfZEVn+GqJP5ZwmUr7QWUrUbe
+ mYrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717574244; x=1718179044;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9AZEdKeDV6It+lG/VoCMIa73B0kziRqa48QTZ9z2H54=;
- b=J3a0+YuW1EXeCMy7OCrjkiQWGbT7GV4u9fHuZ3hG7ddsjk3rcNNDkLh1xqoLsM+MZ6
- LQ5I7pfgFSCpPc2DQpsHPU8lynKXtvk9470XUVp6Btz3c8KVf1RKBom5BoUOKDTOZarM
- 59syxxBjfaIWHtzKNFfv32f02f8SjmFFFlaYQLABWM2SVDEFSKhDDciKtklp+lZ2c13t
- VLMoiD5bmJ7Wq9RLzoz8NTggGi1OfiICJhEYntdZfCnMsaq4aGYnWDK3JOdBifQn77sb
- iqCB20w1cZo1exnayfowMcbK6iQa4kjh8MysYBpHCdFvssYnfCCkRQJtysARfQMh3vGT
- URxw==
-X-Gm-Message-State: AOJu0Yx/J4wBQoBwVIWU8ETFPGgSIxsqprJm18vVAyl2oK7FBbwCvhRO
- XgPfQWJCZb1qHwImvgyc907D3d377juk8W2nS50aHRD0zeCYNzJ4kZOU1lT34GOrpxFsWBN45qK
- wQX5Vn6H7+QcY0aBxQDYSKxiEl+QwfYvXWH+BK5qwGwEZBkfmSxrz
-X-Received: by 2002:a17:906:e293:b0:a68:b073:14a5 with SMTP id
- a640c23a62f3a-a695425e2e8mr382008866b.9.1717574244303; 
- Wed, 05 Jun 2024 00:57:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEo86eY/+NYIWpLgLobm7VEbFCXsxnF8uUvdSLuT2MbMA7sHu6ghdGJJjiI3cCrT2mvWig16w==
-X-Received: by 2002:a17:906:e293:b0:a68:b073:14a5 with SMTP id
- a640c23a62f3a-a695425e2e8mr382007766b.9.1717574243761; 
- Wed, 05 Jun 2024 00:57:23 -0700 (PDT)
-Received: from redhat.com ([2.55.8.167]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a68cc45cea7sm548198566b.51.2024.06.05.00.57.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 00:57:23 -0700 (PDT)
-Date: Wed, 5 Jun 2024 03:57:18 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Gonglei <arei.gonglei@huawei.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, yu.zhang@ionos.com,
- mgalaxy@akamai.com, elmar.gerdes@ionos.com, zhengchuan@huawei.com,
- berrange@redhat.com, armbru@redhat.com, lizhijian@fujitsu.com,
- pbonzini@redhat.com, xiexiangyou@huawei.com,
- linux-rdma@vger.kernel.org, lixiao91@huawei.com,
- jinpu.wang@ionos.com, Jialin Wang <wangjialin23@huawei.com>
-Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
-Message-ID: <20240605035622-mutt-send-email-mst@kernel.org>
-References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
+ d=1e100.net; s=20230601; t=1717574251; x=1718179051;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=egrl/d8rzBTRdPhuc6RcD/PapG2iaIfvjCjdwARZSLA=;
+ b=Nb+0tDRAfXfZo+RHX2hzfQ/QUTSiKZY6AnAE0BvQNl4lTZLJ5ovr2j8AubM+OQHzyV
+ h4K6mL7F9ts22T9g5IyM6JxjX37+bEk8BdNKwp5O6uqut5riExB2DH03BKUWbcu0YI8o
+ I3jLCgWprHiL2V2Ls5W8EfkIIK/wbt9Hb/7C7uQGALBePkPTj1Kl4xN9P8saFvu80y6H
+ 15uOMZ4lfH8RTc4noPEbepG+EK70eAQdYJI5vOl3dZE010HoV0tbcfFpBRNrI2i2Bf7D
+ 29Y3RJ7zNOH5pbGeOk1dAi87o6uPfZ7QISFkXKVvIp9K2uAs6urcDeNo+1hnWm14JMSu
+ wm2A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdUlJS5znnfSJDpg8/bz3zS1aFCIVHxIarVhcNof3CCKHnIs34qPpgxudDDt44vrGrAlVUdo7Sr6y1RsvIJoNlLMRN4b8=
+X-Gm-Message-State: AOJu0YyhZxP1Ne129a0ZEmayqGmsM9lU87xvSbxbbuUOqucCd68HOUZk
+ r8zfdcfljGD/nT4xqDa8Tmx1J1le4aF6srG1ywxaANK0nx3ZEWuzwaKVVANK+8k=
+X-Google-Smtp-Source: AGHT+IGjAHp1inj4UgHzqUbci2IGN2xsLD19xiN/rXBykXqhvKJ5p/X9zo8dIIa9gZ+5xNJQZoI1FQ==
+X-Received: by 2002:a05:600c:458e:b0:420:2986:ccee with SMTP id
+ 5b1f17b1804b1-4215633febamr13040875e9.30.1717574250967; 
+ Wed, 05 Jun 2024 00:57:30 -0700 (PDT)
+Received: from [192.168.60.175] (144.red-88-29-107.staticip.rima-tde.net.
+ [88.29.107.144]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-421581111easm10757595e9.19.2024.06.05.00.57.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Jun 2024 00:57:30 -0700 (PDT)
+Message-ID: <849a91fa-b3fe-4981-a7e3-e174179be26b@linaro.org>
+Date: Wed, 5 Jun 2024 09:57:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 19/37] target/sparc: Implement FPCMPEQ8, FPCMPNE8,
+ FPCMPULE8, FPCMPUGT8
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: mark.cave-ayland@ilande.co.uk
+References: <20240526194254.459395-1-richard.henderson@linaro.org>
+ <20240526194254.459395-20-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240526194254.459395-20-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,76 +97,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 04, 2024 at 08:14:06PM +0800, Gonglei wrote:
-> From: Jialin Wang <wangjialin23@huawei.com>
-> 
-> Hi,
-> 
-> This patch series attempts to refactor RDMA live migration by
-> introducing a new QIOChannelRDMA class based on the rsocket API.
-> 
-> The /usr/include/rdma/rsocket.h provides a higher level rsocket API
-> that is a 1-1 match of the normal kernel 'sockets' API, which hides the
-> detail of rdma protocol into rsocket and allows us to add support for
-> some modern features like multifd more easily.
-> 
-> Here is the previous discussion on refactoring RDMA live migration using
-> the rsocket API:
-> 
-> https://lore.kernel.org/qemu-devel/20240328130255.52257-1-philmd@linaro.org/
-> 
-> We have encountered some bugs when using rsocket and plan to submit them to
-> the rdma-core community.
-> 
-> In addition, the use of rsocket makes our programming more convenient,
-> but it must be noted that this method introduces multiple memory copies,
-> which can be imagined that there will be a certain performance degradation,
-> hoping that friends with RDMA network cards can help verify, thank you!
-
-So you didn't test it with an RDMA card?
-You really should test with an RDMA card though, for correctness
-as much as performance.
+On 26/5/24 21:42, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/sparc/helper.h     |  4 ++++
+>   target/sparc/insns.decode |  5 +++++
+>   target/sparc/translate.c  |  9 +++++++++
+>   target/sparc/vis_helper.c | 40 +++++++++++++++++++++++++++++++++++++++
+>   4 files changed, 58 insertions(+)
 
 
-> Jialin Wang (6):
->   migration: remove RDMA live migration temporarily
->   io: add QIOChannelRDMA class
->   io/channel-rdma: support working in coroutine
->   tests/unit: add test-io-channel-rdma.c
->   migration: introduce new RDMA live migration
->   migration/rdma: support multifd for RDMA migration
-> 
->  docs/rdma.txt                     |  420 ---
->  include/io/channel-rdma.h         |  165 ++
->  io/channel-rdma.c                 |  798 ++++++
->  io/meson.build                    |    1 +
->  io/trace-events                   |   14 +
->  meson.build                       |    6 -
->  migration/meson.build             |    3 +-
->  migration/migration-stats.c       |    5 +-
->  migration/migration-stats.h       |    4 -
->  migration/migration.c             |   13 +-
->  migration/migration.h             |    9 -
->  migration/multifd.c               |   10 +
->  migration/options.c               |   16 -
->  migration/options.h               |    2 -
->  migration/qemu-file.c             |    1 -
->  migration/ram.c                   |   90 +-
->  migration/rdma.c                  | 4205 +----------------------------
->  migration/rdma.h                  |   67 +-
->  migration/savevm.c                |    2 +-
->  migration/trace-events            |   68 +-
->  qapi/migration.json               |   13 +-
->  scripts/analyze-migration.py      |    3 -
->  tests/unit/meson.build            |    1 +
->  tests/unit/test-io-channel-rdma.c |  276 ++
->  24 files changed, 1360 insertions(+), 4832 deletions(-)
->  delete mode 100644 docs/rdma.txt
->  create mode 100644 include/io/channel-rdma.h
->  create mode 100644 io/channel-rdma.c
->  create mode 100644 tests/unit/test-io-channel-rdma.c
-> 
-> -- 
-> 2.43.0
+> +uint64_t helper_fcmpeq8(uint64_t src1, uint64_t src2)
+> +{
+> +    uint64_t a = src1 ^ src2;
+> +    uint64_t m = 0x7f7f7f7f7f7f7f7fULL;
+> +    uint64_t c = ~(((a & m) + m) | a | m);
+> +
+> +    /* a.......b.......c.......d.......e.......f.......g.......h....... */
+> +    c |= c << 7;
+> +    /* ab......bc......cd......de......ef......fg......gh......h....... */
+> +    c |= c << 14;
+> +    /* abcd....bcde....cdef....defg....efgh....fgh.....gh......h....... */
+> +    c |= c << 28;
+> +    /* abcdefghbcdefgh.cdefgh..defgh...efgh....fgh.....gh......h....... */
+> +    return c >> 56;
+> +}
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
