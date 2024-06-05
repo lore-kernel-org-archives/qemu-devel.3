@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148BCC41513
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 02:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11B76C27C50
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 02:05:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEg0u-0007Oq-LY; Tue, 04 Jun 2024 22:04:32 -0400
+	id 1sEg0w-0007PS-6D; Tue, 04 Jun 2024 22:04:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sEg0t-0007OM-5v
+ id 1sEg0t-0007OX-TV
  for qemu-devel@nongnu.org; Tue, 04 Jun 2024 22:04:31 -0400
 Received: from fhigh8-smtp.messagingengine.com ([103.168.172.159])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sEg0q-00076L-Ae
- for qemu-devel@nongnu.org; Tue, 04 Jun 2024 22:04:30 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
- by mailfhigh.nyi.internal (Postfix) with ESMTP id 390EB11401D3;
- Tue,  4 Jun 2024 22:04:27 -0400 (EDT)
+ id 1sEg0s-00076m-1Y
+ for qemu-devel@nongnu.org; Tue, 04 Jun 2024 22:04:31 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailfhigh.nyi.internal (Postfix) with ESMTP id 96E5411401F0;
+ Tue,  4 Jun 2024 22:04:29 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute6.internal (MEProxy); Tue, 04 Jun 2024 22:04:27 -0400
+ by compute5.internal (MEProxy); Tue, 04 Jun 2024 22:04:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:message-id:mime-version:reply-to
- :subject:subject:to:to; s=fm2; t=1717553067; x=1717639467; bh=9J
- y4d2U9vHoG6NJ+h3kJCPVfwr4w7I0ujBENill8wxk=; b=HmA58jHivnFAPUg9Nq
- fX797bQpTJrnHYsg6td3s9auSI9lBhtyrOcqliVzaO/WYTf+xj7e4Vlx+YSYJgVF
- DlbyLYOBshXrYzGJXQx4y+j8fy7k8j5hp3xR1zC/0EKMOGyoI7JnZ61Q8bNSjiKO
- QTpnPA513wDOqpk2trUVtb9YqoJI/l3hLP7pvwNY1TJ8QebnZOoH34E9GFsjMmuC
- BKJX4JgpMeq5Trqe0CEmvytoPssmJ1mnOjpI38vqoIFd8gJ1fHKSBot+wNqyUc5C
- OEyAFHV0Y3eDRuRmUQInh7KOuq+HLmiPa/sKmj93Okrw4oC+B0rDS0wZRtXTfThP
- 5TUg==
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1717553069;
+ x=1717639469; bh=qsdV9vskjuBmzS46VzX1Mqyfv9fGhQMQDsiIY2hOhAw=; b=
+ l8p/leYiWfSc+waSWY4rB3PctPa2dtq3xPdXXo4h8upIyv/7fm3CehScmpjdlW5E
+ jf3vMGiwrqQzZtMI5ZEkvcuGB+b+yq2tBamm3QFLkOEM0FaBbPbIG7mbGns/cRTg
+ biCu0HiPh3NGqhX+WQx3CaMzjPWDxVzvc/ANtte609lGwDWI8FkPM7WFesImpYmu
+ /sHEnGiGB5HUh0ZiEWEbL/4+JlZzf0XmjyKPjxrx1qKTXwLoeS/NNP3XKUcNHxKT
+ dhZUELy3Rrv735/oIjNkxGEFt0MlKnb328wjFDxy2CwTuYFwbw84tbEqNQ0lDMgK
+ ST8lq2p1UfY9jXJzAYDWAw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm1; t=1717553067; x=1717639467; bh=9Jy4d2U9vHoG6
- NJ+h3kJCPVfwr4w7I0ujBENill8wxk=; b=AvVZ8llkoNXR85rSxiP/qF0tOaIb0
- BVNWuQHS/3HSg9bS0fRqzdGxX9p4oOuWBOJjCWubXJPvJI6sHlo24YsDq80pTNZ4
- eb8gR9HSQtDLeB0oriqe2sTKbpYopFQZmBP1r9hJFTwIINeop1fTSiwfDjNFSIAs
- J+15aArZwJ1HZuZsU2gQWKty3ykWS9Gw1RZKY78f3/fWLLTZoV0wdaJNnyzuW2GU
- NBglFuJdajCeZFn0GLJxhnLsfsuXbR88qtFKg6RWswG7/rbbe6Xxe8Faajze9c9T
- qiRsI4Oo0hAuvamsO7YncnkTWzAWYt2ZTBPkaaOeIAm7B0EExg/e9ZpXQ==
-X-ME-Sender: <xms:qsdfZl5OcTeg3Rr4kzGyQa-NbjQHQdgTEcrKC_Qp8dRidEdoUEiGCw>
- <xme:qsdfZi7uRHK7wKkb54kkUpJIQBFZQLXSn0ZHbQLVdOKW3ys15it9Jdn0LGVnauW07
- 0748ISrcioWS1ONLRE>
-X-ME-Received: <xmr:qsdfZscVHwMznIK-3q5AJDUEVBuvsU2UY0AXUZeLO7IeGCxLJ5DCLjI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelhedgheegucetufdoteggodetrfdotf
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1717553069; x=
+ 1717639469; bh=qsdV9vskjuBmzS46VzX1Mqyfv9fGhQMQDsiIY2hOhAw=; b=n
+ LDCLHCQnahQRQoVIVyRCkUbDDkn9fI08WxBhXr+dwTIkLpe/UOwc54cokcu2vlIY
+ g0XhPI/b9b/rg3mKZv31bdlxXHsAsQ4uv8ZVTkpMKnQNf6JpzdRgpsKgGETZ+69L
+ 5ibO2YMuPm27BftK0jHhYlS+jjzMpmBGJa8aN79a5QOFLhPS5B4qYjwDgpTGwSo3
+ 9SoaTxfvuw52p1PQ7AkFUaG1370GwCxXAxcMMBjEc8PXaLwyhM9iRrGvsV0i8WgI
+ uVSV72aIqLa8OXP9UKcDAWL5erVaLtvcE1Qzc367GHunnz552ZHU+x36GCBAhu5M
+ mBoLeiHGZlelW7RUyAt0g==
+X-ME-Sender: <xms:rcdfZhGrXHKCN0juXQmlbOJQP889T8e--izCXPcezEHR6IsRRreT5w>
+ <xme:rcdfZmU4yKxvXAGElc9Sg7N_QUxEPtNAqu3mhK0VLiXYjiNUt9YyNeWhZFF9SrcGy
+ rYhK1Lzg-PvOqlVaV8>
+X-ME-Received: <xmr:rcdfZjIZZ_5TTouTnBdNareS0QEidzPwY_6DzdnAzWBDxjVW8rxyP7A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelhedgheehucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpeflihgrgihu
- nhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomheqnecugg
- ftrfgrthhtvghrnhepgfevffejteegjeeflefgkeetleekhfeugfegvdeuueejkeejteek
- kedvfffffedunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghruf
- hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehf
- lhihghhorghtrdgtohhm
-X-ME-Proxy: <xmx:qsdfZuJ7JCxo_MRfrxsYFgNuElJlEEsSgEEnZmQ7QP6X3-vzrAOkSg>
- <xmx:qsdfZpKPcf8Hy6iU82lbidVAQH9hcuFkaxbsVCMJMVw6j5r0PH2-Kg>
- <xmx:qsdfZnzp1UHmT0301yn6sHsW4P7zpoMivHxOT1zyi_yt88nbZQqOXQ>
- <xmx:qsdfZlJjx3ACutEu3kyug19506nV0Ut54BpnqXl-xCMmyjWr4ZqMig>
- <xmx:q8dfZnjHqpp1ybpBWhaMRwIepGo2kNrUuGdxVRdg7bROeTgJS38_7w-r>
+ cujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpeflihgr
+ gihunhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomheqne
+ cuggftrfgrthhtvghrnhepvdekiefhfeevkeeuveetfeelffekgedugefhtdduudeghfeu
+ veegffegudekjeelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+ hfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
+X-ME-Proxy: <xmx:rcdfZnEShM0HUf2Jw4ieNySl_bxz0ksikmkhmOJITVOs7vE-k7NSfg>
+ <xmx:rcdfZnUkPWRbCbN6AtX-xqoMeijYZ1ZWnPFgJCSg8_yFbMF04seFYw>
+ <xmx:rcdfZiNAjC9ycIpJGS5_OBQjpD6wNU9GEjD0E1oTnxW2KVGPfzc3WQ>
+ <xmx:rcdfZm1SOC1JpA53QC79oaiApJLKZyExXtLdKADqv6ikywHBqlY5Bg>
+ <xmx:rcdfZtfIkl-2ykKReLXqLHHtkRTGCXwVnDv0eAIh--9Yi5_oAsfAWe0w>
 Feedback-ID: ifd894703:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Jun 2024 22:04:26 -0400 (EDT)
+ 4 Jun 2024 22:04:28 -0400 (EDT)
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH v2 0/4] hw/mips/loongson3_virt: Implement IPI support
-Date: Wed, 05 Jun 2024 03:04:23 +0100
-Message-Id: <20240605-loongson3-ipi-v2-0-da26282e03a5@flygoat.com>
+Date: Wed, 05 Jun 2024 03:04:25 +0100
+Subject: [PATCH v2 2/4] hw/intc/loongson_ipi: Provide per core MMIO address
+ spaces
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAKfHX2YC/3XMQQ6CMBCF4auQWVsz1NIKK+9hWEAtMAl2SEsaC
- eHuVvYu/5e8b4foArkITbFDcIkisc8hLwXYqfOjE/TKDRKlwgrvYmb2Y2R/E7SQ0JWr614ZqxA
- hf5bgBvqc3rPNPVFcOWwnn8rf+k9KpUBRdqbXxqDSWj2GeRu5W6+W39Aex/EFBPxkO6wAAAA=
+Message-Id: <20240605-loongson3-ipi-v2-2-da26282e03a5@flygoat.com>
+References: <20240605-loongson3-ipi-v2-0-da26282e03a5@flygoat.com>
+In-Reply-To: <20240605-loongson3-ipi-v2-0-da26282e03a5@flygoat.com>
 To: qemu-devel@nongnu.org
 Cc: Huacai Chen <chenhuacai@kernel.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1479;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6577;
  i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=bRzoJxzFTfKJ3QGDH4Un6FjF8NKS3LzS1VyD0iJD2ZA=;
- b=owGbwMvMwCXmXMhTe71c8zDjabUkhrT44ysvPNl/nI/LZ7GycVLfg7hEngu5K0t9Fswy/n+sg
- vnqvXDxjlIWBjEuBlkxRZYQAaW+DY0XF1x/kPUHZg4rE8gQBi5OAZjInmSGvwISEo90Q9a1uHf3
- M7O7OS38u37rumeHFfYWH5z8qC1MppKR4eXKwwwmzbpqjR9TF87dt7vsZNepxtylKesnLJxcd2X
- fejYA
+ bh=LZOgZg61JSx7cogFY2kbLtUvCEt/U75uCJMoXwV6gt0=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhrT44yvl1SefWjXlJOfcOONvon8bjj6YVLzg9AKW7VyWb
+ mv7TrLzd5SyMIhxMciKKbKECCj1bWi8uOD6g6w/MHNYmUCGMHBxCsBEUioZGboDLA7Pmhq7zP2b
+ u3Q5b4/nwV1P+6Ln3xOJe7vyeRH/mo8M/ytrjubpbH/3c+5nN513/bcflC+dWHh5h/njzKvtFz9
+ PmMsMAA==
 X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
  fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
 Received-SPF: pass client-ip=103.168.172.159;
@@ -117,49 +117,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+The real IPI hardware have dedicated MMIO registers mapped into
+memory address space for every core. This is not used by LoongArch
+guest software but it is essential for CPU without IOCSR such as
+Loongson-3A1000.
 
-This series enabled IPI support for loongson3 virt board, loosely
-based on my previous work[1].
-It generalized loongarch_ipi device to share among both loongarch
-and MIPS machines. 
+Implement it with existing infrastructure.
 
-Thanks
-
-[1]: https://lore.kernel.org/all/20230521102307.87081-1-jiaxun.yang@flygoat.com/
-
-To: qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>
-
+Acked-by: Song Gao <gaosong@loongson.cn>
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
-Changes in v2:
-- Add a patch to remove loongarch_ipi.c (Gao)
-- Change iocsr alias owner to CPU (philmd)
-- New patch to remove ipi_getcpu
-- Link to v1: https://lore.kernel.org/r/20240508-loongson3-ipi-v1-0-1a7b67704664@flygoat.com
+ hw/intc/loongson_ipi.c         | 81 ++++++++++++++++++++++++++++++++----------
+ include/hw/intc/loongson_ipi.h |  2 ++
+ 2 files changed, 64 insertions(+), 19 deletions(-)
 
----
-Jiaxun Yang (4):
-      hw/intc: Remove loongarch_ipi.c
-      hw/intc/loongson_ipi: Provide per core MMIO address spaces
-      hw/mips/loongson3_virt: Wire up loongson_ipi device
-      hw/intc/loongson_ipi: Replace ipi_getcpu with cpu_by_arch_id
+diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
+index 93cc50a37a11..c8a25b4eb8e2 100644
+--- a/hw/intc/loongson_ipi.c
++++ b/hw/intc/loongson_ipi.c
+@@ -23,16 +23,14 @@
+ #endif
+ #include "trace.h"
+ 
+-static MemTxResult loongson_ipi_readl(void *opaque, hwaddr addr,
++static MemTxResult loongson_ipi_core_readl(void *opaque, hwaddr addr,
+                                        uint64_t *data,
+                                        unsigned size, MemTxAttrs attrs)
+ {
+-    IPICore *s;
+-    LoongsonIPI *ipi = opaque;
++    IPICore *s = opaque;
+     uint64_t ret = 0;
+     int index = 0;
+ 
+-    s = &ipi->cpu[attrs.requester_id];
+     addr &= 0xff;
+     switch (addr) {
+     case CORE_STATUS_OFF:
+@@ -61,6 +59,21 @@ static MemTxResult loongson_ipi_readl(void *opaque, hwaddr addr,
+     return MEMTX_OK;
+ }
+ 
++static MemTxResult loongson_ipi_iocsr_readl(void *opaque, hwaddr addr,
++                                       uint64_t *data,
++                                       unsigned size, MemTxAttrs attrs)
++{
++    LoongsonIPI *ipi = opaque;
++    IPICore *s;
++
++    if (attrs.requester_id >= ipi->num_cpu) {
++        return MEMTX_DECODE_ERROR;
++    }
++
++    s = &ipi->cpu[attrs.requester_id];
++    return loongson_ipi_core_readl(s, addr, data, size, attrs);
++}
++
+ static AddressSpace *get_cpu_iocsr_as(CPUState *cpu)
+ {
+ #ifdef TARGET_LOONGARCH64
+@@ -174,17 +187,17 @@ static MemTxResult any_send(uint64_t val, MemTxAttrs attrs)
+     return send_ipi_data(cs, val, addr, attrs);
+ }
+ 
+-static MemTxResult loongson_ipi_writel(void *opaque, hwaddr addr, uint64_t val,
+-                                        unsigned size, MemTxAttrs attrs)
++static MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr,
++                                            uint64_t val, unsigned size,
++                                            MemTxAttrs attrs)
+ {
+-    LoongsonIPI *ipi = opaque;
+-    IPICore *s;
++    IPICore *s = opaque;
++    LoongsonIPI *ipi = s->ipi;
+     int index = 0;
+     uint32_t cpuid;
+     uint8_t vector;
+     CPUState *cs;
+ 
+-    s = &ipi->cpu[attrs.requester_id];
+     addr &= 0xff;
+     trace_loongson_ipi_write(size, (uint64_t)addr, val);
+     switch (addr) {
+@@ -215,13 +228,11 @@ static MemTxResult loongson_ipi_writel(void *opaque, hwaddr addr, uint64_t val,
+         /* IPI status vector */
+         vector = extract8(val, 0, 5);
+         cs = ipi_getcpu(cpuid);
+-        if (cs == NULL) {
++        if (cs == NULL || cs->cpu_index >= ipi->num_cpu) {
+             return MEMTX_DECODE_ERROR;
+         }
+-
+-        /* override requester_id */
+-        attrs.requester_id = cs->cpu_index;
+-        loongson_ipi_writel(ipi, CORE_SET_OFF, BIT(vector), 4, attrs);
++        loongson_ipi_core_writel(&ipi->cpu[cs->cpu_index], CORE_SET_OFF,
++                                 BIT(vector), 4, attrs);
+         break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "invalid write: %x", (uint32_t)addr);
+@@ -231,9 +242,34 @@ static MemTxResult loongson_ipi_writel(void *opaque, hwaddr addr, uint64_t val,
+     return MEMTX_OK;
+ }
+ 
+-static const MemoryRegionOps loongson_ipi_ops = {
+-    .read_with_attrs = loongson_ipi_readl,
+-    .write_with_attrs = loongson_ipi_writel,
++static MemTxResult loongson_ipi_iocsr_writel(void *opaque, hwaddr addr,
++                                            uint64_t val, unsigned size,
++                                            MemTxAttrs attrs)
++{
++    LoongsonIPI *ipi = opaque;
++    IPICore *s;
++
++    if (attrs.requester_id >= ipi->num_cpu) {
++        return MEMTX_DECODE_ERROR;
++    }
++
++    s = &ipi->cpu[attrs.requester_id];
++    return loongson_ipi_core_writel(s, addr, val, size, attrs);
++}
++
++static const MemoryRegionOps loongson_ipi_core_ops = {
++    .read_with_attrs = loongson_ipi_core_readl,
++    .write_with_attrs = loongson_ipi_core_writel,
++    .impl.min_access_size = 4,
++    .impl.max_access_size = 4,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 8,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
++
++static const MemoryRegionOps loongson_ipi_iocsr_ops = {
++    .read_with_attrs = loongson_ipi_iocsr_readl,
++    .write_with_attrs = loongson_ipi_iocsr_writel,
+     .impl.min_access_size = 4,
+     .impl.max_access_size = 4,
+     .valid.min_access_size = 4,
+@@ -282,7 +318,7 @@ static void loongson_ipi_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    memory_region_init_io(&s->ipi_iocsr_mem, OBJECT(dev), &loongson_ipi_ops,
++    memory_region_init_io(&s->ipi_iocsr_mem, OBJECT(dev), &loongson_ipi_iocsr_ops,
+                           s, "loongson_ipi_iocsr", 0x48);
+ 
+     /* loongson_ipi_iocsr performs re-entrant IO through ipi_send */
+@@ -297,11 +333,18 @@ static void loongson_ipi_realize(DeviceState *dev, Error **errp)
+ 
+     s->cpu = g_new0(IPICore, s->num_cpu);
+     if (s->cpu == NULL) {
+-        error_setg(errp, "Memory allocation for ExtIOICore faile");
++        error_setg(errp, "Memory allocation for IPICore faile");
+         return;
+     }
+ 
+     for (i = 0; i < s->num_cpu; i++) {
++        s->cpu[i].ipi = s;
++        s->cpu[i].ipi_mmio_mem = g_new0(MemoryRegion, 1);
++        g_autofree char *name = g_strdup_printf("loongson_ipi_cpu%d_mmio", i);
++        memory_region_init_io(s->cpu[i].ipi_mmio_mem, OBJECT(dev),
++                              &loongson_ipi_core_ops, &s->cpu[i], name, 0x48);
++        sysbus_init_mmio(sbd, s->cpu[i].ipi_mmio_mem);
++
+         qdev_init_gpio_out(dev, &s->cpu[i].irq, 1);
+     }
+ }
+diff --git a/include/hw/intc/loongson_ipi.h b/include/hw/intc/loongson_ipi.h
+index 2c0e8820f5ec..3f795edbf3cd 100644
+--- a/include/hw/intc/loongson_ipi.h
++++ b/include/hw/intc/loongson_ipi.h
+@@ -34,6 +34,8 @@
+ OBJECT_DECLARE_SIMPLE_TYPE(LoongsonIPI, LOONGSON_IPI)
+ 
+ typedef struct IPICore {
++    LoongsonIPI *ipi;
++    MemoryRegion *ipi_mmio_mem;
+     uint32_t status;
+     uint32_t en;
+     uint32_t set;
 
- hw/intc/loongarch_ipi.c        | 347 -----------------------------------------
- hw/intc/loongson_ipi.c         | 120 +++++++-------
- hw/mips/Kconfig                |   1 +
- hw/mips/loongson3_bootp.c      |   2 -
- hw/mips/loongson3_bootp.h      |   3 +
- hw/mips/loongson3_virt.c       |  39 ++++-
- include/hw/intc/loongson_ipi.h |   2 +
- 7 files changed, 108 insertions(+), 406 deletions(-)
----
-base-commit: d67a6e054b92e5e1cbb7b0bd5782a670cc7f0df7
-change-id: 20240508-loongson3-ipi-65e99b47c400
-
-Best regards,
 -- 
-Jiaxun Yang <jiaxun.yang@flygoat.com>
+2.43.0
 
 
