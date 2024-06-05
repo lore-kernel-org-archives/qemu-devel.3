@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAE5FC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 09:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C1F4C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 09:03:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEmXd-0000iu-BW; Wed, 05 Jun 2024 05:02:45 -0400
+	id 1sEmXa-0000iM-QX; Wed, 05 Jun 2024 05:02:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEmXa-0000i7-4h
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 05:02:42 -0400
+ id 1sEmXY-0000hv-L0
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 05:02:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sEmXY-0005lo-Fq
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 05:02:41 -0400
+ id 1sEmXW-0005lh-L5
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 05:02:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717578159;
+ s=mimecast20190719; t=1717578156;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6NFR7P4XUYjs/J4VAY5TRN+jnMtD44mH4gCWVbeIMZ8=;
- b=ImyVnCpmubQY3Rhf+VvmVw5tcsqcXPorECjPClqakuDrnTnI2AvhcZWGLfNkE3iRIST5v0
- fqtbeGWhcr0N/ZzdyUGmFBFR16sgeRkIF+4jZ6YZEv+Xwp8WgVpB4AQ6sQJ+dGL+9dFA9d
- NzDc4OeUkcyt6j6ZlzXfQaQ59kkhNxY=
+ to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=lvtzUrqViQnVa415iJWCgypL+zLlsW1PVD9sTk1VooM=;
+ b=eI/FjRWhZVoUn2d+sau4ggNFVy3nRz7ONFDuDflRwLSv8NpCue9IpxJcx25wigBrKZv6/T
+ YyqlsVUYkVgYLdmKysi9w80ZQqO8I3SB1ANKMaMunrSiYSl6OJG7bQJ/ZbkNM0m7rf8Z9r
+ FaB3bCeZLakAglCPxkK/8t6o5IpSNZs=
 Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
  [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-316-cZPX_toANSiVt2OKmR4o0Q-1; Wed, 05 Jun 2024 05:02:37 -0400
-X-MC-Unique: cZPX_toANSiVt2OKmR4o0Q-1
+ us-mta-206-f3PJB8xaN9uNt6gTAtQnOQ-1; Wed, 05 Jun 2024 05:02:35 -0400
+X-MC-Unique: f3PJB8xaN9uNt6gTAtQnOQ-1
 Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a68f654dc69so181819266b.1
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 02:02:37 -0700 (PDT)
+ a640c23a62f3a-a6a4615420bso19879966b.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 02:02:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717578156; x=1718182956;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6NFR7P4XUYjs/J4VAY5TRN+jnMtD44mH4gCWVbeIMZ8=;
- b=kr1A/u5jkWDw3+2AZibv7ag2NjAE28gvU+kPCQcmyf5EpNqLMOWwRMrQNhcIUZvA0I
- 6bSSWmTojuomwY8haJh9VFwmcmZJQumPCK1z0c4DHvyelgBFfsJOXg4VX8axW5Ohr7EQ
- MATAFAWC+NoaG2fOeFJLpT37vLn4aa7lyCeorNw2Jv7Pjn60o+bUq8O4yiL+PKZwne8e
- czfySxNAiO45RQfCFI4OqOkV9ezYDpaNImM4EVMNfP06ZRhkEUsY39Ho6MbG/0vLStzQ
- IZLfIb5HoO5Y3RVD1c89bIjI+e4JnmMTmZJ8XWmycBYkNTVygAOTLpwOdwTB0OJLW6FG
- P9pA==
-X-Gm-Message-State: AOJu0Yw1f2AvuSaFIqyQ1mbJfIOsmZ4BpXXwFwRInvE/IKF3LMW6d1oG
- LL9/yNeKwJneLoM3fShHpTdAB9etxfUP5ITO4xXT2IdwU1UrJwJsKq4t0y11iQ6yVL0PQIY856M
- ey7H6/Y0/UF3PD6wHCM1HpIZEt4fpZHuZsG8awr2aesh6WgEjcB+PFNK1iQ9uTznZDvG9RHib/O
- 7ddD3j1JcUOATa+7lno5NgB6i/sBWOPupb1NQr
-X-Received: by 2002:a17:906:3595:b0:a66:713a:5017 with SMTP id
- a640c23a62f3a-a699f670be7mr144186666b.29.1717578155784; 
- Wed, 05 Jun 2024 02:02:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEZBYgmWBQPNAOr9cJfOs+Tm7B/035+NKuGxgbNkermLIgikIiILX1NpMTIh2aSX/SSSFkflg==
-X-Received: by 2002:a17:906:3595:b0:a66:713a:5017 with SMTP id
- a640c23a62f3a-a699f670be7mr144184066b.29.1717578155351; 
- Wed, 05 Jun 2024 02:02:35 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717578153; x=1718182953;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lvtzUrqViQnVa415iJWCgypL+zLlsW1PVD9sTk1VooM=;
+ b=MITuKH8W/cvyo9j7bfA07kaGz16en82wPVeeicPoCoopSw4V5BdBAqKPqGMBWC7QKE
+ BIPFEs9pYRJWUtUeTGF8DP+3z2MugT3IKDYofsAEHZPsUq44YgiIOfvrUaYYKvqGPEgk
+ f6XYRUC1K5d+ugaUxmYZlS34NsPYvowyYTfQESw6xBxnPXwuszUSGZJmJJy2MQJYFwnG
+ itlq1nB8swjxCT2lMVN0YvIExFI2UZfdTnX+j6lqeaiLPAFxprUhUxpZrjpwGYEw+A2Q
+ XG9sXZmtdXlyLW9mJM2XguFciRIW5WT2GeG+kxpSY/8nRw3nio7CW0mJeDAwa59ndZ/C
+ MD7Q==
+X-Gm-Message-State: AOJu0YwrOOn+1OPWjuXPPGsVuyLrJolx5/ZDInzjnMnJISOqy2vWJhzD
+ CGk7DLng//S0S5swwO1BkPnRm8K9tlYesekzLxxKPABFsf6aDT5gdIkZLfT7BdhYSmdwc/MTKev
+ Xben9azx7T0ZJ+bO11in1uF2iFs3puDtE2tHrHx6iBTs/L67tIMsQAErgKimtIDjYG/mngL3bqn
+ uBmVQonif+bo1GumQ74NWPI5LkonJei5l2hzsK
+X-Received: by 2002:a17:906:3510:b0:a68:c672:b903 with SMTP id
+ a640c23a62f3a-a699fe00edemr114137066b.53.1717578153251; 
+ Wed, 05 Jun 2024 02:02:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF0Syfrx8mMy/h2VLOevDOlw4vO6IeuTFHXQTRYE5eAXr4aQo+I3ms+9yuptIaJN2g1hsXTFw==
+X-Received: by 2002:a17:906:3510:b0:a68:c672:b903 with SMTP id
+ a640c23a62f3a-a699fe00edemr114135366b.53.1717578151915; 
+ Wed, 05 Jun 2024 02:02:31 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a690fe65393sm390014066b.204.2024.06.05.02.02.34
+ a640c23a62f3a-a68e6b5cdf8sm521491566b.81.2024.06.05.02.02.31
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 02:02:34 -0700 (PDT)
+ Wed, 05 Jun 2024 02:02:31 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 01/46] docs, tests: do not specify scsi=off
-Date: Wed,  5 Jun 2024 11:02:28 +0200
-Message-ID: <20240605090229.1704300-2-pbonzini@redhat.com>
+Subject: [PULL 00/46] mostly i386 patches for 2024-06-04
+Date: Wed,  5 Jun 2024 11:02:27 +0200
+Message-ID: <20240605090229.1704300-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240605090229.1704300-1-pbonzini@redhat.com>
-References: <20240605090229.1704300-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -103,83 +100,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This has been the default forever.
+The following changes since commit 3ab42e46acf867c45bc929fcc37693e327a35a24:
 
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- docs/pci_expander_bridge.txt      | 2 +-
- docs/specs/tpm.rst                | 2 +-
- tests/avocado/intel_iommu.py      | 2 +-
- tests/avocado/smmu.py             | 2 +-
- tests/avocado/tuxrun_baselines.py | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+  Merge tag 'pull-ufs-20240603' of https://gitlab.com/jeuk20.kim/qemu into staging (2024-06-03 08:18:14 -0500)
 
-diff --git a/docs/pci_expander_bridge.txt b/docs/pci_expander_bridge.txt
-index 36750273bb8..540191f5e04 100644
---- a/docs/pci_expander_bridge.txt
-+++ b/docs/pci_expander_bridge.txt
-@@ -25,7 +25,7 @@ A detailed command line would be:
- -object memory-backend-ram,size=1024M,policy=bind,host-nodes=1,id=ram-node1 -numa node,nodeid=1,cpus=1,memdev=ram-node1
- -device pxb,id=bridge1,bus=pci.0,numa_node=1,bus_nr=4 -netdev user,id=nd -device e1000,bus=bridge1,addr=0x4,netdev=nd
- -device pxb,id=bridge2,bus=pci.0,numa_node=0,bus_nr=8 -device e1000,bus=bridge2,addr=0x3
---device pxb,id=bridge3,bus=pci.0,bus_nr=40 -drive if=none,id=drive0,file=[img] -device virtio-blk-pci,drive=drive0,scsi=off,bus=bridge3,addr=1
-+-device pxb,id=bridge3,bus=pci.0,bus_nr=40 -drive if=none,id=drive0,file=[img] -device virtio-blk-pci,drive=drive0,bus=bridge3,addr=1
- 
- Here you have:
-  - 2 NUMA nodes for the guest, 0 and 1. (both mapped to the same NUMA node in host, but you can and should put it in different host NUMA nodes)
-diff --git a/docs/specs/tpm.rst b/docs/specs/tpm.rst
-index 68cb8cf7e65..1ad36ad7099 100644
---- a/docs/specs/tpm.rst
-+++ b/docs/specs/tpm.rst
-@@ -336,7 +336,7 @@ In case a pSeries machine is emulated, use the following command line:
-     -tpmdev emulator,id=tpm0,chardev=chrtpm \
-     -device tpm-spapr,tpmdev=tpm0 \
-     -device spapr-vscsi,id=scsi0,reg=0x00002000 \
--    -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x3,drive=drive-virtio-disk0,id=virtio-disk0 \
-+    -device virtio-blk-pci,bus=pci.0,addr=0x3,drive=drive-virtio-disk0,id=virtio-disk0 \
-     -drive file=test.img,format=raw,if=none,id=drive-virtio-disk0
- 
- In case an Arm virt machine is emulated, use the following command line:
-diff --git a/tests/avocado/intel_iommu.py b/tests/avocado/intel_iommu.py
-index f04ee1cf9d9..09e694bd403 100644
---- a/tests/avocado/intel_iommu.py
-+++ b/tests/avocado/intel_iommu.py
-@@ -32,7 +32,7 @@ class IntelIOMMU(LinuxTest):
- 
-     def set_up_boot(self):
-         path = self.download_boot()
--        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,scsi=off,' +
-+        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
-                          'drive=drv0,id=virtio-disk0,bootindex=1,'
-                          'werror=stop,rerror=stop' + self.IOMMU_ADDON)
-         self.vm.add_args('-device', 'virtio-gpu-pci' + self.IOMMU_ADDON)
-diff --git a/tests/avocado/smmu.py b/tests/avocado/smmu.py
-index 21ff030ca72..4ebfa7128c7 100644
---- a/tests/avocado/smmu.py
-+++ b/tests/avocado/smmu.py
-@@ -32,7 +32,7 @@ class SMMU(LinuxTest):
- 
-     def set_up_boot(self):
-         path = self.download_boot()
--        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,scsi=off,' +
-+        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
-                          'drive=drv0,id=virtio-disk0,bootindex=1,'
-                          'werror=stop,rerror=stop' + self.IOMMU_ADDON)
-         self.vm.add_args('-drive',
-diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
-index a936a3b7809..736e4aa289c 100644
---- a/tests/avocado/tuxrun_baselines.py
-+++ b/tests/avocado/tuxrun_baselines.py
-@@ -235,7 +235,7 @@ def ppc64_common_tuxrun(self, sums, prefix):
-             self.vm.add_args('-drive', 'file=' + qcow2.name +
-                          ',format=qcow2,if=none,id='
-                          'drive-virtio-disk1',
--                         '-device', 'virtio-blk-pci,scsi=off,bus=pci.0,'
-+                         '-device', 'virtio-blk-pci,bus=pci.0,'
-                          'addr=0xb,drive=drive-virtio-disk1,id=virtio-disk1'
-                          ',bootindex=2')
-             self.common_tuxrun(csums=sums, drive="scsi-hd")
+are available in the Git repository at:
+
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to fc7a69e177e4ba26d11fcf47b853f85115b35a11:
+
+  hw/i386: Add support for loading BIOS using guest_memfd (2024-06-04 16:44:23 +0200)
+
+----------------------------------------------------------------
+* virtio-blk: remove SCSI passthrough functionality
+* require x86-64-v2 baseline ISA
+* SEV-SNP host support
+* fix xsave.flat with TCG
+* fixes for CPUID checks done by TCG
+
+----------------------------------------------------------------
+Brijesh Singh (6):
+      i386/sev: Introduce 'sev-snp-guest' object
+      i386/sev: Add the SNP launch start context
+      i386/sev: Add handling to encrypt/finalize guest launch data
+      hw/i386/sev: Add function to get SEV metadata from OVMF header
+      i386/sev: Add support for populating OVMF metadata pages
+      hw/i386/sev: Add support to encrypt BIOS when SEV-SNP is enabled
+
+Dov Murik (3):
+      i386/sev: Extract build_kernel_loader_hashes
+      i386/sev: Reorder struct declarations
+      i386/sev: Allow measured direct kernel boot on SNP
+
+Michael Roth (11):
+      i386/sev: Introduce "sev-common" type to encapsulate common SEV state
+      i386/sev: Add a sev_snp_enabled() helper
+      i386/cpu: Set SEV-SNP CPUID bit when SNP enabled
+      i386/sev: Don't return launch measurements for SEV-SNP guests
+      i386/sev: Update query-sev QAPI format to handle SEV-SNP
+      i386/sev: Set CPU state to protected once SNP guest payload is finalized
+      i386/sev: Add support for SNP CPUID validation
+      i386/kvm: Add KVM_EXIT_HYPERCALL handling for KVM_HC_MAP_GPA_RANGE
+      i386/sev: Enable KVM_HC_MAP_GPA_RANGE hcall for SNP guests
+      hw/i386/sev: Use guest_memfd for legacy ROMs
+      hw/i386: Add support for loading BIOS using guest_memfd
+
+Pankaj Gupta (7):
+      linux-headers: Update to current kvm/next
+      i386/sev: Replace error_report with error_setg
+      i386/sev: Move sev_launch_update to separate class method
+      i386/sev: Move sev_launch_finish to separate class method
+      i386/sev: Add sev_kvm_init() override for SEV class
+      i386/sev: Add snp_kvm_init() override for SNP class
+      i386/sev: Invoke launch_updata_data() for SNP class
+
+Paolo Bonzini (15):
+      docs, tests: do not specify scsi=off
+      virtio-blk: remove SCSI passthrough functionality
+      host/i386: nothing looks at CPUINFO_SSE4
+      meson: assume x86-64-v2 baseline ISA
+      host/i386: assume presence of CMOV
+      host/i386: assume presence of SSE2
+      host/i386: assume presence of SSSE3
+      host/i386: assume presence of POPCNT
+      target/i386: fix xsave.flat from kvm-unit-tests
+      update-linux-headers: fix forwarding to asm-generic headers
+      update-linux-headers: move pvpanic.h to correct directory
+      update-linux-headers: import linux/kvm_para.h header
+      machine: allow early use of machine_require_guest_memfd
+      i386/sev: Add a class method to determine KVM VM type for SNP guests
+      i386/sev: Invoke launch_updata_data() for SEV class
+
+Xiaoyao Li (1):
+      memory: Introduce memory_region_init_ram_guest_memfd()
+
+Xinyu Li (2):
+      target/i386: fix SSE and SSE2 feature check
+      target/i386: fix memory opsize for Mov to/from Seg
+
+Zhao Liu (1):
+      target/i386/tcg: Fix RDPID feature check
+
+ docs/about/deprecated.rst                          |   10 -
+ docs/about/removed-features.rst                    |    8 +
+ docs/pci_expander_bridge.txt                       |    2 +-
+ docs/specs/tpm.rst                                 |    2 +-
+ docs/system/i386/amd-memory-encryption.rst         |   70 +-
+ meson.build                                        |   10 +-
+ qapi/misc-target.json                              |   72 +-
+ qapi/qom.json                                      |   98 +-
+ host/include/i386/host/cpuinfo.h                   |    4 -
+ include/exec/confidential-guest-support.h          |    5 +
+ include/exec/memory.h                              |    6 +
+ include/hw/boards.h                                |    1 -
+ include/hw/i386/pc.h                               |   28 +
+ include/hw/i386/x86.h                              |    2 +-
+ include/standard-headers/linux/kvm_para.h          |   38 +
+ include/standard-headers/{linux => misc}/pvpanic.h |    0
+ linux-headers/asm-loongarch/kvm.h                  |    4 +
+ linux-headers/asm-riscv/kvm.h                      |    1 +
+ linux-headers/asm-x86/kvm.h                        |   52 +-
+ linux-headers/asm-x86/kvm_para.h                   |    1 +
+ linux-headers/linux/kvm_para.h                     |    2 +
+ linux-headers/linux/vhost.h                        |   15 +-
+ target/i386/kvm/kvm_i386.h                         |    1 +
+ target/i386/sev.h                                  |   13 +-
+ target/i386/tcg/decode-new.h                       |    3 +
+ tcg/i386/tcg-target.h                              |    5 +-
+ hw/block/virtio-blk.c                              |  166 +-
+ hw/core/machine.c                                  |    4 +-
+ hw/i386/pc.c                                       |   14 +-
+ hw/i386/pc_sysfw.c                                 |   35 +-
+ hw/i386/x86-common.c                               |   19 +-
+ hw/misc/pvpanic-isa.c                              |    2 +-
+ hw/misc/pvpanic-pci.c                              |    2 +-
+ hw/misc/pvpanic.c                                  |    2 +-
+ system/memory.c                                    |   24 +
+ target/i386/cpu.c                                  |    1 +
+ target/i386/kvm/kvm.c                              |   56 +
+ target/i386/sev-sysemu-stub.c                      |    6 +-
+ target/i386/sev.c                                  | 1581 +++++++++++++++-----
+ target/i386/tcg/fpu_helper.c                       |    5 +
+ target/i386/tcg/translate.c                        |    2 +-
+ util/bufferiszero.c                                |    4 +-
+ util/cpuinfo-i386.c                                |    8 +-
+ target/i386/tcg/decode-new.c.inc                   |   17 +-
+ tcg/i386/tcg-target.c.inc                          |   15 +-
+ scripts/update-linux-headers.sh                    |   37 +-
+ target/i386/kvm/trace-events                       |    1 +
+ target/i386/trace-events                           |    3 +
+ tests/avocado/intel_iommu.py                       |    2 +-
+ tests/avocado/smmu.py                              |    2 +-
+ tests/avocado/tuxrun_baselines.py                  |    2 +-
+ 51 files changed, 1849 insertions(+), 614 deletions(-)
+ create mode 100644 include/standard-headers/linux/kvm_para.h
+ rename include/standard-headers/{linux => misc}/pvpanic.h (100%)
+ create mode 100644 linux-headers/asm-x86/kvm_para.h
+ create mode 100644 linux-headers/linux/kvm_para.h
 -- 
 2.45.1
 
