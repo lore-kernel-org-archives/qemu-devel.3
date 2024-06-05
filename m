@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53D06C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 21:17:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A430CC25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 21:18:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sExzC-0000jD-3Z; Wed, 05 Jun 2024 17:15:58 -0400
+	id 1sExzD-0000jn-MN; Wed, 05 Jun 2024 17:15:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sExz2-0000fw-VE
+ id 1sExz2-0000fr-J3
  for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:15:48 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sExys-0003Rh-Th
+ id 1sExyt-0003Rz-1g
  for qemu-devel@nongnu.org; Wed, 05 Jun 2024 17:15:48 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-703ed5d37acso209639b3a.0
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 14:15:37 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-6f6a045d476so195668b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 14:15:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717622136; x=1718226936; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717622137; x=1718226937; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Chtdl64sSN7t9wuikeNXRUJv7hjmKkzPpF45qIUWzPg=;
- b=UvnZ7sm//ZBM+OB38VIHn88VIEujWtVEM+OZpQmDdnA1KkTXyx4KAEEbz4ZQsHNCth
- eDOwSPcc90f0cZ4uqo02tAiiSwxDTuBmpoBMnoU0RWr85/ji1iJCsPGAZEsoUquTd7Kd
- Bxxw6mHvMCsqhVTUsbg4BnitaPtiPWGg7uVdqWsEKaxGif0j7Vnnsnw5sijz7VMVoDrU
- iLDNYscu39rZp6kOSSrY4S0DQAB8sF7UNtvLvMJc4mN465foarfkXgTxoNEdHIjzfjZk
- To2sYJcW9uRNsZuyAjewVjIVeb48hnY/TlyIsjXIGxv1OPgSZuPBQfPFwd7D32ik03xL
- 5N2g==
+ bh=NRnvBT7dCcRQW46yZ2cILgjEvSH0UMGtXyMJE1zUYf4=;
+ b=S9kKFkx20O5iBGODTxQSGVUjSxOWAZreFkd8sJdIMwY7SovB/JQw5x1bLKaX3b43Sj
+ DK9cOVLC8xTDyIFt8KD7ebFxyEBAKDtjbxaq5NLrdeNoW3zOxFR3YErXHFP4SwCmzZVG
+ YYfEwHfeNAmgUKKucG5q7NaJL0DCP+C7oYtaB19Q3OXBKCcLOPMp50SdpSeFPOBhE+0n
+ 7+zGk6kNZATq3GEX+kT5V+Kdm4JGDHyplnXd4PSxkMLlhS34RnF9NCUPj2V/tDhHpT6K
+ W3nbXeL21JJOV7PEmiqzTxd4FUQXhCTzhBd4GnUTXSeBH0vCPZUInQzj8ZD+WIsdepKg
+ y2KQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717622136; x=1718226936;
+ d=1e100.net; s=20230601; t=1717622137; x=1718226937;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Chtdl64sSN7t9wuikeNXRUJv7hjmKkzPpF45qIUWzPg=;
- b=ZppCoa3O41TyDcFrjoGB46pQcZqfijP1WEb2nt0WWNAG8L9Z7oQ302GXNfXyOl/uL8
- 1SMS996gUw/p8GAhNamidJTgYI93ypf1ekcHy0kBFaePM/E2QIqZp7nbng9mGjRunNIe
- I8MhEkWW5MHXx44UCcFeILInYWYt0MCH7anshtbkFq94HU1z85QrmhyxB+h1TmZXWixV
- +uDxl9DY+elEIOXeNGMvSf9M1QULw2zfy0Ri6DELckM2J/IOu63aSvDGD5RM4smfxWMq
- 1U+Yj+mW8NHIqkNGXcDgzl0P0d2Gkju9QGmJKpEqAx4w0hekEibrAqSpzBj+x5iXJfgP
- u7pQ==
-X-Gm-Message-State: AOJu0YxWMyx+bc047QY+jrO8HxsOwzNPwG8yKzV29K2LjFDXF40x179K
- NS0Z2gJpzulntQbQIdiRJ+gt3BOT5TgMHuaCYi5tPhIXN/9S4yy8W3IXbYA1GikikxIx+llGLkX
- H
-X-Google-Smtp-Source: AGHT+IGC3pApWPCWzkjB3FysAD6FZie0MrCVes8jNFtM0lWzZVkcI6I99uHT21o3TEXZE9DKZ9miXQ==
-X-Received: by 2002:a05:6a00:330e:b0:702:6dc7:2368 with SMTP id
- d2e1a72fcca58-703e59b05fdmr3970041b3a.12.1717622136356; 
- Wed, 05 Jun 2024 14:15:36 -0700 (PDT)
+ bh=NRnvBT7dCcRQW46yZ2cILgjEvSH0UMGtXyMJE1zUYf4=;
+ b=qibHiHPtGzikPLpuLfveMWnE84uvvzmfKP2LLbL+Y0lYX7nA+4wonN/Ela497ebcvt
+ YFT170tv5iqM5lz+N1CFtkntu+BKiGb7sI6fl5uwNC2elJoTOPId6T57Uuf8Qgmm+ZYg
+ rQSbYLkNTpBH+RRFwn0AWAIpohM4PvExkzqpx/mWINqLETMNtFb28aonxZNMUbDlCN8R
+ ahuqTtlyv0Zdq/F5Qt9p5vzAl1yVZaMOaTCHgqmUqX185tuOPlKd1Cy6VhFcHzQqWF9V
+ 8GdeYixwF37VK1EGKEdAv1MopwFoJRpnRkd5GG0W+9XDZS0uex0fNaBZpb2WBXol9L0w
+ quxQ==
+X-Gm-Message-State: AOJu0YyYCcQ8aJsjyBERGd7w4XJuOtkJfWaYiMpMuohA5Hk274Hk0ZsH
+ zUTHoDei2SwKWthUHaKG9shOj1VaQ2eRnPhtAoQ8fSTnzM5762P9La9v4Mhh66t/P9K0gK55efj
+ M
+X-Google-Smtp-Source: AGHT+IFrOjyBsjPYDMv5dM6bzh8qw21VByPFIHuNpSTu1G2B1BZ0K/Ocd1kb5ph/vQI2oMl6TaytCg==
+X-Received: by 2002:a05:6a20:2593:b0:1a3:8e1d:16b8 with SMTP id
+ adf61e73a8af0-1b2b6ffee37mr4401487637.28.1717622137280; 
+ Wed, 05 Jun 2024 14:15:37 -0700 (PDT)
 Received: from stoup.. ([71.212.132.216]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70242aec7d0sm9347538b3a.99.2024.06.05.14.15.35
+ d2e1a72fcca58-70242aec7d0sm9347538b3a.99.2024.06.05.14.15.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 14:15:35 -0700 (PDT)
+ Wed, 05 Jun 2024 14:15:36 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 15/16] disas/microblaze: Split get_field_special
-Date: Wed,  5 Jun 2024 14:15:20 -0700
-Message-Id: <20240605211521.577094-16-richard.henderson@linaro.org>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 16/16] disas/riscv: Use GString in format_inst
+Date: Wed,  5 Jun 2024 14:15:21 -0700
+Message-Id: <20240605211521.577094-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240605211521.577094-1-richard.henderson@linaro.org>
 References: <20240605211521.577094-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,200 +94,422 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract the raw special index and a function to lookup a name.
+Allocate and fill a GString instead of snprintf and
+appending to a fixed sized buffer.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240412073346.458116-21-richard.henderson@linaro.org>
+Message-Id: <20240412073346.458116-22-richard.henderson@linaro.org>
 ---
- disas/microblaze.c | 142 +++++++++++++++++++--------------------------
- 1 file changed, 61 insertions(+), 81 deletions(-)
+ disas/riscv.c | 209 ++++++++++++++++++++++----------------------------
+ 1 file changed, 92 insertions(+), 117 deletions(-)
 
-diff --git a/disas/microblaze.c b/disas/microblaze.c
-index 24febfdea9..197327fae4 100644
---- a/disas/microblaze.c
-+++ b/disas/microblaze.c
-@@ -564,8 +564,6 @@ static const struct op_code_struct {
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 297cfa2f63..90d6b26de9 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -4820,272 +4820,249 @@ static size_t inst_length(rv_inst inst)
  
- /* prefix for register names */
- #define register_prefix "r"
--static const char pvr_register_prefix[] = "rpvr";
+ /* format instruction */
+ 
+-static void append(char *s1, const char *s2, size_t n)
+-{
+-    size_t l1 = strlen(s1);
+-    if (n - l1 - 1 > 0) {
+-        strncat(s1, s2, n - l1);
+-    }
+-}
 -
- 
- /* #defines for valid immediate range */
- #define MIN_IMM  ((int) 0x80000000)
-@@ -580,6 +578,7 @@ static const char pvr_register_prefix[] = "rpvr";
- 
- #define PRIreg    register_prefix "%ld"
- #define PRIrfsl   register_prefix "fsl%ld"
-+#define PRIpvr    register_prefix "pvr%d"
- #define PRIimm    "%d"
- 
- #define get_field_rd(instr)      ((instr & RD_MASK) >> RD_LOW)
-@@ -593,83 +592,48 @@ static const char pvr_register_prefix[] = "rpvr";
- #define get_int_field_imm(instr) ((instr & IMM_MASK) >> IMM_LOW)
- #define get_int_field_r1(instr) ((instr & RA_MASK) >> RA_LOW)
- 
--/*
--  char *
--  get_field_special (instr) 
--  long instr;
--  {
--  char tmpstr[25];
--  
--  snprintf(tmpstr, sizeof(tmpstr), "%s%s", register_prefix,
--          (((instr & IMM_MASK) >> IMM_LOW) & REG_MSR_MASK) == 0 ? "pc" : "msr");
--  
--  return(strdup(tmpstr));
--  }
--*/
--
--static char *
--get_field_special(long instr, const struct op_code_struct *op)
-+static int get_field_special(long instr, const struct op_code_struct *op)
+-static void format_inst(char *buf, size_t buflen, size_t tab, rv_decode *dec)
++static GString *format_inst(size_t tab, rv_decode *dec)
  {
--   char tmpstr[25];
--   char spr[6];
-+    return ((instr & IMM_MASK) >> IMM_LOW) ^ op->immval_mask;
-+}
+     const rv_opcode_data *opcode_data = dec->opcode_data;
+-    char tmp[64];
++    GString *buf = g_string_sized_new(64);
+     const char *fmt;
  
--   switch ( (((instr & IMM_MASK) >> IMM_LOW) ^ op->immval_mask) ) {
--
--   case REG_MSR_MASK :
--      strcpy(spr, "msr");
--      break;
--   case REG_PC_MASK :
--      strcpy(spr, "pc");
--      break;
--   case REG_EAR_MASK :
--      strcpy(spr, "ear");
--      break;
--   case REG_ESR_MASK :
--      strcpy(spr, "esr");
--      break;
--   case REG_FSR_MASK :
--      strcpy(spr, "fsr");
--      break;
--   case REG_BTR_MASK :
--      strcpy(spr, "btr");
--      break;      
--   case REG_EDR_MASK :
--      strcpy(spr, "edr");
--      break;
--   case REG_PID_MASK :
--      strcpy(spr, "pid");
--      break;
--   case REG_ZPR_MASK :
--      strcpy(spr, "zpr");
--      break;
--   case REG_TLBX_MASK :
--      strcpy(spr, "tlbx");
--      break;
--   case REG_TLBLO_MASK :
--      strcpy(spr, "tlblo");
--      break;
--   case REG_TLBHI_MASK :
--      strcpy(spr, "tlbhi");
--      break;
--   case REG_TLBSX_MASK :
--      strcpy(spr, "tlbsx");
--      break;
--   default :
--     {
--       if ( ((((instr & IMM_MASK) >> IMM_LOW) ^ op->immval_mask) & 0xE000) == REG_PVR_MASK) {
--          snprintf(tmpstr, sizeof(tmpstr), "%s%u", pvr_register_prefix,
--                 (unsigned short)(((instr & IMM_MASK) >> IMM_LOW) ^
--                                  op->immval_mask) ^ REG_PVR_MASK);
--	 return(strdup(tmpstr));
--       } else {
--	 strcpy(spr, "pc");
--       }
--     }
--     break;
--   }
--   
--   snprintf(tmpstr, sizeof(tmpstr), "%s%s", register_prefix, spr);
--   return(strdup(tmpstr));
-+/* Returns NULL for PVR registers, which should be rendered differently. */
-+static const char *get_special_name(int special)
-+{
-+    switch (special) {
-+    case REG_MSR_MASK:
-+        return register_prefix "msr";
-+    case REG_PC_MASK:
-+        return register_prefix "pc";
-+    case REG_EAR_MASK:
-+        return register_prefix "ear";
-+    case REG_ESR_MASK:
-+        return register_prefix "esr";
-+    case REG_FSR_MASK:
-+        return register_prefix "fsr";
-+    case REG_BTR_MASK:
-+        return register_prefix "btr";
-+    case REG_EDR_MASK:
-+        return register_prefix "edr";
-+    case REG_PID_MASK:
-+        return register_prefix "pid";
-+    case REG_ZPR_MASK:
-+        return register_prefix "zpr";
-+    case REG_TLBX_MASK:
-+        return register_prefix "tlbx";
-+    case REG_TLBLO_MASK:
-+        return register_prefix "tlblo";
-+    case REG_TLBHI_MASK:
-+        return register_prefix "tlbhi";
-+    case REG_TLBSX_MASK:
-+        return register_prefix "tlbsx";
-+    default:
-+        if ((special & 0xE000) == REG_PVR_MASK) {
-+            /* pvr register */
-+            return NULL;
-+        }
-+        return register_prefix "pc";
-+    }
+     fmt = opcode_data[dec->op].format;
+     while (*fmt) {
+         switch (*fmt) {
+         case 'O':
+-            append(buf, opcode_data[dec->op].name, buflen);
++            g_string_append(buf, opcode_data[dec->op].name);
+             break;
+         case '(':
+-            append(buf, "(", buflen);
+-            break;
+         case ',':
+-            append(buf, ",", buflen);
+-            break;
+         case ')':
+-            append(buf, ")", buflen);
+-            break;
+         case '-':
+-            append(buf, "-", buflen);
++            g_string_append_c(buf, *fmt);
+             break;
+         case 'b':
+-            snprintf(tmp, sizeof(tmp), "%d", dec->bs);
+-            append(buf, tmp, buflen);
++            g_string_append_printf(buf, "%d", dec->bs);
+             break;
+         case 'n':
+-            snprintf(tmp, sizeof(tmp), "%d", dec->rnum);
+-            append(buf, tmp, buflen);
++            g_string_append_printf(buf, "%d", dec->rnum);
+             break;
+         case '0':
+-            append(buf, rv_ireg_name_sym[dec->rd], buflen);
++            g_string_append(buf, rv_ireg_name_sym[dec->rd]);
+             break;
+         case '1':
+-            append(buf, rv_ireg_name_sym[dec->rs1], buflen);
++            g_string_append(buf, rv_ireg_name_sym[dec->rs1]);
+             break;
+         case '2':
+-            append(buf, rv_ireg_name_sym[dec->rs2], buflen);
++            g_string_append(buf, rv_ireg_name_sym[dec->rs2]);
+             break;
+         case '3':
+-            append(buf, dec->cfg->ext_zfinx ? rv_ireg_name_sym[dec->rd] :
+-                                              rv_freg_name_sym[dec->rd],
+-                   buflen);
++            if (dec->cfg->ext_zfinx) {
++                g_string_append(buf, rv_ireg_name_sym[dec->rd]);
++            } else {
++                g_string_append(buf, rv_freg_name_sym[dec->rd]);
++            }
+             break;
+         case '4':
+-            append(buf, dec->cfg->ext_zfinx ? rv_ireg_name_sym[dec->rs1] :
+-                                              rv_freg_name_sym[dec->rs1],
+-                   buflen);
++            if (dec->cfg->ext_zfinx) {
++                g_string_append(buf, rv_ireg_name_sym[dec->rs1]);
++            } else {
++                g_string_append(buf, rv_freg_name_sym[dec->rs1]);
++            }
+             break;
+         case '5':
+-            append(buf, dec->cfg->ext_zfinx ? rv_ireg_name_sym[dec->rs2] :
+-                                              rv_freg_name_sym[dec->rs2],
+-                   buflen);
++            if (dec->cfg->ext_zfinx) {
++                g_string_append(buf, rv_ireg_name_sym[dec->rs2]);
++            } else {
++                g_string_append(buf, rv_freg_name_sym[dec->rs2]);
++            }
+             break;
+         case '6':
+-            append(buf, dec->cfg->ext_zfinx ? rv_ireg_name_sym[dec->rs3] :
+-                                              rv_freg_name_sym[dec->rs3],
+-                   buflen);
++            if (dec->cfg->ext_zfinx) {
++                g_string_append(buf, rv_ireg_name_sym[dec->rs3]);
++            } else {
++                g_string_append(buf, rv_freg_name_sym[dec->rs3]);
++            }
+             break;
+         case '7':
+-            snprintf(tmp, sizeof(tmp), "%d", dec->rs1);
+-            append(buf, tmp, buflen);
++            g_string_append_printf(buf, "%d", dec->rs1);
+             break;
+         case 'i':
+-            snprintf(tmp, sizeof(tmp), "%d", dec->imm);
+-            append(buf, tmp, buflen);
++            g_string_append_printf(buf, "%d", dec->imm);
+             break;
+         case 'u':
+-            snprintf(tmp, sizeof(tmp), "%u", ((uint32_t)dec->imm & 0b111111));
+-            append(buf, tmp, buflen);
++            g_string_append_printf(buf, "%u", ((uint32_t)dec->imm & 0b111111));
+             break;
+         case 'j':
+-            snprintf(tmp, sizeof(tmp), "%d", dec->imm1);
+-            append(buf, tmp, buflen);
++            g_string_append_printf(buf, "%d", dec->imm1);
+             break;
+         case 'o':
+-            snprintf(tmp, sizeof(tmp), "%d", dec->imm);
+-            append(buf, tmp, buflen);
+-            while (strlen(buf) < tab * 2) {
+-                append(buf, " ", buflen);
++            g_string_append_printf(buf, "%d", dec->imm);
++            while (buf->len < tab * 2) {
++                g_string_append_c(buf, ' ');
+             }
+-            snprintf(tmp, sizeof(tmp), "# 0x%" PRIx64,
+-                dec->pc + dec->imm);
+-            append(buf, tmp, buflen);
++            g_string_append_printf(buf, "# 0x%" PRIx64, dec->pc + dec->imm);
+             break;
+         case 'U':
+             fmt++;
+-            snprintf(tmp, sizeof(tmp), "%d", dec->imm >> 12);
+-            append(buf, tmp, buflen);
++            g_string_append_printf(buf, "%d", dec->imm >> 12);
+             if (*fmt == 'o') {
+-                while (strlen(buf) < tab * 2) {
+-                    append(buf, " ", buflen);
++                while (buf->len < tab * 2) {
++                    g_string_append_c(buf, ' ');
+                 }
+-                snprintf(tmp, sizeof(tmp), "# 0x%" PRIx64,
+-                    dec->pc + dec->imm);
+-                append(buf, tmp, buflen);
++                g_string_append_printf(buf, "# 0x%" PRIx64, dec->pc + dec->imm);
+             }
+             break;
+         case 'c': {
+             const char *name = csr_name(dec->imm & 0xfff);
+             if (name) {
+-                append(buf, name, buflen);
++                g_string_append(buf, name);
+             } else {
+-                snprintf(tmp, sizeof(tmp), "0x%03x", dec->imm & 0xfff);
+-                append(buf, tmp, buflen);
++                g_string_append_printf(buf, "0x%03x", dec->imm & 0xfff);
+             }
+             break;
+         }
+         case 'r':
+             switch (dec->rm) {
+             case rv_rm_rne:
+-                append(buf, "rne", buflen);
++                g_string_append(buf, "rne");
+                 break;
+             case rv_rm_rtz:
+-                append(buf, "rtz", buflen);
++                g_string_append(buf, "rtz");
+                 break;
+             case rv_rm_rdn:
+-                append(buf, "rdn", buflen);
++                g_string_append(buf, "rdn");
+                 break;
+             case rv_rm_rup:
+-                append(buf, "rup", buflen);
++                g_string_append(buf, "rup");
+                 break;
+             case rv_rm_rmm:
+-                append(buf, "rmm", buflen);
++                g_string_append(buf, "rmm");
+                 break;
+             case rv_rm_dyn:
+-                append(buf, "dyn", buflen);
++                g_string_append(buf, "dyn");
+                 break;
+             default:
+-                append(buf, "inv", buflen);
++                g_string_append(buf, "inv");
+                 break;
+             }
+             break;
+         case 'p':
+             if (dec->pred & rv_fence_i) {
+-                append(buf, "i", buflen);
++                g_string_append_c(buf, 'i');
+             }
+             if (dec->pred & rv_fence_o) {
+-                append(buf, "o", buflen);
++                g_string_append_c(buf, 'o');
+             }
+             if (dec->pred & rv_fence_r) {
+-                append(buf, "r", buflen);
++                g_string_append_c(buf, 'r');
+             }
+             if (dec->pred & rv_fence_w) {
+-                append(buf, "w", buflen);
++                g_string_append_c(buf, 'w');
+             }
+             break;
+         case 's':
+             if (dec->succ & rv_fence_i) {
+-                append(buf, "i", buflen);
++                g_string_append_c(buf, 'i');
+             }
+             if (dec->succ & rv_fence_o) {
+-                append(buf, "o", buflen);
++                g_string_append_c(buf, 'o');
+             }
+             if (dec->succ & rv_fence_r) {
+-                append(buf, "r", buflen);
++                g_string_append_c(buf, 'r');
+             }
+             if (dec->succ & rv_fence_w) {
+-                append(buf, "w", buflen);
++                g_string_append_c(buf, 'w');
+             }
+             break;
+         case '\t':
+-            while (strlen(buf) < tab) {
+-                append(buf, " ", buflen);
++            while (buf->len < tab) {
++                g_string_append_c(buf, ' ');
+             }
+             break;
+         case 'A':
+             if (dec->aq) {
+-                append(buf, ".aq", buflen);
++                g_string_append(buf, ".aq");
+             }
+             break;
+         case 'R':
+             if (dec->rl) {
+-                append(buf, ".rl", buflen);
++                g_string_append(buf, ".rl");
+             }
+             break;
+         case 'l':
+-            append(buf, ",v0", buflen);
++            g_string_append(buf, ",v0");
+             break;
+         case 'm':
+             if (dec->vm == 0) {
+-                append(buf, ",v0.t", buflen);
++                g_string_append(buf, ",v0.t");
+             }
+             break;
+         case 'D':
+-            append(buf, rv_vreg_name_sym[dec->rd], buflen);
++            g_string_append(buf, rv_vreg_name_sym[dec->rd]);
+             break;
+         case 'E':
+-            append(buf, rv_vreg_name_sym[dec->rs1], buflen);
++            g_string_append(buf, rv_vreg_name_sym[dec->rs1]);
+             break;
+         case 'F':
+-            append(buf, rv_vreg_name_sym[dec->rs2], buflen);
++            g_string_append(buf, rv_vreg_name_sym[dec->rs2]);
+             break;
+         case 'G':
+-            append(buf, rv_vreg_name_sym[dec->rs3], buflen);
++            g_string_append(buf, rv_vreg_name_sym[dec->rs3]);
+             break;
+         case 'v': {
+-            char nbuf[32] = {0};
+             const int sew = 1 << (((dec->vzimm >> 3) & 0b111) + 3);
+-            sprintf(nbuf, "%d", sew);
+             const int lmul = dec->vzimm & 0b11;
+             const int flmul = (dec->vzimm >> 2) & 1;
+             const char *vta = (dec->vzimm >> 6) & 1 ? "ta" : "tu";
+             const char *vma = (dec->vzimm >> 7) & 1 ? "ma" : "mu";
+-            append(buf, "e", buflen);
+-            append(buf, nbuf, buflen);
+-            append(buf, ",m", buflen);
++
++            g_string_append_printf(buf, "e%d,m", sew);
+             if (flmul) {
+                 switch (lmul) {
+                 case 3:
+-                    sprintf(nbuf, "f2");
++                    g_string_append(buf, "f2");
+                     break;
+                 case 2:
+-                    sprintf(nbuf, "f4");
++                    g_string_append(buf, "f4");
+                     break;
+                 case 1:
+-                    sprintf(nbuf, "f8");
+-                break;
++                    g_string_append(buf, "f8");
++                    break;
+                 }
+-                append(buf, nbuf, buflen);
+             } else {
+-                sprintf(nbuf, "%d", 1 << lmul);
+-                append(buf, nbuf, buflen);
++                g_string_append_printf(buf, "%d", 1 << lmul);
+             }
+-            append(buf, ",", buflen);
+-            append(buf, vta, buflen);
+-            append(buf, ",", buflen);
+-            append(buf, vma, buflen);
++            g_string_append_c(buf, ',');
++            g_string_append(buf, vta);
++            g_string_append_c(buf, ',');
++            g_string_append(buf, vma);
+             break;
+         }
+         case 'x': {
+             switch (dec->rlist) {
+             case 4:
+-                snprintf(tmp, sizeof(tmp), "{ra}");
++                g_string_append(buf, "{ra}");
+                 break;
+             case 5:
+-                snprintf(tmp, sizeof(tmp), "{ra, s0}");
++                g_string_append(buf, "{ra, s0}");
+                 break;
+             case 15:
+-                snprintf(tmp, sizeof(tmp), "{ra, s0-s11}");
++                g_string_append(buf, "{ra, s0-s11}");
+                 break;
+             default:
+-                snprintf(tmp, sizeof(tmp), "{ra, s0-s%d}", dec->rlist - 5);
++                g_string_append_printf(buf, "{ra, s0-s%d}", dec->rlist - 5);
+                 break;
+             }
+-            append(buf, tmp, buflen);
+             break;
+         }
+         case 'h':
+-            append(buf, rv_fli_name_const[dec->imm], buflen);
++            g_string_append(buf, rv_fli_name_const[dec->imm]);
+             break;
+         default:
+             break;
+         }
+         fmt++;
+     }
++
++    return buf;
  }
  
- static unsigned long
-@@ -739,6 +703,8 @@ print_insn_microblaze(bfd_vma memaddr, struct disassemble_info *info)
-     static bfd_vma prev_insn_addr = -1; /*init the prev insn addr */
-     static int prev_insn_vma = -1;  /*init the prev insn vma */
-     int curr_insn_vma = info->buffer_vma;
-+    int special;
-+    const char *special_name;
+ /* lift instruction to pseudo-instruction */
+@@ -5171,9 +5148,8 @@ static void decode_inst_decompress(rv_decode *dec, rv_isa isa)
  
-     info->bytes_per_chunk = 4;
+ /* disassemble instruction */
  
-@@ -799,12 +765,26 @@ print_insn_microblaze(bfd_vma memaddr, struct disassemble_info *info)
-                      op->name, get_field_r1(inst), get_field_rfsl(inst));
-         break;
-     case INST_TYPE_RD_SPECIAL:
--        fprintf_func(stream, "%s\t" PRIreg ", %s",
--                     op->name, get_field_rd(inst), get_field_special(inst, op));
-+        special = get_field_special(inst, op);
-+        special_name = get_special_name(special);
-+        if (special_name) {
-+            fprintf_func(stream, "%s\t" PRIreg ", %s",
-+                         op->name, get_field_rd(inst), special_name);
-+        } else {
-+            fprintf_func(stream, "%s\t" PRIreg ", " PRIpvr,
-+                         op->name, get_field_rd(inst), special ^ REG_PVR_MASK);
-+        }
-         break;
-     case INST_TYPE_SPECIAL_R1:
--        fprintf_func(stream, "%s\t%s, " PRIreg,
--                     op->name, get_field_special(inst, op), get_field_r1(inst));
-+        special = get_field_special(inst, op);
-+        special_name = get_special_name(special);
-+        if (special_name) {
-+            fprintf_func(stream, "%s\t%s, " PRIreg,
-+                         op->name, special_name, get_field_r1(inst));
-+        } else {
-+            fprintf_func(stream, "%s\t" PRIpvr ", " PRIreg,
-+                         op->name, special ^ REG_PVR_MASK, get_field_r1(inst));
-+        }
-         break;
-     case INST_TYPE_RD_R1:
-         fprintf_func(stream, "%s\t" PRIreg ", " PRIreg,
+-static void
+-disasm_inst(char *buf, size_t buflen, rv_isa isa, uint64_t pc, rv_inst inst,
+-            RISCVCPUConfig *cfg)
++static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
++                            RISCVCPUConfig *cfg)
+ {
+     rv_decode dec = { 0 };
+     dec.pc = pc;
+@@ -5220,7 +5196,7 @@ disasm_inst(char *buf, size_t buflen, rv_isa isa, uint64_t pc, rv_inst inst,
+     decode_inst_operands(&dec, isa);
+     decode_inst_decompress(&dec, isa);
+     decode_inst_lift_pseudo(&dec);
+-    format_inst(buf, buflen, 24, &dec);
++    return format_inst(24, &dec);
+ }
+ 
+ #define INST_FMT_2 "%04" PRIx64 "              "
+@@ -5231,7 +5207,6 @@ disasm_inst(char *buf, size_t buflen, rv_isa isa, uint64_t pc, rv_inst inst,
+ static int
+ print_insn_riscv(bfd_vma memaddr, struct disassemble_info *info, rv_isa isa)
+ {
+-    char buf[128] = { 0 };
+     bfd_byte packet[2];
+     rv_inst inst = 0;
+     size_t len = 2;
+@@ -5272,9 +5247,9 @@ print_insn_riscv(bfd_vma memaddr, struct disassemble_info *info, rv_isa isa)
+         }
+     }
+ 
+-    disasm_inst(buf, sizeof(buf), isa, memaddr, inst,
+-                (RISCVCPUConfig *)info->target_info);
+-    (*info->fprintf_func)(info->stream, "%s", buf);
++    g_autoptr(GString) str =
++        disasm_inst(isa, memaddr, inst, (RISCVCPUConfig *)info->target_info);
++    (*info->fprintf_func)(info->stream, "%s", str->str);
+ 
+     return len;
+ }
 -- 
 2.34.1
 
