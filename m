@@ -4,65 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 645D4C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 17:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CEFBC25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 17:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEuII-0004T3-3g; Wed, 05 Jun 2024 13:19:26 -0400
+	id 1sEuLl-0005pk-W0; Wed, 05 Jun 2024 13:23:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sEuIG-0004Sm-Qk
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:19:24 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sEuID-000308-M8
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:19:24 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VvZ0n2vwCz688KN;
- Thu,  6 Jun 2024 01:18:01 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 1F9351400C8;
- Thu,  6 Jun 2024 01:19:13 +0800 (CST)
-Received: from localhost (10.126.172.226) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 5 Jun
- 2024 18:19:12 +0100
-Date: Wed, 5 Jun 2024 18:19:11 +0100
-To: Richard Henderson <richard.henderson@linaro.org>
-CC: "Michael S. Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>, "Peter
- Maydell" <peter.maydell@linaro.org>, Igor Mammedov <imammedo@redhat.com>, Ani
- Sinha <anisinha@redhat.com>
-Subject: Re: [PULL 36/46] bios-tables-test: Add data for complex numa test
- (GI, GP etc)
-Message-ID: <20240605181911.00005f09@Huawei.com>
-In-Reply-To: <4d097eaf-d555-41a7-8c3f-c2abe8a51ab6@linaro.org>
-References: <cover.1717527933.git.mst@redhat.com>
- <61cbf56ef1c5dd9dbe6bd6625f6c8d2a82c5697f.1717527933.git.mst@redhat.com>
- <2eefcbdb-ad41-465a-9c14-1dc15bfff94a@linaro.org>
- <20240605162733.00007d8d@Huawei.com>
- <3a1c870c-f708-482d-802a-d3230b398c28@linaro.org>
- <20240605170845.000000dc@huawei.com>
- <20240605171136.00003879@huawei.com>
- <4d097eaf-d555-41a7-8c3f-c2abe8a51ab6@linaro.org>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEuLk-0005nR-DE
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:23:00 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEuLi-0003nH-Im
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:23:00 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2bfff08fc29so54698a91.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 10:22:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717608177; x=1718212977; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=QyfYhcDz9GxZwfZD6zLLHvsedkNWvuKT9dIKJJP5Q0E=;
+ b=eXK00aHi4NDl+8yUogLgcCKTdEYgw7ZdkfUbYjrCE8JcfXTo9riINwxDvuWUTxbMAf
+ kVsWwa+xBHCAhMBNLZPjy/ReFoiOZVArjeomqhDnxQO7Zwfq6Y6mGWG3ZrNJrFHq5zVm
+ 0MmrLQY9/Z+Z19Tr7DqDaQyEiE2UJY0w7BZbkaQZDWYZHKNkLRh1jMhWyR+c0r+1nzah
+ RYHdaMDk1Jf0PtLZO/I4iv3urXpFMkxElZLr/DM3Znx0Aa3lGVEcA2TbkVFcMTvc3WUI
+ hiT2uO6UaIC7KZ2RA+/iKO4IXAPetOoEEpxpwPXSt3/bcttRcx7fBUsgoPGQdpI/hcFB
+ z4rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717608177; x=1718212977;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QyfYhcDz9GxZwfZD6zLLHvsedkNWvuKT9dIKJJP5Q0E=;
+ b=T90M8kQ8hkHHMq6NfwPBCvhHqCYbwkvDPJrmKwyEBr8jrRJpE23Ngu6T/855ABR/eg
+ dl6Y0+IlYoUTfFhoRs+K1j25vBMSlpba71NqazZoTfVy1kY10avJDy19xGR693PUlLj7
+ nMKwIpq45kiBe+OjoxIn0+0LIpeGvBrYAkDBHpYKPjQ+eK8GbP9PumdFL+w1LsVbppu8
+ Toj2bEdNs/1dbHIfKl147CeVdHUjptOI5plDIw6hh+/sMpNsGo5Aan21cBjuvjpNV6Cn
+ kuYifFYZqnb7rhKbTMcQjT12SxedyjA2TIxK4yOcSIgD4F3dgfXJWobABcDEgQKMlcEp
+ dpQg==
+X-Gm-Message-State: AOJu0Yw1w1YwkrGXNGC6EWMeirCw1JVI34mlj8hM04kMpN1KZnSFi0y3
+ 4UofTCuKVUeLyWR+/3QVM8poi8hwM7OfhrsJ/Xnz+0Vqx7GAthkl1WkVGU+QglSSrlY2KcSNiUS
+ x
+X-Google-Smtp-Source: AGHT+IHvjKhLm2kfYnWFjQPOHh6ib/otYCEMQKaDFddpzivkfwO6RGVbl3EUiYbJuUlMt+n+lmuuMA==
+X-Received: by 2002:a17:90a:590:b0:2bd:d42a:e071 with SMTP id
+ 98e67ed59e1d1-2c27db58ee8mr3175942a91.30.1717608177097; 
+ Wed, 05 Jun 2024 10:22:57 -0700 (PDT)
+Received: from stoup.. ([71.212.132.216]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c28066d511sm1720915a91.9.2024.06.05.10.22.56
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Jun 2024 10:22:56 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 02/38] target/sparc: Fix ARRAY8
+Date: Wed,  5 Jun 2024 10:22:17 -0700
+Message-Id: <20240605172253.356302-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240605172253.356302-1-richard.henderson@linaro.org>
+References: <20240605172253.356302-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.126.172.226]
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,100 +89,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 5 Jun 2024 09:54:16 -0700
-Richard Henderson <richard.henderson@linaro.org> wrote:
+Follow the Oracle Sparc 2015 implementation note and bound
+the input value of N to 5 from the lower 3 bits of rs2.
+Spell out all of the intermediate values, matching the diagram
+in the manual.  Fix extraction of upper_x and upper_y for N=0.
 
-> On 6/5/24 11:11, Jonathan Cameron wrote:
-> >>> Sure.  By what incantation do I produce a dump?  
-> >>
-> >> If you still have the /mnt/aml-GHR602 above then either upload that somewhere or
-> >> iasl -d /mnt/aml-GHR602
-> >> should generate you a suitable text file.  However generic ports are fairly recent
-> >> so you may need a newer iasl from acpica-tools to decode.
-> >> It will moan if it doesn't understand the content.
-> >>  
-> > make check-qtest-x86_64 is how I get the test to run in the first place.  
-> 
-> Ah, I see, the file is not cleaned up on abort.
-Yes. End up with a lot of those after a while!
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/sparc/vis_helper.c | 53 ++++++++++++++++++++++++++-------------
+ 1 file changed, 35 insertions(+), 18 deletions(-)
 
-> For the record, I attach the dump.
-Thanks!
-> 
-> > Alternatively, this 'might' be sufficient if my guess for the problem
-> > is correct. Thanks!
-> > 
-> >  From 956df037f024783f19b6b00e5e280484380227a0 Mon Sep 17 00:00:00 2001
-> > From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > Date: Wed, 5 Jun 2024 17:01:36 +0100
-> > Subject: [PATCH] hw/acpi: Fix big endian host creation of Generic Port
-> >   Affinity Structures
-> > 
-> > Treating the HID as an integer caused it to get bit reversed
-> > on big endian hosts running little endian guests.  Treat it
-> > as a character array instead.
-> > 
-> > Fixes hw/acpi: Generic Port Affinity Structure Support
-> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > 
-> > ---
-> > Maybe this is the only problem?  I don't have a setup to test
-> > so any help would be appreciated.
-> > ---
-> >   include/hw/acpi/acpi_generic_initiator.h | 2 +-
-> >   hw/acpi/acpi_generic_initiator.c         | 6 +++++-
-> >   2 files changed, 6 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/include/hw/acpi/acpi_generic_initiator.h b/include/hw/acpi/acpi_generic_initiator.h
-> > index 1a899af30f..5baefda33a 100644
-> > --- a/include/hw/acpi/acpi_generic_initiator.h
-> > +++ b/include/hw/acpi/acpi_generic_initiator.h
-> > @@ -61,7 +61,7 @@ typedef struct PCIDeviceHandle {
-> >               uint16_t bdf;
-> >           };
-> >           struct {
-> > -            uint64_t hid;
-> > +            char hid[8];
-> >               uint32_t uid;
-> >           };
-> >       };
-> > diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-> > index 78b80dcf08..c2fb5ab2ef 100644
-> > --- a/hw/acpi/acpi_generic_initiator.c
-> > +++ b/hw/acpi/acpi_generic_initiator.c
-> > @@ -150,8 +150,12 @@ build_srat_generic_node_affinity(GArray *table_data, int node,
-> >           build_append_int_noprefix(table_data, handle->bdf, 2);
-> >           build_append_int_noprefix(table_data, 0, 12);
-> >       } else {
-> > +        int i;
-> > +
-> >           /* Device Handle - ACPI */
-> > -        build_append_int_noprefix(table_data, handle->hid, 8);
-> > +        for (i = 0; i < sizeof(handle->hid); i++) {
-> > +            build_append_int_noprefix(table_data, handle->hid[i], 1);
-> > +        }
-> >           build_append_int_noprefix(table_data, handle->uid, 4);
-> >           build_append_int_noprefix(table_data, 0, 4);
-> >       }  
-> 
-> Yes, this fixes the abort.
-> Merge the declaration of i into the for loop?
-
-sure.
-
-Thanks for testing. Seems it's time I tried to get an emulated s390
-setup running if that's practical as two of these in the last year :(
-
-Jonathan
-
-
-> 
-> 
-> r~
+diff --git a/target/sparc/vis_helper.c b/target/sparc/vis_helper.c
+index e15c6bb34e..f46fcf1f6a 100644
+--- a/target/sparc/vis_helper.c
++++ b/target/sparc/vis_helper.c
+@@ -21,25 +21,42 @@
+ #include "cpu.h"
+ #include "exec/helper-proto.h"
+ 
+-/* This function uses non-native bit order */
+-#define GET_FIELD(X, FROM, TO)                                  \
+-    ((X) >> (63 - (TO)) & ((1ULL << ((TO) - (FROM) + 1)) - 1))
+-
+-/* This function uses the order in the manuals, i.e. bit 0 is 2^0 */
+-#define GET_FIELD_SP(X, FROM, TO)               \
+-    GET_FIELD(X, 63 - (TO), 63 - (FROM))
+-
+-target_ulong helper_array8(target_ulong pixel_addr, target_ulong cubesize)
++target_ulong helper_array8(target_ulong rs1, target_ulong rs2)
+ {
+-    return (GET_FIELD_SP(pixel_addr, 60, 63) << (17 + 2 * cubesize)) |
+-        (GET_FIELD_SP(pixel_addr, 39, 39 + cubesize - 1) << (17 + cubesize)) |
+-        (GET_FIELD_SP(pixel_addr, 17 + cubesize - 1, 17) << 17) |
+-        (GET_FIELD_SP(pixel_addr, 56, 59) << 13) |
+-        (GET_FIELD_SP(pixel_addr, 35, 38) << 9) |
+-        (GET_FIELD_SP(pixel_addr, 13, 16) << 5) |
+-        (((pixel_addr >> 55) & 1) << 4) |
+-        (GET_FIELD_SP(pixel_addr, 33, 34) << 2) |
+-        GET_FIELD_SP(pixel_addr, 11, 12);
++    /*
++     * From Oracle SPARC Architecture 2015:
++     * Architecturally, an illegal R[rs2] value (>5) causes the array
++     * instructions to produce undefined results. For historic reference,
++     * past implementations of these instructions have ignored R[rs2]{63:3}
++     * and have treated R[rs2] values of 6 and 7 as if they were 5.
++     */
++    target_ulong n = MIN(rs2 & 7, 5);
++
++    target_ulong x_int = (rs1 >> 11) & 0x7ff;
++    target_ulong y_int = (rs1 >> 33) & 0x7ff;
++    target_ulong z_int = rs1 >> 55;
++
++    target_ulong lower_x = x_int & 3;
++    target_ulong lower_y = y_int & 3;
++    target_ulong lower_z = z_int & 1;
++
++    target_ulong middle_x = (x_int >> 2) & 15;
++    target_ulong middle_y = (y_int >> 2) & 15;
++    target_ulong middle_z = (z_int >> 1) & 15;
++
++    target_ulong upper_x = (x_int >> 6) & ((1 << n) - 1);
++    target_ulong upper_y = (y_int >> 6) & ((1 << n) - 1);
++    target_ulong upper_z = z_int >> 5;
++
++    return (upper_z << (17 + 2 * n))
++         | (upper_y << (17 + n))
++         | (upper_x << 17)
++         | (middle_z << 13)
++         | (middle_y << 9)
++         | (middle_x << 5)
++         | (lower_z << 4)
++         | (lower_y << 2)
++         | lower_x;
+ }
+ 
+ #if HOST_BIG_ENDIAN
+-- 
+2.34.1
 
 
