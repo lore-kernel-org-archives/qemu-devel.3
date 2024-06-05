@@ -4,104 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F3C1C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 14:58:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0234EC25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 14:59:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEs5b-0000j0-Mm; Wed, 05 Jun 2024 10:58:11 -0400
+	id 1sEs6f-0002Gn-CG; Wed, 05 Jun 2024 10:59:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sEs5a-0000iW-Io
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 10:58:10 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sEs5Y-00089R-FV
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 10:58:10 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id B093521AC7;
- Wed,  5 Jun 2024 14:58:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717599486; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEs6d-0002Fa-UP
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 10:59:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sEs6a-0008Gk-Hl
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 10:59:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717599551;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=VkKjecMsE5IEeRSvc04idQm3UKbavwFQTLqlMINHX54=;
- b=vh0p8bhjSx3lcxRu+dxs8e2Mrn6kI4pLUYj3CXw0PqmJf6zCZFXpZopa0bBUObhP3F/37H
- 8aVDRlxwAcNWW82cPYTj9naULrgnPtCZIMYyGUPUeOwFWN5SxeRPOi68SQASZYsRdMX61w
- C5eeHF14mhs1V5+MPX/6EKKFw8piG6E=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717599486;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VkKjecMsE5IEeRSvc04idQm3UKbavwFQTLqlMINHX54=;
- b=xEPXyZah2OeWAlGurcPFlJxunM71q/9W146ohurBZ13RwE8VQTFg7aHrGzm634EOQE/I1e
- VGnoPsGuc8sbf/DA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1717599485; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VkKjecMsE5IEeRSvc04idQm3UKbavwFQTLqlMINHX54=;
- b=TyesXl9fTkFk/Ktx6pVHwuFcXQrD6yvWCM55t2IdFhaz0eFsUveDRsj2J2vPDmWiGK0S8C
- vF31/UkivQmmXIYhsosax+AhpAQJNfctTumAxe/dD9BejGmSQl5i8jALvTRLV8EJ2gO2Sa
- zXd0sEzSfMX2E1zHPoMQdZ75TJHsUpo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1717599485;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VkKjecMsE5IEeRSvc04idQm3UKbavwFQTLqlMINHX54=;
- b=bcaWQ8WCzPBy+bLg1wABTioRd7lUrUb4sneGQwAONaJT8wPv1nYK6NPdcQ/d3ayGY6xibB
- YciGkC6I2Ld0BhDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3563D13A42;
- Wed,  5 Jun 2024 14:58:04 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Ci37Ovx8YGblPAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 05 Jun 2024 14:58:04 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- peterx@redhat.com, yuan1.liu@intel.com
-Cc: qemu-devel@nongnu.org, linuxarm@huawei.com, linwenkai6@hisilicon.com,
- zhangfei.gao@linaro.org, huangchenghai2@huawei.com
-Subject: Re: [PATCH 4/7] migration/multifd: Add UADK initialization
-In-Reply-To: <20240529094435.11140-5-shameerali.kolothum.thodi@huawei.com>
-References: <20240529094435.11140-1-shameerali.kolothum.thodi@huawei.com>
- <20240529094435.11140-5-shameerali.kolothum.thodi@huawei.com>
-Date: Wed, 05 Jun 2024 11:58:02 -0300
-Message-ID: <87zfrzfnd1.fsf@suse.de>
+ bh=gn/eBWWIm6t54GG4oYvydhrpfvE4s2/NRLKk6xhbirg=;
+ b=MabGFvXYTpfBTQjRu58X4M6sdRibOu52OYcYxCw2vaX4T770zeL9SFbAsI83aQ0ZDpQfcv
+ fYbMD7hyVPb9h2+LDIvMosqJZ85imu6J5yYcgeJ6NJwP6Gf2U4YDeIapHtELkza9WFnmYv
+ g0KIqSAc4zkis1ou9vvRyGYXfTOrh88=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-642-KcGjQDJ3P7qrYWEgIb62HQ-1; Wed, 05 Jun 2024 10:59:07 -0400
+X-MC-Unique: KcGjQDJ3P7qrYWEgIb62HQ-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-44033f06299so326191cf.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 07:59:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717599547; x=1718204347;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gn/eBWWIm6t54GG4oYvydhrpfvE4s2/NRLKk6xhbirg=;
+ b=tOczw3jVg4sYtrZri3FdszWX2Sq68+Z1zGJkMjUe09+lk3ofk1u5sJ92aVdZY9hrsU
+ bGQQ/drGdNkk0ziQ7jgMFNp6ygxcIH53rS7BJon5Cpk6aw6Y1gRpo5AnEQECHroft6PC
+ /qXMtSZaih9p/Rphl9fz8PbFTiSy9yWqXUxCy94/pNBH2eyb9FgQci8CASNa7NpnW60k
+ JFZUqWERKHHinY/vnw2k1YRj0FPROg+kBBC+C6L7pYalbMGFC+fUPj9cjuCB2MSQWnzn
+ 7O19S4XGILLbdNNhqk8bKaAW8a1eK4C3hdgmyKWorHOxWi+HTlmitX+yl+xe4QpkCHLH
+ SDIg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX3jZbrK3EsKAEicw+RunJ3rYJ8e6KmEtvxmZQa496Y7R40vN/Ww0NidbqJV1sIIUt2nhGrurzC3TNbh0VU5fkO29WGzDU=
+X-Gm-Message-State: AOJu0Yx4oYpB/BxhfH3rdOGOdlT/lxKDZLOi7XR7L+agZTYLT/Agu0QJ
+ KGYkZaUCcyPrHth88PQkFPNP83rLZUHFRfBKtR5QNCZ7++R+StLw4hTCrlT/MRdnF11tdXRQiDF
+ 0uPd9b36aXf3UuvPBIqbtUtSN3Z25ayDENfiQoIGKWOPnPNWaeIEG
+X-Received: by 2002:a05:622a:1391:b0:43a:46e3:f610 with SMTP id
+ d75a77b69052e-4402b6a6d58mr28864701cf.3.1717599546720; 
+ Wed, 05 Jun 2024 07:59:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1ceVYT+BF9h/DqRhgidTNpPCOvh7M9MpWlND4TdghdEOH1vh3jsqnRTU53oEDZ5bKJKcaJw==
+X-Received: by 2002:a05:622a:1391:b0:43a:46e3:f610 with SMTP id
+ d75a77b69052e-4402b6a6d58mr28864231cf.3.1717599545899; 
+ Wed, 05 Jun 2024 07:59:05 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-43ff23a419asm59711721cf.15.2024.06.05.07.59.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 05 Jun 2024 07:59:05 -0700 (PDT)
+Date: Wed, 5 Jun 2024 10:59:03 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: Michael Galaxy <mgalaxy@akamai.com>, Zheng Chuan <zhengchuan@huawei.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Yu Zhang <yu.zhang@ionos.com>,
+ "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>,
+ Jinpu Wang <jinpu.wang@ionos.com>, Elmar Gerdes <elmar.gerdes@ionos.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Prasanna Kumar Kalever <prasanna4324@gmail.com>,
+ "integration@gluster.org" <integration@gluster.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
+ Hanna Reitz <hreitz@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Song Gao <gaosong@loongson.cn>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Pannengyuan <pannengyuan@huawei.com>,
+ Xiexiangyou <xiexiangyou@huawei.com>
+Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
+Message-ID: <ZmB9N4Vr2csBBEnY@x1n>
+References: <ZjClMb-6MddpvHqQ@redhat.com> <ZjJgQcPQ29HJsTpY@x1n>
+ <7e902e4e576a4e199e36d28f99bd55e5@huawei.com>
+ <Zjj0xa-3KrFHTK0S@x1n>
+ <addaa8d094904315a466533763689ead@huawei.com>
+ <ZjpWmG2aUJLkYxJm@x1n>
+ <13ce4f9e-1e7c-24a9-0dc9-c40962979663@huawei.com>
+ <cd93922f-cf58-4a42-854d-0b39c6941905@akamai.com>
+ <Zl-x_Az8i4jOwitt@gallifrey> <ZmBx8UDDmO-C1Oqu@x1n>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[huawei.com:email, imap1.dmz-prg2.suse.org:helo,
- nongnu.org:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZmBx8UDDmO-C1Oqu@x1n>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,249 +129,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Shameer Kolothum via <qemu-devel@nongnu.org> writes:
+On Wed, Jun 05, 2024 at 10:10:57AM -0400, Peter Xu wrote:
+> >   e) Someone made a good suggestion (sorry can't remember who) - that the
+> >      RDMA migration structure was the wrong way around - it should be the
+> >      destination which initiates an RDMA read, rather than the source
+> >      doing a write; then things might become a LOT simpler; you just need
+> >      to send page ranges to the destination and it can pull it.
+> >      That might work nicely for postcopy.
+> 
+> I'm not sure whether it'll still be a problem if rdma recv side is based on
+> zero-copy.  It would be a matter of whether atomicity can be guaranteed so
+> that we don't want the guest vcpus to see a partially copied page during
+> on-flight DMAs.  UFFDIO_COPY (or friend) is currently the only solution for
+> that.
 
-> Initialize UADK session and allocate buffers required. The actual
-> compression/decompression will only be done in a subsequent patch.
->
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> ---
->  migration/multifd-uadk.c | 207 ++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 206 insertions(+), 1 deletion(-)
->
-> diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
-> index c2bb07535b..3172e4d5ca 100644
-> --- a/migration/multifd-uadk.c
-> +++ b/migration/multifd-uadk.c
-> @@ -12,9 +12,214 @@
->  
->  #include "qemu/osdep.h"
->  #include "qemu/module.h"
-> +#include "qapi/error.h"
-> +#include "migration.h"
-> +#include "multifd.h"
-> +#include "options.h"
-> +#include "uadk/wd_comp.h"
-> +#include "uadk/wd_sched.h"
-> +
-> +struct wd_data {
-> +    handle_t handle;
-> +    uint8_t *buf;
-> +    uint32_t *buf_hdr;
-> +};
-> +
-> +static bool uadk_hw_initialised(void)
+And when thinking about this (of UFFDIO_COPY's nature on not being able to
+do zero-copy...), the only way this will be able to do zerocopy is to use
+file memories (shmem/hugetlbfs), as page cache can be prepopulated. So that
+when we do DMA we pass over the page cache, which can be mapped in another
+virtual address besides what the vcpus are using.
 
-The first time this is called it will actually do the initialization,
-no? If so, it should be uadk_hw_init().
+Then we can use UFFDIO_CONTINUE (rather than UFFDIO_COPY) to do atomic
+updates on the vcpu pgtables, avoiding the copy.  QEMU doesn't have it, but
+it looks like there's one more reason we may want to have better use of
+shmem.. than anonymous.  And actually when working on 4k faults on 1G
+hugetlb I added CONTINUE support.
 
-> +{
-> +    char alg[] = "zlib";
-> +    int ret;
-> +
-> +    ret = wd_comp_init2(alg, SCHED_POLICY_RR, TASK_HW);
-> +    if (ret && ret != -WD_EEXIST) {
-> +        return false;
-> +    } else {
-> +        return true;
-> +    }
-> +}
-> +
-> +static struct wd_data *multifd_uadk_init_sess(uint32_t count,
-> +                                              uint32_t page_size,
-> +                                              bool compress, Error **errp)
-> +{
-> +    struct wd_comp_sess_setup ss = {0};
-> +    struct sched_params param = {0};
-> +    uint32_t size = count * page_size;
-> +    struct wd_data *wd;
-> +
-> +    if (!uadk_hw_initialised()) {
-> +        error_setg(errp, "multifd: UADK hardware not available");
+https://github.com/xzpeter/qemu/tree/doublemap
+https://github.com/xzpeter/qemu/commit/b8aff3a9d7654b1cf2c089a06894ff4899740dc5
 
-Does the lib provide a software fallback path that we could use like QPL
-does?
+Maybe it's worthwhile on its own now, because it also means we can use that
+in multifd to avoid one extra layer of buffering when supporting
+multifd+postcopy (which has the same issue here on directly copying data
+into guest pages).  It'll also work with things like rmda I think in
+similar ways.  It's just that it'll not work on anonymous.
 
-> +        return NULL;
-> +    }
-> +
-> +    wd = g_new0(struct wd_data, 1);
-> +    ss.alg_type = WD_ZLIB;
-> +    if (compress) {
-> +        ss.op_type = WD_DIR_COMPRESS;
-> +        /* Add an additional page for handling output > input */
-> +        size += page_size;
-> +    } else {
-> +        ss.op_type = WD_DIR_DECOMPRESS;
-> +    }
-> +    param.type = ss.op_type;
-> +    ss.sched_param = &param;
+I definitely hijacked the thread to somewhere too far away.  I'll stop
+here..
 
-What about window size and compression level? Don't we need to set them
-here? What do they default to?
+Thanks,
 
-> +
-> +    wd->handle = wd_comp_alloc_sess(&ss);
-> +    if (!wd->handle) {
-> +        error_setg(errp, "multifd: failed wd_comp_alloc_sess");
-> +        goto out;
-> +    }
-> +
-> +    wd->buf = g_try_malloc(size);
-> +    if (!wd->buf) {
-> +        error_setg(errp, "multifd: out of mem for uadk buf");
-> +        goto out_free_sess;
-> +    }
-> +    wd->buf_hdr = g_new0(uint32_t, count);
-> +    return wd;
-> +
-> +out_free_sess:
-> +    wd_comp_free_sess(wd->handle);
-> +out:
-> +    wd_comp_uninit2();
-> +    g_free(wd);
-> +    return NULL;
-> +}
-> +
-> +static void multifd_uadk_uninit_sess(struct wd_data *wd)
-> +{
-> +    wd_comp_free_sess(wd->handle);
-> +    wd_comp_uninit2();
-> +    g_free(wd->buf);
-> +    g_free(wd->buf_hdr);
-> +    g_free(wd);
-> +}
-> +
-> +/**
-> + * multifd_uadk_send_setup: setup send side
-> + *
-> + * Returns 0 for success or -1 for error
-> + *
-> + * @p: Params for the channel that we are using
-> + * @errp: pointer to an error
-> + */
-> +static int multifd_uadk_send_setup(MultiFDSendParams *p, Error **errp)
-> +{
-> +    struct wd_data *wd;
-> +
-> +    wd = multifd_uadk_init_sess(p->page_count, p->page_size, true, errp);
-> +    if (!wd) {
-> +        return -1;
-> +    }
-> +
-> +    p->compress_data = wd;
-> +    assert(p->iov == NULL);
-> +    /*
-> +     * Each page will be compressed independently and sent using an IOV. The
-> +     * additional two IOVs are used to store packet header and compressed data
-> +     * length
-> +     */
-> +
-> +    p->iov = g_new0(struct iovec, p->page_count + 2);
-> +    return 0;
-> +}
-> +
-> +/**
-> + * multifd_uadk_send_cleanup: cleanup send side
-> + *
-> + * Close the channel and return memory.
-> + *
-> + * @p: Params for the channel that we are using
-> + * @errp: pointer to an error
-> + */
-> +static void multifd_uadk_send_cleanup(MultiFDSendParams *p, Error **errp)
-> +{
-> +    struct wd_data *wd = p->compress_data;
-> +
-> +    multifd_uadk_uninit_sess(wd);
-> +    p->compress_data = NULL;
-> +}
-> +
-> +/**
-> + * multifd_uadk_send_prepare: prepare data to be able to send
-> + *
-> + * Create a compressed buffer with all the pages that we are going to
-> + * send.
-> + *
-> + * Returns 0 for success or -1 for error
-> + *
-> + * @p: Params for the channel that we are using
-> + * @errp: pointer to an error
-> + */
-> +static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error **errp)
-> +{
-> +    return -1;
-> +}
-> +
-> +/**
-> + * multifd_uadk_recv_setup: setup receive side
-> + *
-> + * Create the compressed channel and buffer.
-> + *
-> + * Returns 0 for success or -1 for error
-> + *
-> + * @p: Params for the channel that we are using
-> + * @errp: pointer to an error
-> + */
-> +static int multifd_uadk_recv_setup(MultiFDRecvParams *p, Error **errp)
-> +{
-> +    struct wd_data *wd;
-> +
-> +    wd = multifd_uadk_init_sess(p->page_count, p->page_size, false, errp);
-> +    if (!wd) {
-> +        return -1;
-> +    }
-> +    p->compress_data = wd;
-> +    return 0;
-> +}
-> +
-> +/**
-> + * multifd_uadk_recv_cleanup: setup receive side
-> + *
-> + * For no compression this function does nothing.
+-- 
+Peter Xu
 
-This line makes no sense here.
-
-> + *
-> + * @p: Params for the channel that we are using
-> + */
-> +static void multifd_uadk_recv_cleanup(MultiFDRecvParams *p)
-> +{
-> +    struct wd_data *wd = p->compress_data;
-> +
-> +    multifd_uadk_uninit_sess(wd);
-> +    p->compress_data = NULL;
-> +}
-> +
-> +/**
-> + * multifd_uadk_recv: read the data from the channel into actual pages
-> + *
-> + * Read the compressed buffer, and uncompress it into the actual
-> + * pages.
-> + *
-> + * Returns 0 for success or -1 for error
-> + *
-> + * @p: Params for the channel that we are using
-> + * @errp: pointer to an error
-> + */
-> +static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
-> +{
-> +    return -1;
-> +}
-> +
-> +static MultiFDMethods multifd_uadk_ops = {
-> +    .send_setup = multifd_uadk_send_setup,
-> +    .send_cleanup = multifd_uadk_send_cleanup,
-> +    .send_prepare = multifd_uadk_send_prepare,
-> +    .recv_setup = multifd_uadk_recv_setup,
-> +    .recv_cleanup = multifd_uadk_recv_cleanup,
-> +    .recv = multifd_uadk_recv,
-> +};
->  
->  static void multifd_uadk_register(void)
->  {
-> -    /* noop for now */
-> +    multifd_register_ops(MULTIFD_COMPRESSION_UADK, &multifd_uadk_ops);
->  }
->  migration_init(multifd_uadk_register);
 
