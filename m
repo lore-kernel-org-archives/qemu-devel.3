@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 509F1C25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3368EC25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:38:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF0BO-0007wY-7O; Wed, 05 Jun 2024 19:36:42 -0400
+	id 1sF0Aq-0004L7-H6; Wed, 05 Jun 2024 19:36:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0BL-0007j9-Pk
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0An-00040V-Oo
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0BH-0005sw-CQ
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:39 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Al-0005bu-EL
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717630594;
+ s=mimecast20190719; t=1717630557;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WFUPapk07PnJ8CLhVhbjjsuC+NoP2UxN6SJb+Hfxl60=;
- b=Ft46ietRFaHn9v2FBrBYdj5mCl+VSZdd/vxRJwrWbB33HOfqJCRNGfGdA/0DrSf1LCGc7s
- X7ANIHlnivaAMEFZSd5BjkoDhYtYI8ufsTT0IzAqLDu0wY7xUbddo/NcxpN/JTxXlWMqeb
- d20Wct+gnrQ+/8UaPLjIzq8sqzeWYdI=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Q5yMEJxQrvHs2013SKJXv7QWp1/VlpmqevozX2UnFx8=;
+ b=XT6ehUYwbQy8TkdSGC0H9SKaqJ7FcuH2GgbCpOa9R52IYp+i1bCuE0+TbaRES+GZKhJJqg
+ ffHAugLU/Itxb9BbGFcB+Xu0wyfE3xfLX6gREkgRryVvigoQCZsmZh18cVqLcsSLUnvm/H
+ uy7qU4KCB3HVEkUAnX6qIbnv4C7zLYc=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-317-DC4zDshaPK-9K2eY8xNbtQ-1; Wed, 05 Jun 2024 19:36:32 -0400
-X-MC-Unique: DC4zDshaPK-9K2eY8xNbtQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a6c72164f46so14653866b.1
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:36:31 -0700 (PDT)
+ us-mta-520-x_O_-WXcOkK2t_8qx8Z05g-1; Wed, 05 Jun 2024 19:35:55 -0400
+X-MC-Unique: x_O_-WXcOkK2t_8qx8Z05g-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a68ce1ac733so15651366b.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:35:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717630590; x=1718235390;
+ d=1e100.net; s=20230601; t=1717630554; x=1718235354;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WFUPapk07PnJ8CLhVhbjjsuC+NoP2UxN6SJb+Hfxl60=;
- b=YsRogNU6OjJP82wHYkwiojP4JQWiPcSO6DrrLhPZeG30VvwOot10NuZ/FbAI5WDqy/
- L8mYVd9KRIBXiWYCRiXMvUvEK7bY3TYeJWe+OpCi59O4wD8MTj4tgNt76DTRMPLVNJut
- 8HflEdek9v3eg/4UVvT4qHSjCsqMUgVNhzIZeXrR1fSXr9WPdXRlLchV3sXfeHYfUE68
- /fmTijOQX1p40zluSdpQ/XCh3HaGxon107YFZdo3MPdLWbhuj9bnNtBgvhrIm37ec+Wd
- ruEQpOVSRXxzSmtDDSCywwUJrgPRwpE+7TaFk/LXzaDT0eQqQdVAswSBQTWI5ex/dVw1
- qgDA==
-X-Gm-Message-State: AOJu0YxOjPwTo/jMXX6qhOnF2QT9pLljgywFCBq75uowJF8itR8QWLj1
- j8EKJ6nQXr4Osg5GnNqbIyKaEvUweljOUFHTJxXaDdu5BxhiZqzG+fDzY1LsB0G6GyFHJVJPSV9
- aKoKTc1rpcTaBmtVGV+MUF5cHEctUwE2p14ryha3IchS623p5ZxFVkdMcbcgTIt193MUbO1PcwZ
- IwflTi3QwMxn2R8xnLeJh4EvX9EQzU0Q==
-X-Received: by 2002:a17:906:fc01:b0:a68:f6b7:1fe3 with SMTP id
- a640c23a62f3a-a699fcf3563mr260036466b.43.1717630590395; 
- Wed, 05 Jun 2024 16:36:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF+UdcTmmXiKcFmzjKBFsEzkh6+bdd4qVh6x5/J7GAk1xNI240aTztcOcdEzm5PVvASfMYPdQ==
-X-Received: by 2002:a17:906:fc01:b0:a68:f6b7:1fe3 with SMTP id
- a640c23a62f3a-a699fcf3563mr260035666b.43.1717630589890; 
- Wed, 05 Jun 2024 16:36:29 -0700 (PDT)
+ bh=Q5yMEJxQrvHs2013SKJXv7QWp1/VlpmqevozX2UnFx8=;
+ b=kZYHGmPjLYapg2MjjVCe641ee9UcRNJEeZoZQjS2kip4UAeIZPZYHx9P6r+2MYxhFw
+ O+vtSMHAXSP3qgqah/jTSbQ+NMlJxKbuFXeQyrERfcvKRYuMbVXDt3mynkPs94Pp3pWA
+ +XXhocGphomeOQV8wdxLoXy/tQo8zw6UZ+TB40rNbsc+trdJpJooM0wNSv2OFWDV9Uof
+ EEqvRNfsUeXYSWpGtccQjkn0zCoteNX2BeZTv7MtjGJE74oQ++IU8dHLq7qgu7fJvnKk
+ 0X6JiGJXblKcqc3n5UFxY3G1GCp7SUtlypeAaF1YruBmn/WXTB2LO/nMKqoqEDRSyPEc
+ Heow==
+X-Gm-Message-State: AOJu0YwlKm6enlHujqlbBgi3yEE5v4nO3571AEDFu6P5WJXKOvpzl8Q3
+ +Qt3EOwcq6uv2GGUQIrb9WqHxBXr6kQ5LwcFExIkUi1pIvLzHsaGxU8GT9FHNYzjTX967NXMlF8
+ PniHL/nVuAXZFE/0h/eua62dhqCkAsllhxefECHgVNTnQ/8IUDjz7WEif4TmDW+s6QwSTIB37k7
+ o+1+9g6R8Z7fGB8UsHzeQL9VfWk4+0Kg==
+X-Received: by 2002:a50:d517:0:b0:56e:238e:372c with SMTP id
+ 4fb4d7f45d1cf-57a8bca192emr2388105a12.26.1717630554206; 
+ Wed, 05 Jun 2024 16:35:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGQW+A6lezbalxgTWk0yBAxgDwxN4wTdhDewJsKVtaFHaApq8Ax6gpweKPd5zY+r1pFjI2EHw==
+X-Received: by 2002:a50:d517:0:b0:56e:238e:372c with SMTP id
+ 4fb4d7f45d1cf-57a8bca192emr2388093a12.26.1717630553743; 
+ Wed, 05 Jun 2024 16:35:53 -0700 (PDT)
 Received: from redhat.com ([2.55.56.67]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c805d2882sm7047266b.90.2024.06.05.16.36.28
+ 4fb4d7f45d1cf-57aadf9cf05sm102315a12.3.2024.06.05.16.35.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 16:36:29 -0700 (PDT)
-Date: Wed, 5 Jun 2024 19:36:26 -0400
+ Wed, 05 Jun 2024 16:35:53 -0700 (PDT)
+Date: Wed, 5 Jun 2024 19:35:50 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
- Svetly Todorov <svetly.todorov@memverge.com>,
  Gregory Price <gregory.price@memverge.com>,
  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL v3 29/41] hw/mem/cxl_type3: Allow to release extent superset
- in QMP interface
-Message-ID: <80ac9548a10f6fb3b9dcbc941e77bf1ca0616e7e.1717630437.git.mst@redhat.com>
+Subject: [PULL v3 19/41] hw/cxl/cxl-mailbox-utils: Add dynamic capacity
+ region representative and mailbox command support
+Message-ID: <e2015c6731718e2e8634d5afddf7977199e88b2d.1717630437.git.mst@redhat.com>
 References: <cover.1717630437.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -79,7 +78,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1717630437.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,37 +105,197 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Fan Ni <fan.ni@samsung.com>
 
-Before the change, the QMP interface used for add/release DC extents
-only allows to release an extent whose DPA range is contained by a single
-accepted extent in the device.
+Per cxl spec r3.1, add dynamic capacity (DC) region representative based on
+Table 8-165 and extend the cxl type3 device definition to include DC region
+information. Also, based on info in 8.2.9.9.9.1, add 'Get Dynamic Capacity
+Configuration' mailbox support.
 
-With the change, we relax the constraints.  As long as the DPA range of
-the extent is covered by accepted extents, we allow the release.
+Note: we store region decode length as byte-wise length on the device, which
+should be divided by 256 * MiB before being returned to the host
+for "Get Dynamic Capacity Configuration" mailbox command per
+specification.
 
-Tested-by: Svetly Todorov <svetly.todorov@memverge.com>
 Reviewed-by: Gregory Price <gregory.price@memverge.com>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-15-nifan.cxl@gmail.com>
+Message-Id: <20240523174651.1089554-5-nifan.cxl@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/mem/cxl_type3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/cxl/cxl_device.h | 16 +++++++
+ hw/cxl/cxl-mailbox-utils.c  | 96 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 112 insertions(+)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 0d18259ec0..5d4a1276be 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1947,7 +1947,7 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
-                            "cannot release extent with pending DPA range");
-                 return;
-             }
--            if (!cxl_extents_contains_dpa_range(&dcd->dc.extents, dpa, len)) {
-+            if (!ct3_test_region_block_backed(dcd, dpa, len)) {
-                 error_setg(errp,
-                            "cannot release extent with non-existing DPA range");
-                 return;
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index a5f8e25020..e839370266 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -422,6 +422,17 @@ typedef struct CXLPoison {
+ typedef QLIST_HEAD(, CXLPoison) CXLPoisonList;
+ #define CXL_POISON_LIST_LIMIT 256
+ 
++#define DCD_MAX_NUM_REGION 8
++
++typedef struct CXLDCRegion {
++    uint64_t base;       /* aligned to 256*MiB */
++    uint64_t decode_len; /* aligned to 256*MiB */
++    uint64_t len;
++    uint64_t block_size;
++    uint32_t dsmadhandle;
++    uint8_t flags;
++} CXLDCRegion;
++
+ struct CXLType3Dev {
+     /* Private */
+     PCIDevice parent_obj;
+@@ -454,6 +465,11 @@ struct CXLType3Dev {
+     unsigned int poison_list_cnt;
+     bool poison_list_overflowed;
+     uint64_t poison_list_overflow_ts;
++
++    struct dynamic_capacity {
++        uint8_t num_regions; /* 0-8 regions */
++        CXLDCRegion regions[DCD_MAX_NUM_REGION];
++    } dc;
+ };
+ 
+ #define TYPE_CXL_TYPE3 "cxl-type3"
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 626acc1d0d..bede28e3c8 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -22,6 +22,8 @@
+ 
+ #define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
+ #define CXL_DC_EVENT_LOG_SIZE 8
++#define CXL_NUM_EXTENTS_SUPPORTED 512
++#define CXL_NUM_TAGS_SUPPORTED 0
+ 
+ /*
+  * How to add a new command, example. The command set FOO, with cmd BAR.
+@@ -80,6 +82,8 @@ enum {
+         #define GET_POISON_LIST        0x0
+         #define INJECT_POISON          0x1
+         #define CLEAR_POISON           0x2
++    DCD_CONFIG  = 0x48,
++        #define GET_DC_CONFIG          0x0
+     PHYSICAL_SWITCH = 0x51,
+         #define IDENTIFY_SWITCH_DEVICE      0x0
+         #define GET_PHYSICAL_PORT_STATE     0x1
+@@ -1238,6 +1242,88 @@ static CXLRetCode cmd_media_clear_poison(const struct cxl_cmd *cmd,
+     return CXL_MBOX_SUCCESS;
+ }
+ 
++/*
++ * CXL r3.1 section 8.2.9.9.9.1: Get Dynamic Capacity Configuration
++ * (Opcode: 4800h)
++ */
++static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
++                                             uint8_t *payload_in,
++                                             size_t len_in,
++                                             uint8_t *payload_out,
++                                             size_t *len_out,
++                                             CXLCCI *cci)
++{
++    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
++    struct {
++        uint8_t region_cnt;
++        uint8_t start_rid;
++    } QEMU_PACKED *in = (void *)payload_in;
++    struct {
++        uint8_t num_regions;
++        uint8_t regions_returned;
++        uint8_t rsvd1[6];
++        struct {
++            uint64_t base;
++            uint64_t decode_len;
++            uint64_t region_len;
++            uint64_t block_size;
++            uint32_t dsmadhandle;
++            uint8_t flags;
++            uint8_t rsvd2[3];
++        } QEMU_PACKED records[];
++    } QEMU_PACKED *out = (void *)payload_out;
++    struct {
++        uint32_t num_extents_supported;
++        uint32_t num_extents_available;
++        uint32_t num_tags_supported;
++        uint32_t num_tags_available;
++    } QEMU_PACKED *extra_out;
++    uint16_t record_count;
++    uint16_t i;
++    uint16_t out_pl_len;
++    uint8_t start_rid;
++
++    start_rid = in->start_rid;
++    if (start_rid >= ct3d->dc.num_regions) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    record_count = MIN(ct3d->dc.num_regions - in->start_rid, in->region_cnt);
++
++    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
++    extra_out = (void *)(payload_out + out_pl_len);
++    out_pl_len += sizeof(*extra_out);
++    assert(out_pl_len <= CXL_MAILBOX_MAX_PAYLOAD_SIZE);
++
++    out->num_regions = ct3d->dc.num_regions;
++    out->regions_returned = record_count;
++    for (i = 0; i < record_count; i++) {
++        stq_le_p(&out->records[i].base,
++                 ct3d->dc.regions[start_rid + i].base);
++        stq_le_p(&out->records[i].decode_len,
++                 ct3d->dc.regions[start_rid + i].decode_len /
++                 CXL_CAPACITY_MULTIPLIER);
++        stq_le_p(&out->records[i].region_len,
++                 ct3d->dc.regions[start_rid + i].len);
++        stq_le_p(&out->records[i].block_size,
++                 ct3d->dc.regions[start_rid + i].block_size);
++        stl_le_p(&out->records[i].dsmadhandle,
++                 ct3d->dc.regions[start_rid + i].dsmadhandle);
++        out->records[i].flags = ct3d->dc.regions[start_rid + i].flags;
++    }
++    /*
++     * TODO: Assign values once extents and tags are introduced
++     * to use.
++     */
++    stl_le_p(&extra_out->num_extents_supported, CXL_NUM_EXTENTS_SUPPORTED);
++    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED);
++    stl_le_p(&extra_out->num_tags_supported, CXL_NUM_TAGS_SUPPORTED);
++    stl_le_p(&extra_out->num_tags_available, CXL_NUM_TAGS_SUPPORTED);
++
++    *len_out = out_pl_len;
++    return CXL_MBOX_SUCCESS;
++}
++
+ #define IMMEDIATE_CONFIG_CHANGE (1 << 1)
+ #define IMMEDIATE_DATA_CHANGE (1 << 2)
+ #define IMMEDIATE_POLICY_CHANGE (1 << 3)
+@@ -1282,6 +1368,11 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+         cmd_media_clear_poison, 72, 0 },
+ };
+ 
++static const struct cxl_cmd cxl_cmd_set_dcd[256][256] = {
++    [DCD_CONFIG][GET_DC_CONFIG] = { "DCD_GET_DC_CONFIG",
++        cmd_dcd_get_dyn_cap_config, 2, 0 },
++};
++
+ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
+     [INFOSTAT][IS_IDENTIFY] = { "IDENTIFY", cmd_infostat_identify, 0, 0 },
+     [INFOSTAT][BACKGROUND_OPERATION_STATUS] = { "BACKGROUND_OPERATION_STATUS",
+@@ -1487,7 +1578,12 @@ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+ 
+ void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max)
+ {
++    CXLType3Dev *ct3d = CXL_TYPE3(d);
++
+     cxl_copy_cci_commands(cci, cxl_cmd_set);
++    if (ct3d->dc.num_regions) {
++        cxl_copy_cci_commands(cci, cxl_cmd_set_dcd);
++    }
+     cci->d = d;
+ 
+     /* No separation for PCI MB as protocol handled in PCI device */
 -- 
 MST
 
