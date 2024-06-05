@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFBD5C27C52
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 06:33:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F6D7C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 06:33:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEkC5-0000qF-Bf; Wed, 05 Jun 2024 02:32:21 -0400
+	id 1sEkCE-0000sx-T3; Wed, 05 Jun 2024 02:32:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1sEkC3-0000pu-4t
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 02:32:19 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1sEkC6-0000qT-60
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 02:32:22 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1sEkC1-0007DH-LE
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 02:32:18 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6f8ec7e054dso4468150b3a.2
- for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 23:32:17 -0700 (PDT)
+ id 1sEkC3-0007De-Lr
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 02:32:21 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1f692d6e990so18023225ad.3
+ for <qemu-devel@nongnu.org>; Tue, 04 Jun 2024 23:32:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1717569135; x=1718173935; darn=nongnu.org;
+ d=sifive.com; s=google; t=1717569137; x=1718173937; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2MCGoy4AY3BGS3+IW2ec2T3KfBFGkFZbhEPH8gR9eZo=;
- b=UoAQ6ZFQwUSg0MmxaF3nYyFjtXAohyRJLzK1LWlvak7pvpZ2sts4l0VnLCO0af2SXC
- ZmiPUp/txG1tq5XHf/7jrpzllI6ZWmUAgsqHFXTNp421zNdl/47WyV0nKsreWdK+BtQD
- o7WnvrfY4ItSemu6j5MPaXsNv1xX6XtRTiXAUxn6dI5qggFeQE1uyongldyo6zMVhox9
- M6RCpxHi7ykYmNqFzds/Sv7J1MqN90Yjf3349KOwCTQT2B8h+91hBuemuj6QwLmwWubN
- uhqdHfeC7JvQO1ZocGQt+RkIcS7IE8QTtFE4xJKlSlhPiFN4g2NufUFHhdrAtYL/gH7P
- oNcg==
+ bh=oMInlFL188ZWR1mMyu2viiuWqvKsDnAijhCCsb0k4W8=;
+ b=kJ4e4Zhr7cKUHg3TCZz26Fs15OlgU4hRtBsc4th24uuqAEAs4BIn0iMQucfuwCSDJk
+ ZpJdlAd4A2SJolXgmYhWOzkMSx8rV9zl6CkIPfKphvVAv2aDwvIbO8d2uaXSLmHQxD4w
+ 7uDV77BprYCNHg7EN283DrkSBuGk1USvXM5K3yXzvm13e1AECa8DryKsSx3aNDL2qL+6
+ 6pG9aP3h5QQVJgQUm3AeZw1r8hHCXprez9UU5G3AaYv/DolqguDyVHh9gxO3i+nFJcgW
+ 87TqbifgXObHYAnYle2B38zdXEjUmBPMTRvvqqRFE6hqgq7MuOBW2Y3kA+qxY19EK+IA
+ fSFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717569135; x=1718173935;
+ d=1e100.net; s=20230601; t=1717569137; x=1718173937;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2MCGoy4AY3BGS3+IW2ec2T3KfBFGkFZbhEPH8gR9eZo=;
- b=EVGAz/0E5dVsgx+ocHA0J7pvsVMvNFjmvceOvZGLjayJGzSMwI72lr1AkjgEWXC7A/
- VCUi1dGHONdQ2Jww1gQLNs0M4S4LGhryHztmBHNapAUc+3b+/sNNLz5FZSFtu4iqJDii
- syZRz4S7N+AMmhFOWXukRaWLYoXFDkphpfQBMuQcTpxHKol+UxyB1asDEHM4xiMY51d2
- rw/F3yVKxbyaHZ2XME3bZbqIPTXHQaT/27hWC6hsYjP+ZMLrB54s8090uoexyvwqKr6i
- XIqA7avdrBSEFyhfoyekMpd99TeolIrjJ6QHM0mw1TNdzCVpbIsxKIqjaKar82VjrjeQ
- 5zsg==
-X-Gm-Message-State: AOJu0YzIC+0JtTjYHpSE4SWKgki6Ijrk2O7VAjjOI+YSYfXSdRqMglrL
- wzaP7G4Qf640U05UOV5U+hbVoKEl9ngrM3Ov/AE4b48LkBKDNxuTAa7EJKFqMbh/kcTVKepUyDe
- 4qODRNdBVk6p/93NUCOcnd5hfTn7bCl6za324RPdaOMHueSx5OPVAyc/a/M84i83et+3cosvoQL
- pHlwZ+BYoX1UxJTT2lyRlse66KxT71pHUFZP3ZJhLEjA==
-X-Google-Smtp-Source: AGHT+IEKVn7ctHMFwVjIrhfCmWUcLZzdKvRYkzVauS/LgY30+jyGNonvPs8AoQASmPOJARwqndit3A==
-X-Received: by 2002:a05:6a21:318b:b0:1b2:91a0:6255 with SMTP id
- adf61e73a8af0-1b2b71b5cdbmr2359579637.62.1717569134980; 
- Tue, 04 Jun 2024 23:32:14 -0700 (PDT)
+ bh=oMInlFL188ZWR1mMyu2viiuWqvKsDnAijhCCsb0k4W8=;
+ b=ZoIL+1D2eR9b9iiO1G40OQVBylZa8jHXAynLVQ171uhvCm8S04vq0pP3hy52T8Lk1L
+ 05HMBS02G3n8xHuQy8FgM7syyMnZNJD9HQPxeqU8mOM+e+hdTxB5tAZK7P0ZJOtl38hs
+ EYmfIjrM+Oiuf6LHKxxDRHSR+ZavSq/Irz2vwIseqYup2YCijdsCLBrxhoSuYlwd89EJ
+ 2Zi1WpsrouwMg3aIXKeO6gbZToRoo4Ru8Y6gTypf9B7ABCEBVunNh2oIqG/88qApZZKK
+ BGy7zNdpaUgfO2hXwy5DEu42vIzzic7SZpEYdCX1R908Pa9jxGU1PM9PmTvU2KVEyW9B
+ 6/Lw==
+X-Gm-Message-State: AOJu0YyNcL7aeJzaZePSu7wA0XCkiZVED+BS/AW6ClRTQW1jhRLiE2P7
+ KZ+m3Z3Dcw4toEzPZhbEx6dLS2y71belY3P09Ph8UT2D3nkVbQ0R4YssvyZ8euE0hEiDENnXhK/
+ vRTv5x6iiFglHBWtFW0fR0VHmPlOHlnne8d5SNEMrV6PY5pJKFX9J8bUmZ2eLNr0Mjff6P0cB2z
+ OccaEF/+9krtefYKevuTia2u4h+xeNMWr6U+Hq69eNdw==
+X-Google-Smtp-Source: AGHT+IETueM9ksvD6vVqcJB3LQOyBzxGxemLZ1c1L+mmE2eDxivg/MvSHHzqPj9smz/ieh9VY7IiWw==
+X-Received: by 2002:a17:902:dac1:b0:1f6:6a85:7ab3 with SMTP id
+ d9443c01a7336-1f6a5a874acmr20349375ad.66.1717569137122; 
+ Tue, 04 Jun 2024 23:32:17 -0700 (PDT)
 Received: from hsinchu16.internal.sifive.com
  (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f632356c84sm94819725ad.76.2024.06.04.23.32.13
+ d9443c01a7336-1f632356c84sm94819725ad.76.2024.06.04.23.32.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 23:32:14 -0700 (PDT)
+ Tue, 04 Jun 2024 23:32:16 -0700 (PDT)
 From: frank.chang@sifive.com
 To: qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -70,23 +70,24 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
  Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH RESEND 3/6] target/riscv: Add MISA implied rules
-Date: Wed,  5 Jun 2024 14:31:51 +0800
-Message-ID: <20240605063154.31298-4-frank.chang@sifive.com>
+Subject: [PATCH RESEND 4/6] target/riscv: Add standard extension implied rules
+Date: Wed,  5 Jun 2024 14:31:52 +0800
+Message-ID: <20240605063154.31298-5-frank.chang@sifive.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240605063154.31298-1-frank.chang@sifive.com>
 References: <20240605063154.31298-1-frank.chang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=frank.chang@sifive.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=frank.chang@sifive.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,42 +105,117 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Frank Chang <frank.chang@sifive.com>
 
-Add MISA extension implied rules to enable the implied extensions
-of MISA recursively.
+Add standard extension implied rules to enable the implied extensions of
+the standard extension recursively.
 
 Signed-off-by: Frank Chang <frank.chang@sifive.com>
 ---
- target/riscv/cpu.c | 50 +++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 49 insertions(+), 1 deletion(-)
+ target/riscv/cpu.c | 340 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 340 insertions(+)
 
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index c7e5cec7ef..a6e9055c5f 100644
+index a6e9055c5f..80b238060a 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -2242,8 +2242,56 @@ RISCVCPUProfile *riscv_profiles[] = {
-     NULL,
+@@ -2289,12 +2289,352 @@ static RISCVCPUImpliedExtsRule RVV_IMPLIED = {
+     },
  };
  
-+static RISCVCPUImpliedExtsRule RVA_IMPLIED = {
-+    .is_misa = true,
-+    .ext = RVA,
++static RISCVCPUImpliedExtsRule ZCB_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zcb),
 +    .implied_exts = {
-+        CPU_CFG_OFFSET(ext_zalrsc), CPU_CFG_OFFSET(ext_zaamo),
++        CPU_CFG_OFFSET(ext_zca),
 +
 +        RISCV_IMPLIED_EXTS_RULE_END
 +    },
 +};
 +
-+static RISCVCPUImpliedExtsRule RVD_IMPLIED = {
-+    .is_misa = true,
-+    .ext = RVD,
++static RISCVCPUImpliedExtsRule ZCD_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zcd),
++    .implied_misas = RVD,
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zca),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZCE_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zce),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zcb), CPU_CFG_OFFSET(ext_zcmp),
++        CPU_CFG_OFFSET(ext_zcmt),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZCF_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zcf),
++    .implied_misas = RVF,
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zca),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZCMP_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zcmp),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zca),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZCMT_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zcmt),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zca), CPU_CFG_OFFSET(ext_zicsr),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZDINX_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zdinx),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zfinx),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZFA_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zfa),
 +    .implied_misas = RVF,
 +    .implied_exts = { RISCV_IMPLIED_EXTS_RULE_END },
 +};
 +
-+static RISCVCPUImpliedExtsRule RVF_IMPLIED = {
-+    .is_misa = true,
-+    .ext = RVF,
++static RISCVCPUImpliedExtsRule ZFBFMIN_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zfbfmin),
++    .implied_misas = RVF,
++    .implied_exts = { RISCV_IMPLIED_EXTS_RULE_END },
++};
++
++static RISCVCPUImpliedExtsRule ZFH_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zfh),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zfhmin),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZFHMIN_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zfhmin),
++    .implied_misas = RVF,
++    .implied_exts = { RISCV_IMPLIED_EXTS_RULE_END },
++};
++
++static RISCVCPUImpliedExtsRule ZFINX_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zfinx),
 +    .implied_exts = {
 +        CPU_CFG_OFFSET(ext_zicsr),
 +
@@ -147,33 +223,253 @@ index c7e5cec7ef..a6e9055c5f 100644
 +    },
 +};
 +
-+static RISCVCPUImpliedExtsRule RVM_IMPLIED = {
-+    .is_misa = true,
-+    .ext = RVM,
++static RISCVCPUImpliedExtsRule ZHINX_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zhinx),
 +    .implied_exts = {
-+        CPU_CFG_OFFSET(ext_zmmul),
++        CPU_CFG_OFFSET(ext_zhinxmin),
 +
 +        RISCV_IMPLIED_EXTS_RULE_END
 +    },
 +};
 +
-+static RISCVCPUImpliedExtsRule RVV_IMPLIED = {
-+    .is_misa = true,
-+    .ext = RVV,
++static RISCVCPUImpliedExtsRule ZHINXMIN_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zhinxmin),
 +    .implied_exts = {
-+        CPU_CFG_OFFSET(ext_zve64d),
++        CPU_CFG_OFFSET(ext_zfinx),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZICNTR_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zicntr),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zicsr),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZIHPM_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zihpm),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zicsr),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZK_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zk),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zkn), CPU_CFG_OFFSET(ext_zkr),
++        CPU_CFG_OFFSET(ext_zkt),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZKN_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zkn),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zbkb), CPU_CFG_OFFSET(ext_zbkc),
++        CPU_CFG_OFFSET(ext_zbkx), CPU_CFG_OFFSET(ext_zkne),
++        CPU_CFG_OFFSET(ext_zknd), CPU_CFG_OFFSET(ext_zknh),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZKS_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zks),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zbkb), CPU_CFG_OFFSET(ext_zbkc),
++        CPU_CFG_OFFSET(ext_zbkx), CPU_CFG_OFFSET(ext_zksed),
++        CPU_CFG_OFFSET(ext_zksh),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVBB_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zvbb),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zvkb),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVE32F_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zve32f),
++    .implied_misas = RVF,
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zve32x),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVE32X_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zve32x),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zicsr),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVE64D_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zve64d),
++    .implied_misas = RVD,
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zve64f),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVE64F_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zve64f),
++    .implied_misas = RVF,
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zve32f), CPU_CFG_OFFSET(ext_zve64x),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVE64X_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zve64x),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zve32x),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVFBFMIN_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zvfbfmin),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zve32f),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVFBFWMA_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zvfbfwma),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zvfbfmin), CPU_CFG_OFFSET(ext_zfbfmin),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVFH_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zvfh),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zvfhmin), CPU_CFG_OFFSET(ext_zfhmin),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVFHMIN_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zvfhmin),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zve32f),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVKN_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zvkn),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zvkned), CPU_CFG_OFFSET(ext_zvknhb),
++        CPU_CFG_OFFSET(ext_zvkb), CPU_CFG_OFFSET(ext_zvkt),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVKNC_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zvknc),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zvkn), CPU_CFG_OFFSET(ext_zvbc),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVKNG_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zvkng),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zvkn), CPU_CFG_OFFSET(ext_zvkg),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVKNHB_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zvknhb),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zve64x),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVKS_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zvks),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zvksed), CPU_CFG_OFFSET(ext_zvksh),
++        CPU_CFG_OFFSET(ext_zvkb), CPU_CFG_OFFSET(ext_zvkt),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVKSC_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zvksc),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zvks), CPU_CFG_OFFSET(ext_zvbc),
++
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
++
++static RISCVCPUImpliedExtsRule ZVKSG_IMPLIED = {
++    .ext = CPU_CFG_OFFSET(ext_zvksg),
++    .implied_exts = {
++        CPU_CFG_OFFSET(ext_zvks), CPU_CFG_OFFSET(ext_zvkg),
 +
 +        RISCV_IMPLIED_EXTS_RULE_END
 +    },
 +};
 +
  RISCVCPUImpliedExtsRule *riscv_misa_implied_rules[] = {
--    NULL
-+    &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
-+    &RVM_IMPLIED, &RVV_IMPLIED, NULL
+     &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
+     &RVM_IMPLIED, &RVV_IMPLIED, NULL
  };
  
  RISCVCPUImpliedExtsRule *riscv_ext_implied_rules[] = {
++    &ZCB_IMPLIED, &ZCD_IMPLIED, &ZCE_IMPLIED,
++    &ZCF_IMPLIED, &ZCMP_IMPLIED, &ZCMT_IMPLIED,
++    &ZDINX_IMPLIED, &ZFA_IMPLIED, &ZFBFMIN_IMPLIED,
++    &ZFH_IMPLIED, &ZFHMIN_IMPLIED, &ZFINX_IMPLIED,
++    &ZHINX_IMPLIED, &ZHINXMIN_IMPLIED, &ZICNTR_IMPLIED,
++    &ZIHPM_IMPLIED, &ZK_IMPLIED, &ZKN_IMPLIED,
++    &ZKS_IMPLIED, &ZVBB_IMPLIED, &ZVE32F_IMPLIED,
++    &ZVE32X_IMPLIED, &ZVE64D_IMPLIED, &ZVE64F_IMPLIED,
++    &ZVE64X_IMPLIED, &ZVFBFMIN_IMPLIED, &ZVFBFWMA_IMPLIED,
++    &ZVFH_IMPLIED, &ZVFHMIN_IMPLIED, &ZVKN_IMPLIED,
++    &ZVKNC_IMPLIED, &ZVKNG_IMPLIED, &ZVKNHB_IMPLIED,
++    &ZVKS_IMPLIED,  &ZVKSC_IMPLIED, &ZVKSG_IMPLIED,
+     NULL
+ };
+ 
 -- 
 2.43.2
 
