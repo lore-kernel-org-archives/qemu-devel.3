@@ -4,55 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D2EFC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 12:03:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEDD4C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 12:09:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEpLk-0003Lg-FQ; Wed, 05 Jun 2024 08:02:40 -0400
+	id 1sEpRl-0004pO-Rt; Wed, 05 Jun 2024 08:08:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sEpLj-0003Kz-4N
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 08:02:39 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1sEpRk-0004oe-4N
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 08:08:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sEpLe-0004V2-Ii
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 08:02:38 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VvQzJ20sYz6K9cq;
- Wed,  5 Jun 2024 20:01:16 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 3A5441408F9;
- Wed,  5 Jun 2024 20:02:27 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 5 Jun
- 2024 13:02:26 +0100
-Date: Wed, 5 Jun 2024 13:02:25 +0100
-To: Li Zhijian <lizhijian@fujitsu.com>
-CC: <qemu-devel@nongnu.org>, <fan.ni@samsung.com>, <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH] cxl: Get rid of unused cfmw_list
-Message-ID: <20240605130225.00006431@Huawei.com>
-In-Reply-To: <20240531061317.865673-1-lizhijian@fujitsu.com>
-References: <20240531061317.865673-1-lizhijian@fujitsu.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1sEpRi-00064Z-EM
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 08:08:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717589329;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2v9Z4zn5H16gf2IEP0RcvQSdt1WbgFyv76Fd0JybRQE=;
+ b=LeCc5d7CS3IeSLm5jVZJ1kwowtAjoBAnBnQwT2wNAW8kUA01OiiDhlvFYFskHO8H74c6UM
+ EkqqCeAYWWEkmNZBwueA/b9bzyyZSQAXjS12pL7/JIfEYeGPcrDznfBIjlh35bjh+A8xww
+ Me/bMhHW4Sr1LjefY01KppA5g92MBCM=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-678-Ei5xy4jcNc-wwKbRQNkKrA-1; Wed, 05 Jun 2024 08:08:47 -0400
+X-MC-Unique: Ei5xy4jcNc-wwKbRQNkKrA-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-57a7946685aso1555054a12.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 05:08:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717589326; x=1718194126;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2v9Z4zn5H16gf2IEP0RcvQSdt1WbgFyv76Fd0JybRQE=;
+ b=iECIFokWN+D7q08T9Q54f8/BJ8KUBWd538qDh2dxQlbB3LdM+BPbmij/JvIepeEv18
+ 5nXNyXZvgf9Ab1XUlFsHCoiwxr/ZWJHOgBJ/7Y+/aGG6mS6OQ8YiNsxQvFk31a8YPE+z
+ ZfRbRnRV1PgTUFZwDSl0hZQ343YA5VbS8i70x7PBkBSd9G2fNJLqsHie7BdYMk/gCIog
+ E5mS0YfSkQZ+AWIO5mMACXRupBcDFYufcqRDcriAM3BxUYGgyRJzpOvIgAYl3NJMTOPp
+ gGNz89KpmTaswFY5fevP0dispPijHH3uYl+1gjdj59QAA94Vw17zwxoAfbg6mLP/mLYO
+ tcNg==
+X-Gm-Message-State: AOJu0YyoiIIaUD74PUHN0FS2+R6ovyYnKEVz4J881x8lN1p6ob9F9rqu
+ paTFFA8RCX+Z+WTCpUNEqr7m00uYUlBTRxr9gC1Lu0pYOvHAykB5W9Y9W68cThLe3cZsiNIHKZZ
+ TVj6oXs4MC4bCPMmvAPRFFtrVUrfVMKpcLpDisiSFhfv1h9s8/9a2iWnz6Wjcai9J4BjeBt8f2a
+ 51B3Z0mVzgrPaBu+6KfGSzXjPjk0I=
+X-Received: by 2002:a50:ccc6:0:b0:57a:27e5:2a8a with SMTP id
+ 4fb4d7f45d1cf-57a8b67c31fmr1805736a12.8.1717589326248; 
+ Wed, 05 Jun 2024 05:08:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+JxuJ520EzT+4QtY4uXVm+JfZMvYvj6q9jh0fTRQVgJJ52LosO9DfGMFok6kJpKaWnybVCz6cTTo87EWHuIc=
+X-Received: by 2002:a50:ccc6:0:b0:57a:27e5:2a8a with SMTP id
+ 4fb4d7f45d1cf-57a8b67c31fmr1805731a12.8.1717589325928; Wed, 05 Jun 2024
+ 05:08:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240603151825.188353-1-kraxel@redhat.com>
+ <20240603151825.188353-2-kraxel@redhat.com>
+ <CAMxuvawqf-0dKPsZP2UTcDWPWQ+8FKbZ=S4KX02hQO1qeeGVMA@mail.gmail.com>
+ <tmtartaqh2ac4azfq4cgwh22uuc4pnrnxjpcpky24xzjrkwb5c@ung7cyha4ppa>
+In-Reply-To: <tmtartaqh2ac4azfq4cgwh22uuc4pnrnxjpcpky24xzjrkwb5c@ung7cyha4ppa>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Wed, 5 Jun 2024 16:08:33 +0400
+Message-ID: <CAMxuvay6qMGCSc7eWzs0Nu7x=VOyG6D56Jb9sNe+azh80GFe1Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] stdvga: fix screen blanking
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Anthony PERARD <anthony@xenproject.org>, 
+ Paul Durrant <paul@xen.org>, xen-devel@lists.xenproject.org, 
+ Stefano Stabellini <sstabellini@kernel.org>, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,64 +99,26 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 31 May 2024 14:13:17 +0800
-Li Zhijian <lizhijian@fujitsu.com> wrote:
+Hi
 
-> There is no user for this member. All '-M cxl-fmw.N' options have
-> been parsed and saved to CXLState.fixed_windows.
-> 
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+On Wed, Jun 5, 2024 at 11:36=E2=80=AFAM Gerd Hoffmann <kraxel@redhat.com> w=
+rote:
+>
+> On Tue, Jun 04, 2024 at 10:27:18AM GMT, Marc-Andr=C3=A9 Lureau wrote:
+> > Hi
+> >
+> > > +    if (is_buffer_shared(surface)) {
+> >
+> > Perhaps the suggestion to rename the function (in the following patch)
+> > should instead be surface_is_allocated() ? that would match the actual
+> > flag check. But callers would have to ! the result. Wdyt?
+>
+> surface_is_shadow() ?  Comes closer to the typical naming in computer
+> graphics.
 
-Hi Li,
-
-Applied to my tree with slight change to patch title
-to hw/cxl: Get rid of unused cfmw_list
-
-I aim to send a group of more minor changes like this for upstream
-in the next week or so.
-
-Btw, to make it easy to spot QEMU patches in patchwork so that
-the kernel maintainers can ignore them - when posting to linux-cxl@vger.kernel.org
-[PATCH qemu]
-marking for patches is helpful.
-
-Thanks,
-
-Jonathan
-
-> ---
->  hw/cxl/cxl-host.c    | 1 -
->  include/hw/cxl/cxl.h | 1 -
->  2 files changed, 2 deletions(-)
-> 
-> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-> index c5f5fcfd64d0..926d3d3da705 100644
-> --- a/hw/cxl/cxl-host.c
-> +++ b/hw/cxl/cxl-host.c
-> @@ -335,7 +335,6 @@ static void machine_set_cfmw(Object *obj, Visitor *v, const char *name,
->      for (it = cfmw_list; it; it = it->next) {
->          cxl_fixed_memory_window_config(state, it->value, errp);
->      }
-> -    state->cfmw_list = cfmw_list;
->  }
->  
->  void cxl_machine_init(Object *obj, CXLState *state)
-> diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
-> index 75e47b686441..e3ecbef03872 100644
-> --- a/include/hw/cxl/cxl.h
-> +++ b/include/hw/cxl/cxl.h
-> @@ -43,7 +43,6 @@ typedef struct CXLState {
->      MemoryRegion host_mr;
->      unsigned int next_mr_idx;
->      GList *fixed_windows;
-> -    CXLFixedMemoryWindowOptionsList *cfmw_list;
->  } CXLState;
->  
->  struct CXLHost {
+If the underlying flag is renamed too, that's ok to me.
 
 
