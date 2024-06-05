@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 311D7C41513
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F0A4C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:39:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF0BP-00088k-FN; Wed, 05 Jun 2024 19:36:43 -0400
+	id 1sF0Ah-0003R3-Bj; Wed, 05 Jun 2024 19:35:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0BN-0007rH-Ae
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:41 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Ad-0003H9-Sn
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:35:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0BL-0005tL-MV
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:40 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Ac-0005bU-7W
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:35:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717630598;
+ s=mimecast20190719; t=1717630553;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=VYKkp6fHZoal2oiYNWaG4icBm491Zje1r86kUs5B3ls=;
- b=ZzH41aHY/cT0KruGUsNz2mH8vB/57VRDlYGmIaUGDgZD8rFGHDBggF0J3bYalT66BGkFQm
- J3zRxT8BaWGJn57V2n2MD2iQTcUNEBP9l8RyEoFx22ymRqayjTquLdPZx37zj9G7UiXW5G
- hn4DOyO2oxbbaCtoYSTh9A+yAcEF72s=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=R2rkXgOWy7oaxjC82Fwhko4ewIXnfZhtW9KkNOPqa7A=;
+ b=gt3GpJHlXaw3NxGacEd7H0r5lTx+70gHHrzQ8l2D3eb9ROtOw8XlBgJYVEYnNSEjKbB24A
+ 8fY3GTe7aXmvDQwMaQhsp52I7b5PRIgqsYc+55ySks1WNVV1Ypf+Po1d4q7uUAgYPzHPju
+ eQu08SnJyrF6WzVcseu2l4sOf+EzldI=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-312-ce_dIIxZMyCxDRzqDL0yag-1; Wed, 05 Jun 2024 19:36:36 -0400
-X-MC-Unique: ce_dIIxZMyCxDRzqDL0yag-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-57a7946685aso128866a12.2
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:36:36 -0700 (PDT)
+ us-mta-674-iuQseTyZMbaif6El0OWXxQ-1; Wed, 05 Jun 2024 19:35:52 -0400
+X-MC-Unique: iuQseTyZMbaif6El0OWXxQ-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a68ea01c455so8554866b.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:35:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717630594; x=1718235394;
+ d=1e100.net; s=20230601; t=1717630551; x=1718235351;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VYKkp6fHZoal2oiYNWaG4icBm491Zje1r86kUs5B3ls=;
- b=jiQMzQ43+hIUcpSNW3OujR6cYMgbvahMCCQmLUX5bLu9tA+VXyMckrJscL3WFTgUid
- 3uS5MQPXSBBG/Na9Yl5OlOwjmnI3FIjf3wD9t+GHzMTY2tHSrFuZpQaUAczKJqoEHb3T
- UmLRr4CNtaD7dU+6vJ6Y05/yQX1ZDEQzESQu4/T0nThr2kQVltEmYevJB+a4/GuLOael
- RPEm51n0YSeAc1WECOXSGAwQETni/ILoegJh1rA9+DCe7SGZgouI33KYCvLtXfOfmvR6
- RO0ukcgLLQ6DRXaLSuOGzBy9kxGJ1sFhnwx5ktfmsynXk7r3jxg0VAhviPv0y4ytQ2mJ
- utGg==
-X-Gm-Message-State: AOJu0Yz5toSMb/97HiuiVthF+vC/DRm99MOZFvmtc0pzKOWToxyG/E3H
- wyohiErTliTur3JX7hReDFHNgayMSsyaoHUryIeefpYRnCzqzq1YxaFrtsyM0kO/PV7zR6MeQQ6
- /qWsDaDeVhoKn+WLW+v6T380HXSwyG4J7GqQnhKJ/YTO+1aiBodnvyST0cr7ZPEjx0f8D8OQIxV
- KQ2zcE+ydaKK6P9LAkn7x3yhL14ZbvBg==
-X-Received: by 2002:a50:f69d:0:b0:57a:79c2:e9d7 with SMTP id
- 4fb4d7f45d1cf-57a8b7c6141mr2531867a12.27.1717630594222; 
- Wed, 05 Jun 2024 16:36:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHqDL5XbCU5fqlEGdBT3VAnL6174hRz+Kbaud0YHpoylqwlOVNg+ayQGc3yGA8kSZ3smxm1cQ==
-X-Received: by 2002:a50:f69d:0:b0:57a:79c2:e9d7 with SMTP id
- 4fb4d7f45d1cf-57a8b7c6141mr2531849a12.27.1717630593817; 
- Wed, 05 Jun 2024 16:36:33 -0700 (PDT)
+ bh=R2rkXgOWy7oaxjC82Fwhko4ewIXnfZhtW9KkNOPqa7A=;
+ b=hglUIrFXdWmJ9+5u5bxcJWqgtI0SJuSORvLPSLK5+2Lluo9To80B8AlSv3IxvWWX99
+ RW68hFbzcuKqTp9NsrtmKChzO0NXxn7mFVQWxnpo+EKXx6tjVo5/QoQrNinhdKKDWGGW
+ NXp/rs6vPLsibyl2fh3jYvQxiRST1sUGQJAq0Azmb+rdtjBSJ6zvejN4yRJ5EpKZmzrp
+ 37o15jW4zMUeTxrbC9pX5uSiXcMsgq0ZcVkaD1VXnK2J12VNjpr54ngcbQZV/ro2bEAZ
+ EoroiVbS8chSb5+cY1hp4+G4ZzPHElr+Mq3UcfGJXoSE9M1EM5uPTTIG3m/BWBz4XfF7
+ Thxw==
+X-Gm-Message-State: AOJu0Yw0jRXE2s1JqQL+e3efZ7xkUlLoSssmclNBGJljfTZlE+CxS3IZ
+ 7pWmo8mhrPF3+prgui6XauigBc6uQfO8naYUs1mD4C2hLFAHFIMO9fqVN/OOLAfIZqUv6qHecUu
+ dI2pnYGieYEwsDgnzhtDmWEeSDuWjM/Nd8bZkWuyumTXYlTLywJd9XZI8AlDHrf4K2sgJRLGX/7
+ MLPRcMeDc/i6GAKqMVnGQdQh1hIAmBlw==
+X-Received: by 2002:a17:906:bcda:b0:a68:f83b:22fa with SMTP id
+ a640c23a62f3a-a699f34bfaamr257780666b.11.1717630550893; 
+ Wed, 05 Jun 2024 16:35:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFsjN5Id0H8dtL24u2t9MhfHZ2YZ+LUfmZzW9KpyS/LTQxcvvuxYE/YTYUzvBq/BnO5pXRwEQ==
+X-Received: by 2002:a17:906:bcda:b0:a68:f83b:22fa with SMTP id
+ a640c23a62f3a-a699f34bfaamr257779566b.11.1717630550404; 
+ Wed, 05 Jun 2024 16:35:50 -0700 (PDT)
 Received: from redhat.com ([2.55.56.67]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aae11a98csm98999a12.48.2024.06.05.16.36.31
+ a640c23a62f3a-a6c806eab0asm6490866b.134.2024.06.05.16.35.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 16:36:33 -0700 (PDT)
-Date: Wed, 5 Jun 2024 19:36:30 -0400
+ Wed, 05 Jun 2024 16:35:49 -0700 (PDT)
+Date: Wed, 5 Jun 2024 19:35:47 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Ankit Agrawal <ankita@nvidia.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
- Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org
-Subject: [PULL v3 30/41] hw/acpi/GI: Fix trivial parameter alignment issue.
-Message-ID: <a8ff9b58450fb1df51302a5d698041aca6adcaaf.1717630437.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
+ Gregory Price <gregory.price@memverge.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PULL v3 18/41] hw/cxl/cxl-mailbox-utils: Add dc_event_log_size
+ field to output payload of identify memory device command
+Message-ID: <9cb633dc30908fd94762ea3694f117b60042ddc8.1717630437.git.mst@redhat.com>
 References: <cover.1717630437.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -88,7 +87,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,32 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Fan Ni <fan.ni@samsung.com>
 
-Before making additional modification, tidy up this misleading indentation.
+Based on CXL spec r3.1 Table 8-127 (Identify Memory Device Output
+Payload), dynamic capacity event log size should be part of
+output of the Identify command.
+Add dc_event_log_size to the output payload for the host to get the info.
 
-Reviewed-by: Ankit Agrawal <ankita@nvidia.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240524100507.32106-2-Jonathan.Cameron@huawei.com>
+Reviewed-by: Gregory Price <gregory.price@memverge.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Message-Id: <20240523174651.1089554-4-nifan.cxl@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/acpi/acpi_generic_initiator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/cxl/cxl-mailbox-utils.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-index 17b9a052f5..18a939b0e5 100644
---- a/hw/acpi/acpi_generic_initiator.c
-+++ b/hw/acpi/acpi_generic_initiator.c
-@@ -132,7 +132,7 @@ static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 2a64c58e2f..626acc1d0d 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -21,6 +21,7 @@
+ #include "sysemu/hostmem.h"
  
-     dev_handle.segment = 0;
-     dev_handle.bdf = PCI_BUILD_BDF(pci_bus_num(pci_get_bus(pci_dev)),
--                                               pci_dev->devfn);
-+                                   pci_dev->devfn);
+ #define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
++#define CXL_DC_EVENT_LOG_SIZE 8
  
-     build_srat_generic_pci_initiator_affinity(table_data,
-                                               gi->node, &dev_handle);
+ /*
+  * How to add a new command, example. The command set FOO, with cmd BAR.
+@@ -780,8 +781,9 @@ static CXLRetCode cmd_identify_memory_device(const struct cxl_cmd *cmd,
+         uint16_t inject_poison_limit;
+         uint8_t poison_caps;
+         uint8_t qos_telemetry_caps;
++        uint16_t dc_event_log_size;
+     } QEMU_PACKED *id;
+-    QEMU_BUILD_BUG_ON(sizeof(*id) != 0x43);
++    QEMU_BUILD_BUG_ON(sizeof(*id) != 0x45);
+     CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+     CXLType3Class *cvc = CXL_TYPE3_GET_CLASS(ct3d);
+     CXLDeviceState *cxl_dstate = &ct3d->cxl_dstate;
+@@ -807,6 +809,7 @@ static CXLRetCode cmd_identify_memory_device(const struct cxl_cmd *cmd,
+     st24_le_p(id->poison_list_max_mer, 256);
+     /* No limit - so limited by main poison record limit */
+     stw_le_p(&id->inject_poison_limit, 0);
++    stw_le_p(&id->dc_event_log_size, CXL_DC_EVENT_LOG_SIZE);
+ 
+     *len_out = sizeof(*id);
+     return CXL_MBOX_SUCCESS;
 -- 
 MST
 
