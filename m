@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C38EFC25B78
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C63C2C41513
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 01:00:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEf0k-0008Io-Ca; Tue, 04 Jun 2024 21:00:18 -0400
+	id 1sEf0e-0008GY-GY; Tue, 04 Jun 2024 21:00:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
- id 1sEf0g-0008HG-RR; Tue, 04 Jun 2024 21:00:16 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1sEf0b-0008FK-39; Tue, 04 Jun 2024 21:00:10 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
- id 1sEf0e-0004TR-GB; Tue, 04 Jun 2024 21:00:14 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-6819b3c92bbso4935935a12.2; 
- Tue, 04 Jun 2024 18:00:11 -0700 (PDT)
+ id 1sEf0Y-0004Rk-DS; Tue, 04 Jun 2024 21:00:08 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7024d571d8eso3860502b3a.0; 
+ Tue, 04 Jun 2024 18:00:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717549209; x=1718154009; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uC5r2TxjccT79vaaKGZJkjS3ciceRzc4YPA+h7BCu/w=;
- b=jy0CbmReQE+ChYXCGwGKvCb6Xy3zZLxhT84F7zzMd2lzTMV7u6BEWgXzC3CdfBiBuf
- TdgaZxtJbhopiz8kJa3A3xT5aSVkPaQcYGwQ6dmYyliHjDHgnAIL75rrsWCtFYqCbRBA
- KWLDVaDgw2xzHKYtgHSaagBeIIR0jQyhH24/VbkhmQ12p2qJEhlCPKXkkoO9RqsmjaMO
- A06rwbbEaz4Tjmj07ZTD3HIshUZWbHiLvHOkBR9k591W/s5P2U3w/lkNE5sM+rKcRel3
- qoJR1OVI0eKTwqAn0lC/nYLeYLzQb5lIwnSuvKM5PINeYLX0BXhaAgwDOb5fvATKp+uJ
- Bz7A==
+ d=gmail.com; s=20230601; t=1717549203; x=1718154003; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0E1X89onMnXj7jR/KXm35viaRfOjLWkvHpW6iFXu/Es=;
+ b=Y7LIsxoZSob2vcgZlWgbIWeJ/ccP8HF54TFR3V4XseZvQzESL8tisFqH+1o1y5pX5Q
+ V0R4W2AoCRD7C8lQFrGP7YMGzryyoJorKZrSQgQNhqSDfBiXcUxNpH3roVCjRedouqNP
+ ZpPeXhKx+zlG8vUyOnFtn1Z3a9FThtqUQBSzL71XDFiDEAiTt0+cih3Dh6sh5wJN71nB
+ 7jRgUruK2BH0WR46eqDwbESIOnsCao5zwsDUkc6DlERlCxQd76u3oaPXbXWM4MoU9jP9
+ GcNPEcI00zdsJ56mEx3liCYZLNkrGucYaVPYOKOHdlALL1SpcyDwdaVtB5TVMVu/Hyog
+ JvcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717549209; x=1718154009;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uC5r2TxjccT79vaaKGZJkjS3ciceRzc4YPA+h7BCu/w=;
- b=VJx7vDFlhkv9J0jSHb+N+jH+hBPAbhQcAMkLEBi4Yeb4IM4L0BaH8LrhZgw/U6bNP1
- YEX9NRr7utpErDi221zmZTaFhAjalxVhPXml7LBRsZKvOO9QC684u4HTHVJ4PqiHPWKe
- ANs9f6XlKPXLTJ/xQs+GtH1IGf5M/zvO33GT+VKmXziQzs6SJOvGGH+spsiehrF0pwkC
- 6GQ6R9vYVXZT3u4Mx+V4OkAExCILIMmbm7xxzASmZ4XxkgIqBLesbqcxY3WybKcb7ZhA
- PQgGVaZGtjIPIjDDX1jVOxzVpT6IwcfFH4d+9b4q/Klug1dRmfptMP8PpFtCK2KvbkhJ
- zT0w==
+ d=1e100.net; s=20230601; t=1717549203; x=1718154003;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0E1X89onMnXj7jR/KXm35viaRfOjLWkvHpW6iFXu/Es=;
+ b=ZbyUn1Q1n9uYqjZLEwwjRpFgDdLNVe3fDG81wqLnHOkwlSB6QU4+xZT4JizBXVf0Xj
+ Eq45ypfM28VLJK/eZ7OSE3zsc8WIKQpGF0stsKNYqRKx6UpwRQYF5JbfTdKNjWNaIv/5
+ CA6D2DFL5GYbWP6+qs624z/BWaKK/+mJ4MHHu7CbEo7r2PszeQXHfUX8Y9psDIV+D/sn
+ jkOIOdzi1JHWEo6PAddZFOeTPp9a47JBAH5OPjyRQPmpJMi2titfGJpwyIZIOrFgHT0M
+ C1ZhGSd29tmaqyBAhike7DMJ6f/W/yOiW7xhxQcIXDgDQq/9/WbhBkbJNhXF1QtuUTKY
+ odsw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXnmLJhWhuruQnXwdM/W1T7vCnkppiXiL3UMrifwV5MwBxbPcX12xetebMfUEXZ7YtJVrVBxTI6T/dBqRKxmOilboYdLgU=
-X-Gm-Message-State: AOJu0YxhkLyXnJN4Ej5uPKQnYIoJdGbU6IizvxDG2WEZKkB83OBGHEeA
- V2zVQhHKy/DYHt0rnb0aZBe7opZNF1NuFL1FTyshmMSiLuRIigpVP/+thjVXCz4=
-X-Google-Smtp-Source: AGHT+IHs3HuwyY+3Y0l34g0k/64gvsddyoIYCT1SYAp/C9U5w7e+qwoEcFy8nF9YJPRWbTw1aPmpow==
-X-Received: by 2002:a05:6a20:914b:b0:1af:f497:8225 with SMTP id
- adf61e73a8af0-1b2b6fbd251mr1635667637.31.1717549209421; 
- Tue, 04 Jun 2024 18:00:09 -0700 (PDT)
+ AJvYcCXigiY56SlWtXCdU3B4ueoOFO7aSfXlu6Zimu2n2iCnQFRjL3a1k+1GT82CGu3Vy9fX2Xo3+CUog8DaWtv0MGDRR4e+3hc=
+X-Gm-Message-State: AOJu0YziZMuyb61OBigAGr1kavtvQ3t8tDJuPc+jGnOA82qWF1bAarpe
+ g1s618gOgc5fnWktaOmC6w7dxd3b3h516GqXk5Y9l9BoqFmNuMpwpMAnt4SkZzo=
+X-Google-Smtp-Source: AGHT+IFo+HCzPenA6ZsPGfJZEIsIF7+sMXXc2n6yunKt8bI6fd01W7WKe8+rRkyX1hh/lfWPq81Dyw==
+X-Received: by 2002:a05:6a21:318b:b0:1b2:91a0:6255 with SMTP id
+ adf61e73a8af0-1b2b71b5cdbmr1669388637.62.1717549203047; 
+ Tue, 04 Jun 2024 18:00:03 -0700 (PDT)
 Received: from amjad-pc.. ([192.228.203.229]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-703ee633e04sm3731b3a.19.2024.06.04.18.00.07
+ d2e1a72fcca58-703ee633e04sm3731b3a.19.2024.06.04.18.00.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 04 Jun 2024 18:00:09 -0700 (PDT)
+ Tue, 04 Jun 2024 18:00:02 -0700 (PDT)
 From: Amjad Alsharafi <amjadsharafi10@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  "open list:vvfat" <qemu-block@nongnu.org>,
  Amjad Alsharafi <amjadsharafi10@gmail.com>
-Subject: [PATCH v4 3/4] vvfat: Fix reading files with non-continuous clusters
-Date: Wed,  5 Jun 2024 08:58:39 +0800
-Message-ID: <3b9536c545c3f472fadc98dddd96a9548adec792.1717549035.git.amjadsharafi10@gmail.com>
+Subject: [PATCH v4 0/4] vvfat: Fix write bugs for large files and add iotests
+Date: Wed,  5 Jun 2024 08:58:36 +0800
+Message-ID: <cover.1717549035.git.amjadsharafi10@gmail.com>
 X-Mailer: git-send-email 2.45.1
-In-Reply-To: <cover.1717549035.git.amjadsharafi10@gmail.com>
-References: <cover.1717549035.git.amjadsharafi10@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=amjadsharafi10@gmail.com; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=amjadsharafi10@gmail.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -95,64 +92,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When reading with `read_cluster` we get the `mapping` with
-`find_mapping_for_cluster` and then we call `open_file` for this
-mapping.
-The issue appear when its the same file, but a second cluster that is
-not immediately after it, imagine clusters `500 -> 503`, this will give
-us 2 mappings one has the range `500..501` and another `503..504`, both
-point to the same file, but different offsets.
+These patches fix some bugs found when modifying files in vvfat.
+First, there was a bug when writing to the cluster 2 or above of a file, it
+will copy the cluster before it instead, so, when writing to cluster=2, the
+content of cluster=1 will be copied into disk instead in its place.
 
-When we don't open the file since the path is the same, we won't assign
-`s->current_mapping` and thus accessing way out of bound of the file.
+Another issue was modifying the clusters of a file and adding new
+clusters, this showed 2 issues:
+- If the new cluster is not immediately after the last cluster, it will
+cause issues when reading from this file in the future.
+- Generally, the usage of info.file.offset was incorrect, and the
+system would crash on abort() when the file is modified and a new
+cluster was added.
 
-From our example above, after `open_file` (that didn't open anything) we
-will get the offset into the file with
-`s->cluster_size*(cluster_num-s->current_mapping->begin)`, which will
-give us `0x2000 * (504-500)`, which is out of bound for this mapping and
-will produce some issues.
+Also, added some iotests for vvfat, covering the this fix and also
+general behavior such as reading, writing, and creating files on the filesystem.
+Including tests for reading/writing the first cluster which
+would pass even before this patch.
 
-Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
----
- block/vvfat.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+v4:
+  Applied some suggestions from Kevin Wolf <kwolf@redhat.com>:
+  - Fixed code formatting by following the coding style in `scripts/checkpatch.pl`
+  - Reduced changes related to `iotests` by setting `vvfat` format as non-generic.
+  - Added another test to cover the fix done in `PATCH 2/4` and `PATCH 3/4` for 
+    handling reading/writing files with non-continuous clusters.
 
-diff --git a/block/vvfat.c b/block/vvfat.c
-index f0642ac3e4..8b4d162aa1 100644
---- a/block/vvfat.c
-+++ b/block/vvfat.c
-@@ -1360,15 +1360,24 @@ static int open_file(BDRVVVFATState* s,mapping_t* mapping)
- {
-     if(!mapping)
-         return -1;
-+    int new_path = 1;
-     if(!s->current_mapping ||
--            strcmp(s->current_mapping->path,mapping->path)) {
--        /* open file */
--        int fd = qemu_open_old(mapping->path,
-+            s->current_mapping->first_mapping_index
-+                != mapping->first_mapping_index ||
-+            (new_path = strcmp(s->current_mapping->path, mapping->path))) {
-+
-+        if (new_path) {
-+            /* open file */
-+            int fd = qemu_open_old(mapping->path,
-                                O_RDONLY | O_BINARY | O_LARGEFILE);
--        if(fd<0)
--            return -1;
--        vvfat_close_current_file(s);
--        s->current_fd = fd;
-+            if (fd < 0) {
-+                return -1;
-+            }
-+            vvfat_close_current_file(s);
-+
-+            s->current_fd = fd;
-+        }
-+        assert(s->current_fd);
-         s->current_mapping = mapping;
-     }
-     return 0;
+v3:
+  Added test for creating new files in vvfat.
+
+v2:
+  Added iotests for `vvfat` driver along with a simple `fat16` module to run the tests.
+
+v1:
+  https://patchew.org/QEMU/20240327201231.31046-1-amjadsharafi10@gmail.com/
+  Fix the issue of writing to the middle of the file in vvfat
+
+Amjad Alsharafi (4):
+  vvfat: Fix bug in writing to middle of file
+  vvfat: Fix usage of `info.file.offset`
+  vvfat: Fix reading files with non-continuous clusters
+  iotests: Add `vvfat` tests
+
+ block/vvfat.c                      |  38 +-
+ tests/qemu-iotests/check           |   2 +-
+ tests/qemu-iotests/fat16.py        | 635 +++++++++++++++++++++++++++++
+ tests/qemu-iotests/testenv.py      |   2 +-
+ tests/qemu-iotests/tests/vvfat     | 440 ++++++++++++++++++++
+ tests/qemu-iotests/tests/vvfat.out |   5 +
+ 6 files changed, 1107 insertions(+), 15 deletions(-)
+ create mode 100644 tests/qemu-iotests/fat16.py
+ create mode 100755 tests/qemu-iotests/tests/vvfat
+ create mode 100755 tests/qemu-iotests/tests/vvfat.out
+
 -- 
 2.45.1
 
