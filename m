@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49467C27C52
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 09:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29463C27C52
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 09:33:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEn0M-0000w0-T5; Wed, 05 Jun 2024 05:32:26 -0400
+	id 1sEn0L-0000ur-RL; Wed, 05 Jun 2024 05:32:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sEn0J-0000uJ-Fo
+ id 1sEn0J-0000uK-In
  for qemu-devel@nongnu.org; Wed, 05 Jun 2024 05:32:23 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sEn0G-0005CA-A3
+ (envelope-from <maobibo@loongson.cn>) id 1sEn0G-0005CC-Df
  for qemu-devel@nongnu.org; Wed, 05 Jun 2024 05:32:23 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxOuqeMGBm17oDAA--.15761S3;
- Wed, 05 Jun 2024 17:32:14 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxSuqfMGBm2roDAA--.16140S3;
+ Wed, 05 Jun 2024 17:32:15 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxPMedMGBm03QVAA--.54130S2; 
- Wed, 05 Jun 2024 17:32:13 +0800 (CST)
+ AQAAf8DxPMedMGBm03QVAA--.54130S3; 
+ Wed, 05 Jun 2024 17:32:14 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -34,13 +34,15 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Subject: [PATCH 0/2] Add simd optimization with function buffer_is_zero
-Date: Wed,  5 Jun 2024 17:32:11 +0800
-Message-Id: <20240605093213.2191929-1-maobibo@loongson.cn>
+Subject: [PATCH 1/2] util: Add lasx cpuinfo for loongarch64
+Date: Wed,  5 Jun 2024 17:32:12 +0800
+Message-Id: <20240605093213.2191929-2-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240605093213.2191929-1-maobibo@loongson.cn>
+References: <20240605093213.2191929-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DxPMedMGBm03QVAA--.54130S2
+X-CM-TRANSID: AQAAf8DxPMedMGBm03QVAA--.54130S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,21 +69,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On some loongarch machines, simd FPU such lsx/lasx is supported. Here
-function buffer_is_zero is optimized with simd FPU supported. 
+Lasx is 256bit vector FPU capability, lsx is 128bit vector VFP. lsx
+is added already, lasx is added here.
 
-Bibo Mao (2):
-  util: Add lasx cpuinfo for loongarch64
-  util/bufferiszero: Add simd acceleration for loongarch64
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ host/include/loongarch64/host/cpuinfo.h | 1 +
+ util/cpuinfo-loongarch.c                | 1 +
+ 2 files changed, 2 insertions(+)
 
- host/include/loongarch64/host/cpuinfo.h |   1 +
- meson.build                             |  11 +++
- util/bufferiszero.c                     | 103 ++++++++++++++++++++++++
- util/cpuinfo-loongarch.c                |   1 +
- 4 files changed, 116 insertions(+)
-
-
-base-commit: 3ab42e46acf867c45bc929fcc37693e327a35a24
+diff --git a/host/include/loongarch64/host/cpuinfo.h b/host/include/loongarch64/host/cpuinfo.h
+index fab664a10b..d7bf27501d 100644
+--- a/host/include/loongarch64/host/cpuinfo.h
++++ b/host/include/loongarch64/host/cpuinfo.h
+@@ -8,6 +8,7 @@
+ 
+ #define CPUINFO_ALWAYS          (1u << 0)  /* so cpuinfo is nonzero */
+ #define CPUINFO_LSX             (1u << 1)
++#define CPUINFO_LASX            (1u << 2)
+ 
+ /* Initialized with a constructor. */
+ extern unsigned cpuinfo;
+diff --git a/util/cpuinfo-loongarch.c b/util/cpuinfo-loongarch.c
+index 08b6d7460c..bb1f7f698b 100644
+--- a/util/cpuinfo-loongarch.c
++++ b/util/cpuinfo-loongarch.c
+@@ -29,6 +29,7 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+ 
+     info = CPUINFO_ALWAYS;
+     info |= (hwcap & HWCAP_LOONGARCH_LSX ? CPUINFO_LSX : 0);
++    info |= (hwcap & HWCAP_LOONGARCH_LASX ? CPUINFO_LASX : 0);
+ 
+     cpuinfo = info;
+     return info;
 -- 
 2.39.3
 
