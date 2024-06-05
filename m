@@ -4,100 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A457DC27C52
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 17:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1844C25B76
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 17:52:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sEuZW-0007vn-TG; Wed, 05 Jun 2024 13:37:14 -0400
+	id 1sEunC-0003yD-An; Wed, 05 Jun 2024 13:51:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sEuZV-0007uk-LW
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:37:13 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEunA-0003xW-F5
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:51:20 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sEuZR-0007Oh-VC
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:37:13 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-57a4ea806a5so44928a12.0
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 10:37:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sEun8-0002sW-JF
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 13:51:20 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-7026ad046a2so34309b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 10:51:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717609027; x=1718213827; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WZeHNDywWHAkUQY+OOtQGx/mxQeSzY6erOcxnTz/UcQ=;
- b=bmRzrtsZS3D9egJnYQb1OZ1H3l3mI6NqcECUf9LX1euhlu9pTao6QsEFb9+PZFLhqL
- 9Fkx/YZ/Mg3MTEhpSuKirpAVb8R916jKqkD2FtYeZdgozefQOL0RfwHHVnplKSH7lUy/
- Fr6mAnDj9Uy+mKnQwDnSMmUkoNAwJQr3nLw6H0ywYqvNM6AsHVgdK6uGM/1dfxub7/6y
- aKLbhc1iIja4KFaSghFHoKVclgMrieL1+Ey+WYXGczZSBdkeDtw3+eNBI2ydqXVi2VjE
- UkvQ9N44qgYPI7YBMY+1/ozsL4plCelnJ1j7Z20doE8MR1LDqdlYwwO/W0KiNv/K3n9D
- ZnLg==
+ d=linaro.org; s=google; t=1717609877; x=1718214677; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=YNWvgzls6aTiLbYKjJgpnxN4ND2a1tUuYX0J8a/VPbU=;
+ b=PYSdVE87reuGWH3cKZYDQbcg4oBQH+oIB2J1JKi/+YJ2MxyKy6QrWBMk3A1HJ8SnP1
+ +/b1Gy8ga28AIsM+T2t+GSKyrDHuKWdIwiEmXSjuqWtRaGyvYKz+6R/wMIlJrPKuFCkZ
+ oVI+z4X8QmfoQBb/feRKD3pU/pv3mAgpgMfAxi0jItLCu7+iAgn0N/hrfFuhwDmS8RUU
+ 4fVjxVQhiQz6ostrZk+sNGvPoonnUaulKEHZzra93AZpEpbBROqY+YEaX0WDDKjBkGZ0
+ 3KyTHdbGsk0fcwZMH6QX7GVdzpdpom9hlsL6pfClkmrKL68y4Hn79LmokmuQG7ZPT/vy
+ 9W8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717609027; x=1718213827;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WZeHNDywWHAkUQY+OOtQGx/mxQeSzY6erOcxnTz/UcQ=;
- b=cFNdvWZF33VF5gLrmHjkmU0wjToJwEi2HMNMwL7HY4kRNgu25RNC4OhSW3y8LJHhlg
- jcsM0feLs2KlZizA4sEa/rY37oMjaicCD4P+Um3RKNR+yQ63c2/xdvJi5qAHgoCklMLb
- /cFaCHBv68qBSM5B8V5qH5yukOsGQDOZMJTWzx6XB4H4Iu8ZIAQXmIE5efdqUfReLwjs
- e07i+uzgiS8WrwJ8OiRgxyZLeyfLgQ7FYiC1Bi3bXNB1IVJ0P+fYkc6wEavSKjTj7Xq2
- vLvR9RPEvqdmP9htig/CnHHNcDbqgEocL9yDVcfGj4RIT9YbVGif/4aRn6nBRK43SmoI
- 4xkA==
+ d=1e100.net; s=20230601; t=1717609877; x=1718214677;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YNWvgzls6aTiLbYKjJgpnxN4ND2a1tUuYX0J8a/VPbU=;
+ b=Ln8JxJFXhF5XrKeFrEZUfWLtdDwqAl2TtpvhGPv1m8ZnuA3X/WduwM74pjAkPWRkgj
+ uya9+SMPe4Yi0RB1hwWvFkiiydk77wDcbhHa+QtzxTLFtF6LNUrNZlX7waEuYuw0cief
+ fZ4WiCmwwe2/rW9BsApkZIqOQkJUahDnQm3U4ZqnGEcrsfDTmrYHYlrKgqCdKp8B+4zE
+ BKUNFkpfnY7E8joDGCzMe0yI7q/VWEIT8oamDQNJdQAiaNTQxZ89uZeN7QmiyUbQMlMo
+ 3ZTjJ2IB2mpnJsG7TNIp1f3jAWDvHiU0RQ5ys7J4DAfhkw3u/XD0a+XY3gkBb4AQDj53
+ Etxg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV4M1UlMBfm4rRoYnMKHcAs3bNroHVJA6K5vXdsN07IvmA+FapB2F8Vgtw7w1u0FFwlR+vJ+IrHh3g9kEV0W/WK+o0Rv9w=
-X-Gm-Message-State: AOJu0YzyRYfKpNCnV2RSnAfDDwdnrHKoa5u7hEEGUYce3Ghsu2OLrCKO
- sGi9jSiEaSlz2E+7smzrsN6CAPqkPzCABt9BN1cuKIwILzCSqptUDsucbI2011g=
-X-Google-Smtp-Source: AGHT+IHYRA8QsRq9mMvDk96nChUmh29V9nty5obigS8JCAlOeCtfFkdi5xQ4rEUyl2B9aGlkA6G7YQ==
-X-Received: by 2002:a50:ccdc:0:b0:578:6198:d6fc with SMTP id
- 4fb4d7f45d1cf-57a8b6b18dbmr2665446a12.18.1717609027225; 
- Wed, 05 Jun 2024 10:37:07 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57a31bb842asm9599584a12.36.2024.06.05.10.37.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 10:37:06 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 448245F754;
- Wed,  5 Jun 2024 18:37:06 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
- <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
- <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefano
- Stabellini <sstabellini@kernel.org>,  Antonio Caggiano
- <quic_acaggian@quicinc.com>,  "Dr . David Alan Gilbert"
- <dgilbert@redhat.com>,  Robert Beckett <bob.beckett@collabora.com>,  Gert
- Wollny <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan
- Singh <gurchetansingh@chromium.org>,  ernunes@redhat.com,  Alyssa Ross
- <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
- <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
- <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
- <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
- <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
- <Jiqian.Chen@amd.com>,  Yiwei Zhang <zzyiwei@chromium.org>
-Subject: Re: [PATCH v12 00/13] Support blob memory and venus on qemu
-In-Reply-To: <159a69c9-11b6-4240-b3c9-b5b8f50bb441@collabora.com> (Dmitry
- Osipenko's message of "Wed, 5 Jun 2024 19:29:40 +0300")
-References: <20240519212712.2605419-1-dmitry.osipenko@collabora.com>
- <87o78zi9wb.fsf@draig.linaro.org> <87jzjni569.fsf@draig.linaro.org>
- <f7b1d066-4636-49b0-b921-ea01b20b2c00@collabora.com>
- <874jaqi5m0.fsf@draig.linaro.org>
- <6bc5a3fc-8fbc-4449-a5e6-cd654655be35@collabora.com>
- <874ja7fnut.fsf@draig.linaro.org>
- <159a69c9-11b6-4240-b3c9-b5b8f50bb441@collabora.com>
-Date: Wed, 05 Jun 2024 18:37:06 +0100
-Message-ID: <878qzj1ebh.fsf@draig.linaro.org>
+ AJvYcCVZNES1UUWor0n5z1K2QfMS5YpwcnV7/iY7QZHqiQp0Be9YpRQVqKhopVZo/IFfy+zDa9Ib2qQK1m/WAbHZmdiR/Jzcu58=
+X-Gm-Message-State: AOJu0YwC6UAWv7cnTaCu5hNkM51LnEDBUVLd2z5HyqxHmNPKg3FXqnvt
+ uMhfH0vDhqVomRcfQV3LkQpHuB83+zMnf/EZ2HC1NbSc/aJGIE7vabSIwb8fHY/E5AOu41RpZzb
+ E
+X-Google-Smtp-Source: AGHT+IHBKYzheE95bCNnY3kYfGCTyWnyZSjQsB8Ej5lfWYHeTTl0ebAxFztTR2T+/aUy5+8D6VMwqQ==
+X-Received: by 2002:a05:6a20:2588:b0:1b1:e35f:3eeb with SMTP id
+ adf61e73a8af0-1b2b712f787mr3749045637.46.1717609876811; 
+ Wed, 05 Jun 2024 10:51:16 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70242af1288sm8872378b3a.134.2024.06.05.10.51.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Jun 2024 10:51:16 -0700 (PDT)
+Message-ID: <9e700c57-7fbb-4073-bec2-4d6328a16650@linaro.org>
+Date: Wed, 5 Jun 2024 10:51:14 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/6] hw/acpi: Generic Port Affinity Structure support
+To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>, qemu-devel@nongnu.org
+References: <20240524100507.32106-1-Jonathan.Cameron@huawei.com>
+ <20240524100507.32106-4-Jonathan.Cameron@huawei.com>
+ <20240605172025.00003ebc@huawei.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240605172025.00003ebc@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,106 +99,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+On 6/5/24 11:21, Jonathan Cameron via wrote:
+> On Fri, 24 May 2024 11:05:04 +0100
+> Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+> 
+>> These are very similar to the recently added Generic Initiators
+>> but instead of representing an initiator of memory traffic they
+>> represent an edge point beyond which may lie either targets or
+>> initiators.  Here we add these ports such that they may
+>> be targets of hmat_lb records to describe the latency and
+>> bandwidth from host side initiators to the port.  A descoverable
+>> mechanism such as UEFI CDAT read from CXL devices and switches
+>> is used to discover the remainder fo the path and the OS can build
+>> up full latency and bandwidth numbers as need for work and data
+>> placement decisions.
+>>
+>> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> 
+> To join up the streams.  The tests added in this series failed
+> CI on s390 bios-tables-test.
+> 
+> https://lore.kernel.org/qemu-devel/ad6d572b-f39e-43ff-b11b-74fbe8ae3148@linaro.org/T/#m0f6531d67ba28663bd35b359e32ddfea42db2dea
+> 
+> has my current theory on why and Richard is grabbing the SRAT table
+> which will hopefully have this as the smoking gun.
+> 
+> Comes back to my normal question to management.  Can I have an s390
+> for tests?  Where are those up to date big endian test boxes for
+> every developer to have on their desks?
 
-> On 6/5/24 17:47, Alex Benn=C3=A9e wrote:
-> ....
->> I'm guessing some sort of resource leak, if I run vkcube-wayland in the
->> guest it complains about being stuck on a fence with the iterator going
->> up. However on the host I see:
->>=20
-<snip>
->>=20
->> The backtrace (and the 18G size of the core file!) indicates a leak:
->
-> The unmap debug-assert tells that BO wasn't mapped because mapping
-> failed, likely due to OOM. You won't hit this abort with a release build
-> of libvirglrenderer.
+In this particular case, it's easy to reproduce within an emulated s390x chroot.
 
-AFAIK I should be building a release build (or at least I hope that is
-what the wrapper I posted does):
+Annoyingly, while the gcc compile farm has a big-endian ppc64 host, the OS install is 
+obsolete centos 7 so it's no longer possible to build there.  Nor is there an s390x.  So 
+there are no usable big-endian hosts there.
 
-  Message-Id: <20240605133527.529950-1-alex.bennee@linaro.org>
-  Date: Wed,  5 Jun 2024 14:35:27 +0100
-  Subject: [RFC PATCH] subprojects: add a wrapper for libvirglrenderer
-  From: =3D?UTF-8?q?Alex=3D20Benn=3DC3=3DA9e?=3D <alex.bennee@linaro.org>
+We have an s390x for qemu CI use, obviously, but I can't give out access to that.
 
-Maybe I need to explicitly set builtype=3Drelease in the default options?
 
-> The leak likely happens due to unsignalled fence.
->
-> Please try to run vkcube with disabled fence-feedback feature:
->
->  # VN_PERF_NO_FENCE_FEEDBACK=3D1 vkcube-wayland
->
-> It fixes hang for me. We had problems with combination of this Venus
-> optimization feature + Intel ANV driver for a long time and hoped that
-> it's fixed by now, apparently the issue was only masked.
-
-That doesn't help, still causes the crash:
-
-  virtio_gpu_fence_ctrl fence 0xdfd, type 0x204=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20
-  virtio_gpu_fence_ctrl fence 0xdfe, type 0x207=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  virtio_gpu_fence_ctrl fence 0xdff, type 0x207=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  virtio_gpu_fence_ctrl fence 0xe00, type 0x207=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  virtio_gpu_fence_ctrl fence 0xe01, type 0x207=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  virtio_gpu_fence_ctrl fence 0xe02, type 0x207=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  virtio_gpu_fence_ctrl fence 0xe03, type 0x207=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20
-  virtio_gpu_fence_resp fence 0xdfd=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  virtio_gpu_fence_resp fence 0xdfe=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  virtio_gpu_fence_resp fence 0xdff=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  virtio_gpu_fence_resp fence 0xe00=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  virtio_gpu_fence_resp fence 0xe01=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  virtio_gpu_fence_resp fence 0xe02=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  virtio_gpu_fence_resp fence 0xe03=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  stats: vq req  100,   7 -- 3D   25 (19560)=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20
-  vrend_renderer_resource_unmap: invalid bits 0x83=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  virgl_renderer_resource_unmap: unexpected ret =3D -22, pipe:0x555559e5d0c=
-0 fd_type:0
-
-  Thread 1 "qemu-system-aar" received signal SIGABRT, Aborted.=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20
-  __pthread_kill_implementation (threadid=3D<optimized out>, signo=3Dsigno@=
-entry=3D6, no_tid=3Dno_tid@entry=3D0) at ./nptl/pthread_kill.c:44
-  44      ./nptl/pthread_kill.c: No such file or directory.=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-
-Which I think means VREND_STORAGE_GL_MEMOBJ | VREND_STORAGE_GL_TEXTURE |
-VREND_STORAGE_GUEST_MEMORY
-
-(I note the sense of has_bits is meant to be mask, bit but I don't think
-that makes any difference)
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
