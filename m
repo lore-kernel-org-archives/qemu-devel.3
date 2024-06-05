@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8D0FC25B76
-	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:36:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BCDBC27C5E
+	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:36:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF0A8-0002wV-M1; Wed, 05 Jun 2024 19:35:24 -0400
+	id 1sF09y-0002ue-DH; Wed, 05 Jun 2024 19:35:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0A6-0002w7-Qg
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:35:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF09x-0002u9-5M
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:35:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0A4-00056U-SI
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:35:22 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF09v-00053k-Je
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:35:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717630519;
+ s=mimecast20190719; t=1717630511;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Q0Pfb548kulwNGCVafgBGSBiO4uWmp/hiUtG94za6C8=;
- b=GOHtIc2ujqNx/z9GfFcL80P/MDubX57e25/1z52AfeT3EnUSPVBg4qc4pe715Cg080nnXw
- u2RmMRRN2RSghiq923IRif+dxStYU/XTncz1t796OZw+0JlN1+Y97jAKpbsVADO2xpN8Qm
- 83Tx4ylgfE+vAVQ8MYUleQsYKYOmVVc=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NfEypfhhzAT3jaOXKR+DgWb6iflUNTeNRcp9m8ElhrQ=;
+ b=INBZyVSy2RYwjiUjy+Ap4nfyJLXLB9IpfPXzk7APCzL2Vx/6I6wGUDkUhTaViDYsqUqlXX
+ wpiRLh5pRzj9vWdar/CVDWFUEpoZQAO3BbCvngD/AU96phAno+xeZ85H0zPEX1Mpy2vXbk
+ 83erGHwKuQZlVwVkXzJ13j3zmFLQwYk=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-543-5AbZ8ib_Pxyo78TN08rAAg-1; Wed, 05 Jun 2024 19:35:18 -0400
-X-MC-Unique: 5AbZ8ib_Pxyo78TN08rAAg-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a68b4937c43so16638566b.2
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:35:18 -0700 (PDT)
+ us-mta-66-d5Mk8XcsMKm5VfyumiqzrQ-1; Wed, 05 Jun 2024 19:35:09 -0400
+X-MC-Unique: d5Mk8XcsMKm5VfyumiqzrQ-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a592c35ac06so27557766b.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:35:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717630517; x=1718235317;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Q0Pfb548kulwNGCVafgBGSBiO4uWmp/hiUtG94za6C8=;
- b=KUuEAYdDXHV7KNu326aA0AQquuDVY/3Oev9ly++ftQQX+6r+rPvaq48AE1abMd6N6f
- d1eSB9ccd0PoJUDtZid1/S+Y1fvF3QD44xVz44otbtyPiH22xnlQkHzdCn2OExjdYoCw
- uwvl/KnKVZH8hlK4SlnRcDDVAQLcXvfCRfB1Np8rjm/HPhEQuMxq7e30DINpVT+JwZ8y
- udlqVpc7fBmcCEsl1FhUoZd6Xa/iWGXZZHxn3rJLyng17h3wGrk/tRZgMrokGtYGO6AB
- Y/FolZmYTPzFWuco2R/k5OQve7E1rVxTOHFGB0you75eiZ/YImf9wJJj5MJV8zB0J0eY
- 2+AA==
-X-Gm-Message-State: AOJu0YweC9HjgFsq7DehZqzR1HsnKv82JkPomgE+BiQQJ8my9OiP/4nx
- wI0fwFxlYW+yDpCKdhGx83gnWh4hnHNYSjOHRicLf0R620CAqXsb+dXAspomxN7g2BvStFemSkq
- YbWAQzkdveIqHTmPDttTGnKjhEYyukIg2LroCN2IES8X2Ci5t10OcYgAugihRHgJPfgkpJDggGB
- lOlmcHUKFifKo0yvxpbiSpGzvULFscEg==
-X-Received: by 2002:a17:906:2bd0:b0:a68:ece7:8db5 with SMTP id
- a640c23a62f3a-a699f562d6cmr224212666b.31.1717630517048; 
- Wed, 05 Jun 2024 16:35:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGahZNBgxL1fwV0i1PzqjyC48R5iFl9fpV7OW4dJf8ZYZw1lm8ehkIRBh1PXle/lKomOuayEg==
-X-Received: by 2002:a17:906:2bd0:b0:a68:ece7:8db5 with SMTP id
- a640c23a62f3a-a699f562d6cmr224211866b.31.1717630516599; 
- Wed, 05 Jun 2024 16:35:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717630508; x=1718235308;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NfEypfhhzAT3jaOXKR+DgWb6iflUNTeNRcp9m8ElhrQ=;
+ b=OHy34unNJ5bxM/8ZuiFb4z86xYxxTrWbBIQ/zsfDeh/pdlSXY6dSsYALJlLhxUkCjk
+ mdwQH2aoTISoQVNDMHmKvNBdzdC/rvlADBlX+U/0VcjKAxDpgu7qclgwaXlErtN8asDt
+ ZFsxv4pWf00UJ6fmx5IbyUAj753BJ6uRimsVAqU84O7y9wXX/Kt/4PvrA7oamYF3seeC
+ z4OOndMMDro7o2+VFuPIqI3VpwRrecvDLQHEPPiDtqvLflnz6XQD030wiATB2csbT9RJ
+ kNg4gp10qKAEPObMZ6wPAOIcfw5jmArX7FnIyO6qJ3iyJP9cbiaR2/bEI3gXSmI50pTE
+ 1Xaw==
+X-Gm-Message-State: AOJu0YxXv24NQL0ZG20BUaw5UF+d7OZsQ/QPd3UK22QN4Dsxt7QFQr50
+ wF/N/OpBp6NAZyXJujFc9bPgoPI/PmS/JnvBI2TKtFAxffKx9IKps4lH9fMwUp9o/LnmqFZ1NX2
+ J7CFIv6qWye33ZZ7AVJzriE2eSuxFwu97Y35tK2sGSih5RWtDC4C4dh4eGhJkMyCXOdHL4qInxA
+ V0Bh23iTpiuKIhveWgeAVnvFHzH59hTA==
+X-Received: by 2002:a17:906:add8:b0:a68:be46:742f with SMTP id
+ a640c23a62f3a-a6c75f8edefmr88843366b.3.1717630507856; 
+ Wed, 05 Jun 2024 16:35:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8qjlS+udktv58GsuPwqZCLE2JugkraGrX6J5bR8VSSWhHp3rKl68z+JOewWk/FnZQ8pmpBQ==
+X-Received: by 2002:a17:906:add8:b0:a68:be46:742f with SMTP id
+ a640c23a62f3a-a6c75f8edefmr88841266b.3.1717630507462; 
+ Wed, 05 Jun 2024 16:35:07 -0700 (PDT)
 Received: from redhat.com ([2.55.56.67]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c80728d18sm6312466b.198.2024.06.05.16.35.14
+ a640c23a62f3a-a6c80582841sm7079666b.42.2024.06.05.16.35.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 16:35:15 -0700 (PDT)
-Date: Wed, 5 Jun 2024 19:35:13 -0400
+ Wed, 05 Jun 2024 16:35:06 -0700 (PDT)
+Date: Wed, 5 Jun 2024 19:35:03 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Christian =?utf-8?Q?P=C3=B6tzsch?= <christian.poetzsch@kernkonzept.com>
-Subject: [PULL v3 09/41] Fix vhost user assertion when sending more than one fd
-Message-ID: <a0aa3161408213dacc3318c92fcadb6d4f42e426.1717630437.git.mst@redhat.com>
+ Jonah Palmer <jonah.palmer@oracle.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, qemu-s390x@nongnu.org
+Subject: [PULL v3 07/41] virtio-ccw: Handle extra notification data
+Message-ID: <da5a4f61c4df4ab86beff9c5ee1cf75e948768d8.1717630437.git.mst@redhat.com>
 References: <cover.1717630437.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1717630437.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,36 +106,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Pötzsch <christian.poetzsch@kernkonzept.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
 
-If the client sends more than one region this assert triggers. The
-reason is that two fd's are 8 bytes and VHOST_MEMORY_BASELINE_NREGIONS
-is exactly 8.
+Add support to virtio-ccw devices for handling the extra data sent from
+the driver to the device when the VIRTIO_F_NOTIFICATION_DATA transport
+feature has been negotiated.
 
-The assert is wrong because it should not test for the size of the fd
-array, but for the numbers of regions.
+The extra data that's passed to the virtio-ccw device when this feature
+is enabled varies depending on the device's virtqueue layout.
 
-Signed-off-by: Christian Pötzsch <christian.poetzsch@kernkonzept.com>
-Message-Id: <20240426083313.3081272-1-christian.poetzsch@kernkonzept.com>
+That data passed to the virtio-ccw device is in the same format as the
+data passed to virtio-pci devices.
+
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Message-Id: <20240315165557.26942-5-jonah.palmer@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/s390x/s390-virtio-ccw.c | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index a879149fef..8adb277d54 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -568,7 +568,7 @@ vu_message_read_default(VuDev *dev, int conn_fd, VhostUserMsg *vmsg)
-         if (cmsg->cmsg_level == SOL_SOCKET && cmsg->cmsg_type == SCM_RIGHTS) {
-             fd_size = cmsg->cmsg_len - CMSG_LEN(0);
-             vmsg->fd_num = fd_size / sizeof(int);
--            assert(fd_size < VHOST_MEMORY_BASELINE_NREGIONS);
-+            assert(vmsg->fd_num <= VHOST_MEMORY_BASELINE_NREGIONS);
-             memcpy(vmsg->fds, CMSG_DATA(cmsg), fd_size);
-             break;
-         }
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 3d0bc3e7f2..956ef7b98d 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -125,9 +125,11 @@ static void subsystem_reset(void)
+ static int virtio_ccw_hcall_notify(const uint64_t *args)
+ {
+     uint64_t subch_id = args[0];
+-    uint64_t queue = args[1];
++    uint64_t data = args[1];
+     SubchDev *sch;
++    VirtIODevice *vdev;
+     int cssid, ssid, schid, m;
++    uint16_t vq_idx = data;
+ 
+     if (ioinst_disassemble_sch_ident(subch_id, &m, &cssid, &ssid, &schid)) {
+         return -EINVAL;
+@@ -136,12 +138,19 @@ static int virtio_ccw_hcall_notify(const uint64_t *args)
+     if (!sch || !css_subch_visible(sch)) {
+         return -EINVAL;
+     }
+-    if (queue >= VIRTIO_QUEUE_MAX) {
++
++    vdev = virtio_ccw_get_vdev(sch);
++    if (vq_idx >= VIRTIO_QUEUE_MAX || !virtio_queue_get_num(vdev, vq_idx)) {
+         return -EINVAL;
+     }
+-    virtio_queue_notify(virtio_ccw_get_vdev(sch), queue);
+-    return 0;
+ 
++    if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
++        virtio_queue_set_shadow_avail_idx(virtio_get_queue(vdev, vq_idx),
++                                          (data >> 16) & 0xFFFF);
++    }
++
++    virtio_queue_notify(vdev, vq_idx);
++    return 0;
+ }
+ 
+ static int virtio_ccw_hcall_early_printk(const uint64_t *args)
 -- 
 MST
 
