@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35FFAC25B76
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C37FBC27C5E
 	for <qemu-devel@archiver.kernel.org>; Wed,  5 Jun 2024 23:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF0BF-0006yI-F7; Wed, 05 Jun 2024 19:36:33 -0400
+	id 1sF0Bi-0002NB-Qq; Wed, 05 Jun 2024 19:37:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0BE-0006sE-9y
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:32 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Bg-0002CI-So
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:37:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0BC-0005sH-M1
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:36:32 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sF0Bf-0005x0-84
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 19:37:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717630590;
+ s=mimecast20190719; t=1717630618;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QuE+o0AC9wdLKXlzVTnODsdNe5/ti8zXK/7OKFfOYUM=;
- b=fZzzDE7ayuDzpcUHa7CTM4N3nhfjtg8hZoph8url2s5tl75o/8Z7NlUQU/VcfdDlR5RgV+
- VK069ly/d3/AOisNXHzFykRit0WXvv3UiNayFTqDkNevFcExVUiGxIgSR/X8kLwIrcUYIP
- ngsh2Oti0batk2sOWuDtFz6TwYP9x8E=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QnECcJhOM1bFNsQiTjayj70I6F2El0gKTbsx9XEyPm8=;
+ b=HyENxY+rHOne+Lh8XT0fE/rHvcELIkEl/ca+7AlScULJYWJD/CEYKBXjcxBTnF3iCC2jkl
+ ++hDSWosNF6zbSCPqs8U85Te67Lf/e967D2UbquwpUfnbwGi34/LSVqxn8U7usmRLrcWko
+ RZjZvEi7NAv23kIRMS+DyMsBns9acbU=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-lZ7d28d5MfSUjS6Crv3nUQ-1; Wed, 05 Jun 2024 19:36:28 -0400
-X-MC-Unique: lZ7d28d5MfSUjS6Crv3nUQ-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-57a941a787dso375941a12.3
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:36:28 -0700 (PDT)
+ us-mta-466-4XyD6xl6PTyuMlAACDMgYQ-1; Wed, 05 Jun 2024 19:36:57 -0400
+X-MC-Unique: 4XyD6xl6PTyuMlAACDMgYQ-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a68c70ab413so22955366b.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 16:36:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717630587; x=1718235387;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QuE+o0AC9wdLKXlzVTnODsdNe5/ti8zXK/7OKFfOYUM=;
- b=FlmtjvdzEL4FCZSPe81Kkt225nw5HShfbtYWvmke7JoRt/7gd+wVmp/lgNxVvuK2GH
- buFBM9QQTSa84LNK8kkjkb2tMM7yso1NTnTZqQsplcjUg3FYgNW6vKZAgPTlETMIBp6s
- +DELTVRXxdLz5rYk3pk5IFptcCmKzAbgy4UlaqZSaApO6DeXgBDWYpwkABCCE5Lna+Bt
- 9A6qWIUOtinJWn2L+xgPpxXiYd5ay4hU+CF8XjNMmyVhDZEW3ljn/1MC1sUkND4IS9iT
- 4U0Aqrhw/GqK+nmrDGBJHC5oRv09a/naV9cKOa9XISIhWGaIpdE13atgRgJpGSu9yvHG
- 709Q==
-X-Gm-Message-State: AOJu0YzLKj/RryuusXtJ8u9Gr1K0nV+F1Kt4H2JyJ0BapklnpoWLGnPO
- qFVZLO/W3rUQzx5l9WHlJjG4Ow7D0fwpkIKQpq0tC8/zLP9KNbGCK0ByilOu/BfEXtz7RCvEYV/
- 0oiXhNYKhg4wvlPDHCcyYzaivAByvbrbSi89TKQO+hyGjo6PTHH0tvf4dB4XMKEpCHP6QrmF2Ou
- g5/MSFiA2vTaHEJRK3305iohkzq5Kmog==
-X-Received: by 2002:a50:bb03:0:b0:57a:1c44:581c with SMTP id
- 4fb4d7f45d1cf-57a8bc91223mr3180058a12.32.1717630587196; 
- Wed, 05 Jun 2024 16:36:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEUGQTqUQCcPO2wRAfy0GXBR/uwMiRv5mZR6w2lI9QLLukUeSoiVCPlO/QrFqi1VcYrG4916g==
-X-Received: by 2002:a50:bb03:0:b0:57a:1c44:581c with SMTP id
- 4fb4d7f45d1cf-57a8bc91223mr3180040a12.32.1717630586655; 
- Wed, 05 Jun 2024 16:36:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717630616; x=1718235416;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QnECcJhOM1bFNsQiTjayj70I6F2El0gKTbsx9XEyPm8=;
+ b=c95QGgv3ZnAWSWQMdgW2o7DE/ItZALCuguW49MBjzwbEmetVWpIfkjJrm1PgwFmE2v
+ riBSumrh7DSS+wbnKReV9veJMMXWVypV6F6tQT7+ccQETC6l1cj9Vq6e5nTsW/wXRTaT
+ qu1zRxC5gOpAPjJwqSKvdxthRKfGtudzqldVeKzVFmAD6BhnXbU++vVm3h/PD5XrmGfx
+ FXurobQcGz/ussVTOG/jPcMm26nG1h5PYcAZik/zpd48d6j90hWgf6kecJ4ZUFfFHjBA
+ nMqN2Jb6Htk1EFemt2cUvBS5u0NJ8sggwF9tHSY3ys5PPyqBXgbZ8g3iGz7qSN6dqiy1
+ ALYQ==
+X-Gm-Message-State: AOJu0YyHohYIIEKz2UNJ19kP55M7o6nNTHfU2AwAAcSTDQL+BQ0xTwu/
+ hXzINvYfwMcxPNO84gt6TPEsFkhHp4gCTPYoWUFscXx5tyfBYE2vgr46QseA66KmaN6Mt3obQEv
+ guBhvJqR63GmrkDnJrEnizLJgpqSa7EQ117QLeczktLtbMUFYjIGONB7TJ9FzcTDLsTQGkMQfl8
+ HEcvFqBDGsh1VFGVFivrseMBDe/QkSYQ==
+X-Received: by 2002:a17:906:270d:b0:a68:f6b8:5239 with SMTP id
+ a640c23a62f3a-a6c75fadd7dmr87076066b.13.1717630616165; 
+ Wed, 05 Jun 2024 16:36:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGqE6efF9YUDghgFRUjvdEt0MVx+5k8YmpWeKKdEDUz++R+lERaz+EC3O9nxJIr7QZMRO/xzA==
+X-Received: by 2002:a17:906:270d:b0:a68:f6b8:5239 with SMTP id
+ a640c23a62f3a-a6c75fadd7dmr87074866b.13.1717630615613; 
+ Wed, 05 Jun 2024 16:36:55 -0700 (PDT)
 Received: from redhat.com ([2.55.56.67]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aae23a0d7sm91917a12.95.2024.06.05.16.36.25
+ a640c23a62f3a-a6c8072a4b3sm6363166b.200.2024.06.05.16.36.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 16:36:26 -0700 (PDT)
-Date: Wed, 5 Jun 2024 19:36:23 -0400
+ Wed, 05 Jun 2024 16:36:55 -0700 (PDT)
+Date: Wed, 5 Jun 2024 19:36:52 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
- Svetly Todorov <svetly.todorov@memverge.com>,
- Gregory Price <gregory.price@memverge.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>
-Subject: [PULL v3 28/41] hw/cxl/cxl-mailbox-utils: Add superset extent
- release mailbox support
-Message-ID: <b841f6e53e910d412a8b8c96489841490e5b67d9.1717630437.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL v3 36/41] hw/misc/pvpanic: add support for normal shutdowns
+Message-ID: <72b448b0eb1521e4583a2b2a7746db9704a379b7.1717630437.git.mst@redhat.com>
 References: <cover.1717630437.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1717630437.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -104,72 +104,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+From: Thomas Weißschuh <thomas@t-8ch.de>
 
-With the change, we extend the extent release mailbox command processing
-to allow more flexible release. As long as the DPA range of the extent to
-release is covered by accepted extent(s) in the device, the release can be
-performed.
+Shutdown requests are normally hardware dependent.
+By extending pvpanic to also handle shutdown requests, guests can
+submit such requests with an easily implementable and cross-platform
+mechanism.
 
-Tested-by: Svetly Todorov <svetly.todorov@memverge.com>
-Reviewed-by: Gregory Price <gregory.price@memverge.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-14-nifan.cxl@gmail.com>
+Acked-by: Cornelia Huck <cohuck@redhat.com>
+Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+Message-Id: <20240527-pvpanic-shutdown-v8-5-5a28ec02558b@t-8ch.de>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/cxl/cxl-mailbox-utils.c | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ include/hw/misc/pvpanic.h | 4 +++-
+ include/sysemu/runstate.h | 1 +
+ hw/misc/pvpanic.c         | 5 +++++
+ system/runstate.c         | 5 +++++
+ 4 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index c4852112fe..74eeb6fde7 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1704,6 +1704,13 @@ static CXLRetCode cxl_dc_extent_release_dry_run(CXLType3Dev *ct3d,
-         dpa = in->updated_entries[i].start_dpa;
-         len = in->updated_entries[i].len;
+diff --git a/include/hw/misc/pvpanic.h b/include/hw/misc/pvpanic.h
+index 947468b81b..04986537af 100644
+--- a/include/hw/misc/pvpanic.h
++++ b/include/hw/misc/pvpanic.h
+@@ -20,7 +20,9 @@
  
-+        /* Check if the DPA range is not fully backed with valid extents */
-+        if (!ct3_test_region_block_backed(ct3d, dpa, len)) {
-+            ret = CXL_MBOX_INVALID_PA;
-+            goto free_and_exit;
-+        }
-+
-+        /* After this point, extent overflow is the only error can happen */
-         while (len > 0) {
-             QTAILQ_FOREACH(ent, updated_list, node) {
-                 range_init_nofail(&range, ent->start_dpa, ent->len);
-@@ -1718,14 +1725,7 @@ static CXLRetCode cxl_dc_extent_release_dry_run(CXLType3Dev *ct3d,
-                     if (range_contains(&range, dpa + len - 1)) {
-                         len2 = ent_start_dpa + ent_len - dpa - len;
-                     } else {
--                        /*
--                         * TODO: we reject the attempt to remove an extent
--                         * that overlaps with multiple extents in the device
--                         * for now. We will allow it once superset release
--                         * support is added.
--                         */
--                        ret = CXL_MBOX_INVALID_PA;
--                        goto free_and_exit;
-+                        dpa = ent_start_dpa + ent_len;
-                     }
-                     len_done = ent_len - len1 - len2;
+ #include "standard-headers/linux/pvpanic.h"
  
-@@ -1752,14 +1752,9 @@ static CXLRetCode cxl_dc_extent_release_dry_run(CXLType3Dev *ct3d,
-                     }
+-#define PVPANIC_EVENTS (PVPANIC_PANICKED | PVPANIC_CRASH_LOADED)
++#define PVPANIC_EVENTS (PVPANIC_PANICKED | \
++                        PVPANIC_CRASH_LOADED | \
++                        PVPANIC_SHUTDOWN)
  
-                     len -= len_done;
--                    /* len == 0 here until superset release is added */
-                     break;
-                 }
-             }
--            if (len) {
--                ret = CXL_MBOX_INVALID_PA;
--                goto free_and_exit;
--            }
-         }
+ #define TYPE_PVPANIC_ISA_DEVICE "pvpanic"
+ #define TYPE_PVPANIC_PCI_DEVICE "pvpanic-pci"
+diff --git a/include/sysemu/runstate.h b/include/sysemu/runstate.h
+index 0117d243c4..e210a37abf 100644
+--- a/include/sysemu/runstate.h
++++ b/include/sysemu/runstate.h
+@@ -104,6 +104,7 @@ void qemu_system_killed(int signal, pid_t pid);
+ void qemu_system_reset(ShutdownCause reason);
+ void qemu_system_guest_panicked(GuestPanicInformation *info);
+ void qemu_system_guest_crashloaded(GuestPanicInformation *info);
++void qemu_system_guest_pvshutdown(void);
+ bool qemu_system_dump_in_progress(void);
+ 
+ #endif
+diff --git a/hw/misc/pvpanic.c b/hw/misc/pvpanic.c
+index a4982cc592..0e9505451a 100644
+--- a/hw/misc/pvpanic.c
++++ b/hw/misc/pvpanic.c
+@@ -40,6 +40,11 @@ static void handle_event(int event)
+         qemu_system_guest_crashloaded(NULL);
+         return;
      }
- free_and_exit:
++
++    if (event & PVPANIC_SHUTDOWN) {
++        qemu_system_guest_pvshutdown();
++        return;
++    }
+ }
+ 
+ /* return supported events on read */
+diff --git a/system/runstate.c b/system/runstate.c
+index cb4905a40f..83055f3278 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -585,6 +585,11 @@ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
+     qapi_free_GuestPanicInformation(info);
+ }
+ 
++void qemu_system_guest_pvshutdown(void)
++{
++    qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
++}
++
+ void qemu_system_reset_request(ShutdownCause reason)
+ {
+     if (reboot_action == REBOOT_ACTION_SHUTDOWN &&
 -- 
 MST
 
