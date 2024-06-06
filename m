@@ -4,85 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3528DC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 04:45:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90BAAC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 05:06:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF4zf-0008D5-Vp; Thu, 06 Jun 2024 00:44:56 -0400
+	id 1sF5JS-0006Dp-2H; Thu, 06 Jun 2024 01:05:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1sF4ze-0008Cq-94
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 00:44:54 -0400
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sF5JQ-0006DY-Iq
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 01:05:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1sF4za-0008JY-Ng
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 00:44:52 -0400
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sF5JN-0003k9-UI
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 01:05:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717649089;
+ s=mimecast20190719; t=1717650314;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vmaAdKQzAZzsiULoP3TeJY9GmDnRELKZLCeesie7Gxw=;
- b=TcwD+UtqH3vYOEpslNM4oYBn5pbDcVrM0OCFyK+lkhp8s+Qv89nofy0//qZE8BUAth+MmL
- xDA2enC9wNiCp6hn8wd9COqkW0yNkSm4xtFAXt8eQPhiCB5OKGbtcZ7wElwjl7+kzYi1W+
- EnCpNjO07/F3yys5RD/NrK0PICgCNQM=
+ bh=RCSumzjzDmjPXJOUPEKDGuagiSsXbpz9zqtzk7gilmY=;
+ b=X0blJjWwq+nHRLBzhel8j7YyQWx8rWqWpEu78+W3+0bzqNlUQONnaJNlk5Nx5gBKTqmKz6
+ Ctu7XAS49YvqPxO1kM+e6y8kCHXg039QpBqst0isp4Wai4hElXN1644Rec/ttfRuf/2UtP
+ R5YNDRI5fPpDiOdIUx8ojvMF3VyZK14=
 Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
  [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-250-uGRC6_2BO6ixMfuQm5GE1A-1; Thu, 06 Jun 2024 00:44:47 -0400
-X-MC-Unique: uGRC6_2BO6ixMfuQm5GE1A-1
+ us-mta-542-d7XDOVi_P2m8RNc8y8L90A-1; Thu, 06 Jun 2024 01:05:10 -0400
+X-MC-Unique: d7XDOVi_P2m8RNc8y8L90A-1
 Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-6507e2f0615so456761a12.1
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 21:44:44 -0700 (PDT)
+ 41be03b00d2f7-6ca1d5c4153so540879a12.3
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 22:05:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717649083; x=1718253883;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vmaAdKQzAZzsiULoP3TeJY9GmDnRELKZLCeesie7Gxw=;
- b=SWDuhTc/2tzNoOaP/MGdXQi8dcSDCLLgygSGYRxTMoT1BysnnR0CnNQ3FNGMmDBFOG
- npkNn3E3MytWEZ531milF4z08sFJ+YXoajJeeVUYhrIYkNcHyeUNr9iJa2gl6bQ4kb+x
- mjz6tzlMiP+zUQilHROffjidI64iO5QUzmVWAfOF2lmMRyFgOsaufBplep//TdCtfuvN
- QVRaUMt/vnGannGiTohHrRcnldwADG3w3Vo1kWKflzWKneIgYpCPFEtKoukvUEuEK37I
- whlZZ+fpwmgvlNNDUNFmtz6hGOAa/8leTxfQc3M1ATC1uCIN4SzlnaRuRXd0YBXGnyIy
- evrw==
+ d=1e100.net; s=20230601; t=1717650309; x=1718255109;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RCSumzjzDmjPXJOUPEKDGuagiSsXbpz9zqtzk7gilmY=;
+ b=h7C1X0Gol1wONdEKpMQjA1ad4fRieA04lmedVcJcMQOutMcbUWWy2LuxJbvAQHSjY/
+ SCU51CgQ3FsFYqCdOcjxnW1nzMHwwOf81iqqVJhl95BEslnqJSPV1KpHQsIGIv94cBcj
+ a0aJ2jEcyrj1SCQTbHCEW/af6DT+sLroLCgMO6Jsb5zAqoJeB4gTIFCGyoEopBepad0f
+ wK6jXoeqOLCGfNsGmLzcnIgUniEg/sBL4AS9m8Elv41KZEamNhStnaeSOMBVsh/QoEfe
+ sboPGXnwdd+UUY05DfFdkHtpqmlJMuR8+jrKwOjyjMLLQEh0E3BrvznXTLs/63LVdGUi
+ /OZQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWEk/MkoNtxmp07qg6I0ZmLkAlmaFU//92OnxINElPMjNG/gcE0NlJdfmDAUH2koQMx9hfzqaaM0LUdWbKdwvcGLyZ2p/8=
-X-Gm-Message-State: AOJu0YzOnfvFzY3Onr2rg121auPAHHKY2NpxT6VjARtyiT47E5fK67c1
- 04lnKkG6w7xXJ2PC/lY1yceFOv7UvgxmbQ8is0E4unvG55xJrkT8I7TevcxwVwrBwkXltzqRV4B
- TincTjuyNPEJ+vlGk4a3d4m6/fZbp8bTHfZepXcM6e75NNjeG8udt
-X-Received: by 2002:a05:6a21:614:b0:1b2:a78c:f5d0 with SMTP id
- adf61e73a8af0-1b2b71930bbmr4171694637.61.1717649083517; 
- Wed, 05 Jun 2024 21:44:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGareBrygFuhTAjPhnm0BTbkTwoRdx9MyJXsKYuufqY+ggORjvGdQp/5N1KxI80VrM1YLARQA==
-X-Received: by 2002:a05:6a21:614:b0:1b2:a78c:f5d0 with SMTP id
- adf61e73a8af0-1b2b71930bbmr4171679637.61.1717649083021; 
- Wed, 05 Jun 2024 21:44:43 -0700 (PDT)
-Received: from localhost.localdomain ([203.163.239.242])
- by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-1f6bd81b9e2sm4057165ad.295.2024.06.05.21.44.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 21:44:42 -0700 (PDT)
-From: Ani Sinha <anisinha@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>, imammedo@redhat.com, qemu-devel@nongnu.org
-Subject: [PATCH v3 3/3] tests/qtest/x86: check for availability of older cpu
- models before running tests
-Date: Thu,  6 Jun 2024 10:14:19 +0530
-Message-ID: <20240606044419.8806-4-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20240606044419.8806-1-anisinha@redhat.com>
-References: <20240606044419.8806-1-anisinha@redhat.com>
+ AJvYcCW5Ddvau+7giusRNLwApJqqD68hFXnV0NWknTXUfL+l7tgh4bjVEXJw+vT/iXeF/p1trQjP98kASX9y2cSi878U6wWeto4=
+X-Gm-Message-State: AOJu0YzxNxkRDNKVtA0ZT5rfNCazc/gL+yNU72fQZiIdu21FRYdEQSzn
+ Mlo4EolYPXAnpwYwbxlJ6vIw8LLODPfRlurkH7Fw6d83xc+QGnTq+sLoA6GX+TBiqY9Mj1DB/8v
+ Ykw5HbXlZNkGHmOrtrSe2MXz1bcqNRFWGJ/eWbFI1cSSLeecVEzE+
+X-Received: by 2002:a05:6a20:2588:b0:1ad:999b:de34 with SMTP id
+ adf61e73a8af0-1b2b710b89bmr6256367637.38.1717650308406; 
+ Wed, 05 Jun 2024 22:05:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG2cNP8RK4J3t42fG0hqJ/kpP5na0edumB4VXYvJNXwCd4HW1qVfft4gFZzIhis5qYqPCrD6g==
+X-Received: by 2002:a05:6a20:2588:b0:1ad:999b:de34 with SMTP id
+ adf61e73a8af0-1b2b710b89bmr6256342637.38.1717650307814; 
+ Wed, 05 Jun 2024 22:05:07 -0700 (PDT)
+Received: from [192.168.68.50] ([43.252.112.224])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f6bd774bf4sm4517435ad.114.2024.06.05.22.05.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Jun 2024 22:05:06 -0700 (PDT)
+Message-ID: <1089f920-aff9-4d16-829d-5d058908a11e@redhat.com>
+Date: Thu, 6 Jun 2024 15:05:02 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: Unexpected error in rme_configure_one() at
+ ../target/arm/kvm-rme.c:159
+To: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Cc: Itaru Kitayama <itaru.kitayama@linux.dev>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-arm <qemu-arm@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ard Biesheuvel <ardb@kernel.org>
+References: <0C6F517A-5686-4BCE-8D08-1CED02CB470E@linux.dev>
+ <4e7aa598-1a5d-47e1-aaa3-78af05947eeb@linaro.org>
+ <CB05CAA2-9301-45F6-8AE3-A2E27A160CDF@linux.dev>
+ <cbd630d7-01e8-49ba-9c8b-a6514d898ed2@redhat.com>
+ <20240531150922.GA83195@myrica>
+ <bd1f84bd-e23c-4f4b-bc0b-a2a1b70081f4@redhat.com>
+ <20240603082402.GA25688@myrica>
+ <2c81cb47-b9bc-4875-a7fb-49c3a8ab6713@redhat.com>
+ <20240604111517.GB875061@myrica>
+ <e7748b25-a01b-49e9-bbeb-cd03abb91cf6@redhat.com>
+ <20240605155608.GA3251699@myrica>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20240605155608.GA3251699@myrica>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -91,7 +102,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,348 +118,387 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is better to check if some older cpu models like 486, athlon, pentium,
-penryn, phenom, core2duo etc are available before running their corresponding
-tests. Some downstream distributions may no longer support these older cpu
-models.
 
-Signature of add_feature_test() has been modified to return void as
-FeatureTestArgs* was not used by the caller.
+On 6/6/24 01:56, Jean-Philippe Brucker wrote:
+> On Wed, Jun 05, 2024 at 11:28:47AM +1000, Gavin Shan wrote:
+>>>>     WriteSections64(): /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll AARCH64 small code model requires identical ELF and PE/COFF section offsets modulo 4 KB.
+>>>
+>>> Ah I've seen this once but it disappeared as I tried to investigate and
+>>> I've since changed the implementation, so I don't have many notes about
+>>> it.
+>>>
+>>> Maybe you could try to bisect from "ArmVirtPkg: ArmCcaIoMmu: Provide an
+>>> implementation for SetAttribute", but it may give false positives if the
+>>> error depends on some random linker placement. Could be
+>>> "ArmVirtPkg/ArmPlatformLibQemu: Setup early UART mapping in a Realm" which
+>>> adds a 4k page to the data section for the ealy RSI config call, though
+>>> that has explicit 4kB alignment.
+>>>
+>>> In my notes I also wrote that changing "-z common-page-size=0x20" to 4k in
+>>> the link flags may have made the error disappear, but I doubt it's the
+>>> right fix.
+>>>
+>>> I'll try GCC 11 to see if I can reproduce.
+>>>
+>>
+>> Ok. I run a git-bisect and the first problematic commit is 1153ae939c
+>> ("ArmVirtPkg/ArmPlatformLibQemu: Add a third-level page table for the UART idmap")
+> 
+> Ah thanks, I'm able to reproduce the problem now, it was my local config
+> that masked it.
+> 
+>>
+>> I'm not familiar with edk2. The error is raised by BaseTools/Source/C/GenFw/Elf64Convert.c::WriteSections64()
+>> where the relocatable address isn't properly aligned to 4KB. So I modified the code
+>> as below, but I have to run two consecutive builds. In the first attempt build, I
+>> still hit the same error.
+> 
+> This seems to be because GenFw generates a file even on error, so it
+> doesn't retry the second time.
+> 
+> This commit moves the page tables from .rodata to .data. When linking
+> IdMap.obj into ArmPlatformPrePeiCore.dll, the alignment of the .text
+> section changes from 0x1000 to 0x800. This change comes from the linker
+> script putting .rodata into .text. I don't know why the included .rodata
+> alignment affects the .text alignment, but I don't think it matters here.
+> 
+> In GenFw, ScanSections64() calculates a mCoffAlignment as the max
+> .text/.data/.hii section alignement. Since with this commit, .data
+> alignement (0x1000) becomes larger than .text (0x800), it picks 0x1000 as
+> the output text offset, and then WriteSections64() complains that this
+> offset isn't equal to the input .text alignment modulo 0x1000.
+> 
+> The linker script says:
+> 
+>    /*
+>     * The alignment of the .data section should be less than or equal to the
+>     * alignment of the .text section. This ensures that the relative offset
+>     * between these sections is the same in the ELF and the PE/COFF versions of
+>     * this binary.
+>     */
+> 
+> but that's not what we're getting. I don't have a fix yet, other than
+> forcing the .text and .data alignment to 4k.
+> 
 
-One minor correction. Replaced 'phenom' with '486' in the test
-'x86/cpuid/auto-level/phenom/arat' matching the cpu used.
+Jean, thanks for your explanation. Right, the issue is caused by mismatched
+alignments for ELF and PE/COFF sections. I ever dumped the variables at the
+failing point, showing the mismatched alignments (0x800 vs 0x1000). Apart from
+that, the virtual address of 'text' section is aligned to 0x800 instead of
+0x1000 after ArmPlatformPrePeiCore.dll is dumped by 'readelf'.
 
-CC: thuth@redhat.com
-CC: imammedo@redhat.com
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- tests/qtest/test-x86-cpuid-compat.c | 170 ++++++++++++++++++----------
- 1 file changed, 108 insertions(+), 62 deletions(-)
+SecHdr->sh_addr:                    0x800              <<< Mismatched alignment between ELF and PE/COFF
+SecOffset:                          0x1000
+SymShdr->sh_addr:                   0x800
+mCoffSectionsOffset[Sym->st_shndx]: 0x1000
+GenFw: ERROR 3000: Invalid
+   WriteSections64(): /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll AARCH64 small code model requires identical ELF and PE/COFF section offsets modulo 4 KB.
 
-changelog:
-v2: reworked as per suggestion from danpb.
-v3: reworked as_feature_test() same way as add_cpuid_test()
+# readelf -S Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll
+Section Headers:
+   [Nr] Name              Type             Address           Offset
+        Size              EntSize          Flags  Link  Info  Align
+   [ 0]                   NULL             0000000000000000  00000000
+        0000000000000000  0000000000000000           0     0     0
+   [ 1] .text             PROGBITS         0000000000000800  00000800       <<< Aligned to 0x800
+        00000000000051b8  0000000000000000  AX       0     0     2048
 
-diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-cpuid-compat.c
-index 6a39454fce..d5307f39e7 100644
---- a/tests/qtest/test-x86-cpuid-compat.c
-+++ b/tests/qtest/test-x86-cpuid-compat.c
-@@ -67,10 +67,29 @@ static void test_cpuid_prop(const void *data)
-     g_free(path);
- }
- 
--static void add_cpuid_test(const char *name, const char *cmdline,
-+static void add_cpuid_test(const char *name, const char *cpu,
-+                           const char *cpufeat, const char *machine,
-                            const char *property, int64_t expected_value)
- {
-     CpuidTestArgs *args = g_new0(CpuidTestArgs, 1);
-+    char *cmdline;
-+    char *save;
-+
-+    if (!qtest_has_cpu(cpu)) {
-+        return;
-+    }
-+    cmdline = g_strdup_printf("-cpu %s", cpu);
-+
-+    if (cpufeat) {
-+        save = cmdline;
-+        cmdline = g_strdup_printf("%s,%s", cmdline, cpufeat);
-+        g_free(save);
-+    }
-+    if (machine) {
-+        save = cmdline;
-+        cmdline = g_strdup_printf("-machine %s %s", machine, cmdline);
-+        g_free(save);
-+    }
-     args->cmdline = cmdline;
-     args->property = property;
-     args->expected_value = expected_value;
-@@ -149,12 +168,24 @@ static void test_feature_flag(const void *data)
-  * either "feature-words" or "filtered-features", when running QEMU
-  * using cmdline
-  */
--static FeatureTestArgs *add_feature_test(const char *name, const char *cmdline,
--                                         uint32_t eax, uint32_t ecx,
--                                         const char *reg, int bitnr,
--                                         bool expected_value)
-+static void add_feature_test(const char *name, const char *cpu,
-+                             const char *cpufeat, uint32_t eax,
-+                             uint32_t ecx, const char *reg,
-+                             int bitnr, bool expected_value)
- {
-     FeatureTestArgs *args = g_new0(FeatureTestArgs, 1);
-+    char *cmdline;
-+
-+    if (!qtest_has_cpu(cpu)) {
-+        return;
-+    }
-+
-+    if (cpufeat) {
-+        cmdline = g_strdup_printf("-cpu %s,%s", cpu, cpufeat);
-+    } else {
-+        cmdline = g_strdup_printf("-cpu %s", cpu);
-+    }
-+
-     args->cmdline = cmdline;
-     args->in_eax = eax;
-     args->in_ecx = ecx;
-@@ -162,13 +193,17 @@ static FeatureTestArgs *add_feature_test(const char *name, const char *cmdline,
-     args->bitnr = bitnr;
-     args->expected_value = expected_value;
-     qtest_add_data_func(name, args, test_feature_flag);
--    return args;
-+    return;
- }
- 
- static void test_plus_minus_subprocess(void)
- {
-     char *path;
- 
-+    if (!qtest_has_cpu("pentium")) {
-+        return;
-+    }
-+
-     /* Rules:
-      * 1)"-foo" overrides "+foo"
-      * 2) "[+-]foo" overrides "foo=..."
-@@ -198,6 +233,10 @@ static void test_plus_minus_subprocess(void)
- 
- static void test_plus_minus(void)
- {
-+    if (!qtest_has_cpu("pentium")) {
-+        return;
-+    }
-+
-     g_test_trap_subprocess("/x86/cpuid/parsing-plus-minus/subprocess", 0, 0);
-     g_test_trap_assert_passed();
-     g_test_trap_assert_stderr("*Ambiguous CPU model string. "
-@@ -217,99 +256,105 @@ int main(int argc, char **argv)
- 
-     /* Original level values for CPU models: */
-     add_cpuid_test("x86/cpuid/phenom/level",
--                   "-cpu phenom", "level", 5);
-+                   "phenom", NULL, NULL, "level", 5);
-     add_cpuid_test("x86/cpuid/Conroe/level",
--                   "-cpu Conroe", "level", 10);
-+                   "Conroe", NULL, NULL, "level", 10);
-     add_cpuid_test("x86/cpuid/SandyBridge/level",
--                   "-cpu SandyBridge", "level", 0xd);
-+                   "SandyBridge", NULL, NULL, "level", 0xd);
-     add_cpuid_test("x86/cpuid/486/xlevel",
--                   "-cpu 486", "xlevel", 0);
-+                   "486", NULL, NULL, "xlevel", 0);
-     add_cpuid_test("x86/cpuid/core2duo/xlevel",
--                   "-cpu core2duo", "xlevel", 0x80000008);
-+                   "core2duo", NULL, NULL, "xlevel", 0x80000008);
-     add_cpuid_test("x86/cpuid/phenom/xlevel",
--                   "-cpu phenom", "xlevel", 0x8000001A);
-+                   "phenom", NULL, NULL, "xlevel", 0x8000001A);
-     add_cpuid_test("x86/cpuid/athlon/xlevel",
--                   "-cpu athlon", "xlevel", 0x80000008);
-+                   "athlon", NULL, NULL, "xlevel", 0x80000008);
- 
-     /* If level is not large enough, it should increase automatically: */
-     /* CPUID[6].EAX: */
--    add_cpuid_test("x86/cpuid/auto-level/phenom/arat",
--                   "-cpu 486,arat=on", "level", 6);
-+    add_cpuid_test("x86/cpuid/auto-level/486/arat",
-+                   "486", "arat=on", NULL, "level", 6);
-     /* CPUID[EAX=7,ECX=0].EBX: */
-     add_cpuid_test("x86/cpuid/auto-level/phenom/fsgsbase",
--                   "-cpu phenom,fsgsbase=on", "level", 7);
-+                   "phenom", "fsgsbase=on", NULL, "level", 7);
-     /* CPUID[EAX=7,ECX=0].ECX: */
-     add_cpuid_test("x86/cpuid/auto-level/phenom/avx512vbmi",
--                   "-cpu phenom,avx512vbmi=on", "level", 7);
-+                   "phenom", "avx512vbmi=on", NULL, "level", 7);
-     /* CPUID[EAX=0xd,ECX=1].EAX: */
-     add_cpuid_test("x86/cpuid/auto-level/phenom/xsaveopt",
--                   "-cpu phenom,xsaveopt=on", "level", 0xd);
-+                   "phenom", "xsaveopt=on", NULL, "level", 0xd);
-     /* CPUID[8000_0001].EDX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/3dnow",
--                   "-cpu 486,3dnow=on", "xlevel", 0x80000001);
-+                   "486", "3dnow=on", NULL, "xlevel", 0x80000001);
-     /* CPUID[8000_0001].ECX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/sse4a",
--                   "-cpu 486,sse4a=on", "xlevel", 0x80000001);
-+                   "486", "sse4a=on", NULL, "xlevel", 0x80000001);
-     /* CPUID[8000_0007].EDX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/invtsc",
--                   "-cpu 486,invtsc=on", "xlevel", 0x80000007);
-+                   "486", "invtsc=on", NULL, "xlevel", 0x80000007);
-     /* CPUID[8000_000A].EDX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/npt",
--                   "-cpu 486,svm=on,npt=on", "xlevel", 0x8000000A);
-+                   "486", "svm=on,npt=on", NULL, "xlevel", 0x8000000A);
-     /* CPUID[C000_0001].EDX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel2/phenom/xstore",
--                   "-cpu phenom,xstore=on", "xlevel2", 0xC0000001);
-+                   "phenom", "xstore=on", NULL, "xlevel2", 0xC0000001);
-     /* SVM needs CPUID[0x8000000A] */
-     add_cpuid_test("x86/cpuid/auto-xlevel/athlon/svm",
--                   "-cpu athlon,svm=on", "xlevel", 0x8000000A);
-+                   "athlon", "svm=on", NULL, "xlevel", 0x8000000A);
- 
- 
-     /* If level is already large enough, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-level/SandyBridge/multiple",
--                   "-cpu SandyBridge,arat=on,fsgsbase=on,avx512vbmi=on",
--                   "level", 0xd);
-+                   "SandyBridge", "arat=on,fsgsbase=on,avx512vbmi=on",
-+                   NULL, "level", 0xd);
-     /* If level is explicitly set, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-level/486/fixed/0xF",
--                   "-cpu 486,level=0xF,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
--                   "level", 0xF);
-+                   "486",
-+                   "level=0xF,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
-+                   NULL, "level", 0xF);
-     add_cpuid_test("x86/cpuid/auto-level/486/fixed/2",
--                   "-cpu 486,level=2,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
--                   "level", 2);
-+                   "486",
-+                   "level=2,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
-+                   NULL, "level", 2);
-     add_cpuid_test("x86/cpuid/auto-level/486/fixed/0",
--                   "-cpu 486,level=0,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
--                   "level", 0);
-+                   "486",
-+                   "level=0,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
-+                   NULL, "level", 0);
- 
-     /* if xlevel is already large enough, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/phenom/3dnow",
--                   "-cpu phenom,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   "xlevel", 0x8000001A);
-+                   "phenom", "3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                   NULL, "xlevel", 0x8000001A);
-     /* If xlevel is explicitly set, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/fixed/80000002",
--                   "-cpu 486,xlevel=0x80000002,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   "xlevel", 0x80000002);
-+                   "486",
-+                   "xlevel=0x80000002,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                   NULL, "xlevel", 0x80000002);
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/fixed/8000001A",
--                   "-cpu 486,xlevel=0x8000001A,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   "xlevel", 0x8000001A);
-+                   "486",
-+                   "xlevel=0x8000001A,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                   NULL, "xlevel", 0x8000001A);
-     add_cpuid_test("x86/cpuid/auto-xlevel/phenom/fixed/0",
--                   "-cpu 486,xlevel=0,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   "xlevel", 0);
-+                   "486",
-+                   "xlevel=0,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                   NULL, "xlevel", 0);
- 
-     /* if xlevel2 is already large enough, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-xlevel2/486/fixed",
--                   "-cpu 486,xlevel2=0xC0000002,xstore=on",
--                   "xlevel2", 0xC0000002);
-+                   "486", "xlevel2=0xC0000002,xstore=on",
-+                   NULL, "xlevel2", 0xC0000002);
- 
-     /* Check compatibility of old machine-types that didn't
-      * auto-increase level/xlevel/xlevel2: */
-     if (qtest_has_machine("pc-i440fx-2.7")) {
-         add_cpuid_test("x86/cpuid/auto-level/pc-2.7",
--                       "-machine pc-i440fx-2.7 -cpu 486,arat=on,avx512vbmi=on,xsaveopt=on",
--                       "level", 1);
-+                       "486", "arat=on,avx512vbmi=on,xsaveopt=on",
-+                       "pc-i440fx-2.7", "level", 1);
-         add_cpuid_test("x86/cpuid/auto-xlevel/pc-2.7",
--                       "-machine pc-i440fx-2.7 -cpu 486,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                       "xlevel", 0);
-+                       "486", "3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                       "pc-i440fx-2.7", "xlevel", 0);
-         add_cpuid_test("x86/cpuid/auto-xlevel2/pc-2.7",
--                       "-machine pc-i440fx-2.7 -cpu 486,xstore=on",
-+                       "486", "xstore=on", "pc-i440fx-2.7",
-                        "xlevel2", 0);
-     }
-     /*
-@@ -319,18 +364,18 @@ int main(int argc, char **argv)
-      */
-     if (qtest_has_machine("pc-i440fx-2.3")) {
-         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.3/off",
--                       "-machine pc-i440fx-2.3 -cpu Penryn",
-+                       "Penryn", NULL, "pc-i440fx-2.3",
-                        "level", 4);
-         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.3/on",
--                       "-machine pc-i440fx-2.3 -cpu Penryn,erms=on",
-+                       "Penryn", "erms=on", "pc-i440fx-2.3",
-                        "level", 7);
-     }
-     if (qtest_has_machine("pc-i440fx-2.9")) {
-         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.9/off",
--                       "-machine pc-i440fx-2.9 -cpu Conroe",
-+                       "Conroe", NULL, "pc-i440fx-2.9",
-                        "level", 10);
-         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.9/on",
--                       "-machine pc-i440fx-2.9 -cpu Conroe,erms=on",
-+                       "Conroe", "erms=on", "pc-i440fx-2.9",
-                        "level", 10);
-     }
- 
-@@ -341,42 +386,43 @@ int main(int argc, char **argv)
-      */
-     if (qtest_has_machine("pc-i440fx-2.3")) {
-         add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.3",
--                       "-machine pc-i440fx-2.3 -cpu SandyBridge",
-+                       "SandyBridge", NULL, "pc-i440fx-2.3",
-                        "xlevel", 0x8000000a);
-     }
-     if (qtest_has_machine("pc-i440fx-2.4")) {
-         add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.4/npt-off",
--                       "-machine pc-i440fx-2.4 -cpu SandyBridge,",
-+                       "SandyBridge", NULL, "pc-i440fx-2.4",
-                        "xlevel", 0x80000008);
-         add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.4/npt-on",
--                       "-machine pc-i440fx-2.4 -cpu SandyBridge,svm=on,npt=on",
-+                       "SandyBridge", "svm=on,npt=on", "pc-i440fx-2.4",
-                        "xlevel", 0x80000008);
-     }
- 
-     /* Test feature parsing */
-     add_feature_test("x86/cpuid/features/plus",
--                     "-cpu 486,+arat",
-+                     "486", "+arat",
-                      6, 0, "EAX", 2, true);
-     add_feature_test("x86/cpuid/features/minus",
--                     "-cpu pentium,-mmx",
-+                     "pentium", "-mmx",
-                      1, 0, "EDX", 23, false);
-     add_feature_test("x86/cpuid/features/on",
--                     "-cpu 486,arat=on",
-+                     "486", "arat=on",
-                      6, 0, "EAX", 2, true);
-     add_feature_test("x86/cpuid/features/off",
--                     "-cpu pentium,mmx=off",
-+                     "pentium", "mmx=off",
-                      1, 0, "EDX", 23, false);
-+
-     add_feature_test("x86/cpuid/features/max-plus-invtsc",
--                     "-cpu max,+invtsc",
-+                     "max" , "+invtsc",
-                      0x80000007, 0, "EDX", 8, true);
-     add_feature_test("x86/cpuid/features/max-invtsc-on",
--                     "-cpu max,invtsc=on",
-+                     "max", "invtsc=on",
-                      0x80000007, 0, "EDX", 8, true);
-     add_feature_test("x86/cpuid/features/max-minus-mmx",
--                     "-cpu max,-mmx",
-+                     "max", "-mmx",
-                      1, 0, "EDX", 23, false);
-     add_feature_test("x86/cpuid/features/max-invtsc-on,mmx=off",
--                     "-cpu max,mmx=off",
-+                     "max", "mmx=off",
-                      1, 0, "EDX", 23, false);
- 
-     return g_test_run();
--- 
-2.42.0
+With the following changes, I'm able to build the firmware successfully. I don't
+see how COMMONPAGESIZE is sorted out because I don't find its definition in the
+source code.
+
+diff --git a/BaseTools/Scripts/GccBase.lds b/BaseTools/Scripts/GccBase.lds
+index 9f27e83bb0..5463df47a9 100644
+--- a/BaseTools/Scripts/GccBase.lds
++++ b/BaseTools/Scripts/GccBase.lds
+@@ -20,7 +20,8 @@ SECTIONS {
+     */
+    . = PECOFF_HEADER_SIZE;
+  
+-  .text : ALIGN(CONSTANT(COMMONPAGESIZE)) {
++  /* .text : ALIGN(CONSTANT(COMMONPAGESIZE)) { */^M
++  .text : ALIGN(4096) {^M
+
+# <rebuild>
+# readelf -S Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll
+There are 24 section headers, starting at offset 0x63050:
+
+Section Headers:
+   [Nr] Name              Type             Address           Offset
+        Size              EntSize          Flags  Link  Info  Align
+   [ 0]                   NULL             0000000000000000  00000000
+        0000000000000000  0000000000000000           0     0     0
+   [ 1] .text             PROGBITS         0000000000001000  00001000     <<< Aligned to 0x1000 now
+        00000000000051b8  0000000000000000  AX       0     0     4096
+
+Even the edk2 for the guest can be built successfully, but I'm not able to try it
+because I'm unable to bring up the host now. I tried to rebuild the environment
+from scratch, the host runs into crash inside EDK2 unfortunately...
+
+   TF-RMM:   https://git.codelinaro.org/linaro/dcap/rmm.git                       (branch: cca/v2)
+   EDK2:     git@github.com:tianocore/edk2.git                                    (tag:    edk2-stable202402)
+   TF-A:     https://git.codelinaro.org/linaro/dcap/tf-a/trusted-firmware-a.git   (branch: cca/v2)
+   QEMU:     https://git.qemu.org/git/qemu.git                                    (branch: master)
+   KERNEL:   https://git.gitlab.arm.com/linux-arm/linux-cca.git                   (branch: cca-full/v2)
+   BuildRoot: <doesn't matter at present>
+
+arm64-server# home/gavin/sandbox/qemu.main/build/qemu-system-aarch64      \
+               -M virt,virtualization=on,secure=on,gic-version=3,acpi=off  \
+               -cpu max,x-rme=on -m 8G -smp 8                              \
+               -monitor none -serial mon:stdio -nographic -nodefaults      \
+               -bios /home/gavin/sandbox/CCA/tf-a/flash.bin                \
+               -kernel /home/gavin/sandbox/CCA/linux/arch/arm64/boot/Image \
+               -append console=ttyAMA0 root=/dev/vda                       \
+               -drive format=raw,if=none,file=/home/gavin/sandbox/CCA/buildroot/output/images/rootfs.ext4,id=hd0 \
+               -device virtio-blk-pci,drive=hd0                            \
+               -netdev tap,id=tap0,vhost=false,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown \
+               -device virtio-net-pci,netdev=tap0,mac=52:54:00:f1:26:b0                          \
+               -fsdev local,security_model=none,path=/home/gavin/sandbox/CCA,id=shr0             \
+               -device virtio-9p-device,fsdev=shr0,mount_tag=shr0
+                  :
+NOTICE:  Booting Trusted Firmware
+NOTICE:  BL1: v2.10.0(debug):99e0b97aa-dirty
+NOTICE:  BL1: Built : 23:14:56, Jun  5 2024
+INFO:    BL1: RAM 0xe0ee000 - 0xe0f7000
+INFO:    BL1: Loading BL2
+INFO:    Loading image id=1 at address 0xe06b000
+INFO:    Image id=1 loaded: 0xe06b000 - 0xe0742d1
+NOTICE:  BL1: Booting BL2
+INFO:    Entry point address = 0xe06b000
+INFO:    SPSR = 0x3cd
+INFO:    [GPT] Boot Configuration
+INFO:      PPS/T:     0x2/40
+INFO:      PGS/P:     0x0/12
+INFO:      L0GPTSZ/S: 0x0/30
+INFO:      PAS count: 0x6
+INFO:      L0 base:   0xedfe000
+INFO:    [GPT] PAS[0]: base 0xe001000, size 0xff000, GPI 0xa, type 0x1
+INFO:    [GPT] PAS[1]: base 0xe100000, size 0xcfe000, GPI 0x8, type 0x1
+INFO:    [GPT] PAS[2]: base 0xedfe000, size 0x202000, GPI 0xa, type 0x1
+INFO:    [GPT] PAS[3]: base 0x40000000, size 0x100000, GPI 0x9, type 0x1
+INFO:    [GPT] PAS[4]: base 0x40100000, size 0x2800000, GPI 0xb, type 0x1
+INFO:    [GPT] PAS[5]: base 0x42900000, size 0x1fd700000, GPI 0x9, type 0x1
+INFO:    Enabling Granule Protection Checks
+NOTICE:  BL2: v2.10.0(debug):99e0b97aa-dirty
+NOTICE:  BL2: Built : 23:14:56, Jun  5 2024
+INFO:    BL2: Doing platform setup
+INFO:    Reserved RMM memory [0x40100000, 0x428fffff] in Device tree
+INFO:    BL2: Loading image id 3
+INFO:    Loading image id=3 at address 0xe0a0000
+INFO:    Image id=3 loaded: 0xe0a0000 - 0xe0b10c4
+INFO:    BL2: Loading image id 35
+INFO:    Loading image id=35 at address 0x40100000
+INFO:    Image id=35 loaded: 0x40100000 - 0x403033b0
+INFO:    BL2: Loading image id 5
+INFO:    Loading image id=5 at address 0x60000000
+INFO:    Image id=5 loaded: 0x60000000 - 0x60200000
+NOTICE:  BL2: Booting BL31
+INFO:    Entry point address = 0xe0a0000
+INFO:    SPSR = 0x3cd
+NOTICE:  BL31: v2.10.0(debug):99e0b97aa-dirty
+NOTICE:  BL31: Built : 23:14:56, Jun  5 2024
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    Maximum SPI INTID supported: 287
+INFO:    BL31: Initializing runtime services
+INFO:    RMM setup done.
+INFO:    BL31: Initializing RMM
+INFO:    RMM init start.
+Booting RMM v.0.4.0(debug) 17924bc Built with GCC 11.4.1
+RMM-EL3 Interface v.0.2
+Boot Manifest Interface v.0.3
+RMI/RSI ABI v.1.0/1.0 built: Jun  5 2024 23:03:00
+INFO:    RMM init end.
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x60000000
+INFO:    SPSR = 0x3c9
+Loading driver at 0x00060009160 EntryPoint=0x00000000000
+ArmVirtGetMemoryMap: Dumping System DRAM Memory Map:
+	PhysicalBase: 0x40000000
+	VirtualBase: 0x40000000
+	Length: 0x200000000
+UEFI firmware (version  built at 23:28:51 on Jun  5 2024)
+PlatformPeim: PL011 UART (console) @ 0x9000000
+PlatformPeim: PL011 UART (debug) @ 0x9000000
+   :
+EFI stub: Booting Linux Kernel...
+EFI stub: EFI_RNG_PROTOCOL unavailable
+SetMemoryAttributes: BaseAddress == 0x22DC00000, Length == 0x1CE0000, Attributes == 0x20000
+SetMemoryAttributes: BaseAddress == 0x22F8E0000, Length == 0xE50000, Attributes == 0x4000
+EFI stub: Using DTB from configuration table
+EFI stub: Exiting boot services...
+EFI stub: update_fdt() ... done
+EFI stub: efi_exit_boot_services: enter
+EFI stub: efi_exit_boot_services: efi_pci_disable_bridge_busmaster
+EFI stub: efi_exit_boot_services: efi_get_memory_map
+EFI stub: efi_exit_boot_services: priv_func
+=====> CoreExitBootServices
+MemoryProtectionExitBootServicesCallback - 0
+SetUefiImageMemoryAttributes - 0x000000023BE60000 - 0x0000000000040000 (0x0000000000000008)
+MemoryProtectionExitBootServicesCallback - 0
+SetUefiImageMemoryAttributes - 0x0000000238AF0000 - 0x0000000000040000 (0x0000000000000008)
+MemoryProtectionExitBootServicesCallback - 0
+SetUefiImageMemoryAttributes - 0x0000000238AA0000 - 0x0000000000040000 (0x0000000000000008)
+MemoryProtectionExitBootServicesCallback - 0
+SetUefiImageMemoryAttributes - 0x0000000238A50000 - 0x0000000000040000 (0x0000000000000008)
+MemoryProtectionExitBootServicesCallback - 0
+SetUefiImageMemoryAttributes - 0x0000000238960000 - 0x0000000000040000 (0x0000000000000008)
+MemoryProtectionExitBootServicesCallback - 0
+SetUefiImageMemoryAttributes - 0x000000023BE20000 - 0x0000000000030000 (0x0000000000000008)
+MemoryProtectionExitBootServicesCallback - 0
+SetUefiImageMemoryAttributes - 0x0000000238860000 - 0x0000000000030000 (0x0000000000000008)
+MemoryProtectionExitBootServicesCallback - 0
+SetUefiImageMemoryAttributes - 0x0000000238820000 - 0x0000000000030000 (0x0000000000000008)
+CoreExitBootServices: MemoryProtectionExitBootServicesCallback
+CoreExitBootServices: SaveAndSetDebugTimer
+CoreExitBootServices: gCpu->DisableInterrupt
+CoreExitBootServices: CalculateEfiHdrCrc
+CoreExitBootServices: Return with status=0x0
+
+
+Synchronous Exception at 0x000000023248E9B4
+PC 0x00023248E9B4
+PC 0x00023248EA70
+PC 0x00023248EBA8
+PC 0x000232490FC8
+PC 0x00023248A004
+PC 0x00023248973C
+PC 0x0002324894DC
+PC 0x00023F2C7FA8 (0x00023F2C1000+0x00006FA8) [ 1] DxeCore.dll
+PC 0x00023BCC6604 (0x00023BCBE000+0x00008604) [ 2] BdsDxe.dll
+PC 0x00023F2CBC68 (0x00023F2C1000+0x0000AC68) [ 3] DxeCore.dll
+[ 1] /home/gavin/sandbox/CCA/edk2/Build/ArmVirtQemuKernel-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Core/Dxe/DxeMain/DEBUG/DxeCore.dll
+[ 2] /home/gavin/sandbox/CCA/edk2/Build/ArmVirtQemuKernel-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Universal/BdsDxe/BdsDxe/DEBUG/BdsDxe.dll
+[ 3] /home/gavin/sandbox/CCA/edk2/Build/ArmVirtQemuKernel-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Core/Dxe/DxeMain/DEBUG/DxeCore.dll
+
+   X0 0x0000000000000000   X1 0x000000023F2C0740   X2 0x000000000000000A   X3 0x00000002325D3E26
+   X4 0x0000000000000020   X5 0xFFFFFFFFFFFFFFFE   X6 0x0000000000000000   X7 0x0000000000000000
+   X8 0x0000000000000000   X9 0x0000000238820000  X10 0x000000000000002E  X11 0x00000000000023D0
+  X12 0x00000000000023C4  X13 0x0000000000000001  X14 0x0000000000000002  X15 0x0000000000000000
+  X16 0x000000023BD30280  X17 0x000000000066BD90  X18 0x0000000000000000  X19 0x000000023F2C0740
+  X20 0x00000002325D3E27  X21 0x000000000000FFFF  X22 0x000000000000000D  X23 0x000000000010FFFF
+  X24 0x000000000000D800  X25 0x000000023F2C0AA8  X26 0x00000002325E2000  X27 0x0000000000000002
+  X28 0x0000000000000018   FP 0x000000023F2C06F0   LR 0x000000023248EA70
+
+   V0 0x0000000000000000 0000000000000000   V1 0xFFFFFF80FFFFFFD0 000000023F2C0800
+   V2 0x0000000000000000 0000000000000000   V3 0x0000000000000000 0000000000000000
+   V4 0x0000000000000000 0000000000000000   V5 0x0000000000000000 0000000000000000
+   V6 0x0000000000000000 0000000000000000   V7 0x0000000000000000 0000000000000000
+   V8 0x0000000000000000 0000000000000000   V9 0x0000000000000000 0000000000000000
+  V10 0x0000000000000000 0000000000000000  V11 0x0000000000000000 0000000000000000
+  V12 0x0000000000000000 0000000000000000  V13 0x0000000000000000 0000000000000000
+  V14 0x0000000000000000 0000000000000000  V15 0x0000000000000000 0000000000000000
+  V16 0x0000000000000000 0000000000000000  V17 0x0000000000000000 0000000000000000
+  V18 0x0000000000000000 0000000000000000  V19 0x0000000000000000 0000000000000000
+  V20 0x0000000000000000 0000000000000000  V21 0x0000000000000000 0000000000000000
+  V22 0x0000000000000000 0000000000000000  V23 0x0000000000000000 0000000000000000
+  V24 0x0000000000000000 0000000000000000  V25 0x0000000000000000 0000000000000000
+  V26 0x0000000000000000 0000000000000000  V27 0x0000000000000000 0000000000000000
+  V28 0x0000000000000000 0000000000000000  V29 0x0000000000000000 0000000000000000
+  V30 0x0000000000000000 0000000000000000  V31 0x0000000000000000 0000000000000000
+
+   SP 0x000000023F2C06F0  ELR 0x000000023248E9B4  SPSR 0xA00002C9  FPSR 0x00000000
+  ESR 0x96000006          FAR 0x0000000000000008
+
+  ESR : EC 0x25  IL 0x1  ISS 0x00000006
+
+Data abort: Translation fault, second level
+
+Stack dump:
+   000023F2C05F0: 000000023F2C06A0 000000023BD31FF4 0000000238820000 0000000000000002
+   000023F2C0610: 000000023B1E2000 000000023FFF9000 0000000000000E20 00000000001FFFFF
+   000023F2C0630: 0000000238850000 0000000000000001 0000000000000003 000000023FFF9E20
+   000023F2C0650: 000000000000070C 0000000000000000 000000023F2C06D0 000000023F2DD644
+   000023F2C0670: 000000023F2C07C8 000000023F2C095F 0000000000000001 000000023BD358ED
+   000023F2C0690: 000000000000070C 0000000000000000 000000023F2C0750 000000023BD31FF4
+   000023F2C06B0: 0000000238820000 0000000000000001 000000023FFF9000 000000023FFFA000
+   000023F2C06D0: 000000023F2C07F0 000000023F2C2534 0000000000000001 0000000000000000
+> 000023F2C06F0: 000000023F2C0700 000000023248EA70 000000023F2C0840 000000023248EBA8
+   000023F2C0710: 00000002325D42BF 000000023B17E918 00000002325E2000 0000000232489978
+   000023F2C0730: 000000023F2C0AB0 00000002325E2000 0020004900460045 0062007500740073
+   000023F2C0750: 000000000020003A 0000000000000001 000000023F2C0860 0000000000000001
+   000023F2C0770: 0000000000000002 00000000000000FF 0000000000000000 0000007F00000000
+   000023F2C0790: 000000023F2C07F0 000000023F2C2548 000000023F2C07C0 000000023F2DEDD8
+   000023F2C07B0: 000000023F2C088D 000000023F2EA000 000000023F2C07F0 000000023F2C2548
+   000023F2C07D0: 0000000000000001 0000000000000000 000000023F2EB000 000000023F2EA000
+ASSERT [ArmCpuDxe] /home/gavin/sandbox/CCA/edk2/ArmPkg/Library/DefaultExceptionHandlerLib/AArch64/DefaultExceptionHandler.c(343): ((BOOLEAN)(0==1))
+  
+
+>> ---> VirtPkg/Library/ArmPlatformLibQemu/IdMap.S
+>>
+>>    .align    12
+>>    .globl    idmap
+>>    .globl    uart_pte
+>>    .section  ".data.idmap", "aw", %progbits
+>>    .align    12
+>>
+>> # source edksetup.sh; export GCC5_AARCH64_PREFIX=
+>> # make -j -C BaseTools; \                                               <<< Failed on the first attempt
+>>    build -b DEBUG -a AARCH64 -t GCC5 -p ArmVirtPkg/ArmVirtQemu.dsc
+>>     :
+>> WriteSections64(): /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll AARCH64 small code model requires identical ELF and PE/COFF section offsets modulo 4 KB.
+>> make: *** [GNUmakefile:405: /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/OUTPUT/ArmPlatformPrePeiCore.efi] Error 2
+>>
+>> # make -j -C BaseTools; \                                              <<< Succeed on the second attempt
+>>    build -b DEBUG -a AARCH64 -t GCC5 -p ArmVirtPkg/ArmVirtQemu.dsc
+>>     :
+>> Generating FVMAIN FV
+>> ######
+>> Fd File Name:QEMU_VARS (/home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/FV/QEMU_VARS.fd)
+>>     :
+>> - Done -
+>> Build end time: 21:04:05, Jun.04 2024
+>> Build total time: 00:00:06
+>>
+>> After that, I'm unable to start the guest with the edk2 image successfully.
+>>
+>> host# # mount | grep 9p
+>> shr0 on /mnt/shr0 type 9p (rw,relatime,access=client,trans=virtio)
+>> host# cat ./realm.sh
+>> #!/bin/sh
+>>
+>> SHR_DIR="/mnt/shr0"
+>>
+>> qemu-system-aarch64 -accel kvm                              \
+>> -machine virt,gic-version=3,confidential-guest-support=rme0 \
+>> -cpu host -smp 2 -m 512M                                    \
+>> -object 'rme-guest,id=rme0,measurement-algo=sha512'         \
+>> -monitor none -serial mon:stdio -nographic                  \
+>> -bios ${SHR_DIR}/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/FV/QEMU_EFI.fd \
+>> -kernel ${SHR_DIR}/linux/arch/arm64/boot/Image              \
+>> -initrd ${SHR_DIR}/buildroot/output/images/rootfs.cpio      \
+>> -append 'console=ttyAMA0'
+>>
+>> host# ./realm.sh
+>> UEFI firmware (version  built at 19:56:47 on Jun  4 2024)
+>> add-symbol-file /home/gavin/sandbox/C                              <<< I don't see more output after it
+> 
+> I'm guessing in this case the firmware was corrupted because GenFw fails the
+> first time and never generated a complete binary
+> 
+
+Yeah, the binary isn't reliable in this case.
+
+>>>
+>>> Note that the guest edk2 is optional and experimental, you can use direct
+>>> kernel boot to get a working demo quicker.
+>>>
+>>
+>> I never did this before. Could you please provide the detailed steps on this?
+> 
+> Removing the -bios parameter to QEMU should be enough. You can also add
+> 'earlycon' to -append to show early boot errors.
+> 
+
+I didn't get a chance to try this yet since the host can't be brought up now.
+I will try this later. I originally thought some sort of boot wrapper is needed
+so that the kernel image has the capability to boot itself. For example, Mark
+Rutland's boot wrapper [1] can be leveraged in this case. I don't think Image has
+the capability to boot itself, right?
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/mark/boot-wrapper-aarch64.git
+
+Thanks,
+Gavin
 
 
