@@ -4,84 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1377C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 10:22:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A37EBC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 10:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFAGH-0004df-Pp; Thu, 06 Jun 2024 06:22:26 -0400
+	id 1sFAH0-0005E8-NE; Thu, 06 Jun 2024 06:23:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sFAG8-0004d9-Jh
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:22:16 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sFAG6-0007j0-NN
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:22:16 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-57a68b0a229so811888a12.3
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 03:22:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717669333; x=1718274133; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GhGzkhBwYegKqiYl+X72GQkTdLUuCzB8Q+fHQwcToP0=;
- b=CZK1dj4mCJA7DUKwSF+vFhsBZJj7wQPl1mdGDZSEagO0HbJiCrFgo4B8HCOEI4HBBG
- NcVU1gjCQlUGT+Ot/FOWxfXdbD0JA8Fvgpp7L9dOXggsCrdPN7NgLI9BW9eQjf/4uY9R
- EbxAYNa96eG2bFFd8WRceXcC3uIac9Iyf7sFFSGKeNzf1rW9Dus8rOgtdOlEbEOYO48d
- +0x8FBcUbnh8+Jy1DlHM3ecHnGeRH8R8Md0wrVoVJP7xke1AG9KhaOzt0PZ6E6Hy4/0Y
- 1T76KhcbqwJl1y7mu3+m1ttsuPUr1Xa8ebSRmSdNmON8GyqHdQ85SW5nCP3zrW2BMEaw
- pg0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717669333; x=1718274133;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GhGzkhBwYegKqiYl+X72GQkTdLUuCzB8Q+fHQwcToP0=;
- b=XpvDuw0g/OQDtQN6OWQBiCwk7Y+oQcW7OSQqNiu93VvT8zuHCBjzDDz6tym+Q3Uxmh
- UdrcexKylalocHlZgXL0aw1QXGUH6tp36Ke0o/fhTeQtzCelxcwLT7mGIhYBNCUbF4Me
- o6+BqNeJSN8Isk98uKIrOe5sZazFDa9/FfuxcHyw8Aov51j8jRlGNoPIpnw+KI9yxzd/
- 3Z0Q1C9q9gFe+s/bLmkr7/758cf5aesnHOsrBfS9UMBZCV1JFBlqE2Dm6e5fgkUtuRP4
- OVr35v9snmm5LiiM0Pc6grZvD1te7m/Rrl/ZBvMygtHWpCWCqoqQvkaCc+6c++l4e1oc
- aBqw==
-X-Gm-Message-State: AOJu0YxJtt9L5db31Gjtm4fOuaqb0vm5j2/95VehM6EuTBXPYwYnkAqB
- +bcUxKDbpJDE1rJov08ZgkDk+MfPKuGpuoxq7Lgv0wnv/oeOIH8LnW8NuYvDMcw=
-X-Google-Smtp-Source: AGHT+IFdbcj6SkYk5BSHtYFjV+ipl0uNgJyYoJyKJk4BlNbLSNqTzlnrpAFnczayp8xKzYNYfGDzNQ==
-X-Received: by 2002:a50:d5d3:0:b0:57a:7885:433d with SMTP id
- 4fb4d7f45d1cf-57a8bcb617emr3084272a12.38.1717669332708; 
- Thu, 06 Jun 2024 03:22:12 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aadfa3c47sm853574a12.16.2024.06.06.03.22.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Jun 2024 03:22:12 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D914F5F7AD;
- Thu,  6 Jun 2024 11:22:11 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org
-Subject: Re: [PATCH v2 4/9] plugins: Introduce TCGCPUOps callbacks for
- mid-tb register reads
-In-Reply-To: <87y17il7w8.fsf@draig.linaro.org> ("Alex =?utf-8?Q?Benn=C3=A9?=
- =?utf-8?Q?e=22's?= message of "Thu, 06 Jun 2024 10:47:51 +0100")
-References: <20240606032926.83599-1-richard.henderson@linaro.org>
- <20240606032926.83599-5-richard.henderson@linaro.org>
- <87y17il7w8.fsf@draig.linaro.org>
-Date: Thu, 06 Jun 2024 11:22:11 +0100
-Message-ID: <87msnyl6b0.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1sFAGy-0005DW-P9
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:23:08 -0400
+Received: from mail-dm6nam11on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2415::600]
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1sFAGw-0007rj-MI
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:23:08 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=BkRxcwhSbd6FnZentT5yur5WowKhLVxZruZRMIds9LDFFB1L2lNYrjqaGeWnp9Sp7si+2MVED93ScFRh3CHm53Sq1BZjaQvsv9MjR8EAHY/Ws25f8+7YMk8Z4W3bAxttR40vP3ObFNt6MtvCTaEMPDii2hl+OBkKmeWnemqD5Z9iR9ff9j2qfa0pmD/uNq+79Si1a5V44RYFUepp9ahrThReok862Ce+Dt9PlNoDfZJ9pqPU8ldgAFGJtFX78Vn/PriP4QQG2vkoy4jXR3lD1WgpSrYJ93zUpKeY8QlZQdbQQvUI75EEHnAxbEjeGhq+SkqjqJ8Brmubus5kfAp1mA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=adzI6SwRWiCX4dOhcKq60SVFvOBfBB/gvXFt8Sn1tD0=;
+ b=EdzEdDB5i67hT2HWldLeBbGTgwUFdvY3sQ37WVxZZzJVZy4QdC2raADdmUg0HWKZLWkVz5KG1xVFRtDaioPRIfSmBE5dYE6R5vborfrHr+IA294mLmd/NL73DuWqwG00huw362R/hZPndbeDpGJ07a2t7qajldMpwtpcAAcJU7vKmu85Rz4pJNfMVkwj27j0uRLzue3i4yOlERuY0DtwMwsaCkynQujtltXJMp+8pH0GAq/j+7bvF4Fw9Sb6QTP1wSnaViB9OiZCdgtJfMGrvYE8FIcdgbhIqQNYZ2JDedcwdm4q7NmSnX8JgH+kDhpgIDytCIsTca6ec71g5hl70w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=adzI6SwRWiCX4dOhcKq60SVFvOBfBB/gvXFt8Sn1tD0=;
+ b=MBKOnR6OKRohjwgZA07+ke2O2tzZhy5jvaLFHMBzZ35BVJZKsE9jYoIB/dMXF+oIF8xLoxUiSQBZnx56Llj8zzdfNeRH5QN7BkFwLwFcboumDv5QJt2Lx/eb2XCM4har5Q9c0XU+8EmPatAexVLfshgL+3MCwkuczmxEfXNG6n4=
+Received: from PH7PR10CA0017.namprd10.prod.outlook.com (2603:10b6:510:23d::10)
+ by BL3PR12MB6401.namprd12.prod.outlook.com (2603:10b6:208:3b1::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.21; Thu, 6 Jun
+ 2024 10:22:55 +0000
+Received: from CY4PEPF0000EDD3.namprd03.prod.outlook.com
+ (2603:10b6:510:23d:cafe::1c) by PH7PR10CA0017.outlook.office365.com
+ (2603:10b6:510:23d::10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7656.20 via Frontend
+ Transport; Thu, 6 Jun 2024 10:22:55 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CY4PEPF0000EDD3.mail.protection.outlook.com (10.167.241.199) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7633.15 via Frontend Transport; Thu, 6 Jun 2024 10:22:55 +0000
+Received: from cjq-desktop.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 6 Jun
+ 2024 05:22:52 -0500
+From: Jiqian Chen <Jiqian.Chen@amd.com>
+To: "Michael S . Tsirkin" <mst@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+CC: <qemu-devel@nongnu.org>, Huang Rui <Ray.Huang@amd.com>, Jiqian Chen
+ <Jiqian.Chen@amd.com>
+Subject: [PATCH v11 1/2] virtio-pci: only reset pm state during resetting
+Date: Thu, 6 Jun 2024 18:22:04 +0800
+Message-ID: <20240606102205.114671-2-Jiqian.Chen@amd.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240606102205.114671-1-Jiqian.Chen@amd.com>
+References: <20240606102205.114671-1-Jiqian.Chen@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EDD3:EE_|BL3PR12MB6401:EE_
+X-MS-Office365-Filtering-Correlation-Id: e9bbaf9e-073b-4e2c-68d2-08dc8612a131
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230031|376005|1800799015|36860700004|82310400017; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?nm27N3WlJH53aFg+V83ZuyWthbqZZ5kFEgr3OM9BiNnPR6JBbtmmHRyVdehZ?=
+ =?us-ascii?Q?iLVPeVADyfseeUmbvLXGpkl7XIn0yJTgmrZqbePwqr1XLystrPdf6L/+PBDs?=
+ =?us-ascii?Q?MH+Rqj3ibHIalzm+mJCJd+V2tTCFU3qii1MSe418DX5FOUWaSFRO/sQrC3S3?=
+ =?us-ascii?Q?nZMYonlmopUR52uQp9mJuJqCZ7Mq8s5TkKDRpPF/j7My0AC0Do8yBZxOC4+B?=
+ =?us-ascii?Q?DMJBD9vFVx5XdbizTfB6Wp55MiaEdGc5f7KlYIpi0x2xMDMOYvm0MaIzPQ9+?=
+ =?us-ascii?Q?xgLNpbM0/mvc6x++/2vUpmBBrLunCtpXmlcXOCGEi28BNwCG6AHMrt78hnYY?=
+ =?us-ascii?Q?PVltOhrt2bnYGksBTythe1tI6U3mVYutc8j7iec4IH5VLisG+zEIUXwUijIt?=
+ =?us-ascii?Q?4rqk/LRO08cg1vjOdYLSh60geNq76fWFcZ8xP5u0F7ox1xDkpVJaub7ruuVP?=
+ =?us-ascii?Q?22NQ6JJqHwCTTzOazoi76+1/msS9TLcBq+M/cY6Eh0g9dxVdn8pYblrcxk3w?=
+ =?us-ascii?Q?+yM4t/XaVk79l5Bzanu/phdGcnu9FN5xZYcmhoK7VTS/JzkFdCbGLD93VJbw?=
+ =?us-ascii?Q?qPEHl9XPcC5XdwdvhqXWax78N27AHkcx2eImsEnlaG5aVu6BC22VYPU2zPgW?=
+ =?us-ascii?Q?ecbmeRf0xeATW+IA+pQzxdYGwoWzICqXKi/DVRy19jT9LcvCzIcoaOZZkwRV?=
+ =?us-ascii?Q?6/LGUEF9GtLAOrjdBSUPwDSMHByQSfTzxS85njoN/9NooXYN+OlkJNaFKW2d?=
+ =?us-ascii?Q?zX9Wz7ncmrK2YcXKEPpqvtZ5ZDMSeCAjK0yh/nO5NqAi/tGI/AFza+a8wzF4?=
+ =?us-ascii?Q?gW7bbX45unpNB85o2EZZu8Uxsys7pIwkeM/udB/a9wFCga12Bx3kyv7uMgdh?=
+ =?us-ascii?Q?ORBw2ny1FOdvy25knyOgPBWE+Phm6XUzthp1vZdFtoL1ZCEPdv43sdXZbMuL?=
+ =?us-ascii?Q?KGEDoBIeHaY9bgUT0tZzv4aKPwt3P+xpXKw83AkyVCbmbh5FfEucqljPGd1w?=
+ =?us-ascii?Q?aI2f00Ef4ipC7JarARGxawjT/EEuq1uNAKjvs2MamYr01SMxzbDI+9YxPvpO?=
+ =?us-ascii?Q?f5Fu8YbnHEYbOZ8XbjGbsNqqkSrSqvXOCQ08C+RORHM3N4+N5gXGev3yP3Qq?=
+ =?us-ascii?Q?FtocbESQQng08z5M09Rjge9ZWDiFophxOc0yB+pFD6L2bVBqnjt8QhPPqYjd?=
+ =?us-ascii?Q?u0e1dg3YtzbTnZeRAydIn95svAHLYjy03JoVd1fV3TeXpoBcHWnz/dI8ugSA?=
+ =?us-ascii?Q?ffAU5SuuRQ8oYO2YbE7oTZ17jNzqvrDHB1t8fvhZi5qpFnsBh9f9OXznDrAZ?=
+ =?us-ascii?Q?BxP164X52ZfPURxLIKlxU30ljmLevrlWpfRv0dm1gq7VX3alOcAdoRSn9Cb6?=
+ =?us-ascii?Q?NT4H1u88IhXcQ1MxQ0UJ4C61SEJsdop0g3JAVKqJWn/siVanhA=3D=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(376005)(1800799015)(36860700004)(82310400017); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2024 10:22:55.0420 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e9bbaf9e-073b-4e2c-68d2-08dc8612a131
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EDD3.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6401
+Received-SPF: permerror client-ip=2a01:111:f403:2415::600;
+ envelope-from=Jiqian.Chen@amd.com;
+ helo=NAM11-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,27 +149,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+Fix bug imported by 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
+After this change, observe that QEMU may erroneously clear the power status of the device,
+or may erroneously clear non writable registers, such as NO_SOFT_RESET, etc.
 
-> Richard Henderson <richard.henderson@linaro.org> writes:
->
->> Certain target registers are not updated continuously within
->> the translation block.  For normal exception handling we use
->> unwind info to re-generate the correct value when required.
->> Leverage that same info for reading those registers for plugins.
->>
->> All targets will need updating for these new callbacks.
->>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->
-> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Only state of PM_CTRL is writable.
+Only when flag VIRTIO_PCI_FLAG_INIT_PM is set, need to reset state.
 
-I'll note there is a minor merge conflict coming against:
+Fixes: 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
 
-  plugins: Ensure register handles are not NULL
+Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+---
+ hw/virtio/virtio-pci.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index b1d02f4b3de0..1b63bcb3f15c 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2300,10 +2300,16 @@ static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
+     virtio_pci_reset(qdev);
+ 
+     if (pci_is_express(dev)) {
++        VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
++
+         pcie_cap_deverr_reset(dev);
+         pcie_cap_lnkctl_reset(dev);
+ 
+-        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, 0);
++        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
++            pci_word_test_and_clear_mask(
++                dev->config + dev->exp.pm_cap + PCI_PM_CTRL,
++                PCI_PM_CTRL_STATE_MASK);
++        }
+     }
+ }
+ 
+-- 
+2.34.1
+
 
