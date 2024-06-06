@@ -4,80 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2492EC27C53
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 01:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D456EC27C53
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 02:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF2ND-00044q-Ma; Wed, 05 Jun 2024 21:57:03 -0400
+	id 1sF2gs-0007J3-7j; Wed, 05 Jun 2024 22:17:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sF2NC-00044a-4M; Wed, 05 Jun 2024 21:57:02 -0400
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sF2NA-0004yq-FE; Wed, 05 Jun 2024 21:57:01 -0400
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-4df550a4d4fso142863e0c.2; 
- Wed, 05 Jun 2024 18:56:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717639018; x=1718243818; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SP+vVrIwRCRG7mN+7o5EnuHdYeiRLLD5qwMlqFx44Yc=;
- b=Cw/xMurmi8agh+fFyDGeTvSMvVb9WnJc5ABJadLyr25uboocIy8DTGwgJb9Zb+7hnT
- oTDLZoNBj3M4wcE88z7bMw07+OwUqNjZjer7j3FAnjzH7rUjfpF38duWQOI5nPyNmC+o
- kAspR9IBsejdhoY2W20QariITfRSA8SL9tK3fmY9XT41FDCdYZMpUlKdsIWC1aWCtmP7
- KymngL2xr2thtyvx+fo6ooZMRptAubTvvNl371EoI381ol1KT40qUSulC9vlcJn5CaL2
- VCGw2+/yLdnfRwNt+tP0iReOfj8fmo1GUqCH54Q9SGKsW4BCZJbOqSjtvB79i+ompigW
- ghsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717639018; x=1718243818;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SP+vVrIwRCRG7mN+7o5EnuHdYeiRLLD5qwMlqFx44Yc=;
- b=duHBgsNMP1cLl/4THVTG+qzoIubmbpdWDOuLjNQscrS/nHOfeTCjmI6qHReUBH/7zF
- zD/VDJ9jxgDfWnQnc1rxh07arIJbJznR/8BzwB+4HIKG07/ktPNpG7CVp9aWffGuBve1
- joHc6k3x9ImiZ4QsMWsfH3vz2tXkQj2ked13n3/VaZVCsLdWuF7X21wyPrdclQHkdqfM
- i3dnPfVfwI2LiZOnbTd6zalGIACo4Jus00H9uQkLPXOWD0HjFaz3ihq5xE4cy+kBTCGQ
- XeqHQzfT7N/VwkNlnyKEbCSOXoixpKedTiCSmVqh5bXS43SQBYn2AynX4guPS4fCOjoW
- CkNw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPlFFaw9i6GjTgXP4t1NoHcy5XDIkfECqQlyrd3XC4cSDJ1AsJTlnqqlCRbhMMN+6NgptBPzA6NrnJxWatjAGnEJsjvsw=
-X-Gm-Message-State: AOJu0YzHXyS9z3EsOGTycagSru4UuPaDGQrI9zI6OIopR+heJGLC79b+
- 1x3tEP/k/Cx23Vo3v0MwKtxpKRubMsu4ktrPraTDZWPz4qBgq7bgx1mBhks3vA1XZIOjDs8S3Jz
- pArh1sYThlRvpk4kC3Qn22GEErPA=
-X-Google-Smtp-Source: AGHT+IFI+O5yLJAOj8GKdBSd074WkX2JHGTdZ7/PKnhGbBDupebrxr+pmZ2VI++BlXGs8hV+LkoNGF3kyZlXfwQw7/A=
-X-Received: by 2002:a1f:f20c:0:b0:4d8:7339:4c35 with SMTP id
- 71dfb90a1353d-4eb3a4ec692mr4369778e0c.13.1717639016899; Wed, 05 Jun 2024
- 18:56:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sF2gp-0007Hy-IU
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 22:17:19 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sF2gm-0008Kk-JZ
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 22:17:19 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Dxi+okHGFmEA0EAA--.17410S3;
+ Thu, 06 Jun 2024 10:17:08 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxmsYhHGFm1l8WAA--.55737S3; 
+ Thu, 06 Jun 2024 10:17:07 +0800 (CST)
+Subject: Re: [PATCH 1/2] util: Add lasx cpuinfo for loongarch64
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=c3=a9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2e_Berrang=c3=a9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+References: <20240605093213.2191929-1-maobibo@loongson.cn>
+ <20240605093213.2191929-2-maobibo@loongson.cn>
+ <b4335eb7-0143-4a37-8fbf-3cf5ff528411@linaro.org>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <33c428d9-b09f-07f3-e273-862a1252133a@loongson.cn>
+Date: Thu, 6 Jun 2024 10:17:04 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20240606014501.20763-1-duchao@eswincomputing.com>
-In-Reply-To: <20240606014501.20763-1-duchao@eswincomputing.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 6 Jun 2024 11:56:30 +1000
-Message-ID: <CAKmqyKPM2H7CWdO=NPEwiZhuLS7SENr_s9EvXx2cQDxw=AFe2w@mail.gmail.com>
-Subject: Re: [PATCH v4 0/3] target/riscv/kvm: QEMU support for KVM Guest Debug
- on RISC-V
-To: Chao Du <duchao@eswincomputing.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com, 
- ajones@ventanamicro.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
- anup@brainfault.org, duchao713@qq.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+In-Reply-To: <b4335eb7-0143-4a37-8fbf-3cf5ff528411@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8BxmsYhHGFm1l8WAA--.55737S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7Kr18WF1xtw43trWxCr4DAwc_yoW8AFy7pF
+ Z7AF1fJFW8GrykWryDXr4Sqr9rXrsrG3W2gF13GF1vyFsIyr1YqF1kZFyj9FnFqan7JF10
+ qr18Xw18ZF15JrcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j8yCJU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -58
+X-Spam_score: -5.9
+X-Spam_bar: -----
+X-Spam_report: (-5.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.975,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,69 +88,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 6, 2024 at 11:50=E2=80=AFAM Chao Du <duchao@eswincomputing.com>=
- wrote:
->
-> This series implements QEMU KVM Guest Debug on RISC-V, with which we
-> could debug RISC-V KVM guest from the host side, using software
-> breakpoints.
->
-> This series is based on riscv-to-apply.next branch and is also
-> available at:
-> https://github.com/Du-Chao/alistair23-qemu/tree/riscv-to-apply.next.0606
->
-> The corresponding KVM side patches have been merged already:
-> https://lore.kernel.org/kvm/20240402062628.5425-1-duchao@eswincomputing.c=
-om/
->
-> A TODO list which will be added later:
-> 1. HW breakpoints support
-> 2. A 'corner case' in which the debug exception is not inserted by the
-> debugger, need to be re-injected to the guest.
->
-> v3,v4:
-> - rebased.
->
-> v2->v2 resend:
-> - add the type conversion in patch #1 to avoid warnings
->
-> v1->v2:
-> - squash patch #2 into #1
-> - check the instruction length from the tail two bits, instead of passing=
- the
->   length information by parameters.
->
-> RFC->v1:
-> - Rebased on riscv-to-apply.next
-> - use configs/ definition to conditionalize debug support
->
-> v2 link:
-> https://lore.kernel.org/qemu-riscv/20240528080759.26439-1-duchao@eswincom=
-puting.com/
-> v1 link:
-> https://lore.kernel.org/qemu-riscv/20240527021916.12953-1-duchao@eswincom=
-puting.com/
-> RFC link:
-> https://lore.kernel.org/qemu-riscv/20231221094923.7349-1-duchao@eswincomp=
-uting.com/
->
-> Chao Du (3):
->   target/riscv/kvm: add software breakpoints support
->   target/riscv/kvm: handle the exit with debug reason
->   target/riscv/kvm: define TARGET_KVM_HAVE_GUEST_DEBUG
 
-Thanks!
 
-Applied to riscv-to-apply.next
+On 2024/6/5 下午7:53, Philippe Mathieu-Daudé wrote:
+> On 5/6/24 11:32, Bibo Mao wrote:
+>> Lasx is 256bit vector FPU capability, lsx is 128bit vector VFP. lsx
+>> is added already, lasx is added here.
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   host/include/loongarch64/host/cpuinfo.h | 1 +
+>>   util/cpuinfo-loongarch.c                | 1 +
+>>   2 files changed, 2 insertions(+)
+>>
+>> diff --git a/host/include/loongarch64/host/cpuinfo.h 
+>> b/host/include/loongarch64/host/cpuinfo.h
+>> index fab664a10b..d7bf27501d 100644
+>> --- a/host/include/loongarch64/host/cpuinfo.h
+>> +++ b/host/include/loongarch64/host/cpuinfo.h
+>> @@ -8,6 +8,7 @@
+>>   #define CPUINFO_ALWAYS          (1u << 0)  /* so cpuinfo is nonzero */
+>>   #define CPUINFO_LSX             (1u << 1)
+>> +#define CPUINFO_LASX            (1u << 2)
+>>   /* Initialized with a constructor. */
+>>   extern unsigned cpuinfo;
+>> diff --git a/util/cpuinfo-loongarch.c b/util/cpuinfo-loongarch.c
+>> index 08b6d7460c..bb1f7f698b 100644
+>> --- a/util/cpuinfo-loongarch.c
+>> +++ b/util/cpuinfo-loongarch.c
+>> @@ -29,6 +29,7 @@ unsigned __attribute__((constructor)) 
+>> cpuinfo_init(void)
+>>       info = CPUINFO_ALWAYS;
+>>       info |= (hwcap & HWCAP_LOONGARCH_LSX ? CPUINFO_LSX : 0);
+>> +    info |= (hwcap & HWCAP_LOONGARCH_LASX ? CPUINFO_LASX : 0);
+>>       cpuinfo = info;
+>>       return info;
+> 
+> This is 
+> https://lore.kernel.org/qemu-devel/20240527211912.14060-6-richard.henderson@linaro.org/ 
+oops, I did not notice this.
 
-Alistair
+And I will drop patch 1 and refresh the patch based on this weblink.
 
->
->  configs/targets/riscv64-softmmu.mak |  1 +
->  target/riscv/kvm/kvm-cpu.c          | 89 +++++++++++++++++++++++++++++
->  2 files changed, 90 insertions(+)
->
-> --
-> 2.17.1
->
+Regards
+Bibo Mao
+
 
