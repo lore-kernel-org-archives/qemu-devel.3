@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 239FAC27C54
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 12:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C25C27C54
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 12:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFBse-00050X-CZ; Thu, 06 Jun 2024 08:06:08 -0400
+	id 1sFBvp-0006jc-3P; Thu, 06 Jun 2024 08:09:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sFBsc-00050D-Ic
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:06:06 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1sFBvm-0006iz-Du
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:09:22 -0400
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sFBsa-0004Bg-U2
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:06:06 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a683868f463so94888866b.0
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 05:06:04 -0700 (PDT)
+ id 1sFBvk-0004cT-F2
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:09:22 -0400
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-2eacd7e7ad7so11057681fa.3
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 05:09:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717675563; x=1718280363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717675758; x=1718280558; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TxXgPziTQpLFtp9Vru6V5/hkWgIzMI58uy6QN1sgnEk=;
- b=jBJnoPfFjIw279H3+5FXqGxOI90Su5Pqgd3iwk/GoJXQrhIkmwcMIi0evSd3OUIMCp
- MeC/01Ykw00ovpkjt5k3XiKn4BF5WaST/EVAhxZdeFYPtov7Pnvmb48yvKRO3Buvk5yM
- svITG2sNHFS+X8O233GHrqD3Y63QCGkc6C6542s+HIOT0m/1pxAzxcV0r2ponNgESnfa
- sCgvldBJpYY+xHxQ7fHzVwwfpANCTtV/JGfyOO+gqfVgXO4Lyq2rvPKpvRdEc5hBFA1E
- HOoxBnqC4OWnwhOfXJZVqHgTKh66PqkMO2tsMCvGycqsDoz79mw/bba10QDJIrf0tVFD
- dFSg==
+ bh=78IsAC/QOA2ESb5fr8h4If6SS2Kpd2jcnYJc6PkPm7Q=;
+ b=T6VQOwsyefhcTHIiJIZKWPcd8z4pO/KxFkdHbVLuZ64F044PMlGP0HB1RB/nrQNFLb
+ xc3OmqjnMngCXEhFKYQwIsFkllZBqg4K9UvEtSudM5XOegC7MoO46ygIKpNpur6IsJOL
+ d+D/CRxhy8kMO8UvBp/SMtLDsSg2moBgU/Z7ZXrE/IlxhkBXFLgy913mV4UnyTpmgNNf
+ naphhU5o7p8kniTSp7Rw8WSwj3nHjLeHi+EXB/Bi42gHzLDmTYxqu+/g6R+vfL+1EIfc
+ QjlmpDW6yphcXHxtxvpGWVQqK1E43fM6EmclWTU9KGE+PK7JT60K6vKTnocn1iPzx4yO
+ 0How==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717675563; x=1718280363;
+ d=1e100.net; s=20230601; t=1717675758; x=1718280558;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TxXgPziTQpLFtp9Vru6V5/hkWgIzMI58uy6QN1sgnEk=;
- b=ACt3tzuwSyNWsliOriYcoSd54O5t4Pz1++hq+CrICQQj73bQ0J3wRdVARNAeDR/BNL
- fXVTeiTKEONhKns/0SgaeRCheFw40H00q8pfttlQYOkwn2AzU/JDO9WDB2c5HWHad9MD
- jUdJ0WpMKRnr2mOHjvlfQC0y3BvtlBM768pufvwkTe2rlChE+Rm6DKT2xZObtAJbmpQa
- 6DXMp/fvyvyfM9ISchG5JFskRw7pLse+cJIwDXNa30u/fIF7AIGjHG2aYxpxyv1RH9Ve
- mpypygM8I33+JwTo43qVqSVQ1oTWOT6SVFRIkUydT1jN1CzBkhykeUvCNXZP9a6xrqMS
- dP+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWzqmdCKhmw5OhuOCom54nriSBz93Z75b2G42YtWxXYpD2AV5P/eFv1GkPUYCCRVScgiu7JvSarGpYoAui0I5ljLijEg3s=
-X-Gm-Message-State: AOJu0YxFa6yJe3SwLZju1SbXQDZN9qomPjDefx4K4Adw8rzlrmRMPAK5
- QsPNhKqEkkmvNDPgXM3u6F5b5c0b0Hdvo+YQWG0fflU4qAOpz4x0/JMa171dkL6JajR5Ybjgcdb
- HEl8Hlc/LUnTqw4Quex5Buvfp/iuykHHIekb06Q==
-X-Google-Smtp-Source: AGHT+IHiR6w+jlIDB6acmb7JvPHL+OAQ2yg0LcxT2COgQSE1/J69z1Py6Zwfa/L/CYU/DylDbrCMQ+OAcu0TddZSxfc=
-X-Received: by 2002:a17:906:f213:b0:a69:180e:9dde with SMTP id
- a640c23a62f3a-a699fa98534mr359430466b.26.1717675563100; Thu, 06 Jun 2024
- 05:06:03 -0700 (PDT)
+ bh=78IsAC/QOA2ESb5fr8h4If6SS2Kpd2jcnYJc6PkPm7Q=;
+ b=VciggLw/z9JnYkJZWdXGoEro0QBaICsHy73+Lw4+YbT0CuFmVR7w2LVEr2iiO/IWj0
+ ++hdAKAWFhPps/IoMHpDx+sQVU2OoYcVZ+bnJssbyskjEcxaECT3KfO0/z/oSziiqR59
+ O8kMY0wiIwMLiFOqXhy+MouvdfbtpZsq4g2owz63jVg/FQe92LeSha+oDcbb7NhJhIXq
+ jp/1ldRA9ZxZVX33e/rmlFp4Qn5qqgFgSJ2N/T7LpswCGFDfi+M9T5BSCDsvig+dHbA8
+ VDZZrN7Ei+Jrh9gm89MtKEstnkf8ahdFbasctwZ7Vng1YwVLo8dniL5t3dYztioJBczA
+ NxGQ==
+X-Gm-Message-State: AOJu0Yyy6GD/KKAx53uxwDoONNILTot3nbs7GKRUTLowr/bzfS6K9Gsp
+ eLd0ZZbmJfS/yUTuYePco43x9nxK1Ezn4Syab7F8xT7cTGmRdhPYd9Wl1rudwlv+K3dgYtfHEZF
+ 7Ffjr90PWecscUfdItDrJ5k0/1Hkppegguq+Udg==
+X-Google-Smtp-Source: AGHT+IGPqI7BfSgZrQpLAne0Z24i2/YMwiAssIryjUU13tp+oycqBGnckZpdk2fTr+5nG1B+y5RL8G8HDFELYDcaukE=
+X-Received: by 2002:a05:651c:2206:b0:2ea:a382:67bc with SMTP id
+ 38308e7fff4ca-2eac7a105famr34037051fa.26.1717675758489; Thu, 06 Jun 2024
+ 05:09:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240606095952.2133-1-andrew.yuan@jaguarmicro.com>
- <CAJy5ezqq51bJG4O9HA-Pv4sw9rYqGdFW-EezCRPfDbTx=9SwyQ@mail.gmail.com>
-In-Reply-To: <CAJy5ezqq51bJG4O9HA-Pv4sw9rYqGdFW-EezCRPfDbTx=9SwyQ@mail.gmail.com>
+References: <20240606103026.78448-1-philmd@linaro.org>
+In-Reply-To: <20240606103026.78448-1-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 6 Jun 2024 13:05:51 +0100
-Message-ID: <CAFEAcA8fSS-qt6KmN_06uEMXddjbqjATh-FkUJVSrPuiu50+PQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/net: cadence_gem: fix: type2_compare_x_word_0 error
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: "Andrew.Yuan" <andrew.yuan@jaguarmicro.com>, luc.michel@amd.com,
- alistair@alistair23.me, 
- jasowang@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Date: Thu, 6 Jun 2024 13:09:07 +0100
+Message-ID: <CAFEAcA_hLYnuwK6PuWv2syJkGFhw70FUUjo--Zd9NuOOLjvMFQ@mail.gmail.com>
+Subject: Re: [PATCH] target/s390x: Fix tracing header path in TCG mem_helper.c
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, 
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,59 +94,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 6 Jun 2024 at 12:04, Edgar E. Iglesias <edgar.iglesias@gmail.com> w=
-rote:
+On Thu, 6 Jun 2024 at 11:30, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
 >
-> On Thu, Jun 6, 2024 at 12:00=E2=80=AFPM Andrew.Yuan <andrew.yuan@jaguarmi=
-cro.com> wrote:
->>
->>         In the Cadence IP for Gigabit Ethernet MAC Part Number: IP7014 I=
-P Rev: R1p12 - Doc Rev: 1.3 User Guide, the specification for the type2_com=
-pare_x_word_0 register is as follows:
->>         The byte stored in bits [23:16] is compared against the byte in =
-the received frame from the selected offset+0, and the byte stored in bits =
-[31:24] is compared against the byte in
->>         the received frame from the selected offset+1.
->>
->>         However, there is an implementation error in the cadence_gem mod=
-el in qemu=EF=BC=9A
->>         the byte stored in bits [31:24] is compared against the byte in =
-the received frame from the selected offset+0
->>
->>         Now, the error code is as follows:
->>         rx_cmp =3D rxbuf_ptr[offset] << 8 | rxbuf_ptr[offset];
->>
->>         and needs to be corrected to=EF=BC=9A
->>         rx_cmp =3D rxbuf_ptr[offset + 1] << 8 | rxbuf_ptr[offset];
->>
->> Signed-off-by: Andrew.Yuan <andrew.yuan@jaguarmicro.com>
+> Commit c9274b6bf0 ("target/s390x: start moving TCG-only code
+> to tcg/") moved mem_helper.c, but the trace-events file is
+> still in the parent directory, so is the generated trace.h.
 >
->
->
-> LGTM:
-> Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
->
-> At some point it would be nice to add the missing logic for the DISABLE_M=
-ASK bit that
-> extends the compare range from 16 to 32-bits.
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+> Ideally we should only use trace events from current directory.
 
-I had a look at this device's code, and I'm trying to
-figure out how we know at this point that there really are
-two bytes pointed to by rxbuf_ptr.
- * The get_queue_from_screen() function takes a rxbufsize
-   argument, but it never uses it...
- * the callsite in gem_receive() will (in the "strip FCS" case)
-   pass its buf argument as rxbuf_ptr, but it will use a
-   rxbufsize argument which has been raised to at least
-   GEM_DMACFG_RBUFSZ_MUL, even if the input size argument
-   is smaller, so even if get_queue_from_screen() honoured
-   its rxbufsize argument it wouldn't help
+Mmm, I was wondering if maybe that would be the better approach.
 
-Would somebody who understands the device like to have a look ?
+A quick grep suggests the only other place doing a "../trace.h"
+include is in include/hw/xen/interface/hvm/hvm_op.h, which is
+unrelated, because it's pulling in the non-autogenerated
+include/hw/xen/interface/trace.h.
 
-This is a separate issue from the incorrect array offset
-argument this patch fixes, though.
-
-thanks
 -- PMM
 
