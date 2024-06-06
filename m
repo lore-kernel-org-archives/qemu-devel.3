@@ -4,89 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93741C27C52
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 17:35:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59265C27C52
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 17:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFH0m-0000FX-5G; Thu, 06 Jun 2024 13:34:52 -0400
+	id 1sFHCz-0003dU-CC; Thu, 06 Jun 2024 13:47:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sFH0j-0000F8-Ts
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 13:34:50 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sFHCy-0003dI-77
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 13:47:28 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sFH0i-0002dp-CS
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 13:34:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=oyY72cTSEbMY5VrOYKGwVhbODT3zHFwaw3viguj02NI=; b=vCHtEFcQ/Ni7z2Q5VKaCkgyB1K
- B2TwXWirMmWVDLtKUWHVouHgAaswMcW7i1DPE2sR8FeU9hjgxMo61F/cLlORNO0rj0/W55VSuQSqo
- oAy6J4PfKHT3kH0KZOOKrXdcMuaHPm4jT4F8+5zhDG/ib7t2nA1IiDrTb6DG9z4r7S/mqBWfUGn8j
- vDEzi6p8qVIH+a0DwawmAO9P5ZdIHx4RshpI7ezVuPxC1s/FVn1Nlgx8hFRcPBuLoYN2wivmDzXT1
- tPJh8qE+sxBjg2nngHKyvHSOikYjz28DtJb/ycqAu+OGgJYEpq00WrY7Di1wc7A4ai/6uSW73BsUa
- GoMbsnDEgRaBzVRS29NuFjZEBzYPfYW4Gt0S//urY0XllPNr7pSqaTXXe/sfxewMhlEzwV+GlGDXK
- I3VN33tmQOZurJk+nM7/1VFiPS+p75aErHiMVS8WaZjfTkpzVusgkTdOqExnk9n8FVRxL0VbjykO7
- 2SJiijZE6y5ubBktALgXaLh1+MhEgslw83V9C9Ksg254ZN0iEu11EVQz/0icQx44Sqyll89H3SbvG
- XoI6a8YR4gVLF4HIysTPMLOiPW0SakTZX0BWsJT4Jrc9QUgB1QH49KHBaWwuV2OrXBNKrNMlv+140
- 911Y+RXMwNIOyvAmwL1wyp8hFVcOzlQUdrZQGrei4=;
-Received: from [2a00:23c4:8bb4:4000:f93e:c223:cb35:c914]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sFGzN-0008ML-AH; Thu, 06 Jun 2024 18:33:29 +0100
-Message-ID: <1bf470d4-71a7-4690-9d3c-0c7b0873dcaf@ilande.co.uk>
-Date: Thu, 6 Jun 2024 18:34:29 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sFHCu-00052g-Ly
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 13:47:27 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VwBW40PTzz6J9cl;
+ Fri,  7 Jun 2024 01:42:56 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id D91F7140C98;
+ Fri,  7 Jun 2024 01:47:17 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 6 Jun
+ 2024 18:47:17 +0100
+Date: Thu, 6 Jun 2024 18:47:16 +0100
+To: Igor Mammedov <imammedo@redhat.com>
+CC: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <philmd@linaro.org>, "Richard
+ Henderson" <richard.henderson@linaro.org>, Dave Jiang <dave.jiang@intel.com>, 
+ Huang Ying <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, <linuxarm@huawei.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH qemu ] hw/acpi: Fix big endian host creation of Generic
+ Port Affinity Structures
+Message-ID: <20240606184716.00000708@Huawei.com>
+In-Reply-To: <20240606160653.27226def@imammedo.users.ipa.redhat.com>
+References: <20240605180455.18193-1-Jonathan.Cameron@huawei.com>
+ <20240606160653.27226def@imammedo.users.ipa.redhat.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org
-References: <20240606144331.698361-1-chigot@adacore.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240606144331.698361-1-chigot@adacore.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:f93e:c223:cb35:c914
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] target/sparc: use signed denominator in sdiv helper
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,41 +72,143 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/06/2024 15:43, Clément Chigot wrote:
+On Thu, 6 Jun 2024 16:06:53 +0200
+Igor Mammedov <imammedo@redhat.com> wrote:
 
-> The result has to be done with the signed denominator (b32) instead of
-> the unsigned value passed in argument (b).
+> On Wed, 5 Jun 2024 19:04:55 +0100
+> Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
 > 
-> Fixes: 1326010322d6 ("target/sparc: Remove CC_OP_DIV")
-> Signed-off-by: Clément Chigot <chigot@adacore.com>
-> ---
->   target/sparc/helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> > Treating the HID as an integer caused it to get bit reversed
+> > on big endian hosts running little endian guests.  Treat it
+> > as a character array instead.
+> > 
+> > Fixes hw/acpi: Generic Port Affinity Structure Support
+> > Tested-by: Richard Henderson <richard.henderson@linaro.org>
+> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > 
+> > ---
+> > Richard ran the version posted in the thread on an s390 instance.
+> > Thanks for the help!
+> > 
+> > Difference from version in thread:
+> > - Instantiate i in the for loop.
+> > 
+> > Sending out now so Michael can decide whether to fold this in, or
+> > drop the GP series for now from his pull request (in which case
+> > I'll do an updated version with this and Markus' docs feedback
+> > folded in.)
+> > 
+> > ---
+> >  include/hw/acpi/acpi_generic_initiator.h | 2 +-
+> >  hw/acpi/acpi_generic_initiator.c         | 4 +++-
+> >  2 files changed, 4 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/include/hw/acpi/acpi_generic_initiator.h b/include/hw/acpi/acpi_generic_initiator.h
+> > index 1a899af30f..5baefda33a 100644
+> > --- a/include/hw/acpi/acpi_generic_initiator.h
+> > +++ b/include/hw/acpi/acpi_generic_initiator.h
+> > @@ -61,7 +61,7 @@ typedef struct PCIDeviceHandle {
+> >              uint16_t bdf;
+> >          };
+> >          struct {
+> > -            uint64_t hid;
+> > +            char hid[8];
+> >              uint32_t uid;
+> >          };
+> >      };  
 > 
-> diff --git a/target/sparc/helper.c b/target/sparc/helper.c
-> index 2247e243b5..7846ddd6f6 100644
-> --- a/target/sparc/helper.c
-> +++ b/target/sparc/helper.c
-> @@ -121,7 +121,7 @@ uint64_t helper_sdiv(CPUSPARCState *env, target_ulong a, target_ulong b)
->           return (uint32_t)(b32 < 0 ? INT32_MAX : INT32_MIN) | (-1ull << 32);
->       }
->   
-> -    a64 /= b;
-> +    a64 /= b32;
->       r = a64;
->       if (unlikely(r != a64)) {
->           return (uint32_t)(a64 < 0 ? INT32_MIN : INT32_MAX) | (-1ull << 32);
+> not sure on top of what this patch applies but I have some generic comments wrt it
 
-Thanks for the patch! I think this might also be:
+https://lore.kernel.org/qemu-devel/20240524100507.32106-1-Jonathan.Cameron@huawei.com/
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2319
+Comments are all on elements of the existing upstream code, but I'm touching it
+anyway so will look at making the improvements you suggest as new precursors
+to v3 given we are going around again anyway.
 
+> 
+> why PCIDeviceHandle is in header file? is there plan for it
+> being used outside of acpi_generic_initiator.c?
 
-ATB,
+I'll add a precursor patch to my series that moves
+it and anything else that should be more local.  May well move
+to being local in aml_build.c given your later comments with the
+various fields passed in as parameters.
 
-Mark.
+> 
+> 
+> > diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
+> > index 78b80dcf08..f064753b67 100644
+> > --- a/hw/acpi/acpi_generic_initiator.c
+> > +++ b/hw/acpi/acpi_generic_initiator.c
+> > @@ -151,7 +151,9 @@ build_srat_generic_node_affinity(GArray *table_data, int node,
+> >          build_append_int_noprefix(table_data, 0, 12);
+> >      } else {
+> >          /* Device Handle - ACPI */
+> > -        build_append_int_noprefix(table_data, handle->hid, 8);
+> > +        for (int i = 0; i < sizeof(handle->hid); i++) {
+> > +            build_append_int_noprefix(table_data, handle->hid[i], 1);
+> > +        }
+> >          build_append_int_noprefix(table_data, handle->uid, 4);
+> >          build_append_int_noprefix(table_data, 0, 4);  
+> 
+> instead of open codding structure
+> 
+> it might be better to introduce helper in aml_build.c
+> something like 
+>   /* proper reference to spec as we do for other ACPI primitives */
+>   build_append_srat_acpi_device_handle(GArray *table_data, char* hid, unit32_t uid)
+>       assert(strlen(hid) ...
+>       for() {
+>             build_append_byte()
+>       }          
+>       ...
+> 
+> the same applies to "Device Handle - PCI" structure
+
+I'll look at moving that stuff and the affinity structure creation
+code themselves in there. I think they ended up in this file because
+of the other infrastructure needed to create these nodes and it
+will have felt natural to keep this together.
+
+Putting it in aml_build.c will put it with similar code though
+which makes sense to me.
+
+> 
+> Also get rid of PCI deps in acpi_generic_initiator.c 
+> move build_all_acpi_generic_initiators/build_srat_generic_pci_initiator into
+> hw/acpi/pci.c
+
+Today it's used only for PCI devices, but that's partly an artifact
+of how we get to the root complex via the bus below it.
+
+Spec wise, it's just as applicable to platform devices etc, but maybe
+we can move it to pci.c for now and move it out again if it gains other
+users. Or leave it in acpi_generic_initiator.c but have all the aml
+stuff in aml_build.c as you suggest. 
+
+> file if it has to access PCI code/structures directly
+> (which I'm not convinced it should, can we get/expose what it needs as QOM properties?)
+
+Maybe. I'll see what I can come up with.  This feels involved
+however so I'm more doubtful about this as a precursor.
+
+> 
+> btw:
+> build_all_acpi_generic_initiators() name doesn't match what it's doing.
+> it composes only one initiator entry.
+
+I'll look at tidying up all the relevant naming.
+
+Jonathan
+
+> 
+> >      }  
+> 
+> 
 
 
