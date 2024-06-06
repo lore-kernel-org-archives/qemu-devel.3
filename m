@@ -4,71 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB246C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 14:42:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B498C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 14:44:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFEJJ-0001Ob-Kq; Thu, 06 Jun 2024 10:41:49 -0400
+	id 1sFEL8-00025S-Tx; Thu, 06 Jun 2024 10:43:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sFEJI-0001OH-C1
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 10:41:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sFEJG-0002yj-Mt
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 10:41:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717684905;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=48OQl/wQWemRfw7if7jKP+922/7ybM76ak4TEdHQU7w=;
- b=iBjQ3Wc0XYVc79jH82tGk0PVFJ9plhTcekE6gykiGu4kGIfa3JIt/BDTAAkJIEpDQolUDi
- W5JFsoosj59UZhSO3d8IhLDyB7tcBn4Ju8S8pALWR9PuKAAfig1SLGNXAixzAtucvxQd+D
- 47vjFE848UFx4gJLgcsFbUbFdML/3Wk=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-324-kHe9JC1GPkG8UHjIJvH2Dw-1; Thu,
- 06 Jun 2024 10:41:43 -0400
-X-MC-Unique: kHe9JC1GPkG8UHjIJvH2Dw-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DD9411C0512A;
- Thu,  6 Jun 2024 14:41:42 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.193.201])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 57B0DFFE5;
- Thu,  6 Jun 2024 14:41:40 +0000 (UTC)
-Date: Thu, 6 Jun 2024 15:41:38 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v3 2/4] usb/hub: mark as deprecated
-Message-ID: <ZmHKotWS7ywfIvOj@redhat.com>
-References: <20240606143010.1318226-1-kraxel@redhat.com>
- <20240606143010.1318226-3-kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1sFEL8-00025H-3h
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 10:43:42 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chigot@adacore.com>)
+ id 1sFEL6-0003DH-Az
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 10:43:41 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4214fe0067fso11398395e9.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 07:43:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=adacore.com; s=google; t=1717685018; x=1718289818; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=HdvBFX7sVfFp4VwD66KEqdg77+YRnOo4LpJGwPEXpAU=;
+ b=huluDfMOSEQuFPqFbvK27CiVrL0rzO3gUEMBpxrG9XQdiqTyRYGRPabSkse9fWC9uI
+ G2b2/fvAaxxiroKX+sbFUXs1l2e+QDcL+feRDQYds8tdZLqW+X23mSaptK4/wX7/f/G7
+ 1GCzTwA8vJ4PDfHgr8gnFxTkrFnYX52fG4l9Ai1zIpM+NAMnB9Jw8wiJmJNjP/sWuHlk
+ rQveQUmDWKke1EJs+dPgEuyQM5BxmDsAdaOqs/Dl8IPO4XSGz8DGK7vxXjfcpj/vwcGS
+ dxor81rHtW8porVujwIlGEdKQSncWXCTE9EHnIo7xVix6gFiA5m/BkvGD+5gEhAiT7BA
+ huGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717685018; x=1718289818;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HdvBFX7sVfFp4VwD66KEqdg77+YRnOo4LpJGwPEXpAU=;
+ b=TSVNiVKQ78K3nEMqxwsX/PoF5VHHPTQAaVEk8qFm8fr6BfZ08hKrjUUf0txp1aAgbE
+ p77/2n+Mb0auSn9czXWpTUneoAtMdIM3DMB2WX4321SECUi6DLSXrdU7TSVTxkoz+51v
+ njVjf2sFBiAdc/BmCEhIW7trc7blTpq5io4Wq7NoiSw6GE1YBWTuQzhaoaYx79++2UEU
+ 8BlfHMezQGbZ+wlwvrxC+TiFqJRTzFs1M27tmvXSQNk56ECQiwkL5tznH3gIH0ibqnSv
+ rGFDKCZFWst+dNC4+46oGcRhaYPuPmmhJQtWWakP0RAQAu+NczfD3Jp+c2+bNERdC9MT
+ Xdqg==
+X-Gm-Message-State: AOJu0YzoLbrpFE4lR+AqnMIGJ6iiZRm27iyqfv8swymYmIuQ0cV4qxay
+ Zf2emThOiZjQLIfGT525ffGkuC6VYYRUvTGcSfQOQNQvtwOeMT4mUWZJm5nOt0u4jES1Xfpa5A8
+ =
+X-Google-Smtp-Source: AGHT+IHlRw4zJAVKiEF48Uu1YZopdv3mhs7/N9kIEHf9ykLWvNklU3kli0xTWiZ31DBtPe7bRFslQA==
+X-Received: by 2002:adf:fecb:0:b0:35c:a02a:97d3 with SMTP id
+ ffacd0b85a97d-35e98099e48mr3885462f8f.71.1717685017862; 
+ Thu, 06 Jun 2024 07:43:37 -0700 (PDT)
+Received: from chigot-Dell.home ([2a01:cb15:8123:8100:15bf:b4fa:4108:a8a5])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35ef5d49f72sm1755154f8f.41.2024.06.06.07.43.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Jun 2024 07:43:37 -0700 (PDT)
+From: =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org,
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>
+Subject: [PATCH] target/sparc: use signed denominator in sdiv helper
+Date: Thu,  6 Jun 2024 16:43:31 +0200
+Message-Id: <20240606144331.698361-1-chigot@adacore.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240606143010.1318226-3-kraxel@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=chigot@adacore.com; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,46 +90,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 06, 2024 at 04:30:08PM +0200, Gerd Hoffmann wrote:
-> The hub supports only USB 1.1.  When running out of usb ports it is in
-> almost all cases the much better choice to add another usb host adapter
-> (or increase the number of root ports when using xhci) instead of using
-> the usb hub.
+The result has to be done with the signed denominator (b32) instead of
+the unsigned value passed in argument (b).
 
-Is that actually a strong enough reason to delete this device though ?
-This reads like its merely something we don't expect to be commonly
-used, rather than something we would actively want to delete.
+Fixes: 1326010322d6 ("target/sparc: Remove CC_OP_DIV")
+Signed-off-by: Clément Chigot <chigot@adacore.com>
+---
+ target/sparc/helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> 
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
->  hw/usb/dev-hub.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/hw/usb/dev-hub.c b/hw/usb/dev-hub.c
-> index 06e9537d0356..bc8d0ba4cfcf 100644
-> --- a/hw/usb/dev-hub.c
-> +++ b/hw/usb/dev-hub.c
-> @@ -686,6 +686,7 @@ static void usb_hub_class_initfn(ObjectClass *klass, void *data)
->      set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->      dc->fw_name = "hub";
->      dc->vmsd = &vmstate_usb_hub;
-> +    klass->deprecated = true;
->      device_class_set_props(dc, usb_hub_properties);
->  }
-
-Deprecations should also have an entry in docs/about/deprecated.rst to
-warn users about the intent to delete the code in future.
-
-With regards,
-Daniel
+diff --git a/target/sparc/helper.c b/target/sparc/helper.c
+index 2247e243b5..7846ddd6f6 100644
+--- a/target/sparc/helper.c
++++ b/target/sparc/helper.c
+@@ -121,7 +121,7 @@ uint64_t helper_sdiv(CPUSPARCState *env, target_ulong a, target_ulong b)
+         return (uint32_t)(b32 < 0 ? INT32_MAX : INT32_MIN) | (-1ull << 32);
+     }
+ 
+-    a64 /= b;
++    a64 /= b32;
+     r = a64;
+     if (unlikely(r != a64)) {
+         return (uint32_t)(a64 < 0 ? INT32_MIN : INT32_MAX) | (-1ull << 32);
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.25.1
 
 
