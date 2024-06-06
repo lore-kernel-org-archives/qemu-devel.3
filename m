@@ -4,55 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C172EC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 09:54:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C42AC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 09:54:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF9ob-0000Iv-Ms; Thu, 06 Jun 2024 05:53:49 -0400
+	id 1sF9oO-0000AP-3p; Thu, 06 Jun 2024 05:53:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sF9oa-0000D6-2s
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:53:48 -0400
+ id 1sF9oN-00009z-5D
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:53:35 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sF9oY-0002Hp-Jy
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:53:47 -0400
+ id 1sF9oK-0002GS-Uj
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:53:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=g1XyuWsPbbTNoYfpRGNg+VmdmBlVjoFl9YL7pF0DpnY=; b=tZf+Uq/HAvyiGCjExSc+yrnyqS
- YqjYKKGE17c8mrxUSdeBfFIwi7naqptP7tUt82Js1iOa7qVgBalqWy1r0fFEA3zDRbF6iCG/gXCAb
- fN7BVae7EUz9Tn+UkR5a5EsqOKpV+FkrJ3ONm1VA5fKwxjgNRrxpeefEIdJuoX/EThwyE6APvVlJ6
- 5SNzGqsy+e/Qj1+EaAnSVHqNhu6yvxx0jTivM/a8YHB3FaY+sJjYitpLKq5oZwwTEcoTIlPJ8kX7u
- bed28VuQwCyLr4dT++Yz/TJf3HwEfv0k4Ba19q03zAeuDh2ZYNTM/PWXrdOenS1vsDLmPl2wIT83h
- ozP3w8nHwUEpeGupuqqpR20q2rdGKURqzTiLSdcvEx2WM0KhGvYMpmpbU263j/f5qTrHkEu0YvYZB
- nv4Y7Qc3Pilad7VpE6dcaQakgPteeHdXfuSF9VOvOHrlGjMBr6SHkgKvOeodTV0jhiM/vYrel4VtQ
- Id3z3FLmWmJP4jbZSmBg1acps5NGofbhcm+6GDZ1rubOa4azof4KrOvP3H9JYMF+8IWYrd/tnvUGF
- PMrMaB1ixP2NOPhQL24FgbQ9BJmurdARzCGRDBuLz0x/kcuik6yptPX1qfBJBQdQkTZeVRnuFt1Ef
- Cvq5JxRo4ETMc26dQqkEwcdvocPJKjeuClL7G3Z/I=;
+ Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References;
+ bh=V/ohVCg/O3eFdXiCWfSvOJH0uNqMmaBrn20gYrGtWr8=; b=SumT0Qo0I98rUj0S1ToZSCIeo7
+ fcYKyWO2Jb0caay6PbKb8DnFqKZ8/xYJjB/dRcmfnPIpRAJvMjSsPq3EtCWUpMfw7qdgqQxAWNzam
+ q8IRjCtXMObpinQMqINSCk8p4Lmum0UYV1P7dvU1UbWGxIPScxxtXLrqHcceV27RcqVWbRDMpOGEc
+ Bm1vdw6AdpRX3XZua2Qh2peakDdCmyfKic9SBPzULPQUM6hGeYdUGY2e+tt1ZJDFN8i92cG4O1ozp
+ FBE6qDfldmiIr5oCQzuytnPiAauUp2TJVDjmtga6FoC998TRHvJDKDTmLJ+/arRVlTSWdR2PkRZ76
+ rO6JoBkVy5JDPrTkUw0Cah9x0jAiSYjjr8FC2waS9VXDEvKyA+bX1hZnA5ueWeQsQ8a6jN7yPX34q
+ AfdV0uUQc8Il2Gq+6AUawxL3/PeeGD/F4Yow80HfJpT/XNyuaB7H14i+zWCdsg9HWQtNQ2sl6HpwM
+ 00WS86iPAWIKLRCQGXpwvbb2Z2/X/FuGxCQEOFL0/XVc4pIWZx8lollBdKoDgUwLXCBUNtNfxn0cB
+ IxZZBJ0LRYQMouNc4e+Oi3IzptCd81X791mlC05XLLm4i5oQfh2pRcmDgDie/06d77WWKA3pshbI7
+ oWdjJF0RM5deMwjOjlvTkON2YHJ0z8YlhlhCTauAY=;
 Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
  (helo=cheesecake.fritz.box)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sF9nF-0004cT-Sm; Thu, 06 Jun 2024 10:52:30 +0100
+ id 1sF9mz-0004cT-1V; Thu, 06 Jun 2024 10:52:13 +0100
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: pbonzini@redhat.com,
 	qemu-devel@nongnu.org
-Date: Thu,  6 Jun 2024 10:53:19 +0100
-Message-Id: <20240606095319.229650-5-mark.cave-ayland@ilande.co.uk>
+Date: Thu,  6 Jun 2024 10:53:15 +0100
+Message-Id: <20240606095319.229650-1-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240606095319.229650-1-mark.cave-ayland@ilande.co.uk>
-References: <20240606095319.229650-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH 4/4] target/i386: fix size of EBP writeback in gen_enter()
+Subject: [PATCH 0/4] target/i386: fixes for OS/2 Warp
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -78,36 +76,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The calculation of FrameTemp is done using the size indicated by mo_pushpop()
-before being written back to EBP, but the final writeback to EBP is done using
-the size indicated by mo_stacksize().
+This series contains two fixes which allow booting OS/2 Warp in QEMU with TCG
+(currently it only boots with KVM).
 
-In the case where mo_pushpop() is MO_32 and mo_stacksize() is MO_16 then the
-final writeback to EBP is done using MO_16 which can leave junk in the top
-16-bits of EBP after executing ENTER.
-
-Change the writeback of EBP to use the same size indicated by mo_pushpop() to
-ensure that the full value is written back.
+Patches 1 and 2 are tidy-ups which prepare for the POP SP fix in patch 3, whilst
+patch 4 is the final fix for ENTER that allows my test image to boot
+successfully.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2198
----
- target/i386/tcg/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 0486ab6911..0716ca35d5 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -2125,7 +2125,7 @@ static void gen_enter(DisasContext *s, int esp_addend, int level)
-     }
- 
-     /* Copy the FrameTemp value to EBP.  */
--    gen_op_mov_reg_v(s, a_ot, R_EBP, s->T1);
-+    gen_op_mov_reg_v(s, d_ot, R_EBP, s->T1);
- 
-     /* Compute the final value of ESP.  */
-     tcg_gen_subi_tl(s->T1, s->T1, esp_addend + size * level);
+
+Mark Cave-Ayland (4):
+  target/i386: use local X86DecodedOp in gen_POP()
+  target/i386: use gen_writeback() within gen_POP()
+  target/i386: fix SP when taking a memory fault during POP
+  target/i386: fix size of EBP writeback in gen_enter()
+
+ target/i386/tcg/emit.c.inc  | 8 +++++---
+ target/i386/tcg/translate.c | 2 +-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
 -- 
 2.39.2
 
