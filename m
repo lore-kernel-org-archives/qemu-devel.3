@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC92C41513
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 12:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8932C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 12:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFCPq-00019r-9n; Thu, 06 Jun 2024 08:40:26 -0400
+	id 1sFCSS-00051H-86; Thu, 06 Jun 2024 08:43:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFCPo-00015D-NI
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:40:24 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFCSR-00050C-5R
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:43:07 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFCPn-0002Ou-5W
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:40:24 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4215c65dca2so6555675e9.1
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 05:40:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFCSP-0002uX-GE
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:43:06 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2eacd7e7b38so10165541fa.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 05:43:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717677621; x=1718282421; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1FuIkTOE+lXFH9ZydHNxhyvDKE3guv4TMSshNohbxYc=;
- b=ZqVemX23wE05crTxwnmLpiptzQpdi8ObnGfoeoBE9CkF0xjJeHOFbth9MSPwhPhznT
- btYI6ArAnix2VgvWaAX2SJUws5TSSgTjwxMO4cXiB13CCzvCv5AZiRLj1aavw9GoV6pS
- w3QVwPXf41wjp7Pvn9Wyf50AL7dgLVy05I9iBTFE6MHi464gqvUoJF7FqMDyrCbfZexg
- k5DvV7SJDcdEmL9iFaCf5LIdQv9spNipF0FO6rgUOWB3cMihDWIEButXZqDg5b8EjT3O
- fc5YWSGoMQ+fVhebrezCCUrXI6McptJztEotOe9oii4zOvJ+XxYcRJKKq9d+RCGXVjfX
- XghQ==
+ d=linaro.org; s=google; t=1717677783; x=1718282583; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=wmWSFdenUilBejz9cmBeGqpcFxGB6yhYLz7CzbG1ozs=;
+ b=W0GNHh745gvkcECNfNY2wBRYW0IHE/eSRa/WNPJ9ybdspQZysJUoCzZc+ELSCB/fQx
+ BUHbiBdmMCQpTf0lKiX578we9airKvR0JAtRW8Cbe/HE9x0ij05zlzkj94y5F08YXFyb
+ EcT98ZJsGRVkLz44rEhe5wfBYcu2iDCwBKOcx81HLka33sU+uStAmmQmunxE6OK0tcBm
+ WPoSdOtRb14ENihQm8mHFrPdBf3gx4iHwpn6+Kfoz3cTdAEQKycykrzeqFoQeJTt3dq1
+ x+ZNFiC1rlwy62BjvJMN2j9sKKD875ICBE5l1n/hMm31pRtN3NhRdioOLMibqnpTftxs
+ eDug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717677621; x=1718282421;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1FuIkTOE+lXFH9ZydHNxhyvDKE3guv4TMSshNohbxYc=;
- b=Wz1dp3Loe5MJmtPg/JDG4wVDjUffNYMYOVIi99KEc133pPRvgSv8Sn89l7Etj9GwXs
- GeiIR+oeKaoxbgO2XKg2Ix3M2FBQgV69cZi6xtcLoktEc2U3RK9ATjNlm7FOWUrA31sK
- EjCtoXg0AEQXvA5lAosvQ0n2frXBO6BolPYE+VAzlcRvEJxu1Ne1VXnUvQG2Uf1saCvk
- hBMEHrHeftGe5W0VLWkHx52q5MFjYkEXApermSPSMQiVnI8fAaoStzX/ogmDS9ek9Cnt
- MYwZuF8oWAapRk24qcce/BBHljwo+mGGCfELlUVDDn/C8d24Unu1moNjZGpwtW3RipTC
- vlSQ==
-X-Gm-Message-State: AOJu0YyS6sqPbEYKFQUgOOiI/YXEATvVGo40CRBh28zgysVZO8Ei3APr
- Vb+D9KZsR3pSj0U6zPveT5JFELcO/7KxiYy6bpo6qqkilC27Ha/B/l3uKyAeIOhRlktIf/E7EkZ
- MMvQ=
-X-Google-Smtp-Source: AGHT+IEDstXo/HDf8fpDQCikdWZ23e7ubX1yPRDTwgGuIMMz65cEgHLVRDLe3BUj8Gfapldv+rtW+A==
-X-Received: by 2002:a05:600c:a01:b0:421:5927:e8cb with SMTP id
- 5b1f17b1804b1-4215927eb54mr34917445e9.18.1717677621165; 
- Thu, 06 Jun 2024 05:40:21 -0700 (PDT)
-Received: from localhost.localdomain (94.red-88-29-105.staticip.rima-tde.net.
+ d=1e100.net; s=20230601; t=1717677783; x=1718282583;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wmWSFdenUilBejz9cmBeGqpcFxGB6yhYLz7CzbG1ozs=;
+ b=H/xKrP6e/eF/ejchxxBEvvitwXEPpKDZYjm0F+lYiotT6xLH2H5LG3lWvhAKsW+yBs
+ CGfB+DMHUGEtGASzwMLR+kwISZPBEa4eUuU6bIStpqunhNOD4R1tMw65sdLv4ppe9Xzf
+ 3dwUWy+XkKC8l+/ueG9LudcV3+MXA4JtLtPjGP1RbCica7MwxpbJ7eou15KOmfMUF16M
+ bk30yK+k2WBt/gDTG5C4bhkcnjf3EONYMQZqVmu7dfEbU7cFVZQf1dj1Z/UAikIq1Qqn
+ gIh5z2FJwNgrYUqpWqbBsUxihx7ENQpzjlNH+cIQestr6xU4ya/bTU9MjKdzh3Ab7mX+
+ UEiQ==
+X-Gm-Message-State: AOJu0YxLsOdAqVxebZzDHuJSIoWKRd5C/YdWZHk7DiwKw0I+Y2W/RMxL
+ M581ncQMuPyHm7Qnr8PK3er3uEG3/agghtf43ZKiJNX/RUq4g/29PYtc6CDtY7U/MDb5rYmWE7t
+ pTPE=
+X-Google-Smtp-Source: AGHT+IHUhco/STdOGNOxa91hG63dDQ0DUedIKXnsNZ/2Gkjw2KayegBFid/nJKsmjjXj3oLl9FC77A==
+X-Received: by 2002:a05:651c:551:b0:2ea:89f6:258f with SMTP id
+ 38308e7fff4ca-2eac77a26a9mr46588661fa.0.1717677782972; 
+ Thu, 06 Jun 2024 05:43:02 -0700 (PDT)
+Received: from [192.168.183.175] (94.red-88-29-105.staticip.rima-tde.net.
  [88.29.105.94]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4215814f141sm54305615e9.42.2024.06.06.05.40.19
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Jun 2024 05:40:20 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH 1/3] plugins: Ensure vCPU index is assigned in init/exit hooks
-Date: Thu,  6 Jun 2024 14:40:08 +0200
-Message-ID: <20240606124010.2460-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240606124010.2460-1-philmd@linaro.org>
-References: <20240606124010.2460-1-philmd@linaro.org>
+ 5b1f17b1804b1-4215c2a5f47sm20864055e9.24.2024.06.06.05.43.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Jun 2024 05:43:02 -0700 (PDT)
+Message-ID: <f932b4f2-25ed-405f-b9c4-cffaab903e3d@linaro.org>
+Date: Thu, 6 Jun 2024 14:43:00 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/3] semihosting: Restrict to TCG
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>
+References: <20240530145349.41309-1-philmd@linaro.org>
+ <1abce060-99cd-4881-835c-1cedc02e61e2@linaro.org>
+Content-Language: en-US
+In-Reply-To: <1abce060-99cd-4881-835c-1cedc02e61e2@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,35 +97,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since vCPUs are hashed by their index, this index can't
-be uninitialized (UNASSIGNED_CPU_INDEX).
+Kind ping :)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- plugins/core.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/plugins/core.c b/plugins/core.c
-index badede28cf..d339b3db4d 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -245,6 +245,7 @@ void qemu_plugin_vcpu_init_hook(CPUState *cpu)
- {
-     bool success;
- 
-+    assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
-     qemu_rec_mutex_lock(&plugin.lock);
-     plugin.num_vcpus = MAX(plugin.num_vcpus, cpu->cpu_index + 1);
-     plugin_cpu_update__locked(&cpu->cpu_index, NULL, NULL);
-@@ -263,6 +264,7 @@ void qemu_plugin_vcpu_exit_hook(CPUState *cpu)
- 
-     plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_EXIT);
- 
-+    assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
-     qemu_rec_mutex_lock(&plugin.lock);
-     success = g_hash_table_remove(plugin.cpu_ht, &cpu->cpu_index);
-     g_assert(success);
--- 
-2.41.0
+On 3/6/24 10:27, Philippe Mathieu-Daudé wrote:
+> On 30/5/24 16:53, Philippe Mathieu-Daudé wrote:
+>> v2: Address Paolo's comment
+> 
+> Missing review: 1 & 2
+> 
+>> Semihosting currently uses the TCG probe_access API,
+>> so it is pointless to have it in the binary when TCG
+>> isn't.
+>>
+>> It could be implemented for other accelerators, but
+>> work need to be done. Meanwhile, do not enable it
+>> unless TCG is available.
+>>
+>> Philippe Mathieu-Daudé (3):
+>>    target/mips: Restrict semihosting to TCG
+>>    target/riscv: Restrict semihosting to TCG
+>>    semihosting: Restrict to TCG
+>>
+>>   semihosting/Kconfig  | 1 +
+>>   target/mips/Kconfig  | 2 +-
+>>   target/riscv/Kconfig | 4 ++--
+>>   3 files changed, 4 insertions(+), 3 deletions(-)
+>>
+> 
 
 
