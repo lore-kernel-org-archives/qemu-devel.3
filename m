@@ -4,84 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB46C27C5E
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 01:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A29B7C27C5E
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 01:51:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFOB5-0006wm-6l; Thu, 06 Jun 2024 21:13:59 -0400
+	id 1sFOk7-00069W-GC; Thu, 06 Jun 2024 21:50:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sFOB3-0006wY-Sz; Thu, 06 Jun 2024 21:13:57 -0400
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sFOB2-0008Rv-8B; Thu, 06 Jun 2024 21:13:57 -0400
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-4eb236e27adso490727e0c.2; 
- Thu, 06 Jun 2024 18:13:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717722834; x=1718327634; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8VVamNqwn3NCn58TIfBAlHEWasFi1+faLZkARLd1OqY=;
- b=YyrQIFVViW9dSKcFYS4T3uUZSbDP3bRoIfl00ejmuHnp0Oy+L6Ibj/GBIGhwqKzBmL
- eRTQsLunhrtqtf3UU1F3oEWcpn3ue34zdvh8GJ7F9NwM67BuAWNsStv6yx0NWXpFStIR
- mvec/80LnqEVb3LRiosuGqEh03ot4EyUvG7VYesEmZL8AKrsRDoPKLD00r6gLKSuIWTR
- qI4LexhPrl5ZW6DBAU7uezIeHsYQ/mo2DKaYp8iUb+nGNle+q649NSgusp9QRAx+Q8c4
- LFLcSawfs8V0ApKiOd28sW3b11CYfMYRQHgX/kj/8Sg5bhZo8AYOPDbS68JKr0fUdcI/
- FoaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717722834; x=1718327634;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8VVamNqwn3NCn58TIfBAlHEWasFi1+faLZkARLd1OqY=;
- b=RIn1/1ylHzFXKOtpAPBEOTrLEMHx67avK9QRWG5EH2QQDAUetDMGSgBuLoTpmkfHPK
- wc7pUJZSKI6YulDPNeRrG0aAzse4GoFHxfFLR7Sbm1DfvFFQR2oR8HEIZArzmeASOIta
- 5m6TmLe1w2Llpvb9AyCpQ9r91sR2QMOuiW+/Tzi7srfZdRhRRmYDLV874MjyJ138by6/
- XwROJf9GraiLvHlUeKVGitx182uO6vWEX5MhLI/pqJmr2P4ak7hCqTiMBtIooqnrm/tF
- KqeeoW2/TbgnlUnBbWDoME4OyMPODWr4scRYWDuzHlqaaCTG7YdZaE89vCeEJsNj1/tL
- SJWQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXALgk38ul8xW4Z54luZH5JW54+usDCVrm4dnF+AlZGiLSAAGeqdp/0RHEvdsnXWtofbheva+DSNKcOKb6uWkjfzxTNxk0=
-X-Gm-Message-State: AOJu0YwkwbPJhfeHNM5ylf4w60NMrxlrv5k3xSVQ0tt+vf5/RCFWVjPg
- AXXwo9k1iPf87j2cQNDQH4qE5BKiLZFSmiaLEFJAgTfv3u4JhT2loQszXDfeNKfpETarMpyvZwX
- 8/OHb2lttvdSzjnGN2d0NrqEwIOI=
-X-Google-Smtp-Source: AGHT+IFazOw7XbNYxsiokdd0Y0syoJlKT7kvZatbx47I96buS6oj4QYH6wQBWthjcupYBlBw4OGuJ1c4YudTcbiPOzY=
-X-Received: by 2002:a05:6122:4592:b0:4d8:7b33:c624 with SMTP id
- 71dfb90a1353d-4eb5615a33emr1678867e0c.0.1717722833799; Thu, 06 Jun 2024
- 18:13:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sFOk5-00069C-RJ
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 21:50:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sFOk3-0008RD-Ss
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 21:50:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717725006;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ic9lQGgoFrYWYtF+u1FC4PF+SFV5H8fSqxQBE8k+O2c=;
+ b=iBXqZe2UfTTclNTWPNKbh0BEFL4dPQbAlxaGkN1VWajFyNZg2Jl5bofox+x+zCfmumEGLl
+ KIzT56IW78K9f74BMYzUV5BzaNYtssz702LP/37+lpmZQZXqqdMMimAG30KvJcHiKOhNxd
+ +WS68g6JY33ZhfiV+gT3XNxSN1sgi2Y=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-523-lEgrEkPiPJ-t0XjnENrCyQ-1; Thu,
+ 06 Jun 2024 21:50:04 -0400
+X-MC-Unique: lEgrEkPiPJ-t0XjnENrCyQ-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB9671979064; Fri,  7 Jun 2024 01:50:02 +0000 (UTC)
+Received: from localhost (unknown [10.39.192.6])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id ABEBC1955F14; Fri,  7 Jun 2024 01:50:00 +0000 (UTC)
+Date: Thu, 6 Jun 2024 14:36:38 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
+ pbonzini@redhat.com
+Subject: Re: [RFC PATCH] migration/savevm: do not schedule
+ snapshot_save_job_bh in qemu_aio_context
+Message-ID: <20240606183638.GC198201@fedora.redhat.com>
+References: <20240605120848.358654-1-f.ebner@proxmox.com>
 MIME-Version: 1.0
-References: <20240606135454.119186-1-fea.wang@sifive.com>
- <20240606135454.119186-7-fea.wang@sifive.com>
-In-Reply-To: <20240606135454.119186-7-fea.wang@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 7 Jun 2024 11:13:26 +1000
-Message-ID: <CAKmqyKOwVE56P1--w0faiYb=96KJeBAeZ+qhC95s6YfYO8oFaw@mail.gmail.com>
-Subject: Re: [PATCH v4 6/6] target/riscv: Support the version for ss1p13
-To: "Fea.Wang" <fea.wang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Frank Chang <frank.chang@sifive.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="xDmBIJEJkhaDUdiz"
+Content-Disposition: inline
+In-Reply-To: <20240605120848.358654-1-f.ebner@proxmox.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 28
+X-Spam_score: 2.8
+X-Spam_bar: ++
+X-Spam_report: (2.8 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,69 +85,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 6, 2024 at 11:51=E2=80=AFPM Fea.Wang <fea.wang@sifive.com> wrot=
-e:
->
-> Add RISC-V privilege 1.13 support.
->
-> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
-> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Weiwei Li <liwei1518@gmail.com>
-> Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+--xDmBIJEJkhaDUdiz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Alistair
-
+On Wed, Jun 05, 2024 at 02:08:48PM +0200, Fiona Ebner wrote:
+> The fact that the snapshot_save_job_bh() is scheduled in the main
+> loop's qemu_aio_context AioContext means that it might get executed
+> during a vCPU thread's aio_poll(). But saving of the VM state cannot
+> happen while the guest or devices are active and can lead to assertion
+> failures. See issue #2111 for two examples. Avoid the problem by
+> scheduling the snapshot_save_job_bh() in the iohandler AioContext,
+> which is not polled by vCPU threads.
+>=20
+> Solves Issue #2111.
+>=20
+> This change also solves the following issue:
+>=20
+> Since commit effd60c878 ("monitor: only run coroutine commands in
+> qemu_aio_context"), the 'snapshot-save' QMP call would not respond
+> right after starting the job anymore, but only after the job finished,
+> which can take a long time. The reason is, because after commit
+> effd60c878, do_qmp_dispatch_bh() runs in the iohandler AioContext.
+> When do_qmp_dispatch_bh() wakes the qmp_dispatch() coroutine, the
+> coroutine cannot be entered immediately anymore, but needs to be
+> scheduled to the main loop's qemu_aio_context AioContext. But
+> snapshot_save_job_bh() was scheduled first to the same AioContext and
+> thus gets executed first.
+>=20
+> Buglink: https://gitlab.com/qemu-project/qemu/-/issues/2111
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 > ---
->  target/riscv/cpu.c         | 6 +++++-
->  target/riscv/tcg/tcg-cpu.c | 4 ++++
->  2 files changed, 9 insertions(+), 1 deletion(-)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index fd0f09c468..4760cb2cc1 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1779,7 +1779,9 @@ static int priv_spec_from_str(const char *priv_spec=
-_str)
->  {
->      int priv_version =3D -1;
->
-> -    if (!g_strcmp0(priv_spec_str, PRIV_VER_1_12_0_STR)) {
-> +    if (!g_strcmp0(priv_spec_str, PRIV_VER_1_13_0_STR)) {
-> +        priv_version =3D PRIV_VERSION_1_13_0;
-> +    } else if (!g_strcmp0(priv_spec_str, PRIV_VER_1_12_0_STR)) {
->          priv_version =3D PRIV_VERSION_1_12_0;
->      } else if (!g_strcmp0(priv_spec_str, PRIV_VER_1_11_0_STR)) {
->          priv_version =3D PRIV_VERSION_1_11_0;
-> @@ -1799,6 +1801,8 @@ const char *priv_spec_to_str(int priv_version)
->          return PRIV_VER_1_11_0_STR;
->      case PRIV_VERSION_1_12_0:
->          return PRIV_VER_1_12_0_STR;
-> +    case PRIV_VERSION_1_13_0:
-> +        return PRIV_VER_1_13_0_STR;
->      default:
->          return NULL;
->      }
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 4c6141f947..eb6f7b9d12 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -318,6 +318,10 @@ static void riscv_cpu_update_named_features(RISCVCPU=
- *cpu)
->          cpu->cfg.has_priv_1_12 =3D true;
->      }
->
-> +    if (cpu->env.priv_ver >=3D PRIV_VERSION_1_13_0) {
-> +        cpu->cfg.has_priv_1_13 =3D true;
-> +    }
-> +
->      /* zic64b is 1.12 or later */
->      cpu->cfg.ext_zic64b =3D cpu->cfg.cbom_blocksize =3D=3D 64 &&
->                            cpu->cfg.cbop_blocksize =3D=3D 64 &&
-> --
-> 2.34.1
->
->
+>=20
+> While initial smoke testing seems fine, I'm not familiar enough with
+> this to rule out any pitfalls with the approach. Any reason why
+> scheduling to the iohandler AioContext could be wrong here?
+
+If something waits for a BlockJob to finish using aio_poll() from
+qemu_aio_context then a deadlock is possible since the iohandler_ctx
+won't get a chance to execute. The only suspicious code path I found was
+job_completed_txn_abort_locked() -> job_finish_sync_locked() but I'm not
+sure whether it triggers this scenario. Please check that code path.
+
+> Should the same be done for the snapshot_load_job_bh and
+> snapshot_delete_job_bh to keep it consistent?
+
+In the long term it would be cleaner to move away from synchronous APIs
+that rely on nested event loops. They have been a source of bugs for
+years.
+
+If vm_stop() and perhaps other operations in save_snapshot() were
+asynchronous, then it would be safe to run the operation in
+qemu_aio_context without using iohandler_ctx. vm_stop() wouldn't invoke
+its callback until vCPUs were quiesced and outside device emulation
+code.
+
+I think this patch is fine as a one-line bug fix, but we should be
+careful about falling back on this trick because it makes the codebase
+harder to understand and more fragile.
+
+>=20
+>  migration/savevm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index c621f2359b..0086b76ab0 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -3459,7 +3459,7 @@ static int coroutine_fn snapshot_save_job_run(Job *=
+job, Error **errp)
+>      SnapshotJob *s =3D container_of(job, SnapshotJob, common);
+>      s->errp =3D errp;
+>      s->co =3D qemu_coroutine_self();
+> -    aio_bh_schedule_oneshot(qemu_get_aio_context(),
+> +    aio_bh_schedule_oneshot(iohandler_get_aio_context(),
+>                              snapshot_save_job_bh, job);
+>      qemu_coroutine_yield();
+>      return s->ret ? 0 : -1;
+> --=20
+> 2.39.2
+
+--xDmBIJEJkhaDUdiz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZiAbYACgkQnKSrs4Gr
+c8hljgf9E3lQXx9tCIwhZJaYEzbOXLQ/szQBwhLxALESFqdyerZzrjJehn8CdttA
+5GhPSl7PItMGoV55wxBQJutCi/lt3i4R6HZNM5FawzRgse/y4iMEPvQb1JFa+Btk
+L6DIWpUDYRMCw+YDlBDmckRbHQ7tmlx9EYfqhiLN34yUm7Fn3QVk3cFa5dYTBGaW
+bi0tfiS1GanN+SC050peVfho8ffD5Mxe09x7a+5es5Gd3HD+X+Pl9z4osX25s/fH
+agYCV//tn7MjfIqKvCnNH9w/ypYvh66yA+Yn8MUdThQjkBKMt73WAbJxzfHjDX2P
+gtp206XzoTaOJ76+ZCBcLNNXLCGF5g==
+=29nG
+-----END PGP SIGNATURE-----
+
+--xDmBIJEJkhaDUdiz--
+
 
