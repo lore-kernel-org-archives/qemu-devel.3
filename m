@@ -4,76 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EAFFC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 05:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C51C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 05:55:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF5Sa-0007r6-Fh; Thu, 06 Jun 2024 01:14:48 -0400
+	id 1sF64w-000718-Dw; Thu, 06 Jun 2024 01:54:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sF5SZ-0007qx-B6
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 01:14:47 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sF5SX-0004v5-27
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 01:14:47 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-60585faa69fso324506a12.1
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 22:14:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717650883; x=1718255683; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jNu99zfEoSDFHqBDEF3ZdEq7ivpBRyBMgJwL2VDAlec=;
- b=fbw+F+1UbJ3PpA25y9dZw73T/9xEPNJS2SKDKW4DTQSTKt5uJH3381vIyWT9/h7DGb
- 2AJffotQNJuKBZAOaUnUkGumI6ocyLYJ4EKyukyGlGXVrN/Y0ou5HljalwSYZhcdl20v
- 0mD3jueHVPx9OEN7H5vUn4wREuxoipXwuFHNkZCoUPmMJ7HEvriRCkxvx8YQFGRlA+bs
- fgBi4+mi7MRPear3b7k99jE8NttZrdHeo/fE0R0N7Sy97/o4L8ow0MFHwOgoCecCiDUP
- rtK9ZEU4U/elTsBCUYjuYUk+6/F+PVFJsS64BX4Fmfwbatnh7uURnore0gjsvxjhkveV
- TtZw==
+ (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
+ id 1sF64t-00070n-P2
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 01:54:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
+ id 1sF64s-0003rI-11
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 01:54:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717653260;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2KJi6HZ+9K2s9dFyDCHddJDpiY9oMPJQjUcygCVeK/Q=;
+ b=iFMO9Jc+CnNa5tMDEASlDrCP+GCKoeCgpBkd6G3+jJ4KHiQ5Cou7gt1iyzmMGyE6JydAdu
+ rAGTQDRx1rcmakizjSHgqiNANdZAnsjl19D4kRiwhFmSrmBZw5TxwYwG/a556yU69yhWkQ
+ /2smTw9QB0DesuV3SRhI9xPdIIEVIDA=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-557-9x4KtIhhNQOPiJEpS7N4ww-1; Thu, 06 Jun 2024 01:54:18 -0400
+X-MC-Unique: 9x4KtIhhNQOPiJEpS7N4ww-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2eaac984495so8290081fa.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 22:54:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717650883; x=1718255683;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jNu99zfEoSDFHqBDEF3ZdEq7ivpBRyBMgJwL2VDAlec=;
- b=WIIzCl7G1SSxsjs42guuu8TSuJGfk72lKp9zGD0nQKDgg9lcZ5ImX9wtr05KZDFs2l
- 8DTM3yJvXXKng+IKMKwyM0fxFTC2479dDoVmBgnZXUHGphHBIjXLBJ+nLM1FpGPNwaW2
- TM3nOESbpJc2qs2xVmK4SBLIILztdDPd7ubhtokjVHLaHOLFvuLfR7KfbomahWA/kY/t
- Jn12JXxNDqi5Of7i6+ecF/qKmZvkeoAV8HfgSfk+FyiF8sZM2XRBcVtkMn/37cCe2ee9
- W2NY1jf0H3ruY4rI0wXn8Zx33cYlmJ2ryFsjyQWXrlFzqwv7cpelrmO5wKf+jkyoMbnH
- Hseg==
-X-Gm-Message-State: AOJu0Yx2Xz9QeheZgA2A2UKQIDH9cXxaj8W5p1YAeVcPg9ScI2wT12ma
- TUS9+G37umoG6LV58MWJLwdf0kPx5SKwEG69tomfWvKnRBUQ0Ol424dnkb8FPIG8O1X8dwANMrr
- y
-X-Google-Smtp-Source: AGHT+IHeZqYrfgmizRsFf9+S5tjGAl4wYaRFWEMpeevC0PIHUOmmCdOhFnJWz1O4fLX9w5fCw5jY/g==
-X-Received: by 2002:a17:90a:b014:b0:2bf:9eb3:cea7 with SMTP id
- 98e67ed59e1d1-2c299a04728mr2065260a91.24.1717650883099; 
- Wed, 05 Jun 2024 22:14:43 -0700 (PDT)
-Received: from stoup.. ([71.212.132.216]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c2806bd7eesm2464881a91.44.2024.06.05.22.14.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 22:14:42 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn
-Subject: [PATCH] util/bufferiszero: Split out host include files
-Date: Wed,  5 Jun 2024 22:14:41 -0700
-Message-Id: <20240606051441.111975-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1717653257; x=1718258057;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2KJi6HZ+9K2s9dFyDCHddJDpiY9oMPJQjUcygCVeK/Q=;
+ b=MxJ4kF1/39GKSMpIw+fmDWl5c4oV2J1JHEYW8geiZblHgqvBVpHgiOKsiFqXkKXSTZ
+ mNcmQVMQv26cWufATBDC2zmj3ScFpl2/IvcHu5aMtPeNc4qf715WX8vTSn0LSpqdaAqD
+ 3DjPqEUfV+gjyGzWogTldfOrqr4xzD+kh7479D/jjSYsWJzN9ju99LIlz4OqzLXXY1su
+ SUncH43OaWOh4smc+oQdrGdk9iBh2rGYFD7QBlBxL2uqHSxNA1zIG3tNRp1vH1w3YlmK
+ /+uOks2UUDMdCWVAA7cNTAonTMw0czMD5BlTf6tlMAHxAS8yCHd/XlxJrhb34Unr9GF+
+ hftA==
+X-Gm-Message-State: AOJu0YyA4z8f77RodUpIsc2fryfss7xvOeclQrla9cxp/ZJ5bNlZZUi0
+ 2DsdpOu34xtOCJpp3QCIrGPWaPabZr4U1VKX5f/PJR111o4V0d6fSdoOCIM8/xza7ZS4UijuHpV
+ J2yDxOST7hmPT+v5PDes9LPcFDLLYx6SIn0E4Sny75Tv7/SLX0HDCYcvxNRU5DFibsrFb0Do/RS
+ WbJfXdtiIsnal5YanKC0xS0WQl/d4=
+X-Received: by 2002:a19:760c:0:b0:52b:90f5:4945 with SMTP id
+ 2adb3069b0e04-52bb2199373mr420546e87.27.1717653257156; 
+ Wed, 05 Jun 2024 22:54:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGH+xYNtLFIdddqXAcHP6m7gPFh4W4eyyC9ghq8OVf7f8+XxAu0Lvx9rQUKG9sEExi1E9w+FLuzuI05+G/Fkm0=
+X-Received: by 2002:a19:760c:0:b0:52b:90f5:4945 with SMTP id
+ 2adb3069b0e04-52bb2199373mr420542e87.27.1717653256617; Wed, 05 Jun 2024
+ 22:54:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
+References: <cover.1717584048.git.mprivozn@redhat.com>
+ <b5b9f9c6bba07879fb43f3c6f496c69867ae3716.1717584048.git.mprivozn@redhat.com>
+In-Reply-To: <b5b9f9c6bba07879fb43f3c6f496c69867ae3716.1717584048.git.mprivozn@redhat.com>
+From: Mario Casquero <mcasquer@redhat.com>
+Date: Thu, 6 Jun 2024 07:54:05 +0200
+Message-ID: <CAMXpfWsuaZXcKDrtwqKOTyiMg7DDoJsE1p3_1mwg1Xp8tfq7sw@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] backends/hostmem: Report error when memory size is
+ unaligned
+To: Michal Privoznik <mprivozn@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mcasquer@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,460 +99,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split out host/bufferiszero.h.inc for x86, aarch64 and generic
-in order to avoid an overlong ifdef ladder.
+This patch has been successfully tested. Try to allocate some 2M
+hugepages in the host, then boot up a VM with the memory size
+unaligned and backed by a file, QEMU prompts the following message:
+qemu-system-x86_64: backend 'memory-backend-file' memory size must be
+multiple of 2 MiB
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- host/include/aarch64/host/bufferiszero.h.inc |  76 ++++++++
- host/include/generic/host/bufferiszero.h.inc |  10 +
- host/include/i386/host/bufferiszero.h.inc    | 124 ++++++++++++
- host/include/x86_64/host/bufferiszero.h.inc  |   1 +
- util/bufferiszero.c                          | 191 +------------------
- 5 files changed, 212 insertions(+), 190 deletions(-)
- create mode 100644 host/include/aarch64/host/bufferiszero.h.inc
- create mode 100644 host/include/generic/host/bufferiszero.h.inc
- create mode 100644 host/include/i386/host/bufferiszero.h.inc
- create mode 100644 host/include/x86_64/host/bufferiszero.h.inc
+Tested-by: Mario Casquero <mcasquer@redhat.com>
 
-diff --git a/host/include/aarch64/host/bufferiszero.h.inc b/host/include/aarch64/host/bufferiszero.h.inc
-new file mode 100644
-index 0000000000..0f0e478831
---- /dev/null
-+++ b/host/include/aarch64/host/bufferiszero.h.inc
-@@ -0,0 +1,76 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * buffer_is_zero acceleration, aarch64 version.
-+ */
-+
-+#ifdef __ARM_NEON
-+#include <arm_neon.h>
-+
-+/*
-+ * Helper for preventing the compiler from reassociating
-+ * chains of binary vector operations.
-+ */
-+#define REASSOC_BARRIER(vec0, vec1) asm("" : "+w"(vec0), "+w"(vec1))
-+
-+static bool buffer_is_zero_simd(const void *buf, size_t len)
-+{
-+    uint32x4_t t0, t1, t2, t3;
-+
-+    /* Align head/tail to 16-byte boundaries.  */
-+    const uint32x4_t *p = QEMU_ALIGN_PTR_DOWN(buf + 16, 16);
-+    const uint32x4_t *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 16);
-+
-+    /* Unaligned loads at head/tail.  */
-+    t0 = vld1q_u32(buf) | vld1q_u32(buf + len - 16);
-+
-+    /* Collect a partial block at tail end.  */
-+    t1 = e[-7] | e[-6];
-+    t2 = e[-5] | e[-4];
-+    t3 = e[-3] | e[-2];
-+    t0 |= e[-1];
-+    REASSOC_BARRIER(t0, t1);
-+    REASSOC_BARRIER(t2, t3);
-+    t0 |= t1;
-+    t2 |= t3;
-+    REASSOC_BARRIER(t0, t2);
-+    t0 |= t2;
-+
-+    /*
-+     * Loop over complete 128-byte blocks.
-+     * With the head and tail removed, e - p >= 14, so the loop
-+     * must iterate at least once.
-+     */
-+    do {
-+        /*
-+         * Reduce via UMAXV.  Whatever the actual result,
-+         * it will only be zero if all input bytes are zero.
-+         */
-+        if (unlikely(vmaxvq_u32(t0) != 0)) {
-+            return false;
-+        }
-+
-+        t0 = p[0] | p[1];
-+        t1 = p[2] | p[3];
-+        t2 = p[4] | p[5];
-+        t3 = p[6] | p[7];
-+        REASSOC_BARRIER(t0, t1);
-+        REASSOC_BARRIER(t2, t3);
-+        t0 |= t1;
-+        t2 |= t3;
-+        REASSOC_BARRIER(t0, t2);
-+        t0 |= t2;
-+        p += 8;
-+    } while (p < e - 7);
-+
-+    return vmaxvq_u32(t0) == 0;
-+}
-+
-+static biz_accel_fn const accel_table[] = {
-+    buffer_is_zero_int_ge256,
-+    buffer_is_zero_simd,
-+};
-+
-+#define best_accel() 1
-+#else
-+# include "host/include/generic/host/bufferiszero.h.inc"
-+#endif
-diff --git a/host/include/generic/host/bufferiszero.h.inc b/host/include/generic/host/bufferiszero.h.inc
-new file mode 100644
-index 0000000000..ea0875c24a
---- /dev/null
-+++ b/host/include/generic/host/bufferiszero.h.inc
-@@ -0,0 +1,10 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * buffer_is_zero acceleration, generic version.
-+ */
-+
-+static biz_accel_fn const accel_table[1] = {
-+    buffer_is_zero_int_ge256
-+};
-+
-+#define best_accel() 0
-diff --git a/host/include/i386/host/bufferiszero.h.inc b/host/include/i386/host/bufferiszero.h.inc
-new file mode 100644
-index 0000000000..ac9bcd07ee
---- /dev/null
-+++ b/host/include/i386/host/bufferiszero.h.inc
-@@ -0,0 +1,124 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * buffer_is_zero acceleration, x86 version.
-+ */
-+
-+#if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
-+#include <immintrin.h>
-+
-+/* Helper for preventing the compiler from reassociating
-+   chains of binary vector operations.  */
-+#define SSE_REASSOC_BARRIER(vec0, vec1) asm("" : "+x"(vec0), "+x"(vec1))
-+
-+/* Note that these vectorized functions may assume len >= 256.  */
-+
-+static bool __attribute__((target("sse2")))
-+buffer_zero_sse2(const void *buf, size_t len)
-+{
-+    /* Unaligned loads at head/tail.  */
-+    __m128i v = *(__m128i_u *)(buf);
-+    __m128i w = *(__m128i_u *)(buf + len - 16);
-+    /* Align head/tail to 16-byte boundaries.  */
-+    const __m128i *p = QEMU_ALIGN_PTR_DOWN(buf + 16, 16);
-+    const __m128i *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 16);
-+    __m128i zero = { 0 };
-+
-+    /* Collect a partial block at tail end.  */
-+    v |= e[-1]; w |= e[-2];
-+    SSE_REASSOC_BARRIER(v, w);
-+    v |= e[-3]; w |= e[-4];
-+    SSE_REASSOC_BARRIER(v, w);
-+    v |= e[-5]; w |= e[-6];
-+    SSE_REASSOC_BARRIER(v, w);
-+    v |= e[-7]; v |= w;
-+
-+    /*
-+     * Loop over complete 128-byte blocks.
-+     * With the head and tail removed, e - p >= 14, so the loop
-+     * must iterate at least once.
-+     */
-+    do {
-+        v = _mm_cmpeq_epi8(v, zero);
-+        if (unlikely(_mm_movemask_epi8(v) != 0xFFFF)) {
-+            return false;
-+        }
-+        v = p[0]; w = p[1];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= p[2]; w |= p[3];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= p[4]; w |= p[5];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= p[6]; w |= p[7];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= w;
-+        p += 8;
-+    } while (p < e - 7);
-+
-+    return _mm_movemask_epi8(_mm_cmpeq_epi8(v, zero)) == 0xFFFF;
-+}
-+
-+#ifdef CONFIG_AVX2_OPT
-+static bool __attribute__((target("avx2")))
-+buffer_zero_avx2(const void *buf, size_t len)
-+{
-+    /* Unaligned loads at head/tail.  */
-+    __m256i v = *(__m256i_u *)(buf);
-+    __m256i w = *(__m256i_u *)(buf + len - 32);
-+    /* Align head/tail to 32-byte boundaries.  */
-+    const __m256i *p = QEMU_ALIGN_PTR_DOWN(buf + 32, 32);
-+    const __m256i *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 32);
-+    __m256i zero = { 0 };
-+
-+    /* Collect a partial block at tail end.  */
-+    v |= e[-1]; w |= e[-2];
-+    SSE_REASSOC_BARRIER(v, w);
-+    v |= e[-3]; w |= e[-4];
-+    SSE_REASSOC_BARRIER(v, w);
-+    v |= e[-5]; w |= e[-6];
-+    SSE_REASSOC_BARRIER(v, w);
-+    v |= e[-7]; v |= w;
-+
-+    /* Loop over complete 256-byte blocks.  */
-+    for (; p < e - 7; p += 8) {
-+        /* PTEST is not profitable here.  */
-+        v = _mm256_cmpeq_epi8(v, zero);
-+        if (unlikely(_mm256_movemask_epi8(v) != 0xFFFFFFFF)) {
-+            return false;
-+        }
-+        v = p[0]; w = p[1];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= p[2]; w |= p[3];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= p[4]; w |= p[5];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= p[6]; w |= p[7];
-+        SSE_REASSOC_BARRIER(v, w);
-+        v |= w;
-+    }
-+
-+    return _mm256_movemask_epi8(_mm256_cmpeq_epi8(v, zero)) == 0xFFFFFFFF;
-+}
-+#endif /* CONFIG_AVX2_OPT */
-+
-+static biz_accel_fn const accel_table[] = {
-+    buffer_is_zero_int_ge256,
-+    buffer_zero_sse2,
-+#ifdef CONFIG_AVX2_OPT
-+    buffer_zero_avx2,
-+#endif
-+};
-+
-+static unsigned best_accel(void)
-+{
-+#ifdef CONFIG_AVX2_OPT
-+    unsigned info = cpuinfo_init();
-+    if (info & CPUINFO_AVX2) {
-+        return 2;
-+    }
-+#endif
-+    return 1;
-+}
-+
-+#else
-+# include "host/include/generic/host/bufferiszero.h.inc"
-+#endif
-diff --git a/host/include/x86_64/host/bufferiszero.h.inc b/host/include/x86_64/host/bufferiszero.h.inc
-new file mode 100644
-index 0000000000..f3893d10eb
---- /dev/null
-+++ b/host/include/x86_64/host/bufferiszero.h.inc
-@@ -0,0 +1 @@
-+#include "host/include/i386/host/bufferiszero.h.inc"
-diff --git a/util/bufferiszero.c b/util/bufferiszero.c
-index 11c080e02c..6e178e0105 100644
---- a/util/bufferiszero.c
-+++ b/util/bufferiszero.c
-@@ -81,196 +81,7 @@ static bool buffer_is_zero_int_ge256(const void *buf, size_t len)
-     return t == 0;
- }
- 
--#if defined(CONFIG_AVX2_OPT) || defined(__SSE2__)
--#include <immintrin.h>
--
--/* Helper for preventing the compiler from reassociating
--   chains of binary vector operations.  */
--#define SSE_REASSOC_BARRIER(vec0, vec1) asm("" : "+x"(vec0), "+x"(vec1))
--
--/* Note that these vectorized functions may assume len >= 256.  */
--
--static bool __attribute__((target("sse2")))
--buffer_zero_sse2(const void *buf, size_t len)
--{
--    /* Unaligned loads at head/tail.  */
--    __m128i v = *(__m128i_u *)(buf);
--    __m128i w = *(__m128i_u *)(buf + len - 16);
--    /* Align head/tail to 16-byte boundaries.  */
--    const __m128i *p = QEMU_ALIGN_PTR_DOWN(buf + 16, 16);
--    const __m128i *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 16);
--    __m128i zero = { 0 };
--
--    /* Collect a partial block at tail end.  */
--    v |= e[-1]; w |= e[-2];
--    SSE_REASSOC_BARRIER(v, w);
--    v |= e[-3]; w |= e[-4];
--    SSE_REASSOC_BARRIER(v, w);
--    v |= e[-5]; w |= e[-6];
--    SSE_REASSOC_BARRIER(v, w);
--    v |= e[-7]; v |= w;
--
--    /*
--     * Loop over complete 128-byte blocks.
--     * With the head and tail removed, e - p >= 14, so the loop
--     * must iterate at least once.
--     */
--    do {
--        v = _mm_cmpeq_epi8(v, zero);
--        if (unlikely(_mm_movemask_epi8(v) != 0xFFFF)) {
--            return false;
--        }
--        v = p[0]; w = p[1];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= p[2]; w |= p[3];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= p[4]; w |= p[5];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= p[6]; w |= p[7];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= w;
--        p += 8;
--    } while (p < e - 7);
--
--    return _mm_movemask_epi8(_mm_cmpeq_epi8(v, zero)) == 0xFFFF;
--}
--
--#ifdef CONFIG_AVX2_OPT
--static bool __attribute__((target("avx2")))
--buffer_zero_avx2(const void *buf, size_t len)
--{
--    /* Unaligned loads at head/tail.  */
--    __m256i v = *(__m256i_u *)(buf);
--    __m256i w = *(__m256i_u *)(buf + len - 32);
--    /* Align head/tail to 32-byte boundaries.  */
--    const __m256i *p = QEMU_ALIGN_PTR_DOWN(buf + 32, 32);
--    const __m256i *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 32);
--    __m256i zero = { 0 };
--
--    /* Collect a partial block at tail end.  */
--    v |= e[-1]; w |= e[-2];
--    SSE_REASSOC_BARRIER(v, w);
--    v |= e[-3]; w |= e[-4];
--    SSE_REASSOC_BARRIER(v, w);
--    v |= e[-5]; w |= e[-6];
--    SSE_REASSOC_BARRIER(v, w);
--    v |= e[-7]; v |= w;
--
--    /* Loop over complete 256-byte blocks.  */
--    for (; p < e - 7; p += 8) {
--        /* PTEST is not profitable here.  */
--        v = _mm256_cmpeq_epi8(v, zero);
--        if (unlikely(_mm256_movemask_epi8(v) != 0xFFFFFFFF)) {
--            return false;
--        }
--        v = p[0]; w = p[1];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= p[2]; w |= p[3];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= p[4]; w |= p[5];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= p[6]; w |= p[7];
--        SSE_REASSOC_BARRIER(v, w);
--        v |= w;
--    }
--
--    return _mm256_movemask_epi8(_mm256_cmpeq_epi8(v, zero)) == 0xFFFFFFFF;
--}
--#endif /* CONFIG_AVX2_OPT */
--
--static biz_accel_fn const accel_table[] = {
--    buffer_is_zero_int_ge256,
--    buffer_zero_sse2,
--#ifdef CONFIG_AVX2_OPT
--    buffer_zero_avx2,
--#endif
--};
--
--static unsigned best_accel(void)
--{
--#ifdef CONFIG_AVX2_OPT
--    unsigned info = cpuinfo_init();
--
--    if (info & CPUINFO_AVX2) {
--        return 2;
--    }
--#endif
--    return 1;
--}
--
--#elif defined(__aarch64__) && defined(__ARM_NEON)
--#include <arm_neon.h>
--
--/*
-- * Helper for preventing the compiler from reassociating
-- * chains of binary vector operations.
-- */
--#define REASSOC_BARRIER(vec0, vec1) asm("" : "+w"(vec0), "+w"(vec1))
--
--static bool buffer_is_zero_simd(const void *buf, size_t len)
--{
--    uint32x4_t t0, t1, t2, t3;
--
--    /* Align head/tail to 16-byte boundaries.  */
--    const uint32x4_t *p = QEMU_ALIGN_PTR_DOWN(buf + 16, 16);
--    const uint32x4_t *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 16);
--
--    /* Unaligned loads at head/tail.  */
--    t0 = vld1q_u32(buf) | vld1q_u32(buf + len - 16);
--
--    /* Collect a partial block at tail end.  */
--    t1 = e[-7] | e[-6];
--    t2 = e[-5] | e[-4];
--    t3 = e[-3] | e[-2];
--    t0 |= e[-1];
--    REASSOC_BARRIER(t0, t1);
--    REASSOC_BARRIER(t2, t3);
--    t0 |= t1;
--    t2 |= t3;
--    REASSOC_BARRIER(t0, t2);
--    t0 |= t2;
--
--    /*
--     * Loop over complete 128-byte blocks.
--     * With the head and tail removed, e - p >= 14, so the loop
--     * must iterate at least once.
--     */
--    do {
--        /*
--         * Reduce via UMAXV.  Whatever the actual result,
--         * it will only be zero if all input bytes are zero.
--         */
--        if (unlikely(vmaxvq_u32(t0) != 0)) {
--            return false;
--        }
--
--        t0 = p[0] | p[1];
--        t1 = p[2] | p[3];
--        t2 = p[4] | p[5];
--        t3 = p[6] | p[7];
--        REASSOC_BARRIER(t0, t1);
--        REASSOC_BARRIER(t2, t3);
--        t0 |= t1;
--        t2 |= t3;
--        REASSOC_BARRIER(t0, t2);
--        t0 |= t2;
--        p += 8;
--    } while (p < e - 7);
--
--    return vmaxvq_u32(t0) == 0;
--}
--
--#define best_accel() 1
--static biz_accel_fn const accel_table[] = {
--    buffer_is_zero_int_ge256,
--    buffer_is_zero_simd,
--};
--#else
--#define best_accel() 0
--static biz_accel_fn const accel_table[1] = {
--    buffer_is_zero_int_ge256
--};
--#endif
-+#include "host/bufferiszero.h.inc"
- 
- static biz_accel_fn buffer_is_zero_accel;
- static unsigned accel_index;
--- 
-2.34.1
+On Wed, Jun 5, 2024 at 12:45=E2=80=AFPM Michal Privoznik <mprivozn@redhat.c=
+om> wrote:
+>
+> If memory-backend-{file,ram} has a size that's not aligned to
+> underlying page size it is not only wasteful, but also may lead
+> to hard to debug behaviour. For instance, in case
+> memory-backend-file and hugepages, madvise() and mbind() fail.
+> Rightfully so, page is the smallest unit they can work with. And
+> even though an error is reported, the root cause it not very
+> clear:
+>
+>   qemu-system-x86_64: Couldn't set property 'dump' on 'memory-backend-fil=
+e': Invalid argument
+>
+> After this commit:
+>
+>   qemu-system-x86_64: backend 'memory-backend-file' memory size must be m=
+ultiple of 2 MiB
+>
+> Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Tested-by: Mario Casquero <mcasquer@redhat.com>
+> ---
+>  backends/hostmem.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/backends/hostmem.c b/backends/hostmem.c
+> index 012a8c190f..4d6c69fe4d 100644
+> --- a/backends/hostmem.c
+> +++ b/backends/hostmem.c
+> @@ -20,6 +20,7 @@
+>  #include "qom/object_interfaces.h"
+>  #include "qemu/mmap-alloc.h"
+>  #include "qemu/madvise.h"
+> +#include "qemu/cutils.h"
+>  #include "hw/qdev-core.h"
+>
+>  #ifdef CONFIG_NUMA
+> @@ -337,6 +338,7 @@ host_memory_backend_memory_complete(UserCreatable *uc=
+, Error **errp)
+>      HostMemoryBackendClass *bc =3D MEMORY_BACKEND_GET_CLASS(uc);
+>      void *ptr;
+>      uint64_t sz;
+> +    size_t pagesize;
+>      bool async =3D !phase_check(PHASE_LATE_BACKENDS_CREATED);
+>
+>      if (!bc->alloc) {
+> @@ -348,6 +350,14 @@ host_memory_backend_memory_complete(UserCreatable *u=
+c, Error **errp)
+>
+>      ptr =3D memory_region_get_ram_ptr(&backend->mr);
+>      sz =3D memory_region_size(&backend->mr);
+> +    pagesize =3D qemu_ram_pagesize(backend->mr.ram_block);
+> +
+> +    if (!QEMU_IS_ALIGNED(sz, pagesize)) {
+> +        g_autofree char *pagesize_str =3D size_to_str(pagesize);
+> +        error_setg(errp, "backend '%s' memory size must be multiple of %=
+s",
+> +                   object_get_typename(OBJECT(uc)), pagesize_str);
+> +        return;
+> +    }
+>
+>      if (backend->merge &&
+>          qemu_madvise(ptr, sz, QEMU_MADV_MERGEABLE)) {
+> --
+> 2.44.1
+>
+>
 
 
