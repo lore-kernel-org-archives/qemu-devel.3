@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F9CAC27C54
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D3DDC41513
 	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 11:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFBdw-0007fC-TR; Thu, 06 Jun 2024 07:50:56 -0400
+	id 1sFBe4-0007mQ-By; Thu, 06 Jun 2024 07:51:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sFBdu-0007eV-GR
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 07:50:54 -0400
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ id 1sFBe3-0007le-CZ
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 07:51:03 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sFBdr-0000s6-OB
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 07:50:54 -0400
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-52b8b638437so933728e87.3
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 04:50:51 -0700 (PDT)
+ id 1sFBe0-0000tc-ES
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 07:51:03 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-57a2ed9af7dso1229349a12.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 04:50:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717674649; x=1718279449; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717674658; x=1718279458; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sULh2Lp00FVZSOqTk/S9hH2fFR3kYyqs56rr8mBrl0s=;
- b=oZetOmDOntfrU6Dcc5o3q5Kv6wlxmSngumEcaXTjougnjyyZ+ODeWw8/1buNXLEiTh
- sDjAsAOQNpUeUqSYGUB7r9+iN/uPBlxTaSNGXk/PtQmgIv/NROtOCeNaOqPib6UqtBuf
- eE4NUMsXSZTuVPt1t39sI5q4skY13gcczntkL0ASPApYXuVXXkWSI2YliqhvJfHWWqFi
- 389q1O16jfJgJIet7f6ft6NrczD6fwDsOrOMYHySCNkNQf1kXjeLAdPkpmydLDevtL4H
- dQaQ6iYw93HhajMJdHSu72ln8KPCC4YBNIG7xpm2QTNyBY2bhlpjTkXMe0vRJXT5UgaF
- vBMA==
+ bh=HEiaO79EnHcFSWKjr05NL64y0sp0/W9PFgORRJ4kV5Q=;
+ b=MGN0z1GECs09TirsXeNl7t807yhwrJjHbYrmrBnpopkC1d4xhxFkmFk90KC5sb4lSe
+ RaPXpSH1YjyyVX5y5iKJSecGuNf3L69nbUnalzp3kDPQYZHGcF849afirPStdMthO9gm
+ nT5/RLCxCi4oRly8oipKoLve4N56B5xwUI46lL09gcd4wHXVc2moKeTHYgsa9HxBSWEJ
+ FViQAnegTcD11mfJ1QFaBydQDaRtmnmej8JoLoYffG6A//m3Ep8i4AJPuPbvYYMpoRgY
+ LUEdF9ywXYVHZaM9LmIpACh2vARffJ+0xuCKJWj0rkBRYLexYVV/pgOtaopALp3nCpj0
+ SD5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717674649; x=1718279449;
+ d=1e100.net; s=20230601; t=1717674658; x=1718279458;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sULh2Lp00FVZSOqTk/S9hH2fFR3kYyqs56rr8mBrl0s=;
- b=HIbj8sV8hHOpaNPJuDVbtwP2n+HnYGGfUVGJ7Bh4X8/BqLB73JAKxlP0UAwUSp8gsk
- 0p77N8fZ7W6ZGlpFXtCmXVIzyL5sYTlBhdPs6A9SINYsQdD1cPphYur5moeJW6nN0uFT
- jLXCcJFoDSHS1/rywEWwMdH8W1XKSPUMPs6EjD7cuiaD5FDlSSwQsn7s+700E9Hg20a5
- sbYgqAk8izfTRdQ0iHcJrx4wnTvSwLVBwDu4dQslGgKGkV6PAJncXE9SrdCFbePmX/KJ
- cH+9PcVeQHSdXxOq1an2JBvYZRjpP9tg9AjiU1oG74SYTz2b3vMJwarQrQr5oWjK+ZTJ
- /rrw==
-X-Gm-Message-State: AOJu0Yw1XuJVwRHTzoqhHoGME0kg0SVolZBU5KL+omLnYVnfGgyuNVpS
- gf2tS12hurt9F37qBkvqCDs8sBGAqHBygiXlAvM02kAcmf5ZnDTrQcWYW5oqR2c=
-X-Google-Smtp-Source: AGHT+IE+ppdxdWn3D8KFrRB+sx1Lds36ECOLiHs/P5ITaO2sIrAjby7KR9nW+6MJ2YbznItJ0+EAlg==
-X-Received: by 2002:ac2:551d:0:b0:52b:aa2f:d8a1 with SMTP id
- 2adb3069b0e04-52bab4dd17emr2589986e87.20.1717674648825; 
- Thu, 06 Jun 2024 04:50:48 -0700 (PDT)
+ bh=HEiaO79EnHcFSWKjr05NL64y0sp0/W9PFgORRJ4kV5Q=;
+ b=fwlwfucCEc5y0U9DaOuoaJW15Uhb/xkVQdgEi//JPkFLP/aUeZZRwRoJ7ehHNlrh9v
+ kSOEC4Oz9KuZo1YPrBFL9PSS7eMS3SNShDWAvt96SVR45jvt98jtBJ7WDJhZkx3RcNz5
+ FRv9742Uf4CFsqf7ywqZmFIn9PvMOm/45vzRWYA/9xRaj7utusC8hRZB910lJe7pXDmJ
+ 1JcQYkEqGZCxbEwyDVnRToqgrOU98tUljIMvmdudPcDnt67bl061rheY2Bp1nz6ZjgyX
+ 9x6KhyapdnzVSPa/V7giHIaLe+tY4J60tKYqhtzvMfivhfZcqKguIDcBv1LN8z2QbbqI
+ SfXg==
+X-Gm-Message-State: AOJu0YzHA91qiITwzLjDn5vCoj8fLCrri20h7x8Qk+FIEw8LEzQ2c7n/
+ 1gm1sy+hj4PXK0kMw61Wm6DZcMAvnyzGhYPDnrZ2xIcp0O2qsCc1VRmZSLXTUK8=
+X-Google-Smtp-Source: AGHT+IGyTifOTlv4a5c2l9SvnG9z9T+rJ2flE5ulMnWnie7F8j69UTDG3ew45mIm27AEux+fsl+CsQ==
+X-Received: by 2002:a50:8e45:0:b0:578:6410:1d50 with SMTP id
+ 4fb4d7f45d1cf-57a8bc912abmr4241181a12.34.1717674657759; 
+ Thu, 06 Jun 2024 04:50:57 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c806ec8e4sm86566966b.113.2024.06.06.04.50.48
+ 4fb4d7f45d1cf-57aae12ce21sm971618a12.49.2024.06.06.04.50.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Jun 2024 04:50:48 -0700 (PDT)
+ Thu, 06 Jun 2024 04:50:52 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1769A5FA1A;
- Thu,  6 Jun 2024 12:50:48 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 147345FA2E;
+ Thu,  6 Jun 2024 12:50:49 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>
-Subject: [PULL 02/12] docs/devel: update references to centos to non-versioned
- container
-Date: Thu,  6 Jun 2024 12:50:37 +0100
-Message-Id: <20240606115047.421045-3-alex.bennee@linaro.org>
+Subject: [PULL 12/12] scripts/ci: drive ubuntu/build-environment.yml from
+ lcitool
+Date: Thu,  6 Jun 2024 12:50:47 +0100
+Message-Id: <20240606115047.421045-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240606115047.421045-1-alex.bennee@linaro.org>
 References: <20240606115047.421045-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x130.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,47 +101,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->From the website:
+Now lcitool can write the package list for us we no longer need to
+duplicate the information directly in build-environment.
 
-"After May 31, 2024, CentOS Stream 8 will be archived and no further
-updates will be provided."
-
-We have updated a few bits but there are still references that need
-fixing. Rather than bump I've replaced them with references to the
-Debian image so we don't have to bump at the next update.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240603175328.3823123-3-alex.bennee@linaro.org>
+Message-Id: <20240603175328.3823123-13-alex.bennee@linaro.org>
 
-diff --git a/docs/devel/testing.rst b/docs/devel/testing.rst
-index fa28e3ecb2..23d3f44f52 100644
---- a/docs/devel/testing.rst
-+++ b/docs/devel/testing.rst
-@@ -387,9 +387,9 @@ make target):
+diff --git a/scripts/ci/setup/ubuntu/build-environment.yml b/scripts/ci/setup/ubuntu/build-environment.yml
+index e82097b465..edf1900b3e 100644
+--- a/scripts/ci/setup/ubuntu/build-environment.yml
++++ b/scripts/ci/setup/ubuntu/build-environment.yml
+@@ -32,135 +32,18 @@
+       when:
+         - ansible_facts['distribution'] == 'Ubuntu'
  
- .. code::
+-    # lcitool variables -f json ubuntu-2204 qemu | jq -r '.pkgs[]' | xargs -n 1 echo "-"
+-    - name: Install basic packages to build QEMU on Ubuntu 22.04
+-      package:
+-        name:
+-          - bash
+-          - bc
+-          - bison
+-          - bsdextrautils
+-          - bzip2
+-          - ca-certificates
+-          - ccache
+-          - clang
+-          - dbus
+-          - debianutils
+-          - diffutils
+-          - exuberant-ctags
+-          - findutils
+-          - flex
+-          - g++
+-          - gcc
+-          - gcovr
+-          - genisoimage
+-          - gettext
+-          - git
+-          - hostname
+-          - libaio-dev
+-          - libasan5
+-          - libasound2-dev
+-          - libattr1-dev
+-          - libbpf-dev
+-          - libbrlapi-dev
+-          - libbz2-dev
+-          - libc6-dev
+-          - libcacard-dev
+-          - libcap-ng-dev
+-          - libcapstone-dev
+-          - libcmocka-dev
+-          - libcurl4-gnutls-dev
+-          - libdaxctl-dev
+-          - libdrm-dev
+-          - libepoxy-dev
+-          - libfdt-dev
+-          - libffi-dev
+-          - libgbm-dev
+-          - libgcrypt20-dev
+-          - libglib2.0-dev
+-          - libglusterfs-dev
+-          - libgnutls28-dev
+-          - libgtk-3-dev
+-          - libibumad-dev
+-          - libibverbs-dev
+-          - libiscsi-dev
+-          - libjemalloc-dev
+-          - libjpeg-turbo8-dev
+-          - libjson-c-dev
+-          - liblttng-ust-dev
+-          - liblzo2-dev
+-          - libncursesw5-dev
+-          - libnfs-dev
+-          - libnuma-dev
+-          - libpam0g-dev
+-          - libpcre2-dev
+-          - libpixman-1-dev
+-          - libpng-dev
+-          - libpulse-dev
+-          - librbd-dev
+-          - librdmacm-dev
+-          - libsasl2-dev
+-          - libsdl2-dev
+-          - libsdl2-image-dev
+-          - libseccomp-dev
+-          - libslirp-dev
+-          - libsnappy-dev
+-          - libspice-protocol-dev
+-          - libssh-dev
+-          - libsystemd-dev
+-          - libtasn1-6-dev
+-          - libubsan1
+-          - libudev-dev
+-          - liburing-dev
+-          - libusb-1.0-0-dev
+-          - libusbredirhost-dev
+-          - libvdeplug-dev
+-          - libvirglrenderer-dev
+-          - libvte-2.91-dev
+-          - libxml2-dev
+-          - libzstd-dev
+-          - llvm
+-          - locales
+-          - make
+-          - meson
+-          - multipath-tools
+-          - ncat
+-          - nettle-dev
+-          - ninja-build
+-          - openssh-client
+-          - pkgconf
+-          - python3
+-          - python3-numpy
+-          - python3-opencv
+-          - python3-pillow
+-          - python3-pip
+-          - python3-sphinx
+-          - python3-sphinx-rtd-theme
+-          - python3-venv
+-          - python3-yaml
+-          - rpm2cpio
+-          - sed
+-          - sparse
+-          - systemtap-sdt-dev
+-          - tar
+-          - tesseract-ocr
+-          - tesseract-ocr-eng
+-          - texinfo
+-          - xfslibs-dev
+-          - zlib1g-dev
+-        state: present
++    # the package lists are updated by "make lcitool-refresh"
++    - name: Include package lists based on OS and architecture
++      include_vars:
++        file: "ubuntu-2204-{{ ansible_facts['architecture'] }}.yaml"
+       when:
+         - ansible_facts['distribution'] == 'Ubuntu'
+         - ansible_facts['distribution_version'] == '22.04'
++        - ansible_facts['architecture'] == 'aarch64' or ansible_facts['architecture'] == 'x86_64'
  
--  make docker-test-build@centos8
-+  make docker-test-build@debian
- 
--This will create a container instance using the ``centos8`` image (the image
-+This will create a container instance using the ``debian`` image (the image
- is downloaded and initialized automatically), in which the ``test-build`` job
- is executed.
- 
-@@ -410,8 +410,8 @@ locally by using the ``NOCACHE`` build option:
- Images
- ~~~~~~
- 
--Along with many other images, the ``centos8`` image is defined in a Dockerfile
--in ``tests/docker/dockerfiles/``, called ``centos8.docker``. ``make docker-help``
-+Along with many other images, the ``debian`` image is defined in a Dockerfile
-+in ``tests/docker/dockerfiles/``, called ``debian.docker``. ``make docker-help``
- command will list all the available images.
- 
- A ``.pre`` script can be added beside the ``.docker`` file, which will be
+-    # not all packages are available for all architectures
+-    - name: Install additional packages to build QEMU on Ubuntu 22.04
++    - name: Install packages for QEMU on Ubuntu 22.04
+       package:
+-        name:
+-          - libpmem-dev
+-          - libspice-server-dev
+-          - libxen-dev
+-        state: present
++        name: "{{ packages }}"
+       when:
+         - ansible_facts['distribution'] == 'Ubuntu'
+         - ansible_facts['distribution_version'] == '22.04'
 -- 
 2.39.2
 
