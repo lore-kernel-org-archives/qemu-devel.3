@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23BB1C27C54
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 11:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03D11C27C54
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 11:21:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFB9k-0004Wl-LO; Thu, 06 Jun 2024 07:19:44 -0400
+	id 1sFBAr-00057L-JM; Thu, 06 Jun 2024 07:20:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sFB9h-0004WC-Vz
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 07:19:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sFBAn-00050u-FK
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 07:20:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sFB9g-0002y3-4V
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 07:19:41 -0400
+ id 1sFBAl-0003H6-So
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 07:20:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717672778;
+ s=mimecast20190719; t=1717672846;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DAr959IikBnh+1gcAfiZp/le8GmAyaYeByGFdopl620=;
- b=H54jXIIv3DFEywqjtTZRCOJgHnnH/9dZae4bY4CeSBJDFWzco6w62bq12Z9dDJe0Io92QU
- mHIohea7f4lIcLVwWTa8rmWrOqvRY7d6Lfu52ityP6Fk4ErfZndhDg4rG2sZT073+lwySJ
- 09m57bg4u5lP7R2T7aDd0e9WLkkkG8w=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=B/IgZm9Ewgr4azTgnx7GjqKuxDFnKWG4sNnWFn5fIGU=;
+ b=bKpRsPpTozbXZXLMW4++4eHEx1W6XpY6ekuKvryaWGQCgBrOsXgo+LFFVgbXZZ4oVbLj9y
+ IEtAqSnKxZpM0gLhE1O+ZmQvIRbQ3XGcOpifgFbDXRq6nfkxVXMxl0eyku7FLQrC4E5w+B
+ nd7tELQ1nxJLX6as+M/mwTKbHgebL8g=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-361-rS6DxxACM7OFYU2gmhn5eg-1; Thu,
- 06 Jun 2024 07:19:35 -0400
-X-MC-Unique: rS6DxxACM7OFYU2gmhn5eg-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-130-eEfiJPErOD6k0rWnW0WsTg-1; Thu,
+ 06 Jun 2024 07:20:43 -0400
+X-MC-Unique: eEfiJPErOD6k0rWnW0WsTg-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B6681956071; Thu,  6 Jun 2024 11:19:33 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 001BC19344EE; Thu,  6 Jun 2024 11:20:42 +0000 (UTC)
 Received: from redhat.com (unknown [10.39.193.201])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 811251955F14; Thu,  6 Jun 2024 11:19:30 +0000 (UTC)
-Date: Thu, 6 Jun 2024 12:19:26 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 65B1819541B2; Thu,  6 Jun 2024 11:20:38 +0000 (UTC)
+Date: Thu, 6 Jun 2024 12:20:35 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mads Ynddal <mads@ynddal.dk>
-Subject: Re: [PATCH] tracetool: Remove unused vcpu.py script
-Message-ID: <ZmGbPipv9bQcztmS@redhat.com>
-References: <20240606102631.78152-1-philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>
+Subject: Re: [PATCH 1/5] backends/tpm: Remove newline character in trace event
+Message-ID: <ZmGbg14QuV64Fcln@redhat.com>
+References: <20240606103943.79116-1-philmd@linaro.org>
+ <20240606103943.79116-2-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240606102631.78152-1-philmd@linaro.org>
+In-Reply-To: <20240606103943.79116-2-philmd@linaro.org>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
@@ -92,17 +92,15 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 06, 2024 at 12:26:31PM +0200, Philippe Mathieu-Daudé wrote:
-> vcpu.py is pointless since commit 89aafcf2a7 ("trace:
-> remove code that depends on setting vcpu"), remote it.
+On Thu, Jun 06, 2024 at 12:39:39PM +0200, Philippe Mathieu-Daudé wrote:
+> Split the 'tpm_util_show_buffer' event in two to avoid
+> using a newline character.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  meson.build                   |  1 -
->  scripts/tracetool/__init__.py |  8 +----
->  scripts/tracetool/vcpu.py     | 59 -----------------------------------
->  3 files changed, 1 insertion(+), 67 deletions(-)
->  delete mode 100644 scripts/tracetool/vcpu.py
+>  backends/tpm/tpm_util.c   | 5 +++--
+>  backends/tpm/trace-events | 3 ++-
+>  2 files changed, 5 insertions(+), 3 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
