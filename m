@@ -4,63 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E6DC25B75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54BFDC27C54
 	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 14:38:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFEFb-0007lm-2W; Thu, 06 Jun 2024 10:37:59 -0400
+	id 1sFEFx-0007sV-Ji; Thu, 06 Jun 2024 10:38:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sFEFa-0007la-2O
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 10:37:58 -0400
+ id 1sFEFw-0007rm-3M
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 10:38:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sFEFY-0001yW-9R
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 10:37:57 -0400
+ id 1sFEFu-00025J-Gw
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 10:38:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717684674;
+ s=mimecast20190719; t=1717684697;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=XTL7wDH/bkQv8y1LPQlgV4mxjFz6bvErRSUqQto+yNU=;
- b=Ib4ahi/OqazmBF6xnkjkICsLZoEeszKK0vL5UBWG4O5VJQH0gubVF1gZKiMTK+AVbJNu17
- NYGC0yRWAK0QmZoFuUlprvirx71ZjieDvQtBTGMY6G1A5sI6439i94LaDRY3SZL4tZtfsP
- iM32tCBfX0KcmVeDejlAJszR3HAAiaM=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KFE623t2Oh5JcEXjCS4LkBJKhWXx0esJCEHBIXJ8r8Q=;
+ b=WKQLhcTCHwCQqtdh8PmpHIy7B/vwAhWyEuzXMB/G2AWoVU8rzFhZb1waaMknNUHpG3tBDg
+ GLX2DLZB+zNyq38dCtw+jbcSb8F6YMbU8UI6wdMqMe9UhyRTFVTlX28fdKOuM3XvcTivwd
+ RfCeuiJJprqWmEopOS3Tbrl9SPgk+EA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-Uc8bOvDDM3Cqd4tSbFpJ0Q-1; Thu,
- 06 Jun 2024 10:37:50 -0400
-X-MC-Unique: Uc8bOvDDM3Cqd4tSbFpJ0Q-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-SAC3ELvYNdu5OegRtgYgvw-1; Thu,
+ 06 Jun 2024 10:38:16 -0400
+X-MC-Unique: SAC3ELvYNdu5OegRtgYgvw-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6B2F219B9AAF; Thu,  6 Jun 2024 14:37:48 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 093B5196CDEA; Thu,  6 Jun 2024 14:38:15 +0000 (UTC)
 Received: from redhat.com (unknown [10.39.193.201])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E16A63001E83; Thu,  6 Jun 2024 14:37:45 +0000 (UTC)
-Date: Thu, 6 Jun 2024 15:37:42 +0100
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7D3FF1955F4B; Thu,  6 Jun 2024 14:38:11 +0000 (UTC)
+Date: Thu, 6 Jun 2024 15:38:08 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Gerd Hoffmann <kraxel@redhat.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v3 3/4] vga/cirrus: mark as not secure
-Message-ID: <ZmHJtrpvbMorfUm1@redhat.com>
+Subject: Re: [PATCH v3 1/4] qom: allow to mark objects as deprecated or not
+ secure.
+Message-ID: <ZmHJ0Ddazxb8AMr1@redhat.com>
 References: <20240606143010.1318226-1-kraxel@redhat.com>
- <20240606143010.1318226-4-kraxel@redhat.com>
+ <20240606143010.1318226-2-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240606143010.1318226-4-kraxel@redhat.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240606143010.1318226-2-kraxel@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -87,47 +91,22 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 06, 2024 at 04:30:09PM +0200, Gerd Hoffmann wrote:
-
-What's the justification for declaring cirrus to be insecure ?
-
-It is shipped as a driver in RHEL for years, was the default graphics
-adapter for most of this time, and bugs in it are considered CVEs
-still.
-
+On Thu, Jun 06, 2024 at 04:30:07PM +0200, Gerd Hoffmann wrote:
+> Add flags to ObjectClass for objects which are deprecated or not secure.
+> Add 'deprecated' and 'not-secure' bools to ObjectTypeInfo, report in
+> 'qom-list-types'.  Print the flags when listing devices via '-device
+> help'.
+> 
 > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 > ---
->  hw/display/cirrus_vga.c     | 1 +
->  hw/display/cirrus_vga_isa.c | 1 +
->  2 files changed, 2 insertions(+)
-> 
-> diff --git a/hw/display/cirrus_vga.c b/hw/display/cirrus_vga.c
-> index 150883a97166..1f4c55b21415 100644
-> --- a/hw/display/cirrus_vga.c
-> +++ b/hw/display/cirrus_vga.c
-> @@ -3007,6 +3007,7 @@ static void cirrus_vga_class_init(ObjectClass *klass, void *data)
->      dc->vmsd = &vmstate_pci_cirrus_vga;
->      device_class_set_props(dc, pci_vga_cirrus_properties);
->      dc->hotpluggable = false;
-> +    klass->not_secure = true;
->  }
->  
->  static const TypeInfo cirrus_vga_info = {
-> diff --git a/hw/display/cirrus_vga_isa.c b/hw/display/cirrus_vga_isa.c
-> index 84be51670ed8..535a631b4b09 100644
-> --- a/hw/display/cirrus_vga_isa.c
-> +++ b/hw/display/cirrus_vga_isa.c
-> @@ -85,6 +85,7 @@ static void isa_cirrus_vga_class_init(ObjectClass *klass, void *data)
->      dc->realize = isa_cirrus_vga_realizefn;
->      device_class_set_props(dc, isa_cirrus_vga_properties);
->      set_bit(DEVICE_CATEGORY_DISPLAY, dc->categories);
-> +    klass->not_secure = true;
->  }
->  
->  static const TypeInfo isa_cirrus_vga_info = {
-> -- 
-> 2.45.2
-> 
+>  include/qom/object.h  | 3 +++
+>  qom/qom-qmp-cmds.c    | 8 ++++++++
+>  system/qdev-monitor.c | 8 ++++++++
+>  qapi/qom.json         | 8 +++++++-
+>  4 files changed, 26 insertions(+), 1 deletion(-)
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
 
 With regards,
 Daniel
