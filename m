@@ -4,94 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 645B4C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 11:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC3A8C27C54
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 11:04:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFAu4-0006O4-O5; Thu, 06 Jun 2024 07:03:32 -0400
+	id 1sFAuh-0006Zx-PX; Thu, 06 Jun 2024 07:04:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1sFAty-0006MD-Sv
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 07:03:29 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sFAug-0006Zg-JU; Thu, 06 Jun 2024 07:04:10 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1sFAtu-0007za-1x
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 07:03:24 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-421572bb0f0so9581995e9.0
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 04:03:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sFAue-00084u-PO; Thu, 06 Jun 2024 07:04:10 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-57a30b3a6cbso946937a12.1; 
+ Thu, 06 Jun 2024 04:04:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717671800; x=1718276600; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=YDtFm+bfOyx7ii8ukPFhPK6OMhezvNjUdfnyr+Oqe5I=;
- b=Lw/Q8hAX2TK7JWZW+adv63l8NPOx7qwADGoez3UsbGyv0wcWcJnN+0OLo+z59BvYkr
- q6lIrD5LBzLwTZlY1FUNE4Dyn9OgD5IbXbLvFau0smgaD0UJlTp0k30YjvENfWuMypaZ
- PUg9GphvKu2fbU6+luii/s4Xb5sFZ5x/D+koSApD06d2Y74M54uncKjn3077bURi+i8X
- BzytwoQcGuo6RhqZSFOg7mYNVjjzYp4QI7ssIUknUxAQ7c+LTXUCWyGhqZEsHhTIpQT2
- 8NQPvRHZDdwuaq+NX/DInsHZuJctcudnJSfv7zLVuvBdBn+8SNhzeDgRRzUb+f1er+as
- UeEA==
+ d=gmail.com; s=20230601; t=1717671847; x=1718276647; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=STTozLZIBEMevP5FO7VZu3tzLVa//G2nSrEQlFHlMBY=;
+ b=PQiY2XIY02B7btsGLuxsTazbkUuidEjBZVDoZgerRBE9onVuW11019gerY35xUtCbK
+ yQK1bPmdLjZ3kAS040iaeubKcshYxT73djip9DlzLKicazBCLZehMvq9Dxy1x/8t734G
+ e7dRlfTU6vqMQXKN/vUHnxe4xNfFhWg9zUeIv7edmxg4nqp8PwLxdvQI3hZOVyGT3crK
+ nx9eoOwy7l7kACoCs1eQxd5V7YxQk908tkLRyMxJ1nlslrb4u3PeqT3MtZWLw9/TKeTY
+ 129zxUZFzzJ3pbSP3C3JBUu9ma/Z0j24uLp6Y+mutInTVQAe1xDoyjNmqU05AsqTQ78v
+ W+bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717671800; x=1718276600;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YDtFm+bfOyx7ii8ukPFhPK6OMhezvNjUdfnyr+Oqe5I=;
- b=LV4jll23GkHDCdG9pTsDyX/2PAZfzNT2L5vL/s1oJ2w0MLBhMAal997UFt1psYtC28
- QMJ3Fsi+gdD6sF+tqhviDAE/gyni+GJ6ogKXiCcnmTqp1WP89kxk8nf0cjRLYAb39QdB
- WKBI9zLyC7RZKw4c/u4iU8MI4/ytOXrCekYV/ysS16JNl0ESe4V3R9KQm9PU3HLQk1ng
- F6K0HTHtVCW40pbx3n5s1bgxUcEvnyoEgxmuVq/3gxf7R3U25iv18KJ+A/9O+hku1Ojq
- IpFi0lJrw7C2x+CE9gAFhjZlGfYxtSUJCyd7OjAKcsdwxk6z7N5btmdwcYgXLEq7gn3n
- 1YOg==
+ d=1e100.net; s=20230601; t=1717671847; x=1718276647;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=STTozLZIBEMevP5FO7VZu3tzLVa//G2nSrEQlFHlMBY=;
+ b=o/KapKZFMnl3kRRrVEwN+eVtZU5++MLyeI+n5me8eXyITYU9DG8UzelfzezoQYuMcX
+ 9CxPOnQeXqZwbtan7j8S4gogjYuFkb8l+ZnqFdCVkW5PWdlHl0FACOguj3mxWTeLvnFG
+ AUlV4anHdtpRYut8Ix3KThtpLJDxFe8IWKpVW+CV16E5wdlkLbI/7Ew9V7GwDI0P76DD
+ 9Q+Ez3HC7r4sdeQMCedSofwz6EuiwYXs+BpHBJjsKJ89Nxv2FXpHa2laquKMeFkfZ5I3
+ INFmrgeCzCF2PTs7sgJjYidY0ozgPFM8jIh3tBIX5G96dSSnT/JR+QclHpy3hSUwzi4R
+ J3uA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXb/VlMCfBe0gFyqzGMX5E3Q4YbnMeEPIc1W6ZzKSaH9LMgCXblR5lSHz+Paq8+8z80ST+wzcY6+aWV/2Y6TkxTagv1gAU=
-X-Gm-Message-State: AOJu0Yyq5Eiqn3ztcbziMTk14nGHYk4zf9lJVvMITLveyxUApey8mroD
- uHvfTAzoHetOofLUsdcPTtrVuKaD6GPb+76UcMP7zLpSiW/Omdm3HZby4Ua1+NM=
-X-Google-Smtp-Source: AGHT+IEswG3HUBTA7tTnLvzBdqZFTi6pG25bq9dEXjSuS6NVl+yXPBTIpbWDfzN1df/5WtRisGiuaQ==
-X-Received: by 2002:a5d:4ec6:0:b0:35d:bed3:634e with SMTP id
- ffacd0b85a97d-35e8833a0ffmr3705182f8f.30.1717671800194; 
- Thu, 06 Jun 2024 04:03:20 -0700 (PDT)
-Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35ef5d29b1bsm1258845f8f.3.2024.06.06.04.03.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Jun 2024 04:03:19 -0700 (PDT)
-Date: Thu, 6 Jun 2024 12:03:34 +0100
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-To: Gavin Shan <gshan@redhat.com>
-Cc: Itaru Kitayama <itaru.kitayama@linux.dev>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-arm <qemu-arm@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ard Biesheuvel <ardb@kernel.org>
-Subject: Re: Unexpected error in rme_configure_one() at
- ../target/arm/kvm-rme.c:159
-Message-ID: <20240606110334.GA3707954@myrica>
-References: <CB05CAA2-9301-45F6-8AE3-A2E27A160CDF@linux.dev>
- <cbd630d7-01e8-49ba-9c8b-a6514d898ed2@redhat.com>
- <20240531150922.GA83195@myrica>
- <bd1f84bd-e23c-4f4b-bc0b-a2a1b70081f4@redhat.com>
- <20240603082402.GA25688@myrica>
- <2c81cb47-b9bc-4875-a7fb-49c3a8ab6713@redhat.com>
- <20240604111517.GB875061@myrica>
- <e7748b25-a01b-49e9-bbeb-cd03abb91cf6@redhat.com>
- <20240605155608.GA3251699@myrica>
- <1089f920-aff9-4d16-829d-5d058908a11e@redhat.com>
+ AJvYcCU4fAG19cv5qhrMm0FUQK83/mfZLejzzwto/UWE8OPBu5R3NtWaC4wmCRcBKT769xwOiKy4S3ykRvnG8sLTTAJ8K9Czj5FBl/MNokQ+F0U0Xs8rtcsEodMK+z4=
+X-Gm-Message-State: AOJu0YzBnoHIBzIAW8/nPcTya/wcN063mG42yAE+tvzIIIxMhXyOPSgR
+ J2BKMasQhHFXdjnUmsDVElWdHJYMS/6CGnhpo9x2+o/vbZGoY3WwhP5ndOFw/3a+pdu6gn5CLBb
+ 4gnBBnVdO2OiX5vdRhcDUszPxxWg=
+X-Google-Smtp-Source: AGHT+IEZxQxxLnSJuSZjgr7/zaiLkd6U5BC3oSmzGNbt8RJcaCi2jourhyY0YcFolCl6GE1Q2dRDQDcjkWipG7i4QOs=
+X-Received: by 2002:a50:d716:0:b0:57a:2fd7:c2d1 with SMTP id
+ 4fb4d7f45d1cf-57a8bccb524mr2339254a12.40.1717671846563; Thu, 06 Jun 2024
+ 04:04:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1089f920-aff9-4d16-829d-5d058908a11e@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=jean-philippe@linaro.org; helo=mail-wm1-x331.google.com
+References: <20240606095952.2133-1-andrew.yuan@jaguarmicro.com>
+In-Reply-To: <20240606095952.2133-1-andrew.yuan@jaguarmicro.com>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Thu, 6 Jun 2024 13:03:54 +0200
+Message-ID: <CAJy5ezqq51bJG4O9HA-Pv4sw9rYqGdFW-EezCRPfDbTx=9SwyQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/net: cadence_gem: fix: type2_compare_x_word_0 error
+To: "Andrew.Yuan" <andrew.yuan@jaguarmicro.com>
+Cc: luc.michel@amd.com, alistair@alistair23.me, peter.maydell@linaro.org, 
+ jasowang@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000041586b061a36a4de"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,114 +88,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 06, 2024 at 03:05:02PM +1000, Gavin Shan wrote:
-> > This commit moves the page tables from .rodata to .data. When linking
-> > IdMap.obj into ArmPlatformPrePeiCore.dll, the alignment of the .text
-> > section changes from 0x1000 to 0x800. This change comes from the linker
-> > script putting .rodata into .text. I don't know why the included .rodata
-> > alignment affects the .text alignment, but I don't think it matters here.
-> > 
-> > In GenFw, ScanSections64() calculates a mCoffAlignment as the max
-> > .text/.data/.hii section alignement. Since with this commit, .data
-> > alignement (0x1000) becomes larger than .text (0x800), it picks 0x1000 as
-> > the output text offset, and then WriteSections64() complains that this
-> > offset isn't equal to the input .text alignment modulo 0x1000.
-> > 
-> > The linker script says:
-> > 
-> >    /*
-> >     * The alignment of the .data section should be less than or equal to the
-> >     * alignment of the .text section. This ensures that the relative offset
-> >     * between these sections is the same in the ELF and the PE/COFF versions of
-> >     * this binary.
-> >     */
-> > 
-> > but that's not what we're getting. I don't have a fix yet, other than
-> > forcing the .text and .data alignment to 4k.
-> > 
-> 
-> Jean, thanks for your explanation. Right, the issue is caused by mismatched
-> alignments for ELF and PE/COFF sections. I ever dumped the variables at the
-> failing point, showing the mismatched alignments (0x800 vs 0x1000). Apart from
-> that, the virtual address of 'text' section is aligned to 0x800 instead of
-> 0x1000 after ArmPlatformPrePeiCore.dll is dumped by 'readelf'.
-> 
-> SecHdr->sh_addr:                    0x800              <<< Mismatched alignment between ELF and PE/COFF
-> SecOffset:                          0x1000
-> SymShdr->sh_addr:                   0x800
-> mCoffSectionsOffset[Sym->st_shndx]: 0x1000
-> GenFw: ERROR 3000: Invalid
->   WriteSections64(): /home/gavin/sandbox/CCA/edk2-guest/Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll AARCH64 small code model requires identical ELF and PE/COFF section offsets modulo 4 KB.
-> 
-> # readelf -S Build/ArmVirtQemu-AARCH64/DEBUG_GCC5/AARCH64/ArmPlatformPkg/PrePeiCore/PrePeiCoreUniCore/DEBUG/ArmPlatformPrePeiCore.dll
-> Section Headers:
->   [Nr] Name              Type             Address           Offset
->        Size              EntSize          Flags  Link  Info  Align
->   [ 0]                   NULL             0000000000000000  00000000
->        0000000000000000  0000000000000000           0     0     0
->   [ 1] .text             PROGBITS         0000000000000800  00000800       <<< Aligned to 0x800
->        00000000000051b8  0000000000000000  AX       0     0     2048
-> 
-> With the following changes, I'm able to build the firmware successfully. I don't
-> see how COMMONPAGESIZE is sorted out because I don't find its definition in the
-> source code.
+--00000000000041586b061a36a4de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-It's a ld builtin, set on the command-line with "-z common-page-size=X" by
-Conf/tools_def.txt, in this case I believe DEBUG_GCC5_AARCH64_DLINK_XIPFLAGS. 
+On Thu, Jun 6, 2024 at 12:00=E2=80=AFPM Andrew.Yuan <andrew.yuan@jaguarmicr=
+o.com>
+wrote:
 
-> 
-> diff --git a/BaseTools/Scripts/GccBase.lds b/BaseTools/Scripts/GccBase.lds
-> index 9f27e83bb0..5463df47a9 100644
-> --- a/BaseTools/Scripts/GccBase.lds
-> +++ b/BaseTools/Scripts/GccBase.lds
-> @@ -20,7 +20,8 @@ SECTIONS {
->     */
->    . = PECOFF_HEADER_SIZE;
-> -  .text : ALIGN(CONSTANT(COMMONPAGESIZE)) {
-> +  /* .text : ALIGN(CONSTANT(COMMONPAGESIZE)) { */^M
-> +  .text : ALIGN(4096) {^M
-
-Build (after clean) fails for me if I only change the .text 
-alignment, I need .data as well. So changing Conf/tools_def.txt is easier.
-I'll try to find a proper fix but it will take me some time to understand
-GenFw.
+>         In the Cadence IP for Gigabit Ethernet MAC Part Number: IP7014 IP
+> Rev: R1p12 - Doc Rev: 1.3 User Guide, the specification for the
+> type2_compare_x_word_0 register is as follows:
+>         The byte stored in bits [23:16] is compared against the byte in
+> the received frame from the selected offset+0, and the byte stored in bit=
+s
+> [31:24] is compared against the byte in
+>         the received frame from the selected offset+1.
+>
+>         However, there is an implementation error in the cadence_gem mode=
+l
+> in qemu=EF=BC=9A
+>         the byte stored in bits [31:24] is compared against the byte in
+> the received frame from the selected offset+0
+>
+>         Now, the error code is as follows:
+>         rx_cmp =3D rxbuf_ptr[offset] << 8 | rxbuf_ptr[offset];
+>
+>         and needs to be corrected to=EF=BC=9A
+>         rx_cmp =3D rxbuf_ptr[offset + 1] << 8 | rxbuf_ptr[offset];
+>
+> Signed-off-by: Andrew.Yuan <andrew.yuan@jaguarmicro.com>
+>
 
 
-> > > > Note that the guest edk2 is optional and experimental, you can use direct
-> > > > kernel boot to get a working demo quicker.
-> > > > 
-> > > 
-> > > I never did this before. Could you please provide the detailed steps on this?
-> > 
-> > Removing the -bios parameter to QEMU should be enough. You can also add
-> > 'earlycon' to -append to show early boot errors.
-> > 
-> 
-> I didn't get a chance to try this yet since the host can't be brought up now.
-> I will try this later. I originally thought some sort of boot wrapper is needed
-> so that the kernel image has the capability to boot itself. For example, Mark
-> Rutland's boot wrapper [1] can be leveraged in this case. I don't think Image has
-> the capability to boot itself, right?
+LGTM:
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
-Yes QEMU can set up everything so that the Image boots on its own. What
-the boot-wrapper does is minimal hardware initialization, handling PSCI
-calls and passing the DTB pointer in x0. But that's only needed when using
-the Arm FastModel (boot-wrapper is a lightweight firmware specifically for
-the FastModel). QEMU can do all that itself so you can boot a kernel
-without any firmware.
+At some point it would be nice to add the missing logic for the
+DISABLE_MASK bit that
+extends the compare range from 16 to 32-bits.
 
-Using edk2 in the Realm guest will be needed for example to boot a distro
-image which contains the kernel, but direct kernel boot is useful both for
-prototyping and real-life use cases like confidential containers and some
-cloud VMs.
+Cheers,
+Edgar
 
-Thanks,
-Jean
 
-> 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/mark/boot-wrapper-aarch64.git
-> 
-> Thanks,
-> Gavin
-> 
+
+> ---
+>  hw/net/cadence_gem.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
+> index ec7bf562e5..9c73ded0d3 100644
+> --- a/hw/net/cadence_gem.c
+> +++ b/hw/net/cadence_gem.c
+> @@ -946,7 +946,7 @@ static int get_queue_from_screen(CadenceGEMState *s,
+> uint8_t *rxbuf_ptr,
+>                  break;
+>              }
+>
+> -            rx_cmp =3D rxbuf_ptr[offset] << 8 | rxbuf_ptr[offset];
+> +            rx_cmp =3D rxbuf_ptr[offset + 1] << 8 | rxbuf_ptr[offset];
+>              mask =3D FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, MASK_VALUE)=
+;
+>              compare =3D FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0,
+> COMPARE_VALUE);
+>
+> --
+> 2.37.0.windows.1
+>
+>
+
+--00000000000041586b061a36a4de
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">On Thu, Jun 6, 2024 at 12:00=E2=80=AFPM A=
+ndrew.Yuan &lt;<a href=3D"mailto:andrew.yuan@jaguarmicro.com">andrew.yuan@j=
+aguarmicro.com</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquo=
+te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
+solid rgb(204,204,204);padding-left:1ex">=C2=A0 =C2=A0 =C2=A0 =C2=A0 In the=
+ Cadence IP for Gigabit Ethernet MAC Part Number: IP7014 IP Rev: R1p12 - Do=
+c Rev: 1.3 User Guide, the specification for the type2_compare_x_word_0 reg=
+ister is as follows:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 The byte stored in bits [23:16] is compared aga=
+inst the byte in the received frame from the selected offset+0, and the byt=
+e stored in bits [31:24] is compared against the byte in<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 the received frame from the selected offset+1.<=
+br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 However, there is an implementation error in th=
+e cadence_gem model in qemu=EF=BC=9A<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 the byte stored in bits [31:24] is compared aga=
+inst the byte in the received frame from the selected offset+0<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 Now, the error code is as follows:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 rx_cmp =3D rxbuf_ptr[offset] &lt;&lt; 8 | rxbuf=
+_ptr[offset];<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 and needs to be corrected to=EF=BC=9A<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 rx_cmp =3D rxbuf_ptr[offset + 1] &lt;&lt; 8 | r=
+xbuf_ptr[offset];<br>
+<br>
+Signed-off-by: Andrew.Yuan &lt;<a href=3D"mailto:andrew.yuan@jaguarmicro.co=
+m" target=3D"_blank">andrew.yuan@jaguarmicro.com</a>&gt;<br></blockquote><d=
+iv><br></div><div><br></div><div>LGTM:</div><div>Reviewed-by: Edgar E. Igle=
+sias &lt;<a href=3D"mailto:edgar.iglesias@amd.com">edgar.iglesias@amd.com</=
+a>&gt;<br></div><div><br></div><div>At some point it would be nice to add t=
+he missing logic for the DISABLE_MASK bit that</div><div>extends the compar=
+e range from 16 to 32-bits.</div><div><br></div><div>Cheers,</div><div>Edga=
+r=C2=A0</div><div><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quo=
+te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
+);padding-left:1ex">
+---<br>
+=C2=A0hw/net/cadence_gem.c | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c<br>
+index ec7bf562e5..9c73ded0d3 100644<br>
+--- a/hw/net/cadence_gem.c<br>
++++ b/hw/net/cadence_gem.c<br>
+@@ -946,7 +946,7 @@ static int get_queue_from_screen(CadenceGEMState *s, ui=
+nt8_t *rxbuf_ptr,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 rx_cmp =3D rxbuf_ptr[offset] &lt=
+;&lt; 8 | rxbuf_ptr[offset];<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 rx_cmp =3D rxbuf_ptr[offset + 1]=
+ &lt;&lt; 8 | rxbuf_ptr[offset];<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0mask =3D FIELD_EX32(cr0, TY=
+PE2_COMPARE_0_WORD_0, MASK_VALUE);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0compare =3D FIELD_EX32(cr0,=
+ TYPE2_COMPARE_0_WORD_0, COMPARE_VALUE);<br>
+<br>
+-- <br>
+2.37.0.windows.1<br>
+<br>
+</blockquote></div></div>
+
+--00000000000041586b061a36a4de--
 
