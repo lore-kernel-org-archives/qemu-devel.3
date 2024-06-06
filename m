@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85C70C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 12:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F328C27C54
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 12:54:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFCae-00076a-4C; Thu, 06 Jun 2024 08:51:36 -0400
+	id 1sFCcJ-0007vH-EL; Thu, 06 Jun 2024 08:53:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFCab-000765-SJ
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:51:33 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFCcH-0007uv-M2
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:53:18 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFCaZ-0004lz-58
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:51:32 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2e6f33150bcso9269361fa.2
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 05:51:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFCcF-00050K-Tn
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:53:17 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-42163fed884so655735e9.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 05:53:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717678289; x=1718283089; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717678394; x=1718283194; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Jqgt3DaC768vMjGSCgqa66K+UuNZWnSqEQ96aP1HQ2w=;
- b=ku1LXW6WsoHKy652lSLkB4e5v9n1wjT9S8dTqoV60AUEKfGur2D4PkJyy5k0B9Aj+a
- 07X3c7X5hTbWWr86Rm58wd6bmeG5DcNVUmVBqWzN5xQsqRE3bB8Uu6yDpQaBvzYQDN3X
- L+KdEZXE+In6Ob7U4ajT1F6LYqdb3Wvkp6NcJNx7VqoXUOUBrBsLKxXvcozZX98N3Uvy
- L6gqNGXVpvVOkiW07WOBFh9BQIuDWI+0xRmftblYJ8jY6Y0aZbhmN/b9DjxHx/NDJeJW
- 0Gt5d7DcRtWirYFoTzXiOco43chaZgRkGnCrpLy7Kt3Jtzi0nrkFlWZrkdE3RiXUECB7
- epuA==
+ bh=Tr8fX3JUlpurx/NdhH5O+ErUpu/8WmiPn+iVeOfsrhc=;
+ b=MLeLIwiv+1OVxzEPx65msJ53P2rF1pm/CcvtrCcST0QNPjvNyvv8Q/SS0jDkfUXL8D
+ EsToV0ssC0a2lXwuMqp4MaNrB2PqpfYSs6zB+3YJCFcT5ozG9HIjOJAd56lopBqi7dYi
+ mzq6ejo0uBf/VN19+O3Il1jkgepef5RTHDQbMaFs7tdYCq/MVqt8BqHzZHO16PyohGsD
+ nQ8ULv2BibzRjWskVHXojgj3mG60hTQWrOLWKM/93JZa0pwjqvCaElHqNMvvvrwowpeE
+ Y7khZu2hQxIzNKC9/y0I7vmyuJKQOAzEybKQq7co04gDGIjdY2IuWzOo3D/QZo2N4hwP
+ VZvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717678289; x=1718283089;
+ d=1e100.net; s=20230601; t=1717678394; x=1718283194;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Jqgt3DaC768vMjGSCgqa66K+UuNZWnSqEQ96aP1HQ2w=;
- b=lApw4/uuD7HjpFrmkDtwopLReOcpivXGcfbgJAVCOAqPUeers2eOOIg/rHNU5flOqg
- EpIG5zm3ptJ3GsUT/Nfd+TnMbDDFb+aVfuJRRPcqraJwg4AvQnGkYkgbZR4hxPMhGWeM
- oVYMc82/5gnGFI7Tvz5yKUG1xZMV/h0ksisojEjNDZEMQv7Xo33jg7M+WQNn71rOu4dB
- hdnEBk2tJ/0XfLES+8n3SnyrGkJdUq0Wh8N98w48i1OssQvWJllfarL1ycto6MCOtCPr
- kfYBB8Pvfnc+FAHlbYn6QoRa03PiPWBtkPH+8lkDsweqATg8i0PMVgRyXYA+J5qdb6DZ
- Uppw==
+ bh=Tr8fX3JUlpurx/NdhH5O+ErUpu/8WmiPn+iVeOfsrhc=;
+ b=KjjwDBxvXAi4k8NuaUsvG8x12Uf7b5gwXTkLBtEQs+CQGZiALMJPCOQVkblO4c2XE8
+ 77L7rZ20gVxNjhydTXDKTjRg+8qxr5BAr5ypJq0TW7dfjPWxjoII/yYGUysKq7XfR6S2
+ V67ZZm5o1MkzEkuXk5lNNqXp1DyfzOrT/oHtStFkTdfCENek5vL9hpLoml3F+s3HuDgT
+ TtN6YSFi+flqrb/r0yUnnQsNJ6EMMKLOLDkUpas3aeNKJsaMEIxssEb8W3LkEux+B/jS
+ wJKMKPtL8qiP7GW9WhMUH3aEHcj3tWXno+Rc3vFsB8b0WB6dHOxqdQxUuKBWPijJ/Q3G
+ 8axw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVwFkRckabLLeuc8Idu56L2GZObVb91veUDX8t0giD6NeC4Tem/A8XYr94POXr9UA9hKZ/Xh97PISQluacd+h8yj2DPijk=
-X-Gm-Message-State: AOJu0YzNgPmYo7fyC1dukr0zOAEMEYvFgeWc+jioI3K1ETI9ffLgzI1A
- 7fBA7+JSqI4qqmcRTkKJSMR+rmC46RkBDenQrD4jqTKiOBbZFlELPExMydg1m11onZ7uJ+kpcRA
- bBGc=
-X-Google-Smtp-Source: AGHT+IFVGptctOcHpsBQ6t6cNMoWbNv2JyN2ojePnC7v9GnzZRZxHCOX2GXsSqjbafmrNYQUkJA/ag==
-X-Received: by 2002:a2e:8816:0:b0:2e9:53c5:2b5c with SMTP id
- 38308e7fff4ca-2eac79f0d43mr24773781fa.16.1717678288840; 
- Thu, 06 Jun 2024 05:51:28 -0700 (PDT)
+ AJvYcCUSEyRKJicCIrd8V46V4hj8O1LURcn6UcbU64kWkgrmBvSgm8Khl2OD5rnS859sZri9TcdSPj74vyk4BhAXuYID/ym+zKQ=
+X-Gm-Message-State: AOJu0YxuruIrDHYN0dRAzr5XyBTqE6nzPl1VnbGLiMkg3/w6UwhFs+iM
+ 5q1nxiNWlwJaLMLOuq1t2nTy/dygUQtEsDQFBgJrTpkjAAEoWxe6iL4fsfQN2HQ=
+X-Google-Smtp-Source: AGHT+IE3TZazcgcnmoYqR9FRgk3uIHSkT++w43C8WkRLipnpz7/gY0e/toLFy3H0ZPkP9bVNzJ1Law==
+X-Received: by 2002:a05:600c:a42:b0:421:205f:52de with SMTP id
+ 5b1f17b1804b1-42156340d05mr46051425e9.26.1717678393943; 
+ Thu, 06 Jun 2024 05:53:13 -0700 (PDT)
 Received: from [192.168.183.175] (94.red-88-29-105.staticip.rima-tde.net.
  [88.29.105.94]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42158149057sm55689325e9.36.2024.06.06.05.51.27
+ ffacd0b85a97d-35ef5d69e71sm1475500f8f.65.2024.06.06.05.53.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Jun 2024 05:51:28 -0700 (PDT)
-Message-ID: <d4df84dd-9e8f-4e8e-b627-64fe7a8aecde@linaro.org>
-Date: Thu, 6 Jun 2024 14:51:26 +0200
+ Thu, 06 Jun 2024 05:53:13 -0700 (PDT)
+Message-ID: <f13e7f01-3058-463f-b74f-9f6369fa484c@linaro.org>
+Date: Thu, 6 Jun 2024 14:53:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 1/5] meson: move shared_module() calls where
- modules are already walked
+Subject: Re: [RFC PATCH v2 3/5] meson: Pass objects and dependencies to
+ declare_dependency()
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: akihiko.odaki@daynix.com
 References: <20240527104937.30443-1-pbonzini@redhat.com>
- <20240527104937.30443-2-pbonzini@redhat.com>
+ <20240527104937.30443-4-pbonzini@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240527104937.30443-2-pbonzini@redhat.com>
+In-Reply-To: <20240527104937.30443-4-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,38 +98,51 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 27/5/24 12:49, Paolo Bonzini wrote:
+> From: Akihiko Odaki <akihiko.odaki@daynix.com>
+> 
+> We used to request declare_dependency() to link_whole static libraries.
+> If a static library is a thin archive, GNU ld keeps all object files
+> referenced by the archive open, and sometimes exceeds the open file limit.
+> 
+> Another problem with link_whole is that suboptimal handling of nested
+> dependencies.
+> 
+> link_whole by itself does not propagate dependencies. In particular,
+> gnutls, a dependency of crypto, is not propagated to its users, and we
+> currently workaround the issue by declaring gnutls as a dependency for
+> each crypto user.  On the other hand, if you write something like
+> 
+>    libfoo = static_library('foo', 'foo.c', dependencies: gnutls)
+>    foo = declare_dependency(link_whole: libfoo)
+> 
+>    libbar = static_library('bar', 'bar.c', dependencies: foo)
+>    bar = declare_dependency(link_whole: libbar, dependencies: foo)
+>    executable('prog', sources: files('prog.c'), dependencies: [foo, bar])
+> 
+> hoping to propagate the gnutls dependency into bar.c, you'll see a
+> linking failure for "prog", because the foo.c.o object file is included in
+> libbar.a and therefore it is linked twice into "prog": once from libfoo.a
+> and once from libbar.a.  Here Meson does not see the duplication, it
+> just asks the linker to link all of libfoo.a and libbar.a into "prog".
+> 
+> Instead of using link_whole, extract objects included in static libraries
+> and pass them to declare_dependency(); and then the dependencies can be
+> added as well so that they are propagated, because object files on the
+> linker command line are always deduplicated.
+> 
+> This requires Meson 1.1.0 or later.
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> Message-ID: <20240524-objects-v1-1-07cbbe96166b@daynix.com>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   meson.build | 34 +++++++++++++++++++---------------
->   1 file changed, 19 insertions(+), 15 deletions(-)
-
-
-> +  if emulator_modules.length() > 0
-> +    alias_target('modules', emulator_modules)
-> +  endif
->   endif
->   
->   nm = find_program('nm')
-> @@ -3745,19 +3762,6 @@ common_ss.add(hwcore)
->   # Targets #
->   ###########
->   
-> -emulator_modules = []
-> -foreach m : block_mods + system_mods
-> -  emulator_modules += shared_module(m.name(),
-> -                build_by_default: true,
-> -                name_prefix: '',
-> -                link_whole: m,
-> -                install: true,
-> -                install_dir: qemu_moddir)
-> -endforeach
-> -if emulator_modules.length() > 0
-> -  alias_target('modules', emulator_modules)
-> -endif
-
-In my experiment I moved this later after the qemu-system-FOO
-meson targets, because I append libqemu-TARGET-softmmu objects;
-but I guess this isn't a good start, and this patch LGTM.
+>   docs/devel/build-system.rst    |  3 ++-
+>   meson.build                    | 44 +++++++++++++++++++---------------
+>   gdbstub/meson.build            |  4 ++--
+>   pythondeps.toml                |  2 +-
+>   tcg/meson.build                |  6 +++--
+>   tests/qtest/libqos/meson.build |  2 +-
+>   6 files changed, 35 insertions(+), 26 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
