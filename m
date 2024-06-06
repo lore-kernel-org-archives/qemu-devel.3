@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D2CC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 04:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C3DEC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 04:02:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF4KI-0007UJ-EH; Thu, 06 Jun 2024 00:02:10 -0400
+	id 1sF4KM-0007Vo-6o; Thu, 06 Jun 2024 00:02:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sF4KD-0007TM-Ut
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 00:02:05 -0400
+ id 1sF4KF-0007Tf-KF
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 00:02:07 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sF4KB-00013Z-IC
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 00:02:05 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1sF4KC-00013k-JX
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 00:02:07 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxW+q1NGFm9hEEAA--.17269S3;
- Thu, 06 Jun 2024 12:01:57 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Dx2Om3NGFmABIEAA--.4537S3;
+ Thu, 06 Jun 2024 12:01:59 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxVcWzNGFmgHQWAA--.45267S3; 
- Thu, 06 Jun 2024 12:01:57 +0800 (CST)
+ AQAAf8BxVcWzNGFmgHQWAA--.45267S7; 
+ Thu, 06 Jun 2024 12:01:59 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, Bibo Mao <maobibo@loongson.cn>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 1/6] tests/libqos: Add loongarch virt machine node
-Date: Thu,  6 Jun 2024 12:01:50 +0800
-Message-Id: <20240606040155.2607422-2-gaosong@loongson.cn>
+Cc: richard.henderson@linaro.org,
+	Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 5/6] hw/loongarch/virt: Enable extioi virt extension
+Date: Thu,  6 Jun 2024 12:01:54 +0800
+Message-Id: <20240606040155.2607422-6-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240606040155.2607422-1-gaosong@loongson.cn>
 References: <20240606040155.2607422-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxVcWzNGFmgHQWAA--.45267S3
+X-CM-TRANSID: AQAAf8BxVcWzNGFmgHQWAA--.45267S7
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,182 +65,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+This patch adds a new board attribute 'v-eiointc'.
+A value of true enables the virt extended I/O interrupt controller.
+VMs working in kvm mode have 'v-eiointc' enabled by default.
 
-Add loongarch virt machine to the graph. It is a modified copy of
-the existing riscv virtmachine in riscv-virt-machine.c
-
-It contains a generic-pcihost controller, and an extra function
-loongarch_config_qpci_bus() to configure GPEX pci host controller
-information, such as ecam and pio_base addresses.
-
-Also hotplug handle checking about TYPE_VIRTIO_IOMMU_PCI device is
-added on loongarch virt machine, since virtio_mmu_pci device requires
-it.
-
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Acked-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240528082053.938564-1-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Message-Id: <20240528083855.1912757-4-gaosong@loongson.cn>
 ---
- hw/loongarch/virt.c                         |   2 +
- tests/qtest/libqos/loongarch-virt-machine.c | 114 ++++++++++++++++++++
- tests/qtest/libqos/meson.build              |   1 +
- 3 files changed, 117 insertions(+)
- create mode 100644 tests/qtest/libqos/loongarch-virt-machine.c
+ hw/loongarch/virt.c         | 88 +++++++++++++++++++++++++++++++++++--
+ include/hw/loongarch/virt.h |  1 +
+ target/loongarch/cpu.h      |  1 +
+ 3 files changed, 87 insertions(+), 3 deletions(-)
 
 diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 3e6e93edf3..2d7f718570 100644
+index 0cef33a904..66cef201ab 100644
 --- a/hw/loongarch/virt.c
 +++ b/hw/loongarch/virt.c
-@@ -45,6 +45,7 @@
- #include "sysemu/tpm.h"
- #include "sysemu/block-backend.h"
- #include "hw/block/flash.h"
-+#include "hw/virtio/virtio-iommu.h"
+@@ -11,6 +11,7 @@
+ #include "hw/boards.h"
+ #include "hw/char/serial.h"
+ #include "sysemu/kvm.h"
++#include "sysemu/tcg.h"
+ #include "sysemu/sysemu.h"
+ #include "sysemu/qtest.h"
+ #include "sysemu/runstate.h"
+@@ -48,6 +49,31 @@
+ #include "hw/virtio/virtio-iommu.h"
  #include "qemu/error-report.h"
  
++static bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
++{
++    if (lvms->veiointc == ON_OFF_AUTO_OFF) {
++        return false;
++    }
++    return true;
++}
++
++static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
++                              void *opaque, Error **errp)
++{
++    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
++    OnOffAuto veiointc = lvms->veiointc;
++
++    visit_type_OnOffAuto(v, name, &veiointc, errp);
++}
++
++static void virt_set_veiointc(Object *obj, Visitor *v, const char *name,
++                              void *opaque, Error **errp)
++{
++    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
++
++    visit_type_OnOffAuto(v, name, &lvms->veiointc, errp);
++}
++
  static PFlashCFI01 *virt_flash_create1(LoongArchVirtMachineState *lvms,
-@@ -1213,6 +1214,7 @@ static HotplugHandler *virt_get_hotplug_handler(MachineState *machine,
-     MachineClass *mc = MACHINE_GET_CLASS(machine);
+                                        const char *name,
+                                        const char *alias_prop_name)
+@@ -790,9 +816,16 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+     /* Create EXTIOI device */
+     extioi = qdev_new(TYPE_LOONGARCH_EXTIOI);
+     qdev_prop_set_uint32(extioi, "num-cpu", ms->smp.cpus);
++    if (virt_is_veiointc_enabled(lvms)) {
++        qdev_prop_set_bit(extioi, "has-virtualization-extension", true);
++    }
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(extioi), &error_fatal);
+     memory_region_add_subregion(&lvms->system_iocsr, APIC_BASE,
+-                   sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 0));
++                    sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 0));
++    if (virt_is_veiointc_enabled(lvms)) {
++        memory_region_add_subregion(&lvms->system_iocsr, EXTIOI_VIRT_BASE,
++                    sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 1));
++    }
  
-     if (device_is_dynamic_sysbus(mc, dev) ||
-+        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
-         memhp_type_supported(dev)) {
-         return HOTPLUG_HANDLER(machine);
+     /*
+      * connect ext irq to the cpu irq
+@@ -899,11 +932,37 @@ static void virt_firmware_init(LoongArchVirtMachineState *lvms)
      }
-diff --git a/tests/qtest/libqos/loongarch-virt-machine.c b/tests/qtest/libqos/loongarch-virt-machine.c
-new file mode 100644
-index 0000000000..c12089c015
---- /dev/null
-+++ b/tests/qtest/libqos/loongarch-virt-machine.c
-@@ -0,0 +1,114 @@
-+/*
-+ * libqos driver framework
-+ *
-+ * Copyright (c) 2018 Emanuele Giuseppe Esposito <e.emanuelegiuseppe@gmail.com>
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License version 2.1 as published by the Free Software Foundation.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "../libqtest.h"
-+#include "qemu/module.h"
-+#include "libqos-malloc.h"
-+#include "qgraph.h"
-+#include "virtio-mmio.h"
-+#include "generic-pcihost.h"
-+#include "hw/pci/pci_regs.h"
-+
-+#define LOONGARCH_PAGE_SIZE               0x1000
-+#define LOONGARCH_VIRT_RAM_ADDR           0x100000
-+#define LOONGARCH_VIRT_RAM_SIZE           0xFF00000
-+
-+#define LOONGARCH_VIRT_PIO_BASE           0x18000000
-+#define LOONGARCH_VIRT_PCIE_PIO_OFFSET    0x4000
-+#define LOONGARCH_VIRT_PCIE_PIO_LIMIT     0x10000
-+#define LOONGARCH_VIRT_PCIE_ECAM_BASE     0x20000000
-+#define LOONGARCH_VIRT_PCIE_MMIO32_BASE   0x40000000
-+#define LOONGARCH_VIRT_PCIE_MMIO32_LIMIT  0x80000000
-+
-+typedef struct QVirtMachine QVirtMachine;
-+
-+struct QVirtMachine {
-+    QOSGraphObject obj;
-+    QGuestAllocator alloc;
-+    QVirtioMMIODevice virtio_mmio;
-+    QGenericPCIHost bridge;
-+};
-+
-+static void virt_destructor(QOSGraphObject *obj)
-+{
-+    QVirtMachine *machine = (QVirtMachine *) obj;
-+    alloc_destroy(&machine->alloc);
-+}
-+
-+static void *virt_get_driver(void *object, const char *interface)
-+{
-+    QVirtMachine *machine = object;
-+    if (!g_strcmp0(interface, "memory")) {
-+        return &machine->alloc;
-+    }
-+
-+    fprintf(stderr, "%s not present in loongarch/virtio\n", interface);
-+    g_assert_not_reached();
-+}
-+
-+static QOSGraphObject *virt_get_device(void *obj, const char *device)
-+{
-+    QVirtMachine *machine = obj;
-+    if (!g_strcmp0(device, "generic-pcihost")) {
-+        return &machine->bridge.obj;
-+    } else if (!g_strcmp0(device, "virtio-mmio")) {
-+        return &machine->virtio_mmio.obj;
-+    }
-+
-+    fprintf(stderr, "%s not present in loongarch/virt\n", device);
-+    g_assert_not_reached();
-+}
-+
-+static void loongarch_config_qpci_bus(QGenericPCIBus *qpci)
-+{
-+    qpci->gpex_pio_base = LOONGARCH_VIRT_PIO_BASE;
-+    qpci->bus.pio_alloc_ptr = LOONGARCH_VIRT_PCIE_PIO_OFFSET;
-+    qpci->bus.pio_limit = LOONGARCH_VIRT_PCIE_PIO_LIMIT;
-+    qpci->bus.mmio_alloc_ptr = LOONGARCH_VIRT_PCIE_MMIO32_BASE;
-+    qpci->bus.mmio_limit = LOONGARCH_VIRT_PCIE_MMIO32_LIMIT;
-+    qpci->ecam_alloc_ptr = LOONGARCH_VIRT_PCIE_ECAM_BASE;
-+}
-+
-+static void *qos_create_machine_loongarch_virt(QTestState *qts)
-+{
-+    QVirtMachine *machine = g_new0(QVirtMachine, 1);
-+
-+    alloc_init(&machine->alloc, 0,
-+               LOONGARCH_VIRT_RAM_ADDR,
-+               LOONGARCH_VIRT_RAM_ADDR + LOONGARCH_VIRT_RAM_SIZE,
-+               LOONGARCH_PAGE_SIZE);
-+
-+    qos_create_generic_pcihost(&machine->bridge, qts, &machine->alloc);
-+    loongarch_config_qpci_bus(&machine->bridge.pci);
-+
-+    machine->obj.get_device = virt_get_device;
-+    machine->obj.get_driver = virt_get_driver;
-+    machine->obj.destructor = virt_destructor;
-+    return machine;
-+}
-+
-+static void virt_machine_register_nodes(void)
-+{
-+    qos_node_create_machine_args("loongarch64/virt",
-+                                 qos_create_machine_loongarch_virt,
-+                                 " -cpu la464");
-+    qos_node_contains("loongarch64/virt", "generic-pcihost", NULL);
-+}
-+
-+libqos_init(virt_machine_register_nodes);
-diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
-index 3aed6efcb8..558eb4c24b 100644
---- a/tests/qtest/libqos/meson.build
-+++ b/tests/qtest/libqos/meson.build
-@@ -61,6 +61,7 @@ libqos_srcs = files(
-         'ppc64_pseries-machine.c',
-         'x86_64_pc-machine.c',
-         'riscv-virt-machine.c',
-+        'loongarch-virt-machine.c',
- )
+ }
  
- if have_virtfs
+-
+ static MemTxResult virt_iocsr_misc_write(void *opaque, hwaddr addr,
+                                          uint64_t val, unsigned size,
+                                          MemTxAttrs attrs)
+ {
++    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(opaque);
++    uint64_t features;
++
++    switch (addr) {
++    case MISC_FUNC_REG:
++        if (!virt_is_veiointc_enabled(lvms)) {
++            return MEMTX_OK;
++        }
++
++        features = address_space_ldl(&lvms->as_iocsr,
++                                     EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
++                                     attrs, NULL);
++        if (val & BIT_ULL(IOCSRM_EXTIOI_EN)) {
++            features |= BIT(EXTIOI_ENABLE);
++        }
++        if (val & BIT_ULL(IOCSRM_EXTIOI_INT_ENCODE)) {
++            features |= BIT(EXTIOI_ENABLE_INT_ENCODE);
++        }
++
++        address_space_stl(&lvms->as_iocsr,
++                          EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
++                          features, attrs, NULL);
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
+     return MEMTX_OK;
+ }
+ 
+@@ -911,7 +970,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+                                         uint64_t *data,
+                                         unsigned size, MemTxAttrs attrs)
+ {
++    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(opaque);
+     uint64_t ret = 0;
++    int features;
+ 
+     switch (addr) {
+     case VERSION_REG:
+@@ -930,7 +991,20 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
+         ret = 0x303030354133ULL;     /* "3A5000" */
+         break;
+     case MISC_FUNC_REG:
+-        ret = BIT_ULL(IOCSRM_EXTIOI_EN);
++        if (!virt_is_veiointc_enabled(lvms)) {
++            ret |= BIT_ULL(IOCSRM_EXTIOI_EN);
++            break;
++        }
++
++        features = address_space_ldl(&lvms->as_iocsr,
++                                     EXTIOI_VIRT_BASE + EXTIOI_VIRT_CONFIG,
++                                     attrs, NULL);
++        if (features & BIT(EXTIOI_ENABLE)) {
++            ret |= BIT_ULL(IOCSRM_EXTIOI_EN);
++        }
++        if (features & BIT(EXTIOI_ENABLE_INT_ENCODE)) {
++            ret |= BIT_ULL(IOCSRM_EXTIOI_INT_ENCODE);
++        }
+         break;
+     default:
+         g_assert_not_reached();
+@@ -1152,6 +1226,9 @@ static void virt_initfn(Object *obj)
+ {
+     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
+ 
++    if (tcg_enabled()) {
++        lvms->veiointc = ON_OFF_AUTO_OFF;
++    }
+     lvms->acpi = ON_OFF_AUTO_AUTO;
+     lvms->oem_id = g_strndup(ACPI_BUILD_APPNAME6, 6);
+     lvms->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
+@@ -1338,6 +1415,11 @@ static void virt_class_init(ObjectClass *oc, void *data)
+         NULL, NULL);
+     object_class_property_set_description(oc, "acpi",
+         "Enable ACPI");
++    object_class_property_add(oc, "v-eiointc", "OnOffAuto",
++        virt_get_veiointc, virt_set_veiointc,
++        NULL, NULL);
++    object_class_property_set_description(oc, "v-eiointc",
++                            "Enable Virt Extend I/O Interrupt Controller.");
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
+ #ifdef CONFIG_TPM
+     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
+diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
+index 2c4f5cf9c8..8fdfacf268 100644
+--- a/include/hw/loongarch/virt.h
++++ b/include/hw/loongarch/virt.h
+@@ -50,6 +50,7 @@ struct LoongArchVirtMachineState {
+     Notifier     machine_done;
+     Notifier     powerdown_notifier;
+     OnOffAuto    acpi;
++    OnOffAuto    veiointc;
+     char         *oem_id;
+     char         *oem_table_id;
+     DeviceState  *acpi_ged;
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 41b8e6d96d..6c41fafb70 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -36,6 +36,7 @@
+ #define CPUNAME_REG             0x20
+ #define MISC_FUNC_REG           0x420
+ #define IOCSRM_EXTIOI_EN        48
++#define IOCSRM_EXTIOI_INT_ENCODE 49
+ 
+ #define IOCSR_MEM_SIZE          0x428
+ 
 -- 
 2.34.1
 
