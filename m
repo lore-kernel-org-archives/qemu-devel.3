@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C473FC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 09:45:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65E16C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 09:46:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF9fa-0004DJ-Hh; Thu, 06 Jun 2024 05:44:30 -0400
+	id 1sF9gq-00051O-Pf; Thu, 06 Jun 2024 05:45:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sF9fZ-0004D7-9I
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:44:29 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ id 1sF9gp-000517-AV
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:45:47 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sF9fX-0008Vc-Py
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:44:29 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-52b98fb5c32so1164649e87.1
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 02:44:26 -0700 (PDT)
+ id 1sF9gn-0000S9-JB
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:45:46 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a6265d3ba8fso62400366b.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 02:45:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717667065; x=1718271865; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717667144; x=1718271944; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9Lby2FWDCzp1L2DNQo2idrg+Efh+C/3fpMfGpj/ZrzY=;
- b=Jh+H3PuQzP1z0t9LT1+kO5wYjU5CnEOIXnTIxy3qjDu/pmi3dEmE+r1IqfnMgPumwi
- OtgsmnJrTj9D8VS34+LlLHxOA9My3f4rkOHq4v37O/P0cOBNq8i3PdoQSd2Jd6Xwhq+5
- tHEA70+BOHLgkK9XlrJmrQF2WKNZ2Af3WDct4qVfq9t/BpOZba41WHBg9EzEoB2fhQNQ
- PGWJSX2tcEBdQ/8F2j8PBiUO/nXFM++rNgLuTSD7pNfETPukIb8excmJlaR6BjGPUAbm
- 7YTljA2iK8s0UsP2Z/qz4RvaeJkb19CFn9Ca7Yq6O7oAXTDrO0u76WY2jfuUJGjC4cii
- Rlkw==
+ :reply-to; bh=BT7KYn2G1PfhtedwOhihnialDtgn8uBirdeqKLzhxe4=;
+ b=bUb/9UixfnVEZENP8naaL4OluASjoCG7/UPj+OPnVVryJPJlmLEpQmGM4bGwheaUxr
+ s1gjRo38dKqEj8cg/tttnOfkWtJjgyYbGDCj82R1Nj4ndmsNp2YCRu0Fb4DQu2Y7gmp5
+ prkmdf9O/KkFS6Nc+1jli1gPEnS2Wtu2EpN389bvhrK0tz9Oy2ehbd4PgEaAi1AmsXuV
+ lDh+Qs25nwnBsCqraIjiw2MG0fikL5J7jw50y1JrUFdWkLtUY/NOovzT3odh1SxsUkaR
+ lMa0jxsQqmLZ4yjyC1nFvXTNCnDzmAIsU26gpat6eZA9weeub6P9ZQXynNKC2sqgq28b
+ Zomw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717667065; x=1718271865;
+ d=1e100.net; s=20230601; t=1717667144; x=1718271944;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9Lby2FWDCzp1L2DNQo2idrg+Efh+C/3fpMfGpj/ZrzY=;
- b=NHy8GL84hFdpKTCSoUgAF1+hgtZp1D4WH56sYnFZYDh/frdW/eAxp4hkPRXijnKFY1
- dXfhWznfDlA//2BtJ+NSDN3QdDKrjcAyh0AG/c8J5WlvNzbXPDWfPR2IwStbkRLk2E78
- 5rXogzMKiRmCMZHwfv9aJQKTE9Ii8BLvQIV7cJqoA1i92IyB3/ILKjqQARHTbKLxuW0s
- hSaZ4jSnCjszxE3MrbzPn0hWam9uiceuDhpt1DiMV10SXeJuxuiodBsqKRA5qJsqI50d
- m4PC/Vrk4UUh4ob8TQCv1Tj/YGTY1BygxwCYca4jo7scr2yv51gGscMgR/Vd4AUOBUut
- 0/ew==
-X-Gm-Message-State: AOJu0Yw9/Zh76VTNh3Ww+UrUhNY9XUefORs7tcK/oSyA1Tc9xy1+/WgM
- ByAgL8ccMGlfkDzS0HhupbuWG7YCyS2pCV0L7AFuFBRmzdrlr50oPagMKSjZ4z4=
-X-Google-Smtp-Source: AGHT+IGoq2YbhjhgXYmTIEHu82NxVZtoqZHeLzBH8hh2BGa6fWzQ4ts9kQNhkSUThYuDMN4TXnR4lg==
-X-Received: by 2002:ac2:5b89:0:b0:52b:8343:618f with SMTP id
- 2adb3069b0e04-52bab4dc99dmr4302251e87.24.1717667065446; 
- Thu, 06 Jun 2024 02:44:25 -0700 (PDT)
+ bh=BT7KYn2G1PfhtedwOhihnialDtgn8uBirdeqKLzhxe4=;
+ b=Ezn5b9/Awhf9Mhge4C1XXfFE8MlWL1GsMlHHquIu86ojl8OpYxi87UYHv2pLjwzsnQ
+ CrccmB88X3/yFOiYxPIXZs+huQIt2NtmLIJuZWpoFYZExPJ96MPIq6rF5Z9Ntm6Je9Sf
+ LOwxXmFPX9p5ceGOoBYusaht/Tos31ab2xnyckpCyv4ljQSokC9Pi9I5WdhUlYHTl2Dm
+ 46ueNgyQcKmjcSSw4rYqCkfcU5LqADoNAP3K6JN0pEtpSt61nDC602QzBbgYRdvOzUgr
+ 1VRSKSEpU7briY5Ae4owunZrduIu8zjic7omVG8Dp11SQv3Tll+CruwCJfioxmZ18Sb2
+ nOGQ==
+X-Gm-Message-State: AOJu0YwaP4Xma4zS8aioj9lxD8FbnuH2pg45d45atTb34gkhmrUTO/oW
+ HA37CIe6rtNoci2+YAg/MRbtEVog9cQLHPPYo81/TpjZ64mUirhfSnJkvm4A0mV3QaD2yTjBX9Q
+ 7
+X-Google-Smtp-Source: AGHT+IGsGiKmLLqcIFu9I0FjXm43i7HbLmtRF5FsOkqMBF7tNi+/mB1luDU6rVbAvyrCnWh8sePDHw==
+X-Received: by 2002:a17:907:9556:b0:a69:6a89:5cc6 with SMTP id
+ a640c23a62f3a-a699f361fe6mr234212166b.6.1717667143954; 
+ Thu, 06 Jun 2024 02:45:43 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c8070e839sm72432766b.176.2024.06.06.02.44.25
+ a640c23a62f3a-a6c8070e2c0sm70354366b.169.2024.06.06.02.45.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Jun 2024 02:44:25 -0700 (PDT)
+ Thu, 06 Jun 2024 02:45:43 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A973F5F7AD;
- Thu,  6 Jun 2024 10:44:24 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 536895F7AD;
+ Thu,  6 Jun 2024 10:45:43 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org
-Subject: Re: [PATCH v2 2/9] accel/tcg: Set CPUState.plugin_ra before all
- plugin callbacks
-In-Reply-To: <20240606032926.83599-3-richard.henderson@linaro.org> (Richard
- Henderson's message of "Wed, 5 Jun 2024 20:29:19 -0700")
+Subject: Re: [PATCH v2 3/9] accel/tcg: Return the TranslationBlock from
+ cpu_unwind_state_data
+In-Reply-To: <20240606032926.83599-4-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Wed, 5 Jun 2024 20:29:20 -0700")
 References: <20240606032926.83599-1-richard.henderson@linaro.org>
- <20240606032926.83599-3-richard.henderson@linaro.org>
-Date: Thu, 06 Jun 2024 10:44:24 +0100
-Message-ID: <877cf2mmmf.fsf@draig.linaro.org>
+ <20240606032926.83599-4-richard.henderson@linaro.org>
+Date: Thu, 06 Jun 2024 10:45:43 +0100
+Message-ID: <8734pqmmk8.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,9 +100,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Richard Henderson <richard.henderson@linaro.org> writes:
 
-> Store a host code address to use with the tcg unwinder when called
-> from a plugin.  Generate one such store per guest insn that uses
-> a plugin callback.
+> Adjust the i386 get_memio_eip function to use tb->cflags instead
+> of tcg_cflags_has, which is technically more correct.
 >
 > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
