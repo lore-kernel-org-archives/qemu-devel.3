@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE95BC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 08:08:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E74C41513
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 08:12:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF8AU-0006SS-Jp; Thu, 06 Jun 2024 04:08:18 -0400
+	id 1sF8EA-0007tq-CX; Thu, 06 Jun 2024 04:12:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sF8AT-0006S5-HF
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 04:08:17 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sF8AR-00072K-TN
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 04:08:17 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-5295eb47b48so815989e87.1
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 01:08:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717661294; x=1718266094; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=d5uRBSa+SRmh8ubH07EsWpj3//vi7QJqTyze2CQpcms=;
- b=iRWgb5ZHYfsC0Ja7A8bt2KiNvOM54jNRMRrSoIcwZLcf5GXwEHq2aXEvw/4f8KuQSo
- QQNSoN3etmjOrgNulFllHgs0ULHft4dOoiV7C/Xl8APnK5X52jXauiR+UK0GT6iuYuGn
- TTUYS930nvQ9cOiidgrF103ecBfuGpy9+SFp8QgjcSG//7K2ytdrXiTn7JERvoxEmoUW
- JI3BUJAhgvlj2cDBbfpqpoe+esFcxVT5eYfbmuQm9rHCzTeHbv3Ki1Pwbg/iWCA5eywT
- 1woRZQf4uK7C7DOyd8nIUqln9qFxgyISGg5K2soyCn863Li8i2nHWNb7AiiAORnRjK9o
- Qh2A==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sF8E7-0007tP-GF
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 04:12:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sF8E5-0007uw-MK
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 04:12:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717661520;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=nfp19UPOB20xbdbfrYsfsdXmc0VAypqgspHKW+ngL4U=;
+ b=J3DzLyMOI9mrDkuJP2lpJ6gUD3FEF18oa7E6CKGntOa7mYkxq2EeplrI47rTlvq4R7A9Rb
+ l/BwLS4DbhrgGECiyHNsUzWF78B49CxCM/G6f9m/B+WspRnQddjg4xMuVGFFu6WIhXZx/6
+ u+a0UHIVu5ThO+am4OEG6czHYtdbC8E=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-662-4XnAH9q2OyaJpIxvUhVP2w-1; Thu, 06 Jun 2024 04:11:58 -0400
+X-MC-Unique: 4XnAH9q2OyaJpIxvUhVP2w-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a68f654dc69so63344766b.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 01:11:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717661294; x=1718266094;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=d5uRBSa+SRmh8ubH07EsWpj3//vi7QJqTyze2CQpcms=;
- b=TY9oQKKr9oGciyAAfVAPQr6FB3LCRr1Px0vKtLd4ddQL4q0UfjsRPo5MjqnjoU7LmG
- 3vFN8igGWgPTvTX9dFnQ5Pg5CZoovi9lO0aoYvjrNzO43g3HvtIsBygfAQfyZ1wsHNfp
- kFl2w8FAaZnwTjzg1/m4khoYoGFuFafEVBa53iiYjYN50MntWhLjqeGzGu7PcMrlFa+Y
- 93nO8YEnT7Tvru/0ixJFxSXxGdtyu/WbwdYlQ8gGqhHW0HchtKH+0SoeCoatLXEdZGdt
- 83pga9Ya6lEQeBdLoJqaz62rK14CANthgpM6oVgux2QCe4+O8tGe0xxeR3+aFVXBNCiL
- FPmQ==
-X-Gm-Message-State: AOJu0YwB3TiDPS3P9523Iy7z6WgXGS3LULjFEOuOBsGP3tHeFuUyB5FC
- hozcx6ANBCoykg4kd87rGZaEBJn/C9TGlH5gFv1pQmv4TjT39gYNzQdBvm5y7bsb35KrjJL2W4D
- YvoI=
-X-Google-Smtp-Source: AGHT+IE/k/BW+mQ0XG0wmB3l4s4QvSC/h7sKJeOK6MKhkiA7d4dZMFY+nk2Z0MFnwon6lOvZq3SfgA==
-X-Received: by 2002:a05:6512:696:b0:52b:8255:71cf with SMTP id
- 2adb3069b0e04-52bab4fb4d6mr3556916e87.47.1717661293545; 
- Thu, 06 Jun 2024 01:08:13 -0700 (PDT)
-Received: from meli-email.org (adsl-33.109.242.225.tellas.gr. [109.242.225.33])
+ d=1e100.net; s=20230601; t=1717661517; x=1718266317;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nfp19UPOB20xbdbfrYsfsdXmc0VAypqgspHKW+ngL4U=;
+ b=FPWCHz5hLYumlhxIH/hm12TU4yxRbnFv4SiBqjEfubXoAWKJHXMMdmyQiXh8FYV+cI
+ ScR2AvrTl4S6VZ6aNSZrmnMvGEGclh/ohdFsoU712ultoPqxzJF6dTMemyWw8yxuz9md
+ dpZqWjlq3vL8LDDULTedwiw3DiMem9E9wTOITpGL/rhbdCGxct6npDIRrjaBVEYy2R18
+ xdY8bZlvwm5uRPEKGw8Cq24GtjfHMU195grRm1qM6Enmd607D7iiR/izl+RE+RjeJhvC
+ U5aO7ajkzwGiZzCpnAtYQgEdVYhI7/Ic8FfIl1l0gfiG9doVXw3cbzGg+Dbu/Ng4X+pi
+ cSlw==
+X-Gm-Message-State: AOJu0Yy9ongtmTXZ0O620HeHMDeVD1S/xxW7jtN1JXFAIg5W5Lj3bBkf
+ iJc31DoPiav1hYfUebzW9Zu4OE3IEHJEK87w/NqIK1L+wX8Ru6gvDNIjIQ596J0dMbbdvu8rAsr
+ OgyEju1H6t/sYX2RCRKS2WHwqtaa5tmID+zHMVP9yzJcXLWRWDu6knKww+r4PoDR6mAvO0TgK06
+ yGUBiEg+AU6LOtAbbw0iRVocKGJo8iyFjWnP1C
+X-Received: by 2002:a17:906:3650:b0:a69:280:f379 with SMTP id
+ a640c23a62f3a-a699f88c6d8mr370081066b.45.1717661516403; 
+ Thu, 06 Jun 2024 01:11:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHlGWGjkenTA70Qm4nG1gz6DmejD1cgJAWiuUSJv8K31825bl+TD/cSr/lVVQk/DMMnCq2dvA==
+X-Received: by 2002:a17:906:3650:b0:a69:280:f379 with SMTP id
+ a640c23a62f3a-a699f88c6d8mr370078366b.45.1717661515831; 
+ Thu, 06 Jun 2024 01:11:55 -0700 (PDT)
+Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4215c2c738bsm12693605e9.32.2024.06.06.01.08.13
+ a640c23a62f3a-a6c805c9e13sm60544666b.54.2024.06.06.01.11.55
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Jun 2024 01:08:13 -0700 (PDT)
-Date: Thu, 06 Jun 2024 11:05:28 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org,
- "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, Konstantin Kostiuk <kkostiuk@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
- Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 01/20] qga: drop blocking of guest-get-memory-block-size
- command
-User-Agent: meli 0.8.5
-References: <20240604134933.220112-1-berrange@redhat.com>
- <20240604134933.220112-2-berrange@redhat.com>
-In-Reply-To: <20240604134933.220112-2-berrange@redhat.com>
-Message-ID: <enfxn.f5a9r77dfi9@linaro.org>
+ Thu, 06 Jun 2024 01:11:55 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH 0/2] python: expect a working python3-tomli package for Python
+ <3.11
+Date: Thu,  6 Jun 2024 10:11:51 +0200
+Message-ID: <20240606081153.2457559-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,47 +100,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 04 Jun 2024 16:49, "Daniel P. Berrangé" <berrange@redhat.com> wrote:
->This command has never existed in tree, since it was renamed to
->guest-get-memory-block-info before being merged.
->
->Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->---
+pythondeps.toml is parsed using either Python's embedded tomllib parser
+new in Python 3.11, or the external tomli library for older versions.
+The latter however was absent in Ubuntu 20.04, so we include a copy of
+the wheel in python/wheels.  (For Debian bullseye, it is included in
+the backports repository).
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Now that Ubuntu 20.04 is not supported anymore, it can be dropped;
+and with it the "ensure" subcommand of mkvenv.py, which was only
+needed to bootstrap the venv with the TOML parser needed by
+"ensuregroup".
 
-> qga/commands-posix.c | 2 +-
-> qga/commands-win32.c | 2 +-
-> 2 files changed, 2 insertions(+), 2 deletions(-)
->
->diff --git a/qga/commands-posix.c b/qga/commands-posix.c
->index 7f05996495..76af98ba32 100644
->--- a/qga/commands-posix.c
->+++ b/qga/commands-posix.c
->@@ -3099,7 +3099,7 @@ GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
->             "guest-suspend-disk", "guest-suspend-ram",
->             "guest-suspend-hybrid", "guest-get-vcpus", "guest-set-vcpus",
->             "guest-get-memory-blocks", "guest-set-memory-blocks",
->-            "guest-get-memory-block-size", "guest-get-memory-block-info",
->+            "guest-get-memory-block-info",
->             NULL};
->         char **p = (char **)list;
-> 
->diff --git a/qga/commands-win32.c b/qga/commands-win32.c
->index 0d1b836e87..9fe670d5b4 100644
->--- a/qga/commands-win32.c
->+++ b/qga/commands-win32.c
->@@ -1995,7 +1995,7 @@ GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
->         "guest-suspend-hybrid",
->         "guest-set-vcpus",
->         "guest-get-memory-blocks", "guest-set-memory-blocks",
->-        "guest-get-memory-block-size", "guest-get-memory-block-info",
->+        "guest-get-memory-block-info",
->         NULL};
->     char **p = (char **)list_unsupported;
-> 
->-- 
->2.45.1
->
->
+Back when mkvenv.py was implemented, John and I had an idea of an
+"isolated mode" that does not use any system packages.  With these
+patches this means that, as things stand, the isolated mode can only
+work with Python 3.11+; older versions would need special code in
+mkvenv.py to install tomli from PyPI if system_site_packages==False[1].
+Since the isolated mode does not exist yet, this is left for the future
+comtemplation.
+
+Paolo
+
+[1] isolated mode probably would benefit from installing distlib instead
+of using the pip._vendor.distlib hack; therefore, adding tomli would
+not be a huge deal anyway.
+
+Paolo Bonzini (2):
+  Revert "python: use vendored tomli"
+  python: mkvenv: remove ensure command
+
+ docs/devel/build-system.rst                |  13 ++-
+ configure                                  |   4 -
+ python/scripts/mkvenv.py                   | 105 ---------------------
+ python/scripts/vendor.py                   |   3 -
+ python/wheels/tomli-2.0.1-py3-none-any.whl | Bin 12757 -> 0 bytes
+ 5 files changed, 6 insertions(+), 119 deletions(-)
+ delete mode 100644 python/wheels/tomli-2.0.1-py3-none-any.whl
+
+-- 
+2.45.1
+
 
