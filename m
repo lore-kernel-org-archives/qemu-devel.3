@@ -4,58 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EFEAC27C54
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 17:14:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF9AC27C54
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 17:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFGgb-0002hM-Tn; Thu, 06 Jun 2024 13:14:01 -0400
+	id 1sFGov-00053R-9B; Thu, 06 Jun 2024 13:22:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sFGgZ-0002gS-Gp; Thu, 06 Jun 2024 13:13:59 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sFGou-00052a-79
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 13:22:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sFGgW-0007Vj-2i; Thu, 06 Jun 2024 13:13:59 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Vw9mG37XGz6HJP4;
- Fri,  7 Jun 2024 01:09:18 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 336401402CB;
- Fri,  7 Jun 2024 01:13:40 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 6 Jun
- 2024 18:13:39 +0100
-Date: Thu, 6 Jun 2024 18:13:38 +0100
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: Zhenyu Zhang <zhenyzha@redhat.com>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>, <gshan@redhat.com>, <eauger@redhat.com>,
- <sebott@redhat.com>, <cohuck@redhat.com>, <ddutile@redhat.com>,
- <shahuang@redhat.com>, Robin Murphy <robin.murphy@arm.com>
-Subject: Re: [PATCH RFC] hw/arm/virt: Avoid unexpected warning from Linux
- guest on host with Fujitsu CPUs
-Message-ID: <20240606181338.00003336@Huawei.com>
-In-Reply-To: <CAFEAcA_ovHZWFi8Xn1YdPNkFjNWQ+BGQTA0Oc9oXTNuPD+bmmA@mail.gmail.com>
-References: <20240606104745.291330-1-zhenyzha@redhat.com>
- <CAFEAcA_ovHZWFi8Xn1YdPNkFjNWQ+BGQTA0Oc9oXTNuPD+bmmA@mail.gmail.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sFGor-0000fM-00
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 13:22:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717694550;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d0RTHHnju26spaZXOce0lBekp84iL4wxEGEEh6iDvus=;
+ b=Dmy7JslJpz6c5gxBkdB1Ni95cYKdw7iJNqP+CFLKnNvu54MP8lBA8ARovWzw8rYurVrkTL
+ ip4AIS/TuWRA9+Nda+lw1i77m9S0fNVsGXvB8+ps19L7vQjNvLjmIwQ33rwCWyj8g2RhZ+
+ 35MXSisaLa/+dROMXaJKA4claoGLibc=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-573-rgl2fXLdMDK02X6kalqLIw-1; Thu, 06 Jun 2024 13:22:29 -0400
+X-MC-Unique: rgl2fXLdMDK02X6kalqLIw-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2c1aa8d19bbso1092176a91.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 10:22:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717694547; x=1718299347;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=d0RTHHnju26spaZXOce0lBekp84iL4wxEGEEh6iDvus=;
+ b=RMZduUDOjM875Nn+guRg/740f5XYCQE9dMqM3PrTGR6kpQSxKd5uJMLiDw/S7/C7aB
+ gMr58XEYg5YPbAIAkYNIjYRVZyh8GqScIlcXOh7019mkldp/uWdgE1vBvbobFzJGzp1I
+ W97LH6/xFE+fjWOAOykSqyk6LqFn57VvPI92hNalHjxQZGO7z6UkcH2H0oBt35IzaiL+
+ 1r7PzomPPctF1kOuJ2RRZnjMiLUdNDZOdAaH3iqtZibi1R8aigNxOcw6xEWIZM9fNUDh
+ MVchHds5DIpnVIX0AtzloENPs4lkOSmHxoicg0VsNwYlr9jWErS9KqD4ED+CHV72Dr8w
+ 2YBg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUZl3w2w4j+/sv57361h8j5M14ljIBq/t46uWXaHljQR8hPBr70QwB0YfK9HEl6ynqkYc2FzuqUh86vDx/lzJL6MkoYjZ0=
+X-Gm-Message-State: AOJu0YyJT9N5aATqYClKTzz7EtKsmQIfUnvXkuDeDnnfKs5okY/gTeNH
+ GVw6RwjJevTJYIjNrhNEBgmeJdx5p93lNkUEvcWJZFZ4C4a0Y1YUuHc5lJOYw/WLQ3Zn7y5X/sf
+ xuF/awldPLfjkfdqdaJxh5OXVX5Z56ulNQrv5ySPGInr5JCEzilWeI30wKsHCuf1fhHsK75eu0i
+ GVHwcWRllfdxYWePGcikPeLU8dLXPdwXjhtYX45w==
+X-Received: by 2002:a17:90a:bb97:b0:2ab:87c3:d12c with SMTP id
+ 98e67ed59e1d1-2c2bcac3ba6mr178382a91.2.1717694547145; 
+ Thu, 06 Jun 2024 10:22:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEXiJpdMvvcfIbVd8O/MqSAmNqzVw+5+FLZNBLQ3aUJIXWB/8Q2Jmw/nSfJ33kFLQEPMUbpvq+Ph+GDAj97QVA=
+X-Received: by 2002:a17:90a:bb97:b0:2ab:87c3:d12c with SMTP id
+ 98e67ed59e1d1-2c2bcac3ba6mr178359a91.2.1717694546674; Thu, 06 Jun 2024
+ 10:22:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <CAFn=p-bdoi1yDQTNhpzM=MP5s8Zm9zxuxbD-zPs_h_iA8C=mGg@mail.gmail.com>
+ <ipebw5yv4l5joa54vk42rb2fmuykzvmjar7blcwiwstj5fwyuq@ycl4du6sb724>
+In-Reply-To: <ipebw5yv4l5joa54vk42rb2fmuykzvmjar7blcwiwstj5fwyuq@ycl4du6sb724>
+From: John Snow <jsnow@redhat.com>
+Date: Thu, 6 Jun 2024 13:22:14 -0400
+Message-ID: <CAFn=p-b9gLmAwLAjzf2RWA4JZuxVM-nnwETwQ44c8F0kOkReVg@mail.gmail.com>
+Subject: Re: Historical QMP schema
+To: Victor Toso <victortoso@redhat.com>
+Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Andrea Bolognani <abologna@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="00000000000049a237061a3bedec"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,197 +95,500 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 6 Jun 2024 12:56:59 +0100
-Peter Maydell <peter.maydell@linaro.org> wrote:
+--00000000000049a237061a3bedec
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> On Thu, 6 Jun 2024 at 11:48, Zhenyu Zhang <zhenyzha@redhat.com> wrote:
+Adding upstream because I think there's little reason to keep this
+discussion off-list.
+
+The context of this mailing thread is that we are discussing how we might
+want to store and record historical QMP API interface information such that
+we can programmatically answer questions like "when was X command
+introduced?", but possibly also to generate changelog QMP reports for
+auditing QMP changes for each version during the release candidate window.
+
+On Thu, Jun 6, 2024 at 6:25=E2=80=AFAM Victor Toso <victortoso@redhat.com> =
+wrote:
+
+> Hi John!
+>
+> On Wed, Jun 05, 2024 at 11:47:53AM GMT, John Snow wrote:
+> > Hi,
 > >
-> > Multiple warning messages and corresponding backtraces are observed when Linux
-> > guest is booted on the host with Fujitsu CPUs. One of them is shown as below.
+> > as part of my project to modernize QMP documentation I recently
+> > forked the QAPI generator and modded it to be able to read
+> > historical QAPI schema going all the way back to v1.0.
 > >
-> > [    0.032443] ------------[ cut here ]------------
-> > [    0.032446] uart-pl011 9000000.pl011: ARCH_DMA_MINALIGN smaller than CTR_EL0.CWG (128 < 256)
-> > [    0.032454] WARNING: CPU: 0 PID: 1 at arch/arm64/mm/dma-mapping.c:54 arch_setup_dma_ops+0xbc/0xcc
-> > [    0.032470] Modules linked in:
-> > [    0.032475] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.14.0-452.el9.aarch64 #1
-> > [    0.032481] Hardware name: linux,dummy-virt (DT)
-> > [    0.032484] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> > [    0.032490] pc : arch_setup_dma_ops+0xbc/0xcc
-> > [    0.032496] lr : arch_setup_dma_ops+0xbc/0xcc
-> > [    0.032501] sp : ffff80008003b860
-> > [    0.032503] x29: ffff80008003b860 x28: 0000000000000000 x27: ffffaae4b949049c
-> > [    0.032510] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-> > [    0.032517] x23: 0000000000000100 x22: 0000000000000000 x21: 0000000000000000
-> > [    0.032523] x20: 0000000100000000 x19: ffff2f06c02ea400 x18: ffffffffffffffff
-> > [    0.032529] x17: 00000000208a5f76 x16: 000000006589dbcb x15: ffffaae4ba071c89
-> > [    0.032535] x14: 0000000000000000 x13: ffffaae4ba071c84 x12: 455f525443206e61
-> > [    0.032541] x11: 68742072656c6c61 x10: 0000000000000029 x9 : ffffaae4b7d21da4
-> > [    0.032547] x8 : 0000000000000029 x7 : 4c414e494d5f414d x6 : 0000000000000029
-> > [    0.032553] x5 : 000000000000000f x4 : ffffaae4b9617a00 x3 : 0000000000000001
-> > [    0.032558] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff2f06c029be40
-> > [    0.032564] Call trace:
-> > [    0.032566]  arch_setup_dma_ops+0xbc/0xcc
-> > [    0.032572]  of_dma_configure_id+0x138/0x300
-> > [    0.032591]  amba_dma_configure+0x34/0xc0
-> > [    0.032600]  really_probe+0x78/0x3dc
-> > [    0.032614]  __driver_probe_device+0x108/0x160
-> > [    0.032619]  driver_probe_device+0x44/0x114
-> > [    0.032624]  __device_attach_driver+0xb8/0x14c
-> > [    0.032629]  bus_for_each_drv+0x88/0xe4
-> > [    0.032634]  __device_attach+0xb0/0x1e0
-> > [    0.032638]  device_initial_probe+0x18/0x20
-> > [    0.032643]  bus_probe_device+0xa8/0xb0
-> > [    0.032648]  device_add+0x4b4/0x6c0
-> > [    0.032652]  amba_device_try_add.part.0+0x48/0x360
-> > [    0.032657]  amba_device_add+0x104/0x144
-> > [    0.032662]  of_amba_device_create.isra.0+0x100/0x1c4
-> > [    0.032666]  of_platform_bus_create+0x294/0x35c
-> > [    0.032669]  of_platform_populate+0x5c/0x150
-> > [    0.032672]  of_platform_default_populate_init+0xd0/0xec
-> > [    0.032697]  do_one_initcall+0x4c/0x2e0
-> > [    0.032701]  do_initcalls+0x100/0x13c
-> > [    0.032707]  kernel_init_freeable+0x1c8/0x21c
-> > [    0.032712]  kernel_init+0x28/0x140
-> > [    0.032731]  ret_from_fork+0x10/0x20
-> > [    0.032735] ---[ end trace 0000000000000000 ]---
-> >
-> > In Linux, a check is applied to every device which is exposed through device-tree
-> > node. The warning message is raised when the device isn't DMA coherent and the
-> > cache line size is larger than ARCH_DMA_MINALIGN (128 bytes). The cache line is
-> > sorted from CTR_EL0[CWG], which corresponds to 256 bytes on the guest CPUs.
-> > The DMA coherent capability is claimed through 'dma-coherent' in their
-> > device-tree nodes.  
-> 
-> For QEMU emulated all our DMA is always coherent, so where we
-> have DMA-capable devices we should definitely tell the kernel
-> that that DMA is coherent.
-> 
-> Our pl011 does not do DMA, though (we do not set the dmas property), so
-> it's kind of bogus for the kernel to complain about that.
-> 
-> So I think we should take these changes where they refer to DMA
-> capable devices and ask the kernel folks to fix the warnings
-> where they refer to devices that aren't doing DMA. Looking through
-> the patch, though, my initial impression is that all these are
-> in the latter category...
+> > We want to be able to use this ability to generate accurate
+> > "since:" data for the docs.
+>
+> :)
+>
+> > My question for you is: do you have any input or preferences
+> > for the format of "output" or "compiled" schemata?
+>
+> Not sure if I understand 'output' & 'compiled' reference here.
+>
 
-I was curious and have a very slow test running, so took a look.
-of_dma_configure() is being passed force_dma = true.
-https://elixir.bootlin.com/linux/v6.10-rc2/source/drivers/amba/bus.c#L361
+The idea is that even though I can modify the schema parser to cope with
+historical versions of the schema, we should re-save the schema into a
+unified format so that the gross hacks and kludges made to support old
+versions in my forked QAPI parser don't need to be kept in-tree. In theory,
+we only need to parse each historical schema precisely once.
 
-The is a comment in of_dma_configure()
-		/*
-		 * For legacy reasons, we have to assume some devices need
-		 * DMA configuration regardless of whether "dma-ranges" is
-		 * correctly specified or not.
-		 */
-So this I think this is being triggered by a workaround for broken DT.
+(And then we'll only need to parse each new schema going forward with the
+version of the QAPI parser that's already in-tree.)
 
-This was introduced by Robin Murphy +CC though you may need to ask on
-kernel list because ARM / QEMU fun.
+Importantly, old versions of the schema aren't contained *entirely* within
+the schema. Here's a timeline:
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=723288836628b
+v0.12.0: QMP first introduced. Events are hardcoded, commands are defined
+in qemu-monitor.hx. query commands are hard-coded in monitor.c.
+v0.14.0: qemu-monitor.hx is forked into qmp-commands.hx and hmp-commands.hx
+v1.0: First version which features qapi-schema.json; all query commands are
+qapified but most other commands are not.
+v1.1.0: A very large chunk of commands are QAPIfied.
+v1.3.0: Most commands are now QAPIfied, but there are 2-3 remaining.
+v2.1.0: events are now fully qapified; most are now defined in
+qapi/events.json
+v2.8.0: The remaining commands are fully qapified; qmp-commands.hx is
+removed.
 
-Relevant comment from that patch description:
+So what I mean by "compiled" schema is parsing historical revisions of the
+schema, including descriptive schema definitions for items not-yet-qapified
+(but nonetheless remain available in that version), and writing that
+curated information back out to disk (and checking into qemu.git) for later
+reference.
 
-"Certain bus types have a general expectation of
-DMA capability and carry a well-established precedent that an absent
-"dma-ranges" implies the same as the empty property, so we automatically
-opt those in to DMA configuration regardless, to avoid regressing most
-existing platforms."
+There are multiple choices for this output format:
 
-The patch implies that AMBA is one of those.
+(A) Just output in native qapi-schema format, just choose the "latest
+version".
+(B) Choose some other arbitrary format.
+(C) Some secret, third thing.
 
-So not sure this is solveable without a hack such as eliding the warning
-message if dma_force was set as the situation probably isn't relevant then..
+I don't like the native qapi schema idea, for a few reasons:
+- It changes over time
+- It does not support nested structures except by reference, but
+- Type names are not meant to API visible
+- Detecting data changes in nested, shared types is difficult
 
-Jonathan
+In my prototype thus far, I have used a JSON-Schema based format with a
+type definition library that catalogues all of the command arg / command
+return / event data types with *all fields* fully dereferenced and inlined,
+except where impossible due to cyclical/recursive references (PCI and
+BlockStats come to mind.)
 
-> 
-> > diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-> > index d480a7da02..cdf99966e6 100644
-> > --- a/hw/arm/boot.c
-> > +++ b/hw/arm/boot.c
-> > @@ -509,6 +509,7 @@ static void fdt_add_psci_node(void *fdt)
-> >      qemu_fdt_setprop_cell(fdt, "/psci", "cpu_off", cpu_off_fn);
-> >      qemu_fdt_setprop_cell(fdt, "/psci", "cpu_on", cpu_on_fn);
-> >      qemu_fdt_setprop_cell(fdt, "/psci", "migrate", migrate_fn);
-> > +    qemu_fdt_setprop(fdt, "/psci", "dma-coherent", NULL, 0);  
-> 
-> The PSCI node is describing the firmware interface for
-> HVC or SMC calls -- I don't think it makes any sense
-> to think of this as doing DMA. So I would query the kernel
-> folks about this warning.
-> 
-> >  }
-> >
-> >  int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
-> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > index 3c93c0c0a6..d3e5f512e2 100644
-> > --- a/hw/arm/virt.c
-> > +++ b/hw/arm/virt.c
-> > @@ -652,6 +652,7 @@ static void fdt_add_pmu_nodes(const VirtMachineState *vms)
-> >          qemu_fdt_setprop_cells(ms->fdt, "/pmu", "interrupts",
-> >                                 GIC_FDT_IRQ_TYPE_PPI,
-> >                                 INTID_TO_PPI(VIRTUAL_PMU_IRQ), irqflags);
-> > +        qemu_fdt_setprop(ms->fdt, "/pmu", "dma-coherent", NULL, 0);  
-> 
-> What DMA interface does the PMU have?
-> 
-> >      }
-> >  }
-> >
-> > @@ -936,6 +937,7 @@ static void create_uart(const VirtMachineState *vms, int uart,
-> >                                 vms->clock_phandle, vms->clock_phandle);
-> >      qemu_fdt_setprop(ms->fdt, nodename, "clock-names",
-> >                           clocknames, sizeof(clocknames));
-> > +    qemu_fdt_setprop(ms->fdt, nodename, "dma-coherent", NULL, 0);  
-> 
-> As above, our PL011 doesn't do any DMA and we do not advertise
-> to the kernel that it does.
-> 
-> >      if (uart == VIRT_UART) {
-> >          qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
-> > @@ -972,6 +974,7 @@ static void create_rtc(const VirtMachineState *vms)
-> >                             GIC_FDT_IRQ_FLAGS_LEVEL_HI);
-> >      qemu_fdt_setprop_cell(ms->fdt, nodename, "clocks", vms->clock_phandle);
-> >      qemu_fdt_setprop_string(ms->fdt, nodename, "clock-names", "apb_pclk");
-> > +    qemu_fdt_setprop(ms->fdt, nodename, "dma-coherent", NULL, 0);
-> >      g_free(nodename);
-> >  }  
-> 
-> What DMA does the pl031 do?
-> 
-> >
-> > @@ -1077,6 +1080,7 @@ static void create_gpio_devices(const VirtMachineState *vms, int gpio,
-> >      qemu_fdt_setprop_cell(ms->fdt, nodename, "clocks", vms->clock_phandle);
-> >      qemu_fdt_setprop_string(ms->fdt, nodename, "clock-names", "apb_pclk");
-> >      qemu_fdt_setprop_cell(ms->fdt, nodename, "phandle", phandle);
-> > +    qemu_fdt_setprop(ms->fdt, nodename, "dma-coherent", NULL, 0);  
-> 
-> As far as I know the PL061 is also not a DMA-capable device.
-> 
-> >      if (gpio != VIRT_GPIO) {
-> >          /* Mark as not usable by the normal world */
-> > diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
-> > index eebcd28f9a..da47071a95 100644
-> > --- a/hw/core/sysbus-fdt.c
-> > +++ b/hw/core/sysbus-fdt.c
-> > @@ -554,6 +554,7 @@ void platform_bus_add_all_fdt_nodes(void *fdt, const char *intc, hwaddr addr,
-> >      qemu_fdt_setprop_cells(fdt, node, "ranges", 0, addr >> 32, addr, bus_size);
-> >
-> >      qemu_fdt_setprop_phandle(fdt, node, "interrupt-parent", intc);
-> > +    qemu_fdt_setprop(fdt, node, "dma-coherent", NULL, 0);  
-> 
-> Isn't this the fdt node for a bus, not a device?
-> 
-> thanks
-> -- PMM
-> 
+A benefit of this "compilation" is that all commands have their arguments
+and return values described solely by type (and for enums, values) and not
+by type name - fully removing non-API information from the "compiled"
+version.
+
+A downside is that this is yet-another-format that differs from the
+existing format that requires someone knowledgeable to manipulate in case
+there are errors found in it, or worse - we decide to change or upgrade the
+format in some way to support a new feature in the future and we must
+yet-again revise our catalogue of historical schemata.
+
+
+>
+> My preference is for this metadata to be there when the generator
+> parses the schema. It could another external metadata file, but
+> available to the generator.
+>
+
+Yes, ideally...
+
+I'm thinking that I'd like to include a qapi/history/ directory which
+contains a record of all compiled historical schemata, and the generator
+can parse the directory and load up them all up - and then compile a quick
+lookup table that is able to answer basic questions about the data.
+
+i.e. "when was X [command/event] first introduced?"
+
+"when was Command.arguments.key first introduced / incompatibly modified?"
+
+The syntax/API for how to ask the QAPISchema object these questions remains
+unpondered, as does the question "how do we report 'since' information in
+the rendered QMP documentation HTML for nested objects that we begrudgingly
+refer to only by type?"
+
+Even if QAPI type names are not API, and even if my new QMP documentation
+project eliminates as many type names as it can by inlining inherited
+structures, boxed arguments, and branches - there are still referenced
+types for argument types. That might be a messy/unsolvable problem right
+now.
+
+
+>
+> We can then identify all the cases where something might have
+> changed, when it changed, and what proper outputs would we have
+> due to that. (e.g: field added/removed)
+>
+> For a whole discussion of this between Markus, Daniel and Andrea
+> with Go output (possibilities) in mind, see the thread from
+>
+>     Date: Tue, 10 May 2022 13:51:05 +0100
+>     From: "Daniel P. Berrang=C3=A9" <berrange@redhat.com>
+>     Subject: Re: [RFC PATCH v1 0/8] qapi: add generator for Golang
+> interface
+>     Message-ID: <YnpfuYvBu56CCi7b@redhat.com>
+>
+> > I figured you might have some opinions because of your dbus and
+> > other API work.  Possibly this historical record is useful to
+> > you in some way.
+>
+> I'm thinking back on when I worked in the libvirt-go-module code
+> generator.
+>
+> For the Go bindings itself, I'm inclined to a have its versions
+> follow closely QEMU versions which brings each qapi-go tag to
+> support to what QAPI itself supports for that QEMU version we
+> generated that code. I think this is more or less close to what
+> Go applications would expect. So, the Since version is not that
+> impactful as it was for libvirt-go-module. Ah, based on what
+> Marc-Andr=C3=A9 wrote, I think this is the same for qapi-rs.
+>
+> Cheers,
+> Victor
+>
+
+As bonus context: here's output from a small utility I wrote called
+schema-diff that compares the compiled v1.0 and v1.1.0 schema:
+
+```
+jsnow@scv ~/s/qemu ((v3.1.0))> ./schema-diff.py qapi-compiled-v1.0.json
+qapi-compiled-v1.1.0.json
+Added commands
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+block-job-cancel
+block-job-set-speed
+block-stream
+block_set_io_throttle
+change-vnc-password
+qom-get
+qom-list
+qom-list-types
+qom-set
+query-block-jobs
+system_wakeup
+transaction
+xen-save-devices-state
+
+Removed commands
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Modified commands
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+add_client (x-qemu-arguments)
+    ++ arguments.tls: Optional<boolean>
+blockdev-snapshot-sync (x-qemu-arguments)
+    -- arguments.snapshot-file: Optional<string>
+    ++ arguments.mode: Optional<enum>
+    ++ arguments.snapshot-file: string
+memsave (x-qemu-arguments)
+    ++ arguments.cpu-index: Optional<integer>
+query-block (x-qemu-returns)
+    ++ returns[].inserted.bps: integer
+    ++ returns[].inserted.bps_rd: integer
+    ++ returns[].inserted.bps_wr: integer
+    ++ returns[].inserted.iops: integer
+    ++ returns[].inserted.iops_rd: integer
+    ++ returns[].inserted.iops_wr: integer
+query-spice (x-qemu-returns)
+    ++ returns.mouse-mode: enum
+query-status (x-qemu-returns)
+       returns.status: enum
+        ++ suspended
+```
+
+It's possibly rough around the edges (branches, ifcond and features are not
+yet supported; alternates are kinda-supported but do not yet diff
+well/prettily, ignore the "x-qemu-" stuff), and the diff output uses an
+arbitrary/invented "key path" and "field type" notation in order to
+simplify the changelog summary, but you can hopefully see the utility of
+such a report.
+
+Helpfully, it shows *all levels* of changes, no matter how deeply nested,
+so *all* potential changes to the API can be observed / audited /
+documented. The only types it ever reports are fundamental JSON types and
+"any" and "enum", so any refactoring we do in the QAPI schema with regards
+to type names, inheritance, boxing, etc are fully transparent in this
+analysis.
+
+It's a useful tool for reviewing QAPI changes during the RC period to
+ensure we did not accidentally create any breaking changes since the last
+released version.
+
+One more example for the road:
+
+```
+jsnow@scv ~/s/qemu ((v3.1.0))> ./schema-diff.py qapi-compiled-v1.1.0.json
+qapi-compiled-v1.2.0.json
+Added commands
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+add-fd
+device-list-properties
+dump-guest-memory
+migrate-set-cache-size
+migrate-set-capabilities
+query-cpu-definitions
+query-events
+query-fdsets
+query-machines
+query-migrate-cache-size
+query-migrate-capabilities
+query-target
+remove-fd
+
+Removed commands
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Modified commands
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+query-block (x-qemu-returns)
+    ++ returns[].inserted.backing_file_depth: integer
+    ++ returns[].inserted.encryption_key_missing: boolean
+query-migrate (x-qemu-returns)
+    ++ returns.disk.duplicate: integer
+    ++ returns.disk.normal: integer
+    ++ returns.disk.normal-bytes: integer
+    ++ returns.ram.duplicate: integer
+    ++ returns.ram.normal: integer
+    ++ returns.ram.normal-bytes: integer
+    ++ returns.total-time: Optional<integer>
+    ++ returns.xbzrle-cache: Optional<object>
+    ++ returns.xbzrle-cache.bytes: integer
+    ++ returns.xbzrle-cache.cache-miss: integer
+    ++ returns.xbzrle-cache.cache-size: integer
+    ++ returns.xbzrle-cache.overflow: integer
+    ++ returns.xbzrle-cache.pages: integer
+```
+
+Here, you can see that although the "disk" and "ram" fields for
+query-migrate's return type are very likely the same actual type, the
+compiler has evaluated everything down to its constituent parts and
+reported each difference independently for the report; preserving the
+possibility to obtain wire-protocol accurate added/modified data for each
+and every individual key.
+
+I'll also point out that this diff view does not confuse "first version
+qapified" with "first version introduced"; v1.2.0 actually qapified several
+commands for the first time, but they remained available in earlier
+versions. The diff output accurately reflects this.
+
+--js
+
+--00000000000049a237061a3bedec
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Adding upstream because I think there&#39;s little re=
+ason to keep this discussion off-list.</div><div><br></div><div>The context=
+ of this mailing thread is that we are discussing how we might want to stor=
+e and record historical QMP API interface information such that we can prog=
+rammatically answer questions like &quot;when was X command introduced?&quo=
+t;, but possibly also to generate changelog QMP reports for auditing QMP ch=
+anges for each version during the release candidate window.<br></div><br><d=
+iv class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun =
+6, 2024 at 6:25=E2=80=AFAM Victor Toso &lt;<a href=3D"mailto:victortoso@red=
+hat.com">victortoso@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D=
+"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(2=
+04,204,204);padding-left:1ex">Hi John!<br>
+<br>
+On Wed, Jun 05, 2024 at 11:47:53AM GMT, John Snow wrote:<br>
+&gt; Hi,<br>
+&gt; <br>
+&gt; as part of my project to modernize QMP documentation I recently<br>
+&gt; forked the QAPI generator and modded it to be able to read<br>
+&gt; historical QAPI schema going all the way back to v1.0.<br>
+&gt; <br>
+&gt; We want to be able to use this ability to generate accurate<br>
+&gt; &quot;since:&quot; data for the docs.<br>
+<br>
+:)<br>
+<br>
+&gt; My question for you is: do you have any input or preferences<br>
+&gt; for the format of &quot;output&quot; or &quot;compiled&quot; schemata?=
+<br>
+<br>
+Not sure if I understand &#39;output&#39; &amp; &#39;compiled&#39; referenc=
+e here.<br></blockquote><div><br></div><div>The idea is that even though I =
+can modify the schema parser to cope with historical versions of the schema=
+, we should re-save the schema into a unified format so that the gross hack=
+s and kludges made to support old versions in my forked QAPI parser don&#39=
+;t need to be kept in-tree. In theory, we only need to parse each historica=
+l schema precisely once.</div><div><br></div><div>(And then we&#39;ll only =
+need to parse each new schema going forward with the version of the QAPI pa=
+rser that&#39;s already in-tree.)<br></div><div><br></div><div>Importantly,=
+ old versions of the schema aren&#39;t contained *entirely* within the sche=
+ma. Here&#39;s a timeline:</div><div><br></div><div>v0.12.0: QMP first intr=
+oduced. Events are hardcoded, commands are defined in qemu-monitor.hx. quer=
+y commands are hard-coded in monitor.c.<br></div><div>v0.14.0: qemu-monitor=
+.hx is forked into qmp-commands.hx and hmp-commands.hx</div><div>v1.0: Firs=
+t version which features qapi-schema.json; all query commands are qapified =
+but most other commands are not.</div><div>v1.1.0: A very large chunk of co=
+mmands are QAPIfied.</div><div>v1.3.0: Most commands are now QAPIfied, but =
+there are 2-3 remaining.</div><div>v2.1.0: events are now fully qapified; m=
+ost are now defined in qapi/events.json<br></div><div>v2.8.0: The remaining=
+ commands are fully qapified; qmp-commands.hx is removed.</div><div><br></d=
+iv><div>So what I mean by &quot;compiled&quot; schema is parsing historical=
+ revisions of the schema, including descriptive schema definitions for item=
+s not-yet-qapified (but nonetheless remain available in that version), and =
+writing that curated information back out to disk (and checking into qemu.g=
+it) for later reference.<br></div><div><br></div><div>There are multiple ch=
+oices for this output format:</div><div><br></div><div>(A) Just output in n=
+ative qapi-schema format, just choose the &quot;latest version&quot;.</div>=
+<div>(B) Choose some other arbitrary format.</div><div>(C) Some secret, thi=
+rd thing.<br></div><div><br></div><div>I don&#39;t like the native qapi sch=
+ema idea, for a few reasons:</div><div>- It changes over time</div><div>- I=
+t does not support nested structures except by reference, but</div><div>- T=
+ype names are not meant to API visible</div><div>- Detecting data changes i=
+n nested, shared types is difficult<br></div><div><br></div><div>In my prot=
+otype thus far, I have used a JSON-Schema based format with a type definiti=
+on library that catalogues all of the command arg / command return / event =
+data types with *all fields* fully dereferenced and inlined, except where i=
+mpossible due to cyclical/recursive references (PCI and BlockStats come to =
+mind.)</div><div><br></div><div>A benefit of this &quot;compilation&quot; i=
+s that all commands have their arguments and return values described solely=
+ by type (and for enums, values) and not by type name - fully removing non-=
+API information from the &quot;compiled&quot; version.</div><div><br></div>=
+<div>A downside is that this is yet-another-format that differs from the ex=
+isting format that requires someone knowledgeable to manipulate in case the=
+re are errors found in it, or worse - we decide to change or upgrade the fo=
+rmat in some way to support a new feature in the future and we must yet-aga=
+in revise our catalogue of historical schemata.<br></div><div>=C2=A0</div><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+My preference is for this metadata to be there when the generator<br>
+parses the schema. It could another external metadata file, but<br>
+available to the generator.<br></blockquote><div><br></div><div>Yes, ideall=
+y...</div><div><br></div><div>I&#39;m thinking that I&#39;d like to include=
+ a qapi/history/ directory which contains a record of all compiled historic=
+al schemata, and the generator can parse the directory and load up them all=
+ up - and then compile a quick lookup table that is able to answer basic qu=
+estions about the data.</div><div><br></div><div>i.e. &quot;when was X [com=
+mand/event] first introduced?&quot;</div><div><br></div><div>&quot;when was=
+ Command.arguments.key first introduced / incompatibly modified?&quot;</div=
+><div><br></div><div>The syntax/API for how to ask the QAPISchema object th=
+ese questions remains unpondered, as does the question &quot;how do we repo=
+rt &#39;since&#39; information in the rendered QMP documentation HTML for n=
+ested objects that we begrudgingly refer to only by type?&quot;</div><div><=
+br></div><div>Even if QAPI type names are not API, and even if my new QMP d=
+ocumentation project eliminates as many type names as it can by inlining in=
+herited structures, boxed arguments, and branches - there are still referen=
+ced types for argument types. That might be a messy/unsolvable problem righ=
+t now.<br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D=
+"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
+ft:1ex">
+<br>
+We can then identify all the cases where something might have<br>
+changed, when it changed, and what proper outputs would we have<br>
+due to that. (e.g: field added/removed)<br>
+<br>
+For a whole discussion of this between Markus, Daniel and Andrea<br>
+with Go output (possibilities) in mind, see the thread from<br>
+<br>
+=C2=A0 =C2=A0 Date: Tue, 10 May 2022 13:51:05 +0100<br>
+=C2=A0 =C2=A0 From: &quot;Daniel P. Berrang=C3=A9&quot; &lt;<a href=3D"mail=
+to:berrange@redhat.com" target=3D"_blank">berrange@redhat.com</a>&gt;<br>
+=C2=A0 =C2=A0 Subject: Re: [RFC PATCH v1 0/8] qapi: add generator for Golan=
+g interface<br>
+=C2=A0 =C2=A0 Message-ID: &lt;<a href=3D"mailto:YnpfuYvBu56CCi7b@redhat.com=
+" target=3D"_blank">YnpfuYvBu56CCi7b@redhat.com</a>&gt;<br>
+<br>
+&gt; I figured you might have some opinions because of your dbus and<br>
+&gt; other API work.=C2=A0 Possibly this historical record is useful to<br>
+&gt; you in some way.<br>
+<br>
+I&#39;m thinking back on when I worked in the libvirt-go-module code<br>
+generator.<br>
+<br>
+For the Go bindings itself, I&#39;m inclined to a have its versions<br>
+follow closely QEMU versions which brings each qapi-go tag to<br>
+support to what QAPI itself supports for that QEMU version we<br>
+generated that code. I think this is more or less close to what<br>
+Go applications would expect. So, the Since version is not that<br>
+impactful as it was for libvirt-go-module. Ah, based on what<br>
+Marc-Andr=C3=A9 wrote, I think this is the same for qapi-rs.<br>
+<br>
+Cheers,<br>
+Victor<br></blockquote><div><br></div><div>As bonus context: here&#39;s out=
+put from a small utility I wrote called schema-diff that compares the compi=
+led v1.0 and v1.1.0 schema:</div><div><br></div><div>```<br>jsnow@scv ~/s/q=
+emu ((v3.1.0))&gt; ./schema-diff.py qapi-compiled-v1.0.json qapi-compiled-v=
+1.1.0.json<br>Added commands<br>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<=
+br>block-job-cancel<br>block-job-set-speed<br>block-stream<br>block_set_io_=
+throttle<br>change-vnc-password<br>qom-get<br>qom-list<br>qom-list-types<br=
+>qom-set<br>query-block-jobs<br>system_wakeup<br>transaction<br>xen-save-de=
+vices-state<br><br>Removed commands<br>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D<br><br>Modified commands<br>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D<br>add_client (x-qemu-arguments)<br>=C2=A0 =C2=A0 ++ arg=
+uments.tls: Optional&lt;boolean&gt;<br>blockdev-snapshot-sync (x-qemu-argum=
+ents)<br>=C2=A0 =C2=A0 -- arguments.snapshot-file: Optional&lt;string&gt;<b=
+r>=C2=A0 =C2=A0 ++ arguments.mode: Optional&lt;enum&gt;<br>=C2=A0 =C2=A0 ++=
+ arguments.snapshot-file: string<br>memsave (x-qemu-arguments)<br>=C2=A0 =
+=C2=A0 ++ arguments.cpu-index: Optional&lt;integer&gt;<br>query-block (x-qe=
+mu-returns)<br>=C2=A0 =C2=A0 ++ returns[].inserted.bps: integer<br>=C2=A0 =
+=C2=A0 ++ returns[].inserted.bps_rd: integer<br>=C2=A0 =C2=A0 ++ returns[].=
+inserted.bps_wr: integer<br>=C2=A0 =C2=A0 ++ returns[].inserted.iops: integ=
+er<br>=C2=A0 =C2=A0 ++ returns[].inserted.iops_rd: integer<br>=C2=A0 =C2=A0=
+ ++ returns[].inserted.iops_wr: integer<br>query-spice (x-qemu-returns)<br>=
+=C2=A0 =C2=A0 ++ returns.mouse-mode: enum<br>query-status (x-qemu-returns)<=
+br>=C2=A0 =C2=A0 =C2=A0 =C2=A0returns.status: enum<br>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 ++ suspended<br>```</div><div><br></div><div>It&#39;s possibly rough=
+ around the edges (branches, ifcond and features are not yet supported; alt=
+ernates are kinda-supported but do not yet diff well/prettily, ignore the &=
+quot;x-qemu-&quot; stuff), and the diff output uses an arbitrary/invented &=
+quot;key path&quot; and &quot;field type&quot; notation in order to simplif=
+y the changelog summary, but you can hopefully see the utility of such a re=
+port.</div><div><br></div><div>Helpfully, it shows *all levels* of changes,=
+ no matter how deeply nested, so *all* potential changes to the API can be =
+observed / audited / documented. The only types it ever reports are fundame=
+ntal JSON types and &quot;any&quot; and &quot;enum&quot;, so any refactorin=
+g we do in the QAPI schema with regards to type names, inheritance, boxing,=
+ etc are fully transparent in this analysis.<br></div><div><br></div><div>I=
+t&#39;s a useful tool for reviewing QAPI changes during the RC period to en=
+sure we did not accidentally create any breaking changes since the last rel=
+eased version.</div><div><br></div><div>One more example for the road:</div=
+><div><br></div><div>```<br>jsnow@scv ~/s/qemu ((v3.1.0))&gt; ./schema-diff=
+.py qapi-compiled-v1.1.0.json qapi-compiled-v1.2.0.json<br>Added commands<b=
+r>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>add-fd<br>device-list-prope=
+rties<br>dump-guest-memory<br>migrate-set-cache-size<br>migrate-set-capabil=
+ities<br>query-cpu-definitions<br>query-events<br>query-fdsets<br>query-mac=
+hines<br>query-migrate-cache-size<br>query-migrate-capabilities<br>query-ta=
+rget<br>remove-fd<br><br>Removed commands<br>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D<br><br>Modified commands<br>=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D<br>query-block (x-qemu-returns)<br>=C2=A0 =C2=A0 +=
++ returns[].inserted.backing_file_depth: integer<br>=C2=A0 =C2=A0 ++ return=
+s[].inserted.encryption_key_missing: boolean<br>query-migrate (x-qemu-retur=
+ns)<br>=C2=A0 =C2=A0 ++ returns.disk.duplicate: integer<br>=C2=A0 =C2=A0 ++=
+ returns.disk.normal: integer<br>=C2=A0 =C2=A0 ++ returns.disk.normal-bytes=
+: integer<br>=C2=A0 =C2=A0 ++ returns.ram.duplicate: integer<br>=C2=A0 =C2=
+=A0 ++ returns.ram.normal: integer<br>=C2=A0 =C2=A0 ++ returns.ram.normal-b=
+ytes: integer<br>=C2=A0 =C2=A0 ++ returns.total-time: Optional&lt;integer&g=
+t;<br>=C2=A0 =C2=A0 ++ returns.xbzrle-cache: Optional&lt;object&gt;<br>=C2=
+=A0 =C2=A0 ++ returns.xbzrle-cache.bytes: integer<br>=C2=A0 =C2=A0 ++ retur=
+ns.xbzrle-cache.cache-miss: integer<br>=C2=A0 =C2=A0 ++ returns.xbzrle-cach=
+e.cache-size: integer<br>=C2=A0 =C2=A0 ++ returns.xbzrle-cache.overflow: in=
+teger<br>=C2=A0 =C2=A0 ++ returns.xbzrle-cache.pages: integer<br>```</div><=
+div><br></div><div>Here, you can see that although the &quot;disk&quot; and=
+ &quot;ram&quot; fields for query-migrate&#39;s return type are very likely=
+ the same actual type, the compiler has evaluated everything down to its co=
+nstituent parts and reported each difference independently for the report; =
+preserving the possibility to obtain wire-protocol accurate added/modified =
+data for each and every individual key.</div><div><br></div><div>I&#39;ll a=
+lso point out that this diff view does not confuse &quot;first version qapi=
+fied&quot; with &quot;first version introduced&quot;; v1.2.0 actually qapif=
+ied several commands for the first time, but they remained available in ear=
+lier versions. The diff output accurately reflects this.</div><div><br></di=
+v><div></div><div>--js<br></div></div></div>
+
+--00000000000049a237061a3bedec--
 
 
