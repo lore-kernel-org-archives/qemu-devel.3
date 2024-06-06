@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC1F5C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 12:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36BFFC27C54
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 13:35:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFCdV-0000Nj-Ag; Thu, 06 Jun 2024 08:54:33 -0400
+	id 1sFDGf-0003Fj-8i; Thu, 06 Jun 2024 09:35:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFCdR-0000N9-K3
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:54:31 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <haris.iqbal@ionos.com>)
+ id 1sFDGd-0003FN-GD
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 09:34:59 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFCdP-00058h-OW
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:54:29 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-52b90038cf7so1454251e87.0
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 05:54:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <haris.iqbal@ionos.com>)
+ id 1sFDGa-0005RG-2c
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 09:34:59 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2e73359b979so11494911fa.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 06:34:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717678465; x=1718283265; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=15tVYli2ChvVNa0VO01EKIcWe4g9oe8PmeG38aQPSO8=;
- b=BhmugmbofsN9mtRLr3DRoWadmQmNe8zIQ8HFIaN2oJbH0oHSUeqCdw85++gIAKLFLR
- /KUH0Pwvs7vng/7g27EHoYwtrhDvVBcY5XEJmjVFzd627JkFUr/O4vGjaxjSA5pPuH8m
- tNFHWYFHdObmgKqdICkdv8kNCRwQ6mBwKdmsvYgB9cYRjJXpokP2XCZx+OMTTYBsiCpP
- 1Y30C/1kqEuwvoMu8J+A2ETHrp9x7QHu5BN9atwik5fNcqo73jeAUYEoBHoMBwQbMeow
- dtFDH2u2gGGjZXflkroPFmzIF2xQYMnytePOrVecTEsxXVT9dLEG9HQboDsUX6m4Q9fn
- BaVg==
+ d=ionos.com; s=google; t=1717680891; x=1718285691; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=I04HKaazZBJoltKWxcG9Rb/UCZ3l9zMjgqW3l2HYN+A=;
+ b=PdDORvPQw3A87A3bBjV7hG4jgfZXiKLJZZTqYeeBH+ZYS3qrde09/SiNgXSWuhJR74
+ Ug516n6X7/7DMfcjYGJV/WNXjb5osqiajxaN4goAcNPRJEGWkjwL1J2xXmGBQGxLHeZX
+ 7bVj2EfN0+oBsUBTDmpjfdoWHhVGhsM2lzu5zeDW8DDVfpQ4y3gooV6HxTMDw4uo7LcN
+ 7pQHo/3T7j1pCR6Isjf2u+nPw6jwmhYIASf1/T61LSUqsMlORRve0Cg3dAHRaT7/4zKm
+ WZ8Vo5/wfBeQA1xCJQZpwxR9h7E4bZ12O/0pWANx36iwT3xavuCiYSo8dl7J6M6fRA3D
+ 0fKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717678465; x=1718283265;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=15tVYli2ChvVNa0VO01EKIcWe4g9oe8PmeG38aQPSO8=;
- b=TwRy650gAPUNRW9EqJh8ptF18W0XyW19QzYUgY1dBYf8Kj8FlW1nCVJkRbS2sN+FXS
- /NlE09+b4ak35rYrfTtoXojuwhpIWv69OX7QwlR1kKWdUTfrQ7b+rwb2O6IrJRnrrm4F
- aQZnqMLPEkB2vgntgcg4gS8SdEpVenIKclVExsrRPAhZX/Dn/iWbV/JciVoRipkO/1/g
- u9u876FsDcebzPjwz22W7PHTpl0qFxCGYy4OsP7N43Y6r+atBDt5hhjbAYryHQswrcJR
- /mgATrmeyjUwQPabr6P7e3DnEEEjqXF4k49oxSAm6odAjayMe95saigu53UTL6tPHCK8
- FluQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8HWNI0inJVZvhXztHQrswl2eG8IiuFXAEmkI9LmaN3RkFH6eKQM/H3Ul7ebGpuJlePAFa0qK3fy7O+P7VrTPv7yavwIc=
-X-Gm-Message-State: AOJu0YyA9I2rIkKppFtxqnp1EPEueqdF3eimfPSCOa3fXZZJCOd2giDX
- +fzXNAyocb529y/gdWU26sen2/odhKhqpBT0GcB+mNQUBVWfKk94YKRfKVtyJWI=
-X-Google-Smtp-Source: AGHT+IFXul0bgnY7zk4NOzGxHHsdzLgF1+KQj4j7GMxEgYU8BY/yav2YNP5bl3G/GV0ZWypitMVumQ==
-X-Received: by 2002:a05:6512:6d1:b0:529:a55d:8d7 with SMTP id
- 2adb3069b0e04-52bab4b0904mr3965171e87.14.1717678465313; 
- Thu, 06 Jun 2024 05:54:25 -0700 (PDT)
-Received: from [192.168.183.175] (94.red-88-29-105.staticip.rima-tde.net.
- [88.29.105.94]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4215c2a59a3sm21039495e9.22.2024.06.06.05.54.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Jun 2024 05:54:24 -0700 (PDT)
-Message-ID: <2712ea39-89f6-4c1f-92d8-b7cd3f923d0e@linaro.org>
-Date: Thu, 6 Jun 2024 14:54:23 +0200
+ d=1e100.net; s=20230601; t=1717680891; x=1718285691;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=I04HKaazZBJoltKWxcG9Rb/UCZ3l9zMjgqW3l2HYN+A=;
+ b=cHNB47aU1oS5rdXHPwGm89NoKxAPNPaSSJmXjwdPNkg4IPLLp5HPZygpDvtzuCnp7x
+ jjdzg5sXgH+jcqz27+OWKbnI3hZuTpyKEGgfl11zQToySDPpzpHLv+rm8Uu25r4oYh+C
+ Gk84n8CVyktmmCB8g9W6+mkLQ0nj4xin3DlnAn9787H5PUYq/77ZKXJgNmwmLaJPH3ZO
+ L34fJbqlx6VOs3QA36Q8gtC9mo1MdR5XFeEFwrlESXyX3nOj34/nBGFcx7azlu+M1BFm
+ 7Z1yljEQJOnTIq/nQyuKxESCoFog19JRv0k6lvcIewHCsNsZzSPFuI+/ErrqJYWNm1O6
+ TmrQ==
+X-Gm-Message-State: AOJu0YzwbFxchFLj0pUYDZnhhn46khbiXrG79lKMWA+oIZXNU97yQXj4
+ AdiZKahlnKub+PNZ5456eptrjAN4IsxQASrowaOhVK4KVlYmMQja7woqKE/Vy0xkDkAm9L0yjxt
+ bhJ8V6KUTXA1pHRraw5dII89boFpntyOW7QkIfg==
+X-Google-Smtp-Source: AGHT+IHLdLHxmTwWN2MZCJQU2+F5anQTqdp0RhPoUccKgQtQxt7cBr2guI0zM8A6QhOA95UZK+Q7Ww+PLk+e/vpoGe0=
+X-Received: by 2002:a2e:984c:0:b0:2ea:aca0:2767 with SMTP id
+ 38308e7fff4ca-2eac7a70433mr33682441fa.44.1717680891377; Thu, 06 Jun 2024
+ 06:34:51 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 4/5] Revert "meson: Propagate gnutls dependency"
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: akihiko.odaki@daynix.com, Roman Bolshakov <roman@roolebo.dev>
-References: <20240527104937.30443-1-pbonzini@redhat.com>
- <20240527104937.30443-5-pbonzini@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240527104937.30443-5-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
+References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
+ <1717503252-51884-4-git-send-email-arei.gonglei@huawei.com>
+In-Reply-To: <1717503252-51884-4-git-send-email-arei.gonglei@huawei.com>
+From: Haris Iqbal <haris.iqbal@ionos.com>
+Date: Thu, 6 Jun 2024 15:34:40 +0200
+Message-ID: <CAJpMwyh38bHxM7JEjt+w4Y4yOiKDpGnsL6WUy7rL40=4KB0+mg@mail.gmail.com>
+Subject: Re: [PATCH 3/6] io/channel-rdma: support working in coroutine
+To: Gonglei <arei.gonglei@huawei.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, yu.zhang@ionos.com, 
+ mgalaxy@akamai.com, elmar.gerdes@ionos.com, zhengchuan@huawei.com, 
+ berrange@redhat.com, armbru@redhat.com, lizhijian@fujitsu.com, 
+ pbonzini@redhat.com, mst@redhat.com, xiexiangyou@huawei.com, 
+ linux-rdma@vger.kernel.org, lixiao91@huawei.com, jinpu.wang@ionos.com, 
+ Jialin Wang <wangjialin23@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: permerror client-ip=2a00:1450:4864:20::233;
+ envelope-from=haris.iqbal@ionos.com; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,99 +95,617 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/5/24 12:49, Paolo Bonzini wrote:
-> From: Akihiko Odaki <akihiko.odaki@daynix.com>
-> 
-> This reverts commit 3eacf70bb5a83e4775ad8003cbca63a40f70c8c2.
-> 
-> It was only needed because of duplicate objects caused by
-> declare_dependency(link_whole: ...), and can be dropped now
-> that meson.build specifies objects and dependencies separately
-> for the internal dependencies.
-> 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Message-ID: <20240524-objects-v1-2-07cbbe96166b@daynix.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+On Tue, Jun 4, 2024 at 2:14=E2=80=AFPM Gonglei <arei.gonglei@huawei.com> wr=
+ote:
+>
+> From: Jialin Wang <wangjialin23@huawei.com>
+>
+> It is not feasible to obtain RDMA completion queue notifications
+> through poll/ppoll on the rsocket fd. Therefore, we create a thread
+> named rpoller for each rsocket fd and two eventfds: pollin_eventfd
+> and pollout_eventfd.
+>
+> When using io_create_watch or io_set_aio_fd_handler waits for POLLIN
+> or POLLOUT events, it will actually poll/ppoll on the pollin_eventfd
+> and pollout_eventfd instead of the rsocket fd.
+>
+> The rpoller rpoll() on the rsocket fd to receive POLLIN and POLLOUT
+> events.
+> When a POLLIN event occurs, the rpoller write the pollin_eventfd,
+> and then poll/ppoll will return the POLLIN event.
+> When a POLLOUT event occurs, the rpoller read the pollout_eventfd,
+> and then poll/ppoll will return the POLLOUT event.
+>
+> For a non-blocking rsocket fd, if rread/rwrite returns EAGAIN, it will
+> read/write the pollin/pollout_eventfd, preventing poll/ppoll from
+> returning POLLIN/POLLOUT events.
+>
+> Known limitations:
+>
+>   For a blocking rsocket fd, if we use io_create_watch to wait for
+>   POLLIN or POLLOUT events, since the rsocket fd is blocking, we
+>   cannot determine when it is not ready to read/write as we can with
+>   non-blocking fds. Therefore, when an event occurs, it will occurs
+>   always, potentially leave the qemu hanging. So we need be cautious
+>   to avoid hanging when using io_create_watch .
+>
+> Luckily, channel-rdma works well in coroutines :)
+>
+> Signed-off-by: Jialin Wang <wangjialin23@huawei.com>
+> Signed-off-by: Gonglei <arei.gonglei@huawei.com>
 > ---
->   meson.build                | 4 ++--
->   block/meson.build          | 2 +-
->   io/meson.build             | 2 +-
->   storage-daemon/meson.build | 2 +-
->   ui/meson.build             | 2 +-
->   5 files changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index 9772c145bdb..84dbd7fb371 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3486,7 +3486,7 @@ if have_block
->       'blockdev-nbd.c',
->       'iothread.c',
->       'job-qmp.c',
-> -  ), gnutls)
-> +  ))
->   
->     # os-posix.c contains POSIX-specific functions used by qemu-storage-daemon,
->     # os-win32.c does not
-> @@ -4004,7 +4004,7 @@ if have_tools
->                dependencies: [block, qemuutil], install: true)
->     qemu_nbd = executable('qemu-nbd', files('qemu-nbd.c'),
->                  link_args: '@block.syms', link_depends: block_syms,
-> -               dependencies: [blockdev, qemuutil, gnutls, selinux],
-> +               dependencies: [blockdev, qemuutil, selinux],
->                  install: true)
->   
->     subdir('storage-daemon')
-> diff --git a/block/meson.build b/block/meson.build
-> index 158dc3b89db..f1262ec2ba8 100644
-> --- a/block/meson.build
-> +++ b/block/meson.build
-> @@ -39,7 +39,7 @@ block_ss.add(files(
->     'throttle.c',
->     'throttle-groups.c',
->     'write-threshold.c',
-> -), zstd, zlib, gnutls)
-> +), zstd, zlib)
->   
->   system_ss.add(when: 'CONFIG_TCG', if_true: files('blkreplay.c'))
->   system_ss.add(files('block-ram-registrar.c'))
-> diff --git a/io/meson.build b/io/meson.build
-> index 283b9b2bdbd..1164812f912 100644
-> --- a/io/meson.build
-> +++ b/io/meson.build
-> @@ -13,4 +13,4 @@ io_ss.add(files(
->     'dns-resolver.c',
->     'net-listener.c',
->     'task.c',
-> -), gnutls)
-> +))
-> diff --git a/storage-daemon/meson.build b/storage-daemon/meson.build
-> index fd5e32f4b28..5e61a9d1bdf 100644
-> --- a/storage-daemon/meson.build
-> +++ b/storage-daemon/meson.build
-> @@ -1,6 +1,6 @@
->   qsd_ss = ss.source_set()
->   qsd_ss.add(files('qemu-storage-daemon.c'))
-> -qsd_ss.add(blockdev, chardev, qmp, qom, qemuutil, gnutls)
-> +qsd_ss.add(blockdev, chardev, qmp, qom, qemuutil)
->   
->   subdir('qapi')
->   
-> diff --git a/ui/meson.build b/ui/meson.build
-> index cfbf29428df..28c7381dd10 100644
-> --- a/ui/meson.build
-> +++ b/ui/meson.build
-> @@ -44,7 +44,7 @@ vnc_ss.add(files(
->     'vnc-jobs.c',
->     'vnc-clipboard.c',
->   ))
-> -vnc_ss.add(zlib, jpeg, gnutls)
-> +vnc_ss.add(zlib, jpeg)
->   vnc_ss.add(when: sasl, if_true: files('vnc-auth-sasl.c'))
->   system_ss.add_all(when: [vnc, pixman], if_true: vnc_ss)
->   system_ss.add(when: vnc, if_false: files('vnc-stubs.c'))
+>  include/io/channel-rdma.h |  15 +-
+>  io/channel-rdma.c         | 363 +++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 376 insertions(+), 2 deletions(-)
+>
+> diff --git a/include/io/channel-rdma.h b/include/io/channel-rdma.h
+> index 8cab2459e5..cb56127d76 100644
+> --- a/include/io/channel-rdma.h
+> +++ b/include/io/channel-rdma.h
+> @@ -47,6 +47,18 @@ struct QIOChannelRDMA {
+>      socklen_t localAddrLen;
+>      struct sockaddr_storage remoteAddr;
+>      socklen_t remoteAddrLen;
+> +
+> +    /* private */
+> +
+> +    /* qemu g_poll/ppoll() POLLIN event on it */
+> +    int pollin_eventfd;
+> +    /* qemu g_poll/ppoll() POLLOUT event on it */
+> +    int pollout_eventfd;
+> +
+> +    /* the index in the rpoller's fds array */
+> +    int index;
+> +    /* rpoller will rpoll() rpoll_events on the rsocket fd */
+> +    short int rpoll_events;
+>  };
+>
+>  /**
+> @@ -147,6 +159,7 @@ void qio_channel_rdma_listen_async(QIOChannelRDMA *io=
+c, InetSocketAddress *addr,
+>   *
+>   * Returns: the new client channel, or NULL on error
+>   */
+> -QIOChannelRDMA *qio_channel_rdma_accept(QIOChannelRDMA *ioc, Error **err=
+p);
+> +QIOChannelRDMA *coroutine_mixed_fn qio_channel_rdma_accept(QIOChannelRDM=
+A *ioc,
+> +                                                           Error **errp)=
+;
+>
+>  #endif /* QIO_CHANNEL_RDMA_H */
+> diff --git a/io/channel-rdma.c b/io/channel-rdma.c
+> index 92c362df52..9792add5cf 100644
+> --- a/io/channel-rdma.c
+> +++ b/io/channel-rdma.c
+> @@ -23,10 +23,15 @@
+>
+>  #include "qemu/osdep.h"
+>  #include "io/channel-rdma.h"
+> +#include "io/channel-util.h"
+> +#include "io/channel-watch.h"
+>  #include "io/channel.h"
+>  #include "qapi/clone-visitor.h"
+>  #include "qapi/error.h"
+>  #include "qapi/qapi-visit-sockets.h"
+> +#include "qemu/atomic.h"
+> +#include "qemu/error-report.h"
+> +#include "qemu/thread.h"
+>  #include "trace.h"
+>  #include <errno.h>
+>  #include <netdb.h>
+> @@ -39,11 +44,274 @@
+>  #include <sys/poll.h>
+>  #include <unistd.h>
+>
+> +typedef enum {
+> +    CLEAR_POLLIN,
+> +    CLEAR_POLLOUT,
+> +    SET_POLLIN,
+> +    SET_POLLOUT,
+> +} UpdateEvent;
+> +
+> +typedef enum {
+> +    RP_CMD_ADD_IOC,
+> +    RP_CMD_DEL_IOC,
+> +    RP_CMD_UPDATE,
+> +} RpollerCMD;
+> +
+> +typedef struct {
+> +    RpollerCMD cmd;
+> +    QIOChannelRDMA *rioc;
+> +} RpollerMsg;
+> +
+> +/*
+> + * rpoll() on the rsocket fd with rpoll_events, when POLLIN/POLLOUT even=
+t
+> + * occurs, it will write/read the pollin_eventfd/pollout_eventfd to allo=
+w
+> + * qemu g_poll/ppoll() get the POLLIN/POLLOUT event
+> + */
+> +static struct Rpoller {
+> +    QemuThread thread;
+> +    bool is_running;
+> +    int sock[2];
+> +    int count; /* the number of rsocket fds being rpoll() */
+> +    int size; /* the size of fds/riocs */
+> +    struct pollfd *fds;
+> +    QIOChannelRDMA **riocs;
+> +} rpoller;
+> +
+> +static void qio_channel_rdma_notify_rpoller(QIOChannelRDMA *rioc,
+> +                                            RpollerCMD cmd)
+> +{
+> +    RpollerMsg msg;
+> +    int ret;
+> +
+> +    msg.cmd =3D cmd;
+> +    msg.rioc =3D rioc;
+> +
+> +    ret =3D RETRY_ON_EINTR(write(rpoller.sock[0], &msg, sizeof msg));
+> +    if (ret !=3D sizeof msg) {
+> +        error_report("%s: failed to send msg, errno: %d", __func__, errn=
+o);
+> +    }
+> +}
+> +
+> +static void qio_channel_rdma_update_poll_event(QIOChannelRDMA *rioc,
+> +                                               UpdateEvent action,
+> +                                               bool notify_rpoller)
+> +{
+> +    /* An eventfd with the value of ULLONG_MAX - 1 is readable but unwri=
+table */
+> +    unsigned long long buf =3D ULLONG_MAX - 1;
+> +
+> +    switch (action) {
+> +    /* only rpoller do SET_* action, to allow qemu ppoll() get the event=
+ */
+> +    case SET_POLLIN:
+> +        RETRY_ON_EINTR(write(rioc->pollin_eventfd, &buf, sizeof buf));
+> +        rioc->rpoll_events &=3D ~POLLIN;
+> +        break;
+> +    case SET_POLLOUT:
+> +        RETRY_ON_EINTR(read(rioc->pollout_eventfd, &buf, sizeof buf));
+> +        rioc->rpoll_events &=3D ~POLLOUT;
+> +        break;
+> +
+> +    /* the rsocket fd is not ready to rread/rwrite */
+> +    case CLEAR_POLLIN:
+> +        RETRY_ON_EINTR(read(rioc->pollin_eventfd, &buf, sizeof buf));
+> +        rioc->rpoll_events |=3D POLLIN;
+> +        break;
+> +    case CLEAR_POLLOUT:
+> +        RETRY_ON_EINTR(write(rioc->pollout_eventfd, &buf, sizeof buf));
+> +        rioc->rpoll_events |=3D POLLOUT;
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +
+> +    /* notify rpoller to rpoll() POLLIN/POLLOUT events */
+> +    if (notify_rpoller) {
+> +        qio_channel_rdma_notify_rpoller(rioc, RP_CMD_UPDATE);
+> +    }
+> +}
+> +
+> +static void qio_channel_rdma_rpoller_add_rioc(QIOChannelRDMA *rioc)
+> +{
+> +    if (rioc->index !=3D -1) {
+> +        error_report("%s: rioc already exsits", __func__);
+> +        return;
+> +    }
+> +
+> +    rioc->index =3D ++rpoller.count;
+> +
+> +    if (rpoller.count + 1 > rpoller.size) {
+> +        rpoller.size *=3D 2;
+> +        rpoller.fds =3D g_renew(struct pollfd, rpoller.fds, rpoller.size=
+);
+> +        rpoller.riocs =3D g_renew(QIOChannelRDMA *, rpoller.riocs, rpoll=
+er.size);
+> +    }
+> +
+> +    rpoller.fds[rioc->index].fd =3D rioc->fd;
+> +    rpoller.fds[rioc->index].events =3D rioc->rpoll_events;
 
+The allotment of rioc fds and events to rpoller slots are sequential,
+but making the deletion also sequentials means that the del_rioc needs
+to be called in the exact opposite sequence as they were added
+(through add_rioc). Otherwise we leaves holes in between, and
+readditions might step on an already used slot.
+
+Does this setup make sure that the above restriction is satisfied, or
+am I missing something?
+
+> +    rpoller.riocs[rioc->index] =3D rioc;
+> +}
+> +
+> +static void qio_channel_rdma_rpoller_del_rioc(QIOChannelRDMA *rioc)
+> +{
+> +    if (rioc->index =3D=3D -1) {
+> +        error_report("%s: rioc not exsits", __func__);
+> +        return;
+> +    }
+> +
+> +    rpoller.fds[rioc->index] =3D rpoller.fds[rpoller.count];
+
+Should this be rpoller.count-1?
+
+> +    rpoller.riocs[rioc->index] =3D rpoller.riocs[rpoller.count];
+> +    rpoller.riocs[rioc->index]->index =3D rioc->index;
+> +    rpoller.count--;
+> +
+> +    close(rioc->pollin_eventfd);
+> +    close(rioc->pollout_eventfd);
+> +    rioc->index =3D -1;
+> +    rioc->rpoll_events =3D 0;
+> +}
+> +
+> +static void qio_channel_rdma_rpoller_update_ioc(QIOChannelRDMA *rioc)
+> +{
+> +    if (rioc->index =3D=3D -1) {
+> +        error_report("%s: rioc not exsits", __func__);
+> +        return;
+> +    }
+> +
+> +    rpoller.fds[rioc->index].fd =3D rioc->fd;
+> +    rpoller.fds[rioc->index].events =3D rioc->rpoll_events;
+> +}
+> +
+> +static void qio_channel_rdma_rpoller_process_msg(void)
+> +{
+> +    RpollerMsg msg;
+> +    int ret;
+> +
+> +    ret =3D RETRY_ON_EINTR(read(rpoller.sock[1], &msg, sizeof msg));
+> +    if (ret !=3D sizeof msg) {
+> +        error_report("%s: rpoller failed to recv msg: %s", __func__,
+> +                     strerror(errno));
+> +        return;
+> +    }
+> +
+> +    switch (msg.cmd) {
+> +    case RP_CMD_ADD_IOC:
+> +        qio_channel_rdma_rpoller_add_rioc(msg.rioc);
+> +        break;
+> +    case RP_CMD_DEL_IOC:
+> +        qio_channel_rdma_rpoller_del_rioc(msg.rioc);
+> +        break;
+> +    case RP_CMD_UPDATE:
+> +        qio_channel_rdma_rpoller_update_ioc(msg.rioc);
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +}
+> +
+> +static void qio_channel_rdma_rpoller_cleanup(void)
+> +{
+> +    close(rpoller.sock[0]);
+> +    close(rpoller.sock[1]);
+> +    rpoller.sock[0] =3D -1;
+> +    rpoller.sock[1] =3D -1;
+> +    g_free(rpoller.fds);
+> +    g_free(rpoller.riocs);
+> +    rpoller.fds =3D NULL;
+> +    rpoller.riocs =3D NULL;
+> +    rpoller.count =3D 0;
+> +    rpoller.size =3D 0;
+> +    rpoller.is_running =3D false;
+> +}
+> +
+> +static void *qio_channel_rdma_rpoller_thread(void *opaque)
+> +{
+> +    int i, ret, error_events =3D POLLERR | POLLHUP | POLLNVAL;
+> +
+> +    do {
+> +        ret =3D rpoll(rpoller.fds, rpoller.count + 1, -1);
+> +        if (ret < 0 && errno !=3D -EINTR) {
+> +            error_report("%s: rpoll() error: %s", __func__, strerror(err=
+no));
+> +            break;
+> +        }
+> +
+> +        for (i =3D 1; i <=3D rpoller.count; i++) {
+> +            if (rpoller.fds[i].revents & (POLLIN | error_events)) {
+> +                qio_channel_rdma_update_poll_event(rpoller.riocs[i], SET=
+_POLLIN,
+> +                                                   false);
+> +                rpoller.fds[i].events &=3D ~POLLIN;
+> +            }
+> +            if (rpoller.fds[i].revents & (POLLOUT | error_events)) {
+> +                qio_channel_rdma_update_poll_event(rpoller.riocs[i],
+> +                                                   SET_POLLOUT, false);
+> +                rpoller.fds[i].events &=3D ~POLLOUT;
+> +            }
+> +            /* ignore this fd */
+> +            if (rpoller.fds[i].revents & (error_events)) {
+> +                rpoller.fds[i].fd =3D -1;
+> +            }
+> +        }
+> +
+> +        if (rpoller.fds[0].revents) {
+> +            qio_channel_rdma_rpoller_process_msg();
+> +        }
+> +    } while (rpoller.count >=3D 1);
+> +
+> +    qio_channel_rdma_rpoller_cleanup();
+> +
+> +    return NULL;
+> +}
+> +
+> +static void qio_channel_rdma_rpoller_start(void)
+> +{
+> +    if (qatomic_xchg(&rpoller.is_running, true)) {
+> +        return;
+> +    }
+> +
+> +    if (qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, rpoller.sock)) {
+> +        rpoller.is_running =3D false;
+> +        error_report("%s: failed to create socketpair %s", __func__,
+> +                     strerror(errno));
+> +        return;
+> +    }
+> +
+> +    rpoller.count =3D 0;
+> +    rpoller.size =3D 4;
+> +    rpoller.fds =3D g_malloc0_n(rpoller.size, sizeof(struct pollfd));
+> +    rpoller.riocs =3D g_malloc0_n(rpoller.size, sizeof(QIOChannelRDMA *)=
+);
+> +    rpoller.fds[0].fd =3D rpoller.sock[1];
+> +    rpoller.fds[0].events =3D POLLIN;
+> +
+> +    qemu_thread_create(&rpoller.thread, "qio-channel-rdma-rpoller",
+> +                       qio_channel_rdma_rpoller_thread, NULL,
+> +                       QEMU_THREAD_JOINABLE);
+> +}
+> +
+> +static void qio_channel_rdma_add_rioc_to_rpoller(QIOChannelRDMA *rioc)
+> +{
+> +    int flags =3D EFD_CLOEXEC | EFD_NONBLOCK;
+> +
+> +    /*
+> +     * A single eventfd is either readable or writable. A single eventfd=
+ cannot
+> +     * represent a state where it is neither readable nor writable. so u=
+se two
+> +     * eventfds here.
+> +     */
+> +    rioc->pollin_eventfd =3D eventfd(0, flags);
+> +    rioc->pollout_eventfd =3D eventfd(0, flags);
+> +    /* pollout_eventfd with the value 0, means writable, make it unwrita=
+ble */
+> +    qio_channel_rdma_update_poll_event(rioc, CLEAR_POLLOUT, false);
+> +
+> +    /* tell the rpoller to rpoll() events on rioc->socketfd */
+> +    rioc->rpoll_events =3D POLLIN | POLLOUT;
+> +    qio_channel_rdma_notify_rpoller(rioc, RP_CMD_ADD_IOC);
+> +}
+> +
+>  QIOChannelRDMA *qio_channel_rdma_new(void)
+>  {
+>      QIOChannelRDMA *rioc;
+>      QIOChannel *ioc;
+>
+> +    qio_channel_rdma_rpoller_start();
+> +    if (!rpoller.is_running) {
+> +        return NULL;
+> +    }
+> +
+>      rioc =3D QIO_CHANNEL_RDMA(object_new(TYPE_QIO_CHANNEL_RDMA));
+>      ioc =3D QIO_CHANNEL(rioc);
+>      qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
+> @@ -125,6 +393,8 @@ retry:
+>          goto out;
+>      }
+>
+> +    qio_channel_rdma_add_rioc_to_rpoller(rioc);
+> +
+>  out:
+>      if (ret) {
+>          trace_qio_channel_rdma_connect_fail(rioc);
+> @@ -211,6 +481,8 @@ int qio_channel_rdma_listen_sync(QIOChannelRDMA *rioc=
+, InetSocketAddress *addr,
+>      qio_channel_set_feature(QIO_CHANNEL(rioc), QIO_CHANNEL_FEATURE_LISTE=
+N);
+>      trace_qio_channel_rdma_listen_complete(rioc, fd);
+>
+> +    qio_channel_rdma_add_rioc_to_rpoller(rioc);
+> +
+>  out:
+>      if (ret) {
+>          trace_qio_channel_rdma_listen_fail(rioc);
+> @@ -267,8 +539,10 @@ void qio_channel_rdma_listen_async(QIOChannelRDMA *i=
+oc, InetSocketAddress *addr,
+>                             qio_channel_listen_worker_free, context);
+>  }
+>
+> -QIOChannelRDMA *qio_channel_rdma_accept(QIOChannelRDMA *rioc, Error **er=
+rp)
+> +QIOChannelRDMA *coroutine_mixed_fn qio_channel_rdma_accept(QIOChannelRDM=
+A *rioc,
+> +                                                           Error **errp)
+>  {
+> +    QIOChannel *ioc =3D QIO_CHANNEL(rioc);
+>      QIOChannelRDMA *cioc;
+>
+>      cioc =3D qio_channel_rdma_new();
+> @@ -283,6 +557,17 @@ retry:
+>          if (errno =3D=3D EINTR) {
+>              goto retry;
+>          }
+> +        if (errno =3D=3D EAGAIN) {
+> +            if (!(rioc->rpoll_events & POLLIN)) {
+> +                qio_channel_rdma_update_poll_event(rioc, CLEAR_POLLIN, t=
+rue);
+> +            }
+> +            if (qemu_in_coroutine()) {
+> +                qio_channel_yield(ioc, G_IO_IN);
+> +            } else {
+> +                qio_channel_wait(ioc, G_IO_IN);
+> +            }
+> +            goto retry;
+> +        }
+>          error_setg_errno(errp, errno, "Unable to accept connection");
+>          goto error;
+>      }
+> @@ -294,6 +579,8 @@ retry:
+>          goto error;
+>      }
+>
+> +    qio_channel_rdma_add_rioc_to_rpoller(cioc);
+> +
+>      trace_qio_channel_rdma_accept_complete(rioc, cioc, cioc->fd);
+>      return cioc;
+>
+> @@ -307,6 +594,10 @@ static void qio_channel_rdma_init(Object *obj)
+>  {
+>      QIOChannelRDMA *ioc =3D QIO_CHANNEL_RDMA(obj);
+>      ioc->fd =3D -1;
+> +    ioc->pollin_eventfd =3D -1;
+> +    ioc->pollout_eventfd =3D -1;
+> +    ioc->index =3D -1;
+> +    ioc->rpoll_events =3D 0;
+>  }
+>
+>  static void qio_channel_rdma_finalize(Object *obj)
+> @@ -314,6 +605,7 @@ static void qio_channel_rdma_finalize(Object *obj)
+>      QIOChannelRDMA *ioc =3D QIO_CHANNEL_RDMA(obj);
+>
+>      if (ioc->fd !=3D -1) {
+> +        qio_channel_rdma_notify_rpoller(ioc, RP_CMD_DEL_IOC);
+>          rclose(ioc->fd);
+>          ioc->fd =3D -1;
+>      }
+> @@ -330,6 +622,12 @@ static ssize_t qio_channel_rdma_readv(QIOChannel *io=
+c, const struct iovec *iov,
+>  retry:
+>      ret =3D rreadv(rioc->fd, iov, niov);
+>      if (ret < 0) {
+> +        if (errno =3D=3D EAGAIN) {
+> +            if (!(rioc->rpoll_events & POLLIN)) {
+> +                qio_channel_rdma_update_poll_event(rioc, CLEAR_POLLIN, t=
+rue);
+> +            }
+> +            return QIO_CHANNEL_ERR_BLOCK;
+> +        }
+>          if (errno =3D=3D EINTR) {
+>              goto retry;
+>          }
+> @@ -351,6 +649,12 @@ static ssize_t qio_channel_rdma_writev(QIOChannel *i=
+oc, const struct iovec *iov,
+>  retry:
+>      ret =3D rwritev(rioc->fd, iov, niov);
+>      if (ret <=3D 0) {
+> +        if (errno =3D=3D EAGAIN) {
+> +            if (!(rioc->rpoll_events & POLLOUT)) {
+> +                qio_channel_rdma_update_poll_event(rioc, CLEAR_POLLOUT, =
+true);
+> +            }
+> +            return QIO_CHANNEL_ERR_BLOCK;
+> +        }
+>          if (errno =3D=3D EINTR) {
+>              goto retry;
+>          }
+> @@ -361,6 +665,28 @@ retry:
+>      return ret;
+>  }
+>
+> +static int qio_channel_rdma_set_blocking(QIOChannel *ioc, bool enabled,
+> +                                         Error **errp G_GNUC_UNUSED)
+> +{
+> +    QIOChannelRDMA *rioc =3D QIO_CHANNEL_RDMA(ioc);
+> +    int flags, ret;
+> +
+> +    flags =3D rfcntl(rioc->fd, F_GETFL);
+> +    if (enabled) {
+> +        flags &=3D ~O_NONBLOCK;
+> +    } else {
+> +        flags |=3D O_NONBLOCK;
+> +    }
+> +
+> +    ret =3D rfcntl(rioc->fd, F_SETFL, flags);
+> +    if (ret) {
+> +        error_setg_errno(errp, errno,
+> +                         "Unable to rfcntl rsocket fd with flags %d", fl=
+ags);
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+>  static void qio_channel_rdma_set_delay(QIOChannel *ioc, bool enabled)
+>  {
+>      QIOChannelRDMA *rioc =3D QIO_CHANNEL_RDMA(ioc);
+> @@ -374,6 +700,7 @@ static int qio_channel_rdma_close(QIOChannel *ioc, Er=
+ror **errp)
+>      QIOChannelRDMA *rioc =3D QIO_CHANNEL_RDMA(ioc);
+>
+>      if (rioc->fd !=3D -1) {
+> +        qio_channel_rdma_notify_rpoller(rioc, RP_CMD_DEL_IOC);
+>          rclose(rioc->fd);
+>          rioc->fd =3D -1;
+>      }
+> @@ -408,6 +735,37 @@ static int qio_channel_rdma_shutdown(QIOChannel *ioc=
+, QIOChannelShutdown how,
+>      return 0;
+>  }
+>
+> +static void
+> +qio_channel_rdma_set_aio_fd_handler(QIOChannel *ioc, AioContext *read_ct=
+x,
+> +                                    IOHandler *io_read, AioContext *writ=
+e_ctx,
+> +                                    IOHandler *io_write, void *opaque)
+> +{
+> +    QIOChannelRDMA *rioc =3D QIO_CHANNEL_RDMA(ioc);
+> +
+> +    qio_channel_util_set_aio_fd_handler(rioc->pollin_eventfd, read_ctx, =
+io_read,
+> +                                        rioc->pollout_eventfd, write_ctx=
+,
+> +                                        io_write, opaque);
+> +}
+> +
+> +static GSource *qio_channel_rdma_create_watch(QIOChannel *ioc,
+> +                                              GIOCondition condition)
+> +{
+> +    QIOChannelRDMA *rioc =3D QIO_CHANNEL_RDMA(ioc);
+> +
+> +    switch (condition) {
+> +    case G_IO_IN:
+> +        return qio_channel_create_fd_watch(ioc, rioc->pollin_eventfd,
+> +                                           condition);
+> +    case G_IO_OUT:
+> +        return qio_channel_create_fd_watch(ioc, rioc->pollout_eventfd,
+> +                                           condition);
+> +    default:
+> +        error_report("%s: do not support watch 0x%x event", __func__,
+> +                     condition);
+> +        return NULL;
+> +    }
+> +}
+> +
+>  static void qio_channel_rdma_class_init(ObjectClass *klass,
+>                                          void *class_data G_GNUC_UNUSED)
+>  {
+> @@ -415,9 +773,12 @@ static void qio_channel_rdma_class_init(ObjectClass =
+*klass,
+>
+>      ioc_klass->io_writev =3D qio_channel_rdma_writev;
+>      ioc_klass->io_readv =3D qio_channel_rdma_readv;
+> +    ioc_klass->io_set_blocking =3D qio_channel_rdma_set_blocking;
+>      ioc_klass->io_close =3D qio_channel_rdma_close;
+>      ioc_klass->io_shutdown =3D qio_channel_rdma_shutdown;
+>      ioc_klass->io_set_delay =3D qio_channel_rdma_set_delay;
+> +    ioc_klass->io_create_watch =3D qio_channel_rdma_create_watch;
+> +    ioc_klass->io_set_aio_fd_handler =3D qio_channel_rdma_set_aio_fd_han=
+dler;
+>  }
+>
+>  static const TypeInfo qio_channel_rdma_info =3D {
+> --
+> 2.43.0
+>
+>
 
