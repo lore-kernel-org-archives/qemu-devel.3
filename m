@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FFBEC27C52
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ED96C41513
 	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 10:40:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFAXh-0003tX-Rb; Thu, 06 Jun 2024 06:40:25 -0400
+	id 1sFAXH-0003md-NH; Thu, 06 Jun 2024 06:39:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFAXg-0003t0-2C
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:40:24 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFAXG-0003lz-8A
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:39:58 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFAXd-0002yw-AA
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:40:23 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-52b9af7a01bso980027e87.0
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 03:40:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFAXD-0002kW-KS
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:39:58 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-421396e3918so11202985e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 03:39:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717670419; x=1718275219; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717670393; x=1718275193; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BMtQclkfQ+tzZ8PXSD+8zjanVSPJ3R9g60tZMLUUdbU=;
- b=qRop8QgJAGLU5YkbpKacQvzQHmJ8spa5rX0r5jtDwrrPCmqxhFAhLd12OuqtTz8Vkq
- hcTwHlK30dCirJ2BA2UzFxGYSN7SfBdwYJseAktqODEm0bj2KQXrMHCyzClEtoISO5FR
- NJjhePEKngBNPuRMlSbq1ed/pZQO0K9495ecNnpSLxP/FYbdKXZUpNJeHjY52ioc7ufL
- a1UApRxddUcc6mNqiQdMPsGDaa2HlkNRp99pVI2cudfLDWBFdg5LGGW1S2+HvzkuapGm
- VprW+5lafx1ptg3PULfeWyTf7IIsk/GlBYgeDYXEpRqdgjqIiluOX5cmLHmzkTREyhqv
- +Wzw==
+ bh=t40djQlv053yA+vH29m5Xf5i4KWL84AS7zuIsTUNOcA=;
+ b=VJKoXadKSC4DyDfjah7F7O8+4JKSTt92vzSbjphQ3G6mbz8Ofl4hltGpfUojt1rWC5
+ pLRoeEStIyNMyIuU4VOUpr06peNHZihK0XovJPoRGBiG09hOA08doYODJWVzitQcDOjx
+ kVamtWUHqZck9ahewFl5M//bYSDPMgunaK8Ygvm8S8T4EVbk2WEVy36/oV2H2ZWcVYJc
+ kk7e7lq5ZdLyJMoOBSZZ408xSssKyrIhM7eZaFtWaUvKrZHCLl0V14bkCWwgPl+UwxZV
+ 1NQpQy0p4qo2+lzUUug5MAfTpfNDOqwNW3t8gwz+CxXcYL0IblF7wjDX8gs65CMPZrVp
+ WzSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717670419; x=1718275219;
+ d=1e100.net; s=20230601; t=1717670393; x=1718275193;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BMtQclkfQ+tzZ8PXSD+8zjanVSPJ3R9g60tZMLUUdbU=;
- b=hazj2t1Ly6kwZRX/eC1kEzufsL9IzNyVk3EmXwe1SOx8AokANBXEiVRY10R+QXn1uN
- PgGMDAZFEl4u9DCPFRRaEKIaCy72+n5XNJYEdScYC150w4PFEFI/Gl1KuKQC8fFhTfz5
- GCDvkmJqtHa6nqUN14yaKZ+C4/SdVCsnxcI9vBK06DFCK62FuMIUT+fxlU95aQ2XfvjR
- 9xqJZYmOkC1+bw55XKeSoIP4RN6qSo3WPBJ6NHt1DDaJo8EeP+OUiPg1L1MJhB5gGkkj
- jYNhC4Bb9koyGoDSRoEaKKxXHFvtsVIWZkQ+erOlfnCof6tMHKN6M/DnvwI+qrO0e3b0
- Epfw==
-X-Gm-Message-State: AOJu0YzR6qRV5VCUZwP4f+rGXb6b5Ce+kR1pR463wogUjSPNgFaDfcNV
- JDKmZpudYOmqKKHBjOIQyW+AalSTgXEKsK3h+41Aqo+jj0TITvhEaRcYOzj40RdqE/yngBNxMEa
- e77c=
-X-Google-Smtp-Source: AGHT+IEbNR8LHVKrJlckZeaPyQ5urxX7BGDye3sHYKEAxrx9lJ4V2Zb3B85UKbn0B4f10r9v/PG4lw==
-X-Received: by 2002:a05:6512:3f09:b0:52b:9c8a:735a with SMTP id
- 2adb3069b0e04-52bab4dbbdbmr3927067e87.40.1717670419082; 
- Thu, 06 Jun 2024 03:40:19 -0700 (PDT)
+ bh=t40djQlv053yA+vH29m5Xf5i4KWL84AS7zuIsTUNOcA=;
+ b=HQz0r20uk/5t+/90Mcgu0/r4mHxFFn10GhmkBHYxVTr83CoLfy48ny8FuBbUTueFgc
+ 3UWYOZPadL0albk4zG/4bAlVTQiEexN2asvSBER+ovYM/Y71cKGrq135HCt1fq3WgQC7
+ L4q627s6Bkiqs7Tdjyt0aPf400iYX0lJkxoSTdJ7hA4+fjv6h0pmJGkosrcZjK7opKTH
+ a43IEuEbYbg6DAlJ/XujZt6sbK3nWQxLdEVIZZuMrtbAo9myxdcr2r1aBUYG8jZ+JWYZ
+ uuwD6pJbM16+X6LBjI44S9vQyN5twETezdSr6XSITu7N61yxmH2zyOv9SHXHbWfyzkMt
+ B6Bg==
+X-Gm-Message-State: AOJu0YwHCVYTDpXVNG/zLJTDPhbVk0ThwtwrkBxpfCZC7mmjV1xHUBiN
+ Y+INctx2lWBRR99epiQkFeG4aaNezquYY6NyTezsA0LiSJP9mNt4QraCsNApfpOY75HUWKWnU+t
+ nKjk=
+X-Google-Smtp-Source: AGHT+IHvmf7hOGJtMw+DX5e434x3VVF4KPxp7Gv4LswgBl49Isytyc/GeKCreRMXsS1U3mo2rzwwzw==
+X-Received: by 2002:a05:600c:a47:b0:41b:eaf2:f7e6 with SMTP id
+ 5b1f17b1804b1-421562c3f28mr56338255e9.2.1717670393421; 
+ Thu, 06 Jun 2024 03:39:53 -0700 (PDT)
 Received: from localhost.localdomain (94.red-88-29-105.staticip.rima-tde.net.
  [88.29.105.94]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4215c19d52dsm17724945e9.8.2024.06.06.03.40.17
+ 5b1f17b1804b1-4215c2cd8fcsm16877045e9.47.2024.06.06.03.39.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 06 Jun 2024 03:40:18 -0700 (PDT)
+ Thu, 06 Jun 2024 03:39:53 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -65,17 +65,17 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Yoshinori Sato <ysato@users.sourceforge.jp>,
  Stefan Berger <stefanb@linux.vnet.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 5/5] tracetool: Forbid newline character in event format
-Date: Thu,  6 Jun 2024 12:39:43 +0200
-Message-ID: <20240606103943.79116-6-philmd@linaro.org>
+Subject: [PATCH 1/5] backends/tpm: Remove newline character in trace event
+Date: Thu,  6 Jun 2024 12:39:39 +0200
+Message-ID: <20240606103943.79116-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240606103943.79116-1-philmd@linaro.org>
 References: <20240606103943.79116-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,28 +98,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Events aren't designed to be multi-lines. Multiple events
-can be used instead. Prevent that format using multi-lines
-by forbidding the newline character.
+Split the 'tpm_util_show_buffer' event in two to avoid
+using a newline character.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- scripts/tracetool/__init__.py | 2 ++
- 1 file changed, 2 insertions(+)
+ backends/tpm/tpm_util.c   | 5 +++--
+ backends/tpm/trace-events | 3 ++-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
-index 7237abe0e8..bc03238c0f 100644
---- a/scripts/tracetool/__init__.py
-+++ b/scripts/tracetool/__init__.py
-@@ -301,6 +301,8 @@ def build(line_str, lineno, filename):
-         if fmt.endswith(r'\n"'):
-             raise ValueError("Event format must not end with a newline "
-                              "character")
-+        if '\\n' in fmt:
-+            raise ValueError("Event format must not use new line character")
+diff --git a/backends/tpm/tpm_util.c b/backends/tpm/tpm_util.c
+index 1856589c3b..cf138551df 100644
+--- a/backends/tpm/tpm_util.c
++++ b/backends/tpm/tpm_util.c
+@@ -339,10 +339,11 @@ void tpm_util_show_buffer(const unsigned char *buffer,
+     size_t len, i;
+     char *line_buffer, *p;
  
-         if len(fmt_trans) > 0:
-             fmt = [fmt_trans, fmt]
+-    if (!trace_event_get_state_backends(TRACE_TPM_UTIL_SHOW_BUFFER)) {
++    if (!trace_event_get_state_backends(TRACE_TPM_UTIL_SHOW_BUFFER_CONTENT)) {
+         return;
+     }
+     len = MIN(tpm_cmd_get_size(buffer), buffer_size);
++    trace_tpm_util_show_buffer_header(string, len);
+ 
+     /*
+      * allocate enough room for 3 chars per buffer entry plus a
+@@ -356,7 +357,7 @@ void tpm_util_show_buffer(const unsigned char *buffer,
+         }
+         p += sprintf(p, "%.2X ", buffer[i]);
+     }
+-    trace_tpm_util_show_buffer(string, len, line_buffer);
++    trace_tpm_util_show_buffer_content(line_buffer);
+ 
+     g_free(line_buffer);
+ }
+diff --git a/backends/tpm/trace-events b/backends/tpm/trace-events
+index 1ecef42a07..cb5cfa6510 100644
+--- a/backends/tpm/trace-events
++++ b/backends/tpm/trace-events
+@@ -10,7 +10,8 @@ tpm_util_get_buffer_size_len(uint32_t len, size_t expected) "tpm_resp->len = %u,
+ tpm_util_get_buffer_size_hdr_len2(uint32_t len, size_t expected) "tpm2_resp->hdr.len = %u, expected = %zu"
+ tpm_util_get_buffer_size_len2(uint32_t len, size_t expected) "tpm2_resp->len = %u, expected = %zu"
+ tpm_util_get_buffer_size(size_t len) "buffersize of device: %zu"
+-tpm_util_show_buffer(const char *direction, size_t len, const char *buf) "direction: %s len: %zu\n%s"
++tpm_util_show_buffer_header(const char *direction, size_t len) "direction: %s len: %zu"
++tpm_util_show_buffer_content(const char *buf) "%s"
+ 
+ # tpm_emulator.c
+ tpm_emulator_set_locality(uint8_t locty) "setting locality to %d"
 -- 
 2.41.0
 
