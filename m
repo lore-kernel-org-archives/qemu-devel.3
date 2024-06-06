@@ -4,85 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C51C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 05:55:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03545C27C55
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 06:05:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF64w-000718-Dw; Thu, 06 Jun 2024 01:54:26 -0400
+	id 1sF6EX-00026V-MS; Thu, 06 Jun 2024 02:04:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1sF64t-00070n-P2
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 01:54:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1sF6EV-00025p-Gi; Thu, 06 Jun 2024 02:04:19 -0400
+Received: from fout2-smtp.messagingengine.com ([103.168.172.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1sF64s-0003rI-11
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 01:54:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717653260;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2KJi6HZ+9K2s9dFyDCHddJDpiY9oMPJQjUcygCVeK/Q=;
- b=iFMO9Jc+CnNa5tMDEASlDrCP+GCKoeCgpBkd6G3+jJ4KHiQ5Cou7gt1iyzmMGyE6JydAdu
- rAGTQDRx1rcmakizjSHgqiNANdZAnsjl19D4kRiwhFmSrmBZw5TxwYwG/a556yU69yhWkQ
- /2smTw9QB0DesuV3SRhI9xPdIIEVIDA=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-557-9x4KtIhhNQOPiJEpS7N4ww-1; Thu, 06 Jun 2024 01:54:18 -0400
-X-MC-Unique: 9x4KtIhhNQOPiJEpS7N4ww-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2eaac984495so8290081fa.0
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 22:54:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717653257; x=1718258057;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2KJi6HZ+9K2s9dFyDCHddJDpiY9oMPJQjUcygCVeK/Q=;
- b=MxJ4kF1/39GKSMpIw+fmDWl5c4oV2J1JHEYW8geiZblHgqvBVpHgiOKsiFqXkKXSTZ
- mNcmQVMQv26cWufATBDC2zmj3ScFpl2/IvcHu5aMtPeNc4qf715WX8vTSn0LSpqdaAqD
- 3DjPqEUfV+gjyGzWogTldfOrqr4xzD+kh7479D/jjSYsWJzN9ju99LIlz4OqzLXXY1su
- SUncH43OaWOh4smc+oQdrGdk9iBh2rGYFD7QBlBxL2uqHSxNA1zIG3tNRp1vH1w3YlmK
- /+uOks2UUDMdCWVAA7cNTAonTMw0czMD5BlTf6tlMAHxAS8yCHd/XlxJrhb34Unr9GF+
- hftA==
-X-Gm-Message-State: AOJu0YyA4z8f77RodUpIsc2fryfss7xvOeclQrla9cxp/ZJ5bNlZZUi0
- 2DsdpOu34xtOCJpp3QCIrGPWaPabZr4U1VKX5f/PJR111o4V0d6fSdoOCIM8/xza7ZS4UijuHpV
- J2yDxOST7hmPT+v5PDes9LPcFDLLYx6SIn0E4Sny75Tv7/SLX0HDCYcvxNRU5DFibsrFb0Do/RS
- WbJfXdtiIsnal5YanKC0xS0WQl/d4=
-X-Received: by 2002:a19:760c:0:b0:52b:90f5:4945 with SMTP id
- 2adb3069b0e04-52bb2199373mr420546e87.27.1717653257156; 
- Wed, 05 Jun 2024 22:54:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGH+xYNtLFIdddqXAcHP6m7gPFh4W4eyyC9ghq8OVf7f8+XxAu0Lvx9rQUKG9sEExi1E9w+FLuzuI05+G/Fkm0=
-X-Received: by 2002:a19:760c:0:b0:52b:90f5:4945 with SMTP id
- 2adb3069b0e04-52bb2199373mr420542e87.27.1717653256617; Wed, 05 Jun 2024
- 22:54:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1sF6ET-0005Ue-Dl; Thu, 06 Jun 2024 02:04:19 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+ by mailfout.nyi.internal (Postfix) with ESMTP id 4187713800E6;
+ Thu,  6 Jun 2024 02:04:14 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute2.internal (MEProxy); Thu, 06 Jun 2024 02:04:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1717653854; x=
+ 1717740254; bh=pl+kXLFf4JSQCKA1CaBpyRAR3caZXuJHC8rivWn7jis=; b=A
+ F3dxMPddSBBPLwEe5XjwhJGGP/FVOfV7fl8UwJ4WjB+7B0FJWbhLwg7mRTrFogjP
+ gJoSop/0HCwXtZcLmRC9o/M1shEy9TZ+9ZUIk30Bk/D+5/AhDRIAcZTS6uZHpO5g
+ 2mPJ8RBV9NbdyX+4w/Dczaw1yf/TeayxDqhzzWQ0+w83ky3X2QXhHK9jF4nZ+hhK
+ Ute0NNkUxHedehGXKO7dvnmjEo+wFQySfFMr5447Dkf8gzjkLnc+mJRjqHBFd9wZ
+ AgsEXdNu64hJl5euNdE5SM56tQisIvhBCY/1tOnKK43gY2kQajgyLt+SOKMvVciP
+ uCc1NQ+mblsz9qizrt/JQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm1; t=1717653854; x=1717740254; bh=pl+kXLFf4JSQCKA1CaBpyRAR3caZ
+ XuJHC8rivWn7jis=; b=iTlKo+jLzty3DlRzXnrfn8eQO2w6rTikxfewk41MpMhf
+ gLOjMDyUbQH46Lf+i5Zm6jcjBP4uGpkAGDSOnNdwhQRW33vY76rjf4S0HqPX2NaA
+ jiaUkqJ5L6Is5ft1RnbW/Qo028tjdwt4xlnOcNAV0bEM/VlbG14DgBRDfkx1ZdEe
+ kwkOdEauN6l7E7A18xV/klGTu3/K63xqkY9nOyaTyIllJCv63FzM631i7FVqpSfI
+ b65wDeuCWb1cFAFhuHIAYtSR+G0t5ckIr3Rf03rYLFYjP5S4Frp5vjiRL+oJRiig
+ zgkiqeWq+J7Fjyy4SJDq7m0RJAVju18yAMZgSEiueQ==
+X-ME-Sender: <xms:XVFhZluyQkW2pREcFn1Z55wfjcZ__LskW5LkvfZXdkqoIMLlwtO5yQ>
+ <xme:XVFhZufOfQe_WKpBKq5E28Y3LeCBe9gVejXlW8nD6JJLlbUb0Oqtv003JRWyWC8EC
+ 1Ji9Sl6irevw785fME>
+X-ME-Received: <xmr:XVFhZoz6yD4zJhRy1Bhz95Q-AIt7uU5GVc02QwfoDkuulRbBKITjG2tZwW0o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeljedguddtfecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefmlhgr
+ uhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrg
+ htthgvrhhnpeejgfejfeffvdeuhfeifefhgffgueelhedukeevjeevtdduudegieegteff
+ ffejveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ hithhssehirhhrvghlvghvrghnthdrughk
+X-ME-Proxy: <xmx:XVFhZsPhn_I0s4P8xz-LQi0OSHSi9phD_i8oN_xLhbgZhp2XVQ_9Cg>
+ <xmx:XVFhZl8W8GjmPZLdMBwtgL6Y4wKmPfXzUsZqLAEEemnPqHnfNsRT-Q>
+ <xmx:XVFhZsV8zeQJqf7HeFAdnuP1FhLtzZ7goecW8mfShvrb4v69IZe3og>
+ <xmx:XVFhZmev0Fe7xOU4Z3CnZwh5_GCestc0ROdX7qonobc623ZZcMkYog>
+ <xmx:XlFhZlxk_bfsrXA5KXc98luuPK0ptdwKn7qGnc958ZXaml7wNmaby0Z3>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Jun 2024 02:04:12 -0400 (EDT)
+Date: Thu, 6 Jun 2024 08:04:06 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Minwoo Im <minwoo.im@samsung.com>
+Cc: Keith Busch <kbusch@kernel.org>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, gost.dev@samsung.com
+Subject: Re: [PATCH] hw/nvme: fix BAR size mismatch of SR-IOV VF
+Message-ID: <ZmFRVrY75B662OsC@cormorant.local>
+References: <CGME20240604212442epcas2p19b786aa21b03d671b7b5cf7857ce24bd@epcas2p1.samsung.com>
+ <20240604211306.2155791-1-minwoo.im@samsung.com>
 MIME-Version: 1.0
-References: <cover.1717584048.git.mprivozn@redhat.com>
- <b5b9f9c6bba07879fb43f3c6f496c69867ae3716.1717584048.git.mprivozn@redhat.com>
-In-Reply-To: <b5b9f9c6bba07879fb43f3c6f496c69867ae3716.1717584048.git.mprivozn@redhat.com>
-From: Mario Casquero <mcasquer@redhat.com>
-Date: Thu, 6 Jun 2024 07:54:05 +0200
-Message-ID: <CAMXpfWsuaZXcKDrtwqKOTyiMg7DDoJsE1p3_1mwg1Xp8tfq7sw@mail.gmail.com>
-Subject: Re: [PATCH v4 5/5] backends/hostmem: Report error when memory size is
- unaligned
-To: Michal Privoznik <mprivozn@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mcasquer@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="s3Oo+sgo4INjdn2l"
+Content-Disposition: inline
+In-Reply-To: <20240604211306.2155791-1-minwoo.im@samsung.com>
+Received-SPF: pass client-ip=103.168.172.145; envelope-from=its@irrelevant.dk;
+ helo=fout2-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,81 +104,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch has been successfully tested. Try to allocate some 2M
-hugepages in the host, then boot up a VM with the memory size
-unaligned and backed by a file, QEMU prompts the following message:
-qemu-system-x86_64: backend 'memory-backend-file' memory size must be
-multiple of 2 MiB
 
-Tested-by: Mario Casquero <mcasquer@redhat.com>
+--s3Oo+sgo4INjdn2l
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 5, 2024 at 12:45=E2=80=AFPM Michal Privoznik <mprivozn@redhat.c=
-om> wrote:
->
-> If memory-backend-{file,ram} has a size that's not aligned to
-> underlying page size it is not only wasteful, but also may lead
-> to hard to debug behaviour. For instance, in case
-> memory-backend-file and hugepages, madvise() and mbind() fail.
-> Rightfully so, page is the smallest unit they can work with. And
-> even though an error is reported, the root cause it not very
-> clear:
->
->   qemu-system-x86_64: Couldn't set property 'dump' on 'memory-backend-fil=
-e': Invalid argument
->
-> After this commit:
->
->   qemu-system-x86_64: backend 'memory-backend-file' memory size must be m=
-ultiple of 2 MiB
->
-> Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Tested-by: Mario Casquero <mcasquer@redhat.com>
+On Jun  5 06:13, Minwoo Im wrote:
+> PF initializes SR-IOV VF BAR0 region in nvme_init_sriov() with bar_size
+> calcaulted by Primary Controller Capability such as VQFRSM and VIFRSM
+> rather than `max_ioqpairs` and `msix_qsize` which is for PF only.
+>=20
+> In this case, the bar size reported in nvme_init_sriov() by PF and
+> nvme_init_pci() by VF might differ especially with large number of
+> sriov_max_vfs (e.g., 127 which is curret maximum number of VFs).  And
+> this reports invalid BAR0 address of VFs to the host operating system
+> so that MMIO access will not be caught properly and, of course, NVMe
+> driver initialization is failed.
+>=20
+> For example, if we give the following options, BAR size will be
+> initialized by PF with 4K, but VF will try to allocate 8K BAR0 size in
+> nvme_init_pci().
+>=20
+> 	#!/bin/bash
+>=20
+> 	nr_vf=3D$((127))
+> 	nr_vq=3D$(($nr_vf * 2 + 2))
+> 	nr_vi=3D$(($nr_vq / 2 + 1))
+> 	nr_ioq=3D$(($nr_vq + 2))
+>=20
+> 	...
+>=20
+> 	-device nvme,serial=3Dfoo,id=3Dnvme0,bus=3Drp2,subsys=3Dsubsys0,mdts=3D9=
+,msix_qsize=3D$nr_ioq,max_ioqpairs=3D$nr_ioq,sriov_max_vfs=3D$nr_vf,sriov_v=
+q_flexible=3D$nr_vq,sriov_vi_flexible=3D$nr_vi \
+>=20
+> To fix this issue, this patch modifies the calculation of BAR size in
+> the PF and VF initialization by using different elements:
+>=20
+> 	PF: `max_ioqpairs + 1` with `msix_qsize`
+> 	VF: VQFRSM with VIFRSM
+>=20
+> Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
+
+Thanks, looks good Minwoo!
+
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+
 > ---
->  backends/hostmem.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/backends/hostmem.c b/backends/hostmem.c
-> index 012a8c190f..4d6c69fe4d 100644
-> --- a/backends/hostmem.c
-> +++ b/backends/hostmem.c
-> @@ -20,6 +20,7 @@
->  #include "qom/object_interfaces.h"
->  #include "qemu/mmap-alloc.h"
->  #include "qemu/madvise.h"
-> +#include "qemu/cutils.h"
->  #include "hw/qdev-core.h"
->
->  #ifdef CONFIG_NUMA
-> @@ -337,6 +338,7 @@ host_memory_backend_memory_complete(UserCreatable *uc=
-, Error **errp)
->      HostMemoryBackendClass *bc =3D MEMORY_BACKEND_GET_CLASS(uc);
->      void *ptr;
->      uint64_t sz;
-> +    size_t pagesize;
->      bool async =3D !phase_check(PHASE_LATE_BACKENDS_CREATED);
->
->      if (!bc->alloc) {
-> @@ -348,6 +350,14 @@ host_memory_backend_memory_complete(UserCreatable *u=
-c, Error **errp)
->
->      ptr =3D memory_region_get_ram_ptr(&backend->mr);
->      sz =3D memory_region_size(&backend->mr);
-> +    pagesize =3D qemu_ram_pagesize(backend->mr.ram_block);
+>  hw/nvme/ctrl.c | 19 +++++++++++++++----
+>  1 file changed, 15 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index 127c3d2383..57bc26034c 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -8093,6 +8093,7 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *p=
+ci_dev, Error **errp)
+>      uint8_t *pci_conf =3D pci_dev->config;
+>      uint64_t bar_size;
+>      unsigned msix_table_offset =3D 0, msix_pba_offset =3D 0;
+> +    unsigned nr_vectors;
+>      int ret;
+> =20
+>      pci_conf[PCI_INTERRUPT_PIN] =3D 1;
+> @@ -8125,9 +8126,19 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *=
+pci_dev, Error **errp)
+>          assert(n->params.msix_qsize >=3D 1);
+> =20
+>          /* add one to max_ioqpairs to account for the admin queue pair */
+> -        bar_size =3D nvme_mbar_size(n->params.max_ioqpairs + 1,
+> -                                  n->params.msix_qsize, &msix_table_offs=
+et,
+> -                                  &msix_pba_offset);
+> +        if (!pci_is_vf(pci_dev)) {
+> +            nr_vectors =3D n->params.msix_qsize;
+> +            bar_size =3D nvme_mbar_size(n->params.max_ioqpairs + 1,
+> +                                      nr_vectors, &msix_table_offset,
+> +                                      &msix_pba_offset);
+> +        } else {
+> +            NvmeCtrl *pn =3D NVME(pcie_sriov_get_pf(pci_dev));
+> +            NvmePriCtrlCap *cap =3D &pn->pri_ctrl_cap;
 > +
-> +    if (!QEMU_IS_ALIGNED(sz, pagesize)) {
-> +        g_autofree char *pagesize_str =3D size_to_str(pagesize);
-> +        error_setg(errp, "backend '%s' memory size must be multiple of %=
-s",
-> +                   object_get_typename(OBJECT(uc)), pagesize_str);
-> +        return;
-> +    }
->
->      if (backend->merge &&
->          qemu_madvise(ptr, sz, QEMU_MADV_MERGEABLE)) {
-> --
-> 2.44.1
->
->
+> +            nr_vectors =3D le16_to_cpu(cap->vifrsm);
+> +            bar_size =3D nvme_mbar_size(le16_to_cpu(cap->vqfrsm), nr_vec=
+tors,
+> +                                      &msix_table_offset, &msix_pba_offs=
+et);
+> +        }
+> =20
+>          memory_region_init(&n->bar0, OBJECT(n), "nvme-bar0", bar_size);
+>          memory_region_init_io(&n->iomem, OBJECT(n), &nvme_mmio_ops, n, "=
+nvme",
+> @@ -8141,7 +8152,7 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *p=
+ci_dev, Error **errp)
+>                               PCI_BASE_ADDRESS_MEM_TYPE_64, &n->bar0);
+>          }
+> =20
+> -        ret =3D msix_init(pci_dev, n->params.msix_qsize,
+> +        ret =3D msix_init(pci_dev, nr_vectors,
+>                          &n->bar0, 0, msix_table_offset,
+>                          &n->bar0, 0, msix_pba_offset, 0, errp);
+>      }
+> --=20
+> 2.34.1
+>=20
 
+--=20
+One of us - No more doubt, silence or taboo about mental illness.
+
+--s3Oo+sgo4INjdn2l
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmZhUVYACgkQTeGvMW1P
+DenJRAf/YOiQCL/Yn+ZWycwTFQV8AQOx2jMubrNX3TPbnUDpY+HKjVyZSNGIM73S
+rkJJyajwtYF6fuV5cuNscgraqxqQh9Rtv5Of7RaqkhRIdquoNblpeh3cYUPyEpPC
+rRd5A3gn3OegryCgCEz8Xo0Iwg0LQj5dNG5MsgEmS2r7VBOturbDgmp8Rf/pZqxM
+Fet6zYefnXoCqVVhb7HBVodicRs5rpa+ogtTgMqgEaMTR6P/X6YsWtMgSAYGJ1Rp
+bx686/zEnpDR0D2+JXGzv6EIexL6e6HIzkJ4OO4OTN+taMHEDhsoPNrSrlzH548p
+/jSk88jr7x02dS+m9u3VuZxyuSN3Tw==
+=XdhI
+-----END PGP SIGNATURE-----
+
+--s3Oo+sgo4INjdn2l--
 
