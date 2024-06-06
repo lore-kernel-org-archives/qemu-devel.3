@@ -4,105 +4,213 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 442B1C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 10:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F01EC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 10:20:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFA8D-0000Dv-U5; Thu, 06 Jun 2024 06:14:05 -0400
+	id 1sFADT-0003YG-0V; Thu, 06 Jun 2024 06:19:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sFA8C-0000D6-29
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:14:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sFADO-0003Xm-NS
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:19:27 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sFA88-00064k-Ll
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:14:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717668839;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VeZe5kJeC7dJ2COJPaCPKXCLkxAytjF73XRXMWRERRA=;
- b=HRLJH7l8mNfubmKkEzgW4hOL0SmnPR3dj9+P+b1NyNvXoY/gABEiwrGtqZXEr2daUB3PeR
- XZ2UDPf+JKfHGfXn7TvZr1UDL5Ura5dCkzVUzmd0NrLDqaWBq4SrXY/rtG3yJJjxIfEY4f
- GNlQ4ILaE1htrdZj5FL4yYKQRSREaFc=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-253-7lp7hEkkNbaq3u2FFyYqzg-1; Thu, 06 Jun 2024 06:13:57 -0400
-X-MC-Unique: 7lp7hEkkNbaq3u2FFyYqzg-1
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-649731dd35bso690761a12.0
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 03:13:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717668837; x=1718273637;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VeZe5kJeC7dJ2COJPaCPKXCLkxAytjF73XRXMWRERRA=;
- b=O/IEAIdqTx4HAzqca4WZMbaggSiRK6JV/mLGthy3WXv2FRtu82XHG8MgWxkQSEKuxf
- cTddyM1/41/tIM63K38Ij/wb4xDwQ4T7B+8qTn4khAvmkerGNfS0ziLuA4q5v4MzVkPO
- VFjaf2rL/fSxe36aX2A17h7GIQWzuL5fzuG/5OaBJWS1MPpq6nv+WU0jmrt0fkDEejDw
- 5EZmozr/LzfD3kYQRQGAzsMUBIcZ/KGPZcJqNuV2YnndZuo6ND+JzQLC4G/HEjP+x0Tu
- D+29syzOXKyuE/zRkZ/n3uKhiPUJycfYnvNalm8drdL6dmqkLATL3WS0aq7O4Hik4Mkl
- 9owQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU2cMa1huYqZSJtPF01UsRgcazs0BfsFNVvXF5xxyXHKGX5qdVZ3ukSl4ubqdwXHowjHQdEi5a+UPomXtmEEbPcAHbL1Xg=
-X-Gm-Message-State: AOJu0Yz2MwZ8ReDfWlwaitwCW5ohH4DpNJr74G3hFNxaPM6q9H0adVXJ
- 6cEQ4GAybacSr1DrkPqsril18EVQlX3jo75YMFOQPqzuqepBJD+2IPVYwqvWYpvbslaSmhlZtKM
- s8jaTlxCYPdNWr4xgH6UVy5SjaA1p0tm0QkhAk0DZRi+SwdtSBHa8
-X-Received: by 2002:a05:6a20:4310:b0:1b0:9b7:bbce with SMTP id
- adf61e73a8af0-1b2b6e5ab6bmr6468907637.4.1717668836486; 
- Thu, 06 Jun 2024 03:13:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHRbpmUOkAozBj6ZgTrDb8SUS88qnilW1R+QJx4/hg7QaNTYTdvx3v6zpbO/yxxq3yw3cPQGg==
-X-Received: by 2002:a05:6a20:4310:b0:1b0:9b7:bbce with SMTP id
- adf61e73a8af0-1b2b6e5ab6bmr6468886637.4.1717668835940; 
- Thu, 06 Jun 2024 03:13:55 -0700 (PDT)
-Received: from [192.168.68.50] ([43.252.112.224])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c2806bd7d2sm3094282a91.36.2024.06.06.03.13.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Jun 2024 03:13:55 -0700 (PDT)
-Message-ID: <e7497618-e300-4560-b752-11c77d177450@redhat.com>
-Date: Thu, 6 Jun 2024 20:13:50 +1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Unexpected error in rme_configure_one() at
- ../target/arm/kvm-rme.c:159
-From: Gavin Shan <gshan@redhat.com>
-To: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Cc: Itaru Kitayama <itaru.kitayama@linux.dev>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-arm <qemu-arm@nongnu.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ard Biesheuvel <ardb@kernel.org>
-References: <0C6F517A-5686-4BCE-8D08-1CED02CB470E@linux.dev>
- <4e7aa598-1a5d-47e1-aaa3-78af05947eeb@linaro.org>
- <CB05CAA2-9301-45F6-8AE3-A2E27A160CDF@linux.dev>
- <cbd630d7-01e8-49ba-9c8b-a6514d898ed2@redhat.com>
- <20240531150922.GA83195@myrica>
- <bd1f84bd-e23c-4f4b-bc0b-a2a1b70081f4@redhat.com>
- <20240603082402.GA25688@myrica>
- <2c81cb47-b9bc-4875-a7fb-49c3a8ab6713@redhat.com>
- <20240604111517.GB875061@myrica>
- <e7748b25-a01b-49e9-bbeb-cd03abb91cf6@redhat.com>
- <20240605155608.GA3251699@myrica>
- <1089f920-aff9-4d16-829d-5d058908a11e@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sFADM-0007DQ-1R
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:19:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1717669164; x=1749205164;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=h5A+LhbTY4RNjaJR3+zMKl84f/DoJKdka3nORVFWoFE=;
+ b=aqygtE75lQZE4VVzFU/GarlGTbh6bjbUFH0CoeO0/ehiEeMwiwtqcxA1
+ nehHnYri/cfg706lCBGgM2tAkEjQg8Fmi0Yg5g5ZeKa7rZS2dgWNUHhir
+ u94oLzly28K7kxO81csNKBHWizYEsoz8psvCtrZkF4lx5h0W2qD0yLGBB
+ P9WTGuC2Xj+PWL6RmraIc+4uY0zFpLjPVtKxttqA+xoRWXYJIlPvqIYcR
+ h5kDpQMiA6T6HXEpODPMDmx+Z7v7TUF1n6+iO8PbGTB53Pg50aMDgeMaL
+ yGaxhgQLy2/3wae4rbM8dojwFzI8enVzvRNHBZvQ5hdotFyS6VcX5Ls9o A==;
+X-CSE-ConnectionGUID: gZcRBROTTPOodQoyCZARvw==
+X-CSE-MsgGUID: lY4gTm48Q669/DZBh6/5dw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11094"; a="24959891"
+X-IronPort-AV: E=Sophos;i="6.08,218,1712646000"; d="scan'208";a="24959891"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jun 2024 03:19:16 -0700
+X-CSE-ConnectionGUID: DGnVcLCyTxqW/6VpSfyIHA==
+X-CSE-MsgGUID: 9cOxY3eNTzKr3rB5s/KITA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,218,1712646000"; d="scan'208";a="37983227"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+ by orviesa009.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 06 Jun 2024 03:19:12 -0700
+Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Thu, 6 Jun 2024 03:19:11 -0700
+Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
+ fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Thu, 6 Jun 2024 03:19:10 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Thu, 6 Jun 2024 03:19:10 -0700
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (104.47.74.43) by
+ edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Thu, 6 Jun 2024 03:19:10 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Rb4ISapuaaM43ju3ghHJrkSCEhlVzZ1Htu2dc3J51D0fobBKnCGFY2j+v5cb4jwVfooxBgapch+gv10CtLxVlLPfzLWUlQP3H5P+YBTrvQpGkvJNqLvpvtChi5XZE9nGQ/5BGSSQticRphvqY6yWj44shZY65ONLPzgXP0uhwHCDzcMiczdJE9WMGCv6qedj38mIhIfnaj3sqzQrRzGELd6TQp1IB7j2ELP2tDlqPEru9Q0OyTQ4tYQxNiJ9EljeTo1psgRk0/ylM+ISmjDIEmlDrmlh+xRH00ZsBa1Q3BEZ7e5qJ8muEePoRj0wbvtMXWFfBz7apZDvulcwSyYg9g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=h5A+LhbTY4RNjaJR3+zMKl84f/DoJKdka3nORVFWoFE=;
+ b=XOSWJeEY2oLP/ReFOMl4crdajohxgHmX2Z1kv5/B/6l+skkeDjJJyemJbvST/42V421uK6VroHv6ymPZno0HLBdu7UwkMDtRF7r1NuR7K2ENXM4cB9dPhIf3/OFkmeHmgM3fZfCyJnXhDcJOJxZ3aOmkvvpGRDNIc1yF/emnGcbBs/YmsEH1zOQfqOV0HMj3ItzVoBgta721ZFjCi8lprWrZ0HXHesdi5UQKeSgn0vReAI2J+70vu1QQwt14cA7Gp+8axpEr5cHl1slMvEodhU1esUdegshYW2c4xyKfeZR+k4A8iuHgh9QUTKKOz1FJNO5SBCBPU4AL8v3NwdCVXQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by CH3PR11MB7770.namprd11.prod.outlook.com (2603:10b6:610:129::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.34; Thu, 6 Jun
+ 2024 10:19:07 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%7]) with mapi id 15.20.7633.033; Thu, 6 Jun 2024
+ 10:19:07 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
+ <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
+ "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: RE: [PATCH v6 09/19] vfio/iommufd: Implement
+ HostIOMMUDeviceClass::realize() handler
+Thread-Topic: [PATCH v6 09/19] vfio/iommufd: Implement
+ HostIOMMUDeviceClass::realize() handler
+Thread-Index: AQHatX026AiY+etA/U+I5iKUsGNWX7G6fB+AgAABvoCAAAHcoA==
+Date: Thu, 6 Jun 2024 10:19:07 +0000
+Message-ID: <SJ0PR11MB674434415F6EBFD6FD68324192FA2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20240603061023.269738-1-zhenzhong.duan@intel.com>
+ <20240603061023.269738-10-zhenzhong.duan@intel.com>
+ <09ba18e0-9d91-4e04-b291-0412d00a108d@redhat.com>
+ <48775516-3c3f-4c1d-a573-cf6649a66aa8@redhat.com>
+In-Reply-To: <48775516-3c3f-4c1d-a573-cf6649a66aa8@redhat.com>
+Accept-Language: en-US
 Content-Language: en-US
-In-Reply-To: <1089f920-aff9-4d16-829d-5d058908a11e@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|CH3PR11MB7770:EE_
+x-ms-office365-filtering-correlation-id: 5c1da6ba-15c8-4c37-13c9-08dc86121976
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230031|376005|7416005|1800799015|366007|38070700009; 
+x-microsoft-antispam-message-info: =?utf-8?B?TDJvajRFbmM4Q3pXNEp1U1R2Y1ZkQUJxWm03VzRCdU1rMlZyMkJvM0NxMHZK?=
+ =?utf-8?B?MEQ4ZWpEbG1yT05kNG5QWHlRMGZhcHJ3ZGZPTmRSbTIxd1RyS3BjeURiN3oy?=
+ =?utf-8?B?WndCbVFRTmtudWpoaFhOYnFJQitQWXJrYWowYzY0MkxGSTQvNkk0VlVlSkdG?=
+ =?utf-8?B?b2dDREYxZGVzLzQ5S3RvSVh1ZDFwYStsNkRBVFZzQW1peHNqWU1FSm9NNFY1?=
+ =?utf-8?B?SFBLRjZmZU9JNWtxZGV6Q3JIdzlCNW9IZGRZYXFuRHhDUnJBdmNlZWhLM2R1?=
+ =?utf-8?B?RDZmZUtZUUZHd3Y4U3hiZjlQdkxNdmNDZm5XSnJGdDViVU5aM0xtYVlMZnpG?=
+ =?utf-8?B?aVhoZUZVemd1REl6WHRNVWV6a3BsQmNwQzZPYkhhQkk1Q2JST0ErYWJXK3NV?=
+ =?utf-8?B?OHNId1MvenRNZSs2VlNsbFkvSGh3SXBkSEltUXR5ZjVVdU9JRFpMZ3UzeCtV?=
+ =?utf-8?B?MjlFOW81WTR2TzBFbTV6NCtQNXBqb2szS3lrQ2h4allETTRHeURwYkxqaHR1?=
+ =?utf-8?B?SkxHNVk5Tm90ZklwaE5iSitTbUpJMk52QkFRQ3lqMktPVm4xVjlhNjNlajZs?=
+ =?utf-8?B?cnZ5L3o3UHFCMUw0ZG12L096d0RFTHhqdWNBczZZNHJZM3dBYkNQRWZWdVEz?=
+ =?utf-8?B?KzJzUE5MU0tvUFhUUFk0UDhFV2d6MDZZc3ZqRjVGZnZQTlNLcG9oMWloVDB6?=
+ =?utf-8?B?aHNocWt2S3U1eFpYYTE2MjhFcFFoc05nNkxNMklhUk42VUp1MFRIYU5IL0hl?=
+ =?utf-8?B?d01hdWdmSGhuNzNqNlBoUjBLTEFuU3pJTldiWWVvVHFEVldxbk5ycVJKWWRT?=
+ =?utf-8?B?d3ZZbDl1aHZDTFJ5R3lueHVGTklUS1VzdUtON2JPOFpyYXNkR01TcHdqWnJV?=
+ =?utf-8?B?NVoxZXh0MzlwMUtKcEhZWWhQVzNrajI5WDdQSkhZREdUaWhWcEY1dENBbHJT?=
+ =?utf-8?B?aEl6ZW9xM2IwUE93Q3luY055SHRVK01JRmVsczBDQm5HOWkxN1pOdUd0SkJG?=
+ =?utf-8?B?azUwSmNzRldLdU9QRkxGeGVEY2JBRFFoanJnOFRCQ0FYWjJzWDlLK3JWMitB?=
+ =?utf-8?B?ZmljaVZJRkZDWEtZRCtyT3dXcDhxTld4Skg2ZVpldEJWMFJqT0hGb2R6MjBU?=
+ =?utf-8?B?N0dSbzRPUzJTZDhMckJFaEpFaXdzTjhXZkpxSjVkQ1lOU2UzaEdzODRXWEJQ?=
+ =?utf-8?B?Q3p1TDc4RUd3NDhVUitrcjdNYjhTd2o3MEtrVlczK1lvdGNQTmxwTUZhWFBO?=
+ =?utf-8?B?N2RMcEJTOVVNdldNQWpKNW1VWlZmREk4d3h6M2VwaVVzTG9QUC8xOTlQc2hX?=
+ =?utf-8?B?Sm5oVkpjTEgzTXdnK25XLzFKeXN2VGtFRUhVQkRhTkJoQWZDYmN0Sm9jd1Rw?=
+ =?utf-8?B?ZnNDa0l4L1VJQVBkWE15endMY0gvbitKUTlvcEZYMjVxRmtzSUZPTTRUSHl3?=
+ =?utf-8?B?VHpQbXppdVYrQVlxd1RuTDNnRzJDcHpSaFZ1S2FwV09sazBDUHk3RFZzekNu?=
+ =?utf-8?B?K3JBWXZZaDF5S0Iza1dXV0lRenJDNjZJMXNjQy9Sd1l2NnhuMlhRWVJPUmQ5?=
+ =?utf-8?B?WlN2Z0FLaGsyOUFQUk93UEJnSWhRbFkxc0NKQWhpUlBZWEh1TFZ3NFkwNU9M?=
+ =?utf-8?B?Qk9QclBYbmJ6dXdPSkErQW0ydllXQkh5T210OS9ob0RWUElIZTNWTTdxNEl3?=
+ =?utf-8?B?ZzdnSytnUXEvS1lOQ0M2S2NEdTFBb0VnMjM4UWpIcmMyMHpuc3JFOXZWUDBt?=
+ =?utf-8?B?K0N0cm9mSHpNbFhKcjdzWSszNGNkSW1IV0pzck9Tam9RT1g5SWdmSGRQRlA0?=
+ =?utf-8?Q?O7vCOj9jdHqAy3eGuutQf7hGOavslXcLz1SSY=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(7416005)(1800799015)(366007)(38070700009); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ZmVuSWUyVWx2KzRhN09KTFZoSjhKNTgxY0QxV1VsV2lGUGtHNEVlT0ZpYnN2?=
+ =?utf-8?B?b0RCVEpKUjJ0b2cxS21DVytZemF3Kyt1dFdvMkhVNHFHZWZHNXNXL3licXJr?=
+ =?utf-8?B?L25GbW9sR1RVS1Vyd0RKSmRLeHAyazFwQjk2THJBMFIwU25SNXM2MXZralBM?=
+ =?utf-8?B?UGxBRE8ybVFJVXhyemhNZG1YRWhuUUx2MHNRZFhyMTcxMCtucGgzcFFxZnZq?=
+ =?utf-8?B?Yzcvc0JWNElVeGRWRUE4Ykp3eWQwaDRTcUptMU16d2RLSk0wa09HcWtxYUR1?=
+ =?utf-8?B?aVUxYlNPTkFwK3JScndvVUlic2lpZHhzQlRJb0d0WHUwRzV6K1V3KzF5WVY1?=
+ =?utf-8?B?eFlqNUNjS21XaHNXZ211MUVNYW11ZXZyMy9JbEJGcFBMblR5ZFhSYXpxMTkx?=
+ =?utf-8?B?S245Qy9xUEVtMmhJMmJTMS90UTNTVkJmVFBLbmZlWGNQYjNHMTRPellkTTZn?=
+ =?utf-8?B?UGowUzJuRDI3Y3VIN3laU29TaWJqOURua1JBSWJISzJEWGx1RWhGNS9TMG1L?=
+ =?utf-8?B?VDJjUW12YXVBTlVJWG9JRkZCWDFQbFVoamJ1ZmhhdlZXQ0ZNa0Y0ZFZEaWVW?=
+ =?utf-8?B?VEJEZS9EMW1ndjh4ekhIbmdqZ3Z3b1R5anNQTGwza1hqVzdEaU5DcTBkWEtk?=
+ =?utf-8?B?Q0traTRlK21MeHkwbGF0cFM4QXJQSCtWeDhhSnBSYi9DTVB1elI2anhERG1O?=
+ =?utf-8?B?RmpNdzBsUDQvTm1QRWVNQSs5d2c0MnRWdHB0T01RQzQ3aitlRWJVOExYMUFU?=
+ =?utf-8?B?aDJsRllMSElCZzM5ZmVuSmNRZWZuNjNZVURtTTlPU2NVcnRFYk5jYTBtaWVS?=
+ =?utf-8?B?NHYybldjcHFnS0hqaUpPbGJMTS9ac1JEWWsyNlFmT0NMRlZBR2FOVEJJcEpL?=
+ =?utf-8?B?Wnd2aWpqczNZRW5XZVRhZ3hTdHpNNklYdXdjOTd6dEpVY2NNWXAwbHZVZnAw?=
+ =?utf-8?B?RGZKUWFKMW03enhtOXV0WjFISEx1eUo3RkxRQVFkTHgrZUlqTm55dTQvWFU1?=
+ =?utf-8?B?eUUzU3JRZVg5akxrYktWaTU3UDI1Y0tPUmYrNjBaVktIaldSdUVUNTNDbm9W?=
+ =?utf-8?B?UU9FZHNwa3dzcExBQktiS1RJQmN4dWtCK1oydFBHUUJMaXZxMjBjTVYwTjNJ?=
+ =?utf-8?B?ZWZvM25nTGtMT2Foek5JUXNJR0REcnFveWtUd2pNVitMVnpVOFg2TVJoYzhN?=
+ =?utf-8?B?akVOUks4U0NLUDNKMUVDcHdoeCtReUZuWkFJNmNYR2k4dUlIT2FlZG1ITklh?=
+ =?utf-8?B?S082Ykl6UjlEandFcDRUZmZjWHB4MXltRW9oOUdpNnFzekozRE9zWEhONHZ3?=
+ =?utf-8?B?RVloM2dEWmZLUXRyUUo1MWs2WGRMNFIrVlc4OWRPeHcyNkpwQ3pxakFwWUhL?=
+ =?utf-8?B?ektMd1g3MVNkTHZvb2hOZFpwbUxpTlBoRE1lb0h6c0x4RjZWZjdGK21UNzBt?=
+ =?utf-8?B?aktlTnRvTzZnQWtuMUtDckxzb1ZzbFBrT2ZnTFpBaE43TU1kWlVmS0FOemRp?=
+ =?utf-8?B?Y3RBaExOYlhjVzNJamdMMXl2MC9IUWVLYWhpN3lFbXNvWFgzM2thUEZOYnda?=
+ =?utf-8?B?REpLOXNpTUVqMVhXQytBdW1Db2s4Ly84ZnhkWlAreUhlQ08xamxOV3BWNVJM?=
+ =?utf-8?B?Lzg1QTVQankwTmhEVXFMNzczQVRNTGwxQ1J2RFNWNU9aWUt5cjRub2Fmcktv?=
+ =?utf-8?B?VDVTbXU4TlhmWjdzTkkwb1JlNzYyMmY3TFRrb0NqR0xOUlI2ZkNaM0FQMXQv?=
+ =?utf-8?B?Uk9lOU9vMWsxeUJPUU1xQ04vQlQxczhYMXZNMVJ5SnQyT1V1MHRlaWwzWStZ?=
+ =?utf-8?B?ZkxKK1ljeWdZb0JqcEtSNUJPcVlrVG8yQVJtS1dDTGk4L3BURHVIYTczbDNO?=
+ =?utf-8?B?MzRSWGdFb1g1eUNaMUk2UDU1NTA0aS9kZVJoQkdRVjZ1ME84UnFtWDg1NFhR?=
+ =?utf-8?B?UjJNTUIzS0NpdzB5Z1NEV3dnU1d3VC94OThLcGNpaXB0NkpuZGN5Sk9VaE5R?=
+ =?utf-8?B?YzM3VWppWEVBOEgxOXFRemJMSjJNU29jOG9kOWhRWThYOXFmdVVIcXdOZVhJ?=
+ =?utf-8?B?b0l6UTd3L3h0QmE0b1JLYVVFUkRjcGNldmVFSk9GVnBHdDVUaXBVaGF4OE1u?=
+ =?utf-8?Q?iHxV8cHxz6o3n0ggNyWFqZA7I?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5c1da6ba-15c8-4c37-13c9-08dc86121976
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Jun 2024 10:19:07.4454 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: V2y14us/UqwCbKujZe/uqQiD/+EVWh+qg+rbuid2tL+ppAAimnCq6t3Ioy2B31p66ScnqSDUHf2RS6/g+JOR1jVghZUAL+vjImL3cylF0k0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB7770
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.11;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,268 +227,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 6/6/24 15:05, Gavin Shan wrote:
-> Even the edk2 for the guest can be built successfully, but I'm not able to try it
-> because I'm unable to bring up the host now. I tried to rebuild the environment
-> from scratch, the host runs into crash inside EDK2 unfortunately...
-> 
->    TF-RMM:   https://git.codelinaro.org/linaro/dcap/rmm.git                       (branch: cca/v2)
->    EDK2:     git@github.com:tianocore/edk2.git                                    (tag:    edk2-stable202402)
->    TF-A:     https://git.codelinaro.org/linaro/dcap/tf-a/trusted-firmware-a.git   (branch: cca/v2)
->    QEMU:     https://git.qemu.org/git/qemu.git                                    (branch: master)
->    KERNEL:   https://git.gitlab.arm.com/linux-arm/linux-cca.git                   (branch: cca-full/v2)
->    BuildRoot: <doesn't matter at present>
-> 
-> arm64-server# home/gavin/sandbox/qemu.main/build/qemu-system-aarch64      \
->                -M virt,virtualization=on,secure=on,gic-version=3,acpi=off  \
->                -cpu max,x-rme=on -m 8G -smp 8                              \
->                -monitor none -serial mon:stdio -nographic -nodefaults      \
->                -bios /home/gavin/sandbox/CCA/tf-a/flash.bin                \
->                -kernel /home/gavin/sandbox/CCA/linux/arch/arm64/boot/Image \
->                -append console=ttyAMA0 root=/dev/vda                       \
->                -drive format=raw,if=none,file=/home/gavin/sandbox/CCA/buildroot/output/images/rootfs.ext4,id=hd0 \
->                -device virtio-blk-pci,drive=hd0                            \
->                -netdev tap,id=tap0,vhost=false,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown \
->                -device virtio-net-pci,netdev=tap0,mac=52:54:00:f1:26:b0                          \
->                -fsdev local,security_model=none,path=/home/gavin/sandbox/CCA,id=shr0             \
->                -device virtio-9p-device,fsdev=shr0,mount_tag=shr0
->                   :
-> NOTICE:  Booting Trusted Firmware
-> NOTICE:  BL1: v2.10.0(debug):99e0b97aa-dirty
-> NOTICE:  BL1: Built : 23:14:56, Jun  5 2024
-> INFO:    BL1: RAM 0xe0ee000 - 0xe0f7000
-> INFO:    BL1: Loading BL2
-> INFO:    Loading image id=1 at address 0xe06b000
-> INFO:    Image id=1 loaded: 0xe06b000 - 0xe0742d1
-> NOTICE:  BL1: Booting BL2
-> INFO:    Entry point address = 0xe06b000
-> INFO:    SPSR = 0x3cd
-> INFO:    [GPT] Boot Configuration
-> INFO:      PPS/T:     0x2/40
-> INFO:      PGS/P:     0x0/12
-> INFO:      L0GPTSZ/S: 0x0/30
-> INFO:      PAS count: 0x6
-> INFO:      L0 base:   0xedfe000
-> INFO:    [GPT] PAS[0]: base 0xe001000, size 0xff000, GPI 0xa, type 0x1
-> INFO:    [GPT] PAS[1]: base 0xe100000, size 0xcfe000, GPI 0x8, type 0x1
-> INFO:    [GPT] PAS[2]: base 0xedfe000, size 0x202000, GPI 0xa, type 0x1
-> INFO:    [GPT] PAS[3]: base 0x40000000, size 0x100000, GPI 0x9, type 0x1
-> INFO:    [GPT] PAS[4]: base 0x40100000, size 0x2800000, GPI 0xb, type 0x1
-> INFO:    [GPT] PAS[5]: base 0x42900000, size 0x1fd700000, GPI 0x9, type 0x1
-> INFO:    Enabling Granule Protection Checks
-> NOTICE:  BL2: v2.10.0(debug):99e0b97aa-dirty
-> NOTICE:  BL2: Built : 23:14:56, Jun  5 2024
-> INFO:    BL2: Doing platform setup
-> INFO:    Reserved RMM memory [0x40100000, 0x428fffff] in Device tree
-> INFO:    BL2: Loading image id 3
-> INFO:    Loading image id=3 at address 0xe0a0000
-> INFO:    Image id=3 loaded: 0xe0a0000 - 0xe0b10c4
-> INFO:    BL2: Loading image id 35
-> INFO:    Loading image id=35 at address 0x40100000
-> INFO:    Image id=35 loaded: 0x40100000 - 0x403033b0
-> INFO:    BL2: Loading image id 5
-> INFO:    Loading image id=5 at address 0x60000000
-> INFO:    Image id=5 loaded: 0x60000000 - 0x60200000
-> NOTICE:  BL2: Booting BL31
-> INFO:    Entry point address = 0xe0a0000
-> INFO:    SPSR = 0x3cd
-> NOTICE:  BL31: v2.10.0(debug):99e0b97aa-dirty
-> NOTICE:  BL31: Built : 23:14:56, Jun  5 2024
-> INFO:    GICv3 without legacy support detected.
-> INFO:    ARM GICv3 driver initialized in EL3
-> INFO:    Maximum SPI INTID supported: 287
-> INFO:    BL31: Initializing runtime services
-> INFO:    RMM setup done.
-> INFO:    BL31: Initializing RMM
-> INFO:    RMM init start.
-> Booting RMM v.0.4.0(debug) 17924bc Built with GCC 11.4.1
-> RMM-EL3 Interface v.0.2
-> Boot Manifest Interface v.0.3
-> RMI/RSI ABI v.1.0/1.0 built: Jun  5 2024 23:03:00
-> INFO:    RMM init end.
-> INFO:    BL31: Preparing for EL3 exit to normal world
-> INFO:    Entry point address = 0x60000000
-> INFO:    SPSR = 0x3c9
-> Loading driver at 0x00060009160 EntryPoint=0x00000000000
-> ArmVirtGetMemoryMap: Dumping System DRAM Memory Map:
->      PhysicalBase: 0x40000000
->      VirtualBase: 0x40000000
->      Length: 0x200000000
-> UEFI firmware (version  built at 23:28:51 on Jun  5 2024)
-> PlatformPeim: PL011 UART (console) @ 0x9000000
-> PlatformPeim: PL011 UART (debug) @ 0x9000000
->    :
-> EFI stub: Booting Linux Kernel...
-> EFI stub: EFI_RNG_PROTOCOL unavailable
-> SetMemoryAttributes: BaseAddress == 0x22DC00000, Length == 0x1CE0000, Attributes == 0x20000
-> SetMemoryAttributes: BaseAddress == 0x22F8E0000, Length == 0xE50000, Attributes == 0x4000
-> EFI stub: Using DTB from configuration table
-> EFI stub: Exiting boot services...
-> EFI stub: update_fdt() ... done
-> EFI stub: efi_exit_boot_services: enter
-> EFI stub: efi_exit_boot_services: efi_pci_disable_bridge_busmaster
-> EFI stub: efi_exit_boot_services: efi_get_memory_map
-> EFI stub: efi_exit_boot_services: priv_func
-> =====> CoreExitBootServices
-> MemoryProtectionExitBootServicesCallback - 0
-> SetUefiImageMemoryAttributes - 0x000000023BE60000 - 0x0000000000040000 (0x0000000000000008)
-> MemoryProtectionExitBootServicesCallback - 0
-> SetUefiImageMemoryAttributes - 0x0000000238AF0000 - 0x0000000000040000 (0x0000000000000008)
-> MemoryProtectionExitBootServicesCallback - 0
-> SetUefiImageMemoryAttributes - 0x0000000238AA0000 - 0x0000000000040000 (0x0000000000000008)
-> MemoryProtectionExitBootServicesCallback - 0
-> SetUefiImageMemoryAttributes - 0x0000000238A50000 - 0x0000000000040000 (0x0000000000000008)
-> MemoryProtectionExitBootServicesCallback - 0
-> SetUefiImageMemoryAttributes - 0x0000000238960000 - 0x0000000000040000 (0x0000000000000008)
-> MemoryProtectionExitBootServicesCallback - 0
-> SetUefiImageMemoryAttributes - 0x000000023BE20000 - 0x0000000000030000 (0x0000000000000008)
-> MemoryProtectionExitBootServicesCallback - 0
-> SetUefiImageMemoryAttributes - 0x0000000238860000 - 0x0000000000030000 (0x0000000000000008)
-> MemoryProtectionExitBootServicesCallback - 0
-> SetUefiImageMemoryAttributes - 0x0000000238820000 - 0x0000000000030000 (0x0000000000000008)
-> CoreExitBootServices: MemoryProtectionExitBootServicesCallback
-> CoreExitBootServices: SaveAndSetDebugTimer
-> CoreExitBootServices: gCpu->DisableInterrupt
-> CoreExitBootServices: CalculateEfiHdrCrc
-> CoreExitBootServices: Return with status=0x0
-> 
-> 
-> Synchronous Exception at 0x000000023248E9B4
-> PC 0x00023248E9B4
-> PC 0x00023248EA70
-> PC 0x00023248EBA8
-> PC 0x000232490FC8
-> PC 0x00023248A004
-> PC 0x00023248973C
-> PC 0x0002324894DC
-> PC 0x00023F2C7FA8 (0x00023F2C1000+0x00006FA8) [ 1] DxeCore.dll
-> PC 0x00023BCC6604 (0x00023BCBE000+0x00008604) [ 2] BdsDxe.dll
-> PC 0x00023F2CBC68 (0x00023F2C1000+0x0000AC68) [ 3] DxeCore.dll
-> [ 1] /home/gavin/sandbox/CCA/edk2/Build/ArmVirtQemuKernel-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Core/Dxe/DxeMain/DEBUG/DxeCore.dll
-> [ 2] /home/gavin/sandbox/CCA/edk2/Build/ArmVirtQemuKernel-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Universal/BdsDxe/BdsDxe/DEBUG/BdsDxe.dll
-> [ 3] /home/gavin/sandbox/CCA/edk2/Build/ArmVirtQemuKernel-AARCH64/DEBUG_GCC5/AARCH64/MdeModulePkg/Core/Dxe/DxeMain/DEBUG/DxeCore.dll
-> 
->    X0 0x0000000000000000   X1 0x000000023F2C0740   X2 0x000000000000000A   X3 0x00000002325D3E26
->    X4 0x0000000000000020   X5 0xFFFFFFFFFFFFFFFE   X6 0x0000000000000000   X7 0x0000000000000000
->    X8 0x0000000000000000   X9 0x0000000238820000  X10 0x000000000000002E  X11 0x00000000000023D0
->   X12 0x00000000000023C4  X13 0x0000000000000001  X14 0x0000000000000002  X15 0x0000000000000000
->   X16 0x000000023BD30280  X17 0x000000000066BD90  X18 0x0000000000000000  X19 0x000000023F2C0740
->   X20 0x00000002325D3E27  X21 0x000000000000FFFF  X22 0x000000000000000D  X23 0x000000000010FFFF
->   X24 0x000000000000D800  X25 0x000000023F2C0AA8  X26 0x00000002325E2000  X27 0x0000000000000002
->   X28 0x0000000000000018   FP 0x000000023F2C06F0   LR 0x000000023248EA70
-> 
->    V0 0x0000000000000000 0000000000000000   V1 0xFFFFFF80FFFFFFD0 000000023F2C0800
->    V2 0x0000000000000000 0000000000000000   V3 0x0000000000000000 0000000000000000
->    V4 0x0000000000000000 0000000000000000   V5 0x0000000000000000 0000000000000000
->    V6 0x0000000000000000 0000000000000000   V7 0x0000000000000000 0000000000000000
->    V8 0x0000000000000000 0000000000000000   V9 0x0000000000000000 0000000000000000
->   V10 0x0000000000000000 0000000000000000  V11 0x0000000000000000 0000000000000000
->   V12 0x0000000000000000 0000000000000000  V13 0x0000000000000000 0000000000000000
->   V14 0x0000000000000000 0000000000000000  V15 0x0000000000000000 0000000000000000
->   V16 0x0000000000000000 0000000000000000  V17 0x0000000000000000 0000000000000000
->   V18 0x0000000000000000 0000000000000000  V19 0x0000000000000000 0000000000000000
->   V20 0x0000000000000000 0000000000000000  V21 0x0000000000000000 0000000000000000
->   V22 0x0000000000000000 0000000000000000  V23 0x0000000000000000 0000000000000000
->   V24 0x0000000000000000 0000000000000000  V25 0x0000000000000000 0000000000000000
->   V26 0x0000000000000000 0000000000000000  V27 0x0000000000000000 0000000000000000
->   V28 0x0000000000000000 0000000000000000  V29 0x0000000000000000 0000000000000000
->   V30 0x0000000000000000 0000000000000000  V31 0x0000000000000000 0000000000000000
-> 
->    SP 0x000000023F2C06F0  ELR 0x000000023248E9B4  SPSR 0xA00002C9  FPSR 0x00000000
->   ESR 0x96000006          FAR 0x0000000000000008
-> 
->   ESR : EC 0x25  IL 0x1  ISS 0x00000006
-> 
-> Data abort: Translation fault, second level
-> 
-> Stack dump:
->    000023F2C05F0: 000000023F2C06A0 000000023BD31FF4 0000000238820000 0000000000000002
->    000023F2C0610: 000000023B1E2000 000000023FFF9000 0000000000000E20 00000000001FFFFF
->    000023F2C0630: 0000000238850000 0000000000000001 0000000000000003 000000023FFF9E20
->    000023F2C0650: 000000000000070C 0000000000000000 000000023F2C06D0 000000023F2DD644
->    000023F2C0670: 000000023F2C07C8 000000023F2C095F 0000000000000001 000000023BD358ED
->    000023F2C0690: 000000000000070C 0000000000000000 000000023F2C0750 000000023BD31FF4
->    000023F2C06B0: 0000000238820000 0000000000000001 000000023FFF9000 000000023FFFA000
->    000023F2C06D0: 000000023F2C07F0 000000023F2C2534 0000000000000001 0000000000000000
->> 000023F2C06F0: 000000023F2C0700 000000023248EA70 000000023F2C0840 000000023248EBA8
->    000023F2C0710: 00000002325D42BF 000000023B17E918 00000002325E2000 0000000232489978
->    000023F2C0730: 000000023F2C0AB0 00000002325E2000 0020004900460045 0062007500740073
->    000023F2C0750: 000000000020003A 0000000000000001 000000023F2C0860 0000000000000001
->    000023F2C0770: 0000000000000002 00000000000000FF 0000000000000000 0000007F00000000
->    000023F2C0790: 000000023F2C07F0 000000023F2C2548 000000023F2C07C0 000000023F2DEDD8
->    000023F2C07B0: 000000023F2C088D 000000023F2EA000 000000023F2C07F0 000000023F2C2548
->    000023F2C07D0: 0000000000000001 0000000000000000 000000023F2EB000 000000023F2EA000
-> ASSERT [ArmCpuDxe] /home/gavin/sandbox/CCA/edk2/ArmPkg/Library/DefaultExceptionHandlerLib/AArch64/DefaultExceptionHandler.c(343): ((BOOLEAN)(0==1))
-> 
-
-Please ignore the crash inside edk2, which is caused by verbose messages
-added to Linux's EFI driver (wrapper). Those verbose messages are added
-by myself and it caused stack overrun. They lead to the crash eventually.
-With those verbose messages removed, I don't see the crash. However, the
-Linux boots very...very slow.
-
-EFI stub: Booting Linux Kernel...
-EFI stub: EFI_RNG_PROTOCOL unavailable
-SetMemoryAttributes: BaseAddress == 0x22DC00000, Length == 0x1CE0000, Attributes == 0x20000
-SetMemoryAttributes: BaseAddress == 0x22F8E0000, Length == 0xE50000, Attributes == 0x4000
-EFI stub: Using DTB from configuration table
-EFI stub: Exiting boot services...
-SetUefiImageMemoryAttributes - 0x000000023BE60000 - 0x0000000000040000 (0x0000000000000008)
-SetUefiImageMemoryAttributes - 0x0000000238AF0000 - 0x0000000000040000 (0x0000000000000008)
-SetUefiImageMemoryAttributes - 0x0000000238AA0000 - 0x0000000000040000 (0x0000000000000008)
-SetUefiImageMemoryAttributes - 0x0000000238A50000 - 0x0000000000040000 (0x0000000000000008)
-SetUefiImageMemoryAttributes - 0x0000000238960000 - 0x0000000000040000 (0x0000000000000008)
-SetUefiImageMemoryAttributes - 0x000000023BE20000 - 0x0000000000030000 (0x0000000000000008)
-SetUefiImageMemoryAttributes - 0x0000000238860000 - 0x0000000000030000 (0x0000000000000008)
-SetUefiImageMemoryAttributes - 0x0000000238820000 - 0x0000000000030000 (0x0000000000000008)   <<< At least 10 minutes' gap between this and next line of log
-[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x000f0510]
-       :
-[   24.057340] Remapping and enabling EFI services.
-[   26.618330] smp: Bringing up secondary CPUs ...                                            <<< PSCI service responses very slow
-[   28.818256] Detected PIPT I-cache on CPU1
-[   28.985946] GICv3: CPU1: found redistributor 1 region 0:0x00000000080c0000
-[   29.055568] GICv3: CPU1: using allocated LPI pending table @0x00000001000c0000
-[   29.203572] CPU1: Booted secondary processor 0x0000000001 [0x000f0510]
-[   36.075187] Detected PIPT I-cache on CPU2
-[   36.119712] GICv3: CPU2: found redistributor 2 region 0:0x00000000080e0000
-[   36.144795] GICv3: CPU2: using allocated LPI pending table @0x00000001000d0000
-[   36.213252] CPU2: Booted secondary processor 0x0000000002 [0x000f0510]
-[  115.355610] Detected PIPT I-cache on CPU3
-[  115.402037] GICv3: CPU3: found redistributor 3 region 0:0x0000000008100000
-[  115.426918] GICv3: CPU3: using allocated LPI pending table @0x00000001000e0000
-[  115.508456] CPU3: Booted secondary processor 0x0000000003 [0x000f0510]
-[  134.596700] Detected PIPT I-cache on CPU4
-[  134.645280] GICv3: CPU4: found redistributor 4 region 0:0x0000000008120000
-[  134.670010] GICv3: CPU4: using allocated LPI pending table @0x00000001000f0000
-[  134.763347] CPU4: Booted secondary processor 0x0000000004 [0x000f0510]
-[  156.200377] Detected PIPT I-cache on CPU5
-[  156.251349] GICv3: CPU5: found redistributor 5 region 0:0x0000000008140000
-[  156.277133] GICv3: CPU5: using allocated LPI pending table @0x0000000100100000
-[  156.382948] CPU5: Booted secondary processor 0x0000000005 [0x000f0510]
-[  176.521840] Detected PIPT I-cache on CPU6
-[  176.575053] GICv3: CPU6: found redistributor 6 region 0:0x0000000008160000
-[  176.600415] GICv3: CPU6: using allocated LPI pending table @0x0000000100110000
-[  176.720944] CPU6: Booted secondary processor 0x0000000006 [0x000f0510]
-[  198.444988] Detected PIPT I-cache on CPU7
-[  198.499710] GICv3: CPU7: found redistributor 7 region 0:0x0000000008180000
-[  198.524345] GICv3: CPU7: using allocated LPI pending table @0x0000000100120000
-[  198.654758] CPU7: Booted secondary processor 0x0000000007 [0x000f0510]
-[  218.456900] smp: Brought up 1 node, 8 CPUs
-[  218.590983] SMP: Total of 8 processors activated.
-[  218.625265] CPU: All CPU(s) started at EL2
-     :
-[  758.664394] PTP clock support registered
-[  760.772801] EDAC MC: Ver: 3.0.0
-[  764.767946] scmi_core: SCMI protocol bus registered
-[  767.858837] efivars: Registered efivars operations
-[  779.386548] FPGA manager framework
-[  780.749886] Advanced Linux Sound Architecture Driver Initialized.
-[  797.557785] vgaarb: loaded                                                            <<< No more output after this
-
-It seems the EDK2 binary, built from upstream's 'edk2-stable202402' tag, doesn't work well.
-
-Thanks,
-Gavin
-
+SGkgRXJpYywNCg0KPi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+RnJvbTogRXJpYyBBdWdl
+ciA8ZXJpYy5hdWdlckByZWRoYXQuY29tPg0KPlN1YmplY3Q6IFJlOiBbUEFUQ0ggdjYgMDkvMTld
+IHZmaW8vaW9tbXVmZDogSW1wbGVtZW50DQo+SG9zdElPTU1VRGV2aWNlQ2xhc3M6OnJlYWxpemUo
+KSBoYW5kbGVyDQo+DQo+DQo+DQo+T24gNi82LzI0IDExOjI2LCBFcmljIEF1Z2VyIHdyb3RlOg0K
+Pj4gSGkgWmhlbnpob25nLA0KPj4gT24gNi8zLzI0IDA4OjEwLCBaaGVuemhvbmcgRHVhbiB3cm90
+ZToNCj4+PiBJdCBjYWxscyBpb21tdWZkX2JhY2tlbmRfZ2V0X2RldmljZV9pbmZvKCkgdG8gZ2V0
+IGhvc3QgSU9NTVUNCj4+PiByZWxhdGVkIGluZm9ybWF0aW9uIGFuZCB0cmFuc2xhdGUgaXQgaW50
+byBIb3N0SU9NTVVEZXZpY2VDYXBzDQo+Pj4gZm9yIHF1ZXJ5IHdpdGggLmdldF9jYXAoKS4NCj4+
+Pg0KPj4+IEludHJvZHVjZSBtYWNybyBWVERfTUdBV19GUk9NX0NBUCB0byBnZXQgTUdBVyB3aGlj
+aCBlcXVhbHMgdG8NCj4+PiAoYXdfYml0cyAtIDEpLg0KPj4+DQo+Pj4gU2lnbmVkLW9mZi1ieTog
+Wmhlbnpob25nIER1YW4gPHpoZW56aG9uZy5kdWFuQGludGVsLmNvbT4NCj4+PiAtLS0NCj4+PiAg
+aW5jbHVkZS9ody9pMzg2L2ludGVsX2lvbW11LmggfCAgMSArDQo+Pj4gIGh3L3ZmaW8vaW9tbXVm
+ZC5jICAgICAgICAgICAgIHwgMzcNCj4rKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+Kw0KPj4+ICAyIGZpbGVzIGNoYW5nZWQsIDM4IGluc2VydGlvbnMoKykNCj4+Pg0KPj4+IGRpZmYg
+LS1naXQgYS9pbmNsdWRlL2h3L2kzODYvaW50ZWxfaW9tbXUuaA0KPmIvaW5jbHVkZS9ody9pMzg2
+L2ludGVsX2lvbW11LmgNCj4+PiBpbmRleCA3ZmEwYTY5NWM4Li43ZDY5NGIwODEzIDEwMDY0NA0K
+Pj4+IC0tLSBhL2luY2x1ZGUvaHcvaTM4Ni9pbnRlbF9pb21tdS5oDQo+Pj4gKysrIGIvaW5jbHVk
+ZS9ody9pMzg2L2ludGVsX2lvbW11LmgNCj4+PiBAQCAtNDcsNiArNDcsNyBAQCBPQkpFQ1RfREVD
+TEFSRV9TSU1QTEVfVFlQRShJbnRlbElPTU1VU3RhdGUsDQo+SU5URUxfSU9NTVVfREVWSUNFKQ0K
+Pj4+ICAjZGVmaW5lIFZURF9IT1NUX0FXXzQ4QklUICAgICAgICAgICA0OA0KPj4+ICAjZGVmaW5l
+IFZURF9IT1NUX0FERFJFU1NfV0lEVEggICAgICBWVERfSE9TVF9BV18zOUJJVA0KPj4+ICAjZGVm
+aW5lIFZURF9IQVdfTUFTSyhhdykgICAgICAgICAgICAoKDFVTEwgPDwgKGF3KSkgLSAxKQ0KPj4+
+ICsjZGVmaW5lIFZURF9NR0FXX0ZST01fQ0FQKGNhcCkgICAgICAoKGNhcCA+PiAxNikgJiAweDNm
+VUxMKQ0KPj4+DQo+Pj4gICNkZWZpbmUgRE1BUl9SRVBPUlRfRl9JTlRSICAgICAgICAgICgxKQ0K
+Pj4+DQo+Pj4gZGlmZiAtLWdpdCBhL2h3L3ZmaW8vaW9tbXVmZC5jIGIvaHcvdmZpby9pb21tdWZk
+LmMNCj4+PiBpbmRleCBlNGE1MDdkNTVjLi45ZDJlOTVlMjBlIDEwMDY0NA0KPj4+IC0tLSBhL2h3
+L3ZmaW8vaW9tbXVmZC5jDQo+Pj4gKysrIGIvaHcvdmZpby9pb21tdWZkLmMNCj4+PiBAQCAtMjUs
+NiArMjUsNyBAQA0KPj4+ICAjaW5jbHVkZSAicWVtdS9jdXRpbHMuaCINCj4+PiAgI2luY2x1ZGUg
+InFlbXUvY2hhcmRldl9vcGVuLmgiDQo+Pj4gICNpbmNsdWRlICJwY2kuaCINCj4+PiArI2luY2x1
+ZGUgImh3L2kzODYvaW50ZWxfaW9tbXVfaW50ZXJuYWwuaCINCj4+Pg0KPj4+ICBzdGF0aWMgaW50
+IGlvbW11ZmRfY2Rldl9tYXAoY29uc3QgVkZJT0NvbnRhaW5lckJhc2UgKmJjb250YWluZXIsDQo+
+aHdhZGRyIGlvdmEsDQo+Pj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICByYW1fYWRkcl90
+IHNpemUsIHZvaWQgKnZhZGRyLCBib29sIHJlYWRvbmx5KQ0KPj4+IEBAIC02MTksNiArNjIwLDQx
+IEBAIHN0YXRpYyB2b2lkDQo+dmZpb19pb21tdV9pb21tdWZkX2NsYXNzX2luaXQoT2JqZWN0Q2xh
+c3MgKmtsYXNzLCB2b2lkICpkYXRhKQ0KPj4+ICAgICAgdmlvYy0+cGNpX2hvdF9yZXNldCA9IGlv
+bW11ZmRfY2Rldl9wY2lfaG90X3Jlc2V0Ow0KPj4+ICB9Ow0KPj4+DQo+Pj4gK3N0YXRpYyBib29s
+IGhpb2RfaW9tbXVmZF92ZmlvX3JlYWxpemUoSG9zdElPTU1VRGV2aWNlICpoaW9kLCB2b2lkDQo+
+Km9wYXF1ZSwNCj4+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBFcnJv
+ciAqKmVycnApDQo+Pj4gK3sNCj4+PiArICAgIFZGSU9EZXZpY2UgKnZkZXYgPSBvcGFxdWU7DQo+
+PiBJIHRoaW5rIGl0IHdvdWxkIG1ha2Ugc2Vuc2UgdG8gc3RvcmUgdmRldiBpbiBoaW9kLiBUaGlz
+IHdvdWxkIGFsbG93IHRvDQo+PiBwb3N0cG9uZSBzb21lIGNvbXB1dGF0aW9ucyBpbiB0aGUgSG9z
+dElPTU1VRGV2aWNlIG9wcyBpbnN0ZWFkIG9mDQo+ZG9pbmcNCj4+IGV2ZXJ5dGhpbmcgaW4gdGhl
+IHJlYWxpemUuDQo+PiBGb3IgaW5zdGFuY2UgdG8gcmV0cmlldmUgdGhlIHVzYWJsZSBpb3ZhX3Jh
+bmdlcyBJIHdpbGwgbmVlZCB0byBhY2Nlc3MNCj4+IHRoZSBiYXNlIGNvbnRhaW5lciBpbiB0aGUg
+YXNzb2NpYXRlZCBvcHMuDQo+DQo+dGhpcyB3b3VsZCBuZWVkIHRvIGJlIG9wYXF1ZSBzaW5jZSB0
+aGUgYWdlbnQgZGV2aWNlIGNhbiBiZSBlaXRoZXINCj5WRklPRGV2aWNlIG9yIFZEUEEgb2JqZWN0
+IHRob3VnaA0KDQpUaGlzIHdpbGwgZ2l2ZSB2SU9NTVUgYWNjZXNzIHRvIGFsbCBWRklPRGV2aWNl
+IG9yIFZEUEEgb2JqZWN0IGVsZW1lbnRzDQphbmQgSSdtIG5vdCBzdXJlIGlmIFZEUEEgc3VwcG9y
+dHMgaW92YV9yYW5nZXMuDQpXaGF0IGFib3V0IGV4cG9zaW5nIG9ubHkgd2hhdCB3ZSBuZWVkLCBs
+aWtlIGJlbG93Lg0KSWYgVkRQQSBkb2Vzbid0IHN1cHBvcnQgaW92YV9yYW5nZXMsIGdldF9jYXAo
+KSBzaG91bGQgcmV0dXJuIDAuDQoNCi0tLSBhL2luY2x1ZGUvc3lzZW11L2hvc3RfaW9tbXVfZGV2
+aWNlLmgNCisrKyBiL2luY2x1ZGUvc3lzZW11L2hvc3RfaW9tbXVfZGV2aWNlLmgNCkBAIC0zMiw2
+ICszMiw3IEBAIHR5cGVkZWYgc3RydWN0IEhvc3RJT01NVURldmljZUNhcHMgew0KICAgICBib29s
+IG5lc3Rpbmc7DQogICAgIGJvb2wgZnMxZ3A7DQogICAgIHVpbnQzMl90IGVycmF0YTsNCisgICAg
+R0xpc3QgKmlvdmFfcmFuZ2VzOw0KIH0gSG9zdElPTU1VRGV2aWNlQ2FwczsNCg0KICNkZWZpbmUg
+VFlQRV9IT1NUX0lPTU1VX0RFVklDRSAiaG9zdC1pb21tdS1kZXZpY2UiDQpAQCAtOTYsNiArOTcs
+NyBAQCBzdHJ1Y3QgSG9zdElPTU1VRGV2aWNlQ2xhc3Mgew0KICNkZWZpbmUgSE9TVF9JT01NVV9E
+RVZJQ0VfQ0FQX05FU1RJTkcgICAgICAgICAgIDINCiAjZGVmaW5lIEhPU1RfSU9NTVVfREVWSUNF
+X0NBUF9GUzFHUCAgICAgICAgICAgICAzDQogI2RlZmluZSBIT1NUX0lPTU1VX0RFVklDRV9DQVBf
+RVJSQVRBICAgICAgICAgICAgNA0KKyNkZWZpbmUgSE9TVF9JT01NVV9ERVZJQ0VfQ0FQX0lPVkFf
+UkFOR0VTICAgICAgIDUNCg0KIC8qKg0KICAqIGVudW0gaG9zdF9pb21tdV9kZXZpY2VfaW9tbXVf
+aHdfaW5mb190eXBlIC0gSU9NTVUgSGFyZHdhcmUgSW5mbyBUeXBlcw0KZGlmZiAtLWdpdCBhL2h3
+L3ZmaW8vY29udGFpbmVyLmMgYi9ody92ZmlvL2NvbnRhaW5lci5jDQppbmRleCAyNmU2ZjdmYjRm
+Li40YzNlOWU0NWMzIDEwMDY0NA0KLS0tIGEvaHcvdmZpby9jb250YWluZXIuYw0KKysrIGIvaHcv
+dmZpby9jb250YWluZXIuYw0KQEAgLTExNDUsNiArMTE0NSw3IEBAIHN0YXRpYyBib29sIGhpb2Rf
+bGVnYWN5X3ZmaW9fcmVhbGl6ZShIb3N0SU9NTVVEZXZpY2UgKmhpb2QsIHZvaWQgKm9wYXF1ZSwN
+Cg0KICAgICBoaW9kLT5uYW1lID0gZ19zdHJkdXAodmRldi0+bmFtZSk7DQogICAgIGhpb2QtPmNh
+cHMuYXdfYml0cyA9IHZmaW9fZGV2aWNlX2dldF9hd19iaXRzKHZkZXYpOw0KKyAgICBoaW9kLT5j
+YXBzLmlvdmFfcmFuZ2VzID0gdmRldi0+YmNvbnRhaW5lci0+aW92YV9yYW5nZXM7DQoNCiAgICAg
+cmV0dXJuIHRydWU7DQogfQ0KQEAgLTExNTcsNiArMTE1OCw4IEBAIHN0YXRpYyBpbnQgaGlvZF9s
+ZWdhY3lfdmZpb19nZXRfY2FwKEhvc3RJT01NVURldmljZSAqaGlvZCwgaW50IGNhcCwNCiAgICAg
+c3dpdGNoIChjYXApIHsNCiAgICAgY2FzZSBIT1NUX0lPTU1VX0RFVklDRV9DQVBfQVdfQklUUzoN
+CiAgICAgICAgIHJldHVybiBjYXBzLT5hd19iaXRzOw0KKyAgICBjYXNlIEhPU1RfSU9NTVVfREVW
+SUNFX0NBUF9JT1ZBX1JBTkdFUzoNCisgICAgICAgIHJldHVybiAxOw0KICAgICBkZWZhdWx0Og0K
+ICAgICAgICAgZXJyb3Jfc2V0ZyhlcnJwLCAiJXM6IHVuc3VwcG9ydGVkIGNhcGFiaWxpdHkgJXgi
+LCBoaW9kLT5uYW1lLCBjYXApOw0KICAgICAgICAgcmV0dXJuIC1FSU5WQUw7DQoNClRoYW5rcw0K
+Wmhlbnpob25nDQo=
 
