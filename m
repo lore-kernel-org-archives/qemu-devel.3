@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6A37C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 09:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 811D3C27C52
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 09:37:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF9Uv-0000QV-0Y; Thu, 06 Jun 2024 05:33:29 -0400
+	id 1sF9Yl-0001lu-UI; Thu, 06 Jun 2024 05:37:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sF9Ut-0000Pz-Bl
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:33:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sF9Yj-0001lC-TY
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:37:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sF9Ur-0006s6-Rc
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:33:27 -0400
+ id 1sF9Yi-0007ZC-E5
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:37:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717666405;
+ s=mimecast20190719; t=1717666643;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=QtmqXwvQtz9AetCc4aSYzY8LISUCeJ1ftIavHc81UjY=;
- b=RgEMLil9nUvMq+vFaQNeGNde0Rkhbz1v9L2ADbYWXv4v7V7bk6lAJQo5pP1Hl9L17UpodP
- GYjjHxR8fEQUimv19OpB6V4+ESYjAqMLXB+vaFcyP8zMgkNf+OK6IJixmU6qqVFYHoEJtT
- 7YgHKhg3kuOEMX0eqyWCpUkPoJG4xDw=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+GCbTdM0GZ7BVxsKLSoCw+rPoe+MChxl2looUyeu6OM=;
+ b=iMuuos96JChsnteUupfnDFVmMF9tNFvsOCr3Go328wRGGZ2K1+vHa2xQ3RKFoADq8u2C63
+ CxtLcgyVvRJclJPJ8nGrZo3DRgDd3AsdQzeWqxDHw9f4/gwUlPg7yu1QBQS8a9kouGazMb
+ sV/EbMXm+YSYjRgTko1bh0QAa+HzXS0=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-bTHahT-ePzKZDidVQnI0WA-1; Thu, 06 Jun 2024 05:33:23 -0400
-X-MC-Unique: bTHahT-ePzKZDidVQnI0WA-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a68e0faf0e6so37117466b.2
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 02:33:23 -0700 (PDT)
+ us-mta-347-MwumC35ZP2iQGGxaK4CceQ-1; Thu, 06 Jun 2024 05:37:19 -0400
+X-MC-Unique: MwumC35ZP2iQGGxaK4CceQ-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a68e0faf0e6so37358166b.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 02:37:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717666400; x=1718271200;
+ d=1e100.net; s=20230601; t=1717666637; x=1718271437;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=QtmqXwvQtz9AetCc4aSYzY8LISUCeJ1ftIavHc81UjY=;
- b=hJeQSU9WEMUk6sl2z8bmYwlk6/gxdd54uSGdo0VeOFrenvRyuDR+Ixj31FPOzJ/IqX
- WKzAqNWp6dlaDR3dzS/T138ctl+2ymIk9C0xEW9MZIJnmNhIbW0/uXGtSIu9ENoG0XvY
- ODXDgNmVmwzl0cWeyZBukaxlFsTmCaS0yy0pWiScIPn3ERxnEgYhHs108U3ZZzwwqmpk
- z50/hdzUChIdLQogldH/G0FzjeOpKE5jOyzwQCdKc4FoAX0YuV1nd0AaLicwSibYqN9O
- zPNaTSEKpKoCd4oGR7CdTloZUvfIu9EkIilHbmpO9qPmadG9dcwg44fsGBlNfASGMB+S
- O8GQ==
-X-Gm-Message-State: AOJu0Yz2WTeMcwo4dV/MmrqyyctEyIAC9qrLOLHbTI0g/LxU6UWJdvDN
- 3Uoa7ylHHps+vttu/dcjpV9JRHhTr0Qt3q1YO/Y9/uN/4J/Xj8GUrFqmw/KWw/3ckUSdViXO9Jo
- 8TUkcW9plZcfPZ2+bDQOWdLovIb61OQkN5H6Wq59RDLC7MgWjbxVA3Ik2kviwfdH0J8VDff8o+Z
- iJ6uF/0C44e+XjF4P/ZEc4MXa9a8m8cYyf39lN
-X-Received: by 2002:a17:906:5647:b0:a63:3c57:5806 with SMTP id
- a640c23a62f3a-a699fccb79dmr314612866b.32.1717666400711; 
- Thu, 06 Jun 2024 02:33:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3FO1K/1gPqv5Q3hLoQEHafs7DmuenX4vubjU2LijmwZJ+o19rohKqQ6A8wKl0HdpBcBzxyA==
-X-Received: by 2002:a17:906:5647:b0:a63:3c57:5806 with SMTP id
- a640c23a62f3a-a699fccb79dmr314610366b.32.1717666400125; 
- Thu, 06 Jun 2024 02:33:20 -0700 (PDT)
+ bh=+GCbTdM0GZ7BVxsKLSoCw+rPoe+MChxl2looUyeu6OM=;
+ b=uABiQz6R6OGeqGLuZ6PnsAPVCB/eyxpZxnreUvzTkaaoV3etzaI78nTrNLSq44IY4W
+ RpLPLXmlvG6Dw1wdiBYae4GOd1CU27p8xkA6lIFZf7IcBM4ltrJvOo+mdiofRw1csMuC
+ ezp8qTUY9aombknJzlGhLQ6xvHVpXR/UJsY8MLZIaVvGgDHjUN4/1m+tY6cjdNf6OSc/
+ GFpOV5QCSgUmn2RguWAJ6pik4qD4Qku9/mHmlj8gjfaurltcddR4J3xVD3875ykzpvo9
+ VDoGpIh4zJj2jej1BLP4lsFqxlG0SNjdapdIHvQyQyj83AdpFK8YCtCsfob2bnmo5MJC
+ bL1Q==
+X-Gm-Message-State: AOJu0YyuS+1wZX4wuStSofPwDR9BNiUfsdSnyAmAGIl1OVFB2/+VRUVL
+ wNlNTwWKU/YE6X6cRQaxZPcIayDiDqgNzGAOyXp6Tc0sXWCFf300r2YdiHRmMu+qFaeShvQCstK
+ 09lu6DO3IFez+lgvDKxuwIAkic4quAk8xhAem2aVb4JLV7lPK13K+G3KXxzl8o8KvZ/dnkKEM6C
+ uBDfsejJQX8MTvbyHZANCzzlhZwUceNDXCXmWP
+X-Received: by 2002:a17:906:fccf:b0:a64:e418:f93f with SMTP id
+ a640c23a62f3a-a69a024ce23mr291021366b.60.1717666636731; 
+ Thu, 06 Jun 2024 02:37:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHwj1ooVpHb7MZruSuxRO0F2MU0kBdsGAEZK1kz3tEDUYrykgPVZW/UNb/XhO89GwBUG5vHsQ==
+X-Received: by 2002:a17:906:fccf:b0:a64:e418:f93f with SMTP id
+ a640c23a62f3a-a69a024ce23mr291019666b.60.1717666636187; 
+ Thu, 06 Jun 2024 02:37:16 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c80581f08sm70705266b.44.2024.06.06.02.33.19
+ a640c23a62f3a-a6c806ec893sm71265666b.140.2024.06.06.02.37.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Jun 2024 02:33:19 -0700 (PDT)
+ Thu, 06 Jun 2024 02:37:15 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Michal Privoznik <mprivozn@redhat.com>
-Subject: [PATCH] machine,
- hostmem: improve error messages for unsupported features
-Date: Thu,  6 Jun 2024 11:33:17 +0200
-Message-ID: <20240606093317.2468231-1-pbonzini@redhat.com>
+Cc: mprivozn@redhat.com
+Subject: [PATCH] hostmem: simplify the code
+Date: Thu,  6 Jun 2024 11:37:13 +0200
+Message-ID: <20240606093713.2469676-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -101,84 +100,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Detect early unsupported MADV_MERGEABLE and MADV_DONTDUMP, and print a clearer
-error message that points to the deficiency of the host.
+No semantic change, just simpler control flow.
 
-Cc: Michal Privoznik <mprivozn@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- backends/hostmem.c | 16 ++++++++++++++++
- hw/core/machine.c  |  9 +++++++++
- 2 files changed, 25 insertions(+)
+ backends/hostmem.c | 24 ++++++++----------------
+ 1 file changed, 8 insertions(+), 16 deletions(-)
 
 diff --git a/backends/hostmem.c b/backends/hostmem.c
-index 4d6c69fe4de..584ee160f9c 100644
+index 37be93c8bb3..33baca6a974 100644
 --- a/backends/hostmem.c
 +++ b/backends/hostmem.c
-@@ -170,6 +170,14 @@ static void host_memory_backend_set_merge(Object *obj, bool value, Error **errp)
- {
-     HostMemoryBackend *backend = MEMORY_BACKEND(obj);
- 
-+    if (QEMU_MADV_MERGEABLE == QEMU_MADV_INVALID) {
-+        if (value) {
-+            error_setg(errp, "Memory merging is not supported on this host\n");
-+        }
-+        assert(!backend->merge);
-+        return;
-+    }
-+
-     if (!host_memory_backend_mr_inited(backend)) {
-         backend->merge = value;
+@@ -178,12 +178,8 @@ static void host_memory_backend_set_merge(Object *obj, bool value, Error **errp)
          return;
-@@ -202,6 +210,14 @@ static void host_memory_backend_set_dump(Object *obj, bool value, Error **errp)
- {
-     HostMemoryBackend *backend = MEMORY_BACKEND(obj);
+     }
  
-+    if (QEMU_MADV_DONTDUMP == QEMU_MADV_INVALID) {
-+        if (!value) {
-+            error_setg(errp, "Dumping guest memory cannot be disabled on this host\n");
-+        }
-+        assert(backend->dump);
-+        return;
-+    }
+-    if (!host_memory_backend_mr_inited(backend)) {
+-        backend->merge = value;
+-        return;
+-    }
+-
+-    if (value != backend->merge) {
++    if (!host_memory_backend_mr_inited(backend) &&
++        value != backend->merge) {
+         void *ptr = memory_region_get_ram_ptr(&backend->mr);
+         uint64_t sz = memory_region_size(&backend->mr);
+ 
+@@ -194,9 +190,9 @@ static void host_memory_backend_set_merge(Object *obj, bool value, Error **errp)
+                              object_get_typename(obj));
+             return;
+         }
+-
+-        backend->merge = value;
+     }
 +
-     if (!host_memory_backend_mr_inited(backend)) {
-         backend->dump = value;
-         return;
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index c31a672051c..2ac1250f575 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -17,6 +17,7 @@
- #include "hw/loader.h"
- #include "qapi/error.h"
- #include "qapi/qapi-visit-machine.h"
-+#include "qemu/madvise.h"
- #include "qom/object_interfaces.h"
- #include "sysemu/cpus.h"
- #include "sysemu/sysemu.h"
-@@ -427,6 +428,10 @@ static void machine_set_dump_guest_core(Object *obj, bool value, Error **errp)
- {
-     MachineState *ms = MACHINE(obj);
- 
-+    if (!value && QEMU_MADV_DONTDUMP == QEMU_MADV_INVALID) {
-+        error_setg(errp, "Dumping guest memory cannot be disabled on this host\n");
-+        return;
-+    }
-     ms->dump_guest_core = value;
++    backend->merge = value;
  }
  
-@@ -441,6 +446,10 @@ static void machine_set_mem_merge(Object *obj, bool value, Error **errp)
- {
-     MachineState *ms = MACHINE(obj);
+ static bool host_memory_backend_get_dump(Object *obj, Error **errp)
+@@ -218,12 +214,8 @@ static void host_memory_backend_set_dump(Object *obj, bool value, Error **errp)
+         return;
+     }
  
-+    if (value && QEMU_MADV_MERGEABLE == QEMU_MADV_INVALID) {
-+        error_setg(errp, "Memory merging is not supported on this host\n");
-+        return;
-+    }
-     ms->mem_merge = value;
+-    if (!host_memory_backend_mr_inited(backend)) {
+-        backend->dump = value;
+-        return;
+-    }
+-
+-    if (value != backend->dump) {
++    if (host_memory_backend_mr_inited(backend) &&
++        value != backend->dump) {
+         void *ptr = memory_region_get_ram_ptr(&backend->mr);
+         uint64_t sz = memory_region_size(&backend->mr);
+ 
+@@ -234,9 +226,9 @@ static void host_memory_backend_set_dump(Object *obj, bool value, Error **errp)
+                              object_get_typename(obj));
+             return;
+         }
+-
+-        backend->dump = value;
+     }
++
++    backend->dump = value;
  }
  
+ static bool host_memory_backend_get_prealloc(Object *obj, Error **errp)
 -- 
 2.45.1
 
