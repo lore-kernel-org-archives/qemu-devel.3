@@ -4,146 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63297C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 16:07:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26619C27C54
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 16:07:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFFd2-0006uE-5w; Thu, 06 Jun 2024 12:06:16 -0400
+	id 1sFFeJ-0007X5-TX; Thu, 06 Jun 2024 12:07:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <John.Allen@amd.com>)
- id 1sFFd1-0006tm-Et
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 12:06:15 -0400
-Received: from mail-dm6nam04on2078.outbound.protection.outlook.com
- ([40.107.102.78] helo=NAM04-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1sFFdx-0007FM-Gu
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 12:07:16 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <John.Allen@amd.com>)
- id 1sFFcx-00033j-5L
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 12:06:15 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=laIuLMVl7dSxq9VNEd+Ia1nQoPPauzGxdsr7ILRcMBdvH/gjJzD3h1t3FdofUekqoegga88dQmnRltjEpsnWOZtfwVxBSdTHzqgcxUaDTZfZe7+GGBh2yhrO78A4nVpOAXrwgyISeLlntyr8mJJ0c/EIYzeD4WOvdR2F84f0SofZAYIugm//KFvJNKpXWr7Du6PI8FqfCz0E0O7MwNFWqU5KmM7eymHzjvwhLZU0jmR+kvm2PM8FIs02DxGuLpY2Xm36DJuOf1bQvq763fJOO9opKukVE2gKkPV+46h3dOs577ZCy9LJxNczs0kM2Remdk4INnZNZHPaeM9J4mT5VQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EDtKkK4+rnfpr7EBeXhopT8sBGOaaQfWgDixMBjwXsg=;
- b=oBfB1r0lfElTpbfZaMCtprFqG+ZwMVY9igQavj4UjKngtajOyFGwtMI0jGU3WOvtPd9eqoTVzs2GcDrKAIX33xOWeTnjzN+R/Y8QAxMSvyfddCvsBtHnzOSs/y6o4R8GomlCJe0rJAhVVxCp9ZM7vzyi5lPWeC/edJ/BihJGs+ND+f/jNgsWT/qvBXhXWc4b8JqLFfXB2eqZGXaWd+cjsjCOMl+jGWm12dIkUrYMKUxGmeoq3zLrItbV6FtYBUvOD+sQPkT8ati4eUpgk7CGYC7l689kFVqtslBLLt0pP0DD8DCgfLUq6EDdyofMj16ThuKSyhp4eruA8EP1Qkye9w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EDtKkK4+rnfpr7EBeXhopT8sBGOaaQfWgDixMBjwXsg=;
- b=v36PjGwn9TaCluu7rTY05cLM+ghYetGReauSw4RmpB0ux2TGG0AEaohXGCiXD2Z0TdVS9CCb+UXQuOSCF9/KPF6tShPogfZvmRBT5SR04pMltD57HoRO3XxzViumAjVqKmLlTmw7ndCihw5amuIKymTTW4AABZpHCNZ/qine0wo=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DS7PR12MB6008.namprd12.prod.outlook.com (2603:10b6:8:7f::15) by
- DS7PR12MB5837.namprd12.prod.outlook.com (2603:10b6:8:78::6) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7633.27; Thu, 6 Jun 2024 16:01:02 +0000
-Received: from DS7PR12MB6008.namprd12.prod.outlook.com
- ([fe80::4aa0:3ad8:9aa0:d1fe]) by DS7PR12MB6008.namprd12.prod.outlook.com
- ([fe80::4aa0:3ad8:9aa0:d1fe%5]) with mapi id 15.20.7633.033; Thu, 6 Jun 2024
- 16:01:02 +0000
-Date: Thu, 6 Jun 2024 11:00:35 -0500
-From: John Allen <john.allen@amd.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, yazen.ghannam@amd.com, michael.roth@amd.com,
- babu.moger@amd.com, pankaj.gupta@amd.com, william.roche@oracle.com,
- joao.m.martins@oracle.com, richard.henderson@linaro.org,
- eduardo@habkost.net
-Subject: Re: [PATCH v5 0/3] Fix MCE handling on AMD hosts
-Message-ID: <ZmHdI2SbXiv173fB@AUS-L1-JOHALLEN.amd.com>
-References: <20240603193622.47156-1-john.allen@amd.com>
- <20240606090903.2464525-3-pbonzini@redhat.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240606090903.2464525-3-pbonzini@redhat.com>
-X-ClientProxiedBy: BYAPR03CA0002.namprd03.prod.outlook.com
- (2603:10b6:a02:a8::15) To DS7PR12MB6008.namprd12.prod.outlook.com
- (2603:10b6:8:7f::15)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1sFFdn-0003ES-Kr
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 12:07:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1717690023; x=1749226023;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=1XKZ44WGUpAi2jpfzSWox24/x+wJ5NGoo2EUsQeEyrY=;
+ b=R6jbvp2dLf1qPHZDdEnbk5ha5LTn2/Ljon4g2KMyLcpjQLVowHXrNiQU
+ nqnC9BQXpE9HtFeULBtm/CdufaQVInjCBnZyvDir4W/nm9wL9gjd+hA3E
+ UuI+jv2yIgMlRfL1XuLgXtC1a5o7Dtu8pGPLdUDHorQBSCWY0oDY/IWwX
+ eBzliFE16w9R8+vnfnQz89+SwpUiHT7aU8JY+8wqr4y1Qom1N5JAgTlkY
+ a55hmBmbCkfj7HoKqxxy7BNzy9MCq27/BjAQGFg2MOSwZ2hPgFKffai5U
+ WfolTaPJbsyl/N0LmgOcxCSLQg2TB1QuqLrQoaxi/UTT3E3k+PKh1AxUS g==;
+X-CSE-ConnectionGUID: BRHR61wORLC4nAp2qReb7g==
+X-CSE-MsgGUID: JuStVgmRRVaUK4ZrEXL+fw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11095"; a="18163172"
+X-IronPort-AV: E=Sophos;i="6.08,219,1712646000"; d="scan'208";a="18163172"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jun 2024 09:06:59 -0700
+X-CSE-ConnectionGUID: IZxt733ORweHL9ZkiMauWQ==
+X-CSE-MsgGUID: o7WjCEGRSpKC5jSCTYTpBA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,219,1712646000"; d="scan'208";a="38083189"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.125.247.52])
+ ([10.125.247.52])
+ by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jun 2024 09:06:59 -0700
+Message-ID: <ae827bce-41d7-450c-8fe8-69df55430bd0@intel.com>
+Date: Fri, 7 Jun 2024 00:06:56 +0800
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR12MB6008:EE_|DS7PR12MB5837:EE_
-X-MS-Office365-Filtering-Correlation-Id: 26f1bedf-8864-4745-df52-08dc8641d1be
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230031|366007|1800799015|376005;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?ziAHe7o0hjqFHWonuyGf5u3RPfRYBRcXuNW28PHV94UcpjRVsNBPI2uSbimL?=
- =?us-ascii?Q?j+hEc1V2RzZcdeVnByn3UWSErngvmS8RxFc1+msB53Y5a8fByQAc2mZyqEGJ?=
- =?us-ascii?Q?nU/yerlsc8HfrGe4p4w4gmI8LXrNLoOqm2gf8pU3eXgdLzyMDj2vfba81/rD?=
- =?us-ascii?Q?YVnWdsGb3lRNBwIbequi/UDupwzBov5ykHo8atETFflHbnKR1eWThD/UiJ7k?=
- =?us-ascii?Q?e9I8S6MK5SO58Z8yiQeY4thlb/iMDGQ1XCGUZG4y+4zINxQqq4Lg88/1xgOw?=
- =?us-ascii?Q?N8lGKvOmKnW+0PnAkJxzxRxpuyhhzvyWxi0xbAHk9spistAwuAbq0r7mTiUl?=
- =?us-ascii?Q?GtWHdVQeoYtWtOlHpgtuTDOaBriBVmOX7sCeAYEXoaK96+IRAtz75Xx5B8t/?=
- =?us-ascii?Q?N6Nbe9NxoHpzGEpVNHCL2sTDyTcU6L11eV2rBO1aZZ+FKZEeQR1r9Qsra9lA?=
- =?us-ascii?Q?07fChkTIUeveBbOWJzCy+eM70qU8H9LLH+IGmsXXBK+5N61D3ZuMDSajW2JU?=
- =?us-ascii?Q?R782DuyAXTY58jZqbfpLRICloZtja4faS+EUisaH1UBsD0UX9O1yUGw3X3RA?=
- =?us-ascii?Q?PnHotygXTkqxYMznfkmhOvHW61Kz35Pb5x9/C3pdkKEyCAkwHkY2MosdZz2h?=
- =?us-ascii?Q?CdySvbvIPKhjPn7Ahz9F3EjFAXCe0PdBWjZ2Ifa05XjJRKSlFriJUIMKeue9?=
- =?us-ascii?Q?uEf/bJug4ZnxoLUsLXqCP8ps6lXP6imB+riq13lrAZipfpvErD5cKAUJn7h9?=
- =?us-ascii?Q?oJdYCS3fZST6VoqTHcWzkctJrBmAljG390wyGb2LVE6k1Sb7tQQrsXjZFk7P?=
- =?us-ascii?Q?YzH8pDKWvzDHR906Iy/4vnFiFDamWitNznV0d7zwcRQqLnchPvvmD86mBJZp?=
- =?us-ascii?Q?sXc/cpJbTVGAQi4BGLsim/puURxV5wRMCydbIlBm1GmCS3wSXUKx4TPirzUU?=
- =?us-ascii?Q?wluPLGeEkbSsnLHM1B0+NWVpfe6ckH0EcEpuz4md0INIVu3WbBXIfd2YTWnG?=
- =?us-ascii?Q?mg70v4DWuW4PMtIrvXJy7bm45C82FWpnuAsidSh2TZexfUC4HdiKEvR9uw+G?=
- =?us-ascii?Q?pYVv3rnsLXSXmWZPp8qiniI1M8/zQMBKxQbtN8f6fxQXyO7iO3j4cPO4fTId?=
- =?us-ascii?Q?cbK3jpIkhbjD8fNx8Gc3Z5riwqYzs+lkCqn7S9WKI6+aq7mgeQvBcvmHHT7A?=
- =?us-ascii?Q?RZk1ERuPrpAFPUb9uITMQIa/xaw2q40+oFjjMN9YBSru3TKNKrcqaHKdcp01?=
- =?us-ascii?Q?OI/62QmrnmRh+sq5/goZuIsnpBRIDo5S+eXMDrSP4aYfBhdu+X2g8xyJkl+y?=
- =?us-ascii?Q?Me1URoaT3xdd9SjSB6NPNKBf?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS7PR12MB6008.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(1800799015)(376005); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Hdc3XaMKVp2f8bZkf3cMvCOqZgLP9V6TCI7nhQOYGEn2QUOxQyQ1ZyWCKyoy?=
- =?us-ascii?Q?8aox1R0yhLaJBuC9O5+C1hLy2xN+OgLBqgn4IMxEjCltJJQoiEyL5/mgIDLQ?=
- =?us-ascii?Q?VydIUZZEHiB2Q3CFlGEV0ZuwbP5uUYdgXfj+KZVY1IWhZwxPvlqLKx1wApYD?=
- =?us-ascii?Q?zU3BJ1lnrRoxcpj2N2nRu8fV/pXMdY2/wY7RQiadoFoSL+1ALRBoC9uUaji4?=
- =?us-ascii?Q?NEQCo6NqKgOM06DexDhry43PhfuTD5DnvxMOtDaik/D0QWf9PtiTn/yKPUiB?=
- =?us-ascii?Q?ZwiDrduxeDraK8xfBGeoFkkUOKgL6iwwFOFQtcilxL6VXf7yz7FU8b0vX0rx?=
- =?us-ascii?Q?v/bC2s3xxcKVsxZJpybaPBBAXaEqeqmYsEEVczgjCxTaSL62dRighDLWASG8?=
- =?us-ascii?Q?lDlYYfb77YCi7cqAadbLnFWtIHqehKkpCJc7nASH80LpPwwFRwLNWmXY4cHS?=
- =?us-ascii?Q?z2zfhoBoK3Ez07XkmcAanPXEKvOXZDcgaybEGc3dGnATXG4UGnzUH4ZJNCpC?=
- =?us-ascii?Q?A1cO1YYiu8YYHu7IvFFvcnNEQOjVQoiicrO8u2zv/U+VeFi6oaNCSMcPcqXJ?=
- =?us-ascii?Q?Y8uQXqaRM36LROflNQPOVJ+Gzg6tx/wVL+VXBWDWPRvnou2ivP1jqVxh3ba0?=
- =?us-ascii?Q?tjVZD/nPL2mCVqKgU9KcZbg/RsH6zlC9WlddZf2chdfX7z9eaNU848Skqed7?=
- =?us-ascii?Q?oWAn9D5QL09bwFwPrtx8hZPeCYb1BwC0pO31UAQhCYYjK0NltSvX7wWArN+q?=
- =?us-ascii?Q?wVGZezgRQ0SbaxZMRFzKGEKIYusFmu3tMS0owLH2920KnFOxEkYZ6dP6TOLw?=
- =?us-ascii?Q?iQuwV3WjO58aUEN5/etIw5fSfDcKn93RM3mSM6+L6UgWCKWBeIn0vzEsKDeS?=
- =?us-ascii?Q?ZTLqYyqhHbSI6lrIA5aWzkm/gM+LJppOjJu5pMNVSTQaskbv/XJRYYIvlrjP?=
- =?us-ascii?Q?xgGe+1RTsmND5kpcTmJgL0YA0qvAtuZKmRFzYZClrmtJ2z721s/gskJPOsA6?=
- =?us-ascii?Q?UR5H7faYE7/QA1AooGqfRLhU0LFQUFbhpMFxxzlHTMJr6PYJTEb1UHJ6OEvz?=
- =?us-ascii?Q?cmQkKnOnNYU5I78UgNxEj0+1mgZ3GSuJcVW69+5OIxHvDyxfexnOegt9xZgv?=
- =?us-ascii?Q?CfEgaD7ZxdzOTKVionBfEzUcBE9S1e+PkSi4PWH3oxK3U3Q4a+jnQdyPpFTk?=
- =?us-ascii?Q?PgXiOtAVqJ4HvJxXZDBjVGbW6qXW0aA6Q2w2KX4UD4I9QlAFJBPIEN6jatlf?=
- =?us-ascii?Q?1C+eTbYA/C0T2ovfXi/1phHXYqpQwUK9vdhvC/CpzyYJcGq2BLdZF0AiQViS?=
- =?us-ascii?Q?fEtx/fxOfEp6W1tSe9czWoijEMN498pF4JlLvYhdz+CS2bXpShAp+vIOzrik?=
- =?us-ascii?Q?3ObfAI3dPHcEhozo1zyGonvVmg0SJgtCv3V4voGSACShva4bAPU19U7IEoP1?=
- =?us-ascii?Q?0kRChv27ry8usPhwqQeVEjtVhUpuoIGlXyBKdvVfzqKhWESW0O9wfyBSBP9W?=
- =?us-ascii?Q?t/zcrlVCudmF7Owwv5qCjbfCP7kqE3cxF9RM/lxIWZurtIlynB+RRl2NPEGt?=
- =?us-ascii?Q?bkQhZ0/kU+az6UgKQown95bs1YCjZn3oeURh9i31?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 26f1bedf-8864-4745-df52-08dc8641d1be
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB6008.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2024 16:00:43.1852 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: glXslQFdWHer2gh8IyrP0nMroexc6i0SzrdbNvsiQ7o+UAPIQ3Hsvfm8IQ7xI0R87AoWDjgEuNFd7vWKmKxCBA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB5837
-Received-SPF: permerror client-ip=40.107.102.78;
- envelope-from=John.Allen@amd.com;
- helo=NAM04-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386: SEV: do not assume machine->cgs is SEV
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: pankaj.gupta@amd.com
+References: <20240605224409.2103109-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20240605224409.2103109-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.172, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,32 +85,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 06, 2024 at 11:09:05AM +0200, Paolo Bonzini wrote:
-> Queued, thanks.  I added a note to the commit message in the third patch:
+On 6/6/2024 6:44 AM, Paolo Bonzini wrote:
+> There can be other confidential computing classes that are not derived
+> from sev-common.  Avoid aborting when encountering them.
 
-Thanks, Paolo!
+I hit it today when rebasing TDX patches to latest QEMU master, which 
+has the SEV-SNP series merged. (I didn't get time to review it between 
+it gets merged.)
 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   target/i386/sev.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
 > 
->     By the time the MCE reaches the guest, the overflow has been handled
->     by the host and has not caused a shutdown, so include the bit unconditionally.
+> diff --git a/target/i386/sev.c b/target/i386/sev.c
+> index 004c667ac14..97e15f8b7a9 100644
+> --- a/target/i386/sev.c
+> +++ b/target/i386/sev.c
+> @@ -1710,7 +1710,9 @@ void sev_es_set_reset_vector(CPUState *cpu)
 
-I'm not sure I understand this additional comment. Is this talking about
-the case where the host gets an overflow? If so, yes, if the host has
-overflow recovery supported, it should handle the overflow and won't
-require any overflow recovery on the part of the guest. For clarity, it
-may be nice to prefix the above statement with something like:
-"In the case of a host overflow, ..."
+my approach is to guard with sev_enabled() when calling 
+sev_es_set_reset_vector() in kvm_arch_reset_vcpu(), because calling sev* 
+specific function in generic kvm code doesn't look reasonable to me.
 
-If we're going to bring up the host overflow case, it may be worth
-clarifying further that host overflows should not propagate to the guest
-and this patch is specifically intended to allow the guest to handle
-overflows in the MCEs that are injected from qemu.
+>   {
+>       X86CPU *x86;
+>       CPUX86State *env;
+> -    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+> +    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
+> +    SevCommonState *sev_common = SEV_COMMON(
+> +        object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON));
+>   
+>       /* Only update if we have valid reset information */
+>       if (!sev_common || !sev_common->reset_data_valid) {
 
-> 
-> Advertising of SUCCOR and OVERFLOW_RECOV in KVM would still be nice. :)
-
-Sure, I will send a series for this.
-
-Thanks,
-John
 
