@@ -4,35 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E54C27C54
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 03:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5942DC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 03:43:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF3vQ-0002ez-8P; Wed, 05 Jun 2024 23:36:28 -0400
+	id 1sF41H-000404-9v; Wed, 05 Jun 2024 23:42:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sF3vN-0002eT-68
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 23:36:25 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sF3vK-00051Z-8k
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 23:36:24 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxW+qwLmFmPhEEAA--.17256S3;
- Thu, 06 Jun 2024 11:36:16 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxbcetLmFmnW8WAA--.56324S3; 
- Thu, 06 Jun 2024 11:36:15 +0800 (CST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sF41F-0003zt-Qh
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 23:42:29 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sF41D-0005uN-0w
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 23:42:29 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1f480624d0dso4976145ad.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 20:42:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717645344; x=1718250144; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jHDWegXe5NXAKopAMrt5aDB6pxak4QB04rSLO7shvtA=;
+ b=u28PZ+VflIrQMsaTvCIVkn3DrYn76xai2nR/cmKdCm8eFpqiA5FwWAs6DmaSLomPIo
+ 35mVfPpi/98gPZANKau//+eMSySM0n4d6CaGvQpb6PV/h4nGz4w9nwK+haqL8SDeiSLn
+ b1ty+g8bKbGOLwyv8xedoDxhbQKmsL/U3p1L8FXxotP9dKwDd5d4EEvPCfe4DtOZ13gv
+ JUpkvNUhGORjOp58K+Z7rDPZip27e89NTenkwGT4fbNNnZDrr0dwMB6Y3oaGMjtpQiJt
+ R/QpF0apFmvcdjmlhAXW2kzarZnkWSnE3txnVmYetTH6bYufQSYs9MCfpuU0/n7fOBhH
+ mY0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717645344; x=1718250144;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jHDWegXe5NXAKopAMrt5aDB6pxak4QB04rSLO7shvtA=;
+ b=VfCokGGvFdqRc03WQrmF0OXQTaIiW/ZULk27kzWGOf2zzyg9YmUQsakNJ7zPDEkJKX
+ 71frmf7opX/NFXYKYQp4SECNxuZrqN5YkwMlaioJpmz9gp0NJfS6PwGD5DYp6bSpai0n
+ VMRRjEibsUIIvXxw3Y9mtlq1UBES7zACiPWw2lgQkUzxLKv/azE6Ow7umwOz6p3MaMRr
+ kOXJRrT3U4jf5XtlzWriR2MZs40n6CfGOU+bEfQ+5DsjaOGcdZrLpCb/Dbtrm3NNdf4+
+ qc0P83mssopItQdtIM61ltEZc72tgpzRej9lvh2sLQ7AzIZ16/qONUtOylY9J7/rNDis
+ z2KA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXhOWZFzWX6/OMo51aW6uE8u3u2xXQf1ZgkcXsEzkxLu59fey38/P/Xz1MrG7RMvAOVpXIqf1d9YWKOQbsJp8bnlhl9u8U=
+X-Gm-Message-State: AOJu0YyHIAemP3vcTqxDsHQULy8NIsIrTYtNrWq20eNmI3zklRIZa2VW
+ zP4SDofx03W0x6v0My9jKK1oZcxgs29JOsnS21K1XvZ6lavny719F52QiCppNNo=
+X-Google-Smtp-Source: AGHT+IGkjnz5QLZGGV0xsBKW0MWSmKgcldjeVNB18u9xIzCuV0+yqbWnbceyN3w2Hnx1AydFxT0J0A==
+X-Received: by 2002:a17:903:1d2:b0:1f4:5c6e:3a9b with SMTP id
+ d9443c01a7336-1f6a5a6991amr55186035ad.44.1717645344051; 
+ Wed, 05 Jun 2024 20:42:24 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f6bd7ccdecsm3138985ad.177.2024.06.05.20.42.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Jun 2024 20:42:23 -0700 (PDT)
+Message-ID: <5dc13c38-353b-4f17-97f3-fefd7f188570@linaro.org>
+Date: Wed, 5 Jun 2024 20:42:21 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 2/2] util/bufferiszero: Add simd acceleration for
  loongarch64
-To: Richard Henderson <richard.henderson@linaro.org>
+To: maobibo <maobibo@loongson.cn>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=c3=a9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2e_Berrang=c3=a9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, qemu-devel@nongnu.org
 References: <20240605093213.2191929-1-maobibo@loongson.cn>
  <20240605093213.2191929-3-maobibo@loongson.cn>
@@ -40,42 +78,20 @@ References: <20240605093213.2191929-1-maobibo@loongson.cn>
  <7b4c6909-40e8-def7-03e8-18a3303295f1@loongson.cn>
  <58ba9ea7-cc45-47d4-a278-3777b496cb44@linaro.org>
  <d504ffbb-353a-452f-bfb1-2640ee1badc9@linaro.org>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <da613eb1-65f8-b690-4517-04640581261b@loongson.cn>
-Date: Thu, 6 Jun 2024 11:36:12 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <d504ffbb-353a-452f-bfb1-2640ee1badc9@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ <da613eb1-65f8-b690-4517-04640581261b@loongson.cn>
 Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <da613eb1-65f8-b690-4517-04640581261b@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8CxbcetLmFmnW8WAA--.56324S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxurW5CF45XF1kWF4kCFWDZFc_yoWrCr18pr
- ZYkFyYyFW5Jrn3tr9xtw15Xr95tr18X3WDWF43JryUArs0qrn2qr4qgryq9F1Fqw4kJFy2
- vF4Fq34fuFy7JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9ab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E
- 14v26r126r1DMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4
- CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1x
- MIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF
- 4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsG
- vfC2KfnxnUUI43ZEXa7IU8j-e5UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -58
-X-Spam_score: -5.9
-X-Spam_bar: -----
-X-Spam_report: (-5.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.975,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,127 +108,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2024/6/6 上午11:27, Richard Henderson wrote:
-> On 6/5/24 20:18, Richard Henderson wrote:
->> On 6/5/24 19:30, maobibo wrote:
+On 6/5/24 20:36, maobibo wrote:
+>>> static biz_accel_fn const accel_table[] = {
+>>>      buffer_is_zero_int_ge256,
+>>> #ifdef __loongarch_sx
+>>>      buffer_is_zero_lsx,
+>>> #endif
+>>> #ifdef __loongarch_asx
+>>>      buffer_is_zero_lasx,
+>>> #endif
+>>> };
 >>>
->>>
->>> On 2024/6/6 上午7:51, Richard Henderson wrote:
->>>> On 6/5/24 02:32, Bibo Mao wrote:
->>>>> Different gcc versions have different features, macro CONFIG_LSX_OPT
->>>>> and CONFIG_LASX_OPT is added here to detect whether gcc supports
->>>>> built-in lsx/lasx macro.
->>>>>
->>>>> Function buffer_zero_lsx() is added for 128bit simd fpu optimization,
->>>>> and function buffer_zero_lasx() is for 256bit simd fpu optimization.
->>>>>
->>>>> Loongarch gcc built-in lsx/lasx macro can be used only when compiler
->>>>> option -mlsx/-mlasx is added, and there is no separate compiler option
->>>>> for function only. So it is only in effect when qemu is compiled with
->>>>> parameter --extra-cflags="-mlasx"
->>>>>
->>>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->>>>> ---
->>>>>   meson.build         |  11 +++++
->>>>>   util/bufferiszero.c | 103 
->>>>> ++++++++++++++++++++++++++++++++++++++++++++
->>>>>   2 files changed, 114 insertions(+)
->>>>>
->>>>> diff --git a/meson.build b/meson.build
->>>>> index 6386607144..29bc362d7a 100644
->>>>> --- a/meson.build
->>>>> +++ b/meson.build
->>>>> @@ -2855,6 +2855,17 @@ 
->>>>> config_host_data.set('CONFIG_ARM_AES_BUILTIN', cc.compiles('''
->>>>>       void foo(uint8x16_t *p) { *p = vaesmcq_u8(*p); }
->>>>>     '''))
->>>>> +# For Loongarch64, detect if LSX/LASX are available.
->>>>> + config_host_data.set('CONFIG_LSX_OPT', cc.compiles('''
->>>>> +    #include "lsxintrin.h"
->>>>> +    int foo(__m128i v) { return __lsx_bz_v(v); }
->>>>> +  '''))
->>>>> +
->>>>> +config_host_data.set('CONFIG_LASX_OPT', cc.compiles('''
->>>>> +    #include "lasxintrin.h"
->>>>> +    int foo(__m256i v) { return __lasx_xbz_v(v); }
->>>>> +  '''))
->>>>
->>>> Both of these are introduced by gcc 14 and llvm 18, so I'm not 
->>>> certain of the utility of separate tests.  We might simplify this with
->>>>
->>>>    config_host_data.set('CONFIG_LSX_LASX_INTRIN_H',
->>>>      cc.has_header('lsxintrin.h') && cc.has_header('lasxintrin.h'))
->>>>
->>>>
->>>> As you say, these headers require vector instructions to be enabled 
->>>> at compile-time rather than detecting them at runtime.  This is a 
->>>> point where the compilers could be improved to support 
->>>> __attribute__((target("xyz"))) and the builtins with that.  The i386 
->>>> port does this, for instance.
->>>>
->>>> In the meantime, it means that you don't need a runtime test.  
->>>> Similar to aarch64 and the use of __ARM_NEON as a compile-time test 
->>>> for simd support.  Perhaps
->>>>
->>>> #elif defined(CONFIG_LSX_LASX_INTRIN_H) && \
->>>>        (defined(__loongarch_sx) || defined(__loongarch_asx))
->>>> # ifdef __loongarch_sx
->>>>    ...
->>>> # endif
->>>> # ifdef __loongarch_asx
->>>>    ...
->>>> # endif
->>> Sure, will do in this way.
->>> And also there is runtime check coming from hwcap, such this:
->>>
->>> unsigned info = cpuinfo_init();
->>>    if (info & CPUINFO_LASX)
->>
->> static biz_accel_fn const accel_table[] = {
->>      buffer_is_zero_int_ge256,
->> #ifdef __loongarch_sx
->>      buffer_is_zero_lsx,
->> #endif
->> #ifdef __loongarch_asx
->>      buffer_is_zero_lasx,
->> #endif
->> };
->>
->> static unsigned best_accel(void)
->> {
->> #ifdef __loongarch_asx
->>      /* lasx may be index 1 or 2, but always last */
->>      return ARRAY_SIZE(accel_table) - 1;
->> #else
->>      /* lsx is always index 1 */
->>      return 1;
->> #endif
->> }
-size of accel_table is decided at compile-time, will it be better if 
-runtime checking is added also?  something like this:
-
-  unsigned info = cpuinfo_init();
-
-  #ifdef __loongarch_asx
-  if (info & CPUINFO_LASX) {
-       /* lasx may be index 1 or 2, but always last */
-       return ARRAY_SIZE(accel_table) - 1;
-  }
-  #endif
-
+>>> static unsigned best_accel(void)
+>>> {
+>>> #ifdef __loongarch_asx
+>>>      /* lasx may be index 1 or 2, but always last */
+>>>      return ARRAY_SIZE(accel_table) - 1;
+>>> #else
+>>>      /* lsx is always index 1 */
+>>>      return 1;
+>>> #endif
+>>> }
+> size of accel_table is decided at compile-time, will it be better if runtime checking is 
+> added also?  something like this:
 > 
-> It occurs to me that by accumulating host specific sections to this 
-> file, we should split it like the atomics.  Put each portion in 
-> host/include/*/host/bufferiszero.h.inc.
-sure, will do.
+>   unsigned info = cpuinfo_init();
+> 
+>   #ifdef __loongarch_asx
+>   if (info & CPUINFO_LASX) {
+>        /* lasx may be index 1 or 2, but always last */
+>        return ARRAY_SIZE(accel_table) - 1;
+>   }
+>   #endif
 
-> 
-> I'll send a patch set handling the existing two hosts.
-> 
-> 
-> r~
-> 
+No, because the ifdef checks that the *compiler* is prepared to use LASX/LSX instructions 
+itself without further checks.  There's no point in qemu checking further.
 
+
+r~
 
