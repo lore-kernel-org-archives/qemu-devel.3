@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85DDBC27C5E
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 04:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D74C27C54
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 04:45:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF4zX-0008C8-BX; Thu, 06 Jun 2024 00:44:47 -0400
+	id 1sF4zQ-0008BE-Q0; Thu, 06 Jun 2024 00:44:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1sF4zV-0008C0-Gz
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 00:44:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sF4zO-00089L-Dl
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 00:44:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1sF4zT-0008JC-Ud
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 00:44:45 -0400
+ id 1sF4zM-0008Ik-Th
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 00:44:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717649082;
+ s=mimecast20190719; t=1717649075;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1uH3JVfpOHt4cmUIhQ0XYf7hQEI1P3L3/uwvE5MbOQ0=;
- b=iiPing+Buezh9bNjLS2Bb2pZ9OGhrnusB53Dd1KOjwB7/OvBH4zookGR3jghrl0Np/JP8L
- qob4AMDGwgLz38dX06DUKTkWpeQwkVVW8OMW/1XbpQabIPCjJe/wqYQKGRav8CuEwGGWqs
- h3oNZ30MCMjK9ZxGBcsOj1Z3HTY2dpc=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=LeOo2RhnL1JFYcrMdhc2fIpLlnfyf8Xj3EB8ZeiRGGc=;
+ b=QKEFPH+4kZlGh5D/aEPHGYyq/zOnpZAspFdz1SxXuRRKcdlKGD303FoAfah4Ty70Js6ZX5
+ AyB8/c9GPQDX0JvdwuNLNShe+V1P0owy3CTtGZvJ9PKdOlb9TW6YTEcybaQurR76VL2c7f
+ uQj+BzZPBE0yDZJvDoo9hBiavlHbG6U=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-CTCIYIYIO7qHipT9AUY6uQ-1; Thu, 06 Jun 2024 00:44:40 -0400
-X-MC-Unique: CTCIYIYIO7qHipT9AUY6uQ-1
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-1f62e7432c7so5391725ad.0
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 21:44:40 -0700 (PDT)
+ us-mta-625-C1YyY8dzN7ipZ1Pt96Cu5Q-1; Thu, 06 Jun 2024 00:44:33 -0400
+X-MC-Unique: C1YyY8dzN7ipZ1Pt96Cu5Q-1
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-1f61b9823cbso6827095ad.1
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 21:44:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717649079; x=1718253879;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1uH3JVfpOHt4cmUIhQ0XYf7hQEI1P3L3/uwvE5MbOQ0=;
- b=dlp8t/s6afSOYpw0cYt6NiW6+oV8bJBz8pCSJGFIXS7DD7sfGCYoDQ3SJR2ljc4k5+
- xnMZ+fGd+MVM2xT1swATJiBZ5xm4S9G9CBLoUNNV7fV/MB18eYLEFC0RGO8TcMtgN4Vn
- xcQ+0mZiKZ6f7wKGrKPPerikHEXLeJ7dLNTGGlzPNNrfSidndzJaud2EhVX9Ozo9JtjK
- Sdqkb2u9+bnrHgS7mILVScw25vOfiHaHBD0T9LP/YJxdsHHRhhgdhsxfo6TLjM13ZmMt
- lmtQM2xFRUotaZXzas/JuEdtDcMt8ZWZPMWPWSeBp7oCGrAhU/eC7xvR21e4V45X+QYY
- 4YxA==
+ d=1e100.net; s=20230601; t=1717649073; x=1718253873;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LeOo2RhnL1JFYcrMdhc2fIpLlnfyf8Xj3EB8ZeiRGGc=;
+ b=bX81pQdjCH7aRLFNxm9KZPdRg/8O5B1qoVbyXKAUaeR1Esft4U86UL6cAsllE1Le7W
+ kzynDZCgKlwtVEfb/ql0WFym7JQ7lLlIv4C+9ZIQbig7CsUgFhjQjR+jj0Y2d7pVm64E
+ T4DvW6tK5jGLU/Yf5R+fy74+VpATNnoT1XsETA+CW+hIz9XBdwvB1jdgQttw7UTYRYNX
+ MTqR7bD7Nxmnvs6t+A9Uv7kWMip4/zKmICW2i/xO2WjzOHN/EVC2gnLoGiKoi+iZTRNS
+ SSkpUqhBYVpCp4LQ350qMBUWyk9ZvNqISUIATOEY4VKiYI3BZbAlUecld2fsHMGqc4tM
+ zPcw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUReb0dnw/MhkVb47cG7e5VkovWRkfyPXnmQzXWODGAydoyW4hmAre4BzoclRvA5UPDYzVwsKpYLp0zZCX2QS71KITesRc=
-X-Gm-Message-State: AOJu0Yx2lap/EXmSploG4nfibQiz5M8HzcGhs/nj0JqdVWxJbPgcqtOJ
- unO7pTrzRkQI/g99josoc94kzWHvcos/y51IO2b+fbavJiicviJl32Leahxe85Y9b+gduxqPiKU
- 0cQvDBIqvaHShOyzDiee9qvy7HFkSo3k2EF6qqa4VOTJTRMmZWk4M
-X-Received: by 2002:a17:902:ced1:b0:1f6:8235:dbbc with SMTP id
- d9443c01a7336-1f6a5a23fdfmr53203135ad.29.1717649079440; 
- Wed, 05 Jun 2024 21:44:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGxUT+6IJaKT/HJHkjna57ygcsZOUPHiyrKlwAGybgL4gONW3GDCjXVMt4svHfybH54oIkJAQ==
-X-Received: by 2002:a17:902:ced1:b0:1f6:8235:dbbc with SMTP id
- d9443c01a7336-1f6a5a23fdfmr53203005ad.29.1717649079004; 
- Wed, 05 Jun 2024 21:44:39 -0700 (PDT)
+ AJvYcCWvC8rAeppQZCNmDHj2BSdE6/5k16BwZmdXvLKHTbH+n6Y/rRYXcNwIZfAESVXD+YiAZYXlo6oimK96U/JCp2faKQ9VuLY=
+X-Gm-Message-State: AOJu0Ywx9D/rReSVSHq01GKWh9yHSGVSq7Tp4ISAZ8VI5xK7hxQA+ejO
+ SUhoN/OBfiI4AvGHJyRqAftQBfmEr9pfAMO0YmdF3TRvCj1/yma/L0dk2rrFrf7vgSDMK3cOdD8
+ J4jq29375Yzd8+QQvK6yQeoxvRNLqDX2k7bxBdIZwjeixai8wfFqU
+X-Received: by 2002:a17:902:e80d:b0:1f6:7815:2325 with SMTP id
+ d9443c01a7336-1f6a5a86e00mr56677405ad.56.1717649072886; 
+ Wed, 05 Jun 2024 21:44:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGA39QnxdUsgyZgGiheBupaY7MRNaPlgankuRMiijLbb5wxYoY/PLmntYteyTtPyCOZH/oDDA==
+X-Received: by 2002:a17:902:e80d:b0:1f6:7815:2325 with SMTP id
+ d9443c01a7336-1f6a5a86e00mr56677235ad.56.1717649072454; 
+ Wed, 05 Jun 2024 21:44:32 -0700 (PDT)
 Received: from localhost.localdomain ([203.163.239.242])
  by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-1f6bd81b9e2sm4057165ad.295.2024.06.05.21.44.36
+ d9443c01a7336-1f6bd81b9e2sm4057165ad.295.2024.06.05.21.44.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 05 Jun 2024 21:44:38 -0700 (PDT)
+ Wed, 05 Jun 2024 21:44:31 -0700 (PDT)
 From: Ani Sinha <anisinha@redhat.com>
-To: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH 2/3] tests/qtest/libqtest: add qtest_has_cpu() api
-Date: Thu,  6 Jun 2024 10:14:18 +0530
-Message-ID: <20240606044419.8806-3-anisinha@redhat.com>
+To: 
+Cc: Ani Sinha <anisinha@redhat.com>, thuth@redhat.com, imammedo@redhat.com,
+ qemu-devel@nongnu.org, pbonzini@redhat.com, lvivier@redhat.com,
+ mst@redhat.com
+Subject: [PATCH v3 0/3] x86 cpu test refactoring
+Date: Thu,  6 Jun 2024 10:14:16 +0530
+Message-ID: <20240606044419.8806-1-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20240606044419.8806-1-anisinha@redhat.com>
-References: <20240606044419.8806-1-anisinha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,147 +102,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Added a new test api qtest_has_cpu() in order to check availability of some
-cpu models in the current QEMU binary. The specific architecture of the QEMU
-binary is selected using the QTEST_QEMU_BINARY environment variable. This api
-would be useful to run tests against some older cpu models after checking if
-QEMU actually supported these models.
+Add a new library api to check for the support of a specific cpu type.
+Used the new api to check support for some older x86 cpu models before
+running the tests.
 
 CC: thuth@redhat.com
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- tests/qtest/libqtest.c | 84 ++++++++++++++++++++++++++++++++++++++++++
- tests/qtest/libqtest.h |  8 ++++
- 2 files changed, 92 insertions(+)
+CC: imammedo@redhat.com
+CC: qemu-devel@nongnu.org
+CC: pbonzini@redhat.com
+CC: lvivier@redhat.com
+CC: mst@redhat.com
 
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index d8f80d335e..135a607728 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -37,6 +37,7 @@
- #include "qapi/qmp/qjson.h"
- #include "qapi/qmp/qlist.h"
- #include "qapi/qmp/qstring.h"
-+#include "qapi/qmp/qbool.h"
- 
- #define MAX_IRQ 256
- 
-@@ -1471,6 +1472,12 @@ struct MachInfo {
-     char *alias;
- };
- 
-+struct CpuInfo {
-+    char *name;
-+    char *alias_of;
-+    bool deprecated;
-+};
-+
- static void qtest_free_machine_list(struct MachInfo *machines)
- {
-     if (machines) {
-@@ -1550,6 +1557,83 @@ static struct MachInfo *qtest_get_machines(const char *var)
-     return machines;
- }
- 
-+static struct CpuInfo *qtest_get_cpus(void)
-+{
-+    static struct CpuInfo *cpus;
-+    QDict *response, *minfo;
-+    QList *list;
-+    const QListEntry *p;
-+    QObject *qobj;
-+    QString *qstr;
-+    QBool *qbool;
-+    QTestState *qts;
-+    int idx;
-+
-+    if (cpus) {
-+        return cpus;
-+    }
-+
-+    silence_spawn_log = !g_test_verbose();
-+
-+    qts = qtest_init_with_env(NULL, "-machine none");
-+    response = qtest_qmp(qts, "{ 'execute': 'query-cpu-definitions' }");
-+    g_assert(response);
-+    list = qdict_get_qlist(response, "return");
-+    g_assert(list);
-+
-+    cpus = g_new(struct CpuInfo, qlist_size(list) + 1);
-+
-+    for (p = qlist_first(list), idx = 0; p; p = qlist_next(p), idx++) {
-+        minfo = qobject_to(QDict, qlist_entry_obj(p));
-+        g_assert(minfo);
-+
-+        qobj = qdict_get(minfo, "name");
-+        g_assert(qobj);
-+        qstr = qobject_to(QString, qobj);
-+        g_assert(qstr);
-+        cpus[idx].name = g_strdup(qstring_get_str(qstr));
-+
-+        qobj = qdict_get(minfo, "alias_of");
-+        if (qobj) { /* old machines do not report aliases */
-+            qstr = qobject_to(QString, qobj);
-+            g_assert(qstr);
-+            cpus[idx].alias_of = g_strdup(qstring_get_str(qstr));
-+        } else {
-+            cpus[idx].alias_of = NULL;
-+        }
-+
-+        qobj = qdict_get(minfo, "deprecated");
-+        qbool = qobject_to(QBool, qobj);
-+        g_assert(qbool);
-+        cpus[idx].deprecated = qbool_get_bool(qbool);
-+    }
-+
-+    qtest_quit(qts);
-+    qobject_unref(response);
-+
-+    silence_spawn_log = false;
-+
-+    memset(&cpus[idx], 0, sizeof(struct CpuInfo)); /* Terminating entry */
-+    return cpus;
-+}
-+
-+bool qtest_has_cpu(const char *cpu)
-+{
-+    struct CpuInfo *cpus;
-+    int i;
-+
-+    cpus = qtest_get_cpus();
-+
-+    for (i = 0; cpus[i].name != NULL; i++) {
-+        if (g_str_equal(cpu, cpus[i].name) ||
-+            (cpus[i].alias_of && g_str_equal(cpu, cpus[i].alias_of))) {
-+            return true;
-+        }
-+    }
-+
-+    return false;
-+}
-+
- void qtest_cb_for_every_machine(void (*cb)(const char *machine),
-                                 bool skip_old_versioned)
- {
-diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
-index 6e3d3525bf..c94b64f960 100644
---- a/tests/qtest/libqtest.h
-+++ b/tests/qtest/libqtest.h
-@@ -949,6 +949,14 @@ bool qtest_has_machine(const char *machine);
-  */
- bool qtest_has_machine_with_env(const char *var, const char *machine);
- 
-+/**
-+ * qtest_has_cpu:
-+ * @cpu: The cpu to look for
-+ *
-+ * Returns: true if the cpu is available in the target binary.
-+ */
-+bool qtest_has_cpu(const char *cpu);
-+
- /**
-  * qtest_has_device:
-  * @device: The device to look for
+Ani Sinha (3):
+  qtest/x86/numa-test: do not use the obsolete 'pentium' cpu
+  tests/qtest/libqtest: add qtest_has_cpu() api
+  tests/qtest/x86: check for availability of older cpu models before
+    running tests
+
+ tests/qtest/libqtest.c              |  84 +++++++++++++++
+ tests/qtest/libqtest.h              |   8 ++
+ tests/qtest/numa-test.c             |   3 +-
+ tests/qtest/test-x86-cpuid-compat.c | 159 +++++++++++++++++-----------
+ 4 files changed, 192 insertions(+), 62 deletions(-)
+
 -- 
 2.42.0
 
