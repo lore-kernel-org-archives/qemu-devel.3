@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3915DC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 06:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152DFC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 06:37:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF6fg-0002ae-Lp; Thu, 06 Jun 2024 02:32:24 -0400
+	id 1sF6jz-0003f4-7g; Thu, 06 Jun 2024 02:36:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sF6ff-0002aH-1j
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 02:32:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sF6fd-0002bX-IQ
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 02:32:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717655540;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1b/BdfzSA2IoDyEC++Ll4lrKKnG8iriFCEK5xzi77pE=;
- b=IAFTkJ2bksjX+xpuXq6a2KBey9rCjFtJP0lWVrnE+0upQzFuIdcRO46SWSMmDoTrWyjM5b
- vHISbgQnrZ2UfOeZPRdMbv3sz8KcnBgxl00SdlOqnDGu9QVbvTWEYsW3Pn5UtauCRnHCpO
- WAhwQ10ucI44Ma3v7njrQJEGcuUe46w=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-141-DZm2qodNO-OQNepZrg5K5w-1; Thu, 06 Jun 2024 02:32:17 -0400
-X-MC-Unique: DZm2qodNO-OQNepZrg5K5w-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-35dceae6283so565881f8f.2
- for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 23:32:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sF6jx-0003ec-ON
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 02:36:49 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sF6jv-0003JT-7J
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 02:36:49 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-42121d27861so7270665e9.0
+ for <qemu-devel@nongnu.org>; Wed, 05 Jun 2024 23:36:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717655805; x=1718260605; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jXh11LLV5UiIIwnV0wa60MhOy/gY7aBK1zuzxij7RcE=;
+ b=zi1WFIktO+82e7e2h5hFv/68JousnkxX60nMTiDuRFkMpqDnTF0ew0pLhSSmM5Wo8e
+ IRoXrkJtOOXUzXA1LO7F1YikV5++AIc7bvZH87lI+8A33btfW5hna4pmTXLQPfJEkKP+
+ ZaVVeAeQWSv7Hj2gYTvq8kStaMFUB8Bt/9AYHeZed7Ki+r4hCHBY3q1AMtEpWL2aMlK5
+ QfX9lJMoQTUxJmN7tMAnf/36oD8AjAoVTFbv/fn02ewIsrQYlH+lEKlnKfzGR+oa5Hu+
+ HTviMAMwoQ6UX7AtojtKJAZ8otObzSEV1JGEjbEw1i/5zC7A0O2pz7Gzps5Asg4waJR8
+ u/BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717655536; x=1718260336;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1b/BdfzSA2IoDyEC++Ll4lrKKnG8iriFCEK5xzi77pE=;
- b=C2W79Y+fN8gtKq8/ufNjpdqn494D4W1+6nKchi+l+xUNPafoFstRfz6AXFqiomCLCV
- O96OCNY4a895c4X1T+1PRTQNOF37RpSHrIC43/KojHqNQawKXae7DnnAM/sOPbRVx1eC
- VqEBqtovxFKZ9tzPOqy3ujzRjHkRIC0VGY4LlHQg/hluiVjJMpTulArvWnDtYc5DGan+
- 0u1NPItxQKmQOebIB77a1UH+rXjPXWca0+UHt5RafLZHc6uV5Qj06z6p0mjhx2sG5r8H
- vz7BKgKwEIW2sC3kA6a80AT2L4+VMxUskirWxU7r+jTU+ucHuOtzQZFKQJdAShpDrXBB
- Ngzw==
+ d=1e100.net; s=20230601; t=1717655805; x=1718260605;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jXh11LLV5UiIIwnV0wa60MhOy/gY7aBK1zuzxij7RcE=;
+ b=PO+PWSdsvA7LX80IenPCnHirMc5jgtMV77AjSViY5IzRTH6+34AWpqO7ZoveFceqXw
+ C/ARC5NbsTvgqhH5s0Gp+vWkXh54WozleYHozzMgHhqQACaSLlFe8ukQV9XJIMRAmpdI
+ E1d/irNqNebVxQssx4YYZjQilSa79cpMxlwmBYAoK4cECfD2VxEmRlyFcMoUFLd3oPMb
+ MmrPzyJ5dHVYsoldIry7ye+SW6Uw52SEWjnie7GkeKdxgI3wH1CYOoJ7S6hJb/eqb+s+
+ vqz+owapHCGR4htlivA/cB8Ype54RQ0kidq7gkv4K9nJBCzoxmbN17iPlXpD4+nziAwY
+ k58g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUNiOPDIRAybhKNvTMjamvOOBms6pzLRisjXhBwiPABsc5jQ1Oak2Y9h9FpiSEvUfXg7i8TWwlb+nf8IjdA3A1tn+/bDwA=
-X-Gm-Message-State: AOJu0Yz9bwp2cfs1dqlrds/Qs6pALpqV2g7uw7GOFaInYTW3BnA0lGDj
- qJxpzOlRWM7c/DkhzC9WrmUd8yKN4Z0zfYPMse8Q5WcbhSKWP8dwwxny7ASWv3NPB346YyIQXCl
- ZTjkQTGcZvabwncT+ERJMscKK0ZNWn9O/CSir1RiZ18MAcGzW+PsSqDD3IMkxeE4khoIZ4hzx6I
- uC50TTavUnBhs72TDhnYninAPxueY=
-X-Received: by 2002:a5d:64c3:0:b0:356:6c6f:2609 with SMTP id
- ffacd0b85a97d-35e84070f54mr3775833f8f.17.1717655536705; 
- Wed, 05 Jun 2024 23:32:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE4ndmajIIbwlULIRcS0UAzUfHJkoe2h5HYsp0ggjQAIdq4c6bcBiJELK20Cgy2kkuhCsORuQDY/IIjniKA440=
-X-Received: by 2002:a5d:64c3:0:b0:356:6c6f:2609 with SMTP id
- ffacd0b85a97d-35e84070f54mr3775790f8f.17.1717655535813; Wed, 05 Jun 2024
- 23:32:15 -0700 (PDT)
+ AJvYcCWC8QPDP7XcdCmOrkwxw+wImNlksrT0QutANN4Q6BiyPAr0CYC9NAmYdzIL/aCtetdk3Vt6Ka9HcqtqAmbLo34WpwKcRdE=
+X-Gm-Message-State: AOJu0Yx71kRtb3DeueqdfGps20I2TmksrmPViTJcWoS1VOvSYUP7QVSN
+ 4swyyc43Q5tOdEGH8UlgHZJ/i7gXm7ZkfWjnP0nOAZ9uHPlg8XIO6hBWEvytCC2OT8awAI/mI4u
+ 5v4E=
+X-Google-Smtp-Source: AGHT+IE2wEQ1zykWxPZ1fzS+8Bg5v5PrUAzyBXjgW70h5IvoPIwI7IhJVteeyh92f3yi0aBQufTvrQ==
+X-Received: by 2002:a05:600c:138a:b0:416:2471:e102 with SMTP id
+ 5b1f17b1804b1-4215634ded8mr35605845e9.37.1717655804776; 
+ Wed, 05 Jun 2024 23:36:44 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.217.163])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35ef5d69917sm689955f8f.62.2024.06.05.23.36.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 05 Jun 2024 23:36:44 -0700 (PDT)
+Message-ID: <eef1ed0e-bbb3-4950-8224-1bc02dc81c87@linaro.org>
+Date: Thu, 6 Jun 2024 08:36:42 +0200
 MIME-Version: 1.0
-References: <20240605224409.2103109-1-pbonzini@redhat.com>
- <ZmEwvsAnh1lXNqhS@intel.com>
- <b930a4ea-73a3-40a8-bbc1-def8aea72c5d@linaro.org>
-In-Reply-To: <b930a4ea-73a3-40a8-bbc1-def8aea72c5d@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 6 Jun 2024 08:32:03 +0200
-Message-ID: <CABgObfaX7kC3XMVp=Tvdgz8o8SyoVcyrheNFTKGD0m1Sn_+O8A@mail.gmail.com>
-Subject: Re: [PATCH] target/i386: SEV: do not assume machine->cgs is SEV
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel <qemu-devel@nongnu.org>, 
- Pankaj Gupta <pankaj.gupta@amd.com>
-Content-Type: multipart/alternative; boundary="0000000000000f22a6061a32d813"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] util/bufferiszero: Split out host include files
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: maobibo@loongson.cn
+References: <20240606051441.111975-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240606051441.111975-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,63 +96,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000f22a6061a32d813
-Content-Type: text/plain; charset="UTF-8"
+On 6/6/24 07:14, Richard Henderson wrote:
+> Split out host/bufferiszero.h.inc for x86, aarch64 and generic
+> in order to avoid an overlong ifdef ladder.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   host/include/aarch64/host/bufferiszero.h.inc |  76 ++++++++
+>   host/include/generic/host/bufferiszero.h.inc |  10 +
+>   host/include/i386/host/bufferiszero.h.inc    | 124 ++++++++++++
+>   host/include/x86_64/host/bufferiszero.h.inc  |   1 +
+>   util/bufferiszero.c                          | 191 +------------------
+>   5 files changed, 212 insertions(+), 190 deletions(-)
+>   create mode 100644 host/include/aarch64/host/bufferiszero.h.inc
+>   create mode 100644 host/include/generic/host/bufferiszero.h.inc
+>   create mode 100644 host/include/i386/host/bufferiszero.h.inc
+>   create mode 100644 host/include/x86_64/host/bufferiszero.h.inc
 
-Il gio 6 giu 2024, 05:52 Richard Henderson <richard.henderson@linaro.org>
-ha scritto:
+Renaming the files as .c.inc:
 
-> > SEV_COMMON(object_dynamic_cast()) looks to be twice cast, we can just
-> > force to do conversion with pointer type:
-> >
-> > (SevCommonState *) object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON)
->
-> You don't need the explicit cast either, since C auto-converts from void*.
->
->    sev_common = object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON);
->
-
-Doh, of course. Thanks to both!
-
-Paolo
-
-
->
-> r~
->
->
-
---0000000000000f22a6061a32d813
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il gio 6 giu 2024, 05:52 Richard Henderson &lt;<a href=
-=3D"mailto:richard.henderson@linaro.org">richard.henderson@linaro.org</a>&g=
-t; ha scritto:</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
-px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt; SEV_COMMON(object_dynamic_cast()) looks to be twice cast, we can just<=
-br>
-&gt; force to do conversion with pointer type:<br>
-&gt; <br>
-&gt; (SevCommonState *) object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON)<b=
-r>
-<br>
-You don&#39;t need the explicit cast either, since C auto-converts from voi=
-d*.<br>
-<br>
-=C2=A0 =C2=A0sev_common =3D object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMO=
-N);<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"aut=
-o">Doh, of course. Thanks to both!</div><div dir=3D"auto"><br></div><div di=
-r=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div cl=
-ass=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
-px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-<br>
-r~<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000000f22a6061a32d813--
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
