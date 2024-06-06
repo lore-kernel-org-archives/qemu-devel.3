@@ -4,88 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13C71C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 08:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0602C27C52
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 08:28:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF8QP-0005dj-N1; Thu, 06 Jun 2024 04:24:45 -0400
+	id 1sF8TU-0006lb-0F; Thu, 06 Jun 2024 04:27:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sF8QO-0005dP-3f
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 04:24:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sF8QM-000201-MJ
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 04:24:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717662281;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1sF8TR-0006kW-87
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 04:27:53 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1sF8TP-0002kb-BM
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 04:27:52 -0400
+Received: from hawking.nue2.suse.org (unknown
+ [IPv6:2a07:de40:a101:3:10:168:4:11])
+ by smtp-out1.suse.de (Postfix) with ESMTP id 9F37421AA7;
+ Thu,  6 Jun 2024 08:27:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1717662468; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=tnWHtkzTgU5+cM6hfgWLug4FTc+B1JE/rXI17PfKzQA=;
- b=QFoCKkZFY9VWUTWW6sVi7/CvM7DnWF4ak9voYllj8oKWNy4Dau+tPx+bRJh78hdUUG3S0N
- ZbESiqSwAmnyqNDlk3m9J4dTFMUFcaLwfFIWM8LBCvy50mB25gUVILf2DYsEER61PZYBCB
- JbRgrpEtr71VQrATnFEvg7Nh+fPbqvo=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-313-qIj2HN-xMYe6iPkMUpEijQ-1; Thu, 06 Jun 2024 04:24:39 -0400
-X-MC-Unique: qIj2HN-xMYe6iPkMUpEijQ-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a68c70ab413so57705066b.1
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 01:24:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717662278; x=1718267078;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tnWHtkzTgU5+cM6hfgWLug4FTc+B1JE/rXI17PfKzQA=;
- b=aTAxACw9nJ+ATDOdvb6YM/NhdN/poVkThCyhup4Bl05DqKt96W+dqgetqZ2IvMYaKu
- UINJ/zrTAVDWdYepESCNtYxhc+M8gb0JffZH5r8atHyDTj7LYi8SOSgSi3w2u5e26Shq
- tuAKPiacprtl7g8aBAT6KIjGT45sjse8YHGhIEkgaLulLaqihUhbfptusKtpfd8/X1UJ
- k09a1fy1+h9abdTGuoND3q1Iz+wZe+6unk0P/hJDKKnuyhQ2ClxyqqmH5rEw6pbaeGZs
- F/EZr3rZJ0OPbBk5YMAMh7WilVmATtAsRKCOtfG1v54YOpU0yYsxy5ywKZl8hM3enw8O
- ygQA==
-X-Gm-Message-State: AOJu0YyB/0k0ccUikK6gBP0kSYPLwKgNIuBLwwExBoaZyIT/fmYWuTCg
- aEwfwTL6DWf371HoBGmvcT/Prpm1fSG6EkpxPjGprNS4JGb97QqWBeAEctr14b01gQrKTH6gZ3V
- oVZ1EomOZJYTX1iacijo+6AcKfEX1XsoTy/6R3CiLwe///E8KaEmg
-X-Received: by 2002:a17:906:71c3:b0:a66:1f72:cbcd with SMTP id
- a640c23a62f3a-a6c763beaecmr149998866b.25.1717662278537; 
- Thu, 06 Jun 2024 01:24:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG69/Du8e4BENcjHHdAPfbw0e0CXZ7B0Dl0RWHNBimFYpU2XQQm+mKP+zESVfPbGlmyZotcLQ==
-X-Received: by 2002:a17:906:71c3:b0:a66:1f72:cbcd with SMTP id
- a640c23a62f3a-a6c763beaecmr149997366b.25.1717662278061; 
- Thu, 06 Jun 2024 01:24:38 -0700 (PDT)
-Received: from avogadro.local ([151.81.115.112])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c80581b47sm63364066b.11.2024.06.06.01.24.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Jun 2024 01:24:37 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Phil Dennis-Jordan <phil@philjordan.eu>
-Cc: qemu-devel@nongnu.org, dirty@apple.com, rbolshakov@ddn.com,
- lists@philjordan.eu
-Subject: Re: [PATCH v3 0/7] hvf x86 correctness and efficiency improvements
-Date: Thu,  6 Jun 2024 10:22:18 +0200
-Message-ID: <20240606082217.2459102-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240605112556.43193-1-phil@philjordan.eu>
-References: 
+ bh=AsdpgkOKLwjPc+GIgrNiSb+wt5Z1ns/Nwl4DyZmXQ4g=;
+ b=jCkwsxqQfnOfcFs+a89WTA/yykgOGbB9F65G7+8+A0SFtAqQg5ah24l142apmUtrl4KniW
+ 6XnWre1DiLvaHQGy1YVcrr9yPWGD8A3W7NNV5ezDMJu8r/Sb8X2i4W1/axZrfYmF4bzRdY
+ cZXeh+827MDxhuVgNQQv08zMcBZtzGo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1717662468;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AsdpgkOKLwjPc+GIgrNiSb+wt5Z1ns/Nwl4DyZmXQ4g=;
+ b=+rJj4aZgwfwaBAWjA/gmgCsEklRenXsxMmLyzlPDIP0MHUL7uqYKu94AtMDLdW1PvVwLEk
+ 3cgqqqlgghxq80CQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Z3q5wM0E;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=38p3q8NO
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1717662466; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AsdpgkOKLwjPc+GIgrNiSb+wt5Z1ns/Nwl4DyZmXQ4g=;
+ b=Z3q5wM0E7lMrvX+1MmXqcFGq27prCiPh96LEMWbjogQlIi5W6T2D9I66x+Q3gvj4Hc0scI
+ GZbH08uR1B/wnAATNVn0QNnerTNEDdiGwqHZR9y4ID69ge+Qsr83QvWDBnsgkFKBocQ9yZ
+ XJuYC5HZjfM6ZRcfJydxRm19Ls59RD0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1717662466;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AsdpgkOKLwjPc+GIgrNiSb+wt5Z1ns/Nwl4DyZmXQ4g=;
+ b=38p3q8NOTNFYO6WojHxcr+soDD6Q2URKtOPJ73yWSfBQGQx0Eb9xf0WVSvz1VUykqc72Jt
+ 8K+9qspSqv+u6WAQ==
+Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
+ id 63BEA4A0552; Thu,  6 Jun 2024 10:27:46 +0200 (CEST)
+From: Andreas Schwab <schwab@suse.de>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: linux-user emulation hangs during fork
+In-Reply-To: <a0e9ee6b-fbe6-48af-a122-fbf5d31aa476@linaro.org> (Richard
+ Henderson's message of "Wed, 5 Jun 2024 16:14:56 -0700")
+References: <mvm5xunu4ye.fsf@suse.de>
+ <a0e9ee6b-fbe6-48af-a122-fbf5d31aa476@linaro.org>
+X-Yow: NATHAN...  your PARENTS were in a CARCRASH!!
+ They're VOIDED - They COLLAPSED
+ They had no CHAINSAWS...  They had no MONEY MACHINES...
+ They did PILLS in SKIMPY GRASS SKIRTS...
+ Nathan, I EMULATED them...  but they were OFF-KEY...
+Date: Thu, 06 Jun 2024 10:27:46 +0200
+Message-ID: <mvmv82mscfx.fsf@suse.de>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [1.62 / 50.00]; BAYES_HAM(-2.99)[99.97%];
+ HFILTER_HOSTNAME_UNKNOWN(2.50)[]; ONCE_RECEIVED(1.20)[];
+ RDNS_NONE(1.00)[];
+ HFILTER_HELO_IP_A(1.00)[hawking.nue2.suse.org];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ HFILTER_HELO_NORES_A_OR_MX(0.30)[hawking.nue2.suse.org];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.18)[-0.896]; RCVD_NO_TLS_LAST(0.10)[];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ DIRECT_TO_MX(0.00)[Gnus/5.13 (Gnus v5.13)];
+ FROM_EQ_ENVFROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:a101:3:10:168:4:11:from];
+ SPAMHAUS_XBL(0.00)[2a07:de40:a101:3:10:168:4:11:from];
+ ARC_NA(0.00)[]; RCPT_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:a101:3:10:168:4:11:from];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_COUNT_ONE(0.00)[1]; TO_DN_SOME(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:email,
+ hawking.nue2.suse.org:helo]
+X-Rspamd-Queue-Id: 9F37421AA7
+X-Spamd-Bar: +
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=schwab@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,13 +128,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+Which ruby?
 
-Thanks for persisting!  It sucks that the hv_vcpu_interrupt() API docs
-are not clear, but your tests are great.  The self-interrupt one is
-the case that I was most worried about, and you're covering it.
-Sorry for being a pain for nothing, at least retrospectively.
+$ ruby --version
+ruby 3.3.1 (2024-04-23 revision c56cd86388) [x86_64-linux-gnu]
 
-Paolo
-
+-- 
+Andreas Schwab, SUSE Labs, schwab@suse.de
+GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
+"And now for something completely different."
 
