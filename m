@@ -4,135 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A37EBC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 10:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECDD9C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 10:27:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFAH0-0005E8-NE; Thu, 06 Jun 2024 06:23:10 -0400
+	id 1sFAKQ-0006S8-23; Thu, 06 Jun 2024 06:26:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
- id 1sFAGy-0005DW-P9
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:23:08 -0400
-Received: from mail-dm6nam11on20600.outbound.protection.outlook.com
- ([2a01:111:f403:2415::600]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
- id 1sFAGw-0007rj-MI
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:23:08 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BkRxcwhSbd6FnZentT5yur5WowKhLVxZruZRMIds9LDFFB1L2lNYrjqaGeWnp9Sp7si+2MVED93ScFRh3CHm53Sq1BZjaQvsv9MjR8EAHY/Ws25f8+7YMk8Z4W3bAxttR40vP3ObFNt6MtvCTaEMPDii2hl+OBkKmeWnemqD5Z9iR9ff9j2qfa0pmD/uNq+79Si1a5V44RYFUepp9ahrThReok862Ce+Dt9PlNoDfZJ9pqPU8ldgAFGJtFX78Vn/PriP4QQG2vkoy4jXR3lD1WgpSrYJ93zUpKeY8QlZQdbQQvUI75EEHnAxbEjeGhq+SkqjqJ8Brmubus5kfAp1mA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=adzI6SwRWiCX4dOhcKq60SVFvOBfBB/gvXFt8Sn1tD0=;
- b=EdzEdDB5i67hT2HWldLeBbGTgwUFdvY3sQ37WVxZZzJVZy4QdC2raADdmUg0HWKZLWkVz5KG1xVFRtDaioPRIfSmBE5dYE6R5vborfrHr+IA294mLmd/NL73DuWqwG00huw362R/hZPndbeDpGJ07a2t7qajldMpwtpcAAcJU7vKmu85Rz4pJNfMVkwj27j0uRLzue3i4yOlERuY0DtwMwsaCkynQujtltXJMp+8pH0GAq/j+7bvF4Fw9Sb6QTP1wSnaViB9OiZCdgtJfMGrvYE8FIcdgbhIqQNYZ2JDedcwdm4q7NmSnX8JgH+kDhpgIDytCIsTca6ec71g5hl70w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=adzI6SwRWiCX4dOhcKq60SVFvOBfBB/gvXFt8Sn1tD0=;
- b=MBKOnR6OKRohjwgZA07+ke2O2tzZhy5jvaLFHMBzZ35BVJZKsE9jYoIB/dMXF+oIF8xLoxUiSQBZnx56Llj8zzdfNeRH5QN7BkFwLwFcboumDv5QJt2Lx/eb2XCM4har5Q9c0XU+8EmPatAexVLfshgL+3MCwkuczmxEfXNG6n4=
-Received: from PH7PR10CA0017.namprd10.prod.outlook.com (2603:10b6:510:23d::10)
- by BL3PR12MB6401.namprd12.prod.outlook.com (2603:10b6:208:3b1::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.21; Thu, 6 Jun
- 2024 10:22:55 +0000
-Received: from CY4PEPF0000EDD3.namprd03.prod.outlook.com
- (2603:10b6:510:23d:cafe::1c) by PH7PR10CA0017.outlook.office365.com
- (2603:10b6:510:23d::10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7656.20 via Frontend
- Transport; Thu, 6 Jun 2024 10:22:55 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CY4PEPF0000EDD3.mail.protection.outlook.com (10.167.241.199) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7633.15 via Frontend Transport; Thu, 6 Jun 2024 10:22:55 +0000
-Received: from cjq-desktop.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 6 Jun
- 2024 05:22:52 -0500
-From: Jiqian Chen <Jiqian.Chen@amd.com>
-To: "Michael S . Tsirkin" <mst@redhat.com>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-CC: <qemu-devel@nongnu.org>, Huang Rui <Ray.Huang@amd.com>, Jiqian Chen
- <Jiqian.Chen@amd.com>
-Subject: [PATCH v11 1/2] virtio-pci: only reset pm state during resetting
-Date: Thu, 6 Jun 2024 18:22:04 +0800
-Message-ID: <20240606102205.114671-2-Jiqian.Chen@amd.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240606102205.114671-1-Jiqian.Chen@amd.com>
-References: <20240606102205.114671-1-Jiqian.Chen@amd.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFAKN-0006RH-Gu
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:26:39 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFAKL-0000OM-QB
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 06:26:39 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-42121d27861so9008595e9.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 03:26:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717669596; x=1718274396; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=i02CoQslFzum0YZSIl6mR+mSGbtebWVBNoZvi4aXxSU=;
+ b=YAywtvlF5vg/sY2wdMwvBhsSOCHoCMu+51xk6OAxXXamnATvmE3brj/CmUVoH6ZMLq
+ 2hJwD6tX0t3N0W49Q1sQiCh3IS9KVtbB7F8dHd4gQgAJb/uDhWtiNhuI6fDMuYgg3zMv
+ jzbcvv1aEAPhUBTx4rbDhLnh8Q7YDdz/bF4FxX2floEGRXbFOhwueTcK1LFwtXn2vnTV
+ z8VgZjy/QHZnRsc9V9DunTQ79UInl8OSIvHEW31GIHe2x3i0ccV8lpU3DJrBOp7JL9sB
+ ndyd2HkcxSXJZYMRcToOJNYS+H/XfaWPzcB2uzUldvYmDzGDPm7KabwJXklBd/emDRzq
+ xFyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717669596; x=1718274396;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=i02CoQslFzum0YZSIl6mR+mSGbtebWVBNoZvi4aXxSU=;
+ b=YY4/ABujqYQIKKbh0hK/mkO/jy2BNeCezgneYY845QAMn09ZARAmkarJ9S1Z+bAPm6
+ sysnGlW+5kSLev9I6xIC4Xn59sa7162RAROycx14RmkT5bUsMhx3iVP319Puj/wuoJxV
+ 3pZX/BOzerEE9kngTcyw0RRofNnBoYUYP+iraqP834lJzBAyU2TdbGg6i+2S5D3sVohH
+ pt+moFSgDanyyHrRqcrIL4O2Buno3GKJ4aNAc6punqpIMFps9dAlZHQrzw28bIxRkHSc
+ vzrXRj6SMcPiMlFlVZxkfsnz8hEd7Jtvdt7hWQofVW2OougTMP96eIc7CdP+nXOLYJIx
+ aqVg==
+X-Gm-Message-State: AOJu0YxtS/ZqFMuKdHmDj2ly9Nmh528Ky2wTAlSMew5KqRiRoVDuKyYQ
+ zut389N9+F4K5EGjcXk1UE9QjV/A5nzyxybjXK+a53wTBPgcY95H9Ou7KEcq9wLY2+1k8xH9ZkB
+ txKs=
+X-Google-Smtp-Source: AGHT+IF32WnJc/Bqk6NkXNrIVaDQ8Vh6CSYorv3SAs0395rBHwtgeUOC6AIMSWQQsmdwMpXI5ZU6gg==
+X-Received: by 2002:a05:600c:a48:b0:418:f991:713f with SMTP id
+ 5b1f17b1804b1-421562e7046mr42967195e9.23.1717669595766; 
+ Thu, 06 Jun 2024 03:26:35 -0700 (PDT)
+Received: from localhost.localdomain (94.red-88-29-105.staticip.rima-tde.net.
+ [88.29.105.94]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4215814f11csm51460525e9.44.2024.06.06.03.26.33
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 06 Jun 2024 03:26:35 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mads Ynddal <mads@ynddal.dk>
+Subject: [PATCH] tracetool: Remove unused vcpu.py script
+Date: Thu,  6 Jun 2024 12:26:31 +0200
+Message-ID: <20240606102631.78152-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EDD3:EE_|BL3PR12MB6401:EE_
-X-MS-Office365-Filtering-Correlation-Id: e9bbaf9e-073b-4e2c-68d2-08dc8612a131
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230031|376005|1800799015|36860700004|82310400017; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?nm27N3WlJH53aFg+V83ZuyWthbqZZ5kFEgr3OM9BiNnPR6JBbtmmHRyVdehZ?=
- =?us-ascii?Q?iLVPeVADyfseeUmbvLXGpkl7XIn0yJTgmrZqbePwqr1XLystrPdf6L/+PBDs?=
- =?us-ascii?Q?MH+Rqj3ibHIalzm+mJCJd+V2tTCFU3qii1MSe418DX5FOUWaSFRO/sQrC3S3?=
- =?us-ascii?Q?nZMYonlmopUR52uQp9mJuJqCZ7Mq8s5TkKDRpPF/j7My0AC0Do8yBZxOC4+B?=
- =?us-ascii?Q?DMJBD9vFVx5XdbizTfB6Wp55MiaEdGc5f7KlYIpi0x2xMDMOYvm0MaIzPQ9+?=
- =?us-ascii?Q?xgLNpbM0/mvc6x++/2vUpmBBrLunCtpXmlcXOCGEi28BNwCG6AHMrt78hnYY?=
- =?us-ascii?Q?PVltOhrt2bnYGksBTythe1tI6U3mVYutc8j7iec4IH5VLisG+zEIUXwUijIt?=
- =?us-ascii?Q?4rqk/LRO08cg1vjOdYLSh60geNq76fWFcZ8xP5u0F7ox1xDkpVJaub7ruuVP?=
- =?us-ascii?Q?22NQ6JJqHwCTTzOazoi76+1/msS9TLcBq+M/cY6Eh0g9dxVdn8pYblrcxk3w?=
- =?us-ascii?Q?+yM4t/XaVk79l5Bzanu/phdGcnu9FN5xZYcmhoK7VTS/JzkFdCbGLD93VJbw?=
- =?us-ascii?Q?qPEHl9XPcC5XdwdvhqXWax78N27AHkcx2eImsEnlaG5aVu6BC22VYPU2zPgW?=
- =?us-ascii?Q?ecbmeRf0xeATW+IA+pQzxdYGwoWzICqXKi/DVRy19jT9LcvCzIcoaOZZkwRV?=
- =?us-ascii?Q?6/LGUEF9GtLAOrjdBSUPwDSMHByQSfTzxS85njoN/9NooXYN+OlkJNaFKW2d?=
- =?us-ascii?Q?zX9Wz7ncmrK2YcXKEPpqvtZ5ZDMSeCAjK0yh/nO5NqAi/tGI/AFza+a8wzF4?=
- =?us-ascii?Q?gW7bbX45unpNB85o2EZZu8Uxsys7pIwkeM/udB/a9wFCga12Bx3kyv7uMgdh?=
- =?us-ascii?Q?ORBw2ny1FOdvy25knyOgPBWE+Phm6XUzthp1vZdFtoL1ZCEPdv43sdXZbMuL?=
- =?us-ascii?Q?KGEDoBIeHaY9bgUT0tZzv4aKPwt3P+xpXKw83AkyVCbmbh5FfEucqljPGd1w?=
- =?us-ascii?Q?aI2f00Ef4ipC7JarARGxawjT/EEuq1uNAKjvs2MamYr01SMxzbDI+9YxPvpO?=
- =?us-ascii?Q?f5Fu8YbnHEYbOZ8XbjGbsNqqkSrSqvXOCQ08C+RORHM3N4+N5gXGev3yP3Qq?=
- =?us-ascii?Q?FtocbESQQng08z5M09Rjge9ZWDiFophxOc0yB+pFD6L2bVBqnjt8QhPPqYjd?=
- =?us-ascii?Q?u0e1dg3YtzbTnZeRAydIn95svAHLYjy03JoVd1fV3TeXpoBcHWnz/dI8ugSA?=
- =?us-ascii?Q?ffAU5SuuRQ8oYO2YbE7oTZ17jNzqvrDHB1t8fvhZi5qpFnsBh9f9OXznDrAZ?=
- =?us-ascii?Q?BxP164X52ZfPURxLIKlxU30ljmLevrlWpfRv0dm1gq7VX3alOcAdoRSn9Cb6?=
- =?us-ascii?Q?NT4H1u88IhXcQ1MxQ0UJ4C61SEJsdop0g3JAVKqJWn/siVanhA=3D=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(376005)(1800799015)(36860700004)(82310400017); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2024 10:22:55.0420 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e9bbaf9e-073b-4e2c-68d2-08dc8612a131
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EDD3.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6401
-Received-SPF: permerror client-ip=2a01:111:f403:2415::600;
- envelope-from=Jiqian.Chen@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -149,43 +96,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix bug imported by 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
-After this change, observe that QEMU may erroneously clear the power status of the device,
-or may erroneously clear non writable registers, such as NO_SOFT_RESET, etc.
+vcpu.py is pointless since commit 89aafcf2a7 ("trace:
+remove code that depends on setting vcpu"), remote it.
 
-Only state of PM_CTRL is writable.
-Only when flag VIRTIO_PCI_FLAG_INIT_PM is set, need to reset state.
-
-Fixes: 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
-
-Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/virtio/virtio-pci.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ meson.build                   |  1 -
+ scripts/tracetool/__init__.py |  8 +----
+ scripts/tracetool/vcpu.py     | 59 -----------------------------------
+ 3 files changed, 1 insertion(+), 67 deletions(-)
+ delete mode 100644 scripts/tracetool/vcpu.py
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index b1d02f4b3de0..1b63bcb3f15c 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2300,10 +2300,16 @@ static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
-     virtio_pci_reset(qdev);
+diff --git a/meson.build b/meson.build
+index d80203f1cd..0c45c948d0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3226,7 +3226,6 @@ tracetool_depends = files(
+   'scripts/tracetool/format/log_stap.py',
+   'scripts/tracetool/format/stap.py',
+   'scripts/tracetool/__init__.py',
+-  'scripts/tracetool/vcpu.py'
+ )
  
-     if (pci_is_express(dev)) {
-+        VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
-+
-         pcie_cap_deverr_reset(dev);
-         pcie_cap_lnkctl_reset(dev);
+ qemu_version_cmd = [find_program('scripts/qemu-version.sh'),
+diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
+index b887540a55..7237abe0e8 100644
+--- a/scripts/tracetool/__init__.py
++++ b/scripts/tracetool/__init__.py
+@@ -306,13 +306,7 @@ def build(line_str, lineno, filename):
+             fmt = [fmt_trans, fmt]
+         args = Arguments.build(groups["args"])
  
--        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, 0);
-+        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
-+            pci_word_test_and_clear_mask(
-+                dev->config + dev->exp.pm_cap + PCI_PM_CTRL,
-+                PCI_PM_CTRL_STATE_MASK);
-+        }
-     }
- }
+-        event = Event(name, props, fmt, args, lineno, filename)
+-
+-        # add implicit arguments when using the 'vcpu' property
+-        import tracetool.vcpu
+-        event = tracetool.vcpu.transform_event(event)
+-
+-        return event
++        return Event(name, props, fmt, args, lineno, filename)
  
+     def __repr__(self):
+         """Evaluable string representation for this object."""
+diff --git a/scripts/tracetool/vcpu.py b/scripts/tracetool/vcpu.py
+deleted file mode 100644
+index d232cb1d06..0000000000
+--- a/scripts/tracetool/vcpu.py
++++ /dev/null
+@@ -1,59 +0,0 @@
+-# -*- coding: utf-8 -*-
+-
+-"""
+-Generic management for the 'vcpu' property.
+-
+-"""
+-
+-__author__     = "Lluís Vilanova <vilanova@ac.upc.edu>"
+-__copyright__  = "Copyright 2016, Lluís Vilanova <vilanova@ac.upc.edu>"
+-__license__    = "GPL version 2 or (at your option) any later version"
+-
+-__maintainer__ = "Stefan Hajnoczi"
+-__email__      = "stefanha@redhat.com"
+-
+-
+-from tracetool import Arguments, try_import
+-
+-
+-def transform_event(event):
+-    """Transform event to comply with the 'vcpu' property (if present)."""
+-    if "vcpu" in event.properties:
+-        event.args = Arguments([("void *", "__cpu"), event.args])
+-        fmt = "\"cpu=%p \""
+-        event.fmt = fmt + event.fmt
+-    return event
+-
+-
+-def transform_args(format, event, *args, **kwargs):
+-    """Transforms the arguments to suit the specified format.
+-
+-    The format module must implement function 'vcpu_args', which receives the
+-    implicit arguments added by the 'vcpu' property, and must return suitable
+-    arguments for the given format.
+-
+-    The function is only called for events with the 'vcpu' property.
+-
+-    Parameters
+-    ==========
+-    format : str
+-        Format module name.
+-    event : Event
+-    args, kwargs
+-        Passed to 'vcpu_transform_args'.
+-
+-    Returns
+-    =======
+-    Arguments
+-        The transformed arguments, including the non-implicit ones.
+-
+-    """
+-    if "vcpu" in event.properties:
+-        ok, func = try_import("tracetool.format." + format,
+-                              "vcpu_transform_args")
+-        assert ok
+-        assert func
+-        return Arguments([func(event.args[:1], *args, **kwargs),
+-                          event.args[1:]])
+-    else:
+-        return event.args
 -- 
-2.34.1
+2.41.0
 
 
