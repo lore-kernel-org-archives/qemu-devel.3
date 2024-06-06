@@ -4,80 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C25C27C54
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 12:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A12C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 12:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFBvp-0006jc-3P; Thu, 06 Jun 2024 08:09:25 -0400
+	id 1sFC3c-0008EB-QA; Thu, 06 Jun 2024 08:17:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sFBvm-0006iz-Du
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:09:22 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sFBvk-0004cT-F2
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 08:09:22 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2eacd7e7ad7so11057681fa.3
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 05:09:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717675758; x=1718280558; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=78IsAC/QOA2ESb5fr8h4If6SS2Kpd2jcnYJc6PkPm7Q=;
- b=T6VQOwsyefhcTHIiJIZKWPcd8z4pO/KxFkdHbVLuZ64F044PMlGP0HB1RB/nrQNFLb
- xc3OmqjnMngCXEhFKYQwIsFkllZBqg4K9UvEtSudM5XOegC7MoO46ygIKpNpur6IsJOL
- d+D/CRxhy8kMO8UvBp/SMtLDsSg2moBgU/Z7ZXrE/IlxhkBXFLgy913mV4UnyTpmgNNf
- naphhU5o7p8kniTSp7Rw8WSwj3nHjLeHi+EXB/Bi42gHzLDmTYxqu+/g6R+vfL+1EIfc
- QjlmpDW6yphcXHxtxvpGWVQqK1E43fM6EmclWTU9KGE+PK7JT60K6vKTnocn1iPzx4yO
- 0How==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717675758; x=1718280558;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=78IsAC/QOA2ESb5fr8h4If6SS2Kpd2jcnYJc6PkPm7Q=;
- b=VciggLw/z9JnYkJZWdXGoEro0QBaICsHy73+Lw4+YbT0CuFmVR7w2LVEr2iiO/IWj0
- ++hdAKAWFhPps/IoMHpDx+sQVU2OoYcVZ+bnJssbyskjEcxaECT3KfO0/z/oSziiqR59
- O8kMY0wiIwMLiFOqXhy+MouvdfbtpZsq4g2owz63jVg/FQe92LeSha+oDcbb7NhJhIXq
- jp/1ldRA9ZxZVX33e/rmlFp4Qn5qqgFgSJ2N/T7LpswCGFDfi+M9T5BSCDsvig+dHbA8
- VDZZrN7Ei+Jrh9gm89MtKEstnkf8ahdFbasctwZ7Vng1YwVLo8dniL5t3dYztioJBczA
- NxGQ==
-X-Gm-Message-State: AOJu0Yyy6GD/KKAx53uxwDoONNILTot3nbs7GKRUTLowr/bzfS6K9Gsp
- eLd0ZZbmJfS/yUTuYePco43x9nxK1Ezn4Syab7F8xT7cTGmRdhPYd9Wl1rudwlv+K3dgYtfHEZF
- 7Ffjr90PWecscUfdItDrJ5k0/1Hkppegguq+Udg==
-X-Google-Smtp-Source: AGHT+IGPqI7BfSgZrQpLAne0Z24i2/YMwiAssIryjUU13tp+oycqBGnckZpdk2fTr+5nG1B+y5RL8G8HDFELYDcaukE=
-X-Received: by 2002:a05:651c:2206:b0:2ea:a382:67bc with SMTP id
- 38308e7fff4ca-2eac7a105famr34037051fa.26.1717675758489; Thu, 06 Jun 2024
- 05:09:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sFC3a-0008C3-5K; Thu, 06 Jun 2024 08:17:26 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sFC3Y-0006EK-Aw; Thu, 06 Jun 2024 08:17:25 -0400
+Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 456CCSZQ024749; Thu, 6 Jun 2024 12:17:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc :
+ content-transfer-encoding : content-type : date : from : in-reply-to :
+ message-id : mime-version : references : subject : to; s=pp1;
+ bh=h6VHakey/41eoMID9x1GF+gfi2vVsl+KAyfGGnlm/fw=;
+ b=iIXwP883VigMmLr//zRMcK/0fXFV9111DucnE5563TWgN/pZMMmsN6lJZe4rUq0TdzgT
+ WgJaCCBQ72aQ4+kLtYldleKIG2FPsUvq66eQJF/eXTmPMN7V9hqZvOgWdYIW+zZi1C7q
+ S0Fq35nWzbWeJI1pMXi+JdxYF79X9hch+nKjX77HDAwTVqXPMWqJP9YAJmSr/dVRMh4r
+ UCB0VNfaRhC0Dk6prgpEpL8HRGRUGLtJvGlEewyqDxG64MOuNihfWZHUzjOjpYf9NnBu
+ IFMu8XkfWS/ULFfS3DWhQEgF8zpnvZ9YVb2unr/w6tVkIxJ+odFpnhN1YyD1PoZRfntz wg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ykcwj00ec-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 06 Jun 2024 12:17:20 +0000
+Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 456CHJ88001258;
+ Thu, 6 Jun 2024 12:17:19 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ykcwj00ea-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 06 Jun 2024 12:17:19 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 456CA6pB008517; Thu, 6 Jun 2024 12:17:18 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ygec12n63-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 06 Jun 2024 12:17:18 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 456CHCxP52035908
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 6 Jun 2024 12:17:14 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8772A2004B;
+ Thu,  6 Jun 2024 12:17:12 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BD3FE20040;
+ Thu,  6 Jun 2024 12:17:10 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.in.ibm.com (unknown
+ [9.109.199.72]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  6 Jun 2024 12:17:10 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Subject: [PATCH v5 5/5] target/ppc: Fix regression due to Power10 and Power11
+ having same PCR
+Date: Thu,  6 Jun 2024 17:46:57 +0530
+Message-ID: <20240606121657.254308-6-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240606121657.254308-1-adityag@linux.ibm.com>
+References: <20240606121657.254308-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
-References: <20240606103026.78448-1-philmd@linaro.org>
-In-Reply-To: <20240606103026.78448-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 6 Jun 2024 13:09:07 +0100
-Message-ID: <CAFEAcA_hLYnuwK6PuWv2syJkGFhw70FUUjo--Zd9NuOOLjvMFQ@mail.gmail.com>
-Subject: Re: [PATCH] target/s390x: Fix tracing header path in TCG mem_helper.c
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, 
- Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: AjQWrj9Rpqfj1Avuo6WORNhxMb2v9vvy
+X-Proofpoint-ORIG-GUID: MU3k9KJD9dIb87hgU2Mkt8djb_OU3NQw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-06_01,2024-06-06_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015
+ priorityscore=1501 mlxscore=0 impostorscore=0 mlxlogscore=884 spamscore=0
+ bulkscore=0 adultscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2406060090
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,23 +118,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 6 Jun 2024 at 11:30, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
->
-> Commit c9274b6bf0 ("target/s390x: start moving TCG-only code
-> to tcg/") moved mem_helper.c, but the trace-events file is
-> still in the parent directory, so is the generated trace.h.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
-> Ideally we should only use trace events from current directory.
+Power11 has the same PCR (Processor Compatibility Register) value, as
+Power10.
 
-Mmm, I was wondering if maybe that would be the better approach.
+Due to this, QEMU considers Power11 as a valid compat-mode for Power10,
+ie. earlier it was possible to run QEMU with '-M pseries,max-compat-mode=power11 --cpu power10'
 
-A quick grep suggests the only other place doing a "../trace.h"
-include is in include/hw/xen/interface/hvm/hvm_op.h, which is
-unrelated, because it's pulling in the non-autogenerated
-include/hw/xen/interface/trace.h.
+Same PCR also introduced a regression where `-M pseries --cpu power10`
+boots as Power11 (ie. logical PVR is of Power11, even though PVR is Power10).
+The regression was due to 'do_client_architecture_support' checking for
+valid compat modes and finding Power11 to be a valid compat mode for
+Power10 (it happens even without passing 'max-compat-mode' explicitly).
 
--- PMM
+Fix compat-mode issue and regression, by ensuring a future Power
+processor (with a higher logical_pvr value, eg. P11) cannot be valid
+compat-mode for an older Power processor (eg. P10)
+
+Cc: Cédric Le Goater <clg@kaod.org>
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+ target/ppc/compat.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/target/ppc/compat.c b/target/ppc/compat.c
+index 12dd8ae290ca..168a3c06316f 100644
+--- a/target/ppc/compat.c
++++ b/target/ppc/compat.c
+@@ -139,6 +139,10 @@ static bool pcc_compat(PowerPCCPUClass *pcc, uint32_t compat_pvr,
+         /* Outside specified range */
+         return false;
+     }
++    if (compat->pvr > pcc->logical_pvr) {
++        /* Older CPU cannot support a newer processor's compat mode */
++        return false;
++    }
+     if (!(pcc->pcr_supported & compat->pcr_level)) {
+         /* Not supported by this CPU */
+         return false;
+-- 
+2.45.1
+
 
