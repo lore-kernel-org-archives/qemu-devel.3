@@ -4,67 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B42BAC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 03:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E54C27C54
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 03:37:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF3pf-00048G-RE; Wed, 05 Jun 2024 23:30:32 -0400
+	id 1sF3vQ-0002ez-8P; Wed, 05 Jun 2024 23:36:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sF3p3-0003Yk-1n
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 23:29:54 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sF3op-0003n4-Ct
- for qemu-devel@nongnu.org; Wed, 05 Jun 2024 23:29:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1717644580; x=1749180580;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=kieskrHj+q6BXqVdHq/yeQgD6BfnrXRu3u4lTS6jM5g=;
- b=aV5kkPJeasFU1Xkq6aiDNLvMP7QoBeFZMDZpY9QkvVJ6axa71a2qSOEk
- 393mNsjCyWXoqAaE4juNNTJ966YdIVdEocIHswixASbF0h7elBBlx0Kwt
- XY66b0th4nsgzrGNBAwOQThPjAbhADvMzruxd8n9Db08iWBk1rPBfnt7w
- iBsDYcsa4ZARSo7REhW8jPHiiurkZQb0b1zIXQINgNBFswG9JgqhXz4tG
- bHRTCLcXk1417YC11kCW4VmamoI3HEJGCUuyXxONj1RFqP4dBwKNjosQx
- qRqmDEdfmTxrZbTDrhuVFCCRBMNviHyuw7vIMZj59t42cKTkywMZfb7BA g==;
-X-CSE-ConnectionGUID: 7qaVlHHJR1emOKd9AW0jaA==
-X-CSE-MsgGUID: bweg2ToHQYWEMDFAEx796Q==
-X-IronPort-AV: E=McAfee;i="6600,9927,11094"; a="36819469"
-X-IronPort-AV: E=Sophos;i="6.08,218,1712646000"; d="scan'208";a="36819469"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jun 2024 20:29:37 -0700
-X-CSE-ConnectionGUID: eQxjEImWR3m3Ee3xfQmFOA==
-X-CSE-MsgGUID: ee9KFhYcR7WToYtuoarCxw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,218,1712646000"; d="scan'208";a="37826936"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa008.fm.intel.com with ESMTP; 05 Jun 2024 20:29:35 -0700
-Date: Thu, 6 Jun 2024 11:45:02 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, pankaj.gupta@amd.com
-Subject: Re: [PATCH] target/i386: SEV: do not assume machine->cgs is SEV
-Message-ID: <ZmEwvsAnh1lXNqhS@intel.com>
-References: <20240605224409.2103109-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sF3vN-0002eT-68
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 23:36:25 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sF3vK-00051Z-8k
+ for qemu-devel@nongnu.org; Wed, 05 Jun 2024 23:36:24 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxW+qwLmFmPhEEAA--.17256S3;
+ Thu, 06 Jun 2024 11:36:16 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxbcetLmFmnW8WAA--.56324S3; 
+ Thu, 06 Jun 2024 11:36:15 +0800 (CST)
+Subject: Re: [PATCH 2/2] util/bufferiszero: Add simd acceleration for
+ loongarch64
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=c3=a9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2e_Berrang=c3=a9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
+ <philmd@linaro.org>, qemu-devel@nongnu.org
+References: <20240605093213.2191929-1-maobibo@loongson.cn>
+ <20240605093213.2191929-3-maobibo@loongson.cn>
+ <5d78d82d-a939-4103-8411-507b1a0372ac@linaro.org>
+ <7b4c6909-40e8-def7-03e8-18a3303295f1@loongson.cn>
+ <58ba9ea7-cc45-47d4-a278-3777b496cb44@linaro.org>
+ <d504ffbb-353a-452f-bfb1-2640ee1badc9@linaro.org>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <da613eb1-65f8-b690-4517-04640581261b@loongson.cn>
+Date: Thu, 6 Jun 2024 11:36:12 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240605224409.2103109-1-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+In-Reply-To: <d504ffbb-353a-452f-bfb1-2640ee1badc9@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8CxbcetLmFmnW8WAA--.56324S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxurW5CF45XF1kWF4kCFWDZFc_yoWrCr18pr
+ ZYkFyYyFW5Jrn3tr9xtw15Xr95tr18X3WDWF43JryUArs0qrn2qr4qgryq9F1Fqw4kJFy2
+ vF4Fq34fuFy7JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9ab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E
+ 14v26r126r1DMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4
+ CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1x
+ MIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF
+ 4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsG
+ vfC2KfnxnUUI43ZEXa7IU8j-e5UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -58
+X-Spam_score: -5.9
+X-Spam_bar: -----
+X-Spam_report: (-5.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.975,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,42 +92,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 06, 2024 at 12:44:09AM +0200, Paolo Bonzini wrote:
-> Date: Thu,  6 Jun 2024 00:44:09 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH] target/i386: SEV: do not assume machine->cgs is SEV
-> X-Mailer: git-send-email 2.45.1
-> 
-> There can be other confidential computing classes that are not derived
-> from sev-common.  Avoid aborting when encountering them.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  target/i386/sev.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/sev.c b/target/i386/sev.c
-> index 004c667ac14..97e15f8b7a9 100644
-> --- a/target/i386/sev.c
-> +++ b/target/i386/sev.c
-> @@ -1710,7 +1710,9 @@ void sev_es_set_reset_vector(CPUState *cpu)
->  {
->      X86CPU *x86;
->      CPUX86State *env;
-> -    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-> +    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
-> +    SevCommonState *sev_common = SEV_COMMON(
-> +        object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON));
 
-SEV_COMMON(object_dynamic_cast()) looks to be twice cast, we can just
-force to do conversion with pointer type:
 
-(SevCommonState *) object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON)
+On 2024/6/6 上午11:27, Richard Henderson wrote:
+> On 6/5/24 20:18, Richard Henderson wrote:
+>> On 6/5/24 19:30, maobibo wrote:
+>>>
+>>>
+>>> On 2024/6/6 上午7:51, Richard Henderson wrote:
+>>>> On 6/5/24 02:32, Bibo Mao wrote:
+>>>>> Different gcc versions have different features, macro CONFIG_LSX_OPT
+>>>>> and CONFIG_LASX_OPT is added here to detect whether gcc supports
+>>>>> built-in lsx/lasx macro.
+>>>>>
+>>>>> Function buffer_zero_lsx() is added for 128bit simd fpu optimization,
+>>>>> and function buffer_zero_lasx() is for 256bit simd fpu optimization.
+>>>>>
+>>>>> Loongarch gcc built-in lsx/lasx macro can be used only when compiler
+>>>>> option -mlsx/-mlasx is added, and there is no separate compiler option
+>>>>> for function only. So it is only in effect when qemu is compiled with
+>>>>> parameter --extra-cflags="-mlasx"
+>>>>>
+>>>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>>>>> ---
+>>>>>   meson.build         |  11 +++++
+>>>>>   util/bufferiszero.c | 103 
+>>>>> ++++++++++++++++++++++++++++++++++++++++++++
+>>>>>   2 files changed, 114 insertions(+)
+>>>>>
+>>>>> diff --git a/meson.build b/meson.build
+>>>>> index 6386607144..29bc362d7a 100644
+>>>>> --- a/meson.build
+>>>>> +++ b/meson.build
+>>>>> @@ -2855,6 +2855,17 @@ 
+>>>>> config_host_data.set('CONFIG_ARM_AES_BUILTIN', cc.compiles('''
+>>>>>       void foo(uint8x16_t *p) { *p = vaesmcq_u8(*p); }
+>>>>>     '''))
+>>>>> +# For Loongarch64, detect if LSX/LASX are available.
+>>>>> + config_host_data.set('CONFIG_LSX_OPT', cc.compiles('''
+>>>>> +    #include "lsxintrin.h"
+>>>>> +    int foo(__m128i v) { return __lsx_bz_v(v); }
+>>>>> +  '''))
+>>>>> +
+>>>>> +config_host_data.set('CONFIG_LASX_OPT', cc.compiles('''
+>>>>> +    #include "lasxintrin.h"
+>>>>> +    int foo(__m256i v) { return __lasx_xbz_v(v); }
+>>>>> +  '''))
+>>>>
+>>>> Both of these are introduced by gcc 14 and llvm 18, so I'm not 
+>>>> certain of the utility of separate tests.  We might simplify this with
+>>>>
+>>>>    config_host_data.set('CONFIG_LSX_LASX_INTRIN_H',
+>>>>      cc.has_header('lsxintrin.h') && cc.has_header('lasxintrin.h'))
+>>>>
+>>>>
+>>>> As you say, these headers require vector instructions to be enabled 
+>>>> at compile-time rather than detecting them at runtime.  This is a 
+>>>> point where the compilers could be improved to support 
+>>>> __attribute__((target("xyz"))) and the builtins with that.  The i386 
+>>>> port does this, for instance.
+>>>>
+>>>> In the meantime, it means that you don't need a runtime test.  
+>>>> Similar to aarch64 and the use of __ARM_NEON as a compile-time test 
+>>>> for simd support.  Perhaps
+>>>>
+>>>> #elif defined(CONFIG_LSX_LASX_INTRIN_H) && \
+>>>>        (defined(__loongarch_sx) || defined(__loongarch_asx))
+>>>> # ifdef __loongarch_sx
+>>>>    ...
+>>>> # endif
+>>>> # ifdef __loongarch_asx
+>>>>    ...
+>>>> # endif
+>>> Sure, will do in this way.
+>>> And also there is runtime check coming from hwcap, such this:
+>>>
+>>> unsigned info = cpuinfo_init();
+>>>    if (info & CPUINFO_LASX)
+>>
+>> static biz_accel_fn const accel_table[] = {
+>>      buffer_is_zero_int_ge256,
+>> #ifdef __loongarch_sx
+>>      buffer_is_zero_lsx,
+>> #endif
+>> #ifdef __loongarch_asx
+>>      buffer_is_zero_lasx,
+>> #endif
+>> };
+>>
+>> static unsigned best_accel(void)
+>> {
+>> #ifdef __loongarch_asx
+>>      /* lasx may be index 1 or 2, but always last */
+>>      return ARRAY_SIZE(accel_table) - 1;
+>> #else
+>>      /* lsx is always index 1 */
+>>      return 1;
+>> #endif
+>> }
+size of accel_table is decided at compile-time, will it be better if 
+runtime checking is added also?  something like this:
 
->      /* Only update if we have valid reset information */
->      if (!sev_common || !sev_common->reset_data_valid) {
-> -- 
-> 2.45.1
+  unsigned info = cpuinfo_init();
+
+  #ifdef __loongarch_asx
+  if (info & CPUINFO_LASX) {
+       /* lasx may be index 1 or 2, but always last */
+       return ARRAY_SIZE(accel_table) - 1;
+  }
+  #endif
+
+> 
+> It occurs to me that by accumulating host specific sections to this 
+> file, we should split it like the atomics.  Put each portion in 
+> host/include/*/host/bufferiszero.h.inc.
+sure, will do.
+
+> 
+> I'll send a patch set handling the existing two hosts.
 > 
 > 
+> r~
+> 
+
 
