@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AF57C25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 09:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B8BC25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 09:50:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF9iz-0005wQ-2z; Thu, 06 Jun 2024 05:48:01 -0400
+	id 1sF9ky-0006rx-Vc; Thu, 06 Jun 2024 05:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sF9ix-0005w4-H7
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:47:59 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1sF9kx-0006rD-0G
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:50:03 -0400
+Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sF9iu-0000yQ-7p
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:47:59 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a68c5524086so80111866b.3
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 02:47:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1sF9kv-0001HC-4z
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:50:02 -0400
+Received: by mail-oi1-x22c.google.com with SMTP id
+ 5614622812f47-3d1d08c7c8aso383380b6e.2
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 02:50:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717667272; x=1718272072; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jM4ZLyBsU6Z2tuPIR67jth5BYR8r5ELIYjc5QzcJQvc=;
- b=xN9SKuP2FgSCfbJDqfuG3l+ttP+XbGFcAPPT3j063Cujzc/NVX4xHA3MLSLGRzDEey
- 3eV9LwRAnwhrSDNNegcWSFhbvwepb3K5T8gnJGwAygl4SnBLr400tkY5Vp83/B8VJcIN
- bHP2KWmuprukpxQ2stQdcFpwG/V34rk+cl9N8zyZ1FvtfLrKkNuikoR8Apl/WGbOVMXJ
- ekqmMudgfE1nJkFX22L9ixUQedKkNM6sGvh6fo+lEx0YrSY+ztHdRBBCpYoRZOf8PKsU
- DoSIB77l42vwfZlywwom+hnjhL46wnQpd39gvKLhx4F3v/36TBiSkvoQdN1sHMePpb8E
- Vryg==
+ d=ventanamicro.com; s=google; t=1717667400; x=1718272200; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ge740h9oTGUFV/3fywNl79mB256gm21GieHK+4LxWNQ=;
+ b=b/nEAMVmDJqErN8+ZDvx3dWT5bZKzmUhdynVfEXGHMjFueiPRtWbODrOWBkvr/LrJc
+ tpctv0/GxXGXvz7jKGaKSANTbMZFLftovWbSt1GBmi1qHfUdBZu8YeMvRkXcfKcw5u9K
+ ODWG8J15K8tL+x/iEkOjEgHfUErwMzXrBlnVroVhML+TmnqXz+Yc59q06IdzXEJYpjRr
+ JGR/F9n+puOtCJGxOaqN0pSN3jSg3gGgRrdRDs37l2AwYx+EamQzQRVKpl322jPFbOZT
+ TK0pae0apbriND9cOUEBngrZmGlTEFHFgxv0dSrK56hueZFFVFQBhXzvDbjOy3pDAv3N
+ NTeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717667272; x=1718272072;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jM4ZLyBsU6Z2tuPIR67jth5BYR8r5ELIYjc5QzcJQvc=;
- b=E8hUIypq333N4N4xTUt3XtieNsdsex7b+TrxPexLT5AqwNYTQR4e0uz+77p371yla5
- PangAxsgdj/LMQVex6Q/Vxm+FGDZjKdN/POSAOriFiHzpXrJuh28Gb16HdXCkUuBrw3u
- 6mo6wPccLAsv/wLQPLEDf9phMnyIQcAEdBluFqPFPh8SI3D/0WowNH/BHqra04vO00gt
- Z4rprGBBsTCZkX0JH8XwyY91PwbKv0RQXsqHhhAcm1Kzd52UU1Ilaa4evSa9yOH3MpyH
- e5A/XOa9eAY+luf3K2EIfSAIB8t2M8YMeyWavaWrhua20FKeGOGdUhBDwy4dTBSot56Z
- 29cA==
-X-Gm-Message-State: AOJu0Yw9303IE1ZjHzcjIwoNidRrle0CrHNUSTx1Z/ShEyAfqt1P9lnW
- F1T7m18PG+xOaa+NGkADl6lM3Zg8lmjmLP4wa2BKeX8vuU23j12JmxHzjHYpJySOa8EJ/n3wJmD
- Q
-X-Google-Smtp-Source: AGHT+IFBJCQqHI/NRNypIRcX4mhL0j4AJmWgjoub0R9jTgLRLJT1TR1VJxEC2XwUNVvxrwoHbOXPAw==
-X-Received: by 2002:a17:906:26d0:b0:a68:f28f:34fb with SMTP id
- a640c23a62f3a-a699f887420mr319760366b.39.1717667272201; 
- Thu, 06 Jun 2024 02:47:52 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c8070bfcbsm72017766b.145.2024.06.06.02.47.51
+ d=1e100.net; s=20230601; t=1717667400; x=1718272200;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ge740h9oTGUFV/3fywNl79mB256gm21GieHK+4LxWNQ=;
+ b=FCb2UIVrbBHuOariJb/Qe+96FUKuVZdxuWT91Pux43724oHoRgfauymaCLmeVJNm2N
+ n8/xjttGeuB7KqFIXYsK+G7ESaMBj+4aZy6H30WG88KJaoY/j/9Xlg+L2ga5osflPPbr
+ tgGYnA3dFJziPv8WBSgcKMCd6zGjRUBWQqFj8OnAPEHe+KoJ3Tz5blKJCkWdkI5RT6P1
+ F8tEH00Z0N7Pn/qA0rEXn4bkYjJ4G7cDoSKshsVBpjWI0E/MVdjj5MEvnh+bB4hbIU8e
+ cd4soPj8cr4WQE6wa2/dXH7lc+eh01MFgl0+wKvAsCOzWx9AAVSmDwUoTNS187pIBy3o
+ N2Ig==
+X-Gm-Message-State: AOJu0YzZIKqdsRvcEOqFizwT00J31AZ+KVU+u92TfkagToSbwlbAV4wO
+ P4BizzqvAmzddPg1DpR6ut/gHwgT5VerLE4QDJhWUXo5I8HXbrHCdRQyp7gPjOo=
+X-Google-Smtp-Source: AGHT+IGvu0dhZRDs/XKdQUCEGrq9ZmI6aDvtOe0H15pAp/7uNjDkxqksA9vJHdK0qeAN3XGTQuM+uQ==
+X-Received: by 2002:a05:6870:2481:b0:24f:dbdb:6009 with SMTP id
+ 586e51a60fabf-25121ed2a52mr5432028fac.32.1717667399647; 
+ Thu, 06 Jun 2024 02:49:59 -0700 (PDT)
+Received: from sunil-laptop ([106.51.187.237])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-703fd500c6asm809905b3a.172.2024.06.06.02.49.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Jun 2024 02:47:51 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4D6B85F7AD;
- Thu,  6 Jun 2024 10:47:51 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org
-Subject: Re: [PATCH v2 4/9] plugins: Introduce TCGCPUOps callbacks for
- mid-tb register reads
-In-Reply-To: <20240606032926.83599-5-richard.henderson@linaro.org> (Richard
- Henderson's message of "Wed, 5 Jun 2024 20:29:21 -0700")
-References: <20240606032926.83599-1-richard.henderson@linaro.org>
- <20240606032926.83599-5-richard.henderson@linaro.org>
-Date: Thu, 06 Jun 2024 10:47:51 +0100
-Message-ID: <87y17il7w8.fsf@draig.linaro.org>
+ Thu, 06 Jun 2024 02:49:59 -0700 (PDT)
+Date: Thu, 6 Jun 2024 15:19:52 +0530
+From: Sunil V L <sunilvl@ventanamicro.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Andrew Jones <ajones@ventanamicro.com>
+Subject: Re: [PATCH 3/3] hw/riscv/virt-acpi-build.c: Update the HID of RISC-V
+ UART
+Message-ID: <ZmGGQNA7NPAV06Mt@sunil-laptop>
+References: <20240528073103.1075812-1-sunilvl@ventanamicro.com>
+ <20240528073103.1075812-4-sunilvl@ventanamicro.com>
+ <20240605164814.0d79ef99@imammedo.users.ipa.redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240605164814.0d79ef99@imammedo.users.ipa.redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-oi1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,21 +101,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+Hi Igor,
+On Wed, Jun 05, 2024 at 04:48:14PM +0200, Igor Mammedov wrote:
+> On Tue, 28 May 2024 13:01:03 +0530
+> Sunil V L <sunilvl@ventanamicro.com> wrote:
+> 
+> > RISC-V is going to use new HID RSCV0003 for generi UART. So, update the
+> > HID.
+> 
+> where does it come from?
+> 
+> > 
+> > Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+> > ---
+> >  hw/riscv/virt-acpi-build.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+> > index 47ec78e432..7f80368415 100644
+> > --- a/hw/riscv/virt-acpi-build.c
+> > +++ b/hw/riscv/virt-acpi-build.c
+> > @@ -192,7 +192,7 @@ acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
+> >                      uint32_t uart_irq)
+> >  {
+> >      Aml *dev = aml_device("COM0");
+> > -    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0501")));
+> > +    aml_append(dev, aml_name_decl("_HID", aml_string("RSCV0003")));
+> 
+> the only place I've found (that could serve as justification)
+>   https://github.com/riscv-non-isa/riscv-brs/blame/main/acpi.adoc
+> 
+> which mentions _CID and not _HID as it is in this patch
+> 
+Right, this is the requirement.
 
-> Certain target registers are not updated continuously within
-> the translation block.  For normal exception handling we use
-> unwind info to re-generate the correct value when required.
-> Leverage that same info for reading those registers for plugins.
->
-> All targets will need updating for these new callbacks.
->
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Yes, _CID says device is compatible. But different vendors may have
+different _HID. For qemu, _CID value is used as _HID since it is not
+vendor specific. This is something similar to how ARMH0011 is used (qemu
+vs RPi) in ARM world.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+I am checking with Andrei to see if we can relax to make it either _HID
+or _CID.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Thanks,
+Sunil
+
 
