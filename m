@@ -4,79 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04AFBC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 08:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54D89C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 09:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF8rQ-0007S9-Qg; Thu, 06 Jun 2024 04:52:40 -0400
+	id 1sF8zp-0002Pw-59; Thu, 06 Jun 2024 05:01:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
- id 1sF8rI-0007Pt-6i
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 04:52:32 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
- id 1sF8rD-0007U4-R3
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 04:52:31 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-52b950aa47bso1024792e87.1
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 01:52:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1717663942; x=1718268742;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MAdl9HG0A7SD6J5iLlRnKo1H1NZFxZUyoafYbOzAsuE=;
- b=czoqxu+8GpAYjPZa+SNhrWbiLywuQmiuJtqWtutSLH1eV8YTdv0S8VJsL1hhwUCmp+
- UTPfOzWVFg8l2wcjWRQISk9t6pkYVYJajpCfeJ+iatR+PG3XUcgTS+pSGBL9LMMOUL3U
- qGISr/N5hQhygysso0mhlpRu1uEeWXYXist0EvfbgAr7XZfAc8JD83i03ww44E1XiZIe
- s3KvONjMUkrAOCCqbVDeU1V+Fg/HGNcAlvgVAmgijLcxucMtbmt91TDyuXsRCSlxXQLi
- xyYPlJEd76E2bmJzpwLXQSWrib6jxYdx7Eywl4EcSzLocAzkxdgN0Dq87wO4FvgqYMWS
- UDfA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sF8zl-0002PN-HE
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:01:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sF8zi-0000m2-Bh
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:01:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717664473;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=hTyBkHfOUJ9uxF1C9hwpYjJJ5ZfdYCgdDu/nl255Im0=;
+ b=LExVxHn9d6TtiItB0Lt3r40KSxMJNTc6zggDyN1j4sSm8TUcXO/GwSWF/so5ZWCiGvx2Gr
+ hOt02W/b1q9nXGLVgcHiXUq3Tu6cEbkhpfhHE/VTW7mli4z6/kbbplJBTtQEufXEvSMty9
+ rD2T81YdvRH5evM+uVLD4nsNz0XcKWE=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-374-cv2-ODvTNYi1x2gvrmRWRg-1; Thu, 06 Jun 2024 05:01:02 -0400
+X-MC-Unique: cv2-ODvTNYi1x2gvrmRWRg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a6c71ca9d55so36874666b.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 02:01:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717663942; x=1718268742;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MAdl9HG0A7SD6J5iLlRnKo1H1NZFxZUyoafYbOzAsuE=;
- b=nlcxilqlvyFSJZoYnSwXDeJefve+vp7nXim7wDw709kLRuqW53tHUTzmC0wNJ8NtVP
- hdHCnQdjm6kIhm/RM81XAi9adFFso2z/tus+AAR7m0Fp1dWaITKmNbM0AJGwQYB4JXE+
- j4+7NzExWcIjFkFbXIVfkkg7gDqGzK8SYZc0IyFjNgD+pyCAjWPS82MSIqoYDqio9yEF
- mftqUam/2gdr01auCrb2txJuhD19r66uAZop2hXNIUPPSteNgV0rPWBhZeGuqg5WGPiR
- C9mL5L94++xAVePUTIiTR3sMew/lpmmPO4At6+BBmIqFpAAFl0lvfnsrjH1U38pGRx4e
- /fPg==
+ d=1e100.net; s=20230601; t=1717664461; x=1718269261;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hTyBkHfOUJ9uxF1C9hwpYjJJ5ZfdYCgdDu/nl255Im0=;
+ b=UmwVyDQsJHqnbQ6DTCVgLfk1hZKDbEJL0ZBLrGIRoRkTAoANyD0rg8tqtdE7GQU/tA
+ G10Tz2j2PxzglDrxzeqMJ17rDPXDhxOEvLsVCn4NBt8JJFg7WftIUjdCblUEbvqXR8vm
+ GqBgVZrBiybM3mJcjPq6W8nVUP0eLtKb9FgMEUEPJis7YZnjrazBlSYUkAtwlCnSveeu
+ ggWNJ2tzGEnqvOm4rVitDGsiazuGyl55ekI9VXorTSCjoqlOtn2NmnMIrBaOJKoqKp8M
+ gdx1ydY/hCYr5Cxitr38ZEW9awPkCGonNkP1uF+vACFcm//hQCpB+/cZNhnQ90laA1tm
+ LKSw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUyU3cVQyS0xU/Whx0M0d/1sSIMDpzdxXBipwXlncE7BIm4MH56wGZUd2wYw6QYH3AB4aVk/0kjnEvBmDvgtpg3SzGngUQ=
-X-Gm-Message-State: AOJu0YzzLQNY9XCup+Ldpx5hHzgCnq3wZG21feyP1KyTrZqdBP3V7ZZc
- KV7PFM73y9lbwR05rljiNhzUMZ0/ybP0pq6jyIxiNv+4CX48g9eKyecraRVc08iCrIa24KKEhRw
- oNcWG8UQe/809HZhZDgt94ugK0bCxjLFhpv0b2qmqc22TgWo=
-X-Google-Smtp-Source: AGHT+IGT1IgCHeqhQI2n/zFaBui44Iy6XVK0HwUPkCgYQuH6Dsyv++q/a09sVJUc+QqtXWNr7z97V4ceaN648M18Ej8=
-X-Received: by 2002:ac2:4c1a:0:b0:52b:88ec:b425 with SMTP id
- 2adb3069b0e04-52bab4dd705mr2772891e87.27.1717663941162; Thu, 06 Jun 2024
- 01:52:21 -0700 (PDT)
+ AJvYcCVL0MWp6ENafpa8Ie+vnRNWRdxmYnck0ax+hekqBH3K+4ODTWNqPT2YTlcAuKU6M19yhuhv7dhyjZnJc03uVa1yUegc0YM=
+X-Gm-Message-State: AOJu0Yw/O7ziDjlIpfFXS+1NgpbJjC5L+N1cCMg/rmhL7LUU/m3PaChR
+ Uvm0/USDN+OLNIXpjdjRnCNSdrTE77/qinJDLY1RWCpwfut4rrBbaB/ssvdEMCcJikwmlzbGMEo
+ m8bYaRtXFO0R1QFlU+8jDG0U+24GTv3TPPxle8mRFHxzBHdqhfxBs
+X-Received: by 2002:a17:906:50b:b0:a6c:6fac:f1ff with SMTP id
+ a640c23a62f3a-a6c6fad1464mr198292666b.12.1717664461347; 
+ Thu, 06 Jun 2024 02:01:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMGQE7XUl40zUD7peELEaXzGUsB73fs884FprBoYCJ5e5eKQfRB6K05jDAFqxikuBBYvakyA==
+X-Received: by 2002:a17:906:50b:b0:a6c:6fac:f1ff with SMTP id
+ a640c23a62f3a-a6c6fad1464mr198291366b.12.1717664460837; 
+ Thu, 06 Jun 2024 02:01:00 -0700 (PDT)
+Received: from [192.168.10.81] ([151.81.115.112])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-a6c806ebd21sm66634266b.100.2024.06.06.02.00.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 06 Jun 2024 02:01:00 -0700 (PDT)
+Message-ID: <bc9560e2-39e6-4391-9fb8-b972f3605c80@redhat.com>
+Date: Thu, 6 Jun 2024 11:00:59 +0200
 MIME-Version: 1.0
-References: <20240605112556.43193-1-phil@philjordan.eu>
- <20240606082217.2459102-2-pbonzini@redhat.com>
-In-Reply-To: <20240606082217.2459102-2-pbonzini@redhat.com>
-From: Phil Dennis-Jordan <lists@philjordan.eu>
-Date: Thu, 6 Jun 2024 10:52:09 +0200
-Message-ID: <CAGCz3vsXwbB6Lk6SyKCbUey_fdgD2CGin-X-E1iqgKaHes3CGA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/7] hvf x86 correctness and efficiency improvements
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: neutral client-ip=2a00:1450:4864:20::12a;
- envelope-from=lists@philjordan.eu; helo=mail-lf1-x12a.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NEUTRAL=0.779, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/6] target/i386: add support for VMX FRED controls
+To: Xin Li <xin3.li@intel.com>, qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, richard.henderson@linaro.org, eduardo@habkost.net,
+ seanjc@google.com, chao.gao@intel.com, hpa@zytor.com, xiaoyao.li@intel.com,
+ weijiang.yang@intel.com
+References: <20231109072012.8078-1-xin3.li@intel.com>
+ <20231109072012.8078-5-xin3.li@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20231109072012.8078-5-xin3.li@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,28 +144,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 6 Jun 2024 at 10:24, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> Queued, thanks.
+On 11/9/23 08:20, Xin Li wrote:
+> Add VMX FRED controls used to enable save/load of FRED MSRs.
+> 
+> Tested-by: Shan Kang <shan.kang@intel.com>
+> Signed-off-by: Xin Li <xin3.li@intel.com>
+> ---
+>   scripts/kvm/vmxcap | 3 +++
+>   target/i386/cpu.c  | 2 +-
+>   2 files changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/scripts/kvm/vmxcap b/scripts/kvm/vmxcap
+> index 7da1e00ca8..44898d73c2 100755
+> --- a/scripts/kvm/vmxcap
+> +++ b/scripts/kvm/vmxcap
+> @@ -229,6 +229,8 @@ controls = [
+>       Allowed1Control(
+>           name = 'secondary VM-Exit controls',
+>           bits = {
+> +            0: 'Save IA32 FRED MSRs',
+> +            1: 'Load IA32 FRED MSRs',
+>               },
+>           cap_msr = MSR_IA32_VMX_EXIT_CTLS2,
+>           ),
+> @@ -246,6 +248,7 @@ controls = [
+>               16: 'Load IA32_BNDCFGS',
+>               17: 'Conceal VM entries from PT',
+>               18: 'Load IA32_RTIT_CTL',
+> +            23: 'Load IA32 FRED MSRs',
+>               },
+>           cap_msr = MSR_IA32_VMX_ENTRY_CTLS,
+>           true_cap_msr = MSR_IA32_VMX_TRUE_ENTRY_CTLS,
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 227ee1c759..dcf914a7ec 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -1285,7 +1285,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+>               NULL, "vmx-entry-ia32e-mode", NULL, NULL,
+>               NULL, "vmx-entry-load-perf-global-ctrl", "vmx-entry-load-pat", "vmx-entry-load-efer",
+>               "vmx-entry-load-bndcfgs", NULL, "vmx-entry-load-rtit-ctl", NULL,
+> -            NULL, NULL, "vmx-entry-load-pkrs", NULL,
+> +            NULL, NULL, "vmx-entry-load-pkrs", "vmx-entry-load-fred",
+>               NULL, NULL, NULL, NULL,
+>               NULL, NULL, NULL, NULL,
+>           },
 
-Thanks - also for reviewing, etc.!
+The bits in the secondary vmexit controls are not supported, and in 
+general the same is true for the secondary vmexit case.  I think it's 
+better to not include the vmx-entry-load-fred bit either, and only do 
+the vmxcap changes.
 
-> Thanks for persisting!  It sucks that the hv_vcpu_interrupt() API docs
-> are not clear, but your tests are great.  The self-interrupt one is
-> the case that I was most worried about, and you're covering it.
-> Sorry for being a pain for nothing, at least retrospectively.
+Also, in patch 1 there should be a dependency from LM to FRED.
 
-No worries - the concern is understandable, especially in the face of
-the unfortunate apparent regression which turned out to be the dirty
-page tracking bug.
+I applied these changes and queued the series, thanks.
 
-And I agree, the hv_vcpu_interrupt docs, along with the rest of
-Hypervisor.framework's, are terrible. There does not appear to have
-been any thought about what a developer using that API might care
-about. I've been working on integrating the HVF APIC/PIC/IOAPIC
-implementations, and there are ambiguities and edge cases galore.
-Unfortunately (?), the perf improvement is worth the trouble of trial
-& error=E2=80=A6
+Paolo
 
-
-Phil
 
