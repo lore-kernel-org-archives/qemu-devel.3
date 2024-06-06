@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC07EC25B75
-	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 09:02:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68A31C25B75
+	for <qemu-devel@archiver.kernel.org>; Thu,  6 Jun 2024 09:11:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sF90v-0002l6-Ly; Thu, 06 Jun 2024 05:02:29 -0400
+	id 1sF98R-0006b5-5m; Thu, 06 Jun 2024 05:10:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sF90f-0002dK-CH
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:02:15 -0400
+ id 1sF98P-0006Yb-BQ
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:10:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sF90d-0000qH-WC
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:02:13 -0400
+ id 1sF98N-0002CL-RG
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 05:10:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717664531;
+ s=mimecast20190719; t=1717665010;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=aJ2V8/i9VqCyvlJIeG58mOskC0uyTGtJ0yH1bA8CvxJbEiA4hbYOtWrWxKpEQ20QlLGFjK
- 9+UGBzoT/45UotE94whrwr4lJYgkFMhySs/p/7F98Ig7sHgmX3fmJ1Mzn26eJkpExb1Xbz
- YEIl1EzSXeYzoFTGZUjl6No5hWcq+Ak=
+ bh=hInEEpOj7E0cVlTApX+9OugLawCx8dqYlcnwpECgt8A=;
+ b=dzX5mFOqECfM7RSIb0n7y2mYqdQ7XoLHHUg4eQJgqgqTwsp5N3lUwho/tMC220aE/kUmb/
+ qxJJ1SesLPIykTyJr2UUlCO24bZV+3+6G4B6IpaZ5WYYMBa4Gv7N6PQ9mCq85Gvsd2Uil8
+ mCWd2zJ0+h6+c41nLmcAgL/YlpqSMwo=
 Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
  [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-6o5zcfepNva-FsKYMrHUSg-1; Thu, 06 Jun 2024 05:02:09 -0400
-X-MC-Unique: 6o5zcfepNva-FsKYMrHUSg-1
+ us-mta-682-2zsHT9IxNXu3Vyj1UKMdCA-1; Thu, 06 Jun 2024 05:10:07 -0400
+X-MC-Unique: 2zsHT9IxNXu3Vyj1UKMdCA-1
 Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-57a941a787dso547140a12.3
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 02:02:09 -0700 (PDT)
+ 4fb4d7f45d1cf-57a5086b835so162270a12.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 02:10:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717664528; x=1718269328;
+ d=1e100.net; s=20230601; t=1717665006; x=1718269806;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=dddulatVswi47d3xa4pz2O+wDaASwNTuR+H00Ym7yqvf9rMy8Al92Yk8tqdsCCnzdN
- MaxKvAset+2wgvOQXUuhNEK/ATkYTUEAAdDmYoz5ALNoVyzqGLqvux2JB0Rcs33//ikf
- 6pjgtKHTvCcyyZmgyhJM/NMzjWQc2rIh7YG1e3lvM2m8b10JloByA3nr51oG8KJ+yznN
- vvzMZwRmZWk7wO+lgu+JlGi/8RAGaBlxAAa0u0ddadeBFJFFoxoGhvEGkG3nrvIYjBDE
- NZCvMuWp68gah/Fs8xcrxt8APkNuzBBOqmJ+LzPteRfOfieAmeWbOhicsS/Hrte+lSAX
- ezVA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWaoBsxsgH8IW8Mxi4Z3MyW4pNI+gJXLkfsOpOPCDXm7FKSmhzUnfAiEGCCYOZ/TQWaXGS+ztPr1AlxJ0s8nVQvZzBiy3w=
-X-Gm-Message-State: AOJu0YwETblbR7f1+1p5n+lxgPnQX7ii2SHGQyLnVg2qnxt3jb5HpQbw
- 1FPnLEw9mXvBEDFVYvzyxEoeHkWY8PhbYvnxiy6wjPXmiSix3ND8MIxDdbXljByrv4TwO7+OZ6S
- biipFUunoqNPvtkBRsal0yzNUm58vLy7UodHtDU1ARrW5470vH8Og
-X-Received: by 2002:a50:d4db:0:b0:57a:242e:806b with SMTP id
- 4fb4d7f45d1cf-57a8b6acd8emr3741209a12.18.1717664528744; 
- Thu, 06 Jun 2024 02:02:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH6YmfUtIhRjw2q+aHPRZl05el050ktlV96IF5ANgA9+rFX2L7xkzIeJzLwf2U/z4GRTy8xUg==
-X-Received: by 2002:a50:d4db:0:b0:57a:242e:806b with SMTP id
- 4fb4d7f45d1cf-57a8b6acd8emr3741189a12.18.1717664528363; 
- Thu, 06 Jun 2024 02:02:08 -0700 (PDT)
+ bh=hInEEpOj7E0cVlTApX+9OugLawCx8dqYlcnwpECgt8A=;
+ b=n1zVXhPsM2YfEp0Lx0otWNZCB227DaX30TBuposB+zmx4Q2ZDWgwFEJNbGKEKKXRH3
+ 8t8M1pzGEEFIVBu90YD6IVGKrjIKbphKGwlInq84pvn+HAVciBCc9LNybZ46NbhyQMc/
+ hWpfQXoxAHhkrjiHq7tfSJ2sjLVW9GqNlzyQT9dxnl7FmV1/1pkX/u2cbTyJOZLACsUF
+ DwIxbCuXf190Ry+ZdgppYJS4Mbe8lGpptRTqSP7EXkdgmJaHtv/4FIwWF28jRUKDYBjR
+ FCHeU/1oIt2RXpisSkpLaq3XviOEJYDW5/u0W58KtCLEG5l7yf0Uk9Vu5ukQaPVmbctL
+ JMAA==
+X-Gm-Message-State: AOJu0Yxy85Gu3wTfemsYRy3nZXSIv00y0+XUmT5wGcXTnWHQ3iG/w1uZ
+ ZKwtRbW5kScH14lQzlWxVUToUtmmev3xenIqvHQSCvgnq4VEQTqAvCn4+gVpcAneZYk5LJJs501
+ d63wex8RIjLWRU5SdvTONvtJ6BeJGGeldvoECv/exxSF0en/Z/uAY
+X-Received: by 2002:a50:d5c9:0:b0:578:2148:61f5 with SMTP id
+ 4fb4d7f45d1cf-57a8bcb3199mr3064761a12.30.1717665006286; 
+ Thu, 06 Jun 2024 02:10:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHdMyGB8aa914d0DSiiHc6ryIQ/pQbaL6sm6w86WwEt173JhUbjLZfHzHLm7ke+/4VwpSqRmw==
+X-Received: by 2002:a50:d5c9:0:b0:578:2148:61f5 with SMTP id
+ 4fb4d7f45d1cf-57a8bcb3199mr3064738a12.30.1717665005855; 
+ Thu, 06 Jun 2024 02:10:05 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aadf9d8ddsm742166a12.1.2024.06.06.02.02.07
+ 4fb4d7f45d1cf-57aadf9d086sm746316a12.18.2024.06.06.02.10.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Jun 2024 02:02:07 -0700 (PDT)
+ Thu, 06 Jun 2024 02:10:05 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] docs: i386: pc: Avoid mentioning limit of maximum vCPUs
-Date: Thu,  6 Jun 2024 11:02:05 +0200
-Message-ID: <20240606090205.2463843-1-pbonzini@redhat.com>
+To: John Allen <john.allen@amd.com>
+Cc: qemu-devel@nongnu.org, yazen.ghannam@amd.com, michael.roth@amd.com,
+ babu.moger@amd.com, pankaj.gupta@amd.com, william.roche@oracle.com,
+ joao.m.martins@oracle.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net
+Subject: Re: [PATCH v5 0/3] Fix MCE handling on AMD hosts
+Date: Thu,  6 Jun 2024 11:09:05 +0200
+Message-ID: <20240606090903.2464525-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240606085436.2028900-1-zhao1.liu@intel.com>
+In-Reply-To: <20240603193622.47156-1-john.allen@amd.com>
 References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -106,7 +104,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+Queued, thanks.  I added a note to the commit message in the third patch:
+
+    By the time the MCE reaches the guest, the overflow has been handled
+    by the host and has not caused a shutdown, so include the bit unconditionally.
+
+Advertising of SUCCOR and OVERFLOW_RECOV in KVM would still be nice. :)
 
 Paolo
 
