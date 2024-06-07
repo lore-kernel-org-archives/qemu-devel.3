@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B198C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 135A1C27C65
 	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 04:27:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFRB0-0004l5-1O; Fri, 07 Jun 2024 00:26:06 -0400
+	id 1sFRB4-0004mc-3R; Fri, 07 Jun 2024 00:26:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sFRAu-0004kF-GM
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 00:26:00 -0400
-Received: from mail-io1-xd34.google.com ([2607:f8b0:4864:20::d34])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sFRAw-0004l0-JT
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 00:26:04 -0400
+Received: from mail-il1-x12d.google.com ([2607:f8b0:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sFRAs-000514-W4
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 00:26:00 -0400
-Received: by mail-io1-xd34.google.com with SMTP id
- ca18e2360f4ac-7eb2db841f2so65492439f.1
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 21:25:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sFRAu-00051Q-Ts
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 00:26:02 -0400
+Received: by mail-il1-x12d.google.com with SMTP id
+ e9e14a558f8ab-3748d68b713so6912055ab.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 21:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1717734357; x=1718339157;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1717734359; x=1718339159;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I/j33GhWtIBI0v34ghg84N3DhwSzzaAp7dsCaoBrlq4=;
- b=Yyi2gcII815T/pAA+1Wjrbeg+l5UOILhLc91hn1PKgvPXUnceOPff0YblcrUon0yd/
- lfPfCxajr4Y7uc45aX8do42fl1tDfg1Nan5i7ESJnceuwfX4l3OF9r/hcyk8A/D3pGyw
- TB7r3DAduV3RD3cTOLfRulDLDb7sPzKrA3RBH64H8oA0kSCMqZNee1z+k+8O7xBFkmy6
- xj6YsfSVy/wRFR2chyMepjGoKNGW/i3cp6/inaR5bKjEEFt7/E/CtJVq9a8p8WyUKaZG
- wjKxwc5BJDSN5j8Neg7DZ3i0uNie0zD9vhtrJYCbvuWyf0hAl69WbyAwbtYV6Bh73UHY
- itCA==
+ bh=e+E8YdlwBZo6utgAOnWf5bK8eXZtaIP4XDr+Yf1pIjg=;
+ b=LaVZ/IABIW32bfoBKkT16T29k2jugDXPH2HWoKpJnGjC0v9TNVP4eYpwDf5zc+O1ZE
+ vy3D7ku/deddRslkXOOFo33+1PUrSdWInz5eG+4pqrb6b1XPldanUIepAZiFmf4en7MG
+ 1KPLYX418D5iBdEhDPkpBAf3Q/msdCxGC/t038teNCsUDKexoZzdtsVJaQzhIxbzro66
+ CVKEeiMSJHvLssYlyMW/lPF+r6ZnQQsPmN93OM2RGuZf44Su9VxH8pRQ2AaKn21B43RP
+ ZKsS8cBn0TKIvtZ7YA4BjQcr2eqzaJJKhBL4IKjqdr5P/SQBskWTuzIi4QMTaWA38wh6
+ 4zcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717734357; x=1718339157;
+ d=1e100.net; s=20230601; t=1717734359; x=1718339159;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=I/j33GhWtIBI0v34ghg84N3DhwSzzaAp7dsCaoBrlq4=;
- b=hpk5jgZZxSXn0lbSYoKRDki2CDGy8P00Zl8D67c2srAOcO72c9I6aBBW+zI9Xwcuyk
- w3vMNJkSAadMyef6DS5ZGWEdoIWA5x/3utZlzwr2ldSoqRxJtOfGcI/X5AL/proxb9Na
- GiaIJELz27+Iwj/b9TDu5D/VQcy1uo5gRed+YIT6J50xqO4XbbPU1LsPwSvXAxZl/xr1
- 5dfgT+C6INFXOme/EQQ6nOObkdsgGWQwLaszavVtnjzOGL2Mex7w16hT6wYgtuJB8S2d
- gRi2AFtV6EmyVPFzrnqOLOYaZp1aGmmjckal+hWMOUnaR+RMZIa6eVCWRzr1nc5oO5gx
- HK2w==
-X-Gm-Message-State: AOJu0YyBo4T4vfPKEtw/CUCwQ3Le6kXVgzhvi7EBO1MGSfIYAXuTljK5
- rZjreZkYT3aZLHHdFptQfg8f1PLru0IFCXqI4hyRNMEoKSA8uDwdRwEHY+qlUcUYFkFoNBgHHWU
- 0CQE=
-X-Google-Smtp-Source: AGHT+IFJnkYLTSNSLqMkyGCaFlIcBtiiYPjxVRD4xAQ7s7uBR32660iDZgHpZ99lro/Dbohsg8/Q4g==
-X-Received: by 2002:a05:6e02:b43:b0:375:fa2:5195 with SMTP id
- e9e14a558f8ab-375803224a3mr19401295ab.8.1717734357266; 
- Thu, 06 Jun 2024 21:25:57 -0700 (PDT)
+ bh=e+E8YdlwBZo6utgAOnWf5bK8eXZtaIP4XDr+Yf1pIjg=;
+ b=PzdYHn53MgbhovkEF5ZiorgTfGf5/04o31QniQbDNk+a9cGHP4w7qEmkK7osoAeuEV
+ uiHv7Bs4RVv7YtZsTCSk/8rcsGZ9fALgvAP7DmvUxappNN/aT8+7EGuXwOC/xU1mYAdW
+ aga1oUOjrfJq7wh77GiyV/V4sgl8xy6ldyJIbaDfbgyh6kuYXPbsny97ObH44ThdTKgi
+ rZqXnSXURya8yANV6yFfsxcfFmCdbmZbVvPpQo2EksGePUtri5WGGPnbOQmnKQv8tO4T
+ eDeoxPkcmkojaGxGYAQjTqfoXZqRpAn339NjoRTLG+bw8ibBKs9vvh5ckl6vdZWz7kIR
+ sm8A==
+X-Gm-Message-State: AOJu0YxKRtWZ6l3zqZBB/2TWSlFtT4kQaM85OwrstJoHgvZQphFmlw92
+ 5gH1NjMA2u00/5SbdwlMOF5mpT5gMYjURqGEdCImSItjgZOnL/rNEIrd60aCaWY580r0sTY5/1D
+ Yfzg=
+X-Google-Smtp-Source: AGHT+IGW1966wtxuskI4e/9BuhuG1QlxDl+dGxHBJWO4tqdRYVUvC5/IuumJlyFx3Q/NEuIR/n1Pmw==
+X-Received: by 2002:a92:c569:0:b0:374:5a2d:178 with SMTP id
+ e9e14a558f8ab-3758030a2fdmr18999515ab.2.1717734358912; 
+ Thu, 06 Jun 2024 21:25:58 -0700 (PDT)
 Received: from dune.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-374bc15d9d9sm6162585ab.37.2024.06.06.21.25.55
+ e9e14a558f8ab-374bc15d9d9sm6162585ab.37.2024.06.06.21.25.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 06 Jun 2024 21:25:56 -0700 (PDT)
+ Thu, 06 Jun 2024 21:25:57 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
  Richard Henderson <richard.henderson@linaro.org>,
  Warner Losh <imp@bsdimp.com>
-Subject: [PATCH 2/3] bsd-user: port linux-user:ff8a8bbc2ad1 for variable page
- sizes
-Date: Thu,  6 Jun 2024 22:25:02 -0600
-Message-ID: <20240607042503.25222-3-imp@bsdimp.com>
+Subject: [PATCH 3/3] bsd-user: Catch up to run-time reserved_va math
+Date: Thu,  6 Jun 2024 22:25:03 -0600
+Message-ID: <20240607042503.25222-4-imp@bsdimp.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240607042503.25222-1-imp@bsdimp.com>
 References: <20240607042503.25222-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::d34;
- envelope-from=imp@bsdimp.com; helo=mail-io1-xd34.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::12d;
+ envelope-from=imp@bsdimp.com; helo=mail-il1-x12d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -95,53 +94,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bring in Richard Henderson's ff8a8bbc2ad1 to finalize the page size to
-allow TARGET_PAGE_BITS_VARY. bsd-user's "blitz" fork has aarch64
-support, which is now variable page size. Add support for it here, even
-though it's effectively a nop in upstream qemu.
+Catch up to linux-user's 8f67b9c694d0, 13c13397556a, 2f7828b57293, and
+95059f9c313a by Richard Henderson which made reserved_va a run-time
+calculation, defaulting to nothing except in the case of 64-bit host
+32-bit target. Also include the adjustment of the comment heading that
+work submitted in the same patch stream. Since this is a direct copy,
+squash it into one patch rather than follow the Linux evolution since
+breaking this down further at this point doesn't make sense for this
+"new code".
 
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/main.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ bsd-user/main.c | 39 +++++++++++++++++++++++++++------------
+ 1 file changed, 27 insertions(+), 12 deletions(-)
 
 diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 29a629d8779..d685734d087 100644
+index d685734d087..dcad266c2c9 100644
 --- a/bsd-user/main.c
 +++ b/bsd-user/main.c
-@@ -46,6 +46,7 @@
- #include "crypto/init.h"
- #include "qemu/guest-random.h"
- #include "gdbstub/user.h"
-+#include "exec/page-vary.h"
+@@ -77,25 +77,16 @@ bool have_guest_base;
+ # if HOST_LONG_BITS > TARGET_VIRT_ADDR_SPACE_BITS
+ #  if TARGET_VIRT_ADDR_SPACE_BITS == 32 && \
+       (TARGET_LONG_BITS == 32 || defined(TARGET_ABI32))
+-#   define MAX_RESERVED_VA  0xfffffffful
++#   define MAX_RESERVED_VA(CPU)  0xfffffffful
+ #  else
+-#   define MAX_RESERVED_VA  ((1ul << TARGET_VIRT_ADDR_SPACE_BITS) - 1)
++#   define MAX_RESERVED_VA(CPU)  ((1ul << TARGET_VIRT_ADDR_SPACE_BITS) - 1)
+ #  endif
+ # else
+-#  define MAX_RESERVED_VA  0
++#  define MAX_RESERVED_VA(CPU)  0
+ # endif
+ #endif
  
- #include "host-os.h"
- #include "target_arch_cpu.h"
-@@ -291,6 +292,7 @@ int main(int argc, char **argv)
-     char **target_environ, **wrk;
+-/*
+- * That said, reserving *too* much vm space via mmap can run into problems
+- * with rlimits, oom due to page table creation, etc.  We will still try it,
+- * if directed by the command-line option, but not by default.
+- */
+-#if HOST_LONG_BITS == 64 && TARGET_VIRT_ADDR_SPACE_BITS <= 32
+-unsigned long reserved_va = MAX_RESERVED_VA;
+-#else
+ unsigned long reserved_va;
+-#endif
+ 
+ const char *interp_prefix = CONFIG_QEMU_INTERP_PREFIX;
+ const char *qemu_uname_release;
+@@ -293,6 +284,7 @@ int main(int argc, char **argv)
      envlist_t *envlist = NULL;
      char *argv0 = NULL;
-+    int host_page_size;
+     int host_page_size;
++    unsigned long max_reserved_va;
  
      adjust_ssize();
  
-@@ -476,6 +478,16 @@ int main(int argc, char **argv)
-                                  opt_one_insn_per_tb, &error_abort);
-         ac->init_machine(NULL);
-     }
-+
-+    /*
-+     * Finalize page size before creating CPUs.
-+     * This will do nothing if !TARGET_PAGE_BITS_VARY.
-+     * The most efficient setting is to match the host.
-+     */
-+    host_page_size = qemu_real_host_page_size();
-+    set_preferred_target_page_bits(ctz32(host_page_size));
-+    finalize_target_page_bits();
-+
-     cpu = cpu_create(cpu_type);
-     env = cpu_env(cpu);
+@@ -493,6 +485,29 @@ int main(int argc, char **argv)
      cpu_reset(cpu);
+     thread_cpu = cpu;
+ 
++    /*
++     * Reserving too much vm space via mmap can run into problems with rlimits,
++     * oom due to page table creation, etc.  We will still try it, if directed
++     * by the command-line option, but not by default. Unless we're running a
++     * target address space of 32 or fewer bits on a host with 64 bits.
++     */
++    max_reserved_va = MAX_RESERVED_VA(cpu);
++    if (reserved_va != 0) {
++        if ((reserved_va + 1) % host_page_size) {
++            char *s = size_to_str(host_page_size);
++            fprintf(stderr, "Reserved virtual address not aligned mod %s\n", s);
++            g_free(s);
++            exit(EXIT_FAILURE);
++        }
++        if (max_reserved_va && reserved_va > max_reserved_va) {
++            fprintf(stderr, "Reserved virtual address too big\n");
++            exit(EXIT_FAILURE);
++        }
++    } else if (HOST_LONG_BITS == 64 && TARGET_VIRT_ADDR_SPACE_BITS <= 32) {
++        /* MAX_RESERVED_VA + 1 is a large power of 2, so is aligned. */
++        reserved_va = max_reserved_va;
++    }
++
+     if (getenv("QEMU_STRACE")) {
+         do_strace = 1;
+     }
 -- 
 2.43.0
 
