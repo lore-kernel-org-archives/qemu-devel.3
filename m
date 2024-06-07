@@ -4,49 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3A08C27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 03:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B198C41513
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 04:27:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFQcV-0005aA-Ie; Thu, 06 Jun 2024 23:50:27 -0400
+	id 1sFRB0-0004l5-1O; Fri, 07 Jun 2024 00:26:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sFQcT-0005a1-Os
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 23:50:25 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sFQcQ-00073s-Nw
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 23:50:25 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Cx_ep4g2JmnHwEAA--.18838S3;
- Fri, 07 Jun 2024 11:50:16 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxRcV4g2JmCL0XAA--.48244S2; 
- Fri, 07 Jun 2024 11:50:16 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH v3] target/loongarch/kvm: Add software breakpoint support
-Date: Fri,  7 Jun 2024 11:50:16 +0800
-Message-Id: <20240607035016.2975799-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sFRAu-0004kF-GM
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 00:26:00 -0400
+Received: from mail-io1-xd34.google.com ([2607:f8b0:4864:20::d34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sFRAs-000514-W4
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 00:26:00 -0400
+Received: by mail-io1-xd34.google.com with SMTP id
+ ca18e2360f4ac-7eb2db841f2so65492439f.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 21:25:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1717734357; x=1718339157;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=I/j33GhWtIBI0v34ghg84N3DhwSzzaAp7dsCaoBrlq4=;
+ b=Yyi2gcII815T/pAA+1Wjrbeg+l5UOILhLc91hn1PKgvPXUnceOPff0YblcrUon0yd/
+ lfPfCxajr4Y7uc45aX8do42fl1tDfg1Nan5i7ESJnceuwfX4l3OF9r/hcyk8A/D3pGyw
+ TB7r3DAduV3RD3cTOLfRulDLDb7sPzKrA3RBH64H8oA0kSCMqZNee1z+k+8O7xBFkmy6
+ xj6YsfSVy/wRFR2chyMepjGoKNGW/i3cp6/inaR5bKjEEFt7/E/CtJVq9a8p8WyUKaZG
+ wjKxwc5BJDSN5j8Neg7DZ3i0uNie0zD9vhtrJYCbvuWyf0hAl69WbyAwbtYV6Bh73UHY
+ itCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717734357; x=1718339157;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=I/j33GhWtIBI0v34ghg84N3DhwSzzaAp7dsCaoBrlq4=;
+ b=hpk5jgZZxSXn0lbSYoKRDki2CDGy8P00Zl8D67c2srAOcO72c9I6aBBW+zI9Xwcuyk
+ w3vMNJkSAadMyef6DS5ZGWEdoIWA5x/3utZlzwr2ldSoqRxJtOfGcI/X5AL/proxb9Na
+ GiaIJELz27+Iwj/b9TDu5D/VQcy1uo5gRed+YIT6J50xqO4XbbPU1LsPwSvXAxZl/xr1
+ 5dfgT+C6INFXOme/EQQ6nOObkdsgGWQwLaszavVtnjzOGL2Mex7w16hT6wYgtuJB8S2d
+ gRi2AFtV6EmyVPFzrnqOLOYaZp1aGmmjckal+hWMOUnaR+RMZIa6eVCWRzr1nc5oO5gx
+ HK2w==
+X-Gm-Message-State: AOJu0YyBo4T4vfPKEtw/CUCwQ3Le6kXVgzhvi7EBO1MGSfIYAXuTljK5
+ rZjreZkYT3aZLHHdFptQfg8f1PLru0IFCXqI4hyRNMEoKSA8uDwdRwEHY+qlUcUYFkFoNBgHHWU
+ 0CQE=
+X-Google-Smtp-Source: AGHT+IFJnkYLTSNSLqMkyGCaFlIcBtiiYPjxVRD4xAQ7s7uBR32660iDZgHpZ99lro/Dbohsg8/Q4g==
+X-Received: by 2002:a05:6e02:b43:b0:375:fa2:5195 with SMTP id
+ e9e14a558f8ab-375803224a3mr19401295ab.8.1717734357266; 
+ Thu, 06 Jun 2024 21:25:57 -0700 (PDT)
+Received: from dune.bsdimp.com ([50.253.99.174])
+ by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-374bc15d9d9sm6162585ab.37.2024.06.06.21.25.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Jun 2024 21:25:56 -0700 (PDT)
+From: Warner Losh <imp@bsdimp.com>
+To: qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Warner Losh <imp@bsdimp.com>
+Subject: [PATCH 2/3] bsd-user: port linux-user:ff8a8bbc2ad1 for variable page
+ sizes
+Date: Thu,  6 Jun 2024 22:25:02 -0600
+Message-ID: <20240607042503.25222-3-imp@bsdimp.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240607042503.25222-1-imp@bsdimp.com>
+References: <20240607042503.25222-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxRcV4g2JmCL0XAA--.48244S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
+Received-SPF: none client-ip=2607:f8b0:4864:20::d34;
+ envelope-from=imp@bsdimp.com; helo=mail-io1-xd34.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,151 +95,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With KVM virtualization, debug exception is injected to guest kernel
-rather than host for normal break intruction. Here hypercall
-instruction with special code is used for sw breakpoint usage,
-and detailed instruction comes from kvm kernel with user API
-KVM_REG_LOONGARCH_DEBUG_INST.
+Bring in Richard Henderson's ff8a8bbc2ad1 to finalize the page size to
+allow TARGET_PAGE_BITS_VARY. bsd-user's "blitz" fork has aarch64
+support, which is now variable page size. Add support for it here, even
+though it's effectively a nop in upstream qemu.
 
-Now only software breakpoint is supported, and it is allowed to
-insert/remove software breakpoint. We can debug guest kernel with gdb
-method after kernel is loaded, hardware breakpoint will be added in later.
-
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
-v2 ... v3:
-  1. Refresh patch based on the latest version, succeed in compile and
-run since kvm uapi header files is updated.
-v1 ... v2:
-  1. Enable TARGET_KVM_HAVE_GUEST_DEBUG on loongarch64 platform
----
- configs/targets/loongarch64-softmmu.mak |  1 +
- target/loongarch/kvm/kvm.c              | 76 +++++++++++++++++++++++++
- 2 files changed, 77 insertions(+)
+ bsd-user/main.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
-index 84beb19b90..65b65e0c34 100644
---- a/configs/targets/loongarch64-softmmu.mak
-+++ b/configs/targets/loongarch64-softmmu.mak
-@@ -1,5 +1,6 @@
- TARGET_ARCH=loongarch64
- TARGET_BASE_ARCH=loongarch
-+TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_SUPPORTS_MTTCG=y
- TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml
- # all boards require libfdt
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 8e6e27c8bf..e1be6a6959 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -28,6 +28,7 @@
- #include "trace.h"
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index 29a629d8779..d685734d087 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -46,6 +46,7 @@
+ #include "crypto/init.h"
+ #include "qemu/guest-random.h"
+ #include "gdbstub/user.h"
++#include "exec/page-vary.h"
  
- static bool cap_has_mp_state;
-+static unsigned int brk_insn;
- const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_LAST_INFO
- };
-@@ -664,7 +665,14 @@ static void kvm_loongarch_vm_stage_change(void *opaque, bool running,
+ #include "host-os.h"
+ #include "target_arch_cpu.h"
+@@ -291,6 +292,7 @@ int main(int argc, char **argv)
+     char **target_environ, **wrk;
+     envlist_t *envlist = NULL;
+     char *argv0 = NULL;
++    int host_page_size;
  
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-+    uint64_t val;
-+
-     qemu_add_vm_change_state_handler(kvm_loongarch_vm_stage_change, cs);
-+
-+    if (!kvm_get_one_reg(cs, KVM_REG_LOONGARCH_DEBUG_INST, &val)) {
-+        brk_insn = val;
-+    }
-+
-     return 0;
- }
+     adjust_ssize();
  
-@@ -739,6 +747,67 @@ bool kvm_arch_stop_on_emulation_error(CPUState *cs)
-     return true;
- }
- 
-+void kvm_arch_update_guest_debug(CPUState *cpu, struct kvm_guest_debug *dbg)
-+{
-+    if (kvm_sw_breakpoints_active(cpu)) {
-+        dbg->control |= KVM_GUESTDBG_ENABLE | KVM_GUESTDBG_USE_SW_BP;
-+    }
-+}
+@@ -476,6 +478,16 @@ int main(int argc, char **argv)
+                                  opt_one_insn_per_tb, &error_abort);
+         ac->init_machine(NULL);
+     }
 +
-+int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-+{
-+    if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&bp->saved_insn, 4, 0) ||
-+        cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&brk_insn, 4, 1)) {
-+        error_report("%s failed", __func__);
-+        return -EINVAL;
-+    }
-+    return 0;
-+}
++    /*
++     * Finalize page size before creating CPUs.
++     * This will do nothing if !TARGET_PAGE_BITS_VARY.
++     * The most efficient setting is to match the host.
++     */
++    host_page_size = qemu_real_host_page_size();
++    set_preferred_target_page_bits(ctz32(host_page_size));
++    finalize_target_page_bits();
 +
-+int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-+{
-+    static uint32_t brk;
-+
-+    if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&brk, 4, 0) ||
-+        brk != brk_insn ||
-+        cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&bp->saved_insn, 4, 1)) {
-+        error_report("%s failed", __func__);
-+        return -EINVAL;
-+    }
-+    return 0;
-+}
-+
-+int kvm_arch_insert_hw_breakpoint(vaddr addr, vaddr len, int type)
-+{
-+    return -ENOSYS;
-+}
-+
-+int kvm_arch_remove_hw_breakpoint(vaddr addr, vaddr len, int type)
-+{
-+    return -ENOSYS;
-+}
-+
-+void kvm_arch_remove_all_hw_breakpoints(void)
-+{
-+}
-+
-+static bool kvm_loongarch_handle_debug(CPUState *cs, struct kvm_run *run)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    CPULoongArchState *env = &cpu->env;
-+
-+    kvm_cpu_synchronize_state(cs);
-+    if (cs->singlestep_enabled) {
-+        return true;
-+    }
-+
-+    if (kvm_find_sw_breakpoint(cs, env->pc)) {
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
- int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
- {
-     int ret = 0;
-@@ -757,6 +826,13 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
-                          run->iocsr_io.len,
-                          run->iocsr_io.is_write);
-         break;
-+
-+    case KVM_EXIT_DEBUG:
-+        if (kvm_loongarch_handle_debug(cs, run)) {
-+            ret = EXCP_DEBUG;
-+        }
-+        break;
-+
-     default:
-         ret = -1;
-         warn_report("KVM: unknown exit reason %d", run->exit_reason);
-
-base-commit: dec9742cbc59415a8b83e382e7ae36395394e4bd
+     cpu = cpu_create(cpu_type);
+     env = cpu_env(cpu);
+     cpu_reset(cpu);
 -- 
-2.39.3
+2.43.0
 
 
