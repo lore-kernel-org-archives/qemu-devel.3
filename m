@@ -4,40 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1606AC27C53
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:08:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B469C27C53
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:08:48 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf17-0005FK-EZ; Fri, 07 Jun 2024 15:12:49 -0400
+	id 1sFf0x-0004PY-W7; Fri, 07 Jun 2024 15:12:41 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf16-0004y4-4y; Fri, 07 Jun 2024 15:12:48 -0400
+ id 1sFf0s-0004Oq-Gj; Fri, 07 Jun 2024 15:12:34 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf14-0001hU-E6; Fri, 07 Jun 2024 15:12:47 -0400
+ id 1sFf0q-0001dz-6j; Fri, 07 Jun 2024 15:12:34 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2A3886E535;
- Fri,  7 Jun 2024 22:13:16 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9235A6E52D;
+ Fri,  7 Jun 2024 22:13:14 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 60E19E2735;
- Fri,  7 Jun 2024 22:12:21 +0300 (MSK)
-Received: (nullmailer pid 528255 invoked by uid 1000);
- Fri, 07 Jun 2024 19:12:20 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id C23D9E272D;
+ Fri,  7 Jun 2024 22:12:19 +0300 (MSK)
+Received: (nullmailer pid 528227 invoked by uid 1000);
+ Fri, 07 Jun 2024 19:12:19 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Xinyu Li <lixinyu@loongson.cn>,
- Xinyu Li <lixinyu20s@ict.ac.cn>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.12 27/29] target/i386: fix SSE and SSE2 feature check
-Date: Fri,  7 Jun 2024 22:12:10 +0300
-Message-Id: <20240607191219.528194-8-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.12 00/29] Patch Round-up for stable 7.2.12,
+ frozen at 2024-06-07
+Date: Fri,  7 Jun 2024 22:12:02 +0300
+Message-Id: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
-References: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,35 +60,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xinyu Li <lixinyu@loongson.cn>
+The following patches are queued for QEMU stable v7.2.12:
 
-Features check of CPUID_SSE and CPUID_SSE2 should use cpuid_features,
-rather than cpuid_ext_features.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
 
-Signed-off-by: Xinyu Li <lixinyu20s@ict.ac.cn>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-ID: <20240602100904.2137939-1-lixinyu20s@ict.ac.cn>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit da7c95920d027dbb00c6879c1da0216b19509191)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Patch freeze is 2024-06-07 (frozen), and the release is planned for 2024-06-09:
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 528e2fdfbb..1dfc368456 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1418,9 +1418,9 @@ static bool has_cpuid_feature(DisasContext *s, X86CPUIDFeature cpuid)
-     case X86_FEAT_PCLMULQDQ:
-         return (s->cpuid_ext_features & CPUID_EXT_PCLMULQDQ);
-     case X86_FEAT_SSE:
--        return (s->cpuid_ext_features & CPUID_SSE);
-+        return (s->cpuid_features & CPUID_SSE);
-     case X86_FEAT_SSE2:
--        return (s->cpuid_ext_features & CPUID_SSE2);
-+        return (s->cpuid_features & CPUID_SSE2);
-     case X86_FEAT_SSE3:
-         return (s->cpuid_ext_features & CPUID_EXT_SSE3);
-     case X86_FEAT_SSSE3:
--- 
-2.39.2
+  https://wiki.qemu.org/Planning/7.2
 
+Please respond here or CC qemu-stable@nongnu.org on any additional notes
+about the planning release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01* 690ceb71936f Philippe Mathieu-Daudé:
+   gitlab-ci: Remove job building EDK2 firmware binaries
+02* 7bc1286b81d4 Palmer Dabbelt:
+   gitlab/opensbi: Move to docker:stable
+03* 04f6fb897a5a Michael Tokarev:
+   linux-user: do_setsockopt: fix SOL_ALG.ALG_SET_KEY
+04* ae6d91a7e9b7 Zhu Yangyang:
+   nbd/server: do not poll within a coroutine context
+05* 4fa333e08dd9 Eric Blake:
+   nbd/server: Mark negotiation functions as coroutine_fn
+06* 06479dbf3d7d Li Zhijian:
+   backends/cryptodev-builtin: Fix local_error leaks
+07* dcc5c018c7e6 Peter Maydell:
+   tests/avocado: update sunxi kernel from armbian to 6.6.16
+08* a88a04906b96 Thomas Huth:
+   .gitlab-ci.d/cirrus.yml: Shorten the runtime of the macOS and FreeBSD jobs
+09* 4b00855f0ee2 Alexandra Diupina:
+   hw/dmax/xlnx_dpdma: fix handling of address_extension descriptor fields
+10* eb656a60fd93 Philippe Mathieu-Daudé:
+   hw/arm/npcm7xx: Store derivative OTP fuse key in little endian
+11* 6a5a63f74ba5 Ruihan Li:
+   target/i386: Give IRQs a chance when resetting HF_INHIBIT_IRQ_MASK
+12* e6578f1f68a0 Mattias Nissler:
+   hw/remote/vfio-user: Fix config space access byte order
+13* 41c685dc59bb Paolo Bonzini:
+   target/i386: fix operand size for DATA16 REX.W POPCNT
+14* 40a3ec7b5ffd Paolo Bonzini:
+   target/i386: rdpkru/wrpkru are no-prefix instructions
+15* 37e91415018d hikalium:
+   ui/gtk: Fix mouse/motion event scaling issue with GTK display backend
+16* e4e62514e3cc Dongwon Kim:
+   ui/gtk: Check if fence_fd is equal to or greater than 0
+17* 84d4b7285486 donsheng:
+   target-i386: hyper-v: Correct kvm_hv_handle_exit return value
+18* 8225bff7c5db Paolo Bonzini:
+   target/i386: disable jmp_opt if EFLAGS.RF is 1
+19* f0f0136abba6 Paolo Bonzini:
+   target/i386: no single-step exception after MOV or POP SS
+20 36fa7c686e9e Richard Henderson:
+   gitlab: Update msys2-64bit runner tags
+21 19ed42e8adc8 Zenghui Yu:
+   hvf: arm: Fix encodings for ID_AA64PFR1_EL1 and debug System registers
+22 daafa78b2972 Andrey Shumilin:
+   hw/intc/arm_gic: Fix handling of NS view of GICC_APR<n>
+23 daf9748ac002 Marcin Juszkiewicz:
+   target/arm: Disable SVE extensions when SVE is disabled
+24 c76b121840c6 yang.zhang:
+   hw/intc/riscv_aplic: APLICs should add child earlier than realize
+25 915758c537b5 Alistair Francis:
+   disas/riscv: Decode all of the pmpcfg and pmpaddr CSRs
+26 7604bbc2d87d Paolo Bonzini:
+   target/i386: fix xsave.flat from kvm-unit-tests
+27 da7c95920d02 Xinyu Li:
+   target/i386: fix SSE and SSE2 feature check
+28 2e701e6785cd Bernhard Beschow:
+   ui/sdl2: Allow host to power down screen
+29 78f932ea1f7b lanyanzhi:
+   target/loongarch: fix a wrong print in cpu dump
+
+(commit(s) marked with * were in previous series and are not resent)
 
