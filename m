@@ -4,69 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8825C27C55
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 10:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 182EDC27C55
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 10:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFX7s-0000GZ-8a; Fri, 07 Jun 2024 06:47:16 -0400
+	id 1sFXB2-0001kr-Hh; Fri, 07 Jun 2024 06:50:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1sFX7o-0000G6-Qw
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 06:47:12 -0400
-Received: from qs51p00im-qukt01071501.me.com ([17.57.155.4])
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sFXAz-0001jE-99
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 06:50:29 -0400
+Received: from wfout8-smtp.messagingengine.com ([64.147.123.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1sFX7n-0003y4-8K
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 06:47:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
- t=1717757227; bh=5VPpkxIv4qSeSXjxKk3cVUF/jAopaZ1NdrEr+y+ic10=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To;
- b=epsljat0wgrZSLBEgqUMKnssyg3MZ4rBto1GU3jqkFk8MTnjMtl+fZ6SDvRbjSQsS
- tUm/c/LCDWy35B2t4fzQTuTZpjc/iSYmQf2zcuYBIwQ/4oBXksD5DQLc/Il1LYHtbb
- DTeiu2OffD90qa9pL/AHH6+4YFkHzNIv6DiNaVSBkKGpZeYhF4PR3VlX7cvT5IAWBJ
- Nq+vLiGdh7tQSwiprNnyfaPiqNhkWK2a3QkrvIRGsP7HiQtaVDqNUwiMKBJ/mmbMVX
- 4z7E/JIMT/QOzJIUMVd5Th8NmrSOhBcTFJY1fv7PxGVRPeBKoMt5nmOJKV6a2geCWV
- KMNMdScBJscrQ==
-Received: from smtpclient.apple (qs51p00im-dlb-asmtp-mailmevip.me.com
- [17.57.155.28])
- by qs51p00im-qukt01071501.me.com (Postfix) with ESMTPSA id 221D61C402D0;
- Fri,  7 Jun 2024 10:47:03 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
-Subject: Re: [PATCH 0/5] trace: Remove and forbid newline characters in event
- format
-From: Mads Ynddal <mads@ynddal.dk>
-In-Reply-To: <20240606103943.79116-1-philmd@linaro.org>
-Date: Fri, 7 Jun 2024 12:46:50 +0200
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sFXAw-0004bB-Ks
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 06:50:29 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailfout.west.internal (Postfix) with ESMTP id 680511C000FA;
+ Fri,  7 Jun 2024 06:50:23 -0400 (EDT)
+Received: from imap44 ([10.202.2.94])
+ by compute3.internal (MEProxy); Fri, 07 Jun 2024 06:50:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm2; t=1717757423;
+ x=1717843823; bh=yTf5sD3+p/akuuj3PkYMhXheqPD2Z8OZQOhySzLWpGk=; b=
+ lfYdFvfoNh7I4vgoXUwgh6rQKUE9CCpBbMIcED9iv2UZJHrBbm54B5J79uBFArE4
+ +6aeuJs9gKZRc6LHdLqL7qQFh7qUI3S2TFbGyuaFA4iEb3Cntp0d1OjRgi3KjW0d
+ fn1MOCoEIa9Yz6Gl7GZK+2oA7iWlPIB7fMGt4FNnB8/OLxJeBcq6+v+gjYYfznp7
+ TpNvbQ4VGO8u2IoY80/izXi6/VUG/M6SyJ0nk0cEQpoBPv0hj24vUdNfejdA4w+s
+ aDcD1BfIwp0RyZPa97LKR03HU+NSLopgx2F7VWSWRYARDp+zb6N6sBxuZ2mGCPG8
+ d+4oBe+0N8eLNgmPUnB4pg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1717757423; x=
+ 1717843823; bh=yTf5sD3+p/akuuj3PkYMhXheqPD2Z8OZQOhySzLWpGk=; b=O
+ fhgb0xcKeMSIjc12NMpWnIonZSWZ3ibAwUyRdgrdvKDNqHlH7innHgsCBzo9dXzz
+ 9sjMrcPZccAKVlNJiWckpJkibEA/qerhYFgMn2Ri1zbl7pwhRTcuwkcdQYDy8+ua
+ PDIjNphSh2U4BZl+JvKUwgJE3HpGNgQpzT+HuPLWVFk/3mn7fOUZDqTwVizOMo+R
+ HDQrEDY0/wy6nar+t8oP06YKzHUhOwsd9YeqCGdrGY33DKBom+9Og+biw9ze8eEW
+ oej4UKHB44Iw/kAWDQLcQWE+HZn8R07xUcIfcrn/U0fva2MwJpUv4n4foXdtrjsP
+ InROCv5Ae+/sA/oSAUzMA==
+X-ME-Sender: <xms:7uViZmgbG6z41Fi-YHtUvJCAPTEj1wYOhdf0DxDHJRrbkpjzCZlw6w>
+ <xme:7uViZnA3AF6shJhOKhI7TTby94X54l5ilCom21Efs09NlwmoHOICN88jLUStF5Mte
+ DrofJIXkZPuRpzzI8g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedtuddgtdekucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfl
+ ihgrgihunhcujggrnhhgfdcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtoh
+ hmqeenucggtffrrghtthgvrhhnpefgudejteevuedvjeeludefffdvieevudehueetfefh
+ udehvdetvdfgudejtefgvdenucffohhmrghinhepuggvsghirghnrdhorhhgnecuvehluh
+ hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdih
+ rghnghesfhhlhihgohgrthdrtghomh
+X-ME-Proxy: <xmx:7uViZuGShmou4OHxk6m0qTVWag2S_XJL0k8BKSFl--PNFgsni9YhDA>
+ <xmx:7uViZvQbkg2Hr_NpWJon2ObmhVRl6Xc-yYbWFeN8QxE2A_SC85G1cg>
+ <xmx:7uViZjzjhqUan3zOb5ziAvhTebwOMkWCUCCB42GjtclSR8Tlf4MovA>
+ <xmx:7uViZt5Eza7pyCI2dxlcDlHCmYj79XZ5LWxt3_Qcy9OpJOP8MlZgBQ>
+ <xmx:7-ViZu-b_PXnPEjr40IWwgJGYXTxCvitvdVa8qIh61S8B723aV13aWHx>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id B99EE36A0074; Fri,  7 Jun 2024 06:50:22 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-497-g97f96844c-fm-20240526.001-g97f96844
+MIME-Version: 1.0
+Message-Id: <bb0a56c7-df3f-41a6-81b8-b962e3875ad9@app.fastmail.com>
+In-Reply-To: <cbc243e6-b77e-4f52-88c5-04b94dad1d20@app.fastmail.com>
+References: <20240511-mips_mttcg-v1-1-1b71d9b85234@flygoat.com>
+ <87h6e8g9p3.fsf@draig.linaro.org>
+ <cbc243e6-b77e-4f52-88c5-04b94dad1d20@app.fastmail.com>
+Date: Fri, 07 Jun 2024 11:49:03 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: "QEMU devel" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] mips64el-softmmu: Enable MTTCG
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <867D16AD-D9FA-42BE-A51F-8CE6274941EC@ynddal.dk>
-References: <20240606103943.79116-1-philmd@linaro.org>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-X-Mailer: Apple Mail (2.3774.600.62)
-X-Proofpoint-GUID: lS6ppaj8x9GvUssqWmQcgKMHpXw4hD9F
-X-Proofpoint-ORIG-GUID: lS6ppaj8x9GvUssqWmQcgKMHpXw4hD9F
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-07_05,2024-06-06_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- malwarescore=0 clxscore=1030
- spamscore=0 adultscore=0 suspectscore=0 phishscore=0 mlxlogscore=711
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2308100000 definitions=main-2406070078
-Received-SPF: pass client-ip=17.57.155.4; envelope-from=mads@ynddal.dk;
- helo=qs51p00im-qukt01071501.me.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=64.147.123.151;
+ envelope-from=jiaxun.yang@flygoat.com; helo=wfout8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,30 +109,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->=20
-> Trace events aren't designed to be multi-lines.
-> Few format use the newline character: remove it
-> and forbid further uses.
->=20
-> Philippe Mathieu-Daud=C3=A9 (5):
->  backends/tpm: Remove newline character in trace event
->  hw/sh4: Remove newline character in trace events
->  hw/usb: Remove newline character in trace events
->  hw/vfio: Remove newline character in trace events
->  tracetool: Forbid newline character in event format
->=20
-> backends/tpm/tpm_util.c       | 5 +++--
-> backends/tpm/trace-events     | 3 ++-
-> hw/sh4/trace-events           | 4 ++--
-> hw/usb/trace-events           | 6 +++---
-> hw/vfio/trace-events          | 4 ++--
-> scripts/tracetool/__init__.py | 2 ++
-> 6 files changed, 14 insertions(+), 10 deletions(-)
->=20
+
+
+=E5=9C=A82024=E5=B9=B46=E6=9C=885=E6=97=A5=E5=85=AD=E6=9C=88 =E4=B8=8B=E5=
+=8D=881:47=EF=BC=8CJiaxun Yang=E5=86=99=E9=81=93=EF=BC=9A
+[...]
+> I'll try to upgrade kernel used in this test.
+
+Unfortunately, we don't have kernel build from reliable source
+for that test.
+
+I requested Debian project to build kernel for us[1].
+
+[1]: https://salsa.debian.org/kernel-team/linux/-/merge_requests/1074
+
+Thanks
+>
+> Thanks
+> - Jiaxun
+>>
+[...]
+>
 > --=20
-> 2.41.0
->=20
+> - Jiaxun
 
-Acked-by: Mads Ynddal <mads@ynddal.dk>
-
+--=20
+- Jiaxun
 
