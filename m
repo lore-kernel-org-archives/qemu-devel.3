@@ -4,77 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1151C27C52
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 00:07:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE8D0C41513
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 00:25:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFN8C-0004tk-8B; Thu, 06 Jun 2024 20:06:56 -0400
+	id 1sFNPV-0001DW-T9; Thu, 06 Jun 2024 20:24:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sFN8B-0004tU-2v
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 20:06:55 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1sFNPU-0001DA-3c
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 20:24:48 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sFN89-0004NE-C9
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 20:06:54 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1f61f775738so13981525ad.2
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 17:06:52 -0700 (PDT)
+ id 1sFNPS-0006wG-DZ
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 20:24:47 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-701b0b0be38so1572727b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 17:24:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717718811; x=1718323611; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=5+YFULanMr7Tt9tzFcud5DCd60OHhq/1RFVT64kRORc=;
- b=TXsbayNHScfDZ2R11rpgdmyMRKPmyVm5hW3onofj6BfFWJZIYjBu98NyMKlhgPyqFi
- LUcUa0BaJEKzj84p1w6M3P8d8LQ+Q+3GCTTf948ZTmGOKNJKYgkXnTPd05ZishsgYP8K
- WV/JaAkDnx3jPseist/I4EOBC5r+NpHuEhXpnN+Yml3rHknJRIfwEPPDO7FtrXm1BIUC
- 1z//P/BCwRsrwBhkDwQiuAPhBT3mxxSPmdmapzF7/3j7zhIkzrCT76tHbtL5PBVXcEOD
- dy+mrqoHVg6ufB5M/DafGA3RbNr7eFTbRYWcISHs+xdP8SQDcQP4UwyMTcuwKqJ1s7ld
- oyVg==
+ d=linaro.org; s=google; t=1717719885; x=1718324685; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=JpCaxNdPEbUKCHyaU8QeByudgLqqWshFb8jc2026cAI=;
+ b=ezfRCB6a8SGlSvilPgSmLGgawK7nmNEymU0SrqWCj+bwda2HxfBnOZEFH524hstNEb
+ 9+0WL8b34d5j+5G3V+QPkF2pqyjq0Xb/Y2nxQai8TVhiHFk25GwrQgy4ZU5ykDjRrhP5
+ 1V2CpojN0x91vytAN/ZE40NZKfZb2BimqziFJGIaXZizeBgHAzgSjJN3mJwqnoagUVA0
+ HSZ1TlNVxr4tjYtxL7u17BfdOFvQJvycUZJ9JjYiUwAB6penZJTlH7MrQRJ39GXcxJbS
+ /XcueCDYZbC4ngyoszTMkMzZUWt9TheSejFHC/jc/Jf43JWHc68k07Y8dgz1YLBh+WHw
+ 6+xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717718811; x=1718323611;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5+YFULanMr7Tt9tzFcud5DCd60OHhq/1RFVT64kRORc=;
- b=EnG6vgnvsjGGA4Sd3rsS9TbTt4gL3gcKr6YrKJDP39H1U7wOiRb4LbXWvXWDPtwOXZ
- cCUguHK0lxl/MArQNdmX7CDAK94MUnXQVSTq/GfjUyVn7Nfz4fmnoA+Zp1AGvKyqwlPS
- k9iT98CJw/W5iBzwFFFByUCHXoeA0WLA9ad4T7f9ebG9P6SEpAfwHstZIbugyFxXcLje
- IhskTFdk55FDJ6FIAMHN1l838SFw6T8d4e+rl5rBjgSo/GH7oZFCXFlg6oXGQQt9E17V
- l4nqVwNxykScyDhfVOwf7N8vZdT8P5FPtK6iOoLdVDR1TNz6UCNYI8S/Wi6KyuXV2bsn
- L1RA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWyCYpeea3ZI1iqbZpPZItQlndeg41Wr8HUu0hKltwumx1KvcpIYxqclkUE4RWXJYerVYAYvRzbw6NB7JOzSuKxO4uK8R8=
-X-Gm-Message-State: AOJu0YxrDT+QCw4m4FhlcKrRs0vbN+yrMNLBnagVRqo3dYeCgPl3CQlV
- 1yHbw9MMxK1A/09qHEFHrxB9dpW6aemeXfjbZEUYYUYCEKnDdqUBXq5R81buaFqM2j83XdcqLNp
- z
-X-Google-Smtp-Source: AGHT+IFrphXyfsTcZPQEDXbi2eJbWpS2VGFjxxIFldg9HXvDdUe8mCE8ly3rBCUUp7G3lR4E/AGeYg==
-X-Received: by 2002:a17:902:e742:b0:1f6:5e40:6e30 with SMTP id
- d9443c01a7336-1f6d03cc26cmr12922705ad.60.1717718811107; 
- Thu, 06 Jun 2024 17:06:51 -0700 (PDT)
-Received: from [192.168.101.177] ([75.147.178.105])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6bd81bbc1sm21514315ad.302.2024.06.06.17.06.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Jun 2024 17:06:50 -0700 (PDT)
-Message-ID: <7c34cb9d-cb2c-4279-a027-c03a224ac551@linaro.org>
-Date: Thu, 6 Jun 2024 17:06:47 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/6] loongarch-to-apply queue
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-References: <20240606040155.2607422-1-gaosong@loongson.cn>
-Content-Language: en-US
+ d=1e100.net; s=20230601; t=1717719885; x=1718324685;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JpCaxNdPEbUKCHyaU8QeByudgLqqWshFb8jc2026cAI=;
+ b=c72slK+rLcqO3j2p+1MPYJHImVe+GUpWxHzCN/1f0kGedKzK+H47+huy6lUCavTbuD
+ egC2Y8H4HRglk9Ck+luQ2iAmYEI/E9h9EG0EZp4XwLJeMe2FQcFOqQqMNFO2h5Eg8KCG
+ vPssfXGQFx1LGMmp8bD+XLUWqjx4chJbo1g13NR6ETC3LorylyKcji2e0p7+QUWG1h/G
+ xIAgoJRYcfAmwupCLtsmJXY+AXUveIfvEYlA0++vlbGgxm3paDlh7FssIT6/935s30i1
+ pNNlrjHbxM3ks6VB3C2i/c4jmkNECubZgDxbNE+8yhFcjS7kbwzo5URIfDgx4jF7/Lhl
+ pIEw==
+X-Gm-Message-State: AOJu0Ywa3bRkfgCJlMjLNhh14YtqhNutBcZ3tb1ERKGCK69cLOHer2FB
+ SawyeRNSvIWlW3bT1YCc2J9JpoqiXlP01ViJgagWdIrcNqULmEI7FVkVXVHrAK4Y1Ar+Bu2KQMf
+ O
+X-Google-Smtp-Source: AGHT+IHfSsU7QJc4Z9jopisUmRC7K8gMlXBcyI8B81OOZQySwsO+ZTr5zG7m0c9dFYNoD5v+Q8ePpw==
+X-Received: by 2002:a05:6a20:7284:b0:1ad:7e66:659a with SMTP id
+ adf61e73a8af0-1b2f96d6b16mr1312191637.15.1717719884646; 
+ Thu, 06 Jun 2024 17:24:44 -0700 (PDT)
+Received: from stoup.. ([75.147.178.105]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-6e2fc776f24sm30985a12.25.2024.06.06.17.24.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 06 Jun 2024 17:24:44 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240606040155.2607422-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+To: qemu-devel@nongnu.org
+Cc: maobibo@loongson.cn
+Subject: [PATCH v2 0/2] util/bufferiszero: Split out hosts, add loongarch64
+Date: Thu,  6 Jun 2024 17:24:41 -0700
+Message-Id: <20240607002443.5820-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,25 +91,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/24 21:01, Song Gao wrote:
-> The following changes since commit db2feb2df8d19592c9859efb3f682404e0052957:
-> 
->    Merge tag 'pull-misc-20240605' ofhttps://gitlab.com/rth7680/qemu  into staging (2024-06-05 14:17:01 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/gaosong/qemu.git  tags/pull-loongarch-20240606
-> 
-> for you to fetch changes up to 78f932ea1f7b3b9b0ac628dc2a91281318fe51fa:
-> 
->    target/loongarch: fix a wrong print in cpu dump (2024-06-06 11:58:06 +0800)
-> 
-> ----------------------------------------------------------------
-> pull-loongarch-20240606
+Based-on: 20240527211912.14060-1-richard.henderson@linaro.org
+("[PATCH 00/18] tcg/loongarch64: Support v64 and v256")
+For "util/loongarch64: Detect LASX vector support"
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+For v2:
+  * Rename to bufferiszero.c.inc (philmd).
+  * Add inline assembly for loongarch64.
+
+On cfarm400.cfarm.net (Loongson-3C5000L-LL @ 2.0GHz):
+
+# Start of bufferiszero tests
+# buffer_is_zero #0:  1KB    11021 MB/sec
+# buffer_is_zero #0:  4KB    32107 MB/sec
+# buffer_is_zero #0: 16KB    59118 MB/sec
+# buffer_is_zero #0: 64KB    67940 MB/sec
+# 
+# buffer_is_zero #1:  1KB     9540 MB/sec
+# buffer_is_zero #1:  4KB    24050 MB/sec
+# buffer_is_zero #1: 16KB    38082 MB/sec
+# buffer_is_zero #1: 64KB    36399 MB/sec
+# 
+# buffer_is_zero #2:  1KB     8026 MB/sec
+# buffer_is_zero #2:  4KB    15493 MB/sec
+# buffer_is_zero #2: 16KB    20865 MB/sec
+# buffer_is_zero #2: 64KB    19694 MB/sec
 
 
 r~
+
+
+Richard Henderson (2):
+  util/bufferiszero: Split out host include files
+  util/bufferiszero: Add loongarch64 vector acceleration
+
+ util/bufferiszero.c                           | 191 +-----------------
+ host/include/aarch64/host/bufferiszero.c.inc  |  76 +++++++
+ host/include/generic/host/bufferiszero.c.inc  |  10 +
+ host/include/i386/host/bufferiszero.c.inc     | 124 ++++++++++++
+ .../loongarch64/host/bufferiszero.c.inc       | 143 +++++++++++++
+ host/include/x86_64/host/bufferiszero.c.inc   |   1 +
+ 6 files changed, 355 insertions(+), 190 deletions(-)
+ create mode 100644 host/include/aarch64/host/bufferiszero.c.inc
+ create mode 100644 host/include/generic/host/bufferiszero.c.inc
+ create mode 100644 host/include/i386/host/bufferiszero.c.inc
+ create mode 100644 host/include/loongarch64/host/bufferiszero.c.inc
+ create mode 100644 host/include/x86_64/host/bufferiszero.c.inc
+
+-- 
+2.34.1
 
 
