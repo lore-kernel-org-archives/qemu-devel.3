@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D91C3C27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 22:30:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 662D0C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 22:31:19 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf1W-0007vy-OV; Fri, 07 Jun 2024 15:13:14 -0400
+	id 1sFf19-0005gt-B2; Fri, 07 Jun 2024 15:12:51 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf1U-0007uq-4L; Fri, 07 Jun 2024 15:13:12 -0400
+ id 1sFf17-0005Id-Kc; Fri, 07 Jun 2024 15:12:49 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf1S-0001jA-6L; Fri, 07 Jun 2024 15:13:11 -0400
+ id 1sFf16-0001hj-0r; Fri, 07 Jun 2024 15:12:49 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4AE386E53D;
- Fri,  7 Jun 2024 22:14:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3929D6E536;
+ Fri,  7 Jun 2024 22:13:16 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 82DEEE273A;
- Fri,  7 Jun 2024 22:13:08 +0300 (MSK)
-Received: (nullmailer pid 528690 invoked by uid 1000);
- Fri, 07 Jun 2024 19:13:08 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 7362FE2736;
+ Fri,  7 Jun 2024 22:12:21 +0300 (MSK)
+Received: (nullmailer pid 528258 invoked by uid 1000);
+ Fri, 07 Jun 2024 19:12:20 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 20/45] gitlab: Update msys2-64bit runner tags
-Date: Fri,  7 Jun 2024 22:12:40 +0300
-Message-Id: <20240607191307.528622-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.12 28/29] ui/sdl2: Allow host to power down screen
+Date: Fri,  7 Jun 2024 22:12:11 +0300
+Message-Id: <20240607191219.528194-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
-References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
+References: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,37 +63,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Bernhard Beschow <shentey@gmail.com>
 
-Gitlab has deprecated and removed support for windows-1809
-and shared-windows.  Update to saas-windows-medium-amd64 per
+By default, SDL disables the screen saver which prevents the host from powering
+down the screen even if the screen is locked. This results in draining the
+battery needlessly when the host isn't connected to a wall charger. Fix that by
+enabling the screen saver.
 
-https://about.gitlab.com/blog/2024/01/22/windows-2022-support-for-gitlab-saas-runners/
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240507175356.281618-1-richard.henderson@linaro.org>
-(cherry picked from commit 36fa7c686e9eac490002ffc439c4affaa352c17c)
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20240512095945.1879-1-shentey@gmail.com>
+(cherry picked from commit 2e701e6785cd8cc048c608751c6e4f6253c67ab6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
-index 8fc08218d2..c6251ebbb8 100644
---- a/.gitlab-ci.d/windows.yml
-+++ b/.gitlab-ci.d/windows.yml
-@@ -1,9 +1,7 @@
- .shared_msys2_builder:
-   extends: .base_job_template
-   tags:
--  - shared-windows
--  - windows
--  - windows-1809
-+  - saas-windows-medium-amd64
-   cache:
-     key: "$CI_JOB_NAME"
-     paths:
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index d630459b78..fc7e8639c2 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -857,6 +857,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+     SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
+ #endif
+     SDL_SetHint(SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4, "1");
++    SDL_EnableScreenSaver();
+     memset(&info, 0, sizeof(info));
+     SDL_VERSION(&info.version);
+ 
 -- 
 2.39.2
 
