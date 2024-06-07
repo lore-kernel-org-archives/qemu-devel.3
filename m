@@ -4,136 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEC71C27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 06:20:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F009EC27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 06:25:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFSx8-0008Ch-I3; Fri, 07 Jun 2024 02:19:54 -0400
+	id 1sFT1c-0001Mc-Bw; Fri, 07 Jun 2024 02:24:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sFSx3-0008A9-15
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 02:19:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sFSx0-0007Ul-6E
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 02:19:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717741185;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=D1hh4CbrihvcIHbQN7MS38b1GC/akWxGJIZJdet8vGQ=;
- b=BTWQhHIQxWl76qEUQmh5ot+Lx+M7LFce1DUgDZ6KyQJbPI9nSy/hEBTkDRdiQqsxy2L1Ys
- 1IEExY1lIF57/tCfbclV1qWGbDFbdrsK/L287p1Kt+6BNFj2wr2vJcuQDbVRnQfGdCUnqu
- 2k8jEMARdqYAYmwvwTmC1n9JpC/8Jus=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-0QMpOBLkPOqXaOT-QbXRPw-1; Fri, 07 Jun 2024 02:19:36 -0400
-X-MC-Unique: 0QMpOBLkPOqXaOT-QbXRPw-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-35dcf7d4014so1062960f8f.0
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 23:19:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFT1b-0001MP-Cv
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 02:24:31 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFT1Z-0008St-Gv
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 02:24:31 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a6265d48ec3so204014666b.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 23:24:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717741463; x=1718346263; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6GDfOeQG7wlVzHncOd6AmTSekULNx9I4Gb/6O209FJQ=;
+ b=MIp+96uc26VicCZGF0N/6/1kg0gxq0xpXWgEWb1Ema3iOxOklP/lHxlBcZb/ee+xrz
+ lkpglhXTQoodCXfVfhVBm03VNGOKMPRjhsE4NIDhBxJiF9zOx3C86QVyDD2DwbLUYAiB
+ gU3JmifoTRqIEXK6qZtK+m3IKM84ceGz5SxCRLl0fi07naKb2QFiwS3uUhjjKqwI7AQS
+ KkRQlzChONL/eCkbnqRODFP7Y7QxzUO7KE7s3WtmiusHO92LvH1ivLwnmS7RDzbnYaYv
+ 6OtwkgbFb4GW15xzdMf9pQpniV2ZbAW94fg3pFkjug7pwr3qzb+YwNuvGkAsXo0l65q4
+ H2Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717741175; x=1718345975;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=D1hh4CbrihvcIHbQN7MS38b1GC/akWxGJIZJdet8vGQ=;
- b=MwYKbFuxYShDF/HIlBkNptCsdUkmwkKjrTreIGXfS3oGkhdfVwllyA2xyEENPFZIv3
- Aj2T1yPEVrubK2EqEMd0srCw0iwvErl+SAC6JPF38fEfmtURHsrhex0lsA1+8S1XkYy3
- AEE/Q2l0XHscMZ0kcZVeh2CKamNwGf64KqyNI28pBfsp1Q1qKGtD+2IDI+PBcPF14POP
- MzkyRI/qjXi9VCKP+uQKWTAxYptc7RvYN0ut0GcLzVXGiP+XvMRxb7jJ4B2bvqF3tn1B
- AIQce+D5s0WzOyTeRIEBfyubL4NEhMvLLymAD4Fm4u4x/OC+MEB1HdN0zHlTOJb02iFk
- iLQg==
+ d=1e100.net; s=20230601; t=1717741463; x=1718346263;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6GDfOeQG7wlVzHncOd6AmTSekULNx9I4Gb/6O209FJQ=;
+ b=Hu7mCK8ZRor4RpdJWyMozRUArHRsYEw8xv8MeJkOuSojACtJjHTCA0VOWqOYe3ROwS
+ zB/IbRuhcLBmhUe3Wh9NWzGDOgyC8ml1WCDM5pyi209c3roldU3rUDE4yvLm8Dy1ibH/
+ aAgvV2rMMVk3a33CmD+jY7ORLTdtc39b1/P4bwpoPa1JjDdSskKmzjxv2ySvCY6FZywF
+ H5N4oq/7vuaCxadWAxeBHslcnhuIfA7qtLoWzaa8Yx6VYrj9lSLnw6fNknDDsBXtgC4m
+ OUqh2XJcfmdxq3mamGKESL6YGoEn1jXOvEBlVwaEqRfiOicqn0e8GLL6HAMGoelVlbDs
+ 6tag==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWql0qTFhw7aZd1XukY37MCqSacN4/Dd0TnEvr2AjoNabUlTYi6F6YottX2HdueXP1Bx85jlgQSZo3JZveNTyYSdKnGzLw=
-X-Gm-Message-State: AOJu0Yycrx7cyYm7FWDOsTciyHb0MMSXZZqTQiXnFuXNnh/2sM9AcHcm
- scQEac45WiwfWw/zQw0UuYY5b+Yt3EsVEVx6eIOeZl4Ht8LMFYsM+G8vbIhLLYzrpRzt52w+O/V
- KVkAR3n4GtWZkqY64cYwCMfUGwov5bGa+caIdN6KLITNxiGpoqowt
-X-Received: by 2002:a5d:5989:0:b0:355:796:15ef with SMTP id
- ffacd0b85a97d-35efed1e61bmr1528410f8f.10.1717741175356; 
- Thu, 06 Jun 2024 23:19:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH17VpKCvZmsIF3P60gymAVTtYk6AiTGNmyonoMnXke+S+XFC98XSie8KVQusb+4I6fDKAoQw==
-X-Received: by 2002:a5d:5989:0:b0:355:796:15ef with SMTP id
- ffacd0b85a97d-35efed1e61bmr1528394f8f.10.1717741174945; 
- Thu, 06 Jun 2024 23:19:34 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-176-192.web.vodafone.de.
- [109.43.176.192]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35f0b876d80sm127898f8f.109.2024.06.06.23.19.33
+ AJvYcCWItzc0hVFVNNcJIF2moamh4bd69HeH+hjFYjNU8ayD/f/FTtRDFKkmh3CBlyijRuJ73DcG/k9uvyz5knVqT+gKbnDfhfs=
+X-Gm-Message-State: AOJu0Yy0DtSzptWlTq5E+9LtbLmHPk4ZIWAhQzOGPsiU72ifZT4mE26Y
+ l7zHxPNhSXbMCW13K182jP5bj2A3NtjK9989Z/75HoTc7eWDoxNb0P+6jWYh2kQ=
+X-Google-Smtp-Source: AGHT+IFX7XFw5OqcHaDgPnQAL5STaH9JhFTt7PFRbVL6uAUYwC/vLBxZN52BALtIPvO7r7kMYAiTVw==
+X-Received: by 2002:a17:906:2355:b0:a68:ae1b:edbc with SMTP id
+ a640c23a62f3a-a6cd675cda6mr106493966b.24.1717741463263; 
+ Thu, 06 Jun 2024 23:24:23 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.196.231])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6c8070e9b1sm194125566b.165.2024.06.06.23.24.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Jun 2024 23:19:34 -0700 (PDT)
-Message-ID: <cf48d601-0686-4ebd-a113-1357441db61d@redhat.com>
-Date: Fri, 7 Jun 2024 08:19:33 +0200
+ Thu, 06 Jun 2024 23:24:22 -0700 (PDT)
+Message-ID: <fcd15341-26a1-4ec5-a2c9-ddb862cf9ec0@linaro.org>
+Date: Fri, 7 Jun 2024 08:24:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] s390x: Add Full Boot Order Support
-To: Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: frankja@linux.ibm.com, nsg@linux.ibm.com
-References: <20240529154311.734548-1-jrossi@linux.ibm.com>
- <24bbebeb-9ce4-4f0f-9ae8-8a8ebf5979ed@redhat.com>
- <f9d9e666-7ed5-4acb-af25-884ca5e92615@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v3 1/4] qom: allow to mark objects as deprecated or not
+ secure.
+To: Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Eric Blake <eblake@redhat.com>, Thomas Huth <thuth@redhat.com>
+References: <20240606143010.1318226-1-kraxel@redhat.com>
+ <20240606143010.1318226-2-kraxel@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <f9d9e666-7ed5-4acb-af25-884ca5e92615@linux.ibm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240606143010.1318226-2-kraxel@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,81 +101,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/06/2024 21.22, Jared Rossi wrote:
+On 6/6/24 16:30, Gerd Hoffmann wrote:
+> Add flags to ObjectClass for objects which are deprecated or not secure.
+> Add 'deprecated' and 'not-secure' bools to ObjectTypeInfo, report in
+> 'qom-list-types'.  Print the flags when listing devices via '-device
+> help'.
 > 
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>   include/qom/object.h  | 3 +++
+>   qom/qom-qmp-cmds.c    | 8 ++++++++
+>   system/qdev-monitor.c | 8 ++++++++
+>   qapi/qom.json         | 8 +++++++-
+>   4 files changed, 26 insertions(+), 1 deletion(-)
 > 
-> On 6/5/24 4:02 AM, Thomas Huth wrote:
->> On 29/05/2024 17.43, jrossi@linux.ibm.com wrote:
->>> From: Jared Rossi <jrossi@linux.ibm.com>
->>>
->>> This patch set primarily adds support for the specification of multiple boot
->>> devices, allowing for the guest to automatically use an alternative 
->>> device on
->>> a failed boot without needing to be reconfigured. It additionally 
->>> provides the
->>> ability to define the loadparm attribute on a per-device bases, which allows
->>> boot devices to use different loadparm values if needed.
->>>
->>> In brief, an IPLB is generated for each designated boot device (up to a 
->>> maximum
->>> of 8) and stored in guest memory immediately before BIOS. If a device 
->>> fails to
->>> boot, the next IPLB is retrieved and we jump back to the start of BIOS.
->>>
->>> Devices can be specified using the standard qemu device tag "bootindex" 
->>> as with
->>> other architectures. Lower number indices are tried first, with 
->>> "bootindex=0"
->>> indicating the first device to try.
->>
->> Is this supposed with multiple scsi-hd devices, too? I tried to boot a 
->> guest with two scsi disks (attached to a single virtio-scsi-ccw adapter) 
->> where only the second disk had a bootable installation, but that failed...?
->>
->>  Thomas
->>
->>
-> 
-> Hi Thomas,
-> 
-> Yes, I would expect that to work. I tried to reproduce this using a 
-> non-bootable scsi disk as the first boot device and then a known-good 
-> bootable scsi disk as the second boot device, with one controller.  In my 
-> instance the BIOS was not able to identify the first disk as bootable and so 
-> that device failed to IPL, but it did move on to the next disk after that, 
-> and the guest successfully IPL'd from the second device.
-> 
-> When you say it failed, do you mean the first disk failed to boot (as 
-> expected), but then the guest died without attempting to boot from the 
-> second disk?  Or did something else happen? I am either not understanding 
-> your configuration or I am not understanding your error.
+> diff --git a/include/qom/object.h b/include/qom/object.h
+> index 13d3a655ddf9..419bd9a4b219 100644
+> --- a/include/qom/object.h
+> +++ b/include/qom/object.h
+> @@ -136,6 +136,9 @@ struct ObjectClass
+>       ObjectUnparent *unparent;
+>   
+>       GHashTable *properties;
+> +
+> +    bool deprecated;
+> +    bool not_secure;
 
-I did this:
+LGTM but I'd rather use a reason string instead of a boolean,
+so we are forced to justify.
 
-  $ ./qemu-system-s390x -bios pc-bios/s390-ccw/s390-ccw.img -accel kvm \
-    -device virtio-scsi-ccw  -drive if=none,id=d2,file=/tmp/bad.qcow2 \
-    -device scsi-hd,drive=d2,bootindex=2 \
-    -drive if=none,id=d8,file=/tmp/good.qcow2 \
-    -device scsi-hd,drive=d8,bootindex=3 -m 4G -nographic
-  LOADPARM=[        ]
-  Using virtio-scsi.
-  Using guessed DASD geometry.
-  Using ECKD scheme (block size   512), CDL
-  No zIPL section in IPL2 record.
-  zIPL load failed.
+That would be in line with MachineClass::deprecation_reason:
 
-  Trying next boot device...
-  LOADPARM=[        ]
-  Using virtio-scsi.
-  Using guessed DASD geometry.
-  Using ECKD scheme (block size   512), CDL
-  No zIPL section in IPL2 record.
-  zIPL load failed.
+  * MachineClass:
+  * @deprecation_reason: If set, the machine is marked as deprecated.
+  *    The string should provide some clear information about what to
+  *    use instead.
 
-So it claims to try to load from the second disk, but it fails.
-If I change the "bootindex=3" of the second disk to "bootindex=1", it boots 
-perfectly fine, so I'm sure that the installation on good.qcow2 is working fine.
-
-  Thomas
+>   };
+>   
+>   /**
+> diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+> index e91a2353472a..325ff0ba2a25 100644
+> --- a/qom/qom-qmp-cmds.c
+> +++ b/qom/qom-qmp-cmds.c
+> @@ -101,6 +101,14 @@ static void qom_list_types_tramp(ObjectClass *klass, void *data)
+>       if (parent) {
+>           info->parent = g_strdup(object_class_get_name(parent));
+>       }
+> +    if (klass->deprecated) {
+> +        info->has_deprecated = true;
+> +        info->deprecated = true;
+> +    }
+> +    if (klass->not_secure) {
+> +        info->has_not_secure = true;
+> +        info->not_secure = true;
+> +    }
+>   
+>       QAPI_LIST_PREPEND(*pret, info);
+>   }
+> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+> index 6af6ef7d667f..effdc95d21d3 100644
+> --- a/system/qdev-monitor.c
+> +++ b/system/qdev-monitor.c
+> @@ -144,6 +144,8 @@ static bool qdev_class_has_alias(DeviceClass *dc)
+>   
+>   static void qdev_print_devinfo(DeviceClass *dc)
+>   {
+> +    ObjectClass *klass = OBJECT_CLASS(dc);
+> +
+>       qemu_printf("name \"%s\"", object_class_get_name(OBJECT_CLASS(dc)));
+>       if (dc->bus_type) {
+>           qemu_printf(", bus %s", dc->bus_type);
+> @@ -157,6 +159,12 @@ static void qdev_print_devinfo(DeviceClass *dc)
+>       if (!dc->user_creatable) {
+>           qemu_printf(", no-user");
+>       }
+> +    if (klass->deprecated) {
+> +        qemu_printf(", deprecated");
+> +    }
+> +    if (klass->not_secure) {
+> +        qemu_printf(", not-secure");
+> +    }
+>       qemu_printf("\n");
+>   }
+>   
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 8bd299265e39..3f20d4c6413b 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -163,10 +163,16 @@
+>   #
+>   # @parent: Name of parent type, if any (since 2.10)
+>   #
+> +# @deprecated: the type is deprecated (since 9.1)
+> +#
+> +# @not-secure: the type (typically a device) is not considered
+> +#     a security boundary (since 9.1)
+> +#
+>   # Since: 1.1
+>   ##
+>   { 'struct': 'ObjectTypeInfo',
+> -  'data': { 'name': 'str', '*abstract': 'bool', '*parent': 'str' } }
+> +  'data': { 'name': 'str', '*abstract': 'bool', '*parent': 'str',
+> +            '*deprecated': 'bool', '*not-secure': 'bool' } }
+>   
+>   ##
+>   # @qom-list-types:
 
 
