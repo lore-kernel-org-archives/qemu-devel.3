@@ -4,85 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD82C41513
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:04:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73840C27C53
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:07:56 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFbjO-0006oT-6N; Fri, 07 Jun 2024 11:42:18 -0400
+	id 1sFaev-00048A-Ua; Fri, 07 Jun 2024 10:33:37 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sFbjM-0006oD-D4
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 11:42:17 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sFaeu-00047u-OH
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:33:36 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sFbjK-000705-S8
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 11:42:16 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-7041ed475acso138045b3a.2
- for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 08:42:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sFaes-0002Vk-GI
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:33:36 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2e78fe9fc2bso31824411fa.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 07:33:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717774933; x=1718379733; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ryl4SDic3Xdsa+1AlQvHVKGA2pGUsQoKwtw/sfpLczg=;
- b=LAIO8O2YaoAO4e4n/upJyEaeqZ39qzKvo1fzP5Ipo07jWmsqUmG7x4TDYhMl0VTGMp
- 27WrYvCpBr3IX3el3GGFr3PZSDnIHWkd3TONv41rMXXKpmRedCwWKoVJDeK4KwDZ3jki
- /ZVsuZQa7jDwk+aoC+PsaHh1lcA7jxizO+5NCe26K29GcrCqlkPlWRQEFCpVig67MILO
- BETlH82F49v9WAngj1I8pzaYKHPLAcuEQE8FwBaZKLgRYGZsIdv+1QT7exHltVYEt4b9
- PGIRRXVLEWJ+KDFTWxkAj4ozU2ulztxMEujJZ3mfLacf0Ua18VoSdM0+vPNmJkeYhOcf
- Lz4Q==
+ d=linaro.org; s=google; t=1717770812; x=1718375612; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=M1m+3h3ZMpB2qpYFkRUj7JWzswXTd2jyCojOK8qXXe8=;
+ b=UL4/SzsCVhkyZzTiLZARtLhZ88SiV/ouImTY/N+cJDI87zLfKon40V5PC9ZQn+VyWP
+ 3nWZZ4CWtUAKd5bK9avI+9cF/OGZdhlZc0Gmytv/yYdThX8yR+/NKzB+AQGf7eauOF90
+ +LxBu+uxm1SrtWpMdda0Z1i3F/ud5wfJ4hvylXdcZ1sh7tCFbVfZc6zoA/gQ5Q04sW97
+ xgqVuwvT3nOkuEQwHivNIyS71Ii2z8+bBL7xC2qjzDWukbGVjdROuncClGMqyQBHc1ca
+ 3mWkaVdoZGDRo3PxF8CAKPkMxK0oKuDDMm5TgUJyAoxn0l940+IrtGxCkC16kKnQJKdN
+ g7qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717774933; x=1718379733;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ryl4SDic3Xdsa+1AlQvHVKGA2pGUsQoKwtw/sfpLczg=;
- b=gI6PwSDYPvv2HFeUrPKPOs43qGg1IgRlT8WjoSajYXW+PKMAdjHI4+Gzf5aOdlTBm3
- QlEg5oEryczQ8y/5Zw7yHrO3Wumh2D8zBEzahgcxY6WhK05gIfbSKcvyOZ83Khj/AVJm
- D65CZ3E/MmeIUrzJtfwTE8Yqekje7aY6HzAAs8FVnroBlxZCbMUkuej61llmrMwj4YsR
- r0067bpxjmmqz4ZouCbdxpUa2W9kmcIHJ0z6YfO6tHwHhj7duZTPI6KkYBcQLmTsyCtu
- NWPqyeLE+2g5qzBqkFIf/LS5gxOYoxCT43kzkcAEeBGAquHQLC1OZc+LcntUP39+0HkS
- ABaA==
-X-Gm-Message-State: AOJu0YxfzEbWTpvSnHytDwy/Dm1rwp5HHMd+oVEaLiqpnE+SF5E1AMNN
- VblhoO7Hvg3vqCU1wrsuEh/hHX2nqXxovLYK+cgWIzTorFi9iJ0RTqb5meBn8bw=
-X-Google-Smtp-Source: AGHT+IF5dnPM97e+RfEc6bBfs3MoqsWQZuXmvhVKtFzz1iHVZuHbQimLqdEiRq8/ajR9G2y7E88yIA==
-X-Received: by 2002:a05:6a20:a10c:b0:1af:cce1:6fc4 with SMTP id
- adf61e73a8af0-1b2f9a60dc5mr3324566637.29.1717774933208; 
- Fri, 07 Jun 2024 08:42:13 -0700 (PDT)
-Received: from [192.168.223.227] ([75.147.178.105])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-6de21788251sm2809599a12.30.2024.06.07.08.42.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Jun 2024 08:42:12 -0700 (PDT)
-Message-ID: <9f7b4127-2e5d-4445-b5b5-c3df46fab7ae@linaro.org>
-Date: Fri, 7 Jun 2024 08:42:10 -0700
+ d=1e100.net; s=20230601; t=1717770812; x=1718375612;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=M1m+3h3ZMpB2qpYFkRUj7JWzswXTd2jyCojOK8qXXe8=;
+ b=QbsBS9qHroHcB6c9FIpVxziU57KUIUOb6rBjkuomMG9YrfI4QiCcY3wFSh6YuBAin1
+ c76WUCjs1ArDyIKHZwh9OcoL6rG6tAbxFauo6qUcx2fXMhlD6SHkeZ9jjom8GQsgc7s8
+ U4eDR8JiuzVCzRrdLohy19w1GduDMhEaE3oZyGwledKK/67XjM1mqqcaq4Wn57WWPrzg
+ rNcWIcBunyF8WTLkxBf85vf/58rxzBUzeUXCoE1X9u043m7hPmAJ7SHHY/B5IuFxg1cz
+ hfZXWrFN2h66Imu4FfzJz0h+f4XKyARcCznpW0pHxwjPSHKTNzkSIHVR+BaIjqu3nl43
+ NmyQ==
+X-Gm-Message-State: AOJu0YzbpfCJOI+hkKrKs4fnf/4h6g2la9NJgAl4+imm2nVqr2LwxclX
+ VYFtQosbMly4aNWETwRnRWpOdxWU3XarFgSWstwhZzG4oIKXfBEl02CjUaMaXKHGKNjDGDA34Pt
+ F3nksqhapEmpz5MfgtD1O8t+0uvD4Mt/jnh0Elg==
+X-Google-Smtp-Source: AGHT+IEaPk732i0YbUA1nmYbFrFWei9Z0zR1zaf4gbjxSxkJKBMjCD7NvdufuljyiCfTiAGP6iUUzj4yigZzHn70PDk=
+X-Received: by 2002:a2e:880e:0:b0:2ea:e2d2:61ff with SMTP id
+ 38308e7fff4ca-2eae2d26485mr10509311fa.23.1717770812457; Fri, 07 Jun 2024
+ 07:33:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] target/ppc: Moving VSX scalar storage access insns to
- decodetree.
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
-References: <20240607144921.726730-1-rathc@linux.ibm.com>
- <20240607144921.726730-2-rathc@linux.ibm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240607144921.726730-2-rathc@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+References: <20240605143044.2029444-1-edgar.iglesias@gmail.com>
+In-Reply-To: <20240605143044.2029444-1-edgar.iglesias@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 7 Jun 2024 15:33:21 +0100
+Message-ID: <CAFEAcA_j0d=0y_1Nd9VZDPceHBw7CMpd4N8Vv14KUa+RvOJR6A@mail.gmail.com>
+Subject: Re: [PATCH v1 0/1] hw/intc/arm_gic: Fix deactivation of SPI lines
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, sstabellini@kernel.org, 
+ julien@xen.org, bertrand.marquis@arm.com, edgar.iglesias@amd.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,23 +88,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/7/24 07:49, Chinmay Rath wrote:
-> Moving the following instructions to decodetree specification :
-> 
-> 	lxs{d, iwa, ibz, ihz, iwz, sp}x		: X-form
-> 	stxs{d, ib, ih, iw, sp}x		: X-form
-> 
-> The changes were verified by validating that the tcg-ops generated by those
-> instructions remain the same, which were captured using the '-d in_asm,op' flag.
-> 
-> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
-> ---
->   target/ppc/insn32.decode            | 13 +++++
->   target/ppc/translate/vsx-impl.c.inc | 79 +++++++++++++----------------
->   target/ppc/translate/vsx-ops.c.inc  | 11 ----
->   3 files changed, 49 insertions(+), 54 deletions(-)
+On Wed, 5 Jun 2024 at 15:43, Edgar E. Iglesias <edgar.iglesias@gmail.com> wrote:
+>
+> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+>
+> Julien reported that he has seen strange behaviour when running
+> Xen on QEMU using GICv2. When Xen migrates a guest's vCPU to
+> another pCPU while the vCPU is handling an interrupt the guest
+> is unable to properly deactivate interrupts.
+>
+> It sounds like something rare but in some setups it actually
+> happens all the time.
+>
+> Looking at it a little closer, our GICv2 model treats
+> deactivation of SPI lines as if they were PPI's, i.e banked per
+> CPU core. The state for active interrupts should only be banked
+> for PPI lines, not for SPI lines.
+>
+> When deactivating SPI lines, I think we need to handle the state
+> as unbanked, similar to how we handle writes to GICD_ICACTIVER.
+>
+> This fixes the problem on my side.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Applied to target-arm.next, thanks.
 
-r~
+(I'm surprised anybody's still using GICv2 seriously at
+this point...)
+
+-- PMM
 
