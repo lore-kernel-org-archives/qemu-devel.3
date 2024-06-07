@@ -4,73 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28CE8C27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15CDEC27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:32:29 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFakn-00065X-AE; Fri, 07 Jun 2024 10:39:41 -0400
+	id 1sFf5n-0004lJ-1R; Fri, 07 Jun 2024 15:17:39 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sFakl-00064L-GL
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:39:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sFf5l-0004kz-Pg; Fri, 07 Jun 2024 15:17:37 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sFakk-0003Ot-0I
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:39:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717771177;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eSM5FRhnse3Lv4Qk6nprGOWP6AKz6doiUgfqyn8MOXg=;
- b=VpHP7AjSb3SqyxbLlHeOFDbfzadhvZIsZhXLx7vJbB1xBVQbfqJNszNlbvvzjMunRxc8mE
- O/ZhqCa+YnI7vIq51cfOYixI8ZCc1ZerP85SvurXa6CGI0DcleG5SXzUA04CLZKKqpTtNn
- xHzo08JQ9OwNiyU14Rk+2DUz/IrkeWc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-356-mSd1nHcBOq6ZPOvqG4jeSw-1; Fri,
- 07 Jun 2024 10:39:34 -0400
-X-MC-Unique: mSd1nHcBOq6ZPOvqG4jeSw-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9767719560B9; Fri,  7 Jun 2024 14:39:32 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.39.193.191])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 069D71956048; Fri,  7 Jun 2024 14:39:26 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
- imammedo@redhat.com, peter.maydell@linaro.org, clg@redhat.com,
- yanghliu@redhat.com, zhenzhong.duan@intel.com
-Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
- berrange@redhat.com
-Subject: [RFC v2 3/7] HostIOMMUDevice: Introduce get_iova_ranges callback
-Date: Fri,  7 Jun 2024 16:37:23 +0200
-Message-ID: <20240607143905.765133-4-eric.auger@redhat.com>
-In-Reply-To: <20240607143905.765133-1-eric.auger@redhat.com>
-References: <20240607143905.765133-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sFf5k-00033M-1O; Fri, 07 Jun 2024 15:17:37 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 9559F6E56B;
+ Fri,  7 Jun 2024 22:14:54 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id C1DFEE2764;
+ Fri,  7 Jun 2024 22:13:59 +0300 (MSK)
+Received: (nullmailer pid 529459 invoked by uid 1000);
+ Fri, 07 Jun 2024 19:13:58 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Joseph Chan <jchan@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 61/71] target/riscv: prioritize pmp errors in
+ raise_mmu_exception()
+Date: Fri,  7 Jun 2024 22:13:42 +0300
+Message-Id: <20240607191356.529336-17-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
+References: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,101 +63,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a new HostIOMMUDevice callback that allows to
-retrieve the usable IOVA ranges.
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Implement this callback in the legacy VFIO and IOMMUFD VFIO
-host iommu devices. This relies on the VFIODevice agent's
-base container iova_ranges resource.
+raise_mmu_exception(), as is today, is prioritizing guest page faults by
+checking first if virt_enabled && !first_stage, and then considering the
+regular inst/load/store faults.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- include/sysemu/host_iommu_device.h |  8 ++++++++
- hw/vfio/container.c                | 14 ++++++++++++++
- hw/vfio/iommufd.c                  | 14 ++++++++++++++
- 3 files changed, 36 insertions(+)
+There's no mention in the spec about guest page fault being a higher
+priority that PMP faults. In fact, privileged spec section 3.7.1 says:
 
-diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
-index 3e5f058e7b..40e0fa13ef 100644
---- a/include/sysemu/host_iommu_device.h
-+++ b/include/sysemu/host_iommu_device.h
-@@ -80,6 +80,14 @@ struct HostIOMMUDeviceClass {
-      * i.e., HOST_IOMMU_DEVICE_CAP_AW_BITS.
-      */
-     int (*get_cap)(HostIOMMUDevice *hiod, int cap, Error **errp);
-+    /**
-+     * @get_iova_ranges: Return the list of usable iova_ranges along with
-+     * @hiod Host IOMMU device
-+     *
-+     * @hiod: handle to the host IOMMU device
-+     * @errp: error handle
-+     */
-+    GList* (*get_iova_ranges)(HostIOMMUDevice *hiod, Error **errp);
- };
+"Attempting to fetch an instruction from a PMP region that does not have
+execute permissions raises an instruction access-fault exception.
+Attempting to execute a load or load-reserved instruction which accesses
+a physical address within a PMP region without read permissions raises a
+load access-fault exception. Attempting to execute a store,
+store-conditional, or AMO instruction which accesses a physical address
+within a PMP region without write permissions raises a store
+access-fault exception."
+
+So, in fact, we're doing it wrong - PMP faults should always be thrown,
+regardless of also being a first or second stage fault.
+
+The way riscv_cpu_tlb_fill() and get_physical_address() work is
+adequate: a TRANSLATE_PMP_FAIL error is immediately reported and
+reflected in the 'pmp_violation' flag. What we need is to change
+raise_mmu_exception() to prioritize it.
+
+Reported-by: Joseph Chan <jchan@ventanamicro.com>
+Fixes: 82d53adfbb ("target/riscv/cpu_helper.c: Invalid exception on MMU translation stage")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240413105929.7030-1-alexei.filippov@syntacore.com>
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 68e7c86927afa240fa450578cb3a4f18926153e4)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index fc090d729a..e3a7797d00 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1176,28 +1176,30 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
  
- /*
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index b728b978a2..edd0df6262 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -1164,12 +1164,26 @@ static int hiod_legacy_vfio_get_cap(HostIOMMUDevice *hiod, int cap,
-     }
- }
- 
-+static GList *
-+hiod_legacy_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
-+{
-+    VFIODevice *vdev = hiod->agent;
-+    GList *l = NULL;
-+
-+    if (vdev && vdev->bcontainer) {
-+        l = g_list_copy(vdev->bcontainer->iova_ranges);
-+    }
-+
-+    return l;
-+}
-+
- static void hiod_legacy_vfio_class_init(ObjectClass *oc, void *data)
- {
-     HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
- 
-     hioc->realize = hiod_legacy_vfio_realize;
-     hioc->get_cap = hiod_legacy_vfio_get_cap;
-+    hioc->get_iova_ranges = hiod_legacy_vfio_get_iova_ranges;
- };
- 
- static const TypeInfo types[] = {
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index dbdae1adbb..1706784063 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -645,11 +645,25 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
-     return true;
- }
- 
-+static GList *
-+hiod_iommufd_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
-+{
-+    VFIODevice *vdev = hiod->agent;
-+    GList *l = NULL;
-+
-+    if (vdev && vdev->bcontainer) {
-+        l = g_list_copy(vdev->bcontainer->iova_ranges);
-+    }
-+
-+    return l;
-+}
-+
- static void hiod_iommufd_vfio_class_init(ObjectClass *oc, void *data)
- {
-     HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_CLASS(oc);
- 
-     hiodc->realize = hiod_iommufd_vfio_realize;
-+    hiodc->get_iova_ranges = hiod_iommufd_vfio_get_iova_ranges;
- };
- 
- static const TypeInfo types[] = {
+     switch (access_type) {
+     case MMU_INST_FETCH:
+-        if (env->virt_enabled && !first_stage) {
++        if (pmp_violation) {
++            cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
++        } else if (env->virt_enabled && !first_stage) {
+             cs->exception_index = RISCV_EXCP_INST_GUEST_PAGE_FAULT;
+         } else {
+-            cs->exception_index = pmp_violation ?
+-                RISCV_EXCP_INST_ACCESS_FAULT : RISCV_EXCP_INST_PAGE_FAULT;
++            cs->exception_index = RISCV_EXCP_INST_PAGE_FAULT;
+         }
+         break;
+     case MMU_DATA_LOAD:
+-        if (two_stage && !first_stage) {
++        if (pmp_violation) {
++            cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
++        } else if (two_stage && !first_stage) {
+             cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
+         } else {
+-            cs->exception_index = pmp_violation ?
+-                RISCV_EXCP_LOAD_ACCESS_FAULT : RISCV_EXCP_LOAD_PAGE_FAULT;
++            cs->exception_index = RISCV_EXCP_LOAD_PAGE_FAULT;
+         }
+         break;
+     case MMU_DATA_STORE:
+-        if (two_stage && !first_stage) {
++        if (pmp_violation) {
++            cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
++        } else if (two_stage && !first_stage) {
+             cs->exception_index = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
+         } else {
+-            cs->exception_index = pmp_violation ?
+-                RISCV_EXCP_STORE_AMO_ACCESS_FAULT :
+-                RISCV_EXCP_STORE_PAGE_FAULT;
++            cs->exception_index = RISCV_EXCP_STORE_PAGE_FAULT;
+         }
+         break;
+     default:
 -- 
-2.41.0
+2.39.2
 
 
