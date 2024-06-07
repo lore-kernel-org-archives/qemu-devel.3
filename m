@@ -4,82 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07733C27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 06:18:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEC71C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 06:20:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFSv4-0006eU-LD; Fri, 07 Jun 2024 02:17:46 -0400
+	id 1sFSx8-0008Ch-I3; Fri, 07 Jun 2024 02:19:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFSv2-0006dA-73
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 02:17:44 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFSuz-00076V-Oq
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 02:17:43 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-57864327f6eso1773545a12.1
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 23:17:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717741059; x=1718345859; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eFRQd03Kvn7MPBMeYVmVS/L5BOooUFmA+uzo+8dGzK4=;
- b=myXb3FvKYbWgGsurAGdPSywe1DLvx7JqaMCb+JzSHBrhb962P8ngxmwbLgfdacdRiY
- rI/1+82rTa4WGBTmwrzYf11m1t5ECWQFdmOmZZnimJUM4WGPZvGAPIEalxAJl59MbnXE
- AYdk4DtSoNYsFHyM2BtSA1H3AB3ykjglAWEb8y0KdD3cP3NwXttk8Jd4843UUH40fM95
- D24bl2VEaLiUqnHHVS8Dlq51VzTbKx4F3OqiLOSWYNaAfLOLNvn5T3klofQ2sYGCNH92
- gkOkNKtEjScMjuOuPffbM4CEVC/MjgPifb8RSMVrtGxAU2bJTPvp1LtfPrdWqZk1CAWt
- pgyA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sFSx3-0008A9-15
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 02:19:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sFSx0-0007Ul-6E
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 02:19:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717741185;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=D1hh4CbrihvcIHbQN7MS38b1GC/akWxGJIZJdet8vGQ=;
+ b=BTWQhHIQxWl76qEUQmh5ot+Lx+M7LFce1DUgDZ6KyQJbPI9nSy/hEBTkDRdiQqsxy2L1Ys
+ 1IEExY1lIF57/tCfbclV1qWGbDFbdrsK/L287p1Kt+6BNFj2wr2vJcuQDbVRnQfGdCUnqu
+ 2k8jEMARdqYAYmwvwTmC1n9JpC/8Jus=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-644-0QMpOBLkPOqXaOT-QbXRPw-1; Fri, 07 Jun 2024 02:19:36 -0400
+X-MC-Unique: 0QMpOBLkPOqXaOT-QbXRPw-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-35dcf7d4014so1062960f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 23:19:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717741059; x=1718345859;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eFRQd03Kvn7MPBMeYVmVS/L5BOooUFmA+uzo+8dGzK4=;
- b=oYk8CZVPL4K+MPBgAz0+kl3nCY9uk/ZPNDr7YzCz44vXFuREgzYMhH7VxR90b+O3iD
- mJE4zcCj5pE2SQZhVYLMn+XP+5Ax3G/yfptHHOo4stU8oUu6GaXGTA4hs6k4wtQT6zKX
- YWUzAK9bbNSTfZEeYIfx+F5Au29YUl6URnfPKAjMIuCX1aI1Ku0fWV14t3LHn37+kuFE
- zSOAlDRlugUBRGy3mWCcbOuue+oeG0T+UgszT6imdd2yn8WXPJ8nuonN1jhVRiFNg9bY
- lPsBM2SD5uPR46Hp2cYXxSPS5NcTY1MffafTgJstOgNc4nVCs37euHGJ3/0I8+ON5Pgp
- Hdlg==
-X-Gm-Message-State: AOJu0YwHcqdP9R1mB+WOAMRpQy6r283Xaifl2uMSa0S8TzmC46aPTqRk
- UH2KxwcPXnoLgLPu4YZpwBul1Z7AGdMOBX/VFvqDWtl66EYdPf3+mrS9Grt4SMI=
-X-Google-Smtp-Source: AGHT+IGAw3PKAJdQ9l8vXEXASFmSaE5p6dVK1KounakkZzQARLugPJj0ja9uz5GP3CDfb1eHg9l04g==
-X-Received: by 2002:a50:ab4b:0:b0:579:cd1c:8d69 with SMTP id
- 4fb4d7f45d1cf-57c4deb9686mr1484494a12.2.1717741059154; 
- Thu, 06 Jun 2024 23:17:39 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.196.231])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aae23405asm2209714a12.82.2024.06.06.23.17.37
+ d=1e100.net; s=20230601; t=1717741175; x=1718345975;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=D1hh4CbrihvcIHbQN7MS38b1GC/akWxGJIZJdet8vGQ=;
+ b=MwYKbFuxYShDF/HIlBkNptCsdUkmwkKjrTreIGXfS3oGkhdfVwllyA2xyEENPFZIv3
+ Aj2T1yPEVrubK2EqEMd0srCw0iwvErl+SAC6JPF38fEfmtURHsrhex0lsA1+8S1XkYy3
+ AEE/Q2l0XHscMZ0kcZVeh2CKamNwGf64KqyNI28pBfsp1Q1qKGtD+2IDI+PBcPF14POP
+ MzkyRI/qjXi9VCKP+uQKWTAxYptc7RvYN0ut0GcLzVXGiP+XvMRxb7jJ4B2bvqF3tn1B
+ AIQce+D5s0WzOyTeRIEBfyubL4NEhMvLLymAD4Fm4u4x/OC+MEB1HdN0zHlTOJb02iFk
+ iLQg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWql0qTFhw7aZd1XukY37MCqSacN4/Dd0TnEvr2AjoNabUlTYi6F6YottX2HdueXP1Bx85jlgQSZo3JZveNTyYSdKnGzLw=
+X-Gm-Message-State: AOJu0Yycrx7cyYm7FWDOsTciyHb0MMSXZZqTQiXnFuXNnh/2sM9AcHcm
+ scQEac45WiwfWw/zQw0UuYY5b+Yt3EsVEVx6eIOeZl4Ht8LMFYsM+G8vbIhLLYzrpRzt52w+O/V
+ KVkAR3n4GtWZkqY64cYwCMfUGwov5bGa+caIdN6KLITNxiGpoqowt
+X-Received: by 2002:a5d:5989:0:b0:355:796:15ef with SMTP id
+ ffacd0b85a97d-35efed1e61bmr1528410f8f.10.1717741175356; 
+ Thu, 06 Jun 2024 23:19:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH17VpKCvZmsIF3P60gymAVTtYk6AiTGNmyonoMnXke+S+XFC98XSie8KVQusb+4I6fDKAoQw==
+X-Received: by 2002:a5d:5989:0:b0:355:796:15ef with SMTP id
+ ffacd0b85a97d-35efed1e61bmr1528394f8f.10.1717741174945; 
+ Thu, 06 Jun 2024 23:19:34 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-176-192.web.vodafone.de.
+ [109.43.176.192]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35f0b876d80sm127898f8f.109.2024.06.06.23.19.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Jun 2024 23:17:38 -0700 (PDT)
-Message-ID: <58ea1275-b71c-4098-b7e6-cde428a2eabb@linaro.org>
-Date: Fri, 7 Jun 2024 08:17:36 +0200
+ Thu, 06 Jun 2024 23:19:34 -0700 (PDT)
+Message-ID: <cf48d601-0686-4ebd-a113-1357441db61d@redhat.com>
+Date: Fri, 7 Jun 2024 08:19:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i386/apic: Add hint on boot failure because of disabling
- x2APIC
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20240606140858.2157106-1-zhao1.liu@intel.com>
+Subject: Re: [PATCH 0/5] s390x: Add Full Boot Order Support
+To: Jared Rossi <jrossi@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com, nsg@linux.ibm.com
+References: <20240529154311.734548-1-jrossi@linux.ibm.com>
+ <24bbebeb-9ce4-4f0f-9ae8-8a8ebf5979ed@redhat.com>
+ <f9d9e666-7ed5-4acb-af25-884ca5e92615@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240606140858.2157106-1-zhao1.liu@intel.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <f9d9e666-7ed5-4acb-af25-884ca5e92615@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,43 +149,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/6/24 16:08, Zhao Liu wrote:
-> Currently, the Q35 supports up to 4096 vCPUs (since v9.0), but for TCG
-> cases, if x2APIC is not actively enabled to boot more than 255 vCPUs (
-> e.g., qemu-system-i386 -M pc-q35-9.0 -smp 666), the following error is
-> reported:
+On 06/06/2024 21.22, Jared Rossi wrote:
 > 
-> Unexpected error in apic_common_set_id() at ../hw/intc/apic_common.c:449:
-> qemu-system-i386: APIC ID 255 requires x2APIC feature in CPU
-> Aborted (core dumped)
 > 
-> This error can be resolved by setting x2apic=on in -cpu. In order to
-> better help users deal with this scenario, add the error hint to
-> instruct users on how to enable the x2apic feature.
+> On 6/5/24 4:02 AM, Thomas Huth wrote:
+>> On 29/05/2024 17.43, jrossi@linux.ibm.com wrote:
+>>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>>
+>>> This patch set primarily adds support for the specification of multiple boot
+>>> devices, allowing for the guest to automatically use an alternative 
+>>> device on
+>>> a failed boot without needing to be reconfigured. It additionally 
+>>> provides the
+>>> ability to define the loadparm attribute on a per-device bases, which allows
+>>> boot devices to use different loadparm values if needed.
+>>>
+>>> In brief, an IPLB is generated for each designated boot device (up to a 
+>>> maximum
+>>> of 8) and stored in guest memory immediately before BIOS. If a device 
+>>> fails to
+>>> boot, the next IPLB is retrieved and we jump back to the start of BIOS.
+>>>
+>>> Devices can be specified using the standard qemu device tag "bootindex" 
+>>> as with
+>>> other architectures. Lower number indices are tried first, with 
+>>> "bootindex=0"
+>>> indicating the first device to try.
+>>
+>> Is this supposed with multiple scsi-hd devices, too? I tried to boot a 
+>> guest with two scsi disks (attached to a single virtio-scsi-ccw adapter) 
+>> where only the second disk had a bootable installation, but that failed...?
+>>
+>>  Thomas
+>>
+>>
+> 
+> Hi Thomas,
+> 
+> Yes, I would expect that to work. I tried to reproduce this using a 
+> non-bootable scsi disk as the first boot device and then a known-good 
+> bootable scsi disk as the second boot device, with one controller.  In my 
+> instance the BIOS was not able to identify the first disk as bootable and so 
+> that device failed to IPL, but it did move on to the next disk after that, 
+> and the guest successfully IPL'd from the second device.
+> 
+> When you say it failed, do you mean the first disk failed to boot (as 
+> expected), but then the guest died without attempting to boot from the 
+> second disk?  Or did something else happen? I am either not understanding 
+> your configuration or I am not understanding your error.
 
-Why not automatically set x2apic=on in this case instead?
+I did this:
 
-> Then, the error
-> report becomes the following:
-> 
-> Unexpected error in apic_common_set_id() at ../hw/intc/apic_common.c:448:
-> qemu-system-i386: APIC ID 255 requires x2APIC feature in CPU
-> Try x2apic=on in -cpu.
-> Aborted (core dumped)
-> 
-> Note since @errp is &error_abort, error_append_hint() can't be applied
-> on @errp. And in order to separate the exact error message from the
-> (perhaps effectively) hint, adding a hint via error_append_hint() is
-> also necessary. Therefore, introduce @local_error in
-> apic_common_set_id() to handle both the error message and the error
-> hint.
-> 
-> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   hw/intc/apic_common.c | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
+  $ ./qemu-system-s390x -bios pc-bios/s390-ccw/s390-ccw.img -accel kvm \
+    -device virtio-scsi-ccw  -drive if=none,id=d2,file=/tmp/bad.qcow2 \
+    -device scsi-hd,drive=d2,bootindex=2 \
+    -drive if=none,id=d8,file=/tmp/good.qcow2 \
+    -device scsi-hd,drive=d8,bootindex=3 -m 4G -nographic
+  LOADPARM=[        ]
+  Using virtio-scsi.
+  Using guessed DASD geometry.
+  Using ECKD scheme (block size   512), CDL
+  No zIPL section in IPL2 record.
+  zIPL load failed.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+  Trying next boot device...
+  LOADPARM=[        ]
+  Using virtio-scsi.
+  Using guessed DASD geometry.
+  Using ECKD scheme (block size   512), CDL
+  No zIPL section in IPL2 record.
+  zIPL load failed.
+
+So it claims to try to load from the second disk, but it fails.
+If I change the "bootindex=3" of the second disk to "bootindex=1", it boots 
+perfectly fine, so I'm sure that the installation on good.qcow2 is working fine.
+
+  Thomas
 
 
