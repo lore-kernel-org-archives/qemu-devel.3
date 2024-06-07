@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DABFC27C5F
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 14:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B2C6C27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 14:19:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFaQ7-0005Oc-KC; Fri, 07 Jun 2024 10:18:19 -0400
+	id 1sFaQ8-0005Ov-MU; Fri, 07 Jun 2024 10:18:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
- id 1sFaQ5-0005Nr-8r
+ id 1sFaQ5-0005Nw-FC
  for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:18:17 -0400
-Received: from mail-qk1-x731.google.com ([2607:f8b0:4864:20::731])
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
- id 1sFaQ3-0007TP-JE
+ id 1sFaQ4-0007TS-0k
  for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:18:17 -0400
-Received: by mail-qk1-x731.google.com with SMTP id
- af79cd13be357-7953f1dcb01so55837885a.3
- for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 07:18:14 -0700 (PDT)
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-24c9f2b7b19so1086498fac.0
+ for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 07:18:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1717769893; x=1718374693; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=GswNpYyzrojMh6Rycvh4hXEO2qJe9DuvUgxafxyx38I=;
- b=WyTjN9cAwqVWldPFOicCHrdeIcv0JrITbUh5kDMDqPrjdSEDYXKs8cUDtaeHKbC2xv
- DdMNr7MmMEKGRU3idYWDOIAwJ/MCtOTEodZItnv8+3TYgr0viNDNYmX9FTGdMAPdIQEq
- ZE+KOfAfcxbi0WcO61B5TrW387H6MhuWRzm/U=
+ d=chromium.org; s=google; t=1717769894; x=1718374694; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3EKBJ8oPgx6RWyKkHBwS8CUXIUj2Ph4UlirUDin8kck=;
+ b=KnutrkLH2ijwMrmuunl4JJy/lAnzCYJn5Nw7akq8yESkdfqeWPs6Q4VB/uGvyh1RcY
+ wF6C/S4aI4qkw8ee1u6K8WfYOkfjQX84k7lXrGRdgmhbaaHwdHEcxv0MiolLQFDJcZt0
+ BQKrh8ybkd/o4O9vGJi761g3hkcH5QQhYDES0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717769893; x=1718374693;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GswNpYyzrojMh6Rycvh4hXEO2qJe9DuvUgxafxyx38I=;
- b=UpdFPEeOVzJo94OtuH2bZH8349ikYaUr5yg8SGOMIMqe2LaCpKzTQ/ClgI+2wmiUkQ
- M3Ef6hLCuBd+CQs3KIsGH94cgTue0ajn9piVJdeM47fiR1Tm/Z1ViS0ViIfgVjIXTjXU
- +8GZCU5xBH2gOcJ7RWtycff5+MeCE++96Tb9jzLA1fHPNhzxycmMW1IA8T1e81gDKnk6
- muoT8NKVzAE0w0HZXcX8ySQfi4vPA9AlFvTjtMCoXa512cFQzgIXcLXqPkT9PsQJleq+
- LtAibGgYCuXJpG7ngMWxHEkU0PaA/cYzdKA2Re2eeztGc+NPN2HpmUVWDt1vcza8xDS5
- qxJQ==
+ d=1e100.net; s=20230601; t=1717769894; x=1718374694;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3EKBJ8oPgx6RWyKkHBwS8CUXIUj2Ph4UlirUDin8kck=;
+ b=U9H/uYSs1oNVuVcJihYln0pPsQT/toxWwd7IzGbzSSq/aKbZMnpoi586ZRf9/VywF7
+ /Sfm6wB+mKcTI4Hn2WylajE7d6s5Eq/RP6QXq1Ayg/qYWr38qwp+yto+MQqEqOlo2HDO
+ 0ho/qCO6abxvjcESrkFPqNOv5F5UeurmrMamNEE0IxQa/C9ds3/99Zzz7M+ef/i2VOfb
+ OsCZqfVCnyEmr8Ixfu3kLdKlhijb99a2i1ZERnptsDTJSY6hd6TAUJGXCQ1K1uAZtAzE
+ xKgLqaugwYJkjV16gZUY3eLVXNZxs1/NPEdxIZbWB1EJJHDY5uP5CmWAEFnzWZ3SH/ZD
+ Hdgg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV1i5AVXQaAk5F9zdfi9IbjX1Ln3Z89UTUZiemt5ISNKKzgQm/SnmyqP8mFo6gudmmdhh2qCfqPy5yndJ56ixI9vztrmOY=
-X-Gm-Message-State: AOJu0YxU1gBBPtHBfqOu1WT/BpoWKeCUzg6NLLDD7Sjvuub+8OD04H4z
- 7X1eP32QKf7cv7qCGsTmCTimqRPTJxDotyTykKUC356r47jKX5nQCmwZeF30vg==
-X-Google-Smtp-Source: AGHT+IEF5m/WEQN+G9SSM+q43DSdMOCP7+EOuarQxwZXqR1ew6jmG7i/S4utZTWlC922HqBqR3kxww==
-X-Received: by 2002:a05:620a:394e:b0:795:4745:df49 with SMTP id
- af79cd13be357-7954745ed8emr143030285a.65.1717769893498; 
- Fri, 07 Jun 2024 07:18:13 -0700 (PDT)
+ AJvYcCUP5RAJhFowOTNpHTbuAvW8udipTSN0mbBcxoyHrPlKeXMrroZ5oPXaEo78yLvsMtACWorBe4sqnvSzS+jNfCAOB0ISlO0=
+X-Gm-Message-State: AOJu0YwXeXievM1+RBeYlPrm6KwOmhXxC0FFuulyNgInYBQX1RHpHF4a
+ WTFYj8oNc3bPDQAVhVHcuILCp1UKaKaTJVhqZwV/2JDeiiZfCeGbf7n6uYEEoA==
+X-Google-Smtp-Source: AGHT+IGea9xbmP4pQjMRnCYNO64QwxZqXeDkwvVLTtam7GRMX0N/6D/lCTHWeswr0uamFTOACHqFUA==
+X-Received: by 2002:a05:6870:b491:b0:23e:6d9a:8f45 with SMTP id
+ 586e51a60fabf-25464f0d3abmr2632335fac.48.1717769894101; 
+ Fri, 07 Jun 2024 07:18:14 -0700 (PDT)
 Received: from denia.c.googlers.com.com
  (123.178.145.34.bc.googleusercontent.com. [34.145.178.123])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79532813a2dsm170873885a.20.2024.06.07.07.18.12
+ af79cd13be357-79532813a2dsm170873885a.20.2024.06.07.07.18.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 07 Jun 2024 07:18:13 -0700 (PDT)
 From: Ricardo Ribalda <ribalda@chromium.org>
@@ -66,14 +67,16 @@ To: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
  Andrea Righi <andrea.righi@canonical.com>
 Cc: Ricardo Ribalda <ribalda@chromium.org>
-Subject: [PATCH v3 0/3] hw/i386/acpi: Pre-compute the _PRT table
-Date: Fri,  7 Jun 2024 14:17:23 +0000
-Message-ID: <20240607141809.1637137-1-ribalda@chromium.org>
+Subject: [PATCH v3 1/3] tests/acpi: pc: allow DSDT acpi table changes
+Date: Fri,  7 Jun 2024 14:17:24 +0000
+Message-ID: <20240607141809.1637137-2-ribalda@chromium.org>
 X-Mailer: git-send-email 2.45.2.505.gda0bf45e8d-goog
+In-Reply-To: <20240607141809.1637137-1-ribalda@chromium.org>
+References: <20240607141809.1637137-1-ribalda@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::731;
- envelope-from=ribalda@chromium.org; helo=mail-qk1-x731.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::33;
+ envelope-from=ribalda@chromium.org; helo=mail-oa1-x33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,39 +99,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Today for x86 the _PRT() table is computed in runtime.
-Under some configurations, computing the _PRT table can take more than
-30 seconds and the ACPI timeout is violated.
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-This patchset modifies _PRT() to return a pre-computed table.
-
-Changelog v2 Thanks Michael:
-- Code style
-- Add cover letter
-
-Ricardo Ribalda (3):
-  tests/acpi: pc: allow DSDT acpi table changes
-  hw/i386/acpi-build: Return a pre-computed _PRT table
-  tests/acpi: pc: update golden masters for DSDT
-
- hw/i386/acpi-build.c             | 120 ++++++-------------------------
- tests/data/acpi/pc/DSDT          | Bin 6830 -> 8527 bytes
- tests/data/acpi/pc/DSDT.acpierst | Bin 6741 -> 8438 bytes
- tests/data/acpi/pc/DSDT.acpihmat | Bin 8155 -> 9852 bytes
- tests/data/acpi/pc/DSDT.bridge   | Bin 13701 -> 15398 bytes
- tests/data/acpi/pc/DSDT.cphp     | Bin 7294 -> 8991 bytes
- tests/data/acpi/pc/DSDT.dimmpxm  | Bin 8484 -> 10181 bytes
- tests/data/acpi/pc/DSDT.hpbridge | Bin 6781 -> 8478 bytes
- tests/data/acpi/pc/DSDT.hpbrroot | Bin 3337 -> 5034 bytes
- tests/data/acpi/pc/DSDT.ipmikcs  | Bin 6902 -> 8599 bytes
- tests/data/acpi/pc/DSDT.memhp    | Bin 8189 -> 9886 bytes
- tests/data/acpi/pc/DSDT.nohpet   | Bin 6688 -> 8385 bytes
- tests/data/acpi/pc/DSDT.numamem  | Bin 6836 -> 8533 bytes
- tests/data/acpi/pc/DSDT.roothp   | Bin 10623 -> 12320 bytes
- tests/data/acpi/q35/DSDT.cxl     | Bin 9714 -> 13148 bytes
- tests/data/acpi/q35/DSDT.viot    | Bin 9464 -> 14615 bytes
- 16 files changed, 22 insertions(+), 98 deletions(-)
-
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..b2c2c10cbc 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,2 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/pc/DSDT",
 -- 
 2.45.2.505.gda0bf45e8d-goog
 
