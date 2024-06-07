@@ -4,82 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE8EAC27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 08:59:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 903BCC27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 09:05:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFVRM-0006pz-8U; Fri, 07 Jun 2024 04:59:16 -0400
+	id 1sFVWY-0001Xk-I9; Fri, 07 Jun 2024 05:04:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
- id 1sFVRK-0006pE-Ah
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 04:59:14 -0400
-Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
- id 1sFVRH-00029X-QI
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 04:59:14 -0400
-Received: by mail-yb1-xb32.google.com with SMTP id
- 3f1490d57ef6-dfaf512483dso794823276.1
- for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 01:59:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1717750748; x=1718355548; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3EKBJ8oPgx6RWyKkHBwS8CUXIUj2Ph4UlirUDin8kck=;
- b=Q6vPflOKtu+tZMTuo18tbVzyIpwCPACu5VNgqRc6EPXq3WOCY4DABV3cc4obWdZLpP
- 4BOKbd7jYxsuMWEVPpwq7oFGiBwPPb/Qbep+2kojqzlIONjXFVAGftUuZU8EsLJOY7sR
- odNB+S/MHlZwI0u3EsaCev6NHWj9Aa0CihaJg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717750748; x=1718355548;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3EKBJ8oPgx6RWyKkHBwS8CUXIUj2Ph4UlirUDin8kck=;
- b=AY0nn6E5aTxVXtiH8cWeV11MZ5Gh4rXeakwCvVNtsmwfU17J34O5TTGZvcFPw1dhUt
- tfS38JNsN5WkNohPJTYnb8bpQINhcoMyNI2Gf6q/JYtZxI/ufU6elmSQ1VocL0KBCfrb
- ksnyCryBgExFK9MXSFYDsxiO+oU0Atmlx6Q0ZPYVA5umC92s0YGxEqUXtS4EcUlg98ac
- 1Xqe3xk9/lqj0ySFiVmU4kl8i63khyFW38ifERY86MkHjj6w2dxMAqHatwb654cjqrAe
- e0LrlMi6wNsWXjrF5wslJOh/izuYXWEu/wKUa8yBwDJLLWVZ2B9E7LJUkEkS9rUe/wlY
- vwmw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUEs2T+omZBNMlPPND2ZhOOcplp+TBngb3gvPWjXTLNLL4nxTaroii6YdMWPJSPZ5BPe9P4YyOUJulIgbgz5JZZlVsXQRs=
-X-Gm-Message-State: AOJu0Yy7eNkL2qpOZDTOcuQ8gwzNwRWHtZ9J8jZ5eEY9ZRZSdquxqxVV
- /GNWPZS7gCiE5+A0NEKz+/VBQajx3WUnsl/mqcT9vlwDMja20qz59c1e7tiVIg==
-X-Google-Smtp-Source: AGHT+IFxdKKJKFazmAdLmFk3VUfxgFa6MFD52r/5XJWUC7rqjbFnQ2jLlzLnlzF/DrLKU0JiCuZvYA==
-X-Received: by 2002:a25:adc1:0:b0:df7:8dca:1ef2 with SMTP id
- 3f1490d57ef6-dfaf65bfbcemr1785533276.34.1717750747946; 
- Fri, 07 Jun 2024 01:59:07 -0700 (PDT)
-Received: from denia.c.googlers.com.com
- (123.178.145.34.bc.googleusercontent.com. [34.145.178.123])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b04f989461sm15259936d6.77.2024.06.07.01.59.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Jun 2024 01:59:07 -0700 (PDT)
-From: Ricardo Ribalda <ribalda@chromium.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
- Andrea Righi <andrea.righi@canonical.com>
-Cc: Ricardo Ribalda <ribalda@chromium.org>
-Subject: [PATCH v2 1/3] tests/acpi: pc: allow DSDT acpi table changes
-Date: Fri,  7 Jun 2024 08:58:56 +0000
-Message-ID: <20240607085903.1349513-1-ribalda@chromium.org>
-X-Mailer: git-send-email 2.45.2.505.gda0bf45e8d-goog
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sFVWW-0001XP-DL
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 05:04:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sFVWT-0003Hq-Lp
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 05:04:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717751071;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=BcFayrWtggtMP3po7Z8Z9ax3OJMOt2ZY/TMiLnkBC4E=;
+ b=WzeVvUZJ3HMQGeTEi5tfFKO0I9HPB9BXF9Ado9+OHyb2dW8MXSmHqaQRO8lp2oIS9/pft9
+ rj/Hv63iXffzwyq3bzH5AbezN7e9PXxixzAqndhzfi1xXzwmAqfytwKg5OCwWzj6IVFw4S
+ Lac+6Ba5ZH1fTuozY93I+Tr7KJ0f18U=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-327-lcAfQ5hHMrmQ6rDfyf2yAQ-1; Fri, 07 Jun 2024 05:04:27 -0400
+X-MC-Unique: lcAfQ5hHMrmQ6rDfyf2yAQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9261A101A528;
+ Fri,  7 Jun 2024 09:04:26 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.193.232])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 9B6182166B0E;
+ Fri,  7 Jun 2024 09:04:22 +0000 (UTC)
+Date: Fri, 7 Jun 2024 10:04:19 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Gonglei <arei.gonglei@huawei.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, yu.zhang@ionos.com,
+ mgalaxy@akamai.com, elmar.gerdes@ionos.com, zhengchuan@huawei.com,
+ armbru@redhat.com, lizhijian@fujitsu.com, pbonzini@redhat.com,
+ mst@redhat.com, xiexiangyou@huawei.com, linux-rdma@vger.kernel.org,
+ lixiao91@huawei.com, jinpu.wang@ionos.com,
+ Jialin Wang <wangjialin23@huawei.com>
+Subject: Re: [PATCH 3/6] io/channel-rdma: support working in coroutine
+Message-ID: <ZmLNExmXzxb-hgoN@redhat.com>
+References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
+ <1717503252-51884-4-git-send-email-arei.gonglei@huawei.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
- envelope-from=ribalda@chromium.org; helo=mail-yb1-xb32.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1717503252-51884-4-git-send-email-arei.gonglei@huawei.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,22 +85,485 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
----
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- 1 file changed, 1 insertion(+)
+On Tue, Jun 04, 2024 at 08:14:09PM +0800, Gonglei wrote:
+> From: Jialin Wang <wangjialin23@huawei.com>
+> 
+> It is not feasible to obtain RDMA completion queue notifications
+> through poll/ppoll on the rsocket fd. Therefore, we create a thread
+> named rpoller for each rsocket fd and two eventfds: pollin_eventfd
+> and pollout_eventfd.
+> 
+> When using io_create_watch or io_set_aio_fd_handler waits for POLLIN
+> or POLLOUT events, it will actually poll/ppoll on the pollin_eventfd
+> and pollout_eventfd instead of the rsocket fd.
+> 
+> The rpoller rpoll() on the rsocket fd to receive POLLIN and POLLOUT
+> events.
+> When a POLLIN event occurs, the rpoller write the pollin_eventfd,
+> and then poll/ppoll will return the POLLIN event.
+> When a POLLOUT event occurs, the rpoller read the pollout_eventfd,
+> and then poll/ppoll will return the POLLOUT event.
+> 
+> For a non-blocking rsocket fd, if rread/rwrite returns EAGAIN, it will
+> read/write the pollin/pollout_eventfd, preventing poll/ppoll from
+> returning POLLIN/POLLOUT events.
+> 
+> Known limitations:
+> 
+>   For a blocking rsocket fd, if we use io_create_watch to wait for
+>   POLLIN or POLLOUT events, since the rsocket fd is blocking, we
+>   cannot determine when it is not ready to read/write as we can with
+>   non-blocking fds. Therefore, when an event occurs, it will occurs
+>   always, potentially leave the qemu hanging. So we need be cautious
+>   to avoid hanging when using io_create_watch .
+> 
+> Luckily, channel-rdma works well in coroutines :)
+> 
+> Signed-off-by: Jialin Wang <wangjialin23@huawei.com>
+> Signed-off-by: Gonglei <arei.gonglei@huawei.com>
+> ---
+>  include/io/channel-rdma.h |  15 +-
+>  io/channel-rdma.c         | 363 +++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 376 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/io/channel-rdma.h b/include/io/channel-rdma.h
+> index 8cab2459e5..cb56127d76 100644
+> --- a/include/io/channel-rdma.h
+> +++ b/include/io/channel-rdma.h
+> @@ -47,6 +47,18 @@ struct QIOChannelRDMA {
+>      socklen_t localAddrLen;
+>      struct sockaddr_storage remoteAddr;
+>      socklen_t remoteAddrLen;
+> +
+> +    /* private */
+> +
+> +    /* qemu g_poll/ppoll() POLLIN event on it */
+> +    int pollin_eventfd;
+> +    /* qemu g_poll/ppoll() POLLOUT event on it */
+> +    int pollout_eventfd;
+> +
+> +    /* the index in the rpoller's fds array */
+> +    int index;
+> +    /* rpoller will rpoll() rpoll_events on the rsocket fd */
+> +    short int rpoll_events;
+>  };
+>  
+>  /**
+> @@ -147,6 +159,7 @@ void qio_channel_rdma_listen_async(QIOChannelRDMA *ioc, InetSocketAddress *addr,
+>   *
+>   * Returns: the new client channel, or NULL on error
+>   */
+> -QIOChannelRDMA *qio_channel_rdma_accept(QIOChannelRDMA *ioc, Error **errp);
+> +QIOChannelRDMA *coroutine_mixed_fn qio_channel_rdma_accept(QIOChannelRDMA *ioc,
+> +                                                           Error **errp);
+>  
+>  #endif /* QIO_CHANNEL_RDMA_H */
+> diff --git a/io/channel-rdma.c b/io/channel-rdma.c
+> index 92c362df52..9792add5cf 100644
+> --- a/io/channel-rdma.c
+> +++ b/io/channel-rdma.c
+> @@ -23,10 +23,15 @@
+>  
+>  #include "qemu/osdep.h"
+>  #include "io/channel-rdma.h"
+> +#include "io/channel-util.h"
+> +#include "io/channel-watch.h"
+>  #include "io/channel.h"
+>  #include "qapi/clone-visitor.h"
+>  #include "qapi/error.h"
+>  #include "qapi/qapi-visit-sockets.h"
+> +#include "qemu/atomic.h"
+> +#include "qemu/error-report.h"
+> +#include "qemu/thread.h"
+>  #include "trace.h"
+>  #include <errno.h>
+>  #include <netdb.h>
+> @@ -39,11 +44,274 @@
+>  #include <sys/poll.h>
+>  #include <unistd.h>
+>  
+> +typedef enum {
+> +    CLEAR_POLLIN,
+> +    CLEAR_POLLOUT,
+> +    SET_POLLIN,
+> +    SET_POLLOUT,
+> +} UpdateEvent;
+> +
+> +typedef enum {
+> +    RP_CMD_ADD_IOC,
+> +    RP_CMD_DEL_IOC,
+> +    RP_CMD_UPDATE,
+> +} RpollerCMD;
+> +
+> +typedef struct {
+> +    RpollerCMD cmd;
+> +    QIOChannelRDMA *rioc;
+> +} RpollerMsg;
+> +
+> +/*
+> + * rpoll() on the rsocket fd with rpoll_events, when POLLIN/POLLOUT event
+> + * occurs, it will write/read the pollin_eventfd/pollout_eventfd to allow
+> + * qemu g_poll/ppoll() get the POLLIN/POLLOUT event
+> + */
+> +static struct Rpoller {
+> +    QemuThread thread;
+> +    bool is_running;
+> +    int sock[2];
+> +    int count; /* the number of rsocket fds being rpoll() */
+> +    int size; /* the size of fds/riocs */
+> +    struct pollfd *fds;
+> +    QIOChannelRDMA **riocs;
+> +} rpoller;
+> +
+> +static void qio_channel_rdma_notify_rpoller(QIOChannelRDMA *rioc,
+> +                                            RpollerCMD cmd)
+> +{
+> +    RpollerMsg msg;
+> +    int ret;
+> +
+> +    msg.cmd = cmd;
+> +    msg.rioc = rioc;
+> +
+> +    ret = RETRY_ON_EINTR(write(rpoller.sock[0], &msg, sizeof msg));
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..b2c2c10cbc 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/pc/DSDT",
+So this message is handled asynchronously by the poll thread, but
+you're not acquiring any reference on teh 'rioc' object. So there's
+the possibility that the owner of the rioc calls 'unref' free'ing
+the last reference, before the poll thread has finished processing
+the message.  IMHO the poll thread must hold a reference on the
+rioc for as long as it needs the object.
+
+> +    if (ret != sizeof msg) {
+> +        error_report("%s: failed to send msg, errno: %d", __func__, errno);
+> +    }
+
+I feel like this should be propagated to the caller via an Error **errp
+parameter.
+
+> +}
+> +
+> +static void qio_channel_rdma_update_poll_event(QIOChannelRDMA *rioc,
+> +                                               UpdateEvent action,
+> +                                               bool notify_rpoller)
+> +{
+> +    /* An eventfd with the value of ULLONG_MAX - 1 is readable but unwritable */
+> +    unsigned long long buf = ULLONG_MAX - 1;
+> +
+> +    switch (action) {
+> +    /* only rpoller do SET_* action, to allow qemu ppoll() get the event */
+> +    case SET_POLLIN:
+> +        RETRY_ON_EINTR(write(rioc->pollin_eventfd, &buf, sizeof buf));
+> +        rioc->rpoll_events &= ~POLLIN;
+> +        break;
+> +    case SET_POLLOUT:
+> +        RETRY_ON_EINTR(read(rioc->pollout_eventfd, &buf, sizeof buf));
+> +        rioc->rpoll_events &= ~POLLOUT;
+> +        break;
+> +
+> +    /* the rsocket fd is not ready to rread/rwrite */
+> +    case CLEAR_POLLIN:
+> +        RETRY_ON_EINTR(read(rioc->pollin_eventfd, &buf, sizeof buf));
+> +        rioc->rpoll_events |= POLLIN;
+> +        break;
+> +    case CLEAR_POLLOUT:
+> +        RETRY_ON_EINTR(write(rioc->pollout_eventfd, &buf, sizeof buf));
+> +        rioc->rpoll_events |= POLLOUT;
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +
+> +    /* notify rpoller to rpoll() POLLIN/POLLOUT events */
+> +    if (notify_rpoller) {
+> +        qio_channel_rdma_notify_rpoller(rioc, RP_CMD_UPDATE);
+> +    }
+> +}
+> +
+> +static void qio_channel_rdma_rpoller_add_rioc(QIOChannelRDMA *rioc)
+> +{
+> +    if (rioc->index != -1) {
+> +        error_report("%s: rioc already exsits", __func__);
+> +        return;
+> +    }
+> +
+> +    rioc->index = ++rpoller.count;
+> +
+> +    if (rpoller.count + 1 > rpoller.size) {
+> +        rpoller.size *= 2;
+> +        rpoller.fds = g_renew(struct pollfd, rpoller.fds, rpoller.size);
+> +        rpoller.riocs = g_renew(QIOChannelRDMA *, rpoller.riocs, rpoller.size);
+> +    }
+> +
+> +    rpoller.fds[rioc->index].fd = rioc->fd;
+> +    rpoller.fds[rioc->index].events = rioc->rpoll_events;
+> +    rpoller.riocs[rioc->index] = rioc;
+> +}
+> +
+> +static void qio_channel_rdma_rpoller_del_rioc(QIOChannelRDMA *rioc)
+> +{
+> +    if (rioc->index == -1) {
+> +        error_report("%s: rioc not exsits", __func__);
+> +        return;
+> +    }
+> +
+> +    rpoller.fds[rioc->index] = rpoller.fds[rpoller.count];
+> +    rpoller.riocs[rioc->index] = rpoller.riocs[rpoller.count];
+> +    rpoller.riocs[rioc->index]->index = rioc->index;
+> +    rpoller.count--;
+> +
+> +    close(rioc->pollin_eventfd);
+> +    close(rioc->pollout_eventfd);
+> +    rioc->index = -1;
+> +    rioc->rpoll_events = 0;
+> +}
+> +
+> +static void qio_channel_rdma_rpoller_update_ioc(QIOChannelRDMA *rioc)
+> +{
+> +    if (rioc->index == -1) {
+> +        error_report("%s: rioc not exsits", __func__);
+> +        return;
+> +    }
+> +
+> +    rpoller.fds[rioc->index].fd = rioc->fd;
+> +    rpoller.fds[rioc->index].events = rioc->rpoll_events;
+> +}
+> +
+> +static void qio_channel_rdma_rpoller_process_msg(void)
+> +{
+> +    RpollerMsg msg;
+> +    int ret;
+> +
+> +    ret = RETRY_ON_EINTR(read(rpoller.sock[1], &msg, sizeof msg));
+> +    if (ret != sizeof msg) {
+> +        error_report("%s: rpoller failed to recv msg: %s", __func__,
+> +                     strerror(errno));
+> +        return;
+> +    }
+> +
+> +    switch (msg.cmd) {
+> +    case RP_CMD_ADD_IOC:
+> +        qio_channel_rdma_rpoller_add_rioc(msg.rioc);
+> +        break;
+> +    case RP_CMD_DEL_IOC:
+> +        qio_channel_rdma_rpoller_del_rioc(msg.rioc);
+> +        break;
+> +    case RP_CMD_UPDATE:
+> +        qio_channel_rdma_rpoller_update_ioc(msg.rioc);
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +}
+> +
+> +static void qio_channel_rdma_rpoller_cleanup(void)
+> +{
+> +    close(rpoller.sock[0]);
+> +    close(rpoller.sock[1]);
+> +    rpoller.sock[0] = -1;
+> +    rpoller.sock[1] = -1;
+> +    g_free(rpoller.fds);
+> +    g_free(rpoller.riocs);
+> +    rpoller.fds = NULL;
+> +    rpoller.riocs = NULL;
+> +    rpoller.count = 0;
+> +    rpoller.size = 0;
+> +    rpoller.is_running = false;
+> +}
+> +
+> +static void *qio_channel_rdma_rpoller_thread(void *opaque)
+> +{
+> +    int i, ret, error_events = POLLERR | POLLHUP | POLLNVAL;
+> +
+> +    do {
+> +        ret = rpoll(rpoller.fds, rpoller.count + 1, -1);
+> +        if (ret < 0 && errno != -EINTR) {
+> +            error_report("%s: rpoll() error: %s", __func__, strerror(errno));
+> +            break;
+> +        }
+> +
+> +        for (i = 1; i <= rpoller.count; i++) {
+> +            if (rpoller.fds[i].revents & (POLLIN | error_events)) {
+> +                qio_channel_rdma_update_poll_event(rpoller.riocs[i], SET_POLLIN,
+> +                                                   false);
+> +                rpoller.fds[i].events &= ~POLLIN;
+> +            }
+> +            if (rpoller.fds[i].revents & (POLLOUT | error_events)) {
+> +                qio_channel_rdma_update_poll_event(rpoller.riocs[i],
+> +                                                   SET_POLLOUT, false);
+> +                rpoller.fds[i].events &= ~POLLOUT;
+> +            }
+> +            /* ignore this fd */
+> +            if (rpoller.fds[i].revents & (error_events)) {
+> +                rpoller.fds[i].fd = -1;
+> +            }
+> +        }
+> +
+> +        if (rpoller.fds[0].revents) {
+> +            qio_channel_rdma_rpoller_process_msg();
+> +        }
+> +    } while (rpoller.count >= 1);
+> +
+> +    qio_channel_rdma_rpoller_cleanup();
+> +
+> +    return NULL;
+> +}
+> +
+> +static void qio_channel_rdma_rpoller_start(void)
+> +{
+> +    if (qatomic_xchg(&rpoller.is_running, true)) {
+> +        return;
+> +    }
+> +
+> +    if (qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, rpoller.sock)) {
+> +        rpoller.is_running = false;
+> +        error_report("%s: failed to create socketpair %s", __func__,
+> +                     strerror(errno));
+> +        return;
+> +    }
+> +
+> +    rpoller.count = 0;
+> +    rpoller.size = 4;
+> +    rpoller.fds = g_malloc0_n(rpoller.size, sizeof(struct pollfd));
+> +    rpoller.riocs = g_malloc0_n(rpoller.size, sizeof(QIOChannelRDMA *));
+> +    rpoller.fds[0].fd = rpoller.sock[1];
+> +    rpoller.fds[0].events = POLLIN;
+> +
+> +    qemu_thread_create(&rpoller.thread, "qio-channel-rdma-rpoller",
+> +                       qio_channel_rdma_rpoller_thread, NULL,
+> +                       QEMU_THREAD_JOINABLE);
+> +}
+> +
+> +static void qio_channel_rdma_add_rioc_to_rpoller(QIOChannelRDMA *rioc)
+> +{
+> +    int flags = EFD_CLOEXEC | EFD_NONBLOCK;
+> +
+> +    /*
+> +     * A single eventfd is either readable or writable. A single eventfd cannot
+> +     * represent a state where it is neither readable nor writable. so use two
+> +     * eventfds here.
+> +     */
+> +    rioc->pollin_eventfd = eventfd(0, flags);
+> +    rioc->pollout_eventfd = eventfd(0, flags);
+> +    /* pollout_eventfd with the value 0, means writable, make it unwritable */
+> +    qio_channel_rdma_update_poll_event(rioc, CLEAR_POLLOUT, false);
+> +
+> +    /* tell the rpoller to rpoll() events on rioc->socketfd */
+> +    rioc->rpoll_events = POLLIN | POLLOUT;
+> +    qio_channel_rdma_notify_rpoller(rioc, RP_CMD_ADD_IOC);
+> +}
+> +
+>  QIOChannelRDMA *qio_channel_rdma_new(void)
+>  {
+>      QIOChannelRDMA *rioc;
+>      QIOChannel *ioc;
+>  
+> +    qio_channel_rdma_rpoller_start();
+> +    if (!rpoller.is_running) {
+> +        return NULL;
+> +    }
+> +
+>      rioc = QIO_CHANNEL_RDMA(object_new(TYPE_QIO_CHANNEL_RDMA));
+>      ioc = QIO_CHANNEL(rioc);
+>      qio_channel_set_feature(ioc, QIO_CHANNEL_FEATURE_SHUTDOWN);
+> @@ -125,6 +393,8 @@ retry:
+>          goto out;
+>      }
+>  
+> +    qio_channel_rdma_add_rioc_to_rpoller(rioc);
+> +
+>  out:
+>      if (ret) {
+>          trace_qio_channel_rdma_connect_fail(rioc);
+> @@ -211,6 +481,8 @@ int qio_channel_rdma_listen_sync(QIOChannelRDMA *rioc, InetSocketAddress *addr,
+>      qio_channel_set_feature(QIO_CHANNEL(rioc), QIO_CHANNEL_FEATURE_LISTEN);
+>      trace_qio_channel_rdma_listen_complete(rioc, fd);
+>  
+> +    qio_channel_rdma_add_rioc_to_rpoller(rioc);
+> +
+>  out:
+>      if (ret) {
+>          trace_qio_channel_rdma_listen_fail(rioc);
+> @@ -267,8 +539,10 @@ void qio_channel_rdma_listen_async(QIOChannelRDMA *ioc, InetSocketAddress *addr,
+>                             qio_channel_listen_worker_free, context);
+>  }
+>  
+> -QIOChannelRDMA *qio_channel_rdma_accept(QIOChannelRDMA *rioc, Error **errp)
+> +QIOChannelRDMA *coroutine_mixed_fn qio_channel_rdma_accept(QIOChannelRDMA *rioc,
+> +                                                           Error **errp)
+>  {
+> +    QIOChannel *ioc = QIO_CHANNEL(rioc);
+>      QIOChannelRDMA *cioc;
+>  
+>      cioc = qio_channel_rdma_new();
+> @@ -283,6 +557,17 @@ retry:
+>          if (errno == EINTR) {
+>              goto retry;
+>          }
+> +        if (errno == EAGAIN) {
+> +            if (!(rioc->rpoll_events & POLLIN)) {
+> +                qio_channel_rdma_update_poll_event(rioc, CLEAR_POLLIN, true);
+> +            }
+> +            if (qemu_in_coroutine()) {
+> +                qio_channel_yield(ioc, G_IO_IN);
+> +            } else {
+> +                qio_channel_wait(ioc, G_IO_IN);
+> +            }
+> +            goto retry;
+> +        }
+>          error_setg_errno(errp, errno, "Unable to accept connection");
+>          goto error;
+>      }
+> @@ -294,6 +579,8 @@ retry:
+>          goto error;
+>      }
+>  
+> +    qio_channel_rdma_add_rioc_to_rpoller(cioc);
+> +
+>      trace_qio_channel_rdma_accept_complete(rioc, cioc, cioc->fd);
+>      return cioc;
+>  
+> @@ -307,6 +594,10 @@ static void qio_channel_rdma_init(Object *obj)
+>  {
+>      QIOChannelRDMA *ioc = QIO_CHANNEL_RDMA(obj);
+>      ioc->fd = -1;
+> +    ioc->pollin_eventfd = -1;
+> +    ioc->pollout_eventfd = -1;
+> +    ioc->index = -1;
+> +    ioc->rpoll_events = 0;
+>  }
+>  
+>  static void qio_channel_rdma_finalize(Object *obj)
+> @@ -314,6 +605,7 @@ static void qio_channel_rdma_finalize(Object *obj)
+>      QIOChannelRDMA *ioc = QIO_CHANNEL_RDMA(obj);
+>  
+>      if (ioc->fd != -1) {
+> +        qio_channel_rdma_notify_rpoller(ioc, RP_CMD_DEL_IOC);
+
+This is unsafe.
+
+When finalize runs, the object has dropped its last reference and
+is about to be free()d.  The notify_rpoller() method, however,
+sends an async message to the poll thread, which the poll thread
+will end up processing after the rioc is free()d. ie a use-after-free.
+
+If you take my earlier suggestion that the poll thread should hold
+its own reference on the ioc, then it becomes impossible for the
+rioc to be freed while there is still an active I/O watch, and
+thus this call can go away, and so will the use after free.
+
+>          rclose(ioc->fd);
+>          ioc->fd = -1;
+>      }
+
+With regards,
+Daniel
 -- 
-2.45.2.505.gda0bf45e8d-goog
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
