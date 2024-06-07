@@ -4,37 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39937C27C65
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 22:45:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E540C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 22:46:08 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf44-0007Rn-CZ; Fri, 07 Jun 2024 15:15:52 -0400
+	id 1sFf2R-00021r-Tp; Fri, 07 Jun 2024 15:14:12 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf42-0007Qz-5n; Fri, 07 Jun 2024 15:15:50 -0400
+ id 1sFf2C-00015Z-PM; Fri, 07 Jun 2024 15:13:58 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf3z-0002bB-KV; Fri, 07 Jun 2024 15:15:49 -0400
+ id 1sFf2A-0001pC-94; Fri, 07 Jun 2024 15:13:56 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5806A6E559;
- Fri,  7 Jun 2024 22:14:51 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 31A126E544;
+ Fri,  7 Jun 2024 22:14:04 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 9147BE2753;
- Fri,  7 Jun 2024 22:13:56 +0300 (MSK)
-Received: (nullmailer pid 529403 invoked by uid 1000);
- Fri, 07 Jun 2024 19:13:56 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 567C1E2741;
+ Fri,  7 Jun 2024 22:13:09 +0300 (MSK)
+Received: (nullmailer pid 528712 invoked by uid 1000);
+ Fri, 07 Jun 2024 19:13:08 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>, "Roth,
- Michael" <Michael.Roth@amd.com>
-Subject: [Stable-9.0.1 00/71] Patch Round-up for stable 9.0.1,
- frozen on 2024-06-07
-Date: Fri,  7 Jun 2024 22:13:25 +0300
-Message-Id: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
+ "Richard W.M. Jones" <rjones@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 28/45] iotests: test NBD+TLS+iothread
+Date: Fri,  7 Jun 2024 22:12:47 +0300
+Message-Id: <20240607191307.528622-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
+References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -61,172 +64,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v9.0.1:
+From: Eric Blake <eblake@redhat.com>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-9.0
+Prevent regressions when using NBD with TLS in the presence of
+iothreads, adding coverage the fix to qio channels made in the
+previous patch.
 
-Patch freeze is 2024-06-07 (frozen), and the release is planned for 2024-06-09:
+The shell function pick_unused_port() was copied from
+nbdkit.git/tests/functions.sh.in, where it had all authors from Red
+Hat, agreeing to the resulting relicensing from 2-clause BSD to GPLv2.
 
-  https://wiki.qemu.org/Planning/9.0
+CC: qemu-stable@nongnu.org
+CC: "Richard W.M. Jones" <rjones@redhat.com>
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20240531180639.1392905-6-eblake@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit a73c99378022ebb785481e84cfe1e81097546268)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Please respond here or CC qemu-stable@nongnu.org with any additional notes
-about the planning release.
+diff --git a/tests/qemu-iotests/tests/nbd-tls-iothread b/tests/qemu-iotests/tests/nbd-tls-iothread
+new file mode 100755
+index 0000000000..a2fb07206e
+--- /dev/null
++++ b/tests/qemu-iotests/tests/nbd-tls-iothread
+@@ -0,0 +1,168 @@
++#!/usr/bin/env bash
++# group: rw quick
++#
++# Test of NBD+TLS+iothread
++#
++# Copyright (C) 2024 Red Hat, Inc.
++#
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++#
++
++# creator
++owner=eblake@redhat.com
++
++seq=`basename $0`
++echo "QA output created by $seq"
++
++status=1    # failure is the default!
++
++_cleanup()
++{
++    _cleanup_qemu
++    _cleanup_test_img
++    rm -f "$dst_image"
++    tls_x509_cleanup
++}
++trap "_cleanup; exit \$status" 0 1 2 3 15
++
++# get standard environment, filters and checks
++cd ..
++. ./common.rc
++. ./common.filter
++. ./common.qemu
++. ./common.tls
++. ./common.nbd
++
++_supported_fmt qcow2  # Hardcoded to qcow2 command line and QMP below
++_supported_proto file
++
++# pick_unused_port
++#
++# Picks and returns an "unused" port, setting the global variable
++# $port.
++#
++# This is inherently racy, but we need it because qemu does not currently
++# permit NBD+TLS over a Unix domain socket
++pick_unused_port ()
++{
++    if ! (ss --version) >/dev/null 2>&1; then
++        _notrun "ss utility required, skipped this test"
++    fi
++
++    # Start at a random port to make it less likely that two parallel
++    # tests will conflict.
++    port=$(( 50000 + (RANDOM%15000) ))
++    while ss -ltn | grep -sqE ":$port\b"; do
++        ((port++))
++        if [ $port -eq 65000 ]; then port=50000; fi
++    done
++    echo picked unused port
++}
++
++tls_x509_init
++
++size=1G
++DST_IMG="$TEST_DIR/dst.qcow2"
++
++echo
++echo "== preparing TLS creds and spare port =="
++
++pick_unused_port
++tls_x509_create_root_ca "ca1"
++tls_x509_create_server "ca1" "server1"
++tls_x509_create_client "ca1" "client1"
++tls_obj_base=tls-creds-x509,id=tls0,verify-peer=true,dir="${tls_dir}"
++
++echo
++echo "== preparing image =="
++
++_make_test_img $size
++$QEMU_IMG create -f qcow2 "$DST_IMG" $size | _filter_img_create
++
++echo
++echo === Starting Src QEMU ===
++echo
++
++_launch_qemu -machine q35 \
++    -object iothread,id=iothread0 \
++    -object "${tls_obj_base}"/client1,endpoint=client \
++    -device '{"driver":"pcie-root-port", "id":"root0", "multifunction":true,
++              "bus":"pcie.0"}' \
++    -device '{"driver":"virtio-scsi-pci", "id":"virtio_scsi_pci0",
++              "bus":"root0", "iothread":"iothread0"}' \
++    -device '{"driver":"scsi-hd", "id":"image1", "drive":"drive_image1",
++              "bus":"virtio_scsi_pci0.0"}' \
++    -blockdev '{"driver":"file", "cache":{"direct":true, "no-flush":false},
++                "filename":"'"$TEST_IMG"'", "node-name":"drive_sys1"}' \
++    -blockdev '{"driver":"qcow2", "node-name":"drive_image1",
++                "file":"drive_sys1"}'
++h1=$QEMU_HANDLE
++_send_qemu_cmd $h1 '{"execute": "qmp_capabilities"}' 'return'
++
++echo
++echo === Starting Dst VM2 ===
++echo
++
++_launch_qemu -machine q35 \
++    -object iothread,id=iothread0 \
++    -object "${tls_obj_base}"/server1,endpoint=server \
++    -device '{"driver":"pcie-root-port", "id":"root0", "multifunction":true,
++              "bus":"pcie.0"}' \
++    -device '{"driver":"virtio-scsi-pci", "id":"virtio_scsi_pci0",
++              "bus":"root0", "iothread":"iothread0"}' \
++    -device '{"driver":"scsi-hd", "id":"image1", "drive":"drive_image1",
++              "bus":"virtio_scsi_pci0.0"}' \
++    -blockdev '{"driver":"file", "cache":{"direct":true, "no-flush":false},
++                "filename":"'"$DST_IMG"'", "node-name":"drive_sys1"}' \
++    -blockdev '{"driver":"qcow2", "node-name":"drive_image1",
++                "file":"drive_sys1"}' \
++    -incoming defer
++h2=$QEMU_HANDLE
++_send_qemu_cmd $h2 '{"execute": "qmp_capabilities"}' 'return'
++
++echo
++echo === Dst VM: Enable NBD server for incoming storage migration ===
++echo
++
++_send_qemu_cmd $h2 '{"execute": "nbd-server-start", "arguments":
++    {"addr": {"type": "inet", "data": {"host": "127.0.0.1", "port": "'$port'"}},
++              "tls-creds": "tls0"}}' '{"return": {}}' | sed "s/\"$port\"/PORT/g"
++_send_qemu_cmd $h2 '{"execute": "block-export-add", "arguments":
++    {"node-name": "drive_image1", "type": "nbd", "writable": true,
++      "id": "drive_image1"}}' '{"return": {}}'
++
++echo
++echo === Src VM: Mirror to dst NBD for outgoing storage migration ===
++echo
++
++_send_qemu_cmd $h1 '{"execute": "blockdev-add", "arguments":
++    {"node-name": "mirror", "driver": "nbd",
++     "server": {"type": "inet", "host": "127.0.0.1", "port": "'$port'"},
++     "export": "drive_image1", "tls-creds": "tls0",
++     "tls-hostname": "127.0.0.1"}}' '{"return": {}}' | sed "s/\"$port\"/PORT/g"
++_send_qemu_cmd $h1 '{"execute": "blockdev-mirror", "arguments":
++    {"sync": "full", "device": "drive_image1", "target": "mirror",
++     "job-id": "drive_image1_53"}}' '{"return": {}}'
++_timed_wait_for $h1 '"ready"'
++
++echo
++echo === Cleaning up ===
++echo
++
++_send_qemu_cmd $h1 '{"execute":"quit"}' ''
++_send_qemu_cmd $h2 '{"execute":"quit"}' ''
++
++echo "*** done"
++rm -f $seq.full
++status=0
+diff --git a/tests/qemu-iotests/tests/nbd-tls-iothread.out b/tests/qemu-iotests/tests/nbd-tls-iothread.out
+new file mode 100644
+index 0000000000..1d83d4f903
+--- /dev/null
++++ b/tests/qemu-iotests/tests/nbd-tls-iothread.out
+@@ -0,0 +1,54 @@
++QA output created by nbd-tls-iothread
++
++== preparing TLS creds and spare port ==
++picked unused port
++Generating a self signed certificate...
++Generating a signed certificate...
++Generating a signed certificate...
++
++== preparing image ==
++Formatting 'TEST_DIR/t.IMGFMT', fmt=IMGFMT size=1073741824
++Formatting 'TEST_DIR/dst.IMGFMT', fmt=IMGFMT size=1073741824
++
++=== Starting Src QEMU ===
++
++{"execute": "qmp_capabilities"}
++{"return": {}}
++
++=== Starting Dst VM2 ===
++
++{"execute": "qmp_capabilities"}
++{"return": {}}
++
++=== Dst VM: Enable NBD server for incoming storage migration ===
++
++{"execute": "nbd-server-start", "arguments":
++    {"addr": {"type": "inet", "data": {"host": "127.0.0.1", "port": PORT}},
++              "tls-creds": "tls0"}}
++{"return": {}}
++{"execute": "block-export-add", "arguments":
++    {"node-name": "drive_image1", "type": "nbd", "writable": true,
++      "id": "drive_image1"}}
++{"return": {}}
++
++=== Src VM: Mirror to dst NBD for outgoing storage migration ===
++
++{"execute": "blockdev-add", "arguments":
++    {"node-name": "mirror", "driver": "nbd",
++     "server": {"type": "inet", "host": "127.0.0.1", "port": PORT},
++     "export": "drive_image1", "tls-creds": "tls0",
++     "tls-hostname": "127.0.0.1"}}
++{"return": {}}
++{"execute": "blockdev-mirror", "arguments":
++    {"sync": "full", "device": "drive_image1", "target": "mirror",
++     "job-id": "drive_image1_53"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "created", "id": "drive_image1_53"}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "running", "id": "drive_image1_53"}}
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "JOB_STATUS_CHANGE", "data": {"status": "ready", "id": "drive_image1_53"}}
++
++=== Cleaning up ===
++
++{"execute":"quit"}
++{"execute":"quit"}
++*** done
+-- 
+2.39.2
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
-
-Thanks!
-
-/mjt
-
---------------------------------------
-01* 2cc637f1ea08 Li Zhijian:
-   migration/colo: Fix bdrv_graph_rdlock_main_loop: Assertion 
-   `!qemu_in_coroutine()' failed.
-02* 04f6fb897a5a Michael Tokarev:
-   linux-user: do_setsockopt: fix SOL_ALG.ALG_SET_KEY
-03* 838f82468a12 Zhao Liu:
-   docs: i386: pc: Update maximum CPU numbers for PC Q35
-04* ae6d91a7e9b7 Zhu Yangyang:
-   nbd/server: do not poll within a coroutine context
-05* 4fa333e08dd9 Eric Blake:
-   nbd/server: Mark negotiation functions as coroutine_fn
-06* 06479dbf3d7d Li Zhijian:
-   backends/cryptodev-builtin: Fix local_error leaks
-07* 0cbb322f70e8 Michael Tokarev:
-   target/loongarch/cpu.c: typo fix: expection
-08* e4426353175f Daniel Henrique Barboza:
-   target/riscv/kvm: remove sneaky strerrorname_np() instance
-09* 7b19a3554d2d Richard Henderson:
-   target/arm: Restrict translation disabled alignment check to VMSA
-10* dcc5c018c7e6 Peter Maydell:
-   tests/avocado: update sunxi kernel from armbian to 6.6.16
-11* a88a04906b96 Thomas Huth:
-   .gitlab-ci.d/cirrus.yml: Shorten the runtime of the macOS and FreeBSD jobs
-12* f2c8aeb1afef Jeuk Kim:
-   hw/ufs: Fix buffer overflow bug
-13* 4b00855f0ee2 Alexandra Diupina:
-   hw/dmax/xlnx_dpdma: fix handling of address_extension descriptor fields
-14* eb656a60fd93 Philippe Mathieu-Daudé:
-   hw/arm/npcm7xx: Store derivative OTP fuse key in little endian
-15* c365e6b07057 Philippe Mathieu-Daudé:
-   target/sh4: Fix ADDV opcode
-16* e88a856efd1d Philippe Mathieu-Daudé:
-   target/sh4: Fix SUBV opcode
-17* e096d370ad87 Philippe Mathieu-Daudé:
-   plugins: Update stale comment
-18* 6a5a63f74ba5 Ruihan Li:
-   target/i386: Give IRQs a chance when resetting HF_INHIBIT_IRQ_MASK
-19* 7b616f36de0b Richard Henderson:
-   target/sparc: Fix FEXPAND
-20* 9157dccc7e71 Richard Henderson:
-   target/sparc: Fix FMUL8x16
-21* a859602c746b Richard Henderson:
-   target/sparc: Fix FMUL8x16A{U,L}
-22* be8998e046c2 Richard Henderson:
-   target/sparc: Fix FMULD8*X16
-23* d3ef26afde77 Richard Henderson:
-   target/sparc: Fix FPMERGE
-24* ca51921158e3 Richard Henderson:
-   target/sh4: Update DisasContextBase.insn_start
-25* 54c52ec719fb Song Gao:
-   hw/loongarch/virt: Fix memory leak
-26* e6578f1f68a0 Mattias Nissler:
-   hw/remote/vfio-user: Fix config space access byte order
-27* 41c685dc59bb Paolo Bonzini:
-   target/i386: fix operand size for DATA16 REX.W POPCNT
-28* 40a3ec7b5ffd Paolo Bonzini:
-   target/i386: rdpkru/wrpkru are no-prefix instructions
-29* fe01af5d47d4 Paolo Bonzini:
-   target/i386: fix feature dependency for WAITPKG
-30* 23b1f53c2c89 Paolo Bonzini:
-   configure: quote -D options that are passed through to meson
-31* 371d60dfdb47 Thomas Huth:
-   configure: Fix error message when C compiler is not working
-32* 37e91415018d hikalium:
-   ui/gtk: Fix mouse/motion event scaling issue with GTK display backend
-33* e4e62514e3cc Dongwon Kim:
-   ui/gtk: Check if fence_fd is equal to or greater than 0
-34* c9290dfebfdb Richard Henderson:
-   tcg/loongarch64: Fill out tcg_out_{ld,st} for vector regs
-35* 2563be6317fa Gerd Hoffmann:
-   hw/pflash: fix block write start
-36* 84d4b7285486 donsheng:
-   target-i386: hyper-v: Correct kvm_hv_handle_exit return value
-37* 9710401276a0 Fiona Ebner:
-   hw/core/machine: move compatibility flags for VirtIO-net USO to machine 
-   8.1
-38* 07c0866103d4 Song Gao:
-   target/loongarch/kvm: fpu save the vreg registers high 192bit
-39* b11f9814526b Song Gao:
-   hw/loongarch: Fix fdt memory node wrong 'reg'
-40* 6204af704a07 Jiaxun Yang:
-   hw/loongarch/virt: Fix FDT memory node address width
-41* 8225bff7c5db Paolo Bonzini:
-   target/i386: disable jmp_opt if EFLAGS.RF is 1
-42* f0f0136abba6 Paolo Bonzini:
-   target/i386: no single-step exception after MOV or POP SS
-43* 36fa7c686e9e Richard Henderson:
-   gitlab: Update msys2-64bit runner tags
-44* bad7a2759c69 Daniel P. Berrangé:
-   dockerfiles: add 'MAKE' env variable to remaining containers
-45 c53f7a107879 Daniel P. Berrangé:
-   gitlab: use $MAKE instead of 'make'
-46 b563959b906d Daniel P. Berrangé:
-   gitlab: use 'setarch -R' to workaround tsan bug
-47 19ed42e8adc8 Zenghui Yu:
-   hvf: arm: Fix encodings for ID_AA64PFR1_EL1 and debug System registers
-48 daafa78b2972 Andrey Shumilin:
-   hw/intc/arm_gic: Fix handling of NS view of GICC_APR<n>
-49 daf9748ac002 Marcin Juszkiewicz:
-   target/arm: Disable SVE extensions when SVE is disabled
-50 199e84de1c90 Eric Blake:
-   qio: Inherit follow_coroutine_ctx across TLS
-51 a73c99378022 Eric Blake:
-   iotests: test NBD+TLS+iothread
-52 c76b121840c6 yang.zhang:
-   hw/intc/riscv_aplic: APLICs should add child earlier than realize
-53 86997772fa80 Andrew Jones:
-   target/riscv/kvm: Fix exposure of Zkr
-54 1215d45b2aa9 Daniel Henrique Barboza:
-   target/riscv/kvm: tolerate KVM disable ext errors
-55 75115d880c6d Huang Tao:
-   target/riscv: Fix the element agnostic function problem
-56 ff33b7a9699e Yangyu Chen:
-   target/riscv/cpu.c: fix Zvkb extension config
-57 17b713c0806e Max Chou:
-   target/riscv: rvv: Fix Zvfhmin checking for vfwcvt.f.f.v and vfncvt.f.f.w 
-   instructions
-58 7a999d4dd704 Max Chou:
-   target/riscv: rvv: Check single width operator for vector fp widen 
-   instructions
-59 692f33a3abca Max Chou:
-   target/riscv: rvv: Check single width operator for vfncvt.rod.f.f.w
-60 93cb52b7a3cc Max Chou:
-   target/riscv: rvv: Remove redudant SEW checking for vector fp 
-   narrow/widen instructions
-61 68e7c86927af Daniel Henrique Barboza:
-   target/riscv: prioritize pmp errors in raise_mmu_exception()
-62 6c9a34424713 Alexei Filippov:
-   target/riscv: do not set mtval2 for non guest-page faults
-63 c5eb8d633674 Alistair Francis:
-   target/riscv: rvzicbo: Fixup CBO extension register calculation
-64 190b867f28cb Yong-Xuan Wang:
-   target/riscv/kvm.c: Fix the hart bit setting of AIA
-65 583edc4efb7f Daniel Henrique Barboza:
-   riscv, gdbstub.c: fix reg_width in ricsv_gen_dynamic_vector_feature()
-66 915758c537b5 Alistair Francis:
-   disas/riscv: Decode all of the pmpcfg and pmpaddr CSRs
-67 7604bbc2d87d Paolo Bonzini:
-   target/i386: fix xsave.flat from kvm-unit-tests
-68 da7c95920d02 Xinyu Li:
-   target/i386: fix SSE and SSE2 feature check
-69 40a23ef64366 Marc-André Lureau:
-   virtio-gpu: fix v2 migration
-70 2e701e6785cd Bernhard Beschow:
-   ui/sdl2: Allow host to power down screen
-71 78f932ea1f7b lanyanzhi:
-   target/loongarch: fix a wrong print in cpu dump
-
-(commit(s) marked with * were in previous series and are not resent)
 
