@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BD38C27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:44:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2217EC27C55
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:44:51 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFb6f-00019W-C3; Fri, 07 Jun 2024 11:02:17 -0400
+	id 1sFbnI-0007Mq-Mk; Fri, 07 Jun 2024 11:46:20 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sFb6d-00019N-HN
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 11:02:15 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1sFbnG-0007MM-6V
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 11:46:18 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sFb6c-0007w9-1o
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 11:02:15 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2c24115469bso2467506a91.0
- for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 08:02:13 -0700 (PDT)
+ id 1sFbnE-0007U1-JE
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 11:46:17 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-7025ca8bebcso2018356b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 08:46:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717772532; x=1718377332; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717775175; x=1718379975; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=e8h3Ob/U2MovjuDuWEQiWuqRZGka2ZSGoWHfBoY/wbQ=;
- b=Q9Yt/F76y5A0X1Q/oZaWeg0SGmvTCNbHewzNHVZB/80AskntdLlFhahaibUCOJL9uT
- +jB1TWyflsqBHLWuGxrlHrl65blQHpthxLKOqXoxFTNGJtZs9Eu2566FgPZXXSzV5yn8
- s7xX/YKNMRp/e25EYGNm1kMO1C+89EePSU7Fsq8JbODhwyp6KHfZUX/1BLFfkMX9q56o
- +FQFSWjEBINTAIspvny++EQWDUYUPWCECxuSZP0UMX5TcNjEkVy5DX4itovDdyOS5I69
- 317BsBWblIPmO6H7fuXafw4hU3WFoWHiVOvup+v1lGZNeY+XHL1jENE3BCXfO718wuzw
- leeA==
+ bh=uac6KoO32L9+6czhV1pDuA7BLZcZKuuVRVkct3+TYlM=;
+ b=ndqnHeub7WbKTOSvIkc8cbXpQzqJV67xwn25GhbpGZWfRpUGiaMcoQ+9pXflf6TPSc
+ sLL03OvHJM/lTEjoTVFr5sP8ufOH0pu9RlEjMGWmJ9Eo9rsatnduzTmFxGW/R1tk6j2m
+ 6ViDPUv+xcoqUaRrkBaVPSYqy53LRlQgQWyNlEWB9nr53hYTjvLYicn8B6IwP0P335ya
+ CUH4jGAPAeLsQ1PCpRdlxkQ50nIJiBucmUvrBA4hKeo4QDnjPUnQKLF2GYe8PCxcVFI3
+ o57oFzWDeKMf9wi1riYheKM8K3c7epPXXdNa/yp0JIh8ROo2LZwlZq8xcnJlncydbXWG
+ zvlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717772532; x=1718377332;
+ d=1e100.net; s=20230601; t=1717775175; x=1718379975;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=e8h3Ob/U2MovjuDuWEQiWuqRZGka2ZSGoWHfBoY/wbQ=;
- b=ifGj16MKOux90W8r/0eBfEj0+4LDhOjGfHB//pJOYyFxgyyl8bv2nubLkALgVz/fxH
- RB88CBs/3QfIaIImikru4dXZ3hK3QceOL1gyB5o8+T0JWqKt6Nj7yY8N+DNv4IYrKjWG
- 8oPA3+g2DHwyA3poih9NctU/wiu5yULKKGWLq1G9HSLB+5By1L0et+qgKStR2YxxOefA
- GdO5VGC67O1QjgZG6JXTE8FMa2llrih3JVlOWc9lpRfOv7WN6EpnM8LhhfYPNwf7nKDY
- Bhf3wvfP1d7JsX9Iw/chJjMdYl+aFuzDhkgbNRxG5VVEqdH+XXy0aW0rMLt21OyacZ4c
- +Dew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWOcAQkOYaLvDkytQfYvxBizHSOgPfOOxQNz2POYZZKVPdHKMvj2BOpwAYDkpPZ3hhVm8W9NZhucHneH3VZysy7KlgXxgQ=
-X-Gm-Message-State: AOJu0YyUHpSbC8zTq8FtvbbyALts0fEVvXyfl8dmu/Ihx8DZARJZTLh0
- VLGgV70bzLlXaRvcTAj5JlWKQCyUoDB+z4LE56pqYwDb2PLDsaVXn873am5BXzw=
-X-Google-Smtp-Source: AGHT+IFb+omimqyap0eB7Uttxb8BftUOBBerr+x8F3F5aUjI4ebK8CKVosh4A7piDiHaJ8lpLYAENA==
-X-Received: by 2002:a17:90a:f982:b0:2b0:e883:270d with SMTP id
- 98e67ed59e1d1-2c29996bfd0mr7745701a91.1.1717772531988; 
- Fri, 07 Jun 2024 08:02:11 -0700 (PDT)
+ bh=uac6KoO32L9+6czhV1pDuA7BLZcZKuuVRVkct3+TYlM=;
+ b=LAJz99bnOf7/MJPYMri8SmCackOrG64GB3Jp8RmIacD47TJ3opXWcEwqdx2P1/wqow
+ 3U6maLsRQree6VYMZqM3DvT2EBtLCLSIuU8rgMA5avkw7Nh4F9qIcvfbR2M4wmPsXcFL
+ 326lM+LjWu++6DAvIvfxsu3yvuLp1ofyhSZ0UNMvxldtcfPKch9kcuc2aj+mDywwhAVk
+ tGryzk6QLvSlLuvZvgqSojtSQzCaj2EEwa+TbpYjx9AwwXLLVPhAxIKbOjjeXbURzExh
+ L6Lm1pMtWOBasKe+CLEaRVfUGBqGtmUYrQcaGMrOK2HeTMmT+ewH00kczDeNCna/ti08
+ AL6A==
+X-Gm-Message-State: AOJu0Yz1lBsOuBBiIEGLljvmkNMDPNB25JeoLOnJYzFMUFU+jvuO3Z62
+ wnXMIajk7n4NADCZhwJpe5/rIUbm7L8/GOeSmwJNAzQ6o1/lhE3u+EmdYlKop3s=
+X-Google-Smtp-Source: AGHT+IH/IkRv47Uw7bD3fbuFiqA8CtP+MXPdtVSMAXnVbjOFhevKSLsZZ6unYY1ezOD9wVy2I8Tkjg==
+X-Received: by 2002:a05:6a20:f397:b0:1af:f8b5:9c13 with SMTP id
+ adf61e73a8af0-1b2f9c89d16mr2485851637.39.1717775175252; 
+ Fri, 07 Jun 2024 08:46:15 -0700 (PDT)
 Received: from [192.168.223.227] ([75.147.178.105])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c2d14fffcesm528227a91.42.2024.06.07.08.02.11
+ 41be03b00d2f7-6de2760b076sm2907550a12.84.2024.06.07.08.46.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Jun 2024 08:02:11 -0700 (PDT)
-Message-ID: <1b310d07-d59a-4d23-b89c-a46bb0a48a46@linaro.org>
-Date: Fri, 7 Jun 2024 08:02:08 -0700
+ Fri, 07 Jun 2024 08:46:14 -0700 (PDT)
+Message-ID: <28ea359e-fdbf-4a4f-b004-19e558d8d96f@linaro.org>
+Date: Fri, 7 Jun 2024 08:46:12 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] bsd-user: Baby Steps towards eliminating
- qemu_host_page_size, et al
-To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>
-References: <20240607042503.25222-1-imp@bsdimp.com>
+Subject: Re: [PATCH 3/4] target/ppc: Move VSX vector storage access insns to
+ decodetree.
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com
+References: <20240607144921.726730-1-rathc@linux.ibm.com>
+ <20240607144921.726730-4-rathc@linux.ibm.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240607042503.25222-1-imp@bsdimp.com>
+In-Reply-To: <20240607144921.726730-4-rathc@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,13 +98,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/6/24 21:25, Warner Losh wrote:
-> Warner Losh (3):
->    linux-user: Adjust comment to reflect the code.
->    bsd-user: port linux-user:ff8a8bbc2ad1 for variable page sizes
->    bsd-user: Catch up to run-time reserved_va math
+On 6/7/24 07:49, Chinmay Rath wrote:
+> Moving the following instructions to decodetree specification:
+> 
+>    lxv{b16, d2, h8, w4, ds, ws}x   : X-form
+>    stxv{b16, d2, h8, w4}x          : X-form
+> 
+> The changes were verified by validating that the tcg-ops generated for those
+> instructions remain the same, which were captured using the '-d in_asm,op' flag.
+> 
+> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+> ---
+>   target/ppc/insn32.decode            |  10 ++
+>   target/ppc/translate/vsx-impl.c.inc | 199 ++++++++++++----------------
+>   target/ppc/translate/vsx-ops.c.inc  |  12 --
+>   3 files changed, 97 insertions(+), 124 deletions(-)
 
+Because the ops are identical,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+But you really should update these to use tcg_gen_qemu_ld/st_i128 with the proper 
+atomicity flags.  This will fix an existing bug...
+
+> +static bool trans_LXVD2X(DisasContext *ctx, arg_LXVD2X *a)
+>   {
+>       TCGv EA;
+>       TCGv_i64 t0;
+> +
+> +    REQUIRE_VSX(ctx);
+> +    REQUIRE_INSNS_FLAGS2(ctx, VSX);
+> +
+>       t0 = tcg_temp_new_i64();
+>       gen_set_access_type(ctx, ACCESS_INT);
+> +    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
+>       gen_qemu_ld64_i64(ctx, t0, EA);
+> +    set_cpu_vsr(a->rt, t0, true);
+
+where the vector register is partially modified ...
+
+>       tcg_gen_addi_tl(EA, EA, 8);
+>       gen_qemu_ld64_i64(ctx, t0, EA);
+
+before a fault from the second load is recognized.
+Similarly for stores leaving memory partially modified.
+
+
 r~
+
 
