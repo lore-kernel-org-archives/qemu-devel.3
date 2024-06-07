@@ -4,49 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0863FC27C53
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:04:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD82C41513
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:04:41 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf4x-0001vA-Qk; Fri, 07 Jun 2024 15:16:47 -0400
+	id 1sFbjO-0006oT-6N; Fri, 07 Jun 2024 11:42:18 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf4w-0001sR-SM; Fri, 07 Jun 2024 15:16:46 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf4u-0002ya-Oa; Fri, 07 Jun 2024 15:16:46 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C0C5C6E563;
- Fri,  7 Jun 2024 22:14:53 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 045B3E275D;
- Fri,  7 Jun 2024 22:13:59 +0300 (MSK)
-Received: (nullmailer pid 529438 invoked by uid 1000);
- Fri, 07 Jun 2024 19:13:58 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 54/71] target/riscv/kvm: tolerate KVM disable ext errors
-Date: Fri,  7 Jun 2024 22:13:35 +0300
-Message-Id: <20240607191356.529336-10-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
-References: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sFbjM-0006oD-D4
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 11:42:17 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sFbjK-000705-S8
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 11:42:16 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-7041ed475acso138045b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 08:42:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717774933; x=1718379733; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Ryl4SDic3Xdsa+1AlQvHVKGA2pGUsQoKwtw/sfpLczg=;
+ b=LAIO8O2YaoAO4e4n/upJyEaeqZ39qzKvo1fzP5Ipo07jWmsqUmG7x4TDYhMl0VTGMp
+ 27WrYvCpBr3IX3el3GGFr3PZSDnIHWkd3TONv41rMXXKpmRedCwWKoVJDeK4KwDZ3jki
+ /ZVsuZQa7jDwk+aoC+PsaHh1lcA7jxizO+5NCe26K29GcrCqlkPlWRQEFCpVig67MILO
+ BETlH82F49v9WAngj1I8pzaYKHPLAcuEQE8FwBaZKLgRYGZsIdv+1QT7exHltVYEt4b9
+ PGIRRXVLEWJ+KDFTWxkAj4ozU2ulztxMEujJZ3mfLacf0Ua18VoSdM0+vPNmJkeYhOcf
+ Lz4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717774933; x=1718379733;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ryl4SDic3Xdsa+1AlQvHVKGA2pGUsQoKwtw/sfpLczg=;
+ b=gI6PwSDYPvv2HFeUrPKPOs43qGg1IgRlT8WjoSajYXW+PKMAdjHI4+Gzf5aOdlTBm3
+ QlEg5oEryczQ8y/5Zw7yHrO3Wumh2D8zBEzahgcxY6WhK05gIfbSKcvyOZ83Khj/AVJm
+ D65CZ3E/MmeIUrzJtfwTE8Yqekje7aY6HzAAs8FVnroBlxZCbMUkuej61llmrMwj4YsR
+ r0067bpxjmmqz4ZouCbdxpUa2W9kmcIHJ0z6YfO6tHwHhj7duZTPI6KkYBcQLmTsyCtu
+ NWPqyeLE+2g5qzBqkFIf/LS5gxOYoxCT43kzkcAEeBGAquHQLC1OZc+LcntUP39+0HkS
+ ABaA==
+X-Gm-Message-State: AOJu0YxfzEbWTpvSnHytDwy/Dm1rwp5HHMd+oVEaLiqpnE+SF5E1AMNN
+ VblhoO7Hvg3vqCU1wrsuEh/hHX2nqXxovLYK+cgWIzTorFi9iJ0RTqb5meBn8bw=
+X-Google-Smtp-Source: AGHT+IF5dnPM97e+RfEc6bBfs3MoqsWQZuXmvhVKtFzz1iHVZuHbQimLqdEiRq8/ajR9G2y7E88yIA==
+X-Received: by 2002:a05:6a20:a10c:b0:1af:cce1:6fc4 with SMTP id
+ adf61e73a8af0-1b2f9a60dc5mr3324566637.29.1717774933208; 
+ Fri, 07 Jun 2024 08:42:13 -0700 (PDT)
+Received: from [192.168.223.227] ([75.147.178.105])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-6de21788251sm2809599a12.30.2024.06.07.08.42.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Jun 2024 08:42:12 -0700 (PDT)
+Message-ID: <9f7b4127-2e5d-4445-b5b5-c3df46fab7ae@linaro.org>
+Date: Fri, 7 Jun 2024 08:42:10 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] target/ppc: Moving VSX scalar storage access insns to
+ decodetree.
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com
+References: <20240607144921.726730-1-rathc@linux.ibm.com>
+ <20240607144921.726730-2-rathc@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240607144921.726730-2-rathc@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,67 +98,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+On 6/7/24 07:49, Chinmay Rath wrote:
+> Moving the following instructions to decodetree specification :
+> 
+> 	lxs{d, iwa, ibz, ihz, iwz, sp}x		: X-form
+> 	stxs{d, ib, ih, iw, sp}x		: X-form
+> 
+> The changes were verified by validating that the tcg-ops generated by those
+> instructions remain the same, which were captured using the '-d in_asm,op' flag.
+> 
+> Signed-off-by: Chinmay Rath<rathc@linux.ibm.com>
+> ---
+>   target/ppc/insn32.decode            | 13 +++++
+>   target/ppc/translate/vsx-impl.c.inc | 79 +++++++++++++----------------
+>   target/ppc/translate/vsx-ops.c.inc  | 11 ----
+>   3 files changed, 49 insertions(+), 54 deletions(-)
 
-Running a KVM guest using a 6.9-rc3 kernel, in a 6.8 host that has zkr
-enabled, will fail with a kernel oops SIGILL right at the start. The
-reason is that we can't expose zkr without implementing the SEED CSR.
-Disabling zkr in the guest would be a workaround, but if the KVM doesn't
-allow it we'll error out and never boot.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-In hindsight this is too strict. If we keep proceeding, despite not
-disabling the extension in the KVM vcpu, we'll not add the extension in
-the riscv,isa. The guest kernel will be unaware of the extension, i.e.
-it doesn't matter if the KVM vcpu has it enabled underneath or not. So
-it's ok to keep booting in this case.
-
-Change our current logic to not error out if we fail to disable an
-extension in kvm_set_one_reg(), but show a warning and keep booting. It
-is important to throw a warning because we must make the user aware that
-the extension is still available in the vcpu, meaning that an
-ill-behaved guest can ignore the riscv,isa settings and  use the
-extension.
-
-The case we're handling happens with an EINVAL error code. If we fail to
-disable the extension in KVM for any other reason, error out.
-
-We'll also keep erroring out when we fail to enable an extension in KVM,
-since adding the extension in riscv,isa at this point will cause a guest
-malfunction because the extension isn't enabled in the vcpu.
-
-Suggested-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240422171425.333037-2-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 1215d45b2aa97512a2867e401aa59f3d0c23cb23)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 243a624fee..5187b88ad9 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -427,10 +427,14 @@ static void kvm_riscv_update_cpu_cfg_isa_ext(RISCVCPU *cpu, CPUState *cs)
-         reg = kvm_cpu_cfg_get(cpu, multi_ext_cfg);
-         ret = kvm_set_one_reg(cs, id, &reg);
-         if (ret != 0) {
--            error_report("Unable to %s extension %s in KVM, error %d",
--                         reg ? "enable" : "disable",
--                         multi_ext_cfg->name, ret);
--            exit(EXIT_FAILURE);
-+            if (!reg && ret == -EINVAL) {
-+                warn_report("KVM cannot disable extension %s",
-+                            multi_ext_cfg->name);
-+            } else {
-+                error_report("Unable to enable extension %s in KVM, error %d",
-+                             multi_ext_cfg->name, ret);
-+                exit(EXIT_FAILURE);
-+            }
-         }
-     }
- }
--- 
-2.39.2
-
+r~
 
