@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8028CC27C65
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 05:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3624C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 05:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFRmm-0007sE-Se; Fri, 07 Jun 2024 01:05:08 -0400
+	id 1sFSXz-00044b-La; Fri, 07 Jun 2024 01:53:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sFRml-0007rX-JL; Fri, 07 Jun 2024 01:05:07 -0400
-Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
+ (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
+ id 1sFSXw-000449-9V
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 01:53:53 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sFRmj-0002XG-E7; Fri, 07 Jun 2024 01:05:07 -0400
-Received: by mail-ua1-x933.google.com with SMTP id
- a1e0cc1a2514c-80b26f1cadaso565431241.3; 
- Thu, 06 Jun 2024 22:05:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jinpu.wang@ionos.com>)
+ id 1sFSXt-0002WQ-Sy
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 01:53:52 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-57a1fe639a5so2026497a12.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 22:53:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717736703; x=1718341503; darn=nongnu.org;
+ d=ionos.com; s=google; t=1717739625; x=1718344425; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wHP7bSfVELwRPSMQrkzalt1IaT8TdTLBmjT9owy7zEY=;
- b=XgQUGZLgy1jP14iCf8UvYx7RSIHYXZNzLYQoKWa08HtUerrRwcz9+7jXP6fp+dEuI5
- zO5tm4R/T/pqgSuo/V7xmpt+/I/FtIuDXGFnw0wSZRh+15UgQbDN5HlhpOg101VQbhjC
- I26hP4Qd2rQsxxUC3Fi4FLVZsPAOf6XDRiFJAcN9H9Cokn2N8bHYNyVsquU/4e1j55uG
- lIypv9CTi/KVZtfVhokiI29mshzlw042XjOD9BdP/G7u1EbWeoBTk8EIhWkbZ3K0hcIl
- uJASmpHlsGjkRx0G84vHkFVuQ+LtIIAz6CCQPLluwMTZBFfsuXony0SiN4n5vCflBCQ/
- 2c7w==
+ bh=zRzi2U/aGEWVOu13r3wPYJj/enOLXzMocY1cfz2tIJw=;
+ b=ZAZjX2LTQldyytw8bBSi2x6KlaxLL2VJakfnq8igS13NFv5x1WpLkBAHbmuDTuKCa3
+ +T+eaB+w6fUMV0pxymfBxSj+yfwqGkB4bdBW2RAQ5MyrAIGVgUETRmXtfQP2FEveBeh1
+ VEOQgxRlgd6SJDG5UGqPkv8mT7IaVIf569mcR4UZQb/JMmqSGQ9eq6OA5Oj9iTEPppC2
+ x4vU14OfXUUR7/pkeNn1FMM4q82XJMzP8gMYqUWF+DuIXwp18JwQJ4ox2ccrc7e5jqUp
+ wC39jaT+U2jJhm8cRiUAPvfJGyMj3IK+bZea5GC61DStiZ9pUdKrMFsX0Avcl9ZIyUeO
+ Cg9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717736703; x=1718341503;
+ d=1e100.net; s=20230601; t=1717739625; x=1718344425;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wHP7bSfVELwRPSMQrkzalt1IaT8TdTLBmjT9owy7zEY=;
- b=veOTlTfJWE4hEbbFt7Og6ZeTEt7Kj2CzVuEL3Aggs7ujyUrhMJgGIW7x3wvFsK03xR
- wXy+XUNZdxa7ym26NiXhv7fV3f0kH3Myh3eCtaCPBDH2JmRJYIp9S/4vyy9F3Od9cWBO
- jPFDkEFKjuZ+CWDO89CSIlmHViVV3m2ttgGRI2j7wvzsLGiQcoClUzbFSuv9if98lyEG
- iFbevLbR7qJ40ZpQ/gK0DOqa+ZXftUeb3X0qMXxJS8DRKMPzUIrE94JNhR8Z3YcGkANY
- Tgx4a9xTitx8c6PTtQlaplM4y2tqx8JEyU4aseOddxmDuFm2ymHG0XpPYOV3Sgi598Wa
- aCeQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUcSLDLCkHTtGjNT8uGUxhoFPJBXgU22O1Nyx59/EMvLqjBs0qyWCszlAG5JKzbW4j4fO4dECalL9QPS5VyRFgHgQaoNeI=
-X-Gm-Message-State: AOJu0YyCZrTELrcRv4sYo9sK+tNDu+6GD0qJmjuLGysShvjJYBKoHwvW
- tvgknPBq5GXQw2hmU+95CirNDIxPBiDaVxPJ3BHJvpGZ7Nc+7kbnA5QtvQXXNJXQtzKhn6zaOR6
- sXv8ZS7B0zGy9FDi+EiaQYgHx3b8M/Q==
-X-Google-Smtp-Source: AGHT+IHHKgUGVcY1aQyvVaPXAY5xNz/MZHd2QibkjyzTWeROS9xmD0RYLVx31Cvqe8lvAod7KJj+IKim2e3kdF+GTnQ=
-X-Received: by 2002:a05:6102:32c2:b0:48b:ae47:c11 with SMTP id
- ada2fe7eead31-48c272a67b4mr1810581137.4.1717736703461; Thu, 06 Jun 2024
- 22:05:03 -0700 (PDT)
+ bh=zRzi2U/aGEWVOu13r3wPYJj/enOLXzMocY1cfz2tIJw=;
+ b=TMqiOrK79V8bb/+shIaF1nltwku9j/XlTO9C+fJJ4xo+Bb/mB2Qy/MsZmbJ2iBJkVh
+ g5fq/lia4bsjNAfWJYmC81X7Nw4d69OBRfi5a99YwyY1dxuZ141RBMCgk3EriziBjy6c
+ IZMQeprJKN8rEQv8VurqRZupn/zfPaDLlwxSZgkEpVNG/Hmyik7mftICeaYMQtUtNclu
+ ljvng0EDmLtoFBWInAFrEExl+Y5S8mzj7ck2kIFSompRXIyEaK1i9VZMkMK52YnzHdxn
+ EznNP/LcEPwpD1O375NBs/oWmFyR+VuVuLN5iVJ59aPeuEX3qQ6HIQDepe+DYvRS9gvf
+ Kz5Q==
+X-Gm-Message-State: AOJu0Yxqfi4/buTasQlVrJpin6AqWJ5wCnQJTi6R40GnWa+1e9AhlPHJ
+ VDHudR6mDBprnocU2fFELMQAS0weI76o90NM8hpVzMqj90uIg30eFIVHV3sar84RCFjuGXHtGdZ
+ H5Wo33G26zBFWOhw6j/4l/a4dGMLg5TGYJwH82Q==
+X-Google-Smtp-Source: AGHT+IELw58JibX99xmkcVEIIyx5rwz/M9lBuMjWpNn/fhzqVwwVM822hkEfekIqEgdaEN35EH9XLbQsv9Y6Ex/K9j4=
+X-Received: by 2002:a50:d791:0:b0:57a:33a5:9b78 with SMTP id
+ 4fb4d7f45d1cf-57c50999129mr723574a12.34.1717739625569; Thu, 06 Jun 2024
+ 22:53:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240606135454.119186-1-fea.wang@sifive.com>
-In-Reply-To: <20240606135454.119186-1-fea.wang@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 7 Jun 2024 15:04:37 +1000
-Message-ID: <CAKmqyKNzTu4va_epcOL=OZL7=WpCK=b+x_WXYVQcn=FO8VPkjQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/6] target/riscv: Support RISC-V privilege 1.13 spec
-To: "Fea.Wang" <fea.wang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
+In-Reply-To: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
+From: Jinpu Wang <jinpu.wang@ionos.com>
+Date: Fri, 7 Jun 2024 07:53:34 +0200
+Message-ID: <CAMGffEkUd2EOS3+PQ9Yfp=8V1pZB_emo7gcmxmvOX=iWVG6Axg@mail.gmail.com>
+Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+To: Gonglei <arei.gonglei@huawei.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, yu.zhang@ionos.com, 
+ mgalaxy@akamai.com, elmar.gerdes@ionos.com, zhengchuan@huawei.com, 
+ berrange@redhat.com, armbru@redhat.com, lizhijian@fujitsu.com, 
+ pbonzini@redhat.com, mst@redhat.com, xiexiangyou@huawei.com, 
+ linux-rdma@vger.kernel.org, lixiao91@huawei.com, 
+ Jialin Wang <wangjialin23@huawei.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x933.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: permerror client-ip=2a00:1450:4864:20::52e;
+ envelope-from=jinpu.wang@ionos.com; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,75 +94,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 6, 2024 at 11:50=E2=80=AFPM Fea.Wang <fea.wang@sifive.com> wrot=
-e:
->
-> Based on the change log for the RISC-V privilege 1.13 spec, add the
-> support for ss1p13.
->
-> base-commit: 7a2356147f3a5faebf95dba4140247ec6e5607b1
->
-> * Reorder commits
->
-> [v3]
-> * Correct the mstateen0 for P1P13 in commit message
-> * Refactor commit by splitting to two commits
->
-> [v2]
-> * Check HEDELEGH by hmode32 instead of any32
-> * Remove unnecessary code
-> * Refine calling functions
->
-> [v1]
->
-> Ref:https://github.com/riscv/riscv-isa-manual/blob/a7d93c9/src/priv-prefa=
-ce.adoc?plain=3D1#L40-L72
->
-> Lists what to do without clarification or document format.
-> * Redefined misa.MXL to be read-only, making MXLEN a constant.(Skip, impl=
-ementation ignored)
-> * Added the constraint that SXLEN=E2=89=A5UXLEN.(Skip, implementation ign=
-ored)
-> * Defined the misa.V field to reflect that the V extension has been imple=
-mented.(Skip, existed)
-> * Defined the RV32-only medelegh and hedelegh CSRs.(Done in these patches=
-)
-> * Defined the misaligned atomicity granule PMA, superseding the proposed =
-Zam extension..(Skip, implementation ignored)
-> * Allocated interrupt 13 for Sscofpmf LCOFI interrupt.(Skip, existed)
-> * Defined hardware error and software check exception codes.(Done in thes=
-e patches)
-> * Specified synchronization requirements when changing the PBMTE fields i=
-n menvcfg and henvcfg.(Skip, implementation ignored)
-> * Incorporated Svade and Svadu extension specifications.(Skip, existed)
->
-> Fea.Wang (5):
->   target/riscv: Define macros and variables for ss1p13
->   target/riscv: Add 'P1P13' bit in SMSTATEEN0
->   target/riscv: Add MEDELEGH, HEDELEGH csrs for RV32
->   target/riscv: Reserve exception codes for sw-check and hw-err
->   target/riscv: Support the version for ss1p13
->
-> Jim Shu (1):
->   target/riscv: Reuse the conversion function of priv_spec
+Hi Gonglei, hi folks on the list,
 
-Thanks!
+On Tue, Jun 4, 2024 at 2:14=E2=80=AFPM Gonglei <arei.gonglei@huawei.com> wr=
+ote:
+>
+> From: Jialin Wang <wangjialin23@huawei.com>
+>
+> Hi,
+>
+> This patch series attempts to refactor RDMA live migration by
+> introducing a new QIOChannelRDMA class based on the rsocket API.
+>
+> The /usr/include/rdma/rsocket.h provides a higher level rsocket API
+> that is a 1-1 match of the normal kernel 'sockets' API, which hides the
+> detail of rdma protocol into rsocket and allows us to add support for
+> some modern features like multifd more easily.
+>
+> Here is the previous discussion on refactoring RDMA live migration using
+> the rsocket API:
+>
+> https://lore.kernel.org/qemu-devel/20240328130255.52257-1-philmd@linaro.o=
+rg/
+>
+> We have encountered some bugs when using rsocket and plan to submit them =
+to
+> the rdma-core community.
+>
+> In addition, the use of rsocket makes our programming more convenient,
+> but it must be noted that this method introduces multiple memory copies,
+> which can be imagined that there will be a certain performance degradatio=
+n,
+> hoping that friends with RDMA network cards can help verify, thank you!
+First thx for the effort, we are running migration tests on our IB
+fabric, different generation of HCA from mellanox, the migration works
+ok,
+there are a few failures,  Yu will share the result later separately.
 
-Applied to riscv-to-apply.next
+The one blocker for the change is the old implementation and the new
+rsocket implementation;
+they don't talk to each other due to the effect of different wire
+protocol during connection establishment.
+eg the old RDMA migration has special control message during the
+migration flow, which rsocket use a different control message, so
+there lead to no way
+to migrate VM using rdma transport pre to the rsocket patchset to a
+new version with rsocket implementation.
 
-Alistair
+Probably we should keep both implementation for a while, mark the old
+implementation as deprecated, and promote the new implementation, and
+high light in doc,
+they are not compatible.
+
+Regards!
+Jinpu
+
+
 
 >
->  target/riscv/cpu.c         |  8 ++++++--
->  target/riscv/cpu.h         |  5 ++++-
->  target/riscv/cpu_bits.h    |  5 +++++
->  target/riscv/cpu_cfg.h     |  1 +
->  target/riscv/csr.c         | 39 ++++++++++++++++++++++++++++++++++++++
->  target/riscv/tcg/tcg-cpu.c | 17 ++++++++---------
->  6 files changed, 63 insertions(+), 12 deletions(-)
+> Jialin Wang (6):
+>   migration: remove RDMA live migration temporarily
+>   io: add QIOChannelRDMA class
+>   io/channel-rdma: support working in coroutine
+>   tests/unit: add test-io-channel-rdma.c
+>   migration: introduce new RDMA live migration
+>   migration/rdma: support multifd for RDMA migration
+>
+>  docs/rdma.txt                     |  420 ---
+>  include/io/channel-rdma.h         |  165 ++
+>  io/channel-rdma.c                 |  798 ++++++
+>  io/meson.build                    |    1 +
+>  io/trace-events                   |   14 +
+>  meson.build                       |    6 -
+>  migration/meson.build             |    3 +-
+>  migration/migration-stats.c       |    5 +-
+>  migration/migration-stats.h       |    4 -
+>  migration/migration.c             |   13 +-
+>  migration/migration.h             |    9 -
+>  migration/multifd.c               |   10 +
+>  migration/options.c               |   16 -
+>  migration/options.h               |    2 -
+>  migration/qemu-file.c             |    1 -
+>  migration/ram.c                   |   90 +-
+>  migration/rdma.c                  | 4205 +----------------------------
+>  migration/rdma.h                  |   67 +-
+>  migration/savevm.c                |    2 +-
+>  migration/trace-events            |   68 +-
+>  qapi/migration.json               |   13 +-
+>  scripts/analyze-migration.py      |    3 -
+>  tests/unit/meson.build            |    1 +
+>  tests/unit/test-io-channel-rdma.c |  276 ++
+>  24 files changed, 1360 insertions(+), 4832 deletions(-)
+>  delete mode 100644 docs/rdma.txt
+>  create mode 100644 include/io/channel-rdma.h
+>  create mode 100644 io/channel-rdma.c
+>  create mode 100644 tests/unit/test-io-channel-rdma.c
 >
 > --
-> 2.34.1
->
+> 2.43.0
 >
 
