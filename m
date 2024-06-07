@@ -4,52 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2113C27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:24:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B45C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:25:28 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf3b-0005xV-55; Fri, 07 Jun 2024 15:15:23 -0400
+	id 1sFalD-0007QT-Rs; Fri, 07 Jun 2024 10:40:07 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf3Z-0005s0-Hc; Fri, 07 Jun 2024 15:15:21 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sFalA-0007EV-6x
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:40:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf3X-0002DV-ML; Fri, 07 Jun 2024 15:15:21 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0215E6E552;
- Fri,  7 Jun 2024 22:14:06 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 2C902E274E;
- Fri,  7 Jun 2024 22:13:11 +0300 (MSK)
-Received: (nullmailer pid 528752 invoked by uid 1000);
- Fri, 07 Jun 2024 19:13:08 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alistair Francis <alistair23@gmail.com>,
- Eric DeVolder <eric_devolder@yahoo.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 41/45] disas/riscv: Decode all of the pmpcfg and
- pmpaddr CSRs
-Date: Fri,  7 Jun 2024 22:13:00 +0300
-Message-Id: <20240607191307.528622-21-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
-References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sFal8-0003Qs-Hz
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:40:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717771201;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xK/OvgNzzcXSWIsdldMqiiYrOffSKwz7no1QQVoOC3M=;
+ b=fIlPZpW6YG4o+TEa2FAQqDGFRSZ13OCRN+jIHqlMViSOQ8kVTEmsrDom5ZQ+OgjMtcXouO
+ UuqX+lxRINZu4ZRPjegeDI5kSc/kFlaGEr9xL6mgJQUwjz/KI0EUFEUoYNl3eKrAFbBE+h
+ /f3X4sKAvJunDx7qFIcDvBATrTJ6QUU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-300-pWgggVlZOBGnrh-8JtS-AQ-1; Fri,
+ 07 Jun 2024 10:39:56 -0400
+X-MC-Unique: pWgggVlZOBGnrh-8JtS-AQ-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8836E19560B9; Fri,  7 Jun 2024 14:39:55 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.39.193.191])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B50DA1956048; Fri,  7 Jun 2024 14:39:50 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
+ imammedo@redhat.com, peter.maydell@linaro.org, clg@redhat.com,
+ yanghliu@redhat.com, zhenzhong.duan@intel.com
+Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
+ berrange@redhat.com
+Subject: [RFC v2 7/7] memory: Remove IOMMU MR iommu_set_iova_range API
+Date: Fri,  7 Jun 2024 16:37:27 +0200
+Message-ID: <20240607143905.765133-8-eric.auger@redhat.com>
+In-Reply-To: <20240607143905.765133-1-eric.auger@redhat.com>
+References: <20240607143905.765133-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,106 +86,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair23@gmail.com>
+Since the host IOVA ranges are now passed through the
+PCIIOMMUOps set_host_resv_regions and we have removed
+the only implementation of iommu_set_iova_range() in
+the virtio-iommu and the only call site in vfio/common,
+let's retire the IOMMU MR API and its memory wrapper.
 
-Previously we only listed a single pmpcfg CSR and the first 16 pmpaddr
-CSRs. This patch fixes this to list all 16 pmpcfg and all 64 pmpaddr
-CSRs are part of the disassembly.
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+---
+ include/exec/memory.h | 32 --------------------------------
+ system/memory.c       | 13 -------------
+ 2 files changed, 45 deletions(-)
 
-Reported-by: Eric DeVolder <eric_devolder@yahoo.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Fixes: ea10325917 ("RISC-V Disassembler")
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240514051615.330979-1-alistair.francis@wdc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 915758c537b5fe09575291f4acd87e2d377a93de)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/disas/riscv.c b/disas/riscv.c
-index e9458e574b..8cb2b79f6a 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -2184,7 +2184,22 @@ static const char *csr_name(int csrno)
-     case 0x0383: return "mibound";
-     case 0x0384: return "mdbase";
-     case 0x0385: return "mdbound";
--    case 0x03a0: return "pmpcfg3";
-+    case 0x03a0: return "pmpcfg0";
-+    case 0x03a1: return "pmpcfg1";
-+    case 0x03a2: return "pmpcfg2";
-+    case 0x03a3: return "pmpcfg3";
-+    case 0x03a4: return "pmpcfg4";
-+    case 0x03a5: return "pmpcfg5";
-+    case 0x03a6: return "pmpcfg6";
-+    case 0x03a7: return "pmpcfg7";
-+    case 0x03a8: return "pmpcfg8";
-+    case 0x03a9: return "pmpcfg9";
-+    case 0x03aa: return "pmpcfg10";
-+    case 0x03ab: return "pmpcfg11";
-+    case 0x03ac: return "pmpcfg12";
-+    case 0x03ad: return "pmpcfg13";
-+    case 0x03ae: return "pmpcfg14";
-+    case 0x03af: return "pmpcfg15";
-     case 0x03b0: return "pmpaddr0";
-     case 0x03b1: return "pmpaddr1";
-     case 0x03b2: return "pmpaddr2";
-@@ -2201,6 +2216,54 @@ static const char *csr_name(int csrno)
-     case 0x03bd: return "pmpaddr13";
-     case 0x03be: return "pmpaddr14";
-     case 0x03bf: return "pmpaddr15";
-+    case 0x03c0: return "pmpaddr16";
-+    case 0x03c1: return "pmpaddr17";
-+    case 0x03c2: return "pmpaddr18";
-+    case 0x03c3: return "pmpaddr19";
-+    case 0x03c4: return "pmpaddr20";
-+    case 0x03c5: return "pmpaddr21";
-+    case 0x03c6: return "pmpaddr22";
-+    case 0x03c7: return "pmpaddr23";
-+    case 0x03c8: return "pmpaddr24";
-+    case 0x03c9: return "pmpaddr25";
-+    case 0x03ca: return "pmpaddr26";
-+    case 0x03cb: return "pmpaddr27";
-+    case 0x03cc: return "pmpaddr28";
-+    case 0x03cd: return "pmpaddr29";
-+    case 0x03ce: return "pmpaddr30";
-+    case 0x03cf: return "pmpaddr31";
-+    case 0x03d0: return "pmpaddr32";
-+    case 0x03d1: return "pmpaddr33";
-+    case 0x03d2: return "pmpaddr34";
-+    case 0x03d3: return "pmpaddr35";
-+    case 0x03d4: return "pmpaddr36";
-+    case 0x03d5: return "pmpaddr37";
-+    case 0x03d6: return "pmpaddr38";
-+    case 0x03d7: return "pmpaddr39";
-+    case 0x03d8: return "pmpaddr40";
-+    case 0x03d9: return "pmpaddr41";
-+    case 0x03da: return "pmpaddr42";
-+    case 0x03db: return "pmpaddr43";
-+    case 0x03dc: return "pmpaddr44";
-+    case 0x03dd: return "pmpaddr45";
-+    case 0x03de: return "pmpaddr46";
-+    case 0x03df: return "pmpaddr47";
-+    case 0x03e0: return "pmpaddr48";
-+    case 0x03e1: return "pmpaddr49";
-+    case 0x03e2: return "pmpaddr50";
-+    case 0x03e3: return "pmpaddr51";
-+    case 0x03e4: return "pmpaddr52";
-+    case 0x03e5: return "pmpaddr53";
-+    case 0x03e6: return "pmpaddr54";
-+    case 0x03e7: return "pmpaddr55";
-+    case 0x03e8: return "pmpaddr56";
-+    case 0x03e9: return "pmpaddr57";
-+    case 0x03ea: return "pmpaddr58";
-+    case 0x03eb: return "pmpaddr59";
-+    case 0x03ec: return "pmpaddr60";
-+    case 0x03ed: return "pmpaddr61";
-+    case 0x03ee: return "pmpaddr62";
-+    case 0x03ef: return "pmpaddr63";
-     case 0x0780: return "mtohost";
-     case 0x0781: return "mfromhost";
-     case 0x0782: return "mreset";
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 9cdd64e9c6..35d772e52b 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -530,26 +530,6 @@ struct IOMMUMemoryRegionClass {
+      int (*iommu_set_page_size_mask)(IOMMUMemoryRegion *iommu,
+                                      uint64_t page_size_mask,
+                                      Error **errp);
+-    /**
+-     * @iommu_set_iova_ranges:
+-     *
+-     * Propagate information about the usable IOVA ranges for a given IOMMU
+-     * memory region. Used for example to propagate host physical device
+-     * reserved memory region constraints to the virtual IOMMU.
+-     *
+-     * Optional method: if this method is not provided, then the default IOVA
+-     * aperture is used.
+-     *
+-     * @iommu: the IOMMUMemoryRegion
+-     *
+-     * @iova_ranges: list of ordered IOVA ranges (at least one range)
+-     *
+-     * Returns 0 on success, or a negative error. In case of failure, the error
+-     * object must be created.
+-     */
+-     int (*iommu_set_iova_ranges)(IOMMUMemoryRegion *iommu,
+-                                  GList *iova_ranges,
+-                                  Error **errp);
+ };
+ 
+ typedef struct RamDiscardListener RamDiscardListener;
+@@ -1945,18 +1925,6 @@ int memory_region_iommu_set_page_size_mask(IOMMUMemoryRegion *iommu_mr,
+                                            uint64_t page_size_mask,
+                                            Error **errp);
+ 
+-/**
+- * memory_region_iommu_set_iova_ranges - Set the usable IOVA ranges
+- * for a given IOMMU MR region
+- *
+- * @iommu: IOMMU memory region
+- * @iova_ranges: list of ordered IOVA ranges (at least one range)
+- * @errp: pointer to Error*, to store an error if it happens.
+- */
+-int memory_region_iommu_set_iova_ranges(IOMMUMemoryRegion *iommu,
+-                                        GList *iova_ranges,
+-                                        Error **errp);
+-
+ /**
+  * memory_region_name: get a memory region's name
+  *
+diff --git a/system/memory.c b/system/memory.c
+index 9540caa8a1..248d514f83 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1914,19 +1914,6 @@ int memory_region_iommu_set_page_size_mask(IOMMUMemoryRegion *iommu_mr,
+     return ret;
+ }
+ 
+-int memory_region_iommu_set_iova_ranges(IOMMUMemoryRegion *iommu_mr,
+-                                        GList *iova_ranges,
+-                                        Error **errp)
+-{
+-    IOMMUMemoryRegionClass *imrc = IOMMU_MEMORY_REGION_GET_CLASS(iommu_mr);
+-    int ret = 0;
+-
+-    if (imrc->iommu_set_iova_ranges) {
+-        ret = imrc->iommu_set_iova_ranges(iommu_mr, iova_ranges, errp);
+-    }
+-    return ret;
+-}
+-
+ int memory_region_register_iommu_notifier(MemoryRegion *mr,
+                                           IOMMUNotifier *n, Error **errp)
+ {
 -- 
-2.39.2
+2.41.0
 
 
