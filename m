@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 667E3C27C53
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E41BEC27C53
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:26:34 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf41-0007Qd-NE; Fri, 07 Jun 2024 15:15:49 -0400
+	id 1sFf3Z-0005ry-DD; Fri, 07 Jun 2024 15:15:21 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf3z-0007QP-NQ; Fri, 07 Jun 2024 15:15:47 -0400
+ id 1sFf3X-0005rJ-Vt; Fri, 07 Jun 2024 15:15:20 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf3y-0002Zp-0Y; Fri, 07 Jun 2024 15:15:47 -0400
+ id 1sFf3U-0002D1-On; Fri, 07 Jun 2024 15:15:19 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4C0EA6E556;
- Fri,  7 Jun 2024 22:14:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D71B56E551;
+ Fri,  7 Jun 2024 22:14:05 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 84BBEE2752;
+ by tsrv.corpit.ru (Postfix) with SMTP id 14D50E274D;
  Fri,  7 Jun 2024 22:13:11 +0300 (MSK)
-Received: (nullmailer pid 528766 invoked by uid 1000);
+Received: (nullmailer pid 528749 invoked by uid 1000);
  Fri, 07 Jun 2024 19:13:08 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, lanyanzhi <lanyanzhi22b@ict.ac.cn>,
- Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 45/45] target/loongarch: fix a wrong print in cpu dump
-Date: Fri,  7 Jun 2024 22:13:04 +0300
-Message-Id: <20240607191307.528622-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 40/45] target/riscv/kvm.c: Fix the hart bit setting of
+ AIA
+Date: Fri,  7 Jun 2024 22:12:59 +0300
+Message-Id: <20240607191307.528622-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
 References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
@@ -62,35 +63,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: lanyanzhi <lanyanzhi22b@ict.ac.cn>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
-description:
-    loongarch_cpu_dump_state() want to dump all loongarch cpu
-state registers, but there is a tiny typographical error when
-printing "PRCFG2".
+In AIA spec, each hart (or each hart within a group) has a unique hart
+number to locate the memory pages of interrupt files in the address
+space. The number of bits required to represent any hart number is equal
+to ceil(log2(hmax + 1)), where hmax is the largest hart number among
+groups.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: lanyanzhi <lanyanzhi22b@ict.ac.cn>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240604073831.666690-1-lanyanzhi22b@ict.ac.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-(cherry picked from commit 78f932ea1f7b3b9b0ac628dc2a91281318fe51fa)
+However, if the largest hart number among groups is a power of 2, QEMU
+will pass an inaccurate hart-index-bit setting to Linux. For example, when
+the guest OS has 4 harts, only ceil(log2(3 + 1)) = 2 bits are sufficient
+to represent 4 harts, but we passes 3 to Linux. The code needs to be
+updated to ensure accurate hart-index-bit settings.
+
+Additionally, a Linux patch[1] is necessary to correctly recover the hart
+index when the guest OS has only 1 hart, where the hart-index-bit is 0.
+
+[1] https://lore.kernel.org/lkml/20240415064905.25184-1-yongxuan.wang@sifive.com/t/
+
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Message-ID: <20240515091129.28116-1-yongxuan.wang@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 190b867f28cb5781f3cd01a3deb371e4211595b1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 337f04b201..6710ca0016 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -764,7 +764,7 @@ void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-     qemu_fprintf(f, "EENTRY=%016" PRIx64 "\n", env->CSR_EENTRY);
-     qemu_fprintf(f, "PRCFG1=%016" PRIx64 ", PRCFG2=%016" PRIx64 ","
-                  " PRCFG3=%016" PRIx64 "\n",
--                 env->CSR_PRCFG1, env->CSR_PRCFG3, env->CSR_PRCFG3);
-+                 env->CSR_PRCFG1, env->CSR_PRCFG2, env->CSR_PRCFG3);
-     qemu_fprintf(f, "TLBRENTRY=%016" PRIx64 "\n", env->CSR_TLBRENTRY);
-     qemu_fprintf(f, "TLBRBADV=%016" PRIx64 "\n", env->CSR_TLBRBADV);
-     qemu_fprintf(f, "TLBRERA=%016" PRIx64 "\n", env->CSR_TLBRERA);
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index fa00b14269..aa7444d958 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1455,7 +1455,14 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+         }
+     }
+ 
+-    hart_bits = find_last_bit(&max_hart_per_socket, BITS_PER_LONG) + 1;
++
++    if (max_hart_per_socket > 1) {
++        max_hart_per_socket--;
++        hart_bits = find_last_bit(&max_hart_per_socket, BITS_PER_LONG) + 1;
++    } else {
++        hart_bits = 0;
++    }
++
+     ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+                             KVM_DEV_RISCV_AIA_CONFIG_HART_BITS,
+                             &hart_bits, true, NULL);
 -- 
 2.39.2
 
