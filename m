@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71CEFC27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 06:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07733C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 06:18:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFSqD-0003W7-UZ; Fri, 07 Jun 2024 02:12:45 -0400
+	id 1sFSv4-0006eU-LD; Fri, 07 Jun 2024 02:17:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFSqC-0003UI-6R
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 02:12:44 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFSv2-0006dA-73
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 02:17:44 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFSqA-0005tn-G5
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 02:12:43 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a68c8b90c85so213170966b.2
- for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 23:12:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFSuz-00076V-Oq
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 02:17:43 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-57864327f6eso1773545a12.1
+ for <qemu-devel@nongnu.org>; Thu, 06 Jun 2024 23:17:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717740760; x=1718345560; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717741059; x=1718345859; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gOTPnRnckfXvjO0O7bBnuiFS+/3GTfBKm+5B1Iph7pk=;
- b=N9EF0BFa1QYO8a/pH32KvW3t0HSm/sf7ozSlO3Wj126AcTiXapPAayAswE+xCyry3/
- p/j16gbw6TK0+P5jT02d4bFNInUZwtFVVfyv0b75+/sHR4WeJwkJSHdICeI/qum133xY
- A9olw5MO+GBzljMJRU/5BR9EX/oIC72AYIPANjSLnYLd06zF/PrtgF1wMBu2RzW2oYXi
- XqrMl/n4Vdy+NBlk6/klQ2KyqetHYCgxY5C/rWUBzd1t99Z2Ym+2CPHs6rtyfnJ8wC+A
- n5X3hvjZZjSz9XDygNvAJ1vQpaYDab6DH1bdvgymfBxYzO5oxtDak2xbGU/QrX91HpO/
- TBdA==
+ bh=eFRQd03Kvn7MPBMeYVmVS/L5BOooUFmA+uzo+8dGzK4=;
+ b=myXb3FvKYbWgGsurAGdPSywe1DLvx7JqaMCb+JzSHBrhb962P8ngxmwbLgfdacdRiY
+ rI/1+82rTa4WGBTmwrzYf11m1t5ECWQFdmOmZZnimJUM4WGPZvGAPIEalxAJl59MbnXE
+ AYdk4DtSoNYsFHyM2BtSA1H3AB3ykjglAWEb8y0KdD3cP3NwXttk8Jd4843UUH40fM95
+ D24bl2VEaLiUqnHHVS8Dlq51VzTbKx4F3OqiLOSWYNaAfLOLNvn5T3klofQ2sYGCNH92
+ gkOkNKtEjScMjuOuPffbM4CEVC/MjgPifb8RSMVrtGxAU2bJTPvp1LtfPrdWqZk1CAWt
+ pgyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717740760; x=1718345560;
+ d=1e100.net; s=20230601; t=1717741059; x=1718345859;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gOTPnRnckfXvjO0O7bBnuiFS+/3GTfBKm+5B1Iph7pk=;
- b=hjoNpkl4Fv6VFj78hj/GEfxO8q5GiUMCDnmszTIdSI+aP0l9GKQIINa2SKUYrrPmGG
- /QBCthc9TBXVEQ93wnpN9ebmeC/ECNvDt8GLBLTR3OYN6Z4urDDCyGNtsFd69Mc85zaY
- bDwyt82A63lNwqDb8XEScX5rLgJBfcDOEXubEEVtYfE3YL+0o85j5rbhY+/RJvII9LmD
- 7k3Nm7sTB38qp2fwlUdnlrQynxrMLkHb+4dWfMbqfMMwXLAYOjuDkRuMfGpjvTHygOiA
- JS2qGNY3AJRA5lwupGA4o9E3dyrnn6ItkkAHkolK3nbV0nS+NmnZiH0TBxtmzcBl+Ya8
- Pp5A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXMPVK4A6wJciecUsxpyNqkNEXZxrpd5X6EMuk2O8mMGu8HYvdhzBmxJFUMI+fPfruAKCxyDsjPZI8vQRPHUa8TFiVXDMc=
-X-Gm-Message-State: AOJu0Yy7Kd2gUjIbc7mNQ8Y1vGk05uXINK8XiZA4cKcgD0QURfxnhwdD
- LuBKzEVQf8gPNh35jNk3WE5cIt4NQRyEhILM6wrU/Mx+dOoFPs5HOSLFZeuH3Kc=
-X-Google-Smtp-Source: AGHT+IH9rZnmxxqhPDhz6Rqf1IsuD8cPb8RYWJsFw5Js19OG/POvRo1v7z+uzkYjLODUdVsXr/IbbQ==
-X-Received: by 2002:a17:906:71db:b0:a68:2d37:fb5a with SMTP id
- a640c23a62f3a-a6cd560f9f6mr128265366b.4.1717740760592; 
- Thu, 06 Jun 2024 23:12:40 -0700 (PDT)
+ bh=eFRQd03Kvn7MPBMeYVmVS/L5BOooUFmA+uzo+8dGzK4=;
+ b=oYk8CZVPL4K+MPBgAz0+kl3nCY9uk/ZPNDr7YzCz44vXFuREgzYMhH7VxR90b+O3iD
+ mJE4zcCj5pE2SQZhVYLMn+XP+5Ax3G/yfptHHOo4stU8oUu6GaXGTA4hs6k4wtQT6zKX
+ YWUzAK9bbNSTfZEeYIfx+F5Au29YUl6URnfPKAjMIuCX1aI1Ku0fWV14t3LHn37+kuFE
+ zSOAlDRlugUBRGy3mWCcbOuue+oeG0T+UgszT6imdd2yn8WXPJ8nuonN1jhVRiFNg9bY
+ lPsBM2SD5uPR46Hp2cYXxSPS5NcTY1MffafTgJstOgNc4nVCs37euHGJ3/0I8+ON5Pgp
+ Hdlg==
+X-Gm-Message-State: AOJu0YwHcqdP9R1mB+WOAMRpQy6r283Xaifl2uMSa0S8TzmC46aPTqRk
+ UH2KxwcPXnoLgLPu4YZpwBul1Z7AGdMOBX/VFvqDWtl66EYdPf3+mrS9Grt4SMI=
+X-Google-Smtp-Source: AGHT+IGAw3PKAJdQ9l8vXEXASFmSaE5p6dVK1KounakkZzQARLugPJj0ja9uz5GP3CDfb1eHg9l04g==
+X-Received: by 2002:a50:ab4b:0:b0:579:cd1c:8d69 with SMTP id
+ 4fb4d7f45d1cf-57c4deb9686mr1484494a12.2.1717741059154; 
+ Thu, 06 Jun 2024 23:17:39 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.196.231])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c80581892sm199077066b.12.2024.06.06.23.12.39
+ 4fb4d7f45d1cf-57aae23405asm2209714a12.82.2024.06.06.23.17.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 06 Jun 2024 23:12:40 -0700 (PDT)
-Message-ID: <00ee7754-f3a6-4fd6-9bd2-e5903049e403@linaro.org>
-Date: Fri, 7 Jun 2024 08:12:38 +0200
+ Thu, 06 Jun 2024 23:17:38 -0700 (PDT)
+Message-ID: <58ea1275-b71c-4098-b7e6-cde428a2eabb@linaro.org>
+Date: Fri, 7 Jun 2024 08:17:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/6] Move tcg implementation of x86
- get_physical_address into common helper code.
-To: Don Porter <porter@cs.unc.edu>, qemu-devel@nongnu.org
-Cc: dave@treblig.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
- richard.henderson@linaro.org
-References: <20240606140253.2277760-1-porter@cs.unc.edu>
- <20240606140253.2277760-6-porter@cs.unc.edu>
+Subject: Re: [PATCH] i386/apic: Add hint on boot failure because of disabling
+ x2APIC
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20240606140858.2157106-1-zhao1.liu@intel.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240606140253.2277760-6-porter@cs.unc.edu>
+In-Reply-To: <20240606140858.2157106-1-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,13 +95,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/6/24 16:02, Don Porter wrote:
-> Signed-off-by: Don Porter <porter@cs.unc.edu>
+On 6/6/24 16:08, Zhao Liu wrote:
+> Currently, the Q35 supports up to 4096 vCPUs (since v9.0), but for TCG
+> cases, if x2APIC is not actively enabled to boot more than 255 vCPUs (
+> e.g., qemu-system-i386 -M pc-q35-9.0 -smp 666), the following error is
+> reported:
+> 
+> Unexpected error in apic_common_set_id() at ../hw/intc/apic_common.c:449:
+> qemu-system-i386: APIC ID 255 requires x2APIC feature in CPU
+> Aborted (core dumped)
+> 
+> This error can be resolved by setting x2apic=on in -cpu. In order to
+> better help users deal with this scenario, add the error hint to
+> instruct users on how to enable the x2apic feature.
+
+Why not automatically set x2apic=on in this case instead?
+
+> Then, the error
+> report becomes the following:
+> 
+> Unexpected error in apic_common_set_id() at ../hw/intc/apic_common.c:448:
+> qemu-system-i386: APIC ID 255 requires x2APIC feature in CPU
+> Try x2apic=on in -cpu.
+> Aborted (core dumped)
+> 
+> Note since @errp is &error_abort, error_append_hint() can't be applied
+> on @errp. And in order to separate the exact error message from the
+> (perhaps effectively) hint, adding a hint via error_append_hint() is
+> also necessary. Therefore, introduce @local_error in
+> apic_common_set_id() to handle both the error message and the error
+> hint.
+> 
+> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   target/i386/cpu.h                    |  42 ++
->   target/i386/helper.c                 | 515 +++++++++++++++++++++++++
->   target/i386/tcg/sysemu/excp_helper.c | 555 +--------------------------
->   3 files changed, 562 insertions(+), 550 deletions(-)
+>   hw/intc/apic_common.c | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
