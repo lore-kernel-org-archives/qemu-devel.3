@@ -4,72 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A29B7C27C5E
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 01:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB75EC27C5E
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 01:53:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFOk7-00069W-GC; Thu, 06 Jun 2024 21:50:11 -0400
+	id 1sFOmX-00078K-Ev; Thu, 06 Jun 2024 21:52:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sFOk5-00069C-RJ
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 21:50:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sFOk3-0008RD-Ss
- for qemu-devel@nongnu.org; Thu, 06 Jun 2024 21:50:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717725006;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ic9lQGgoFrYWYtF+u1FC4PF+SFV5H8fSqxQBE8k+O2c=;
- b=iBXqZe2UfTTclNTWPNKbh0BEFL4dPQbAlxaGkN1VWajFyNZg2Jl5bofox+x+zCfmumEGLl
- KIzT56IW78K9f74BMYzUV5BzaNYtssz702LP/37+lpmZQZXqqdMMimAG30KvJcHiKOhNxd
- +WS68g6JY33ZhfiV+gT3XNxSN1sgi2Y=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-523-lEgrEkPiPJ-t0XjnENrCyQ-1; Thu,
- 06 Jun 2024 21:50:04 -0400
-X-MC-Unique: lEgrEkPiPJ-t0XjnENrCyQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BB9671979064; Fri,  7 Jun 2024 01:50:02 +0000 (UTC)
-Received: from localhost (unknown [10.39.192.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ABEBC1955F14; Fri,  7 Jun 2024 01:50:00 +0000 (UTC)
-Date: Thu, 6 Jun 2024 14:36:38 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
- pbonzini@redhat.com
-Subject: Re: [RFC PATCH] migration/savevm: do not schedule
- snapshot_save_job_bh in qemu_aio_context
-Message-ID: <20240606183638.GC198201@fedora.redhat.com>
-References: <20240605120848.358654-1-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sFOmU-00077u-OK
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 21:52:38 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sFOmR-0000WG-RC
+ for qemu-devel@nongnu.org; Thu, 06 Jun 2024 21:52:38 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bxb+vaZ2JmF3gEAA--.18897S3;
+ Fri, 07 Jun 2024 09:52:26 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxnsfVZ2Jmz6AXAA--.59504S3; 
+ Fri, 07 Jun 2024 09:52:23 +0800 (CST)
+Subject: Re: [PATCH v2 2/2] util/bufferiszero: Add loongarch64 vector
+ acceleration
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240607002443.5820-1-richard.henderson@linaro.org>
+ <20240607002443.5820-3-richard.henderson@linaro.org>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <2768b597-e144-2634-4c11-43e2a1ae302e@loongson.cn>
+Date: Fri, 7 Jun 2024 09:52:20 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="xDmBIJEJkhaDUdiz"
-Content-Disposition: inline
-In-Reply-To: <20240605120848.358654-1-f.ebner@proxmox.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 28
-X-Spam_score: 2.8
-X-Spam_bar: ++
-X-Spam_report: (2.8 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
- DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+In-Reply-To: <20240607002443.5820-3-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8BxnsfVZ2Jmz6AXAA--.59504S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3WFyxZrWrArWxGr47ur47ZFc_yoW7XF47pa
+ yrurZYkr10grnxZryDGr4kKr45ZrWYyw1YgayayFnxXrZ5trn8Wrs8ur10gr47Jwn3Jryj
+ vF4UGFs5C34kJrbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.266,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,102 +84,171 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---xDmBIJEJkhaDUdiz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 05, 2024 at 02:08:48PM +0200, Fiona Ebner wrote:
-> The fact that the snapshot_save_job_bh() is scheduled in the main
-> loop's qemu_aio_context AioContext means that it might get executed
-> during a vCPU thread's aio_poll(). But saving of the VM state cannot
-> happen while the guest or devices are active and can lead to assertion
-> failures. See issue #2111 for two examples. Avoid the problem by
-> scheduling the snapshot_save_job_bh() in the iohandler AioContext,
-> which is not polled by vCPU threads.
->=20
-> Solves Issue #2111.
->=20
-> This change also solves the following issue:
->=20
-> Since commit effd60c878 ("monitor: only run coroutine commands in
-> qemu_aio_context"), the 'snapshot-save' QMP call would not respond
-> right after starting the job anymore, but only after the job finished,
-> which can take a long time. The reason is, because after commit
-> effd60c878, do_qmp_dispatch_bh() runs in the iohandler AioContext.
-> When do_qmp_dispatch_bh() wakes the qmp_dispatch() coroutine, the
-> coroutine cannot be entered immediately anymore, but needs to be
-> scheduled to the main loop's qemu_aio_context AioContext. But
-> snapshot_save_job_bh() was scheduled first to the same AioContext and
-> thus gets executed first.
->=20
-> Buglink: https://gitlab.com/qemu-project/qemu/-/issues/2111
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+On 2024/6/7 上午8:24, Richard Henderson wrote:
+> Use inline assembly because no release compiler allows
+> per-function selection of the ISA.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->=20
-> While initial smoke testing seems fine, I'm not familiar enough with
-> this to rule out any pitfalls with the approach. Any reason why
-> scheduling to the iohandler AioContext could be wrong here?
+>   .../loongarch64/host/bufferiszero.c.inc       | 143 ++++++++++++++++++
+>   1 file changed, 143 insertions(+)
+>   create mode 100644 host/include/loongarch64/host/bufferiszero.c.inc
+> 
+> diff --git a/host/include/loongarch64/host/bufferiszero.c.inc b/host/include/loongarch64/host/bufferiszero.c.inc
+> new file mode 100644
+> index 0000000000..69891eac80
+> --- /dev/null
+> +++ b/host/include/loongarch64/host/bufferiszero.c.inc
+> @@ -0,0 +1,143 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + * buffer_is_zero acceleration, loongarch64 version.
+> + */
+> +
+> +/*
+> + * Builtins for LSX and LASX are introduced by gcc 14 and llvm 18,
+> + * but as yet neither has support for attribute target, so neither
+> + * is able to enable the optimization without globally enabling
+> + * vector support.  Since we want runtime detection, use assembly.
+> + */
+> +
+> +static bool buffer_is_zero_lsx(const void *buf, size_t len)
+> +{
+> +    const void *p = QEMU_ALIGN_PTR_DOWN(buf + 16, 16);
+> +    const void *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 16) - (7 * 16);
+> +    const void *l = buf + len;
+> +    bool ret;
+> +
+> +    asm("vld $vr0,%2,0\n\t"             /* first: buf + 0 */
+> +        "vld $vr1,%4,-16\n\t"           /* last: buf + len - 16 */
+> +        "vld $vr2,%3,0\n\t"             /* e[0] */
+> +        "vld $vr3,%3,16\n\t"            /* e[1] */
+> +        "vld $vr4,%3,32\n\t"            /* e[2] */
+> +        "vld $vr5,%3,48\n\t"            /* e[3] */
+> +        "vld $vr6,%3,64\n\t"            /* e[4] */
+> +        "vld $vr7,%3,80\n\t"            /* e[5] */
+> +        "vld $vr8,%3,96\n\t"            /* e[6] */
+> +        "vor.v $vr0,$vr0,$vr1\n\t"
+> +        "vor.v $vr2,$vr2,$vr3\n\t"
+> +        "vor.v $vr4,$vr4,$vr5\n\t"
+> +        "vor.v $vr6,$vr6,$vr7\n\t"
+> +        "vor.v $vr0,$vr0,$vr2\n\t"
+> +        "vor.v $vr4,$vr4,$vr6\n\t"
+> +        "vor.v $vr0,$vr0,$vr4\n\t"
+> +        "vor.v $vr0,$vr0,$vr8\n\t"
+> +        "or %0,$r0,$r0\n"               /* prepare return false */
+> +    "1:\n\t"
+> +        "vsetnez.v $fcc0,$vr0\n\t"
+> +        "bcnez $fcc0,2f\n\t"
+> +        "vld $vr0,%1,0\n\t"             /* p[0] */
+> +        "vld $vr1,%1,16\n\t"            /* p[1] */
+> +        "vld $vr2,%1,32\n\t"            /* p[2] */
+> +        "vld $vr3,%1,48\n\t"            /* p[3] */
+> +        "vld $vr4,%1,64\n\t"            /* p[4] */
+> +        "vld $vr5,%1,80\n\t"            /* p[5] */
+> +        "vld $vr6,%1,96\n\t"            /* p[6] */
+> +        "vld $vr7,%1,112\n\t"           /* p[7] */
+> +        "addi.d %1,%1,128\n\t"
+> +        "vor.v $vr0,$vr0,$vr1\n\t"
+> +        "vor.v $vr2,$vr2,$vr3\n\t"
+> +        "vor.v $vr4,$vr4,$vr5\n\t"
+> +        "vor.v $vr6,$vr6,$vr7\n\t"
+> +        "vor.v $vr0,$vr0,$vr2\n\t"
+> +        "vor.v $vr4,$vr4,$vr6\n\t"
+> +        "vor.v $vr0,$vr0,$vr4\n\t"
+> +        "bltu %1,%3,1b\n\t"
+> +        "vsetnez.v $fcc0,$vr0\n\t"
+> +        "bcnez $fcc0,2f\n\t"
+> +        "ori %0,$r0,1\n"
+> +    "2:"
+> +        : "=&r"(ret), "+r"(p)
+> +        : "r"(buf), "r"(e), "r"(l)
+> +        : "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "fcc0");
+> +
+> +    return ret;
+> +}
+> +
+> +static bool buffer_is_zero_lasx(const void *buf, size_t len)
+> +{
+> +    const void *p = QEMU_ALIGN_PTR_DOWN(buf + 32, 32);
+> +    const void *e = QEMU_ALIGN_PTR_DOWN(buf + len - 1, 32) - (7 * 32);
+> +    const void *l = buf + len;
+> +    bool ret;
+> +
+> +    asm("xvld $xr0,%2,0\n\t"             /* first: buf + 0 */
+> +        "xvld $xr1,%4,-32\n\t"           /* last: buf + len - 32 */
+> +        "xvld $xr2,%3,0\n\t"             /* e[0] */
+> +        "xvld $xr3,%3,32\n\t"            /* e[1] */
+> +        "xvld $xr4,%3,64\n\t"            /* e[2] */
+> +        "xvld $xr5,%3,96\n\t"            /* e[3] */
+> +        "xvld $xr6,%3,128\n\t"           /* e[4] */
+> +        "xvld $xr7,%3,160\n\t"           /* e[5] */
+> +        "xvld $xr8,%3,192\n\t"           /* e[6] */
+> +        "xvor.v $xr0,$xr0,$xr1\n\t"
+> +        "xvor.v $xr2,$xr2,$xr3\n\t"
+> +        "xvor.v $xr4,$xr4,$xr5\n\t"
+> +        "xvor.v $xr6,$xr6,$xr7\n\t"
+> +        "xvor.v $xr0,$xr0,$xr2\n\t"
+> +        "xvor.v $xr4,$xr4,$xr6\n\t"
+> +        "xvor.v $xr0,$xr0,$xr4\n\t"
+> +        "xvor.v $xr0,$xr0,$xr8\n\t"
+> +        "or %0,$r0,$r0\n\t"              /* prepare return false */
+> +        "bgeu %1,%3,2f\n"
+> +    "1:\n\t"
+> +        "xvsetnez.v $fcc0,$xr0\n\t"
+> +        "bcnez $fcc0,3f\n\t"
+> +        "xvld $xr0,%1,0\n\t"             /* p[0] */
+> +        "xvld $xr1,%1,32\n\t"            /* p[1] */
+> +        "xvld $xr2,%1,64\n\t"            /* p[2] */
+> +        "xvld $xr3,%1,96\n\t"            /* p[3] */
+> +        "xvld $xr4,%1,128\n\t"           /* p[4] */
+> +        "xvld $xr5,%1,160\n\t"           /* p[5] */
+> +        "xvld $xr6,%1,192\n\t"           /* p[6] */
+> +        "xvld $xr7,%1,224\n\t"           /* p[7] */
+> +        "addi.d %1,%1,256\n\t"
+> +        "xvor.v $xr0,$xr0,$xr1\n\t"
+> +        "xvor.v $xr2,$xr2,$xr3\n\t"
+> +        "xvor.v $xr4,$xr4,$xr5\n\t"
+> +        "xvor.v $xr6,$xr6,$xr7\n\t"
+> +        "xvor.v $xr0,$xr0,$xr2\n\t"
+> +        "xvor.v $xr4,$xr4,$xr6\n\t"
+> +        "xvor.v $xr0,$xr0,$xr4\n\t"
+> +        "bltu %1,%3,1b\n"
+> +    "2:\n\t"
+> +        "xvsetnez.v $fcc0,$xr0\n\t"
+> +        "bcnez $fcc0,3f\n\t"
+> +        "ori %0,$r0,1\n"
+> +    "3:"
+> +        : "=&r"(ret), "+r"(p)
+> +        : "r"(buf), "r"(e), "r"(l)
+> +        : "f0", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "fcc0");
+> +
+> +    return ret;
+> +}
+> +
+> +static biz_accel_fn const accel_table[] = {
+> +    buffer_is_zero_int_ge256,
+> +    buffer_is_zero_lsx,
+> +    buffer_is_zero_lasx,
+> +};
+> +
+> +static unsigned best_accel(void)
+> +{
+> +    unsigned info = cpuinfo_init();
+> +    if (info & CPUINFO_LASX) {
+> +        return 2;
+> +    }
+> +    if (info & CPUINFO_LSX) {
+> +        return 1;
+> +    }
+> +    return 0;
+> +}
+> 
 
-If something waits for a BlockJob to finish using aio_poll() from
-qemu_aio_context then a deadlock is possible since the iohandler_ctx
-won't get a chance to execute. The only suspicious code path I found was
-job_completed_txn_abort_locked() -> job_finish_sync_locked() but I'm not
-sure whether it triggers this scenario. Please check that code path.
+This is better than mine, there is no dependency on compiler option any 
+more.
 
-> Should the same be done for the snapshot_load_job_bh and
-> snapshot_delete_job_bh to keep it consistent?
-
-In the long term it would be cleaner to move away from synchronous APIs
-that rely on nested event loops. They have been a source of bugs for
-years.
-
-If vm_stop() and perhaps other operations in save_snapshot() were
-asynchronous, then it would be safe to run the operation in
-qemu_aio_context without using iohandler_ctx. vm_stop() wouldn't invoke
-its callback until vCPUs were quiesced and outside device emulation
-code.
-
-I think this patch is fine as a one-line bug fix, but we should be
-careful about falling back on this trick because it makes the codebase
-harder to understand and more fragile.
-
->=20
->  migration/savevm.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index c621f2359b..0086b76ab0 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -3459,7 +3459,7 @@ static int coroutine_fn snapshot_save_job_run(Job *=
-job, Error **errp)
->      SnapshotJob *s =3D container_of(job, SnapshotJob, common);
->      s->errp =3D errp;
->      s->co =3D qemu_coroutine_self();
-> -    aio_bh_schedule_oneshot(qemu_get_aio_context(),
-> +    aio_bh_schedule_oneshot(iohandler_get_aio_context(),
->                              snapshot_save_job_bh, job);
->      qemu_coroutine_yield();
->      return s->ret ? 0 : -1;
-> --=20
-> 2.39.2
-
---xDmBIJEJkhaDUdiz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZiAbYACgkQnKSrs4Gr
-c8hljgf9E3lQXx9tCIwhZJaYEzbOXLQ/szQBwhLxALESFqdyerZzrjJehn8CdttA
-5GhPSl7PItMGoV55wxBQJutCi/lt3i4R6HZNM5FawzRgse/y4iMEPvQb1JFa+Btk
-L6DIWpUDYRMCw+YDlBDmckRbHQ7tmlx9EYfqhiLN34yUm7Fn3QVk3cFa5dYTBGaW
-bi0tfiS1GanN+SC050peVfho8ffD5Mxe09x7a+5es5Gd3HD+X+Pl9z4osX25s/fH
-agYCV//tn7MjfIqKvCnNH9w/ypYvh66yA+Yn8MUdThQjkBKMt73WAbJxzfHjDX2P
-gtp206XzoTaOJ76+ZCBcLNNXLCGF5g==
-=29nG
------END PGP SIGNATURE-----
-
---xDmBIJEJkhaDUdiz--
+Tested-by: Bibo Mao <maobibo@loongson.cn>
 
 
