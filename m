@@ -4,73 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B45C27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90DCFC27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:28:04 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFalD-0007QT-Rs; Fri, 07 Jun 2024 10:40:07 -0400
+	id 1sFf1A-00068A-WC; Fri, 07 Jun 2024 15:12:53 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sFalA-0007EV-6x
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:40:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sFf19-0005gd-9v; Fri, 07 Jun 2024 15:12:51 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sFal8-0003Qs-Hz
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:40:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717771201;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xK/OvgNzzcXSWIsdldMqiiYrOffSKwz7no1QQVoOC3M=;
- b=fIlPZpW6YG4o+TEa2FAQqDGFRSZ13OCRN+jIHqlMViSOQ8kVTEmsrDom5ZQ+OgjMtcXouO
- UuqX+lxRINZu4ZRPjegeDI5kSc/kFlaGEr9xL6mgJQUwjz/KI0EUFEUoYNl3eKrAFbBE+h
- /f3X4sKAvJunDx7qFIcDvBATrTJ6QUU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-300-pWgggVlZOBGnrh-8JtS-AQ-1; Fri,
- 07 Jun 2024 10:39:56 -0400
-X-MC-Unique: pWgggVlZOBGnrh-8JtS-AQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8836E19560B9; Fri,  7 Jun 2024 14:39:55 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.39.193.191])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B50DA1956048; Fri,  7 Jun 2024 14:39:50 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
- imammedo@redhat.com, peter.maydell@linaro.org, clg@redhat.com,
- yanghliu@redhat.com, zhenzhong.duan@intel.com
-Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
- berrange@redhat.com
-Subject: [RFC v2 7/7] memory: Remove IOMMU MR iommu_set_iova_range API
-Date: Fri,  7 Jun 2024 16:37:27 +0200
-Message-ID: <20240607143905.765133-8-eric.auger@redhat.com>
-In-Reply-To: <20240607143905.765133-1-eric.auger@redhat.com>
-References: <20240607143905.765133-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sFf17-0001i0-Jo; Fri, 07 Jun 2024 15:12:51 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4A76B6E537;
+ Fri,  7 Jun 2024 22:13:16 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 8317FE2737;
+ Fri,  7 Jun 2024 22:12:21 +0300 (MSK)
+Received: (nullmailer pid 528261 invoked by uid 1000);
+ Fri, 07 Jun 2024 19:12:20 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, lanyanzhi <lanyanzhi22b@ict.ac.cn>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.12 29/29] target/loongarch: fix a wrong print in cpu dump
+Date: Fri,  7 Jun 2024 22:12:12 +0300
+Message-Id: <20240607191219.528194-10-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
+References: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,93 +62,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the host IOVA ranges are now passed through the
-PCIIOMMUOps set_host_resv_regions and we have removed
-the only implementation of iommu_set_iova_range() in
-the virtio-iommu and the only call site in vfio/common,
-let's retire the IOMMU MR API and its memory wrapper.
+From: lanyanzhi <lanyanzhi22b@ict.ac.cn>
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- include/exec/memory.h | 32 --------------------------------
- system/memory.c       | 13 -------------
- 2 files changed, 45 deletions(-)
+description:
+    loongarch_cpu_dump_state() want to dump all loongarch cpu
+state registers, but there is a tiny typographical error when
+printing "PRCFG2".
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 9cdd64e9c6..35d772e52b 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -530,26 +530,6 @@ struct IOMMUMemoryRegionClass {
-      int (*iommu_set_page_size_mask)(IOMMUMemoryRegion *iommu,
-                                      uint64_t page_size_mask,
-                                      Error **errp);
--    /**
--     * @iommu_set_iova_ranges:
--     *
--     * Propagate information about the usable IOVA ranges for a given IOMMU
--     * memory region. Used for example to propagate host physical device
--     * reserved memory region constraints to the virtual IOMMU.
--     *
--     * Optional method: if this method is not provided, then the default IOVA
--     * aperture is used.
--     *
--     * @iommu: the IOMMUMemoryRegion
--     *
--     * @iova_ranges: list of ordered IOVA ranges (at least one range)
--     *
--     * Returns 0 on success, or a negative error. In case of failure, the error
--     * object must be created.
--     */
--     int (*iommu_set_iova_ranges)(IOMMUMemoryRegion *iommu,
--                                  GList *iova_ranges,
--                                  Error **errp);
- };
- 
- typedef struct RamDiscardListener RamDiscardListener;
-@@ -1945,18 +1925,6 @@ int memory_region_iommu_set_page_size_mask(IOMMUMemoryRegion *iommu_mr,
-                                            uint64_t page_size_mask,
-                                            Error **errp);
- 
--/**
-- * memory_region_iommu_set_iova_ranges - Set the usable IOVA ranges
-- * for a given IOMMU MR region
-- *
-- * @iommu: IOMMU memory region
-- * @iova_ranges: list of ordered IOVA ranges (at least one range)
-- * @errp: pointer to Error*, to store an error if it happens.
-- */
--int memory_region_iommu_set_iova_ranges(IOMMUMemoryRegion *iommu,
--                                        GList *iova_ranges,
--                                        Error **errp);
--
- /**
-  * memory_region_name: get a memory region's name
-  *
-diff --git a/system/memory.c b/system/memory.c
-index 9540caa8a1..248d514f83 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1914,19 +1914,6 @@ int memory_region_iommu_set_page_size_mask(IOMMUMemoryRegion *iommu_mr,
-     return ret;
- }
- 
--int memory_region_iommu_set_iova_ranges(IOMMUMemoryRegion *iommu_mr,
--                                        GList *iova_ranges,
--                                        Error **errp)
--{
--    IOMMUMemoryRegionClass *imrc = IOMMU_MEMORY_REGION_GET_CLASS(iommu_mr);
--    int ret = 0;
--
--    if (imrc->iommu_set_iova_ranges) {
--        ret = imrc->iommu_set_iova_ranges(iommu_mr, iova_ranges, errp);
--    }
--    return ret;
--}
--
- int memory_region_register_iommu_notifier(MemoryRegion *mr,
-                                           IOMMUNotifier *n, Error **errp)
- {
+Cc: qemu-stable@nongnu.org
+Signed-off-by: lanyanzhi <lanyanzhi22b@ict.ac.cn>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-Id: <20240604073831.666690-1-lanyanzhi22b@ict.ac.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+(cherry picked from commit 78f932ea1f7b3b9b0ac628dc2a91281318fe51fa)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 92dd50e15e..56e36d81b3 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -653,7 +653,7 @@ void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+     qemu_fprintf(f, "EENTRY=%016" PRIx64 "\n", env->CSR_EENTRY);
+     qemu_fprintf(f, "PRCFG1=%016" PRIx64 ", PRCFG2=%016" PRIx64 ","
+                  " PRCFG3=%016" PRIx64 "\n",
+-                 env->CSR_PRCFG1, env->CSR_PRCFG3, env->CSR_PRCFG3);
++                 env->CSR_PRCFG1, env->CSR_PRCFG2, env->CSR_PRCFG3);
+     qemu_fprintf(f, "TLBRENTRY=%016" PRIx64 "\n", env->CSR_TLBRENTRY);
+     qemu_fprintf(f, "TLBRBADV=%016" PRIx64 "\n", env->CSR_TLBRBADV);
+     qemu_fprintf(f, "TLBRERA=%016" PRIx64 "\n", env->CSR_TLBRERA);
 -- 
-2.41.0
+2.39.2
 
 
