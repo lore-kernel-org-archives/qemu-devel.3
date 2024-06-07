@@ -4,72 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A364BC27C5F
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 13:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 921BCC27C5F
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 13:40:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFZYu-0003Db-GC; Fri, 07 Jun 2024 09:23:20 -0400
+	id 1sFZox-00083J-85; Fri, 07 Jun 2024 09:39:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sFZYs-0003Cy-Gw
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:23:18 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sFZov-00082x-Au
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:39:53 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sFZYq-0000qZ-4g
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:23:18 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5751bcb3139so2369423a12.1
- for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 06:23:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sFZos-0005Sn-1z
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:39:51 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-62c8811267dso22496417b3.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 06:39:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717766594; x=1718371394; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Hz7KIHgqQkoU8fxiYHqRc1uzz6uGe1LeWN0XDL9oCDA=;
- b=r7Bwj1yIM0b+CNU0Mra88myh3pH1Qx+Hxc+frhREPOkRv7/FMHBs5TL83KQVgKEZBd
- eyjM4xAh5RXH2jKZfsJTFhPKu8j21GfkNrtnHdOP6rkDdkFX1riHYNXtortcBACbvLjT
- 0Ac8J8aq4LkGy5sttmvX2sXxyw70k3MurFPi/JBV79dbecn3sr9mTmDjLEzu8cEQ5k6W
- T5Dc3jnimXN+3aQ3e6g7rJ0OxY5Es8VLs/NqhIumFzil7jcJC4DjuMzILSMgM7COGKV9
- 6RqBwz9kS817mEQSVrXiwzsWtjZE5raLyLJc3c8bX5AUi5AKOlNeCPftblkBoq/a7Uxy
- +Few==
+ d=linaro.org; s=google; t=1717767588; x=1718372388; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jxWporrIUohh1LiPB08FWD5xOdQEpY/r4crr5j/U+OU=;
+ b=QX/WPe3CcU3Aw7ZPrgXGIzWBy30AY2uzvf7V10QseYIKXNP89NGEJYJ+UBXofOM3R2
+ MLgYqTfMnJU0MOOHYDupPu3e/741ckfTOseKYI/J8/qEq2cL9uqjxQU7ppUGvbeqYlDq
+ 4u+0uRZXLIW148bp6UwVRL79z1A+tqMG1jx8sRDtAuzB62FTUc7qRfiWmw2B5eg3guNr
+ hPocmbvW0aRsfeMPt7FURVCdR5nj5SxNP2B68TQSsAuzg7ghTWBpS48E0a7yCj75Vluq
+ m1XCpWdQVsEgrozOEVXqmO0J0Iq3NDvyw4tnxzM8yn705GAgHy74K/vR7K3FVb/MGFXJ
+ 8YBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717766594; x=1718371394;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Hz7KIHgqQkoU8fxiYHqRc1uzz6uGe1LeWN0XDL9oCDA=;
- b=Z3QznrhwsLa01bx8Jd0Qnn07xC5u37SsiRAPF/0daRNo27o37WErNUV9nlzHJw0Yh+
- VXJD5fVIrri85e5DhU05OX8BK2DkYkLq828rUcangVaqyAJ7TRIbYOjtBgBZ7WjYtqRy
- Mhw4T9SrD+hXsESKpxHUFwcz9Fb5TTclPxldZyaZEgozW2asH3LgbdBMtwAQFXxsFJBb
- AEo5HZAy3CxhgEbV1AdlqGApkf0+a3UdYhn6iZBlO1qqsKOVDAVqq+/vs6KssHo2zgmr
- yHhnLTVwxTcmgCKvHwFIuwx32xJEkCxTcESLikQV6b+uTggn3bkWKCBRpkjBNQHrcvMO
- KgSw==
-X-Gm-Message-State: AOJu0Yz+yjZ4saMOgeLofQh5YaUXkiMpSKdK23O7ZR/2ACcEsz6/vLhQ
- uqtv119Q+AtfInramNc2/EJzErR8Sf8HAM5aI4YGnmPSlB+HBpCcxFRHfR4AM/KskdCG8BB5Mmo
- PiAhg3sijHzN9GfSqf/O9NJAlCJE8suLWla89pw==
-X-Google-Smtp-Source: AGHT+IEe5YIkdqa839hK5lGB55YObRMQz82aI4z1iW5jJhtTdW+wiVFlSXyLZ4wPMFOePJrB8mEAocOsPY0F20lyNno=
-X-Received: by 2002:a50:d541:0:b0:574:ebf4:f78c with SMTP id
- 4fb4d7f45d1cf-57c5086e307mr1454036a12.7.1717766593768; Fri, 07 Jun 2024
- 06:23:13 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717767588; x=1718372388;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jxWporrIUohh1LiPB08FWD5xOdQEpY/r4crr5j/U+OU=;
+ b=fntSg36p37hssc5wMd4O446OeuhOAzTncO6kyVNqkjkxIn9f42UQJi557PTr8vBdwM
+ UYNRC/Vi6P4UupAjun/JZsqHAho0X5jjRRH8H3z6OW5CyGhlCoKhw6wOpKkUVxvOfa22
+ IfivOoEK2aZzoPkFmFcW/+GEFj7NMKR9WhzcN1r0VgaeuG96vlGHIPLKgBnodyfjekCk
+ I/SiuIHRbCD0UkX7JbLkpYv1/psF7lh8sgpq98V8l0LgZAm7kRgn+DxD0RGCA00UPA5I
+ ONGrhVMG5/SI1otgsgBVJPj5ejyu4d+vu0baIPoDdWT5qrwSg+Rpaw/W4DfmaA+OU7ib
+ mwAg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUrh5/ODoyyssDsBOGDZTxkEEX8tUQRfaI8wPi7ZiKgWlIGpqq6dMgitwyFUtLtL2WBprNXr5c9J8tdoYjrfapV9VW1Haw=
+X-Gm-Message-State: AOJu0Yw9ug7HxkrvrTo4sXaP1OoCkehabeny9E8zWgOaqeqN0r3PJUia
+ Nc50j+objCofPFh+pcppPPqNEhfeM2gETAQWFYv9Qr4+ForjipGD+hubQLu2Lkk=
+X-Google-Smtp-Source: AGHT+IG3vVGEknWPqZi6H8uMJT92LgfGrc6P6htAlyA5+E3ygNLpzmIBHZj/h+a/2FR0R0OVkaHqcQ==
+X-Received: by 2002:a81:9107:0:b0:61e:a3b:e473 with SMTP id
+ 00721157ae682-62cd55715d0mr27949667b3.7.1717767588386; 
+ Fri, 07 Jun 2024 06:39:48 -0700 (PDT)
+Received: from ?IPV6:2607:fb90:2ce2:c16a:7071:cbfe:cb87:bfb5?
+ ([2607:fb90:2ce2:c16a:7071:cbfe:cb87:bfb5])
+ by smtp.gmail.com with ESMTPSA id
+ 00721157ae682-62ccad1bce4sm6783497b3.71.2024.06.07.06.39.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Jun 2024 06:39:48 -0700 (PDT)
+Message-ID: <b4d2ae55-0ab7-478e-9666-a0acc1c0fe2d@linaro.org>
+Date: Fri, 7 Jun 2024 06:39:42 -0700
 MIME-Version: 1.0
-References: <20240520232634.317988-1-dmamfmgm@gmail.com>
- <CAFEAcA8JFMid+SeHWuoaK9meVWwgch9wwzKmT4SFUXz4U_iacw@mail.gmail.com>
- <CACBuX0RaZyXZtmdSsF279UZnw_St8mgX_U284zZ+o0o4ziHypw@mail.gmail.com>
-In-Reply-To: <CACBuX0RaZyXZtmdSsF279UZnw_St8mgX_U284zZ+o0o4ziHypw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 7 Jun 2024 14:23:02 +0100
-Message-ID: <CAFEAcA-xF=ko5xZ-KfquY_PBr3xXdnRrwp9JR01W7ko40_BFDQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-ohci: Fix ohci_service_td: accept valid TDs
-To: Cord Amfmgm <dmamfmgm@gmail.com>
-Cc: qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@linaro.org>, 
- Michael Tokarev <mjt@tls.msk.ru>, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: support atomic instruction fetch (Ziccif)
+To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20240607101403.1109-1-jim.shu@sifive.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240607101403.1109-1-jim.shu@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,69 +102,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 31 May 2024 at 19:16, Cord Amfmgm <dmamfmgm@gmail.com> wrote:
-> On Fri, May 31, 2024 at 9:03=E2=80=AFAM Peter Maydell <peter.maydell@lina=
-ro.org> wrote:
->> What I would like to see is what we could classify under
->> "rationale", which is to say "what prompted us to make this
->> change?". In my experience it's important to record this
->> (including in the commit message). There are of course
->> many cases in QEMU's git history where we failed to do that,
->> but in general I think it's a good standard to meet. (I
->> am also erring on the side of caution in reviewing this
->> particular patch, because I don't know the relevant standards
->> or this bit of the code very well.)
+On 6/7/24 03:14, Jim Shu wrote:
+> Support 4-byte atomic instruction fetch when instruction is natural
+> aligned.
+> 
+> Current implementation is not atomic because it loads instruction twice
+> for first and last 2 bytes. We load 4 bytes at once to keep the
+> atomicity. This instruction preload method only applys when instruction
+> is 4-byte aligned. If instruction is unaligned, it could be across pages
+> so that preload will trigger additional page fault.
+> 
+> We encounter this issue when doing pressure test of enabling & disabling
+> Linux kernel ftrace. Ftrace with kernel preemption requires concurrent
+> modification and execution of instruction, so non-atomic instruction
+> fetch will cause the race condition. We may fetch the wrong instruction
+> which is the mixing of 2 instructions.
 
-> Thanks, in responding to that, I'm breaking down my responses into the fo=
-llowing answers:
->
-> Q1: (summarizing) What prompted us to make this change?
->
-> A1: I'm summarizing what I wrote in previous emails and the commit messag=
-e -
->
-> * Bring qemu closer to actual hw with a neatly packaged test case to demo=
-nstrate the behavior
-> * I interpret the spec (Table 4-2) as saying the "be =3D cbp - 1" is vali=
-d, in addition to setting "cbp =3D 0"
-> * I interpret it that way due to a comment in an old linux kernel version=
- in the 2.x range, ohci-hcd.c file. It said (paraphrasing) some misbehaving=
- ohci controllers would fetch physical memory at 0 when cbp =3D 0 was in th=
-e Transfer Descriptor
+Hmm.  This is insufficient, as you have no guarantee that translator_ldl itself is atomic. 
+  Indeed, it is not: it uses memcpy as the innermost read.
 
-Interesting. Do you have a more specific version for that?
-I had a look at various 2.x Linux OHCI drivers but they all seem to do
-zero-length packets "by the spec" with CBP=3DBE=3D0. eg 2.6.39.4:
-https://elixir.bootlin.com/linux/v2.6.39.4/source/drivers/usb/host/ohci-q.c=
-#L539
-and there's no hardware-quirk handling to do it differently on
-some controllers. (The USB OHCI driver seems to have gone through
-a couple of rewrites in the 2.x kernel timeframe; the earlier 2.3.51
-version does the TD fill here:
-https://elixir.bootlin.com/linux/2.3.51/source/drivers/usb/usb-ohci.c#L812
-and again it handles zero length as BE=3DCBP=3D0.)
+Let me think about this...
 
-> But I only have a test case I created myself, and am not an expert on com=
-puter history here. I think "be liberal in what you accept, by conservative=
- in what you send" applies when I don't know which historical OSes, if any,=
- need this behavior. I think the behavior of actual hardware weighs more he=
-avily since that *is* available and testable. Are there additional checks t=
-hat would expand on what's known about actual ohci hw?
 
-The other side of the argument is "if in doubt and you don't
-know of any concrete problem being caused, don't change
-working code". If there are any historical OSes that rely on
-being able to send zero packets with be=3Dcbp-1 for some nonzero
-be, and anybody wants to run them on QEMU, then presumably they
-can send us a bug report saying "XYZ's USB support doesn't work".
-That nobody has ever does this is evidence on the side of
-"there is no such OS out there, everybody writing an OHCI driver
-read the spec and made their driver send zero length packets the
-way the spec very clearly says you should". Please correct me
-if I'm wrong, but my interpretation of your helpful explanation
-above is that this is essentially a theoretical problem rather
-than one that's caused you a problem you need to fix.
+r~
 
-thanks
--- PMM
 
