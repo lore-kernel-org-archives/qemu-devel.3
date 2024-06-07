@@ -4,48 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90DCFC27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA885C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:28:23 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf1A-00068A-WC; Fri, 07 Jun 2024 15:12:53 -0400
+	id 1sFbil-0006UZ-Ko; Fri, 07 Jun 2024 11:41:39 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf19-0005gd-9v; Fri, 07 Jun 2024 15:12:51 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf17-0001i0-Jo; Fri, 07 Jun 2024 15:12:51 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4A76B6E537;
- Fri,  7 Jun 2024 22:13:16 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 8317FE2737;
- Fri,  7 Jun 2024 22:12:21 +0300 (MSK)
-Received: (nullmailer pid 528261 invoked by uid 1000);
- Fri, 07 Jun 2024 19:12:20 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, lanyanzhi <lanyanzhi22b@ict.ac.cn>,
- Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.12 29/29] target/loongarch: fix a wrong print in cpu dump
-Date: Fri,  7 Jun 2024 22:12:12 +0300
-Message-Id: <20240607191219.528194-10-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
-References: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sFbik-0006Tv-9o
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 11:41:38 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sFbii-0006yd-7f
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 11:41:38 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1f6da06ba24so6123035ad.2
+ for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 08:41:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717774894; x=1718379694; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=x1qv6IgBykZGIEulE6jXABhySKz9LjMJH1MzP+GCm8g=;
+ b=rWZ9AvOYUcWqiEFxADwZyOY69YyN5OJzF6OQg33WdA5sjogpFodPDO1pCWrgtmsqr/
+ AJukBpZfhJKnRhDLvm6rZnY76pNWqJAzWUY17ClD21uAqDzjj4JT3hMqRJCo2SUxn/OT
+ yDKcNS33ePtlVGWp5NvubztMVbN9gDCcIxHOUSl9G7rcmCyshZbnOojLXQ/u10gEGjxQ
+ 6M5PQr5vSVRjR6gjbyjyvRxzaxD7Tgy3fI590q2dYBD0usFkX7PJzkxu8n0RRZJ/kiZf
+ 1PPn4PmPxcXLdifSvn2h67oVAclc6TDNXkIlFZdt23HOJ37vXajeAilqh5M9SbzUJ9WC
+ l0hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717774894; x=1718379694;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=x1qv6IgBykZGIEulE6jXABhySKz9LjMJH1MzP+GCm8g=;
+ b=aiiBnhwkiFIIQ/lUgtLnWKpCSnvQ0epIXCcXp5J9I6B3oWroZAEj4EduRDliSOKSTX
+ R1bRjlQHtTQsmuHgKHOymIlvtMvDV1LedUPqdiun6CJlwxHLftnOyGX9nrOJ0vdebg6Z
+ dyqcxIGr9q+h8yIV9c7EzuVHosLAtZQb1oMEadkTUYkcD1i29qJUDZASJ0AGrNzlU1/i
+ a67ANTJftiEK7AskfORzyrMWxEEcZD0JkHon5PGatUupTkPrwidVhYGpux2Vb+jCztRo
+ M2WX8T36l2yMEEtKhwLAfAUqs3hDahCoJ1kbc50C+XeuZcOzsh2WYw42yDVj5ZRoE3vg
+ 89jw==
+X-Gm-Message-State: AOJu0YwcEW68lt+25lXH0yROOa7wG51KYHhwjgemhE7gGTu+SViChcBc
+ nA1Byj+u07Bha987bPoaNIUFeM9wtmfJSqqF4Hv/tzTS1rg9pZdIE+v7fpFoAQY=
+X-Google-Smtp-Source: AGHT+IEe5tamzQb1kxipIbJw6yoC3/5yJizrhvAxt3i6o7eOo0cRUEtsq+zC5yowfm3b9W7f0OkPnA==
+X-Received: by 2002:a17:903:2306:b0:1f4:a233:c964 with SMTP id
+ d9443c01a7336-1f6d0377894mr31365905ad.55.1717774894138; 
+ Fri, 07 Jun 2024 08:41:34 -0700 (PDT)
+Received: from [192.168.223.227] ([75.147.178.105])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f6bd770405sm35705615ad.108.2024.06.07.08.41.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 07 Jun 2024 08:41:33 -0700 (PDT)
+Message-ID: <91e78fa4-f844-4b79-ba09-46c722f35df8@linaro.org>
+Date: Fri, 7 Jun 2024 08:41:30 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] target/ppc: Move VSX vector with length storage
+ access insns to decodetree.
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com
+References: <20240607144921.726730-1-rathc@linux.ibm.com>
+ <20240607144921.726730-3-rathc@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240607144921.726730-3-rathc@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -62,36 +98,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: lanyanzhi <lanyanzhi22b@ict.ac.cn>
+On 6/7/24 07:49, Chinmay Rath wrote:
+> +static bool do_ld_st_vl(DisasContext *ctx, arg_X *a,
+> +                        void (*helper)(TCGv_ptr, TCGv, TCGv_ptr, TCGv))
+> +{
+> +    TCGv EA;
+> +    TCGv_ptr xt;
+> +    if (a->rt < 32) {
+> +        REQUIRE_VSX(ctx);
+> +    } else {
+> +        REQUIRE_VECTOR(ctx);
+> +    }
+> +    xt = gen_vsr_ptr(a->rt);
+> +    gen_set_access_type(ctx, ACCESS_INT);
+> +
+> +    if (a->ra) {
+> +        EA = tcg_temp_new();
+> +        tcg_gen_mov_tl(EA, cpu_gpr[a->ra]);
+> +    } else {
+> +        EA = tcg_constant_tl(0);
+> +    }
+> +    if (NARROW_MODE(ctx)) {
+> +        tcg_gen_ext32u_tl(EA, EA);
 
-description:
-    loongarch_cpu_dump_state() want to dump all loongarch cpu
-state registers, but there is a tiny typographical error when
-printing "PRCFG2".
+ra == 0, narrow mode, will crash, due to write into constant 0.
+Obviously 0 does not need extending, so this could be
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: lanyanzhi <lanyanzhi22b@ict.ac.cn>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240604073831.666690-1-lanyanzhi22b@ict.ac.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-(cherry picked from commit 78f932ea1f7b3b9b0ac628dc2a91281318fe51fa)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+     if (!a->ra) {
+         ea = constant 0;
+     } else if (narrow mode) {
+         ea = tcg_temp_new();
+         tcg_gen_ext32u_tl(ea, cpu_gpr[a->ra]);
+     } else {
+         ra = cpu_gpr[a->ra];
+     }
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 92dd50e15e..56e36d81b3 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -653,7 +653,7 @@ void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-     qemu_fprintf(f, "EENTRY=%016" PRIx64 "\n", env->CSR_EENTRY);
-     qemu_fprintf(f, "PRCFG1=%016" PRIx64 ", PRCFG2=%016" PRIx64 ","
-                  " PRCFG3=%016" PRIx64 "\n",
--                 env->CSR_PRCFG1, env->CSR_PRCFG3, env->CSR_PRCFG3);
-+                 env->CSR_PRCFG1, env->CSR_PRCFG2, env->CSR_PRCFG3);
-     qemu_fprintf(f, "TLBRENTRY=%016" PRIx64 "\n", env->CSR_TLBRENTRY);
-     qemu_fprintf(f, "TLBRBADV=%016" PRIx64 "\n", env->CSR_TLBRBADV);
-     qemu_fprintf(f, "TLBRERA=%016" PRIx64 "\n", env->CSR_TLBRERA);
--- 
-2.39.2
 
+Aren't there existing helper functions for computing this address?
+And if not, better to create one.
+
+
+r~
 
