@@ -4,55 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9BCFC41513
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 10:40:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8825C27C55
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 10:48:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFX05-00056p-5v; Fri, 07 Jun 2024 06:39:13 -0400
+	id 1sFX7s-0000GZ-8a; Fri, 07 Jun 2024 06:47:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiongyining1480@phytium.com.cn>)
- id 1sFX00-000553-Qx; Fri, 07 Jun 2024 06:39:08 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <xiongyining1480@phytium.com.cn>)
- id 1sFWzx-0002c4-Bd; Fri, 07 Jun 2024 06:39:08 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwDntt1G42JmZF4sAA--.26038S2;
- Fri, 07 Jun 2024 18:39:02 +0800 (CST)
-Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwA34tc742JmSdwAAA--.1309S3;
- Fri, 07 Jun 2024 18:38:51 +0800 (CST)
-From: Xiong Yining <xiongyining1480@phytium.com.cn>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: rad@semihalf.com, peter.maydell@linaro.org, quic_llindhol@quicinc.com,
- marcin.juszkiewicz@linaro.org,
- Xiong Yining <xiongyining1480@phytium.com.cn>
-Subject: [PATCH v5 0/1] ARM Sbsa-ref: Enable CPU cluster topology
-Date: Fri,  7 Jun 2024 10:38:24 +0000
-Message-Id: <20240607103825.1295328-1-xiongyining1480@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwA34tc742JmSdwAAA--.1309S3
-X-CM-SenderInfo: x0lr0wp1lqx0bjrumio6sk53xlxphulrpou0/1tbiAQAJBmZiD2QErAAAsJ
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=xiongyinin
- g1480@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvdXoW7Wr4kAr45ZF1rZFWUWryxuFg_yoWkJrc_Zr
- 4kZayFgrs7Jr4v9ayFya1fAry0k3yj9r15GrnxKFW5tw1rCF4DtrsrG3s3Aw1rWr18W34D
- Aay7Cr4fC3sIgjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
- Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
- UUUU=
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=xiongyining1480@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1sFX7o-0000G6-Qw
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 06:47:12 -0400
+Received: from qs51p00im-qukt01071501.me.com ([17.57.155.4])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1sFX7n-0003y4-8K
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 06:47:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
+ t=1717757227; bh=5VPpkxIv4qSeSXjxKk3cVUF/jAopaZ1NdrEr+y+ic10=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To;
+ b=epsljat0wgrZSLBEgqUMKnssyg3MZ4rBto1GU3jqkFk8MTnjMtl+fZ6SDvRbjSQsS
+ tUm/c/LCDWy35B2t4fzQTuTZpjc/iSYmQf2zcuYBIwQ/4oBXksD5DQLc/Il1LYHtbb
+ DTeiu2OffD90qa9pL/AHH6+4YFkHzNIv6DiNaVSBkKGpZeYhF4PR3VlX7cvT5IAWBJ
+ Nq+vLiGdh7tQSwiprNnyfaPiqNhkWK2a3QkrvIRGsP7HiQtaVDqNUwiMKBJ/mmbMVX
+ 4z7E/JIMT/QOzJIUMVd5Th8NmrSOhBcTFJY1fv7PxGVRPeBKoMt5nmOJKV6a2geCWV
+ KMNMdScBJscrQ==
+Received: from smtpclient.apple (qs51p00im-dlb-asmtp-mailmevip.me.com
+ [17.57.155.28])
+ by qs51p00im-qukt01071501.me.com (Postfix) with ESMTPSA id 221D61C402D0;
+ Fri,  7 Jun 2024 10:47:03 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
+Subject: Re: [PATCH 0/5] trace: Remove and forbid newline characters in event
+ format
+From: Mads Ynddal <mads@ynddal.dk>
+In-Reply-To: <20240606103943.79116-1-philmd@linaro.org>
+Date: Fri, 7 Jun 2024 12:46:50 +0200
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <867D16AD-D9FA-42BE-A51F-8CE6274941EC@ynddal.dk>
+References: <20240606103943.79116-1-philmd@linaro.org>
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Mailer: Apple Mail (2.3774.600.62)
+X-Proofpoint-GUID: lS6ppaj8x9GvUssqWmQcgKMHpXw4hD9F
+X-Proofpoint-ORIG-GUID: lS6ppaj8x9GvUssqWmQcgKMHpXw4hD9F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-07_05,2024-06-06_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ malwarescore=0 clxscore=1030
+ spamscore=0 adultscore=0 suspectscore=0 phishscore=0 mlxlogscore=711
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2308100000 definitions=main-2406070078
+Received-SPF: pass client-ip=17.57.155.4; envelope-from=mads@ynddal.dk;
+ helo=qs51p00im-qukt01071501.me.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,39 +83,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enable CPU cluster support on SbsaQemu platform, so that users can
-specify a 4-level CPU hierarchy sockets/clusters/cores/threads. And this
-topology can be passed to the firmware through /cpus/topology Device Tree.
+>=20
+> Trace events aren't designed to be multi-lines.
+> Few format use the newline character: remove it
+> and forbid further uses.
+>=20
+> Philippe Mathieu-Daud=C3=A9 (5):
+>  backends/tpm: Remove newline character in trace event
+>  hw/sh4: Remove newline character in trace events
+>  hw/usb: Remove newline character in trace events
+>  hw/vfio: Remove newline character in trace events
+>  tracetool: Forbid newline character in event format
+>=20
+> backends/tpm/tpm_util.c       | 5 +++--
+> backends/tpm/trace-events     | 3 ++-
+> hw/sh4/trace-events           | 4 ++--
+> hw/usb/trace-events           | 6 +++---
+> hw/vfio/trace-events          | 4 ++--
+> scripts/tracetool/__init__.py | 2 ++
+> 6 files changed, 14 insertions(+), 10 deletions(-)
+>=20
+> --=20
+> 2.41.0
+>=20
 
-Signed-off-by: Xiong Yining <xiongyining1480@phytium.com.cn>
-
---
-Changes in v5:
-- use /cpus/topology to describe cpu topology directly.
-- Link to v4 https://lists.gnu.org/archive/html/qemu-devel/2024-04/msg03940.html
-
-Changes in v4:
-- align the machine-version-minor to 4
-
-Changes in v3:
-- squash the two patches together into one
-- add the DTB information in docs/system/arm/sbsa.rst
-- Link to v2: 
-https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg02951.html
-
-Changes in v2:
-- put this code before sbsa_fdt_add_gic_node().
-- Link to v1: 
-https://lists.gnu.org/archive/html/qemu-devel/2023-12/msg03390.html
-
-Xiong Yining (1):
-  hw/arm/sbsa-ref: Enable CPU cluster on ARM sbsa machine
-
- docs/system/arm/sbsa.rst |  4 ++++
- hw/arm/sbsa-ref.c        | 11 ++++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
-
--- 
-2.34.1
+Acked-by: Mads Ynddal <mads@ynddal.dk>
 
 
