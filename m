@@ -4,147 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13048C27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E5D6C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:40:50 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFb55-0000W6-R8; Fri, 07 Jun 2024 11:00:40 -0400
+	id 1sFaun-0000o5-JI; Fri, 07 Jun 2024 10:50:01 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1sFb53-0000Vf-Vb; Fri, 07 Jun 2024 11:00:38 -0400
-Received: from mail-he1eur04on20721.outbound.protection.outlook.com
- ([2a01:111:f403:260f::721]
- helo=EUR04-HE1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1sFaum-0000hd-GU; Fri, 07 Jun 2024 10:50:00 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander.ivanov@virtuozzo.com>)
- id 1sFb51-0007T0-K6; Fri, 07 Jun 2024 11:00:37 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=XQRgBIrqzotdY+UKVVgcsNS4ymlj12CkTNgN5NXWiiPiLxuthb1hrgOlr3p6FETPhXLDWBztBUlQRkRRPhS5coCpC31EgyT4+uup+SW+n13AFqYEC014tj6ZZPYRNWq4HoawEuYb18CXLkP3a8CH7ei2QC2az1VqmXlHvrQzbw8SBxwIFtnHfMl9VuV7tGIQE5mRVMlBdcX5sMrRfc4M6NvCd4G4+EdYhJQYxu/T5kXQjSOQdIcHGsO8bxAxdznGQNqHv1iXCFUXGRKFq5xrc//s0MdAVeCcu2giqQilfNIETyGx+FrsvsqZrqED+TAI/laBkOfreVLrN8QK4OBWzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rdnHrKrY9dARdDaugMOOW83+AVtVGc9qAaOLohRp5kA=;
- b=Ht8dHJvpH23tws9K12uKJocn/2WA0b9809G2dYCTferYNzBwIEFsIkgmahpivjQK8Z4maB9hEOfF5x8+Iqo88QEW0Ai7FgNZpucgjCiRZmxdCQcDHsR0sZs5joUUBIvkAIbjDnBDEnmtR5w2MZRKukq2hMJq89oi09A3sMAcCR9snz1OuKGHUNDfAbdpCedQ4ARMbb5piihd3S+opBxLtviJdZfp6OeowunWVp9cYnarrTY8YxGnQ/DzOC9gJpUAxYrx+4giquiF1wH1zBNeAQ6qRikXEz4ypfAkaV39voOngPz4Pv/qeW4VjUEJpmVLWNvuvJTctelCNhHVFd95yA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rdnHrKrY9dARdDaugMOOW83+AVtVGc9qAaOLohRp5kA=;
- b=uII+oSdsD0L6GOS+diRJ6lInJW8hYltHCBMvjUZuwz/980zdLgsaWYH/1UkoHXWvmLsg+ynKYArWtoOaF5/6vxh4gvpSYFM9DsoWzbrxK/CiX9sA0wydQQxsfXa0W7cSa69nFyqLxQDQ5NxXipOaZJVJQNjxNFaCXQAcjdxpvQPiATQYm54ukMBJ3l2Eneuh5ySkcxgxJhpqsfe0CgB6D1saZUpeT6nLTUuPK1/40cSNoWQL+HcZ0SCL/nXyybizEnXgHiGBPmYDPdqaSOEEztFmZPNEtLlkFp/i/TTFUgvDqbGRbC4q0phBhH44ufiIAu/LnABHqXfr6yCYeHYFHQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
- (2603:10a6:800:205::19) by DU0PR08MB9395.eurprd08.prod.outlook.com
- (2603:10a6:10:422::17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7587.35; Fri, 7 Jun
- 2024 15:00:28 +0000
-Received: from VI0PR08MB10743.eurprd08.prod.outlook.com
- ([fe80::cebf:31ab:1e25:cfb5]) by VI0PR08MB10743.eurprd08.prod.outlook.com
- ([fe80::cebf:31ab:1e25:cfb5%7]) with mapi id 15.20.7633.033; Fri, 7 Jun 2024
- 15:00:28 +0000
-From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com,
- eblake@redhat.com, vsementsov@yandex-team.ru, kwolf@redhat.com,
- hreitz@redhat.com
-Subject: [PATCH] nbd: Prevent NULL pointer dereference in
- nbd_blockdev_client_closed()
-Date: Fri,  7 Jun 2024 17:00:21 +0200
-Message-ID: <20240607150021.121536-1-alexander.ivanov@virtuozzo.com>
-X-Mailer: git-send-email 2.43.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: WA2P291CA0029.POLP291.PROD.OUTLOOK.COM
- (2603:10a6:1d0:1f::29) To VI0PR08MB10743.eurprd08.prod.outlook.com
- (2603:10a6:800:205::19)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1sFauk-0005OD-Cx; Fri, 07 Jun 2024 10:50:00 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 457Ebka4031188; Fri, 7 Jun 2024 14:49:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc :
+ content-transfer-encoding : date : from : in-reply-to : message-id :
+ mime-version : references : subject : to; s=pp1;
+ bh=ox4yET5znO3z68pxRcBe6MLUyla4FOSqUAs5lRbKFMA=;
+ b=XD9q7NwuB/OByC3of2suvx4LdK3ZCUtzf0YjRFZfCs3MyjMAJpL9wyMYEubj0EHwf3t4
+ Q/2nUhpRw+3ZoJQrlu7JyUlJkf7AgpdFlB8qb+ulY3Ayp2sf1Sg3ntTsxIk9MbJW9cwj
+ bsUV8RMPDdUXfYjN8nEJnNCEDAvivc6vB5gyvK6WbRN8arjWwWAhh57LShg3n5GkIVhC
+ MMn/4vZXRb1S1lGF2wv7faaqDGcNneAKEpQLEMNliedsz0OwaQxvh2HwzOvxGqylM72O
+ 4lYYy9e1YajrtV2omrtJ2tni01HGxlycXAOLvkztFw61nVR4k2D1Wnc24uP38QUWJlsH Lg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ym44k021t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 07 Jun 2024 14:49:54 +0000
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 457EnsLK024494;
+ Fri, 7 Jun 2024 14:49:54 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ym44k021r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 07 Jun 2024 14:49:54 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 457Bu6Jh000829; Fri, 7 Jun 2024 14:49:53 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ygdyuhfr3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 07 Jun 2024 14:49:53 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 457EnnYU35127768
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 7 Jun 2024 14:49:51 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5EC3120049;
+ Fri,  7 Jun 2024 14:49:49 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 18CD12004D;
+ Fri,  7 Jun 2024 14:49:47 +0000 (GMT)
+Received: from localhost.localdomain.com (unknown [9.171.62.199])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  7 Jun 2024 14:49:46 +0000 (GMT)
+From: Chinmay Rath <rathc@linux.ibm.com>
+To: qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ richard.henderson@linaro.org, harshpb@linux.ibm.com
+Subject: [PATCH 4/4] target/ppc: Move VSX fp compare insns to decodetree.
+Date: Fri,  7 Jun 2024 20:19:21 +0530
+Message-Id: <20240607144921.726730-5-rathc@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240607144921.726730-1-rathc@linux.ibm.com>
+References: <20240607144921.726730-1-rathc@linux.ibm.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10743:EE_|DU0PR08MB9395:EE_
-X-MS-Office365-Filtering-Correlation-Id: 25190286-e82b-4cec-b2ad-08dc8702917a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230031|366007|52116005|1800799015|376005|38350700005; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?VG4yjAvv0u1WNu6IWgsuSGsZ9ZvqZFvpNJHD2vrYJuMwGTwQyrd4TZJ94vlv?=
- =?us-ascii?Q?mKGwaTElE+CcDlPJQrEX+eD98Izz6uABCLsFRR9c4EXtsVuFPAdGzw6Cy0No?=
- =?us-ascii?Q?jFE5fg8tpLV3+aNJkLtbA4DFxAM3epwsCP+Wp6U0Dcb997sOV6Yns2rJWirQ?=
- =?us-ascii?Q?3QcznJXlrzvVL3ai1q8w2OJYCw+CDq7ESXWu79j+mulr4gb4N8d+1TQPRSy7?=
- =?us-ascii?Q?Cs1RL+U8/nCtIIVQuUjUHslLD+uf/x07ysUgePgpDwzCPbe5Eo5py6eROmpo?=
- =?us-ascii?Q?Vwc0tm4yD6mQc09zNo25ZrVokWGwvCQRky6M4NSBv+Rj2HO8Bb6yGv2C7ZA0?=
- =?us-ascii?Q?3ZGj2ND0Aek3D6ydHnlEStZNmbGP7nfv0gLEZRu7eSYJcMXYCTxndCavBK2a?=
- =?us-ascii?Q?k9BlgL/Fb9TUdAAggf1fvWoR8LtyxdOZUydnayA83pESLZe9WEjgVJY3F66f?=
- =?us-ascii?Q?YWRhFy0eBSjNRaRtl88oo/o8EgsnMyEtFV8xkWcUQBkXKFwr0fgG2VUCHiFw?=
- =?us-ascii?Q?lFJQzXLq/r0xvAYe0MSLzDwrr3s9xlJ10+gtBk/rhOeSaABaUqqjxyuophWc?=
- =?us-ascii?Q?rKFTTBhcDymhnf0qy34B8m7vRYCXPUdLTC3MpoE8KOpVN/Gc+sUAQDU7+s5a?=
- =?us-ascii?Q?4igZx/mkV+ZGAautv3r0X0G/EaYkY/o35KL6mC2IQBJf92JRFvK19emIY7TR?=
- =?us-ascii?Q?+FhMIV7mxq+IGcnjh4PbLH+2NPslBtu/sKfozo4tK+q7IGbrRTNLE/hgndct?=
- =?us-ascii?Q?j3THdB3jQEL7OPFjcCBtx/Pi/9jaDhhoP0MHCdJL24x9GCl2s35H3a5enAYq?=
- =?us-ascii?Q?eW7yLnYrMwfSpylHrVGNg2aPrAU6hEvDaHjGBd7Trrv1SQ2vY9/G53D2F3nk?=
- =?us-ascii?Q?1FVLOeIdkDqyBKzf8yw63WCCmQ008nJwu7vOYnG5Jkmp/Fz2binElMQPTZ8A?=
- =?us-ascii?Q?L9hyWuNNMbFvnt7xTCUuiGjnRXhQn6/Yy5BAjYjSPTpkUV+QLuQgElr/pgrz?=
- =?us-ascii?Q?dPND9U3en57v0B4KMh4ED0Liw3v2L8jH32nEdRkdZaJArr/8yQuYunXNhHOx?=
- =?us-ascii?Q?+uFMwhObnynBSakigAae7EHPAVdCT2vOM2d0XYQqBcv59X7bvyi0A10iwfCP?=
- =?us-ascii?Q?57km1vLzsX/0KKIQ8h6sPeN98U8fjbeHmhfQ72+pFKIyFJ/JlXO6HQbWXVUE?=
- =?us-ascii?Q?0Jcc/bxu+G95gmcTcHhNmio+8zp4gNSoI8rdbMbmb5j6Cmkb81VaXvMJ0d9r?=
- =?us-ascii?Q?k26ofzkAt5aB6p2yJqNawTKIyW7ksu0pBmxJPwtn8PTAJrtR+IZepWYD43Ul?=
- =?us-ascii?Q?7prr71a+oUpQiZBtcaYorBz52Cbh/OHK80SObewavEd9fZ+GMTG4YuX7m673?=
- =?us-ascii?Q?iN4KozA=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10743.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(52116005)(1800799015)(376005)(38350700005); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?cB8UI0cCUV24aHpPgUCPcJaOjmJPdU7v4SGpSvyixATcartbZs50JCrvGXLj?=
- =?us-ascii?Q?zRGA3uiiR7fZmTMrx9Hrgp3c3F7X0vJcNj9qHr3gXgEMPlNdy/5LXeG+et6/?=
- =?us-ascii?Q?V9xeJq70K5xM1PKi4Up105Bl+T2ZqJP7azzA67phIqHQLn3BWC8PFi37VL5J?=
- =?us-ascii?Q?AgLinTljH9vGY7XSejkICJnsrUiVYumUzPcd8ci6gSLl0u37DI8beDhVBvzr?=
- =?us-ascii?Q?el1TVWaNR0b3fi/O/HKMA/WW37Qbkk0EmzS+CacGH+vXASmxHqg34/g276na?=
- =?us-ascii?Q?hSD0wEbPwBca4HbR8HA0NTc7u3JlQfhgIZ8qm8jFSkjao8myF07t7frn0GIc?=
- =?us-ascii?Q?ncZbAXMlqEi6q4tpX6wXHBtDJL3Uc2d154JUhFinE4JgMjRd3Wxx9Xc9Ahrs?=
- =?us-ascii?Q?4mKQoZ18lcE2FvVG7x9ughr3LZMAhWz5oSXuCGPt01Ltru5eIcIt5Dqb7T4e?=
- =?us-ascii?Q?gsLvg+6CEYmR1M9TSrim6EhwzaOT9CLaSTD3rcgZMX+IIL5VgwB584q/vLlM?=
- =?us-ascii?Q?n2HfweF/SfS9X4PreHFq8kGFWLo3hxdzHUBNDHBf7Wq28bXb2j8fco7LBEdD?=
- =?us-ascii?Q?4OlYB26ifFALO+v5dctAKm7651xE1jD0/9Phx5GXBJu7O1QMKAIsE1uqL9ym?=
- =?us-ascii?Q?gvtfza58QbRrbrYuwbIhlsOW1rhiPnGChjvExyCbgzcIo/8+0N7BU59y05mR?=
- =?us-ascii?Q?KRsIMfBcUxJE6evVDfva+IfrrcUepUZWe04hVZ2rj5yIOqlHuS5dddcXKMJj?=
- =?us-ascii?Q?HhgYDUboUI9vN1VZaGQYiEGYfBzds0WZ1ZP+BEPlBl/U1OG2kBi/iXK/IYA7?=
- =?us-ascii?Q?r40bj2McolexSGer+NhwM2tGkZHO9RIy0immovnNAOGQtfLVv1tIu4zICCYE?=
- =?us-ascii?Q?8kz3Rdg+Sampp5aRPV72vamjcUhM84Ew4VQKZslNg/+BhDa8FePu5D8xqU6d?=
- =?us-ascii?Q?ICARcHxWneph/d/SyKx0zOLMqmt/RqSvJsOchAkznHnJNrBdjQnljnCKdtqJ?=
- =?us-ascii?Q?DMOyFDwUrFU6pbWgokRelRfdfqRP6QWftlVO7HvY4GfoedQUkpcGnCC4pJSW?=
- =?us-ascii?Q?13NavmjuHH0di6GlxezWdmXp+jh2XQxrRwZSPpmSeGqnSkuSYIHN6TDm0bra?=
- =?us-ascii?Q?24tH09C1qpNV0l4oVBn/QgCMGDdK5qDCVxKXzr0a1CZH86eWm4Facpoo/VDV?=
- =?us-ascii?Q?OYLseIy0GxTo8xRJGGFqdiyj0HU6PA0jHUBcMMijDiSxU3hP96/a/lnGx3u3?=
- =?us-ascii?Q?mX5i0BByoGdWFkKmWTUkx1GvwgDxzZxjUauz+2xDNC7nYIeZVwTBN7Gl8JYT?=
- =?us-ascii?Q?rNIZN5L8I2oNFiwnMo0Ia9a++mRix0sHip1usN7weCq2ah5xAfe4Dz2z286D?=
- =?us-ascii?Q?VyOG1+ehsS8wEXgUWWQO+zrLY0mv8JA4YI7DFeMmM7ZPni+Cttht40My7+4a?=
- =?us-ascii?Q?7n0QbPRNQES518TTh6iFpOrLY/BTTaqKdoSs3mgVQz1Nd4YjoTmgowhKsib9?=
- =?us-ascii?Q?lwEHy6opUZulEZlWyJNaHo8BXtoVsiiTPaDorAAtcYb7j1cqC9BIW9mMkUmj?=
- =?us-ascii?Q?KB/4ejTaSFT+AzjH2J2hYS10UFiwhxpENtO0QhyHcykZhBZvhOg/mRqwBGwC?=
- =?us-ascii?Q?K9GAJ01rUVpl5lMJYQgfZQo=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 25190286-e82b-4cec-b2ad-08dc8702917a
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10743.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2024 15:00:28.1945 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: S9NzZJcSpfUzyc3hHSTbbk/4l+SDmwAk+Um9jgl74pVYMEkFncp+vOVQARGsv9kthMb7YO0HudXD2WNFtTBB92H4K6BJ0ZpO4UW904v/HL8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR08MB9395
-Received-SPF: pass client-ip=2a01:111:f403:260f::721;
- envelope-from=alexander.ivanov@virtuozzo.com;
- helo=EUR04-HE1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: SEBYzIBoAt2kwHo42TtoZ-sOT61XdHmP
+X-Proofpoint-ORIG-GUID: kZnRMwEagzFnKBe8RKRFAPpqcZ-1E_FP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-07_08,2024-06-06_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ lowpriorityscore=0 suspectscore=0 mlxlogscore=887 spamscore=0 phishscore=0
+ bulkscore=0 mlxscore=0 malwarescore=0 adultscore=0 impostorscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2405010000 definitions=main-2406070109
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,34 +112,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In some cases, the NBD server can be stopped before
-nbd_blockdev_client_closed() is called, causing the nbd_server variable
-to be nullified. This leads to a NULL pointer dereference when accessing
-nbd_server.
+Moving the following instructions to decodetree specification:
 
-Add a NULL check for nbd_server to the nbd_blockdev_client_closed()
-function to prevent NULL pointer dereference.
+	xvcmp{eq, gt, ge, ne}{s, d}p	: XX3-form
 
-Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+The changes were verified by validating that the tcg-ops generated for those
+instructions remain the same which were captured using the '-d in_asm,op' flag.
+
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- blockdev-nbd.c | 3 +++
- 1 file changed, 3 insertions(+)
+ target/ppc/helper.h                 | 16 ++++-----
+ target/ppc/insn32.decode            | 12 +++++++
+ target/ppc/fpu_helper.c             | 16 ++++-----
+ target/ppc/translate/vsx-impl.c.inc | 50 ++++++++++++++---------------
+ target/ppc/translate/vsx-ops.c.inc  | 18 -----------
+ 5 files changed, 52 insertions(+), 60 deletions(-)
 
-diff --git a/blockdev-nbd.c b/blockdev-nbd.c
-index 213012435f..fb1f30ae0d 100644
---- a/blockdev-nbd.c
-+++ b/blockdev-nbd.c
-@@ -52,6 +52,9 @@ int nbd_server_max_connections(void)
- static void nbd_blockdev_client_closed(NBDClient *client, bool ignored)
- {
-     nbd_client_put(client);
-+    if (nbd_server == NULL) {
-+        return;
+diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+index 510ce76524..3fd849628a 100644
+--- a/target/ppc/helper.h
++++ b/target/ppc/helper.h
+@@ -473,10 +473,10 @@ DEF_HELPER_5(xvnmadddp, void, env, vsr, vsr, vsr, vsr)
+ DEF_HELPER_5(xvnmsubdp, void, env, vsr, vsr, vsr, vsr)
+ DEF_HELPER_4(XVMAXDP, void, env, vsr, vsr, vsr)
+ DEF_HELPER_4(XVMINDP, void, env, vsr, vsr, vsr)
+-DEF_HELPER_FLAGS_4(xvcmpeqdp, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
+-DEF_HELPER_FLAGS_4(xvcmpgedp, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
+-DEF_HELPER_FLAGS_4(xvcmpgtdp, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
+-DEF_HELPER_FLAGS_4(xvcmpnedp, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
++DEF_HELPER_FLAGS_4(XVCMPEQDP, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
++DEF_HELPER_FLAGS_4(XVCMPGEDP, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
++DEF_HELPER_FLAGS_4(XVCMPGTDP, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
++DEF_HELPER_FLAGS_4(XVCMPNEDP, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
+ DEF_HELPER_3(xvcvdpsp, void, env, vsr, vsr)
+ DEF_HELPER_3(xvcvdpsxds, void, env, vsr, vsr)
+ DEF_HELPER_3(xvcvdpsxws, void, env, vsr, vsr)
+@@ -507,10 +507,10 @@ DEF_HELPER_5(xvnmaddsp, void, env, vsr, vsr, vsr, vsr)
+ DEF_HELPER_5(xvnmsubsp, void, env, vsr, vsr, vsr, vsr)
+ DEF_HELPER_4(XVMAXSP, void, env, vsr, vsr, vsr)
+ DEF_HELPER_4(XVMINSP, void, env, vsr, vsr, vsr)
+-DEF_HELPER_FLAGS_4(xvcmpeqsp, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
+-DEF_HELPER_FLAGS_4(xvcmpgesp, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
+-DEF_HELPER_FLAGS_4(xvcmpgtsp, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
+-DEF_HELPER_FLAGS_4(xvcmpnesp, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
++DEF_HELPER_FLAGS_4(XVCMPEQSP, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
++DEF_HELPER_FLAGS_4(XVCMPGESP, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
++DEF_HELPER_FLAGS_4(XVCMPGTSP, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
++DEF_HELPER_FLAGS_4(XVCMPNESP, TCG_CALL_NO_RWG, i32, env, vsr, vsr, vsr)
+ DEF_HELPER_3(xvcvspdp, void, env, vsr, vsr)
+ DEF_HELPER_3(xvcvsphp, void, env, vsr, vsr)
+ DEF_HELPER_3(xvcvhpsp, void, env, vsr, vsr)
+diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
+index 3d31ef52f8..bcaf03f24c 100644
+--- a/target/ppc/insn32.decode
++++ b/target/ppc/insn32.decode
+@@ -217,6 +217,9 @@
+ &XX3            xt xa xb
+ @XX3            ...... ..... ..... ..... ........ ...           &XX3 xt=%xx_xt xa=%xx_xa xb=%xx_xb
+ 
++&XX3_rc         xt xa xb rc:bool
++@XX3_rc         ...... ..... ..... ..... rc:1 ....... ...       &XX3_rc xt=%xx_xt xa=%xx_xa xb=%xx_xb
++
+ # 32 bit GER instructions have all mask bits considered 1
+ &MMIRR_XX3      xa xb xt pmsk xmsk ymsk
+ %xx_at          23:3
+@@ -923,6 +926,15 @@ XSCMPEQQP       111111 ..... ..... ..... 0001000100 -   @X
+ XSCMPGEQP       111111 ..... ..... ..... 0011000100 -   @X
+ XSCMPGTQP       111111 ..... ..... ..... 0011100100 -   @X
+ 
++XVCMPEQSP       111100 ..... ..... ..... . 1000011 ...   @XX3_rc
++XVCMPGTSP       111100 ..... ..... ..... . 1001011 ...   @XX3_rc
++XVCMPGESP       111100 ..... ..... ..... . 1010011 ...   @XX3_rc
++XVCMPNESP       111100 ..... ..... ..... . 1011011 ...   @XX3_rc
++XVCMPEQDP       111100 ..... ..... ..... . 1100011 ...   @XX3_rc
++XVCMPGTDP       111100 ..... ..... ..... . 1101011 ...   @XX3_rc
++XVCMPGEDP       111100 ..... ..... ..... . 1110011 ...   @XX3_rc
++XVCMPNEDP       111100 ..... ..... ..... . 1111011 ...   @XX3_rc
++
+ XSMAXDP         111100 ..... ..... ..... 10100000 ...   @XX3
+ XSMINDP         111100 ..... ..... ..... 10101000 ...   @XX3
+ 
+diff --git a/target/ppc/fpu_helper.c b/target/ppc/fpu_helper.c
+index a013160644..5a300a3c86 100644
+--- a/target/ppc/fpu_helper.c
++++ b/target/ppc/fpu_helper.c
+@@ -2624,14 +2624,14 @@ uint32_t helper_##op(CPUPPCState *env, ppc_vsr_t *xt,                     \
+     return crf6;                                                          \
+ }
+ 
+-VSX_CMP(xvcmpeqdp, 2, float64, VsrD(i), eq, 0, 1)
+-VSX_CMP(xvcmpgedp, 2, float64, VsrD(i), le, 1, 1)
+-VSX_CMP(xvcmpgtdp, 2, float64, VsrD(i), lt, 1, 1)
+-VSX_CMP(xvcmpnedp, 2, float64, VsrD(i), eq, 0, 0)
+-VSX_CMP(xvcmpeqsp, 4, float32, VsrW(i), eq, 0, 1)
+-VSX_CMP(xvcmpgesp, 4, float32, VsrW(i), le, 1, 1)
+-VSX_CMP(xvcmpgtsp, 4, float32, VsrW(i), lt, 1, 1)
+-VSX_CMP(xvcmpnesp, 4, float32, VsrW(i), eq, 0, 0)
++VSX_CMP(XVCMPEQDP, 2, float64, VsrD(i), eq, 0, 1)
++VSX_CMP(XVCMPGEDP, 2, float64, VsrD(i), le, 1, 1)
++VSX_CMP(XVCMPGTDP, 2, float64, VsrD(i), lt, 1, 1)
++VSX_CMP(XVCMPNEDP, 2, float64, VsrD(i), eq, 0, 0)
++VSX_CMP(XVCMPEQSP, 4, float32, VsrW(i), eq, 0, 1)
++VSX_CMP(XVCMPGESP, 4, float32, VsrW(i), le, 1, 1)
++VSX_CMP(XVCMPGTSP, 4, float32, VsrW(i), lt, 1, 1)
++VSX_CMP(XVCMPNESP, 4, float32, VsrW(i), eq, 0, 0)
+ 
+ /*
+  * VSX_CVT_FP_TO_FP - VSX floating point/floating point conversion
+diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
+index 739b5ad915..84cd144632 100644
+--- a/target/ppc/translate/vsx-impl.c.inc
++++ b/target/ppc/translate/vsx-impl.c.inc
+@@ -802,34 +802,32 @@ static bool do_xvcpsgn(DisasContext *ctx, arg_XX3 *a, unsigned vece)
+ TRANS(XVCPSGNSP, do_xvcpsgn, MO_32)
+ TRANS(XVCPSGNDP, do_xvcpsgn, MO_64)
+ 
+-#define VSX_CMP(name, op1, op2, inval, type)                                  \
+-static void gen_##name(DisasContext *ctx)                                     \
+-{                                                                             \
+-    TCGv_i32 ignored;                                                         \
+-    TCGv_ptr xt, xa, xb;                                                      \
+-    if (unlikely(!ctx->vsx_enabled)) {                                        \
+-        gen_exception(ctx, POWERPC_EXCP_VSXU);                                \
+-        return;                                                               \
+-    }                                                                         \
+-    xt = gen_vsr_ptr(xT(ctx->opcode));                                        \
+-    xa = gen_vsr_ptr(xA(ctx->opcode));                                        \
+-    xb = gen_vsr_ptr(xB(ctx->opcode));                                        \
+-    if ((ctx->opcode >> (31 - 21)) & 1) {                                     \
+-        gen_helper_##name(cpu_crf[6], tcg_env, xt, xa, xb);                   \
+-    } else {                                                                  \
+-        ignored = tcg_temp_new_i32();                                         \
+-        gen_helper_##name(ignored, tcg_env, xt, xa, xb);                      \
+-    }                                                                         \
++static bool do_cmp(DisasContext *ctx, arg_XX3_rc *a,
++            void (*helper)(TCGv_i32, TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_ptr))
++{
++    TCGv_i32 ignored;
++    TCGv_ptr xt, xa, xb;
++    REQUIRE_VSX(ctx);
++    xt = gen_vsr_ptr(a->xt);
++    xa = gen_vsr_ptr(a->xa);
++    xb = gen_vsr_ptr(a->xb);
++    if (a->rc) {
++        helper(cpu_crf[6], tcg_env, xt, xa, xb);
++    } else {
++        ignored = tcg_temp_new_i32();
++        helper(ignored, tcg_env, xt, xa, xb);
 +    }
-     assert(nbd_server->connections > 0);
-     nbd_server->connections--;
-     nbd_update_server_watch(nbd_server);
++    return true;
+ }
+ 
+-VSX_CMP(xvcmpeqdp, 0x0C, 0x0C, 0, PPC2_VSX)
+-VSX_CMP(xvcmpgedp, 0x0C, 0x0E, 0, PPC2_VSX)
+-VSX_CMP(xvcmpgtdp, 0x0C, 0x0D, 0, PPC2_VSX)
+-VSX_CMP(xvcmpnedp, 0x0C, 0x0F, 0, PPC2_ISA300)
+-VSX_CMP(xvcmpeqsp, 0x0C, 0x08, 0, PPC2_VSX)
+-VSX_CMP(xvcmpgesp, 0x0C, 0x0A, 0, PPC2_VSX)
+-VSX_CMP(xvcmpgtsp, 0x0C, 0x09, 0, PPC2_VSX)
+-VSX_CMP(xvcmpnesp, 0x0C, 0x0B, 0, PPC2_VSX)
++TRANS_FLAGS2(VSX, XVCMPEQSP, do_cmp, gen_helper_XVCMPEQSP);
++TRANS_FLAGS2(VSX, XVCMPGTSP, do_cmp, gen_helper_XVCMPGTSP);
++TRANS_FLAGS2(VSX, XVCMPGESP, do_cmp, gen_helper_XVCMPGESP);
++TRANS_FLAGS2(ISA300, XVCMPNESP, do_cmp, gen_helper_XVCMPNESP);
++TRANS_FLAGS2(VSX, XVCMPEQDP, do_cmp, gen_helper_XVCMPEQDP);
++TRANS_FLAGS2(VSX, XVCMPGTDP, do_cmp, gen_helper_XVCMPGTDP);
++TRANS_FLAGS2(VSX, XVCMPGEDP, do_cmp, gen_helper_XVCMPGEDP);
++TRANS_FLAGS2(ISA300, XVCMPNEDP, do_cmp, gen_helper_XVCMPNEDP);
+ 
+ static bool trans_XSCVQPDP(DisasContext *ctx, arg_X_tb_rc *a)
+ {
+diff --git a/target/ppc/translate/vsx-ops.c.inc b/target/ppc/translate/vsx-ops.c.inc
+index 91cde088bc..e553b5b8fa 100644
+--- a/target/ppc/translate/vsx-ops.c.inc
++++ b/target/ppc/translate/vsx-ops.c.inc
+@@ -43,16 +43,6 @@ GEN_HANDLER2_E(name, #name, 0x3C, opc2 | 1, opc3, 1, PPC_NONE, fl2), \
+ GEN_HANDLER2_E(name, #name, 0x3C, opc2 | 2, opc3, 1, PPC_NONE, fl2), \
+ GEN_HANDLER2_E(name, #name, 0x3C, opc2 | 3, opc3, 1, PPC_NONE, fl2)
+ 
+-#define GEN_XX3_RC_FORM(name, opc2, opc3, fl2)                          \
+-GEN_HANDLER2_E(name, #name, 0x3C, opc2 | 0x00, opc3 | 0x00, 0, PPC_NONE, fl2), \
+-GEN_HANDLER2_E(name, #name, 0x3C, opc2 | 0x01, opc3 | 0x00, 0, PPC_NONE, fl2), \
+-GEN_HANDLER2_E(name, #name, 0x3C, opc2 | 0x02, opc3 | 0x00, 0, PPC_NONE, fl2), \
+-GEN_HANDLER2_E(name, #name, 0x3C, opc2 | 0x03, opc3 | 0x00, 0, PPC_NONE, fl2), \
+-GEN_HANDLER2_E(name, #name, 0x3C, opc2 | 0x00, opc3 | 0x10, 0, PPC_NONE, fl2), \
+-GEN_HANDLER2_E(name, #name, 0x3C, opc2 | 0x01, opc3 | 0x10, 0, PPC_NONE, fl2), \
+-GEN_HANDLER2_E(name, #name, 0x3C, opc2 | 0x02, opc3 | 0x10, 0, PPC_NONE, fl2), \
+-GEN_HANDLER2_E(name, #name, 0x3C, opc2 | 0x03, opc3 | 0x10, 0, PPC_NONE, fl2)
+-
+ #define GEN_XX3FORM_DM(name, opc2, opc3) \
+ GEN_HANDLER2_E(name, #name, 0x3C, opc2|0x00, opc3|0x00, 0, PPC_NONE, PPC2_VSX),\
+ GEN_HANDLER2_E(name, #name, 0x3C, opc2|0x01, opc3|0x00, 0, PPC_NONE, PPC2_VSX),\
+@@ -175,10 +165,6 @@ GEN_XX3FORM_NAME(xvnmadddp, "xvnmaddadp", 0x04, 0x1C, PPC2_VSX),
+ GEN_XX3FORM_NAME(xvnmadddp, "xvnmaddmdp", 0x04, 0x1D, PPC2_VSX),
+ GEN_XX3FORM_NAME(xvnmsubdp, "xvnmsubadp", 0x04, 0x1E, PPC2_VSX),
+ GEN_XX3FORM_NAME(xvnmsubdp, "xvnmsubmdp", 0x04, 0x1F, PPC2_VSX),
+-GEN_XX3_RC_FORM(xvcmpeqdp, 0x0C, 0x0C, PPC2_VSX),
+-GEN_XX3_RC_FORM(xvcmpgtdp, 0x0C, 0x0D, PPC2_VSX),
+-GEN_XX3_RC_FORM(xvcmpgedp, 0x0C, 0x0E, PPC2_VSX),
+-GEN_XX3_RC_FORM(xvcmpnedp, 0x0C, 0x0F, PPC2_ISA300),
+ GEN_XX2FORM(xvcvdpsp, 0x12, 0x18, PPC2_VSX),
+ GEN_XX2FORM(xvcvdpsxds, 0x10, 0x1D, PPC2_VSX),
+ GEN_XX2FORM(xvcvdpsxws, 0x10, 0x0D, PPC2_VSX),
+@@ -207,10 +193,6 @@ GEN_XX3FORM_NAME(xvnmaddsp, "xvnmaddasp", 0x04, 0x18, PPC2_VSX),
+ GEN_XX3FORM_NAME(xvnmaddsp, "xvnmaddmsp", 0x04, 0x19, PPC2_VSX),
+ GEN_XX3FORM_NAME(xvnmsubsp, "xvnmsubasp", 0x04, 0x1A, PPC2_VSX),
+ GEN_XX3FORM_NAME(xvnmsubsp, "xvnmsubmsp", 0x04, 0x1B, PPC2_VSX),
+-GEN_XX3_RC_FORM(xvcmpeqsp, 0x0C, 0x08, PPC2_VSX),
+-GEN_XX3_RC_FORM(xvcmpgtsp, 0x0C, 0x09, PPC2_VSX),
+-GEN_XX3_RC_FORM(xvcmpgesp, 0x0C, 0x0A, PPC2_VSX),
+-GEN_XX3_RC_FORM(xvcmpnesp, 0x0C, 0x0B, PPC2_ISA300),
+ GEN_XX2FORM(xvcvspdp, 0x12, 0x1C, PPC2_VSX),
+ GEN_XX2FORM(xvcvspsxds, 0x10, 0x19, PPC2_VSX),
+ GEN_XX2FORM(xvcvspsxws, 0x10, 0x09, PPC2_VSX),
 -- 
-2.43.0
+2.39.3
 
 
