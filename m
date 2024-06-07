@@ -4,50 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFBA8C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9095DC27C55
 	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:15:26 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf2h-0002zQ-5D; Fri, 07 Jun 2024 15:14:27 -0400
+	id 1sFakc-00054p-1y; Fri, 07 Jun 2024 10:39:30 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf2f-0002y2-4n; Fri, 07 Jun 2024 15:14:25 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sFaka-0004rC-0L
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:39:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf2d-0001yj-Ex; Fri, 07 Jun 2024 15:14:24 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B76EB6E54A;
- Fri,  7 Jun 2024 22:14:04 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id EC7FBE2746;
- Fri,  7 Jun 2024 22:13:09 +0300 (MSK)
-Received: (nullmailer pid 528728 invoked by uid 1000);
- Fri, 07 Jun 2024 19:13:08 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 33/45] target/riscv: rvv: Fix Zvfhmin checking for
- vfwcvt.f.f.v and vfncvt.f.f.w instructions
-Date: Fri,  7 Jun 2024 22:12:52 +0300
-Message-Id: <20240607191307.528622-13-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
-References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sFakY-0003MS-J8
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:39:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1717771166;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8m2kYAzpkGJ3Ey1H6NVbak4uUSK3PzHJop1nhkRKo+c=;
+ b=AyYzPR0L5hvqIZhIks6ViO8YA10LmppVikCkiqfblIxRHBLkvJokbhlOynoL5zN6WQNU7z
+ MpzySzJPH2Yp7RpPGFLwv0aY1AP1dHWxoPtVRH7rGs5g1cHN/S4+mrgPVFTadkFR8AxYuN
+ Ld8i7jUfqjgjKffkM63fIzt7Gq92smY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-jz2ezpk1MUmu6D9BnI5Uxw-1; Fri,
+ 07 Jun 2024 10:39:22 -0400
+X-MC-Unique: jz2ezpk1MUmu6D9BnI5Uxw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4D1EC1956063; Fri,  7 Jun 2024 14:39:21 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.39.193.191])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 481B61956048; Fri,  7 Jun 2024 14:39:16 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
+ imammedo@redhat.com, peter.maydell@linaro.org, clg@redhat.com,
+ yanghliu@redhat.com, zhenzhong.duan@intel.com
+Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
+ berrange@redhat.com
+Subject: [RFC v2 1/7] HostIOMMUDevice: Store the VFIO/VDPA agent
+Date: Fri,  7 Jun 2024 16:37:21 +0200
+Message-ID: <20240607143905.765133-2-eric.auger@redhat.com>
+In-Reply-To: <20240607143905.765133-1-eric.auger@redhat.com>
+References: <20240607143905.765133-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,77 +86,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+Store the agent device (VFIO or VDPA) in the host IOMMU device.
+This will allow easy access to some of its resources.
 
-According v spec 18.4, only the vfwcvt.f.f.v and vfncvt.f.f.w
-instructions will be affected by Zvfhmin extension.
-And the vfwcvt.f.f.v and vfncvt.f.f.w instructions only support the
-conversions of
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+---
+ include/sysemu/host_iommu_device.h | 1 +
+ hw/vfio/container.c                | 1 +
+ hw/vfio/iommufd.c                  | 2 ++
+ 3 files changed, 4 insertions(+)
 
-* From 1*SEW(16/32) to 2*SEW(32/64)
-* From 2*SEW(32/64) to 1*SEW(16/32)
-
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240322092600.1198921-2-max.chou@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 17b713c0806e72cd8edc6c2ddd8acc5be0475df6)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index db9e45b696..a5fe92b670 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -50,6 +50,22 @@ static bool require_rvf(DisasContext *s)
-     }
- }
+diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+index a57873958b..3e5f058e7b 100644
+--- a/include/sysemu/host_iommu_device.h
++++ b/include/sysemu/host_iommu_device.h
+@@ -34,6 +34,7 @@ struct HostIOMMUDevice {
+     Object parent_obj;
  
-+static bool require_rvfmin(DisasContext *s)
-+{
-+    if (s->mstatus_fs == EXT_STATUS_DISABLED) {
-+        return false;
-+    }
-+
-+    switch (s->sew) {
-+    case MO_16:
-+        return s->cfg_ptr->ext_zvfhmin;
-+    case MO_32:
-+        return s->cfg_ptr->ext_zve32f;
-+    default:
-+        return false;
-+    }
-+}
-+
- static bool require_scale_rvf(DisasContext *s)
- {
-     if (s->mstatus_fs == EXT_STATUS_DISABLED) {
-@@ -75,8 +91,6 @@ static bool require_scale_rvfmin(DisasContext *s)
-     }
+     char *name;
++    void *agent; /* pointer to agent device, ie. VFIO or VDPA device */
+     HostIOMMUDeviceCaps caps;
+ };
  
-     switch (s->sew) {
--    case MO_8:
--        return s->cfg_ptr->ext_zvfhmin;
-     case MO_16:
-         return s->cfg_ptr->ext_zve32f;
-     case MO_32:
-@@ -2747,6 +2761,7 @@ static bool opxfv_widen_check(DisasContext *s, arg_rmr *a)
- static bool opffv_widen_check(DisasContext *s, arg_rmr *a)
- {
-     return opfv_widen_check(s, a) &&
-+           require_rvfmin(s) &&
-            require_scale_rvfmin(s) &&
-            (s->sew != MO_8);
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 26e6f7fb4f..b728b978a2 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -1145,6 +1145,7 @@ static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+ 
+     hiod->name = g_strdup(vdev->name);
+     hiod->caps.aw_bits = vfio_device_get_aw_bits(vdev);
++    hiod->agent = opaque;
+ 
+     return true;
  }
-@@ -2858,6 +2873,7 @@ static bool opfxv_narrow_check(DisasContext *s, arg_rmr *a)
- static bool opffv_narrow_check(DisasContext *s, arg_rmr *a)
- {
-     return opfv_narrow_check(s, a) &&
-+           require_rvfmin(s) &&
-            require_scale_rvfmin(s) &&
-            (s->sew != MO_8);
- }
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 409ed3dcc9..dbdae1adbb 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -631,6 +631,8 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+         struct iommu_hw_info_vtd vtd;
+     } data;
+ 
++    hiod->agent = opaque;
++
+     if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
+                                          &type, &data, sizeof(data), errp)) {
+         return false;
 -- 
-2.39.2
+2.41.0
 
 
