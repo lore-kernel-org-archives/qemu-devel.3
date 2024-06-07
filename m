@@ -4,84 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B2C6C27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 14:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE2A2C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 14:19:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFaQ8-0005Ov-MU; Fri, 07 Jun 2024 10:18:20 -0400
+	id 1sFaQ8-0005Os-JM; Fri, 07 Jun 2024 10:18:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
- id 1sFaQ5-0005Nw-FC
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:18:17 -0400
-Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sFaQ6-0005OF-K1
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:18:18 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
- id 1sFaQ4-0007TS-0k
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:18:17 -0400
-Received: by mail-oa1-x33.google.com with SMTP id
- 586e51a60fabf-24c9f2b7b19so1086498fac.0
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sFaQ3-0007TO-Ts
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:18:18 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2e95a75a90eso23163211fa.2
  for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 07:18:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1717769894; x=1718374694; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3EKBJ8oPgx6RWyKkHBwS8CUXIUj2Ph4UlirUDin8kck=;
- b=KnutrkLH2ijwMrmuunl4JJy/lAnzCYJn5Nw7akq8yESkdfqeWPs6Q4VB/uGvyh1RcY
- wF6C/S4aI4qkw8ee1u6K8WfYOkfjQX84k7lXrGRdgmhbaaHwdHEcxv0MiolLQFDJcZt0
- BQKrh8ybkd/o4O9vGJi761g3hkcH5QQhYDES0=
+ d=linaro.org; s=google; t=1717769893; x=1718374693; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=h7oRD/YPnW1o+2UOYzoV3Mdb3wXEMA9wej+6rHN0M34=;
+ b=VVuEca6Za/nC1ngbvBn4o14I2v5jhlSS0dxTXfCZTl8fUNdXDhR5PU4eXtXC3vf7yP
+ 5HeRFE3rfCOqhkZm/iIQ7uH0mSGK7yTE6t2/H8L2FeFMcytIKAYj7N26SfHB59V27LRO
+ Sc/SquE+9C6S0mQ4GCJ/NM/Nt07dZhZsDGIQ2et5WX0diY+kAwW7ulEyZjC9sVcoWzSR
+ oHodhVlIHA/9YwkoluoLrC+1N4QqEYTAOx30AdNGEcAD/AcZozlJQCJWEhDYyIkoKfkD
+ t6mjsEhNLamYdXa2tEJ7y/dkgZeVDOXJBUbCZF5SFD5I7EvnSHTOE+BsH0T/oZtEwRMT
+ KI8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717769894; x=1718374694;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3EKBJ8oPgx6RWyKkHBwS8CUXIUj2Ph4UlirUDin8kck=;
- b=U9H/uYSs1oNVuVcJihYln0pPsQT/toxWwd7IzGbzSSq/aKbZMnpoi586ZRf9/VywF7
- /Sfm6wB+mKcTI4Hn2WylajE7d6s5Eq/RP6QXq1Ayg/qYWr38qwp+yto+MQqEqOlo2HDO
- 0ho/qCO6abxvjcESrkFPqNOv5F5UeurmrMamNEE0IxQa/C9ds3/99Zzz7M+ef/i2VOfb
- OsCZqfVCnyEmr8Ixfu3kLdKlhijb99a2i1ZERnptsDTJSY6hd6TAUJGXCQ1K1uAZtAzE
- xKgLqaugwYJkjV16gZUY3eLVXNZxs1/NPEdxIZbWB1EJJHDY5uP5CmWAEFnzWZ3SH/ZD
- Hdgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUP5RAJhFowOTNpHTbuAvW8udipTSN0mbBcxoyHrPlKeXMrroZ5oPXaEo78yLvsMtACWorBe4sqnvSzS+jNfCAOB0ISlO0=
-X-Gm-Message-State: AOJu0YwXeXievM1+RBeYlPrm6KwOmhXxC0FFuulyNgInYBQX1RHpHF4a
- WTFYj8oNc3bPDQAVhVHcuILCp1UKaKaTJVhqZwV/2JDeiiZfCeGbf7n6uYEEoA==
-X-Google-Smtp-Source: AGHT+IGea9xbmP4pQjMRnCYNO64QwxZqXeDkwvVLTtam7GRMX0N/6D/lCTHWeswr0uamFTOACHqFUA==
-X-Received: by 2002:a05:6870:b491:b0:23e:6d9a:8f45 with SMTP id
- 586e51a60fabf-25464f0d3abmr2632335fac.48.1717769894101; 
- Fri, 07 Jun 2024 07:18:14 -0700 (PDT)
-Received: from denia.c.googlers.com.com
- (123.178.145.34.bc.googleusercontent.com. [34.145.178.123])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79532813a2dsm170873885a.20.2024.06.07.07.18.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 07 Jun 2024 07:18:13 -0700 (PDT)
-From: Ricardo Ribalda <ribalda@chromium.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
- Andrea Righi <andrea.righi@canonical.com>
-Cc: Ricardo Ribalda <ribalda@chromium.org>
-Subject: [PATCH v3 1/3] tests/acpi: pc: allow DSDT acpi table changes
-Date: Fri,  7 Jun 2024 14:17:24 +0000
-Message-ID: <20240607141809.1637137-2-ribalda@chromium.org>
-X-Mailer: git-send-email 2.45.2.505.gda0bf45e8d-goog
-In-Reply-To: <20240607141809.1637137-1-ribalda@chromium.org>
-References: <20240607141809.1637137-1-ribalda@chromium.org>
+ d=1e100.net; s=20230601; t=1717769893; x=1718374693;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=h7oRD/YPnW1o+2UOYzoV3Mdb3wXEMA9wej+6rHN0M34=;
+ b=KD/Rw2p8x5OM0EROimKbPj6Pr/64syMSnEr8L33ZBBcB1qcfTObiBi7cwuV0lhrdPa
+ UjJO3gUPqgAd9FY8lIgSBMoXvV9oUHQIMt1CXK6tHO5sL/TJMKBI3g1CtQ8ow9RtaJnB
+ GYZpIWrPT2NaIGmfuJZuLF76pWJkizwxoarP9j90P0ThKAmFcb9LeMKsVgwLNCsK9K/H
+ G9cLqsIrv6swduYEtaGk2gbnXeCHu7d78A0AXlNUNjKGuuSioD7aPP+N3n2Zk88uTWaY
+ ow2uJyjBXVwSicvsGlD6v6hGmYkPzjMYgkDwBb7YcB+M7XmTXjJ40YPiDnxKUb1Dthng
+ 4atA==
+X-Gm-Message-State: AOJu0Yy3BNyfQKCY+1pn1TooNJvSBh1e50IhZqvCCf+JGiWGT7vDg6Ez
+ D3Kn1xOfGMBF2kP/MM+X2JQMIuZgOCQoNGHnOBlnkwvTvO+x5VSMS5kdgqLfMKNPpj2VHEZT8wE
+ eCgXiA9BTgXyD0UuZGYeWo4z572ZQJ+8hHJ9Xg4cy9knQvA1N
+X-Google-Smtp-Source: AGHT+IEJSNbcFAJMzs6nc9bK7jOM8qUlJxVSvcQo0pN3EYKRCvdD5wcnP4bwY54PBWp9Nu9KrrAqrOIZ3og43tqMd0o=
+X-Received: by 2002:a05:651c:1502:b0:2ea:83e6:d5e with SMTP id
+ 38308e7fff4ca-2eadce37a72mr20761551fa.26.1717769893283; Fri, 07 Jun 2024
+ 07:18:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::33;
- envelope-from=ribalda@chromium.org; helo=mail-oa1-x33.google.com
+References: <20240604064409.957105-1-pbonzini@redhat.com>
+ <20240604064409.957105-37-pbonzini@redhat.com>
+In-Reply-To: <20240604064409.957105-37-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 7 Jun 2024 15:18:02 +0100
+Message-ID: <CAFEAcA9Y5qTseBFY=QoM_Cin2xHy2Y=81k-nv=fbEGKEofcdnw@mail.gmail.com>
+Subject: Re: [PULL 36/45] i386/sev: Invoke launch_updata_data() for SEV class
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Pankaj Gupta <pankaj.gupta@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,19 +88,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
----
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- 1 file changed, 1 insertion(+)
+On Tue, 4 Jun 2024 at 07:49, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> Add launch_update_data() in SevCommonStateClass and
+> invoke as sev_launch_update_data() for SEV object.
+>
+> Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
+> Message-ID: <20240530111643.1091816-26-pankaj.gupta@amd.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..b2c2c10cbc 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/pc/DSDT",
--- 
-2.45.2.505.gda0bf45e8d-goog
+Hi; Coverity points out an issue in this code (CID 1546886):
 
+>  sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
+>  {
+>      SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+> +    SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(sev_common);
+
+SEV_COMMON_GET_CLASS() dereferences the pointer it is passed,
+so it isn't valid to pass it a NULL pointer...
+
+>
+>      if (!sev_common) {
+>          return 0;
+
+...but we don't do the "return failure if passed NULL" until after
+we've dereferenced sev_common.
+
+The get-the-class-pointer operation should be done after this
+check, I think.
+
+thanks
+-- PMM
 
