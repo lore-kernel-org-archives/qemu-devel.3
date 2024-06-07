@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B2FC27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C8D7C27C65
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:44:25 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf15-0004ve-Tt; Fri, 07 Jun 2024 15:12:47 -0400
+	id 1sFf2I-0001AO-9j; Fri, 07 Jun 2024 15:14:03 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf0z-0004Q5-5B; Fri, 07 Jun 2024 15:12:41 -0400
+ id 1sFf2D-000169-Tq; Fri, 07 Jun 2024 15:14:00 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf0x-0001gX-JC; Fri, 07 Jun 2024 15:12:40 -0400
+ id 1sFf2C-0001pb-5p; Fri, 07 Jun 2024 15:13:57 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CBBFD6E531;
- Fri,  7 Jun 2024 22:13:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4E5056E545;
+ Fri,  7 Jun 2024 22:14:04 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 10BEBE2731;
- Fri,  7 Jun 2024 22:12:21 +0300 (MSK)
-Received: (nullmailer pid 528243 invoked by uid 1000);
- Fri, 07 Jun 2024 19:12:20 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 80EE9E2742;
+ Fri,  7 Jun 2024 22:13:09 +0300 (MSK)
+Received: (nullmailer pid 528715 invoked by uid 1000);
+ Fri, 07 Jun 2024 19:13:08 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.12 23/29] target/arm: Disable SVE extensions when SVE is
- disabled
-Date: Fri,  7 Jun 2024 22:12:06 +0300
-Message-Id: <20240607191219.528194-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "yang.zhang" <yang.zhang@hexintek.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 29/45] hw/intc/riscv_aplic: APLICs should add child
+ earlier than realize
+Date: Fri,  7 Jun 2024 22:12:48 +0300
+Message-Id: <20240607191307.528622-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
-References: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
+References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -63,36 +63,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+From: "yang.zhang" <yang.zhang@hexintek.com>
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2304
-Reported-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Message-id: 20240526204551.553282-1-richard.henderson@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit daf9748ac002ec35258e5986b6257961fd04b565)
+Since only root APLICs can have hw IRQ lines, aplic->parent should
+be initialized first.
+
+Fixes: e8f79343cf ("hw/intc: Add RISC-V AIA APLIC device emulation")
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: yang.zhang <yang.zhang@hexintek.com>
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Message-ID: <20240409014445.278-1-gaoshanliukou@163.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit c76b121840c6ca79dc6305a5f4bcf17c72217d9c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 3d74f134f5..037e9d9feb 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -190,7 +190,11 @@ void arm_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
-          * No explicit bits enabled, and no implicit bits from sve-max-vq.
-          */
-         if (!cpu_isar_feature(aa64_sve, cpu)) {
--            /* SVE is disabled and so are all vector lengths.  Good. */
-+            /*
-+             * SVE is disabled and so are all vector lengths.  Good.
-+             * Disable all SVE extensions as well.
-+             */
-+            cpu->isar.id_aa64zfr0 = 0;
-             return;
-         }
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index 6e816e33bf..ab23399a8d 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -975,16 +975,16 @@ DeviceState *riscv_aplic_create(hwaddr addr, hwaddr size,
+     qdev_prop_set_bit(dev, "msimode", msimode);
+     qdev_prop_set_bit(dev, "mmode", mmode);
  
++    if (parent) {
++        riscv_aplic_add_child(parent, dev);
++    }
++
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
+     if (!is_kvm_aia(msimode)) {
+         sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
+     }
+ 
+-    if (parent) {
+-        riscv_aplic_add_child(parent, dev);
+-    }
+-
+     if (!msimode) {
+         for (i = 0; i < num_harts; i++) {
+             CPUState *cpu = cpu_by_arch_id(hartid_base + i);
 -- 
 2.39.2
 
