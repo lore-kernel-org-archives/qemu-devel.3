@@ -4,56 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FCD0C27C5F
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 13:55:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69854C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 14:05:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFa3l-0006Kc-1Q; Fri, 07 Jun 2024 09:55:13 -0400
+	id 1sFaCp-0004LP-5f; Fri, 07 Jun 2024 10:04:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1sFa3j-0006JD-2j
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:55:11 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sFaCn-0004Kw-JZ; Fri, 07 Jun 2024 10:04:33 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1sFa3g-0008QT-UK
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:55:10 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VwjNK1FB7z6D8rX;
- Fri,  7 Jun 2024 21:53:53 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 26B0C140C98;
- Fri,  7 Jun 2024 21:55:07 +0800 (CST)
-Received: from A2303104131.china.huawei.com (10.202.227.28) by
- lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 7 Jun 2024 14:54:58 +0100
-To: <qemu-devel@nongnu.org>, <peterx@redhat.com>, <farosas@suse.de>
-CC: <yuan1.liu@intel.com>, <pbonzini@redhat.com>, <berrange@redhat.com>,
- <marcandre.lureau@redhat.com>, <thuth@redhat.com>, <armbru@redhat.com>,
- <lvivier@redhat.com>, <linuxarm@huawei.com>, <linwenkai6@hisilicon.com>,
- <zhangfei.gao@linaro.org>, <huangchenghai2@huawei.com>
-Subject: [PATCH v2 7/7] tests/migration-test: add uadk compression test
-Date: Fri, 7 Jun 2024 14:53:10 +0100
-Message-ID: <20240607135310.46320-8-shameerali.kolothum.thodi@huawei.com>
-X-Mailer: git-send-email 2.12.0.windows.1
-In-Reply-To: <20240607135310.46320-1-shameerali.kolothum.thodi@huawei.com>
-References: <20240607135310.46320-1-shameerali.kolothum.thodi@huawei.com>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sFaCl-0002Ew-4r; Fri, 07 Jun 2024 10:04:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=GIYnsST43nefCECPfrzEHy5iEPGuAaIBorJIrZwMoX4=; b=U7vugKpFZdPqg4F0
+ vgEyaHgZLPH97e3nA+g+uSBD6CBFSGKwuOJMn8nAD7n8Q43eo09qTUBtegdp5Byab6ihFt3eyZYQG
+ OWJ6Q64FECDiiHFzkj/4ANEH4OAlrup2zBbSAqeeupU2UCx5muQbGxvp26ppSETuNYIbAHsWsmJAY
+ VPqsH0oSKr89nLUOsEzGthohyi5xTT4r/BLaIPTubFDh7JO1Evhk2GPLi6sovDhkCOIwTcNfTyteO
+ Xk1efhMWjQe7Tr+zvr02wi0CuVLUWlZraJ9CPYw/xulYnM2ACxG/H5BDRZPYCN17n08ncXHfUUWB4
+ keJOUAxvP1NmPBM1Xw==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1sFaCg-0050k1-3A;
+ Fri, 07 Jun 2024 14:04:26 +0000
+Date: Fri, 7 Jun 2024 14:04:26 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: peter.maydell@linaro.org, laurent@vivier.eu, qemu-trivial@nongnu.org
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/7] Remove some unused structures
+Message-ID: <ZmMTPvLUaB4tGvbk@gallifrey>
+References: <20240505171444.333302-1-dave@treblig.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.202.227.28]
-X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20240505171444.333302-1-dave@treblig.org>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 14:01:06 up 30 days, 1:15, 1 user, load average: 0.02, 0.04, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,66 +65,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
----
- tests/qtest/migration-test.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+* Dr. David Alan Gilbert (dave@treblig.org) wrote:
+> A bunch of structs that are currently unused,
+> found with a simple script and a bit of eyeballing.
+> 
+> The only one I'm that suspicious of is the SPARC
+> one, where the patch which removed the use is a bit
+> confusing to me.
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index ef0c3f5e28..056d8790ec 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -2669,6 +2669,14 @@ test_migrate_precopy_tcp_multifd_qpl_start(QTestState *from,
-     return test_migrate_precopy_tcp_multifd_start_common(from, to, "qpl");
- }
- #endif /* CONFIG_QPL */
-+#ifdef CONFIG_UADK
-+static void *
-+test_migrate_precopy_tcp_multifd_uadk_start(QTestState *from,
-+                                            QTestState *to)
-+{
-+    return test_migrate_precopy_tcp_multifd_start_common(from, to, "uadk");
-+}
-+#endif /* CONFIG_UADK */
- 
- static void test_multifd_tcp_uri_none(void)
- {
-@@ -2761,6 +2769,17 @@ static void test_multifd_tcp_qpl(void)
- }
- #endif
- 
-+#ifdef CONFIG_UADK
-+static void test_multifd_tcp_uadk(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .start_hook = test_migrate_precopy_tcp_multifd_uadk_start,
-+    };
-+    test_precopy_common(&args);
-+}
-+#endif
-+
- #ifdef CONFIG_GNUTLS
- static void *
- test_migrate_multifd_tcp_tls_psk_start_match(QTestState *from,
-@@ -3650,6 +3669,10 @@ int main(int argc, char **argv)
-     migration_test_add("/migration/multifd/tcp/plain/qpl",
-                        test_multifd_tcp_qpl);
- #endif
-+#ifdef CONFIG_UADK
-+    migration_test_add("/migration/multifd/tcp/plain/uadk",
-+                       test_multifd_tcp_uadk);
-+#endif
- #ifdef CONFIG_GNUTLS
-     migration_test_add("/migration/multifd/tcp/tls/psk/match",
-                        test_multifd_tcp_tls_psk_match);
+Copying in Trivial; I think there are 4 of these that
+are still outstanding:
+
+   [PATCH 1/7] linux-user: cris: Remove unused struct 'rt_signal_frame'
+      (Although cris is going)
+   [PATCH 3/7] linux-user: sparc: Remove unused struct 'target_mc_fq'
+   [PATCH 5/7] hw/arm/bcm2836: Remove unusued struct 'BCM283XClass'
+   [PATCH 7/7] net/can: Remove unused struct 'CanBusState'
+
+Can Trivial pick these up please?
+
+Dave
+
+> Tested with a 
+>   --target-list=ppc-softmmu,m68k-softmmu,x86_64-softmmu,arm-softmmu,aarch64-softmmu,cris-linux-user,i386-linux-user,sparc-linux-user
+> and 'make check' on x86 linux.
+> 
+> Dave
+> 
+> Dr. David Alan Gilbert (7):
+>   linux-user: cris: Remove unused struct 'rt_signal_frame'
+>   linux-user: i386/signal: Remove unused fp structs
+>   linux-user: sparc: Remove unused struct 'target_mc_fq'
+>   hw/usb/dev-network: Remove unused struct 'rndis_config_parameter'
+>   hw/arm/bcm2836: Remove unusued struct 'BCM283XClass'
+>   target/ppc: Remove unused struct 'mmu_ctx_hash32'
+>   net/can: Remove unused struct 'CanBusState'
+> 
+>  hw/arm/bcm2836.c          | 12 ------------
+>  hw/usb/dev-network.c      |  8 --------
+>  linux-user/cris/signal.c  |  8 --------
+>  linux-user/i386/signal.c  | 10 ----------
+>  linux-user/sparc/signal.c |  5 -----
+>  net/can/can_host.c        |  6 ------
+>  target/ppc/mmu-hash32.c   |  6 ------
+>  7 files changed, 55 deletions(-)
+> 
+> -- 
+> 2.45.0
+> 
+> 
 -- 
-2.34.1
-
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
