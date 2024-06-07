@@ -4,41 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9527DC27C65
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 22:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00F26C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 22:45:03 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf34-0004D4-MF; Fri, 07 Jun 2024 15:14:50 -0400
+	id 1sFf1Y-0007x2-8q; Fri, 07 Jun 2024 15:13:16 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf33-0004Cs-F8; Fri, 07 Jun 2024 15:14:49 -0400
+ id 1sFf1W-0007vw-Lk; Fri, 07 Jun 2024 15:13:14 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf30-000200-Sx; Fri, 07 Jun 2024 15:14:49 -0400
+ id 1sFf1V-0001jX-1k; Fri, 07 Jun 2024 15:13:14 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 014366E54C;
- Fri,  7 Jun 2024 22:14:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5D7486E53E;
+ Fri,  7 Jun 2024 22:14:03 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 326D6E2748;
- Fri,  7 Jun 2024 22:13:10 +0300 (MSK)
-Received: (nullmailer pid 528734 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 947BEE273B;
+ Fri,  7 Jun 2024 22:13:08 +0300 (MSK)
+Received: (nullmailer pid 528694 invoked by uid 1000);
  Fri, 07 Jun 2024 19:13:08 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 35/45] target/riscv: rvv: Check single width operator
- for vfncvt.rod.f.f.w
-Date: Fri,  7 Jun 2024 22:12:54 +0300
-Message-Id: <20240607191307.528622-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 22/45] gitlab: use $MAKE instead of 'make'
+Date: Fri,  7 Jun 2024 22:12:41 +0300
+Message-Id: <20240607191307.528622-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
 References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,31 +65,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-The opfv_narrow_check needs to check the single width float operator by
-require_rvf.
+The lcitool generated containers have '$MAKE' set to the path
+of the right 'make' binary. Using the env variable makes it
+possible to override the choice per job.
 
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240322092600.1198921-4-max.chou@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 692f33a3abcaae789b08623e7cbdffcd2c738c89)
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240513111551.488088-3-berrange@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit c53f7a107879a2b7e719b07692a05289bf603fde)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index e42f49a6d8..23a451cd9b 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -2885,6 +2885,7 @@ static bool opffv_narrow_check(DisasContext *s, arg_rmr *a)
- static bool opffv_rod_narrow_check(DisasContext *s, arg_rmr *a)
- {
-     return opfv_narrow_check(s, a) &&
-+           require_rvf(s) &&
-            require_scale_rvf(s) &&
-            (s->sew != MO_8);
- }
+diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+index 4fbfeb6667..8e4d60f5d0 100644
+--- a/.gitlab-ci.d/buildtest-template.yml
++++ b/.gitlab-ci.d/buildtest-template.yml
+@@ -25,10 +25,10 @@
+       then
+         pyvenv/bin/meson configure . -Dbackend_max_links="$LD_JOBS" ;
+       fi || exit 1;
+-    - make -j"$JOBS"
++    - $MAKE -j"$JOBS"
+     - if test -n "$MAKE_CHECK_ARGS";
+       then
+-        make -j"$JOBS" $MAKE_CHECK_ARGS ;
++        $MAKE -j"$JOBS" $MAKE_CHECK_ARGS ;
+       fi
+     - ccache --show-stats
+ 
+@@ -59,7 +59,7 @@
+     - cd build
+     - find . -type f -exec touch {} +
+     # Avoid recompiling by hiding ninja with NINJA=":"
+-    - make NINJA=":" $MAKE_CHECK_ARGS
++    - $MAKE NINJA=":" $MAKE_CHECK_ARGS
+ 
+ .native_test_job_template:
+   extends: .common_test_job_template
 -- 
 2.39.2
 
