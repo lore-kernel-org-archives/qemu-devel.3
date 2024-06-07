@@ -4,39 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 609D7C27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33E0BC27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:11:12 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf3B-0004bY-RC; Fri, 07 Jun 2024 15:14:57 -0400
+	id 1sFf3B-0004Xw-3f; Fri, 07 Jun 2024 15:14:57 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf3B-0004Xu-1P; Fri, 07 Jun 2024 15:14:57 -0400
+ id 1sFf39-0004X2-Ba; Fri, 07 Jun 2024 15:14:55 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf39-0002Ce-AA; Fri, 07 Jun 2024 15:14:56 -0400
+ id 1sFf37-0002CD-OJ; Fri, 07 Jun 2024 15:14:55 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B45D36E550;
+ by isrv.corpit.ru (Postfix) with ESMTP id 931156E54F;
  Fri,  7 Jun 2024 22:14:05 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E3381E274C;
+ by tsrv.corpit.ru (Postfix) with SMTP id C0D72E274B;
  Fri,  7 Jun 2024 22:13:10 +0300 (MSK)
-Received: (nullmailer pid 528746 invoked by uid 1000);
+Received: (nullmailer pid 528743 invoked by uid 1000);
  Fri, 07 Jun 2024 19:13:08 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alistair Francis <alistair23@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Fabian Thomas <fabian.thomas@cispa.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 39/45] target/riscv: rvzicbo: Fixup CBO extension
- register calculation
-Date: Fri,  7 Jun 2024 22:12:58 +0300
-Message-Id: <20240607191307.528622-19-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alexei Filippov <alexei.filippov@syntacore.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 38/45] target/riscv: do not set mtval2 for non
+ guest-page faults
+Date: Fri,  7 Jun 2024 22:12:57 +0300
+Message-Id: <20240607191307.528622-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
 References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
@@ -65,86 +63,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair23@gmail.com>
+From: Alexei Filippov <alexei.filippov@syntacore.com>
 
-When running the instruction
+Previous patch fixed the PMP priority in raise_mmu_exception() but we're still
+setting mtval2 incorrectly. In riscv_cpu_tlb_fill(), after pmp check in 2 stage
+translation part, mtval2 will be set in case of successes 2 stage translation but
+failed pmp check.
 
-```
-    cbo.flush 0(x0)
-```
+In this case we gonna set mtval2 via env->guest_phys_fault_addr in context of
+riscv_cpu_tlb_fill(), as this was a guest-page-fault, but it didn't and mtval2
+should be zero, according to RISCV privileged spec sect. 9.4.4: When a guest
+page-fault is taken into M-mode, mtval2 is written with either zero or guest
+physical address that faulted, shifted by 2 bits. *For other traps, mtval2
+is set to zero...*
 
-QEMU would segfault.
-
-The issue was in cpu_gpr[a->rs1] as QEMU does not have cpu_gpr[0]
-allocated.
-
-In order to fix this let's use the existing get_address()
-helper. This also has the benefit of performing pointer mask
-calculations on the address specified in rs1.
-
-The pointer masking specificiation specifically states:
-
-"""
-Cache Management Operations: All instructions in Zicbom, Zicbop and Zicboz
-"""
-
-So this is the correct behaviour and we previously have been incorrectly
-not masking the address.
-
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reported-by: Fabian Thomas <fabian.thomas@cispa.de>
-Fixes: e05da09b7cfd ("target/riscv: implement Zicbom extension")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240503103052.6819-1-alexei.filippov@syntacore.com>
 Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240514023910.301766-1-alistair.francis@wdc.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit c5eb8d6336741dbcb98efcc347f8265bf60bc9d1)
+(cherry picked from commit 6c9a344247132ac6c3d0eb9670db45149a29c88f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvzicbo.c.inc b/target/riscv/insn_trans/trans_rvzicbo.c.inc
-index d5d7095903..15711c3140 100644
---- a/target/riscv/insn_trans/trans_rvzicbo.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicbo.c.inc
-@@ -31,27 +31,35 @@
- static bool trans_cbo_clean(DisasContext *ctx, arg_cbo_clean *a)
- {
-     REQUIRE_ZICBOM(ctx);
--    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
-+    TCGv src = get_address(ctx, a->rs1, 0);
-+
-+    gen_helper_cbo_clean_flush(tcg_env, src);
-     return true;
- }
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index cf97c782dd..62dda4f284 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1361,17 +1361,17 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                               __func__, pa, ret, prot_pmp, tlb_size);
  
- static bool trans_cbo_flush(DisasContext *ctx, arg_cbo_flush *a)
- {
-     REQUIRE_ZICBOM(ctx);
--    gen_helper_cbo_clean_flush(tcg_env, cpu_gpr[a->rs1]);
-+    TCGv src = get_address(ctx, a->rs1, 0);
-+
-+    gen_helper_cbo_clean_flush(tcg_env, src);
-     return true;
- }
- 
- static bool trans_cbo_inval(DisasContext *ctx, arg_cbo_inval *a)
- {
-     REQUIRE_ZICBOM(ctx);
--    gen_helper_cbo_inval(tcg_env, cpu_gpr[a->rs1]);
-+    TCGv src = get_address(ctx, a->rs1, 0);
-+
-+    gen_helper_cbo_inval(tcg_env, src);
-     return true;
- }
- 
- static bool trans_cbo_zero(DisasContext *ctx, arg_cbo_zero *a)
- {
-     REQUIRE_ZICBOZ(ctx);
--    gen_helper_cbo_zero(tcg_env, cpu_gpr[a->rs1]);
-+    TCGv src = get_address(ctx, a->rs1, 0);
-+
-+    gen_helper_cbo_zero(tcg_env, src);
-     return true;
- }
+                 prot &= prot_pmp;
+-            }
+-
+-            if (ret != TRANSLATE_SUCCESS) {
++            } else {
+                 /*
+                  * Guest physical address translation failed, this is a HS
+                  * level exception
+                  */
+                 first_stage_error = false;
+-                env->guest_phys_fault_addr = (im_address |
+-                                              (address &
+-                                               (TARGET_PAGE_SIZE - 1))) >> 2;
++                if (ret != TRANSLATE_PMP_FAIL) {
++                    env->guest_phys_fault_addr = (im_address |
++                                                  (address &
++                                                   (TARGET_PAGE_SIZE - 1))) >> 2;
++                }
+             }
+         }
+     } else {
 -- 
 2.39.2
 
