@@ -4,87 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E79FFC27C5F
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 08:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 630CBC27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 08:46:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFUzL-0003gU-RF; Fri, 07 Jun 2024 04:30:19 -0400
+	id 1sFVEQ-00089X-Bx; Fri, 07 Jun 2024 04:45:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sFUzK-0003fW-Uu
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 04:30:18 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sFUzG-0005av-F9
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 04:30:18 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2c1a4192d55so1490281a91.2
- for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 01:30:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1717749012; x=1718353812; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9r4JbAVD94HD2el89nUtXsq0QGUzKGfPjEoTm+yYIPE=;
- b=btxm27jjuGGPE0Ny65zTkYEaMENKdDHxa3+m1KTwskIhTh1jwEGm8mo6LRzmnBy+NK
- i0hAQQ8ZrUhK8c0oK+S0JbNepUmaneKN7QUe1P8rxFPlIv31PQBjsFX+WtJDc/NEza7a
- qgiVEuWi1z8XScBgwLpAMqHEYwoPY7k9FgqytkHxM7hid+YbWZqU80AwSqwCXRT0bwGz
- aAbTYm9+uIBMu7ppI22GVu8/Y8hZRcHZhnlXECwTkSMGPCcdFydYkdhVU2QslET0a0qg
- +M83OrYKmZCwpbhy+TEpMzCnuRqk3NQ3mYlTQ9daXPVzVxbwX6ANCZFF8KJ+KjYIbqCn
- HXgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717749012; x=1718353812;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9r4JbAVD94HD2el89nUtXsq0QGUzKGfPjEoTm+yYIPE=;
- b=agXN1mGalzOaau95UH88BvtX05h11sNPoSpiLRA9AzBVvBRzHOfimS6Uy6skFx2Cyq
- ODbogR+oWWH4y+lYVbWso16S4w7GETt7oyQ+M+cX4HPcwOzzQZjphvbHHyEXUKZsXvs+
- O93ziqyRS4B7SKuCAznYnfVYGavEAOE1R4EbAkSKsldfNSf+Zp5nGnYYxUsXoHfYFsRM
- /76Plc/ruKlMDRmYKtnbcOr1Ysw/Ar4eQWna3Tw+tB88Qq+DDnxCF+aPB9rBx9VkNZAk
- GLz5GyhzqypGTaTc812NIp4jfKzwIbhKOKXyfqpFhnUb2q1CywX+bN/j0V4DVPFUoHj9
- DAIg==
-X-Gm-Message-State: AOJu0YwUBQc0vLGqwgdOqAUIvDQna6ezenKinL2G9Yf6fhIjQzL3InCo
- 5/gFD5bXHITYhYl0mwm81s5k1UX0YRkOXBRdQ2Uaf4y4dnCuEPHZcHLsGKYV+48=
-X-Google-Smtp-Source: AGHT+IFXU0rLSKltvf7M/Yfcxk/h3SgCvIR+6ysSfsgSQsFZuWnaiJ0hheHMpnVTDlho/i1HnBk+ag==
-X-Received: by 2002:a17:90a:5e01:b0:2bf:6b68:5219 with SMTP id
- 98e67ed59e1d1-2c2bcc76d26mr1696338a91.41.1717749011803; 
- Fri, 07 Jun 2024 01:30:11 -0700 (PDT)
-Received: from [192.168.68.109] (189-69-160-78.dial-up.telesp.net.br.
- [189.69.160.78]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c2806bd7c7sm4888400a91.41.2024.06.07.01.30.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Jun 2024 01:30:11 -0700 (PDT)
-Message-ID: <291911a9-b01c-4d39-a3d2-7ed3b69b644b@ventanamicro.com>
-Date: Fri, 7 Jun 2024 05:30:06 -0300
+ (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
+ id 1sFVEO-000899-B8
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 04:45:52 -0400
+Received: from szxga03-in.huawei.com ([45.249.212.189])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <arei.gonglei@huawei.com>)
+ id 1sFVEJ-0008HP-NM
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 04:45:52 -0400
+Received: from mail.maildlp.com (unknown [172.19.163.252])
+ by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4VwZSr1PCgzPpr8;
+ Fri,  7 Jun 2024 16:42:20 +0800 (CST)
+Received: from dggpeml500015.china.huawei.com (unknown [7.185.36.226])
+ by mail.maildlp.com (Postfix) with ESMTPS id ABB3018007E;
+ Fri,  7 Jun 2024 16:45:39 +0800 (CST)
+Received: from dggpemf200006.china.huawei.com (7.185.36.61) by
+ dggpeml500015.china.huawei.com (7.185.36.226) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 7 Jun 2024 16:45:39 +0800
+Received: from dggpemf200006.china.huawei.com ([7.185.36.61]) by
+ dggpemf200006.china.huawei.com ([7.185.36.61]) with mapi id 15.02.1544.011;
+ Fri, 7 Jun 2024 16:45:39 +0800
+To: Haris Iqbal <haris.iqbal@ionos.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "peterx@redhat.com"
+ <peterx@redhat.com>, "yu.zhang@ionos.com" <yu.zhang@ionos.com>,
+ "mgalaxy@akamai.com" <mgalaxy@akamai.com>, "elmar.gerdes@ionos.com"
+ <elmar.gerdes@ionos.com>, zhengchuan <zhengchuan@huawei.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, "armbru@redhat.com"
+ <armbru@redhat.com>, "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, Xiexiangyou <xiexiangyou@huawei.com>,
+ "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>, "lixiao (H)"
+ <lixiao91@huawei.com>, "jinpu.wang@ionos.com" <jinpu.wang@ionos.com>,
+ Wangjialin <wangjialin23@huawei.com>
+Subject: RE: [PATCH 3/6] io/channel-rdma: support working in coroutine
+Thread-Topic: [PATCH 3/6] io/channel-rdma: support working in coroutine
+Thread-Index: AQHatni7W52WMMzW8Ee4gnF0E7ZtJ7G6OYIAgAHF47A=
+Date: Fri, 7 Jun 2024 08:45:39 +0000
+Message-ID: <4f76b5e737584bfda08bf141d1667b9e@huawei.com>
+References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
+ <1717503252-51884-4-git-send-email-arei.gonglei@huawei.com>
+ <CAJpMwyh38bHxM7JEjt+w4Y4yOiKDpGnsL6WUy7rL40=4KB0+mg@mail.gmail.com>
+In-Reply-To: <CAJpMwyh38bHxM7JEjt+w4Y4yOiKDpGnsL6WUy7rL40=4KB0+mg@mail.gmail.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.173.124.235]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 08/13] hw/riscv/riscv-iommu: add Address Translation
- Cache (IOATC)
-To: Tomasz Jeznach <tjeznach@rivosinc.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- palmer@rivosinc.com, ajones@ventanamicro.com, frank.chang@sifive.com
-References: <20240523173955.1940072-1-dbarboza@ventanamicro.com>
- <20240523173955.1940072-9-dbarboza@ventanamicro.com>
- <CAH2o1u79UaPJ4SGRV-GKaKHCxO68eq--xBxxSEfprbMWNz+qAg@mail.gmail.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <CAH2o1u79UaPJ4SGRV-GKaKHCxO68eq--xBxxSEfprbMWNz+qAg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=45.249.212.189;
+ envelope-from=arei.gonglei@huawei.com; helo=szxga03-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,452 +82,402 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Gonglei (Arei)" <arei.gonglei@huawei.com>
+From:  "Gonglei (Arei)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tomasz,
-
-On 6/5/24 2:34 PM, Tomasz Jeznach wrote:
-> Daniel,
-> 
-> Thank you for your upstreaming work!
-
-Glad to help!
-
-> 
-> I've synchronized the private branch with v3 changes, and noticed
-> there is an important change missing in this patchset. We need
-> reader-writer lock around access to GLib.HashTable as it's not
-> MT-safe.  Diff added below, also available on github [1] branch
-> riscv_iommu_v4-rc1.
-> 
-> [1] link: https://github.com/tjeznach/qemu/tree/riscv_iommu_v4-rc1
-
-
-Just picked the changes and squashed them in patch 3 and 8. Thanks!
-
-
-Daniel
-
-> 
-> Thanks!
-> - Tomasz Jeznach
-> 
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index a27f56419a..75c5d645fc 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -991,7 +991,9 @@ static void riscv_iommu_ctx_inval(RISCVIOMMUState
-> *s, GHFunc func,
->           .pasid = pasid,
->       };
->       ctx_cache = g_hash_table_ref(s->ctx_cache);
-> +    pthread_rwlock_wrlock(&s->ctx_lock);
->       g_hash_table_foreach(ctx_cache, func, &key);
-> +    pthread_rwlock_unlock(&s->ctx_lock);
->       g_hash_table_unref(ctx_cache);
->   }
-> 
-> @@ -1007,26 +1009,31 @@ static RISCVIOMMUContext
-> *riscv_iommu_ctx(RISCVIOMMUState *s,
->       };
-> 
->       ctx_cache = g_hash_table_ref(s->ctx_cache);
-> +    pthread_rwlock_rdlock(&s->ctx_lock);
->       ctx = g_hash_table_lookup(ctx_cache, &key);
-> +    pthread_rwlock_unlock(&s->ctx_lock);
-> 
->       if (ctx && (ctx->tc & RISCV_IOMMU_DC_TC_V)) {
->           *ref = ctx_cache;
->           return ctx;
->       }
-> 
-> -    if (g_hash_table_size(s->ctx_cache) >= LIMIT_CACHE_CTX) {
-> -        ctx_cache = g_hash_table_new_full(__ctx_hash, __ctx_equal,
-> -                                          g_free, NULL);
-> -        g_hash_table_unref(qatomic_xchg(&s->ctx_cache, ctx_cache));
-> -    }
-> -
->       ctx = g_new0(RISCVIOMMUContext, 1);
->       ctx->devid = devid;
->       ctx->pasid = pasid;
-> 
->       int fault = riscv_iommu_ctx_fetch(s, ctx);
->       if (!fault) {
-> +        pthread_rwlock_wrlock(&s->ctx_lock);
-> +        if (g_hash_table_size(ctx_cache) >= LIMIT_CACHE_CTX) {
-> +            g_hash_table_unref(ctx_cache);
-> +            ctx_cache = g_hash_table_new_full(__ctx_hash, __ctx_equal,
-> +                                              g_free, NULL);
-> +            g_hash_table_ref(ctx_cache);
-> +            g_hash_table_unref(qatomic_xchg(&s->ctx_cache, ctx_cache));
-> +        }
->           g_hash_table_add(ctx_cache, ctx);
-> +        pthread_rwlock_unlock(&s->ctx_lock);
->           *ref = ctx_cache;
->           return ctx;
->       }
-> @@ -1176,12 +1183,14 @@ static void riscv_iommu_iot_update(RISCVIOMMUState *s,
->           return;
->       }
-> 
-> +    pthread_rwlock_wrlock(&s->iot_lock);
->       if (g_hash_table_size(s->iot_cache) >= s->iot_limit) {
->           iot_cache = g_hash_table_new_full(__iot_hash, __iot_equal,
->                                             g_free, NULL);
->           g_hash_table_unref(qatomic_xchg(&s->iot_cache, iot_cache));
->       }
->       g_hash_table_add(iot_cache, iot);
-> +    pthread_rwlock_unlock(&s->iot_lock);
->   }
-> 
->   static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
-> @@ -1195,7 +1204,9 @@ static void
-> riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
->       };
-> 
->       iot_cache = g_hash_table_ref(s->iot_cache);
-> +    pthread_rwlock_wrlock(&s->iot_lock);
->       g_hash_table_foreach(iot_cache, func, &key);
-> +    pthread_rwlock_unlock(&s->iot_lock);
->       g_hash_table_unref(iot_cache);
->   }
-> 
-> @@ -1227,7 +1238,9 @@ static int riscv_iommu_translate(RISCVIOMMUState
-> *s, RISCVIOMMUContext *ctx,
->           }
->       }
-> 
-> +    pthread_rwlock_rdlock(&s->iot_lock);
->       iot = riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova);
-> +    pthread_rwlock_unlock(&s->iot_lock);
->       perm = iot ? iot->perm : IOMMU_NONE;
->       if (perm != IOMMU_NONE) {
->           iotlb->translated_addr = PPN_PHYS(iot->phys);
-> @@ -2085,6 +2098,8 @@ static void riscv_iommu_realize(DeviceState
-> *dev, Error **errp)
->                                            g_free, NULL);
->       s->iot_cache = g_hash_table_new_full(__iot_hash, __iot_equal,
->                                            g_free, NULL);
-> +    pthread_rwlock_init(&s->ctx_lock, NULL);
-> +    pthread_rwlock_init(&s->iot_lock, NULL);
-> 
->       s->iommus.le_next = NULL;
->       s->iommus.le_prev = NULL;
-> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-> index 26236c3cee..041b3b9e05 100644
-> --- a/hw/riscv/riscv-iommu.h
-> +++ b/hw/riscv/riscv-iommu.h
-> @@ -71,7 +71,9 @@ struct RISCVIOMMUState {
->       MemoryRegion trap_mr;
-> 
->       GHashTable *ctx_cache;          /* Device translation Context Cache */
-> +    pthread_rwlock_t ctx_lock;      /* Device translation Cache update lock */
->       GHashTable *iot_cache;          /* IO Translated Address Cache */
-> +    pthread_rwlock_t iot_lock;      /* IO TLB Cache update lock */
->       unsigned iot_limit;             /* IO Translation Cache size limit */
-> 
->       /* MMIO Hardware Interface */
-> 
-> 
-> On Thu, May 23, 2024 at 10:40 AM Daniel Henrique Barboza
-> <dbarboza@ventanamicro.com> wrote:
->>
->> From: Tomasz Jeznach <tjeznach@rivosinc.com>
->>
->> The RISC-V IOMMU spec predicts that the IOMMU can use translation caches
->> to hold entries from the DDT. This includes implementation for all cache
->> commands that are marked as 'not implemented'.
->>
->> There are some artifacts included in the cache that predicts s-stage and
->> g-stage elements, although we don't support it yet. We'll introduce them
->> next.
->>
->> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> Reviewed-by: Frank Chang <frank.chang@sifive.com>
->> ---
->>   hw/riscv/riscv-iommu.c | 189 ++++++++++++++++++++++++++++++++++++++++-
->>   hw/riscv/riscv-iommu.h |   2 +
->>   2 files changed, 187 insertions(+), 4 deletions(-)
->>
->> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
->> index 39b4ff1405..abf6ae7726 100644
->> --- a/hw/riscv/riscv-iommu.c
->> +++ b/hw/riscv/riscv-iommu.c
->> @@ -63,6 +63,16 @@ struct RISCVIOMMUContext {
->>       uint64_t msiptp;            /* MSI redirection page table pointer */
->>   };
->>
->> +/* Address translation cache entry */
->> +struct RISCVIOMMUEntry {
->> +    uint64_t iova:44;           /* IOVA Page Number */
->> +    uint64_t pscid:20;          /* Process Soft-Context identifier */
->> +    uint64_t phys:44;           /* Physical Page Number */
->> +    uint64_t gscid:16;          /* Guest Soft-Context identifier */
->> +    uint64_t perm:2;            /* IOMMU_RW flags */
->> +    uint64_t __rfu:2;
->> +};
->> +
->>   /* IOMMU index for transactions without PASID specified. */
->>   #define RISCV_IOMMU_NOPASID 0
->>
->> @@ -751,13 +761,125 @@ static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
->>       return &as->iova_as;
->>   }
->>
->> +/* Translation Object cache support */
->> +static gboolean __iot_equal(gconstpointer v1, gconstpointer v2)
->> +{
->> +    RISCVIOMMUEntry *t1 = (RISCVIOMMUEntry *) v1;
->> +    RISCVIOMMUEntry *t2 = (RISCVIOMMUEntry *) v2;
->> +    return t1->gscid == t2->gscid && t1->pscid == t2->pscid &&
->> +           t1->iova == t2->iova;
->> +}
->> +
->> +static guint __iot_hash(gconstpointer v)
->> +{
->> +    RISCVIOMMUEntry *t = (RISCVIOMMUEntry *) v;
->> +    return (guint)t->iova;
->> +}
->> +
->> +/* GV: 1 PSCV: 1 AV: 1 */
->> +static void __iot_inval_pscid_iova(gpointer key, gpointer value, gpointer data)
->> +{
->> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
->> +    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
->> +    if (iot->gscid == arg->gscid &&
->> +        iot->pscid == arg->pscid &&
->> +        iot->iova == arg->iova) {
->> +        iot->perm = IOMMU_NONE;
->> +    }
->> +}
->> +
->> +/* GV: 1 PSCV: 1 AV: 0 */
->> +static void __iot_inval_pscid(gpointer key, gpointer value, gpointer data)
->> +{
->> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
->> +    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
->> +    if (iot->gscid == arg->gscid &&
->> +        iot->pscid == arg->pscid) {
->> +        iot->perm = IOMMU_NONE;
->> +    }
->> +}
->> +
->> +/* GV: 1 GVMA: 1 */
->> +static void __iot_inval_gscid_gpa(gpointer key, gpointer value, gpointer data)
->> +{
->> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
->> +    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
->> +    if (iot->gscid == arg->gscid) {
->> +        /* simplified cache, no GPA matching */
->> +        iot->perm = IOMMU_NONE;
->> +    }
->> +}
->> +
->> +/* GV: 1 GVMA: 0 */
->> +static void __iot_inval_gscid(gpointer key, gpointer value, gpointer data)
->> +{
->> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
->> +    RISCVIOMMUEntry *arg = (RISCVIOMMUEntry *) data;
->> +    if (iot->gscid == arg->gscid) {
->> +        iot->perm = IOMMU_NONE;
->> +    }
->> +}
->> +
->> +/* GV: 0 */
->> +static void __iot_inval_all(gpointer key, gpointer value, gpointer data)
->> +{
->> +    RISCVIOMMUEntry *iot = (RISCVIOMMUEntry *) value;
->> +    iot->perm = IOMMU_NONE;
->> +}
->> +
->> +/* caller should keep ref-count for iot_cache object */
->> +static RISCVIOMMUEntry *riscv_iommu_iot_lookup(RISCVIOMMUContext *ctx,
->> +    GHashTable *iot_cache, hwaddr iova)
->> +{
->> +    RISCVIOMMUEntry key = {
->> +        .pscid = get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID),
->> +        .iova  = PPN_DOWN(iova),
->> +    };
->> +    return g_hash_table_lookup(iot_cache, &key);
->> +}
->> +
->> +/* caller should keep ref-count for iot_cache object */
->> +static void riscv_iommu_iot_update(RISCVIOMMUState *s,
->> +    GHashTable *iot_cache, RISCVIOMMUEntry *iot)
->> +{
->> +    if (!s->iot_limit) {
->> +        return;
->> +    }
->> +
->> +    if (g_hash_table_size(s->iot_cache) >= s->iot_limit) {
->> +        iot_cache = g_hash_table_new_full(__iot_hash, __iot_equal,
->> +                                          g_free, NULL);
->> +        g_hash_table_unref(qatomic_xchg(&s->iot_cache, iot_cache));
->> +    }
->> +    g_hash_table_add(iot_cache, iot);
->> +}
->> +
->> +static void riscv_iommu_iot_inval(RISCVIOMMUState *s, GHFunc func,
->> +    uint32_t gscid, uint32_t pscid, hwaddr iova)
->> +{
->> +    GHashTable *iot_cache;
->> +    RISCVIOMMUEntry key = {
->> +        .gscid = gscid,
->> +        .pscid = pscid,
->> +        .iova  = PPN_DOWN(iova),
->> +    };
->> +
->> +    iot_cache = g_hash_table_ref(s->iot_cache);
->> +    g_hash_table_foreach(iot_cache, func, &key);
->> +    g_hash_table_unref(iot_cache);
->> +}
->> +
->>   static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
->> -    IOMMUTLBEntry *iotlb)
->> +    IOMMUTLBEntry *iotlb, bool enable_cache)
->>   {
->> +    RISCVIOMMUEntry *iot;
->> +    IOMMUAccessFlags perm;
->>       bool enable_pasid;
->>       bool enable_pri;
->> +    GHashTable *iot_cache;
->>       int fault;
->>
->> +    iot_cache = g_hash_table_ref(s->iot_cache);
->>       /*
->>        * TC[32] is reserved for custom extensions, used here to temporarily
->>        * enable automatic page-request generation for ATS queries.
->> @@ -765,9 +887,36 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
->>       enable_pri = (iotlb->perm == IOMMU_NONE) && (ctx->tc & BIT_ULL(32));
->>       enable_pasid = (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
->>
->> +    iot = riscv_iommu_iot_lookup(ctx, iot_cache, iotlb->iova);
->> +    perm = iot ? iot->perm : IOMMU_NONE;
->> +    if (perm != IOMMU_NONE) {
->> +        iotlb->translated_addr = PPN_PHYS(iot->phys);
->> +        iotlb->addr_mask = ~TARGET_PAGE_MASK;
->> +        iotlb->perm = perm;
->> +        fault = 0;
->> +        goto done;
->> +    }
->> +
->>       /* Translate using device directory / page table information. */
->>       fault = riscv_iommu_spa_fetch(s, ctx, iotlb);
->>
->> +    if (!fault && iotlb->target_as == &s->trap_as) {
->> +        /* Do not cache trapped MSI translations */
->> +        goto done;
->> +    }
->> +
->> +    if (!fault && iotlb->translated_addr != iotlb->iova && enable_cache) {
->> +        iot = g_new0(RISCVIOMMUEntry, 1);
->> +        iot->iova = PPN_DOWN(iotlb->iova);
->> +        iot->phys = PPN_DOWN(iotlb->translated_addr);
->> +        iot->pscid = get_field(ctx->ta, RISCV_IOMMU_DC_TA_PSCID);
->> +        iot->perm = iotlb->perm;
->> +        riscv_iommu_iot_update(s, iot_cache, iot);
->> +    }
->> +
->> +done:
->> +    g_hash_table_unref(iot_cache);
->> +
->>       if (enable_pri && fault) {
->>           struct riscv_iommu_pq_record pr = {0};
->>           if (enable_pasid) {
->> @@ -907,13 +1056,40 @@ static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
->>               if (cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV) {
->>                   /* illegal command arguments IOTINVAL.GVMA & PSCV == 1 */
->>                   goto cmd_ill;
->> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
->> +                /* invalidate all cache mappings */
->> +                func = __iot_inval_all;
->> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
->> +                /* invalidate cache matching GSCID */
->> +                func = __iot_inval_gscid;
->> +            } else {
->> +                /* invalidate cache matching GSCID and ADDR (GPA) */
->> +                func = __iot_inval_gscid_gpa;
->>               }
->> -            /* translation cache not implemented yet */
->> +            riscv_iommu_iot_inval(s, func,
->> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID), 0,
->> +                cmd.dword1 & TARGET_PAGE_MASK);
->>               break;
->>
->>           case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOTINVAL_FUNC_VMA,
->>                                RISCV_IOMMU_CMD_IOTINVAL_OPCODE):
->> -            /* translation cache not implemented yet */
->> +            if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_GV)) {
->> +                /* invalidate all cache mappings, simplified model */
->> +                func = __iot_inval_all;
->> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV)) {
->> +                /* invalidate cache matching GSCID, simplified model */
->> +                func = __iot_inval_gscid;
->> +            } else if (!(cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_AV)) {
->> +                /* invalidate cache matching GSCID and PSCID */
->> +                func = __iot_inval_pscid;
->> +            } else {
->> +                /* invalidate cache matching GSCID and PSCID and ADDR (IOVA) */
->> +                func = __iot_inval_pscid_iova;
->> +            }
->> +            riscv_iommu_iot_inval(s, func,
->> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_GSCID),
->> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOTINVAL_PSCID),
->> +                cmd.dword1 & TARGET_PAGE_MASK);
->>               break;
->>
->>           case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_DDT,
->> @@ -1410,6 +1586,8 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
->>       /* Device translation context cache */
->>       s->ctx_cache = g_hash_table_new_full(__ctx_hash, __ctx_equal,
->>                                            g_free, NULL);
->> +    s->iot_cache = g_hash_table_new_full(__iot_hash, __iot_equal,
->> +                                         g_free, NULL);
->>
->>       s->iommus.le_next = NULL;
->>       s->iommus.le_prev = NULL;
->> @@ -1423,6 +1601,7 @@ static void riscv_iommu_unrealize(DeviceState *dev)
->>       RISCVIOMMUState *s = RISCV_IOMMU(dev);
->>
->>       qemu_mutex_destroy(&s->core_lock);
->> +    g_hash_table_unref(s->iot_cache);
->>       g_hash_table_unref(s->ctx_cache);
->>   }
->>
->> @@ -1430,6 +1609,8 @@ static Property riscv_iommu_properties[] = {
->>       DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
->>           RISCV_IOMMU_SPEC_DOT_VER),
->>       DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
->> +    DEFINE_PROP_UINT32("ioatc-limit", RISCVIOMMUState, iot_limit,
->> +        LIMIT_CACHE_IOT),
->>       DEFINE_PROP_BOOL("intremap", RISCVIOMMUState, enable_msi, TRUE),
->>       DEFINE_PROP_BOOL("off", RISCVIOMMUState, enable_off, TRUE),
->>       DEFINE_PROP_LINK("downstream-mr", RISCVIOMMUState, target_mr,
->> @@ -1482,7 +1663,7 @@ static IOMMUTLBEntry riscv_iommu_memory_region_translate(
->>           /* Translation disabled or invalid. */
->>           iotlb.addr_mask = 0;
->>           iotlb.perm = IOMMU_NONE;
->> -    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb)) {
->> +    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb, true)) {
->>           /* Translation disabled or fault reported. */
->>           iotlb.addr_mask = 0;
->>           iotlb.perm = IOMMU_NONE;
->> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
->> index 31d3907d33..3afee9f3e8 100644
->> --- a/hw/riscv/riscv-iommu.h
->> +++ b/hw/riscv/riscv-iommu.h
->> @@ -68,6 +68,8 @@ struct RISCVIOMMUState {
->>       MemoryRegion trap_mr;
->>
->>       GHashTable *ctx_cache;          /* Device translation Context Cache */
->> +    GHashTable *iot_cache;          /* IO Translated Address Cache */
->> +    unsigned iot_limit;             /* IO Translation Cache size limit */
->>
->>       /* MMIO Hardware Interface */
->>       MemoryRegion regs_mr;
->> --
->> 2.44.0
->>
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogSGFyaXMgSXFiYWwgW21h
+aWx0bzpoYXJpcy5pcWJhbEBpb25vcy5jb21dDQo+IFNlbnQ6IFRodXJzZGF5LCBKdW5lIDYsIDIw
+MjQgOTozNSBQTQ0KPiBUbzogR29uZ2xlaSAoQXJlaSkgPGFyZWkuZ29uZ2xlaUBodWF3ZWkuY29t
+Pg0KPiBDYzogcWVtdS1kZXZlbEBub25nbnUub3JnOyBwZXRlcnhAcmVkaGF0LmNvbTsgeXUuemhh
+bmdAaW9ub3MuY29tOw0KPiBtZ2FsYXh5QGFrYW1haS5jb207IGVsbWFyLmdlcmRlc0Bpb25vcy5j
+b207IHpoZW5nY2h1YW4NCj4gPHpoZW5nY2h1YW5AaHVhd2VpLmNvbT47IGJlcnJhbmdlQHJlZGhh
+dC5jb207IGFybWJydUByZWRoYXQuY29tOw0KPiBsaXpoaWppYW5AZnVqaXRzdS5jb207IHBib256
+aW5pQHJlZGhhdC5jb207IG1zdEByZWRoYXQuY29tOyBYaWV4aWFuZ3lvdQ0KPiA8eGlleGlhbmd5
+b3VAaHVhd2VpLmNvbT47IGxpbnV4LXJkbWFAdmdlci5rZXJuZWwub3JnOyBsaXhpYW8gKEgpDQo+
+IDxsaXhpYW85MUBodWF3ZWkuY29tPjsgamlucHUud2FuZ0Bpb25vcy5jb207IFdhbmdqaWFsaW4N
+Cj4gPHdhbmdqaWFsaW4yM0BodWF3ZWkuY29tPg0KPiBTdWJqZWN0OiBSZTogW1BBVENIIDMvNl0g
+aW8vY2hhbm5lbC1yZG1hOiBzdXBwb3J0IHdvcmtpbmcgaW4gY29yb3V0aW5lDQo+IA0KPiBPbiBU
+dWUsIEp1biA0LCAyMDI0IGF0IDI6MTTigK9QTSBHb25nbGVpIDxhcmVpLmdvbmdsZWlAaHVhd2Vp
+LmNvbT4gd3JvdGU6DQo+ID4NCj4gPiBGcm9tOiBKaWFsaW4gV2FuZyA8d2FuZ2ppYWxpbjIzQGh1
+YXdlaS5jb20+DQo+ID4NCj4gPiBJdCBpcyBub3QgZmVhc2libGUgdG8gb2J0YWluIFJETUEgY29t
+cGxldGlvbiBxdWV1ZSBub3RpZmljYXRpb25zDQo+ID4gdGhyb3VnaCBwb2xsL3Bwb2xsIG9uIHRo
+ZSByc29ja2V0IGZkLiBUaGVyZWZvcmUsIHdlIGNyZWF0ZSBhIHRocmVhZA0KPiA+IG5hbWVkIHJw
+b2xsZXIgZm9yIGVhY2ggcnNvY2tldCBmZCBhbmQgdHdvIGV2ZW50ZmRzOiBwb2xsaW5fZXZlbnRm
+ZCBhbmQNCj4gPiBwb2xsb3V0X2V2ZW50ZmQuDQo+ID4NCj4gPiBXaGVuIHVzaW5nIGlvX2NyZWF0
+ZV93YXRjaCBvciBpb19zZXRfYWlvX2ZkX2hhbmRsZXIgd2FpdHMgZm9yIFBPTExJTg0KPiA+IG9y
+IFBPTExPVVQgZXZlbnRzLCBpdCB3aWxsIGFjdHVhbGx5IHBvbGwvcHBvbGwgb24gdGhlIHBvbGxp
+bl9ldmVudGZkDQo+ID4gYW5kIHBvbGxvdXRfZXZlbnRmZCBpbnN0ZWFkIG9mIHRoZSByc29ja2V0
+IGZkLg0KPiA+DQo+ID4gVGhlIHJwb2xsZXIgcnBvbGwoKSBvbiB0aGUgcnNvY2tldCBmZCB0byBy
+ZWNlaXZlIFBPTExJTiBhbmQgUE9MTE9VVA0KPiA+IGV2ZW50cy4NCj4gPiBXaGVuIGEgUE9MTElO
+IGV2ZW50IG9jY3VycywgdGhlIHJwb2xsZXIgd3JpdGUgdGhlIHBvbGxpbl9ldmVudGZkLCBhbmQN
+Cj4gPiB0aGVuIHBvbGwvcHBvbGwgd2lsbCByZXR1cm4gdGhlIFBPTExJTiBldmVudC4NCj4gPiBX
+aGVuIGEgUE9MTE9VVCBldmVudCBvY2N1cnMsIHRoZSBycG9sbGVyIHJlYWQgdGhlIHBvbGxvdXRf
+ZXZlbnRmZCwgYW5kDQo+ID4gdGhlbiBwb2xsL3Bwb2xsIHdpbGwgcmV0dXJuIHRoZSBQT0xMT1VU
+IGV2ZW50Lg0KPiA+DQo+ID4gRm9yIGEgbm9uLWJsb2NraW5nIHJzb2NrZXQgZmQsIGlmIHJyZWFk
+L3J3cml0ZSByZXR1cm5zIEVBR0FJTiwgaXQgd2lsbA0KPiA+IHJlYWQvd3JpdGUgdGhlIHBvbGxp
+bi9wb2xsb3V0X2V2ZW50ZmQsIHByZXZlbnRpbmcgcG9sbC9wcG9sbCBmcm9tDQo+ID4gcmV0dXJu
+aW5nIFBPTExJTi9QT0xMT1VUIGV2ZW50cy4NCj4gPg0KPiA+IEtub3duIGxpbWl0YXRpb25zOg0K
+PiA+DQo+ID4gICBGb3IgYSBibG9ja2luZyByc29ja2V0IGZkLCBpZiB3ZSB1c2UgaW9fY3JlYXRl
+X3dhdGNoIHRvIHdhaXQgZm9yDQo+ID4gICBQT0xMSU4gb3IgUE9MTE9VVCBldmVudHMsIHNpbmNl
+IHRoZSByc29ja2V0IGZkIGlzIGJsb2NraW5nLCB3ZQ0KPiA+ICAgY2Fubm90IGRldGVybWluZSB3
+aGVuIGl0IGlzIG5vdCByZWFkeSB0byByZWFkL3dyaXRlIGFzIHdlIGNhbiB3aXRoDQo+ID4gICBu
+b24tYmxvY2tpbmcgZmRzLiBUaGVyZWZvcmUsIHdoZW4gYW4gZXZlbnQgb2NjdXJzLCBpdCB3aWxs
+IG9jY3Vycw0KPiA+ICAgYWx3YXlzLCBwb3RlbnRpYWxseSBsZWF2ZSB0aGUgcWVtdSBoYW5naW5n
+LiBTbyB3ZSBuZWVkIGJlIGNhdXRpb3VzDQo+ID4gICB0byBhdm9pZCBoYW5naW5nIHdoZW4gdXNp
+bmcgaW9fY3JlYXRlX3dhdGNoIC4NCj4gPg0KPiA+IEx1Y2tpbHksIGNoYW5uZWwtcmRtYSB3b3Jr
+cyB3ZWxsIGluIGNvcm91dGluZXMgOikNCj4gPg0KPiA+IFNpZ25lZC1vZmYtYnk6IEppYWxpbiBX
+YW5nIDx3YW5namlhbGluMjNAaHVhd2VpLmNvbT4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBHb25nbGVp
+IDxhcmVpLmdvbmdsZWlAaHVhd2VpLmNvbT4NCj4gPiAtLS0NCj4gPiAgaW5jbHVkZS9pby9jaGFu
+bmVsLXJkbWEuaCB8ICAxNSArLQ0KPiA+ICBpby9jaGFubmVsLXJkbWEuYyAgICAgICAgIHwgMzYz
+DQo+ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKystDQo+ID4gIDIgZmlsZXMg
+Y2hhbmdlZCwgMzc2IGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pDQo+ID4NCj4gPiBkaWZm
+IC0tZ2l0IGEvaW5jbHVkZS9pby9jaGFubmVsLXJkbWEuaCBiL2luY2x1ZGUvaW8vY2hhbm5lbC1y
+ZG1hLmgNCj4gPiBpbmRleCA4Y2FiMjQ1OWU1Li5jYjU2MTI3ZDc2IDEwMDY0NA0KPiA+IC0tLSBh
+L2luY2x1ZGUvaW8vY2hhbm5lbC1yZG1hLmgNCj4gPiArKysgYi9pbmNsdWRlL2lvL2NoYW5uZWwt
+cmRtYS5oDQo+ID4gQEAgLTQ3LDYgKzQ3LDE4IEBAIHN0cnVjdCBRSU9DaGFubmVsUkRNQSB7DQo+
+ID4gICAgICBzb2NrbGVuX3QgbG9jYWxBZGRyTGVuOw0KPiA+ICAgICAgc3RydWN0IHNvY2thZGRy
+X3N0b3JhZ2UgcmVtb3RlQWRkcjsNCj4gPiAgICAgIHNvY2tsZW5fdCByZW1vdGVBZGRyTGVuOw0K
+PiA+ICsNCj4gPiArICAgIC8qIHByaXZhdGUgKi8NCj4gPiArDQo+ID4gKyAgICAvKiBxZW11IGdf
+cG9sbC9wcG9sbCgpIFBPTExJTiBldmVudCBvbiBpdCAqLw0KPiA+ICsgICAgaW50IHBvbGxpbl9l
+dmVudGZkOw0KPiA+ICsgICAgLyogcWVtdSBnX3BvbGwvcHBvbGwoKSBQT0xMT1VUIGV2ZW50IG9u
+IGl0ICovDQo+ID4gKyAgICBpbnQgcG9sbG91dF9ldmVudGZkOw0KPiA+ICsNCj4gPiArICAgIC8q
+IHRoZSBpbmRleCBpbiB0aGUgcnBvbGxlcidzIGZkcyBhcnJheSAqLw0KPiA+ICsgICAgaW50IGlu
+ZGV4Ow0KPiA+ICsgICAgLyogcnBvbGxlciB3aWxsIHJwb2xsKCkgcnBvbGxfZXZlbnRzIG9uIHRo
+ZSByc29ja2V0IGZkICovDQo+ID4gKyAgICBzaG9ydCBpbnQgcnBvbGxfZXZlbnRzOw0KPiA+ICB9
+Ow0KPiA+DQo+ID4gIC8qKg0KPiA+IEBAIC0xNDcsNiArMTU5LDcgQEAgdm9pZA0KPiBxaW9fY2hh
+bm5lbF9yZG1hX2xpc3Rlbl9hc3luYyhRSU9DaGFubmVsUkRNQSAqaW9jLCBJbmV0U29ja2V0QWRk
+cmVzcw0KPiAqYWRkciwNCj4gPiAgICoNCj4gPiAgICogUmV0dXJuczogdGhlIG5ldyBjbGllbnQg
+Y2hhbm5lbCwgb3IgTlVMTCBvbiBlcnJvcg0KPiA+ICAgKi8NCj4gPiAtUUlPQ2hhbm5lbFJETUEg
+KnFpb19jaGFubmVsX3JkbWFfYWNjZXB0KFFJT0NoYW5uZWxSRE1BICppb2MsDQo+IEVycm9yDQo+
+ID4gKiplcnJwKTsNCj4gPiArUUlPQ2hhbm5lbFJETUEgKmNvcm91dGluZV9taXhlZF9mbg0KPiBx
+aW9fY2hhbm5lbF9yZG1hX2FjY2VwdChRSU9DaGFubmVsUkRNQSAqaW9jLA0KPiA+ICsNCj4gRXJy
+b3INCj4gPiArKiplcnJwKTsNCj4gPg0KPiA+ICAjZW5kaWYgLyogUUlPX0NIQU5ORUxfUkRNQV9I
+ICovDQo+ID4gZGlmZiAtLWdpdCBhL2lvL2NoYW5uZWwtcmRtYS5jIGIvaW8vY2hhbm5lbC1yZG1h
+LmMgaW5kZXgNCj4gPiA5MmMzNjJkZjUyLi45NzkyYWRkNWNmIDEwMDY0NA0KPiA+IC0tLSBhL2lv
+L2NoYW5uZWwtcmRtYS5jDQo+ID4gKysrIGIvaW8vY2hhbm5lbC1yZG1hLmMNCj4gPiBAQCAtMjMs
+MTAgKzIzLDE1IEBADQo+ID4NCj4gPiAgI2luY2x1ZGUgInFlbXUvb3NkZXAuaCINCj4gPiAgI2lu
+Y2x1ZGUgImlvL2NoYW5uZWwtcmRtYS5oIg0KPiA+ICsjaW5jbHVkZSAiaW8vY2hhbm5lbC11dGls
+LmgiDQo+ID4gKyNpbmNsdWRlICJpby9jaGFubmVsLXdhdGNoLmgiDQo+ID4gICNpbmNsdWRlICJp
+by9jaGFubmVsLmgiDQo+ID4gICNpbmNsdWRlICJxYXBpL2Nsb25lLXZpc2l0b3IuaCINCj4gPiAg
+I2luY2x1ZGUgInFhcGkvZXJyb3IuaCINCj4gPiAgI2luY2x1ZGUgInFhcGkvcWFwaS12aXNpdC1z
+b2NrZXRzLmgiDQo+ID4gKyNpbmNsdWRlICJxZW11L2F0b21pYy5oIg0KPiA+ICsjaW5jbHVkZSAi
+cWVtdS9lcnJvci1yZXBvcnQuaCINCj4gPiArI2luY2x1ZGUgInFlbXUvdGhyZWFkLmgiDQo+ID4g
+ICNpbmNsdWRlICJ0cmFjZS5oIg0KPiA+ICAjaW5jbHVkZSA8ZXJybm8uaD4NCj4gPiAgI2luY2x1
+ZGUgPG5ldGRiLmg+DQo+ID4gQEAgLTM5LDExICs0NCwyNzQgQEANCj4gPiAgI2luY2x1ZGUgPHN5
+cy9wb2xsLmg+DQo+ID4gICNpbmNsdWRlIDx1bmlzdGQuaD4NCj4gPg0KPiA+ICt0eXBlZGVmIGVu
+dW0gew0KPiA+ICsgICAgQ0xFQVJfUE9MTElOLA0KPiA+ICsgICAgQ0xFQVJfUE9MTE9VVCwNCj4g
+PiArICAgIFNFVF9QT0xMSU4sDQo+ID4gKyAgICBTRVRfUE9MTE9VVCwNCj4gPiArfSBVcGRhdGVF
+dmVudDsNCj4gPiArDQo+ID4gK3R5cGVkZWYgZW51bSB7DQo+ID4gKyAgICBSUF9DTURfQUREX0lP
+QywNCj4gPiArICAgIFJQX0NNRF9ERUxfSU9DLA0KPiA+ICsgICAgUlBfQ01EX1VQREFURSwNCj4g
+PiArfSBScG9sbGVyQ01EOw0KPiA+ICsNCj4gPiArdHlwZWRlZiBzdHJ1Y3Qgew0KPiA+ICsgICAg
+UnBvbGxlckNNRCBjbWQ7DQo+ID4gKyAgICBRSU9DaGFubmVsUkRNQSAqcmlvYzsNCj4gPiArfSBS
+cG9sbGVyTXNnOw0KPiA+ICsNCj4gPiArLyoNCj4gPiArICogcnBvbGwoKSBvbiB0aGUgcnNvY2tl
+dCBmZCB3aXRoIHJwb2xsX2V2ZW50cywgd2hlbiBQT0xMSU4vUE9MTE9VVA0KPiA+ICtldmVudA0K
+PiA+ICsgKiBvY2N1cnMsIGl0IHdpbGwgd3JpdGUvcmVhZCB0aGUgcG9sbGluX2V2ZW50ZmQvcG9s
+bG91dF9ldmVudGZkIHRvDQo+ID4gK2FsbG93DQo+ID4gKyAqIHFlbXUgZ19wb2xsL3Bwb2xsKCkg
+Z2V0IHRoZSBQT0xMSU4vUE9MTE9VVCBldmVudCAgKi8gc3RhdGljIHN0cnVjdA0KPiA+ICtScG9s
+bGVyIHsNCj4gPiArICAgIFFlbXVUaHJlYWQgdGhyZWFkOw0KPiA+ICsgICAgYm9vbCBpc19ydW5u
+aW5nOw0KPiA+ICsgICAgaW50IHNvY2tbMl07DQo+ID4gKyAgICBpbnQgY291bnQ7IC8qIHRoZSBu
+dW1iZXIgb2YgcnNvY2tldCBmZHMgYmVpbmcgcnBvbGwoKSAqLw0KPiA+ICsgICAgaW50IHNpemU7
+IC8qIHRoZSBzaXplIG9mIGZkcy9yaW9jcyAqLw0KPiA+ICsgICAgc3RydWN0IHBvbGxmZCAqZmRz
+Ow0KPiA+ICsgICAgUUlPQ2hhbm5lbFJETUEgKipyaW9jczsNCj4gPiArfSBycG9sbGVyOw0KPiA+
+ICsNCj4gPiArc3RhdGljIHZvaWQgcWlvX2NoYW5uZWxfcmRtYV9ub3RpZnlfcnBvbGxlcihRSU9D
+aGFubmVsUkRNQSAqcmlvYywNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICBScG9sbGVyQ01EIGNtZCkgew0KPiA+ICsgICAgUnBvbGxlck1zZyBtc2c7DQo+
+ID4gKyAgICBpbnQgcmV0Ow0KPiA+ICsNCj4gPiArICAgIG1zZy5jbWQgPSBjbWQ7DQo+ID4gKyAg
+ICBtc2cucmlvYyA9IHJpb2M7DQo+ID4gKw0KPiA+ICsgICAgcmV0ID0gUkVUUllfT05fRUlOVFIo
+d3JpdGUocnBvbGxlci5zb2NrWzBdLCAmbXNnLCBzaXplb2YgbXNnKSk7DQo+ID4gKyAgICBpZiAo
+cmV0ICE9IHNpemVvZiBtc2cpIHsNCj4gPiArICAgICAgICBlcnJvcl9yZXBvcnQoIiVzOiBmYWls
+ZWQgdG8gc2VuZCBtc2csIGVycm5vOiAlZCIsIF9fZnVuY19fLA0KPiBlcnJubyk7DQo+ID4gKyAg
+ICB9DQo+ID4gK30NCj4gPiArDQo+ID4gK3N0YXRpYyB2b2lkIHFpb19jaGFubmVsX3JkbWFfdXBk
+YXRlX3BvbGxfZXZlbnQoUUlPQ2hhbm5lbFJETUEgKnJpb2MsDQo+ID4gKyAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgVXBkYXRlRXZlbnQNCj4gYWN0aW9uLA0K
+PiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGJvb2wg
+bm90aWZ5X3Jwb2xsZXIpDQo+IHsNCj4gPiArICAgIC8qIEFuIGV2ZW50ZmQgd2l0aCB0aGUgdmFs
+dWUgb2YgVUxMT05HX01BWCAtIDEgaXMgcmVhZGFibGUgYnV0DQo+IHVud3JpdGFibGUgKi8NCj4g
+PiArICAgIHVuc2lnbmVkIGxvbmcgbG9uZyBidWYgPSBVTExPTkdfTUFYIC0gMTsNCj4gPiArDQo+
+ID4gKyAgICBzd2l0Y2ggKGFjdGlvbikgew0KPiA+ICsgICAgLyogb25seSBycG9sbGVyIGRvIFNF
+VF8qIGFjdGlvbiwgdG8gYWxsb3cgcWVtdSBwcG9sbCgpIGdldCB0aGUgZXZlbnQgKi8NCj4gPiAr
+ICAgIGNhc2UgU0VUX1BPTExJTjoNCj4gPiArICAgICAgICBSRVRSWV9PTl9FSU5UUih3cml0ZShy
+aW9jLT5wb2xsaW5fZXZlbnRmZCwgJmJ1Ziwgc2l6ZW9mIGJ1ZikpOw0KPiA+ICsgICAgICAgIHJp
+b2MtPnJwb2xsX2V2ZW50cyAmPSB+UE9MTElOOw0KPiA+ICsgICAgICAgIGJyZWFrOw0KPiA+ICsg
+ICAgY2FzZSBTRVRfUE9MTE9VVDoNCj4gPiArICAgICAgICBSRVRSWV9PTl9FSU5UUihyZWFkKHJp
+b2MtPnBvbGxvdXRfZXZlbnRmZCwgJmJ1Ziwgc2l6ZW9mIGJ1ZikpOw0KPiA+ICsgICAgICAgIHJp
+b2MtPnJwb2xsX2V2ZW50cyAmPSB+UE9MTE9VVDsNCj4gPiArICAgICAgICBicmVhazsNCj4gPiAr
+DQo+ID4gKyAgICAvKiB0aGUgcnNvY2tldCBmZCBpcyBub3QgcmVhZHkgdG8gcnJlYWQvcndyaXRl
+ICovDQo+ID4gKyAgICBjYXNlIENMRUFSX1BPTExJTjoNCj4gPiArICAgICAgICBSRVRSWV9PTl9F
+SU5UUihyZWFkKHJpb2MtPnBvbGxpbl9ldmVudGZkLCAmYnVmLCBzaXplb2YgYnVmKSk7DQo+ID4g
+KyAgICAgICAgcmlvYy0+cnBvbGxfZXZlbnRzIHw9IFBPTExJTjsNCj4gPiArICAgICAgICBicmVh
+azsNCj4gPiArICAgIGNhc2UgQ0xFQVJfUE9MTE9VVDoNCj4gPiArICAgICAgICBSRVRSWV9PTl9F
+SU5UUih3cml0ZShyaW9jLT5wb2xsb3V0X2V2ZW50ZmQsICZidWYsIHNpemVvZiBidWYpKTsNCj4g
+PiArICAgICAgICByaW9jLT5ycG9sbF9ldmVudHMgfD0gUE9MTE9VVDsNCj4gPiArICAgICAgICBi
+cmVhazsNCj4gPiArICAgIGRlZmF1bHQ6DQo+ID4gKyAgICAgICAgYnJlYWs7DQo+ID4gKyAgICB9
+DQo+ID4gKw0KPiA+ICsgICAgLyogbm90aWZ5IHJwb2xsZXIgdG8gcnBvbGwoKSBQT0xMSU4vUE9M
+TE9VVCBldmVudHMgKi8NCj4gPiArICAgIGlmIChub3RpZnlfcnBvbGxlcikgew0KPiA+ICsgICAg
+ICAgIHFpb19jaGFubmVsX3JkbWFfbm90aWZ5X3Jwb2xsZXIocmlvYywgUlBfQ01EX1VQREFURSk7
+DQo+ID4gKyAgICB9DQo+ID4gK30NCj4gPiArDQo+ID4gK3N0YXRpYyB2b2lkIHFpb19jaGFubmVs
+X3JkbWFfcnBvbGxlcl9hZGRfcmlvYyhRSU9DaGFubmVsUkRNQSAqcmlvYykgew0KPiA+ICsgICAg
+aWYgKHJpb2MtPmluZGV4ICE9IC0xKSB7DQo+ID4gKyAgICAgICAgZXJyb3JfcmVwb3J0KCIlczog
+cmlvYyBhbHJlYWR5IGV4c2l0cyIsIF9fZnVuY19fKTsNCj4gPiArICAgICAgICByZXR1cm47DQo+
+ID4gKyAgICB9DQo+ID4gKw0KPiA+ICsgICAgcmlvYy0+aW5kZXggPSArK3Jwb2xsZXIuY291bnQ7
+DQo+ID4gKw0KPiA+ICsgICAgaWYgKHJwb2xsZXIuY291bnQgKyAxID4gcnBvbGxlci5zaXplKSB7
+DQo+ID4gKyAgICAgICAgcnBvbGxlci5zaXplICo9IDI7DQo+ID4gKyAgICAgICAgcnBvbGxlci5m
+ZHMgPSBnX3JlbmV3KHN0cnVjdCBwb2xsZmQsIHJwb2xsZXIuZmRzLCBycG9sbGVyLnNpemUpOw0K
+PiA+ICsgICAgICAgIHJwb2xsZXIucmlvY3MgPSBnX3JlbmV3KFFJT0NoYW5uZWxSRE1BICosIHJw
+b2xsZXIucmlvY3MsDQo+IHJwb2xsZXIuc2l6ZSk7DQo+ID4gKyAgICB9DQo+ID4gKw0KPiA+ICsg
+ICAgcnBvbGxlci5mZHNbcmlvYy0+aW5kZXhdLmZkID0gcmlvYy0+ZmQ7DQo+ID4gKyAgICBycG9s
+bGVyLmZkc1tyaW9jLT5pbmRleF0uZXZlbnRzID0gcmlvYy0+cnBvbGxfZXZlbnRzOw0KPiANCj4g
+VGhlIGFsbG90bWVudCBvZiByaW9jIGZkcyBhbmQgZXZlbnRzIHRvIHJwb2xsZXIgc2xvdHMgYXJl
+IHNlcXVlbnRpYWwsIGJ1dCBtYWtpbmcNCj4gdGhlIGRlbGV0aW9uIGFsc28gc2VxdWVudGlhbHMg
+bWVhbnMgdGhhdCB0aGUgZGVsX3Jpb2MgbmVlZHMgdG8gYmUgY2FsbGVkIGluIHRoZQ0KPiBleGFj
+dCBvcHBvc2l0ZSBzZXF1ZW5jZSBhcyB0aGV5IHdlcmUgYWRkZWQgKHRocm91Z2ggYWRkX3Jpb2Mp
+LiBPdGhlcndpc2Ugd2UNCj4gbGVhdmVzIGhvbGVzIGluIGJldHdlZW4sIGFuZCByZWFkZGl0aW9u
+cyBtaWdodCBzdGVwIG9uIGFuIGFscmVhZHkgdXNlZCBzbG90Lg0KPiANCj4gRG9lcyB0aGlzIHNl
+dHVwIG1ha2Ugc3VyZSB0aGF0IHRoZSBhYm92ZSByZXN0cmljdGlvbiBpcyBzYXRpc2ZpZWQsIG9y
+IGFtIEkNCj4gbWlzc2luZyBzb21ldGhpbmc/DQo+IA0KDQpBY3R1YWxseSwgd2UgdXNlIGFuIE8g
+KDEpIGFsZ29yaXRobSBmb3IgZGVsZXRpb24sIHRoYXQgaXMsIGVhY2ggdGltZSB3ZSByZXBsYWNl
+IHRoZSBhcnJheSBlbGVtZW50IHRvIGJlIGRlbGV0ZWQgd2l0aCB0aGUgbGFzdCBvbmUuDQpQbHMg
+c2VlIHFpb19jaGFubmVsX3JkbWFfcnBvbGxlcl9kZWxfcmlvYygpOg0KDQogICBycG9sbGVyLmZk
+c1tyaW9jLT5pbmRleF0gPSBycG9sbGVyLmZkc1tycG9sbGVyLmNvdW50XTsNCg0KPiA+ICsgICAg
+cnBvbGxlci5yaW9jc1tyaW9jLT5pbmRleF0gPSByaW9jOyB9DQo+ID4gKw0KPiA+ICtzdGF0aWMg
+dm9pZCBxaW9fY2hhbm5lbF9yZG1hX3Jwb2xsZXJfZGVsX3Jpb2MoUUlPQ2hhbm5lbFJETUEgKnJp
+b2MpIHsNCj4gPiArICAgIGlmIChyaW9jLT5pbmRleCA9PSAtMSkgew0KPiA+ICsgICAgICAgIGVy
+cm9yX3JlcG9ydCgiJXM6IHJpb2Mgbm90IGV4c2l0cyIsIF9fZnVuY19fKTsNCj4gPiArICAgICAg
+ICByZXR1cm47DQo+ID4gKyAgICB9DQo+ID4gKw0KPiA+ICsgICAgcnBvbGxlci5mZHNbcmlvYy0+
+aW5kZXhdID0gcnBvbGxlci5mZHNbcnBvbGxlci5jb3VudF07DQo+IA0KPiBTaG91bGQgdGhpcyBi
+ZSBycG9sbGVyLmNvdW50LTE/DQo+IA0KTm8uIHRoZSBmaXJzdCBlbGVtZW50IGlzIHRoZSBzb2Nr
+cGFpcnMnIGZkLiBQbHMgc2VlIHFpb19jaGFubmVsX3JkbWFfcnBvbGxlcl9zdGFydCgpOg0KDQog
+ICBycG9sbGVyLmZkc1swXS5mZCA9IHJwb2xsZXIuc29ja1sxXTsNCiAgIHJwb2xsZXIuZmRzWzBd
+LmV2ZW50cyA9IFBPTExJTjsNCg0KDQpSZWdhcmRzLA0KLUdvbmdsZWkNCg0KPiA+ICsgICAgcnBv
+bGxlci5yaW9jc1tyaW9jLT5pbmRleF0gPSBycG9sbGVyLnJpb2NzW3Jwb2xsZXIuY291bnRdOw0K
+PiA+ICsgICAgcnBvbGxlci5yaW9jc1tyaW9jLT5pbmRleF0tPmluZGV4ID0gcmlvYy0+aW5kZXg7
+DQo+ID4gKyAgICBycG9sbGVyLmNvdW50LS07DQo+ID4gKw0KPiA+ICsgICAgY2xvc2UocmlvYy0+
+cG9sbGluX2V2ZW50ZmQpOw0KPiA+ICsgICAgY2xvc2UocmlvYy0+cG9sbG91dF9ldmVudGZkKTsN
+Cj4gPiArICAgIHJpb2MtPmluZGV4ID0gLTE7DQo+ID4gKyAgICByaW9jLT5ycG9sbF9ldmVudHMg
+PSAwOw0KPiA+ICt9DQo+ID4gKw0KPiA+ICtzdGF0aWMgdm9pZCBxaW9fY2hhbm5lbF9yZG1hX3Jw
+b2xsZXJfdXBkYXRlX2lvYyhRSU9DaGFubmVsUkRNQSAqcmlvYykNCj4gPiArew0KPiA+ICsgICAg
+aWYgKHJpb2MtPmluZGV4ID09IC0xKSB7DQo+ID4gKyAgICAgICAgZXJyb3JfcmVwb3J0KCIlczog
+cmlvYyBub3QgZXhzaXRzIiwgX19mdW5jX18pOw0KPiA+ICsgICAgICAgIHJldHVybjsNCj4gPiAr
+ICAgIH0NCj4gPiArDQo+ID4gKyAgICBycG9sbGVyLmZkc1tyaW9jLT5pbmRleF0uZmQgPSByaW9j
+LT5mZDsNCj4gPiArICAgIHJwb2xsZXIuZmRzW3Jpb2MtPmluZGV4XS5ldmVudHMgPSByaW9jLT5y
+cG9sbF9ldmVudHM7IH0NCj4gPiArDQo+ID4gK3N0YXRpYyB2b2lkIHFpb19jaGFubmVsX3JkbWFf
+cnBvbGxlcl9wcm9jZXNzX21zZyh2b2lkKQ0KPiA+ICt7DQo+ID4gKyAgICBScG9sbGVyTXNnIG1z
+ZzsNCj4gPiArICAgIGludCByZXQ7DQo+ID4gKw0KPiA+ICsgICAgcmV0ID0gUkVUUllfT05fRUlO
+VFIocmVhZChycG9sbGVyLnNvY2tbMV0sICZtc2csIHNpemVvZiBtc2cpKTsNCj4gPiArICAgIGlm
+IChyZXQgIT0gc2l6ZW9mIG1zZykgew0KPiA+ICsgICAgICAgIGVycm9yX3JlcG9ydCgiJXM6IHJw
+b2xsZXIgZmFpbGVkIHRvIHJlY3YgbXNnOiAlcyIsIF9fZnVuY19fLA0KPiA+ICsgICAgICAgICAg
+ICAgICAgICAgICBzdHJlcnJvcihlcnJubykpOw0KPiA+ICsgICAgICAgIHJldHVybjsNCj4gPiAr
+ICAgIH0NCj4gPiArDQo+ID4gKyAgICBzd2l0Y2ggKG1zZy5jbWQpIHsNCj4gPiArICAgIGNhc2Ug
+UlBfQ01EX0FERF9JT0M6DQo+ID4gKyAgICAgICAgcWlvX2NoYW5uZWxfcmRtYV9ycG9sbGVyX2Fk
+ZF9yaW9jKG1zZy5yaW9jKTsNCj4gPiArICAgICAgICBicmVhazsNCj4gPiArICAgIGNhc2UgUlBf
+Q01EX0RFTF9JT0M6DQo+ID4gKyAgICAgICAgcWlvX2NoYW5uZWxfcmRtYV9ycG9sbGVyX2RlbF9y
+aW9jKG1zZy5yaW9jKTsNCj4gPiArICAgICAgICBicmVhazsNCj4gPiArICAgIGNhc2UgUlBfQ01E
+X1VQREFURToNCj4gPiArICAgICAgICBxaW9fY2hhbm5lbF9yZG1hX3Jwb2xsZXJfdXBkYXRlX2lv
+Yyhtc2cucmlvYyk7DQo+ID4gKyAgICAgICAgYnJlYWs7DQo+ID4gKyAgICBkZWZhdWx0Og0KPiA+
+ICsgICAgICAgIGJyZWFrOw0KPiA+ICsgICAgfQ0KPiA+ICt9DQo+ID4gKw0KPiA+ICtzdGF0aWMg
+dm9pZCBxaW9fY2hhbm5lbF9yZG1hX3Jwb2xsZXJfY2xlYW51cCh2b2lkKQ0KPiA+ICt7DQo+ID4g
+KyAgICBjbG9zZShycG9sbGVyLnNvY2tbMF0pOw0KPiA+ICsgICAgY2xvc2UocnBvbGxlci5zb2Nr
+WzFdKTsNCj4gPiArICAgIHJwb2xsZXIuc29ja1swXSA9IC0xOw0KPiA+ICsgICAgcnBvbGxlci5z
+b2NrWzFdID0gLTE7DQo+ID4gKyAgICBnX2ZyZWUocnBvbGxlci5mZHMpOw0KPiA+ICsgICAgZ19m
+cmVlKHJwb2xsZXIucmlvY3MpOw0KPiA+ICsgICAgcnBvbGxlci5mZHMgPSBOVUxMOw0KPiA+ICsg
+ICAgcnBvbGxlci5yaW9jcyA9IE5VTEw7DQo+ID4gKyAgICBycG9sbGVyLmNvdW50ID0gMDsNCj4g
+PiArICAgIHJwb2xsZXIuc2l6ZSA9IDA7DQo+ID4gKyAgICBycG9sbGVyLmlzX3J1bm5pbmcgPSBm
+YWxzZTsNCj4gPiArfQ0KPiA+ICsNCj4gPiArc3RhdGljIHZvaWQgKnFpb19jaGFubmVsX3JkbWFf
+cnBvbGxlcl90aHJlYWQodm9pZCAqb3BhcXVlKSB7DQo+ID4gKyAgICBpbnQgaSwgcmV0LCBlcnJv
+cl9ldmVudHMgPSBQT0xMRVJSIHwgUE9MTEhVUCB8IFBPTExOVkFMOw0KPiA+ICsNCj4gPiArICAg
+IGRvIHsNCj4gPiArICAgICAgICByZXQgPSBycG9sbChycG9sbGVyLmZkcywgcnBvbGxlci5jb3Vu
+dCArIDEsIC0xKTsNCj4gPiArICAgICAgICBpZiAocmV0IDwgMCAmJiBlcnJubyAhPSAtRUlOVFIp
+IHsNCj4gPiArICAgICAgICAgICAgZXJyb3JfcmVwb3J0KCIlczogcnBvbGwoKSBlcnJvcjogJXMi
+LCBfX2Z1bmNfXywNCj4gc3RyZXJyb3IoZXJybm8pKTsNCj4gPiArICAgICAgICAgICAgYnJlYWs7
+DQo+ID4gKyAgICAgICAgfQ0KPiA+ICsNCj4gPiArICAgICAgICBmb3IgKGkgPSAxOyBpIDw9IHJw
+b2xsZXIuY291bnQ7IGkrKykgew0KPiA+ICsgICAgICAgICAgICBpZiAocnBvbGxlci5mZHNbaV0u
+cmV2ZW50cyAmIChQT0xMSU4gfCBlcnJvcl9ldmVudHMpKSB7DQo+ID4gKyAgICAgICAgICAgICAg
+ICBxaW9fY2hhbm5lbF9yZG1hX3VwZGF0ZV9wb2xsX2V2ZW50KHJwb2xsZXIucmlvY3NbaV0sDQo+
+IFNFVF9QT0xMSU4sDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIGZhbHNlKTsNCj4gPiArICAgICAgICAgICAgICAgIHJwb2xsZXIuZmRzW2ld
+LmV2ZW50cyAmPSB+UE9MTElOOw0KPiA+ICsgICAgICAgICAgICB9DQo+ID4gKyAgICAgICAgICAg
+IGlmIChycG9sbGVyLmZkc1tpXS5yZXZlbnRzICYgKFBPTExPVVQgfCBlcnJvcl9ldmVudHMpKSB7
+DQo+ID4gKyAgICAgICAgICAgICAgICBxaW9fY2hhbm5lbF9yZG1hX3VwZGF0ZV9wb2xsX2V2ZW50
+KHJwb2xsZXIucmlvY3NbaV0sDQo+ID4gKw0KPiBTRVRfUE9MTE9VVCwgZmFsc2UpOw0KPiA+ICsg
+ICAgICAgICAgICAgICAgcnBvbGxlci5mZHNbaV0uZXZlbnRzICY9IH5QT0xMT1VUOw0KPiA+ICsg
+ICAgICAgICAgICB9DQo+ID4gKyAgICAgICAgICAgIC8qIGlnbm9yZSB0aGlzIGZkICovDQo+ID4g
+KyAgICAgICAgICAgIGlmIChycG9sbGVyLmZkc1tpXS5yZXZlbnRzICYgKGVycm9yX2V2ZW50cykp
+IHsNCj4gPiArICAgICAgICAgICAgICAgIHJwb2xsZXIuZmRzW2ldLmZkID0gLTE7DQo+ID4gKyAg
+ICAgICAgICAgIH0NCj4gPiArICAgICAgICB9DQo+ID4gKw0KPiA+ICsgICAgICAgIGlmIChycG9s
+bGVyLmZkc1swXS5yZXZlbnRzKSB7DQo+ID4gKyAgICAgICAgICAgIHFpb19jaGFubmVsX3JkbWFf
+cnBvbGxlcl9wcm9jZXNzX21zZygpOw0KPiA+ICsgICAgICAgIH0NCj4gPiArICAgIH0gd2hpbGUg
+KHJwb2xsZXIuY291bnQgPj0gMSk7DQo+ID4gKw0KPiA+ICsgICAgcWlvX2NoYW5uZWxfcmRtYV9y
+cG9sbGVyX2NsZWFudXAoKTsNCj4gPiArDQo+ID4gKyAgICByZXR1cm4gTlVMTDsNCj4gPiArfQ0K
+PiA+ICsNCj4gPiArc3RhdGljIHZvaWQgcWlvX2NoYW5uZWxfcmRtYV9ycG9sbGVyX3N0YXJ0KHZv
+aWQpDQo+ID4gK3sNCj4gPiArICAgIGlmIChxYXRvbWljX3hjaGcoJnJwb2xsZXIuaXNfcnVubmlu
+ZywgdHJ1ZSkpIHsNCj4gPiArICAgICAgICByZXR1cm47DQo+ID4gKyAgICB9DQo+ID4gKw0KPiA+
+ICsgICAgaWYgKHFlbXVfc29ja2V0cGFpcihBRl9VTklYLCBTT0NLX1NUUkVBTSwgMCwgcnBvbGxl
+ci5zb2NrKSkgew0KPiA+ICsgICAgICAgIHJwb2xsZXIuaXNfcnVubmluZyA9IGZhbHNlOw0KPiA+
+ICsgICAgICAgIGVycm9yX3JlcG9ydCgiJXM6IGZhaWxlZCB0byBjcmVhdGUgc29ja2V0cGFpciAl
+cyIsIF9fZnVuY19fLA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICBzdHJlcnJvcihlcnJubykp
+Ow0KPiA+ICsgICAgICAgIHJldHVybjsNCj4gPiArICAgIH0NCj4gPiArDQo+ID4gKyAgICBycG9s
+bGVyLmNvdW50ID0gMDsNCj4gPiArICAgIHJwb2xsZXIuc2l6ZSA9IDQ7DQo+ID4gKyAgICBycG9s
+bGVyLmZkcyA9IGdfbWFsbG9jMF9uKHJwb2xsZXIuc2l6ZSwgc2l6ZW9mKHN0cnVjdCBwb2xsZmQp
+KTsNCj4gPiArICAgIHJwb2xsZXIucmlvY3MgPSBnX21hbGxvYzBfbihycG9sbGVyLnNpemUsIHNp
+emVvZihRSU9DaGFubmVsUkRNQSAqKSk7DQo+ID4gKyAgICBycG9sbGVyLmZkc1swXS5mZCA9IHJw
+b2xsZXIuc29ja1sxXTsNCj4gPiArICAgIHJwb2xsZXIuZmRzWzBdLmV2ZW50cyA9IFBPTExJTjsN
+Cj4gPiArDQo+ID4gKyAgICBxZW11X3RocmVhZF9jcmVhdGUoJnJwb2xsZXIudGhyZWFkLCAicWlv
+LWNoYW5uZWwtcmRtYS1ycG9sbGVyIiwNCj4gPiArICAgICAgICAgICAgICAgICAgICAgICBxaW9f
+Y2hhbm5lbF9yZG1hX3Jwb2xsZXJfdGhyZWFkLCBOVUxMLA0KPiA+ICsgICAgICAgICAgICAgICAg
+ICAgICAgIFFFTVVfVEhSRUFEX0pPSU5BQkxFKTsgfQ0KPiA+ICsNCj4gPiArc3RhdGljIHZvaWQg
+cWlvX2NoYW5uZWxfcmRtYV9hZGRfcmlvY190b19ycG9sbGVyKFFJT0NoYW5uZWxSRE1BDQo+ID4g
+KypyaW9jKSB7DQo+ID4gKyAgICBpbnQgZmxhZ3MgPSBFRkRfQ0xPRVhFQyB8IEVGRF9OT05CTE9D
+SzsNCj4gPiArDQo+ID4gKyAgICAvKg0KPiA+ICsgICAgICogQSBzaW5nbGUgZXZlbnRmZCBpcyBl
+aXRoZXIgcmVhZGFibGUgb3Igd3JpdGFibGUuIEEgc2luZ2xlIGV2ZW50ZmQNCj4gY2Fubm90DQo+
+ID4gKyAgICAgKiByZXByZXNlbnQgYSBzdGF0ZSB3aGVyZSBpdCBpcyBuZWl0aGVyIHJlYWRhYmxl
+IG5vciB3cml0YWJsZS4gc28gdXNlDQo+IHR3bw0KPiA+ICsgICAgICogZXZlbnRmZHMgaGVyZS4N
+Cj4gPiArICAgICAqLw0KPiA+ICsgICAgcmlvYy0+cG9sbGluX2V2ZW50ZmQgPSBldmVudGZkKDAs
+IGZsYWdzKTsNCj4gPiArICAgIHJpb2MtPnBvbGxvdXRfZXZlbnRmZCA9IGV2ZW50ZmQoMCwgZmxh
+Z3MpOw0KPiA+ICsgICAgLyogcG9sbG91dF9ldmVudGZkIHdpdGggdGhlIHZhbHVlIDAsIG1lYW5z
+IHdyaXRhYmxlLCBtYWtlIGl0DQo+IHVud3JpdGFibGUgKi8NCj4gPiArICAgIHFpb19jaGFubmVs
+X3JkbWFfdXBkYXRlX3BvbGxfZXZlbnQocmlvYywgQ0xFQVJfUE9MTE9VVCwgZmFsc2UpOw0KPiA+
+ICsNCj4gPiArICAgIC8qIHRlbGwgdGhlIHJwb2xsZXIgdG8gcnBvbGwoKSBldmVudHMgb24gcmlv
+Yy0+c29ja2V0ZmQgKi8NCj4gPiArICAgIHJpb2MtPnJwb2xsX2V2ZW50cyA9IFBPTExJTiB8IFBP
+TExPVVQ7DQo+ID4gKyAgICBxaW9fY2hhbm5lbF9yZG1hX25vdGlmeV9ycG9sbGVyKHJpb2MsIFJQ
+X0NNRF9BRERfSU9DKTsgfQ0KPiA+ICsNCj4gPiAgUUlPQ2hhbm5lbFJETUEgKnFpb19jaGFubmVs
+X3JkbWFfbmV3KHZvaWQpICB7DQo+ID4gICAgICBRSU9DaGFubmVsUkRNQSAqcmlvYzsNCj4gPiAg
+ICAgIFFJT0NoYW5uZWwgKmlvYzsNCj4gPg0KPiA+ICsgICAgcWlvX2NoYW5uZWxfcmRtYV9ycG9s
+bGVyX3N0YXJ0KCk7DQo+ID4gKyAgICBpZiAoIXJwb2xsZXIuaXNfcnVubmluZykgew0KPiA+ICsg
+ICAgICAgIHJldHVybiBOVUxMOw0KPiA+ICsgICAgfQ0KPiA+ICsNCj4gPiAgICAgIHJpb2MgPQ0K
+PiBRSU9fQ0hBTk5FTF9SRE1BKG9iamVjdF9uZXcoVFlQRV9RSU9fQ0hBTk5FTF9SRE1BKSk7DQo+
+ID4gICAgICBpb2MgPSBRSU9fQ0hBTk5FTChyaW9jKTsNCj4gPiAgICAgIHFpb19jaGFubmVsX3Nl
+dF9mZWF0dXJlKGlvYywgUUlPX0NIQU5ORUxfRkVBVFVSRV9TSFVURE9XTik7DQo+IEBADQo+ID4g
+LTEyNSw2ICszOTMsOCBAQCByZXRyeToNCj4gPiAgICAgICAgICBnb3RvIG91dDsNCj4gPiAgICAg
+IH0NCj4gPg0KPiA+ICsgICAgcWlvX2NoYW5uZWxfcmRtYV9hZGRfcmlvY190b19ycG9sbGVyKHJp
+b2MpOw0KPiA+ICsNCj4gPiAgb3V0Og0KPiA+ICAgICAgaWYgKHJldCkgew0KPiA+ICAgICAgICAg
+IHRyYWNlX3Fpb19jaGFubmVsX3JkbWFfY29ubmVjdF9mYWlsKHJpb2MpOw0KPiA+IEBAIC0yMTEs
+NiArNDgxLDggQEAgaW50DQo+IHFpb19jaGFubmVsX3JkbWFfbGlzdGVuX3N5bmMoUUlPQ2hhbm5l
+bFJETUEgKnJpb2MsIEluZXRTb2NrZXRBZGRyZXNzDQo+ICphZGRyLA0KPiA+ICAgICAgcWlvX2No
+YW5uZWxfc2V0X2ZlYXR1cmUoUUlPX0NIQU5ORUwocmlvYyksDQo+IFFJT19DSEFOTkVMX0ZFQVRV
+UkVfTElTVEVOKTsNCj4gPiAgICAgIHRyYWNlX3Fpb19jaGFubmVsX3JkbWFfbGlzdGVuX2NvbXBs
+ZXRlKHJpb2MsIGZkKTsNCj4gPg0KPiA+ICsgICAgcWlvX2NoYW5uZWxfcmRtYV9hZGRfcmlvY190
+b19ycG9sbGVyKHJpb2MpOw0KPiA+ICsNCj4gPiAgb3V0Og0KPiA+ICAgICAgaWYgKHJldCkgew0K
+PiA+ICAgICAgICAgIHRyYWNlX3Fpb19jaGFubmVsX3JkbWFfbGlzdGVuX2ZhaWwocmlvYyk7DQo+
+ID4gQEAgLTI2Nyw4ICs1MzksMTAgQEAgdm9pZA0KPiBxaW9fY2hhbm5lbF9yZG1hX2xpc3Rlbl9h
+c3luYyhRSU9DaGFubmVsUkRNQSAqaW9jLCBJbmV0U29ja2V0QWRkcmVzcw0KPiAqYWRkciwNCj4g
+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcWlvX2NoYW5uZWxfbGlzdGVuX3dvcmtlcl9m
+cmVlLA0KPiBjb250ZXh0KTsNCj4gPiB9DQo+ID4NCj4gPiAtUUlPQ2hhbm5lbFJETUEgKnFpb19j
+aGFubmVsX3JkbWFfYWNjZXB0KFFJT0NoYW5uZWxSRE1BICpyaW9jLA0KPiBFcnJvcg0KPiA+ICoq
+ZXJycCkNCj4gPiArUUlPQ2hhbm5lbFJETUEgKmNvcm91dGluZV9taXhlZF9mbg0KPiBxaW9fY2hh
+bm5lbF9yZG1hX2FjY2VwdChRSU9DaGFubmVsUkRNQSAqcmlvYywNCj4gPiArDQo+IEVycm9yDQo+
+ID4gKyoqZXJycCkNCj4gPiAgew0KPiA+ICsgICAgUUlPQ2hhbm5lbCAqaW9jID0gUUlPX0NIQU5O
+RUwocmlvYyk7DQo+ID4gICAgICBRSU9DaGFubmVsUkRNQSAqY2lvYzsNCj4gPg0KPiA+ICAgICAg
+Y2lvYyA9IHFpb19jaGFubmVsX3JkbWFfbmV3KCk7DQo+ID4gQEAgLTI4Myw2ICs1NTcsMTcgQEAg
+cmV0cnk6DQo+ID4gICAgICAgICAgaWYgKGVycm5vID09IEVJTlRSKSB7DQo+ID4gICAgICAgICAg
+ICAgIGdvdG8gcmV0cnk7DQo+ID4gICAgICAgICAgfQ0KPiA+ICsgICAgICAgIGlmIChlcnJubyA9
+PSBFQUdBSU4pIHsNCj4gPiArICAgICAgICAgICAgaWYgKCEocmlvYy0+cnBvbGxfZXZlbnRzICYg
+UE9MTElOKSkgew0KPiA+ICsgICAgICAgICAgICAgICAgcWlvX2NoYW5uZWxfcmRtYV91cGRhdGVf
+cG9sbF9ldmVudChyaW9jLA0KPiBDTEVBUl9QT0xMSU4sIHRydWUpOw0KPiA+ICsgICAgICAgICAg
+ICB9DQo+ID4gKyAgICAgICAgICAgIGlmIChxZW11X2luX2Nvcm91dGluZSgpKSB7DQo+ID4gKyAg
+ICAgICAgICAgICAgICBxaW9fY2hhbm5lbF95aWVsZChpb2MsIEdfSU9fSU4pOw0KPiA+ICsgICAg
+ICAgICAgICB9IGVsc2Ugew0KPiA+ICsgICAgICAgICAgICAgICAgcWlvX2NoYW5uZWxfd2FpdChp
+b2MsIEdfSU9fSU4pOw0KPiA+ICsgICAgICAgICAgICB9DQo+ID4gKyAgICAgICAgICAgIGdvdG8g
+cmV0cnk7DQo+ID4gKyAgICAgICAgfQ0KPiA+ICAgICAgICAgIGVycm9yX3NldGdfZXJybm8oZXJy
+cCwgZXJybm8sICJVbmFibGUgdG8gYWNjZXB0IGNvbm5lY3Rpb24iKTsNCj4gPiAgICAgICAgICBn
+b3RvIGVycm9yOw0KPiA+ICAgICAgfQ0KPiA+IEBAIC0yOTQsNiArNTc5LDggQEAgcmV0cnk6DQo+
+ID4gICAgICAgICAgZ290byBlcnJvcjsNCj4gPiAgICAgIH0NCj4gPg0KPiA+ICsgICAgcWlvX2No
+YW5uZWxfcmRtYV9hZGRfcmlvY190b19ycG9sbGVyKGNpb2MpOw0KPiA+ICsNCj4gPiAgICAgIHRy
+YWNlX3Fpb19jaGFubmVsX3JkbWFfYWNjZXB0X2NvbXBsZXRlKHJpb2MsIGNpb2MsIGNpb2MtPmZk
+KTsNCj4gPiAgICAgIHJldHVybiBjaW9jOw0KPiA+DQo+ID4gQEAgLTMwNyw2ICs1OTQsMTAgQEAg
+c3RhdGljIHZvaWQgcWlvX2NoYW5uZWxfcmRtYV9pbml0KE9iamVjdCAqb2JqKSAgew0KPiA+ICAg
+ICAgUUlPQ2hhbm5lbFJETUEgKmlvYyA9IFFJT19DSEFOTkVMX1JETUEob2JqKTsNCj4gPiAgICAg
+IGlvYy0+ZmQgPSAtMTsNCj4gPiArICAgIGlvYy0+cG9sbGluX2V2ZW50ZmQgPSAtMTsNCj4gPiAr
+ICAgIGlvYy0+cG9sbG91dF9ldmVudGZkID0gLTE7DQo+ID4gKyAgICBpb2MtPmluZGV4ID0gLTE7
+DQo+ID4gKyAgICBpb2MtPnJwb2xsX2V2ZW50cyA9IDA7DQo+ID4gIH0NCj4gPg0KPiA+ICBzdGF0
+aWMgdm9pZCBxaW9fY2hhbm5lbF9yZG1hX2ZpbmFsaXplKE9iamVjdCAqb2JqKSBAQCAtMzE0LDYg
+KzYwNSw3DQo+ID4gQEAgc3RhdGljIHZvaWQgcWlvX2NoYW5uZWxfcmRtYV9maW5hbGl6ZShPYmpl
+Y3QgKm9iaikNCj4gPiAgICAgIFFJT0NoYW5uZWxSRE1BICppb2MgPSBRSU9fQ0hBTk5FTF9SRE1B
+KG9iaik7DQo+ID4NCj4gPiAgICAgIGlmIChpb2MtPmZkICE9IC0xKSB7DQo+ID4gKyAgICAgICAg
+cWlvX2NoYW5uZWxfcmRtYV9ub3RpZnlfcnBvbGxlcihpb2MsIFJQX0NNRF9ERUxfSU9DKTsNCj4g
+PiAgICAgICAgICByY2xvc2UoaW9jLT5mZCk7DQo+ID4gICAgICAgICAgaW9jLT5mZCA9IC0xOw0K
+PiA+ICAgICAgfQ0KPiA+IEBAIC0zMzAsNiArNjIyLDEyIEBAIHN0YXRpYyBzc2l6ZV90DQo+IHFp
+b19jaGFubmVsX3JkbWFfcmVhZHYoUUlPQ2hhbm5lbA0KPiA+ICppb2MsIGNvbnN0IHN0cnVjdCBp
+b3ZlYyAqaW92LA0KPiA+ICByZXRyeToNCj4gPiAgICAgIHJldCA9IHJyZWFkdihyaW9jLT5mZCwg
+aW92LCBuaW92KTsNCj4gPiAgICAgIGlmIChyZXQgPCAwKSB7DQo+ID4gKyAgICAgICAgaWYgKGVy
+cm5vID09IEVBR0FJTikgew0KPiA+ICsgICAgICAgICAgICBpZiAoIShyaW9jLT5ycG9sbF9ldmVu
+dHMgJiBQT0xMSU4pKSB7DQo+ID4gKyAgICAgICAgICAgICAgICBxaW9fY2hhbm5lbF9yZG1hX3Vw
+ZGF0ZV9wb2xsX2V2ZW50KHJpb2MsDQo+IENMRUFSX1BPTExJTiwgdHJ1ZSk7DQo+ID4gKyAgICAg
+ICAgICAgIH0NCj4gPiArICAgICAgICAgICAgcmV0dXJuIFFJT19DSEFOTkVMX0VSUl9CTE9DSzsN
+Cj4gPiArICAgICAgICB9DQo+ID4gICAgICAgICAgaWYgKGVycm5vID09IEVJTlRSKSB7DQo+ID4g
+ICAgICAgICAgICAgIGdvdG8gcmV0cnk7DQo+ID4gICAgICAgICAgfQ0KPiA+IEBAIC0zNTEsNiAr
+NjQ5LDEyIEBAIHN0YXRpYyBzc2l6ZV90DQo+IHFpb19jaGFubmVsX3JkbWFfd3JpdGV2KFFJT0No
+YW5uZWwNCj4gPiAqaW9jLCBjb25zdCBzdHJ1Y3QgaW92ZWMgKmlvdiwNCj4gPiAgcmV0cnk6DQo+
+ID4gICAgICByZXQgPSByd3JpdGV2KHJpb2MtPmZkLCBpb3YsIG5pb3YpOw0KPiA+ICAgICAgaWYg
+KHJldCA8PSAwKSB7DQo+ID4gKyAgICAgICAgaWYgKGVycm5vID09IEVBR0FJTikgew0KPiA+ICsg
+ICAgICAgICAgICBpZiAoIShyaW9jLT5ycG9sbF9ldmVudHMgJiBQT0xMT1VUKSkgew0KPiA+ICsg
+ICAgICAgICAgICAgICAgcWlvX2NoYW5uZWxfcmRtYV91cGRhdGVfcG9sbF9ldmVudChyaW9jLA0K
+PiBDTEVBUl9QT0xMT1VULCB0cnVlKTsNCj4gPiArICAgICAgICAgICAgfQ0KPiA+ICsgICAgICAg
+ICAgICByZXR1cm4gUUlPX0NIQU5ORUxfRVJSX0JMT0NLOw0KPiA+ICsgICAgICAgIH0NCj4gPiAg
+ICAgICAgICBpZiAoZXJybm8gPT0gRUlOVFIpIHsNCj4gPiAgICAgICAgICAgICAgZ290byByZXRy
+eTsNCj4gPiAgICAgICAgICB9DQo+ID4gQEAgLTM2MSw2ICs2NjUsMjggQEAgcmV0cnk6DQo+ID4g
+ICAgICByZXR1cm4gcmV0Ow0KPiA+ICB9DQo+ID4NCj4gPiArc3RhdGljIGludCBxaW9fY2hhbm5l
+bF9yZG1hX3NldF9ibG9ja2luZyhRSU9DaGFubmVsICppb2MsIGJvb2wgZW5hYmxlZCwNCj4gPiAr
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBFcnJvciAqKmVycnANCj4g
+R19HTlVDX1VOVVNFRCkNCj4gPiArew0KPiA+ICsgICAgUUlPQ2hhbm5lbFJETUEgKnJpb2MgPSBR
+SU9fQ0hBTk5FTF9SRE1BKGlvYyk7DQo+ID4gKyAgICBpbnQgZmxhZ3MsIHJldDsNCj4gPiArDQo+
+ID4gKyAgICBmbGFncyA9IHJmY250bChyaW9jLT5mZCwgRl9HRVRGTCk7DQo+ID4gKyAgICBpZiAo
+ZW5hYmxlZCkgew0KPiA+ICsgICAgICAgIGZsYWdzICY9IH5PX05PTkJMT0NLOw0KPiA+ICsgICAg
+fSBlbHNlIHsNCj4gPiArICAgICAgICBmbGFncyB8PSBPX05PTkJMT0NLOw0KPiA+ICsgICAgfQ0K
+PiA+ICsNCj4gPiArICAgIHJldCA9IHJmY250bChyaW9jLT5mZCwgRl9TRVRGTCwgZmxhZ3MpOw0K
+PiA+ICsgICAgaWYgKHJldCkgew0KPiA+ICsgICAgICAgIGVycm9yX3NldGdfZXJybm8oZXJycCwg
+ZXJybm8sDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAiVW5hYmxlIHRvIHJmY250bCBy
+c29ja2V0IGZkIHdpdGggZmxhZ3MgJWQiLA0KPiBmbGFncyk7DQo+ID4gKyAgICB9DQo+ID4gKw0K
+PiA+ICsgICAgcmV0dXJuIHJldDsNCj4gPiArfQ0KPiA+ICsNCj4gPiAgc3RhdGljIHZvaWQgcWlv
+X2NoYW5uZWxfcmRtYV9zZXRfZGVsYXkoUUlPQ2hhbm5lbCAqaW9jLCBib29sIGVuYWJsZWQpDQo+
+ID4gew0KPiA+ICAgICAgUUlPQ2hhbm5lbFJETUEgKnJpb2MgPSBRSU9fQ0hBTk5FTF9SRE1BKGlv
+Yyk7IEBAIC0zNzQsNg0KPiArNzAwLDcgQEANCj4gPiBzdGF0aWMgaW50IHFpb19jaGFubmVsX3Jk
+bWFfY2xvc2UoUUlPQ2hhbm5lbCAqaW9jLCBFcnJvciAqKmVycnApDQo+ID4gICAgICBRSU9DaGFu
+bmVsUkRNQSAqcmlvYyA9IFFJT19DSEFOTkVMX1JETUEoaW9jKTsNCj4gPg0KPiA+ICAgICAgaWYg
+KHJpb2MtPmZkICE9IC0xKSB7DQo+ID4gKyAgICAgICAgcWlvX2NoYW5uZWxfcmRtYV9ub3RpZnlf
+cnBvbGxlcihyaW9jLCBSUF9DTURfREVMX0lPQyk7DQo+ID4gICAgICAgICAgcmNsb3NlKHJpb2Mt
+PmZkKTsNCj4gPiAgICAgICAgICByaW9jLT5mZCA9IC0xOw0KPiA+ICAgICAgfQ0KPiA+IEBAIC00
+MDgsNiArNzM1LDM3IEBAIHN0YXRpYyBpbnQgcWlvX2NoYW5uZWxfcmRtYV9zaHV0ZG93bihRSU9D
+aGFubmVsDQo+ICppb2MsIFFJT0NoYW5uZWxTaHV0ZG93biBob3csDQo+ID4gICAgICByZXR1cm4g
+MDsNCj4gPiAgfQ0KPiA+DQo+ID4gK3N0YXRpYyB2b2lkDQo+ID4gK3Fpb19jaGFubmVsX3JkbWFf
+c2V0X2Fpb19mZF9oYW5kbGVyKFFJT0NoYW5uZWwgKmlvYywgQWlvQ29udGV4dA0KPiAqcmVhZF9j
+dHgsDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIElPSGFuZGxlciAq
+aW9fcmVhZCwNCj4gQWlvQ29udGV4dCAqd3JpdGVfY3R4LA0KPiA+ICsgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICBJT0hhbmRsZXIgKmlvX3dyaXRlLCB2b2lkDQo+ID4gKypvcGFx
+dWUpIHsNCj4gPiArICAgIFFJT0NoYW5uZWxSRE1BICpyaW9jID0gUUlPX0NIQU5ORUxfUkRNQShp
+b2MpOw0KPiA+ICsNCj4gPiArICAgIHFpb19jaGFubmVsX3V0aWxfc2V0X2Fpb19mZF9oYW5kbGVy
+KHJpb2MtPnBvbGxpbl9ldmVudGZkLCByZWFkX2N0eCwNCj4gaW9fcmVhZCwNCj4gPiArICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHJpb2MtPnBvbGxvdXRfZXZlbnRmZCwN
+Cj4gd3JpdGVfY3R4LA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgaW9fd3JpdGUsIG9wYXF1ZSk7IH0NCj4gPiArDQo+ID4gK3N0YXRpYyBHU291cmNlICpxaW9f
+Y2hhbm5lbF9yZG1hX2NyZWF0ZV93YXRjaChRSU9DaGFubmVsICppb2MsDQo+ID4gKyAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBHSU9Db25kaXRpb24NCj4gY29u
+ZGl0aW9uKQ0KPiA+ICt7DQo+ID4gKyAgICBRSU9DaGFubmVsUkRNQSAqcmlvYyA9IFFJT19DSEFO
+TkVMX1JETUEoaW9jKTsNCj4gPiArDQo+ID4gKyAgICBzd2l0Y2ggKGNvbmRpdGlvbikgew0KPiA+
+ICsgICAgY2FzZSBHX0lPX0lOOg0KPiA+ICsgICAgICAgIHJldHVybiBxaW9fY2hhbm5lbF9jcmVh
+dGVfZmRfd2F0Y2goaW9jLCByaW9jLT5wb2xsaW5fZXZlbnRmZCwNCj4gPiArICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNvbmRpdGlvbik7DQo+ID4gKyAgICBjYXNl
+IEdfSU9fT1VUOg0KPiA+ICsgICAgICAgIHJldHVybiBxaW9fY2hhbm5lbF9jcmVhdGVfZmRfd2F0
+Y2goaW9jLCByaW9jLT5wb2xsb3V0X2V2ZW50ZmQsDQo+ID4gKyAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICBjb25kaXRpb24pOw0KPiA+ICsgICAgZGVmYXVsdDoNCj4g
+PiArICAgICAgICBlcnJvcl9yZXBvcnQoIiVzOiBkbyBub3Qgc3VwcG9ydCB3YXRjaCAweCV4IGV2
+ZW50IiwgX19mdW5jX18sDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgIGNvbmRpdGlvbik7DQo+
+ID4gKyAgICAgICAgcmV0dXJuIE5VTEw7DQo+ID4gKyAgICB9DQo+ID4gK30NCj4gPiArDQo+ID4g
+IHN0YXRpYyB2b2lkIHFpb19jaGFubmVsX3JkbWFfY2xhc3NfaW5pdChPYmplY3RDbGFzcyAqa2xh
+c3MsDQo+ID4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2b2lkICpj
+bGFzc19kYXRhDQo+ID4gR19HTlVDX1VOVVNFRCkgIHsgQEAgLTQxNSw5ICs3NzMsMTIgQEAgc3Rh
+dGljIHZvaWQNCj4gPiBxaW9fY2hhbm5lbF9yZG1hX2NsYXNzX2luaXQoT2JqZWN0Q2xhc3MgKmts
+YXNzLA0KPiA+DQo+ID4gICAgICBpb2Nfa2xhc3MtPmlvX3dyaXRldiA9IHFpb19jaGFubmVsX3Jk
+bWFfd3JpdGV2Ow0KPiA+ICAgICAgaW9jX2tsYXNzLT5pb19yZWFkdiA9IHFpb19jaGFubmVsX3Jk
+bWFfcmVhZHY7DQo+ID4gKyAgICBpb2Nfa2xhc3MtPmlvX3NldF9ibG9ja2luZyA9IHFpb19jaGFu
+bmVsX3JkbWFfc2V0X2Jsb2NraW5nOw0KPiA+ICAgICAgaW9jX2tsYXNzLT5pb19jbG9zZSA9IHFp
+b19jaGFubmVsX3JkbWFfY2xvc2U7DQo+ID4gICAgICBpb2Nfa2xhc3MtPmlvX3NodXRkb3duID0g
+cWlvX2NoYW5uZWxfcmRtYV9zaHV0ZG93bjsNCj4gPiAgICAgIGlvY19rbGFzcy0+aW9fc2V0X2Rl
+bGF5ID0gcWlvX2NoYW5uZWxfcmRtYV9zZXRfZGVsYXk7DQo+ID4gKyAgICBpb2Nfa2xhc3MtPmlv
+X2NyZWF0ZV93YXRjaCA9IHFpb19jaGFubmVsX3JkbWFfY3JlYXRlX3dhdGNoOw0KPiA+ICsgICAg
+aW9jX2tsYXNzLT5pb19zZXRfYWlvX2ZkX2hhbmRsZXIgPQ0KPiA+ICsgcWlvX2NoYW5uZWxfcmRt
+YV9zZXRfYWlvX2ZkX2hhbmRsZXI7DQo+ID4gIH0NCj4gPg0KPiA+ICBzdGF0aWMgY29uc3QgVHlw
+ZUluZm8gcWlvX2NoYW5uZWxfcmRtYV9pbmZvID0gew0KPiA+IC0tDQo+ID4gMi40My4wDQo+ID4N
+Cj4gPg0K
 
