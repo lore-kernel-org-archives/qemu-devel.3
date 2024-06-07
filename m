@@ -4,41 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA11C27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 22:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC6E2C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 22:55:10 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf38-0004R4-5R; Fri, 07 Jun 2024 15:14:54 -0400
+	id 1sFf6E-00062s-KF; Fri, 07 Jun 2024 15:18:06 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf36-0004Da-0g; Fri, 07 Jun 2024 15:14:52 -0400
+ id 1sFf6C-00062Y-IY; Fri, 07 Jun 2024 15:18:04 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf33-00020S-62; Fri, 07 Jun 2024 15:14:51 -0400
+ id 1sFf6A-000389-St; Fri, 07 Jun 2024 15:18:04 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3EA086E54D;
- Fri,  7 Jun 2024 22:14:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 00BD96E56F;
+ Fri,  7 Jun 2024 22:14:55 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 5295BE2749;
- Fri,  7 Jun 2024 22:13:10 +0300 (MSK)
-Received: (nullmailer pid 528737 invoked by uid 1000);
- Fri, 07 Jun 2024 19:13:08 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 34315E2768;
+ Fri,  7 Jun 2024 22:14:00 +0300 (MSK)
+Received: (nullmailer pid 529472 invoked by uid 1000);
+ Fri, 07 Jun 2024 19:13:58 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: qemu-stable@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Robin Dapp <rdapp.gcc@gmail.com>, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 36/45] target/riscv: rvv: Remove redudant SEW checking
- for vector fp narrow/widen instructions
-Date: Fri,  7 Jun 2024 22:12:55 +0300
-Message-Id: <20240607191307.528622-16-mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 65/71] riscv,
+ gdbstub.c: fix reg_width in ricsv_gen_dynamic_vector_feature()
+Date: Fri,  7 Jun 2024 22:13:46 +0300
+Message-Id: <20240607191356.529336-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
-References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
+References: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,95 +66,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-If the checking functions check both the single and double width
-operators at the same time, then the single width operator checking
-functions (require_rvf[min]) will check whether the SEW is 8.
+Commit 33a24910ae changed 'reg_width' to use 'vlenb', i.e. vector length
+in bytes, when in this context we want 'reg_width' as the length in
+bits.
 
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Fix 'reg_width' back to the value in bits like 7cb59921c05a
+("target/riscv/gdbstub.c: use 'vlenb' instead of shifting 'vlen'") set
+beforehand.
+
+While we're at it, rename 'reg_width' to 'bitsize' to provide a bit more
+clarity about what the variable represents. 'bitsize' is also used in
+riscv_gen_dynamic_csr_feature() with the same purpose, i.e. as an input to
+gdb_feature_builder_append_reg().
+
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Reported-by: Robin Dapp <rdapp.gcc@gmail.com>
+Fixes: 33a24910ae ("target/riscv: Use GDBFeature for dynamic XML")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Acked-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240322092600.1198921-5-max.chou@sifive.com>
+Message-ID: <20240517203054.880861-2-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 93cb52b7a3ccc64e8d28813324818edae07e21d5)
+(cherry picked from commit 583edc4efb7f4075212bdee281f336edfa532e3f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 23a451cd9b..7076459e3e 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -2381,7 +2381,6 @@ static bool opfvv_widen_check(DisasContext *s, arg_rmrr *a)
-     return require_rvv(s) &&
-            require_rvf(s) &&
-            require_scale_rvf(s) &&
--           (s->sew != MO_8) &&
-            vext_check_isa_ill(s) &&
-            vext_check_dss(s, a->rd, a->rs1, a->rs2, a->vm);
- }
-@@ -2424,7 +2423,6 @@ static bool opfvf_widen_check(DisasContext *s, arg_rmrr *a)
-     return require_rvv(s) &&
-            require_rvf(s) &&
-            require_scale_rvf(s) &&
--           (s->sew != MO_8) &&
-            vext_check_isa_ill(s) &&
-            vext_check_ds(s, a->rd, a->rs2, a->vm);
- }
-@@ -2457,7 +2455,6 @@ static bool opfwv_widen_check(DisasContext *s, arg_rmrr *a)
-     return require_rvv(s) &&
-            require_rvf(s) &&
-            require_scale_rvf(s) &&
--           (s->sew != MO_8) &&
-            vext_check_isa_ill(s) &&
-            vext_check_dds(s, a->rd, a->rs1, a->rs2, a->vm);
- }
-@@ -2500,7 +2497,6 @@ static bool opfwf_widen_check(DisasContext *s, arg_rmrr *a)
-     return require_rvv(s) &&
-            require_rvf(s) &&
-            require_scale_rvf(s) &&
--           (s->sew != MO_8) &&
-            vext_check_isa_ill(s) &&
-            vext_check_dd(s, a->rd, a->rs2, a->vm);
- }
-@@ -2766,8 +2762,7 @@ static bool opffv_widen_check(DisasContext *s, arg_rmr *a)
+diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+index be7a02cd90..c0026bd648 100644
+--- a/target/riscv/gdbstub.c
++++ b/target/riscv/gdbstub.c
+@@ -288,7 +288,7 @@ static GDBFeature *riscv_gen_dynamic_csr_feature(CPUState *cs, int base_reg)
+ static GDBFeature *ricsv_gen_dynamic_vector_feature(CPUState *cs, int base_reg)
  {
-     return opfv_widen_check(s, a) &&
-            require_rvfmin(s) &&
--           require_scale_rvfmin(s) &&
--           (s->sew != MO_8);
-+           require_scale_rvfmin(s);
- }
+     RISCVCPU *cpu = RISCV_CPU(cs);
+-    int reg_width = cpu->cfg.vlenb;
++    int bitsize = cpu->cfg.vlenb << 3;
+     GDBFeatureBuilder builder;
+     int i;
  
- #define GEN_OPFV_WIDEN_TRANS(NAME, CHECK, HELPER, FRM)             \
-@@ -2878,16 +2873,14 @@ static bool opffv_narrow_check(DisasContext *s, arg_rmr *a)
- {
-     return opfv_narrow_check(s, a) &&
-            require_rvfmin(s) &&
--           require_scale_rvfmin(s) &&
--           (s->sew != MO_8);
-+           require_scale_rvfmin(s);
- }
+@@ -298,7 +298,7 @@ static GDBFeature *ricsv_gen_dynamic_vector_feature(CPUState *cs, int base_reg)
  
- static bool opffv_rod_narrow_check(DisasContext *s, arg_rmr *a)
- {
-     return opfv_narrow_check(s, a) &&
-            require_rvf(s) &&
--           require_scale_rvf(s) &&
--           (s->sew != MO_8);
-+           require_scale_rvf(s);
- }
+     /* First define types and totals in a whole VL */
+     for (i = 0; i < ARRAY_SIZE(vec_lanes); i++) {
+-        int count = reg_width / vec_lanes[i].size;
++        int count = bitsize / vec_lanes[i].size;
+         gdb_feature_builder_append_tag(
+             &builder, "<vector id=\"%s\" type=\"%s\" count=\"%d\"/>",
+             vec_lanes[i].id, vec_lanes[i].gdb_type, count);
+@@ -316,7 +316,7 @@ static GDBFeature *ricsv_gen_dynamic_vector_feature(CPUState *cs, int base_reg)
+     /* Define vector registers */
+     for (i = 0; i < 32; i++) {
+         gdb_feature_builder_append_reg(&builder, g_strdup_printf("v%d", i),
+-                                       reg_width, i, "riscv_vector", "vector");
++                                       bitsize, i, "riscv_vector", "vector");
+     }
  
- #define GEN_OPFV_NARROW_TRANS(NAME, CHECK, HELPER, FRM)            \
-@@ -3021,8 +3014,7 @@ static bool freduction_widen_check(DisasContext *s, arg_rmrr *a)
- {
-     return reduction_widen_check(s, a) &&
-            require_rvf(s) &&
--           require_scale_rvf(s) &&
--           (s->sew != MO_8);
-+           require_scale_rvf(s);
- }
- 
- GEN_OPFVV_WIDEN_TRANS(vfwredusum_vs, freduction_widen_check)
+     gdb_feature_builder_end(&builder);
 -- 
 2.39.2
 
