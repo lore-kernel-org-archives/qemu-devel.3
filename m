@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF993C27C55
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:09:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6C34C27C53
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:10:56 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf4v-0001rS-Ao; Fri, 07 Jun 2024 15:16:45 -0400
+	id 1sFf2i-00033S-0D; Fri, 07 Jun 2024 15:14:28 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf4t-0001r3-B5; Fri, 07 Jun 2024 15:16:43 -0400
+ id 1sFf2g-0002yp-LR; Fri, 07 Jun 2024 15:14:26 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf4r-0002ty-Md; Fri, 07 Jun 2024 15:16:43 -0400
+ id 1sFf2e-0001zL-U4; Fri, 07 Jun 2024 15:14:26 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9148E6E561;
- Fri,  7 Jun 2024 22:14:53 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D4B346E54B;
+ Fri,  7 Jun 2024 22:14:04 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id CA02AE275B;
- Fri,  7 Jun 2024 22:13:58 +0300 (MSK)
-Received: (nullmailer pid 529431 invoked by uid 1000);
- Fri, 07 Jun 2024 19:13:58 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 12896E2747;
+ Fri,  7 Jun 2024 22:13:10 +0300 (MSK)
+Received: (nullmailer pid 528731 invoked by uid 1000);
+ Fri, 07 Jun 2024 19:13:08 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "yang.zhang" <yang.zhang@hexintek.com>,
+Cc: qemu-stable@nongnu.org, Max Chou <max.chou@sifive.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 52/71] hw/intc/riscv_aplic: APLICs should add child
- earlier than realize
-Date: Fri,  7 Jun 2024 22:13:33 +0300
-Message-Id: <20240607191356.529336-8-mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 34/45] target/riscv: rvv: Check single width operator
+ for vector fp widen instructions
+Date: Fri,  7 Jun 2024 22:12:53 +0300
+Message-Id: <20240607191307.528622-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
-References: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
+References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,45 +64,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "yang.zhang" <yang.zhang@hexintek.com>
+From: Max Chou <max.chou@sifive.com>
 
-Since only root APLICs can have hw IRQ lines, aplic->parent should
-be initialized first.
+The require_scale_rvf function only checks the double width operator for
+the vector floating point widen instructions, so most of the widen
+checking functions need to add require_rvf for single width operator.
 
-Fixes: e8f79343cf ("hw/intc: Add RISC-V AIA APLIC device emulation")
+The vfwcvt.f.x.v and vfwcvt.f.xu.v instructions convert single width
+integer to double width float, so the opfxv_widen_check function doesn’t
+need require_rvf for the single width operator(integer).
+
+Signed-off-by: Max Chou <max.chou@sifive.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Signed-off-by: yang.zhang <yang.zhang@hexintek.com>
 Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240409014445.278-1-gaoshanliukou@163.com>
+Message-ID: <20240322092600.1198921-3-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit c76b121840c6ca79dc6305a5f4bcf17c72217d9c)
+(cherry picked from commit 7a999d4dd704aa71fe6416871ada69438b56b1e5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index fc5df0d598..32edd6d07b 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -1000,16 +1000,16 @@ DeviceState *riscv_aplic_create(hwaddr addr, hwaddr size,
-     qdev_prop_set_bit(dev, "msimode", msimode);
-     qdev_prop_set_bit(dev, "mmode", mmode);
- 
-+    if (parent) {
-+        riscv_aplic_add_child(parent, dev);
-+    }
-+
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
- 
-     if (!is_kvm_aia(msimode)) {
-         sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
-     }
- 
--    if (parent) {
--        riscv_aplic_add_child(parent, dev);
--    }
--
-     if (!msimode) {
-         for (i = 0; i < num_harts; i++) {
-             CPUState *cpu = cpu_by_arch_id(hartid_base + i);
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index a5fe92b670..e42f49a6d8 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -2379,6 +2379,7 @@ GEN_OPFVF_TRANS(vfrsub_vf,  opfvf_check)
+ static bool opfvv_widen_check(DisasContext *s, arg_rmrr *a)
+ {
+     return require_rvv(s) &&
++           require_rvf(s) &&
+            require_scale_rvf(s) &&
+            (s->sew != MO_8) &&
+            vext_check_isa_ill(s) &&
+@@ -2421,6 +2422,7 @@ GEN_OPFVV_WIDEN_TRANS(vfwsub_vv, opfvv_widen_check)
+ static bool opfvf_widen_check(DisasContext *s, arg_rmrr *a)
+ {
+     return require_rvv(s) &&
++           require_rvf(s) &&
+            require_scale_rvf(s) &&
+            (s->sew != MO_8) &&
+            vext_check_isa_ill(s) &&
+@@ -2453,6 +2455,7 @@ GEN_OPFVF_WIDEN_TRANS(vfwsub_vf)
+ static bool opfwv_widen_check(DisasContext *s, arg_rmrr *a)
+ {
+     return require_rvv(s) &&
++           require_rvf(s) &&
+            require_scale_rvf(s) &&
+            (s->sew != MO_8) &&
+            vext_check_isa_ill(s) &&
+@@ -2495,6 +2498,7 @@ GEN_OPFWV_WIDEN_TRANS(vfwsub_wv)
+ static bool opfwf_widen_check(DisasContext *s, arg_rmrr *a)
+ {
+     return require_rvv(s) &&
++           require_rvf(s) &&
+            require_scale_rvf(s) &&
+            (s->sew != MO_8) &&
+            vext_check_isa_ill(s) &&
+@@ -3015,6 +3019,7 @@ GEN_OPFVV_TRANS(vfredmin_vs, freduction_check)
+ static bool freduction_widen_check(DisasContext *s, arg_rmrr *a)
+ {
+     return reduction_widen_check(s, a) &&
++           require_rvf(s) &&
+            require_scale_rvf(s) &&
+            (s->sew != MO_8);
+ }
 -- 
 2.39.2
 
