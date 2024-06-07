@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E63A0C27C55
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90A88C27C55
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:41:24 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf2f-0002yD-KN; Fri, 07 Jun 2024 15:14:25 -0400
+	id 1sFf6I-0006IY-Dk; Fri, 07 Jun 2024 15:18:10 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf2d-0002jo-F0; Fri, 07 Jun 2024 15:14:23 -0400
+ id 1sFf6F-000655-TK; Fri, 07 Jun 2024 15:18:08 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf2b-0001qe-PQ; Fri, 07 Jun 2024 15:14:23 -0400
+ id 1sFf6D-00038Z-JZ; Fri, 07 Jun 2024 15:18:07 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9F61D6E549;
- Fri,  7 Jun 2024 22:14:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 234136E570;
+ Fri,  7 Jun 2024 22:14:55 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id CF5CEE2745;
- Fri,  7 Jun 2024 22:13:09 +0300 (MSK)
-Received: (nullmailer pid 528725 invoked by uid 1000);
- Fri, 07 Jun 2024 19:13:08 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 4BF6DE2769;
+ Fri,  7 Jun 2024 22:14:00 +0300 (MSK)
+Received: (nullmailer pid 529475 invoked by uid 1000);
+ Fri, 07 Jun 2024 19:13:58 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yangyu Chen <cyy@cyyself.name>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>, Max Chou <max.chou@sifive.com>,
+Cc: qemu-stable@nongnu.org, Alistair Francis <alistair23@gmail.com>,
+ Eric DeVolder <eric_devolder@yahoo.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 32/45] target/riscv/cpu.c: fix Zvkb extension config
-Date: Fri,  7 Jun 2024 22:12:51 +0300
-Message-Id: <20240607191307.528622-12-mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 66/71] disas/riscv: Decode all of the pmpcfg and
+ pmpaddr CSRs
+Date: Fri,  7 Jun 2024 22:13:47 +0300
+Message-Id: <20240607191356.529336-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
-References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
+References: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,36 +65,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yangyu Chen <cyy@cyyself.name>
+From: Alistair Francis <alistair23@gmail.com>
 
-This code has a typo that writes zvkb to zvkg, causing users can't
-enable zvkb through the config. This patch gets this fixed.
+Previously we only listed a single pmpcfg CSR and the first 16 pmpaddr
+CSRs. This patch fixes this to list all 16 pmpcfg and all 64 pmpaddr
+CSRs are part of the disassembly.
 
-Signed-off-by: Yangyu Chen <cyy@cyyself.name>
-Fixes: ea61ef7097d0 ("target/riscv: Move vector crypto extensions to riscv_cpu_extensions")
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Reviewed-by:  Weiwei Li <liwei1518@gmail.com>
-Message-ID: <tencent_7E34EEF0F90B9A68BF38BEE09EC6D4877C0A@qq.com>
-Cc: qemu-stable <qemu-stable@nongnu.org>
+Reported-by: Eric DeVolder <eric_devolder@yahoo.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit ff33b7a9699e977a050a1014c617a89da1bf8295)
+Fixes: ea10325917 ("RISC-V Disassembler")
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Message-ID: <20240514051615.330979-1-alistair.francis@wdc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 915758c537b5fe09575291f4acd87e2d377a93de)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 83c7c0cf07..77cb59b8a1 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1359,7 +1359,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     /* Vector cryptography extensions */
-     MULTI_EXT_CFG_BOOL("zvbb", ext_zvbb, false),
-     MULTI_EXT_CFG_BOOL("zvbc", ext_zvbc, false),
--    MULTI_EXT_CFG_BOOL("zvkb", ext_zvkg, false),
-+    MULTI_EXT_CFG_BOOL("zvkb", ext_zvkb, false),
-     MULTI_EXT_CFG_BOOL("zvkg", ext_zvkg, false),
-     MULTI_EXT_CFG_BOOL("zvkned", ext_zvkned, false),
-     MULTI_EXT_CFG_BOOL("zvknha", ext_zvknha, false),
+diff --git a/disas/riscv.c b/disas/riscv.c
+index e236c8b5b7..297cfa2f63 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -2190,7 +2190,22 @@ static const char *csr_name(int csrno)
+     case 0x0383: return "mibound";
+     case 0x0384: return "mdbase";
+     case 0x0385: return "mdbound";
+-    case 0x03a0: return "pmpcfg3";
++    case 0x03a0: return "pmpcfg0";
++    case 0x03a1: return "pmpcfg1";
++    case 0x03a2: return "pmpcfg2";
++    case 0x03a3: return "pmpcfg3";
++    case 0x03a4: return "pmpcfg4";
++    case 0x03a5: return "pmpcfg5";
++    case 0x03a6: return "pmpcfg6";
++    case 0x03a7: return "pmpcfg7";
++    case 0x03a8: return "pmpcfg8";
++    case 0x03a9: return "pmpcfg9";
++    case 0x03aa: return "pmpcfg10";
++    case 0x03ab: return "pmpcfg11";
++    case 0x03ac: return "pmpcfg12";
++    case 0x03ad: return "pmpcfg13";
++    case 0x03ae: return "pmpcfg14";
++    case 0x03af: return "pmpcfg15";
+     case 0x03b0: return "pmpaddr0";
+     case 0x03b1: return "pmpaddr1";
+     case 0x03b2: return "pmpaddr2";
+@@ -2207,6 +2222,54 @@ static const char *csr_name(int csrno)
+     case 0x03bd: return "pmpaddr13";
+     case 0x03be: return "pmpaddr14";
+     case 0x03bf: return "pmpaddr15";
++    case 0x03c0: return "pmpaddr16";
++    case 0x03c1: return "pmpaddr17";
++    case 0x03c2: return "pmpaddr18";
++    case 0x03c3: return "pmpaddr19";
++    case 0x03c4: return "pmpaddr20";
++    case 0x03c5: return "pmpaddr21";
++    case 0x03c6: return "pmpaddr22";
++    case 0x03c7: return "pmpaddr23";
++    case 0x03c8: return "pmpaddr24";
++    case 0x03c9: return "pmpaddr25";
++    case 0x03ca: return "pmpaddr26";
++    case 0x03cb: return "pmpaddr27";
++    case 0x03cc: return "pmpaddr28";
++    case 0x03cd: return "pmpaddr29";
++    case 0x03ce: return "pmpaddr30";
++    case 0x03cf: return "pmpaddr31";
++    case 0x03d0: return "pmpaddr32";
++    case 0x03d1: return "pmpaddr33";
++    case 0x03d2: return "pmpaddr34";
++    case 0x03d3: return "pmpaddr35";
++    case 0x03d4: return "pmpaddr36";
++    case 0x03d5: return "pmpaddr37";
++    case 0x03d6: return "pmpaddr38";
++    case 0x03d7: return "pmpaddr39";
++    case 0x03d8: return "pmpaddr40";
++    case 0x03d9: return "pmpaddr41";
++    case 0x03da: return "pmpaddr42";
++    case 0x03db: return "pmpaddr43";
++    case 0x03dc: return "pmpaddr44";
++    case 0x03dd: return "pmpaddr45";
++    case 0x03de: return "pmpaddr46";
++    case 0x03df: return "pmpaddr47";
++    case 0x03e0: return "pmpaddr48";
++    case 0x03e1: return "pmpaddr49";
++    case 0x03e2: return "pmpaddr50";
++    case 0x03e3: return "pmpaddr51";
++    case 0x03e4: return "pmpaddr52";
++    case 0x03e5: return "pmpaddr53";
++    case 0x03e6: return "pmpaddr54";
++    case 0x03e7: return "pmpaddr55";
++    case 0x03e8: return "pmpaddr56";
++    case 0x03e9: return "pmpaddr57";
++    case 0x03ea: return "pmpaddr58";
++    case 0x03eb: return "pmpaddr59";
++    case 0x03ec: return "pmpaddr60";
++    case 0x03ed: return "pmpaddr61";
++    case 0x03ee: return "pmpaddr62";
++    case 0x03ef: return "pmpaddr63";
+     case 0x0780: return "mtohost";
+     case 0x0781: return "mfromhost";
+     case 0x0782: return "mreset";
 -- 
 2.39.2
 
