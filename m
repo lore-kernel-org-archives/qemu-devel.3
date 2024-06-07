@@ -4,84 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA885C27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7304CC27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:28:27 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFbil-0006UZ-Ko; Fri, 07 Jun 2024 11:41:39 -0400
+	id 1sFf2A-00014h-Kx; Fri, 07 Jun 2024 15:13:54 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sFbik-0006Tv-9o
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 11:41:38 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sFbii-0006yd-7f
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 11:41:38 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1f6da06ba24so6123035ad.2
- for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 08:41:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717774894; x=1718379694; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=x1qv6IgBykZGIEulE6jXABhySKz9LjMJH1MzP+GCm8g=;
- b=rWZ9AvOYUcWqiEFxADwZyOY69YyN5OJzF6OQg33WdA5sjogpFodPDO1pCWrgtmsqr/
- AJukBpZfhJKnRhDLvm6rZnY76pNWqJAzWUY17ClD21uAqDzjj4JT3hMqRJCo2SUxn/OT
- yDKcNS33ePtlVGWp5NvubztMVbN9gDCcIxHOUSl9G7rcmCyshZbnOojLXQ/u10gEGjxQ
- 6M5PQr5vSVRjR6gjbyjyvRxzaxD7Tgy3fI590q2dYBD0usFkX7PJzkxu8n0RRZJ/kiZf
- 1PPn4PmPxcXLdifSvn2h67oVAclc6TDNXkIlFZdt23HOJ37vXajeAilqh5M9SbzUJ9WC
- l0hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717774894; x=1718379694;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x1qv6IgBykZGIEulE6jXABhySKz9LjMJH1MzP+GCm8g=;
- b=aiiBnhwkiFIIQ/lUgtLnWKpCSnvQ0epIXCcXp5J9I6B3oWroZAEj4EduRDliSOKSTX
- R1bRjlQHtTQsmuHgKHOymIlvtMvDV1LedUPqdiun6CJlwxHLftnOyGX9nrOJ0vdebg6Z
- dyqcxIGr9q+h8yIV9c7EzuVHosLAtZQb1oMEadkTUYkcD1i29qJUDZASJ0AGrNzlU1/i
- a67ANTJftiEK7AskfORzyrMWxEEcZD0JkHon5PGatUupTkPrwidVhYGpux2Vb+jCztRo
- M2WX8T36l2yMEEtKhwLAfAUqs3hDahCoJ1kbc50C+XeuZcOzsh2WYw42yDVj5ZRoE3vg
- 89jw==
-X-Gm-Message-State: AOJu0YwcEW68lt+25lXH0yROOa7wG51KYHhwjgemhE7gGTu+SViChcBc
- nA1Byj+u07Bha987bPoaNIUFeM9wtmfJSqqF4Hv/tzTS1rg9pZdIE+v7fpFoAQY=
-X-Google-Smtp-Source: AGHT+IEe5tamzQb1kxipIbJw6yoC3/5yJizrhvAxt3i6o7eOo0cRUEtsq+zC5yowfm3b9W7f0OkPnA==
-X-Received: by 2002:a17:903:2306:b0:1f4:a233:c964 with SMTP id
- d9443c01a7336-1f6d0377894mr31365905ad.55.1717774894138; 
- Fri, 07 Jun 2024 08:41:34 -0700 (PDT)
-Received: from [192.168.223.227] ([75.147.178.105])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6bd770405sm35705615ad.108.2024.06.07.08.41.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Jun 2024 08:41:33 -0700 (PDT)
-Message-ID: <91e78fa4-f844-4b79-ba09-46c722f35df8@linaro.org>
-Date: Fri, 7 Jun 2024 08:41:30 -0700
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sFf27-00013j-Ef; Fri, 07 Jun 2024 15:13:51 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sFf1t-0001kG-6B; Fri, 07 Jun 2024 15:13:38 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id C70726E541;
+ Fri,  7 Jun 2024 22:14:03 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 0A189E273E;
+ Fri,  7 Jun 2024 22:13:09 +0300 (MSK)
+Received: (nullmailer pid 528703 invoked by uid 1000);
+ Fri, 07 Jun 2024 19:13:08 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Andrey Shumilin <shum.sdl@nppct.ru>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 25/45] hw/intc/arm_gic: Fix handling of NS view of
+ GICC_APR<n>
+Date: Fri,  7 Jun 2024 22:12:44 +0300
+Message-Id: <20240607191307.528622-5-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
+References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] target/ppc: Move VSX vector with length storage
- access insns to decodetree.
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
-References: <20240607144921.726730-1-rathc@linux.ibm.com>
- <20240607144921.726730-3-rathc@linux.ibm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240607144921.726730-3-rathc@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,45 +66,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/7/24 07:49, Chinmay Rath wrote:
-> +static bool do_ld_st_vl(DisasContext *ctx, arg_X *a,
-> +                        void (*helper)(TCGv_ptr, TCGv, TCGv_ptr, TCGv))
-> +{
-> +    TCGv EA;
-> +    TCGv_ptr xt;
-> +    if (a->rt < 32) {
-> +        REQUIRE_VSX(ctx);
-> +    } else {
-> +        REQUIRE_VECTOR(ctx);
-> +    }
-> +    xt = gen_vsr_ptr(a->rt);
-> +    gen_set_access_type(ctx, ACCESS_INT);
-> +
-> +    if (a->ra) {
-> +        EA = tcg_temp_new();
-> +        tcg_gen_mov_tl(EA, cpu_gpr[a->ra]);
-> +    } else {
-> +        EA = tcg_constant_tl(0);
-> +    }
-> +    if (NARROW_MODE(ctx)) {
-> +        tcg_gen_ext32u_tl(EA, EA);
+From: Andrey Shumilin <shum.sdl@nppct.ru>
 
-ra == 0, narrow mode, will crash, due to write into constant 0.
-Obviously 0 does not need extending, so this could be
+In gic_cpu_read() and gic_cpu_write(), we delegate the handling of
+reading and writing the Non-Secure view of the GICC_APR<n> registers
+to functions gic_apr_ns_view() and gic_apr_write_ns_view().
+Unfortunately we got the order of the arguments wrong, swapping the
+CPU number and the register number (which the compiler doesn't catch
+because they're both integers).
 
-     if (!a->ra) {
-         ea = constant 0;
-     } else if (narrow mode) {
-         ea = tcg_temp_new();
-         tcg_gen_ext32u_tl(ea, cpu_gpr[a->ra]);
-     } else {
-         ra = cpu_gpr[a->ra];
-     }
+Most guests probably didn't notice this bug because directly
+accessing the APR registers is typically something only done by
+firmware when it is doing state save for going into a sleep mode.
 
+Correct the mismatched call arguments.
 
-Aren't there existing helper functions for computing this address?
-And if not, better to create one.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
+Cc: qemu-stable@nongnu.org
+Fixes: 51fd06e0ee ("hw/intc/arm_gic: Fix handling of GICC_APR<n>, GICC_NSAPR<n> registers")
+Signed-off-by: Andrey Shumilin <shum.sdl@nppct.ru>
+[PMM: Rewrote commit message]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Bennée<alex.bennee@linaro.org>
+(cherry picked from commit daafa78b297291fea36fb4daeed526705fa7c035)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-r~
+diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+index 074cf50af2..e4b8437f8b 100644
+--- a/hw/intc/arm_gic.c
++++ b/hw/intc/arm_gic.c
+@@ -1658,7 +1658,7 @@ static MemTxResult gic_cpu_read(GICState *s, int cpu, int offset,
+             *data = s->h_apr[gic_get_vcpu_real_id(cpu)];
+         } else if (gic_cpu_ns_access(s, cpu, attrs)) {
+             /* NS view of GICC_APR<n> is the top half of GIC_NSAPR<n> */
+-            *data = gic_apr_ns_view(s, regno, cpu);
++            *data = gic_apr_ns_view(s, cpu, regno);
+         } else {
+             *data = s->apr[regno][cpu];
+         }
+@@ -1746,7 +1746,7 @@ static MemTxResult gic_cpu_write(GICState *s, int cpu, int offset,
+             s->h_apr[gic_get_vcpu_real_id(cpu)] = value;
+         } else if (gic_cpu_ns_access(s, cpu, attrs)) {
+             /* NS view of GICC_APR<n> is the top half of GIC_NSAPR<n> */
+-            gic_apr_write_ns_view(s, regno, cpu, value);
++            gic_apr_write_ns_view(s, cpu, regno, value);
+         } else {
+             s->apr[regno][cpu] = value;
+         }
+-- 
+2.39.2
+
 
