@@ -4,40 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1B0CC27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 13:55:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22924C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 13:55:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFa3H-0004w5-MA; Fri, 07 Jun 2024 09:54:43 -0400
+	id 1sFa3Q-0005Jl-6m; Fri, 07 Jun 2024 09:54:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1sFa3F-0004ts-R5
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:54:41 -0400
+ id 1sFa3O-0005J6-M1
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:54:50 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1sFa3C-0008AT-W3
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:54:41 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VwjJ50rQvz6JB86;
- Fri,  7 Jun 2024 21:50:13 +0800 (CST)
+ id 1sFa3M-0008As-Te
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:54:50 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VwjHw4tQyz6H7KH;
+ Fri,  7 Jun 2024 21:50:04 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 51901140CB9;
- Fri,  7 Jun 2024 21:54:37 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 3D4E4140B33;
+ Fri,  7 Jun 2024 21:54:47 +0800 (CST)
 Received: from A2303104131.china.huawei.com (10.202.227.28) by
  lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 7 Jun 2024 14:54:29 +0100
+ 15.1.2507.39; Fri, 7 Jun 2024 14:54:39 +0100
 To: <qemu-devel@nongnu.org>, <peterx@redhat.com>, <farosas@suse.de>
 CC: <yuan1.liu@intel.com>, <pbonzini@redhat.com>, <berrange@redhat.com>,
  <marcandre.lureau@redhat.com>, <thuth@redhat.com>, <armbru@redhat.com>,
  <lvivier@redhat.com>, <linuxarm@huawei.com>, <linwenkai6@hisilicon.com>,
  <zhangfei.gao@linaro.org>, <huangchenghai2@huawei.com>
-Subject: [PATCH v2 4/7] migration/multifd: Add UADK initialization
-Date: Fri, 7 Jun 2024 14:53:07 +0100
-Message-ID: <20240607135310.46320-5-shameerali.kolothum.thodi@huawei.com>
+Subject: [PATCH v2 5/7] migration/multifd: Add UADK based compression and
+ decompression
+Date: Fri, 7 Jun 2024 14:53:08 +0100
+Message-ID: <20240607135310.46320-6-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: git-send-email 2.12.0.windows.1
 In-Reply-To: <20240607135310.46320-1-shameerali.kolothum.thodi@huawei.com>
 References: <20240607135310.46320-1-shameerali.kolothum.thodi@huawei.com>
@@ -72,236 +73,179 @@ From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Initialize UADK session and allocate buffers required. The actual
-compression/decompression will only be done in a subsequent patch.
+Uses UADK wd_do_comp_sync() API to (de)compress a normal page using
+hardware accelerator.
 
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 ---
- migration/multifd-uadk.c | 209 ++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 208 insertions(+), 1 deletion(-)
+ migration/multifd-uadk.c | 132 ++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 130 insertions(+), 2 deletions(-)
 
 diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
-index c2bb07535b..535411a405 100644
+index 535411a405..70bba92eaa 100644
 --- a/migration/multifd-uadk.c
 +++ b/migration/multifd-uadk.c
-@@ -12,9 +12,216 @@
- 
+@@ -13,6 +13,7 @@
  #include "qemu/osdep.h"
  #include "qemu/module.h"
-+#include "qapi/error.h"
-+#include "migration.h"
-+#include "multifd.h"
-+#include "options.h"
-+#include "uadk/wd_comp.h"
-+#include "uadk/wd_sched.h"
-+
-+struct wd_data {
-+    handle_t handle;
-+    uint8_t *buf;
-+    uint32_t *buf_hdr;
-+};
-+
-+static bool uadk_hw_init(void)
+ #include "qapi/error.h"
++#include "exec/ramblock.h"
+ #include "migration.h"
+ #include "multifd.h"
+ #include "options.h"
+@@ -142,6 +143,15 @@ static void multifd_uadk_send_cleanup(MultiFDSendParams *p, Error **errp)
+     p->compress_data = NULL;
+ }
+ 
++static inline void prepare_next_iov(MultiFDSendParams *p, void *base,
++                                    uint32_t len)
 +{
-+    char alg[] = "zlib";
-+    int ret;
-+
-+    ret = wd_comp_init2(alg, SCHED_POLICY_RR, TASK_HW);
-+    if (ret && ret != -WD_EEXIST) {
-+        return false;
-+    } else {
-+        return true;
-+    }
++    p->iov[p->iovs_num].iov_base = (uint8_t *)base;
++    p->iov[p->iovs_num].iov_len = len;
++    p->next_packet_size += len;
++    p->iovs_num++;
 +}
 +
-+static struct wd_data *multifd_uadk_init_sess(uint32_t count,
-+                                              uint32_t page_size,
-+                                              bool compress, Error **errp)
-+{
-+    struct wd_comp_sess_setup ss = {0};
-+    struct sched_params param = {0};
-+    uint32_t size = count * page_size;
-+    struct wd_data *wd;
+ /**
+  * multifd_uadk_send_prepare: prepare data to be able to send
+  *
+@@ -155,7 +165,56 @@ static void multifd_uadk_send_cleanup(MultiFDSendParams *p, Error **errp)
+  */
+ static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error **errp)
+ {
+-    return -1;
++    struct wd_data *uadk_data = p->compress_data;
++    uint32_t hdr_size;
++    uint8_t *buf = uadk_data->buf;
++    int ret = 0;
 +
-+    if (!uadk_hw_init()) {
-+        error_setg(errp, "multifd: UADK hardware not available");
-+        return NULL;
-+    }
-+
-+    wd = g_new0(struct wd_data, 1);
-+    ss.alg_type = WD_ZLIB;
-+    if (compress) {
-+        ss.op_type = WD_DIR_COMPRESS;
-+        /* Add an additional page for handling output > input */
-+        size += page_size;
-+    } else {
-+        ss.op_type = WD_DIR_DECOMPRESS;
-+    }
-+
-+    /* We use default level 1 compression and 4K window size */
-+    param.type = ss.op_type;
-+    ss.sched_param = &param;
-+
-+    wd->handle = wd_comp_alloc_sess(&ss);
-+    if (!wd->handle) {
-+        error_setg(errp, "multifd: failed wd_comp_alloc_sess");
++    if (!multifd_send_prepare_common(p)) {
 +        goto out;
 +    }
 +
-+    wd->buf = g_try_malloc(size);
-+    if (!wd->buf) {
-+        error_setg(errp, "multifd: out of mem for uadk buf");
-+        goto out_free_sess;
-+    }
-+    wd->buf_hdr = g_new0(uint32_t, count);
-+    return wd;
++    hdr_size = p->pages->normal_num * sizeof(uint32_t);
++    /* prepare the header that stores the lengths of all compressed data */
++    prepare_next_iov(p, uadk_data->buf_hdr, hdr_size);
 +
-+out_free_sess:
-+    wd_comp_free_sess(wd->handle);
++    for (int i = 0; i < p->pages->normal_num; i++) {
++        struct wd_comp_req creq = {
++            .op_type = WD_DIR_COMPRESS,
++            .src     = p->pages->block->host + p->pages->offset[i],
++            .src_len = p->page_size,
++            .dst     = buf,
++            /* Set dst_len to double the src in case compressed out >= page_size */
++            .dst_len = p->page_size * 2,
++        };
++
++        ret = wd_do_comp_sync(uadk_data->handle, &creq);
++        if (ret || creq.status) {
++            error_setg(errp, "multifd %u: failed compression, ret %d status %d",
++                       p->id, ret, creq.status);
++            return -1;
++        }
++        if (creq.dst_len < p->page_size) {
++            uadk_data->buf_hdr[i] = cpu_to_be32(creq.dst_len);
++            prepare_next_iov(p, buf, creq.dst_len);
++            buf += creq.dst_len;
++        } else {
++            /*
++             * Send raw data if compressed out >= page_size. We might be better
++             * off sending raw data if output is slightly less than page_size
++             * as well because at the receive end we can skip the decompression.
++             * But it is tricky to find the right number here.
++             */
++            uadk_data->buf_hdr[i] = cpu_to_be32(p->page_size);
++            prepare_next_iov(p, p->pages->block->host + p->pages->offset[i],
++                             p->page_size);
++            buf += p->page_size;
++        }
++    }
 +out:
-+    wd_comp_uninit2();
-+    g_free(wd);
-+    return NULL;
-+}
-+
-+static void multifd_uadk_uninit_sess(struct wd_data *wd)
-+{
-+    wd_comp_free_sess(wd->handle);
-+    wd_comp_uninit2();
-+    g_free(wd->buf);
-+    g_free(wd->buf_hdr);
-+    g_free(wd);
-+}
-+
-+/**
-+ * multifd_uadk_send_setup: setup send side
-+ *
-+ * Returns 0 for success or -1 for error
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static int multifd_uadk_send_setup(MultiFDSendParams *p, Error **errp)
-+{
-+    struct wd_data *wd;
-+
-+    wd = multifd_uadk_init_sess(p->page_count, p->page_size, true, errp);
-+    if (!wd) {
-+        return -1;
-+    }
-+
-+    p->compress_data = wd;
-+    assert(p->iov == NULL);
-+    /*
-+     * Each page will be compressed independently and sent using an IOV. The
-+     * additional two IOVs are used to store packet header and compressed data
-+     * length
-+     */
-+
-+    p->iov = g_new0(struct iovec, p->page_count + 2);
++    p->flags |= MULTIFD_FLAG_UADK;
++    multifd_send_fill_packet(p);
 +    return 0;
-+}
-+
-+/**
-+ * multifd_uadk_send_cleanup: cleanup send side
-+ *
-+ * Close the channel and return memory.
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static void multifd_uadk_send_cleanup(MultiFDSendParams *p, Error **errp)
-+{
-+    struct wd_data *wd = p->compress_data;
-+
-+    multifd_uadk_uninit_sess(wd);
-+    p->compress_data = NULL;
-+}
-+
-+/**
-+ * multifd_uadk_send_prepare: prepare data to be able to send
-+ *
-+ * Create a compressed buffer with all the pages that we are going to
-+ * send.
-+ *
-+ * Returns 0 for success or -1 for error
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error **errp)
-+{
-+    return -1;
-+}
-+
-+/**
-+ * multifd_uadk_recv_setup: setup receive side
-+ *
-+ * Create the compressed channel and buffer.
-+ *
-+ * Returns 0 for success or -1 for error
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static int multifd_uadk_recv_setup(MultiFDRecvParams *p, Error **errp)
-+{
-+    struct wd_data *wd;
-+
-+    wd = multifd_uadk_init_sess(p->page_count, p->page_size, false, errp);
-+    if (!wd) {
-+        return -1;
-+    }
-+    p->compress_data = wd;
-+    return 0;
-+}
-+
-+/**
-+ * multifd_uadk_recv_cleanup: cleanup receive side
-+ *
-+ * Close the channel and return memory.
-+ *
-+ * @p: Params for the channel that we are using
-+ */
-+static void multifd_uadk_recv_cleanup(MultiFDRecvParams *p)
-+{
-+    struct wd_data *wd = p->compress_data;
-+
-+    multifd_uadk_uninit_sess(wd);
-+    p->compress_data = NULL;
-+}
-+
-+/**
-+ * multifd_uadk_recv: read the data from the channel into actual pages
-+ *
-+ * Read the compressed buffer, and uncompress it into the actual
-+ * pages.
-+ *
-+ * Returns 0 for success or -1 for error
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
-+{
-+    return -1;
-+}
-+
-+static MultiFDMethods multifd_uadk_ops = {
-+    .send_setup = multifd_uadk_send_setup,
-+    .send_cleanup = multifd_uadk_send_cleanup,
-+    .send_prepare = multifd_uadk_send_prepare,
-+    .recv_setup = multifd_uadk_recv_setup,
-+    .recv_cleanup = multifd_uadk_recv_cleanup,
-+    .recv = multifd_uadk_recv,
-+};
- 
- static void multifd_uadk_register(void)
- {
--    /* noop for now */
-+    multifd_register_ops(MULTIFD_COMPRESSION_UADK, &multifd_uadk_ops);
  }
- migration_init(multifd_uadk_register);
+ 
+ /**
+@@ -208,7 +267,76 @@ static void multifd_uadk_recv_cleanup(MultiFDRecvParams *p)
+  */
+ static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
+ {
+-    return -1;
++    struct wd_data *uadk_data = p->compress_data;
++    uint32_t in_size = p->next_packet_size;
++    uint32_t flags = p->flags & MULTIFD_FLAG_COMPRESSION_MASK;
++    uint32_t hdr_len = p->normal_num * sizeof(uint32_t);
++    uint32_t data_len = 0;
++    uint8_t *buf = uadk_data->buf;
++    int ret = 0;
++
++    if (flags != MULTIFD_FLAG_UADK) {
++        error_setg(errp, "multifd %u: flags received %x flags expected %x",
++                   p->id, flags, MULTIFD_FLAG_ZLIB);
++        return -1;
++    }
++
++    multifd_recv_zero_page_process(p);
++    if (!p->normal_num) {
++        assert(in_size == 0);
++        return 0;
++    }
++
++    /* read compressed data lengths */
++    assert(hdr_len < in_size);
++    ret = qio_channel_read_all(p->c, (void *) uadk_data->buf_hdr,
++                               hdr_len, errp);
++    if (ret != 0) {
++        return ret;
++    }
++
++    for (int i = 0; i < p->normal_num; i++) {
++        uadk_data->buf_hdr[i] = be32_to_cpu(uadk_data->buf_hdr[i]);
++        data_len += uadk_data->buf_hdr[i];
++        assert(uadk_data->buf_hdr[i] <= p->page_size);
++    }
++
++    /* read compressed data */
++    assert(in_size == hdr_len + data_len);
++    ret = qio_channel_read_all(p->c, (void *)buf, data_len, errp);
++    if (ret != 0) {
++        return ret;
++    }
++
++    for (int i = 0; i < p->normal_num; i++) {
++        struct wd_comp_req creq = {
++            .op_type = WD_DIR_DECOMPRESS,
++            .src     = buf,
++            .src_len = uadk_data->buf_hdr[i],
++            .dst     = p->host + p->normal[i],
++            .dst_len = p->page_size,
++        };
++
++        if (uadk_data->buf_hdr[i] == p->page_size) {
++            memcpy(p->host + p->normal[i], buf, p->page_size);
++            buf += p->page_size;
++            continue;
++        }
++
++        ret = wd_do_comp_sync(uadk_data->handle, &creq);
++        if (ret || creq.status) {
++            error_setg(errp, "multifd %u: failed decompression, ret %d status %d",
++                       p->id, ret, creq.status);
++            return -1;
++        }
++        if (creq.dst_len != p->page_size) {
++            error_setg(errp, "multifd %u: decompressed length error", p->id);
++            return -1;
++        }
++        buf += uadk_data->buf_hdr[i];
++     }
++
++    return 0;
+ }
+ 
+ static MultiFDMethods multifd_uadk_ops = {
 -- 
 2.34.1
 
