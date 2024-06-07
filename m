@@ -4,74 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 689D7C27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1091DC27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 23:52:00 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFakj-0005kT-I8; Fri, 07 Jun 2024 10:39:37 -0400
+	id 1sFeWj-0001JZ-Hn; Fri, 07 Jun 2024 14:41:25 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sFaki-0005cy-Ky
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:39:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
+ id 1sFeWi-0001It-98
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 14:41:24 -0400
+Received: from mail-bn8nam12on2080.outbound.protection.outlook.com
+ ([40.107.237.80] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sFakh-0003Oa-2i
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:39:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717771174;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sxoYtCwqn6c+3/9Ce6QALKIyPjypJJl1PydGzJDqgAc=;
- b=AkOdpJlvTIHM3limNwW7n7xsOYYOme78iQbY9I1fbWjPYJwCwPajSVHUp5lNl6zdD8UFbB
- KqcNDbNZopG3h3Jqh766mI8o3JQcLV7pn1RRx5Vgqi1nTqd4xYoQJGkQH7x+mMxFt541Up
- ZrfFisQ94u47ZoD0NDjEbVZx2+re8eU=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-JNvzNWrMMkeB4zzqKL3pMA-1; Fri,
- 07 Jun 2024 10:39:28 -0400
-X-MC-Unique: JNvzNWrMMkeB4zzqKL3pMA-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A7D7D1955F36; Fri,  7 Jun 2024 14:39:26 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.39.193.191])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 81D1A1956050; Fri,  7 Jun 2024 14:39:21 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
- imammedo@redhat.com, peter.maydell@linaro.org, clg@redhat.com,
- yanghliu@redhat.com, zhenzhong.duan@intel.com
-Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
- berrange@redhat.com
-Subject: [RFC v2 2/7] virtio-iommu: Implement set|unset]_iommu_device()
- callbacks
-Date: Fri,  7 Jun 2024 16:37:22 +0200
-Message-ID: <20240607143905.765133-3-eric.auger@redhat.com>
-In-Reply-To: <20240607143905.765133-1-eric.auger@redhat.com>
-References: <20240607143905.765133-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
+ id 1sFeWg-0004zZ-Jq
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 14:41:24 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=PCVnwW2Z91GLQSc0i5IXdgUigj4rUx1NCX+X/287F4MN0mJupRWFsF5x975+hlMA7jhtFBazu6pXovwG6UL19gpyCUgwZi8z+ORm53JXl06X/ZrGbZR3vUZCHutdUCGC98zWinPoWnCbkdXFQndSDChPn7fk3RjEeI5re0UojcKBruNrj3W2Aat9eEYntihhm3lXGddAQwvEDdGK5oYMPIxu3eHOCKtcnZOnnEZefFkIWrq0vNDfP1R55bBXIAX9kiHMq5BeEvnHF3M68p+e+T7X2mU83z/WmY8sXh2v2rs4VqB8sMUn8kHWyStqKXB12iXXAVy4OJFgq48ApHJgHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=I8F0oGA8VEPZYg934kR/lZOH1mCEaW9Eu2/EEHu3xmE=;
+ b=cZMgzNpJnDy7Tq7kQsmJcF1XjtlHAySjF7R6lEArE75Z4RX0OTTfNraOy+z/8w8sW5O8iwcNJYCjcX2kQBO6ZZeV68lCL6PkT/lfddFwx933nWU93AEWKP9XKQchzl6z7UqhQlb6E7PmSCbO3aNWv/FFjdApc8Cb8oVryQp4s93q5hdc+DmVRPl9dysBrBvaxnzdbcIC5Z3UYTRfisnJ93cF7dxNDUuKmvI8gMcmgPfSFfYQKBgyrh+6QrgFDaJx7q96xlihTthZpNL3tOp2+j+Y/hrdZY6tehT7lM3yO1l5N6E+m3w0LcdcAghDTn8H6GXWBk4uGRdtHtxa7d1rOQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=I8F0oGA8VEPZYg934kR/lZOH1mCEaW9Eu2/EEHu3xmE=;
+ b=MQfprpVeuiGEDIjGwqPXS4nHPj25xvTyRcPsCTZs1chK0RV1RRvftsHDn9OOGuJ7jdBJDQEgpSDeH6lnd9+DMliTf+34wPTfUvC2YUUoODBzanWUPpMqMwow1+FWJHm8porkee5WpsAJ5DlwXoO1u4GyS1bpcThMPZQk9TZJ0pE=
+Received: from MW2PR2101CA0003.namprd21.prod.outlook.com (2603:10b6:302:1::16)
+ by SA3PR12MB9131.namprd12.prod.outlook.com (2603:10b6:806:395::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.34; Fri, 7 Jun
+ 2024 18:36:17 +0000
+Received: from CO1PEPF000044F6.namprd21.prod.outlook.com
+ (2603:10b6:302:1:cafe::8d) by MW2PR2101CA0003.outlook.office365.com
+ (2603:10b6:302:1::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.7 via Frontend
+ Transport; Fri, 7 Jun 2024 18:36:13 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CO1PEPF000044F6.mail.protection.outlook.com (10.167.241.196) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7677.0 via Frontend Transport; Fri, 7 Jun 2024 18:36:17 +0000
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Fri, 7 Jun
+ 2024 13:36:13 -0500
+Received: from pankaj-M75q.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.35 via Frontend
+ Transport; Fri, 7 Jun 2024 13:36:12 -0500
+From: Pankaj Gupta <pankaj.gupta@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <brijesh.singh@amd.com>, <dovmurik@linux.ibm.com>, <armbru@redhat.com>,
+ <michael.roth@amd.com>, <pbonzini@redhat.com>, <thomas.lendacky@amd.com>,
+ <peter.maydell@linaro.org>, <pankaj.gupta@amd.com>
+Subject: [PATCH 3/3] i386/sev: Return when sev_common is null
+Date: Fri, 7 Jun 2024 13:36:11 -0500
+Message-ID: <20240607183611.1111100-4-pankaj.gupta@amd.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240607183611.1111100-1-pankaj.gupta@amd.com>
+References: <20240607183611.1111100-1-pankaj.gupta@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain
+Received-SPF: None (SATLEXMB04.amd.com: pankaj.gupta@amd.com does not
+ designate permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000044F6:EE_|SA3PR12MB9131:EE_
+X-MS-Office365-Filtering-Correlation-Id: fabf66d4-c2e6-4134-f99d-08dc8720b7dd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230031|36860700004|1800799015|82310400017|376005; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?JYxGin/nz8BHfusDsL/mgmbK/ufRgqf2skRKoESXwqyC/EpXClp2QxPpFnmK?=
+ =?us-ascii?Q?HrY1D/d6D0aChX90zLX1mf5H3QlAvF4/ijnCXpHVrh7ZCb8uMuXAmCg852LA?=
+ =?us-ascii?Q?NLRO1dkuv0O66i4NUCe0pPFqKdP0lXM10diFWnBMbYADyWLG2/r3uqpd8+6/?=
+ =?us-ascii?Q?Cu/Nb02lpxEa2YPOH0IeEC3XOi6FPJ98r6QP2lpb4ebnvsI7p5qYUaJHQ8Ic?=
+ =?us-ascii?Q?Lg5EoTUjVgt9J/VQ4oQgHSvCfOS1CJNXgyX7GdcnivZk3pLnaYJd5D9x9EDX?=
+ =?us-ascii?Q?59lz8R5LqnTubrAGnjM1UaUgP5eY2BomLd6SUobyYRDVrk7/x4MgBYS0VEbK?=
+ =?us-ascii?Q?u2u5zsLyue1UUNYShIv7UyUTmb7WuPNQBzeQKobIQblteesJ7zO1KZutOA2A?=
+ =?us-ascii?Q?URi3ZHXuq8nlxXC+3ZyhVnjlJSSUwzR3h++lfGooZvBK72peEwPTKCremiUG?=
+ =?us-ascii?Q?f+lcHrb3xe983vc1oS6gRARHOFIQDzyaA+oq25s12yG/ghMXmy27b1H5zPpS?=
+ =?us-ascii?Q?53Tk8t2Qhlu8OGxh6BKHp2S7DNoD4e8mNQgNViB4bWYfntmKOm/FOij8F6k9?=
+ =?us-ascii?Q?xpkSCZh/n/tFoIuZ5jom9FMXSPs4U8QIaub+3lUw23nKUaW3aMYdhTv23QnW?=
+ =?us-ascii?Q?J6oX48mXH2DsnfkPMzTJI0hb+9wafgYMSMbxnq9AiW3H3F7CYQrmgn4PyP41?=
+ =?us-ascii?Q?6HMV86lbpGPaveEneMZObuO53qtuDEI5RkwrtT0MqaH6ZN/hOi4LdaBCbCdF?=
+ =?us-ascii?Q?LB7Fq5Q65GvDt5gkgTgowjnh8S/DsQ4LdHB0McGkw4OhP3WDg4hTzfpKM27a?=
+ =?us-ascii?Q?whrHkZ+pmGeGFl/tTuwNNYx2+sZL3WED2DpMwIC7gqZEgL5pZJTl4jE3n+ds?=
+ =?us-ascii?Q?HQb/cVB2TmYluHX5qLF0fKM+Mnp+wWPEYtUGC8NclAOpxHFXXWcMGfX6WNSC?=
+ =?us-ascii?Q?J+G5Fb546PJZZ3l1yFGD7HJ+da7FXsBRd+Zo8VR0hkKz5PAaC7HLOF1rI08b?=
+ =?us-ascii?Q?msQ3FNc5AGNcALVWBQlfT1+6K0AS1vjVwj5RSPyuiu/613I2pnfIGRg1ZloA?=
+ =?us-ascii?Q?CQBb8HeFBK5wET1bUb6fiI+nP5tV7kU59uZktJR9ZTdox8hRMk75WOi/8fJZ?=
+ =?us-ascii?Q?YRqLM0V++FeSFAtYEiFNCmWubYWcW3bFRoQ/Yz6U8p9Uag8e6i3c+xaAJEPI?=
+ =?us-ascii?Q?YdrdzbzErPrNYLU59/lAk5Pk4Nl9BpEJJ+E1j9Dxlooavw/SJcN3TVXVi4sw?=
+ =?us-ascii?Q?b3zkuIxqvdVp9pk5GJlAAzAQIJq9wRd5c/GiXetMMW7H+R5gu167nRpCNw6b?=
+ =?us-ascii?Q?GrAalM7Po6LKoBeBrzMdCuOgVK09D4PRBCxKdV3JZeUqUrjMWGoOQlvIhQfj?=
+ =?us-ascii?Q?mmO5axVp+7UN+ovFU0OAe89uIyRj/AJj42CxQN+te9laG9iOdw=3D=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(36860700004)(1800799015)(82310400017)(376005); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2024 18:36:17.1686 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: fabf66d4-c2e6-4134-f99d-08dc8720b7dd
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000044F6.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB9131
+Received-SPF: permerror client-ip=40.107.237.80;
+ envelope-from=Pankaj.Gupta@amd.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,167 +150,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement PCIIOMMUOPs [set|unset]_iommu_device() callbacks.
-In set(), a VirtioHostIOMMUDevice is allocated which holds
-a reference to the HostIOMMUDevice. This object is stored in a hash
-table indexed by PCI BDF. The handle to the Host IOMMU device
-will allow to retrieve information related to the physical IOMMU.
+coverity #1546885
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
+fixes: 16dcf200dc ("i386/sev: Introduce "sev-common" type to encapsulate common SEV state")
+Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
 ---
- include/hw/virtio/virtio-iommu.h |  9 ++++
- hw/virtio/virtio-iommu.c         | 87 ++++++++++++++++++++++++++++++++
- 2 files changed, 96 insertions(+)
+ target/i386/sev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
-index 83a52cc446..4f664ea0c4 100644
---- a/include/hw/virtio/virtio-iommu.h
-+++ b/include/hw/virtio/virtio-iommu.h
-@@ -45,6 +45,14 @@ typedef struct IOMMUDevice {
-     bool probe_done;
- } IOMMUDevice;
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index f18432f58e..c40562dce3 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -587,6 +587,7 @@ static SevCapability *sev_get_capabilities(Error **errp)
+     sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+     if (!sev_common) {
+         error_setg(errp, "SEV is not configured");
++        return NULL;
+     }
  
-+typedef struct VirtioHostIOMMUDevice {
-+    void *viommu;
-+    PCIBus *bus;
-+    uint8_t devfn;
-+    HostIOMMUDevice *dev;
-+    QLIST_ENTRY(VirtioHostIOMMUDevice) next;
-+} VirtioHostIOMMUDevice;
-+
- typedef struct IOMMUPciBus {
-     PCIBus       *bus;
-     IOMMUDevice  *pbdev[]; /* Parent array is sparse, so dynamically alloc */
-@@ -57,6 +65,7 @@ struct VirtIOIOMMU {
-     struct virtio_iommu_config config;
-     uint64_t features;
-     GHashTable *as_by_busptr;
-+    GHashTable *host_iommu_devices;
-     IOMMUPciBus *iommu_pcibus_by_bus_num[PCI_BUS_MAX];
-     PCIBus *primary_bus;
-     ReservedRegion *prop_resv_regions;
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 1326c6ec41..0680a357f0 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -28,6 +28,7 @@
- #include "sysemu/kvm.h"
- #include "sysemu/reset.h"
- #include "sysemu/sysemu.h"
-+#include "sysemu/host_iommu_device.h"
- #include "qemu/reserved-region.h"
- #include "qemu/units.h"
- #include "qapi/error.h"
-@@ -69,6 +70,11 @@ typedef struct VirtIOIOMMUMapping {
-     uint32_t flags;
- } VirtIOIOMMUMapping;
- 
-+struct hiod_key {
-+    PCIBus *bus;
-+    uint8_t devfn;
-+};
-+
- static inline uint16_t virtio_iommu_get_bdf(IOMMUDevice *dev)
- {
-     return PCI_BUILD_BDF(pci_bus_num(dev->bus), dev->devfn);
-@@ -462,8 +468,86 @@ static AddressSpace *virtio_iommu_find_add_as(PCIBus *bus, void *opaque,
-     return &sdev->as;
- }
- 
-+static gboolean hiod_equal(gconstpointer v1, gconstpointer v2)
-+{
-+    const struct hiod_key *key1 = v1;
-+    const struct hiod_key *key2 = v2;
-+
-+    return (key1->bus == key2->bus) && (key1->devfn == key2->devfn);
-+}
-+
-+static guint hiod_hash(gconstpointer v)
-+{
-+    const struct hiod_key *key = v;
-+    guint value = (guint)(uintptr_t)key->bus;
-+
-+    return (guint)(value << 8 | key->devfn);
-+}
-+
-+static VirtioHostIOMMUDevice *
-+get_host_iommu_device(VirtIOIOMMU *viommu, PCIBus *bus, int devfn) {
-+    struct hiod_key key = {
-+        .bus = bus,
-+        .devfn = devfn,
-+    };
-+
-+    return g_hash_table_lookup(viommu->host_iommu_devices, &key);
-+}
-+
-+static bool virtio_iommu_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-+                                          HostIOMMUDevice *hiod, Error **errp)
-+{
-+    VirtIOIOMMU *viommu = opaque;
-+    VirtioHostIOMMUDevice *vhiod;
-+    struct hiod_key *new_key;
-+
-+    assert(hiod);
-+
-+    vhiod = get_host_iommu_device(viommu, bus, devfn);
-+    if (vhiod) {
-+        error_setg(errp, "VirtioHostIOMMUDevice already exists");
-+        return false;
-+    }
-+
-+    vhiod = g_malloc0(sizeof(VirtioHostIOMMUDevice));
-+    vhiod->bus = bus;
-+    vhiod->devfn = (uint8_t)devfn;
-+    vhiod->viommu = viommu;
-+    vhiod->dev = hiod;
-+
-+    new_key = g_malloc(sizeof(*new_key));
-+    new_key->bus = bus;
-+    new_key->devfn = devfn;
-+
-+    object_ref(hiod);
-+    g_hash_table_insert(viommu->host_iommu_devices, new_key, vhiod);
-+
-+    return true;
-+}
-+
-+static void
-+virtio_iommu_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
-+{
-+    VirtIOIOMMU *viommu = opaque;
-+    VirtioHostIOMMUDevice *vhiod;
-+    struct hiod_key key = {
-+        .bus = bus,
-+        .devfn = devfn,
-+    };
-+
-+    vhiod = g_hash_table_lookup(viommu->host_iommu_devices, &key);
-+    if (!vhiod) {
-+        return;
-+    }
-+
-+    g_hash_table_remove(viommu->host_iommu_devices, &key);
-+    object_unref(vhiod->dev);
-+}
-+
- static const PCIIOMMUOps virtio_iommu_ops = {
-     .get_address_space = virtio_iommu_find_add_as,
-+    .set_iommu_device = virtio_iommu_set_iommu_device,
-+    .unset_iommu_device = virtio_iommu_unset_iommu_device,
- };
- 
- static int virtio_iommu_attach(VirtIOIOMMU *s,
-@@ -1357,6 +1441,9 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
- 
-     s->as_by_busptr = g_hash_table_new_full(NULL, NULL, NULL, g_free);
- 
-+    s->host_iommu_devices = g_hash_table_new_full(hiod_hash, hiod_equal,
-+                                                  g_free, g_free);
-+
-     if (s->primary_bus) {
-         pci_setup_iommu(s->primary_bus, &virtio_iommu_ops, s);
-     } else {
+     sev_device = object_property_get_str(OBJECT(sev_common), "sev-device",
 -- 
-2.41.0
+2.34.1
 
 
