@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F6B8C27C53
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:25:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 667E3C27C53
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:26:23 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf5N-00038H-I8; Fri, 07 Jun 2024 15:17:13 -0400
+	id 1sFf41-0007Qd-NE; Fri, 07 Jun 2024 15:15:49 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf5L-00036x-Ev; Fri, 07 Jun 2024 15:17:11 -0400
+ id 1sFf3z-0007QP-NQ; Fri, 07 Jun 2024 15:15:47 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf5I-0002zR-At; Fri, 07 Jun 2024 15:17:10 -0400
+ id 1sFf3y-0002Zp-0Y; Fri, 07 Jun 2024 15:15:47 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EDC726E565;
- Fri,  7 Jun 2024 22:14:53 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4C0EA6E556;
+ Fri,  7 Jun 2024 22:14:06 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 2BA28E275F;
- Fri,  7 Jun 2024 22:13:59 +0300 (MSK)
-Received: (nullmailer pid 529444 invoked by uid 1000);
- Fri, 07 Jun 2024 19:13:58 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 84BBEE2752;
+ Fri,  7 Jun 2024 22:13:11 +0300 (MSK)
+Received: (nullmailer pid 528766 invoked by uid 1000);
+ Fri, 07 Jun 2024 19:13:08 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Yangyu Chen <cyy@cyyself.name>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>, Max Chou <max.chou@sifive.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 56/71] target/riscv/cpu.c: fix Zvkb extension config
-Date: Fri,  7 Jun 2024 22:13:37 +0300
-Message-Id: <20240607191356.529336-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, lanyanzhi <lanyanzhi22b@ict.ac.cn>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 45/45] target/loongarch: fix a wrong print in cpu dump
+Date: Fri,  7 Jun 2024 22:13:04 +0300
+Message-Id: <20240607191307.528622-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
-References: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
+References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -64,36 +62,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yangyu Chen <cyy@cyyself.name>
+From: lanyanzhi <lanyanzhi22b@ict.ac.cn>
 
-This code has a typo that writes zvkb to zvkg, causing users can't
-enable zvkb through the config. This patch gets this fixed.
+description:
+    loongarch_cpu_dump_state() want to dump all loongarch cpu
+state registers, but there is a tiny typographical error when
+printing "PRCFG2".
 
-Signed-off-by: Yangyu Chen <cyy@cyyself.name>
-Fixes: ea61ef7097d0 ("target/riscv: Move vector crypto extensions to riscv_cpu_extensions")
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Reviewed-by:  Weiwei Li <liwei1518@gmail.com>
-Message-ID: <tencent_7E34EEF0F90B9A68BF38BEE09EC6D4877C0A@qq.com>
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit ff33b7a9699e977a050a1014c617a89da1bf8295)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: lanyanzhi <lanyanzhi22b@ict.ac.cn>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-Id: <20240604073831.666690-1-lanyanzhi22b@ict.ac.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+(cherry picked from commit 78f932ea1f7b3b9b0ac628dc2a91281318fe51fa)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 36e3e5fdaf..776f377849 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1535,7 +1535,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     /* Vector cryptography extensions */
-     MULTI_EXT_CFG_BOOL("zvbb", ext_zvbb, false),
-     MULTI_EXT_CFG_BOOL("zvbc", ext_zvbc, false),
--    MULTI_EXT_CFG_BOOL("zvkb", ext_zvkg, false),
-+    MULTI_EXT_CFG_BOOL("zvkb", ext_zvkb, false),
-     MULTI_EXT_CFG_BOOL("zvkg", ext_zvkg, false),
-     MULTI_EXT_CFG_BOOL("zvkned", ext_zvkned, false),
-     MULTI_EXT_CFG_BOOL("zvknha", ext_zvknha, false),
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 337f04b201..6710ca0016 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -764,7 +764,7 @@ void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+     qemu_fprintf(f, "EENTRY=%016" PRIx64 "\n", env->CSR_EENTRY);
+     qemu_fprintf(f, "PRCFG1=%016" PRIx64 ", PRCFG2=%016" PRIx64 ","
+                  " PRCFG3=%016" PRIx64 "\n",
+-                 env->CSR_PRCFG1, env->CSR_PRCFG3, env->CSR_PRCFG3);
++                 env->CSR_PRCFG1, env->CSR_PRCFG2, env->CSR_PRCFG3);
+     qemu_fprintf(f, "TLBRENTRY=%016" PRIx64 "\n", env->CSR_TLBRENTRY);
+     qemu_fprintf(f, "TLBRBADV=%016" PRIx64 "\n", env->CSR_TLBRBADV);
+     qemu_fprintf(f, "TLBRERA=%016" PRIx64 "\n", env->CSR_TLBRERA);
 -- 
 2.39.2
 
