@@ -4,84 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E46CEC27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 13:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF8FDC27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 13:54:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFZxo-0002wm-TE; Fri, 07 Jun 2024 09:49:04 -0400
+	id 1sFa2p-0004pG-KT; Fri, 07 Jun 2024 09:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFZxn-0002wH-Hh
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:49:03 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sFZxl-0007JW-W5
- for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:49:03 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-57a31d63b6bso3058739a12.0
- for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 06:49:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717768140; x=1718372940; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FSL2qKKtjXLKKqSsYqmkSjAD/o7fRQA6ifx0uw3IlM4=;
- b=kEWgQKgUwIQpdGrBGG8QBu2txDuRJ+yp/BbAqhtGhcrjS22/XntIq4NEKD03F5csEh
- TG3HWBLn72pqfO1BGV2BeU08yjSJprtE0dy6TVqfU+i6n+BNKrZItBGQypIMEVGUnw2a
- xLue44xDtcvbP9mxRvPtig1RhkrgCjTu6S6crCWrA1fYTxXEQHs4nin1AEnIrPP6z3ZO
- l3dgakA2LAYZxFlU+s6Lmmd4GWieIJHWW2ixf5sYfDpv/NxgeydN6soHBCAV0YW9MRZe
- +H3nk+W054BuuzuqVr6dZTUZdtcJjlYC0/xCfXVEuUkq/YsY/DP/0wgO6hNezff2R8LR
- /v9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717768140; x=1718372940;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FSL2qKKtjXLKKqSsYqmkSjAD/o7fRQA6ifx0uw3IlM4=;
- b=d2ryn4n6AuLB6WZdE7MdUsj4mkSFaTdnJiYONFv4YVIn45lw1EeSYA0wK2tBXUcjqg
- l3QFiFtn8/ATb5QEp/LnDaUNC1vp+DYVHFAfUNWb/PkWq/Biw1OWc9TP4SZqlMZSaTor
- kRu0rKbS86sYbKkpDjAtKXqtHPJtqzNRmngpcXX1TsBofZQmjxRGKJGN2NxtMZ+Yt4RP
- DFkD4VeuXkCEubZoJAJtj13WSh93uz32q2rBdGd1mPDehRzEmGF/uvv+OO66K4A4sK3v
- 4N6AfjnxMiaoNPL87R06Y82vc3ov0dFqQqRlcBoFkbLCBagr8CaSVwomXsXBgybQKMgF
- 8pSw==
-X-Gm-Message-State: AOJu0YyYNByDFHkG8K2URZYDrPYgj6wCvZUNypLBJukaBrsNc2aUnPdB
- WjBe0lqgvfGmmYf8MqJWzt8YTAYZaHdT5b44YwFZ42+6is0JdOMD6Q9LR4xHzw0=
-X-Google-Smtp-Source: AGHT+IHvA5C07OMA+AGKxQ86u4sMa5aCjmHBkg1yOZd42IVp7zwG2/EFUe/+AoRVrqNK8VCc6/9PBw==
-X-Received: by 2002:a17:906:b313:b0:a6e:2a67:789f with SMTP id
- a640c23a62f3a-a6e2a677a24mr97972666b.40.1717768139826; 
- Fri, 07 Jun 2024 06:48:59 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.196.231])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c80588851sm254195466b.29.2024.06.07.06.48.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 07 Jun 2024 06:48:59 -0700 (PDT)
-Message-ID: <aea6bd27-6c59-4257-ab89-18809444f8a8@linaro.org>
-Date: Fri, 7 Jun 2024 15:48:57 +0200
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1sFa2o-0004ow-65
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:54:14 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1sFa2l-00087a-Le
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 09:54:13 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VwjH85WDmz6H6sf;
+ Fri,  7 Jun 2024 21:49:24 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 530ED140B55;
+ Fri,  7 Jun 2024 21:54:07 +0800 (CST)
+Received: from A2303104131.china.huawei.com (10.202.227.28) by
+ lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 7 Jun 2024 14:53:59 +0100
+To: <qemu-devel@nongnu.org>, <peterx@redhat.com>, <farosas@suse.de>
+CC: <yuan1.liu@intel.com>, <pbonzini@redhat.com>, <berrange@redhat.com>,
+ <marcandre.lureau@redhat.com>, <thuth@redhat.com>, <armbru@redhat.com>,
+ <lvivier@redhat.com>, <linuxarm@huawei.com>, <linwenkai6@hisilicon.com>,
+ <zhangfei.gao@linaro.org>, <huangchenghai2@huawei.com>
+Subject: [PATCH v2 1/7] docs/migration: add uadk compression feature
+Date: Fri, 7 Jun 2024 14:53:04 +0100
+Message-ID: <20240607135310.46320-2-shameerali.kolothum.thodi@huawei.com>
+X-Mailer: git-send-email 2.12.0.windows.1
+In-Reply-To: <20240607135310.46320-1-shameerali.kolothum.thodi@huawei.com>
+References: <20240607135310.46320-1-shameerali.kolothum.thodi@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] target/mips: Restrict semihosting to TCG
-To: Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240530145349.41309-1-philmd@linaro.org>
- <20240530145349.41309-2-philmd@linaro.org>
- <c2kx2jt43pcujrfx3szs3wztny7i5bvb3gypmw73dpcf5izvbo@3ahkvdtgrfl5>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <c2kx2jt43pcujrfx3szs3wztny7i5bvb3gypmw73dpcf5izvbo@3ahkvdtgrfl5>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.202.227.28]
+X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,28 +68,181 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/6/24 13:08, Anton Johansson wrote:
-> On 30/05/24, Philippe Mathieu-Daudé wrote:
->> Semihosting currently uses the TCG probe_access API. To prepare for
->> encoding the TCG dependency in Kconfig, do not enable it unless TCG
->> is available.
->>
->> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/mips/Kconfig | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> xtensa and m68k also `select SEMIHOSTING`, were these missed?
+Document UADK(User Space Accelerator Development Kit) library details
+and how to use that for migration.
 
-TCG is the only accelerator they use, so it is kinda implicit,
-but you are right, I'll update for completeness.
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+---
+ docs/devel/migration/features.rst         |   1 +
+ docs/devel/migration/uadk-compression.rst | 144 ++++++++++++++++++++++
+ 2 files changed, 145 insertions(+)
+ create mode 100644 docs/devel/migration/uadk-compression.rst
 
-> Otherwise for patch 1 & 2:
-> Reviewed-by: Anton Johansson <anjo@rev.ng>
+diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
+index bc98b65075..58f8fd9e16 100644
+--- a/docs/devel/migration/features.rst
++++ b/docs/devel/migration/features.rst
+@@ -13,3 +13,4 @@ Migration has plenty of features to support different use cases.
+    mapped-ram
+    CPR
+    qpl-compression
++   uadk-compression
+diff --git a/docs/devel/migration/uadk-compression.rst b/docs/devel/migration/uadk-compression.rst
+new file mode 100644
+index 0000000000..988b92631e
+--- /dev/null
++++ b/docs/devel/migration/uadk-compression.rst
+@@ -0,0 +1,144 @@
++=========================================================
++User Space Accelerator Development Kit (UADK) Compression
++=========================================================
++UADK is a general-purpose user space accelerator framework that uses shared
++virtual addressing (SVA) to provide a unified programming interface for
++hardware acceleration of cryptographic and compression algorithms.
++
++UADK includes Unified/User-space-access-intended Accelerator Framework (UACCE),
++which enables hardware accelerators from different vendors that support SVA to
++adapt to UADK.
++
++Currently, HiSilicon Kunpeng hardware accelerators have been registered with
++UACCE. Through the UADK framework, users can run cryptographic and compression
++algorithms using hardware accelerators instead of CPUs, freeing up CPU
++computing power and improving computing performance.
++
++https://github.com/Linaro/uadk/tree/master/docs
++
++UADK Framework
++==============
++UADK consists of UACCE, vendors' drivers, and an algorithm layer. UADK requires
++the hardware accelerator to support SVA, and the operating system to support
++IOMMU and SVA. Hardware accelerators from different vendors are registered as
++different character devices with UACCE by using kernel-mode drivers of the
++vendors. A user can access the hardware accelerators by performing user-mode
++operations on the character devices.
++
++::
++
++          +----------------------------------+
++          |                apps              |
++          +----+------------------------+----+
++               |                        |
++               |                        |
++       +-------+--------+       +-------+-------+
++       |   scheduler    |       | alg libraries |
++       +-------+--------+       +-------+-------+
++               |                         |
++               |                         |
++               |                         |
++               |                +--------+------+
++               |                | vendor drivers|
++               |                +-+-------------+
++               |                  |
++               |                  |
++            +--+------------------+--+
++            |         libwd          |
++    User    +----+-------------+-----+
++    --------------------------------------------------
++    Kernel    +--+-----+   +------+
++              | uacce  |   | smmu |
++              +---+----+   +------+
++                  |
++              +---+------------------+
++              | vendor kernel driver |
++              +----------------------+
++    --------------------------------------------------
++             +----------------------+
++             |   HW Accelerators    |
++             +----------------------+
++
++UADK Installation
++-----------------
++Build UADK
++^^^^^^^^^^
++
++.. code-block:: shell
++
++    git clone https://github.com/Linaro/uadk.git
++    cd uadk
++    mkdir build
++    ./autogen.sh
++    ./configure --prefix=$PWD/build
++    make
++    make install
++
++Without --prefix, UADK will be installed to /usr/local/lib by default.
++If get error:"cannot find -lnuma", please install the libnuma-dev
++
++Run pkg-config libwd to ensure env is setup correctly
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++* export PKG_CONFIG_PATH=$PWD/build/lib/pkgconfig
++* pkg-config libwd --cflags --libs
++  -I/usr/local/include -L/usr/local/lib -lwd
++
++* export PKG_CONFIG_PATH is required on demand.
++  Not required if UADK is installed to /usr/local/lib
++
++UADK Host Kernel Requirements
++-----------------------------
++User needs to make sure that ``UACCE`` is already supported in Linux kernel.
++The kernel version should be at least v5.9 with SVA (Shared Virtual
++Addressing) enabled.
++
++Kernel Configuration
++^^^^^^^^^^^^^^^^^^^^
++
++``UACCE`` could be built as module or built-in.
++
++Here's an example to enable UACCE with hardware accelerator in HiSilicon
++Kunpeng platform.
++
++*    CONFIG_IOMMU_SVA_LIB=y
++*    CONFIG_ARM_SMMU=y
++*    CONFIG_ARM_SMMU_V3=y
++*    CONFIG_ARM_SMMU_V3_SVA=y
++*    CONFIG_PCI_PASID=y
++*    CONFIG_UACCE=y
++*    CONFIG_CRYPTO_DEV_HISI_QM=y
++*    CONFIG_CRYPTO_DEV_HISI_ZIP=y
++
++Make sure all these above kernel configurations are selected.
++
++Accelerator dev node permissions
++--------------------------------
++Harware accelerators(eg: HiSilicon Kunpeng Zip accelerator) gets registered to
++UADK and char devices are created in dev directory. In order to access resources
++on hardware accelerator devices, write permission should be provided to user.
++
++.. code-block:: shell
++
++    $ sudo chmod 777 /dev/hisi_zip-*
++
++How To Use UADK Compression In Qemu Migration
++---------------------------------------------
++* Make sure UADK is installed as above
++* Build ``Qemu`` with ``--enable-uadk`` parameter
++
++  E.g. configure --target-list=aarch64-softmmu --enable-kvm ``--enable-uadk``
++
++* Enable ``UADK`` compression during migration
++
++  Set ``migrate_set_parameter multifd-compression uadk``
++
++Since UADK uses Shared Virtual Addressing(SVA) and device access virtual memory
++directly it is possible that SMMUv3 may enounter page faults while walking the
++IO page tables. This may impact the performance. In order to mitigate this,
++please make sure to specify ``-mem-prealloc`` parameter to the destination VM
++boot parameters.
++
++Though both UADK and ZLIB are based on the deflate compression algorithm, UADK
++is not fully compatible with ZLIB. Hence, please make sure to use ``uadk`` on
++both source and destination during migration.
+-- 
+2.34.1
 
-Thanks!
 
