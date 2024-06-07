@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8432CC27C53
-	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 22:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E023C27C53
+	for <qemu-devel@archiver.kernel.org>; Fri,  7 Jun 2024 22:22:03 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf4z-00028o-JJ; Fri, 07 Jun 2024 15:16:49 -0400
+	id 1sFf3d-0006BY-RW; Fri, 07 Jun 2024 15:15:25 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf4y-0001z0-BJ; Fri, 07 Jun 2024 15:16:48 -0400
+ id 1sFf3c-00061n-HZ; Fri, 07 Jun 2024 15:15:24 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf4w-0002z3-NA; Fri, 07 Jun 2024 15:16:48 -0400
+ id 1sFf3a-0002Wk-Ta; Fri, 07 Jun 2024 15:15:24 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D3A6F6E564;
- Fri,  7 Jun 2024 22:14:53 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2C3196E554;
+ Fri,  7 Jun 2024 22:14:06 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 15DA1E275E;
- Fri,  7 Jun 2024 22:13:59 +0300 (MSK)
-Received: (nullmailer pid 529441 invoked by uid 1000);
- Fri, 07 Jun 2024 19:13:58 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id 63C0BE2750;
+ Fri,  7 Jun 2024 22:13:11 +0300 (MSK)
+Received: (nullmailer pid 528760 invoked by uid 1000);
+ Fri, 07 Jun 2024 19:13:08 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Huang Tao <eric.huang@linux.alibaba.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.1 55/71] target/riscv: Fix the element agnostic function
- problem
-Date: Fri,  7 Jun 2024 22:13:36 +0300
-Message-Id: <20240607191356.529336-11-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Xinyu Li <lixinyu@loongson.cn>,
+ Xinyu Li <lixinyu20s@ict.ac.cn>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.5 43/45] target/i386: fix SSE and SSE2 feature check
+Date: Fri,  7 Jun 2024 22:13:02 +0300
+Message-Id: <20240607191307.528622-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
-References: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
+References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -64,57 +62,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Huang Tao <eric.huang@linux.alibaba.com>
+From: Xinyu Li <lixinyu@loongson.cn>
 
-In RVV and vcrypto instructions, the masked and tail elements are set to 1s
-using vext_set_elems_1s function if the vma/vta bit is set. It is the element
-agnostic policy.
+Features check of CPUID_SSE and CPUID_SSE2 should use cpuid_features,
+rather than cpuid_ext_features.
 
-However, this function can't deal the big endian situation. This patch fixes
-the problem by adding handling of such case.
-
-Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240325021654.6594-1-eric.huang@linux.alibaba.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 75115d880c6d396f8a2d56aab8c12236d85a90e0)
+Signed-off-by: Xinyu Li <lixinyu20s@ict.ac.cn>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-ID: <20240602100904.2137939-1-lixinyu20s@ict.ac.cn>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit da7c95920d027dbb00c6879c1da0216b19509191)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
-index 996c21eb31..05b2d01e58 100644
---- a/target/riscv/vector_internals.c
-+++ b/target/riscv/vector_internals.c
-@@ -30,6 +30,28 @@ void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
-     if (tot - cnt == 0) {
-         return ;
-     }
-+
-+    if (HOST_BIG_ENDIAN) {
-+        /*
-+         * Deal the situation when the elements are insdie
-+         * only one uint64 block including setting the
-+         * masked-off element.
-+         */
-+        if (((tot - 1) ^ cnt) < 8) {
-+            memset(base + H1(tot - 1), -1, tot - cnt);
-+            return;
-+        }
-+        /*
-+         * Otherwise, at least cross two uint64_t blocks.
-+         * Set first unaligned block.
-+         */
-+        if (cnt % 8 != 0) {
-+            uint32_t j = ROUND_UP(cnt, 8);
-+            memset(base + H1(j - 1), -1, j - cnt);
-+            cnt = j;
-+        }
-+        /* Set other 64bit aligend blocks */
-+    }
-     memset(base + cnt, -1, tot - cnt);
- }
- 
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 2bdbb1bba0..73aa2c42b7 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1478,9 +1478,9 @@ static bool has_cpuid_feature(DisasContext *s, X86CPUIDFeature cpuid)
+     case X86_FEAT_PCLMULQDQ:
+         return (s->cpuid_ext_features & CPUID_EXT_PCLMULQDQ);
+     case X86_FEAT_SSE:
+-        return (s->cpuid_ext_features & CPUID_SSE);
++        return (s->cpuid_features & CPUID_SSE);
+     case X86_FEAT_SSE2:
+-        return (s->cpuid_ext_features & CPUID_SSE2);
++        return (s->cpuid_features & CPUID_SSE2);
+     case X86_FEAT_SSE3:
+         return (s->cpuid_ext_features & CPUID_EXT_SSE3);
+     case X86_FEAT_SSSE3:
 -- 
 2.39.2
 
