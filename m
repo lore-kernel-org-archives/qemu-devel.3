@@ -4,49 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60AE5C27C55
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 711A1C27C53
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:17:55 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf2L-0001PJ-TQ; Fri, 07 Jun 2024 15:14:05 -0400
+	id 1sFaZm-0002rr-Dw; Fri, 07 Jun 2024 10:28:18 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf2G-000185-E7; Fri, 07 Jun 2024 15:14:00 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf2E-0001q0-92; Fri, 07 Jun 2024 15:13:59 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 60BBD6E546;
- Fri,  7 Jun 2024 22:14:04 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 97C37E2743;
- Fri,  7 Jun 2024 22:13:09 +0300 (MSK)
-Received: (nullmailer pid 528718 invoked by uid 1000);
- Fri, 07 Jun 2024 19:13:08 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.5 30/45] target/riscv/kvm: tolerate KVM disable ext errors
-Date: Fri,  7 Jun 2024 22:12:49 +0300
-Message-Id: <20240607191307.528622-10-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
-References: <qemu-stable-8.2.5-20240607221227@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sFaZk-0002r4-7Q
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:28:16 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sFaZi-0001gz-Kb
+ for qemu-devel@nongnu.org; Fri, 07 Jun 2024 10:28:15 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-52bc335e49aso335323e87.3
+ for <qemu-devel@nongnu.org>; Fri, 07 Jun 2024 07:28:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717770491; x=1718375291; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sIHXcyplGCyuaTcYN2ALHANulZfiRs5AdM6IBKq+3DU=;
+ b=FS3TVtSA88VuuUOP/SsDJM5AITLbe5LSpqG1TNgGWBYzRWCJ6JVyeD0P96vAu3bJZ2
+ G7bB9FJueG2eAdYf9ZvK0KgU6Y9DpsCr1CpYy1+GU0FdgygSu+gsC9oQDvcK1BwCahzB
+ bHDl0tBEYIcUo+gh5zc73qrVFn1oAajWM8/+oxG8NyANQsTeYNgJSN/pw8HsUYAb1XrK
+ zQWHOyiZoye9DN7UHfI84/QWjj+wTwiOcuhY3y8dfr0IRKEdI5mqAlFPQIlHRUHdmIrB
+ yo7Spn+2SVgVKkw7VYK7CBQBr8ASJpGu5NQl0X+U2+gK5m7i+dihb77+2/KaFtytBXco
+ Rc6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717770491; x=1718375291;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sIHXcyplGCyuaTcYN2ALHANulZfiRs5AdM6IBKq+3DU=;
+ b=syenUrXICwNf+X174n5KaCgz9mJSUbTVRmZs6QFDkawKxqluz3/FB6L3h+ZsB7g85C
+ kbXDCJBhXXPXABJ0/DID8AFpOz9GdK2JppgGgRQ21ZwATCoBK7jFWrnFKSPhWTHdEMia
+ shy/cT/N96bnE9tpneRbn7uif12/y2Y6UN3QP1cSEM0zq2gx8Ga5LPSMtgbaSHZsffT7
+ qQLLu56Si9i2fhJqJV/Ng4t3nOZUwuHgARFzwmv8xiw4sD2o7HJJ+AVBvLbz4gWcSyPF
+ UEIkKsHP3B3UyjazhywlJCNhQxfLIA7Nai/0TdmnnPKK8hOM3UDNuVpclC2Qm9oPzp8T
+ foEw==
+X-Gm-Message-State: AOJu0YzsDoKyLIFeGVvoLyt3fSyuqiXhcBhK4nxkQb6V8068CFP9vwGs
+ 6nF1l1oVdf+lKDoyVgVFN8zK5MLVxitBOnI/DNuAC15U8Lg2QmbefyUwIcG9ZKsIkN8PO4yMXKl
+ BfTtMlx4XfsbqL/aIsAs9hi8p9FDkjftmVdq2Lw==
+X-Google-Smtp-Source: AGHT+IHUAmjhsfJs/bp5+aVqMtzrV3im2oG7sbfAN1K9TPKs2bMalQci6QAaXnGm5i5bC/sVnQLi9xyjo450vwNcUK0=
+X-Received: by 2002:a2e:720f:0:b0:2eb:447:25af with SMTP id
+ 38308e7fff4ca-2eb044769dfmr2511801fa.13.1717770491303; Fri, 07 Jun 2024
+ 07:28:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240209140505.2536635-1-berrange@redhat.com>
+ <20240209140505.2536635-3-berrange@redhat.com>
+In-Reply-To: <20240209140505.2536635-3-berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 7 Jun 2024 15:27:59 +0100
+Message-ID: <CAFEAcA-qZ9fb=s7hLCcRnH6w6DjDnpSJuGKWbY-Lyne-yJkCVg@mail.gmail.com>
+Subject: Re: [PULL 02/17] crypto: Introduce SM4 symmetric cipher algorithm
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, Stefan Weil <sw@weilnetz.de>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Hyman Huang <yong.huang@smartx.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,67 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+On Fri, 9 Feb 2024 at 14:07, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
+wrote:
+>
+> From: Hyman Huang <yong.huang@smartx.com>
+>
+> Introduce the SM4 cipher algorithms (OSCCA GB/T 32907-2016).
+>
+> SM4 (GBT.32907-2016) is a cryptographic standard issued by the
+> Organization of State Commercial Administration of China (OSCCA)
+> as an authorized cryptographic algorithms for the use within China.
+>
+> Detect the SM4 cipher algorithms and enable the feature silently
+> if it is available.
+>
+> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-Running a KVM guest using a 6.9-rc3 kernel, in a 6.8 host that has zkr
-enabled, will fail with a kernel oops SIGILL right at the start. The
-reason is that we can't expose zkr without implementing the SEED CSR.
-Disabling zkr in the guest would be a workaround, but if the KVM doesn't
-allow it we'll error out and never boot.
+Hi; Coverity points out an issue in this code (CID 1546884):
 
-In hindsight this is too strict. If we keep proceeding, despite not
-disabling the extension in the KVM vcpu, we'll not add the extension in
-the riscv,isa. The guest kernel will be unaware of the extension, i.e.
-it doesn't matter if the KVM vcpu has it enabled underneath or not. So
-it's ok to keep booting in this case.
 
-Change our current logic to not error out if we fail to disable an
-extension in kvm_set_one_reg(), but show a warning and keep booting. It
-is important to throw a warning because we must make the user aware that
-the extension is still available in the vcpu, meaning that an
-ill-behaved guest can ignore the riscv,isa settings and  use the
-extension.
+> @@ -701,6 +731,25 @@ static QCryptoCipher *qcrypto_cipher_ctx_new(QCrypto=
+CipherAlgorithm alg,
+>
+>              return &ctx->base;
+>          }
+> +#ifdef CONFIG_CRYPTO_SM4
+> +    case QCRYPTO_CIPHER_ALG_SM4:
+> +        {
+> +            QCryptoNettleSm4 *ctx =3D g_new0(QCryptoNettleSm4, 1);
 
-The case we're handling happens with an EINVAL error code. If we fail to
-disable the extension in KVM for any other reason, error out.
+Here we allocate memory...
 
-We'll also keep erroring out when we fail to enable an extension in KVM,
-since adding the extension in riscv,isa at this point will cause a guest
-malfunction because the extension isn't enabled in the vcpu.
+> +
+> +            switch (mode) {
+> +            case QCRYPTO_CIPHER_MODE_ECB:
+> +                ctx->base.driver =3D &qcrypto_nettle_sm4_driver_ecb;
+> +                break;
+> +            default:
+> +                goto bad_cipher_mode;
 
-Suggested-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Message-ID: <20240422171425.333037-2-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 1215d45b2aa97512a2867e401aa59f3d0c23cb23)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+...but here we may jump to bad_cipher_mode, resulting in
+the memory being leaked, because we never free it.
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index ddbe820e10..fa00b14269 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -379,10 +379,14 @@ static void kvm_riscv_update_cpu_cfg_isa_ext(RISCVCPU *cpu, CPUState *cs)
-         reg = kvm_cpu_cfg_get(cpu, multi_ext_cfg);
-         ret = kvm_set_one_reg(cs, id, &reg);
-         if (ret != 0) {
--            error_report("Unable to %s extension %s in KVM, error %d",
--                         reg ? "enable" : "disable",
--                         multi_ext_cfg->name, ret);
--            exit(EXIT_FAILURE);
-+            if (!reg && ret == -EINVAL) {
-+                warn_report("KVM cannot disable extension %s",
-+                            multi_ext_cfg->name);
-+            } else {
-+                error_report("Unable to enable extension %s in KVM, error %d",
-+                             multi_ext_cfg->name, ret);
-+                exit(EXIT_FAILURE);
-+            }
-         }
-     }
- }
--- 
-2.39.2
+> +            }
+> +
 
+This could be fixed by not doing the g_new0() until this
+point when we know we aren't going to fail. This is what we
+do for the other cipher cases in this file that have a switch
+where the default for mode is a jump to bad_cipher_mode.
+
+(PS: is it intentional that for some of these ciphers
+an unknown mode value is an error returned to the caller
+via bad_cipher_mode, and for others it is a g_assert_not_reached()?)
+
+> +            sm4_set_encrypt_key(&ctx->key[0], key);
+> +            sm4_set_decrypt_key(&ctx->key[1], key);
+> +
+> +            return &ctx->base;
+> +        }
+> +#endif
+
+thanks
+-- PMM
 
