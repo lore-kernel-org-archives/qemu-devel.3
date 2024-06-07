@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5A45C27C65
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:00:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C564C27C53
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 00:00:47 +0000 (UTC)
 Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFf0x-0004PZ-Vp; Fri, 07 Jun 2024 15:12:41 -0400
+	id 1sFf5q-0004m6-CG; Fri, 07 Jun 2024 15:17:42 -0400
 Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf0s-0004Or-Gw; Fri, 07 Jun 2024 15:12:35 -0400
+ id 1sFf5o-0004lq-Pc; Fri, 07 Jun 2024 15:17:40 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sFf0q-0001e2-53; Fri, 07 Jun 2024 15:12:34 -0400
+ id 1sFf5n-00033v-4R; Fri, 07 Jun 2024 15:17:40 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 950396E52E;
- Fri,  7 Jun 2024 22:13:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id ACBF36E56C;
+ Fri,  7 Jun 2024 22:14:54 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C6096E272E;
- Fri,  7 Jun 2024 22:12:20 +0300 (MSK)
-Received: (nullmailer pid 528233 invoked by uid 1000);
- Fri, 07 Jun 2024 19:12:20 -0000
+ by tsrv.corpit.ru (Postfix) with SMTP id DF965E2765;
+ Fri,  7 Jun 2024 22:13:59 +0300 (MSK)
+Received: (nullmailer pid 529462 invoked by uid 1000);
+ Fri, 07 Jun 2024 19:13:58 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.12 20/29] gitlab: Update msys2-64bit runner tags
-Date: Fri,  7 Jun 2024 22:12:03 +0300
-Message-Id: <20240607191219.528194-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alexei Filippov <alexei.filippov@syntacore.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.1 62/71] target/riscv: do not set mtval2 for non
+ guest-page faults
+Date: Fri,  7 Jun 2024 22:13:43 +0300
+Message-Id: <20240607191356.529336-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
-References: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
+References: <qemu-stable-9.0.1-20240607221321@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,37 +63,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Alexei Filippov <alexei.filippov@syntacore.com>
 
-Gitlab has deprecated and removed support for windows-1809
-and shared-windows.  Update to saas-windows-medium-amd64 per
+Previous patch fixed the PMP priority in raise_mmu_exception() but we're still
+setting mtval2 incorrectly. In riscv_cpu_tlb_fill(), after pmp check in 2 stage
+translation part, mtval2 will be set in case of successes 2 stage translation but
+failed pmp check.
 
-https://about.gitlab.com/blog/2024/01/22/windows-2022-support-for-gitlab-saas-runners/
+In this case we gonna set mtval2 via env->guest_phys_fault_addr in context of
+riscv_cpu_tlb_fill(), as this was a guest-page-fault, but it didn't and mtval2
+should be zero, according to RISCV privileged spec sect. 9.4.4: When a guest
+page-fault is taken into M-mode, mtval2 is written with either zero or guest
+physical address that faulted, shifted by 2 bits. *For other traps, mtval2
+is set to zero...*
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240507175356.281618-1-richard.henderson@linaro.org>
-(cherry picked from commit 36fa7c686e9eac490002ffc439c4affaa352c17c)
+Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240503103052.6819-1-alexei.filippov@syntacore.com>
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 6c9a344247132ac6c3d0eb9670db45149a29c88f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
-index 0180261b7f..dfa4eb84a7 100644
---- a/.gitlab-ci.d/windows.yml
-+++ b/.gitlab-ci.d/windows.yml
-@@ -1,9 +1,7 @@
- .shared_msys2_builder:
-   extends: .base_job_template
-   tags:
--  - shared-windows
--  - windows
--  - windows-1809
-+  - saas-windows-medium-amd64
-   cache:
-     key: "${CI_JOB_NAME}-cache"
-     paths:
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index e3a7797d00..484edad900 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1375,17 +1375,17 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+                               __func__, pa, ret, prot_pmp, tlb_size);
+ 
+                 prot &= prot_pmp;
+-            }
+-
+-            if (ret != TRANSLATE_SUCCESS) {
++            } else {
+                 /*
+                  * Guest physical address translation failed, this is a HS
+                  * level exception
+                  */
+                 first_stage_error = false;
+-                env->guest_phys_fault_addr = (im_address |
+-                                              (address &
+-                                               (TARGET_PAGE_SIZE - 1))) >> 2;
++                if (ret != TRANSLATE_PMP_FAIL) {
++                    env->guest_phys_fault_addr = (im_address |
++                                                  (address &
++                                                   (TARGET_PAGE_SIZE - 1))) >> 2;
++                }
+             }
+         }
+     } else {
 -- 
 2.39.2
 
