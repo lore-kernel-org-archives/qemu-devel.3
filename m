@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24EA6C27C55
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9381EC25B76
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFrXK-0000Zu-UW; Sat, 08 Jun 2024 04:34:54 -0400
+	id 1sFrXz-0001Gp-S8; Sat, 08 Jun 2024 04:35:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrXG-0000Ya-CC
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sFrXy-00018q-RU
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrXE-0008J6-Ap
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:50 -0400
+ id 1sFrXx-0000Dk-Cv
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717835687;
+ s=mimecast20190719; t=1717835732;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JE1l3mnnViu2bSu14FqFVuNS+di8GAj9jPlWPGLObPQ=;
- b=i5Ah6Ailm2eFK3+7R4QXvNo9Om/xQwfQh4E4imHi3Gdjsy1b1TK6WlDK6O/Artdg619llT
- C2HaHU7sOZusvxmwx7VqKbQY/cp7IBqThfW/ZIoW5wwwqkDksSg6LuUfh10EciKjBQpDaQ
- My7ySWDRIuy2cIp3p46R/zBD9mhjckk=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tJL4G6DZbP63BxtynbmGzzcFW/nfu3SZI/XSGkVfEGk=;
+ b=iK+5JkS2f26Bm24fHSUcX5T2U+FB44ZR1fsf7uiUpW6ookIHDYn4dj2FPT44ybpr2eatmM
+ vaafiu5e/K8b3wWu6qrynl2xUL2ASfQED99ryaQn0m+nxY3CN9IWg8z++a8goUbbSYe6k7
+ wo5L4Vpug6EjCbwRtPsA3yD3VtNAdws=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-7ePzo6xOPZGqGpS51nTd1A-1; Sat, 08 Jun 2024 04:34:45 -0400
-X-MC-Unique: 7ePzo6xOPZGqGpS51nTd1A-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a6efac81377so29294966b.2
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:34:45 -0700 (PDT)
+ us-mta-83-Nq563lP9NiuvzgHEUCCfww-1; Sat, 08 Jun 2024 04:35:31 -0400
+X-MC-Unique: Nq563lP9NiuvzgHEUCCfww-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2ea9aeae4e6so25100001fa.0
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:35:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717835683; x=1718440483;
+ d=1e100.net; s=20230601; t=1717835729; x=1718440529;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JE1l3mnnViu2bSu14FqFVuNS+di8GAj9jPlWPGLObPQ=;
- b=AlZLD/f5JyfKYDAMJghwKrJwNsAXhX67hd57+SlZjCS7RsyICjl7/1qpYKq8t/8nD4
- JylKJhPnraqzrJOEJqsiJyHtUySOwJ8BfhNu4+x9SeV4LLSuD42qkWhSw8wb30ZVlHpu
- g9Rwdn3aVC7JOVs+NduMNmYxFF8DVCG7y1yryIW5GAucUPR4WHG900dkSAkMSwkOgpT0
- j2GDOEl6VGRXK9SeujFNXywK74sypaC+BzHVMmY9RkMK18bvasDW0fP4NV3nYitn6Fro
- a9+aJ/ZP5ufkl0iV4uTlpgnSq4dhrrVHwvT5GmGTISI98DvXAbsoXEkHMFRdwijuH3I+
- Fxsw==
-X-Gm-Message-State: AOJu0YwOqYMWsVtSxE6p+3eglE2Dv3qPXWb/l1g962ynsrgEGG+3/V/U
- iJelMgLZo99vnqXVNTU/j2DP6QQGQYunoEE4zCZOxbAq2oRQP2f2omdj6NcVcSNtYOr7zGPf5Jz
- wyiVK/jj6mvwjTjRWBcYKkLF/Cuybz4cPhNBMs/JBgFjUpDa/HIl0pwlxwyauJysaU/VrwdQQy1
- zWivtEZz54vlajH/aH3LKE+uOcMjdBKgCLiAli
-X-Received: by 2002:a17:906:f5a9:b0:a6f:2c2:9e98 with SMTP id
- a640c23a62f3a-a6f02c2a0demr81619066b.12.1717835683496; 
- Sat, 08 Jun 2024 01:34:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFx6qcKV/fspAlFFotHRSBQv3y5tyl/j9n9WpvReQoYBLRuxdozhPqC9x5OQDTR59AZsUrcFA==
-X-Received: by 2002:a17:906:f5a9:b0:a6f:2c2:9e98 with SMTP id
- a640c23a62f3a-a6f02c2a0demr81618166b.12.1717835683090; 
- Sat, 08 Jun 2024 01:34:43 -0700 (PDT)
+ bh=tJL4G6DZbP63BxtynbmGzzcFW/nfu3SZI/XSGkVfEGk=;
+ b=W+enkNi3KaDJTlN/1P2mBLvs33hx/t3/pJppe79eNhorQdNv4DNRjWK4jZVlPpPb1Z
+ 2fM1PGlX4VvXNcs+/kSbUVqNlefmm5fBOYqlm7dL0g6Uf2EBWzBdOWJPHWBFj/ftWG81
+ qTMydeaCEbLiBXjia0KvfeB9HKCJsnOGbYKZp+mhMAiPyUZJlgtHlI4z0DSdsfjrBraY
+ zMaPdSY8bBHqZoH8/Y1dsQM595q+BL7hwzWiu09reHil9BbwlRQtpo/F3u3DlXpi2dCH
+ yryDVLllaMfT05I7nacQAbNJc/HRJzdBjRA2iNpBr9foPspvnh1BdIa4YeimpUXICavW
+ Yw8Q==
+X-Gm-Message-State: AOJu0YyHAglQBd2E6vE/Q6KUjEodKfbJf6R+Q/uixPcaZJ8KU4XsJe3p
+ KapS6lOvrTF9ZbowzZp/lBNIzQ5Yo2NpEdUIXVO/r27RA56aTguYILXsFUDAKATj6iIqAA4d9CI
+ 56EWXdCLMq+fijZjx0P1GDZ7h843N97TaxKUe8yilsAXNcnAb8mFigW4cS9rXQprey1oXZG0kBf
+ MEGh89TlD7KhbCfd9p9Wc3UYKsHSmzjAE7bFCr
+X-Received: by 2002:a05:6512:104e:b0:52b:fb4:1283 with SMTP id
+ 2adb3069b0e04-52bb9f775ccmr4608711e87.15.1717835729474; 
+ Sat, 08 Jun 2024 01:35:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGAL4Nq0kxJzAORqtSRfKtyeHQxPgJR77T4oF9k9E0XQnZk/1o0IeFtuM4JTsBJWuLfU95g3A==
+X-Received: by 2002:a05:6512:104e:b0:52b:fb4:1283 with SMTP id
+ 2adb3069b0e04-52bb9f775ccmr4608697e87.15.1717835729147; 
+ Sat, 08 Jun 2024 01:35:29 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6ef64a75b7sm131819166b.191.2024.06.08.01.34.41
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-a6c8070e2fcsm352999966b.154.2024.06.08.01.35.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 01:34:42 -0700 (PDT)
+ Sat, 08 Jun 2024 01:35:27 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/42] target/i386: fix TF/RF handling for HLT
-Date: Sat,  8 Jun 2024 10:33:42 +0200
-Message-ID: <20240608083415.2769160-10-pbonzini@redhat.com>
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
+ Roman Bolshakov <roman@roolebo.dev>
+Subject: [PULL 27/42] hvf: Consistent types for vCPU handles
+Date: Sat,  8 Jun 2024 10:34:00 +0200
+Message-ID: <20240608083415.2769160-28-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240608083415.2769160-1-pbonzini@redhat.com>
 References: <20240608083415.2769160-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,65 +105,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HLT uses DISAS_NORETURN because the corresponding helper calls
-cpu_loop_exit().  However, while gen_eob() clears HF_RF_MASK and
-synthesizes a #DB exception if single-step is active, none of this is
-done by HLT.  Note that the single-step trap is generated after the halt
-is finished.
+From: Phil Dennis-Jordan <phil@philjordan.eu>
 
+macOS Hypervisor.framework uses different types for identifying vCPUs, hv_vcpu_t or hv_vcpuid_t, depending on host architecture. They are not just differently named typedefs for the same primitive type, but reference different-width integers.
+
+Instead of using an integer type and casting where necessary, this change introduces a typedef which resolves the active architecture’s hvf typedef. It also removes a now-unnecessary cast.
+
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Reviewed-by: Roman Bolshakov <roman@roolebo.dev>
+Tested-by: Roman Bolshakov <roman@roolebo.dev>
+Message-ID: <20240605112556.43193-4-phil@philjordan.eu>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/sysemu/misc_helper.c |  2 +-
- target/i386/tcg/sysemu/seg_helper.c  | 17 ++++++++++++++---
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ include/sysemu/hvf_int.h  | 4 +++-
+ accel/hvf/hvf-accel-ops.c | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/tcg/sysemu/misc_helper.c b/target/i386/tcg/sysemu/misc_helper.c
-index 093cc2d0f90..7fa0c5a06de 100644
---- a/target/i386/tcg/sysemu/misc_helper.c
-+++ b/target/i386/tcg/sysemu/misc_helper.c
-@@ -520,7 +520,7 @@ G_NORETURN void helper_hlt(CPUX86State *env)
- {
-     CPUState *cs = env_cpu(env);
+diff --git a/include/sysemu/hvf_int.h b/include/sysemu/hvf_int.h
+index 4a327fd5260..30e739a2b52 100644
+--- a/include/sysemu/hvf_int.h
++++ b/include/sysemu/hvf_int.h
+@@ -13,8 +13,10 @@
  
--    env->hflags &= ~HF_INHIBIT_IRQ_MASK; /* needed if sti is just before */
-+    do_end_instruction(env);
-     cs->halted = 1;
-     cs->exception_index = EXCP_HLT;
-     cpu_loop_exit(cs);
-diff --git a/target/i386/tcg/sysemu/seg_helper.c b/target/i386/tcg/sysemu/seg_helper.c
-index 9ba94deb3aa..05174a79e73 100644
---- a/target/i386/tcg/sysemu/seg_helper.c
-+++ b/target/i386/tcg/sysemu/seg_helper.c
-@@ -130,15 +130,26 @@ void x86_cpu_do_interrupt(CPUState *cs)
+ #ifdef __aarch64__
+ #include <Hypervisor/Hypervisor.h>
++typedef hv_vcpu_t hvf_vcpuid;
+ #else
+ #include <Hypervisor/hv.h>
++typedef hv_vcpuid_t hvf_vcpuid;
+ #endif
  
- bool x86_cpu_exec_halt(CPUState *cpu)
- {
--    if (cpu->interrupt_request & CPU_INTERRUPT_POLL) {
--        X86CPU *x86_cpu = X86_CPU(cpu);
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
+ /* hvf_slot flags */
+@@ -50,7 +52,7 @@ struct HVFState {
+ extern HVFState *hvf_state;
  
-+    if (cpu->interrupt_request & CPU_INTERRUPT_POLL) {
-         bql_lock();
-         apic_poll_irq(x86_cpu->apic_state);
-         cpu_reset_interrupt(cpu, CPU_INTERRUPT_POLL);
-         bql_unlock();
-     }
--    return cpu_has_work(cpu);
-+
-+    if (!cpu_has_work(cpu)) {
-+        return false;
-+    }
-+
-+    /* Complete HLT instruction.  */
-+    if (env->eflags & TF_MASK) {
-+        env->dr[6] |= DR6_BS;
-+        do_interrupt_all(x86_cpu, EXCP01_DB, 0, 0, env->eip, 0);
-+    }
-+    return true;
- }
- 
- bool x86_need_replay_interrupt(int interrupt_request)
+ struct AccelCPUState {
+-    uint64_t fd;
++    hvf_vcpuid fd;
+     void *exit;
+     bool vtimer_masked;
+     sigset_t unblock_ipi_mask;
+diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+index 6f1e27ef469..b2a37a2229f 100644
+--- a/accel/hvf/hvf-accel-ops.c
++++ b/accel/hvf/hvf-accel-ops.c
+@@ -400,7 +400,7 @@ static int hvf_init_vcpu(CPUState *cpu)
+     r = hv_vcpu_create(&cpu->accel->fd,
+                        (hv_vcpu_exit_t **)&cpu->accel->exit, NULL);
+ #else
+-    r = hv_vcpu_create((hv_vcpuid_t *)&cpu->accel->fd, HV_VCPU_DEFAULT);
++    r = hv_vcpu_create(&cpu->accel->fd, HV_VCPU_DEFAULT);
+ #endif
+     cpu->accel->dirty = true;
+     assert_hvf_ok(r);
 -- 
 2.45.1
 
