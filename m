@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D1AC25B76
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 19:04:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCDCEC25B76
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 19:38:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sG1Lw-0006FT-CZ; Sat, 08 Jun 2024 15:03:48 -0400
+	id 1sG1sO-0008K6-Pj; Sat, 08 Jun 2024 15:37:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sG1Lv-0006F8-6f
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 15:03:47 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1sG1sN-0008Je-Dh
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 15:37:19 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sG1Lt-0001qQ-M1
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 15:03:46 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-6818eea9c3aso2454546a12.1
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 12:03:44 -0700 (PDT)
+ id 1sG1sM-0007UF-0I
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 15:37:19 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-6c53a315c6eso2453033a12.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 12:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717873424; x=1718478224; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717875436; x=1718480236; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/me+LvmxwPsNvxGAWU4NHMCEOs2aPmngEYNYWdFU1MI=;
- b=fzePJle1P75W7ED6cDIjoTgnQAa7zPpc65saH6IFB9EzIDNWrWlXvFcQAjovTHeZBy
- Lr1FFi3C/DJBRUxUrpy9YiQhHO7PMU3cKvajNt3kSiqZKBGqoqpmB6O5Hn5+HwFrLxGb
- +pbbPYIYYJW2dZKEKY0CIvIeuCJQ0GGHl7StmvywsgR49ftP8JLRxM3U4+h8UbVtgDHx
- GL8OpKvpoTOeP5Koc3x2MBVcYTmMXlXRICR4orCAXkj2aZMUe7WyLHAuSOvfWinSDXfL
- 7+faoAd9JcQZjU2/AbfzEpko5bGEuFMflvk63d767szQgOdPI4WvHEHvLtQri+pM3rLx
- LiZg==
+ bh=rUWvhkjtYZ0idT6G0lMCje5Gf669PZbYtux4uZ6aaLw=;
+ b=l/lpJB3TIHjDvhDX3T3m4PCsQdk4HHPSONxZBMCGqVizC3p9s9HjH5ofdxF04USoZx
+ oQVDBq0MypdH+NEKyv/URGg9Ib9u5p6X0mKDkVYlP4g8D/mW283wHnliZ8U9zw+lryV2
+ wTr/DiorYzuzUugsZQZaDMElDoIO199ek4mkfeWW2sIBu8DM7EXmZvGjBTZya6T1+5Rt
+ tLIzHfUfs7Qi1dDQwQsiPcLeD1+0CwYD7OydB5qz65omK8zFMzo7YDOd7sldc2MhES+o
+ jhm+OHCrnQOjk3BGg48TEnztoPIarjp3ekx31+P/j1agQEtpEekbF7Y9SVOrqAUBpRY5
+ HO5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717873424; x=1718478224;
+ d=1e100.net; s=20230601; t=1717875436; x=1718480236;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/me+LvmxwPsNvxGAWU4NHMCEOs2aPmngEYNYWdFU1MI=;
- b=jIPinJrixDBc5hBssTYgucwhsuOPz/+rUwb/dQjrhE1vpjgKonLjeBpFukqfmKmImO
- 9Gx2PHHo4rum0mNffZ+c/xOl2/IgpB8K7tGX60kNiggVAo+3w3YW7yWMccwvOyZNdeLO
- lfTHbDxAcu+1UnAJ0EHwISvoRADmpCWYLJlNYItwQexT1D+8GpxxE85UAWj01FA+PT2g
- /cSD0nXwyrvnNECJZeIHl7WmO5trklFWiKBQ0OJnLPhkcNMhN5pz/9e/H7VN2Ta/1kyS
- 8MnxyNzKvfddQiAFrU0jVsuNzILZJPtQQqv85FQp7bj4BpTCtuiii/z9e7loFLG/TSvZ
- bvwg==
+ bh=rUWvhkjtYZ0idT6G0lMCje5Gf669PZbYtux4uZ6aaLw=;
+ b=kWP6o0AgW+AonaxMVGtJs/sZA66sTVdVu67gy7JczoXR6r4A8MXYRyNmQpRT4M1U6H
+ mXhxXo5aoa1X9MfKxo3MR5zt3ffmuCiz9wx5b28x8A0BY5Sl42ES8frXx8nK9cLsrcch
+ QD3O+yN1U/F+z25SphBNBT8ZhvtE3bXh6AT45xg8beUKv3EBwKNe9DjjnlOI3oyO5PCs
+ UcGDiiwJ3BYrEp2zBzk6FYRbsjG+QCPXz8rkdgnIOeXDr3qFffHzEDV8i2i60pM2KJuJ
+ NBxvtG1Tc8m2gxamLpWNOu4fdI+Ayp3hdljFzXEIcjsv7LwRi+kX1lmNoI8DQE5n0be6
+ QuvQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1QJW+7gFX76e3Z7T2RDf3gQJWJmOcfHOktvOACUxaOjQBxDcx5NhpsnnCv7hda+9A5mWL0gfvmCI/oonCKsBljsD3jKM=
-X-Gm-Message-State: AOJu0YyF8haXQE05giWbL2ZUIdXjijUgJ56SnkzXJJwhyJao6ZN/QC2q
- q/K237gMvUxkr8L2QAQa1FMC+00zTnODVnpyAGu5QsCwgpOsTfPBWhTxr+f5ts+n/dLrOC9WmlN
- i
-X-Google-Smtp-Source: AGHT+IGfZ6fG7Mt3BRcK08In3YtQQrRSyEWlWso2RlSBHQGepyGHF54ymixZIZ10MGOPeXVSO8RtUw==
-X-Received: by 2002:a17:902:ce04:b0:1f4:a77a:3b81 with SMTP id
- d9443c01a7336-1f6d031f867mr72574415ad.41.1717873423636; 
- Sat, 08 Jun 2024 12:03:43 -0700 (PDT)
+ AJvYcCUKVGbKSVEHLeMSCpNFMHQfz6YYo6DNiexVARdwY5LR1vniGculMbvnv5OHRZZE4Ro4+ToOSe159osXyuBvKHZ3eDHUkEk=
+X-Gm-Message-State: AOJu0YzBv0UqXjj64WKvwe4Nok6OTWQkZ1fa6Km6vtfRuTe/Ylz+nl+U
+ tLC6P7ctgLgjEJNUEbK9OpeIZIDd3CXylfcnv16usz8rcx4qs7fWVNRUhIV62Q9esa6mnU9LxnR
+ 3
+X-Google-Smtp-Source: AGHT+IGqmR3PIJqqKY5qRX3SOG6UEotXNSCXeJ7YDxNd+rZk7W8AnKtdSDEihFl9kgV9W7xE+UL5rQ==
+X-Received: by 2002:a17:90a:8c0b:b0:2c2:fadf:26d6 with SMTP id
+ 98e67ed59e1d1-2c2fadf2b72mr81133a91.15.1717875436149; 
+ Sat, 08 Jun 2024 12:37:16 -0700 (PDT)
 Received: from [192.168.64.11] ([50.78.183.178])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6bd7ccd3bsm55263095ad.176.2024.06.08.12.03.42
+ 98e67ed59e1d1-2c2f6e74a0dsm189314a91.2.2024.06.08.12.37.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 08 Jun 2024 12:03:43 -0700 (PDT)
-Message-ID: <c2e29e40-f35e-4bb2-93d3-7b924dfca5c6@linaro.org>
-Date: Sat, 8 Jun 2024 12:03:41 -0700
+ Sat, 08 Jun 2024 12:37:15 -0700 (PDT)
+Message-ID: <ac196cf1-bfc6-4cf8-8087-f03f052326d8@linaro.org>
+Date: Sat, 8 Jun 2024 12:37:13 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/25] target/i386: convert non-grouped, helper-based
- 2-byte opcodes
+Subject: Re: [PATCH 14/25] target/i386: convert bit test instructions to new
+ decoder
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20240608084113.2770363-1-pbonzini@redhat.com>
- <20240608084113.2770363-14-pbonzini@redhat.com>
+ <20240608084113.2770363-15-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240608084113.2770363-14-pbonzini@redhat.com>
+In-Reply-To: <20240608084113.2770363-15-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,21 +100,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/8/24 01:41, Paolo Bonzini wrote:
-> These have very simple generators and no need for complex group
-> decoding.  Apart from LAR/LSL which are simplified to use
-> gen_op_deposit_reg_v and movcond, the code is generally lifted
-> from translate.c into the generators.
-> 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   target/i386/tcg/decode-new.h     |   7 ++
->   target/i386/tcg/seg_helper.c     |  16 ++--
->   target/i386/tcg/translate.c      | 148 ------------------------------
->   target/i386/tcg/decode-new.c.inc |  48 +++++++---
->   target/i386/tcg/emit.c.inc       | 151 +++++++++++++++++++++++++++++++
->   5 files changed, 202 insertions(+), 168 deletions(-)
+> -        if (mod != 3) {
+> -            AddressParts a = gen_lea_modrm_0(env, s, modrm);
+> -            /* specific case: we need to add a displacement */
+> -            gen_exts(ot, s->T1);
+> -            tcg_gen_sari_tl(s->tmp0, s->T1, 3 + ot);
+> -            tcg_gen_shli_tl(s->tmp0, s->tmp0, ot);
+> -            tcg_gen_add_tl(s->A0, gen_lea_modrm_1(s, a, false), s->tmp0);
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This is not the same as
+
+> +    if (decode->e.special == X86_SPECIAL_BitTest) {
+> +        int oplen = 3 + decode->op[0].ot;
+> +        int poslen = 8 << decode->op[2].ot;
+> +        TCGv ofs = tcg_temp_new();
+> +
+> +        /* Extract memory displacement from T1.  */
+> +        assert (decode->op[2].unit == X86_OP_INT);
+> +        tcg_gen_sextract_tl(ofs, s->T1, oplen, poslen - oplen);
+> +
+> +        tcg_gen_add_tl(s->A0, ea, ofs);
+
+... this.
+
+Combining the exts + sari into an sextract is fine, but this has lost the shli.
+
 
 r~
 
