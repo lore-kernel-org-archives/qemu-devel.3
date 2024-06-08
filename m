@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89635C27C55
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B16DBC25B76
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:38:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFrXG-0000Yb-Ee; Sat, 08 Jun 2024 04:34:50 -0400
+	id 1sFrYO-0003Jb-N5; Sat, 08 Jun 2024 04:36:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrXF-0000YB-6J
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:49 -0400
+ id 1sFrYL-000367-8j
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrXD-0008J1-H5
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:48 -0400
+ id 1sFrYI-0000JQ-DA
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717835686;
+ s=mimecast20190719; t=1717835753;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aHLLmdM1T47s1VBxMQynaNLfQGaY0mg7XaNcdIi3/jE=;
- b=KKqyPSopXZhtkrSFVoz04yBSmQLQOC9uXFvAhM7bFLDzEo3jXZ6ufBFKbto/WRFsjAVC8E
- ZPkhpv1NrspycczmPp9i3RjHoBE7jTqj5tuXnHLwE1qq8740QfM07v/STqTBTWn7nyokSx
- KXNcr/XbKvgJwkAiJI5lOqYRhRFJEHg=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jKfBGH3wmrp1aUEk4x0YxyqjA7pI80vSZzG/Q9Zj3to=;
+ b=UyFvUKwaLgq+qZikRvCQXf/IB9TXwoLHCqM2Kxf0xWL/K7KcSWn8vUMaDuV18QRrgoeDk0
+ xnXlEydBVa64wYWAx5WZ6CVbSaHvG6dGEp8hWLd5Nl0FKj+ZaVhs7CMR5mlDZusYHFCLQ5
+ Cv50WUeMKDoWuZ2Ae86i0NLKGHrkHR8=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-65-SmEdl57AMpaC5dxcuGdTHQ-1; Sat, 08 Jun 2024 04:34:45 -0400
-X-MC-Unique: SmEdl57AMpaC5dxcuGdTHQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a6ef6ac6e0aso46459866b.0
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:34:44 -0700 (PDT)
+ us-mta-189-FtUCOwslPkiWqLyTnd6BVQ-1; Sat, 08 Jun 2024 04:35:52 -0400
+X-MC-Unique: FtUCOwslPkiWqLyTnd6BVQ-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a6c70438d0cso88927066b.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:35:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717835683; x=1718440483;
+ d=1e100.net; s=20230601; t=1717835750; x=1718440550;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aHLLmdM1T47s1VBxMQynaNLfQGaY0mg7XaNcdIi3/jE=;
- b=BG9c78Zs8YTaSivTASwvDI4McVp83pGigUW4YQpyIxT2WwtwWIyzGPkpIdJYjeu67H
- gEndgJQBxDTSHX73VFEuPzguvEIhTqYNtYJAsj3yY/jr3x6iAtXoVjBzP6vGRt+EwGyO
- EaQvnyt3aMABey+89h7mp08vRBoPC7O+ASmI4IT5XUwyTVbiyGoxwYVxN0BVYRCImHNQ
- VerS+k1Hxub4MWIVd8JUqMN8KaPdwhhUk59kSExk8Ccrm8UuP7gKosZe6pg5aT9IJl4k
- EEu0YNzjg2vvGdCXHPSe4+nUe6gVGenD6r4HHHlryglgYmuvG7c2uTKZIvPgwTII3tNz
- tC6Q==
-X-Gm-Message-State: AOJu0YyNOa9csCA20AkhD6KwASPbEQalgQ+fyRDXAxZdy4swVUNzBSnT
- i1/PeasOqLVnlAp7kjErHiDBfcW9xUBOlwf/T39lUG9xgfUwZbBcM0PwXvOgBCOKgEealpVus3b
- TFgz1tbtVyoIjT+BfjDlH6ObKbYhDGYNtkijj3MgHjSeVSaJ6ae7nXu2F11Cy9qRAcR+C9/v+ia
- UB4JSx9AgDA/dMlmWxkyTdCMmrw6Y7tBhpUz1c
-X-Received: by 2002:a17:907:1ca1:b0:a6e:337:1428 with SMTP id
- a640c23a62f3a-a6e03372a85mr259602566b.57.1717835683497; 
- Sat, 08 Jun 2024 01:34:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMwQrD4T6AOMsqfMR3wFfYilitp1VeGT1DCER+3DCMINCHqSoasDBYb///sgWSW/UgYRdreQ==
-X-Received: by 2002:a17:907:1ca1:b0:a6e:337:1428 with SMTP id
- a640c23a62f3a-a6e03372a85mr259585166b.57.1717835676597; 
- Sat, 08 Jun 2024 01:34:36 -0700 (PDT)
+ bh=jKfBGH3wmrp1aUEk4x0YxyqjA7pI80vSZzG/Q9Zj3to=;
+ b=fjM/CJoAV3DYVDhY1BkTDdUS2FjaFTuAhPIh4MdpcSHgAVbhq7pru16Kytpr5haSyb
+ nyPCLn1ezESGlJYvFu9vx4JBpLNaY6gzWU7+F38qBaJzzJAZtGfxe02jXZzjpYPVr67P
+ AOZOjDZgUPx7AXM8ESwghddHKvStkhZQlP9vOuLYtA7IxzN8YvE7lyuhgje+si7Br3vi
+ vFECQamNUI0w+n1I/KKjlPbcUXi7CU2ZrwtWOHH1+cyza58IOrnbqgJsGp1AKoTaGkxs
+ Kj3pp39w9YWKosjTqi6P0zg7QC4c4jOkoGlaL35T+MGhMsjhOcIqY5jteFVj4PhSdWJX
+ Od/g==
+X-Gm-Message-State: AOJu0YwuknLL2xkVyDLytrRkpPTcoAaBPTf5MJmDsYUvm6ZMb1m0PvBy
+ CQZYKoTv5SpYCQewbW/kV4A/+KH3XheMnZ+QVTSDOqvB7/jOPKy8cXHwmZ4MRtK/YgQvQOle6wW
+ EpK996W+fU/7Zdc+jiwrtWlR7YlhyEgTA3k3nAtXTrFnvfc1xAZdLicrNsbs723ADJ6ejXtrcyp
+ alL+BjnoCMeQZbPZ6z/Pk95HnQrgVODueS0nm7
+X-Received: by 2002:a50:d7ca:0:b0:578:638e:3683 with SMTP id
+ 4fb4d7f45d1cf-57c50861ae8mr3501893a12.5.1717835749902; 
+ Sat, 08 Jun 2024 01:35:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHPpSNUH26R94kqjS+wvfDmQp9cEaWERwcVZXYjWFo6KM/3jUtYtIrJMoXWjkZE42ecv9wNMg==
+X-Received: by 2002:a50:d7ca:0:b0:578:638e:3683 with SMTP id
+ 4fb4d7f45d1cf-57c50861ae8mr3501878a12.5.1717835749476; 
+ Sat, 08 Jun 2024 01:35:49 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f0a5989basm34791766b.219.2024.06.08.01.34.35
- for <qemu-devel@nongnu.org>
+ 4fb4d7f45d1cf-57aae2366a4sm3915477a12.92.2024.06.08.01.35.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 01:34:36 -0700 (PDT)
+ Sat, 08 Jun 2024 01:35:48 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/42] target/i386: disable/enable breakpoints on vmentry/vmexit
-Date: Sat,  8 Jun 2024 10:33:39 +0200
-Message-ID: <20240608083415.2769160-7-pbonzini@redhat.com>
+Cc: Xin Li <xin3.li@intel.com>,
+	Shan Kang <shan.kang@intel.com>
+Subject: [PULL 36/42] target/i386: Add get/set/migrate support for FRED MSRs
+Date: Sat,  8 Jun 2024 10:34:09 +0200
+Message-ID: <20240608083415.2769160-37-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240608083415.2769160-1-pbonzini@redhat.com>
 References: <20240608083415.2769160-1-pbonzini@redhat.com>
@@ -103,90 +104,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the required DR7 (either from the VMCB or from the host save
-area) disables a breakpoint that was enabled prior to vmentry
-or vmexit, it is left enabled and will trigger EXCP_DEBUG.
-This causes a spurious #DB on the next crossing of the breakpoint.
+From: Xin Li <xin3.li@intel.com>
 
-To disable it, vmentry/vmexit must use cpu_x86_update_dr7
-to load DR7.
+FRED CPU states are managed in 9 new FRED MSRs, in addtion to a few
+existing CPU registers and MSRs, e.g., CR4.FRED and MSR_IA32_PL0_SSP.
 
-Because cpu_x86_update_dr7 takes a 32-bit argument, check
-reserved bits prior to calling cpu_x86_update_dr7, and do the
-same for DR6 as well for consistency.
+Save/restore/migrate FRED MSRs if FRED is exposed to the guest.
 
-This scenario is tested by the "host_rflags" test in kvm-unit-tests.
-
+Tested-by: Shan Kang <shan.kang@intel.com>
+Signed-off-by: Xin Li <xin3.li@intel.com>
+Message-ID: <20231109072012.8078-7-xin3.li@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/sysemu/svm_helper.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ target/i386/cpu.h     | 22 +++++++++++++++++++
+ target/i386/kvm/kvm.c | 49 +++++++++++++++++++++++++++++++++++++++++++
+ target/i386/machine.c | 28 +++++++++++++++++++++++++
+ 3 files changed, 99 insertions(+)
 
-diff --git a/target/i386/tcg/sysemu/svm_helper.c b/target/i386/tcg/sysemu/svm_helper.c
-index 5d6de2294fa..922d8964f8e 100644
---- a/target/i386/tcg/sysemu/svm_helper.c
-+++ b/target/i386/tcg/sysemu/svm_helper.c
-@@ -163,6 +163,8 @@ void helper_vmrun(CPUX86State *env, int aflag, int next_eip_addend)
-     uint64_t new_cr0;
-     uint64_t new_cr3;
-     uint64_t new_cr4;
-+    uint64_t new_dr6;
-+    uint64_t new_dr7;
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 8ff27e933de..29d799adfd6 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -538,6 +538,17 @@ typedef enum X86Seg {
+ #define MSR_IA32_XFD                    0x000001c4
+ #define MSR_IA32_XFD_ERR                0x000001c5
  
-     if (aflag == 2) {
-         addr = env->regs[R_EAX];
-@@ -361,20 +363,22 @@ void helper_vmrun(CPUX86State *env, int aflag, int next_eip_addend)
-                                 env->vm_vmcb + offsetof(struct vmcb, save.rsp));
-     env->regs[R_EAX] = x86_ldq_phys(cs,
-                                 env->vm_vmcb + offsetof(struct vmcb, save.rax));
--    env->dr[7] = x86_ldq_phys(cs,
--                          env->vm_vmcb + offsetof(struct vmcb, save.dr7));
--    env->dr[6] = x86_ldq_phys(cs,
--                          env->vm_vmcb + offsetof(struct vmcb, save.dr6));
++/* FRED MSRs */
++#define MSR_IA32_FRED_RSP0              0x000001cc       /* Stack level 0 regular stack pointer */
++#define MSR_IA32_FRED_RSP1              0x000001cd       /* Stack level 1 regular stack pointer */
++#define MSR_IA32_FRED_RSP2              0x000001ce       /* Stack level 2 regular stack pointer */
++#define MSR_IA32_FRED_RSP3              0x000001cf       /* Stack level 3 regular stack pointer */
++#define MSR_IA32_FRED_STKLVLS           0x000001d0       /* FRED exception stack levels */
++#define MSR_IA32_FRED_SSP1              0x000001d1       /* Stack level 1 shadow stack pointer in ring 0 */
++#define MSR_IA32_FRED_SSP2              0x000001d2       /* Stack level 2 shadow stack pointer in ring 0 */
++#define MSR_IA32_FRED_SSP3              0x000001d3       /* Stack level 3 shadow stack pointer in ring 0 */
++#define MSR_IA32_FRED_CONFIG            0x000001d4       /* FRED Entrypoint and interrupt stack level */
 +
-+    new_dr7 = x86_ldq_phys(cs, env->vm_vmcb + offsetof(struct vmcb, save.dr7));
-+    new_dr6 = x86_ldq_phys(cs, env->vm_vmcb + offsetof(struct vmcb, save.dr6));
+ #define MSR_IA32_BNDCFGS                0x00000d90
+ #define MSR_IA32_XSS                    0x00000da0
+ #define MSR_IA32_UMWAIT_CONTROL         0xe1
+@@ -1723,6 +1734,17 @@ typedef struct CPUArchState {
+     target_ulong cstar;
+     target_ulong fmask;
+     target_ulong kernelgsbase;
++
++    /* FRED MSRs */
++    uint64_t fred_rsp0;
++    uint64_t fred_rsp1;
++    uint64_t fred_rsp2;
++    uint64_t fred_rsp3;
++    uint64_t fred_stklvls;
++    uint64_t fred_ssp1;
++    uint64_t fred_ssp2;
++    uint64_t fred_ssp3;
++    uint64_t fred_config;
+ #endif
  
- #ifdef TARGET_X86_64
--    if (env->dr[6] & DR_RESERVED_MASK) {
-+    if (new_dr7 & DR_RESERVED_MASK) {
-         cpu_vmexit(env, SVM_EXIT_ERR, 0, GETPC());
-     }
--    if (env->dr[7] & DR_RESERVED_MASK) {
-+    if (new_dr6 & DR_RESERVED_MASK) {
-         cpu_vmexit(env, SVM_EXIT_ERR, 0, GETPC());
+     uint64_t tsc_adjust;
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 0852ed077f0..b5635209812 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -3376,6 +3376,17 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
+         kvm_msr_entry_add(cpu, MSR_KERNELGSBASE, env->kernelgsbase);
+         kvm_msr_entry_add(cpu, MSR_FMASK, env->fmask);
+         kvm_msr_entry_add(cpu, MSR_LSTAR, env->lstar);
++        if (env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_FRED) {
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP0, env->fred_rsp0);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP1, env->fred_rsp1);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP2, env->fred_rsp2);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP3, env->fred_rsp3);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_STKLVLS, env->fred_stklvls);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP1, env->fred_ssp1);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP2, env->fred_ssp2);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP3, env->fred_ssp3);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_CONFIG, env->fred_config);
++        }
      }
  #endif
  
-+    cpu_x86_update_dr7(env, new_dr7);
-+    env->dr[6] = new_dr6;
-+
-     if (is_efer_invalid_state(env)) {
-         cpu_vmexit(env, SVM_EXIT_ERR, 0, GETPC());
+@@ -3848,6 +3859,17 @@ static int kvm_get_msrs(X86CPU *cpu)
+         kvm_msr_entry_add(cpu, MSR_KERNELGSBASE, 0);
+         kvm_msr_entry_add(cpu, MSR_FMASK, 0);
+         kvm_msr_entry_add(cpu, MSR_LSTAR, 0);
++        if (env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_FRED) {
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP0, 0);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP1, 0);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP2, 0);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP3, 0);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_STKLVLS, 0);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP1, 0);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP2, 0);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP3, 0);
++            kvm_msr_entry_add(cpu, MSR_IA32_FRED_CONFIG, 0);
++        }
      }
-@@ -864,8 +868,11 @@ void do_vmexit(CPUX86State *env)
+ #endif
+     kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, 0);
+@@ -4069,6 +4091,33 @@ static int kvm_get_msrs(X86CPU *cpu)
+         case MSR_LSTAR:
+             env->lstar = msrs[i].data;
+             break;
++        case MSR_IA32_FRED_RSP0:
++            env->fred_rsp0 = msrs[i].data;
++            break;
++        case MSR_IA32_FRED_RSP1:
++            env->fred_rsp1 = msrs[i].data;
++            break;
++        case MSR_IA32_FRED_RSP2:
++            env->fred_rsp2 = msrs[i].data;
++            break;
++        case MSR_IA32_FRED_RSP3:
++            env->fred_rsp3 = msrs[i].data;
++            break;
++        case MSR_IA32_FRED_STKLVLS:
++            env->fred_stklvls = msrs[i].data;
++            break;
++        case MSR_IA32_FRED_SSP1:
++            env->fred_ssp1 = msrs[i].data;
++            break;
++        case MSR_IA32_FRED_SSP2:
++            env->fred_ssp2 = msrs[i].data;
++            break;
++        case MSR_IA32_FRED_SSP3:
++            env->fred_ssp3 = msrs[i].data;
++            break;
++        case MSR_IA32_FRED_CONFIG:
++            env->fred_config = msrs[i].data;
++            break;
+ #endif
+         case MSR_IA32_TSC:
+             env->tsc = msrs[i].data;
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index c3ae3208147..39f8294f279 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -1544,6 +1544,33 @@ static const VMStateDescription vmstate_msr_xfd = {
+ };
  
-     env->dr[6] = x86_ldq_phys(cs,
-                           env->vm_hsave + offsetof(struct vmcb, save.dr6));
--    env->dr[7] = x86_ldq_phys(cs,
--                          env->vm_hsave + offsetof(struct vmcb, save.dr7));
+ #ifdef TARGET_X86_64
++static bool intel_fred_msrs_needed(void *opaque)
++{
++    X86CPU *cpu = opaque;
++    CPUX86State *env = &cpu->env;
 +
-+    /* Disables all breakpoints in the host DR7 register. */
-+    cpu_x86_update_dr7(env,
-+             x86_ldq_phys(cs,
-+                          env->vm_hsave + offsetof(struct vmcb, save.dr7)) & ~0xff);
- 
-     /* other setups */
-     x86_stl_phys(cs,
-@@ -891,8 +898,6 @@ void do_vmexit(CPUX86State *env)
-        from the page table indicated the host's CR3. If the PDPEs contain
-        illegal state, the processor causes a shutdown. */
- 
--    /* Disables all breakpoints in the host DR7 register. */
--
-     /* Checks the reloaded host state for consistency. */
- 
-     /* If the host's rIP reloaded by #VMEXIT is outside the limit of the
++    return !!(env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_FRED);
++}
++
++static const VMStateDescription vmstate_msr_fred = {
++    .name = "cpu/fred",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = intel_fred_msrs_needed,
++    .fields = (VMStateField[]) {
++        VMSTATE_UINT64(env.fred_rsp0, X86CPU),
++        VMSTATE_UINT64(env.fred_rsp1, X86CPU),
++        VMSTATE_UINT64(env.fred_rsp2, X86CPU),
++        VMSTATE_UINT64(env.fred_rsp3, X86CPU),
++        VMSTATE_UINT64(env.fred_stklvls, X86CPU),
++        VMSTATE_UINT64(env.fred_ssp1, X86CPU),
++        VMSTATE_UINT64(env.fred_ssp2, X86CPU),
++        VMSTATE_UINT64(env.fred_ssp3, X86CPU),
++        VMSTATE_UINT64(env.fred_config, X86CPU),
++        VMSTATE_END_OF_LIST()
++            }
++        };
++
+ static bool amx_xtile_needed(void *opaque)
+ {
+     X86CPU *cpu = opaque;
+@@ -1747,6 +1774,7 @@ const VMStateDescription vmstate_x86_cpu = {
+         &vmstate_pdptrs,
+         &vmstate_msr_xfd,
+ #ifdef TARGET_X86_64
++        &vmstate_msr_fred,
+         &vmstate_amx_xtile,
+ #endif
+         &vmstate_arch_lbr,
 -- 
 2.45.1
 
