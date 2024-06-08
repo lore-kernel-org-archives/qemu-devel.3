@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C25C27C55
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 20:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C124C27C55
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 20:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sG2Yv-0000mt-AO; Sat, 08 Jun 2024 16:21:17 -0400
+	id 1sG2Ys-0000lA-Dp; Sat, 08 Jun 2024 16:21:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sG2Yu-0000lq-42
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 16:21:16 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1sG2Yq-0000k4-Oo
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 16:21:12 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sG2Ys-0006YB-Ay
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 16:21:15 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-35f1691b18fso431804f8f.2
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 13:21:13 -0700 (PDT)
+ id 1sG2Yp-0006Vv-5v
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 16:21:12 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-35f188e09a8so376309f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 13:21:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1717878073; x=1718482873;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1717878069; x=1718482869;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cQEyeeAODBFtgLjJITuW2Z+P+ELVxbNF153Umdt+bWw=;
- b=VmprFHxo8sKtp3kIPz87LyWIp4GiesXKOJ+u4Z7cM/NPnldspl7Svo5gMYxppMBVdk
- ybzkJ/7EseM4VEi1Bwuc2bT6rduKjyB+at8lhuk0BeoL1wJpE4fOVFyftUQNYXgb24kQ
- AmIG7I7eW/D2djYnV7wpcVdHo0z+QzTamQvRK8EKb/WBeFKEP8Uqj1ZEpkOOJchfWvaV
- fmp5SzawaaHfZSceEi+Oss/WR0NfBrZ3dGV82no8fq0WuDhoLfDzZn82uftAQzTtzTOp
- 5SsZ4CE0TVmCoFmN9AXpQX8Gocx0FciFh5jI9/BdEJghTzmtyVpneqQW1iIbE6o0uARu
- ZTZQ==
+ bh=5RqSz/egwUoLX36Oqb4G2UnTOgtv4z+/AsIJrjeRIuk=;
+ b=0Bu6jdxJnYH+OGEIMQCM467CT/5OrXdefT3XyeI3sQ88AtIPkZDQtSCGAynUTLPZHm
+ Xks81JYR3W/vrBaOD1Yg6hkMNvbmMvUvX4Cqk2cRfQuwM3XspcmJ70UkbJ14FSMOB+8b
+ 8wl6axvw8KKesnIA8uwIiv4ugvxOXKYxpiPbVAYzDTPZfVHT+xxMZJsHBbrLBVbM260A
+ VjvyzJ8wVOmWF6PMEWlbnRq+m/zmlcRqn+pLVCqsiTZ/KZ+FW5U3D52THek+Wyw0U221
+ j5Yw4TU3y2khjLW0sHFCVfviuCKVlnUZVhGvC/WTOIPehB+kb6XsByoMKL7QxAWN+l8j
+ G4JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717878073; x=1718482873;
+ d=1e100.net; s=20230601; t=1717878069; x=1718482869;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cQEyeeAODBFtgLjJITuW2Z+P+ELVxbNF153Umdt+bWw=;
- b=CT0RAoJPol8dhCCo7RKJhX3ZVNO+2C8DgBpgas+BqgqLIhJRQk+lRryB51dijS5KaR
- 4zXjNp+7Q3PNOPxpyab/N91C5v+7mFJC+UTu0NmlgqKdmQW3ZyQERNEJoV2M0hVm2+cy
- 4dYKG2MRpCH5hxkB2Z16urAxnOmus7lmkbHrE9oIfeRerlNFLnJBv0bRYon01szmUXGm
- lMIGNW2lYDHRyAz7e4kAuTXsAL5AuqZCpfCmRpgjB6SFUKUYjR/E9vknNP37O4sVIfUm
- TjP57wPKF6RG8014qFcI62IPbuaNqjk/SW0PHziltue3PTHJ95jvydSYS8qjftqooQuX
- 9zyg==
-X-Gm-Message-State: AOJu0YyhKTFFX7yWsVhpPW28vYxok1wt910BieCoYgixjeQ3XoWjwVlg
- 1Ih2rXGwyMy8CpGWK5eRWQ7aU9x2KGuLNezDbCb0Cu1kWosPA37HwFv4okexMIuAx2y8AF/iJec
+ bh=5RqSz/egwUoLX36Oqb4G2UnTOgtv4z+/AsIJrjeRIuk=;
+ b=DJQUkVzBQKU0iyk6QxOOyzpglel5w9qZBk3IhT0BbUUC0/3Iy7TOQ+P8k2coh/C5Hf
+ qkM4Jv5FM6dnGXc6Z+36AvBB9hzodkKscpaRFRKaYjjDK6HNQfXuMl4kcuaE/mG/YKto
+ xPn41m8kdWQn8vBXIFBtcsg6IDyZfA5AspIkQlpL0rL1yHEJszTJ6ToUBek6O5CqUQT0
+ tVF6jz1GyUutVcYK/JLSYOAqoQZ3yTb20jy7I7v3qNM/CKALtEDBdqIOTcZMgHE/d++Z
+ Y34G8VQhBjWigsWigrqRFJwwNk4uFNbk0loLitMNDT9cyYp3/mbDv9z0y+EMKcHmkYPl
+ vOTQ==
+X-Gm-Message-State: AOJu0YznlOOAya/HZmX+t99qnhJ8R/4ZXGqdr49L1RY2ZPZptODYeqbf
+ 4jkMaYxxZQ/OAespsGkGxkT2WhZkbyl4HGNP7jq//hOVLEmMPNN3iaIF4ZgDKj6+yDdWUhosFRk
  =
-X-Google-Smtp-Source: AGHT+IGzJf3SDxJxqscgePxLY8aMTTc8fSssrYWrXVN1vWD9XaDv+af18Kwl50hy8hq1hhHqYGwl4A==
-X-Received: by 2002:a5d:678e:0:b0:355:77c:3146 with SMTP id
- ffacd0b85a97d-35efed20185mr3946592f8f.14.1717878072968; 
- Sat, 08 Jun 2024 13:21:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJgNwAAZiMYxz/nmPYcxHXlfgs2Cv3Ym386VHzGBgJF/Bg3JUEy07EUrhSWJJzx/qot/zd5Q==
+X-Received: by 2002:a5d:56c2:0:b0:35f:d70:6193 with SMTP id
+ ffacd0b85a97d-35f0d7062c0mr2341623f8f.41.1717878069442; 
+ Sat, 08 Jun 2024 13:21:09 -0700 (PDT)
 Received: from localhost.localdomain (89-104-8-17.customer.bnet.at.
  [89.104.8.17]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35f0ccc5f03sm3803845f8f.88.2024.06.08.13.21.12
+ ffacd0b85a97d-35f0ccc5f03sm3803845f8f.88.2024.06.08.13.21.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 13:21:12 -0700 (PDT)
+ Sat, 08 Jun 2024 13:21:09 -0700 (PDT)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, philmd@linaro.org, akihiko.odaki@daynix.com,
  marcandre.lureau@redhat.com, Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH 2/3] hw: Moves int_clamp() implementations to header
-Date: Sat,  8 Jun 2024 22:20:44 +0200
-Message-Id: <20240608202045.2815-3-phil@philjordan.eu>
+Subject: [PATCH 1/3] Cursor: 8 -> 1 bit alpha downsampling improvement
+Date: Sat,  8 Jun 2024 22:20:43 +0200
+Message-Id: <20240608202045.2815-2-phil@philjordan.eu>
 X-Mailer: git-send-email 2.36.1
 In-Reply-To: <20240608202045.2815-1-phil@philjordan.eu>
 References: <20240608202045.2815-1-phil@philjordan.eu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::429;
- envelope-from=phil@philjordan.eu; helo=mail-wr1-x429.google.com
+Received-SPF: neutral client-ip=2a00:1450:4864:20::431;
+ envelope-from=phil@philjordan.eu; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -95,99 +95,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both hw/input/hid.c and hw/usb/dev-wacom.c define identical versions
-(aside from code formatting) of a clamping function, int_clamp().
-(marked inline) To avoid duplication and to enable further re-use, this
-change moves the function into qemu/cutils.h.
+Mouse cursors with 8 bit alpha were downsampled to 1-bit opacity maps by
+turning alpha values of 255 into 1 and everything else into 0. This
+means that mostly-opaque pixels ended up completely invisible.
 
-Signed-off-by: Phil Dennis-Jordan<phil@philjordan.eu>
+This patch changes the behaviour so that only pixels with less than 50%
+alpha (0-127) are treated as transparent when converted to 1-bit alpha.
+
+This greatly improves the subjective appearance of anti-aliased mouse
+cursors, such as those used by macOS, when using a front-end UI without
+support for alpha-blended cursors, such as some VNC clients.
+
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 ---
- hw/input/hid.c        | 12 +-----------
- hw/usb/dev-wacom.c    | 11 +----------
- include/qemu/cutils.h | 11 +++++++++++
- 3 files changed, 13 insertions(+), 21 deletions(-)
+ ui/cursor.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/input/hid.c b/hw/input/hid.c
-index 76bedc1844..89f37f1bbb 100644
---- a/hw/input/hid.c
-+++ b/hw/input/hid.c
-@@ -26,6 +26,7 @@
- #include "qemu/osdep.h"
- #include "ui/console.h"
- #include "qemu/timer.h"
-+#include "qemu/cutils.h"
- #include "hw/input/hid.h"
- #include "migration/vmstate.h"
- #include "trace.h"
-@@ -336,17 +337,6 @@ static void hid_keyboard_process_keycode(HIDState *hs)
-     }
- }
- 
--static inline int int_clamp(int val, int vmin, int vmax)
--{
--    if (val < vmin) {
--        return vmin;
--    } else if (val > vmax) {
--        return vmax;
--    } else {
--        return val;
--    }
--}
--
- void hid_pointer_activate(HIDState *hs)
- {
-     if (!hs->ptr.mouse_grabbed) {
-diff --git a/hw/usb/dev-wacom.c b/hw/usb/dev-wacom.c
-index 7177c17f03..539581010e 100644
---- a/hw/usb/dev-wacom.c
-+++ b/hw/usb/dev-wacom.c
-@@ -32,6 +32,7 @@
- #include "hw/usb/hid.h"
- #include "migration/vmstate.h"
- #include "qemu/module.h"
-+#include "qemu/cutils.h"
- #include "desc.h"
- #include "qom/object.h"
- 
-@@ -215,16 +216,6 @@ static void usb_wacom_event(void *opaque,
-     usb_wakeup(s->intr, 0);
- }
- 
--static inline int int_clamp(int val, int vmin, int vmax)
--{
--    if (val < vmin)
--        return vmin;
--    else if (val > vmax)
--        return vmax;
--    else
--        return val;
--}
--
- static int usb_mouse_poll(USBWacomState *s, uint8_t *buf, int len)
- {
-     int dx, dy, dz, b, l;
-diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
-index da15547bfb..4394f03326 100644
---- a/include/qemu/cutils.h
-+++ b/include/qemu/cutils.h
-@@ -277,6 +277,17 @@ static inline const char *yes_no(bool b)
-      return b ? "yes" : "no";
- }
- 
-+static inline int int_clamp(int val, int vmin, int vmax)
-+{
-+    if (val < vmin) {
-+        return vmin;
-+    } else if (val > vmax) {
-+        return vmax;
-+    } else {
-+        return val;
-+    }
-+}
-+
- /*
-  * helper to parse debug environment variables
-  */
+diff --git a/ui/cursor.c b/ui/cursor.c
+index 29717b3ecb..4c05e5555c 100644
+--- a/ui/cursor.c
++++ b/ui/cursor.c
+@@ -232,7 +232,7 @@ void cursor_get_mono_mask(QEMUCursor *c, int transparent, uint8_t *mask)
+     for (y = 0; y < c->height; y++) {
+         bit = 0x80;
+         for (x = 0; x < c->width; x++, data++) {
+-            if ((*data & 0xff000000) != 0xff000000) {
++            if ((*data & 0xff000000) < 0x80000000) {
+                 if (transparent != 0) {
+                     mask[x/8] |= bit;
+                 }
 -- 
 2.36.1
 
