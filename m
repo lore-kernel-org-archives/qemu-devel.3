@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2236CC25B76
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6497C25B76
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:42:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFrek-0004YE-OU; Sat, 08 Jun 2024 04:42:34 -0400
+	id 1sFreY-0003lX-SX; Sat, 08 Jun 2024 04:42:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrei-0004JH-V2
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:42:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sFreX-0003iI-QW
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:42:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFreg-0001YU-U9
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:42:32 -0400
+ id 1sFreW-0001Vi-2U
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:42:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717836150;
+ s=mimecast20190719; t=1717836139;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XW36JikV1vaIpwUTwftCWapesqtWR9fALEpfLU1nVko=;
- b=VVkkg6Eog7RhTybA/vfgnUzcA5/fAxDQM1KQLUT2ZZSD0ySXDdW0VELLsWizWkp3PLLXFC
- oxvNxgX7j6H9tStM5r6Scl2n3/lJOyUW5oVqJaqwI+g6PMUa+BE/H66npQzmoIJlzrXXPm
- R3dPiVjLIinEvbfa1PDZIorlBoy4Jss=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=e54zIwB4ZotLZ75Nya5oaHP5znOGdXyOL0dXOi/s3BY=;
+ b=OAfe4r1d29QgFMGiFzaMpID9OL+ls99iC+kcjt28N76YWbHKi1aBOsaPzzKgbU3BttkHee
+ KRr4886po6JUxB6fHr81zds5/27CEbfPHTpr6g+4L/H0trSAPXNIIBrZCjwXqb1CSYKziL
+ DBO+/81052tqn5OluF62R3fT6sXcY7g=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-231-jtMqDDtvMYqDvhBgJ8xXCA-1; Sat, 08 Jun 2024 04:42:28 -0400
-X-MC-Unique: jtMqDDtvMYqDvhBgJ8xXCA-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a6ef729b8a7so45199266b.1
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:42:27 -0700 (PDT)
+ us-mta-618-pJgg61V4PwCiUZPLE0re_w-1; Sat, 08 Jun 2024 04:42:14 -0400
+X-MC-Unique: pJgg61V4PwCiUZPLE0re_w-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-57c6979daf7so180439a12.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:42:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717836146; x=1718440946;
+ d=1e100.net; s=20230601; t=1717836132; x=1718440932;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XW36JikV1vaIpwUTwftCWapesqtWR9fALEpfLU1nVko=;
- b=uK4QGx2vQ/RNEoMRDoA5OnuSMHlfJWJ9wICbXVEjOtRCGyNQlmXLXZLHgg7pn11Blz
- 7bwDHxsR/GlCM7MpxIw08aZShPQdekfpDm1Tjv+UFzlrlxzQNkGm7qjsijwat8PtNjNf
- RZ1dXCnlb6O/fBG5RbGKNNcGr/p7WrsccktKzOptldwNYATvpDwSpuBhY1kB3GwFUUAF
- H3puggL/aHvnhSQ9BrebpavfB+FEhi+g1XHEIUmFlyoEDMs/i7m8dTuDEvVSNH1sCKqI
- P6WTb/AypXaPm9opGWhF6Nql99uTUGCfymSW2G+kvvfl+NXqPzlH8rq0mPVBGMPR7Lxh
- r4eA==
-X-Gm-Message-State: AOJu0YwB5gkaD29tZecxy4Z6tZaf4yQMAb5X9FvmsqU6vOS8FEkQWG2Y
- 5zCZN1aRH7vaBubNNVMDVglHnzJl9huRjgIV3ikR/T8cuUHAqDNXpGabrAWJPbl4YXMIbJRR+oR
- lTDHsjQvvzQk48HdcYn8jfxuenPMiNleEYROZETqmQaAgjXxCHRa5RgwlN+bii7AtxI2ngKHVV4
- 1wlCJdA/fUGkYVdBx9bE678YUnRmcLIVP1x3za
-X-Received: by 2002:a50:99d4:0:b0:57c:61df:fe68 with SMTP id
- 4fb4d7f45d1cf-57c61dfffafmr1411784a12.17.1717836145911; 
- Sat, 08 Jun 2024 01:42:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEvhYL/W+uvwVIeXsyuYe+3HTqrHgGWHq0+xmLkQ7vNm7RP2YlX5OI9QnZ48dak0ZvlF61uzA==
-X-Received: by 2002:a50:99d4:0:b0:57c:61df:fe68 with SMTP id
- 4fb4d7f45d1cf-57c61dfffafmr1411774a12.17.1717836145408; 
- Sat, 08 Jun 2024 01:42:25 -0700 (PDT)
+ bh=e54zIwB4ZotLZ75Nya5oaHP5znOGdXyOL0dXOi/s3BY=;
+ b=tfaK6V4Rl4iV+gAgGasN7GqAHAYMP5/XpcslD5/4AyQqc+1Lz0E+ueRYfwgld2r2mp
+ 11HnKfN5Grzn5sXdnMc0OfTyFAtllf4bsJ2cWMPH86Yfxnb9Jjxvcur6W455OQrbYE9v
+ pmH8rZqKgTjB6GVp6JB/smgTMFF+8SVEeTyBh4GJqY/9WCmRdrJLw/ckXuRRs/q9d7CJ
+ 4v1aMleSajKNnCp4E0IyHhiDxmGDOyosS31o8VtTyhkqFrOykDdxA6zRqSqc1Y0je9Uq
+ GpdjYa4MMX644n1bfjZZp2bbU1a8dm8bifvlG+Hs7wThd9RW7tLLKaAri6LCipGze9DN
+ sTGQ==
+X-Gm-Message-State: AOJu0YxflcqbS2cnomy/2ctvbLlAv3w0dBeQ862RlJ/nN2H0pdiWtQUk
+ RSvaXRsss9BKGPiSmk+oa1HxUbk0/BadI0M9i/1m/k6TR+yDyxGxkN72FO+hYslkGcLdt/UYPCF
+ pUPdP4jFR6GMwD3PtcLSta9cCap+7Yl7TJN1NuglUEBCqWRKvE4gBNFb8h143TZWfOrNwyLJGyz
+ c4bBe1pa47O35uCyeV5bayi3qonN8oQxuvvWaw
+X-Received: by 2002:a50:cd56:0:b0:57a:31c6:69cf with SMTP id
+ 4fb4d7f45d1cf-57c50990d57mr2461490a12.28.1717836132329; 
+ Sat, 08 Jun 2024 01:42:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFoEa/m+uBJrPOHWW9ztTd/5V4IWDSpV3aUNNXUADrJAueF/31IVE3psJdy5ZIldLel4XBZHw==
+X-Received: by 2002:a50:cd56:0:b0:57a:31c6:69cf with SMTP id
+ 4fb4d7f45d1cf-57c50990d57mr2461481a12.28.1717836131850; 
+ Sat, 08 Jun 2024 01:42:11 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aae0ca9besm3951043a12.27.2024.06.08.01.42.22
+ 4fb4d7f45d1cf-57aae0ffbf8sm3981249a12.39.2024.06.08.01.42.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 01:42:23 -0700 (PDT)
+ Sat, 08 Jun 2024 01:42:09 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 20/25] target/i386: convert CMPXCHG to new decoder
-Date: Sat,  8 Jun 2024 10:41:08 +0200
-Message-ID: <20240608084113.2770363-21-pbonzini@redhat.com>
+Subject: [PATCH 16/25] target/i386: adapt gen_shift_count for SHLD/SHRD
+Date: Sat,  8 Jun 2024 10:41:04 +0200
+Message-ID: <20240608084113.2770363-17-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240608084113.2770363-1-pbonzini@redhat.com>
 References: <20240608084113.2770363-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,200 +103,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+SHLD/SHRD can have 3 register operands - s->T0, s->T1 and either
+1 or CL - and therefore decode->op[2] is taken by the low part
+of the register being shifted.  Pass X86_OP_* to gen_shift_count
+from its current callers and hardcode cpu_regs[R_ECX] as the
+shift count.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c      | 79 --------------------------------
- target/i386/tcg/decode-new.c.inc |  3 +-
- target/i386/tcg/emit.c.inc       | 51 +++++++++++++++++++++
- 3 files changed, 53 insertions(+), 80 deletions(-)
+ target/i386/tcg/emit.c.inc | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 7a63c927c1f..1f76339130a 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -434,13 +434,6 @@ static inline MemOp mo_stacksize(DisasContext *s)
-     return CODE64(s) ? MO_64 : SS32(s) ? MO_32 : MO_16;
- }
- 
--/* Select size 8 if lsb of B is clear, else OT.  Used for decoding
--   byte vs word opcodes.  */
--static inline MemOp mo_b_d(int b, MemOp ot)
--{
--    return b & 1 ? ot : MO_8;
--}
--
- /* Compute the result of writing t0 to the OT-sized register REG.
-  *
-  * If DEST is NULL, store the result into the register and return the
-@@ -715,11 +708,6 @@ static TCGv gen_ext_tl(TCGv dst, TCGv src, MemOp size, bool sign)
-     return dst;
- }
- 
--static void gen_extu(MemOp ot, TCGv reg)
--{
--    gen_ext_tl(reg, reg, ot, false);
--}
--
- static void gen_op_j_ecx(DisasContext *s, TCGCond cond, TCGLabel *label1)
- {
-     TCGv tmp = gen_ext_tl(NULL, cpu_regs[R_ECX], s->aflag, false);
-@@ -2998,73 +2986,6 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
- 
-     /* now check op code */
-     switch (b) {
--        /**************************/
--        /* arith & logic */
--    case 0x1b0:
--    case 0x1b1: /* cmpxchg Ev, Gv */
--        {
--            TCGv oldv, newv, cmpv, dest;
--
--            ot = mo_b_d(b, dflag);
--            modrm = x86_ldub_code(env, s);
--            reg = ((modrm >> 3) & 7) | REX_R(s);
--            mod = (modrm >> 6) & 3;
--            oldv = tcg_temp_new();
--            newv = tcg_temp_new();
--            cmpv = tcg_temp_new();
--            gen_op_mov_v_reg(s, ot, newv, reg);
--            tcg_gen_mov_tl(cmpv, cpu_regs[R_EAX]);
--            gen_extu(ot, cmpv);
--            if (s->prefix & PREFIX_LOCK) {
--                if (mod == 3) {
--                    goto illegal_op;
--                }
--                gen_lea_modrm(env, s, modrm);
--                tcg_gen_atomic_cmpxchg_tl(oldv, s->A0, cmpv, newv,
--                                          s->mem_index, ot | MO_LE);
--            } else {
--                if (mod == 3) {
--                    rm = (modrm & 7) | REX_B(s);
--                    gen_op_mov_v_reg(s, ot, oldv, rm);
--                    gen_extu(ot, oldv);
--
--                    /*
--                     * Unlike the memory case, where "the destination operand receives
--                     * a write cycle without regard to the result of the comparison",
--                     * rm must not be touched altogether if the write fails, including
--                     * not zero-extending it on 64-bit processors.  So, precompute
--                     * the result of a successful writeback and perform the movcond
--                     * directly on cpu_regs.  Also need to write accumulator first, in
--                     * case rm is part of RAX too.
--                     */
--                    dest = gen_op_deposit_reg_v(s, ot, rm, newv, newv);
--                    tcg_gen_movcond_tl(TCG_COND_EQ, dest, oldv, cmpv, newv, dest);
--                } else {
--                    gen_lea_modrm(env, s, modrm);
--                    gen_op_ld_v(s, ot, oldv, s->A0);
--
--                    /*
--                     * Perform an unconditional store cycle like physical cpu;
--                     * must be before changing accumulator to ensure
--                     * idempotency if the store faults and the instruction
--                     * is restarted
--                     */
--                    tcg_gen_movcond_tl(TCG_COND_EQ, newv, oldv, cmpv, newv, oldv);
--                    gen_op_st_v(s, ot, newv, s->A0);
--                }
--            }
--	    /*
--	     * Write EAX only if the cmpxchg fails; reuse newv as the destination,
--	     * since it's dead here.
--	     */
--            dest = gen_op_deposit_reg_v(s, ot, R_EAX, newv, oldv);
--            tcg_gen_movcond_tl(TCG_COND_EQ, dest, oldv, cmpv, dest, newv);
--            tcg_gen_mov_tl(cpu_cc_src, oldv);
--            tcg_gen_mov_tl(s->cc_srcT, cmpv);
--            tcg_gen_sub_tl(cpu_cc_dst, cmpv, oldv);
--            set_cc_op(s, CC_OP_SUBB + ot);
--        }
--        break;
-     case 0x1c7: /* cmpxchg8b */
-         modrm = x86_ldub_code(env, s);
-         mod = (modrm >> 6) & 3;
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 11ecd1c6c1d..00ffaeb0763 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1181,6 +1181,8 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xa4] = X86_OP_ENTRY4(SHLD,  E,v, 2op,v, G,v),
-     [0xa5] = X86_OP_ENTRY3(SHLD,  E,v, 2op,v, G,v),
- 
-+    [0xb0] = X86_OP_ENTRY2(CMPXCHG,E,b, G,b, lock),
-+    [0xb1] = X86_OP_ENTRY2(CMPXCHG,E,v, G,v, lock),
-     [0xb2] = X86_OP_ENTRY3(LSS,    G,v, EM,p, None, None),
-     [0xb3] = X86_OP_ENTRY2(BTR,    E,v, G,v,             btEvGv),
-     [0xb4] = X86_OP_ENTRY3(LFS,    G,v, EM,p, None, None),
-@@ -2612,7 +2614,6 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-             switch (b) {
-             case 0x00 ... 0x01: /* mostly privileged instructions */
-             case 0x1a ... 0x1b: /* MPX */
--            case 0xb0 ... 0xb1: /* cmpxchg */
-             case 0xc7:          /* grp9 */
-                 disas_insn_old(s, cpu, b + 0x100);
-                 return;
 diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 42e41a7a87c..857d270d247 100644
+index 41398e5130c..2e73b41cd3e 100644
 --- a/target/i386/tcg/emit.c.inc
 +++ b/target/i386/tcg/emit.c.inc
-@@ -1708,6 +1708,57 @@ static void gen_CMPS(DisasContext *s, X86DecodedInsn *decode)
-     }
+@@ -2998,16 +2998,16 @@ static void gen_PUSHF(DisasContext *s, X86DecodedInsn *decode)
  }
  
-+static void gen_CMPXCHG(DisasContext *s, X86DecodedInsn *decode)
-+{
-+    MemOp ot = decode->op[2].ot;
-+    TCGv cmpv = tcg_temp_new();
-+    TCGv oldv = tcg_temp_new();
-+    TCGv newv = tcg_temp_new();
-+    TCGv dest;
-+
-+    tcg_gen_ext_tl(cmpv, cpu_regs[R_EAX], ot);
-+    tcg_gen_ext_tl(newv, s->T1, ot);
-+    if (s->prefix & PREFIX_LOCK) {
-+        tcg_gen_atomic_cmpxchg_tl(oldv, s->A0, cmpv, newv,
-+                                  s->mem_index, ot | MO_LE);
-+    } else {
-+        tcg_gen_ext_tl(oldv, s->T0, ot);
-+        if (decode->op[0].has_ea) {
-+            /*
-+             * Perform an unconditional store cycle like physical cpu;
-+             * must be before changing accumulator to ensure
-+             * idempotency if the store faults and the instruction
-+             * is restarted
-+             */
-+            tcg_gen_movcond_tl(TCG_COND_EQ, newv, oldv, cmpv, newv, oldv);
-+            gen_op_st_v(s, ot, newv, s->A0);
-+        } else {
-+            /*
-+             * Unlike the memory case, where "the destination operand receives
-+             * a write cycle without regard to the result of the comparison",
-+             * rm must not be touched altogether if the write fails, including
-+             * not zero-extending it on 64-bit processors.  So, precompute
-+             * the result of a successful writeback and perform the movcond
-+             * directly on cpu_regs.  In case rm is part of RAX, note that this
-+             * movcond and the one below are mutually exclusive is executed.
-+             */
-+            dest = gen_op_deposit_reg_v(s, ot, decode->op[0].n, newv, newv);
-+            tcg_gen_movcond_tl(TCG_COND_EQ, dest, oldv, cmpv, newv, dest);
-+        }
-+        decode->op[0].unit = X86_OP_SKIP;
-+    }
-+
-+    /* Write RAX only if the cmpxchg fails.  */
-+    dest = gen_op_deposit_reg_v(s, ot, R_EAX, s->T0, oldv);
-+    tcg_gen_movcond_tl(TCG_COND_NE, dest, oldv, cmpv, s->T0, dest);
-+
-+    tcg_gen_mov_tl(s->cc_srcT, cmpv);
-+    tcg_gen_sub_tl(cmpv, cmpv, oldv);
-+    decode->cc_dst = cmpv;
-+    decode->cc_src = oldv;
-+    decode->cc_op = CC_OP_SUBB + ot;
-+}
-+
- static void gen_CPUID(DisasContext *s, X86DecodedInsn *decode)
+ static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
+-                             bool *can_be_zero, TCGv *count)
++                             bool *can_be_zero, TCGv *count, int unit)
  {
-     gen_update_cc_op(s);
+     MemOp ot = decode->op[0].ot;
+     int mask = (ot <= MO_32 ? 0x1f : 0x3f);
+ 
+     *can_be_zero = false;
+-    switch (decode->op[2].unit) {
++    switch (unit) {
+     case X86_OP_INT:
+         *count = tcg_temp_new();
+-        tcg_gen_andi_tl(*count, s->T1, mask);
++        tcg_gen_andi_tl(*count, cpu_regs[R_ECX], mask);
+         *can_be_zero = true;
+         break;
+ 
+@@ -3192,7 +3192,7 @@ static void gen_RCL(DisasContext *s, X86DecodedInsn *decode)
+     bool have_1bit_cin, can_be_zero;
+     TCGv count;
+     TCGLabel *zero_label = NULL;
+-    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count);
++    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
+     TCGv low, high, low_count;
+ 
+     if (!count) {
+@@ -3244,7 +3244,7 @@ static void gen_RCR(DisasContext *s, X86DecodedInsn *decode)
+     bool have_1bit_cin, can_be_zero;
+     TCGv count;
+     TCGLabel *zero_label = NULL;
+-    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count);
++    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
+     TCGv low, high, high_count;
+ 
+     if (!count) {
+@@ -3422,7 +3422,7 @@ static void gen_ROL(DisasContext *s, X86DecodedInsn *decode)
+ {
+     bool can_be_zero;
+     TCGv count;
+-    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count);
++    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
+     TCGv_i32 temp32, count32;
+     TCGv old = tcg_temp_new();
+ 
+@@ -3450,7 +3450,7 @@ static void gen_ROR(DisasContext *s, X86DecodedInsn *decode)
+ {
+     bool can_be_zero;
+     TCGv count;
+-    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count);
++    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
+     TCGv_i32 temp32, count32;
+     TCGv old = tcg_temp_new();
+ 
+@@ -3562,7 +3562,7 @@ static void gen_SAR(DisasContext *s, X86DecodedInsn *decode)
+ {
+     bool can_be_zero;
+     TCGv count;
+-    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count);
++    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
+ 
+     if (!count) {
+         return;
+@@ -3690,7 +3690,7 @@ static void gen_SHL(DisasContext *s, X86DecodedInsn *decode)
+ {
+     bool can_be_zero;
+     TCGv count;
+-    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count);
++    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
+ 
+     if (!count) {
+         return;
+@@ -3722,7 +3722,7 @@ static void gen_SHR(DisasContext *s, X86DecodedInsn *decode)
+ {
+     bool can_be_zero;
+     TCGv count;
+-    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count);
++    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
+ 
+     if (!count) {
+         return;
 -- 
 2.45.1
 
