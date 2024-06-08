@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9B14C25B76
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 18:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D1A5C25B76
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 18:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sG0jx-0002V7-G8; Sat, 08 Jun 2024 14:24:33 -0400
+	id 1sG0lY-0003R1-HR; Sat, 08 Jun 2024 14:26:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sG0jw-0002Ux-Jx
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 14:24:32 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1sG0lW-0003OY-1L
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 14:26:10 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sG0jv-0004Kf-41
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 14:24:32 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1f44b594deeso25946065ad.2
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 11:24:30 -0700 (PDT)
+ id 1sG0lU-0004ku-Fa
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 14:26:09 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1f44b441b08so24933915ad.0
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 11:26:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717871069; x=1718475869; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717871167; x=1718475967; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Zrlyg3NXecdp+Q2qJwjQpdyZPKt8ZrKqoSB0FVkLojU=;
- b=DOJtizwn1dqb20gQLGYdZMODmq9Wfk8NkV2A1wKoTdAPpzc6TnEN5SnYso+Sbv8j2U
- 9YZv7NRpojaPHr6C1bq/+l/dGQIUZ3qON4nWBAqy1OkZN57ieqyuGN/ecK499RlzMM8S
- hsEr7aaoJbFnd5P7lc2pLYgBGiFxdPtPXUWWP4aZBD3h1NtyDEZSkK0xis422owqwU6D
- LqealOx0ADcujU9Z3rJmhg8oax/5v3YPLEd81U0U6+N/S/f57t6/w0G4w1jgk/R1TDl3
- e2AnJProlRiStXVlEvx6Z6H8mQT2+qTqEQB74ewxscZaVLglU1c3X64ja1PtfX6Qu9HH
- O9hA==
+ bh=rKqYzxdpstXoonRcTE78dlRKdMK1azmrdL/keA6udRE=;
+ b=BCVyU12k+3Q65x00jwcXMaDX9xHQiJttkR9mZhw05ehTBiGtWlMX/vo+YuglV5a8Ue
+ owfk262veeo3b9RlnAUwui+J+oVygg9HX72k3Cjwhxk+QgVRebSncs8opPAL2l4w5yQz
+ EvPHdT3xMQgWuIl6lDHQXNR9RhOP2Qtme5hlCn3zYPZJpofphHN0N8H9zdtanI4DQK8Y
+ ouVMJVJ6diDIEdSx8XYxzYUnKBybGX6K+I2VKw0qdCdj95crUBkkayhegkMV1HZzxNfK
+ 2tpCSdWlYptjB4jQOUzRG9qjzy6hz6cVPMLUGBmQlqlcLJTZNEsJJNpv0acdOSlOjEhM
+ Rt8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717871069; x=1718475869;
+ d=1e100.net; s=20230601; t=1717871167; x=1718475967;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Zrlyg3NXecdp+Q2qJwjQpdyZPKt8ZrKqoSB0FVkLojU=;
- b=j4NEBhmbpIlXBjfmqwj3VCzupVVF2lpruTzZZb9yvw5EQavbeVGHOM7vWcJplYn5OI
- 9pMhucg0uYjEy/VjgDxFH0rB4P+CLWJD7w3bSQDPHFIV1AJ83PLaAZIqo3RPNuZ7B2uq
- aRH/NCWKw9ufDa1S8UHYIVATH1ilMKHBxArNT8ljT/gvpO3CxieRP5G6cuno2dkFFSi6
- OP4P0CgConqez5qRU9addxZJW2mh7NaWUTILacn61KJPawXb76zXWCDMVP1xxwJwKvjD
- 0fFJnghs8dtxCl/DetSc+zFzrkw+iityk0to733T1wrLZtHncniCiplsxqBusvMMFZcE
- 5abg==
+ bh=rKqYzxdpstXoonRcTE78dlRKdMK1azmrdL/keA6udRE=;
+ b=Kc24gihATgYXWfMZ43ZicPfNkL4/VC2v0U9dQwfpgjY0FuWEY8DxKl7YuyScBTjzuN
+ h7o2oGcSFo5bSIWh1cbis+e50AFwCUc1LnBBMyNY0zy84IKv9V1lss9Ucp98w7eUAWgM
+ X834nJBVJFlHjrvaG+zXAP8FPLxYtRIvT2kSsWgQWvGP3swySbdBzNnfu+652fJUYSmj
+ 65JCpCCQo3ZyV9oaVga6/xTe4Se42rUMoQcvxFkGffd9v4yz94pC28S0m65vAmMyRdBL
+ 5x6sDrahBx8IdtGJep7rIKF+SLMsaA4GrHV2Ip185K37Et/jPi3KbFdLIAbIpy5+UcxZ
+ tGvg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUudWXVjF7KSceg/FYaYNeGwhnsqOIpes4yOKNfIJP8eab9QpEf/dHBVLkxdCrbI5PhZY5iaojyNSnnpCygnkryg/IJtQ0=
-X-Gm-Message-State: AOJu0Yxon46VDxmI0XT59HvRkKwzaIP/obsd02ONv15qd+j9SL7OGWPr
- YorIkfYhMx8z//R8Hxxy3naDBAATdYCJVz/To++ux3odzv71NQjwziVvSlwUL5o=
-X-Google-Smtp-Source: AGHT+IETDuD4nqXqa2nEKTAVUjtoH4lIkHxjwTH0+W86tSrDlKcHJ0WNdD146m/VLS6f2utelziUkg==
-X-Received: by 2002:a17:902:ec83:b0:1f6:2795:b236 with SMTP id
- d9443c01a7336-1f6d02dd8d6mr67116895ad.24.1717871069089; 
- Sat, 08 Jun 2024 11:24:29 -0700 (PDT)
+ AJvYcCVBFzuc8DJKJsAhAeAKXdkkY0CvZtDunc4uqrlAsaVCMDvHHA03Dd+OhSLTzHZ0NaiOv8zvTTJ+ywyk1VGFIp8cTNO55XY=
+X-Gm-Message-State: AOJu0YxGZV6XKMCKlgR2UQuYLpsEr1Kbco5CPSRIBOryDcBiVeQrWqZw
+ 5ZsdIbM2QqGUvQ9DsEyb7NIOrVsngC4Cdl23cMeYPZhXUaw/W4deQWLzHO8OhVw=
+X-Google-Smtp-Source: AGHT+IHcnR1lA/nQxi4s2tTsn9CipL9ahoCE25FGtj865pcAR+g9XhSmftVz3Im5baYEXsWC2qVZhg==
+X-Received: by 2002:a17:902:d491:b0:1f4:962f:6338 with SMTP id
+ d9443c01a7336-1f6d02eeb1emr65848075ad.28.1717871166958; 
+ Sat, 08 Jun 2024 11:26:06 -0700 (PDT)
 Received: from [192.168.64.11] ([50.78.183.178])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6bd7e3e71sm54694555ad.219.2024.06.08.11.24.28
+ d9443c01a7336-1f6d6617394sm34000835ad.261.2024.06.08.11.26.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 08 Jun 2024 11:24:28 -0700 (PDT)
-Message-ID: <0f417e46-d958-4529-8dab-227c8860be2b@linaro.org>
-Date: Sat, 8 Jun 2024 11:24:26 -0700
+ Sat, 08 Jun 2024 11:26:06 -0700 (PDT)
+Message-ID: <cdae3542-ae83-4e2f-a3d8-82c24b429f5b@linaro.org>
+Date: Sat, 8 Jun 2024 11:26:04 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/25] target/i386: convert MOV from/to CR and DR to new
- decoder
+Subject: Re: [PATCH 09/25] target/i386: fix bad sorting of entries in the 0F
+ table
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20240608084113.2770363-1-pbonzini@redhat.com>
- <20240608084113.2770363-9-pbonzini@redhat.com>
+ <20240608084113.2770363-10-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240608084113.2770363-9-pbonzini@redhat.com>
+In-Reply-To: <20240608084113.2770363-10-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,15 +99,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/8/24 01:40, Paolo Bonzini wrote:
-> Complete implementation of C and D operand types, then the operations
-> are just MOVs.
+> Aesthetic change only.
 > 
 > Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
->   target/i386/tcg/translate.c      | 79 --------------------------------
->   target/i386/tcg/decode-new.c.inc | 53 +++++++++++++++++++--
->   target/i386/tcg/emit.c.inc       | 20 +++++++-
->   3 files changed, 68 insertions(+), 84 deletions(-)
+>   target/i386/tcg/decode-new.c.inc | 93 ++++++++++++++++----------------
+>   1 file changed, 46 insertions(+), 47 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
