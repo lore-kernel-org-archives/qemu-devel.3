@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91DEFC25B76
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 20:17:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED93C25B76
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 20:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sG2VV-000767-36; Sat, 08 Jun 2024 16:17:45 -0400
+	id 1sG2Wr-0007tW-OS; Sat, 08 Jun 2024 16:19:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sG2VT-000754-4M
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 16:17:43 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1sG2Wp-0007st-JT
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 16:19:07 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sG2VR-0005z4-KT
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 16:17:42 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1f64ecb1766so25642165ad.1
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 13:17:41 -0700 (PDT)
+ id 1sG2Wn-00063i-Gn
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 16:19:07 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-70255d5ddc7so2662590b3a.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 13:19:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717877860; x=1718482660; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717877944; x=1718482744; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SKOFpkZH7cyvDsoDcdGLt3LBEW58WYsgTly3bbIwkJg=;
- b=W10T1Rfh95iFH7ndnXSNnV43Fa6upqAlLioKh4/jCbH32PsjBS0erJxoNhs2xsCutA
- LxiqRRQMGyqjSwfFdf2gLbvV1V4vD7hkm1C8tVJsuMJS0ptIoVnyahXT7VZWYnBq4dFH
- 9VGkgezCoy78sXexhl3wUAllcH8kwdeCAspejYwNDzePweAZNmmCuyzmSBLm8en/SCLm
- 3t/XIWM7fsETzAb+AITgZVXKJzL9THK5vCCsMklOgdw0tlvTJLnj8TidSIW2w3xIjLBh
- 9iig9V6fjHIh0PAZqSln3yiSveBTECZvboO1MOgHvtbqda5JmPbKE7ihUZLic7Nkt4IG
- 7EJw==
+ bh=d2TiceYzWFxsgprbHVhAhRrL5WBgg+1v6FRI6hMkfuA=;
+ b=FdHDfV9eWWSHAF7y/sjQYJPy7m9/zHRzy/KT+RcaryUuvYapIPWQWcxhbZaa9eB/NM
+ I/iz9pvN2/wmppuFIuham+AlsJ2tl7BNh+Bf03ZcgBBRDvLkuGQeEVDI0TgSbwUVdJWD
+ /t+6I8XNG91LBVH56Pak3Op0ody7TcB3O1r+wbGq3i5H3+w+WX25QYKwsRyfUO7PvcDV
+ YSw9HFJ8Wb4oGbvvRO4bemekBizziaQ2CXcyGau8zDnciEgMset/qVfmoEzmk0zoxVlc
+ WsPJfj/SNkbWft/EnRM5natlPmLnNzuzhwn480KjlY1qW7Ddx177ZeaRFwG56NElGZgP
+ xEqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717877860; x=1718482660;
+ d=1e100.net; s=20230601; t=1717877944; x=1718482744;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SKOFpkZH7cyvDsoDcdGLt3LBEW58WYsgTly3bbIwkJg=;
- b=nHlkaa8dRBLqEatWv9AgUb1prJreNQqloGYZKUTvpbG9LeZuEliDkUkAL9QjRFPFNr
- IG44sUPS+67lEG+UuioGMM7yS2lBUejS9XFNjkEWet6V//tWNfwEGVRD2y4UYXyDvthF
- De3B3ZOwlQHqSPiqh5zzdk8eGKyXs7ov/hvBYtN1xMNsh350A3TxgAikVxpTouinGUOo
- tipvll6mlZ0/BdZeSaGfmnoo0qzanV7Tef8IbZxvf7YNIT80qU4fGziD9xhirQtc9/SN
- aPzjxcq5d5laPDAQTTo9POSwLjTQp7XFIIUJ/DIRnIJuaRBG0JHAJIzD3uZ3mA/WASXO
- wjDQ==
+ bh=d2TiceYzWFxsgprbHVhAhRrL5WBgg+1v6FRI6hMkfuA=;
+ b=dPBxh5iqa74xVdOMX3Nwlqt1ouihyEiyWXnGLFhil7QeaE8IGxKqC2nnQvCP8OLA7Z
+ t2VO+OrcqBB8+oHQ4wnDSCNHAC4m4lbeUA4OuwTDCGzHdyqgYjLpVcryFj6Dj6EDk4S/
+ Y7Xhj4nyM4saHUBfQCfIodtGY+4CcXpGG7aC5SRfKwx9NuS/RbX+g8p2e4LUihadvvwA
+ GUsiSgJ/vrEuhswezUcufVmT9jvK0sYDnqmDwJzxBre75rnhGjuL3fNb6YZRueAKSoPv
+ 4ZMcThemEvXGvMmfz9XAdS/OqdymBFEX7aJDgNBh5TERFWqIXncbSsVW9f2criSoFq0x
+ fRVA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUiZ/9hO5OY9l+FvIgS3ZLnQXejma3BD4o2XOnEUrDFqTlFytUNTdNuXfxFvjvhtqVomPJPruc8PYCgwRhoeYr7V1pyxJg=
-X-Gm-Message-State: AOJu0YwDCCyMlizbrJLpTRmyiZXNSh43FQPtmwRjywf3BbAbL4Vg2pgN
- zFZEj5GqBt13ZboJUo2QOSVVlPk3wCwhk4GMAKEta6eVcaxF8FoCJFpcGi4GNuwgfJTe9MxKgSg
- G
-X-Google-Smtp-Source: AGHT+IH9p0+HTWIsALjgMlo7iDlLza/OOqbppaTMZnc69WixxS7/mw0fzDvhvgT1eDJYbk8mqCsbBg==
-X-Received: by 2002:a17:903:2345:b0:1f6:74f3:ac0a with SMTP id
- d9443c01a7336-1f6d03d6ef3mr63685455ad.64.1717877860075; 
- Sat, 08 Jun 2024 13:17:40 -0700 (PDT)
+ AJvYcCXavBiEjTDHXw66FynH+BittAQQ3SqCp/ZlrxiPSxYvhBLAxK6wo7dSBr9reZEoiQUQOvYrp39u0h1BR/t4ATLSI+8YA8Q=
+X-Gm-Message-State: AOJu0YyCh8G4hobxpXzbBXvsyIQ1Cr/Pgt9nLYjzJTvxGFhIMbwVkqdm
+ 1tznXwJG2s17T/1QiGX/DXBsWy99Zr7S50/P9MIIYVvnBm3ivJchCOL/DPiZm0PQ1jl0cPYXEAq
+ T
+X-Google-Smtp-Source: AGHT+IGLzJVis+tdtI5mUMf8DLd6s2T2OvyBTC7rAgS3pY2Xz9Sb4BNQ5I9Jt+yISyHLY/ktc7ZlKQ==
+X-Received: by 2002:a05:6a21:3398:b0:1b0:1ce1:e7ac with SMTP id
+ adf61e73a8af0-1b2f9cbd7d3mr6548690637.53.1717877943599; 
+ Sat, 08 Jun 2024 13:19:03 -0700 (PDT)
 Received: from [192.168.64.11] ([50.78.183.178])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6bd761430sm55488315ad.55.2024.06.08.13.17.39
+ d2e1a72fcca58-7041f2fe912sm1867314b3a.212.2024.06.08.13.19.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 08 Jun 2024 13:17:39 -0700 (PDT)
-Message-ID: <72409816-8703-4c4b-85ec-6c8b58c35eaf@linaro.org>
-Date: Sat, 8 Jun 2024 13:17:37 -0700
+ Sat, 08 Jun 2024 13:19:03 -0700 (PDT)
+Message-ID: <be32f958-39ab-4c40-b81e-074f034229e1@linaro.org>
+Date: Sat, 8 Jun 2024 13:19:01 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 25/25] target/i386: remove gen_ext_tl
+Subject: Re: [PULL 00/42] i386, scsi. hostmem fixes for 2024-06-08
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240608084113.2770363-1-pbonzini@redhat.com>
- <20240608084113.2770363-26-pbonzini@redhat.com>
+References: <20240608083415.2769160-1-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240608084113.2770363-26-pbonzini@redhat.com>
+In-Reply-To: <20240608083415.2769160-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,20 +97,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/8/24 01:41, Paolo Bonzini wrote:
-> With the introduction of tcg_gen_ext_tl, most uses can be converted directly
-> because they do not have a NULL destination.  tcg_gen_ext_tl is able to drop
-> no-ops like "tcg_gen_ext_tl(tcgv, tcgv, MO_TL)" just fine, and the only thing
-> that gen_ext_tl was adding on top was avoiding the creation of a useless
-> temporary.  This can be done in the only place where it matters, which is
-> gen_op_j_ecx.
+On 6/8/24 01:33, Paolo Bonzini wrote:
+> The following changes since commit f1572ab94738bd5787b7badcd4bd93a3657f0680:
 > 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   target/i386/tcg/translate.c | 41 +++++++++++++++----------------------
->   1 file changed, 17 insertions(+), 24 deletions(-)
+>    Merge tag 'for-upstream' ofhttps://gitlab.com/bonzini/qemu  into staging (2024-06-05 07:45:23 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/bonzini/qemu.git  tags/for-upstream
+> 
+> for you to fetch changes up to fc00123f3abeb027cd51eb58ea8845377794b3bc:
+> 
+>    python: mkvenv: remove ensure command (2024-06-08 10:33:39 +0200)
+> 
+> ----------------------------------------------------------------
+> * scsi-disk: Don't silently truncate serial number
+> * backends/hostmem: Report error on unavailable qemu_madvise() features or unaligned memory sizes
+> * target/i386: fixes and documentation for INHIBIT_IRQ/TF/RF and debugging
+> * i386/hvf: Adds support for INVTSC cpuid bit
+> * i386/hvf: Fixes for dirty memory tracking
+> * i386/hvf: Use hv_vcpu_interrupt() and hv_vcpu_run_until()
+> * hvf: Cleanups
+> * stubs: fixes for --disable-system build
+> * i386/kvm: support for FRED
+> * i386/kvm: fix MCE handling on AMD hosts
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+
 
 r~
+
 
