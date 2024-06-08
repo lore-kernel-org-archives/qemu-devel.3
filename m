@@ -4,84 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED93C25B76
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 20:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6D52C25B76
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 20:21:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sG2Wr-0007tW-OS; Sat, 08 Jun 2024 16:19:09 -0400
+	id 1sG2Yr-0000kN-D3; Sat, 08 Jun 2024 16:21:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sG2Wp-0007st-JT
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 16:19:07 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sG2Yp-0000jX-4X
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 16:21:11 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sG2Wn-00063i-Gn
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 16:19:07 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-70255d5ddc7so2662590b3a.3
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 13:19:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sG2Ym-0006To-K8
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 16:21:10 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-354be94c874so2441802f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 13:21:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717877944; x=1718482744; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=d2TiceYzWFxsgprbHVhAhRrL5WBgg+1v6FRI6hMkfuA=;
- b=FdHDfV9eWWSHAF7y/sjQYJPy7m9/zHRzy/KT+RcaryUuvYapIPWQWcxhbZaa9eB/NM
- I/iz9pvN2/wmppuFIuham+AlsJ2tl7BNh+Bf03ZcgBBRDvLkuGQeEVDI0TgSbwUVdJWD
- /t+6I8XNG91LBVH56Pak3Op0ody7TcB3O1r+wbGq3i5H3+w+WX25QYKwsRyfUO7PvcDV
- YSw9HFJ8Wb4oGbvvRO4bemekBizziaQ2CXcyGau8zDnciEgMset/qVfmoEzmk0zoxVlc
- WsPJfj/SNkbWft/EnRM5natlPmLnNzuzhwn480KjlY1qW7Ddx177ZeaRFwG56NElGZgP
- xEqA==
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1717878066; x=1718482866;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=B9zXy62U/i/GPhaOCkWS7JnbtEA8aZVV+oCWEQAna0s=;
+ b=agMNl9aVnjDdLdLdZRrmb9wBbzoaxy3b/SVdcoxYZbxLrj+C0a++uu6jQbkcn8tU+0
+ pihRZjysMUSFY1/bhEo7a+vZzu335kt3KILDRxID6FSDbLzHsruggwrxG/2ZRPZfxnFv
+ jbi9DVDy9YBlT+sKdf2BgQP0nmtAzpnmmzDyHzJE3hjn/2QPHih+xRj4AmF7THfBMZk+
+ lPhy1yYP1UV/Jwqnrr5wJUTuAeW9NK76GXLjrohgkDNrkwmT+79RGqhlbE+ypDxp0Gtk
+ sqoxXyJ7MtMkjoH0TRehnwPrytRm0G0d62/WgOuglQ2Ao5NMUh6qWTZ/CSAf1qQALkgN
+ 3WqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717877944; x=1718482744;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=d2TiceYzWFxsgprbHVhAhRrL5WBgg+1v6FRI6hMkfuA=;
- b=dPBxh5iqa74xVdOMX3Nwlqt1ouihyEiyWXnGLFhil7QeaE8IGxKqC2nnQvCP8OLA7Z
- t2VO+OrcqBB8+oHQ4wnDSCNHAC4m4lbeUA4OuwTDCGzHdyqgYjLpVcryFj6Dj6EDk4S/
- Y7Xhj4nyM4saHUBfQCfIodtGY+4CcXpGG7aC5SRfKwx9NuS/RbX+g8p2e4LUihadvvwA
- GUsiSgJ/vrEuhswezUcufVmT9jvK0sYDnqmDwJzxBre75rnhGjuL3fNb6YZRueAKSoPv
- 4ZMcThemEvXGvMmfz9XAdS/OqdymBFEX7aJDgNBh5TERFWqIXncbSsVW9f2criSoFq0x
- fRVA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXavBiEjTDHXw66FynH+BittAQQ3SqCp/ZlrxiPSxYvhBLAxK6wo7dSBr9reZEoiQUQOvYrp39u0h1BR/t4ATLSI+8YA8Q=
-X-Gm-Message-State: AOJu0YyCh8G4hobxpXzbBXvsyIQ1Cr/Pgt9nLYjzJTvxGFhIMbwVkqdm
- 1tznXwJG2s17T/1QiGX/DXBsWy99Zr7S50/P9MIIYVvnBm3ivJchCOL/DPiZm0PQ1jl0cPYXEAq
- T
-X-Google-Smtp-Source: AGHT+IGLzJVis+tdtI5mUMf8DLd6s2T2OvyBTC7rAgS3pY2Xz9Sb4BNQ5I9Jt+yISyHLY/ktc7ZlKQ==
-X-Received: by 2002:a05:6a21:3398:b0:1b0:1ce1:e7ac with SMTP id
- adf61e73a8af0-1b2f9cbd7d3mr6548690637.53.1717877943599; 
- Sat, 08 Jun 2024 13:19:03 -0700 (PDT)
-Received: from [192.168.64.11] ([50.78.183.178])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7041f2fe912sm1867314b3a.212.2024.06.08.13.19.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 08 Jun 2024 13:19:03 -0700 (PDT)
-Message-ID: <be32f958-39ab-4c40-b81e-074f034229e1@linaro.org>
-Date: Sat, 8 Jun 2024 13:19:01 -0700
+ d=1e100.net; s=20230601; t=1717878066; x=1718482866;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=B9zXy62U/i/GPhaOCkWS7JnbtEA8aZVV+oCWEQAna0s=;
+ b=mk9UKBLfKIsz55wRY+PWs0qjHCca+v1nMO+tklhonbLQJ/KS6YRYALaIkEG6sciLNd
+ zniivdm/SAb0o0JkV89MYms6vkBF7o+vOla94OTTc4q+w4XBfxQTncc+mzLZ5dQIR2av
+ HnCT2njeuMSSiNEdjKRlmLgI6/sRCFkj5bI+vWpYNUNeub0+15F19N7pvtuUDY8UxAU7
+ FvIFbfpYle3dOLcbBNgkaoUPWSZHT+bOTR61o5N+SR3tOyjQspcsrErYIDaLeKGK6V67
+ 8T6zTt7fWN6vVF4BXBW9tTirko8IsvMAE4GDNqUE1IKZIdIuQPas73uhHfR6Xwhtcudo
+ 1Tbw==
+X-Gm-Message-State: AOJu0YxryEkKPDKvjdNeVOHnjxbukLUt3Pu1UIdJ6oHZi4W2zJUZZPFN
+ iM2rKwCMoqxABTsvt8jhCfrLD4zXLIAA096YOP+KMvbzzGmmOkTEMksYr0ORG8/KsUFnN5zxg5o
+ =
+X-Google-Smtp-Source: AGHT+IFEahbfl52L063ZyCGRCyQYNUY0UT8wdBCLbwfdhANMExSBEYTgxNNFhSIna/3xQSUgRKNCoQ==
+X-Received: by 2002:a5d:5f4a:0:b0:35d:be9a:3e6a with SMTP id
+ ffacd0b85a97d-35efedca59fmr6347303f8f.53.1717878065942; 
+ Sat, 08 Jun 2024 13:21:05 -0700 (PDT)
+Received: from localhost.localdomain (89-104-8-17.customer.bnet.at.
+ [89.104.8.17]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35f0ccc5f03sm3803845f8f.88.2024.06.08.13.21.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 08 Jun 2024 13:21:05 -0700 (PDT)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, philmd@linaro.org, akihiko.odaki@daynix.com,
+ marcandre.lureau@redhat.com, Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH 0/3] Mouse cursor improvements on macOS and VNC
+Date: Sat,  8 Jun 2024 22:20:42 +0200
+Message-Id: <20240608202045.2815-1-phil@philjordan.eu>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/42] i386, scsi. hostmem fixes for 2024-06-08
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240608083415.2769160-1-pbonzini@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240608083415.2769160-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: neutral client-ip=2a00:1450:4864:20::431;
+ envelope-from=phil@philjordan.eu; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NEUTRAL=0.779, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,34 +92,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/8/24 01:33, Paolo Bonzini wrote:
-> The following changes since commit f1572ab94738bd5787b7badcd4bd93a3657f0680:
-> 
->    Merge tag 'for-upstream' ofhttps://gitlab.com/bonzini/qemu  into staging (2024-06-05 07:45:23 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/bonzini/qemu.git  tags/for-upstream
-> 
-> for you to fetch changes up to fc00123f3abeb027cd51eb58ea8845377794b3bc:
-> 
->    python: mkvenv: remove ensure command (2024-06-08 10:33:39 +0200)
-> 
-> ----------------------------------------------------------------
-> * scsi-disk: Don't silently truncate serial number
-> * backends/hostmem: Report error on unavailable qemu_madvise() features or unaligned memory sizes
-> * target/i386: fixes and documentation for INHIBIT_IRQ/TF/RF and debugging
-> * i386/hvf: Adds support for INVTSC cpuid bit
-> * i386/hvf: Fixes for dirty memory tracking
-> * i386/hvf: Use hv_vcpu_interrupt() and hv_vcpu_run_until()
-> * hvf: Cleanups
-> * stubs: fixes for --disable-system build
-> * i386/kvm: support for FRED
-> * i386/kvm: fix MCE handling on AMD hosts
+This series of loosely related changes provides some minor improvements
+in mouse cursor usability.
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+ 1. This one-liner changes alpha downsampling when using a UI frontend
+    which does not support alpha-blended mouse cursors. Previously,
+    any pixel with an alpha value other than 255 was treated as fully
+    transparent in this context. This looks pretty bad when the guest
+    OS uses anti-aliased cursors. (e.g. macOS) This occurs with some
+    VNC clients, for example.
+ 2. This change has nothing to do with cursors: there are two
+    functionally identical implementations of an int_clamp() inline
+    function in the Qemu codebase. This unifies them in the shared
+    cutils.h header, as I'm about to use it in a third location in
+    patch number 3.
+ 3. This sizeable patch implements cursor support in the (macOS) Cocoa
+    UI frontend. This fixes the issue of no mouse pointer showing up
+    when using virtio-vga on a macOS host, for example.
+    It unfortunately introduces some complexity to the mouse movement
+    event handling when using a relative pointing device in the guest,
+    as teleporting the cursor on the host offsets the next mouse event
+    delta by a corresponding amount. We therefore need to track this
+    offset and counteract it when processing the event. For details,
+    see the commit message and inline comments.
 
+This work was sponsored by Sauce Labs Inc.
 
-r~
+Phil Dennis-Jordan (3):
+  Cursor: 8 -> 1 bit alpha downsampling improvement
+  hw: Moves int_clamp() implementations to header
+  ui/cocoa: Adds support for mouse cursors
+
+ hw/input/hid.c        |  12 +--
+ hw/usb/dev-wacom.c    |  11 +--
+ include/qemu/cutils.h |  11 +++
+ ui/cocoa.m            | 167 +++++++++++++++++++++++++++++++++++++++++-
+ ui/cursor.c           |   2 +-
+ ui/trace-events       |   7 ++
+ 6 files changed, 185 insertions(+), 25 deletions(-)
+
+-- 
+2.36.1
 
 
