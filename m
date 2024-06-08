@@ -4,89 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98BEDC25B76
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Jun 2024 01:00:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74365C27C5E
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Jun 2024 05:32:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sG6sL-0007nc-5o; Sat, 08 Jun 2024 20:57:37 -0400
+	id 1sGB9d-0005xR-3M; Sun, 09 Jun 2024 01:31:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bcain@quicinc.com>) id 1sG6sG-0007lJ-4q
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 20:57:32 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bcain@quicinc.com>) id 1sG6sC-0003te-9Y
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 20:57:30 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4590knpY015215;
- Sun, 9 Jun 2024 00:57:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- W0hv18PH1zmmBiXV+tTS7ii6GGPMv6F2fMonOX/sww4=; b=LhoXGF+B0RbBhz3C
- P+i1+UlaKfbyqdfn20wqVc102EeDvyn9yn7dtfKbfnkRkZDzMzIJpee8TCcZMdis
- DxCnPSKkkgO6cPARfZEEYGmYqnVmFRbWOw1IKvRftVjcMhZWwQCygcyUWbo3MFsX
- R4rYFZYYINHdaju5lVscBDPRmTrdUTVnFxMzexIlqy5G/LWlrZXg8gBODrZTwG+g
- +MGn9LuBwKm0xtIlRzY6QJ1sJ0LDCoMKuNuenDQERwFNN+jTsYa9IQZbTGi6LB+K
- xM6qxWS3bAcfUc54Njh9vBlQDWktx4qQ2OrPAN3Cu/ghdgq77Qcttvvl66W7fg19
- 2XrU+Q==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yme8rs9wt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 09 Jun 2024 00:57:23 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
- [10.47.209.196])
- by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id
- 4590vLrr024413
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 9 Jun 2024 00:57:21 GMT
-Received: from hu-bcain-lv.qualcomm.com (10.49.16.6) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sat, 8 Jun 2024 17:57:21 -0700
-From: Brian Cain <bcain@quicinc.com>
-To: <qemu-devel@nongnu.org>
-CC: <bcain@quicinc.com>, <armbru@redhat.com>, <richard.henderson@linaro.org>, 
- <philmd@linaro.org>, <peter.maydell@linaro.org>,
- <quic_mathbern@quicinc.com>, <stefanha@redhat.com>, <ale@rev.ng>,
- <anjo@rev.ng>, <quic_mliebel@quicinc.com>, <ltaylorsimpson@gmail.com>
-Subject: [PULL 5/6] target/hexagon: idef-parser fix leak of init_list
-Date: Sat, 8 Jun 2024 17:57:04 -0700
-Message-ID: <20240609005705.2809037-6-bcain@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240609005705.2809037-1-bcain@quicinc.com>
-References: <20240609005705.2809037-1-bcain@quicinc.com>
+ (Exim 4.90_1) (envelope-from <brzakbranislav@gmail.com>)
+ id 1sG3tB-0005kG-MK; Sat, 08 Jun 2024 17:46:23 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <brzakbranislav@gmail.com>)
+ id 1sG3t8-0005Im-B1; Sat, 08 Jun 2024 17:46:17 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a6f11a2d18aso34453166b.2; 
+ Sat, 08 Jun 2024 14:46:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1717883169; x=1718487969; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/alHFJfcIZYSqhMXs3UYaKvWveN8iKEwTM/iShxLUsg=;
+ b=c+w/BxvMYAYpjzZIFxp2ZOTreyQI8YBRxiuSo2m6P0btl2UvOkPA2VQep2a36FTQMd
+ inH7+/pFHROWVlwYOHUwt4e/7XhSdS8+AzCHuY2xMd3ktVOoR7c5H2T/2vdL9J8QXgz6
+ p6fcRnqTvlLfGsS78HaISng01S4IpU7DWzqzLUKKlxPVeZjZrqKjAGmYr7wL8z7yMVIa
+ e6b+9elLumDRjk5qxGTHQxVz4PJdJr88QqY81AUauKSa0D+zpxU+U1zgGlOP3doflEoG
+ 95+HlBRfMZyzCBA7idksIXUkxd2SyCgA9zqfDsLeye0nPr1bWP7GtRf4hVlrtYE/Y2yk
+ 2QGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717883169; x=1718487969;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/alHFJfcIZYSqhMXs3UYaKvWveN8iKEwTM/iShxLUsg=;
+ b=Dnj/Ujxj87tbI6Qv4LgXPdsA7UueApBWt09/lmEsnUra0jn07KESSColwo1lU+b7xx
+ poHsHkyRNnlnBnEq6weeYp4l1+RhIAi1l8ts20766ufIoGRBRRmvfQGryjZtPQNL//WY
+ NenAJJIcsumyJ7VgiPdlCYAIcFvLwAtT6x0g0jKJwL5KdUDAPuymNyRjI1exddXrXj6v
+ aK9A0vpbx1cODqsz0U0MDzGxrunaEvEx+NeO5nti4D6fkSoF+wGyOVD+iHf9ow5GM3lm
+ dn39LAncRsoUrieAEeqWu0N8m4Qy/Q60aQDaJvpbrpUZAcq69MrOadr5MUmg6YpVp7Bp
+ 7rrQ==
+X-Gm-Message-State: AOJu0YzJGu6UddUe5Qz9r7hgIguvtAfqefQBvdg87Qm63RQrTmIAdrix
+ Rt9AFRiBcd+0FZgbrkiyyxprEUN7M1tyH+Ut4vc2y1nM9GDWKKZVrLxyCjbH
+X-Google-Smtp-Source: AGHT+IFDc959GklOTTLFsf6Mu1A3Ua3KYJQxk184/tpJxyRTH7ZFRq4AftkT4IY/NzJ/iYwEh1hMrg==
+X-Received: by 2002:a17:906:ad87:b0:a68:ec11:4561 with SMTP id
+ a640c23a62f3a-a6cdc0e3a63mr374459366b.76.1717883169193; 
+ Sat, 08 Jun 2024 14:46:09 -0700 (PDT)
+Received: from localhost.localdomain (178-221-109-16.dynamic.isp.telekom.rs.
+ [178.221.109.16]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6c806eab0asm432951766b.134.2024.06.08.14.46.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 08 Jun 2024 14:46:08 -0700 (PDT)
+From: Branislav Brzak <brzakbranislav@gmail.com>
+To: qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com,
+ Branislav Brzak <brzakbranislav@gmail.com>
+Subject: [PATCH] target/riscv: Fix froundnx.h nanbox check
+Date: Sat,  8 Jun 2024 23:45:46 +0200
+Message-Id: <20240608214546.226963-1-brzakbranislav@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-ORIG-GUID: vrSY73g2d8-8e49uHa_X2dqb4PO-7nhl
-X-Proofpoint-GUID: vrSY73g2d8-8e49uHa_X2dqb4PO-7nhl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-08_16,2024-06-06_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0
- suspectscore=0 bulkscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
- priorityscore=1501 mlxlogscore=832 impostorscore=0 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406090006
-Received-SPF: pass client-ip=205.220.168.131; envelope-from=bcain@quicinc.com;
- helo=mx0a-0031df01.pphosted.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=brzakbranislav@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 09 Jun 2024 01:31:43 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,36 +90,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RnJvbTogQW50b24gSm9oYW5zc29uIDxhbmpvQHJldi5uZz4KCmdlbl9pbnN0X2luaXRfYXJncygp
-IGlzIGNhbGxlZCBmb3IgaW5zdHJ1Y3Rpb25zIHVzaW5nIGEgcHJlZGljYXRlIGFzIGFuCnJ2YWx1
-ZS4gVXBvbiBmaXJzdCBjYWxsLCB0aGUgbGlzdCBvZiBhcmd1bWVudHMgd2hpY2ggbWlnaHQgbmVl
-ZAppbml0aWFsaXphdGlvbiBpbml0X2xpc3QgaXMgZnJlZWQgdG8gaW5kaWNhdGUgdGhhdCB0aGV5
-IGhhdmUgYmVlbgpwcm9jZXNzZWQuIEZvciBpbnN0cnVjdGlvbnMgd2l0aG91dCBhbiBydmFsdWUg
-cHJlZGljYXRlLApnZW5faW5zdF9pbml0X2FyZ3MoKSBpc24ndCBjYWxsZWQgYW5kIGluaXRfbGlz
-dCB3aWxsIG5ldmVyIGJlIGZyZWVkLgoKRnJlZSBpbml0X2xpc3QgZnJvbSBmcmVlX2luc3RydWN0
-aW9uKCkgaWYgaXQgaGFzbid0IGFscmVhZHkgYmVlbiBmcmVlZC4KQSBjb21tZW50IGluIGZyZWVf
-aW5zdHJ1Y3Rpb24gaXMgYWxzbyB1cGRhdGVkLgoKU2lnbmVkLW9mZi1ieTogQW50b24gSm9oYW5z
-c29uIDxhbmpvQHJldi5uZz4KUmV2aWV3ZWQtYnk6IFRheWxvciBTaW1wc29uIDxsdGF5bG9yc2lt
-cHNvbkBnbWFpbC5jb20+ClJldmlld2VkLWJ5OiBCcmlhbiBDYWluIDxiY2FpbkBxdWljaW5jLmNv
-bT4KTWVzc2FnZS1JZDogPDIwMjQwNTIzMTI1OTAxLjI3Nzk3LTQtYW5qb0ByZXYubmc+ClNpZ25l
-ZC1vZmYtYnk6IEJyaWFuIENhaW4gPGJjYWluQHF1aWNpbmMuY29tPgotLS0KIHRhcmdldC9oZXhh
-Z29uL2lkZWYtcGFyc2VyL3BhcnNlci1oZWxwZXJzLmMgfCA5ICsrKysrKysrLQogMSBmaWxlIGNo
-YW5nZWQsIDggaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQoKZGlmZiAtLWdpdCBhL3Rhcmdl
-dC9oZXhhZ29uL2lkZWYtcGFyc2VyL3BhcnNlci1oZWxwZXJzLmMgYi90YXJnZXQvaGV4YWdvbi9p
-ZGVmLXBhcnNlci9wYXJzZXItaGVscGVycy5jCmluZGV4IDk1ZjJiNDMwNzYuLmMxNTBjMzA4YmUg
-MTAwNjQ0Ci0tLSBhL3RhcmdldC9oZXhhZ29uL2lkZWYtcGFyc2VyL3BhcnNlci1oZWxwZXJzLmMK
-KysrIGIvdGFyZ2V0L2hleGFnb24vaWRlZi1wYXJzZXIvcGFyc2VyLWhlbHBlcnMuYwpAQCAtMjEy
-MSw5ICsyMTIxLDE2IEBAIHZvaWQgZnJlZV9pbnN0cnVjdGlvbihDb250ZXh0ICpjKQogICAgICAg
-ICBnX3N0cmluZ19mcmVlKGdfYXJyYXlfaW5kZXgoYy0+aW5zdC5zdHJpbmdzLCBHU3RyaW5nKiwg
-aSksIFRSVUUpOwogICAgIH0KICAgICBnX2FycmF5X2ZyZWUoYy0+aW5zdC5zdHJpbmdzLCBUUlVF
-KTsKKyAgICAvKgorICAgICAqIEZyZWUgbGlzdCBvZiBhcmd1bWVudHMgdGhhdCBtaWdodCBuZWVk
-IGluaXRpYWxpemF0aW9uLCBpZiB0aGV5IGhhdmVuJ3QKKyAgICAgKiBhbHJlYWR5IGJlZW4gZnJl
-ZWQuCisgICAgICovCisgICAgaWYgKGMtPmluc3QuaW5pdF9saXN0KSB7CisgICAgICAgIGdfYXJy
-YXlfZnJlZShjLT5pbnN0LmluaXRfbGlzdCwgVFJVRSk7CisgICAgfQogICAgIC8qIEZyZWUgSU5B
-TUUgdG9rZW4gdmFsdWUgKi8KICAgICBnX3N0cmluZ19mcmVlKGMtPmluc3QubmFtZSwgVFJVRSk7
-Ci0gICAgLyogRnJlZSB2YXJpYWJsZXMgYW5kIHJlZ2lzdGVycyAqLworICAgIC8qIEZyZWUgZGVj
-bGFyZWQgVENHdiB2YXJpYWJsZXMgKi8KICAgICBnX2FycmF5X2ZyZWUoYy0+aW5zdC5hbGxvY2F0
-ZWQsIFRSVUUpOwogICAgIC8qIEluaXRpYWxpemUgaW5zdHJ1Y3Rpb24tc3BlY2lmaWMgcG9ydGlv
-biBvZiB0aGUgY29udGV4dCAqLwogICAgIG1lbXNldCgmKGMtPmluc3QpLCAwLCBzaXplb2YoSW5z
-dCkpOwotLSAKMi4yNS4xCgo=
+helper_froundnx_h function mistakenly uses single percision nanbox
+check instead of the half percision one. This patch fixes the issue.
+
+Signed-off-by: Branislav Brzak <brzakbranislav@gmail.com>
+---
+ target/riscv/fpu_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/riscv/fpu_helper.c b/target/riscv/fpu_helper.c
+index 871a70a316..91b1a56d10 100644
+--- a/target/riscv/fpu_helper.c
++++ b/target/riscv/fpu_helper.c
+@@ -676,7 +676,7 @@ uint64_t helper_fround_h(CPURISCVState *env, uint64_t rs1)
+ 
+ uint64_t helper_froundnx_h(CPURISCVState *env, uint64_t rs1)
+ {
+-    float16 frs1 = check_nanbox_s(env, rs1);
++    float16 frs1 = check_nanbox_h(env, rs1);
+     frs1 = float16_round_to_int(frs1, &env->fp_status);
+     return nanbox_h(env, frs1);
+ }
+-- 
+2.34.1
+
 
