@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF504C27C55
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE833C25B76
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:44:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFrf4-0006Vy-Jf; Sat, 08 Jun 2024 04:42:54 -0400
+	id 1sFrdu-0001Wu-TI; Sat, 08 Jun 2024 04:41:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrf0-0006Lg-88
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:42:53 -0400
+ id 1sFrds-0001St-Ql
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:41:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrey-0001b1-Ig
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:42:49 -0400
+ id 1sFrdr-0001Ng-4u
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:41:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717836167;
+ s=mimecast20190719; t=1717836098;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=y89oAmpMMJpJrCJMrNComgRidKETfKFzJFsG8GNQjw0=;
- b=gjQ8Y6V0wbr+wgYokAiCVDCsNlHOtaRzLbt0Y6U2bUSKIbNLQHtWeBzFmL7soFJ+E/oIAX
- rx9BNOLWSNSbbe0j8TMQOvZPOpraauud6vv4OhMYbFXaDUjRGgmgWROivyOpt+TEkxUNCt
- EQ81Y531KJc+HV6Ps8Qqwc4JOVIUfTc=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uMwm5EoQWR8WwwQOBghJk+ePxHBVZNeMzC33/BhJzSI=;
+ b=V7xXG90ZFcpP40DRzZXKtupjGY/Ko6Kli/+FF3B7G5CbyY3Si38+7i5KazxzTzv1qCVvNu
+ ywE4sw7U60Qm3jNw4yambFUG2zZ/0/72t7rk4N9qDwP37qOGPVXKcSuqCxLSNjDLpXxzre
+ tUq53NZKno8a1ExgtITYzgiHVxkm3aQ=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-251-qKlgK2_wOe6vSR6V2kiEBQ-1; Sat, 08 Jun 2024 04:42:45 -0400
-X-MC-Unique: qKlgK2_wOe6vSR6V2kiEBQ-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-52c091e4413so574408e87.2
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:42:45 -0700 (PDT)
+ us-mta-463-COt33wvdOqWvKEDzA5UGqQ-1; Sat, 08 Jun 2024 04:41:36 -0400
+X-MC-Unique: COt33wvdOqWvKEDzA5UGqQ-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a6f0f008f9aso2540166b.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:41:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717836163; x=1718440963;
+ d=1e100.net; s=20230601; t=1717836095; x=1718440895;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=y89oAmpMMJpJrCJMrNComgRidKETfKFzJFsG8GNQjw0=;
- b=Kz0gVyzmivGO1DrodzYK31alMN9cOhFS4vrfy7evRRMHvQX+bjqGXQl8AjSEqf0Tsz
- nQWwerWatslJvo1Z6i3GsvYp2Dev0xrh1MrmjoFV/bfVoGRLdatmCjO+tQFTRIuL4mt6
- +oHyP6ffdoYj3v7SzWMreYeKzQa70HSuTLNK8ADPiUMO93BpwIxw695dwrIeV1Y3dpeY
- vjVE/XYaBYh6/BtmOEn+t+p90T7gPd0/d2tcq6xRldfRoGn6IzLXEqvHT1+EFZJQAudN
- 6PogzjoY9HalhMgTeqp1Pk1G9gsrppnWd6SNGEzWYXcWqw2C9TITUlBH64JcoX1jH6pR
- 9dwQ==
-X-Gm-Message-State: AOJu0Yx869HI48AYNXuBZZhEusa/IQTc/GxvyIYH3VT+l5rZjNQP48F+
- v5ObTr1Dpm5j8pEWAuZhX3varvUsTlER7vsO33tGXsqMAwkcpN4Bn0wwm32aBDljF3bnwPe1aAO
- wMX0ki6nd+bpwNXB85lpTgqHC/07SReQ6CU/4j7hDNmcLQcdrfCQ17IONmx8zDAOSM6lPknEie3
- EDO02OAJHq8npKyyJNTFO1Q26UHx3dVjcD4rdD
-X-Received: by 2002:a05:6512:3d29:b0:52b:959c:1dc7 with SMTP id
- 2adb3069b0e04-52bb9fc5eadmr4604719e87.42.1717836163154; 
- Sat, 08 Jun 2024 01:42:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGKHrz81WP2xiFpiVddh0eh54+736GE4evfMlYCqo2TTlegcY2tLEND4G4PFazZ2nfu0BgaAA==
-X-Received: by 2002:a05:6512:3d29:b0:52b:959c:1dc7 with SMTP id
- 2adb3069b0e04-52bb9fc5eadmr4604705e87.42.1717836162695; 
- Sat, 08 Jun 2024 01:42:42 -0700 (PDT)
+ bh=uMwm5EoQWR8WwwQOBghJk+ePxHBVZNeMzC33/BhJzSI=;
+ b=Dwx4jBNmg9iYYJ7vFmR7xEQKE4APNXVZZPdojKiSUsitguzDQWxVMmiHTfh4Y9hnyD
+ GgHPzpJzgKI2JhtqhSs7X5yyAxi5Vd3CBEZmQHZ1YCq0VKeQjnFfA3UafK2PWPBGKZpu
+ QQ1zJJqAjcxfiLMT7muGOeHllNJz99Fg4+UOAoPNHYnfuQgYit2Waqb42xznmQZG/erL
+ 5TXLWkjZgGtGryRGANu+z4xA/U//HCIkhje7kQQEL2dPXxmrBlTemr+SLkWmDBc6ZSEb
+ mZ+GzDEVlkmzSi1EdeEuL6sM85uO/6r2PANtWSztHiww43sMDOWS7h7CPEFSe/DLvt1s
+ 8u0w==
+X-Gm-Message-State: AOJu0YyBl/ZjhMVhog/TtdONa+jF+vOiqzA5DGBa1qYcmGnKtjjz8Gts
+ RPFOzfBeXqoZdVR5tjAfSxhxLghNaZiPnCdJiy77n4w2NvVdT913MpcK0mlkYRy2N/2Whuynb2T
+ 9vwF41TklkYoyfaYiYLTSuKAK2qMdUr8Nl7Aig/y7tvg2rS+bo6w+3pg3ouEEU60/cywOVID9A7
+ A9y4DUZR8S2iQRrUm+czGlmUONyuNjQ62rsw0O
+X-Received: by 2002:a50:d7ca:0:b0:578:638e:3683 with SMTP id
+ 4fb4d7f45d1cf-57c50861ae8mr3510745a12.5.1717836094823; 
+ Sat, 08 Jun 2024 01:41:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHLQ+iKIHvNgnv55Yco+FipE5yyOJ/2Pz4LC+niCyi2r1u6X7QaSd0tbDEz7YxulKizGSQ9kg==
+X-Received: by 2002:a50:d7ca:0:b0:578:638e:3683 with SMTP id
+ 4fb4d7f45d1cf-57c50861ae8mr3510740a12.5.1717836094394; 
+ Sat, 08 Jun 2024 01:41:34 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c805cccfesm356672866b.86.2024.06.08.01.42.40
+ 4fb4d7f45d1cf-57aae0ca5e3sm3937038a12.25.2024.06.08.01.41.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 01:42:40 -0700 (PDT)
+ Sat, 08 Jun 2024 01:41:31 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 25/25] target/i386: remove gen_ext_tl
-Date: Sat,  8 Jun 2024 10:41:13 +0200
-Message-ID: <20240608084113.2770363-26-pbonzini@redhat.com>
+Subject: [PATCH 05/25] target/i386: change X86_ENTRYwr to use T0,
+ use it for moves
+Date: Sat,  8 Jun 2024 10:40:53 +0200
+Message-ID: <20240608084113.2770363-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240608084113.2770363-1-pbonzini@redhat.com>
 References: <20240608084113.2770363-1-pbonzini@redhat.com>
@@ -103,106 +104,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the introduction of tcg_gen_ext_tl, most uses can be converted directly
-because they do not have a NULL destination.  tcg_gen_ext_tl is able to drop
-no-ops like "tcg_gen_ext_tl(tcgv, tcgv, MO_TL)" just fine, and the only thing
-that gen_ext_tl was adding on top was avoiding the creation of a useless
-temporary.  This can be done in the only place where it matters, which is
-gen_op_j_ecx.
+Just like X86_ENTRYr, X86_ENTRYwr is easily changed to use only T0.
+In this case, the motivation is to use it for the MOV instruction
+family.  The case when you need to preserve the input value is the
+odd one, as it is used basically only for BLS* instructions.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 41 +++++++++++++++----------------------
- 1 file changed, 17 insertions(+), 24 deletions(-)
+ target/i386/tcg/decode-new.c.inc | 48 ++++++++++++++++----------------
+ target/i386/tcg/emit.c.inc       |  2 +-
+ 2 files changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index ee5ef3ccbc6..8089b502628 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -697,23 +697,16 @@ static inline TCGv gen_compute_Dshift(DisasContext *s, MemOp ot)
-     return dshift;
- };
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index f9d3e2577b2..d41002e2f5c 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -180,7 +180,7 @@
+ #define X86_OP_ENTRYrr(op, op0, s0, op1, s1, ...)                 \
+     X86_OP_ENTRY3(op, None, None, op0, s0, op1, s1, ## __VA_ARGS__)
+ #define X86_OP_ENTRYwr(op, op0, s0, op1, s1, ...)                 \
+-    X86_OP_ENTRY3(op, op0, s0, None, None, op1, s1, ## __VA_ARGS__)
++    X86_OP_ENTRY3(op, op0, s0, op1, s1, None, None, ## __VA_ARGS__)
+ #define X86_OP_ENTRY2(op, op0, s0, op1, s1, ...)                  \
+     X86_OP_ENTRY3(op, op0, s0, 2op, s0, op1, s1, ## __VA_ARGS__)
+ #define X86_OP_ENTRYw(op, op0, s0, ...)                           \
+@@ -612,15 +612,15 @@ static const X86OpEntry opcodes_0F38_00toEF[240] = {
+ /* five rows for no prefix, 66, F3, F2, 66+F2  */
+ static const X86OpEntry opcodes_0F38_F0toFF[16][5] = {
+     [0] = {
+-        X86_OP_ENTRY3(MOVBE, G,y, M,y, None,None, cpuid(MOVBE)),
+-        X86_OP_ENTRY3(MOVBE, G,w, M,w, None,None, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, G,y, M,y, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, G,w, M,w, cpuid(MOVBE)),
+         {},
+         X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
+         X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
+     },
+     [1] = {
+-        X86_OP_ENTRY3(MOVBE, M,y, G,y, None,None, cpuid(MOVBE)),
+-        X86_OP_ENTRY3(MOVBE, M,w, G,w, None,None, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, M,y, G,y, cpuid(MOVBE)),
++        X86_OP_ENTRYwr(MOVBE, M,w, G,w, cpuid(MOVBE)),
+         {},
+         X86_OP_ENTRY2(CRC32, G,d, E,y, cpuid(SSE42)),
+         X86_OP_ENTRY2(CRC32, G,d, E,w, cpuid(SSE42)),
+@@ -1586,18 +1586,18 @@ static const X86OpEntry opcodes_root[256] = {
+     [0x7E] = X86_OP_ENTRYr(Jcc, J,b),
+     [0x7F] = X86_OP_ENTRYr(Jcc, J,b),
  
--static TCGv gen_ext_tl(TCGv dst, TCGv src, MemOp size, bool sign)
--{
--    if (size == MO_TL) {
--        return src;
--    }
--    if (!dst) {
--        dst = tcg_temp_new();
--    }
--    tcg_gen_ext_tl(dst, src, size | (sign ? MO_SIGN : 0));
--    return dst;
--}
--
- static void gen_op_j_ecx(DisasContext *s, TCGCond cond, TCGLabel *label1)
- {
--    TCGv tmp = gen_ext_tl(NULL, cpu_regs[R_ECX], s->aflag, false);
--
--    tcg_gen_brcondi_tl(cond, tmp, 0, label1);
-+    TCGv lhs;
-+    if (s->aflag == MO_TL) {
-+        lhs = cpu_regs[R_ECX];
-+    } else {
-+        lhs = tcg_temp_new();
-+        tcg_gen_ext_tl(lhs, cpu_regs[R_ECX], s->aflag);
-+    }
-+    tcg_gen_brcondi_tl(cond, lhs, 0, label1);
- }
+-    [0x88] = X86_OP_ENTRY3(MOV, E,b, G,b, None, None),
+-    [0x89] = X86_OP_ENTRY3(MOV, E,v, G,v, None, None),
+-    [0x8A] = X86_OP_ENTRY3(MOV, G,b, E,b, None, None),
+-    [0x8B] = X86_OP_ENTRY3(MOV, G,v, E,v, None, None),
+-    /* Missing in Table A-2: memory destination is always 16-bit.  */
+-    [0x8C] = X86_OP_ENTRY3(MOV, E,v, S,w, None, None, op0_Mw),
+-    [0x8D] = X86_OP_ENTRY3(LEA, G,v, M,v, None, None, noseg),
+-    [0x8E] = X86_OP_ENTRY3(MOV, S,w, E,w, None, None),
++    [0x88] = X86_OP_ENTRYwr(MOV, E,b, G,b),
++    [0x89] = X86_OP_ENTRYwr(MOV, E,v, G,v),
++    [0x8A] = X86_OP_ENTRYwr(MOV, G,b, E,b),
++    [0x8B] = X86_OP_ENTRYwr(MOV, G,v, E,v),
++     /* Missing in Table A-2: memory destination is always 16-bit.  */
++    [0x8C] = X86_OP_ENTRYwr(MOV, E,v, S,w, op0_Mw),
++    [0x8D] = X86_OP_ENTRYwr(LEA, G,v, M,v, noseg),
++    [0x8E] = X86_OP_ENTRYwr(MOV, S,w, E,w),
+     [0x8F] = X86_OP_GROUPw(group1A, E,v),
  
- static inline void gen_op_jz_ecx(DisasContext *s, TCGLabel *label1)
-@@ -886,16 +879,16 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
-     case CC_OP_SUBB ... CC_OP_SUBQ:
-         /* (DATA_TYPE)CC_SRCT < (DATA_TYPE)CC_SRC */
-         size = s->cc_op - CC_OP_SUBB;
--        gen_ext_tl(s->cc_srcT, s->cc_srcT, size, false);
--        gen_ext_tl(cpu_cc_src, cpu_cc_src, size, false);
-+        tcg_gen_ext_tl(s->cc_srcT, s->cc_srcT, size);
-+        tcg_gen_ext_tl(cpu_cc_src, cpu_cc_src, size);
-         return (CCPrepare) { .cond = TCG_COND_LTU, .reg = s->cc_srcT,
-                              .reg2 = cpu_cc_src, .use_reg2 = true };
+     [0x98] = X86_OP_ENTRY1(CBW,    0,v), /* rAX */
+-    [0x99] = X86_OP_ENTRY3(CWD,    2,v, 0,v, None, None), /* rDX, rAX */
++    [0x99] = X86_OP_ENTRYwr(CWD,   2,v, 0,v), /* rDX, rAX */
+     [0x9A] = X86_OP_ENTRYrr(CALLF, I_unsigned,p, I_unsigned,w, chk(i64)),
+     [0x9B] = X86_OP_ENTRY0(WAIT),
+     [0x9C] = X86_OP_ENTRY0(PUSHF,  chk(vm86_iopl) svm(PUSHF)),
+@@ -1607,22 +1607,22 @@ static const X86OpEntry opcodes_root[256] = {
  
-     case CC_OP_ADDB ... CC_OP_ADDQ:
-         /* (DATA_TYPE)CC_DST < (DATA_TYPE)CC_SRC */
-         size = s->cc_op - CC_OP_ADDB;
--        gen_ext_tl(cpu_cc_dst, cpu_cc_dst, size, false);
--        gen_ext_tl(cpu_cc_src, cpu_cc_src, size, false);
-+        tcg_gen_ext_tl(cpu_cc_dst, cpu_cc_dst, size);
-+        tcg_gen_ext_tl(cpu_cc_src, cpu_cc_src, size);
-         return (CCPrepare) { .cond = TCG_COND_LTU, .reg = cpu_cc_dst,
-                              .reg2 = cpu_cc_src, .use_reg2 = true };
+     [0xA8] = X86_OP_ENTRYrr(AND, 0,b, I,b),   /* AL, Ib */
+     [0xA9] = X86_OP_ENTRYrr(AND, 0,v, I,z),   /* rAX, Iz */
+-    [0xAA] = X86_OP_ENTRY3(STOS, Y,b, 0,b, None, None),
+-    [0xAB] = X86_OP_ENTRY3(STOS, Y,v, 0,v, None, None),
++    [0xAA] = X86_OP_ENTRYwr(STOS, Y,b, 0,b),
++    [0xAB] = X86_OP_ENTRYwr(STOS, Y,v, 0,v),
+     /* Manual writeback because REP LODS (!) has to write EAX/RAX after every LODS.  */
+     [0xAC] = X86_OP_ENTRYr(LODS, X,b),
+     [0xAD] = X86_OP_ENTRYr(LODS, X,v),
+     [0xAE] = X86_OP_ENTRYrr(SCAS, 0,b, Y,b),
+     [0xAF] = X86_OP_ENTRYrr(SCAS, 0,v, Y,v),
  
-@@ -920,7 +913,7 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
+-    [0xB8] = X86_OP_ENTRY3(MOV, LoBits,v, I,v, None, None),
+-    [0xB9] = X86_OP_ENTRY3(MOV, LoBits,v, I,v, None, None),
+-    [0xBA] = X86_OP_ENTRY3(MOV, LoBits,v, I,v, None, None),
+-    [0xBB] = X86_OP_ENTRY3(MOV, LoBits,v, I,v, None, None),
+-    [0xBC] = X86_OP_ENTRY3(MOV, LoBits,v, I,v, None, None),
+-    [0xBD] = X86_OP_ENTRY3(MOV, LoBits,v, I,v, None, None),
+-    [0xBE] = X86_OP_ENTRY3(MOV, LoBits,v, I,v, None, None),
+-    [0xBF] = X86_OP_ENTRY3(MOV, LoBits,v, I,v, None, None),
++    [0xB8] = X86_OP_ENTRYwr(MOV, LoBits,v, I,v),
++    [0xB9] = X86_OP_ENTRYwr(MOV, LoBits,v, I,v),
++    [0xBA] = X86_OP_ENTRYwr(MOV, LoBits,v, I,v),
++    [0xBB] = X86_OP_ENTRYwr(MOV, LoBits,v, I,v),
++    [0xBC] = X86_OP_ENTRYwr(MOV, LoBits,v, I,v),
++    [0xBD] = X86_OP_ENTRYwr(MOV, LoBits,v, I,v),
++    [0xBE] = X86_OP_ENTRYwr(MOV, LoBits,v, I,v),
++    [0xBF] = X86_OP_ENTRYwr(MOV, LoBits,v, I,v),
  
-     case CC_OP_BMILGB ... CC_OP_BMILGQ:
-         size = s->cc_op - CC_OP_BMILGB;
--        gen_ext_tl(cpu_cc_src, cpu_cc_src, size, false);
-+        tcg_gen_ext_tl(cpu_cc_src, cpu_cc_src, size);
-         return (CCPrepare) { .cond = TCG_COND_EQ, .reg = cpu_cc_src };
+     [0xC8] = X86_OP_ENTRYrr(ENTER, I,w, I,b),
+     [0xC9] = X86_OP_ENTRY1(LEAVE, A,d64),
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 797e6e81406..78d89db57cd 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1796,7 +1796,7 @@ static void gen_IN(DisasContext *s, X86DecodedInsn *decode)
+     MemOp ot = decode->op[0].ot;
+     TCGv_i32 port = tcg_temp_new_i32();
  
-     case CC_OP_ADCX:
-@@ -1048,8 +1041,8 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
-         size = s->cc_op - CC_OP_SUBB;
-         switch (jcc_op) {
-         case JCC_BE:
--            gen_ext_tl(s->cc_srcT, s->cc_srcT, size, false);
--            gen_ext_tl(cpu_cc_src, cpu_cc_src, size, false);
-+            tcg_gen_ext_tl(s->cc_srcT, s->cc_srcT, size);
-+            tcg_gen_ext_tl(cpu_cc_src, cpu_cc_src, size);
-             cc = (CCPrepare) { .cond = TCG_COND_LEU, .reg = s->cc_srcT,
-                                .reg2 = cpu_cc_src, .use_reg2 = true };
-             break;
-@@ -1059,8 +1052,8 @@ static CCPrepare gen_prepare_cc(DisasContext *s, int b, TCGv reg)
-         case JCC_LE:
-             cond = TCG_COND_LE;
-         fast_jcc_l:
--            gen_ext_tl(s->cc_srcT, s->cc_srcT, size, true);
--            gen_ext_tl(cpu_cc_src, cpu_cc_src, size, true);
-+            tcg_gen_ext_tl(s->cc_srcT, s->cc_srcT, size | MO_SIGN);
-+            tcg_gen_ext_tl(cpu_cc_src, cpu_cc_src, size | MO_SIGN);
-             cc = (CCPrepare) { .cond = cond, .reg = s->cc_srcT,
-                                .reg2 = cpu_cc_src, .use_reg2 = true };
-             break;
+-    tcg_gen_trunc_tl_i32(port, s->T1);
++    tcg_gen_trunc_tl_i32(port, s->T0);
+     tcg_gen_ext16u_i32(port, port);
+     if (!gen_check_io(s, ot, port, SVM_IOIO_TYPE_MASK)) {
+         return;
 -- 
 2.45.1
 
