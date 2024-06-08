@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E506C27C55
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:36:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E028BC27C55
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:37:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFrYF-0002zL-Or; Sat, 08 Jun 2024 04:35:51 -0400
+	id 1sFrXg-0000go-Vd; Sat, 08 Jun 2024 04:35:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrYE-0002yI-NQ
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:50 -0400
+ id 1sFrXf-0000gU-KJ
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrYD-0000IG-9X
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:50 -0400
+ id 1sFrXe-00005A-9O
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717835748;
+ s=mimecast20190719; t=1717835713;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FY/b9ZJxXQtXE7IYTUEDi/lb+onz2CG5Vy49ypNFS2w=;
- b=FgTfhwrqqH0jGlQQo+OfYHOfRQVf6jms0z1bv7pZVOPvmCI+MC+MlFUf0QEWkuB95HqHDS
- +pi5433K9no7PypjDyXJc+VUdDVtuhsEs+0uWvnNoksdJh943MBxhN8HKsW3uRaJZ0ccdp
- wODWCspviyjlR+Io4ioftoPJ0ex7FWU=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HAfO6Ix8e+bhIYRVOpA1NwjJTADdLTV0dP5aAUkqZAo=;
+ b=MozaAGmPhlSWWnRcjZ7583kWWoO3HOYCTGnTnyZ+n5NcIG9klZB1F1/GZKID4jpyELtYm2
+ uKFveZ/6CtQtgXTwi01FNswFiWFoN484/4EZCIpU8GVH18vTBIJSiTd79qD1TRPbGtDZaY
+ NsTnZcwdua3erse8s4GgecXc1r47bw8=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-9-nUxZVjQmPs-jj-duG2Ej8g-1; Sat, 08 Jun 2024 04:35:47 -0400
-X-MC-Unique: nUxZVjQmPs-jj-duG2Ej8g-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-57c718807b2so59569a12.1
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:35:46 -0700 (PDT)
+ us-mta-287-boOv181CPQCF13TTO989ng-1; Sat, 08 Jun 2024 04:35:09 -0400
+X-MC-Unique: boOv181CPQCF13TTO989ng-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-52c82e67810so26115e87.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:35:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717835745; x=1718440545;
+ d=1e100.net; s=20230601; t=1717835707; x=1718440507;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FY/b9ZJxXQtXE7IYTUEDi/lb+onz2CG5Vy49ypNFS2w=;
- b=h4MTntSSmynqqldJWmyUChNG0QcA/v2IZSm4XkpTlP7rTu6rImAcURJD9mAnfg2uv7
- QbKbZM7fB1Huz4JxT1A2diwd04V+6XeMQwYCKOY0ZKK3LvtLxqwW2+Ey87UXJAK2nwJV
- Dk3yLKCfZXiuTeKpgOX/u9Lku99pPn5rDCUAypzPHoFqh823HVs2DAiN2eubUf0QVrR9
- keNKRGzBDf3LFcHMPfcpmioZOCYG7Kl5CTY4hWCCmszm+Tt2a7O0PoIVlUE0HjzYtdx/
- iMj5hlHaJUyc0CY1aOAlxag+rf58Uogzs8KweFPKxHQYl576Kiyt+FXtBTkfoLuag5tG
- rKOA==
-X-Gm-Message-State: AOJu0YzGoB6HM4t3bMXIaixxxXVS97lBX8Ur88giYbszV5/qaySfYA8a
- wyX+EHAw3UAr7VfVcvmVadUr6KXYgLQl7psALhOJUi09ZMOwNOobkpdn3UPza4BzpUgx19HfptO
- JjVz/7v/lQqkr80ctnQ1FxE5d6arPud1z6gJzmxXvM58VO7NqVOeowsVwEe0zU0I43AVMbHKuNq
- IgaBNSyjxU/cdgrRs4mu+0mLAowj4bYESNuYgs
-X-Received: by 2002:a50:8719:0:b0:57a:2ae5:70e7 with SMTP id
- 4fb4d7f45d1cf-57c5086e02dmr2439357a12.7.1717835745312; 
- Sat, 08 Jun 2024 01:35:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFUf+r0mjElDoTcAdv8axH856ydtyAiqxkmtY5U4/SZ73mogqfYBWsMMeoo+dzlj9a2f2hzZg==
-X-Received: by 2002:a50:8719:0:b0:57a:2ae5:70e7 with SMTP id
- 4fb4d7f45d1cf-57c5086e02dmr2439345a12.7.1717835744992; 
- Sat, 08 Jun 2024 01:35:44 -0700 (PDT)
+ bh=HAfO6Ix8e+bhIYRVOpA1NwjJTADdLTV0dP5aAUkqZAo=;
+ b=ZTOvdNCmvuAjromUobIrxFZMBEDFECK5VVEBS3caGiMCr4GflvnszNlmW3GrTGex7K
+ gPNDWIVYGAUQVw1aBPaXPPLqWGamDsWlhLrhYvPoXacX10IxYXjl2nG3W4YHVp7WcRhz
+ VFf+6wEKCpcKmq5jxGQsj16l5ZDJfG2C7aAM57eN4NJ4b7vn5NJlx7RYa1g7CA1GT3lb
+ K/uqVIs9apbGALr+BOcoCSzJmrK1wXN0ibRz5RBqmimtu3w8ak7uND7cx+hdFxS90MPG
+ Nb1eC6pfqmv7XlaF2rzTldPs5HQZg4ZYmmPyRRBRqDzboCz8hV27xnfL68HQ2m/gsxPT
+ fStQ==
+X-Gm-Message-State: AOJu0YxxNPQ/QdD3Yb0gvVPXB1YezN75y8XrsvI4iWl8fzcjoAjsecK9
+ EX+9x+Cet1CXzF6aIKjOuszB41R8NohDl6olxKUxla1MzZ1VFE8V6V287631kHI7x8W6nqz6WWH
+ +YG/h9r5R0eyLEeNndl93ft1hSl2b0fjYAJfN8YE1dObZ5I60y8VYV5txkE+Bpl7RknDYNHds0f
+ 2n4ohiFNRe2uDSC2fGRCfOj/EJH89Ya+r3z6fI
+X-Received: by 2002:ac2:5588:0:b0:52b:9d65:afc2 with SMTP id
+ 2adb3069b0e04-52bb9fc5e49mr3478345e87.48.1717835707002; 
+ Sat, 08 Jun 2024 01:35:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGfvHvZxPboAc6fO9/9MGHjOc/6cAS8N4vsfkaOKetpVEQVeoYtiEaRMPVLsu/IZ1Jgz0e6Bg==
+X-Received: by 2002:ac2:5588:0:b0:52b:9d65:afc2 with SMTP id
+ 2adb3069b0e04-52bb9fc5e49mr3478337e87.48.1717835706680; 
+ Sat, 08 Jun 2024 01:35:06 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aadf9d086sm3919298a12.18.2024.06.08.01.35.42
+ a640c23a62f3a-a6ef4581827sm146920366b.215.2024.06.08.01.35.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 01:35:43 -0700 (PDT)
+ Sat, 08 Jun 2024 01:35:04 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xin Li <xin3.li@intel.com>,
-	Shan Kang <shan.kang@intel.com>
-Subject: [PULL 34/42] vmxcap: add support for VMX FRED controls
-Date: Sat,  8 Jun 2024 10:34:07 +0200
-Message-ID: <20240608083415.2769160-35-pbonzini@redhat.com>
+Cc: Michal Privoznik <mprivozn@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PULL 18/42] osdep: Make qemu_madvise() to set errno in all cases
+Date: Sat,  8 Jun 2024 10:33:51 +0200
+Message-ID: <20240608083415.2769160-19-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240608083415.2769160-1-pbonzini@redhat.com>
 References: <20240608083415.2769160-1-pbonzini@redhat.com>
@@ -104,61 +104,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xin Li <xin3.li@intel.com>
+From: Michal Privoznik <mprivozn@redhat.com>
 
-Report secondary vm-exit controls and the VMX controls used to
-save/load FRED MSRs.
+The unspoken premise of qemu_madvise() is that errno is set on
+error. And it is mostly the case except for posix_madvise() which
+is documented to return either zero (on success) or a positive
+error number. This means, we must set errno ourselves. And while
+at it, make the function return a negative value on error, just
+like other error paths do.
 
-Tested-by: Shan Kang <shan.kang@intel.com>
-Signed-off-by: Xin Li <xin3.li@intel.com>
-Message-ID: <20231109072012.8078-5-xin3.li@intel.com>
+Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Message-ID: <af17113e7c1f2cc909ffd36d23f5a411b63b8764.1717584048.git.mprivozn@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/kvm/vmxcap | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ util/osdep.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/kvm/vmxcap b/scripts/kvm/vmxcap
-index 3fb4d5b3425..44898d73c2e 100755
---- a/scripts/kvm/vmxcap
-+++ b/scripts/kvm/vmxcap
-@@ -24,6 +24,7 @@ MSR_IA32_VMX_TRUE_EXIT_CTLS = 0x48F
- MSR_IA32_VMX_TRUE_ENTRY_CTLS = 0x490
- MSR_IA32_VMX_VMFUNC = 0x491
- MSR_IA32_VMX_PROCBASED_CTLS3 = 0x492
-+MSR_IA32_VMX_EXIT_CTLS2 = 0x493
- 
- class msr(object):
-     def __init__(self):
-@@ -219,11 +220,21 @@ controls = [
-             23: 'Clear IA32_BNDCFGS',
-             24: 'Conceal VM exits from PT',
-             25: 'Clear IA32_RTIT_CTL',
-+            31: 'Activate secondary VM-exit controls',
-             },
-         cap_msr = MSR_IA32_VMX_EXIT_CTLS,
-         true_cap_msr = MSR_IA32_VMX_TRUE_EXIT_CTLS,
-         ),
- 
-+    Allowed1Control(
-+        name = 'secondary VM-Exit controls',
-+        bits = {
-+            0: 'Save IA32 FRED MSRs',
-+            1: 'Load IA32 FRED MSRs',
-+            },
-+        cap_msr = MSR_IA32_VMX_EXIT_CTLS2,
-+        ),
-+
-     Control(
-         name = 'VM-Entry controls',
-         bits = {
-@@ -237,6 +248,7 @@ controls = [
-             16: 'Load IA32_BNDCFGS',
-             17: 'Conceal VM entries from PT',
-             18: 'Load IA32_RTIT_CTL',
-+            23: 'Load IA32 FRED MSRs',
-             },
-         cap_msr = MSR_IA32_VMX_ENTRY_CTLS,
-         true_cap_msr = MSR_IA32_VMX_TRUE_ENTRY_CTLS,
+diff --git a/util/osdep.c b/util/osdep.c
+index e996c4744af..e42f4e8121d 100644
+--- a/util/osdep.c
++++ b/util/osdep.c
+@@ -57,7 +57,12 @@ int qemu_madvise(void *addr, size_t len, int advice)
+ #if defined(CONFIG_MADVISE)
+     return madvise(addr, len, advice);
+ #elif defined(CONFIG_POSIX_MADVISE)
+-    return posix_madvise(addr, len, advice);
++    int rc = posix_madvise(addr, len, advice);
++    if (rc) {
++        errno = rc;
++        return -1;
++    }
++    return 0;
+ #else
+     errno = EINVAL;
+     return -1;
 -- 
 2.45.1
 
