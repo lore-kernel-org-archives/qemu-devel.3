@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B16DBC25B76
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:38:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60D6EC25B76
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:39:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFrYO-0003Jb-N5; Sat, 08 Jun 2024 04:36:00 -0400
+	id 1sFrYb-00045y-Gd; Sat, 08 Jun 2024 04:36:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrYL-000367-8j
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sFrYZ-0003lg-8C
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:36:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrYI-0000JQ-DA
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:57 -0400
+ id 1sFrYX-0000Lx-Jk
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:36:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717835753;
+ s=mimecast20190719; t=1717835769;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jKfBGH3wmrp1aUEk4x0YxyqjA7pI80vSZzG/Q9Zj3to=;
- b=UyFvUKwaLgq+qZikRvCQXf/IB9TXwoLHCqM2Kxf0xWL/K7KcSWn8vUMaDuV18QRrgoeDk0
- xnXlEydBVa64wYWAx5WZ6CVbSaHvG6dGEp8hWLd5Nl0FKj+ZaVhs7CMR5mlDZusYHFCLQ5
- Cv50WUeMKDoWuZ2Ae86i0NLKGHrkHR8=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=n5zvmcvef8pRBAw9VrXIyPOYRYeCWBajLWVRPej6rGM=;
+ b=BN+pnwR0r19L8eGpEaKIoPcaU/rnSmd2qnfmuvo6OoIc8AdUo9Yk9/CaB0RSk2V/xCqSpb
+ nIJKjVq97hr3oq7sC4v+P70Se3yqUjAFvEtaOyX8UfBPL/et9FyyW+wAtWhgv04oGjt8vq
+ 7HzzFsqc0u2e6ZeLC3dOEDrxl+8U6g8=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-189-FtUCOwslPkiWqLyTnd6BVQ-1; Sat, 08 Jun 2024 04:35:52 -0400
-X-MC-Unique: FtUCOwslPkiWqLyTnd6BVQ-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a6c70438d0cso88927066b.1
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:35:51 -0700 (PDT)
+ us-mta-548-hBgYYYArMRmvGTM9iO8Zew-1; Sat, 08 Jun 2024 04:36:07 -0400
+X-MC-Unique: hBgYYYArMRmvGTM9iO8Zew-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a6efbb08949so31694666b.0
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:36:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717835750; x=1718440550;
+ d=1e100.net; s=20230601; t=1717835765; x=1718440565;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jKfBGH3wmrp1aUEk4x0YxyqjA7pI80vSZzG/Q9Zj3to=;
- b=fjM/CJoAV3DYVDhY1BkTDdUS2FjaFTuAhPIh4MdpcSHgAVbhq7pru16Kytpr5haSyb
- nyPCLn1ezESGlJYvFu9vx4JBpLNaY6gzWU7+F38qBaJzzJAZtGfxe02jXZzjpYPVr67P
- AOZOjDZgUPx7AXM8ESwghddHKvStkhZQlP9vOuLYtA7IxzN8YvE7lyuhgje+si7Br3vi
- vFECQamNUI0w+n1I/KKjlPbcUXi7CU2ZrwtWOHH1+cyza58IOrnbqgJsGp1AKoTaGkxs
- Kj3pp39w9YWKosjTqi6P0zg7QC4c4jOkoGlaL35T+MGhMsjhOcIqY5jteFVj4PhSdWJX
- Od/g==
-X-Gm-Message-State: AOJu0YwuknLL2xkVyDLytrRkpPTcoAaBPTf5MJmDsYUvm6ZMb1m0PvBy
- CQZYKoTv5SpYCQewbW/kV4A/+KH3XheMnZ+QVTSDOqvB7/jOPKy8cXHwmZ4MRtK/YgQvQOle6wW
- EpK996W+fU/7Zdc+jiwrtWlR7YlhyEgTA3k3nAtXTrFnvfc1xAZdLicrNsbs723ADJ6ejXtrcyp
- alL+BjnoCMeQZbPZ6z/Pk95HnQrgVODueS0nm7
-X-Received: by 2002:a50:d7ca:0:b0:578:638e:3683 with SMTP id
- 4fb4d7f45d1cf-57c50861ae8mr3501893a12.5.1717835749902; 
- Sat, 08 Jun 2024 01:35:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHPpSNUH26R94kqjS+wvfDmQp9cEaWERwcVZXYjWFo6KM/3jUtYtIrJMoXWjkZE42ecv9wNMg==
-X-Received: by 2002:a50:d7ca:0:b0:578:638e:3683 with SMTP id
- 4fb4d7f45d1cf-57c50861ae8mr3501878a12.5.1717835749476; 
- Sat, 08 Jun 2024 01:35:49 -0700 (PDT)
+ bh=n5zvmcvef8pRBAw9VrXIyPOYRYeCWBajLWVRPej6rGM=;
+ b=XX9d7JA+Jw7dEaxCmhTdBDZE3SFfl2bHs9FY0mL68VHcWmCne3W23CUnU6GJkw600w
+ IpzVAdbjsjuYg0Ln7RDRW1ddub7Zp/uYRQTA1mxZOMep2/IAZ1YEk7u0pFF16jxSuzCG
+ NhHZhbvl96F+OFBhBQWM5fXLgRHxOj0JY83MUw8LhPxx36E443ypdoa0QvuEjXEXpK9f
+ Yep2LX6WYX/L/y/ZJSAIdA+PKyGCAhh5DXtoYbEq/yma57/LvnVounrm39HyQp8zFad8
+ 5lV4kt68gKI9hO8MC9IfSpc2WGzXYgUYXS/H9jKsbJPUXbkEVG2tbGzmzVJE2wA9t21P
+ uRrA==
+X-Gm-Message-State: AOJu0YzE+XkS/nuwFKfZaOdvx0HR4MB1XIJbIic9Tlie9leyPF0iNHHe
+ g+HuxNgxxPo0xaDkZxWHeEAXJXWKWGyWmWFwsm+U52NPtT6q3nnhfZN80wEEnfG7PG1ehCkV4qj
+ MuJPAjeC7Y7yy9cDEdirgOVRoZ51a+jNhOcxNDOXOzv7fY4QTTsnf3F8+KGWcoHYNb3XkXgrPDl
+ C0WSxo9gWfycjW4hKN4BaHUPsn2oc/hOq1P736
+X-Received: by 2002:a17:906:f34d:b0:a5c:fd35:df3d with SMTP id
+ a640c23a62f3a-a6cdad22eeamr242822066b.61.1717835764977; 
+ Sat, 08 Jun 2024 01:36:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGbgjO+GPOWl9QQ3i7UzQ46v6qqUnJTOta7AuUgfmTz99JpHFujPLyY8tuz7kHwW9XJwYIcDw==
+X-Received: by 2002:a17:906:f34d:b0:a5c:fd35:df3d with SMTP id
+ a640c23a62f3a-a6cdad22eeamr242821366b.61.1717835764483; 
+ Sat, 08 Jun 2024 01:36:04 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aae2366a4sm3915477a12.92.2024.06.08.01.35.48
+ a640c23a62f3a-a6c8070e7fesm357927266b.183.2024.06.08.01.36.03
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 01:35:48 -0700 (PDT)
+ Sat, 08 Jun 2024 01:36:04 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xin Li <xin3.li@intel.com>,
-	Shan Kang <shan.kang@intel.com>
-Subject: [PULL 36/42] target/i386: Add get/set/migrate support for FRED MSRs
-Date: Sat,  8 Jun 2024 10:34:09 +0200
-Message-ID: <20240608083415.2769160-37-pbonzini@redhat.com>
+Subject: [PULL 42/42] python: mkvenv: remove ensure command
+Date: Sat,  8 Jun 2024 10:34:15 +0200
+Message-ID: <20240608083415.2769160-43-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240608083415.2769160-1-pbonzini@redhat.com>
 References: <20240608083415.2769160-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -104,183 +103,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xin Li <xin3.li@intel.com>
+This was used to bootstrap the venv with a TOML parser, after which
+ensuregroup is used.  Now that we expect it to be present as a system
+package (either tomli or, for Python 3.11, tomllib), it is not needed
+anymore.
 
-FRED CPU states are managed in 9 new FRED MSRs, in addtion to a few
-existing CPU registers and MSRs, e.g., CR4.FRED and MSR_IA32_PL0_SSP.
+Note that this means that, when implemented, the hypothetical "isolated"
+mode that does not use any system packages will only work with Python
+3.11+.
 
-Save/restore/migrate FRED MSRs if FRED is exposed to the guest.
-
-Tested-by: Shan Kang <shan.kang@intel.com>
-Signed-off-by: Xin Li <xin3.li@intel.com>
-Message-ID: <20231109072012.8078-7-xin3.li@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h     | 22 +++++++++++++++++++
- target/i386/kvm/kvm.c | 49 +++++++++++++++++++++++++++++++++++++++++++
- target/i386/machine.c | 28 +++++++++++++++++++++++++
- 3 files changed, 99 insertions(+)
+ python/scripts/mkvenv.py | 105 ---------------------------------------
+ 1 file changed, 105 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 8ff27e933de..29d799adfd6 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -538,6 +538,17 @@ typedef enum X86Seg {
- #define MSR_IA32_XFD                    0x000001c4
- #define MSR_IA32_XFD_ERR                0x000001c5
+diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
+index d0b9c215ca2..f2526af0a04 100644
+--- a/python/scripts/mkvenv.py
++++ b/python/scripts/mkvenv.py
+@@ -13,7 +13,6 @@
+     create    create a venv
+     post_init
+               post-venv initialization
+-    ensure    Ensure that the specified package is installed.
+     ensuregroup
+               Ensure that the specified package group is installed.
  
-+/* FRED MSRs */
-+#define MSR_IA32_FRED_RSP0              0x000001cc       /* Stack level 0 regular stack pointer */
-+#define MSR_IA32_FRED_RSP1              0x000001cd       /* Stack level 1 regular stack pointer */
-+#define MSR_IA32_FRED_RSP2              0x000001ce       /* Stack level 2 regular stack pointer */
-+#define MSR_IA32_FRED_RSP3              0x000001cf       /* Stack level 3 regular stack pointer */
-+#define MSR_IA32_FRED_STKLVLS           0x000001d0       /* FRED exception stack levels */
-+#define MSR_IA32_FRED_SSP1              0x000001d1       /* Stack level 1 shadow stack pointer in ring 0 */
-+#define MSR_IA32_FRED_SSP2              0x000001d2       /* Stack level 2 shadow stack pointer in ring 0 */
-+#define MSR_IA32_FRED_SSP3              0x000001d3       /* Stack level 3 shadow stack pointer in ring 0 */
-+#define MSR_IA32_FRED_CONFIG            0x000001d4       /* FRED Entrypoint and interrupt stack level */
-+
- #define MSR_IA32_BNDCFGS                0x00000d90
- #define MSR_IA32_XSS                    0x00000da0
- #define MSR_IA32_UMWAIT_CONTROL         0xe1
-@@ -1723,6 +1734,17 @@ typedef struct CPUArchState {
-     target_ulong cstar;
-     target_ulong fmask;
-     target_ulong kernelgsbase;
-+
-+    /* FRED MSRs */
-+    uint64_t fred_rsp0;
-+    uint64_t fred_rsp1;
-+    uint64_t fred_rsp2;
-+    uint64_t fred_rsp3;
-+    uint64_t fred_stklvls;
-+    uint64_t fred_ssp1;
-+    uint64_t fred_ssp2;
-+    uint64_t fred_ssp3;
-+    uint64_t fred_config;
- #endif
+@@ -36,18 +35,6 @@
  
-     uint64_t tsc_adjust;
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 0852ed077f0..b5635209812 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3376,6 +3376,17 @@ static int kvm_put_msrs(X86CPU *cpu, int level)
-         kvm_msr_entry_add(cpu, MSR_KERNELGSBASE, env->kernelgsbase);
-         kvm_msr_entry_add(cpu, MSR_FMASK, env->fmask);
-         kvm_msr_entry_add(cpu, MSR_LSTAR, env->lstar);
-+        if (env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_FRED) {
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP0, env->fred_rsp0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP1, env->fred_rsp1);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP2, env->fred_rsp2);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP3, env->fred_rsp3);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_STKLVLS, env->fred_stklvls);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP1, env->fred_ssp1);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP2, env->fred_ssp2);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP3, env->fred_ssp3);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_CONFIG, env->fred_config);
-+        }
-     }
- #endif
+ --------------------------------------------------
  
-@@ -3848,6 +3859,17 @@ static int kvm_get_msrs(X86CPU *cpu)
-         kvm_msr_entry_add(cpu, MSR_KERNELGSBASE, 0);
-         kvm_msr_entry_add(cpu, MSR_FMASK, 0);
-         kvm_msr_entry_add(cpu, MSR_LSTAR, 0);
-+        if (env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_FRED) {
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP0, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP1, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP2, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_RSP3, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_STKLVLS, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP1, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP2, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP3, 0);
-+            kvm_msr_entry_add(cpu, MSR_IA32_FRED_CONFIG, 0);
-+        }
-     }
- #endif
-     kvm_msr_entry_add(cpu, MSR_KVM_SYSTEM_TIME, 0);
-@@ -4069,6 +4091,33 @@ static int kvm_get_msrs(X86CPU *cpu)
-         case MSR_LSTAR:
-             env->lstar = msrs[i].data;
-             break;
-+        case MSR_IA32_FRED_RSP0:
-+            env->fred_rsp0 = msrs[i].data;
-+            break;
-+        case MSR_IA32_FRED_RSP1:
-+            env->fred_rsp1 = msrs[i].data;
-+            break;
-+        case MSR_IA32_FRED_RSP2:
-+            env->fred_rsp2 = msrs[i].data;
-+            break;
-+        case MSR_IA32_FRED_RSP3:
-+            env->fred_rsp3 = msrs[i].data;
-+            break;
-+        case MSR_IA32_FRED_STKLVLS:
-+            env->fred_stklvls = msrs[i].data;
-+            break;
-+        case MSR_IA32_FRED_SSP1:
-+            env->fred_ssp1 = msrs[i].data;
-+            break;
-+        case MSR_IA32_FRED_SSP2:
-+            env->fred_ssp2 = msrs[i].data;
-+            break;
-+        case MSR_IA32_FRED_SSP3:
-+            env->fred_ssp3 = msrs[i].data;
-+            break;
-+        case MSR_IA32_FRED_CONFIG:
-+            env->fred_config = msrs[i].data;
-+            break;
- #endif
-         case MSR_IA32_TSC:
-             env->tsc = msrs[i].data;
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index c3ae3208147..39f8294f279 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -1544,6 +1544,33 @@ static const VMStateDescription vmstate_msr_xfd = {
- };
+-usage: mkvenv ensure [-h] [--online] [--dir DIR] dep_spec...
+-
+-positional arguments:
+-  dep_spec    PEP 508 Dependency specification, e.g. 'meson>=0.61.5'
+-
+-options:
+-  -h, --help  show this help message and exit
+-  --online    Install packages from PyPI, if necessary.
+-  --dir DIR   Path to vendored packages where we may install from.
+-
+---------------------------------------------------
+-
+ usage: mkvenv ensuregroup [-h] [--online] [--dir DIR] file group...
  
- #ifdef TARGET_X86_64
-+static bool intel_fred_msrs_needed(void *opaque)
-+{
-+    X86CPU *cpu = opaque;
-+    CPUX86State *env = &cpu->env;
-+
-+    return !!(env->features[FEAT_7_1_EAX] & CPUID_7_1_EAX_FRED);
-+}
-+
-+static const VMStateDescription vmstate_msr_fred = {
-+    .name = "cpu/fred",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = intel_fred_msrs_needed,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_UINT64(env.fred_rsp0, X86CPU),
-+        VMSTATE_UINT64(env.fred_rsp1, X86CPU),
-+        VMSTATE_UINT64(env.fred_rsp2, X86CPU),
-+        VMSTATE_UINT64(env.fred_rsp3, X86CPU),
-+        VMSTATE_UINT64(env.fred_stklvls, X86CPU),
-+        VMSTATE_UINT64(env.fred_ssp1, X86CPU),
-+        VMSTATE_UINT64(env.fred_ssp2, X86CPU),
-+        VMSTATE_UINT64(env.fred_ssp3, X86CPU),
-+        VMSTATE_UINT64(env.fred_config, X86CPU),
-+        VMSTATE_END_OF_LIST()
-+            }
-+        };
-+
- static bool amx_xtile_needed(void *opaque)
- {
-     X86CPU *cpu = opaque;
-@@ -1747,6 +1774,7 @@ const VMStateDescription vmstate_x86_cpu = {
-         &vmstate_pdptrs,
-         &vmstate_msr_xfd,
- #ifdef TARGET_X86_64
-+        &vmstate_msr_fred,
-         &vmstate_amx_xtile,
- #endif
-         &vmstate_arch_lbr,
+ positional arguments:
+@@ -726,57 +713,6 @@ def _do_ensure(
+     return None
+ 
+ 
+-def ensure(
+-    dep_specs: Sequence[str],
+-    online: bool = False,
+-    wheels_dir: Optional[Union[str, Path]] = None,
+-    prog: Optional[str] = None,
+-) -> None:
+-    """
+-    Use pip to ensure we have the package specified by @dep_specs.
+-
+-    If the package is already installed, do nothing. If online and
+-    wheels_dir are both provided, prefer packages found in wheels_dir
+-    first before connecting to PyPI.
+-
+-    :param dep_specs:
+-        PEP 508 dependency specifications. e.g. ['meson>=0.61.5'].
+-    :param online: If True, fall back to PyPI.
+-    :param wheels_dir: If specified, search this path for packages.
+-    :param prog:
+-        If specified, use this program name for error diagnostics that will
+-        be presented to the user. e.g., 'sphinx-build' can be used as a
+-        bellwether for the presence of 'sphinx'.
+-    """
+-
+-    if not HAVE_DISTLIB:
+-        raise Ouch("a usable distlib could not be found, please install it")
+-
+-    # Convert the depspecs to a dictionary, as if they came
+-    # from a section in a pythondeps.toml file
+-    group: Dict[str, Dict[str, str]] = {}
+-    for spec in dep_specs:
+-        name = distlib.version.LegacyMatcher(spec).name
+-        group[name] = {}
+-
+-        spec = spec.strip()
+-        pos = len(name)
+-        ver = spec[pos:].strip()
+-        if ver:
+-            group[name]["accepted"] = ver
+-
+-        if prog:
+-            group[name]["canary"] = prog
+-            prog = None
+-
+-    result = _do_ensure(group, online, wheels_dir)
+-    if result:
+-        # Well, that's not good.
+-        if result[1]:
+-            raise Ouch(result[0])
+-        raise SystemExit(f"\n{result[0]}\n\n")
+-
+-
+ def _parse_groups(file: str) -> Dict[str, Dict[str, Any]]:
+     if not HAVE_TOMLLIB:
+         if sys.version_info < (3, 11):
+@@ -888,39 +824,6 @@ def _add_ensuregroup_subcommand(subparsers: Any) -> None:
+     )
+ 
+ 
+-def _add_ensure_subcommand(subparsers: Any) -> None:
+-    subparser = subparsers.add_parser(
+-        "ensure", help="Ensure that the specified package is installed."
+-    )
+-    subparser.add_argument(
+-        "--online",
+-        action="store_true",
+-        help="Install packages from PyPI, if necessary.",
+-    )
+-    subparser.add_argument(
+-        "--dir",
+-        type=str,
+-        action="store",
+-        help="Path to vendored packages where we may install from.",
+-    )
+-    subparser.add_argument(
+-        "--diagnose",
+-        type=str,
+-        action="store",
+-        help=(
+-            "Name of a shell utility to use for "
+-            "diagnostics if this command fails."
+-        ),
+-    )
+-    subparser.add_argument(
+-        "dep_specs",
+-        type=str,
+-        action="store",
+-        help="PEP 508 Dependency specification, e.g. 'meson>=0.61.5'",
+-        nargs="+",
+-    )
+-
+-
+ def main() -> int:
+     """CLI interface to make_qemu_venv. See module docstring."""
+     if os.environ.get("DEBUG") or os.environ.get("GITLAB_CI"):
+@@ -944,7 +847,6 @@ def main() -> int:
+ 
+     _add_create_subcommand(subparsers)
+     _add_post_init_subcommand(subparsers)
+-    _add_ensure_subcommand(subparsers)
+     _add_ensuregroup_subcommand(subparsers)
+ 
+     args = parser.parse_args()
+@@ -957,13 +859,6 @@ def main() -> int:
+             )
+         if args.command == "post_init":
+             post_venv_setup()
+-        if args.command == "ensure":
+-            ensure(
+-                dep_specs=args.dep_specs,
+-                online=args.online,
+-                wheels_dir=args.dir,
+-                prog=args.diagnose,
+-            )
+         if args.command == "ensuregroup":
+             ensure_group(
+                 file=args.file,
 -- 
 2.45.1
 
