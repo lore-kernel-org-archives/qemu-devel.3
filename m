@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E44ADC25B76
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:42:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0220C25B76
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:42:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFre9-0001hN-8k; Sat, 08 Jun 2024 04:41:57 -0400
+	id 1sFrdm-0001L4-BX; Sat, 08 Jun 2024 04:41:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFre7-0001dT-Io
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:41:55 -0400
+ id 1sFrdl-0001KV-4D
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:41:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFre5-0001Q5-PS
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:41:55 -0400
+ id 1sFrdj-0001NE-Gz
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:41:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717836113;
+ s=mimecast20190719; t=1717836090;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Z1J3/JD1dn7MgaT8Ll/a2KX3nRmtx9rCL7vpXkttTP8=;
- b=g2shNsR8O7z8hMuRgEejcXPZo3Jw2/SPHM2pdmSQuoWw/iRA5GscwFSspx5CR63rZOXhZ7
- xBhJFM0zx7x6YYPRTtE8y6HDHawTQXXktCkirkbWE/f4l5CaYQBmcEvXJp1ZfFvhkAqffG
- B2kILyVydLedgleFmo1DHZckEEVVcIM=
+ bh=+S5LnfQa8HuliJcdgec0NytFwCbzBU9w1gslYMiuR1g=;
+ b=Hh8RbKGbuhNitAVll9CSsPJ8c2deM1R2Vpw04ndI+Z0C6gAhPeVVjGOMELGI3Gl1ev1jcP
+ QPdU3mOL0Svprgc1NTTJhF4w5N9JpRR3Jee1R5nH22DXY1hbM1VcyTGah9GEbAEuz9uYU/
+ OpVk4G8+Icjfsori7PUmlsuAlOiCC/E=
 Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
  [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-281-iJ6EVuG9PEShWwTDHqYEtQ-1; Sat, 08 Jun 2024 04:41:50 -0400
-X-MC-Unique: iJ6EVuG9PEShWwTDHqYEtQ-1
+ us-mta-63-V23OToHLP42egWjbC6Jupg-1; Sat, 08 Jun 2024 04:41:29 -0400
+X-MC-Unique: V23OToHLP42egWjbC6Jupg-1
 Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a6c72164f46so151784166b.1
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:41:50 -0700 (PDT)
+ a640c23a62f3a-a6efe561b04so24403066b.3
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:41:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717836108; x=1718440908;
+ d=1e100.net; s=20230601; t=1717836087; x=1718440887;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Z1J3/JD1dn7MgaT8Ll/a2KX3nRmtx9rCL7vpXkttTP8=;
- b=slCtIbE02nG5jloOSl2fn9XgXF0QDbfTCLNviqM891Jr9NKIYLME7CcrovuiNRMt7L
- dDUI8v5ioAsFLgM6LpjYrMBvFyT8ZlaoOIkAppZum/Y2InKAtBZXmiMCHSJ/qoHv0CsM
- Muc8+uiK511Z9Kd3hYWne104zYC1nJA3lvVm3yTJ7lgxkllfyMLcS/BpyEbOSzjwQPUL
- nXj71gZtzHo6iY8R6LIMCQXafjNtBNVhnRMTTv4mM0XDwPWQXqXWnMESc3egcVFovt1p
- do32mA8BjSnkMXkSWBwCnKGVnsxJBel6pH3gwQJ78kYRJsDg6CEyUAJBP4BpF/zXQXlc
- tw7g==
-X-Gm-Message-State: AOJu0YyI12w+aAhbaHGjZKTQRDtOw9GwtWfhTGGMdA0qXwIlLpBY//j6
- MwyB6IzLsBtBHbfuYQ8XLcERxemigLsAhdD6+Y26Up60VEdWWeHxpCzkB0cfeHXbwWhkxkw+q7Y
- ayzH+k1sq8lIkEXPboG8jb9hJ66LgesYNfblih5nlbvnxmMWph9W1kW1CttXrjQp5tEOPDmzh96
- LCbRElsl1Cm6iP4xScKV+oc+HiSGGl1F1ZMi16
-X-Received: by 2002:a17:906:6953:b0:a68:be21:8dca with SMTP id
- a640c23a62f3a-a6cd561a934mr301993166b.10.1717836108513; 
- Sat, 08 Jun 2024 01:41:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3vHcAzvdhy79AqHo6t6sYrYmDKux2gq77OmDRSzwflzUCiN6eps7a8lSpYK2EYyKnbGXhtA==
-X-Received: by 2002:a17:906:6953:b0:a68:be21:8dca with SMTP id
- a640c23a62f3a-a6cd561a934mr301992266b.10.1717836107958; 
- Sat, 08 Jun 2024 01:41:47 -0700 (PDT)
+ bh=+S5LnfQa8HuliJcdgec0NytFwCbzBU9w1gslYMiuR1g=;
+ b=urCAjPMpS31A9Ob/RyNS4IQFmN1z5mkAz7oX3zAr28/os90GnVzB0tU+r+8VGpJY6f
+ G31oaECD/ASBSh83dFnpMr+RymAvYFD2YSBlhmN3SEYIBuhaaNe6nhFjQxVvyk/8k10y
+ 7jaPw96e7dQ0KCt9dmI3JeVjboe+AfAvm5amPJtBBVCeuJkcQBnE2lktVtoD5SuFXDBy
+ ytN1JIM2p1PA0m8cusVwkTlyub1H67eW0luUk0gdsaqQR4ctea58icY5wgN+9YlQPgqO
+ POmPEIX4nUePLxtDvLB+JDPNuzrCO/DeqderpOX2DA5kqheKB4sZ8gm3nE+8ZXxOkQD/
+ L5Xw==
+X-Gm-Message-State: AOJu0YxwXqgoOGbhsu2oE+jEBaI0yPkNmwUYkbZxOBHw9k4hSBs8Sjpm
+ c4bO7yfDyWSKWvVx0wwYs268bAwUe+JoaDY5mPEqzTvlMa+th8KFl3IYrZ3a7tMjQBlne6XUFyg
+ +F6AyMIyQgbNRyARo7bKBNf8j07/B2hrk/sjIkm3tdkQoGVlWtaZxbZYUQ6LSC05nN1mUXZKZz2
+ FQyK1IbKoY5G+StvVvPMtV3y6atHe/dDJA9qp9
+X-Received: by 2002:a17:907:bb88:b0:a63:cd85:4d7b with SMTP id
+ a640c23a62f3a-a6cdb00066fmr282583766b.62.1717836087189; 
+ Sat, 08 Jun 2024 01:41:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGHWeSRnnMPsCh19PhVvwzrWfzYSw6Ve4+4X9m8BQ16gZHV/W9jTQhnUsdb4CeciiN97SvL8A==
+X-Received: by 2002:a17:907:bb88:b0:a63:cd85:4d7b with SMTP id
+ a640c23a62f3a-a6cdb00066fmr282582666b.62.1717836086838; 
+ Sat, 08 Jun 2024 01:41:26 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f0cdfb226sm26713866b.151.2024.06.08.01.41.45
+ a640c23a62f3a-a6eff899fbbsm59005066b.212.2024.06.08.01.41.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 01:41:45 -0700 (PDT)
+ Sat, 08 Jun 2024 01:41:23 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 09/25] target/i386: fix bad sorting of entries in the 0F table
-Date: Sat,  8 Jun 2024 10:40:57 +0200
-Message-ID: <20240608084113.2770363-10-pbonzini@redhat.com>
+Subject: [PATCH 03/25] target/i386: put BLS* input in T1,
+ use generic flag writeback
+Date: Sat,  8 Jun 2024 10:40:51 +0200
+Message-ID: <20240608084113.2770363-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240608084113.2770363-1-pbonzini@redhat.com>
 References: <20240608084113.2770363-1-pbonzini@redhat.com>
@@ -103,145 +104,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Aesthetic change only.
+This makes for easier cpu_cc_* setup, and not using set_cc_op()
+should come in handy if QEMU ever implements APX.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.c.inc | 93 ++++++++++++++++----------------
- 1 file changed, 46 insertions(+), 47 deletions(-)
+ target/i386/tcg/decode-new.c.inc |  4 ++--
+ target/i386/tcg/emit.c.inc       | 24 +++++++++---------------
+ 2 files changed, 11 insertions(+), 17 deletions(-)
 
 diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 4c567911f41..4e745f10dd8 100644
+index e7d88020481..380fb793531 100644
 --- a/target/i386/tcg/decode-new.c.inc
 +++ b/target/i386/tcg/decode-new.c.inc
-@@ -1006,14 +1006,6 @@ static void decode_MOV_CR_DR(DisasContext *s, CPUX86State *env, X86OpEntry *entr
+@@ -633,7 +633,7 @@ static const X86OpEntry opcodes_0F38_F0toFF[16][5] = {
+         {},
+     },
+     [3] = {
+-        X86_OP_GROUP3(group17, B,y, E,y, None,None, vex13 cpuid(BMI1)),
++        X86_OP_GROUP3(group17, B,y, None,None, E,y, vex13 cpuid(BMI1)),
+         {},
+         {},
+         {},
+@@ -2604,7 +2604,7 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+     }
+ 
+     /*
+-     * Write back flags after last memory access.  Some newer ALU instructions, as
++     * Write back flags after last memory access.  Some older ALU instructions, as
+      * well as SSE instructions, write flags in the gen_* function, but that can
+      * cause incorrect tracking of CC_OP for instructions that write to both memory
+      * and flags.
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 2041ea9d04a..a25b3dfc6b5 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1272,40 +1272,34 @@ static void gen_BEXTR(DisasContext *s, X86DecodedInsn *decode)
+     prepare_update1_cc(decode, s, CC_OP_LOGICB + ot);
  }
  
- static const X86OpEntry opcodes_0F[256] = {
--    [0x0E] = X86_OP_ENTRY0(EMMS,                              cpuid(3DNOW)), /* femms */
--    /*
--     * 3DNow!'s opcode byte comes *after* modrm and displacements, making it
--     * more like an Ib operand.  Dispatch to the right helper in a single gen_*
--     * function.
--     */
--    [0x0F] = X86_OP_ENTRY3(3dnow,       P,q, Q,q, I,b,        cpuid(3DNOW)),
--
-     [0x10] = X86_OP_GROUP0(0F10),
-     [0x11] = X86_OP_GROUP0(0F11),
-     [0x12] = X86_OP_GROUP0(0F12),
-@@ -1086,8 +1078,54 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xa0] = X86_OP_ENTRYr(PUSH, FS, w),
-     [0xa1] = X86_OP_ENTRYw(POP, FS, w),
+-/* BLSI do not have memory operands and can use set_cc_op.  */
+ static void gen_BLSI(DisasContext *s, X86DecodedInsn *decode)
+ {
+     MemOp ot = decode->op[0].ot;
  
-+    [0xb2] = X86_OP_ENTRY3(LSS,    G,v, EM,p, None, None),
-+    [0xb4] = X86_OP_ENTRY3(LFS,    G,v, EM,p, None, None),
-+    [0xb5] = X86_OP_ENTRY3(LGS,    G,v, EM,p, None, None),
-+    [0xb6] = X86_OP_ENTRY3(MOV,    G,v, E,b, None, None, zextT0), /* MOVZX */
-+    [0xb7] = X86_OP_ENTRY3(MOV,    G,v, E,w, None, None, zextT0), /* MOVZX */
-+
-+    [0xc2] = X86_OP_ENTRY4(VCMP,       V,x, H,x, W,x,       vex2_rep3 p_00_66_f3_f2),
-+    [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2)), /* MOVNTI */
-+    [0xc4] = X86_OP_ENTRY4(PINSRW,     V,dq,H,dq,E,w,       vex5 mmx p_00_66),
-+    [0xc5] = X86_OP_ENTRY3(PEXTRW,     G,d, U,dq,I,b,       vex5 mmx p_00_66),
-+    [0xc6] = X86_OP_ENTRY4(VSHUF,      V,x, H,x, W,x,       vex4 p_00_66),
-+
-+    [0xd0] = X86_OP_ENTRY3(VADDSUB,   V,x, H,x, W,x,        vex2 cpuid(SSE3) p_66_f2),
-+    [0xd1] = X86_OP_ENTRY3(PSRLW_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
-+    [0xd2] = X86_OP_ENTRY3(PSRLD_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
-+    [0xd3] = X86_OP_ENTRY3(PSRLQ_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
-+    [0xd4] = X86_OP_ENTRY3(PADDQ,     V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
-+    [0xd5] = X86_OP_ENTRY3(PMULLW,    V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
-+    [0xd6] = X86_OP_GROUP0(0FD6),
-+    [0xd7] = X86_OP_ENTRY3(PMOVMSKB,  G,d, None,None, U,x,  vex7 mmx avx2_256 p_00_66),
-+
-+    [0xe0] = X86_OP_ENTRY3(PAVGB,     V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
-+    [0xe1] = X86_OP_ENTRY3(PSRAW_r,   V,x, H,x, W,x,        vex7 mmx avx2_256 p_00_66),
-+    [0xe2] = X86_OP_ENTRY3(PSRAD_r,   V,x, H,x, W,x,        vex7 mmx avx2_256 p_00_66),
-+    [0xe3] = X86_OP_ENTRY3(PAVGW,     V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
-+    [0xe4] = X86_OP_ENTRY3(PMULHUW,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
-+    [0xe5] = X86_OP_ENTRY3(PMULHW,    V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
-+    [0xe6] = X86_OP_GROUP0(0FE6),
-+    [0xe7] = X86_OP_ENTRY3(MOVDQ,     W,x, None,None, V,x,  vex1 mmx p_00_66), /* MOVNTQ/MOVNTDQ */
-+
-+    [0xf0] = X86_OP_ENTRY3(MOVDQ,    V,x, None,None, WM,x,  vex4_unal cpuid(SSE3) p_f2), /* LDDQU */
-+    [0xf1] = X86_OP_ENTRY3(PSLLW_r,  V,x, H,x, W,x,         vex7 mmx avx2_256 p_00_66),
-+    [0xf2] = X86_OP_ENTRY3(PSLLD_r,  V,x, H,x, W,x,         vex7 mmx avx2_256 p_00_66),
-+    [0xf3] = X86_OP_ENTRY3(PSLLQ_r,  V,x, H,x, W,x,         vex7 mmx avx2_256 p_00_66),
-+    [0xf4] = X86_OP_ENTRY3(PMULUDQ,  V,x, H,x, W,x,         vex4 mmx avx2_256 p_00_66),
-+    [0xf5] = X86_OP_ENTRY3(PMADDWD,  V,x, H,x, W,x,         vex4 mmx avx2_256 p_00_66),
-+    [0xf6] = X86_OP_ENTRY3(PSADBW,   V,x, H,x, W,x,         vex4 mmx avx2_256 p_00_66),
-+    [0xf7] = X86_OP_ENTRY3(MASKMOV,  None,None, V,dq, U,dq, vex4_unal avx2_256 mmx p_00_66),
-+
-     [0x0b] = X86_OP_ENTRY0(UD),           /* UD2 */
-     [0x0d] = X86_OP_ENTRY1(NOP,  M,v),    /* 3DNow! prefetch */
-+    [0x0e] = X86_OP_ENTRY0(EMMS,                              cpuid(3DNOW)), /* femms */
-+    /*
-+     * 3DNow!'s opcode byte comes *after* modrm and displacements, making it
-+     * more like an Ib operand.  Dispatch to the right helper in a single gen_*
-+     * function.
-+     */
-+    [0x0f] = X86_OP_ENTRY3(3dnow,       P,q, Q,q, I,b,        cpuid(3DNOW)),
+-    tcg_gen_mov_tl(cpu_cc_src, s->T0);
+-    tcg_gen_neg_tl(s->T1, s->T0);
++    /* input in T1, which is ready for prepare_update2_cc  */
++    tcg_gen_neg_tl(s->T0, s->T1);
+     tcg_gen_and_tl(s->T0, s->T0, s->T1);
+-    tcg_gen_mov_tl(cpu_cc_dst, s->T0);
+-    set_cc_op(s, CC_OP_BMILGB + ot);
++    prepare_update2_cc(decode, s, CC_OP_BMILGB + ot);
+ }
  
-     [0x18] = X86_OP_ENTRY1(NOP,  nop,v),  /* prefetch/reserved NOP */
-     [0x19] = X86_OP_ENTRY1(NOP,  nop,v),  /* reserved NOP */
-@@ -1169,23 +1207,11 @@ static const X86OpEntry opcodes_0F[256] = {
-      */
-     [0xaf] = X86_OP_ENTRY3(IMUL3,  G,v, E,v, 2op,v, sextT0),
+-/* BLSMSK do not have memory operands and can use set_cc_op.  */
+ static void gen_BLSMSK(DisasContext *s, X86DecodedInsn *decode)
+ {
+     MemOp ot = decode->op[0].ot;
  
--    [0xb2] = X86_OP_ENTRY3(LSS,    G,v, EM,p, None, None),
--    [0xb4] = X86_OP_ENTRY3(LFS,    G,v, EM,p, None, None),
--    [0xb5] = X86_OP_ENTRY3(LGS,    G,v, EM,p, None, None),
--    [0xb6] = X86_OP_ENTRY3(MOV,    G,v, E,b, None, None, zextT0), /* MOVZX */
--    [0xb7] = X86_OP_ENTRY3(MOV,    G,v, E,w, None, None, zextT0), /* MOVZX */
--
-     /* decoded as modrm, which is visible as a difference between page fault and #UD */
-     [0xb9] = X86_OP_ENTRYr(UD,     nop,v),                        /* UD1 */
-     [0xbe] = X86_OP_ENTRY3(MOV,    G,v, E,b, None, None, sextT0), /* MOVSX */
-     [0xbf] = X86_OP_ENTRY3(MOV,    G,v, E,w, None, None, sextT0), /* MOVSX */
+-    tcg_gen_mov_tl(cpu_cc_src, s->T0);
+-    tcg_gen_subi_tl(s->T1, s->T0, 1);
++    /* input in T1, which is ready for prepare_update2_cc  */
++    tcg_gen_subi_tl(s->T0, s->T1, 1);
+     tcg_gen_xor_tl(s->T0, s->T0, s->T1);
+-    tcg_gen_mov_tl(cpu_cc_dst, s->T0);
+-    set_cc_op(s, CC_OP_BMILGB + ot);
++    prepare_update2_cc(decode, s, CC_OP_BMILGB + ot);
+ }
  
--    [0xc2] = X86_OP_ENTRY4(VCMP,       V,x, H,x, W,x,       vex2_rep3 p_00_66_f3_f2),
--    [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2)), /* MOVNTI */
--    [0xc4] = X86_OP_ENTRY4(PINSRW,     V,dq,H,dq,E,w,       vex5 mmx p_00_66),
--    [0xc5] = X86_OP_ENTRY3(PEXTRW,     G,d, U,dq,I,b,       vex5 mmx p_00_66),
--    [0xc6] = X86_OP_ENTRY4(VSHUF,      V,x, H,x, W,x,       vex4 p_00_66),
--
-     [0xc8] = X86_OP_ENTRY1(BSWAP,     LoBits,y),
-     [0xc9] = X86_OP_ENTRY1(BSWAP,     LoBits,y),
-     [0xca] = X86_OP_ENTRY1(BSWAP,     LoBits,y),
-@@ -1195,33 +1221,6 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xce] = X86_OP_ENTRY1(BSWAP,     LoBits,y),
-     [0xcf] = X86_OP_ENTRY1(BSWAP,     LoBits,y),
+-/* BLSR do not have memory operands and can use set_cc_op.  */
+ static void gen_BLSR(DisasContext *s, X86DecodedInsn *decode)
+ {
+     MemOp ot = decode->op[0].ot;
  
--    [0xd0] = X86_OP_ENTRY3(VADDSUB,   V,x, H,x, W,x,        vex2 cpuid(SSE3) p_66_f2),
--    [0xd1] = X86_OP_ENTRY3(PSRLW_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
--    [0xd2] = X86_OP_ENTRY3(PSRLD_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
--    [0xd3] = X86_OP_ENTRY3(PSRLQ_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
--    [0xd4] = X86_OP_ENTRY3(PADDQ,     V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
--    [0xd5] = X86_OP_ENTRY3(PMULLW,    V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
--    [0xd6] = X86_OP_GROUP0(0FD6),
--    [0xd7] = X86_OP_ENTRY3(PMOVMSKB,  G,d, None,None, U,x,  vex7 mmx avx2_256 p_00_66),
--
--    [0xe0] = X86_OP_ENTRY3(PAVGB,     V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
--    [0xe1] = X86_OP_ENTRY3(PSRAW_r,   V,x, H,x, W,x,        vex7 mmx avx2_256 p_00_66),
--    [0xe2] = X86_OP_ENTRY3(PSRAD_r,   V,x, H,x, W,x,        vex7 mmx avx2_256 p_00_66),
--    [0xe3] = X86_OP_ENTRY3(PAVGW,     V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
--    [0xe4] = X86_OP_ENTRY3(PMULHUW,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
--    [0xe5] = X86_OP_ENTRY3(PMULHW,    V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
--    [0xe6] = X86_OP_GROUP0(0FE6),
--    [0xe7] = X86_OP_ENTRY3(MOVDQ,     W,x, None,None, V,x,  vex1 mmx p_00_66), /* MOVNTQ/MOVNTDQ */
--
--    [0xf0] = X86_OP_ENTRY3(MOVDQ,    V,x, None,None, WM,x,  vex4_unal cpuid(SSE3) p_f2), /* LDDQU */
--    [0xf1] = X86_OP_ENTRY3(PSLLW_r,  V,x, H,x, W,x,         vex7 mmx avx2_256 p_00_66),
--    [0xf2] = X86_OP_ENTRY3(PSLLD_r,  V,x, H,x, W,x,         vex7 mmx avx2_256 p_00_66),
--    [0xf3] = X86_OP_ENTRY3(PSLLQ_r,  V,x, H,x, W,x,         vex7 mmx avx2_256 p_00_66),
--    [0xf4] = X86_OP_ENTRY3(PMULUDQ,  V,x, H,x, W,x,         vex4 mmx avx2_256 p_00_66),
--    [0xf5] = X86_OP_ENTRY3(PMADDWD,  V,x, H,x, W,x,         vex4 mmx avx2_256 p_00_66),
--    [0xf6] = X86_OP_ENTRY3(PSADBW,   V,x, H,x, W,x,         vex4 mmx avx2_256 p_00_66),
--    [0xf7] = X86_OP_ENTRY3(MASKMOV,  None,None, V,dq, U,dq, vex4_unal avx2_256 mmx p_00_66),
--
-     /* Incorrectly missing from 2-17 */
-     [0xd8] = X86_OP_ENTRY3(PSUBUSB,  V,x, H,x, W,x,  vex4 mmx avx2_256 p_00_66),
-     [0xd9] = X86_OP_ENTRY3(PSUBUSW,  V,x, H,x, W,x,  vex4 mmx avx2_256 p_00_66),
+-    tcg_gen_mov_tl(cpu_cc_src, s->T0);
+-    tcg_gen_subi_tl(s->T1, s->T0, 1);
++    /* input in T1, which is ready for prepare_update2_cc  */
++    tcg_gen_subi_tl(s->T0, s->T1, 1);
+     tcg_gen_and_tl(s->T0, s->T0, s->T1);
+-    tcg_gen_mov_tl(cpu_cc_dst, s->T0);
+-    set_cc_op(s, CC_OP_BMILGB + ot);
++    prepare_update2_cc(decode, s, CC_OP_BMILGB + ot);
+ }
+ 
+ static void gen_BOUND(DisasContext *s, X86DecodedInsn *decode)
 -- 
 2.45.1
 
