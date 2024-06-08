@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9869EC25B76
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:42:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E44ADC25B76
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:42:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFreK-0002y1-OS; Sat, 08 Jun 2024 04:42:08 -0400
+	id 1sFre9-0001hN-8k; Sat, 08 Jun 2024 04:41:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFreI-0002sj-Lc
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:42:06 -0400
+ id 1sFre7-0001dT-Io
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:41:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFreG-0001R1-Pk
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:42:06 -0400
+ id 1sFre5-0001Q5-PS
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:41:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717836124;
+ s=mimecast20190719; t=1717836113;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=29vDyAjFlT0oHHuzdskRtBwuTNaHeAQJUG9MkDRPFew=;
- b=IpAhcWCtiaXUW0ZMXJcQy+UdpcZcAipObvjGEYsCtTgjamrzgS0Ttr8anlymPOcNhZTKfQ
- bNopdKNaQDDBN+kGh6IV06cnCsv1qZ88PMPrnYsZav6QJ2MLsqSA6ZWFx/epi1PMCQpLMJ
- ibSOKuU5qregOlPk7wXqLiiIn/DYrhc=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Z1J3/JD1dn7MgaT8Ll/a2KX3nRmtx9rCL7vpXkttTP8=;
+ b=g2shNsR8O7z8hMuRgEejcXPZo3Jw2/SPHM2pdmSQuoWw/iRA5GscwFSspx5CR63rZOXhZ7
+ xBhJFM0zx7x6YYPRTtE8y6HDHawTQXXktCkirkbWE/f4l5CaYQBmcEvXJp1ZfFvhkAqffG
+ B2kILyVydLedgleFmo1DHZckEEVVcIM=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-505-s6FfGkXwMYC6v_vXAHJhAg-1; Sat, 08 Jun 2024 04:41:58 -0400
-X-MC-Unique: s6FfGkXwMYC6v_vXAHJhAg-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a68ce1ac733so157603866b.3
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:41:57 -0700 (PDT)
+ us-mta-281-iJ6EVuG9PEShWwTDHqYEtQ-1; Sat, 08 Jun 2024 04:41:50 -0400
+X-MC-Unique: iJ6EVuG9PEShWwTDHqYEtQ-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a6c72164f46so151784166b.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:41:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717836116; x=1718440916;
+ d=1e100.net; s=20230601; t=1717836108; x=1718440908;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=29vDyAjFlT0oHHuzdskRtBwuTNaHeAQJUG9MkDRPFew=;
- b=cOVxjVw+O4IfZT0CvYFM0nyPB0IV6QS2oZDG0E3C02vXBYvW8yXyLqLz3g+YR4diUj
- 60U2VsEuPNizx48k+wEfEO/hOoXrtULTZxjx3Y20aPOyVeKgvyyBH+4LpFpnNQh35Xpu
- W9ZUBVIFMJXJEJ938lHW59oXApbS+5r7YtL3Tw/Rzdwp7XwuSyXwxnrtorXJs2gVh5TW
- oly2RZ27oLugNG3DxyZH3YLDTc/NHxPKVOJKBxRfax5IZpFXzUk9nzCKjsI7++Ck/FHS
- +rBYq3IDBRP19Mi6nUAE+zhPamJdcj+3NNNsxORMDn4Hs6S961cYkRxVw8OtLF/HsY6h
- GXSg==
-X-Gm-Message-State: AOJu0YwKWe/566I3Ye2ndsIx5wLmyzRqHWDKgGGD0LECuxkPjfMJl10F
- uKdJLKicfvc2SpcCIJAfRlcyxIfBXgQlptSjsf5mZsMDCIVhuvSl2SUnKaX6wBvzsxxbgXDDNH1
- 9ck8cWIt832P5+N91YE3rZOH99iqoKly0t9k0K8rb4OEyPX9KhZCukv/3GAEE1sQbIkNELWLF+U
- G7V2Zq7adiTyZ+ST7l1LRnQisvBs2vEBcgv0nJ
-X-Received: by 2002:a17:906:2894:b0:a6f:cae:b141 with SMTP id
- a640c23a62f3a-a6f0caeb662mr34090266b.2.1717836116018; 
- Sat, 08 Jun 2024 01:41:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGTTre6JdsYJKv0cStu2DXFEeBDLgmNMJj3iyIkJEw5Q145TN5oHW5EtfTDf/n3zWzZYM7OcA==
-X-Received: by 2002:a17:906:2894:b0:a6f:cae:b141 with SMTP id
- a640c23a62f3a-a6f0caeb662mr34088666b.2.1717836115221; 
- Sat, 08 Jun 2024 01:41:55 -0700 (PDT)
+ bh=Z1J3/JD1dn7MgaT8Ll/a2KX3nRmtx9rCL7vpXkttTP8=;
+ b=slCtIbE02nG5jloOSl2fn9XgXF0QDbfTCLNviqM891Jr9NKIYLME7CcrovuiNRMt7L
+ dDUI8v5ioAsFLgM6LpjYrMBvFyT8ZlaoOIkAppZum/Y2InKAtBZXmiMCHSJ/qoHv0CsM
+ Muc8+uiK511Z9Kd3hYWne104zYC1nJA3lvVm3yTJ7lgxkllfyMLcS/BpyEbOSzjwQPUL
+ nXj71gZtzHo6iY8R6LIMCQXafjNtBNVhnRMTTv4mM0XDwPWQXqXWnMESc3egcVFovt1p
+ do32mA8BjSnkMXkSWBwCnKGVnsxJBel6pH3gwQJ78kYRJsDg6CEyUAJBP4BpF/zXQXlc
+ tw7g==
+X-Gm-Message-State: AOJu0YyI12w+aAhbaHGjZKTQRDtOw9GwtWfhTGGMdA0qXwIlLpBY//j6
+ MwyB6IzLsBtBHbfuYQ8XLcERxemigLsAhdD6+Y26Up60VEdWWeHxpCzkB0cfeHXbwWhkxkw+q7Y
+ ayzH+k1sq8lIkEXPboG8jb9hJ66LgesYNfblih5nlbvnxmMWph9W1kW1CttXrjQp5tEOPDmzh96
+ LCbRElsl1Cm6iP4xScKV+oc+HiSGGl1F1ZMi16
+X-Received: by 2002:a17:906:6953:b0:a68:be21:8dca with SMTP id
+ a640c23a62f3a-a6cd561a934mr301993166b.10.1717836108513; 
+ Sat, 08 Jun 2024 01:41:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF3vHcAzvdhy79AqHo6t6sYrYmDKux2gq77OmDRSzwflzUCiN6eps7a8lSpYK2EYyKnbGXhtA==
+X-Received: by 2002:a17:906:6953:b0:a68:be21:8dca with SMTP id
+ a640c23a62f3a-a6cd561a934mr301992266b.10.1717836107958; 
+ Sat, 08 Jun 2024 01:41:47 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c80581716sm359752466b.19.2024.06.08.01.41.52
+ a640c23a62f3a-a6f0cdfb226sm26713866b.151.2024.06.08.01.41.45
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 01:41:52 -0700 (PDT)
+ Sat, 08 Jun 2024 01:41:45 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 11/25] target/i386: replace read_crN helper with read_cr8
-Date: Sat,  8 Jun 2024 10:40:59 +0200
-Message-ID: <20240608084113.2770363-12-pbonzini@redhat.com>
+Subject: [PATCH 09/25] target/i386: fix bad sorting of entries in the 0F table
+Date: Sat,  8 Jun 2024 10:40:57 +0200
+Message-ID: <20240608084113.2770363-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240608084113.2770363-1-pbonzini@redhat.com>
 References: <20240608084113.2770363-1-pbonzini@redhat.com>
@@ -103,74 +103,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All other control registers are stored plainly in CPUX86State.
+Aesthetic change only.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/helper.h                 |  2 +-
- target/i386/tcg/sysemu/misc_helper.c | 20 +++++---------------
- target/i386/tcg/emit.c.inc           |  2 +-
- 3 files changed, 7 insertions(+), 17 deletions(-)
+ target/i386/tcg/decode-new.c.inc | 93 ++++++++++++++++----------------
+ 1 file changed, 46 insertions(+), 47 deletions(-)
 
-diff --git a/target/i386/helper.h b/target/i386/helper.h
-index 2f46cffabd8..eeb8df56eaa 100644
---- a/target/i386/helper.h
-+++ b/target/i386/helper.h
-@@ -95,7 +95,7 @@ DEF_HELPER_FLAGS_2(monitor, TCG_CALL_NO_WG, void, env, tl)
- DEF_HELPER_FLAGS_2(mwait, TCG_CALL_NO_WG, noreturn, env, int)
- DEF_HELPER_1(rdmsr, void, env)
- DEF_HELPER_1(wrmsr, void, env)
--DEF_HELPER_FLAGS_2(read_crN, TCG_CALL_NO_RWG, tl, env, int)
-+DEF_HELPER_FLAGS_1(read_cr8, TCG_CALL_NO_RWG, tl, env)
- DEF_HELPER_FLAGS_3(write_crN, TCG_CALL_NO_RWG, void, env, int, tl)
- #endif /* !CONFIG_USER_ONLY */
- 
-diff --git a/target/i386/tcg/sysemu/misc_helper.c b/target/i386/tcg/sysemu/misc_helper.c
-index 7fa0c5a06de..094aa56a20d 100644
---- a/target/i386/tcg/sysemu/misc_helper.c
-+++ b/target/i386/tcg/sysemu/misc_helper.c
-@@ -63,23 +63,13 @@ target_ulong helper_inl(CPUX86State *env, uint32_t port)
-                              cpu_get_mem_attrs(env), NULL);
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 4c567911f41..4e745f10dd8 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1006,14 +1006,6 @@ static void decode_MOV_CR_DR(DisasContext *s, CPUX86State *env, X86OpEntry *entr
  }
  
--target_ulong helper_read_crN(CPUX86State *env, int reg)
-+target_ulong helper_read_cr8(CPUX86State *env)
- {
--    target_ulong val;
+ static const X86OpEntry opcodes_0F[256] = {
+-    [0x0E] = X86_OP_ENTRY0(EMMS,                              cpuid(3DNOW)), /* femms */
+-    /*
+-     * 3DNow!'s opcode byte comes *after* modrm and displacements, making it
+-     * more like an Ib operand.  Dispatch to the right helper in a single gen_*
+-     * function.
+-     */
+-    [0x0F] = X86_OP_ENTRY3(3dnow,       P,q, Q,q, I,b,        cpuid(3DNOW)),
 -
--    switch (reg) {
--    default:
--        val = env->cr[reg];
--        break;
--    case 8:
--        if (!(env->hflags2 & HF2_VINTR_MASK)) {
--            val = cpu_get_apic_tpr(env_archcpu(env)->apic_state);
--        } else {
--            val = env->int_ctl & V_TPR_MASK;
--        }
--        break;
-+    if (!(env->hflags2 & HF2_VINTR_MASK)) {
-+        return cpu_get_apic_tpr(env_archcpu(env)->apic_state);
-+    } else {
-+        return env->int_ctl & V_TPR_MASK;
-     }
--    return val;
- }
+     [0x10] = X86_OP_GROUP0(0F10),
+     [0x11] = X86_OP_GROUP0(0F11),
+     [0x12] = X86_OP_GROUP0(0F12),
+@@ -1086,8 +1078,54 @@ static const X86OpEntry opcodes_0F[256] = {
+     [0xa0] = X86_OP_ENTRYr(PUSH, FS, w),
+     [0xa1] = X86_OP_ENTRYw(POP, FS, w),
  
- void helper_write_crN(CPUX86State *env, int reg, target_ulong t0)
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 5ca3764e006..709ef7b0cb2 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -245,7 +245,7 @@ static void gen_load(DisasContext *s, X86DecodedInsn *decode, int opn, TCGv v)
- #ifndef CONFIG_USER_ONLY
-     case X86_OP_CR:
-         if (op->n == 8) {
--            gen_helper_read_crN(v, tcg_env, tcg_constant_i32(op->n));
-+            gen_helper_read_cr8(v, tcg_env);
-         } else {
-             tcg_gen_ld_tl(v, tcg_env, offsetof(CPUX86State, cr[op->n]));
-         }
++    [0xb2] = X86_OP_ENTRY3(LSS,    G,v, EM,p, None, None),
++    [0xb4] = X86_OP_ENTRY3(LFS,    G,v, EM,p, None, None),
++    [0xb5] = X86_OP_ENTRY3(LGS,    G,v, EM,p, None, None),
++    [0xb6] = X86_OP_ENTRY3(MOV,    G,v, E,b, None, None, zextT0), /* MOVZX */
++    [0xb7] = X86_OP_ENTRY3(MOV,    G,v, E,w, None, None, zextT0), /* MOVZX */
++
++    [0xc2] = X86_OP_ENTRY4(VCMP,       V,x, H,x, W,x,       vex2_rep3 p_00_66_f3_f2),
++    [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2)), /* MOVNTI */
++    [0xc4] = X86_OP_ENTRY4(PINSRW,     V,dq,H,dq,E,w,       vex5 mmx p_00_66),
++    [0xc5] = X86_OP_ENTRY3(PEXTRW,     G,d, U,dq,I,b,       vex5 mmx p_00_66),
++    [0xc6] = X86_OP_ENTRY4(VSHUF,      V,x, H,x, W,x,       vex4 p_00_66),
++
++    [0xd0] = X86_OP_ENTRY3(VADDSUB,   V,x, H,x, W,x,        vex2 cpuid(SSE3) p_66_f2),
++    [0xd1] = X86_OP_ENTRY3(PSRLW_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
++    [0xd2] = X86_OP_ENTRY3(PSRLD_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
++    [0xd3] = X86_OP_ENTRY3(PSRLQ_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
++    [0xd4] = X86_OP_ENTRY3(PADDQ,     V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
++    [0xd5] = X86_OP_ENTRY3(PMULLW,    V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
++    [0xd6] = X86_OP_GROUP0(0FD6),
++    [0xd7] = X86_OP_ENTRY3(PMOVMSKB,  G,d, None,None, U,x,  vex7 mmx avx2_256 p_00_66),
++
++    [0xe0] = X86_OP_ENTRY3(PAVGB,     V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
++    [0xe1] = X86_OP_ENTRY3(PSRAW_r,   V,x, H,x, W,x,        vex7 mmx avx2_256 p_00_66),
++    [0xe2] = X86_OP_ENTRY3(PSRAD_r,   V,x, H,x, W,x,        vex7 mmx avx2_256 p_00_66),
++    [0xe3] = X86_OP_ENTRY3(PAVGW,     V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
++    [0xe4] = X86_OP_ENTRY3(PMULHUW,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
++    [0xe5] = X86_OP_ENTRY3(PMULHW,    V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
++    [0xe6] = X86_OP_GROUP0(0FE6),
++    [0xe7] = X86_OP_ENTRY3(MOVDQ,     W,x, None,None, V,x,  vex1 mmx p_00_66), /* MOVNTQ/MOVNTDQ */
++
++    [0xf0] = X86_OP_ENTRY3(MOVDQ,    V,x, None,None, WM,x,  vex4_unal cpuid(SSE3) p_f2), /* LDDQU */
++    [0xf1] = X86_OP_ENTRY3(PSLLW_r,  V,x, H,x, W,x,         vex7 mmx avx2_256 p_00_66),
++    [0xf2] = X86_OP_ENTRY3(PSLLD_r,  V,x, H,x, W,x,         vex7 mmx avx2_256 p_00_66),
++    [0xf3] = X86_OP_ENTRY3(PSLLQ_r,  V,x, H,x, W,x,         vex7 mmx avx2_256 p_00_66),
++    [0xf4] = X86_OP_ENTRY3(PMULUDQ,  V,x, H,x, W,x,         vex4 mmx avx2_256 p_00_66),
++    [0xf5] = X86_OP_ENTRY3(PMADDWD,  V,x, H,x, W,x,         vex4 mmx avx2_256 p_00_66),
++    [0xf6] = X86_OP_ENTRY3(PSADBW,   V,x, H,x, W,x,         vex4 mmx avx2_256 p_00_66),
++    [0xf7] = X86_OP_ENTRY3(MASKMOV,  None,None, V,dq, U,dq, vex4_unal avx2_256 mmx p_00_66),
++
+     [0x0b] = X86_OP_ENTRY0(UD),           /* UD2 */
+     [0x0d] = X86_OP_ENTRY1(NOP,  M,v),    /* 3DNow! prefetch */
++    [0x0e] = X86_OP_ENTRY0(EMMS,                              cpuid(3DNOW)), /* femms */
++    /*
++     * 3DNow!'s opcode byte comes *after* modrm and displacements, making it
++     * more like an Ib operand.  Dispatch to the right helper in a single gen_*
++     * function.
++     */
++    [0x0f] = X86_OP_ENTRY3(3dnow,       P,q, Q,q, I,b,        cpuid(3DNOW)),
+ 
+     [0x18] = X86_OP_ENTRY1(NOP,  nop,v),  /* prefetch/reserved NOP */
+     [0x19] = X86_OP_ENTRY1(NOP,  nop,v),  /* reserved NOP */
+@@ -1169,23 +1207,11 @@ static const X86OpEntry opcodes_0F[256] = {
+      */
+     [0xaf] = X86_OP_ENTRY3(IMUL3,  G,v, E,v, 2op,v, sextT0),
+ 
+-    [0xb2] = X86_OP_ENTRY3(LSS,    G,v, EM,p, None, None),
+-    [0xb4] = X86_OP_ENTRY3(LFS,    G,v, EM,p, None, None),
+-    [0xb5] = X86_OP_ENTRY3(LGS,    G,v, EM,p, None, None),
+-    [0xb6] = X86_OP_ENTRY3(MOV,    G,v, E,b, None, None, zextT0), /* MOVZX */
+-    [0xb7] = X86_OP_ENTRY3(MOV,    G,v, E,w, None, None, zextT0), /* MOVZX */
+-
+     /* decoded as modrm, which is visible as a difference between page fault and #UD */
+     [0xb9] = X86_OP_ENTRYr(UD,     nop,v),                        /* UD1 */
+     [0xbe] = X86_OP_ENTRY3(MOV,    G,v, E,b, None, None, sextT0), /* MOVSX */
+     [0xbf] = X86_OP_ENTRY3(MOV,    G,v, E,w, None, None, sextT0), /* MOVSX */
+ 
+-    [0xc2] = X86_OP_ENTRY4(VCMP,       V,x, H,x, W,x,       vex2_rep3 p_00_66_f3_f2),
+-    [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2)), /* MOVNTI */
+-    [0xc4] = X86_OP_ENTRY4(PINSRW,     V,dq,H,dq,E,w,       vex5 mmx p_00_66),
+-    [0xc5] = X86_OP_ENTRY3(PEXTRW,     G,d, U,dq,I,b,       vex5 mmx p_00_66),
+-    [0xc6] = X86_OP_ENTRY4(VSHUF,      V,x, H,x, W,x,       vex4 p_00_66),
+-
+     [0xc8] = X86_OP_ENTRY1(BSWAP,     LoBits,y),
+     [0xc9] = X86_OP_ENTRY1(BSWAP,     LoBits,y),
+     [0xca] = X86_OP_ENTRY1(BSWAP,     LoBits,y),
+@@ -1195,33 +1221,6 @@ static const X86OpEntry opcodes_0F[256] = {
+     [0xce] = X86_OP_ENTRY1(BSWAP,     LoBits,y),
+     [0xcf] = X86_OP_ENTRY1(BSWAP,     LoBits,y),
+ 
+-    [0xd0] = X86_OP_ENTRY3(VADDSUB,   V,x, H,x, W,x,        vex2 cpuid(SSE3) p_66_f2),
+-    [0xd1] = X86_OP_ENTRY3(PSRLW_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
+-    [0xd2] = X86_OP_ENTRY3(PSRLD_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
+-    [0xd3] = X86_OP_ENTRY3(PSRLQ_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
+-    [0xd4] = X86_OP_ENTRY3(PADDQ,     V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
+-    [0xd5] = X86_OP_ENTRY3(PMULLW,    V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
+-    [0xd6] = X86_OP_GROUP0(0FD6),
+-    [0xd7] = X86_OP_ENTRY3(PMOVMSKB,  G,d, None,None, U,x,  vex7 mmx avx2_256 p_00_66),
+-
+-    [0xe0] = X86_OP_ENTRY3(PAVGB,     V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
+-    [0xe1] = X86_OP_ENTRY3(PSRAW_r,   V,x, H,x, W,x,        vex7 mmx avx2_256 p_00_66),
+-    [0xe2] = X86_OP_ENTRY3(PSRAD_r,   V,x, H,x, W,x,        vex7 mmx avx2_256 p_00_66),
+-    [0xe3] = X86_OP_ENTRY3(PAVGW,     V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
+-    [0xe4] = X86_OP_ENTRY3(PMULHUW,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
+-    [0xe5] = X86_OP_ENTRY3(PMULHW,    V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
+-    [0xe6] = X86_OP_GROUP0(0FE6),
+-    [0xe7] = X86_OP_ENTRY3(MOVDQ,     W,x, None,None, V,x,  vex1 mmx p_00_66), /* MOVNTQ/MOVNTDQ */
+-
+-    [0xf0] = X86_OP_ENTRY3(MOVDQ,    V,x, None,None, WM,x,  vex4_unal cpuid(SSE3) p_f2), /* LDDQU */
+-    [0xf1] = X86_OP_ENTRY3(PSLLW_r,  V,x, H,x, W,x,         vex7 mmx avx2_256 p_00_66),
+-    [0xf2] = X86_OP_ENTRY3(PSLLD_r,  V,x, H,x, W,x,         vex7 mmx avx2_256 p_00_66),
+-    [0xf3] = X86_OP_ENTRY3(PSLLQ_r,  V,x, H,x, W,x,         vex7 mmx avx2_256 p_00_66),
+-    [0xf4] = X86_OP_ENTRY3(PMULUDQ,  V,x, H,x, W,x,         vex4 mmx avx2_256 p_00_66),
+-    [0xf5] = X86_OP_ENTRY3(PMADDWD,  V,x, H,x, W,x,         vex4 mmx avx2_256 p_00_66),
+-    [0xf6] = X86_OP_ENTRY3(PSADBW,   V,x, H,x, W,x,         vex4 mmx avx2_256 p_00_66),
+-    [0xf7] = X86_OP_ENTRY3(MASKMOV,  None,None, V,dq, U,dq, vex4_unal avx2_256 mmx p_00_66),
+-
+     /* Incorrectly missing from 2-17 */
+     [0xd8] = X86_OP_ENTRY3(PSUBUSB,  V,x, H,x, W,x,  vex4 mmx avx2_256 p_00_66),
+     [0xd9] = X86_OP_ENTRY3(PSUBUSW,  V,x, H,x, W,x,  vex4 mmx avx2_256 p_00_66),
 -- 
 2.45.1
 
