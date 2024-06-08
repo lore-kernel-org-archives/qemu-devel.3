@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC4C5C25B76
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 18:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D1AC25B76
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 19:04:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sG16F-0001gu-DN; Sat, 08 Jun 2024 14:47:35 -0400
+	id 1sG1Lw-0006FT-CZ; Sat, 08 Jun 2024 15:03:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sG16D-0001gF-TP
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 14:47:33 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1sG1Lv-0006F8-6f
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 15:03:47 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sG16C-0007mg-Bp
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 14:47:33 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-6e9f52e99c2so190398a12.1
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 11:47:31 -0700 (PDT)
+ id 1sG1Lt-0001qQ-M1
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 15:03:46 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-6818eea9c3aso2454546a12.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 12:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717872451; x=1718477251; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717873424; x=1718478224; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=sXIQJhmt2t7U4AjigUp+szJWOuo4ME8Gmx2nONkkyrA=;
- b=jTvCfgj/HEeo/tHQGlsPoeRK6eRMTYEEXuBnpwiNwOkeeXzsUTRkC/riPQaTmCdDeH
- I4/V3h1sEokmfS+DCRlVmUWesA2qihvFqeBe5n0R8j5xJXSPSZ0EFthaQbE5N2AF64DL
- MWZGp7x5e5tn3ADf8WIE5Mde2diLoOVJPQvLFV5QbTWisbCdCTaJDD/xzDJ2f/1T7l9z
- e3USpqKV7EbhIs3VKYEYsjywD/NA1KvrgaRlGkCnBCf/qomt2HOxeRqBhEw9vzJcWl0w
- eEKIbRzXklrTA0uH7LzgzA2hAa5JnnBG85VLT/H1izKd0WQtZZ4YpKNvRFbelJOeNSZl
- 5MDg==
+ bh=/me+LvmxwPsNvxGAWU4NHMCEOs2aPmngEYNYWdFU1MI=;
+ b=fzePJle1P75W7ED6cDIjoTgnQAa7zPpc65saH6IFB9EzIDNWrWlXvFcQAjovTHeZBy
+ Lr1FFi3C/DJBRUxUrpy9YiQhHO7PMU3cKvajNt3kSiqZKBGqoqpmB6O5Hn5+HwFrLxGb
+ +pbbPYIYYJW2dZKEKY0CIvIeuCJQ0GGHl7StmvywsgR49ftP8JLRxM3U4+h8UbVtgDHx
+ GL8OpKvpoTOeP5Koc3x2MBVcYTmMXlXRICR4orCAXkj2aZMUe7WyLHAuSOvfWinSDXfL
+ 7+faoAd9JcQZjU2/AbfzEpko5bGEuFMflvk63d767szQgOdPI4WvHEHvLtQri+pM3rLx
+ LiZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717872451; x=1718477251;
+ d=1e100.net; s=20230601; t=1717873424; x=1718478224;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sXIQJhmt2t7U4AjigUp+szJWOuo4ME8Gmx2nONkkyrA=;
- b=bZaL1k0MsxQdTW7blCqYea4xyA6oD4ova+frN/a5uo4GyajYAWctaguBuzSXog5b7k
- i/BQ7yfHNM/m1Rn4bwfMvTEWdMbzFZqwwlwd+/tHNTSDVhP//yJjqxmK8o/aMx9CGH0/
- bCOoI3f+DC9csdt3tm35nfskZje/njTyt87PJK+M7zaysjS/922teTG54GOnQUOMat9F
- 9gdiYjOZSzIzYcVBYPtw9gtAwAUVnpNH7IoONQO9BtXfait5G2/W1pEpLJRx0AXi5g3q
- 8DzcaCquHPMn/lNK85XeaTBUCDZJuJCSjIbnyWZ44y8IYZAQ1RTIDsWw6lU6a1Atynob
- HSHg==
+ bh=/me+LvmxwPsNvxGAWU4NHMCEOs2aPmngEYNYWdFU1MI=;
+ b=jIPinJrixDBc5hBssTYgucwhsuOPz/+rUwb/dQjrhE1vpjgKonLjeBpFukqfmKmImO
+ 9Gx2PHHo4rum0mNffZ+c/xOl2/IgpB8K7tGX60kNiggVAo+3w3YW7yWMccwvOyZNdeLO
+ lfTHbDxAcu+1UnAJ0EHwISvoRADmpCWYLJlNYItwQexT1D+8GpxxE85UAWj01FA+PT2g
+ /cSD0nXwyrvnNECJZeIHl7WmO5trklFWiKBQ0OJnLPhkcNMhN5pz/9e/H7VN2Ta/1kyS
+ 8MnxyNzKvfddQiAFrU0jVsuNzILZJPtQQqv85FQp7bj4BpTCtuiii/z9e7loFLG/TSvZ
+ bvwg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWD0/XOvOkFNbA5YTMrAnJ/RRnWhJ9YXGXeCIvuzo4TPK7q53cBCbvj2+gtJ6u6MgtaviMKOqfeyWeyOVTwFwk1vQ1MkKs=
-X-Gm-Message-State: AOJu0YyJHpyCgF0IiIlMSeuvWEtDBy8os4mfhoe4Xy5rCuNoKN3+HzwG
- CN3Fu+u/C5HykmuydBtrTfWVX+CUYUFtUu79DfuSSvNufMHwOZ72M7/h6fD8KQXjSXoQXPC/5DP
- n
-X-Google-Smtp-Source: AGHT+IE4zvpuLK9/DqEaFmg20wwK0gwI/aGUw7fMlluEtARkRNUDTIP4vyA/UZ20da+MdvhRzHpLyg==
-X-Received: by 2002:a05:6a21:3393:b0:1af:cfc2:8069 with SMTP id
- adf61e73a8af0-1b2f96d6969mr6540192637.4.1717872450592; 
- Sat, 08 Jun 2024 11:47:30 -0700 (PDT)
+ AJvYcCX1QJW+7gFX76e3Z7T2RDf3gQJWJmOcfHOktvOACUxaOjQBxDcx5NhpsnnCv7hda+9A5mWL0gfvmCI/oonCKsBljsD3jKM=
+X-Gm-Message-State: AOJu0YyF8haXQE05giWbL2ZUIdXjijUgJ56SnkzXJJwhyJao6ZN/QC2q
+ q/K237gMvUxkr8L2QAQa1FMC+00zTnODVnpyAGu5QsCwgpOsTfPBWhTxr+f5ts+n/dLrOC9WmlN
+ i
+X-Google-Smtp-Source: AGHT+IGfZ6fG7Mt3BRcK08In3YtQQrRSyEWlWso2RlSBHQGepyGHF54ymixZIZ10MGOPeXVSO8RtUw==
+X-Received: by 2002:a17:902:ce04:b0:1f4:a77a:3b81 with SMTP id
+ d9443c01a7336-1f6d031f867mr72574415ad.41.1717873423636; 
+ Sat, 08 Jun 2024 12:03:43 -0700 (PDT)
 Received: from [192.168.64.11] ([50.78.183.178])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6bd76bbdbsm54471585ad.76.2024.06.08.11.47.29
+ d9443c01a7336-1f6bd7ccd3bsm55263095ad.176.2024.06.08.12.03.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 08 Jun 2024 11:47:30 -0700 (PDT)
-Message-ID: <47024745-2b10-468b-8145-e5192dd93546@linaro.org>
-Date: Sat, 8 Jun 2024 11:47:28 -0700
+ Sat, 08 Jun 2024 12:03:43 -0700 (PDT)
+Message-ID: <c2e29e40-f35e-4bb2-93d3-7b924dfca5c6@linaro.org>
+Date: Sat, 8 Jun 2024 12:03:41 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/25] target/i386: split X86_CHECK_prot into PE and VM86
- checks
+Subject: Re: [PATCH 13/25] target/i386: convert non-grouped, helper-based
+ 2-byte opcodes
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20240608084113.2770363-1-pbonzini@redhat.com>
- <20240608084113.2770363-13-pbonzini@redhat.com>
+ <20240608084113.2770363-14-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240608084113.2770363-13-pbonzini@redhat.com>
+In-Reply-To: <20240608084113.2770363-14-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,16 +100,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/8/24 01:41, Paolo Bonzini wrote:
-> SYSENTER is allowed in VM86 mode, but not in real mode.  Split the check
-> so that PE and !VM86 are covered by separate bits.
+> These have very simple generators and no need for complex group
+> decoding.  Apart from LAR/LSL which are simplified to use
+> gen_op_deposit_reg_v and movcond, the code is generally lifted
+> from translate.c into the generators.
 > 
 > Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
->   target/i386/tcg/decode-new.h     | 8 ++++++--
->   target/i386/tcg/decode-new.c.inc | 9 +++++++--
->   2 files changed, 13 insertions(+), 4 deletions(-)
+>   target/i386/tcg/decode-new.h     |   7 ++
+>   target/i386/tcg/seg_helper.c     |  16 ++--
+>   target/i386/tcg/translate.c      | 148 ------------------------------
+>   target/i386/tcg/decode-new.c.inc |  48 +++++++---
+>   target/i386/tcg/emit.c.inc       | 151 +++++++++++++++++++++++++++++++
+>   5 files changed, 202 insertions(+), 168 deletions(-)
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
