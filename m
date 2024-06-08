@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F213EC25B76
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 19:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DAF7C25B76
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 19:42:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sG1v4-0001Fd-IX; Sat, 08 Jun 2024 15:40:06 -0400
+	id 1sG1xH-0002Jq-Lv; Sat, 08 Jun 2024 15:42:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sG1v2-0001F0-Ci
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 15:40:04 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1sG1xF-0002JH-CG
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 15:42:21 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sG1v0-0007jL-7J
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 15:40:04 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1f6559668e1so27513035ad.3
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 12:39:54 -0700 (PDT)
+ id 1sG1xD-0008CV-Rp
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 15:42:21 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-6ce533b6409so2417758a12.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 12:42:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1717875593; x=1718480393; darn=nongnu.org;
+ d=linaro.org; s=google; t=1717875738; x=1718480538; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jlr5wGCcl4M9s+xYbIntxUfdPvKK2+zmnxARDbooMXI=;
- b=i6POzP2yDmFXFvFo+hdOHcrUBozk8ieHcJQrONhecLXEiitN80l0orUBbMhni0+92x
- cW7SN4YXfP3szkW1fbfgyPvM5r+axHvlh4JhOR+p+xBj8ywCcgmGHQ1TifLb1Fnk3oI5
- 0vUwxNkWfZhehk8G906BhHv1OOoMD6Vp452KjUU9+K7sPzrUtLEoPxV28cr29F0ES9B6
- ms1vpb/xIHuxSGbehr9jq/cZaE4H25dDFR3h5qRsrpVszXbT1S4WE9RVelmHeLNAjy/b
- LnTQ21dINAEd3LYNfb0+65sVmO53CMaQSgQ3r78PtQxRm0vDS+pf0efOWx2DgVsO2nkm
- NGkw==
+ bh=KD8gn/JiY8FjkVHvsahMem5Zcr+4iZEyd1nFOXXUbto=;
+ b=wPLLn2FsewT9lYrnR7aJ11e7zoLt9nPm7NWcrRxcF/NVLnj5skSTc9rVH6X7z6yq35
+ 27jtSxbkmKvm7lOywmXOPPLNTs3S8KD+O/4L7FAjNbR5fZylmGM45oKT87axfS242fe/
+ mxThkFlqIyxMLcuoiMYl2qBTkBBxv5RI6UiSqp71y0KSxTjHSqjhabZVrxd8oNv6vC99
+ 8NVpIsaBFhuC4n2TW8x79Hv8WIiO7FefupTdu5qnzL1z7T5odFh3HVm0JvHk0bRzJqub
+ WInuAA516ZpeJAZe+XWsXjR8AaLDl/RBp9viY28s0dD2oL1WYFdkqB6MhNnXuxAGE5wd
+ rVcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717875593; x=1718480393;
+ d=1e100.net; s=20230601; t=1717875738; x=1718480538;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jlr5wGCcl4M9s+xYbIntxUfdPvKK2+zmnxARDbooMXI=;
- b=rC7NVyPaj6oT48gUeMRTaCVSojALAd6ji52EgPWmB7RKBcDFXmCo26aLLuMQtcaKJI
- UpI/0mJvyYQQVqEFY0jyFJzols4O48VOVxgTXJtXbtml2aerkZ31Yp76NEHz/y3P6sYv
- z0cMTnWY+bi4zXkbRVd2suFOugDFr53Vj6c2mLCBGlTcRKM8neuAO/I0fJIRg2b0GNAp
- hubnCLjwgtK8ZpYmzin00tEzptt8MH68znzfdTHh4ZkogZ5oWnXSbLHcKN1FTQUOVNZ/
- chN2ljoXFUAvW5Wr3misCj5l+zNe+wjmsgxWEaJJJ2clFnAAAa4l3TOSgIGFs2/Z0ut2
- RE7Q==
+ bh=KD8gn/JiY8FjkVHvsahMem5Zcr+4iZEyd1nFOXXUbto=;
+ b=aO2n13EZXywKivFjkPtORLmXYNvVi/D9y5Lk0/AlSAGSUp/gm/EAQXFntlcZMizR5G
+ MCPeWsjvK29MZiPmz4auLbDeakbGJHGHtoD5WoEcRFYSOgYJAuWvBfRiJAUCikRmxBIY
+ qeSztG60xWUNyfAfjbQ9hwcALEWncShJGZ/aYUXBImpcDIhiVQXBgP57wJUxkDylPHJI
+ zB2TPdsQWdN/4tNmnzVQaSBTz0BBO6CdDQp7ByXFr2uXNvbiog9XOEx92CN4tIWO/cYz
+ Wj5wCqwVl+j5eZ2/3+a60oZ0VCLOJ5TvptDBxQ7lqNrzzWsBuMYhbZqnFcbgIeFGAbo7
+ Te9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXR9o5tHZdL7d+4nUjJpEiCejZR+OrCQb63EJn5NWIUcLW5jXd6W/7rqtBqpj2ertfIszaYTMxW/Sdzk7EpvaVaUwb11Yw=
-X-Gm-Message-State: AOJu0YxaWlpXPLs15DrgPqylsHHbvrx4noRKzOWF1lwEKtgDKdkWN6vJ
- foFvEuKtFOi+HdiCTNy6xEs2bE8DBL47/eh1on6vM1BsORfzhx2qhd2VbMl5PPs=
-X-Google-Smtp-Source: AGHT+IEiUJkkSMvMkskrxmOI5qnP84bkpWmCuLTmE1Oq09eEjxbCgiUwShiXpr5Vy0YEgdLTJwfaRQ==
-X-Received: by 2002:a17:903:41cf:b0:1f6:78f7:14da with SMTP id
- d9443c01a7336-1f6d02e6cfemr68294035ad.24.1717875593340; 
- Sat, 08 Jun 2024 12:39:53 -0700 (PDT)
+ AJvYcCUDTJgOfF6rJ3Hl0jinV8UapYAtU+CvNIp4QR44ZP+0U+LqhxID9HeZ6PIM3h04p7CYw3JEyrd3ThoHA0kYeGAS9LrWGhA=
+X-Gm-Message-State: AOJu0YzUBXR6CD2UlijQj6afoAUApZmW1M+WRkt5QVOtXBz4WYQEFJoG
+ qjnSing3lnMOwwlOyVhuh3rP092dMGNFE6sMPloIH9EEN+oaA5kjXeKvzimrEbo=
+X-Google-Smtp-Source: AGHT+IG/k4Z+mgORS1V8ByIrqzWwX5TTyTGxq9KAm0V0KP0IJnNv/WuO6Ig7Dy74OxoYu8JwjMYYbw==
+X-Received: by 2002:a17:902:6549:b0:1f2:fd49:9fcc with SMTP id
+ d9443c01a7336-1f6d02f4f38mr58702235ad.34.1717875738127; 
+ Sat, 08 Jun 2024 12:42:18 -0700 (PDT)
 Received: from [192.168.64.11] ([50.78.183.178])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6bd75efb4sm55135715ad.14.2024.06.08.12.39.52
+ d9443c01a7336-1f705013129sm1335815ad.54.2024.06.08.12.42.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 08 Jun 2024 12:39:52 -0700 (PDT)
-Message-ID: <2299f5d3-08ce-4a51-8791-ac59c09be2a2@linaro.org>
-Date: Sat, 8 Jun 2024 12:39:50 -0700
+ Sat, 08 Jun 2024 12:42:17 -0700 (PDT)
+Message-ID: <d1e604ba-7f7c-436f-bf1b-4e53bed4d5ff@linaro.org>
+Date: Sat, 8 Jun 2024 12:42:15 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/25] target/i386: pull load/writeback out of
- gen_shiftd_rm_T1
+Subject: Re: [PATCH 16/25] target/i386: adapt gen_shift_count for SHLD/SHRD
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20240608084113.2770363-1-pbonzini@redhat.com>
- <20240608084113.2770363-16-pbonzini@redhat.com>
+ <20240608084113.2770363-17-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240608084113.2770363-16-pbonzini@redhat.com>
+In-Reply-To: <20240608084113.2770363-17-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,14 +98,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/8/24 01:41, Paolo Bonzini wrote:
-> Use gen_ld_modrm/gen_st_modrm, moving them and gen_shift_flags to the
-> caller.  This way, gen_shiftd_rm_T1 becomes something that the new
-> decoder can call.
+> SHLD/SHRD can have 3 register operands - s->T0, s->T1 and either
+> 1 or CL - and therefore decode->op[2] is taken by the low part
+> of the register being shifted.  Pass X86_OP_* to gen_shift_count
+> from its current callers and hardcode cpu_regs[R_ECX] as the
+> shift count.
 > 
 > Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
->   target/i386/tcg/translate.c | 55 ++++++++++---------------------------
->   1 file changed, 14 insertions(+), 41 deletions(-)
+>   target/i386/tcg/emit.c.inc | 20 ++++++++++----------
+>   1 file changed, 10 insertions(+), 10 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
