@@ -4,83 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43401C25B76
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C88FEC27C55
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:38:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFrXx-00014t-6F; Sat, 08 Jun 2024 04:35:33 -0400
+	id 1sFrWu-0000Sf-7g; Sat, 08 Jun 2024 04:34:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrXs-0000sT-MM
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sFrWs-0000SN-A6
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrXr-0000AV-8R
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:28 -0400
+ id 1sFrWq-0008F2-9L
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717835726;
+ s=mimecast20190719; t=1717835663;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Jl7+qZ8Lq0CXcPMg6Cgj2G+ARy4KWfNqMA1f/i5w8wQ=;
- b=i0RTgBWn36t3poDEMJWrxpKBYjfeFAUsAhOZJ8lR8Y8wcIeU5Nu26HubIZQQz0Fl5Lx1Ds
- 2lKhXzlhlMeNfme3o/xJhvZozlnp7c1vJpl96eXOqWAHdcXhUotZX6g9XZ9D2aHipDsdmm
- TxWr0wThIP2IzU61dGVSoQMh00rbqt8=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=DnPUGHSIvUF3O0xr1nlthjeGPXLFnE9nFl/zQ9utt1s=;
+ b=IjR0Km40ui1y9WhDhHNHFSMJSMJXKBjh2Cgt5nAD/o8A525VDZEgvAxfd95aPJfQJmoxIy
+ WX96WitlJ5jOjuVv95ywAFhrilGOZScvNXIJIlETCQM1bLkBPdtk4XYAQ/Dlh7nMDWjfXM
+ 60MFjcmFc2uyQ/DVo4zaKalBj87gyR8=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-404-YamLbM2NNrSUT88Kts6STw-1; Sat, 08 Jun 2024 04:35:24 -0400
-X-MC-Unique: YamLbM2NNrSUT88Kts6STw-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-57c602f0125so1047075a12.0
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:35:24 -0700 (PDT)
+ us-mta-589-VQcx22zFPkulxYUPNKDj8g-1; Sat, 08 Jun 2024 04:34:21 -0400
+X-MC-Unique: VQcx22zFPkulxYUPNKDj8g-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-52c091e4413so570752e87.2
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:34:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717835722; x=1718440522;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Jl7+qZ8Lq0CXcPMg6Cgj2G+ARy4KWfNqMA1f/i5w8wQ=;
- b=kOkv+yFllCXKN2KOnNY5nQ8HaLq/c4oOXy/DQgqDJhio+FxE8NRbpeajlS/qk9C1bt
- a64w2N0U8bKip0rRW9og4EeGsxwm1gAshYncvyP5aeg8XVNt4f6A5YEPkxHu/jZPagjG
- +yo4MQNLcG+TBL1dJJhR/Rk8XvXUjF134NOpuqJYMKkKn6H0ylWX3V5iyUozl+KJwH5M
- RAaI6tIb//rY+3nm8Qu0RQ8a8rsMMH7n+0bgIqyQ8zyI7x+gH2bUzLcPWEt72hUeTPFD
- gda9vs7M9Pr8PcFSpjJtHFu0NykuE+UL56AThXkP01EVkvnFpJFaz3+GECJ4CqsywX4A
- JdHg==
-X-Gm-Message-State: AOJu0YymBEMvw1BxMruW/SNpNeFDsyd0p/dG9LlpRf6Z9CBU3wzfsq3j
- C+hIzzFevlmu9qdT1gqKmXq67y6h0sun3ns+H0UA1ISfoSTknPf0h9U6Zo01WgTZBdt/+l1z/6V
- bOLx/zwXJqNptjuxXc5MEjiSu884vLXPcaX+3k/0OOc1Y/R2rJDfeHhDlVZu3JOBh9nuwgWmcNk
- mRhqIuOUTE5p/qF9pn4mELHFWKOa1GmmHehBFP
-X-Received: by 2002:a50:8d1a:0:b0:579:eb77:6d83 with SMTP id
- 4fb4d7f45d1cf-57c4e3f6decmr3638011a12.13.1717835722676; 
- Sat, 08 Jun 2024 01:35:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEU4nQuEPGdY2JTi52BVxeezKOm6ky6zrjRks5lo8yie/9IH1VnJaCkbZr3N5sx2wN7zuqZ4w==
-X-Received: by 2002:a50:8d1a:0:b0:579:eb77:6d83 with SMTP id
- 4fb4d7f45d1cf-57c4e3f6decmr3638001a12.13.1717835722335; 
- Sat, 08 Jun 2024 01:35:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1717835659; x=1718440459;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DnPUGHSIvUF3O0xr1nlthjeGPXLFnE9nFl/zQ9utt1s=;
+ b=O5HWx2An51OIOV3YqXBpxgakO4MMp+YCzWvsDmp3ABafIoO3psCPoZlJgr8kVYwXWJ
+ hK9xLCDfZOdkZExgCf5siomB3NA2QtK44rBu1OeJrt1nhDS5rCIiQBkm4l8cGEMyJHjj
+ 4ThoA6H6VmlnmaD0azHiDVDxXUlKVCBRTEQy1baO9HG9q2lv4fOFk3s0vzhKTWmBM8B9
+ EaK9jTyuidGQVJJfTCPOLPorAdv54a33vQv4yvxKhC49foL13hX07rcXyK3nkmw8TsLx
+ 3Ri1mdjAzzx6qXLMLZBx8APvF14/3IU16UuDdjNFgHq2fFLD0pXpT9YJUBMogJ+Hbo9r
+ 6Zug==
+X-Gm-Message-State: AOJu0Yx9Z1CySLNcaDUvIzTYteFiOpzjshV91Gapn94regAlgj/Kh37W
+ G5fsJYe+FAF8iCl91lyu9Z+BU58mQ4JgK9pmE98EaEgOMJAncsmPCB74MoXZgKGJIzlB2AiJ5+J
+ G68abxyPm4fqZZ8kBlDk4aKL8WBJPIgF+j3XahQixpwhVkItD7sIU1VwQ8WtP3wIoe/D+4CewiT
+ QhBS0s+yAShUSAoU7Q5rTnVnfCbqB8mr3YmJXv
+X-Received: by 2002:a05:6512:2f1:b0:52b:798f:cd7e with SMTP id
+ 2adb3069b0e04-52bb9f62696mr3661137e87.12.1717835659144; 
+ Sat, 08 Jun 2024 01:34:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG7NRz7Trij5Q+lgCj5rpq5Ch5HDdeHSJgAIHJJW4IzYsW82sxMq1QhmnfDTT6IA8uuboqlSQ==
+X-Received: by 2002:a05:6512:2f1:b0:52b:798f:cd7e with SMTP id
+ 2adb3069b0e04-52bb9f62696mr3661121e87.12.1717835658530; 
+ Sat, 08 Jun 2024 01:34:18 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aae229729sm3960517a12.79.2024.06.08.01.35.20
+ a640c23a62f3a-a6c805c8c09sm355375966b.59.2024.06.08.01.34.17
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 01:35:20 -0700 (PDT)
+ Sat, 08 Jun 2024 01:34:17 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 24/42] stubs/meson: Fix qemuutil build when --disable-system
-Date: Sat,  8 Jun 2024 10:33:57 +0200
-Message-ID: <20240608083415.2769160-25-pbonzini@redhat.com>
+Subject: [PULL 00/42] i386, scsi. hostmem fixes for 2024-06-08
+Date: Sat,  8 Jun 2024 10:33:33 +0200
+Message-ID: <20240608083415.2769160-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240608083415.2769160-1-pbonzini@redhat.com>
-References: <20240608083415.2769160-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,68 +100,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+The following changes since commit f1572ab94738bd5787b7badcd4bd93a3657f0680:
 
-Compiling without system, user, tools or guest-agent fails with the
-following error message:
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-06-05 07:45:23 -0700)
 
-./configure --disable-system --disable-user --disable-tools \
---disable-guest-agent
+are available in the Git repository at:
 
-error message:
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
 
-/usr/bin/ld: libqemuutil.a.p/util_error-report.c.o: in function `error_printf':
-/media/liuzhao/data/qemu-cook/build/../util/error-report.c:38: undefined reference to `error_vprintf'
-/usr/bin/ld: libqemuutil.a.p/util_error-report.c.o: in function `vreport':
-/media/liuzhao/data/qemu-cook/build/../util/error-report.c:215: undefined reference to `error_vprintf'
-collect2: error: ld returned 1 exit status
+for you to fetch changes up to fc00123f3abeb027cd51eb58ea8845377794b3bc:
 
-This is because tests/bench and tests/unit both need qemuutil, which
-requires error_vprintf stub when system is disabled.
+  python: mkvenv: remove ensure command (2024-06-08 10:33:39 +0200)
 
-Add error_vprintf stub into stub_ss for all cases other than disabling
-system.
+----------------------------------------------------------------
+* scsi-disk: Don't silently truncate serial number
+* backends/hostmem: Report error on unavailable qemu_madvise() features or unaligned memory sizes
+* target/i386: fixes and documentation for INHIBIT_IRQ/TF/RF and debugging
+* i386/hvf: Adds support for INVTSC cpuid bit
+* i386/hvf: Fixes for dirty memory tracking
+* i386/hvf: Use hv_vcpu_interrupt() and hv_vcpu_run_until()
+* hvf: Cleanups
+* stubs: fixes for --disable-system build
+* i386/kvm: support for FRED
+* i386/kvm: fix MCE handling on AMD hosts
 
-Fixes: 3a15604900c4 ("stubs: include stubs only if needed")
-Reported-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Message-ID: <20240605152549.1795762-1-zhao1.liu@intel.com>
-[Include error-printf.c unconditionally. - Paolo]
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- stubs/meson.build | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+----------------------------------------------------------------
+John Allen (3):
+      i386: Fix MCE support for AMD hosts
+      i386: Add support for SUCCOR feature
+      i386: Add support for overflow recovery
 
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 3b9d42023cb..f15b48d01f0 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -3,6 +3,7 @@
- # below, so that it is clear who needs the stubbed functionality.
- 
- stub_ss.add(files('cpu-get-clock.c'))
-+stub_ss.add(files('error-printf.c'))
- stub_ss.add(files('fdset.c'))
- stub_ss.add(files('iothread-lock.c'))
- stub_ss.add(files('is-daemonized.c'))
-@@ -45,17 +46,10 @@ if have_block or have_ga
-   stub_ss.add(files('qmp-quit.c'))
- endif
- 
--if have_ga
--  stub_ss.add(files('error-printf.c'))
--endif
--
- if have_block or have_user
-   stub_ss.add(files('qtest.c'))
-   stub_ss.add(files('vm-stop.c'))
-   stub_ss.add(files('vmstate.c'))
--
--  # more symbols provided by the monitor
--  stub_ss.add(files('error-printf.c'))
- endif
- 
- if have_user
+Kevin Wolf (1):
+      scsi-disk: Don't silently truncate serial number
+
+Mark Cave-Ayland (4):
+      target/i386: use local X86DecodedOp in gen_POP()
+      target/i386: use gen_writeback() within gen_POP()
+      target/i386: fix SP when taking a memory fault during POP
+      target/i386: fix size of EBP writeback in gen_enter()
+
+Michal Privoznik (4):
+      meson: Don't even detect posix_madvise() on Darwin
+      osdep: Make qemu_madvise() to set errno in all cases
+      osdep: Make qemu_madvise() return ENOSYS on unsupported OSes
+      backends/hostmem: Report error when memory size is unaligned
+
+Paolo Bonzini (16):
+      target/i386: fix pushed value of EFLAGS.RF
+      target/i386: fix implementation of ICEBP
+      target/i386: cleanup HLT helpers
+      target/i386: cleanup PAUSE helpers
+      target/i386: implement DR7.GD
+      target/i386: disable/enable breakpoints on vmentry/vmexit
+      target/i386: fix INHIBIT_IRQ/TF/RF handling for VMRUN
+      target/i386: fix INHIBIT_IRQ/TF/RF handling for PAUSE
+      target/i386: fix TF/RF handling for HLT
+      target/i386: document incorrect semantics of watchpoint following MOV/POP SS
+      target/i386: document use of DISAS_NORETURN
+      machine: default -M mem-merge to off is QEMU_MADV_MERGEABLE is not available
+      machine, hostmem: improve error messages for unsupported features
+      hostmem: simplify the code for merge and dump properties
+      Revert "python: use vendored tomli"
+      python: mkvenv: remove ensure command
+
+Phil Dennis-Jordan (7):
+      i386/hvf: Adds support for INVTSC cpuid bit
+      i386/hvf: Fixes some compilation warnings
+      hvf: Consistent types for vCPU handles
+      i386/hvf: Fixes dirty memory tracking by page granularity RX->RWX change
+      i386/hvf: In kick_vcpu use hv_vcpu_interrupt to force exit
+      i386/hvf: Updates API usage to use modern vCPU run function
+      hvf: Makes assert_hvf_ok report failed expression
+
+Xin Li (5):
+      target/i386: add support for FRED in CPUID enumeration
+      target/i386: mark CR4.FRED not reserved
+      vmxcap: add support for VMX FRED controls
+      target/i386: enumerate VMX nested-exception support
+      target/i386: Add get/set/migrate support for FRED MSRs
+
+Zhao Liu (2):
+      stubs/meson: Fix qemuutil build when --disable-system
+      docs: i386: pc: Avoid mentioning limit of maximum vCPUs
+
+ docs/devel/build-system.rst                |  13 ++--
+ docs/system/target-i386-desc.rst.inc       |   3 +-
+ configure                                  |   4 --
+ meson.build                                |  14 ++--
+ include/sysemu/hostmem.h                   |   2 +-
+ include/sysemu/hvf_int.h                   |   9 ++-
+ target/i386/cpu.h                          |  53 ++++++++++++++-
+ target/i386/helper.h                       |   5 +-
+ target/i386/hvf/vmx.h                      |   3 +-
+ target/i386/tcg/helper-tcg.h               |  13 +++-
+ accel/hvf/hvf-accel-ops.c                  |   2 +-
+ accel/hvf/hvf-all.c                        |  51 ++++++--------
+ backends/hostmem-epc.c                     |   1 +
+ backends/hostmem-file.c                    |   1 +
+ backends/hostmem-memfd.c                   |   1 +
+ backends/hostmem.c                         |  36 +++++++---
+ hw/core/machine.c                          |  11 ++-
+ hw/scsi/scsi-disk.c                        |  20 +++++-
+ target/i386/cpu.c                          |  33 ++++++++-
+ target/i386/helper.c                       |   4 ++
+ target/i386/hvf/hvf.c                      |  47 ++++++++++++-
+ target/i386/hvf/x86_cpuid.c                |   4 ++
+ target/i386/hvf/x86_decode.c               |   2 +-
+ target/i386/hvf/x86_emu.c                  |   4 +-
+ target/i386/kvm/kvm.c                      |  90 ++++++++++++++++++++++---
+ target/i386/machine.c                      |  28 ++++++++
+ target/i386/tcg/excp_helper.c              |  20 ++++++
+ target/i386/tcg/misc_helper.c              |  14 ++--
+ target/i386/tcg/seg_helper.c               |  49 ++++++++++++--
+ target/i386/tcg/sysemu/bpt_helper.c        |  18 +++++
+ target/i386/tcg/sysemu/misc_helper.c       |  17 ++---
+ target/i386/tcg/sysemu/seg_helper.c        |  17 ++++-
+ target/i386/tcg/sysemu/svm_helper.c        |  71 ++++++++++++-------
+ target/i386/tcg/translate.c                |  39 ++++++++++-
+ util/osdep.c                               |   9 ++-
+ target/i386/tcg/decode-new.c.inc           |  19 +++++-
+ target/i386/tcg/emit.c.inc                 |  37 +++++-----
+ python/scripts/mkvenv.py                   | 105 -----------------------------
+ python/scripts/vendor.py                   |   3 -
+ python/wheels/tomli-2.0.1-py3-none-any.whl | Bin 12757 -> 0 bytes
+ scripts/kvm/vmxcap                         |  13 ++++
+ stubs/meson.build                          |   8 +--
+ 42 files changed, 617 insertions(+), 276 deletions(-)
+ delete mode 100644 python/wheels/tomli-2.0.1-py3-none-any.whl
 -- 
 2.45.1
 
