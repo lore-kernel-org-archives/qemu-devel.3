@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F14BCC27C55
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFF65C27C55
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:36:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFrX8-0000Wi-2f; Sat, 08 Jun 2024 04:34:42 -0400
+	id 1sFrYD-0002y1-Rw; Sat, 08 Jun 2024 04:35:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrX4-0000UF-8w
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sFrYB-0002rY-NO
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrX2-0008G7-3u
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:38 -0400
+ id 1sFrY9-0000H7-TU
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717835673;
+ s=mimecast20190719; t=1717835745;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1ZXg5/L7nPPJRmwWi/bRL++Ow5ed1vgkGFx1Ql7WL3I=;
- b=jCvdx4o3SrXnjZduAyePVYW++kdiQ0pLqk41HoRnL/DLaeTtUlsDEdoQYHcSktYCyKYRto
- wHSjnzFljnpNPFAGS8bxTUDQHsEHoBO7zryGSWdo5OFRpuqDOwlNU3usoYyZUrwEMcaVxT
- aDuwMqdDT68rHTmp/aZDcJUgJllN5U8=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9ZFB/yuExqMQepg77oZOQlaKUtKGOsnEHOoUh/toyKM=;
+ b=MsHa4ZuvrkbrTYQ4w43A3PxW5hp5Obu2upw7izzS4KEFy5yJ1sR5abTO8PxVP18wpK3KeS
+ h+x4rbMkbZzU6bfgqTIyHz2YxnVnc9GAcpuzEhAEciqlxVS0RM0eqLEh1R/eQCrHfzPt3L
+ bipk13jVRTpwa5Led+jCDgdFugSUg1U=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-218-GKuY5RmpMXakumNlVb2lfQ-1; Sat, 08 Jun 2024 04:34:30 -0400
-X-MC-Unique: GKuY5RmpMXakumNlVb2lfQ-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-57c5216e486so816695a12.0
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:34:30 -0700 (PDT)
+ us-mta-639--OGSG0z1MPaTo3h2VhQAkQ-1; Sat, 08 Jun 2024 04:35:39 -0400
+X-MC-Unique: -OGSG0z1MPaTo3h2VhQAkQ-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a6ef6ac6e0aso46492966b.0
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:35:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717835669; x=1718440469;
+ d=1e100.net; s=20230601; t=1717835738; x=1718440538;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1ZXg5/L7nPPJRmwWi/bRL++Ow5ed1vgkGFx1Ql7WL3I=;
- b=F7Maaw7mxd5wL2Rya4aRL/6sfExF1CSklNVbYyyn/XBk2/O121+DK9JoRNhVECCE8d
- MNYKuNmGX5/NAG+nXSWGw3EFnyeA9puaY+C9/SdQ5yqVKteLpdMxvN4XYl6O25qGB/6m
- SAROuv54BAGGFiSs01RD4OOj8Z009leDFQcamIE30Pfxk6WIh7FVZxd9QmOpBGzsVENj
- hvkTqqkGi4P8ZH7Y284nUqkmZBf71nxI0NIwetzitVTQF+yqVo5qSfIQdOpdnvpa293K
- LZzoffPUySl+CQn1vdHP/uuElEmOEMNuKMaUS2sLg78lFtGSHjO32IoOkXGiBIBnachA
- HGKw==
-X-Gm-Message-State: AOJu0YzS8cwByLAtHI7d7McIayF5vvwb8+QNKBU8gnlSNlYDCwgGVcjc
- GMyt72bahBXpMMl/Jkoekz9jNiTjXFC5Db6c+93zZP382uJ3VKw6QkqDVxp/ikxL+ZnbOi9TYBv
- 0xWq9q+AH7Qh32LX6Nci+hYe0SYDn/5GpwdyPED+ZNCQsTMmZ4odJw9Dc0sNRSvmwkeg3uEuJVD
- Ohgvweqn5Y9tnslJGE8ETcn2HTutlHWrZJW5HX
-X-Received: by 2002:a50:d61b:0:b0:57c:41e1:6e59 with SMTP id
- 4fb4d7f45d1cf-57c50924b9bmr3004373a12.23.1717835668909; 
- Sat, 08 Jun 2024 01:34:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF335a0HmK8kKOQbYU2x9BhmnyqUpOUwWyWpPBso3bkWBahxyny/BxxU7UnFdNGtHIwSkEB2w==
-X-Received: by 2002:a50:d61b:0:b0:57c:41e1:6e59 with SMTP id
- 4fb4d7f45d1cf-57c50924b9bmr3004362a12.23.1717835668432; 
- Sat, 08 Jun 2024 01:34:28 -0700 (PDT)
+ bh=9ZFB/yuExqMQepg77oZOQlaKUtKGOsnEHOoUh/toyKM=;
+ b=L9ivVMvlxF5zr5eaWiDaX9X1z0+lPwDVMZOj8pafAjG9DG+ZeIG5MJuWpydizE7smd
+ 0Pge/s8pxwQjicbo8D3CRkkhwafwBG43n9jM6bFvRNPoejxD+EzX6fa6jmVqmY5QOmEA
+ YkBLC8OJqEHMZjdTVAFUGI/HAAWevvU8uNXFJdc6m8QzgDykslOMUHW12ewsul2nl+cU
+ n3Paa81fuhQ7bOKywjhAVdxUPan8MpkkRWOIo5r1CHzaBk85DQz8kdd63ogaY5aZ/FTq
+ COZpjqFxYEC9M9z49FSiHS91agEeLSPvvkC95SQVMZabVivoXv93eu+ghyyswoP5hRmg
+ oCvQ==
+X-Gm-Message-State: AOJu0YyWZne3nrdDZTyp3PHHhyBoVKfs155zFJeu52pO4pekFSI/w0G9
+ jRi1bngdIofklzMbtgKMtjta5CwF1eHPnc7go4GQSs9rXGHBXxnPs0xmlsuw+HDOww5PHGnWh6X
+ YO5A4CWaH/LTDJFWnjyH1rc8mg79KOWLbj8aY/gmJyeyeoZqG2eZ9/0/4yjiXydasMy5jT7ZoZ/
+ pwd3XoGu6H/Mc82FvNLWF8va0Oil9l77CqZ7US
+X-Received: by 2002:a17:906:4a4a:b0:a6f:74:d389 with SMTP id
+ a640c23a62f3a-a6f0074d52fmr61708166b.14.1717835738213; 
+ Sat, 08 Jun 2024 01:35:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGg6qRSsxR1uoDlv1tO2P304Tmc/IiJ+ffWkip6goNciW0hd12+KYJmu7cUxw78M6WBuA9zmA==
+X-Received: by 2002:a17:906:4a4a:b0:a6f:74:d389 with SMTP id
+ a640c23a62f3a-a6f0074d52fmr61706566b.14.1717835737677; 
+ Sat, 08 Jun 2024 01:35:37 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aae102c7esm3930956a12.45.2024.06.08.01.34.27
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-a6c8072a64asm355314766b.220.2024.06.08.01.35.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 01:34:28 -0700 (PDT)
+ Sat, 08 Jun 2024 01:35:36 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/42] target/i386: cleanup PAUSE helpers
-Date: Sat,  8 Jun 2024 10:33:37 +0200
-Message-ID: <20240608083415.2769160-5-pbonzini@redhat.com>
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PULL 31/42] hvf: Makes assert_hvf_ok report failed expression
+Date: Sat,  8 Jun 2024 10:34:04 +0200
+Message-ID: <20240608083415.2769160-32-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240608083415.2769160-1-pbonzini@redhat.com>
 References: <20240608083415.2769160-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,158 +103,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use decode.c's support for intercepts, doing the check in TCG-generated
-code rather than the helper.  This is cleaner because it allows removing
-the eip_addend argument to helper_pause(), even though it adds a bit of
-bloat for opcode 0x90's new decoding function.
+From: Phil Dennis-Jordan <phil@philjordan.eu>
 
+When a macOS Hypervisor.framework call fails which is checked by
+assert_hvf_ok(), Qemu exits printing the error value, but not the
+location
+in the code, as regular assert() macro expansions would.
+
+This change turns assert_hvf_ok() into a macro similar to other
+assertions, which expands to a call to the corresponding _impl()
+function together with information about the expression that failed
+the assertion and its location in the code.
+
+Additionally, stringifying the numeric hv_return_t code is factored
+into a helper function that can be reused for diagnostics and debugging
+outside of assertions.
+
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Message-ID: <20240605112556.43193-8-phil@philjordan.eu>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/helper.h                 |  2 +-
- target/i386/tcg/helper-tcg.h         |  1 -
- target/i386/tcg/misc_helper.c        | 10 +---------
- target/i386/tcg/sysemu/misc_helper.c |  2 +-
- target/i386/tcg/decode-new.c.inc     | 15 ++++++++++++++-
- target/i386/tcg/emit.c.inc           | 20 ++++++++------------
- 6 files changed, 25 insertions(+), 25 deletions(-)
+ include/sysemu/hvf_int.h |  5 +++-
+ accel/hvf/hvf-all.c      | 51 +++++++++++++++++-----------------------
+ 2 files changed, 26 insertions(+), 30 deletions(-)
 
-diff --git a/target/i386/helper.h b/target/i386/helper.h
-index c244dbb4812..2f46cffabd8 100644
---- a/target/i386/helper.h
-+++ b/target/i386/helper.h
-@@ -53,7 +53,7 @@ DEF_HELPER_1(sysenter, void, env)
- DEF_HELPER_2(sysexit, void, env, int)
- DEF_HELPER_2(syscall, void, env, int)
- DEF_HELPER_2(sysret, void, env, int)
--DEF_HELPER_FLAGS_2(pause, TCG_CALL_NO_WG, noreturn, env, int)
-+DEF_HELPER_FLAGS_1(pause, TCG_CALL_NO_WG, noreturn, env)
- DEF_HELPER_FLAGS_3(raise_interrupt, TCG_CALL_NO_WG, noreturn, env, int, int)
- DEF_HELPER_FLAGS_2(raise_exception, TCG_CALL_NO_WG, noreturn, env, int)
- DEF_HELPER_FLAGS_1(icebp, TCG_CALL_NO_WG, noreturn, env)
-diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
-index eb6a4926a43..15d6c6f8b4f 100644
---- a/target/i386/tcg/helper-tcg.h
-+++ b/target/i386/tcg/helper-tcg.h
-@@ -91,7 +91,6 @@ extern const uint8_t parity_table[256];
+diff --git a/include/sysemu/hvf_int.h b/include/sysemu/hvf_int.h
+index 30e739a2b52..5b28d17ba1f 100644
+--- a/include/sysemu/hvf_int.h
++++ b/include/sysemu/hvf_int.h
+@@ -60,7 +60,10 @@ struct AccelCPUState {
+     bool dirty;
+ };
  
- /* misc_helper.c */
- void cpu_load_eflags(CPUX86State *env, int eflags, int update_mask);
--G_NORETURN void do_pause(CPUX86State *env);
+-void assert_hvf_ok(hv_return_t ret);
++void assert_hvf_ok_impl(hv_return_t ret, const char *file, unsigned int line,
++                        const char *exp);
++#define assert_hvf_ok(EX) assert_hvf_ok_impl((EX), __FILE__, __LINE__, #EX)
++const char *hvf_return_string(hv_return_t ret);
+ int hvf_arch_init(void);
+ int hvf_arch_init_vcpu(CPUState *cpu);
+ void hvf_arch_vcpu_destroy(CPUState *cpu);
+diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+index db05b81be58..c008dc2f1ea 100644
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -13,40 +13,33 @@
+ #include "sysemu/hvf.h"
+ #include "sysemu/hvf_int.h"
  
- /* sysemu/svm_helper.c */
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/i386/tcg/misc_helper.c b/target/i386/tcg/misc_helper.c
-index b0f0f7b893b..8316d42ffcd 100644
---- a/target/i386/tcg/misc_helper.c
-+++ b/target/i386/tcg/misc_helper.c
-@@ -88,7 +88,7 @@ G_NORETURN void helper_rdpmc(CPUX86State *env)
-     raise_exception_err(env, EXCP06_ILLOP, 0);
- }
- 
--G_NORETURN void do_pause(CPUX86State *env)
-+G_NORETURN void helper_pause(CPUX86State *env)
- {
-     CPUState *cs = env_cpu(env);
- 
-@@ -97,14 +97,6 @@ G_NORETURN void do_pause(CPUX86State *env)
-     cpu_loop_exit(cs);
- }
- 
--G_NORETURN void helper_pause(CPUX86State *env, int next_eip_addend)
--{
--    cpu_svm_check_intercept_param(env, SVM_EXIT_PAUSE, 0, GETPC());
--    env->eip += next_eip_addend;
--
--    do_pause(env);
--}
--
- uint64_t helper_rdpkru(CPUX86State *env, uint32_t ecx)
- {
-     if ((env->cr[4] & CR4_PKE_MASK) == 0) {
-diff --git a/target/i386/tcg/sysemu/misc_helper.c b/target/i386/tcg/sysemu/misc_helper.c
-index e41c88346cb..093cc2d0f90 100644
---- a/target/i386/tcg/sysemu/misc_helper.c
-+++ b/target/i386/tcg/sysemu/misc_helper.c
-@@ -547,7 +547,7 @@ G_NORETURN void helper_mwait(CPUX86State *env, int next_eip_addend)
- 
-     /* XXX: not complete but not completely erroneous */
-     if (cs->cpu_index != 0 || CPU_NEXT(cs) != NULL) {
--        do_pause(env);
-+        helper_pause(env);
-     } else {
-         helper_hlt(env);
-     }
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 376d2bdabe1..c2d8da8d14e 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1359,6 +1359,19 @@ static void decode_group11(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
-     }
- }
- 
-+static void decode_90(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+-void assert_hvf_ok(hv_return_t ret)
++const char *hvf_return_string(hv_return_t ret)
 +{
-+    static X86OpEntry pause = X86_OP_ENTRY0(PAUSE, svm(PAUSE));
-+    static X86OpEntry nop = X86_OP_ENTRY0(NOP);
-+    static X86OpEntry xchg_ax = X86_OP_ENTRY2(XCHG, 0,v, LoBits,v);
-+
-+    if (REX_B(s)) {
-+        *entry = xchg_ax;
-+    } else {
-+        *entry = (s->prefix & PREFIX_REPZ) ? pause : nop;
++    switch (ret) {
++    case HV_SUCCESS:      return "HV_SUCCESS";
++    case HV_ERROR:        return "HV_ERROR";
++    case HV_BUSY:         return "HV_BUSY";
++    case HV_BAD_ARGUMENT: return "HV_BAD_ARGUMENT";
++    case HV_NO_RESOURCES: return "HV_NO_RESOURCES";
++    case HV_NO_DEVICE:    return "HV_NO_DEVICE";
++    case HV_UNSUPPORTED:  return "HV_UNSUPPORTED";
++#if defined(MAC_OS_VERSION_11_0) && \
++    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
++    case HV_DENIED:       return "HV_DENIED";
++#endif
++    default:              return "[unknown hv_return value]";
 +    }
 +}
 +
- static const X86OpEntry opcodes_root[256] = {
-     [0x00] = X86_OP_ENTRY2(ADD, E,b, G,b, lock),
-     [0x01] = X86_OP_ENTRY2(ADD, E,v, G,v, lock),
-@@ -1441,7 +1454,7 @@ static const X86OpEntry opcodes_root[256] = {
-     [0x86] = X86_OP_ENTRY2(XCHG, E,b, G,b, xchg),
-     [0x87] = X86_OP_ENTRY2(XCHG, E,v, G,v, xchg),
- 
--    [0x90] = X86_OP_ENTRY2(XCHG, 0,v, LoBits,v),
-+    [0x90] = X86_OP_GROUP0(90),
-     [0x91] = X86_OP_ENTRY2(XCHG, 0,v, LoBits,v),
-     [0x92] = X86_OP_ENTRY2(XCHG, 0,v, LoBits,v),
-     [0x93] = X86_OP_ENTRY2(XCHG, 0,v, LoBits,v),
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 2e94e8ec56f..f90f3d3c589 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -2350,6 +2350,14 @@ static void gen_PANDN(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-                       decode->op[1].offset, vec_len, vec_len);
- }
- 
-+static void gen_PAUSE(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
-+{
-+    gen_update_cc_op(s);
-+    gen_update_eip_next(s);
-+    gen_helper_pause(tcg_env);
-+    s->base.is_jmp = DISAS_NORETURN;
-+}
-+
- static void gen_PCMPESTRI(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
++void assert_hvf_ok_impl(hv_return_t ret, const char *file, unsigned int line,
++                        const char *exp)
  {
-     TCGv_i32 imm = tcg_constant8u_i32(decode->immediate);
-@@ -4014,18 +4022,6 @@ static void gen_WAIT(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+     if (ret == HV_SUCCESS) {
+         return;
+     }
  
- static void gen_XCHG(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
- {
--    if (decode->b == 0x90 && !REX_B(s)) {
--        if (s->prefix & PREFIX_REPZ) {
--            gen_update_cc_op(s);
--            gen_update_eip_cur(s);
--            gen_helper_pause(tcg_env, cur_insn_len_i32(s));
--            s->base.is_jmp = DISAS_NORETURN;
--        }
--        /* No writeback.  */
--        decode->op[0].unit = X86_OP_SKIP;
--        return;
+-    switch (ret) {
+-    case HV_ERROR:
+-        error_report("Error: HV_ERROR");
+-        break;
+-    case HV_BUSY:
+-        error_report("Error: HV_BUSY");
+-        break;
+-    case HV_BAD_ARGUMENT:
+-        error_report("Error: HV_BAD_ARGUMENT");
+-        break;
+-    case HV_NO_RESOURCES:
+-        error_report("Error: HV_NO_RESOURCES");
+-        break;
+-    case HV_NO_DEVICE:
+-        error_report("Error: HV_NO_DEVICE");
+-        break;
+-    case HV_UNSUPPORTED:
+-        error_report("Error: HV_UNSUPPORTED");
+-        break;
+-#if defined(MAC_OS_VERSION_11_0) && \
+-    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
+-    case HV_DENIED:
+-        error_report("Error: HV_DENIED");
+-        break;
+-#endif
+-    default:
+-        error_report("Unknown Error");
 -    }
--
-     if (s->prefix & PREFIX_LOCK) {
-         tcg_gen_atomic_xchg_tl(s->T0, s->A0, s->T1,
-                                s->mem_index, decode->op[0].ot | MO_LE);
++    error_report("Error: %s = %s (0x%x, at %s:%u)",
++        exp, hvf_return_string(ret), ret, file, line);
+ 
+     abort();
+ }
 -- 
 2.45.1
 
