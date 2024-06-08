@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B68C1C25B76
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:36:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F14BCC27C55
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFrXF-0000YA-HH; Sat, 08 Jun 2024 04:34:49 -0400
+	id 1sFrX8-0000Wi-2f; Sat, 08 Jun 2024 04:34:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrXA-0000Xh-W7
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sFrX4-0000UF-8w
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrX9-0008Io-Av
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:44 -0400
+ id 1sFrX2-0008G7-3u
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717835682;
+ s=mimecast20190719; t=1717835673;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jd1l2qesW2ZIZOnZQq5rLZIMm8vL0i3PnwLlc9wF0HE=;
- b=QZ5mVv+E6Bf230QKaevYtkClsZE/yocFyKX3e1FmOpdoyPTJP/EsIMX23PjLL2wHHiO2ca
- Eyc0a3K5gBJbyxfUV9S2nl7YlEp7G5jBhRqyJswh/yYtZLyFIZJrA7KQyHjw/yGMRq5hyN
- m0b9uBVnyy940AOAmpgJxJnwASlZb3I=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1ZXg5/L7nPPJRmwWi/bRL++Ow5ed1vgkGFx1Ql7WL3I=;
+ b=jCvdx4o3SrXnjZduAyePVYW++kdiQ0pLqk41HoRnL/DLaeTtUlsDEdoQYHcSktYCyKYRto
+ wHSjnzFljnpNPFAGS8bxTUDQHsEHoBO7zryGSWdo5OFRpuqDOwlNU3usoYyZUrwEMcaVxT
+ aDuwMqdDT68rHTmp/aZDcJUgJllN5U8=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-153-Fj1w5G3QPku_A4ZAeRR8MA-1; Sat, 08 Jun 2024 04:34:40 -0400
-X-MC-Unique: Fj1w5G3QPku_A4ZAeRR8MA-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a68f654dc69so204290166b.1
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:34:40 -0700 (PDT)
+ us-mta-218-GKuY5RmpMXakumNlVb2lfQ-1; Sat, 08 Jun 2024 04:34:30 -0400
+X-MC-Unique: GKuY5RmpMXakumNlVb2lfQ-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-57c5216e486so816695a12.0
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:34:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717835678; x=1718440478;
+ d=1e100.net; s=20230601; t=1717835669; x=1718440469;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jd1l2qesW2ZIZOnZQq5rLZIMm8vL0i3PnwLlc9wF0HE=;
- b=J+Ta/FGj6ekXPrEM0tW9eavQfhywGXREiDpz3KbtA2vEySrwUllWm75jPwoVyFPVfg
- 8TFH63UgG1ogPyNS51V5Rsy6zEZ5PYLI7s8ayoV+MAyhFQmTMcomq8LP5Wke+tZmLuSL
- V8cnBGrX4vJvJPDoiecRYgzu9HdPy3koQpxyCxy4Xds5BsPqQS7p86Z9NOwkZMOMm5W6
- cK+xfEgv+BAT+2sfuyiahMymCl1KuzsyGudhlQa8PjZauY45xG9mvqKjCMGbuYHu5NQ0
- shg3yMJBroXDfKOMSorizXNyQmlQquCltIUX2m94e9NgGF0MRcuJR/23/bdWyzSJm62n
- czYQ==
-X-Gm-Message-State: AOJu0Yy1E8Dnpuln2lPkY4qnCyMI7SQovMSoCL1hr4mIGowxP0VMmD30
- 88xgJ+J+aKJhNFwW9kuFBkAUB+DahQTQQT9MyGVt432hupyAFM3E4ysPZ94ex49yrQuJv7YMtFc
- YFzIzbGJyqveF3+s14muZm39/W39AJvy+4x53nmjcD0DyVvyM0mJDICrP04A529mrkkmuzDsUpj
- 3NcSdn/hVtQMxeYbh0OEu/SwwxFb6snXqErJZZ
-X-Received: by 2002:a17:906:4a05:b0:a6e:fbe1:d5e1 with SMTP id
- a640c23a62f3a-a6efbe1f6d7mr109895866b.22.1717835678624; 
- Sat, 08 Jun 2024 01:34:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHnwWldcgn4kCPqCCa6Q38D+7qNQyIbIsclYlTsqHSh4aAbeAgkhxdbx1Z2Z7RePqT3X/dahQ==
-X-Received: by 2002:a17:906:4a05:b0:a6e:fbe1:d5e1 with SMTP id
- a640c23a62f3a-a6efbe1f6d7mr109894666b.22.1717835678224; 
- Sat, 08 Jun 2024 01:34:38 -0700 (PDT)
+ bh=1ZXg5/L7nPPJRmwWi/bRL++Ow5ed1vgkGFx1Ql7WL3I=;
+ b=F7Maaw7mxd5wL2Rya4aRL/6sfExF1CSklNVbYyyn/XBk2/O121+DK9JoRNhVECCE8d
+ MNYKuNmGX5/NAG+nXSWGw3EFnyeA9puaY+C9/SdQ5yqVKteLpdMxvN4XYl6O25qGB/6m
+ SAROuv54BAGGFiSs01RD4OOj8Z009leDFQcamIE30Pfxk6WIh7FVZxd9QmOpBGzsVENj
+ hvkTqqkGi4P8ZH7Y284nUqkmZBf71nxI0NIwetzitVTQF+yqVo5qSfIQdOpdnvpa293K
+ LZzoffPUySl+CQn1vdHP/uuElEmOEMNuKMaUS2sLg78lFtGSHjO32IoOkXGiBIBnachA
+ HGKw==
+X-Gm-Message-State: AOJu0YzS8cwByLAtHI7d7McIayF5vvwb8+QNKBU8gnlSNlYDCwgGVcjc
+ GMyt72bahBXpMMl/Jkoekz9jNiTjXFC5Db6c+93zZP382uJ3VKw6QkqDVxp/ikxL+ZnbOi9TYBv
+ 0xWq9q+AH7Qh32LX6Nci+hYe0SYDn/5GpwdyPED+ZNCQsTMmZ4odJw9Dc0sNRSvmwkeg3uEuJVD
+ Ohgvweqn5Y9tnslJGE8ETcn2HTutlHWrZJW5HX
+X-Received: by 2002:a50:d61b:0:b0:57c:41e1:6e59 with SMTP id
+ 4fb4d7f45d1cf-57c50924b9bmr3004373a12.23.1717835668909; 
+ Sat, 08 Jun 2024 01:34:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF335a0HmK8kKOQbYU2x9BhmnyqUpOUwWyWpPBso3bkWBahxyny/BxxU7UnFdNGtHIwSkEB2w==
+X-Received: by 2002:a50:d61b:0:b0:57c:41e1:6e59 with SMTP id
+ 4fb4d7f45d1cf-57c50924b9bmr3004362a12.23.1717835668432; 
+ Sat, 08 Jun 2024 01:34:28 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f0deda4e4sm18103066b.177.2024.06.08.01.34.37
+ 4fb4d7f45d1cf-57aae102c7esm3930956a12.45.2024.06.08.01.34.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 01:34:37 -0700 (PDT)
+ Sat, 08 Jun 2024 01:34:28 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/42] target/i386: fix INHIBIT_IRQ/TF/RF handling for VMRUN
-Date: Sat,  8 Jun 2024 10:33:40 +0200
-Message-ID: <20240608083415.2769160-8-pbonzini@redhat.com>
+Subject: [PULL 04/42] target/i386: cleanup PAUSE helpers
+Date: Sat,  8 Jun 2024 10:33:37 +0200
+Message-ID: <20240608083415.2769160-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240608083415.2769160-1-pbonzini@redhat.com>
 References: <20240608083415.2769160-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,132 +103,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From vm entry to exit, VMRUN is handled as a single instruction.  It
-uses DISAS_NORETURN in order to avoid processing TF or RF before
-the first instruction executes in the guest.  However, the corresponding
-handling is missing in vmexit.  Add it, and at the same time reorganize
-the comments with quotes from the manual about the tasks performed
-by a #VMEXIT.
-
-Another gen_eob() task that is missing in VMRUN is preparing the
-HF_INHIBIT_IRQ flag for the next instruction, in this case by loading
-it from the VMCB control state.
+Use decode.c's support for intercepts, doing the check in TCG-generated
+code rather than the helper.  This is cleaner because it allows removing
+the eip_addend argument to helper_pause(), even though it adds a bit of
+bloat for opcode 0x90's new decoding function.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/sysemu/svm_helper.c | 46 +++++++++++++++++++++--------
- target/i386/tcg/translate.c         |  5 ++++
- 2 files changed, 38 insertions(+), 13 deletions(-)
+ target/i386/helper.h                 |  2 +-
+ target/i386/tcg/helper-tcg.h         |  1 -
+ target/i386/tcg/misc_helper.c        | 10 +---------
+ target/i386/tcg/sysemu/misc_helper.c |  2 +-
+ target/i386/tcg/decode-new.c.inc     | 15 ++++++++++++++-
+ target/i386/tcg/emit.c.inc           | 20 ++++++++------------
+ 6 files changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/target/i386/tcg/sysemu/svm_helper.c b/target/i386/tcg/sysemu/svm_helper.c
-index 922d8964f8e..9db8ad62a01 100644
---- a/target/i386/tcg/sysemu/svm_helper.c
-+++ b/target/i386/tcg/sysemu/svm_helper.c
-@@ -254,6 +254,13 @@ void helper_vmrun(CPUX86State *env, int aflag, int next_eip_addend)
-                                                   control.intercept_exceptions
-                                                   ));
+diff --git a/target/i386/helper.h b/target/i386/helper.h
+index c244dbb4812..2f46cffabd8 100644
+--- a/target/i386/helper.h
++++ b/target/i386/helper.h
+@@ -53,7 +53,7 @@ DEF_HELPER_1(sysenter, void, env)
+ DEF_HELPER_2(sysexit, void, env, int)
+ DEF_HELPER_2(syscall, void, env, int)
+ DEF_HELPER_2(sysret, void, env, int)
+-DEF_HELPER_FLAGS_2(pause, TCG_CALL_NO_WG, noreturn, env, int)
++DEF_HELPER_FLAGS_1(pause, TCG_CALL_NO_WG, noreturn, env)
+ DEF_HELPER_FLAGS_3(raise_interrupt, TCG_CALL_NO_WG, noreturn, env, int, int)
+ DEF_HELPER_FLAGS_2(raise_exception, TCG_CALL_NO_WG, noreturn, env, int)
+ DEF_HELPER_FLAGS_1(icebp, TCG_CALL_NO_WG, noreturn, env)
+diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
+index eb6a4926a43..15d6c6f8b4f 100644
+--- a/target/i386/tcg/helper-tcg.h
++++ b/target/i386/tcg/helper-tcg.h
+@@ -91,7 +91,6 @@ extern const uint8_t parity_table[256];
  
-+    env->hflags &= ~HF_INHIBIT_IRQ_MASK;
-+    if (x86_ldl_phys(cs, env->vm_vmcb +
-+                offsetof(struct vmcb, control.int_state)) &
-+                 SVM_INTERRUPT_SHADOW_MASK) {
-+        env->hflags |= HF_INHIBIT_IRQ_MASK;
-+    }
-+
-     nested_ctl = x86_ldq_phys(cs, env->vm_vmcb + offsetof(struct vmcb,
-                                                           control.nested_ctl));
-     asid = x86_ldq_phys(cs, env->vm_vmcb + offsetof(struct vmcb,
-@@ -815,8 +822,12 @@ void do_vmexit(CPUX86State *env)
-     env->hflags &= ~HF_GUEST_MASK;
-     env->intercept = 0;
-     env->intercept_exceptions = 0;
-+
-+    /* Clears the V_IRQ and V_INTR_MASKING bits inside the processor. */
-     cs->interrupt_request &= ~CPU_INTERRUPT_VIRQ;
-     env->int_ctl = 0;
-+
-+    /* Clears the TSC_OFFSET inside the processor. */
-     env->tsc_offset = 0;
+ /* misc_helper.c */
+ void cpu_load_eflags(CPUX86State *env, int eflags, int update_mask);
+-G_NORETURN void do_pause(CPUX86State *env);
  
-     env->gdt.base  = x86_ldq_phys(cs, env->vm_hsave + offsetof(struct vmcb,
-@@ -836,6 +847,15 @@ void do_vmexit(CPUX86State *env)
-     cpu_x86_update_cr4(env, x86_ldq_phys(cs,
-                                      env->vm_hsave + offsetof(struct vmcb,
-                                                               save.cr4)));
-+
-+    /*
-+     * Resets the current ASID register to zero (host ASID; TLB flush).
-+     *
-+     * If the host is in PAE mode, the processor reloads the host's PDPEs
-+     * from the page table indicated the host's CR3. FIXME: If the PDPEs
-+     * contain illegal state, the processor causes a shutdown (QEMU does
-+     * not implement PDPTRs).
-+     */
-     cpu_x86_update_cr3(env, x86_ldq_phys(cs,
-                                      env->vm_hsave + offsetof(struct vmcb,
-                                                               save.cr3)));
-@@ -843,12 +863,14 @@ void do_vmexit(CPUX86State *env)
-        set properly */
-     cpu_load_efer(env, x86_ldq_phys(cs, env->vm_hsave + offsetof(struct vmcb,
-                                                          save.efer)));
-+
-+    /* Completion of the VMRUN instruction clears the host EFLAGS.RF bit.  */
-     env->eflags = 0;
-     cpu_load_eflags(env, x86_ldq_phys(cs,
-                                   env->vm_hsave + offsetof(struct vmcb,
-                                                            save.rflags)),
-                     ~(CC_O | CC_S | CC_Z | CC_A | CC_P | CC_C | DF_MASK |
--                      VM_MASK));
-+                      RF_MASK | VM_MASK));
- 
-     svm_load_seg_cache(env, MMU_PHYS_IDX,
-                        env->vm_hsave + offsetof(struct vmcb, save.es), R_ES);
-@@ -888,19 +910,17 @@ void do_vmexit(CPUX86State *env)
- 
-     env->hflags2 &= ~HF2_GIF_MASK;
-     env->hflags2 &= ~HF2_VGIF_MASK;
--    /* FIXME: Resets the current ASID register to zero (host ASID). */
- 
--    /* Clears the V_IRQ and V_INTR_MASKING bits inside the processor. */
- 
--    /* Clears the TSC_OFFSET inside the processor. */
-+    /* FIXME: Checks the reloaded host state for consistency. */
- 
--    /* If the host is in PAE mode, the processor reloads the host's PDPEs
--       from the page table indicated the host's CR3. If the PDPEs contain
--       illegal state, the processor causes a shutdown. */
--
--    /* Checks the reloaded host state for consistency. */
--
--    /* If the host's rIP reloaded by #VMEXIT is outside the limit of the
--       host's code segment or non-canonical (in the case of long mode), a
--       #GP fault is delivered inside the host. */
-+    /*
-+     * EFLAGS.TF causes a #DB trap after the VMRUN completes on the host
-+     * side (i.e., after the #VMEXIT from the guest). Since we're running
-+     * in the main loop, call do_interrupt_all directly.
-+     */
-+    if ((env->eflags & TF_MASK) != 0) {
-+        env->dr[6] |= DR6_BS;
-+        do_interrupt_all(X86_CPU(cs), EXCP01_DB, 0, 0, env->eip, 0);
-+    }
+ /* sysemu/svm_helper.c */
+ #ifndef CONFIG_USER_ONLY
+diff --git a/target/i386/tcg/misc_helper.c b/target/i386/tcg/misc_helper.c
+index b0f0f7b893b..8316d42ffcd 100644
+--- a/target/i386/tcg/misc_helper.c
++++ b/target/i386/tcg/misc_helper.c
+@@ -88,7 +88,7 @@ G_NORETURN void helper_rdpmc(CPUX86State *env)
+     raise_exception_err(env, EXCP06_ILLOP, 0);
  }
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 77ed9c1db47..a9c6424c7df 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -3745,6 +3745,11 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-             }
-             gen_update_cc_op(s);
-             gen_update_eip_cur(s);
-+            /*
-+             * Reloads INHIBIT_IRQ mask as well as TF and RF with guest state.
-+             * The usual gen_eob() handling is performed on vmexit after
-+             * host state is reloaded.
-+             */
-             gen_helper_vmrun(tcg_env, tcg_constant_i32(s->aflag - 1),
-                              cur_insn_len_i32(s));
-             tcg_gen_exit_tb(NULL, 0);
+ 
+-G_NORETURN void do_pause(CPUX86State *env)
++G_NORETURN void helper_pause(CPUX86State *env)
+ {
+     CPUState *cs = env_cpu(env);
+ 
+@@ -97,14 +97,6 @@ G_NORETURN void do_pause(CPUX86State *env)
+     cpu_loop_exit(cs);
+ }
+ 
+-G_NORETURN void helper_pause(CPUX86State *env, int next_eip_addend)
+-{
+-    cpu_svm_check_intercept_param(env, SVM_EXIT_PAUSE, 0, GETPC());
+-    env->eip += next_eip_addend;
+-
+-    do_pause(env);
+-}
+-
+ uint64_t helper_rdpkru(CPUX86State *env, uint32_t ecx)
+ {
+     if ((env->cr[4] & CR4_PKE_MASK) == 0) {
+diff --git a/target/i386/tcg/sysemu/misc_helper.c b/target/i386/tcg/sysemu/misc_helper.c
+index e41c88346cb..093cc2d0f90 100644
+--- a/target/i386/tcg/sysemu/misc_helper.c
++++ b/target/i386/tcg/sysemu/misc_helper.c
+@@ -547,7 +547,7 @@ G_NORETURN void helper_mwait(CPUX86State *env, int next_eip_addend)
+ 
+     /* XXX: not complete but not completely erroneous */
+     if (cs->cpu_index != 0 || CPU_NEXT(cs) != NULL) {
+-        do_pause(env);
++        helper_pause(env);
+     } else {
+         helper_hlt(env);
+     }
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 376d2bdabe1..c2d8da8d14e 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1359,6 +1359,19 @@ static void decode_group11(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+     }
+ }
+ 
++static void decode_90(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
++{
++    static X86OpEntry pause = X86_OP_ENTRY0(PAUSE, svm(PAUSE));
++    static X86OpEntry nop = X86_OP_ENTRY0(NOP);
++    static X86OpEntry xchg_ax = X86_OP_ENTRY2(XCHG, 0,v, LoBits,v);
++
++    if (REX_B(s)) {
++        *entry = xchg_ax;
++    } else {
++        *entry = (s->prefix & PREFIX_REPZ) ? pause : nop;
++    }
++}
++
+ static const X86OpEntry opcodes_root[256] = {
+     [0x00] = X86_OP_ENTRY2(ADD, E,b, G,b, lock),
+     [0x01] = X86_OP_ENTRY2(ADD, E,v, G,v, lock),
+@@ -1441,7 +1454,7 @@ static const X86OpEntry opcodes_root[256] = {
+     [0x86] = X86_OP_ENTRY2(XCHG, E,b, G,b, xchg),
+     [0x87] = X86_OP_ENTRY2(XCHG, E,v, G,v, xchg),
+ 
+-    [0x90] = X86_OP_ENTRY2(XCHG, 0,v, LoBits,v),
++    [0x90] = X86_OP_GROUP0(90),
+     [0x91] = X86_OP_ENTRY2(XCHG, 0,v, LoBits,v),
+     [0x92] = X86_OP_ENTRY2(XCHG, 0,v, LoBits,v),
+     [0x93] = X86_OP_ENTRY2(XCHG, 0,v, LoBits,v),
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 2e94e8ec56f..f90f3d3c589 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -2350,6 +2350,14 @@ static void gen_PANDN(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+                       decode->op[1].offset, vec_len, vec_len);
+ }
+ 
++static void gen_PAUSE(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
++{
++    gen_update_cc_op(s);
++    gen_update_eip_next(s);
++    gen_helper_pause(tcg_env);
++    s->base.is_jmp = DISAS_NORETURN;
++}
++
+ static void gen_PCMPESTRI(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ {
+     TCGv_i32 imm = tcg_constant8u_i32(decode->immediate);
+@@ -4014,18 +4022,6 @@ static void gen_WAIT(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ 
+ static void gen_XCHG(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode)
+ {
+-    if (decode->b == 0x90 && !REX_B(s)) {
+-        if (s->prefix & PREFIX_REPZ) {
+-            gen_update_cc_op(s);
+-            gen_update_eip_cur(s);
+-            gen_helper_pause(tcg_env, cur_insn_len_i32(s));
+-            s->base.is_jmp = DISAS_NORETURN;
+-        }
+-        /* No writeback.  */
+-        decode->op[0].unit = X86_OP_SKIP;
+-        return;
+-    }
+-
+     if (s->prefix & PREFIX_LOCK) {
+         tcg_gen_atomic_xchg_tl(s->T0, s->A0, s->T1,
+                                s->mem_index, decode->op[0].ot | MO_LE);
 -- 
 2.45.1
 
