@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6EAAC25B76
-	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2C1DC27C55
+	for <qemu-devel@archiver.kernel.org>; Sat,  8 Jun 2024 08:38:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sFrWv-0000T1-HO; Sat, 08 Jun 2024 04:34:29 -0400
+	id 1sFrYF-0002yo-1X; Sat, 08 Jun 2024 04:35:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrWu-0000Sd-17
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sFrYC-0002wN-TW
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sFrWs-0008FH-E7
- for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:34:27 -0400
+ id 1sFrYB-0000Hb-4u
+ for qemu-devel@nongnu.org; Sat, 08 Jun 2024 04:35:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717835665;
+ s=mimecast20190719; t=1717835746;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kSWUo4sCXjrNOR0yu+FmZCYBkQr0GiAN238dsmBJ6yo=;
- b=FYGavq9m3MdOzp8O/weLd+HnZN3rKnccpFbzCsKEdHh75e4iJc7Bg7xKHnXyCMpWxfEcgR
- Rp4VS/ZujcEtrFk8cJWS9zK1Tw5B/+R+nKDTT0XoKF6oP3hJ/hbKUjwlfRHOCQFcY6gcbt
- t/o5Pd38D53p4F5M7d24VmBrjLeTS8w=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+1SSoXnODbA0T267ExP4EpxDHUPMe33TEy/vs7sS7iM=;
+ b=fDAJ5TH1WePVMIxispbhOatDSJncNYQCmeUJFEFq1HwcyOh6MhXQjM/zuw84VzVMiBPVAj
+ zIpapQfNCF6hVZiHK3kJ0gpFypbWiom24ZxYxbnOhVPRqVBHZSaWPBVWF7xvTOENRUt4rr
+ huhL4s9BHBR1p/4XtYQNK/1xZ7osyfI=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-79-LYpYqYWWPZKtM5wR-Njg1A-1; Sat, 08 Jun 2024 04:34:23 -0400
-X-MC-Unique: LYpYqYWWPZKtM5wR-Njg1A-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-57a52cb6d86so1724299a12.1
- for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:34:23 -0700 (PDT)
+ us-mta-252-PASeM3s4PFyHLv1Pzc_vQg-1; Sat, 08 Jun 2024 04:35:42 -0400
+X-MC-Unique: PASeM3s4PFyHLv1Pzc_vQg-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a68e85d466dso181937666b.1
+ for <qemu-devel@nongnu.org>; Sat, 08 Jun 2024 01:35:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717835662; x=1718440462;
+ d=1e100.net; s=20230601; t=1717835740; x=1718440540;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kSWUo4sCXjrNOR0yu+FmZCYBkQr0GiAN238dsmBJ6yo=;
- b=FDc+JIIP+hN9yjJ8sTFwha3fqijWc/uiqw1jDqdjVQf5CwNOuV6nBE2J6ROl9ITK/7
- or6BAami9xqc0PjT7VMeulBG+54Jn3v4ce3hjw3dUX8HaR0TUsSLMdzY0Ivk6k9MFEkS
- BcKuoHJbWlr76K0jKJaSvRZGr2U0erCHFgf7GktW1yk73DSvsdlG3qBW9LhCcm6aim2l
- 0MYToca+Vv2+5zzXx6IS0AGDkBHzrmGdjyq3bltdO6gY9EvUKGk2rPw+SIBPmeNu3MG6
- 7vHXJ2XlRsRb3v9R5wAhn+hThj5XD/GrcHSX+4Dyrw/gT0xUe5gz9+/anrAeOuxKx/zU
- RdGA==
-X-Gm-Message-State: AOJu0Yw+t7C4JEpkpek5aQWZKSZ0VayFj/4WgMri23Uu0w6EfA3VHIhG
- 7w0W+VqMTs2R8dGaglH1ZQhzJrpshWMeAq7gxHhmoqPYogIl9SfqibW9xUVNG3CQj1UsFUfQxNo
- WVzESAyb1zEi/8a81vTxgnmemfcz9N/qbPvPAHuizQCfYOkeHxvA6R0iF5Q5ZADRflB1rqq7z08
- 5Nex8e1m0PUXOnUArS27jCQsfDEgRrBrkNltER
-X-Received: by 2002:a50:f619:0:b0:57c:5503:940b with SMTP id
- 4fb4d7f45d1cf-57c6f45ffcfmr445844a12.15.1717835661946; 
- Sat, 08 Jun 2024 01:34:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEOnkUwXAuR96ptCvBrFbsFxz/BDthb6XFmSRWHlrOSu4hdRQRnlTMGsTNDU6YwnwA4hAGQ4Q==
-X-Received: by 2002:a50:f619:0:b0:57c:5503:940b with SMTP id
- 4fb4d7f45d1cf-57c6f45ffcfmr445831a12.15.1717835661430; 
- Sat, 08 Jun 2024 01:34:21 -0700 (PDT)
+ bh=+1SSoXnODbA0T267ExP4EpxDHUPMe33TEy/vs7sS7iM=;
+ b=n5xkVu0INcHqqGaISz9R+xyUL9CWnoXFmfKpN3WzBRtKfY2JxpKyUIuEKqTC4d0VhU
+ Ff37FC5Lh4pQ6S0Ln7eEOYwJ2lVV6hRUH55Id8aZjGmvI4becyKqQi0CSwT9ejV49B1K
+ 7sjnhmkcHJfmPep3qMeR3AINqobfm59GG4y8eFjSexwSvlIZzEQ1XuJjvjQsPtyHJ6sX
+ 82v9gHtbTqnUw1HY5y1CB+Y0WJgPokci9JromKKh4xVD4bVL8Y6EIVYtNc1ODuR61ld4
+ YEho8FRoV5CMAmG//RAAfSRqgxNMwTtS3/iLcQSJ9ZOpAUvWnLBdDEnU08bZD/3bXO6K
+ v5sg==
+X-Gm-Message-State: AOJu0YyF9Wyx6O/japlIbCGXcQL8s/wQPw0jJvoR5TC5uBtkbpU72Cuk
+ 3IT2dOMhG2bhBjxWrtl2zkkn7fii4xm03xXaE7p8d33ijC/DbbD2IN7py5LK/cFvLKGjCh59Hvx
+ 1wd+kUdfNm4WfIqP1s7+K/G0rLr/Q8YMlzOdzauH9TkUdDvlWoYSsDo3135+rpUGQxjxMEUqRdJ
+ YFKBoCmz/y1hTFxn78MiCg5Gk/7St8RtCBWutc
+X-Received: by 2002:a17:906:6a29:b0:a6e:a97c:fc97 with SMTP id
+ a640c23a62f3a-a6ea97cfd15mr247901266b.7.1717835740355; 
+ Sat, 08 Jun 2024 01:35:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG77+T0UOs7vENqNuYG26yUrIvmXn/Ba7V2fvC3E7zGyEBUsO5o6jwEAf4oC4PGCr+GtNs04A==
+X-Received: by 2002:a17:906:6a29:b0:a6e:a97c:fc97 with SMTP id
+ a640c23a62f3a-a6ea97cfd15mr247899666b.7.1717835739976; 
+ Sat, 08 Jun 2024 01:35:39 -0700 (PDT)
 Received: from avogadro.local ([151.81.115.112])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aae0ffbf8sm3972416a12.39.2024.06.08.01.34.20
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-a6c806eaa4dsm354422166b.110.2024.06.08.01.35.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 01:34:20 -0700 (PDT)
+ Sat, 08 Jun 2024 01:35:38 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/42] target/i386: fix pushed value of EFLAGS.RF
-Date: Sat,  8 Jun 2024 10:33:34 +0200
-Message-ID: <20240608083415.2769160-2-pbonzini@redhat.com>
+Cc: Xin Li <xin3.li@intel.com>,
+	Shan Kang <shan.kang@intel.com>
+Subject: [PULL 32/42] target/i386: add support for FRED in CPUID enumeration
+Date: Sat,  8 Jun 2024 10:34:05 +0200
+Message-ID: <20240608083415.2769160-33-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240608083415.2769160-1-pbonzini@redhat.com>
 References: <20240608083415.2769160-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,160 +104,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When preparing an exception stack frame for a fault exception, the value
-pushed for RF is 1.  Take that into account.  The same should be true
-of interrupts for repeated string instructions, but the situation there
-is complicated.
+From: Xin Li <xin3.li@intel.com>
 
+FRED, i.e., the Intel flexible return and event delivery architecture,
+defines simple new transitions that change privilege level (ring
+transitions).
+
+The new transitions defined by the FRED architecture are FRED event
+delivery and, for returning from events, two FRED return instructions.
+FRED event delivery can effect a transition from ring 3 to ring 0, but
+it is used also to deliver events incident to ring 0.  One FRED
+instruction (ERETU) effects a return from ring 0 to ring 3, while the
+other (ERETS) returns while remaining in ring 0.  Collectively, FRED
+event delivery and the FRED return instructions are FRED transitions.
+
+In addition to these transitions, the FRED architecture defines a new
+instruction (LKGS) for managing the state of the GS segment register.
+The LKGS instruction can be used by 64-bit operating systems that do
+not use the new FRED transitions.
+
+WRMSRNS is an instruction that behaves exactly like WRMSR, with the
+only difference being that it is not a serializing instruction by
+default.  Under certain conditions, WRMSRNS may replace WRMSR to improve
+performance.  FRED uses it to switch RSP0 in a faster manner.
+
+Search for the latest FRED spec in most search engines with this search
+pattern:
+
+  site:intel.com FRED (flexible return and event delivery) specification
+
+The CPUID feature flag CPUID.(EAX=7,ECX=1):EAX[17] enumerates FRED, and
+the CPUID feature flag CPUID.(EAX=7,ECX=1):EAX[18] enumerates LKGS, and
+the CPUID feature flag CPUID.(EAX=7,ECX=1):EAX[19] enumerates WRMSRNS.
+
+Add CPUID definitions for FRED/LKGS/WRMSRNS, and expose them to KVM guests.
+
+Because FRED relies on LKGS and WRMSRNS, add that to feature dependency
+map.
+
+Tested-by: Shan Kang <shan.kang@intel.com>
+Signed-off-by: Xin Li <xin3.li@intel.com>
+Message-ID: <20231109072012.8078-2-xin3.li@intel.com>
+[Fix order of dependencies, add dependencies from LM to FRED. - Paolo]
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/seg_helper.c | 49 ++++++++++++++++++++++++++++++++----
- target/i386/tcg/translate.c  |  8 ++++++
- 2 files changed, 52 insertions(+), 5 deletions(-)
+ target/i386/cpu.h |  6 ++++++
+ target/i386/cpu.c | 14 +++++++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 0301459004e..715db1f2326 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -526,6 +526,24 @@ static inline unsigned int get_sp_mask(unsigned int e2)
-     }
- }
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index c64ef0c1a28..ad3577056da 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -941,6 +941,12 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
+ #define CPUID_7_1_EDX_AMX_COMPLEX       (1U << 8)
+ /* PREFETCHIT0/1 Instructions */
+ #define CPUID_7_1_EDX_PREFETCHITI       (1U << 14)
++/* Flexible return and event delivery (FRED) */
++#define CPUID_7_1_EAX_FRED              (1U << 17)
++/* Load into IA32_KERNEL_GS_BASE (LKGS) */
++#define CPUID_7_1_EAX_LKGS              (1U << 18)
++/* Non-Serializing Write to Model Specific Register (WRMSRNS) */
++#define CPUID_7_1_EAX_WRMSRNS           (1U << 19)
  
-+static int exception_is_fault(int intno)
-+{
-+    switch (intno) {
-+        /*
-+         * #DB can be both fault- and trap-like, but it never sets RF=1
-+         * in the RFLAGS value pushed on the stack.
-+         */
-+    case EXCP01_DB:
-+    case EXCP03_INT3:
-+    case EXCP04_INTO:
-+    case EXCP08_DBLE:
-+    case EXCP12_MCHK:
-+        return 0;
-+    }
-+    /* Everything else including reserved exception is a fault.  */
-+    return 1;
-+}
-+
- int exception_has_error_code(int intno)
- {
-     switch (intno) {
-@@ -605,8 +623,9 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-     int type, dpl, selector, ss_dpl, cpl;
-     int has_error_code, new_stack, shift;
-     uint32_t e1, e2, offset, ss = 0, esp, ss_e1 = 0, ss_e2 = 0;
--    uint32_t old_eip, sp_mask;
-+    uint32_t old_eip, sp_mask, eflags;
-     int vm86 = env->eflags & VM_MASK;
-+    bool set_rf;
+ /* Do not exhibit MXCSR Configuration Dependent Timing (MCDT) behavior */
+ #define CPUID_7_2_EDX_MCDT_NO           (1U << 5)
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 914bef442c7..bfb5a25e596 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1114,7 +1114,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+             "avx-vnni", "avx512-bf16", NULL, "cmpccxadd",
+             NULL, NULL, "fzrm", "fsrs",
+             "fsrc", NULL, NULL, NULL,
+-            NULL, NULL, NULL, NULL,
++            NULL, "fred", "lkgs", "wrmsrns",
+             NULL, "amx-fp16", NULL, "avx-ifma",
+             NULL, NULL, "lam", NULL,
+             NULL, NULL, NULL, NULL,
+@@ -1701,6 +1701,18 @@ static FeatureDep feature_dependencies[] = {
+         .from = { FEAT_7_0_ECX,             CPUID_7_0_ECX_WAITPKG },
+         .to = { FEAT_VMX_SECONDARY_CTLS,    VMX_SECONDARY_EXEC_ENABLE_USER_WAIT_PAUSE },
+     },
++    {
++        .from = { FEAT_8000_0001_EDX,       CPUID_EXT2_LM },
++        .to = { FEAT_7_1_EAX,               CPUID_7_1_EAX_FRED },
++    },
++    {
++        .from = { FEAT_7_1_EAX,             CPUID_7_1_EAX_LKGS },
++        .to = { FEAT_7_1_EAX,               CPUID_7_1_EAX_FRED },
++    },
++    {
++        .from = { FEAT_7_1_EAX,             CPUID_7_1_EAX_WRMSRNS },
++        .to = { FEAT_7_1_EAX,               CPUID_7_1_EAX_FRED },
++    },
+ };
  
-     has_error_code = 0;
-     if (!is_int && !is_hw) {
-@@ -614,8 +633,10 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-     }
-     if (is_int) {
-         old_eip = next_eip;
-+        set_rf = false;
-     } else {
-         old_eip = env->eip;
-+        set_rf = exception_is_fault(intno);
-     }
- 
-     dt = &env->idt;
-@@ -748,6 +769,15 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-     }
-     push_size <<= shift;
- #endif
-+    eflags = cpu_compute_eflags(env);
-+    /*
-+     * AMD states that code breakpoint #DBs clear RF=0, Intel leaves it
-+     * as is.  AMD behavior could be implemented in check_hw_breakpoints().
-+     */
-+    if (set_rf) {
-+        eflags |= RF_MASK;
-+    }
-+
-     if (shift == 1) {
-         if (new_stack) {
-             if (vm86) {
-@@ -759,7 +789,7 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-             PUSHL(ssp, esp, sp_mask, env->segs[R_SS].selector);
-             PUSHL(ssp, esp, sp_mask, env->regs[R_ESP]);
-         }
--        PUSHL(ssp, esp, sp_mask, cpu_compute_eflags(env));
-+        PUSHL(ssp, esp, sp_mask, eflags);
-         PUSHL(ssp, esp, sp_mask, env->segs[R_CS].selector);
-         PUSHL(ssp, esp, sp_mask, old_eip);
-         if (has_error_code) {
-@@ -776,7 +806,7 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
-             PUSHW(ssp, esp, sp_mask, env->segs[R_SS].selector);
-             PUSHW(ssp, esp, sp_mask, env->regs[R_ESP]);
-         }
--        PUSHW(ssp, esp, sp_mask, cpu_compute_eflags(env));
-+        PUSHW(ssp, esp, sp_mask, eflags);
-         PUSHW(ssp, esp, sp_mask, env->segs[R_CS].selector);
-         PUSHW(ssp, esp, sp_mask, old_eip);
-         if (has_error_code) {
-@@ -868,8 +898,9 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
-     target_ulong ptr;
-     int type, dpl, selector, cpl, ist;
-     int has_error_code, new_stack;
--    uint32_t e1, e2, e3, ss;
-+    uint32_t e1, e2, e3, ss, eflags;
-     target_ulong old_eip, esp, offset;
-+    bool set_rf;
- 
-     has_error_code = 0;
-     if (!is_int && !is_hw) {
-@@ -877,8 +908,10 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
-     }
-     if (is_int) {
-         old_eip = next_eip;
-+        set_rf = false;
-     } else {
-         old_eip = env->eip;
-+        set_rf = exception_is_fault(intno);
-     }
- 
-     dt = &env->idt;
-@@ -950,9 +983,15 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
-     }
-     esp &= ~0xfLL; /* align stack */
- 
-+    /* See do_interrupt_protected.  */
-+    eflags = cpu_compute_eflags(env);
-+    if (set_rf) {
-+        eflags |= RF_MASK;
-+    }
-+
-     PUSHQ(esp, env->segs[R_SS].selector);
-     PUSHQ(esp, env->regs[R_ESP]);
--    PUSHQ(esp, cpu_compute_eflags(env));
-+    PUSHQ(esp, eflags);
-     PUSHQ(esp, env->segs[R_CS].selector);
-     PUSHQ(esp, old_eip);
-     if (has_error_code) {
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 0486ab69112..d438f8f76f7 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -4630,6 +4630,14 @@ static void i386_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cpu)
-      * If jmp_opt, we want to handle each string instruction individually.
-      * For icount also disable repz optimization so that each iteration
-      * is accounted separately.
-+     *
-+     * FIXME: this is messy; it makes REP string instructions a lot less
-+     * efficient than they should be and it gets in the way of correct
-+     * handling of RF (interrupts or traps arriving after any iteration
-+     * of a repeated string instruction but the last should set RF to 1).
-+     * Perhaps it would be more efficient if REP string instructions were
-+     * always at the beginning of the TB, or even their own TB?  That
-+     * would even allow accounting up to 64k iterations at once for icount.
-      */
-     dc->repz_opt = !dc->jmp_opt && !(cflags & CF_USE_ICOUNT);
- 
+ typedef struct X86RegisterInfo32 {
 -- 
 2.45.1
 
