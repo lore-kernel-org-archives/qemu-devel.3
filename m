@@ -4,78 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74365C27C5E
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Jun 2024 05:32:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1AFAC27C53
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Jun 2024 08:53:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGB9d-0005xR-3M; Sun, 09 Jun 2024 01:31:45 -0400
+	id 1sGEHo-00030k-Jy; Sun, 09 Jun 2024 04:52:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brzakbranislav@gmail.com>)
- id 1sG3tB-0005kG-MK; Sat, 08 Jun 2024 17:46:23 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sGEHn-00030c-EU
+ for qemu-devel@nongnu.org; Sun, 09 Jun 2024 04:52:23 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <brzakbranislav@gmail.com>)
- id 1sG3t8-0005Im-B1; Sat, 08 Jun 2024 17:46:17 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a6f11a2d18aso34453166b.2; 
- Sat, 08 Jun 2024 14:46:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sGEHl-0007vM-LC
+ for qemu-devel@nongnu.org; Sun, 09 Jun 2024 04:52:23 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2c1ab9e17f6so2994110a91.1
+ for <qemu-devel@nongnu.org>; Sun, 09 Jun 2024 01:52:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1717883169; x=1718487969; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/alHFJfcIZYSqhMXs3UYaKvWveN8iKEwTM/iShxLUsg=;
- b=c+w/BxvMYAYpjzZIFxp2ZOTreyQI8YBRxiuSo2m6P0btl2UvOkPA2VQep2a36FTQMd
- inH7+/pFHROWVlwYOHUwt4e/7XhSdS8+AzCHuY2xMd3ktVOoR7c5H2T/2vdL9J8QXgz6
- p6fcRnqTvlLfGsS78HaISng01S4IpU7DWzqzLUKKlxPVeZjZrqKjAGmYr7wL8z7yMVIa
- e6b+9elLumDRjk5qxGTHQxVz4PJdJr88QqY81AUauKSa0D+zpxU+U1zgGlOP3doflEoG
- 95+HlBRfMZyzCBA7idksIXUkxd2SyCgA9zqfDsLeye0nPr1bWP7GtRf4hVlrtYE/Y2yk
- 2QGw==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717923139; x=1718527939;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=d70sB/N+M+bStshnDRlDMCr2vmsamFSMXxkqYGOFpRY=;
+ b=HDu0G8bY01qAA589oXotFaNkBK0MDVwiF8jN3K7/rAjsuh6E+igzO1HqBpdRj7hIE1
+ 5GidJPwfOWLkMZG8Nsw1aq1Jqy8b624QYmn7sQ3eKGCy2lyiqrqW3U2hDGXV2NxnZTt1
+ VVsFVUxiCoB2PERvWoSSHl1g2LOowXO0cRi51LiTnryVRjQowh80FnkRbbkQxPk69w/B
+ A4VuirEmskSbnV1cdYMUvDHsVjgduzNcSZUCAdOyFLx9vjX4vpfwMKqYUlM+T7XXMigp
+ 8TmD5SrEQO5y+lIyv1OZIpW7gBU7TeDpK1EXPCio0m72FrjbV3t9szzHp4z3M6YUkRUa
+ n4mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717883169; x=1718487969;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/alHFJfcIZYSqhMXs3UYaKvWveN8iKEwTM/iShxLUsg=;
- b=Dnj/Ujxj87tbI6Qv4LgXPdsA7UueApBWt09/lmEsnUra0jn07KESSColwo1lU+b7xx
- poHsHkyRNnlnBnEq6weeYp4l1+RhIAi1l8ts20766ufIoGRBRRmvfQGryjZtPQNL//WY
- NenAJJIcsumyJ7VgiPdlCYAIcFvLwAtT6x0g0jKJwL5KdUDAPuymNyRjI1exddXrXj6v
- aK9A0vpbx1cODqsz0U0MDzGxrunaEvEx+NeO5nti4D6fkSoF+wGyOVD+iHf9ow5GM3lm
- dn39LAncRsoUrieAEeqWu0N8m4Qy/Q60aQDaJvpbrpUZAcq69MrOadr5MUmg6YpVp7Bp
- 7rrQ==
-X-Gm-Message-State: AOJu0YzJGu6UddUe5Qz9r7hgIguvtAfqefQBvdg87Qm63RQrTmIAdrix
- Rt9AFRiBcd+0FZgbrkiyyxprEUN7M1tyH+Ut4vc2y1nM9GDWKKZVrLxyCjbH
-X-Google-Smtp-Source: AGHT+IFDc959GklOTTLFsf6Mu1A3Ua3KYJQxk184/tpJxyRTH7ZFRq4AftkT4IY/NzJ/iYwEh1hMrg==
-X-Received: by 2002:a17:906:ad87:b0:a68:ec11:4561 with SMTP id
- a640c23a62f3a-a6cdc0e3a63mr374459366b.76.1717883169193; 
- Sat, 08 Jun 2024 14:46:09 -0700 (PDT)
-Received: from localhost.localdomain (178-221-109-16.dynamic.isp.telekom.rs.
- [178.221.109.16]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6c806eab0asm432951766b.134.2024.06.08.14.46.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 08 Jun 2024 14:46:08 -0700 (PDT)
-From: Branislav Brzak <brzakbranislav@gmail.com>
-To: qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com,
- Branislav Brzak <brzakbranislav@gmail.com>
-Subject: [PATCH] target/riscv: Fix froundnx.h nanbox check
-Date: Sat,  8 Jun 2024 23:45:46 +0200
-Message-Id: <20240608214546.226963-1-brzakbranislav@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1717923139; x=1718527939;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=d70sB/N+M+bStshnDRlDMCr2vmsamFSMXxkqYGOFpRY=;
+ b=quUsaKomexPek7Pi17TuyUOkOAE/0DzQuIcECcxhOarfCVnFzvKGToKklbfGqrsJ5v
+ Une8LT4svjdfEa6mDKA9cvTRRSKY1MVUw/904Ttz9QmPD6A0yPcZc71QYHNGel2Jua43
+ Bcqel3FRV0emngKYvkhbn7d82A9Sqgfnrv1yLm3GKMULu8KwkCWSaqwWZv0tBhIHXx7U
+ z/jFRhU6HaoK0am8t7NPqx7FbTLGaOJD0RH6klGWDs1sUopC+zt9dM8+IclLbx0qYTyu
+ 1VPbT1zWZFEFl8X+Ufzc3jhAJFryIdGOpkJ/60ycsWxpToQiuiDuMnsKO6G9IywqbFi7
+ K6sw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVaz3X0RRmOAvsxVC8GGQgL3zItxWOgz3zpAY/jL0QwSUU180QDseEfnuQumG4PBmP3t65auGU3UK9EuZJu3SyBX2v49lo=
+X-Gm-Message-State: AOJu0YwJxkr1q/Cs5hJZ7Dr0JDYsOsHtEvoIeAFP8XEvpFAQJUxcp7Mu
+ AX4kipGk+6w67iheCbv1/C7239ZEQUgMwDAR/kU8HteliX8iJU6U8sfK8nUC5DY=
+X-Google-Smtp-Source: AGHT+IHZk7GmbaBVYmmF6c8mQa9DB5NCNsw0jU6mFWSvZp7MdmTqoyOTA+K21kepWlgFmbZKcPepcQ==
+X-Received: by 2002:a17:90a:9382:b0:2c2:97c2:1426 with SMTP id
+ 98e67ed59e1d1-2c2bcac30cdmr6033642a91.10.1717923138910; 
+ Sun, 09 Jun 2024 01:52:18 -0700 (PDT)
+Received: from [157.82.204.135] ([157.82.204.135])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c2ee465711sm1613750a91.45.2024.06.09.01.52.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 09 Jun 2024 01:52:18 -0700 (PDT)
+Message-ID: <82079561-20e0-41de-85fa-d0a4c9256621@daynix.com>
+Date: Sun, 9 Jun 2024 17:52:15 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=brzakbranislav@gmail.com; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] Cursor: 8 -> 1 bit alpha downsampling improvement
+To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, philmd@linaro.org, marcandre.lureau@redhat.com
+References: <20240608202045.2815-1-phil@philjordan.eu>
+ <20240608202045.2815-2-phil@philjordan.eu>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240608202045.2815-2-phil@philjordan.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 09 Jun 2024 01:31:43 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,28 +98,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-helper_froundnx_h function mistakenly uses single percision nanbox
-check instead of the half percision one. This patch fixes the issue.
+On 2024/06/09 5:20, Phil Dennis-Jordan wrote:
+> Mouse cursors with 8 bit alpha were downsampled to 1-bit opacity maps by
+> turning alpha values of 255 into 1 and everything else into 0. This
+> means that mostly-opaque pixels ended up completely invisible.
+> 
+> This patch changes the behaviour so that only pixels with less than 50%
+> alpha (0-127) are treated as transparent when converted to 1-bit alpha.
+> 
+> This greatly improves the subjective appearance of anti-aliased mouse
+> cursors, such as those used by macOS, when using a front-end UI without
+> support for alpha-blended cursors, such as some VNC clients.
+> 
+> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> ---
+>   ui/cursor.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/ui/cursor.c b/ui/cursor.c
+> index 29717b3ecb..4c05e5555c 100644
+> --- a/ui/cursor.c
+> +++ b/ui/cursor.c
+> @@ -232,7 +232,7 @@ void cursor_get_mono_mask(QEMUCursor *c, int transparent, uint8_t *mask)
+>       for (y = 0; y < c->height; y++) {
+>           bit = 0x80;
+>           for (x = 0; x < c->width; x++, data++) {
+> -            if ((*data & 0xff000000) != 0xff000000) {
+> +            if ((*data & 0xff000000) < 0x80000000) {
 
-Signed-off-by: Branislav Brzak <brzakbranislav@gmail.com>
----
- target/riscv/fpu_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/target/riscv/fpu_helper.c b/target/riscv/fpu_helper.c
-index 871a70a316..91b1a56d10 100644
---- a/target/riscv/fpu_helper.c
-+++ b/target/riscv/fpu_helper.c
-@@ -676,7 +676,7 @@ uint64_t helper_fround_h(CPURISCVState *env, uint64_t rs1)
- 
- uint64_t helper_froundnx_h(CPURISCVState *env, uint64_t rs1)
- {
--    float16 frs1 = check_nanbox_s(env, rs1);
-+    float16 frs1 = check_nanbox_h(env, rs1);
-     frs1 = float16_round_to_int(frs1, &env->fp_status);
-     return nanbox_h(env, frs1);
- }
--- 
-2.34.1
-
+You can just evaluate: !(*data & 0x80000000)
 
