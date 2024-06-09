@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8F6C27C53
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Jun 2024 08:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C589C27C53
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Jun 2024 09:07:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGEOb-0005Ac-Mw; Sun, 09 Jun 2024 04:59:25 -0400
+	id 1sGEVV-0006Pe-2M; Sun, 09 Jun 2024 05:06:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sGEOZ-0005AT-SD
- for qemu-devel@nongnu.org; Sun, 09 Jun 2024 04:59:24 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1sGEVS-0006PJ-Q1
+ for qemu-devel@nongnu.org; Sun, 09 Jun 2024 05:06:32 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sGEOW-0000Nv-TJ
- for qemu-devel@nongnu.org; Sun, 09 Jun 2024 04:59:22 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7046e87e9afso105724b3a.0
- for <qemu-devel@nongnu.org>; Sun, 09 Jun 2024 01:59:19 -0700 (PDT)
+ id 1sGEVQ-0001Zt-VP
+ for qemu-devel@nongnu.org; Sun, 09 Jun 2024 05:06:30 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2c2eb5b1917so555297a91.2
+ for <qemu-devel@nongnu.org>; Sun, 09 Jun 2024 02:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717923559; x=1718528359;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717923987; x=1718528787;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TiNXRggKOd8tiPolmpM0X1M1FzyLTexY4bsdWhAi1fA=;
- b=wJ4Z8rpmKgTWvTdxI5LNdH/rYgrfAwvkep1Lv+k7CXfqWckU+ewTom4lR1hDEDK+Oa
- vFPBW7PI7O+E15mT7YB/U1tr6exL/D0nBFFJLe3d63odssXjg5RCpC8ph80dFKJf0mU2
- iM2eLr/J/854iO78VNKORFgr+DcRKkrn7VdokwAKMQ9z2Kw2wXf7qnf+0/TqkZFzJdRL
- Jm0y0oCCopRey3kwBB+C/9jiDLZEuJ3Xi4EYr0O4+zUpCBWj7dlsnaXHbUEV0K1jBwMK
- /0AnAJ/iW31h3Br+CWsTXOADxCJY2vbF7id+q+62s52x+qi6ENld/kLZt32AXF644Ij4
- Onag==
+ bh=nS/xyx91Ti2NGlgKmQn7Ab5LWao7+anvDTB6TfeVMcw=;
+ b=tA24LL9xr/d+WHIWhydUp1/KiAWuE5VsYkP1n8WmsjLhLn33CT8VXI9rVDA2RBtdBV
+ hRzdFjRhuCsst3wyF1xEzq05IpXl6/3brcqqFhMvTh+DjdJw+VoQh8pQYtlEpgHapc1B
+ O+QFv+hRSOYYMTXZyC+svCX+Q51TV77nLXbelYDkoIQPw30AxUu7rNfGmtonLayahXW5
+ C3ColAoNk0zfUlYmh2g05Okq3nkmgbasIdRmSx59mglv+RR8An7i9AKceacCV9L7Iwug
+ kZtUyZJm/5kTYctMt6pjnZLCtClHc9oEMwyzY7HPxzKU2R9qAe2EDA39TU0cLT7fpyCQ
+ QFSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717923559; x=1718528359;
+ d=1e100.net; s=20230601; t=1717923987; x=1718528787;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TiNXRggKOd8tiPolmpM0X1M1FzyLTexY4bsdWhAi1fA=;
- b=ePPME5jdwXqIT+KrKFnJHj0f/aUpWZxP0eE2GpPgH6utifk+fr0k9A06PhSeJsiv4G
- 6B+BzaIIN4Kzui4uWv6xOZtkx5kiomZgLwi4W62oVMkW+MXwLxgv6N0iBXOLYTKRUlJJ
- F74pRLkuzZtgY3i6aWdFYmyIqkqbNx4rju11KoXxGTsFg5zn/yapDv3Sy8nmyi7HhxCs
- MEbA0I7TvAq0oeB2uDvpB22keKv8eJwdZDWZJUYdH8fzI9ONI2Hue7WG5Qa9qQcco6sl
- P6y1V/ENBzb9Xex4e0oIsqCXWKtNWU10wufyam25lj8b3BUmQMuYb2ETlxcAw/dbz8eO
- B/Mw==
+ bh=nS/xyx91Ti2NGlgKmQn7Ab5LWao7+anvDTB6TfeVMcw=;
+ b=wIDfWZBzf2rz+Cd8Zptpz3mEVSiIgJeUCeZZSEAy05x5ysG4kYcqldTziDVUAyAS6v
+ 8GZP05CYukFbz+yZ2mig416il4qVFNonXDAwYMnhqsMlJ3cikIWyNaKqHZ/eBMguYhXO
+ HMrO8nz96gJbPyFFJZwsxh1of89LJDJoqEiBKiEZqPDz1Ll95B/8qrrN9EvZ3FQGcJW+
+ R6oTon8549fKYX/uJ2v9iqX+O47tDMhd8GvMC7iKbH5jZGQlKXPZPKmKyUITQydofQOx
+ YiCig/tFeFVr8S+q5kLcl1mMeBsfrU4a9QQRFY7de7081bMZ6zf23y7rE09lpNsBE0g0
+ ZiNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWmrf36cHa1qZYxyvbTzSm+k2iTPesrQFrAud0H4GFeN4RGlkQbtqI7R2kL4Y4HhwaRjKJhKa+66nbZweSYnVySoSprc3o=
-X-Gm-Message-State: AOJu0YwxGTH7pisI4o9zQwX+EcPC3r/jPFu7b06y2ezM42W6SrLlQK+K
- k5RtQd3RsuV8fbOsiPCiw3JFcjL6KTDZ21COW1XuFBBHHN8hcRrQ+/rf2q9CB+WHqauHr56zPOK
- wjk4=
-X-Google-Smtp-Source: AGHT+IE3zxmrXcL0/sidHCQpnpSnUFe6dB1tGiXKKpDgIS4yaUNA7TiQdQFke3qqwoH7PH8LgljLUQ==
-X-Received: by 2002:a05:6a00:8506:b0:704:25de:f297 with SMTP id
- d2e1a72fcca58-70425def3f2mr2182639b3a.29.1717923558649; 
- Sun, 09 Jun 2024 01:59:18 -0700 (PDT)
+ AJvYcCXnE8/xO3ZwJ0QeZ5aCrIkO0aRh6ecOdTZ8MRkk2fEjkc+tu9zeDSGVGUTpVS/DHiynWzvZ/pEM+ptSv8Cv/+wFa8agJTE=
+X-Gm-Message-State: AOJu0YxL6gcXhpKCsFXpELgYRyLX5Tl+do3axEWMcuDtZPNpzQ76Bg15
+ GEzuUKuVpoPvssZ7xPrTj04CWi8TtFbTihlkVYzgc1KWpP/Ag+5jEHgYxDIZSHI=
+X-Google-Smtp-Source: AGHT+IFmrXA0FDPzYY887nBn9pXuFmqJcDHjk7TBU4kTE0BzCVVrwH2ndyvutKMDI7QghQa/xZ8/gg==
+X-Received: by 2002:a17:90a:4494:b0:2c2:fed5:b88c with SMTP id
+ 98e67ed59e1d1-2c2fed5b979mr467385a91.47.1717923987439; 
+ Sun, 09 Jun 2024 02:06:27 -0700 (PDT)
 Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-703fd3774besm5310345b3a.14.2024.06.09.01.59.17
+ 98e67ed59e1d1-2c2eceb5b29sm1708501a91.51.2024.06.09.02.06.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Jun 2024 01:59:18 -0700 (PDT)
-Message-ID: <16786a0d-4cf5-4e62-9db1-a2f448f4b8a6@daynix.com>
-Date: Sun, 9 Jun 2024 17:59:16 +0900
+ Sun, 09 Jun 2024 02:06:27 -0700 (PDT)
+Message-ID: <dd047370-f0ed-4b8c-a251-037e82f64986@daynix.com>
+Date: Sun, 9 Jun 2024 18:06:24 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] hw: Moves int_clamp() implementations to header
+Subject: Re: [PATCH 3/3] ui/cocoa: Adds support for mouse cursors
 To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, philmd@linaro.org, marcandre.lureau@redhat.com
 References: <20240608202045.2815-1-phil@philjordan.eu>
- <20240608202045.2815-3-phil@philjordan.eu>
+ <20240608202045.2815-4-phil@philjordan.eu>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240608202045.2815-3-phil@philjordan.eu>
+In-Reply-To: <20240608202045.2815-4-phil@philjordan.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::432;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,16 +99,36 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2024/06/09 5:20, Phil Dennis-Jordan wrote:
-> Both hw/input/hid.c and hw/usb/dev-wacom.c define identical versions
-> (aside from code formatting) of a clamping function, int_clamp().
-> (marked inline) To avoid duplication and to enable further re-use, this
-> change moves the function into qemu/cutils.h.
+> This change implements the callbacks dpy_cursor_define and dpy_mouse_set
+> for the Cocoa UI. The incoming mouse cursor image is converted into an
+> NSCursor object, allowing the guest mouse cursor to be rendered as the
+> host's native OS cursor on macOS.
+> 
+> This is straightforward in absolute pointing mode, but rather trickier
+> with a relative pointing device:
+> 
+>   1. The cursor position in Qemu's coordinate system must be translated
+>      and converted into macOS's Core Graphics/Quartz coordinates when
+>      positioning the cursor. Additionally, the position already includes
+>      the hotspot offset; we'd prefer to use the host OS's hotspot support
+>      so we need subtract the hotspot vector off again.
+>   2. Setting the cursor position programmatically on macOS biases the
+>      next mouse movement event by the amount the cursor was shifted.
+>      If we didn't reverse that bias when forwarding the next event
+>      back into Qemu's input stack, this would create a feedback loop.
+>      (The behaviour of affecting mouse events makes sense for e.g.
+>      setting the cursor position in a remote access system.)
+> 
+> This change slightly improves the user experience when using virtual
+> display adapter implementations which check for UI back-end cursor
+> support, and fixes the issue of no visible mouse cursor when using one
+> which does not. (Such as virtio-vga)
 
-Wht about replacing int_clamp(a, b, c) with MIN(MAX(a, b), c)? 
-MIN(MAX(a, b), c) has a few advantages:
-- It works with any integer types
-   (so you can replace even uint_clamp() in hw/display/vga.c)
-- It makes clear that b is the minimum value and c is the maximum value
-   while it is not with int_clamp()
-- It is already used in other places.
+Thanks for working on ui/cocoa, but I already have submitted a patch for 
+this particular problem:
+https://patchew.org/QEMU/20240318-cursor-v1-0-0bbe6c382217@daynix.com/
+
+The difference between these patches is that my patch does not use 
+warping at all. I thought reversing the mouse movement bias is a fragile 
+approach that depends on the details of how Quartz works.
 
