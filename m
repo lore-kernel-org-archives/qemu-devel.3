@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97BB2C27C53
-	for <qemu-devel@archiver.kernel.org>; Sun,  9 Jun 2024 19:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09B9FC27C53
+	for <qemu-devel@archiver.kernel.org>; Sun,  9 Jun 2024 19:06:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGNop-0007wb-O0; Sun, 09 Jun 2024 15:03:07 -0400
+	id 1sGNri-0000kD-Kj; Sun, 09 Jun 2024 15:06:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sGNoo-0007wO-RH
- for qemu-devel@nongnu.org; Sun, 09 Jun 2024 15:03:06 -0400
+ id 1sGNrg-0000hZ-Fg
+ for qemu-devel@nongnu.org; Sun, 09 Jun 2024 15:06:04 -0400
 Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sGNon-0006FV-1B
- for qemu-devel@nongnu.org; Sun, 09 Jun 2024 15:03:06 -0400
+ id 1sGNre-0006vN-M5
+ for qemu-devel@nongnu.org; Sun, 09 Jun 2024 15:06:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1717959781;
- bh=vyY6JCTNzStpm0dJ2D3XTOWlcS30yIhXLqyc4K1ovzI=;
+ s=mail; t=1717959961;
+ bh=dLc8V9KYljGpQZml3Sr28BLa3Yi0F1apaSQp9eBOz+0=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=n8EfYxJO0Wc5RNWSJ8YrPdg6Bn79dQ2+ujlwv62zUO96eCpqt40R3O+JBBj0bHW9w
- 8H4w0PS+BZBvM653ZkUhvfLZAWabX4VN5sjqBx/+42A+7QSy5swOVistHCoe5T7y5s
- cEFLc1wTvO+f6e9y00CJR2UIqTwRy/0/+ZA+1KD1N24ihKodAgS+V34GcQuUpLxX1f
- jGqhxPqOoTPPnACna5n8YXzGNAzK+5fH11bkUohAlDsb7e+C3aAR1FNcN+O62aUBjF
- 7Hyr72DLjHg+5k1Gp6TGas9SFua+ydL+PNeJ1cp8YDn4A2QA60j9UX7vKg1nA6wkqF
- 7iyYD48sUkQmA==
+ b=bbOvyccO01tqblterYPo3AzB+lnVzzdAx3KRd5AQ5Q0KJivw8garrGjvlvncZrY63
+ gBsR5c3WyfW5yr4d48BebX5sizo6y8r/bgqM/W+dgsIyXdLPblgCSDV7yMdum21SA+
+ JwrmqP7DTsXxEjyB65b47Ve7sP+pp5mc6EI0K5+4arXYVUy3BvSGfgybxKpqBA6+lA
+ DyeYd+G1Jn3Ul5NvimWpLxOJyq/hu11Iia7MLcFCyM+qT73cIAgDp+mNFG8/kP/ymQ
+ KFyB514FOz98AB5e3u4Dj0kz0CD2b8Spljj8LRWqC2HVGl6XqpZAwCpkbGJbgVFCEV
+ TymSyX8H0CDzw==
 Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 3F62E3780C1F;
- Sun,  9 Jun 2024 19:02:59 +0000 (UTC)
-Message-ID: <70a2368c-2ed5-4035-a278-5d8a16c406ba@collabora.com>
-Date: Sun, 9 Jun 2024 22:02:56 +0300
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 3B1403780C1F;
+ Sun,  9 Jun 2024 19:05:59 +0000 (UTC)
+Message-ID: <e0cd69c0-f82c-4772-9169-5645360d9af7@collabora.com>
+Date: Sun, 9 Jun 2024 22:05:56 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v13 03/13] virtio-gpu: Handle virtio_gpu_virgl_init()
  failure
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
  Stefano Stabellini <sstabellini@kernel.org>,
@@ -52,11 +52,10 @@ To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
  Robert Beckett <bob.beckett@collabora.com>,
  Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
+ <alex.bennee@linaro.org>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, ernunes@redhat.com,
+ Alyssa Ross <hi@alyssa.is>, =?UTF-8?Q?Roger_Pau_Monn=C3=A9?=
+ <roger.pau@citrix.com>, Alex Deucher <alexander.deucher@amd.com>,
  Stefano Stabellini <stefano.stabellini@amd.com>,
  =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
  Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
@@ -65,12 +64,10 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240527030233.3775514-1-dmitry.osipenko@collabora.com>
  <20240527030233.3775514-4-dmitry.osipenko@collabora.com>
- <c9891c82-b139-49cb-9f94-52a96cc20eea@daynix.com>
- <c2a4c684-24d8-4a3d-bed0-9b711b00b169@collabora.com>
- <24afb7f8-f091-4405-917e-ee7bb0a1e2b8@daynix.com>
+ <CAJ+F1CLW3fSE+UVwqXepwipJrK77EJfSqvepFXZUwecNdwmTwQ@mail.gmail.com>
 Content-Language: en-US
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <24afb7f8-f091-4405-917e-ee7bb0a1e2b8@daynix.com>
+In-Reply-To: <CAJ+F1CLW3fSE+UVwqXepwipJrK77EJfSqvepFXZUwecNdwmTwQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=46.235.227.194;
@@ -96,24 +93,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/24 08:44, Akihiko Odaki wrote:
-> On 2024/06/03 14:26, Dmitry Osipenko wrote:
->> On 6/2/24 08:34, Akihiko Odaki wrote:
->>>> +typedef enum {
->>>> +    RS_START,       /* starting state */
->>>> +    RS_INIT_FAILED, /* failed initialisation */
->>>
->>> Is the distinction between RS_START and RS_INIT_FAILED really necessary?
+On 6/4/24 17:21, Marc-André Lureau wrote:
+>> @@ -65,13 +70,21 @@ static void virtio_gpu_gl_handle_ctrl(VirtIODevice
+>> *vdev, VirtQueue *vq)
+>>          return;
+>>      }
 >>
->> The state stays in RS_INIT_FAILED once was failed until virtio-gpu is
->> reset, re-initializing virglrenderer isn't allowed in this state.
-> 
-> Can you elaborate more? Why isn't re-initializing allowed?
+>> -    if (!gl->renderer_inited) {
+>> -        virtio_gpu_virgl_init(g);
+>> -        gl->renderer_inited = true;
+>> -    }
+>> -    if (gl->renderer_reset) {
+>> -        gl->renderer_reset = false;
+>> +    switch (gl->renderer_state) {
+>> +    case RS_RESET:
+>>          virtio_gpu_virgl_reset(g);
+>> +        /* fallthrough */
+>> +    case RS_START:
+>> +        if (virtio_gpu_virgl_init(g)) {
+>> +            gl->renderer_state = RS_INIT_FAILED;
+>> +        } else {
+>> +            gl->renderer_state = RS_INITED;
+>> +        }
+>> +        break;
+>> +    case RS_INIT_FAILED:
+>> +        return;
+>> +    case RS_INITED:
+>> +        break;
+>>      }
+>>
+>>
+> This still lets it go through the cmd processing after setting
+> gl->renderer_state = RS_INIT_FAILED, the first time.
 
-In practice, if virglrenderer initialization failed once, it will fail
-second time. Otherwise we will be retrying to init endlessly because
-guest won't stop sending virgl commands even if they all are timing out.
-Each initialization failure produces a error msg.
+Good catch, thanks!
 
 -- 
 Best regards,
