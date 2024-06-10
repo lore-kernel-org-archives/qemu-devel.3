@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDEF1C25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:01:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 684C3C25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:02:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGwR7-0008Gv-42; Tue, 11 Jun 2024 04:00:57 -0400
+	id 1sGwQv-0008Am-FO; Tue, 11 Jun 2024 04:00:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1sGwR5-0008GL-0P
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:00:55 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
+ id 1sGwQt-00089G-8b
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:00:43 -0400
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1sGwR2-0006mp-Pj
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:00:54 -0400
+ id 1sGwQp-0006jb-Sf
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:00:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1718092852; x=1749628852;
+ t=1718092840; x=1749628840;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=h/+xzRnNIaIK2kagnHhmAQbOZqHqMq07lzV1hIPaZdI=;
- b=fPOJTk3XPns4/LPU8iRe/q6/RBuoM7zKP12B2DK4cSZP3fUUq9xLo7ij
- 9kvI2aC2hF7sy7KXzLfX4BYs67qMGDw/NJ2X9hekpm9xP+4eODJK8gaR7
- 18rEeHFCGVKcZPrrx9ss9l+7oopyOLVU2ZrpIIQ3a8QfnyQOvPb+71swN
- Or5vi2ip1W4aE3vZssubVF0R00wXaiOCIVTm8hMjpVKUzXrhPVV6je4gp
- 1mkTrSBOaisjBaRdH2aPCfFsnD2CzmKvTlBTDUoCAzL8nIrOph6Nwx3ZH
- 1vk0sITRS1UXxIVbkKR0nnr0VJ73gwKMY4U7SLeyH6wD6W7Bu8H+4eFEK A==;
-X-CSE-ConnectionGUID: v6nOUNvZQd2j0jUOySEp+w==
-X-CSE-MsgGUID: iHZd2CJeTY2FaAq5TG7qbg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11099"; a="15013827"
-X-IronPort-AV: E=Sophos;i="6.08,229,1712646000"; d="scan'208";a="15013827"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Jun 2024 01:00:51 -0700
-X-CSE-ConnectionGUID: +UMOR6IUR2qTe77u36fVLw==
-X-CSE-MsgGUID: CKu+Pw1ER/SPjPJG4p0L/g==
+ bh=yZclYataE8oUk3+OrIlf/wHgyHNC2yjRy371bVDuXoc=;
+ b=TmnwfV3/kgIKOzBuR9vboMG+Dh2dgYyupubtZFq9d0n+6b9/MriyYgqx
+ EGvX+LH+0uKhPqCG5c3FcANTDiEwlBAnq2BY2l19gAsiacuAxDXD1qX5K
+ rTrB0atBjOpmWYUHLPXrZKOeTSGSvhestHMqqKE8/vC9/AVvncZDGiUd8
+ yWr8ZmcjDSPuFlLapqyJEerAsnNW+KQ8vqTx/fwxPtS+5jlhzWGX81FDd
+ UJVfwhz00tHkyLNmp4pLqYhI9WSYNJoGqZwv54X0gSgRtuQLbQaANsIsi
+ hrRTvZGmeQrAra87pqQXFJL7HLSaGO8GpaKXKL+aCpzWHGmW1BUIfkG1W Q==;
+X-CSE-ConnectionGUID: 9mnQJZvTTQmcNBTfxcyqDg==
+X-CSE-MsgGUID: PmAQjLNDRFmiwUm8ITR+kA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11099"; a="14510006"
+X-IronPort-AV: E=Sophos;i="6.08,229,1712646000"; d="scan'208";a="14510006"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Jun 2024 01:00:37 -0700
+X-CSE-ConnectionGUID: n7I6srg6SaaI9CPOgDLfcg==
+X-CSE-MsgGUID: 4xgPB4ARQ2WsrOJPl8Smew==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,229,1712646000"; d="scan'208";a="39415830"
+X-IronPort-AV: E=Sophos;i="6.08,229,1712646000"; d="scan'208";a="39184810"
 Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
- by fmviesa010.fm.intel.com with ESMTP; 11 Jun 2024 01:00:48 -0700
+ by fmviesa007.fm.intel.com with ESMTP; 11 Jun 2024 01:00:33 -0700
 From: Yuan Liu <yuan1.liu@intel.com>
 To: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com,
  marcandre.lureau@redhat.com, berrange@redhat.com, thuth@redhat.com,
  philmd@linaro.org
 Cc: qemu-devel@nongnu.org, yuan1.liu@intel.com, nanhai.zou@intel.com,
  shameerali.kolothum.thodi@huawei.com
-Subject: [PATCH v8 5/7] migration/multifd: implement initialization of qpl
- compression
-Date: Mon, 10 Jun 2024 18:21:08 +0800
-Message-ID: <20240610102110.900410-6-yuan1.liu@intel.com>
+Subject: [PATCH v8 1/7] docs/migration: add qpl compression feature
+Date: Mon, 10 Jun 2024 18:21:04 +0800
+Message-ID: <20240610102110.900410-2-yuan1.liu@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240610102110.900410-1-yuan1.liu@intel.com>
 References: <20240610102110.900410-1-yuan1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=yuan1.liu@intel.com;
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=yuan1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -84,362 +83,294 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-during initialization, a software job is allocated to each channel
-for software path fallabck when the IAA hardware is unavailable or
-the hardware job submission fails. If the IAA hardware is available,
-multiple hardware jobs are allocated for batch processing.
+add Intel Query Processing Library (QPL) compression method
+introduction
 
 Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
 Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Acked-by: Peter Xu <peterx@redhat.com>
 ---
- migration/multifd-qpl.c | 328 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 327 insertions(+), 1 deletion(-)
+ docs/devel/migration/features.rst        |   1 +
+ docs/devel/migration/qpl-compression.rst | 260 +++++++++++++++++++++++
+ 2 files changed, 261 insertions(+)
+ create mode 100644 docs/devel/migration/qpl-compression.rst
 
-diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
-index 056a68a060..6791a204d5 100644
---- a/migration/multifd-qpl.c
-+++ b/migration/multifd-qpl.c
-@@ -9,12 +9,338 @@
-  * This work is licensed under the terms of the GNU GPL, version 2 or later.
-  * See the COPYING file in the top-level directory.
-  */
+diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
+index d5ca7b86d5..bc98b65075 100644
+--- a/docs/devel/migration/features.rst
++++ b/docs/devel/migration/features.rst
+@@ -12,3 +12,4 @@ Migration has plenty of features to support different use cases.
+    virtio
+    mapped-ram
+    CPR
++   qpl-compression
+diff --git a/docs/devel/migration/qpl-compression.rst b/docs/devel/migration/qpl-compression.rst
+new file mode 100644
+index 0000000000..990992d786
+--- /dev/null
++++ b/docs/devel/migration/qpl-compression.rst
+@@ -0,0 +1,260 @@
++===============
++QPL Compression
++===============
++The Intel Query Processing Library (Intel ``QPL``) is an open-source library to
++provide compression and decompression features and it is based on deflate
++compression algorithm (RFC 1951).
 +
- #include "qemu/osdep.h"
- #include "qemu/module.h"
-+#include "qapi/error.h"
-+#include "multifd.h"
-+#include "qpl/qpl.h"
++The ``QPL`` compression relies on Intel In-Memory Analytics Accelerator(``IAA``)
++and Shared Virtual Memory(``SVM``) technology, they are new features supported
++from Intel 4th Gen Intel Xeon Scalable processors, codenamed Sapphire Rapids
++processor(``SPR``).
 +
-+typedef struct {
-+    /* the QPL hardware path job */
-+    qpl_job *job;
-+    /* indicates if fallback to software path is required */
-+    bool fallback_sw_path;
-+    /* output data from the software path */
-+    uint8_t *sw_output;
-+    /* output data length from the software path */
-+    uint32_t sw_output_len;
-+} QplHwJob;
++For more ``QPL`` introduction, please refer to `QPL Introduction
++<https://intel.github.io/qpl/documentation/introduction_docs/introduction.html>`_
 +
-+typedef struct {
-+    /* array of hardware jobs, the number of jobs equals the number pages */
-+    QplHwJob *hw_jobs;
-+    /* the QPL software job for the slow path and software fallback */
-+    qpl_job *sw_job;
-+    /* the number of pages that the QPL needs to process at one time */
-+    uint32_t page_num;
-+    /* array of compressed page buffers */
-+    uint8_t *zbuf;
-+    /* array of compressed page lengths */
-+    uint32_t *zlen;
-+    /* the status of the hardware device */
-+    bool hw_avail;
-+} QplData;
++QPL Compression Framework
++=========================
 +
-+/**
-+ * check_hw_avail: check if IAA hardware is available
-+ *
-+ * If the IAA hardware does not exist or is unavailable,
-+ * the QPL hardware job initialization will fail.
-+ *
-+ * Returns true if IAA hardware is available, otherwise false.
-+ *
-+ * @job_size: indicates the hardware job size if hardware is available
-+ */
-+static bool check_hw_avail(uint32_t *job_size)
-+{
-+    qpl_path_t path = qpl_path_hardware;
-+    uint32_t size = 0;
-+    qpl_job *job;
++::
 +
-+    if (qpl_get_job_size(path, &size) != QPL_STS_OK) {
-+        return false;
-+    }
-+    assert(size > 0);
-+    job = g_malloc0(size);
-+    if (qpl_init_job(path, job) != QPL_STS_OK) {
-+        g_free(job);
-+        return false;
-+    }
-+    g_free(job);
-+    *job_size = size;
-+    return true;
-+}
++  +----------------+       +------------------+
++  | MultiFD Thread |       |accel-config tool |
++  +-------+--------+       +--------+---------+
++          |                         |
++          |                         |
++          |compress/decompress      |
++  +-------+--------+                | Setup IAA
++  |  QPL library   |                | Resources
++  +-------+---+----+                |
++          |   |                     |
++          |   +-------------+-------+
++          |   Open IAA      |
++          |   Devices +-----+-----+
++          |           |idxd driver|
++          |           +-----+-----+
++          |                 |
++          |                 |
++          |           +-----+-----+
++          +-----------+IAA Devices|
++      Submit jobs     +-----------+
++      via enqcmd
 +
-+/**
-+ * multifd_qpl_free_sw_job: clean up software job
-+ *
-+ * Free the software job resources.
-+ *
-+ * @qpl: pointer to the QplData structure
-+ */
-+static void multifd_qpl_free_sw_job(QplData *qpl)
-+{
-+    assert(qpl);
-+    if (qpl->sw_job) {
-+        qpl_fini_job(qpl->sw_job);
-+        g_free(qpl->sw_job);
-+        qpl->sw_job = NULL;
-+    }
-+}
 +
-+/**
-+ * multifd_qpl_free_jobs: clean up hardware jobs
-+ *
-+ * Free all hardware job resources.
-+ *
-+ * @qpl: pointer to the QplData structure
-+ */
-+static void multifd_qpl_free_hw_job(QplData *qpl)
-+{
-+    assert(qpl);
-+    if (qpl->hw_jobs) {
-+        for (int i = 0; i < qpl->page_num; i++) {
-+            qpl_fini_job(qpl->hw_jobs[i].job);
-+            g_free(qpl->hw_jobs[i].job);
-+            qpl->hw_jobs[i].job = NULL;
-+        }
-+        g_free(qpl->hw_jobs);
-+        qpl->hw_jobs = NULL;
-+    }
-+}
++QPL Build And Installation
++--------------------------
 +
-+/**
-+ * multifd_qpl_init_sw_job: initialize a software job
-+ *
-+ * Use the QPL software path to initialize a job
-+ *
-+ * @qpl: pointer to the QplData structure
-+ * @errp: pointer to an error
-+ */
-+static int multifd_qpl_init_sw_job(QplData *qpl, Error **errp)
-+{
-+    qpl_path_t path = qpl_path_software;
-+    uint32_t size = 0;
-+    qpl_job *job = NULL;
-+    qpl_status status;
++.. code-block:: shell
 +
-+    status = qpl_get_job_size(path, &size);
-+    if (status != QPL_STS_OK) {
-+        error_setg(errp, "qpl_get_job_size failed with error %d", status);
-+        return -1;
-+    }
-+    job = g_malloc0(size);
-+    status = qpl_init_job(path, job);
-+    if (status != QPL_STS_OK) {
-+        error_setg(errp, "qpl_init_job failed with error %d", status);
-+        g_free(job);
-+        return -1;
-+    }
-+    qpl->sw_job = job;
-+    return 0;
-+}
++  $git clone --recursive https://github.com/intel/qpl.git qpl
++  $mkdir qpl/build
++  $cd qpl/build
++  $cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DQPL_LIBRARY_TYPE=SHARED ..
++  $sudo cmake --build . --target install
 +
-+/**
-+ * multifd_qpl_init_jobs: initialize hardware jobs
-+ *
-+ * Use the QPL hardware path to initialize jobs
-+ *
-+ * @qpl: pointer to the QplData structure
-+ * @size: the size of QPL hardware path job
-+ * @errp: pointer to an error
-+ */
-+static void multifd_qpl_init_hw_job(QplData *qpl, uint32_t size, Error **errp)
-+{
-+    qpl_path_t path = qpl_path_hardware;
-+    qpl_job *job = NULL;
-+    qpl_status status;
++For more details about ``QPL`` installation, please refer to `QPL Installation
++<https://intel.github.io/qpl/documentation/get_started_docs/installation.html>`_
 +
-+    qpl->hw_jobs = g_new0(QplHwJob, qpl->page_num);
-+    for (int i = 0; i < qpl->page_num; i++) {
-+        job = g_malloc0(size);
-+        status = qpl_init_job(path, job);
-+        /* the job initialization should succeed after check_hw_avail */
-+        assert(status == QPL_STS_OK);
-+        qpl->hw_jobs[i].job = job;
-+    }
-+}
++IAA Device Management
++---------------------
 +
-+/**
-+ * multifd_qpl_init: initialize QplData structure
-+ *
-+ * Allocate and initialize a QplData structure
-+ *
-+ * Returns a QplData pointer on success or NULL on error
-+ *
-+ * @num: the number of pages
-+ * @size: the page size
-+ * @errp: pointer to an error
-+ */
-+static QplData *multifd_qpl_init(uint32_t num, uint32_t size, Error **errp)
-+{
-+    uint32_t job_size = 0;
-+    QplData *qpl;
++The number of ``IAA`` devices will vary depending on the Xeon product model.
++On a ``SPR`` server, there can be a maximum of 8 ``IAA`` devices, with up to
++4 devices per socket.
 +
-+    qpl = g_new0(QplData, 1);
-+    qpl->page_num = num;
-+    if (multifd_qpl_init_sw_job(qpl, errp) != 0) {
-+        g_free(qpl);
-+        return NULL;
-+    }
-+    qpl->hw_avail = check_hw_avail(&job_size);
-+    if (qpl->hw_avail) {
-+        multifd_qpl_init_hw_job(qpl, job_size, errp);
-+    }
-+    qpl->zbuf = g_malloc0(size * num);
-+    qpl->zlen = g_new0(uint32_t, num);
-+    return qpl;
-+}
++By default, all ``IAA`` devices are disabled and need to be configured and
++enabled by users manually.
 +
-+/**
-+ * multifd_qpl_deinit: clean up QplData structure
-+ *
-+ * Free jobs, buffers and the QplData structure
-+ *
-+ * @qpl: pointer to the QplData structure
-+ */
-+static void multifd_qpl_deinit(QplData *qpl)
-+{
-+    if (qpl) {
-+        multifd_qpl_free_sw_job(qpl);
-+        multifd_qpl_free_hw_job(qpl);
-+        g_free(qpl->zbuf);
-+        g_free(qpl->zlen);
-+        g_free(qpl);
-+    }
-+}
++Check the number of devices through the following command
 +
-+/**
-+ * multifd_qpl_send_setup: set up send side
-+ *
-+ * Set up the channel with QPL compression.
-+ *
-+ * Returns 0 on success or -1 on error
-+ *
-+ * @p: Params for the channel being used
-+ * @errp: pointer to an error
-+ */
-+static int multifd_qpl_send_setup(MultiFDSendParams *p, Error **errp)
-+{
-+    QplData *qpl;
++.. code-block:: shell
 +
-+    qpl = multifd_qpl_init(p->page_count, p->page_size, errp);
-+    if (!qpl) {
-+        return -1;
-+    }
-+    p->compress_data = qpl;
++  #lspci -d 8086:0cfe
++  6a:02.0 System peripheral: Intel Corporation Device 0cfe
++  6f:02.0 System peripheral: Intel Corporation Device 0cfe
++  74:02.0 System peripheral: Intel Corporation Device 0cfe
++  79:02.0 System peripheral: Intel Corporation Device 0cfe
++  e7:02.0 System peripheral: Intel Corporation Device 0cfe
++  ec:02.0 System peripheral: Intel Corporation Device 0cfe
++  f1:02.0 System peripheral: Intel Corporation Device 0cfe
++  f6:02.0 System peripheral: Intel Corporation Device 0cfe
 +
-+    /*
-+     * the page will be compressed independently and sent using an IOV. The
-+     * additional two IOVs are used to store packet header and compressed data
-+     * length
-+     */
-+    p->iov = g_new0(struct iovec, p->page_count + 2);
-+    return 0;
-+}
++IAA Device Configuration And Enabling
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 +
-+/**
-+ * multifd_qpl_send_cleanup: clean up send side
-+ *
-+ * Close the channel and free memory.
-+ *
-+ * @p: Params for the channel being used
-+ * @errp: pointer to an error
-+ */
-+static void multifd_qpl_send_cleanup(MultiFDSendParams *p, Error **errp)
-+{
-+    multifd_qpl_deinit(p->compress_data);
-+    p->compress_data = NULL;
-+    g_free(p->iov);
-+    p->iov = NULL;
-+}
++The ``accel-config`` tool is used to enable ``IAA`` devices and configure
++``IAA`` hardware resources(work queues and engines). One ``IAA`` device
++has 8 work queues and 8 processing engines, multiple engines can be assigned
++to a work queue via ``group`` attribute.
 +
-+/**
-+ * multifd_qpl_send_prepare: prepare data to be able to send
-+ *
-+ * Create a compressed buffer with all the pages that we are going to
-+ * send.
-+ *
-+ * Returns 0 on success or -1 on error
-+ *
-+ * @p: Params for the channel being used
-+ * @errp: pointer to an error
-+ */
-+static int multifd_qpl_send_prepare(MultiFDSendParams *p, Error **errp)
-+{
-+    /* Implement in next patch */
-+    return -1;
-+}
++For ``accel-config`` installation, please refer to `accel-config installation
++<https://github.com/intel/idxd-config>`_
 +
-+/**
-+ * multifd_qpl_recv_setup: set up receive side
-+ *
-+ * Create the compressed channel and buffer.
-+ *
-+ * Returns 0 on success or -1 on error
-+ *
-+ * @p: Params for the channel being used
-+ * @errp: pointer to an error
-+ */
-+static int multifd_qpl_recv_setup(MultiFDRecvParams *p, Error **errp)
-+{
-+    QplData *qpl;
++One example of configuring and enabling an ``IAA`` device.
 +
-+    qpl = multifd_qpl_init(p->page_count, p->page_size, errp);
-+    if (!qpl) {
-+        return -1;
-+    }
-+    p->compress_data = qpl;
-+    return 0;
-+}
++.. code-block:: shell
 +
-+/**
-+ * multifd_qpl_recv_cleanup: set up receive side
-+ *
-+ * Close the channel and free memory.
-+ *
-+ * @p: Params for the channel being used
-+ */
-+static void multifd_qpl_recv_cleanup(MultiFDRecvParams *p)
-+{
-+    multifd_qpl_deinit(p->compress_data);
-+    p->compress_data = NULL;
-+}
++  #accel-config config-engine iax1/engine1.0 -g 0
++  #accel-config config-engine iax1/engine1.1 -g 0
++  #accel-config config-engine iax1/engine1.2 -g 0
++  #accel-config config-engine iax1/engine1.3 -g 0
++  #accel-config config-engine iax1/engine1.4 -g 0
++  #accel-config config-engine iax1/engine1.5 -g 0
++  #accel-config config-engine iax1/engine1.6 -g 0
++  #accel-config config-engine iax1/engine1.7 -g 0
++  #accel-config config-wq iax1/wq1.0 -g 0 -s 128 -p 10 -b 1 -t 128 -m shared -y user -n app1 -d user
++  #accel-config enable-device iax1
++  #accel-config enable-wq iax1/wq1.0
 +
-+/**
-+ * multifd_qpl_recv: read the data from the channel into actual pages
-+ *
-+ * Read the compressed buffer, and uncompress it into the actual
-+ * pages.
-+ *
-+ * Returns 0 on success or -1 on error
-+ *
-+ * @p: Params for the channel being used
-+ * @errp: pointer to an error
-+ */
-+static int multifd_qpl_recv(MultiFDRecvParams *p, Error **errp)
-+{
-+    /* Implement in next patch */
-+    return -1;
-+}
++.. note::
++   IAX is an early name for IAA
 +
-+static MultiFDMethods multifd_qpl_ops = {
-+    .send_setup = multifd_qpl_send_setup,
-+    .send_cleanup = multifd_qpl_send_cleanup,
-+    .send_prepare = multifd_qpl_send_prepare,
-+    .recv_setup = multifd_qpl_recv_setup,
-+    .recv_cleanup = multifd_qpl_recv_cleanup,
-+    .recv = multifd_qpl_recv,
-+};
- 
- static void multifd_qpl_register(void)
- {
--    /* noop */
-+    multifd_register_ops(MULTIFD_COMPRESSION_QPL, &multifd_qpl_ops);
- }
- 
- migration_init(multifd_qpl_register);
++- The ``IAA`` device index is 1, use ``ls -lh /sys/bus/dsa/devices/iax*``
++  command to query the ``IAA`` device index.
++
++- 8 engines and 1 work queue are configured in group 0, so all compression jobs
++  submitted to this work queue can be processed by all engines at the same time.
++
++- Set work queue attributes including the work mode, work queue size and so on.
++
++- Enable the ``IAA1`` device and work queue 1.0
++
++.. note::
++
++  Set work queue mode to shared mode, since ``QPL`` library only supports
++  shared mode
++
++For more detailed configuration, please refer to `IAA Configuration Samples
++<https://github.com/intel/idxd-config/tree/stable/Documentation/accfg>`_
++
++IAA Unit Test
++^^^^^^^^^^^^^
++
++- Enabling ``IAA`` devices for Xeon platform, please refer to `IAA User Guide
++  <https://www.intel.com/content/www/us/en/content-details/780887/intel-in-memory-analytics-accelerator-intel-iaa.html>`_
++
++- ``IAA`` device driver is Intel Data Accelerator Driver (idxd), it is
++  recommended that the minimum version of Linux kernel is 5.18.
++
++- Add ``"intel_iommu=on,sm_on"`` parameter to kernel command line
++  for ``SVM`` feature enabling.
++
++Here is an easy way to verify ``IAA`` device driver and ``SVM`` with `iaa_test
++<https://github.com/intel/idxd-config/tree/stable/test>`_
++
++.. code-block:: shell
++
++  #./test/iaa_test
++   [ info] alloc wq 0 shared size 128 addr 0x7f26cebe5000 batch sz 0xfffffffe xfer sz 0x80000000
++   [ info] test noop: tflags 0x1 num_desc 1
++   [ info] preparing descriptor for noop
++   [ info] Submitted all noop jobs
++   [ info] verifying task result for 0x16f7e20
++   [ info] test with op 0 passed
++
++
++IAA Resources Allocation For Migration
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++There is no ``IAA`` resource configuration parameters for migration and
++``accel-config`` tool configuration cannot directly specify the ``IAA``
++resources used for migration.
++
++The multifd migration with ``QPL`` compression method  will use all work
++queues that are enabled and shared mode.
++
++.. note::
++
++  Accessing IAA resources requires ``sudo`` command or ``root`` privileges
++  by default. Administrators can modify the IAA device node ownership
++  so that QEMU can use IAA with specified user permissions.
++
++  For example
++
++  #chown -R qemu /dev/iax
++
++Shared Virtual Memory(SVM) Introduction
++=======================================
++
++An ability for an accelerator I/O device to operate in the same virtual
++memory space of applications on host processors. It also implies the
++ability to operate from pageable memory, avoiding functional requirements
++to pin memory for DMA operations.
++
++When using ``SVM`` technology, users do not need to reserve memory for the
++``IAA`` device and perform pin memory operation. The ``IAA`` device can
++directly access data using the virtual address of the process.
++
++For more ``SVM`` technology, please refer to
++`Shared Virtual Addressing (SVA) with ENQCMD
++<https://docs.kernel.org/next/x86/sva.html>`_
++
++
++How To Use QPL Compression In Migration
++=======================================
++
++1 - Installation of ``QPL`` library and ``accel-config`` library if using IAA
++
++2 - Configure and enable ``IAA`` devices and work queues via ``accel-config``
++
++3 - Build ``QEMU`` with ``--enable-qpl`` parameter
++
++  E.g. configure --target-list=x86_64-softmmu --enable-kvm ``--enable-qpl``
++
++4 - Enable ``QPL`` compression during migration
++
++  Set ``migrate_set_parameter multifd-compression qpl`` when migrating, the
++  ``QPL`` compression does not support configuring the compression level, it
++  only supports one compression level.
++
++The Difference Between QPL And ZLIB
++===================================
++
++Although both ``QPL`` and ``ZLIB`` are based on the deflate compression
++algorithm, and ``QPL`` can support the header and tail of ``ZLIB``, ``QPL``
++is still not fully compatible with the ``ZLIB`` compression in the migration.
++
++``QPL`` only supports 4K history buffer, and ``ZLIB`` is 32K by default.
++``ZLIB`` compresses data that ``QPL`` may not decompress correctly and
++vice versa.
++
++``QPL`` does not support the ``Z_SYNC_FLUSH`` operation in ``ZLIB`` streaming
++compression, current ``ZLIB`` implementation uses ``Z_SYNC_FLUSH``, so each
++``multifd`` thread has a ``ZLIB`` streaming context, and all page compression
++and decompression are based on this stream. ``QPL`` cannot decompress such data
++and vice versa.
++
++The introduction for ``Z_SYNC_FLUSH``, please refer to `Zlib Manual
++<https://www.zlib.net/manual.html>`_
++
++The Best Practices
++==================
++When user enables the IAA device for ``QPL`` compression, it is recommended
++to add ``-mem-prealloc`` parameter to the destination boot parameters. This
++parameter can avoid the occurrence of I/O page fault and reduce the overhead
++of IAA compression and decompression.
++
++The example of booting with ``-mem-prealloc`` parameter
++
++.. code-block:: shell
++
++   $qemu-system-x86_64 --enable-kvm -cpu host --mem-prealloc ...
++
++
++An example about I/O page fault measurement of destination without
++``-mem-prealloc``, the ``svm_prq`` indicates the number of I/O page fault
++occurrences and processing time.
++
++.. code-block:: shell
++
++  #echo 1 > /sys/kernel/debug/iommu/intel/dmar_perf_latency
++  #echo 2 > /sys/kernel/debug/iommu/intel/dmar_perf_latency
++  #echo 3 > /sys/kernel/debug/iommu/intel/dmar_perf_latency
++  #echo 4 > /sys/kernel/debug/iommu/intel/dmar_perf_latency
++  #cat /sys/kernel/debug/iommu/intel/dmar_perf_latency
++  IOMMU: dmar18 Register Base Address: c87fc000
++                  <0.1us   0.1us-1us    1us-10us  10us-100us   100us-1ms    1ms-10ms      >=10ms     min(us)     max(us) average(us)
++   inv_iotlb           0         286         123           0           0           0           0           0           1           0
++  inv_devtlb           0         276         133           0           0           0           0           0           2           0
++     inv_iec           0           0           0           0           0           0           0           0           0           0
++     svm_prq           0           0       25206         364         395           0           0           1         556           9
 -- 
 2.43.0
 
