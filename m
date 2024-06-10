@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF55C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F21DC3DA41
 	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 15:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGhLE-0002GS-2C; Mon, 10 Jun 2024 11:53:52 -0400
+	id 1sGhLA-0002FY-2u; Mon, 10 Jun 2024 11:53:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1sGhLB-0002G0-Vq
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 11:53:50 -0400
+ id 1sGhL9-0002FQ-14
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 11:53:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1sGhLA-0005vi-GF
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 11:53:49 -0400
+ id 1sGhL7-0005uh-Ix
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 11:53:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718034827;
+ s=mimecast20190719; t=1718034824;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tEm5SypP4ujlvRPqKGgOWCwNC2b83/NcN8Gj0e/pphI=;
- b=Wp9M+T/5bUszuh8ki6AIRYOOfRnNTnbIhiRFK08PVCu/yZ2FfXOOKt3RGu/waoqBpNskr8
- rGUzFwY+i9DI27mNsn0N0LWLma10eFguMCaRseLUCrqboNETBlgHihh7EpYzgadiEY4ycM
- jULPBsID1g9rtikLRou43qFwGdn8oWQ=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Jtpi+70dcuK+iPUM7lz3SL1wDL7DuVPcE0zmNjAimls=;
+ b=QfiyXmow6HxsJft4AVwxub8fPFGdr6nbve6nQf33wuBDaQwrW1eeLei3t6jRbDYoUgNSWl
+ mGsdHBrcguWrK5J0EcbOujIPSnVVWszPPqpijAAaizSR+QAcj5Yv6NYKeOp+xnM7cHW/7O
+ hcZBpLYhvSe68H/t3GGJ6TB6w2aRWFI=
+Received: from mail-il1-f197.google.com (mail-il1-f197.google.com
+ [209.85.166.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-219-Tm16QYLAMLqIiJY-wtQD4A-1; Mon, 10 Jun 2024 11:53:46 -0400
-X-MC-Unique: Tm16QYLAMLqIiJY-wtQD4A-1
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-70498a5c19dso1040679b3a.1
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 08:53:46 -0700 (PDT)
+ us-mta-613-GzhDx7ctPJ-E_w_273fvHQ-1; Mon, 10 Jun 2024 11:53:42 -0400
+X-MC-Unique: GzhDx7ctPJ-E_w_273fvHQ-1
+Received: by mail-il1-f197.google.com with SMTP id
+ e9e14a558f8ab-374b7648ab3so1334335ab.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 08:53:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718034825; x=1718639625;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tEm5SypP4ujlvRPqKGgOWCwNC2b83/NcN8Gj0e/pphI=;
- b=e9xlVBOd1ohqS35K2ACpKONkgSYgfi6sVem/CqPvdk7gHz/XN28H+VJ9deWCV9z15i
- 5gP42u9xZpB2kkJAz6LKrJ4v4H5XmoLSSzXZ6WAeAi7or2sU6bkRXe36vI9HN52IN80P
- 6T2ocrRHi/SZ5e8Hq1dmehqNfjyP0P07QDZFxHzkqArIsEXAbsGfW2yv4FGYh9T10pNc
- G0PqPkANntwl1rOzHDysMEUFi2eRrV+q22fAenlh14BWbABLFJS2WAWPAOXO8yJsP4xK
- neAAUSaI9IESOM3WKlQXmqr/U+Gmrgvd8dPBDS8prDGxmB4rvdajbEKOWlbWY8EOtSHz
- oyxw==
+ d=1e100.net; s=20230601; t=1718034822; x=1718639622;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Jtpi+70dcuK+iPUM7lz3SL1wDL7DuVPcE0zmNjAimls=;
+ b=ObofAV33/QgjC4h7rq7lMV5GURjh1fmZPdvaBmhVbn52xsHwbeQZ6oPE0ziRzQCxbB
+ a3i9qQU7VE+pPad1PG62WNau1c/3DjPs+5ipK+BcgEAfxaqQTGraSyLOo4dXrzD0oC9j
+ myCohX2iJi3vsBoMuLKm1QZll1X/o7s67WHCCLwAKx2NCgTPQOVqDE++8ciUX1aeI24u
+ rgGK5Ya+c56kxq+ocItgM2SChnlazZWjV6zinnzmXPUI5Ye/4aw0dRyRQcLc7Z2BqMkb
+ Bw+G31hc/W3xOuh+zAUc7mDPTdij9P0xfb8WbNGbV62yMkfhPMaqzWFEHgwaxaIPtA38
+ 36hg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVURoSs3Zv4C47tw3fDCuN6LUZb4eHOLFGwlOoRz6/RbZOvDKYIsXi8mR1R5dn5aWxLPVkWIEB7ZQ++lvAwqxqsFR3wSxI=
-X-Gm-Message-State: AOJu0Yw++mkNgGKgMkZulyaZCv3aDeBxhT+wla6tTauDMqY1Qynefulz
- yliN/rrxG3ViNnpN/AAxvFdAkL+ZeVAjFTEEmnSlCa11GjWtHvEWYYpbe6zxlV6PHfPv0ChFfda
- pPijA7A3lx2SlzEr5mtuzGVGkwvs/V75acuWTKx+f4EyFsbwLLMJP
-X-Received: by 2002:a05:6a21:32a3:b0:1b5:cf9c:2936 with SMTP id
- adf61e73a8af0-1b5cf9c2b30mr5368398637.39.1718034825244; 
- Mon, 10 Jun 2024 08:53:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8Zn2ooFk1wbPb5KmhsF4Ez1tcrY/SDRhIdn/tdAfdshOJw21+TFvBjJZMgVOvEmwDfKJTfw==
-X-Received: by 2002:a05:6a21:32a3:b0:1b5:cf9c:2936 with SMTP id
- adf61e73a8af0-1b5cf9c2b30mr5368379637.39.1718034824841; 
- Mon, 10 Jun 2024 08:53:44 -0700 (PDT)
+ AJvYcCWyKIHIDJnZUipVBfg/ohy0pi5MbiX9vkJ7nVb1z4dUbrHG4GctfMd3EMcREc+FGxyr45qbHsXcH+5ES/IH8hXwwjiSMwc=
+X-Gm-Message-State: AOJu0YwphMuGte5116UOG/Ina+dDDDD0z0OsvZlXkUsxsK+2UbL2CWwE
+ H3nRho/MJpZeYx4zOBB965J5Hqi1i0M5ej8MCYlavjvwEbYcX0iJl5UzlJGzXnVQbXYy9CmnoY0
+ +TMBV9WAaYhQDOs3xXoY/3g+V/kQchErw7p49Qp08h9X4v9BBpiU7
+X-Received: by 2002:a92:ca4c:0:b0:374:972a:f8ae with SMTP id
+ e9e14a558f8ab-3758030843bmr128707335ab.12.1718034821820; 
+ Mon, 10 Jun 2024 08:53:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGG+AMG7hwIKvyYdWJDdSoBahsXg9Ptl8Ag+MIpVhn+WCshEs+u+8xYb6ohoK77vXlN2bgr1g==
+X-Received: by 2002:a92:ca4c:0:b0:374:972a:f8ae with SMTP id
+ e9e14a558f8ab-3758030843bmr128707075ab.12.1718034821388; 
+ Mon, 10 Jun 2024 08:53:41 -0700 (PDT)
 Received: from localhost.localdomain ([115.96.118.89])
  by smtp.googlemail.com with ESMTPSA id
- 41be03b00d2f7-6e3819ffa94sm5155290a12.85.2024.06.10.08.53.41
+ 41be03b00d2f7-6e3819ffa94sm5155290a12.85.2024.06.10.08.53.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Jun 2024 08:53:44 -0700 (PDT)
+ Mon, 10 Jun 2024 08:53:40 -0700 (PDT)
 From: Ani Sinha <anisinha@redhat.com>
-To: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- qemu-devel@nongnu.org
-Subject: [PATCH 1/3] qtest/x86/numa-test: do not use the obsolete 'pentium' cpu
-Date: Mon, 10 Jun 2024 21:22:58 +0530
-Message-ID: <20240610155303.7933-2-anisinha@redhat.com>
+To: 
+Cc: Ani Sinha <anisinha@redhat.com>, thuth@redhat.com, imammedo@redhat.com,
+ qemu-devel@nongnu.org, pbonzini@redhat.com, lvivier@redhat.com,
+ mst@redhat.com
+Subject: [PATCH v4 0/3] x86 cpu test refactoring
+Date: Mon, 10 Jun 2024 21:22:57 +0530
+Message-ID: <20240610155303.7933-1-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20240610155303.7933-1-anisinha@redhat.com>
-References: <20240610155303.7933-1-anisinha@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -105,32 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'pentium' cpu is old and obsolete and should be avoided for running tests if
-its not strictly needed. Use 'max' cpu instead for generic non-cpu specific
-numa test.
+Add a new library api to check for the support of a specific cpu type.
+Used the new api to check support for some older x86 cpu models before
+running the tests.
 
 CC: thuth@redhat.com
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- tests/qtest/numa-test.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+CC: imammedo@redhat.com
+CC: qemu-devel@nongnu.org
+CC: pbonzini@redhat.com
+CC: lvivier@redhat.com
+CC: mst@redhat.com
 
-diff --git a/tests/qtest/numa-test.c b/tests/qtest/numa-test.c
-index 7aa262dbb9..f01f19592d 100644
---- a/tests/qtest/numa-test.c
-+++ b/tests/qtest/numa-test.c
-@@ -125,7 +125,8 @@ static void pc_numa_cpu(const void *data)
-     QTestState *qts;
-     g_autofree char *cli = NULL;
- 
--    cli = make_cli(data, "-cpu pentium -machine smp.cpus=8,smp.sockets=2,smp.cores=2,smp.threads=2 "
-+    cli = make_cli(data,
-+        "-cpu max -machine smp.cpus=8,smp.sockets=2,smp.cores=2,smp.threads=2 "
-         "-numa node,nodeid=0,memdev=ram -numa node,nodeid=1 "
-         "-numa cpu,node-id=1,socket-id=0 "
-         "-numa cpu,node-id=0,socket-id=1,core-id=0 "
+
+Ani Sinha (3):
+  qtest/x86/numa-test: do not use the obsolete 'pentium' cpu
+  tests/qtest/libqtest: add qtest_has_cpu_model() api
+  tests/qtest/x86: check for availability of older cpu models before
+    running tests
+
+ tests/qtest/libqtest.c              |  83 ++++++++++++++
+ tests/qtest/libqtest.h              |   8 ++
+ tests/qtest/numa-test.c             |   3 +-
+ tests/qtest/test-x86-cpuid-compat.c | 170 ++++++++++++++++++----------
+ 4 files changed, 201 insertions(+), 63 deletions(-)
+
 -- 
 2.42.0
 
