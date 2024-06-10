@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C9B3C27C5E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 15:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F893C27C55
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 15:43:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGgd9-0005fU-D8; Mon, 10 Jun 2024 11:08:19 -0400
+	id 1sGh9m-0008KU-5y; Mon, 10 Jun 2024 11:42:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGgd7-0005eL-Ij
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 11:08:17 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGgd5-0006Yw-SA
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 11:08:17 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2ebeefb9b56so506341fa.0
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 08:08:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718032093; x=1718636893; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yXk0bDQ1yYJpJgY5lHESnxmo/mUAUI8vWA756v/ff84=;
- b=IP+419bCWvT4ByeHNw8/QBFSAJa4YP58FXPo0cm9KILSNBFSWKzDgHIQNnKDYroR84
- Z/J0zl0A0LQfbkzl00eELfN7E/JF3ZwHtclLGTSJAt5TwpkTk4xY9bqhjB5GAyfyJ+c1
- sfJsqplzHXyABFWZ1B5OmHra+RC/kqB1RaspNJnUh7q5DPzZZkrOybcnwvSOKfr/qI+S
- KdCgOT9yNGj8YcGEzrtywQ47CQKIisFRAAnAnZtumv43d55OaVbc3NaXunAn49R7m23n
- UtW5q3JVTUFd0wGJt4m4OKt5fR1g6O2d1PABPHOEjyREfnXb3Pcf3u8v/CNKzsTJI+OK
- 4ivw==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sGh9h-0008Jv-OA
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 11:41:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sGh9e-0001UX-WE
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 11:41:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718034113;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tz8oEDZrsga1fB7hJHYhPgWZIhfxnebHJ5NF1kPQzFE=;
+ b=WeeH8M/kxkrsZlnzmAkOvbL8/QPTiAuelyrLPfwi0hYlA9AsmazKjrBAfaYjSOnsMLDPvO
+ iJ1qG+0NLPe+P5NPXJvx31GB7qEORZ0JwS8K+osBJbE1SlxaPB/mZ+H9wxYXI1s+YygLoR
+ mh/kWCY8fBJRjX2sk2Us8to+DQrb2zc=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-342-y4r0s8sVPUWXAZetEDgFgQ-1; Mon, 10 Jun 2024 11:41:51 -0400
+X-MC-Unique: y4r0s8sVPUWXAZetEDgFgQ-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-6c7e13b6a62so21491a12.0
+ for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 08:41:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718032093; x=1718636893;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yXk0bDQ1yYJpJgY5lHESnxmo/mUAUI8vWA756v/ff84=;
- b=mzR6omabrGBaOoG1ihxAq1Da0dwA6vVNYqHuecAU96Fzwot7oKivFMMXcE1rxWTTt/
- 7D6x84PO5pH6QapXJR/1ITo5w6DtlJGbR2+zPUXZZXLWQpwnKMTeumb0WaIzuEyM9HlN
- DtnVV8oBQsSDRPEZr3F72z1OxfepfxBENoNkBb4JFJnpuQvfoPzIfYoF0lAIC1EgMh+b
- gMpjumYV6MZ8EkwDT4CrmJJLpqLk0FhWlAjA1b9uF45Nh5FS2oUlWPQ3pEpTlDYiZXCZ
- ASOVEWLlPwxyiQpgnX0pGOv29W94vkjdjM/YGqw/iXMEekRxy++3ETNWXBjEvgmrPPVp
- 69Pw==
-X-Gm-Message-State: AOJu0YwOlqDbE2mYz5YpFvRWovqXFAUT/7jjtdznXA5GjDlls5s/Rpbh
- BVMgeTKo1QaSB1JM149EC0ve0sGkZlRxRlqpucdWHnHuGbQ+Wr12unCB2uF5WF8LOQ0f6cyOq+Y
- L
-X-Google-Smtp-Source: AGHT+IE2dYsYRaJMuNiOMu/WfBm+5ctwyi5FGzRoWFgkg9afl/d4+UxNQa9lLHdwSp8Ts/b+K+5Vmw==
-X-Received: by 2002:a05:651c:b06:b0:2eb:f029:7142 with SMTP id
- 38308e7fff4ca-2ebf029716emr2631901fa.15.1718032093424; 
- Mon, 10 Jun 2024 08:08:13 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.129.242])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42196386d13sm47450965e9.12.2024.06.10.08.08.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 10 Jun 2024 08:08:12 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
- Markus Armbruster <armbru@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/2] hw/misc/mos6522: Do not open-code
- hmp_info_human_readable_text()
-Date: Mon, 10 Jun 2024 17:07:58 +0200
-Message-ID: <20240610150758.2827-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240610150758.2827-1-philmd@linaro.org>
-References: <20240610150758.2827-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1718034110; x=1718638910;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tz8oEDZrsga1fB7hJHYhPgWZIhfxnebHJ5NF1kPQzFE=;
+ b=uZcsQQDCuPm86MACPSMonCE3HyAp4YCcwAsi8moC9JqJLud3BJI6CQwypom4v/Ab+I
+ I8BFAC0OQS3dWdChZOEwHKfhL6MJgDlkksPVC9UTcph8WutKL9NLYQk9lxOSZkE80+eW
+ PIao6yLYsJBf+kQoetX6Bzc1g8nbrCiB6UbY91guL2E6hI7B/1t3InGeOPztUTt5xsf3
+ MI7MU4W1OPaaqZcUw0AFDLBbQb/w8JrC/8I4yIt4yrlHZRZv7EGVAyScsjDD4fK7d3dV
+ pJWKU2LN+15GupBXSoV3llymVj2AMQg9rW1Itlv4KwpyeEpyRGHiGqIay5UWOVUrgdKx
+ PE/w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUX2FyMiCI6V9LKXceuEMq3Pbc2yH/YvxbxzifUUVu886FW1nSyPyOJrMt3dKGVZPJUDR/LaaZV2kZfAMwjJ/l8LWnoEQg=
+X-Gm-Message-State: AOJu0YzESTtKO3YOa3lV8KdyCBKg0R9lshTwHZnsc1gy/B++ZHlU0ItJ
+ 3ZC6SiIPVkIkOrl2Bih+CYXKQgPIw5Ef3ng/YloCtQFDIvv0whpL79slE/5v+SS5Ji8V8Ttu23B
+ w+hxA8n6N2mRbRwrFd0JDUkxOc1MJAOB2LvuhUfs3GFsVw+8hbzS4xMPHolZSSqa8wZSfzcw36z
+ tXlWPY7IjNolS+kbDLYNKBX/+v2rM=
+X-Received: by 2002:a17:902:e54c:b0:1f6:5869:df53 with SMTP id
+ d9443c01a7336-1f6d02e647amr117536565ad.20.1718034110470; 
+ Mon, 10 Jun 2024 08:41:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH66Pz92+73IhD3g6AvC3pKks/2VOJrnWA3w4ScZC72GxlrHHSK7H/1lARaUOZCvhR10u5UFDSafg0LtwkDYWw=
+X-Received: by 2002:a17:902:e54c:b0:1f6:5869:df53 with SMTP id
+ d9443c01a7336-1f6d02e647amr117536075ad.20.1718034110081; Mon, 10 Jun 2024
+ 08:41:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <CAFn=p-bdoi1yDQTNhpzM=MP5s8Zm9zxuxbD-zPs_h_iA8C=mGg@mail.gmail.com>
+ <ipebw5yv4l5joa54vk42rb2fmuykzvmjar7blcwiwstj5fwyuq@ycl4du6sb724>
+ <CAFn=p-b9gLmAwLAjzf2RWA4JZuxVM-nnwETwQ44c8F0kOkReVg@mail.gmail.com>
+ <ZmblKThDo7PJG5Fh@redhat.com> <87frtknchd.fsf@pond.sub.org>
+In-Reply-To: <87frtknchd.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 10 Jun 2024 11:41:37 -0400
+Message-ID: <CAFn=p-aEktwkkcKUqm_sqOOUNizi-AgsUHexHxgs1SCT1Vs5eg@mail.gmail.com>
+Subject: Re: Historical QMP schema
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Victor Toso <victortoso@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Andrea Bolognani <abologna@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000d7fd66061a8afc8f"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,85 +101,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register the command 'info via' using HMPCommand::cmd_info_hrt(),
-so it is processed using the generic hmp_info_human_readable_text().
+--000000000000d7fd66061a8afc8f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/misc/mos6522.h    |  2 --
- include/monitor/hmp-target.h |  1 -
- hw/misc/mos6522.c            | 13 -------------
- hmp-commands-info.hx         |  2 +-
- 4 files changed, 1 insertion(+), 17 deletions(-)
+On Mon, Jun 10, 2024 at 9:39=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
 
-diff --git a/include/hw/misc/mos6522.h b/include/hw/misc/mos6522.h
-index fba45668ab..a54fe063ac 100644
---- a/include/hw/misc/mos6522.h
-+++ b/include/hw/misc/mos6522.h
-@@ -172,6 +172,4 @@ extern const VMStateDescription vmstate_mos6522;
- uint64_t mos6522_read(void *opaque, hwaddr addr, unsigned size);
- void mos6522_write(void *opaque, hwaddr addr, uint64_t val, unsigned size);
- 
--void hmp_info_via(Monitor *mon, const QDict *qdict);
--
- #endif /* MOS6522_H */
-diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
-index b679aaebbf..9b46fec84a 100644
---- a/include/monitor/hmp-target.h
-+++ b/include/monitor/hmp-target.h
-@@ -53,7 +53,6 @@ void hmp_mce(Monitor *mon, const QDict *qdict);
- void hmp_info_local_apic(Monitor *mon, const QDict *qdict);
- void hmp_info_sev(Monitor *mon, const QDict *qdict);
- void hmp_info_sgx(Monitor *mon, const QDict *qdict);
--void hmp_info_via(Monitor *mon, const QDict *qdict);
- void hmp_memory_dump(Monitor *mon, const QDict *qdict);
- void hmp_physical_memory_dump(Monitor *mon, const QDict *qdict);
- void hmp_info_registers(Monitor *mon, const QDict *qdict);
-diff --git a/hw/misc/mos6522.c b/hw/misc/mos6522.c
-index b1bb7f54f0..afa343dd27 100644
---- a/hw/misc/mos6522.c
-+++ b/hw/misc/mos6522.c
-@@ -29,8 +29,6 @@
- #include "hw/misc/mos6522.h"
- #include "hw/qdev-properties.h"
- #include "migration/vmstate.h"
--#include "monitor/monitor.h"
--#include "monitor/hmp.h"
- #include "qapi/qapi-commands-machine.h"
- #include "qapi/type-helpers.h"
- #include "qemu/timer.h"
-@@ -587,17 +585,6 @@ HumanReadableText *qmp_x_query_mos6522_devices(Error **errp)
-     return human_readable_text_from_str(buf);
- }
- 
--void hmp_info_via(Monitor *mon, const QDict *qdict)
--{
--    Error *err = NULL;
--    g_autoptr(HumanReadableText) info = qmp_x_query_mos6522_devices(&err);
--
--    if (hmp_handle_error(mon, err)) {
--        return;
--    }
--    monitor_puts(mon, info->human_readable_text);
--}
--
- static const MemoryRegionOps mos6522_ops = {
-     .read = mos6522_read,
-     .write = mos6522_write,
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index cfd4ad5651..a24c217d89 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -873,7 +873,7 @@ ERST
-         .args_type    = "",
-         .params       = "",
-         .help         = "show guest mos6522 VIA devices",
--        .cmd          = hmp_info_via,
-+        .cmd_info_hrt = qmp_x_query_mos6522_devices,
-     },
- #endif
- 
--- 
-2.41.0
+> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>
+> > On Thu, Jun 06, 2024 at 01:22:14PM -0400, John Snow wrote:
+> >> On Thu, Jun 6, 2024 at 6:25=E2=80=AFAM Victor Toso <victortoso@redhat.=
+com>
+> wrote:
+> >> > On Wed, Jun 05, 2024 at 11:47:53AM GMT, John Snow wrote:
+> >> Importantly, old versions of the schema aren't contained *entirely*
+> within
+> >> the schema. Here's a timeline:
+> >>
+> >> v0.12.0: QMP first introduced. Events are hardcoded, commands are
+> defined
+> >> in qemu-monitor.hx. query commands are hard-coded in monitor.c.
+> >> v0.14.0: qemu-monitor.hx is forked into qmp-commands.hx and
+> hmp-commands.hx
+> >> v1.0: First version which features qapi-schema.json; all query command=
+s
+> are
+> >> qapified but most other commands are not.
+> >> v1.1.0: A very large chunk of commands are QAPIfied.
+> >> v1.3.0: Most commands are now QAPIfied, but there are 2-3 remaining.
+> >> v2.1.0: events are now fully qapified; most are now defined in
+> >> qapi/events.json
+> >> v2.8.0: The remaining commands are fully qapified; qmp-commands.hx is
+> >> removed.
+> >
+> > v2.8.0 was in Dec 2016 - 7+1/2 years ago.
+> >
+> > libvirt's min QEMU version is 4.2.0 - Dec 2019
+> >
+> > Ther are non-libvirt consumers of QEMU, but for them, do we think it is
+> > reasonable for a consumer of QAPI *today*, to care about a QEMU version
+> > from almost 8 years ago ?
+> >
+> > IOW, I wonder if the most pragammatic answer to this problem is to simp=
+ly
+> > entirely ignore the problems prior to 2.8.0 - accept that the versionin=
+g
+> > is inaccurate/incomplete for versions before 2.8.0
+>
+> I'm in favour.  However, I'd prefer honest "Since: at least 2.8.0" to
+> "Since: <untrustworthy but irrelevant version <=3D 2.8.0>".
+>
+
+That's certainly fine by me if it's community consensus to do so.
+
+I wouldn't mind a phrasing in our HTML doc output in this way:
+
+"Since: 4.2.0", when it's after the cutoff, or
+"Since: at least 2.8.0" when it's at or prior to the cutoff.
+
+However, because I am unreasonable, I do have a pretty accurate history of
+everything that happened prior to then anyway, just in case ...!
+
+(I was afraid of the review feedback of when I went to cull such
+information from our docs, admittedly...)
+
+Even after 2.8.0, there are many "breaking changes" to the QAPI schema
+format itself that requires various hacks and workarounds in the QAPI
+generator to be able to parse until at least v6.2.0 or so; things we
+definitely don't feel like hacking into the upstream parser and
+maintaining/supporting. It's far easier, I think, to compile this
+information *once* and store the compiled result into a file we can check
+back into the qemu.git tree to serve as historical reference instead.
+
+So, even if we do ignore such older versions, it's still a question of how
+we'd like to store and maintain the historical information so we have a
+reference for new releases going forward, and what kind of features we'd
+like to see such a format support us with.
+
+My list right now is:
+
+- The ability to see at a glance, as a "one-page summary", any changes to
+the QMP wire protocol during Release Candidate phase.
+- The ability to programmatically determine from the doc generator:
+    - when any Command or Event was introduced
+    - when any Command Argument/Return field was introduced (or modified
+incompatibly?)
+    - when any Event member was introduced/modified incompatibly
+
+I've got some prototypes for this, I hope to send some example output soon
+when it's more reasonably complete and I don't have to explain the
+Work-In-Progress caveats quite as much; however I'm still receptive to
+ideas and suggestions about how to organize this data. Right now, I am
+using a JSON Schema format for "compiled" data because it has the ability
+to describe arbitrarily nested structures, which allows me to strip all
+"non-API" information from the compiled schema, such as intermediate type
+names which we do not consider API. This allows me to give accurate
+version-to-version diff reports regardless of the type factoring on the
+developer's side.
+
+I'm not necessarily attached to this idea, but it has been useful in
+prototyping for verifying that the rest of my qapihackborg is functioning
+correctly, so it can serve as a starting point for critique and discussion,
+I think.
+
+(I just chose JSON Schema because it's something I am aware of and know how
+to use, and it fit some loose criteria for the hacking I was doing. Maybe
+we'll stick with it, maybe we won't. etc.)
+
+--js
+
+--000000000000d7fd66061a8afc8f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 10, 2024 at 9:39=E2=80=AF=
+AM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat=
+.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1=
+ex">Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com" targ=
+et=3D"_blank">berrange@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; On Thu, Jun 06, 2024 at 01:22:14PM -0400, John Snow wrote:<br>
+&gt;&gt; On Thu, Jun 6, 2024 at 6:25=E2=80=AFAM Victor Toso &lt;<a href=3D"=
+mailto:victortoso@redhat.com" target=3D"_blank">victortoso@redhat.com</a>&g=
+t; wrote:<br>
+&gt;&gt; &gt; On Wed, Jun 05, 2024 at 11:47:53AM GMT, John Snow wrote:<br>
+&gt;&gt; Importantly, old versions of the schema aren&#39;t contained *enti=
+rely* within<br>
+&gt;&gt; the schema. Here&#39;s a timeline:<br>
+&gt;&gt; <br>
+&gt;&gt; v0.12.0: QMP first introduced. Events are hardcoded, commands are =
+defined<br>
+&gt;&gt; in qemu-monitor.hx. query commands are hard-coded in monitor.c.<br=
+>
+&gt;&gt; v0.14.0: qemu-monitor.hx is forked into qmp-commands.hx and hmp-co=
+mmands.hx<br>
+&gt;&gt; v1.0: First version which features qapi-schema.json; all query com=
+mands are<br>
+&gt;&gt; qapified but most other commands are not.<br>
+&gt;&gt; v1.1.0: A very large chunk of commands are QAPIfied.<br>
+&gt;&gt; v1.3.0: Most commands are now QAPIfied, but there are 2-3 remainin=
+g.<br>
+&gt;&gt; v2.1.0: events are now fully qapified; most are now defined in<br>
+&gt;&gt; qapi/events.json<br>
+&gt;&gt; v2.8.0: The remaining commands are fully qapified; qmp-commands.hx=
+ is<br>
+&gt;&gt; removed.<br>
+&gt;<br>
+&gt; v2.8.0 was in Dec 2016 - 7+1/2 years ago.<br>
+&gt;<br>
+&gt; libvirt&#39;s min QEMU version is 4.2.0 - Dec 2019<br>
+&gt;<br>
+&gt; Ther are non-libvirt consumers of QEMU, but for them, do we think it i=
+s<br>
+&gt; reasonable for a consumer of QAPI *today*, to care about a QEMU versio=
+n<br>
+&gt; from almost 8 years ago ?<br>
+&gt;<br>
+&gt; IOW, I wonder if the most pragammatic answer to this problem is to sim=
+ply<br>
+&gt; entirely ignore the problems prior to 2.8.0 - accept that the versioni=
+ng<br>
+&gt; is inaccurate/incomplete for versions before 2.8.0<br>
+<br>
+I&#39;m in favour.=C2=A0 However, I&#39;d prefer honest &quot;Since: at lea=
+st 2.8.0&quot; to<br>
+&quot;Since: &lt;untrustworthy but irrelevant version &lt;=3D 2.8.0&gt;&quo=
+t;.<br></blockquote><div><br></div><div>That&#39;s certainly fine by me if =
+it&#39;s community consensus to do so.</div><div><br></div><div>I wouldn&#3=
+9;t mind a phrasing in our HTML doc output in this way:</div><div><br></div=
+><div>&quot;Since: 4.2.0&quot;, when it&#39;s after the cutoff, or</div><di=
+v>&quot;Since: at least 2.8.0&quot; when it&#39;s at or prior to the cutoff=
+.<br></div><div></div><div><br></div><div>However, because I am unreasonabl=
+e, I do have a pretty accurate history of everything that happened prior to=
+ then anyway, just in case ...!</div><div><br></div><div>(I was afraid of t=
+he review feedback of when I went to cull such information from our docs, a=
+dmittedly...)</div><div><br></div><div>Even after 2.8.0, there are many &qu=
+ot;breaking changes&quot; to the QAPI schema=20
+format itself that requires various hacks and workarounds in the QAPI=20
+generator to be able to parse until at least v6.2.0 or so; things we=20
+definitely don&#39;t feel like hacking into the upstream parser and=20
+maintaining/supporting. It&#39;s far easier, I think, to compile this=20
+information *once* and store the compiled result into a file we can=20
+check back into the qemu.git tree to serve as historical reference=20
+instead.</div><div><br></div><div>So, even if we do ignore such older versi=
+ons, it&#39;s still a question of how we&#39;d like to store and maintain t=
+he historical information so we have a reference for new releases going for=
+ward, and what kind of features we&#39;d like to see such a format support =
+us with.</div><div><br></div><div>My list right now is:</div><div><br></div=
+><div>- The ability to see at a glance, as a &quot;one-page summary&quot;, =
+any changes to the QMP wire protocol during Release Candidate phase.</div><=
+div>- The ability to programmatically determine from the doc generator:</di=
+v><div>=C2=A0 =C2=A0 - when any Command or Event was introduced</div><div>=
+=C2=A0=C2=A0=C2=A0 - when any Command Argument/Return field was introduced =
+(or modified incompatibly?)</div><div>=C2=A0=C2=A0=C2=A0 - when any Event m=
+ember was introduced/modified incompatibly</div><div><br></div><div>I&#39;v=
+e got some prototypes for this, I hope to send some example output soon whe=
+n it&#39;s more reasonably complete and I don&#39;t have to explain the Wor=
+k-In-Progress caveats quite as much; however I&#39;m still receptive to ide=
+as and suggestions about how to organize this data. Right now, I am using a=
+ JSON Schema format for &quot;compiled&quot; data because it has the abilit=
+y to describe arbitrarily nested structures, which allows me to strip all &=
+quot;non-API&quot; information from the compiled schema, such as intermedia=
+te type names which we do not consider API. This allows me to give accurate=
+ version-to-version diff reports regardless of the type factoring on the de=
+veloper&#39;s side.</div><div><br></div><div>I&#39;m not necessarily attach=
+ed to this idea, but it has been useful in prototyping for verifying that t=
+he rest of my qapihackborg is functioning correctly, so it can serve as a s=
+tarting point for critique and discussion, I think.</div><div><br></div><di=
+v>(I just chose JSON Schema because it&#39;s something I am aware of and kn=
+ow how to use, and it fit some loose criteria for the hacking I was doing. =
+Maybe we&#39;ll stick with it, maybe we won&#39;t. etc.)<br></div><div><br>=
+</div><div>--js<br></div><div><br></div></div></div>
+
+--000000000000d7fd66061a8afc8f--
 
 
