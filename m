@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB0DAC27C5E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 12:22:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC119C27C55
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 12:25:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGe1P-0006IM-Hw; Mon, 10 Jun 2024 08:21:11 -0400
+	id 1sGe5f-00006e-Pj; Mon, 10 Jun 2024 08:25:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sGe1M-0006H6-RW; Mon, 10 Jun 2024 08:21:08 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sGe1K-0005qB-Pt; Mon, 10 Jun 2024 08:21:08 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6A8176EE5E;
- Mon, 10 Jun 2024 15:21:53 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 99443E4676;
- Mon, 10 Jun 2024 15:20:53 +0300 (MSK)
-Message-ID: <9338d9f7-7aa4-44a2-853c-42b07fe115c2@tls.msk.ru>
-Date: Mon, 10 Jun 2024 15:20:53 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sGe5c-00005p-Ns
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 08:25:33 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sGe5Z-0006XF-Em
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 08:25:31 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a6269885572so944314566b.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 05:25:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718022327; x=1718627127; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Eq3w4yME0O1jAdNW/jpjg0o+JmuZ3WFbHzjkXW5Jx4k=;
+ b=Yb9XGufVYtyKcrv4EN6E4zTBGfz+Khgm3ZA8HK8746I95GyH105aWzITjzydR9yDKM
+ eFrhFnVdWpIwpWJ+IeNeJF5tsQjQyLhYFAiysjkelGu3KBRPOuJQUhvLytVjyXd/BBYf
+ 6YepZg4TXsz9X87fnYOOJAKENn3xYMr6T+XUUAbsVfLBW0a6m+6fzwfX5mb6rPHvitNt
+ czOBnnceK3D6W8QZPuwFPfQfwrIoSkjEVVXdOqL6Nhhv7cd6AMNlGUmiNq2gwjJ/h3jz
+ 3+RjovGtt1elQp46StEq/oEZAsEg9nkuqv7R4EAiVzeQn1IpjzPIW31DkpOtQhpnCzEY
+ /kjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718022327; x=1718627127;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Eq3w4yME0O1jAdNW/jpjg0o+JmuZ3WFbHzjkXW5Jx4k=;
+ b=miaJJMfLWaNnA28lihRRZ2v2dtw/m7pBRXF3SzVwYNRTX1/sPuh/w38uvAt3lny6sT
+ g+OU03KI/8DL/YeUoA70iPDqi/M2BPJM1GXBQucY8Kh2CiDe9TIsgbYgHZdG67bRAXp7
+ k8N3YvVn+SAC0aLGY0sP7fnQyzN1BisojEfZFWPfHgdxIbq/nstIb9kveHtB8R8fXsjm
+ ocJ5K/QzjnwLaDbMlUc0bSPPKk/IgyVguGtsUgxqjz869xt9znSX7qUwUPyNbU8R+c6+
+ m2OfbL+paPohZLtt/H/nW+Lpu+0LsvDFWYBQ1U9kGm1XfewzDcjIWxPvlDGvvgMtMsv0
+ K+nA==
+X-Gm-Message-State: AOJu0YyzWz96Uq4ssG3CbDqDVCegIG0jb8tKU+nLMYpmtcww0Y9uY+gF
+ /0zluOTNFfFdV5qZflyJCxVjN5JzDeBv2WYf16dJIDjKzD7DGaxqFw7GecQ2A0QwhTxNCtw+zOs
+ niSGEaMuH8F6bis1IEnF7X1WcKoTupSNvifF+vfqY/BIVvhO3
+X-Google-Smtp-Source: AGHT+IG2o4KvidVJ8BYnYQmO74fW6p4IuUlt0NFsqG5NAVZ91eJUc+fm45BgVu0hDSoz7NDiJYcH6sqns1bri3Kzrwg=
+X-Received: by 2002:a17:907:84c:b0:a65:2b64:f84a with SMTP id
+ a640c23a62f3a-a6c7650a2f4mr1229562566b.25.1718022327231; Mon, 10 Jun 2024
+ 05:25:27 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Stable-7.2.12 00/29] Patch Round-up for stable 7.2.12, frozen at
- 2024-06-07
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <qemu-stable-7.2.12-20240607221018@cover.tls.msk.ru>
- <l6jbovskcivkkog7lkvazwn4f4vqflbilgo63lfgwecunsb4al@iak6kurhbl57>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <l6jbovskcivkkog7lkvazwn4f4vqflbilgo63lfgwecunsb4al@iak6kurhbl57>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240604145934.1230583-1-peter.maydell@linaro.org>
+In-Reply-To: <20240604145934.1230583-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 10 Jun 2024 13:25:15 +0100
+Message-ID: <CAFEAcA8D-33hFsw2T40ygkjsFDj7a7=v8iupskkrptzZ-L5vqA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] scrips/coverity-scan: COMPONENTS.md updates
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,36 +88,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-10.06.2024 15:17, Eric Blake wrote:
->> 01* 690ceb71936f Philippe Mathieu-Daudé:
->>     gitlab-ci: Remove job building EDK2 firmware binaries
->> 02* 7bc1286b81d4 Palmer Dabbelt:
->>     gitlab/opensbi: Move to docker:stable
->> 03* 04f6fb897a5a Michael Tokarev:
->>     linux-user: do_setsockopt: fix SOL_ALG.ALG_SET_KEY
->> 04* ae6d91a7e9b7 Zhu Yangyang:
->>     nbd/server: do not poll within a coroutine context
->> 05* 4fa333e08dd9 Eric Blake:
->>     nbd/server: Mark negotiation functions as coroutine_fn
-> 
-> In addition to these two, we also need the following for NBD:
-> 
->   14ddea7e3c81 Eric Blake:
->    qio: Inherit follow_coroutine_ctx across TLS
+On Tue, 4 Jun 2024 at 15:59, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> Since commit 83aa1baa069c we have been running the build for Coverity
+> Scan as a Gitlab CI job, rather than the old setup where it was run
+> on a local developer's machine.  This is working well, but the
+> absolute paths of files are different for the Gitlab CI job, which
+> means that the regexes we use to identify Coverity components no
+> longer work. With Gitlab CI builds the file paths are of the form
+>  /builds/qemu-project/qemu/accel/kvm/kvm-all.c
+>
+> rather than the old
+>  /qemu/accel/kvm/kvm-all.c
+>
+> and our regexes all don't match.
+>
+> The main aim of this series is to fix that, which is what patch 1 does.
+>
+> Patches 2-5 are minor updates where we were missing files in some
+> components because we hadn't updated them when we moved things around
+> or added new files. They're worth doing now since handling patch 1
+> will require a manual deletion of all components in the coverity
+> web GUI and re-adding them. (There is, alas, no automated API for this.)
 
-Does it need to be in 7.2.12, or can it wait for the next, 7.2.13, release?
+I'll take this via target-arm.next and do the web GUI update
+at some point too.
 
-I tagged 7.2.12 yesterday already.  So if this change is also needed, I guess
-we can make 7.2.13 release sooner than later.
-
-Thank you for letting me know!
-
-/mjt
-
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
-
+thanks
+-- PMM
 
