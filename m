@@ -4,65 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A41C4C27C55
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 17:06:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF6AEC27C55
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 17:08:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGiSu-0007WN-DO; Mon, 10 Jun 2024 13:05:52 -0400
+	id 1sGiVN-0000R5-QG; Mon, 10 Jun 2024 13:08:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sGiSs-0007Vv-QX
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:05:50 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sGiVK-0000QF-Nl
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:08:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sGiSr-0007ty-0B
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:05:50 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sGiVI-0008SD-T4
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:08:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718039147;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1718039300;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1/oM1gMtpMcgkADiOdKEqTcGvC51DXWws6wOH/J8C1A=;
- b=c90IsSbcltUReYZi0EB0efMdMRLO2ag3gpY4fRs7iNlxC46IaY6Fz8C/ZeFwa/WyN201LH
- 8DZ06CwaSp6f2OlbG0qpmmW4CCpE9KUHLILuQua+kSq3VrjZRHp92H2ugFdSqNAFDM0RTk
- BuidwAZOafmQEZz6spxKhFfyY2Zv1/o=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=HEMdLRG001ZxcsdjZ2WT9rsDJNxWdE53ElY8PbryMuE=;
+ b=iW/4QGVB60RlSIpdXgHNjywGjd0h2ni3jTGzj6US8X+K8BL9qYbvBhataFTefLHRIW2gym
+ 6TCPs9eZusfJ04B9m1OARtwWfJoOPq9z2OvYDEYwxtiGxNbbPYP7/c+bR5lKtyf4BMJ9f/
+ d1MFMV3dfYqeL+pfYtn8Rqls2u4B5OU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-6kPHOJMjPnerZZmXTSz46A-1; Mon,
- 10 Jun 2024 13:05:44 -0400
-X-MC-Unique: 6kPHOJMjPnerZZmXTSz46A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-332-5uqoeg8HNcKCCfpxLJQHEw-1; Mon,
+ 10 Jun 2024 13:08:16 -0400
+X-MC-Unique: 5uqoeg8HNcKCCfpxLJQHEw-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D0E419560B5; Mon, 10 Jun 2024 17:05:42 +0000 (UTC)
-Received: from localhost (unknown [10.39.195.112])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2EE5219560AB; Mon, 10 Jun 2024 17:05:39 +0000 (UTC)
-Date: Mon, 10 Jun 2024 13:05:33 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Yoshinori Sato <ysato@users.sourceforge.jp>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>
-Subject: Re: [PATCH 0/5] trace: Remove and forbid newline characters in event
- format
-Message-ID: <20240610170533.GA343470@fedora.redhat.com>
-References: <20240606103943.79116-1-philmd@linaro.org>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B3DA19560BC; Mon, 10 Jun 2024 17:08:12 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.32])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3382819560B1; Mon, 10 Jun 2024 17:08:09 +0000 (UTC)
+Date: Mon, 10 Jun 2024 18:08:06 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-ppc@nongnu.org
+Subject: Re: [PATCH 1/2] hw/misc/mos6522: Expose x-query-mos6522-devices QMP
+ command
+Message-ID: <Zmcy9kTk6DegYqqQ@redhat.com>
+References: <20240610150758.2827-1-philmd@linaro.org>
+ <20240610150758.2827-2-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="HZHu1J2Shs2/l16y"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240606103943.79116-1-philmd@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240610150758.2827-2-philmd@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -84,59 +87,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Jun 10, 2024 at 05:07:57PM +0200, Philippe Mathieu-Daudé wrote:
+> This is a counterpart to the HMP "info via" command. It is being
+> added with an "x-" prefix because this QMP command is intended as an
+> adhoc debugging tool and will thus not be modelled in QAPI as fully
+> structured data, nor will it have long term guaranteed stability.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  MAINTAINERS             |  2 +-
+>  qapi/machine.json       | 17 +++++++++++++++++
+>  hw/misc/mos6522-stubs.c | 18 ++++++++++++++++++
+>  hw/misc/mos6522.c       |  5 +++--
+>  hw/misc/meson.build     |  3 ++-
+>  5 files changed, 41 insertions(+), 4 deletions(-)
+>  create mode 100644 hw/misc/mos6522-stubs.c
 
---HZHu1J2Shs2/l16y
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-On Thu, Jun 06, 2024 at 12:39:38PM +0200, Philippe Mathieu-Daud=E9 wrote:
-> Trace events aren't designed to be multi-lines.
-> Few format use the newline character: remove it
-> and forbid further uses.
->=20
-> Philippe Mathieu-Daud=E9 (5):
->   backends/tpm: Remove newline character in trace event
->   hw/sh4: Remove newline character in trace events
->   hw/usb: Remove newline character in trace events
->   hw/vfio: Remove newline character in trace events
->   tracetool: Forbid newline character in event format
->=20
->  backends/tpm/tpm_util.c       | 5 +++--
->  backends/tpm/trace-events     | 3 ++-
->  hw/sh4/trace-events           | 4 ++--
->  hw/usb/trace-events           | 6 +++---
->  hw/vfio/trace-events          | 4 ++--
->  scripts/tracetool/__init__.py | 2 ++
->  6 files changed, 14 insertions(+), 10 deletions(-)
->=20
-> --=20
-> 2.41.0
->=20
-
-Thanks, applied to my tracing tree:
-https://gitlab.com/stefanha/qemu/commits/tracing
-
-Stefan
-
---HZHu1J2Shs2/l16y
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZnMl0ACgkQnKSrs4Gr
-c8hBrwgAthjbg8Xycs0OsW2sPceMRRRLcKlofv8aGEJBDHa9J8g+qdHu6LdKVEPe
-OwEVrPKnJUGN1VBPil6vgEPF5mMYd/jtJW+gZ9xM8a6rGIkE60aUEOtBNuqR2OhL
-SQas95MoruyC9hvJHqiPvhziF+IpXjEK8W7zxLr2OJnQEqP1J6zecaB9gBxx5zFB
-InTimFBpakatjMqPnO46XCQtpVCD9aTeBkkBbQ+3/KL+izAGRf9W+zpI1Cb08tlS
-vKOHTV9Kew8o62P4zYyFoyHd8zcPP7gtaERf2GB5Ri8A/ZDXPzPF8NvVwpqKjX95
-xwvl3W8ee2xJ17cI11fyGxb/3wkJqA==
-=orl7
------END PGP SIGNATURE-----
-
---HZHu1J2Shs2/l16y--
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
