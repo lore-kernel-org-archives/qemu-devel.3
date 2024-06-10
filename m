@@ -4,43 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5674C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8C2EC27C5F
 	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 09:25:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGbGB-0003FY-02; Mon, 10 Jun 2024 05:24:15 -0400
+	id 1sGbGR-0003Jm-LF; Mon, 10 Jun 2024 05:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=l9v5=NM=kaod.org=clg@ozlabs.org>)
- id 1sGbG9-0003FD-52; Mon, 10 Jun 2024 05:24:13 -0400
+ id 1sGbGP-0003Ix-55
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 05:24:29 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=l9v5=NM=kaod.org=clg@ozlabs.org>)
- id 1sGbG7-0003Xq-IV; Mon, 10 Jun 2024 05:24:12 -0400
+ id 1sGbGN-0003ZH-HK
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 05:24:28 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4VyRFb41Nlz4x2M;
- Mon, 10 Jun 2024 19:24:03 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VyRG145xpz4x4T;
+ Mon, 10 Jun 2024 19:24:25 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4VyRFY3hQ7z4x4T;
- Mon, 10 Jun 2024 19:24:01 +1000 (AEST)
-Message-ID: <c8490af5-466d-44fd-ace5-2b32f653e4b6@kaod.org>
-Date: Mon, 10 Jun 2024 11:23:59 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VyRFy1vzsz4xFB;
+ Mon, 10 Jun 2024 19:24:21 +1000 (AEST)
+Message-ID: <5e3e934c-fe10-4bb7-ac30-50e838a52104@kaod.org>
+Date: Mon, 10 Jun 2024 11:24:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] aspeed/smc: Reintroduce "dram-base" property for AST2700
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>
-References: <20240527124315.35356-1-clg@redhat.com>
+Subject: Re: [PATCH] MAINTAINERS: Add reviewers for ASPEED BMCs
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: steven_lee@aspeedtech.com, troy_lee@aspeedtech.com
+References: <20240605060310.1946803-1-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240527124315.35356-1-clg@redhat.com>
+In-Reply-To: <20240605060310.1946803-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=l9v5=NM=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
@@ -65,31 +71,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/27/24 2:43 PM, Cédric Le Goater wrote:
-> The Aspeed SMC device model use to have a 'sdram_base' property. It
-> was removed by commit d177892d4a48 ("aspeed/smc: Remove unused
-> "sdram-base" property") because previous changes simplified the DMA
-> transaction model to use an offset in RAM and not the physical
-> address.
+On 6/5/24 8:03 AM, Jamin Lin wrote:
+> Add ASPEED members "Steven Lee", "Troy Lee" and "Jamin Lin"
+> to be reviewers of ASPEED BMCs.
 > 
-> The AST2700 SoC has larger address space (64-bit) and a new register
-> DMA DRAM Side Address High Part (0x7C) is introduced to deal with the
-> high bits of the DMA address. To be able to compute the offset of the
-> DMA transaction, as done on the other SoCs, we will need to know where
-> the DRAM is mapped in the address space. Re-introduce a "dram-base"
-> property to hold this value.
-> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
 > ---
->   include/hw/ssi/aspeed_smc.h | 1 +
->   hw/ssi/aspeed_smc.c         | 1 +
->   2 files changed, 2 insertions(+)
-
+>   MAINTAINERS | 3 +++
+>   1 file changed, 3 insertions(+)
 
 Applied to aspeed-next.
 
 Thanks,
 
 C.
+
+
+
 
 
