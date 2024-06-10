@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78C6BC27C5F
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 17:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF79C27C55
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 17:16:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGicL-0007J6-4j; Mon, 10 Jun 2024 13:15:37 -0400
+	id 1sGicG-0007C0-JN; Mon, 10 Jun 2024 13:15:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sGicG-0007B4-10
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:15:32 -0400
+ id 1sGicE-000766-Dq
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:15:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sGicE-0001Vl-8l
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:15:31 -0400
+ id 1sGicC-0001VS-O3
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:15:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718039729;
+ s=mimecast20190719; t=1718039728;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KfimpW5azDfsPr0aZjQVwpll8heNiGpKgP1JYzSz1H4=;
- b=BqKMeo74DlpkmQ4nKAGygIwd5v7aHszbOkJbXfLKy3UcbKoP/JYOfh7eBDgAX0YV7f5gm0
- lIfrhW0CAismBwpcZzEMLvtixZW7CPrBcGtEcsVB6FtXO6rJKXUsBXzFm+ThHbKeQCfIa6
- eWsb1oMlJYvpR5q455UTFOL9USFyYHI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=PgELMkc1bS7VwzQKP/T+wBa1GSPK4TqZBA1l61ePfzM=;
+ b=g93ZDuDEre6C99c5VsiFnkd6RHEFC0Q2qkD5I/KY7XRSVE9uIocqoxc4MrK8iGfMVnFhNu
+ wg+lrr7DSmHGJ+5hlhw/oDXDmptNgbJgLHetwOnmbHtJVDujkDveHq5VfVwI5uirI3F00P
+ knbUNtvC4smE2DQEi5lTLvFNy4X/3rM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-246-SFJq2jA4O3mYl7K6yBnuXA-1; Mon,
- 10 Jun 2024 13:15:26 -0400
-X-MC-Unique: SFJq2jA4O3mYl7K6yBnuXA-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-64-iGu4kgfPMj6UIrMRIlvRKA-1; Mon,
+ 10 Jun 2024 13:15:25 -0400
+X-MC-Unique: iGu4kgfPMj6UIrMRIlvRKA-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8371D195604F; Mon, 10 Jun 2024 17:15:24 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6BBDF1954B25; Mon, 10 Jun 2024 17:15:20 +0000 (UTC)
 Received: from localhost (unknown [10.39.195.112])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C2A5530000C3; Mon, 10 Jun 2024 17:15:22 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 966A71956048; Mon, 10 Jun 2024 17:14:01 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -58,15 +58,15 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Yoshinori Sato <ysato@users.sourceforge.jp>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Stefan Berger <stefanb@linux.vnet.ibm.com>
-Subject: [PULL 5/6] hw/vfio: Remove newline character in trace events
-Date: Mon, 10 Jun 2024 13:13:14 -0400
-Message-ID: <20240610171315.346143-6-stefanha@redhat.com>
+Subject: [PULL 4/6] hw/usb: Remove newline character in trace events
+Date: Mon, 10 Jun 2024 13:13:13 -0400
+Message-ID: <20240610171315.346143-5-stefanha@redhat.com>
 In-Reply-To: <20240610171315.346143-1-stefanha@redhat.com>
 References: <20240610171315.346143-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
@@ -100,34 +100,43 @@ Remove the newline characters.
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Mads Ynddal <mads@ynddal.dk>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-id: 20240606103943.79116-5-philmd@linaro.org
+Message-id: 20240606103943.79116-4-philmd@linaro.org
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/vfio/trace-events | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/usb/trace-events | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 64161bf6f4..e16179b507 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -19,7 +19,7 @@ vfio_msix_fixup(const char *name, int bar, uint64_t start, uint64_t end) " (%s)
- vfio_msix_relo(const char *name, int bar, uint64_t offset) " (%s) BAR %d offset 0x%"PRIx64""
- vfio_msi_enable(const char *name, int nr_vectors) " (%s) Enabled %d MSI vectors"
- vfio_msi_disable(const char *name) " (%s)"
--vfio_pci_load_rom(const char *name, unsigned long size, unsigned long offset, unsigned long flags) "Device %s ROM:\n  size: 0x%lx, offset: 0x%lx, flags: 0x%lx"
-+vfio_pci_load_rom(const char *name, unsigned long size, unsigned long offset, unsigned long flags) "Device '%s' ROM: size: 0x%lx, offset: 0x%lx, flags: 0x%lx"
- vfio_rom_read(const char *name, uint64_t addr, int size, uint64_t data) " (%s, 0x%"PRIx64", 0x%x) = 0x%"PRIx64
- vfio_pci_size_rom(const char *name, int size) "%s ROM size 0x%x"
- vfio_vga_write(uint64_t addr, uint64_t data, int size) " (0x%"PRIx64", 0x%"PRIx64", %d)"
-@@ -35,7 +35,7 @@ vfio_pci_hot_reset(const char *name, const char *type) " (%s) %s"
- vfio_pci_hot_reset_has_dep_devices(const char *name) "%s: hot reset dependent devices:"
- vfio_pci_hot_reset_dep_devices(int domain, int bus, int slot, int function, int group_id) "\t%04x:%02x:%02x.%x group %d"
- vfio_pci_hot_reset_result(const char *name, const char *result) "%s hot reset: %s"
--vfio_populate_device_config(const char *name, unsigned long size, unsigned long offset, unsigned long flags) "Device %s config:\n  size: 0x%lx, offset: 0x%lx, flags: 0x%lx"
-+vfio_populate_device_config(const char *name, unsigned long size, unsigned long offset, unsigned long flags) "Device '%s' config: size: 0x%lx, offset: 0x%lx, flags: 0x%lx"
- vfio_populate_device_get_irq_info_failure(const char *errstr) "VFIO_DEVICE_GET_IRQ_INFO failure: %s"
- vfio_attach_device(const char *name, int group_id) " (%s) group %d"
- vfio_detach_device(const char *name, int group_id) " (%s) group %d"
+diff --git a/hw/usb/trace-events b/hw/usb/trace-events
+index fd7b90d70c..46732717a9 100644
+--- a/hw/usb/trace-events
++++ b/hw/usb/trace-events
+@@ -15,7 +15,7 @@ usb_ohci_exit(const char *s) "%s"
+ 
+ # hcd-ohci.c
+ usb_ohci_iso_td_read_failed(uint32_t addr) "ISO_TD read error at 0x%x"
+-usb_ohci_iso_td_head(uint32_t head, uint32_t tail, uint32_t flags, uint32_t bp, uint32_t next, uint32_t be, uint32_t framenum, uint32_t startframe, uint32_t framecount, int rel_frame_num) "ISO_TD ED head 0x%.8x tailp 0x%.8x\n0x%.8x 0x%.8x 0x%.8x 0x%.8x\nframe_number 0x%.8x starting_frame 0x%.8x\nframe_count  0x%.8x relative %d"
++usb_ohci_iso_td_head(uint32_t head, uint32_t tail, uint32_t flags, uint32_t bp, uint32_t next, uint32_t be, uint32_t framenum, uint32_t startframe, uint32_t framecount, int rel_frame_num) "ISO_TD ED head 0x%.8x tailp 0x%.8x, flags 0x%.8x bp 0x%.8x next 0x%.8x be 0x%.8x, frame_number 0x%.8x starting_frame 0x%.8x, frame_count 0x%.8x relative %d"
+ usb_ohci_iso_td_head_offset(uint32_t o0, uint32_t o1, uint32_t o2, uint32_t o3, uint32_t o4, uint32_t o5, uint32_t o6, uint32_t o7) "0x%.8x 0x%.8x 0x%.8x 0x%.8x 0x%.8x 0x%.8x 0x%.8x 0x%.8x"
+ usb_ohci_iso_td_relative_frame_number_neg(int rel) "ISO_TD R=%d < 0"
+ usb_ohci_iso_td_relative_frame_number_big(int rel, int count) "ISO_TD R=%d > FC=%d"
+@@ -23,7 +23,7 @@ usb_ohci_iso_td_bad_direction(int dir) "Bad direction %d"
+ usb_ohci_iso_td_bad_bp_be(uint32_t bp, uint32_t be) "ISO_TD bp 0x%.8x be 0x%.8x"
+ usb_ohci_iso_td_bad_cc_not_accessed(uint32_t start, uint32_t next) "ISO_TD cc != not accessed 0x%.8x 0x%.8x"
+ usb_ohci_iso_td_bad_cc_overrun(uint32_t start, uint32_t next) "ISO_TD start_offset=0x%.8x > next_offset=0x%.8x"
+-usb_ohci_iso_td_so(uint32_t so, uint32_t eo, uint32_t s, uint32_t e, const char *str, ssize_t len, int ret) "0x%.8x eo 0x%.8x\nsa 0x%.8x ea 0x%.8x\ndir %s len %zu ret %d"
++usb_ohci_iso_td_so(uint32_t so, uint32_t eo, uint32_t s, uint32_t e, const char *str, ssize_t len, int ret) "0x%.8x eo 0x%.8x sa 0x%.8x ea 0x%.8x dir %s len %zu ret %d"
+ usb_ohci_iso_td_data_overrun(int ret, ssize_t len) "DataOverrun %d > %zu"
+ usb_ohci_iso_td_data_underrun(int ret) "DataUnderrun %d"
+ usb_ohci_iso_td_nak(int ret) "got NAK/STALL %d"
+@@ -55,7 +55,7 @@ usb_ohci_td_pkt_full(const char *dir, const char *buf) "%s data: %s"
+ usb_ohci_td_too_many_pending(int ep) "ep=%d"
+ usb_ohci_td_packet_status(int status) "status=%d"
+ usb_ohci_ed_read_error(uint32_t addr) "ED read error at 0x%x"
+-usb_ohci_ed_pkt(uint32_t cur, int h, int c, uint32_t head, uint32_t tail, uint32_t next) "ED @ 0x%.8x h=%u c=%u\n  head=0x%.8x tailp=0x%.8x next=0x%.8x"
++usb_ohci_ed_pkt(uint32_t cur, int h, int c, uint32_t head, uint32_t tail, uint32_t next) "ED @ 0x%.8x h=%u c=%u head=0x%.8x tailp=0x%.8x next=0x%.8x"
+ usb_ohci_ed_pkt_flags(uint32_t fa, uint32_t en, uint32_t d, int s, int k, int f, uint32_t mps) "fa=%u en=%u d=%u s=%u k=%u f=%u mps=%u"
+ usb_ohci_hcca_read_error(uint32_t addr) "HCCA read error at 0x%x"
+ usb_ohci_mem_read(uint32_t size, const char *name, uint32_t addr, uint32_t offs, uint32_t val) "%d %s 0x%x %d -> 0x%x"
 -- 
 2.45.1
 
