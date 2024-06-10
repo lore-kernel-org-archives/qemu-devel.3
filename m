@@ -4,107 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93016C27C5E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 03:39:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A6B2C27C5E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 03:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGVrW-0002up-II; Sun, 09 Jun 2024 23:38:26 -0400
+	id 1sGWBV-0007lZ-6R; Sun, 09 Jun 2024 23:59:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sGVrV-0002uW-3L
- for qemu-devel@nongnu.org; Sun, 09 Jun 2024 23:38:25 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sGVrT-0004wr-Cf
- for qemu-devel@nongnu.org; Sun, 09 Jun 2024 23:38:24 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1f6dfc17006so15421225ad.0
- for <qemu-devel@nongnu.org>; Sun, 09 Jun 2024 20:38:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1717990701; x=1718595501;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/zKkLuArRJQG20dEbTUKgKUwQ4e36XoWCQ718GMLJXM=;
- b=kz+A6jtE+F5bvrwZc8HErDR8VHIm0t9qnrV0GOvMAe1S6licuWdJ673kDYIVB0oCn/
- rWLGgFHg4WI/CS9RgMDgmNGInPpcqKTDHxHZSLT5E3KZ4cD/BAlsle17gsBE7jdtg6nI
- Wuj51myvk4Ji25NWMUKWeib6GkMoVDSpGyQORgeSwXXmVEiMVNIMlFyZCFuRz+LDnQ/S
- yDS4nmgVD0yWlSSFZ3gFIHeA2hr3ERZN6MpO1okR41rTmwkg1wPeAkZSWxuX8R9lPatU
- NWyMlNqXbd4tBzRuONc1gOvdO2f/2Gdvk7APggGEWdnMqXj3wLNjj3QaaIYIYMxLk+x1
- Kvmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1717990701; x=1718595501;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/zKkLuArRJQG20dEbTUKgKUwQ4e36XoWCQ718GMLJXM=;
- b=Y+Bl7eCmgzREm6gxIKEiPwEfT2jeSzdsK9Dbb3U6L6LZJLRFvyBKP4ewP6Ghyn4edS
- Z1Ku55qJFXDW81spmffmAgJ78+dLFmmyd2tY+9f3nPF44ebSL1qthz4qtb7VJzXNFVLO
- zJWaPV5kj+0V66zbJ0hjxRfcizW+wj4wAmvFgZBYbyX74QlzZMv+rE0NdEH576JQ2+j0
- pWJU62qLqvt2qe8valWrie/5GjtJ7Tbpc/BOIpew0Zo3tgK95JG0rv/If+aXpPy2O+x3
- 4egnHc2zQQbTlcezR+X4Q9aZbyvVyh7spOjOmQTT5yGDjtMOn7zuPS9ulXKcbv1fFWqX
- U5Kg==
-X-Gm-Message-State: AOJu0YwzJZ3X1cpHJ8ZtsdmQp0fshNGNkr5zfyIiRHquvyHswSCUWKSj
- XkXeWBAlnAHiXxBBm2r7pE/GO36G1YF4OtRmaYqj3MLRxiZjfQwaeTpZ6pjnFXE=
-X-Google-Smtp-Source: AGHT+IFLC2UyAqWiQ6zUuDvmSHwn79SaqPi99Vsv/V4CJJ5rGPahokU8Np9cahFC2XW764xT1S5K/g==
-X-Received: by 2002:a17:902:cec3:b0:1f7:13ac:e813 with SMTP id
- d9443c01a7336-1f713acea1cmr14774065ad.49.1717990701463; 
- Sun, 09 Jun 2024 20:38:21 -0700 (PDT)
-Received: from [157.82.204.135] ([157.82.204.135])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6da30cc2asm51393585ad.236.2024.06.09.20.38.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Jun 2024 20:38:21 -0700 (PDT)
-Message-ID: <802327b2-f166-49b5-b063-f642bb78111f@daynix.com>
-Date: Mon, 10 Jun 2024 12:38:15 +0900
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1sGWBT-0007ks-4V; Sun, 09 Jun 2024 23:59:03 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1sGWBR-0001pQ-6o; Sun, 09 Jun 2024 23:59:02 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45A2VTD3019563;
+ Mon, 10 Jun 2024 03:58:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=w
+ fK/UXi7+S8voEzfPkdfX4jKC+LEAgeNn2tl8j0bWA8=; b=FW/Qf5W8gm4dUsiVr
+ Mz7Tqjx+nQ5n6fkpyluWe6iTRd43O7N9sQpcX0rx+RTjPxdSarza9Bk7SxFm5FjH
+ cMZkssI3yB+ug9GGx3wmCfm6z8+luTViSe0nQW/rDZCJoAOaehFHoqu5plPQTpV3
+ hLv+05WBGbrbS75+5oWC7d91I48RSN99gFuC5SVWRspfZRObCDjWIZN+bSCJWgdU
+ HFzz4ZMGWzJq7jNHN5jH3SWiPZiuPTU5i/KWdU0N+KRgS2imlqZ2X1njeRnVNA5o
+ BBNQ7yYkU/W+JEZ3gh+euCvOCmEgXAcw6oQ+VpmmqTN3Ns0sRiUF+Rrs9+ICImzI
+ nptag==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ynrqx04xw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Jun 2024 03:58:58 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45A3wv2D015585;
+ Mon, 10 Jun 2024 03:58:57 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ynrqx04xu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Jun 2024 03:58:57 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45A2pEUw027267; Mon, 10 Jun 2024 03:58:57 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3yn210dgjp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 10 Jun 2024 03:58:57 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45A3wrQS26542826
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 10 Jun 2024 03:58:55 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 975AD5804E;
+ Mon, 10 Jun 2024 03:58:53 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A6E2858060;
+ Mon, 10 Jun 2024 03:58:52 +0000 (GMT)
+Received: from [9.67.189.165] (unknown [9.67.189.165])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 10 Jun 2024 03:58:52 +0000 (GMT)
+Message-ID: <b650a629-6f0b-41fd-93e3-87de48feba94@linux.ibm.com>
+Date: Sun, 9 Jun 2024 23:58:51 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v13 03/13] virtio-gpu: Handle virtio_gpu_virgl_init()
- failure
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-References: <20240527030233.3775514-1-dmitry.osipenko@collabora.com>
- <20240527030233.3775514-4-dmitry.osipenko@collabora.com>
- <c9891c82-b139-49cb-9f94-52a96cc20eea@daynix.com>
- <c2a4c684-24d8-4a3d-bed0-9b711b00b169@collabora.com>
- <24afb7f8-f091-4405-917e-ee7bb0a1e2b8@daynix.com>
- <70a2368c-2ed5-4035-a278-5d8a16c406ba@collabora.com>
+Subject: Re: [PATCH 0/5] s390x: Add Full Boot Order Support
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: frankja@linux.ibm.com, nsg@linux.ibm.com
+References: <20240529154311.734548-1-jrossi@linux.ibm.com>
+ <24bbebeb-9ce4-4f0f-9ae8-8a8ebf5979ed@redhat.com>
+ <f9d9e666-7ed5-4acb-af25-884ca5e92615@linux.ibm.com>
+ <cf48d601-0686-4ebd-a113-1357441db61d@redhat.com>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <70a2368c-2ed5-4035-a278-5d8a16c406ba@collabora.com>
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <cf48d601-0686-4ebd-a113-1357441db61d@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::632;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 5xYumTvKwSPq_I_k0_FrTH173mqcxfOw
+X-Proofpoint-GUID: wFq43h2nBazk64xd-FIYubg1zoUEw_c8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-09_18,2024-06-06_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 mlxlogscore=999
+ suspectscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 spamscore=0 clxscore=1015 malwarescore=0 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406100025
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,32 +118,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/06/10 4:02, Dmitry Osipenko wrote:
-> On 6/3/24 08:44, Akihiko Odaki wrote:
->> On 2024/06/03 14:26, Dmitry Osipenko wrote:
->>> On 6/2/24 08:34, Akihiko Odaki wrote:
->>>>> +typedef enum {
->>>>> +    RS_START,       /* starting state */
->>>>> +    RS_INIT_FAILED, /* failed initialisation */
->>>>
->>>> Is the distinction between RS_START and RS_INIT_FAILED really necessary?
->>>
->>> The state stays in RS_INIT_FAILED once was failed until virtio-gpu is
->>> reset, re-initializing virglrenderer isn't allowed in this state.
->>
->> Can you elaborate more? Why isn't re-initializing allowed?
-> 
-> In practice, if virglrenderer initialization failed once, it will fail
-> second time. Otherwise we will be retrying to init endlessly because
-> guest won't stop sending virgl commands even if they all are timing out.
-> Each initialization failure produces a error msg.
->
-I see.
 
-A better solution is to add a new function to GraphicHwOps to call back 
-after initializating the displays and before starting the guest. You can 
-do virgl initialization in such a function, and exit(1) if the 
-initialization fails because the guest has not started yet, saving this 
-enum. I don't require you to make such a change however; this is not a 
-regression of your patches so you have no obligation to fix it.
+
+On 6/7/24 2:19 AM, Thomas Huth wrote:
+> On 06/06/2024 21.22, Jared Rossi wrote:
+>>
+>>
+>> On 6/5/24 4:02 AM, Thomas Huth wrote:
+>>> On 29/05/2024 17.43, jrossi@linux.ibm.com wrote:
+>>>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>>>
+>>>> This patch set primarily adds support for the specification of 
+>>>> multiple boot
+>>>> devices, allowing for the guest to automatically use an alternative 
+>>>> device on
+>>>> a failed boot without needing to be reconfigured. It additionally 
+>>>> provides the
+>>>> ability to define the loadparm attribute on a per-device bases, 
+>>>> which allows
+>>>> boot devices to use different loadparm values if needed.
+>>>>
+>>>> In brief, an IPLB is generated for each designated boot device (up 
+>>>> to a maximum
+>>>> of 8) and stored in guest memory immediately before BIOS. If a 
+>>>> device fails to
+>>>> boot, the next IPLB is retrieved and we jump back to the start of 
+>>>> BIOS.
+>>>>
+>>>> Devices can be specified using the standard qemu device tag 
+>>>> "bootindex" as with
+>>>> other architectures. Lower number indices are tried first, with 
+>>>> "bootindex=0"
+>>>> indicating the first device to try.
+>>>
+>>> Is this supposed with multiple scsi-hd devices, too? I tried to boot 
+>>> a guest with two scsi disks (attached to a single virtio-scsi-ccw 
+>>> adapter) where only the second disk had a bootable installation, but 
+>>> that failed...?
+>>>
+>>>  Thomas
+>>>
+>>>
+>>
+>> Hi Thomas,
+>>
+>> Yes, I would expect that to work. I tried to reproduce this using a 
+>> non-bootable scsi disk as the first boot device and then a known-good 
+>> bootable scsi disk as the second boot device, with one controller.  
+>> In my instance the BIOS was not able to identify the first disk as 
+>> bootable and so that device failed to IPL, but it did move on to the 
+>> next disk after that, and the guest successfully IPL'd from the 
+>> second device.
+>>
+>> When you say it failed, do you mean the first disk failed to boot (as 
+>> expected), but then the guest died without attempting to boot from 
+>> the second disk?  Or did something else happen? I am either not 
+>> understanding your configuration or I am not understanding your error.
+>
+> I did this:
+>
+>  $ ./qemu-system-s390x -bios pc-bios/s390-ccw/s390-ccw.img -accel kvm \
+>    -device virtio-scsi-ccw  -drive if=none,id=d2,file=/tmp/bad.qcow2 \
+>    -device scsi-hd,drive=d2,bootindex=2 \
+>    -drive if=none,id=d8,file=/tmp/good.qcow2 \
+>    -device scsi-hd,drive=d8,bootindex=3 -m 4G -nographic
+>  LOADPARM=[        ]
+>  Using virtio-scsi.
+>  Using guessed DASD geometry.
+>  Using ECKD scheme (block size   512), CDL
+>  No zIPL section in IPL2 record.
+>  zIPL load failed.
+>
+>  Trying next boot device...
+>  LOADPARM=[        ]
+>  Using virtio-scsi.
+>  Using guessed DASD geometry.
+>  Using ECKD scheme (block size   512), CDL
+>  No zIPL section in IPL2 record.
+>  zIPL load failed.
+>
+> So it claims to try to load from the second disk, but it fails.
+> If I change the "bootindex=3" of the second disk to "bootindex=1", it 
+> boots perfectly fine, so I'm sure that the installation on good.qcow2 
+> is working fine.
+>
+>  Thomas
+>
+
+I am able to reproduce this now; I'll investigate the problem.
+
 
