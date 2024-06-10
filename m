@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CDB6C27C55
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 15:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E72C27C5F
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 16:11:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGhLO-0002IX-4J; Mon, 10 Jun 2024 11:54:02 -0400
+	id 1sGhb2-0000W4-15; Mon, 10 Jun 2024 12:10:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1sGhLL-0002I4-RJ
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 11:53:59 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sGhaz-0000Vb-GN
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 12:10:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1sGhLJ-0005y8-PF
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 11:53:59 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sGhax-00026k-Aa
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 12:10:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718034836;
+ s=mimecast20190719; t=1718035804;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bTiWV60Yw5YHcmL5cLv5wWfs1CoY7BJX7S0VToe0aU4=;
- b=SDD61N1mv7bS2Hr4uH3oivbsntAjHvnlXZCMzjrBBq/sKhedeeosZzi2C2oU6b6YOHv7Eb
- 7uNF6MMQ0rLQQe7srjwmK9J80OF4RXCcMFOHcG8f6vc8WTLUPHfk+criSetspRLIOdTOfC
- SqZD8ojqKa16iNEh38dtZ5BHrYvo6/M=
-Received: from mail-il1-f199.google.com (mail-il1-f199.google.com
- [209.85.166.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=g+bhupLrgx4ArV/OJQmP0KB4AgM5JV8BkrXqxjjJ3ac=;
+ b=Ex6XkG+3+kDzwN9fP8T4uZf6F/bQ5no4B01mmGNPJod1UrBMCJUinAC8LqRsyxGRgveNS8
+ K0yFwwlvMmpgd+kwciJzpoGvOGIRm1IIJkEjmdNx8LCGTTP+bOkDhnkFb4cJwN70QGdfxe
+ Te4YCosXayO1g8dmv7xMd5scXHCCXhc=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-VFVA6lFaNgGm00UTYrlDMA-1; Mon, 10 Jun 2024 11:53:54 -0400
-X-MC-Unique: VFVA6lFaNgGm00UTYrlDMA-1
-Received: by mail-il1-f199.google.com with SMTP id
- e9e14a558f8ab-375a31f4251so12230085ab.1
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 08:53:54 -0700 (PDT)
+ us-mta-135-gL5Y94CCOOq8PAi9hxqmxg-1; Mon, 10 Jun 2024 12:10:02 -0400
+X-MC-Unique: gL5Y94CCOOq8PAi9hxqmxg-1
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-44026f38681so512571cf.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 09:10:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718034833; x=1718639633;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bTiWV60Yw5YHcmL5cLv5wWfs1CoY7BJX7S0VToe0aU4=;
- b=EoS38ex04drQl/rbW4q83DPxNlad/4370w8pmGDHaU4F4p0JK6TQxoCCnKIeNA2KuK
- HoEl2IRA4YraYLNq1dkHe9krP/ig3oD98g1LaJGtFIB+4M2afuXr8lJVdrInIGO/sm3w
- zPWCSlDrvQ5LxTszGwVdlJDGc7/mY4itOfTAUAPx7SVBbrzbQ+6/xM3DtM2XJ2DNcohu
- XuuKI1gvufnjVA1bQYs4XnzvnLOgauuDx6u9gdNY7ABRuy85dWsl0OfebSJrdx0pdnIA
- vWrls0rfqNPDOxw4C4TSTldGaUPBJmVWGndxe6H6L1+eQOGNM8fqgScxYRMTIWZuhpZ9
- EQXA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXxOp65OWEoU+tkNBwwHgMDhxmmu2J/RVgbSSx0ujCgxraazL5Oq7VoaU/jVOcbwlytG3ReUh8Iw4jzEwA6a1xsBXteC+o=
-X-Gm-Message-State: AOJu0Yy3kSAtbh57DuMN2Q0EQ3HRVCOJevuVuQx+HeoNuX4leFhYaRpX
- vVmT7775PP7258uPw4ACY7/kNzbogVyMt3g7Yhoh8rr175oXJPBV3G9xKVXsbZuY3hEqgEfC481
- qwSXEwxsBms0V8dPStImHDsYLzttGUBe8eoAxnInEmciuv/O1Cgua
-X-Received: by 2002:a05:6e02:144a:b0:375:ab32:8f0 with SMTP id
- e9e14a558f8ab-375ab322623mr23859305ab.14.1718034832892; 
- Mon, 10 Jun 2024 08:53:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEaExKluA3Rvt6JuOILzBUOwxkdxt3YsHkWnG49oBIvMx6jA+Z0EzSj5Xc2lZQPvbVXGzCMbg==
-X-Received: by 2002:a05:6e02:144a:b0:375:ab32:8f0 with SMTP id
- e9e14a558f8ab-375ab322623mr23858955ab.14.1718034832303; 
- Mon, 10 Jun 2024 08:53:52 -0700 (PDT)
-Received: from localhost.localdomain ([115.96.118.89])
- by smtp.googlemail.com with ESMTPSA id
- 41be03b00d2f7-6e3819ffa94sm5155290a12.85.2024.06.10.08.53.48
+ d=1e100.net; s=20230601; t=1718035802; x=1718640602;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=g+bhupLrgx4ArV/OJQmP0KB4AgM5JV8BkrXqxjjJ3ac=;
+ b=gjAtVAYdBUw9Wqry1AidVQwsdv2PfHlMhlyI3x+APHLwl15VICE/iduV1HT6PVsDMz
+ mA+N9lQBYLqgANaDndZciWlgmxQh8lyiqxnL0Lq4yREbBs5W0rWDeB1YjvNnhPObNGU3
+ MdGyTsuq61zlONwnChxhNARbZUxmpzhY0iMArMRVvycs9EgrZE9f+iZkmsqTfTjEbSgQ
+ VrRrFW6zVJmfvadHe9Lt+L7/oZc4Jxc1Hr0dVQNRC/emGHcL1wdgJSaz/4F2/2q7ReSG
+ 1LRqhKa9fW3MMtha43n7AEnpLsY/RZwIhHHHUYyToFInBbPgHncRhlXtWyfLy0nldT7r
+ 3HpA==
+X-Gm-Message-State: AOJu0YyQqGJwf599UW11yl3nfwAgILMmTTRnDj8xOBjz8OEmaG/A+Zc8
+ TcgTL1Z+10/Gv9gKBLNnMHzIvuQRSWTjqFBNMGOQRmUszU8LfJUBJ4hUtRocucvZE9LPMckcQmV
+ zd0Z7WuJXvxi7ZYxnksAsZbPIlec1CN9Z91Ycn07DFSfunsxjm8Nc
+X-Received: by 2002:a05:620a:261c:b0:797:adf9:b33f with SMTP id
+ af79cd13be357-797adf9b5c3mr118822985a.4.1718035801316; 
+ Mon, 10 Jun 2024 09:10:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHqK31yZjSvmGT+n2R5ASeQnLDlQZd7b5QiMkAg5DZGKO8uI3cO1FvffhCPD1l4U0qFWlwzyA==
+X-Received: by 2002:a05:620a:261c:b0:797:adf9:b33f with SMTP id
+ af79cd13be357-797adf9b5c3mr118810585a.4.1718035799792; 
+ Mon, 10 Jun 2024 09:09:59 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-79555a58ca7sm222158985a.32.2024.06.10.09.09.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Jun 2024 08:53:51 -0700 (PDT)
-From: Ani Sinha <anisinha@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Mon, 10 Jun 2024 09:09:59 -0700 (PDT)
+Date: Mon, 10 Jun 2024 12:09:57 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
  Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>, imammedo@redhat.com,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Subject: [PATCH v4 3/3] tests/qtest/x86: check for availability of older cpu
- models before running tests
-Date: Mon, 10 Jun 2024 21:23:00 +0530
-Message-ID: <20240610155303.7933-4-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20240610155303.7933-1-anisinha@redhat.com>
-References: <20240610155303.7933-1-anisinha@redhat.com>
+Subject: Re: [PATCH v2 18/18] migration/ram: Add direct-io support to precopy
+ file migration
+Message-ID: <ZmclVQw0x7KKLxmF@x1n>
+References: <20240523190548.23977-1-farosas@suse.de>
+ <20240523190548.23977-19-farosas@suse.de> <Zl9_ZiC6-743ZosG@x1n>
+ <87y17gwq5g.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87y17gwq5g.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -110,350 +104,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is better to check if some older cpu models like 486, athlon, pentium,
-penryn, phenom, core2duo etc are available before running their corresponding
-tests. Some downstream distributions may no longer support these older cpu
-models.
+On Fri, Jun 07, 2024 at 03:42:35PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Thu, May 23, 2024 at 04:05:48PM -0300, Fabiano Rosas wrote:
+> >> We've recently added support for direct-io with multifd, which brings
+> >> performance benefits, but creates a non-uniform user interface by
+> >> coupling direct-io with the multifd capability. This means that users
+> >> cannot keep the direct-io flag enabled while disabling multifd.
+> >> 
+> >> Libvirt in particular already has support for direct-io and parallel
+> >> migration separately from each other, so it would be a regression to
+> >> now require both options together. It's relatively simple for QEMU to
+> >> add support for direct-io migration without multifd, so let's do this
+> >> in order to keep both options decoupled.
+> >> 
+> >> We cannot simply enable the O_DIRECT flag, however, because not all IO
+> >> performed by the migration thread satisfies the alignment requirements
+> >> of O_DIRECT. There are many small read & writes that add headers and
+> >> synchronization flags to the stream, which at the moment are required
+> >> to always be present.
+> >> 
+> >> Fortunately, due to fixed-ram migration there is a discernible moment
+> >> where only RAM pages are written to the migration file. Enable
+> >> direct-io during that moment.
+> >> 
+> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >
+> > Is anyone going to consume this?  How's the performance?
+> 
+> I don't think we have a pre-determined consumer for this. This came up
+> in an internal discussion about making the interface simpler for libvirt
+> and in a thread on the libvirt mailing list[1] about using O_DIRECT to
+> keep the snapshot data out of the caches to avoid impacting the rest of
+> the system. (I could have described this better in the commit message,
+> sorry).
+> 
+> Quoting Daniel:
+> 
+>   "Note the reason for using O_DIRECT is *not* to make saving / restoring
+>    the guest VM faster. Rather it is to ensure that saving/restoring a VM
+>    does not trash the host I/O / buffer cache, which will negatively impact
+>    performance of all the *other* concurrently running VMs."
+> 
+> 1- https://lore.kernel.org/r/87sez86ztq.fsf@suse.de
+> 
+> About performance, a quick test on a stopped 30G guest, shows
+> mapped-ram=on direct-io=on it's 12% slower than mapped-ram=on
+> direct-io=off.
 
-Signature of add_feature_test() has been modified to return void as
-FeatureTestArgs* was not used by the caller.
+Yes, this makes sense.
 
-One minor correction. Replaced 'phenom' with '486' in the test
-'x86/cpuid/auto-level/phenom/arat' matching the cpu used.
+> 
+> >
+> > It doesn't look super fast to me if we need to enable/disable dio in each
+> > loop.. then it's a matter of whether we should bother, or would it be
+> > easier that we simply require multifd when direct-io=on.
+> 
+> AIUI, the issue here that users are already allowed to specify in
+> libvirt the equivalent to direct-io and multifd independent of each
+> other (bypass-cache, parallel). To start requiring both together now in
+> some situations would be a regression. I confess I don't know libvirt
+> code to know whether this can be worked around somehow, but as I said,
+> it's a relatively simple change from the QEMU side.
 
-CC: thuth@redhat.com
-CC: imammedo@redhat.com
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
----
- tests/qtest/test-x86-cpuid-compat.c | 170 ++++++++++++++++++----------
- 1 file changed, 108 insertions(+), 62 deletions(-)
+Firstly, I definitely want to already avoid all the calls to either
+migration_direct_io_start() or *_finish(), now we already need to
+explicitly call them in three paths, and that's not intuitive and less
+readable, just like the hard coded rdma codes.
 
-changelog:
-v2: reworked as per suggestion from danpb.
-v3: reworked as_feature_test() same way as add_cpuid_test()
-v4: phil's suggestion. tags added.
+I also worry we may overlook the complexity here, and pinning buffers
+definitely need more thoughts on its own.  It's easier to digest when using
+multifd and when QEMU only pins guest pages just like tcp-zerocopy does,
+which are naturally host page size aligned, and also guaranteed to not be
+freed (while reused / modified is fine here, as dirty tracking guarantees a
+new page will be migrated soon again).
 
-diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-cpuid-compat.c
-index 6a39454fce..b9e7e5ef7b 100644
---- a/tests/qtest/test-x86-cpuid-compat.c
-+++ b/tests/qtest/test-x86-cpuid-compat.c
-@@ -67,10 +67,29 @@ static void test_cpuid_prop(const void *data)
-     g_free(path);
- }
- 
--static void add_cpuid_test(const char *name, const char *cmdline,
-+static void add_cpuid_test(const char *name, const char *cpu,
-+                           const char *cpufeat, const char *machine,
-                            const char *property, int64_t expected_value)
- {
-     CpuidTestArgs *args = g_new0(CpuidTestArgs, 1);
-+    char *cmdline;
-+    char *save;
-+
-+    if (!qtest_has_cpu_model(cpu)) {
-+        return;
-+    }
-+    cmdline = g_strdup_printf("-cpu %s", cpu);
-+
-+    if (cpufeat) {
-+        save = cmdline;
-+        cmdline = g_strdup_printf("%s,%s", cmdline, cpufeat);
-+        g_free(save);
-+    }
-+    if (machine) {
-+        save = cmdline;
-+        cmdline = g_strdup_printf("-machine %s %s", machine, cmdline);
-+        g_free(save);
-+    }
-     args->cmdline = cmdline;
-     args->property = property;
-     args->expected_value = expected_value;
-@@ -149,12 +168,24 @@ static void test_feature_flag(const void *data)
-  * either "feature-words" or "filtered-features", when running QEMU
-  * using cmdline
-  */
--static FeatureTestArgs *add_feature_test(const char *name, const char *cmdline,
--                                         uint32_t eax, uint32_t ecx,
--                                         const char *reg, int bitnr,
--                                         bool expected_value)
-+static void add_feature_test(const char *name, const char *cpu,
-+                             const char *cpufeat, uint32_t eax,
-+                             uint32_t ecx, const char *reg,
-+                             int bitnr, bool expected_value)
- {
-     FeatureTestArgs *args = g_new0(FeatureTestArgs, 1);
-+    char *cmdline;
-+
-+    if (!qtest_has_cpu_model(cpu)) {
-+        return;
-+    }
-+
-+    if (cpufeat) {
-+        cmdline = g_strdup_printf("-cpu %s,%s", cpu, cpufeat);
-+    } else {
-+        cmdline = g_strdup_printf("-cpu %s", cpu);
-+    }
-+
-     args->cmdline = cmdline;
-     args->in_eax = eax;
-     args->in_ecx = ecx;
-@@ -162,13 +193,17 @@ static FeatureTestArgs *add_feature_test(const char *name, const char *cmdline,
-     args->bitnr = bitnr;
-     args->expected_value = expected_value;
-     qtest_add_data_func(name, args, test_feature_flag);
--    return args;
-+    return;
- }
- 
- static void test_plus_minus_subprocess(void)
- {
-     char *path;
- 
-+    if (!qtest_has_cpu_model("pentium")) {
-+        return;
-+    }
-+
-     /* Rules:
-      * 1)"-foo" overrides "+foo"
-      * 2) "[+-]foo" overrides "foo=..."
-@@ -198,6 +233,10 @@ static void test_plus_minus_subprocess(void)
- 
- static void test_plus_minus(void)
- {
-+    if (!qtest_has_cpu_model("pentium")) {
-+        return;
-+    }
-+
-     g_test_trap_subprocess("/x86/cpuid/parsing-plus-minus/subprocess", 0, 0);
-     g_test_trap_assert_passed();
-     g_test_trap_assert_stderr("*Ambiguous CPU model string. "
-@@ -217,99 +256,105 @@ int main(int argc, char **argv)
- 
-     /* Original level values for CPU models: */
-     add_cpuid_test("x86/cpuid/phenom/level",
--                   "-cpu phenom", "level", 5);
-+                   "phenom", NULL, NULL, "level", 5);
-     add_cpuid_test("x86/cpuid/Conroe/level",
--                   "-cpu Conroe", "level", 10);
-+                   "Conroe", NULL, NULL, "level", 10);
-     add_cpuid_test("x86/cpuid/SandyBridge/level",
--                   "-cpu SandyBridge", "level", 0xd);
-+                   "SandyBridge", NULL, NULL, "level", 0xd);
-     add_cpuid_test("x86/cpuid/486/xlevel",
--                   "-cpu 486", "xlevel", 0);
-+                   "486", NULL, NULL, "xlevel", 0);
-     add_cpuid_test("x86/cpuid/core2duo/xlevel",
--                   "-cpu core2duo", "xlevel", 0x80000008);
-+                   "core2duo", NULL, NULL, "xlevel", 0x80000008);
-     add_cpuid_test("x86/cpuid/phenom/xlevel",
--                   "-cpu phenom", "xlevel", 0x8000001A);
-+                   "phenom", NULL, NULL, "xlevel", 0x8000001A);
-     add_cpuid_test("x86/cpuid/athlon/xlevel",
--                   "-cpu athlon", "xlevel", 0x80000008);
-+                   "athlon", NULL, NULL, "xlevel", 0x80000008);
- 
-     /* If level is not large enough, it should increase automatically: */
-     /* CPUID[6].EAX: */
--    add_cpuid_test("x86/cpuid/auto-level/phenom/arat",
--                   "-cpu 486,arat=on", "level", 6);
-+    add_cpuid_test("x86/cpuid/auto-level/486/arat",
-+                   "486", "arat=on", NULL, "level", 6);
-     /* CPUID[EAX=7,ECX=0].EBX: */
-     add_cpuid_test("x86/cpuid/auto-level/phenom/fsgsbase",
--                   "-cpu phenom,fsgsbase=on", "level", 7);
-+                   "phenom", "fsgsbase=on", NULL, "level", 7);
-     /* CPUID[EAX=7,ECX=0].ECX: */
-     add_cpuid_test("x86/cpuid/auto-level/phenom/avx512vbmi",
--                   "-cpu phenom,avx512vbmi=on", "level", 7);
-+                   "phenom", "avx512vbmi=on", NULL, "level", 7);
-     /* CPUID[EAX=0xd,ECX=1].EAX: */
-     add_cpuid_test("x86/cpuid/auto-level/phenom/xsaveopt",
--                   "-cpu phenom,xsaveopt=on", "level", 0xd);
-+                   "phenom", "xsaveopt=on", NULL, "level", 0xd);
-     /* CPUID[8000_0001].EDX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/3dnow",
--                   "-cpu 486,3dnow=on", "xlevel", 0x80000001);
-+                   "486", "3dnow=on", NULL, "xlevel", 0x80000001);
-     /* CPUID[8000_0001].ECX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/sse4a",
--                   "-cpu 486,sse4a=on", "xlevel", 0x80000001);
-+                   "486", "sse4a=on", NULL, "xlevel", 0x80000001);
-     /* CPUID[8000_0007].EDX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/invtsc",
--                   "-cpu 486,invtsc=on", "xlevel", 0x80000007);
-+                   "486", "invtsc=on", NULL, "xlevel", 0x80000007);
-     /* CPUID[8000_000A].EDX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/npt",
--                   "-cpu 486,svm=on,npt=on", "xlevel", 0x8000000A);
-+                   "486", "svm=on,npt=on", NULL, "xlevel", 0x8000000A);
-     /* CPUID[C000_0001].EDX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel2/phenom/xstore",
--                   "-cpu phenom,xstore=on", "xlevel2", 0xC0000001);
-+                   "phenom", "xstore=on", NULL, "xlevel2", 0xC0000001);
-     /* SVM needs CPUID[0x8000000A] */
-     add_cpuid_test("x86/cpuid/auto-xlevel/athlon/svm",
--                   "-cpu athlon,svm=on", "xlevel", 0x8000000A);
-+                   "athlon", "svm=on", NULL, "xlevel", 0x8000000A);
- 
- 
-     /* If level is already large enough, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-level/SandyBridge/multiple",
--                   "-cpu SandyBridge,arat=on,fsgsbase=on,avx512vbmi=on",
--                   "level", 0xd);
-+                   "SandyBridge", "arat=on,fsgsbase=on,avx512vbmi=on",
-+                   NULL, "level", 0xd);
-     /* If level is explicitly set, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-level/486/fixed/0xF",
--                   "-cpu 486,level=0xF,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
--                   "level", 0xF);
-+                   "486",
-+                   "level=0xF,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
-+                   NULL, "level", 0xF);
-     add_cpuid_test("x86/cpuid/auto-level/486/fixed/2",
--                   "-cpu 486,level=2,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
--                   "level", 2);
-+                   "486",
-+                   "level=2,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
-+                   NULL, "level", 2);
-     add_cpuid_test("x86/cpuid/auto-level/486/fixed/0",
--                   "-cpu 486,level=0,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
--                   "level", 0);
-+                   "486",
-+                   "level=0,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
-+                   NULL, "level", 0);
- 
-     /* if xlevel is already large enough, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/phenom/3dnow",
--                   "-cpu phenom,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   "xlevel", 0x8000001A);
-+                   "phenom", "3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                   NULL, "xlevel", 0x8000001A);
-     /* If xlevel is explicitly set, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/fixed/80000002",
--                   "-cpu 486,xlevel=0x80000002,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   "xlevel", 0x80000002);
-+                   "486",
-+                   "xlevel=0x80000002,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                   NULL, "xlevel", 0x80000002);
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/fixed/8000001A",
--                   "-cpu 486,xlevel=0x8000001A,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   "xlevel", 0x8000001A);
-+                   "486",
-+                   "xlevel=0x8000001A,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                   NULL, "xlevel", 0x8000001A);
-     add_cpuid_test("x86/cpuid/auto-xlevel/phenom/fixed/0",
--                   "-cpu 486,xlevel=0,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   "xlevel", 0);
-+                   "486",
-+                   "xlevel=0,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                   NULL, "xlevel", 0);
- 
-     /* if xlevel2 is already large enough, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-xlevel2/486/fixed",
--                   "-cpu 486,xlevel2=0xC0000002,xstore=on",
--                   "xlevel2", 0xC0000002);
-+                   "486", "xlevel2=0xC0000002,xstore=on",
-+                   NULL, "xlevel2", 0xC0000002);
- 
-     /* Check compatibility of old machine-types that didn't
-      * auto-increase level/xlevel/xlevel2: */
-     if (qtest_has_machine("pc-i440fx-2.7")) {
-         add_cpuid_test("x86/cpuid/auto-level/pc-2.7",
--                       "-machine pc-i440fx-2.7 -cpu 486,arat=on,avx512vbmi=on,xsaveopt=on",
--                       "level", 1);
-+                       "486", "arat=on,avx512vbmi=on,xsaveopt=on",
-+                       "pc-i440fx-2.7", "level", 1);
-         add_cpuid_test("x86/cpuid/auto-xlevel/pc-2.7",
--                       "-machine pc-i440fx-2.7 -cpu 486,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                       "xlevel", 0);
-+                       "486", "3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                       "pc-i440fx-2.7", "xlevel", 0);
-         add_cpuid_test("x86/cpuid/auto-xlevel2/pc-2.7",
--                       "-machine pc-i440fx-2.7 -cpu 486,xstore=on",
-+                       "486", "xstore=on", "pc-i440fx-2.7",
-                        "xlevel2", 0);
-     }
-     /*
-@@ -319,18 +364,18 @@ int main(int argc, char **argv)
-      */
-     if (qtest_has_machine("pc-i440fx-2.3")) {
-         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.3/off",
--                       "-machine pc-i440fx-2.3 -cpu Penryn",
-+                       "Penryn", NULL, "pc-i440fx-2.3",
-                        "level", 4);
-         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.3/on",
--                       "-machine pc-i440fx-2.3 -cpu Penryn,erms=on",
-+                       "Penryn", "erms=on", "pc-i440fx-2.3",
-                        "level", 7);
-     }
-     if (qtest_has_machine("pc-i440fx-2.9")) {
-         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.9/off",
--                       "-machine pc-i440fx-2.9 -cpu Conroe",
-+                       "Conroe", NULL, "pc-i440fx-2.9",
-                        "level", 10);
-         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.9/on",
--                       "-machine pc-i440fx-2.9 -cpu Conroe,erms=on",
-+                       "Conroe", "erms=on", "pc-i440fx-2.9",
-                        "level", 10);
-     }
- 
-@@ -341,42 +386,43 @@ int main(int argc, char **argv)
-      */
-     if (qtest_has_machine("pc-i440fx-2.3")) {
-         add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.3",
--                       "-machine pc-i440fx-2.3 -cpu SandyBridge",
-+                       "SandyBridge", NULL, "pc-i440fx-2.3",
-                        "xlevel", 0x8000000a);
-     }
-     if (qtest_has_machine("pc-i440fx-2.4")) {
-         add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.4/npt-off",
--                       "-machine pc-i440fx-2.4 -cpu SandyBridge,",
-+                       "SandyBridge", NULL, "pc-i440fx-2.4",
-                        "xlevel", 0x80000008);
-         add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.4/npt-on",
--                       "-machine pc-i440fx-2.4 -cpu SandyBridge,svm=on,npt=on",
-+                       "SandyBridge", "svm=on,npt=on", "pc-i440fx-2.4",
-                        "xlevel", 0x80000008);
-     }
- 
-     /* Test feature parsing */
-     add_feature_test("x86/cpuid/features/plus",
--                     "-cpu 486,+arat",
-+                     "486", "+arat",
-                      6, 0, "EAX", 2, true);
-     add_feature_test("x86/cpuid/features/minus",
--                     "-cpu pentium,-mmx",
-+                     "pentium", "-mmx",
-                      1, 0, "EDX", 23, false);
-     add_feature_test("x86/cpuid/features/on",
--                     "-cpu 486,arat=on",
-+                     "486", "arat=on",
-                      6, 0, "EAX", 2, true);
-     add_feature_test("x86/cpuid/features/off",
--                     "-cpu pentium,mmx=off",
-+                     "pentium", "mmx=off",
-                      1, 0, "EDX", 23, false);
-+
-     add_feature_test("x86/cpuid/features/max-plus-invtsc",
--                     "-cpu max,+invtsc",
-+                     "max" , "+invtsc",
-                      0x80000007, 0, "EDX", 8, true);
-     add_feature_test("x86/cpuid/features/max-invtsc-on",
--                     "-cpu max,invtsc=on",
-+                     "max", "invtsc=on",
-                      0x80000007, 0, "EDX", 8, true);
-     add_feature_test("x86/cpuid/features/max-minus-mmx",
--                     "-cpu max,-mmx",
-+                     "max", "-mmx",
-                      1, 0, "EDX", 23, false);
-     add_feature_test("x86/cpuid/features/max-invtsc-on,mmx=off",
--                     "-cpu max,mmx=off",
-+                     "max", "mmx=off",
-                      1, 0, "EDX", 23, false);
- 
-     return g_test_run();
+IMHO here the "not be freed / modified" is even more important than
+"alignment": the latter is about perf, the former is about correctness.
+When we do directio on random buffers, AFAIU we don't want to have the
+buffer modified before flushed to disk, and that's IMHO not easy to
+guarantee.
+
+E.g., I don't think this guarantees a flush on the buffer usages:
+
+  migration_direct_io_start()
+    /* flush any potentially unaligned IO before setting O_DIRECT */
+    qemu_fflush(file);
+
+qemu_fflush() internally does writev(), and that "flush" is about "flushing
+qemufile iov[] to fd", not "flushing buffers to disk".  I think it means
+if we do qemu_fflush() then we modify QEMUFile.buf[IO_BUF_SIZE] we're
+doomed: we will never know whether dio has happened, and which version of
+buffer will be sent; I don't think it's guaranteed it will always be the
+old version of the buffer.
+
+However the issue is, QEMUFile defines qemu_fflush() as: after call, the
+buf[] can be reused!  It suggests breaking things I guess in dio context.
+
+IIUC currently mapped-ram is ok because mapped-ram is just special that it
+doesn't have page headers, so it doesn't use the buf[] during iterations;
+while for zeropage it uses file_bmap bitmap and that's separate too and
+does not generate any byte on the wire either.
+
+xbzrle could use that buf[], but maybe mapped-ram doesn't work anyway with
+xbzrle.
+
+Everything is just very not obvious and tricky to me.  This still looks
+pretty dangerous to me.  Would migration_direct_io_finish() guarantee
+something like a fdatasync()?  If so it looks safer, but still within the
+start() and finish() if someone calls qemu_fflush() and reuse the buffer we
+can still get hard to debug issues (as the outcome would be that we saw
+corrupted migration files).
+
+> 
+> Another option which would be for libvirt to keep using multifd, but
+> make it 1 channel only if --parallel is not specified. That might be
+> enough to solve the interface issues. Of course, it's a different code
+> altogether than the usual precopy code that gets executed when
+> multifd=off, I don't know whether that could be an issue somehow.
+
+Would there be any comment from Libvirt side?  This sounds like a good
+solution if my above concern is real; as long as we always stick dio with
+guest pages we'll be all fine.
+
+Thanks,
+
 -- 
-2.42.0
+Peter Xu
 
 
