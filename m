@@ -4,79 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA40C27C5F
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 16:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 465C2C27C5E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 16:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGhoF-00045h-Dy; Mon, 10 Jun 2024 12:23:51 -0400
+	id 1sGhoI-000479-Oy; Mon, 10 Jun 2024 12:23:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sGhoD-00044N-8G
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 12:23:49 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1sGhoE-000450-Rq
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 12:23:51 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sGhoB-0005kv-8w
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 12:23:48 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4218180a122so1272435e9.1
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 09:23:46 -0700 (PDT)
+ id 1sGhoC-0005l9-6N
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 12:23:50 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-42133f8432aso1160905e9.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 09:23:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718036625; x=1718641425; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=MmJqXEo/cvQTcJBBQgnUyi4Q/sMvVbORelXofEHlP2E=;
- b=TUBsaGmXCXRKSGFInEc+G5T0yUrTQMJ3KD/LhfYzeigk9ieRDBY46cr0QqaTjdAqUP
- jEmVYhvG4yZ5RiSXV33LOW4NRcjmOx9OpMyjaT+RsrLMeqwdmRnLGICcFXAn5NjvCE8N
- 2mh5mrOFUZx0tCKa2FIHAGYHuMGbaKqvwPMArXP9k+PosqKtQTQvprXu1/5u5EHIPQIM
- 4F1B7eFkzXZeha6DWo7q3+WKkVqKKeLHUao12+ZGFlap2aNlOrhaWZUuKSE1yhUgMsep
- U4wl90k599LFWwCFvDMNKTCnQaE0twqTak0h8x1Cd6soQwDo1dbZY9qsUWrKDGV9QUVB
- 8JUA==
+ d=linaro.org; s=google; t=1718036627; x=1718641427; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=7Imr1z9bfFUSXc72Pq5zm13hYL6VZ46pb0N02MSoc4g=;
+ b=a1gfukT98Bk9or3OzDi9vbeE3IOSOeecpWveHG4rt3l9tM/tQRVFMQQq29m4KehIui
+ 22EVihlguUc7Ny7O3lqKp7RrS3A9CszkUPnjgHL6f7q7wlNhj9zHO2Ds3++MT+I+2wsB
+ ODIF4/lxlb3gdppFpC0Gs39tOBRkvB6SNfcwg1hHOoPhtdQbcjxBxuVMLHJ+1U3AqmpG
+ ZxjawH8bL0YQ4PAPdvHvZvwi/3l+DBxopNLEaHNbl/8tSCp6zwTQWANpl24oVJ29BDSM
+ wi8wX3LmH0pnM1cY3dldrCrJdpocz9In51NafhdXwavJownl70AeYLGeyXTJR/izanZI
+ xGnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718036625; x=1718641425;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MmJqXEo/cvQTcJBBQgnUyi4Q/sMvVbORelXofEHlP2E=;
- b=nLl8Gmr6l6TLizOeWZg8ZfEgodFPD2dG85vnh89mS3p91oAIVqYBANjp7VQF2rJj9Q
- YcxvBTD7SAoWPqbAc/XxFEUJAhPCu3XXsOgROD1z53CV+iC5AuRJlI/4yQDmr92PxHMR
- jXaaxKgNrM/Csmfail2jH48oTsAEkbke1UAXhczDPnyMR5L+/EYJfZTl1voSPf7YXemd
- GMZKGG/mwdpgojPPBs2zYC8P4y/ZurbaEMwuo/MNAmJKLaGYwr8Q+SWY4bMnM5Wkk6gJ
- VWsC3UrAdRi7qmaeTz+NSFD1f3jZTGTATcwsINdjZgxLPFeusN4k1LKoW0HUNUOelUY2
- jRrw==
+ d=1e100.net; s=20230601; t=1718036627; x=1718641427;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7Imr1z9bfFUSXc72Pq5zm13hYL6VZ46pb0N02MSoc4g=;
+ b=CIXsnUTflt4fxhzoQhHfzaez73WHLAK1zoyvbm9BmkgG4zsNXEL/Fs/QnkLFQ/vLWV
+ VpE/dpkp+OFD36iiK9eDk27Kg2Zcv95L9DI3aWrAYvdj2/9X+sjuxpggVSCbBAYv2D2f
+ 63iBJD2TyfdQTNknFttP1SBHpzp+oE1TuwWq1gHJ7Xt7ThtpAflGnPrpb/593MgISbyu
+ mbGxKP5SMiB4cTkUdfHn/KG01Qr2nt/9wE5Vnio1Fe1mZcKvShF+/jeJrqujIajy62St
+ A6J250YqURkfiqJfibiP440wG+01/J8wB1NacCaI1GgEJVy5/ADm/ddsViXPBjRIMRVi
+ MvUg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0ujl9Zzkc1ohurk6plXL8tq0ElgIUb42Z5lt4m2u8CTAFzAoyWnjEPedWAoPWmJU2Si6/6pDtxaCtate0rXLVzPAxCJY=
-X-Gm-Message-State: AOJu0Yw1r3cVt1+vyguy/ebNXOeCWnO7qv6/LyjIp5n546fHkmePb6ov
- wxwDth1zhPp3QAlIKBRMT7HQu2oUrivjFKUIaVQDeLg5OjPHBrj9bjMlyGgEjmk=
-X-Google-Smtp-Source: AGHT+IGzVnQ/niUpJVG8O37nBThXlWypkVF3WQzftlOup8tlm+ZU1BX4gs1RLV6DgznkvJN2I+ls2w==
-X-Received: by 2002:a05:600c:3d86:b0:421:81c1:65fa with SMTP id
- 5b1f17b1804b1-42181c1661cmr42193745e9.13.1718036625372; 
- Mon, 10 Jun 2024 09:23:45 -0700 (PDT)
+ AJvYcCWOam0rXV0J5/XgHskHeAYOCXSZOQYBcpZ/JrfHqpTn2ixpLAdt+4PQUpU8KBIhytLVyk3T2JmpzJyfsNV5LegzRgSf/e8=
+X-Gm-Message-State: AOJu0YztNxJTaicM8cV5Mm2zorhqVPub33xdvGeMSQOR8W3TYctiJCk9
+ SXeQf+AvyEL3gTljEbcQWl/T5kF4AusFfGNh5s0BqUDXqQKsXlf1ZquhYCOf52mSfUvOkGl8Bz8
+ h
+X-Google-Smtp-Source: AGHT+IE2TIv+oEgSAyM6P1lUm4tI8zotWB02zbA9aEPu6fcLjPSfM+d6glXmOaruxTIE2w1PGCwiyQ==
+X-Received: by 2002:a05:600c:4752:b0:421:182d:9232 with SMTP id
+ 5b1f17b1804b1-42164a031c2mr88763325e9.18.1718036626656; 
+ Mon, 10 Jun 2024 09:23:46 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4215c2a6225sm147250405e9.25.2024.06.10.09.23.44
+ 5b1f17b1804b1-4215c2a6225sm147250405e9.25.2024.06.10.09.23.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Jun 2024 09:23:45 -0700 (PDT)
+ Mon, 10 Jun 2024 09:23:46 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 0/3] hw/arm: Create second NonSecure UART for virt board
-Date: Mon, 10 Jun 2024 17:23:40 +0100
-Message-Id: <20240610162343.2131524-1-peter.maydell@linaro.org>
+Subject: [PATCH v2 2/3] hw/arm/virt: Rename VIRT_UART and VIRT_SECURE_UART to
+ VIRT_UART[01]
+Date: Mon, 10 Jun 2024 17:23:42 +0100
+Message-Id: <20240610162343.2131524-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240610162343.2131524-1-peter.maydell@linaro.org>
+References: <20240610162343.2131524-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,72 +97,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is v2 of a series I posted back in October last year:
- https://patchew.org/QEMU/20231023161532.2729084-1-peter.maydell@linaro.org/
-At the time I wanted to wait until EDK2 had been updated so it
-didn't behave weirdly in the presence of a second UART. That
-happened at the tail end of last year, but I'd forgotten that
-we never committed the QEMU side of things until Laszlo kindly
-reminded me a few days ago. So there are now no blockers to
-getting this patchset into QEMU.
+We're going to make the second UART not always a secure-only device.
+Rename the constants VIRT_UART and VIRT_SECURE_UART to VIRT_UART0
+and VIRT_UART1 accordingly.
 
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/arm/virt.h    |  4 ++--
+ hw/arm/virt-acpi-build.c | 12 ++++++------
+ hw/arm/virt.c            | 14 +++++++-------
+ 3 files changed, 15 insertions(+), 15 deletions(-)
 
-For some use-cases, it is helpful to have more than one UART available
-to the guest, but the Arm 'virt' board only creates one.  If the
-second UART slot is not already used for a TrustZone Secure-World-only
-UART, create it as a NonSecure UART if the user provides a serial
-backend for it (e.g. via a second -serial command line option).
-
-We've wanted this for literally years; my first attempt at it
-was this series in 2017:
-https://lore.kernel.org/all/1512745328-5109-1-git-send-email-peter.maydell@linaro.org/
-More recently Axel Heider revived the idea with a patchset in 2022:
-https://lore.kernel.org/qemu-devel/166990501232.22022.16582561244534011083-0@git.sr.ht/
-
-However it has previously foundered on the problem that EDK2 does
-odd things when presented with multiple UARTs in the DTB. (Specifically,
-it will send the guest GRUB bootloader output to UART1, debug output
-to both UARTs 0 and 1 depending on how far through boot it is, and the
-guest kernel will use UART0 since that's what the ACPI tables say.)
-
-Several things here I think mean we can finally get over this issue:
- * I learnt about the device tree "aliases" node; this allows us to
-   explicitly say "this node is the first UART and this node is the
-   second UART". So guests like Linux that follow this part of the
-   DTB spec will always get the UART order correct; and if there are
-   obscure guests that turn out to misbehave, we can point at the
-   spec and say "this is how you should fix this on your end"...
- * This patch, like Axel's patch, only creates the second UART if
-   the user asks for it on the command line, so any pre-existing
-   command lines will not change behaviour.
- * Laszlo Ersek has kindly written some EDK2 patches that rationalise
-   what it does when it finds more than one UART. This means that
-   we can tell any users who do want to use two UARTs with EDK2
-   "you should upgrade your EDK2 blobs to version NNN if you want to
-   do that". These are now in a released EDK2 and QEMU's EDK2
-   blobs have been updated to a version including these changes.
-
-Changes since v2:
- * rebased (the search-n-replace patch 2 needed some minor tweaks)
- * updated commit message to patch 3 with details of which EDK2
-   release you need for second-uart support
-
-Patches 1 and 2 have been reviewed; patch 3 needs review.
-
-thanks
--- PMM
-
-Peter Maydell (3):
-  hw/arm/virt: Add serial aliases in DTB
-  hw/arm/virt: Rename VIRT_UART and VIRT_SECURE_UART to VIRT_UART[01]
-  hw/arm/virt: allow creation of a second NonSecure UART
-
- docs/system/arm/virt.rst |  6 ++++-
- include/hw/arm/virt.h    |  5 ++--
- hw/arm/virt-acpi-build.c | 22 ++++++++++-------
- hw/arm/virt.c            | 52 +++++++++++++++++++++++++++++++++-------
- 4 files changed, 65 insertions(+), 20 deletions(-)
-
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index bb486d36b14..1227e7f7f08 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -59,7 +59,7 @@ enum {
+     VIRT_GIC_ITS,
+     VIRT_GIC_REDIST,
+     VIRT_SMMU,
+-    VIRT_UART,
++    VIRT_UART0,
+     VIRT_MMIO,
+     VIRT_RTC,
+     VIRT_FW_CFG,
+@@ -69,7 +69,7 @@ enum {
+     VIRT_PCIE_ECAM,
+     VIRT_PLATFORM_BUS,
+     VIRT_GPIO,
+-    VIRT_SECURE_UART,
++    VIRT_UART1,
+     VIRT_SECURE_MEM,
+     VIRT_SECURE_GPIO,
+     VIRT_PCDIMM_ACPI,
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index c3ccfef026f..eb5796e309b 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -440,10 +440,10 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         .base_addr.width = 32,
+         .base_addr.offset = 0,
+         .base_addr.size = 3,
+-        .base_addr.addr = vms->memmap[VIRT_UART].base,
++        .base_addr.addr = vms->memmap[VIRT_UART0].base,
+         .interrupt_type = (1 << 3),/* Bit[3] ARMH GIC interrupt*/
+         .pc_interrupt = 0,         /* IRQ */
+-        .interrupt = (vms->irqmap[VIRT_UART] + ARM_SPI_BASE),
++        .interrupt = (vms->irqmap[VIRT_UART0] + ARM_SPI_BASE),
+         .baud_rate = 3,            /* 9600 */
+         .parity = 0,               /* No Parity */
+         .stop_bits = 1,            /* 1 Stop bit */
+@@ -631,11 +631,11 @@ build_dbg2(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+ 
+     /* BaseAddressRegister[] */
+     build_append_gas(table_data, AML_AS_SYSTEM_MEMORY, 32, 0, 3,
+-                     vms->memmap[VIRT_UART].base);
++                     vms->memmap[VIRT_UART0].base);
+ 
+     /* AddressSize[] */
+     build_append_int_noprefix(table_data,
+-                              vms->memmap[VIRT_UART].size, 4);
++                              vms->memmap[VIRT_UART0].size, 4);
+ 
+     /* NamespaceString[] */
+     g_array_append_vals(table_data, name, namespace_length);
+@@ -816,8 +816,8 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+      */
+     scope = aml_scope("\\_SB");
+     acpi_dsdt_add_cpus(scope, vms);
+-    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART],
+-                       (irqmap[VIRT_UART] + ARM_SPI_BASE));
++    acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0],
++                       (irqmap[VIRT_UART0] + ARM_SPI_BASE));
+     if (vmc->acpi_expose_flash) {
+         acpi_dsdt_add_flash(scope, &memmap[VIRT_FLASH]);
+     }
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 0c1dab67c00..920a9db22f2 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -165,11 +165,11 @@ static const MemMapEntry base_memmap[] = {
+     [VIRT_GIC_ITS] =            { 0x08080000, 0x00020000 },
+     /* This redistributor space allows up to 2*64kB*123 CPUs */
+     [VIRT_GIC_REDIST] =         { 0x080A0000, 0x00F60000 },
+-    [VIRT_UART] =               { 0x09000000, 0x00001000 },
++    [VIRT_UART0] =              { 0x09000000, 0x00001000 },
+     [VIRT_RTC] =                { 0x09010000, 0x00001000 },
+     [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
+     [VIRT_GPIO] =               { 0x09030000, 0x00001000 },
+-    [VIRT_SECURE_UART] =        { 0x09040000, 0x00001000 },
++    [VIRT_UART1] =              { 0x09040000, 0x00001000 },
+     [VIRT_SMMU] =               { 0x09050000, 0x00020000 },
+     [VIRT_PCDIMM_ACPI] =        { 0x09070000, MEMORY_HOTPLUG_IO_LEN },
+     [VIRT_ACPI_GED] =           { 0x09080000, ACPI_GED_EVT_SEL_LEN },
+@@ -212,11 +212,11 @@ static MemMapEntry extended_memmap[] = {
+ };
+ 
+ static const int a15irqmap[] = {
+-    [VIRT_UART] = 1,
++    [VIRT_UART0] = 1,
+     [VIRT_RTC] = 2,
+     [VIRT_PCIE] = 3, /* ... to 6 */
+     [VIRT_GPIO] = 7,
+-    [VIRT_SECURE_UART] = 8,
++    [VIRT_UART1] = 8,
+     [VIRT_ACPI_GED] = 9,
+     [VIRT_MMIO] = 16, /* ...to 16 + NUM_VIRTIO_TRANSPORTS - 1 */
+     [VIRT_GIC_V2M] = 48, /* ...to 48 + NUM_GICV2M_SPIS - 1 */
+@@ -939,7 +939,7 @@ static void create_uart(const VirtMachineState *vms, int uart,
+     qemu_fdt_setprop(ms->fdt, nodename, "clock-names",
+                          clocknames, sizeof(clocknames));
+ 
+-    if (uart == VIRT_UART) {
++    if (uart == VIRT_UART0) {
+         qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
+         qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", nodename);
+     } else {
+@@ -2318,11 +2318,11 @@ static void machvirt_init(MachineState *machine)
+ 
+     fdt_add_pmu_nodes(vms);
+ 
+-    create_uart(vms, VIRT_UART, sysmem, serial_hd(0));
++    create_uart(vms, VIRT_UART0, sysmem, serial_hd(0));
+ 
+     if (vms->secure) {
+         create_secure_ram(vms, secure_sysmem, secure_tag_sysmem);
+-        create_uart(vms, VIRT_SECURE_UART, secure_sysmem, serial_hd(1));
++        create_uart(vms, VIRT_UART1, secure_sysmem, serial_hd(1));
+     }
+ 
+     if (tag_sysmem) {
 -- 
 2.34.1
 
