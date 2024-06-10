@@ -4,81 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E71FC27C55
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 16:26:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F11C27C5F
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 16:32:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGhoI-000474-Gn; Mon, 10 Jun 2024 12:23:54 -0400
+	id 1sGhvb-0001sP-1D; Mon, 10 Jun 2024 12:31:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sGhoG-00045v-8K
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 12:23:52 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sGhoC-0005lF-M7
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 12:23:52 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-42189d3c7efso12748235e9.2
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 09:23:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718036627; x=1718641427; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=51rpOCPyyqijxNaq+plifSaYwuIzh/Wia3WOiDOVjbI=;
- b=KlWzzFF/Xgn4UC7iTfBr0j6Tr1PBA/sA5iNczDKeTHp65jcc6pg2dHdAPp6KKw7DJL
- 5vwFjmYPbgo9re/PIj6ce4e6Yt4LFJwj+q8ugtlwuMOkdH4RoDoFKvjIIj/X22DNMaRt
- tj/pDMPb13pZlhfTq8BsklOiNUZ5WawVNMIIpOBnxJm+XAir6m4b0T2bfiQ9Ks5YSeRM
- tD0VRTJXxGEoFwCM4qMnnmfHQ0EFAD6okdM7jSDkZ6OflIBXweStx/TvYzk+hGOcirWT
- GPw3WPdtKqrDQiV8QKQ97K2MTb4tepHmHorcU/0i8ve3/aWALEqxuv1X5v/XKR0UW3Ha
- SFgQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sGhvQ-0001pJ-Oe
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 12:31:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sGhvO-0007sk-H5
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 12:31:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718037073;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=kEPnFYShNOfW6Go38hlXjO2BpMJrNG7XS+knedTSyz4=;
+ b=Xd+x/5oBbco1SDUXhxeN37KgifC9urqk9tp+Kta3oIZl+l3OOFo4Pn63oMX3qvXZjLZhQr
+ Y7KyotkSCZiOEzlU2ldMn1xktsq0WgjtGOdGjVd1NTd+viCe94TZFmmgfGUSa6ZVUU6iLE
+ CVSMKKesLCYrNyqS3/Uovtw7tJDMIgM=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-606-eOyKlrFrNV2MQcfNhO3bmA-1; Mon, 10 Jun 2024 12:31:11 -0400
+X-MC-Unique: eOyKlrFrNV2MQcfNhO3bmA-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6b07a472e83so3821226d6.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 09:31:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718036627; x=1718641427;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=51rpOCPyyqijxNaq+plifSaYwuIzh/Wia3WOiDOVjbI=;
- b=efe23Z3pHLQLffMkzbaoj3vFbijsnz7uIKDX3gBp/qrwIhk8WvQ/Omf4iowiKsMymP
- oqTQSCC6O1XYurJlChZxRf/tLDKwYl4y0PuWdXxmJy1za1My8Rt0CVLzpWh90hHO0GgP
- PZX1hRQAPJENOthp9PuV2t5PFd8lL7mx0g/Ex3EsaUhD1e8Dmo9gnA9oEA3BkLpLZ53s
- 5LroyV4hXGogUUnWzUN6zFfyWOsYnH0zJEDKrKu5vW0T+oQZAyMFt3uw4qDimEyPZHhl
- giZzaRphDqmVMo1xqKuw5ScqvYFaU7VKteFZQXydUAFb9W7kdwyCyiNbp3/KklQN6zJ0
- E9Pg==
+ d=1e100.net; s=20230601; t=1718037071; x=1718641871;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kEPnFYShNOfW6Go38hlXjO2BpMJrNG7XS+knedTSyz4=;
+ b=dYXJ4ZjRTV6MW9h5F6rwPVOApixPufeYMjcu74sSaP7mrBr8NbFkGJS+Gm4eBFNsjH
+ FDZ4py4s46tQ1u1VwLmEHyveJIV897w6ykpps7ALbWrTn+apFZ79cbBspN8lrrmAtJde
+ Jc+q7jNspl1TixvEOy1YE/4ilHJNeRu94DZ0tIk3brbyhfV2f6yxKhIcmtS0V061kXcQ
+ KD+5Epk32VrLSRTu0dvlO4Um/txP+1DiLTQ1z1ojohsj9iVhovnmLRcq5xsY+MmHFnez
+ X2mFEQJCZ06yIOPJUbVVOeggRCAfQa3SZoH1mz5xg/UPJK8IfcZN8qTrC1x4m20GP3y6
+ veeQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXudjtJ74p20HNgzPoTsJj/Pd9lX3J9dWw36YzJmrwtU2CU/FBos5a+LKWszFYwlxzdJPAdcGxkblT7+sCb+hlmTRt+E7A=
-X-Gm-Message-State: AOJu0Yx2L+QbA2GjXDLLRYftv3ZmHlkcXBBp36xkoVNAark8oWGG1TX5
- 0WkxG/rA4Rx5KPgtXf9kO1nF190Xk1I0miDiYFx3MQkkKWKgFe377mx/1yR9pHw=
-X-Google-Smtp-Source: AGHT+IEIJlTr0u2MZXSxkl3a9TL7Lm8/kX2GrxUFvvbicerOk1qAlaa/YaKc/meHB1uz2DcojoCWUA==
-X-Received: by 2002:a05:600c:314a:b0:422:1a82:3ed2 with SMTP id
- 5b1f17b1804b1-4221a8245ccmr11939475e9.27.1718036627150; 
- Mon, 10 Jun 2024 09:23:47 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4215c2a6225sm147250405e9.25.2024.06.10.09.23.46
+ AJvYcCU6D0heOTTxegYpHpZR9zvo7b31IJb/JGsR6CzBx7oJcqaCkpfoKd3nygtzYVJ4VVOmyWnpxg0w49Sm+2faopU5b7Is/oU=
+X-Gm-Message-State: AOJu0YwYQx8OcEE90x3XoA3wVA9zklUFgl29fWIyZB5DzmCL6Ihlbdh/
+ UoL5jdiQly/sqwx0aiVT0Z3zPQjP6s9ISPdh0O0AXO0k7uqfCShx+hHFjp1uX4rrKy6i60pf+e4
+ ht5l5ez3s7H0T1Anef2vCoH1NzQWNzPX7wL38sWHA8tLZd6KBg8hX
+X-Received: by 2002:a05:6214:23cc:b0:6a0:cd65:599a with SMTP id
+ 6a1803df08f44-6b059b73fcdmr112353226d6.2.1718037070987; 
+ Mon, 10 Jun 2024 09:31:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGdLxSknR+8WIYDrIdq1gqx5Ivt0FX6ldjE5iVrk2Qw9zbpwv6gfEMzL2vLXatF+5AN68cnHA==
+X-Received: by 2002:a05:6214:23cc:b0:6a0:cd65:599a with SMTP id
+ 6a1803df08f44-6b059b73fcdmr112352916d6.2.1718037070341; 
+ Mon, 10 Jun 2024 09:31:10 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b080015e39sm9518236d6.31.2024.06.10.09.31.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Jun 2024 09:23:46 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2 3/3] hw/arm/virt: allow creation of a second NonSecure UART
-Date: Mon, 10 Jun 2024 17:23:43 +0100
-Message-Id: <20240610162343.2131524-4-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240610162343.2131524-1-peter.maydell@linaro.org>
-References: <20240610162343.2131524-1-peter.maydell@linaro.org>
+ Mon, 10 Jun 2024 09:31:08 -0700 (PDT)
+Date: Mon, 10 Jun 2024 12:31:05 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Cc: Jinpu Wang <jinpu.wang@ionos.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "yu.zhang@ionos.com" <yu.zhang@ionos.com>,
+ "mgalaxy@akamai.com" <mgalaxy@akamai.com>,
+ "elmar.gerdes@ionos.com" <elmar.gerdes@ionos.com>,
+ zhengchuan <zhengchuan@huawei.com>,
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "lizhijian@fujitsu.com" <lizhijian@fujitsu.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, Xiexiangyou <xiexiangyou@huawei.com>,
+ "linux-rdma@vger.kernel.org" <linux-rdma@vger.kernel.org>,
+ "lixiao (H)" <lixiao91@huawei.com>, Wangjialin <wangjialin23@huawei.com>
+Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+Message-ID: <ZmcqSai3rU4KuEnO@x1n>
+References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
+ <CAMGffEkUd2EOS3+PQ9Yfp=8V1pZB_emo7gcmxmvOX=iWVG6Axg@mail.gmail.com>
+ <b637ce3cac16409c83a3391b05011eec@huawei.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <b637ce3cac16409c83a3391b05011eec@huawei.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,167 +116,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For some use-cases, it is helpful to have more than one UART
-available to the guest.  If the second UART slot is not already used
-for a TrustZone Secure-World-only UART, create it as a NonSecure UART
-only when the user provides a serial backend (e.g.  via a second
--serial command line option).
+On Fri, Jun 07, 2024 at 08:28:29AM +0000, Gonglei (Arei) wrote:
+> 
+> 
+> > -----Original Message-----
+> > From: Jinpu Wang [mailto:jinpu.wang@ionos.com]
+> > Sent: Friday, June 7, 2024 1:54 PM
+> > To: Gonglei (Arei) <arei.gonglei@huawei.com>
+> > Cc: qemu-devel@nongnu.org; peterx@redhat.com; yu.zhang@ionos.com;
+> > mgalaxy@akamai.com; elmar.gerdes@ionos.com; zhengchuan
+> > <zhengchuan@huawei.com>; berrange@redhat.com; armbru@redhat.com;
+> > lizhijian@fujitsu.com; pbonzini@redhat.com; mst@redhat.com; Xiexiangyou
+> > <xiexiangyou@huawei.com>; linux-rdma@vger.kernel.org; lixiao (H)
+> > <lixiao91@huawei.com>; Wangjialin <wangjialin23@huawei.com>
+> > Subject: Re: [PATCH 0/6] refactor RDMA live migration based on rsocket API
+> > 
+> > Hi Gonglei, hi folks on the list,
+> > 
+> > On Tue, Jun 4, 2024 at 2:14 PM Gonglei <arei.gonglei@huawei.com> wrote:
+> > >
+> > > From: Jialin Wang <wangjialin23@huawei.com>
+> > >
+> > > Hi,
+> > >
+> > > This patch series attempts to refactor RDMA live migration by
+> > > introducing a new QIOChannelRDMA class based on the rsocket API.
+> > >
+> > > The /usr/include/rdma/rsocket.h provides a higher level rsocket API
+> > > that is a 1-1 match of the normal kernel 'sockets' API, which hides
+> > > the detail of rdma protocol into rsocket and allows us to add support
+> > > for some modern features like multifd more easily.
+> > >
+> > > Here is the previous discussion on refactoring RDMA live migration
+> > > using the rsocket API:
+> > >
+> > > https://lore.kernel.org/qemu-devel/20240328130255.52257-1-philmd@linar
+> > > o.org/
+> > >
+> > > We have encountered some bugs when using rsocket and plan to submit
+> > > them to the rdma-core community.
+> > >
+> > > In addition, the use of rsocket makes our programming more convenient,
+> > > but it must be noted that this method introduces multiple memory
+> > > copies, which can be imagined that there will be a certain performance
+> > > degradation, hoping that friends with RDMA network cards can help verify,
+> > thank you!
+> > First thx for the effort, we are running migration tests on our IB fabric, different
+> > generation of HCA from mellanox, the migration works ok, there are a few
+> > failures,  Yu will share the result later separately.
+> > 
+> 
+> Thank you so much. 
+> 
+> > The one blocker for the change is the old implementation and the new rsocket
+> > implementation; they don't talk to each other due to the effect of different wire
+> > protocol during connection establishment.
+> > eg the old RDMA migration has special control message during the migration
+> > flow, which rsocket use a different control message, so there lead to no way to
+> > migrate VM using rdma transport pre to the rsocket patchset to a new version
+> > with rsocket implementation.
+> > 
+> > Probably we should keep both implementation for a while, mark the old
+> > implementation as deprecated, and promote the new implementation, and
+> > high light in doc, they are not compatible.
+> > 
+> 
+> IMO It makes sense. What's your opinion? @Peter.
 
-This avoids problems where existing guest software only expects a
-single UART, and gets confused by the second UART in the DTB.  The
-major example of this is older EDK2 firmware, which will send the
-GRUB bootloader output to UART1 and the guest serial output to UART0.
-Users who want to use both UARTs with a guest setup including EDK2
-are advised to update to EDK2 release edk2-stable202311 or newer.
-(The prebuilt EDK2 blobs QEMU upstream provides are new enough.)
-The relevant EDK2 changes are the ones described here:
-https://bugzilla.tianocore.org/show_bug.cgi?id=4577
+Sounds good to me.  We can use an internal property field and enable
+rsocket rdma migration on new machine types with rdma protocol, deprecating
+both old rdma and that internal field after 2 releases.  So that when
+receiving rdma migrations it'll use old property (as old qemu will use old
+machine types), but when initiating rdma migration on new binary it'll
+switch to rsocket.
 
-Inspired-by: Axel Heider <axel.heider@hensoldt.net>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Tested-by: Laszlo Ersek <lersek@redhat.com>
----
- docs/system/arm/virt.rst |  6 +++++-
- include/hw/arm/virt.h    |  1 +
- hw/arm/virt-acpi-build.c | 12 ++++++++----
- hw/arm/virt.c            | 38 +++++++++++++++++++++++++++++++++++---
- 4 files changed, 49 insertions(+), 8 deletions(-)
+It might be more important to address either the failures or perf concerns
+that others raised, though.
 
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index 26fcba00b76..e67e7f0f7c5 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -26,7 +26,7 @@ The virt board supports:
- 
- - PCI/PCIe devices
- - Flash memory
--- One PL011 UART
-+- Either one or two PL011 UARTs for the NonSecure World
- - An RTC
- - The fw_cfg device that allows a guest to obtain data from QEMU
- - A PL061 GPIO controller
-@@ -48,6 +48,10 @@ The virt board supports:
-   - A secure flash memory
-   - 16MB of secure RAM
- 
-+The second NonSecure UART only exists if a backend is configured
-+explicitly (e.g. with a second -serial command line option) and
-+TrustZone emulation is not enabled.
-+
- Supported guest CPU types:
- 
- - ``cortex-a7`` (32-bit)
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index 1227e7f7f08..ab961bb6a9b 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -151,6 +151,7 @@ struct VirtMachineState {
-     bool ras;
-     bool mte;
-     bool dtb_randomness;
-+    bool second_ns_uart_present;
-     OnOffAuto acpi;
-     VirtGICType gic_version;
-     VirtIOMMUType iommu;
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index eb5796e309b..b2366f24f96 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -79,11 +79,11 @@ static void acpi_dsdt_add_cpus(Aml *scope, VirtMachineState *vms)
- }
- 
- static void acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
--                                           uint32_t uart_irq)
-+                               uint32_t uart_irq, int uartidx)
- {
--    Aml *dev = aml_device("COM0");
-+    Aml *dev = aml_device("COM%d", uartidx);
-     aml_append(dev, aml_name_decl("_HID", aml_string("ARMH0011")));
--    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-+    aml_append(dev, aml_name_decl("_UID", aml_int(uartidx)));
- 
-     Aml *crs = aml_resource_template();
-     aml_append(crs, aml_memory32_fixed(uart_memmap->base,
-@@ -817,7 +817,11 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     scope = aml_scope("\\_SB");
-     acpi_dsdt_add_cpus(scope, vms);
-     acpi_dsdt_add_uart(scope, &memmap[VIRT_UART0],
--                       (irqmap[VIRT_UART0] + ARM_SPI_BASE));
-+                       (irqmap[VIRT_UART0] + ARM_SPI_BASE), 0);
-+    if (vms->second_ns_uart_present) {
-+        acpi_dsdt_add_uart(scope, &memmap[VIRT_UART1],
-+                           (irqmap[VIRT_UART1] + ARM_SPI_BASE), 1);
-+    }
-     if (vmc->acpi_expose_flash) {
-         acpi_dsdt_add_flash(scope, &memmap[VIRT_FLASH]);
-     }
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 920a9db22f2..5028af8eb56 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -906,7 +906,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
- }
- 
- static void create_uart(const VirtMachineState *vms, int uart,
--                        MemoryRegion *mem, Chardev *chr)
-+                        MemoryRegion *mem, Chardev *chr, bool secure)
- {
-     char *nodename;
-     hwaddr base = vms->memmap[uart].base;
-@@ -944,6 +944,8 @@ static void create_uart(const VirtMachineState *vms, int uart,
-         qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial0", nodename);
-     } else {
-         qemu_fdt_setprop_string(ms->fdt, "/aliases", "serial1", nodename);
-+    }
-+    if (secure) {
-         /* Mark as not usable by the normal world */
-         qemu_fdt_setprop_string(ms->fdt, nodename, "status", "disabled");
-         qemu_fdt_setprop_string(ms->fdt, nodename, "secure-status", "okay");
-@@ -2318,11 +2320,41 @@ static void machvirt_init(MachineState *machine)
- 
-     fdt_add_pmu_nodes(vms);
- 
--    create_uart(vms, VIRT_UART0, sysmem, serial_hd(0));
-+    /*
-+     * The first UART always exists. If the security extensions are
-+     * enabled, the second UART also always exists. Otherwise, it only exists
-+     * if a backend is configured explicitly via '-serial <backend>'.
-+     * This avoids potentially breaking existing user setups that expect
-+     * only one NonSecure UART to be present (for instance, older EDK2
-+     * binaries).
-+     *
-+     * The nodes end up in the DTB in reverse order of creation, so we must
-+     * create UART0 last to ensure it appears as the first node in the DTB,
-+     * for compatibility with guest software that just iterates through the
-+     * DTB to find the first UART, as older versions of EDK2 do.
-+     * DTB readers that follow the spec, as Linux does, should honour the
-+     * aliases node information and /chosen/stdout-path regardless of
-+     * the order that nodes appear in the DTB.
-+     *
-+     * For similar back-compatibility reasons, if UART1 is the secure UART
-+     * we create it second (and so it appears first in the DTB), because
-+     * that's what QEMU has always done.
-+     */
-+    if (!vms->secure) {
-+        Chardev *serial1 = serial_hd(1);
-+
-+        if (serial1) {
-+            vms->second_ns_uart_present = true;
-+            create_uart(vms, VIRT_UART1, sysmem, serial1, false);
-+        }
-+    }
-+    create_uart(vms, VIRT_UART0, sysmem, serial_hd(0), false);
-+    if (vms->secure) {
-+        create_uart(vms, VIRT_UART1, secure_sysmem, serial_hd(1), true);
-+    }
- 
-     if (vms->secure) {
-         create_secure_ram(vms, secure_sysmem, secure_tag_sysmem);
--        create_uart(vms, VIRT_UART1, secure_sysmem, serial_hd(1));
-     }
- 
-     if (tag_sysmem) {
+Thanks,
+
 -- 
-2.34.1
+Peter Xu
 
 
