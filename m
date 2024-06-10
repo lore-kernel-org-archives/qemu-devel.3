@@ -4,75 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A24C27C5E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 17:27:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 010CDC27C55
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 17:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGinQ-0003kO-0y; Mon, 10 Jun 2024 13:27:04 -0400
+	id 1sGj5w-0001AA-VO; Mon, 10 Jun 2024 13:46:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sGinN-0003i2-Bi
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:27:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sGinJ-0003oz-VR
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:27:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718040416;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lc0ml7SNkGtVVdgm0zFaPwJSYf6uHIj5VSLzPLmnyrY=;
- b=HYm84tIAYjRXjCTE+EUjG0+Tp39tvFRg6Py3acIzRPb6Rh/cI0mzA514zwRlMob2NeKJqj
- orfugiTGyS/Dxpbi2yP6GMeR4cTUy8IYf+5I+XzqC4ZL6Z3sFuklc/WJz2JUSe5yPWA0lH
- Cqq86wq63D1mRdYmLAJdu8MrVhBysIM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-vY3Mr3L4PUe4oDk-oVGjKQ-1; Mon,
- 10 Jun 2024 13:26:51 -0400
-X-MC-Unique: vY3Mr3L4PUe4oDk-oVGjKQ-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sGj5r-00018n-4T
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:46:09 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sGj5n-0007kr-EX
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:46:06 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C0BE195605F; Mon, 10 Jun 2024 17:26:47 +0000 (UTC)
-Received: from localhost (unknown [10.39.195.112])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8668F1956089; Mon, 10 Jun 2024 17:26:45 +0000 (UTC)
-Date: Mon, 10 Jun 2024 13:26:43 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Changqi Lu <luchangqi.123@bytedance.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
- hreitz@redhat.com, fam@euphon.net, ronniesahlberg@gmail.com,
- pbonzini@redhat.com, pl@dlhnet.de, kbusch@kernel.org,
- its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
- pizhenwei@bytedance.com
-Subject: Re: [PATCH v5 01/10] block: add persistent reservation in/out api
-Message-ID: <20240610172643.GB334653@fedora.redhat.com>
-References: <20240606122444.2914576-1-luchangqi.123@bytedance.com>
- <20240606122444.2914576-2-luchangqi.123@bytedance.com>
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 4391B21FF2;
+ Mon, 10 Jun 2024 17:45:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718041557; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=O7lPH/I24c+XhF5BkUQ7dnzU1V7TI1Wxgx1FgEO7WDI=;
+ b=a3vEMmrGMgT2LH1sghUQ+lokNfq69UDPcwEzB0vU+LHNhtom1n7etecKCtyrkNh6OYX7HZ
+ ifjiVbfpmWZY1AkoQ50jB4Es2m4BGODAj8ajGul+IKfHYH1zclpXOmnEgRF2mumu77xZYD
+ UnzS9D05AbYhMpuXpzGAHJ3FacMwtYY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718041557;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=O7lPH/I24c+XhF5BkUQ7dnzU1V7TI1Wxgx1FgEO7WDI=;
+ b=gZuWPbLvyBtefVvN2FC4byXEeges8pptN2FzGvXyzjJzCT5vzcObwtPAHtNzTQjLP5uYM3
+ 1y1Qy4FZbQCQxmCw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=a3vEMmrG;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=gZuWPbLv
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718041557; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=O7lPH/I24c+XhF5BkUQ7dnzU1V7TI1Wxgx1FgEO7WDI=;
+ b=a3vEMmrGMgT2LH1sghUQ+lokNfq69UDPcwEzB0vU+LHNhtom1n7etecKCtyrkNh6OYX7HZ
+ ifjiVbfpmWZY1AkoQ50jB4Es2m4BGODAj8ajGul+IKfHYH1zclpXOmnEgRF2mumu77xZYD
+ UnzS9D05AbYhMpuXpzGAHJ3FacMwtYY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718041557;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=O7lPH/I24c+XhF5BkUQ7dnzU1V7TI1Wxgx1FgEO7WDI=;
+ b=gZuWPbLvyBtefVvN2FC4byXEeges8pptN2FzGvXyzjJzCT5vzcObwtPAHtNzTQjLP5uYM3
+ 1y1Qy4FZbQCQxmCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B323A13A7F;
+ Mon, 10 Jun 2024 17:45:56 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id oX5WHtQ7Z2ZXfQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 10 Jun 2024 17:45:56 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com, Claudio
+ Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>, Thomas Huth
+ <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 18/18] migration/ram: Add direct-io support to
+ precopy file migration
+In-Reply-To: <ZmclVQw0x7KKLxmF@x1n>
+References: <20240523190548.23977-1-farosas@suse.de>
+ <20240523190548.23977-19-farosas@suse.de> <Zl9_ZiC6-743ZosG@x1n>
+ <87y17gwq5g.fsf@suse.de> <ZmclVQw0x7KKLxmF@x1n>
+Date: Mon, 10 Jun 2024 14:45:53 -0300
+Message-ID: <87r0d4wv1q.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="TN78XIvGZ/gvOYpZ"
-Content-Disposition: inline
-In-Reply-To: <20240606122444.2914576-2-luchangqi.123@bytedance.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 4391B21FF2
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ MIME_TRACE(0.00)[0:+];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; MID_RHS_MATCH_FROM(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[9]; RCVD_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DKIM_TRACE(0.00)[suse.de:+]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,886 +129,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Peter Xu <peterx@redhat.com> writes:
 
---TN78XIvGZ/gvOYpZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Fri, Jun 07, 2024 at 03:42:35PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > On Thu, May 23, 2024 at 04:05:48PM -0300, Fabiano Rosas wrote:
+>> >> We've recently added support for direct-io with multifd, which brings
+>> >> performance benefits, but creates a non-uniform user interface by
+>> >> coupling direct-io with the multifd capability. This means that users
+>> >> cannot keep the direct-io flag enabled while disabling multifd.
+>> >> 
+>> >> Libvirt in particular already has support for direct-io and parallel
+>> >> migration separately from each other, so it would be a regression to
+>> >> now require both options together. It's relatively simple for QEMU to
+>> >> add support for direct-io migration without multifd, so let's do this
+>> >> in order to keep both options decoupled.
+>> >> 
+>> >> We cannot simply enable the O_DIRECT flag, however, because not all IO
+>> >> performed by the migration thread satisfies the alignment requirements
+>> >> of O_DIRECT. There are many small read & writes that add headers and
+>> >> synchronization flags to the stream, which at the moment are required
+>> >> to always be present.
+>> >> 
+>> >> Fortunately, due to fixed-ram migration there is a discernible moment
+>> >> where only RAM pages are written to the migration file. Enable
+>> >> direct-io during that moment.
+>> >> 
+>> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> >
+>> > Is anyone going to consume this?  How's the performance?
+>> 
+>> I don't think we have a pre-determined consumer for this. This came up
+>> in an internal discussion about making the interface simpler for libvirt
+>> and in a thread on the libvirt mailing list[1] about using O_DIRECT to
+>> keep the snapshot data out of the caches to avoid impacting the rest of
+>> the system. (I could have described this better in the commit message,
+>> sorry).
+>> 
+>> Quoting Daniel:
+>> 
+>>   "Note the reason for using O_DIRECT is *not* to make saving / restoring
+>>    the guest VM faster. Rather it is to ensure that saving/restoring a VM
+>>    does not trash the host I/O / buffer cache, which will negatively impact
+>>    performance of all the *other* concurrently running VMs."
+>> 
+>> 1- https://lore.kernel.org/r/87sez86ztq.fsf@suse.de
+>> 
+>> About performance, a quick test on a stopped 30G guest, shows
+>> mapped-ram=on direct-io=on it's 12% slower than mapped-ram=on
+>> direct-io=off.
+>
+> Yes, this makes sense.
+>
+>> 
+>> >
+>> > It doesn't look super fast to me if we need to enable/disable dio in each
+>> > loop.. then it's a matter of whether we should bother, or would it be
+>> > easier that we simply require multifd when direct-io=on.
+>> 
+>> AIUI, the issue here that users are already allowed to specify in
+>> libvirt the equivalent to direct-io and multifd independent of each
+>> other (bypass-cache, parallel). To start requiring both together now in
+>> some situations would be a regression. I confess I don't know libvirt
+>> code to know whether this can be worked around somehow, but as I said,
+>> it's a relatively simple change from the QEMU side.
+>
+> Firstly, I definitely want to already avoid all the calls to either
+> migration_direct_io_start() or *_finish(), now we already need to
+> explicitly call them in three paths, and that's not intuitive and less
+> readable, just like the hard coded rdma codes.
 
-On Thu, Jun 06, 2024 at 08:24:35PM +0800, Changqi Lu wrote:
-> Add persistent reservation in/out operations
-> at the block level. The following operations
-> are included:
->=20
-> - read_keys:        retrieves the list of registered keys.
-> - read_reservation: retrieves the current reservation status.
-> - register:         registers a new reservation key.
-> - reserve:          initiates a reservation for a specific key.
-> - release:          releases a reservation for a specific key.
-> - clear:            clears all existing reservations.
-> - preempt:          preempts a reservation held by another key.
->=20
-> Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
-> Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-> ---
->  block/block-backend.c             | 397 ++++++++++++++++++++++++++++++
->  block/io.c                        | 163 ++++++++++++
->  include/block/block-common.h      |  40 +++
->  include/block/block-io.h          |  20 ++
->  include/block/block_int-common.h  |  84 +++++++
->  include/sysemu/block-backend-io.h |  24 ++
->  6 files changed, 728 insertions(+)
->=20
-> diff --git a/block/block-backend.c b/block/block-backend.c
-> index db6f9b92a3..6707d94df7 100644
-> --- a/block/block-backend.c
-> +++ b/block/block-backend.c
-> @@ -1770,6 +1770,403 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsi=
-gned long int req, void *buf,
->      return blk_aio_prwv(blk, req, 0, buf, blk_aio_ioctl_entry, 0, cb, op=
-aque);
->  }
-> =20
-> +typedef struct BlkPrInCo {
-> +    BlockBackend *blk;
-> +    uint32_t *generation;
-> +    uint32_t num_keys;
-> +    BlockPrType *type;
-> +    uint64_t *keys;
-> +    int ret;
-> +} BlkPrInCo;
-> +
-> +typedef struct BlkPrInCB {
-> +    BlockAIOCB common;
-> +    BlkPrInCo prco;
-> +    bool has_returned;
-> +} BlkPrInCB;
-> +
-> +static const AIOCBInfo blk_pr_in_aiocb_info =3D {
-> +    .aiocb_size         =3D sizeof(BlkPrInCB),
-> +};
-> +
-> +static void blk_pr_in_complete(BlkPrInCB *acb)
-> +{
-> +    if (acb->has_returned) {
-> +        acb->common.cb(acb->common.opaque, acb->prco.ret);
-> +        blk_dec_in_flight(acb->prco.blk);
+Right, but that's just a side-effect of how the code is structured and
+the fact that writes to the stream happen in small chunks. Setting
+O_DIRECT needs to happen around aligned IO. We could move the calls
+further down into qemu_put_buffer_at(), but that would be four fcntl()
+calls for every page.
 
-Did you receive my replies to v1 of this patch series?
+A tangent:
+ one thing that occured to me now is that we may be able to restrict
+ calls to qemu_fflush() to internal code like add_to_iovec() and maybe
+ use that function to gather the correct amount of data before writing,
+ making sure it disables O_DIRECT in case alignment is about to be
+ broken?
 
-Please take a look at them and respond:
-https://lore.kernel.org/qemu-devel/20240508093629.441057-1-luchangqi.123@by=
-tedance.com/
+>
+> I also worry we may overlook the complexity here, and pinning buffers
+> definitely need more thoughts on its own.  It's easier to digest when using
+> multifd and when QEMU only pins guest pages just like tcp-zerocopy does,
+> which are naturally host page size aligned, and also guaranteed to not be
+> freed (while reused / modified is fine here, as dirty tracking guarantees a
+> new page will be migrated soon again).
 
-Thanks,
-Stefan
+I don't get this at all, sorry. What is different from multifd here?
+We're writing on the same HVA as the one that would be given to multifd
+(if it were enabled) and dirty tracking is working the same.
 
-> +        qemu_aio_unref(acb);
-> +    }
-> +}
-> +
-> +static void blk_pr_in_complete_bh(void *opaque)
-> +{
-> +    BlkPrInCB *acb =3D opaque;
-> +    assert(acb->has_returned);
-> +    blk_pr_in_complete(acb);
-> +}
-> +
-> +static BlockAIOCB *blk_aio_pr_in(BlockBackend *blk, uint32_t *generation,
-> +                                 uint32_t num_keys, BlockPrType *type,
-> +                                 uint64_t *keys, CoroutineEntry co_entry,
-> +                                 BlockCompletionFunc *cb, void *opaque)
-> +{
-> +    BlkPrInCB *acb;
-> +    Coroutine *co;
-> +
-> +    blk_inc_in_flight(blk);
-> +    acb =3D blk_aio_get(&blk_pr_in_aiocb_info, blk, cb, opaque);
-> +    acb->prco =3D (BlkPrInCo) {
-> +        .blk        =3D blk,
-> +        .generation =3D generation,
-> +        .num_keys   =3D num_keys,
-> +        .type       =3D type,
-> +        .ret        =3D NOT_DONE,
-> +        .keys       =3D keys,
-> +    };
-> +    acb->has_returned =3D false;
-> +
-> +    co =3D qemu_coroutine_create(co_entry, acb);
-> +    aio_co_enter(qemu_get_current_aio_context(), co);
-> +
-> +    acb->has_returned =3D true;
-> +    if (acb->prco.ret !=3D NOT_DONE) {
-> +        replay_bh_schedule_oneshot_event(qemu_get_current_aio_context(),
-> +                                         blk_pr_in_complete_bh, acb);
-> +    }
-> +
-> +    return &acb->common;
-> +}
-> +
-> +/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-> +static int coroutine_fn
-> +blk_aio_pr_do_read_keys(BlockBackend *blk, uint32_t *generation,
-> +                        uint32_t num_keys, uint64_t *keys)
-> +{
-> +    IO_CODE();
-> +
-> +    blk_wait_while_drained(blk);
-> +    GRAPH_RDLOCK_GUARD();
-> +
-> +    if (!blk_co_is_available(blk)) {
-> +        return -ENOMEDIUM;
-> +    }
-> +
-> +    return bdrv_co_pr_read_keys(blk_bs(blk), generation, num_keys, keys);
-> +}
-> +
-> +static void coroutine_fn blk_aio_pr_read_keys_entry(void *opaque)
-> +{
-> +    BlkPrInCB *acb =3D opaque;
-> +    BlkPrInCo *prco =3D &acb->prco;
-> +
-> +    prco->ret =3D blk_aio_pr_do_read_keys(prco->blk, prco->generation,
-> +                                        prco->num_keys, prco->keys);
-> +    blk_pr_in_complete(acb);
-> +}
-> +
-> +BlockAIOCB *blk_aio_pr_read_keys(BlockBackend *blk, uint32_t *generation,
-> +                                 uint32_t num_keys, uint64_t *keys,
-> +                                 BlockCompletionFunc *cb, void *opaque)
-> +{
-> +    IO_CODE();
-> +    return blk_aio_pr_in(blk, generation, num_keys, NULL, keys,
-> +                         blk_aio_pr_read_keys_entry, cb, opaque);
-> +}
-> +
-> +/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-> +static int coroutine_fn
-> +blk_aio_pr_do_read_reservation(BlockBackend *blk, uint32_t *generation,
-> +                               uint64_t *key, BlockPrType *type)
-> +{
-> +    IO_CODE();
-> +
-> +    blk_wait_while_drained(blk);
-> +    GRAPH_RDLOCK_GUARD();
-> +
-> +    if (!blk_co_is_available(blk)) {
-> +        return -ENOMEDIUM;
-> +    }
-> +
-> +    return bdrv_co_pr_read_reservation(blk_bs(blk), generation, key, typ=
-e);
-> +}
-> +
-> +static void coroutine_fn blk_aio_pr_read_reservation_entry(void *opaque)
-> +{
-> +    BlkPrInCB *acb =3D opaque;
-> +    BlkPrInCo *prco =3D &acb->prco;
-> +
-> +    prco->ret =3D blk_aio_pr_do_read_reservation(prco->blk, prco->genera=
-tion,
-> +                                               prco->keys, prco->type);
-> +    blk_pr_in_complete(acb);
-> +}
-> +
-> +BlockAIOCB *blk_aio_pr_read_reservation(BlockBackend *blk, uint32_t *gen=
-eration,
-> +                                        uint64_t *key, BlockPrType *type,
-> +                                        BlockCompletionFunc *cb, void *o=
-paque)
-> +{
-> +    IO_CODE();
-> +    return blk_aio_pr_in(blk, generation, 0, type, key,
-> +                         blk_aio_pr_read_reservation_entry, cb, opaque);
-> +}
-> +
-> +typedef struct BlkPrOutCo {
-> +    BlockBackend *blk;
-> +    uint64_t old_key;
-> +    uint64_t new_key;
-> +    bool ptpl;
-> +    BlockPrType type;
-> +    bool ignore_key;
-> +    bool abort;
-> +    int ret;
-> +} BlkPrOutCo;
-> +
-> +typedef struct BlkPrOutCB {
-> +    BlockAIOCB common;
-> +    BlkPrOutCo prco;
-> +    bool has_returned;
-> +} BlkPrOutCB;
-> +
-> +static const AIOCBInfo blk_pr_out_aiocb_info =3D {
-> +    .aiocb_size         =3D sizeof(BlkPrOutCB),
-> +};
-> +
-> +static void blk_pr_out_complete(BlkPrOutCB *acb)
-> +{
-> +    if (acb->has_returned) {
-> +        acb->common.cb(acb->common.opaque, acb->prco.ret);
-> +        blk_dec_in_flight(acb->prco.blk);
-> +        qemu_aio_unref(acb);
-> +    }
-> +}
-> +
-> +static void blk_pr_out_complete_bh(void *opaque)
-> +{
-> +    BlkPrOutCB *acb =3D opaque;
-> +    assert(acb->has_returned);
-> +    blk_pr_out_complete(acb);
-> +}
-> +
-> +static BlockAIOCB *blk_aio_pr_out(BlockBackend *blk, uint64_t old_key,
-> +                                  uint64_t new_key, bool ptpl,
-> +                                  BlockPrType type, bool ignore_key,
-> +                                  bool abort, CoroutineEntry co_entry,
-> +                                  BlockCompletionFunc *cb, void *opaque)
-> +{
-> +    BlkPrOutCB *acb;
-> +    Coroutine *co;
-> +
-> +    blk_inc_in_flight(blk);
-> +    acb =3D blk_aio_get(&blk_pr_out_aiocb_info, blk, cb, opaque);
-> +    acb->prco =3D (BlkPrOutCo) {
-> +        .blk        =3D blk,
-> +        .old_key    =3D old_key,
-> +        .new_key    =3D new_key,
-> +        .ptpl       =3D ptpl,
-> +        .type       =3D type,
-> +        .ignore_key =3D ignore_key,
-> +        .abort      =3D abort,
-> +        .ret        =3D NOT_DONE,
-> +    };
-> +    acb->has_returned =3D false;
-> +
-> +    co =3D qemu_coroutine_create(co_entry, acb);
-> +    aio_co_enter(qemu_get_current_aio_context(), co);
-> +
-> +    acb->has_returned =3D true;
-> +    if (acb->prco.ret !=3D NOT_DONE) {
-> +        replay_bh_schedule_oneshot_event(qemu_get_current_aio_context(),
-> +                                         blk_pr_out_complete_bh, acb);
-> +    }
-> +
-> +    return &acb->common;
-> +}
-> +
-> +/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-> +static int coroutine_fn
-> +blk_aio_pr_do_register(BlockBackend *blk, uint64_t old_key,
-> +                       uint64_t new_key, BlockPrType type,
-> +                       bool ptpl, bool ignore_key)
-> +{
-> +    IO_CODE();
-> +
-> +    blk_wait_while_drained(blk);
-> +    GRAPH_RDLOCK_GUARD();
-> +
-> +    if (!blk_co_is_available(blk)) {
-> +        return -ENOMEDIUM;
-> +    }
-> +
-> +    return bdrv_co_pr_register(blk_bs(blk), old_key, new_key, type,
-> +                               ptpl, ignore_key);
-> +}
-> +
-> +static void coroutine_fn blk_aio_pr_register_entry(void *opaque)
-> +{
-> +    BlkPrOutCB *acb =3D opaque;
-> +    BlkPrOutCo *prco =3D &acb->prco;
-> +
-> +    prco->ret =3D blk_aio_pr_do_register(prco->blk, prco->old_key, prco-=
->new_key,
-> +                                       prco->type, prco->ptpl,
-> +                                       prco->ignore_key);
-> +    blk_pr_out_complete(acb);
-> +}
-> +
-> +BlockAIOCB *blk_aio_pr_register(BlockBackend *blk, uint64_t old_key,
-> +                                uint64_t new_key, BlockPrType type,
-> +                                bool ptpl, bool ignore_key,
-> +                                BlockCompletionFunc *cb,
-> +                                void *opaque)
-> +{
-> +    IO_CODE();
-> +    return blk_aio_pr_out(blk, old_key, new_key, ptpl, type, ignore_key,=
- false,
-> +                          blk_aio_pr_register_entry, cb, opaque);
-> +}
-> +
-> +/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-> +static int coroutine_fn
-> +blk_aio_pr_do_reserve(BlockBackend *blk, uint64_t key, BlockPrType type)
-> +{
-> +    IO_CODE();
-> +
-> +    blk_wait_while_drained(blk);
-> +    GRAPH_RDLOCK_GUARD();
-> +
-> +    if (!blk_co_is_available(blk)) {
-> +        return -ENOMEDIUM;
-> +    }
-> +
-> +    return bdrv_co_pr_reserve(blk_bs(blk), key, type);
-> +}
-> +
-> +static void coroutine_fn blk_aio_pr_reserve_entry(void *opaque)
-> +{
-> +    BlkPrOutCB *acb =3D opaque;
-> +    BlkPrOutCo *prco =3D &acb->prco;
-> +
-> +    prco->ret =3D blk_aio_pr_do_reserve(prco->blk, prco->old_key,
-> +                                      prco->type);
-> +    blk_pr_out_complete(acb);
-> +}
-> +
-> +
-> +BlockAIOCB *blk_aio_pr_reserve(BlockBackend *blk,  uint64_t key,
-> +                               BlockPrType type,
-> +                               BlockCompletionFunc *cb,
-> +                               void *opaque)
-> +{
-> +    IO_CODE();
-> +    return blk_aio_pr_out(blk, key, 0, false, type, false, false,
-> +                          blk_aio_pr_reserve_entry, cb, opaque);
-> +}
-> +
-> +/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-> +static int coroutine_fn
-> +blk_aio_pr_do_release(BlockBackend *blk, uint64_t key, BlockPrType type)
-> +{
-> +    IO_CODE();
-> +
-> +    blk_wait_while_drained(blk);
-> +    GRAPH_RDLOCK_GUARD();
-> +
-> +    if (!blk_co_is_available(blk)) {
-> +        return -ENOMEDIUM;
-> +    }
-> +
-> +    return bdrv_co_pr_release(blk_bs(blk), key, type);
-> +}
-> +
-> +static void coroutine_fn blk_aio_pr_release_entry(void *opaque)
-> +{
-> +    BlkPrOutCB *acb =3D opaque;
-> +    BlkPrOutCo *prco =3D &acb->prco;
-> +
-> +    prco->ret =3D blk_aio_pr_do_release(prco->blk, prco->old_key, prco->=
-type);
-> +    blk_pr_out_complete(acb);
-> +}
-> +
-> +
-> +BlockAIOCB *blk_aio_pr_release(BlockBackend *blk, uint64_t key,
-> +                               BlockPrType type, BlockCompletionFunc *cb,
-> +                               void *opaque)
-> +{
-> +    IO_CODE();
-> +    return blk_aio_pr_out(blk, key, 0, false, type, false, false,
-> +                          blk_aio_pr_release_entry, cb, opaque);
-> +}
-> +
-> +/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-> +static int coroutine_fn
-> +blk_aio_pr_do_clear(BlockBackend *blk, uint64_t key)
-> +{
-> +    IO_CODE();
-> +
-> +    blk_wait_while_drained(blk);
-> +    GRAPH_RDLOCK_GUARD();
-> +
-> +    if (!blk_co_is_available(blk)) {
-> +        return -ENOMEDIUM;
-> +    }
-> +
-> +    return bdrv_co_pr_clear(blk_bs(blk), key);
-> +}
-> +
-> +static void coroutine_fn blk_aio_pr_clear_entry(void *opaque)
-> +{
-> +    BlkPrOutCB *acb =3D opaque;
-> +    BlkPrOutCo *prco =3D &acb->prco;
-> +
-> +    prco->ret =3D blk_aio_pr_do_clear(prco->blk, prco->old_key);
-> +    blk_pr_out_complete(acb);
-> +}
-> +
-> +
-> +BlockAIOCB *blk_aio_pr_clear(BlockBackend *blk, uint64_t key,
-> +                             BlockCompletionFunc *cb, void *opaque)
-> +{
-> +    IO_CODE();
-> +    return blk_aio_pr_out(blk, key, 0, false, 0, false, false,
-> +                          blk_aio_pr_clear_entry, cb, opaque);
-> +}
-> +
-> +/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-> +static int coroutine_fn
-> +blk_aio_pr_do_preempt(BlockBackend *blk, uint64_t cr_key,
-> +                      uint64_t pr_key, BlockPrType type, bool abort)
-> +{
-> +    IO_CODE();
-> +
-> +    blk_wait_while_drained(blk);
-> +    GRAPH_RDLOCK_GUARD();
-> +
-> +    if (!blk_co_is_available(blk)) {
-> +        return -ENOMEDIUM;
-> +    }
-> +
-> +    return bdrv_co_pr_preempt(blk_bs(blk), cr_key, pr_key, type, abort);
-> +}
-> +
-> +static void coroutine_fn blk_aio_pr_preempt_entry(void *opaque)
-> +{
-> +    BlkPrOutCB *acb =3D opaque;
-> +    BlkPrOutCo *prco =3D &acb->prco;
-> +
-> +    prco->ret =3D blk_aio_pr_do_preempt(prco->blk, prco->old_key,
-> +                                      prco->new_key, prco->type,
-> +                                      prco->abort);
-> +    blk_pr_out_complete(acb);
-> +}
-> +
-> +
-> +BlockAIOCB *blk_aio_pr_preempt(BlockBackend *blk, uint64_t cr_key,
-> +                               uint64_t pr_key, BlockPrType type,
-> +                               bool abort, BlockCompletionFunc *cb,
-> +                               void *opaque)
-> +{
-> +    IO_CODE();
-> +    return blk_aio_pr_out(blk, cr_key, pr_key, false, type, false, abort,
-> +                          blk_aio_pr_preempt_entry, cb, opaque);
-> +}
-> +
->  /* To be called between exactly one pair of blk_inc/dec_in_flight() */
->  static int coroutine_fn
->  blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
-> diff --git a/block/io.c b/block/io.c
-> index 7217cf811b..87a363c94f 100644
-> --- a/block/io.c
-> +++ b/block/io.c
-> @@ -3220,6 +3220,169 @@ out:
->      return co.ret;
->  }
-> =20
-> +int coroutine_fn bdrv_co_pr_read_keys(BlockDriverState *bs,
-> +                 uint32_t *generation, uint32_t num_keys,
-> +                 uint64_t *keys)
-> +{
-> +    BlockDriver *drv =3D bs->drv;
-> +    CoroutineIOCompletion co =3D {
-> +        .coroutine =3D qemu_coroutine_self(),
-> +    };
-> +
-> +    IO_CODE();
-> +    assert_bdrv_graph_readable();
-> +
-> +    bdrv_inc_in_flight(bs);
-> +    if (!drv || !drv->bdrv_co_pr_read_keys) {
-> +        co.ret =3D -ENOTSUP;
-> +        goto out;
-> +    }
-> +
-> +    co.ret =3D drv->bdrv_co_pr_read_keys(bs, generation, num_keys, keys);
-> +out:
-> +    bdrv_dec_in_flight(bs);
-> +    return co.ret;
-> +}
-> +
-> +int coroutine_fn bdrv_co_pr_read_reservation(BlockDriverState *bs,
-> +                 uint32_t *generation, uint64_t *key, BlockPrType *type)
-> +{
-> +    BlockDriver *drv =3D bs->drv;
-> +    CoroutineIOCompletion co =3D {
-> +        .coroutine =3D qemu_coroutine_self(),
-> +    };
-> +
-> +    IO_CODE();
-> +    assert_bdrv_graph_readable();
-> +
-> +    bdrv_inc_in_flight(bs);
-> +    if (!drv || !drv->bdrv_co_pr_read_reservation) {
-> +        co.ret =3D -ENOTSUP;
-> +        goto out;
-> +    }
-> +
-> +    co.ret =3D drv->bdrv_co_pr_read_reservation(bs, generation, key, typ=
-e);
-> +out:
-> +    bdrv_dec_in_flight(bs);
-> +    return co.ret;
-> +}
-> +
-> +int coroutine_fn bdrv_co_pr_register(BlockDriverState *bs, uint64_t old_=
-key,
-> +                 uint64_t new_key, BlockPrType type, bool ptpl,
-> +                 bool ignore_key)
-> +{
-> +    BlockDriver *drv =3D bs->drv;
-> +    CoroutineIOCompletion co =3D {
-> +        .coroutine =3D qemu_coroutine_self(),
-> +    };
-> +
-> +    IO_CODE();
-> +    assert_bdrv_graph_readable();
-> +
-> +    bdrv_inc_in_flight(bs);
-> +    if (!drv || !drv->bdrv_co_pr_register) {
-> +        co.ret =3D -ENOTSUP;
-> +        goto out;
-> +    }
-> +
-> +    co.ret =3D drv->bdrv_co_pr_register(bs, old_key, new_key, type,
-> +    ptpl, ignore_key);
-> +out:
-> +    bdrv_dec_in_flight(bs);
-> +    return co.ret;
-> +}
-> +
-> +int coroutine_fn bdrv_co_pr_reserve(BlockDriverState *bs, uint64_t key,
-> +                                    BlockPrType type)
-> +{
-> +    BlockDriver *drv =3D bs->drv;
-> +    CoroutineIOCompletion co =3D {
-> +        .coroutine =3D qemu_coroutine_self(),
-> +    };
-> +
-> +    IO_CODE();
-> +    assert_bdrv_graph_readable();
-> +
-> +    bdrv_inc_in_flight(bs);
-> +    if (!drv || !drv->bdrv_co_pr_reserve) {
-> +        co.ret =3D -ENOTSUP;
-> +        goto out;
-> +    }
-> +
-> +    co.ret =3D drv->bdrv_co_pr_reserve(bs, key, type);
-> +out:
-> +    bdrv_dec_in_flight(bs);
-> +    return co.ret;
-> +}
-> +
-> +int coroutine_fn bdrv_co_pr_release(BlockDriverState *bs, uint64_t key,
-> +                                    BlockPrType type)
-> +{
-> +    BlockDriver *drv =3D bs->drv;
-> +    CoroutineIOCompletion co =3D {
-> +        .coroutine =3D qemu_coroutine_self(),
-> +    };
-> +
-> +    IO_CODE();
-> +    assert_bdrv_graph_readable();
-> +
-> +    bdrv_inc_in_flight(bs);
-> +    if (!drv || !drv->bdrv_co_pr_release) {
-> +        co.ret =3D -ENOTSUP;
-> +        goto out;
-> +    }
-> +
-> +    co.ret =3D drv->bdrv_co_pr_release(bs, key, type);
-> +out:
-> +    bdrv_dec_in_flight(bs);
-> +    return co.ret;
-> +}
-> +
-> +int coroutine_fn bdrv_co_pr_clear(BlockDriverState *bs, uint64_t key)
-> +{
-> +    BlockDriver *drv =3D bs->drv;
-> +    CoroutineIOCompletion co =3D {
-> +        .coroutine =3D qemu_coroutine_self(),
-> +    };
-> +
-> +    IO_CODE();
-> +    assert_bdrv_graph_readable();
-> +
-> +    bdrv_inc_in_flight(bs);
-> +    if (!drv || !drv->bdrv_co_pr_clear) {
-> +        co.ret =3D -ENOTSUP;
-> +        goto out;
-> +    }
-> +
-> +    co.ret =3D drv->bdrv_co_pr_clear(bs, key);
-> +out:
-> +    bdrv_dec_in_flight(bs);
-> +    return co.ret;
-> +}
-> +
-> +int coroutine_fn bdrv_co_pr_preempt(BlockDriverState *bs, uint64_t cr_ke=
-y,
-> +                 uint64_t pr_key, BlockPrType type, bool abort)
-> +{
-> +    BlockDriver *drv =3D bs->drv;
-> +    CoroutineIOCompletion co =3D {
-> +        .coroutine =3D qemu_coroutine_self(),
-> +    };
-> +
-> +    IO_CODE();
-> +    assert_bdrv_graph_readable();
-> +
-> +    bdrv_inc_in_flight(bs);
-> +    if (!drv || !drv->bdrv_co_pr_preempt) {
-> +        co.ret =3D -ENOTSUP;
-> +        goto out;
-> +    }
-> +
-> +    co.ret =3D drv->bdrv_co_pr_preempt(bs, cr_key, pr_key, type, abort);
-> +out:
-> +    bdrv_dec_in_flight(bs);
-> +    return co.ret;
-> +}
-> +
->  int coroutine_fn bdrv_co_zone_report(BlockDriverState *bs, int64_t offse=
-t,
->                          unsigned int *nr_zones,
->                          BlockZoneDescriptor *zones)
-> diff --git a/include/block/block-common.h b/include/block/block-common.h
-> index a846023a09..7ca4e2328f 100644
-> --- a/include/block/block-common.h
-> +++ b/include/block/block-common.h
-> @@ -524,6 +524,46 @@ typedef enum {
->      BDRV_FIX_ERRORS   =3D 2,
->  } BdrvCheckMode;
-> =20
-> +/**
-> + *  According SCSI protocol(chapter 5.9 of SCSI Primary Commands - 4)
-> + *  and NVMe protocol(chapter 7.2 of NVMe Base Specification 2.0),
-> + *  the persistent reservation types and persistent capabilities of
-> + *  the public layer block are abstracted.
-> + */
-> +typedef enum {
-> +    BLK_PR_WRITE_EXCLUSIVE              =3D 0x1,
-> +    BLK_PR_EXCLUSIVE_ACCESS             =3D 0x2,
-> +    BLK_PR_WRITE_EXCLUSIVE_REGS_ONLY    =3D 0x3,
-> +    BLK_PR_EXCLUSIVE_ACCESS_REGS_ONLY   =3D 0x4,
-> +    BLK_PR_WRITE_EXCLUSIVE_ALL_REGS     =3D 0x5,
-> +    BLK_PR_EXCLUSIVE_ACCESS_ALL_REGS    =3D 0x6,
-> +} BlockPrType;
-> +
-> +typedef enum BLKPrCap {
-> +    /* Persist Through Power Loss */
-> +    BLK_PR_CAP_PTPL =3D 1 << 0,
-> +    /* Write Exclusive reservation type */
-> +    BLK_PR_CAP_WR_EX =3D 1 << 1,
-> +    /* Exclusive Access reservation type */
-> +    BLK_PR_CAP_EX_AC =3D 1 << 2,
-> +    /* Write Exclusive Registrants Only reservation type */
-> +    BLK_PR_CAP_WR_EX_RO =3D 1 << 3,
-> +    /* Exclusive Access Registrants Only reservation type */
-> +    BLK_PR_CAP_EX_AC_RO =3D 1 << 4,
-> +    /* Write Exclusive All Registrants reservation type */
-> +    BLK_PR_CAP_WR_EX_AR =3D 1 << 5,
-> +    /* Exclusive Access All Registrants reservation type */
-> +    BLK_PR_CAP_EX_AC_AR =3D 1 << 6,
-> +
-> +    BLK_PR_CAP_ALL =3D (BLK_PR_CAP_PTPL |
-> +                     BLK_PR_CAP_WR_EX |
-> +                     BLK_PR_CAP_EX_AC |
-> +                     BLK_PR_CAP_WR_EX_RO |
-> +                     BLK_PR_CAP_EX_AC_RO |
-> +                     BLK_PR_CAP_WR_EX_AR |
-> +                     BLK_PR_CAP_EX_AC_AR),
-> +} BLKPrCap;
-> +
->  typedef struct BlockSizes {
->      uint32_t phys;
->      uint32_t log;
-> diff --git a/include/block/block-io.h b/include/block/block-io.h
-> index b49e0537dd..908361862b 100644
-> --- a/include/block/block-io.h
-> +++ b/include/block/block-io.h
-> @@ -106,6 +106,26 @@ void bdrv_aio_cancel_async(BlockAIOCB *acb);
->  int coroutine_fn GRAPH_RDLOCK
->  bdrv_co_ioctl(BlockDriverState *bs, int req, void *buf);
-> =20
-> +int coroutine_fn GRAPH_RDLOCK
-> +bdrv_co_pr_read_keys(BlockDriverState *bs, uint32_t *generation,
-> +                     uint32_t num_keys, uint64_t *keys);
-> +int coroutine_fn GRAPH_RDLOCK
-> +bdrv_co_pr_read_reservation(BlockDriverState *bs, uint32_t *generation,
-> +                            uint64_t *key, BlockPrType *type);
-> +int coroutine_fn GRAPH_RDLOCK
-> +bdrv_co_pr_register(BlockDriverState *bs, uint64_t old_key,
-> +                    uint64_t new_key, BlockPrType type,
-> +                    bool ptpl, bool ignore_key);
-> +int coroutine_fn GRAPH_RDLOCK
-> +bdrv_co_pr_reserve(BlockDriverState *bs, uint64_t key, BlockPrType type);
-> +int coroutine_fn GRAPH_RDLOCK
-> +bdrv_co_pr_release(BlockDriverState *bs, uint64_t key, BlockPrType type);
-> +int coroutine_fn GRAPH_RDLOCK
-> +bdrv_co_pr_clear(BlockDriverState *bs, uint64_t key);
-> +int coroutine_fn GRAPH_RDLOCK
-> +bdrv_co_pr_preempt(BlockDriverState *bs, uint64_t cr_key, uint64_t pr_ke=
-y,
-> +                   BlockPrType type, bool abort);
-> +
->  /* Ensure contents are flushed to disk.  */
->  int coroutine_fn GRAPH_RDLOCK bdrv_co_flush(BlockDriverState *bs);
-> =20
-> diff --git a/include/block/block_int-common.h b/include/block/block_int-c=
-ommon.h
-> index 761276127e..6e628069e9 100644
-> --- a/include/block/block_int-common.h
-> +++ b/include/block/block_int-common.h
-> @@ -766,6 +766,87 @@ struct BlockDriver {
->      int coroutine_fn GRAPH_RDLOCK_PTR (*bdrv_co_ioctl)(
->          BlockDriverState *bs, unsigned long int req, void *buf);
-> =20
-> +    /*
-> +     * Persistent reservation series api.
-> +     * Please refer to chapter 5.9 of SCSI Primary Commands - 4 or
-> +     * chapter 7 of NVMe Base Specification 2.0.
-> +     *
-> +     * The block layer driver should implement all the following APIs
-> +     * or none at all, including: bdrv_co_pr_read_keys,
-> +     * bdrv_co_pr_read_reservation, bdrv_co_pr_register,
-> +     * bdrv_co_pr_reserve, bdrv_co_pr_release,
-> +     * bdrv_co_pr_clear and bdrv_co_pr_preempt.
-> +     *
-> +     * Read the registered keys and return them in the @keys.
-> +     * @generation: The generation of the reservation key.
-> +     * @num_keys:   The maximum number of keys that can be transmitted.
-> +     * @keys:       Registered keys array.
-> +     *
-> +     * On success, store generation in @generation and store keys @keys
-> +     * and return the number of @keys.
-> +     * On failure return -errno.
-> +     */
-> +    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_read_keys)(
-> +        BlockDriverState *bs, uint32_t *generation,
-> +        uint32_t num_keys, uint64_t *keys);
-> +    /*
-> +     * Read the reservation key and store it in the @key.
-> +     * @generation: The generation of the reservation key.
-> +     * @key:        The reservation key.
-> +     * @type:       Type of the reservation key.
-> +     *
-> +     * On success, store generation in @generation, store the
-> +     * reservation key in @key and return the number of @key
-> +     * which used to determine whether the reservation key exists.
-> +     * On failure return -errno.
-> +     */
-> +    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_read_reservation)(
-> +        BlockDriverState *bs, uint32_t *generation,
-> +        uint64_t *key, BlockPrType *type);
-> +    /*
-> +     * Register, unregister, or replace a reservation key.
-> +     * @old_key:    The current reservation key associated with the host.
-> +     * @new_key:    The new reservation Key.
-> +     * @type:       Type of the reservation key.
-> +     * @ignore_key: Ignore or not @old_key.
-> +     * @ptpl:       Whether to support Persist Through Power Loss(PTPL).
-> +     */
-> +    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_register)(
-> +        BlockDriverState *bs, uint64_t old_key,
-> +        uint64_t new_key, BlockPrType type,
-> +        bool ptpl, bool ignore_key);
-> +    /*
-> +     * Acquire a reservation on a host.
-> +     * @key:  The current reservation key associated with the host.
-> +     * @type: Type of the reservation key.
-> +     */
-> +    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_reserve)(
-> +        BlockDriverState *bs, uint64_t key, BlockPrType type);
-> +    /*
-> +     * Release a reservation on a host.
-> +     * @key:  The current reservation key associated with the host.
-> +     * @type: Type of the reservation key.
-> +     */
-> +    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_release)(
-> +        BlockDriverState *bs, uint64_t key, BlockPrType type);
-> +    /**
-> +     * Clear reservations on a host.
-> +     * @key: The current reservation key associated with the host.
-> +     */
-> +    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_clear)(
-> +        BlockDriverState *bs, uint64_t key);
-> +    /*
-> +     * Preempt a reservation held on a host.
-> +     * @cr_key: The current reservation key associated with the host.
-> +     * @pr_key: The preempt reservation Key which to be
-> +     *          unregistered from the namespace.
-> +     * @type:   Type of the reservation key.
-> +     * @abort:  Whether to abort a reservation held on a host.
-> +     */
-> +    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_preempt)(
-> +        BlockDriverState *bs, uint64_t cr_key,
-> +        uint64_t pr_key, BlockPrType type, bool abort);
-> +
->      /*
->       * Returns 0 for completed check, -errno for internal errors.
->       * The check results are stored in result.
-> @@ -899,6 +980,9 @@ typedef struct BlockLimits {
->      uint32_t max_active_zones;
-> =20
->      uint32_t write_granularity;
-> +
-> +   /* Persistent reservation capacities. */
-> +    uint8_t pr_cap;
->  } BlockLimits;
-> =20
->  typedef struct BdrvOpBlocker BdrvOpBlocker;
-> diff --git a/include/sysemu/block-backend-io.h b/include/sysemu/block-bac=
-kend-io.h
-> index d174275a5c..b3d49a3c6f 100644
-> --- a/include/sysemu/block-backend-io.h
-> +++ b/include/sysemu/block-backend-io.h
-> @@ -62,6 +62,30 @@ void blk_aio_cancel_async(BlockAIOCB *acb);
->  BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void=
- *buf,
->                            BlockCompletionFunc *cb, void *opaque);
-> =20
-> +BlockAIOCB *blk_aio_pr_read_keys(BlockBackend *blk, uint32_t *generation,
-> +                                 uint32_t num_keys, uint64_t *keys,
-> +                                 BlockCompletionFunc *cb, void *opaque);
-> +BlockAIOCB *blk_aio_pr_read_reservation(BlockBackend *blk, uint32_t *gen=
-eration,
-> +                                        uint64_t *key, BlockPrType *type,
-> +                                        BlockCompletionFunc *cb, void *o=
-paque);
-> +BlockAIOCB *blk_aio_pr_register(BlockBackend *blk, uint64_t old_key,
-> +                                uint64_t new_key, BlockPrType type,
-> +                                bool ptpl, bool ignore_key,
-> +                                BlockCompletionFunc *cb,
-> +                                void *opaque);
-> +BlockAIOCB *blk_aio_pr_reserve(BlockBackend *blk,  uint64_t key,
-> +                               BlockPrType type,
-> +                               BlockCompletionFunc *cb,
-> +                               void *opaque);
-> +BlockAIOCB *blk_aio_pr_release(BlockBackend *blk, uint64_t key,
-> +                               BlockPrType type, BlockCompletionFunc *cb,
-> +                               void *opaque);
-> +BlockAIOCB *blk_aio_pr_clear(BlockBackend *blk, uint64_t key,
-> +                             BlockCompletionFunc *cb, void *opaque);
-> +BlockAIOCB *blk_aio_pr_preempt(BlockBackend *blk, uint64_t cr_key,
-> +                               uint64_t pr_key, BlockPrType type, bool a=
-bort,
-> +                               BlockCompletionFunc *cb, void *opaque);
-> +
->  void blk_inc_in_flight(BlockBackend *blk);
->  void blk_dec_in_flight(BlockBackend *blk);
-> =20
-> --=20
-> 2.20.1
->=20
+> IMHO here the "not be freed / modified" is even more important than
+> "alignment": the latter is about perf, the former is about correctness.
+> When we do directio on random buffers, AFAIU we don't want to have the
+> buffer modified before flushed to disk, and that's IMHO not easy to
+> guarantee.
+>
+> E.g., I don't think this guarantees a flush on the buffer usages:
+>
+>   migration_direct_io_start()
+>     /* flush any potentially unaligned IO before setting O_DIRECT */
+>     qemu_fflush(file);
+>
+> qemu_fflush() internally does writev(), and that "flush" is about "flushing
+> qemufile iov[] to fd", not "flushing buffers to disk".  I think it means
+> if we do qemu_fflush() then we modify QEMUFile.buf[IO_BUF_SIZE] we're
+> doomed: we will never know whether dio has happened, and which version of
+> buffer will be sent; I don't think it's guaranteed it will always be the
+> old version of the buffer.
+>
+> However the issue is, QEMUFile defines qemu_fflush() as: after call, the
+> buf[] can be reused!  It suggests breaking things I guess in dio context.
 
---TN78XIvGZ/gvOYpZ
-Content-Type: application/pgp-signature; name="signature.asc"
+I think you're mixing the usage of qemu_put_byte()/qemu_put_buffer()
+with the usage of qemu_put_buffer_at(). The former two use the
+QEMUFile.buf without O_DIRECT and the latter writes directly to the fd
+at the page offset. So there's no issue in reusing buf before writes
+have reached the disk. All writes going through buf are serialized and
+all writes going through qio_channel_pwrite() go to a different offset.
 
------BEGIN PGP SIGNATURE-----
+I included all of these assert(!f->dio) to ensure that we don't use the
+two APIs incorrectly. Mainly that we don't try to write to buf while
+O_DIRECT is set.
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZnN1MACgkQnKSrs4Gr
-c8jqYQgAsWt3wHrNjpEfgTz9ErsF2kToJw+wgV4pkpM5vlFNLkpsSSSepVDtdUfa
-Pic2pLfn3l8SsRbtoXMvYQsbmMmhoz+bRDSwBr6KmFjlDIXYeYpA8hZCae4IKfxf
-GsMNPA5kPWdDWw92vuFsh/z3zp7GVXxtk5i2nFh+BXdvWYFi6gwW9Kxp1oEehDEu
-SAn5eq3IWTyPC1u5JBMgAyUdGM71Q7JfKLY7IPN01+by9VvaDs6lXHw+zjbQgOFG
-yRpRRLAgRvrg5nUgtTE7KUxHWM7iAYxuX3yitnhE72MQqQrqkKC25y5sx7eloqYh
-GuZNiuLolcLwjivmzagsxb2FwREerg==
-=WV18
------END PGP SIGNATURE-----
+>
+> IIUC currently mapped-ram is ok because mapped-ram is just special that it
+> doesn't have page headers, so it doesn't use the buf[] during iterations;
+> while for zeropage it uses file_bmap bitmap and that's separate too and
+> does not generate any byte on the wire either.
 
---TN78XIvGZ/gvOYpZ--
+Right. This is all mapped-ram. I'm not proposing to enable O_DIRECT for
+any migration.
 
+>
+> xbzrle could use that buf[], but maybe mapped-ram doesn't work anyway with
+> xbzrle.
+>
+> Everything is just very not obvious and tricky to me.  This still looks
+> pretty dangerous to me.  Would migration_direct_io_finish() guarantee
+> something like a fdatasync()?  If so it looks safer, but still within the
+> start() and finish() if someone calls qemu_fflush() and reuse the buffer we
+> can still get hard to debug issues (as the outcome would be that we saw
+> corrupted migration files).
+>
+>> 
+>> Another option which would be for libvirt to keep using multifd, but
+>> make it 1 channel only if --parallel is not specified. That might be
+>> enough to solve the interface issues. Of course, it's a different code
+>> altogether than the usual precopy code that gets executed when
+>> multifd=off, I don't know whether that could be an issue somehow.
+>
+> Would there be any comment from Libvirt side?  This sounds like a good
+> solution if my above concern is real; as long as we always stick dio with
+> guest pages we'll be all fine.
+>
+> Thanks,
 
