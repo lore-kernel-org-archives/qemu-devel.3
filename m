@@ -4,75 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF086C27C55
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 14:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88072C27C55
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 14:39:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGfnM-0003bz-5d; Mon, 10 Jun 2024 10:14:48 -0400
+	id 1sGgAh-0001hU-Ea; Mon, 10 Jun 2024 10:38:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sGfnK-0003bg-Cp
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 10:14:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sGfnG-0003pr-EA
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 10:14:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718028879;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VVQAU5q7B02aIy7C1pErblWSsN5s1y8XfMDe6DpcDGU=;
- b=bS/sM14sj3rhKDwWdGUG7s/YNfaNuMEGJA4EM0F9yyVMY2UK32p8zlvIUDUEfoEkf2jz1z
- RC8HypxOrMbtAzP0gTiuIX6Xei8dICnbAesRB4k2+4creaUvNjFGk1KVuEOJwEgIMtGG4m
- BusWFUU8Y0v73qW8yks8ykT5ZZ87QAQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-374-8kednBntNK6ZJaNsG_RLpw-1; Mon,
- 10 Jun 2024 10:14:36 -0400
-X-MC-Unique: 8kednBntNK6ZJaNsG_RLpw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F67D19560AD; Mon, 10 Jun 2024 14:14:34 +0000 (UTC)
-Received: from localhost (unknown [10.39.195.112])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7669D1956087; Mon, 10 Jun 2024 14:14:32 +0000 (UTC)
-Date: Mon, 10 Jun 2024 10:14:30 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Mads Ynddal <mads@ynddal.dk>
-Subject: Re: [PATCH] tracetool: Remove unused vcpu.py script
-Message-ID: <20240610141430.GC313831@fedora.redhat.com>
-References: <20240606102631.78152-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGgAf-0001h8-TQ
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 10:38:53 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGgAe-0000Id-8b
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 10:38:53 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-42108856c33so33418645e9.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 07:38:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718030329; x=1718635129; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8T4BMrgO9Himn5e/NN5RW8KrrQ99iahQ06VjN4PaWTQ=;
+ b=hxBI86PDeuBN/rQ9zZKLMqmC6ACUbNuzE7l6hW+a6+/jvsK0qcIXyTFxzx2bdaQDWV
+ ywfvW/e7lFSUcgAixPQSV+iV9nDXu656p4bYBseQY6AEWdNKhCAy3lpQYvcm8iME8DQj
+ kfH+I3rJpn2gxNFjTkX53XmWHsvdfvf/Z9DAaD7pzt5lVRY7apKoR0TUe8IA9/a1amgA
+ BkdKfLEtDZ4NvPI6AG/k6lVwdOHAMW+vwisi4bm6uuPB+pqN1ak43I1ZBtyTBVvXCG6I
+ 3YYiyYQg8JDaMDsPJMYQ7ovqCps9OiarT7o0uoIh3WyKHEooOGz3/zQfUeeqcPwLNCw+
+ pwVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718030329; x=1718635129;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8T4BMrgO9Himn5e/NN5RW8KrrQ99iahQ06VjN4PaWTQ=;
+ b=WDnk/YYfZDGMU3zmgl805EUvlJIUNF07br4UnW9buYuh2oHvoGn63xrL4ap4vAUOib
+ vukokYE7K3GsYVkYisEGDz2K6x0SDwjGqkSA2d6ykh+jJ4UJZxB1E2v0nmK9QCxkyZNk
+ sZfQj5QB4h5Dhhxso4izAAolciHx80OT5fHSYwr84oSWJsB9WDzvy6Ui7mZuC4CQx93Y
+ q5a1UeMGO4jhO7LwJ9UP/bfUuzdUtzep88OuFpv5TYkz8Z80LgsqR8HiWkSmlKEYv9Ri
+ sMa/JQSnO2ovX/OcW9khQ3+rt6DqFW1b3ILfzmlgG3eXwGGPFYpJ5ynwkVrmszWcsbLE
+ Vmaw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVoPTQMTGzgAcbOQH4UuSiPKU1yY9lRi13HS6owf+JNFEPwm4EfSdDwRSI47VyfAWdEJVBfxe1pE/z8SBxfAp5WWJbAtkY=
+X-Gm-Message-State: AOJu0YxKzWF+aabI6eTmmAVrqchgag8LQi/PjwTnmbNvscMjX7/8W5cJ
+ lSfdE525onfM2NwVi6eq0FNoNmnXWttMQ+KuV6HezdtxpkLqWuECW4neSj7ccxg=
+X-Google-Smtp-Source: AGHT+IFUpB5zuI8t9K8hEoPJEuLqZohLqTFlZlHMiePzlQBx1lasT/a4UFESCgWDN3fHpPLgFhHAvw==
+X-Received: by 2002:adf:fa45:0:b0:35f:b45:97b4 with SMTP id
+ ffacd0b85a97d-35f0b45b1c7mr7768875f8f.20.1718030328726; 
+ Mon, 10 Jun 2024 07:38:48 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.129.242])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42183c08f49sm50126885e9.6.2024.06.10.07.38.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 10 Jun 2024 07:38:47 -0700 (PDT)
+Message-ID: <f4812da5-8c1c-454b-b571-35bba37b8098@linaro.org>
+Date: Mon, 10 Jun 2024 16:38:46 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="9e59mGk9aI6PlFeJ"
-Content-Disposition: inline
-In-Reply-To: <20240606102631.78152-1-philmd@linaro.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] tests/qtest/libqtest: add qtest_has_cpu() api
+To: Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?Q?Reviewed-by_=3A_Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, qemu-devel@nongnu.org
+References: <20240610132123.6381-1-anisinha@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240610132123.6381-1-anisinha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,44 +97,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Ani,
 
---9e59mGk9aI6PlFeJ
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Jun 06, 2024 at 12:26:31PM +0200, Philippe Mathieu-Daud=E9 wrote:
-> vcpu.py is pointless since commit 89aafcf2a7 ("trace:
-> remove code that depends on setting vcpu"), remote it.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
+On 10/6/24 15:21, Ani Sinha wrote:
+> Added a new test api qtest_has_cpu() in order to check availability of some
+> cpu models in the current QEMU binary. The specific architecture of the QEMU
+> binary is selected using the QTEST_QEMU_BINARY environment variable. This api
+> would be useful to run tests against some older cpu models after checking if
+> QEMU actually supported these models.
+> 
+> CC: thuth@redhat.com
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> Reviewed-by: Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->  meson.build                   |  1 -
->  scripts/tracetool/__init__.py |  8 +----
->  scripts/tracetool/vcpu.py     | 59 -----------------------------------
->  3 files changed, 1 insertion(+), 67 deletions(-)
->  delete mode 100644 scripts/tracetool/vcpu.py
+>   tests/qtest/libqtest.c | 83 ++++++++++++++++++++++++++++++++++++++++++
+>   tests/qtest/libqtest.h |  8 ++++
+>   2 files changed, 91 insertions(+)
 
-Thanks, applied to my tracing tree:
-https://gitlab.com/stefanha/qemu/commits/tracing
+Since "CPU" commonly refers to a CPU state, I suggest renaming as:
 
-Stefan
+> +struct CpuInfo {
 
---9e59mGk9aI6PlFeJ
-Content-Type: application/pgp-signature; name="signature.asc"
+CpuModel
 
------BEGIN PGP SIGNATURE-----
+> +static struct CpuInfo *qtest_get_cpus(void)
 
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZnCkYACgkQnKSrs4Gr
-c8gRawgAjOOU/NLhR1F8p2neGcFctYIPp4HMszw0tZis5pB4h0kf5PTd9f5fHu7H
-ikIwLfXY3REm8qdmfmD6M5siSJS4KFbqI/c05CvSU3ZVS8Ll8pZmbQuXNUFPM8QT
-FrNFnaTk/rzQaQvqrJm9LlcwJel0gqzGA1E/O1JOSixSIyzOdXHjiVgpQLkqkny3
-Uid6PJ5tbO8oTgcO6F+8fZcKMrJY+YKOeWEcNk0drvb/wirCLjOWW/Ojxizc1usy
-5T85wHZlcwDHW4FMAnpmt2DoXaGb9cY+0Zt4+4WmBSEhKD9NDKzJf0M0x6K08bml
-8cUDmbEs9FL1y2kWFBxbt0NNns3LAA==
-=loZ0
------END PGP SIGNATURE-----
+qtest_get_cpu_models()
 
---9e59mGk9aI6PlFeJ--
+> +bool qtest_has_cpu(const char *cpu)
 
+qtest_has_cpu_model()
+
+Regards,
+
+Phil.
 
