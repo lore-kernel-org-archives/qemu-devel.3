@@ -4,69 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF79C27C55
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 17:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 327F2C27C5E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 17:18:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGicG-0007C0-JN; Mon, 10 Jun 2024 13:15:32 -0400
+	id 1sGifG-0001A9-Sx; Mon, 10 Jun 2024 13:18:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sGicE-000766-Dq
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:15:30 -0400
+ id 1sGifE-00018A-Iw
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:18:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sGicC-0001VS-O3
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:15:30 -0400
+ id 1sGifD-00023o-1Y
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:18:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718039728;
+ s=mimecast20190719; t=1718039914;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PgELMkc1bS7VwzQKP/T+wBa1GSPK4TqZBA1l61ePfzM=;
- b=g93ZDuDEre6C99c5VsiFnkd6RHEFC0Q2qkD5I/KY7XRSVE9uIocqoxc4MrK8iGfMVnFhNu
- wg+lrr7DSmHGJ+5hlhw/oDXDmptNgbJgLHetwOnmbHtJVDujkDveHq5VfVwI5uirI3F00P
- knbUNtvC4smE2DQEi5lTLvFNy4X/3rM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=mFuQhmj9T7Z+nWcvOfuTcgoiI+lA5QosiNtUTx9l5Vk=;
+ b=OgXY76Jt05h/BCiB/AYH7SxkEQAaWoC3EdwjXSOlCfqaJ0FVkj8UjDVggUDRT5GVF1qadI
+ pTlrcLHDZRrg+FF8Ppm5pOyxzF7nPeDth1Fe4DLF8u9KfBbKLg3IQpquH06Cintgx87Jln
+ Q2xHJXzSEpz+cof9bmFVRPVN0OvFav8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-64-iGu4kgfPMj6UIrMRIlvRKA-1; Mon,
- 10 Jun 2024 13:15:25 -0400
-X-MC-Unique: iGu4kgfPMj6UIrMRIlvRKA-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-524-qs9IxC0aPhSvTeA4rhTaSA-1; Mon,
+ 10 Jun 2024 13:18:30 -0400
+X-MC-Unique: qs9IxC0aPhSvTeA4rhTaSA-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6BBDF1954B25; Mon, 10 Jun 2024 17:15:20 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0A5E619560BF; Mon, 10 Jun 2024 17:18:28 +0000 (UTC)
 Received: from localhost (unknown [10.39.195.112])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 966A71956048; Mon, 10 Jun 2024 17:14:01 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2FD2219560AB; Mon, 10 Jun 2024 17:18:25 +0000 (UTC)
+Date: Mon, 10 Jun 2024 13:18:23 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Richard Henderson <rth@twiddle.net>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Alex Williamson <alex.williamson@redhat.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>
-Subject: [PULL 4/6] hw/usb: Remove newline character in trace events
-Date: Mon, 10 Jun 2024 13:13:13 -0400
-Message-ID: <20240610171315.346143-5-stefanha@redhat.com>
-In-Reply-To: <20240610171315.346143-1-stefanha@redhat.com>
-References: <20240610171315.346143-1-stefanha@redhat.com>
+To: Changqi Lu <luchangqi.123@bytedance.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
+ hreitz@redhat.com, fam@euphon.net, ronniesahlberg@gmail.com,
+ pbonzini@redhat.com, pl@dlhnet.de, kbusch@kernel.org,
+ its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
+ pizhenwei@bytedance.com
+Subject: Re: [PATCH v5 00/10] Support persistent reservation operations
+Message-ID: <20240610171823.GA334653@fedora.redhat.com>
+References: <20240606122444.2914576-1-luchangqi.123@bytedance.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="gxnLNSZVCcpzHxFt"
+Content-Disposition: inline
+In-Reply-To: <20240606122444.2914576-1-luchangqi.123@bytedance.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
@@ -92,52 +87,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Trace events aren't designed to be multi-lines.
-Remove the newline characters.
+--gxnLNSZVCcpzHxFt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Mads Ynddal <mads@ynddal.dk>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-id: 20240606103943.79116-4-philmd@linaro.org
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- hw/usb/trace-events | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+On Thu, Jun 06, 2024 at 08:24:34PM +0800, Changqi Lu wrote:
+> Hi,
+>=20
+> patchv5 has been modified.=20
+>=20
+> Sincerely hope that everyone can help review the
+> code and provide some suggestions.
+>=20
+> v4->v5:
+> - Fixed a memory leak bug at hw/nvme/ctrl.c.
+>=20
+> v3->v4:
+> - At the nvme layer, the two patches of enabling the ONCS
+>   function and enabling rescap are combined into one.
+> - At the nvme layer, add helper functions for pr capacity
+>   conversion between the block layer and the nvme layer.
+>=20
+> v2->v3:
+> In v2 Persist Through Power Loss(PTPL) is enable default.
+> In v3 PTPL is supported, which is passed as a parameter.
+>=20
+> v1->v2:
+> - Add sg_persist --report-capabilities for SCSI protocol and enable
+>   oncs and rescap for NVMe protocol.
+> - Add persistent reservation capabilities constants and helper functions =
+for
+>   SCSI and NVMe protocol.
+> - Add comments for necessary APIs.
+>=20
+> v1:
+> - Add seven APIs about persistent reservation command for block layer.
+>   These APIs including reading keys, reading reservations, registering,
+>   reserving, releasing, clearing and preempting.
+> - Add the necessary pr-related operation APIs for both the
+>   SCSI protocol and NVMe protocol at the device layer.
+> - Add scsi driver at the driver layer to verify the functions
 
-diff --git a/hw/usb/trace-events b/hw/usb/trace-events
-index fd7b90d70c..46732717a9 100644
---- a/hw/usb/trace-events
-+++ b/hw/usb/trace-events
-@@ -15,7 +15,7 @@ usb_ohci_exit(const char *s) "%s"
- 
- # hcd-ohci.c
- usb_ohci_iso_td_read_failed(uint32_t addr) "ISO_TD read error at 0x%x"
--usb_ohci_iso_td_head(uint32_t head, uint32_t tail, uint32_t flags, uint32_t bp, uint32_t next, uint32_t be, uint32_t framenum, uint32_t startframe, uint32_t framecount, int rel_frame_num) "ISO_TD ED head 0x%.8x tailp 0x%.8x\n0x%.8x 0x%.8x 0x%.8x 0x%.8x\nframe_number 0x%.8x starting_frame 0x%.8x\nframe_count  0x%.8x relative %d"
-+usb_ohci_iso_td_head(uint32_t head, uint32_t tail, uint32_t flags, uint32_t bp, uint32_t next, uint32_t be, uint32_t framenum, uint32_t startframe, uint32_t framecount, int rel_frame_num) "ISO_TD ED head 0x%.8x tailp 0x%.8x, flags 0x%.8x bp 0x%.8x next 0x%.8x be 0x%.8x, frame_number 0x%.8x starting_frame 0x%.8x, frame_count 0x%.8x relative %d"
- usb_ohci_iso_td_head_offset(uint32_t o0, uint32_t o1, uint32_t o2, uint32_t o3, uint32_t o4, uint32_t o5, uint32_t o6, uint32_t o7) "0x%.8x 0x%.8x 0x%.8x 0x%.8x 0x%.8x 0x%.8x 0x%.8x 0x%.8x"
- usb_ohci_iso_td_relative_frame_number_neg(int rel) "ISO_TD R=%d < 0"
- usb_ohci_iso_td_relative_frame_number_big(int rel, int count) "ISO_TD R=%d > FC=%d"
-@@ -23,7 +23,7 @@ usb_ohci_iso_td_bad_direction(int dir) "Bad direction %d"
- usb_ohci_iso_td_bad_bp_be(uint32_t bp, uint32_t be) "ISO_TD bp 0x%.8x be 0x%.8x"
- usb_ohci_iso_td_bad_cc_not_accessed(uint32_t start, uint32_t next) "ISO_TD cc != not accessed 0x%.8x 0x%.8x"
- usb_ohci_iso_td_bad_cc_overrun(uint32_t start, uint32_t next) "ISO_TD start_offset=0x%.8x > next_offset=0x%.8x"
--usb_ohci_iso_td_so(uint32_t so, uint32_t eo, uint32_t s, uint32_t e, const char *str, ssize_t len, int ret) "0x%.8x eo 0x%.8x\nsa 0x%.8x ea 0x%.8x\ndir %s len %zu ret %d"
-+usb_ohci_iso_td_so(uint32_t so, uint32_t eo, uint32_t s, uint32_t e, const char *str, ssize_t len, int ret) "0x%.8x eo 0x%.8x sa 0x%.8x ea 0x%.8x dir %s len %zu ret %d"
- usb_ohci_iso_td_data_overrun(int ret, ssize_t len) "DataOverrun %d > %zu"
- usb_ohci_iso_td_data_underrun(int ret) "DataUnderrun %d"
- usb_ohci_iso_td_nak(int ret) "got NAK/STALL %d"
-@@ -55,7 +55,7 @@ usb_ohci_td_pkt_full(const char *dir, const char *buf) "%s data: %s"
- usb_ohci_td_too_many_pending(int ep) "ep=%d"
- usb_ohci_td_packet_status(int status) "status=%d"
- usb_ohci_ed_read_error(uint32_t addr) "ED read error at 0x%x"
--usb_ohci_ed_pkt(uint32_t cur, int h, int c, uint32_t head, uint32_t tail, uint32_t next) "ED @ 0x%.8x h=%u c=%u\n  head=0x%.8x tailp=0x%.8x next=0x%.8x"
-+usb_ohci_ed_pkt(uint32_t cur, int h, int c, uint32_t head, uint32_t tail, uint32_t next) "ED @ 0x%.8x h=%u c=%u head=0x%.8x tailp=0x%.8x next=0x%.8x"
- usb_ohci_ed_pkt_flags(uint32_t fa, uint32_t en, uint32_t d, int s, int k, int f, uint32_t mps) "fa=%u en=%u d=%u s=%u k=%u f=%u mps=%u"
- usb_ohci_hcca_read_error(uint32_t addr) "HCCA read error at 0x%x"
- usb_ohci_mem_read(uint32_t size, const char *name, uint32_t addr, uint32_t offs, uint32_t val) "%d %s 0x%x %d -> 0x%x"
--- 
-2.45.1
+My question from v1 is unanswered:
+
+  What is the relationship to the existing PRManager functionality
+  (docs/interop/pr-helper.rst) where block/file-posix.c interprets SCSI
+  ioctls and sends persistent reservation requests to an external helper
+  process?
+
+  I wonder if block/file-posix.c can implement the new block driver
+  callbacks using pr_mgr (while keeping the existing scsi-generic
+  support).
+
+Thanks,
+Stefan
+
+>=20
+>=20
+> Changqi Lu (10):
+>   block: add persistent reservation in/out api
+>   block/raw: add persistent reservation in/out driver
+>   scsi/constant: add persistent reservation in/out protocol constants
+>   scsi/util: add helper functions for persistent reservation types
+>     conversion
+>   hw/scsi: add persistent reservation in/out api for scsi device
+>   block/nvme: add reservation command protocol constants
+>   hw/nvme: add helper functions for converting reservation types
+>   hw/nvme: enable ONCS and rescap function
+>   hw/nvme: add reservation protocal command
+>   block/iscsi: add persistent reservation in/out driver
+>=20
+>  block/block-backend.c             | 397 ++++++++++++++++++++++++++
+>  block/io.c                        | 163 +++++++++++
+>  block/iscsi.c                     | 443 ++++++++++++++++++++++++++++++
+>  block/raw-format.c                |  56 ++++
+>  hw/nvme/ctrl.c                    | 326 +++++++++++++++++++++-
+>  hw/nvme/ns.c                      |   5 +
+>  hw/nvme/nvme.h                    |  84 ++++++
+>  hw/scsi/scsi-disk.c               | 352 ++++++++++++++++++++++++
+>  include/block/block-common.h      |  40 +++
+>  include/block/block-io.h          |  20 ++
+>  include/block/block_int-common.h  |  84 ++++++
+>  include/block/nvme.h              |  98 +++++++
+>  include/scsi/constants.h          |  52 ++++
+>  include/scsi/utils.h              |   8 +
+>  include/sysemu/block-backend-io.h |  24 ++
+>  scsi/utils.c                      |  81 ++++++
+>  16 files changed, 2231 insertions(+), 2 deletions(-)
+>=20
+> --=20
+> 2.20.1
+>=20
+
+--gxnLNSZVCcpzHxFt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZnNV8ACgkQnKSrs4Gr
+c8hKKAf5AVkZxIpC8B0k9eX9sopzM0mI2ar2lY7Tu8DYHycwuX5ZNrdKiOg3VW1h
+ufbdahg1Cpth7PhGbz+EXykZbxNQIyK7zTneu0fgAORw0KBdqFpmfC2Tyi8y8fbV
+xzavWTVO97GYStScf/by6Kq7ddb/t6GGGRlqJO7la2NfsYlLJJehB0oBjLtk5xqu
+1GDnq4VIGaScNLxbcTklHxH1RarJkMzv/D1Ddwj0eCAzlqhQxpq/mhjU/kT3+Tjo
+FX0/I+tczJHimkLw6ruDya3KZ7Zy4hqRLt6XlOPf49Fy5jbk8e9AoSMRp1AaWrew
+/HICXVMdReqVh6H+q0sMq/2LSS1Kgw==
+=34FX
+-----END PGP SIGNATURE-----
+
+--gxnLNSZVCcpzHxFt--
 
 
