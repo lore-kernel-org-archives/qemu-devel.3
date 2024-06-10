@@ -4,71 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CD7FC27C5E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 13:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED4C2C27C5E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 13:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGfFR-0000S0-5e; Mon, 10 Jun 2024 09:39:45 -0400
+	id 1sGfIt-0002NO-SZ; Mon, 10 Jun 2024 09:43:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGfFJ-0000Mv-GE
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 09:39:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGfIs-0002Mt-Et
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 09:43:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGfFH-0004Tj-7W
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 09:39:36 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGfIr-0005Dg-0A
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 09:43:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718026772;
+ s=mimecast20190719; t=1718026995;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Go28+kUQFS49dz/gLvHSNbkE7+S0iWgEq3ObQoXELfY=;
- b=KZX5CMuuYwTIqyeCkDwJstj96psdYsmtGO2LXcH1AYfe0FKlxVVEySQNls3WaVv0RpOZOz
- 6WyQjadOz9ti5JUR3QVSuHlitvszdoURrwJe9Gi3M8t9mV24V8ir2djLjly+7eIoRlY1zS
- 0PUt4NHNtXCNaXJcnPDjZFKpXgkzKNY=
+ bh=qGo3hyENRGdvt/h348iHjqp2VnqXtdS/7WfZxY2liW8=;
+ b=FmfqFSy3V45oy3hAn/a1oM1k3cvrFmNEaii91Thpv87B3Bf9n3aGSdoP4rHuGjAYF/D3w1
+ zxopsZPk8Og+sqIObPVXsroDg1NTgFIx2REeUY2nf4SFYVViO6XSv2j5Jm0eUsGuMDnvcT
+ SAbaJKcrdGASZpNqo2Qzs5qOH2SO+Xk=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-226-lH3Aa9MQN4SZNIbVguicUw-1; Mon,
- 10 Jun 2024 09:39:30 -0400
-X-MC-Unique: lH3Aa9MQN4SZNIbVguicUw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-c_3lejICMMmAiDrbEAShdA-1; Mon,
+ 10 Jun 2024 09:43:13 -0400
+X-MC-Unique: c_3lejICMMmAiDrbEAShdA-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F54B1956086
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 13:39:29 +0000 (UTC)
+ id 9F1321956094
+ for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 13:43:12 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F03DD1956089
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 13:39:28 +0000 (UTC)
+ id 56DD31956089
+ for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 13:43:12 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 827C121E66E5; Mon, 10 Jun 2024 15:39:26 +0200 (CEST)
+ id 61BB621E681D; Mon, 10 Jun 2024 15:43:10 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: John Snow <jsnow@redhat.com>,  Victor Toso <victortoso@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Andrea
- Bolognani <abologna@redhat.com>,  qemu-devel <qemu-devel@nongnu.org>
-Subject: Re: Historical QMP schema
-In-Reply-To: <ZmblKThDo7PJG5Fh@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Mon, 10 Jun 2024 12:36:09 +0100")
-References: <CAFn=p-bdoi1yDQTNhpzM=MP5s8Zm9zxuxbD-zPs_h_iA8C=mGg@mail.gmail.com>
- <ipebw5yv4l5joa54vk42rb2fmuykzvmjar7blcwiwstj5fwyuq@ycl4du6sb724>
- <CAFn=p-b9gLmAwLAjzf2RWA4JZuxVM-nnwETwQ44c8F0kOkReVg@mail.gmail.com>
- <ZmblKThDo7PJG5Fh@redhat.com>
-Date: Mon, 10 Jun 2024 15:39:26 +0200
-Message-ID: <87frtknchd.fsf@pond.sub.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/2] crypto: avoid leak of ctx when bad cipher mode is
+ given
+In-Reply-To: <20240610094049.851127-2-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Mon, 10 Jun 2024 10:40:48
+ +0100")
+References: <20240610094049.851127-1-berrange@redhat.com>
+ <20240610094049.851127-2-berrange@redhat.com>
+Date: Mon, 10 Jun 2024 15:43:10 +0200
+Message-ID: <87bk48ncb5.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -95,41 +92,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> On Thu, Jun 06, 2024 at 01:22:14PM -0400, John Snow wrote:
->> On Thu, Jun 6, 2024 at 6:25=E2=80=AFAM Victor Toso <victortoso@redhat.co=
-m> wrote:
->> > On Wed, Jun 05, 2024 at 11:47:53AM GMT, John Snow wrote:
->> Importantly, old versions of the schema aren't contained *entirely* with=
-in
->> the schema. Here's a timeline:
->>=20
->> v0.12.0: QMP first introduced. Events are hardcoded, commands are defined
->> in qemu-monitor.hx. query commands are hard-coded in monitor.c.
->> v0.14.0: qemu-monitor.hx is forked into qmp-commands.hx and hmp-commands=
-.hx
->> v1.0: First version which features qapi-schema.json; all query commands =
-are
->> qapified but most other commands are not.
->> v1.1.0: A very large chunk of commands are QAPIfied.
->> v1.3.0: Most commands are now QAPIfied, but there are 2-3 remaining.
->> v2.1.0: events are now fully qapified; most are now defined in
->> qapi/events.json
->> v2.8.0: The remaining commands are fully qapified; qmp-commands.hx is
->> removed.
->
-> v2.8.0 was in Dec 2016 - 7+1/2 years ago.
->
-> libvirt's min QEMU version is 4.2.0 - Dec 2019
->
-> Ther are non-libvirt consumers of QEMU, but for them, do we think it is
-> reasonable for a consumer of QAPI *today*, to care about a QEMU version
-> from almost 8 years ago ?
->
-> IOW, I wonder if the most pragammatic answer to this problem is to simply
-> entirely ignore the problems prior to 2.8.0 - accept that the versioning
-> is inaccurate/incomplete for versions before 2.8.0
+> This fixes Coverity CID-1546884
 
-I'm in favour.  However, I'd prefer honest "Since: at least 2.8.0" to
-"Since: <untrustworthy but irrelevant version <=3D 2.8.0>".
+We usually say
+
+  Fixes: Coverity CID 1546884
+
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
 
