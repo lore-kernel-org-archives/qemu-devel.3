@@ -4,93 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB5CC27C5E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 18:25:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E48C27C55
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 18:27:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGjgH-0000XD-HL; Mon, 10 Jun 2024 14:23:45 -0400
+	id 1sGjjS-0005hq-Uv; Mon, 10 Jun 2024 14:27:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sGjg9-0000Sy-Jy
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 14:23:38 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sGjg7-0006BE-Qy
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 14:23:37 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-52c32d934c2so2343196e87.2
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 11:23:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718043814; x=1718648614; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aNSC7+YfInJHGM0e7SPiMj3ud9COeB0Hq7ik61VnjtI=;
- b=p/ysV9c6Tmwk/MXttyiTrUESc2p0lhWyvDXomO7g9gXj5xstexzt0ultOyTzSXBv6X
- JA/18KDk+PJw4OetYQXa4DbBUmUqm88WOxq4Imvszbc1fEYjDJSUwZ0weYGpICsgSx2D
- 7himaAIadlPcOn4B5igq2A4PS+XWQjmAoQaoAt2VAa0sGcC7HlLIF0NnfwGGMfwgnnVz
- DTNei+8/wybcAkMgHZ6zhRoLlHFPN+MupwPKgfySxz2T9/EDRy9ScABigZkO62momKdw
- ek8Q4LJ+LmFJGLAv3bCmJCG0NNSpQYXXy9JZERTbg/05pyZrnRsWMbM3VCdJL/A3/cMt
- Ne+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718043814; x=1718648614;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aNSC7+YfInJHGM0e7SPiMj3ud9COeB0Hq7ik61VnjtI=;
- b=rNm4Mk9/oXtlVUBlgFzePgeQUPX/hEZlJNV9KE4L/ZsvI8fedeOiPF2lgnY5W5Ky3l
- AYQDQVzR0qiwVVT9g2gEisKtCNiNBKsI4o0LwUHhzb8gqtIvpE3yMjHhnKzrMGBSXORQ
- KJ4jWYIEhikbFX1Ujdg35hgPjam+1+YkHTPYcS+G8kutNXojkcS7filSxe7XDFPRc36+
- Nb4QX90Ok7c/S7rwQutATTDF/8M5/NATT+5XcuAV1gQfLO6NZvNZe+43B/mnh7sccaVX
- +i2qOt7xJHCuNCHFi9l48jpMkZbeia1TkU1NmfhRJWl3dwQSAp/d5e/wT7xfkkPxhEci
- ruQw==
-X-Gm-Message-State: AOJu0Yzx1VfyhXPtddrXJXDSwHsODaHDwxFYEyHGnWdSuEiTiExcdvsI
- Z+Sjo/TQrzSB40P3NmCNRO7sRunRZPXU29jXUdB563epvcYauM48GnpnWDDN0DJjg7lutkqI/DB
- yraM=
-X-Google-Smtp-Source: AGHT+IE5nH88iEnVnh+LQrhOy51QZPD7zfrVmKdr4lX9tYzkULdz1aJGTGtW4OlHuG04RkjJ0xDZdQ==
-X-Received: by 2002:a05:6512:33d3:b0:52c:93b0:3bb with SMTP id
- 2adb3069b0e04-52c93b00469mr142637e87.48.1718043813946; 
- Mon, 10 Jun 2024 11:23:33 -0700 (PDT)
-Received: from localhost.localdomain (adsl-33.37.6.162.tellas.gr.
- [37.6.162.33]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42161147811sm135487395e9.18.2024.06.10.11.23.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 10 Jun 2024 11:23:33 -0700 (PDT)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-Subject: [RFC PATCH v1 3/6] DO NOT MERGE: add rustdoc build for gitlab pages
-Date: Mon, 10 Jun 2024 21:22:38 +0300
-Message-ID: <01551761cd74fc370eb118b3de1b47dfaf53d4f2.1718040303.git.manos.pitsidianakis@linaro.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
-References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sGjjI-0005gO-1L
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 14:26:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sGjjG-0006pw-8f
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 14:26:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718044008;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wDKPwfTMvPEdBysezOfWfcB12MRhGMTru7l7+W2DslE=;
+ b=eqSujr7FN7QKFSnrHEACOYlk7nVIO/8xaGH9NcizKKoV6URFoM6s+bth1ci4rcu9KPR24Y
+ ODkHgeI6vMSst028j1kHZEm1//0fQwiQSTqmU0l77LgNGFtAnHB6Do3UDuwUXyfW4TDDLp
+ ZPMA85AAoYxG4Gam7Vk9cwic9w1yRwg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-XQutqeZXOk-Dq7aiGw_Y0A-1; Mon,
+ 10 Jun 2024 14:26:45 -0400
+X-MC-Unique: XQutqeZXOk-Dq7aiGw_Y0A-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A17AE19560A2; Mon, 10 Jun 2024 18:26:42 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.32])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9DDE619560AA; Mon, 10 Jun 2024 18:26:36 +0000 (UTC)
+Date: Mon, 10 Jun 2024 19:26:33 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-devel@nongnu.org,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ qemu-s390x@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [RFC PATCH 2/3] monitor: Allow passing HMP arguments to QMP
+ HumanReadableText API
+Message-ID: <ZmdFWdtTyhqoRREK@redhat.com>
+References: <20240610175852.21215-1-philmd@linaro.org>
+ <20240610175852.21215-3-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <20240610175852.21215-3-philmd@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,87 +95,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- .gitlab-ci.d/buildtest.yml | 55 +++++++++++++++++++++++++-------------
- 1 file changed, 36 insertions(+), 19 deletions(-)
+On Mon, Jun 10, 2024 at 07:58:51PM +0200, Philippe Mathieu-Daudé wrote:
+> Allow HMP commands implemented using the HumanReadableText API
+> (via the HMPCommand::cmd_info_hrt handler) to pass arguments
+> to the QMP equivalent command. The arguments are serialized as
+> a JSON dictionary.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  docs/devel/writing-monitor-commands.rst | 15 ++++++++++++++-
+>  qapi/machine.json                       | 24 ++++++++++++++++++++++++
+>  include/monitor/monitor.h               |  3 ++-
+>  monitor/monitor-internal.h              |  2 +-
+>  accel/tcg/monitor.c                     |  4 ++--
+>  hw/core/loader.c                        |  2 +-
+>  hw/core/machine-qmp-cmds.c              |  9 +++++----
+>  hw/usb/bus.c                            |  2 +-
+>  monitor/hmp-target.c                    |  3 ++-
+>  monitor/hmp.c                           | 11 +++++++----
+>  10 files changed, 59 insertions(+), 16 deletions(-)
+> 
+> diff --git a/docs/devel/writing-monitor-commands.rst b/docs/devel/writing-monitor-commands.rst
+> index 930da5cd06..843458e52c 100644
+> --- a/docs/devel/writing-monitor-commands.rst
+> +++ b/docs/devel/writing-monitor-commands.rst
+> @@ -561,6 +561,7 @@ returns a ``HumanReadableText``::
+>   # Since: 6.2
+>   ##
+>   { 'command': 'x-query-roms',
+> +   'data': { 'json-args': 'str'},
+>     'returns': 'HumanReadableText',
+>     'features': [ 'unstable' ] }
+>  
+> @@ -578,7 +579,7 @@ Implementing the QMP command
+>  The QMP implementation will typically involve creating a ``GString``
+>  object and printing formatted data into it, like this::
+>  
+> - HumanReadableText *qmp_x_query_roms(Error **errp)
+> + HumanReadableText *qmp_x_query_roms(const char *json_args, Error **errp)
+>   {
+>       g_autoptr(GString) buf = g_string_new("");
+>       Rom *rom;
+> @@ -596,6 +597,18 @@ object and printing formatted data into it, like this::
+>  The actual implementation emits more information.  You can find it in
+>  hw/core/loader.c.
+>  
+> +For QMP command taking (optional) parameters, these parameters are
+> +serialized as a JSON dictionary, and can be retrieved using the QDict
+> +API. If the previous ``x-query-roms`` command were taking a "index"
+> +argument, it could be retrieved as::
+> +
+> + HumanReadableText *qmp_x_query_roms(const char *json_args, Error **errp)
+> + {
+> +     g_autoptr(GString) buf = g_string_new("");
+> +     QDict *qdict = qobject_to(QDict, qobject_from_json(json_args, &error_abort));
+> +     uint64_t index = qdict_get_int(qdict, "index");
+> +     ...
+> + }
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index 91c57efded..1cd6519506 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -715,31 +715,48 @@ build-tools-and-docs-debian:
- # For contributor forks we want to publish from any repo so
- # that users can see the results of their commits, regardless
- # of what topic branch they're currently using
-+# pages:
-+#   extends: .base_job_template
-+#   image: $CI_REGISTRY_IMAGE/qemu/debian:$QEMU_CI_CONTAINER_TAG
-+#   stage: test
-+#   needs:
-+#     - job: build-tools-and-docs-debian
-+#   script:
-+#     - mkdir -p public
-+#     # HTML-ised source tree
-+#     - make gtags
-+#     # We unset variables to work around a bug in some htags versions
-+#     # which causes it to fail when the environment is large
-+#     - CI_COMMIT_MESSAGE= CI_COMMIT_TAG_MESSAGE= htags
-+#         -anT --tree-view=filetree -m qemu_init
-+#         -t "Welcome to the QEMU sourcecode"
-+#     - mv HTML public/src
-+#     # Project documentation
-+#     - make -C build install DESTDIR=$(pwd)/temp-install
-+#     - mv temp-install/usr/local/share/doc/qemu/* public/
-+#   artifacts:
-+#     when: on_success
-+#     paths:
-+#       - public
-+#   variables:
-+#     QEMU_JOB_PUBLISH: 1
-+# The Docker image that will be used to build your app
- pages:
--  extends: .base_job_template
--  image: $CI_REGISTRY_IMAGE/qemu/debian:$QEMU_CI_CONTAINER_TAG
--  stage: test
--  needs:
--    - job: build-tools-and-docs-debian
-+  image: rust:latest
-   script:
--    - mkdir -p public
--    # HTML-ised source tree
--    - make gtags
--    # We unset variables to work around a bug in some htags versions
--    # which causes it to fail when the environment is large
--    - CI_COMMIT_MESSAGE= CI_COMMIT_TAG_MESSAGE= htags
--        -anT --tree-view=filetree -m qemu_init
--        -t "Welcome to the QEMU sourcecode"
--    - mv HTML public/src
--    # Project documentation
--    - make -C build install DESTDIR=$(pwd)/temp-install
--    - mv temp-install/usr/local/share/doc/qemu/* public/
-+    - cd ./rust/pl011/
-+    - cargo tree --depth 1 -e normal --prefix none | cut -d' ' -f1  | xargs
-+      printf -- '-p %s\n'  | xargs cargo doc --no-deps --document-private-items --target x86_64-unknown-linux-gnu
-+    - cd ./../..
-+    - mv ./rust/pl011/target/doc ./public
-   artifacts:
-     when: on_success
-     paths:
-       - public
--  variables:
--    QEMU_JOB_PUBLISH: 1
-+  rules:
-+    # This ensures that only pushes to the default branch will trigger
-+    # a pages deploy
-+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
- 
- coverity:
-   image: $CI_REGISTRY_IMAGE/qemu/fedora:$QEMU_CI_CONTAINER_TAG
+Passing json inside json is pretty gross, and throwing away a key
+benefit of QAPI - that it de-serializes the JSON into the actual
+data types that you need, avoiding manual & error prone code for
+unpacking args from a QDict.
+
+IMHO if a commend requires arguments, they should be modelled
+explicitly, and not use the  cmd_info_hrt convenience handler
+which was only ever intended simple for no-arg 'info' commands.
+
+With regards,
+Daniel
 -- 
-γαῖα πυρί μιχθήτω
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
