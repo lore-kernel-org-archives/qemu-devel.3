@@ -4,70 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F27EDC27C5E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 11:37:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEBADC27C65
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 11:46:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGdKF-0005nk-8D; Mon, 10 Jun 2024 07:36:35 -0400
+	id 1sGdTC-0001UD-0Z; Mon, 10 Jun 2024 07:45:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sGdK2-0005jT-1q
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 07:36:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGdTA-0001TW-QC
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 07:45:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sGdJz-00048y-2e
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 07:36:21 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGdT9-0006Cv-5B
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 07:45:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718019377;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1718019945;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=tQjulkKUlCuwPKp+JrI9B7wbNMNniLuAlzw6vafKRfU=;
- b=CpQDEurVvZ8VMMj6fJafIRxoDCgpsgPXRnEPKcSOmfgPHeQHHt3O0l9UHywYBlnThBq96a
- iQhJmLXdVqer+T7SiOq3LulGZRn+a/35LOYmrpOWG6JntCiJJa2cvAGreKOhq15DsIuIAf
- YTUawVspI8m1gCRRJuciFVcViU3Lak8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=8H7+GFYWZt+fqm9LdJrMD4rXPF9PRp7Tx2xQ1dLcOwE=;
+ b=VhIJMDrFSzUTSJ2L+hL3ui9Ugk1rUZSfBkjEiF9aftoajOzo6ful49pCuTL6/lfQ2McUSW
+ x5+6onBck+PjFdhJqJbRHYaTjnBZfJN+z65UCpOwPWTNMDTwY4N5gNopIKulX143TROPSX
+ DAgR3uU74LyV1e53U2gLdFSAoDWtsZs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-46YYA7DdNUWKrHFTMxGCKw-1; Mon,
- 10 Jun 2024 07:36:16 -0400
-X-MC-Unique: 46YYA7DdNUWKrHFTMxGCKw-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-kv8X1yWmOZW3CR4Uf6hZyg-1; Mon,
+ 10 Jun 2024 07:45:41 -0400
+X-MC-Unique: kv8X1yWmOZW3CR4Uf6hZyg-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 58FD5195608C
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 11:36:15 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.32])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 917BF1956089; Mon, 10 Jun 2024 11:36:12 +0000 (UTC)
-Date: Mon, 10 Jun 2024 12:36:09 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: Victor Toso <victortoso@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Andrea Bolognani <abologna@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-Subject: Re: Historical QMP schema
-Message-ID: <ZmblKThDo7PJG5Fh@redhat.com>
-References: <CAFn=p-bdoi1yDQTNhpzM=MP5s8Zm9zxuxbD-zPs_h_iA8C=mGg@mail.gmail.com>
- <ipebw5yv4l5joa54vk42rb2fmuykzvmjar7blcwiwstj5fwyuq@ycl4du6sb724>
- <CAFn=p-b9gLmAwLAjzf2RWA4JZuxVM-nnwETwQ44c8F0kOkReVg@mail.gmail.com>
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 36A3B19560B4; Mon, 10 Jun 2024 11:45:39 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C24EC1956087; Mon, 10 Jun 2024 11:45:37 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 72B7B21E681D; Mon, 10 Jun 2024 13:45:35 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Gonglei <arei.gonglei@huawei.com>
+Cc: <qemu-devel@nongnu.org>,  <peterx@redhat.com>,  <yu.zhang@ionos.com>,
+ <mgalaxy@akamai.com>,  <elmar.gerdes@ionos.com>,
+ <zhengchuan@huawei.com>,  <berrange@redhat.com>,  <armbru@redhat.com>,
+ <lizhijian@fujitsu.com>,  <pbonzini@redhat.com>,  <mst@redhat.com>,
+ <xiexiangyou@huawei.com>,  <linux-rdma@vger.kernel.org>,
+ <lixiao91@huawei.com>,  <jinpu.wang@ionos.com>,  Jialin Wang
+ <wangjialin23@huawei.com>
+Subject: Re: [PATCH 1/6] migration: remove RDMA live migration temporarily
+In-Reply-To: <1717503252-51884-2-git-send-email-arei.gonglei@huawei.com>
+ (Gonglei's message of "Tue, 4 Jun 2024 20:14:07 +0800")
+References: <1717503252-51884-1-git-send-email-arei.gonglei@huawei.com>
+ <1717503252-51884-2-git-send-email-arei.gonglei@huawei.com>
+Date: Mon, 10 Jun 2024 13:45:35 +0200
+Message-ID: <878qzdqaw0.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFn=p-b9gLmAwLAjzf2RWA4JZuxVM-nnwETwQ44c8F0kOkReVg@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -89,45 +87,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 06, 2024 at 01:22:14PM -0400, John Snow wrote:
-> On Thu, Jun 6, 2024 at 6:25 AM Victor Toso <victortoso@redhat.com> wrote:
-> > On Wed, Jun 05, 2024 at 11:47:53AM GMT, John Snow wrote:
-> Importantly, old versions of the schema aren't contained *entirely* within
-> the schema. Here's a timeline:
-> 
-> v0.12.0: QMP first introduced. Events are hardcoded, commands are defined
-> in qemu-monitor.hx. query commands are hard-coded in monitor.c.
-> v0.14.0: qemu-monitor.hx is forked into qmp-commands.hx and hmp-commands.hx
-> v1.0: First version which features qapi-schema.json; all query commands are
-> qapified but most other commands are not.
-> v1.1.0: A very large chunk of commands are QAPIfied.
-> v1.3.0: Most commands are now QAPIfied, but there are 2-3 remaining.
-> v2.1.0: events are now fully qapified; most are now defined in
-> qapi/events.json
-> v2.8.0: The remaining commands are fully qapified; qmp-commands.hx is
-> removed.
+Gonglei <arei.gonglei@huawei.com> writes:
 
-v2.8.0 was in Dec 2016 - 7+1/2 years ago.
+> From: Jialin Wang <wangjialin23@huawei.com>
+>
+> The new RDMA live migration will be introduced in the upcoming
+> few commits.
+>
+> Signed-off-by: Jialin Wang <wangjialin23@huawei.com>
+> Signed-off-by: Gonglei <arei.gonglei@huawei.com>
 
-libvirt's min QEMU version is 4.2.0 - Dec 2019
+[...]
 
-Ther are non-libvirt consumers of QEMU, but for them, do we think it is
-reasonable for a consumer of QAPI *today*, to care about a QEMU version
-from almost 8 years ago ?
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index a351fd3714..4d7d49bfec 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -210,9 +210,9 @@
+>  #
+>  # @setup-time: amount of setup time in milliseconds *before* the
+>  #     iterations begin but *after* the QMP command is issued.  This is
+> -#     designed to provide an accounting of any activities (such as
+> -#     RDMA pinning) which may be expensive, but do not actually occur
+> -#     during the iterative migration rounds themselves.  (since 1.6)
+> +#     designed to provide an accounting of any activities which may be
+> +#     expensive, but do not actually occur during the iterative migration
+> +#     rounds themselves.  (since 1.6)
 
-IOW, I wonder if the most pragammatic answer to this problem is to simply
-entirely ignore the problems prior to 2.8.0 - accept that the versioning
-is inaccurate/incomplete for versions before 2.8.0
+I guess the new RDMA migration code will not do RDMA pinning.  Correct?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>  #
+>  # @cpu-throttle-percentage: percentage of time guest cpus are being
+>  #     throttled during auto-converge.  This is only present when
+> @@ -378,10 +378,6 @@
+>  #     for certain work loads, by sending compressed difference of the
+>  #     pages
+>  #
+> -# @rdma-pin-all: Controls whether or not the entire VM memory
+> -#     footprint is mlock()'d on demand or all at once.  Refer to
+> -#     docs/rdma.txt for usage.  Disabled by default.  (since 2.0)
+> -#
+>  # @zero-blocks: During storage migration encode blocks of zeroes
+>  #     efficiently.  This essentially saves 1MB of zeroes per block on
+>  #     the wire.  Enabling requires source and target VM to support
+> @@ -476,7 +472,7 @@
+>  # Since: 1.2
+>  ##
+>  { 'enum': 'MigrationCapability',
+> -  'data': ['xbzrle', 'rdma-pin-all', 'auto-converge', 'zero-blocks',
+> +  'data': ['xbzrle', 'auto-converge', 'zero-blocks',
+>             'events', 'postcopy-ram',
+>             { 'name': 'x-colo', 'features': [ 'unstable' ] },
+>             'release-ram',
+
+I guess you remove @rdma-pin-all, because it makes no sense with the new
+migration code.  However, this is an incompatible change.
+
+Here's the orderly way to remove it:
+
+1. Document it doesn't do anything anymore, and deprecate it.
+
+2. Remove after the deprecation grace period (two releases, see
+docs/about/deprecated.rst.
+
+> @@ -533,7 +529,6 @@
+>  #     -> { "execute": "query-migrate-capabilities" }
+>  #     <- { "return": [
+>  #           {"state": false, "capability": "xbzrle"},
+> -#           {"state": false, "capability": "rdma-pin-all"},
+>  #           {"state": false, "capability": "auto-converge"},
+>  #           {"state": false, "capability": "zero-blocks"},
+>  #           {"state": true, "capability": "events"},
+
+[...]
 
 
