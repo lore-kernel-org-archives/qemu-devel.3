@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9A8C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33D42C27C55
 	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 17:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGjIP-0005HI-SN; Mon, 10 Jun 2024 13:59:05 -0400
+	id 1sGjIX-0005Kd-FA; Mon, 10 Jun 2024 13:59:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGjIO-0005Gx-T7
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:59:04 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGjIV-0005It-Jv
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:59:11 -0400
 Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGjIN-0001aI-7h
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:59:04 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGjIT-0001ai-DL
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:59:11 -0400
 Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-421a1b834acso11227295e9.3
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 10:59:02 -0700 (PDT)
+ 5b1f17b1804b1-4223c77e4b1so1077935e9.2
+ for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 10:59:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718042341; x=1718647141; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718042348; x=1718647148; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xJyIGRy7KVzvmUcZdC1VviPw8AK09jMHFagaK3CiBV0=;
- b=EPCNZ/3v1aqrGlIwloX5WpmJDBS7PzTc2o6hx1KfFBP9z4Lc8D4I/NnHqstNzNPvlD
- EqG8N/Clj90o0rtWJKNoNDvarC3oiyU5SgAXd1lfE6+FNsPcINg9QcOA7AsKPKqaYg6t
- Pjd+KJDew3i68DyoDk+2bHc0jOWxl7GIcVziPoqijtooFJEXIiOE65S8NBZJWWCS5dv0
- ZQhHYUK0qjKJ8HLRN8dWacd2Qn48NI+uFHOHHRrPbZNtFDnI4Ld/B3cUor+mcmoLVrRQ
- mZtCoV98LQitbbw2JvNwa2fyV7sHqRSUJhoojYzNlXYYqvSJEOYJntuST7CF7ZW2ePbM
- kQDA==
+ bh=GNte3Osrk4NBFN17tMmuMGXy/JnFYDWs3NUrv+YBw84=;
+ b=evegldKYw4ZvacVCr0aic+N5Il6gMuAIdBpahAIIw4X52ow5k1Ta0Sx0Qv3PNIV0So
+ 5q3WsSueXQ7F591r2yznR5U5p9khuY+B4/W0QWcxxyoT6psIzdrzwzltZotxAVzCI27o
+ 8TuMSmbhw8+uVsOGlJx5AQAWY+87vowYz78+at3Uhpk+GZsDuFRr3fi7GU8xcD0kAlsT
+ 26WWuLNY8GGlV53M5yCnEkD2JHr+aFzRpxiJ/6e3YMXJ3H+LDwNbo6ew8v/4c22IrRYX
+ q/4xZ2UtHyzpvnZnxBuxxipvT5wXDoQF6/GIjQUdddt/i0TzpcBFUq7FqqHMZ3rM1fSn
+ ntAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718042341; x=1718647141;
+ d=1e100.net; s=20230601; t=1718042348; x=1718647148;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xJyIGRy7KVzvmUcZdC1VviPw8AK09jMHFagaK3CiBV0=;
- b=JZUZUV8K5U+OsJavxow+31pAysNB9g6TWmOw8MPQuf/Tzne214mieFRQKSqbzGzsII
- wpEVQTfdCq5g2rhvehpRRPYp76G2L19Ek51wmC535EdVNKVYRoHl3y5HW7+2S25Bb50z
- T85mXx1ScX2QcY706g64PcvBvFaZfRl/iVVL8zogH7Jj42cpbYHD97PWr2qvDcjVklG8
- eFKYdpCVhJ9K4Qim7g3l5vp0PCmROd3ha9w93dA9a9qr77KDg9aWT70F7EH5oiL0AM2c
- FWvw6wc+vhU30chajAaana9kX5DPCq46qdT/Mp34PTEbL5APHzVvI7exGwTlA6btmVe3
- UeaA==
+ bh=GNte3Osrk4NBFN17tMmuMGXy/JnFYDWs3NUrv+YBw84=;
+ b=Phuxyfm52wpnvE9MHW1Fgk5fhAX24DbWak1UcHr8R1FPrmvdcaRc6SpASxzjHm0XFW
+ GRqWDyqlX59o6cgIWDYujnj9WClCJgmL8fMhMmhS7mu7EH6glcUxCQABoPVXj+2Q53YT
+ lJ2zglZAEbAArnwUduU6U19UUaZhBMnPFGBoEyOMvGFQBEX8IQhiONTAybN2uwoD2jLH
+ P1ffFqUFCmUXmzoYIQcJQBlc/5OebPSk1NEEdjRJwVGUOVB1NCx9bqfN3V6vQgL82PjU
+ n5lUGUv9h6UT1sn+7xF+8Q6YPzJOY9ZXEs833TCpaR+RlzNASUQJmbaKr5bQRrNm+7zB
+ torQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV1YpZF9F0dOEg8DIvzmn/WBmKA9qaRquIXu9vSkbGv3XRd22/cJ44fqHy8Xl4/mttv9uxjo4BmS1rOWx527uWRZtLnpAI=
-X-Gm-Message-State: AOJu0YwZ8vwQnuFFsxpHsML7zlOjDQyOMarulfdDanzkBmPc2pVZ4YRl
- YeYOaxpM0XqNVZki+yeLJ2uSmzvKzvRsEcio9lOYgYiC4rKnu5YHUE6AjRqMFmsRbDh6UImWVBn
- k
-X-Google-Smtp-Source: AGHT+IGC0r8r4U+5H74xP3OZhqO9lPcJMPCNVuVWC/c+jvvBOZ/P6BClNiksnEjDXQnmUd0cnSeucg==
-X-Received: by 2002:a05:600c:4f93:b0:421:f441:e7e7 with SMTP id
- 5b1f17b1804b1-421f441eae3mr19894315e9.19.1718042341622; 
- Mon, 10 Jun 2024 10:59:01 -0700 (PDT)
+ AJvYcCVswcNbQg8QQhN+Of1VfiP0a1oZcsQT4AVvvkTTOUY6M1UjWH7FsaB6+t3TVpbDeEsL7yAhWAzBy0jlmp+kT7BUxfs/GsU=
+X-Gm-Message-State: AOJu0YzEh8XOrrS1pd4I1shJP5feuNU7XU4WonCzTudC5HBJLKeieCZw
+ wGcHb6plOnmcRBXIIG5rQqlPZYESV+eNfP58uUqLPB3DxBvvOMqV6Ols3XtqmqY=
+X-Google-Smtp-Source: AGHT+IG7iPsZxgFPnE4L2bCB8PtwqGG35kr03sgugf2XVKSiuorhnPCGQp14fEROySn6Nru2Appsbg==
+X-Received: by 2002:a05:600c:1907:b0:419:f241:633b with SMTP id
+ 5b1f17b1804b1-421649ea685mr92311205e9.8.1718042347748; 
+ Mon, 10 Jun 2024 10:59:07 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.129.242])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4217ab6199bsm89965205e9.13.2024.06.10.10.58.59
+ 5b1f17b1804b1-4224385670fsm1523025e9.16.2024.06.10.10.59.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 10 Jun 2024 10:59:01 -0700 (PDT)
+ Mon, 10 Jun 2024 10:59:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -73,10 +72,10 @@ Cc: Yanan Wang <wangyanan55@huawei.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 1/3] hw/s390x: Declare target specific monitor commands in
- hmp-target.h
-Date: Mon, 10 Jun 2024 19:58:50 +0200
-Message-ID: <20240610175852.21215-2-philmd@linaro.org>
+Subject: [RFC PATCH 2/3] monitor: Allow passing HMP arguments to QMP
+ HumanReadableText API
+Date: Mon, 10 Jun 2024 19:58:51 +0200
+Message-ID: <20240610175852.21215-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240610175852.21215-1-philmd@linaro.org>
 References: <20240610175852.21215-1-philmd@linaro.org>
@@ -91,7 +90,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,115 +106,372 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"monitor/hmp-target.h" is meant to hold target-specific commands.
-Move s390x specific commands there, slightly simplifying hmp-target.c.
+Allow HMP commands implemented using the HumanReadableText API
+(via the HMPCommand::cmd_info_hrt handler) to pass arguments
+to the QMP equivalent command. The arguments are serialized as
+a JSON dictionary.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/s390x/storage-attributes.h | 4 ----
- include/hw/s390x/storage-keys.h       | 4 ----
- include/monitor/hmp-target.h          | 5 +++++
- hw/s390x/s390-skeys.c                 | 2 ++
- hw/s390x/s390-stattrib.c              | 2 ++
- monitor/hmp-target.c                  | 5 -----
- 6 files changed, 9 insertions(+), 13 deletions(-)
+ docs/devel/writing-monitor-commands.rst | 15 ++++++++++++++-
+ qapi/machine.json                       | 24 ++++++++++++++++++++++++
+ include/monitor/monitor.h               |  3 ++-
+ monitor/monitor-internal.h              |  2 +-
+ accel/tcg/monitor.c                     |  4 ++--
+ hw/core/loader.c                        |  2 +-
+ hw/core/machine-qmp-cmds.c              |  9 +++++----
+ hw/usb/bus.c                            |  2 +-
+ monitor/hmp-target.c                    |  3 ++-
+ monitor/hmp.c                           | 11 +++++++----
+ 10 files changed, 59 insertions(+), 16 deletions(-)
 
-diff --git a/include/hw/s390x/storage-attributes.h b/include/hw/s390x/storage-attributes.h
-index 8921a04d51..4916c75936 100644
---- a/include/hw/s390x/storage-attributes.h
-+++ b/include/hw/s390x/storage-attributes.h
-@@ -13,7 +13,6 @@
- #define S390_STORAGE_ATTRIBUTES_H
+diff --git a/docs/devel/writing-monitor-commands.rst b/docs/devel/writing-monitor-commands.rst
+index 930da5cd06..843458e52c 100644
+--- a/docs/devel/writing-monitor-commands.rst
++++ b/docs/devel/writing-monitor-commands.rst
+@@ -561,6 +561,7 @@ returns a ``HumanReadableText``::
+  # Since: 6.2
+  ##
+  { 'command': 'x-query-roms',
++   'data': { 'json-args': 'str'},
+    'returns': 'HumanReadableText',
+    'features': [ 'unstable' ] }
  
- #include "hw/qdev-core.h"
--#include "monitor/monitor.h"
- #include "qom/object.h"
+@@ -578,7 +579,7 @@ Implementing the QMP command
+ The QMP implementation will typically involve creating a ``GString``
+ object and printing formatted data into it, like this::
  
- #define TYPE_S390_STATTRIB "s390-storage_attributes"
-@@ -73,7 +72,4 @@ static inline Object *kvm_s390_stattrib_create(void)
- }
- #endif
+- HumanReadableText *qmp_x_query_roms(Error **errp)
++ HumanReadableText *qmp_x_query_roms(const char *json_args, Error **errp)
+  {
+      g_autoptr(GString) buf = g_string_new("");
+      Rom *rom;
+@@ -596,6 +597,18 @@ object and printing formatted data into it, like this::
+ The actual implementation emits more information.  You can find it in
+ hw/core/loader.c.
  
--void hmp_info_cmma(Monitor *mon, const QDict *qdict);
--void hmp_migrationmode(Monitor *mon, const QDict *qdict);
--
- #endif /* S390_STORAGE_ATTRIBUTES_H */
-diff --git a/include/hw/s390x/storage-keys.h b/include/hw/s390x/storage-keys.h
-index aa2ec2aae5..1d9b7ead44 100644
---- a/include/hw/s390x/storage-keys.h
-+++ b/include/hw/s390x/storage-keys.h
-@@ -13,7 +13,6 @@
- #define S390_STORAGE_KEYS_H
- 
- #include "hw/qdev-core.h"
--#include "monitor/monitor.h"
- #include "qom/object.h"
- 
- #define TYPE_S390_SKEYS "s390-skeys"
-@@ -114,7 +113,4 @@ void s390_skeys_init(void);
- 
- S390SKeysState *s390_get_skeys_device(void);
- 
--void hmp_dump_skeys(Monitor *mon, const QDict *qdict);
--void hmp_info_skeys(Monitor *mon, const QDict *qdict);
--
- #endif /* S390_STORAGE_KEYS_H */
-diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
-index b679aaebbf..024cff0052 100644
---- a/include/monitor/hmp-target.h
-+++ b/include/monitor/hmp-target.h
-@@ -61,4 +61,9 @@ void hmp_gva2gpa(Monitor *mon, const QDict *qdict);
- void hmp_gpa2hva(Monitor *mon, const QDict *qdict);
- void hmp_gpa2hpa(Monitor *mon, const QDict *qdict);
- 
-+void hmp_dump_skeys(Monitor *mon, const QDict *qdict);
-+void hmp_info_skeys(Monitor *mon, const QDict *qdict);
-+void hmp_info_cmma(Monitor *mon, const QDict *qdict);
-+void hmp_migrationmode(Monitor *mon, const QDict *qdict);
++For QMP command taking (optional) parameters, these parameters are
++serialized as a JSON dictionary, and can be retrieved using the QDict
++API. If the previous ``x-query-roms`` command were taking a "index"
++argument, it could be retrieved as::
 +
- #endif /* MONITOR_HMP_TARGET_H */
-diff --git a/hw/s390x/s390-skeys.c b/hw/s390x/s390-skeys.c
-index 5c535d483e..7b2ccb94a5 100644
---- a/hw/s390x/s390-skeys.c
-+++ b/hw/s390x/s390-skeys.c
-@@ -23,6 +23,8 @@
- #include "sysemu/kvm.h"
- #include "migration/qemu-file-types.h"
- #include "migration/register.h"
-+#include "monitor/hmp-target.h"
-+#include "monitor/monitor.h"
++ HumanReadableText *qmp_x_query_roms(const char *json_args, Error **errp)
++ {
++     g_autoptr(GString) buf = g_string_new("");
++     QDict *qdict = qobject_to(QDict, qobject_from_json(json_args, &error_abort));
++     uint64_t index = qdict_get_int(qdict, "index");
++     ...
++ }
  
- #define S390_SKEYS_BUFFER_SIZE (128 * KiB)  /* Room for 128k storage keys */
- #define S390_SKEYS_SAVE_FLAG_EOS 0x01
-diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
-index c4259b5327..9b4b8d8d0c 100644
---- a/hw/s390x/s390-stattrib.c
-+++ b/hw/s390x/s390-stattrib.c
-@@ -19,6 +19,8 @@
- #include "exec/ram_addr.h"
- #include "qapi/error.h"
- #include "qapi/qmp/qdict.h"
-+#include "monitor/hmp-target.h"
-+#include "monitor/monitor.h"
- #include "cpu.h"
+ Implementing the HMP command
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 1283d14493..6da72f2585 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1697,6 +1697,8 @@
+ #
+ # Query interrupt statistics
+ #
++# @json-args: HMP arguments encoded as JSON string (unused for this command).
++#
+ # Features:
+ #
+ # @unstable: This command is meant for debugging.
+@@ -1706,6 +1708,7 @@
+ # Since: 6.2
+ ##
+ { 'command': 'x-query-irq',
++  'data': { 'json-args': 'str'},
+   'returns': 'HumanReadableText',
+   'features': [ 'unstable' ] }
  
- /* 512KiB cover 2GB of guest memory */
+@@ -1714,6 +1717,8 @@
+ #
+ # Query TCG compiler statistics
+ #
++# @json-args: HMP arguments encoded as JSON string (unused for this command).
++#
+ # Features:
+ #
+ # @unstable: This command is meant for debugging.
+@@ -1723,6 +1728,7 @@
+ # Since: 6.2
+ ##
+ { 'command': 'x-query-jit',
++  'data': { 'json-args': 'str'},
+   'returns': 'HumanReadableText',
+   'if': 'CONFIG_TCG',
+   'features': [ 'unstable' ] }
+@@ -1732,6 +1738,8 @@
+ #
+ # Query NUMA topology information
+ #
++# @json-args: HMP arguments encoded as JSON string (unused for this command).
++#
+ # Features:
+ #
+ # @unstable: This command is meant for debugging.
+@@ -1741,6 +1749,7 @@
+ # Since: 6.2
+ ##
+ { 'command': 'x-query-numa',
++  'data': { 'json-args': 'str'},
+   'returns': 'HumanReadableText',
+   'features': [ 'unstable' ] }
+ 
+@@ -1749,6 +1758,8 @@
+ #
+ # Query TCG opcode counters
+ #
++# @json-args: HMP arguments encoded as JSON string (unused for this command).
++#
+ # Features:
+ #
+ # @unstable: This command is meant for debugging.
+@@ -1758,6 +1769,7 @@
+ # Since: 6.2
+ ##
+ { 'command': 'x-query-opcount',
++  'data': { 'json-args': 'str'},
+   'returns': 'HumanReadableText',
+   'if': 'CONFIG_TCG',
+   'features': [ 'unstable' ] }
+@@ -1767,6 +1779,8 @@
+ #
+ # Query system ramblock information
+ #
++# @json-args: HMP arguments encoded as JSON string (unused for this command).
++#
+ # Features:
+ #
+ # @unstable: This command is meant for debugging.
+@@ -1776,6 +1790,7 @@
+ # Since: 6.2
+ ##
+ { 'command': 'x-query-ramblock',
++  'data': { 'json-args': 'str'},
+   'returns': 'HumanReadableText',
+   'features': [ 'unstable' ] }
+ 
+@@ -1784,6 +1799,8 @@
+ #
+ # Query information on the registered ROMS
+ #
++# @json-args: HMP arguments encoded as JSON string (unused for this command).
++#
+ # Features:
+ #
+ # @unstable: This command is meant for debugging.
+@@ -1793,6 +1810,7 @@
+ # Since: 6.2
+ ##
+ { 'command': 'x-query-roms',
++  'data': { 'json-args': 'str'},
+   'returns': 'HumanReadableText',
+   'features': [ 'unstable' ] }
+ 
+@@ -1801,6 +1819,8 @@
+ #
+ # Query information on the USB devices
+ #
++# @json-args: HMP arguments encoded as JSON string (unused for this command).
++#
+ # Features:
+ #
+ # @unstable: This command is meant for debugging.
+@@ -1810,6 +1830,7 @@
+ # Since: 6.2
+ ##
+ { 'command': 'x-query-usb',
++  'data': { 'json-args': 'str'},
+   'returns': 'HumanReadableText',
+   'features': [ 'unstable' ] }
+ 
+@@ -1870,6 +1891,8 @@
+ #
+ # Query information on interrupt controller devices
+ #
++# @json-args: HMP arguments encoded as JSON string (unused for this command).
++#
+ # Features:
+ #
+ # @unstable: This command is meant for debugging.
+@@ -1879,5 +1902,6 @@
+ # Since: 9.1
+ ##
+ { 'command': 'x-query-interrupt-controllers',
++  'data': { 'json-args': 'str'},
+   'returns': 'HumanReadableText',
+   'features': [ 'unstable' ]}
+diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+index 965f5d5450..b21c702c12 100644
+--- a/include/monitor/monitor.h
++++ b/include/monitor/monitor.h
+@@ -58,7 +58,8 @@ int64_t monitor_fdset_dup_fd_find(int dup_fd);
+ void monitor_register_hmp(const char *name, bool info,
+                           void (*cmd)(Monitor *mon, const QDict *qdict));
+ void monitor_register_hmp_info_hrt(const char *name,
+-                                   HumanReadableText *(*handler)(Error **errp));
++                                   HumanReadableText *(*handler)(const char *json_args,
++                                                                 Error **errp));
+ 
+ int error_vprintf_unless_qmp(const char *fmt, va_list ap) G_GNUC_PRINTF(1, 0);
+ int error_printf_unless_qmp(const char *fmt, ...) G_GNUC_PRINTF(1, 2);
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 252de85681..b3aa50834b 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -81,7 +81,7 @@ typedef struct HMPCommand {
+      * @cmd_info_hrt to the corresponding QMP handler that returns
+      * the formatted text.
+      */
+-    HumanReadableText *(*cmd_info_hrt)(Error **errp);
++    HumanReadableText *(*cmd_info_hrt)(const char *json_args, Error **errp);
+     bool coroutine;
+     /*
+      * @sub_table is a list of 2nd level of commands. If it does not exist,
+diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
+index 093efe9714..517c96eeb7 100644
+--- a/accel/tcg/monitor.c
++++ b/accel/tcg/monitor.c
+@@ -199,7 +199,7 @@ static void dump_exec_info(GString *buf)
+     tcg_dump_info(buf);
+ }
+ 
+-HumanReadableText *qmp_x_query_jit(Error **errp)
++HumanReadableText *qmp_x_query_jit(const char *json_args, Error **errp)
+ {
+     g_autoptr(GString) buf = g_string_new("");
+ 
+@@ -220,7 +220,7 @@ static void tcg_dump_op_count(GString *buf)
+     g_string_append_printf(buf, "[TCG profiler not compiled]\n");
+ }
+ 
+-HumanReadableText *qmp_x_query_opcount(Error **errp)
++HumanReadableText *qmp_x_query_opcount(const char *json_args, Error **errp)
+ {
+     g_autoptr(GString) buf = g_string_new("");
+ 
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index 2f8105d7de..e0da5edbb3 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -1679,7 +1679,7 @@ void *rom_ptr_for_as(AddressSpace *as, hwaddr addr, size_t size)
+     return cbdata.rom;
+ }
+ 
+-HumanReadableText *qmp_x_query_roms(Error **errp)
++HumanReadableText *qmp_x_query_roms(const char *json_args, Error **errp)
+ {
+     Rom *rom;
+     g_autoptr(GString) buf = g_string_new("");
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index 130217da8f..fc79772df8 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -214,7 +214,7 @@ MemdevList *qmp_query_memdev(Error **errp)
+     return list;
+ }
+ 
+-HumanReadableText *qmp_x_query_numa(Error **errp)
++HumanReadableText *qmp_x_query_numa(const char *json_args, Error **errp)
+ {
+     g_autoptr(GString) buf = g_string_new("");
+     int i, nb_numa_nodes;
+@@ -311,7 +311,7 @@ MemoryInfo *qmp_query_memory_size_summary(Error **errp)
+     return mem_info;
+ }
+ 
+-HumanReadableText *qmp_x_query_ramblock(Error **errp)
++HumanReadableText *qmp_x_query_ramblock(const char *json_args, Error **errp)
+ {
+     g_autoptr(GString) buf = ram_block_format();
+ 
+@@ -351,7 +351,7 @@ static int qmp_x_query_irq_foreach(Object *obj, void *opaque)
+     return 0;
+ }
+ 
+-HumanReadableText *qmp_x_query_irq(Error **errp)
++HumanReadableText *qmp_x_query_irq(const char *json_args, Error **errp)
+ {
+     g_autoptr(GString) buf = g_string_new("");
+ 
+@@ -382,7 +382,8 @@ static int qmp_x_query_intc_foreach(Object *obj, void *opaque)
+     return 0;
+ }
+ 
+-HumanReadableText *qmp_x_query_interrupt_controllers(Error **errp)
++HumanReadableText *qmp_x_query_interrupt_controllers(const char *json_args,
++                                                     Error **errp)
+ {
+     g_autoptr(GString) buf = g_string_new("");
+     object_child_foreach_recursive(object_get_root(),
+diff --git a/hw/usb/bus.c b/hw/usb/bus.c
+index bfab2807d7..daa3f71d47 100644
+--- a/hw/usb/bus.c
++++ b/hw/usb/bus.c
+@@ -598,7 +598,7 @@ static char *usb_get_fw_dev_path(DeviceState *qdev)
+     return fw_path;
+ }
+ 
+-HumanReadableText *qmp_x_query_usb(Error **errp)
++HumanReadableText *qmp_x_query_usb(const char *json_args, Error **errp)
+ {
+     g_autoptr(GString) buf = g_string_new("");
+     USBBus *bus;
 diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
-index 1eb72ac1bf..0466474354 100644
+index 0466474354..81e53a5767 100644
 --- a/monitor/hmp-target.c
 +++ b/monitor/hmp-target.c
-@@ -36,11 +36,6 @@
- #include "qapi/error.h"
+@@ -157,7 +157,8 @@ void monitor_register_hmp(const char *name, bool info,
+ }
+ 
+ void monitor_register_hmp_info_hrt(const char *name,
+-                                   HumanReadableText *(*handler)(Error **errp))
++                                   HumanReadableText *(*handler)(const char *json_args,
++                                                                 Error **errp))
+ {
+     HMPCommand *table = hmp_info_cmds;
+ 
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 69c1b7e98a..7802a31412 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -29,6 +29,7 @@
+ #include "monitor/hmp.h"
+ #include "qapi/qmp/qdict.h"
+ #include "qapi/qmp/qnum.h"
++#include "qapi/qmp/qjson.h"
+ #include "qemu/config-file.h"
+ #include "qemu/ctype.h"
  #include "qemu/cutils.h"
+@@ -1082,11 +1083,13 @@ fail:
+     return NULL;
+ }
  
--#if defined(TARGET_S390X)
--#include "hw/s390x/storage-keys.h"
--#include "hw/s390x/storage-attributes.h"
--#endif
--
- /* Make devices configuration available for use in hmp-commands*.hx templates */
- #include CONFIG_DEVICES
+-static void hmp_info_human_readable_text(Monitor *mon,
+-                                         HumanReadableText *(*handler)(Error **))
++static void hmp_info_human_readable_text(Monitor *mon, QDict *qdict,
++                                         HumanReadableText *(*handler)(const char *,
++                                                                       Error **))
+ {
+     Error *err = NULL;
+-    g_autoptr(HumanReadableText) info = handler(&err);
++    g_autoptr(GString) ret_json = qobject_to_json(QOBJECT(qdict));
++    g_autoptr(HumanReadableText) info = handler(ret_json->str, &err);
  
+     if (hmp_handle_error(mon, err)) {
+         return;
+@@ -1100,7 +1103,7 @@ static void handle_hmp_command_exec(Monitor *mon,
+                                     QDict *qdict)
+ {
+     if (cmd->cmd_info_hrt) {
+-        hmp_info_human_readable_text(mon,
++        hmp_info_human_readable_text(mon, qdict,
+                                      cmd->cmd_info_hrt);
+     } else {
+         cmd->cmd(mon, qdict);
 -- 
 2.41.0
 
