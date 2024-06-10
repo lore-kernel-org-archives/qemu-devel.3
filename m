@@ -4,62 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5627C27C55
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 17:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9A8C41513
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 17:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGj7l-000249-SW; Mon, 10 Jun 2024 13:48:06 -0400
+	id 1sGjIP-0005HI-SN; Mon, 10 Jun 2024 13:59:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sGj7k-00023k-IE
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:48:04 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sGj7h-00087s-2C
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:48:03 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VyfKC0PBNz6K5sk;
- Tue, 11 Jun 2024 01:42:55 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id EC8F81404F5;
- Tue, 11 Jun 2024 01:47:46 +0800 (CST)
-Received: from localhost (10.122.247.231) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 10 Jun
- 2024 18:47:46 +0100
-Date: Mon, 10 Jun 2024 18:47:45 +0100
-To: Igor Mammedov <imammedo@redhat.com>
-CC: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <philmd@linaro.org>, "Richard
- Henderson" <richard.henderson@linaro.org>, Dave Jiang <dave.jiang@intel.com>, 
- Huang Ying <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, <linuxarm@huawei.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH qemu ] hw/acpi: Fix big endian host creation of Generic
- Port Affinity Structures
-Message-ID: <20240610184745.00006683@huawei.com>
-In-Reply-To: <20240606184716.00000708@Huawei.com>
-References: <20240605180455.18193-1-Jonathan.Cameron@huawei.com>
- <20240606160653.27226def@imammedo.users.ipa.redhat.com>
- <20240606184716.00000708@Huawei.com>
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGjIO-0005Gx-T7
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:59:04 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGjIN-0001aI-7h
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 13:59:04 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-421a1b834acso11227295e9.3
+ for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 10:59:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718042341; x=1718647141; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xJyIGRy7KVzvmUcZdC1VviPw8AK09jMHFagaK3CiBV0=;
+ b=EPCNZ/3v1aqrGlIwloX5WpmJDBS7PzTc2o6hx1KfFBP9z4Lc8D4I/NnHqstNzNPvlD
+ EqG8N/Clj90o0rtWJKNoNDvarC3oiyU5SgAXd1lfE6+FNsPcINg9QcOA7AsKPKqaYg6t
+ Pjd+KJDew3i68DyoDk+2bHc0jOWxl7GIcVziPoqijtooFJEXIiOE65S8NBZJWWCS5dv0
+ ZQhHYUK0qjKJ8HLRN8dWacd2Qn48NI+uFHOHHRrPbZNtFDnI4Ld/B3cUor+mcmoLVrRQ
+ mZtCoV98LQitbbw2JvNwa2fyV7sHqRSUJhoojYzNlXYYqvSJEOYJntuST7CF7ZW2ePbM
+ kQDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718042341; x=1718647141;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xJyIGRy7KVzvmUcZdC1VviPw8AK09jMHFagaK3CiBV0=;
+ b=JZUZUV8K5U+OsJavxow+31pAysNB9g6TWmOw8MPQuf/Tzne214mieFRQKSqbzGzsII
+ wpEVQTfdCq5g2rhvehpRRPYp76G2L19Ek51wmC535EdVNKVYRoHl3y5HW7+2S25Bb50z
+ T85mXx1ScX2QcY706g64PcvBvFaZfRl/iVVL8zogH7Jj42cpbYHD97PWr2qvDcjVklG8
+ eFKYdpCVhJ9K4Qim7g3l5vp0PCmROd3ha9w93dA9a9qr77KDg9aWT70F7EH5oiL0AM2c
+ FWvw6wc+vhU30chajAaana9kX5DPCq46qdT/Mp34PTEbL5APHzVvI7exGwTlA6btmVe3
+ UeaA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV1YpZF9F0dOEg8DIvzmn/WBmKA9qaRquIXu9vSkbGv3XRd22/cJ44fqHy8Xl4/mttv9uxjo4BmS1rOWx527uWRZtLnpAI=
+X-Gm-Message-State: AOJu0YwZ8vwQnuFFsxpHsML7zlOjDQyOMarulfdDanzkBmPc2pVZ4YRl
+ YeYOaxpM0XqNVZki+yeLJ2uSmzvKzvRsEcio9lOYgYiC4rKnu5YHUE6AjRqMFmsRbDh6UImWVBn
+ k
+X-Google-Smtp-Source: AGHT+IGC0r8r4U+5H74xP3OZhqO9lPcJMPCNVuVWC/c+jvvBOZ/P6BClNiksnEjDXQnmUd0cnSeucg==
+X-Received: by 2002:a05:600c:4f93:b0:421:f441:e7e7 with SMTP id
+ 5b1f17b1804b1-421f441eae3mr19894315e9.19.1718042341622; 
+ Mon, 10 Jun 2024 10:59:01 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.129.242])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4217ab6199bsm89965205e9.13.2024.06.10.10.58.59
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 10 Jun 2024 10:59:01 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-devel@nongnu.org
+Cc: Yanan Wang <wangyanan55@huawei.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-s390x@nongnu.org,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 1/3] hw/s390x: Declare target specific monitor commands in
+ hmp-target.h
+Date: Mon, 10 Jun 2024 19:58:50 +0200
+Message-ID: <20240610175852.21215-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240610175852.21215-1-philmd@linaro.org>
+References: <20240610175852.21215-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.122.247.231]
-X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,203 +104,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+"monitor/hmp-target.h" is meant to hold target-specific commands.
+Move s390x specific commands there, slightly simplifying hmp-target.c.
 
-Hi Igor,
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/s390x/storage-attributes.h | 4 ----
+ include/hw/s390x/storage-keys.h       | 4 ----
+ include/monitor/hmp-target.h          | 5 +++++
+ hw/s390x/s390-skeys.c                 | 2 ++
+ hw/s390x/s390-stattrib.c              | 2 ++
+ monitor/hmp-target.c                  | 5 -----
+ 6 files changed, 9 insertions(+), 13 deletions(-)
 
-Some code snippets below to try and see if I'm on the correct track
-for what you had in mind.
-
-> >   
-> > > diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-> > > index 78b80dcf08..f064753b67 100644
-> > > --- a/hw/acpi/acpi_generic_initiator.c
-> > > +++ b/hw/acpi/acpi_generic_initiator.c
-> > > @@ -151,7 +151,9 @@ build_srat_generic_node_affinity(GArray *table_data, int node,
-> > >          build_append_int_noprefix(table_data, 0, 12);
-> > >      } else {
-> > >          /* Device Handle - ACPI */
-> > > -        build_append_int_noprefix(table_data, handle->hid, 8);
-> > > +        for (int i = 0; i < sizeof(handle->hid); i++) {
-> > > +            build_append_int_noprefix(table_data, handle->hid[i], 1);
-> > > +        }
-> > >          build_append_int_noprefix(table_data, handle->uid, 4);
-> > >          build_append_int_noprefix(table_data, 0, 4);    
-> > 
-> > instead of open codding structure
-> > 
-> > it might be better to introduce helper in aml_build.c
-> > something like 
-> >   /* proper reference to spec as we do for other ACPI primitives */
-> >   build_append_srat_acpi_device_handle(GArray *table_data, char* hid, unit32_t uid)
-> >       assert(strlen(hid) ...
-> >       for() {
-> >             build_append_byte()
-> >       }          
-> >       ...
-> > 
-> > the same applies to "Device Handle - PCI" structure  
-> 
-> I'll look at moving that stuff and the affinity structure creation
-> code themselves in there. I think they ended up in this file because
-> of the other infrastructure needed to create these nodes and it
-> will have felt natural to keep this together.
-> 
-> Putting it in aml_build.c will put it with similar code though
-> which makes sense to me.
-
-This all works out fine, though there is less reason to keep a
-ACPI_GENERIC_NODE base under GENERIC_PORT and GENERIC_INITIATOR
-so I may drop that and just have a small amount of code duplication.
-
-> 
-> > 
-> > Also get rid of PCI deps in acpi_generic_initiator.c 
-> > move build_all_acpi_generic_initiators/build_srat_generic_pci_initiator into
-> > hw/acpi/pci.c  
-> 
-> Today it's used only for PCI devices, but that's partly an artifact
-> of how we get to the root complex via the bus below it.
-> 
-> Spec wise, it's just as applicable to platform devices etc, but maybe
-> we can move it to pci.c for now and move it out again if it gains other
-> users. Or leave it in acpi_generic_initiator.c but have all the aml
-> stuff in aml_build.c as you suggest. 
-> 
-> > file if it has to access PCI code/structures directly
-> > (which I'm not convinced it should, can we get/expose what it needs as QOM properties?)  
-> 
-> Maybe. I'll see what I can come up with.  This feels involved
-> however so I'm more doubtful about this as a precursor.
-
-This is a little messy and tricky to get the right level of generic.
-For the bdf, were you thinking something along the lines of the following?
-
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 324c1302d2..75366491b7 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -67,6 +67,19 @@ static char *pcibus_get_fw_dev_path(DeviceState *dev);
- static void pcibus_reset_hold(Object *obj, ResetType type);
- static bool pcie_has_upstream_port(PCIDevice *dev);
-
-+static void prop_pci_bdf_get(Object *obj, Visitor *v, const char *name,
-+                             void *opaque, Error **errp)
-+{
-+    uint16_t bdf = pci_get_bdf(PCI_DEVICE(obj));
-+
-+    visit_type_uint16(v, name, &bdf, errp);
-+}
-+
-+static const PropertyInfo prop_pci_bdf = {
-+    .name = "bdf",
-+    .get = prop_pci_bdf_get,
-+};
-+
- static Property pci_props[] = {
-     DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
-     DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
-@@ -85,6 +98,7 @@ static Property pci_props[] = {
-                     QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
-     DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
-                     QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
-+    { .name = "bdf", .info = &prop_pci_bdf },
-     DEFINE_PROP_END_OF_LIST()
- };
-
-
-The other case is where I need to get the ACPI UID associate with a
-root complex. Now that has to be matched to the appropriate HID and so
-far the only one of those is ACPI0016 which is the HID for
-TYPE_PXB_CXL_DEV. That happens to the bus number of the
-TYPE_PXB_CXL_BUS but that connection should probably not be explicit
-outside of the PXB specific code.
-
-I can add a property like: 
-
-diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-index f5431443b9..1c51f3f5b6 100644
---- a/hw/pci-bridge/pci_expander_bridge.c
-+++ b/hw/pci-bridge/pci_expander_bridge.c
-@@ -92,6 +92,21 @@ static void pxb_bus_class_init(ObjectClass *class, void *data)
-     pbc->numa_node = pxb_bus_numa_node;
+diff --git a/include/hw/s390x/storage-attributes.h b/include/hw/s390x/storage-attributes.h
+index 8921a04d51..4916c75936 100644
+--- a/include/hw/s390x/storage-attributes.h
++++ b/include/hw/s390x/storage-attributes.h
+@@ -13,7 +13,6 @@
+ #define S390_STORAGE_ATTRIBUTES_H
+ 
+ #include "hw/qdev-core.h"
+-#include "monitor/monitor.h"
+ #include "qom/object.h"
+ 
+ #define TYPE_S390_STATTRIB "s390-storage_attributes"
+@@ -73,7 +72,4 @@ static inline Object *kvm_s390_stattrib_create(void)
  }
-
-+static void prop_pxb_cxl_uid_get(Object *obj, Visitor *v, const char *name,
-+                             void *opaque, Error **errp)
-+{
-+    uint32_t uid = pci_bus_num(PCI_BUS(obj));
+ #endif
+ 
+-void hmp_info_cmma(Monitor *mon, const QDict *qdict);
+-void hmp_migrationmode(Monitor *mon, const QDict *qdict);
+-
+ #endif /* S390_STORAGE_ATTRIBUTES_H */
+diff --git a/include/hw/s390x/storage-keys.h b/include/hw/s390x/storage-keys.h
+index aa2ec2aae5..1d9b7ead44 100644
+--- a/include/hw/s390x/storage-keys.h
++++ b/include/hw/s390x/storage-keys.h
+@@ -13,7 +13,6 @@
+ #define S390_STORAGE_KEYS_H
+ 
+ #include "hw/qdev-core.h"
+-#include "monitor/monitor.h"
+ #include "qom/object.h"
+ 
+ #define TYPE_S390_SKEYS "s390-skeys"
+@@ -114,7 +113,4 @@ void s390_skeys_init(void);
+ 
+ S390SKeysState *s390_get_skeys_device(void);
+ 
+-void hmp_dump_skeys(Monitor *mon, const QDict *qdict);
+-void hmp_info_skeys(Monitor *mon, const QDict *qdict);
+-
+ #endif /* S390_STORAGE_KEYS_H */
+diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
+index b679aaebbf..024cff0052 100644
+--- a/include/monitor/hmp-target.h
++++ b/include/monitor/hmp-target.h
+@@ -61,4 +61,9 @@ void hmp_gva2gpa(Monitor *mon, const QDict *qdict);
+ void hmp_gpa2hva(Monitor *mon, const QDict *qdict);
+ void hmp_gpa2hpa(Monitor *mon, const QDict *qdict);
+ 
++void hmp_dump_skeys(Monitor *mon, const QDict *qdict);
++void hmp_info_skeys(Monitor *mon, const QDict *qdict);
++void hmp_info_cmma(Monitor *mon, const QDict *qdict);
++void hmp_migrationmode(Monitor *mon, const QDict *qdict);
 +
-+    visit_type_uint32(v, name, &uid, errp);
-+}
-+
-+static void pxb_cxl_bus_class_init(ObjectClass *class, void *data)
-+{
-+    pxb_bus_class_init(class, data);
-+    object_class_property_add(class, "acpi_uid", "uint32",
-+                              prop_pxb_cxl_uid_get, NULL, NULL, NULL);
-+}
-+
- static const TypeInfo pxb_bus_info = {
-     .name          = TYPE_PXB_BUS,
-     .parent        = TYPE_PCI_BUS,
-@@ -110,7 +125,7 @@ static const TypeInfo pxb_cxl_bus_info = {
-     .name          = TYPE_PXB_CXL_BUS,
-     .parent        = TYPE_CXL_BUS,
-     .instance_size = sizeof(PXBBus),
--    .class_init    = pxb_bus_class_init,
-+    .class_init    = pxb_cxl_bus_class_init,
- };
-
- static const char *pxb_host_root_bus_path(PCIHostState *host_bridge,
-
-and query it when setting up the generic port with
-
-        const char *hid = "ACPI0016";
-        uint32_t uid;
-
-        if (gn->node >= ms->numa_state->num_nodes) {
-            error_printf("%s: node %d is invalid.\n",
-                         TYPE_ACPI_GENERIC_PORT, gn->node);
-            exit(1);
-        }
-
-        o = object_resolve_path_type(gn->pci_dev, TYPE_PXB_CXL_BUS, NULL);
-        if (!o) {
-            error_printf("%s: device must be a CXL host bridge.\n",
-                         TYPE_ACPI_GENERIC_PORT);
-            exit(1);
-        }
-
-        uid = object_property_get_uint(o, "acpi_uid", &error_fatal);
-        build_srat_acpi_generic_port(table_data, gn->node, hid, uid);
-
-        return 0;
-
-Thanks,
-
-Jonathan
-
-> 
-> > 
-> > btw:
-> > build_all_acpi_generic_initiators() name doesn't match what it's doing.
-> > it composes only one initiator entry.  
-> 
-> I'll look at tidying up all the relevant naming.
-> 
-> Jonathan
-> 
-> >   
-> > >      }    
-> > 
-> >   
-> 
-> 
-> 
+ #endif /* MONITOR_HMP_TARGET_H */
+diff --git a/hw/s390x/s390-skeys.c b/hw/s390x/s390-skeys.c
+index 5c535d483e..7b2ccb94a5 100644
+--- a/hw/s390x/s390-skeys.c
++++ b/hw/s390x/s390-skeys.c
+@@ -23,6 +23,8 @@
+ #include "sysemu/kvm.h"
+ #include "migration/qemu-file-types.h"
+ #include "migration/register.h"
++#include "monitor/hmp-target.h"
++#include "monitor/monitor.h"
+ 
+ #define S390_SKEYS_BUFFER_SIZE (128 * KiB)  /* Room for 128k storage keys */
+ #define S390_SKEYS_SAVE_FLAG_EOS 0x01
+diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
+index c4259b5327..9b4b8d8d0c 100644
+--- a/hw/s390x/s390-stattrib.c
++++ b/hw/s390x/s390-stattrib.c
+@@ -19,6 +19,8 @@
+ #include "exec/ram_addr.h"
+ #include "qapi/error.h"
+ #include "qapi/qmp/qdict.h"
++#include "monitor/hmp-target.h"
++#include "monitor/monitor.h"
+ #include "cpu.h"
+ 
+ /* 512KiB cover 2GB of guest memory */
+diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
+index 1eb72ac1bf..0466474354 100644
+--- a/monitor/hmp-target.c
++++ b/monitor/hmp-target.c
+@@ -36,11 +36,6 @@
+ #include "qapi/error.h"
+ #include "qemu/cutils.h"
+ 
+-#if defined(TARGET_S390X)
+-#include "hw/s390x/storage-keys.h"
+-#include "hw/s390x/storage-attributes.h"
+-#endif
+-
+ /* Make devices configuration available for use in hmp-commands*.hx templates */
+ #include CONFIG_DEVICES
+ 
+-- 
+2.41.0
 
 
