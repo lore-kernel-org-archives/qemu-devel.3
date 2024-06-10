@@ -4,74 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 637F7C27C5E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 05:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D40FC27C5E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 06:05:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGXhZ-0005IS-KK; Mon, 10 Jun 2024 01:36:17 -0400
+	id 1sGY9K-0003KM-Ni; Mon, 10 Jun 2024 02:04:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGXhV-0005Hy-Pg
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 01:36:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGXhQ-0003aK-Hs
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 01:36:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1717997766;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ut5GOHzrFBaqq2tQ94vwoum46L7z+7A07wSZwFzCAgM=;
- b=fNq9sJYU0waJafKf6s2+7li5BrA0bH3ORo4DsLBqCkz40uxvyBYaEvbbMDPZXk34v0hhXU
- 6R1Dhgdl3SLWwrMSRuTjXhe4ZwjBliKKW0pG0f+AwHz6cXh3iEI5m4GFmdW8+ABuTWto25
- EyKasdraWddhgPHVzjy0p0pwg0usHAE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-pG5QMNR3Mei0GxGyYHIW3Q-1; Mon,
- 10 Jun 2024 01:35:56 -0400
-X-MC-Unique: pG5QMNR3Mei0GxGyYHIW3Q-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE7B7195609D; Mon, 10 Jun 2024 05:35:54 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4E6B91956050; Mon, 10 Jun 2024 05:35:54 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 148B621E6682; Mon, 10 Jun 2024 07:35:52 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pankaj Gupta <pankaj.gupta@amd.com>
-Cc: <qemu-devel@nongnu.org>,  <brijesh.singh@amd.com>,
- <dovmurik@linux.ibm.com>,  <michael.roth@amd.com>,
- <pbonzini@redhat.com>,  <thomas.lendacky@amd.com>,
- <peter.maydell@linaro.org>
-Subject: Re: [PATCH 1/3] i386/sev: fix unreachable code coverity issue
-In-Reply-To: <20240607183611.1111100-2-pankaj.gupta@amd.com> (Pankaj Gupta's
- message of "Fri, 7 Jun 2024 13:36:09 -0500")
-References: <20240607183611.1111100-1-pankaj.gupta@amd.com>
- <20240607183611.1111100-2-pankaj.gupta@amd.com>
-Date: Mon, 10 Jun 2024 07:35:52 +0200
-Message-ID: <87v82hs6kn.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGY9I-0003Ja-Fc
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 02:04:56 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGY9F-0000nj-Tw
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 02:04:55 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52bc27cfb14so2852516e87.0
+ for <qemu-devel@nongnu.org>; Sun, 09 Jun 2024 23:04:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1717999491; x=1718604291; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Mz5HlpAGy/kiQYJ3EPXYuRg/Ok6CveWjBpoGnYhVKsc=;
+ b=DWmapxjgPhWmiMSSTRDZsqrro0d/wsJ5Re8URq0C3UdPsNdHY6l88ou1gq723xIZsn
+ yi1eCtLzAx7Os02IClYe9Zg4F3oNZSEtv62KBUgNQaDq7Rzc6swN5DJe3s9XKHOH7f0O
+ qYD7h15Nu3wiBReiOcl4Au1yPTxx2ldC9wG0oxW6+mhqYlzHfiRj55+hO+HUK2085AM/
+ BC/Du6eiCLz73GfKQqKIiLwl5nj0mz3n0QzLVaalmiSWxu/oJ1gOfjOrl8MZnkeD1bsK
+ YzhMnbfJrITL3dOWJVFEpNLHT/JzirdVbnePq7VDKxfezjb9xJiK+9rU0UhbN4E2cdwd
+ VrQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1717999491; x=1718604291;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Mz5HlpAGy/kiQYJ3EPXYuRg/Ok6CveWjBpoGnYhVKsc=;
+ b=dlxsxw3TaLXznv8AeRafYDiTnqFACRf0Mg9f0JlYIyGzm0m/peuRD3Kb/f7XploTES
+ 7bzGPjjn5D4rsM/hxTfgq+pEzjZ/CJoBdm8xvtJvlpD9s4RBWDXBGGO4U857jXJWcN5y
+ KUtY3sB9zEWnEktGPL0upGkXXZ0qXTUSe1q7DQ2s9qa2ilOUFZ+B+nWsWJikSDLx0OOD
+ ZNpsie+PpOfpAiVDAKG4hP4X1cM6imA8fAWoCKkBUBspoRMoKK6/dVSF5l9ZJcMdptvu
+ K455WcXGZrcjOxZBSclp4EHyv2oPXdYTSyE89s/BXeBJPW2C+F6Ra6q4nfG+bxRBRXJz
+ NcDw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXV+Pus4Pu/EoHu/8sqWbJOlP8m4lD4pEpLkFe9vQVCdVBB3b/0qwN34IuxJexbj83gNmCacxxkvkE4SnicSHxsifPWNO0=
+X-Gm-Message-State: AOJu0YxLZiZjAkVeV0IpyXulKRbt7RRtka+fxdiSu3NOBSBqDDlZUJVQ
+ lE/PXow8m0P/IcTOArkq247L0yswuCgpkXvfxsqQUvx4qi6cbsUl4gmBt94/eiU=
+X-Google-Smtp-Source: AGHT+IE3DPW091Zobqtg9U9ontLqU++rU/wgCOjZ3OZdOTVeC9Xfbc7cRLyG3FaUYUO89fGuAGBKyw==
+X-Received: by 2002:a19:8c42:0:b0:52c:7fbf:39f6 with SMTP id
+ 2adb3069b0e04-52c7fbf3b15mr3517744e87.26.1717999490722; 
+ Sun, 09 Jun 2024 23:04:50 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.129.242])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6f1d8369casm119024066b.225.2024.06.09.23.04.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 09 Jun 2024 23:04:50 -0700 (PDT)
+Message-ID: <f04c5b61-2e73-4029-a614-a9c7686ec46d@linaro.org>
+Date: Mon, 10 Jun 2024 08:04:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/arm/xilinx_zynq: Fix IRQ/FIQ routing
+To: Sebastian Huber <sebastian.huber@embedded-brains.de>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20240610052906.4432-1-sebastian.huber@embedded-brains.de>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240610052906.4432-1-sebastian.huber@embedded-brains.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,19 +95,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pankaj Gupta <pankaj.gupta@amd.com> writes:
+On 10/6/24 07:29, Sebastian Huber wrote:
+> Fix the system bus interrupt line to CPU core assignment.
+> 
+> Signed-off-by: Sebastian Huber <sebastian.huber@embedded-brains.de>
+> ---
+>   hw/arm/xilinx_zynq.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
 
-> Set 'finish->id_block_en' when block_size read.
->
-> coverity #1546887
->
-> fixes: 7b34df4426 ("i386/sev: Introduce 'sev-snp-guest' object")
-
-Please make that
-
-  Fixes: Coverity CID 1546887
-  Fixes: 7b34df4426 ("i386/sev: Introduce 'sev-snp-guest' object")
-
-> Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
