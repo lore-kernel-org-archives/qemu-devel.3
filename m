@@ -4,85 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78C36C27C5E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 20:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A9EAC27C5E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 21:04:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGlvk-0005Mw-P8; Mon, 10 Jun 2024 16:47:52 -0400
+	id 1sGmAQ-0001Yz-Mc; Mon, 10 Jun 2024 17:03:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1sGlvi-0005Mh-IR
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 16:47:50 -0400
-Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1sGlvg-00035h-5J
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 16:47:50 -0400
-Received: by mail-oo1-xc34.google.com with SMTP id
- 006d021491bc7-5b9778bb7c8so165782eaf.3
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 13:47:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718052466; x=1718657266; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=FlO9G4dVlhQdd8xNRAN49jicsXnu95KlQ2748b/u650=;
- b=V3cYcWm7S+y9Hw1ieWJpZkHhNER66oLcVAqxD5GGRqRbn/zKs5jZmCNwVGDmH3mVyD
- eRo0gAqBv76E/COtmRoFKQLkhEEAOKf8DtxhTLIhZjMENq7hREhtlk18HZGdm1KeiKiZ
- qTgH/Hua2E6liGbzO6McSop9rUJyoSEtg768JAKngAJSHL2tFgTDucmxecHf1apB+jkJ
- nQYacwVBOxSfPVbG0QRqNVQKEoD5cHb5lH9ymSU6u/wT+hqlx70MAnpKDZDjTrbSzykw
- kkuB3phA04yd17LpiU0MhejnUXXDAd4dtlmgjyR3t4w6Sxht2QjJTAfeoTSK48AdTPq7
- mi4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718052466; x=1718657266;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FlO9G4dVlhQdd8xNRAN49jicsXnu95KlQ2748b/u650=;
- b=oIzwtiFCsdgwS437CUJVfx2JTy513x/svTg65qErKtrJ8GZsbTJ+1RQk8Hl+oOJVYf
- 5m7mUfkHVHqcN81f47rTW0AOluh7wR+NhaZw4C2Sp3a8r0G7/uAa9MnaiXEEGk8Ec2tz
- L0loZOPS0a0nTVAtB5itvc/909Gp1yszKs/1iadEtWmIimG5xaE7hATPXQm9x6juIz19
- eCpYXUPup2FnQnJQXn696SpH3CcdlHYhp22nMrWvTWlWmAkClbFO2iAcVvSsmkE4e8Gb
- wYDfKu+4WatTO+OEspXq7ZhO7tcg2PFrGWLBIW+vD5XdsrkiuUGsdAneBacs/rAhEwMZ
- 2a7Q==
-X-Gm-Message-State: AOJu0YzoY4cUpPQnNYXL1DhYj4eyuUHNU73pofkVn4jP0RnKhYuSeEnQ
- szK75KBpAJLAwkfu7/Vf0tdDqjIE4Nz2dG8tLLdSTWcT/L45suQMyrMq+Q5ds1RlzAHyoyog+Ew
- RDIWAG3+cpFd49QBCRIhBOEflrJo=
-X-Google-Smtp-Source: AGHT+IG3CfhlcEx/oa7XhrmBOtxs8XP1hUtWzQd9vhFXOk4SV5vhzU+VS/qGcyOfuFEEKoElXh6uO52fDAQwbhCAcYg=
-X-Received: by 2002:a05:6820:1c90:b0:5ba:e2cb:c853 with SMTP id
- 006d021491bc7-5bae2cbd02cmr5202832eaf.5.1718052465257; Mon, 10 Jun 2024
- 13:47:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sGmAN-0001Y1-EL; Mon, 10 Jun 2024 17:02:59 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sGmAK-0006Gz-Lj; Mon, 10 Jun 2024 17:02:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=Y6FoNNlXR+KrEK2nSb6udr5/u8P0dwud0njdRHgqjDY=; b=om9Ss9sFuyH1EDUj
+ 1+NrhAamVxTRgfPcSD6QAjdlRkg+w1IEAcdj3eKBui6EytlS5EH5t3FXPpsVpTyKlnQhYSow05Rr3
+ y8ER/F+6cMQzzOZ41qKDYOkb1xQk6X4tbDqlC4w+beMHALKB4WooWy8z3KbewJeTT6Ca0AeTyuGKE
+ 0xKGNPWxkfBTxgVxoEPtaP8AqaS8WB/MrnM2RGsGOQqJzf7ZAranf5FMU3WbZo6tgWIYRGY5DKzla
+ jS6fcVPhAPYcevdToVvwnZeE/zGCMJnEDGtQp+luvpQeERlkvI66VJ1HvtkZtMesuWsBEC5h0vD/6
+ wU5m+fs3FjJxau3lQg==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1sGmAE-005QJ7-1k;
+ Mon, 10 Jun 2024 21:02:50 +0000
+Date: Mon, 10 Jun 2024 21:02:50 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ qemu-s390x@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 1/3] hw/s390x: Declare target specific monitor commands
+ in hmp-target.h
+Message-ID: <Zmdp-uI1wleQN0Xr@gallifrey>
+References: <20240610175852.21215-1-philmd@linaro.org>
+ <20240610175852.21215-2-philmd@linaro.org>
 MIME-Version: 1.0
-References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
- <CAJSP0QU2Y_mNtYQtPbahnvj1eLLTu2Z-f4z-6VZgSSxqgVnPbQ@mail.gmail.com>
- <evsu7.aus3yo6r56i@linaro.org>
-In-Reply-To: <evsu7.aus3yo6r56i@linaro.org>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 10 Jun 2024 16:47:33 -0400
-Message-ID: <CAJSP0QWLe6yPDE3rPztx=oS0g+vKT9W3GykrNU0EQZcaW06sog@mail.gmail.com>
-Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9_e?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
- envelope-from=stefanha@gmail.com; helo=mail-oo1-xc34.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240610175852.21215-2-philmd@linaro.org>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 20:59:03 up 33 days, 8:13, 1 user, load average: 0.00, 0.02, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,215 +81,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 10 Jun 2024 at 16:27, Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
->
-> On Mon, 10 Jun 2024 22:59, Stefan Hajnoczi <stefanha@gmail.com> wrote:
-> >> What are the issues with not using the compiler, rustc, directly?
-> >> -----------------------------------------------------------------
-> >> [whataretheissueswith] Back to [TOC]
-> >>
-> >> 1. Tooling
-> >>    Mostly writing up the build-sys tooling to do so. Ideally we'd
-> >>    compile everything without cargo but rustc directly.
-> >
-> >Why would that be ideal?
->
-> It remove the indirection level of meson<->cargo<->rustc. I don't have a
-> concrete idea on how to tackle this, but if cargo ends up not strictly
-> necessary, I don't see why we cannot use one build system.
+* Philippe Mathieu-Daudé (philmd@linaro.org) wrote:
+> "monitor/hmp-target.h" is meant to hold target-specific commands.
+> Move s390x specific commands there, slightly simplifying hmp-target.c.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  include/hw/s390x/storage-attributes.h | 4 ----
+>  include/hw/s390x/storage-keys.h       | 4 ----
+>  include/monitor/hmp-target.h          | 5 +++++
+>  hw/s390x/s390-skeys.c                 | 2 ++
+>  hw/s390x/s390-stattrib.c              | 2 ++
+>  monitor/hmp-target.c                  | 5 -----
+>  6 files changed, 9 insertions(+), 13 deletions(-)
+> 
+> diff --git a/include/hw/s390x/storage-attributes.h b/include/hw/s390x/storage-attributes.h
+> index 8921a04d51..4916c75936 100644
+> --- a/include/hw/s390x/storage-attributes.h
+> +++ b/include/hw/s390x/storage-attributes.h
+> @@ -13,7 +13,6 @@
+>  #define S390_STORAGE_ATTRIBUTES_H
+>  
+>  #include "hw/qdev-core.h"
+> -#include "monitor/monitor.h"
+>  #include "qom/object.h"
+>  
+>  #define TYPE_S390_STATTRIB "s390-storage_attributes"
+> @@ -73,7 +72,4 @@ static inline Object *kvm_s390_stattrib_create(void)
+>  }
+>  #endif
+>  
+> -void hmp_info_cmma(Monitor *mon, const QDict *qdict);
+> -void hmp_migrationmode(Monitor *mon, const QDict *qdict);
+> -
+>  #endif /* S390_STORAGE_ATTRIBUTES_H */
+> diff --git a/include/hw/s390x/storage-keys.h b/include/hw/s390x/storage-keys.h
+> index aa2ec2aae5..1d9b7ead44 100644
+> --- a/include/hw/s390x/storage-keys.h
+> +++ b/include/hw/s390x/storage-keys.h
+> @@ -13,7 +13,6 @@
+>  #define S390_STORAGE_KEYS_H
+>  
+>  #include "hw/qdev-core.h"
+> -#include "monitor/monitor.h"
+>  #include "qom/object.h"
+>  
+>  #define TYPE_S390_SKEYS "s390-skeys"
+> @@ -114,7 +113,4 @@ void s390_skeys_init(void);
+>  
+>  S390SKeysState *s390_get_skeys_device(void);
+>  
+> -void hmp_dump_skeys(Monitor *mon, const QDict *qdict);
+> -void hmp_info_skeys(Monitor *mon, const QDict *qdict);
+> -
+>  #endif /* S390_STORAGE_KEYS_H */
+> diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
+> index b679aaebbf..024cff0052 100644
+> --- a/include/monitor/hmp-target.h
+> +++ b/include/monitor/hmp-target.h
+> @@ -61,4 +61,9 @@ void hmp_gva2gpa(Monitor *mon, const QDict *qdict);
+>  void hmp_gpa2hva(Monitor *mon, const QDict *qdict);
+>  void hmp_gpa2hpa(Monitor *mon, const QDict *qdict);
+>  
+> +void hmp_dump_skeys(Monitor *mon, const QDict *qdict);
+> +void hmp_info_skeys(Monitor *mon, const QDict *qdict);
+> +void hmp_info_cmma(Monitor *mon, const QDict *qdict);
+> +void hmp_migrationmode(Monitor *mon, const QDict *qdict);
+> +
 
-The convenience of being able to use cargo dependencies without
-special QEMU meson build system effort seems worth the overhead of
-meson<->cargo<->rustc to me. There is a blog post that explores using
-cargo crates using meson's wrap dependencies here, and it seems like
-extra work:
-https://coaxion.net/blog/2023/04/building-a-gstreamer-plugin-in-rust-with-meson-instead-of-cargo/
+Could you please add a comment here saying that these are all s390,
+since it's not obvious from their names.
+(and if we're lucky the other s390 commands will stay with them).
 
-It's possible to use just meson today, but I don't think it's
-practical when using cargo dependencies.
+Dave
 
->
-> >
-> >>
-> >>    If we decide we need Rust's `std` library support, we could
-> >>    investigate whether building it from scratch is a good solution. This
-> >>    will only build the bits we need in our devices.
-> >
-> >Whether or not to use std is a fundamental decision. It might be
-> >difficult to back from std later on. This is something that should be
-> >discussed in more detail.
-> >
-> >Do you want to avoid std for maximum flexibility in the future, or are
-> >there QEMU use cases today where std is unavailable?
->
-> For flexibility, and for being compatible with more versions.
->
-> But I do not want to avoid it, what I am saying is we can do a custom
-> build of it instead of linking to the rust toolchain's prebuilt version.
-
-What advantages does a custom build of std bring?
-
->
-> >
-> >>
-> >> 2. Rust dependencies
-> >>    We could go without them completely. I chose deliberately to include
-> >>    one dependency in my UART implementation, `bilge`[0], because it has
-> >>    an elegant way of representing typed bitfields for the UART's
-> >>    registers.
-> >>
-> >> [0]: Article: https://hecatia-elegua.github.io/blog/no-more-bit-fiddling/
-> >>      Crates.io page: https://crates.io/crates/bilge
-> >>      Repository: https://github.com/hecatia-elegua/bilge
-> >
-> >I guess there will be interest in using rust-vmm crates in some way.
-> >
-> >Bindings to platform features that are not available in core or std
-> >will also be desirable. We probably don't want to reinvent them.
->
->
-> Agreed.
->
-> >
-> >>
-> >> Should QEMU use third-party dependencies?
-> >> -----------------------------------------
-> >> [shouldqemuusethirdparty] Back to [TOC]
-> >>
-> >> In my personal opinion, if we need a dependency we need a strong
-> >> argument for it. A dependency needs a trusted upstream source, a QEMU
-> >> maintainer to make sure it us up-to-date in QEMU etc.
-> >>
-> >> We already fetch some projects with meson subprojects, so this is not a
-> >> new reality. Cargo allows you to define "locked" dependencies which is
-> >> the same as only fetching specific commits by SHA. No suspicious
-> >> tarballs, and no disappearing dependencies a la left-pad in npm.
-> >>
-> >> However, I believe it's worth considering vendoring every dependency by
-> >> default, if they prove to be few, for the sake of having a local QEMU
-> >> git clone buildable without network access.
-> >
-> >Do you mean vendoring by committing them to qemu.git or just the
-> >practice of running `cargo vendor` locally for users who decide they
-> >want to keep a copy of the dependencies?
->
->
-> Committing, with an option to opt-out. They are generally not big in
-> size. I am not of strong opinion on this one, I'm very open to
-> alternatives.
-
-Fedora and Debian want Rust applications to use distro-packaged
-crates. No vendoring and no crates.io online access. It's a bit of a
-pain because Rust developers need to make sure their code works with
-whatever version of crates Fedora and Debian provide.
-
-The `cargo vendor` command makes it easy for anyone wishing to collect
-the required dependencies for offline builds (something I've used for
-CentOS builds where vendoring is allowed).
-
-I suggest not vendoring packages in qemu.git. Users can still run
-`cargo vendor` for easy offline builds.
-
->
->
-> >>
-> >> Should QEMU provide wrapping Rust APIs over QEMU internals?
-> >> -----------------------------------------------------------
-> >> [qemuprovidewrappingrustapis] Back to [TOC]
-> >>
-> >> My personal opinion is no, with the reasoning being that QEMU internals
-> >> are not documented or stable. However I do not see why creating stable
-> >> opt-in interfaces is bad. It just needs someone to volunteer to maintain
-> >> it and ensure there are no breakages through versions.
-> >
-> >Rust code will need to interface with QEMU's C APIs, so Rust wrappers
-> >seem unavoidable. Using a protocol like vhost-user might be possible
-> >in some cases. It separates the two codebases so they can both be
-> >native and without bindings, but that won't work for all parts of the
-> >QEMU source tree.
-> >
-> >Stable APIs aren't necessary if most developers in the QEMU community
-> >are willing to work in both languages. They can adjust both C and Rust
-> >code when making changes to APIs. I find this preferable to having
-> >Rust maintainers whose job is to keep wrappers up-to-date. Those Rust
-> >maintainers would probably burn out. This seems like a question of
-> >which approach the developer community is comfortable with.
->
->
-> Me too.
->
-> >
-> >>
-> >> Will QEMU now depend on Rust and thus not build on my XYZ platform?
-> >> -------------------------------------------------------------------
-> >> [qemudependonrustnotbuildonxyz] Back to [TOC]
-> >>
-> >> No, worry about this in some years if this experiment takes off. Rust
-> >> has broad platform support and is present in most distro package
-> >> managers. In the future we might have gcc support for it as well.
-> >>
-> >> For now, Rust will have an experimental status, and will be aimed to
-> >> those who wish to try it. I leave it to the project leaders to make
-> >> proper decisions and statements on this if necessary.
-> >
-> >This can be discussed in a separate email thread if you prefer, but I
-> >do think it needs agreement soon so that people have the confidence to
-> >invest their time in writing Rust. They need to know that the code
-> >they develop will be available on most platforms where QEMU is
-> >available and that others in the community won't object or insist on a
-> >C implementation for platform support reasons.
->
-> Definitely, also it's out of scope for this RFC since we're not writing
-> and rules/guidelines yet.
->
-> >
-> >>
-> >>
-> >> How is the compilation structured?
-> >> ==================================
-> >> [howisthecompilationstructured] Back to [TOC]
-> >>
-> >> First, a meson target that runs `bindgen` on a bunch of header files
-> >> (defined in `rust/wrapper.h`) is created as a target and as a dependency
-> >> for any rust hardware device that needs it. You can see the generated
-> >> bindings by running
-> >>
-> >>   ninja generated.rs
-> >>
-> >> inside your build directory.
-> >>
-> >> The devices are defined as dictionaries in rust/meson.build because they
-> >> depend on the bindgen dependency, which is available much later in the
-> >> meson process (when the static qemu lib and target emulator executables
-> >> are defined).
-> >>
-> >> A cargo wrapper python script under scripts/ exists to build the crate
-> >> library, by providing the path to the generated.rs bindings via the
-> >> environment. Then, the qemu-system-aarch64 binary links against the
-> >> staticlib archive (i.e. libpl011.a)
-> >>
-> >> The generated.rs rust file includes a bunch of junk definitions?
-> >> ================================================================
-> >> [generatedrsincludesjunk] Back to [TOC]
-> >>
-> >> Yes, bindgen allows you to block certain types and identifiers from
-> >> being generated but they are simply too many. I have trimmed some of the
-> >> fat but vast improvements can be made.
-> >>
-> >> The staticlib artifact contains a bunch of mangled .o objects?
-> >> ==============================================================
-> >> [staticlibmangledobjects] Back to [TOC]
-> >>
-> >> Yes, until we compile without the `std` module library or we compile it
-> >> manually instead of linking it, we will have some junk in it.
-> >
-> >What is the consequence of this? As long as the linker is bringing in
-> >.o files from the .a only through symbol dependencies, then unused .o
-> >files in the .a won't be linked into the final QEMU binary.
->
-> No consequence, I just want to warn anyone peeking into the rust output
-> (not the final qemu binary) to expect junk.
-
-Okay, cool!
+>  #endif /* MONITOR_HMP_TARGET_H */
+> diff --git a/hw/s390x/s390-skeys.c b/hw/s390x/s390-skeys.c
+> index 5c535d483e..7b2ccb94a5 100644
+> --- a/hw/s390x/s390-skeys.c
+> +++ b/hw/s390x/s390-skeys.c
+> @@ -23,6 +23,8 @@
+>  #include "sysemu/kvm.h"
+>  #include "migration/qemu-file-types.h"
+>  #include "migration/register.h"
+> +#include "monitor/hmp-target.h"
+> +#include "monitor/monitor.h"
+>  
+>  #define S390_SKEYS_BUFFER_SIZE (128 * KiB)  /* Room for 128k storage keys */
+>  #define S390_SKEYS_SAVE_FLAG_EOS 0x01
+> diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
+> index c4259b5327..9b4b8d8d0c 100644
+> --- a/hw/s390x/s390-stattrib.c
+> +++ b/hw/s390x/s390-stattrib.c
+> @@ -19,6 +19,8 @@
+>  #include "exec/ram_addr.h"
+>  #include "qapi/error.h"
+>  #include "qapi/qmp/qdict.h"
+> +#include "monitor/hmp-target.h"
+> +#include "monitor/monitor.h"
+>  #include "cpu.h"
+>  
+>  /* 512KiB cover 2GB of guest memory */
+> diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
+> index 1eb72ac1bf..0466474354 100644
+> --- a/monitor/hmp-target.c
+> +++ b/monitor/hmp-target.c
+> @@ -36,11 +36,6 @@
+>  #include "qapi/error.h"
+>  #include "qemu/cutils.h"
+>  
+> -#if defined(TARGET_S390X)
+> -#include "hw/s390x/storage-keys.h"
+> -#include "hw/s390x/storage-attributes.h"
+> -#endif
+> -
+>  /* Make devices configuration available for use in hmp-commands*.hx templates */
+>  #include CONFIG_DEVICES
+>  
+> -- 
+> 2.41.0
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
