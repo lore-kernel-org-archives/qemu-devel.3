@@ -4,79 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5983BC27C5F
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 06:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18D8C27C5E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 06:36:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGYSo-000109-C2; Mon, 10 Jun 2024 02:25:06 -0400
+	id 1sGYd1-0006L7-3X; Mon, 10 Jun 2024 02:35:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGYSm-0000xE-I6
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 02:25:04 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGYd0-0006Kc-0v
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 02:35:38 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGYSk-0005Gw-Kf
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 02:25:04 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-52c525257feso2085523e87.1
- for <qemu-devel@nongnu.org>; Sun, 09 Jun 2024 23:25:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGYcy-0007Nu-AT
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 02:35:37 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-42198492353so5002215e9.1
+ for <qemu-devel@nongnu.org>; Sun, 09 Jun 2024 23:35:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718000700; x=1718605500; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+0GdibTRrJ+MB0GA2hbpLcO8vpDArVCG67e5p9bW9aI=;
- b=zicOMflkBJhxSs+gpcxP/ZCHc5Pu9EYUsUGm6n3yoXGx2iV3qMr1E/4elTQxOkJc3Z
- d4Am3kZclmvAyCr03+0lG1AZVQFKgd9jughSvjTqe1bJb0TZalMPTbfSdJOweSWHInR5
- B9pRQ8LxLdV5jK9XSwQYlP3Ca69VWPr5sYnmpA1nPjGMtcltX1ZCEgn0jIdV7o7JTAkJ
- X5iutc980hM2lnSfdWLvGlXkZEihib39zZSDe+hM3l0s/pNFPkzCAAjPQaa6SaMQxFZR
- qhq0k91njT7WEZS10Bjj7006AcKdz77ZMsNsbALU2IQSnUVO6awfsTIn9aRj2K21HqM5
- lF1w==
+ d=linaro.org; s=google; t=1718001334; x=1718606134; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3cLqCWiC1J/ZUjSxyI/3+bTiT19Rcz0X6qNntKz3//M=;
+ b=axOykuzGwvcOsvrU2gkkVYghweAZoFgjy36rfNuLfz52qfdcKTPFmoL2iX0BPaaf2n
+ zYplR3g+66uP8msH162wQj0Hh8FzAfG1rhxH1AuwO3IAu6sK5WGRhR0po90Y5VLv2IEz
+ TRaUrwPBjQopRUCupMjFOZUGkpJnl/rwLN5MC6lS8d5qvGMNg1QWmpkAA+Gm6KY/VIqU
+ UgdZNd8AYZdanT4UCNyZNcUSD+iWHyzPDDV/Xse2m4fwTB1bnDIr/1ALFXY6c2ZbITbT
+ sQqovD2dtfNPVrn12Veoj2sWJwOC1AuGRLQanCwuZ+/jT80ai9XOefMGaSWBRLG2JOGG
+ serQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718000700; x=1718605500;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+0GdibTRrJ+MB0GA2hbpLcO8vpDArVCG67e5p9bW9aI=;
- b=Mu26Hy9ScgFze7g2FxD+6rJb5WA9O57kbrShCj6zGXpBfiC+ATZjUx6jZUc5f/U6lu
- fYKbPcCdBwBhZLuIIb8RbiFOkeJVkcRgcTl3QidZZrBOPu+e4QlqrB3NiDIITabgZ0L3
- ijRntIMz0lpS6d0W7gvNBkTO3cwj23+Kqg3wAXze1dqhbtU2Z3jiFtXzvPrSzABQ/HNR
- wJsh9SNQKv5KHRAFHc8DyMNvKZwZ2YfIPVNLMKWIGmfUqlQ/8SHeOSxHewG/2fjil+Sq
- Pfn+gmxusc+8BS5K9A0i2j28S2sOznLuVml3v3yXjMEQiF/R3+BO0bJLMtCWStB35O1M
- 7b3Q==
-X-Gm-Message-State: AOJu0YxVK4MpA2h0DWLrNNNqeKJbhawBdS8EuFwk4P3AmVQTiw0Lr0tv
- 4ypI3DnlKT2tTBRDStCuED7uRdIkCAX5RZOGy7T3fkJ/kkQM7JbttqEZxmSZLdi7Sm4cTRIbXos
- 2
-X-Google-Smtp-Source: AGHT+IEZ0CnKd8Y22E5FnKtCDVogfFH7/PQPhc67cZdyC9Kpn9bfsst8hzh9+Bpz87X/UG3rXUnkyw==
-X-Received: by 2002:a19:8c41:0:b0:52c:8c57:2d04 with SMTP id
- 2adb3069b0e04-52c8c572d54mr548345e87.47.1718000700115; 
- Sun, 09 Jun 2024 23:25:00 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.129.242])
+ d=1e100.net; s=20230601; t=1718001334; x=1718606134;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3cLqCWiC1J/ZUjSxyI/3+bTiT19Rcz0X6qNntKz3//M=;
+ b=pypibmQKvn+mQpkkaIjC0or+I06OPa1ssdeVPPbIowoFmdJswN3Mc2nRACcWPue8i2
+ gDV2N7cRJzNDIvJS8v1GD2ON1HckGhfq5wgDt5E7T5dtGkSaAVI8M5cqYQz35VBOT1/b
+ QwUoOiMl/Y+FO3l9fxkK+UMHGClnW9LZ0MRxAS+42gl/KlE5Bp2Qoo4MoeDsY5i5Jrm1
+ T+L4XMur0yCKekWg1Ey8gQ4bV2zI14gWZxOu5jgBDwyrdO9Q1FhnK5QIO6wGmXxCS2AA
+ 0O4po/A+uZLQ2iHnG2SOJZAozlqp+/VgsGsM959QBm8E77f7wHMhyPl4Wl3g5t1T05wl
+ CPtQ==
+X-Gm-Message-State: AOJu0YxQnKG5x0UzZNXgQCo9UtPm0N1ii55WV9kndFSuQNY9R+zxzm2M
+ QoAjo2ANosHqc9d7KfHKoouNpw2ThdxGnKE1jLH8LelQhdvAd3rWaChZAEFoNIpfXgDkMB6m42i
+ M
+X-Google-Smtp-Source: AGHT+IEojMPBFu+PLUW0SXOmJHDF8O3UILz2bwhIh5nlqWn3DpEg9JC7hk6RyAil/HtLB8oP3w/Dfw==
+X-Received: by 2002:a05:600c:3547:b0:421:dd8c:3588 with SMTP id
+ 5b1f17b1804b1-421dd8c3951mr10554165e9.21.1718001334369; 
+ Sun, 09 Jun 2024 23:35:34 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.129.242])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42183c08f49sm36331295e9.6.2024.06.09.23.24.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 09 Jun 2024 23:24:59 -0700 (PDT)
-Message-ID: <79d16330-79ff-410f-b9ae-e1d4db6524ed@linaro.org>
-Date: Mon, 10 Jun 2024 08:24:58 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/26] hw/ppc: Prefer HumanReadableText over Monitor
+ ffacd0b85a97d-35f29116506sm123147f8f.60.2024.06.09.23.35.32
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 09 Jun 2024 23:35:33 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>, David Gibson <david@gibson.dropbear.id.au>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240610062105.49848-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240610062105.49848-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Eric Blake <eblake@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Nicholas Piggin <npiggin@gmail.com>, Don Porter <porter@cs.unc.edu>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ qemu-ppc@nongnu.org, Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH 2/2] hw/intc: Introduce x-query-interrupt-controllers QMP
+ command
+Date: Mon, 10 Jun 2024 08:35:17 +0200
+Message-ID: <20240610063518.50680-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240610063518.50680-1-philmd@linaro.org>
+References: <20240610063518.50680-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,23 +109,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/6/24 08:20, Philippe Mathieu-Daudé wrote:
-> Hi,
-> 
-> This series remove uses of Monitor in hw/ppc/,
-> replacing by the more generic HumanReadableText.
-> Care is taken to keep the commit bisectables by
-> updating functions one by one, also easing review.
-> 
-> For rationale see previous series from Daniel:
-> https://lore.kernel.org/qemu-devel/20211028155457.967291-1-berrange@redhat.com/
+This is a counterpart to the HMP "info pic" command. It is being
+added with an "x-" prefix because this QMP command is intended as an
+adhoc debugging tool and will thus not be modelled in QAPI as fully
+structured data, nor will it have long term guaranteed stability.
+The existing HMP command is rewritten to call the QMP command.
 
-Or more specifically commit f2de406f29 ("docs/devel: document
-expectations for QAPI data modelling for QMP").
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ qapi/machine.json          | 17 +++++++++++++++++
+ hw/core/machine-qmp-cmds.c | 29 +++++++++++++++++++++++++++++
+ monitor/hmp-cmds.c         | 33 ---------------------------------
+ hmp-commands-info.hx       |  2 +-
+ 4 files changed, 47 insertions(+), 34 deletions(-)
 
-> 
-> Regards,
-> 
-> Phil.
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 453feb9347..1283d14493 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1864,3 +1864,20 @@
+ { 'command': 'dumpdtb',
+   'data': { 'filename': 'str' },
+   'if': 'CONFIG_FDT' }
++
++##
++# @x-query-interrupt-controllers:
++#
++# Query information on interrupt controller devices
++#
++# Features:
++#
++# @unstable: This command is meant for debugging.
++#
++# Returns: Interrupt controller device information
++#
++# Since: 9.1
++##
++{ 'command': 'x-query-interrupt-controllers',
++  'returns': 'HumanReadableText',
++  'features': [ 'unstable' ]}
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index 5972100b1f..130217da8f 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -361,6 +361,35 @@ HumanReadableText *qmp_x_query_irq(Error **errp)
+     return human_readable_text_from_str(buf);
+ }
+ 
++static int qmp_x_query_intc_foreach(Object *obj, void *opaque)
++{
++    InterruptStatsProvider *intc;
++    InterruptStatsProviderClass *k;
++    GString *buf = opaque;
++
++    if (object_dynamic_cast(obj, TYPE_INTERRUPT_STATS_PROVIDER)) {
++        intc = INTERRUPT_STATS_PROVIDER(obj);
++        k = INTERRUPT_STATS_PROVIDER_GET_CLASS(obj);
++        if (k->print_info) {
++            k->print_info(intc, buf);
++        } else {
++            g_string_append_printf(buf,
++                                   "Interrupt controller information not available for %s.\n",
++                                   object_get_typename(obj));
++        }
++    }
++
++    return 0;
++}
++
++HumanReadableText *qmp_x_query_interrupt_controllers(Error **errp)
++{
++    g_autoptr(GString) buf = g_string_new("");
++    object_child_foreach_recursive(object_get_root(),
++                                   qmp_x_query_intc_foreach, buf);
++    return human_readable_text_from_str(buf);
++}
++
+ GuidInfo *qmp_query_vm_generation_id(Error **errp)
+ {
+     GuidInfo *info;
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index fbff7fdb57..45ee3a9e1f 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -25,9 +25,7 @@
+ #include "qapi/qapi-commands-machine.h"
+ #include "qapi/qapi-commands-misc.h"
+ #include "qapi/qmp/qdict.h"
+-#include "qapi/type-helpers.h"
+ #include "qemu/cutils.h"
+-#include "hw/intc/intc.h"
+ #include "qemu/log.h"
+ #include "sysemu/sysemu.h"
+ 
+@@ -83,37 +81,6 @@ void hmp_info_version(Monitor *mon, const QDict *qdict)
+     qapi_free_VersionInfo(info);
+ }
+ 
+-static int hmp_info_pic_foreach(Object *obj, void *opaque)
+-{
+-    InterruptStatsProvider *intc;
+-    InterruptStatsProviderClass *k;
+-    Monitor *mon = opaque;
+-
+-    if (object_dynamic_cast(obj, TYPE_INTERRUPT_STATS_PROVIDER)) {
+-        intc = INTERRUPT_STATS_PROVIDER(obj);
+-        k = INTERRUPT_STATS_PROVIDER_GET_CLASS(obj);
+-        if (k->print_info) {
+-            g_autoptr(GString) buf = g_string_new("");
+-            g_autoptr(HumanReadableText) info = NULL;
+-
+-            k->print_info(intc, buf);
+-            info = human_readable_text_from_str(buf);
+-            monitor_puts(mon, info->human_readable_text);
+-        } else {
+-            monitor_printf(mon, "Interrupt controller information not available for %s.\n",
+-                           object_get_typename(obj));
+-        }
+-    }
+-
+-    return 0;
+-}
+-
+-void hmp_info_pic(Monitor *mon, const QDict *qdict)
+-{
+-    object_child_foreach_recursive(object_get_root(),
+-                                   hmp_info_pic_foreach, mon);
+-}
+-
+ void hmp_quit(Monitor *mon, const QDict *qdict)
+ {
+     monitor_suspend(mon);
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 20a9835ea8..cfd4ad5651 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -174,7 +174,7 @@ ERST
+         .args_type  = "",
+         .params     = "",
+         .help       = "show PIC state",
+-        .cmd        = hmp_info_pic,
++        .cmd_info_hrt = qmp_x_query_interrupt_controllers,
+     },
+ 
+ SRST
+-- 
+2.41.0
 
 
