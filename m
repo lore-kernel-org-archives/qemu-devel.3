@@ -4,71 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2150C27C5E
-	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 08:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 587BCC27C5E
+	for <qemu-devel@archiver.kernel.org>; Mon, 10 Jun 2024 08:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGZxh-0002nn-FL; Mon, 10 Jun 2024 04:01:05 -0400
+	id 1sGaDN-0007AC-6l; Mon, 10 Jun 2024 04:17:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sGZxf-0002nV-L8
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 04:01:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=l9v5=NM=kaod.org=clg@ozlabs.org>)
+ id 1sGaDL-00079O-7Z; Mon, 10 Jun 2024 04:17:15 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sGZxc-0005pP-DL
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 04:01:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718006455;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bwX66JCDFSUHsalpQt8mrmV3Iwjtm6krHMmcv5oWvdY=;
- b=VNM8wjP9DUHlBq8XhDt+L7hyr3T8vHfChPdUIaqAZchLWZIXYDnSPP/b0I6bInDGTBV/a+
- vyQs9RvQSnGmley3WHxBzYN6l4uPKw7NAdf3q0JhrS3GEEz3kyD+nzc9VHBjaGtR827y5a
- RuorPcJRGqphJqAetaEa35aatIC9aR8=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-RSwSi46xP9GaKqedtdJ1Rw-1; Mon, 10 Jun 2024 04:00:51 -0400
-X-MC-Unique: RSwSi46xP9GaKqedtdJ1Rw-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
+ (Exim 4.90_1) (envelope-from <SRS0=l9v5=NM=kaod.org=clg@ozlabs.org>)
+ id 1sGaDI-0000DB-Au; Mon, 10 Jun 2024 04:17:14 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4VyPm86flvz4wc3;
+ Mon, 10 Jun 2024 18:16:56 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1B92D800262;
- Mon, 10 Jun 2024 08:00:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.32])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 54A551121337;
- Mon, 10 Jun 2024 08:00:50 +0000 (UTC)
-Date: Mon, 10 Jun 2024 09:00:48 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH] monitor: Remove obsolete stubs
-Message-ID: <ZmaysBQQsrdTBBTD@redhat.com>
-References: <20240610063924.51154-1-philmd@linaro.org>
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4VyPm521V2z4wc1;
+ Mon, 10 Jun 2024 18:16:52 +1000 (AEST)
+Message-ID: <88d4798b-d9a6-4dcc-86bd-0385a5ec4503@kaod.org>
+Date: Mon, 10 Jun 2024 10:16:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/26] hw/ppc: Prefer HumanReadableText over Monitor
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>, David Gibson <david@gibson.dropbear.id.au>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+References: <20240610062105.49848-1-philmd@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240610062105.49848-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240610063924.51154-1-philmd@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=l9v5=NM=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,42 +66,88 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 10, 2024 at 08:39:24AM +0200, Philippe Mathieu-Daudé wrote:
-> hmp_info_roms() was removed in commit dd98234c05 ("qapi:
-> introduce x-query-roms QMP command"),
+On 6/10/24 8:20 AM, Philippe Mathieu-Daudé wrote:
+> Hi,
 > 
-> hmp_info_numa() in commit 1b8ae799d8 ("qapi: introduce
-> x-query-numa QMP command"),
+> This series remove uses of Monitor in hw/ppc/,
+> replacing by the more generic HumanReadableText.
+> Care is taken to keep the commit bisectables by
+> updating functions one by one, also easing review.
 > 
-> hmp_info_ramblock() in commit ca411b7c8a ("qapi: introduce
-> x-query-ramblock QMP command")
-> 
-> and hmp_info_irq() in commit 91f2fa7045 ("qapi: introduce
-> x-query-irq QMP command").
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> Note x-query-roms is used as example in
-> docs/devel/writing-monitor-commands.rst
-> but was removed in commit dd98234c05
-> ("qapi: introduce x-query-roms QMP command").
-> ---
->  include/hw/loader.h   | 1 -
->  include/monitor/hmp.h | 3 ---
->  2 files changed, 4 deletions(-)
+> For rationale see previous series from Daniel:
+> https://lore.kernel.org/qemu-devel/20211028155457.967291-1-berrange@redhat.com/
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+This looks OK to me but I think there are patches in the ppc queue
+that will conflict. I would wait for Nick to send a PR first and
+then rebase.
+
+Thanks,
+
+C.
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
+> 
+> Regards,
+> 
+> Phil.
+> 
+> Philippe Mathieu-Daudé (26):
+>    hw/ppc: Avoid using Monitor in pnv_phb3_msi_pic_print_info()
+>    hw/ppc: Avoid using Monitor in icp_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_tctx_pic_print_info()
+>    hw/ppc: Avoid using Monitor in ics_pic_print_info()
+>    hw/ppc: Avoid using Monitor in PnvChipClass::intc_print_info()
+>    hw/ppc: Avoid using Monitor in xive_end_queue_pic_print_info()
+>    hw/ppc: Avoid using Monitor in spapr_xive_end_pic_print_info()
+>    hw/ppc: Avoid using Monitor in spapr_xive_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_source_pic_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_phb4_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_eas_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_end_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_end_eas_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_nvt_pic_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_xive_pic_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_psi_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_eas_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_end_eas_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_end_queue_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_end_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_nvp_pic_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_xive2_pic_print_info()
+>    hw/ppc: Avoid using Monitor in
+>      SpaprInterruptControllerClass::print_info()
+>    hw/ppc: Avoid using Monitor in spapr_irq_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_chip_power9_pic_print_info_child()
+>    hw/ppc: Avoid using Monitor in pic_print_info()
+> 
+>   include/hw/pci-host/pnv_phb3.h |   2 +-
+>   include/hw/pci-host/pnv_phb4.h |   2 +-
+>   include/hw/ppc/pnv_chip.h      |   4 +-
+>   include/hw/ppc/pnv_psi.h       |   2 +-
+>   include/hw/ppc/pnv_xive.h      |   4 +-
+>   include/hw/ppc/spapr_irq.h     |   4 +-
+>   include/hw/ppc/xics.h          |   4 +-
+>   include/hw/ppc/xive.h          |   4 +-
+>   include/hw/ppc/xive2_regs.h    |   8 +--
+>   include/hw/ppc/xive_regs.h     |   8 +--
+>   hw/intc/pnv_xive.c             |  38 ++++++------
+>   hw/intc/pnv_xive2.c            |  48 +++++++--------
+>   hw/intc/spapr_xive.c           |  41 ++++++-------
+>   hw/intc/xics.c                 |  25 ++++----
+>   hw/intc/xics_spapr.c           |   7 +--
+>   hw/intc/xive.c                 | 108 ++++++++++++++++-----------------
+>   hw/intc/xive2.c                |  87 +++++++++++++-------------
+>   hw/pci-host/pnv_phb3_msi.c     |  21 +++----
+>   hw/pci-host/pnv_phb4.c         |  17 +++---
+>   hw/ppc/pnv.c                   |  52 ++++++++--------
+>   hw/ppc/pnv_psi.c               |   9 ++-
+>   hw/ppc/spapr.c                 |  11 +++-
+>   hw/ppc/spapr_irq.c             |   4 +-
+>   23 files changed, 256 insertions(+), 254 deletions(-)
+> 
 
 
