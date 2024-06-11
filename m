@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CD62C27C5E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:27:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE3DC41513
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:31:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGwqE-0007Oo-LJ; Tue, 11 Jun 2024 04:26:54 -0400
+	id 1sGwuQ-0000a1-1i; Tue, 11 Jun 2024 04:31:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGwqD-0007JY-Bu
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:26:53 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sGwuI-0000VJ-31
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:31:06 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGwqB-0003ow-Gx
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:26:53 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a6ef46d25efso414590666b.0
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 01:26:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sGwuG-0004ho-Fg
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:31:05 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-57c778b5742so2809802a12.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 01:31:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718094410; x=1718699210; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=P28ahqKzuIGVS2J3ZZMcOkZ6w/itYTHmdHzvmXZV1X4=;
- b=G9l68g9n3DtyzxuuZBVgg7cvFnMQHkjyAPxXc8ojAk2Of2GKYl2S6gbf6XFPIXTcii
- XjrvA928fHS9PXSfy4zxsWaimnrQafz8AWzSNvZtcCD/OUNOTlREDpJJffhy9d3SCV+t
- 2UAIIU9Wn7KDZw64zgqfnWy8VHTy8qJSfatGLOmFaGM9773a8uHgevC2Q0wAQkzS69vi
- /uKP8PMRMF3o0w1zAoBpUfFhkO0+mHgk2fkN28MQFXKGYVA76HPBdVEukRAwvYuG5mBw
- S4RpWmFDr76Q+amULq/DDJcOcBg55LpbKJAA7VG1CH8FlL8nNXkm4D5NBp2XSYVrI18H
- +1mg==
+ d=linaro.org; s=google; t=1718094662; x=1718699462; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LBM1lmxk9SqQfQU0caWRbtEyiyYWjt1uLUTr1AlIS4U=;
+ b=Tx+JoeVZTB10b2pyBKlBlw1xkDqoXBu/geVPzez22mUIT9z85wxzqSA75Gbh3xlTca
+ Vrm0s1QFeZg3NqYoYali4he86hilYgAsxAlT9MUcrO6CftfXKVgyUy2H3sEIcT8FSem4
+ Fo24AwOO111lCaOaJ+SvLGwEeoE6XOaR2DdtD4KTUHRnEeyxE6s2570n1FEQLfK8tQbc
+ bkB075ZAgT5P9K3Es3X6sOChqrFH21/cbiwSiEO7wfCHSDhXPxcXhjkEvDMoIvTjcfA3
+ H6OxYhxxhcQMnAfVIhwI4kbGa73TAmQgi89cwp5brxcpgzzPFwIrCVqRJa7IotPbUvkL
+ vhhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718094410; x=1718699210;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P28ahqKzuIGVS2J3ZZMcOkZ6w/itYTHmdHzvmXZV1X4=;
- b=Beb/ZdHIdQlSKH64+QIAi6XJLo1kDpKhrZLeF2NS0lNQ3SvQ/+3Qr5MgqNBCbL1okZ
- ehXEu1BMeAdbvZR5xsv3LjZiFXeBMr4q3Xkk9KJ/sMnY3ZwHg8dR0laNnv/s1zIYTXRA
- 8wcQfmSI3xHB9zRKlqAD0tIxhtXdt5dOwehnnXW+aRDHyTVvyUpOSKzQF2M1BvIMW3Hc
- 8pE7fb/ycqQlLA893Umso17fbXRfK9M5VNpbr6PUnuADrQ2OY3e+f9U3rKdbAPZFgQY3
- QDh4jlTHrA97WxoknJZLGeTaQXVbHC3YY+zHRLAtl8EhCSa/jyyZ4uo0OhPKBJEeQQ22
- CrbQ==
+ d=1e100.net; s=20230601; t=1718094662; x=1718699462;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LBM1lmxk9SqQfQU0caWRbtEyiyYWjt1uLUTr1AlIS4U=;
+ b=eM77VSaJAMxeyVz3ia8cqWh/ph7OpaA8N++zDe/K+/AtD0oxmkxeWAH7pPXGa/XGEB
+ DUnvE3mKsbeJSxjcsIeDRfuzVOMotnQCdfRJlUTrnFKSAyFLeUCsDl7Ev/TX/eEVEn4L
+ WqlqkL7PPTciksDtRzZDyvClr7EG248vtsph/pIJj6YAXaMS4bBd3Ic40xBwHsrOJtGJ
+ U3IP6rwMvKMY4ZoUiwGf+CCgLUmlNkS4/oYGqIV11JNKxZBM7luRPcNTiNX6DHBOg5pa
+ XGrt0yZXUoQEmvxnlLnMeBFqGh+dZllum22KCBEZkpAPcDOpJHDUbvpJGqL9MVbjH8e8
+ oshw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVrxbf8xXWW0KErwqMWA/+uToxJzOw+ncMVKrl2P3SOMyPXDC/RmdRDWc6TYArvgkDjZG/gKLe+asVoqi5xkZIuw3q1Rxw=
-X-Gm-Message-State: AOJu0YyJwhxbwS3mcSO5/qQFfgGZF1mtXy06Zlhf10DxnWSJM/1boS0R
- 3wslcScLBG5pOoD1mCqISQrdBPt5kYuZfxzzsx2vIkW5KZb4YDyJqGStjFkjkWRGtnqWwHc3tCp
- i
-X-Google-Smtp-Source: AGHT+IFhCJyOImlGg/rHs8TXaQRbkJ2PgX0JvgaBQisCBwWbxVyvuPAaQIkBJT7v9EKMC5V9kRymgg==
-X-Received: by 2002:a17:906:79d0:b0:a6e:f847:2cd9 with SMTP id
- a640c23a62f3a-a6ef84730a8mr561006066b.21.1718094409479; 
- Tue, 11 Jun 2024 01:26:49 -0700 (PDT)
-Received: from [192.168.69.100] (rsa59-h02-176-184-32-6.dsl.sta.abo.bbox.fr.
- [176.184.32.6]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f0dd008c8sm395165666b.128.2024.06.11.01.26.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Jun 2024 01:26:48 -0700 (PDT)
-Message-ID: <0b63712f-898b-400b-83a6-182effd6ca5b@linaro.org>
-Date: Tue, 11 Jun 2024 10:26:47 +0200
+ AJvYcCWDQa38pHMrb0EP5lOw0b4Q8SZs/jjHWJIblsEadopAqmRUNw9sQ/Gv9j7KyjqelPVdNd/qB5751ApNP0XFxWfr8iDa83w=
+X-Gm-Message-State: AOJu0YxcxIgAssikFNfOdS/uo2O9JT3uAOg1C3GOcixVN4Cs4XChnEtf
+ zkSp3549JkrcScPdySkffhccL+Y1CH6iuNCoVCOVTTY77A/gi5pE4MuebqsbBsqTIKGGMOIWHh7
+ 7i+AQgEvV63z7C5doE8b+AOS5p2rhcWb8XDj0kg==
+X-Google-Smtp-Source: AGHT+IEf/ig5kmx7kzEpKb7oObj/iPolvTgzKoM+xdAXnVYPnATiNMKpJsvsOywMaE3klg8XAnNj3hbOPgxgblGC4YI=
+X-Received: by 2002:a50:d5da:0:b0:57c:61ca:eb8c with SMTP id
+ 4fb4d7f45d1cf-57c61caec8fmr5635508a12.42.1718094662527; Tue, 11 Jun 2024
+ 01:31:02 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/arm: Set arm_v7m_tcg_ops cpu_exec_halt to
- arm_cpu_exec_halt()
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20240603160933.1141717-1-peter.maydell@linaro.org>
- <20240603160933.1141717-2-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240603160933.1141717-2-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
+References: <20240610150758.2827-1-philmd@linaro.org>
+ <87h6e0uizr.fsf@pond.sub.org>
+In-Reply-To: <87h6e0uizr.fsf@pond.sub.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 11 Jun 2024 09:30:47 +0100
+Message-ID: <CAFEAcA8F9fTVuTwNosLi7qcZ7ki-kARKJsnrp3-er41LbkpZiA@mail.gmail.com>
+Subject: Re: Examining device state via monitor for debugging (was: [PATCH
+ 0/2] hw/misc/mos6522: Do not open-code hmp_info_human_readable_text())
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,26 +98,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/24 18:09, Peter Maydell wrote:
-> In commit a96edb687e76 we set the cpu_exec_halt field of the
-> TCGCPUOps arm_tcg_ops to arm_cpu_exec_halt(), but we left the
-> arm_v7m_tcg_ops struct unchanged.  That isn't wrong, because for
-> M-profile FEAT_WFxT doesn't exist and the default handling for "no
-> cpu_exec_halt method" is correct, but it's perhaps a little
-> confusing.  We would also like to make setting the cpu_exec_halt
-> method mandatory.
-> 
-> Initialize arm_v7m_tcg_ops cpu_exec_halt to the same function we use
-> for A-profile.  (On M-profile we never set up the wfxt timer so there
-> is no change in behaviour here.)
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/arm/internals.h   | 3 +++
->   target/arm/cpu.c         | 2 +-
->   target/arm/tcg/cpu-v7m.c | 1 +
->   3 files changed, 5 insertions(+), 1 deletion(-)
+On Tue, 11 Jun 2024 at 06:50, Markus Armbruster <armbru@redhat.com> wrote:
+>
+> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+>
+> > Officialise the QMP command, use the existing
+> > hmp_info_human_readable_text() helper.
+>
+> I'm not sure "officialise" is a word :)
+>
+> Taking a step back...  "info via" and its new QMP counterpart
+> x-query-mos6522-devices dump device state.  I understand why examining
+> device state via monitor can be useful for debugging.  However, we have
+> more than 2000 devices in the tree.  Clearly, we don't want 2000 device
+> state queries.  Not even 100.  Could we have more generic means instead?
+>
+> We could use QOM (read-only) properties to expose device state.
+>
+> If we use one QOM property per "thing", examining device state becomes
+> quite tedious.  Also, you'd have to stop the guest to get a consistent
+> view, and adding lots of QOM properties bloats the code.
+>
+> If we use a single, object-valued property for the entire state, we get
+> to define the objects in QAPI.  Differently tedious, and bloats the
+> generated code.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+We already have a machine readable mandatory-for-every-device
+representation of its entire state -- it's the vmstate struct.
+Admittedly this is sometimes a bit different from the guest-facing
+view of a device and we don't machine-record the field names...
 
+-- PMM
 
