@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29BA2C27C65
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC42C41513
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 17:39:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH5Qv-00008T-ST; Tue, 11 Jun 2024 13:37:21 -0400
+	id 1sH5Qo-0008W5-Dj; Tue, 11 Jun 2024 13:37:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5Qu-000078-GW
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:37:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5Qn-0008Vd-Bn
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:37:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5Qs-0008Ua-NE
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:37:20 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5Ql-0008SC-Pt
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:37:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718127438;
+ s=mimecast20190719; t=1718127431;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FJaqIGhVpINR8HgGtOg7iThzOx8v1LlBfHCauXsWLWw=;
- b=Iuh9DGiFcPz5A5kK+yeR1de8Hcmo2DtmRBs3Kn4qpQ+vQCTxgv/yP/LxkBHH0suhRlZZZp
- ZoWHl1TL6+0yMnkq+wh2Elwv8G2VgEuLPVUqOOJtskj601lBqBnli7Vv4ydvpuzgRsTlej
- vVkrhs8tPemIgeohty9vmVSOflHOq2E=
+ bh=EDPviX5iCZw8qqN1UwxNpLLXgI2B2YRvbWcSGkLKba0=;
+ b=OOlZGsIYps3RdC9RNaZumOl6lJ4RK2EDZv7hzzEiQBPyP+LqeuTcv00e7/rJZS+Osru7P7
+ OYm/vXf5ndJtPt5GCm9eFetcvTnsHpq9av7GurUpM944EGYad0ek0lqP5qtpFmod7DCIQq
+ y9Y4vJV1kTZoFQMCTecHmaZvJLCes1o=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-Mwc_56U2NX-uHg2rhw68ZA-1; Tue,
- 11 Jun 2024 13:37:13 -0400
-X-MC-Unique: Mwc_56U2NX-uHg2rhw68ZA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-128-gAvFlpdHNGCL709YToLZjg-1; Tue,
+ 11 Jun 2024 13:37:09 -0400
+X-MC-Unique: gAvFlpdHNGCL709YToLZjg-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4DFA31956086; Tue, 11 Jun 2024 17:37:12 +0000 (UTC)
+ id 781C11956094; Tue, 11 Jun 2024 17:37:08 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.39.192.130])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0123E19560AF; Tue, 11 Jun 2024 17:37:10 +0000 (UTC)
+ id D813F19560AB; Tue, 11 Jun 2024 17:37:05 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 4/8] qemu-io: add cvtnum() error handling for zone commands
-Date: Tue, 11 Jun 2024 19:36:54 +0200
-Message-ID: <20240611173658.231831-5-kwolf@redhat.com>
+Subject: [PULL 2/8] Revert "monitor: use aio_co_reschedule_self()"
+Date: Tue, 11 Jun 2024 19:36:52 +0200
+Message-ID: <20240611173658.231831-3-kwolf@redhat.com>
 In-Reply-To: <20240611173658.231831-1-kwolf@redhat.com>
 References: <20240611173658.231831-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -83,123 +83,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stefan Hajnoczi <stefanha@redhat.com>
 
-cvtnum() parses positive int64_t values and returns a negative errno on
-failure. Print errors and return early when cvtnum() fails.
+Commit 1f25c172f837 ("monitor: use aio_co_reschedule_self()") was a code
+cleanup that uses aio_co_reschedule_self() instead of open coding
+coroutine rescheduling.
 
-While we're at it, also reject nr_zones values greater or equal to 2^32
-since they cannot be represented.
+Bug RHEL-34618 was reported and Kevin Wolf <kwolf@redhat.com> identified
+the root cause. I missed that aio_co_reschedule_self() ->
+qemu_get_current_aio_context() only knows about
+qemu_aio_context/IOThread AioContexts and not about iohandler_ctx. It
+does not function correctly when going back from the iohandler_ctx to
+qemu_aio_context.
 
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Cc: Sam Li <faithilikerun@gmail.com>
+Go back to open coding the AioContext transitions to avoid this bug.
+
+This reverts commit 1f25c172f83704e350c0829438d832384084a74d.
+
+Cc: qemu-stable@nongnu.org
+Buglink: https://issues.redhat.com/browse/RHEL-34618
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20240507180558.377233-1-stefanha@redhat.com>
-Reviewed-by: Sam Li <faithilikerun@gmail.com>
+Message-ID: <20240506190622.56095-2-stefanha@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- qemu-io-cmds.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 47 insertions(+), 1 deletion(-)
+ qapi/qmp-dispatch.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
-index f5d7202a13..e2fab57183 100644
---- a/qemu-io-cmds.c
-+++ b/qemu-io-cmds.c
-@@ -1739,12 +1739,26 @@ static int zone_report_f(BlockBackend *blk, int argc, char **argv)
- {
-     int ret;
-     int64_t offset;
-+    int64_t val;
-     unsigned int nr_zones;
+diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
+index f3488afeef..176b549473 100644
+--- a/qapi/qmp-dispatch.c
++++ b/qapi/qmp-dispatch.c
+@@ -212,7 +212,8 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
+              * executing the command handler so that it can make progress if it
+              * involves an AIO_WAIT_WHILE().
+              */
+-            aio_co_reschedule_self(qemu_get_aio_context());
++            aio_co_schedule(qemu_get_aio_context(), qemu_coroutine_self());
++            qemu_coroutine_yield();
+         }
  
-     ++optind;
-     offset = cvtnum(argv[optind]);
-+    if (offset < 0) {
-+        print_cvtnum_err(offset, argv[optind]);
-+        return offset;
-+    }
-     ++optind;
--    nr_zones = cvtnum(argv[optind]);
-+    val = cvtnum(argv[optind]);
-+    if (val < 0) {
-+        print_cvtnum_err(val, argv[optind]);
-+        return val;
-+    }
-+    if (val > UINT_MAX) {
-+        printf("Number of zones must be less than 2^32\n");
-+        return -ERANGE;
-+    }
-+    nr_zones = val;
- 
-     g_autofree BlockZoneDescriptor *zones = NULL;
-     zones = g_new(BlockZoneDescriptor, nr_zones);
-@@ -1780,8 +1794,16 @@ static int zone_open_f(BlockBackend *blk, int argc, char **argv)
-     int64_t offset, len;
-     ++optind;
-     offset = cvtnum(argv[optind]);
-+    if (offset < 0) {
-+        print_cvtnum_err(offset, argv[optind]);
-+        return offset;
-+    }
-     ++optind;
-     len = cvtnum(argv[optind]);
-+    if (len < 0) {
-+        print_cvtnum_err(len, argv[optind]);
-+        return len;
-+    }
-     ret = blk_zone_mgmt(blk, BLK_ZO_OPEN, offset, len);
-     if (ret < 0) {
-         printf("zone open failed: %s\n", strerror(-ret));
-@@ -1805,8 +1827,16 @@ static int zone_close_f(BlockBackend *blk, int argc, char **argv)
-     int64_t offset, len;
-     ++optind;
-     offset = cvtnum(argv[optind]);
-+    if (offset < 0) {
-+        print_cvtnum_err(offset, argv[optind]);
-+        return offset;
-+    }
-     ++optind;
-     len = cvtnum(argv[optind]);
-+    if (len < 0) {
-+        print_cvtnum_err(len, argv[optind]);
-+        return len;
-+    }
-     ret = blk_zone_mgmt(blk, BLK_ZO_CLOSE, offset, len);
-     if (ret < 0) {
-         printf("zone close failed: %s\n", strerror(-ret));
-@@ -1830,8 +1860,16 @@ static int zone_finish_f(BlockBackend *blk, int argc, char **argv)
-     int64_t offset, len;
-     ++optind;
-     offset = cvtnum(argv[optind]);
-+    if (offset < 0) {
-+        print_cvtnum_err(offset, argv[optind]);
-+        return offset;
-+    }
-     ++optind;
-     len = cvtnum(argv[optind]);
-+    if (len < 0) {
-+        print_cvtnum_err(len, argv[optind]);
-+        return len;
-+    }
-     ret = blk_zone_mgmt(blk, BLK_ZO_FINISH, offset, len);
-     if (ret < 0) {
-         printf("zone finish failed: %s\n", strerror(-ret));
-@@ -1855,8 +1893,16 @@ static int zone_reset_f(BlockBackend *blk, int argc, char **argv)
-     int64_t offset, len;
-     ++optind;
-     offset = cvtnum(argv[optind]);
-+    if (offset < 0) {
-+        print_cvtnum_err(offset, argv[optind]);
-+        return offset;
-+    }
-     ++optind;
-     len = cvtnum(argv[optind]);
-+    if (len < 0) {
-+        print_cvtnum_err(len, argv[optind]);
-+        return len;
-+    }
-     ret = blk_zone_mgmt(blk, BLK_ZO_RESET, offset, len);
-     if (ret < 0) {
-         printf("zone reset failed: %s\n", strerror(-ret));
+         monitor_set_cur(qemu_coroutine_self(), cur_mon);
+@@ -226,7 +227,9 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
+              * Move back to iohandler_ctx so that nested event loops for
+              * qemu_aio_context don't start new monitor commands.
+              */
+-            aio_co_reschedule_self(iohandler_get_aio_context());
++            aio_co_schedule(iohandler_get_aio_context(),
++                            qemu_coroutine_self());
++            qemu_coroutine_yield();
+         }
+     } else {
+        /*
 -- 
 2.45.2
 
