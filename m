@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD23C27C75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ACEBC27C65
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 17:38:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH5Qw-00008h-9I; Tue, 11 Jun 2024 13:37:22 -0400
+	id 1sH5R2-0000E8-Bl; Tue, 11 Jun 2024 13:37:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5Qu-00007f-P9
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:37:20 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5R0-0000Cv-V3
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:37:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5Qt-0008Ul-2K
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:37:20 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5Qz-00005v-7h
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:37:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718127438;
+ s=mimecast20190719; t=1718127444;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Pic+NTGR2xDZGvJdSIIWUg6ye59mZnjGjver02Rud84=;
- b=JNBSZ6KpPTXcX2sYEBJ7C9irFR3XhyG3rWxJ2d5TGAVjEDgK+yYs35rHY9pIKFIwNyDNaN
- 6f/UEoFOMg38Q87ZIMVuhiZ8EYBCO7c/rteAI1lZgD+95vQuQrLQDzAVu+uZYu9NfBbLZP
- 8TrwoC51hthba4SI6uUgHdvJ6ZY1v/U=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=lv65QFUQSYP8QtBV0oK5wLlGxJlscP+ME8lnikpyAKI=;
+ b=RQAOUr2GFo25N59Ff0Y9IJvrIGlvTUHWMML9R2fuvwjVs3cSqAdq8hPil5D61Df1JzgTsx
+ b9N63jeVkGK7JXGfcwyK5cSsegFdqpvZfibuD+Wj7c/lfm1VKvA4T/5NPzCpnbAex2gBYs
+ NkICwkcJ+qC+KQRF2ysnfWAQ6lI5qVM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-FUDJC3w9OQaijwwYgsIhrA-1; Tue,
- 11 Jun 2024 13:37:16 -0400
-X-MC-Unique: FUDJC3w9OQaijwwYgsIhrA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-212-1K0sGGBHNOKk_ZSS8-hPRA-1; Tue,
+ 11 Jun 2024 13:37:20 -0400
+X-MC-Unique: 1K0sGGBHNOKk_ZSS8-hPRA-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CEA7A19560BC; Tue, 11 Jun 2024 17:37:15 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DCB071955D82; Tue, 11 Jun 2024 17:37:19 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.39.192.130])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9B38B19560AF; Tue, 11 Jun 2024 17:37:14 +0000 (UTC)
+ id A8BC419560AB; Tue, 11 Jun 2024 17:37:18 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 6/8] linux-aio: add IO_CMD_FDSYNC command support
-Date: Tue, 11 Jun 2024 19:36:56 +0200
-Message-ID: <20240611173658.231831-7-kwolf@redhat.com>
+Subject: [PULL 8/8] crypto/block: drop qcrypto_block_open() n_threads argument
+Date: Tue, 11 Jun 2024 19:36:58 +0200
+Message-ID: <20240611173658.231831-9-kwolf@redhat.com>
 In-Reply-To: <20240611173658.231831-1-kwolf@redhat.com>
 References: <20240611173658.231831-1-kwolf@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
@@ -81,117 +82,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-Libaio defines IO_CMD_FDSYNC command to sync all outstanding
-asynchronous I/O operations, by flushing out file data to the
-disk storage. Enable linux-aio to submit such aio request.
+The n_threads argument is no longer used since the previous commit.
+Remove it.
 
-When using aio=native without fdsync() support, QEMU creates
-pthreads, and destroying these pthreads results in TLB flushes.
-In a real-time guest environment, TLB flushes cause a latency
-spike. This patch helps to avoid such spikes.
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
-Message-ID: <20240425070412.37248-1-ppandit@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20240527155851.892885-3-stefanha@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Acked-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- include/block/raw-aio.h |  1 +
- block/file-posix.c      |  9 +++++++++
- block/linux-aio.c       | 21 ++++++++++++++++++++-
- 3 files changed, 30 insertions(+), 1 deletion(-)
+ crypto/blockpriv.h             | 1 -
+ include/crypto/block.h         | 2 --
+ block/crypto.c                 | 1 -
+ block/qcow.c                   | 2 +-
+ block/qcow2.c                  | 5 ++---
+ crypto/block-luks.c            | 1 -
+ crypto/block-qcow.c            | 6 ++----
+ crypto/block.c                 | 3 +--
+ tests/unit/test-crypto-block.c | 4 ----
+ 9 files changed, 6 insertions(+), 19 deletions(-)
 
-diff --git a/include/block/raw-aio.h b/include/block/raw-aio.h
-index 20e000b8ef..626706827f 100644
---- a/include/block/raw-aio.h
-+++ b/include/block/raw-aio.h
-@@ -60,6 +60,7 @@ void laio_cleanup(LinuxAioState *s);
- int coroutine_fn laio_co_submit(int fd, uint64_t offset, QEMUIOVector *qiov,
-                                 int type, uint64_t dev_max_batch);
+diff --git a/crypto/blockpriv.h b/crypto/blockpriv.h
+index 4bf6043d5d..b8f77cb5eb 100644
+--- a/crypto/blockpriv.h
++++ b/crypto/blockpriv.h
+@@ -59,7 +59,6 @@ struct QCryptoBlockDriver {
+                 QCryptoBlockReadFunc readfunc,
+                 void *opaque,
+                 unsigned int flags,
+-                size_t n_threads,
+                 Error **errp);
  
-+bool laio_has_fdsync(int);
- void laio_detach_aio_context(LinuxAioState *s, AioContext *old_context);
- void laio_attach_aio_context(LinuxAioState *s, AioContext *new_context);
- #endif
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 5c46938936..be25e35ff6 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -159,6 +159,7 @@ typedef struct BDRVRawState {
-     bool has_discard:1;
-     bool has_write_zeroes:1;
-     bool use_linux_aio:1;
-+    bool has_laio_fdsync:1;
-     bool use_linux_io_uring:1;
-     int page_cache_inconsistent; /* errno from fdatasync failure */
-     bool has_fallocate;
-@@ -718,6 +719,9 @@ static int raw_open_common(BlockDriverState *bs, QDict *options,
-         ret = -EINVAL;
-         goto fail;
+     int (*create)(QCryptoBlock *block,
+diff --git a/include/crypto/block.h b/include/crypto/block.h
+index 92e823c9f2..5b5d039800 100644
+--- a/include/crypto/block.h
++++ b/include/crypto/block.h
+@@ -76,7 +76,6 @@ typedef enum {
+  * @readfunc: callback for reading data from the volume
+  * @opaque: data to pass to @readfunc
+  * @flags: bitmask of QCryptoBlockOpenFlags values
+- * @n_threads: allow concurrent I/O from up to @n_threads threads
+  * @errp: pointer to a NULL-initialized error object
+  *
+  * Create a new block encryption object for an existing
+@@ -113,7 +112,6 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
+                                  QCryptoBlockReadFunc readfunc,
+                                  void *opaque,
+                                  unsigned int flags,
+-                                 size_t n_threads,
+                                  Error **errp);
+ 
+ typedef enum {
+diff --git a/block/crypto.c b/block/crypto.c
+index 21eed909c1..4eed3ffa6a 100644
+--- a/block/crypto.c
++++ b/block/crypto.c
+@@ -363,7 +363,6 @@ static int block_crypto_open_generic(QCryptoBlockFormat format,
+                                        block_crypto_read_func,
+                                        bs,
+                                        cflags,
+-                                       1,
+                                        errp);
+ 
+     if (!crypto->block) {
+diff --git a/block/qcow.c b/block/qcow.c
+index ca8e1d5ec8..c2f89db055 100644
+--- a/block/qcow.c
++++ b/block/qcow.c
+@@ -211,7 +211,7 @@ static int qcow_open(BlockDriverState *bs, QDict *options, int flags,
+                 cflags |= QCRYPTO_BLOCK_OPEN_NO_IO;
+             }
+             s->crypto = qcrypto_block_open(crypto_opts, "encrypt.",
+-                                           NULL, NULL, cflags, 1, errp);
++                                           NULL, NULL, cflags, errp);
+             if (!s->crypto) {
+                 ret = -EINVAL;
+                 goto fail;
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 956128b409..10883a2494 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -321,7 +321,7 @@ qcow2_read_extensions(BlockDriverState *bs, uint64_t start_offset,
+             }
+             s->crypto = qcrypto_block_open(s->crypto_opts, "encrypt.",
+                                            qcow2_crypto_hdr_read_func,
+-                                           bs, cflags, QCOW2_MAX_THREADS, errp);
++                                           bs, cflags, errp);
+             if (!s->crypto) {
+                 return -EINVAL;
+             }
+@@ -1701,8 +1701,7 @@ qcow2_do_open(BlockDriverState *bs, QDict *options, int flags,
+                 cflags |= QCRYPTO_BLOCK_OPEN_NO_IO;
+             }
+             s->crypto = qcrypto_block_open(s->crypto_opts, "encrypt.",
+-                                           NULL, NULL, cflags,
+-                                           QCOW2_MAX_THREADS, errp);
++                                           NULL, NULL, cflags, errp);
+             if (!s->crypto) {
+                 ret = -EINVAL;
+                 goto fail;
+diff --git a/crypto/block-luks.c b/crypto/block-luks.c
+index 3357852c0a..5b777c15d3 100644
+--- a/crypto/block-luks.c
++++ b/crypto/block-luks.c
+@@ -1189,7 +1189,6 @@ qcrypto_block_luks_open(QCryptoBlock *block,
+                         QCryptoBlockReadFunc readfunc,
+                         void *opaque,
+                         unsigned int flags,
+-                        size_t n_threads,
+                         Error **errp)
+ {
+     QCryptoBlockLUKS *luks = NULL;
+diff --git a/crypto/block-qcow.c b/crypto/block-qcow.c
+index 02305058e3..42e9556e42 100644
+--- a/crypto/block-qcow.c
++++ b/crypto/block-qcow.c
+@@ -44,7 +44,6 @@ qcrypto_block_qcow_has_format(const uint8_t *buf G_GNUC_UNUSED,
+ static int
+ qcrypto_block_qcow_init(QCryptoBlock *block,
+                         const char *keysecret,
+-                        size_t n_threads,
+                         Error **errp)
+ {
+     char *password;
+@@ -100,7 +99,6 @@ qcrypto_block_qcow_open(QCryptoBlock *block,
+                         QCryptoBlockReadFunc readfunc G_GNUC_UNUSED,
+                         void *opaque G_GNUC_UNUSED,
+                         unsigned int flags,
+-                        size_t n_threads,
+                         Error **errp)
+ {
+     if (flags & QCRYPTO_BLOCK_OPEN_NO_IO) {
+@@ -115,7 +113,7 @@ qcrypto_block_qcow_open(QCryptoBlock *block,
+             return -1;
+         }
+         return qcrypto_block_qcow_init(block, options->u.qcow.key_secret,
+-                                       n_threads, errp);
++                                       errp);
      }
-+    if (s->use_linux_aio) {
-+        s->has_laio_fdsync = laio_has_fdsync(s->fd);
-+    }
- #else
-     if (s->use_linux_aio) {
-         error_setg(errp, "aio=native was specified, but is not supported "
-@@ -2598,6 +2602,11 @@ static int coroutine_fn raw_co_flush_to_disk(BlockDriverState *bs)
-     if (raw_check_linux_io_uring(s)) {
-         return luring_co_submit(bs, s->fd, 0, NULL, QEMU_AIO_FLUSH);
-     }
-+#endif
-+#ifdef CONFIG_LINUX_AIO
-+    if (s->has_laio_fdsync && raw_check_linux_aio(s)) {
-+        return laio_co_submit(s->fd, 0, NULL, QEMU_AIO_FLUSH, 0);
-+    }
- #endif
-     return raw_thread_pool_submit(handle_aiocb_flush, &acb);
  }
-diff --git a/block/linux-aio.c b/block/linux-aio.c
-index ec05d946f3..e3b5ec9aba 100644
---- a/block/linux-aio.c
-+++ b/block/linux-aio.c
-@@ -384,6 +384,9 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
-     case QEMU_AIO_READ:
-         io_prep_preadv(iocbs, fd, qiov->iov, qiov->niov, offset);
-         break;
-+    case QEMU_AIO_FLUSH:
-+        io_prep_fdsync(iocbs, fd);
-+        break;
-     /* Currently Linux kernel does not support other operations */
-     default:
-         fprintf(stderr, "%s: invalid AIO request type 0x%x.\n",
-@@ -412,7 +415,7 @@ int coroutine_fn laio_co_submit(int fd, uint64_t offset, QEMUIOVector *qiov,
-     AioContext *ctx = qemu_get_current_aio_context();
-     struct qemu_laiocb laiocb = {
-         .co         = qemu_coroutine_self(),
--        .nbytes     = qiov->size,
-+        .nbytes     = qiov ? qiov->size : 0,
-         .ctx        = aio_get_linux_aio(ctx),
-         .ret        = -EINPROGRESS,
-         .is_read    = (type == QEMU_AIO_READ),
-@@ -486,3 +489,19 @@ void laio_cleanup(LinuxAioState *s)
+ 
+@@ -135,7 +133,7 @@ qcrypto_block_qcow_create(QCryptoBlock *block,
+         return -1;
      }
-     g_free(s);
+     /* QCow2 has no special header, since everything is hardwired */
+-    return qcrypto_block_qcow_init(block, options->u.qcow.key_secret, 1, errp);
++    return qcrypto_block_qcow_init(block, options->u.qcow.key_secret, errp);
  }
-+
-+bool laio_has_fdsync(int fd)
-+{
-+    struct iocb cb;
-+    struct iocb *cbs[] = {&cb, NULL};
-+
-+    io_context_t ctx = 0;
-+    io_setup(1, &ctx);
-+
-+    /* check if host kernel supports IO_CMD_FDSYNC */
-+    io_prep_fdsync(&cb, fd);
-+    int ret = io_submit(ctx, 1, cbs);
-+
-+    io_destroy(ctx);
-+    return (ret == -EINVAL) ? false : true;
-+}
+ 
+ 
+diff --git a/crypto/block.c b/crypto/block.c
+index ba6d1cebc7..3bcc4270c3 100644
+--- a/crypto/block.c
++++ b/crypto/block.c
+@@ -53,7 +53,6 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
+                                  QCryptoBlockReadFunc readfunc,
+                                  void *opaque,
+                                  unsigned int flags,
+-                                 size_t n_threads,
+                                  Error **errp)
+ {
+     QCryptoBlock *block = g_new0(QCryptoBlock, 1);
+@@ -73,7 +72,7 @@ QCryptoBlock *qcrypto_block_open(QCryptoBlockOpenOptions *options,
+     block->driver = qcrypto_block_drivers[options->format];
+ 
+     if (block->driver->open(block, options, optprefix,
+-                            readfunc, opaque, flags, n_threads, errp) < 0)
++                            readfunc, opaque, flags, errp) < 0)
+     {
+         g_free(block);
+         return NULL;
+diff --git a/tests/unit/test-crypto-block.c b/tests/unit/test-crypto-block.c
+index 6cfc817a92..42cfab6067 100644
+--- a/tests/unit/test-crypto-block.c
++++ b/tests/unit/test-crypto-block.c
+@@ -303,7 +303,6 @@ static void test_block(gconstpointer opaque)
+                              test_block_read_func,
+                              &header,
+                              0,
+-                             1,
+                              NULL);
+     g_assert(blk == NULL);
+ 
+@@ -312,7 +311,6 @@ static void test_block(gconstpointer opaque)
+                              test_block_read_func,
+                              &header,
+                              QCRYPTO_BLOCK_OPEN_NO_IO,
+-                             1,
+                              &error_abort);
+ 
+     g_assert(qcrypto_block_get_cipher(blk) == NULL);
+@@ -327,7 +325,6 @@ static void test_block(gconstpointer opaque)
+                              test_block_read_func,
+                              &header,
+                              0,
+-                             1,
+                              &error_abort);
+     g_assert(blk);
+ 
+@@ -384,7 +381,6 @@ test_luks_bad_header(gconstpointer data)
+                              test_block_read_func,
+                              &buf,
+                              0,
+-                             1,
+                              &err);
+     g_assert(!blk);
+     g_assert(err);
 -- 
 2.45.2
 
