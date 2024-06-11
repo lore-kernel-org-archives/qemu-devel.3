@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE961C27C75
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 15:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE0EEC27C75
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 16:17:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH3sS-0000WV-9B; Tue, 11 Jun 2024 11:57:40 -0400
+	id 1sH4A7-0001Kh-RB; Tue, 11 Jun 2024 12:15:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
- id 1sH3sQ-0000Un-65
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:57:38 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1sH4A4-0001J7-Ry
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 12:15:53 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
- id 1sH3sN-0003SE-RF
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:57:37 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-57c714a1e24so1488222a12.2
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 08:57:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1sH4A0-0008Ek-An
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 12:15:52 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-70436048c25so2383688b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 09:15:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ionos.com; s=google; t=1718121449; x=1718726249; darn=nongnu.org;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qd2Rpmamp36iDBTKs57xjKnW8LLsn8kRk0AsQeNZ1MA=;
- b=g7IZgwvK8Gop0h5C+P20+fXeTWh+jSOxPwopjEhbYuafhz0Qa4ZnQzRs76uN9tAIVG
- YwDhxXwHtGxcDzF9yW+EZHyVmtJlSjU/uNW/8K5dkXoBpwOEwB7ZHRZ2aQXoDhD1N0Uz
- 25K6uoULE0yNxeGwhb+a+CCOtVHGDxIqMnRjtIDmX5KmfxtDROUss88rEfyT56iz5t/q
- a/z6Oy39hTQ//Mt2B5K45m6UvP0fDNWLpCmubpBDwVM3R+46zFusnmjqpF5kxLq/b9RC
- gN3C5dKg9bdQnTARJn44YVYs2matreCgsmGEMOslf2oipE56BFDEP8/yibnzyjLsmvxt
- E+pg==
+ d=sifive.com; s=google; t=1718122545; x=1718727345; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=X8U9W6LTNbFhBVhx5JOhYBJi8+SwDZy2bHZfTD8JNyo=;
+ b=B7Nv6zXaPRkjq2OUN6SzG18wKpx2YQhMgmeBcQk8HhsosFOKkcRZVElzmDRnP7ZUwu
+ OKP68UdWgaU0MJ+VURttWiqGrsiSx2cqa11/OwQm7c+yaKo+tevENRFOqOx0hLClR4pX
+ G17hUDG3niumQAq1ATVsg37+71tf49JyI5w/2yfCW8sem3rX9BsvsvF2qU1dCSWh8sqw
+ lf6vzxvPdvGYozaimB8KGLsrMzZS88D2cZwVoToz4O0sb8he7NXrVoErSZOPr350LkGK
+ V7akKK3tKoLGu1QIfGIDALiLp7fMOapRg6cYXOIFTz/Pa0rpx3+AM+abtHCpxQ0NVaPj
+ +6nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718121449; x=1718726249;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qd2Rpmamp36iDBTKs57xjKnW8LLsn8kRk0AsQeNZ1MA=;
- b=NnUw1xBEgrZP3cCFpmavJEeob57xyvOEW751F0S68iCySBe7T8PJ0YNB0wshh++64S
- tNiYV6Etxe6knb4Q8zGFgWCCFP41iFHcKg4aV7jWdl+gL/rUBIgaOvoLJQ/Fs6rrFZxH
- NehNrWTCYwbg2nqLSLy6IeexkiLh9jPJdBCMZpmGxjmc718DYfUI1nNv9T9z99aR/zoy
- a6eXfqbaoJ+/vEhvb0/9Ph9qLGW/Epx7gzidhCeLeML9uTY3HlMCgt6eykvammP0oT4n
- 6zzVqPOrVVCKEMR/NBrTqhLkP1IcxZr3exPoq+j9dDXScl+aGOXfmiEwbg9Fc9FIHbhL
- k//w==
+ d=1e100.net; s=20230601; t=1718122545; x=1718727345;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=X8U9W6LTNbFhBVhx5JOhYBJi8+SwDZy2bHZfTD8JNyo=;
+ b=BUjY2XgqnZ8pifo29kGkiL0Wb1+qI9RnGLIxoVR/R+BABpXBQXysFlDZEs9ZRIk+Gk
+ FbdaPjdxGTvsKK5Mx+tu7G/s8I5i/ipmGaRPBc6T3X5ufHkDAJ0HUuUw3FStp3svAqf5
+ n2bhrki56ICoZdrxqOPmfWJ67CA/44kizrh4atmEAaZVMkUqPucoGEjxJM5A/Ic3Pf5o
+ yQY9AHt39rf5qHFc0bttZjqoO2YcaGjDs+Z5vXnL8dIU42w0+lCRfiNL2VLX/71wjPGy
+ kKLU6fCVapn8869Gi6uORSwUnUWDUAClgHUgHrrGcjBDKFN3FDTjwLIja5PWaYeUbM+4
+ PYAQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUflHDZ4r5L+WdJo3yfFB2unDLTr2a8RDLp+y/BmboYZxrkMw71KD00eAbIwn2ZAPKY4rW+8fmX7KK0/lvVlBbaSHIbkwo=
-X-Gm-Message-State: AOJu0YwPCKZk2pJVKeRSLUpA8+1eIritWqztXs41u/xO/Tsoe3ngdNaJ
- ugrRW76wtyYOyXLYfvLArm89nZivqw5vvIXuMijB8Y2TmBQStw1sst7Fje9yef/HTR7ekNPkM9a
- X3DkRpNaFTcoSxG9OMc5RT7YzgDwjh2KykqiJaQ==
-X-Google-Smtp-Source: AGHT+IHq0p1FHweEXd0wsqWJ4MFkIIAxJDShw4RNWASpw0xPbN89q+TKoFH4uzyFCg7lO/Zb0uKdN3W5awc0GC0gvsE=
-X-Received: by 2002:a50:a685:0:b0:578:72d4:e3b0 with SMTP id
- 4fb4d7f45d1cf-57c509a6080mr7860717a12.36.1718121449152; Tue, 11 Jun 2024
- 08:57:29 -0700 (PDT)
+ AJvYcCXo92L3SLNKmjaOV6qZuo3WYs/gzLPXDxoH43fCb1wg8CdZTMmi7W+heQvK11G/WASTN8Em9/L0kt2jKD5clPbkeB4ux5Q=
+X-Gm-Message-State: AOJu0Yz8bf8K785+D9vich6TdzNXDwTEQq3kl0wUIzOefTEADy2Me4cq
+ 1RHoFGfhxXD2ji9hAr8rnOAmgJGIwvChzYuM2dzRTlrX/0farR5AkfBEaELXoic=
+X-Google-Smtp-Source: AGHT+IGaTP+mYec18ysCnpOPdeMj18Zlrq9GVTXyT+3fZ0OGwTkerekBkf1o9EMkVomut/PGiLJlxQ==
+X-Received: by 2002:a05:6a20:2443:b0:1b6:a1c1:b8ca with SMTP id
+ adf61e73a8af0-1b6a1c1ba19mr6758651637.47.1718122544519; 
+ Tue, 11 Jun 2024 09:15:44 -0700 (PDT)
+Received: from [192.168.100.252] (59-124-168-89.hinet-ip.hinet.net.
+ [59.124.168.89]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7042571df69sm5886907b3a.52.2024.06.11.09.15.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Jun 2024 09:15:43 -0700 (PDT)
+Message-ID: <6334e628-f823-4d9c-be24-9d721af2e5fe@sifive.com>
+Date: Wed, 12 Jun 2024 00:15:38 +0800
 MIME-Version: 1.0
-References: <CAHEcVy6_HUjwvww9WrqeqruYRyEDwq1Tee-tm3mxaQE=w92-HA@mail.gmail.com>
- <ZN37R//1H+rDTzeS@redhat.com>
- <CAHEcVy6U3pSyMue=SZ8b_JyWurzgj5fN3Htfg8QqS_Ho16Ye4Q@mail.gmail.com>
-In-Reply-To: <CAHEcVy6U3pSyMue=SZ8b_JyWurzgj5fN3Htfg8QqS_Ho16Ye4Q@mail.gmail.com>
-From: Yu Zhang <yu.zhang@ionos.com>
-Date: Tue, 11 Jun 2024 17:57:18 +0200
-Message-ID: <CAHEcVy6G5e=AiDmX66R0r=EnjB7ANDfyhqgvY+KzJ3_8FBfJ_w@mail.gmail.com>
-Subject: Re: about QEMU TLS
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>, Jinpu Wang <jinpu.wang@ionos.com>, 
- Elmar Gerdes <elmar.gerdes@ionos.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: permerror client-ip=2a00:1450:4864:20::534;
- envelope-from=yu.zhang@ionos.com; helo=mail-ed1-x534.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 03/13] hw/riscv: add RISC-V IOMMU base emulation
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ tjeznach@rivosinc.com, ajones@ventanamicro.com, frank.chang@sifive.com,
+ Sebastien Boeuf <seb@rivosinc.com>
+References: <20240523173955.1940072-1-dbarboza@ventanamicro.com>
+ <20240523173955.1940072-4-dbarboza@ventanamicro.com>
+Content-Language: en-US
+From: Jason Chien <jason.chien@sifive.com>
+In-Reply-To: <20240523173955.1940072-4-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=jason.chien@sifive.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,162 +101,2041 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Daniel and all,
+Hi Daniel,
 
-When I was using TLS encryption for VM live-migration, I noticed one
-thing: the migration works regardless of the "endpoint" setting (that
-is: either "endpoint=3Dserver", or "endpoint=3Dclient") on the target
-server.
-The line I added is:
-"-object tls-creds-x509,id=3Dtls0,dir=3D/path/to/qemutls,endpoint=3Dclient
-(or server),verify-peer=3Don".
+On 2024/5/24 上午 01:39, Daniel Henrique Barboza wrote:
+> From: Tomasz Jeznach <tjeznach@rivosinc.com>
+>
+> The RISC-V IOMMU specification is now ratified as-per the RISC-V
+> international process. The latest frozen specifcation can be found
+> at:
+>
+> https://github.com/riscv-non-isa/riscv-iommu/releases/download/v1.0/riscv-iommu.pdf
+>
+> Add the foundation of the device emulation for RISC-V IOMMU, which
+> includes an IOMMU that has no capabilities but MSI interrupt support and
+> fault queue interfaces. We'll add add more features incrementally in the
+> next patches.
+>
+> Co-developed-by: Sebastien Boeuf <seb@rivosinc.com>
+> Signed-off-by: Sebastien Boeuf <seb@rivosinc.com>
+> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>   hw/riscv/Kconfig         |    4 +
+>   hw/riscv/meson.build     |    1 +
+>   hw/riscv/riscv-iommu.c   | 1602 ++++++++++++++++++++++++++++++++++++++
+>   hw/riscv/riscv-iommu.h   |  141 ++++
+>   hw/riscv/trace-events    |   11 +
+>   hw/riscv/trace.h         |    1 +
+>   include/hw/riscv/iommu.h |   36 +
+>   meson.build              |    1 +
+>   8 files changed, 1797 insertions(+)
+>   create mode 100644 hw/riscv/riscv-iommu.c
+>   create mode 100644 hw/riscv/riscv-iommu.h
+>   create mode 100644 hw/riscv/trace-events
+>   create mode 100644 hw/riscv/trace.h
+>   create mode 100644 include/hw/riscv/iommu.h
+>
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index a2030e3a6f..f69d6e3c8e 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -1,3 +1,6 @@
+> +config RISCV_IOMMU
+> +    bool
+> +
+>   config RISCV_NUMA
+>       bool
+>   
+> @@ -47,6 +50,7 @@ config RISCV_VIRT
+>       select SERIAL
+>       select RISCV_ACLINT
+>       select RISCV_APLIC
+> +    select RISCV_IOMMU
+>       select RISCV_IMSIC
+>       select SIFIVE_PLIC
+>       select SIFIVE_TEST
+> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+> index f872674093..cbc99c6e8e 100644
+> --- a/hw/riscv/meson.build
+> +++ b/hw/riscv/meson.build
+> @@ -10,5 +10,6 @@ riscv_ss.add(when: 'CONFIG_SIFIVE_U', if_true: files('sifive_u.c'))
+>   riscv_ss.add(when: 'CONFIG_SPIKE', if_true: files('spike.c'))
+>   riscv_ss.add(when: 'CONFIG_MICROCHIP_PFSOC', if_true: files('microchip_pfsoc.c'))
+>   riscv_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
+> +riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files('riscv-iommu.c'))
+>   
+>   hw_arch += {'riscv': riscv_ss}
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> new file mode 100644
+> index 0000000000..39b4ff1405
+> --- /dev/null
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -0,0 +1,1602 @@
+> +/*
+> + * QEMU emulation of an RISC-V IOMMU
+> + *
+> + * Copyright (C) 2021-2023, Rivos Inc.
+> + *
+> + * This program is free software; you can redistribute it and/or modify
+> + * it under the terms of the GNU General Public License as published by
+> + * the Free Software Foundation; either version 2 of the License.
+> + *
+> + * This program is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> + * GNU General Public License for more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along
+> + * with this program; if not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qom/object.h"
+> +#include "hw/pci/pci_bus.h"
+> +#include "hw/pci/pci_device.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/riscv/riscv_hart.h"
+> +#include "migration/vmstate.h"
+> +#include "qapi/error.h"
+> +#include "qemu/timer.h"
+> +
+> +#include "cpu_bits.h"
+> +#include "riscv-iommu.h"
+> +#include "riscv-iommu-bits.h"
+> +#include "trace.h"
+> +
+> +#define LIMIT_CACHE_CTX               (1U << 7)
+> +#define LIMIT_CACHE_IOT               (1U << 20)
+> +
+> +/* Physical page number coversions */
+> +#define PPN_PHYS(ppn)                 ((ppn) << TARGET_PAGE_BITS)
+> +#define PPN_DOWN(phy)                 ((phy) >> TARGET_PAGE_BITS)
+> +
+> +typedef struct RISCVIOMMUContext RISCVIOMMUContext;
+> +typedef struct RISCVIOMMUEntry RISCVIOMMUEntry;
+> +
+> +/* Device assigned I/O address space */
+> +struct RISCVIOMMUSpace {
+> +    IOMMUMemoryRegion iova_mr;  /* IOVA memory region for attached device */
+> +    AddressSpace iova_as;       /* IOVA address space for attached device */
+> +    RISCVIOMMUState *iommu;     /* Managing IOMMU device state */
+> +    uint32_t devid;             /* Requester identifier, AKA device_id */
+> +    bool notifier;              /* IOMMU unmap notifier enabled */
+> +    QLIST_ENTRY(RISCVIOMMUSpace) list;
+> +};
+> +
+> +/* Device translation context state. */
+> +struct RISCVIOMMUContext {
+> +    uint64_t devid:24;          /* Requester Id, AKA device_id */
+> +    uint64_t pasid:20;          /* Process Address Space ID */
+> +    uint64_t __rfu:20;          /* reserved */
+> +    uint64_t tc;                /* Translation Control */
+> +    uint64_t ta;                /* Translation Attributes */
+> +    uint64_t msi_addr_mask;     /* MSI filtering - address mask */
+> +    uint64_t msi_addr_pattern;  /* MSI filtering - address pattern */
+> +    uint64_t msiptp;            /* MSI redirection page table pointer */
+> +};
+> +
+> +/* IOMMU index for transactions without PASID specified. */
+> +#define RISCV_IOMMU_NOPASID 0
+> +
+> +static void riscv_iommu_notify(RISCVIOMMUState *s, int vec)
+> +{
+> +    const uint32_t fctl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FCTL);
+> +    uint32_t ipsr, ivec;
+> +
+> +    if (fctl & RISCV_IOMMU_FCTL_WSI || !s->notify) {
+> +        return;
+> +    }
+> +
+> +    ipsr = riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_IPSR, (1 << vec), 0);
+> +    ivec = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_IVEC);
+> +
+> +    if (!(ipsr & (1 << vec))) {
+> +        s->notify(s, (ivec >> (vec * 4)) & 0x0F);
+> +    }
+> +}
+> +
+> +static void riscv_iommu_fault(RISCVIOMMUState *s,
+> +                              struct riscv_iommu_fq_record *ev)
+> +{
+> +    uint32_t ctrl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQCSR);
+> +    uint32_t head = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQH) & s->fq_mask;
+> +    uint32_t tail = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQT) & s->fq_mask;
+> +    uint32_t next = (tail + 1) & s->fq_mask;
+> +    uint32_t devid = get_field(ev->hdr, RISCV_IOMMU_FQ_HDR_DID);
+> +
+> +    trace_riscv_iommu_flt(s->parent_obj.id, PCI_BUS_NUM(devid), PCI_SLOT(devid),
+> +                          PCI_FUNC(devid), ev->hdr, ev->iotval);
+> +
+> +    if (!(ctrl & RISCV_IOMMU_FQCSR_FQON) ||
+> +        !!(ctrl & (RISCV_IOMMU_FQCSR_FQOF | RISCV_IOMMU_FQCSR_FQMF))) {
+> +        return;
+> +    }
+> +
+> +    if (head == next) {
+> +        riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_FQCSR,
+> +                              RISCV_IOMMU_FQCSR_FQOF, 0);
+> +    } else {
+> +        dma_addr_t addr = s->fq_addr + tail * sizeof(*ev);
+> +        if (dma_memory_write(s->target_as, addr, ev, sizeof(*ev),
+> +                             MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
+> +            riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_FQCSR,
+> +                                  RISCV_IOMMU_FQCSR_FQMF, 0);
+> +        } else {
+> +            riscv_iommu_reg_set32(s, RISCV_IOMMU_REG_FQT, next);
+> +        }
+> +    }
+> +
+> +    if (ctrl & RISCV_IOMMU_FQCSR_FIE) {
+> +        riscv_iommu_notify(s, RISCV_IOMMU_INTR_FQ);
+> +    }
+> +}
+> +
+> +static void riscv_iommu_pri(RISCVIOMMUState *s,
+> +    struct riscv_iommu_pq_record *pr)
+> +{
+> +    uint32_t ctrl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_PQCSR);
+> +    uint32_t head = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_PQH) & s->pq_mask;
+> +    uint32_t tail = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_PQT) & s->pq_mask;
+> +    uint32_t next = (tail + 1) & s->pq_mask;
+> +    uint32_t devid = get_field(pr->hdr, RISCV_IOMMU_PREQ_HDR_DID);
+> +
+> +    trace_riscv_iommu_pri(s->parent_obj.id, PCI_BUS_NUM(devid), PCI_SLOT(devid),
+> +                          PCI_FUNC(devid), pr->payload);
+> +
+> +    if (!(ctrl & RISCV_IOMMU_PQCSR_PQON) ||
+> +        !!(ctrl & (RISCV_IOMMU_PQCSR_PQOF | RISCV_IOMMU_PQCSR_PQMF))) {
+> +        return;
+> +    }
+> +
+> +    if (head == next) {
+> +        riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_PQCSR,
+> +                              RISCV_IOMMU_PQCSR_PQOF, 0);
+> +    } else {
+> +        dma_addr_t addr = s->pq_addr + tail * sizeof(*pr);
+> +        if (dma_memory_write(s->target_as, addr, pr, sizeof(*pr),
+> +                             MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
+> +            riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_PQCSR,
+> +                                  RISCV_IOMMU_PQCSR_PQMF, 0);
+> +        } else {
+> +            riscv_iommu_reg_set32(s, RISCV_IOMMU_REG_PQT, next);
+> +        }
+> +    }
+> +
+> +    if (ctrl & RISCV_IOMMU_PQCSR_PIE) {
+> +        riscv_iommu_notify(s, RISCV_IOMMU_INTR_PQ);
+> +    }
+> +}
+> +
+> +/* Portable implementation of pext_u64, bit-mask extraction. */
+> +static uint64_t _pext_u64(uint64_t val, uint64_t ext)
+> +{
+> +    uint64_t ret = 0;
+> +    uint64_t rot = 1;
+> +
+> +    while (ext) {
+> +        if (ext & 1) {
+> +            if (val & 1) {
+> +                ret |= rot;
+> +            }
+> +            rot <<= 1;
+> +        }
+> +        val >>= 1;
+> +        ext >>= 1;
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+> +/* Check if GPA matches MSI/MRIF pattern. */
+> +static bool riscv_iommu_msi_check(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+> +    dma_addr_t gpa)
+> +{
+> +    if (get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_MODE) !=
+> +        RISCV_IOMMU_DC_MSIPTP_MODE_FLAT) {
+> +        return false; /* Invalid MSI/MRIF mode */
+> +    }
+> +
+> +    if ((PPN_DOWN(gpa) ^ ctx->msi_addr_pattern) & ~ctx->msi_addr_mask) {
+> +        return false; /* GPA not in MSI range defined by AIA IMSIC rules. */
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +/* RISCV IOMMU Address Translation Lookup - Page Table Walk */
+> +static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+> +    IOMMUTLBEntry *iotlb)
+> +{
+> +    /* Early check for MSI address match when IOVA == GPA */
+> +    if (iotlb->perm & IOMMU_WO &&
+> +        riscv_iommu_msi_check(s, ctx, iotlb->iova)) {
+> +        iotlb->target_as = &s->trap_as;
+> +        iotlb->translated_addr = iotlb->iova;
+> +        iotlb->addr_mask = ~TARGET_PAGE_MASK;
+> +        return 0;
+> +    }
+> +
+> +    /* Exit early for pass-through mode. */
+> +    iotlb->translated_addr = iotlb->iova;
+> +    iotlb->addr_mask = ~TARGET_PAGE_MASK;
+> +    /* Allow R/W in pass-through mode */
+> +    iotlb->perm = IOMMU_RW;
+> +    return 0;
+> +}
+> +
+> +static void riscv_iommu_report_fault(RISCVIOMMUState *s,
+> +                                     RISCVIOMMUContext *ctx,
+> +                                     uint32_t fault_type, uint32_t cause,
+> +                                     bool pv,
+> +                                     uint64_t iotval, uint64_t iotval2)
+> +{
+> +    struct riscv_iommu_fq_record ev = { 0 };
+> +
+> +    if (ctx->tc & RISCV_IOMMU_DC_TC_DTF) {
+> +        switch (cause) {
+> +        case RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED:
+> +        case RISCV_IOMMU_FQ_CAUSE_DDT_LOAD_FAULT:
+> +        case RISCV_IOMMU_FQ_CAUSE_DDT_INVALID:
+> +        case RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED:
+> +        case RISCV_IOMMU_FQ_CAUSE_DDT_CORRUPTED:
+> +        case RISCV_IOMMU_FQ_CAUSE_INTERNAL_DP_ERROR:
+> +        case RISCV_IOMMU_FQ_CAUSE_MSI_WR_FAULT:
+> +            break;
+> +        default:
+> +            /* DTF prevents reporting a fault for this given cause */
+> +            return;
+> +        }
+> +    }
+> +
+> +    ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_CAUSE, cause);
+> +    ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_TTYPE, fault_type);
+> +    ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_DID, ctx->devid);
+> +    ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_PV, true);
+> +
+> +    if (pv) {
+> +        ev.hdr = set_field(ev.hdr, RISCV_IOMMU_FQ_HDR_PID, ctx->pasid);
+> +    }
+> +
+> +    ev.iotval = iotval;
+> +    ev.iotval2 = iotval2;
+> +
+> +    riscv_iommu_fault(s, &ev);
+> +}
+> +
+> +/* Redirect MSI write for given GPA. */
+> +static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
+> +    RISCVIOMMUContext *ctx, uint64_t gpa, uint64_t data,
+> +    unsigned size, MemTxAttrs attrs)
+> +{
+> +    MemTxResult res;
+> +    dma_addr_t addr;
+> +    uint64_t intn;
+> +    uint32_t n190;
+> +    uint64_t pte[2];
+> +    int fault_type = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
+> +    int cause;
+> +
+> +    if (!riscv_iommu_msi_check(s, ctx, gpa)) {
+> +        res = MEMTX_ACCESS_ERROR;
+> +        cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
+> +        goto err;
+> +    }
+> +
+> +    /* Interrupt File Number */
+> +    intn = _pext_u64(PPN_DOWN(gpa), ctx->msi_addr_mask);
+> +    if (intn >= 256) {
+> +        /* Interrupt file number out of range */
+> +        res = MEMTX_ACCESS_ERROR;
+> +        cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
+> +        goto err;
+> +    }
+> +
+> +    /* fetch MSI PTE */
+> +    addr = PPN_PHYS(get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_PPN));
+> +    addr = addr | (intn * sizeof(pte));
+> +    res = dma_memory_read(s->target_as, addr, &pte, sizeof(pte),
+> +            MEMTXATTRS_UNSPECIFIED);
+> +    if (res != MEMTX_OK) {
+> +        if (res == MEMTX_DECODE_ERROR) {
+> +            cause = RISCV_IOMMU_FQ_CAUSE_MSI_PT_CORRUPTED;
+> +        } else {
+> +            cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
+> +        }
+> +        goto err;
+> +    }
+> +
+> +    le64_to_cpus(&pte[0]);
+> +    le64_to_cpus(&pte[1]);
+> +
+> +    if (!(pte[0] & RISCV_IOMMU_MSI_PTE_V) || (pte[0] & RISCV_IOMMU_MSI_PTE_C)) {
+> +        /*
+> +         * The spec mentions that: "If msipte.C == 1, then further
+> +         * processing to interpret the PTE is implementation
+> +         * defined.". We'll abort with cause = 262 for this
+> +         * case too.
+> +         */
+> +        res = MEMTX_ACCESS_ERROR;
+> +        cause = RISCV_IOMMU_FQ_CAUSE_MSI_INVALID;
+> +        goto err;
+> +    }
+> +
+> +    switch (get_field(pte[0], RISCV_IOMMU_MSI_PTE_M)) {
+> +    case RISCV_IOMMU_MSI_PTE_M_BASIC:
+> +        /* MSI Pass-through mode */
+> +        addr = PPN_PHYS(get_field(pte[0], RISCV_IOMMU_MSI_PTE_PPN));
+> +        addr = addr | (gpa & TARGET_PAGE_MASK);
+> +
+> +        trace_riscv_iommu_msi(s->parent_obj.id, PCI_BUS_NUM(ctx->devid),
+> +                              PCI_SLOT(ctx->devid), PCI_FUNC(ctx->devid),
+> +                              gpa, addr);
+> +
+> +        res = dma_memory_write(s->target_as, addr, &data, size, attrs);
+> +        if (res != MEMTX_OK) {
+> +            cause = RISCV_IOMMU_FQ_CAUSE_MSI_WR_FAULT;
+> +            goto err;
+> +        }
+> +
+> +        return MEMTX_OK;
+> +    case RISCV_IOMMU_MSI_PTE_M_MRIF:
+> +        /* MRIF mode, continue. */
+> +        break;
+> +    default:
+> +        res = MEMTX_ACCESS_ERROR;
+> +        cause = RISCV_IOMMU_FQ_CAUSE_MSI_MISCONFIGURED;
+> +        goto err;
+> +    }
+> +
+> +    /*
+> +     * Report an error for interrupt identities exceeding the maximum allowed
+> +     * for an IMSIC interrupt file (2047) or destination address is not 32-bit
+> +     * aligned. See IOMMU Specification, Chapter 2.3. MSI page tables.
+> +     */
+> +    if ((data > 2047) || (gpa & 3)) {
+> +        res = MEMTX_ACCESS_ERROR;
+> +        cause = RISCV_IOMMU_FQ_CAUSE_MSI_MISCONFIGURED;
+> +        goto err;
+> +    }
+> +
+> +    /* MSI MRIF mode, non atomic pending bit update */
+> +
+> +    /* MRIF pending bit address */
+> +    addr = get_field(pte[0], RISCV_IOMMU_MSI_PTE_MRIF_ADDR) << 9;
+> +    addr = addr | ((data & 0x7c0) >> 3);
+> +
+> +    trace_riscv_iommu_msi(s->parent_obj.id, PCI_BUS_NUM(ctx->devid),
+> +                          PCI_SLOT(ctx->devid), PCI_FUNC(ctx->devid),
+> +                          gpa, addr);
+> +
+> +    /* MRIF pending bit mask */
+> +    data = 1ULL << (data & 0x03f);
+> +    res = dma_memory_read(s->target_as, addr, &intn, sizeof(intn), attrs);
+> +    if (res != MEMTX_OK) {
+> +        cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
+> +        goto err;
+> +    }
+> +
+> +    intn = intn | data;
+> +    res = dma_memory_write(s->target_as, addr, &intn, sizeof(intn), attrs);
+> +    if (res != MEMTX_OK) {
+> +        cause = RISCV_IOMMU_FQ_CAUSE_MSI_WR_FAULT;
+> +        goto err;
+> +    }
+> +
+> +    /* Get MRIF enable bits */
+> +    addr = addr + sizeof(intn);
+> +    res = dma_memory_read(s->target_as, addr, &intn, sizeof(intn), attrs);
+> +    if (res != MEMTX_OK) {
+> +        cause = RISCV_IOMMU_FQ_CAUSE_MSI_LOAD_FAULT;
+> +        goto err;
+> +    }
+> +
+> +    if (!(intn & data)) {
+> +        /* notification disabled, MRIF update completed. */
+> +        return MEMTX_OK;
+> +    }
+> +
+> +    /* Send notification message */
+> +    addr = PPN_PHYS(get_field(pte[1], RISCV_IOMMU_MSI_MRIF_NPPN));
+> +    n190 = get_field(pte[1], RISCV_IOMMU_MSI_MRIF_NID) |
+> +          (get_field(pte[1], RISCV_IOMMU_MSI_MRIF_NID_MSB) << 10);
+> +
+> +    res = dma_memory_write(s->target_as, addr, &n190, sizeof(n190), attrs);
+> +    if (res != MEMTX_OK) {
+> +        cause = RISCV_IOMMU_FQ_CAUSE_MSI_WR_FAULT;
+> +        goto err;
+> +    }
+> +
+> +    return MEMTX_OK;
+> +
+> +err:
+> +    riscv_iommu_report_fault(s, ctx, fault_type, cause,
+> +                             !!ctx->pasid, 0, 0);
+> +    return res;
+> +}
+> +
+> +/*
+> + * Check device context configuration as described by the
+> + * riscv-iommu spec section "Device-context configuration
+> + * checks".
+> + */
+> +static bool riscv_iommu_validate_device_ctx(RISCVIOMMUState *s,
+> +                                            RISCVIOMMUContext *ctx)
+> +{
+> +    uint32_t msi_mode;
+> +
+> +    if (!(ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI) &&
+> +        ctx->tc & RISCV_IOMMU_DC_TC_PRPR) {
+> +        return false;
+> +    }
+> +
+> +    if (!(s->cap & RISCV_IOMMU_CAP_T2GPA) &&
+> +        ctx->tc & RISCV_IOMMU_DC_TC_T2GPA) {
+> +        return false;
+> +    }
+> +
+> +    if (s->cap & RISCV_IOMMU_CAP_MSI_FLAT) {
+> +        msi_mode = get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_MODE);
+> +
+> +        if (msi_mode != RISCV_IOMMU_DC_MSIPTP_MODE_OFF &&
+> +            msi_mode != RISCV_IOMMU_DC_MSIPTP_MODE_FLAT) {
+> +            return false;
+> +        }
+> +    }
+> +
+> +    /*
+> +     * CAP_END is always zero (only one endianess). FCTL_BE is
+> +     * always zero (little-endian accesses). Thus TC_SBE must
+> +     * always be LE, i.e. zero.
+> +     */
+> +    if (ctx->tc & RISCV_IOMMU_DC_TC_SBE) {
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +/*
+> + * RISC-V IOMMU Device Context Loopkup - Device Directory Tree Walk
+> + *
+> + * @s         : IOMMU Device State
+> + * @ctx       : Device Translation Context with devid and pasid set.
+> + * @return    : success or fault code.
+> + */
+> +static int riscv_iommu_ctx_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx)
+> +{
+> +    const uint64_t ddtp = s->ddtp;
+> +    unsigned mode = get_field(ddtp, RISCV_IOMMU_DDTP_MODE);
+> +    dma_addr_t addr = PPN_PHYS(get_field(ddtp, RISCV_IOMMU_DDTP_PPN));
+> +    struct riscv_iommu_dc dc;
+> +    /* Device Context format: 0: extended (64 bytes) | 1: base (32 bytes) */
+> +    const int dc_fmt = !s->enable_msi;
+> +    const size_t dc_len = sizeof(dc) >> dc_fmt;
+> +    unsigned depth;
+> +    uint64_t de;
+> +
+> +    switch (mode) {
+> +    case RISCV_IOMMU_DDTP_MODE_OFF:
+> +        return RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED;
+> +
+> +    case RISCV_IOMMU_DDTP_MODE_BARE:
+> +        /* mock up pass-through translation context */
+> +        ctx->tc = RISCV_IOMMU_DC_TC_V;
+> +        ctx->ta = 0;
+> +        ctx->msiptp = 0;
+> +        return 0;
+> +
+> +    case RISCV_IOMMU_DDTP_MODE_1LVL:
+> +        depth = 0;
+> +        break;
+> +
+> +    case RISCV_IOMMU_DDTP_MODE_2LVL:
+> +        depth = 1;
+> +        break;
+> +
+> +    case RISCV_IOMMU_DDTP_MODE_3LVL:
+> +        depth = 2;
+> +        break;
+> +
+> +    default:
+> +        return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
+> +    }
+> +
+> +    /*
+> +     * Check supported device id width (in bits).
+> +     * See IOMMU Specification, Chapter 6. Software guidelines.
+> +     * - if extended device-context format is used:
+> +     *   1LVL: 6, 2LVL: 15, 3LVL: 24
+> +     * - if base device-context format is used:
+> +     *   1LVL: 7, 2LVL: 16, 3LVL: 24
+> +     */
+> +    if (ctx->devid >= (1 << (depth * 9 + 6 + (dc_fmt && depth != 2)))) {
+> +        return RISCV_IOMMU_FQ_CAUSE_TTYPE_BLOCKED;
+> +    }
+> +
+> +    /* Device directory tree walk */
+> +    for (; depth-- > 0; ) {
+> +        /*
+> +         * Select device id index bits based on device directory tree level
+> +         * and device context format.
+> +         * See IOMMU Specification, Chapter 2. Data Structures.
+> +         * - if extended device-context format is used:
+> +         *   device index: [23:15][14:6][5:0]
+> +         * - if base device-context format is used:
+> +         *   device index: [23:16][15:7][6:0]
+> +         */
+> +        const int split = depth * 9 + 6 + dc_fmt;
+> +        addr |= ((ctx->devid >> split) << 3) & ~TARGET_PAGE_MASK;
+> +        if (dma_memory_read(s->target_as, addr, &de, sizeof(de),
+> +                            MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
+> +            return RISCV_IOMMU_FQ_CAUSE_DDT_LOAD_FAULT;
+> +        }
+> +        le64_to_cpus(&de);
+> +        if (!(de & RISCV_IOMMU_DDTE_VALID)) {
+> +            /* invalid directory entry */
+> +            return RISCV_IOMMU_FQ_CAUSE_DDT_INVALID;
+> +        }
+> +        if (de & ~(RISCV_IOMMU_DDTE_PPN | RISCV_IOMMU_DDTE_VALID)) {
+> +            /* reserved bits set */
+> +            return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
+> +        }
+> +        addr = PPN_PHYS(get_field(de, RISCV_IOMMU_DDTE_PPN));
+> +    }
+> +
+> +    /* index into device context entry page */
+> +    addr |= (ctx->devid * dc_len) & ~TARGET_PAGE_MASK;
+> +
+> +    memset(&dc, 0, sizeof(dc));
+> +    if (dma_memory_read(s->target_as, addr, &dc, dc_len,
+> +                        MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
+> +        return RISCV_IOMMU_FQ_CAUSE_DDT_LOAD_FAULT;
+> +    }
+> +
+> +    /* Set translation context. */
+> +    ctx->tc = le64_to_cpu(dc.tc);
+> +    ctx->ta = le64_to_cpu(dc.ta);
+> +    ctx->msiptp = le64_to_cpu(dc.msiptp);
+> +    ctx->msi_addr_mask = le64_to_cpu(dc.msi_addr_mask);
+> +    ctx->msi_addr_pattern = le64_to_cpu(dc.msi_addr_pattern);
+> +
+> +    if (!riscv_iommu_validate_device_ctx(s, ctx)) {
+> +        return RISCV_IOMMU_FQ_CAUSE_DDT_MISCONFIGURED;
+> +    }
+> +
+> +    if (!(ctx->tc & RISCV_IOMMU_DC_TC_V)) {
+> +        return RISCV_IOMMU_FQ_CAUSE_DDT_INVALID;
+> +    }
+> +
+> +    if (!(ctx->tc & RISCV_IOMMU_DC_TC_PDTV)) {
+> +        if (ctx->pasid != RISCV_IOMMU_NOPASID) {
+> +            /* PASID is disabled */
+> +            return RISCV_IOMMU_FQ_CAUSE_TTYPE_BLOCKED;
+> +        }
+> +        return 0;
+> +    }
+> +
+> +    /* FSC.TC.PDTV enabled */
+> +    if (mode > RISCV_IOMMU_DC_FSC_PDTP_MODE_PD20) {
+> +        /* Invalid PDTP.MODE */
+> +        return RISCV_IOMMU_FQ_CAUSE_PDT_MISCONFIGURED;
+> +    }
+> +
+> +    for (depth = mode - RISCV_IOMMU_DC_FSC_PDTP_MODE_PD8; depth-- > 0; ) {
+> +        /*
+> +         * Select process id index bits based on process directory tree
+> +         * level. See IOMMU Specification, 2.2. Process-Directory-Table.
+> +         */
+> +        const int split = depth * 9 + 8;
+> +        addr |= ((ctx->pasid >> split) << 3) & ~TARGET_PAGE_MASK;
+> +        if (dma_memory_read(s->target_as, addr, &de, sizeof(de),
+> +                            MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
+> +            return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+> +        }
+> +        le64_to_cpus(&de);
+> +        if (!(de & RISCV_IOMMU_PC_TA_V)) {
+> +            return RISCV_IOMMU_FQ_CAUSE_PDT_INVALID;
+> +        }
+> +        addr = PPN_PHYS(get_field(de, RISCV_IOMMU_PC_FSC_PPN));
+> +    }
+> +
+> +    /* Leaf entry in PDT */
+> +    addr |= (ctx->pasid << 4) & ~TARGET_PAGE_MASK;
+> +    if (dma_memory_read(s->target_as, addr, &dc.ta, sizeof(uint64_t) * 2,
+> +                        MEMTXATTRS_UNSPECIFIED) != MEMTX_OK) {
+> +        return RISCV_IOMMU_FQ_CAUSE_PDT_LOAD_FAULT;
+> +    }
+> +
+> +    /* Use FSC and TA from process directory entry. */
+> +    ctx->ta = le64_to_cpu(dc.ta);
+> +
+> +    return 0;
+> +}
+> +
+> +/* Translation Context cache support */
+> +static gboolean __ctx_equal(gconstpointer v1, gconstpointer v2)
+> +{
+> +    RISCVIOMMUContext *c1 = (RISCVIOMMUContext *) v1;
+> +    RISCVIOMMUContext *c2 = (RISCVIOMMUContext *) v2;
+> +    return c1->devid == c2->devid && c1->pasid == c2->pasid;
+> +}
+> +
+> +static guint __ctx_hash(gconstpointer v)
+> +{
+> +    RISCVIOMMUContext *ctx = (RISCVIOMMUContext *) v;
+> +    /* Generate simple hash of (pasid, devid), assuming 24-bit wide devid */
+> +    return (guint)(ctx->devid) + ((guint)(ctx->pasid) << 24);
+> +}
+> +
+> +static void __ctx_inval_devid_pasid(gpointer key, gpointer value, gpointer data)
+> +{
+> +    RISCVIOMMUContext *ctx = (RISCVIOMMUContext *) value;
+> +    RISCVIOMMUContext *arg = (RISCVIOMMUContext *) data;
+> +    if (ctx->tc & RISCV_IOMMU_DC_TC_V &&
+> +        ctx->devid == arg->devid &&
+> +        ctx->pasid == arg->pasid) {
+> +        ctx->tc &= ~RISCV_IOMMU_DC_TC_V;
+> +    }
+> +}
+> +
+> +static void __ctx_inval_devid(gpointer key, gpointer value, gpointer data)
+> +{
+> +    RISCVIOMMUContext *ctx = (RISCVIOMMUContext *) value;
+> +    RISCVIOMMUContext *arg = (RISCVIOMMUContext *) data;
+> +    if (ctx->tc & RISCV_IOMMU_DC_TC_V &&
+> +        ctx->devid == arg->devid) {
+> +        ctx->tc &= ~RISCV_IOMMU_DC_TC_V;
+> +    }
+> +}
+> +
+> +static void __ctx_inval_all(gpointer key, gpointer value, gpointer data)
+> +{
+> +    RISCVIOMMUContext *ctx = (RISCVIOMMUContext *) value;
+> +    if (ctx->tc & RISCV_IOMMU_DC_TC_V) {
+> +        ctx->tc &= ~RISCV_IOMMU_DC_TC_V;
+> +    }
+> +}
+> +
+> +static void riscv_iommu_ctx_inval(RISCVIOMMUState *s, GHFunc func,
+> +    uint32_t devid, uint32_t pasid)
+> +{
+> +    GHashTable *ctx_cache;
+> +    RISCVIOMMUContext key = {
+> +        .devid = devid,
+> +        .pasid = pasid,
+> +    };
+> +    ctx_cache = g_hash_table_ref(s->ctx_cache);
+> +    g_hash_table_foreach(ctx_cache, func, &key);
+> +    g_hash_table_unref(ctx_cache);
+> +}
+> +
+> +/* Find or allocate translation context for a given {device_id, process_id} */
+> +static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMMUState *s,
+> +    unsigned devid, unsigned pasid, void **ref)
+> +{
+> +    GHashTable *ctx_cache;
+> +    RISCVIOMMUContext *ctx;
+> +    RISCVIOMMUContext key = {
+> +        .devid = devid,
+> +        .pasid = pasid,
+> +    };
+> +
+> +    ctx_cache = g_hash_table_ref(s->ctx_cache);
+> +    ctx = g_hash_table_lookup(ctx_cache, &key);
+> +
+> +    if (ctx && (ctx->tc & RISCV_IOMMU_DC_TC_V)) {
+> +        *ref = ctx_cache;
+> +        return ctx;
+> +    }
+> +
+> +    if (g_hash_table_size(s->ctx_cache) >= LIMIT_CACHE_CTX) {
+> +        ctx_cache = g_hash_table_new_full(__ctx_hash, __ctx_equal,
+> +                                          g_free, NULL);
+> +        g_hash_table_unref(qatomic_xchg(&s->ctx_cache, ctx_cache));
+> +    }
+> +
+> +    ctx = g_new0(RISCVIOMMUContext, 1);
+> +    ctx->devid = devid;
+> +    ctx->pasid = pasid;
+> +
+> +    int fault = riscv_iommu_ctx_fetch(s, ctx);
+> +    if (!fault) {
+> +        g_hash_table_add(ctx_cache, ctx);
+> +        *ref = ctx_cache;
+> +        return ctx;
+> +    }
+> +
+> +    g_hash_table_unref(ctx_cache);
+> +    *ref = NULL;
+> +
+> +    riscv_iommu_report_fault(s, ctx, RISCV_IOMMU_FQ_TTYPE_UADDR_RD,
+> +                             fault, !!pasid, 0, 0);
+> +
+> +    g_free(ctx);
+> +    return NULL;
+> +}
+> +
+> +static void riscv_iommu_ctx_put(RISCVIOMMUState *s, void *ref)
+> +{
+> +    if (ref) {
+> +        g_hash_table_unref((GHashTable *)ref);
+> +    }
+> +}
+> +
+> +/* Find or allocate address space for a given device */
+> +static AddressSpace *riscv_iommu_space(RISCVIOMMUState *s, uint32_t devid)
+> +{
+> +    RISCVIOMMUSpace *as;
+> +
+> +    /* FIXME: PCIe bus remapping for attached endpoints. */
+> +    devid |= s->bus << 8;
+> +
+> +    qemu_mutex_lock(&s->core_lock);
+> +    QLIST_FOREACH(as, &s->spaces, list) {
+> +        if (as->devid == devid) {
+> +            break;
+> +        }
+> +    }
+> +    qemu_mutex_unlock(&s->core_lock);
+> +
+> +    if (as == NULL) {
+> +        char name[64];
+> +        as = g_new0(RISCVIOMMUSpace, 1);
+> +
+> +        as->iommu = s;
+> +        as->devid = devid;
+> +
+> +        snprintf(name, sizeof(name), "riscv-iommu-%04x:%02x.%d-iova",
+> +            PCI_BUS_NUM(as->devid), PCI_SLOT(as->devid), PCI_FUNC(as->devid));
+> +
+> +        /* IOVA address space, untranslated addresses */
+> +        memory_region_init_iommu(&as->iova_mr, sizeof(as->iova_mr),
+> +            TYPE_RISCV_IOMMU_MEMORY_REGION,
+> +            OBJECT(as), "riscv_iommu", UINT64_MAX);
+> +        address_space_init(&as->iova_as, MEMORY_REGION(&as->iova_mr), name);
+> +
+> +        qemu_mutex_lock(&s->core_lock);
+> +        QLIST_INSERT_HEAD(&s->spaces, as, list);
+> +        qemu_mutex_unlock(&s->core_lock);
+> +
+> +        trace_riscv_iommu_new(s->parent_obj.id, PCI_BUS_NUM(as->devid),
+> +                PCI_SLOT(as->devid), PCI_FUNC(as->devid));
+> +    }
+> +    return &as->iova_as;
+> +}
+> +
+> +static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+> +    IOMMUTLBEntry *iotlb)
+> +{
+> +    bool enable_pasid;
+> +    bool enable_pri;
+> +    int fault;
+> +
+> +    /*
+> +     * TC[32] is reserved for custom extensions, used here to temporarily
+> +     * enable automatic page-request generation for ATS queries.
+> +     */
+> +    enable_pri = (iotlb->perm == IOMMU_NONE) && (ctx->tc & BIT_ULL(32));
+> +    enable_pasid = (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
+> +
+> +    /* Translate using device directory / page table information. */
+> +    fault = riscv_iommu_spa_fetch(s, ctx, iotlb);
+> +
+> +    if (enable_pri && fault) {
+> +        struct riscv_iommu_pq_record pr = {0};
+> +        if (enable_pasid) {
+> +            pr.hdr = set_field(RISCV_IOMMU_PREQ_HDR_PV,
+> +                RISCV_IOMMU_PREQ_HDR_PID, ctx->pasid);
+> +        }
+> +        pr.hdr = set_field(pr.hdr, RISCV_IOMMU_PREQ_HDR_DID, ctx->devid);
+> +        pr.payload = (iotlb->iova & TARGET_PAGE_MASK) |
+> +                     RISCV_IOMMU_PREQ_PAYLOAD_M;
+> +        riscv_iommu_pri(s, &pr);
+> +        return fault;
+> +    }
+> +
+> +    if (fault) {
+> +        unsigned ttype;
+> +
+> +        if (iotlb->perm & IOMMU_RW) {
+> +            ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
+> +        } else {
+> +            ttype = RISCV_IOMMU_FQ_TTYPE_UADDR_RD;
+> +        }
+> +
+> +        riscv_iommu_report_fault(s, ctx, ttype, fault, enable_pasid,
+> +                                 iotlb->iova, iotlb->translated_addr);
+> +        return fault;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +/* IOMMU Command Interface */
+> +static MemTxResult riscv_iommu_iofence(RISCVIOMMUState *s, bool notify,
+> +    uint64_t addr, uint32_t data)
+> +{
+> +    /*
+> +     * ATS processing in this implementation of the IOMMU is synchronous,
+> +     * no need to wait for completions here.
+> +     */
+> +    if (!notify) {
+> +        return MEMTX_OK;
+> +    }
+> +
+> +    return dma_memory_write(s->target_as, addr, &data, sizeof(data),
+> +        MEMTXATTRS_UNSPECIFIED);
+> +}
+> +
+> +static void riscv_iommu_process_ddtp(RISCVIOMMUState *s)
+> +{
+> +    uint64_t old_ddtp = s->ddtp;
+> +    uint64_t new_ddtp = riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_DDTP);
+> +    unsigned new_mode = get_field(new_ddtp, RISCV_IOMMU_DDTP_MODE);
+> +    unsigned old_mode = get_field(old_ddtp, RISCV_IOMMU_DDTP_MODE);
+> +    bool ok = false;
+> +
+> +    /*
+> +     * Check for allowed DDTP.MODE transitions:
+> +     * {OFF, BARE}        -> {OFF, BARE, 1LVL, 2LVL, 3LVL}
+> +     * {1LVL, 2LVL, 3LVL} -> {OFF, BARE}
+> +     */
+> +    if (new_mode == old_mode ||
+> +        new_mode == RISCV_IOMMU_DDTP_MODE_OFF ||
+> +        new_mode == RISCV_IOMMU_DDTP_MODE_BARE) {
+> +        ok = true;
+> +    } else if (new_mode == RISCV_IOMMU_DDTP_MODE_1LVL ||
+> +               new_mode == RISCV_IOMMU_DDTP_MODE_2LVL ||
+> +               new_mode == RISCV_IOMMU_DDTP_MODE_3LVL) {
+> +        ok = old_mode == RISCV_IOMMU_DDTP_MODE_OFF ||
+> +             old_mode == RISCV_IOMMU_DDTP_MODE_BARE;
+> +    }
+> +
+> +    if (ok) {
+> +        /* clear reserved and busy bits, report back sanitized version */
+> +        new_ddtp = set_field(new_ddtp & RISCV_IOMMU_DDTP_PPN,
+> +                             RISCV_IOMMU_DDTP_MODE, new_mode);
+> +    } else {
+> +        new_ddtp = old_ddtp;
+> +    }
+> +    s->ddtp = new_ddtp;
+> +
+> +    riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_DDTP, new_ddtp);
+> +}
+> +
+> +/* Command function and opcode field. */
+> +#define RISCV_IOMMU_CMD(func, op) (((func) << 7) | (op))
+> +
+> +static void riscv_iommu_process_cq_tail(RISCVIOMMUState *s)
+> +{
+> +    struct riscv_iommu_command cmd;
+> +    MemTxResult res;
+> +    dma_addr_t addr;
+> +    uint32_t tail, head, ctrl;
+> +    uint64_t cmd_opcode;
+> +    GHFunc func;
+> +
+> +    ctrl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
+> +    tail = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQT) & s->cq_mask;
+> +    head = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQH) & s->cq_mask;
+> +
+> +    /* Check for pending error or queue processing disabled */
+> +    if (!(ctrl & RISCV_IOMMU_CQCSR_CQON) ||
+> +        !!(ctrl & (RISCV_IOMMU_CQCSR_CMD_ILL | RISCV_IOMMU_CQCSR_CQMF))) {
+> +        return;
+> +    }
+> +
+> +    while (tail != head) {
+> +        addr = s->cq_addr  + head * sizeof(cmd);
+> +        res = dma_memory_read(s->target_as, addr, &cmd, sizeof(cmd),
+> +                              MEMTXATTRS_UNSPECIFIED);
+> +
+> +        if (res != MEMTX_OK) {
+> +            riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR,
+> +                                  RISCV_IOMMU_CQCSR_CQMF, 0);
+> +            goto fault;
+> +        }
+> +
+> +        trace_riscv_iommu_cmd(s->parent_obj.id, cmd.dword0, cmd.dword1);
+> +
+> +        cmd_opcode = get_field(cmd.dword0,
+> +                               RISCV_IOMMU_CMD_OPCODE | RISCV_IOMMU_CMD_FUNC);
+> +
+> +        switch (cmd_opcode) {
+> +        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOFENCE_FUNC_C,
+> +                             RISCV_IOMMU_CMD_IOFENCE_OPCODE):
+> +            res = riscv_iommu_iofence(s,
+> +                cmd.dword0 & RISCV_IOMMU_CMD_IOFENCE_AV, cmd.dword1,
+> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IOFENCE_DATA));
+> +
+> +            if (res != MEMTX_OK) {
+> +                riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR,
+> +                                      RISCV_IOMMU_CQCSR_CQMF, 0);
+> +                goto fault;
+> +            }
+> +            break;
+> +
+> +        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOTINVAL_FUNC_GVMA,
+> +                             RISCV_IOMMU_CMD_IOTINVAL_OPCODE):
+> +            if (cmd.dword0 & RISCV_IOMMU_CMD_IOTINVAL_PSCV) {
+> +                /* illegal command arguments IOTINVAL.GVMA & PSCV == 1 */
+> +                goto cmd_ill;
+> +            }
+> +            /* translation cache not implemented yet */
+> +            break;
+> +
+> +        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IOTINVAL_FUNC_VMA,
+> +                             RISCV_IOMMU_CMD_IOTINVAL_OPCODE):
+> +            /* translation cache not implemented yet */
+> +            break;
+> +
+> +        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_DDT,
+> +                             RISCV_IOMMU_CMD_IODIR_OPCODE):
+> +            if (!(cmd.dword0 & RISCV_IOMMU_CMD_IODIR_DV)) {
+> +                /* invalidate all device context cache mappings */
+> +                func = __ctx_inval_all;
+> +            } else {
+> +                /* invalidate all device context matching DID */
+> +                func = __ctx_inval_devid;
+> +            }
+> +            riscv_iommu_ctx_inval(s, func,
+> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_DID), 0);
+> +            break;
+> +
+> +        case RISCV_IOMMU_CMD(RISCV_IOMMU_CMD_IODIR_FUNC_INVAL_PDT,
+> +                             RISCV_IOMMU_CMD_IODIR_OPCODE):
+> +            if (!(cmd.dword0 & RISCV_IOMMU_CMD_IODIR_DV)) {
+> +                /* illegal command arguments IODIR_PDT & DV == 0 */
+> +                goto cmd_ill;
+> +            } else {
+> +                func = __ctx_inval_devid_pasid;
+> +            }
+> +            riscv_iommu_ctx_inval(s, func,
+> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_DID),
+> +                get_field(cmd.dword0, RISCV_IOMMU_CMD_IODIR_PID));
+> +            break;
+> +
+> +        default:
+> +        cmd_ill:
+> +            /* Invalid instruction, do not advance instruction index. */
+> +            riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR,
+> +                RISCV_IOMMU_CQCSR_CMD_ILL, 0);
+> +            goto fault;
+> +        }
+> +
+> +        /* Advance and update head pointer after command completes. */
+> +        head = (head + 1) & s->cq_mask;
+> +        riscv_iommu_reg_set32(s, RISCV_IOMMU_REG_CQH, head);
+> +    }
+> +    return;
+> +
+> +fault:
+> +    if (ctrl & RISCV_IOMMU_CQCSR_CIE) {
+> +        riscv_iommu_notify(s, RISCV_IOMMU_INTR_CQ);
+> +    }
+> +}
+> +
+> +static void riscv_iommu_process_cq_control(RISCVIOMMUState *s)
+> +{
+> +    uint64_t base;
+> +    uint32_t ctrl_set = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
+> +    uint32_t ctrl_clr;
+> +    bool enable = !!(ctrl_set & RISCV_IOMMU_CQCSR_CQEN);
+> +    bool active = !!(ctrl_set & RISCV_IOMMU_CQCSR_CQON);
+> +
+> +    if (enable && !active) {
+> +        base = riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_CQB);
+> +        s->cq_mask = (2ULL << get_field(base, RISCV_IOMMU_CQB_LOG2SZ)) - 1;
+> +        s->cq_addr = PPN_PHYS(get_field(base, RISCV_IOMMU_CQB_PPN));
+> +        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_CQT], ~s->cq_mask);
+> +        stl_le_p(&s->regs_rw[RISCV_IOMMU_REG_CQH], 0);
+> +        stl_le_p(&s->regs_rw[RISCV_IOMMU_REG_CQT], 0);
+> +        ctrl_set = RISCV_IOMMU_CQCSR_CQON;
+> +        ctrl_clr = RISCV_IOMMU_CQCSR_BUSY | RISCV_IOMMU_CQCSR_CQMF |
+> +                   RISCV_IOMMU_CQCSR_CMD_ILL | RISCV_IOMMU_CQCSR_CMD_TO |
+> +                   RISCV_IOMMU_CQCSR_FENCE_W_IP;
+> +    } else if (!enable && active) {
+> +        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_CQT], ~0);
+> +        ctrl_set = 0;
+> +        ctrl_clr = RISCV_IOMMU_CQCSR_BUSY | RISCV_IOMMU_CQCSR_CQON;
+> +    } else {
+> +        ctrl_set = 0;
+> +        ctrl_clr = RISCV_IOMMU_CQCSR_BUSY;
+> +    }
+> +
+> +    riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_CQCSR, ctrl_set, ctrl_clr);
+> +}
+> +
+> +static void riscv_iommu_process_fq_control(RISCVIOMMUState *s)
+> +{
+> +    uint64_t base;
+> +    uint32_t ctrl_set = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQCSR);
+> +    uint32_t ctrl_clr;
+> +    bool enable = !!(ctrl_set & RISCV_IOMMU_FQCSR_FQEN);
+> +    bool active = !!(ctrl_set & RISCV_IOMMU_FQCSR_FQON);
+> +
+> +    if (enable && !active) {
+> +        base = riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_FQB);
+> +        s->fq_mask = (2ULL << get_field(base, RISCV_IOMMU_FQB_LOG2SZ)) - 1;
+> +        s->fq_addr = PPN_PHYS(get_field(base, RISCV_IOMMU_FQB_PPN));
+> +        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_FQH], ~s->fq_mask);
+> +        stl_le_p(&s->regs_rw[RISCV_IOMMU_REG_FQH], 0);
+> +        stl_le_p(&s->regs_rw[RISCV_IOMMU_REG_FQT], 0);
+> +        ctrl_set = RISCV_IOMMU_FQCSR_FQON;
+> +        ctrl_clr = RISCV_IOMMU_FQCSR_BUSY | RISCV_IOMMU_FQCSR_FQMF |
+> +            RISCV_IOMMU_FQCSR_FQOF;
+> +    } else if (!enable && active) {
+> +        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_FQH], ~0);
+> +        ctrl_set = 0;
+> +        ctrl_clr = RISCV_IOMMU_FQCSR_BUSY | RISCV_IOMMU_FQCSR_FQON;
+> +    } else {
+> +        ctrl_set = 0;
+> +        ctrl_clr = RISCV_IOMMU_FQCSR_BUSY;
+> +    }
+> +
+> +    riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_FQCSR, ctrl_set, ctrl_clr);
+> +}
+> +
+> +static void riscv_iommu_process_pq_control(RISCVIOMMUState *s)
+> +{
+> +    uint64_t base;
+> +    uint32_t ctrl_set = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_PQCSR);
+> +    uint32_t ctrl_clr;
+> +    bool enable = !!(ctrl_set & RISCV_IOMMU_PQCSR_PQEN);
+> +    bool active = !!(ctrl_set & RISCV_IOMMU_PQCSR_PQON);
+> +
+> +    if (enable && !active) {
+> +        base = riscv_iommu_reg_get64(s, RISCV_IOMMU_REG_PQB);
+> +        s->pq_mask = (2ULL << get_field(base, RISCV_IOMMU_PQB_LOG2SZ)) - 1;
+> +        s->pq_addr = PPN_PHYS(get_field(base, RISCV_IOMMU_PQB_PPN));
+> +        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_PQH], ~s->pq_mask);
+> +        stl_le_p(&s->regs_rw[RISCV_IOMMU_REG_PQH], 0);
+> +        stl_le_p(&s->regs_rw[RISCV_IOMMU_REG_PQT], 0);
+> +        ctrl_set = RISCV_IOMMU_PQCSR_PQON;
+> +        ctrl_clr = RISCV_IOMMU_PQCSR_BUSY | RISCV_IOMMU_PQCSR_PQMF |
+> +            RISCV_IOMMU_PQCSR_PQOF;
+> +    } else if (!enable && active) {
+> +        stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_PQH], ~0);
+> +        ctrl_set = 0;
+> +        ctrl_clr = RISCV_IOMMU_PQCSR_BUSY | RISCV_IOMMU_PQCSR_PQON;
+> +    } else {
+> +        ctrl_set = 0;
+> +        ctrl_clr = RISCV_IOMMU_PQCSR_BUSY;
+> +    }
+> +
+> +    riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_PQCSR, ctrl_set, ctrl_clr);
+> +}
+> +
+> +typedef void riscv_iommu_process_fn(RISCVIOMMUState *s);
+> +
+> +static void riscv_iommu_update_ipsr(RISCVIOMMUState *s, uint64_t data)
+> +{
+> +    uint32_t cqcsr, fqcsr, pqcsr;
+> +    uint32_t ipsr_set = 0;
+> +    uint32_t ipsr_clr = 0;
+> +
+> +    if (data & RISCV_IOMMU_IPSR_CIP) {
+> +        cqcsr = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_CQCSR);
+> +
+> +        if (cqcsr & RISCV_IOMMU_CQCSR_CIE &&
+> +            (cqcsr & RISCV_IOMMU_CQCSR_FENCE_W_IP ||
+> +             cqcsr & RISCV_IOMMU_CQCSR_CMD_ILL ||
+> +             cqcsr & RISCV_IOMMU_CQCSR_CMD_TO ||
+> +             cqcsr & RISCV_IOMMU_CQCSR_CQMF)) {
+> +            ipsr_set |= RISCV_IOMMU_IPSR_CIP;
+> +        } else {
+> +            ipsr_clr |= RISCV_IOMMU_IPSR_CIP;
+> +        }
+> +    } else {
+> +        ipsr_clr |= RISCV_IOMMU_IPSR_CIP;
+> +    }
+> +
+> +    if (data & RISCV_IOMMU_IPSR_FIP) {
+> +        fqcsr = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FQCSR);
+> +
+> +        if (fqcsr & RISCV_IOMMU_FQCSR_FIE &&
+> +            (fqcsr & RISCV_IOMMU_FQCSR_FQOF ||
+> +             fqcsr & RISCV_IOMMU_FQCSR_FQMF)) {
+> +            ipsr_set |= RISCV_IOMMU_IPSR_FIP;
+> +        } else {
+> +            ipsr_clr |= RISCV_IOMMU_IPSR_FIP;
+> +        }
+> +    } else {
+> +        ipsr_clr |= RISCV_IOMMU_IPSR_FIP;
+> +    }
+> +
+> +    if (data & RISCV_IOMMU_IPSR_PIP) {
+> +        pqcsr = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_PQCSR);
+> +
+> +        if (pqcsr & RISCV_IOMMU_PQCSR_PIE &&
+> +            (pqcsr & RISCV_IOMMU_PQCSR_PQOF ||
+> +             pqcsr & RISCV_IOMMU_PQCSR_PQMF)) {
+> +            ipsr_set |= RISCV_IOMMU_IPSR_PIP;
+> +        } else {
+> +            ipsr_clr |= RISCV_IOMMU_IPSR_PIP;
+> +        }
+> +    } else {
+> +        ipsr_clr |= RISCV_IOMMU_IPSR_PIP;
+> +    }
+> +
+> +    riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_IPSR, ipsr_set, ipsr_clr);
+> +}
+> +
+> +static MemTxResult riscv_iommu_mmio_write(void *opaque, hwaddr addr,
+> +    uint64_t data, unsigned size, MemTxAttrs attrs)
+> +{
+> +    riscv_iommu_process_fn *process_fn = NULL;
+> +    RISCVIOMMUState *s = opaque;
+> +    uint32_t regb = addr & ~3;
+> +    uint32_t busy = 0;
+> +    uint64_t val = 0;
+> +
+> +    if ((addr & (size - 1)) != 0) {
+> +        /* Unsupported MMIO alignment or access size */
+> +        return MEMTX_ERROR;
+> +    }
+> +
+> +    if (addr + size > RISCV_IOMMU_REG_MSI_CONFIG) {
+> +        /* Unsupported MMIO access location. */
+> +        return MEMTX_ACCESS_ERROR;
+> +    }
+> +
+> +    /* Track actionable MMIO write. */
+> +    switch (regb) {
+> +    case RISCV_IOMMU_REG_DDTP:
+> +    case RISCV_IOMMU_REG_DDTP + 4:
+> +        process_fn = riscv_iommu_process_ddtp;
+> +        regb = RISCV_IOMMU_REG_DDTP;
+> +        busy = RISCV_IOMMU_DDTP_BUSY;
+> +        break;
+> +
+> +    case RISCV_IOMMU_REG_CQT:
+> +        process_fn = riscv_iommu_process_cq_tail;
+> +        break;
+> +
+> +    case RISCV_IOMMU_REG_CQCSR:
+> +        process_fn = riscv_iommu_process_cq_control;
+> +        busy = RISCV_IOMMU_CQCSR_BUSY;
+> +        break;
+> +
+> +    case RISCV_IOMMU_REG_FQCSR:
+> +        process_fn = riscv_iommu_process_fq_control;
+> +        busy = RISCV_IOMMU_FQCSR_BUSY;
+> +        break;
+> +
+> +    case RISCV_IOMMU_REG_PQCSR:
+> +        process_fn = riscv_iommu_process_pq_control;
+> +        busy = RISCV_IOMMU_PQCSR_BUSY;
+> +        break;
+> +
+> +    case RISCV_IOMMU_REG_IPSR:
+> +        /*
+> +         * IPSR has special procedures to update. Execute it
+> +         * and exit.
+> +         */
+> +        if (size == 4) {
+> +            uint32_t ro = ldl_le_p(&s->regs_ro[addr]);
+> +            uint32_t wc = ldl_le_p(&s->regs_wc[addr]);
+> +            uint32_t rw = ldl_le_p(&s->regs_rw[addr]);
+> +            stl_le_p(&val, ((rw & ro) | (data & ~ro)) & ~(data & wc));
+> +        } else if (size == 8) {
+> +            uint64_t ro = ldq_le_p(&s->regs_ro[addr]);
+> +            uint64_t wc = ldq_le_p(&s->regs_wc[addr]);
+> +            uint64_t rw = ldq_le_p(&s->regs_rw[addr]);
+> +            stq_le_p(&val, ((rw & ro) | (data & ~ro)) & ~(data & wc));
+> +        }
+> +
+> +        riscv_iommu_update_ipsr(s, val);
+> +
+> +        return MEMTX_OK;
+> +
+> +    default:
+> +        break;
+> +    }
+> +
+> +    /*
+> +     * Registers update might be not synchronized with core logic.
+> +     * If system software updates register when relevant BUSY bit
+> +     * is set IOMMU behavior of additional writes to the register
+> +     * is UNSPECIFIED.
+> +     */
+> +    qemu_spin_lock(&s->regs_lock);
+> +    if (size == 1) {
+> +        uint8_t ro = s->regs_ro[addr];
+> +        uint8_t wc = s->regs_wc[addr];
+> +        uint8_t rw = s->regs_rw[addr];
+> +        s->regs_rw[addr] = ((rw & ro) | (data & ~ro)) & ~(data & wc);
+> +    } else if (size == 2) {
+> +        uint16_t ro = lduw_le_p(&s->regs_ro[addr]);
+> +        uint16_t wc = lduw_le_p(&s->regs_wc[addr]);
+> +        uint16_t rw = lduw_le_p(&s->regs_rw[addr]);
+> +        stw_le_p(&s->regs_rw[addr], ((rw & ro) | (data & ~ro)) & ~(data & wc));
+> +    } else if (size == 4) {
+> +        uint32_t ro = ldl_le_p(&s->regs_ro[addr]);
+> +        uint32_t wc = ldl_le_p(&s->regs_wc[addr]);
+> +        uint32_t rw = ldl_le_p(&s->regs_rw[addr]);
+> +        stl_le_p(&s->regs_rw[addr], ((rw & ro) | (data & ~ro)) & ~(data & wc));
+> +    } else if (size == 8) {
+> +        uint64_t ro = ldq_le_p(&s->regs_ro[addr]);
+> +        uint64_t wc = ldq_le_p(&s->regs_wc[addr]);
+> +        uint64_t rw = ldq_le_p(&s->regs_rw[addr]);
+> +        stq_le_p(&s->regs_rw[addr], ((rw & ro) | (data & ~ro)) & ~(data & wc));
+> +    }
+> +
+> +    /* Busy flag update, MSB 4-byte register. */
+> +    if (busy) {
+> +        uint32_t rw = ldl_le_p(&s->regs_rw[regb]);
+> +        stl_le_p(&s->regs_rw[regb], rw | busy);
+> +    }
+> +    qemu_spin_unlock(&s->regs_lock);
+> +
+> +    if (process_fn) {
+> +        qemu_mutex_lock(&s->core_lock);
+> +        process_fn(s);
+> +        qemu_mutex_unlock(&s->core_lock);
+> +    }
+> +
+> +    return MEMTX_OK;
+> +}
+> +
+> +static MemTxResult riscv_iommu_mmio_read(void *opaque, hwaddr addr,
+> +    uint64_t *data, unsigned size, MemTxAttrs attrs)
+> +{
+> +    RISCVIOMMUState *s = opaque;
+> +    uint64_t val = -1;
+> +    uint8_t *ptr;
+> +
+> +    if ((addr & (size - 1)) != 0) {
+> +        /* Unsupported MMIO alignment. */
+> +        return MEMTX_ERROR;
+> +    }
+> +
+> +    if (addr + size > RISCV_IOMMU_REG_MSI_CONFIG) {
+> +        return MEMTX_ACCESS_ERROR;
+> +    }
+> +
+> +    ptr = &s->regs_rw[addr];
+> +
+> +    if (size == 1) {
+> +        val = (uint64_t)*ptr;
+> +    } else if (size == 2) {
+> +        val = lduw_le_p(ptr);
+> +    } else if (size == 4) {
+> +        val = ldl_le_p(ptr);
+> +    } else if (size == 8) {
+> +        val = ldq_le_p(ptr);
+> +    } else {
+> +        return MEMTX_ERROR;
+> +    }
+> +
+> +    *data = val;
+> +
+> +    return MEMTX_OK;
+> +}
+> +
+> +static const MemoryRegionOps riscv_iommu_mmio_ops = {
+> +    .read_with_attrs = riscv_iommu_mmio_read,
+> +    .write_with_attrs = riscv_iommu_mmio_write,
+> +    .endianness = DEVICE_NATIVE_ENDIAN,
+> +    .impl = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 8,
+> +        .unaligned = false,
+> +    },
+> +    .valid = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 8,
+> +    }
+> +};
+> +
+> +/*
+> + * Translations matching MSI pattern check are redirected to "riscv-iommu-trap"
+> + * memory region as untranslated address, for additional MSI/MRIF interception
+> + * by IOMMU interrupt remapping implementation.
+> + * Note: Device emulation code generating an MSI is expected to provide a valid
+> + * memory transaction attributes with requested_id set.
+> + */
+> +static MemTxResult riscv_iommu_trap_write(void *opaque, hwaddr addr,
+> +    uint64_t data, unsigned size, MemTxAttrs attrs)
+> +{
+> +    RISCVIOMMUState* s = (RISCVIOMMUState *)opaque;
+> +    RISCVIOMMUContext *ctx;
+> +    MemTxResult res;
+> +    void *ref;
+> +    uint32_t devid = attrs.requester_id;
+> +
+> +    if (attrs.unspecified) {
+> +        return MEMTX_ACCESS_ERROR;
+> +    }
+> +
+> +    /* FIXME: PCIe bus remapping for attached endpoints. */
+> +    devid |= s->bus << 8;
+> +
+> +    ctx = riscv_iommu_ctx(s, devid, 0, &ref);
+> +    if (ctx == NULL) {
+> +        res = MEMTX_ACCESS_ERROR;
+> +    } else {
+> +        res = riscv_iommu_msi_write(s, ctx, addr, data, size, attrs);
+> +    }
+> +    riscv_iommu_ctx_put(s, ref);
+> +    return res;
+> +}
+> +
+> +static MemTxResult riscv_iommu_trap_read(void *opaque, hwaddr addr,
+> +    uint64_t *data, unsigned size, MemTxAttrs attrs)
+> +{
+> +    return MEMTX_ACCESS_ERROR;
+> +}
+> +
+> +static const MemoryRegionOps riscv_iommu_trap_ops = {
+> +    .read_with_attrs = riscv_iommu_trap_read,
+> +    .write_with_attrs = riscv_iommu_trap_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +    .impl = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 8,
+> +        .unaligned = true,
+> +    },
+> +    .valid = {
+> +        .min_access_size = 4,
+> +        .max_access_size = 8,
+> +    }
+> +};
+> +
+> +static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+> +{
+> +    RISCVIOMMUState *s = RISCV_IOMMU(dev);
+> +
+> +    s->cap = s->version & RISCV_IOMMU_CAP_VERSION;
+> +    if (s->enable_msi) {
+> +        s->cap |= RISCV_IOMMU_CAP_MSI_FLAT | RISCV_IOMMU_CAP_MSI_MRIF;
+> +    }
+> +    /* Report QEMU target physical address space limits */
+> +    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS,
+> +                       TARGET_PHYS_ADDR_SPACE_BITS);
+> +
+> +    /* TODO: method to report supported PASID bits */
+> +    s->pasid_bits = 8; /* restricted to size of MemTxAttrs.pasid */
+> +    s->cap |= RISCV_IOMMU_CAP_PD8;
+> +
+> +    /* Out-of-reset translation mode: OFF (DMA disabled) BARE (passthrough) */
+> +    s->ddtp = set_field(0, RISCV_IOMMU_DDTP_MODE, s->enable_off ?
+> +                        RISCV_IOMMU_DDTP_MODE_OFF : RISCV_IOMMU_DDTP_MODE_BARE);
+> +
+> +    /* register storage */
+> +    s->regs_rw = g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
+> +    s->regs_ro = g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
+> +    s->regs_wc = g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
+> +
+> +     /* Mark all registers read-only */
+> +    memset(s->regs_ro, 0xff, RISCV_IOMMU_REG_SIZE);
+> +
+> +    /*
+> +     * Register complete MMIO space, including MSI/PBA registers.
+> +     * Note, PCIDevice implementation will add overlapping MR for MSI/PBA,
+> +     * managed directly by the PCIDevice implementation.
+> +     */
+> +    memory_region_init_io(&s->regs_mr, OBJECT(dev), &riscv_iommu_mmio_ops, s,
+> +        "riscv-iommu-regs", RISCV_IOMMU_REG_SIZE);
+> +
+> +    /* Set power-on register state */
+> +    stq_le_p(&s->regs_rw[RISCV_IOMMU_REG_CAP], s->cap);
+> +    stq_le_p(&s->regs_rw[RISCV_IOMMU_REG_FCTL], 0);
+> +    stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_DDTP],
+> +        ~(RISCV_IOMMU_DDTP_PPN | RISCV_IOMMU_DDTP_MODE));
+> +    stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_CQB],
+> +        ~(RISCV_IOMMU_CQB_LOG2SZ | RISCV_IOMMU_CQB_PPN));
+> +    stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_FQB],
+> +        ~(RISCV_IOMMU_FQB_LOG2SZ | RISCV_IOMMU_FQB_PPN));
+> +    stq_le_p(&s->regs_ro[RISCV_IOMMU_REG_PQB],
+> +        ~(RISCV_IOMMU_PQB_LOG2SZ | RISCV_IOMMU_PQB_PPN));
+> +    stl_le_p(&s->regs_wc[RISCV_IOMMU_REG_CQCSR], RISCV_IOMMU_CQCSR_CQMF |
+> +        RISCV_IOMMU_CQCSR_CMD_TO | RISCV_IOMMU_CQCSR_CMD_ILL);
+> +    stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_CQCSR], RISCV_IOMMU_CQCSR_CQON |
+> +        RISCV_IOMMU_CQCSR_BUSY);
+> +    stl_le_p(&s->regs_wc[RISCV_IOMMU_REG_FQCSR], RISCV_IOMMU_FQCSR_FQMF |
+> +        RISCV_IOMMU_FQCSR_FQOF);
+> +    stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_FQCSR], RISCV_IOMMU_FQCSR_FQON |
+> +        RISCV_IOMMU_FQCSR_BUSY);
+> +    stl_le_p(&s->regs_wc[RISCV_IOMMU_REG_PQCSR], RISCV_IOMMU_PQCSR_PQMF |
+> +        RISCV_IOMMU_PQCSR_PQOF);
+> +    stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_PQCSR], RISCV_IOMMU_PQCSR_PQON |
+> +        RISCV_IOMMU_PQCSR_BUSY);
+> +    stl_le_p(&s->regs_wc[RISCV_IOMMU_REG_IPSR], ~0);
+> +    stl_le_p(&s->regs_ro[RISCV_IOMMU_REG_IVEC], 0);
+> +    stq_le_p(&s->regs_rw[RISCV_IOMMU_REG_DDTP], s->ddtp);
+> +
+> +    /* Memory region for downstream access, if specified. */
+> +    if (s->target_mr) {
+> +        s->target_as = g_new0(AddressSpace, 1);
+> +        address_space_init(s->target_as, s->target_mr,
+> +            "riscv-iommu-downstream");
+> +    } else {
+> +        /* Fallback to global system memory. */
+> +        s->target_as = &address_space_memory;
+> +    }
+> +
+> +    /* Memory region for untranslated MRIF/MSI writes */
+> +    memory_region_init_io(&s->trap_mr, OBJECT(dev), &riscv_iommu_trap_ops, s,
+> +            "riscv-iommu-trap", ~0ULL);
+> +    address_space_init(&s->trap_as, &s->trap_mr, "riscv-iommu-trap-as");
+> +
+> +    /* Device translation context cache */
+> +    s->ctx_cache = g_hash_table_new_full(__ctx_hash, __ctx_equal,
+> +                                         g_free, NULL);
+> +
+> +    s->iommus.le_next = NULL;
+> +    s->iommus.le_prev = NULL;
+> +    QLIST_INIT(&s->spaces);
+> +    qemu_mutex_init(&s->core_lock);
+> +    qemu_spin_init(&s->regs_lock);
+> +}
+> +
+> +static void riscv_iommu_unrealize(DeviceState *dev)
+> +{
+> +    RISCVIOMMUState *s = RISCV_IOMMU(dev);
+> +
+> +    qemu_mutex_destroy(&s->core_lock);
+> +    g_hash_table_unref(s->ctx_cache);
+> +}
+> +
+> +static Property riscv_iommu_properties[] = {
+> +    DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
+> +        RISCV_IOMMU_SPEC_DOT_VER),
+> +    DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
+> +    DEFINE_PROP_BOOL("intremap", RISCVIOMMUState, enable_msi, TRUE),
+> +    DEFINE_PROP_BOOL("off", RISCVIOMMUState, enable_off, TRUE),
+> +    DEFINE_PROP_LINK("downstream-mr", RISCVIOMMUState, target_mr,
+> +        TYPE_MEMORY_REGION, MemoryRegion *),
+> +    DEFINE_PROP_END_OF_LIST(),
+> +};
+> +
+> +static void riscv_iommu_class_init(ObjectClass *klass, void* data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +
+> +    /* internal device for riscv-iommu-{pci/sys}, not user-creatable */
+> +    dc->user_creatable = false;
+> +    dc->realize = riscv_iommu_realize;
+> +    dc->unrealize = riscv_iommu_unrealize;
+> +    device_class_set_props(dc, riscv_iommu_properties);
+> +}
+> +
+> +static const TypeInfo riscv_iommu_info = {
+> +    .name = TYPE_RISCV_IOMMU,
+> +    .parent = TYPE_DEVICE,
+> +    .instance_size = sizeof(RISCVIOMMUState),
+> +    .class_init = riscv_iommu_class_init,
+> +};
+> +
+> +static const char *IOMMU_FLAG_STR[] = {
+> +    "NA",
+> +    "RO",
+> +    "WR",
+> +    "RW",
+> +};
+> +
+> +/* RISC-V IOMMU Memory Region - Address Translation Space */
+> +static IOMMUTLBEntry riscv_iommu_memory_region_translate(
+> +    IOMMUMemoryRegion *iommu_mr, hwaddr addr,
+> +    IOMMUAccessFlags flag, int iommu_idx)
+> +{
+> +    RISCVIOMMUSpace *as = container_of(iommu_mr, RISCVIOMMUSpace, iova_mr);
+> +    RISCVIOMMUContext *ctx;
+> +    void *ref;
+> +    IOMMUTLBEntry iotlb = {
+> +        .iova = addr,
+> +        .target_as = as->iommu->target_as,
+> +        .addr_mask = ~0ULL,
+> +        .perm = flag,
+> +    };
+> +
+> +    ctx = riscv_iommu_ctx(as->iommu, as->devid, iommu_idx, &ref);
+> +    if (ctx == NULL) {
+> +        /* Translation disabled or invalid. */
+> +        iotlb.addr_mask = 0;
+> +        iotlb.perm = IOMMU_NONE;
+> +    } else if (riscv_iommu_translate(as->iommu, ctx, &iotlb)) {
+> +        /* Translation disabled or fault reported. */
+> +        iotlb.addr_mask = 0;
+> +        iotlb.perm = IOMMU_NONE;
+> +    }
+> +
+> +    /* Trace all dma translations with original access flags. */
+> +    trace_riscv_iommu_dma(as->iommu->parent_obj.id, PCI_BUS_NUM(as->devid),
+> +                          PCI_SLOT(as->devid), PCI_FUNC(as->devid), iommu_idx,
+> +                          IOMMU_FLAG_STR[flag & IOMMU_RW], iotlb.iova,
+> +                          iotlb.translated_addr);
+> +
+> +    riscv_iommu_ctx_put(as->iommu, ref);
+> +
+> +    return iotlb;
+> +}
+> +
+> +static int riscv_iommu_memory_region_notify(
+> +    IOMMUMemoryRegion *iommu_mr, IOMMUNotifierFlag old,
+> +    IOMMUNotifierFlag new, Error **errp)
+> +{
+> +    RISCVIOMMUSpace *as = container_of(iommu_mr, RISCVIOMMUSpace, iova_mr);
+> +
+> +    if (old == IOMMU_NOTIFIER_NONE) {
+> +        as->notifier = true;
+> +        trace_riscv_iommu_notifier_add(iommu_mr->parent_obj.name);
+> +    } else if (new == IOMMU_NOTIFIER_NONE) {
+> +        as->notifier = false;
+> +        trace_riscv_iommu_notifier_del(iommu_mr->parent_obj.name);
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static inline bool pci_is_iommu(PCIDevice *pdev)
+> +{
+> +    return pci_get_word(pdev->config + PCI_CLASS_DEVICE) == 0x0806;
+> +}
+> +
+> +static AddressSpace *riscv_iommu_find_as(PCIBus *bus, void *opaque, int devfn)
+> +{
+> +    RISCVIOMMUState *s = (RISCVIOMMUState *) opaque;
+> +    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
+> +    AddressSpace *as = NULL;
+> +
+> +    if (pdev && pci_is_iommu(pdev)) {
+> +        return s->target_as;
+> +    }
+> +
+> +    /* Find first registered IOMMU device */
+> +    while (s->iommus.le_prev) {
+> +        s = *(s->iommus.le_prev);
+> +    }
+> +
+> +    /* Find first matching IOMMU */
+> +    while (s != NULL && as == NULL) {
+> +        as = riscv_iommu_space(s, PCI_BUILD_BDF(pci_bus_num(bus), devfn));
+> +        s = s->iommus.le_next;
+> +    }
+> +
+> +    return as ? as : &address_space_memory;
+> +}
+> +
+> +static const PCIIOMMUOps riscv_iommu_ops = {
+> +    .get_address_space = riscv_iommu_find_as,
+> +};
+> +
+> +void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
+> +        Error **errp)
+> +{
+> +    if (bus->iommu_ops &&
+> +        bus->iommu_ops->get_address_space == riscv_iommu_find_as) {
+> +        /* Allow multiple IOMMUs on the same PCIe bus, link known devices */
+> +        RISCVIOMMUState *last = (RISCVIOMMUState *)bus->iommu_opaque;
+> +        QLIST_INSERT_AFTER(last, iommu, iommus);
+> +    } else if (!bus->iommu_ops && !bus->iommu_opaque) {
+> +        pci_setup_iommu(bus, &riscv_iommu_ops, iommu);
 
-It seems that currently the setting of "endpoint" is not strictly
-enforced for VM migration. I'd like to know, if it's intentionally
-done to allow a certain flexibility, or should be fixed from the
-security perspective. Thank you very much!
+We use Designware PCIe with RISCV IOMMU internally and there is a 
+problem that we would like to point out.
 
-Best regards,
-Yu Zhang @ IONOS cloud
+Both hw/riscv/riscv-iommu.c and hw/pci-host/designware.c utilize 
+pci_setup_iommu(). When pci_setup_iommu() is invoked in 
+hw/riscv/riscv-iommu.c, the iommu_ops set by Designware PCIe host is 
+lost, which results in incorrect translation as the PCIe translation 
+logic is overwritten and lost.
 
-On Mon, Aug 21, 2023 at 4:29=E2=80=AFPM Yu Zhang <yu.zhang@ionos.com> wrote=
-:
->
-> Hello Daniel,
->
-> sorry for my slow reply! I tested the approach you suggested by the
-> following way:
->
-> On the target server, start a VM in -incoming mode:
->
-> qemu-7.1 \
-> -uuid ${VM_UUID} \
->  ...
-> -object tls-creds-x509,id=3Dtls0,dir=3D${HOME}/qemutls,endpoint=3Dserver =
-\
->  ...
-> -incoming defer \
-> -qmp unix:${SOCK},server,nowait \
-> -qmp unix:${SOCK},server,nowait &
->
-> Set the migrate parameter and waiting for the incoming VM from source:
->
-> echo '{"execute":"qmp_capabilities"}{ "execute":
-> "migrate-set-parameters", "arguments": { "tls-creds": "tls0" }}' |
-> sudo nc -U -w 1 ${SOCK}
-> echo '{"execute":"qmp_capabilities"}{ "execute": "migrate",
-> "arguments": { "uri": "tcp::8089" }}
->
-> in HMP:
-> (qemu) migrate_set_parameter tls-creds tls0
-> (qemu) migrate_incoming tcp:[::]:8089
->
-> On the source server, start a VM:
->
-> qemu-7.1 \
-> -uuid ${VM_UUID} \
->  ...
-> -object tls-creds-x509,id=3Dtls0,dir=3D${HOME}/qemutls,endpoint=3Dclient =
-\
->  ...
-> -qmp unix:${SOCK},server,nowait \
-> -qmp unix:${SOCK},server,nowait &
->
-> Set the migrate parameter and migrate the VM from source to target:
->
-> echo '{"execute":"qmp_capabilities"}{ "execute":
-> "migrate-set-parameters", "arguments": { "tls-creds": "tls0" }}' |
-> sudo nc -U -w 1 ${SOCK}
-> echo '{"execute":"qmp_capabilities"}{ "execute": "migrate",
-> "arguments": { "uri": "tcp:10.41.19.32:8089" }}
->
-> and query the migration after a few seconds:
->
-> echo '{"execute":"qmp_capabilities"}{ "execute": "query-migrate" }' |
-> sudo nc -U -w 1 ${SOCK}
->
-> the migrate is completed successfully.
->
-> To further migrate the VM from source (the target for the previously
-> migration), the endpoint must be changed from "server" to "client" by
-> QMP commands:
->
-> echo '{"execute":"qmp_capabilities"}{ "execute": "object-del",
-> "arguments": { "id": "tls0" }}' | sudo nc -U -w 1 ${SOCK}
-> echo '{"execute":"qmp_capabilities"}{ "execute": "object-add",
-> "arguments": { "id": "tls0", "qom-type": "tls-creds-x509", "endpoint":
-> "client", "dir": "${HOME}/qemutls", "verify-peer": false }}' | sudo nc
-> -U -w 1 ${SOCK}
->
-> which in HMP commands are:
->
-> (qemu) object_del tls0
-> (qemu) object_add tls-creds-x509,id=3Dtls0,dir=3D${HOME}/qemutls,endpoint=
-=3Dclient
-> (qemu) migrate_set_parameter tls-creds tls0
-> (qemu) migrate tcp:10.41.16.10:8089
->
-> So far as I tested, the TLS certificate must be valid for at least one
-> day. Therefore, the VM migration with an expired TLS certificate can
-> only be done in one day.
->
-> Thank you so much for your kind reply!
-> Best regards
->
-> Yu Zhang @ IONOS Compute Platform
->
-> On Thu, Aug 17, 2023 at 12:49=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrang=
-e@redhat.com> wrote:
-> >
-> > On Mon, Aug 07, 2023 at 12:07:31AM +0200, Yu Zhang wrote:
-> > > Hi all,
-> > >
-> > > According to qemu docs [1], TLS parameters are specified as an object=
- in
-> > > the QEMU command line:
-> > >
-> > >    -object tls-creds-x509,id=3Did,endpoint=3Dendpoint,dir=3D/path/to/=
-cred/dir ...
-> > >
-> > > of which "endpoint" is a type of "QCryptoTLSCredsEndpoint" and can be
-> > > either a "server" or a "client".
-> > >
-> > > I'd like to know:
-> > >
-> > > - When a VM is started with this config, is there a way (e.g. QMP) to
-> > > change the value of "endpoint"?
-> > >   If possible, how to do this? or else after the first migration of a=
- VM,
-> > > the VM has "endpoint=3Dserver",
-> > >   which can't be migrated without stop / start.
-> >
-> > Use object_del + object_add to delete the old credentials and
-> > create new ones.
-> >
-> > > - In which case does the QEMU reload its TLS certificate, e.g. when a=
- QEMU
-> > > VM has been run longer
-> > >   than the valid period of its TLS certificate?
-> >
-> > The certs are loaded at the time the incoming/outgoing migration
-> > operation is initiated, so they are always fresh.
-> >
-> > > - The migration is done by using HMP monitor on both source and targe=
-t
-> > > side. Is it possible to do it
-> > >   by using QMP commands?
-> >
-> > Almost everything in HMP has an equivalent QMP command.
-> >
-> >
-> > With regards,
-> > Daniel
-> > --
-> > |: https://berrange.com      -o-    https://www.flickr.com/photos/dberr=
-ange :|
-> > |: https://libvirt.org         -o-            https://fstop138.berrange=
-.com :|
-> > |: https://entangle-photo.org    -o-    https://www.instagram.com/dberr=
-ange :|
-> >
+I think it may be a better choice to expose a memory region property in 
+each PCIe host for the purpose of specifying the target memory region 
+that the PCIe host should send requests to. By doing this, the 
+Designware PCIe host can finish its translation and directs the request 
+to the IOMMU memory region of the RISCV IOMMU.
+
+The below code, based on riscv_iommu_v3, exposes a target memory region 
+property in Designware PCIe and directs inbound requests to the target 
+memory which can be specified to be the IOMMU memory region of RISCV IOMMU.
+
+diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
+index c25d50f1c6..6b6d4ac1aa 100644
+--- a/hw/pci-host/designware.c
++++ b/hw/pci-host/designware.c
+@@ -435,7 +435,7 @@ static void designware_pcie_root_realize(PCIDevice 
+*dev, Error **errp)
+          viewport->cr[0]   = DESIGNWARE_PCIE_ATU_TYPE_MEM;
+
+          source      = &host->pci.address_space_root;
+-        destination = get_system_memory();
++        destination = host->target_mr;
+          direction   = "Inbound";
+
+          /*
+@@ -713,6 +713,10 @@ static void 
+designware_pcie_host_realize(DeviceState *dev, Error **errp)
+                         "pcie-bus-address-space");
+      pci_setup_iommu(pci->bus, &designware_iommu_ops, s);
+
++    if (!s->target_mr) {
++        s->target_mr = get_system_memory();
++    }
++
+      qdev_realize(DEVICE(&s->root), BUS(pci->bus), &error_fatal);
+  }
+
+@@ -730,6 +734,12 @@ static const VMStateDescription 
+vmstate_designware_pcie_host = {
+      }
+  };
+
++static Property designware_pcie_host_properties[] = {
++    DEFINE_PROP_LINK("target-mr", DesignwarePCIEHost, target_mr,
++                     TYPE_MEMORY_REGION, MemoryRegion *),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
+  static void designware_pcie_host_class_init(ObjectClass *klass, void 
+*data)
+  {
+      DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -740,6 +750,7 @@ static void 
+designware_pcie_host_class_init(ObjectClass *klass, void *data)
+      set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+      dc->fw_name = "pci";
+      dc->vmsd = &vmstate_designware_pcie_host;
++    device_class_set_props(dc, designware_pcie_host_properties);
+  }
+
+  static void designware_pcie_host_init(Object *obj)
+diff --git a/include/hw/pci-host/designware.h 
+b/include/hw/pci-host/designware.h
+index 908f3d946b..2530eacbb0 100644
+--- a/include/hw/pci-host/designware.h
++++ b/include/hw/pci-host/designware.h
+@@ -91,6 +91,7 @@ struct DesignwarePCIEHost {
+      } pci;
+
+      MemoryRegion mmio;
++    MemoryRegion *target_mr;
+  };
+
+  #endif /* DESIGNWARE_H */
+
+We also need to specify the requester id (BDF) in the memory attribute 
+when sending requests to the IOMMU memory region in order to distinguish 
+the source endpoint, since all endpoints under Designware PCIe host 
+write to the same IOMMU memory region.
+
+diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+index d3dd0f64b2..1fc64a2d1f 100644
+--- a/include/hw/pci/pci_device.h
++++ b/include/hw/pci/pci_device.h
+@@ -249,8 +249,11 @@ static inline MemTxResult pci_dma_rw(PCIDevice 
+*dev, dma_addr_t addr,
+  static inline MemTxResult pci_dma_read(PCIDevice *dev, dma_addr_t addr,
+                                         void *buf, dma_addr_t len)
+  {
++    MemTxAttrs attrs = {};
++    attrs.requester_id = pci_requester_id(dev);
++
+      return pci_dma_rw(dev, addr, buf, len,
+-                      DMA_DIRECTION_TO_DEVICE, MEMTXATTRS_UNSPECIFIED);
++                      DMA_DIRECTION_TO_DEVICE, attrs);
+  }
+
+  /**
+@@ -268,8 +271,11 @@ static inline MemTxResult pci_dma_read(PCIDevice 
+*dev, dma_addr_t addr,
+  static inline MemTxResult pci_dma_write(PCIDevice *dev, dma_addr_t addr,
+                                          const void *buf, dma_addr_t len)
+  {
++    MemTxAttrs attrs = {};
++    attrs.requester_id = pci_requester_id(dev);
++
+      return pci_dma_rw(dev, addr, (void *) buf, len,
+-                      DMA_DIRECTION_FROM_DEVICE, MEMTXATTRS_UNSPECIFIED);
++                      DMA_DIRECTION_FROM_DEVICE, attrs);
+  }
+
+  #define PCI_DMA_DEFINE_LDST(_l, _s, _bits) \
+@@ -313,8 +319,11 @@ PCI_DMA_DEFINE_LDST(q_be, q_be, 64);
+  static inline void *pci_dma_map(PCIDevice *dev, dma_addr_t addr,
+                                  dma_addr_t *plen, DMADirection dir)
+  {
++    MemTxAttrs attrs = {};
++    attrs.requester_id = pci_requester_id(dev);
++
+      return dma_memory_map(pci_get_address_space(dev), addr, plen, dir,
+-                          MEMTXATTRS_UNSPECIFIED);
++                          attrs);
+  }
+
+We hope not to call pci_setup_iommu() in hw/riscv/riscv-iommu.c to avoid 
+conflicts of iommu_ops. Do you have any suggestion on this issue?
+
+Thanks.
+
+> +    } else {
+> +        error_setg(errp, "can't register secondary IOMMU for PCI bus #%d",
+> +            pci_bus_num(bus));
+> +    }
+> +}
+> +
+> +static int riscv_iommu_memory_region_index(IOMMUMemoryRegion *iommu_mr,
+> +    MemTxAttrs attrs)
+> +{
+> +    return attrs.unspecified ? RISCV_IOMMU_NOPASID : (int)attrs.pasid;
+> +}
+> +
+> +static int riscv_iommu_memory_region_index_len(IOMMUMemoryRegion *iommu_mr)
+> +{
+> +    RISCVIOMMUSpace *as = container_of(iommu_mr, RISCVIOMMUSpace, iova_mr);
+> +    return 1 << as->iommu->pasid_bits;
+> +}
+> +
+> +static void riscv_iommu_memory_region_init(ObjectClass *klass, void *data)
+> +{
+> +    IOMMUMemoryRegionClass *imrc = IOMMU_MEMORY_REGION_CLASS(klass);
+> +
+> +    imrc->translate = riscv_iommu_memory_region_translate;
+> +    imrc->notify_flag_changed = riscv_iommu_memory_region_notify;
+> +    imrc->attrs_to_index = riscv_iommu_memory_region_index;
+> +    imrc->num_indexes = riscv_iommu_memory_region_index_len;
+> +}
+> +
+> +static const TypeInfo riscv_iommu_memory_region_info = {
+> +    .parent = TYPE_IOMMU_MEMORY_REGION,
+> +    .name = TYPE_RISCV_IOMMU_MEMORY_REGION,
+> +    .class_init = riscv_iommu_memory_region_init,
+> +};
+> +
+> +static void riscv_iommu_register_mr_types(void)
+> +{
+> +    type_register_static(&riscv_iommu_memory_region_info);
+> +    type_register_static(&riscv_iommu_info);
+> +}
+> +
+> +type_init(riscv_iommu_register_mr_types);
+> diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
+> new file mode 100644
+> index 0000000000..31d3907d33
+> --- /dev/null
+> +++ b/hw/riscv/riscv-iommu.h
+> @@ -0,0 +1,141 @@
+> +/*
+> + * QEMU emulation of an RISC-V IOMMU
+> + *
+> + * Copyright (C) 2022-2023 Rivos Inc.
+> + *
+> + * This program is free software; you can redistribute it and/or modify
+> + * it under the terms of the GNU General Public License as published by
+> + * the Free Software Foundation; either version 2 of the License.
+> + *
+> + * This program is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> + * GNU General Public License for more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along
+> + * with this program; if not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#ifndef HW_RISCV_IOMMU_STATE_H
+> +#define HW_RISCV_IOMMU_STATE_H
+> +
+> +#include "qemu/osdep.h"
+> +#include "qom/object.h"
+> +
+> +#include "hw/riscv/iommu.h"
+> +
+> +struct RISCVIOMMUState {
+> +    /*< private >*/
+> +    DeviceState parent_obj;
+> +
+> +    /*< public >*/
+> +    uint32_t version;     /* Reported interface version number */
+> +    uint32_t pasid_bits;  /* process identifier width */
+> +    uint32_t bus;         /* PCI bus mapping for non-root endpoints */
+> +
+> +    uint64_t cap;         /* IOMMU supported capabilities */
+> +    uint64_t fctl;        /* IOMMU enabled features */
+> +
+> +    bool enable_off;      /* Enable out-of-reset OFF mode (DMA disabled) */
+> +    bool enable_msi;      /* Enable MSI remapping */
+> +
+> +    /* IOMMU Internal State */
+> +    uint64_t ddtp;        /* Validated Device Directory Tree Root Pointer */
+> +
+> +    dma_addr_t cq_addr;   /* Command queue base physical address */
+> +    dma_addr_t fq_addr;   /* Fault/event queue base physical address */
+> +    dma_addr_t pq_addr;   /* Page request queue base physical address */
+> +
+> +    uint32_t cq_mask;     /* Command queue index bit mask */
+> +    uint32_t fq_mask;     /* Fault/event queue index bit mask */
+> +    uint32_t pq_mask;     /* Page request queue index bit mask */
+> +
+> +    /* interrupt notifier */
+> +    void (*notify)(RISCVIOMMUState *iommu, unsigned vector);
+> +
+> +    /* IOMMU State Machine */
+> +    QemuThread core_proc; /* Background processing thread */
+> +    QemuMutex core_lock;  /* Global IOMMU lock, used for cache/regs updates */
+> +    QemuCond core_cond;   /* Background processing wake up signal */
+> +    unsigned core_exec;   /* Processing thread execution actions */
+> +
+> +    /* IOMMU target address space */
+> +    AddressSpace *target_as;
+> +    MemoryRegion *target_mr;
+> +
+> +    /* MSI / MRIF access trap */
+> +    AddressSpace trap_as;
+> +    MemoryRegion trap_mr;
+> +
+> +    GHashTable *ctx_cache;          /* Device translation Context Cache */
+> +
+> +    /* MMIO Hardware Interface */
+> +    MemoryRegion regs_mr;
+> +    QemuSpin regs_lock;
+> +    uint8_t *regs_rw;  /* register state (user write) */
+> +    uint8_t *regs_wc;  /* write-1-to-clear mask */
+> +    uint8_t *regs_ro;  /* read-only mask */
+> +
+> +    QLIST_ENTRY(RISCVIOMMUState) iommus;
+> +    QLIST_HEAD(, RISCVIOMMUSpace) spaces;
+> +};
+> +
+> +void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
+> +         Error **errp);
+> +
+> +/* private helpers */
+> +
+> +/* Register helper functions */
+> +static inline uint32_t riscv_iommu_reg_mod32(RISCVIOMMUState *s,
+> +    unsigned idx, uint32_t set, uint32_t clr)
+> +{
+> +    uint32_t val;
+> +    qemu_spin_lock(&s->regs_lock);
+> +    val = ldl_le_p(s->regs_rw + idx);
+> +    stl_le_p(s->regs_rw + idx, (val & ~clr) | set);
+> +    qemu_spin_unlock(&s->regs_lock);
+> +    return val;
+> +}
+> +
+> +static inline void riscv_iommu_reg_set32(RISCVIOMMUState *s,
+> +    unsigned idx, uint32_t set)
+> +{
+> +    qemu_spin_lock(&s->regs_lock);
+> +    stl_le_p(s->regs_rw + idx, set);
+> +    qemu_spin_unlock(&s->regs_lock);
+> +}
+> +
+> +static inline uint32_t riscv_iommu_reg_get32(RISCVIOMMUState *s,
+> +    unsigned idx)
+> +{
+> +    return ldl_le_p(s->regs_rw + idx);
+> +}
+> +
+> +static inline uint64_t riscv_iommu_reg_mod64(RISCVIOMMUState *s,
+> +    unsigned idx, uint64_t set, uint64_t clr)
+> +{
+> +    uint64_t val;
+> +    qemu_spin_lock(&s->regs_lock);
+> +    val = ldq_le_p(s->regs_rw + idx);
+> +    stq_le_p(s->regs_rw + idx, (val & ~clr) | set);
+> +    qemu_spin_unlock(&s->regs_lock);
+> +    return val;
+> +}
+> +
+> +static inline void riscv_iommu_reg_set64(RISCVIOMMUState *s,
+> +    unsigned idx, uint64_t set)
+> +{
+> +    qemu_spin_lock(&s->regs_lock);
+> +    stq_le_p(s->regs_rw + idx, set);
+> +    qemu_spin_unlock(&s->regs_lock);
+> +}
+> +
+> +static inline uint64_t riscv_iommu_reg_get64(RISCVIOMMUState *s,
+> +    unsigned idx)
+> +{
+> +    return ldq_le_p(s->regs_rw + idx);
+> +}
+> +
+> +
+> +
+> +#endif
+> diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
+> new file mode 100644
+> index 0000000000..42a97caffa
+> --- /dev/null
+> +++ b/hw/riscv/trace-events
+> @@ -0,0 +1,11 @@
+> +# See documentation at docs/devel/tracing.rst
+> +
+> +# riscv-iommu.c
+> +riscv_iommu_new(const char *id, unsigned b, unsigned d, unsigned f) "%s: device attached %04x:%02x.%d"
+> +riscv_iommu_flt(const char *id, unsigned b, unsigned d, unsigned f, uint64_t reason, uint64_t iova) "%s: fault %04x:%02x.%u reason: 0x%"PRIx64" iova: 0x%"PRIx64
+> +riscv_iommu_pri(const char *id, unsigned b, unsigned d, unsigned f, uint64_t iova) "%s: page request %04x:%02x.%u iova: 0x%"PRIx64
+> +riscv_iommu_dma(const char *id, unsigned b, unsigned d, unsigned f, unsigned pasid, const char *dir, uint64_t iova, uint64_t phys) "%s: translate %04x:%02x.%u #%u %s 0x%"PRIx64" -> 0x%"PRIx64
+> +riscv_iommu_msi(const char *id, unsigned b, unsigned d, unsigned f, uint64_t iova, uint64_t phys) "%s: translate %04x:%02x.%u MSI 0x%"PRIx64" -> 0x%"PRIx64
+> +riscv_iommu_cmd(const char *id, uint64_t l, uint64_t u) "%s: command 0x%"PRIx64" 0x%"PRIx64
+> +riscv_iommu_notifier_add(const char *id) "%s: dev-iotlb notifier added"
+> +riscv_iommu_notifier_del(const char *id) "%s: dev-iotlb notifier removed"
+> diff --git a/hw/riscv/trace.h b/hw/riscv/trace.h
+> new file mode 100644
+> index 0000000000..8c0e3ca1f3
+> --- /dev/null
+> +++ b/hw/riscv/trace.h
+> @@ -0,0 +1 @@
+> +#include "trace/trace-hw_riscv.h"
+> diff --git a/include/hw/riscv/iommu.h b/include/hw/riscv/iommu.h
+> new file mode 100644
+> index 0000000000..070ee69973
+> --- /dev/null
+> +++ b/include/hw/riscv/iommu.h
+> @@ -0,0 +1,36 @@
+> +/*
+> + * QEMU emulation of an RISC-V IOMMU
+> + *
+> + * Copyright (C) 2022-2023 Rivos Inc.
+> + *
+> + * This program is free software; you can redistribute it and/or modify
+> + * it under the terms of the GNU General Public License as published by
+> + * the Free Software Foundation; either version 2 of the License.
+> + *
+> + * This program is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> + * GNU General Public License for more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along
+> + * with this program; if not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#ifndef HW_RISCV_IOMMU_H
+> +#define HW_RISCV_IOMMU_H
+> +
+> +#include "qemu/osdep.h"
+> +#include "qom/object.h"
+> +
+> +#define TYPE_RISCV_IOMMU "riscv-iommu"
+> +OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUState, RISCV_IOMMU)
+> +typedef struct RISCVIOMMUState RISCVIOMMUState;
+> +
+> +#define TYPE_RISCV_IOMMU_MEMORY_REGION "riscv-iommu-mr"
+> +typedef struct RISCVIOMMUSpace RISCVIOMMUSpace;
+> +
+> +#define TYPE_RISCV_IOMMU_PCI "riscv-iommu-pci"
+> +OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUStatePci, RISCV_IOMMU_PCI)
+> +typedef struct RISCVIOMMUStatePci RISCVIOMMUStatePci;
+> +
+> +#endif
+> diff --git a/meson.build b/meson.build
+> index a9de71d450..8099d8271c 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -3319,6 +3319,7 @@ if have_system
+>       'hw/pci-host',
+>       'hw/ppc',
+>       'hw/rtc',
+> +    'hw/riscv',
+>       'hw/s390x',
+>       'hw/scsi',
+>       'hw/sd',
 
