@@ -4,76 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1AFDC27C75
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 15:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C01E7C27C75
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 15:33:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH33U-0003Gz-8J; Tue, 11 Jun 2024 11:05:00 -0400
+	id 1sH3U1-0003MG-BB; Tue, 11 Jun 2024 11:32:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sH33M-0003Fl-2y
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:04:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sH33J-00085E-FS
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:04:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718118288;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rGKKe0RSG0ekt7xDq0aXM9vPhPUmi9tghmU2YFyAn4g=;
- b=fLmkVs8uLOJO6S0TIGOO+RQAnxBygDM/tPmQC5JBy19oFlDKXZymF3bGClvz7sknYBMXSc
- xSQnbw8QojnlQxuWYC03oVAI0Osq4uvXZAIQanAG59Lp78XLWE/0y+m09trEMJMdmzKIgP
- nHM06gn34s2yfEzJ2dtk0o0UVsm6VW0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-JhPnEVARM4qO7IF-IpCpPA-1; Tue,
- 11 Jun 2024 11:04:42 -0400
-X-MC-Unique: JhPnEVARM4qO7IF-IpCpPA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 078E01956067; Tue, 11 Jun 2024 15:04:37 +0000 (UTC)
-Received: from localhost (unknown [10.39.193.36])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D517C19560B0; Tue, 11 Jun 2024 15:04:29 +0000 (UTC)
-Date: Tue, 11 Jun 2024 11:04:27 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: =?utf-8?B?5Y2i6ZW/5aWH?= <luchangqi.123@bytedance.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
- hreitz@redhat.com, fam@euphon.net, ronniesahlberg@gmail.com,
- pbonzini@redhat.com, pl@dlhnet.de, kbusch@kernel.org,
- its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
- pizhenwei@bytedance.com
-Subject: Re: Re: [PATCH v5 00/10] Support persistent reservation operations
-Message-ID: <20240611150427.GC366375@fedora.redhat.com>
-References: <20240606122444.2914576-1-luchangqi.123@bytedance.com>
- <20240610171823.GA334653@fedora.redhat.com>
- <CAO5cSZDWkoORC_LPib3b16+q8vRK7zUvzYeVp7SjZg0+EBeRNQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sH3U0-0003M4-Id
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:32:24 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sH3Tw-0006Jh-9j
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:32:24 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1f4a0050b9aso47964465ad.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 08:32:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718119938; x=1718724738; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eG7XOGjL1NCNTpejGsE7L6EYRktGj9qQdfmrwyqQAXE=;
+ b=oRSnDjIHp2tu7BYWXYWA0O1YcKgpyxn+z/v14PliiqXuhxE/TnPckw0T/auOCZcoV9
+ kM+EKBH9EJ/syKcxH9gzO3CnZd6e/7Xt6tydG/4872ibdxNi5Ak57+go1LhIGGqkVpX+
+ tpH5AimBq/Nn3TdITWmoHH1A2G4LiKGx/hG1egfVJs9JDt5dVZ4y4WeEzNQK19JQQJSy
+ 4gnJWJw9CkFcvq14BOo2knJIAd3waSuHqEn62Klcp8O76RD8t0jULzo8XiPEe8Ut+ikw
+ r1keoFxYGjSaY2zslBmP8IiHA+7G/g+gA7F2vQWR4d3c039EoDDHPNet8cJ+qPIXCYnV
+ ZhXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718119938; x=1718724738;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eG7XOGjL1NCNTpejGsE7L6EYRktGj9qQdfmrwyqQAXE=;
+ b=TafML1zS2OrZwDDRrDEIPKnF7HTDc+1gq+TA0czY3fgmDFN56dxQWkACEFAtOvkxYB
+ cjqKU/YzzgMOHXL/lEAhwNUM4Fu1DC2hyV8ihcjMQRjUnOnFXL+dJzmOuOQhnsYF89+Q
+ skEEF3L17L/99fDDaQxPGWmE7PMrSnHJKE3PHfaZadcynCemevwMt7JtIsSG6kb+EGOO
+ pxTSisNqFrQIxR5OK/rENs1nwpQ1KHwWdQxnztJyqGGXnLAbBE1ZDsKaw7S15oZ3HgMG
+ pBqHCT2MF7atOVQmlbwBBrnPSuK2auIjxLPXv6aX93I6RCezszL+gPbIuxklmYlYWZeH
+ 94VQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWTTC3QIzbfmaIcgTXNyZsslVIxLpe4pfmL8aLa3hjJZ+NWZYQzzTHVrq8VrrDJQtB9vQsXckBLpFlo+ZX2xaREbosWwis=
+X-Gm-Message-State: AOJu0YxAMtPqLHMhIWSae0tk8mVfRVvAKs1R8PVOxQdvv7HkWxoKbi1N
+ 8kXUGNplY0PyLR8b2ugVmE0MSJ+jlwANI1BG56yUBwfzrkWGd3izvjyW0EdzLRc=
+X-Google-Smtp-Source: AGHT+IFEBDas8C15kSDEKIY6mlkqDYow3XTSoOZcGdN9xdcmpg7UYFCxD+YTRQdwR7JJluw+09ixgg==
+X-Received: by 2002:a17:903:1c8:b0:1f7:d1d:21ed with SMTP id
+ d9443c01a7336-1f70d1d29e3mr60100665ad.19.1718119938373; 
+ Tue, 11 Jun 2024 08:32:18 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::e697? ([2604:3d08:9384:1d00::e697])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f6fbea199esm57386995ad.196.2024.06.11.08.32.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Jun 2024 08:32:17 -0700 (PDT)
+Message-ID: <fecbcab1-1955-4369-a420-215105adbe93@linaro.org>
+Date: Tue, 11 Jun 2024 08:32:16 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="UGEvaVH8QWKmsHGN"
-Content-Disposition: inline
-In-Reply-To: <CAO5cSZDWkoORC_LPib3b16+q8vRK7zUvzYeVp7SjZg0+EBeRNQ@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Marc-Andr_=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>
+References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
+ <d910708f-ed55-4eee-8f66-8703cb45081c@linaro.org>
+ <evt7n.ggoypj31l14q@linaro.org>
+ <6e7a14a1-8727-4ce5-ae67-797323704464@linaro.org>
+ <87o787zvfi.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87o787zvfi.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,136 +109,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---UGEvaVH8QWKmsHGN
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Jun 10, 2024 at 07:55:20PM -0700, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
-> Hi,
->=20
-> Sorry, I explained it in patch2 and forgot to reply your email.
->=20
-> The existing PRManager only works with local scsi devices. This series
-> will completely decouple devices and drivers. The device can not only be
-> scsi, but also other devices such as nvme. The same is true for the
-> driver, which is completely unrestricted.
->=20
-> And block/file-posix.c can implement the new block driver, and
-> pr_manager can be executed after splicing ioctl commands in these
-> drivers. This will be implemented in subsequent patches.
-
-Thanks for explaining!
-
-Stefan
-
->=20
-> On 2024/6/11 01:18, Stefan Hajnoczi wrote:
-> > On Thu, Jun 06, 2024 at 08:24:34PM +0800, Changqi Lu wrote:
-> >> Hi,
-> >>
-> >> patchv5 has been modified.
-> >>
-> >> Sincerely hope that everyone can help review the
-> >> code and provide some suggestions.
-> >>
-> >> v4->v5:
-> >> - Fixed a memory leak bug at hw/nvme/ctrl.c.
-> >>
-> >> v3->v4:
-> >> - At the nvme layer, the two patches of enabling the ONCS
-> >> function and enabling rescap are combined into one.
-> >> - At the nvme layer, add helper functions for pr capacity
-> >> conversion between the block layer and the nvme layer.
-> >>
-> >> v2->v3:
-> >> In v2 Persist Through Power Loss(PTPL) is enable default.
-> >> In v3 PTPL is supported, which is passed as a parameter.
-> >>
-> >> v1->v2:
-> >> - Add sg_persist --report-capabilities for SCSI protocol and enable
-> >> oncs and rescap for NVMe protocol.
-> >> - Add persistent reservation capabilities constants and helper functio=
-ns
-> for
-> >> SCSI and NVMe protocol.
-> >> - Add comments for necessary APIs.
-> >>
-> >> v1:
-> >> - Add seven APIs about persistent reservation command for block layer.
-> >> These APIs including reading keys, reading reservations, registering,
-> >> reserving, releasing, clearing and preempting.
-> >> - Add the necessary pr-related operation APIs for both the
-> >> SCSI protocol and NVMe protocol at the device layer.
-> >> - Add scsi driver at the driver layer to verify the functions
-> >
-> > My question from v1 is unanswered:
-> >
-> > What is the relationship to the existing PRManager functionality
-> > (docs/interop/pr-helper.rst) where block/file-posix.c interprets SCSI
-> > ioctls and sends persistent reservation requests to an external helper
-> > process?
-> >
-> > I wonder if block/file-posix.c can implement the new block driver
-> > callbacks using pr_mgr (while keeping the existing scsi-generic
-> > support).
-> >
-> > Thanks,
-> > Stefan
-> >
-> >>
-> >>
-> >> Changqi Lu (10):
-> >> block: add persistent reservation in/out api
-> >> block/raw: add persistent reservation in/out driver
-> >> scsi/constant: add persistent reservation in/out protocol constants
-> >> scsi/util: add helper functions for persistent reservation types
-> >> conversion
-> >> hw/scsi: add persistent reservation in/out api for scsi device
-> >> block/nvme: add reservation command protocol constants
-> >> hw/nvme: add helper functions for converting reservation types
-> >> hw/nvme: enable ONCS and rescap function
-> >> hw/nvme: add reservation protocal command
-> >> block/iscsi: add persistent reservation in/out driver
-> >>
-> >> block/block-backend.c | 397 ++++++++++++++++++++++++++
-> >> block/io.c | 163 +++++++++++
-> >> block/iscsi.c | 443 ++++++++++++++++++++++++++++++
-> >> block/raw-format.c | 56 ++++
-> >> hw/nvme/ctrl.c | 326 +++++++++++++++++++++-
-> >> hw/nvme/ns.c | 5 +
-> >> hw/nvme/nvme.h | 84 ++++++
-> >> hw/scsi/scsi-disk.c | 352 ++++++++++++++++++++++++
-> >> include/block/block-common.h | 40 +++
-> >> include/block/block-io.h | 20 ++
-> >> include/block/block_int-common.h | 84 ++++++
-> >> include/block/nvme.h | 98 +++++++
-> >> include/scsi/constants.h | 52 ++++
-> >> include/scsi/utils.h | 8 +
-> >> include/sysemu/block-backend-io.h | 24 ++
-> >> scsi/utils.c | 81 ++++++
-> >> 16 files changed, 2231 insertions(+), 2 deletions(-)
-> >>
-> >> --
-> >> 2.20.1
-> >>
-
---UGEvaVH8QWKmsHGN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZoZ3sACgkQnKSrs4Gr
-c8gIsggApitziGaJ6VOIcdPjg3sMCX7z4xm5U3MJxq86m/OIcFAwVDe+QYzGxH0S
-6AbdmJNPY1XTZ2sHjfME4svTw4uMLYvSM8ydAti0OBFDd240izDVsgoutFPHJXj2
-a0HJ+VSE7XzKZC0HdjedFpmYLw+TSDGTflUvKkmv/3sN2qHv7sWXqa3kBmEdv2+X
-87JmtkTT+E3qacx0aq+sZ20GH4XwZrVIar4Nc2sUx93U9ze9I2S1Be84+7knx+p7
-OJmIP0cT9rpaqSBk7CzmEoVrKOqmFT9Tqi4lKbClKliiQamQlADrk9XWx0LWx6Nc
-Xc9o2etlFyant/jcQHovUsD/d0tNZw==
-=/NYd
------END PGP SIGNATURE-----
-
---UGEvaVH8QWKmsHGN--
-
+T24gNi8xMS8yNCAwMjoyMSwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBQaWVycmljayBCb3V2
+aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+IHdyaXRlczoNCj4gDQo+PiBPbiA2
+LzEwLzI0IDEzOjI5LCBNYW5vcyBQaXRzaWRpYW5ha2lzIHdyb3RlOg0KPj4+IE9uIE1vbiwg
+MTAgSnVuIDIwMjQgMjI6MzcsIFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJA
+bGluYXJvLm9yZz4gd3JvdGU6DQo+Pj4+IEhlbGxvIE1hbm9zLA0KPj4+Pg0KPiA8c25pcD4N
+Cj4+Pj4gRXhjZWxsZW50IHdvcmssIGFuZCB0aGFua3MgZm9yIHBvc3RpbmcgdGhpcyBSRkMh
+DQo+Pj4+DQo+Pj4+IElNSE8sIGhhdmluZyBwYXRjaGVzIDIgYW5kIDUgc3BsaXR0ZWQgaXMg
+YSBiaXQgY29uZnVzaW5nLCBhbmQgZXhwb3NpbmcNCj4+Pj4gKHRlbXBvcmFyaWx5KSB0aGUg
+Z2VuZXJhdGVkLnJzIGZpbGUgaW4gcGF0Y2hlcyBpcyBub3QgYSBnb29kIG1vdmUuDQo+Pj4+
+IEFueSByZWFzb24geW91IGtlcHQgaXQgdGhpcyB3YXk/DQo+Pj4gVGhhdCB3YXMgbXkgZmly
+c3QgYXBwcm9hY2gsIEkgd2lsbCByZXdvcmsgaXQgb24gdGhlIHNlY29uZCB2ZXJzaW9uLg0K
+Pj4+IFRoZQ0KPj4+IGdlbmVyYXRlZCBjb2RlIHNob3VsZCBub3QgZXhpc3QgaW4gY29tbWl0
+dGVkIGNvZGUgYXQgYWxsLg0KPj4+IEl0IHdhcyBpbml0YWxseSB0cmlja3kgc2V0dGluZyB1
+cCB0aGUgZGVwZW5kZW5jeSBvcmRlcnMgY29ycmVjdGx5LA0KPj4+IHNvIEkNCj4+PiBmaXJz
+dCBjb21taXR0ZWQgaXQgYW5kIHRoZW4gbWFkZSBpdCBhIGRlcGVuZGVuY3kuDQo+Pj4NCj4+
+Pj4NCj4+Pj4gTWF5YmUgaXQgY291bGQgYmUgYmV0dGVyIGlmIGJ1aWxkLnJzIGZpbGUgd2Fz
+ICpub3QqIG5lZWRlZCBmb3IgbmV3DQo+Pj4+IGRldmljZXMvZm9sZGVycywgYW5kIGNvdWxk
+IGJlIGFic3RyYWN0ZWQgYXMgYSBkZXRhaWwgb2YgdGhlIHB5dGhvbg0KPj4+PiB3cmFwcGVy
+IHNjcmlwdCBpbnN0ZWFkIG9mIHNvbWV0aGluZyB0aGF0IHNob3VsZCBiZSBjb21taXR0ZWQu
+DQo+Pj4gVGhhdCdkIG1lYW4geW91IGNhbm5vdCB3b3JrIG9uIHRoZSBydXN0IGZpbGVzIHdp
+dGggYSBMYW5ndWFnZVNlcnZlciwNCj4+PiB5b3UNCj4+PiBjYW5ub3QgcnVuIGNhcmdvIGJ1
+aWxkIG9yIGNhcmdvIGNoZWNrIG9yIGNhcmdvIGNsaXBweSwgZXRjLiBUaGF0J3Mgd2h5IEkN
+Cj4+PiBsZWZ0IHRoZSBhbHRlcm5hdGl2ZSBjaG9pY2Ugb2YgaW5jbHVkaW5nIGEgbWFudWFs
+bHkgZ2VuZXJhdGVkIGJpbmRpbmdzDQo+Pj4gZmlsZSAoZ2VuZXJhdGVkLnJzLmluYykNCj4+
+Pg0KPj4NCj4+IE1heWJlIEkgbWlzc2VkIHNvbWV0aGluZywgYnV0IGl0IHNlZW1zIGxpa2Ug
+aXQganVzdCBjaGVja3MvY29waWVzIHRoZQ0KPj4gZ2VuZXJhdGVkLnJzIGZpbGUgd2hlcmUg
+aXQncyBleHBlY3RlZC4gRGVmaW5pdGVseSBzb21ldGhpbmcgdGhhdCBjb3VsZA0KPj4gYmUg
+ZG9uZSBhcyBwYXJ0IG9mIHRoZSBydXN0IGJ1aWxkLg0KPj4NCj4+IEhhdmluZyB0byBydW4g
+dGhlIGJ1aWxkIGJlZm9yZSBnZXR0aW5nIGNvbXBsZXRpb24gZG9lcyBub3Qgc2VlbSB0byBi
+ZQ0KPj4gYSBodWdlIGNvbXByb21pc2UuDQo+Pg0KPiA8c25pcD4NCj4gDQo+IEFzIGxvbmcg
+YXMgdGhlIExhbmd1YWdlIFNlcnZlciBjYW4ga2ljayBpbiBhZnRlciBhIGZpcnN0IGJ1aWxk
+LiBSdXN0DQo+IGRlZmluaXRlbHkgbGVhbnMgaW4gdG8gdGhlIGNvbmNlcHQgb2YgdGhlIHRv
+b2xpbmcgaGVscGluZyB5b3Ugb3V0IHdoaWxlDQo+IGNvZGluZy4NCj4gDQo+IEkgdGhpbmsg
+Zm9yIHRoZSBDIExTUHMgY29tcGlsZV9jb21tYW5kcy5qc29uIGlzIGdlbmVyYXRlZCBkdXJp
+bmcgdGhlDQo+IGNvbmZpZ3VyZSBzdGVwIGJ1dCBJIGNvdWxkIGJlIHdyb25nLg0KPiANCg0K
+WWVzLCBtZXNvbiBnZW5lcmF0ZXMgaXQuDQpJIGFncmVlIGhhdmluZyBzdXBwb3J0IGZvciBj
+b21wbGV0aW9uIHRvb2xpbmcgaXMgaW1wb3J0YW50IG5vd2FkYXlzLCANCndoZXRoZXIgaW4g
+QyBvciBpbiBSdXN0Lg0K
 
