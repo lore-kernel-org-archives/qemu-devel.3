@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0574C27C5E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 10:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA324C27C75
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 10:08:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGyI8-0006W0-Fy; Tue, 11 Jun 2024 05:59:48 -0400
+	id 1sGyPd-0000jP-99; Tue, 11 Jun 2024 06:07:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGyI6-0006VM-Lk
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:59:46 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sGyPY-0000hz-EV
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 06:07:30 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGyI4-0004d9-Sg
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:59:46 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a6f177b78dcso270279066b.1
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 02:59:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sGyPW-0006E5-5G
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 06:07:28 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-57a1fe63947so1167220a12.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 03:07:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718099983; x=1718704783; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9YXmo3CRVR8RoBeLgk/6TvQpS4uvHDIPiwNG3ECCLdI=;
- b=aTjboZGJ58mHYU/wb/A8FExuLBL7u7u7P0zBcZCMY0aB5VyIXccNCxryMddXNVHjZE
- SYv4hV7FPPjBZKY3KT4V80/8+x1HEIkbP4RTvSa6CWx18zCuixpYG542xP2rXaMITuF1
- AU0+lFMYr9zuQJJReSvCemUhAAl4flv7kD1wqFK51NYRYVp8gPne2c/fGSl+IRhHBKFp
- KueqsbZYoEMIBzzh7TM3oVIJOfYrthv9u11rEwwYms4M9oEZSfF938zEJlVBedNVgamR
- EZEyrusTCWosCpOyecsXlh5O7jujzzhCVA9hkMJYmUeAK+6J9DjuAZzfP8cwNRvD642R
- ZAdA==
+ d=linaro.org; s=google; t=1718100444; x=1718705244; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=/a5FtD6rQV+VlTF/jdGlUtxkFwtZpYBmDFOOJ7ZNAMA=;
+ b=ErF2NOK1CSbUGbdIu0g1bVUrsC3IF8SO4M6atSLrMzPwc1sTL8OEzRs4S0xM8h+C3z
+ UuuSvwUJHH1HHHwWgFnOOgr0CciCjiZjkLaozKlAE56aQzgXytrJW4jbOpkWWjdvmcgu
+ rs5PYhJaqVm414QH8yUiveSujlFYzGwWUyhzcPtJKtsg4Xy4XG/jky7zKIogR350nwOm
+ e2sHux+N5G0alSZtZVFYy94Zn4MvxyhuWtt5bs862veZ5ltDVs8ewinsh6uOfh82tyst
+ LK3cSc0PXzH3sNdiHPRShPXD3MRZRrcHow23X+CPP7b5fh5fca20kshe9L+mEe8EhKDv
+ C8zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718099983; x=1718704783;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9YXmo3CRVR8RoBeLgk/6TvQpS4uvHDIPiwNG3ECCLdI=;
- b=YtUY7WG575jNPsx6gQOAhGLvNdIS25k+ScbOwSiDXPBDQIOqjdnwtujgjVZMVFXVKT
- IZ2vkBVfI/B6xySRQWiuCUCZBkT3u2nlLlFntd0H5f93YoH5Jy6rkXMJMPWJLetBeUVB
- zT+5+kOGmQNispHra77eCcrQH2Y5XXtr+TJ3AgIBH5fvXIfx7tt5Cm0s1SFu+pcklX8w
- EK+NdSLwRMcbUnBSZjBHS8CoVrtThTDYgoAJzsZnMtz/LDPPAAgUGGleatwEkdz/juJQ
- wrZXhVsyztO94rYr6UTOU1LXp5fkK9mYL/V2TJSy4aeRTTMyJ+deWlZINC7A27ZRbSaN
- QePA==
-X-Gm-Message-State: AOJu0YymM72UQZeMPjyBwcrY/DB0ZJEmsodLHHcC9/+rWBQ1oc5uLRnG
- +LnVcs0QGWU3Pykr+ueR2mFh/kNJH3/AeNTcWG1y4eZqVOXmTz9afzP3bLHpMLc=
-X-Google-Smtp-Source: AGHT+IFE2KlPYg1WsxJqEY1LZOSpkQODfDN5U0VESCb9cIhxddtq6sxAchmyxy0WkkUJJoU/LFB1og==
-X-Received: by 2002:a17:906:c0d4:b0:a62:1347:ad40 with SMTP id
- a640c23a62f3a-a6cd5616b72mr755025066b.16.1718099983069; 
- Tue, 11 Jun 2024 02:59:43 -0700 (PDT)
-Received: from [192.168.69.100] (rsa59-h02-176-184-32-6.dsl.sta.abo.bbox.fr.
- [176.184.32.6]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f335878cbsm99484666b.214.2024.06.11.02.59.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Jun 2024 02:59:42 -0700 (PDT)
-Message-ID: <cc648a89-c1ba-4cdf-ac7e-b6b4e3c9e263@linaro.org>
-Date: Tue, 11 Jun 2024 11:59:40 +0200
+ d=1e100.net; s=20230601; t=1718100444; x=1718705244;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/a5FtD6rQV+VlTF/jdGlUtxkFwtZpYBmDFOOJ7ZNAMA=;
+ b=gvGk/dlTF1Z6QfuracW7nkUuJp0hzrTboFOhahP5ICYzjRMUcP9lIl46qKV80Xknay
+ xSwgG14Nb/SuP0b1JnhhGGxNlr6jTHUxXh2loYmuPnfGRGk6khWvC8eqn0r2X5l+6icH
+ FvReQu/XKJIH6V7oiElOgvySJHMYLNL0Hyqxkmp7E7rXAcgDVepk71EYQzMS5NoKoFGI
+ WvJjtMHw2AiftuihyXDO5AudVKM+sLaRTQbc1Xsk8do+ZhRAAUz1XRYQpAl/4zgw/8of
+ ptaU2dFmVnnw9LwTP5pPkulvISd+XevwrN5d71hju+iGXb/Cpr+tIerO3DIJ5MiR06Ro
+ 5qBA==
+X-Gm-Message-State: AOJu0Yz3LKc1NUF4PoFgdXqouX4tBR5xFAyNSl58qHeERXSTJ30nXfuJ
+ helprf5zdlzZhSNGDGl1FDgWKiBHYFrYC53YTVKJZk3rx/PrTge1Q/PAIW1dBRU=
+X-Google-Smtp-Source: AGHT+IEz38bzmOML/AYUwKaHhwyJTdG/Bt7w6mZ0+Gy4FBEGjVtcYiq3Oz7WY61UmkbI0d+UjH4tfQ==
+X-Received: by 2002:a17:906:705:b0:a6f:1dbb:d38b with SMTP id
+ a640c23a62f3a-a6f1dbbd3e7mr318969966b.28.1718100444473; 
+ Tue, 11 Jun 2024 03:07:24 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6f0557b1c3sm431069666b.209.2024.06.11.03.07.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Jun 2024 03:07:23 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A110D5F898;
+ Tue, 11 Jun 2024 11:07:22 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  qemu-riscv@nongnu.org,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Anton Johansson <anjo@rev.ng>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Max Filippov <jcmvbkbc@gmail.com>,
+ Laurent Vivier <laurent@vivier.eu>
+Subject: Re: [PATCH v3 0/5] semihosting: Restrict to TCG
+In-Reply-To: <20240610145808.2267-1-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 10 Jun 2024 16:58:02
+ +0200")
+References: <20240610145808.2267-1-philmd@linaro.org>
+Date: Tue, 11 Jun 2024 11:07:22 +0100
+Message-ID: <87ed93ztb9.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/usb: Introduce x-query-usbhost QMP command
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Don Porter <porter@cs.unc.edu>,
- Eric Blake <eblake@redhat.com>, Thomas Huth <thuth@redhat.com>
-References: <20240610063848.51027-1-philmd@linaro.org>
- <Zma6S1bHmE4oGKhX@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Zma6S1bHmE4oGKhX@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,50 +99,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/6/24 10:33, Daniel P. Berrangé wrote:
-> On Mon, Jun 10, 2024 at 08:38:47AM +0200, Philippe Mathieu-Daudé wrote:
->> This is a counterpart to the HMP "info usbhost" command. It is being
->> added with an "x-" prefix because this QMP command is intended as an
->> adhoc debugging tool and will thus not be modelled in QAPI as fully
->> structured data, nor will it have long term guaranteed stability.
->> The existing HMP command is rewritten to call the QMP command.
-> 
-> 'info usb' host is one of the problem scenarios i mentioned in
-> 
-> https://lore.kernel.org/qemu-devel/20211028155457.967291-1-berrange@redhat.com/
-> 
-> Its HMP impl is within a dynamically loadable module. So if you
-> run it initially you'll get
-> 
-> (qemu) info usbhost
-> Command "info usbhost" is not available.
-> 
-> 
-> but if you have a usb host on the cli:
-> 
-> (qemu) info usbhost
->    Bus 3, Addr 6, Port 8, Speed 480 Mb/s
->      Class ef: USB device 04f2:b74f
->    Bus 3, Addr 11, Port 7.3, Speed 1.5 Mb/s
->    ...snip...
-> 
-> 
-> Anyway, the end result is that this patch fails to link when modules
-> are enabled:
-> 
-> cc -m64 @qemu-system-x86_64.rsp
-> /usr/bin/ld: libqemuutil.a.p/meson-generated_.._qapi_qapi-commands-machine.c.o: in function `qmp_marshal_x_query_usbhost':
-> /var/home/berrange/src/virt/qemu/build/qapi/qapi-commands-machine.c:1514: undefined reference to `qmp_x_query_usbhost'
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Indeed I missed that.
+> v3: Address Anton's comment
+> v2: Address Paolo's comment
+>
+> Semihosting currently uses the TCG probe_access API,
+> so it is pointless to have it in the binary when TCG
+> isn't.
+>
+> It could be implemented for other accelerators, but
+> work need to be done. Meanwhile, do not enable it
+> unless TCG is available.
 
-> IMHO the solution to this is to refactor the cdoe to split
-> hw/usb/host-libusb.c into two parts.
-> 
-> One part provides the monitor API impls, and some callbacks
-> for feeding data to them. The other part provides the actual
-> impl, and registers the callbacks needed by the monitor cmd.
+Queued to semihosting/next, thanks.
 
-Yeah something like that will do.
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
