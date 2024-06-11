@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2B9EC25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 09:39:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA954C25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 09:50:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGxxW-0008Vy-Ua; Tue, 11 Jun 2024 05:38:30 -0400
+	id 1sGy8I-0002uR-TB; Tue, 11 Jun 2024 05:49:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sGxxT-0008VQ-4Z
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:38:27 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sGxxQ-0000vR-7W
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:38:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1718098704; x=1749634704;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=rqk4oOToLzOJgWVnnrihVv/vZpY+222F98+waiK9O5M=;
- b=nMeFb+rsc9JyvK5M4ldZk2C9D8UVkn9JiwsQZC0sGRMmUhEj48sGrvzT
- 4ImZDyVMNYwyd8usQ4x0Zv2r/fUSUhLMNtklfKJ+zJfCFtfZTyXKWKz6G
- t1Dn6hgunPRnNX35bnn/XsppnlwXDZwt3g0YhOwuvWsAbCGeG/AV2mCvK
- 9/A87lTF7KXwFQiAi27XhhBVeC6XEYs2JODG/OKkQ3m0lJwRO6SI3LjPs
- 5aQhiOu4yWT5xm48NYjEOFgyir8tuAj0NnvyCZpyNzihQIRn5i5ciDQc6
- KiMU7SvIzjapDbGNlMGmak/7xCKf9G22Er8dlmfRyIwAmutg9HpYYzEUO Q==;
-X-CSE-ConnectionGUID: aM0e7bCvTJmKgRx/TcW4Iw==
-X-CSE-MsgGUID: 3IhnP8DzSK+PIdj+gLMUzA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11099"; a="25375376"
-X-IronPort-AV: E=Sophos;i="6.08,229,1712646000"; d="scan'208";a="25375376"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Jun 2024 02:38:19 -0700
-X-CSE-ConnectionGUID: gCruLSKPTKiT2y+uA1dshA==
-X-CSE-MsgGUID: BwYEmZMpR56jrm+7ogWhUQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,229,1712646000"; d="scan'208";a="39458063"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa009.jf.intel.com with ESMTP; 11 Jun 2024 02:38:16 -0700
-Date: Tue, 11 Jun 2024 17:53:45 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
-Message-ID: <ZmgeqY3Vkax7yfPw@intel.com>
-References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
- <ZmgIUfqDjJuw2Chl@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGy8H-0002sF-J3
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:49:37 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGy8F-0002nU-QO
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:49:37 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a6f1cf00b3aso355349166b.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 02:49:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718099374; x=1718704174; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bkcLmgYjDVWjMZumxqVKMMvdKBARKZngVYrElYP/WJQ=;
+ b=LZEEtfHZ90UklUzjpMrtI9WffUhxeU5CexvU9P6I3BOb07rCsx1l40GcZzHLhhHEWD
+ aogjSzrmNdDN0uqLnRXLmkZgiPy+iPoUJGVyup9cFCwZ1mzpL30hAbB/FhzKMdfA2+bJ
+ eNJWyhJh705sk1x5lN8I9eMfzvH9GHNPW5prwcbDix1n+dIXrIyEaFCsZ+IZhbVRNl6O
+ 8pfqXLX4z6MQ4U+GGREozxSmjeWwq/Ugw7kI7OUq5YlogwGjxsgiujsakX1VHof4HyTD
+ kM3Mh48B9a7JKM/MKVd5hGs1WMHk0nX2X096Kxwt0fFxtyj71TKW3I2OGXxdj7YE3Vwn
+ VDCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718099374; x=1718704174;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bkcLmgYjDVWjMZumxqVKMMvdKBARKZngVYrElYP/WJQ=;
+ b=PFlvzdRwvRYfxJVvF2fWLS7kofF+xHeYihuP0LpJJd31JxE/37TCPhshiSuMjQY+F8
+ pVoSUFPHCnqcfhrs31FxmduUGFiySqUSXr00D0UJX2F9JWzJoHqfPIJGcqLuTvjZlCJE
+ qfkH/7uj61uFDSWcE2Vzx1fH6ercvG106SpZ9NdwAnSa4rGbpMHrPKZod0EZpnGRWmBg
+ fzU1/If8E0DCQyhMvWWfU5svUjSo5lW0j3+fVX1sENvITA6ctrCC7dAI2Bu9pNULTggl
+ byFPFWtD0UasIwZ0fs6uvYmGhMHFMf3v8yrtxTkhZ6GA5LALtY0BLPltsKFR1JytCQBf
+ XJkw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW2adhyMiwEkgZYM1XTRTUI1v1gj+O4U2+MruzT1EwCZpSQ2nw5+wddNXRnESjML+ITfMQy7P7EoUYwjaFCioXdXchcsSY=
+X-Gm-Message-State: AOJu0YyNiQz9HxLQr/0QPQ0laAwJlVEw0G2bkJ6ZKSvryBS73AWUTzkw
+ 3ej1Z4v8CBaSVvErYHEJrd5ullunAah1GZymudtBGyv2RGBTydD2J4qIt8EZqjM=
+X-Google-Smtp-Source: AGHT+IEl4xpqvc8N2nBZR2IxO7bFXDSZOElDkp/fsSBT85Jw60k+SucU/bn4P+P9PR2KbLRvr2uHeQ==
+X-Received: by 2002:a17:906:3688:b0:a6f:1a4d:5c5c with SMTP id
+ a640c23a62f3a-a6f34c7dde9mr140073666b.2.1718099373612; 
+ Tue, 11 Jun 2024 02:49:33 -0700 (PDT)
+Received: from [192.168.69.100] (rsa59-h02-176-184-32-6.dsl.sta.abo.bbox.fr.
+ [176.184.32.6]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6f1c0fe610sm277382266b.91.2024.06.11.02.49.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Jun 2024 02:49:32 -0700 (PDT)
+Message-ID: <100d2b67-18ef-44a0-abe3-c9cd0fa0d392@linaro.org>
+Date: Tue, 11 Jun 2024 11:49:31 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=gb2312
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/1] meson: Remove libibumad dependence
+To: zhenwei pi <pizhenwei@bytedance.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ thuth@redhat.com
+References: <20240611092743.59255-1-pizhenwei@bytedance.com>
+ <20240611092743.59255-2-pizhenwei@bytedance.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240611092743.59255-2-pizhenwei@bytedance.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZmgIUfqDjJuw2Chl@redhat.com>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,73 +97,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 11, 2024 at 09:18:25AM +0100, Daniel P. Berrang®¶ wrote:
-> Date: Tue, 11 Jun 2024 09:18:25 +0100
-> From: "Daniel P. Berrang®¶" <berrange@redhat.com>
-> Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
+On 11/6/24 11:27, zhenwei pi wrote:
+> RDMA based migration has no dependence on libumad. libibverbs and
+> librdmacm are enough.
+> libumad was used by rdmacm-mux which has been already removed. It's
+> remained mistakenly.
 > 
-> On Mon, Jun 10, 2024 at 09:22:35PM +0300, Manos Pitsidianakis wrote:
-> > What are the issues with not using the compiler, rustc, directly?
-> > -----------------------------------------------------------------
-> > [whataretheissueswith] Back to [TOC]
-> > 
-> > 1. Tooling
-> >    Mostly writing up the build-sys tooling to do so. Ideally we'd 
-> >    compile everything without cargo but rustc directly.
-> > 
-> >    If we decide we need Rust's `std` library support, we could 
-> >    investigate whether building it from scratch is a good solution. This 
-> >    will only build the bits we need in our devices.
-> 
-> Re-building 'std' for QEMU would be a no-go for many distros who
-> will expect QEMU to use the distro provided 'std' package. So at
-> most that would have to be an optional feature.
-> 
-> > 2. Rust dependencies
-> >    We could go without them completely. I chose deliberately to include 
-> >    one dependency in my UART implementation, `bilge`[0], because it has 
-> >    an elegant way of representing typed bitfields for the UART's 
-> >    registers.
-> > 
-> > [0]: Article: https://hecatia-elegua.github.io/blog/no-more-bit-fiddling/
-> >      Crates.io page: https://crates.io/crates/bilge
-> >      Repository: https://github.com/hecatia-elegua/bilge
-> > 
-> > Should QEMU use third-party dependencies?
-> > -----------------------------------------
-> > [shouldqemuusethirdparty] Back to [TOC]
-> > 
-> > In my personal opinion, if we need a dependency we need a strong 
-> > argument for it. A dependency needs a trusted upstream source, a QEMU 
-> > maintainer to make sure it us up-to-date in QEMU etc.
-> 
-> "strong" is a rather fuzzy term. In C we already have a huge number
-> of build dependencies
-> 
->  $ wc -l tests/lcitool/projects/qemu.yml 
->  127 tests/lcitool/projects/qemu.yml
-> 
-> we would have many more than that except that we're conservative
-> about adding deps on things because getting new libraries into
-> distros is quite painful, or we lag behind where we would want
-> to be to stick with compat for old distro versions.
-> 
-> In terms of Rust dependancies, I'd expect us to have fairly arbitrary
-> dependancies used. If the dep avoids QEMU maintainers having to
-> re-invent the wheel for something there is already a common crate
-> for, then it is a good thing to use it. I'd almost go as far as
-> encouraging use of external crates. Our maintainers should focus tmie
-> on writing code that's delivers compelling features to QEMU, rather
-> than re-creating common APIs that already have good crates.
+> Fixes: 1dfd42c4264b ("hw/rdma: Remove deprecated pvrdma device and rdmacm-mux helper")
+> Cc: Philippe Mathieu-Daud√© <philmd@linaro.org>
+> Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+> ---
+>   meson.build                     | 4 +---
+>   tests/lcitool/projects/qemu.yml | 1 -
+>   2 files changed, 1 insertion(+), 4 deletions(-)
 
-So should a base lib be introduced to import and wrap all external
-dependencies?
 
-Sort of like osdep.h, so that specific Rust implementations can't import
-external third-party libraries directly, but only through the base lib.
+> diff --git a/tests/lcitool/projects/qemu.yml b/tests/lcitool/projects/qemu.yml
+> index 070d7f4706..0c85784259 100644
+> --- a/tests/lcitool/projects/qemu.yml
+> +++ b/tests/lcitool/projects/qemu.yml
+> @@ -47,7 +47,6 @@ packages:
+>    - libfdt
+>    - libffi
+>    - libgcrypt
+> - - libibumad
+>    - libibverbs
+>    - libiscsi
+>    - libjemalloc
 
-The advantage of this is that we can unify the management of external
-dependencies and avoid °∞potentially/overly arbitrary°± importing of
-specific Rust implementations.
-
+You didn't run "make lcitool-refresh", see:
+https://www.qemu.org/docs/master/devel/testing#adding-new-build-pre-requisites
 
