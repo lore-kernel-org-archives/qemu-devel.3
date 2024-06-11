@@ -4,84 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF93C25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 06:59:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B3FEC25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 07:16:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGvSk-0002a4-GB; Tue, 11 Jun 2024 02:58:34 -0400
+	id 1sGvj3-00064r-QJ; Tue, 11 Jun 2024 03:15:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sGvSj-0002ZU-7v
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 02:58:33 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sGvSh-0002mc-Ey
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 02:58:32 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-579fa270e53so881611a12.3
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 23:58:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718089109; x=1718693909; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IoCxk8AHZFyOyb4xLAvrTvADVC+mMY0zdmcNIFMmLH0=;
- b=pi1aVHNCsNllP7wGR95QW6C0BGXj8jZSvIv5ZooyZOR+qdPzk8Z/UqeDPoJYT0BS5k
- BA2gLCQUc78eOSIBwBt+U1JQP1MR3VJlK4lxWeoGn2Zkhbm0puZjNeb5wv9HWu0rZ0Th
- g9ZXJZhJQgopL1vhc/tHwizlAqhxbowa0Kq621+TB0BQMHxsu7kQKHuVnLaudNmN6wkN
- PgSbqDe/OR71Sz3au9v0aNJqTJAcctnIlPf7uQITptx1tY64/ZlWxKte60xb6a/mpMge
- QbpU6MLFDsijc2fLa3CZh7Nbd5sjd+4J0UX9X2QS91CB+EiNMawZMzliwHfHXz8/O14g
- wYwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718089109; x=1718693909;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IoCxk8AHZFyOyb4xLAvrTvADVC+mMY0zdmcNIFMmLH0=;
- b=TkBKAGv2M729KkxXhTprLT/eWwJvQK64nlHPtlgr/qt3uV2LteD3Ys3+3vZt3Je+mH
- Kuv68ZvqAzLrsxoEZNy17pOhuDnNyyydvF+Mt8BYmyWEhnnKL/EyiWPatE3ajhelS22M
- Q/rw3hmCOcTGzOmdT+OJWpLRS+4u410w5jnoYzanWdMCemu6XXBEBeOfNDoNn4bJ+9KF
- q/1hkTZ1UsyYmGE0tpZQqXDcMKa1igW215tb/E/BPcy6UMmEZBJafzghs3F4gHcBbC5Q
- q8X7jw8hvZf6k6J7zTLi+Qe3DlFZ3+21/4hQBpFXFBA+ZMq2G8AeYVxkHKHPkw65fYBG
- 6VWg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPK5hAFsSl//CCvmdZHGtwPno2ZaFn1o9qSnnDW91niMt/WIUfm+TBpFDBizdMVrkHVRGhtRW2UbeE+9epbd0pmR9KI/o=
-X-Gm-Message-State: AOJu0YyT7Yuwj41BZpfoCVw8sgccdPrQh6omWQJk52TD2NdUf33+Xy+3
- QFanKnQG2qbPeAenK2uuL/bLU49Fibgym1UqIJraEXhujzn9Ki8IASl8+uHhTK0a2EUeOGoN+V2
- KdjIMpxTIUHJgVFknni+WV97SjYDH0HMBu8WYtQ==
-X-Google-Smtp-Source: AGHT+IESjMI+oIlI8k9sm1ZUTc0CjnxNqXl/Q9v2Q3kpKBEO4EzmtEsI57LNPbs+FnhLdKdJN2PTaNuLAVafCVJlxWg=
-X-Received: by 2002:a50:bb03:0:b0:57a:72fc:c515 with SMTP id
- 4fb4d7f45d1cf-57c50972f4emr9623199a12.29.1718089108932; Mon, 10 Jun 2024
- 23:58:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sGvix-00064S-En; Tue, 11 Jun 2024 03:15:21 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sGviq-0005pO-Pg; Tue, 11 Jun 2024 03:15:16 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 928336F4B6;
+ Tue, 11 Jun 2024 10:16:03 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 52E66E4E27;
+ Tue, 11 Jun 2024 10:15:02 +0300 (MSK)
+Message-ID: <63f58487-682b-4f12-b15f-7efd2fddc753@tls.msk.ru>
+Date: Tue, 11 Jun 2024 10:15:02 +0300
 MIME-Version: 1.0
-References: <20240610150758.2827-1-philmd@linaro.org>
- <87h6e0uizr.fsf@pond.sub.org>
- <e0d03597-a9d1-4386-83b4-519aae23f679@ilande.co.uk>
-In-Reply-To: <e0d03597-a9d1-4386-83b4-519aae23f679@ilande.co.uk>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 11 Jun 2024 09:58:12 +0300
-Message-ID: <CAAjaMXad7b7SvAkAmvt+4RuLqZoTGCpELN0YMoVu7xGazwPRug@mail.gmail.com>
-Subject: Re: Examining device state via monitor for debugging
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>, 
- =?UTF-8?B?RGFuaWVsIFAuQmVycmFuZ8Op?= <berrange@redhat.com>, 
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] hw/audio/virtio-snd: Always use little endian audio
+ format
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-stable@nongnu.org
+References: <20240422211830.25606-1-philmd@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240422211830.25606-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,63 +88,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Jun 2024 at 09:11, Mark Cave-Ayland
-<mark.cave-ayland@ilande.co.uk> wrote:
->
-> On 11/06/2024 06:49, Markus Armbruster wrote:
->
-> > Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
-> >
-> >> Officialise the QMP command, use the existing
-> >> hmp_info_human_readable_text() helper.
-> >
-> > I'm not sure "officialise" is a word :)
-> >
-> > Taking a step back...  "info via" and its new QMP counterpart
-> > x-query-mos6522-devices dump device state.  I understand why examining
-> > device state via monitor can be useful for debugging.  However, we have
-> > more than 2000 devices in the tree.  Clearly, we don't want 2000 device
-> > state queries.  Not even 100.  Could we have more generic means instead=
-?
-> >
-> > We could use QOM (read-only) properties to expose device state.
-> >
-> > If we use one QOM property per "thing", examining device state becomes
-> > quite tedious.  Also, you'd have to stop the guest to get a consistent
-> > view, and adding lots of QOM properties bloats the code.
-> >
-> > If we use a single, object-valued property for the entire state, we get
-> > to define the objects in QAPI.  Differently tedious, and bloats the
-> > generated code.
-> >
-> > We could use a single string-valued property.  Too much of an abuse of
-> > QOM?
-> >
-> > We could add an optional "dump state for debugging" method to QOM, and
-> > have a single query command that calls it if present.
-> >
-> > Thoughts?
->
-> I agree that there should be a better way of doing things here. The aim o=
-f the
-> original "info via" series was to allow the command to be contained compl=
-etely within
-> mos6522.c, but unfortunately due to the way that qemu-options.hx works th=
-en you end
-> up with #ifdef-fery or stubs to make all configuration combinations work.
->
-> As you point out ideally there should be a way for a QOM object to dynami=
-cally
-> register its own monitor commands, which I think should help with this.
->
-> IIRC in the original thread Daniel or David proposed a new "debug" monito=
-r command
-> such that a device could register its own debug <foo> commands either via=
- DeviceClass
-> or a function called during realize that would return a HumanReadableText=
- via QMP.
+23.04.2024 00:18, Philippe Mathieu-Daudé wrote:
+> The VIRTIO Sound Device conforms with the Virtio spec v1.2,
+> thus only use little endianness.
+> 
+> Remove the suspicious target_words_bigendian() noticed during
+> code review.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: eb9ad377bb ("virtio-sound: handle control messages and streams")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This is starting to sound like OOP: A Monitor interface defines
-monitor commands, and QOM type classes can implement/define their own.
-A Debug interface would do this.
+Ping?  Is this change still needed?
+
+Thanks,
+
+/mjt
+
+> diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+> index c80b58bf5d..ba4fff7302 100644
+> --- a/hw/audio/virtio-snd.c
+> +++ b/hw/audio/virtio-snd.c
+> @@ -24,7 +24,6 @@
+>   #include "trace.h"
+>   #include "qapi/error.h"
+>   #include "hw/audio/virtio-snd.h"
+> -#include "hw/core/cpu.h"
+>   
+>   #define VIRTIO_SOUND_VM_VERSION 1
+>   #define VIRTIO_SOUND_JACK_DEFAULT 0
+> @@ -401,7 +400,7 @@ static void virtio_snd_get_qemu_audsettings(audsettings *as,
+>       as->nchannels = MIN(AUDIO_MAX_CHANNELS, params->channels);
+>       as->fmt = virtio_snd_get_qemu_format(params->format);
+>       as->freq = virtio_snd_get_qemu_freq(params->rate);
+> -    as->endianness = target_words_bigendian() ? 1 : 0;
+> +    as->endianness = 0; /* Conforming to VIRTIO 1.0: always little endian. */
+>   }
+>   
+>   /*
+
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+
 
