@@ -4,89 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C01E7C27C75
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 15:33:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF6E2C27C75
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 15:44:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH3U1-0003MG-BB; Tue, 11 Jun 2024 11:32:25 -0400
+	id 1sH3fV-0007yh-SR; Tue, 11 Jun 2024 11:44:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sH3U0-0003M4-Id
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:32:24 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1sH3fU-0007y2-EW
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:44:16 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sH3Tw-0006Jh-9j
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:32:24 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1f4a0050b9aso47964465ad.2
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 08:32:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1sH3fS-0000cY-Hs
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:44:16 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-52c84a21b8cso2411630e87.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 08:44:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718119938; x=1718724738; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=eG7XOGjL1NCNTpejGsE7L6EYRktGj9qQdfmrwyqQAXE=;
- b=oRSnDjIHp2tu7BYWXYWA0O1YcKgpyxn+z/v14PliiqXuhxE/TnPckw0T/auOCZcoV9
- kM+EKBH9EJ/syKcxH9gzO3CnZd6e/7Xt6tydG/4872ibdxNi5Ak57+go1LhIGGqkVpX+
- tpH5AimBq/Nn3TdITWmoHH1A2G4LiKGx/hG1egfVJs9JDt5dVZ4y4WeEzNQK19JQQJSy
- 4gnJWJw9CkFcvq14BOo2knJIAd3waSuHqEn62Klcp8O76RD8t0jULzo8XiPEe8Ut+ikw
- r1keoFxYGjSaY2zslBmP8IiHA+7G/g+gA7F2vQWR4d3c039EoDDHPNet8cJ+qPIXCYnV
- ZhXA==
+ d=linaro.org; s=google; t=1718120652; x=1718725452; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=T1e1qjdaqpMV6raGY7zH6pObZdNAPbmFXeohXMTghM8=;
+ b=egsosdrN13gZaC7OVyqQ2G2Kv7tYHT3Z5AmIL8leyCPP+avGAPIzd15rFO22ax6n3d
+ tEQM+NMojxpQzWFou9MaXHWLgruDa3bGHp6EZzHeTQlDDz8ygJmIF4ofo5a+U2D0fKG1
+ Bw1CSrCC/spTC8vUz3v6autS1ReJARXCPWx2MXG70a+glZjeTmVi1IBZdjbToi4c5Oix
+ Y/jmaqS3IVhtcVKDweYc/hL5TEie87ubGHCrujgc2x92QgZ72iPhIVcyfzX4V4fjgv7y
+ GRHDCS/cqUJNuUpfxFXCPzqaRDIJaEI1d6c4+V+NGTecGVTkRQsABI3SKwtCc2We4JBL
+ wAMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718119938; x=1718724738;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eG7XOGjL1NCNTpejGsE7L6EYRktGj9qQdfmrwyqQAXE=;
- b=TafML1zS2OrZwDDRrDEIPKnF7HTDc+1gq+TA0czY3fgmDFN56dxQWkACEFAtOvkxYB
- cjqKU/YzzgMOHXL/lEAhwNUM4Fu1DC2hyV8ihcjMQRjUnOnFXL+dJzmOuOQhnsYF89+Q
- skEEF3L17L/99fDDaQxPGWmE7PMrSnHJKE3PHfaZadcynCemevwMt7JtIsSG6kb+EGOO
- pxTSisNqFrQIxR5OK/rENs1nwpQ1KHwWdQxnztJyqGGXnLAbBE1ZDsKaw7S15oZ3HgMG
- pBqHCT2MF7atOVQmlbwBBrnPSuK2auIjxLPXv6aX93I6RCezszL+gPbIuxklmYlYWZeH
- 94VQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWTTC3QIzbfmaIcgTXNyZsslVIxLpe4pfmL8aLa3hjJZ+NWZYQzzTHVrq8VrrDJQtB9vQsXckBLpFlo+ZX2xaREbosWwis=
-X-Gm-Message-State: AOJu0YxAMtPqLHMhIWSae0tk8mVfRVvAKs1R8PVOxQdvv7HkWxoKbi1N
- 8kXUGNplY0PyLR8b2ugVmE0MSJ+jlwANI1BG56yUBwfzrkWGd3izvjyW0EdzLRc=
-X-Google-Smtp-Source: AGHT+IFEBDas8C15kSDEKIY6mlkqDYow3XTSoOZcGdN9xdcmpg7UYFCxD+YTRQdwR7JJluw+09ixgg==
-X-Received: by 2002:a17:903:1c8:b0:1f7:d1d:21ed with SMTP id
- d9443c01a7336-1f70d1d29e3mr60100665ad.19.1718119938373; 
- Tue, 11 Jun 2024 08:32:18 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::e697? ([2604:3d08:9384:1d00::e697])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6fbea199esm57386995ad.196.2024.06.11.08.32.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Jun 2024 08:32:17 -0700 (PDT)
-Message-ID: <fecbcab1-1955-4369-a420-215105adbe93@linaro.org>
-Date: Tue, 11 Jun 2024 08:32:16 -0700
+ d=1e100.net; s=20230601; t=1718120652; x=1718725452;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=T1e1qjdaqpMV6raGY7zH6pObZdNAPbmFXeohXMTghM8=;
+ b=ILD7GDtKdBXHjBi5Lxn3MmHTkrTPWhj8z8pNe1KuCJQLGin3kwlWnx2QtxLhFh/JNm
+ Jbh5+BGHoOnYLVeuhbecdGhDPY9TZiZnMQHgVIcD62JVCvDgbLOMqN0vFj6vo3Rq6oM4
+ E2RLaLo+lJvV0joA0zgcpjeAcMCeevCPrMRW+LZdS5t+13du7OT5jMvyqJ0zpUe9HWIN
+ O2uub3fyjyAGeO2/k9EE5Oxv0+U2IkRd4ni9T6XOeuttd8E3C89MW7E3SCcjLfVQKX/E
+ o1nERYAfICaG2/xLr4T7ur51VX33uJXvv45WSLQljN+CcopKGgjpEh2l1uk/Wl0nGjbN
+ Kc9Q==
+X-Gm-Message-State: AOJu0YyBgTW2Abh3SQcYfFQYN6xeKWU47SCQdJGajXVpuomgpUSwq/sQ
+ IY/dv7UinIyhI6WEn3pXGcOsZHQuKuByVxdJ0zAWHWzvh4QRMErWwMSvzKPTdAnHTmsTkjC8Fek
+ mS7SHf/grilZpv13op6n3+IQbE0yq3IjXbgzI5A==
+X-Google-Smtp-Source: AGHT+IHOo8qESay6BB3DhnXfUYB+cYzFTayH2RXQWQEjrNLPmMkl0tmpELdgccdwXIAfdHdIiSK/4OrEqNW2DVa43Ms=
+X-Received: by 2002:ac2:5559:0:b0:52b:c2b8:b1d9 with SMTP id
+ 2adb3069b0e04-52c9262c528mr890996e87.26.1718120651823; Tue, 11 Jun 2024
+ 08:44:11 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Marc-Andr_=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>
-References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
- <d910708f-ed55-4eee-8f66-8703cb45081c@linaro.org>
- <evt7n.ggoypj31l14q@linaro.org>
- <6e7a14a1-8727-4ce5-ae67-797323704464@linaro.org>
- <87o787zvfi.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <87o787zvfi.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
+References: <20240607135310.46320-1-shameerali.kolothum.thodi@huawei.com>
+ <20240607135310.46320-2-shameerali.kolothum.thodi@huawei.com>
+In-Reply-To: <20240607135310.46320-2-shameerali.kolothum.thodi@huawei.com>
+From: Zhangfei Gao <zhangfei.gao@linaro.org>
+Date: Tue, 11 Jun 2024 23:44:00 +0800
+Message-ID: <CABQgh9E+ODoBJFxA90g3JSZdQEbKjVG1Qiv5vP2JAfXK0bed9w@mail.gmail.com>
+Subject: Re: [PATCH v2 1/7] docs/migration: add uadk compression feature
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de, 
+ yuan1.liu@intel.com, pbonzini@redhat.com, berrange@redhat.com, 
+ marcandre.lureau@redhat.com, thuth@redhat.com, armbru@redhat.com, 
+ lvivier@redhat.com, linuxarm@huawei.com, linwenkai6@hisilicon.com, 
+ huangchenghai2@huawei.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=zhangfei.gao@linaro.org; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,42 +92,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNi8xMS8yNCAwMjoyMSwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBQaWVycmljayBCb3V2
-aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+IHdyaXRlczoNCj4gDQo+PiBPbiA2
-LzEwLzI0IDEzOjI5LCBNYW5vcyBQaXRzaWRpYW5ha2lzIHdyb3RlOg0KPj4+IE9uIE1vbiwg
-MTAgSnVuIDIwMjQgMjI6MzcsIFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJA
-bGluYXJvLm9yZz4gd3JvdGU6DQo+Pj4+IEhlbGxvIE1hbm9zLA0KPj4+Pg0KPiA8c25pcD4N
-Cj4+Pj4gRXhjZWxsZW50IHdvcmssIGFuZCB0aGFua3MgZm9yIHBvc3RpbmcgdGhpcyBSRkMh
-DQo+Pj4+DQo+Pj4+IElNSE8sIGhhdmluZyBwYXRjaGVzIDIgYW5kIDUgc3BsaXR0ZWQgaXMg
-YSBiaXQgY29uZnVzaW5nLCBhbmQgZXhwb3NpbmcNCj4+Pj4gKHRlbXBvcmFyaWx5KSB0aGUg
-Z2VuZXJhdGVkLnJzIGZpbGUgaW4gcGF0Y2hlcyBpcyBub3QgYSBnb29kIG1vdmUuDQo+Pj4+
-IEFueSByZWFzb24geW91IGtlcHQgaXQgdGhpcyB3YXk/DQo+Pj4gVGhhdCB3YXMgbXkgZmly
-c3QgYXBwcm9hY2gsIEkgd2lsbCByZXdvcmsgaXQgb24gdGhlIHNlY29uZCB2ZXJzaW9uLg0K
-Pj4+IFRoZQ0KPj4+IGdlbmVyYXRlZCBjb2RlIHNob3VsZCBub3QgZXhpc3QgaW4gY29tbWl0
-dGVkIGNvZGUgYXQgYWxsLg0KPj4+IEl0IHdhcyBpbml0YWxseSB0cmlja3kgc2V0dGluZyB1
-cCB0aGUgZGVwZW5kZW5jeSBvcmRlcnMgY29ycmVjdGx5LA0KPj4+IHNvIEkNCj4+PiBmaXJz
-dCBjb21taXR0ZWQgaXQgYW5kIHRoZW4gbWFkZSBpdCBhIGRlcGVuZGVuY3kuDQo+Pj4NCj4+
-Pj4NCj4+Pj4gTWF5YmUgaXQgY291bGQgYmUgYmV0dGVyIGlmIGJ1aWxkLnJzIGZpbGUgd2Fz
-ICpub3QqIG5lZWRlZCBmb3IgbmV3DQo+Pj4+IGRldmljZXMvZm9sZGVycywgYW5kIGNvdWxk
-IGJlIGFic3RyYWN0ZWQgYXMgYSBkZXRhaWwgb2YgdGhlIHB5dGhvbg0KPj4+PiB3cmFwcGVy
-IHNjcmlwdCBpbnN0ZWFkIG9mIHNvbWV0aGluZyB0aGF0IHNob3VsZCBiZSBjb21taXR0ZWQu
-DQo+Pj4gVGhhdCdkIG1lYW4geW91IGNhbm5vdCB3b3JrIG9uIHRoZSBydXN0IGZpbGVzIHdp
-dGggYSBMYW5ndWFnZVNlcnZlciwNCj4+PiB5b3UNCj4+PiBjYW5ub3QgcnVuIGNhcmdvIGJ1
-aWxkIG9yIGNhcmdvIGNoZWNrIG9yIGNhcmdvIGNsaXBweSwgZXRjLiBUaGF0J3Mgd2h5IEkN
-Cj4+PiBsZWZ0IHRoZSBhbHRlcm5hdGl2ZSBjaG9pY2Ugb2YgaW5jbHVkaW5nIGEgbWFudWFs
-bHkgZ2VuZXJhdGVkIGJpbmRpbmdzDQo+Pj4gZmlsZSAoZ2VuZXJhdGVkLnJzLmluYykNCj4+
-Pg0KPj4NCj4+IE1heWJlIEkgbWlzc2VkIHNvbWV0aGluZywgYnV0IGl0IHNlZW1zIGxpa2Ug
-aXQganVzdCBjaGVja3MvY29waWVzIHRoZQ0KPj4gZ2VuZXJhdGVkLnJzIGZpbGUgd2hlcmUg
-aXQncyBleHBlY3RlZC4gRGVmaW5pdGVseSBzb21ldGhpbmcgdGhhdCBjb3VsZA0KPj4gYmUg
-ZG9uZSBhcyBwYXJ0IG9mIHRoZSBydXN0IGJ1aWxkLg0KPj4NCj4+IEhhdmluZyB0byBydW4g
-dGhlIGJ1aWxkIGJlZm9yZSBnZXR0aW5nIGNvbXBsZXRpb24gZG9lcyBub3Qgc2VlbSB0byBi
-ZQ0KPj4gYSBodWdlIGNvbXByb21pc2UuDQo+Pg0KPiA8c25pcD4NCj4gDQo+IEFzIGxvbmcg
-YXMgdGhlIExhbmd1YWdlIFNlcnZlciBjYW4ga2ljayBpbiBhZnRlciBhIGZpcnN0IGJ1aWxk
-LiBSdXN0DQo+IGRlZmluaXRlbHkgbGVhbnMgaW4gdG8gdGhlIGNvbmNlcHQgb2YgdGhlIHRv
-b2xpbmcgaGVscGluZyB5b3Ugb3V0IHdoaWxlDQo+IGNvZGluZy4NCj4gDQo+IEkgdGhpbmsg
-Zm9yIHRoZSBDIExTUHMgY29tcGlsZV9jb21tYW5kcy5qc29uIGlzIGdlbmVyYXRlZCBkdXJp
-bmcgdGhlDQo+IGNvbmZpZ3VyZSBzdGVwIGJ1dCBJIGNvdWxkIGJlIHdyb25nLg0KPiANCg0K
-WWVzLCBtZXNvbiBnZW5lcmF0ZXMgaXQuDQpJIGFncmVlIGhhdmluZyBzdXBwb3J0IGZvciBj
-b21wbGV0aW9uIHRvb2xpbmcgaXMgaW1wb3J0YW50IG5vd2FkYXlzLCANCndoZXRoZXIgaW4g
-QyBvciBpbiBSdXN0Lg0K
+On Fri, 7 Jun 2024 at 21:54, Shameer Kolothum
+<shameerali.kolothum.thodi@huawei.com> wrote:
+>
+> Document UADK(User Space Accelerator Development Kit) library details
+> and how to use that for migration.
+>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+
+Good job, thanks Shameer
+
+Reviewed-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 
