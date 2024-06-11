@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A9F2C25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 09:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7950CC25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 09:14:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGxZ7-0007F1-O5; Tue, 11 Jun 2024 05:13:17 -0400
+	id 1sGxaB-0007x8-St; Tue, 11 Jun 2024 05:14:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGxZ3-0007EM-CK
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:13:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGxZ1-0004Ma-Dj
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:13:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718097190;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gJ4nMjzNjW74YyFSS9vJjosGVpy81l031GC9dsz0yl4=;
- b=WzL0QEsTuth0w+GRYXLJfmYqjPLk2tlUpvNfVHOA1ltz+FfJLdWSVDk/VAebYB+E8PfveP
- 6uThghDU8FW4i3gnWpQcC0bO8kyXz+em78+iTPirJsXpxuLzBljU2n/ZIobRWM+nYq/EO+
- 9GvuEmI03KVfRLxgYwChR1tBWn03Z+U=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-588-NsovCs2_O4CIoKF6eclrLg-1; Tue,
- 11 Jun 2024 05:13:04 -0400
-X-MC-Unique: NsovCs2_O4CIoKF6eclrLg-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9596D19560B0; Tue, 11 Jun 2024 09:13:03 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E15061956087; Tue, 11 Jun 2024 09:13:02 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A0CB621E681D; Tue, 11 Jun 2024 11:13:00 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Konstantin
- Kostiuk <kkostiuk@redhat.com>,  Michael Roth <michael.roth@amd.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 08/20] qga: conditionalize schema for commands
- unsupported on Windows
-In-Reply-To: <20240604134933.220112-9-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Tue, 4 Jun 2024 14:49:21
- +0100")
-References: <20240604134933.220112-1-berrange@redhat.com>
- <20240604134933.220112-9-berrange@redhat.com>
-Date: Tue, 11 Jun 2024 11:13:00 +0200
-Message-ID: <87a5jrlu5f.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGxa0-0007w8-SZ
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:14:12 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGxZy-0004VA-N3
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:14:12 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-57c6994e2f1so2023620a12.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 02:14:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718097249; x=1718702049; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=psvciP/sk9qfS9xCb26Yf49XGU91OjCAXlXIert47MM=;
+ b=w3GgjLMCUXcXuTXqnUOqR/dKrw6/gbMJs5xYVIRGFzpgPpb0C31keyN+ywvSp3f/Vj
+ XH9pKSwa5U2qX2tS5kLoZU2GCorp8y3SDdOY34V4g3IiyuzZnb8srDw7jZepa/pfG+g/
+ F6NZSEUnWNUjQ5BFt9GYbashnaz8xcy0biMeAhYRZ6JorlgB2GLKCH3CLE2655COpOaO
+ cTstohe2O9FTN6X9bBmRYNG/yB1rWnuDnk1UpCOITtGQxfUuI3hF1IBzcGn3eg93Z3li
+ V9Lx5X03fHI1Ky2v06aTTfGAlKMsxdpQHqmImIJgXa4Mtce72mGdxeLuX1kEdFVIJOLL
+ omkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718097249; x=1718702049;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=psvciP/sk9qfS9xCb26Yf49XGU91OjCAXlXIert47MM=;
+ b=YI+YhfBMRXfmtcwrq2hDNY9Lv/+1hGtiJUwxlsEz2yswO2X0qML0wWQBbONGnR1ioZ
+ Pnp6AgNx9VEVK+ltXnc8wvwtvM7KWtvzIACVGgBzDZtAqzxj86Hq83Oeuta+n4CUVnYe
+ XKR3e0LAqWFzhRdxL1FNQtr865q++dT1MoGQlddT9aeYm6lZQd+EJc0Ubj3cfv+Tlm1t
+ 9sotNIbTZpzRy0ctjMD1eTgtgQxO5kGlPqQGigPCoGZwG24Olh566cawNeYEU3xfePwp
+ pgnSZvoHOjj65aRC3k8maQAVvAMoZbee8nMilfOlY9hzVKEJxlpmwm5ANJejZaw6sbNM
+ ULGg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbvETdVdoBzx79tOj+mbmtq8SdlRFopNhbyI1neAxOA1bWm+ETLkvwh2R6iJ3AlPu5jtfyKVFoHJAbMcp9IWIp7edn3mo=
+X-Gm-Message-State: AOJu0YxwyLL25gxB+qjx/orAEEcDaxMCr0U3xQK2j9+THQNaYzQ+bqz/
+ 11d8Tu/mLzzN0E6j67B4RMP4p+kssZKgDvOQeixv1Hc8xYOKH32VNqwsA4fXL8IW2KLgW+uSU3B
+ a
+X-Google-Smtp-Source: AGHT+IG7mRBizrberc6kojnC2g3HkyFOH9gdNbAA9EDLGWNjEl9IfajiPcQHJ0hqx1lbVYbpeCWl+g==
+X-Received: by 2002:a50:c2da:0:b0:57c:7c44:74df with SMTP id
+ 4fb4d7f45d1cf-57c7c447531mr4436553a12.29.1718097248682; 
+ Tue, 11 Jun 2024 02:14:08 -0700 (PDT)
+Received: from [192.168.69.100] (rsa59-h02-176-184-32-6.dsl.sta.abo.bbox.fr.
+ [176.184.32.6]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6f2706d8ebsm166490666b.114.2024.06.11.02.14.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 11 Jun 2024 02:14:08 -0700 (PDT)
+Message-ID: <4231f244-e247-4fd6-8e90-44051ac98a3c@linaro.org>
+Date: Tue, 11 Jun 2024 11:14:05 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] meson: Remove libumad dependence
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: zhenwei pi <pizhenwei@bytedance.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ thuth@redhat.com
+References: <20240611082407.57154-1-pizhenwei@bytedance.com>
+ <5d7981cf-6d18-4915-bb6b-985998a0c953@linaro.org>
+Content-Language: en-US
+In-Reply-To: <5d7981cf-6d18-4915-bb6b-985998a0c953@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,145 +98,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 11/6/24 11:09, Philippe Mathieu-Daudé wrote:
+> On 11/6/24 10:24, zhenwei pi wrote:
+>> RDMA based migration has no dependence on libumad, libibverbs and
+>> librdmacm are enough.
+>> libumad was used by rdmacm-mux which has been already removed. It's
+>> remained mistakenly.
+> 
+> Great!
+> 
+> Please also update tests/lcitool/projects/qemu.yml,
 
-> Rather than creating stubs for every command that just return
-> QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
-> fully exclude generation of the commands on Windows.
->
-> The command will be rejected at QMP dispatch time instead,
-> avoiding reimplementing rejection by blocking the stub commands.
+(see 
+https://www.qemu.org/docs/master/devel/testing#adding-new-build-pre-requisites)
 
-The commit message should mention that the value of "error" in the error
-response changes from
-
-    {"class": "GenericError, "desc": "this feature or command is not curren=
-tly supported"}
-
-to
-
-    {"class": "CommandNotFound", "desc": "The command FOO has not been foun=
-d"}
-
-> This fixes inconsistency where some commands are implemented
-> as stubs, yet not added to the blockedrpc list.
-
-Example?
-
-> This has the additional benefit that the QGA protocol reference
-> now documents what conditions enable use of the command.
-
-Yes!
-
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  qga/commands-win32.c | 56 +-------------------------------------------
->  qga/qapi-schema.json | 45 +++++++++++++++++++++++------------
->  2 files changed, 31 insertions(+), 70 deletions(-)
->
-> diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-> index 9fe670d5b4..2533e4c748 100644
-> --- a/qga/commands-win32.c
-> +++ b/qga/commands-win32.c
-> @@ -1494,11 +1494,6 @@ out:
->      }
->  }
->=20=20
-> -void qmp_guest_suspend_hybrid(Error **errp)
-> -{
-> -    error_setg(errp, QERR_UNSUPPORTED);
-> -}
-> -
->  static IP_ADAPTER_ADDRESSES *guest_get_adapters_addresses(Error **errp)
->  {
->      IP_ADAPTER_ADDRESSES *adptr_addrs =3D NULL;
-> @@ -1862,12 +1857,6 @@ GuestLogicalProcessorList *qmp_guest_get_vcpus(Err=
-or **errp)
->      return NULL;
->  }
->=20=20
-> -int64_t qmp_guest_set_vcpus(GuestLogicalProcessorList *vcpus, Error **er=
-rp)
-> -{
-> -    error_setg(errp, QERR_UNSUPPORTED);
-> -    return -1;
-> -}
-> -
->  static gchar *
->  get_net_error_message(gint error)
->  {
-> @@ -1969,46 +1958,15 @@ done:
->      g_free(rawpasswddata);
->  }
->=20=20
-> -GuestMemoryBlockList *qmp_guest_get_memory_blocks(Error **errp)
-> -{
-> -    error_setg(errp, QERR_UNSUPPORTED);
-> -    return NULL;
-> -}
-> -
-> -GuestMemoryBlockResponseList *
-> -qmp_guest_set_memory_blocks(GuestMemoryBlockList *mem_blks, Error **errp)
-> -{
-> -    error_setg(errp, QERR_UNSUPPORTED);
-> -    return NULL;
-> -}
-> -
-> -GuestMemoryBlockInfo *qmp_guest_get_memory_block_info(Error **errp)
-> -{
-> -    error_setg(errp, QERR_UNSUPPORTED);
-> -    return NULL;
-> -}
-> -
->  /* add unsupported commands to the list of blocked RPCs */
->  GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
->  {
-> -    const char *list_unsupported[] =3D {
-> -        "guest-suspend-hybrid",
-> -        "guest-set-vcpus",
-> -        "guest-get-memory-blocks", "guest-set-memory-blocks",
-> -        "guest-get-memory-block-info",
-> -        NULL};
-> -    char **p =3D (char **)list_unsupported;
-> -
-> -    while (*p) {
-> -        blockedrpcs =3D g_list_append(blockedrpcs, g_strdup(*p++));
-> -    }
-> -
->      if (!vss_init(true)) {
->          g_debug("vss_init failed, vss commands are going to be disabled"=
-);
->          const char *list[] =3D {
->              "guest-get-fsinfo", "guest-fsfreeze-status",
->              "guest-fsfreeze-freeze", "guest-fsfreeze-thaw", NULL};
-> -        p =3D (char **)list;
-> +        char **p =3D (char **)list;
-
-Can you make @p const and drop the cast?
-
->=20=20
->          while (*p) {
->              blockedrpcs =3D g_list_append(blockedrpcs, g_strdup(*p++));
-> @@ -2505,15 +2463,3 @@ char *qga_get_host_name(Error **errp)
->=20=20
->      return g_utf16_to_utf8(tmp, size, NULL, NULL, NULL);
->  }
-> -
-> -GuestDiskStatsInfoList *qmp_guest_get_diskstats(Error **errp)
-> -{
-> -    error_setg(errp, QERR_UNSUPPORTED);
-> -    return NULL;
-> -}
-> -
-> -GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
-> -{
-> -    error_setg(errp, QERR_UNSUPPORTED);
-> -    return NULL;
-> -}
-
-Reducing use of QERR_UNSUPPORTED is lovely.
-
-
-[Schema patch snipped; it looks good to me...]
+> with that:
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+>> Fixes: 1dfd42c4264b ("hw/rdma: Remove deprecated pvrdma device and 
+>> rdmacm-mux helper")
+>> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+>> ---
+>>   meson.build | 4 +---
+>>   1 file changed, 1 insertion(+), 3 deletions(-)
+>>
+>> diff --git a/meson.build b/meson.build
+>> index ec59effca2..226b97ea26 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -1885,11 +1885,9 @@ endif
+>>   rdma = not_found
+>>   if not get_option('rdma').auto() or have_system
+>> -  libumad = cc.find_library('ibumad', required: get_option('rdma'))
+>>     rdma_libs = [cc.find_library('rdmacm', has_headers: 
+>> ['rdma/rdma_cma.h'],
+>>                                  required: get_option('rdma')),
+>> -               cc.find_library('ibverbs', required: get_option('rdma')),
+>> -               libumad]
+>> +               cc.find_library('ibverbs', required: get_option('rdma'))]
+>>     rdma = declare_dependency(dependencies: rdma_libs)
+>>     foreach lib: rdma_libs
+>>       if not lib.found()
+> 
 
 
