@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F333FC25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95F03C25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:43:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGwzN-00032Z-Fu; Tue, 11 Jun 2024 04:36:21 -0400
+	id 1sGx5z-00067G-TT; Tue, 11 Jun 2024 04:43:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sGwzL-00032D-II
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:36:19 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sGwzJ-0005bd-Vb
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:36:19 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-579fa270e53so1034534a12.3
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 01:36:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718094976; x=1718699776; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=k6RembHLwkOyv7tlgzOTSxzgHhL8szsKqgQ3ptT75Lc=;
- b=rnj4X5jprd1tu8V88KtH1mDccYmHUDNjkJulERy3tEgH2tR5P5fu+FNzxO+KDyhnmr
- 2e9dRB2Cn60g8K8U1B9ibJ3ayvZP/3lNhxtR7sFRNSuSfoBRiMNkLwfCVoqRXOWT3kKr
- BgzzaATTFVukCZvcT2XRCBlLmnJhvaFJLwpT2zzjwfOXesOqrKh5nVLzz3c7I+QM/2QB
- 9LO4W2iSPpcxSsQj+fwCgFyM0y+8xptHXRsR6w6mAqDEluU6SEZA5l9sAszhq2zwmHNY
- ITVAsTwDZynydo5WpY+Zzb4fLvcyVWeTViSJEJ3rN2w8RmHtRobH7BKcAuHDqeeERiSG
- hIgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718094976; x=1718699776;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=k6RembHLwkOyv7tlgzOTSxzgHhL8szsKqgQ3ptT75Lc=;
- b=nrpEW4Twi6u1eNTI+ck7c7KeR32fJX/Umz+3NnRHBXp79eO346kOEok7nGSjOueNqB
- XW1+V/4qDZzW242MGSJokij0hGCHvP2mljxqhpHujfVTqt5Zrin1B2ykJ3L4IEN0rati
- yY2sGEyC2jJfIXtH2nbc7QVtrGVaIqb0v5AwiYWgsqSiqyMwPrYRbvYAbhwHRNYq9llW
- SplDf6BPgr5CqXYY4AeAhyBrWN6xLGQViwEKKhT3TcchLtwguu5CsFoeJ+qoI9D7HNE0
- 22zT8jvKFtnHlBh6UAuLcFKXe+xGvTLylB0kWURNu5ZnFM3d4bTAhDziy98yFQjzOVpt
- 9zVA==
-X-Gm-Message-State: AOJu0Yyk5FrYGo73QmSoL600uRe7SMDPe+BB60EcJUkTdEsXHi5G0Uc7
- AF2FWGEkUt0sQnTW2/6KoQnf2jT13XQha5vdlrqfiK/9CfZm4EiI++f9k8GjiOxsOfuz0Qw7Mog
- qHPR3ITu3hMFXimWSWieeMhj+uUcxYPpRWVljrA==
-X-Google-Smtp-Source: AGHT+IF5gHCdZresklNd7YCM+DWy1SrJMzdlWjXFs3AEbdfZz6trsPVEh30mEff45zSdIdTSyVcupISpvjS3/FuaVd0=
-X-Received: by 2002:a50:9fa7:0:b0:57c:5fc9:16a3 with SMTP id
- 4fb4d7f45d1cf-57c5fc916f4mr8015835a12.13.1718094975822; Tue, 11 Jun 2024
- 01:36:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sGx5x-00066n-9b
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:43:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sGx5u-0006i3-51
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:43:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718095384;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=x+U7iNiKAT721w3Nqtv6tMGdBcz5Gb4cX/xbmOjQDTU=;
+ b=Z5jbCKWc1ixme7MDH27JnlXrUMLyciPDYNrZ+j0uPjxIZCFBWw6job5XHyy+mB9l8vIFa7
+ Hz5B5bpYbp4Hfbb44a0uieWp80fiIqt4uV7AJoD/knjWEwCoHksVrihtopReYkRvIX47vI
+ x42Y8QT1s5mqrfLT9c5jX1ontOIFFI0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-523-kMuVG7-YNFaKKzVbSP9HEA-1; Tue,
+ 11 Jun 2024 04:43:00 -0400
+X-MC-Unique: kMuVG7-YNFaKKzVbSP9HEA-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BF3D319560B1; Tue, 11 Jun 2024 08:42:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.73])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8F7E719560AA; Tue, 11 Jun 2024 08:42:53 +0000 (UTC)
+Date: Tue, 11 Jun 2024 09:42:50 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?B?QmVubsOp?= e <alex.bennee@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
+Message-ID: <ZmgOCjCEzj9IYwgV@redhat.com>
+References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
+ <CAJSP0QU2Y_mNtYQtPbahnvj1eLLTu2Z-f4z-6VZgSSxqgVnPbQ@mail.gmail.com>
+ <evsu7.aus3yo6r56i@linaro.org>
+ <CAJSP0QWLe6yPDE3rPztx=oS0g+vKT9W3GykrNU0EQZcaW06sog@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240603160933.1141717-1-peter.maydell@linaro.org>
- <20240603160933.1141717-4-peter.maydell@linaro.org>
- <5b10d49a-8da2-491f-8b8c-26556482957d@linaro.org>
-In-Reply-To: <5b10d49a-8da2-491f-8b8c-26556482957d@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 11 Jun 2024 09:36:02 +0100
-Message-ID: <CAFEAcA_1JyzM9WiBsQ-3YxNmH3i1usnU3iAc7QR-G2m89f-GbQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] accel/tcg: Make TCGCPUOps::cpu_exec_halt mandatory
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAJSP0QWLe6yPDE3rPztx=oS0g+vKT9W3GykrNU0EQZcaW06sog@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,98 +92,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Jun 2024 at 09:25, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Hi Peter,
->
-> On 3/6/24 18:09, Peter Maydell wrote:
-> > Now that all targets set TCGCPUOps::cpu_exec_halt, we can make it
-> > mandatory and remove the fallback handling that calls cpu_has_work.
+On Mon, Jun 10, 2024 at 04:47:33PM -0400, Stefan Hajnoczi wrote:
+> On Mon, 10 Jun 2024 at 16:27, Manos Pitsidianakis
+> <manos.pitsidianakis@linaro.org> wrote:
 > >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >   include/hw/core/tcg-cpu-ops.h | 9 ++++++---
-> >   accel/tcg/cpu-exec.c          | 7 +------
-> >   2 files changed, 7 insertions(+), 9 deletions(-)
+> > On Mon, 10 Jun 2024 22:59, Stefan Hajnoczi <stefanha@gmail.com> wrote:
+> > >> Should QEMU use third-party dependencies?
+> > >> -----------------------------------------
+> > >> [shouldqemuusethirdparty] Back to [TOC]
+> > >>
+> > >> In my personal opinion, if we need a dependency we need a strong
+> > >> argument for it. A dependency needs a trusted upstream source, a QEMU
+> > >> maintainer to make sure it us up-to-date in QEMU etc.
+> > >>
+> > >> We already fetch some projects with meson subprojects, so this is not a
+> > >> new reality. Cargo allows you to define "locked" dependencies which is
+> > >> the same as only fetching specific commits by SHA. No suspicious
+> > >> tarballs, and no disappearing dependencies a la left-pad in npm.
+> > >>
+> > >> However, I believe it's worth considering vendoring every dependency by
+> > >> default, if they prove to be few, for the sake of having a local QEMU
+> > >> git clone buildable without network access.
+> > >
+> > >Do you mean vendoring by committing them to qemu.git or just the
+> > >practice of running `cargo vendor` locally for users who decide they
+> > >want to keep a copy of the dependencies?
 > >
-> > diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-op=
-s.h
-> > index 099de3375e3..34318cf0e60 100644
-> > --- a/include/hw/core/tcg-cpu-ops.h
-> > +++ b/include/hw/core/tcg-cpu-ops.h
-> > @@ -122,10 +122,13 @@ struct TCGCPUOps {
-> >        * to do when the CPU is in the halted state.
-> >        *
-> >        * Return true to indicate that the CPU should now leave halt, fa=
-lse
-> > -     * if it should remain in the halted state.
-> > +     * if it should remain in the halted state. (This should generally
-> > +     * be the same value that cpu_has_work() would return.)
-> >        *
-> > -     * If this method is not provided, the default is to do nothing, a=
-nd
-> > -     * to leave halt if cpu_has_work() returns true.
-> > +     * This method must be provided. If the target does not need to
-> > +     * do anything special for halt, the same function used for its
-> > +     * CPUClass::has_work method can be used here, as they have the
-> > +     * same function signature.
-> >        */
-> >       bool (*cpu_exec_halt)(CPUState *cpu);
-> >       /**
-> > diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-> > index 6711b58e0b2..8be4d2a1330 100644
-> > --- a/accel/tcg/cpu-exec.c
-> > +++ b/accel/tcg/cpu-exec.c
-> > @@ -682,13 +682,8 @@ static inline bool cpu_handle_halt(CPUState *cpu)
-> >   #ifndef CONFIG_USER_ONLY
-> >       if (cpu->halted) {
-> >           const TCGCPUOps *tcg_ops =3D cpu->cc->tcg_ops;
-> > -        bool leave_halt;
-> > +        bool leave_halt =3D tcg_ops->cpu_exec_halt(cpu);
 > >
-> > -        if (tcg_ops->cpu_exec_halt) {
-> > -            leave_halt =3D tcg_ops->cpu_exec_halt(cpu);
-> > -        } else {
-> > -            leave_halt =3D cpu_has_work(cpu);
-> > -        }
-> >           if (!leave_halt) {
-> >               return true;
-> >           }
->
-> Could we assert the handler is assigned in tcg_exec_realizefn()?
+> > Committing, with an option to opt-out. They are generally not big in
+> > size. I am not of strong opinion on this one, I'm very open to
+> > alternatives.
+> 
+> Fedora and Debian want Rust applications to use distro-packaged
+> crates. No vendoring and no crates.io online access. It's a bit of a
+> pain because Rust developers need to make sure their code works with
+> whatever version of crates Fedora and Debian provide.
 
-Yeah, we could. I thought about an assert that it was set up,
-but couldn't identify a place to do that.
+NB Fedora isn't actually that strict for Rust.  The "no vendoring"
+policy is merely a "SHOULD", rather than a "MUST" requirement:
 
-> If you agree I could squash these 3 lines:
->
-> -- >8 --
-> --- a/accel/tcg/cpu-exec.c
-> +++ b/accel/tcg/cpu-exec.c
-> @@ -1077,6 +1077,10 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **err=
-p)
->       static bool tcg_target_initialized;
->
->       if (!tcg_target_initialized) {
-> +        /* Check mandatory TCGCPUOps handlers */
-> +        assert(cpu->cc->tcg_ops->initialize);
-> +        assert(cpu->cc->tcg_ops->cpu_exec_halt);
-> +
->           cpu->cc->tcg_ops->initialize();
+  https://docs.fedoraproject.org/en-US/packaging-guidelines/Rust/#_vendored_dependencies
 
-I don't think we need to assert initialize if we're about to call
-it anyway -- the call will crash if it's NULL in an easy to diagnose way.
+which is a more pragmmatic approach to the real world packaging where
+there's potentially 100's of deps in an application chain.
 
->           tcg_target_initialized =3D true;
->       }
-> ---
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-thanks
--- PMM
 
