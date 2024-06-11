@@ -4,84 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1A7FC25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21EE5C27C5E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:19:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGwhD-0002tJ-0i; Tue, 11 Jun 2024 04:17:35 -0400
+	id 1sGwiL-0003dO-Ig; Tue, 11 Jun 2024 04:18:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGwhB-0002si-Bx
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:17:33 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGwh9-0001zI-Ib
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:17:33 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-57a677d3d79so11423971a12.1
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 01:17:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718093849; x=1718698649; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7kJSHp+3vZEw0JRPuHjECcenM6gafNdXSMSt50lci5o=;
- b=jNx0mcb6LkaWs+UElUCyZgo9aq/Ptgq5cmjXQ1RKeLeT5J0topdhxeNtVdv9tkWFPd
- puLTSMViYkbqBn+Kv8cc+GWf1RtaB3DaggwGhtu0zx3ULBrPOgmu1pF71cgqphaoDFJt
- fBQILKaA5mITSUhBcP8nbGXDQC9aEb0Ac7hUz5uJvJisUCTiDf3A5LSnWU6F93+ziJXZ
- Xflzik/3SF8pBmP2pmHu9XDRnTNytIpvqiDjo30pNBhJ0PIUxS+2GUzhuWTqDvg4t28J
- 6BlBWIvffwvTHGSVylF1L+P1Hse6Y9RXoAjaZE9W46AQ3TQz9OwWSS1orllQlY6Y/16o
- 5G4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718093849; x=1718698649;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7kJSHp+3vZEw0JRPuHjECcenM6gafNdXSMSt50lci5o=;
- b=Uqocb5o8AXLSe/Au/w5tMrs4NiyZDcpM0942NHBcBamTWYTj1yOFiSdxkj0UJqy0gJ
- P87Nq3/xTTOX/lAoduPeo0pN7xLiUgTnwKXCPh6HizsEKlMMjQUJMwPxdYaM1UPgJ4Kd
- FmpB4cQiwqENGLhSbJSrIGcUZZlOAuNubGs6rgc68oKQd7ZhGu1Fe+OVdjju3kBddrhE
- zEeyEnzy36TFHDjzAWG8wEdMjw1J96NTl4zF8PedCguLEu5ZSVa5ge0x6nQuI1g2sabd
- MTc3smKTCO9bhM6O64eWVtez8pZ7qq3d/kjqUCiI7CxlFAvuHLTKZBUwvuBVUYccYMNs
- RoXQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXK0mkItDMYRYwCUglKzm5TQuCmfIxJepHiFHnWQRiaDncdWuuwzAahXoLWhYFVtMUbSmvf7n6wV4tx4M/ZezLJUIUDG3Y=
-X-Gm-Message-State: AOJu0YwHxVu3sFoJciw3tNfJIXNjcAA++P/j+Zl2HJ4Q0Qyub3H7WGk7
- N2pRhx8FLFHRQJ0gZjGic2lP7h3jnFQJFNgKbPgCu61iVg6z5IOqrtPxnNvT7uU=
-X-Google-Smtp-Source: AGHT+IGL8/4/uCmKoz6Uatz05yNsZaAvmDE3BaCN5oVmZ4Re6/TZxYS2FXNYLLMlhC57pQE5lDRlSA==
-X-Received: by 2002:aa7:c2d4:0:b0:57c:9655:9943 with SMTP id
- 4fb4d7f45d1cf-57c9655b257mr526919a12.2.1718093849490; 
- Tue, 11 Jun 2024 01:17:29 -0700 (PDT)
-Received: from [192.168.69.100] (rsa59-h02-176-184-32-6.dsl.sta.abo.bbox.fr.
- [176.184.32.6]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57aae0ffbf8sm8980194a12.39.2024.06.11.01.17.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Jun 2024 01:17:28 -0700 (PDT)
-Message-ID: <9a45b5fb-09ba-4bb4-a91e-85dfb9b3031c@linaro.org>
-Date: Tue, 11 Jun 2024 10:17:11 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sGwiJ-0003cs-UG
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:18:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sGwiH-0002CS-QL
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:18:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718093919;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=VVHAuFT0IMEmESZKU9qnNisekpHWEQ+THEqd7fnks8M=;
+ b=ToqRrS4Sx+E0SsEDqgdyO581lypT4Ee0UWXX3bU5YdodyHx6bs0Fb/oqPB1queIdR8Ze7l
+ QRRRTXOCLLXemX1Zt+cdCxgMXjhtUyFdrlEU40IRU9EHOZLsOE8lS4xVeMQJhw+w1gKttq
+ O35HpaAEwcmrVr1ugAHXwbiDTFakHO8=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-531-XvytCqiGP7CcPRs0F4nNvQ-1; Tue,
+ 11 Jun 2024 04:18:35 -0400
+X-MC-Unique: XvytCqiGP7CcPRs0F4nNvQ-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 68A3E1955F10; Tue, 11 Jun 2024 08:18:33 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.73])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9A7311956048; Tue, 11 Jun 2024 08:18:28 +0000 (UTC)
+Date: Tue, 11 Jun 2024 09:18:25 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
+Message-ID: <ZmgIUfqDjJuw2Chl@redhat.com>
+References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] target: Set TCGCPUOps::cpu_exec_halt to target's
- has_work implementation
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20240603160933.1141717-1-peter.maydell@linaro.org>
- <20240603160933.1141717-3-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240603160933.1141717-3-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,45 +88,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/24 18:09, Peter Maydell wrote:
-> Currently the TCGCPUOps::cpu_exec_halt method is optional, and if it
-> is not set then the default is to call the CPUClass::has_work
-> method (which has an identical function signature).
+On Mon, Jun 10, 2024 at 09:22:35PM +0300, Manos Pitsidianakis wrote:
+> What are the issues with not using the compiler, rustc, directly?
+> -----------------------------------------------------------------
+> [whataretheissueswith] Back to [TOC]
 > 
-> We would like to make the cpu_exec_halt method mandatory so we can
-> remove the runtime check and fallback handling.  In preparation for
-> that, make all the targets which don't need special handling in their
-> cpu_exec_halt set it to their cpu_has_work implementation instead of
-> leaving it unset.  (This is every target except for arm and i386.)
+> 1. Tooling
+>    Mostly writing up the build-sys tooling to do so. Ideally we'd 
+>    compile everything without cargo but rustc directly.
 > 
-> In the riscv case this requires us to make the function not
-> be local to the source file it's defined in.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/riscv/internals.h   | 3 +++
->   target/alpha/cpu.c         | 1 +
->   target/avr/cpu.c           | 1 +
->   target/cris/cpu.c          | 2 ++
->   target/hppa/cpu.c          | 1 +
->   target/loongarch/cpu.c     | 1 +
->   target/m68k/cpu.c          | 1 +
->   target/microblaze/cpu.c    | 1 +
->   target/mips/cpu.c          | 1 +
->   target/openrisc/cpu.c      | 1 +
->   target/ppc/cpu_init.c      | 2 ++
->   target/riscv/cpu.c         | 2 +-
->   target/riscv/tcg/tcg-cpu.c | 2 ++
->   target/rx/cpu.c            | 1 +
->   target/s390x/cpu.c         | 1 +
->   target/sh4/cpu.c           | 1 +
->   target/sparc/cpu.c         | 1 +
->   target/xtensa/cpu.c        | 1 +
->   18 files changed, 23 insertions(+), 1 deletion(-)
+>    If we decide we need Rust's `std` library support, we could 
+>    investigate whether building it from scratch is a good solution. This 
+>    will only build the bits we need in our devices.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Re-building 'std' for QEMU would be a no-go for many distros who
+will expect QEMU to use the distro provided 'std' package. So at
+most that would have to be an optional feature.
+
+> 2. Rust dependencies
+>    We could go without them completely. I chose deliberately to include 
+>    one dependency in my UART implementation, `bilge`[0], because it has 
+>    an elegant way of representing typed bitfields for the UART's 
+>    registers.
+> 
+> [0]: Article: https://hecatia-elegua.github.io/blog/no-more-bit-fiddling/
+>      Crates.io page: https://crates.io/crates/bilge
+>      Repository: https://github.com/hecatia-elegua/bilge
+> 
+> Should QEMU use third-party dependencies?
+> -----------------------------------------
+> [shouldqemuusethirdparty] Back to [TOC]
+> 
+> In my personal opinion, if we need a dependency we need a strong 
+> argument for it. A dependency needs a trusted upstream source, a QEMU 
+> maintainer to make sure it us up-to-date in QEMU etc.
+
+"strong" is a rather fuzzy term. In C we already have a huge number
+of build dependencies
+
+ $ wc -l tests/lcitool/projects/qemu.yml 
+ 127 tests/lcitool/projects/qemu.yml
+
+we would have many more than that except that we're conservative
+about adding deps on things because getting new libraries into
+distros is quite painful, or we lag behind where we would want
+to be to stick with compat for old distro versions.
+
+In terms of Rust dependancies, I'd expect us to have fairly arbitrary
+dependancies used. If the dep avoids QEMU maintainers having to
+re-invent the wheel for something there is already a common crate
+for, then it is a good thing to use it. I'd almost go as far as
+encouraging use of external crates. Our maintainers should focus tmie
+on writing code that's delivers compelling features to QEMU, rather
+than re-creating common APIs that already have good crates.
+
+> We already fetch some projects with meson subprojects, so this is not a 
+> new reality. Cargo allows you to define "locked" dependencies which is 
+> the same as only fetching specific commits by SHA. No suspicious 
+> tarballs, and no disappearing dependencies a la left-pad in npm.
+> 
+> However, I believe it's worth considering vendoring every dependency by 
+> default, if they prove to be few, for the sake of having a local QEMU 
+> git clone buildable without network access.
+
+A local git clone is already not buildable without network access,
+given that you have to install countless extra distro packages
+ahead of time. I think its reasonable to expect people working from
+git to have to download rust deps. We should consider whether we
+want vendoring in the release tarballs though.
+
+> Should QEMU provide wrapping Rust APIs over QEMU internals?
+> -----------------------------------------------------------
+> [qemuprovidewrappingrustapis] Back to [TOC]
+> 
+> My personal opinion is no, with the reasoning being that QEMU internals 
+> are not documented or stable. However I do not see why creating stable 
+> opt-in interfaces is bad. It just needs someone to volunteer to maintain 
+> it and ensure there are no breakages through versions.
+
+I expect this will evolve organically with people providing wrappers
+where appropriate to suit their development neds.
+
+> Will QEMU now depend on Rust and thus not build on my XYZ platform?
+> -------------------------------------------------------------------
+> [qemudependonrustnotbuildonxyz] Back to [TOC]
+> 
+> No, worry about this in some years if this experiment takes off. Rust 
+> has broad platform support and is present in most distro package 
+> managers. In the future we might have gcc support for it as well.
+
+Rust isn't going away, so if a platform wants to remain relevant
+to the modern software world, then people who care about that
+platform need to ensure Rust works on it. I wouldn't say that
+QEMU needs to massively worry about this, since all the common
+platforms are now covered precisely because Rust is becoming
+so wildly used that a platform cannot ignore it.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
