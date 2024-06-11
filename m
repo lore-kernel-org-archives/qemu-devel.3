@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48766C27C65
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 17:48:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81700C27C65
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 17:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH5aX-0007f8-9P; Tue, 11 Jun 2024 13:47:17 -0400
+	id 1sH5dU-0000Iv-Vs; Tue, 11 Jun 2024 13:50:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sH5aV-0007em-I5
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:47:15 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sH5aT-0002EA-OS
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:47:15 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a6f1c4800easo319154866b.3
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 10:47:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718128032; x=1718732832; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gwSTSCJVVwt0iVYmLJK1Db1TLI+pYOhV6c8R4CFhtaU=;
- b=Jcr2KMpzRerW44nI1LSDQT6qjGP+DKukgKUSwWHXeZnDNDHXMNiEtqZ9CAAHxECBsX
- 8tW34jlOpPc/ieroiRx768vVdah+U9aIF9ach/hsTPF9k9r+ZdaVdvLpC5sKFwZ+4Vcz
- gIOzindTjLQ1oqvgp+zWg4ute9fgaocRq4CN3MEHVW3hrPEmbz33jGBhmjg12Y+dWNtN
- i3AUgQ2pxiRjZ0uhBPGvH/RUMveZ/KsPmd1RPfZjWQAV+bluDWcF1z5CL5bBnyek5qyl
- m0VSK+lm5eptI23d1TKm7oI6pHfT8omnEtvtgOeKDNQ6GDKelNnWYA2kkvGxj7wO9Lj7
- hi8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718128032; x=1718732832;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gwSTSCJVVwt0iVYmLJK1Db1TLI+pYOhV6c8R4CFhtaU=;
- b=nK7YarpfCHoooYRIHGMEruQXRWDqPEKJeNGBEVb4ydZB1nLe59k76yli5QR1tprhsF
- w/ROqa1L5n5m6SvKYBtTvKPt+1JI0eKPtoXtFgDKLgpn8sreu6KMoclyow9amkhzPlkS
- 1jHOhKlDazQAPnqwybveSiHTQYhhFpLLvzWJ7Ytb0gj4J5uxc0pOrK6qk4E2pVPx2Sbs
- BC16/7gPULALohm5Sff9l9zc0+44meUtJqBostqOmxe+eLaPsFYCHeLCXLwMF1v21QN3
- hipMeGHZPdJOm27RrVxL0VLqqvjYt/NBFICvkfWg9ALFHJ8Y6zcCxLtYsCcgmKRWgYfU
- 5whQ==
-X-Gm-Message-State: AOJu0Yw1u+Y877JiTL9aDnCPNFT3JhAVYt0NqHmCnRE9V0ApUfhkiJWZ
- Dgw3DpvQ5TKHZ4X7lHQtRbWL860HCztw2NKsmEAKy9zQ1VUJ954Q2rT/jnv8hIRSGjEjLbcurQm
- 93eNa50xYKLadZijP4bFka9lf++mrG/L42CeH8g==
-X-Google-Smtp-Source: AGHT+IF+LmSgQG5TNqPiNU8kPvzVYjCS8NSdf8fa5T5LnHAD2MH612lYmUZGilg1FhW8NNDzlE1a3+56aDbYE6iUyn4=
-X-Received: by 2002:a17:906:6a29:b0:a6e:a97c:fc97 with SMTP id
- a640c23a62f3a-a6ea97cfd15mr865047666b.7.1718128032014; Tue, 11 Jun 2024
- 10:47:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5dT-0000Ht-BL
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:50:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5dR-00037Q-8m
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:50:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718128216;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=sAUjnMz8eHEoX4lTMd9RO51MMzPmRqWk4z1sgk7dwcA=;
+ b=HcUTuFMIVyz0LPqXOmn7Xrjjz8gOvKs3ayKPERRcNpBqmv+oUPQRsYP38HpOx2WXb3NMzW
+ xsJjKklp/WzapQX57wAJKdc4H/8cpHqnfFSKLXsH4AF8nEXC7uK66iD63wk22bHuO0jmfn
+ eY47F+DMDlZxknOr8LxaaOI6+M+e+qI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-4hrYrfxvMXeDvFMiW86i0A-1; Tue,
+ 11 Jun 2024 13:50:11 -0400
+X-MC-Unique: 4hrYrfxvMXeDvFMiW86i0A-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1E7611956095; Tue, 11 Jun 2024 17:50:08 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.192.130])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C92811956055; Tue, 11 Jun 2024 17:50:03 +0000 (UTC)
+Date: Tue, 11 Jun 2024 19:49:58 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
+ eblake@redhat.com, xiechanglong.d@gmail.com,
+ wencongyang2@huawei.com, hreitz@redhat.com, jsnow@redhat.com,
+ f.ebner@proxmox.com
+Subject: Re: [PATCH v4 5/5] iotests: add backup-discard-source
+Message-ID: <ZmiORpYFHEWUXQRI@redhat.com>
+References: <20240313152822.626493-1-vsementsov@yandex-team.ru>
+ <20240313152822.626493-6-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
-References: <20240611122348.3613272-1-manos.pitsidianakis@linaro.org>
- <5cc8bab3-4edc-4657-882b-5e8291fba29d@linaro.org>
-In-Reply-To: <5cc8bab3-4edc-4657-882b-5e8291fba29d@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Tue, 11 Jun 2024 20:46:55 +0300
-Message-ID: <CAAjaMXZb+9h+eMOE67k-tGNRSObFqD5-_wUT1PaOHWSE86b2Aw@mail.gmail.com>
-Subject: Re: [PATCH v1] virtio-iommu: add error check before assert
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Zheyu Ma <zheyuma97@gmail.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Eric Auger <eric.auger@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240313152822.626493-6-vsementsov@yandex-team.ru>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,61 +84,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Jun 2024 at 18:01, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 11/6/24 14:23, Manos Pitsidianakis wrote:
-> > A fuzzer case discovered by Zheyu Ma causes an assert failure.
-> >
-> > Add a check before the assert, and respond with an error before moving
-> > on to the next queue element.
-> >
-> > To reproduce the failure:
-> >
-> > cat << EOF | \
-> > qemu-system-x86_64 \
-> > -display none -machine accel=3Dqtest -m 512M -machine q35 -nodefaults \
-> > -device virtio-iommu -qtest stdio
-> > outl 0xcf8 0x80000804
-> > outw 0xcfc 0x06
-> > outl 0xcf8 0x80000820
-> > outl 0xcfc 0xe0004000
-> > write 0x10000e 0x1 0x01
-> > write 0xe0004020 0x4 0x00001000
-> > write 0xe0004028 0x4 0x00101000
-> > write 0xe000401c 0x1 0x01
-> > write 0x106000 0x1 0x05
-> > write 0x100001 0x1 0x60
-> > write 0x100002 0x1 0x10
-> > write 0x100009 0x1 0x04
-> > write 0x10000c 0x1 0x01
-> > write 0x100018 0x1 0x04
-> > write 0x10001c 0x1 0x02
-> > write 0x101003 0x1 0x01
-> > write 0xe0007001 0x1 0x00
-> > EOF
-> >
-> > Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2359
-> > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> > ---
-> >   hw/virtio/virtio-iommu.c | 12 ++++++++++++
-> >   1 file changed, 12 insertions(+)
-> >
-> > diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-> > index 1326c6ec41..9b99def39f 100644
-> > --- a/hw/virtio/virtio-iommu.c
-> > +++ b/hw/virtio/virtio-iommu.c
-> > @@ -818,6 +818,18 @@ static void virtio_iommu_handle_command(VirtIODevi=
-ce *vdev, VirtQueue *vq)
-> >   out:
-> >           sz =3D iov_from_buf(elem->in_sg, elem->in_num, 0,
-> >                             buf ? buf : &tail, output_size);
-> > +        if (unlikely(sz !=3D output_size)) {
->
-> Is this a normal guest behavior? Should we log it as GUEST_ERROR?
+Am 13.03.2024 um 16:28 hat Vladimir Sementsov-Ogievskiy geschrieben:
+> Add test for a new backup option: discard-source.
+> 
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+> Tested-by: Fiona Ebner <f.ebner@proxmox.com>
 
-It's not, it'd be a virtio spec (implementation) mis-use by the guest.
-the Internal device error (VIRTIO_IOMMU_S_DEVERR) would be logged by
-the kernel; should we log it as well?
+This test fails for me, and it already does so after this commit that
+introduced it. I haven't checked what get_actual_size(), but I'm running
+on XFS, so its preallocation could be causing this. We generally avoid
+checking the number of allocated blocks in image files for this reason.
+
+Kevin
+
+
+backup-discard-source   fail       [19:45:49] [19:45:50]   0.8s                 failed, exit status 1
+--- /home/kwolf/source/qemu/tests/qemu-iotests/tests/backup-discard-source.out
++++ /home/kwolf/source/qemu/build-clang/scratch/qcow2-file-backup-discard-source/backup-discard-source.out.bad
+@@ -1,5 +1,14 @@
+-..
++F.
++======================================================================
++FAIL: test_discard_cbw (__main__.TestBackup.test_discard_cbw)
++1. do backup(discard_source=True), which should inform
++----------------------------------------------------------------------
++Traceback (most recent call last):
++  File "/home/kwolf/source/qemu/tests/qemu-iotests/tests/backup-discard-source", line 147, in test_discard_cbw
++    self.assertLess(get_actual_size(self.vm, 'temp'), 512 * 1024)
++AssertionError: 1249280 not less than 524288
++
+ ----------------------------------------------------------------------
+ Ran 2 tests
+
+-OK
++FAILED (failures=1)
+Failures: backup-discard-source
+Failed 1 of 1 iotests
+
 
