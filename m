@@ -4,90 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A06D5C25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 12:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38E62C27C5E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 12:28:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH0ag-0005J8-4L; Tue, 11 Jun 2024 08:27:06 -0400
+	id 1sH0bm-00063i-IN; Tue, 11 Jun 2024 08:28:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH0ae-0005IY-Mr
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 08:27:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sH0bl-00063X-90
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 08:28:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH0ac-0007zd-VZ
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 08:27:04 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sH0bj-0008BZ-FW
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 08:28:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718108822;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1718108890;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=gxMwk0zRP4l50IYuW3UJWbTIp4NX/H+Kx3YjZmJP1iIukP0+ZYD21FdJEZYTe4YhUCKVqn
- rVit4kkwl5EpodyKwJW/HiqgY5SDIOaxnvO8Cj+ejkdPbd4awHslFi2Fe8VDmWGkzdvNGF
- nTLhibIWNGCWsEOEu8bcZwI2pC3zDrk=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-391-MoqrpIgIPOOy6cLKdDoL1g-1; Tue, 11 Jun 2024 08:26:58 -0400
-X-MC-Unique: MoqrpIgIPOOy6cLKdDoL1g-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a6def6e9ef2so323149066b.0
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 05:26:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718108817; x=1718713617;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=OxbWJcTrqml9DnIGWSqYKgRmmkSm9DUfAGvopBkLmDoHLP5L9gI2EH/HeA+FVXLQBA
- hAe2nI2CHs/XUDfzW8/OrSJ0mS0X7VRb2bcqbZLcMNETTMcwRm+ux/JSKi8wvFFeG0pu
- AbxCUJas8zrUgITXBh33IiUBj5PCR80PmbL9+Pw72s6lpTnVUfH8livahtTWp/JPvxTN
- SAPyDYNUNc+OfJRLATomXL61tdcgTde6Z6qxmRDfinTvc1qKSLW7yw5mc2w/TukS91eK
- dzbf8ffgysDN3ZI9v5d4MtBrBZdFKBtEieNZUUfKq93sECsoAls3uvzD6HVGZ+/oIInc
- 68qw==
-X-Gm-Message-State: AOJu0YygX4NSOBzpnBblCmeunRHJf6gYevVsoocNUWr6Vjmz881OdZYU
- 9MQKV6YQB1cIsHWUt2IbSw+xtcaR7qTkeUnWwZRN6bcosZttVsoTp8HiZv5c6MR2kduLHrx0/bG
- 2JxtXdihaw9PAunQKsh7P3AAkyCIzIdBq81KzPXqqg/On33KKXqMg
-X-Received: by 2002:a17:906:f752:b0:a6f:2000:9811 with SMTP id
- a640c23a62f3a-a6f34cb47b7mr156564966b.13.1718108817679; 
- Tue, 11 Jun 2024 05:26:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFoJYh1X3/DdsogwmSRla2ThmVoraYWChWTfAE3abrBGPraG3Qk3SczRzLCUdlMlGydRQsDpg==
-X-Received: by 2002:a17:906:f752:b0:a6f:2000:9811 with SMTP id
- a640c23a62f3a-a6f34cb47b7mr156563866b.13.1718108817285; 
- Tue, 11 Jun 2024 05:26:57 -0700 (PDT)
-Received: from avogadro.local ([151.62.196.71])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6e89b5ee63sm567702066b.122.2024.06.11.05.26.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Jun 2024 05:26:56 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Pankaj Gupta <pankaj.gupta@amd.com>
-Cc: qemu-devel@nongnu.org, brijesh.singh@amd.com, dovmurik@linux.ibm.com,
- armbru@redhat.com, michael.roth@amd.com, pbonzini@redhat.com,
- thomas.lendacky@amd.com, peter.maydell@linaro.org
-Subject: Re: [PATCH 0/3] snp: fix coverity reported issues
-Date: Tue, 11 Jun 2024 14:26:56 +0200
-Message-ID: <20240611122656.69171-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240607183611.1111100-1-pankaj.gupta@amd.com>
-References: 
+ bh=SwoaVqRohIc5Xf11W3+CQB0ZLhM/uF0XjzNyl2PklG8=;
+ b=ZqkjkEWDIo6fflWKaEl5tczw8lug6dVJyeyQFY0aq2pMRaQOVR8K0vLsDxEysp87TYIiAD
+ itdy5uAzVCEeN4OuJSUVCyctxc8vGzSL72bLocE6V/l9Us8YBUDiVP+tLhbjLCDlb2hG8j
+ 4U9xWrylXGzd9OCm9Mvc02Wu4ab8RbU=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-h6jBTKvIPMaMWvre5PCsdg-1; Tue,
+ 11 Jun 2024 08:28:09 -0400
+X-MC-Unique: h6jBTKvIPMaMWvre5PCsdg-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0400519560AA; Tue, 11 Jun 2024 12:28:08 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.73])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D615D300021B; Tue, 11 Jun 2024 12:28:05 +0000 (UTC)
+Date: Tue, 11 Jun 2024 13:28:02 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH v2 2/3] hw/usb: Introduce x-query-usbhost QMP command
+Message-ID: <ZmhC0tVuaj20x6pW@redhat.com>
+References: <20240611102305.60735-1-philmd@linaro.org>
+ <20240611102305.60735-3-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+In-Reply-To: <20240611102305.60735-3-philmd@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,11 +87,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+On Tue, Jun 11, 2024 at 12:23:04PM +0200, Philippe Mathieu-Daudé wrote:
+> This is a counterpart to the HMP "info usbhost" command. It is being
+> added with an "x-" prefix because this QMP command is intended as an
+> adhoc debugging tool and will thus not be modelled in QAPI as fully
+> structured data, nor will it have long term guaranteed stability.
+> The existing HMP command is rewritten to call the QMP command.
+> 
+> Since host-libusb.c can be built as part of the 'hw-usb' module,
+> we introduce the libusb_register_hmp_info_hrt() helper to allow late
+> registration when the module is loaded.
+> 
+> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  qapi/machine.json           | 18 ++++++++++++++++
+>  hw/usb/host-libusb.h        | 16 ++++++++++++++
+>  include/hw/usb.h            |  3 ---
+>  hw/usb/bus-stub.c           |  7 +++++-
+>  hw/usb/host-libusb-common.c | 31 ++++++++++++++++++++++++++
+>  hw/usb/host-libusb.c        | 43 +++++++++++++++++++++++++------------
+>  tests/qtest/qmp-cmd-test.c  |  3 +++
+>  hmp-commands-info.hx        |  2 ++
+>  hw/usb/meson.build          |  1 +
+>  9 files changed, 106 insertions(+), 18 deletions(-)
+>  create mode 100644 hw/usb/host-libusb.h
+>  create mode 100644 hw/usb/host-libusb-common.c
 
-Paolo
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
