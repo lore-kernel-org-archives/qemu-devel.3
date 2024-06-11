@@ -4,72 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1295C25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 14:05:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5B06C25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 14:05:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH26p-0005kL-71; Tue, 11 Jun 2024 10:04:23 -0400
+	id 1sH27j-0006Dc-AW; Tue, 11 Jun 2024 10:05:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sH26n-0005jQ-Cq
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:04:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sH27g-00064I-85
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:05:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sH26l-0001Zu-8N
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:04:21 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sH27e-0001hG-F8
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:05:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718114657;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1718114713;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=09TTUvEkRoTU27DpZAoSzAkCk9EXn/rTO34SkpWhc2U=;
- b=XtvvIJARY4oT1fsQHvK2S02XOY9PBJNC7voOpogj4zXTBdrAS10xD3Go+tIFhAbXGUQKoQ
- uy6zGas0h4wDlyBVg+0KoBJ2WqLIjmHtFU/XiNdaJGyqE9n3PybMfr64FH3+mDb7wAT5bN
- 0cDnsFzrsX3DpOpHxzJWGkYsFlUOJUA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=L4wPH+4tgj0Trt7UaPXNbwmTIK+vrVNtZc/zIVlAkvo=;
+ b=JpB0u6pTAZBtJ4KRHklMkU2BqZUgrTXINjeYNGfkkPcdEPYf1zp2jz8ZHWWOtRQHj0LTsw
+ 58EUZ+iHZf5w71EE1bDAN8Xpy+FFMuv6dwyaIMMLzKEUe7ihlhJHLub3SmfGfEJ5tuHVJ1
+ z03N3sZd2uogfbkqbTDhQFqHHGzuwhk=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-310-nZP-so0DOzWHghmGueCszA-1; Tue,
- 11 Jun 2024 10:04:13 -0400
-X-MC-Unique: nZP-so0DOzWHghmGueCszA-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-403-09iZCzLwNIG93VKrkoHQXg-1; Tue,
+ 11 Jun 2024 10:05:07 -0400
+X-MC-Unique: 09iZCzLwNIG93VKrkoHQXg-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B947D1944CCC; Tue, 11 Jun 2024 14:04:03 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.73])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CD61C18D12C5; Tue, 11 Jun 2024 14:03:40 +0000 (UTC)
-Date: Tue, 11 Jun 2024 15:03:36 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 08/20] qga: conditionalize schema for commands
- unsupported on Windows
-Message-ID: <ZmhZOLzqPAaJ6e1D@redhat.com>
-References: <20240604134933.220112-1-berrange@redhat.com>
- <20240604134933.220112-9-berrange@redhat.com>
- <87ed93k2hy.fsf@pond.sub.org>
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7E2641954204; Tue, 11 Jun 2024 14:05:03 +0000 (UTC)
+Received: from localhost (unknown [10.39.193.36])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E4534196B8C2; Tue, 11 Jun 2024 14:04:51 +0000 (UTC)
+Date: Tue, 11 Jun 2024 10:04:49 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
+ pbonzini@redhat.com
+Subject: Re: [RFC PATCH] migration/savevm: do not schedule
+ snapshot_save_job_bh in qemu_aio_context
+Message-ID: <20240611140449.GA366375@fedora.redhat.com>
+References: <20240605120848.358654-1-f.ebner@proxmox.com>
+ <20240606183638.GC198201@fedora.redhat.com>
+ <6d64f07d-1638-44dc-848b-b307c0ebd0ad@proxmox.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="7QKAj/CNm8MP71bq"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87ed93k2hy.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <6d64f07d-1638-44dc-848b-b307c0ebd0ad@proxmox.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -91,105 +84,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 11, 2024 at 03:55:37PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> > Rather than creating stubs for every command that just return
-> > QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
-> > fully exclude generation of the commands on Windows.
-> >
-> > The command will be rejected at QMP dispatch time instead,
-> > avoiding reimplementing rejection by blocking the stub commands.
-> >
-> > This fixes inconsistency where some commands are implemented
-> > as stubs, yet not added to the blockedrpc list.
-> >
-> > This has the additional benefit that the QGA protocol reference
-> > now documents what conditions enable use of the command.
-> >
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >  qga/commands-win32.c | 56 +-------------------------------------------
-> >  qga/qapi-schema.json | 45 +++++++++++++++++++++++------------
-> >  2 files changed, 31 insertions(+), 70 deletions(-)
-> >
-> > diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-> > index 9fe670d5b4..2533e4c748 100644
-> > --- a/qga/commands-win32.c
-> > +++ b/qga/commands-win32.c
-> 
-> [...]
-> 
-> >  /* add unsupported commands to the list of blocked RPCs */
-> >  GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
-> >  {
-> > -    const char *list_unsupported[] = {
-> > -        "guest-suspend-hybrid",
-> > -        "guest-set-vcpus",
-> > -        "guest-get-memory-blocks", "guest-set-memory-blocks",
-> > -        "guest-get-memory-block-info",
-> > -        NULL};
-> > -    char **p = (char **)list_unsupported;
-> > -
-> > -    while (*p) {
-> > -        blockedrpcs = g_list_append(blockedrpcs, g_strdup(*p++));
-> > -    }
-> > -
-> >      if (!vss_init(true)) {
-> >          g_debug("vss_init failed, vss commands are going to be disabled");
-> >          const char *list[] = {
-> >              "guest-get-fsinfo", "guest-fsfreeze-status",
-> >              "guest-fsfreeze-freeze", "guest-fsfreeze-thaw", NULL};
-> > -        p = (char **)list;
-> > +        char **p = (char **)list;
-> >  
-> >          while (*p) {
-> >              blockedrpcs = g_list_append(blockedrpcs, g_strdup(*p++));
->            }
->        }
-> 
->        return blockedrpcs;
->    }
-> 
-> Four commands get disabled when vss_init() fails, i.e. when qga-vss.dll
-> can't be loaded and initialized.
-> 
-> Three of the four commands do this first:
-> 
->         if (!vss_initialized()) {
->             error_setg(errp, QERR_UNSUPPORTED);
->             return 0;
->         }
-> 
-> The execption is qmp_guest_get_fsinfo().
-> 
-> vss_initialized() returns true between successful vss_init() and
-> vss_deinit().
-> 
-> Aside: we call vss_init() in three places.  Two of them init, call
-> something, then deinit.  Weird.  Moving on.
-> 
-> If these commands are meant to be only available when the DLL is, then
-> having them check vss_initialized() is useless.
-> 
-> Conversely, if the check isn't useless, then the "make it available
-> only" business is.
-> 
-> Opportunity for further cleanup?
 
-If we eliminate the "make it available" check in ga_command_init_blockedrpcs,
-that would be a nice cleanup IMHO, as these few commands are the only
-special case where that's needed now.
+--7QKAj/CNm8MP71bq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+On Tue, Jun 11, 2024 at 02:08:49PM +0200, Fiona Ebner wrote:
+> Am 06.06.24 um 20:36 schrieb Stefan Hajnoczi:
+> > On Wed, Jun 05, 2024 at 02:08:48PM +0200, Fiona Ebner wrote:
+> >> The fact that the snapshot_save_job_bh() is scheduled in the main
+> >> loop's qemu_aio_context AioContext means that it might get executed
+> >> during a vCPU thread's aio_poll(). But saving of the VM state cannot
+> >> happen while the guest or devices are active and can lead to assertion
+> >> failures. See issue #2111 for two examples. Avoid the problem by
+> >> scheduling the snapshot_save_job_bh() in the iohandler AioContext,
+> >> which is not polled by vCPU threads.
+> >>
+> >> Solves Issue #2111.
+> >>
+> >> This change also solves the following issue:
+> >>
+> >> Since commit effd60c878 ("monitor: only run coroutine commands in
+> >> qemu_aio_context"), the 'snapshot-save' QMP call would not respond
+> >> right after starting the job anymore, but only after the job finished,
+> >> which can take a long time. The reason is, because after commit
+> >> effd60c878, do_qmp_dispatch_bh() runs in the iohandler AioContext.
+> >> When do_qmp_dispatch_bh() wakes the qmp_dispatch() coroutine, the
+> >> coroutine cannot be entered immediately anymore, but needs to be
+> >> scheduled to the main loop's qemu_aio_context AioContext. But
+> >> snapshot_save_job_bh() was scheduled first to the same AioContext and
+> >> thus gets executed first.
+> >>
+> >> Buglink: https://gitlab.com/qemu-project/qemu/-/issues/2111
+> >> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+> >> ---
+> >>
+> >> While initial smoke testing seems fine, I'm not familiar enough with
+> >> this to rule out any pitfalls with the approach. Any reason why
+> >> scheduling to the iohandler AioContext could be wrong here?
+> >=20
+> > If something waits for a BlockJob to finish using aio_poll() from
+> > qemu_aio_context then a deadlock is possible since the iohandler_ctx
+> > won't get a chance to execute. The only suspicious code path I found was
+> > job_completed_txn_abort_locked() -> job_finish_sync_locked() but I'm not
+> > sure whether it triggers this scenario. Please check that code path.
+> >=20
+>=20
+> Sorry, I don't understand. Isn't executing the scheduled BH the only
+> additional progress that the iohandler_ctx needs to make compared to
+> before the patch? How exactly would that cause issues when waiting for a
+> BlockJob?
+>=20
+> Or do you mean something waiting for the SnapshotJob from
+> qemu_aio_context before snapshot_save_job_bh had the chance to run?
+
+Yes, exactly. job_finish_sync_locked() will hang since iohandler_ctx has
+no chance to execute. But I haven't audited the code to understand
+whether this can happen.
+
+Stefan
+
+--7QKAj/CNm8MP71bq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZoWYEACgkQnKSrs4Gr
+c8i4AwgAnAL1eJuFcov15YSTg5//ZuNkgdSB6MJDbK2RS+dm0woILRJTkEuQiBJw
+GamN4FRQFXX48fFTk1Ww7ACRoiSQ9QIe9V3m5+ZeMneF6KMSqrvDV7qjrlduBT5a
+MQLC7+2oWv8dg7j+hcbgTo6kzOnDwrX06R4qdyrCLAmK/oe70bR04CiRNPXKar/v
+iHUr5H/N7gUwiSfs1JnrundGvlasu+xtVz7nJ+LLO1gRdLYfOb0UEk94Oe3r1A1I
+at7y8kJG1BoVPeC1cWFuBpmYVlvu3ZAEYQTh621/vqn7BTRh8Gk3SILfrDKBy/4u
+wU0n0QyRmZ2yV1gflu1x9F13WM5dIA==
+=Ln32
+-----END PGP SIGNATURE-----
+
+--7QKAj/CNm8MP71bq--
 
 
