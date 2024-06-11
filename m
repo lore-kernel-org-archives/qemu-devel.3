@@ -4,95 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36F32C27C5E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 13:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD1EC25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 13:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH1Mg-0001Vq-An; Tue, 11 Jun 2024 09:16:42 -0400
+	id 1sH1yb-0002y6-VH; Tue, 11 Jun 2024 09:55:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH1Mf-0001VU-26
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 09:16:41 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sH1yb-0002xG-1A
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 09:55:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH1Mb-0000io-3H
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 09:16:40 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sH1yZ-0000Cf-FM
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 09:55:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718111796;
+ s=mimecast20190719; t=1718114149;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Q3iOta0LTb+MN26waluU7zrWgUJpiCUq5p0w+f2JU0Y=;
- b=O7JejXbwpX7hUEK+J7WeERAzrSg2MNZkd2+S8/PIIDgoVRAxIwk39YtmFqQm/xRoC5Qepm
- xpxzTqZ8uc4VL88XhAwV9z84NyvDwpN4ORHfP7EsEnQYh4p1PuzYfpwZ8iX080P7lp+brh
- Kb4keGDtuZoD3TumOBxYKbpeKD/iR3Y=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-318-sJDkLDAsOG26hek81NvQcw-1; Tue, 11 Jun 2024 09:16:32 -0400
-X-MC-Unique: sJDkLDAsOG26hek81NvQcw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-35f306b2e66so109572f8f.0
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 06:16:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718111790; x=1718716590;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Q3iOta0LTb+MN26waluU7zrWgUJpiCUq5p0w+f2JU0Y=;
- b=r9gtW+yAZNp6VQ+LOip9fuwktF87SXZbbuoPni1l7y/slhhlVlHhBtksZQqmYcbIns
- DE9V8RSRhYliX2KEkNZSncoENXpbW04RHEJ5eWU8rcM6dRSQun1T1bkoVSvI2KRzFLNj
- JApAVcnrD+XzmEmFT6q7nVnsEw2fKFwwHALJ7UpOpseZdyrV4W5nOGnBem0fEe3CmMBF
- hWTRQZN+R+VnwU0XJMiEuR4GG6LeuYlOx4bapKYbYGR74cKOkPYEvb76gVN86B4FPL6Y
- EEbKouLxbAX+vau8xZZSN4CW2zWoiYxG7BAIjdpnB0tNlw28C9eG/4hIuVsZRWzwVv7N
- Z55g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW9/tcVhWLzUuoSDFKgmLtmlyP/XoZgdu7q1Pr2ea7fBye3EzeNtkgFQJUyxZtd7ZL9/C1gp3KVBGIrqcB+Epr2DJCKMss=
-X-Gm-Message-State: AOJu0YzKm/u5iF9FNslAN7v/6LOoKgcitE90BkrY/wSBXi0dCurOidwy
- lJOcZJBrnIdLMIDfdrsUo30PqKLDpdi/NZ5MfGNQhBSMRxswrIhTFJXM2wTmwSo1j9ZsM3heQbK
- VRJksrm2QIhdwCwHxWP+c3mN0E+NejTw8pUXuqyghsEwRcWvzMN7wTXe4D4NpGWYB4r23s80wDU
- Azap1e1R58ufkeK0MY/x8XEkjqLQdxC5SIqVU=
-X-Received: by 2002:a5d:5551:0:b0:35f:d07:d34 with SMTP id
- ffacd0b85a97d-35f2b2c469amr2151791f8f.27.1718111790696; 
- Tue, 11 Jun 2024 06:16:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFBspUmwYS9fiouYlLEN85gF7qAom66FGtGs5miIV7lLD9DU1wAz33FfdMy6zSaH6ifZJB7x4kmmDLfi3QW0Yg=
-X-Received: by 2002:a5d:5551:0:b0:35f:d07:d34 with SMTP id
- ffacd0b85a97d-35f2b2c469amr2151761f8f.27.1718111790345; 
- Tue, 11 Jun 2024 06:16:30 -0700 (PDT)
+ bh=xJyfgniAhZVKhhbthOgQXlleID2ouP3pT15ACeBfZdo=;
+ b=Ym3W1hG3b39pI6J9n2OHEZtivgFDm0uLSfwxH/nC2iTO8XLDrmGjcIEUClv9NLslkg1MAm
+ bsPy3/rbX6iJBrwAnKAxaj6M67aWPx0VzeUNvxmpK5gaRfThpN+WicwhaVFJCg7Bi7C3AM
+ rPC4AzFKfVAH9FWViv6+5vbe3pTPM80=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-pFOElUAgMoyVKqNPl-Q-8A-1; Tue,
+ 11 Jun 2024 09:55:44 -0400
+X-MC-Unique: pFOElUAgMoyVKqNPl-Q-8A-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6AC2519560B1; Tue, 11 Jun 2024 13:55:41 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 183511956048; Tue, 11 Jun 2024 13:55:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0250221E6682; Tue, 11 Jun 2024 15:55:38 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Konstantin
+ Kostiuk <kkostiuk@redhat.com>,  Michael Roth <michael.roth@amd.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 08/20] qga: conditionalize schema for commands
+ unsupported on Windows
+In-Reply-To: <20240604134933.220112-9-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Tue, 4 Jun 2024 14:49:21
+ +0100")
+References: <20240604134933.220112-1-berrange@redhat.com>
+ <20240604134933.220112-9-berrange@redhat.com>
+Date: Tue, 11 Jun 2024 15:55:37 +0200
+Message-ID: <87ed93k2hy.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
- <ZmgJVGMx81aHjg5f@redhat.com>
-In-Reply-To: <ZmgJVGMx81aHjg5f@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 11 Jun 2024 15:16:19 +0200
-Message-ID: <CABgObfZrEPQ2btoLwbfH4X7wH7Ly74SXzce0cNNuxejRyGsPHw@mail.gmail.com>
-Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,52 +92,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 11, 2024 at 10:22=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
->
-> On Mon, Jun 10, 2024 at 09:22:35PM +0300, Manos Pitsidianakis wrote:
-> > Hello everyone,
-> >
-> > This is an early draft of my work on implementing a very simple device,
-> > in this case the ARM PL011 (which in C code resides in hw/char/pl011.c
-> > and is used in hw/arm/virt.c).
->
-> looking at the diffstat:
->
-> >  .gitignore                     |   2 +
-> >  .gitlab-ci.d/buildtest.yml     |  64 ++--
-> >  configure                      |  12 +
-> >  hw/arm/virt.c                  |   2 +-
-> >  meson.build                    |  99 ++++++
-> >  meson_options.txt              |   4 +
-> >  rust/meson.build               |  93 ++++++
-> >  rust/pl011/.cargo/config.toml  |   2 +
-> >  rust/pl011/.gitignore          |   2 +
-> >  rust/pl011/Cargo.lock          | 120 +++++++
-> >  rust/pl011/Cargo.toml          |  26 ++
-> >  rust/pl011/README.md           |  42 +++
-> >  rust/pl011/build.rs            |  44 +++
-> >  rust/pl011/meson.build         |   7 +
-> >  rust/pl011/rustfmt.toml        |  10 +
-> >  rust/pl011/src/definitions.rs  |  95 ++++++
-> >  rust/pl011/src/device.rs       | 531 ++++++++++++++++++++++++++++++
-> >  rust/pl011/src/device_class.rs |  95 ++++++
-> >  rust/pl011/src/generated.rs    |   5 +
-> >  rust/pl011/src/lib.rs          | 575 +++++++++++++++++++++++++++++++++
-> >  rust/pl011/src/memory_ops.rs   |  38 +++
->
-> My thought is that if we're going to start implementing devices
-> or other parts of QEMU, in Rust, then I do not want to see it
-> placed in a completely separate directory sub-tree.
->
-> In this example, I would expect to have hw/arm/pl011.rs, or hw/arm/pl011/=
-*.rs
-> so that the device is part of the normal Arm hardware directory structure
-> and maintainer assignments.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-I think that's incompatible with the layout that Cargo expects.
-rust/hw/arm/pl011/ could be another possibility.
+> Rather than creating stubs for every command that just return
+> QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
+> fully exclude generation of the commands on Windows.
+>
+> The command will be rejected at QMP dispatch time instead,
+> avoiding reimplementing rejection by blocking the stub commands.
+>
+> This fixes inconsistency where some commands are implemented
+> as stubs, yet not added to the blockedrpc list.
+>
+> This has the additional benefit that the QGA protocol reference
+> now documents what conditions enable use of the command.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> ---
+>  qga/commands-win32.c | 56 +-------------------------------------------
+>  qga/qapi-schema.json | 45 +++++++++++++++++++++++------------
+>  2 files changed, 31 insertions(+), 70 deletions(-)
+>
+> diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+> index 9fe670d5b4..2533e4c748 100644
+> --- a/qga/commands-win32.c
+> +++ b/qga/commands-win32.c
 
-Paolo
+[...]
+
+>  /* add unsupported commands to the list of blocked RPCs */
+>  GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
+>  {
+> -    const char *list_unsupported[] =3D {
+> -        "guest-suspend-hybrid",
+> -        "guest-set-vcpus",
+> -        "guest-get-memory-blocks", "guest-set-memory-blocks",
+> -        "guest-get-memory-block-info",
+> -        NULL};
+> -    char **p =3D (char **)list_unsupported;
+> -
+> -    while (*p) {
+> -        blockedrpcs =3D g_list_append(blockedrpcs, g_strdup(*p++));
+> -    }
+> -
+>      if (!vss_init(true)) {
+>          g_debug("vss_init failed, vss commands are going to be disabled"=
+);
+>          const char *list[] =3D {
+>              "guest-get-fsinfo", "guest-fsfreeze-status",
+>              "guest-fsfreeze-freeze", "guest-fsfreeze-thaw", NULL};
+> -        p =3D (char **)list;
+> +        char **p =3D (char **)list;
+>=20=20
+>          while (*p) {
+>              blockedrpcs =3D g_list_append(blockedrpcs, g_strdup(*p++));
+           }
+       }
+
+       return blockedrpcs;
+   }
+
+Four commands get disabled when vss_init() fails, i.e. when qga-vss.dll
+can't be loaded and initialized.
+
+Three of the four commands do this first:
+
+        if (!vss_initialized()) {
+            error_setg(errp, QERR_UNSUPPORTED);
+            return 0;
+        }
+
+The execption is qmp_guest_get_fsinfo().
+
+vss_initialized() returns true between successful vss_init() and
+vss_deinit().
+
+Aside: we call vss_init() in three places.  Two of them init, call
+something, then deinit.  Weird.  Moving on.
+
+If these commands are meant to be only available when the DLL is, then
+having them check vss_initialized() is useless.
+
+Conversely, if the check isn't useless, then the "make it available
+only" business is.
+
+Opportunity for further cleanup?
+
+[...]
 
 
