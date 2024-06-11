@@ -4,86 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78227C25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 12:18:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C04C41513
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 12:24:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH0S7-00073r-DU; Tue, 11 Jun 2024 08:18:15 -0400
+	id 1sH0Xe-0001rv-St; Tue, 11 Jun 2024 08:23:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sH0Rr-00072P-U0
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 08:17:59 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sH0Rn-0006A5-NJ
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 08:17:57 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-57a1fe6392eso8154434a12.0
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 05:17:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718108274; x=1718713074; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JbOttmsMh9Ndwkesc+TbbULpmiFD9C8jwdEacYx8YaQ=;
- b=FZtJixbLJECOKGMoMRstlU3nFZjhi6zS6HwiQgMhskwh/Y8AYZ/XHyeMnxy7qg71rg
- Q6TFK4OVybCxWy04oj5/8IC5poiZJjVhLOC4ZXr/YBxCb9LEJI+DOlWPLI8oHfI3Na6a
- g81EviEBHS5ZySWrptqTutM/7O4f22IabYaZS8vqogAnwjZMjMVN6UJe+5+/p2M0pcnG
- ERwyRjDlXg0rXHqWIrctQcpfZzkuj/+exCYxQd/TK9cS/jYGzqvS0ZG34rTMIrnuz+Qo
- LN5oUGn4RQ/O8OoGDExLjO2THnny0gzhnMJlvQq37whuU6SMVkQ210d6L/L+fThTNwvi
- d/tA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718108274; x=1718713074;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JbOttmsMh9Ndwkesc+TbbULpmiFD9C8jwdEacYx8YaQ=;
- b=XF+DWe+oN/rLPzWpOpWNZxN4k06z8IoMxozAyZJ6Y34OxBhXGah0252G0bIz7jhqD1
- hE+e7QliMlJR+t1rw/MC1FRmJWZLj0g08FeopzFDASf4AfA491ObrhlrGJu3Tb4Dk+1s
- 0bcEV2vQ1w8nipIoowdecERHsZS8+xo6nTg9nw4eMnP+57lOsfos0QaiixAf2aGXc41A
- nbpn1Q6pKITDt8jBZ1aYXovQFsLnH6oHo+IGBdlaiSbih89lCDWZ2/XrQSmN/zPoLKIq
- ayKIF3w71YaQuLW/4eVq5gso2mf6vP7PXZRsP0Liqn6oIzQcBX/gasUwM95d2bwIMyDp
- XkpA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXVy+12B9DIBdGdxF1HT9ZN2eG+yJ9m6rO4Jp4848ohrpVQuq3yVnHF2sGG8vD7CitqQc50IYCaTGeSZny6lCW4yuPY8Dk=
-X-Gm-Message-State: AOJu0YwcNFKJ+/HYnFzjapL3Crrje/KosqZQOXslhdSVdX28zz79LHVl
- NqejrSEhjNWtF0eNWFkj8rIsa5jzzOwaaz3PlDO8Lo/OOBqLYI4X3qZnoUZBDX4=
-X-Google-Smtp-Source: AGHT+IH8JEmJ9q94Lo3tFzJ5X6TeIVSjGRcEWkCltLTak4zCVGYX1CJpA5FaVVJAwCxwRjrKT4soKQ==
-X-Received: by 2002:a17:906:3bcc:b0:a6e:9dab:14f9 with SMTP id
- a640c23a62f3a-a6e9dab1584mr589473466b.10.1718108273918; 
- Tue, 11 Jun 2024 05:17:53 -0700 (PDT)
-Received: from [192.168.69.100] (rsa59-h02-176-184-32-6.dsl.sta.abo.bbox.fr.
- [176.184.32.6]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6effd5bfc8sm451914666b.2.2024.06.11.05.17.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Jun 2024 05:17:53 -0700 (PDT)
-Message-ID: <abe29495-2890-4817-ad8e-229956589e4a@linaro.org>
-Date: Tue, 11 Jun 2024 14:17:51 +0200
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sH0Xc-0001rd-LT; Tue, 11 Jun 2024 08:23:57 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sH0Xa-0007KZ-LJ; Tue, 11 Jun 2024 08:23:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=nF9wECwog8DyAQqoag5qzzQgj3d1eValGLXNfp0vJG0=; b=TPV7Axhr3JXXzKfW
+ Ia7i9nTdpGE+Ax2Y9tGSTVJPwfNYmvZhFf+rhFxCLVXHqY8GF/t17nFdCDf48DvOzgM/3bT6y4u0W
+ SBBLXdDZAV9KHyHOo0GbyEnt9BqAO2zoPx1ic9wGkiSkLuSeOUSlt/t24NsS6N7h/Av1CdlKXFfNq
+ I3ZKAdkmuKXz/fapMxaG5ZrSc8KjYhZB0U8kcz1NuNm9eXwFvtlcwJ9RML8U5KIZz2/HoG+9kzV1j
+ xELRcge+bY4NxdgFDswLU5ET7TcSrAZvEs2tOmEurF/TU3B5N6PW4exF5b+RVbDHG9+HI1PGdB44/
+ 5xbqMCbVhwFtVmYvOw==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1sH0XV-005Ypr-0v;
+ Tue, 11 Jun 2024 12:23:49 +0000
+Date: Tue, 11 Jun 2024 12:23:49 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: Examining device state via monitor for debugging (was: [PATCH
+ 0/2] hw/misc/mos6522: Do not open-code hmp_info_human_readable_text())
+Message-ID: <ZmhB1RzXCGOU9nu4@gallifrey>
+References: <20240610150758.2827-1-philmd@linaro.org>
+ <87h6e0uizr.fsf@pond.sub.org>
+ <CAFEAcA8F9fTVuTwNosLi7qcZ7ki-kARKJsnrp3-er41LbkpZiA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] hw/audio/virtio-snd: Always use little endian audio
- format
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-stable@nongnu.org
-References: <20240422211830.25606-1-philmd@linaro.org>
- <63f58487-682b-4f12-b15f-7efd2fddc753@tls.msk.ru>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <63f58487-682b-4f12-b15f-7efd2fddc753@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CAFEAcA8F9fTVuTwNosLi7qcZ7ki-kARKJsnrp3-er41LbkpZiA@mail.gmail.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 12:16:20 up 33 days, 23:30, 1 user, load average: 0.00, 0.00, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,22 +77,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/6/24 09:15, Michael Tokarev wrote:
-> 23.04.2024 00:18, Philippe Mathieu-Daudé wrote:
->> The VIRTIO Sound Device conforms with the Virtio spec v1.2,
->> thus only use little endianness.
->>
->> Remove the suspicious target_words_bigendian() noticed during
->> code review.
->>
->> Cc: qemu-stable@nongnu.org
->> Fixes: eb9ad377bb ("virtio-sound: handle control messages and streams")
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> Ping?  Is this change still needed?
+* Peter Maydell (peter.maydell@linaro.org) wrote:
+> On Tue, 11 Jun 2024 at 06:50, Markus Armbruster <armbru@redhat.com> wrote:
+> >
+> > Philippe Mathieu-Daud=E9 <philmd@linaro.org> writes:
+> >
+> > > Officialise the QMP command, use the existing
+> > > hmp_info_human_readable_text() helper.
+> >
+> > I'm not sure "officialise" is a word :)
+> >
+> > Taking a step back...  "info via" and its new QMP counterpart
+> > x-query-mos6522-devices dump device state.  I understand why examining
+> > device state via monitor can be useful for debugging.  However, we have
+> > more than 2000 devices in the tree.  Clearly, we don't want 2000 device
+> > state queries.  Not even 100.  Could we have more generic means instead?
+> >
+> > We could use QOM (read-only) properties to expose device state.
+> >
+> > If we use one QOM property per "thing", examining device state becomes
+> > quite tedious.  Also, you'd have to stop the guest to get a consistent
+> > view, and adding lots of QOM properties bloats the code.
+> >
+> > If we use a single, object-valued property for the entire state, we get
+> > to define the objects in QAPI.  Differently tedious, and bloats the
+> > generated code.
+>=20
+> We already have a machine readable mandatory-for-every-device
+> representation of its entire state -- it's the vmstate struct.
+> Admittedly this is sometimes a bit different from the guest-facing
+> view of a device and we don't machine-record the field names...
 
-Since Michael reviewed the patch, I'll queue it via the hw-misc tree.
+vmstate might not contain everything needed for debug; devices
+do a lot of fiddling to create a consistent vmstate, and there may
+be more that someone debugging wants (e.g. fd's or host memory addresses).
+It's also hopelessly cryptic.
 
-Thanks!
+=46rom an HMP point, a 'info debug <DEVICENAME>' seems good to me,
+possibly with some options as to whether to recurse or perhaps
+add flags to 'info qtree' to also call it.
 
+Dave
+
+
+
+
+> -- PMM
+--=20
+ -----Open up your eyes, open up your mind, open up your code -------  =20
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \=20
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
