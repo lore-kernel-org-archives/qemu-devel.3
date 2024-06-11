@@ -4,77 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C91D8C27C5E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 14:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9867C25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 14:26:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH2RW-0006xD-W9; Tue, 11 Jun 2024 10:25:47 -0400
+	id 1sH2RL-0006sq-P8; Tue, 11 Jun 2024 10:25:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH2RV-0006wj-0i
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:25:45 -0400
+ id 1sH2RI-0006rr-UM
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:25:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH2RT-0005zu-7p
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:25:44 -0400
+ id 1sH2RH-0005xc-5m
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:25:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718115942;
+ s=mimecast20190719; t=1718115929;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6DKevtbrkfxNUqdbBiwO/iM4isVZ7jyc8Kd9+OEOr0w=;
- b=MkeiklHW4adJVKvRkoetLQuuaPHGQ3d34XKNwcTs0mQNJ7xPIN08N6jKvq8hqNjcd/uvT7
- dUi6id9Sgh0JR0ZVWn1u9aWYezty73raeJtfIoIPd3rthvo4LAVhpVf7ogyF1PibnvT81x
- 08/md1R+DfsmS7c5unHWzasnn4pypaw=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=tmfXOPyxxCuD+6YbVe62/oWf5gXUYk2/0W2+4iL6AfU=;
+ b=geD54iGoxUI0bpufeEdbIYzltQNjo86yXnjO3nFcReDgHg9Y2g5A0BfU/JVcOSmFjFwaZZ
+ 4QxOwkA8Vw6wxIzeSWSajoIHEapKn4n1DpTj24ylq9pIMBRm7+xml/tLf//k/ERBSGSa/P
+ QGWTtSNnQlpGWQo78sxbXt2WCMKal7w=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-495-BbEhq56-Ody30D7rRbyKGQ-1; Tue, 11 Jun 2024 10:25:40 -0400
-X-MC-Unique: BbEhq56-Ody30D7rRbyKGQ-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-57c748dd112so957037a12.0
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 07:25:40 -0700 (PDT)
+ us-mta-225-eLu9mHrbPHiuw7dtIVVJSw-1; Tue, 11 Jun 2024 10:25:27 -0400
+X-MC-Unique: eLu9mHrbPHiuw7dtIVVJSw-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a6ef729b8a7so60168766b.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 07:25:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718115939; x=1718720739;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6DKevtbrkfxNUqdbBiwO/iM4isVZ7jyc8Kd9+OEOr0w=;
- b=hkP4AIWgfaTXhmvO0/oNm//cRsTDFEKELfyhb8pYb5YMZ6SrkOavuz+R25cxpcTAhH
- /iFqthHWOMsQpulT588z4vEUNZC/PqyJWkAXrOby8z1rMdxZ7yj56rXU9C5nx7Ay/CwV
- Vw/d3bveTGF8o06xMloMb7uSOJHUyNLgDnC46xVtFuhkQ7GDCI5IhDx3P44AWeMWwhqv
- 2t2JFRW/JPjarL8xfPcuVGd3RPCy7vPrQDJwaQ0rFLPi8UN/WUWEiVOuXlfBEZwLRpgC
- wkY25uiE2MVJIE7XPqUucIKufT0pgF6pZz29QVDxN9GLgHWVMAK02xvhEs8D/HMGAqi/
- 32fA==
-X-Gm-Message-State: AOJu0YwELWy5fJCWwINIh+nWsbwolOCRo19wwx0WiPGAxRjwVLZSdF6L
- rQQhprkS6eNpzoYTTsIZ04lG1T0S/nZXD3e9fbUXl7sJpZibIa4WEasn6ZnzpT6NkcnjEgAmxcf
- UIckpGPuN7Tz3l55awpOZtouHQ2gGquPm4gC1N/ccqPuY0rETgixzUrl5uoGwaomwSy9YSbNnDw
- ViPnDKLsC/hiQyQMRo4HBOaDFu1Zm4Lobu7f/5
-X-Received: by 2002:a50:9b42:0:b0:57c:9dbc:2b6e with SMTP id
- 4fb4d7f45d1cf-57c9dbc2cdcmr856574a12.42.1718115938759; 
- Tue, 11 Jun 2024 07:25:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHoOVCdcQYra8b9kvSw0ZnmRSj5+GCyldJjXCljZrTM3SyCuPOeLxdwTTfLGrZ8EJg6NdFJDg==
-X-Received: by 2002:a50:9b42:0:b0:57c:9dbc:2b6e with SMTP id
- 4fb4d7f45d1cf-57c9dbc2cdcmr856556a12.42.1718115938442; 
- Tue, 11 Jun 2024 07:25:38 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718115925; x=1718720725;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tmfXOPyxxCuD+6YbVe62/oWf5gXUYk2/0W2+4iL6AfU=;
+ b=WLrNNJolTweUwoNDor+luvwS9BNm8KBclMUnX0OD+4ViwP4uF5SDdDnowqAWmxJ67B
+ ENON/kSsgNwMVyY0t2tpKc6EuUW74ee5lfXPw9NbELi0js6huzUo3cvKSPix1CeEu1ik
+ CGBdhO5Xcc6ttJNWcVqbGYb70/fYf7XAcCHPpencWLyRZT59Llm5GhL48Iasu4+BT5au
+ nsX9WWtD0gg16PweiTvljlACALQmGba6Xsn7XUofP1eIZJngHPxI4g2lKZBLciAmnKfU
+ zkKJX02p2eLV7oF9nF6HCfzvctEuQPjH70ePIYkjdvdIEywVNDuyUTUxsMBANzMaIkrT
+ aoeg==
+X-Gm-Message-State: AOJu0Yy1kC0wi+9YEIAKY5xUSpISJPRJNPPi/xgATGr3J/3QVcCQWBlb
+ lVLbYSnFoCwcfmXhQI6oCUW6qoeDmcN9D3PQdhYDUc5FuLM+5aSnEv0VmtOJiDUf+ZFBryd988g
+ qTKkKq/ZWg7YNIFliY+TN8hFawfGNjuxHzh/F2+8Yvli6YuScQuXxOcVw3+3ct2IcN/z8Bjpju0
+ gzMDgFMCUntVSjQTTdekQkpQgSlmmALir2gGbZ
+X-Received: by 2002:a17:907:10cf:b0:a6f:11f7:e8c5 with SMTP id
+ a640c23a62f3a-a6f11f7ede0mr469758366b.12.1718115925710; 
+ Tue, 11 Jun 2024 07:25:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNuFcfOViiIHMVd3vl/Spie5jORpQGhyMDcih10QMlexqN9j0ZyUccae7rQWaa/KVBBU8e6g==
+X-Received: by 2002:a17:907:10cf:b0:a6f:11f7:e8c5 with SMTP id
+ a640c23a62f3a-a6f11f7ede0mr469755966b.12.1718115925197; 
+ Tue, 11 Jun 2024 07:25:25 -0700 (PDT)
 Received: from avogadro.local ([151.62.196.71])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57c7407b4f0sm5395444a12.92.2024.06.11.07.25.37
+ a640c23a62f3a-a6f1e6795b9sm270034666b.174.2024.06.11.07.25.24
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Jun 2024 07:25:37 -0700 (PDT)
+ Tue, 11 Jun 2024 07:25:24 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 07/25] target/i386: rewrite flags writeback for ADCX/ADOX
-Date: Tue, 11 Jun 2024 16:25:05 +0200
-Message-ID: <20240611142524.83762-8-pbonzini@redhat.com>
+Subject: [PULL 00/25] target/i386, SCSI changes for 2024-06-11
+Date: Tue, 11 Jun 2024 16:24:58 +0200
+Message-ID: <20240611142524.83762-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240611142524.83762-1-pbonzini@redhat.com>
-References: <20240611142524.83762-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -103,157 +99,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid using set_cc_op() in preparation for implementing APX; treat
-CC_OP_EFLAGS similar to the case where we have the "opposite" cc_op
-(CC_OP_ADOX for ADCX and CC_OP_ADCX for ADOX), except the resulting
-cc_op is not CC_OP_ADCOX. This is written easily as two "if"s, whose
-conditions are both false for CC_OP_EFLAGS, both true for CC_OP_ADCOX,
-and one each true for CC_OP_ADCX/ADOX.
+The following changes since commit 80e8f0602168f451a93e71cbb1d59e93d745e62e:
 
-The new logic also makes it easy to drop usage of tmp0.
+  Merge tag 'bsd-user-misc-2024q2-pull-request' of gitlab.com:bsdimp/qemu into staging (2024-06-09 11:21:55 -0700)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/cpu.h          |  9 +++---
- target/i386/tcg/emit.c.inc | 61 ++++++++++++++++++++++----------------
- 2 files changed, 40 insertions(+), 30 deletions(-)
+are available in the Git repository at:
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 8fe28b67e0f..7e2a9b56aea 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1260,6 +1260,8 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- /* Use a clearer name for this.  */
- #define CPU_INTERRUPT_INIT      CPU_INTERRUPT_RESET
- 
-+#define CC_OP_HAS_EFLAGS(op) ((op) >= CC_OP_EFLAGS && (op) <= CC_OP_ADCOX)
-+
- /* Instead of computing the condition codes after each x86 instruction,
-  * QEMU just stores one operand (called CC_SRC), the result
-  * (called CC_DST) and the type of operation (called CC_OP). When the
-@@ -1270,6 +1272,9 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
- typedef enum {
-     CC_OP_DYNAMIC, /* must use dynamic code to get cc_op */
-     CC_OP_EFLAGS,  /* all cc are explicitly computed, CC_SRC = flags */
-+    CC_OP_ADCX, /* CC_DST = C, CC_SRC = rest.  */
-+    CC_OP_ADOX, /* CC_SRC2 = O, CC_SRC = rest.  */
-+    CC_OP_ADCOX, /* CC_DST = C, CC_SRC2 = O, CC_SRC = rest.  */
- 
-     CC_OP_MULB, /* modify all flags, C, O = (CC_SRC != 0) */
-     CC_OP_MULW,
-@@ -1326,10 +1331,6 @@ typedef enum {
-     CC_OP_BMILGL,
-     CC_OP_BMILGQ,
- 
--    CC_OP_ADCX, /* CC_DST = C, CC_SRC = rest.  */
--    CC_OP_ADOX, /* CC_DST = O, CC_SRC = rest.  */
--    CC_OP_ADCOX, /* CC_DST = C, CC_SRC2 = O, CC_SRC = rest.  */
--
-     CC_OP_CLR, /* Z set, all other flags clear.  */
-     CC_OP_POPCNT, /* Z via CC_SRC, all other flags clear.  */
- 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index df7597c7e2f..2041ea9d04a 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -1122,24 +1122,41 @@ static void gen_ADC(DisasContext *s, X86DecodedInsn *decode)
-     prepare_update3_cc(decode, s, CC_OP_ADCB + ot, c_in);
- }
- 
--/* ADCX/ADOX do not have memory operands and can use set_cc_op.  */
--static void gen_ADCOX(DisasContext *s, MemOp ot, int cc_op)
-+static void gen_ADCOX(DisasContext *s, X86DecodedInsn *decode, int cc_op)
- {
--    int opposite_cc_op;
-+    MemOp ot = decode->op[0].ot;
-     TCGv carry_in = NULL;
--    TCGv carry_out = (cc_op == CC_OP_ADCX ? cpu_cc_dst : cpu_cc_src2);
-+    TCGv *carry_out = (cc_op == CC_OP_ADCX ? &decode->cc_dst : &decode->cc_src2);
-     TCGv zero;
- 
--    if (cc_op == s->cc_op || s->cc_op == CC_OP_ADCOX) {
--        /* Re-use the carry-out from a previous round.  */
--        carry_in = carry_out;
--    } else {
--        /* We don't have a carry-in, get it out of EFLAGS.  */
--        if (s->cc_op != CC_OP_ADCX && s->cc_op != CC_OP_ADOX) {
--            gen_compute_eflags(s);
-+    decode->cc_op = cc_op;
-+    *carry_out = tcg_temp_new();
-+    if (CC_OP_HAS_EFLAGS(s->cc_op)) {
-+        decode->cc_src = cpu_cc_src;
-+
-+        /* Re-use the carry-out from a previous round?  */
-+        if (s->cc_op == cc_op || s->cc_op == CC_OP_ADCOX) {
-+            carry_in = (cc_op == CC_OP_ADCX ? cpu_cc_dst : cpu_cc_src2);
-         }
--        carry_in = s->tmp0;
--        tcg_gen_extract_tl(carry_in, cpu_cc_src,
-+
-+        /* Preserve the opposite carry from previous rounds?  */
-+        if (s->cc_op != cc_op && s->cc_op != CC_OP_EFLAGS) {
-+            decode->cc_op = CC_OP_ADCOX;
-+            if (carry_out == &decode->cc_dst) {
-+                decode->cc_src2 = cpu_cc_src2;
-+            } else {
-+                decode->cc_dst = cpu_cc_dst;
-+            }
-+        }
-+    } else {
-+        decode->cc_src = tcg_temp_new();
-+        gen_mov_eflags(s, decode->cc_src);
-+    }
-+
-+    if (!carry_in) {
-+        /* Get carry_in out of EFLAGS.  */
-+        carry_in = tcg_temp_new();
-+        tcg_gen_extract_tl(carry_in, decode->cc_src,
-             ctz32(cc_op == CC_OP_ADCX ? CC_C : CC_O), 1);
-     }
- 
-@@ -1151,28 +1168,20 @@ static void gen_ADCOX(DisasContext *s, MemOp ot, int cc_op)
-         tcg_gen_ext32u_tl(s->T1, s->T1);
-         tcg_gen_add_i64(s->T0, s->T0, s->T1);
-         tcg_gen_add_i64(s->T0, s->T0, carry_in);
--        tcg_gen_shri_i64(carry_out, s->T0, 32);
-+        tcg_gen_shri_i64(*carry_out, s->T0, 32);
-         break;
- #endif
-     default:
-         zero = tcg_constant_tl(0);
--        tcg_gen_add2_tl(s->T0, carry_out, s->T0, zero, carry_in, zero);
--        tcg_gen_add2_tl(s->T0, carry_out, s->T0, carry_out, s->T1, zero);
-+        tcg_gen_add2_tl(s->T0, *carry_out, s->T0, zero, carry_in, zero);
-+        tcg_gen_add2_tl(s->T0, *carry_out, s->T0, *carry_out, s->T1, zero);
-         break;
-     }
--
--    opposite_cc_op = cc_op == CC_OP_ADCX ? CC_OP_ADOX : CC_OP_ADCX;
--    if (s->cc_op == CC_OP_ADCOX || s->cc_op == opposite_cc_op) {
--        /* Merge with the carry-out from the opposite instruction.  */
--        set_cc_op(s, CC_OP_ADCOX);
--    } else {
--        set_cc_op(s, cc_op);
--    }
- }
- 
- static void gen_ADCX(DisasContext *s, X86DecodedInsn *decode)
- {
--    gen_ADCOX(s, decode->op[0].ot, CC_OP_ADCX);
-+    gen_ADCOX(s, decode, CC_OP_ADCX);
- }
- 
- static void gen_ADD(DisasContext *s, X86DecodedInsn *decode)
-@@ -1190,7 +1199,7 @@ static void gen_ADD(DisasContext *s, X86DecodedInsn *decode)
- 
- static void gen_ADOX(DisasContext *s, X86DecodedInsn *decode)
- {
--    gen_ADCOX(s, decode->op[0].ot, CC_OP_ADOX);
-+    gen_ADCOX(s, decode, CC_OP_ADOX);
- }
- 
- static void gen_AND(DisasContext *s, X86DecodedInsn *decode)
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to 58ab5e809ad66a02b6fa273ba11ed35b8b2fea60:
+
+  target/i386: SEV: do not assume machine->cgs is SEV (2024-06-11 14:29:23 +0200)
+
+----------------------------------------------------------------
+* i386: fix issue with cache topology passthrough
+* scsi-disk: migrate emulated requests
+* i386/sev: fix Coverity issues
+* i386/tcg: more conversions to new decoder
+
+----------------------------------------------------------------
+Chuang Xu (1):
+      i386/cpu: fixup number of addressable IDs for processor cores in the physical package
+
+Hyman Huang (1):
+      scsi-disk: Fix crash for VM configured with USB CDROM after live migration
+
+Pankaj Gupta (3):
+      i386/sev: fix unreachable code coverity issue
+      i386/sev: Move SEV_COMMON null check before dereferencing
+      i386/sev: Return when sev_common is null
+
+Paolo Bonzini (20):
+      target/i386: remove CPUX86State argument from generator functions
+      target/i386: rewrite flags writeback for ADCX/ADOX
+      target/i386: put BLS* input in T1, use generic flag writeback
+      target/i386: change X86_ENTRYr to use T0
+      target/i386: change X86_ENTRYwr to use T0, use it for moves
+      target/i386: replace NoSeg special with NoLoadEA
+      target/i386: fix processing of intercept 0 (read CR0)
+      target/i386: convert MOV from/to CR and DR to new decoder
+      target/i386: fix bad sorting of entries in the 0F table
+      target/i386: finish converting 0F AE to the new decoder
+      target/i386: replace read_crN helper with read_cr8
+      target/i386: split X86_CHECK_prot into PE and VM86 checks
+      target/i386: convert non-grouped, helper-based 2-byte opcodes
+      target/i386: pull load/writeback out of gen_shiftd_rm_T1
+      target/i386: adapt gen_shift_count for SHLD/SHRD
+      target/i386: convert SHLD/SHRD to new decoder
+      target/i386: convert LZCNT/TZCNT/BSF/BSR/POPCNT to new decoder
+      target/i386: convert XADD to new decoder
+      target/i386: convert CMPXCHG to new decoder
+      target/i386: SEV: do not assume machine->cgs is SEV
+
+ target/i386/cpu.h                    |    9 +-
+ target/i386/helper.h                 |    2 +-
+ target/i386/tcg/decode-new.h         |   31 +-
+ hw/core/machine.c                    |    1 +
+ hw/scsi/scsi-disk.c                  |   24 +-
+ target/i386/cpu.c                    |    6 +-
+ target/i386/sev.c                    |   11 +-
+ target/i386/tcg/seg_helper.c         |   16 +-
+ target/i386/tcg/sysemu/misc_helper.c |   20 +-
+ target/i386/tcg/translate.c          |  716 +--------------------
+ target/i386/tcg/decode-new.c.inc     |  381 +++++++----
+ target/i386/tcg/emit.c.inc           | 1162 +++++++++++++++++++++++-----------
+ 12 files changed, 1160 insertions(+), 1219 deletions(-)
 -- 
 2.45.1
 
