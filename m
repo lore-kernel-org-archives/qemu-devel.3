@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19FB3C27C77
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 15:47:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9265EC27C75
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 15:48:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH3iX-0003fk-OR; Tue, 11 Jun 2024 11:47:25 -0400
+	id 1sH3jI-0004LA-3A; Tue, 11 Jun 2024 11:48:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
- id 1sH3iW-0003fN-MP
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:47:24 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ id 1sH3jF-0004Ki-Dd
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:48:10 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
- id 1sH3iV-0001MG-8G
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:47:24 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-52bc1261e8fso4637230e87.0
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 08:47:22 -0700 (PDT)
+ id 1sH3jD-0001Ss-Gp
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 11:48:08 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-52c7f7fdd24so1611148e87.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 08:48:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718120841; x=1718725641; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718120885; x=1718725685; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=L/aKdqvNIlb60qzVsRZ+CFJQ4CQz5P1P/33QXQlGMCQ=;
- b=QIKFE3DRzq70aAEs7awdLOPnpspmf3CuIvRCKJA+LxS7SAuQyS888nKDCGBkv5nsAl
- uFSWbJA7iLXAdzv7i9OA/NeU1J8kmxC4U11FXwEU8iGTTNcayqV5EZyvv/tf53omtCo6
- yhCVK52yhxRNfffBqaSo9YHt14Q1DqKcBku/UsouKxRx/08fm//6YwMs5Vwzr3I4wrPE
- VC7rSZox8vt/5GmhSKIlEIWCeA38kc/s17q5Z6lMgcZD87LPcw52KvJWM9atxVdjFySp
- pI+ZZXl3pAgy7DlUfd3R2PUU23GHa/AxKTRWJ+29k/ulmh+es8lpijBwbgUiGrHWtPWf
- JMVQ==
+ bh=m936C4I0IMR3Eb3vomVcqxpbQBOe3OrFPXcUMLrlZRA=;
+ b=qWSAgHi7l8IwShIpksITm0FDtLyxHwBO0T4WPH9n3IEvjBhnamv6TjEN7YE5xx7SWA
+ vG6+W/9dU5hEziF1PTS1+UXyYQg78LCw2AKyCvzqh2Ow9S3WS4Rxy1alzR0T0UxvcYWn
+ iAGjCV2fila+gUowM2W9wr4QspkPTrch4FFWD0T0QLkSBDPndyp+eaU5pFJvUxa3Gzt7
+ L6gg1mVnOGZUbw0BfUIMsCJTbTv0vgq6J0kRzXnqEMeSP6sLOWHgbNe4a4HGZKmDIjwm
+ ifmCQv+wbk8s9rXqHeRd3QVPDVcl4nlvtdYQnUus5O0kU4eKfktsMQ9bS68bOkF8wHBY
+ NrEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718120841; x=1718725641;
+ d=1e100.net; s=20230601; t=1718120885; x=1718725685;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=L/aKdqvNIlb60qzVsRZ+CFJQ4CQz5P1P/33QXQlGMCQ=;
- b=bkqYS5z1yWpMZf2DNDbdEl2LI4moIzhEzbsHLcbEhwvJknHXZTqGhz2geU8C6aI6de
- UvuzB9MKi+daSkbjYj8gHp6Jijt8B/f6Pg9lcaKVo18e+qgFLEpw0XKdt0UnrYPAHmZQ
- Ezo3hx2rqtIyhLXZIlTChzp2vIVXnKti/VZJ/Hs8tsupFG+dWnbI0kDIVRbZXLJrtXCD
- sKtZCFdi4fIZ7RBpWoZ9FWq1ZBt/RWd13uVBujpmwLCRw+1p9HJAYN5G9DnXKa74bICF
- sVNu/26lCWKNzj2XwISkHC4Dbl/C4uSM4bLXnlm0XDuHbfEz40vfDeWX11Vd28fQm1fI
- 2BLw==
-X-Gm-Message-State: AOJu0Yx12k2yjnbZhIzdFvrQMGrYYcMRaYv0GV2KgYCJPPsL+1dZ07ql
- /dVP8dVvplAXKSOXn41tOu28mexFV2VmIFrq4wfJmpFuAdjJpNrIqh7mR7BYLWki+jqw7m2Id3l
- Y52boFIg9nKkUe3hZs2ThdNfQyF7jP+H9QPKmxw==
-X-Google-Smtp-Source: AGHT+IGOy19g3J4x3TuUitsy0i24RysSIrL8HMM0sw50D09uz4gNSbvUkioeO7OLnu+m4tuGC+dhvOcCfsi4+TrHins=
-X-Received: by 2002:a05:6512:3a8a:b0:52c:93f9:e757 with SMTP id
- 2adb3069b0e04-52c93f9f4e2mr1955138e87.34.1718120841095; Tue, 11 Jun 2024
- 08:47:21 -0700 (PDT)
+ bh=m936C4I0IMR3Eb3vomVcqxpbQBOe3OrFPXcUMLrlZRA=;
+ b=BrR3OWKCxAmwYMvVeTqCysv8+/RyTEEbqlr9hqssQMjQjXRPus48O28dVRnwxG06uS
+ opVDMjVwZ3vFRLocMRj3R6NfvGTJLhuTo0z6gWGDnWnZykqO3xZ5yWGDs5ZbFduZRV8n
+ aLpzGVxdmO55PXr+nX82PPIYkina1G20B0XJDG3CZoKhQ+qFMhzG/DG2bwSi20T4fhYt
+ Ghy291AHo9WjrGzqP+eoJHSGevAsX2qs/4bdDrTSAw05nGNiI1LKVavkp2An+7HmC8lJ
+ Vmtybjci1pIHq+I4U7jakNUBIxAhMSqFnwzu3Lo96zWrr9Y+82hf2FzBuJCy9vhA9piM
+ 908Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW4qf7OTarHRbXJudlIvLbomRJigRzgxmsSG4TO6VV5Z49b5Gni+ql8Tjt8o5XVCAJcIySTAnaC5Pn3KJ9Y5fonieQNebw=
+X-Gm-Message-State: AOJu0YzqK5BliYksaHZzcJt4URsHZ3wxLmWZlJT4f6Tv0UdXzFSfWyJh
+ gL8GDZlUJHKrDm8TP21iCRpXmBDUMK7l+/hWZrfZIYpwsD2D0OTjLbzgJZWJ+rnYwyn1XpBQ2Fh
+ T56flTRC8CMWTuWSBJ69YcyNH2XaJ0ZDIQVFoHQ==
+X-Google-Smtp-Source: AGHT+IEF1v91AT7EehdBIcAD5J105KNpkyWUh7DgwHp9eaxvl+MbOJj2Z+JkF2Cl2KY2kyrBloDqQzS1U5ZJZFM0xik=
+X-Received: by 2002:a05:6512:3c96:b0:52c:859f:f4f0 with SMTP id
+ 2adb3069b0e04-52c859ff687mr5265097e87.1.1718120885504; Tue, 11 Jun 2024
+ 08:48:05 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240607135310.46320-1-shameerali.kolothum.thodi@huawei.com>
- <20240607135310.46320-7-shameerali.kolothum.thodi@huawei.com>
-In-Reply-To: <20240607135310.46320-7-shameerali.kolothum.thodi@huawei.com>
+ <20240607135310.46320-5-shameerali.kolothum.thodi@huawei.com>
+ <87o788wsr8.fsf@suse.de>
+In-Reply-To: <87o788wsr8.fsf@suse.de>
 From: Zhangfei Gao <zhangfei.gao@linaro.org>
-Date: Tue, 11 Jun 2024 23:47:10 +0800
-Message-ID: <CABQgh9HrWe7qpyPT9moizDOZ+8rd_-LG4xOfDSk-KsbkseBWNA@mail.gmail.com>
-Subject: Re: [PATCH v2 6/7] migration/multifd: Switch to no compression when
- no hardware support
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de, 
- yuan1.liu@intel.com, pbonzini@redhat.com, berrange@redhat.com, 
- marcandre.lureau@redhat.com, thuth@redhat.com, armbru@redhat.com, 
- lvivier@redhat.com, linuxarm@huawei.com, linwenkai6@hisilicon.com, 
- huangchenghai2@huawei.com
+Date: Tue, 11 Jun 2024 23:47:54 +0800
+Message-ID: <CABQgh9GZyKBy99OHwhk6Y8zboDFSsFubLmx_Vw_NOqOdvEsYOg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/7] migration/multifd: Add UADK initialization
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-devel@nongnu.org, 
+ peterx@redhat.com, yuan1.liu@intel.com, pbonzini@redhat.com, 
+ berrange@redhat.com, marcandre.lureau@redhat.com, thuth@redhat.com, 
+ armbru@redhat.com, lvivier@redhat.com, linuxarm@huawei.com, 
+ linwenkai6@hisilicon.com, huangchenghai2@huawei.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=zhangfei.gao@linaro.org; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=zhangfei.gao@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,16 +96,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 7 Jun 2024 at 21:54, Shameer Kolothum
-<shameerali.kolothum.thodi@huawei.com> wrote:
+On Tue, 11 Jun 2024 at 02:35, Fabiano Rosas <farosas@suse.de> wrote:
 >
-> Send raw packets over if UADK hardware support is not available. This is to
-> satisfy  Qemu qtest CI which may run on platforms that don't have UADK
-> hardware support. Subsequent patch will add support for uadk migration
-> qtest.
+> Shameer Kolothum via <qemu-devel@nongnu.org> writes:
+>
+> > Initialize UADK session and allocate buffers required. The actual
+> > compression/decompression will only be done in a subsequent patch.
+> >
+> > Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 >
 > Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 
 Reviewed-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 
