@@ -4,94 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB257C25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 06:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37A34C27C5E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 06:20:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGui1-0004gj-C0; Tue, 11 Jun 2024 02:10:19 -0400
+	id 1sGuqi-0000HF-Ot; Tue, 11 Jun 2024 02:19:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sGuhv-0004gL-Uf; Tue, 11 Jun 2024 02:10:12 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sGuqg-0000GO-H9; Tue, 11 Jun 2024 02:19:14 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sGuhu-0002Ay-7m; Tue, 11 Jun 2024 02:10:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=hq15L9/FMiQMesRM9Nhu/p9g/XjYCS23k8N7bNPwzAE=; b=uhaO35XA+MTMqI8DIQqCuhpHLZ
- BVAFsus6tFA1sLg80jrVE0g3vJIOuZ2ZfFYIIF+T2ukEwseAzEJAkhyshRlgQmRJL2RYtWJZZNG/b
- +U4F2UT0mBwfHu+nk6SnZc91W+ZhvZJQ70P/G5ccg0EjbBFu3ZR7J2hyV79xDuNnga+orrSVTIqqi
- 09tzlKAS/GRwEPBIOKhSAKUi2gmijx9HYA0D7GwYzO7kD8Bs5zjdXXXYmuA5McabWA7EYUqqQ77HV
- mnTJMX+lrnfZzaq9YpWtR29t0mvJ96DQ4fflNI1jb/bKH3gzvwAjyft15wPbCYszuqn2ItCMeHzxh
- LlhTl1xIfcCHDvexByKiwewvAXHVDQmgFgHk0kc0scF2l+cFJl94YvTBozhUyZ7GrT7uQrmmHtxDO
- czEgxU9mfRnDhnw+YyAIRfjRXo9k/tuUvFPDpJfWnRrbC+lyTlVA3J4WY18gnK7PdZCZQlsL7edn7
- 7y4ODWz2gqvxVcFB8CPJZvO6y3Ay4QTJlCKUnoUXwIwz5rbfJGKe1P5ST0ZCNrZHqF3R+meXuctM8
- qeLfo9SllnxdRMKCMi40sGWoMzIhp9Dd5qzB8+A3JBhf3Bs6wOKZfGBQ/uIAin66nRwzo5z9kofkB
- eJv3X6VqVyBTJ0FM1LHZxrOXWTtW8Y06XJtxoq0A8=;
-Received: from [2a00:23c4:8bb4:4000:6a6e:c7d9:b2e6:455b]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sGugU-0005Ix-Ie; Tue, 11 Jun 2024 07:08:46 +0100
-Message-ID: <e0d03597-a9d1-4386-83b4-519aae23f679@ilande.co.uk>
-Date: Tue, 11 Jun 2024 07:09:56 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sGuqd-0003mx-DJ; Tue, 11 Jun 2024 02:19:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1718086751; x=1749622751;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=XHJof9KHIGlQUK8G+y0OIiHckY7ViqyWin/79YCmlT8=;
+ b=Xvi/pCMnkoa23fUW1daJEazmAnr2UdqVs2KpZv2GT1ctAZF+/uTIHP9l
+ tY7f0YHb+cEG0rPBLaRzByiOY1Z2wJLQzxSoHJauR7jHES6DetJX+7Wcr
+ jIhv/Te2j0EF9X2A8b3T4yGULTPcLteQGAMXG9K5DP392Ox5I8A+lffqp
+ o+a+yC+esqkgtRTGtLe9OfM4j6hp38JmvtIYOBN34XsIXarg2IB/45jzV
+ Vi4tOIBO81QDAmP27gBTqHrMFjxAaqeT6Yrt4a4xaZ/O7ijTV1BW9qysO
+ RCgjLpxhRg1yVxarYJmZfhGwiGybSaDeWn7LivZ0kv7E4uYINf+DgK3wa w==;
+X-CSE-ConnectionGUID: IzeEOoJATmSW+rk68i9JeQ==
+X-CSE-MsgGUID: 44LNSObLR5We/bJX84QKvA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11099"; a="14946705"
+X-IronPort-AV: E=Sophos;i="6.08,229,1712646000"; d="scan'208";a="14946705"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jun 2024 23:19:06 -0700
+X-CSE-ConnectionGUID: 5ve7Y1uDQwW7TiqL7a9GxA==
+X-CSE-MsgGUID: RFUv8XI6TDG1xJ7tkB4Zhw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,229,1712646000"; d="scan'208";a="39421515"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa009.fm.intel.com with ESMTP; 10 Jun 2024 23:19:04 -0700
+Date: Tue, 11 Jun 2024 14:34:32 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Chuang Xu <xuchuangxclwt@bytedance.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, xieyongji@bytedance.com,
+ imammedo@redhat.com, qemu-stable@nongnu.org,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>
+Subject: Re: [PATCH v3] i386/cpu: fixup number of addressable IDs for
+ processor cores in the physical package
+Message-ID: <Zmfv+Ce+3sAiNJLL@intel.com>
+References: <20240611032314.64076-1-xuchuangxclwt@bytedance.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?= <berrange@redhat.com>,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240610150758.2827-1-philmd@linaro.org>
- <87h6e0uizr.fsf@pond.sub.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <87h6e0uizr.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:6a6e:c7d9:b2e6:455b
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: Examining device state via monitor for debugging
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240611032314.64076-1-xuchuangxclwt@bytedance.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,58 +83,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/06/2024 06:49, Markus Armbruster wrote:
+On Tue, Jun 11, 2024 at 11:23:14AM +0800, Chuang Xu wrote:
+> Date: Tue, 11 Jun 2024 11:23:14 +0800
+> From: Chuang Xu <xuchuangxclwt@bytedance.com>
+> Subject: [PATCH v3] i386/cpu: fixup number of addressable IDs for processor
+>  cores in the physical package
+> X-Mailer: git-send-email 2.24.3 (Apple Git-128)
+> 
+> When QEMU is started with:
+> -cpu host,host-cache-info=on,l3-cache=off \
+> -smp 2,sockets=1,dies=1,cores=1,threads=2
+> Guest can't acquire maximum number of addressable IDs for processor cores in
+> the physical package from CPUID[04H].
+> 
+> When creating a CPU topology of 1 core per package, host-cache-info only
+> uses the Host's addressable core IDs field (CPUID.04H.EAX[bits 31-26]),
+> resulting in a conflict (on the multicore Host) between the Guest core
+> topology information in this field and the Guest's actual cores number.
+> 
+> Fix it by removing the unnecessary condition to cover 1 core per package
+> case. This is safe because cores_per_pkg will not be 0 and will be at
+> least 1.
+> 
+> Fixes: d7caf13b5fcf ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
+> Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+> Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+> ---
+>  target/i386/cpu.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
 
-> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
-> 
->> Officialise the QMP command, use the existing
->> hmp_info_human_readable_text() helper.
-> 
-> I'm not sure "officialise" is a word :)
-> 
-> Taking a step back...  "info via" and its new QMP counterpart
-> x-query-mos6522-devices dump device state.  I understand why examining
-> device state via monitor can be useful for debugging.  However, we have
-> more than 2000 devices in the tree.  Clearly, we don't want 2000 device
-> state queries.  Not even 100.  Could we have more generic means instead?
-> 
-> We could use QOM (read-only) properties to expose device state.
-> 
-> If we use one QOM property per "thing", examining device state becomes
-> quite tedious.  Also, you'd have to stop the guest to get a consistent
-> view, and adding lots of QOM properties bloats the code.
-> 
-> If we use a single, object-valued property for the entire state, we get
-> to define the objects in QAPI.  Differently tedious, and bloats the
-> generated code.
-> 
-> We could use a single string-valued property.  Too much of an abuse of
-> QOM?
-> 
-> We could add an optional "dump state for debugging" method to QOM, and
-> have a single query command that calls it if present.
-> 
-> Thoughts?
+Thanks! LGTM,
 
-I agree that there should be a better way of doing things here. The aim of the 
-original "info via" series was to allow the command to be contained completely within 
-mos6522.c, but unfortunately due to the way that qemu-options.hx works then you end 
-up with #ifdef-fery or stubs to make all configuration combinations work.
-
-As you point out ideally there should be a way for a QOM object to dynamically 
-register its own monitor commands, which I think should help with this.
-
-IIRC in the original thread Daniel or David proposed a new "debug" monitor command 
-such that a device could register its own debug <foo> commands either via DeviceClass 
-or a function called during realize that would return a HumanReadableText via QMP.
-
-In terms of "info via" it is only used by developers for the 68k and PPC Mac machines 
-so if it were to change from "info via" to "debug via" I don't see there would be a 
-big problem with this.
-
-
-ATB,
-
-Mark.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
