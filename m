@@ -4,58 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF22C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 01:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02E52C27C55
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 01:57:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGqhR-0006Js-1g; Mon, 10 Jun 2024 21:53:25 -0400
+	id 1sGqkh-0007SL-TN; Mon, 10 Jun 2024 21:56:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sGqhO-0006JK-Vk; Mon, 10 Jun 2024 21:53:23 -0400
-Received: from out30-101.freemail.mail.aliyun.com ([115.124.30.101])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sGqhL-0007gT-MO; Mon, 10 Jun 2024 21:53:22 -0400
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1sGqkg-0007S6-5q
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 21:56:46 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1sGqkd-0008NU-WF
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 21:56:45 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-57c68c3f8adso579907a12.1
+ for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 18:56:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1718070785; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=BVBBOzy3qg9xoD94CXl2QBclhSDhRSSdeBA481m6Ax4=;
- b=WR+I7SnYJW5xY5HM7VSJ8HlSHrVo0tBuwyh2TvH1rIq/Z/cNmcxNH+kYU5eJjGUtLUr2Po/6c2Xd4qS6Mp95RZCACAnWM92BHoYSAKNdN9uioZiad9773OPAS5WttIPkEoHo5pj7f053OYTBG3KPO055xB/fz6BYS1GTkbOKMtE=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045046011;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
- TI=SMTPD_---0W8Ec.FU_1718070783; 
-Received: from 30.166.64.137(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W8Ec.FU_1718070783) by smtp.aliyun-inc.com;
- Tue, 11 Jun 2024 09:53:04 +0800
-Message-ID: <4368759b-506c-410c-980c-4ab34de7f142@linux.alibaba.com>
-Date: Tue, 11 Jun 2024 09:51:58 +0800
+ d=sifive.com; s=google; t=1718071002; x=1718675802; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=jA9plbGjO19auJGrvFBaMK0jULV71vxMlfivxMbC8X8=;
+ b=NPuB1rOU6PA5HecV4xrTvCHS/ubL8TtCuO6amZpmgs/D3xKGtPPIErmSoVk3FgWTP7
+ ItfaEY+637BelMHv0TnaxkX/ElV0eT89LLRmE42RaJnoyWGUUL5HLX/Wq8dcD1NpK9Gi
+ 82iBSr4FP0wMNWrTj/xx5VjVAqkpdCVVClvWnOVbGLlVwmwxqZB6jt6yDfiO+b6T4Vh4
+ 82Aklo/cy1HJK2K4MtR61uyqOxXX0UJrHAbtRcC9wawL/d/a/JrOtVPvDuOSWk++Qlc9
+ Xlrl1NGCZa6C4yV+4uHxON21K65YkDGsv2WAxOo8y9ZpCbGooG7YUH9FjkIH3NlDxfyR
+ 7hRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718071002; x=1718675802;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jA9plbGjO19auJGrvFBaMK0jULV71vxMlfivxMbC8X8=;
+ b=dKCFK6tcsW2NJ5Twqsoi9NdkqiSGY3Jxd9WDJikDlmXGqfzJCoXF+jbA4YZMO5h4sw
+ 2OILs1BZrzsSF0Qy9o7XOXqnlgaMruHRAsvl0ll5YlfmJugexmEJZGAryNBY7rSnAh5z
+ dfqnqDs81JZ+f1ld6dAJZGewavskxqp7yxdfl5qOBSOiEIt66//Gqtg/kCPMNgGuxjOb
+ z0XvWi6xAj+kG09V6lEXNr/jF1U+Prpa7nrJFQSm7nMwb/1vzZo5DvSTMaZ6zxMlbKCr
+ UHEiA1npoXUXyndrSpPUH/gA0rMEoZRtja7357GYtdFeUtHwQOHLeHlu8A/eXJlfK9/F
+ VQVQ==
+X-Gm-Message-State: AOJu0Yxq1w+UjNXgFex33479ULNneM1AWBvd3Q7Xp8YKQ0Tq9nyqsfGo
+ L1+znm4vvsnffqXsQHtd6EY0vroPG0OOA1inC0g39QlnWLr9wk5D3mdqJtdGewt0CY2pigPAacr
+ goJZqpk65TIsONrbAtS+bWJNX0UIY4RvXhoNrOg==
+X-Google-Smtp-Source: AGHT+IF8nCsSuMNAItG5gbTwCQij+80ptnI90P+Od+yRjL3GYo+iAAv2id54Cpfp+bsMwcJ4mrNsf7A0LMNUJhVhd8o=
+X-Received: by 2002:a50:96c4:0:b0:57c:5b26:46c9 with SMTP id
+ 4fb4d7f45d1cf-57c5b264930mr7816692a12.9.1718071001671; Mon, 10 Jun 2024
+ 18:56:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/13] riscv: QEMU RISC-V IOMMU Support
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, palmer@rivosinc.com, tjeznach@rivosinc.com,
- ajones@ventanamicro.com, frank.chang@sifive.com
-References: <20240523173955.1940072-1-dbarboza@ventanamicro.com>
-Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240523173955.1940072-1-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=115.124.30.101;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-101.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+References: <20240605063154.31298-1-frank.chang@sifive.com>
+ <20240605063154.31298-2-frank.chang@sifive.com>
+ <CAKmqyKN8J1g_1XyAVxpjWiSQDDhPuKrQk9x3ys2JCbiaGyf=AA@mail.gmail.com>
+In-Reply-To: <CAKmqyKN8J1g_1XyAVxpjWiSQDDhPuKrQk9x3ys2JCbiaGyf=AA@mail.gmail.com>
+From: Frank Chang <frank.chang@sifive.com>
+Date: Tue, 11 Jun 2024 09:56:29 +0800
+Message-ID: <CAE_xrPhZPghZmv81n4hvV=fpGege0MO0v-SHAKbL_30WNbCtNA@mail.gmail.com>
+Subject: Re: [PATCH RESEND 1/6] target/riscv: Introduce extension implied
+ rules definition
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000c10200061a9393c5"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=frank.chang@sifive.com; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,207 +95,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+--000000000000c10200061a9393c5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I want to know if we can use the IOMMU and IOPMP at the same time.
+Hi Alistair,
 
-The relationship between them is more similar to MMU and sPMP or to MMU 
-and PMP?
+On Tue, Jun 11, 2024 at 9:35=E2=80=AFAM Alistair Francis <alistair23@gmail.=
+com>
+wrote:
 
-Thanks,
-Zhiwei
+> On Wed, Jun 5, 2024 at 4:35=E2=80=AFPM <frank.chang@sifive.com> wrote:
+> >
+> > From: Frank Chang <frank.chang@sifive.com>
+> >
+> > RISCVCPUImpliedExtsRule is created to store the implied rules.
+> > 'is_misa' flag is used to distinguish whether the rule is derived
+> > from the MISA or other extensions.
+> > 'ext' stores the MISA bit if 'is_misa' is true. Otherwise, it stores
+> > the offset of the extension defined in RISCVCPUConfig. 'ext' will also
+> > serve as the key of the hash tables to look up the rule in the followin=
+g
+> > commit.
+> >
+> > Signed-off-by: Frank Chang <frank.chang@sifive.com>
+> > ---
+> >  target/riscv/cpu.c |  8 ++++++++
+> >  target/riscv/cpu.h | 18 ++++++++++++++++++
+> >  2 files changed, 26 insertions(+)
+> >
+> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> > index cee6fc4a9a..c7e5cec7ef 100644
+> > --- a/target/riscv/cpu.c
+> > +++ b/target/riscv/cpu.c
+> > @@ -2242,6 +2242,14 @@ RISCVCPUProfile *riscv_profiles[] =3D {
+> >      NULL,
+> >  };
+> >
+> > +RISCVCPUImpliedExtsRule *riscv_misa_implied_rules[] =3D {
+> > +    NULL
+> > +};
+> > +
+> > +RISCVCPUImpliedExtsRule *riscv_ext_implied_rules[] =3D {
+> > +    NULL
+> > +};
+> > +
+> >  static Property riscv_cpu_properties[] =3D {
+> >      DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
+> >
+> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> > index 1501868008..b5a036cf27 100644
+> > --- a/target/riscv/cpu.h
+> > +++ b/target/riscv/cpu.h
+> > @@ -122,6 +122,24 @@ typedef enum {
+> >      EXT_STATUS_DIRTY,
+> >  } RISCVExtStatus;
+> >
+> > +typedef struct riscv_cpu_implied_exts_rule RISCVCPUImpliedExtsRule;
+> > +
+> > +struct riscv_cpu_implied_exts_rule {
+> > +    /* Bitmask indicates the rule enabled status for the harts. */
+> > +    uint64_t enabled;
+>
+> I'm not clear why we need this
+>
 
-On 2024/5/24 1:39, Daniel Henrique Barboza wrote:
-> Hi,
+This is because a rule may be implied more than once.
+e.g. Zcf implies RVF, Zfa also implies RVF.
+There's no need to check RVF's implied rule again for Zfa after Zcf's
+implied rules are enabled.
+
+The implied rules are checked recursively, so once the rule has been
+enabled (per-CPU basis),
+the rule (and all its implied rules) will not be rechecked.
+
+Regards,
+Frank Chang
+
+
+> Alistair
 >
-> In this new version a lot of changes were made throughout all the code,
-> most notably on patch 3. Link for the previous version is [1].
+> > +    /* True if this is a MISA implied rule. */
+> > +    bool is_misa;
+> > +    /* ext is MISA bit if is_misa flag is true, else extension offset.
+> */
+> > +    const uint32_t ext;
+> > +    const uint32_t implied_misas;
+> > +    const uint32_t implied_exts[];
+> > +};
+> > +
+> > +extern RISCVCPUImpliedExtsRule *riscv_misa_implied_rules[];
+> > +extern RISCVCPUImpliedExtsRule *riscv_ext_implied_rules[];
+> > +
+> > +#define RISCV_IMPLIED_EXTS_RULE_END -1
+> > +
+> >  #define MMU_USER_IDX 3
+> >
+> >  #define MAX_RISCV_PMPS (16)
+> > --
+> > 2.43.2
+> >
+> >
 >
-> * How it was tested *
+
+--000000000000c10200061a9393c5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi Alistair,</div><div dir=3D"ltr"><br></div><div dir=
+=3D"ltr">On Tue, Jun 11, 2024 at 9:35=E2=80=AFAM Alistair Francis &lt;<a hr=
+ef=3D"mailto:alistair23@gmail.com">alistair23@gmail.com</a>&gt; wrote:<br><=
+/div><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"=
+margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
+t:1ex">On Wed, Jun 5, 2024 at 4:35=E2=80=AFPM &lt;<a href=3D"mailto:frank.c=
+hang@sifive.com" target=3D"_blank">frank.chang@sifive.com</a>&gt; wrote:<br=
 >
-> This series was tested using an emulated QEMU RISC-V host booting a QEMU
-> KVM guest, passing through an emulated e1000 network card from the host
-> to the guest. I can provide more details (e.g. QEMU command lines) if
-> required, just let me know. For now this cover-letter is too much of an
-> essay as is.
->
-> The Linux kernel used for tests can be found here:
->
-> https://github.com/tjeznach/linux/tree/riscv_iommu_v6-rc3
->
-> This is a newer version of the following work from Tomasz:
->
-> https://lore.kernel.org/linux-riscv/cover.1715708679.git.tjeznach@rivosinc.com/
-> ("[PATCH v5 0/7] Linux RISC-V IOMMU Support")
->
-> The v5 wasn't enough for the testing being done. v6-rc3 did the trick.
->
-> Note that to test this work using riscv-iommu-pci we'll need to provide
-> the Rivos PCI ID in the command line. More details down below.
->
-> * Highlights of this version *
->
-> - patches removed from v2: platform driver (riscv-iommu-sys, former
-> patch 05) and the EDU changes (patches 14 and 15). The platform driver
-> will be sent later with a working example on the 'virt' machine,
-> either on a newer version of this series or via a follow-up series. We
-> already have a PoC on [2] created by Sunil. More tests are needed, so
-> it'll be left behind for now. The EDU changes will be sent in separate
-> after I finish the doc changes that Frank cited in v2.
->
-> - patch 3 contains the bulk of changes made from v2. Please give special
-> attention to the following functions since this is entirely new code I
-> ended up adding:
->   
->   - riscv_iommu_report_fault()
->   - riscv_iommu_validate_device_ctx()
->   - riscv_iommu_update_ipsr()
->   
->    Aside from these helpers most of the changes made in this patch 3 were
-> punctual.
->
-> - Red HAT PCI ID related changes. A new patch (4) that introduces a
-> generic RISC-V IOMMU PCI ID was added. This PCI ID was gracefully given
-> to us by Red Hat and Gerd Hoffman from their ID space. The
-> riscv-iommu-pci device now defaults to this PCI ID instead of Rivos PCI
-> ID. The device was changed slightly to allow vendor-id and device-id to
-> be set in the command-line, so it's now possible to use this reference
-> device as another RISC-V IOMMU PCI device to ease the burden of
-> testing/development.
->
->    To instantiate the riscv-iommu-pci device using the previous Rivos PCI
-> ID, use the following cmd line:
->
->    -device riscv-iommu-pci,vendor-id=0x1efd,device-id=0xedf1
->
->    I'm using these options to test the series with the existing Linux RISC-V
-> IOMMU support that uses just a Rivos ID to identify the device.
->
->
-> Series based on alistair/riscv-to-apply.next. It's also applicable on
-> current QEMU master. It can also be fetched from:
->
-> https://gitlab.com/danielhb/qemu/-/tree/riscv_iommu_v3
->   
->
-> Patches missing reviews/acks: 3, 5, 9, 10, 11.
->
-> Changes from v2 [1]:
-> - patch 05 (hw/riscv: add riscv-iommu-sys platform device): dropped
->    - will be reintroduced in a later review or as a follow-up series
->
-> - patches 14 and 15: dropped
->    - will be sent in separate
->
-> - patches 2, 3, 4 and 5:
->    - removed all 'Ziommu' references
->
-> - patch 2:
->    - added extra bits that patch 3 ended up using
->
-> - patch 3:
->    - fixed blank line at EOF in hw/riscv/trace.h
->    - added a riscv_iommu_report_fault() helper to report faults. The helper checks if
->      a given fault is eligible to be reported if DTF is 1
->    - Use riscv_iommu_report_fault() in riscv_iommu_ctx() and riscv_iommu_translate()
->      to avoid code repetition
->    - added a riscv_iommu_validate_device_ctx() helper to validate the device context
->      as specified in "Device configuration checks" section. This helper is being used
->      in riscv_iommu_ctx_fetch()
->    - added a new riscv_iommu_update_ipsr() helper to handle IPSR updates
->      in riscv_iommu_mmio_write()
->    - riscv_iommmu_msi_write() now reports a fault in all error paths
->    - check for fctl.WSI before issuing a MSI interrupt in riscv_iommu_notify()
->    - change riscv-iommu region name to 'riscv-iommu'
->    - change address_space_init() name for PCI devices to 'name' instead of using TYPE_RISCV_IOMMU_PCI
->    - changed riscv_iommu_mmio_ops min_access_size to 4
->    - do not check for min and max sizes on riscv_iommu_mmio_write()
->    - changed riscv_iommu_trap_ops  min_access_size to 4
->    - removed IOMMU qemu_thread thread:
->      - riscv_iommu_mmio_write() will now execute a riscv_iommu_process_fn by holding
->        'core_lock'
->    - init FSCR as zero explicitly
->    - check for bus->iommu_opaque == NULL before calling pci_setup_iommu()
->
-> - patch 4 (new):
->    - add Red-Hat PCI RISC-V IOMMU ID
->
-> - patch 5 (former 4):
->    - create vendor-id and device-id properties
->    - set Red-hat PCI RISC-V IOMMU ID as default ID
->
-> - patch 8:
->    - use IOMMU_NONE instead of '0' in relevant 'iot->perm = 0' instances
->
-> - patch 9:
->    - add s-stage and g-stage steps in riscv_iommu_validate_device_ctx()
->    - removed 'gpa' boolean from riscv_iommu_spa_fetch()
->    - 'en_s' is no longer used for early MSI address match
->
-> - patch 10:
->    - add ATS steps in riscv_iommu_validate_device_ctx()
->    - check for 's->enable_ats' before adding RISCV_IOMMU_DC_TC_EN_ATS in device context
->    - check for 's->enable_ats' before processing ATS commands in riscv_iommu_process_cq_tail()
->    - remove ambiguous trace_riscv_iommu_ats() from riscv_iommu_translate()
->
-> - patch 11:
->    - removed unused bits
->    - added RISCV_IOMMU_TR_REQ_CTL_NW and RISCV_IOMMU_TR_RESPONSE_S
->      bits
->    - set IOMMUTLBEntry 'perm' using RISCV_IOMMU_TR_REQ_CTL_NW in riscv_iommu_process_dbg()
->    - clear RISCV_IOMMU_TR_RESPONSE_S in riscv_iommu_process_dbg(). Added a comment talking about the (lack of) superpage support
->   
-> [1] https://lore.kernel.org/qemu-riscv/20240307160319.675044-1-dbarboza@ventanamicro.com/
-> [2] https://github.com/vlsunil/qemu/commits/acpi_rimt_poc_v1/
->
-> Andrew Jones (1):
->    hw/riscv/riscv-iommu: Add another irq for mrif notifications
->
-> Daniel Henrique Barboza (3):
->    pci-ids.rst: add Red Hat pci-id for RISC-V IOMMU device
->    test/qtest: add riscv-iommu-pci tests
->    qtest/riscv-iommu-test: add init queues test
->
-> Tomasz Jeznach (9):
->    exec/memtxattr: add process identifier to the transaction attributes
->    hw/riscv: add riscv-iommu-bits.h
->    hw/riscv: add RISC-V IOMMU base emulation
->    hw/riscv: add riscv-iommu-pci reference device
->    hw/riscv/virt.c: support for RISC-V IOMMU PCIDevice hotplug
->    hw/riscv/riscv-iommu: add Address Translation Cache (IOATC)
->    hw/riscv/riscv-iommu: add s-stage and g-stage support
->    hw/riscv/riscv-iommu: add ATS support
->    hw/riscv/riscv-iommu: add DBG support
->
->   docs/specs/pci-ids.rst           |    2 +
->   hw/riscv/Kconfig                 |    4 +
->   hw/riscv/meson.build             |    1 +
->   hw/riscv/riscv-iommu-bits.h      |  416 ++++++
->   hw/riscv/riscv-iommu-pci.c       |  177 +++
->   hw/riscv/riscv-iommu.c           | 2283 ++++++++++++++++++++++++++++++
->   hw/riscv/riscv-iommu.h           |  146 ++
->   hw/riscv/trace-events            |   15 +
->   hw/riscv/trace.h                 |    1 +
->   hw/riscv/virt.c                  |   33 +-
->   include/exec/memattrs.h          |    5 +
->   include/hw/pci/pci.h             |    1 +
->   include/hw/riscv/iommu.h         |   36 +
->   meson.build                      |    1 +
->   tests/qtest/libqos/meson.build   |    4 +
->   tests/qtest/libqos/riscv-iommu.c |   76 +
->   tests/qtest/libqos/riscv-iommu.h |  100 ++
->   tests/qtest/meson.build          |    1 +
->   tests/qtest/riscv-iommu-test.c   |  234 +++
->   19 files changed, 3535 insertions(+), 1 deletion(-)
->   create mode 100644 hw/riscv/riscv-iommu-bits.h
->   create mode 100644 hw/riscv/riscv-iommu-pci.c
->   create mode 100644 hw/riscv/riscv-iommu.c
->   create mode 100644 hw/riscv/riscv-iommu.h
->   create mode 100644 hw/riscv/trace-events
->   create mode 100644 hw/riscv/trace.h
->   create mode 100644 include/hw/riscv/iommu.h
->   create mode 100644 tests/qtest/libqos/riscv-iommu.c
->   create mode 100644 tests/qtest/libqos/riscv-iommu.h
->   create mode 100644 tests/qtest/riscv-iommu-test.c
->
+&gt;<br>
+&gt; From: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.com" target=
+=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
+&gt;<br>
+&gt; RISCVCPUImpliedExtsRule is created to store the implied rules.<br>
+&gt; &#39;is_misa&#39; flag is used to distinguish whether the rule is deri=
+ved<br>
+&gt; from the MISA or other extensions.<br>
+&gt; &#39;ext&#39; stores the MISA bit if &#39;is_misa&#39; is true. Otherw=
+ise, it stores<br>
+&gt; the offset of the extension defined in RISCVCPUConfig. &#39;ext&#39; w=
+ill also<br>
+&gt; serve as the key of the hash tables to look up the rule in the followi=
+ng<br>
+&gt; commit.<br>
+&gt;<br>
+&gt; Signed-off-by: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.co=
+m" target=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 target/riscv/cpu.c |=C2=A0 8 ++++++++<br>
+&gt;=C2=A0 target/riscv/cpu.h | 18 ++++++++++++++++++<br>
+&gt;=C2=A0 2 files changed, 26 insertions(+)<br>
+&gt;<br>
+&gt; diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c<br>
+&gt; index cee6fc4a9a..c7e5cec7ef 100644<br>
+&gt; --- a/target/riscv/cpu.c<br>
+&gt; +++ b/target/riscv/cpu.c<br>
+&gt; @@ -2242,6 +2242,14 @@ RISCVCPUProfile *riscv_profiles[] =3D {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 NULL,<br>
+&gt;=C2=A0 };<br>
+&gt;<br>
+&gt; +RISCVCPUImpliedExtsRule *riscv_misa_implied_rules[] =3D {<br>
+&gt; +=C2=A0 =C2=A0 NULL<br>
+&gt; +};<br>
+&gt; +<br>
+&gt; +RISCVCPUImpliedExtsRule *riscv_ext_implied_rules[] =3D {<br>
+&gt; +=C2=A0 =C2=A0 NULL<br>
+&gt; +};<br>
+&gt; +<br>
+&gt;=C2=A0 static Property riscv_cpu_properties[] =3D {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 DEFINE_PROP_BOOL(&quot;debug&quot;, RISCVCPU, cfg.=
+debug, true),<br>
+&gt;<br>
+&gt; diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h<br>
+&gt; index 1501868008..b5a036cf27 100644<br>
+&gt; --- a/target/riscv/cpu.h<br>
+&gt; +++ b/target/riscv/cpu.h<br>
+&gt; @@ -122,6 +122,24 @@ typedef enum {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 EXT_STATUS_DIRTY,<br>
+&gt;=C2=A0 } RISCVExtStatus;<br>
+&gt;<br>
+&gt; +typedef struct riscv_cpu_implied_exts_rule RISCVCPUImpliedExtsRule;<b=
+r>
+&gt; +<br>
+&gt; +struct riscv_cpu_implied_exts_rule {<br>
+&gt; +=C2=A0 =C2=A0 /* Bitmask indicates the rule enabled status for the ha=
+rts. */<br>
+&gt; +=C2=A0 =C2=A0 uint64_t enabled;<br>
+<br>
+I&#39;m not clear why we need this<br></blockquote><div><br></div><div>This=
+ is because a rule may be implied more than once.</div><div>e.g. Zcf implie=
+s RVF, Zfa also implies RVF.</div><div>There&#39;s no need to check RVF&#39=
+;s implied rule again for Zfa after Zcf&#39;s implied rules are enabled.</d=
+iv><div><br></div><div>The implied rules are checked recursively, so once t=
+he rule has been enabled (per-CPU basis),</div><div>the rule (and all its=
+=C2=A0implied rules) will not be rechecked.</div><div>=C2=A0</div><div>Rega=
+rds,</div><div>Frank Chang</div><div><br></div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
+04);padding-left:1ex">
+<br>
+Alistair<br>
+<br>
+&gt; +=C2=A0 =C2=A0 /* True if this is a MISA implied rule. */<br>
+&gt; +=C2=A0 =C2=A0 bool is_misa;<br>
+&gt; +=C2=A0 =C2=A0 /* ext is MISA bit if is_misa flag is true, else extens=
+ion offset. */<br>
+&gt; +=C2=A0 =C2=A0 const uint32_t ext;<br>
+&gt; +=C2=A0 =C2=A0 const uint32_t implied_misas;<br>
+&gt; +=C2=A0 =C2=A0 const uint32_t implied_exts[];<br>
+&gt; +};<br>
+&gt; +<br>
+&gt; +extern RISCVCPUImpliedExtsRule *riscv_misa_implied_rules[];<br>
+&gt; +extern RISCVCPUImpliedExtsRule *riscv_ext_implied_rules[];<br>
+&gt; +<br>
+&gt; +#define RISCV_IMPLIED_EXTS_RULE_END -1<br>
+&gt; +<br>
+&gt;=C2=A0 #define MMU_USER_IDX 3<br>
+&gt;<br>
+&gt;=C2=A0 #define MAX_RISCV_PMPS (16)<br>
+&gt; --<br>
+&gt; 2.43.2<br>
+&gt;<br>
+&gt;<br>
+</blockquote></div></div>
+
+--000000000000c10200061a9393c5--
 
