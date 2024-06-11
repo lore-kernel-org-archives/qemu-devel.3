@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE3DC41513
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F333FC25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:37:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGwuQ-0000a1-1i; Tue, 11 Jun 2024 04:31:14 -0400
+	id 1sGwzN-00032Z-Fu; Tue, 11 Jun 2024 04:36:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sGwuI-0000VJ-31
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:31:06 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1sGwzL-00032D-II
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:36:19 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sGwuG-0004ho-Fg
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:31:05 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-57c778b5742so2809802a12.2
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 01:31:03 -0700 (PDT)
+ id 1sGwzJ-0005bd-Vb
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:36:19 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-579fa270e53so1034534a12.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 01:36:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718094662; x=1718699462; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718094976; x=1718699776; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LBM1lmxk9SqQfQU0caWRbtEyiyYWjt1uLUTr1AlIS4U=;
- b=Tx+JoeVZTB10b2pyBKlBlw1xkDqoXBu/geVPzez22mUIT9z85wxzqSA75Gbh3xlTca
- Vrm0s1QFeZg3NqYoYali4he86hilYgAsxAlT9MUcrO6CftfXKVgyUy2H3sEIcT8FSem4
- Fo24AwOO111lCaOaJ+SvLGwEeoE6XOaR2DdtD4KTUHRnEeyxE6s2570n1FEQLfK8tQbc
- bkB075ZAgT5P9K3Es3X6sOChqrFH21/cbiwSiEO7wfCHSDhXPxcXhjkEvDMoIvTjcfA3
- H6OxYhxxhcQMnAfVIhwI4kbGa73TAmQgi89cwp5brxcpgzzPFwIrCVqRJa7IotPbUvkL
- vhhg==
+ bh=k6RembHLwkOyv7tlgzOTSxzgHhL8szsKqgQ3ptT75Lc=;
+ b=rnj4X5jprd1tu8V88KtH1mDccYmHUDNjkJulERy3tEgH2tR5P5fu+FNzxO+KDyhnmr
+ 2e9dRB2Cn60g8K8U1B9ibJ3ayvZP/3lNhxtR7sFRNSuSfoBRiMNkLwfCVoqRXOWT3kKr
+ BgzzaATTFVukCZvcT2XRCBlLmnJhvaFJLwpT2zzjwfOXesOqrKh5nVLzz3c7I+QM/2QB
+ 9LO4W2iSPpcxSsQj+fwCgFyM0y+8xptHXRsR6w6mAqDEluU6SEZA5l9sAszhq2zwmHNY
+ ITVAsTwDZynydo5WpY+Zzb4fLvcyVWeTViSJEJ3rN2w8RmHtRobH7BKcAuHDqeeERiSG
+ hIgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718094662; x=1718699462;
+ d=1e100.net; s=20230601; t=1718094976; x=1718699776;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LBM1lmxk9SqQfQU0caWRbtEyiyYWjt1uLUTr1AlIS4U=;
- b=eM77VSaJAMxeyVz3ia8cqWh/ph7OpaA8N++zDe/K+/AtD0oxmkxeWAH7pPXGa/XGEB
- DUnvE3mKsbeJSxjcsIeDRfuzVOMotnQCdfRJlUTrnFKSAyFLeUCsDl7Ev/TX/eEVEn4L
- WqlqkL7PPTciksDtRzZDyvClr7EG248vtsph/pIJj6YAXaMS4bBd3Ic40xBwHsrOJtGJ
- U3IP6rwMvKMY4ZoUiwGf+CCgLUmlNkS4/oYGqIV11JNKxZBM7luRPcNTiNX6DHBOg5pa
- XGrt0yZXUoQEmvxnlLnMeBFqGh+dZllum22KCBEZkpAPcDOpJHDUbvpJGqL9MVbjH8e8
- oshw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDQa38pHMrb0EP5lOw0b4Q8SZs/jjHWJIblsEadopAqmRUNw9sQ/Gv9j7KyjqelPVdNd/qB5751ApNP0XFxWfr8iDa83w=
-X-Gm-Message-State: AOJu0YxcxIgAssikFNfOdS/uo2O9JT3uAOg1C3GOcixVN4Cs4XChnEtf
- zkSp3549JkrcScPdySkffhccL+Y1CH6iuNCoVCOVTTY77A/gi5pE4MuebqsbBsqTIKGGMOIWHh7
- 7i+AQgEvV63z7C5doE8b+AOS5p2rhcWb8XDj0kg==
-X-Google-Smtp-Source: AGHT+IEf/ig5kmx7kzEpKb7oObj/iPolvTgzKoM+xdAXnVYPnATiNMKpJsvsOywMaE3klg8XAnNj3hbOPgxgblGC4YI=
-X-Received: by 2002:a50:d5da:0:b0:57c:61ca:eb8c with SMTP id
- 4fb4d7f45d1cf-57c61caec8fmr5635508a12.42.1718094662527; Tue, 11 Jun 2024
- 01:31:02 -0700 (PDT)
+ bh=k6RembHLwkOyv7tlgzOTSxzgHhL8szsKqgQ3ptT75Lc=;
+ b=nrpEW4Twi6u1eNTI+ck7c7KeR32fJX/Umz+3NnRHBXp79eO346kOEok7nGSjOueNqB
+ XW1+V/4qDZzW242MGSJokij0hGCHvP2mljxqhpHujfVTqt5Zrin1B2ykJ3L4IEN0rati
+ yY2sGEyC2jJfIXtH2nbc7QVtrGVaIqb0v5AwiYWgsqSiqyMwPrYRbvYAbhwHRNYq9llW
+ SplDf6BPgr5CqXYY4AeAhyBrWN6xLGQViwEKKhT3TcchLtwguu5CsFoeJ+qoI9D7HNE0
+ 22zT8jvKFtnHlBh6UAuLcFKXe+xGvTLylB0kWURNu5ZnFM3d4bTAhDziy98yFQjzOVpt
+ 9zVA==
+X-Gm-Message-State: AOJu0Yyk5FrYGo73QmSoL600uRe7SMDPe+BB60EcJUkTdEsXHi5G0Uc7
+ AF2FWGEkUt0sQnTW2/6KoQnf2jT13XQha5vdlrqfiK/9CfZm4EiI++f9k8GjiOxsOfuz0Qw7Mog
+ qHPR3ITu3hMFXimWSWieeMhj+uUcxYPpRWVljrA==
+X-Google-Smtp-Source: AGHT+IF5gHCdZresklNd7YCM+DWy1SrJMzdlWjXFs3AEbdfZz6trsPVEh30mEff45zSdIdTSyVcupISpvjS3/FuaVd0=
+X-Received: by 2002:a50:9fa7:0:b0:57c:5fc9:16a3 with SMTP id
+ 4fb4d7f45d1cf-57c5fc916f4mr8015835a12.13.1718094975822; Tue, 11 Jun 2024
+ 01:36:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240610150758.2827-1-philmd@linaro.org>
- <87h6e0uizr.fsf@pond.sub.org>
-In-Reply-To: <87h6e0uizr.fsf@pond.sub.org>
+References: <20240603160933.1141717-1-peter.maydell@linaro.org>
+ <20240603160933.1141717-4-peter.maydell@linaro.org>
+ <5b10d49a-8da2-491f-8b8c-26556482957d@linaro.org>
+In-Reply-To: <5b10d49a-8da2-491f-8b8c-26556482957d@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 11 Jun 2024 09:30:47 +0100
-Message-ID: <CAFEAcA8F9fTVuTwNosLi7qcZ7ki-kARKJsnrp3-er41LbkpZiA@mail.gmail.com>
-Subject: Re: Examining device state via monitor for debugging (was: [PATCH
- 0/2] hw/misc/mos6522: Do not open-code hmp_info_human_readable_text())
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>
+Date: Tue, 11 Jun 2024 09:36:02 +0100
+Message-ID: <CAFEAcA_1JyzM9WiBsQ-3YxNmH3i1usnU3iAc7QR-G2m89f-GbQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] accel/tcg: Make TCGCPUOps::cpu_exec_halt mandatory
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,35 +91,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Jun 2024 at 06:50, Markus Armbruster <armbru@redhat.com> wrote:
+On Tue, 11 Jun 2024 at 09:25, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+> Hi Peter,
 >
-> > Officialise the QMP command, use the existing
-> > hmp_info_human_readable_text() helper.
+> On 3/6/24 18:09, Peter Maydell wrote:
+> > Now that all targets set TCGCPUOps::cpu_exec_halt, we can make it
+> > mandatory and remove the fallback handling that calls cpu_has_work.
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   include/hw/core/tcg-cpu-ops.h | 9 ++++++---
+> >   accel/tcg/cpu-exec.c          | 7 +------
+> >   2 files changed, 7 insertions(+), 9 deletions(-)
+> >
+> > diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-op=
+s.h
+> > index 099de3375e3..34318cf0e60 100644
+> > --- a/include/hw/core/tcg-cpu-ops.h
+> > +++ b/include/hw/core/tcg-cpu-ops.h
+> > @@ -122,10 +122,13 @@ struct TCGCPUOps {
+> >        * to do when the CPU is in the halted state.
+> >        *
+> >        * Return true to indicate that the CPU should now leave halt, fa=
+lse
+> > -     * if it should remain in the halted state.
+> > +     * if it should remain in the halted state. (This should generally
+> > +     * be the same value that cpu_has_work() would return.)
+> >        *
+> > -     * If this method is not provided, the default is to do nothing, a=
+nd
+> > -     * to leave halt if cpu_has_work() returns true.
+> > +     * This method must be provided. If the target does not need to
+> > +     * do anything special for halt, the same function used for its
+> > +     * CPUClass::has_work method can be used here, as they have the
+> > +     * same function signature.
+> >        */
+> >       bool (*cpu_exec_halt)(CPUState *cpu);
+> >       /**
+> > diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+> > index 6711b58e0b2..8be4d2a1330 100644
+> > --- a/accel/tcg/cpu-exec.c
+> > +++ b/accel/tcg/cpu-exec.c
+> > @@ -682,13 +682,8 @@ static inline bool cpu_handle_halt(CPUState *cpu)
+> >   #ifndef CONFIG_USER_ONLY
+> >       if (cpu->halted) {
+> >           const TCGCPUOps *tcg_ops =3D cpu->cc->tcg_ops;
+> > -        bool leave_halt;
+> > +        bool leave_halt =3D tcg_ops->cpu_exec_halt(cpu);
+> >
+> > -        if (tcg_ops->cpu_exec_halt) {
+> > -            leave_halt =3D tcg_ops->cpu_exec_halt(cpu);
+> > -        } else {
+> > -            leave_halt =3D cpu_has_work(cpu);
+> > -        }
+> >           if (!leave_halt) {
+> >               return true;
+> >           }
 >
-> I'm not sure "officialise" is a word :)
->
-> Taking a step back...  "info via" and its new QMP counterpart
-> x-query-mos6522-devices dump device state.  I understand why examining
-> device state via monitor can be useful for debugging.  However, we have
-> more than 2000 devices in the tree.  Clearly, we don't want 2000 device
-> state queries.  Not even 100.  Could we have more generic means instead?
->
-> We could use QOM (read-only) properties to expose device state.
->
-> If we use one QOM property per "thing", examining device state becomes
-> quite tedious.  Also, you'd have to stop the guest to get a consistent
-> view, and adding lots of QOM properties bloats the code.
->
-> If we use a single, object-valued property for the entire state, we get
-> to define the objects in QAPI.  Differently tedious, and bloats the
-> generated code.
+> Could we assert the handler is assigned in tcg_exec_realizefn()?
 
-We already have a machine readable mandatory-for-every-device
-representation of its entire state -- it's the vmstate struct.
-Admittedly this is sometimes a bit different from the guest-facing
-view of a device and we don't machine-record the field names...
+Yeah, we could. I thought about an assert that it was set up,
+but couldn't identify a place to do that.
 
+> If you agree I could squash these 3 lines:
+>
+> -- >8 --
+> --- a/accel/tcg/cpu-exec.c
+> +++ b/accel/tcg/cpu-exec.c
+> @@ -1077,6 +1077,10 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **err=
+p)
+>       static bool tcg_target_initialized;
+>
+>       if (!tcg_target_initialized) {
+> +        /* Check mandatory TCGCPUOps handlers */
+> +        assert(cpu->cc->tcg_ops->initialize);
+> +        assert(cpu->cc->tcg_ops->cpu_exec_halt);
+> +
+>           cpu->cc->tcg_ops->initialize();
+
+I don't think we need to assert initialize if we're about to call
+it anyway -- the call will crash if it's NULL in an easy to diagnose way.
+
+>           tcg_target_initialized =3D true;
+>       }
+> ---
+>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+
+thanks
 -- PMM
 
