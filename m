@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A55C27C75
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3AA9C27C77
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 10:24:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGyen-0006PU-CR; Tue, 11 Jun 2024 06:23:13 -0400
+	id 1sGyet-0006QS-2V; Tue, 11 Jun 2024 06:23:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGyem-0006P1-2j
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 06:23:12 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGyer-0006Q1-HA
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 06:23:17 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGyek-0000XL-6c
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 06:23:11 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-35f188e09a8so2271354f8f.2
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 03:23:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGyep-0000Xu-TQ
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 06:23:17 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-35f1c490c13so2913708f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 03:23:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718101388; x=1718706188; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Xpe02UaoiDO4a/WcwgPB6nbXqy4TUqut8B50lRTSb+o=;
- b=vuw4/2NIHWia3DF/C/YKOGfiFjb+J/IP9VGlxqQGaDlJn+khpz/nvJMPF35n9EpADF
- Fd9YpyFKA3nF0K6LdBlOta4MJx7z+h7uxQ1CJhBBNqaco/GS8RJixZh6j58A/XRMvLrP
- 83QQ8Ubk6WdtTeTlrAN3FSZWo1AEJ4GUsiqsaavOp/3moyt7MEl12S5KyNjcpLbd0w62
- lSgC2a0Zzd5+7DPajIHzeV0Fz5OaxgdkY8sI3okzjO90IGyL9KrV7FF/cvxrKVqt0FIi
- DRdfYdETcEPsrERZPLfut0P//CdzKLZZMfsbcXmRQud0ntJUlRhg4Lr+CHqyPrXmp1pK
- nNCg==
+ d=linaro.org; s=google; t=1718101394; x=1718706194; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R+Nzh48rBgkECIQzn+94+NuX+YcHJey5MBlADXTE7iY=;
+ b=KJG+p6Gaep7ZeyuhRNWXlqahgUstN7Qde79a8RV7DIzA6FNaiLIAZYb6CmX3kKBHGJ
+ 2YL+azEkUXMQva5OMZkOFdLNnz1n/jMZs6kzUlipUL6QwrT5cIjdKf52auS6tSq/zn9i
+ 7PkZZPMYF0zJwAnsO+gSdNYYNDrNo7aG6DIOWNzK1QqobX64Tm0xF/qcpw6IuDVW7gtq
+ JWvIvzCzQCqa/41a2zwkT4aDpBpkfDFtVnIgDDTSuX7lOXusEkH26ow2Ju2CtZOmBALd
+ zq3lqvy4LjFm/Wl9G+9IDOo1ftLygM8oIL/zs7+6YbLHsQjfEKUqmwIRR9UXBqyK+u6n
+ 8Fiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718101388; x=1718706188;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Xpe02UaoiDO4a/WcwgPB6nbXqy4TUqut8B50lRTSb+o=;
- b=XnxTwX+jVBEHeQ0LRiZYDbzKR1DDjNePuyKBGkVeGbMPGI5sKHz8CTm0BZM67kK3+k
- Nie2d9utKtruY2NxjwbVVBq2yeE6BvHQykzYtVEuL7vE8eWgZCaOPPxvz6gFdT2UTy++
- GtLLMRsGOKlydawcRZP/kmxIy+OQ38X+2VII8+qBeXR61oInmAzKeQDVi79y5rv5+Eho
- 0zDilcZ5Mp5S9p3HAZ14CfdBm8pLcTBen+mmhztSwGO5oM6otz0v3VcWDA7wH3YHX4Sc
- cXdfNWOvu4WHb8vy2WOZe50OPWt6xaDQK+P8o4YuD9h29GDeAEVtcSR2YE/yPyE9P1uf
- P5AA==
+ d=1e100.net; s=20230601; t=1718101394; x=1718706194;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=R+Nzh48rBgkECIQzn+94+NuX+YcHJey5MBlADXTE7iY=;
+ b=gKT6ffwLbuSEPAbOBHGEx2OLDAUHWLTBuz1WSJExMex1fqrIuyyBDZbglqGaUYpEgU
+ BoB0/kPTTBpVc3w+MqaW1Bi+LqLEySa13zaI/AdO8ABH6Eods6EWwgdCFKvhPgxgaLMv
+ +x5QMk1HKEWzgQNlJSw+oxON4pbRgzxYm76x6LYcSV4JiDwjyRDVu20eFVEXTAmteJx+
+ JQsp6JULQCL+7Exo0KqPbTTbCBqbMyEoG1Bov3WvEQIYxtbae9FMSYRoIiMFqpEAlerJ
+ KoxaEnbj+WhB4czhspWeCynI5gaJD0eA2/H4AFGgnZC69L4iqtzDblTS4Ay7AcG2mMpZ
+ U6Fg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsfUw8lLKqlCzqS43U3s/ILq0RBc9w53lEpiYQoh+fgiBuL7gNqlFE7Fo9dJAW7h70+JxqbfBHm/bs2ZhrlOQwhu7AURw=
-X-Gm-Message-State: AOJu0YzZh6EoctqUa1hgI7YGH5trP22RNY8CXEMJlwXEjf73rx4Iu5j5
- J4qr1z9IXK0YDX2ekplaAzIgoiO/xPE2QKCVngSXqci4pXBWpUT4j4tWMrb3kSc=
-X-Google-Smtp-Source: AGHT+IH/PEaRVR6Ps9EzO6gqKexgWcBhwhpahK2JXwBomwAPKu1mexEPvxG9KosIZqA5QycylvUfuQ==
-X-Received: by 2002:a5d:6d01:0:b0:35f:18e6:845f with SMTP id
- ffacd0b85a97d-35f18e68979mr5687383f8f.40.1718101388519; 
- Tue, 11 Jun 2024 03:23:08 -0700 (PDT)
+ AJvYcCWlj5CP/qiia0bSI7SNDlrbQsAYsYkWcu0rVP12gZ86rE78ysRkSgmkXvjzrrC3eRPbBsorAYKRT3UtoOEEGnBpSFZkwpU=
+X-Gm-Message-State: AOJu0YwGvE3bIRa1FcUZ1e1LRHInyhfDg1r5Xc7K5tKINqiwUY/970Va
+ lG5j315wxH3fOffAGIo2A7mBYm7NfwRhE7VGS5YolreQP4m/APpYy0eUO6GmZjY=
+X-Google-Smtp-Source: AGHT+IHNfP3UR6zjAE83/iqUWBf5IOF6zOgXT2KlPLC63mfj5HJvT36bApcL52OSte322BYej6+iPQ==
+X-Received: by 2002:a05:6000:b43:b0:35f:900:4e6 with SMTP id
+ ffacd0b85a97d-35f090005famr9425893f8f.60.1718101394184; 
+ Tue, 11 Jun 2024 03:23:14 -0700 (PDT)
 Received: from m1x-phil.lan (rsa59-h02-176-184-32-6.dsl.sta.abo.bbox.fr.
  [176.184.32.6]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35f2598ac1esm4513148f8f.93.2024.06.11.03.23.07
+ ffacd0b85a97d-35f24d67093sm4999971f8f.96.2024.06.11.03.23.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 11 Jun 2024 03:23:08 -0700 (PDT)
+ Tue, 11 Jun 2024 03:23:13 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Markus Armbruster <armbru@redhat.com>,
- Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 0/3] hw/usb: Introduce x-query-usbhost QMP command
-Date: Tue, 11 Jun 2024 12:23:02 +0200
-Message-ID: <20240611102305.60735-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 1/3] hw/usb: Remove unused 'host.h' header
+Date: Tue, 11 Jun 2024 12:23:03 +0200
+Message-ID: <20240611102305.60735-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240611102305.60735-1-philmd@linaro.org>
+References: <20240611102305.60735-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,32 +98,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v1:
-- Consider modules (Daniel)
-- Remove monitor_register_hmp
+Since commit 99761176ee ("usb: Remove legacy -usbdevice options
+(host, serial, disk and net)") hw/usb/host.h is not used, remove
+it.
 
-Philippe Mathieu-Daudé (3):
-  hw/usb: Remove unused 'host.h' header
-  hw/usb: Introduce x-query-usbhost QMP command
-  monitor: Remove monitor_register_hmp()
-
- qapi/machine.json           | 18 +++++++++++++++
- hw/usb/host-libusb.h        | 16 ++++++++++++++
- hw/usb/host.h               | 44 -------------------------------------
- include/hw/usb.h            |  3 ---
- include/monitor/monitor.h   |  2 --
- hw/usb/bus-stub.c           |  7 +++++-
- hw/usb/host-libusb-common.c | 31 ++++++++++++++++++++++++++
- hw/usb/host-libusb.c        | 43 ++++++++++++++++++++++++------------
- monitor/hmp-target.c        | 16 --------------
- tests/qtest/qmp-cmd-test.c  |  3 +++
- hmp-commands-info.hx        |  2 ++
- hw/usb/meson.build          |  1 +
- 12 files changed, 106 insertions(+), 80 deletions(-)
- create mode 100644 hw/usb/host-libusb.h
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Cc: Thomas Huth <thuth@redhat.com>
+---
+ hw/usb/host.h | 44 --------------------------------------------
+ 1 file changed, 44 deletions(-)
  delete mode 100644 hw/usb/host.h
- create mode 100644 hw/usb/host-libusb-common.c
 
+diff --git a/hw/usb/host.h b/hw/usb/host.h
+deleted file mode 100644
+index 048ff3b482..0000000000
+--- a/hw/usb/host.h
++++ /dev/null
+@@ -1,44 +0,0 @@
+-/*
+- * Linux host USB redirector
+- *
+- * Copyright (c) 2005 Fabrice Bellard
+- *
+- * Copyright (c) 2008 Max Krasnyansky
+- *      Support for host device auto connect & disconnect
+- *      Major rewrite to support fully async operation
+- *
+- * Copyright 2008 TJ <linux@tjworld.net>
+- *      Added flexible support for /dev/bus/usb /sys/bus/usb/devices in addition
+- *      to the legacy /proc/bus/usb USB device discovery and handling
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+- * THE SOFTWARE.
+- */
+-
+-#ifndef QEMU_USB_HOST_H
+-#define QEMU_USB_HOST_H
+-
+-struct USBAutoFilter {
+-    uint32_t bus_num;
+-    uint32_t addr;
+-    char     *port;
+-    uint32_t vendor_id;
+-    uint32_t product_id;
+-};
+-
+-#endif /* QEMU_USB_HOST_H */
 -- 
 2.41.0
 
