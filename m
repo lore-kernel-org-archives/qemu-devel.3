@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA62CC27C65
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 16:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DCA7C27C75
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 17:32:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH4Gu-0003jB-4x; Tue, 11 Jun 2024 12:22:56 -0400
+	id 1sH5LS-0006Jt-KQ; Tue, 11 Jun 2024 13:31:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
- id 1sH4Gt-0003iX-CH; Tue, 11 Jun 2024 12:22:55 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <rrh.henry@gmail.com>)
+ id 1sH4Et-00039j-C1
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 12:20:51 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
- id 1sH4Gr-000199-6Y; Tue, 11 Jun 2024 12:22:55 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1f64ecb1766so44689895ad.1; 
- Tue, 11 Jun 2024 09:22:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rrh.henry@gmail.com>)
+ id 1sH4Er-0000kP-Bj
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 12:20:51 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1f6176b0420so4311785ad.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 09:20:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718122971; x=1718727771; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=pv6PISvr2XUjNP+uegBuVeg22kS4wy5UCX42VcqVPyE=;
- b=VruFGIW04GtZCKWYsqeooEd5fdYg6TkCbIZJfj7rz+haBM2oZpPC5AtUP4VyigXic8
- sb8BotfDrW0RWuLIFb7T/tsUZIyAeQotpQi5u5wTcUlr/LBEYDd/NGdcRYP8sMOGuej8
- f8mCH3Yg8ISybHXA82dC65LgnFLS8kF8Gr4ITTc3WFjIjB54mU13CMtRJDU+kFTR/xrV
- gMpI4kCaG8/aFuiX72BnMK0cMWiKEb9R3Hm+BMctUqY3SbwuqxWA+IYu6+ROmBOjOeZf
- M/dVCyoskrBgAT4IOopCDoUHaa0ZpP5Q2XXprx63rT8zHEmrN09x8thPIsdo8q5TkUkK
- a8gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718122971; x=1718727771;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1718122847; x=1718727647; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pv6PISvr2XUjNP+uegBuVeg22kS4wy5UCX42VcqVPyE=;
- b=W/biZa8sOVAHvHj5g5OxTAoVbnAIa88xNKYJJyhe/kSvGItFdQ1kD5dkL0Z8ND2l+k
- swO9w9OLjCPYOl0ztHDvGN+ST7zHl3Vim+XyO5KNyIm4dzLIb26lb3GHJ6WLRmL1/tCR
- KsvdwnEk6gyCHRGTFCrKBh5eItFZEzZdNsYKafR9UadOsdEqd9rFrvWxtCCG1N7ZucZv
- nzUFubxKy6tvF+H8mOKalJVl4PZxxCo32KLlztTVrHN63xNH2pGXRMl5PF1aYfnAkiBI
- /A+arB8wtcqIVqJG474l0z4tGTUaqhGkJ3CEDnkaEgn3zRtEbryHn2RMWwLIkkwjD0co
- k+sw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW89YcEZBk/oguYSKxcGdzoW/GKn4E/VAXmpLApTtJdSBv7yt4Mx3w0a8EfqdGZ/5FCQMAsimos6ki1komwMldELCs4t6w=
-X-Gm-Message-State: AOJu0YxZkQoekwY7q8kB/G2GCz9gP7ND3YvIEjaxumxhNM4k5SiycbRL
- Jqw4fmTYlFt+wZUbWvzTretNaeLeLrzw5LvUh4YBGEVMrg4U8jKz
-X-Google-Smtp-Source: AGHT+IGcRaPZMY67r++uJl+bV52tllnmRcPeEJaQ+B7lNf5lbkU8hlLucITVw1esAHwyOz0dVvnC/A==
-X-Received: by 2002:a17:902:d487:b0:1f6:612b:96eb with SMTP id
- d9443c01a7336-1f6d0395667mr150622815ad.50.1718122970642; 
- Tue, 11 Jun 2024 09:22:50 -0700 (PDT)
-Received: from amjad-pc ([202.185.212.207]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6e7858544sm74870125ad.75.2024.06.11.09.22.48
+ bh=vYALSgq6uCw4sIrLmod3F1XOC4BmsDQqBTUq1GtgRGs=;
+ b=hFYRBfp4xvGmjlugmqyOCQa3hhkoM9CN/INnW01utljOAQeaN2/GC6Kpm86sOU8Fe3
+ KPH70L5fIAGgWcN40v1A0aIY+zTF/qvi0rQUvbVLecNafhbBgnPnoiKQ97D4rguwaOlL
+ atSWWtJ4qz+Mc4PmgH1azWQYqhnhJX1ADIQ4X4QbLcenVq8zJdf/C496XMvqgI8hsSMA
+ t5Guda1/lAPgc3+pbCWJFvv5ut8C37a4/3Z3i/3MwqPBl5pRHH0XWL4Eumkd5XMLWVFC
+ HV6oCYLPSgtokR7c2zNlIWQHkoAmHCBlQMs25VDRKB+/0tKh+cYGAmflk9i/HpRe2AvL
+ 3rxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718122847; x=1718727647;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vYALSgq6uCw4sIrLmod3F1XOC4BmsDQqBTUq1GtgRGs=;
+ b=jERATXPoH29b+WyNoXyGWWRlDRVYRiZUIrQkXzBT+4EsPRk9VccQLe7IBBCBSsAdxv
+ o9kq2YtjVETCoUici7sH+HRJ8xk7Zcglm+AEZHJ1GpCKaIvwjz9oDGkuLzu/s61SRlUU
+ Co9AzwvPet8R2br8W5VxRZ1ji3J7/64W0X6DmZtq9/Oy/m6y1KDbr0un6hXp9ylU7+3X
+ mGWGl0tFuotwijMMvtfFtDT7ScVLZdzRN8Cp4z/Fa8CmFhK+y95Fr+O7H+CYIiEOUs3K
+ 6ZSXxWGdFC+Gsen9ibaYUeRJOdexcrIeYN59yEb2Nt4VeaXLhbzz89Zha+gQWQn8U9zz
+ qXgw==
+X-Gm-Message-State: AOJu0YygxPZUBYdM/NoWv/f9Uz++EWWbggtXBL1lwP+ab1XaOMAPB+cC
+ 8xSqXwD00tcD05o8CB1PrF4LfX0l6gob6dru1P4jsPi6l3AmwfT92luoEw==
+X-Google-Smtp-Source: AGHT+IFq7QRHJ8pdlDXLwawkSjWwrC6C+U4oodkwAkv/vkruuKbk2mEhDjSlEcjzJta/VE0LyzjUuw==
+X-Received: by 2002:a17:902:ea0b:b0:1f2:ffbc:7156 with SMTP id
+ d9443c01a7336-1f6d02c1450mr141189765ad.1.1718122847222; 
+ Tue, 11 Jun 2024 09:20:47 -0700 (PDT)
+Received: from ahadg-ubnt-05.lan ([2605:59c8:7c5:ea10:1363:e947:a6b8:de4a])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f6facdba8esm59426355ad.238.2024.06.11.09.20.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Jun 2024 09:22:50 -0700 (PDT)
-Date: Wed, 12 Jun 2024 00:22:46 +0800
-From: Amjad Alsharafi <amjadsharafi10@gmail.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- "open list:vvfat" <qemu-block@nongnu.org>
-Subject: Re: [PATCH v4 2/4] vvfat: Fix usage of `info.file.offset`
-Message-ID: <Zmh51luVeRY6H-Qp@amjad-pc>
-References: <cover.1717549035.git.amjadsharafi10@gmail.com>
- <a4ae80b8307284a8b30f0267171cca850f12dc42.1717549035.git.amjadsharafi10@gmail.com>
- <Zmcup6IVpHW3sRP5@redhat.com> <ZmhDl7ob8G62FtZb@amjad-pc>
- <ZmhfnSIe30da03uN@redhat.com>
+ Tue, 11 Jun 2024 09:20:46 -0700 (PDT)
+From: "Robert R. Henry" <rrh.henry@gmail.com>
+X-Google-Original-From: "Robert R. Henry" <robhenry@microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org,
+ "Robert R. Henry" <robhenry@microsoft.com>
+Subject: [PATCH 1/1] i386/tcg: Allow IRET from user mode to user mode for
+ dotnet runtime
+Date: Tue, 11 Jun 2024 09:20:21 -0700
+Message-Id: <20240611162021.269457-2-robhenry@microsoft.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240611162021.269457-1-robhenry@microsoft.com>
+References: <20240611162021.269457-1-robhenry@microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZmhfnSIe30da03uN@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=amjadsharafi10@gmail.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=rrh.henry@gmail.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 11 Jun 2024 13:31:40 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,185 +97,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 11, 2024 at 04:30:53PM +0200, Kevin Wolf wrote:
-> Am 11.06.2024 um 14:31 hat Amjad Alsharafi geschrieben:
-> > On Mon, Jun 10, 2024 at 06:49:43PM +0200, Kevin Wolf wrote:
-> > > Am 05.06.2024 um 02:58 hat Amjad Alsharafi geschrieben:
-> > > > The field is marked as "the offset in the file (in clusters)", but it
-> > > > was being used like this
-> > > > `cluster_size*(nums)+mapping->info.file.offset`, which is incorrect.
-> > > > 
-> > > > Additionally, removed the `abort` when `first_mapping_index` does not
-> > > > match, as this matches the case when adding new clusters for files, and
-> > > > its inevitable that we reach this condition when doing that if the
-> > > > clusters are not after one another, so there is no reason to `abort`
-> > > > here, execution continues and the new clusters are written to disk
-> > > > correctly.
-> > > > 
-> > > > Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
-> > > 
-> > > Can you help me understand how first_mapping_index really works?
-> > > 
-> > > It seems to me that you get a chain of mappings for each file on the FAT
-> > > filesystem, which are just the contiguous areas in it, and
-> > > first_mapping_index refers to the mapping at the start of the file. But
-> > > for much of the time, it actually doesn't seem to be set at all, so you
-> > > have mapping->first_mapping_index == -1. Do you understand the rules
-> > > around when it's set and when it isn't?
-> > 
-> > Yeah. So `first_mapping_index` is the index of the first mapping, each
-> > mapping is a group of clusters that are contiguous in the file.
-> > Its mostly `-1` because the first mapping will have the value set as
-> > `-1` and not its own index, this value will only be set when the file
-> > contain more than one mapping, and this will only happen when you add
-> > clusters to a file that are not contiguous with the existing clusters.
-> 
-> Ah, that makes some sense. Not sure if it's optimal, but it's a rule I
-> can work with. So just to confirm, this is the invariant that we think
-> should always hold true, right?
-> 
->     assert((mapping->mode & MODE_DIRECTORY) ||
->            !mapping->info.file.offset ||
->            mapping->first_mapping_index > 0);
-> 
+This fixes a bug wherein i386/tcg assumed an interrupt return using
+the IRET instruction was always returning from kernel mode to either
+kernel mode or user mode. This assumption is violated when IRET is used
+as a clever way to restore thread state, as for example in the dotnet
+runtime. There, IRET returns from user mode to user mode.
 
-Yes.
+This bug manifested itself as a page fault in the guest Linux kernel.
 
-We can add this into `get_cluster_count_for_direntry` loop.
-I'm thinking of also converting those `abort` into `assert`, since
-the line `copy_it = 1;` was confusing me, since it was after the `abort`.
+This bug appears to have been in QEMU since the beginning.
 
-> > And actually, thanks to that I noticed another bug not fixed in PATCH 3, 
-> > We are doing this check 
-> > `s->current_mapping->first_mapping_index != mapping->first_mapping_index`
-> > to know if we should switch to the new mapping or not. 
-> > If we were reading from the first mapping (`first_mapping_index == -1`)
-> > and we jumped to the second mapping (`first_mapping_index == n`), we
-> > will catch this condition and switch to the new mapping.
-> > 
-> > But if the file has more than 2 mappings, and we jumped to the 3rd
-> > mapping, we will not catch this since (`first_mapping_index == n`) for
-> > both of them haha. I think a better check is to check the `mapping`
-> > pointer directly. (I'll add it also in the next series together with a
-> > test for it.)
-> 
-> This comparison is exactly what confused me. I didn't realise that the
-> first mapping in the chain has a different value here, so I thought this
-> must mean that we're looking at a different file now - but of course I
-> couldn't see a reason for that because we're iterating through a single
-> file in this function.
-> 
-> But even now that I know that the condition triggers when switching from
-> the first to the second mapping, it doesn't make sense to me. We don't
-> have to copy things around just because a file is non-contiguous.
-> 
-> What we want to catch is if the order of mappings has changed compared
-> to the old state. Do we need a linked list, maybe a prev_mapping_index,
-> instead of first_mapping_index so that we can compare if it is still the
-> same as before?
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/249
+Signed-off-by: Robert R. Henry <robhenry@microsoft.com>
+---
+ target/i386/tcg/seg_helper.c | 78 ++++++++++++++++++++++--------------
+ 1 file changed, 47 insertions(+), 31 deletions(-)
 
-I think this would be the better design (tbh, that's what I thought 
-`first_mapping_index` would do), though not sure if other components
-depend so much into the current design that it would be hard to change.
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 715db1f232..815d26e61d 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -843,20 +843,35 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
+ 
+ #ifdef TARGET_X86_64
+ 
+-#define PUSHQ_RA(sp, val, ra)                   \
+-    {                                           \
+-        sp -= 8;                                \
+-        cpu_stq_kernel_ra(env, sp, (val), ra);  \
+-    }
+-
+-#define POPQ_RA(sp, val, ra)                    \
+-    {                                           \
+-        val = cpu_ldq_kernel_ra(env, sp, ra);   \
+-        sp += 8;                                \
+-    }
++#define PUSHQ_RA(sp, val, ra, cpl, dpl) \
++  FUNC_PUSHQ_RA(env, &sp, val, ra, cpl, dpl)
++
++static inline void FUNC_PUSHQ_RA(
++    CPUX86State *env, target_ulong *sp,
++    target_ulong val, target_ulong ra, int cpl, int dpl) {
++  *sp -= 8;
++  if (dpl == 0) {
++    cpu_stq_kernel_ra(env, *sp, val, ra);
++  } else {
++    cpu_stq_data_ra(env, *sp, val, ra);
++  } 
++}
+ 
+-#define PUSHQ(sp, val) PUSHQ_RA(sp, val, 0)
+-#define POPQ(sp, val) POPQ_RA(sp, val, 0)
++#define POPQ_RA(sp, val, ra, cpl, dpl) \
++  val = FUNC_POPQ_RA(env, &sp, ra, cpl, dpl)
++
++static inline target_ulong FUNC_POPQ_RA(
++    CPUX86State *env, target_ulong *sp,
++    target_ulong ra, int cpl, int dpl) {
++  target_ulong val;
++  if (cpl == 0) {  /* TODO perhaps both arms reduce to cpu_ldq_data_ra? */
++    val = cpu_ldq_kernel_ra(env, *sp, ra);
++  } else {
++    val = cpu_ldq_data_ra(env, *sp, ra);
++  }
++  *sp += 8;
++  return val;
++}
+ 
+ static inline target_ulong get_rsp_from_tss(CPUX86State *env, int level)
+ {
+@@ -901,6 +916,7 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
+     uint32_t e1, e2, e3, ss, eflags;
+     target_ulong old_eip, esp, offset;
+     bool set_rf;
++    const target_ulong retaddr = 0;
+ 
+     has_error_code = 0;
+     if (!is_int && !is_hw) {
+@@ -989,13 +1005,13 @@ static void do_interrupt64(CPUX86State *env, int intno, int is_int,
+         eflags |= RF_MASK;
+     }
+ 
+-    PUSHQ(esp, env->segs[R_SS].selector);
+-    PUSHQ(esp, env->regs[R_ESP]);
+-    PUSHQ(esp, eflags);
+-    PUSHQ(esp, env->segs[R_CS].selector);
+-    PUSHQ(esp, old_eip);
++    PUSHQ_RA(esp, env->segs[R_SS].selector, retaddr, cpl, dpl);
++    PUSHQ_RA(esp, env->regs[R_ESP],         retaddr, cpl, dpl);
++    PUSHQ_RA(esp, eflags,                   retaddr, cpl, dpl);
++    PUSHQ_RA(esp, env->segs[R_CS].selector, retaddr, cpl, dpl);
++    PUSHQ_RA(esp, old_eip,                  retaddr, cpl, dpl);
+     if (has_error_code) {
+-        PUSHQ(esp, error_code);
++        PUSHQ_RA(esp, error_code, retaddr, cpl, dpl);
+     }
+ 
+     /* interrupt gate clear IF mask */
+@@ -1621,8 +1637,8 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+ 
+             /* 64 bit case */
+             rsp = env->regs[R_ESP];
+-            PUSHQ_RA(rsp, env->segs[R_CS].selector, GETPC());
+-            PUSHQ_RA(rsp, next_eip, GETPC());
++            PUSHQ_RA(rsp, env->segs[R_CS].selector, GETPC(), cpl, dpl);
++            PUSHQ_RA(rsp, next_eip, GETPC(), cpl, dpl);
+             /* from this point, not restartable */
+             env->regs[R_ESP] = rsp;
+             cpu_x86_load_seg_cache(env, R_CS, (new_cs & 0xfffc) | cpl,
+@@ -1792,8 +1808,8 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+ #ifdef TARGET_X86_64
+             if (shift == 2) {
+                 /* XXX: verify if new stack address is canonical */
+-                PUSHQ_RA(sp, env->segs[R_SS].selector, GETPC());
+-                PUSHQ_RA(sp, env->regs[R_ESP], GETPC());
++                PUSHQ_RA(sp, env->segs[R_SS].selector, GETPC(), cpl, dpl);
++                PUSHQ_RA(sp, env->regs[R_ESP], GETPC(), cpl, dpl);
+                 /* parameters aren't supported for 64-bit call gates */
+             } else
+ #endif
+@@ -1828,8 +1844,8 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+ 
+ #ifdef TARGET_X86_64
+         if (shift == 2) {
+-            PUSHQ_RA(sp, env->segs[R_CS].selector, GETPC());
+-            PUSHQ_RA(sp, next_eip, GETPC());
++            PUSHQ_RA(sp, env->segs[R_CS].selector, GETPC(), cpl, dpl);
++            PUSHQ_RA(sp, next_eip, GETPC(), cpl, dpl);
+         } else
+ #endif
+         if (shift == 1) {
+@@ -1944,6 +1960,7 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
+     int cpl, dpl, rpl, eflags_mask, iopl;
+     target_ulong ssp, sp, new_eip, new_esp, sp_mask;
+ 
++    cpl = env->hflags & HF_CPL_MASK;
+ #ifdef TARGET_X86_64
+     if (shift == 2) {
+         sp_mask = -1;
+@@ -1957,11 +1974,11 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
+     new_eflags = 0; /* avoid warning */
+ #ifdef TARGET_X86_64
+     if (shift == 2) {
+-        POPQ_RA(sp, new_eip, retaddr);
+-        POPQ_RA(sp, new_cs, retaddr);
++        POPQ_RA(sp, new_eip, retaddr, cpl, dpl);
++        POPQ_RA(sp, new_cs, retaddr, cpl, dpl);
+         new_cs &= 0xffff;
+         if (is_iret) {
+-            POPQ_RA(sp, new_eflags, retaddr);
++            POPQ_RA(sp, new_eflags, retaddr, cpl, dpl);
+         }
+     } else
+ #endif
+@@ -1999,7 +2016,6 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
+         !(e2 & DESC_CS_MASK)) {
+         raise_exception_err_ra(env, EXCP0D_GPF, new_cs & 0xfffc, retaddr);
+     }
+-    cpl = env->hflags & HF_CPL_MASK;
+     rpl = new_cs & 3;
+     if (rpl < cpl) {
+         raise_exception_err_ra(env, EXCP0D_GPF, new_cs & 0xfffc, retaddr);
+@@ -2030,8 +2046,8 @@ static inline void helper_ret_protected(CPUX86State *env, int shift,
+         /* return to different privilege level */
+ #ifdef TARGET_X86_64
+         if (shift == 2) {
+-            POPQ_RA(sp, new_esp, retaddr);
+-            POPQ_RA(sp, new_ss, retaddr);
++            POPQ_RA(sp, new_esp, retaddr, cpl, dpl);
++            POPQ_RA(sp, new_ss, retaddr, cpl, dpl);
+             new_ss &= 0xffff;
+         } else
+ #endif
+-- 
+2.34.1
 
-I'll try to implement this `prev_mapping_index` and see how it goes.
-
-> 
-> Or actually, I suppose that's the first block with an abort() in the
-> code, just that it doesn't compare mappings, but their offsets.
-
-I think, I'm still confused on the whole logic there, the function
-`get_cluster_count_for_direntry` is a mess, and it doesn't just
-*get* the cluster count, it also schedule writeouts and may
-copy clusters around.
-
-> 
-> > > 
-> > > >  block/vvfat.c | 12 +++++++-----
-> > > >  1 file changed, 7 insertions(+), 5 deletions(-)
-> > > > 
-> > > > diff --git a/block/vvfat.c b/block/vvfat.c
-> > > > index 19da009a5b..f0642ac3e4 100644
-> > > > --- a/block/vvfat.c
-> > > > +++ b/block/vvfat.c
-> > > > @@ -1408,7 +1408,9 @@ read_cluster_directory:
-> > > >  
-> > > >          assert(s->current_fd);
-> > > >  
-> > > > -        offset=s->cluster_size*(cluster_num-s->current_mapping->begin)+s->current_mapping->info.file.offset;
-> > > > +        offset = s->cluster_size *
-> > > > +            ((cluster_num - s->current_mapping->begin)
-> > > > +            + s->current_mapping->info.file.offset);
-> > > >          if(lseek(s->current_fd, offset, SEEK_SET)!=offset)
-> > > >              return -3;
-> > > >          s->cluster=s->cluster_buffer;
-> > > > @@ -1929,8 +1931,9 @@ get_cluster_count_for_direntry(BDRVVVFATState* s, direntry_t* direntry, const ch
-> > > >                          (mapping->mode & MODE_DIRECTORY) == 0) {
-> > > >  
-> > > >                      /* was modified in qcow */
-> > > > -                    if (offset != mapping->info.file.offset + s->cluster_size
-> > > > -                            * (cluster_num - mapping->begin)) {
-> > > > +                    if (offset != s->cluster_size
-> > > > +                            * ((cluster_num - mapping->begin)
-> > > > +                            + mapping->info.file.offset)) {
-> > > >                          /* offset of this cluster in file chain has changed */
-> > > >                          abort();
-> > > >                          copy_it = 1;
-> > > > @@ -1944,7 +1947,6 @@ get_cluster_count_for_direntry(BDRVVVFATState* s, direntry_t* direntry, const ch
-> > > >  
-> > > >                      if (mapping->first_mapping_index != first_mapping_index
-> > > >                              && mapping->info.file.offset > 0) {
-> > > > -                        abort();
-> > > >                          copy_it = 1;
-> > > >                      }
-> > > 
-> > > I'm unsure which case this represents. If first_mapping_index refers to
-> > > the mapping of the first cluster in the file, does this mean we got a
-> > > mapping for a different file here? Or is the comparison between -1 and a
-> > > real value?
-> > 
-> > Now that I think more about it, I think this `abort` is actually
-> > correct, the issue though is that the handling around this code is not.
-> > 
-> > What this `abort` actually does is that it checks.
-> > - if the `mapping->first_mapping_index` is not the same as
-> >   `first_mapping_index`, which **should** happen only in one case, when
-> >   we are handling the first mapping, in that case
-> >   `mapping->first_mapping_index == -1`, in all other cases, the other
-> >   mappings after the first should have the condition true.
-> > - From above, we know that this is the first mapping, so if the offset
-> >   is not `0`, then abort, since this is an invalid state.
-> 
-> Yes, make sense.
-> 
-> > This is all good, the issue is that `first_mapping_index` is not set if
-> > we are checking from the middle, the variable `first_mapping_index` is
-> > only set if we passed through the check `cluster_was_modified` with the
-> > first mapping, and in the same function call we checked the other
-> > mappings.
-> 
-> I think I noticed the same yesterday, but when I tried to write a quick
-> patch that I could show you and that would update first_mapping_index in
-> each iteration, I broke something. So I decided I'd first ask you what
-> all of this even means. :-)
-> 
-> > From what I have seen, that doesn't happen since even if you write the
-> > whole file in one go, you are still writing it cluster by cluster, and
-> > the checks happen at that time.
-> 
-> Well, we do trigger the condition, but I suppose updating
-> first_mapping_index in each loop iteration is really the way to go if
-> you think the same.
-
-Indeed, I did a quick change, modifying the loop to always go through
-and set the `first_mapping_index` for the first mapping fixes the issue
-and we can put the `abort` back in place.
-
-I'll also modify the check to instead be 
-`mapping->first_mapping_index < 0 && mapping->info.file.offset > 0`
-This will make it clear that this applies only to the first mapping.
-
-> 
-> Kevin
-> 
 
