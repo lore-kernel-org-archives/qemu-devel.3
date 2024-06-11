@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0622EC25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:23:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD97C27C65
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGwmX-0004zI-4b; Tue, 11 Jun 2024 04:23:05 -0400
+	id 1sGwnn-0005jD-GJ; Tue, 11 Jun 2024 04:24:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sGwmV-0004xq-MK
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:23:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sGwmR-0002wR-PK
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:23:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718094178;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=deMu8Fgzhf8RXQ/fW8aeaRQ/fV0OhhmCDqqteKj0fow=;
- b=HUZVtU+Ywzynzxh0vqbYwLuwHtEsQzuIsjpqeg6ncTqP4kos7vlOhx5mnL4zGBZfO/6llH
- LDuYW3HvmJ6klP/+uzGVR+EfWG69DZ3Tja2N8wbEJ7x9qyZLsc4F6e6Q49669LV6uKyhlo
- C/rRIBhL7ECdJQGB5/0wt1YZV5F+3TE=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-mGj0idIzOpmOQtn71vKndw-1; Tue,
- 11 Jun 2024 04:22:55 -0400
-X-MC-Unique: mGj0idIzOpmOQtn71vKndw-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 97CB719560AF; Tue, 11 Jun 2024 08:22:53 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.73])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1B30E1956048; Tue, 11 Jun 2024 08:22:47 +0000 (UTC)
-Date: Tue, 11 Jun 2024 09:22:44 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
-Message-ID: <ZmgJVGMx81aHjg5f@redhat.com>
-References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1sGwnl-0005ix-Ns
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:24:21 -0400
+Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1sGwnj-0003Go-Ou
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:24:21 -0400
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-3c9cc681ee0so2763710b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 01:24:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1718094254; x=1718699054; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dqp/2xkEK3HcQoW/eJvtXy5zbjbqjYqv4hVWB9wiNd4=;
+ b=faigxlizNT2Hau091vMqzGndCnkD3ldX+gDRQWSF8AfS7wMIEeOGbuuXEDN4Hpyvm5
+ +InC+7ug0g1ZYf97CY0/bR907W3Ec4olcYGCtHDg73zw0IWTof2YrMofPeAi6buL9vP9
+ CTmGMtcyHxy3KIPC9xVb9yyM2X2HhBoSQqR1MRv7cAou7l1BlHJYzfvp+NAU4rZlB1xD
+ fHQ+cRXNKSihXwehX3SA0Fqz4zq6KFcIiwSmSWqhiWLAsKFPd9cfj6HA/9uHXgr3yTXZ
+ a8203+OzcvXjflYPThgyvr8gPqU2AFz/8g68tABO4D1rDtP4Wc7/alude/n9wyB6Ma4P
+ Dl8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718094254; x=1718699054;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dqp/2xkEK3HcQoW/eJvtXy5zbjbqjYqv4hVWB9wiNd4=;
+ b=UpoOOcjVqHpTR7UcVeGg6QraAMjhNpduHXYQawnjT07RWQT2/hDXp+H7YAkaMazIyT
+ /fPeu3Ez63XhM+N+g5MWdpRrjcdp8AjVVuNOeeH/ITF66hQ7JmygbhmuklbWu2zYV2LZ
+ VZOMujVIWWUTMxmQr6M6nunBj5vu34FkfalcB6GgOmKA2PfUzAWEZ01fu94/7qTaEZVM
+ WWVzRMGhAUv3kVJi5rUzAVtQD/dL7obZcC7EvK3Y9ys4ezzqF2yiQ3O9ToSg8E2/23g5
+ aY7OE+6Qq1mNQRNAk26DV14kCqLwb8k4z94w+odKMndclj8rpKSgwRVKMt19S04MWtK8
+ 2cWQ==
+X-Gm-Message-State: AOJu0YwXz2QCbf+TtMHR3Ipp43LRfdvg2L/x/XIVg91QlNZsHxr7Z62s
+ PnFYMqWzQPB9s9Jiao4JHqnETVRIBFIJ5wHAuu8MWPY99mS2D3lVQKYFnTY8UJTFprbWQxMSppb
+ 0k9c=
+X-Google-Smtp-Source: AGHT+IFWHaiZzcCQeEGaJAtIyNWu4jYGHZU/k4odGim8s2juCoJOs3X6EfLoI5IcGkgHkE/eyV2vuw==
+X-Received: by 2002:a05:6808:114f:b0:3d2:24cc:edb2 with SMTP id
+ 5614622812f47-3d224ccee42mr6760811b6e.21.1718094254154; 
+ Tue, 11 Jun 2024 01:24:14 -0700 (PDT)
+Received: from libai.bytedance.net ([61.213.176.14])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70421e6453csm5340790b3a.205.2024.06.11.01.24.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Jun 2024 01:24:13 -0700 (PDT)
+From: zhenwei pi <pizhenwei@bytedance.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ thuth@redhat.com, zhenwei pi <pizhenwei@bytedance.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] meson: Remove libumad dependence
+Date: Tue, 11 Jun 2024 16:24:07 +0800
+Message-Id: <20240611082407.57154-1-pizhenwei@bytedance.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
+ envelope-from=pizhenwei@bytedance.com; helo=mail-oi1-x232.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,54 +91,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 10, 2024 at 09:22:35PM +0300, Manos Pitsidianakis wrote:
-> Hello everyone,
-> 
-> This is an early draft of my work on implementing a very simple device, 
-> in this case the ARM PL011 (which in C code resides in hw/char/pl011.c 
-> and is used in hw/arm/virt.c).
+RDMA based migration has no dependence on libumad, libibverbs and
+librdmacm are enough.
+libumad was used by rdmacm-mux which has been already removed. It's
+remained mistakenly.
 
-looking at the diffstat:
+Fixes: 1dfd42c4264b ("hw/rdma: Remove deprecated pvrdma device and rdmacm-mux helper")
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+---
+ meson.build | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
->  .gitignore                     |   2 +
->  .gitlab-ci.d/buildtest.yml     |  64 ++--
->  configure                      |  12 +
->  hw/arm/virt.c                  |   2 +-
->  meson.build                    |  99 ++++++
->  meson_options.txt              |   4 +
->  rust/meson.build               |  93 ++++++
->  rust/pl011/.cargo/config.toml  |   2 +
->  rust/pl011/.gitignore          |   2 +
->  rust/pl011/Cargo.lock          | 120 +++++++
->  rust/pl011/Cargo.toml          |  26 ++
->  rust/pl011/README.md           |  42 +++
->  rust/pl011/build.rs            |  44 +++
->  rust/pl011/meson.build         |   7 +
->  rust/pl011/rustfmt.toml        |  10 +
->  rust/pl011/src/definitions.rs  |  95 ++++++
->  rust/pl011/src/device.rs       | 531 ++++++++++++++++++++++++++++++
->  rust/pl011/src/device_class.rs |  95 ++++++
->  rust/pl011/src/generated.rs    |   5 +
->  rust/pl011/src/lib.rs          | 575 +++++++++++++++++++++++++++++++++
->  rust/pl011/src/memory_ops.rs   |  38 +++
-
-My thought is that if we're going to start implementing devices
-or other parts of QEMU, in Rust, then I do not want to see it
-placed in a completely separate directory sub-tree.
-
-In this example, I would expect to have hw/arm/pl011.rs, or hw/arm/pl011/*.rs
-so that the device is part of the normal Arm hardware directory structure 
-and maintainer assignments.
-
-With regards,
-Daniel
+diff --git a/meson.build b/meson.build
+index ec59effca2..226b97ea26 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1885,11 +1885,9 @@ endif
+ 
+ rdma = not_found
+ if not get_option('rdma').auto() or have_system
+-  libumad = cc.find_library('ibumad', required: get_option('rdma'))
+   rdma_libs = [cc.find_library('rdmacm', has_headers: ['rdma/rdma_cma.h'],
+                                required: get_option('rdma')),
+-               cc.find_library('ibverbs', required: get_option('rdma')),
+-               libumad]
++               cc.find_library('ibverbs', required: get_option('rdma'))]
+   rdma = declare_dependency(dependencies: rdma_libs)
+   foreach lib: rdma_libs
+     if not lib.found()
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.34.1
 
 
