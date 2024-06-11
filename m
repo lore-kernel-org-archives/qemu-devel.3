@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 498A2C25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 05:38:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ECD3C25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 05:51:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGuBn-0005G0-FQ; Tue, 11 Jun 2024 01:36:59 -0400
+	id 1sGuOW-0008UH-3R; Tue, 11 Jun 2024 01:50:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGuBl-0005FV-Pk
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 01:36:57 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGuOS-0008U4-Eo
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 01:50:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGuBj-0004RG-Tl
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 01:36:57 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sGuOQ-0006eo-Uq
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 01:50:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718084213;
+ s=mimecast20190719; t=1718085001;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8muqscW0gLMLIVQoE9rAh0RZxnA/AZSMLbOh7Y/hXp4=;
- b=ZHYd62ALCjIE1V4mzViwVppbRwHIuIYpkhVCdFXVx1VrG5GW2SKkNP4ayksCZTrcTjlqQv
- KkFsdmGlQhkArtxeOPlBBsdAT+/n9OdADYfZYZMFzoJd9EkYARKrpgJG7NAD40lOMYxocI
- cvw7wr6Y28ks6C7oXhHR8gLioYRyn/8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=lnTcopFK3YO3q+7LOZ8Vlb7WBNkuEX6akzGvfkE2WaY=;
+ b=OxWtH/Gylq8OL6BOu7jgnsqKdc+8jTk94UmV98HSeFJt8tlE1hAXcXtvoU4Tm9wt91bjyO
+ 9eim7p/gK0cvaRytZiitBU5MyOEwzt/6xW1F80R0Z7QK5lu7zHOe20MWAd1DnP7t7VtLh+
+ oG6atbljLiLSsDx1eOCfyrGAMPMYdLU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-Y8WSQOqfONK5sgTygVu8bg-1; Tue,
- 11 Jun 2024 01:36:51 -0400
-X-MC-Unique: Y8WSQOqfONK5sgTygVu8bg-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-504-dLERJ0j3OtS6KgKfIrdRrQ-1; Tue,
+ 11 Jun 2024 01:49:18 -0400
+X-MC-Unique: dLERJ0j3OtS6KgKfIrdRrQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0BF8319560B8; Tue, 11 Jun 2024 05:36:49 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E0B41956059; Tue, 11 Jun 2024 05:49:16 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E2C91955E85; Tue, 11 Jun 2024 05:36:47 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E375A19560AA; Tue, 11 Jun 2024 05:49:14 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 772C321E6757; Tue, 11 Jun 2024 07:36:45 +0200 (CEST)
+ id B078421E681D; Tue, 11 Jun 2024 07:49:12 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org,  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,  Daniel P .
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  qemu-ppc@nongnu.org
-Subject: Re: [PATCH 1/2] hw/misc/mos6522: Expose x-query-mos6522-devices QMP
- command
-In-Reply-To: <20240610150758.2827-2-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 10 Jun 2024 17:07:57
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  qemu-ppc@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Examining device state via monitor for debugging (was: [PATCH 0/2]
+ hw/misc/mos6522: Do not open-code hmp_info_human_readable_text())
+In-Reply-To: <20240610150758.2827-1-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 10 Jun 2024 17:07:56
  +0200")
 References: <20240610150758.2827-1-philmd@linaro.org>
- <20240610150758.2827-2-philmd@linaro.org>
-Date: Tue, 11 Jun 2024 07:36:45 +0200
-Message-ID: <87sexkujki.fsf@pond.sub.org>
+Date: Tue, 11 Jun 2024 07:49:12 +0200
+Message-ID: <87h6e0uizr.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
@@ -92,98 +93,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-> This is a counterpart to the HMP "info via" command. It is being
-> added with an "x-" prefix because this QMP command is intended as an
-> adhoc debugging tool and will thus not be modelled in QAPI as fully
-> structured data, nor will it have long term guaranteed stability.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  MAINTAINERS             |  2 +-
->  qapi/machine.json       | 17 +++++++++++++++++
->  hw/misc/mos6522-stubs.c | 18 ++++++++++++++++++
->  hw/misc/mos6522.c       |  5 +++--
->  hw/misc/meson.build     |  3 ++-
->  5 files changed, 41 insertions(+), 4 deletions(-)
->  create mode 100644 hw/misc/mos6522-stubs.c
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 951556224a..e86638c68c 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1453,7 +1453,7 @@ F: hw/ppc/mac_newworld.c
->  F: hw/pci-host/uninorth.c
->  F: hw/pci-bridge/dec.[hc]
->  F: hw/misc/macio/
-> -F: hw/misc/mos6522.c
-> +F: hw/misc/mos6522*.c
->  F: hw/nvram/mac_nvram.c
->  F: hw/ppc/fw_cfg.c
->  F: hw/input/adb*
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index 1283d14493..a82b8dd39d 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
+> Officialise the QMP command, use the existing
+> hmp_info_human_readable_text() helper.
 
-I figure you pick machine.json because it already serves as grabbag of
-vaguely device-specific queries like x-query-usb.  misc-target.json is
-another grabbag.
+I'm not sure "officialise" is a word :)
 
-> @@ -1865,6 +1865,23 @@
->    'data': { 'filename': 'str' },
->    'if': 'CONFIG_FDT' }
->=20=20
-> +##
-> +# @x-query-mos6522-devices:
-> +#
-> +# Query information on MOS6522 VIA devices
-> +#
-> +# Features:
-> +#
-> +# @unstable: This command is meant for debugging.
-> +#
-> +# Returns: MOS6522 VIA devices information
-> +#
-> +# Since: 9.1
-> +##
-> +{ 'command': 'x-query-mos6522-devices',
-> +  'returns': 'HumanReadableText',
-> +  'features': [ 'unstable' ]}
-> +
->  ##
->  # @x-query-interrupt-controllers:
->  #
+Taking a step back...  "info via" and its new QMP counterpart
+x-query-mos6522-devices dump device state.  I understand why examining
+device state via monitor can be useful for debugging.  However, we have
+more than 2000 devices in the tree.  Clearly, we don't want 2000 device
+state queries.  Not even 100.  Could we have more generic means instead?
 
-HMP "info via" is compile-time conditional on CONFIG_MOS6522.
+We could use QOM (read-only) properties to expose device state.
 
-Its new QMP counterpart x-query-mos6522-devices is unconditional.
-Can you explain why?
+If we use one QOM property per "thing", examining device state becomes
+quite tedious.  Also, you'd have to stop the guest to get a consistent
+view, and adding lots of QOM properties bloats the code.
 
-Possibly related:
+If we use a single, object-valued property for the entire state, we get
+to define the objects in QAPI.  Differently tedious, and bloats the
+generated code.
 
-commit 409e9f7131e55e74eb09e65535779e311df5ebf5
-Author: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Date:   Sat Mar 5 15:09:53 2022 +0000
+We could use a single string-valued property.  Too much of an abuse of
+QOM?
 
-    mos6522: add "info via" HMP command for debugging
-=20=20=20=20
-    This displays detailed information about the device registers and timer=
-s to aid
-    debugging problems with timers and interrupts.
-=20=20=20=20
---> Currently the QAPI generators for HumanReadableText don't work correctl=
-y if
---> used in qapi/target-misc.json when a non-specified target is built, so =
-for
---> now manually add a hmp_info_via() wrapper until direct support for per-=
-device
---> HMP/QMP commands is implemented.
-=20=20=20=20
-    Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-    Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-    Message-Id: <20220305150957.5053-9-mark.cave-ayland@ilande.co.uk>
-    Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+We could add an optional "dump state for debugging" method to QOM, and
+have a single query command that calls it if present.
 
-[...]
+Thoughts?
 
 
