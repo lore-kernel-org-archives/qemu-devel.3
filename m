@@ -4,95 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59920C27C5E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 09:31:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2B9EC25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 09:39:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGxpw-0006As-FY; Tue, 11 Jun 2024 05:30:40 -0400
+	id 1sGxxW-0008Vy-Ua; Tue, 11 Jun 2024 05:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sGxpu-00068Y-RX
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:30:38 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sGxps-0007qi-ND
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:30:38 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-57a52dfd081so991110a12.2
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 02:30:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718098235; x=1718703035; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AbcuUhK3LaL0JvHiBlPX7mdsWHxijm/AB7JI39XtzRM=;
- b=pRyyNw7K+WGjRF2JvDiMJ2QQTeUED+4HOB4qrN3fs8DwHOU+z5mHkLPIqNEJLht2S/
- Ka1DBCzlVQy2FlbbOIp3F/gwzf5Orl5C49ebOvg0RCbXExEwogMVNm1rhz77LJFbUFTP
- NFa8FAZYILFokM8cqk6xafLNYlpeKwNe+g/nV9FsRfLs9HOXkO1Bxr5v5s2FbT7CXQsN
- hkOYZt8Fhg0nOqu6Umokga5oRoQzloSFV8Q1VmONHJOSbk8Tn8mSIzHaNpoZ8hlgSDrX
- MSyFjaSnaHWM2bHjcMOP9R2lo8wpzSpdzAAdHzJ8SoppY56EgpF0+QhUHwxh5q57q28n
- jz4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718098235; x=1718703035;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AbcuUhK3LaL0JvHiBlPX7mdsWHxijm/AB7JI39XtzRM=;
- b=hYkVd7Y73cKkHmiYTmwYLJSeMrqVf23X1tAshAjXX37NMVke5xZuWRf4saAi7gVTQp
- TLjveJkFom3AV2zPve4jLChUCNpmgcV205WFZY5VLID4Be/0lQgzCGb7ZwBgxAKDR8Ap
- 3FOfN95/DfWKEqeg0IBloKgvaFR2bpYLdy4sm7QQjyOOgpUCWNwGQ0MdaISj0VJzBlSz
- WlE9fvdqtmEb1dvhCJsUkCcin9AQF5xXi6bzCPfjqXGpxOBbdJgulGrMi354ei3KqBKh
- vYQ8UXbeLYOpqk9nAzGnFNvMXvj6LV4Jz6VgvpVfu18U2R3oqARS6Gan0CHFypIhShk5
- gPIQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVS/yikCSUVR1dBYWN+133qi3HPo5+42YYZrqhCSvtodc9K6uW35RfWsEn6f3y4JeX82cPsMIcmmUUoWbw8P3trIhxrhGA=
-X-Gm-Message-State: AOJu0Yx4jXApg7G3+yPe+sD0IouWNoiUsS8WfjkLZy2gxWGBbjHs9g5B
- RF3z276ZeduUM4UPBKt/hyMW7tLeK3L7J+5toLzfmK3mZOq0wGjkIM4zz60QXbk=
-X-Google-Smtp-Source: AGHT+IEy2rcJefxKoB28N+t5SJINbIKN6BVs8Alk6Bg/oWVosz6ceWXvSZEEnedJWEdlBFdwQId+/A==
-X-Received: by 2002:a17:906:bc4e:b0:a6f:20ed:8b3d with SMTP id
- a640c23a62f3a-a6f20ed8c4cmr334263566b.33.1718098234737; 
- Tue, 11 Jun 2024 02:30:34 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f1c99d8f1sm272401966b.175.2024.06.11.02.30.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Jun 2024 02:30:34 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6C1B45F898;
- Tue, 11 Jun 2024 10:30:33 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Stefan Hajnoczi <stefanha@gmail.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sGxxT-0008VQ-4Z
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:38:27 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sGxxQ-0000vR-7W
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:38:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1718098704; x=1749634704;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=rqk4oOToLzOJgWVnnrihVv/vZpY+222F98+waiK9O5M=;
+ b=nMeFb+rsc9JyvK5M4ldZk2C9D8UVkn9JiwsQZC0sGRMmUhEj48sGrvzT
+ 4ImZDyVMNYwyd8usQ4x0Zv2r/fUSUhLMNtklfKJ+zJfCFtfZTyXKWKz6G
+ t1Dn6hgunPRnNX35bnn/XsppnlwXDZwt3g0YhOwuvWsAbCGeG/AV2mCvK
+ 9/A87lTF7KXwFQiAi27XhhBVeC6XEYs2JODG/OKkQ3m0lJwRO6SI3LjPs
+ 5aQhiOu4yWT5xm48NYjEOFgyir8tuAj0NnvyCZpyNzihQIRn5i5ciDQc6
+ KiMU7SvIzjapDbGNlMGmak/7xCKf9G22Er8dlmfRyIwAmutg9HpYYzEUO Q==;
+X-CSE-ConnectionGUID: aM0e7bCvTJmKgRx/TcW4Iw==
+X-CSE-MsgGUID: 3IhnP8DzSK+PIdj+gLMUzA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11099"; a="25375376"
+X-IronPort-AV: E=Sophos;i="6.08,229,1712646000"; d="scan'208";a="25375376"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Jun 2024 02:38:19 -0700
+X-CSE-ConnectionGUID: gCruLSKPTKiT2y+uA1dshA==
+X-CSE-MsgGUID: BwYEmZMpR56jrm+7ogWhUQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,229,1712646000"; d="scan'208";a="39458063"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa009.jf.intel.com with ESMTP; 11 Jun 2024 02:38:16 -0700
+Date: Tue, 11 Jun 2024 17:53:45 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org,  Stefan Hajnoczi <stefanha@redhat.com>,  Mads
- Ynddal <mads@ynddal.dk>,  Paolo Bonzini <pbonzini@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>,  Markus Armbruster <armbru@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Zhao Liu
- <zhao1.liu@intel.com>,  Gustavo Romero <gustavo.romero@linaro.org>,
+ qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
-In-Reply-To: <CAJSP0QWLe6yPDE3rPztx=oS0g+vKT9W3GykrNU0EQZcaW06sog@mail.gmail.com>
- (Stefan Hajnoczi's message of "Mon, 10 Jun 2024 16:47:33 -0400")
+Message-ID: <ZmgeqY3Vkax7yfPw@intel.com>
 References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
- <CAJSP0QU2Y_mNtYQtPbahnvj1eLLTu2Z-f4z-6VZgSSxqgVnPbQ@mail.gmail.com>
- <evsu7.aus3yo6r56i@linaro.org>
- <CAJSP0QWLe6yPDE3rPztx=oS0g+vKT9W3GykrNU0EQZcaW06sog@mail.gmail.com>
-Date: Tue, 11 Jun 2024 10:30:33 +0100
-Message-ID: <87jzivzv0m.fsf@draig.linaro.org>
+ <ZmgIUfqDjJuw2Chl@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=gb2312
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZmgIUfqDjJuw2Chl@redhat.com>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,70 +92,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stefan Hajnoczi <stefanha@gmail.com> writes:
+On Tue, Jun 11, 2024 at 09:18:25AM +0100, Daniel P. Berrang¨¦ wrote:
+> Date: Tue, 11 Jun 2024 09:18:25 +0100
+> From: "Daniel P. Berrang¨¦" <berrange@redhat.com>
+> Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
+> 
+> On Mon, Jun 10, 2024 at 09:22:35PM +0300, Manos Pitsidianakis wrote:
+> > What are the issues with not using the compiler, rustc, directly?
+> > -----------------------------------------------------------------
+> > [whataretheissueswith] Back to [TOC]
+> > 
+> > 1. Tooling
+> >    Mostly writing up the build-sys tooling to do so. Ideally we'd 
+> >    compile everything without cargo but rustc directly.
+> > 
+> >    If we decide we need Rust's `std` library support, we could 
+> >    investigate whether building it from scratch is a good solution. This 
+> >    will only build the bits we need in our devices.
+> 
+> Re-building 'std' for QEMU would be a no-go for many distros who
+> will expect QEMU to use the distro provided 'std' package. So at
+> most that would have to be an optional feature.
+> 
+> > 2. Rust dependencies
+> >    We could go without them completely. I chose deliberately to include 
+> >    one dependency in my UART implementation, `bilge`[0], because it has 
+> >    an elegant way of representing typed bitfields for the UART's 
+> >    registers.
+> > 
+> > [0]: Article: https://hecatia-elegua.github.io/blog/no-more-bit-fiddling/
+> >      Crates.io page: https://crates.io/crates/bilge
+> >      Repository: https://github.com/hecatia-elegua/bilge
+> > 
+> > Should QEMU use third-party dependencies?
+> > -----------------------------------------
+> > [shouldqemuusethirdparty] Back to [TOC]
+> > 
+> > In my personal opinion, if we need a dependency we need a strong 
+> > argument for it. A dependency needs a trusted upstream source, a QEMU 
+> > maintainer to make sure it us up-to-date in QEMU etc.
+> 
+> "strong" is a rather fuzzy term. In C we already have a huge number
+> of build dependencies
+> 
+>  $ wc -l tests/lcitool/projects/qemu.yml 
+>  127 tests/lcitool/projects/qemu.yml
+> 
+> we would have many more than that except that we're conservative
+> about adding deps on things because getting new libraries into
+> distros is quite painful, or we lag behind where we would want
+> to be to stick with compat for old distro versions.
+> 
+> In terms of Rust dependancies, I'd expect us to have fairly arbitrary
+> dependancies used. If the dep avoids QEMU maintainers having to
+> re-invent the wheel for something there is already a common crate
+> for, then it is a good thing to use it. I'd almost go as far as
+> encouraging use of external crates. Our maintainers should focus tmie
+> on writing code that's delivers compelling features to QEMU, rather
+> than re-creating common APIs that already have good crates.
 
-> On Mon, 10 Jun 2024 at 16:27, Manos Pitsidianakis
-> <manos.pitsidianakis@linaro.org> wrote:
->>
->> On Mon, 10 Jun 2024 22:59, Stefan Hajnoczi <stefanha@gmail.com> wrote:
-<snip>
->> >>
->> >> 1. Tooling
->> >>    Mostly writing up the build-sys tooling to do so. Ideally we'd
->> >>    compile everything without cargo but rustc directly.
->> >
->> >Why would that be ideal?
->>
->> It remove the indirection level of meson<->cargo<->rustc. I don't have a
->> concrete idea on how to tackle this, but if cargo ends up not strictly
->> necessary, I don't see why we cannot use one build system.
->
-> The convenience of being able to use cargo dependencies without
-> special QEMU meson build system effort seems worth the overhead of
-> meson<->cargo<->rustc to me. There is a blog post that explores using
-> cargo crates using meson's wrap dependencies here, and it seems like
-> extra work:
-> https://coaxion.net/blog/2023/04/building-a-gstreamer-plugin-in-rust-with=
--meson-instead-of-cargo/
->
-> It's possible to use just meson today, but I don't think it's
-> practical when using cargo dependencies.
+So should a base lib be introduced to import and wrap all external
+dependencies?
 
-I did find the wrap approach very useful in giving a useful checkout
-with --download that I can edit and tweak but is still integrated into
-the build. This is helpful when working with very new libraries that
-haven't been widely packaged yet. Distro's can choose or not choose to
-use --download as they wish.
+Sort of like osdep.h, so that specific Rust implementations can't import
+external third-party libraries directly, but only through the base lib.
 
-<snip>
->> >
->> >Do you mean vendoring by committing them to qemu.git or just the
->> >practice of running `cargo vendor` locally for users who decide they
->> >want to keep a copy of the dependencies?
->>
->>
->> Committing, with an option to opt-out. They are generally not big in
->> size. I am not of strong opinion on this one, I'm very open to
->> alternatives.
+The advantage of this is that we can unify the management of external
+dependencies and avoid ¡°potentially/overly arbitrary¡± importing of
+specific Rust implementations.
 
-I think we generally host stuff we explicitly need in separate mirrors
-or even a little light forking (testfloat does this).
-
-> Fedora and Debian want Rust applications to use distro-packaged
-> crates. No vendoring and no crates.io online access. It's a bit of a
-> pain because Rust developers need to make sure their code works with
-> whatever version of crates Fedora and Debian provide.
->
-> The `cargo vendor` command makes it easy for anyone wishing to collect
-> the required dependencies for offline builds (something I've used for
-> CentOS builds where vendoring is allowed).
->
-> I suggest not vendoring packages in qemu.git. Users can still run
-> `cargo vendor` for easy offline builds.
->
-<snip>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
