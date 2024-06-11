@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78C4BC27C5E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 14:28:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90E24C25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 14:28:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH2S5-0007pp-N7; Tue, 11 Jun 2024 10:26:21 -0400
+	id 1sH2RQ-0006vw-NU; Tue, 11 Jun 2024 10:25:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH2S4-0007m1-AQ
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:26:20 -0400
+ id 1sH2RO-0006uU-3W
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:25:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH2S2-0006B4-9f
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:26:20 -0400
+ id 1sH2RM-0005yQ-IX
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:25:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718115977;
+ s=mimecast20190719; t=1718115935;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OMXn4xoWtbGxxqnSwTv4pZx73//0h8zKWI4om598UJg=;
- b=FG21cJcVHbzOxfFk0L1IZm67GPknSqc1iHs5+Kpsloc9F53f7zqkfv512K+dZ+Mg0yHiJs
- xap5KSvL6i9etucdhVLkdtzWZJflXvJKHAGyY4Zji4o3+bu1nS5s2witbHlOzILP1SpKXf
- rHny/QxS+XSix/gYU0G+ICG2n8dWktk=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/cM7wXV2F0pH6OJZLvvHOAgJSjTxfrcPSVlPgLYx7Pc=;
+ b=G47aFxthQq82QGX7Q/QrpSeiK1qmNhUASkNomB04/LQGHzTvA/zT/rWuLL8gN1wqrFKNkb
+ ZP5u8e3GyPlkil+9FFN6JF+axnSfRMVQC6dbyM5DtgG8kMf0WRrfDO6YeoFVV4dPdNdzuj
+ 1q85YVs0z+0mZLjjSyp7uDa9W5szUwE=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-346-WBaKHQB4NKalU3an7Y2ENQ-1; Tue, 11 Jun 2024 10:26:14 -0400
-X-MC-Unique: WBaKHQB4NKalU3an7Y2ENQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a6f3f614e58so26582366b.0
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 07:26:14 -0700 (PDT)
+ us-mta-146-YPzCvkvjOF6GZwt-7QjeIg-1; Tue, 11 Jun 2024 10:25:29 -0400
+X-MC-Unique: YPzCvkvjOF6GZwt-7QjeIg-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a6f2af30793so47500666b.2
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 07:25:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718115972; x=1718720772;
+ d=1e100.net; s=20230601; t=1718115928; x=1718720728;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OMXn4xoWtbGxxqnSwTv4pZx73//0h8zKWI4om598UJg=;
- b=VSOZ3UZ13ICCnxRFZua2N8BNeQzIFuxQBJQFFBtfdVP0+5bTckHHlRCmgcScEqne6L
- Dfcq7ds5GcsWyMhXYBY7JiVIMPs/Fyo12Sxki3NeWcHGlgyvhsMJODd6DZSyHHBAlJnj
- p19Ne2T0h85SBuGaorNXPAC2xiwervrSl5PQDp3o/yjQlTultgyvEHASbu1oGOkC9tvY
- ya/l1ZJFGpaXIlorZnVgiZY0NkM1fCNR95QpOZhBGJWPupIrcwaJGIK5GhojiczXVcHn
- HXMwUhoqrI+eTYDqEBsjfRLx47Q7dMDCkxTPrnyD6eP/59FbzTQnGpTLqpPGUVYHzokR
- lLhw==
-X-Gm-Message-State: AOJu0YydJ/K1zIRNJ+/zhoR9mUg0yrNMWSapM+7C3Nd2IHeruH9Nuxef
- Jdftty8GdwMRIFWnkpbm3uuP5b9aJ7WmJS49H+SaCD9Furhrspf/7Eq516D8Ymarh2iCibFixb+
- WaLkwI7lvoQ6g7XUHQMHgundcEGA5TQaC7bj40hj/cSKw+b0Y+110CbtzIPwOnhpEcT8QHbkeYm
- NihlA+CnDMzAbshIvSDsYDMhwFkUaAsO5OeyFP
-X-Received: by 2002:a17:907:1c05:b0:a6d:de5b:5b1d with SMTP id
- a640c23a62f3a-a6dde5b5d36mr1195733066b.18.1718115972246; 
- Tue, 11 Jun 2024 07:26:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFg52ntUCawpabA0Et2bP7SmqQeJYUF9gqiUx7T5tmDWGqDCRiY7tDIXMOXzdHp1r7R+fJT4w==
-X-Received: by 2002:a17:907:1c05:b0:a6d:de5b:5b1d with SMTP id
- a640c23a62f3a-a6dde5b5d36mr1195730966b.18.1718115971829; 
- Tue, 11 Jun 2024 07:26:11 -0700 (PDT)
+ bh=/cM7wXV2F0pH6OJZLvvHOAgJSjTxfrcPSVlPgLYx7Pc=;
+ b=sdro15VJVAetaO4pQY/aaC8OUxJVJXn6fyAYFieWoaaXCyvYWOts0fKYn8jaSn0de1
+ eUoa6ZwmnDD0pnqY5Yhi7kBpJdqx9a8uoCog6YXI1hAF7G9Q3ejri+ssj7b7KAX1zgS9
+ LmwEhnzM8e4k0Co/9dE0h1iQmV9mP79h0sOXv5bVp8hJHafViPnz8QeyS+8Mo3hqItAi
+ I0yx5Y9VglPBFyb2X9ICUDiMDU4Xd4+cGfm1RvvGfqVB4ifbuRHYcQ1hiPf9IzF4X0P3
+ rDCNOXi4dE2vQLJNFfIyddUEMERTLFMPXObY+R0EqjHGu8M2bVohjsRWMAV16LiVzSv4
+ dd7g==
+X-Gm-Message-State: AOJu0Yy37JM2oCUAtjpM+m/ik5LYKpm886aTsLhgGG2EPlxulyeFUYRX
+ xEEfBjjKJm0jfLMAfcFUA3ky96iAeo16WhxzWoSJkoAl0Pj+KWu0CwTaJDw5kImUCAE7Lbc1Gwy
+ 7LhwMjuyFMqLHyYUoHdBvJtMuEYFMs+rWQivBc2bHdabGANGgI8jy4ktagKj67L8D+vSt/8mUz0
+ wYnQoLf/aIaTNxcJQY3mCTa3QzNOauNxbjJgsB
+X-Received: by 2002:a17:906:2844:b0:a6f:1d3e:d1af with SMTP id
+ a640c23a62f3a-a6f1d3ed202mr440176966b.5.1718115927811; 
+ Tue, 11 Jun 2024 07:25:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH+720WuYCmxgP7HJp9rCt/R4ioMgMDddeTijxEo80Vhf33ZpxBt0UimL2bwY8sRLGqaqgtXA==
+X-Received: by 2002:a17:906:2844:b0:a6f:1d3e:d1af with SMTP id
+ a640c23a62f3a-a6f1d3ed202mr440174966b.5.1718115927490; 
+ Tue, 11 Jun 2024 07:25:27 -0700 (PDT)
 Received: from avogadro.local ([151.62.196.71])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f09154b34sm454236066b.148.2024.06.11.07.26.09
+ a640c23a62f3a-a6f3672d1efsm102920766b.224.2024.06.11.07.25.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Jun 2024 07:26:09 -0700 (PDT)
+ Tue, 11 Jun 2024 07:25:27 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 21/25] target/i386: convert SHLD/SHRD to new decoder
-Date: Tue, 11 Jun 2024 16:25:19 +0200
-Message-ID: <20240611142524.83762-22-pbonzini@redhat.com>
+Cc: Chuang Xu <xuchuangxclwt@bytedance.com>,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 02/25] i386/cpu: fixup number of addressable IDs for processor
+ cores in the physical package
+Date: Tue, 11 Jun 2024 16:25:00 +0200
+Message-ID: <20240611142524.83762-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240611142524.83762-1-pbonzini@redhat.com>
 References: <20240611142524.83762-1-pbonzini@redhat.com>
@@ -103,235 +106,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the same flag generation code as SHL and SHR, but use
-the existing gen_shiftd_rm_T1 function to compute the result
-as well as CC_SRC.
+From: Chuang Xu <xuchuangxclwt@bytedance.com>
 
-Decoding-wise, SHLD/SHRD by immediate count as a 4 operand
-instruction because s->T0 and s->T1 actually occupy three op
-slots.  The infrastructure used by opcodes in the 0F 3A table
-works fine.
+When QEMU is started with:
+-cpu host,host-cache-info=on,l3-cache=off \
+-smp 2,sockets=1,dies=1,cores=1,threads=2
+Guest can't acquire maximum number of addressable IDs for processor cores in
+the physical package from CPUID[04H].
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+When creating a CPU topology of 1 core per package, host-cache-info only
+uses the Host's addressable core IDs field (CPUID.04H.EAX[bits 31-26]),
+resulting in a conflict (on the multicore Host) between the Guest core
+topology information in this field and the Guest's actual cores number.
+
+Fix it by removing the unnecessary condition to cover 1 core per package
+case. This is safe because cores_per_pkg will not be 0 and will be at
+least 1.
+
+Fixes: d7caf13b5fcf ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
+Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-ID: <20240611032314.64076-1-xuchuangxclwt@bytedance.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c      | 84 +-------------------------------
- target/i386/tcg/decode-new.c.inc |  8 ++-
- target/i386/tcg/emit.c.inc       | 42 ++++++++++++++++
- 3 files changed, 50 insertions(+), 84 deletions(-)
+ target/i386/cpu.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 5200b578a0e..33058db4e30 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -1434,57 +1434,11 @@ static bool check_cpl0(DisasContext *s)
-     return false;
- }
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 7466217d5ea..365852cb99e 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6455,10 +6455,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+             if (*eax & 31) {
+                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
  
--static void gen_shift_flags(DisasContext *s, MemOp ot, TCGv result,
--                            TCGv shm1, TCGv count, bool is_right)
--{
--    TCGv_i32 z32, s32, oldop;
--    TCGv z_tl;
--
--    /* Store the results into the CC variables.  If we know that the
--       variable must be dead, store unconditionally.  Otherwise we'll
--       need to not disrupt the current contents.  */
--    z_tl = tcg_constant_tl(0);
--    if (cc_op_live[s->cc_op] & USES_CC_DST) {
--        tcg_gen_movcond_tl(TCG_COND_NE, cpu_cc_dst, count, z_tl,
--                           result, cpu_cc_dst);
--    } else {
--        tcg_gen_mov_tl(cpu_cc_dst, result);
--    }
--    if (cc_op_live[s->cc_op] & USES_CC_SRC) {
--        tcg_gen_movcond_tl(TCG_COND_NE, cpu_cc_src, count, z_tl,
--                           shm1, cpu_cc_src);
--    } else {
--        tcg_gen_mov_tl(cpu_cc_src, shm1);
--    }
--
--    /* Get the two potential CC_OP values into temporaries.  */
--    tcg_gen_movi_i32(s->tmp2_i32, (is_right ? CC_OP_SARB : CC_OP_SHLB) + ot);
--    if (s->cc_op == CC_OP_DYNAMIC) {
--        oldop = cpu_cc_op;
--    } else {
--        tcg_gen_movi_i32(s->tmp3_i32, s->cc_op);
--        oldop = s->tmp3_i32;
--    }
--
--    /* Conditionally store the CC_OP value.  */
--    z32 = tcg_constant_i32(0);
--    s32 = tcg_temp_new_i32();
--    tcg_gen_trunc_tl_i32(s32, count);
--    tcg_gen_movcond_i32(TCG_COND_NE, cpu_cc_op, s32, z32, s->tmp2_i32, oldop);
--
--    /* The CC_OP value is no longer predictable.  */
--    set_cc_op(s, CC_OP_DYNAMIC);
--}
--
- /* XXX: add faster immediate case */
--static TCGv gen_shiftd_rm_T1(DisasContext *s, MemOp ot,
--                             bool is_right, TCGv count_in)
-+static void gen_shiftd_rm_T1(DisasContext *s, MemOp ot,
-+                             bool is_right, TCGv count)
- {
-     target_ulong mask = (ot == MO_64 ? 63 : 31);
--    TCGv count;
--
--    count = tcg_temp_new();
--    tcg_gen_andi_tl(count, count_in, mask);
+-                if (cores_per_pkg > 1) {
+-                    *eax &= ~0xFC000000;
+-                    *eax |= max_core_ids_in_package(&topo_info) << 26;
+-                }
++                *eax &= ~0xFC000000;
++                *eax |= max_core_ids_in_package(&topo_info) << 26;
+                 if (host_vcpus_per_cache > threads_per_pkg) {
+                     *eax &= ~0x3FFC000;
  
-     switch (ot) {
-     case MO_16:
-@@ -1546,8 +1500,6 @@ static TCGv gen_shiftd_rm_T1(DisasContext *s, MemOp ot,
-         tcg_gen_or_tl(s->T0, s->T0, s->T1);
-         break;
-     }
--
--    return count;
- }
- 
- #define X86_MAX_INSN_LENGTH 15
-@@ -3057,7 +3009,6 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-     CPUX86State *env = cpu_env(cpu);
-     int prefixes = s->prefix;
-     MemOp dflag = s->dflag;
--    TCGv shift;
-     MemOp ot;
-     int modrm, reg, rm, mod, op, val;
- 
-@@ -3221,37 +3172,6 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-         }
-         break;
- 
--        /**************************/
--        /* shifts */
--    case 0x1a4: /* shld imm */
--        op = 0;
--        shift = NULL;
--        goto do_shiftd;
--    case 0x1a5: /* shld cl */
--        op = 0;
--        shift = cpu_regs[R_ECX];
--        goto do_shiftd;
--    case 0x1ac: /* shrd imm */
--        op = 1;
--        shift = NULL;
--        goto do_shiftd;
--    case 0x1ad: /* shrd cl */
--        op = 1;
--        shift = cpu_regs[R_ECX];
--    do_shiftd:
--        ot = dflag;
--        modrm = x86_ldub_code(env, s);
--        reg = ((modrm >> 3) & 7) | REX_R(s);
--        gen_ld_modrm(env, s, modrm, ot);
--        if (!shift) {
--            shift = tcg_constant_tl(x86_ldub_code(env, s));
--        }
--        gen_op_mov_v_reg(s, ot, s->T1, reg);
--        shift = gen_shiftd_rm_T1(s, ot, op, shift);
--        gen_st_modrm(env, s, modrm, ot);
--        gen_shift_flags(s, ot, s->T0, s->tmp0, shift, op);
--        break;
--
-         /************************/
-         /* bit operations */
-     case 0x1ba: /* bt/bts/btr/btc Gv, im */
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 1db9d1e2bc3..2d27b07f296 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1114,6 +1114,8 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xa0] = X86_OP_ENTRYr(PUSH, FS, w),
-     [0xa1] = X86_OP_ENTRYw(POP, FS, w),
-     [0xa2] = X86_OP_ENTRY0(CPUID),
-+    [0xa4] = X86_OP_ENTRY4(SHLD,  E,v, 2op,v, G,v),
-+    [0xa5] = X86_OP_ENTRY3(SHLD,  E,v, 2op,v, G,v),
- 
-     [0xb2] = X86_OP_ENTRY3(LSS,    G,v, EM,p, None, None),
-     [0xb4] = X86_OP_ENTRY3(LFS,    G,v, EM,p, None, None),
-@@ -1240,6 +1242,8 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xa8] = X86_OP_ENTRYr(PUSH,   GS, w),
-     [0xa9] = X86_OP_ENTRYw(POP,    GS, w),
-     [0xaa] = X86_OP_ENTRY0(RSM,             chk(smm) svm(RSM)),
-+    [0xac] = X86_OP_ENTRY4(SHRD,   E,v, 2op,v, G,v),
-+    [0xad] = X86_OP_ENTRY3(SHRD,   E,v, 2op,v, G,v),
-     [0xae] = X86_OP_GROUP0(group15),
-     /*
-      * It's slightly more efficient to put Ev operand in T0 and allow gen_IMUL3
-@@ -2532,8 +2536,8 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-             switch (b) {
-             case 0x00 ... 0x01: /* mostly privileged instructions */
-             case 0x1a ... 0x1b: /* MPX */
--            case 0xa3 ... 0xa5: /* BT, SHLD */
--            case 0xab ... 0xad: /* BTS, SHRD */
-+            case 0xa3:          /* bt */
-+            case 0xab:          /* bts */
-             case 0xb0 ... 0xb1: /* cmpxchg */
-             case 0xb3:          /* btr */
-             case 0xb8:          /* integer ops */
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 156ea282af4..fc4687a35bd 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -3584,6 +3584,27 @@ static void gen_SHL(DisasContext *s, X86DecodedInsn *decode)
-     }
- }
- 
-+static void gen_SHLD(DisasContext *s, X86DecodedInsn *decode)
-+{
-+    bool can_be_zero;
-+    TCGv count;
-+    int unit = decode->e.op3 == X86_TYPE_I ? X86_OP_IMM : X86_OP_INT;
-+    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, unit);
-+
-+    if (!count) {
-+        return;
-+    }
-+
-+    decode->cc_dst = s->T0;
-+    decode->cc_src = s->tmp0;
-+    gen_shiftd_rm_T1(s, ot, false, count);
-+    if (can_be_zero) {
-+        gen_shift_dynamic_flags(s, decode, count, CC_OP_SHLB + ot);
-+    } else {
-+        decode->cc_op = CC_OP_SHLB + ot;
-+    }
-+}
-+
- static void gen_SHLX(DisasContext *s, X86DecodedInsn *decode)
- {
-     MemOp ot = decode->op[0].ot;
-@@ -3616,6 +3637,27 @@ static void gen_SHR(DisasContext *s, X86DecodedInsn *decode)
-     }
- }
- 
-+static void gen_SHRD(DisasContext *s, X86DecodedInsn *decode)
-+{
-+    bool can_be_zero;
-+    TCGv count;
-+    int unit = decode->e.op3 == X86_TYPE_I ? X86_OP_IMM : X86_OP_INT;
-+    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, unit);
-+
-+    if (!count) {
-+        return;
-+    }
-+
-+    decode->cc_dst = s->T0;
-+    decode->cc_src = s->tmp0;
-+    gen_shiftd_rm_T1(s, ot, true, count);
-+    if (can_be_zero) {
-+        gen_shift_dynamic_flags(s, decode, count, CC_OP_SARB + ot);
-+    } else {
-+        decode->cc_op = CC_OP_SARB + ot;
-+    }
-+}
-+
- static void gen_SHRX(DisasContext *s, X86DecodedInsn *decode)
- {
-     MemOp ot = decode->op[0].ot;
 -- 
 2.45.1
 
