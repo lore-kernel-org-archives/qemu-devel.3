@@ -4,90 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA474C25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 14:31:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62BF3C27C5E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 14:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH2S7-0007y4-Q6; Tue, 11 Jun 2024 10:26:23 -0400
+	id 1sH2Wy-0004GF-Lt; Tue, 11 Jun 2024 10:31:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH2S6-0007tr-Ex
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:26:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH2Wn-0003u3-Ci
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:31:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH2S4-0006Bg-IB
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:26:22 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH2Wj-00071l-AL
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:31:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718115979;
+ s=mimecast20190719; t=1718116263;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iM+2F+hx2KQCEz/PaZSH6JF18fi1CDq4iiNZACN4mQA=;
- b=PY7vKQhho3WgtRePm0dr7erS+/XnwprE2pY3UijKmZDlXFr5lEE/ruuyFuCrZxck94oih0
- yDmlgJrZ0r4CE5scg9ObesXiqQHB+y7qV0gZuBRxIcKz27QyZtUHMfHS7rybqE7aMOljCe
- 5AbFaeElYo2P6roz4oRpZBKiaTnnsoE=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-85-pXl3cdAlP6uMmC9wL2OhQg-1; Tue, 11 Jun 2024 10:26:18 -0400
-X-MC-Unique: pXl3cdAlP6uMmC9wL2OhQg-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-57ca45d7664so42910a12.1
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 07:26:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718115976; x=1718720776;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iM+2F+hx2KQCEz/PaZSH6JF18fi1CDq4iiNZACN4mQA=;
- b=Q6y5B3ak+ZhDwRUIt4YbnCvwYj0tOk35rzqQjCiUS8U/o53kiYQo9t/ZkBb3zz0Fan
- CWKSWn0NI2BdifV6JMT3YLnFUCqoh4qH7R4z47lxlcXfiC59ZZhgjv/7g3uIBAQ2CVHn
- dBKO6IogWb+URAXARwaAOiuEvab3/lM4Yc1kUpym6ArY2PS9tAx72AMMKQNYy+szAGYi
- VV8xV8NIv+h2TVKd/f+Vhhn1Kxt39c78+BOgmF65wCn2D25PZtC2Ao6HwxbBqCgHSDRf
- Sn+Psip5HyuNs6sCoZDbAZqN3za3kinE2+oYjiOg5aLxPPNs4KUHX/9uJGohw7VsSZIK
- kauw==
-X-Gm-Message-State: AOJu0YymW7TrfIBzPEoxcHkAC15yP875u/Kiu8Ya7yzbK4HLkpBx7iCf
- saUkYDhscGzk0H4n4hIexeqYsrKwMOXDU5889QSN0AjE4ILLg8v0w739BiBAKVJ9OOGAbGk2d7y
- 4mBbJ6fjuoVikgt6DeK0KCbVf5d4ZlFs1y6ldAu7IrwtXc81U4hFGycxWUAmuhmmumLcFGirCoD
- BsfHtu8jAyh7wW+OSyP1kU9WkqutJo9AcOhAJ+
-X-Received: by 2002:a50:d51c:0:b0:57c:7653:7386 with SMTP id
- 4fb4d7f45d1cf-57c76537481mr5111329a12.13.1718115976327; 
- Tue, 11 Jun 2024 07:26:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2nqnefGUi5VtpTkasGAJTMKtzxXV6+BZZ7jGFznM+R1D4HM2u9sp/NGW9YMd5YQOqg8CWSA==
-X-Received: by 2002:a50:d51c:0:b0:57c:7653:7386 with SMTP id
- 4fb4d7f45d1cf-57c76537481mr5111313a12.13.1718115975909; 
- Tue, 11 Jun 2024 07:26:15 -0700 (PDT)
-Received: from avogadro.local ([151.62.196.71])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57ca4527bd6sm183711a12.22.2024.06.11.07.26.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Jun 2024 07:26:13 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 23/25] target/i386: convert XADD to new decoder
-Date: Tue, 11 Jun 2024 16:25:21 +0200
-Message-ID: <20240611142524.83762-24-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.1
-In-Reply-To: <20240611142524.83762-1-pbonzini@redhat.com>
-References: <20240611142524.83762-1-pbonzini@redhat.com>
+ bh=kV3MxGpsGCoh0lXguRIZ7kx9cS0PXboFJlj+TUUaD78=;
+ b=hCgT+QD7bhUsNUBvDSAIJg/selOAnuCrvLkaSj452eVR+JuiZqH/madYfR61pUNfM7Pltv
+ 60rt+lD2XcT/hgLc1Y+52+hV7H0rLE5sdScJ+RfQqVooFhK/CxszyKik12EFj0OFgRpUz7
+ MbWhMcsOubOVS82fP38se4ttmcus6l4=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-262-Zvs-czWnPhOcwXFHz76Z6g-1; Tue,
+ 11 Jun 2024 10:30:58 -0400
+X-MC-Unique: Zvs-czWnPhOcwXFHz76Z6g-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3AAF0195608C; Tue, 11 Jun 2024 14:30:57 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.192.130])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C8ED51955E84; Tue, 11 Jun 2024 14:30:55 +0000 (UTC)
+Date: Tue, 11 Jun 2024 16:30:53 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Amjad Alsharafi <amjadsharafi10@gmail.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ "open list:vvfat" <qemu-block@nongnu.org>
+Subject: Re: [PATCH v4 2/4] vvfat: Fix usage of `info.file.offset`
+Message-ID: <ZmhfnSIe30da03uN@redhat.com>
+References: <cover.1717549035.git.amjadsharafi10@gmail.com>
+ <a4ae80b8307284a8b30f0267171cca850f12dc42.1717549035.git.amjadsharafi10@gmail.com>
+ <Zmcup6IVpHW3sRP5@redhat.com> <ZmhDl7ob8G62FtZb@amjad-pc>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZmhDl7ob8G62FtZb@amjad-pc>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,124 +83,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/translate.c      | 35 --------------------------------
- target/i386/tcg/decode-new.c.inc |  3 ++-
- target/i386/tcg/emit.c.inc       | 24 ++++++++++++++++++++++
- 3 files changed, 26 insertions(+), 36 deletions(-)
+Am 11.06.2024 um 14:31 hat Amjad Alsharafi geschrieben:
+> On Mon, Jun 10, 2024 at 06:49:43PM +0200, Kevin Wolf wrote:
+> > Am 05.06.2024 um 02:58 hat Amjad Alsharafi geschrieben:
+> > > The field is marked as "the offset in the file (in clusters)", but it
+> > > was being used like this
+> > > `cluster_size*(nums)+mapping->info.file.offset`, which is incorrect.
+> > > 
+> > > Additionally, removed the `abort` when `first_mapping_index` does not
+> > > match, as this matches the case when adding new clusters for files, and
+> > > its inevitable that we reach this condition when doing that if the
+> > > clusters are not after one another, so there is no reason to `abort`
+> > > here, execution continues and the new clusters are written to disk
+> > > correctly.
+> > > 
+> > > Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
+> > 
+> > Can you help me understand how first_mapping_index really works?
+> > 
+> > It seems to me that you get a chain of mappings for each file on the FAT
+> > filesystem, which are just the contiguous areas in it, and
+> > first_mapping_index refers to the mapping at the start of the file. But
+> > for much of the time, it actually doesn't seem to be set at all, so you
+> > have mapping->first_mapping_index == -1. Do you understand the rules
+> > around when it's set and when it isn't?
+> 
+> Yeah. So `first_mapping_index` is the index of the first mapping, each
+> mapping is a group of clusters that are contiguous in the file.
+> Its mostly `-1` because the first mapping will have the value set as
+> `-1` and not its own index, this value will only be set when the file
+> contain more than one mapping, and this will only happen when you add
+> clusters to a file that are not contiguous with the existing clusters.
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 68a11f81786..5d9312bb48c 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -823,12 +823,6 @@ static void gen_movs(DisasContext *s, MemOp ot)
-     gen_op_add_reg(s, s->aflag, R_EDI, dshift);
- }
- 
--static void gen_op_update2_cc(DisasContext *s)
--{
--    tcg_gen_mov_tl(cpu_cc_src, s->T1);
--    tcg_gen_mov_tl(cpu_cc_dst, s->T0);
--}
--
- /* compute all eflags to reg */
- static void gen_mov_eflags(DisasContext *s, TCGv reg)
- {
-@@ -3011,35 +3005,6 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-     switch (b) {
-         /**************************/
-         /* arith & logic */
--    case 0x1c0:
--    case 0x1c1: /* xadd Ev, Gv */
--        ot = mo_b_d(b, dflag);
--        modrm = x86_ldub_code(env, s);
--        reg = ((modrm >> 3) & 7) | REX_R(s);
--        mod = (modrm >> 6) & 3;
--        gen_op_mov_v_reg(s, ot, s->T0, reg);
--        if (mod == 3) {
--            rm = (modrm & 7) | REX_B(s);
--            gen_op_mov_v_reg(s, ot, s->T1, rm);
--            tcg_gen_add_tl(s->T0, s->T0, s->T1);
--            gen_op_mov_reg_v(s, ot, reg, s->T1);
--            gen_op_mov_reg_v(s, ot, rm, s->T0);
--        } else {
--            gen_lea_modrm(env, s, modrm);
--            if (s->prefix & PREFIX_LOCK) {
--                tcg_gen_atomic_fetch_add_tl(s->T1, s->A0, s->T0,
--                                            s->mem_index, ot | MO_LE);
--                tcg_gen_add_tl(s->T0, s->T0, s->T1);
--            } else {
--                gen_op_ld_v(s, ot, s->T1, s->A0);
--                tcg_gen_add_tl(s->T0, s->T0, s->T1);
--                gen_op_st_v(s, ot, s->T0, s->A0);
--            }
--            gen_op_mov_reg_v(s, ot, reg, s->T1);
--        }
--        gen_op_update2_cc(s);
--        set_cc_op(s, CC_OP_ADDB + ot);
--        break;
-     case 0x1b0:
-     case 0x1b1: /* cmpxchg Ev, Gv */
-         {
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 15ebc1233ea..008a8387bda 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1167,6 +1167,8 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xb6] = X86_OP_ENTRY3(MOV,    G,v, E,b, None, None, zextT0), /* MOVZX */
-     [0xb7] = X86_OP_ENTRY3(MOV,    G,v, E,w, None, None, zextT0), /* MOVZX */
- 
-+    [0xc0] = X86_OP_ENTRY2(XADD,       E,b, G,b,            lock),
-+    [0xc1] = X86_OP_ENTRY2(XADD,       E,v, G,v,            lock),
-     [0xc2] = X86_OP_ENTRY4(VCMP,       V,x, H,x, W,x,       vex2_rep3 p_00_66_f3_f2),
-     [0xc3] = X86_OP_ENTRY3(MOV,        EM,y,G,y, None,None, cpuid(SSE2)), /* MOVNTI */
-     [0xc4] = X86_OP_ENTRY4(PINSRW,     V,dq,H,dq,E,w,       vex5 mmx p_00_66),
-@@ -2590,7 +2592,6 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-             case 0xb0 ... 0xb1: /* cmpxchg */
-             case 0xb3:          /* btr */
-             case 0xba ... 0xbb: /* grp8, btc */
--            case 0xc0 ... 0xc1: /* xadd */
-             case 0xc7:          /* grp9 */
-                 disas_insn_old(s, cpu, b + 0x100);
-                 return;
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 7f554ba1173..9c8fe14e286 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -4368,6 +4368,30 @@ static void gen_WRxxBASE(DisasContext *s, X86DecodedInsn *decode)
-     tcg_gen_mov_tl(base, s->T0);
- }
- 
-+static void gen_XADD(DisasContext *s, X86DecodedInsn *decode)
-+{
-+    MemOp ot = decode->op[1].ot;
-+
-+    decode->cc_dst = tcg_temp_new();
-+    decode->cc_src = s->T1;
-+    decode->cc_op = CC_OP_ADDB + ot;
-+
-+    if (s->prefix & PREFIX_LOCK) {
-+        tcg_gen_atomic_fetch_add_tl(s->T0, s->A0, s->T1, s->mem_index, ot | MO_LE);
-+        tcg_gen_add_tl(decode->cc_dst, s->T0, s->T1);
-+    } else {
-+        tcg_gen_add_tl(decode->cc_dst, s->T0, s->T1);
-+        /*
-+         * NOTE: writing memory first is important for MMU exceptions,
-+         * but "new result" wins for XADD AX, AX.
-+         */
-+        gen_writeback(s, decode, 0, decode->cc_dst);
-+    }
-+    if (decode->op[0].has_ea || decode->op[2].n != decode->op[0].n) {
-+        gen_writeback(s, decode, 2, s->T0);
-+    }
-+}
-+
- static void gen_XCHG(DisasContext *s, X86DecodedInsn *decode)
- {
-     if (s->prefix & PREFIX_LOCK) {
--- 
-2.45.1
+Ah, that makes some sense. Not sure if it's optimal, but it's a rule I
+can work with. So just to confirm, this is the invariant that we think
+should always hold true, right?
+
+    assert((mapping->mode & MODE_DIRECTORY) ||
+           !mapping->info.file.offset ||
+           mapping->first_mapping_index > 0);
+
+> And actually, thanks to that I noticed another bug not fixed in PATCH 3, 
+> We are doing this check 
+> `s->current_mapping->first_mapping_index != mapping->first_mapping_index`
+> to know if we should switch to the new mapping or not. 
+> If we were reading from the first mapping (`first_mapping_index == -1`)
+> and we jumped to the second mapping (`first_mapping_index == n`), we
+> will catch this condition and switch to the new mapping.
+> 
+> But if the file has more than 2 mappings, and we jumped to the 3rd
+> mapping, we will not catch this since (`first_mapping_index == n`) for
+> both of them haha. I think a better check is to check the `mapping`
+> pointer directly. (I'll add it also in the next series together with a
+> test for it.)
+
+This comparison is exactly what confused me. I didn't realise that the
+first mapping in the chain has a different value here, so I thought this
+must mean that we're looking at a different file now - but of course I
+couldn't see a reason for that because we're iterating through a single
+file in this function.
+
+But even now that I know that the condition triggers when switching from
+the first to the second mapping, it doesn't make sense to me. We don't
+have to copy things around just because a file is non-contiguous.
+
+What we want to catch is if the order of mappings has changed compared
+to the old state. Do we need a linked list, maybe a prev_mapping_index,
+instead of first_mapping_index so that we can compare if it is still the
+same as before?
+
+Or actually, I suppose that's the first block with an abort() in the
+code, just that it doesn't compare mappings, but their offsets.
+
+> > 
+> > >  block/vvfat.c | 12 +++++++-----
+> > >  1 file changed, 7 insertions(+), 5 deletions(-)
+> > > 
+> > > diff --git a/block/vvfat.c b/block/vvfat.c
+> > > index 19da009a5b..f0642ac3e4 100644
+> > > --- a/block/vvfat.c
+> > > +++ b/block/vvfat.c
+> > > @@ -1408,7 +1408,9 @@ read_cluster_directory:
+> > >  
+> > >          assert(s->current_fd);
+> > >  
+> > > -        offset=s->cluster_size*(cluster_num-s->current_mapping->begin)+s->current_mapping->info.file.offset;
+> > > +        offset = s->cluster_size *
+> > > +            ((cluster_num - s->current_mapping->begin)
+> > > +            + s->current_mapping->info.file.offset);
+> > >          if(lseek(s->current_fd, offset, SEEK_SET)!=offset)
+> > >              return -3;
+> > >          s->cluster=s->cluster_buffer;
+> > > @@ -1929,8 +1931,9 @@ get_cluster_count_for_direntry(BDRVVVFATState* s, direntry_t* direntry, const ch
+> > >                          (mapping->mode & MODE_DIRECTORY) == 0) {
+> > >  
+> > >                      /* was modified in qcow */
+> > > -                    if (offset != mapping->info.file.offset + s->cluster_size
+> > > -                            * (cluster_num - mapping->begin)) {
+> > > +                    if (offset != s->cluster_size
+> > > +                            * ((cluster_num - mapping->begin)
+> > > +                            + mapping->info.file.offset)) {
+> > >                          /* offset of this cluster in file chain has changed */
+> > >                          abort();
+> > >                          copy_it = 1;
+> > > @@ -1944,7 +1947,6 @@ get_cluster_count_for_direntry(BDRVVVFATState* s, direntry_t* direntry, const ch
+> > >  
+> > >                      if (mapping->first_mapping_index != first_mapping_index
+> > >                              && mapping->info.file.offset > 0) {
+> > > -                        abort();
+> > >                          copy_it = 1;
+> > >                      }
+> > 
+> > I'm unsure which case this represents. If first_mapping_index refers to
+> > the mapping of the first cluster in the file, does this mean we got a
+> > mapping for a different file here? Or is the comparison between -1 and a
+> > real value?
+> 
+> Now that I think more about it, I think this `abort` is actually
+> correct, the issue though is that the handling around this code is not.
+> 
+> What this `abort` actually does is that it checks.
+> - if the `mapping->first_mapping_index` is not the same as
+>   `first_mapping_index`, which **should** happen only in one case, when
+>   we are handling the first mapping, in that case
+>   `mapping->first_mapping_index == -1`, in all other cases, the other
+>   mappings after the first should have the condition true.
+> - From above, we know that this is the first mapping, so if the offset
+>   is not `0`, then abort, since this is an invalid state.
+
+Yes, make sense.
+
+> This is all good, the issue is that `first_mapping_index` is not set if
+> we are checking from the middle, the variable `first_mapping_index` is
+> only set if we passed through the check `cluster_was_modified` with the
+> first mapping, and in the same function call we checked the other
+> mappings.
+
+I think I noticed the same yesterday, but when I tried to write a quick
+patch that I could show you and that would update first_mapping_index in
+each iteration, I broke something. So I decided I'd first ask you what
+all of this even means. :-)
+
+> From what I have seen, that doesn't happen since even if you write the
+> whole file in one go, you are still writing it cluster by cluster, and
+> the checks happen at that time.
+
+Well, we do trigger the condition, but I suppose updating
+first_mapping_index in each loop iteration is really the way to go if
+you think the same.
+
+Kevin
 
 
