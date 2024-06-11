@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21EE5C27C5E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0622EC25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:23:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGwiL-0003dO-Ig; Tue, 11 Jun 2024 04:18:45 -0400
+	id 1sGwmX-0004zI-4b; Tue, 11 Jun 2024 04:23:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sGwiJ-0003cs-UG
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:18:43 -0400
+ id 1sGwmV-0004xq-MK
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:23:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sGwiH-0002CS-QL
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:18:43 -0400
+ id 1sGwmR-0002wR-PK
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:23:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718093919;
+ s=mimecast20190719; t=1718094178;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=VVHAuFT0IMEmESZKU9qnNisekpHWEQ+THEqd7fnks8M=;
- b=ToqRrS4Sx+E0SsEDqgdyO581lypT4Ee0UWXX3bU5YdodyHx6bs0Fb/oqPB1queIdR8Ze7l
- QRRRTXOCLLXemX1Zt+cdCxgMXjhtUyFdrlEU40IRU9EHOZLsOE8lS4xVeMQJhw+w1gKttq
- O35HpaAEwcmrVr1ugAHXwbiDTFakHO8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=deMu8Fgzhf8RXQ/fW8aeaRQ/fV0OhhmCDqqteKj0fow=;
+ b=HUZVtU+Ywzynzxh0vqbYwLuwHtEsQzuIsjpqeg6ncTqP4kos7vlOhx5mnL4zGBZfO/6llH
+ LDuYW3HvmJ6klP/+uzGVR+EfWG69DZ3Tja2N8wbEJ7x9qyZLsc4F6e6Q49669LV6uKyhlo
+ C/rRIBhL7ECdJQGB5/0wt1YZV5F+3TE=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-531-XvytCqiGP7CcPRs0F4nNvQ-1; Tue,
- 11 Jun 2024 04:18:35 -0400
-X-MC-Unique: XvytCqiGP7CcPRs0F4nNvQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-mGj0idIzOpmOQtn71vKndw-1; Tue,
+ 11 Jun 2024 04:22:55 -0400
+X-MC-Unique: mGj0idIzOpmOQtn71vKndw-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 68A3E1955F10; Tue, 11 Jun 2024 08:18:33 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 97CB719560AF; Tue, 11 Jun 2024 08:22:53 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.73])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A7311956048; Tue, 11 Jun 2024 08:18:28 +0000 (UTC)
-Date: Tue, 11 Jun 2024 09:18:25 +0100
+ id 1B30E1956048; Tue, 11 Jun 2024 08:22:47 +0000 (UTC)
+Date: Tue, 11 Jun 2024 09:22:44 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
@@ -58,7 +58,7 @@ Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
-Message-ID: <ZmgIUfqDjJuw2Chl@redhat.com>
+Message-ID: <ZmgJVGMx81aHjg5f@redhat.com>
 References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -93,101 +93,43 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, Jun 10, 2024 at 09:22:35PM +0300, Manos Pitsidianakis wrote:
-> What are the issues with not using the compiler, rustc, directly?
-> -----------------------------------------------------------------
-> [whataretheissueswith] Back to [TOC]
+> Hello everyone,
 > 
-> 1. Tooling
->    Mostly writing up the build-sys tooling to do so. Ideally we'd 
->    compile everything without cargo but rustc directly.
-> 
->    If we decide we need Rust's `std` library support, we could 
->    investigate whether building it from scratch is a good solution. This 
->    will only build the bits we need in our devices.
+> This is an early draft of my work on implementing a very simple device, 
+> in this case the ARM PL011 (which in C code resides in hw/char/pl011.c 
+> and is used in hw/arm/virt.c).
 
-Re-building 'std' for QEMU would be a no-go for many distros who
-will expect QEMU to use the distro provided 'std' package. So at
-most that would have to be an optional feature.
+looking at the diffstat:
 
-> 2. Rust dependencies
->    We could go without them completely. I chose deliberately to include 
->    one dependency in my UART implementation, `bilge`[0], because it has 
->    an elegant way of representing typed bitfields for the UART's 
->    registers.
-> 
-> [0]: Article: https://hecatia-elegua.github.io/blog/no-more-bit-fiddling/
->      Crates.io page: https://crates.io/crates/bilge
->      Repository: https://github.com/hecatia-elegua/bilge
-> 
-> Should QEMU use third-party dependencies?
-> -----------------------------------------
-> [shouldqemuusethirdparty] Back to [TOC]
-> 
-> In my personal opinion, if we need a dependency we need a strong 
-> argument for it. A dependency needs a trusted upstream source, a QEMU 
-> maintainer to make sure it us up-to-date in QEMU etc.
+>  .gitignore                     |   2 +
+>  .gitlab-ci.d/buildtest.yml     |  64 ++--
+>  configure                      |  12 +
+>  hw/arm/virt.c                  |   2 +-
+>  meson.build                    |  99 ++++++
+>  meson_options.txt              |   4 +
+>  rust/meson.build               |  93 ++++++
+>  rust/pl011/.cargo/config.toml  |   2 +
+>  rust/pl011/.gitignore          |   2 +
+>  rust/pl011/Cargo.lock          | 120 +++++++
+>  rust/pl011/Cargo.toml          |  26 ++
+>  rust/pl011/README.md           |  42 +++
+>  rust/pl011/build.rs            |  44 +++
+>  rust/pl011/meson.build         |   7 +
+>  rust/pl011/rustfmt.toml        |  10 +
+>  rust/pl011/src/definitions.rs  |  95 ++++++
+>  rust/pl011/src/device.rs       | 531 ++++++++++++++++++++++++++++++
+>  rust/pl011/src/device_class.rs |  95 ++++++
+>  rust/pl011/src/generated.rs    |   5 +
+>  rust/pl011/src/lib.rs          | 575 +++++++++++++++++++++++++++++++++
+>  rust/pl011/src/memory_ops.rs   |  38 +++
 
-"strong" is a rather fuzzy term. In C we already have a huge number
-of build dependencies
+My thought is that if we're going to start implementing devices
+or other parts of QEMU, in Rust, then I do not want to see it
+placed in a completely separate directory sub-tree.
 
- $ wc -l tests/lcitool/projects/qemu.yml 
- 127 tests/lcitool/projects/qemu.yml
-
-we would have many more than that except that we're conservative
-about adding deps on things because getting new libraries into
-distros is quite painful, or we lag behind where we would want
-to be to stick with compat for old distro versions.
-
-In terms of Rust dependancies, I'd expect us to have fairly arbitrary
-dependancies used. If the dep avoids QEMU maintainers having to
-re-invent the wheel for something there is already a common crate
-for, then it is a good thing to use it. I'd almost go as far as
-encouraging use of external crates. Our maintainers should focus tmie
-on writing code that's delivers compelling features to QEMU, rather
-than re-creating common APIs that already have good crates.
-
-> We already fetch some projects with meson subprojects, so this is not a 
-> new reality. Cargo allows you to define "locked" dependencies which is 
-> the same as only fetching specific commits by SHA. No suspicious 
-> tarballs, and no disappearing dependencies a la left-pad in npm.
-> 
-> However, I believe it's worth considering vendoring every dependency by 
-> default, if they prove to be few, for the sake of having a local QEMU 
-> git clone buildable without network access.
-
-A local git clone is already not buildable without network access,
-given that you have to install countless extra distro packages
-ahead of time. I think its reasonable to expect people working from
-git to have to download rust deps. We should consider whether we
-want vendoring in the release tarballs though.
-
-> Should QEMU provide wrapping Rust APIs over QEMU internals?
-> -----------------------------------------------------------
-> [qemuprovidewrappingrustapis] Back to [TOC]
-> 
-> My personal opinion is no, with the reasoning being that QEMU internals 
-> are not documented or stable. However I do not see why creating stable 
-> opt-in interfaces is bad. It just needs someone to volunteer to maintain 
-> it and ensure there are no breakages through versions.
-
-I expect this will evolve organically with people providing wrappers
-where appropriate to suit their development neds.
-
-> Will QEMU now depend on Rust and thus not build on my XYZ platform?
-> -------------------------------------------------------------------
-> [qemudependonrustnotbuildonxyz] Back to [TOC]
-> 
-> No, worry about this in some years if this experiment takes off. Rust 
-> has broad platform support and is present in most distro package 
-> managers. In the future we might have gcc support for it as well.
-
-Rust isn't going away, so if a platform wants to remain relevant
-to the modern software world, then people who care about that
-platform need to ensure Rust works on it. I wouldn't say that
-QEMU needs to massively worry about this, since all the common
-platforms are now covered precisely because Rust is becoming
-so wildly used that a platform cannot ignore it.
-
+In this example, I would expect to have hw/arm/pl011.rs, or hw/arm/pl011/*.rs
+so that the device is part of the normal Arm hardware directory structure 
+and maintainer assignments.
 
 With regards,
 Daniel
