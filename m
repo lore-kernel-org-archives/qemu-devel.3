@@ -4,64 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C04C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C22CC25B76
 	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 12:24:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH0Xe-0001rv-St; Tue, 11 Jun 2024 08:23:58 -0400
+	id 1sH0Xu-0002Ln-MH; Tue, 11 Jun 2024 08:24:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1sH0Xc-0001rd-LT; Tue, 11 Jun 2024 08:23:57 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1sH0Xa-0007KZ-LJ; Tue, 11 Jun 2024 08:23:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=nF9wECwog8DyAQqoag5qzzQgj3d1eValGLXNfp0vJG0=; b=TPV7Axhr3JXXzKfW
- Ia7i9nTdpGE+Ax2Y9tGSTVJPwfNYmvZhFf+rhFxCLVXHqY8GF/t17nFdCDf48DvOzgM/3bT6y4u0W
- SBBLXdDZAV9KHyHOo0GbyEnt9BqAO2zoPx1ic9wGkiSkLuSeOUSlt/t24NsS6N7h/Av1CdlKXFfNq
- I3ZKAdkmuKXz/fapMxaG5ZrSc8KjYhZB0U8kcz1NuNm9eXwFvtlcwJ9RML8U5KIZz2/HoG+9kzV1j
- xELRcge+bY4NxdgFDswLU5ET7TcSrAZvEs2tOmEurF/TU3B5N6PW4exF5b+RVbDHG9+HI1PGdB44/
- 5xbqMCbVhwFtVmYvOw==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1sH0XV-005Ypr-0v;
- Tue, 11 Jun 2024 12:23:49 +0000
-Date: Tue, 11 Jun 2024 12:23:49 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Markus Armbruster <armbru@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: Examining device state via monitor for debugging (was: [PATCH
- 0/2] hw/misc/mos6522: Do not open-code hmp_info_human_readable_text())
-Message-ID: <ZmhB1RzXCGOU9nu4@gallifrey>
-References: <20240610150758.2827-1-philmd@linaro.org>
- <87h6e0uizr.fsf@pond.sub.org>
- <CAFEAcA8F9fTVuTwNosLi7qcZ7ki-kARKJsnrp3-er41LbkpZiA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sH0Xs-0002L9-6q
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 08:24:12 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sH0Xp-0007NM-Tf
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 08:24:11 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-35f2c0b7701so490385f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 05:24:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718108646; x=1718713446; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=r2IUh6JjwaeLgT7iyknV/seoPi4AaRCJv8Z19ePuBmk=;
+ b=uwrm0lYDmvODbeWeLZrUK0DM9sPwjCD1gr2g3ApHl5+DJ/+RFwZmUj6wEsqx3tAnND
+ 3Wr5mJsSW1GJ1/NJGR+OSMAnhgVxo5EmuHuvPgfh1jkrTJ1WoCu6wPufqO49ypvQ6egT
+ 2zFL2S6E2UpTRkEs6J/KiUBNrSyyHea1U6ZUTskCfk71AOjFAdsLWjkK5lrQevXhwLzF
+ 3/zMUMTrL5C+8G/15OYyZ5zzGWw7O7bjIkNbkmMLqfVABvNcOaTmew31QKCmCzuTVK1e
+ Y/FOB8qFbL1lZFBHSviHdVAKPtVJpffPGPjS/eEAoq9iWX/0keotlgMGSa52LvzAeyF3
+ QIYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718108646; x=1718713446;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=r2IUh6JjwaeLgT7iyknV/seoPi4AaRCJv8Z19ePuBmk=;
+ b=LEDEc4IoPekF6cCEiukIbPQsCvKru74Fi8UpBXXo9ahseWHKPVR3RwZ/tzjYbLV6JY
+ Q3Loo7qYLFkRxlYijy+Hj8bWwFnsbjzCCNuaTIlEU4+43/J/dWyiXRS39P2OGNQrt86k
+ 9vj6jVtJmCSSdN51hrkbXBAX1DgLns+eGBbPJ8RmdzgL15y3YpGvq34RyAbPONrJfXYN
+ uuci/0Zh0MyOBn7cb76SmgQAF/hLB8pbzvHSpnCsjHqJAI6DCyDUHan3FpYtOleforCg
+ GxjAQDGmJB0r8LzxuinWAdMZrPfwAasmxlSV8jhJ3Mrfhq1ROsukzVIlcPHXjRljnUsb
+ WOgA==
+X-Gm-Message-State: AOJu0Yxm6zzxfJEj8gCLwAYIVYrUyp4L4PNJEKmuIefv+a72z6US2Nmd
+ c0/gWGAHOZWxHr58L6zKwyRMmHH1xllsIInR8RU0Q2buY6IfQzBP61FmRazwQgNKfynIHg3IqMA
+ wr0s=
+X-Google-Smtp-Source: AGHT+IGe3in4Q9Udo0T5HV//MMvfJfnPJCzwLEdr3U8tp/GLxf0jYJPmvwZQFdDkeq+5W0aR6C/0aA==
+X-Received: by 2002:a5d:6812:0:b0:35f:1e71:2635 with SMTP id
+ ffacd0b85a97d-35f2b27ee1dmr2371029f8f.9.1718108646219; 
+ Tue, 11 Jun 2024 05:24:06 -0700 (PDT)
+Received: from localhost.localdomain (adsl-105.37.6.1.tellas.gr. [37.6.1.105])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35ef5fc0a0dsm13756623f8f.91.2024.06.11.05.24.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Jun 2024 05:24:05 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Zheyu Ma <zheyuma97@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v1] virtio-iommu: add error check before assert
+Date: Tue, 11 Jun 2024 15:23:45 +0300
+Message-ID: <20240611122348.3613272-1-manos.pitsidianakis@linaro.org>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAFEAcA8F9fTVuTwNosLi7qcZ7ki-kARKJsnrp3-er41LbkpZiA@mail.gmail.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
-X-Uptime: 12:16:20 up 33 days, 23:30, 1 user, load average: 0.00, 0.00, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+Content-Type: text/plain; charset=UTF8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,55 +94,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Maydell (peter.maydell@linaro.org) wrote:
-> On Tue, 11 Jun 2024 at 06:50, Markus Armbruster <armbru@redhat.com> wrote:
-> >
-> > Philippe Mathieu-Daud=E9 <philmd@linaro.org> writes:
-> >
-> > > Officialise the QMP command, use the existing
-> > > hmp_info_human_readable_text() helper.
-> >
-> > I'm not sure "officialise" is a word :)
-> >
-> > Taking a step back...  "info via" and its new QMP counterpart
-> > x-query-mos6522-devices dump device state.  I understand why examining
-> > device state via monitor can be useful for debugging.  However, we have
-> > more than 2000 devices in the tree.  Clearly, we don't want 2000 device
-> > state queries.  Not even 100.  Could we have more generic means instead?
-> >
-> > We could use QOM (read-only) properties to expose device state.
-> >
-> > If we use one QOM property per "thing", examining device state becomes
-> > quite tedious.  Also, you'd have to stop the guest to get a consistent
-> > view, and adding lots of QOM properties bloats the code.
-> >
-> > If we use a single, object-valued property for the entire state, we get
-> > to define the objects in QAPI.  Differently tedious, and bloats the
-> > generated code.
->=20
-> We already have a machine readable mandatory-for-every-device
-> representation of its entire state -- it's the vmstate struct.
-> Admittedly this is sometimes a bit different from the guest-facing
-> view of a device and we don't machine-record the field names...
+A fuzzer case discovered by Zheyu Ma causes an assert failure.
 
-vmstate might not contain everything needed for debug; devices
-do a lot of fiddling to create a consistent vmstate, and there may
-be more that someone debugging wants (e.g. fd's or host memory addresses).
-It's also hopelessly cryptic.
+Add a check before the assert, and respond with an error before moving
+on to the next queue element.
 
-=46rom an HMP point, a 'info debug <DEVICENAME>' seems good to me,
-possibly with some options as to whether to recurse or perhaps
-add flags to 'info qtree' to also call it.
+To reproduce the failure:
 
-Dave
+cat << EOF | \
+qemu-system-x86_64 \
+-display none -machine accel=qtest -m 512M -machine q35 -nodefaults \
+-device virtio-iommu -qtest stdio
+outl 0xcf8 0x80000804
+outw 0xcfc 0x06
+outl 0xcf8 0x80000820
+outl 0xcfc 0xe0004000
+write 0x10000e 0x1 0x01
+write 0xe0004020 0x4 0x00001000
+write 0xe0004028 0x4 0x00101000
+write 0xe000401c 0x1 0x01
+write 0x106000 0x1 0x05
+write 0x100001 0x1 0x60
+write 0x100002 0x1 0x10
+write 0x100009 0x1 0x04
+write 0x10000c 0x1 0x01
+write 0x100018 0x1 0x04
+write 0x10001c 0x1 0x02
+write 0x101003 0x1 0x01
+write 0xe0007001 0x1 0x00
+EOF
 
+Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2359
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+ hw/virtio/virtio-iommu.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 1326c6ec41..9b99def39f 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -818,6 +818,18 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
+ out:
+         sz = iov_from_buf(elem->in_sg, elem->in_num, 0,
+                           buf ? buf : &tail, output_size);
++        if (unlikely(sz != output_size)) {
++            tail.status = VIRTIO_IOMMU_S_DEVERR;
++            /* We checked that tail can fit earlier */
++            output_size = sizeof(tail);
++            g_free(buf);
++            buf = NULL;
++            sz = iov_from_buf(elem->in_sg,
++                              elem->in_num,
++                              0,
++                              &tail,
++                              output_size);
++        }
+         assert(sz == output_size);
+ 
+         virtqueue_push(vq, elem, sz);
 
+base-commit: 80e8f0602168f451a93e71cbb1d59e93d745e62e
+-- 
+γαῖα πυρί μιχθήτω
 
-> -- PMM
---=20
- -----Open up your eyes, open up your mind, open up your code -------  =20
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \=20
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
 
