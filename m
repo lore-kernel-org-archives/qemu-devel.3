@@ -4,82 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02E52C27C55
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 01:57:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0107C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 01:58:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGqkh-0007SL-TN; Mon, 10 Jun 2024 21:56:47 -0400
+	id 1sGqlY-0008Ej-2j; Mon, 10 Jun 2024 21:57:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1sGqkg-0007S6-5q
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 21:56:46 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1sGqkd-0008NU-WF
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 21:56:45 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-57c68c3f8adso579907a12.1
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 18:56:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1718071002; x=1718675802; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jA9plbGjO19auJGrvFBaMK0jULV71vxMlfivxMbC8X8=;
- b=NPuB1rOU6PA5HecV4xrTvCHS/ubL8TtCuO6amZpmgs/D3xKGtPPIErmSoVk3FgWTP7
- ItfaEY+637BelMHv0TnaxkX/ElV0eT89LLRmE42RaJnoyWGUUL5HLX/Wq8dcD1NpK9Gi
- 82iBSr4FP0wMNWrTj/xx5VjVAqkpdCVVClvWnOVbGLlVwmwxqZB6jt6yDfiO+b6T4Vh4
- 82Aklo/cy1HJK2K4MtR61uyqOxXX0UJrHAbtRcC9wawL/d/a/JrOtVPvDuOSWk++Qlc9
- Xlrl1NGCZa6C4yV+4uHxON21K65YkDGsv2WAxOo8y9ZpCbGooG7YUH9FjkIH3NlDxfyR
- 7hRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718071002; x=1718675802;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jA9plbGjO19auJGrvFBaMK0jULV71vxMlfivxMbC8X8=;
- b=dKCFK6tcsW2NJ5Twqsoi9NdkqiSGY3Jxd9WDJikDlmXGqfzJCoXF+jbA4YZMO5h4sw
- 2OILs1BZrzsSF0Qy9o7XOXqnlgaMruHRAsvl0ll5YlfmJugexmEJZGAryNBY7rSnAh5z
- dfqnqDs81JZ+f1ld6dAJZGewavskxqp7yxdfl5qOBSOiEIt66//Gqtg/kCPMNgGuxjOb
- z0XvWi6xAj+kG09V6lEXNr/jF1U+Prpa7nrJFQSm7nMwb/1vzZo5DvSTMaZ6zxMlbKCr
- UHEiA1npoXUXyndrSpPUH/gA0rMEoZRtja7357GYtdFeUtHwQOHLeHlu8A/eXJlfK9/F
- VQVQ==
-X-Gm-Message-State: AOJu0Yxq1w+UjNXgFex33479ULNneM1AWBvd3Q7Xp8YKQ0Tq9nyqsfGo
- L1+znm4vvsnffqXsQHtd6EY0vroPG0OOA1inC0g39QlnWLr9wk5D3mdqJtdGewt0CY2pigPAacr
- goJZqpk65TIsONrbAtS+bWJNX0UIY4RvXhoNrOg==
-X-Google-Smtp-Source: AGHT+IF8nCsSuMNAItG5gbTwCQij+80ptnI90P+Od+yRjL3GYo+iAAv2id54Cpfp+bsMwcJ4mrNsf7A0LMNUJhVhd8o=
-X-Received: by 2002:a50:96c4:0:b0:57c:5b26:46c9 with SMTP id
- 4fb4d7f45d1cf-57c5b264930mr7816692a12.9.1718071001671; Mon, 10 Jun 2024
- 18:56:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sGqlV-0008ED-Ew
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 21:57:37 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sGqlS-0008T7-Bc
+ for qemu-devel@nongnu.org; Mon, 10 Jun 2024 21:57:37 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxP_AEr2dm6ogFAA--.22676S3;
+ Tue, 11 Jun 2024 09:57:24 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxVcUBr2dm3IcbAA--.56858S3; 
+ Tue, 11 Jun 2024 09:57:23 +0800 (CST)
+Subject: Re: [PULL 06/10] hw/loongarch: Refine fwcfg memory map
+To: Peter Maydell <peter.maydell@linaro.org>, Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org
+References: <20240523014637.614872-1-gaosong@loongson.cn>
+ <20240523014637.614872-7-gaosong@loongson.cn>
+ <CAFEAcA8AONDHH=zMb6ODoE58=P4BN7+bBKJqzxQWU81STG8q4Q@mail.gmail.com>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <147d5eda-d83a-60c2-5e16-6147918965ef@loongson.cn>
+Date: Tue, 11 Jun 2024 09:57:21 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20240605063154.31298-1-frank.chang@sifive.com>
- <20240605063154.31298-2-frank.chang@sifive.com>
- <CAKmqyKN8J1g_1XyAVxpjWiSQDDhPuKrQk9x3ys2JCbiaGyf=AA@mail.gmail.com>
-In-Reply-To: <CAKmqyKN8J1g_1XyAVxpjWiSQDDhPuKrQk9x3ys2JCbiaGyf=AA@mail.gmail.com>
-From: Frank Chang <frank.chang@sifive.com>
-Date: Tue, 11 Jun 2024 09:56:29 +0800
-Message-ID: <CAE_xrPhZPghZmv81n4hvV=fpGege0MO0v-SHAKbL_30WNbCtNA@mail.gmail.com>
-Subject: Re: [PATCH RESEND 1/6] target/riscv: Introduce extension implied
- rules definition
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000c10200061a9393c5"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=frank.chang@sifive.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+In-Reply-To: <CAFEAcA8AONDHH=zMb6ODoE58=P4BN7+bBKJqzxQWU81STG8q4Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8BxVcUBr2dm3IcbAA--.56858S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxAr4UZF4UWrW7Cr4fWr4rJFc_yoW5uF4rpF
+ 4Sgana9F4DJFyDGr4xKa4UJFy7Zrn3Kr97XFWIkF1qkr1Dur1F9r4rG3s8KryDur1xAFy0
+ vFWqyrZxZ3Z0grXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.287,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,215 +84,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c10200061a9393c5
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi Alistair,
-
-On Tue, Jun 11, 2024 at 9:35=E2=80=AFAM Alistair Francis <alistair23@gmail.=
-com>
-wrote:
-
-> On Wed, Jun 5, 2024 at 4:35=E2=80=AFPM <frank.chang@sifive.com> wrote:
-> >
-> > From: Frank Chang <frank.chang@sifive.com>
-> >
-> > RISCVCPUImpliedExtsRule is created to store the implied rules.
-> > 'is_misa' flag is used to distinguish whether the rule is derived
-> > from the MISA or other extensions.
-> > 'ext' stores the MISA bit if 'is_misa' is true. Otherwise, it stores
-> > the offset of the extension defined in RISCVCPUConfig. 'ext' will also
-> > serve as the key of the hash tables to look up the rule in the followin=
-g
-> > commit.
-> >
-> > Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> > ---
-> >  target/riscv/cpu.c |  8 ++++++++
-> >  target/riscv/cpu.h | 18 ++++++++++++++++++
-> >  2 files changed, 26 insertions(+)
-> >
-> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> > index cee6fc4a9a..c7e5cec7ef 100644
-> > --- a/target/riscv/cpu.c
-> > +++ b/target/riscv/cpu.c
-> > @@ -2242,6 +2242,14 @@ RISCVCPUProfile *riscv_profiles[] =3D {
-> >      NULL,
-> >  };
-> >
-> > +RISCVCPUImpliedExtsRule *riscv_misa_implied_rules[] =3D {
-> > +    NULL
-> > +};
-> > +
-> > +RISCVCPUImpliedExtsRule *riscv_ext_implied_rules[] =3D {
-> > +    NULL
-> > +};
-> > +
-> >  static Property riscv_cpu_properties[] =3D {
-> >      DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
-> >
-> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > index 1501868008..b5a036cf27 100644
-> > --- a/target/riscv/cpu.h
-> > +++ b/target/riscv/cpu.h
-> > @@ -122,6 +122,24 @@ typedef enum {
-> >      EXT_STATUS_DIRTY,
-> >  } RISCVExtStatus;
-> >
-> > +typedef struct riscv_cpu_implied_exts_rule RISCVCPUImpliedExtsRule;
-> > +
-> > +struct riscv_cpu_implied_exts_rule {
-> > +    /* Bitmask indicates the rule enabled status for the harts. */
-> > +    uint64_t enabled;
->
-> I'm not clear why we need this
->
-
-This is because a rule may be implied more than once.
-e.g. Zcf implies RVF, Zfa also implies RVF.
-There's no need to check RVF's implied rule again for Zfa after Zcf's
-implied rules are enabled.
-
-The implied rules are checked recursively, so once the rule has been
-enabled (per-CPU basis),
-the rule (and all its implied rules) will not be rechecked.
-
-Regards,
-Frank Chang
 
 
-> Alistair
->
-> > +    /* True if this is a MISA implied rule. */
-> > +    bool is_misa;
-> > +    /* ext is MISA bit if is_misa flag is true, else extension offset.
-> */
-> > +    const uint32_t ext;
-> > +    const uint32_t implied_misas;
-> > +    const uint32_t implied_exts[];
-> > +};
-> > +
-> > +extern RISCVCPUImpliedExtsRule *riscv_misa_implied_rules[];
-> > +extern RISCVCPUImpliedExtsRule *riscv_ext_implied_rules[];
-> > +
-> > +#define RISCV_IMPLIED_EXTS_RULE_END -1
-> > +
-> >  #define MMU_USER_IDX 3
-> >
-> >  #define MAX_RISCV_PMPS (16)
-> > --
-> > 2.43.2
-> >
-> >
->
+On 2024/6/7 下午10:31, Peter Maydell wrote:
+> On Thu, 23 May 2024 at 02:48, Song Gao <gaosong@loongson.cn> wrote:
+>>
+>> From: Bibo Mao <maobibo@loongson.cn>
+>>
+>> Memory map table for fwcfg is used for UEFI BIOS, UEFI BIOS uses the first
+>> entry from fwcfg memory map as the first memory HOB, the second memory HOB
+>> will be used if the first memory HOB is used up.
+>>
+>> Memory map table for fwcfg does not care about numa node, however in
+>> generic the first memory HOB is part of numa node0, so that runtime
+>> memory of UEFI which is allocated from the first memory HOB is located
+>> at numa node0.
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> Reviewed-by: Song Gao <gaosong@loongson.cn>
+>> Message-Id: <20240515093927.3453674-4-maobibo@loongson.cn>
+>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> 
+> Hi; Coverity points out a possible issue with this code
+> (CID 1546441):
+> 
+>> +static void fw_cfg_add_memory(MachineState *ms)
+>> +{
+>> +    hwaddr base, size, ram_size, gap;
+>> +    int nb_numa_nodes, nodes;
+>> +    NodeInfo *numa_info;
+>> +
+>> +    ram_size = ms->ram_size;
+>> +    base = VIRT_LOWMEM_BASE;
+>> +    gap = VIRT_LOWMEM_SIZE;
+>> +    nodes = nb_numa_nodes = ms->numa_state->num_nodes;
+>> +    numa_info = ms->numa_state->nodes;
+>> +    if (!nodes) {
+>> +        nodes = 1;
+>> +    }
+>> +
+>> +    /* add fw_cfg memory map of node0 */
+>> +    if (nb_numa_nodes) {
+>> +        size = numa_info[0].node_mem;
+>> +    } else {
+>> +        size = ram_size;
+>> +    }
+>> +
+>> +    if (size >= gap) {
+>> +        memmap_add_entry(base, gap, 1);
+>> +        size -= gap;
+>> +        base = VIRT_HIGHMEM_BASE;
+>> +        gap = ram_size - VIRT_LOWMEM_SIZE;
+> 
+> In this if() statement we set 'gap'...
+> 
+>> +    }
+>> +
+>> +    if (size) {
+>> +        memmap_add_entry(base, size, 1);
+>> +        base += size;
+>> +    }
+>> +
+>> +    if (nodes < 2) {
+>> +        return;
+>> +    }
+>> +
+>> +    /* add fw_cfg memory map of other nodes */
+>> +    size = ram_size - numa_info[0].node_mem;
+>> +    gap  = VIRT_LOWMEM_BASE + VIRT_LOWMEM_SIZE;
+> 
+> ...but then later here we unconditionally overwrite 'gap',
+> without ever using it in between, making the previous
+> assignment useless.
+> 
+> What was the intention here ?
+It is abuse about variable gap, sometimes it represents low memory size,
+sometimes it represents the end address of low memory.
 
---000000000000c10200061a9393c5
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+It can be removed at both placed, what is this patch?
 
-<div dir=3D"ltr"><div>Hi Alistair,</div><div dir=3D"ltr"><br></div><div dir=
-=3D"ltr">On Tue, Jun 11, 2024 at 9:35=E2=80=AFAM Alistair Francis &lt;<a hr=
-ef=3D"mailto:alistair23@gmail.com">alistair23@gmail.com</a>&gt; wrote:<br><=
-/div><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"=
-margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
-t:1ex">On Wed, Jun 5, 2024 at 4:35=E2=80=AFPM &lt;<a href=3D"mailto:frank.c=
-hang@sifive.com" target=3D"_blank">frank.chang@sifive.com</a>&gt; wrote:<br=
->
-&gt;<br>
-&gt; From: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.com" target=
-=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
-&gt;<br>
-&gt; RISCVCPUImpliedExtsRule is created to store the implied rules.<br>
-&gt; &#39;is_misa&#39; flag is used to distinguish whether the rule is deri=
-ved<br>
-&gt; from the MISA or other extensions.<br>
-&gt; &#39;ext&#39; stores the MISA bit if &#39;is_misa&#39; is true. Otherw=
-ise, it stores<br>
-&gt; the offset of the extension defined in RISCVCPUConfig. &#39;ext&#39; w=
-ill also<br>
-&gt; serve as the key of the hash tables to look up the rule in the followi=
-ng<br>
-&gt; commit.<br>
-&gt;<br>
-&gt; Signed-off-by: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.co=
-m" target=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 target/riscv/cpu.c |=C2=A0 8 ++++++++<br>
-&gt;=C2=A0 target/riscv/cpu.h | 18 ++++++++++++++++++<br>
-&gt;=C2=A0 2 files changed, 26 insertions(+)<br>
-&gt;<br>
-&gt; diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c<br>
-&gt; index cee6fc4a9a..c7e5cec7ef 100644<br>
-&gt; --- a/target/riscv/cpu.c<br>
-&gt; +++ b/target/riscv/cpu.c<br>
-&gt; @@ -2242,6 +2242,14 @@ RISCVCPUProfile *riscv_profiles[] =3D {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 NULL,<br>
-&gt;=C2=A0 };<br>
-&gt;<br>
-&gt; +RISCVCPUImpliedExtsRule *riscv_misa_implied_rules[] =3D {<br>
-&gt; +=C2=A0 =C2=A0 NULL<br>
-&gt; +};<br>
-&gt; +<br>
-&gt; +RISCVCPUImpliedExtsRule *riscv_ext_implied_rules[] =3D {<br>
-&gt; +=C2=A0 =C2=A0 NULL<br>
-&gt; +};<br>
-&gt; +<br>
-&gt;=C2=A0 static Property riscv_cpu_properties[] =3D {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 DEFINE_PROP_BOOL(&quot;debug&quot;, RISCVCPU, cfg.=
-debug, true),<br>
-&gt;<br>
-&gt; diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h<br>
-&gt; index 1501868008..b5a036cf27 100644<br>
-&gt; --- a/target/riscv/cpu.h<br>
-&gt; +++ b/target/riscv/cpu.h<br>
-&gt; @@ -122,6 +122,24 @@ typedef enum {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 EXT_STATUS_DIRTY,<br>
-&gt;=C2=A0 } RISCVExtStatus;<br>
-&gt;<br>
-&gt; +typedef struct riscv_cpu_implied_exts_rule RISCVCPUImpliedExtsRule;<b=
-r>
-&gt; +<br>
-&gt; +struct riscv_cpu_implied_exts_rule {<br>
-&gt; +=C2=A0 =C2=A0 /* Bitmask indicates the rule enabled status for the ha=
-rts. */<br>
-&gt; +=C2=A0 =C2=A0 uint64_t enabled;<br>
-<br>
-I&#39;m not clear why we need this<br></blockquote><div><br></div><div>This=
- is because a rule may be implied more than once.</div><div>e.g. Zcf implie=
-s RVF, Zfa also implies RVF.</div><div>There&#39;s no need to check RVF&#39=
-;s implied rule again for Zfa after Zcf&#39;s implied rules are enabled.</d=
-iv><div><br></div><div>The implied rules are checked recursively, so once t=
-he rule has been enabled (per-CPU basis),</div><div>the rule (and all its=
-=C2=A0implied rules) will not be rechecked.</div><div>=C2=A0</div><div>Rega=
-rds,</div><div>Frank Chang</div><div><br></div><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex">
-<br>
-Alistair<br>
-<br>
-&gt; +=C2=A0 =C2=A0 /* True if this is a MISA implied rule. */<br>
-&gt; +=C2=A0 =C2=A0 bool is_misa;<br>
-&gt; +=C2=A0 =C2=A0 /* ext is MISA bit if is_misa flag is true, else extens=
-ion offset. */<br>
-&gt; +=C2=A0 =C2=A0 const uint32_t ext;<br>
-&gt; +=C2=A0 =C2=A0 const uint32_t implied_misas;<br>
-&gt; +=C2=A0 =C2=A0 const uint32_t implied_exts[];<br>
-&gt; +};<br>
-&gt; +<br>
-&gt; +extern RISCVCPUImpliedExtsRule *riscv_misa_implied_rules[];<br>
-&gt; +extern RISCVCPUImpliedExtsRule *riscv_ext_implied_rules[];<br>
-&gt; +<br>
-&gt; +#define RISCV_IMPLIED_EXTS_RULE_END -1<br>
-&gt; +<br>
-&gt;=C2=A0 #define MMU_USER_IDX 3<br>
-&gt;<br>
-&gt;=C2=A0 #define MAX_RISCV_PMPS (16)<br>
-&gt; --<br>
-&gt; 2.43.2<br>
-&gt;<br>
-&gt;<br>
-</blockquote></div></div>
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -1054,7 +1054,6 @@ static void fw_cfg_add_memory(MachineState *ms)
+          memmap_add_entry(base, gap, 1);
+          size -= gap;
+          base = VIRT_HIGHMEM_BASE;
+-        gap = ram_size - VIRT_LOWMEM_SIZE;
+      }
 
---000000000000c10200061a9393c5--
+      if (size) {
+@@ -1068,15 +1067,14 @@ static void fw_cfg_add_memory(MachineState *ms)
+
+      /* add fw_cfg memory map of other nodes */
+      size = ram_size - numa_info[0].node_mem;
+-    gap  = VIRT_LOWMEM_BASE + VIRT_LOWMEM_SIZE;
+-    if (base < gap && (base + size) > gap) {
++    if (numa_info[0].node_mem < gap && ram_size > gap) {
+          /*
+           * memory map for the maining nodes splited into two part
+-         *   lowram:  [base, +(gap - base))
+-         *   highram: [VIRT_HIGHMEM_BASE, +(size - (gap - base)))
++         * lowram:  [base, +(gap - numa_info[0].node_mem))
++         * highram: [VIRT_HIGHMEM_BASE, +(size - (gap - 
+numa_info[0].node_mem)))
+           */
+-        memmap_add_entry(base, gap - base, 1);
+-        size -= gap - base;
++        memmap_add_entry(base, gap - numa_info[0].node_mem, 1);
++        size -= gap - numa_info[0].node_mem;
+          base = VIRT_HIGHMEM_BASE;
+      }
+
+Regards
+Bibo Mao
+
+
+> 
+> thanks
+> -- PMM
+> 
+
 
