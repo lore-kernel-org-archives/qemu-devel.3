@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90E24C25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 14:28:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0610C27C5E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 14:28:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH2RQ-0006vw-NU; Tue, 11 Jun 2024 10:25:40 -0400
+	id 1sH2Rf-00077D-6B; Tue, 11 Jun 2024 10:25:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH2RO-0006uU-3W
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:25:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sH2Rb-0006zM-Om
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:25:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH2RM-0005yQ-IX
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:25:37 -0400
+ id 1sH2RZ-00062R-VG
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 10:25:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718115935;
+ s=mimecast20190719; t=1718115949;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/cM7wXV2F0pH6OJZLvvHOAgJSjTxfrcPSVlPgLYx7Pc=;
- b=G47aFxthQq82QGX7Q/QrpSeiK1qmNhUASkNomB04/LQGHzTvA/zT/rWuLL8gN1wqrFKNkb
- ZP5u8e3GyPlkil+9FFN6JF+axnSfRMVQC6dbyM5DtgG8kMf0WRrfDO6YeoFVV4dPdNdzuj
- 1q85YVs0z+0mZLjjSyp7uDa9W5szUwE=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JtpA8jO2B8YYkVW7V6besTBoo0joDWNRiMliiJ4GgY8=;
+ b=bHRG7bJqJhqmQXtNj4en8aR0HeKF5XDxznSpkfJP5zk1XY3ItPKT63iXTMF4bo9TziSyh5
+ W7MPYhQyMSHAZmGFTqT4a6+K09C5FdWJ3yPI/9sYiK81KlRtg9utEob2Eac2v5ePMMWc5z
+ BODQ/Lm3i5Iy+mYWgQ5HATUEgCZhOME=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-146-YPzCvkvjOF6GZwt-7QjeIg-1; Tue, 11 Jun 2024 10:25:29 -0400
-X-MC-Unique: YPzCvkvjOF6GZwt-7QjeIg-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a6f2af30793so47500666b.2
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 07:25:29 -0700 (PDT)
+ us-mta-201-r-5EmMJcPWabOj-7CkUewQ-1; Tue, 11 Jun 2024 10:25:48 -0400
+X-MC-Unique: r-5EmMJcPWabOj-7CkUewQ-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a6ef4489474so214907766b.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 07:25:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718115928; x=1718720728;
+ d=1e100.net; s=20230601; t=1718115945; x=1718720745;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/cM7wXV2F0pH6OJZLvvHOAgJSjTxfrcPSVlPgLYx7Pc=;
- b=sdro15VJVAetaO4pQY/aaC8OUxJVJXn6fyAYFieWoaaXCyvYWOts0fKYn8jaSn0de1
- eUoa6ZwmnDD0pnqY5Yhi7kBpJdqx9a8uoCog6YXI1hAF7G9Q3ejri+ssj7b7KAX1zgS9
- LmwEhnzM8e4k0Co/9dE0h1iQmV9mP79h0sOXv5bVp8hJHafViPnz8QeyS+8Mo3hqItAi
- I0yx5Y9VglPBFyb2X9ICUDiMDU4Xd4+cGfm1RvvGfqVB4ifbuRHYcQ1hiPf9IzF4X0P3
- rDCNOXi4dE2vQLJNFfIyddUEMERTLFMPXObY+R0EqjHGu8M2bVohjsRWMAV16LiVzSv4
- dd7g==
-X-Gm-Message-State: AOJu0Yy37JM2oCUAtjpM+m/ik5LYKpm886aTsLhgGG2EPlxulyeFUYRX
- xEEfBjjKJm0jfLMAfcFUA3ky96iAeo16WhxzWoSJkoAl0Pj+KWu0CwTaJDw5kImUCAE7Lbc1Gwy
- 7LhwMjuyFMqLHyYUoHdBvJtMuEYFMs+rWQivBc2bHdabGANGgI8jy4ktagKj67L8D+vSt/8mUz0
- wYnQoLf/aIaTNxcJQY3mCTa3QzNOauNxbjJgsB
-X-Received: by 2002:a17:906:2844:b0:a6f:1d3e:d1af with SMTP id
- a640c23a62f3a-a6f1d3ed202mr440176966b.5.1718115927811; 
- Tue, 11 Jun 2024 07:25:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+720WuYCmxgP7HJp9rCt/R4ioMgMDddeTijxEo80Vhf33ZpxBt0UimL2bwY8sRLGqaqgtXA==
-X-Received: by 2002:a17:906:2844:b0:a6f:1d3e:d1af with SMTP id
- a640c23a62f3a-a6f1d3ed202mr440174966b.5.1718115927490; 
- Tue, 11 Jun 2024 07:25:27 -0700 (PDT)
+ bh=JtpA8jO2B8YYkVW7V6besTBoo0joDWNRiMliiJ4GgY8=;
+ b=WE9zqGvFsvxkoL72WNhcKTX9dyULoetBSoMIx1bEkkonDYGe6vnrSPd358i3Hi6n5J
+ wjprDeTznVG3TaIL4pLK/7CGyw4U/XYy4AXpSCEEHebDPgeYTdSlJJQD4ShMn3cJf9Zy
+ tvTYrzxLNJWVeui7gAiYwvFBQQnKpVa4q2nyfzpSvinCHoDT2/PGEkIAzYw2y1jolDb5
+ rKFmgGROTLojq36gi3xcD4e1n76c6Az6nXDFRNd7vq9wYG/DoSLmCxQtmTPYvyHWLLKq
+ RM1PDmQscG9yVbdrHxaOeQcxK9OM1GPxiI1c7mqFvm7DkovQwssTbH8OqA27eBvsPToP
+ hOpg==
+X-Gm-Message-State: AOJu0YzPvzSkJ7uN1QZf1s6J1VN11x8+31RH8zJ7JJIgsyU82MLHqn35
+ EHjB9CzsLEEe6F7H7cNQaRP7KPj5YclI9hp2B9kcixW+YZPu7/AyuHkD+MUgmNicxHLRv8g87DY
+ O/6morrR443iMzrn3VswiWgNpKI4ZpjSEIMMGiLl3PDP9spgTrYU9Y6m8d2X/1QH+T+jvODX9he
+ qgTTiPA/NMR6QrCDQ9539OjA1MhFpx5d4zqzty
+X-Received: by 2002:a17:906:cc93:b0:a6e:88cc:bee9 with SMTP id
+ a640c23a62f3a-a6e88ccbf2bmr663606566b.24.1718115944766; 
+ Tue, 11 Jun 2024 07:25:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHnFrP2SVZ3xiw8Ayxo+ba5VMn4BBlhiYgesJmG9oIftX/2LHuZGrzjSStWl23T8s93xXpinw==
+X-Received: by 2002:a17:906:cc93:b0:a6e:88cc:bee9 with SMTP id
+ a640c23a62f3a-a6e88ccbf2bmr663605666b.24.1718115944329; 
+ Tue, 11 Jun 2024 07:25:44 -0700 (PDT)
 Received: from avogadro.local ([151.62.196.71])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f3672d1efsm102920766b.224.2024.06.11.07.25.26
+ a640c23a62f3a-a6f1480821esm356150566b.150.2024.06.11.07.25.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Jun 2024 07:25:27 -0700 (PDT)
+ Tue, 11 Jun 2024 07:25:41 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Chuang Xu <xuchuangxclwt@bytedance.com>,
- Guixiong Wei <weiguixiong@bytedance.com>,
- Yipeng Yin <yinyipeng@bytedance.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 02/25] i386/cpu: fixup number of addressable IDs for processor
- cores in the physical package
-Date: Tue, 11 Jun 2024 16:25:00 +0200
-Message-ID: <20240611142524.83762-3-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 09/25] target/i386: change X86_ENTRYr to use T0
+Date: Tue, 11 Jun 2024 16:25:07 +0200
+Message-ID: <20240611142524.83762-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240611142524.83762-1-pbonzini@redhat.com>
 References: <20240611142524.83762-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -106,51 +103,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chuang Xu <xuchuangxclwt@bytedance.com>
+I am not sure why I made it use T1.  It is a bit more symmetric with
+respect to X86_ENTRYwr (which uses T0 for the "w"ritten operand
+and T1 for the "r"ead operand), but it is also less flexible because it
+does not let you apply zextT0/sextT0.
 
-When QEMU is started with:
--cpu host,host-cache-info=on,l3-cache=off \
--smp 2,sockets=1,dies=1,cores=1,threads=2
-Guest can't acquire maximum number of addressable IDs for processor cores in
-the physical package from CPUID[04H].
-
-When creating a CPU topology of 1 core per package, host-cache-info only
-uses the Host's addressable core IDs field (CPUID.04H.EAX[bits 31-26]),
-resulting in a conflict (on the multicore Host) between the Guest core
-topology information in this field and the Guest's actual cores number.
-
-Fix it by removing the unnecessary condition to cover 1 core per package
-case. This is safe because cores_per_pkg will not be 0 and will be at
-least 1.
-
-Fixes: d7caf13b5fcf ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
-Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
-Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
-Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-ID: <20240611032314.64076-1-xuchuangxclwt@bytedance.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ target/i386/tcg/decode-new.c.inc |  6 +++---
+ target/i386/tcg/emit.c.inc       | 34 ++++++++++++++++----------------
+ 2 files changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 7466217d5ea..365852cb99e 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6455,10 +6455,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-             if (*eax & 31) {
-                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 380fb793531..f9d3e2577b2 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -186,7 +186,7 @@
+ #define X86_OP_ENTRYw(op, op0, s0, ...)                           \
+     X86_OP_ENTRY3(op, op0, s0, None, None, None, None, ## __VA_ARGS__)
+ #define X86_OP_ENTRYr(op, op0, s0, ...)                           \
+-    X86_OP_ENTRY3(op, None, None, None, None, op0, s0, ## __VA_ARGS__)
++    X86_OP_ENTRY3(op, None, None, op0, s0, None, None, ## __VA_ARGS__)
+ #define X86_OP_ENTRY1(op, op0, s0, ...)                           \
+     X86_OP_ENTRY3(op, op0, s0, 2op, s0, None, None, ## __VA_ARGS__)
+ #define X86_OP_ENTRY0(op, ...)                                    \
+@@ -1335,9 +1335,9 @@ static void decode_group4_5(DisasContext *s, CPUX86State *env, X86OpEntry *entry
+         /* 0xff */
+         [0x08] = X86_OP_ENTRY1(INC,     E,v,                           lock),
+         [0x09] = X86_OP_ENTRY1(DEC,     E,v,                           lock),
+-        [0x0a] = X86_OP_ENTRY3(CALL_m,  None, None, E,f64, None, None, zextT0),
++        [0x0a] = X86_OP_ENTRYr(CALL_m,  E,f64,                         zextT0),
+         [0x0b] = X86_OP_ENTRYr(CALLF_m, M,p),
+-        [0x0c] = X86_OP_ENTRY3(JMP_m,   None, None, E,f64, None, None, zextT0),
++        [0x0c] = X86_OP_ENTRYr(JMP_m,   E,f64,                         zextT0),
+         [0x0d] = X86_OP_ENTRYr(JMPF_m,  M,p),
+         [0x0e] = X86_OP_ENTRYr(PUSH,    E,f64),
+     };
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index a25b3dfc6b5..797e6e81406 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1363,7 +1363,7 @@ static void gen_CALLF(DisasContext *s, X86DecodedInsn *decode)
  
--                if (cores_per_pkg > 1) {
--                    *eax &= ~0xFC000000;
--                    *eax |= max_core_ids_in_package(&topo_info) << 26;
--                }
-+                *eax &= ~0xFC000000;
-+                *eax |= max_core_ids_in_package(&topo_info) << 26;
-                 if (host_vcpus_per_cache > threads_per_pkg) {
-                     *eax &= ~0x3FFC000;
+ static void gen_CALLF_m(DisasContext *s, X86DecodedInsn *decode)
+ {
+-    MemOp ot = decode->op[2].ot;
++    MemOp ot = decode->op[1].ot;
  
+     gen_op_ld_v(s, ot, s->T0, s->A0);
+     gen_add_A0_im(s, 1 << ot);
+@@ -1593,22 +1593,22 @@ static void gen_DEC(DisasContext *s, X86DecodedInsn *decode)
+ 
+ static void gen_DIV(DisasContext *s, X86DecodedInsn *decode)
+ {
+-    MemOp ot = decode->op[2].ot;
++    MemOp ot = decode->op[1].ot;
+ 
+     switch(ot) {
+     case MO_8:
+-        gen_helper_divb_AL(tcg_env, s->T1);
++        gen_helper_divb_AL(tcg_env, s->T0);
+         break;
+     case MO_16:
+-        gen_helper_divw_AX(tcg_env, s->T1);
++        gen_helper_divw_AX(tcg_env, s->T0);
+         break;
+     default:
+     case MO_32:
+-        gen_helper_divl_EAX(tcg_env, s->T1);
++        gen_helper_divl_EAX(tcg_env, s->T0);
+         break;
+ #ifdef TARGET_X86_64
+     case MO_64:
+-        gen_helper_divq_EAX(tcg_env, s->T1);
++        gen_helper_divq_EAX(tcg_env, s->T0);
+         break;
+ #endif
+     }
+@@ -1649,22 +1649,22 @@ static void gen_HLT(DisasContext *s, X86DecodedInsn *decode)
+ 
+ static void gen_IDIV(DisasContext *s, X86DecodedInsn *decode)
+ {
+-    MemOp ot = decode->op[2].ot;
++    MemOp ot = decode->op[1].ot;
+ 
+     switch(ot) {
+     case MO_8:
+-        gen_helper_idivb_AL(tcg_env, s->T1);
++        gen_helper_idivb_AL(tcg_env, s->T0);
+         break;
+     case MO_16:
+-        gen_helper_idivw_AX(tcg_env, s->T1);
++        gen_helper_idivw_AX(tcg_env, s->T0);
+         break;
+     default:
+     case MO_32:
+-        gen_helper_idivl_EAX(tcg_env, s->T1);
++        gen_helper_idivl_EAX(tcg_env, s->T0);
+         break;
+ #ifdef TARGET_X86_64
+     case MO_64:
+-        gen_helper_idivq_EAX(tcg_env, s->T1);
++        gen_helper_idivq_EAX(tcg_env, s->T0);
+         break;
+ #endif
+     }
+@@ -1926,7 +1926,7 @@ static void gen_JMPF(DisasContext *s, X86DecodedInsn *decode)
+ 
+ static void gen_JMPF_m(DisasContext *s, X86DecodedInsn *decode)
+ {
+-    MemOp ot = decode->op[2].ot;
++    MemOp ot = decode->op[1].ot;
+ 
+     gen_op_ld_v(s, ot, s->T0, s->A0);
+     gen_add_A0_im(s, 1 << ot);
+@@ -1947,7 +1947,7 @@ static void gen_LAHF(DisasContext *s, X86DecodedInsn *decode)
+ 
+ static void gen_LDMXCSR(DisasContext *s, X86DecodedInsn *decode)
+ {
+-    tcg_gen_trunc_tl_i32(s->tmp2_i32, s->T1);
++    tcg_gen_trunc_tl_i32(s->tmp2_i32, s->T0);
+     gen_helper_ldmxcsr(tcg_env, s->tmp2_i32);
+ }
+ 
+@@ -1995,7 +1995,7 @@ static void gen_LGS(DisasContext *s, X86DecodedInsn *decode)
+ 
+ static void gen_LODS(DisasContext *s, X86DecodedInsn *decode)
+ {
+-    MemOp ot = decode->op[2].ot;
++    MemOp ot = decode->op[1].ot;
+     if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
+         gen_repz(s, ot, gen_lods);
+     } else {
+@@ -2765,7 +2765,7 @@ static void gen_PSLLDQ_i(DisasContext *s, X86DecodedInsn *decode)
+ 
+ static void gen_PUSH(DisasContext *s, X86DecodedInsn *decode)
+ {
+-    gen_push_v(s, s->T1);
++    gen_push_v(s, s->T0);
+ }
+ 
+ static void gen_PUSHA(DisasContext *s, X86DecodedInsn *decode)
+@@ -3077,7 +3077,7 @@ static void gen_RCR(DisasContext *s, X86DecodedInsn *decode)
+ 
+ static void gen_RET(DisasContext *s, X86DecodedInsn *decode)
+ {
+-    int16_t adjust = decode->e.op2 == X86_TYPE_I ? decode->immediate : 0;
++    int16_t adjust = decode->e.op1 == X86_TYPE_I ? decode->immediate : 0;
+ 
+     MemOp ot = gen_pop_T0(s);
+     gen_stack_update(s, adjust + (1 << ot));
+@@ -3088,7 +3088,7 @@ static void gen_RET(DisasContext *s, X86DecodedInsn *decode)
+ 
+ static void gen_RETF(DisasContext *s, X86DecodedInsn *decode)
+ {
+-    int16_t adjust = decode->e.op2 == X86_TYPE_I ? decode->immediate : 0;
++    int16_t adjust = decode->e.op1 == X86_TYPE_I ? decode->immediate : 0;
+ 
+     if (!PE(s) || VM86(s)) {
+         gen_lea_ss_ofs(s, s->A0, cpu_regs[R_ESP], 0);
 -- 
 2.45.1
 
