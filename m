@@ -4,83 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7545C27C5E
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 11:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C768DC25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 12:10:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH005-0006ou-Gq; Tue, 11 Jun 2024 07:49:17 -0400
+	id 1sH0JP-0003QS-3Q; Tue, 11 Jun 2024 08:09:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sH004-0006ol-AM
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 07:49:16 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sH002-0000Kj-Oq
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 07:49:16 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a6f253a06caso101215966b.1
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 04:49:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718106552; x=1718711352; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mGuogEaBOKdKHZR7bUW3PsSBmnv0v7zdZ5YLYkfH9AA=;
- b=RrGKeuEH9fJ3aFtg4NwYNqMoF/LiqjBqIVvTqt1IYBB3TSSh03d/DO8wPQ51YtS87W
- cfx3kw/HIjhGGnfVum4pcmp6zErDSCLxjSN6VFWBP7kvs7JM/AHSu2fZzyu8SM0KOimP
- Kk2r9kfI1ZBTBhlbi+HVLQ+Tk3jTF9MvRJqC7nOy8+AwvFEhkal5p+UXXx53DcY2Qf87
- aIF3SOdmLH46xvhrnQn52JFPifNz7QUAV44B9IWbmGnvW4qW9LlVTpOx8Pm/MPNeupPe
- uf6925moktJBlCakdlMspxi2h05eJpCJojMwvmuFFtPyDH/mpI9K3Z3oJc04JAq+BPv4
- 2mZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718106552; x=1718711352;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mGuogEaBOKdKHZR7bUW3PsSBmnv0v7zdZ5YLYkfH9AA=;
- b=wqJEdFnlH32GBSfUcWAznIa+ZCAzVyXyeQhXkLH0y42c2ZchFJkJ/b7fEVRf3m7+By
- /Gd+Yhq8DaZDOXjBXuo1aLRElrPsVaV4LVchzsKGHMwUiQkUQT5JAHa8dAEX0VUEEb1g
- BKK65wDftRH7qfGh7SmtcTwjjv6ny0NFj6TztXwHDCQxuAKt09CtyPjFiHuQeee76Ob6
- cNOqz9GntY6oWP7IiHcaybCrFyc7pFQKXs25lRWuKN2Buk2sjPRzSykh5DWpE19HIGdP
- +NTEMaLCB2/BAP3NcjyTgiwHsBPiuKhq+xCLxh+LUrw3vhdbvHIGAUaIshd+qgIzfRlp
- 0vNQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWa3BI29UnviXroRsTK3JRWPhpgVHzLkGY+E8ywko+F++il/oLoesrVLX3cz9JWQk75GvlBO2AD3nvOBUwrCdSZJusE6oc=
-X-Gm-Message-State: AOJu0YyVmMnpj1Ey0vvuRKsKraIXQlUZmnodi+90wMooDoZbQ9yiOZAr
- oqyCdEjINr6/A+mfpG3VcZZOsIbs55WrhYmHDFiP5NrZpuwkT2F2UzTk42yVT/E=
-X-Google-Smtp-Source: AGHT+IGnLNvnLVRSb8G27QxO/fHX5Pm52ANFYGPoc9FbNJi/qSreIhxo31UlTTCKaY1OsKyA7HqKNQ==
-X-Received: by 2002:a17:907:7d93:b0:a6f:1c3d:656 with SMTP id
- a640c23a62f3a-a6f1c3d0718mr583853266b.55.1718106552152; 
- Tue, 11 Jun 2024 04:49:12 -0700 (PDT)
-Received: from [192.168.69.100] (rsa59-h02-176-184-32-6.dsl.sta.abo.bbox.fr.
- [176.184.32.6]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f15095318sm342426366b.131.2024.06.11.04.49.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Jun 2024 04:49:11 -0700 (PDT)
-Message-ID: <7701a256-cbbd-40f7-823b-d578279a4422@linaro.org>
-Date: Tue, 11 Jun 2024 13:49:09 +0200
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1sH0JM-0003Py-Eg
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 08:09:12 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1sH0JK-0004ZN-1k
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 08:09:11 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 7226F45A56;
+ Tue, 11 Jun 2024 14:08:57 +0200 (CEST)
+Message-ID: <6d64f07d-1638-44dc-848b-b307c0ebd0ad@proxmox.com>
+Date: Tue, 11 Jun 2024 14:08:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] meson: Remove libibumad dependence
-To: zhenwei pi <pizhenwei@bytedance.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
- thuth@redhat.com
-References: <20240611105427.61395-1-pizhenwei@bytedance.com>
+Subject: Re: [RFC PATCH] migration/savevm: do not schedule
+ snapshot_save_job_bh in qemu_aio_context
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, farosas@suse.de,
+ pbonzini@redhat.com
+References: <20240605120848.358654-1-f.ebner@proxmox.com>
+ <20240606183638.GC198201@fedora.redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240611105427.61395-1-pizhenwei@bytedance.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <20240606183638.GC198201@fedora.redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,14 +61,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/6/24 12:54, zhenwei pi wrote:
+Am 06.06.24 um 20:36 schrieb Stefan Hajnoczi:
+> On Wed, Jun 05, 2024 at 02:08:48PM +0200, Fiona Ebner wrote:
+>> The fact that the snapshot_save_job_bh() is scheduled in the main
+>> loop's qemu_aio_context AioContext means that it might get executed
+>> during a vCPU thread's aio_poll(). But saving of the VM state cannot
+>> happen while the guest or devices are active and can lead to assertion
+>> failures. See issue #2111 for two examples. Avoid the problem by
+>> scheduling the snapshot_save_job_bh() in the iohandler AioContext,
+>> which is not polled by vCPU threads.
+>>
+>> Solves Issue #2111.
+>>
+>> This change also solves the following issue:
+>>
+>> Since commit effd60c878 ("monitor: only run coroutine commands in
+>> qemu_aio_context"), the 'snapshot-save' QMP call would not respond
+>> right after starting the job anymore, but only after the job finished,
+>> which can take a long time. The reason is, because after commit
+>> effd60c878, do_qmp_dispatch_bh() runs in the iohandler AioContext.
+>> When do_qmp_dispatch_bh() wakes the qmp_dispatch() coroutine, the
+>> coroutine cannot be entered immediately anymore, but needs to be
+>> scheduled to the main loop's qemu_aio_context AioContext. But
+>> snapshot_save_job_bh() was scheduled first to the same AioContext and
+>> thus gets executed first.
+>>
+>> Buglink: https://gitlab.com/qemu-project/qemu/-/issues/2111
+>> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+>> ---
+>>
+>> While initial smoke testing seems fine, I'm not familiar enough with
+>> this to rule out any pitfalls with the approach. Any reason why
+>> scheduling to the iohandler AioContext could be wrong here?
+> 
+> If something waits for a BlockJob to finish using aio_poll() from
+> qemu_aio_context then a deadlock is possible since the iohandler_ctx
+> won't get a chance to execute. The only suspicious code path I found was
+> job_completed_txn_abort_locked() -> job_finish_sync_locked() but I'm not
+> sure whether it triggers this scenario. Please check that code path.
+> 
 
-> Zhenwei Pi (2):
->    meson: Remove libibumad dependence
->    test: Remove libibumad dependence
+Sorry, I don't understand. Isn't executing the scheduled BH the only
+additional progress that the iohandler_ctx needs to make compared to
+before the patch? How exactly would that cause issues when waiting for a
+BlockJob?
 
-Series:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Or do you mean something waiting for the SnapshotJob from
+qemu_aio_context before snapshot_save_job_bh had the chance to run?
 
-Thanks!
+Best Regards,
+Fiona
+
 
