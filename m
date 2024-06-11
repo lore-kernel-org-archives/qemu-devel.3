@@ -4,71 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30B6DC25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:02:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BFC3C25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 08:02:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGwQv-0008Ao-Pa; Tue, 11 Jun 2024 04:00:45 -0400
+	id 1sGwSq-0004gE-BE; Tue, 11 Jun 2024 04:02:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1sGwQu-00089z-GC
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:00:44 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sGwSl-0004YH-95
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:02:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1sGwQr-0006l9-P3
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:00:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1718092842; x=1749628842;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=XL3qUJ/s4JKxW1z/Q1moGl6f6RxBIByPE7Pu6LcLU94=;
- b=Q92XVMt63PSf5Dbu026+jDj8FgKH3mY6/XBM7e8zt9E+FlhDXppnmiRt
- tsY4E4pKO2ZfsL/lGikGJD8NVHjL3Nh+Fxfy9vqVYk8MDpO5zkJTvpEJk
- YtTal00CpN+JV+hWv/83IfUsIW9BUIlLpK8DiQSBDLH5Zropsq/YyTxSr
- 91uz1TpWsaGLX/DREVzifuSlH8lCPNSoztZypa1uLzVk0Ye6OrIonNQaE
- ZT5pCUVIKHAedcErMLX4dsZAJeqGt9j5V2wX9w5AQuAd+7CCq3v7rSqYp
- WgMXPLGg3jhsC/9Z2V5Dx9z6rzHchL8YUhPV2EVDB3tye902DvQ1BJZsx w==;
-X-CSE-ConnectionGUID: KXLGkQJZSniSDVO1UfX2HQ==
-X-CSE-MsgGUID: gzNh1/GdRO2iJyUzGSvkGg==
-X-IronPort-AV: E=McAfee;i="6600,9927,11099"; a="14510014"
-X-IronPort-AV: E=Sophos;i="6.08,229,1712646000"; d="scan'208";a="14510014"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Jun 2024 01:00:40 -0700
-X-CSE-ConnectionGUID: 1hO77vkqRuaHSkN5OMn+Lg==
-X-CSE-MsgGUID: +iiORHKoSDSUpnBjyVmkKQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,229,1712646000"; d="scan'208";a="39184817"
-Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
- by fmviesa007.fm.intel.com with ESMTP; 11 Jun 2024 01:00:37 -0700
-From: Yuan Liu <yuan1.liu@intel.com>
-To: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com,
- marcandre.lureau@redhat.com, berrange@redhat.com, thuth@redhat.com,
- philmd@linaro.org
-Cc: qemu-devel@nongnu.org, yuan1.liu@intel.com, nanhai.zou@intel.com,
- shameerali.kolothum.thodi@huawei.com
-Subject: [PATCH v8 2/7] migration/multifd: put IOV initialization into
- compression method
-Date: Mon, 10 Jun 2024 18:21:05 +0800
-Message-ID: <20240610102110.900410-3-yuan1.liu@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240610102110.900410-1-yuan1.liu@intel.com>
-References: <20240610102110.900410-1-yuan1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sGwSj-000779-4y
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 04:02:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718092953;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=gOIMo7agRsQ1q9S/U/C6xOuQiN0B0LBlbYxEE6Uqm3g=;
+ b=c9VDw5bp4k9Bn6hgao1kJZhhBq+5eP4jfyidyxTgdTNo3nnA2N+uxSJokVQI8D/GI9NfJP
+ DjnNTemEOszVRfSughrDbECLNzSjzDkz54IoVaRH1Cq/2a11J/xHhRidpetRVNRylKw3yN
+ Cp3wRwcVMpEzXCuyX9Z5RTFAPGDaf7M=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-93-r0Hf-Q0JNBq9g-Sqkf0Z5w-1; Tue,
+ 11 Jun 2024 04:02:27 -0400
+X-MC-Unique: r0Hf-Q0JNBq9g-Sqkf0Z5w-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 07D5519560B4; Tue, 11 Jun 2024 08:02:26 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.73])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C44719560AA; Tue, 11 Jun 2024 08:02:21 +0000 (UTC)
+Date: Tue, 11 Jun 2024 09:02:18 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?B?QmVubsOp?= e <alex.bennee@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>
+Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
+Message-ID: <ZmgEiiyLbxVgjitc@redhat.com>
+References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
+ <d910708f-ed55-4eee-8f66-8703cb45081c@linaro.org>
+ <evt7n.ggoypj31l14q@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=yuan1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
- DKIMWL_WL_HIGH=-0.143, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <evt7n.ggoypj31l14q@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,165 +90,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Different compression methods may require different numbers of IOVs.
-Based on streaming compression of zlib and zstd, all pages will be
-compressed to a data block, so two IOVs are needed for packet header
-and compressed data block.
+On Mon, Jun 10, 2024 at 11:29:36PM +0300, Manos Pitsidianakis wrote:
+> On Mon, 10 Jun 2024 22:37, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
+> > > The staticlib artifact contains a bunch of mangled .o objects?
+> > > ==============================================================
+> > > [staticlibmangledobjects] Back to [TOC]
+> > > 
+> > > Yes, until we compile without the `std` module library or we compile it
+> > > manually instead of linking it, we will have some junk in it.
+> > > 
+> > 
+> > Besides the size aspect, which potential advantage would there be to
+> > switch to no_std?
+> > We don't build a bare metal or kernel binary here, so why introduce this
+> > restriction willingly?
+> 
+> We'll see that as we progress. Might enable more platform support, for
+> example. I have no definite answers here. Also, I know binary bloat is a big
+> complaint from people with dislike of Rust, so I pre-emptively addressed it.
 
-Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
-Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
----
- migration/multifd-zlib.c |  7 +++++++
- migration/multifd-zstd.c |  8 +++++++-
- migration/multifd.c      | 22 ++++++++++++----------
- 3 files changed, 26 insertions(+), 11 deletions(-)
+Requiring 'no_std' would significantly limit what 3rd party crates QEMU
+can make use of, and thus would put more burden on QEMU maintainers.
+I don't find "binary bloat" a credible technical argument on its own
+either, so certainly not sufficient justification to take on the pain
+of 'no_std'.
 
-diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
-index 737a9645d2..2ced69487e 100644
---- a/migration/multifd-zlib.c
-+++ b/migration/multifd-zlib.c
-@@ -70,6 +70,10 @@ static int zlib_send_setup(MultiFDSendParams *p, Error **errp)
-         goto err_free_zbuff;
-     }
-     p->compress_data = z;
-+
-+    /* Needs 2 IOVs, one for packet header and one for compressed data */
-+    p->iov = g_new0(struct iovec, 2);
-+
-     return 0;
- 
- err_free_zbuff:
-@@ -101,6 +105,9 @@ static void zlib_send_cleanup(MultiFDSendParams *p, Error **errp)
-     z->buf = NULL;
-     g_free(p->compress_data);
-     p->compress_data = NULL;
-+
-+    g_free(p->iov);
-+    p->iov = NULL;
- }
- 
- /**
-diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
-index 256858df0a..ca17b7e310 100644
---- a/migration/multifd-zstd.c
-+++ b/migration/multifd-zstd.c
-@@ -52,7 +52,6 @@ static int zstd_send_setup(MultiFDSendParams *p, Error **errp)
-     struct zstd_data *z = g_new0(struct zstd_data, 1);
-     int res;
- 
--    p->compress_data = z;
-     z->zcs = ZSTD_createCStream();
-     if (!z->zcs) {
-         g_free(z);
-@@ -77,6 +76,10 @@ static int zstd_send_setup(MultiFDSendParams *p, Error **errp)
-         error_setg(errp, "multifd %u: out of memory for zbuff", p->id);
-         return -1;
-     }
-+    p->compress_data = z;
-+
-+    /* Needs 2 IOVs, one for packet header and one for compressed data */
-+    p->iov = g_new0(struct iovec, 2);
-     return 0;
- }
- 
-@@ -98,6 +101,9 @@ static void zstd_send_cleanup(MultiFDSendParams *p, Error **errp)
-     z->zbuff = NULL;
-     g_free(p->compress_data);
-     p->compress_data = NULL;
-+
-+    g_free(p->iov);
-+    p->iov = NULL;
- }
- 
- /**
-diff --git a/migration/multifd.c b/migration/multifd.c
-index f317bff077..d82885fdbb 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -137,6 +137,13 @@ static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
-         p->write_flags |= QIO_CHANNEL_WRITE_FLAG_ZERO_COPY;
-     }
- 
-+    if (multifd_use_packets()) {
-+        /* We need one extra place for the packet header */
-+        p->iov = g_new0(struct iovec, p->page_count + 1);
-+    } else {
-+        p->iov = g_new0(struct iovec, p->page_count);
-+    }
-+
-     return 0;
- }
- 
-@@ -150,6 +157,8 @@ static int nocomp_send_setup(MultiFDSendParams *p, Error **errp)
-  */
- static void nocomp_send_cleanup(MultiFDSendParams *p, Error **errp)
- {
-+    g_free(p->iov);
-+    p->iov = NULL;
-     return;
- }
- 
-@@ -228,6 +237,7 @@ static int nocomp_send_prepare(MultiFDSendParams *p, Error **errp)
-  */
- static int nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
- {
-+    p->iov = g_new0(struct iovec, p->page_count);
-     return 0;
- }
- 
-@@ -240,6 +250,8 @@ static int nocomp_recv_setup(MultiFDRecvParams *p, Error **errp)
-  */
- static void nocomp_recv_cleanup(MultiFDRecvParams *p)
- {
-+    g_free(p->iov);
-+    p->iov = NULL;
- }
- 
- /**
-@@ -783,8 +795,6 @@ static bool multifd_send_cleanup_channel(MultiFDSendParams *p, Error **errp)
-     p->packet_len = 0;
-     g_free(p->packet);
-     p->packet = NULL;
--    g_free(p->iov);
--    p->iov = NULL;
-     multifd_send_state->ops->send_cleanup(p, errp);
- 
-     return *errp == NULL;
-@@ -1179,11 +1189,6 @@ bool multifd_send_setup(void)
-             p->packet = g_malloc0(p->packet_len);
-             p->packet->magic = cpu_to_be32(MULTIFD_MAGIC);
-             p->packet->version = cpu_to_be32(MULTIFD_VERSION);
--
--            /* We need one extra place for the packet header */
--            p->iov = g_new0(struct iovec, page_count + 1);
--        } else {
--            p->iov = g_new0(struct iovec, page_count);
-         }
-         p->name = g_strdup_printf("multifdsend_%d", i);
-         p->page_size = qemu_target_page_size();
-@@ -1353,8 +1358,6 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
-     p->packet_len = 0;
-     g_free(p->packet);
-     p->packet = NULL;
--    g_free(p->iov);
--    p->iov = NULL;
-     g_free(p->normal);
-     p->normal = NULL;
-     g_free(p->zero);
-@@ -1602,7 +1605,6 @@ int multifd_recv_setup(Error **errp)
-             p->packet = g_malloc0(p->packet_len);
-         }
-         p->name = g_strdup_printf("multifdrecv_%d", i);
--        p->iov = g_new0(struct iovec, page_count);
-         p->normal = g_new0(ram_addr_t, page_count);
-         p->zero = g_new0(ram_addr_t, page_count);
-         p->page_count = page_count;
+
+With regards,
+Daniel
 -- 
-2.43.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
