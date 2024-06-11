@@ -4,59 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC42C41513
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 17:39:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39820C27C65
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 17:39:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH5Qo-0008W5-Dj; Tue, 11 Jun 2024 13:37:14 -0400
+	id 1sH5Qn-0008Vv-M4; Tue, 11 Jun 2024 13:37:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5Qn-0008Vd-Bn
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:37:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5Ql-0008UW-Cc
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:37:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5Ql-0008SC-Pt
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:37:13 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sH5Qj-0008RY-MW
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 13:37:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718127431;
+ s=mimecast20190719; t=1718127428;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EDPviX5iCZw8qqN1UwxNpLLXgI2B2YRvbWcSGkLKba0=;
- b=OOlZGsIYps3RdC9RNaZumOl6lJ4RK2EDZv7hzzEiQBPyP+LqeuTcv00e7/rJZS+Osru7P7
- OYm/vXf5ndJtPt5GCm9eFetcvTnsHpq9av7GurUpM944EGYad0ek0lqP5qtpFmod7DCIQq
- y9Y4vJV1kTZoFQMCTecHmaZvJLCes1o=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=bN3/Ft7mIfVvkp85+OB5qSx2iA4eQDvCxKe5CnKDVBc=;
+ b=cMF6m1+6fSgxH6F/ngL43DMu/AO7q8a7UY835rRRgEtrLjhNc+JNlU57ptPAgqVFYi1+rG
+ rdBiN9cZnT5tKAkyRJM+pBWsEbwv/Gx/1Vn67aSf0IFH//X/dqlOFHXX6e+RuHQ7mXvN77
+ A6tjJlikg6snUansRq9GZ5CSX2ztthU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-128-gAvFlpdHNGCL709YToLZjg-1; Tue,
- 11 Jun 2024 13:37:09 -0400
-X-MC-Unique: gAvFlpdHNGCL709YToLZjg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-Qhq-WawbPKa9rFhpmYXFbg-1; Tue,
+ 11 Jun 2024 13:37:04 -0400
+X-MC-Unique: Qhq-WawbPKa9rFhpmYXFbg-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 781C11956094; Tue, 11 Jun 2024 17:37:08 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71C0019560BB; Tue, 11 Jun 2024 17:37:03 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.39.192.130])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D813F19560AB; Tue, 11 Jun 2024 17:37:05 +0000 (UTC)
+ id 0A43719560AB; Tue, 11 Jun 2024 17:37:01 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 2/8] Revert "monitor: use aio_co_reschedule_self()"
-Date: Tue, 11 Jun 2024 19:36:52 +0200
-Message-ID: <20240611173658.231831-3-kwolf@redhat.com>
-In-Reply-To: <20240611173658.231831-1-kwolf@redhat.com>
-References: <20240611173658.231831-1-kwolf@redhat.com>
+Subject: [PULL 0/8] Block layer patches
+Date: Tue, 11 Jun 2024 19:36:50 +0200
+Message-ID: <20240611173658.231831-1-kwolf@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -81,59 +79,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+The following changes since commit 80e8f0602168f451a93e71cbb1d59e93d745e62e:
 
-Commit 1f25c172f837 ("monitor: use aio_co_reschedule_self()") was a code
-cleanup that uses aio_co_reschedule_self() instead of open coding
-coroutine rescheduling.
+  Merge tag 'bsd-user-misc-2024q2-pull-request' of gitlab.com:bsdimp/qemu into staging (2024-06-09 11:21:55 -0700)
 
-Bug RHEL-34618 was reported and Kevin Wolf <kwolf@redhat.com> identified
-the root cause. I missed that aio_co_reschedule_self() ->
-qemu_get_current_aio_context() only knows about
-qemu_aio_context/IOThread AioContexts and not about iohandler_ctx. It
-does not function correctly when going back from the iohandler_ctx to
-qemu_aio_context.
+are available in the Git repository at:
 
-Go back to open coding the AioContext transitions to avoid this bug.
+  https://repo.or.cz/qemu/kevin.git tags/for-upstream
 
-This reverts commit 1f25c172f83704e350c0829438d832384084a74d.
+for you to fetch changes up to 3ab0f063e58ed9224237d69c4211ca83335164c4:
 
-Cc: qemu-stable@nongnu.org
-Buglink: https://issues.redhat.com/browse/RHEL-34618
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20240506190622.56095-2-stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- qapi/qmp-dispatch.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+  crypto/block: drop qcrypto_block_open() n_threads argument (2024-06-10 11:05:43 +0200)
 
-diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
-index f3488afeef..176b549473 100644
---- a/qapi/qmp-dispatch.c
-+++ b/qapi/qmp-dispatch.c
-@@ -212,7 +212,8 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
-              * executing the command handler so that it can make progress if it
-              * involves an AIO_WAIT_WHILE().
-              */
--            aio_co_reschedule_self(qemu_get_aio_context());
-+            aio_co_schedule(qemu_get_aio_context(), qemu_coroutine_self());
-+            qemu_coroutine_yield();
-         }
- 
-         monitor_set_cur(qemu_coroutine_self(), cur_mon);
-@@ -226,7 +227,9 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
-              * Move back to iohandler_ctx so that nested event loops for
-              * qemu_aio_context don't start new monitor commands.
-              */
--            aio_co_reschedule_self(iohandler_get_aio_context());
-+            aio_co_schedule(iohandler_get_aio_context(),
-+                            qemu_coroutine_self());
-+            qemu_coroutine_yield();
-         }
-     } else {
-        /*
--- 
-2.45.2
+----------------------------------------------------------------
+Block layer patches
+
+- crypto: Fix crash when used with multiqueue devices
+- linux-aio: add IO_CMD_FDSYNC command support
+- copy-before-write: Avoid integer overflows for timeout > 4s
+- Fix crash with QMP block_resize and iothreads
+- qemu-io: add cvtnum() error handling for zone commands
+- Code cleanup
+
+----------------------------------------------------------------
+Denis V. Lunev via (1):
+      block: drop force_dup parameter of raw_reconfigure_getfd()
+
+Fiona Ebner (1):
+      block/copy-before-write: use uint64_t for timeout in nanoseconds
+
+Prasad J Pandit (1):
+      linux-aio: add IO_CMD_FDSYNC command support
+
+Stefan Hajnoczi (5):
+      Revert "monitor: use aio_co_reschedule_self()"
+      aio: warn about iohandler_ctx special casing
+      qemu-io: add cvtnum() error handling for zone commands
+      block/crypto: create ciphers on demand
+      crypto/block: drop qcrypto_block_open() n_threads argument
+
+ crypto/blockpriv.h             |  13 +++--
+ include/block/aio.h            |   6 +++
+ include/block/raw-aio.h        |   1 +
+ include/crypto/block.h         |   2 -
+ block/copy-before-write.c      |   2 +-
+ block/crypto.c                 |   1 -
+ block/file-posix.c             |  17 ++++--
+ block/linux-aio.c              |  21 +++++++-
+ block/qcow.c                   |   2 +-
+ block/qcow2.c                  |   5 +-
+ crypto/block-luks.c            |   4 +-
+ crypto/block-qcow.c            |   8 ++-
+ crypto/block.c                 | 114 ++++++++++++++++++++++++-----------------
+ qapi/qmp-dispatch.c            |   7 ++-
+ qemu-io-cmds.c                 |  48 ++++++++++++++++-
+ tests/unit/test-crypto-block.c |   4 --
+ 16 files changed, 176 insertions(+), 79 deletions(-)
 
 
