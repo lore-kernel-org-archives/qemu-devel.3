@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7950CC25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 09:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1800DC25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 09:19:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGxaB-0007x8-St; Tue, 11 Jun 2024 05:14:25 -0400
+	id 1sGxec-0000yW-MB; Tue, 11 Jun 2024 05:18:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGxa0-0007w8-SZ
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:14:12 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sGxea-0000xw-8l
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:18:56 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sGxZy-0004VA-N3
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:14:12 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-57c6994e2f1so2023620a12.0
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 02:14:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sGxeY-0005JW-E0
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:18:56 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-52bbdc237f0so1122499e87.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 02:18:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718097249; x=1718702049; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=psvciP/sk9qfS9xCb26Yf49XGU91OjCAXlXIert47MM=;
- b=w3GgjLMCUXcXuTXqnUOqR/dKrw6/gbMJs5xYVIRGFzpgPpb0C31keyN+ywvSp3f/Vj
- XH9pKSwa5U2qX2tS5kLoZU2GCorp8y3SDdOY34V4g3IiyuzZnb8srDw7jZepa/pfG+g/
- F6NZSEUnWNUjQ5BFt9GYbashnaz8xcy0biMeAhYRZ6JorlgB2GLKCH3CLE2655COpOaO
- cTstohe2O9FTN6X9bBmRYNG/yB1rWnuDnk1UpCOITtGQxfUuI3hF1IBzcGn3eg93Z3li
- V9Lx5X03fHI1Ky2v06aTTfGAlKMsxdpQHqmImIJgXa4Mtce72mGdxeLuX1kEdFVIJOLL
- omkw==
+ d=linaro.org; s=google; t=1718097531; x=1718702331; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=ZN5KdxGdLRhcfzsdA/LZseSyqvlb2OAa3EGi3ttYIA4=;
+ b=UKtgRjEVdGsEIOcnmaJQAYNy01eD/leKVA+sOwHu8Z/ELkcjiIbOiEA6h7vaSZwvXP
+ 1qPRpkdP80bwVwiPjvadsgHYmRpgds6Iee9KL1SgJnUFc0/Xl1iku47nC4tNjRpHCqCt
+ 2ZlkFyc+wIptiMuGqJPrQ/lF0acZ/0eyDQJ3WUIIb3BC3jg7L8h2sCjYpQNbrQMCrzeJ
+ 8C8dDQdIGR+DWOI1FguP6rBfcfi5uowj5NC8YfhO7wRqH+SkWvnab5nJwJMXQFyfH2kK
+ 1PfhbpGS23r/ePJoSUwXCAZ5LoplfJOYU51hU+7ZwFbdZp25hUrC74Ns70sSMTAynH6s
+ 7aag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718097249; x=1718702049;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=psvciP/sk9qfS9xCb26Yf49XGU91OjCAXlXIert47MM=;
- b=YI+YhfBMRXfmtcwrq2hDNY9Lv/+1hGtiJUwxlsEz2yswO2X0qML0wWQBbONGnR1ioZ
- Pnp6AgNx9VEVK+ltXnc8wvwtvM7KWtvzIACVGgBzDZtAqzxj86Hq83Oeuta+n4CUVnYe
- XKR3e0LAqWFzhRdxL1FNQtr865q++dT1MoGQlddT9aeYm6lZQd+EJc0Ubj3cfv+Tlm1t
- 9sotNIbTZpzRy0ctjMD1eTgtgQxO5kGlPqQGigPCoGZwG24Olh566cawNeYEU3xfePwp
- pgnSZvoHOjj65aRC3k8maQAVvAMoZbee8nMilfOlY9hzVKEJxlpmwm5ANJejZaw6sbNM
- ULGg==
+ d=1e100.net; s=20230601; t=1718097531; x=1718702331;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZN5KdxGdLRhcfzsdA/LZseSyqvlb2OAa3EGi3ttYIA4=;
+ b=f0GVfxTtVOUfgLVSbjusD7Enq+ZeTUWbV+Bmd4H+n7qk9jj9BtPLWFqIEk4DHykHCg
+ 8YqmMRfx+Gj5zvJCPURN9ggRRgGOr6NWePgrf3xeeA8ydIbzPJPGVIbwH+9iVgs9VqeB
+ UbFOr+2idzryn391UvTHH8rdkCH98kssT47kNdGAEhanYTrcJ2FxmgkRZxIe0uQzDmAz
+ Ecvd/6Ta8UupEa4k+Cck5skWM9HoMh5YmY5VSiEFL4bpyCLFcAzt9s3H98zUSGoCp/Zr
+ TukRnVHl2AWPRUj3F8//9mpFJm51u1ynhm1SPoNWToO7HwQcFDegfdbN+T2EQ1y9zBlA
+ Lgzg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWbvETdVdoBzx79tOj+mbmtq8SdlRFopNhbyI1neAxOA1bWm+ETLkvwh2R6iJ3AlPu5jtfyKVFoHJAbMcp9IWIp7edn3mo=
-X-Gm-Message-State: AOJu0YxwyLL25gxB+qjx/orAEEcDaxMCr0U3xQK2j9+THQNaYzQ+bqz/
- 11d8Tu/mLzzN0E6j67B4RMP4p+kssZKgDvOQeixv1Hc8xYOKH32VNqwsA4fXL8IW2KLgW+uSU3B
- a
-X-Google-Smtp-Source: AGHT+IG7mRBizrberc6kojnC2g3HkyFOH9gdNbAA9EDLGWNjEl9IfajiPcQHJ0hqx1lbVYbpeCWl+g==
-X-Received: by 2002:a50:c2da:0:b0:57c:7c44:74df with SMTP id
- 4fb4d7f45d1cf-57c7c447531mr4436553a12.29.1718097248682; 
- Tue, 11 Jun 2024 02:14:08 -0700 (PDT)
-Received: from [192.168.69.100] (rsa59-h02-176-184-32-6.dsl.sta.abo.bbox.fr.
- [176.184.32.6]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f2706d8ebsm166490666b.114.2024.06.11.02.14.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Jun 2024 02:14:08 -0700 (PDT)
-Message-ID: <4231f244-e247-4fd6-8e90-44051ac98a3c@linaro.org>
-Date: Tue, 11 Jun 2024 11:14:05 +0200
+ AJvYcCXSGVN6gWQ+wXN9CR1sNGY9uPWVr1LBicc8UMZFhqNYs5Jf6zfwSFQxzcRcp1g7hzosXPcIgX9c+YWjQaMYqEC2BTMfcbQ=
+X-Gm-Message-State: AOJu0YzojTNflhpX/rcgLxGX162yi+R37iZbjxJV5uxEZIwbv55eJk53
+ Ce7bHk8VUyqOfM45B6MzSMviME7bn4N+58OdkSaMW5XhCABEOaDkPqDHXNtnQuQ=
+X-Google-Smtp-Source: AGHT+IGmfr7CrXyDOQ4a3d6UkcLM2bhFb1Biqe5OOH8+NsFa2o8SUOAfvSGIt6Ri/SG7GjKnUdhPFw==
+X-Received: by 2002:a05:6512:104a:b0:52c:84a7:f9d5 with SMTP id
+ 2adb3069b0e04-52c84a7faaamr7234707e87.69.1718097530711; 
+ Tue, 11 Jun 2024 02:18:50 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4215c2c7396sm169963905e9.33.2024.06.11.02.18.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Jun 2024 02:18:50 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3524C5F898;
+ Tue, 11 Jun 2024 10:18:49 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,  Stefan Hajnoczi
+ <stefanha@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Thomas
+ Huth <thuth@redhat.com>,  Markus Armbruster <armbru@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Zhao Liu
+ <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>
+Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
+In-Reply-To: <ZmgEiiyLbxVgjitc@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Tue, 11 Jun 2024 09:02:18 +0100")
+References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
+ <d910708f-ed55-4eee-8f66-8703cb45081c@linaro.org>
+ <evt7n.ggoypj31l14q@linaro.org> <ZmgEiiyLbxVgjitc@redhat.com>
+Date: Tue, 11 Jun 2024 10:18:49 +0100
+Message-ID: <87sexjzvk6.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson: Remove libumad dependence
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: zhenwei pi <pizhenwei@bytedance.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
- thuth@redhat.com
-References: <20240611082407.57154-1-pizhenwei@bytedance.com>
- <5d7981cf-6d18-4915-bb6b-985998a0c953@linaro.org>
-Content-Language: en-US
-In-Reply-To: <5d7981cf-6d18-4915-bb6b-985998a0c953@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,48 +107,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/6/24 11:09, Philippe Mathieu-Daudé wrote:
-> On 11/6/24 10:24, zhenwei pi wrote:
->> RDMA based migration has no dependence on libumad, libibverbs and
->> librdmacm are enough.
->> libumad was used by rdmacm-mux which has been already removed. It's
->> remained mistakenly.
-> 
-> Great!
-> 
-> Please also update tests/lcitool/projects/qemu.yml,
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-(see 
-https://www.qemu.org/docs/master/devel/testing#adding-new-build-pre-requisites)
+> On Mon, Jun 10, 2024 at 11:29:36PM +0300, Manos Pitsidianakis wrote:
+>> On Mon, 10 Jun 2024 22:37, Pierrick Bouvier <pierrick.bouvier@linaro.org=
+> wrote:
+>> > > The staticlib artifact contains a bunch of mangled .o objects?
+>> > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> > > [staticlibmangledobjects] Back to [TOC]
+>> > >=20
+>> > > Yes, until we compile without the `std` module library or we compile=
+ it
+>> > > manually instead of linking it, we will have some junk in it.
+>> > >=20
+>> >=20
+>> > Besides the size aspect, which potential advantage would there be to
+>> > switch to no_std?
+>> > We don't build a bare metal or kernel binary here, so why introduce th=
+is
+>> > restriction willingly?
+>>=20
+>> We'll see that as we progress. Might enable more platform support, for
+>> example. I have no definite answers here. Also, I know binary bloat is a=
+ big
+>> complaint from people with dislike of Rust, so I pre-emptively addressed=
+ it.
+>
+> Requiring 'no_std' would significantly limit what 3rd party crates QEMU
+> can make use of, and thus would put more burden on QEMU maintainers.
+> I don't find "binary bloat" a credible technical argument on its own
+> either, so certainly not sufficient justification to take on the pain
+> of 'no_std'.
 
-> with that:
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
->> Fixes: 1dfd42c4264b ("hw/rdma: Remove deprecated pvrdma device and 
->> rdmacm-mux helper")
->> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
->> ---
->>   meson.build | 4 +---
->>   1 file changed, 1 insertion(+), 3 deletions(-)
->>
->> diff --git a/meson.build b/meson.build
->> index ec59effca2..226b97ea26 100644
->> --- a/meson.build
->> +++ b/meson.build
->> @@ -1885,11 +1885,9 @@ endif
->>   rdma = not_found
->>   if not get_option('rdma').auto() or have_system
->> -  libumad = cc.find_library('ibumad', required: get_option('rdma'))
->>     rdma_libs = [cc.find_library('rdmacm', has_headers: 
->> ['rdma/rdma_cma.h'],
->>                                  required: get_option('rdma')),
->> -               cc.find_library('ibverbs', required: get_option('rdma')),
->> -               libumad]
->> +               cc.find_library('ibverbs', required: get_option('rdma'))]
->>     rdma = declare_dependency(dependencies: rdma_libs)
->>     foreach lib: rdma_libs
->>       if not lib.found()
-> 
+no_std is great for OS's and micro controllers but I don't think its
+something we have to worry about for QEMU. One potential area of
+co-operation would be the rust-vmm libraries and they definitely take
+advantage of the stdlibs.
 
+>
+>
+> With regards,
+> Daniel
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
