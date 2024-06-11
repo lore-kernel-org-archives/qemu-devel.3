@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E499BC25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 13:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36F32C27C5E
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 13:17:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH1K1-0008Re-UX; Tue, 11 Jun 2024 09:13:57 -0400
+	id 1sH1Mg-0001Vq-An; Tue, 11 Jun 2024 09:16:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH1K0-0008Pl-2v
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 09:13:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sH1Mf-0001VU-26
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 09:16:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sH1Jx-0008MJ-T7
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 09:13:55 -0400
+ id 1sH1Mb-0000io-3H
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 09:16:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718111632;
+ s=mimecast20190719; t=1718111796;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cSoVD+HWHz3z3mBYxCXNT/DvFCGFl6jxXBW8Y3QFPDQ=;
- b=g9GjB1/0fI//KhSOqi5i+tzZjyG4BmqGGYaMwrroA1oOKKBhq35awEGAFwhJ1EcSx3qj29
- uvCagCOXXoF+UtPXP+DNmVSlQGVv4J/4MZ6l8ZnTTZ0xQe5Zxq092ZcElDibwW8GkJ4AVb
- /N/WbMNw/uUjVc+p9hL/lwD54YCo1C8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Q3iOta0LTb+MN26waluU7zrWgUJpiCUq5p0w+f2JU0Y=;
+ b=O7JejXbwpX7hUEK+J7WeERAzrSg2MNZkd2+S8/PIIDgoVRAxIwk39YtmFqQm/xRoC5Qepm
+ xpxzTqZ8uc4VL88XhAwV9z84NyvDwpN4ORHfP7EsEnQYh4p1PuzYfpwZ8iX080P7lp+brh
+ Kb4keGDtuZoD3TumOBxYKbpeKD/iR3Y=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-125-FEJLj5aDN0-2DXtpGc1OvA-1; Tue, 11 Jun 2024 09:13:50 -0400
-X-MC-Unique: FEJLj5aDN0-2DXtpGc1OvA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-35f0b9c5bd4so539188f8f.2
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 06:13:48 -0700 (PDT)
+ us-mta-318-sJDkLDAsOG26hek81NvQcw-1; Tue, 11 Jun 2024 09:16:32 -0400
+X-MC-Unique: sJDkLDAsOG26hek81NvQcw-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-35f306b2e66so109572f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 06:16:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718111628; x=1718716428;
+ d=1e100.net; s=20230601; t=1718111790; x=1718716590;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cSoVD+HWHz3z3mBYxCXNT/DvFCGFl6jxXBW8Y3QFPDQ=;
- b=O3GBDlZIxD+zKMlNUKflatiAvvdnxmafcqVPm+tM9oWQdbeeF9xYPUd6BXdt//jW3w
- R9AGdsxe1vEcajLIzoJhdlEiaRbaOQL2V8eRCexOHvyoVk7GmCpfTyfCXGMTOX3oTzL6
- XlAyTPtcB6Vqvm4SnMIRlfwzPFttDn4cnUmlKa/upPDxlLneLsf9ONnLG4To/vc45ST7
- qa0MAT/huUhZM0nI8QirCgolBy3MsH1+7LdnR8MLbnHZ2DRzdR3DdMJZ63rp3Aqe+vtG
- lwDKEpFmw23NddRBdyOqRBwEKu1X8DhC4MiOvcSZGF7eqI/okGycIUi0M8gv0r/gj76S
- RhsQ==
+ bh=Q3iOta0LTb+MN26waluU7zrWgUJpiCUq5p0w+f2JU0Y=;
+ b=r9gtW+yAZNp6VQ+LOip9fuwktF87SXZbbuoPni1l7y/slhhlVlHhBtksZQqmYcbIns
+ DE9V8RSRhYliX2KEkNZSncoENXpbW04RHEJ5eWU8rcM6dRSQun1T1bkoVSvI2KRzFLNj
+ JApAVcnrD+XzmEmFT6q7nVnsEw2fKFwwHALJ7UpOpseZdyrV4W5nOGnBem0fEe3CmMBF
+ hWTRQZN+R+VnwU0XJMiEuR4GG6LeuYlOx4bapKYbYGR74cKOkPYEvb76gVN86B4FPL6Y
+ EEbKouLxbAX+vau8xZZSN4CW2zWoiYxG7BAIjdpnB0tNlw28C9eG/4hIuVsZRWzwVv7N
+ Z55g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUYoXzfInMsYprb1tS+vxQh20pXKcusilCa7ZrvwUqbhTOsQGeMih7j+fwNyqm8gvjknHBM/uUyHKAcCiwANmjY5PILlPc=
-X-Gm-Message-State: AOJu0Yw1lBO+6zNxTs6m3lvhzJNPeNdfclADvS2ITA55nh4j1rt6pWwg
- +zIvEI1ztfRqnSO6Pf92N3dfmlIIuj86QexAtK/YwY1Nt6OuB0aNFLkKriovExcYb1iWTuXG/4P
- FnH5gcFTMvxgXtWERC8yN6OBlnYq1uQ1w9aQ2zrarGWXVHCA/B8SFDNxD0ZsRpCk4o/YcDIKeab
- LyPpCSUca1GVOb3sfP6qzV0BuEuQQ=
-X-Received: by 2002:a5d:648f:0:b0:35e:83c0:82cb with SMTP id
- ffacd0b85a97d-35efedf8b16mr13073759f8f.70.1718111627886; 
- Tue, 11 Jun 2024 06:13:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG02BZJ2myERgrXw98rePshDSgPpZ6V1dQwmZMTnyKrM8LnDQEOkJ7QwjgLJdGrFAIs6xhdjsAJi0RUCEuDc7c=
-X-Received: by 2002:a5d:648f:0:b0:35e:83c0:82cb with SMTP id
- ffacd0b85a97d-35efedf8b16mr13073730f8f.70.1718111627526; Tue, 11 Jun 2024
- 06:13:47 -0700 (PDT)
+ AJvYcCW9/tcVhWLzUuoSDFKgmLtmlyP/XoZgdu7q1Pr2ea7fBye3EzeNtkgFQJUyxZtd7ZL9/C1gp3KVBGIrqcB+Epr2DJCKMss=
+X-Gm-Message-State: AOJu0YzKm/u5iF9FNslAN7v/6LOoKgcitE90BkrY/wSBXi0dCurOidwy
+ lJOcZJBrnIdLMIDfdrsUo30PqKLDpdi/NZ5MfGNQhBSMRxswrIhTFJXM2wTmwSo1j9ZsM3heQbK
+ VRJksrm2QIhdwCwHxWP+c3mN0E+NejTw8pUXuqyghsEwRcWvzMN7wTXe4D4NpGWYB4r23s80wDU
+ Azap1e1R58ufkeK0MY/x8XEkjqLQdxC5SIqVU=
+X-Received: by 2002:a5d:5551:0:b0:35f:d07:d34 with SMTP id
+ ffacd0b85a97d-35f2b2c469amr2151791f8f.27.1718111790696; 
+ Tue, 11 Jun 2024 06:16:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFBspUmwYS9fiouYlLEN85gF7qAom66FGtGs5miIV7lLD9DU1wAz33FfdMy6zSaH6ifZJB7x4kmmDLfi3QW0Yg=
+X-Received: by 2002:a5d:5551:0:b0:35f:d07:d34 with SMTP id
+ ffacd0b85a97d-35f2b2c469amr2151761f8f.27.1718111790345; 
+ Tue, 11 Jun 2024 06:16:30 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
- <CAJSP0QU2Y_mNtYQtPbahnvj1eLLTu2Z-f4z-6VZgSSxqgVnPbQ@mail.gmail.com>
- <evsu7.aus3yo6r56i@linaro.org>
- <CAJSP0QWLe6yPDE3rPztx=oS0g+vKT9W3GykrNU0EQZcaW06sog@mail.gmail.com>
-In-Reply-To: <CAJSP0QWLe6yPDE3rPztx=oS0g+vKT9W3GykrNU0EQZcaW06sog@mail.gmail.com>
+ <ZmgJVGMx81aHjg5f@redhat.com>
+In-Reply-To: <ZmgJVGMx81aHjg5f@redhat.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 11 Jun 2024 15:13:36 +0200
-Message-ID: <CABgObfa1VfpyQJY4SdQfOt8BwPC5KDNrNVkXA3HgjEPipGNGUg@mail.gmail.com>
+Date: Tue, 11 Jun 2024 15:16:19 +0200
+Message-ID: <CABgObfZrEPQ2btoLwbfH4X7wH7Ly74SXzce0cNNuxejRyGsPHw@mail.gmail.com>
 Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
-To: Stefan Hajnoczi <stefanha@gmail.com>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org,
  Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>, 
  Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9_e?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
  Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
@@ -86,7 +83,7 @@ Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -111,56 +108,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 10, 2024 at 10:47=E2=80=AFPM Stefan Hajnoczi <stefanha@gmail.co=
-m> wrote:
-> On Mon, 10 Jun 2024 at 16:27, Manos Pitsidianakis
-> <manos.pitsidianakis@linaro.org> wrote:
-> >
-> > On Mon, 10 Jun 2024 22:59, Stefan Hajnoczi <stefanha@gmail.com> wrote:
-> > >> What are the issues with not using the compiler, rustc, directly?
-> > >> -----------------------------------------------------------------
-> > >> [whataretheissueswith] Back to [TOC]
-> > >>
-> > >> 1. Tooling
-> > >>    Mostly writing up the build-sys tooling to do so. Ideally we'd
-> > >>    compile everything without cargo but rustc directly.
-> > >
-> > >Why would that be ideal?
-> >
-> > It remove the indirection level of meson<->cargo<->rustc. I don't have =
-a
-> > concrete idea on how to tackle this, but if cargo ends up not strictly
-> > necessary, I don't see why we cannot use one build system.
+On Tue, Jun 11, 2024 at 10:22=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com> wrote:
 >
-> The convenience of being able to use cargo dependencies without
-> special QEMU meson build system effort seems worth the overhead of
-> meson<->cargo<->rustc to me. There is a blog post that explores using
-> cargo crates using meson's wrap dependencies here, and it seems like
-> extra work:
-> https://coaxion.net/blog/2023/04/building-a-gstreamer-plugin-in-rust-with=
--meson-instead-of-cargo/
+> On Mon, Jun 10, 2024 at 09:22:35PM +0300, Manos Pitsidianakis wrote:
+> > Hello everyone,
+> >
+> > This is an early draft of my work on implementing a very simple device,
+> > in this case the ARM PL011 (which in C code resides in hw/char/pl011.c
+> > and is used in hw/arm/virt.c).
+>
+> looking at the diffstat:
+>
+> >  .gitignore                     |   2 +
+> >  .gitlab-ci.d/buildtest.yml     |  64 ++--
+> >  configure                      |  12 +
+> >  hw/arm/virt.c                  |   2 +-
+> >  meson.build                    |  99 ++++++
+> >  meson_options.txt              |   4 +
+> >  rust/meson.build               |  93 ++++++
+> >  rust/pl011/.cargo/config.toml  |   2 +
+> >  rust/pl011/.gitignore          |   2 +
+> >  rust/pl011/Cargo.lock          | 120 +++++++
+> >  rust/pl011/Cargo.toml          |  26 ++
+> >  rust/pl011/README.md           |  42 +++
+> >  rust/pl011/build.rs            |  44 +++
+> >  rust/pl011/meson.build         |   7 +
+> >  rust/pl011/rustfmt.toml        |  10 +
+> >  rust/pl011/src/definitions.rs  |  95 ++++++
+> >  rust/pl011/src/device.rs       | 531 ++++++++++++++++++++++++++++++
+> >  rust/pl011/src/device_class.rs |  95 ++++++
+> >  rust/pl011/src/generated.rs    |   5 +
+> >  rust/pl011/src/lib.rs          | 575 +++++++++++++++++++++++++++++++++
+> >  rust/pl011/src/memory_ops.rs   |  38 +++
+>
+> My thought is that if we're going to start implementing devices
+> or other parts of QEMU, in Rust, then I do not want to see it
+> placed in a completely separate directory sub-tree.
+>
+> In this example, I would expect to have hw/arm/pl011.rs, or hw/arm/pl011/=
+*.rs
+> so that the device is part of the normal Arm hardware directory structure
+> and maintainer assignments.
 
-The worst part of using cargo from meson (like in libblkio) is the
-lack of integration with Rust tests, but otherwise it's a much better
-experience. IIUC Meson's cargo subprojects do not support build.rs,
-which is a problem if one of your dependencies (for example libc)
-needs it.
-
-https://mesonbuild.com/Wrap-dependency-system-manual.html#cargo-wraps
-
-On the other hand, I think it's possible, possibly even clearer, to
-invoke bindgen from meson. I would prefer to have many small .rs files
-produced by bindgen, to be imported via "use", and I would prefer an
-allowlist approach that excludes symbols from system headers.
-
-> > >I guess there will be interest in using rust-vmm crates in some way.
-
-Yes, especially the ByteValued, VolatileMemory and Bytes traits.
-
-One complication in that respect is that anything that does DMA
-depends on either RCU or the BQL. We could, at least at the beginning,
-introduce a dummy guard that simply enforces at run-time that the BQL
-is taken.
+I think that's incompatible with the layout that Cargo expects.
+rust/hw/arm/pl011/ could be another possibility.
 
 Paolo
 
