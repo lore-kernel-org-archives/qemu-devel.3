@@ -4,84 +4,187 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF3FCC27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 02:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F4FC27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 03:23:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGrfV-0002bd-No; Mon, 10 Jun 2024 22:55:29 -0400
+	id 1sGs61-0001Cm-L4; Mon, 10 Jun 2024 23:22:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sGrfT-0002aw-WB
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 22:55:28 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sGrfR-0001zc-Cu
- for qemu-devel@nongnu.org; Mon, 10 Jun 2024 22:55:27 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-57a1fe63947so672873a12.1
- for <qemu-devel@nongnu.org>; Mon, 10 Jun 2024 19:55:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1718074521; x=1718679321; darn=nongnu.org;
- h=cc:to:subject:message-id:date:references:mime-version:from
- :in-reply-to:user-agent:from:to:cc:subject:date:message-id:reply-to;
- bh=Lwf1xaKXoEVyechDaqGNXQgHY63+pPB1WQguX8+ZFtk=;
- b=Kn6KHl5+qZu+fjOEYEukIO2+AZWWF/skg3fFyYmn/LLKYnnO8wFGKN6HgT2Ar2OqTX
- aIV8eYRC7dZNXX0TC+m3JGWE2Rz2uoOwbri1bW+lHK8r8W9/8V3g0mRy17SuO5+xOpzK
- 69ik3IF2ZX/2AUJn242m7yH7Ll18zfcqWRu382NdtPXJ01MPlofADxKW4TZEeQpKQyE8
- 6zDxYKCVyxpIFqx7i7EH7HwJPf1EFNW8d6f4TSK3DEhkqtMMWkpwF+aHXJfjr5T7Wj32
- btj7eLRFAgIwOUtlsgElgKHCYrWNINIpVMCIRVdQOnZHzx7CzgRh/ZDSE8iZeJSvOGXK
- g2Kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718074521; x=1718679321;
- h=cc:to:subject:message-id:date:references:mime-version:from
- :in-reply-to:user-agent:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Lwf1xaKXoEVyechDaqGNXQgHY63+pPB1WQguX8+ZFtk=;
- b=Phjj6qGjb5r6IviOwSR11tRAl0QpIFx7p9u/S+igN9gbO8RANSfpHaXjjOJxXLYf4y
- S/GDoNOFnbcMqJjgCBCxsKKtcEw1gFvcDv0LYkKZmTqwXRNpUmpoRDdR5zfFweNB9ZBo
- vxbwWM/tDpaQsh+moEgwUDLgr5m5kxZUX507Rpn3yRYvqYOaiqEmXZ6T8oO8k7tibxKG
- 8z9ri3wVr9aQxOwWVbB1c6lazr3wAkLYCXRzV9Z71DkpC+1v71BfXZoy3T5a0wJrpc7W
- O+3bGq8Vu39Gpd3cq9TbTffOdImwUR7LnnjusbZIx4rgfJWJHrdMQZKKM/M5KBcEIJFq
- arnA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0J2+Sqj3U5oaMcPT8Ucf0rb4NNKf1PiDJszRBSlRO/++lPQzCjYZtF5hNxD44T8bQN9zoG+oVF4g+aV/aYfvSYa9pAgA=
-X-Gm-Message-State: AOJu0YysaJfXB9bEBWWeLa86rxdfXAKXC5PFS3G2x4j55lVnOesb3xKT
- iXwvrR/YBuaoyIIg+YKeCiNJGQIrXzfWN2AX9K5xexYW7PYnuO2/XDH+iCacVsePUd0xL/IjLv+
- ULoM/IDvmtVaFvIpAqtMZJ7vZQMCi2Fx3GoslUw==
-X-Google-Smtp-Source: AGHT+IFrMP7Se5EDhnITQNkUFGOQlHvhDzjDlnypK5a/m3hXEuZ3CD6EkqqvpAbscXUX6HcZbMdBRhOCXmnm47IyqYE=
-X-Received: by 2002:a50:9e62:0:b0:57c:7f3a:6c8e with SMTP id
- 4fb4d7f45d1cf-57c7f3ac291mr3456736a12.11.1718074521238; Mon, 10 Jun 2024
- 19:55:21 -0700 (PDT)
-Received: from 44278815321 named unknown by gmailapi.google.com with HTTPREST; 
- Mon, 10 Jun 2024 19:55:20 -0700
-User-Agent: Mozilla Thunderbird
-In-Reply-To: <20240610171823.GA334653@fedora.redhat.com>
-From: =?UTF-8?B?5Y2i6ZW/5aWH?= <luchangqi.123@bytedance.com>
-Mime-Version: 1.0
-X-Original-From: =?UTF-8?B?5Y2i6ZW/5aWHIDxsdWNoYW5ncWkuMTIzQGJ5dGVkYW5jZS5jb20+?=
-References: <20240606122444.2914576-1-luchangqi.123@bytedance.com>
- <20240610171823.GA334653@fedora.redhat.com>
-Date: Mon, 10 Jun 2024 19:55:20 -0700
-Message-ID: <CAO5cSZDWkoORC_LPib3b16+q8vRK7zUvzYeVp7SjZg0+EBeRNQ@mail.gmail.com>
-Subject: Re:Re: [PATCH v5 00/10] Support persistent reservation operations
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com, 
- hreitz@redhat.com, fam@euphon.net, ronniesahlberg@gmail.com, 
- pbonzini@redhat.com, pl@dlhnet.de, kbusch@kernel.org, its@irrelevant.dk, 
- foss@defmacro.it, philmd@linaro.org, pizhenwei@bytedance.com
-Content-Type: multipart/alternative; boundary="0000000000008958b9061a9465ae"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_MUA_MOZILLA=2.309,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sGs5z-0001Bv-MI; Mon, 10 Jun 2024 23:22:51 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sGs5w-0006Wz-H2; Mon, 10 Jun 2024 23:22:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1718076169; x=1749612169;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=WvNjWp5HkIC2Y4+7O5hn5EJ3xy04cpTPpS2jZ+3iIcA=;
+ b=GmOftZthsO7LeDs99dTNe7a/XVTH2irGTgG/x9eV+pT8/uevoTSf97K0
+ /pQo8llI5SxqmAEMbvgQb/MvhhO5wc1OZ5l+hr6XHBw75ngqnBpTDMnKK
+ BJctAJbrluYy8piXl9FjKnh/d6LQdgQ1f1Y7mA4GG1sKzmStbR5d8LU+d
+ B5E4AVQQM0XnC3DI4FBo8gyxgN2FFDjbZyS1DqmqlsVizfcpZF919sRsL
+ NMXJH6ZLf1GVbaRLBJ1eukaZMud1GTpTQCk5SUYyLDLxXQNK+E+uMRoHJ
+ 9kt/HzOh0Lr2psJhgwbit2e4ubMt6rqO/GWvdwLv9/t02S0kluTCPqbOd A==;
+X-CSE-ConnectionGUID: nMRGxVGMShimK0mopA3kKg==
+X-CSE-MsgGUID: ebYTuJO3TbiWb+x+TYlhCg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11099"; a="32249887"
+X-IronPort-AV: E=Sophos;i="6.08,227,1712646000"; d="scan'208";a="32249887"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jun 2024 20:22:45 -0700
+X-CSE-ConnectionGUID: 8kk+0d+3Q+6Wa7MCclq39A==
+X-CSE-MsgGUID: dpb1eKALQ4S6eoBO6F3Gnw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,227,1712646000"; d="scan'208";a="39843866"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+ by orviesa008.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 10 Jun 2024 20:22:44 -0700
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Mon, 10 Jun 2024 20:22:43 -0700
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Mon, 10 Jun 2024 20:22:43 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.169)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 10 Jun 2024 20:22:43 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=GjYnoR5wG5daDPcn+Qx0IX6Eks4cIjgpU1qF2budw3wQ+IUKNnTaTli3lDeItFfTtcL7YLcA9C6WTldHYqNJebU4j9ac8tCXnHNZZn7HmAf4yn4tSdQhi5KZZrENBRx/BnEjAFEnYUxJgJIvXLOm8V5zInm1EvehrEW0iE5M8GFZwAROEB7pF23YEJf5JyFvCrKfhpuvDFhn5wV2Uy+FrwGindJeUvsFwCwluz55yPS/CdoFK2i8K1Pqx8/hXqBqAn4GFLCZt7Jm0EHexYIZz2ZhLEuoz0RF98AfrAECOYyXMSvtS4lZYAgYMNQ59mCQMJYBAPGPWjHzdQ3gIOx37Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cUjpKP+y5/CaoDvR0mMrrcJ6NZEgyNAjXDCVEcgxDYI=;
+ b=CYgJFdTF0UTEXpb3pNtiOmoSiJubdEcHqk/sVqQa/lhbJe6pd0OBv29J3rPh82vcrO+7a8i78FSlJWqsfP8tcMpRzb2BGAsjLyejmwg+d2VN2z8Y2uW77aIagdngCkzueq6czfYkljPt7nadnCho9vpJbQZTHrHuzqlDbAJsQoN64zoTV9uH4iWSt5iUFAFnshG8zmoMcxR04eGJjFivcuwleP9fOStG8srlgGzsexYUrMjlOdhMWYC7zun8qmAMx2ypa8fnynugaLXTLa5jx13RBw0jjfebkZOakXVRHNMjrVIGcNdecylRxPsNGnQr3qyqNNZxRaZpZFZZd773+Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by BL1PR11MB5238.namprd11.prod.outlook.com (2603:10b6:208:313::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7633.36; Tue, 11 Jun
+ 2024 03:22:42 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%7]) with mapi id 15.20.7633.036; Tue, 11 Jun 2024
+ 03:22:40 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
+ <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "mst@redhat.com"
+ <mst@redhat.com>, "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ "imammedo@redhat.com" <imammedo@redhat.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "clg@redhat.com" <clg@redhat.com>,
+ "yanghliu@redhat.com" <yanghliu@redhat.com>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>
+Subject: RE: [RFC v2 1/7] HostIOMMUDevice: Store the VFIO/VDPA agent
+Thread-Topic: [RFC v2 1/7] HostIOMMUDevice: Store the VFIO/VDPA agent
+Thread-Index: AQHauOiG0IqKm1eT40Owsp5StCp+K7HB6y6A
+Date: Tue, 11 Jun 2024 03:22:40 +0000
+Message-ID: <SJ0PR11MB6744419244FE6E8A85462C0C92C72@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20240607143905.765133-1-eric.auger@redhat.com>
+ <20240607143905.765133-2-eric.auger@redhat.com>
+In-Reply-To: <20240607143905.765133-2-eric.auger@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|BL1PR11MB5238:EE_
+x-ms-office365-filtering-correlation-id: b3709ac3-8ba1-4ec3-9e14-08dc89c5c05e
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230031|7416005|1800799015|366007|376005|921011|38070700009; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?33MgHeW0oSc0grNoBE8nZfXSEN4+xodC0vMVH0nVohpsilcQi86g/rmpWzQ1?=
+ =?us-ascii?Q?7QSmP0ZwpI8r0oUOZ0AiW0MscecGm3S4z2zd5QWIll3+hrufeFqjGLzlF80Z?=
+ =?us-ascii?Q?TEScJNfPdeZLNmAnBNw6KLsgRAV9alu7dtDCSUd22P/mdQtICDFfyzUzv8M9?=
+ =?us-ascii?Q?2XGvLXKZyqJ9iln7s3/fQ4PjQevEtF1PIOZMYMXB7pVb3qdnBAa+xFBeTD7O?=
+ =?us-ascii?Q?tdUu0m+PIvic6CfuxI69I0uROLc0Zt9ztxGsSP+dH91cxUwdK/fKjw4WJ2NO?=
+ =?us-ascii?Q?q0XRDLNHpLFBeGJu5idhAvdRZSGYxnTOsYujZY5YP6hzuA889l3GLoFNfy+c?=
+ =?us-ascii?Q?K2BOnSOyEfEzJRBo7zF/osOCSF1Oqhy0C490bRSankQm2uP9v6SejrQhb0jB?=
+ =?us-ascii?Q?Mmb7QayX2zpYtCq+9Kf1D7eIQKkKbplo3RKpLIxOW4LVaPL6A2oCz5j5evfX?=
+ =?us-ascii?Q?hJAAtZIFpNxnwf1sMX3jUboMNaYtUlQ18UA0r+InAtOWzviYWSSUD2VEWw9D?=
+ =?us-ascii?Q?t41eePKV2jrVg6mdWVGHUh1cmcSvSvyvcIHX2BnpQTOL1Kaxhv58PtWB+I0T?=
+ =?us-ascii?Q?qBiKILRxzoV68Pf/N3QtsPiV/QZ7xCxhV/2tUUwatujGlaQEMWME6Xf4nNZb?=
+ =?us-ascii?Q?HxWXFZcG8X1WxZNVmGYQDfIVV2d4iX6uMNCb/pN0SWwrv8wPsp1Et28ksYLY?=
+ =?us-ascii?Q?8cqWv/CZukkraluJkx6o16my9kFhwKu5AHZtg2vjKbj7YWRdJQMThE+AwZRv?=
+ =?us-ascii?Q?z9btcGSnWjeiaquIbULMLiqYgbIj+Z5BdK6Jwo5O9VbO1JOP6F29Dxl82lMi?=
+ =?us-ascii?Q?rNYOC6uven0DJpFhI22/dHgsSSTpVphnRcdTgvs9bQrokLnq8w1GfMZv+DCx?=
+ =?us-ascii?Q?cirLpVqVPpua8TSlXAqGj4b2orOyOe9+J7X9k60mY1btXl6eVWGBO9Q8GqLc?=
+ =?us-ascii?Q?5mSndYkcholuxlTrbex/kLeWzSr0E4gXG1bxLVgYUZMsc2yqYCORf1FfWyIJ?=
+ =?us-ascii?Q?QYGhXnt0xvNIas8zY3JgiJrBXsOSGbnPrLIyG4i1PPiN3vOd0kcTHFresw8j?=
+ =?us-ascii?Q?272u1NfOE7WhuCt2BCgShQ5+Cm/2KXdzo5BIpuZfpwSXXtLQHesYY61RxSIm?=
+ =?us-ascii?Q?b97rAaassbQIoI9//Xwv1zuS8TjW1up3WO3zu+FPBDQqKFWiUe6gJMxcYGGT?=
+ =?us-ascii?Q?PBmAvglYzD4+i18YFNJ/8US+WLjEn9JaLWsJa1+bdcx1ULJeaKg272PMrPII?=
+ =?us-ascii?Q?qfdrwGUp9QcCr/PZ2C3reTGGBUKuq/c9fmSqnJGuNfROmNg0soD3yaIVpamD?=
+ =?us-ascii?Q?uocPxGJec46fdaVcYLO3Sk+XZqzoXZDU97S/WsqY5/W5NTjpFF5wy0rd9rnl?=
+ =?us-ascii?Q?i+ia9yXsgbaoYSGVNtyioXfVnG2L?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(7416005)(1800799015)(366007)(376005)(921011)(38070700009);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?1YO5qzVkbZrZvKT2DZrORBsem9dkeNleFSpyAkKoHZFzC4PT2lgAsWnVKE88?=
+ =?us-ascii?Q?b2/YaOW9C9qR6V+g4gEiUGIKXFZD8jofw7O90nJ/hhvb3tAkNf9KWftLLUpI?=
+ =?us-ascii?Q?xnGoISHfwuXvpzmRC+5FzfSH8Lch2UTg1FHC4/9oP3QM7EW6r4DfyDKECK99?=
+ =?us-ascii?Q?qaTkT6cCT3nq9+3WwDRm78Nalv38x3Zo1ZGKNGYOYBvBQaTIeM1lu5PwNEQg?=
+ =?us-ascii?Q?JZp/8rbJRgN2e/QA4HtxCLHo76yeC3SzTAUHHG2t72FcW4HmBBFw6zhqSUgr?=
+ =?us-ascii?Q?pZl991pFJa9bPjQOfyneoCyEgUri34o1LKZ/qcAoIxLSvWl6JV9iJN2fOvdy?=
+ =?us-ascii?Q?brCh3hV6vZU9BBzxkLKdTh7JMtbbUKV/9d8FgdxQkSbcJsXoMmQIg9HwWeNy?=
+ =?us-ascii?Q?U47+TxG4pStyQOg9yUc2zYp7+AXlhAsx7KvKOASLyd4pxQEeMqREnmuQWWZF?=
+ =?us-ascii?Q?co/KAhikgas82dykO/W9nFP9d4vzqzk1xRhVAn39sqcd0xBcYqQ6NYc2kTdf?=
+ =?us-ascii?Q?d2AKmTHsmrfv4iq5a3OMVhFoVpQOhycdv2uhbHrfPyFTfCuEErCKLrIkthOV?=
+ =?us-ascii?Q?Ytme4OVPE5EPzt+jVTpEjKn5Dk4LO3qNQZlI8V05xdLPVtR4nfVSuQYl7pU7?=
+ =?us-ascii?Q?PjoXfUmOkFKrrkzOFFR4lbdyRqFTfx0/hp71lu39egweVQgM7irKvRf3xPiZ?=
+ =?us-ascii?Q?fAXDaCvyWuCuMivIqGcs5joodigz6aulw5JubrTcIoZQaCVC1JDjdX7HrH3b?=
+ =?us-ascii?Q?JfTacR17/KCXgDi/162Z72sLtBXBKKTLGve/rP1ZKE8FJHAAEec3DQB0k1s7?=
+ =?us-ascii?Q?rkck1qrUgJHxUQ/lPMJMHEnsP04iC/UyU3YWLlBMOJml3orIp3X96afZdafo?=
+ =?us-ascii?Q?GanTTpAm/QrL4jYu4AK0/+4IByTZKNin7XtdQ3Sx/QVew06sfSTFbUZyWr15?=
+ =?us-ascii?Q?U/ymTJkgJ7BEy5a9JF+33MLuG4zXD1Eu2utHAgYQ7ztouB7IurkL6aMYVMtV?=
+ =?us-ascii?Q?ZC7gaQFM/pKUkd8Kkn6jNNsx7i1meRZaVVxFXPD6Smiil+r5M+r87iGbJ0Ha?=
+ =?us-ascii?Q?g5I0taydC0Tz/qpANlZF9kt9GmoQyO6Q6ik+p1rvXgsrtd6YjNnhMxpeKeO3?=
+ =?us-ascii?Q?4U7PY4PU9vIBCRRuG6htGNeINwZjMjfcBVwRSzLtWjSnJNsaf7sX7mO9m57m?=
+ =?us-ascii?Q?sOeEqzi4nMcw750EPxdkQ4xh4iroocnFmVHg4LEYyHKRTEG/hD/G2apylByK?=
+ =?us-ascii?Q?mV8WM4SmLG2uaNUMEPKHyBBRWFd9g0fVg8rPQ3MRc7AvsNLViak7r17zAmBB?=
+ =?us-ascii?Q?v+mZ/5Kp7TciLDMrstvazTtz6a8wkKaEvcrnOXhCaOVGxQarfVuUm8Ej5ndW?=
+ =?us-ascii?Q?XlGll3/rwQkR4eCToI7tIK9BOMIbHEcmpKFDCb9hO+7l53POZilK/jsNuMYW?=
+ =?us-ascii?Q?BsQwWbw693r9wf8q//ANqhCya6cLwnXiA+ORngGDQyuR9I+ssWME5HpI104P?=
+ =?us-ascii?Q?L5RmIstX7Pb+mych48SyDFqIjWOq8SSrNfxcRtSI4Fs7j2txDVYyd3IUeeuB?=
+ =?us-ascii?Q?94FoJkMt/vA54ZJleDqBs0Za9JZhEK9NwUaWcY1A?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3709ac3-8ba1-4ec3-9e14-08dc89c5c05e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jun 2024 03:22:40.8589 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: wkHOYlKBfFxqtYO+AgMIE3kJHaW4abFcNb7yL+pTKkuepArbPQy2LYRrQC1m5iE1pwMxaYhpldiSJih7p4pfFBDaPhCWUY+okGSFtqLDM6Y=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR11MB5238
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.10;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,214 +200,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008958b9061a9465ae
-Content-Type: text/plain; charset="UTF-8"
 
-Hi,
 
-Sorry, I explained it in patch2 and forgot to reply your email.
-
-The existing PRManager only works with local scsi devices. This series
-will completely decouple devices and drivers. The device can not only be
-scsi, but also other devices such as nvme. The same is true for the
-driver, which is completely unrestricted.
-
-And block/file-posix.c can implement the new block driver, and
-pr_manager can be executed after splicing ioctl commands in these
-drivers. This will be implemented in subsequent patches.
-
-On 2024/6/11 01:18, Stefan Hajnoczi wrote:
-> On Thu, Jun 06, 2024 at 08:24:34PM +0800, Changqi Lu wrote:
->> Hi,
->>
->> patchv5 has been modified.
->>
->> Sincerely hope that everyone can help review the
->> code and provide some suggestions.
->>
->> v4->v5:
->> - Fixed a memory leak bug at hw/nvme/ctrl.c.
->>
->> v3->v4:
->> - At the nvme layer, the two patches of enabling the ONCS
->> function and enabling rescap are combined into one.
->> - At the nvme layer, add helper functions for pr capacity
->> conversion between the block layer and the nvme layer.
->>
->> v2->v3:
->> In v2 Persist Through Power Loss(PTPL) is enable default.
->> In v3 PTPL is supported, which is passed as a parameter.
->>
->> v1->v2:
->> - Add sg_persist --report-capabilities for SCSI protocol and enable
->> oncs and rescap for NVMe protocol.
->> - Add persistent reservation capabilities constants and helper functions
-for
->> SCSI and NVMe protocol.
->> - Add comments for necessary APIs.
->>
->> v1:
->> - Add seven APIs about persistent reservation command for block layer.
->> These APIs including reading keys, reading reservations, registering,
->> reserving, releasing, clearing and preempting.
->> - Add the necessary pr-related operation APIs for both the
->> SCSI protocol and NVMe protocol at the device layer.
->> - Add scsi driver at the driver layer to verify the functions
+>-----Original Message-----
+>From: Eric Auger <eric.auger@redhat.com>
+>Subject: [RFC v2 1/7] HostIOMMUDevice: Store the VFIO/VDPA agent
 >
-> My question from v1 is unanswered:
+>Store the agent device (VFIO or VDPA) in the host IOMMU device.
+>This will allow easy access to some of its resources.
 >
-> What is the relationship to the existing PRManager functionality
-> (docs/interop/pr-helper.rst) where block/file-posix.c interprets SCSI
-> ioctls and sends persistent reservation requests to an external helper
-> process?
->
-> I wonder if block/file-posix.c can implement the new block driver
-> callbacks using pr_mgr (while keeping the existing scsi-generic
-> support).
->
-> Thanks,
-> Stefan
->
->>
->>
->> Changqi Lu (10):
->> block: add persistent reservation in/out api
->> block/raw: add persistent reservation in/out driver
->> scsi/constant: add persistent reservation in/out protocol constants
->> scsi/util: add helper functions for persistent reservation types
->> conversion
->> hw/scsi: add persistent reservation in/out api for scsi device
->> block/nvme: add reservation command protocol constants
->> hw/nvme: add helper functions for converting reservation types
->> hw/nvme: enable ONCS and rescap function
->> hw/nvme: add reservation protocal command
->> block/iscsi: add persistent reservation in/out driver
->>
->> block/block-backend.c | 397 ++++++++++++++++++++++++++
->> block/io.c | 163 +++++++++++
->> block/iscsi.c | 443 ++++++++++++++++++++++++++++++
->> block/raw-format.c | 56 ++++
->> hw/nvme/ctrl.c | 326 +++++++++++++++++++++-
->> hw/nvme/ns.c | 5 +
->> hw/nvme/nvme.h | 84 ++++++
->> hw/scsi/scsi-disk.c | 352 ++++++++++++++++++++++++
->> include/block/block-common.h | 40 +++
->> include/block/block-io.h | 20 ++
->> include/block/block_int-common.h | 84 ++++++
->> include/block/nvme.h | 98 +++++++
->> include/scsi/constants.h | 52 ++++
->> include/scsi/utils.h | 8 +
->> include/sysemu/block-backend-io.h | 24 ++
->> scsi/utils.c | 81 ++++++
->> 16 files changed, 2231 insertions(+), 2 deletions(-)
->>
->> --
->> 2.20.1
->>
+>Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>---
 
---0000000000008958b9061a9465ae
-Content-Type: text/html; charset="UTF-8"
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>=20
 
-<p>Hi,
-<br>
-<br>Sorry, I explained it in patch2 and forgot to reply your email.
-<br>
-<br>The existing PRManager only works with local scsi devices. This series
-<br>will completely decouple devices and drivers. The device can not only be
-<br>scsi, but also other devices such as nvme. The same is true for the
-<br>driver, which is completely unrestricted.
-<br>
-<br>And block/file-posix.c can implement the new block driver, and
-<br>pr_manager can be executed after splicing ioctl commands in these
-<br>drivers. This will be implemented in subsequent patches.
-<br>
-<br>On 2024/6/11 01:18, Stefan Hajnoczi wrote:
-<br>&gt; On Thu, Jun 06, 2024 at 08:24:34PM +0800, Changqi Lu wrote:
-<br>&gt;&gt; Hi,
-<br>&gt;&gt;
-<br>&gt;&gt; patchv5 has been modified. 
-<br>&gt;&gt;
-<br>&gt;&gt; Sincerely hope that everyone can help review the
-<br>&gt;&gt; code and provide some suggestions.
-<br>&gt;&gt;
-<br>&gt;&gt; v4-&gt;v5:
-<br>&gt;&gt; - Fixed a memory leak bug at hw/nvme/ctrl.c.
-<br>&gt;&gt;
-<br>&gt;&gt; v3-&gt;v4:
-<br>&gt;&gt; - At the nvme layer, the two patches of enabling the ONCS
-<br>&gt;&gt;   function and enabling rescap are combined into one.
-<br>&gt;&gt; - At the nvme layer, add helper functions for pr capacity
-<br>&gt;&gt;   conversion between the block layer and the nvme layer.
-<br>&gt;&gt;
-<br>&gt;&gt; v2-&gt;v3:
-<br>&gt;&gt; In v2 Persist Through Power Loss(PTPL) is enable default.
-<br>&gt;&gt; In v3 PTPL is supported, which is passed as a parameter.
-<br>&gt;&gt;
-<br>&gt;&gt; v1-&gt;v2:
-<br>&gt;&gt; - Add sg_persist --report-capabilities for SCSI protocol and enable
-<br>&gt;&gt;   oncs and rescap for NVMe protocol.
-<br>&gt;&gt; - Add persistent reservation capabilities constants and helper functions for
-<br>&gt;&gt;   SCSI and NVMe protocol.
-<br>&gt;&gt; - Add comments for necessary APIs.
-<br>&gt;&gt;
-<br>&gt;&gt; v1:
-<br>&gt;&gt; - Add seven APIs about persistent reservation command for block layer.
-<br>&gt;&gt;   These APIs including reading keys, reading reservations, registering,
-<br>&gt;&gt;   reserving, releasing, clearing and preempting.
-<br>&gt;&gt; - Add the necessary pr-related operation APIs for both the
-<br>&gt;&gt;   SCSI protocol and NVMe protocol at the device layer.
-<br>&gt;&gt; - Add scsi driver at the driver layer to verify the functions
-<br>&gt; 
-<br>&gt; My question from v1 is unanswered:
-<br>&gt; 
-<br>&gt;   What is the relationship to the existing PRManager functionality
-<br>&gt;   (docs/interop/pr-helper.rst) where block/file-posix.c interprets SCSI
-<br>&gt;   ioctls and sends persistent reservation requests to an external helper
-<br>&gt;   process?
-<br>&gt; 
-<br>&gt;   I wonder if block/file-posix.c can implement the new block driver
-<br>&gt;   callbacks using pr_mgr (while keeping the existing scsi-generic
-<br>&gt;   support).
-<br>&gt; 
-<br>&gt; Thanks,
-<br>&gt; Stefan
-<br>&gt; 
-<br>&gt;&gt;
-<br>&gt;&gt;
-<br>&gt;&gt; Changqi Lu (10):
-<br>&gt;&gt;   block: add persistent reservation in/out api
-<br>&gt;&gt;   block/raw: add persistent reservation in/out driver
-<br>&gt;&gt;   scsi/constant: add persistent reservation in/out protocol constants
-<br>&gt;&gt;   scsi/util: add helper functions for persistent reservation types
-<br>&gt;&gt;     conversion
-<br>&gt;&gt;   hw/scsi: add persistent reservation in/out api for scsi device
-<br>&gt;&gt;   block/nvme: add reservation command protocol constants
-<br>&gt;&gt;   hw/nvme: add helper functions for converting reservation types
-<br>&gt;&gt;   hw/nvme: enable ONCS and rescap function
-<br>&gt;&gt;   hw/nvme: add reservation protocal command
-<br>&gt;&gt;   block/iscsi: add persistent reservation in/out driver
-<br>&gt;&gt;
-<br>&gt;&gt;  block/block-backend.c             | 397 ++++++++++++++++++++++++++
-<br>&gt;&gt;  block/io.c                        | 163 +++++++++++
-<br>&gt;&gt;  block/iscsi.c                     | 443 ++++++++++++++++++++++++++++++
-<br>&gt;&gt;  block/raw-format.c                |  56 ++++
-<br>&gt;&gt;  hw/nvme/ctrl.c                    | 326 +++++++++++++++++++++-
-<br>&gt;&gt;  hw/nvme/ns.c                      |   5 +
-<br>&gt;&gt;  hw/nvme/nvme.h                    |  84 ++++++
-<br>&gt;&gt;  hw/scsi/scsi-disk.c               | 352 ++++++++++++++++++++++++
-<br>&gt;&gt;  include/block/block-common.h      |  40 +++
-<br>&gt;&gt;  include/block/block-io.h          |  20 ++
-<br>&gt;&gt;  include/block/block_int-common.h  |  84 ++++++
-<br>&gt;&gt;  include/block/nvme.h              |  98 +++++++
-<br>&gt;&gt;  include/scsi/constants.h          |  52 ++++
-<br>&gt;&gt;  include/scsi/utils.h              |   8 +
-<br>&gt;&gt;  include/sysemu/block-backend-io.h |  24 ++
-<br>&gt;&gt;  scsi/utils.c                      |  81 ++++++
-<br>&gt;&gt;  16 files changed, 2231 insertions(+), 2 deletions(-)
-<br>&gt;&gt;
-<br>&gt;&gt; -- 
-<br>&gt;&gt; 2.20.1
-<br>&gt;&gt;</p>
+Thanks
+Zhenzhong
 
---0000000000008958b9061a9465ae--
+> include/sysemu/host_iommu_device.h | 1 +
+> hw/vfio/container.c                | 1 +
+> hw/vfio/iommufd.c                  | 2 ++
+> 3 files changed, 4 insertions(+)
+>
+>diff --git a/include/sysemu/host_iommu_device.h
+>b/include/sysemu/host_iommu_device.h
+>index a57873958b..3e5f058e7b 100644
+>--- a/include/sysemu/host_iommu_device.h
+>+++ b/include/sysemu/host_iommu_device.h
+>@@ -34,6 +34,7 @@ struct HostIOMMUDevice {
+>     Object parent_obj;
+>
+>     char *name;
+>+    void *agent; /* pointer to agent device, ie. VFIO or VDPA device */
+>     HostIOMMUDeviceCaps caps;
+> };
+>
+>diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+>index 26e6f7fb4f..b728b978a2 100644
+>--- a/hw/vfio/container.c
+>+++ b/hw/vfio/container.c
+>@@ -1145,6 +1145,7 @@ static bool
+>hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+>
+>     hiod->name =3D g_strdup(vdev->name);
+>     hiod->caps.aw_bits =3D vfio_device_get_aw_bits(vdev);
+>+    hiod->agent =3D opaque;
+>
+>     return true;
+> }
+>diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>index 409ed3dcc9..dbdae1adbb 100644
+>--- a/hw/vfio/iommufd.c
+>+++ b/hw/vfio/iommufd.c
+>@@ -631,6 +631,8 @@ static bool
+>hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+>         struct iommu_hw_info_vtd vtd;
+>     } data;
+>
+>+    hiod->agent =3D opaque;
+>+
+>     if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
+>                                          &type, &data, sizeof(data), errp=
+)) {
+>         return false;
+>--
+>2.41.0
+
 
