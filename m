@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB525C27C75
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 12:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C075C25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 12:33:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sH0fT-0001Qy-K0; Tue, 11 Jun 2024 08:32:03 -0400
+	id 1sH0gg-0002Gz-VO; Tue, 11 Jun 2024 08:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frolov@swemel.ru>)
- id 1sH0fR-0001QD-VA; Tue, 11 Jun 2024 08:32:01 -0400
+ (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1sH0gd-0002GV-N9
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 08:33:16 -0400
 Received: from mx.swemel.ru ([95.143.211.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frolov@swemel.ru>)
- id 1sH0fQ-0000t6-28; Tue, 11 Jun 2024 08:32:01 -0400
-Message-ID: <4f9e536c-1dd8-43e3-8c0b-cc4ee5832e10@swemel.ru>
+ (Exim 4.90_1) (envelope-from <frolov@swemel.ru>) id 1sH0gc-00010C-0J
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 08:33:15 -0400
+Message-ID: <a2a6e83e-fb47-4de1-a807-81843092c3fa@swemel.ru>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=swemel.ru; s=mail;
- t=1718109116;
+ t=1718109192;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AhH1WYkiF+1NPJkaIk1wcbcYku6uZVNzMKCMpAeKbmo=;
- b=kZl30vRdKQSRrN/7O82IzSERA6nz1iVLAzUjgsnbo+urlkBzUz3mFZjq/wW5TkFtWkUyiU
- /n6QFsoMvR6o7oU75exhlvq/gmi0A7BBVNu7W4F+oxckavMMaZd/YJaBsibvUJRjJNB3Je
- gAKWroPeAoLEcx5k47d170XW1R89Upo=
-Date: Tue, 11 Jun 2024 15:31:56 +0300
+ bh=zu92SY8BigfsXSNFXgZf82QTZTbmbV8DEpbmgDtKA7Q=;
+ b=G8ehK9ZYOt39PE29ue67NOQyo5OQX0JbvDj3BYnlLCMlfb+yHlox5lx075ygKPvMi5ue5k
+ Z5DnijEsvdNSnTuIAOe7xRGbvU+Q9LuUkKMJXL93ewXon+f4+tVCJrEkl+33BBlRnYwvsv
+ CSMxkp82uuWdB2qZVPTV8Edrch9Z0R0=
+Date: Tue, 11 Jun 2024 15:33:12 +0300
 MIME-Version: 1.0
-Subject: Re: [PATCH] tests/qtest/fuzz/virtio_net_fuzz.c: fix
- virtio_net_fuzz_multi
+Subject: Re: [PATCH] hw/net/virtio-net.c: fix crash in iov_copy()
 Content-Language: en-US
-To: alxndr@bu.edu
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, sdl.qemu@linuxtesting.org
-References: <20240523102813.396750-2-frolov@swemel.ru>
+To: mst@redhat.com
+Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
+References: <20240527133140.218300-2-frolov@swemel.ru>
 From: =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0KTRgNC+0LvQvtCy?= <frolov@swemel.ru>
-In-Reply-To: <20240523102813.396750-2-frolov@swemel.ru>
+In-Reply-To: <20240527133140.218300-2-frolov@swemel.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=95.143.211.150; envelope-from=frolov@swemel.ru;
@@ -66,31 +65,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 ping
 
-https://patchew.org/QEMU/20240523102813.396750-2-frolov@swemel.ru/
+https://patchew.org/QEMU/20240527133140.218300-2-frolov@swemel.ru/
 
-On 23.05.2024 13:28, Dmitry Frolov wrote:
-> If QTestState was already CLOSED due to error, calling qtest_clock_step()
-> afterwards makes no sense and only raises false-crash with message:
-> "assertion timer != NULL failed".
+On 27.05.2024 16:31, Dmitry Frolov wrote:
+> A crash found while fuzzing device virtio-net-socket-check-used.
+> Assertion "offset == 0" in iov_copy() fails if less than guest_hdr_len bytes
+> were transmited.
 >
 > Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
 > ---
->   tests/qtest/fuzz/virtio_net_fuzz.c | 3 +++
->   1 file changed, 3 insertions(+)
+>   hw/net/virtio-net.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
 >
-> diff --git a/tests/qtest/fuzz/virtio_net_fuzz.c b/tests/qtest/fuzz/virtio_net_fuzz.c
-> index e239875e3b..2f57a8ddd8 100644
-> --- a/tests/qtest/fuzz/virtio_net_fuzz.c
-> +++ b/tests/qtest/fuzz/virtio_net_fuzz.c
-> @@ -81,6 +81,9 @@ static void virtio_net_fuzz_multi(QTestState *s,
->           /* Run the main loop */
->           qtest_clock_step(s, 100);
->           flush_events(s);
-> +        if (!qtest_probe_child(s)) {
-> +            return;
-> +        }
->   
->           /* Wait on used descriptors */
->           if (check_used && !vqa.rx) {
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 24e5e7d347..603b80a50a 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -2783,6 +2783,12 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+>            */
+>           assert(n->host_hdr_len <= n->guest_hdr_len);
+>           if (n->host_hdr_len != n->guest_hdr_len) {
+> +            if (iov_size(out_sg, out_num) < n->guest_hdr_len) {
+> +                virtio_error(vdev, "virtio-net header is invalid");
+> +                virtqueue_detach_element(q->tx_vq, elem, 0);
+> +                g_free(elem);
+> +                return -EINVAL;
+> +            }
+>               unsigned sg_num = iov_copy(sg, ARRAY_SIZE(sg),
+>                                          out_sg, out_num,
+>                                          0, n->host_hdr_len);
 
 
