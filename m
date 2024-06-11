@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1800DC25B76
-	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 09:19:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6444C25B76
+	for <qemu-devel@archiver.kernel.org>; Tue, 11 Jun 2024 09:22:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sGxec-0000yW-MB; Tue, 11 Jun 2024 05:18:58 -0400
+	id 1sGxhe-00027U-Pa; Tue, 11 Jun 2024 05:22:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sGxea-0000xw-8l
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:18:56 -0400
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ id 1sGxhd-00027G-Fd
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:22:05 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sGxeY-0005JW-E0
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:18:56 -0400
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-52bbdc237f0so1122499e87.0
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 02:18:52 -0700 (PDT)
+ id 1sGxhY-0005wl-SO
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 05:22:05 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2ebeefb9b56so10053761fa.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 02:22:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718097531; x=1718702331; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718097719; x=1718702519; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ZN5KdxGdLRhcfzsdA/LZseSyqvlb2OAa3EGi3ttYIA4=;
- b=UKtgRjEVdGsEIOcnmaJQAYNy01eD/leKVA+sOwHu8Z/ELkcjiIbOiEA6h7vaSZwvXP
- 1qPRpkdP80bwVwiPjvadsgHYmRpgds6Iee9KL1SgJnUFc0/Xl1iku47nC4tNjRpHCqCt
- 2ZlkFyc+wIptiMuGqJPrQ/lF0acZ/0eyDQJ3WUIIb3BC3jg7L8h2sCjYpQNbrQMCrzeJ
- 8C8dDQdIGR+DWOI1FguP6rBfcfi5uowj5NC8YfhO7wRqH+SkWvnab5nJwJMXQFyfH2kK
- 1PfhbpGS23r/ePJoSUwXCAZ5LoplfJOYU51hU+7ZwFbdZp25hUrC74Ns70sSMTAynH6s
- 7aag==
+ :reply-to; bh=HJ8ZB0M6228iVYGDBJHTxKD5uJyM/zEz2/HvUMQDVpA=;
+ b=PLLjggz30C4zx8Q48p7NccSFw0w7BG6VS9ohuvbiJJj7u9cilbkxib0NZRCVFUh6y4
+ n8GDM2dv2F8dU4T/0Jo4N+CY97WptKAwpAc9M2lbLdn8cFXIC9/OXpLOREO91JG/5utv
+ 89mXfWPVreIbZUXRTawxFUJ6yO6qWXLgBjmCcg9qnufhir/i9jUHQdN898d//qJtMieu
+ 04okOfYa5eaCpgkqP26FTkSdPvrjmI/2JDSrSSNOVuujAGqKppGEuViN12QkO7dA+Ctk
+ n5Wt0lQqw7R2S+1JrQlqmDANwbdRQhvqT97RuSTq6T7nOOvW4fUPbq/xpuHu0P5QN8kb
+ gFKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718097531; x=1718702331;
+ d=1e100.net; s=20230601; t=1718097719; x=1718702519;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZN5KdxGdLRhcfzsdA/LZseSyqvlb2OAa3EGi3ttYIA4=;
- b=f0GVfxTtVOUfgLVSbjusD7Enq+ZeTUWbV+Bmd4H+n7qk9jj9BtPLWFqIEk4DHykHCg
- 8YqmMRfx+Gj5zvJCPURN9ggRRgGOr6NWePgrf3xeeA8ydIbzPJPGVIbwH+9iVgs9VqeB
- UbFOr+2idzryn391UvTHH8rdkCH98kssT47kNdGAEhanYTrcJ2FxmgkRZxIe0uQzDmAz
- Ecvd/6Ta8UupEa4k+Cck5skWM9HoMh5YmY5VSiEFL4bpyCLFcAzt9s3H98zUSGoCp/Zr
- TukRnVHl2AWPRUj3F8//9mpFJm51u1ynhm1SPoNWToO7HwQcFDegfdbN+T2EQ1y9zBlA
- Lgzg==
+ bh=HJ8ZB0M6228iVYGDBJHTxKD5uJyM/zEz2/HvUMQDVpA=;
+ b=DMx15kH6nNPL1vXM1Ls0lz2tav8n2OpHDRL+wMdm7DLxFpa/yynlc+aCX3bl94hI5H
+ 9rug/p9ksR6bKv6wbkK6kEPcqE3TnXXA4KaH1/gs3rGVE6/kqOT+oxtYK8+VspPLPmUO
+ kZs6NrTL5X1l1GBdAiJLXF9ZwgqsVoV1F4ZNwpXl2S+H8fXJO5rJQXL8DrORtRIea1t/
+ THrg17PlRU/MyABso1xIMb5O+/LjwrLmjKLpwnZhO7Pf11n8PqWBsgabkcrroPnQrRfu
+ UMFF7deBYjSQSteGNycq/DJ+FMXOfuGoYnAbk8ESgqVqzJSzLqXU4m5pxKsbcgnLuRgZ
+ ZUpg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSGVN6gWQ+wXN9CR1sNGY9uPWVr1LBicc8UMZFhqNYs5Jf6zfwSFQxzcRcp1g7hzosXPcIgX9c+YWjQaMYqEC2BTMfcbQ=
-X-Gm-Message-State: AOJu0YzojTNflhpX/rcgLxGX162yi+R37iZbjxJV5uxEZIwbv55eJk53
- Ce7bHk8VUyqOfM45B6MzSMviME7bn4N+58OdkSaMW5XhCABEOaDkPqDHXNtnQuQ=
-X-Google-Smtp-Source: AGHT+IGmfr7CrXyDOQ4a3d6UkcLM2bhFb1Biqe5OOH8+NsFa2o8SUOAfvSGIt6Ri/SG7GjKnUdhPFw==
-X-Received: by 2002:a05:6512:104a:b0:52c:84a7:f9d5 with SMTP id
- 2adb3069b0e04-52c84a7faaamr7234707e87.69.1718097530711; 
- Tue, 11 Jun 2024 02:18:50 -0700 (PDT)
+ AJvYcCUhApc7Ws/JjZOI2JUMsG0f1xdazLOBEpYgq66xYYkG7bcH2ncUA2sJrK7P4Owh68ZgyxUqkltK5SCRX9zCUphsOsa15dw=
+X-Gm-Message-State: AOJu0YxnPSbHyMhKuM8dzV4TYVWTkcE6qyWEMc+K4b5pFQDguO4qD/JQ
+ wK+B/9vsXlNDfBNcVJ1qsyUq1t6hOO1MApmUWy9mmhrnKwSEBUpYxq+24Ql47LPisUqKWMhJVah
+ u
+X-Google-Smtp-Source: AGHT+IESE0SNnm6QlbKLvxm8UQlt9x1evHZ6KoLPbBvXbUFedfo0Mb0yF54ksH0cNW6hpwE6Or2xEw==
+X-Received: by 2002:a5d:6da8:0:b0:35f:22e3:1e0c with SMTP id
+ ffacd0b85a97d-35f22e31ef8mr5836655f8f.69.1718097698392; 
+ Tue, 11 Jun 2024 02:21:38 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4215c2c7396sm169963905e9.33.2024.06.11.02.18.49
+ ffacd0b85a97d-35f24d67093sm4830172f8f.96.2024.06.11.02.21.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Jun 2024 02:18:50 -0700 (PDT)
+ Tue, 11 Jun 2024 02:21:37 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3524C5F898;
- Tue, 11 Jun 2024 10:18:49 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 0EFB65F898;
+ Tue, 11 Jun 2024 10:21:37 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,  Stefan Hajnoczi
- <stefanha@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Thomas
- Huth <thuth@redhat.com>,  Markus Armbruster <armbru@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Zhao Liu
- <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org,  Stefan Hajnoczi <stefanha@redhat.com>,  Mads
+ Ynddal <mads@ynddal.dk>,  Paolo Bonzini <pbonzini@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Marc-Andr =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,  Markus Armbruster <armbru@redhat.com>,
+ Philippe Mathieu-Daud =?utf-8?Q?=C3=A9?= <philmd@linaro.org>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Gustavo Romero <gustavo.romero@linaro.org>
 Subject: Re: [RFC PATCH v1 0/6] Implement ARM PL011 in Rust
-In-Reply-To: <ZmgEiiyLbxVgjitc@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Tue, 11 Jun 2024 09:02:18 +0100")
+In-Reply-To: <6e7a14a1-8727-4ce5-ae67-797323704464@linaro.org> (Pierrick
+ Bouvier's message of "Mon, 10 Jun 2024 14:38:18 -0700")
 References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
  <d910708f-ed55-4eee-8f66-8703cb45081c@linaro.org>
- <evt7n.ggoypj31l14q@linaro.org> <ZmgEiiyLbxVgjitc@redhat.com>
-Date: Tue, 11 Jun 2024 10:18:49 +0100
-Message-ID: <87sexjzvk6.fsf@draig.linaro.org>
+ <evt7n.ggoypj31l14q@linaro.org>
+ <6e7a14a1-8727-4ce5-ae67-797323704464@linaro.org>
+Date: Tue, 11 Jun 2024 10:21:37 +0100
+Message-ID: <87o787zvfi.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,49 +109,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-> On Mon, Jun 10, 2024 at 11:29:36PM +0300, Manos Pitsidianakis wrote:
+> On 6/10/24 13:29, Manos Pitsidianakis wrote:
 >> On Mon, 10 Jun 2024 22:37, Pierrick Bouvier <pierrick.bouvier@linaro.org=
 > wrote:
->> > > The staticlib artifact contains a bunch of mangled .o objects?
->> > > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->> > > [staticlibmangledobjects] Back to [TOC]
->> > >=20
->> > > Yes, until we compile without the `std` module library or we compile=
- it
->> > > manually instead of linking it, we will have some junk in it.
->> > >=20
->> >=20
->> > Besides the size aspect, which potential advantage would there be to
->> > switch to no_std?
->> > We don't build a bare metal or kernel binary here, so why introduce th=
-is
->> > restriction willingly?
+>>> Hello Manos,
+>>>
+<snip>
+>>> Excellent work, and thanks for posting this RFC!
+>>>
+>>> IMHO, having patches 2 and 5 splitted is a bit confusing, and exposing
+>>> (temporarily) the generated.rs file in patches is not a good move.
+>>> Any reason you kept it this way?
+>> That was my first approach, I will rework it on the second version.
+>> The
+>> generated code should not exist in committed code at all.
+>> It was initally tricky setting up the dependency orders correctly,
+>> so I
+>> first committed it and then made it a dependency.
 >>=20
->> We'll see that as we progress. Might enable more platform support, for
->> example. I have no definite answers here. Also, I know binary bloat is a=
- big
->> complaint from people with dislike of Rust, so I pre-emptively addressed=
- it.
+>>>
+>>> Maybe it could be better if build.rs file was *not* needed for new
+>>> devices/folders, and could be abstracted as a detail of the python
+>>> wrapper script instead of something that should be committed.
+>> That'd mean you cannot work on the rust files with a LanguageServer,
+>> you
+>> cannot run cargo build or cargo check or cargo clippy, etc. That's why I
+>> left the alternative choice of including a manually generated bindings
+>> file (generated.rs.inc)
+>>=20
 >
-> Requiring 'no_std' would significantly limit what 3rd party crates QEMU
-> can make use of, and thus would put more burden on QEMU maintainers.
-> I don't find "binary bloat" a credible technical argument on its own
-> either, so certainly not sufficient justification to take on the pain
-> of 'no_std'.
+> Maybe I missed something, but it seems like it just checks/copies the
+> generated.rs file where it's expected. Definitely something that could
+> be done as part of the rust build.
+>
+> Having to run the build before getting completion does not seem to be
+> a huge compromise.
+>
+<snip>
 
-no_std is great for OS's and micro controllers but I don't think its
-something we have to worry about for QEMU. One potential area of
-co-operation would be the rust-vmm libraries and they definitely take
-advantage of the stdlibs.
+As long as the Language Server can kick in after a first build. Rust
+definitely leans in to the concept of the tooling helping you out while
+coding.
 
->
->
-> With regards,
-> Daniel
+I think for the C LSPs compile_commands.json is generated during the
+configure step but I could be wrong.
 
 --=20
 Alex Benn=C3=A9e
