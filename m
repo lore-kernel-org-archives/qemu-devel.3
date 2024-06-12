@@ -4,101 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E659C27C75
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 19:55:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD99C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 19:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHU3T-0003Mh-S1; Wed, 12 Jun 2024 15:54:47 -0400
+	id 1sHU50-000607-9Q; Wed, 12 Jun 2024 15:56:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sHU3P-0003Lm-SZ
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 15:54:44 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1sHU4w-0005tO-4q
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 15:56:18 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sHU3O-0001tr-3z
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 15:54:43 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1f8395a530dso2985655ad.0
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 12:54:41 -0700 (PDT)
+ id 1sHU4u-0002HM-Kf
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 15:56:17 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-70436048c25so183324b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 12:56:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718222080; x=1718826880; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1718222175; x=1718826975; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=014mCvmsneMMkuLx+Xyiw1WdgpnbnmCM9FvWncbYNgI=;
- b=JtOe9FF0S2d20uc+P4prQAqxCKhV6R8mX7Y5fIFEfBwRl7Cm6JFQfIIfjd78JHgmQr
- tNmKACx5IxS4vhWli7BFYzds79TxSF8m87r5M1+QMjMIGJXGEUSQp+a+m0LOZGeP+coC
- qB3BOMECohSYd/BNWh0+gqtoEOue4exEA/01de7Wrj+T8BHCrMGllRuErOt+Uwxf03vD
- +g2VUL31E/J/jj+q/l2vtx63jKclZiM4LW1/zCxC2wXUbtcGpwRzHn4sUQDf8N82ImTr
- kMEO9v4hKFVaQ/q0TV7OJ/m4jMaVURM5QqumpTW7DqGZKR3PU7RHqcZTbSGvwnwov4Nh
- jo/A==
+ bh=F7j4aJiYaenW5TseFWsiQZqieKrZydWs0ulUBvDuWEU=;
+ b=TaXMx2KAbjXXYJqQZqzuavaGGH14ZWsmtX21TSC5Hydv0l9/5Sp6BKedpfk/NZzpuN
+ WDApb70HNcYX4p5M9y0YtR39BsUpiFQGK3GxOHgWSgk9mXSsj8Jv384YPgr6w6Un1L+L
+ N8HcgTvUAetI7LkoZDW/vwRtaQgpCzBbou+ZPsy75E72jrVy/NhHTN1BaCC/QZigg3ni
+ SuRd3A54QKrscRbMLZSzmbIYqGmQPf5jE5cTG4+G2CFresc+qrtYkya5irC/W2kbEvoA
+ WLTPoDFwppvLG94jlQBImGjUaRJdpzosD7GMIxALblty62WJRoflRxetsGeIYExGNRmP
+ hqzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718222080; x=1718826880;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1718222175; x=1718826975;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=014mCvmsneMMkuLx+Xyiw1WdgpnbnmCM9FvWncbYNgI=;
- b=cMFbb7cx8dWB9eQ45xO+UygSED6AG8xeUSn+FVGTJimQK8L9W29mieQg5bZkpeLkdh
- G7Wt1VH1LwJbI+o7PxKOKwkynZd8lmJBBNlVrKbQRNTjSiKqwmXDBAESuRVRgr6nrZkU
- H3wBZp7xAUquFAWKPexqeCdaUXHlDpUvWFB6YxxOwVm629EErpf6JeEZTaQMw0/VmRAC
- +wCckxT+15E64fPlzyXFhgj9w05T6EIgD91cigd4CAzUsWvvxf+u6f2mVnro8rMxypF5
- SkXNvxLf7x69DGdruE6AAcCuO7A2v1hi6ljKX/xzIFaEw0V70uXykOZTmlWbxe366mdW
- Va3g==
-X-Gm-Message-State: AOJu0YwedXEJRoHJapYZCU4814Y9Gq0hBAC1WlIn0ji8iyCWdAYd6viw
- 3/p++sYewdUFo8vof13wa+/eH1zmdSVBh87wBb2FFmY+xBB4QP/v3x4R9QaiRr0=
-X-Google-Smtp-Source: AGHT+IFiZMLDHj1AGhVp8Sgaq2CBrQxTQCF/xc8ZKCR3TczAc73j+H0Z3wRTa2yTgiR8xyhFeQrcYg==
-X-Received: by 2002:a17:90b:2250:b0:2c4:b300:1b4c with SMTP id
- 98e67ed59e1d1-2c4b3001d74mr1876019a91.24.1718222080434; 
- Wed, 12 Jun 2024 12:54:40 -0700 (PDT)
+ bh=F7j4aJiYaenW5TseFWsiQZqieKrZydWs0ulUBvDuWEU=;
+ b=gcahyQ/lYXZOBSk3gDIgYEkJs9ckXVqZObJhkgUIoukb9oppgmYRXqCabd5pP8wqK1
+ WMN36A82NWyAjOscm/k/dWWSC68ohpDfbGfKDv94qDrPngCJwVvLfx8BMonSO1Jqg5LY
+ 667HQZuJpu+jl4O6GYMB3s/F/Q0KRCTa2n+w4RRNdOcCaPj+tJziOm9ePxXGnQhy8UhM
+ l7AnM6AvH4s4R+D5pxAKyWeeBf/aESinSp+R3BkLdhqSYZ7yjG7UJg8L5sSecVSfgk84
+ 1lokm6881nFt4fpGoPBhtvLs3U9PUzMiTvtd2IPaDudhBPxKhL3+DbO6RZwuIqpkIzAL
+ DnBA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXQi+oMst/6C3bor6SKP29ZU5dLTXof5X3Meirr5lwJVegM60eiq0RV0LUXIfviu+9/qE13fCaB8PcYahjSMDClQWKZcf0=
+X-Gm-Message-State: AOJu0Yy90Il8XNZv+YT1MggcnqdEbRIZgz3rwBDhyNmCjczrMfJj/K9M
+ cflFDo83qsfWY5j0JB0sZ1Iia9Dj+gzVGbz36N7AUb84RDoU8i1v2vLOQhZujzU=
+X-Google-Smtp-Source: AGHT+IE/e7Ocy8xrrIAl/6QXzStgds4hfJNvk4pLF3i5jEGL7HgXrAP/QQNj6yAxEdrJqvdep4y/fg==
+X-Received: by 2002:a05:6a21:6da7:b0:1b5:4c70:d688 with SMTP id
+ adf61e73a8af0-1b8a9bff8f0mr3141681637.3.1718222174782; 
+ Wed, 12 Jun 2024 12:56:14 -0700 (PDT)
 Received: from ?IPV6:2604:3d08:9384:1d00::2193? ([2604:3d08:9384:1d00::2193])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c4a7602690sm2256310a91.28.2024.06.12.12.54.39
+ d2e1a72fcca58-704229f26b7sm8088872b3a.116.2024.06.12.12.56.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Jun 2024 12:54:40 -0700 (PDT)
-Message-ID: <ec9ded4e-4a06-4472-84fc-1942010b34c8@linaro.org>
-Date: Wed, 12 Jun 2024 12:54:38 -0700
+ Wed, 12 Jun 2024 12:56:14 -0700 (PDT)
+Message-ID: <c634ad67-7bfc-498d-b834-54c521301b9e@linaro.org>
+Date: Wed, 12 Jun 2024 12:56:13 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/9] plugins: add time control API
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Burton <mburton@qti.qualcomm.com>, qemu-s390x@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
- Laurent Vivier <lvivier@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Alexandre Iooss <erdnaxe@crans.org>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Nicholas Piggin <npiggin@gmail.com>,
- Marco Liebel <mliebel@qti.qualcomm.com>, Thomas Huth <thuth@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, qemu-ppc@nongnu.org,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Cameron Esfahani <dirty@apple.com>,
- Jamie Iles <quic_jiles@quicinc.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240612153508.1532940-1-alex.bennee@linaro.org>
- <20240612153508.1532940-9-alex.bennee@linaro.org>
- <abe88b9b-621a-4956-877d-dd311a7fd58b@linaro.org>
- <87ikyevtoc.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] accel/tcg/plugin: Fix inject_mem_cb rw masking
 Content-Language: en-US
-In-Reply-To: <87ikyevtoc.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org
+References: <20240605222531.28399-1-richard.henderson@linaro.org>
+ <b9826606-3952-417b-8a08-f1db31a2cf7b@linaro.org>
+In-Reply-To: <b9826606-3952-417b-8a08-f1db31a2cf7b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,20 +98,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNi8xMi8yNCAxMjozNywgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBQaWVycmljayBCb3V2
-aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+IHdyaXRlczoNCj4gDQo+PiBIaSBB
-bGV4LA0KPj4NCj4+IEkgbm90aWNlZCB0aGUgbmV3IHN5bWJvbHMgbGFjayBRRU1VX1BMVUdJ
-Tl9BUEkgcXVhbGlmaWVyIGluDQo+PiBpbmNsdWRlL3FlbXUvcWVtdS1wbHVnaW4uaDoNCj4+
-IC0gcWVtdV9wbHVnaW5fdXBkYXRlX25zDQo+PiAtIHFlbXVfcGx1Z2luX3JlcXVlc3RfdGlt
-ZV9jb250cm9sDQo+Pg0KPj4gU28gaXQgd291bGQgYmUgaW1wb3NzaWJsZSB0byB1c2UgdGhv
-c2Ugc3ltYm9scyBvbiB3aW5kb3dzLg0KPj4NCj4+IEkga2VwdCBhIHJlbWluZGVyIHRvIHNl
-bmQgYSBuZXcgcGF0Y2ggYWZ0ZXIgeW91IHB1bGxlZCB0aGlzLCBidXQgaWYgd2UNCj4+IGdv
-IHRvIGEgbmV3IHNlcmllcywgaXQgY291bGQgYmUgYXMgZmFzdCBmb3IgeW91IHRvIGp1c3Qg
-YWRkIHRoaXMNCj4+IGRpcmVjdGx5Lg0KPiANCj4gU3VyZSBpZiB5b3Ugc2VuZCB0aGUgcGF0
-Y2ggSSdsbCBqdXN0IG1lcmdlIGl0IGludG8gdGhlIHNlcmllcy4NCj4gDQoNCkkgcG9zdGVk
-IHRoZSBzZXJpZXMgPDIwMjQwNjEyMTk1MTQ3LjkzMTIxLTEtcGllcnJpY2suYm91dmllckBs
-aW5hcm8ub3JnPiANCndpdGggdGhpcyBmaXgsIGFuZCBhIHNlY29uZCBmb3IgaXNzdWUgcmVw
-b3J0ZWQgYnkgUmljaGFyZC4NCg0KSWYgeW91IGNvdWxkIGludGVncmF0ZSB0aG9zZSBpbiBj
-dXJyZW50IHNlcmllcywgdGhhdCB3b3VsZCBiZSBwZXJmZWN0IDopDQoNClRoYW5rcyENClBp
-ZXJyaWNrDQo=
+On 6/5/24 15:39, Pierrick Bouvier wrote:
+> Thanks for catching this Richard.
+> 
+> I did the same mistake in plugins/core.c as well, could you fix it as
+> well as part of this patch?
+> 
+> For complement, rw are enums,
+> R is 0b01, W is 0b10, and RW is 0b11, thus it work as expected with &.
+> 
+> Thanks,
+> Pierrick
+> 
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> 
+> On 6/5/24 15:25, Richard Henderson wrote:
+>> These are not booleans, but masks.
+>>
+>> Fixes: f86fd4d8721 ("plugins: distinct types for callbacks")
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>    accel/tcg/plugin-gen.c | 4 ++--
+>>    1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+>> index cc1634e7a6..b6bae32b99 100644
+>> --- a/accel/tcg/plugin-gen.c
+>> +++ b/accel/tcg/plugin-gen.c
+>> @@ -240,13 +240,13 @@ static void inject_mem_cb(struct qemu_plugin_dyn_cb *cb,
+>>    {
+>>        switch (cb->type) {
+>>        case PLUGIN_CB_MEM_REGULAR:
+>> -        if (rw && cb->regular.rw) {
+>> +        if (rw & cb->regular.rw) {
+>>                gen_mem_cb(&cb->regular, meminfo, addr);
+>>            }
+>>            break;
+>>        case PLUGIN_CB_INLINE_ADD_U64:
+>>        case PLUGIN_CB_INLINE_STORE_U64:
+>> -        if (rw && cb->inline_insn.rw) {
+>> +        if (rw & cb->inline_insn.rw) {
+>>                inject_cb(cb);
+>>            }
+>>            break;
+
+I sent a new series with your fix + other in plugins/core.c, so no 
+action is needed from you.
+(20240612195147.93121-1-pierrick.bouvier@linaro.org)
+
+Thanks,
+Pierrick
 
