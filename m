@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C682DC27C7B
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:03:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0243CC27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:03:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNcL-0003MJ-Vz; Wed, 12 Jun 2024 09:02:22 -0400
+	id 1sHNbm-00034u-KY; Wed, 12 Jun 2024 09:01:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNcI-0003GC-Ug
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNbk-000346-Et
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:01:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNcD-00081C-Hm
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:17 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNbh-0007kD-Dz
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:01:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718197326;
+ s=mimecast20190719; t=1718197295;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ws/ojGwG8BdlKWnideBj9jHmFCpvjonk90U9l4xkS/o=;
- b=Opdc+Qe0Is1BI7N29tVyzqggtHleG6JnjbjK+zPzvYGubOXlfSnUoLoPyk1jk7cnjKZ/ZT
- 9baxEAFKdniGBkjKGHQhN1Dcs47MaBtgpibnnKKKl9hl0r8w3KR9uAfoQZ2nllq/Yefuyl
- jWaKlQ93e77CqHUeNYGltEAG8tx32DM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=qlJFtZJjwq8+p7ez8aklM5DrH5iXcuxwqEn8YjmMP1Y=;
+ b=abOCsPLUQ/eQXjMfWuGhzv0wakkfQ0JCwmaaSRFShD9GTIZdqiezDHjA0TSkwv6frtVQI+
+ 4nLxz7Dy3YPCvCb81FzOCmsliZVIIyyOhZH35vGiiF2MI53v9mCzSAeBSgcpctKxSxbubW
+ eK+BZ2a/iS7b1neD+y9S/n8x5MJLXmM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-477-BpMRUI1hPimHpkpHb-JbHA-1; Wed,
- 12 Jun 2024 09:02:04 -0400
-X-MC-Unique: BpMRUI1hPimHpkpHb-JbHA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-132-52M5Ycy2PKiwgNtut0PQJA-1; Wed,
+ 12 Jun 2024 09:01:33 -0400
+X-MC-Unique: 52M5Ycy2PKiwgNtut0PQJA-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0FCE51955D65; Wed, 12 Jun 2024 13:02:04 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 65A3A1955D6A; Wed, 12 Jun 2024 13:01:31 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.49])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5F5911956056; Wed, 12 Jun 2024 13:02:02 +0000 (UTC)
+ id 8400D1956056; Wed, 12 Jun 2024 13:01:29 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v1 16/16] vfio/container: Introduce
- vfio_iommu_legacy_instance_init()
-Date: Wed, 12 Jun 2024 15:01:22 +0200
-Message-ID: <20240612130122.813935-17-clg@redhat.com>
+Subject: [PATCH v1 02/16] vfio: Remove unused declarations from vfio-common.h
+Date: Wed, 12 Jun 2024 15:01:08 +0200
+Message-ID: <20240612130122.813935-3-clg@redhat.com>
 In-Reply-To: <20240612130122.813935-1-clg@redhat.com>
 References: <20240612130122.813935-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -85,49 +84,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just as we did for the VFIOContainerBase object, introduce an
-instance_init() handler for the legacy VFIOContainer object and do the
-specific initialization there.
+These were forgotten in the recent cleanups.
 
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/container.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ include/hw/vfio/vfio-common.h | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 60a0838a9ca83a010d73396dbcd2d24fcdc802ae..b76cdf7e06e5675a8734b1fba5737eae3d5ad955 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -639,7 +639,6 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 776de8064f740784f95cab0311c5f15f50d60ffe..c19572f90b277193491020af28e8b5587f15bfd1 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -207,10 +207,6 @@ typedef struct VFIODisplay {
+ VFIOAddressSpace *vfio_get_address_space(AddressSpace *as);
+ void vfio_put_address_space(VFIOAddressSpace *space);
  
-     vfio_kvm_device_add_group(group);
- 
--    QLIST_INIT(&container->group_list);
-     vfio_address_space_insert(space, bcontainer);
- 
-     group->container = container;
-@@ -1181,6 +1180,13 @@ hiod_legacy_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
-     return l;
- }
- 
-+static void vfio_iommu_legacy_instance_init(Object *obj)
-+{
-+    VFIOContainer *container = VFIO_IOMMU_LEGACY(obj);
-+
-+    QLIST_INIT(&container->group_list);
-+}
-+
- static void hiod_legacy_vfio_class_init(ObjectClass *oc, void *data)
- {
-     HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
-@@ -1194,6 +1200,7 @@ static const TypeInfo types[] = {
-     {
-         .name = TYPE_VFIO_IOMMU_LEGACY,
-         .parent = TYPE_VFIO_IOMMU,
-+        .instance_init = vfio_iommu_legacy_instance_init,
-         .instance_size = sizeof(VFIOContainer),
-         .class_init = vfio_iommu_legacy_class_init,
-     }, {
+-/* SPAPR specific */
+-int vfio_spapr_container_init(VFIOContainer *container, Error **errp);
+-void vfio_spapr_container_deinit(VFIOContainer *container);
+-
+ void vfio_disable_irqindex(VFIODevice *vbasedev, int index);
+ void vfio_unmask_single_irqindex(VFIODevice *vbasedev, int index);
+ void vfio_mask_single_irqindex(VFIODevice *vbasedev, int index);
 -- 
 2.45.2
 
