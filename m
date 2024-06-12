@@ -4,78 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 769A8C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 08:38:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F96BC27C75
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 08:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHJU3-0002w9-JS; Wed, 12 Jun 2024 04:37:31 -0400
+	id 1sHJms-0006aU-NN; Wed, 12 Jun 2024 04:56:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sHJU1-0002vw-MA
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:37:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sHJTx-0002dA-TB
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:37:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718181444;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=ea47Fm5g+ziz0j0FxjxLlqkoAXKSn1ati6SqNn84BtE=;
- b=K2AfNBAQj07GFK8FarnPYuhUB1uMUL9tts/RwXU5VAaAf8fIyi1kKVfCJNttQQ4eEGw8La
- uTHhHTQVUOzOk9XDvSNA9os+1eHWSfOnoIszzuIeyShiiFrVgM9SnQ5hmVOAlPFoFyFMrY
- hLL/CIIYERCKXGoyB6pFAcA+Ct1mmZk=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-246-L6j_9gkUN0Gc-3g9U4lbMA-1; Wed,
- 12 Jun 2024 04:37:11 -0400
-X-MC-Unique: L6j_9gkUN0Gc-3g9U4lbMA-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 669FC19560B6; Wed, 12 Jun 2024 08:37:09 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.115])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 650801956053; Wed, 12 Jun 2024 08:37:03 +0000 (UTC)
-Date: Wed, 12 Jun 2024 09:37:00 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sHJmq-0006Zo-59
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:56:56 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sHJmo-0005Qo-BS
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:56:55 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-35f223e7691so405679f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 01:56:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718182606; x=1718787406; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=sykB+ZZ03atBd8iudmBxnh/0IJvWE1EfTCtRykO68BY=;
+ b=Pu1r0MJmz781maxJDp9h5UmQbA7i9KlynuBthgjRtdxJQ61L1u3BazOxvpyUyNgYX6
+ 5uMgpADD2hYQazLizfmVNqTjHeISO2eQINZV1vbe9jkdWAvttDOADrjAZW5gG5A2EgrG
+ 25OIZIgM6poFbEAMkZzDEcNj0JBkRPOeoGTgzMFCrhXJEONA4INY2cSLgWxJLgy0bjxT
+ A8SyQs0w+BNrZ6vDlhtDt0LJfYCnb21RivbzQH5MfDTXUV0kN0sKIWtUxPUGQlPd1PON
+ JoGTkyZKIg1HmXU7AwGRYHiMaZqJDONfmjLKG22X4bDHX2FYPaST+ojrBviJk0Y1iosK
+ Coag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718182606; x=1718787406;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sykB+ZZ03atBd8iudmBxnh/0IJvWE1EfTCtRykO68BY=;
+ b=avkUI1Qy0K55YdxwUUtix/z8ysHTKifQAB04tHJ8BjJJ2EvtSQEMMHN2BuxhP9SiCl
+ K/zomiZAjMnTy4xKMJ9b50GZDMwsF5zO109z9/N2D/Zlh9RDd6UJkMxfIeVAvagjZxKs
+ LCotOIJNGgdzXnM12T0rWN9DJW494W1qEakixHWn9ngGVlyyhFH/vRw+9OlUYAjvvTNz
+ ZiT+ScmgrNmdkx8GdiPzsQsVk+aENdYscfl2S1YcdrRbwaOsthSfuA1+2AVVXMGFC53x
+ NHCmCbVMf+eKhiS5b/q3HYS59CiGGEz0X19b+ztfh6oKB2Z7kDQp2OWp3vGxK1U6IAVR
+ uAaA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXxb8vSXvUgjx0fnjOHvwYDfj7z2c4Gk7TpVtI4Crf09IXLPpcMGTVjDn0r6MN4l6y28Dvq+me4efL+naeIV3JB803qbKk=
+X-Gm-Message-State: AOJu0Yz/tzedbgaA+hDP/zh5h24T4InoLI9mGcPWUukxlLVlVLUIe2zb
+ ImLjTB3mZV3MbmF8dpgxWzwufcfOow8qb86V6DX5x+v4H8jDmKlEkI/RmGub9DY=
+X-Google-Smtp-Source: AGHT+IE+sRiHoGK0tMdgTomZEbWxwBkqAHtCuCsuPJvaJiAHYLAbJFLBbjV/ziWy3Y0l7q4qXO8CcQ==
+X-Received: by 2002:a5d:47c1:0:b0:360:6e1c:558f with SMTP id
+ ffacd0b85a97d-3606e1c56d0mr888924f8f.5.1718182606415; 
+ Wed, 12 Jun 2024 01:56:46 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35f0eb36c72sm12078275f8f.85.2024.06.12.01.56.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Jun 2024 01:56:46 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 606A25F893;
+ Wed, 12 Jun 2024 09:56:45 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [RFC PATCH v2 0/5] Implement ARM PL011 in Rust
-Message-ID: <ZmleLH1dQvPqPBAY@redhat.com>
-References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,
+ Zheyu Ma <zheyuma97@gmail.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>
+Subject: Re: [PATCH v1] virtio-iommu: add error check before assert
+In-Reply-To: <CAAjaMXZb+9h+eMOE67k-tGNRSObFqD5-_wUT1PaOHWSE86b2Aw@mail.gmail.com>
+ (Manos Pitsidianakis's message of "Tue, 11 Jun 2024 20:46:55 +0300")
+References: <20240611122348.3613272-1-manos.pitsidianakis@linaro.org>
+ <5cc8bab3-4edc-4657-882b-5e8291fba29d@linaro.org>
+ <CAAjaMXZb+9h+eMOE67k-tGNRSObFqD5-_wUT1PaOHWSE86b2Aw@mail.gmail.com>
+Date: Wed, 12 Jun 2024 09:56:45 +0100
+Message-ID: <87sexiy1wy.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,81 +99,73 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 11, 2024 at 01:33:29PM +0300, Manos Pitsidianakis wrote:
+Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
 
-> 
->  .gitignore                     |   2 +
->  .gitlab-ci.d/buildtest.yml     |  64 ++--
->  MAINTAINERS                    |  13 +
->  configure                      |  12 +
->  hw/arm/virt.c                  |   4 +
->  meson.build                    | 102 ++++++
->  meson_options.txt              |   4 +
->  rust/meson.build               |  93 ++++++
->  rust/pl011/.cargo/config.toml  |   2 +
->  rust/pl011/.gitignore          |   2 +
->  rust/pl011/Cargo.lock          | 120 +++++++
->  rust/pl011/Cargo.toml          |  66 ++++
->  rust/pl011/README.md           |  42 +++
->  rust/pl011/build.rs            |  44 +++
->  rust/pl011/deny.toml           |  57 ++++
->  rust/pl011/meson.build         |   7 +
->  rust/pl011/rustfmt.toml        |   1 +
->  rust/pl011/src/definitions.rs  |  95 ++++++
->  rust/pl011/src/device.rs       | 531 ++++++++++++++++++++++++++++++
->  rust/pl011/src/device_class.rs |  95 ++++++
->  rust/pl011/src/generated.rs    |   5 +
->  rust/pl011/src/lib.rs          | 581 +++++++++++++++++++++++++++++++++
->  rust/pl011/src/memory_ops.rs   |  38 +++
->  rust/rustfmt.toml              |   7 +
->  rust/wrapper.h                 |  39 +++
->  scripts/cargo_wrapper.py       | 221 +++++++++++++
->  scripts/meson-buildoptions.sh  |   6 +
+> On Tue, 11 Jun 2024 at 18:01, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.=
+org> wrote:
+>>
+>> On 11/6/24 14:23, Manos Pitsidianakis wrote:
+>> > A fuzzer case discovered by Zheyu Ma causes an assert failure.
+>> >
+>> > Add a check before the assert, and respond with an error before moving
+>> > on to the next queue element.
+>> >
+>> > To reproduce the failure:
+>> >
+>> > cat << EOF | \
+>> > qemu-system-x86_64 \
+>> > -display none -machine accel=3Dqtest -m 512M -machine q35 -nodefaults \
+>> > -device virtio-iommu -qtest stdio
+>> > outl 0xcf8 0x80000804
+>> > outw 0xcfc 0x06
+>> > outl 0xcf8 0x80000820
+>> > outl 0xcfc 0xe0004000
+>> > write 0x10000e 0x1 0x01
+>> > write 0xe0004020 0x4 0x00001000
+>> > write 0xe0004028 0x4 0x00101000
+>> > write 0xe000401c 0x1 0x01
+>> > write 0x106000 0x1 0x05
+>> > write 0x100001 0x1 0x60
+>> > write 0x100002 0x1 0x10
+>> > write 0x100009 0x1 0x04
+>> > write 0x10000c 0x1 0x01
+>> > write 0x100018 0x1 0x04
+>> > write 0x10001c 0x1 0x02
+>> > write 0x101003 0x1 0x01
+>> > write 0xe0007001 0x1 0x00
+>> > EOF
+>> >
+>> > Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+>> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2359
+>> > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>> > ---
+>> >   hw/virtio/virtio-iommu.c | 12 ++++++++++++
+>> >   1 file changed, 12 insertions(+)
+>> >
+>> > diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+>> > index 1326c6ec41..9b99def39f 100644
+>> > --- a/hw/virtio/virtio-iommu.c
+>> > +++ b/hw/virtio/virtio-iommu.c
+>> > @@ -818,6 +818,18 @@ static void virtio_iommu_handle_command(VirtIODev=
+ice *vdev, VirtQueue *vq)
+>> >   out:
+>> >           sz =3D iov_from_buf(elem->in_sg, elem->in_num, 0,
+>> >                             buf ? buf : &tail, output_size);
+>> > +        if (unlikely(sz !=3D output_size)) {
+>>
+>> Is this a normal guest behavior? Should we log it as GUEST_ERROR?
+>
+> It's not, it'd be a virtio spec (implementation) mis-use by the guest.
+> the Internal device error (VIRTIO_IOMMU_S_DEVERR) would be logged by
+> the kernel; should we log it as well?
 
-Given the priority of getting the build system correct, what's missing
-here is updates/integration into our standard GitLab CI pipeline. If
-that can be shown to be working, that'll give alot more confidence in
-the overall solution.
+Yes logging guest errors are useful when attempting to work out if
+guests are buggy or QEMU is in the future.
 
-Ideally this should not require anything more than updating the docker
-container definitions to add in the rust toolchain, plus the appropriate
-std library build for the given target - we cross compiler for every
-arch we officially care about.
-
-Most of our dockerfiles these days are managed by lcitool, and it has
-nearly sufficient support for cross compiling with the rust std library.
-So to start with, this series should modify tests/lcitool/projects/qemu.yml
-to add
-
-  - rust
-  - rust-std
-
-to the package list, and run 'make lcitool-refresh' to re-create the
-dockerfiles - see the docs/devel/testing.rst for more info about
-lcitool if needed.
-
-Assuming these 2 rust packages are in the container, I would then
-expect QEMU to just "do the right thing" when building this rust
-code. If it does not, then that's a sign of gaps that need closing.
-
-Getting rid of the need to use --rust-target-triple will be the
-immediate gap that needs fixing, as CI just passes --cross-prefix
-for cross-builds and expects everything to be set from that.
-
-The main gap we have is that for Windows I need to update lcitool
-to pull in the mingw std lib target for rust, which I something I
-missed when adding rust cross compiler support.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
