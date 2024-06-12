@@ -4,87 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DD9DC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 06:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 953BFC27C75
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 06:44:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHH4f-0006q7-9N; Wed, 12 Jun 2024 02:03:09 -0400
+	id 1sHHhO-0007v3-IX; Wed, 12 Jun 2024 02:43:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sHH4d-0006pW-Dr
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 02:03:07 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sHHhM-0007uk-TR
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 02:43:08 -0400
+Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sHH4b-0008N0-Mi
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 02:03:07 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2ebdfe261f9so49336791fa.1
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 23:03:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sHHhK-000736-Vd
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 02:43:08 -0400
+Received: by mail-yb1-xb32.google.com with SMTP id
+ 3f1490d57ef6-dfdb6122992so1094185276.3
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 23:43:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718172184; x=1718776984; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=+WZJ0zbGQ9rPRWIgjD7uEcrT9KcXmkhz2RNKTxF8QTk=;
- b=XkiFr9EjkKRf4MG3I3+sMmP30l6uwVd+Nhl5Ub6sMSdnTWt/ce+ZFZ2g27k7iia9NK
- uQCC3eZsbbxt2FQpDN8V+Hh719ocOOlKZLW6du9e+HNogf3gnum12/OHituIX++Y8xRH
- yGqG9ZGroH4dc9dgWWQW2L+8i7uotdv51InO97i2ReYJFljWz3w7PAFzUTpi0dG6k6v7
- /gTBFuuuv7eMlPNlR4YxsWukbGLdFFkBXNvyLwt2JX+BoyWekSLkZXd3G5YE4SZZ+Ux4
- Bk5BApD4ykuE3iI3pW65udTp8Ak+B5gTkfkgT/3Fkq4Q+5DOGbN3vHaaPrlbL+ZGhxm0
- 2hIg==
+ d=gmail.com; s=20230601; t=1718174585; x=1718779385; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=7uljngEgBJSUc2E6vSGDQntB2a2QWVo10OeMcPtI7HU=;
+ b=PA9ArBhiE0XT/+dRAEPolafUWLLKuSP0MrmGRGh2ZEmq7bUYRfe0W4y989dXsLWAkn
+ ZqY3OKIGKDd0YyqUbar6BUXW+3nvGeQClaFFyQ6pqnSQhte1bbQVPWboW1R+aoBtTjx/
+ JUQxFc5hYJpdvN2KyBshNMwPHXELFiZZzh8VJ9qfgWc1TfcrVq9t8u9mQrmVqRTsSkpk
+ 2tKEstRkacm85gJw6XUQ6bEK+d8XazYx41o0nslGTkSgIyPoT2GqjHT1sj7CtztUn8yY
+ AdbOQSSkxqtRBOBZdfCip6SD51uf+I+3iJ6NYPvtqgvN4zhGL5e7EXhJpsqGc9WsRqG1
+ Z7Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718172184; x=1718776984;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+WZJ0zbGQ9rPRWIgjD7uEcrT9KcXmkhz2RNKTxF8QTk=;
- b=qV+F8+IbBSA5TX6Jnhmkh2EhD7DLrZvj1Sdh/VR0aztI/JUHHi7nCXxLH1faPPS2nk
- XhgNoymbRzyCHq6FKKfEi/rEgj3GD/8Aku3CkY+ntF1zw8TO9IDhlWes+sJZcYa3HQ6t
- bJg1uB76w3oI8ii96IqDNjuTrwrVjuwnTDc5G7IHDYEr4iVM8XLlkwTSmwrvdPzfEuhr
- xvLQRU2LMhocZzqZ9Vr7W97TDAsO2zDo/hac/GdRogJ74SRAQzY9tYCNF7u/PenYPhkB
- qmWgAy1CxSOCbPKpsCxT8GgsmDmCJQtw20YuSafYjuc8AV+Qv4vXQXpJMcK3wdC8Lreh
- L0cw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUq5C/qNHUj5fs8DdYm3Wo2O4Vw0p1eVXLT4WlAWeXRLSEt/89uGwzTkjwQD7RwTIoLQDfN45Xe97D65eotnF14s9qBsXE=
-X-Gm-Message-State: AOJu0YwaP+tU5B/sVerypuW2TCaso8eZSl5O6V94im8w+rQ5h3fxJZVy
- o1oNZZYQ3Az9B8GfxsROa+++UODvP586GXIVuPDFoq7c1Df2x3+Wcss0VX+i5tM=
-X-Google-Smtp-Source: AGHT+IHQFwyR+oWFMqCciBrG6Sb/nPhAsuzdeR6lZPM0nKGQtIHvgkPY+3N3nUF9HxvlunZ8ffTICg==
-X-Received: by 2002:a2e:bc0a:0:b0:2eb:fcf2:f7c9 with SMTP id
- 38308e7fff4ca-2ebfcf2f958mr5753131fa.3.1718172183723; 
- Tue, 11 Jun 2024 23:03:03 -0700 (PDT)
-Received: from meli-email.org (adsl-33.37.6.162.tellas.gr. [37.6.162.33])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35f254fb3c2sm6897833f8f.49.2024.06.11.23.03.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 11 Jun 2024 23:03:03 -0700 (PDT)
-Date: Wed, 12 Jun 2024 09:01:01 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-block@nongnu.org, Alberto Garcia <berto@igalia.com>,
- qemu-devel@nongnu.org
-Cc: Alberto Garcia <berto@igalia.com>, qemu-block@nongnu.org,
- Eric Blake <eblake@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Czenczek <hreitz@redhat.com>, Madeeha Javed <javed@igalia.com>
-Subject: Re: [PATCH] scripts/qcow2-to-stdout.py: Add script to write qcow2
- images to stdout
-User-Agent: meli 0.8.6
-References: <20240610144708.81351-1-berto@igalia.com>
-In-Reply-To: <20240610144708.81351-1-berto@igalia.com>
-Message-ID: <eye51.7m7tedycfrgc@linaro.org>
+ d=1e100.net; s=20230601; t=1718174585; x=1718779385;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7uljngEgBJSUc2E6vSGDQntB2a2QWVo10OeMcPtI7HU=;
+ b=Uybgaaews0h2PQWO1TnAAOhe87iZX8yvswp7Z6z0OYoVj1dHyzGqOQhOskYT5KO/Qq
+ 2JYgu/6yjoNpS4aQ6GDyOy+UN6ZDkqqb1UAKs1vCanHpIJ3cwkNNbfDIMdT+DB3KrOvB
+ X9GXx5jgBmRXhw05XlnZRP+vjl9AHVjMwrI8v0Rp7+hKFOMEm5wgehG42bgD1bvAnSCC
+ D9hV/ySQolrsOBDpfkPpB/aq16jmYr7mL6kASOqxFzGEjEEebXZohaZ0kEjFBrYla7Fh
+ nhjf34cDQ4aoBagLrstk7XORDGDOyvdKmnU3i1mmCmQ6ANyDgeuuI7TMIvipQKOy5/p3
+ H2Dg==
+X-Gm-Message-State: AOJu0YwptXGXTGi2jsS3h7Xr1t2aFtysTyeFaeVGP63Dsf7A9p/ck6xf
+ Zj/EMAmw6hM/2Ehbc3b2Yj0/sfSpUEGTb32x6iak3nPaAR//71L5WT6w0+LpSHuwoaQ0dsbzqyl
+ AoL2QSUkx8le7JtAZ7sOaPTMRtns=
+X-Google-Smtp-Source: AGHT+IFXq2NFx5MkX+wf1r5MnmC0MFWzZ/mxU87zmXYwb5yJZuCR3rAsmacoys8PgTL1vLwD40SJ4GLEZZjq7XDsgsU=
+X-Received: by 2002:a25:aa4d:0:b0:dfe:1ba4:371b with SMTP id
+ 3f1490d57ef6-dfe691032bamr719572276.57.1718174585241; Tue, 11 Jun 2024
+ 23:43:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lj1-x235.google.com
+References: <20240531185804.119557-1-dongwon.kim@intel.com>
+ <CAJ+F1C+PG-Tf-ADFTgBGq5nvJSCEVhFW0Pk6a2Pf7gVurbJeuw@mail.gmail.com>
+ <a89b283a-24e3-4117-b465-ab8d79252625@intel.com>
+ <CAJ+F1CJ-4cWV81_YTit5jTEoY6FPTeu7u177pZzb61FhXw_j0Q@mail.gmail.com>
+ <fa43009f-1292-49f5-bab0-618028c16045@intel.com>
+In-Reply-To: <fa43009f-1292-49f5-bab0-618028c16045@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 12 Jun 2024 10:42:53 +0400
+Message-ID: <CAJ+F1CLAJTZLHKa9_zVo=-GLRw8JHnzJT=G4fdLLsaS1sK2HUg@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 0/2] ui/gtk: Introduce new param - Connectors
+To: "Kim, Dongwon" <dongwon.kim@intel.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000d0cad5061aabb139"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-yb1-xb32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,36 +91,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Alberto,
+--000000000000d0cad5061aabb139
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 10 Jun 2024 17:47, Alberto Garcia <berto@igalia.com> wrote:
->This tool converts a disk image to qcow2, writing the result directly
->to stdout. This can be used for example to send the generated file
->over the network.
+Hi
+
+On Tue, Jun 11, 2024 at 10:28=E2=80=AFPM Kim, Dongwon <dongwon.kim@intel.co=
+m> wrote:
+
+> Hi Marc-Andr=C3=A9,
 >
->This is equivalent to using qemu-img to convert a file to qcow2 and
->then writing the result to stdout, with the difference that this tool
->does not need to create this temporary qcow2 file and therefore does
->not need any additional disk space.
-
-
-Can you expand on this a little bit? Would modifying qemu-img to write 
-to stdout if given, say, - instead of a file output path be enough to 
-make this script unnecessary?
-
-
->The input file is read twice. The first pass is used to determine
->which clusters contain non-zero data and that information is used to
->create the qcow2 header, refcount table and blocks, and L1 and L2
->tables. After all that metadata is created then the second pass is
->used to write the guest data.
+> On 6/5/2024 12:26 AM, Marc-Andr=C3=A9 Lureau wrote:
+> > Hi
+> >
+> > On Tue, Jun 4, 2024 at 9:59=E2=80=AFPM Kim, Dongwon <dongwon.kim@intel.=
+com
+> > <mailto:dongwon.kim@intel.com>> wrote:
 >
->By default qcow2-to-stdout.py expects the input to be a raw file, but
->if qemu-storage-daemon is available then it can also be used to read
->images in other formats. Alternatively the user can also run qemu-ndb
->or qemu-storage-daemon manually instead.
+> Xorg may not be going away soon, but it's used less and less. As one of
+> > the developers, I am no longer running/testing it for a long time. I
+> > wish we would just drop its support tbh.
 >
->Signed-off-by: Alberto Garcia <berto@igalia.com>
->Signed-off-by: Madeeha Javed <javed@igalia.com>
->---
+> There are features offered by Xorg that are not offered by Wayland
+> compositors and again, we have customers that rely on these features.
+> One of them is the ability to position the window via
+> gtk_window_set_position(). There are strong arguments
+> made on either side when it comes to window positioning:
+>
+> https://gitlab.freedesktop.org/wayland/wayland-protocols/-/merge_requests=
+/247
+>
+> Until there is a way to do this with Wayland compositors, we have to
+> unfortunately rely on Gnome + Xorg.
+>
+>
+It's a smaller and smaller number of users. The potential/future users are
+greater if we focus on Wayland.
+
+Fwiw, GNOME (and RHEL) is set to drop Xorg support (
+https://gitlab.gnome.org/GNOME/gnome-session/-/merge_requests/98)
+
+Btw, there is a similar monitor-mapping functionality implemented in
+virt-viewer/remote-viewer:
+https://www.mankier.com/1/virt-viewer#Configuration. Is this something that
+those users could use instead?
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
+
+--000000000000d0cad5061aabb139
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_quote=
+"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jun 11, 2024 at 10:28=E2=80=
+=AFPM Kim, Dongwon &lt;<a href=3D"mailto:dongwon.kim@intel.com">dongwon.kim=
+@intel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">Hi Marc-Andr=C3=A9,<br>
+<br>
+On 6/5/2024 12:26 AM, Marc-Andr=C3=A9 Lureau wrote:<br>
+&gt; Hi<br>
+&gt; <br>
+&gt; On Tue, Jun 4, 2024 at 9:59=E2=80=AFPM Kim, Dongwon &lt;<a href=3D"mai=
+lto:dongwon.kim@intel.com" target=3D"_blank">dongwon.kim@intel.com</a> <br>
+&gt; &lt;mailto:<a href=3D"mailto:dongwon.kim@intel.com" target=3D"_blank">=
+dongwon.kim@intel.com</a>&gt;&gt; wrote:<br></blockquote><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">
+&gt; Xorg may not be going away soon, but it&#39;s used less and less. As o=
+ne of <br>
+&gt; the developers, I am no longer running/testing it for a long time. I <=
+br>
+&gt; wish we would just drop its support tbh.<br>
+<br>
+There are features offered by Xorg that are not offered by Wayland <br>
+compositors and again, we have customers that rely on these features.<br>
+One of them is the ability to position the window via <br>
+gtk_window_set_position(). There are strong arguments<br>
+made on either side when it comes to window positioning:<br>
+<a href=3D"https://gitlab.freedesktop.org/wayland/wayland-protocols/-/merge=
+_requests/247" rel=3D"noreferrer" target=3D"_blank">https://gitlab.freedesk=
+top.org/wayland/wayland-protocols/-/merge_requests/247</a><br>
+<br>
+Until there is a way to do this with Wayland compositors, we have to <br>
+unfortunately rely on Gnome + Xorg.<br>
+<br></blockquote><div><br></div><div><div>It&#39;s a smaller and smaller nu=
+mber of users. The potential/future users are greater if we focus on Waylan=
+d.</div><div><br></div><div>Fwiw, GNOME (and RHEL) is set to drop Xorg supp=
+ort (<a href=3D"https://gitlab.gnome.org/GNOME/gnome-session/-/merge_reques=
+ts/98">https://gitlab.gnome.org/GNOME/gnome-session/-/merge_requests/98</a>=
+)</div><div><br></div><div>Btw, there is a similar monitor-mapping function=
+ality implemented in virt-viewer/remote-viewer: <a href=3D"https://www.mank=
+ier.com/1/virt-viewer#Configuration">https://www.mankier.com/1/virt-viewer#=
+Configuration</a>. Is this something that those users could use instead?</d=
+iv><div><br></div></div></div><br><span class=3D"gmail_signature_prefix">--=
+ </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=A9 Lure=
+au<br></div></div>
+
+--000000000000d0cad5061aabb139--
 
