@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E352FC27C77
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 15:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD81AC27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 15:46:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHQ7u-0001eq-A7; Wed, 12 Jun 2024 11:43:06 -0400
+	id 1sHQAq-00057T-Hw; Wed, 12 Jun 2024 11:46:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sHQ7s-0001e6-Tg
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:43:04 -0400
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sHQAp-00053M-6q
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:46:07 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sHQ7r-000626-6h
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:43:04 -0400
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-52c9034860dso12698e87.2
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 08:43:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sHQAn-0006dr-Iq
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:46:06 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1f6f031549bso152835ad.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 08:46:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718206981; x=1718811781; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=yC/iniut6MADBsLNUbX7E2zAshIKTl1wk4xczH2LqDc=;
- b=N5oEZVFbEoiXlbRwobxGAq1l32rrFlX0apQ5jNb8yDAPWZfTfCglHD9mny0H75Rzv6
- PDDSkCg7qGSIV53UVeDszrxHuCZwzG1xRoEwhsgB2FWH2+1ulLa5bTRhGn3r9aw7gKnr
- wWBWPkSQBIB8gj4xk/X5OZRQaXFd1zQmjnTqv+BdNXqfdY0jkqKZJNzCor5Xg3ll1auC
- MwsDhKXwjO3Xh5g4RcJDrwNCLnAlrXnvBLeKeOFiBAtYEOjhObiIg9MWdEqeMhNyKrmM
- zU8MaPBwrGbgmNY3hVOdzDZ8v1IR/FK+v/yG8rLyfYswAUTxJEpOVQo2QwpMSpbCZ0Dx
- Khzg==
+ d=linaro.org; s=google; t=1718207163; x=1718811963; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QrfrlrISbi31Cyu+lHZqtj98oxaFekxBlFPaxn8Jd1k=;
+ b=lfHmbGam9V/MNYMiM31o745BCcJwr0b7BGLdb8+mFZyzC0HDyKQno5MQ06TlY12xVo
+ 6HtgAKa3/NxA8BLQnz4mgU4DniHQshz/rI3Gh5T9rcXTI5k99xsu/7ussrDKCvwv3q31
+ NWaGGOeA/TtzH5cx8sPgbewg0MeiCbuz2KMdKHC6gewHm5AyX91bImEJfWgh7XQD1Cxv
+ Wu3XutwrvybAymfsGP7gIXuDhKrYldfrNa/GkbNjjaa380YMufnC8Fem3T7FL8VKFtwa
+ Mup6UYMzXdDzK0wFV80GEPYUYFAYktCYnGcSXS5nAFDA8tIC7ztYcer7T3a7A8kKYsd8
+ Zl+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718206981; x=1718811781;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yC/iniut6MADBsLNUbX7E2zAshIKTl1wk4xczH2LqDc=;
- b=Kp/GGm12ShtYlQowaHohzOg/rTNUsuLqOyd8fDaigLWmd3oCJ00lD3M/wyUtzJ/4eO
- eWrT/p+fEO+1DAg/CFt6Q46IUgTZwe6FlyTqRqZJ9CU1d6xZxMoB5NAONhzjXNsLu9Yi
- XzyVwc9ZeTfX8YeNiryO+GpDV9GRHXygR2KthSzJ6VIkMrli3CysdowhPEGomaLmEzsN
- Ev2MrrGiRxIcnxAiKYtw5IEAQwmSGKE9la/5EAm4m5easSleAYYixuHT7ap19+26fSFI
- IH8Q9+Yd7xz6maL7/EuWBuA8oPaBQkFCCs5PJFZc2I4FUhEAUkgcSrXfbTDsxEBcYdPq
- ik5Q==
-X-Gm-Message-State: AOJu0YzePErlWRQnaV7NLq/yH7JjJOtzB0frJXYfDgznI+ovOvUDn+wQ
- Vh6WNGysnU9GS9SR3DyHgfJTZdDMEr9WXJIC4oHzuCRN10j3/4yU972jbkqoY2c=
-X-Google-Smtp-Source: AGHT+IGrJjbpEnVjRhA1ReP0WQTTBKW8bcHNneZFY/Fm8KlRX2X7Xk70rAb9DT7bQc31TUPED4wGgw==
-X-Received: by 2002:a05:6512:2255:b0:52c:8ed1:21fe with SMTP id
- 2adb3069b0e04-52c9a403475mr2301576e87.53.1718206981270; 
- Wed, 12 Jun 2024 08:43:01 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f185078fesm473719766b.16.2024.06.12.08.43.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Jun 2024 08:43:01 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 51F9B5F893;
- Wed, 12 Jun 2024 16:43:00 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Anton Johansson via <qemu-devel@nongnu.org>
-Cc: Anton Johansson <anjo@rev.ng>,  richard.henderson@linaro.org,
- qemu-stable@nongnu.org,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Subject: Re: [PATCH v3] accel/tcg: Fix typo causing tb->page_addr[1] to not
- be recorded
-In-Reply-To: <20240612133031.15298-1-anjo@rev.ng> (Anton Johansson via's
- message of "Wed, 12 Jun 2024 15:30:31 +0200")
-References: <20240612133031.15298-1-anjo@rev.ng>
-Date: Wed, 12 Jun 2024 16:43:00 +0100
-Message-ID: <87zfrqw4jf.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1718207163; x=1718811963;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QrfrlrISbi31Cyu+lHZqtj98oxaFekxBlFPaxn8Jd1k=;
+ b=T0Wxx2Q+MX0qitvZaBkdq2WKlYnicdldAE+/XzbQTJTR0jNjI5ayp3uIaGrZS6s/pq
+ 0+/II07nHvOspeRZZ5cPp/vEgGDL4xmShBR0Nd71cUlI6HxdDykAGmEUiHtAZ1raGfQJ
+ WDxHzQvMWTT7H/YjqgdeIxw4PCGE7zhfkeG/QvxbKwBzU/wXwooSNSEi9Hcpko87vG43
+ yPbezBaiNvQMtdpwVUzzN9+/9gtAPGoqxSf2lqRkMxPVkC03XWXz/gaHrIS3zbu6HXvg
+ +uadBCtqnaVFkg5YoRu6HmXWRWd/BcV4sOpAz9TInA3msEQpjGUCzPFQbjUchUxF2Piw
+ +yWg==
+X-Gm-Message-State: AOJu0YzmNUuqOzz7+tWZx70ADjhF37roeSlUjbKDfXsHdDKVecSSHEcC
+ t88GoPoUehlp/QlCIXwcs9Jk0/+BLI744xHui82WIIg8zNTw8s2jIlICqFk2ZguvuJFoO5ZWwDJ
+ j
+X-Google-Smtp-Source: AGHT+IF0nKT1Uq2swYwLQfLnlpW3BPZPLrBXavuQr8V54mQtKru+xG7jAPED6+CkZUuLgeJk+h/8MA==
+X-Received: by 2002:a17:902:e5ca:b0:1f6:f82d:a8cb with SMTP id
+ d9443c01a7336-1f83b6fae95mr23182775ad.52.1718207163175; 
+ Wed, 12 Jun 2024 08:46:03 -0700 (PDT)
+Received: from [192.168.100.227] ([108.174.179.84])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f6bd76b861sm125190745ad.68.2024.06.12.08.46.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Jun 2024 08:46:02 -0700 (PDT)
+Message-ID: <eaa422eb-d616-44fe-ac7e-79baec8d60ce@linaro.org>
+Date: Wed, 12 Jun 2024 08:45:59 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x135.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 8/9] target/arm: Add aarch64_tcg_ops
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org
+References: <20240606032926.83599-1-richard.henderson@linaro.org>
+ <20240606032926.83599-9-richard.henderson@linaro.org>
+ <878qzaxm6n.fsf@draig.linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <878qzaxm6n.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,21 +98,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Anton Johansson via <qemu-devel@nongnu.org> writes:
+On 6/12/24 07:36, Alex Bennée wrote:
+> What happens when the CPU is running mixed mode code and jumping between
+> 64 and 32 bit? Wouldn't it be easier to have a helper that routes to the
+> correct unwinder, c.f. gen_intermediate_code
 
-> For TBs crossing page boundaries, the 2nd page will never be
-> recorded/removed, as the index of the 2nd page is computed from the
-> address of the 1st page. This is due to a typo, fix it.
->
-> Cc: qemu-stable@nongnu.org
-> Fixes: deba78709a ("accel/tcg: Always lock pages before translation")
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+GDB can't switch modes, so there is *never* any mode switching.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
