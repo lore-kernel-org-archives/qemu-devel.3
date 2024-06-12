@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C754C27C78
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 02:26:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F5BFC27C78
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 03:07:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHDgE-0002zK-8H; Tue, 11 Jun 2024 22:25:42 -0400
+	id 1sHEJU-0008Qp-Tt; Tue, 11 Jun 2024 23:06:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sHDgC-0002yN-Ik
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 22:25:40 -0400
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1sHEJT-0008PN-7a
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 23:06:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sHDgA-0004rg-QI
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 22:25:40 -0400
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1sHEJR-0002g6-DV
+ for qemu-devel@nongnu.org; Tue, 11 Jun 2024 23:06:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718159135;
+ s=mimecast20190719; t=1718161572;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eth8zu/249M8nPQmTdDsAo4QECDF1/gVZaRBKjhaVN0=;
- b=FaAZdLuQicE8wnfq+FVNeI7kM8CEh+ZxVvx9wJcLcQadcLMF9+48GKmVl+P7Xlbh5cg0Nx
- Fmaq+eBhQRX64iVT0YcOA3rtX3W+lCvGMRuG/rwSRvBWnoYB6ObJfe/jdeyqz/y+e1/gW5
- If3OBqh0Z6bIBXxWU6fmRe3gSjSn7wI=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=97jL+ek52SO1pBnnzFGCoCVEwNoneZ1fNFqX1sqmCpI=;
+ b=ZXjpiGDzV75NzXPEpRg3n7D86tOYdDJb/DHNJ9PfOXQSWHO9RGAejAM0QuM5MdiuH2AiT0
+ 2yJoV7CE7mEww3bMqu0cZc/JAywtiKVJxvVGV0nGdDn85xjXQzlmejZ4jcWhmw79HWGLKr
+ YI+LtJGNzftfn/WDiWOifolec5eAnY0=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-218-6NXxYaReOQuhRcKi4jA-hQ-1; Tue, 11 Jun 2024 22:25:26 -0400
-X-MC-Unique: 6NXxYaReOQuhRcKi4jA-hQ-1
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-6cebd09196bso4567551a12.2
- for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 19:25:26 -0700 (PDT)
+ us-mta-484-buLt1jcBNjKR4CaOFrRFpA-1; Tue, 11 Jun 2024 23:05:02 -0400
+X-MC-Unique: buLt1jcBNjKR4CaOFrRFpA-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4405af5cf90so18204861cf.1
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 20:05:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718159125; x=1718763925;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1718161502; x=1718766302;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eth8zu/249M8nPQmTdDsAo4QECDF1/gVZaRBKjhaVN0=;
- b=EeM2jJ/ECmQyVekhi+JS8i+nYvjon6T2TQbYo2GBFpb58Xh/iYIusnUqfKZJ72ojqt
- u8n5jelaYdlNX6ay3DCWoKn/rjlqZq02Ai/ekEYZzxPA+SsuerbeQq9Yw9Mz3TuD8+gB
- UC9/2Wp5UXw5PtfdWpE2skBQdSnNFN068acehAwxCviu4oZlw2iZOlCh5AwdRvpIe9sc
- x8dAt7mzhzm3cu3oCPYUjPxjijAeF0YEjenVGPb3dyRFzrtImFdlZkDAD0uYQFTICYCs
- cAnNK6PFR4DSBWAEzf6mEMdR1DmRbQaQ7dH0l2Jbz61l4Xw1IM3Rb8wWYztjcgAGGhdJ
- 5wlg==
-X-Gm-Message-State: AOJu0YwRzNPSfjMSjqj1LxPwVaB0C1Q0JuKiPWQr+0JxcAOKzP4gnbSN
- tf9o6GOuHXJg3mZC1F+wldT4JV6mElbAKdfcNmremzowqwJRxjJKfFmEp4SMeVR5mPTWO9IGuBu
- T49Aprg3eVOW4x58MLcOikDeZwvEoaskyOtC6wuZf9F+5dbGxExxM
-X-Received: by 2002:a05:6a21:3295:b0:1b7:889d:f206 with SMTP id
- adf61e73a8af0-1b8a9bbda24mr780885637.28.1718159125559; 
- Tue, 11 Jun 2024 19:25:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvsdxEZWF7nQaJvnp0jXD7OQPULgKJoZVoyhvmNSjfLpNgTUMBdxgW2j4+TmPdWC9WVsAG4g==
-X-Received: by 2002:a05:6a21:3295:b0:1b7:889d:f206 with SMTP id
- adf61e73a8af0-1b8a9bbda24mr780875637.28.1718159125164; 
- Tue, 11 Jun 2024 19:25:25 -0700 (PDT)
-Received: from [192.168.68.50] ([43.252.112.224])
+ bh=97jL+ek52SO1pBnnzFGCoCVEwNoneZ1fNFqX1sqmCpI=;
+ b=h9Iw1RscINhd2IdQo91H/a75yDlBWByuwLu30FJTblq1j/539c3yFKAmpH+0iv2JFo
+ XI6HBDd/pnDZwuR1omcPi+H3rlg6rP9+HGK9Zp/MvYGP1g3q9p+UYmFGEJ4QFrZFiXXM
+ W4TNANdoUr3DGTrs1QTUedH18zjpBvTS1LFNTt5GpcmCZlliRozPqAqezzMP2zvWiI6t
+ OE713p+MFCvDMaG/Uu8+LGY81YLeSqxfvAshbP0egMUOTapuKXH8px5KBntnYAKIqiTe
+ PymvKKav6LKdTFadx9W5zX/+OEeHErmM6qNPr9CIXIor0yUYBczzDaah5Yj+Clzwcpmv
+ mAdQ==
+X-Gm-Message-State: AOJu0Yy6xwDj/n/CIJTkyUX0eBe+Hi4xPEaqR7dy6tJEC+0qPMUzVsOv
+ VO/BxIl/1w3R3aTgImmgbK1e0mM7GnODNsLcitB46t9ozhcn4d+7syrJ/ZeqRvzj9n+VfHtA/zi
+ imkXJP93MdNN+oKlflWyvEhiYeML32hQokqyVXcnTNktQ3Nm4IE1u
+X-Received: by 2002:ac8:5806:0:b0:441:4b3d:a637 with SMTP id
+ d75a77b69052e-4415abbb66amr5336231cf.7.1718161501692; 
+ Tue, 11 Jun 2024 20:05:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHnx6i3A601ys77XgOW8sQZoAtYNyg6uWUBwCxIfsl8mhGVs3s1rc+Tv2R/XX3NynbMQWzDvg==
+X-Received: by 2002:ac8:5806:0:b0:441:4b3d:a637 with SMTP id
+ d75a77b69052e-4415abbb66amr5335831cf.7.1718161500930; 
+ Tue, 11 Jun 2024 20:05:00 -0700 (PDT)
+Received: from [192.168.40.248] ([216.212.38.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f6bd7fdd53sm110391655ad.293.2024.06.11.19.25.20
+ d75a77b69052e-44054648fffsm38794221cf.97.2024.06.11.20.04.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 11 Jun 2024 19:25:24 -0700 (PDT)
-Message-ID: <c744f128-0933-4ea9-ba41-65b8e5a90c02@redhat.com>
-Date: Wed, 12 Jun 2024 12:25:18 +1000
+ Tue, 11 Jun 2024 20:05:00 -0700 (PDT)
+Message-ID: <19774806-3e16-4929-9bb1-dca29dd31395@redhat.com>
+Date: Tue, 11 Jun 2024 23:04:48 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3] hw/arm/virt: Avoid unexpected warning from Linux guest
  on host with Fujitsu CPUs
+Content-Language: en-US
 To: Zhenyu Zhang <zhenyzha@redhat.com>, qemu-arm@nongnu.org
 Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, robin.murphy@arm.com,
- Jonathan.Cameron@huawei.com, eauger@redhat.com, sebott@redhat.com,
- cohuck@redhat.com, ddutile@redhat.com, shahuang@redhat.com
+ Jonathan.Cameron@huawei.com, gshan@redhat.com, eauger@redhat.com,
+ sebott@redhat.com, cohuck@redhat.com, shahuang@redhat.com
 References: <20240612020506.307793-1-zhenyzha@redhat.com>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
+From: Donald Dutile <ddutile@redhat.com>
 In-Reply-To: <20240612020506.307793-1-zhenyzha@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ddutile@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -88,7 +90,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,7 +106,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/12/24 12:05, Zhenyu Zhang wrote:
+
+
+On 6/11/24 10:05 PM, Zhenyu Zhang wrote:
 > Multiple warning messages and corresponding backtraces are observed when Linux
 > guest is booted on the host with Fujitsu CPUs. One of them is shown as below.
 > 
@@ -173,7 +177,32 @@ On 6/12/24 12:05, Zhenyu Zhang wrote:
 >   hw/arm/virt.c | 11 +++++++++++
 >   1 file changed, 11 insertions(+)
 > 
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 3c93c0c0a6..3cefac6d43 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -271,6 +271,17 @@ static void create_fdt(VirtMachineState *vms)
+>       qemu_fdt_setprop_cell(fdt, "/", "#size-cells", 0x2);
+>       qemu_fdt_setprop_string(fdt, "/", "model", "linux,dummy-virt");
+>   
+> +    /*
+> +     * For QEMU, all DMA is coherent. Advertising this in the root node
+> +     * has two benefits:
+> +     *
+> +     * - It avoids potential bugs where we forget to mark a DMA
+> +     *   capable device as being dma-coherent
+> +     * - It avoids spurious warnings from the Linux kernel about
+> +     *   devices which can't do DMA at all
+> +     */
+> +    qemu_fdt_setprop(fdt, "/", "dma-coherent", NULL, 0);
+> +
+>       /* /chosen must exist for load_dtb to fill in necessary properties later */
+>       qemu_fdt_add_subnode(fdt, "/chosen");
+>       if (vms->dtb_randomness) {
 
-Reviewed-by: Gavin Shan <gshan@redhat.com>
++1 to Peter's suggested comment, otherwise, unless privy to this thread,
+one would wonder how/why.
+
+Reviewed-by: Donald Dutile <ddutile@redhat.com
 
 
