@@ -4,90 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F771C27C77
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 11:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F657C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 11:39:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHMAp-0002S8-C7; Wed, 12 Jun 2024 07:29:51 -0400
+	id 1sHMJB-0004Gi-3Y; Wed, 12 Jun 2024 07:38:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sHMAn-0002Rj-Qs
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 07:29:49 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHMJ9-0004GY-I3
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 07:38:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sHMAm-0007t0-1G
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 07:29:49 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHMJ7-0001FR-PY
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 07:38:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718191786;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1718192304;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9mSk0is/yOv/WbmvaHtHjmziyZSm3k7CLbkO6t73YaQ=;
- b=XduyHbtfK+IevoXxEOMmOsYQVq3a3yQt75jWZd1wcX3vR3fcAhnakTXqnhYy9OSOcp7i1y
- WiruwLQx0E5C/uM6sVlCj+EjLCck2u8SmgsrF9OYDCEO4iLYrRLjlXGN7VutBiGTnBDSYt
- +SRKW4abmPapBS7eeMJVhmP6wDli5Js=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-25-T00qbaQWNWOqsvPFlCeEpg-1; Wed, 12 Jun 2024 07:29:43 -0400
-X-MC-Unique: T00qbaQWNWOqsvPFlCeEpg-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-52c989652e6so777799e87.0
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 04:29:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718191782; x=1718796582;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9mSk0is/yOv/WbmvaHtHjmziyZSm3k7CLbkO6t73YaQ=;
- b=IlMohGKTDbIj8ccZaEp4x6TUGCfPN4d2WLAiVEDV9tOfrdka/EY7drr2EOtNHlGv3X
- 3D3JvQwxLnrvQqrdbmpV8pEdCSDVXXYctq3qN3Jh2HdAVYDOjqvz4cImRNVjumE4rbFH
- f28H8g5wASRCFpZu3MjnR9Y36TjarGo17a7kVMZ5cbv55kOKUQgFBlUwNbMw579sUNcU
- SJyuqKamDEU7k3m6sExUSGliRt6c1lbFUJ2rQVi2LHiYLzeelnoLKgOGJvrYuDojvnrV
- eNwRcEIuSj03z2dTNWttBt/d9DlFSoxE5XOgrqnR/H+C4aJoSak3+zoCU4e6Pj0Sk5sz
- HSYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVc2oD6Crmfzqpdnf1Kb/V3nCbDqPiiADPJ+8jx8sckOLTmt3oICFs/EO50nToUesKiOT4EJFiCzCJh2pGw0tm/INUNRSs=
-X-Gm-Message-State: AOJu0YxwSSPYn9/bTCyg0eKS1RSQj0gZpWPZzXHtnOzd86hDk78E7ngj
- ZDrLJXMtFKNzyaURcCmMUCYMKHPxaEl+MYpWgULYxW7lDVRWTyxxjwFFCxMJp0mtRiAQjy/uIlM
- JdvzbcTZrCIWxpUSNEb1LF3iq62nkuVj6oMYnpMlfHyzdjAb5+lv92bDNmDQAD4SNWcSoIYjGHB
- 5R3VnwHha0upQIx2LuhSVRk12W9Uk=
-X-Received: by 2002:a05:6512:3185:b0:52b:c2db:525a with SMTP id
- 2adb3069b0e04-52c9a3fcdefmr1458733e87.42.1718191782270; 
- Wed, 12 Jun 2024 04:29:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGVCfsYsc/GAGTZ/oK1mHXyt+T8FLBVDiQsoqA9J+BbTqOHiRImcmY9CYCxqUSg6s+5++rnp1atcOC2mfLy18E=
-X-Received: by 2002:a05:6512:3185:b0:52b:c2db:525a with SMTP id
- 2adb3069b0e04-52c9a3fcdefmr1458712e87.42.1718191781917; Wed, 12 Jun 2024
- 04:29:41 -0700 (PDT)
-MIME-Version: 1.0
+ bh=5fD2pYojMAcurxn3tkreeI+FXSJvVJd7z1KH+PQ8ek8=;
+ b=YEO/FI7ryu691hr4QHLN8HJaRbN+FKu8vuhia6BSHDlqN/z0+c3Y6aYpmw3ZRB/vIMIqmt
+ hEfSY2+FIfh0LBk/IGc8FG5ySzQxRoNd5YYundQSh0NJhddXf5chY+ZIvdWpGVpCArTm4b
+ 94zLo4tNJg3cAGOwOv+CtsJfQKD2bxo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-tdsDymAeNCuRkt4T1SaJaA-1; Wed,
+ 12 Jun 2024 07:38:21 -0400
+X-MC-Unique: tdsDymAeNCuRkt4T1SaJaA-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A241C195608B; Wed, 12 Jun 2024 11:38:19 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.115])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9CC2419560B1; Wed, 12 Jun 2024 11:38:17 +0000 (UTC)
+Date: Wed, 12 Jun 2024 12:38:14 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Alexander Monakov <amonakov@ispras.ru>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 0/5] Reinstate ability to use Qemu on pre-SSE4.1 x86 hosts
+Message-ID: <ZmmIpr5f0sQy-VGl@redhat.com>
 References: <20240612105525.8795-1-amonakov@ispras.ru>
  <ZmmAq8fbJLuaX4Qg@redhat.com>
  <CABgObfbGa=xpp9-cLwzqCpPFsf27qM+K-svfXEvc6ffjb=_VAg@mail.gmail.com>
- <e26ac8a0-5cb0-22a8-fbf9-54f198cdc7ed@ispras.ru>
-In-Reply-To: <e26ac8a0-5cb0-22a8-fbf9-54f198cdc7ed@ispras.ru>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 12 Jun 2024 13:29:28 +0200
-Message-ID: <CABgObfYf8=3yXu1p6q6jzyZ7uHy92BHaBXtJY8AMYXBdd9+HGA@mail.gmail.com>
-Subject: Re: [PATCH 0/5] Reinstate ability to use Qemu on pre-SSE4.1 x86 hosts
-To: Alexander Monakov <amonakov@ispras.ru>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfbGa=xpp9-cLwzqCpPFsf27qM+K-svfXEvc6ffjb=_VAg@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,46 +86,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 12, 2024 at 1:19=E2=80=AFPM Alexander Monakov <amonakov@ispras.=
-ru> wrote:
-> On Wed, 12 Jun 2024, Paolo Bonzini wrote:
-> > I didn't do this because of RHEL9, I did it because it's silly that
-> > QEMU cannot use POPCNT and has to waste 2% of the L1 d-cache to
-> > compute the x86 parity flag (and POPCNT was introduced at the same
-> > time as SSE4.2).
->
-> From looking at that POPCNT patch I understood that Qemu detects
-> presence of POPCNT at runtime and will only use the fallback when
-> POPCNT is unavailable. Did I misunderstand?
+On Wed, Jun 12, 2024 at 01:12:43PM +0200, Paolo Bonzini wrote:
+> On Wed, Jun 12, 2024 at 1:04 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > On Wed, Jun 12, 2024 at 01:55:20PM +0300, Alexander Monakov wrote:
+> > > Hello,
+> > >
+> > > I'm sending straightforward reverts to recent patches that bumped minimum
+> > > required x86 instruction set to SSE4.2. The older chips did not stop working,
+> > > and people still test and use new software on older hardware:
+> > > https://sourceware.org/bugzilla/show_bug.cgi?id=31867
+> > >
+> > > Considering the very minor gains from the baseline raise, I'm honestly not
+> > > sure why it happened. It seems better to let distributions handle that.
+> >
+> > Indeed distros are opinionated about the x86_64 baseline they want
+> > to target.
+> >
+> > While RHEL-9 switched to a x86_64-v2 baseline, Fedora has repeatedly
+> > rejected the idea of moving to an x86_64-v2 baseline, wanting to retain
+> > full backwards compat. So this assumption in QEMU is preventing the
+> > distros from satisfying their chosen build target goals.
+> 
+> I didn't do this because of RHEL9, I did it because it's silly that
+> QEMU cannot use POPCNT and has to waste 2% of the L1 d-cache to
+> compute the x86 parity flag (and POPCNT was introduced at the same
+> time as SSE4.2).
+> 
+> Intel x86_64-v2 processors have been around for about 15 years, AMD
+> for a little less (2011). I'd rather hear from users about the
+> usecases for running QEMU on such old processors before reverting, as
+> this does not get in the way of booting/installing distros on old
+> machines. Unless QEMU is run from within the installation media, which
+> it isn't, requiring a particular processor family does not prevent
+> Fedora from being installable on pre-v2 processors.
 
--mpopcnt allows GCC to generate the POPCNT instruction for helper
-code. Right now we have code like this in
-target/i386/tcg/cc_helper_template.h:
+This isn't anything to do with the distro installer. The use case is that
+the distro wants all its software to be able to run on the x86_64 baseline
+it has chosen to build with.
 
-    pf =3D parity_table[(uint8_t)dst];
+If we want to use POPCNT in the TCG code, can we not do a runtime check
+and selectively build pieces of code with  __attribute__((target("popcnt"))),
+as we've done historically for the bufferiszero.c code, rather than
+changing the entire QEMU baseline ?
 
-and it could be instead something like
 
-#if defined __i386__ || defined __x86_64__ || defined __s390x__||
-defined __riscv_zbb
-static inline unsigned int compute_pf(uint8_t x)
-{
-    return __builtin_parity(x) * CC_P;
-}
-#else
-extern const uint8_t parity_table[256];
-static inline unsigned int compute_pf(uint8_t x)
-{
-    return parity_table[x];
-}
-#endif
-
-The code generated for __builtin_parity, if you don't have it
-available in hardware, is pretty bad.
-
-Paolo
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
