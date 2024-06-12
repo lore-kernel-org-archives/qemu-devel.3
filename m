@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C70C5C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 12:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73BE6C27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 12:38:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNAV-00056J-Fp; Wed, 12 Jun 2024 08:33:35 -0400
+	id 1sHNEa-0006TK-Vq; Wed, 12 Jun 2024 08:37:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHNAT-00054z-Uu
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:33:33 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHNES-0006SJ-BZ
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:37:41 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHNAQ-0002kC-Km
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:33:33 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-35f1bc63981so536993f8f.1
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 05:33:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHNEQ-0003UL-Pv
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:37:40 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a6f13dddf7eso472525966b.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 05:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718195609; x=1718800409; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718195857; x=1718800657; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=QEHScbmL4R3l7GYXJJElRuFgvpRPXJ+4HyME0GWSF7k=;
- b=l2g6z8dptuqjcYMo86woM3GouuHqLrUIBZaiVzqaSnWNAqfO3vmWeORP8Y9+vZERD1
- lBcuxfQojoPi3RSXgQ3OEU79DqSJLh0JlF7L6XtTUdLkHTGP/VlO0tVdbZIWBpsLBa0i
- 58sDIdLpnY1LMWj1KS88C3GyMVR2Ht92bpz+sC3fE/VdIdOZKDEDO89C+zMsrlAPReuO
- 1tQBVkGajnLF8C5VLLSY4aBFdvQ4jSG2/ChOVPHnKcKi2qT5T+0yLX/xwQc/Tb+tIkFa
- IAm8rhnIzP0tqgvugfWx7cAcKqeYwzeANBrlGE78VtLwK0QBbiqZD4/e5fhygkLHM/xf
- rr4Q==
+ bh=wXULtP5u80zE6dfwGbbH16ulqchPjjATeK5JB0svpMA=;
+ b=HMwWATqs45c2uGA2524xjFqU1njre0WNDTdJIfup6GGNjurRqyG9G3PtgwWfl10jMJ
+ Czr7TXghfws8aAm7bFOz8GzGrxJPn6cAUee88FXJ4yImz4vk/0IRdcH6Uk/bwdKADfe/
+ IrISt6qUw7D+gQCNSgeaYrbdhRZNVBPpyFB0dZCbNYzLhQMHcpt0GRHl1+FEJDVHQtTt
+ jiUVpYvfMcD8soTszi4uiODcqAWnmjY680tnqiiwLqlO53KcInVr/Z+3EmTjEUke7UCx
+ KJz5CB9kZHmsIH3Ndhh0Oijbu/61EZ1t15uHYnF+L2ImphbArzgDZNxfVLEx9ILQGLdR
+ HfGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718195609; x=1718800409;
+ d=1e100.net; s=20230601; t=1718195857; x=1718800657;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QEHScbmL4R3l7GYXJJElRuFgvpRPXJ+4HyME0GWSF7k=;
- b=lwkCqf5y2XrBiJDuwGKadNE76Vggfd3+V3NNJLxsIQk1SsuCbh8RHXB3tnlnNZYxuI
- Y/hK+FntBpetRxX3OB0F/hAnZCRg5ijLnp6+9E+tU3VREe+Cdmjd4iKoe8COP3y6zyEu
- p29m1Kp6I9s1v0IFJirDO4X+2isuwDi9tPgZpdBVm6kEtXVEuvbXSxJHS9DyfDZ+vwcZ
- eXLkiYbKnN9BpQwKuJcD+vLa9KHuX6VyT4qzy4D4fFhsdYJDBZ2gIFk6QClMTCqlvyZo
- 5fJK7K759gWs+TuQ/hxOEr+QCFxJiBo7amSni0x7fSB00oMK3HNeYbYBxnlCgXBOviCC
- kUkw==
-X-Gm-Message-State: AOJu0YwdgsJNmhyqCQaWJz/vCs8wqQNx2eI6OCqOfCJiuCe4cIqw9/Rq
- 85PzcAIw3b6/5GAJblwbQbUCum96JHM5PDBSNgleqJLpIzDqJneIgPEQqRXoWLM=
-X-Google-Smtp-Source: AGHT+IEXbqutLt81YaMU0yCNU9YKZ4qUG1YbsgICbD7MuI3ozy3zk8VJdtI7wOz18iiDiaXK0BRNGg==
-X-Received: by 2002:a5d:598f:0:b0:360:6e58:c41c with SMTP id
- ffacd0b85a97d-3606e58c4a8mr1589917f8f.6.1718195608805; 
- Wed, 12 Jun 2024 05:33:28 -0700 (PDT)
+ bh=wXULtP5u80zE6dfwGbbH16ulqchPjjATeK5JB0svpMA=;
+ b=vrg7bzd4tExsC4AmGZDkQCTAGQMBJIalxPwEpLM4vHP2iZVhbnWikbsEcAAgLVCR7z
+ zbtIvrw0wjZlJuyHd+RP8FqWIixa2o88tDRi5N01UrJmkxKwpDZ6ajgQihVVVbeqfEFB
+ LMlir6If53rVzrQoi7y6P4EerT2kGG6JoWQNrqOHsG0lNBuBWjHqTYKBTcL++1gnskg8
+ zyW35hDvVEUrKtiKJ123lxM4hvbgmxYptFB9JdgDjS92koBx/m4GxyGZU6nAZ2yyKYIJ
+ 3mNRjTwUYtfJL9rDruT1BXzi9/R+z/Ns3cfPbZYM+APDb4mSW39njUOKu60Yzv+q+UqT
+ px1w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUmg3Rb9jj2AJ8nAYWN3qyXOq8c7UrmZK33MX9mDjWUYsvuPzt/5+jIh8L+M3SlRGz06xAiA/a8E8zi0eGV0LLsRo3A79A=
+X-Gm-Message-State: AOJu0Yy8JjzVUJ6xnnc+Sadr6UhSHYQtTxQO83CN7osD3ngxeTm8XtCC
+ HeUvPGa91ZwRnekAfhf3t3Swt8oPWC+Bk4vKl6moLVCT5TUleAIieyhgI5xTnDLgNyUZzCPwSSs
+ n
+X-Google-Smtp-Source: AGHT+IH3rnXMg+cV+bNwN5oqh8YYaaLPEqS3aSWc1dyCR0wwKWfVlmnqhah33OODMYa+Oe+N5g5zQQ==
+X-Received: by 2002:a17:906:f190:b0:a68:e335:3e62 with SMTP id
+ a640c23a62f3a-a6f480268admr101258066b.72.1718195857218; 
+ Wed, 12 Jun 2024 05:37:37 -0700 (PDT)
 Received: from [192.168.69.100] (ram94-h02-176-184-0-172.dsl.sta.abo.bbox.fr.
  [176.184.0.172]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-35f23a00997sm8485204f8f.0.2024.06.12.05.33.27
+ a640c23a62f3a-a6f13e08c89sm481365166b.88.2024.06.12.05.37.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Jun 2024 05:33:28 -0700 (PDT)
-Message-ID: <69649622-e52c-4d24-809b-3d8a97786a69@linaro.org>
-Date: Wed, 12 Jun 2024 14:33:25 +0200
+ Wed, 12 Jun 2024 05:37:36 -0700 (PDT)
+Message-ID: <63fc5141-00c2-404e-9c29-5a2c805c474a@linaro.org>
+Date: Wed, 12 Jun 2024 14:37:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] hw/arm/virt: Avoid unexpected warning from Linux guest
- on host with Fujitsu CPUs
-To: Zhenyu Zhang <zhenyzha@redhat.com>, qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, robin.murphy@arm.com,
- Jonathan.Cameron@huawei.com, gshan@redhat.com, eauger@redhat.com,
- sebott@redhat.com, cohuck@redhat.com, ddutile@redhat.com,
- shahuang@redhat.com, qemu-riscv <qemu-riscv@nongnu.org>,
- qemu-ppc <qemu-ppc@nongnu.org>, Song Gao <gaosong@loongson.cn>,
- qemu-arm <qemu-arm@nongnu.org>
-References: <20240612020506.307793-1-zhenyzha@redhat.com>
+Subject: Re: [PATCH] accel/tcg: Fix typo causing tb->page_addr[1] to not be
+ recorded
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org
+References: <20240611215814.32752-1-anjo@rev.ng>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240612020506.307793-1-zhenyzha@redhat.com>
+In-Reply-To: <20240611215814.32752-1-anjo@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,102 +97,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenyu,
+On 11/6/24 23:58, Anton Johansson via wrote:
+> For TBs crossing page boundaries, the 2nd page will never be
+> recorded/removed, as the index of the 2nd page is computed from the
+> address of the 1st page. This is due to a typo, fix it.
 
-On 12/6/24 04:05, Zhenyu Zhang wrote:
-> Multiple warning messages and corresponding backtraces are observed when Linux
-> guest is booted on the host with Fujitsu CPUs. One of them is shown as below.
-> 
-> [    0.032443] ------------[ cut here ]------------
-> [    0.032446] uart-pl011 9000000.pl011: ARCH_DMA_MINALIGN smaller than
-> CTR_EL0.CWG (128 < 256)
-> [    0.032454] WARNING: CPU: 0 PID: 1 at arch/arm64/mm/dma-mapping.c:54
-> arch_setup_dma_ops+0xbc/0xcc
-> [    0.032470] Modules linked in:
-> [    0.032475] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.14.0-452.el9.aarch64
-> [    0.032481] Hardware name: linux,dummy-virt (DT)
-> [    0.032484] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [    0.032490] pc : arch_setup_dma_ops+0xbc/0xcc
-> [    0.032496] lr : arch_setup_dma_ops+0xbc/0xcc
-> [    0.032501] sp : ffff80008003b860
-> [    0.032503] x29: ffff80008003b860 x28: 0000000000000000 x27: ffffaae4b949049c
-> [    0.032510] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-> [    0.032517] x23: 0000000000000100 x22: 0000000000000000 x21: 0000000000000000
-> [    0.032523] x20: 0000000100000000 x19: ffff2f06c02ea400 x18: ffffffffffffffff
-> [    0.032529] x17: 00000000208a5f76 x16: 000000006589dbcb x15: ffffaae4ba071c89
-> [    0.032535] x14: 0000000000000000 x13: ffffaae4ba071c84 x12: 455f525443206e61
-> [    0.032541] x11: 68742072656c6c61 x10: 0000000000000029 x9 : ffffaae4b7d21da4
-> [    0.032547] x8 : 0000000000000029 x7 : 4c414e494d5f414d x6 : 0000000000000029
-> [    0.032553] x5 : 000000000000000f x4 : ffffaae4b9617a00 x3 : 0000000000000001
-> [    0.032558] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff2f06c029be40
-> [    0.032564] Call trace:
-> [    0.032566]  arch_setup_dma_ops+0xbc/0xcc
-> [    0.032572]  of_dma_configure_id+0x138/0x300
-> [    0.032591]  amba_dma_configure+0x34/0xc0
-> [    0.032600]  really_probe+0x78/0x3dc
-> [    0.032614]  __driver_probe_device+0x108/0x160
-> [    0.032619]  driver_probe_device+0x44/0x114
-> [    0.032624]  __device_attach_driver+0xb8/0x14c
-> [    0.032629]  bus_for_each_drv+0x88/0xe4
-> [    0.032634]  __device_attach+0xb0/0x1e0
-> [    0.032638]  device_initial_probe+0x18/0x20
-> [    0.032643]  bus_probe_device+0xa8/0xb0
-> [    0.032648]  device_add+0x4b4/0x6c0
-> [    0.032652]  amba_device_try_add.part.0+0x48/0x360
-> [    0.032657]  amba_device_add+0x104/0x144
-> [    0.032662]  of_amba_device_create.isra.0+0x100/0x1c4
-> [    0.032666]  of_platform_bus_create+0x294/0x35c
-> [    0.032669]  of_platform_populate+0x5c/0x150
-> [    0.032672]  of_platform_default_populate_init+0xd0/0xec
-> [    0.032697]  do_one_initcall+0x4c/0x2e0
-> [    0.032701]  do_initcalls+0x100/0x13c
-> [    0.032707]  kernel_init_freeable+0x1c8/0x21c
-> [    0.032712]  kernel_init+0x28/0x140
-> [    0.032731]  ret_from_fork+0x10/0x20
-> [    0.032735] ---[ end trace 0000000000000000 ]---
-> 
-> In Linux, a check is applied to every device which is exposed through
-> device-tree node. The warning message is raised when the device isn't
-> DMA coherent and the cache line size is larger than ARCH_DMA_MINALIGN
-> (128 bytes). The cache line is sorted from CTR_EL0[CWG], which corresponds
-> to 256 bytes on the guest CPUs. The DMA coherent capability is claimed
-> through 'dma-coherent' in their device-tree nodes or parent nodes.
-> 
-> Fix the issue by adding 'dma-coherent' property to the device-tree root
-> node, meaning all devices are capable of DMA coherent by default.
-> 
-> Signed-off-by: Zhenyu Zhang <zhenyzha@redhat.com>
+Cc: qemu-stable@nongnu.org
+Fixes: deba78709a ("accel/tcg: Always lock pages before translation")
+
+> Signed-off-by: Anton Johansson <anjo@rev.ng>
 > ---
-> v3: Add comments explaining why we add 'dma-coherent' property (Peter)
-> ---
->   hw/arm/virt.c | 11 +++++++++++
->   1 file changed, 11 insertions(+)
-> 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 3c93c0c0a6..3cefac6d43 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -271,6 +271,17 @@ static void create_fdt(VirtMachineState *vms)
->       qemu_fdt_setprop_cell(fdt, "/", "#size-cells", 0x2);
->       qemu_fdt_setprop_string(fdt, "/", "model", "linux,dummy-virt");
->   
-> +    /*
-> +     * For QEMU, all DMA is coherent. Advertising this in the root node
-> +     * has two benefits:
-> +     *
-> +     * - It avoids potential bugs where we forget to mark a DMA
-> +     *   capable device as being dma-coherent
-> +     * - It avoids spurious warnings from the Linux kernel about
-> +     *   devices which can't do DMA at all
-> +     */
-> +    qemu_fdt_setprop(fdt, "/", "dma-coherent", NULL, 0);
+>   accel/tcg/tb-maint.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-OK, but why restrict that to the Aarch64 virt machine?
-Shouldn't advertise this generically in create_device_tree()?
-Or otherwise at least in the other virt machines?
-
->       /* /chosen must exist for load_dtb to fill in necessary properties later */
->       qemu_fdt_add_subnode(fdt, "/chosen");
->       if (vms->dtb_randomness) {
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
