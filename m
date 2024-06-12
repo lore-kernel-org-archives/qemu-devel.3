@@ -4,56 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4F40C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:23:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62D8FC27C7B
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:23:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNug-0008O8-JR; Wed, 12 Jun 2024 09:21:18 -0400
+	id 1sHNvZ-0001N2-Mn; Wed, 12 Jun 2024 09:22:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHNuZ-0008F4-4Q
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:21:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHNuw-0000OD-8f
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:21:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHNuS-0003r1-4P
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:21:08 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHNuq-0003ww-JZ
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:21:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718198461;
+ s=mimecast20190719; t=1718198486;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=mHRCvrH9Xdn/6MhWUZNCs8EnGLFVyI0q6+F4eQOAU9Y=;
- b=STx/fm7kvbiKzxEFOdtGHC+EL1kmxEMR9oya8rB2uYhrko0SfLc3BvY2jT60KROpR08E/4
- isBVsjiCgSKpSQlB3WKd4ZioFqc9vYg5d69ZkOjucIA+ivw0bmEB4RMZKkbsKCiEn0XhZz
- bMlAjvksnGPzfO6FPMKgK+Um+W9tuWI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oZVPlEGbCCOC79f4sHz2CsYrZpGooR8EfTW2vWGLuGA=;
+ b=XqKZWdFmK4DqbLZSAujPcUwfGA5l4q3SATtkomTqwHM75QNBuOUqNo8JQr3RvitS/L6RKe
+ 1NFAb3SkqDHAZy6mF5NhC+hUDcIDOL0Wbc/Z5nrT7wuCAw5ZYW4cl3L18zEf12+z2KD4w2
+ GSgYipdwmOm6Aef16on3OpA1owJohoc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-350-ha69tsEvOcynmIThdS5Dww-1; Wed,
- 12 Jun 2024 09:20:59 -0400
-X-MC-Unique: ha69tsEvOcynmIThdS5Dww-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-VzVuyYP_OqiYdpe5wWLHQw-1; Wed,
+ 12 Jun 2024 09:21:23 -0400
+X-MC-Unique: VzVuyYP_OqiYdpe5wWLHQw-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B3A6B1954236; Wed, 12 Jun 2024 13:20:58 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2F05B1954194; Wed, 12 Jun 2024 13:21:22 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.236])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3D5521956087; Wed, 12 Jun 2024 13:20:56 +0000 (UTC)
+ id 47FDF1954AC0; Wed, 12 Jun 2024 13:21:19 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 00/15] CPU-related test updates
-Date: Wed, 12 Jun 2024 15:20:40 +0200
-Message-ID: <20240612132055.326889-1-thuth@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+	Yongwei Ma <yongwei.ma@intel.com>
+Subject: [PULL 08/15] tests/unit/test-smp-parse: Fix comment of parameters=1
+ case
+Date: Wed, 12 Jun 2024 15:20:48 +0200
+Message-ID: <20240612132055.326889-9-thuth@redhat.com>
+In-Reply-To: <20240612132055.326889-1-thuth@redhat.com>
+References: <20240612132055.326889-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -78,71 +83,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 80e8f0602168f451a93e71cbb1d59e93d745e62e:
+From: Zhao Liu <zhao1.liu@intel.com>
 
-  Merge tag 'bsd-user-misc-2024q2-pull-request' of gitlab.com:bsdimp/qemu into staging (2024-06-09 11:21:55 -0700)
+SMP_CONFIG_WITH_FULL_TOPO hasn't support module level, so the parameter
+should indicate the "clusters".
 
-are available in the Git repository at:
+Additionally, reorder the parameters of -smp to match the topology
+hierarchy order.
 
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2024-06-12
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Message-ID: <20240529061925.350323-3-zhao1.liu@intel.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/unit/test-smp-parse.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-for you to fetch changes up to 26a09ead7351f117ae780781b347f014da03c20b:
-
-  tests/tcg/s390x: Allow specifying extra QEMU options on the command line (2024-06-12 12:12:28 +0200)
-
-----------------------------------------------------------------
-* Fix loongarch64 avocado test
-* Make qtests more flexible with regards to non-available CPU models
-* Improvements for the test-smp-parse unit test
-
-----------------------------------------------------------------
-Ani Sinha (3):
-      qtest/x86/numa-test: do not use the obsolete 'pentium' cpu
-      tests/qtest/libqtest: add qtest_has_cpu_model() api
-      tests/qtest/x86: check for availability of older cpu models before running tests
-
-Ilya Leoshkevich (1):
-      tests/tcg/s390x: Allow specifying extra QEMU options on the command line
-
-Song Gao (1):
-      tests/avocado: Update LoongArch bios file
-
-Zhao Liu (8):
-      tests/unit/test-smp-parse: Fix comments of drawers and books case
-      tests/unit/test-smp-parse: Fix comment of parameters=1 case
-      tests/unit/test-smp-parse: Fix an invalid topology case
-      tests/unit/test-smp-parse: Use default parameters=0 when not set in -smp
-      tests/unit/test-smp-parse: Make test cases aware of module level
-      tests/unit/test-smp-parse: Test "modules" parameter in -smp
-      tests/unit/test-smp-parse: Test "modules" and "dies" combination case
-      tests/unit/test-smp-parse: Test the full 8-levels topology hierarchy
-
-Zhenwei Pi (2):
-      meson: Remove libibumad dependence
-      test: Remove libibumad dependence
-
- meson.build                                        |   4 +-
- tests/qtest/libqtest.h                             |   8 +
- tests/qtest/libqtest.c                             |  83 +++++
- tests/qtest/numa-test.c                            |   3 +-
- tests/qtest/test-x86-cpuid-compat.c                | 170 ++++++----
- tests/unit/test-smp-parse.c                        | 373 +++++++++++++++++----
- scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml   |   1 -
- scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml     |   1 -
- tests/avocado/machine_loongarch.py                 |   8 +-
- tests/docker/dockerfiles/debian-amd64-cross.docker |   1 -
- tests/docker/dockerfiles/debian-arm64-cross.docker |   1 -
- tests/docker/dockerfiles/debian-armel-cross.docker |   1 -
- tests/docker/dockerfiles/debian-armhf-cross.docker |   1 -
- tests/docker/dockerfiles/debian-i686-cross.docker  |   1 -
- .../dockerfiles/debian-mips64el-cross.docker       |   1 -
- .../docker/dockerfiles/debian-mipsel-cross.docker  |   1 -
- .../docker/dockerfiles/debian-ppc64el-cross.docker |   1 -
- tests/docker/dockerfiles/debian-s390x-cross.docker |   1 -
- tests/docker/dockerfiles/debian.docker             |   1 -
- tests/docker/dockerfiles/ubuntu2204.docker         |   1 -
- tests/lcitool/projects/qemu.yml                    |   1 -
- tests/tcg/s390x/Makefile.softmmu-target            |   2 +-
- 22 files changed, 518 insertions(+), 147 deletions(-)
+diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
+index fa8e7d83a7..c9cbc89c21 100644
+--- a/tests/unit/test-smp-parse.c
++++ b/tests/unit/test-smp-parse.c
+@@ -333,7 +333,9 @@ static const struct SMPTestData data_generic_valid[] = {
+     }, {
+         /*
+          * Unsupported parameters are always allowed to be set to '1'
+-         * config: -smp 8,books=1,drawers=1,sockets=2,modules=1,dies=1,cores=2,threads=2,maxcpus=8
++         * config:
++         *   -smp 8,drawers=1,books=1,sockets=2,dies=1,clusters=1,cores=2,\
++         *        threads=2,maxcpus=8
+          * expect: cpus=8,sockets=2,cores=2,threads=2,maxcpus=8 */
+         .config = SMP_CONFIG_WITH_FULL_TOPO(8, 1, 1, 2, 1, 1, 2, 2, 8),
+         .expect_prefer_sockets = CPU_TOPOLOGY_GENERIC(8, 2, 2, 2, 8),
+-- 
+2.45.2
 
 
