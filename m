@@ -4,70 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C23DDC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DC32C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:12:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNhI-0007zw-3H; Wed, 12 Jun 2024 09:07:28 -0400
+	id 1sHNcN-0003RP-KD; Wed, 12 Jun 2024 09:02:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sHNhF-0007tk-I7
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:07:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNcD-0003Dk-1L
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sHNhE-0000ZF-1d
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:07:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNc3-00080r-3h
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718197643;
+ s=mimecast20190719; t=1718197321;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BBfd6Z86Wbhg9+axntpREHq05oibhQASjFKI6YkK6pw=;
- b=b2Tq1MR0NBAfX/HnvXxamMg0a1/7Hb2S/SAfrp6tv/kFwtrk7ULamIXLN4wnDPgqT7/Iof
- /drNere/bdW6GBpUd7JjdAXmBxkXo7jDpDIvLPOeqX0UNnODg9EtY8Ol3e4D/qeTdG446F
- ODyfNmnvC9s0SmKPjdydQKWilYFiY1E=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=wZmcgFMvgRdwuVB8jTrsKpoEok8IGGidAmfsen4KOfg=;
+ b=GEBI/oYYpo4n9sYicrR6ZDdcmhxXCYE3jd6RAFVVPPWdh4AfETeHFnzloEdxK/KwtUJrU7
+ Y3DNepqXElOljfWaDy3BHy4vVndBaX/zSJ7WsuYBzBw92VQ2ew4LxSPaE9U1MHEKb+w+0z
+ AYARAGlzNm/eO0rKtMNkuEVLq+A4YQM=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-BV-LNF3yOTOUy7iEhDe-LQ-1; Wed,
- 12 Jun 2024 09:07:17 -0400
-X-MC-Unique: BV-LNF3yOTOUy7iEhDe-LQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-179-aWog0iRPPZab3__3kgdIBw-1; Wed,
+ 12 Jun 2024 09:01:57 -0400
+X-MC-Unique: aWog0iRPPZab3__3kgdIBw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8566F1954B0B; Wed, 12 Jun 2024 13:07:16 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EEA4730000C4; Wed, 12 Jun 2024 13:07:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C30B721E66E5; Wed, 12 Jun 2024 15:07:13 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Konstantin Kostiuk <kkostiuk@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,  qemu-devel@nongnu.org,  qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org,  qemu-block@nongnu.org,  qemu-s390x@nongnu.org
-Subject: Re: [RFC PATCH v2 21/22] qapi: Inline and remove QERR_UNSUPPORTED
- definition
-In-Reply-To: <18739a67-84bb-4fd3-adb6-0db0f0eb7af1@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 12 Jun 2024 14:23:09
- +0200")
-References: <20231005045041.52649-1-philmd@linaro.org>
- <20231005045041.52649-22-philmd@linaro.org>
- <87mswx5n63.fsf@pond.sub.org>
- <18739a67-84bb-4fd3-adb6-0db0f0eb7af1@linaro.org>
-Date: Wed, 12 Jun 2024 15:07:13 +0200
-Message-ID: <87plsmfgxq.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E867C1955DC5; Wed, 12 Jun 2024 13:01:56 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.49])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1A3FE1956053; Wed, 12 Jun 2024 13:01:54 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v1 13/16] vfio/container: Introduce an instance_init() handler
+Date: Wed, 12 Jun 2024 15:01:19 +0200
+Message-ID: <20240612130122.813935-14-clg@redhat.com>
+In-Reply-To: <20240612130122.813935-1-clg@redhat.com>
+References: <20240612130122.813935-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -92,23 +84,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+This allows us to move the initialization code from vfio_container_init(),
+which we will soon remove.
 
-> Michael, Konstantin, QERR_UNSUPPORTED is only used by QGA.
->
-> Do you mind giving our maintainer's position on Markus
-> analysis so we can know how to proceed with this definition?
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/vfio/container-base.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-Daniel Berrang=C3=A9 recently posted patches that get rid of most instances
-of QERR_UNSUPPORTED:
-
-    [PATCH 00/20] qga: clean up command source locations and conditionals
-    https://lore.kernel.org/qemu-devel/20240604134933.220112-1-berrange@red=
-hat.com/
-
-I pointed out a possible opportunity to remove even more.
-
-I think we should let the dust settle there, then figure out how to
-eliminate remaining QERR_UNSUPPORTED, if any.
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index 98c15e174dd78df5146ee83c05c98f3ea9c1e52c..3858f5ab1d68e897f9013161d7c5c20c0553029d 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -75,12 +75,6 @@ void vfio_container_init(VFIOContainerBase *bcontainer,
+                          const VFIOIOMMUClass *ops)
+ {
+     bcontainer->ops = ops;
+-    bcontainer->error = NULL;
+-    bcontainer->dirty_pages_supported = false;
+-    bcontainer->dma_max_mappings = 0;
+-    bcontainer->iova_ranges = NULL;
+-    QLIST_INIT(&bcontainer->giommu_list);
+-    QLIST_INIT(&bcontainer->vrdl_list);
+ }
+ 
+ void vfio_container_destroy(VFIOContainerBase *bcontainer)
+@@ -99,10 +93,23 @@ void vfio_container_destroy(VFIOContainerBase *bcontainer)
+     g_list_free_full(bcontainer->iova_ranges, g_free);
+ }
+ 
++static void vfio_container_instance_init(Object *obj)
++{
++    VFIOContainerBase *bcontainer = VFIO_IOMMU(obj);
++
++    bcontainer->error = NULL;
++    bcontainer->dirty_pages_supported = false;
++    bcontainer->dma_max_mappings = 0;
++    bcontainer->iova_ranges = NULL;
++    QLIST_INIT(&bcontainer->giommu_list);
++    QLIST_INIT(&bcontainer->vrdl_list);
++}
++
+ static const TypeInfo types[] = {
+     {
+         .name = TYPE_VFIO_IOMMU,
+         .parent = TYPE_OBJECT,
++        .instance_init = vfio_container_instance_init,
+         .instance_size = sizeof(VFIOContainerBase),
+         .class_size = sizeof(VFIOIOMMUClass),
+         .abstract = true,
+-- 
+2.45.2
 
 
