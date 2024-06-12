@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0877C27C75
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 08:16:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 086B3C27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 08:16:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHJ8h-0002rJ-H1; Wed, 12 Jun 2024 04:15:27 -0400
+	id 1sHJ8E-0002Fu-M8; Wed, 12 Jun 2024 04:14:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sHJ8f-0002l5-Np
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:15:25 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1sHJ8D-0002Es-BF
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:14:57 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sHJ8d-0006RE-No
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:15:25 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1f692d6e990so61548725ad.3
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 01:15:23 -0700 (PDT)
+ id 1sHJ8B-0006JY-Fi
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:14:57 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1f64ecb1766so50546675ad.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 01:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1718180122; x=1718784922; darn=nongnu.org;
+ d=sifive.com; s=google; t=1718180093; x=1718784893; darn=nongnu.org;
  h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
  :cc:subject:date:message-id:reply-to;
- bh=cAY0jW33Nj782SxENctmS4bNW7VRXFYMi+Au2pU8GGg=;
- b=AkFChHSRi9FuDXAqDe2qDD5ieYTd44LLsZ5Sml08XQezQoyaBUBucwFB5kYOVyCinF
- bHk7o90d9ajMeiWFAdegIg4F3OVxHCCZZQT1vE/YEUk+tTOzjPmtvT4GqmyoROlWU6+W
- L76ORVFZPlULW46bopTc8Pbh5wKATpSbMHHUBLT6cl+p4CzsaQEWcD+JF9tGcsHw8P4o
- 6psMSWgAt6tvs4PRsiLhlFKz30tWPnfyia2B6VTIHei9ZVAYtv8Dsseop2BiJ5gT0DGQ
- llCdAKZtVQ6XlCw562lBX6A2mUgobCptAkuE5cLAVA7WAzwOmh/amDqkn1BeN3gS9UPm
- ypIg==
+ bh=N1D0EBwsV6VQtcv780/DUEjjt7vhGVA63Te3ctWhZfA=;
+ b=mti9qCRsNJmelYIZR/D/m3ezfW3mxqAD7hGR4vnie+B3dDRqxjcd0XSWdzAPcAjl8h
+ /ALR2RQHk3Oaxb7nqqmovjpBQw5GfCAd8Xchpn+SRwNFY+uc9IlnaSvDi0eM11N14vZN
+ j23lYgRUCgci6ihTZS3lRHmmfRWDLYP/F8I7/mMT2BZVYm7JtPID2TEMUJ42aa0T0g56
+ 88KnZMyspzaDVC+Nf7ZTHp1dqBZVOf/w4fxoAgqEACVQm6F2CLCwkN8GHJs4FCqEWgVc
+ Crj5WOC3cJMb7nduWEGSrGUiUoCyvQ7lTHKlRC+xjzj6yd6pW7d7k/Xn85PDHu8AfS22
+ LbRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718180122; x=1718784922;
+ d=1e100.net; s=20230601; t=1718180093; x=1718784893;
  h=references:in-reply-to:message-id:date:subject:cc:to:from
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cAY0jW33Nj782SxENctmS4bNW7VRXFYMi+Au2pU8GGg=;
- b=oUnILmrIBBWKAEMIOK2txPDz4RrekqPTRZmRFc/kaRg2SQzq6vZh1j1xt0DB5jCZbJ
- q2q6/rffW1136/qEGf6SywHio93uxELihT2rqC5C9D77b1p/T1jaaPj74dZp3XVk96qS
- H/pIEPFsLfpPuIxeaRVVY9/AYtM2D4CIlT9unMlkjqozA8XYFTWwXzENm8//wmAcz1td
- K84IWtOgAxh7ktHalDsiAvKGkQYcVaTtjaFunYQHl9OMNjzO4NsSeDh4oZunCqMb8fUs
- AjZ/K6GfsaJ7BJgxRuTJahLisXQ4xPHlSZ1kT1c7XYDRMx6Y/gp4GVPyB8ZzSjgZ973M
- VK2Q==
-X-Gm-Message-State: AOJu0YzJwyEAHv8NRH5Za/6h0hnTvmsws4P7vuo4E6L0iy4ETAAo14OI
- go6FEfoNcWon9woNWkJyPMYabB8gBxzF0RS7XpzIU6rkP2Htr+0trSFhFCdfjX784A7opWxQ9XG
- qRkMqyc/XRWReAchQzH1SqWS3giwjabypaPfRoAN95sxNmYJ1oMhjRS8LaaHdzcLbuDl/ijV2d6
- p0589C6K4ak2rxXypUcte+XaKgaUaTvlvKzEyjsgg8rg==
-X-Google-Smtp-Source: AGHT+IHUiZ6yRJPovFi3wuSKb1lIaXMYW52Ig2N+KD3BR2hpJOErLSMsS3A/wsHOygy4d4Z3kX5hNg==
-X-Received: by 2002:a17:903:234b:b0:1f7:13b1:753f with SMTP id
- d9443c01a7336-1f83b5e1de8mr13440535ad.22.1718180121827; 
- Wed, 12 Jun 2024 01:15:21 -0700 (PDT)
+ bh=N1D0EBwsV6VQtcv780/DUEjjt7vhGVA63Te3ctWhZfA=;
+ b=wmO8+I0EszqRm61dL8VvULxMc+3xjfVoJxc//77maJVKPAQNAAWF01MTBBeyh+iN3I
+ aL7avKYWbt5vBvaPTkV+htgt8AHhokUAM4Dhh85PQt5yPGb61+sQUMoRg+PJS/xdcYBg
+ 4xT8KGHIHRBQgfYRz8DiF7ugjDsfGzdRsbaHw0gAkwqMawgvGBCJRAmdqjtOw/dLP/+M
+ g8246ofP4cIvNwgplHGXZNy/Wx210jzlEN/6sEbvBYEuvGl+rMxdEUW1MWD5fxy9CADC
+ ZPf8sOdpwFVbDBHQtyaJsi+9IoIsTPLKF6lAAn6mCaY+Gv37hVT3nR8KBiNCaWGm5LwM
+ gQ2g==
+X-Gm-Message-State: AOJu0YznfUOTxWVMAzgF7VJio5+ijKAhIxNKbmhBdsWL89x15Hx+V5GZ
+ oa9kPfMAWQrCzDDx9LKZN5/qxd7T6PihzRtXbMM50S18CB/AtIfLaNOLTPFZIgNjafzueVCfi8m
+ 0mBzFFWruqV1osFqwMurxN1raWkscLbmRdJfMtULE3mDtJuiJLA5y1LA3oVdTvf2oNl+AMKemTk
+ qivU+AGf61s7Ucs8aRu+W4pCqBfh3LPVYGNeLPDy37xA==
+X-Google-Smtp-Source: AGHT+IHAWHsJkZE4953kpysrVK4yCFesw23yF64Dnflq1Ntro1lAaQJsWtSgpvQzgG6J5tDpW9DiUA==
+X-Received: by 2002:a17:902:cf08:b0:1f4:71ef:98f8 with SMTP id
+ d9443c01a7336-1f83b6990aemr11303805ad.16.1718180093024; 
+ Wed, 12 Jun 2024 01:14:53 -0700 (PDT)
 Received: from hsinchu26.internal.sifive.com
  (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f8393e8e53sm11363875ad.16.2024.06.12.01.15.16
+ d9443c01a7336-1f8393e8e53sm11363875ad.16.2024.06.12.01.14.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Jun 2024 01:15:21 -0700 (PDT)
+ Wed, 12 Jun 2024 01:14:52 -0700 (PDT)
 From: Jim Shu <jim.shu@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -91,15 +91,14 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  qemu-ppc@nongnu.org (open list:PowerPC TCG CPUs),
  qemu-s390x@nongnu.org (open list:S390 TCG CPUs),
  Jim Shu <jim.shu@sifive.com>
-Subject: [RFC PATCH 08/16] target/riscv: Allow global WG config to set WG CPU
- callbacks
-Date: Wed, 12 Jun 2024 16:14:08 +0800
-Message-Id: <20240612081416.29704-9-jim.shu@sifive.com>
+Subject: [RFC PATCH 03/16] exec: Add RISC-V WorldGuard WID to MemTxAttrs
+Date: Wed, 12 Jun 2024 16:14:03 +0800
+Message-Id: <20240612081416.29704-4-jim.shu@sifive.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20240612081416.29704-1-jim.shu@sifive.com>
 References: <20240612081416.29704-1-jim.shu@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=jim.shu@sifive.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=jim.shu@sifive.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,29 +121,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some WG CPU functions depend on global WG config (like num-of-world), so
-we let the global WG config device to set callbacks of a RISC-V HART.
+RISC-V WorldGuard will add 5-bit world_id (WID) to the each memory
+transaction on the bus. The wgChecker in front of RAM or peripherals
+MMIO could do the access control based on the WID. It is similar to ARM
+TrustZone NS bit, but the WID is 5-bit.
+
+The common implementation of WID is AXI4 AxUSER signal.
 
 Signed-off-by: Jim Shu <jim.shu@sifive.com>
 ---
- target/riscv/cpu.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/exec/memattrs.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 2d3bfedbba..50a0fba127 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -431,6 +431,10 @@ struct CPUArchState {
-     uint64_t kvm_timer_state;
-     uint64_t kvm_timer_frequency;
- #endif /* CONFIG_KVM */
+diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
+index 14cdd8d582..d00f3c5500 100644
+--- a/include/exec/memattrs.h
++++ b/include/exec/memattrs.h
+@@ -52,6 +52,11 @@ typedef struct MemTxAttrs {
+     unsigned int memory:1;
+     /* Requester ID (for MSI for example) */
+     unsigned int requester_id:16;
 +
-+    /* machine specific WorldGuard callback */
-+    void (*wg_reset)(CPURISCVState *env);
-+    void (*wid_to_mem_attrs)(MemTxAttrs *attrs, uint32_t wid);
- };
++    /*
++     * RISC-V WorldGuard: the 5-bit WID of memory access.
++     */
++    uint8_t world_id;
+ } MemTxAttrs;
  
- /*
+ /* Bus masters which don't specify any attributes will get this,
 -- 
 2.17.1
 
