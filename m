@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12CB6C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 05:46:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F7A5C27C75
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 05:49:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHGoF-00034V-Ge; Wed, 12 Jun 2024 01:46:11 -0400
+	id 1sHGrX-0003x0-B2; Wed, 12 Jun 2024 01:49:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1sHGoD-00034E-Dx; Wed, 12 Jun 2024 01:46:09 -0400
-Received: from fhigh1-smtp.messagingengine.com ([103.168.172.152])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1sHGo8-0005Nf-NP; Wed, 12 Jun 2024 01:46:09 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailfhigh.nyi.internal (Postfix) with ESMTP id 9985C11400A9;
- Wed, 12 Jun 2024 01:46:01 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute4.internal (MEProxy); Wed, 12 Jun 2024 01:46:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1718171161; x=
- 1718257561; bh=m7roqio0aD7RxosC7iJZBlNkCBJwIMTgsJCVAhxEPvA=; b=P
- eOCYIG8XiPpslfi7oAP43n109Lf7z0jdkAOsCCagO6YSSXs0r9SvkAAoafHCTtxE
- hBi3MzybcD2qgDmrx7GKAorI6Tcop+xbCbMj18wbCQFudujfGl9qrgucTuGQnSPl
- K1L8fusJ2y/PmqQDeIIEdOVo+elNkAa6l2Zs7kmJqMUckGBqzOVBtf7AqYHyifMJ
- +D5oSXqXowHbJtNSOYpPcgW3kQmUJTTvhsw08K5BVkG58D0sLkeKdKxKm/3taBvr
- 0wPbJ/ygCufFRjE8xq9S+9Xsdy3hDehsCUKORoZOODR/OAQNxTGwK63u17xtyWu7
- ZOl4MKD1mOMh4Wop26aAg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1718171161; x=1718257561; bh=m7roqio0aD7RxosC7iJZBlNkCBJw
- IMTgsJCVAhxEPvA=; b=dCZki5TUcIVoVmweN1gU0SQPWKNvJIatTYHNIlp9dMOS
- xWD6rv24Wd/Dr/VHH201PNfHjEvmUVMxjbFfgEchEywGLLRaF3gKfKuL1672v9G6
- ApVgOYD3/cFE2xxy6UhhEFOadzAa3iZcv8gfYzG9rQ7TR57QmNG3NxbUHwxyKY6F
- CfAT00Fd+HwyeSly0dvdnp9Xnr4PezsOTb6YFfurfzV7VrtUdnoGPVk29qk6WZk4
- kw8nN3CeTTh3eeL1dzYbhn80acmFXFe6iBdBM5MIlopGRhwE5hbMa9Rx6how8O4t
- 3czn5kjwYvKGUWqusO4SGPS65d2RWp5p4UxtDGszVw==
-X-ME-Sender: <xms:GDZpZuPftgsgNcq71fGB-cITjcgVdioaHF1gLXF7ei7fDWOS1hkEng>
- <xme:GDZpZs9hPdHLqqRBpuJtLlDsa1PvUyO6Zy_Yzvm4UxT5HxiMYS1q9Utkvtg0SibHQ
- RUGCEhbne5OjhWFyko>
-X-ME-Received: <xmr:GDZpZlT3NuEIYrganG-yA9ou9YsHgas1WNz7tGKOq2xdzx1HRjM-Eul9xsjM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedufedgleejucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghu
- shculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrth
- htvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffff
- jeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepih
- htshesihhrrhgvlhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:GDZpZusy8GTQwEeIjfXuaFWI5RrJh7q5f_ldi8excMUMTYXT-nqYiQ>
- <xmx:GDZpZmeU7L78e1_EHA0UQhanMNzYffH5xNKShvwULz5I_VPbUAZofA>
- <xmx:GDZpZi1W6nna-ImZhKMT7iaz1PtGnE1HlXvsOza9XNkJxGv8z3bxVA>
- <xmx:GDZpZq-wTFz8yFB6grv_mWAC7mNaGdBKWQ4TKj5mQMauuWh54_LTlg>
- <xmx:GTZpZsv9jn9RUAOG412ZDK9r-1HC4p1937n-f89D0JgnQmqk4U3LR_UU>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Jun 2024 01:45:59 -0400 (EDT)
-Date: Wed, 12 Jun 2024 07:45:53 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Minwoo Im <minwoo.im@samsung.com>
-Cc: Keith Busch <kbusch@kernel.org>, Jesper Devantier <foss@defmacro.it>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org, gost.dev@samsung.com
-Subject: Re: [PATCH v4 0/4] hw/nvme: FDP and SR-IOV enhancements
-Message-ID: <Zmk2EeoLq59BDEkR@cormorant.local>
-References: <CGME20240529125356epcas2p44725c6fa708097d0394eba22abafdc2b@epcas2p4.samsung.com>
- <20240529124234.1430707-1-minwoo.im@samsung.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sHGrV-0003wR-2P
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 01:49:33 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sHGrS-0005jf-FP
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 01:49:32 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-35f2266edd8so1439035f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 11 Jun 2024 22:49:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718171368; x=1718776168; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=FJEXnSYS89m3/YxvYHuwZzWVdIsED6LEvlvNI2qr600=;
+ b=tBmKD5xD8LwNlk3J/rC4BMOHCuNF3LIdY542Dtry7djNV2J29GPuWupHeAM1rlQEdU
+ epV52LKGYlawXcx91w2NH80P59H0FcgCBL1Je1tveaDOjRU1+dCeUJyJMQiXx+oNmM8/
+ dFfNAkWbOEu8HDMPyCD6wn4iApymRoUo8UtL8KEJ5GZGy/8VUWF8UsIodifGJNG6xQ33
+ +8Dv6jnuTH0FRzonht+3oMr8VN9bMAITnX08MYh1nAzFVgtwT26vfBFVaBYhU7rVCycB
+ 6IinuiaU7KLDHNXIe0GcdVhg1+cT0p+CiP9iiLMXlcOgl3Qtn0YM2ZaWQjSu/BqEOmDX
+ t0rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718171368; x=1718776168;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FJEXnSYS89m3/YxvYHuwZzWVdIsED6LEvlvNI2qr600=;
+ b=ZP35meUly/9l7Qqm9Tv69r7KB801lPrSC9wIi4qJAQrDAHhRbn2cTfZrpFosgqiiDu
+ uQ9rz7Qg8IGha4F4Ur+UcluzT1dPD0ZmJ/Qu7VrVLFN6/R/V706e4NVmVWvVXKCGQyd7
+ eMXiEv1k2E8ZbTo0PmVFSvKT8QZto+zECQSUopCYXPKUUDrt3+6hY8CyfEOzM3khjzp+
+ 67XRkGdALpNItuFA8yaTtkytXBNMP6I5ZIBRxmsbSeMhbcilEJFMp3oz/B+GsEGkvXiG
+ iavQsEhLkEVVnhxfoFZHru5b1pqGQ7SqIA3JUWeyAbG27c2SlcBkOSvzNyxXBnHPvtR2
+ STqA==
+X-Gm-Message-State: AOJu0YzcCEp+AxkGITjUqteTwvj0LGqUSOn8qkqrZ6hy6e4RlUwE7nhi
+ v/kJw+UxlIn4mQx4t18RExMC5gr68gOwTIYRn28LgzVaBZSFIDhVlIseeOqCX9mvzb5k/QU/M7F
+ GYNM=
+X-Google-Smtp-Source: AGHT+IEFZVMOlaCnBqgwVs/Wdq3kg1GgsHr6rJERVKFvYj/sLy2PRfunMcw4+7VR9IrHkeHLkfM8Rw==
+X-Received: by 2002:a5d:4112:0:b0:35f:48e:fe59 with SMTP id
+ ffacd0b85a97d-35fe89449fcmr419858f8f.66.1718171367600; 
+ Tue, 11 Jun 2024 22:49:27 -0700 (PDT)
+Received: from meli-email.org (adsl-33.109.242.225.tellas.gr. [109.242.225.33])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35f2f67b5b8sm2781625f8f.12.2024.06.11.22.49.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 11 Jun 2024 22:49:27 -0700 (PDT)
+Date: Wed, 12 Jun 2024 08:48:49 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Fr=?UTF-8?B?w6k=?= d=?UTF-8?B?w6k=?= ric Barrat <fbarrat@linux.ibm.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ "Daniel P . Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ C=?UTF-8?B?w6k=?= dric Le Goater <clg@kaod.org>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>
+Subject: Re: [PATCH 00/26] hw/ppc: Prefer HumanReadableText over Monitor
+User-Agent: meli 0.8.6
+References: <20240610062105.49848-1-philmd@linaro.org>
+In-Reply-To: <20240610062105.49848-1-philmd@linaro.org>
+Message-ID: <eydid.qr5cr60ecbze@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="LSpl/WBa3HQiUC7b"
-Content-Disposition: inline
-In-Reply-To: <20240529124234.1430707-1-minwoo.im@samsung.com>
-Received-SPF: pass client-ip=103.168.172.152; envelope-from=its@irrelevant.dk;
- helo=fhigh1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,104 +103,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 10 Jun 2024 09:20, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>Hi,
+>
+>This series remove uses of Monitor in hw/ppc/,
+>replacing by the more generic HumanReadableText.
+>Care is taken to keep the commit bisectables by
+>updating functions one by one, also easing review.
+>
+>For rationale see previous series from Daniel:
+>https://lore.kernel.org/qemu-devel/20211028155457.967291-1-berrange@redhat.com/
+>
+>Regards,
+>
+>Phil.
+>
+>Philippe Mathieu-Daudé (26):
+>  hw/ppc: Avoid using Monitor in pnv_phb3_msi_pic_print_info()
+>  hw/ppc: Avoid using Monitor in icp_pic_print_info()
+>  hw/ppc: Avoid using Monitor in xive_tctx_pic_print_info()
+>  hw/ppc: Avoid using Monitor in ics_pic_print_info()
+>  hw/ppc: Avoid using Monitor in PnvChipClass::intc_print_info()
+>  hw/ppc: Avoid using Monitor in xive_end_queue_pic_print_info()
+>  hw/ppc: Avoid using Monitor in spapr_xive_end_pic_print_info()
+>  hw/ppc: Avoid using Monitor in spapr_xive_pic_print_info()
+>  hw/ppc: Avoid using Monitor in xive_source_pic_print_info()
+>  hw/ppc: Avoid using Monitor in pnv_phb4_pic_print_info()
+>  hw/ppc: Avoid using Monitor in xive_eas_pic_print_info()
+>  hw/ppc: Avoid using Monitor in xive_end_pic_print_info()
+>  hw/ppc: Avoid using Monitor in xive_end_eas_pic_print_info()
+>  hw/ppc: Avoid using Monitor in xive_nvt_pic_print_info()
+>  hw/ppc: Avoid using Monitor in pnv_xive_pic_print_info()
+>  hw/ppc: Avoid using Monitor in pnv_psi_pic_print_info()
+>  hw/ppc: Avoid using Monitor in xive2_eas_pic_print_info()
+>  hw/ppc: Avoid using Monitor in xive2_end_eas_pic_print_info()
+>  hw/ppc: Avoid using Monitor in xive2_end_queue_pic_print_info()
+>  hw/ppc: Avoid using Monitor in xive2_end_pic_print_info()
+>  hw/ppc: Avoid using Monitor in xive2_nvp_pic_print_info()
+>  hw/ppc: Avoid using Monitor in pnv_xive2_pic_print_info()
+>  hw/ppc: Avoid using Monitor in
+>    SpaprInterruptControllerClass::print_info()
+>  hw/ppc: Avoid using Monitor in spapr_irq_print_info()
+>  hw/ppc: Avoid using Monitor in pnv_chip_power9_pic_print_info_child()
+>  hw/ppc: Avoid using Monitor in pic_print_info()
+>
+> include/hw/pci-host/pnv_phb3.h |   2 +-
+> include/hw/pci-host/pnv_phb4.h |   2 +-
+> include/hw/ppc/pnv_chip.h      |   4 +-
+> include/hw/ppc/pnv_psi.h       |   2 +-
+> include/hw/ppc/pnv_xive.h      |   4 +-
+> include/hw/ppc/spapr_irq.h     |   4 +-
+> include/hw/ppc/xics.h          |   4 +-
+> include/hw/ppc/xive.h          |   4 +-
+> include/hw/ppc/xive2_regs.h    |   8 +--
+> include/hw/ppc/xive_regs.h     |   8 +--
+> hw/intc/pnv_xive.c             |  38 ++++++------
+> hw/intc/pnv_xive2.c            |  48 +++++++--------
+> hw/intc/spapr_xive.c           |  41 ++++++-------
+> hw/intc/xics.c                 |  25 ++++----
+> hw/intc/xics_spapr.c           |   7 +--
+> hw/intc/xive.c                 | 108 ++++++++++++++++-----------------
+> hw/intc/xive2.c                |  87 +++++++++++++-------------
+> hw/pci-host/pnv_phb3_msi.c     |  21 +++----
+> hw/pci-host/pnv_phb4.c         |  17 +++---
+> hw/ppc/pnv.c                   |  52 ++++++++--------
+> hw/ppc/pnv_psi.c               |   9 ++-
+> hw/ppc/spapr.c                 |  11 +++-
+> hw/ppc/spapr_irq.c             |   4 +-
+> 23 files changed, 256 insertions(+), 254 deletions(-)
+>
+>-- 
+>2.41.0
 
---LSpl/WBa3HQiUC7b
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+For the series:
 
-On May 29 21:42, Minwoo Im wrote:
-> Hello,
->=20
-> This is v4 patchset to increase number of virtual functions for NVMe SR-I=
-OV.
-> Please consider the following change notes per version.
->=20
-> This patchset has been tested with the following simple script more than
-> 127 VFs.
->=20
-> 	-device nvme-subsys,id=3Dsubsys0 \
-> 	-device ioh3420,id=3Drp2,multifunction=3Don,chassis=3D12 \
-> 	-device nvme,serial=3Dfoo,id=3Dnvme0,bus=3Drp2,subsys=3Dsubsys0,mdts=3D9=
-,msix_qsize=3D130,max_ioqpairs=3D260,sriov_max_vfs=3D129,sriov_vq_flexible=
-=3D258,sriov_vi_flexible=3D129 \
->=20
-> 	$ cat nvme-enable-vfs.sh
-> 	#!/bin/bash
->=20
-> 	nr_vfs=3D129
->=20
-> 	for (( i=3D1; i<=3D$nr_vfs; i++ ))
-> 	do
-> 		nvme virt-mgmt /dev/nvme0 -c $i -r 0 -a 8 -n 2
-> 		nvme virt-mgmt /dev/nvme0 -c $i -r 1 -a 8 -n 1
-> 	done
->=20
-> 	bdf=3D"0000:01:00.0"
-> 	sysfs=3D"/sys/bus/pci/devices/$bdf"
-> 	nvme=3D"/sys/bus/pci/drivers/nvme"
->=20
-> 	echo 0 > $sysfs/sriov_drivers_autoprobe
-> 	echo $nr_vfs > $sysfs/sriov_numvfs
->=20
-> 	for (( i=3D1; i<=3D$nr_vfs; i++ ))
-> 	do
-> 		nvme virt-mgmt /dev/nvme0 -c $i -a 9
->=20
-> 		echo "nvme" > $sysfs/virtfn$(($i-1))/driver_override
-> 		bdf=3D"$(basename $(readlink $sysfs/virtfn$(($i-1))))"
-> 		echo $bdf > $nvme/bind
-> 	done
->=20
-> Thanks,
->=20
-> v4:
->  - Rebased on the latest master.
->  - Update n->params.sriov_max_vfs to uint16_t as per spec.
->=20
-> v3:
->  - Replace [3/4] patch with one allocating a dyanmic array of secondary
->    controller list rather than a static array with a fixed size of
->    maximum number of VF to support (Suggested by Klaus).
-> v2:                                                    =20
->  - Added [2/4] commit to fix crash due to entry overflow
->=20
-> Minwoo Im (4):
->   hw/nvme: add Identify Endurance Group List
->   hw/nvme: separate identify data for sec. ctrl list
->   hw/nvme: Allocate sec-ctrl-list as a dynamic array
->   hw/nvme: Expand VI/VQ resource to uint32
->=20
->  hw/nvme/ctrl.c       | 59 +++++++++++++++++++++++++++-----------------
->  hw/nvme/nvme.h       | 19 +++++++-------
->  hw/nvme/subsys.c     | 10 +++++---
->  include/block/nvme.h |  1 +
->  4 files changed, 54 insertions(+), 35 deletions(-)
->=20
-> --=20
-> 2.34.1
->=20
-
-Looks good Minwoo!
-
-Grabbing for nvme-next.
-
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-
---LSpl/WBa3HQiUC7b
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmZpNhEACgkQTeGvMW1P
-DekYmQf/cwCfZYVKJsW+MxZfCMiv8gfOj6W1ZegcSVCn8duR3TKABr7w2swm/sxH
-tWl54wqrUxcRDld7nQTe/Lvhxcf1ZZX36x91tdq3nbo9p80mVMHP1fW0dyGfkB5q
-BByVUjd7za+UtCengQGbinJFznsktSRALYRuCnYbIj/+ZAt1yly7l6EHcIXgLxPF
-DdRjV58POvEBraFFHrYduzh808nVHMMirIkjpn3KHRAyietFE3fCGniwD1JH6vDN
-zFfAhzAaLf7mO5NrNlfUigSypSvYGCPXRm3U1YvI+sIUWLHuLi4eH4QTrAjX01Im
-4qdzddZYKtebWUiZhDkc3S7osL84eg==
-=c+ZQ
------END PGP SIGNATURE-----
-
---LSpl/WBa3HQiUC7b--
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
