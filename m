@@ -4,108 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1252BC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 08:18:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B39C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 08:26:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHJ9V-0005nL-Fg; Wed, 12 Jun 2024 04:16:17 -0400
+	id 1sHJIk-0006iw-Js; Wed, 12 Jun 2024 04:25:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sHJ9U-0005eA-4i
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:16:16 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sHJIi-0006hi-OG
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:25:48 -0400
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sHJ9P-0006qm-Ar
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:16:15 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1f70131063cso16961535ad.2
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 01:16:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sHJIg-0000aT-S1
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:25:48 -0400
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-441187684e3so16219941cf.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 01:25:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1718180169; x=1718784969; darn=nongnu.org;
- h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
- :cc:subject:date:message-id:reply-to;
- bh=7Zs56IfQW4V8sqUEW1KobOHNpim94d18CajV+uj3sek=;
- b=iU64JaUXOpMTAeRp3dYWTrEaWAPX9MxC/5KwT9aQFYKYeUyR0x9FjvYhH+N/tbXcFC
- KJjBHzIR8c1YGSDbrVsx/zobqZhoVQQdkWfNYAiRkxeZRwqALZduk4GESaQM5BkCVwd8
- nkXzO567aml6DK9B3ABS8i+wRtjRD6gs1NO/GORqfwPwKDwifwvy17MBwPPFnDt4E7P/
- FyZ2RvmTSLnm2QS1y9ncXoQJAGxX67IutFKATEP6Xoi3+Gc1Fhd7U2RDsp8IHcjbIE5H
- kWq5LFIaor+lHNJTQbHqobHWXIIrGf01HhmLR4jFeb94WdzrKLOLjmqn1zHIpn4q+Hu1
- wbFQ==
+ d=gmail.com; s=20230601; t=1718180745; x=1718785545; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=hyu6ielKMarcsWUOwFStM4bXwbsTyWxuDlTiRdxVleY=;
+ b=kQ4zZVycpxAcoApIPsJSt3mvoqYUCYC22Ks5zSA4Fbzrp4sGwVkS6Q4h511sUP/IiC
+ x3kNhmK/pd21mFGK7XGmDBlqQTUCAfox2FERKG6u9gX3gE5rGi95Z9CNRsZLVxjGGWet
+ mmFojEGFtRTpeTNmu8z3ACphvd3YY8V3MzTPBILPo5mb/QJ85aFbv+FgOlkFsiQ1v/G2
+ 4SX3aLSqp1+N7u6JkUMpKYr+mLRfGVP+fEcDcneoadMnEG/IDLTknPXXSwO1MzSRBR0q
+ IqCBNc6toWtajEmlGOvT+Ac8Y+Y/MnpHXhcAgR0yoP4NDHnFj9B36rrLAd++LIAoDq3U
+ OLFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718180169; x=1718784969;
- h=references:in-reply-to:message-id:date:subject:cc:to:from
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7Zs56IfQW4V8sqUEW1KobOHNpim94d18CajV+uj3sek=;
- b=JczqtIUIrvhsjqDR4L7u5r0MXPDh0HzK+ciiGflFMIDa2mKmWYwUpI/InwhJZFnqnU
- EO3zMZ7OZRolCbdV0xr+pA2liVmJF/Wy8MgRNxeXc8jPJCmwhqtW+euOPpaaH1j5tFpW
- UvWhU0QPOT+lxFan2XjLw7QiFxJjYgcDSiWHEH9GHR9TVPT9zgtEJpka1pWlZDq1utwB
- yxEAx+YgjwEka1zV6TohxmXdJEy+AEOYgc/i0NdtzInuFn20HoRwYLvTEuCYz10Dwnke
- uofXaBFxXmTFYL+FoXghT3MNIABRWV5cRYd0UET6IDqPfd6h/brFInw28WoGvqQkbwRQ
- rgWQ==
-X-Gm-Message-State: AOJu0Ywqb0qA/zecvr1Z4/bqC0Odq6Do3smg5LZK4zUnxbs6Tf1LKkKh
- xY0wQhddn6AnKr1pfBIDv1jpsjbbNutnUkieQtynd3WnwFpyY6kmAIvE+fv+MNgSMwtF04inuKT
- US69mz02fnDXi6zaX2ZKe2rCWk1bqDGn72bKojrmBgPX1uCU8vlXjiHWq2JU769dYPcdoaJa4kp
- PkpF+Ml4FtnY6P3J0jGzgQxMDWECmLAGTd/LuFUKNirw==
-X-Google-Smtp-Source: AGHT+IFZI0uD97KN8S3AD0WaGGdqs9bMHQ35x0UNs/HsiXiPw2iJARhoCvv/DnkcypVwlwTRn0BWFQ==
-X-Received: by 2002:a17:903:2283:b0:1f7:187f:cb5a with SMTP id
- d9443c01a7336-1f83b565eb1mr12729405ad.11.1718180168578; 
- Wed, 12 Jun 2024 01:16:08 -0700 (PDT)
-Received: from hsinchu26.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f8393e8e53sm11363875ad.16.2024.06.12.01.16.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Jun 2024 01:16:08 -0700 (PDT)
-From: Jim Shu <jim.shu@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
+ d=1e100.net; s=20230601; t=1718180745; x=1718785545;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hyu6ielKMarcsWUOwFStM4bXwbsTyWxuDlTiRdxVleY=;
+ b=A1q8NEIF4hy86JgEYf+rZ06ln3IbSe/W/ISv3Fe8xtjTTgBOxAm7jp3PL+Kw4m3gAP
+ Zt1Bn+m9TxcxSjES6K9Tdk7g7FrLbZlvKsE+nJxKUSkPDIUJzfJfKYh2QMr2h5wtaGfx
+ QrUWxD2tuyfEprXWD9MryvUPC8VCePH6CSi17+V/MNULbgXqJxcHVuZy5c0h4f2Yxp6M
+ fOqqh/GB0NHspahJdLD9GNep7bmu8OSWNmmJSlvxVzjs1NRUvyahZbL+c2k6WvurUrmy
+ MJcqyCSwPNBWEP96H0kEvf07wtl+xz+yhOsC0T0nll87/5w9F2bO3F1X42Mmolqbkg+l
+ G7dA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWXfnla23o9rrWyAlKn8IXCXOrSV8kYgSrrsYAaWIih2TeYeVJyKU2372w0ubVnXLM1MOiS+GsgQx3XDsHEoaucoDg6cb4=
+X-Gm-Message-State: AOJu0YzBkS/P+tAx25BUey+ZXkHGgDgxybVLMjCWlc1jOK1w/PzUGEV+
+ vCLdp7SUUXX5MsxwS7VcVahi521Hj6/1Qk8Bx+qkUs5zXan9ePzEQxnatzqlaN4RmR3je6UCVkG
+ RuWTgu3tOUElPpkKJ9YG/ZPhZsAc=
+X-Google-Smtp-Source: AGHT+IHD5lcDcj3mCnnOqmKILq8fTpBkKfE6o4rpnx+hEtH4T4KVK9gYa9T2sFoO5OIbJz8+VdGdwAurpvsV3d1IJJM=
+X-Received: by 2002:a05:622a:181e:b0:441:592c:e77c with SMTP id
+ d75a77b69052e-4415abd56dbmr8770111cf.24.1718180745438; Wed, 12 Jun 2024
+ 01:25:45 -0700 (PDT)
+MIME-Version: 1.0
+References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
+ <0933b669c8e47e1a78d21e56881e0933ef910461.1718040303.git.manos.pitsidianakis@linaro.org>
+ <20240610192517.GA350256@fedora>
+ <CAAjaMXZ9bBtNyrjhUy=ypFeVYuo7ctHbaro6VCKins7-3M9e=g@mail.gmail.com>
+ <CAJSP0QVvU2Vta6gcdBbDiV8a5wQf64HbYrJj_UOduhQynLyzNg@mail.gmail.com>
+ <ZmlWbsG9edD4GgSZ@redhat.com>
+In-Reply-To: <ZmlWbsG9edD4GgSZ@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 12 Jun 2024 12:25:33 +0400
+Message-ID: <CAJ+F1CL8RTVKLCcDwyeDpYc5joYkwmz98dNnpmoB2VxSyWv0UA@mail.gmail.com>
+Subject: Re: [RFC PATCH v1 1/6] build-sys: Add rust feature option
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, 
+ qemu-devel@nongnu.org, Mads Ynddal <mads@ynddal.dk>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
  Peter Maydell <peter.maydell@linaro.org>,
- Michael Rolnik <mrolnik@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Max Filippov <jcmvbkbc@gmail.com>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs),
- qemu-ppc@nongnu.org (open list:PowerPC TCG CPUs),
- qemu-s390x@nongnu.org (open list:S390 TCG CPUs),
- Jim Shu <jim.shu@sifive.com>
-Subject: [RFC PATCH 16/16] hw/riscv: virt: Add WorldGuard support
-Date: Wed, 12 Jun 2024 16:14:16 +0800
-Message-Id: <20240612081416.29704-17-jim.shu@sifive.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240612081416.29704-1-jim.shu@sifive.com>
-References: <20240612081416.29704-1-jim.shu@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=jim.shu@sifive.com; helo=mail-pl1-x630.google.com
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, John Snow <jsnow@redhat.com>, 
+ Cleber Rosa <crosa@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000fdf05c061aad20e9"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,369 +105,260 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Add 'wg=on' option to enable RISC-V WorldGuard
-* Add wgChecker to protect several resources:
-  DRAM, FLASH, UART.
+--000000000000fdf05c061aad20e9
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
----
- docs/system/riscv/virt.rst |  10 +++
- hw/riscv/Kconfig           |   1 +
- hw/riscv/virt.c            | 163 ++++++++++++++++++++++++++++++++++++-
- include/hw/riscv/virt.h    |  17 +++-
- 4 files changed, 186 insertions(+), 5 deletions(-)
+Hi
 
-diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
-index 9a06f95a34..2d2992dc34 100644
---- a/docs/system/riscv/virt.rst
-+++ b/docs/system/riscv/virt.rst
-@@ -116,6 +116,16 @@ The following machine-specific options are supported:
-   having AIA IMSIC (i.e. "aia=aplic-imsic" selected). When not specified,
-   the default number of per-HART VS-level AIA IMSIC pages is 0.
- 
-+- wg=[on|off]
-+
-+  When this option is "on", RISC-V WorldGuard will be enabled in the system
-+  to provide the isolation of multiple worlds. RISC-V HARTS will enable WG
-+  extensions to have WID in memory transaction. wgCheckers in front of RAMs
-+  and device MMIO will be enabled to provide the access control of resources
-+  if the transaction contains WID. When not specified, this option is assumed
-+  to be "off".
-+  This option is restricted to the TCG accelerator.
-+
- Running Linux kernel
- --------------------
- 
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index a2030e3a6f..7804fdbb7a 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -56,6 +56,7 @@ config RISCV_VIRT
-     select PLATFORM_BUS
-     select ACPI
-     select ACPI_PCI
-+    select RISCV_WORLDGUARD
- 
- config SHAKTI_C
-     bool
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 4fdb660525..eed49ebd02 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -55,6 +55,7 @@
- #include "hw/acpi/aml-build.h"
- #include "qapi/qapi-visit-common.h"
- #include "hw/virtio/virtio-iommu.h"
-+#include "hw/misc/riscv_worldguard.h"
- 
- /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
- static bool virt_use_kvm_aia(RISCVVirtState *s)
-@@ -76,6 +77,9 @@ static const MemMapEntry virt_memmap[] = {
-     [VIRT_ACLINT_SSWI] =  {  0x2F00000,        0x4000 },
-     [VIRT_PCIE_PIO] =     {  0x3000000,       0x10000 },
-     [VIRT_PLATFORM_BUS] = {  0x4000000,     0x2000000 },
-+    [VIRT_WGC_DRAM] =     {  0x6000000,        0x1000 },
-+    [VIRT_WGC_FLASH] =    {  0x6001000,        0x1000 },
-+    [VIRT_WGC_UART] =     {  0x6002000,        0x1000 },
-     [VIRT_PLIC] =         {  0xc000000, VIRT_PLIC_SIZE(VIRT_CPUS_MAX * 2) },
-     [VIRT_APLIC_M] =      {  0xc000000, APLIC_SIZE(VIRT_CPUS_MAX) },
-     [VIRT_APLIC_S] =      {  0xd000000, APLIC_SIZE(VIRT_CPUS_MAX) },
-@@ -101,6 +105,38 @@ static MemMapEntry virt_high_pcie_memmap;
- 
- #define VIRT_FLASH_SECTOR_SIZE (256 * KiB)
- 
-+/* wgChecker helpers */
-+typedef struct WGCInfo {
-+    int memmap_idx;
-+    uint32_t irq_num;
-+    uint32_t slot_count;
-+
-+    int num_of_child;
-+    MemoryRegion *c_region[WGC_NUM_REGIONS];
-+    uint64_t c_offset[WGC_NUM_REGIONS];
-+} WGCInfo;
-+
-+enum {
-+    WGC_DRAM,
-+    WGC_FLASH,
-+    WGC_UART,
-+    WGC_NUM,
-+};
-+
-+static WGCInfo virt_wgcinfo[] = {
-+    [WGC_DRAM]  = { VIRT_WGC_DRAM, WGC_DRAM_IRQ, 16 },
-+    [WGC_FLASH] = { VIRT_WGC_FLASH, WGC_FLASH_IRQ, 16 },
-+    [WGC_UART]  = { VIRT_WGC_UART, WGC_UART_IRQ, 1 },
-+};
-+
-+static void wgc_append_child(WGCInfo *info, MemoryRegion *region,
-+                             uint64_t offset)
-+{
-+    info->c_region[info->num_of_child] = region;
-+    info->c_offset[info->num_of_child] = offset;
-+    info->num_of_child += 1;
-+}
-+
- static PFlashCFI01 *virt_flash_create1(RISCVVirtState *s,
-                                        const char *name,
-                                        const char *alias_prop_name)
-@@ -151,7 +187,8 @@ static void virt_flash_map1(PFlashCFI01 *flash,
- }
- 
- static void virt_flash_map(RISCVVirtState *s,
--                           MemoryRegion *sysmem)
-+                           MemoryRegion *sysmem,
-+                           WGCInfo *info)
- {
-     hwaddr flashsize = virt_memmap[VIRT_FLASH].size / 2;
-     hwaddr flashbase = virt_memmap[VIRT_FLASH].base;
-@@ -160,6 +197,15 @@ static void virt_flash_map(RISCVVirtState *s,
-                     sysmem);
-     virt_flash_map1(s->flash[1], flashbase + flashsize, flashsize,
-                     sysmem);
-+
-+    if (info) {
-+        wgc_append_child(info,
-+                         sysbus_mmio_get_region(SYS_BUS_DEVICE(s->flash[0]), 0),
-+                         flashbase);
-+        wgc_append_child(info,
-+                         sysbus_mmio_get_region(SYS_BUS_DEVICE(s->flash[1]), 0),
-+                         flashbase + flashsize);
-+    }
- }
- 
- static void create_pcie_irq_map(RISCVVirtState *s, void *fdt, char *nodename,
-@@ -1303,6 +1349,71 @@ static void virt_build_smbios(RISCVVirtState *s)
-     }
- }
- 
-+static DeviceState *create_wgc(WGCInfo *info, DeviceState *irqchip)
-+{
-+    MemoryRegion *system_memory = get_system_memory();
-+    DeviceState *wgc;
-+    MemoryRegion *upstream_mr, *downstream_mr;
-+    qemu_irq irq = qdev_get_gpio_in(irqchip, info->irq_num);
-+    hwaddr base, size;
-+
-+    /* Unmap downstream_mr from system_memory if it is already mapped. */
-+    for (int i=0; i<info->num_of_child; i++) {
-+        downstream_mr = info->c_region[i];
-+
-+        g_assert(downstream_mr);
-+        if (downstream_mr->container == system_memory) {
-+            memory_region_del_subregion(system_memory, downstream_mr);
-+        }
-+
-+        /*
-+         * Clear the offset of downstream_mr, so we could correctly do
-+         * address_space_init() to it in wgchecker.
-+         */
-+        memory_region_set_address(downstream_mr, 0);
-+    }
-+
-+    base = virt_memmap[info->memmap_idx].base;
-+    size = virt_memmap[info->memmap_idx].size;
-+
-+    wgc = riscv_wgchecker_create(
-+        base, size, irq, info->slot_count, 0, 0,
-+        info->num_of_child, info->c_region, info->c_offset, 0, NULL);
-+
-+    /* Map upstream_mr to system_memory */
-+    for (int i=0; i<info->num_of_child; i++) {
-+        upstream_mr = sysbus_mmio_get_region(SYS_BUS_DEVICE(wgc), i+1);
-+        g_assert(upstream_mr);
-+        memory_region_add_subregion(system_memory, info->c_offset[i], upstream_mr);
-+    }
-+
-+    return wgc;
-+}
-+
-+static void virt_create_worldguard(WGCInfo *wgcinfo, int wgc_num,
-+                                   DeviceState *irqchip)
-+{
-+    CPUState *cpu;
-+
-+    /* Global WG config */
-+    riscv_worldguard_create(VIRT_WG_NWORLDS,
-+                            VIRT_WG_TRUSTEDWID,
-+                            VIRT_WG_HWBYPASS,
-+                            VIRT_WG_TZCOMPAT);
-+
-+    /* Enable WG extension of each CPU */
-+    CPU_FOREACH(cpu) {
-+        CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
-+
-+        riscv_worldguard_apply_cpu(env->mhartid);
-+    }
-+
-+    /* Create all wgChecker devices */
-+    for (int i=0; i<wgc_num; i++) {
-+        create_wgc(&wgcinfo[i], DEVICE(irqchip));
-+    }
-+}
-+
- static void virt_machine_done(Notifier *notifier, void *data)
- {
-     RISCVVirtState *s = container_of(notifier, RISCVVirtState,
-@@ -1401,10 +1512,12 @@ static void virt_machine_done(Notifier *notifier, void *data)
- static void virt_machine_init(MachineState *machine)
- {
-     const MemMapEntry *memmap = virt_memmap;
-+    WGCInfo *wgcinfo = virt_wgcinfo;
-     RISCVVirtState *s = RISCV_VIRT_MACHINE(machine);
-     MemoryRegion *system_memory = get_system_memory();
-     MemoryRegion *mask_rom = g_new(MemoryRegion, 1);
-     DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
-+    SerialMM *uart;
-     int i, base_hartid, hart_count;
-     int socket_count = riscv_socket_count(machine);
- 
-@@ -1420,6 +1533,11 @@ static void virt_machine_init(MachineState *machine)
-         exit(1);
-     }
- 
-+    if (!tcg_enabled() && s->have_wg) {
-+        error_report("'wg' is only available with TCG acceleration");
-+        exit(1);
-+    }
-+
-     /* Initialize sockets */
-     mmio_irqchip = virtio_irqchip = pcie_irqchip = NULL;
-     for (i = 0; i < socket_count; i++) {
-@@ -1547,6 +1665,10 @@ static void virt_machine_init(MachineState *machine)
-     memory_region_add_subregion(system_memory, memmap[VIRT_DRAM].base,
-         machine->ram);
- 
-+    if (tcg_enabled() && s->have_wg) {
-+        wgc_append_child(&wgcinfo[WGC_DRAM], machine->ram, memmap[VIRT_DRAM].base);
-+    }
-+
-     /* boot rom */
-     memory_region_init_rom(mask_rom, NULL, "riscv_virt_board.mrom",
-                            memmap[VIRT_MROM].size, &error_fatal);
-@@ -1574,10 +1696,16 @@ static void virt_machine_init(MachineState *machine)
- 
-     create_platform_bus(s, mmio_irqchip);
- 
--    serial_mm_init(system_memory, memmap[VIRT_UART0].base,
-+    uart = serial_mm_init(system_memory, memmap[VIRT_UART0].base,
-         0, qdev_get_gpio_in(mmio_irqchip, UART0_IRQ), 399193,
-         serial_hd(0), DEVICE_LITTLE_ENDIAN);
- 
-+    if (tcg_enabled() && s->have_wg) {
-+        wgc_append_child(&wgcinfo[WGC_UART],
-+                         sysbus_mmio_get_region(SYS_BUS_DEVICE(uart), 0),
-+                         memmap[VIRT_UART0].base);
-+    }
-+
-     sysbus_create_simple("goldfish_rtc", memmap[VIRT_RTC].base,
-         qdev_get_gpio_in(mmio_irqchip, RTC_IRQ));
- 
-@@ -1586,7 +1714,16 @@ static void virt_machine_init(MachineState *machine)
-         pflash_cfi01_legacy_drive(s->flash[i],
-                                   drive_get(IF_PFLASH, 0, i));
-     }
--    virt_flash_map(s, system_memory);
-+
-+    if (tcg_enabled() && s->have_wg) {
-+        virt_flash_map(s, system_memory, &wgcinfo[WGC_FLASH]);
-+    } else {
-+        virt_flash_map(s, system_memory, NULL);
-+    }
-+
-+    if (tcg_enabled() && s->have_wg) {
-+        virt_create_worldguard(wgcinfo, WGC_NUM, mmio_irqchip);
-+    }
- 
-     /* load/create device tree */
-     if (machine->dtb) {
-@@ -1614,6 +1751,20 @@ static void virt_machine_instance_init(Object *obj)
-     s->acpi = ON_OFF_AUTO_AUTO;
- }
- 
-+static bool virt_get_wg(Object *obj, Error **errp)
-+{
-+    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
-+
-+    return s->have_wg;
-+}
-+
-+static void virt_set_wg(Object *obj, bool value, Error **errp)
-+{
-+    RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
-+
-+    s->have_wg = value;
-+}
-+
- static char *virt_get_aia_guests(Object *obj, Error **errp)
- {
-     RISCVVirtState *s = RISCV_VIRT_MACHINE(obj);
-@@ -1794,6 +1945,12 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
-                               NULL, NULL);
-     object_class_property_set_description(oc, "acpi",
-                                           "Enable ACPI");
-+
-+    object_class_property_add_bool(oc, "wg", virt_get_wg,
-+                                   virt_set_wg);
-+    object_class_property_set_description(oc, "wg",
-+                                              "Set on/off to enable/disable the "
-+                                              "RISC-V WorldGuard.");
- }
- 
- static const TypeInfo virt_machine_typeinfo = {
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index 3db839160f..4d78702daf 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -57,6 +57,7 @@ struct RISCVVirtState {
-     bool have_aclint;
-     RISCVVirtAIAType aia_type;
-     int aia_guests;
-+    bool have_wg;
-     char *oem_id;
-     char *oem_table_id;
-     OnOffAuto acpi;
-@@ -84,12 +85,18 @@ enum {
-     VIRT_PCIE_MMIO,
-     VIRT_PCIE_PIO,
-     VIRT_PLATFORM_BUS,
--    VIRT_PCIE_ECAM
-+    VIRT_PCIE_ECAM,
-+    VIRT_WGC_DRAM,
-+    VIRT_WGC_FLASH,
-+    VIRT_WGC_UART
- };
- 
- enum {
-     UART0_IRQ = 10,
-     RTC_IRQ = 11,
-+    WGC_DRAM_IRQ = 15,
-+    WGC_FLASH_IRQ = 16,
-+    WGC_UART_IRQ = 17,
-     VIRTIO_IRQ = 1, /* 1 to 8 */
-     VIRTIO_COUNT = 8,
-     PCIE_IRQ = 0x20, /* 32 to 35 */
-@@ -99,7 +106,7 @@ enum {
- #define VIRT_PLATFORM_BUS_NUM_IRQS 32
- 
- #define VIRT_IRQCHIP_NUM_MSIS 255
--#define VIRT_IRQCHIP_NUM_SOURCES 96
-+#define VIRT_IRQCHIP_NUM_SOURCES 128
- #define VIRT_IRQCHIP_NUM_PRIO_BITS 3
- #define VIRT_IRQCHIP_MAX_GUESTS_BITS 3
- #define VIRT_IRQCHIP_MAX_GUESTS ((1U << VIRT_IRQCHIP_MAX_GUESTS_BITS) - 1U)
-@@ -153,4 +160,10 @@ uint32_t imsic_num_bits(uint32_t count);
- #error "Can't accommodate all IMSIC groups in address space"
- #endif
- 
-+/* WorldGuard */
-+#define VIRT_WG_NWORLDS         4
-+#define VIRT_WG_TRUSTEDWID      3
-+#define VIRT_WG_HWBYPASS        true
-+#define VIRT_WG_TZCOMPAT        false
-+
- #endif
--- 
-2.17.1
+On Wed, Jun 12, 2024 at 12:05=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com>
+wrote:
 
+> On Tue, Jun 11, 2024 at 02:25:39PM -0400, Stefan Hajnoczi wrote:
+> > On Tue, 11 Jun 2024 at 13:54, Manos Pitsidianakis
+> > <manos.pitsidianakis@linaro.org> wrote:
+> > >
+> > > On Tue, 11 Jun 2024 at 17:05, Stefan Hajnoczi <stefanha@redhat.com>
+> wrote:
+> > > >
+> > > > On Mon, Jun 10, 2024 at 09:22:36PM +0300, Manos Pitsidianakis wrote=
+:
+> > > > > Add options for Rust in meson_options.txt, meson.build, configure
+> to
+> > > > > prepare for adding Rust code in the followup commits.
+> > > > >
+> > > > > `rust` is a reserved meson name, so we have to use an alternative=
+.
+> > > > > `with_rust` was chosen.
+> > > > >
+> > > > > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.or=
+g
+> >
+> > > > > ---
+> > > > > The cargo wrapper script hardcodes some rust target triples. This
+> is
+> > > > > just temporary.
+> > > > > ---
+> > > > >  .gitignore               |   2 +
+> > > > >  configure                |  12 +++
+> > > > >  meson.build              |  11 ++
+> > > > >  meson_options.txt        |   4 +
+> > > > >  scripts/cargo_wrapper.py | 211
+> +++++++++++++++++++++++++++++++++++++++
+> > > > >  5 files changed, 240 insertions(+)
+> > > > >  create mode 100644 scripts/cargo_wrapper.py
+>
+> > > > > diff --git a/configure b/configure
+> > > > > index 38ee257701..c195630771 100755
+> > > > > --- a/configure
+> > > > > +++ b/configure
+>
+> snip
+>
+> > > > > +  test "$with_rust_target_triple" !=3D "" && meson_option_add
+> "-Dwith_rust_target_triple=3D$with_rust_target_triple"
+>
+> So the --rust-target-triple is only needed when cross compiling,
+> but this is not the way we normally handle passing cross compiler
+> info to meson. Instead we create a meson cross compiler options
+> file containing the target info.
+>
+> eg for ./configure --cross-prefix=3Dx86_64-w64-mingw32-
+>
+> we end up creating:
+>
+> $ cat build/config-meson.cross
+> # Automatically generated by configure - do not modify
+> [properties]
+> [built-in options]
+> c_args =3D []
+> cpp_args =3D []
+> objc_args =3D []
+> c_link_args =3D []
+> cpp_link_args =3D []
+> # environment defaults, can still be overridden on
+> # the command line
+> werror =3D true
+> [project options]
+>
+> [binaries]
+> c =3D ['x86_64-w64-mingw32-gcc','-m64']
+> cpp =3D ['x86_64-w64-mingw32-g++','-m64']
+> objc =3D ['x86_64-w64-mingw32-clang','-m64']
+> ar =3D ['x86_64-w64-mingw32-ar']
+> dlltool =3D ['x86_64-w64-mingw32-dlltool']
+> nm =3D ['x86_64-w64-mingw32-nm']
+> pkgconfig =3D ['x86_64-w64-mingw32-pkg-config']
+> pkg-config =3D ['x86_64-w64-mingw32-pkg-config']
+> ranlib =3D ['x86_64-w64-mingw32-ranlib']
+> strip =3D ['x86_64-w64-mingw32-strip']
+> widl =3D ['x86_64-w64-mingw32-widl']
+> windres =3D ['x86_64-w64-mingw32-windres']
+> windmc =3D ['x86_64-w64-mingw32-windmc']
+> [host_machine]
+> system =3D 'windows'
+> cpu_family =3D 'x86_64'
+> cpu =3D 'x86_64'
+> endian =3D 'little'
+>
+>
+> Should we not be passing the rust compiler target through
+> this meson options file by setting something like this
+>
+>   rust =3D ['rustc', '--target', '$target_target_triple']
+>
+
+Agree
+
+
+>
+>
+> Also I don't think we should be requiring --rust-target-triple
+> to be passed by the user. For all the combinations we know &
+> test, we should have configure "do the right thing" and set a
+> suitable rust target triple based on the --cross-prefix argument
+> that is given, so there is no extra burden on users cross
+> compiling. Users should then only use --rust-target-triple
+> if our default logic is wrong for some reason.
+>
+>
+Then I think we would need to maintain some mapping between GNU
+target-triplets and Rust. It would be convenient to allow users to
+set/overwrite it though.
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
+
+--000000000000fdf05c061aad20e9
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_quote=
+"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jun 12, 2024 at 12:05=E2=80=
+=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">be=
+rrange@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
+adding-left:1ex">On Tue, Jun 11, 2024 at 02:25:39PM -0400, Stefan Hajnoczi =
+wrote:<br>
+&gt; On Tue, 11 Jun 2024 at 13:54, Manos Pitsidianakis<br>
+&gt; &lt;<a href=3D"mailto:manos.pitsidianakis@linaro.org" target=3D"_blank=
+">manos.pitsidianakis@linaro.org</a>&gt; wrote:<br>
+&gt; &gt;<br>
+&gt; &gt; On Tue, 11 Jun 2024 at 17:05, Stefan Hajnoczi &lt;<a href=3D"mail=
+to:stefanha@redhat.com" target=3D"_blank">stefanha@redhat.com</a>&gt; wrote=
+:<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; On Mon, Jun 10, 2024 at 09:22:36PM +0300, Manos Pitsidianaki=
+s wrote:<br>
+&gt; &gt; &gt; &gt; Add options for Rust in meson_options.txt, meson.build,=
+ configure to<br>
+&gt; &gt; &gt; &gt; prepare for adding Rust code in the followup commits.<b=
+r>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; `rust` is a reserved meson name, so we have to use an a=
+lternative.<br>
+&gt; &gt; &gt; &gt; `with_rust` was chosen.<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; Signed-off-by: Manos Pitsidianakis &lt;<a href=3D"mailt=
+o:manos.pitsidianakis@linaro.org" target=3D"_blank">manos.pitsidianakis@lin=
+aro.org</a>&gt;<br>
+&gt; &gt; &gt; &gt; ---<br>
+&gt; &gt; &gt; &gt; The cargo wrapper script hardcodes some rust target tri=
+ples. This is<br>
+&gt; &gt; &gt; &gt; just temporary.<br>
+&gt; &gt; &gt; &gt; ---<br>
+&gt; &gt; &gt; &gt;=C2=A0 .gitignore=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A02 +<br>
+&gt; &gt; &gt; &gt;=C2=A0 configure=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 |=C2=A0 12 +++<br>
+&gt; &gt; &gt; &gt;=C2=A0 meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 |=C2=A0 11 ++<br>
+&gt; &gt; &gt; &gt;=C2=A0 meson_options.txt=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=
+=A0 =C2=A04 +<br>
+&gt; &gt; &gt; &gt;=C2=A0 scripts/cargo_wrapper.py | 211 ++++++++++++++++++=
++++++++++++++++++++++<br>
+&gt; &gt; &gt; &gt;=C2=A0 5 files changed, 240 insertions(+)<br>
+&gt; &gt; &gt; &gt;=C2=A0 create mode 100644 scripts/cargo_wrapper.py<br>
+<br>
+&gt; &gt; &gt; &gt; diff --git a/configure b/configure<br>
+&gt; &gt; &gt; &gt; index 38ee257701..c195630771 100755<br>
+&gt; &gt; &gt; &gt; --- a/configure<br>
+&gt; &gt; &gt; &gt; +++ b/configure<br>
+<br>
+snip<br>
+<br>
+&gt; &gt; &gt; &gt; +=C2=A0 test &quot;$with_rust_target_triple&quot; !=3D =
+&quot;&quot; &amp;&amp; meson_option_add &quot;-Dwith_rust_target_triple=3D=
+$with_rust_target_triple&quot;<br>
+<br>
+So the --rust-target-triple is only needed when cross compiling,<br>
+but this is not the way we normally handle passing cross compiler<br>
+info to meson. Instead we create a meson cross compiler options<br>
+file containing the target info.<br>
+<br>
+eg for ./configure --cross-prefix=3Dx86_64-w64-mingw32-<br>
+<br>
+we end up creating:<br>
+<br>
+$ cat build/config-meson.cross <br>
+# Automatically generated by configure - do not modify<br>
+[properties]<br>
+[built-in options]<br>
+c_args =3D []<br>
+cpp_args =3D []<br>
+objc_args =3D []<br>
+c_link_args =3D []<br>
+cpp_link_args =3D []<br>
+# environment defaults, can still be overridden on <br>
+# the command line<br>
+werror =3D true<br>
+[project options]<br>
+<br>
+[binaries]<br>
+c =3D [&#39;x86_64-w64-mingw32-gcc&#39;,&#39;-m64&#39;]<br>
+cpp =3D [&#39;x86_64-w64-mingw32-g++&#39;,&#39;-m64&#39;]<br>
+objc =3D [&#39;x86_64-w64-mingw32-clang&#39;,&#39;-m64&#39;]<br>
+ar =3D [&#39;x86_64-w64-mingw32-ar&#39;]<br>
+dlltool =3D [&#39;x86_64-w64-mingw32-dlltool&#39;]<br>
+nm =3D [&#39;x86_64-w64-mingw32-nm&#39;]<br>
+pkgconfig =3D [&#39;x86_64-w64-mingw32-pkg-config&#39;]<br>
+pkg-config =3D [&#39;x86_64-w64-mingw32-pkg-config&#39;]<br>
+ranlib =3D [&#39;x86_64-w64-mingw32-ranlib&#39;]<br>
+strip =3D [&#39;x86_64-w64-mingw32-strip&#39;]<br>
+widl =3D [&#39;x86_64-w64-mingw32-widl&#39;]<br>
+windres =3D [&#39;x86_64-w64-mingw32-windres&#39;]<br>
+windmc =3D [&#39;x86_64-w64-mingw32-windmc&#39;]<br>
+[host_machine]<br>
+system =3D &#39;windows&#39;<br>
+cpu_family =3D &#39;x86_64&#39;<br>
+cpu =3D &#39;x86_64&#39;<br>
+endian =3D &#39;little&#39;<br>
+<br>
+<br>
+Should we not be passing the rust compiler target through<br>
+this meson options file by setting something like this<br>
+<br>
+=C2=A0 rust =3D [&#39;rustc&#39;, &#39;--target&#39;, &#39;$target_target_t=
+riple&#39;]<br></blockquote><div><br></div><div>Agree</div><div>=C2=A0<br><=
+/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
+rder-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+<br>
+Also I don&#39;t think we should be requiring --rust-target-triple<br>
+to be passed by the user. For all the combinations we know &amp;<br>
+test, we should have configure &quot;do the right thing&quot; and set a<br>
+suitable rust target triple based on the --cross-prefix argument<br>
+that is given, so there is no extra burden on users cross<br>
+compiling. Users should then only use --rust-target-triple<br>
+if our default logic is wrong for some reason.<br>
+<br>
+</blockquote><div><br></div><div>Then I think we would need to maintain som=
+e mapping between GNU target-triplets and Rust. It would be convenient to a=
+llow users to set/overwrite it though.<br></div></div><br clear=3D"all"><br=
+><span class=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" clas=
+s=3D"gmail_signature">Marc-Andr=C3=A9 Lureau<br></div></div>
+
+--000000000000fdf05c061aad20e9--
 
