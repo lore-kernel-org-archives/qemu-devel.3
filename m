@@ -4,54 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24740C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 11:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A629FC27C7B
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 11:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHM1H-0006R3-N7; Wed, 12 Jun 2024 07:19:59 -0400
+	id 1sHM6N-0007pQ-Eb; Wed, 12 Jun 2024 07:25:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
- id 1sHM1E-0006Qg-Ut
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 07:19:56 -0400
-Received: from mail.ispras.ru ([83.149.199.84])
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
- id 1sHM1B-0005X9-L5
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 07:19:56 -0400
-Received: from [10.10.3.121] (unknown [10.10.3.121])
- by mail.ispras.ru (Postfix) with ESMTPS id DC82240755E8;
- Wed, 12 Jun 2024 11:19:48 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru DC82240755E8
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
- s=default; t=1718191188;
- bh=qWUQFtLzO1JgXRX60+SzqyyzoxG0n6bTArGZ/rOlTzs=;
- h=Date:From:To:cc:Subject:In-Reply-To:References:From;
- b=s/bFPmFHxAOjxfX0m+AIlS62RZrgg4fzkmiEnWglk2U5iFzVwIIY3vrJtpg36VE6p
- /UUIQGr163zcClc0Vckrg/w2BVOsXaAxni+dGUJy/ZE8UOwHsgGGnCmviRh31ytTQE
- Oiby8zk3VZAjoFVHu0hhXjWPAwYj6eS0DkV4nIDw=
-Date: Wed, 12 Jun 2024 14:19:48 +0300 (MSK)
-From: Alexander Monakov <amonakov@ispras.ru>
-To: Paolo Bonzini <pbonzini@redhat.com>
-cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 0/5] Reinstate ability to use Qemu on pre-SSE4.1 x86 hosts
-In-Reply-To: <CABgObfbGa=xpp9-cLwzqCpPFsf27qM+K-svfXEvc6ffjb=_VAg@mail.gmail.com>
-Message-ID: <e26ac8a0-5cb0-22a8-fbf9-54f198cdc7ed@ispras.ru>
-References: <20240612105525.8795-1-amonakov@ispras.ru>
- <ZmmAq8fbJLuaX4Qg@redhat.com>
- <CABgObfbGa=xpp9-cLwzqCpPFsf27qM+K-svfXEvc6ffjb=_VAg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHM6J-0007ol-Mt
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 07:25:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHM6H-00071u-Ep
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 07:25:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718191508;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=oJpK17ekPHy/08AgdBkFlqxStkcVYvPDXzQ7uyyl7Xw=;
+ b=HBzTA+4noVFUmJp1/XRCCFg6PGVCD/pqwp/dIosVbYA30GIL7iuf5+jbK8iq9gnApnYslR
+ q07b78dnovxiREXzfqJH9yOEW3m6oDwOh0j95rXUxXQ74wqFwpU8HZFE1FPP9zVYYsKy8p
+ V+nhY2jwwhNXP8Wd7EUVe+K0mnQlRds=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-522-HLTSDRGLMJaIem5wJs7y4Q-1; Wed,
+ 12 Jun 2024 07:25:05 -0400
+X-MC-Unique: HLTSDRGLMJaIem5wJs7y4Q-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C9B41955E74; Wed, 12 Jun 2024 11:25:02 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.115])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CD7931956053; Wed, 12 Jun 2024 11:24:59 +0000 (UTC)
+Date: Wed, 12 Jun 2024 12:24:56 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v3 1/4] qom: allow to mark objects as deprecated or not
+ secure.
+Message-ID: <ZmmFiJY4gBTk8kKk@redhat.com>
+References: <20240606143010.1318226-1-kraxel@redhat.com>
+ <20240606143010.1318226-2-kraxel@redhat.com>
+ <8734pifmgv.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=83.149.199.84; envelope-from=amonakov@ispras.ru;
- helo=mail.ispras.ru
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8734pifmgv.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,20 +85,117 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Jun 12, 2024 at 01:07:44PM +0200, Markus Armbruster wrote:
+> Gerd Hoffmann <kraxel@redhat.com> writes:
+> 
+> > Add flags to ObjectClass for objects which are deprecated or not secure.
+> > Add 'deprecated' and 'not-secure' bools to ObjectTypeInfo, report in
+> > 'qom-list-types'.  Print the flags when listing devices via '-device
+> > help'.
+> >
+> > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> > ---
+> >  include/qom/object.h  | 3 +++
+> >  qom/qom-qmp-cmds.c    | 8 ++++++++
+> >  system/qdev-monitor.c | 8 ++++++++
+> >  qapi/qom.json         | 8 +++++++-
+> >  4 files changed, 26 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/include/qom/object.h b/include/qom/object.h
+> > index 13d3a655ddf9..419bd9a4b219 100644
+> > --- a/include/qom/object.h
+> > +++ b/include/qom/object.h
+> > @@ -136,6 +136,9 @@ struct ObjectClass
+> >      ObjectUnparent *unparent;
+> >  
+> >      GHashTable *properties;
+> > +
+> > +    bool deprecated;
+> > +    bool not_secure;
+> >  };
+> 
+> Ignorant question: should this be in struct TypeImpl instead?
+> 
+> >  
+> >  /**
+> > diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+> > index e91a2353472a..325ff0ba2a25 100644
+> > --- a/qom/qom-qmp-cmds.c
+> > +++ b/qom/qom-qmp-cmds.c
+> > @@ -101,6 +101,14 @@ static void qom_list_types_tramp(ObjectClass *klass, void *data)
+> >      if (parent) {
+> >          info->parent = g_strdup(object_class_get_name(parent));
+> >      }
+> > +    if (klass->deprecated) {
+> > +        info->has_deprecated = true;
+> > +        info->deprecated = true;
+> > +    }
+> > +    if (klass->not_secure) {
+> > +        info->has_not_secure = true;
+> > +        info->not_secure = true;
+> > +    }
+> >  
+> >      QAPI_LIST_PREPEND(*pret, info);
+> >  }
+> > diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+> > index 6af6ef7d667f..effdc95d21d3 100644
+> > --- a/system/qdev-monitor.c
+> > +++ b/system/qdev-monitor.c
+> > @@ -144,6 +144,8 @@ static bool qdev_class_has_alias(DeviceClass *dc)
+> >  
+> >  static void qdev_print_devinfo(DeviceClass *dc)
+> >  {
+> > +    ObjectClass *klass = OBJECT_CLASS(dc);
+> > +
+> >      qemu_printf("name \"%s\"", object_class_get_name(OBJECT_CLASS(dc)));
+> >      if (dc->bus_type) {
+> >          qemu_printf(", bus %s", dc->bus_type);
+> > @@ -157,6 +159,12 @@ static void qdev_print_devinfo(DeviceClass *dc)
+> >      if (!dc->user_creatable) {
+> >          qemu_printf(", no-user");
+> >      }
+> > +    if (klass->deprecated) {
+> > +        qemu_printf(", deprecated");
+> > +    }
+> > +    if (klass->not_secure) {
+> > +        qemu_printf(", not-secure");
+> > +    }
+> >      qemu_printf("\n");
+> >  }
+> >  
+> > diff --git a/qapi/qom.json b/qapi/qom.json
+> > index 8bd299265e39..3f20d4c6413b 100644
+> > --- a/qapi/qom.json
+> > +++ b/qapi/qom.json
+> > @@ -163,10 +163,16 @@
+> >  #
+> >  # @parent: Name of parent type, if any (since 2.10)
+> >  #
+> > +# @deprecated: the type is deprecated (since 9.1)
+> > +#
+> > +# @not-secure: the type (typically a device) is not considered
+> > +#     a security boundary (since 9.1)
+> 
+> What does this mean?  Does it mean "do not add an instance of this
+> device the guest unless you trust the guest"?
 
-On Wed, 12 Jun 2024, Paolo Bonzini wrote:
+Essentially yes. This ties to our security doc where we declare
+we won't consider non-virtualization use cases as being security
+bugs (CVEs) as large parts of QEMU haven't been designed to
+provide a guest security boundary
 
-> I didn't do this because of RHEL9, I did it because it's silly that
-> QEMU cannot use POPCNT and has to waste 2% of the L1 d-cache to
-> compute the x86 parity flag (and POPCNT was introduced at the same
-> time as SSE4.2).
+  https://www.qemu.org/docs/master/system/security.html
 
-From looking at that POPCNT patch I understood that Qemu detects
-presence of POPCNT at runtime and will only use the fallback when
-POPCNT is unavailable. Did I misunderstand?
 
-Alexander
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
