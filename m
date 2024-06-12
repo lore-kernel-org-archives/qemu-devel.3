@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F81CC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 15:21:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FE5DC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 15:30:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHPmH-00069L-Ri; Wed, 12 Jun 2024 11:20:45 -0400
+	id 1sHPus-0007fL-4h; Wed, 12 Jun 2024 11:29:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sHPmG-000693-0T
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:20:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sHPuq-0007er-Nw
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:29:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sHPmE-0001t3-0g
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:20:43 -0400
+ id 1sHPuo-0003OH-VX
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:29:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718205640;
+ s=mimecast20190719; t=1718206173;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3QXZNdUYf/LHVDGJm8SdWHziQ8t+RRpon3DYbeIehwg=;
- b=cfHHeKx/KqynisB0Nst52ydUch49AStA+NeAQeKkGS2IacurgQ+bTI+qL4FqPZKbHCSLAE
- f/b/UwbeaPYPr1r7JSCDx+0SNZvHOuFDfwryf4AZOlXyxQecPVeFCtbEBjfsjjio0f9LX3
- eJaIFa05LayoposLu5lV6dpjryDIC9I=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=83AuWKs8CK3QhCp7J+sW1I5vZCPrUchZQE6BW36tB8A=;
+ b=SkBqnesLx1BwiE2aG8tMVKcKBT1DK1WtSLF7/hkHTKl5AXj0pgTRdh4KCZP7YK0aSdlgWx
+ Wh8cUm0EGfWpoKjPCLK6XTU4l3ZPIF7x4HGQdnkeSIDdhfTnPFFElNHMgbZdlW9u1ohnv2
+ M1pR8CnkqSQID4lk+0Q+JbOtYfEy+QU=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-332-HGlq3SmKNTmt8Op4sr1VpA-1; Wed, 12 Jun 2024 11:20:39 -0400
-X-MC-Unique: HGlq3SmKNTmt8Op4sr1VpA-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-421eed70e30so24342765e9.1
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 08:20:38 -0700 (PDT)
+ us-mta-441-gwGtIHZJPXicpeZvGFIjxA-1; Wed, 12 Jun 2024 11:29:31 -0400
+X-MC-Unique: gwGtIHZJPXicpeZvGFIjxA-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-35f10585251so2341f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 08:29:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718205637; x=1718810437;
+ d=1e100.net; s=20230601; t=1718206170; x=1718810970;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3QXZNdUYf/LHVDGJm8SdWHziQ8t+RRpon3DYbeIehwg=;
- b=pRNsbKYa2Jwk96l0BjGqHC8+8KEDSVwx3YV8fOxv7q7GBXvJ9r5h3YkRRwrR7pfp1R
- HmsX+9NDutEVYRK55mqBPGD2uYTtr27YgNRO3nu3IcbKb0xWKbv98kBcHWxnSRVfXS1m
- PYnxY5w1BazOpUny/nwuR54Dd0kz3P4FgVCIF8lxzx1zGlfM5fpPzNFFlnyKDcWtJtnS
- 0CidOj0GUotFUIwcH2vwMz87qZ0rhtuenRq1FA294YWHKq34qY3bZHHjfRP2Sl1CSIuP
- E25OGugqTMlOs+ikq7ATwt/ze254GX35gKom4c914imcxlGa9G6U2JUgMNRTHj63zTok
- nhoQ==
-X-Gm-Message-State: AOJu0YyGVUJOCTLd657JjoZzaAhmv2RlI4eHW4HzAy3lABo+qM/kR3f2
- hHM7ocR0QHWskJagHDLB/47dNPjXX24OaM8LnNEw6HRT8mBGlmnWrQDAXKJFIHcl4YboEzRGbK/
- SKp4f+o+CxMsv3DDtpKMKoR5a7OBqlrcc8pBz1k/budBcbbz9gXZyWhHv6072GzJv8CdN/1COBX
- rPTNxojyIMI/ErJivKcUfJ7Mx3QcY=
-X-Received: by 2002:a05:600c:45ce:b0:421:f346:6b02 with SMTP id
- 5b1f17b1804b1-422a08d3cf8mr7276925e9.27.1718205637314; 
- Wed, 12 Jun 2024 08:20:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEbVNNh7nYTOiNOBIEiVXw+frXw2JTE4jxK2NgljmzNQFO19s4iLuPly8td5/NCfT6dEsiVb6FH5ZzBUeQXUH0=
-X-Received: by 2002:a05:600c:45ce:b0:421:f346:6b02 with SMTP id
- 5b1f17b1804b1-422a08d3cf8mr7276705e9.27.1718205636964; Wed, 12 Jun 2024
- 08:20:36 -0700 (PDT)
+ bh=83AuWKs8CK3QhCp7J+sW1I5vZCPrUchZQE6BW36tB8A=;
+ b=ATneiSBbt4f3Pj16ljExzRyy4tO9XYK6enNt5tDQ4ofLviSFJP4F5oe9QiHtC9chvp
+ HJc97rGWnD3NFW8PUAAOInSNlzRpHUCL4EWOFD+f0nx6kxbIaV6w5vDFTFgLNn8B+6C6
+ +Bx0yYAKXpo8tMbPiBHU+wpf881lAkeFOCyg01QE7WIrb4w1NzLLmZu9bfvvXQnkzkBO
+ Fv7lO1KPBXZ/kjyiRx4l7pqNf6PSOslyNUFZa3COCfMW4l5/ACG/kFnwcQelZAzC5TcY
+ X5eTTF8DCDJTLXpo9LGRhhqzDPVOZdPibfX5ZnxEI2D1+9yPUPqLoc3Bxj1HpKzHWV+c
+ gV5w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXVRcZwhHzd5EcjtRHAXlbnBkIYIV2UJQ4chLREiXIQsV7GlqH7b8cTBnLg5gOx5TGi5Y8z9jtXyaY0eO/DT5EN+7/uRnI=
+X-Gm-Message-State: AOJu0YyTKTPZRn9v+GP2Bay2JAINqfFEPfdM4y/lDTwJq+w76KgtiBgW
+ UIQkE/Ug8Ea/5DPsozedcOSo0NppWXY8buncpqWNO4B0oIffJotU2OiSWBO2clgPtvwVM1RjGhY
+ +Nef1z5E7zlepVuNnOsuHI34WKusm3frHOmg4JUfyky/TQ5TYOfyfIS9ANG6PC1mjKXb0yAWPnD
+ v6HjjKU1LVhfRVNG3/dIqtb6n7g8c=
+X-Received: by 2002:adf:e70f:0:b0:35f:2635:5b82 with SMTP id
+ ffacd0b85a97d-35fe8937a66mr1666727f8f.59.1718206170724; 
+ Wed, 12 Jun 2024 08:29:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE7JOkIAnueBratc4CfQpfaKzumxk9xy8e35FEQp+k6sJhPaiQBH1HN+gwyCSih/c1ilBbirGjhcRRkecLfRA8=
+X-Received: by 2002:adf:e70f:0:b0:35f:2635:5b82 with SMTP id
+ ffacd0b85a97d-35fe8937a66mr1666715f8f.59.1718206170375; Wed, 12 Jun 2024
+ 08:29:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
- <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
- <CABgObfY8BS0yCw2CxgDQTBA4np9BZgGJF3N=t6eoBcdACAE=NA@mail.gmail.com>
- <ez270.x96k6aeu0rpw@linaro.org>
-In-Reply-To: <ez270.x96k6aeu0rpw@linaro.org>
+References: <20240612105525.8795-1-amonakov@ispras.ru>
+ <ZmmAq8fbJLuaX4Qg@redhat.com>
+ <CABgObfbGa=xpp9-cLwzqCpPFsf27qM+K-svfXEvc6ffjb=_VAg@mail.gmail.com>
+ <ZmmIpr5f0sQy-VGl@redhat.com>
+ <CABgObfZHBGxS-D9LdM1v0oDXBHoKm2-A4FknixmqjfJeQR1YLw@mail.gmail.com>
+ <ZmmSxq7i_tpYj7tw@redhat.com> <Zmm6Kf8PEwZ47bMb@redhat.com>
+In-Reply-To: <Zmm6Kf8PEwZ47bMb@redhat.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 12 Jun 2024 17:20:24 +0200
-Message-ID: <CABgObfYe_wx135QYe7W8ri5Xv-Fit6FW_YBe8U5rR=fS0Zz5wA@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?Q?Alex_Benn=C3=A9_e?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Date: Wed, 12 Jun 2024 17:29:19 +0200
+Message-ID: <CABgObfbkbE_LKD-x3JkM39N10ZqNPU=FCO_9_iTvrbckqst2ng@mail.gmail.com>
+Subject: Re: [PATCH 0/5] Reinstate ability to use Qemu on pre-SSE4.1 x86 hosts
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Alexander Monakov <amonakov@ispras.ru>, qemu-devel@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -108,147 +105,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 12, 2024 at 4:42=E2=80=AFPM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
-> There was consensus in the community call that we won't be writing Rust
-> APIs for internal C QEMU interfaces; or at least, that's not the goal
+On Wed, Jun 12, 2024 at 5:09=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+> This might suggest we could put a runtime feature check in main(),
+> print a warning and then exit(1), however, QEMU has alot of code
+> that is triggered from ELF constructors. If we're building the
+> entire of QEMU codebase with extra features enabled, I worry that
+> the constructors could potentially cause a illegal instruction
+> crash before main() runs ?
 
-I disagree with that. We need _some_ kind of bindings, otherwise we
-have too much unsafe code, and the benefit of Rust becomes so much
-lower that I doubt the utility.
+And I learnt that one can simply add -mneeded to the compiler command
+line to achieve that, at least on glibc systems:
 
-If something is used by only one device then fine, but when some kind
-of unsafe code repeats across most if not all devices, that is a
-problem. It can be macros, it can be smart pointers, that remains to
-be seen---but repetition should be a warning signal that _something_
-is necessary.
+$ gcc f.c -mneeded -mpopcnt
+$ qemu-x86_64 -cpu core2duo ./a.out
+./a.out: CPU ISA level is lower than required
+$ qemu-x86_64 ./a.out
+1234
 
-> >For definining new classes I think it's okay if Rust does not support
-> >writing superclasses yet, only leaves.
-> >
-> >I would make a QOM class written in Rust a struct that only contains
-> >the new fields. The struct must implement Default and possibly Drop
-> >(for finalize).
->
-> The object is allocated and freed from C, hence it is not Dropped. We're
-> only ever accessing it from a reference retrieved from a QEMU provided
-> raw pointer. If the struct gains heap object fields like Box or Vec or
-> String, they'd have to be dropped manually on _unrealize.
+$ gcc f.c -mneeded
+$ qemu-x86_64 -cpu core2duo ./a.out
+1234
 
-That's my point, if you have
+Using "readelf -n" on the executable unveils the magic:
 
-  struct MyDevice_Inner {
-    data: Vec<u8>,
-  }
+Displaying notes found in: .note.gnu.property
+  Owner                Data size     Description
+  GNU                  0x00000030    NT_GNU_PROPERTY_TYPE_0
+      Properties: x86 ISA needed: x86-64-baseline, x86-64-v2
+    x86 feature used: x86
+    x86 ISA used:
 
-  struct MyDevice {
-    parent_obj: qemu::bindings::SysBusDevice,
-    private: ManuallyDrop<PL011_Inner>,
-  }
-
-then the instance_finalize method can simply do
-
-  pub instance_finalize(self: *c_void)
-  {
-    let dev =3D self as *mut MyDevice;
-    unsafe { ManuallyDrop::drop(dev.private) }
-  }
-
-Don't do it on _unrealize, create macros that do it for you.
-
-> >and then a macro defines a wrapper struct that includes just two
-> >fields, one for the superclass and one for the Rust struct.
-> >instance_init can initialize the latter with Default::default().
-> >
-> >  struct PL011 {
-> >    parent_obj: qemu::bindings::SysBusDevice,
-> >    private: PL011_Inner,
-> >  }
->
-> a nested struct is not necessary for using the Default trait
-
-Agreed, but a nested struct is nice anyway in my opinion as a boundary
-between the C-ish and Rust idiomatic code.
-
-> >"private" probably should be RefCell<PL011_Inner>, avoiding the unsafe
-> >
-> >    state.as_mut().read(addr, size)
->
->
-> RefCell etc are not FFI safe.
-
-Why does it matter? Everything after the SysBusDevice is private.
-
-> Also, nested fields must be visible so that the offset_of! macro works, f=
-or QOM properties.
-
-Note that QOM properties do not use offset_of; qdev properties do.
-Using qdev properties is much easier because they hide visitors, but
-again - not necessary, sometimes going lower-level can be easier if
-the API you wrap is less C-ish.
-
-Also, you can define constants (including properties) in contexts
-where non-public fields are visible:
-
-use std::mem;
-pub struct Foo {
-    _x: i32,
-    y: i32,
-}
-impl Foo {
-    pub const OFFSET_Y: usize =3D mem::offset_of!(Foo, y);
-}
-fn main() {
-    println!("{}", Foo::OFFSET_Y);
-}
-
-Any offset needed to go past the SysBusDevice and any other fields
-before MyDevice_Inner can be added via macros. Also note that it
-doesn't _have_ to be RefCell; RefCell isn't particularly magic. We can
-implement our own interior mutability thingy that is more friendly to
-qdev properties, or that includes the ManuallyDrop<> thing from above,
-or both.
-
-For example you could have
-
-  type PL011 =3D QOMImpl<qemu::bindings::SysBusDevice, PL011_Inner>;
-
-and all the magic (for example Borrow<PL011_Inner>, the TypeInfo, the
-instance_init and instance_finalize function) would be in QOMImpl.
-
-My point is: let's not focus on having a C-like API. It's the easiest
-thing to do but not the target.
-
-> Finally,
->
->      state.as_mut().read(addr, size)
->
-> Is safe since we receive a valid pointer from QEMU. This fact cannot be
-> derived by the compiler, which is why it has an `unsafe` keyword. That
-> does not mean that the use here is unsafe.
-
-Yes, it is safe otherwise it would be undefined behavior, but there
-are no checks of the kind that you have in Rust whenever you have
-&mut.
-
-state.as_mut() implies that no other references to state are in use;
-but there are (you pass it as the opaque value to both the
-MemoryRegionOps and the chardev frontend callbacks). This is why I
-think something like RefCell is needed to go from a shared reference
-to an exclusive one (interior mutability).
-
-> >There should also be macros to define the wrappers for MMIO MemoryRegion=
-s.
->
-> Do you mean the MemoryRegionOps?
-
-Yes.
-
-> I wanted to focus on the build system integration for the first RFC
-> which is why there are some macros but not in every place it makes
-> sense.
-
-Yes, absolutely. We need to start somewhere.
+I'm actually amazed. :)
 
 Paolo
 
