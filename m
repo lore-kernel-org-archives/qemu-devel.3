@@ -4,83 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 105C6C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 15:35:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 328EEC27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 15:36:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHPzo-0000Js-IR; Wed, 12 Jun 2024 11:34:44 -0400
+	id 1sHQ0U-00015o-89; Wed, 12 Jun 2024 11:35:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1sHPzn-0000JW-4t
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:34:43 -0400
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sHQ0R-0000z5-97
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:35:23 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1sHPzl-00045x-8Y
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:34:42 -0400
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-6f9398390fcso2153857a34.3
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 08:34:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sHQ0K-0004Ls-2F
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:35:22 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a6f09b457fdso291566b.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 08:35:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718206480; x=1718811280; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ze8c5CsI/Ai9FlRhp5UjNXXdqYHhftXKuXJjvZtRXHo=;
- b=jpgdOrSsCvxDfd8qgq7sRVEzR59m5AZKKG7ixd/Z3VHCdsrd3DBc9Vx5Sd2p7VHy94
- /fzr2u72okEaJdYFFPNE4X1ARhUj2JrOyijTzRT43RF0Dfihglkobu65uBYnk9aUxEgb
- 1bYiuKALoTlvLlb6/887MIGfsTn/PaNLHG41Euy8l4vtVnJ1BNXTbOR4jYiAQfkEHrfY
- TR7at7IgY5ZJgxstJA6a9/BiPSZcpjO+xQUWGBKHf369kQM5JkkSLwBBQoozJIB7CvF2
- rOKw+Ow3D8ncZHEQpALGezrsQJRpPpiipuF1YkRhEJfPyc1IQwaq5oSlZ3pA2GKXZO3o
- CBuA==
+ d=linaro.org; s=google; t=1718206514; x=1718811314; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SXF7Z655MWVuCTh0vDHFDJ5r0Y06lB8CjThjsNdjBZI=;
+ b=yw05tdorIVDYYvVSUfzh1oG3n8gJNHb9NsoYc3wfLQpWLeamWD3AtguEN1mhb+XOjM
+ neZyJGDY2H685FCu/ZbKYzv+5B+My27TiG3MjPQwuzDksvCrHXoFApEuycO0HUoBnZKe
+ yla2x4lqRunNFuw2nJJR36UKIdyUPQtal7znoHTPxPj1RkR5sMLsOStoLGWE8ZUA/PFr
+ nfdPuGpsT8A/rXIqEhXoq/sko325u8znotIO+ozrBcv19JEdwX07KxNAs3xmaKDu3InZ
+ J3y/OdaV4NoIu/aYmrB/hzlA8CETbuCz4jSp7DkxQ17Rv97gGbq4tGlYjFzwq8WBXAbo
+ 5l1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718206480; x=1718811280;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ze8c5CsI/Ai9FlRhp5UjNXXdqYHhftXKuXJjvZtRXHo=;
- b=GodghcB1XlaV/ahX+w/dtLyWuFd2bCmEjDKK6UrcGQYKWROICCOwQrPoe5nXW7wpyF
- 0aHOSl5+wJQ3bmnqGXT8wVxzcNTg84OY3ijaeS0ZUQJBuK+O9OhBQPonNSef+efjOfu+
- BzFN30TjsihBW6Z7MvXU3pSKYPGjWoGLT2QQ41kq8rgZHNz7PDAD+1W0BA9KF8vzJVk6
- rVQdjZnssWtN/SULcWrLyjQO9m81vDBuv90d85KFeNTpe++XM9zMtVq7TS5YdimcUeaR
- yTS74M3ECm8yZPhp/ouPList9oA+fld2AQODNlNJot2D0cNvH1yGvf4QpabbFGoYCpCs
- lQ5w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXXZ6njwXQ7isBOtkxCxmLcWAR+bUafmeazZDH6SJrJXJzn1qZaY+Ml33zBgphLSx3LYFJGzjvChp50z/oRnPTLRbWQR/w=
-X-Gm-Message-State: AOJu0YzYgntr6lVxy1lnfDc4QmvJ3VPvNsyK2V9c5yJbLkj1n7bQEL6/
- ngVoyR8PkUYnkrL6Ldk0QoFBCm/yac6Le6F5gwidJIzXbEhUweCs+oa08vPKN1UlS6L7prJdvRG
- WUzcjRsom5uby8k/cCau7vnH4OyA=
-X-Google-Smtp-Source: AGHT+IGln0QWRufvTYnw0/bVcMD4gDRyS+19n3fc3TcaP4+8K78+319oHtR1jkF7Iqx82+8P9Pm/yWYYv/qJfBtqvys=
-X-Received: by 2002:a9d:7501:0:b0:6fa:18e8:444a with SMTP id
- 46e09a7af769-6fa1be2b43dmr2478567a34.4.1718206479347; Wed, 12 Jun 2024
- 08:34:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718206514; x=1718811314;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SXF7Z655MWVuCTh0vDHFDJ5r0Y06lB8CjThjsNdjBZI=;
+ b=N7gWu69t9w9NgDi3jphwlNHnlzucTQvZ4coyfqOulpNe7TIXbtBbIHolcYNIg0Jlbi
+ 7r/nXFqeugSGVX588DdO4GX3HOcEX7gS7WAixD92p7pceglsETVsBbiuQ91VUBvhP4t6
+ 2zSNiVA2iFXFBYgY3BhYBhTSvaYW7uVAGWflecv+b2UhB5AufUIwvdLjWK3AL6JcwKzO
+ 30VSjjTyaVWVQAWrc5lqG7nd8fFh011OcCLsii3s1sI70loVTFMZ6Z6/yJHuHcvJm6fv
+ CgF4wUngfw9CQ7pEw/Yc/H0I8gAvYoqnsiRJ0eJeaVBaGrS11IsxT0elpC2AmlW82SVx
+ vKcQ==
+X-Gm-Message-State: AOJu0YwbzvYtMzU2VluSAifxIYOBj6XDZivaCkEAdVpVQTkewZ4gDVIE
+ epjxU9S3q2y36Dm5tcu5iP19Gdvea1qW9Kwiyx2k6z/esR5Kkxsczyp1qZqPeNM=
+X-Google-Smtp-Source: AGHT+IGV0CaQWozdukxCOv9szzRwut8fzIQhJ0oT+uBW42XK2tCER+X14VH6Mef5wPkxmJ3eRDzSXA==
+X-Received: by 2002:a17:906:48c7:b0:a6f:4b5b:4ba7 with SMTP id
+ a640c23a62f3a-a6f4b5b4c43mr115226566b.67.1718206514383; 
+ Wed, 12 Jun 2024 08:35:14 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6f0c410d31sm575607766b.73.2024.06.12.08.35.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Jun 2024 08:35:11 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C62165FA1A;
+ Wed, 12 Jun 2024 16:35:08 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Burton <mburton@qti.qualcomm.com>, qemu-s390x@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
+ Laurent Vivier <lvivier@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Marco Liebel <mliebel@qti.qualcomm.com>, Thomas Huth <thuth@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, qemu-ppc@nongnu.org,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Cameron Esfahani <dirty@apple.com>, Jamie Iles <quic_jiles@quicinc.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH 6/9] sysemu: generalise qtest_warp_clock as
+ qemu_clock_advance_virtual_time
+Date: Wed, 12 Jun 2024 16:35:05 +0100
+Message-Id: <20240612153508.1532940-7-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240612153508.1532940-1-alex.bennee@linaro.org>
+References: <20240612153508.1532940-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-References: <20240605120848.358654-1-f.ebner@proxmox.com>
- <20240606183638.GC198201@fedora.redhat.com>
- <6d64f07d-1638-44dc-848b-b307c0ebd0ad@proxmox.com>
- <20240611140449.GA366375@fedora.redhat.com>
- <08689bad-80f3-4cc1-bdd9-39df04b40d89@proxmox.com>
-In-Reply-To: <08689bad-80f3-4cc1-bdd9-39df04b40d89@proxmox.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 12 Jun 2024 11:34:27 -0400
-Message-ID: <CAJSP0QUJ2dsAgMaoesTSF7Ni+EPQsCxzOavTvU0sgj7h+7vkQg@mail.gmail.com>
-Subject: Re: [RFC PATCH] migration/savevm: do not schedule snapshot_save_job_bh
- in qemu_aio_context
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- peterx@redhat.com, 
- farosas@suse.de, pbonzini@redhat.com, Kevin Wolf <kwolf@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
- envelope-from=stefanha@gmail.com; helo=mail-ot1-x32d.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,136 +114,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Jun 2024 at 05:21, Fiona Ebner <f.ebner@proxmox.com> wrote:
->
-> Am 11.06.24 um 16:04 schrieb Stefan Hajnoczi:
-> > On Tue, Jun 11, 2024 at 02:08:49PM +0200, Fiona Ebner wrote:
-> >> Am 06.06.24 um 20:36 schrieb Stefan Hajnoczi:
-> >>> On Wed, Jun 05, 2024 at 02:08:48PM +0200, Fiona Ebner wrote:
-> >>>> The fact that the snapshot_save_job_bh() is scheduled in the main
-> >>>> loop's qemu_aio_context AioContext means that it might get executed
-> >>>> during a vCPU thread's aio_poll(). But saving of the VM state cannot
-> >>>> happen while the guest or devices are active and can lead to assertion
-> >>>> failures. See issue #2111 for two examples. Avoid the problem by
-> >>>> scheduling the snapshot_save_job_bh() in the iohandler AioContext,
-> >>>> which is not polled by vCPU threads.
-> >>>>
-> >>>> Solves Issue #2111.
-> >>>>
-> >>>> This change also solves the following issue:
-> >>>>
-> >>>> Since commit effd60c878 ("monitor: only run coroutine commands in
-> >>>> qemu_aio_context"), the 'snapshot-save' QMP call would not respond
-> >>>> right after starting the job anymore, but only after the job finished,
-> >>>> which can take a long time. The reason is, because after commit
-> >>>> effd60c878, do_qmp_dispatch_bh() runs in the iohandler AioContext.
-> >>>> When do_qmp_dispatch_bh() wakes the qmp_dispatch() coroutine, the
-> >>>> coroutine cannot be entered immediately anymore, but needs to be
-> >>>> scheduled to the main loop's qemu_aio_context AioContext. But
-> >>>> snapshot_save_job_bh() was scheduled first to the same AioContext and
-> >>>> thus gets executed first.
-> >>>>
-> >>>> Buglink: https://gitlab.com/qemu-project/qemu/-/issues/2111
-> >>>> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> >>>> ---
-> >>>>
-> >>>> While initial smoke testing seems fine, I'm not familiar enough with
-> >>>> this to rule out any pitfalls with the approach. Any reason why
-> >>>> scheduling to the iohandler AioContext could be wrong here?
-> >>>
-> >>> If something waits for a BlockJob to finish using aio_poll() from
-> >>> qemu_aio_context then a deadlock is possible since the iohandler_ctx
-> >>> won't get a chance to execute. The only suspicious code path I found was
-> >>> job_completed_txn_abort_locked() -> job_finish_sync_locked() but I'm not
-> >>> sure whether it triggers this scenario. Please check that code path.
-> >>>
-> >>
-> >> Sorry, I don't understand. Isn't executing the scheduled BH the only
-> >> additional progress that the iohandler_ctx needs to make compared to
-> >> before the patch? How exactly would that cause issues when waiting for a
-> >> BlockJob?
-> >>
-> >> Or do you mean something waiting for the SnapshotJob from
-> >> qemu_aio_context before snapshot_save_job_bh had the chance to run?
-> >
-> > Yes, exactly. job_finish_sync_locked() will hang since iohandler_ctx has
-> > no chance to execute. But I haven't audited the code to understand
-> > whether this can happen.
-> So job_finish_sync_locked() is executed in
-> job_completed_txn_abort_locked() when the following branch is taken
->
-> > if (!job_is_completed_locked(other_job))
->
-> and there is no other job in the transaction, so we can assume other_job
-> being the snapshot-save job itself.
->
-> The callers of job_completed_txn_abort_locked():
->
-> 1. in job_do_finalize_locked() if job->ret is non-zero. The callers of
-> which are:
->
-> 1a. in job_finalize_locked() if JOB_VERB_FINALIZE is allowed, meaning
-> job->status is JOB_STATUS_PENDING, so job_is_completed_locked() will be
-> true.
->
-> 1b. job_completed_txn_success_locked() sets job->status to
-> JOB_STATUS_WAITING before, so job_is_completed_locked() will be true.
->
-> 2. in job_completed_locked() it is only done if job->ret is non-zero, in
-> which case job->status was set to JOB_STATUS_ABORTING by the preceding
-> job_update_rc_locked(), and thus job_is_completed_locked() will be true.
->
-> 3. in job_cancel_locked() if job->deferred_to_main_loop is true, which
-> is set in job_co_entry() before job_exit() is scheduled as a BH and is
-> also set in job_do_dismiss_locked(). In the former case, the
-> snapshot_save_job_bh has already been executed. In the latter case,
-> job_is_completed_locked() will be true (since job_early_fail() is not
-> used for the snapshot job).
->
->
-> However, job_finish_sync_locked() is also executed via
-> job_cancel_sync_all() during qemu_cleanup(). With bad timing there, I
-> suppose the issue could arise.
->
-> In fact, I could trigger it with the following hack on top:
->
-> > diff --git a/migration/savevm.c b/migration/savevm.c
-> > index 0086b76ab0..42c93176ba 100644
-> > --- a/migration/savevm.c
-> > +++ b/migration/savevm.c
-> > @@ -3429,6 +3429,17 @@ static void snapshot_load_job_bh(void *opaque)
-> >
-> >  static void snapshot_save_job_bh(void *opaque)
-> >  {
-> > +    static int n = 0;
-> > +    n++;
-> > +    if (n < 10000000) {
-> > +        aio_bh_schedule_oneshot(iohandler_get_aio_context(),
-> > +                                snapshot_save_job_bh, opaque);
-> > +        if (n % 1000000 == 0) {
-> > +            error_report("iteration %d", n);
-> > +        }
-> > +        return;
-> > +    }
-> > +
-> >      Job *job = opaque;
-> >      SnapshotJob *s = container_of(job, SnapshotJob, common);
-> >
->
-> Once the AIO_WAIT_WHILE_UNLOCKED(job->aio_context, ...) was hit in
-> job_finish_sync_locked(), the snapshot_save_job_bh would never be
-> executed again, leading to the deadlock you described.
+Move the key functionality of moving time forward into the clock
+sub-system itself. This will allow us to plumb in time control into
+plugins.
 
-Thank you for investigating! It looks like we would be trading one
-issue (the assertion failures you mentioned) for another (a rare, but
-possible, hang).
+From: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240530220610.1245424-4-pierrick.bouvier@linaro.org>
+---
+ include/qemu/timer.h | 15 +++++++++++++++
+ system/qtest.c       | 25 +++----------------------
+ util/qemu-timer.c    | 26 ++++++++++++++++++++++++++
+ 3 files changed, 44 insertions(+), 22 deletions(-)
 
-I'm not sure what the best solution is. It seems like vm_stop() is the
-first place where things go awry. It's where we should exit device
-emulation code. Doing that probably requires an asynchronous API that
-takes a callback. Do you want to try that?
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index 9a366e551f..910587d829 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -245,6 +245,21 @@ bool qemu_clock_run_timers(QEMUClockType type);
+  */
+ bool qemu_clock_run_all_timers(void);
+ 
++/**
++ * qemu_clock_advance_virtual_time(): advance the virtual time tick
++ * @target: target time in nanoseconds
++ *
++ * This function is used where the control of the flow of time has
++ * been delegated to outside the clock subsystem (be it qtest, icount
++ * or some other external source). You can ask the clock system to
++ * return @early at the first expired timer.
++ *
++ * Time can only move forward, attempts to reverse time would lead to
++ * an error.
++ *
++ * Returns: new virtual time.
++ */
++int64_t qemu_clock_advance_virtual_time(int64_t dest);
+ 
+ /*
+  * QEMUTimerList
+diff --git a/system/qtest.c b/system/qtest.c
+index 5be66b0140..8cb98966b4 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -337,26 +337,6 @@ void qtest_set_virtual_clock(int64_t count)
+     qatomic_set_i64(&qtest_clock_counter, count);
+ }
+ 
+-static void qtest_clock_warp(int64_t dest)
+-{
+-    int64_t clock = cpus_get_virtual_clock();
+-    AioContext *aio_context;
+-    assert(qtest_enabled());
+-    aio_context = qemu_get_aio_context();
+-    while (clock < dest) {
+-        int64_t deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
+-                                                      QEMU_TIMER_ATTR_ALL);
+-        int64_t warp = qemu_soonest_timeout(dest - clock, deadline);
+-
+-        cpus_set_virtual_clock(cpus_get_virtual_clock() + warp);
+-
+-        qemu_clock_run_timers(QEMU_CLOCK_VIRTUAL);
+-        timerlist_run_timers(aio_context->tlg.tl[QEMU_CLOCK_VIRTUAL]);
+-        clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+-    }
+-    qemu_clock_notify(QEMU_CLOCK_VIRTUAL);
+-}
+-
+ static bool (*process_command_cb)(CharBackend *chr, gchar **words);
+ 
+ void qtest_set_command_cb(bool (*pc_cb)(CharBackend *chr, gchar **words))
+@@ -751,7 +731,8 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+             ns = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
+                                             QEMU_TIMER_ATTR_ALL);
+         }
+-        qtest_clock_warp(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + ns);
++        qemu_clock_advance_virtual_time(
++            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + ns);
+         qtest_send_prefix(chr);
+         qtest_sendf(chr, "OK %"PRIi64"\n",
+                     (int64_t)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
+@@ -777,7 +758,7 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+         g_assert(words[1]);
+         ret = qemu_strtoi64(words[1], NULL, 0, &ns);
+         g_assert(ret == 0);
+-        qtest_clock_warp(ns);
++        qemu_clock_advance_virtual_time(ns);
+         qtest_send_prefix(chr);
+         qtest_sendf(chr, "OK %"PRIi64"\n",
+                     (int64_t)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
+diff --git a/util/qemu-timer.c b/util/qemu-timer.c
+index 6a0de33dd2..213114be68 100644
+--- a/util/qemu-timer.c
++++ b/util/qemu-timer.c
+@@ -645,6 +645,11 @@ int64_t qemu_clock_get_ns(QEMUClockType type)
+     }
+ }
+ 
++static void qemu_virtual_clock_set_ns(int64_t time)
++{
++    return cpus_set_virtual_clock(time);
++}
++
+ void init_clocks(QEMUTimerListNotifyCB *notify_cb)
+ {
+     QEMUClockType type;
+@@ -675,3 +680,24 @@ bool qemu_clock_run_all_timers(void)
+ 
+     return progress;
+ }
++
++int64_t qemu_clock_advance_virtual_time(int64_t dest)
++{
++    int64_t clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++    AioContext *aio_context;
++    aio_context = qemu_get_aio_context();
++    while (clock < dest) {
++        int64_t deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
++                                                      QEMU_TIMER_ATTR_ALL);
++        int64_t warp = qemu_soonest_timeout(dest - clock, deadline);
++
++        qemu_virtual_clock_set_ns(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + warp);
++
++        qemu_clock_run_timers(QEMU_CLOCK_VIRTUAL);
++        timerlist_run_timers(aio_context->tlg.tl[QEMU_CLOCK_VIRTUAL]);
++        clock = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++    }
++    qemu_clock_notify(QEMU_CLOCK_VIRTUAL);
++
++    return clock;
++}
+-- 
+2.39.2
 
-CCing Kevin in case he has ideas.
-
-Stefan
 
