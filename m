@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 576B9C27C77
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:08:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B630C27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:09:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNcZ-00045l-G5; Wed, 12 Jun 2024 09:02:35 -0400
+	id 1sHNcO-0003SG-H4; Wed, 12 Jun 2024 09:02:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNcV-0003rX-N3
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNcK-0003KT-TN
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNcT-000836-Ic
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:31 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNcC-00081Q-Oj
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718197344;
+ s=mimecast20190719; t=1718197328;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zlQIixF+5BWQgaBiWgi4DZhNkx7aTai0kzaTXlzG5rc=;
- b=ANRhNVywO1T3CbbH5qQjb+lpzFL7lL6qNOXAJzFkcyLJS+A/Gs8vui+RUejWGL/+5kMXD3
- xyzdmReOdThgCXH4dZ2YJn6El1z0vrdHV8Ze2WL+5QWMA4wCRf0CyEJDhFTWHt6pC4iWpO
- 7oL4PmkX2W0JZ0xXbggfJN2/Qpeqaqs=
+ bh=G4pjGaGoyjtNHc+eRM2tVmkqWWianbUh/EWWOB064lE=;
+ b=W1YFj6Yr+WbuC/C/HX0ILkxMMvqT/xBSKQQ/tFTkyeLM4Z5OmR1phExu5HrZ017/NMNxB9
+ /WkWRYIyceNy9nayE+hgtYOBQd8vdxm8+1vifYpqaYVudVGP3e17UESE3YJlnotCoVKlF6
+ 5GH7e+vnRWRHJiJqRlFOG/PxRQyjorA=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-_CFrJJWoP323RyPcB-IBzw-1; Wed,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-503-jqQTprIaPOudRrniSpSlbw-1; Wed,
  12 Jun 2024 09:02:02 -0400
-X-MC-Unique: _CFrJJWoP323RyPcB-IBzw-1
+X-MC-Unique: jqQTprIaPOudRrniSpSlbw-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BD9881954201; Wed, 12 Jun 2024 13:01:50 +0000 (UTC)
+ id 1B32E1954214; Wed, 12 Jun 2024 13:02:02 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.49])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6340F1956053; Wed, 12 Jun 2024 13:01:48 +0000 (UTC)
+ id 1B2B31956053; Wed, 12 Jun 2024 13:01:59 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v1 10/16] vfio/container: Discover IOMMU type before creating
- the container
-Date: Wed, 12 Jun 2024 15:01:16 +0200
-Message-ID: <20240612130122.813935-11-clg@redhat.com>
+Subject: [PATCH v1 15/16] vfio/container: Remove vfio_container_init()
+Date: Wed, 12 Jun 2024 15:01:21 +0200
+Message-ID: <20240612130122.813935-16-clg@redhat.com>
 In-Reply-To: <20240612130122.813935-1-clg@redhat.com>
 References: <20240612130122.813935-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -85,111 +84,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the QEMU struct type representing the VFIO container is deduced
-from the IOMMU type exposed by the host, this type should be well
-defined *before* creating the container struct. This will be necessary
-to instantiate a QOM object of the correct type in future changes.
-
-Rework vfio_set_iommu() to extract the part doing the container
-initialization and move it under vfio_create_container().
+It's now empty.
 
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/container.c | 47 ++++++++++++++++++++++-----------------------
- 1 file changed, 23 insertions(+), 24 deletions(-)
+ include/hw/vfio/vfio-container-base.h | 2 --
+ hw/vfio/container-base.c              | 5 -----
+ hw/vfio/container.c                   | 3 ---
+ hw/vfio/iommufd.c                     | 1 -
+ 4 files changed, 11 deletions(-)
 
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index 6b57cd8e7f5d7d2817f6e3b96ce4566d2630bb12..6242a62771caa8cf19440a53ad6f4db862ca12d7 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -86,8 +86,6 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+                    VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
+ 
+-void vfio_container_init(VFIOContainerBase *bcontainer,
+-                         const VFIOIOMMUClass *ops);
+ void vfio_container_destroy(VFIOContainerBase *bcontainer);
+ 
+ 
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index 24669d4d7472f49ac3adf2618a32bf7d82c5c344..970ae2356a92f87df44e1dd58ff8c67045a24ef1 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -83,11 +83,6 @@ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+                                                errp);
+ }
+ 
+-void vfio_container_init(VFIOContainerBase *bcontainer,
+-                         const VFIOIOMMUClass *ops)
+-{
+-}
+-
+ void vfio_container_destroy(VFIOContainerBase *bcontainer)
+ {
+     VFIOGuestIOMMU *giommu, *tmp;
 diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 8b47d1a13dca793dee1e1b7e06f36e8ea58a81e9..983726f9514ec1106d521c9711a46a4780688ee1 100644
+index 9e9e1ab229c0804f073cd65d92735d4bbf63d1d7..60a0838a9ca83a010d73396dbcd2d24fcdc802ae 100644
 --- a/hw/vfio/container.c
 +++ b/hw/vfio/container.c
-@@ -389,54 +389,56 @@ static const char *vfio_get_iommu_class_name(int iommu_type)
-     };
- }
- 
--static bool vfio_set_iommu(VFIOContainer *container, int group_fd,
--                           Error **errp)
-+static bool vfio_set_iommu(int container_fd, int group_fd,
-+                           int *iommu_type, Error **errp)
- {
--    int iommu_type;
--    const VFIOIOMMUClass *vioc;
--    const char *vioc_name;
--
--    iommu_type = vfio_get_iommu_type(container->fd, errp);
--    if (iommu_type < 0) {
--        return false;
--    }
--
--    if (ioctl(group_fd, VFIO_GROUP_SET_CONTAINER, &container->fd)) {
-+    if (ioctl(group_fd, VFIO_GROUP_SET_CONTAINER, &container_fd)) {
-         error_setg_errno(errp, errno, "Failed to set group container");
-         return false;
-     }
- 
--    while (ioctl(container->fd, VFIO_SET_IOMMU, iommu_type)) {
--        if (iommu_type == VFIO_SPAPR_TCE_v2_IOMMU) {
-+    while (ioctl(container_fd, VFIO_SET_IOMMU, *iommu_type)) {
-+        if (*iommu_type == VFIO_SPAPR_TCE_v2_IOMMU) {
-             /*
-              * On sPAPR, despite the IOMMU subdriver always advertises v1 and
-              * v2, the running platform may not support v2 and there is no
-              * way to guess it until an IOMMU group gets added to the container.
-              * So in case it fails with v2, try v1 as a fallback.
-              */
--            iommu_type = VFIO_SPAPR_TCE_IOMMU;
-+            *iommu_type = VFIO_SPAPR_TCE_IOMMU;
-             continue;
-         }
-         error_setg_errno(errp, errno, "Failed to set iommu for container");
-         return false;
-     }
- 
--    container->iommu_type = iommu_type;
--
--    vioc_name = vfio_get_iommu_class_name(iommu_type);
--    vioc = VFIO_IOMMU_CLASS(object_class_by_name(vioc_name));
--
--    vfio_container_init(&container->bcontainer, vioc);
-     return true;
- }
- 
- static VFIOContainer *vfio_create_container(int fd, VFIOGroup *group,
+@@ -419,7 +419,6 @@ static VFIOContainer *vfio_create_container(int fd, VFIOGroup *group,
                                              Error **errp)
  {
-+    int iommu_type;
-+    const VFIOIOMMUClass *vioc;
-+    const char *vioc_name;
+     int iommu_type;
+-    const VFIOIOMMUClass *vioc;
+     const char *vioc_name;
      VFIOContainer *container;
  
-+    iommu_type = vfio_get_iommu_type(fd, errp);
-+    if (iommu_type < 0) {
-+        return NULL;
-+    }
-+
-+    if (!vfio_set_iommu(fd, group->fd, &iommu_type, errp)) {
-+        return NULL;
-+    }
-+
-+    vioc_name = vfio_get_iommu_class_name(iommu_type);
-+    vioc = VFIO_IOMMU_CLASS(object_class_by_name(vioc_name));
-+
-     container = g_malloc0(sizeof(*container));
+@@ -433,12 +432,10 @@ static VFIOContainer *vfio_create_container(int fd, VFIOGroup *group,
+     }
+ 
+     vioc_name = vfio_get_iommu_class_name(iommu_type);
+-    vioc = VFIO_IOMMU_CLASS(object_class_by_name(vioc_name));
+ 
+     container = VFIO_IOMMU_LEGACY(object_new(vioc_name));
      container->fd = fd;
-+    container->iommu_type = iommu_type;
-+    vfio_container_init(&container->bcontainer, vioc);
+     container->iommu_type = iommu_type;
+-    vfio_container_init(&container->bcontainer, vioc);
      return container;
  }
  
-@@ -618,9 +620,6 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
-     if (!container) {
-         goto close_fd_exit;
-     }
--    if (!vfio_set_iommu(container, group->fd, errp)) {
--        goto free_container_exit;
--    }
-     bcontainer = &container->bcontainer;
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index e1932135df410c53d4062616ee2664b27d30b92c..811e12b7da91357fa5b85ebb9dcc3adeabfa41fd 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -357,7 +357,6 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+     container->ioas_id = ioas_id;
  
-     if (!vfio_cpr_register_container(bcontainer, errp)) {
+     bcontainer = &container->bcontainer;
+-    vfio_container_init(bcontainer, iommufd_vioc);
+     vfio_address_space_insert(space, bcontainer);
+ 
+     if (!iommufd_cdev_attach_container(vbasedev, container, errp)) {
 -- 
 2.45.2
 
