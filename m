@@ -4,126 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77DC4C27C77
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:09:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6FBBC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:10:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNic-0001qz-I4; Wed, 12 Jun 2024 09:08:50 -0400
+	id 1sHNbp-00036X-HL; Wed, 12 Jun 2024 09:01:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1sHNib-0001pz-Hw
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:08:49 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1sHNiZ-0000ns-Pc
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:08:49 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNbn-000353-5G
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:01:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNbj-0007wt-SV
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:01:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718197303;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qUKDYanprLniMeqwrHAv6cargk98Oow3Mh4VWG0FwdI=;
+ b=PxbTsrhsvApxwBEc0TqgFmr91YBpDGJ05+6WBqfP8gB6DBNZzAWfAmKPYJQmzDOMaBvN0c
+ SRWJwubx8aqpljM5EiFqKs9NxFLbKbs+o576igxdxnHfmGF/SiXkGYv6GNL0sTHGV3Nign
+ mI3urmHYBu0AB1wzsOc42SiRszz89Yk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-vDR9FGgjMC27DWI23NLhGA-1; Wed,
+ 12 Jun 2024 09:01:41 -0400
+X-MC-Unique: vDR9FGgjMC27DWI23NLhGA-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 64C3221B11;
- Wed, 12 Jun 2024 13:08:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718197723; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7sLti1x2WHTPUgx+9FLUr6UUrzyE/h8D8CGPHkGLyBs=;
- b=lXlxS/9RqQXjv6BuJitJALq0QFqd8NxvLeZiYn3TEHiofKviiK7aaR3GUE09S2Z3AM0SBV
- q8wd7OzYp8RHXoSklA6f/jUFMeA5YROkuC+tEZRzIPO8xTmF46ljmvyS/5aztCG+RH+2MX
- rEfd7+g93EGhtQ9nqFrJfb9tsPMk+EY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718197723;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7sLti1x2WHTPUgx+9FLUr6UUrzyE/h8D8CGPHkGLyBs=;
- b=gWLa7XthLeSfDqrUW74OWVuU9lAAgd2vAs7J6MOjEfeoTD7QLXxZif83c0rZQ9nPRznheE
- 43LR7bq9j/Jb3QBQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=cX2cEdVE;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ttvlMp9V
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718197721; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7sLti1x2WHTPUgx+9FLUr6UUrzyE/h8D8CGPHkGLyBs=;
- b=cX2cEdVEqFjnINK5ATAoz1pMBr+ojbcdwKikokD62jAHcsRna8PNkVzQe7+7NmWECVHkx1
- yBJ+tM8zan1nnTBXHzmhOtmJ0QQ+uCrpbqns9E4We7p86ECmBOFAF/+gGu7XwkuLDo4zzg
- TTl/95WFhDz0RqTopHYBAbps6h6l2SE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718197721;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7sLti1x2WHTPUgx+9FLUr6UUrzyE/h8D8CGPHkGLyBs=;
- b=ttvlMp9VLpKNSNKtNeKJThL6b5uFoSle4XZIKbZQ9gzD76OI9Rncn4VX/oMXq7nPlYde/u
- zo+r2qoLT8QDkzCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 301A3132FF;
- Wed, 12 Jun 2024 13:08:41 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id r5o0CtmdaWYEMwAAD6G6ig
- (envelope-from <cfontana@suse.de>); Wed, 12 Jun 2024 13:08:41 +0000
-Message-ID: <1a8cd52a-6c3e-47b4-89c8-d0254ba452e7@suse.de>
-Date: Wed, 12 Jun 2024 15:08:40 +0200
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 94B09195608B; Wed, 12 Jun 2024 13:01:40 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.49])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C8D801956053; Wed, 12 Jun 2024 13:01:38 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v1 06/16] vfio/container: Simplify vfio_container_init()
+Date: Wed, 12 Jun 2024 15:01:12 +0200
+Message-ID: <20240612130122.813935-7-clg@redhat.com>
+In-Reply-To: <20240612130122.813935-1-clg@redhat.com>
+References: <20240612130122.813935-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: assert fails in s390x TCG
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Anton Johansson <anjo@rev.ng>
-References: <eaec32e3-d56a-e6a7-fcbe-860948e79658@suse.de>
- <def2df0d-fb58-8e67-a0eb-7d646da3be42@linaro.org>
- <0e06f694-7aeb-66d1-48d8-317a93f8f741@suse.de>
- <6a3e8443-2d0a-451e-a481-cc26575d8211@linaro.org>
- <14787dc3-66ae-e15e-0bdf-14ca53bff17d@linaro.org>
- <b0b49b1b-6877-487c-9f4d-b29ae54c5ab0@linaro.org>
-Content-Language: en-US
-From: Claudio Fontana <cfontana@suse.de>
-In-Reply-To: <b0b49b1b-6877-487c-9f4d-b29ae54c5ab0@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-6.50 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; XM_UA_NO_VERSION(0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; TO_DN_ALL(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[nongnu.org:email, imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, gnu.org:url, suse.de:email, suse.de:dkim]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 64C3221B11
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=cfontana@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,52 +84,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/12/24 14:41, Philippe Mathieu-Daudé wrote:
-> On 28/7/23 18:43, Richard Henderson wrote:
->> On 7/28/23 09:05, Richard Henderson wrote:
->>> It's the page containing both code and a page table entry that 
->>> concerns me.  It seems like a kernel bug, though obviously we 
->>> shouldn't crash.  I'm not sure what to do about it.
->>
->> Bah.  Of course it's not a kernel bug, since the store is to LowCore.
->> And of course LowCore is part of a larger page, which easily has other 
->> stuff.
-> 
-> Maybe related to
-> https://lore.kernel.org/qemu-devel/20240611215814.32752-1-anjo@rev.ng/
-> 
+Assign the base container VFIOAddressSpace 'space' pointer in
+vfio_address_space_insert().
 
-Hi philippe,
+To be noted that vfio_connect_container() will assign the 'space'
+pointer later in the execution flow. This should not have any
+consequence.
 
-this was already fixed by Ilya's commit:
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/vfio/vfio-container-base.h | 1 -
+ hw/vfio/common.c                      | 1 +
+ hw/vfio/container-base.c              | 3 +--
+ hw/vfio/container.c                   | 6 +++---
+ hw/vfio/iommufd.c                     | 2 +-
+ 5 files changed, 6 insertions(+), 7 deletions(-)
 
-commit 791b2b6a930273db694b9ba48bbb406e78715927
-Author: Ilya Leoshkevich <iii@linux.ibm.com>
-Date:   Sat Aug 5 01:03:18 2023 +0200
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index 442c0dfc4c1774753c239c2c8360dcd1540d44fa..d505f63607ec40e6aa44aeb3e20848ac780562a1 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -87,7 +87,6 @@ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+                    VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
+ 
+ void vfio_container_init(VFIOContainerBase *bcontainer,
+-                         VFIOAddressSpace *space,
+                          const VFIOIOMMUClass *ops);
+ void vfio_container_destroy(VFIOContainerBase *bcontainer);
+ 
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 8cdf26c6f5a490cfa02bdf1087a91948709aaa33..1686a0bed23bd95467bfb00a0c39a4d966e49cae 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1512,6 +1512,7 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
+                                VFIOContainerBase *bcontainer)
+ {
+     QLIST_INSERT_HEAD(&space->containers, bcontainer, next);
++    bcontainer->space = space;
+ }
+ 
+ struct vfio_device_info *vfio_get_device_info(int fd)
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index 760d9d0622b2e847ecb3368c88df772efb06043f..280f0dd2db1fc3939fe9925ce00a2c50d0e14196 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -71,11 +71,10 @@ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+                                                errp);
+ }
+ 
+-void vfio_container_init(VFIOContainerBase *bcontainer, VFIOAddressSpace *space,
++void vfio_container_init(VFIOContainerBase *bcontainer,
+                          const VFIOIOMMUClass *ops)
+ {
+     bcontainer->ops = ops;
+-    bcontainer->space = space;
+     bcontainer->error = NULL;
+     bcontainer->dirty_pages_supported = false;
+     bcontainer->dma_max_mappings = 0;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 15ca3643bc1b4e1a50a5a3de4359d61ec1bda9de..70fd6334e9c959f4301b46ed1ae9b77fcb4d7d1c 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -394,7 +394,7 @@ static const VFIOIOMMUClass *vfio_get_iommu_class(int iommu_type, Error **errp)
+ }
+ 
+ static bool vfio_set_iommu(VFIOContainer *container, int group_fd,
+-                           VFIOAddressSpace *space, Error **errp)
++                           Error **errp)
+ {
+     int iommu_type;
+     const VFIOIOMMUClass *vioc;
+@@ -432,7 +432,7 @@ static bool vfio_set_iommu(VFIOContainer *container, int group_fd,
+         return false;
+     }
+ 
+-    vfio_container_init(&container->bcontainer, space, vioc);
++    vfio_container_init(&container->bcontainer, vioc);
+     return true;
+ }
+ 
+@@ -614,7 +614,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+     container->fd = fd;
+     bcontainer = &container->bcontainer;
+ 
+-    if (!vfio_set_iommu(container, group->fd, space, errp)) {
++    if (!vfio_set_iommu(container, group->fd, errp)) {
+         goto free_container_exit;
+     }
+ 
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 19bb6419bdffd1c69cc14c7cd5684eb6d0231338..d97a4f7393791660b90e340436c6e084c0781444 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -357,7 +357,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+     container->ioas_id = ioas_id;
+ 
+     bcontainer = &container->bcontainer;
+-    vfio_container_init(bcontainer, space, iommufd_vioc);
++    vfio_container_init(bcontainer, iommufd_vioc);
+     vfio_address_space_insert(space, bcontainer);
+ 
+     if (!iommufd_cdev_attach_container(vbasedev, container, errp)) {
+-- 
+2.45.2
 
-    target/s390x: Fix the "ignored match" case in VSTRS
-    
-    Currently the emulation of VSTRS recognizes partial matches in presence
-    of \0 in the haystack, which, according to PoP, is not correct:
-    
-        If the ZS flag is one and a zero byte was detected
-        in the second operand, then there can not be a
-        partial match ...
-    
-    Add a check for this. While at it, fold a number of explicitly handled
-    special cases into the generic logic.
-    
-    Cc: qemu-stable@nongnu.org
-    Reported-by: Claudio Fontana <cfontana@suse.de>
-    Closes: https://lists.gnu.org/archive/html/qemu-devel/2023-08/msg00633.html
-    Fixes: 1d706f314191 ("target/s390x: vxeh2: vector string search")
-    Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-    Message-Id: <20230804233748.218935-3-iii@linux.ibm.com>
-    Tested-by: Claudio Fontana <cfontana@suse.de>
-    Acked-by: David Hildenbrand <david@redhat.com>
-    Signed-off-by: Thomas Huth <thuth@redhat.com>
-
-Ciao,
-
-Claudio
 
