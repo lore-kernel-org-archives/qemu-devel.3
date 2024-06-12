@@ -4,75 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B305C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 16:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 864ACC27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 16:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHQVI-0002BE-GZ; Wed, 12 Jun 2024 12:07:16 -0400
+	id 1sHQm1-0000Zk-3M; Wed, 12 Jun 2024 12:24:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sHQVH-0002AZ-Fg
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 12:07:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sHQly-0000Z1-Nb
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 12:24:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sHQVF-0002Tx-NQ
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 12:07:15 -0400
+ id 1sHQlx-0005nb-1b
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 12:24:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718208432;
+ s=mimecast20190719; t=1718209467;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8gZC9sFbKgdeP7G05F9emmLdcMbSZ0QAmmc/5aZFAGA=;
- b=CB1vEncb63OSQM73S3s/SpeM2blSi0Gagwh1w4FRkC3PtQNQLGxjVR9ARYWQvQCi+24Tix
- 0akx8X+pPyiydlAAHz44a+RDQNrNFNaEuXuqrFpRfykbgHMd9UJJfLN8JlPCzBGAN74Edr
- CbaKbN+5YCdvHZvQedbLXxtG8l4UpDY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=jh9Hc6oq55B/+hrDwJrPLVgsQ/OcTyxzkj+mcrrusQs=;
+ b=eZ+PctclAXLwJ4CFz3fUS7hbidqN+O+TIxryt3C/tWY6PL4NJSTAC2cKvrVxHQXbmcTP1i
+ dZAf4/wvw46EhwTrGzqv9Mh6OwsYefRGuXX0/hdG8yLCH9kqND4IKH3qOglePCytd5xcR3
+ egEpLpRaEafkrSkkmCfHVTdVbPhK6vM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-154-2hxNrrsYMNCt6-Jn_NhAUw-1; Wed,
- 12 Jun 2024 12:07:08 -0400
-X-MC-Unique: 2hxNrrsYMNCt6-Jn_NhAUw-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-401-oOQy5q7NMWO8ldP7n7QhbQ-1; Wed,
+ 12 Jun 2024 12:24:26 -0400
+X-MC-Unique: oOQy5q7NMWO8ldP7n7QhbQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C5D31955F01; Wed, 12 Jun 2024 16:07:06 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 308191955DE9; Wed, 12 Jun 2024 16:24:24 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.115])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F3E2F1956087; Wed, 12 Jun 2024 16:07:00 +0000 (UTC)
-Date: Wed, 12 Jun 2024 17:06:57 +0100
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2C4C619560AD; Wed, 12 Jun 2024 16:24:21 +0000 (UTC)
+Date: Wed, 12 Jun 2024 17:24:18 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Alexander Monakov <amonakov@ispras.ru>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?utf-8?B?QmVubsOp?= e <alex.bennee@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
-Message-ID: <ZmnHoajecti472mi@redhat.com>
-References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
- <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
- <CABgObfY8BS0yCw2CxgDQTBA4np9BZgGJF3N=t6eoBcdACAE=NA@mail.gmail.com>
- <ez270.x96k6aeu0rpw@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 0/5] Reinstate ability to use Qemu on pre-SSE4.1 x86 hosts
+Message-ID: <ZmnLslPKftkPUkWI@redhat.com>
+References: <20240612105525.8795-1-amonakov@ispras.ru>
+ <ZmmAq8fbJLuaX4Qg@redhat.com>
+ <CABgObfbGa=xpp9-cLwzqCpPFsf27qM+K-svfXEvc6ffjb=_VAg@mail.gmail.com>
+ <ZmmIpr5f0sQy-VGl@redhat.com>
+ <CABgObfZHBGxS-D9LdM1v0oDXBHoKm2-A4FknixmqjfJeQR1YLw@mail.gmail.com>
+ <ZmmSxq7i_tpYj7tw@redhat.com> <Zmm6Kf8PEwZ47bMb@redhat.com>
+ <59f923eb-1925-8c22-e83a-8703fbf60b7f@ispras.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ez270.x96k6aeu0rpw@linaro.org>
+In-Reply-To: <59f923eb-1925-8c22-e83a-8703fbf60b7f@ispras.ru>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -98,54 +94,33 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 12, 2024 at 05:14:56PM +0300, Manos Pitsidianakis wrote:
-> On Wed, 12 Jun 2024 15:29, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> > I think this is extremely useful to show where we could go in the task
-> > of creating more idiomatic bindings.
-> > 
-> > On Tue, Jun 11, 2024 at 12:34 PM Manos Pitsidianakis
-> > <manos.pitsidianakis@linaro.org> wrote:
-> > > +pub const PL011_ARM_INFO: TypeInfo = TypeInfo {
-> > > +    name: TYPE_PL011.as_ptr(),
-> > > +    parent: TYPE_SYS_BUS_DEVICE.as_ptr(),
-> > > +    instance_size: core::mem::size_of::<PL011State>(),
-> > > +    instance_align: core::mem::align_of::<PL011State>(),
-> > > +    instance_init: Some(pl011_init),
-> > > +    instance_post_init: None,
-> > > +    instance_finalize: None,
-> > > +    abstract_: false,
-> > > +    class_size: 0,
-> > > +    class_init: Some(pl011_class_init),
-> > > +    class_base_init: None,
-> > > +    class_data: core::ptr::null_mut(),
-> > > +    interfaces: core::ptr::null_mut(),
-> > > +};
-> > 
-> > QOM is certainly a major part of what we need to do for idiomatic
-> > bindings. This series includes both using QOM objects (chardev) and
-> > defining them.
-> > 
-> > For using QOM objects, there is only one strategy that we need to
-> > implement for both Chardev and DeviceState/SysBusDevice which is nice.
-> > We can probably take inspiration from glib-rs, see for example
-> > - https://docs.rs/glib/latest/glib/object/trait.Cast.html
-> > - https://docs.rs/glib/latest/glib/object/trait.ObjectType.html
-> > - https://docs.rs/glib/latest/glib/object/struct.ObjectRef.html
+On Wed, Jun 12, 2024 at 06:40:09PM +0300, Alexander Monakov wrote:
 > 
+> On Wed, 12 Jun 2024, Daniel P. Berrangé wrote:
 > 
-> There was consensus in the community call that we won't be writing Rust APIs
-> for internal C QEMU interfaces; or at least, that's not the goal
+> > I learnt that FESCo approved a surprisingly loose rule saying
+> > 
+> >   "Libraries packaged in Fedora may require ISA extensions,
+> >    however any packaged application must not crash on any
+> >    officially supported architecture, either by providing
+> >    a generic fallback implementation OR by cleanly exiting
+> >    when the requisite hardware support is unavailable."
+> > 
+> > This might suggest we could put a runtime feature check in main(),
+> > print a warning and then exit(1), however, QEMU has alot of code
+> > that is triggered from ELF constructors. If we're building the
+> > entire of QEMU codebase with extra features enabled, I worry that
+> > the constructors could potentially cause a illegal instruction
+> > crash before main() runs ?
+> 
+> Are you literally suggesting to find a solution that satisfies the letter
+> of Fedora rules, and not what's good for the spirit of a wider community.
 
-I think that is over-stating things. This was only mentioned in passing
-and my feeling was that we didn't have that detailed of a discussion
-because at this stage such a discussion is a bit like putting the cart
-before the horse.
-
-While the initial focus might be to just consume a Rust API that is a
-1:1 mapping of the C API, I expect that over time we'll end up writing
-various higher level Rust wrappers around the C API. If we didn't do that,
-then in effect we'd be making ourselves write psuedo-C code in Rust,
-undermining many of the benefits we could get.
+I'm interested in exploring what the options are. Personally I still
+think QEMU ought to maintain compat with the original x86_64 ABI, since
+very few distros have moved to requiring -v2, but if that doesn't happen
+I want to understand the implications for Fedora since that's where I'm
+a maintainer.
 
 With regards,
 Daniel
