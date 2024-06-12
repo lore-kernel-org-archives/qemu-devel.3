@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1234C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 12:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F760C27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 12:49:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNOy-0005OU-0t; Wed, 12 Jun 2024 08:48:32 -0400
+	id 1sHNPM-0005Xh-LM; Wed, 12 Jun 2024 08:48:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHNOv-0005OB-O7
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:48:29 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sHNPL-0005Uq-4g
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:48:55 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHNOu-0005oo-3v
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:48:29 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4210aa012e5so21800505e9.0
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 05:48:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sHNPI-0005tR-Eb
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:48:54 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-57a44c2ce80so2926029a12.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 05:48:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718196506; x=1718801306; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Y/3y/8JIIGuT9LIu6BrhKkuGg4jsQO4e/xe3DbBKrik=;
- b=ZEO/n1t5J984atQc80DZEaXwB666qRG88XoWXiOno0alYP2buIca1u9GI6CzDNJFmV
- Te5zc6L9aCWNuJFZydy0FCoNd3Jt+UPGG2FGR+yjLa2WRLLKUUywhO8Rh/SorJWksdi5
- R0BbuXTkBphq1XSG+jxhuGeoltRk1EewCYOUYKEyQyJY4DY2rRAKuW+34aq7EDcPjRWV
- +Gk6ObzhAdMsBZHDi5LMIqVJ+mleLd7+oy1EH4dHM4t6GTc2M9QxeKkx22k9LB5jwmlP
- MXHvQV4RM089rETAKcSIr59ttGVULvJHVty7VY2j5fYkscR0CGyUYfpKAv/b91Dj0UuR
- UVIw==
+ d=linaro.org; s=google; t=1718196531; x=1718801331; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VJKu1EI5WiRS6emBcQ8li8fqo56Fg1wL9feC7WT0qL0=;
+ b=sjjODgjJTzJsfQxaHF92wunFkKDI5KTDr9BwlPzhPeOR+Sok00O9si15/mDoOcc2XH
+ jXz/KlMG2R13NTztwgAHxIanKjYkKC3X1X5+CfF8JiCXLPEzb4iIP4PbAJhmEUgVyOYQ
+ VB5AxC1rB6PrJVG9FsvQ/VXc/vn7lt7imMwxkx16ugJ2LbnspixAuJQNxT9F6Jqn2Rcj
+ 3gZj9yqApzZJbC5zx9whcfDxa4zXqIEr0V8yRU9XeHRWICy6Hsv6p2m4hrhkJMXEUR0v
+ bzyBlFWFlkOjFimzMwHoSrdUqyCedIlH1w8VUi435p7/yN8bdJKFAlcahD5pL8XS5bLJ
+ ereg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718196506; x=1718801306;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y/3y/8JIIGuT9LIu6BrhKkuGg4jsQO4e/xe3DbBKrik=;
- b=uCOaz8dvjVE6xhcmE335jus7g50UjWelN5cXfCAniW9jHwX0x0kQSZOXUvR7g1MR9Y
- OeSou65WHICH/rXOw/pQxr7nCWpoYTJoi7dpK/N6+96mzgMSgTeTdOAO+J8dGnOTxNUx
- EpgZK4nlCNdA/5+oo/XeBSzrNdf2Gpomw56DsOxvcimSB2lytBG657Dhk+mBQqExESwq
- JCABFqtSIoEQNiBuEBSLVgpwEQk7kzT/qlkW9Avvwoqo7vO/Yi3IIqXpGNewPTSKT3Ln
- bDW6+toypnxvqUz157WnVVVSExNhL0JcGS/hajM3MdxW1n5nkIlMCRFNkOCnK5ksLESY
- JPkg==
+ d=1e100.net; s=20230601; t=1718196531; x=1718801331;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VJKu1EI5WiRS6emBcQ8li8fqo56Fg1wL9feC7WT0qL0=;
+ b=hSPc5r1IQjQ/d5pZ/QeQHjCVJSuQxwzni41UuuIG5JPxbWJnzjXPLheHL9hLmipRm+
+ J6srt7nfrf3q9jp5xGS4XpjCMO23XlsN/GVX1ix2ND5J5Dx+HUYDXNaN7cEMcrfT4wIg
+ lJSqz60r7WZKX+eGznirB8qgvRJ4Q5k8fgE12FVQTuDY7vjMQS1h+t7XVisSaYgEUOP4
+ b1CZjqHXwBZn7fqD9h+IIpZ2qrTWBLLIWbK7Smnyb0qxEe2fbq92cPOz7xh9EQvsypf/
+ iPAR+OUp4gtyWSLuHlpS45/AOkt5PFPRDFv7xLXch5XEuFXeoAsWS2NMMQd9t2Te3I95
+ EMzA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU0U8V1DGtYEJHrKIhfkOmf510lCOwYjwIRvqcJ8Nt05LWPbtTv82/p944Aa+AGRclVpUce67dJo0C/pSPwEHocDQJRfxU=
-X-Gm-Message-State: AOJu0YwmnI55ASIZqAGLheaTerGUV2YEkuZF1Z1i70JkziRMSC1Vi1go
- Msn10AQe5fSVMVwUufeK8TyVv/4u9Cfy8MC06mK2YbMkUCXbJarCsE2ux4bxhlmiOcCkZkH2SUo
- 9
-X-Google-Smtp-Source: AGHT+IELaLfMxIlQ3ua+N50C57vHt/QvgvPJpfE4/pEIP/z6b73HIY4+01TA3F/TWWmoagIeb4zHJA==
-X-Received: by 2002:adf:dd91:0:b0:35f:1dcd:131d with SMTP id
- ffacd0b85a97d-35fdf7acb54mr1172234f8f.30.1718196506592; 
- Wed, 12 Jun 2024 05:48:26 -0700 (PDT)
-Received: from [192.168.69.100] (ram94-h02-176-184-0-172.dsl.sta.abo.bbox.fr.
- [176.184.0.172]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422874e73e8sm26542105e9.43.2024.06.12.05.48.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Jun 2024 05:48:26 -0700 (PDT)
-Message-ID: <6e00233e-63ab-4513-aa0f-c55ab4ef0747@linaro.org>
-Date: Wed, 12 Jun 2024 14:48:24 +0200
+ AJvYcCXFImk22WJUUZH3Aa+rMBbRJfCpvEZpYPbaLJuWKI0s0XIukulaqfI0tnTMDmJe7UubmWDuRh/qYmJKpiZjTpsspajkxp4=
+X-Gm-Message-State: AOJu0Ywb3NHGVcs0z43hSQS1rFuxU8tIUE0oUpnD8k3N/ixuvQ1PE8Cz
+ wFm37D1nnrL6uP2M7EnzaWUxGIrvw1IX53QrUAx5d9dtv2/Hpo0xImOV+dbeQ0siM4A/8hl+mWp
+ ZD9MJlVa4Mv3kq1fd12EebNhzoyVcagHEQMAkbg==
+X-Google-Smtp-Source: AGHT+IFkfptB1IveV9NnJWiFFjm8RIM0P9MFqWCDaFuQo4cmENpVGJDMLPV6v4t/sKPEnnHXGFa53G/xBQCnMwUcC9k=
+X-Received: by 2002:a50:aa9d:0:b0:57a:2a46:701 with SMTP id
+ 4fb4d7f45d1cf-57ca9769334mr1164669a12.19.1718196530638; Wed, 12 Jun 2024
+ 05:48:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/1] qga/linux: Add new api 'guest-network-get-route'
-To: Dehan Meng <demeng@redhat.com>, qemu-devel@nongnu.org
-Cc: kkostiuk@redhat.com, michael.roth@amd.com
-References: <20240612103105.301456-1-demeng@redhat.com>
- <20240612103105.301456-2-demeng@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240612103105.301456-2-demeng@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+References: <20240612020506.307793-1-zhenyzha@redhat.com>
+ <69649622-e52c-4d24-809b-3d8a97786a69@linaro.org>
+In-Reply-To: <69649622-e52c-4d24-809b-3d8a97786a69@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 12 Jun 2024 13:48:37 +0100
+Message-ID: <CAFEAcA9wEjONgLfTObNYwJbwn5Gs1BDJiDivc9PEwmfOeZW6ww@mail.gmail.com>
+Subject: Re: [PATCH v3] hw/arm/virt: Avoid unexpected warning from Linux guest
+ on host with Fujitsu CPUs
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Zhenyu Zhang <zhenyzha@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, 
+ robin.murphy@arm.com, Jonathan.Cameron@huawei.com, gshan@redhat.com, 
+ eauger@redhat.com, sebott@redhat.com, cohuck@redhat.com, ddutile@redhat.com, 
+ shahuang@redhat.com, qemu-riscv <qemu-riscv@nongnu.org>,
+ qemu-ppc <qemu-ppc@nongnu.org>, Song Gao <gaosong@loongson.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,88 +98,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Dehan,
+On Wed, 12 Jun 2024 at 13:33, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Hi Zhenyu,
+>
+> On 12/6/24 04:05, Zhenyu Zhang wrote:
+> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> > index 3c93c0c0a6..3cefac6d43 100644
+> > --- a/hw/arm/virt.c
+> > +++ b/hw/arm/virt.c
+> > @@ -271,6 +271,17 @@ static void create_fdt(VirtMachineState *vms)
+> >       qemu_fdt_setprop_cell(fdt, "/", "#size-cells", 0x2);
+> >       qemu_fdt_setprop_string(fdt, "/", "model", "linux,dummy-virt");
+> >
+> > +    /*
+> > +     * For QEMU, all DMA is coherent. Advertising this in the root nod=
+e
+> > +     * has two benefits:
+> > +     *
+> > +     * - It avoids potential bugs where we forget to mark a DMA
+> > +     *   capable device as being dma-coherent
+> > +     * - It avoids spurious warnings from the Linux kernel about
+> > +     *   devices which can't do DMA at all
+> > +     */
+> > +    qemu_fdt_setprop(fdt, "/", "dma-coherent", NULL, 0);
+>
+> OK, but why restrict that to the Aarch64 virt machine?
+> Shouldn't advertise this generically in create_device_tree()?
+> Or otherwise at least in the other virt machines?
 
-On 12/6/24 12:31, Dehan Meng wrote:
-> The Route information of the Linux VM needs to be used
-> by administrators and users when debugging network problems
-> and troubleshooting.
-> 
-> Signed-off-by: Dehan Meng <demeng@redhat.com>
-> ---
->   qga/commands-posix.c | 81 ++++++++++++++++++++++++++++++++++++++++++++
->   qga/commands-win32.c |  6 ++++
->   qga/qapi-schema.json | 56 ++++++++++++++++++++++++++++++
->   3 files changed, 143 insertions(+)
+create_device_tree() creates an empty device tree, not one
+with stuff in it. It seems reasonable to me for this property
+on the root to be set in the same place we set other properties
+of the root node.
 
-
-> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> index b3de1fb6b3..58f51aecbb 100644
-> --- a/qga/qapi-schema.json
-> +++ b/qga/qapi-schema.json
-> @@ -1800,3 +1800,59 @@
->   { 'command': 'guest-get-cpustats',
->     'returns': ['GuestCpuStats']
->   }
-> +
-> +##
-> +# @GuestNetworkRoute:
-> +#
-> +# Route information, currently, only linux supported.
-> +#
-> +# @iface: The destination network or host's egress network interface in the routing table
-> +#
-> +# @destination: The IP address of the target network or host, The final destination of the packet
-
-Maybe clearer to start naming this @ipv4 in case you plan @ipv6
-support later (see @NetdevUserOptions structure in qapi/net.json).
-
-> +#
-> +# @gateway: The IP address of the next hop router
-> +#
-> +# @mask: Subnet Mask
-> +#
-> +# @metric: Route metric
-> +#
-> +# @flags: Route flags (not for windows)
-> +#
-> +# @irtt: Initial round-trip delay (not for windows)
-> +#
-> +# @refcnt: The route's reference count (not for windows)
-> +#
-> +# @use: Route usage count (not for windows)
-> +#
-> +# @window: TCP window size, used for flow control (not for windows)
-> +#
-> +# @mtu: Data link layer maximum packet size (not for windows)
-> +#
-> +# Since: 9.1
-> +
-> +##
-> +{ 'struct': 'GuestNetworkRoute',
-> +  'data': {'iface': 'str',
-> +           'destination': 'str',
-> +           'gateway': 'str',
-> +           'metric': 'int',
-> +           'mask': 'str',
-> +           '*irtt': 'int',
-> +           '*flags': 'uint64',
-> +           '*refcnt': 'int',
-> +           '*use': 'int',
-> +           '*window': 'int',
-> +           '*mtu': 'int'
-> +           }}
-> +
-> +##
-> +# @guest-network-get-route:
-> +#
-> +# Retrieve information about route of network.
-> +# Returns: List of route info of guest.
-> +#
-> +# Since: 9.1
-> +##
-> +{ 'command': 'guest-network-get-route',
-> +  'returns': ['GuestNetworkRoute']
-> +}
-
+thanks
+-- PMM
 
