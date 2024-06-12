@@ -4,71 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C39D7C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77DC4C27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:09:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNcM-0003P3-TO; Wed, 12 Jun 2024 09:02:23 -0400
+	id 1sHNic-0001qz-I4; Wed, 12 Jun 2024 09:08:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNcH-0003EA-0d
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNcA-000817-I1
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718197324;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1sHNib-0001pz-Hw
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:08:49 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1sHNiZ-0000ns-Pc
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:08:49 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 64C3221B11;
+ Wed, 12 Jun 2024 13:08:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718197723; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BtR9KWjkVOl5a+QyMVcTFX2Y2Sd5zloxUYPRhRaXBqo=;
- b=CnQ2tVhc4YW/zLZDCGT/hy/QhUHUmxUokQgLP/gGv5Aj6cV693SC+oPtjPMuDt2M/PdYZ1
- 2pJ7tfxv+rIqIyUbNAlysOe4VOQKaivsN9oBlaNTeMivHNVWrNCUx9aimWH5pYiRgyGjkr
- uw73Gl0EiXQ9O1PQrvyx9YUr09d1pLM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-42-jA4zdDZgNg6hAJ0cAY7ZNA-1; Wed,
- 12 Jun 2024 09:02:00 -0400
-X-MC-Unique: jA4zdDZgNg6hAJ0cAY7ZNA-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ bh=7sLti1x2WHTPUgx+9FLUr6UUrzyE/h8D8CGPHkGLyBs=;
+ b=lXlxS/9RqQXjv6BuJitJALq0QFqd8NxvLeZiYn3TEHiofKviiK7aaR3GUE09S2Z3AM0SBV
+ q8wd7OzYp8RHXoSklA6f/jUFMeA5YROkuC+tEZRzIPO8xTmF46ljmvyS/5aztCG+RH+2MX
+ rEfd7+g93EGhtQ9nqFrJfb9tsPMk+EY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718197723;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7sLti1x2WHTPUgx+9FLUr6UUrzyE/h8D8CGPHkGLyBs=;
+ b=gWLa7XthLeSfDqrUW74OWVuU9lAAgd2vAs7J6MOjEfeoTD7QLXxZif83c0rZQ9nPRznheE
+ 43LR7bq9j/Jb3QBQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=cX2cEdVE;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=ttvlMp9V
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718197721; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7sLti1x2WHTPUgx+9FLUr6UUrzyE/h8D8CGPHkGLyBs=;
+ b=cX2cEdVEqFjnINK5ATAoz1pMBr+ojbcdwKikokD62jAHcsRna8PNkVzQe7+7NmWECVHkx1
+ yBJ+tM8zan1nnTBXHzmhOtmJ0QQ+uCrpbqns9E4We7p86ECmBOFAF/+gGu7XwkuLDo4zzg
+ TTl/95WFhDz0RqTopHYBAbps6h6l2SE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718197721;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7sLti1x2WHTPUgx+9FLUr6UUrzyE/h8D8CGPHkGLyBs=;
+ b=ttvlMp9VLpKNSNKtNeKJThL6b5uFoSle4XZIKbZQ9gzD76OI9Rncn4VX/oMXq7nPlYde/u
+ zo+r2qoLT8QDkzCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD4701955DC7; Wed, 12 Jun 2024 13:01:59 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.49])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 53E6F1956053; Wed, 12 Jun 2024 13:01:57 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v1 14/16] vfio/container: Remove VFIOContainerBase::ops
-Date: Wed, 12 Jun 2024 15:01:20 +0200
-Message-ID: <20240612130122.813935-15-clg@redhat.com>
-In-Reply-To: <20240612130122.813935-1-clg@redhat.com>
-References: <20240612130122.813935-1-clg@redhat.com>
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 301A3132FF;
+ Wed, 12 Jun 2024 13:08:41 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id r5o0CtmdaWYEMwAAD6G6ig
+ (envelope-from <cfontana@suse.de>); Wed, 12 Jun 2024 13:08:41 +0000
+Message-ID: <1a8cd52a-6c3e-47b4-89c8-d0254ba452e7@suse.de>
+Date: Wed, 12 Jun 2024 15:08:40 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: assert fails in s390x TCG
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Anton Johansson <anjo@rev.ng>
+References: <eaec32e3-d56a-e6a7-fcbe-860948e79658@suse.de>
+ <def2df0d-fb58-8e67-a0eb-7d646da3be42@linaro.org>
+ <0e06f694-7aeb-66d1-48d8-317a93f8f741@suse.de>
+ <6a3e8443-2d0a-451e-a481-cc26575d8211@linaro.org>
+ <14787dc3-66ae-e15e-0bdf-14ca53bff17d@linaro.org>
+ <b0b49b1b-6877-487c-9f4d-b29ae54c5ab0@linaro.org>
+Content-Language: en-US
+From: Claudio Fontana <cfontana@suse.de>
+In-Reply-To: <b0b49b1b-6877-487c-9f4d-b29ae54c5ab0@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spamd-Result: default: False [-6.50 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; XM_UA_NO_VERSION(0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; TO_DN_ALL(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[nongnu.org:email, imap1.dmz-prg2.suse.org:helo,
+ imap1.dmz-prg2.suse.org:rdns, gnu.org:url, suse.de:email, suse.de:dkim]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 64C3221B11
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=cfontana@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,226 +139,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead, use VFIO_IOMMU_GET_CLASS() to get the class pointer.
+On 6/12/24 14:41, Philippe Mathieu-Daudé wrote:
+> On 28/7/23 18:43, Richard Henderson wrote:
+>> On 7/28/23 09:05, Richard Henderson wrote:
+>>> It's the page containing both code and a page table entry that 
+>>> concerns me.  It seems like a kernel bug, though obviously we 
+>>> shouldn't crash.  I'm not sure what to do about it.
+>>
+>> Bah.  Of course it's not a kernel bug, since the store is to LowCore.
+>> And of course LowCore is part of a larger page, which easily has other 
+>> stuff.
+> 
+> Maybe related to
+> https://lore.kernel.org/qemu-devel/20240611215814.32752-1-anjo@rev.ng/
+> 
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/vfio/vfio-container-base.h |  1 -
- hw/vfio/common.c                      |  2 +-
- hw/vfio/container-base.c              | 37 +++++++++++++++++----------
- hw/vfio/container.c                   | 15 ++++++-----
- hw/vfio/iommufd.c                     |  4 +--
- hw/vfio/pci.c                         |  4 +--
- 6 files changed, 38 insertions(+), 25 deletions(-)
+Hi philippe,
 
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index b079b76f68975c5701a289ce9012e912a8e44fc6..6b57cd8e7f5d7d2817f6e3b96ce4566d2630bb12 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -35,7 +35,6 @@ typedef struct VFIOAddressSpace {
-  */
- typedef struct VFIOContainerBase {
-     Object parent;
--    const VFIOIOMMUClass *ops;
-     VFIOAddressSpace *space;
-     MemoryListener listener;
-     Error *error;
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 1686a0bed23bd95467bfb00a0c39a4d966e49cae..7cdb969fd396ae3815cb175ad631d93d7cca7006 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -1573,5 +1573,5 @@ void vfio_detach_device(VFIODevice *vbasedev)
-         return;
-     }
-     object_unref(vbasedev->hiod);
--    vbasedev->bcontainer->ops->detach_device(vbasedev);
-+    VFIO_IOMMU_GET_CLASS(vbasedev->bcontainer)->detach_device(vbasedev);
- }
-diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-index 3858f5ab1d68e897f9013161d7c5c20c0553029d..24669d4d7472f49ac3adf2618a32bf7d82c5c344 100644
---- a/hw/vfio/container-base.c
-+++ b/hw/vfio/container-base.c
-@@ -19,62 +19,73 @@ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
-                            hwaddr iova, ram_addr_t size,
-                            void *vaddr, bool readonly)
- {
--    g_assert(bcontainer->ops->dma_map);
--    return bcontainer->ops->dma_map(bcontainer, iova, size, vaddr, readonly);
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+
-+    g_assert(vioc->dma_map);
-+    return vioc->dma_map(bcontainer, iova, size, vaddr, readonly);
- }
- 
- int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
-                              hwaddr iova, ram_addr_t size,
-                              IOMMUTLBEntry *iotlb)
- {
--    g_assert(bcontainer->ops->dma_unmap);
--    return bcontainer->ops->dma_unmap(bcontainer, iova, size, iotlb);
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+
-+    g_assert(vioc->dma_unmap);
-+    return vioc->dma_unmap(bcontainer, iova, size, iotlb);
- }
- 
- bool vfio_container_add_section_window(VFIOContainerBase *bcontainer,
-                                        MemoryRegionSection *section,
-                                        Error **errp)
- {
--    if (!bcontainer->ops->add_window) {
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+
-+    if (!vioc->add_window) {
-         return true;
-     }
- 
--    return bcontainer->ops->add_window(bcontainer, section, errp);
-+    return vioc->add_window(bcontainer, section, errp);
- }
- 
- void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
-                                        MemoryRegionSection *section)
- {
--    if (!bcontainer->ops->del_window) {
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+
-+    if (!vioc->del_window) {
-         return;
-     }
- 
--    return bcontainer->ops->del_window(bcontainer, section);
-+    return vioc->del_window(bcontainer, section);
- }
- 
- int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
-                                            bool start, Error **errp)
- {
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+
-     if (!bcontainer->dirty_pages_supported) {
-         return 0;
-     }
- 
--    g_assert(bcontainer->ops->set_dirty_page_tracking);
--    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start, errp);
-+    g_assert(vioc->set_dirty_page_tracking);
-+    return vioc->set_dirty_page_tracking(bcontainer, start, errp);
- }
- 
- int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-                    VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp)
- {
--    g_assert(bcontainer->ops->query_dirty_bitmap);
--    return bcontainer->ops->query_dirty_bitmap(bcontainer, vbmap, iova, size,
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+
-+    g_assert(vioc->query_dirty_bitmap);
-+    return vioc->query_dirty_bitmap(bcontainer, vbmap, iova, size,
-                                                errp);
- }
- 
- void vfio_container_init(VFIOContainerBase *bcontainer,
-                          const VFIOIOMMUClass *ops)
- {
--    bcontainer->ops = ops;
- }
- 
- void vfio_container_destroy(VFIOContainerBase *bcontainer)
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index f8bde76cfdba41f3d6da8a7c852624485bd933a0..9e9e1ab229c0804f073cd65d92735d4bbf63d1d7 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -548,6 +548,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
-     VFIOContainerBase *bcontainer;
-     int ret, fd;
-     VFIOAddressSpace *space;
-+    VFIOIOMMUClass *vioc;
- 
-     space = vfio_get_address_space(as);
- 
-@@ -632,9 +633,10 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
-         goto unregister_container_exit;
-     }
- 
--    assert(bcontainer->ops->setup);
-+    vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+    assert(vioc->setup);
- 
--    if (!bcontainer->ops->setup(bcontainer, errp)) {
-+    if (!vioc->setup(bcontainer, errp)) {
-         goto enable_discards_exit;
-     }
- 
-@@ -663,8 +665,8 @@ listener_release_exit:
-     QLIST_REMOVE(bcontainer, next);
-     vfio_kvm_device_del_group(group);
-     memory_listener_unregister(&bcontainer->listener);
--    if (bcontainer->ops->release) {
--        bcontainer->ops->release(bcontainer);
-+    if (vioc->release) {
-+        vioc->release(bcontainer);
-     }
- 
- enable_discards_exit:
-@@ -689,6 +691,7 @@ static void vfio_disconnect_container(VFIOGroup *group)
- {
-     VFIOContainer *container = group->container;
-     VFIOContainerBase *bcontainer = &container->bcontainer;
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
- 
-     QLIST_REMOVE(group, container_next);
-     group->container = NULL;
-@@ -700,8 +703,8 @@ static void vfio_disconnect_container(VFIOGroup *group)
-      */
-     if (QLIST_EMPTY(&container->group_list)) {
-         memory_listener_unregister(&bcontainer->listener);
--        if (bcontainer->ops->release) {
--            bcontainer->ops->release(bcontainer);
-+        if (vioc->release) {
-+            vioc->release(bcontainer);
-         }
-     }
- 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 5daf9c1ea268e7b4ab0dbfe9e55a176b23aaa62b..e1932135df410c53d4062616ee2664b27d30b92c 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -324,7 +324,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
-     /* try to attach to an existing container in this space */
-     QLIST_FOREACH(bcontainer, &space->containers, next) {
-         container = container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
--        if (bcontainer->ops != iommufd_vioc ||
-+        if (VFIO_IOMMU_GET_CLASS(bcontainer) != iommufd_vioc ||
-             vbasedev->iommufd != container->be) {
-             continue;
-         }
-@@ -465,7 +465,7 @@ static VFIODevice *iommufd_cdev_pci_find_by_devid(__u32 devid)
-         VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
- 
-     QLIST_FOREACH(vbasedev_iter, &vfio_device_list, global_next) {
--        if (vbasedev_iter->bcontainer->ops != iommufd_vioc) {
-+        if (VFIO_IOMMU_GET_CLASS(vbasedev_iter->bcontainer) != iommufd_vioc) {
-             continue;
-         }
-         if (devid == vbasedev_iter->devid) {
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index d8a76c1ee003e6f5669e8390271836fd9d839a8a..e03d9f3ba5461f55f6351d937aba5d522a9128ec 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2511,9 +2511,9 @@ int vfio_pci_get_pci_hot_reset_info(VFIOPCIDevice *vdev,
- static int vfio_pci_hot_reset(VFIOPCIDevice *vdev, bool single)
- {
-     VFIODevice *vbasedev = &vdev->vbasedev;
--    const VFIOIOMMUClass *ops = vbasedev->bcontainer->ops;
-+    const VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(vbasedev->bcontainer);
- 
--    return ops->pci_hot_reset(vbasedev, single);
-+    return vioc->pci_hot_reset(vbasedev, single);
- }
- 
- /*
--- 
-2.45.2
+this was already fixed by Ilya's commit:
 
+commit 791b2b6a930273db694b9ba48bbb406e78715927
+Author: Ilya Leoshkevich <iii@linux.ibm.com>
+Date:   Sat Aug 5 01:03:18 2023 +0200
+
+    target/s390x: Fix the "ignored match" case in VSTRS
+    
+    Currently the emulation of VSTRS recognizes partial matches in presence
+    of \0 in the haystack, which, according to PoP, is not correct:
+    
+        If the ZS flag is one and a zero byte was detected
+        in the second operand, then there can not be a
+        partial match ...
+    
+    Add a check for this. While at it, fold a number of explicitly handled
+    special cases into the generic logic.
+    
+    Cc: qemu-stable@nongnu.org
+    Reported-by: Claudio Fontana <cfontana@suse.de>
+    Closes: https://lists.gnu.org/archive/html/qemu-devel/2023-08/msg00633.html
+    Fixes: 1d706f314191 ("target/s390x: vxeh2: vector string search")
+    Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+    Message-Id: <20230804233748.218935-3-iii@linux.ibm.com>
+    Tested-by: Claudio Fontana <cfontana@suse.de>
+    Acked-by: David Hildenbrand <david@redhat.com>
+    Signed-off-by: Thomas Huth <thuth@redhat.com>
+
+Ciao,
+
+Claudio
 
