@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74BBDC41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7255AC27C53
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 19:53:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHU0v-0001V1-Fz; Wed, 12 Jun 2024 15:52:09 -0400
+	id 1sHU0w-0001Vt-LH; Wed, 12 Jun 2024 15:52:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sHU0q-0001UU-TM
+ id 1sHU0s-0001Uj-UU
  for qemu-devel@nongnu.org; Wed, 12 Jun 2024 15:52:06 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sHU0p-0001hm-GA
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 15:52:04 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-70436048c25so179295b3a.0
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 12:52:03 -0700 (PDT)
+ id 1sHU0r-0001ir-7w
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 15:52:06 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-705c424ebbbso187342b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 12:52:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718221922; x=1718826722; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718221923; x=1718826723; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vPN2j3d8Uxe6THZhv7lreo3SEMvYCFajl10m+bHCIeY=;
- b=A7ArQWLLsVc29Q7cXVekrsltOsPwnk68Lbef9szzmRIdpr2s/a+rni8U/tljst0S94
- Yy3aRQzWUjzI+lLrg1MePRpyG6aB/Q8t0uuMaVkY37yLhmkpSIhO6kTE64DOH5GSfagt
- smbnElUMzprK2GzOl9OwpsPPLW7sO8U7AQ7CcREAAiTSR3td2w2oqKchAExRni92EEo4
- WNQjckxIxrKqv0ZhzDJKggvN+UYpqGI0Tt3eXPxIFIH56otPNyIFHLeoKVuW7hOBsr9J
- 9rFRNhjmuHWaykLru+swjH9BQF82bCrCzrEKLUYk9/NNY158IsZc0nJFJaYpvvYvGIKZ
- gCbQ==
+ bh=8gy0JxlZS4txlKe3nUnoxbsxzsnpPJAtrjxoA7hdB8Y=;
+ b=iI+Hm9JLoTd/WsBG2Hhqt1PlEoyzr0D9G55LZ1j0IqaiU2aPuJLDjceSe+GD3ySjWj
+ lWVhmyk4LWHEPjoUKgE7dcYE9kJ62q248s70rWq81Mk58D4qEdQ7Z/OVfwURSC6+eNdt
+ Hf2/0cnztpfLjdEoQ9F+W0jyg+Rds8Dj5RVUrrgyC77IcIlkDk64M6f/qlhSIplHx9eV
+ yIjZPYfQXli9AgASScpXhSt4eaNqfXwF90WNMcjmJRdkonp87LTcIsQtTZQcVkppt9tn
+ RSlyhiHdZVkzp+ObJxdV9x0fk+VHg59X/EigFRRKCclVxPIobTT4NvA6cXBhn28tUQV/
+ 512A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718221922; x=1718826722;
+ d=1e100.net; s=20230601; t=1718221923; x=1718826723;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vPN2j3d8Uxe6THZhv7lreo3SEMvYCFajl10m+bHCIeY=;
- b=G9aTt3MmkBGKTcGbMdZcdXs5a5bqOjJbvKrh4+Z4RS06PUYc5NtGNCZRTSnu1r5IK/
- 5wVUBY4JJZAR7TZuwfs6NwhD7eEhunZ90U+OZ9d7SvDG3PjA8HS3qwrPETlfz7hWTmo2
- 0i4m6hVNo4u2w4EPWZugJ2gimvVJdfQjI17VIo4O74337nsruatPdgr2duCDCWPfTXV2
- 21k3weFCs8nSDZauUfM0V4HYpR4fTJvOv46lsHfDsV2Bb9vzWXI3sKdW8iq5rblzc6pa
- qSKbXYd1Ws1Z9+3k/0BnI7cP84Gsp4JUVWwK8W5239oRy6lv4XD+WzoqSoIvRhGan/m7
- nwMg==
-X-Gm-Message-State: AOJu0Yy+WntQS4Q9agqTE8OJgNokrxDS9fkWajZUtVzGNK9QAe2p7MM8
- MscICjZkBZdmpyep1yffFFwrSmp+7kv+AaTU/BmzefCccKQxiR+OIo3ietQwH9MS2gEb6V1P5l1
- 7
-X-Google-Smtp-Source: AGHT+IHE1MJIat//Ww4gGPbOdoPRQdtlYUDw1BM9kWVaPUwA9zT8PJHv8osUpZJMra6L10A5BuPnlA==
-X-Received: by 2002:a05:6a20:da9a:b0:1b7:406c:107d with SMTP id
- adf61e73a8af0-1b8a9c42286mr3038420637.27.1718221921704; 
- Wed, 12 Jun 2024 12:52:01 -0700 (PDT)
+ bh=8gy0JxlZS4txlKe3nUnoxbsxzsnpPJAtrjxoA7hdB8Y=;
+ b=GX/6MKFWzzgSXqrzVEmAFmzums9NDyCm1DbfpEmgT5cU6KFLMYSjkWNT0eIZqPXvDy
+ mL1eopHk/pR7Zd4J4sG80MjKzBhbuRLny+IC0JtFGaE0sl3BRmYTx959KjGDN5ZNMnRd
+ i+6f4ETS7Pl+C0vgHKdcPU4M57gyxU8mnhr3lznNCMSnzLQIGZS6lphfCK8qR/cSLAyY
+ 1PBkff61cFZuqTFHNfUisXFR/KazrPGD2szeaWGw/SfQwRfb3hDNKp68r8MIROlZ2lqb
+ wTypx7ssNHdPB62OOhoDih554PVsslX14qfTEjN9mCm8cVOsXv3l+cE72VI1COwwYQkk
+ fCcA==
+X-Gm-Message-State: AOJu0YzgYiEu9n9a7s1HJjG9BLdvz1Ax7zH4RHPMGnjeq//t+riVZRJa
+ juuPlXU5JfpW6gzz1ACZz/6zNK4eQYF+6dwz2+vVV9kmhCeCea5LOrouLq8q51B9z6KKNk1kyp/
+ j
+X-Google-Smtp-Source: AGHT+IGDdcINSwUlJBEf9TcaaMioP2hJISS68IxBgf2AF7xpmHq+S8QVdUndcgYr38vIu83dKlSdSw==
+X-Received: by 2002:a05:6a00:21d1:b0:704:37b2:4ced with SMTP id
+ d2e1a72fcca58-705bcdffe08mr3484327b3a.11.1718221922699; 
+ Wed, 12 Jun 2024 12:52:02 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::2193])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70424c7fc99sm8009927b3a.157.2024.06.12.12.52.00
+ d2e1a72fcca58-70424c7fc99sm8009927b3a.157.2024.06.12.12.52.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Jun 2024 12:52:01 -0700 (PDT)
+ Wed, 12 Jun 2024 12:52:02 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -67,16 +67,16 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH 1/2] plugins: missing QEMU_PLUGIN_API for time control
-Date: Wed, 12 Jun 2024 12:51:46 -0700
-Message-Id: <20240612195147.93121-2-pierrick.bouvier@linaro.org>
+Subject: [PATCH 2/2] plugins: fix inject_mem_cb rw masking
+Date: Wed, 12 Jun 2024 12:51:47 -0700
+Message-Id: <20240612195147.93121-3-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240612195147.93121-1-pierrick.bouvier@linaro.org>
 References: <20240612195147.93121-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,31 +99,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+These are not booleans, but masks.
+Issue found by Richard Henderson.
+
+Fixes: f86fd4d8721 ("plugins: distinct types for callbacks")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/qemu/qemu-plugin.h | 2 ++
- 1 file changed, 2 insertions(+)
+ accel/tcg/plugin-gen.c | 4 ++--
+ plugins/core.c         | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 80b1637cede..310ee10f301 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -670,6 +670,7 @@ void qemu_plugin_register_vcpu_mem_inline_per_vcpu(
-  *
-  * Returns an opaque handle or NULL if fails
-  */
-+QEMU_PLUGIN_API
- const void *qemu_plugin_request_time_control(void);
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index cc1634e7a6b..b6bae32b997 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -240,13 +240,13 @@ static void inject_mem_cb(struct qemu_plugin_dyn_cb *cb,
+ {
+     switch (cb->type) {
+     case PLUGIN_CB_MEM_REGULAR:
+-        if (rw && cb->regular.rw) {
++        if (rw & cb->regular.rw) {
+             gen_mem_cb(&cb->regular, meminfo, addr);
+         }
+         break;
+     case PLUGIN_CB_INLINE_ADD_U64:
+     case PLUGIN_CB_INLINE_STORE_U64:
+-        if (rw && cb->inline_insn.rw) {
++        if (rw & cb->inline_insn.rw) {
+             inject_cb(cb);
+         }
+         break;
+diff --git a/plugins/core.c b/plugins/core.c
+index badede28cf9..9d737d82787 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -589,7 +589,7 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
  
- /**
-@@ -682,6 +683,7 @@ const void *qemu_plugin_request_time_control(void);
-  *
-  * Start time is 0.
-  */
-+QEMU_PLUGIN_API
- void qemu_plugin_update_ns(const void *handle, int64_t time);
- 
- typedef void
+         switch (cb->type) {
+         case PLUGIN_CB_MEM_REGULAR:
+-            if (rw && cb->regular.rw) {
++            if (rw & cb->regular.rw) {
+                 cb->regular.f.vcpu_mem(cpu->cpu_index,
+                                        make_plugin_meminfo(oi, rw),
+                                        vaddr, cb->regular.userp);
+@@ -597,7 +597,7 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
+             break;
+         case PLUGIN_CB_INLINE_ADD_U64:
+         case PLUGIN_CB_INLINE_STORE_U64:
+-            if (rw && cb->inline_insn.rw) {
++            if (rw & cb->inline_insn.rw) {
+                 exec_inline_op(cb->type, &cb->inline_insn, cpu->cpu_index);
+             }
+             break;
 -- 
 2.39.2
 
