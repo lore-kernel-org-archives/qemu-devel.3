@@ -4,57 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D2B5C27C77
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 09:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7641DC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 10:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHKg2-0001kK-At; Wed, 12 Jun 2024 05:53:58 -0400
+	id 1sHKnB-0003fZ-Ra; Wed, 12 Jun 2024 06:01:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sHKfz-0001jI-CK; Wed, 12 Jun 2024 05:53:55 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHKn9-0003f9-ON
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 06:01:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sHKfw-0007JR-Tu; Wed, 12 Jun 2024 05:53:55 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4VzgnD6BDKz6K8xl;
- Wed, 12 Jun 2024 17:52:16 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 084BC140B2F;
- Wed, 12 Jun 2024 17:53:38 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 12 Jun
- 2024 10:53:30 +0100
-Date: Wed, 12 Jun 2024 10:53:29 +0100
-To: Zhenyu Zhang <zhenyzha@redhat.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>,
- <peter.maydell@linaro.org>, <robin.murphy@arm.com>, <gshan@redhat.com>,
- <eauger@redhat.com>, <sebott@redhat.com>, <cohuck@redhat.com>,
- <ddutile@redhat.com>, <shahuang@redhat.com>
-Subject: Re: [PATCH v3] hw/arm/virt: Avoid unexpected warning from Linux
- guest on host with Fujitsu CPUs
-Message-ID: <20240612105329.00004607@Huawei.com>
-In-Reply-To: <20240612020506.307793-1-zhenyzha@redhat.com>
-References: <20240612020506.307793-1-zhenyzha@redhat.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHKn8-00005T-7A
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 06:01:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718186476;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=rkMt1t/bKGRddpknAApomxO54ApmzFma5Vpwp0SBDzw=;
+ b=YKB0XWaOVvOFdsxIhmOUKOu5oay02M4n/5OMYJOjf7yGQ9ofXS1LWYrsLVC/wixZXakNuK
+ xiFT07iZN+LFy6mkBeK+Zjc7wGQ7aE6RiDrvux3KanqFyaaMlioUpfaVr0CplCEdyIn2qc
+ VPP4egZIvIjRSI+nbamIyLOB24+pE54=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-173-pe8Ee7P-O6Kj01A1ssahNg-1; Wed, 12 Jun 2024 06:01:13 -0400
+X-MC-Unique: pe8Ee7P-O6Kj01A1ssahNg-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4415b409145so4740561cf.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 03:01:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718186473; x=1718791273;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rkMt1t/bKGRddpknAApomxO54ApmzFma5Vpwp0SBDzw=;
+ b=OcIaPONPoE1p2Qjzh8y3GPoAnkisogkT8l51NCCI1vl5R9WviKptXKQLwoAstndgcC
+ nZEamcnYsS5al1osQs7yY9YhE7cIUlOzt7K4pLStlmZtSigvLAywy1JXTA3ZFqwFWJxx
+ lrqPpLbYtADNdIv0drj5r0KsW0hgn/7JPmJb4TaZKMq2gH/DlRhximob+NCo8sxDN2b0
+ dM6P0WooSdRTgWrKJs3e29vGvoCZIkd4ePt57GdGKCIIsRYosYFk1eiTis199Om8YPxu
+ Hv6t1r7rKFcEPX3n9fkLxCtxsPkn9v2XovhcdE37zqrEWMQeuYs/DNdGxB8DerKgZwpZ
+ 6plQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUb1iW64OPOGwi/QM2eqQW727EGS304zAczSH8GRIguDM31MtmFSZtPmoM8IW+Z6qGQspNFpHTsyho9IvQHTLFk0UlVEZk=
+X-Gm-Message-State: AOJu0Yy1KhBKw0fhmiWcAvNeo0iHWPgQVr67QPXm9mW9LleFoHFvyhIx
+ EtrR4bF5WU2GJZAlrKCgElfie9XEz512NV07Brmz40rfp+zfsP7HsJ/27HK/AolZSDUjfkCX+6K
+ 22uLEb/7ver3TRrzBK6ze9rwL2tlgmFIWS09gcDntmmswQCG10xTB
+X-Received: by 2002:ac8:5905:0:b0:441:1452:131f with SMTP id
+ d75a77b69052e-4415ac2f644mr12707881cf.16.1718186472880; 
+ Wed, 12 Jun 2024 03:01:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5SvavtJVpZYbaymN6VeHjF9ikuDsMV60N9DNS8CSotRre9tQiQ10dJALO7tiT9TP3HtJO8Q==
+X-Received: by 2002:ac8:5905:0:b0:441:1452:131f with SMTP id
+ d75a77b69052e-4415ac2f644mr12707371cf.16.1718186471798; 
+ Wed, 12 Jun 2024 03:01:11 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-176-68.web.vodafone.de.
+ [109.43.176.68]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4405795b270sm38399191cf.11.2024.06.12.03.01.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Jun 2024 03:01:11 -0700 (PDT)
+Message-ID: <a7a84903-8485-44f7-b43f-1095c2551429@redhat.com>
+Date: Wed, 12 Jun 2024 12:01:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/8] tests/unit/test-smp-parse: Make test cases aware of
+ module level
+To: Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, qemu-devel@nongnu.org
+Cc: Yongwei Ma <yongwei.ma@intel.com>
+References: <20240529061925.350323-1-zhao1.liu@intel.com>
+ <20240529061925.350323-6-zhao1.liu@intel.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240529061925.350323-6-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,107 +148,21 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Jun 2024 22:05:06 -0400
-Zhenyu Zhang <zhenyzha@redhat.com> wrote:
-
-> Multiple warning messages and corresponding backtraces are observed when Linux
-> guest is booted on the host with Fujitsu CPUs. One of them is shown as below.
+On 29/05/2024 08.19, Zhao Liu wrote:
+> Currently, -smp supports module level.
 > 
-> [    0.032443] ------------[ cut here ]------------
-> [    0.032446] uart-pl011 9000000.pl011: ARCH_DMA_MINALIGN smaller than
-> CTR_EL0.CWG (128 < 256)
-> [    0.032454] WARNING: CPU: 0 PID: 1 at arch/arm64/mm/dma-mapping.c:54
-> arch_setup_dma_ops+0xbc/0xcc
-> [    0.032470] Modules linked in:
-> [    0.032475] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 5.14.0-452.el9.aarch64
-> [    0.032481] Hardware name: linux,dummy-virt (DT)
-> [    0.032484] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [    0.032490] pc : arch_setup_dma_ops+0xbc/0xcc
-> [    0.032496] lr : arch_setup_dma_ops+0xbc/0xcc
-> [    0.032501] sp : ffff80008003b860
-> [    0.032503] x29: ffff80008003b860 x28: 0000000000000000 x27: ffffaae4b949049c
-> [    0.032510] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000000
-> [    0.032517] x23: 0000000000000100 x22: 0000000000000000 x21: 0000000000000000
-> [    0.032523] x20: 0000000100000000 x19: ffff2f06c02ea400 x18: ffffffffffffffff
-> [    0.032529] x17: 00000000208a5f76 x16: 000000006589dbcb x15: ffffaae4ba071c89
-> [    0.032535] x14: 0000000000000000 x13: ffffaae4ba071c84 x12: 455f525443206e61
-> [    0.032541] x11: 68742072656c6c61 x10: 0000000000000029 x9 : ffffaae4b7d21da4
-> [    0.032547] x8 : 0000000000000029 x7 : 4c414e494d5f414d x6 : 0000000000000029
-> [    0.032553] x5 : 000000000000000f x4 : ffffaae4b9617a00 x3 : 0000000000000001
-> [    0.032558] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff2f06c029be40
-> [    0.032564] Call trace:
-> [    0.032566]  arch_setup_dma_ops+0xbc/0xcc
-> [    0.032572]  of_dma_configure_id+0x138/0x300
-> [    0.032591]  amba_dma_configure+0x34/0xc0
-> [    0.032600]  really_probe+0x78/0x3dc
-> [    0.032614]  __driver_probe_device+0x108/0x160
-> [    0.032619]  driver_probe_device+0x44/0x114
-> [    0.032624]  __device_attach_driver+0xb8/0x14c
-> [    0.032629]  bus_for_each_drv+0x88/0xe4
-> [    0.032634]  __device_attach+0xb0/0x1e0
-> [    0.032638]  device_initial_probe+0x18/0x20
-> [    0.032643]  bus_probe_device+0xa8/0xb0
-> [    0.032648]  device_add+0x4b4/0x6c0
-> [    0.032652]  amba_device_try_add.part.0+0x48/0x360
-> [    0.032657]  amba_device_add+0x104/0x144
-> [    0.032662]  of_amba_device_create.isra.0+0x100/0x1c4
-> [    0.032666]  of_platform_bus_create+0x294/0x35c
-> [    0.032669]  of_platform_populate+0x5c/0x150
-> [    0.032672]  of_platform_default_populate_init+0xd0/0xec
-> [    0.032697]  do_one_initcall+0x4c/0x2e0
-> [    0.032701]  do_initcalls+0x100/0x13c
-> [    0.032707]  kernel_init_freeable+0x1c8/0x21c
-> [    0.032712]  kernel_init+0x28/0x140
-> [    0.032731]  ret_from_fork+0x10/0x20
-> [    0.032735] ---[ end trace 0000000000000000 ]---
+> It is necessary to consider the effects of module in the test cases to
+> ensure that the calculations are correct. This is also the preparation
+> to add module test cases.
 > 
-> In Linux, a check is applied to every device which is exposed through
-> device-tree node. The warning message is raised when the device isn't
-> DMA coherent and the cache line size is larger than ARCH_DMA_MINALIGN
-> (128 bytes). The cache line is sorted from CTR_EL0[CWG], which corresponds
-> to 256 bytes on the guest CPUs. The DMA coherent capability is claimed
-> through 'dma-coherent' in their device-tree nodes or parent nodes.
-> 
-> Fix the issue by adding 'dma-coherent' property to the device-tree root
-> node, meaning all devices are capable of DMA coherent by default.
-> 
-> Signed-off-by: Zhenyu Zhang <zhenyzha@redhat.com>
-Aligns with earlier discussion so...
-
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
-> v3: Add comments explaining why we add 'dma-coherent' property (Peter)
-> ---
->  hw/arm/virt.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 3c93c0c0a6..3cefac6d43 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -271,6 +271,17 @@ static void create_fdt(VirtMachineState *vms)
->      qemu_fdt_setprop_cell(fdt, "/", "#size-cells", 0x2);
->      qemu_fdt_setprop_string(fdt, "/", "model", "linux,dummy-virt");
->  
-> +    /*
-> +     * For QEMU, all DMA is coherent. Advertising this in the root node
-> +     * has two benefits:
-> +     *
-> +     * - It avoids potential bugs where we forget to mark a DMA
-> +     *   capable device as being dma-coherent
-> +     * - It avoids spurious warnings from the Linux kernel about
-> +     *   devices which can't do DMA at all
-> +     */
-> +    qemu_fdt_setprop(fdt, "/", "dma-coherent", NULL, 0);
-> +
->      /* /chosen must exist for load_dtb to fill in necessary properties later */
->      qemu_fdt_add_subnode(fdt, "/chosen");
->      if (vms->dtb_randomness) {
+>   tests/unit/test-smp-parse.c | 13 +++++++++++--
+>   1 file changed, 11 insertions(+), 2 deletions(-)
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
