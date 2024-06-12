@@ -4,95 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CFE6C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED0E1C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:46:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHOCZ-0003ZE-Bz; Wed, 12 Jun 2024 09:39:47 -0400
+	id 1sHOIV-0006bu-SK; Wed, 12 Jun 2024 09:45:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sHOCX-0003Yv-OB
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:39:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sHOCW-0007iN-10
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:39:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718199582;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QekPl/+SJDAqOkSOuUlcgF2vIe5Agb0K/30Ij11Y9HI=;
- b=asQq7xw+e6KAGST8cosqHtaZhadehU592KNtRght2zZZMDtUE4qrl9WsXuYdYB2QmftnNq
- XUbXA7Hmg99li4W8ngekVeLiJVOzDldbJckzfFmiPPAH/Y79qMn2N50EvGp9PBkY4EFA4i
- j4J8KbQhgjkMY+wlAtpwFM3slGcva3o=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-50-gyFDPiISMnaE1TqBuIzIVQ-1; Wed, 12 Jun 2024 09:39:41 -0400
-X-MC-Unique: gyFDPiISMnaE1TqBuIzIVQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-35f06558bc3so1709152f8f.1
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 06:39:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHOIM-0006ax-RL
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:45:50 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHOIK-0000bd-9t
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:45:46 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-52bc3130ae6so5387606e87.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 06:45:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718199942; x=1718804742; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3iMuEOSqVyKNMU1vKgc/9cJtilerGT1O4PEnMf0TI5k=;
+ b=bvUjVJE+4WyJgmjGmWhnPdGwjXXEyMTLV7X4q/Ma71PavNx+CnfDcpSeUcl1vHR9n2
+ 1kGDOyO9/RYsIrVAl+7WvSfDploeLQnKwavksH3LIxR3ZzoY04JQsXbM7/yRjhv9EYNi
+ O39F5gYJg8M7HtBwDOG9sjQLMDPQHwvivC7WQnesk/tPviP4GY5vNkhw7jcSeAG5FDcc
+ F5acTjZpHHlcD4JrYsKOzYju/zUETK1GQ02NJyOZKF07jl8sqyt9mtEfJSXq+imFFQX3
+ RP+RRnTHYo0JoylQnLHzvCqhOdv9MzDSN8XZtTJtfAHbwRw8qKJKN2r4kz2hSGYc6ycz
+ no/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718199580; x=1718804380;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QekPl/+SJDAqOkSOuUlcgF2vIe5Agb0K/30Ij11Y9HI=;
- b=rGsY8zTsOth3MJmBPG1GPmpeCIwkPv+lYiky00WbhV3+Aqe7WIv8nNWGhIfURifHrm
- ow5rhxt/yfM4fbXunmGClP4uFufJM7qm2QSlt9FfB8AZ0ZZfEQBI+QW6Q4dQf63fewy9
- Fd/BFHOK4HvSkeeJIROnC3TwAk5HVNw/VdQa7E478TpzooeBPbQ9z1D83KjZ+oOvAmBS
- klu7cL1Sf4IIrM+zWkdvLUOPlcipDUgFxhGA9t6qHMpqTVibnk/FIlzaUtnaP0TS1vcW
- nFRCAIsU1mdx+7CN0hmGcbBOotCeFMXIrKD+xJJd4CdEAM3Q9Y62Xk6qy1gxOu362zyG
- /zBA==
+ d=1e100.net; s=20230601; t=1718199942; x=1718804742;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3iMuEOSqVyKNMU1vKgc/9cJtilerGT1O4PEnMf0TI5k=;
+ b=JziezMU+LTSWA7tyXKiTSb5GEqmicAuo3HIuAJoXYxNh2kUaBM8zNJBVCmYWOoStZi
+ d8wf5vZBthaorVwMeGSC+y4UB2MBeOiPV0hFGXhr4YRrKoSrbrPoG2kFOY0hec2GOP65
+ fo5m4Koyc/LZPisfFEdHJM3JSlull6MBbX/nIszTIVEgTN+31hpPZR1j5JBfMvY0KpFh
+ QPADzbOjqMmk7tRWFIg5LCnpSv/Ak9auIBKwLm2nQ3mvfGYyMZZB8Q0135ZRVAXMyZfq
+ wM23XT7Ob2ctvHXNIy0B7NiJpqle+12dSzYBumobUoshC9qILkudGF5crZb8pLq1J3lR
+ c3eg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTauRCsw/Kn77rOj8M6s+OELoFD0o2R2vVZG/VM8t+JIXCo+16FZy5uSLXIRJ2d+gvc94JqKpvb6MiwkqVX2vRb1386h8=
-X-Gm-Message-State: AOJu0Yxm8WkPFjyT/r6fgEwMxudBcDRivvBTRqr9MS1YNV/q/MrLA9rD
- nFkZ/Vxpkl6KUMHMJylZR8F2JvUbEDYZLy3mZ4gNWHdh3mvJksRuasapzGv8uBDRJpYjoi7pAUC
- BmCT0dFpCCb1YFjf2tEBpmG2XyPHlDcmAouTE71M/jgc5d/dPWAKq+3b0AMwJZSZ4oejCrsUqo3
- t9dwnDJH607f0FRBEG9nr8ECiRaIA=
-X-Received: by 2002:adf:e645:0:b0:360:6ffa:9803 with SMTP id
- ffacd0b85a97d-3606ffa98cbmr624438f8f.56.1718199580541; 
- Wed, 12 Jun 2024 06:39:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGBQ5ZcEbocLMw2CEB/I6OAGJRnGt3DmYLMT81vjeitZvtwMWDdjkbz5We1ZFIda+k5J4KY6rgClYRvqyo/ZDo=
-X-Received: by 2002:adf:e645:0:b0:360:6ffa:9803 with SMTP id
- ffacd0b85a97d-3606ffa98cbmr624419f8f.56.1718199580172; Wed, 12 Jun 2024
- 06:39:40 -0700 (PDT)
+ AJvYcCXdHcXpee/8j3gogC27cLW5vo/KtZf4N9NQq9dX663RbBRiWeOc0WnIH1gYxi1MKdv2F4u7F4La6PaPvNIbliJeqpKvFT8=
+X-Gm-Message-State: AOJu0YwETr3GWlg7yKz+DYwxtVGSVWRTzTmAK1r7xvobIjWHhiBoNHux
+ +zWZIMDI+9Z5k7lpHmBO5oidU1TwpA01gEdH7xnibBgpTbZA733J452gOS012NY=
+X-Google-Smtp-Source: AGHT+IEaM/obTlsMPLH3flzu1jdIdpnAlOXOFxUqGXRegM1Y4Pgjr7yGxxhaTndHkNZhj336kaRJag==
+X-Received: by 2002:a05:6512:3055:b0:52c:89b5:27b3 with SMTP id
+ 2adb3069b0e04-52c9a3fdf47mr1549604e87.42.1718199942422; 
+ Wed, 12 Jun 2024 06:45:42 -0700 (PDT)
+Received: from [192.168.69.100] (ram94-h02-176-184-0-172.dsl.sta.abo.bbox.fr.
+ [176.184.0.172]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-52c97db2356sm401521e87.200.2024.06.12.06.45.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Jun 2024 06:45:41 -0700 (PDT)
+Message-ID: <ffd4dcb3-3777-4335-9a33-9818dd413b8d@linaro.org>
+Date: Wed, 12 Jun 2024 15:45:39 +0200
 MIME-Version: 1.0
-References: <20240612105525.8795-1-amonakov@ispras.ru>
- <ZmmAq8fbJLuaX4Qg@redhat.com>
- <CABgObfbGa=xpp9-cLwzqCpPFsf27qM+K-svfXEvc6ffjb=_VAg@mail.gmail.com>
- <e26ac8a0-5cb0-22a8-fbf9-54f198cdc7ed@ispras.ru>
- <CABgObfYf8=3yXu1p6q6jzyZ7uHy92BHaBXtJY8AMYXBdd9+HGA@mail.gmail.com>
- <caa7d068-a2c6-28a4-51d5-93c61f004bc0@ispras.ru>
- <CABgObfaswAJRffjdu9h8crD6jvFAP78CaDDbutvoa7EGxwuy1w@mail.gmail.com>
- <e292326a-0f71-3d4d-4ec1-562efe94271b@ispras.ru>
- <CABgObfZEmA6DrN-8f_nTg8DHfN+m7DO+DbabW1AtdtMtHjbgyQ@mail.gmail.com>
- <b5fac5cc-40af-2437-44c4-4e0d5747691d@ispras.ru>
-In-Reply-To: <b5fac5cc-40af-2437-44c4-4e0d5747691d@ispras.ru>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 12 Jun 2024 15:39:28 +0200
-Message-ID: <CABgObfbPu10_jEuT2sEHJmF91Vov9M7bTmLR9dQXRR5gicNF5Q@mail.gmail.com>
-Subject: Re: [PATCH 0/5] Reinstate ability to use Qemu on pre-SSE4.1 x86 hosts
-To: Alexander Monakov <amonakov@ispras.ru>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 21/22] qapi: Inline and remove QERR_UNSUPPORTED
+ definition
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Konstantin Kostiuk <kkostiuk@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
+ qemu-s390x@nongnu.org
+References: <20231005045041.52649-1-philmd@linaro.org>
+ <20231005045041.52649-22-philmd@linaro.org> <87mswx5n63.fsf@pond.sub.org>
+ <18739a67-84bb-4fd3-adb6-0db0f0eb7af1@linaro.org>
+ <87plsmfgxq.fsf@pond.sub.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87plsmfgxq.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,33 +102,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 12, 2024 at 3:34=E2=80=AFPM Alexander Monakov <amonakov@ispras.=
-ru> wrote:
-> On Wed, 12 Jun 2024, Paolo Bonzini wrote:
-> > > I found out from the mailing list. My Core2-based desktop would be af=
-fected.
-> >
-> > Do you run QEMU on it? With KVM or TCG?
->
-> Excuse me? Are you going to ask for SSH access to ensure my computer real=
-ly
-> exists and is in working order?
+On 12/6/24 15:07, Markus Armbruster wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+> 
+>> Michael, Konstantin, QERR_UNSUPPORTED is only used by QGA.
+>>
+>> Do you mind giving our maintainer's position on Markus
+>> analysis so we can know how to proceed with this definition?
+> 
+> Daniel Berrangé recently posted patches that get rid of most instances
+> of QERR_UNSUPPORTED:
+> 
+>      [PATCH 00/20] qga: clean up command source locations and conditionals
+>      https://lore.kernel.org/qemu-devel/20240604134933.220112-1-berrange@redhat.com/
+> 
+> I pointed out a possible opportunity to remove even more.
+> 
+> I think we should let the dust settle there, then figure out how to
+> eliminate remaining QERR_UNSUPPORTED, if any.
 
-Come on. The thing is, I'm not debating the existence of computers
-that don't have x86_64-v2, but I *am* debating the usefulness of
-making QEMU run on them and any extra information can be interesting.
-
-> Can you tell me why you never commented on buffer_is_zero improvements, w=
-here
-> v1 was sent in October?  Just trying to understand how you care for 2% of=
- L1D
-> use but could be ok with those kinds of speedups be dropped on the floor.
-
-I'm not sure if there is any overlap in the scenarios where
-buffer_is_zero performance matters, and x86 emulation. People can care
-about thing A but not thing B. If there's anything that you think I
-can help reviewing, feel free to let me know offlist.
-
-Paolo
+Ah great, thanks for the update :)
 
 
