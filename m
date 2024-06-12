@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F760C27C77
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 12:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AAFAC27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 12:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNPM-0005Xh-LM; Wed, 12 Jun 2024 08:48:56 -0400
+	id 1sHNQk-0007Dw-7h; Wed, 12 Jun 2024 08:50:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sHNPL-0005Uq-4g
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:48:55 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHNQh-0007Cs-Om
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:50:19 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sHNPI-0005tR-Eb
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:48:54 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-57a44c2ce80so2926029a12.0
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 05:48:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHNQd-0006JY-Te
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:50:18 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-35f1cb7a40fso3590919f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 05:50:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718196531; x=1718801331; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VJKu1EI5WiRS6emBcQ8li8fqo56Fg1wL9feC7WT0qL0=;
- b=sjjODgjJTzJsfQxaHF92wunFkKDI5KTDr9BwlPzhPeOR+Sok00O9si15/mDoOcc2XH
- jXz/KlMG2R13NTztwgAHxIanKjYkKC3X1X5+CfF8JiCXLPEzb4iIP4PbAJhmEUgVyOYQ
- VB5AxC1rB6PrJVG9FsvQ/VXc/vn7lt7imMwxkx16ugJ2LbnspixAuJQNxT9F6Jqn2Rcj
- 3gZj9yqApzZJbC5zx9whcfDxa4zXqIEr0V8yRU9XeHRWICy6Hsv6p2m4hrhkJMXEUR0v
- bzyBlFWFlkOjFimzMwHoSrdUqyCedIlH1w8VUi435p7/yN8bdJKFAlcahD5pL8XS5bLJ
- ereg==
+ d=linaro.org; s=google; t=1718196614; x=1718801414; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UiekToTWPow3vHTwnb6CkZoHJAihJQce2rVWuOyp1hI=;
+ b=vNfrZB/6ZAfBPEGtgR6ZepUDEHNms5YtdvjKIAqb7qZgcf+bW1NZQW8XQMd2UxTmv4
+ PPWsTmy8ioqEmzw+zXA+mWIQaP6lD55rOb9a6xevr5yzdjfMolJfuvst71jUGieXL/Dw
+ hDJipFHZxExSwaIcWYa763uxlLIQiNxMFMeyLSs3oQLYLKo+Xs8eDOikpipX7DytsQ0z
+ a7cetZdDAHzeK4tjHLABEOg60ZJTz9BTfg10im1vyXrO0yPYjf+8P1UjQMQ6zPfFwbrV
+ OEnWFxF/XqHcAtW9ikLyNk92u+T/fXfvvV1Cw9/wT8emur0j6LEgLDGMdBdWNjzlwku/
+ gyMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718196531; x=1718801331;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VJKu1EI5WiRS6emBcQ8li8fqo56Fg1wL9feC7WT0qL0=;
- b=hSPc5r1IQjQ/d5pZ/QeQHjCVJSuQxwzni41UuuIG5JPxbWJnzjXPLheHL9hLmipRm+
- J6srt7nfrf3q9jp5xGS4XpjCMO23XlsN/GVX1ix2ND5J5Dx+HUYDXNaN7cEMcrfT4wIg
- lJSqz60r7WZKX+eGznirB8qgvRJ4Q5k8fgE12FVQTuDY7vjMQS1h+t7XVisSaYgEUOP4
- b1CZjqHXwBZn7fqD9h+IIpZ2qrTWBLLIWbK7Smnyb0qxEe2fbq92cPOz7xh9EQvsypf/
- iPAR+OUp4gtyWSLuHlpS45/AOkt5PFPRDFv7xLXch5XEuFXeoAsWS2NMMQd9t2Te3I95
- EMzA==
+ d=1e100.net; s=20230601; t=1718196614; x=1718801414;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UiekToTWPow3vHTwnb6CkZoHJAihJQce2rVWuOyp1hI=;
+ b=ncHGVnDO/GZl8sLjQPJ2xO8lBMpMjvdu0pkZRjc18uCIjflWY2m/7+vypXE0KTzpkN
+ pZ60uiHRK/7OES48O29P+LDH6sPZv52DI02uAHgQCgNvb6ueXjnAZLddfI3lTCpGNU8h
+ BYpJckn0EEOtZJ6Y0UzVyg9WvMilip6SladwAkP7cSC6NIjMyCQFy4aFv1BVfK8j7BAW
+ 17WBOwQCAu/eZkM+RZqg9ZqkXNJeWESs17Xs4Y073JXqS4onyuoMYXM0XT43L0zgJJ1I
+ F8od+D3yYiI/pn4wedN2iSrKLpdVQTeZUMqOn0nee+B+pFWxqUMOAfo6GMT4jGesO5k4
+ nWfQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFImk22WJUUZH3Aa+rMBbRJfCpvEZpYPbaLJuWKI0s0XIukulaqfI0tnTMDmJe7UubmWDuRh/qYmJKpiZjTpsspajkxp4=
-X-Gm-Message-State: AOJu0Ywb3NHGVcs0z43hSQS1rFuxU8tIUE0oUpnD8k3N/ixuvQ1PE8Cz
- wFm37D1nnrL6uP2M7EnzaWUxGIrvw1IX53QrUAx5d9dtv2/Hpo0xImOV+dbeQ0siM4A/8hl+mWp
- ZD9MJlVa4Mv3kq1fd12EebNhzoyVcagHEQMAkbg==
-X-Google-Smtp-Source: AGHT+IFkfptB1IveV9NnJWiFFjm8RIM0P9MFqWCDaFuQo4cmENpVGJDMLPV6v4t/sKPEnnHXGFa53G/xBQCnMwUcC9k=
-X-Received: by 2002:a50:aa9d:0:b0:57a:2a46:701 with SMTP id
- 4fb4d7f45d1cf-57ca9769334mr1164669a12.19.1718196530638; Wed, 12 Jun 2024
- 05:48:50 -0700 (PDT)
+ AJvYcCVtbvM7vA+5MbcGVmLoIOC12WAlkwu7JiTOuKM4MdeQsEADJr3SHvpGYcnVuf1A0ILmCnq5Z/EBf4qe88YK/23MZhHr3EA=
+X-Gm-Message-State: AOJu0YwTmBvzA7lKqtapoh++Zwui2FIwTx5PCe+yJdK8rP4VCdlLYGLy
+ T0/2RxlAkLv54OJMlTSbysc0kGdmj/unqlDTuGYSiWqLvr+Fw2i9iLUXJOwRMdM=
+X-Google-Smtp-Source: AGHT+IEQ3IpLR8I7EWKPq9ZW7bkOGfuc3+kxg7/fbOBCIEe1ZjsLCCQw2kVOja4xotqhe/zZyn+yhA==
+X-Received: by 2002:a5d:5185:0:b0:35f:caa:1ebc with SMTP id
+ ffacd0b85a97d-35fdf79bcd7mr1488952f8f.7.1718196614071; 
+ Wed, 12 Jun 2024 05:50:14 -0700 (PDT)
+Received: from [192.168.69.100] (ram94-h02-176-184-0-172.dsl.sta.abo.bbox.fr.
+ [176.184.0.172]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42285317d46sm20622325e9.1.2024.06.12.05.50.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Jun 2024 05:50:13 -0700 (PDT)
+Message-ID: <8d7e111b-4f74-4a67-b01b-2af5ce009a06@linaro.org>
+Date: Wed, 12 Jun 2024 14:50:11 +0200
 MIME-Version: 1.0
-References: <20240612020506.307793-1-zhenyzha@redhat.com>
- <69649622-e52c-4d24-809b-3d8a97786a69@linaro.org>
-In-Reply-To: <69649622-e52c-4d24-809b-3d8a97786a69@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 12 Jun 2024 13:48:37 +0100
-Message-ID: <CAFEAcA9wEjONgLfTObNYwJbwn5Gs1BDJiDivc9PEwmfOeZW6ww@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3] hw/arm/virt: Avoid unexpected warning from Linux guest
  on host with Fujitsu CPUs
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
 Cc: Zhenyu Zhang <zhenyzha@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, 
- robin.murphy@arm.com, Jonathan.Cameron@huawei.com, gshan@redhat.com, 
- eauger@redhat.com, sebott@redhat.com, cohuck@redhat.com, ddutile@redhat.com, 
- shahuang@redhat.com, qemu-riscv <qemu-riscv@nongnu.org>,
+ qemu-devel@nongnu.org, robin.murphy@arm.com, Jonathan.Cameron@huawei.com,
+ gshan@redhat.com, eauger@redhat.com, sebott@redhat.com, cohuck@redhat.com,
+ ddutile@redhat.com, shahuang@redhat.com, qemu-riscv <qemu-riscv@nongnu.org>,
  qemu-ppc <qemu-ppc@nongnu.org>, Song Gao <gaosong@loongson.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+References: <20240612020506.307793-1-zhenyzha@redhat.com>
+ <69649622-e52c-4d24-809b-3d8a97786a69@linaro.org>
+ <CAFEAcA9wEjONgLfTObNYwJbwn5Gs1BDJiDivc9PEwmfOeZW6ww@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA9wEjONgLfTObNYwJbwn5Gs1BDJiDivc9PEwmfOeZW6ww@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,41 +102,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Jun 2024 at 13:33, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Hi Zhenyu,
->
-> On 12/6/24 04:05, Zhenyu Zhang wrote:
-> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > index 3c93c0c0a6..3cefac6d43 100644
-> > --- a/hw/arm/virt.c
-> > +++ b/hw/arm/virt.c
-> > @@ -271,6 +271,17 @@ static void create_fdt(VirtMachineState *vms)
-> >       qemu_fdt_setprop_cell(fdt, "/", "#size-cells", 0x2);
-> >       qemu_fdt_setprop_string(fdt, "/", "model", "linux,dummy-virt");
-> >
-> > +    /*
-> > +     * For QEMU, all DMA is coherent. Advertising this in the root nod=
-e
-> > +     * has two benefits:
-> > +     *
-> > +     * - It avoids potential bugs where we forget to mark a DMA
-> > +     *   capable device as being dma-coherent
-> > +     * - It avoids spurious warnings from the Linux kernel about
-> > +     *   devices which can't do DMA at all
-> > +     */
-> > +    qemu_fdt_setprop(fdt, "/", "dma-coherent", NULL, 0);
->
-> OK, but why restrict that to the Aarch64 virt machine?
-> Shouldn't advertise this generically in create_device_tree()?
-> Or otherwise at least in the other virt machines?
+On 12/6/24 14:48, Peter Maydell wrote:
+> On Wed, 12 Jun 2024 at 13:33, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> Hi Zhenyu,
+>>
+>> On 12/6/24 04:05, Zhenyu Zhang wrote:
+>>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>>> index 3c93c0c0a6..3cefac6d43 100644
+>>> --- a/hw/arm/virt.c
+>>> +++ b/hw/arm/virt.c
+>>> @@ -271,6 +271,17 @@ static void create_fdt(VirtMachineState *vms)
+>>>        qemu_fdt_setprop_cell(fdt, "/", "#size-cells", 0x2);
+>>>        qemu_fdt_setprop_string(fdt, "/", "model", "linux,dummy-virt");
+>>>
+>>> +    /*
+>>> +     * For QEMU, all DMA is coherent. Advertising this in the root node
+>>> +     * has two benefits:
+>>> +     *
+>>> +     * - It avoids potential bugs where we forget to mark a DMA
+>>> +     *   capable device as being dma-coherent
+>>> +     * - It avoids spurious warnings from the Linux kernel about
+>>> +     *   devices which can't do DMA at all
+>>> +     */
+>>> +    qemu_fdt_setprop(fdt, "/", "dma-coherent", NULL, 0);
+>>
+>> OK, but why restrict that to the Aarch64 virt machine?
+>> Shouldn't advertise this generically in create_device_tree()?
+>> Or otherwise at least in the other virt machines?
+> 
+> create_device_tree() creates an empty device tree, not one
+> with stuff in it. It seems reasonable to me for this property
+> on the root to be set in the same place we set other properties
+> of the root node.
 
-create_device_tree() creates an empty device tree, not one
-with stuff in it. It seems reasonable to me for this property
-on the root to be set in the same place we set other properties
-of the root node.
+OK. Still the question about other virt machines remains
+unanswered :)
 
-thanks
--- PMM
 
