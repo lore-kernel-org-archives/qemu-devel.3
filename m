@@ -4,74 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D20B1C27C77
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0429C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNbn-00035I-FK; Wed, 12 Jun 2024 09:01:47 -0400
+	id 1sHNcP-0003Td-U9; Wed, 12 Jun 2024 09:02:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNbl-00034c-Ol
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:01:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sHNcN-0003RE-HM
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNbh-0007ly-Go
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:01:45 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sHNcL-00082k-TQ
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718197298;
+ s=mimecast20190719; t=1718197341;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=h4tug8Qf6vvztvO7K6lVXWn6yVxd15mqm4F8ME6ZIp0=;
- b=DiHbqKzsLy/P8kHO9fM4zsEwu3LfNXREGBt2odOab0Rn+ufjNfmv27/qGSslSri43Nu1Ox
- nJmFarvlMSP1LJUb6BvhOZ7PivJ6Ih6zep53ngPvPXC9TgACumMrziIp2mfeSotoOtfe+l
- mnOZcDj9zl1dYYFWO6+9W4Xy3nJQryA=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-fVpOaHsmNni_cdppElErkQ-1; Wed,
- 12 Jun 2024 09:01:37 -0400
-X-MC-Unique: fVpOaHsmNni_cdppElErkQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6E1F51955E7A; Wed, 12 Jun 2024 13:01:36 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.49])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1236C1956053; Wed, 12 Jun 2024 13:01:33 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v1 04/16] vfio/common: Extract vIOMMU code from
- vfio_sync_dirty_bitmap()
-Date: Wed, 12 Jun 2024 15:01:10 +0200
-Message-ID: <20240612130122.813935-5-clg@redhat.com>
-In-Reply-To: <20240612130122.813935-1-clg@redhat.com>
-References: <20240612130122.813935-1-clg@redhat.com>
+ bh=Su7ClX2VsFIEko0OXJVvgHI4Li50SabFJTO7o/P9fMs=;
+ b=g/Jjp/MUT9cmEymAuu1oTMstFVioDCArQ905CPOg/xCIWPiVO4kqfop+5hIe5DWU/a4O0p
+ cLd5+EPPM/qZQQEYc5MpIeUZBoH8sVkETse+Eqp6cuLMCt+M8lp7cI/8yTTD+qy91vp5OQ
+ +JU47zf5fn94goL6XumAL+q80qvNoUE=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-681-otdwcqrwNoeLinQ4Gj14OA-1; Wed, 12 Jun 2024 09:02:19 -0400
+X-MC-Unique: otdwcqrwNoeLinQ4Gj14OA-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4406476507cso20626791cf.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 06:02:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718197339; x=1718802139;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Su7ClX2VsFIEko0OXJVvgHI4Li50SabFJTO7o/P9fMs=;
+ b=UB6PqWib4hJuOVuxNe1wEWEPVe8u8w0iu4Oqr26OBAC3IUr33md37MF496kg+Rd7P+
+ IUvSzHG/+ETlxN/IyJWnHyoWx+DAfiRBLmbdgskdQPt1Lb7vRMA/Vj63ICf31NG7gmw7
+ ZRy07zPv1GskjSmpaYrWhyZFxMFRQkAcEiXq5GLf7o506cFVb6klN6O5V145lqTsD34a
+ bp539VWUVTEp4oMQPAecbTCxYWt8i2F7RpFAIqk1ct0CmMEqfXnUmuqnSyWM2mituwE3
+ aMTtfiiLXLQiYjB42gbGXICKpwhHdm4ShHNKOTHPgHTutEiKb9ioUELTKgFLWJBTkRVa
+ KBGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVfZnz/Gk9fImFCbbZcLWB4U6bYWPq4BpWJ3y8Qb79qks268l3kokhySLvNFMxpfqULPW+7+2uabWLtEZx/ILFOCgovBrc=
+X-Gm-Message-State: AOJu0YwFaGqMp4YWVtf/zmKTkjbnSWIwhZvnmFgGCd5ODD66GN+rUpDG
+ gUy0qMF3QgZH8ZPfAcGZRsn7sHRKxY+aPHuIIsImu8y1PgW108AaooNvmWUYZmL3lbszZv6ozS0
+ LL9f7qJU1jES6R0/17arvAvlyg9027wPTOUwWaaVZadTdgs00WAyC
+X-Received: by 2002:a05:6214:3291:b0:6b0:8b40:c7e0 with SMTP id
+ 6a1803df08f44-6b1a731b7d6mr18097986d6.44.1718197338850; 
+ Wed, 12 Jun 2024 06:02:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEderl/MfePzFiHQ2ncxEuElJrm+4BKYlXdhuE/JLFmI8+4UqTQNNgTmOVLm1w6aUl87AC0UQ==
+X-Received: by 2002:a05:6214:3291:b0:6b0:8b40:c7e0 with SMTP id
+ 6a1803df08f44-6b1a731b7d6mr18097576d6.44.1718197338326; 
+ Wed, 12 Jun 2024 06:02:18 -0700 (PDT)
+Received: from step1.redhat.com ([193.207.132.52])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b07a727eb8sm33527016d6.9.2024.06.12.06.02.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Jun 2024 06:02:16 -0700 (PDT)
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: mst@redhat.com,
+	qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Brad Smith <brad@comstyle.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, gmaglione@redhat.com,
+ stefanha@redhat.com, Coiby Xu <Coiby.Xu@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, slp@redhat.com,
+ Igor Mammedov <imammedo@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>, Thomas Huth <thuth@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ David Hildenbrand <david@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jason Wang <jasowang@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH RESEND v7 02/12] libvhost-user: fail vu_message_write() if
+ sendmsg() is failing
+Date: Wed, 12 Jun 2024 15:01:30 +0200
+Message-ID: <20240612130140.63004-3-sgarzare@redhat.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240612130140.63004-1-sgarzare@redhat.com>
+References: <20240612130140.63004-1-sgarzare@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,102 +120,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Avihai Horon <avihaih@nvidia.com>
+In vu_message_write() we use sendmsg() to send the message header,
+then a write() to send the payload.
 
-Extract vIOMMU code from vfio_sync_dirty_bitmap() to a new function and
-restructure the code.
+If sendmsg() fails we should avoid sending the payload, since we
+were unable to send the header.
 
-This is done in preparation for optimizing vIOMMU deviice dirty page
-tracking. No functional changes intended.
+Discovered before fixing the issue with the previous patch, where
+sendmsg() failed on macOS due to wrong parameters, but the frontend
+still sent the payload which the backend incorrectly interpreted
+as a wrong header.
 
-Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-[ clg: - Rebased on upstream ]
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- hw/vfio/common.c | 63 +++++++++++++++++++++++++++++-------------------
- 1 file changed, 38 insertions(+), 25 deletions(-)
+ subprojects/libvhost-user/libvhost-user.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index fe215918bdf66ddbe3c5db803e10ce1aa9756b90..f28641bad5cf4b71fcdc0a6c9d42b24c8d786248 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -1302,37 +1302,50 @@ vfio_sync_ram_discard_listener_dirty_bitmap(VFIOContainerBase *bcontainer,
-                                                 &vrdl);
- }
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 22bea0c775..a11afd1960 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -639,6 +639,11 @@ vu_message_write(VuDev *dev, int conn_fd, VhostUserMsg *vmsg)
+         rc = sendmsg(conn_fd, &msg, 0);
+     } while (rc < 0 && (errno == EINTR || errno == EAGAIN));
  
-+static int vfio_sync_iommu_dirty_bitmap(VFIOContainerBase *bcontainer,
-+                                        MemoryRegionSection *section)
-+{
-+    VFIOGuestIOMMU *giommu;
-+    bool found = false;
-+    Int128 llend;
-+    vfio_giommu_dirty_notifier gdn;
-+    int idx;
-+
-+    QLIST_FOREACH(giommu, &bcontainer->giommu_list, giommu_next) {
-+        if (MEMORY_REGION(giommu->iommu_mr) == section->mr &&
-+            giommu->n.start == section->offset_within_region) {
-+            found = true;
-+            break;
-+        }
++    if (rc <= 0) {
++        vu_panic(dev, "Error while writing: %s", strerror(errno));
++        return false;
 +    }
 +
-+    if (!found) {
-+        return 0;
-+    }
-+
-+    gdn.giommu = giommu;
-+    idx = memory_region_iommu_attrs_to_index(giommu->iommu_mr,
-+                                             MEMTXATTRS_UNSPECIFIED);
-+
-+    llend = int128_add(int128_make64(section->offset_within_region),
-+                       section->size);
-+    llend = int128_sub(llend, int128_one());
-+
-+    iommu_notifier_init(&gdn.n, vfio_iommu_map_dirty_notify, IOMMU_NOTIFIER_MAP,
-+                        section->offset_within_region, int128_get64(llend),
-+                        idx);
-+    memory_region_iommu_replay(giommu->iommu_mr, &gdn.n);
-+
-+    return 0;
-+}
-+
- static int vfio_sync_dirty_bitmap(VFIOContainerBase *bcontainer,
-                                   MemoryRegionSection *section, Error **errp)
- {
-     ram_addr_t ram_addr;
- 
-     if (memory_region_is_iommu(section->mr)) {
--        VFIOGuestIOMMU *giommu;
--
--        QLIST_FOREACH(giommu, &bcontainer->giommu_list, giommu_next) {
--            if (MEMORY_REGION(giommu->iommu_mr) == section->mr &&
--                giommu->n.start == section->offset_within_region) {
--                Int128 llend;
--                vfio_giommu_dirty_notifier gdn = { .giommu = giommu };
--                int idx = memory_region_iommu_attrs_to_index(giommu->iommu_mr,
--                                                       MEMTXATTRS_UNSPECIFIED);
--
--                llend = int128_add(int128_make64(section->offset_within_region),
--                                   section->size);
--                llend = int128_sub(llend, int128_one());
--
--                iommu_notifier_init(&gdn.n,
--                                    vfio_iommu_map_dirty_notify,
--                                    IOMMU_NOTIFIER_MAP,
--                                    section->offset_within_region,
--                                    int128_get64(llend),
--                                    idx);
--                memory_region_iommu_replay(giommu->iommu_mr, &gdn.n);
--                break;
--            }
--        }
--        return 0;
-+        return vfio_sync_iommu_dirty_bitmap(bcontainer, section);
-     } else if (memory_region_has_ram_discard_manager(section->mr)) {
-         int ret;
- 
+     if (vmsg->size) {
+         do {
+             if (vmsg->data) {
 -- 
 2.45.2
 
