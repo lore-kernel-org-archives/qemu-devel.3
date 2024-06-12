@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28514C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 245ADC27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNvG-0000vG-Gc; Wed, 12 Jun 2024 09:21:56 -0400
+	id 1sHNvQ-00011D-5V; Wed, 12 Jun 2024 09:22:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHNux-0000Ou-QB
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:21:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHNuu-0003xc-4w
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHNuv-0000O7-Qs
  for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:21:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHNuq-0003wj-7b
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:21:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718198490;
+ s=mimecast20190719; t=1718198484;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=W2ti5MdYPaT8sRVI8LbSwShzQk9KoHPKLbkpjkZs45g=;
- b=GNVETZCJICESylYYABdVadvUnZkgr8IPCu01C6bxt80cXNVUbOvf9426ymuH5+Qm5nkrB+
- go29Sb09lJjIe+RGqCEHoE6b+utRKeWVO7nD+DsnUPIwzKL2myjGYGp+rQsP8I3WxpfDIY
- hEs3WoI7/EwkcYJpEWIMVJt9qP/H7tw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=fL0oeRA4y1D39ogIDciJCzoJ6e3r/gjv0CsBd13xcrY=;
+ b=Kd6DWsihCBEZUW8VI0lXQkQegwtWWp+q1OZfBEQMEC5HLumnfSIbX7GJb6dJ5n5pgE5goC
+ nKBa5a8FFB89taQPVB8lDKLUKhkPq9+RrHixYd4uzS9k/yrhwn2Lx5bdbXrYYOy9GKfhvJ
+ AL4fd8cnV7LgnXWNU3HrqmmeqmGlxB8=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-pgY8wELfON2cUdHWwdQftw-1; Wed,
- 12 Jun 2024 09:21:28 -0400
-X-MC-Unique: pgY8wELfON2cUdHWwdQftw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-81-g7DcJbRPPtOjZJNWJ6SOIQ-1; Wed,
+ 12 Jun 2024 09:21:20 -0400
+X-MC-Unique: g7DcJbRPPtOjZJNWJ6SOIQ-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F16A1955E7D; Wed, 12 Jun 2024 13:21:27 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFCB819560B3; Wed, 12 Jun 2024 13:21:19 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.194.236])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ED2B91956087; Wed, 12 Jun 2024 13:21:25 +0000 (UTC)
+ id B579B1955E87; Wed, 12 Jun 2024 13:21:17 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
 Cc: Zhao Liu <zhao1.liu@intel.com>,
 	Yongwei Ma <yongwei.ma@intel.com>
-Subject: [PULL 10/15] tests/unit/test-smp-parse: Use default parameters=0 when
- not set in -smp
-Date: Wed, 12 Jun 2024 15:20:50 +0200
-Message-ID: <20240612132055.326889-11-thuth@redhat.com>
+Subject: [PULL 07/15] tests/unit/test-smp-parse: Fix comments of drawers and
+ books case
+Date: Wed, 12 Jun 2024 15:20:47 +0200
+Message-ID: <20240612132055.326889-8-thuth@redhat.com>
 In-Reply-To: <20240612132055.326889-1-thuth@redhat.com>
 References: <20240612132055.326889-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -85,60 +85,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Since -smp allows parameters=1 whether the level is supported by
-machine, to avoid the test scenarios where the parameter defaults to 1
-cause some errors to be masked, explicitly set undesired parameters to
-0.
+Fix the comments to match the actual configurations.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Message-ID: <20240529061925.350323-5-zhao1.liu@intel.com>
+Message-ID: <20240529061925.350323-2-zhao1.liu@intel.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
  tests/unit/test-smp-parse.c | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
-index 5d99e0d923..e3a0a9d12d 100644
+index 9fdba24fce..fa8e7d83a7 100644
 --- a/tests/unit/test-smp-parse.c
 +++ b/tests/unit/test-smp-parse.c
-@@ -436,7 +436,7 @@ static const struct SMPTestData data_with_clusters_invalid[] = {
- static const struct SMPTestData data_with_books_invalid[] = {
+@@ -474,8 +474,8 @@ static const struct SMPTestData data_with_drawers_invalid[] = {
+ static const struct SMPTestData data_with_drawers_books_invalid[] = {
      {
-         /* config: -smp 16,books=2,sockets=2,cores=4,threads=2,maxcpus=16 */
--        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 16, F, 1, T, 2, T,
-+        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 16, F, 0, T, 2, T,
-                                                 2, T, 4, T, 2, T, 16),
-         .expect_error = "Invalid CPU topology: "
-                         "product of the hierarchy must match maxcpus: "
-@@ -444,7 +444,7 @@ static const struct SMPTestData data_with_books_invalid[] = {
-                         "!= maxcpus (16)",
+         /*
+-         * config: -smp 200,drawers=2,books=2,sockets=2,cores=4,\
+-         * threads=2,maxcpus=200
++         * config: -smp 200,drawers=3,books=5,sockets=2,cores=4,\
++         *              threads=2,maxcpus=200
+          */
+         .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 200, T, 3, T, 5, T,
+                                                 2, T, 4, T, 2, T, 200),
+@@ -485,8 +485,8 @@ static const struct SMPTestData data_with_drawers_books_invalid[] = {
+                         "cores (4) * threads (2) != maxcpus (200)",
      }, {
-         /* config: -smp 34,books=2,sockets=2,cores=4,threads=2,maxcpus=32 */
--        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 34, F, 1, T, 2, T,
-+        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 34, F, 0, T, 2, T,
-                                                 2, T, 4, T, 2, T, 32),
-         .expect_error = "Invalid CPU topology: "
-                         "maxcpus must be equal to or greater than smp: "
-@@ -456,7 +456,7 @@ static const struct SMPTestData data_with_books_invalid[] = {
- static const struct SMPTestData data_with_drawers_invalid[] = {
-     {
-         /* config: -smp 16,drawers=2,sockets=2,cores=4,threads=2,maxcpus=16 */
--        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 16, T, 2, F, 1, T,
-+        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 16, T, 2, F, 0, T,
-                                                 2, T, 4, T, 2, T, 16),
-         .expect_error = "Invalid CPU topology: "
-                         "product of the hierarchy must match maxcpus: "
-@@ -464,7 +464,7 @@ static const struct SMPTestData data_with_drawers_invalid[] = {
-                         "!= maxcpus (16)",
-     }, {
-         /* config: -smp 34,drawers=2,sockets=2,cores=4,threads=2,maxcpus=32 */
--        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 34, T, 2, F, 1, T,
-+        .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 34, T, 2, F, 0, T,
-                                                 2, T, 4, T, 2, T, 32),
-         .expect_error = "Invalid CPU topology: "
-                         "maxcpus must be equal to or greater than smp: "
+         /*
+-         * config: -smp 242,drawers=2,books=2,sockets=2,cores=4,\
+-         * threads=2,maxcpus=240
++         * config: -smp 242,drawers=3,books=5,sockets=2,cores=4,\
++         *              threads=2,maxcpus=240
+          */
+         .config = SMP_CONFIG_WITH_BOOKS_DRAWERS(T, 242, T, 3, T, 5, T,
+                                                 2, T, 4, T, 2, T, 240),
 -- 
 2.45.2
 
