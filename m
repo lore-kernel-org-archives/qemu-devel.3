@@ -4,112 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EF5C27C77
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 14:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DA13C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 14:33:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHP0g-0003mQ-KS; Wed, 12 Jun 2024 10:31:34 -0400
+	id 1sHP2M-0004o6-Le; Wed, 12 Jun 2024 10:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sHP0f-0003hO-3x
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 10:31:33 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHP2K-0004nU-Pm
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 10:33:16 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sHP0d-000116-EN
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 10:31:32 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 397EE5C2D2;
- Wed, 12 Jun 2024 14:31:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718202687; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AlizMYU18wbD7Lf15QFvvuM+VNwM/S7O6EvDmuh354I=;
- b=X6evhL3uedFP81MT+ZIkHyOvd/dyLrmhaz2dixVbOBS3ehGfLI9zyNzXHmPW/7MlBANFtW
- /cvfKK3KXDxaVIZfDlguuTAj/LDaBLihZmY5DUyidYOp/dGAJjF4sg3FQu/qmKwNWcJpo2
- B51QH2xAW5C4Ew8+Z5zeANr2Cdv9Itk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718202687;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AlizMYU18wbD7Lf15QFvvuM+VNwM/S7O6EvDmuh354I=;
- b=VC4GPStYefT9KNPZ6DQrYqi+3iTvGqqtT6+LL7/Yyqinepf3QxcAWozZ4QC4kGYYqm7pMr
- np0rgoV5qU+EFBAw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=X6evhL3u;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VC4GPStY
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718202687; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AlizMYU18wbD7Lf15QFvvuM+VNwM/S7O6EvDmuh354I=;
- b=X6evhL3uedFP81MT+ZIkHyOvd/dyLrmhaz2dixVbOBS3ehGfLI9zyNzXHmPW/7MlBANFtW
- /cvfKK3KXDxaVIZfDlguuTAj/LDaBLihZmY5DUyidYOp/dGAJjF4sg3FQu/qmKwNWcJpo2
- B51QH2xAW5C4Ew8+Z5zeANr2Cdv9Itk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718202687;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AlizMYU18wbD7Lf15QFvvuM+VNwM/S7O6EvDmuh354I=;
- b=VC4GPStYefT9KNPZ6DQrYqi+3iTvGqqtT6+LL7/Yyqinepf3QxcAWozZ4QC4kGYYqm7pMr
- np0rgoV5qU+EFBAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B67D61372E;
- Wed, 12 Jun 2024 14:31:26 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id bDXMHj6xaWa9TAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 12 Jun 2024 14:31:26 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Yuan Liu <yuan1.liu@intel.com>, peterx@redhat.com, pbonzini@redhat.com,
- marcandre.lureau@redhat.com, berrange@redhat.com, thuth@redhat.com,
- philmd@linaro.org
-Cc: qemu-devel@nongnu.org, yuan1.liu@intel.com, nanhai.zou@intel.com,
- shameerali.kolothum.thodi@huawei.com
-Subject: Re: [PATCH v8 4/7] migration/multifd: add qpl compression method
-In-Reply-To: <87msnqck32.fsf@suse.de>
-References: <20240610102110.900410-1-yuan1.liu@intel.com>
- <20240610102110.900410-5-yuan1.liu@intel.com> <87msnqck32.fsf@suse.de>
-Date: Wed, 12 Jun 2024 11:31:24 -0300
-Message-ID: <87h6dycjwj.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHP2I-00019i-UW
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 10:33:16 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4217990f997so37790655e9.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 07:33:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718202792; x=1718807592; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=n2qVdms+e50cnyPcFlCget/utC54t8n1u5in1FJt0Qw=;
+ b=AJ7wtM13mzbP5TCm9CXd/aHnN/cCQ3QPDLyifAs1zLkmUEqQNsJN6c16m/2ha9OWyO
+ /XZLalKPMY3Bg1JI7HYCvtL7bskWSxD4tFLxbO29SCmEVJbuV0T3OkSVjJlVgL5F0Cml
+ +iOxGecDHLBILEgo8dfCAFwn5rL7Ak5pjwLFExPettUT19jzZIOldblmWx13y/rqp+KC
+ kqSjpW4qIejcAUbt8DIts93TvxVWn0bZcvWh72522GHp0iran3Yepa0tArV0lGI0gWQH
+ DvW4nIHIw5MXICFIPdtuxBw/T88rMHLq/B97/kS6TcnPDxydQHOHqUmpFJti5ZWgiSe0
+ TXMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718202792; x=1718807592;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=n2qVdms+e50cnyPcFlCget/utC54t8n1u5in1FJt0Qw=;
+ b=nBruA2GbcGFlUX/4LB/IC1KsnT7niyZW/KB/9wkbflATdNZxXiKklGLSOinpMx82Ko
+ roDXGPyF8ghFpKscGxluX7uSVzRawKUEIL3M5av6G2ruY9hwTbKEhgNEj2CZRQIP73cu
+ JT95SFcLdXHINSEQF03xT6jdT3v5iARYVUG0OpDfl5PFEyT7FS10eliOT4ZWXJ1LvUyO
+ LrjGklMGWPDSgDRLXBat5oMGf1AuVPbMJra32qSr0zAXpp3aK5nIRYqbgHCItIUBGl4T
+ buNv6e3T7fwOOUjhceqT2YMmMDpcDTzEug8kve1vGkk5LN53iKkV0djeybbtVgnoRBQ/
+ kqGA==
+X-Gm-Message-State: AOJu0Ywq8scR9FxKVXQb1oS7S51yhD2simM/FeIMtlObypYy5+u8N67q
+ BbRhgClQqSubjUmV5N1bwF4ftnSZhB4Tarb5WYIl5bxn6AAHM/lfPA0NAuwAP0c=
+X-Google-Smtp-Source: AGHT+IHpBWYaZK6ZegVqEicuQ/JRC13HEHOFRCWtX78EM/s+SKmWbenY1gdcp/MPa5ycDiJNSOXRFg==
+X-Received: by 2002:a05:600c:46c6:b0:421:de31:8b with SMTP id
+ 5b1f17b1804b1-422866c5968mr14956185e9.27.1718202792420; 
+ Wed, 12 Jun 2024 07:33:12 -0700 (PDT)
+Received: from [192.168.69.100] (ram94-h02-176-184-0-172.dsl.sta.abo.bbox.fr.
+ [176.184.0.172]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-422871eb9ecsm28880515e9.35.2024.06.12.07.33.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 12 Jun 2024 07:33:11 -0700 (PDT)
+Message-ID: <a5cabbae-20f1-47ce-a46f-30ad3b1d9d78@linaro.org>
+Date: Wed, 12 Jun 2024 16:33:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[11]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,suse.de:email,suse.de:dkim];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 397EE5C2D2
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: assert fails in s390x TCG
+To: Claudio Fontana <cfontana@suse.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Anton Johansson <anjo@rev.ng>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+References: <eaec32e3-d56a-e6a7-fcbe-860948e79658@suse.de>
+ <def2df0d-fb58-8e67-a0eb-7d646da3be42@linaro.org>
+ <0e06f694-7aeb-66d1-48d8-317a93f8f741@suse.de>
+ <6a3e8443-2d0a-451e-a481-cc26575d8211@linaro.org>
+ <14787dc3-66ae-e15e-0bdf-14ca53bff17d@linaro.org>
+ <b0b49b1b-6877-487c-9f4d-b29ae54c5ab0@linaro.org>
+ <1a8cd52a-6c3e-47b4-89c8-d0254ba452e7@suse.de>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <1a8cd52a-6c3e-47b4-89c8-d0254ba452e7@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,32 +103,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+On 12/6/24 15:08, Claudio Fontana wrote:
+> On 6/12/24 14:41, Philippe Mathieu-Daudé wrote:
+>> On 28/7/23 18:43, Richard Henderson wrote:
+>>> On 7/28/23 09:05, Richard Henderson wrote:
+>>>> It's the page containing both code and a page table entry that
+>>>> concerns me.  It seems like a kernel bug, though obviously we
+>>>> shouldn't crash.  I'm not sure what to do about it.
+>>>
+>>> Bah.  Of course it's not a kernel bug, since the store is to LowCore.
+>>> And of course LowCore is part of a larger page, which easily has other
+>>> stuff.
+>>
+>> Maybe related to
+>> https://lore.kernel.org/qemu-devel/20240611215814.32752-1-anjo@rev.ng/
+>>
+> 
+> Hi philippe,
+> 
+> this was already fixed by Ilya's commit:
+> 
+> commit 791b2b6a930273db694b9ba48bbb406e78715927
+> Author: Ilya Leoshkevich <iii@linux.ibm.com>
+> Date:   Sat Aug 5 01:03:18 2023 +0200
+> 
+>      target/s390x: Fix the "ignored match" case in VSTRS
+>      
+>      Currently the emulation of VSTRS recognizes partial matches in presence
+>      of \0 in the haystack, which, according to PoP, is not correct:
+>      
+>          If the ZS flag is one and a zero byte was detected
+>          in the second operand, then there can not be a
+>          partial match ...
+>      
+>      Add a check for this. While at it, fold a number of explicitly handled
+>      special cases into the generic logic.
+>      
+>      Cc: qemu-stable@nongnu.org
+>      Reported-by: Claudio Fontana <cfontana@suse.de>
+>      Closes: https://lists.gnu.org/archive/html/qemu-devel/2023-08/msg00633.html
+>      Fixes: 1d706f314191 ("target/s390x: vxeh2: vector string search")
+>      Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>      Message-Id: <20230804233748.218935-3-iii@linux.ibm.com>
+>      Tested-by: Claudio Fontana <cfontana@suse.de>
+>      Acked-by: David Hildenbrand <david@redhat.com>
+>      Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-> Yuan Liu <yuan1.liu@intel.com> writes:
->
->> add the Query Processing Library (QPL) compression method
->>
->> Introduce the qpl as a new multifd migration compression method, it can
->> use In-Memory Analytics Accelerator(IAA) to accelerate compression and
->> decompression, which can not only reduce network bandwidth requirement
->> but also reduce host compression and decompression CPU overhead.
->>
->> How to enable qpl compression during migration:
->> migrate_set_parameter multifd-compression qpl
->>
->> There is no qpl compression level parameter added since it only supports
->> level one, users do not need to specify the qpl compression level.
->>
->> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
->> Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
->> Reviewed-by: Peter Xu <peterx@redhat.com>
->> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->
-> I don't think I ever reviewed this patch. Please drop this when you
-> resubmit.
-
-Actually, just leave it. I thought you'd need to fix the output size on
-6/7, but I saw you just moved it elsewhere. So no need to respin. I'll
-queue this version shortly unless anyone else has comments.
+Ah great, thanks Ilya ;)
 
