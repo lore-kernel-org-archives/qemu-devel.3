@@ -4,97 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA5EAC27C75
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 18:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECF5BC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 18:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHSgk-0000PS-4v; Wed, 12 Jun 2024 14:27:14 -0400
+	id 1sHSkD-0001xT-Vy; Wed, 12 Jun 2024 14:30:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sHSgi-0000Jn-9q
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 14:27:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1sHSk2-0001wE-R3
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 14:30:42 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sHSgg-0003G6-OM
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 14:27:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718216829;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8N0tCfQDxZKgqXkEkMY4W8skwzm7AxYnBHGEioODlP0=;
- b=TSs5Ji8i2gkpFv6XEkLekokhEO1HR6Y2xHHRK4IqS8uAG8jZULwlT6jzSQBLVeP2h5Rpkk
- Ts47GXByQtfMkkbIvM6lrEpO0l75HYG6pwB7ebDGTZAlGavBN/17Nf0GhEyxEji+Pj+KJG
- voBujaz56dAlQ+zQmUtrrHJ7l8787tA=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-127-LfJyM9iiO36LXF7DB_2UWQ-1; Wed, 12 Jun 2024 14:27:08 -0400
-X-MC-Unique: LfJyM9iiO36LXF7DB_2UWQ-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6b06c786b64so112076d6.2
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 11:27:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718216827; x=1718821627;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8N0tCfQDxZKgqXkEkMY4W8skwzm7AxYnBHGEioODlP0=;
- b=txxieqx7B3MadFUg2GgsusqZslKnDR5Tpdt96AKQkWQXFLecM23YhA36z7cZlnMdn6
- 42M1LRS5fj4kZwveE6HhT7fLSHy8wNbWTBZIbtZKJ+G3E7tgl8HzqK4qdzn4bgxKpUnr
- 0sUTi4NJKb5wACCpgOvbw3VzPRnUgVIMOwKixiARjFP0QzItvEgy5uLSt34U3WXqoyE8
- WoWowE38rfoSL6wMO+jK7OZ0Ep5N90tbVBP18y9UCiMi4ZBWtZzMrYkykOHIlVw2D9nv
- r7xkWEZ35P4inHVRxhT9FlA3CDHwCLvpePPFGsV1E88zQ9mQcPDNz/isgl0b/nabMBh6
- DOpg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVXmn4bQW4/TO8mYCCSiiLQ53p2b5H6ISClN/53dF+yHbmzM4icr0WhRmwt2VcAGd/V9Q3afeoBObvaEXz4uUB50yejB1Q=
-X-Gm-Message-State: AOJu0YxvBLyKUrUjgUl+eOiMVXtnc+r9WmryG80Qt7uQTjDl/rfk0cCs
- mlfCsOmC1G4VfqNr6L7A2NYRT7Ex7FZnZvyEHtm+oUi2wUzsT4LkpCLtWiQjdT91u4nG2Eo9h12
- cCJY1YfaAFBObsJnJ5YliA4kTnSeNXE/nIQF347832LQ5Wlv0bR2E
-X-Received: by 2002:ad4:5d69:0:b0:6ab:7ce8:820c with SMTP id
- 6a1803df08f44-6b1b5b124bdmr27010316d6.5.1718216827408; 
- Wed, 12 Jun 2024 11:27:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+p7D6PRAglYgAzyHyFF8Vn9L9ej5LEHPJMgym7hOibfz7ef+cJF99vizD7GKorUkyP4hK6w==
-X-Received: by 2002:ad4:5d69:0:b0:6ab:7ce8:820c with SMTP id
- 6a1803df08f44-6b1b5b124bdmr27010046d6.5.1718216826760; 
- Wed, 12 Jun 2024 11:27:06 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b06f915c78sm45772256d6.104.2024.06.12.11.27.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Jun 2024 11:27:06 -0700 (PDT)
-Date: Wed, 12 Jun 2024 14:27:04 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- armbru@redhat.com, Claudio Fontana <cfontana@suse.de>,
- Jim Fehlig <jfehlig@suse.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 18/18] migration/ram: Add direct-io support to precopy
- file migration
-Message-ID: <ZmnoeEKhvxx8rxu5@x1n>
-References: <20240523190548.23977-1-farosas@suse.de>
- <20240523190548.23977-19-farosas@suse.de> <Zl9_ZiC6-743ZosG@x1n>
- <87y17gwq5g.fsf@suse.de> <ZmclVQw0x7KKLxmF@x1n>
- <87r0d4wv1q.fsf@suse.de> <ZmdNstq2bONG-7M7@x1n>
- <87le3cwo9e.fsf@suse.de> <87ed92c9vh.fsf@suse.de>
- <Zmnlt0jUx2o1MEgy@redhat.com>
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1sHSk0-0003r8-1V
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 14:30:37 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45CFNOB8016703;
+ Wed, 12 Jun 2024 18:30:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ si6An54rgbK6FfapjfzVC7p9aZAyjkE1B5AFy4lJ26U=; b=OPBhL06p10GGS0pU
+ 25ghULXQXbySUG7NHxmgBTWub/nUpje992XIR46CJ7SbYM6xPtY7XYX4D7lDybNs
+ e4LSHHRed60NldSaOHWDylVG3/6DeroSifSyQDtHIJdp4ryciD6t0kH1fJLL3lG1
+ S+aX+NdcedQ519FRvTl7GF6t8Z9fc0OrvE22p6E8yGdRHUgn7QM2uesVp/aDd592
+ QwgORmhKdfbalhikaFs5okl1UqjvCvZyNjXV9okaPLbazv5Ba5mKJuYmjXyy7SIo
+ 7tvz0sJo8E9ON/stRnedSHtVs94OMwXYHyShJhokIcfQk6JvYIEWbqj3Lkzb6Rr5
+ 3oRAXQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yqe93ghpe-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Jun 2024 18:30:31 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
+ [10.47.209.196])
+ by NALASPPMTA05.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id
+ 45CIUIKu018238
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Jun 2024 18:30:18 GMT
+Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 12 Jun 2024 11:30:17 -0700
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+To: <ltaylorsimpson@gmail.com>
+CC: <qemu-devel@nongnu.org>, <bcain@quicinc.com>, <tedwood@quicinc.com>,
+ <alex.bennee@linaro.org>, <quic_mathbern@quicinc.com>,
+ <sidneym@quicinc.com>, <quic_mliebel@quicinc.com>,
+ <richard.henderson@linaro.org>, <philmd@linaro.org>, <ale@rev.ng>,
+ <anjo@rev.ng>
+Subject: Re: [PATCH] Hexagon: lldb read/write predicate registers p0/p1/p2/p3
+Date: Wed, 12 Jun 2024 15:30:08 -0300
+Message-ID: <20240612183008.4123155-1-quic_mathbern@quicinc.com>
+X-Mailer: git-send-email 2.37.2
+In-Reply-To: <20240612164239.90276-1-ltaylorsimpson@gmail.com>
+References: <20240612164239.90276-1-ltaylorsimpson@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zmnlt0jUx2o1MEgy@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-GUID: 4mrqWsE030Kug36HDjV5ge4nUShLJc_s
+X-Proofpoint-ORIG-GUID: 4mrqWsE030Kug36HDjV5ge4nUShLJc_s
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-12_10,2024-06-12_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 mlxlogscore=425
+ impostorscore=0 priorityscore=1501 mlxscore=0 bulkscore=0 adultscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406120132
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_mathbern@quicinc.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,34 +105,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 12, 2024 at 07:15:19PM +0100, Daniel P. Berrangé wrote:
-> IIUC, with the "fixed-ram" feature, the on-disk format of a saved VM
-> should end up the same whether we're using traditional migration, or
-> multifd migration. Use of multifd is simply an optimization that lets
-> us write RAM in parallel to the file, with direct-io further optimizing.
-> 
-> There's also a clear break with libvirt between the existing on-disk
-> format libvirt uses, and the new fixed-ram format. So we have no backwards
-> compatibilty concerns added from multifd, beyond what we already have to
-> figure out when deciding on use of 'fixed-ram'. 
-> 
-> Thus I believe there is no downside to always using multifd for save
-> images with fixed-ram, even if we only want nchannels=1.
+On Wed, 12 Jun 2024 10:42:39 -0600 Taylor Simpson <ltaylorsimpson@gmail.com> wrote:
+>
+> diff --git a/target/hexagon/gdbstub.c b/target/hexagon/gdbstub.c
+> index 502c6987f0..e67e627fc9 100644
+> --- a/target/hexagon/gdbstub.c
+> +++ b/target/hexagon/gdbstub.c
+> @@ -56,6 +64,15 @@ int hexagon_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+>          return sizeof(target_ulong);
+>      }
+>  
+> +    n -= TOTAL_PER_THREAD_REGS;
+> +
+> +    if (n < NUM_PREGS) {
+> +        env->pred[n] = ldtul_p(mem_buf);
+> +        return sizeof(uint8_t);
 
-That sounds good.
+I wonder, shouldn't this be sizeof(target_ulong) since we wrote a target_ulong?
 
-Just to double check with all of us: so we allow mapped-ram to be used in
-whatever case when !dio, however we restrict dio only when with multifd=on,
-am I right?
-
-I'd personally like that, and it also pretty much matches with what we have
-with tcp zerocopy send too. After all they're really similar stuff to me on
-pinning implications and locked_vm restrictions.  It's just that the target
-of the data movement is different here, either to NIC, or to/from a file.
-
-Thanks,
-
--- 
-Peter Xu
-
+> +    }
+> +
+> +    n -= NUM_PREGS;
+> +
+>      g_assert_not_reached();
+>  }
 
