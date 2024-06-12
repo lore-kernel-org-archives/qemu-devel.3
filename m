@@ -4,90 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B804DC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 14:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EF5C27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 14:31:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHP0I-0003P7-OL; Wed, 12 Jun 2024 10:31:10 -0400
+	id 1sHP0g-0003mQ-KS; Wed, 12 Jun 2024 10:31:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sHP0G-0003Og-Tn
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 10:31:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sHP0D-000109-O8
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 10:31:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718202662;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sHP0f-0003hO-3x
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 10:31:33 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sHP0d-000116-EN
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 10:31:32 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 397EE5C2D2;
+ Wed, 12 Jun 2024 14:31:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718202687; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=LNOWsKOD3ZvVR7goK0xUuH5E9Qs0TocVfUGSb64pAmo=;
- b=L3YXczMvBDI39pZVten9kxEjVtaqYslnT5FT1UNnPW6X+Cb+q1UKWraxwCBik9sX6hhc2L
- 3UcYuSeE4H8x7Iar9by2qD7CCtAgrapys1bIHKuV8TLw3XXn8ZI/2Md3OZUe57mZuS4wc+
- HzdmRnrzoZEZU+XZkHUvmCYwJ+Ni1OM=
-Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
- [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-1-2YV1NFyeO3WS1KlB-Xie-w-1; Wed, 12 Jun 2024 10:31:01 -0400
-X-MC-Unique: 2YV1NFyeO3WS1KlB-Xie-w-1
-Received: by mail-yb1-f200.google.com with SMTP id
- 3f1490d57ef6-dfa478f473eso1359410276.0
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 07:31:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718202661; x=1718807461;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LNOWsKOD3ZvVR7goK0xUuH5E9Qs0TocVfUGSb64pAmo=;
- b=KKyxbw5QEQXkj0TLW6++LdUA7uQTWD6TJOqOlhCwj0RIXJdI8VtQkR/nY4WQtWbDHT
- hRu4WMBniZZtXt1l/EcdgXlpDabPk8VKMzZctJlkWhU9i5NQLIJsA8EtjHO1byIbhrpL
- lYnE3Zh2SfpSPDYKJso2+vDk/Dv6JDM1LET41wfXjpjOt29gf5xNJcG1B1FcIOAM93dn
- skG+7gpRj0Neob7iOPFLX+0//gkYQxwCNwYKuFYcp9u0iXQk5wbZiv+8O88MxHSZZzTG
- 9iaZivM2TrL999FuJx9jpDa8RoDfUOzWlQpnZj1tAUSlJvKhP8qQyvMIIKihCm5QeHI+
- 0/0w==
-X-Gm-Message-State: AOJu0YwJMvWp2pUZPoKXHMIjbgKWH5zPRKfcW09wV7184gIBuUGDuGiM
- sJh1PH9QrktR6BZdcEFBAFG1FBSXOMmOnlL/+zqtNOB75sOiONCDQoda2uY5qaWE9uzSf8L+CC5
- SPKb8+lS5fsFW9ZxOcUrIhGdJ6Gi8UhUfdH0qiGJ4WSuewvXhaeig
-X-Received: by 2002:a25:1c4:0:b0:dfd:b41d:4a98 with SMTP id
- 3f1490d57ef6-dfe69fca31bmr1532303276.3.1718202660192; 
- Wed, 12 Jun 2024 07:31:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHdOrmob11wocoArmN5lLdd9v5JObCeZBZcND6ORJBVTfAifYTp7b1cyjCwyZbudaqbLcObSg==
-X-Received: by 2002:a25:1c4:0:b0:dfd:b41d:4a98 with SMTP id
- 3f1490d57ef6-dfe69fca31bmr1532270276.3.1718202659607; 
- Wed, 12 Jun 2024 07:30:59 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-44085391d1esm30299561cf.16.2024.06.12.07.30.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Jun 2024 07:30:59 -0700 (PDT)
-Date: Wed, 12 Jun 2024 10:30:50 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
- David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 0/3] memory: Constify IOMMUTLBEvent in
- memory_region_notify_iommu*()
-Message-ID: <ZmmxGqNDQfb_MzeN@x1n>
-References: <20240612132532.85928-1-philmd@linaro.org>
+ bh=AlizMYU18wbD7Lf15QFvvuM+VNwM/S7O6EvDmuh354I=;
+ b=X6evhL3uedFP81MT+ZIkHyOvd/dyLrmhaz2dixVbOBS3ehGfLI9zyNzXHmPW/7MlBANFtW
+ /cvfKK3KXDxaVIZfDlguuTAj/LDaBLihZmY5DUyidYOp/dGAJjF4sg3FQu/qmKwNWcJpo2
+ B51QH2xAW5C4Ew8+Z5zeANr2Cdv9Itk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718202687;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AlizMYU18wbD7Lf15QFvvuM+VNwM/S7O6EvDmuh354I=;
+ b=VC4GPStYefT9KNPZ6DQrYqi+3iTvGqqtT6+LL7/Yyqinepf3QxcAWozZ4QC4kGYYqm7pMr
+ np0rgoV5qU+EFBAw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=X6evhL3u;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VC4GPStY
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718202687; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AlizMYU18wbD7Lf15QFvvuM+VNwM/S7O6EvDmuh354I=;
+ b=X6evhL3uedFP81MT+ZIkHyOvd/dyLrmhaz2dixVbOBS3ehGfLI9zyNzXHmPW/7MlBANFtW
+ /cvfKK3KXDxaVIZfDlguuTAj/LDaBLihZmY5DUyidYOp/dGAJjF4sg3FQu/qmKwNWcJpo2
+ B51QH2xAW5C4Ew8+Z5zeANr2Cdv9Itk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718202687;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AlizMYU18wbD7Lf15QFvvuM+VNwM/S7O6EvDmuh354I=;
+ b=VC4GPStYefT9KNPZ6DQrYqi+3iTvGqqtT6+LL7/Yyqinepf3QxcAWozZ4QC4kGYYqm7pMr
+ np0rgoV5qU+EFBAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B67D61372E;
+ Wed, 12 Jun 2024 14:31:26 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id bDXMHj6xaWa9TAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 12 Jun 2024 14:31:26 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Yuan Liu <yuan1.liu@intel.com>, peterx@redhat.com, pbonzini@redhat.com,
+ marcandre.lureau@redhat.com, berrange@redhat.com, thuth@redhat.com,
+ philmd@linaro.org
+Cc: qemu-devel@nongnu.org, yuan1.liu@intel.com, nanhai.zou@intel.com,
+ shameerali.kolothum.thodi@huawei.com
+Subject: Re: [PATCH v8 4/7] migration/multifd: add qpl compression method
+In-Reply-To: <87msnqck32.fsf@suse.de>
+References: <20240610102110.900410-1-yuan1.liu@intel.com>
+ <20240610102110.900410-5-yuan1.liu@intel.com> <87msnqck32.fsf@suse.de>
+Date: Wed, 12 Jun 2024 11:31:24 -0300
+Message-ID: <87h6dycjwj.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240612132532.85928-1-philmd@linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[11]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,suse.de:email,suse.de:dkim];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 397EE5C2D2
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,17 +126,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 12, 2024 at 03:25:28PM +0200, Philippe Mathieu-Daudé wrote:
-> Trivial patches using const IOMMUTLBEvent.
-> 
-> Philippe Mathieu-Daudé (3):
->   memory: Constify IOMMUTLBEvent in memory_region_notify_iommu_one()
->   memory: Constify IOMMUTLBEvent in memory_region_notify_iommu()
->   hw/i386/iommu: Constify IOMMUTLBEvent in vtd_page_walk_hook prototype
+Fabiano Rosas <farosas@suse.de> writes:
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+> Yuan Liu <yuan1.liu@intel.com> writes:
+>
+>> add the Query Processing Library (QPL) compression method
+>>
+>> Introduce the qpl as a new multifd migration compression method, it can
+>> use In-Memory Analytics Accelerator(IAA) to accelerate compression and
+>> decompression, which can not only reduce network bandwidth requirement
+>> but also reduce host compression and decompression CPU overhead.
+>>
+>> How to enable qpl compression during migration:
+>> migrate_set_parameter multifd-compression qpl
+>>
+>> There is no qpl compression level parameter added since it only supports
+>> level one, users do not need to specify the qpl compression level.
+>>
+>> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
+>> Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
+>> Reviewed-by: Peter Xu <peterx@redhat.com>
+>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+>
+> I don't think I ever reviewed this patch. Please drop this when you
+> resubmit.
 
--- 
-Peter Xu
-
+Actually, just leave it. I thought you'd need to fix the output size on
+6/7, but I saw you just moved it elsewhere. So no need to respin. I'll
+queue this version shortly unless anyone else has comments.
 
