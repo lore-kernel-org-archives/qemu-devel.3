@@ -4,78 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E621C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 11:45:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E21AC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 11:46:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHMPG-0006gw-CG; Wed, 12 Jun 2024 07:44:46 -0400
+	id 1sHMQg-0007Jl-Jn; Wed, 12 Jun 2024 07:46:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sHMPD-0006gQ-Hm
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 07:44:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sHMPC-0002LP-0z
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 07:44:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718192681;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=n6S96Rp6J9kKR7F2mL2xm6fdtnBaMl08bY+tB+k1c0Y=;
- b=FR+3W+WXSjQawR1L9oSK/7NNgOWwbPAgXaL1b05V+mOPC3NC3dHoyDIs+mrGa5mvn8WBSa
- mv2vd12vyWl+8CtMqvDBnn5J73ucbvXQEuJsp09SSbjchbTcWtikeu0qGBH6Ytm4xQiWVf
- mmlpS8rTHQjR2bJ/pgTuqdG16qw2Lmo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-295-0btIiwbDMw2hzmLIJzhUjg-1; Wed,
- 12 Jun 2024 07:44:38 -0400
-X-MC-Unique: 0btIiwbDMw2hzmLIJzhUjg-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F0226195608E; Wed, 12 Jun 2024 11:44:36 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6BD4319560AF; Wed, 12 Jun 2024 11:44:36 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 00F2521F4B8B; Wed, 12 Jun 2024 13:44:33 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>,  qemu-devel@nongnu.org,  Paolo
- Bonzini <pbonzini@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v3 1/4] qom: allow to mark objects as deprecated or not
- secure.
-In-Reply-To: <ZmmFiJY4gBTk8kKk@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Wed, 12 Jun 2024 12:24:56 +0100")
-References: <20240606143010.1318226-1-kraxel@redhat.com>
- <20240606143010.1318226-2-kraxel@redhat.com>
- <8734pifmgv.fsf@pond.sub.org> <ZmmFiJY4gBTk8kKk@redhat.com>
-Date: Wed, 12 Jun 2024 13:44:33 +0200
-Message-ID: <87ikyee672.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
+ id 1sHMQb-0007Ig-F8
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 07:46:09 -0400
+Received: from mail.ispras.ru ([83.149.199.84])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
+ id 1sHMQW-0002iE-AW
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 07:46:08 -0400
+Received: from [10.10.3.121] (unknown [10.10.3.121])
+ by mail.ispras.ru (Postfix) with ESMTPS id 80DB540755E8;
+ Wed, 12 Jun 2024 11:46:01 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 80DB540755E8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+ s=default; t=1718192761;
+ bh=2ei2FukXUx03ACW2sMrttv5mUoBKsFcD2oyeuoaDUJg=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=kNfBfWRrIxMDHZdMHQ7Ure0CdUiJqueDt8UYa+1DB+gLMuHCG/eNsaDQ74abZp1To
+ hfvCHm92i5P+BaYA7SwdCP28Zr1C1qHKJLnAVlCn+O3OhdaCMf8pBPoRpiD7qRQKRk
+ UNIlRPiKVcGlYm7LruFKotfUG5d4zbv3k51Y0iJk=
+Date: Wed, 12 Jun 2024 14:46:01 +0300 (MSK)
+From: Alexander Monakov <amonakov@ispras.ru>
+To: Paolo Bonzini <pbonzini@redhat.com>
+cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 0/5] Reinstate ability to use Qemu on pre-SSE4.1 x86 hosts
+In-Reply-To: <CABgObfYf8=3yXu1p6q6jzyZ7uHy92BHaBXtJY8AMYXBdd9+HGA@mail.gmail.com>
+Message-ID: <caa7d068-a2c6-28a4-51d5-93c61f004bc0@ispras.ru>
+References: <20240612105525.8795-1-amonakov@ispras.ru>
+ <ZmmAq8fbJLuaX4Qg@redhat.com>
+ <CABgObfbGa=xpp9-cLwzqCpPFsf27qM+K-svfXEvc6ffjb=_VAg@mail.gmail.com>
+ <e26ac8a0-5cb0-22a8-fbf9-54f198cdc7ed@ispras.ru>
+ <CABgObfYf8=3yXu1p6q6jzyZ7uHy92BHaBXtJY8AMYXBdd9+HGA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: multipart/mixed; boundary="8323328-934418380-1718192761=:10393"
+Received-SPF: pass client-ip=83.149.199.84; envelope-from=amonakov@ispras.ru;
+ helo=mail.ispras.ru
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,44 +69,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On Wed, Jun 12, 2024 at 01:07:44PM +0200, Markus Armbruster wrote:
->> Gerd Hoffmann <kraxel@redhat.com> writes:
->>=20
->> > Add flags to ObjectClass for objects which are deprecated or not secur=
-e.
->> > Add 'deprecated' and 'not-secure' bools to ObjectTypeInfo, report in
->> > 'qom-list-types'.  Print the flags when listing devices via '-device
->> > help'.
->> >
->> > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+--8323328-934418380-1718192761=:10393
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-[...]
 
->> > diff --git a/qapi/qom.json b/qapi/qom.json
->> > index 8bd299265e39..3f20d4c6413b 100644
->> > --- a/qapi/qom.json
->> > +++ b/qapi/qom.json
->> > @@ -163,10 +163,16 @@
->> >  #
->> >  # @parent: Name of parent type, if any (since 2.10)
->> >  #
->> > +# @deprecated: the type is deprecated (since 9.1)
->> > +#
->> > +# @not-secure: the type (typically a device) is not considered
->> > +#     a security boundary (since 9.1)
->>=20
->> What does this mean?  Does it mean "do not add an instance of this
->> device the guest unless you trust the guest"?
->
-> Essentially yes. This ties to our security doc where we declare
-> we won't consider non-virtualization use cases as being security
-> bugs (CVEs) as large parts of QEMU haven't been designed to
-> provide a guest security boundary
->
->   https://www.qemu.org/docs/master/system/security.html
+On Wed, 12 Jun 2024, Paolo Bonzini wrote:
 
-Would it make sense to add a suitable pointer to the doc comment?
+> On Wed, Jun 12, 2024 at 1:19 PM Alexander Monakov <amonakov@ispras.ru> wrote:
+> > On Wed, 12 Jun 2024, Paolo Bonzini wrote:
+> > > I didn't do this because of RHEL9, I did it because it's silly that
+> > > QEMU cannot use POPCNT and has to waste 2% of the L1 d-cache to
+> > > compute the x86 parity flag (and POPCNT was introduced at the same
+> > > time as SSE4.2).
+> >
+> > From looking at that POPCNT patch I understood that Qemu detects
+> > presence of POPCNT at runtime and will only use the fallback when
+> > POPCNT is unavailable. Did I misunderstand?
+> 
+> -mpopcnt allows GCC to generate the POPCNT instruction for helper
+> code. Right now we have code like this in
+> target/i386/tcg/cc_helper_template.h:
+> 
+>     pf = parity_table[(uint8_t)dst];
+> 
+> and it could be instead something like
+> 
+> #if defined __i386__ || defined __x86_64__ || defined __s390x__||
+> defined __riscv_zbb
 
+GCC also predefines __POPCNT__ when -mpopcnt is active, so that would be
+available for ifdef testing like above, but...
+
+> static inline unsigned int compute_pf(uint8_t x)
+> {
+>     return __builtin_parity(x) * CC_P;
+> }
+> #else
+> extern const uint8_t parity_table[256];
+> static inline unsigned int compute_pf(uint8_t x)
+> {
+>     return parity_table[x];
+> }
+> #endif
+> 
+> The code generated for __builtin_parity, if you don't have it
+> available in hardware, is pretty bad.
+
+On x86 parity _is_ available in baseline ISA, no? Here's what gcc-14 generates:
+
+        xor     eax, eax
+        test    dil, dil
+        setnp   al
+        sal     eax, 2
+
+and with -mpopcnt:
+
+        movsx   eax, dil
+        popcnt  eax, eax
+        and     eax, 1
+        sal     eax, 2
+
+Alexander
+--8323328-934418380-1718192761=:10393--
 
