@@ -4,82 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6770FC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 07:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD52C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 07:52:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHIfG-0002cR-5L; Wed, 12 Jun 2024 03:45:02 -0400
+	id 1sHIlt-00048H-KK; Wed, 12 Jun 2024 03:51:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
- id 1sHIfF-0002bl-4s
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 03:45:01 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yu.zhang@ionos.com>)
- id 1sHIfD-00012v-4O
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 03:45:00 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a6ef8bf500dso223411966b.0
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 00:44:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sHIlq-00047f-PB; Wed, 12 Jun 2024 03:51:50 -0400
+Received: from out30-98.freemail.mail.aliyun.com ([115.124.30.98])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sHIln-0002YL-Gj; Wed, 12 Jun 2024 03:51:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ionos.com; s=google; t=1718178297; x=1718783097; darn=nongnu.org;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3Hkfwh18810tf73lzyctyQK+hcUKYxx1U7w1dcxRJMM=;
- b=NhjrfSiNQFlUSeCaEt9gIM3KO2HOe7ZIGGdawKdpzXBqXwb/VCPy51EWM7FsjDgqCp
- 6unwYcAWRn/HmDNnRkUJedSJSo43O1ohxeb9fbWUxwwPDltcsk+axRDmuuZpdGr5ZzpM
- EnQs7mHd+w2WUzP7zhlHHMVHiR9whX/Xij4Z4jDMqjmlTMZaTvGLwcTstk4ReUw2tqWK
- 1gLlOmQ666fyGqjqbeShygriax2dnxgiMgRGY7U9OvpE/q4Ytf2T89gzMzEvKJLA8jzB
- qKMBMJNUx6owyP/inrwMWcsMUn1o+bDtcBN4IgUyMjWnJoWZ3FQdlyoJ2Xo5LUfjAPc+
- 6tMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718178297; x=1718783097;
- h=content-transfer-encoding:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3Hkfwh18810tf73lzyctyQK+hcUKYxx1U7w1dcxRJMM=;
- b=HS95NUXHcbqJHGNOrxnwqA4th9AUVxDJiXzK7SmnqCRCe/wJyTPbNnyA4yVWY+WKBd
- cOpX49U5rNCofGfbUTS2GiHHDWgLyPk1FdG3F52vD6H+TmbD2f2HTo8Y0f1uCmV1Yqna
- WfUC/4YQCo/UDGOn85B/f72iG93N/qluL8tvIQqT3I3Jhn3R5hKlZB5F8jvPq7RcBCSn
- rF+JxB1052f2qVGjCKtA52slLBWTPfGXrTE7H00M46jZWxD530+EmotZTftIX4qUE1HK
- dCur9pi2T5ZLIEJBT9O1Hk5+DfsPj+ykl5CtV4xMVgmDuIxSlnOSPnAM3U9KRtCTXqWj
- slYw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVHCq5GbTx1yEFWuFvlDLTrdYskX7pU0vh0EwYercGNB4OIu0lwiXnwXmxkpS9ZZwk5wonWmPpl0yUoqzQ03C59sKOGgSM=
-X-Gm-Message-State: AOJu0YxzvSmBX7bG+BKk9K4jjYiOILQguoXtFo86xG598Rd0nOzziztr
- IGYnKOtOnxrz271uO1C18iK10y/XoeaHNgZVn1TIkCQ3DPVeSf4FvzojrWdGdCzM3OrJF0TyHO+
- 1ct0bDPO2zaJVxLxKKrpAGfUFSPhkNdWgZndExw==
-X-Google-Smtp-Source: AGHT+IHmCH44otSLBpk4YfeJHvSWWd45FcWLoEaY16pGuwpuoeoqD/mNCICNWN16WqQElRxSD/n85Ea//ERLxtFg9oI=
-X-Received: by 2002:a17:906:c795:b0:a6f:4c10:8da6 with SMTP id
- a640c23a62f3a-a6f4c108effmr18776466b.2.1718178296660; Wed, 12 Jun 2024
- 00:44:56 -0700 (PDT)
+ d=linux.alibaba.com; s=default;
+ t=1718178696; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=VUJ5qx48u20PmlP1dFLZoPOVraGgXPnmN/mJ/FyMglc=;
+ b=cZ8Rraus6Dwg9M605dslDjDHpHeuGABFy+om6uFvIDB3M0l2dD249y94gDlVsAQB9u08tGylFhIvMrdO12jyJCi2beal/7LPM5THL5YDFbWxOJ7YuZ+JZ0XxhTEvhoZi+fc0rrCR/WIm6KXY9wU3JjVq8DIx+/twyhMZRpDHoZI=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032014031;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
+ TI=SMTPD_---0W8JOZvX_1718178694; 
+Received: from 30.166.64.137(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0W8JOZvX_1718178694) by smtp.aliyun-inc.com;
+ Wed, 12 Jun 2024 15:51:35 +0800
+Message-ID: <e98e7047-d13b-4443-94ea-981c4dd9e58c@linux.alibaba.com>
+Date: Wed, 12 Jun 2024 15:50:28 +0800
 MIME-Version: 1.0
-References: <CAHEcVy6_HUjwvww9WrqeqruYRyEDwq1Tee-tm3mxaQE=w92-HA@mail.gmail.com>
- <ZN37R//1H+rDTzeS@redhat.com>
- <CAHEcVy6U3pSyMue=SZ8b_JyWurzgj5fN3Htfg8QqS_Ho16Ye4Q@mail.gmail.com>
- <CAHEcVy6G5e=AiDmX66R0r=EnjB7ANDfyhqgvY+KzJ3_8FBfJ_w@mail.gmail.com>
-In-Reply-To: <CAHEcVy6G5e=AiDmX66R0r=EnjB7ANDfyhqgvY+KzJ3_8FBfJ_w@mail.gmail.com>
-From: Yu Zhang <yu.zhang@ionos.com>
-Date: Wed, 12 Jun 2024 09:44:45 +0200
-Message-ID: <CAHEcVy4-UA_JmxAhjRAtc8oo_VMOFQPkTWCvTqUq7kKQYp52AQ@mail.gmail.com>
-Subject: Re: about QEMU TLS
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>, Jinpu Wang <jinpu.wang@ionos.com>, 
- Elmar Gerdes <elmar.gerdes@ionos.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: permerror client-ip=2a00:1450:4864:20::636;
- envelope-from=yu.zhang@ionos.com; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/13] riscv: QEMU RISC-V IOMMU Support
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, palmer@rivosinc.com, tjeznach@rivosinc.com,
+ ajones@ventanamicro.com, frank.chang@sifive.com
+References: <20240523173955.1940072-1-dbarboza@ventanamicro.com>
+ <4368759b-506c-410c-980c-4ab34de7f142@linux.alibaba.com>
+ <19dbebe9-75c8-41cf-9e31-713e84904713@ventanamicro.com>
+Content-Language: en-US
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <19dbebe9-75c8-41cf-9e31-713e84904713@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.98;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-98.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,172 +73,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sorry for my confusion. I tested TLS migration by using RDMA, as RDMA
-traffic bypasses the CPU, the TLS setting is not validated. With TCP,
-the connection can't be established if "endpoint" setting is wrong.
 
-On Tue, Jun 11, 2024 at 5:57=E2=80=AFPM Yu Zhang <yu.zhang@ionos.com> wrote=
-:
+On 2024/6/11 18:13, Daniel Henrique Barboza wrote:
+> Hi Zhiwei,
 >
-> Hello Daniel and all,
+> On 6/10/24 10:51 PM, LIU Zhiwei wrote:
+>> Hi Daniel,
+>>
+>> I want to know if we can use the IOMMU and IOPMP at the same time.
 >
-> When I was using TLS encryption for VM live-migration, I noticed one
-> thing: the migration works regardless of the "endpoint" setting (that
-> is: either "endpoint=3Dserver", or "endpoint=3Dclient") on the target
-> server.
-> The line I added is:
-> "-object tls-creds-x509,id=3Dtls0,dir=3D/path/to/qemutls,endpoint=3Dclien=
-t
-> (or server),verify-peer=3Don".
+> AFAIK we can. They're not mutually exclusive since they offer protection
+> and isolation at different layers/stages.
+
+OK. Thanks. I will dive into more details.
+
+I see the IOMMU and IOPMP implementations on mail list both set IOMMU 
+for PCI root bus.
+Is it right?
+
+Thanks,
+Zhiwei
+
 >
-> It seems that currently the setting of "endpoint" is not strictly
-> enforced for VM migration. I'd like to know, if it's intentionally
-> done to allow a certain flexibility, or should be fixed from the
-> security perspective. Thank you very much!
 >
-> Best regards,
-> Yu Zhang @ IONOS cloud
+>>
+>> The relationship between them is more similar to MMU and sPMP or to 
+>> MMU and PMP?
 >
-> On Mon, Aug 21, 2023 at 4:29=E2=80=AFPM Yu Zhang <yu.zhang@ionos.com> wro=
-te:
-> >
-> > Hello Daniel,
-> >
-> > sorry for my slow reply! I tested the approach you suggested by the
-> > following way:
-> >
-> > On the target server, start a VM in -incoming mode:
-> >
-> > qemu-7.1 \
-> > -uuid ${VM_UUID} \
-> >  ...
-> > -object tls-creds-x509,id=3Dtls0,dir=3D${HOME}/qemutls,endpoint=3Dserve=
-r \
-> >  ...
-> > -incoming defer \
-> > -qmp unix:${SOCK},server,nowait \
-> > -qmp unix:${SOCK},server,nowait &
-> >
-> > Set the migrate parameter and waiting for the incoming VM from source:
-> >
-> > echo '{"execute":"qmp_capabilities"}{ "execute":
-> > "migrate-set-parameters", "arguments": { "tls-creds": "tls0" }}' |
-> > sudo nc -U -w 1 ${SOCK}
-> > echo '{"execute":"qmp_capabilities"}{ "execute": "migrate",
-> > "arguments": { "uri": "tcp::8089" }}
-> >
-> > in HMP:
-> > (qemu) migrate_set_parameter tls-creds tls0
-> > (qemu) migrate_incoming tcp:[::]:8089
-> >
-> > On the source server, start a VM:
-> >
-> > qemu-7.1 \
-> > -uuid ${VM_UUID} \
-> >  ...
-> > -object tls-creds-x509,id=3Dtls0,dir=3D${HOME}/qemutls,endpoint=3Dclien=
-t \
-> >  ...
-> > -qmp unix:${SOCK},server,nowait \
-> > -qmp unix:${SOCK},server,nowait &
-> >
-> > Set the migrate parameter and migrate the VM from source to target:
-> >
-> > echo '{"execute":"qmp_capabilities"}{ "execute":
-> > "migrate-set-parameters", "arguments": { "tls-creds": "tls0" }}' |
-> > sudo nc -U -w 1 ${SOCK}
-> > echo '{"execute":"qmp_capabilities"}{ "execute": "migrate",
-> > "arguments": { "uri": "tcp:10.41.19.32:8089" }}
-> >
-> > and query the migration after a few seconds:
-> >
-> > echo '{"execute":"qmp_capabilities"}{ "execute": "query-migrate" }' |
-> > sudo nc -U -w 1 ${SOCK}
-> >
-> > the migrate is completed successfully.
-> >
-> > To further migrate the VM from source (the target for the previously
-> > migration), the endpoint must be changed from "server" to "client" by
-> > QMP commands:
-> >
-> > echo '{"execute":"qmp_capabilities"}{ "execute": "object-del",
-> > "arguments": { "id": "tls0" }}' | sudo nc -U -w 1 ${SOCK}
-> > echo '{"execute":"qmp_capabilities"}{ "execute": "object-add",
-> > "arguments": { "id": "tls0", "qom-type": "tls-creds-x509", "endpoint":
-> > "client", "dir": "${HOME}/qemutls", "verify-peer": false }}' | sudo nc
-> > -U -w 1 ${SOCK}
-> >
-> > which in HMP commands are:
-> >
-> > (qemu) object_del tls0
-> > (qemu) object_add tls-creds-x509,id=3Dtls0,dir=3D${HOME}/qemutls,endpoi=
-nt=3Dclient
-> > (qemu) migrate_set_parameter tls-creds tls0
-> > (qemu) migrate tcp:10.41.16.10:8089
-> >
-> > So far as I tested, the TLS certificate must be valid for at least one
-> > day. Therefore, the VM migration with an expired TLS certificate can
-> > only be done in one day.
-> >
-> > Thank you so much for your kind reply!
-> > Best regards
-> >
-> > Yu Zhang @ IONOS Compute Platform
-> >
-> > On Thu, Aug 17, 2023 at 12:49=E2=80=AFPM Daniel P. Berrang=C3=A9 <berra=
-nge@redhat.com> wrote:
-> > >
-> > > On Mon, Aug 07, 2023 at 12:07:31AM +0200, Yu Zhang wrote:
-> > > > Hi all,
-> > > >
-> > > > According to qemu docs [1], TLS parameters are specified as an obje=
-ct in
-> > > > the QEMU command line:
-> > > >
-> > > >    -object tls-creds-x509,id=3Did,endpoint=3Dendpoint,dir=3D/path/t=
-o/cred/dir ...
-> > > >
-> > > > of which "endpoint" is a type of "QCryptoTLSCredsEndpoint" and can =
-be
-> > > > either a "server" or a "client".
-> > > >
-> > > > I'd like to know:
-> > > >
-> > > > - When a VM is started with this config, is there a way (e.g. QMP) =
-to
-> > > > change the value of "endpoint"?
-> > > >   If possible, how to do this? or else after the first migration of=
- a VM,
-> > > > the VM has "endpoint=3Dserver",
-> > > >   which can't be migrated without stop / start.
-> > >
-> > > Use object_del + object_add to delete the old credentials and
-> > > create new ones.
-> > >
-> > > > - In which case does the QEMU reload its TLS certificate, e.g. when=
- a QEMU
-> > > > VM has been run longer
-> > > >   than the valid period of its TLS certificate?
-> > >
-> > > The certs are loaded at the time the incoming/outgoing migration
-> > > operation is initiated, so they are always fresh.
-> > >
-> > > > - The migration is done by using HMP monitor on both source and tar=
-get
-> > > > side. Is it possible to do it
-> > > >   by using QMP commands?
-> > >
-> > > Almost everything in HMP has an equivalent QMP command.
-> > >
-> > >
-> > > With regards,
-> > > Daniel
-> > > --
-> > > |: https://berrange.com      -o-    https://www.flickr.com/photos/dbe=
-rrange :|
-> > > |: https://libvirt.org         -o-            https://fstop138.berran=
-ge.com :|
-> > > |: https://entangle-photo.org    -o-    https://www.instagram.com/dbe=
-rrange :|
-> > >
+> I'd say MMU and PMP since the IOMMU can isolate devices regardless of
+> s-mode context or not.
+>
+>
+> Thanks,
+>
+> Daniel
+>
+>>
+>> Thanks,
+>> Zhiwei
+>>
+>> On 2024/5/24 1:39, Daniel Henrique Barboza wrote:
+>>> Hi,
+>>>
+>>> In this new version a lot of changes were made throughout all the code,
+>>> most notably on patch 3. Link for the previous version is [1].
+>>>
+>>> * How it was tested *
+>>>
+>>> This series was tested using an emulated QEMU RISC-V host booting a 
+>>> QEMU
+>>> KVM guest, passing through an emulated e1000 network card from the host
+>>> to the guest. I can provide more details (e.g. QEMU command lines) if
+>>> required, just let me know. For now this cover-letter is too much of an
+>>> essay as is.
+>>>
+>>> The Linux kernel used for tests can be found here:
+>>>
+>>> https://github.com/tjeznach/linux/tree/riscv_iommu_v6-rc3
+>>>
+>>> This is a newer version of the following work from Tomasz:
+>>>
+>>> https://lore.kernel.org/linux-riscv/cover.1715708679.git.tjeznach@rivosinc.com/ 
+>>>
+>>> ("[PATCH v5 0/7] Linux RISC-V IOMMU Support")
+>>>
+>>> The v5 wasn't enough for the testing being done. v6-rc3 did the trick.
+>>>
+>>> Note that to test this work using riscv-iommu-pci we'll need to provide
+>>> the Rivos PCI ID in the command line. More details down below.
+>>>
+>>> * Highlights of this version *
+>>>
+>>> - patches removed from v2: platform driver (riscv-iommu-sys, former
+>>> patch 05) and the EDU changes (patches 14 and 15). The platform driver
+>>> will be sent later with a working example on the 'virt' machine,
+>>> either on a newer version of this series or via a follow-up series. We
+>>> already have a PoC on [2] created by Sunil. More tests are needed, so
+>>> it'll be left behind for now. The EDU changes will be sent in separate
+>>> after I finish the doc changes that Frank cited in v2.
+>>>
+>>> - patch 3 contains the bulk of changes made from v2. Please give 
+>>> special
+>>> attention to the following functions since this is entirely new code I
+>>> ended up adding:
+>>>   - riscv_iommu_report_fault()
+>>>   - riscv_iommu_validate_device_ctx()
+>>>   - riscv_iommu_update_ipsr()
+>>>    Aside from these helpers most of the changes made in this patch 3 
+>>> were
+>>> punctual.
+>>>
+>>> - Red HAT PCI ID related changes. A new patch (4) that introduces a
+>>> generic RISC-V IOMMU PCI ID was added. This PCI ID was gracefully given
+>>> to us by Red Hat and Gerd Hoffman from their ID space. The
+>>> riscv-iommu-pci device now defaults to this PCI ID instead of Rivos PCI
+>>> ID. The device was changed slightly to allow vendor-id and device-id to
+>>> be set in the command-line, so it's now possible to use this reference
+>>> device as another RISC-V IOMMU PCI device to ease the burden of
+>>> testing/development.
+>>>
+>>>    To instantiate the riscv-iommu-pci device using the previous 
+>>> Rivos PCI
+>>> ID, use the following cmd line:
+>>>
+>>>    -device riscv-iommu-pci,vendor-id=0x1efd,device-id=0xedf1
+>>>
+>>>    I'm using these options to test the series with the existing 
+>>> Linux RISC-V
+>>> IOMMU support that uses just a Rivos ID to identify the device.
+>>>
+>>>
+>>> Series based on alistair/riscv-to-apply.next. It's also applicable on
+>>> current QEMU master. It can also be fetched from:
+>>>
+>>> https://gitlab.com/danielhb/qemu/-/tree/riscv_iommu_v3
+>>>
+>>> Patches missing reviews/acks: 3, 5, 9, 10, 11.
+>>>
+>>> Changes from v2 [1]:
+>>> - patch 05 (hw/riscv: add riscv-iommu-sys platform device): dropped
+>>>    - will be reintroduced in a later review or as a follow-up series
+>>>
+>>> - patches 14 and 15: dropped
+>>>    - will be sent in separate
+>>>
+>>> - patches 2, 3, 4 and 5:
+>>>    - removed all 'Ziommu' references
+>>>
+>>> - patch 2:
+>>>    - added extra bits that patch 3 ended up using
+>>>
+>>> - patch 3:
+>>>    - fixed blank line at EOF in hw/riscv/trace.h
+>>>    - added a riscv_iommu_report_fault() helper to report faults. The 
+>>> helper checks if
+>>>      a given fault is eligible to be reported if DTF is 1
+>>>    - Use riscv_iommu_report_fault() in riscv_iommu_ctx() and 
+>>> riscv_iommu_translate()
+>>>      to avoid code repetition
+>>>    - added a riscv_iommu_validate_device_ctx() helper to validate 
+>>> the device context
+>>>      as specified in "Device configuration checks" section. This 
+>>> helper is being used
+>>>      in riscv_iommu_ctx_fetch()
+>>>    - added a new riscv_iommu_update_ipsr() helper to handle IPSR 
+>>> updates
+>>>      in riscv_iommu_mmio_write()
+>>>    - riscv_iommmu_msi_write() now reports a fault in all error paths
+>>>    - check for fctl.WSI before issuing a MSI interrupt in 
+>>> riscv_iommu_notify()
+>>>    - change riscv-iommu region name to 'riscv-iommu'
+>>>    - change address_space_init() name for PCI devices to 'name' 
+>>> instead of using TYPE_RISCV_IOMMU_PCI
+>>>    - changed riscv_iommu_mmio_ops min_access_size to 4
+>>>    - do not check for min and max sizes on riscv_iommu_mmio_write()
+>>>    - changed riscv_iommu_trap_ops  min_access_size to 4
+>>>    - removed IOMMU qemu_thread thread:
+>>>      - riscv_iommu_mmio_write() will now execute a 
+>>> riscv_iommu_process_fn by holding
+>>>        'core_lock'
+>>>    - init FSCR as zero explicitly
+>>>    - check for bus->iommu_opaque == NULL before calling 
+>>> pci_setup_iommu()
+>>>
+>>> - patch 4 (new):
+>>>    - add Red-Hat PCI RISC-V IOMMU ID
+>>>
+>>> - patch 5 (former 4):
+>>>    - create vendor-id and device-id properties
+>>>    - set Red-hat PCI RISC-V IOMMU ID as default ID
+>>>
+>>> - patch 8:
+>>>    - use IOMMU_NONE instead of '0' in relevant 'iot->perm = 0' 
+>>> instances
+>>>
+>>> - patch 9:
+>>>    - add s-stage and g-stage steps in riscv_iommu_validate_device_ctx()
+>>>    - removed 'gpa' boolean from riscv_iommu_spa_fetch()
+>>>    - 'en_s' is no longer used for early MSI address match
+>>>
+>>> - patch 10:
+>>>    - add ATS steps in riscv_iommu_validate_device_ctx()
+>>>    - check for 's->enable_ats' before adding 
+>>> RISCV_IOMMU_DC_TC_EN_ATS in device context
+>>>    - check for 's->enable_ats' before processing ATS commands in 
+>>> riscv_iommu_process_cq_tail()
+>>>    - remove ambiguous trace_riscv_iommu_ats() from 
+>>> riscv_iommu_translate()
+>>>
+>>> - patch 11:
+>>>    - removed unused bits
+>>>    - added RISCV_IOMMU_TR_REQ_CTL_NW and RISCV_IOMMU_TR_RESPONSE_S
+>>>      bits
+>>>    - set IOMMUTLBEntry 'perm' using RISCV_IOMMU_TR_REQ_CTL_NW in 
+>>> riscv_iommu_process_dbg()
+>>>    - clear RISCV_IOMMU_TR_RESPONSE_S in riscv_iommu_process_dbg(). 
+>>> Added a comment talking about the (lack of) superpage support
+>>> [1] 
+>>> https://lore.kernel.org/qemu-riscv/20240307160319.675044-1-dbarboza@ventanamicro.com/
+>>> [2] https://github.com/vlsunil/qemu/commits/acpi_rimt_poc_v1/
+>>>
+>>> Andrew Jones (1):
+>>>    hw/riscv/riscv-iommu: Add another irq for mrif notifications
+>>>
+>>> Daniel Henrique Barboza (3):
+>>>    pci-ids.rst: add Red Hat pci-id for RISC-V IOMMU device
+>>>    test/qtest: add riscv-iommu-pci tests
+>>>    qtest/riscv-iommu-test: add init queues test
+>>>
+>>> Tomasz Jeznach (9):
+>>>    exec/memtxattr: add process identifier to the transaction attributes
+>>>    hw/riscv: add riscv-iommu-bits.h
+>>>    hw/riscv: add RISC-V IOMMU base emulation
+>>>    hw/riscv: add riscv-iommu-pci reference device
+>>>    hw/riscv/virt.c: support for RISC-V IOMMU PCIDevice hotplug
+>>>    hw/riscv/riscv-iommu: add Address Translation Cache (IOATC)
+>>>    hw/riscv/riscv-iommu: add s-stage and g-stage support
+>>>    hw/riscv/riscv-iommu: add ATS support
+>>>    hw/riscv/riscv-iommu: add DBG support
+>>>
+>>>   docs/specs/pci-ids.rst           |    2 +
+>>>   hw/riscv/Kconfig                 |    4 +
+>>>   hw/riscv/meson.build             |    1 +
+>>>   hw/riscv/riscv-iommu-bits.h      |  416 ++++++
+>>>   hw/riscv/riscv-iommu-pci.c       |  177 +++
+>>>   hw/riscv/riscv-iommu.c           | 2283 
+>>> ++++++++++++++++++++++++++++++
+>>>   hw/riscv/riscv-iommu.h           |  146 ++
+>>>   hw/riscv/trace-events            |   15 +
+>>>   hw/riscv/trace.h                 |    1 +
+>>>   hw/riscv/virt.c                  |   33 +-
+>>>   include/exec/memattrs.h          |    5 +
+>>>   include/hw/pci/pci.h             |    1 +
+>>>   include/hw/riscv/iommu.h         |   36 +
+>>>   meson.build                      |    1 +
+>>>   tests/qtest/libqos/meson.build   |    4 +
+>>>   tests/qtest/libqos/riscv-iommu.c |   76 +
+>>>   tests/qtest/libqos/riscv-iommu.h |  100 ++
+>>>   tests/qtest/meson.build          |    1 +
+>>>   tests/qtest/riscv-iommu-test.c   |  234 +++
+>>>   19 files changed, 3535 insertions(+), 1 deletion(-)
+>>>   create mode 100644 hw/riscv/riscv-iommu-bits.h
+>>>   create mode 100644 hw/riscv/riscv-iommu-pci.c
+>>>   create mode 100644 hw/riscv/riscv-iommu.c
+>>>   create mode 100644 hw/riscv/riscv-iommu.h
+>>>   create mode 100644 hw/riscv/trace-events
+>>>   create mode 100644 hw/riscv/trace.h
+>>>   create mode 100644 include/hw/riscv/iommu.h
+>>>   create mode 100644 tests/qtest/libqos/riscv-iommu.c
+>>>   create mode 100644 tests/qtest/libqos/riscv-iommu.h
+>>>   create mode 100644 tests/qtest/riscv-iommu-test.c
+>>>
 
