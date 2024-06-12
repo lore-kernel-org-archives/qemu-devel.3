@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFBCFC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 09:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06D18C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 09:03:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHJrj-0001Pe-7D; Wed, 12 Jun 2024 05:01:59 -0400
+	id 1sHJsz-0002hg-He; Wed, 12 Jun 2024 05:03:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHJrh-0001PL-Bb
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 05:01:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHJsy-0002hS-HN
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 05:03:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHJrf-0006WT-Tf
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 05:01:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHJsx-0006mY-5v
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 05:03:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718182914;
+ s=mimecast20190719; t=1718182993;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qgzfOrnaFV9h5HmGRIVbz1AoIwyEvvUQvUVo4+888bQ=;
- b=F1R03uCCPqGElveoN4FOO1ngRWXy12WxqnEpki+184bgDAGIFf9y2FVWLGnQ4IR2DbOSMU
- z/uVZuXpFlfCxe7ZkFIbp0ILpZPz1PvS4vgr9bF6RP5h5TXvw9Tb0q5iywEK20dXSdT934
- VcZcrOlsHBpomXjh4OjTsZVp/G3VGic=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1IG2i7GrUurVMAy/ZLQNiYXHFmgjQv3IFcsRm3STYeY=;
+ b=TQjcIcE2Ug8RnhEpYMIGPmyKFFZ/Pykr8RbMMtEvSQ5ORGP2XbV+P6kU6F34hlMerTUhfu
+ oyV0vL3lDROhLXi+BFfEmLOEUHXRPjiLZ3GD/8MXZ1+/VTQVRp1R3uhBXZn1vZYs+cGQij
+ geXV/VlcVOotsWjcXJwJhsF9P/y0UXg=
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-663-SkPa2GanNvWKXmLRDz_c0w-1; Wed, 12 Jun 2024 05:01:53 -0400
-X-MC-Unique: SkPa2GanNvWKXmLRDz_c0w-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-795589ae41fso511971785a.0
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 02:01:53 -0700 (PDT)
+ us-mta-644-pzVvsME0MKmFx66Y-fxG7Q-1; Wed, 12 Jun 2024 05:03:10 -0400
+X-MC-Unique: pzVvsME0MKmFx66Y-fxG7Q-1
+Received: by mail-yb1-f199.google.com with SMTP id
+ 3f1490d57ef6-dfedfecada4so287391276.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 02:03:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718182913; x=1718787713;
+ d=1e100.net; s=20230601; t=1718182990; x=1718787790;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qgzfOrnaFV9h5HmGRIVbz1AoIwyEvvUQvUVo4+888bQ=;
- b=RnEiAhXb4aXenRoduofvX5DvyS7F39N+t7XpvY7job5FWkPFncPexPMrZ9KrQyuPxB
- nXYc+lTfroxNEI3dzyPF4HzJ2o5L/LfdYPCNBH/R4dwmX9nRG2ChjjK4x64CCM9rAJZ2
- eFJK58QgSYe7csqVadhDDKeFC0RBlycBAZMpmbsFPZxB6ynvStN5M6Gc2EUQQQKufSzB
- YwAqimZ8p3hOHf8nK4bdahlEFmYRqwaTrcXMmsDej7UM2FQDoqvT96QRhTO0iO48uM9Q
- NXimwYVe+b8kJ7+MalgbzwTron2n/HqtLe4JCfxnmIcfQ2GmvMDEc9z2G5n4Wz6pC9x7
- EJiQ==
+ bh=1IG2i7GrUurVMAy/ZLQNiYXHFmgjQv3IFcsRm3STYeY=;
+ b=AetkwLFq2xwr+UNsNW9zKpVMGLthUMgdzGArGcEIbcIn7l4uzsb9Z0d4T6BC8/lxZ4
+ p9VnddSsz1m+7F/jGNidzPlCfolPhPQQkzJBgIjWiUaocwc2hz5I3mEluLdm/+JO0ZAZ
+ SR5orG5/gdYC1Gk75F59OfclgxHzEuXSpjNpQVsk5JfjVVHg/hHUuc5uZZVOSwDXSvd2
+ Mn1tVf6M6acXvrJpVq1208X/2D6p2Q59cphlpEZ6+pSM4sG5PQrLTanEauiRRZEmXnjt
+ aDqt6OSmg0mC0VcJ3xS8xbg++JWFfomkB07g7hvFuHLHhYnWSiSyZIcgqkp2F8Aa3cQq
+ afcQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5pbHGL77erO93+UqNt9kP+B2bnEsXEkT3eJcOMb5EBE51iz/zSnv3+Sr6Lme4coDieC1euN1jqoWDg5m2oO0wl8rFZVI=
-X-Gm-Message-State: AOJu0YxJ27jleEUIz9cM1LUDmpzCd4iG7eaUF1YpM6qy2IT2GduKtavJ
- GQ3oasJngO9x874vsrZMC7YHjgPVuE/uVgZptrjCYjkWJp7rDSkiKn/V5oWRiN/Fn8BjwtGJV9t
- 2rwPs8WBDepL3vLcr+gj7GPjD1vIDZ9SwvEndNLqwc0kO0sUCB/U7
-X-Received: by 2002:a05:620a:4621:b0:794:fa3a:4277 with SMTP id
- af79cd13be357-797f5ed65e1mr114088985a.5.1718182912496; 
- Wed, 12 Jun 2024 02:01:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHREMmlKg3/qMui2eyTf2C9FGFBRf+7hgwST3JlFVX8UNiD1gu6ab5pRJekJ2XBkURJYhjk7A==
-X-Received: by 2002:a05:620a:4621:b0:794:fa3a:4277 with SMTP id
- af79cd13be357-797f5ed65e1mr114086085a.5.1718182911985; 
- Wed, 12 Jun 2024 02:01:51 -0700 (PDT)
+ AJvYcCWs0m+EGyyyDpmYbpVFHkftbo1SjZtZ0klxAyEndGLINy4jdKmZWWPK9nu3xfk7ix/6BdrVtKMZHYLAfYlTl0OiWgdzTg0=
+X-Gm-Message-State: AOJu0YzABm8s3BHmkT1h+uHfzoBBCA5bCTozSlBYFJaoKrUkqr+pu1Ae
+ QglJOyEJoaI1SBRfEAdwAAchLI5z8T70TEJtzwnj7vb7yNk2tLSYAr9hJjT/EB1F/I3rZ45IpGF
+ Lja/5RHcnNYWMMcsSXj/qFqzCUrhMwtD9dNoD0JP98nql0GsUswUl
+X-Received: by 2002:a05:6902:50c:b0:df7:7399:f98f with SMTP id
+ 3f1490d57ef6-dfe6715d7c4mr1088285276.29.1718182990252; 
+ Wed, 12 Jun 2024 02:03:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkwLgMwInyaBkkdfTXtorbzITgn4rWACbeuuNK6sYXt35nT+V6aI1Qt6qmjbU2mWAC0KqJxw==
+X-Received: by 2002:a05:6902:50c:b0:df7:7399:f98f with SMTP id
+ 3f1490d57ef6-dfe6715d7c4mr1088256276.29.1718182989825; 
+ Wed, 12 Jun 2024 02:03:09 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-43-176-68.web.vodafone.de.
  [109.43.176.68]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4406075025dsm33469421cf.85.2024.06.12.02.01.49
+ d75a77b69052e-44152b1585bsm11826091cf.27.2024.06.12.02.03.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Jun 2024 02:01:51 -0700 (PDT)
-Message-ID: <c349cb12-b255-4d06-8275-0085fa3bd864@redhat.com>
-Date: Wed, 12 Jun 2024 11:01:46 +0200
+ Wed, 12 Jun 2024 02:03:09 -0700 (PDT)
+Message-ID: <684ad4d7-0e9c-445e-9472-cef5fe3f7963@redhat.com>
+Date: Wed, 12 Jun 2024 11:03:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/8] tests/unit/test-smp-parse: Fix comment of
- parameters=1 case
+Subject: Re: [PATCH 3/8] tests/unit/test-smp-parse: Fix an invalid topology
+ case
 To: Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>, qemu-devel@nongnu.org
 Cc: Yongwei Ma <yongwei.ma@intel.com>
 References: <20240529061925.350323-1-zhao1.liu@intel.com>
- <20240529061925.350323-3-zhao1.liu@intel.com>
+ <20240529061925.350323-4-zhao1.liu@intel.com>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -123,10 +123,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240529061925.350323-3-zhao1.liu@intel.com>
+In-Reply-To: <20240529061925.350323-4-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -152,17 +152,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 29/05/2024 08.19, Zhao Liu wrote:
-> SMP_CONFIG_WITH_FULL_TOPO hasn't support module level, so the parameter
-> should indicate the "clusters".
-> 
-> Additionally, reorder the parameters of -smp to match the topology
-> hierarchy order.
+> Adjust the "cpus" parameter to match the comment configuration.
 > 
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   tests/unit/test-smp-parse.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
+>   tests/unit/test-smp-parse.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
+
 
 
