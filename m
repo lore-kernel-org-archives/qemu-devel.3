@@ -4,81 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D7F8C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 22:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD1DC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 23:01:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHWmE-0002OX-EU; Wed, 12 Jun 2024 18:49:10 -0400
+	id 1sHWxp-0004fv-81; Wed, 12 Jun 2024 19:01:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHWmC-0002O9-9e
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 18:49:08 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sHWxn-0004f3-Sz
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 19:01:07 -0400
+Received: from mail-io1-xd29.google.com ([2607:f8b0:4864:20::d29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHWmA-0007yh-Le
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 18:49:08 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4210aa012e5so4594295e9.0
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 15:49:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sHWxj-0002Hy-21
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 19:01:07 -0400
+Received: by mail-io1-xd29.google.com with SMTP id
+ ca18e2360f4ac-7eb12b2bf78so13821039f.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 16:01:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718232543; x=1718837343; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718233261; x=1718838061; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VMPkjphzI7jBLRJzoWXb3tOsGoP14cnyUVZQCVDADyE=;
- b=XNoHVqsXirHbWCZQ0A9UNzS4xxYDHyqrfx2TeEsAfVjvvghXyfTJpJs91mRv18D9Ev
- qQ7kmqgnGUHxveNPOT3sSgTz5rlZokteIw7hktWLNhwOrJO6KY5lew0toFddJyvEaHu0
- ESoeqoQDMg//moBzz5xOLNirQzkyiyWPfpSDAC44iEeXah5wR2zAoPAldr9nJ6G4Afp4
- WLpUThGMw9XOR0d2O8bGJLLSZoCscbgo8cqsgK/qSuiIbruJprZWphTtiQf5f46BaG0U
- IwYFkTu8Rd1vZFKNT8QuIyR4T+ydAOayaSV8fBzxtzSXlajfxBWYMx/JoknF1+YCSCSr
- b10g==
+ bh=PkHN5ZHaGSGPBr+6ovQnLLgpRVbBLYqPBu2sokkC6DM=;
+ b=V+M0vawtbkB29mFbBmMdmInN3qFO/UrJaacCb4HOGVN9N34KX4OOxRSGvGpSfdGmzu
+ EJwC3RZNbhL0kASFr26oLwReAUCwPh7nMG1Hm9wPt3thY7VUWlszMdDFJ0KOoavjJ0Kj
+ Ig4Un9TZ5i+gwSjFmDWvZNbo5hQ6c9a1u92f4MVkIrJQDD23S8JCvXK/xW6PC1SZkz0V
+ 6bYT8kUPp/IhXbc7nGK2Z5ua9BLLbqoaVFczXokOuTyty8vraQlSv4cPE+8No2vB8cJ+
+ PVe7gfT3v90HYffbge1Q6sY2E0sYWJIrb0tyUc8wjZrb6CmewEFWfS4028V4eHWkxR4a
+ aW7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718232543; x=1718837343;
+ d=1e100.net; s=20230601; t=1718233261; x=1718838061;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VMPkjphzI7jBLRJzoWXb3tOsGoP14cnyUVZQCVDADyE=;
- b=TL9DNPNcGKbf7vU+F/+cqasUrWuC4KeNQhwezKRtZus05ggp+oyzNeNBvrJqoP/P5i
- 6zxLm9+fVAKG4xlnWVZxR0S0w0K69Po93gYN6trIqmq+Totb/B1W2j6hEZcEfdmSsUhQ
- drP/knJ5GYI3Ea5jatEWgIY0XuWoIgc1AH10m6c9U72R3Gl4zY/3uX2q7wnTj1+WtBbn
- 63a7OejrA5jzeMjN3Udi1la1zojn7yW9UtS7HP4yyo6msuHcAHoz5sRwX30DSStIsyNa
- E+mJxDpWi6t4iydBMZPQSx6225aEHMQaIwx0B7Oyo4I9mJXMxy7jIKCv8sdtsQjz2fFd
- SMOQ==
+ bh=PkHN5ZHaGSGPBr+6ovQnLLgpRVbBLYqPBu2sokkC6DM=;
+ b=kD9nfy2TY2Gp6Y19oSCik0rySX3yP5uHcbheHISqBEtsGgBbpf96ee9/2oOgqi3ID4
+ 9DHXatdP5xAr5vsQ8x/dNov5PesFcAlWU3GY/Eq4P2Ucw+2sbtnhdb0ykf4gh21d1TQj
+ G9+GcPoMUK/YbLvISLGb+27X0+b3RJMXyAow6/G+reP2NGmB8GR1/g7JszJwF7YsTlar
+ tjEF+5pALGfwqFQ6Z29stqydTJOMFrI30cnR4L7zqOEJ/q9e8QHT9PJeMD1zeuOgF+gK
+ N/tji/TcjMg1uDB1ckZfUdbgMJaJNPMTkOvPv2FcgVq/cc7RNyKPEb1V7O32ZAsgV3rc
+ 7sgw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX4u7UjbHrvtaqtBeWRGJySB1svMqq4wKotjpJsrjtUTK46Ub0XzWWwvPY//WgZP6khq1dSLB3DHE4HTdkALgHRkcqkzSc=
-X-Gm-Message-State: AOJu0YzPnh8xXGRyKNw8QFgSj2/pv7RMdMGATi8GRSgDIo8BojycNxay
- 5zgNCpCtwaIQnQZbTRtlTYTgSq981hgN1eJLQx2VhGARyojtaC9jHza4s4FHyV9qBBasI0B0Fzs
- m
-X-Google-Smtp-Source: AGHT+IG82I8oRkEgvuYUNGAMoqJ8WB8pGOrwL7By2MqD6+zTzI84v7Sju0qUOcoXM0UEQxRdcrjGOg==
-X-Received: by 2002:a05:600c:524e:b0:422:123f:4b05 with SMTP id
- 5b1f17b1804b1-422866bfc43mr23266725e9.39.1718232543047; 
- Wed, 12 Jun 2024 15:49:03 -0700 (PDT)
-Received: from [192.168.69.100] (sta21-h02-176-184-21-30.dsl.sta.abo.bbox.fr.
- [176.184.21.30]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422f602e7e3sm2432095e9.12.2024.06.12.15.49.01
+ AJvYcCXIfzUzx1LMPpzO45hDK2xwmUetwEWoEoAx1yRNDaPZnQp95MaYcLAIDcEAt9iqD8fCAEbiITnmfW6mTG9vuqEfYLAdcu0=
+X-Gm-Message-State: AOJu0Yw5sW7PLM4FKzom/9LD6icMXfrUqo7o7nbfv3OIQf6yvLi3Ukto
+ mYA3QJxpp2yEb7ZUX9JTYmHTbVE3ZNWeG03XpxZwjFAHrvFMpXgVjt8jGI5KbI8=
+X-Google-Smtp-Source: AGHT+IHXKntcdBTNP8aph+w7LOdXmIyWc8cLH8HnEFdGDHf0aBZ58uA/8nozoI8QJwa2NTvJYZeWMA==
+X-Received: by 2002:a05:6602:1645:b0:7eb:8015:3ec6 with SMTP id
+ ca18e2360f4ac-7ebcd0a8a01mr323526539f.4.1718233261129; 
+ Wed, 12 Jun 2024 16:01:01 -0700 (PDT)
+Received: from ?IPV6:2607:fb90:35e0:8272:93ec:4db6:b474:173c?
+ ([2607:fb90:35e0:8272:93ec:4db6:b474:173c])
+ by smtp.gmail.com with ESMTPSA id
+ ca18e2360f4ac-7ebdba6594esm4210039f.29.2024.06.12.16.00.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Jun 2024 15:49:02 -0700 (PDT)
-Message-ID: <d9a20624-1813-4a29-b819-1de3961cc3cf@linaro.org>
-Date: Thu, 13 Jun 2024 00:49:00 +0200
+ Wed, 12 Jun 2024 16:01:00 -0700 (PDT)
+Message-ID: <3da62ef7-f596-465f-96dc-d7e325982b6d@linaro.org>
+Date: Wed, 12 Jun 2024 16:00:55 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 21/32] hw/sd: Add mmc switch function support
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org
-Cc: Bin Meng <bin.meng@windriver.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Lucien Murray-Pitts <lucienmp.qemu@gmail.com>,
- Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>,
- "Edgar E . Iglesias" <edgar.iglesias@xilinx.com>
-References: <20230703132509.2474225-1-clg@kaod.org>
- <20230703132509.2474225-22-clg@kaod.org>
+Subject: Re: [PULL 0/6] Tracing patches
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Richard Henderson <rth@twiddle.net>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>
+References: <20240610171315.346143-1-stefanha@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20230703132509.2474225-22-clg@kaod.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240610171315.346143-1-stefanha@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d29;
+ envelope-from=richard.henderson@linaro.org; helo=mail-io1-xd29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,65 +106,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/23 15:24, Cédric Le Goater wrote:
-> From: Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>
+On 6/10/24 10:13, Stefan Hajnoczi wrote:
+> The following changes since commit 80e8f0602168f451a93e71cbb1d59e93d745e62e:
 > 
-> switch operation in mmc cards, updated the ext_csd register to
-> request changes in card operations. Here we implement similar
-> sequence but requests are mostly dummy and make no change.
+>    Merge tag 'bsd-user-misc-2024q2-pull-request' of gitlab.com:bsdimp/qemu into staging (2024-06-09 11:21:55 -0700)
 > 
-> Implement SWITCH_ERROR if the write operation offset goes beyond length
-> of ext_csd.
+> are available in the Git repository at:
 > 
-> Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@xilinx.com>
-> [ clg: - ported on SDProto framework ]
-> Signed-off-by: Cédric Le Goater <clg@kaod.org>
-> ---
->   hw/sd/sd.c | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 52 insertions(+)
+>    https://gitlab.com/stefanha/qemu.git  tags/tracing-pull-request
+> 
+> for you to fetch changes up to 4c2b6f328742084a5bd770af7c3a2ef07828c41c:
+> 
+>    tracetool: Forbid newline character in event format (2024-06-10 13:05:27 -0400)
+> 
+> ----------------------------------------------------------------
+> Pull request
+> 
+> Cleanups from Philippe Mathieu-Daudé.
+
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
 
-> +static void mmc_function_switch(SDState *sd, uint32_t arg)
-> +{
-> +    uint32_t access = extract32(arg, 24, 2);
-> +    uint32_t index = extract32(arg, 16, 8);
-> +    uint32_t value = extract32(arg, 8, 8);
-> +    uint8_t b = sd->ext_csd[index];
-
-This field is added in the next patch :)
-
-../../hw/sd/sd.c:927:21: error: no member named 'ext_csd' in 'struct 
-SDState'
-     uint8_t b = sd->ext_csd[index];
-                 ~~  ^
-../../hw/sd/sd.c:949:9: error: no member named 'ext_csd' in 'struct SDState'
-     sd->ext_csd[index] = b;
-     ~~  ^
-
-No need to respin, as I'm integrating your work.
-
-> +    switch (access) {
-> +    case MMC_CMD6_ACCESS_COMMAND_SET:
-> +        qemu_log_mask(LOG_UNIMP, "MMC Command set switching not supported\n");
-> +        return;
-> +    case MMC_CMD6_ACCESS_SET_BITS:
-> +        b |= value;
-> +        break;
-> +    case MMC_CMD6_ACCESS_CLEAR_BITS:
-> +        b &= ~value;
-> +        break;
-> +    case MMC_CMD6_ACCESS_WRITE_BYTE:
-> +        b = value;
-> +        break;
-> +    }
-> +
-> +    if (index >= 192) {
-> +        sd->card_status |= R_CSR_SWITCH_ERROR_MASK;
-> +        return;
-> +    }
-> +
-> +    sd->ext_csd[index] = b;
-> +}
+r~
 
 
