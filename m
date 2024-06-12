@@ -4,64 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28F6FC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 08:30:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 769A8C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 08:38:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHJNJ-0000sK-QR; Wed, 12 Jun 2024 04:30:33 -0400
+	id 1sHJU3-0002w9-JS; Wed, 12 Jun 2024 04:37:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sHJNI-0000s9-OD
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:30:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHJU1-0002vw-MA
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:37:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sHJNG-0001SA-Sm
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:30:32 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHJTx-0002dA-TB
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:37:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718181028;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5J4zs9cJmmGO99W/I3dfSsAXt52SURVOm8dXnZpoitc=;
- b=K855uRH1EAWkW24U+5JB/FlYX0HY0ROXpGCgGaeHkM2vKXcd7ONdCb6dQQrGiv1KBy2Unn
- 4wtkwgcWGP9WMpB4nn+ibCyVaWiRSxO5Sc6XOfdV+ycAnP55HRIkowzseHcAdfq+1X455u
- krLkdzDTy40MmAb0Oe+EzIcGuCbuGh4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1718181444;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=ea47Fm5g+ziz0j0FxjxLlqkoAXKSn1ati6SqNn84BtE=;
+ b=K2AfNBAQj07GFK8FarnPYuhUB1uMUL9tts/RwXU5VAaAf8fIyi1kKVfCJNttQQ4eEGw8La
+ uTHhHTQVUOzOk9XDvSNA9os+1eHWSfOnoIszzuIeyShiiFrVgM9SnQ5hmVOAlPFoFyFMrY
+ hLL/CIIYERCKXGoyB6pFAcA+Ct1mmZk=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-543-u-i3Bp7PPA6ez7I0URP8AQ-1; Wed,
- 12 Jun 2024 04:30:25 -0400
-X-MC-Unique: u-i3Bp7PPA6ez7I0URP8AQ-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-246-L6j_9gkUN0Gc-3g9U4lbMA-1; Wed,
+ 12 Jun 2024 04:37:11 -0400
+X-MC-Unique: L6j_9gkUN0Gc-3g9U4lbMA-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 55F2919560B2; Wed, 12 Jun 2024 08:30:24 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D392D19560AE; Wed, 12 Jun 2024 08:30:23 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B0F1A21E6757; Wed, 12 Jun 2024 10:30:21 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Eduardo
- Habkost <eduardo@habkost.net>,  Eric Blake <eblake@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH v3 4/4] qdev: add device policy [RfC]
-In-Reply-To: <20240606143010.1318226-5-kraxel@redhat.com> (Gerd Hoffmann's
- message of "Thu, 6 Jun 2024 16:30:10 +0200")
-References: <20240606143010.1318226-1-kraxel@redhat.com>
- <20240606143010.1318226-5-kraxel@redhat.com>
-Date: Wed, 12 Jun 2024 10:30:21 +0200
-Message-ID: <87le3aftr6.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 669FC19560B6; Wed, 12 Jun 2024 08:37:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.115])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 650801956053; Wed, 12 Jun 2024 08:37:03 +0000 (UTC)
+Date: Wed, 12 Jun 2024 09:37:00 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v2 0/5] Implement ARM PL011 in Rust
+Message-ID: <ZmleLH1dQvPqPBAY@redhat.com>
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -83,131 +88,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gerd Hoffmann <kraxel@redhat.com> writes:
+On Tue, Jun 11, 2024 at 01:33:29PM +0300, Manos Pitsidianakis wrote:
 
-> Add policies for devices which are deprecated or not secure.
-> There are three options: allow, warn and deny.
->
-> It's implemented for devices only.  Devices will probably be the main
-> user of this.  Also object_new() can't fail as of today so it's a bit
-> hard to implement policy checking at object level, especially the 'deny'
-> part of it.
->
-> TODO: add a command line option to actually set these policies.
->
-> Comments are welcome.
->
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> ---
->  hw/core/qdev.c | 60 +++++++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 59 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-> index f3a996f57dee..0c4e5cec743c 100644
-> --- a/hw/core/qdev.c
-> +++ b/hw/core/qdev.c
-> @@ -43,6 +43,15 @@
->  static bool qdev_hot_added = false;
->  bool qdev_hot_removed = false;
->  
-> +enum qdev_policy {
-> +    QDEV_ALLOW = 0,
-> +    QDEV_WARN  = 1,
-> +    QDEV_DENY  = 2,
-> +};
-> +
-> +static enum qdev_policy qdev_deprecated_policy;
-> +static enum qdev_policy qdev_not_secure_policy;
-> +
->  const VMStateDescription *qdev_get_vmsd(DeviceState *dev)
->  {
->      DeviceClass *dc = DEVICE_GET_CLASS(dev);
-> @@ -144,6 +153,43 @@ bool qdev_set_parent_bus(DeviceState *dev, BusState *bus, Error **errp)
->      return true;
->  }
->  
-> +static bool qdev_class_check(const char *name, ObjectClass *oc)
-> +{
-> +    bool allow = true;
-> +
-> +    if (oc->deprecated) {
-> +        switch (qdev_deprecated_policy) {
-> +        case QDEV_WARN:
-> +            warn_report("device \"%s\" is deprecated", name);
-> +            break;
-> +        case QDEV_DENY:
-> +            error_report("device \"%s\" is deprecated", name);
-> +            allow = false;
-> +            break;
-> +        default:
-> +            /* nothing */
-> +            break;
-> +        }
-> +    }
-> +
-> +    if (oc->not_secure) {
-> +        switch (qdev_not_secure_policy) {
-> +        case QDEV_WARN:
-> +            warn_report("device \"%s\" is not secure", name);
-> +            break;
-> +        case QDEV_DENY:
-> +            error_report("device \"%s\" is not secure", name);
-> +            allow = false;
-> +            break;
-> +        default:
-> +            /* nothing */
-> +            break;
-> +        }
-> +    }
-> +
-> +    return allow;
-> +}
-> +
->  DeviceState *qdev_new(const char *name)
->  {
->      ObjectClass *oc = object_class_by_name(name);
-> @@ -162,14 +208,26 @@ DeviceState *qdev_new(const char *name)
->          error_report("unknown type '%s'", name);
->          abort();
->      }
-> +
-> +    if (!qdev_class_check(name, oc)) {
+> 
+>  .gitignore                     |   2 +
+>  .gitlab-ci.d/buildtest.yml     |  64 ++--
+>  MAINTAINERS                    |  13 +
+>  configure                      |  12 +
+>  hw/arm/virt.c                  |   4 +
+>  meson.build                    | 102 ++++++
+>  meson_options.txt              |   4 +
+>  rust/meson.build               |  93 ++++++
+>  rust/pl011/.cargo/config.toml  |   2 +
+>  rust/pl011/.gitignore          |   2 +
+>  rust/pl011/Cargo.lock          | 120 +++++++
+>  rust/pl011/Cargo.toml          |  66 ++++
+>  rust/pl011/README.md           |  42 +++
+>  rust/pl011/build.rs            |  44 +++
+>  rust/pl011/deny.toml           |  57 ++++
+>  rust/pl011/meson.build         |   7 +
+>  rust/pl011/rustfmt.toml        |   1 +
+>  rust/pl011/src/definitions.rs  |  95 ++++++
+>  rust/pl011/src/device.rs       | 531 ++++++++++++++++++++++++++++++
+>  rust/pl011/src/device_class.rs |  95 ++++++
+>  rust/pl011/src/generated.rs    |   5 +
+>  rust/pl011/src/lib.rs          | 581 +++++++++++++++++++++++++++++++++
+>  rust/pl011/src/memory_ops.rs   |  38 +++
+>  rust/rustfmt.toml              |   7 +
+>  rust/wrapper.h                 |  39 +++
+>  scripts/cargo_wrapper.py       | 221 +++++++++++++
+>  scripts/meson-buildoptions.sh  |   6 +
 
-Anti-pattern: use of error_report() from within a function that returns
-an error via Error **errp argument.
+Given the priority of getting the build system correct, what's missing
+here is updates/integration into our standard GitLab CI pipeline. If
+that can be shown to be working, that'll give alot more confidence in
+the overall solution.
 
-One such call chain: QMP core -> qmp_device_add() -> qdev_device_add()
--> qdev_device_add_from_qdict() -> qdev_new().  Your error message goes
-to stderr, which is wrong.
+Ideally this should not require anything more than updating the docker
+container definitions to add in the rust toolchain, plus the appropriate
+std library build for the given target - we cross compiler for every
+arch we officially care about.
 
-> +        exit(1);
+Most of our dockerfiles these days are managed by lcitool, and it has
+nearly sufficient support for cross compiling with the rust std library.
+So to start with, this series should modify tests/lcitool/projects/qemu.yml
+to add
 
-Worse, QMP command device_add can now kill the guest instantly.
+  - rust
+  - rust-std
 
-You need to lift the check up the call chains some.
+to the package list, and run 'make lcitool-refresh' to re-create the
+dockerfiles - see the docs/devel/testing.rst for more info about
+lcitool if needed.
 
-> +    }
-> +
->      return DEVICE(object_new(name));
->  }
->  
->  DeviceState *qdev_try_new(const char *name)
->  {
-> -    if (!module_object_class_by_name(name)) {
-> +    ObjectClass *oc = module_object_class_by_name(name);
-> +
-> +    if (!oc) {
->          return NULL;
->      }
-> +
-> +    if (!qdev_class_check(name, oc)) {
-> +        return NULL;
-> +    }
-> +
->      return DEVICE(object_new(name));
->  }
+Assuming these 2 rust packages are in the container, I would then
+expect QEMU to just "do the right thing" when building this rust
+code. If it does not, then that's a sign of gaps that need closing.
+
+Getting rid of the need to use --rust-target-triple will be the
+immediate gap that needs fixing, as CI just passes --cross-prefix
+for cross-builds and expects everything to be set from that.
+
+The main gap we have is that for Windows I need to update lcitool
+to pull in the mingw std lib target for rust, which I something I
+missed when adding rust cross compiler support.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
