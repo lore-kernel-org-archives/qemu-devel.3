@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73BE6C27C77
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 12:38:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAC27C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 12:42:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNEa-0006TK-Vq; Wed, 12 Jun 2024 08:37:49 -0400
+	id 1sHNI5-00082p-CX; Wed, 12 Jun 2024 08:41:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHNES-0006SJ-BZ
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:37:41 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHNI3-00082B-RK
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:41:23 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHNEQ-0003UL-Pv
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:37:40 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a6f13dddf7eso472525966b.0
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 05:37:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHNI1-0004Zv-UF
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 08:41:23 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4217c7eb6b4so34248925e9.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 05:41:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718195857; x=1718800657; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718196080; x=1718800880; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wXULtP5u80zE6dfwGbbH16ulqchPjjATeK5JB0svpMA=;
- b=HMwWATqs45c2uGA2524xjFqU1njre0WNDTdJIfup6GGNjurRqyG9G3PtgwWfl10jMJ
- Czr7TXghfws8aAm7bFOz8GzGrxJPn6cAUee88FXJ4yImz4vk/0IRdcH6Uk/bwdKADfe/
- IrISt6qUw7D+gQCNSgeaYrbdhRZNVBPpyFB0dZCbNYzLhQMHcpt0GRHl1+FEJDVHQtTt
- jiUVpYvfMcD8soTszi4uiODcqAWnmjY680tnqiiwLqlO53KcInVr/Z+3EmTjEUke7UCx
- KJz5CB9kZHmsIH3Ndhh0Oijbu/61EZ1t15uHYnF+L2ImphbArzgDZNxfVLEx9ILQGLdR
- HfGQ==
+ bh=jWHUKg/zjYNtmU/Lg/9RbL6pFprhOQ5VObmPARBdPVA=;
+ b=voSipf0/cqpOy564bqbHQ2aJ4eT6mCYRc9kg+IZO2xjIPAbXg7O4Ifk0o2FvvwuLfv
+ uLp+BNyLgAmbTVhtwS9yPN8bCLFUnejayj5KN/L24VlIZVYA0a1AV1Iu0lB93X+liJiT
+ JYPFLCGGrJ7IJ1FUDZyoEU0sBkeZMwOKT6lLqVM9WM53j2IHByuHVYYhra4aU1ZUdvCN
+ +tRxbLrCSNKx8FHVrm7j40gBD5G1LeCPtXWAobaJ1mw+N/9giKdMiKidrUO8R/LmqKL6
+ tbYHjztFVBVukG1M2/m1DWtMaEvIJbAYaJxYK4Wa2d8dHzFtkgvdlqW7DXoe1gB2uu04
+ ZBVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718195857; x=1718800657;
+ d=1e100.net; s=20230601; t=1718196080; x=1718800880;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wXULtP5u80zE6dfwGbbH16ulqchPjjATeK5JB0svpMA=;
- b=vrg7bzd4tExsC4AmGZDkQCTAGQMBJIalxPwEpLM4vHP2iZVhbnWikbsEcAAgLVCR7z
- zbtIvrw0wjZlJuyHd+RP8FqWIixa2o88tDRi5N01UrJmkxKwpDZ6ajgQihVVVbeqfEFB
- LMlir6If53rVzrQoi7y6P4EerT2kGG6JoWQNrqOHsG0lNBuBWjHqTYKBTcL++1gnskg8
- zyW35hDvVEUrKtiKJ123lxM4hvbgmxYptFB9JdgDjS92koBx/m4GxyGZU6nAZ2yyKYIJ
- 3mNRjTwUYtfJL9rDruT1BXzi9/R+z/Ns3cfPbZYM+APDb4mSW39njUOKu60Yzv+q+UqT
- px1w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmg3Rb9jj2AJ8nAYWN3qyXOq8c7UrmZK33MX9mDjWUYsvuPzt/5+jIh8L+M3SlRGz06xAiA/a8E8zi0eGV0LLsRo3A79A=
-X-Gm-Message-State: AOJu0Yy8JjzVUJ6xnnc+Sadr6UhSHYQtTxQO83CN7osD3ngxeTm8XtCC
- HeUvPGa91ZwRnekAfhf3t3Swt8oPWC+Bk4vKl6moLVCT5TUleAIieyhgI5xTnDLgNyUZzCPwSSs
- n
-X-Google-Smtp-Source: AGHT+IH3rnXMg+cV+bNwN5oqh8YYaaLPEqS3aSWc1dyCR0wwKWfVlmnqhah33OODMYa+Oe+N5g5zQQ==
-X-Received: by 2002:a17:906:f190:b0:a68:e335:3e62 with SMTP id
- a640c23a62f3a-a6f480268admr101258066b.72.1718195857218; 
- Wed, 12 Jun 2024 05:37:37 -0700 (PDT)
+ bh=jWHUKg/zjYNtmU/Lg/9RbL6pFprhOQ5VObmPARBdPVA=;
+ b=JFPQKv/d6biSjmhaf1j3oJR8koww/7xT7eZHSPU5uQhafwQuk0bfO9Or82vMfmW8Aj
+ gFta+dcHk74VDGmAbWCI/kogKK6SmkNWspeJ/72Qk/LRDnmvNQtWBQadGbT9oBtTvouX
+ 8oG8ATnyn+JjaVKX05x+8qDlbCi/bREWKETdDbxog9Zqu+XHtBP2gxxR+WKPaIp9vEue
+ IzYbpcEyNt+68O4ONinpNHt+PQP5bBvKu3tGJ/k/pGsH9XPquCvX5+lNj/8AHT0TEW1J
+ Nw6APHJ4gjteQnlROMJYjoBWFkFrHGJiPekEcuSHqBzhLgQwHklvwhAia+VvlcQ57kkP
+ HEUA==
+X-Gm-Message-State: AOJu0Yy8RTrbCnThfnuBMhclImy+DaaBOc8mR5jO/o7y1iGom47hrd64
+ sKQWE3gecmd0p1eP3l3+Qv4rEt2vCKdf+EsqT0J1peGJqD1BCtWbIxjWUyAWr4BiSn0WTn07zjH
+ T
+X-Google-Smtp-Source: AGHT+IGOEUeFaddceCgNfObA82oeV7XuFprLKyqmCD4u/BAlfUkwCpVyZZEXo52HeeSzD2Q09LY+vQ==
+X-Received: by 2002:a05:600c:3b87:b0:422:123f:4b15 with SMTP id
+ 5b1f17b1804b1-422867bec5fmr14832375e9.37.1718196080127; 
+ Wed, 12 Jun 2024 05:41:20 -0700 (PDT)
 Received: from [192.168.69.100] (ram94-h02-176-184-0-172.dsl.sta.abo.bbox.fr.
  [176.184.0.172]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f13e08c89sm481365166b.88.2024.06.12.05.37.36
+ 5b1f17b1804b1-422871f98bfsm25005075e9.45.2024.06.12.05.41.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Jun 2024 05:37:36 -0700 (PDT)
-Message-ID: <63fc5141-00c2-404e-9c29-5a2c805c474a@linaro.org>
-Date: Wed, 12 Jun 2024 14:37:35 +0200
+ Wed, 12 Jun 2024 05:41:19 -0700 (PDT)
+Message-ID: <b0b49b1b-6877-487c-9f4d-b29ae54c5ab0@linaro.org>
+Date: Wed, 12 Jun 2024 14:41:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: Fix typo causing tb->page_addr[1] to not be
- recorded
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org
-References: <20240611215814.32752-1-anjo@rev.ng>
+Subject: Re: assert fails in s390x TCG
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Claudio Fontana <cfontana@suse.de>, Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Anton Johansson <anjo@rev.ng>
+References: <eaec32e3-d56a-e6a7-fcbe-860948e79658@suse.de>
+ <def2df0d-fb58-8e67-a0eb-7d646da3be42@linaro.org>
+ <0e06f694-7aeb-66d1-48d8-317a93f8f741@suse.de>
+ <6a3e8443-2d0a-451e-a481-cc26575d8211@linaro.org>
+ <14787dc3-66ae-e15e-0bdf-14ca53bff17d@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240611215814.32752-1-anjo@rev.ng>
+In-Reply-To: <14787dc3-66ae-e15e-0bdf-14ca53bff17d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,19 +100,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/6/24 23:58, Anton Johansson via wrote:
-> For TBs crossing page boundaries, the 2nd page will never be
-> recorded/removed, as the index of the 2nd page is computed from the
-> address of the 1st page. This is due to a typo, fix it.
+On 28/7/23 18:43, Richard Henderson wrote:
+> On 7/28/23 09:05, Richard Henderson wrote:
+>> It's the page containing both code and a page table entry that 
+>> concerns me.  It seems like a kernel bug, though obviously we 
+>> shouldn't crash.  I'm not sure what to do about it.
+> 
+> Bah.  Of course it's not a kernel bug, since the store is to LowCore.
+> And of course LowCore is part of a larger page, which easily has other 
+> stuff.
 
-Cc: qemu-stable@nongnu.org
-Fixes: deba78709a ("accel/tcg: Always lock pages before translation")
-
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
->   accel/tcg/tb-maint.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Maybe related to
+https://lore.kernel.org/qemu-devel/20240611215814.32752-1-anjo@rev.ng/
 
 
