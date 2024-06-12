@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC37FC41513
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 08:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB9EC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 08:16:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHJ8B-0002CL-3B; Wed, 12 Jun 2024 04:14:55 -0400
+	id 1sHJ99-0004bV-GU; Wed, 12 Jun 2024 04:15:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sHJ89-0002BH-UM
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:14:53 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1sHJ97-0004Qz-3S
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:15:53 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sHJ86-0006IT-9O
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:14:53 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-70435f4c330so1635886b3a.1
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 01:14:49 -0700 (PDT)
+ id 1sHJ92-0006Z4-3m
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:15:52 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1f480624d0fso16641775ad.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 01:15:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1718180087; x=1718784887; darn=nongnu.org;
+ d=sifive.com; s=google; t=1718180146; x=1718784946; darn=nongnu.org;
  h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
  :cc:subject:date:message-id:reply-to;
- bh=EnRKmLCd3tTTNF000mNJdg96ExcPAjbIehkU3yaHeR4=;
- b=LlhhuXhXzzSXpCQ0/ksG9Sa7Vm9NIuhbwIkb/xcuX/K9EIry5vzHFD9cA+bAkMGuNm
- 04mKWDtpVEFKsMFB6FLl5IAtXueWga/46L+WrfmPBSCp2E6mYUCLUxVASjcx4cZiWSbE
- 928fRli9enZQVz1FK3qJkz0eFc2vyJ9oIXxGJx9rdRX++Jbd2nvt359R0S14H5HL8HVs
- oogHtN20C4LSsx3xyoz+rjSErk/ZBIpcX6K2FZEiFrpCpCq6rJVNP6B7j6w/HP00CDfz
- pHyrYF07QTgvLogwY7w5s0N7Cm7IZqmRSraF5B5ZHIx16wq+gkKDtpP1UsD0K4fdntqQ
- EM9A==
+ bh=6SDWdEji79jZuEfxYlRwhHJyOygZmGzZyl21bKBD6lI=;
+ b=ephY/oG5/TyYFT0AghH/uXuv1mMIRr3MaXAISFHntDtE3JzgBO5NGwB3ExM0iD35TE
+ AaSz2MJY3cH79jinsT6Yu/zfunoD3WRKW1pP6VCb6H04uGyMcKkt1ewPmgBQ9Wvo4Fgp
+ QDA4OGIO+LAMN07mzefCS45D9ZAp/AUveGH+yg9xc2Kn/rrwIBercd5HEt0DQgxKB6h3
+ J79ZqjDlta++Lwr+978x5iP9/ntkzF66qofaeAkBprcCOu17bx01kuqFlQOCO1/htuPO
+ cTZmA3v8kofw2WXhoeFQGbtdknqjlhi3hi13u3Plq4PYQPySkDWZ5I97Cv93R8jJU2w0
+ 58Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718180087; x=1718784887;
+ d=1e100.net; s=20230601; t=1718180146; x=1718784946;
  h=references:in-reply-to:message-id:date:subject:cc:to:from
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EnRKmLCd3tTTNF000mNJdg96ExcPAjbIehkU3yaHeR4=;
- b=nJPwnVBDCZj8Bc2CW0qNeC8kwIKW73jaTVPuMeVU2wPor4cxFrtgLgPhGwu4wWe30r
- j0TewNh7PE1Q6bOk/TelTPigVXKPpOMxV83YHpukp7ooUC9XzpPL+RIO6m7gwXR+tzKh
- iQ676fUeW3xQTdWs1c6uQ0Oy9TvUs2xrr9s+4YGaYA4k054wvRhLzAC/COcXbg9v7l4+
- D+cWNPIIxKht8VnS/2/N0LYAgxhawxOHoJ/laGA3RHUvCyTNSrF5AVlO1oGe2uD08aPD
- n55haP4058RzOn8lyZN0RUiiwKoi2Z0Irr4srRgWW95Ectb1/5hWS2E6qmddzUXXozqI
- 09ag==
-X-Gm-Message-State: AOJu0YxNYIUzr0Dd+hCHMH1KqLzHP8D8iNK0/L5YBnk+g+wpjpFEZdF2
- BsRWpoiwxYOUfpFjPjsVS3mlBFRlrJioM5F/cJEeFs4q7pYrsJrCMfCgehYUTlYrg3GgB6cUen8
- ST9+kzzalJ2ZIrcPs7Zaew4WwYuxCiD5uhzqCLWPkt5uRbSm0ocEBdLWNi9tQxw77aBuOA33pun
- jvUSSoH2phjpXImLE8L5//PAIsOqCCA3t2k2vKNZQDMw==
-X-Google-Smtp-Source: AGHT+IGWlon/ISFN4i9A53CaDMMAPipk99P9n7vrPkOWhZGMNrV4ht77HI7oB5plpt7aCs8z+SBucg==
-X-Received: by 2002:a05:6a20:bc9b:b0:1b1:ed9d:f92e with SMTP id
- adf61e73a8af0-1b8a9c2c72bmr946171637.38.1718180087187; 
- Wed, 12 Jun 2024 01:14:47 -0700 (PDT)
+ bh=6SDWdEji79jZuEfxYlRwhHJyOygZmGzZyl21bKBD6lI=;
+ b=IYDDl1KA7wzSFvka+icGe2Fo2EZc4Zzyu6vJo7+JmRpE4H2FeclT4FutrpzV46U5Nh
+ tBlq0iG4IKDUCRwDm4Cc6ZDIvXrOA0F54jV3fbzWOHM/zVp7rQDRgRiMr/WejIaJxs0M
+ GIBkzI0r47e4+KDDs+pkLe39weSS4otqJjZDGsoiZNHAN82MXZpgQqju4q5zVkLhZQoB
+ fefshrzvTT52Tx9NQGuVMqLfBSKpXy0v5vabgM+G/qfjZWnWio0TefA+HCuLKuhHdKla
+ goqZjptKG30p2EsUCeWnbuHznI0uKSNr1tzsrCNRPll3CAvkeaqNF4MALmxGW3qQsESU
+ ZxUA==
+X-Gm-Message-State: AOJu0YwOZrTaLFryd+sAlJtC+y8lEtZf+r1S1yZLIiw9zusGppsC1Jy2
+ WwcAfryxEfk7OC28XwthWo4E2t8tOKitFUBopPgSCSdl9+Giy3v/oyP3+BjPh43tq/N3KNp4bBE
+ P+fJwmqLIPTczgRzJ7BrWE69crIq28E31ngCu34LnoEMS7ZkaqD6WndDzPhxBDu0vljRgwMHcHs
+ ZAxI3Lrh43B5gWCUQro3hkUWWMyeBfqF18y1ETfYRBew==
+X-Google-Smtp-Source: AGHT+IGWuiw4qN6215AIuz3B82UrjcAr18BITHC04BrN6BSLgSVO+wOv8vv9zRqeYywcoxF4Y1/pug==
+X-Received: by 2002:a17:903:18a:b0:1f4:64d9:5cfd with SMTP id
+ d9443c01a7336-1f83b6ed60dmr12725245ad.42.1718180145210; 
+ Wed, 12 Jun 2024 01:15:45 -0700 (PDT)
 Received: from hsinchu26.internal.sifive.com
  (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f8393e8e53sm11363875ad.16.2024.06.12.01.14.41
+ d9443c01a7336-1f8393e8e53sm11363875ad.16.2024.06.12.01.15.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Jun 2024 01:14:46 -0700 (PDT)
+ Wed, 12 Jun 2024 01:15:44 -0700 (PDT)
 From: Jim Shu <jim.shu@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -91,15 +91,15 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  qemu-ppc@nongnu.org (open list:PowerPC TCG CPUs),
  qemu-s390x@nongnu.org (open list:S390 TCG CPUs),
  Jim Shu <jim.shu@sifive.com>
-Subject: [RFC PATCH 02/16] accel/tcg: memory access from CPU will pass
- access_type to IOMMU
-Date: Wed, 12 Jun 2024 16:14:02 +0800
-Message-Id: <20240612081416.29704-3-jim.shu@sifive.com>
+Subject: [RFC PATCH 12/16] hw/misc: riscv_wgchecker: Implement RISC-V
+ WorldGuard Checker
+Date: Wed, 12 Jun 2024 16:14:12 +0800
+Message-Id: <20240612081416.29704-13-jim.shu@sifive.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20240612081416.29704-1-jim.shu@sifive.com>
 References: <20240612081416.29704-1-jim.shu@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=jim.shu@sifive.com; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=jim.shu@sifive.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,504 +122,740 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is the preparation patch for upcoming RISC-V wgChecker device.
+Implement the RISC-V WorldGuard Checker, which sits in front of RAM or
+device MMIO and allow software to configure it to either pass through or
+reject transactions.
 
-Since RISC-V wgChecker could permit access in RO/WO permission, the
-IOMMUMemoryRegion could return different section for read & write
-access. The memory access from CPU should also pass the access_type to
-IOMMU translate function so that IOMMU could return the correct section
-of specified access_type.
+We implement the wgChecker as a QEMU IOMMU, which will direct transactions
+either through to the devices and memory behind it or to a special
+"never works" AddressSpace if they are blocked.
+
+This initial commit implements the skeleton of the device:
+ * it always permits accesses
+ * it doesn't implement wgChecker's slot registers
+ * it doesn't implement the interrupt or other behaviour
+   for blocked transactions
 
 Signed-off-by: Jim Shu <jim.shu@sifive.com>
 ---
- accel/tcg/cputlb.c                   | 15 +++++++++------
- include/exec/exec-all.h              | 11 +++++++----
- system/physmem.c                     | 16 +++++++++++-----
- target/alpha/helper.c                |  2 +-
- target/arm/tcg/tlb_helper.c          |  2 +-
- target/avr/helper.c                  |  2 +-
- target/cris/helper.c                 |  2 +-
- target/hppa/mem_helper.c             |  2 +-
- target/i386/tcg/sysemu/excp_helper.c |  3 ++-
- target/loongarch/tcg/tlb_helper.c    |  2 +-
- target/m68k/helper.c                 | 10 +++++++---
- target/microblaze/helper.c           |  8 ++++----
- target/mips/tcg/sysemu/tlb_helper.c  |  4 ++--
- target/openrisc/mmu.c                |  2 +-
- target/ppc/mmu_helper.c              |  2 +-
- target/riscv/cpu_helper.c            |  2 +-
- target/rx/cpu.c                      |  3 ++-
- target/s390x/tcg/excp_helper.c       |  2 +-
- target/sh4/helper.c                  |  2 +-
- target/sparc/mmu_helper.c            |  6 +++---
- target/tricore/helper.c              |  2 +-
- target/xtensa/helper.c               |  3 ++-
- 22 files changed, 61 insertions(+), 42 deletions(-)
+ hw/misc/meson.build                |   2 +-
+ hw/misc/riscv_wgchecker.c          | 604 +++++++++++++++++++++++++++++
+ hw/misc/trace-events               |   8 +
+ include/hw/misc/riscv_worldguard.h |  63 +++
+ 4 files changed, 676 insertions(+), 1 deletion(-)
+ create mode 100644 hw/misc/riscv_wgchecker.c
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 8cf124b760..f1b07f6926 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1036,7 +1036,8 @@ static inline void tlb_set_compare(CPUTLBEntryFull *full, CPUTLBEntry *ent,
-  * critical section.
-  */
- void tlb_set_page_full(CPUState *cpu, int mmu_idx,
--                       vaddr addr, CPUTLBEntryFull *full)
-+                       vaddr addr, MMUAccessType access_type,
-+                       CPUTLBEntryFull *full)
- {
-     CPUTLB *tlb = &cpu->neg.tlb;
-     CPUTLBDesc *desc = &tlb->d[mmu_idx];
-@@ -1063,7 +1064,8 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
-     prot = full->prot;
-     asidx = cpu_asidx_from_attrs(cpu, full->attrs);
-     section = address_space_translate_for_iotlb(cpu, asidx, paddr_page,
--                                                &xlat, &sz, full->attrs, &prot);
-+                                                &xlat, &sz, full->attrs, &prot,
-+                                                access_type);
-     assert(sz >= TARGET_PAGE_SIZE);
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index a75668ff86..c5cb3bf4ee 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -34,7 +34,7 @@ system_ss.add(when: 'CONFIG_SIFIVE_E_PRCI', if_true: files('sifive_e_prci.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_E_AON', if_true: files('sifive_e_aon.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_OTP', if_true: files('sifive_u_otp.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_U_PRCI', if_true: files('sifive_u_prci.c'))
+-specific_ss.add(when: 'CONFIG_RISCV_WORLDGUARD', if_true: files('riscv_worldguard.c'))
++specific_ss.add(when: 'CONFIG_RISCV_WORLDGUARD', if_true: files('riscv_worldguard.c', 'riscv_wgchecker.c'))
  
-     tlb_debug("vaddr=%016" VADDR_PRIx " paddr=0x" HWADDR_FMT_plx
-@@ -1200,7 +1202,8 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+ subdir('macio')
  
- void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
-                              hwaddr paddr, MemTxAttrs attrs, int prot,
--                             int mmu_idx, uint64_t size)
-+                             MMUAccessType access_type, int mmu_idx,
-+                             uint64_t size)
- {
-     CPUTLBEntryFull full = {
-         .phys_addr = paddr,
-@@ -1210,15 +1213,15 @@ void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
-     };
- 
-     assert(is_power_of_2(size));
--    tlb_set_page_full(cpu, mmu_idx, addr, &full);
-+    tlb_set_page_full(cpu, mmu_idx, addr, access_type, &full);
- }
- 
- void tlb_set_page(CPUState *cpu, vaddr addr,
--                  hwaddr paddr, int prot,
-+                  hwaddr paddr, int prot, MMUAccessType access_type,
-                   int mmu_idx, uint64_t size)
- {
-     tlb_set_page_with_attrs(cpu, addr, paddr, MEMTXATTRS_UNSPECIFIED,
--                            prot, mmu_idx, size);
-+                            prot, access_type, mmu_idx, size);
- }
- 
- /*
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index b6b46ad13c..0d5363ac02 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -205,7 +205,7 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *cpu,
-  * used by tlb_flush_page.
-  */
- void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
--                       CPUTLBEntryFull *full);
-+                       MMUAccessType access_type, CPUTLBEntryFull *full);
- 
- /**
-  * tlb_set_page_with_attrs:
-@@ -231,7 +231,8 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx, vaddr addr,
-  */
- void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
-                              hwaddr paddr, MemTxAttrs attrs,
--                             int prot, int mmu_idx, vaddr size);
-+                             int prot, MMUAccessType access_type, int mmu_idx,
-+                             vaddr size);
- /* tlb_set_page:
-  *
-  * This function is equivalent to calling tlb_set_page_with_attrs()
-@@ -240,7 +241,8 @@ void tlb_set_page_with_attrs(CPUState *cpu, vaddr addr,
-  */
- void tlb_set_page(CPUState *cpu, vaddr addr,
-                   hwaddr paddr, int prot,
--                  int mmu_idx, vaddr size);
-+                  MMUAccessType access_type, int mmu_idx,
-+                  vaddr size);
- #else
- static inline void tlb_init(CPUState *cpu)
- {
-@@ -591,7 +593,8 @@ void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
- MemoryRegionSection *
- address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr addr,
-                                   hwaddr *xlat, hwaddr *plen,
--                                  MemTxAttrs attrs, int *prot);
-+                                  MemTxAttrs attrs, int *prot,
-+                                  MMUAccessType access_type);
- hwaddr memory_region_section_get_iotlb(CPUState *cpu,
-                                        MemoryRegionSection *section);
- #endif
-diff --git a/system/physmem.c b/system/physmem.c
-index b7847db1a2..a5a0ea77bd 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -674,12 +674,14 @@ void tcg_iommu_init_notifier_list(CPUState *cpu)
- MemoryRegionSection *
- address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr orig_addr,
-                                   hwaddr *xlat, hwaddr *plen,
--                                  MemTxAttrs attrs, int *prot)
-+                                  MemTxAttrs attrs, int *prot,
-+                                  MMUAccessType access_type)
- {
-     MemoryRegionSection *section;
-     IOMMUMemoryRegion *iommu_mr;
-     IOMMUMemoryRegionClass *imrc;
-     IOMMUTLBEntry iotlb;
-+    IOMMUAccessFlags iommu_flags;
-     int iommu_idx;
-     hwaddr addr = orig_addr;
-     AddressSpaceDispatch *d = cpu->cpu_ases[asidx].memory_dispatch;
-@@ -696,10 +698,14 @@ address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr orig_addr,
- 
-         iommu_idx = imrc->attrs_to_index(iommu_mr, attrs);
-         tcg_register_iommu_notifier(cpu, iommu_mr, iommu_idx);
--        /* We need all the permissions, so pass IOMMU_NONE so the IOMMU
--         * doesn't short-cut its translation table walk.
--         */
--        iotlb = imrc->translate(iommu_mr, addr, IOMMU_NONE, iommu_idx);
+diff --git a/hw/misc/riscv_wgchecker.c b/hw/misc/riscv_wgchecker.c
+new file mode 100644
+index 0000000000..2421b1438c
+--- /dev/null
++++ b/hw/misc/riscv_wgchecker.c
+@@ -0,0 +1,604 @@
++/*
++ * RISC-V WorldGuard Checker Device
++ *
++ * Copyright (c) 2022 SiFive, Inc.
++ *
++ * This provides WorldGuard Checker model.
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
 +
-+        if (access_type == MMU_DATA_STORE) {
-+            iommu_flags = IOMMU_WO;
-+        } else {
-+            iommu_flags = IOMMU_RO;
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/log.h"
++#include "exec/hwaddr.h"
++#include "exec/exec-all.h"
++#include "hw/irq.h"
++#include "hw/registerfields.h"
++#include "hw/sysbus.h"
++#include "hw/hw.h"
++#include "hw/qdev-properties.h"
++#include "hw/misc/riscv_worldguard.h"
++#include "target/riscv/cpu.h"
++#include "trace.h"
++
++/* Common */
++REG32(VENDOR,               0x000)
++REG32(IMPID,                0x004)
++
++/* wgChecker */
++REG32(NSLOTS,               0x008)
++REG64(ERRCAUSE,             0x010)
++    FIELD(ERRCAUSE, WID,        0,  8)
++    FIELD(ERRCAUSE, R,          8,  1)
++    FIELD(ERRCAUSE, W,          9,  1)
++    FIELD(ERRCAUSE, BE,         62, 1)
++    FIELD(ERRCAUSE, IP,         63, 1)
++
++#define ERRCAUSE_MASK   \
++    (R_ERRCAUSE_WID_MASK | \
++     R_ERRCAUSE_R_MASK   | \
++     R_ERRCAUSE_W_MASK   | \
++     R_ERRCAUSE_BE_MASK  | \
++     R_ERRCAUSE_IP_MASK)
++
++REG64(ERRADDR,              0x018)
++
++/*
++ * Accesses only reach these read and write functions if the wgChecker
++ * is blocking them; non-blocked accesses go directly to the downstream
++ * memory region without passing through this code.
++ */
++static MemTxResult riscv_wgc_mem_blocked_read(void *opaque, hwaddr addr,
++                                               uint64_t *pdata,
++                                               unsigned size, MemTxAttrs attrs)
++{
++    uint32_t wid = mem_attrs_to_wid(attrs);
++
++    trace_riscv_wgc_mem_blocked_read(addr, size, wid);
++
++    *pdata = 0;
++    return MEMTX_OK;
++}
++
++static MemTxResult riscv_wgc_mem_blocked_write(void *opaque, hwaddr addr,
++                                               uint64_t value,
++                                               unsigned size, MemTxAttrs attrs)
++{
++    uint32_t wid = mem_attrs_to_wid(attrs);
++
++    trace_riscv_wgc_mem_blocked_write(addr, value, size, wid);
++
++    return MEMTX_OK;
++}
++
++static const MemoryRegionOps riscv_wgc_mem_blocked_ops = {
++    .read_with_attrs = riscv_wgc_mem_blocked_read,
++    .write_with_attrs = riscv_wgc_mem_blocked_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid.min_access_size = 1,
++    .valid.max_access_size = 8,
++    .impl.min_access_size = 1,
++    .impl.max_access_size = 8,
++};
++
++static IOMMUTLBEntry riscv_wgc_translate(IOMMUMemoryRegion *iommu,
++                                          hwaddr addr, IOMMUAccessFlags flags,
++                                          int iommu_idx)
++{
++    WgCheckerRegion *region = container_of(iommu, WgCheckerRegion, upstream);
++    RISCVWgCheckerState *s = RISCV_WGCHECKER(region->wgchecker);
++    hwaddr phys_addr;
++    uint64_t region_size;
++
++    IOMMUTLBEntry ret = {
++        .iova = addr & ~WG_ALIGNED_MASK,
++        .translated_addr = addr & ~WG_ALIGNED_MASK,
++        .addr_mask = WG_ALIGNED_MASK,
++        .perm = IOMMU_RW,
++    };
++
++    /* addr shouldn't exceed region size of down/upstream. */
++    region_size = memory_region_size(region->downstream);
++    g_assert(addr < region_size);
++
++    /*
++     * Look at the wgChecker configuration for this address, and
++     * return a TLB entry directing the transaction at either
++     * downstream_as or blocked_io_as, as appropriate.
++     * For the moment, always permit accesses.
++     */
++
++    /* Use physical address instead of offset */
++    phys_addr = addr + region->region_offset;
++
++    is_success = true;
++
++    trace_riscv_wgc_translate(phys_addr, flags,
++        iommu_idx, is_success ? "pass" : "block");
++
++    ret.target_as = is_success ? &region->downstream_as : &region->blocked_io_as;
++    return ret;
++}
++
++static int riscv_wgc_attrs_to_index(IOMMUMemoryRegion *iommu, MemTxAttrs attrs)
++{
++    return mem_attrs_to_wid(attrs);
++}
++
++static int riscv_wgc_num_indexes(IOMMUMemoryRegion *iommu)
++{
++    return worldguard_config->nworlds;
++}
++
++static uint64_t riscv_wgchecker_readq(void *opaque, hwaddr addr)
++{
++    RISCVWgCheckerState *s = RISCV_WGCHECKER(opaque);
++    uint64_t val = 0;
++
++    switch (addr) {
++    case A_ERRCAUSE:
++        val = s->errcause & ERRCAUSE_MASK;
++        break;
++    case A_ERRADDR:
++        val = s->erraddr;
++        break;
++    case A_NSLOTS:
++        val = s->slot_count;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Unexpected memory access to (0x%" HWADDR_PRIX ", %u) \n",
++                      __func__, addr, 8);
++        break;
++    }
++
++    return val;
++}
++
++static uint64_t riscv_wgchecker_readl(void *opaque, hwaddr addr)
++{
++    RISCVWgCheckerState *s = RISCV_WGCHECKER(opaque);
++    uint64_t val = 0;
++
++    switch (addr) {
++    case A_VENDOR:
++        val = 0;
++        break;
++    case A_IMPID:
++        val = 0;
++        break;
++    case A_NSLOTS:
++        val = extract64(s->slot_count, 0, 32);
++        break;
++    case A_NSLOTS + 4:
++        val = extract64(s->slot_count, 0, 32);
++        break;
++    case A_ERRCAUSE:
++        val = s->errcause & ERRCAUSE_MASK;
++        val = extract64(val, 0, 32);
++        break;
++    case A_ERRCAUSE + 4:
++        val = s->errcause & ERRCAUSE_MASK;
++        val = extract64(val, 32, 32);
++        break;
++    case A_ERRADDR:
++        val = extract64(s->erraddr, 0, 32);
++        break;
++    case A_ERRADDR + 4:
++        val = extract64(s->erraddr, 32, 32);
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Unexpected memory access to (0x%" HWADDR_PRIX ", %u) \n",
++                      __func__, addr, 4);
++        break;
++    }
++
++    return val;
++}
++
++static uint64_t riscv_wgchecker_read(void *opaque, hwaddr addr, unsigned size)
++{
++    uint64_t val = 0;
++
++    switch (size) {
++    case 8:
++        val = riscv_wgchecker_readq(opaque, addr);
++        break;
++    case 4:
++        val = riscv_wgchecker_readl(opaque, addr);
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid read size %u to wgChecker\n",
++                      __func__, size);
++        return 0;
++    }
++
++    return val;
++}
++
++static void riscv_wgchecker_writeq(void *opaque, hwaddr addr,
++                                    uint64_t value)
++{
++    RISCVWgCheckerState *s = RISCV_WGCHECKER(opaque);
++
++    switch (addr) {
++    case A_ERRCAUSE:
++        s->errcause = value & ERRCAUSE_MASK;
++        break;
++    case A_ERRADDR:
++        s->erraddr = value;
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Unexpected memory access to (0x%" HWADDR_PRIX ", %u) \n",
++                      __func__, addr, 8);
++        break;
++    }
++}
++
++static void riscv_wgchecker_writel(void *opaque, hwaddr addr,
++                                    uint64_t value)
++{
++    RISCVWgCheckerState *s = RISCV_WGCHECKER(opaque);
++
++    switch (addr) {
++    case A_ERRCAUSE:
++        value &= extract64(ERRCAUSE_MASK, 0, 32);
++        s->errcause = deposit64(s->errcause, 0, 32, value);
++        break;
++    case A_ERRCAUSE + 4:
++        value &= extract64(ERRCAUSE_MASK, 32, 32);
++        s->errcause = deposit64(s->errcause, 32, 32, value);
++        break;
++    case A_ERRADDR:
++        s->erraddr = deposit64(s->erraddr, 0, 32, value);
++        break;
++    case A_ERRADDR + 4:
++        s->erraddr = deposit64(s->erraddr, 32, 32, value);
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: Unexpected memory access to (0x%" HWADDR_PRIX ", %u) \n",
++                      __func__, addr, 4);
++        break;
++    }
++}
++
++static void riscv_wgchecker_write(void *opaque, hwaddr addr,
++                                   uint64_t value, unsigned size)
++{
++    switch (size) {
++    case 8:
++        riscv_wgchecker_writeq(opaque, addr, value);
++        break;
++    case 4:
++        riscv_wgchecker_writel(opaque, addr, value);
++        break;
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Invalid write size %u to wgChecker\n",
++                      __func__, size);
++        break;
++    }
++}
++
++static MemTxResult riscv_wgchecker_read_with_attrs(
++    void *opaque, hwaddr addr, uint64_t *pdata, unsigned size,
++    MemTxAttrs attrs)
++{
++    SysBusDevice *dev = SYS_BUS_DEVICE(opaque);
++
++    trace_riscv_wgchecker_mmio_read(dev->mmio[0].addr, addr, size);
++
++    *pdata = 0;
++    if (could_access_wgblocks(attrs, "wgChecker")) {
++        *pdata = riscv_wgchecker_read(opaque, addr, size);
++    }
++
++    return MEMTX_OK;
++}
++
++static MemTxResult riscv_wgchecker_write_with_attrs(
++    void *opaque, hwaddr addr, uint64_t data, unsigned size,
++    MemTxAttrs attrs)
++{
++    SysBusDevice *dev = SYS_BUS_DEVICE(opaque);
++
++    trace_riscv_wgchecker_mmio_write(dev->mmio[0].addr, addr, size, data);
++
++    if (could_access_wgblocks(attrs, "wgChecker")) {
++        riscv_wgchecker_write(opaque, addr, data, size);
++    }
++
++    return MEMTX_OK;
++}
++
++static const MemoryRegionOps riscv_wgchecker_ops = {
++    .read_with_attrs = riscv_wgchecker_read_with_attrs,
++    .write_with_attrs = riscv_wgchecker_write_with_attrs,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8
++    },
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 8
++    }
++};
++
++static void riscv_wgc_iommu_memory_region_class_init(ObjectClass *klass,
++                                                  void *data)
++{
++    IOMMUMemoryRegionClass *imrc = IOMMU_MEMORY_REGION_CLASS(klass);
++
++    imrc->translate = riscv_wgc_translate;
++    imrc->attrs_to_index = riscv_wgc_attrs_to_index;
++    imrc->num_indexes = riscv_wgc_num_indexes;
++}
++
++static const TypeInfo riscv_wgc_iommu_memory_region_info = {
++    .name = TYPE_RISCV_WGC_IOMMU_MEMORY_REGION,
++    .parent = TYPE_IOMMU_MEMORY_REGION,
++    .class_init = riscv_wgc_iommu_memory_region_class_init,
++};
++
++
++#define DEFINE_REGION(N)                                                \
++    DEFINE_PROP_LINK("downstream-mr[" #N "]", RISCVWgCheckerState,     \
++                     mem_regions[N].downstream,                         \
++                     TYPE_MEMORY_REGION, MemoryRegion *),               \
++    DEFINE_PROP_UINT64("region-offset[" #N "]", RISCVWgCheckerState,   \
++                       mem_regions[N].region_offset, 0)                 \
++
++static Property riscv_wgchecker_properties[] = {
++    DEFINE_PROP_UINT32("slot-count", RISCVWgCheckerState, slot_count, 0x1),
++    DEFINE_PROP_UINT32("mmio-size", RISCVWgCheckerState, mmio_size, 0x1000),
++
++    /* Assume 1 wgChecker has 16 regions at maximum (WGC_NUM_REGIONS). */
++    DEFINE_REGION(0), DEFINE_REGION(1), DEFINE_REGION(2), DEFINE_REGION(3),
++    DEFINE_REGION(4), DEFINE_REGION(5), DEFINE_REGION(6), DEFINE_REGION(7),
++    DEFINE_REGION(8), DEFINE_REGION(9), DEFINE_REGION(10), DEFINE_REGION(11),
++    DEFINE_REGION(12), DEFINE_REGION(13), DEFINE_REGION(14), DEFINE_REGION(15),
++
++    DEFINE_PROP_UINT64("addr-range-start", RISCVWgCheckerState, addr_range_start, 0),
++    DEFINE_PROP_UINT64("addr-range-size", RISCVWgCheckerState, addr_range_size, UINT64_MAX),
++
++    /*
++     * We could only set individual wgChecker to hw-bypass mode. It is
++     * usually used in wgChecker of BootROM, since SW has no way to enable
++     * the permission of it.
++     */
++    DEFINE_PROP_BOOL("hw-bypass", RISCVWgCheckerState, hw_bypass, false),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static int int_log2_down(int n)
++{
++    int i = 0;
++
++    n >>= 1;
++
++    while (n) {
++        i++;
++        n >>= 1;
++    }
++
++    return i;
++}
++
++static int int_log2_up(int n)
++{
++    return int_log2_down(n - 1) + 1;
++}
++
++/*
++ * Change the address range to be NAPOT alignment.
++ *
++ * New address range should totally cover the origin range, but new range
++ * should be configured by 1 NAPOT region (slot).
++ */
++static void address_range_align_napot(RISCVWgCheckerState *s)
++{
++    uint64_t start, end, size, new_size;
++
++    start = s->addr_range_start;
++    end = s->addr_range_start + s->addr_range_size;
++    size = s->addr_range_size;
++
++    if (size == UINT64_MAX) {
++        /* Full address range. No need of NAPOT alignment. */
++        return;
++    }
++
++    /* Size is the next power-of-2 number. */
++    size = 1 << (int_log2_up(size));
++    start = QEMU_ALIGN_DOWN(start, size);
++    end = QEMU_ALIGN_UP(end, size);
++    new_size = end - start;
++
++    /*
++     * If base is not aligned to region size (new_size),
++     * double the region size and try it again.
++     */
++    while ((new_size != size) && (size != 1ULL << 63)) {
++        size *= 2;
++        start = QEMU_ALIGN_DOWN(start, size);
++        end = QEMU_ALIGN_UP(end, size);
++        new_size = end - start;
++    }
++
++    s->addr_range_start = start;
++    s->addr_range_size = size;
++}
++
++static void riscv_wgchecker_realize(DeviceState *dev, Error **errp)
++{
++    Object *obj = OBJECT(dev);
++    RISCVWgCheckerState *s = RISCV_WGCHECKER(dev);
++    uint64_t size;
++
++    if (worldguard_config == NULL) {
++        error_setg(errp, "Couldn't find global WorldGuard configs. "
++                   "Please realize %s device at first.",
++                   TYPE_RISCV_WORLDGUARD);
++        return;
++    }
++
++    if (s->slot_count == 0) {
++        error_setg(errp, "wgChecker slot-count couldn't be zero.");
++        return;
++    }
++
++    memory_region_init_io(&s->mmio, OBJECT(dev), &riscv_wgchecker_ops, s,
++                          TYPE_RISCV_WGCHECKER, s->mmio_size);
++    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mmio);
++    sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
++
++    /* Address range should be NAPOT alignment */
++    address_range_align_napot(s);
++
++    for (int i=0; i<WGC_NUM_REGIONS; i++) {
++        WgCheckerRegion *region = &s->mem_regions[i];
++
++        if (!region->downstream) {
++            continue;
 +        }
++        region->wgchecker = s;
 +
-+        iotlb = imrc->translate(iommu_mr, addr, iommu_flags, iommu_idx);
-         addr = ((iotlb.translated_addr & ~iotlb.addr_mask)
-                 | (addr & iotlb.addr_mask));
-         /* Update the caller's prot bits to remove permissions the IOMMU
-diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-index 2f1000c99f..7ea548f1d0 100644
---- a/target/alpha/helper.c
-+++ b/target/alpha/helper.c
-@@ -318,7 +318,7 @@ bool alpha_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
-     }
++        const char *upstream_name = g_strdup_printf(
++            "wgchecker-upstream-%"HWADDR_PRIx, region->region_offset);
++        const char *downstream_name = g_strdup_printf(
++            "wgchecker-downstream-%"HWADDR_PRIx, region->region_offset);
++
++        size = memory_region_size(region->downstream);
++        memory_region_init_iommu(&region->upstream, sizeof(region->upstream),
++                                 TYPE_RISCV_WGC_IOMMU_MEMORY_REGION,
++                                 obj, upstream_name, size);
++
++        /* upstream MRs are 2nd ~ (n+1)th MemoryRegion. */
++        sysbus_init_mmio(SYS_BUS_DEVICE(dev), MEMORY_REGION(&region->upstream));
++
++        /*
++         * This memory region is not exposed to users of this device as a
++         * sysbus MMIO region, but is instead used internally as something
++         * that our IOMMU translate function might direct accesses to.
++         */
++        memory_region_init_io(&region->blocked_io, obj, &riscv_wgc_mem_blocked_ops,
++                              region, "wgchecker-blocked-io", size);
++
++        address_space_init(&region->downstream_as, region->downstream,
++                           downstream_name);
++        address_space_init(&region->blocked_io_as, &region->blocked_io,
++                           "wgchecker-blocked-io");
++    }
++}
++
++static void riscv_wgchecker_unrealize(DeviceState *dev)
++{
++    RISCVWgCheckerState *s = RISCV_WGCHECKER(dev);
++
++    g_free(s->slots);
++    if (s->num_default_slots && s->default_slots) {
++        g_free(s->default_slots);
++    }
++}
++
++static void riscv_wgchecker_reset_enter(Object *obj, ResetType type)
++{
++    RISCVWgCheckerState *s = RISCV_WGCHECKER(obj);
++    uint64_t start = s->addr_range_start;
++    uint64_t end = s->addr_range_start + s->addr_range_size;
++    int nslots = s->slot_count;
++
++    s->errcause = 0;
++    s->erraddr = 0;
++}
++
++static void riscv_wgchecker_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    device_class_set_props(dc, riscv_wgchecker_properties);
++    dc->user_creatable = true;
++    dc->realize = riscv_wgchecker_realize;
++    dc->unrealize = riscv_wgchecker_unrealize;
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++    rc->phases.enter = riscv_wgchecker_reset_enter;
++}
++
++static void riscv_wgchecker_instance_init(Object *obj)
++{
++    RISCVWgCheckerState *s = RISCV_WGCHECKER(obj);
++
++    s->num_default_slots = 0;
++}
++
++static const TypeInfo riscv_wgchecker_info = {
++    .name          = TYPE_RISCV_WGCHECKER,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_init = riscv_wgchecker_instance_init,
++    .instance_size = sizeof(RISCVWgCheckerState),
++    .class_init    = riscv_wgchecker_class_init,
++};
++
++static void riscv_wgchecker_register_types(void)
++{
++    type_register_static(&riscv_wgchecker_info);
++    type_register_static(&riscv_wgc_iommu_memory_region_info);
++}
++
++type_init(riscv_wgchecker_register_types)
++
++/*
++ * Create WgChecker device
++ */
++DeviceState *riscv_wgchecker_create(hwaddr addr, uint32_t size,
++                                    qemu_irq irq, uint32_t slot_count,
++                                    uint64_t addr_range_start,
++                                    uint64_t addr_range_size,
++                                    uint32_t num_of_region,
++                                    MemoryRegion **downstream,
++                                    uint64_t *region_offset,
++                                    uint32_t num_default_slots,
++                                    WgCheckerSlot *default_slots)
++{
++    DeviceState *dev = qdev_new(TYPE_RISCV_WGCHECKER);
++    RISCVWgCheckerState *s = RISCV_WGCHECKER(dev);
++    char name_mr[32];
++    char name_offset[32];
++    int i;
++
++    qdev_prop_set_uint32(dev, "slot-count", slot_count);
++    qdev_prop_set_uint32(dev, "mmio-size", size);
++    qdev_prop_set_uint64(dev, "addr-range-start", addr_range_start);
++    if (addr_range_size) {
++        qdev_prop_set_uint64(dev, "addr-range-size", addr_range_size);
++    }
++
++    g_assert(num_of_region <= WGC_NUM_REGIONS);
++    for (i=0; i<num_of_region; i++) {
++        snprintf(name_mr, 32, "downstream-mr[%d]", i);
++        snprintf(name_offset, 32, "region-offset[%d]", i);
++
++        object_property_set_link(OBJECT(dev), name_mr,
++                                 OBJECT(downstream[i]), &error_fatal);
++        qdev_prop_set_uint64(dev, name_offset, region_offset[i]);
++    }
++
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, addr);
++    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, irq);
++    return dev;
++}
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index 5d241cb40a..a64c7f0f9f 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -351,3 +351,11 @@ djmemc_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRI
+ # iosb.c
+ iosb_read(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
+ iosb_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
++
++# riscv_worldguard.c
++riscv_wgchecker_mmio_read(uint64_t base, uint64_t offset, unsigned int size) "base = 0x%"PRIx64", offset = 0x%"PRIx64", size = 0x%x"
++riscv_wgchecker_mmio_write(uint64_t base, uint64_t offset, unsigned int size, uint64_t val) "base = 0x%"PRIx64", offset = 0x%"PRIx64", size = 0x%x, val = 0x%"PRIx64
++
++riscv_wgc_mem_blocked_read(uint64_t addr, unsigned size, uint32_t wid) "wgChecker blocked read: offset 0x%" PRIx64 " size %u wid %" PRIu32
++riscv_wgc_mem_blocked_write(uint64_t addr, uint64_t data, unsigned size, uint32_t wid) "wgChecker blocked write: offset 0x%" PRIx64 " data 0x%" PRIx64 " size %u wid %" PRIu32
++riscv_wgc_translate(uint64_t addr, int flags, int wid, const char *res) "wgChecker translate: addr 0x%016" PRIx64 " flags 0x%x wid %d: %s"
+diff --git a/include/hw/misc/riscv_worldguard.h b/include/hw/misc/riscv_worldguard.h
+index 211a72e438..7b5aae866a 100644
+--- a/include/hw/misc/riscv_worldguard.h
++++ b/include/hw/misc/riscv_worldguard.h
+@@ -53,4 +53,67 @@ void riscv_worldguard_apply_cpu(uint32_t hartid);
+ uint32_t mem_attrs_to_wid(MemTxAttrs attrs);
+ bool could_access_wgblocks(MemTxAttrs attrs, const char *wgblock);
  
-     tlb_set_page(cs, addr & TARGET_PAGE_MASK, phys & TARGET_PAGE_MASK,
--                 prot, mmu_idx, TARGET_PAGE_SIZE);
-+                 prot, access_type, mmu_idx, TARGET_PAGE_SIZE);
-     return true;
- }
- 
-diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
-index 885bf4ec14..186c612957 100644
---- a/target/arm/tcg/tlb_helper.c
-+++ b/target/arm/tcg/tlb_helper.c
-@@ -361,7 +361,7 @@ bool arm_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         res.f.extra.arm.pte_attrs = res.cacheattrs.attrs;
-         res.f.extra.arm.shareability = res.cacheattrs.shareability;
- 
--        tlb_set_page_full(cs, mmu_idx, address, &res.f);
-+        tlb_set_page_full(cs, mmu_idx, address, access_type, &res.f);
-         return true;
-     } else if (probe) {
-         return false;
-diff --git a/target/avr/helper.c b/target/avr/helper.c
-index 345708a1b3..07d795848e 100644
---- a/target/avr/helper.c
-+++ b/target/avr/helper.c
-@@ -149,7 +149,7 @@ bool avr_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         }
-     }
- 
--    tlb_set_page(cs, address, paddr, prot, mmu_idx, page_size);
-+    tlb_set_page(cs, address, paddr, prot, access_type, mmu_idx, page_size);
-     return true;
- }
- 
-diff --git a/target/cris/helper.c b/target/cris/helper.c
-index 1c3f86876f..644244312c 100644
---- a/target/cris/helper.c
-+++ b/target/cris/helper.c
-@@ -68,7 +68,7 @@ bool cris_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         phy = res.phy & ~0x80000000;
-         prot = res.prot;
-         tlb_set_page(cs, address & TARGET_PAGE_MASK, phy,
--                     prot, mmu_idx, TARGET_PAGE_SIZE);
-+                     prot, access_type, mmu_idx, TARGET_PAGE_SIZE);
-         return true;
-     }
- 
-diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index b984f730aa..0a42d47ce9 100644
---- a/target/hppa/mem_helper.c
-+++ b/target/hppa/mem_helper.c
-@@ -461,7 +461,7 @@ bool hppa_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
-      * because we record the large page here in the hppa tlb.
-      */
-     tlb_set_page(cs, addr & TARGET_PAGE_MASK, phys & TARGET_PAGE_MASK,
--                 prot, mmu_idx, TARGET_PAGE_SIZE);
-+                 prot, type, mmu_idx, TARGET_PAGE_SIZE);
-     return true;
- }
- 
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index 8fb05b1f53..c7a53a1179 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -610,7 +610,8 @@ bool x86_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
-         tlb_set_page_with_attrs(cs, addr & TARGET_PAGE_MASK,
-                                 out.paddr & TARGET_PAGE_MASK,
-                                 cpu_get_mem_attrs(env),
--                                out.prot, mmu_idx, out.page_size);
-+                                out.prot, access_type, mmu_idx,
-+                                out.page_size);
-         return true;
-     }
- 
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index d6331f9b0b..7f9a44128a 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -490,7 +490,7 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     if (ret == TLBRET_MATCH) {
-         tlb_set_page(cs, address & TARGET_PAGE_MASK,
-                      physical & TARGET_PAGE_MASK, prot,
--                     mmu_idx, TARGET_PAGE_SIZE);
-+                     access_type, mmu_idx, TARGET_PAGE_SIZE);
-         qemu_log_mask(CPU_LOG_MMU,
-                       "%s address=%" VADDR_PRIx " physical " HWADDR_FMT_plx
-                       " prot %d\n", __func__, address, physical, prot);
-diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-index 7967ad13cb..e63ebe4e18 100644
---- a/target/m68k/helper.c
-+++ b/target/m68k/helper.c
-@@ -967,7 +967,7 @@ bool m68k_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         tlb_set_page(cs, address & TARGET_PAGE_MASK,
-                      address & TARGET_PAGE_MASK,
-                      PAGE_READ | PAGE_WRITE | PAGE_EXEC,
--                     mmu_idx, TARGET_PAGE_SIZE);
-+                     qemu_access_type, mmu_idx, TARGET_PAGE_SIZE);
-         return true;
-     }
- 
-@@ -987,7 +987,8 @@ bool m68k_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                                address, access_type, &page_size);
-     if (likely(ret == 0)) {
-         tlb_set_page(cs, address & TARGET_PAGE_MASK,
--                     physical & TARGET_PAGE_MASK, prot, mmu_idx, page_size);
-+                     physical & TARGET_PAGE_MASK, prot, qemu_access_type,
-+                     mmu_idx, page_size);
-         return true;
-     }
- 
-@@ -1459,6 +1460,7 @@ void HELPER(ptest)(CPUM68KState *env, uint32_t addr, uint32_t is_read)
-     int prot;
-     int ret;
-     target_ulong page_size;
-+    MMUAccessType qemu_access_type;
- 
-     access_type = ACCESS_PTEST;
-     if (env->dfc & 4) {
-@@ -1466,9 +1468,11 @@ void HELPER(ptest)(CPUM68KState *env, uint32_t addr, uint32_t is_read)
-     }
-     if ((env->dfc & 3) == 2) {
-         access_type |= ACCESS_CODE;
-+        qemu_access_type = MMU_INST_FETCH;
-     }
-     if (!is_read) {
-         access_type |= ACCESS_STORE;
-+        qemu_access_type = MMU_DATA_STORE;
-     }
- 
-     env->mmu.mmusr = 0;
-@@ -1478,7 +1482,7 @@ void HELPER(ptest)(CPUM68KState *env, uint32_t addr, uint32_t is_read)
-     if (ret == 0) {
-         tlb_set_page(env_cpu(env), addr & TARGET_PAGE_MASK,
-                      physical & TARGET_PAGE_MASK,
--                     prot, access_type & ACCESS_SUPER ?
-+                     prot, qemu_access_type, access_type & ACCESS_SUPER ?
-                      MMU_KERNEL_IDX : MMU_USER_IDX, page_size);
-     }
- }
-diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-index 5d3259ce31..5229daf1d5 100644
---- a/target/microblaze/helper.c
-+++ b/target/microblaze/helper.c
-@@ -53,8 +53,8 @@ bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         /* MMU disabled or not available.  */
-         address &= TARGET_PAGE_MASK;
-         prot = PAGE_RWX;
--        tlb_set_page_with_attrs(cs, address, address, attrs, prot, mmu_idx,
--                                TARGET_PAGE_SIZE);
-+        tlb_set_page_with_attrs(cs, address, address, attrs, prot, access_type,
-+                                mmu_idx, TARGET_PAGE_SIZE);
-         return true;
-     }
- 
-@@ -65,8 +65,8 @@ bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- 
-         qemu_log_mask(CPU_LOG_MMU, "MMU map mmu=%d v=%x p=%x prot=%x\n",
-                       mmu_idx, vaddr, paddr, lu.prot);
--        tlb_set_page_with_attrs(cs, vaddr, paddr, attrs, lu.prot, mmu_idx,
--                                TARGET_PAGE_SIZE);
-+        tlb_set_page_with_attrs(cs, vaddr, paddr, attrs, lu.prot, access_type,
-+                                mmu_idx, TARGET_PAGE_SIZE);
-         return true;
-     }
- 
-diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
-index 3ba6d369a6..90b9668bd0 100644
---- a/target/mips/tcg/sysemu/tlb_helper.c
-+++ b/target/mips/tcg/sysemu/tlb_helper.c
-@@ -931,7 +931,7 @@ bool mips_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     if (ret == TLBRET_MATCH) {
-         tlb_set_page(cs, address & TARGET_PAGE_MASK,
-                      physical & TARGET_PAGE_MASK, prot,
--                     mmu_idx, TARGET_PAGE_SIZE);
-+                     access_type, mmu_idx, TARGET_PAGE_SIZE);
-         return true;
-     }
- #if !defined(TARGET_MIPS64)
-@@ -949,7 +949,7 @@ bool mips_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-             if (ret == TLBRET_MATCH) {
-                 tlb_set_page(cs, address & TARGET_PAGE_MASK,
-                              physical & TARGET_PAGE_MASK, prot,
--                             mmu_idx, TARGET_PAGE_SIZE);
-+                             access_type, mmu_idx, TARGET_PAGE_SIZE);
-                 return true;
-             }
-         }
-diff --git a/target/openrisc/mmu.c b/target/openrisc/mmu.c
-index c632d5230b..a04003c37e 100644
---- a/target/openrisc/mmu.c
-+++ b/target/openrisc/mmu.c
-@@ -128,7 +128,7 @@ bool openrisc_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
-     if (likely(excp == 0)) {
-         tlb_set_page(cs, addr & TARGET_PAGE_MASK,
-                      phys_addr & TARGET_PAGE_MASK, prot,
--                     mmu_idx, TARGET_PAGE_SIZE);
-+                     access_type, mmu_idx, TARGET_PAGE_SIZE);
-         return true;
-     }
-     if (probe) {
-diff --git a/target/ppc/mmu_helper.c b/target/ppc/mmu_helper.c
-index b0a0676beb..dd264ac335 100644
---- a/target/ppc/mmu_helper.c
-+++ b/target/ppc/mmu_helper.c
-@@ -1368,7 +1368,7 @@ bool ppc_cpu_tlb_fill(CPUState *cs, vaddr eaddr, int size,
-     if (ppc_xlate(cpu, eaddr, access_type, &raddr,
-                   &page_size, &prot, mmu_idx, !probe)) {
-         tlb_set_page(cs, eaddr & TARGET_PAGE_MASK, raddr & TARGET_PAGE_MASK,
--                     prot, mmu_idx, 1UL << page_size);
-+                     prot, access_type, mmu_idx, 1UL << page_size);
-         return true;
-     }
-     if (probe) {
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 6709622dd3..161df34626 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1419,7 +1419,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
- 
-     if (ret == TRANSLATE_SUCCESS) {
-         tlb_set_page(cs, address & ~(tlb_size - 1), pa & ~(tlb_size - 1),
--                     prot, mmu_idx, tlb_size);
-+                     prot, access_type, mmu_idx, tlb_size);
-         return true;
-     } else if (probe) {
-         return false;
-diff --git a/target/rx/cpu.c b/target/rx/cpu.c
-index 8a584f0a11..2e0fd20aef 100644
---- a/target/rx/cpu.c
-+++ b/target/rx/cpu.c
-@@ -163,7 +163,8 @@ static bool rx_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
-     /* Linear mapping */
-     address = physical = addr & TARGET_PAGE_MASK;
-     prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
--    tlb_set_page(cs, address, physical, prot, mmu_idx, TARGET_PAGE_SIZE);
-+    tlb_set_page(cs, address, physical, prot, access_type,
-+                 mmu_idx, TARGET_PAGE_SIZE);
-     return true;
- }
- 
-diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
-index 4c0b692c9e..bcd9f80474 100644
---- a/target/s390x/tcg/excp_helper.c
-+++ b/target/s390x/tcg/excp_helper.c
-@@ -178,7 +178,7 @@ bool s390_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                       "%s: set tlb %" PRIx64 " -> %" PRIx64 " (%x)\n",
-                       __func__, (uint64_t)vaddr, (uint64_t)raddr, prot);
-         tlb_set_page(cs, address & TARGET_PAGE_MASK, raddr, prot,
--                     mmu_idx, TARGET_PAGE_SIZE);
-+                     access_type, mmu_idx, TARGET_PAGE_SIZE);
-         return true;
-     }
-     if (probe) {
-diff --git a/target/sh4/helper.c b/target/sh4/helper.c
-index 6702910627..00b06898b7 100644
---- a/target/sh4/helper.c
-+++ b/target/sh4/helper.c
-@@ -807,7 +807,7 @@ bool superh_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     if (ret == MMU_OK) {
-         address &= TARGET_PAGE_MASK;
-         physical &= TARGET_PAGE_MASK;
--        tlb_set_page(cs, address, physical, prot, mmu_idx, TARGET_PAGE_SIZE);
-+        tlb_set_page(cs, address, physical, prot, access_type, mmu_idx, TARGET_PAGE_SIZE);
-         return true;
-     }
-     if (probe) {
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index 9ff06026b8..1dade2eef8 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -229,7 +229,7 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                       "Translate at %" VADDR_PRIx " -> "
-                       HWADDR_FMT_plx ", vaddr " TARGET_FMT_lx "\n",
-                       address, full.phys_addr, vaddr);
--        tlb_set_page_full(cs, mmu_idx, vaddr, &full);
-+        tlb_set_page_full(cs, mmu_idx, vaddr, access_type, &full);
-         return true;
-     }
- 
-@@ -245,7 +245,7 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-            neverland. Fake/overridden mappings will be flushed when
-            switching to normal mode. */
-         full.prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
--        tlb_set_page_full(cs, mmu_idx, vaddr, &full);
-+        tlb_set_page_full(cs, mmu_idx, vaddr, access_type, &full);
-         return true;
-     } else {
-         if (access_type == MMU_INST_FETCH) {
-@@ -769,7 +769,7 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         trace_mmu_helper_mmu_fault(address, full.phys_addr, mmu_idx, env->tl,
-                                    env->dmmu.mmu_primary_context,
-                                    env->dmmu.mmu_secondary_context);
--        tlb_set_page_full(cs, mmu_idx, address, &full);
-+        tlb_set_page_full(cs, mmu_idx, address, access_type, &full);
-         return true;
-     }
-     if (probe) {
-diff --git a/target/tricore/helper.c b/target/tricore/helper.c
-index 7014255f77..295f515772 100644
---- a/target/tricore/helper.c
-+++ b/target/tricore/helper.c
-@@ -84,7 +84,7 @@ bool tricore_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     if (ret == TLBRET_MATCH) {
-         tlb_set_page(cs, address & TARGET_PAGE_MASK,
-                      physical & TARGET_PAGE_MASK, prot | PAGE_EXEC,
--                     mmu_idx, TARGET_PAGE_SIZE);
-+                     rw, mmu_idx, TARGET_PAGE_SIZE);
-         return true;
-     } else {
-         assert(ret < 0);
-diff --git a/target/xtensa/helper.c b/target/xtensa/helper.c
-index ca214b948a..3a155638c5 100644
---- a/target/xtensa/helper.c
-+++ b/target/xtensa/helper.c
-@@ -280,7 +280,8 @@ bool xtensa_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         tlb_set_page(cs,
-                      address & TARGET_PAGE_MASK,
-                      paddr & TARGET_PAGE_MASK,
--                     access, mmu_idx, page_size);
-+                     access, access_type, mmu_idx,
-+                     page_size);
-         return true;
-     } else if (probe) {
-         return false;
++#define TYPE_RISCV_WGCHECKER  "riscv.wgchecker"
++
++typedef struct RISCVWgCheckerState RISCVWgCheckerState;
++DECLARE_INSTANCE_CHECKER(RISCVWgCheckerState, RISCV_WGCHECKER,
++                         TYPE_RISCV_WGCHECKER)
++
++#define TYPE_RISCV_WGC_IOMMU_MEMORY_REGION    "riscv-wgc-iommu-memory-region"
++
++typedef struct WgCheckerSlot WgCheckerSlot;
++struct WgCheckerSlot {
++    uint64_t addr;
++    uint64_t perm;
++    uint32_t cfg;
++};
++
++typedef struct WgCheckerRegion WgCheckerRegion;
++struct WgCheckerRegion {
++    MemoryRegion *downstream;
++    uint64_t region_offset;
++
++    IOMMUMemoryRegion upstream;
++    MemoryRegion blocked_io;
++    AddressSpace downstream_as;
++    AddressSpace blocked_io_as;
++
++    RISCVWgCheckerState *wgchecker;
++};
++
++#define WGC_NUM_REGIONS     16
++
++struct RISCVWgCheckerState {
++    /*< private >*/
++    SysBusDevice parent_obj;
++
++    /*< public >*/
++    MemoryRegion mmio;
++    qemu_irq irq;
++
++    /* error reg */
++    uint64_t errcause;
++    uint64_t erraddr;
++
++    /* Memory regions protected by wgChecker */
++    WgCheckerRegion mem_regions[WGC_NUM_REGIONS];
++
++    /* Property */
++    uint32_t slot_count; /* nslots */
++    uint32_t mmio_size;
++    uint64_t addr_range_start;
++    uint64_t addr_range_size;
++    bool hw_bypass;
++};
++
++DeviceState *riscv_wgchecker_create(hwaddr addr, uint32_t size,
++                                    qemu_irq irq, uint32_t slot_count,
++                                    uint64_t addr_range_start,
++                                    uint64_t addr_range_size,
++                                    uint32_t num_of_region,
++                                    MemoryRegion **downstream,
++                                    uint64_t *region_offset,
++                                    uint32_t num_default_slots,
++                                    WgCheckerSlot *default_slots);
++
+ #endif
 -- 
 2.17.1
 
