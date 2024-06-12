@@ -4,62 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD01DC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5827DC27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:21:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNuh-0008QV-Lm; Wed, 12 Jun 2024 09:21:19 -0400
+	id 1sHNuO-0007w2-1O; Wed, 12 Jun 2024 09:21:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHNuf-0008My-31
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:21:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sHNuL-0007pw-Qn
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:20:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHNuc-0003ui-Sy
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:21:16 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sHNuK-0003qK-5G
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:20:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718198474;
+ s=mimecast20190719; t=1718198455;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=76NiWBKyQcEFElyQMaFGltfiHdnMty6s8Qu7s1R1agU=;
- b=Ez93P1K9ugnMJ8Vm8t5R1+W+ZqtEqgWMpFu3PPZLY1katEmuJNmTejj3c5fTBtZ43hmr83
- kZh19StO9H+ycSN912mc/BftvOoGpFIstApoxvJzthn1/AzvGK7QTgtacUbe4cwtenfDg7
- vD1aNnc3bBBT1kp8npblsJ0TScIWIMk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=dUYG9QxIMIQ5uhr++x6WgjmKQdaajBC/IgrrKluYzDs=;
+ b=d9xz4gtMtpmYZ8sMgEITshwGIPfZnlgTXLbEj8ovAPXeuOVhTyVGvY44BD3XChCVlwPvQf
+ 7/OBFgCt7BfTfYWz2R5txEvdrT7/iT198NptdgdT3KK2FgQeNRYmtUyChcYn+gIwCK2JvM
+ hdbtDrEnKabDa7U/NOKYyP5nfNTgreI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-JPNK3KxlPbOJpOT2enaKMw-1; Wed,
- 12 Jun 2024 09:21:12 -0400
-X-MC-Unique: JPNK3KxlPbOJpOT2enaKMw-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-175-LvY2leuXMDSTmD8JM9HH8g-1; Wed,
+ 12 Jun 2024 09:20:52 -0400
+X-MC-Unique: LvY2leuXMDSTmD8JM9HH8g-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 658AD1955E7D; Wed, 12 Jun 2024 13:21:11 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.194.236])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EA8221956087; Wed, 12 Jun 2024 13:21:08 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Richard Henderson <richard.henderson@linaro.org>
-Cc: Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 04/15] tests/qtest/x86: check for availability of older cpu
- models before running tests
-Date: Wed, 12 Jun 2024 15:20:44 +0200
-Message-ID: <20240612132055.326889-5-thuth@redhat.com>
-In-Reply-To: <20240612132055.326889-1-thuth@redhat.com>
-References: <20240612132055.326889-1-thuth@redhat.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 21DD81955D9E; Wed, 12 Jun 2024 13:20:51 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6DADA1956059; Wed, 12 Jun 2024 13:20:50 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4FB9521E66E5; Wed, 12 Jun 2024 15:20:48 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: mst@redhat.com,  qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Hanna
+ Reitz <hreitz@redhat.com>,  Brad Smith <brad@comstyle.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Laurent Vivier <lvivier@redhat.com>,
+ gmaglione@redhat.com,  stefanha@redhat.com,  Coiby Xu
+ <Coiby.Xu@gmail.com>,  Gerd Hoffmann <kraxel@redhat.com>,  slp@redhat.com,
+ Igor Mammedov <imammedo@redhat.com>,  Raphael Norwitz
+ <raphael@enfabrica.net>,  Thomas Huth <thuth@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  David Hildenbrand <david@redhat.com>,  Kevin Wolf
+ <kwolf@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Jason Wang
+ <jasowang@redhat.com>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH RESEND v7 10/12] hostmem: add a new memory backend based
+ on POSIX shm_open()
+In-Reply-To: <20240612130140.63004-11-sgarzare@redhat.com> (Stefano
+ Garzarella's message of "Wed, 12 Jun 2024 15:01:38 +0200")
+References: <20240612130140.63004-1-sgarzare@redhat.com>
+ <20240612130140.63004-11-sgarzare@redhat.com>
+Date: Wed, 12 Jun 2024 15:20:48 +0200
+Message-ID: <87frtifgb3.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -84,347 +97,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ani Sinha <anisinha@redhat.com>
+Stefano Garzarella <sgarzare@redhat.com> writes:
 
-It is better to check if some older cpu models like 486, athlon, pentium,
-penryn, phenom, core2duo etc are available before running their corresponding
-tests. Some downstream distributions may no longer support these older cpu
-models.
+> shm_open() creates and opens a new POSIX shared memory object.
+> A POSIX shared memory object allows creating memory backend with an
+> associated file descriptor that can be shared with external processes
+> (e.g. vhost-user).
+>
+> The new `memory-backend-shm` can be used as an alternative when
+> `memory-backend-memfd` is not available (Linux only), since shm_open()
+> should be provided by any POSIX-compliant operating system.
+>
+> This backend mimics memfd, allocating memory that is practically
+> anonymous. In theory shm_open() requires a name, but this is allocated
+> for a short time interval and shm_unlink() is called right after
+> shm_open(). After that, only fd is shared with external processes
+> (e.g., vhost-user) as if it were associated with anonymous memory.
+>
+> In the future we may also allow the user to specify the name to be
+> passed to shm_open(), but for now we keep the backend simple, mimicking
+> anonymous memory such as memfd.
+>
+> Acked-by: David Hildenbrand <david@redhat.com>
+> Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 
-Signature of add_feature_test() has been modified to return void as
-FeatureTestArgs* was not used by the caller.
+[...]
 
-One minor correction. Replaced 'phenom' with '486' in the test
-'x86/cpuid/auto-level/phenom/arat' matching the cpu used.
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 9b8f6a7ab5..94e4458288 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -601,8 +601,8 @@
+>  #
+>  # @share: if false, the memory is private to QEMU; if true, it is
+>  #     shared (default false for backends memory-backend-file and
+> -#     memory-backend-ram, true for backends memory-backend-epc and
+> -#     memory-backend-memfd)
+> +#     memory-backend-ram, true for backends memory-backend-epc,
+> +#     memory-backend-memfd, and memory-backend-shm)
+>  #
+>  # @reserve: if true, reserve swap space (or huge pages) if applicable
+>  #     (default: true) (since 6.1)
+> @@ -721,6 +721,22 @@
+>              '*hugetlbsize': 'size',
+>              '*seal': 'bool' } }
+>  
+> +##
+> +# @MemoryBackendShmProperties:
+> +#
+> +# Properties for memory-backend-shm objects.
+> +#
+> +# Setting @share boolean option (defined in the base type) to false
+> +# will cause a failure during allocation because it is not
+> +# supported by this backend.
 
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240610155303.7933-4-anisinha@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/qtest/test-x86-cpuid-compat.c | 170 ++++++++++++++++++----------
- 1 file changed, 108 insertions(+), 62 deletions(-)
+This is QMP reference documentation.  "Failure during allocation" feels
+like unnecessary detail there.  Maybe "This memory backend support only
+shared memory, which is the default."
 
-diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-cpuid-compat.c
-index 6a39454fce..b9e7e5ef7b 100644
---- a/tests/qtest/test-x86-cpuid-compat.c
-+++ b/tests/qtest/test-x86-cpuid-compat.c
-@@ -67,10 +67,29 @@ static void test_cpuid_prop(const void *data)
-     g_free(path);
- }
- 
--static void add_cpuid_test(const char *name, const char *cmdline,
-+static void add_cpuid_test(const char *name, const char *cpu,
-+                           const char *cpufeat, const char *machine,
-                            const char *property, int64_t expected_value)
- {
-     CpuidTestArgs *args = g_new0(CpuidTestArgs, 1);
-+    char *cmdline;
-+    char *save;
-+
-+    if (!qtest_has_cpu_model(cpu)) {
-+        return;
-+    }
-+    cmdline = g_strdup_printf("-cpu %s", cpu);
-+
-+    if (cpufeat) {
-+        save = cmdline;
-+        cmdline = g_strdup_printf("%s,%s", cmdline, cpufeat);
-+        g_free(save);
-+    }
-+    if (machine) {
-+        save = cmdline;
-+        cmdline = g_strdup_printf("-machine %s %s", machine, cmdline);
-+        g_free(save);
-+    }
-     args->cmdline = cmdline;
-     args->property = property;
-     args->expected_value = expected_value;
-@@ -149,12 +168,24 @@ static void test_feature_flag(const void *data)
-  * either "feature-words" or "filtered-features", when running QEMU
-  * using cmdline
-  */
--static FeatureTestArgs *add_feature_test(const char *name, const char *cmdline,
--                                         uint32_t eax, uint32_t ecx,
--                                         const char *reg, int bitnr,
--                                         bool expected_value)
-+static void add_feature_test(const char *name, const char *cpu,
-+                             const char *cpufeat, uint32_t eax,
-+                             uint32_t ecx, const char *reg,
-+                             int bitnr, bool expected_value)
- {
-     FeatureTestArgs *args = g_new0(FeatureTestArgs, 1);
-+    char *cmdline;
-+
-+    if (!qtest_has_cpu_model(cpu)) {
-+        return;
-+    }
-+
-+    if (cpufeat) {
-+        cmdline = g_strdup_printf("-cpu %s,%s", cpu, cpufeat);
-+    } else {
-+        cmdline = g_strdup_printf("-cpu %s", cpu);
-+    }
-+
-     args->cmdline = cmdline;
-     args->in_eax = eax;
-     args->in_ecx = ecx;
-@@ -162,13 +193,17 @@ static FeatureTestArgs *add_feature_test(const char *name, const char *cmdline,
-     args->bitnr = bitnr;
-     args->expected_value = expected_value;
-     qtest_add_data_func(name, args, test_feature_flag);
--    return args;
-+    return;
- }
- 
- static void test_plus_minus_subprocess(void)
- {
-     char *path;
- 
-+    if (!qtest_has_cpu_model("pentium")) {
-+        return;
-+    }
-+
-     /* Rules:
-      * 1)"-foo" overrides "+foo"
-      * 2) "[+-]foo" overrides "foo=..."
-@@ -198,6 +233,10 @@ static void test_plus_minus_subprocess(void)
- 
- static void test_plus_minus(void)
- {
-+    if (!qtest_has_cpu_model("pentium")) {
-+        return;
-+    }
-+
-     g_test_trap_subprocess("/x86/cpuid/parsing-plus-minus/subprocess", 0, 0);
-     g_test_trap_assert_passed();
-     g_test_trap_assert_stderr("*Ambiguous CPU model string. "
-@@ -217,99 +256,105 @@ int main(int argc, char **argv)
- 
-     /* Original level values for CPU models: */
-     add_cpuid_test("x86/cpuid/phenom/level",
--                   "-cpu phenom", "level", 5);
-+                   "phenom", NULL, NULL, "level", 5);
-     add_cpuid_test("x86/cpuid/Conroe/level",
--                   "-cpu Conroe", "level", 10);
-+                   "Conroe", NULL, NULL, "level", 10);
-     add_cpuid_test("x86/cpuid/SandyBridge/level",
--                   "-cpu SandyBridge", "level", 0xd);
-+                   "SandyBridge", NULL, NULL, "level", 0xd);
-     add_cpuid_test("x86/cpuid/486/xlevel",
--                   "-cpu 486", "xlevel", 0);
-+                   "486", NULL, NULL, "xlevel", 0);
-     add_cpuid_test("x86/cpuid/core2duo/xlevel",
--                   "-cpu core2duo", "xlevel", 0x80000008);
-+                   "core2duo", NULL, NULL, "xlevel", 0x80000008);
-     add_cpuid_test("x86/cpuid/phenom/xlevel",
--                   "-cpu phenom", "xlevel", 0x8000001A);
-+                   "phenom", NULL, NULL, "xlevel", 0x8000001A);
-     add_cpuid_test("x86/cpuid/athlon/xlevel",
--                   "-cpu athlon", "xlevel", 0x80000008);
-+                   "athlon", NULL, NULL, "xlevel", 0x80000008);
- 
-     /* If level is not large enough, it should increase automatically: */
-     /* CPUID[6].EAX: */
--    add_cpuid_test("x86/cpuid/auto-level/phenom/arat",
--                   "-cpu 486,arat=on", "level", 6);
-+    add_cpuid_test("x86/cpuid/auto-level/486/arat",
-+                   "486", "arat=on", NULL, "level", 6);
-     /* CPUID[EAX=7,ECX=0].EBX: */
-     add_cpuid_test("x86/cpuid/auto-level/phenom/fsgsbase",
--                   "-cpu phenom,fsgsbase=on", "level", 7);
-+                   "phenom", "fsgsbase=on", NULL, "level", 7);
-     /* CPUID[EAX=7,ECX=0].ECX: */
-     add_cpuid_test("x86/cpuid/auto-level/phenom/avx512vbmi",
--                   "-cpu phenom,avx512vbmi=on", "level", 7);
-+                   "phenom", "avx512vbmi=on", NULL, "level", 7);
-     /* CPUID[EAX=0xd,ECX=1].EAX: */
-     add_cpuid_test("x86/cpuid/auto-level/phenom/xsaveopt",
--                   "-cpu phenom,xsaveopt=on", "level", 0xd);
-+                   "phenom", "xsaveopt=on", NULL, "level", 0xd);
-     /* CPUID[8000_0001].EDX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/3dnow",
--                   "-cpu 486,3dnow=on", "xlevel", 0x80000001);
-+                   "486", "3dnow=on", NULL, "xlevel", 0x80000001);
-     /* CPUID[8000_0001].ECX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/sse4a",
--                   "-cpu 486,sse4a=on", "xlevel", 0x80000001);
-+                   "486", "sse4a=on", NULL, "xlevel", 0x80000001);
-     /* CPUID[8000_0007].EDX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/invtsc",
--                   "-cpu 486,invtsc=on", "xlevel", 0x80000007);
-+                   "486", "invtsc=on", NULL, "xlevel", 0x80000007);
-     /* CPUID[8000_000A].EDX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/npt",
--                   "-cpu 486,svm=on,npt=on", "xlevel", 0x8000000A);
-+                   "486", "svm=on,npt=on", NULL, "xlevel", 0x8000000A);
-     /* CPUID[C000_0001].EDX: */
-     add_cpuid_test("x86/cpuid/auto-xlevel2/phenom/xstore",
--                   "-cpu phenom,xstore=on", "xlevel2", 0xC0000001);
-+                   "phenom", "xstore=on", NULL, "xlevel2", 0xC0000001);
-     /* SVM needs CPUID[0x8000000A] */
-     add_cpuid_test("x86/cpuid/auto-xlevel/athlon/svm",
--                   "-cpu athlon,svm=on", "xlevel", 0x8000000A);
-+                   "athlon", "svm=on", NULL, "xlevel", 0x8000000A);
- 
- 
-     /* If level is already large enough, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-level/SandyBridge/multiple",
--                   "-cpu SandyBridge,arat=on,fsgsbase=on,avx512vbmi=on",
--                   "level", 0xd);
-+                   "SandyBridge", "arat=on,fsgsbase=on,avx512vbmi=on",
-+                   NULL, "level", 0xd);
-     /* If level is explicitly set, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-level/486/fixed/0xF",
--                   "-cpu 486,level=0xF,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
--                   "level", 0xF);
-+                   "486",
-+                   "level=0xF,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
-+                   NULL, "level", 0xF);
-     add_cpuid_test("x86/cpuid/auto-level/486/fixed/2",
--                   "-cpu 486,level=2,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
--                   "level", 2);
-+                   "486",
-+                   "level=2,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
-+                   NULL, "level", 2);
-     add_cpuid_test("x86/cpuid/auto-level/486/fixed/0",
--                   "-cpu 486,level=0,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
--                   "level", 0);
-+                   "486",
-+                   "level=0,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
-+                   NULL, "level", 0);
- 
-     /* if xlevel is already large enough, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/phenom/3dnow",
--                   "-cpu phenom,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   "xlevel", 0x8000001A);
-+                   "phenom", "3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                   NULL, "xlevel", 0x8000001A);
-     /* If xlevel is explicitly set, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/fixed/80000002",
--                   "-cpu 486,xlevel=0x80000002,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   "xlevel", 0x80000002);
-+                   "486",
-+                   "xlevel=0x80000002,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                   NULL, "xlevel", 0x80000002);
-     add_cpuid_test("x86/cpuid/auto-xlevel/486/fixed/8000001A",
--                   "-cpu 486,xlevel=0x8000001A,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   "xlevel", 0x8000001A);
-+                   "486",
-+                   "xlevel=0x8000001A,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                   NULL, "xlevel", 0x8000001A);
-     add_cpuid_test("x86/cpuid/auto-xlevel/phenom/fixed/0",
--                   "-cpu 486,xlevel=0,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   "xlevel", 0);
-+                   "486",
-+                   "xlevel=0,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                   NULL, "xlevel", 0);
- 
-     /* if xlevel2 is already large enough, it shouldn't change: */
-     add_cpuid_test("x86/cpuid/auto-xlevel2/486/fixed",
--                   "-cpu 486,xlevel2=0xC0000002,xstore=on",
--                   "xlevel2", 0xC0000002);
-+                   "486", "xlevel2=0xC0000002,xstore=on",
-+                   NULL, "xlevel2", 0xC0000002);
- 
-     /* Check compatibility of old machine-types that didn't
-      * auto-increase level/xlevel/xlevel2: */
-     if (qtest_has_machine("pc-i440fx-2.7")) {
-         add_cpuid_test("x86/cpuid/auto-level/pc-2.7",
--                       "-machine pc-i440fx-2.7 -cpu 486,arat=on,avx512vbmi=on,xsaveopt=on",
--                       "level", 1);
-+                       "486", "arat=on,avx512vbmi=on,xsaveopt=on",
-+                       "pc-i440fx-2.7", "level", 1);
-         add_cpuid_test("x86/cpuid/auto-xlevel/pc-2.7",
--                       "-machine pc-i440fx-2.7 -cpu 486,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                       "xlevel", 0);
-+                       "486", "3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+                       "pc-i440fx-2.7", "xlevel", 0);
-         add_cpuid_test("x86/cpuid/auto-xlevel2/pc-2.7",
--                       "-machine pc-i440fx-2.7 -cpu 486,xstore=on",
-+                       "486", "xstore=on", "pc-i440fx-2.7",
-                        "xlevel2", 0);
-     }
-     /*
-@@ -319,18 +364,18 @@ int main(int argc, char **argv)
-      */
-     if (qtest_has_machine("pc-i440fx-2.3")) {
-         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.3/off",
--                       "-machine pc-i440fx-2.3 -cpu Penryn",
-+                       "Penryn", NULL, "pc-i440fx-2.3",
-                        "level", 4);
-         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.3/on",
--                       "-machine pc-i440fx-2.3 -cpu Penryn,erms=on",
-+                       "Penryn", "erms=on", "pc-i440fx-2.3",
-                        "level", 7);
-     }
-     if (qtest_has_machine("pc-i440fx-2.9")) {
-         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.9/off",
--                       "-machine pc-i440fx-2.9 -cpu Conroe",
-+                       "Conroe", NULL, "pc-i440fx-2.9",
-                        "level", 10);
-         add_cpuid_test("x86/cpuid/auto-level7/pc-i440fx-2.9/on",
--                       "-machine pc-i440fx-2.9 -cpu Conroe,erms=on",
-+                       "Conroe", "erms=on", "pc-i440fx-2.9",
-                        "level", 10);
-     }
- 
-@@ -341,42 +386,43 @@ int main(int argc, char **argv)
-      */
-     if (qtest_has_machine("pc-i440fx-2.3")) {
-         add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.3",
--                       "-machine pc-i440fx-2.3 -cpu SandyBridge",
-+                       "SandyBridge", NULL, "pc-i440fx-2.3",
-                        "xlevel", 0x8000000a);
-     }
-     if (qtest_has_machine("pc-i440fx-2.4")) {
-         add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.4/npt-off",
--                       "-machine pc-i440fx-2.4 -cpu SandyBridge,",
-+                       "SandyBridge", NULL, "pc-i440fx-2.4",
-                        "xlevel", 0x80000008);
-         add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.4/npt-on",
--                       "-machine pc-i440fx-2.4 -cpu SandyBridge,svm=on,npt=on",
-+                       "SandyBridge", "svm=on,npt=on", "pc-i440fx-2.4",
-                        "xlevel", 0x80000008);
-     }
- 
-     /* Test feature parsing */
-     add_feature_test("x86/cpuid/features/plus",
--                     "-cpu 486,+arat",
-+                     "486", "+arat",
-                      6, 0, "EAX", 2, true);
-     add_feature_test("x86/cpuid/features/minus",
--                     "-cpu pentium,-mmx",
-+                     "pentium", "-mmx",
-                      1, 0, "EDX", 23, false);
-     add_feature_test("x86/cpuid/features/on",
--                     "-cpu 486,arat=on",
-+                     "486", "arat=on",
-                      6, 0, "EAX", 2, true);
-     add_feature_test("x86/cpuid/features/off",
--                     "-cpu pentium,mmx=off",
-+                     "pentium", "mmx=off",
-                      1, 0, "EDX", 23, false);
-+
-     add_feature_test("x86/cpuid/features/max-plus-invtsc",
--                     "-cpu max,+invtsc",
-+                     "max" , "+invtsc",
-                      0x80000007, 0, "EDX", 8, true);
-     add_feature_test("x86/cpuid/features/max-invtsc-on",
--                     "-cpu max,invtsc=on",
-+                     "max", "invtsc=on",
-                      0x80000007, 0, "EDX", 8, true);
-     add_feature_test("x86/cpuid/features/max-minus-mmx",
--                     "-cpu max,-mmx",
-+                     "max", "-mmx",
-                      1, 0, "EDX", 23, false);
-     add_feature_test("x86/cpuid/features/max-invtsc-on,mmx=off",
--                     "-cpu max,mmx=off",
-+                     "max", "mmx=off",
-                      1, 0, "EDX", 23, false);
- 
-     return g_test_run();
--- 
-2.45.2
+> +#
+> +# Since: 9.1
+> +##
+> +{ 'struct': 'MemoryBackendShmProperties',
+> +  'base': 'MemoryBackendProperties',
+> +  'data': { },
+> +  'if': 'CONFIG_POSIX' }
+> +
+>  ##
+>  # @MemoryBackendEpcProperties:
+>  #
+> @@ -1049,6 +1065,8 @@
+>      { 'name': 'memory-backend-memfd',
+>        'if': 'CONFIG_LINUX' },
+>      'memory-backend-ram',
+> +    { 'name': 'memory-backend-shm',
+> +      'if': 'CONFIG_POSIX' },
+>      'pef-guest',
+>      { 'name': 'pr-manager-helper',
+>        'if': 'CONFIG_LINUX' },
+> @@ -1121,6 +1139,8 @@
+>        'memory-backend-memfd':       { 'type': 'MemoryBackendMemfdProperties',
+>                                        'if': 'CONFIG_LINUX' },
+>        'memory-backend-ram':         'MemoryBackendProperties',
+> +      'memory-backend-shm':         { 'type': 'MemoryBackendShmProperties',
+> +                                      'if': 'CONFIG_POSIX' },
+>        'pr-manager-helper':          { 'type': 'PrManagerHelperProperties',
+>                                        'if': 'CONFIG_LINUX' },
+>        'qtest':                      'QtestProperties',
+
+[...]
+
+Other than that, QAPI schema
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
