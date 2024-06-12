@@ -4,60 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD52C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 07:52:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3619C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 08:05:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHIlt-00048H-KK; Wed, 12 Jun 2024 03:51:53 -0400
+	id 1sHIyQ-00005Z-0w; Wed, 12 Jun 2024 04:04:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sHIlq-00047f-PB; Wed, 12 Jun 2024 03:51:50 -0400
-Received: from out30-98.freemail.mail.aliyun.com ([115.124.30.98])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHIyL-00004q-IR
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:04:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sHIln-0002YL-Gj; Wed, 12 Jun 2024 03:51:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1718178696; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=VUJ5qx48u20PmlP1dFLZoPOVraGgXPnmN/mJ/FyMglc=;
- b=cZ8Rraus6Dwg9M605dslDjDHpHeuGABFy+om6uFvIDB3M0l2dD249y94gDlVsAQB9u08tGylFhIvMrdO12jyJCi2beal/7LPM5THL5YDFbWxOJ7YuZ+JZ0XxhTEvhoZi+fc0rrCR/WIm6KXY9wU3JjVq8DIx+/twyhMZRpDHoZI=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R101e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032014031;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
- TI=SMTPD_---0W8JOZvX_1718178694; 
-Received: from 30.166.64.137(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W8JOZvX_1718178694) by smtp.aliyun-inc.com;
- Wed, 12 Jun 2024 15:51:35 +0800
-Message-ID: <e98e7047-d13b-4443-94ea-981c4dd9e58c@linux.alibaba.com>
-Date: Wed, 12 Jun 2024 15:50:28 +0800
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHIyI-0004ip-DA
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 04:04:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718179480;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zQrFEe7W4sI09VOobip/BVk5fiOKKKkN3S6RFtH+sMI=;
+ b=R6RjeSpiHKLpCKFcq8/6bEFCHv94Co2CCDXR+KbPKvQzE5YuF+lDHat1U2IZHdApgRajU0
+ qzlHcsE14qSe5LCeMeOYPkD53xu+cyszX7Kb2wE1p3cVeEaTFbL9UftOYaJM6AXlpw+Gp4
+ 1pJ7RkxYhMlW6HucCduZogTdIvDUpiI=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-110-v5k5eKsmO6Kj2geOKLER6g-1; Wed,
+ 12 Jun 2024 04:04:32 -0400
+X-MC-Unique: v5k5eKsmO6Kj2geOKLER6g-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BE48A19560A7; Wed, 12 Jun 2024 08:04:29 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.115])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6646E1956087; Wed, 12 Jun 2024 08:04:23 +0000 (UTC)
+Date: Wed, 12 Jun 2024 09:04:20 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Subject: Re: [RFC PATCH v1 1/6] build-sys: Add rust feature option
+Message-ID: <ZmlWbsG9edD4GgSZ@redhat.com>
+References: <cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
+ <0933b669c8e47e1a78d21e56881e0933ef910461.1718040303.git.manos.pitsidianakis@linaro.org>
+ <20240610192517.GA350256@fedora>
+ <CAAjaMXZ9bBtNyrjhUy=ypFeVYuo7ctHbaro6VCKins7-3M9e=g@mail.gmail.com>
+ <CAJSP0QVvU2Vta6gcdBbDiV8a5wQf64HbYrJj_UOduhQynLyzNg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/13] riscv: QEMU RISC-V IOMMU Support
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, palmer@rivosinc.com, tjeznach@rivosinc.com,
- ajones@ventanamicro.com, frank.chang@sifive.com
-References: <20240523173955.1940072-1-dbarboza@ventanamicro.com>
- <4368759b-506c-410c-980c-4ab34de7f142@linux.alibaba.com>
- <19dbebe9-75c8-41cf-9e31-713e84904713@ventanamicro.com>
-Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <19dbebe9-75c8-41cf-9e31-713e84904713@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.98;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-98.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+In-Reply-To: <CAJSP0QVvU2Vta6gcdBbDiV8a5wQf64HbYrJj_UOduhQynLyzNg@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,258 +97,171 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Jun 11, 2024 at 02:25:39PM -0400, Stefan Hajnoczi wrote:
+> On Tue, 11 Jun 2024 at 13:54, Manos Pitsidianakis
+> <manos.pitsidianakis@linaro.org> wrote:
+> >
+> > On Tue, 11 Jun 2024 at 17:05, Stefan Hajnoczi <stefanha@redhat.com> wrote:
+> > >
+> > > On Mon, Jun 10, 2024 at 09:22:36PM +0300, Manos Pitsidianakis wrote:
+> > > > Add options for Rust in meson_options.txt, meson.build, configure to
+> > > > prepare for adding Rust code in the followup commits.
+> > > >
+> > > > `rust` is a reserved meson name, so we have to use an alternative.
+> > > > `with_rust` was chosen.
+> > > >
+> > > > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > > > ---
+> > > > The cargo wrapper script hardcodes some rust target triples. This is
+> > > > just temporary.
+> > > > ---
+> > > >  .gitignore               |   2 +
+> > > >  configure                |  12 +++
+> > > >  meson.build              |  11 ++
+> > > >  meson_options.txt        |   4 +
+> > > >  scripts/cargo_wrapper.py | 211 +++++++++++++++++++++++++++++++++++++++
+> > > >  5 files changed, 240 insertions(+)
+> > > >  create mode 100644 scripts/cargo_wrapper.py
 
-On 2024/6/11 18:13, Daniel Henrique Barboza wrote:
-> Hi Zhiwei,
->
-> On 6/10/24 10:51 PM, LIU Zhiwei wrote:
->> Hi Daniel,
->>
->> I want to know if we can use the IOMMU and IOPMP at the same time.
->
-> AFAIK we can. They're not mutually exclusive since they offer protection
-> and isolation at different layers/stages.
+> > > > diff --git a/configure b/configure
+> > > > index 38ee257701..c195630771 100755
+> > > > --- a/configure
+> > > > +++ b/configure
 
-OK. Thanks. I will dive into more details.
+snip
 
-I see the IOMMU and IOPMP implementations on mail list both set IOMMU 
-for PCI root bus.
-Is it right?
+> > > > +  test "$with_rust_target_triple" != "" && meson_option_add "-Dwith_rust_target_triple=$with_rust_target_triple"
 
-Thanks,
-Zhiwei
+So the --rust-target-triple is only needed when cross compiling,
+but this is not the way we normally handle passing cross compiler
+info to meson. Instead we create a meson cross compiler options
+file containing the target info.
 
->
->
->>
->> The relationship between them is more similar to MMU and sPMP or to 
->> MMU and PMP?
->
-> I'd say MMU and PMP since the IOMMU can isolate devices regardless of
-> s-mode context or not.
->
->
-> Thanks,
->
-> Daniel
->
->>
->> Thanks,
->> Zhiwei
->>
->> On 2024/5/24 1:39, Daniel Henrique Barboza wrote:
->>> Hi,
->>>
->>> In this new version a lot of changes were made throughout all the code,
->>> most notably on patch 3. Link for the previous version is [1].
->>>
->>> * How it was tested *
->>>
->>> This series was tested using an emulated QEMU RISC-V host booting a 
->>> QEMU
->>> KVM guest, passing through an emulated e1000 network card from the host
->>> to the guest. I can provide more details (e.g. QEMU command lines) if
->>> required, just let me know. For now this cover-letter is too much of an
->>> essay as is.
->>>
->>> The Linux kernel used for tests can be found here:
->>>
->>> https://github.com/tjeznach/linux/tree/riscv_iommu_v6-rc3
->>>
->>> This is a newer version of the following work from Tomasz:
->>>
->>> https://lore.kernel.org/linux-riscv/cover.1715708679.git.tjeznach@rivosinc.com/ 
->>>
->>> ("[PATCH v5 0/7] Linux RISC-V IOMMU Support")
->>>
->>> The v5 wasn't enough for the testing being done. v6-rc3 did the trick.
->>>
->>> Note that to test this work using riscv-iommu-pci we'll need to provide
->>> the Rivos PCI ID in the command line. More details down below.
->>>
->>> * Highlights of this version *
->>>
->>> - patches removed from v2: platform driver (riscv-iommu-sys, former
->>> patch 05) and the EDU changes (patches 14 and 15). The platform driver
->>> will be sent later with a working example on the 'virt' machine,
->>> either on a newer version of this series or via a follow-up series. We
->>> already have a PoC on [2] created by Sunil. More tests are needed, so
->>> it'll be left behind for now. The EDU changes will be sent in separate
->>> after I finish the doc changes that Frank cited in v2.
->>>
->>> - patch 3 contains the bulk of changes made from v2. Please give 
->>> special
->>> attention to the following functions since this is entirely new code I
->>> ended up adding:
->>>   - riscv_iommu_report_fault()
->>>   - riscv_iommu_validate_device_ctx()
->>>   - riscv_iommu_update_ipsr()
->>>    Aside from these helpers most of the changes made in this patch 3 
->>> were
->>> punctual.
->>>
->>> - Red HAT PCI ID related changes. A new patch (4) that introduces a
->>> generic RISC-V IOMMU PCI ID was added. This PCI ID was gracefully given
->>> to us by Red Hat and Gerd Hoffman from their ID space. The
->>> riscv-iommu-pci device now defaults to this PCI ID instead of Rivos PCI
->>> ID. The device was changed slightly to allow vendor-id and device-id to
->>> be set in the command-line, so it's now possible to use this reference
->>> device as another RISC-V IOMMU PCI device to ease the burden of
->>> testing/development.
->>>
->>>    To instantiate the riscv-iommu-pci device using the previous 
->>> Rivos PCI
->>> ID, use the following cmd line:
->>>
->>>    -device riscv-iommu-pci,vendor-id=0x1efd,device-id=0xedf1
->>>
->>>    I'm using these options to test the series with the existing 
->>> Linux RISC-V
->>> IOMMU support that uses just a Rivos ID to identify the device.
->>>
->>>
->>> Series based on alistair/riscv-to-apply.next. It's also applicable on
->>> current QEMU master. It can also be fetched from:
->>>
->>> https://gitlab.com/danielhb/qemu/-/tree/riscv_iommu_v3
->>>
->>> Patches missing reviews/acks: 3, 5, 9, 10, 11.
->>>
->>> Changes from v2 [1]:
->>> - patch 05 (hw/riscv: add riscv-iommu-sys platform device): dropped
->>>    - will be reintroduced in a later review or as a follow-up series
->>>
->>> - patches 14 and 15: dropped
->>>    - will be sent in separate
->>>
->>> - patches 2, 3, 4 and 5:
->>>    - removed all 'Ziommu' references
->>>
->>> - patch 2:
->>>    - added extra bits that patch 3 ended up using
->>>
->>> - patch 3:
->>>    - fixed blank line at EOF in hw/riscv/trace.h
->>>    - added a riscv_iommu_report_fault() helper to report faults. The 
->>> helper checks if
->>>      a given fault is eligible to be reported if DTF is 1
->>>    - Use riscv_iommu_report_fault() in riscv_iommu_ctx() and 
->>> riscv_iommu_translate()
->>>      to avoid code repetition
->>>    - added a riscv_iommu_validate_device_ctx() helper to validate 
->>> the device context
->>>      as specified in "Device configuration checks" section. This 
->>> helper is being used
->>>      in riscv_iommu_ctx_fetch()
->>>    - added a new riscv_iommu_update_ipsr() helper to handle IPSR 
->>> updates
->>>      in riscv_iommu_mmio_write()
->>>    - riscv_iommmu_msi_write() now reports a fault in all error paths
->>>    - check for fctl.WSI before issuing a MSI interrupt in 
->>> riscv_iommu_notify()
->>>    - change riscv-iommu region name to 'riscv-iommu'
->>>    - change address_space_init() name for PCI devices to 'name' 
->>> instead of using TYPE_RISCV_IOMMU_PCI
->>>    - changed riscv_iommu_mmio_ops min_access_size to 4
->>>    - do not check for min and max sizes on riscv_iommu_mmio_write()
->>>    - changed riscv_iommu_trap_ops  min_access_size to 4
->>>    - removed IOMMU qemu_thread thread:
->>>      - riscv_iommu_mmio_write() will now execute a 
->>> riscv_iommu_process_fn by holding
->>>        'core_lock'
->>>    - init FSCR as zero explicitly
->>>    - check for bus->iommu_opaque == NULL before calling 
->>> pci_setup_iommu()
->>>
->>> - patch 4 (new):
->>>    - add Red-Hat PCI RISC-V IOMMU ID
->>>
->>> - patch 5 (former 4):
->>>    - create vendor-id and device-id properties
->>>    - set Red-hat PCI RISC-V IOMMU ID as default ID
->>>
->>> - patch 8:
->>>    - use IOMMU_NONE instead of '0' in relevant 'iot->perm = 0' 
->>> instances
->>>
->>> - patch 9:
->>>    - add s-stage and g-stage steps in riscv_iommu_validate_device_ctx()
->>>    - removed 'gpa' boolean from riscv_iommu_spa_fetch()
->>>    - 'en_s' is no longer used for early MSI address match
->>>
->>> - patch 10:
->>>    - add ATS steps in riscv_iommu_validate_device_ctx()
->>>    - check for 's->enable_ats' before adding 
->>> RISCV_IOMMU_DC_TC_EN_ATS in device context
->>>    - check for 's->enable_ats' before processing ATS commands in 
->>> riscv_iommu_process_cq_tail()
->>>    - remove ambiguous trace_riscv_iommu_ats() from 
->>> riscv_iommu_translate()
->>>
->>> - patch 11:
->>>    - removed unused bits
->>>    - added RISCV_IOMMU_TR_REQ_CTL_NW and RISCV_IOMMU_TR_RESPONSE_S
->>>      bits
->>>    - set IOMMUTLBEntry 'perm' using RISCV_IOMMU_TR_REQ_CTL_NW in 
->>> riscv_iommu_process_dbg()
->>>    - clear RISCV_IOMMU_TR_RESPONSE_S in riscv_iommu_process_dbg(). 
->>> Added a comment talking about the (lack of) superpage support
->>> [1] 
->>> https://lore.kernel.org/qemu-riscv/20240307160319.675044-1-dbarboza@ventanamicro.com/
->>> [2] https://github.com/vlsunil/qemu/commits/acpi_rimt_poc_v1/
->>>
->>> Andrew Jones (1):
->>>    hw/riscv/riscv-iommu: Add another irq for mrif notifications
->>>
->>> Daniel Henrique Barboza (3):
->>>    pci-ids.rst: add Red Hat pci-id for RISC-V IOMMU device
->>>    test/qtest: add riscv-iommu-pci tests
->>>    qtest/riscv-iommu-test: add init queues test
->>>
->>> Tomasz Jeznach (9):
->>>    exec/memtxattr: add process identifier to the transaction attributes
->>>    hw/riscv: add riscv-iommu-bits.h
->>>    hw/riscv: add RISC-V IOMMU base emulation
->>>    hw/riscv: add riscv-iommu-pci reference device
->>>    hw/riscv/virt.c: support for RISC-V IOMMU PCIDevice hotplug
->>>    hw/riscv/riscv-iommu: add Address Translation Cache (IOATC)
->>>    hw/riscv/riscv-iommu: add s-stage and g-stage support
->>>    hw/riscv/riscv-iommu: add ATS support
->>>    hw/riscv/riscv-iommu: add DBG support
->>>
->>>   docs/specs/pci-ids.rst           |    2 +
->>>   hw/riscv/Kconfig                 |    4 +
->>>   hw/riscv/meson.build             |    1 +
->>>   hw/riscv/riscv-iommu-bits.h      |  416 ++++++
->>>   hw/riscv/riscv-iommu-pci.c       |  177 +++
->>>   hw/riscv/riscv-iommu.c           | 2283 
->>> ++++++++++++++++++++++++++++++
->>>   hw/riscv/riscv-iommu.h           |  146 ++
->>>   hw/riscv/trace-events            |   15 +
->>>   hw/riscv/trace.h                 |    1 +
->>>   hw/riscv/virt.c                  |   33 +-
->>>   include/exec/memattrs.h          |    5 +
->>>   include/hw/pci/pci.h             |    1 +
->>>   include/hw/riscv/iommu.h         |   36 +
->>>   meson.build                      |    1 +
->>>   tests/qtest/libqos/meson.build   |    4 +
->>>   tests/qtest/libqos/riscv-iommu.c |   76 +
->>>   tests/qtest/libqos/riscv-iommu.h |  100 ++
->>>   tests/qtest/meson.build          |    1 +
->>>   tests/qtest/riscv-iommu-test.c   |  234 +++
->>>   19 files changed, 3535 insertions(+), 1 deletion(-)
->>>   create mode 100644 hw/riscv/riscv-iommu-bits.h
->>>   create mode 100644 hw/riscv/riscv-iommu-pci.c
->>>   create mode 100644 hw/riscv/riscv-iommu.c
->>>   create mode 100644 hw/riscv/riscv-iommu.h
->>>   create mode 100644 hw/riscv/trace-events
->>>   create mode 100644 hw/riscv/trace.h
->>>   create mode 100644 include/hw/riscv/iommu.h
->>>   create mode 100644 tests/qtest/libqos/riscv-iommu.c
->>>   create mode 100644 tests/qtest/libqos/riscv-iommu.h
->>>   create mode 100644 tests/qtest/riscv-iommu-test.c
->>>
+eg for ./configure --cross-prefix=x86_64-w64-mingw32-
+
+we end up creating:
+
+$ cat build/config-meson.cross 
+# Automatically generated by configure - do not modify
+[properties]
+[built-in options]
+c_args = []
+cpp_args = []
+objc_args = []
+c_link_args = []
+cpp_link_args = []
+# environment defaults, can still be overridden on 
+# the command line
+werror = true
+[project options]
+
+[binaries]
+c = ['x86_64-w64-mingw32-gcc','-m64']
+cpp = ['x86_64-w64-mingw32-g++','-m64']
+objc = ['x86_64-w64-mingw32-clang','-m64']
+ar = ['x86_64-w64-mingw32-ar']
+dlltool = ['x86_64-w64-mingw32-dlltool']
+nm = ['x86_64-w64-mingw32-nm']
+pkgconfig = ['x86_64-w64-mingw32-pkg-config']
+pkg-config = ['x86_64-w64-mingw32-pkg-config']
+ranlib = ['x86_64-w64-mingw32-ranlib']
+strip = ['x86_64-w64-mingw32-strip']
+widl = ['x86_64-w64-mingw32-widl']
+windres = ['x86_64-w64-mingw32-windres']
+windmc = ['x86_64-w64-mingw32-windmc']
+[host_machine]
+system = 'windows'
+cpu_family = 'x86_64'
+cpu = 'x86_64'
+endian = 'little'
+
+
+Should we not be passing the rust compiler target through
+this meson options file by setting something like this
+
+  rust = ['rustc', '--target', '$target_target_triple']
+
+
+Also I don't think we should be requiring --rust-target-triple
+to be passed by the user. For all the combinations we know &
+test, we should have configure "do the right thing" and set a
+suitable rust target triple based on the --cross-prefix argument
+that is given, so there is no extra burden on users cross
+compiling. Users should then only use --rust-target-triple
+if our default logic is wrong for some reason.
+
+> > > >    run_meson() {
+> > > >      NINJA=$ninja $meson setup "$@" "$PWD" "$source_path"
+> > > >    }
+> > > > diff --git a/scripts/cargo_wrapper.py b/scripts/cargo_wrapper.py
+> > > > new file mode 100644
+> > > > index 0000000000..d338effdaa
+> > > > --- /dev/null
+> > > > +++ b/scripts/cargo_wrapper.py
+> > > > @@ -0,0 +1,211 @@
+> > > > +#!/usr/bin/env python3
+> > > > +# Copyright (c) 2020 Red Hat, Inc.
+> > > > +# Copyright (c) 2023 Linaro Ltd.
+> > > > +#
+> > > > +# Authors:
+> > > > +#  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> > > > +#  Marc-André Lureau <marcandre.lureau@redhat.com>
+> > > > +#
+> > > > +# This work is licensed under the terms of the GNU GPL, version 2 or
+> > > > +# later.  See the COPYING file in the top-level directory.
+> > > > +
+> > > > +import argparse
+> > > > +import configparser
+> > > > +import distutils.file_util
+> > > > +import json
+> > > > +import logging
+> > > > +import os
+> > > > +import os.path
+> > > > +import re
+> > > > +import subprocess
+> > > > +import sys
+> > > > +import pathlib
+> > > > +import shutil
+> > > > +import tomllib
+> > > > +
+> > > > +from pathlib import Path
+> > > > +from typing import Any, Dict, List, Tuple
+> > > > +
+> > > > +RUST_TARGET_TRIPLES = (
+> > > > +    "aarch64-unknown-linux-gnu",
+> > > > +    "x86_64-unknown-linux-gnu",
+> > > > +    "x86_64-apple-darwin",
+> > > > +    "aarch64-apple-darwin",
+> > > > +)
+> > >
+> > > Is this hardcoded to avoid calling `rustc --print target-list`?
+> > >
+> > > Or is this the support matrix? In that case it would be interesting to
+> > > figure out the target triples for all host OSes and CPUs that QEMU is
+> > > supported on.
+> >
+> > Yes, it's what I tested it on (the x86-64-apple-darwin part through rosetta).
+> >
+> > Do you think running -print target-list would be a better choice here?
+> > This is only for providing the valid choices for the target triplet
+> > CLI argument in argparse.
+> 
+> How about not restricting choices? If the user specifies an invalid
+> choice then the compiler will fail with an error message. That seems
+> okay and avoids the issue altogether.
+
+Yes, we should not artifically limit the choices of target at all, as
+we don't do that for existing cross compiler targets.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
