@@ -4,59 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90019C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:02:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C2C5C27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNbm-00034t-Lt; Wed, 12 Jun 2024 09:01:46 -0400
+	id 1sHNbo-00035y-5d; Wed, 12 Jun 2024 09:01:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNbk-000348-Kb
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:01:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNbl-00034j-W8
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:01:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNbh-0007k7-Db
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:01:44 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNbh-0007pi-H9
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:01:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718197292;
+ s=mimecast20190719; t=1718197300;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=5yRaWwLDhGbvAU0z8G4TpcKLUfQNsgr5YLCwdYKTM4Q=;
- b=c1CgXfwmJFWklZgBTOEHePagRimhI4DD3xlnPGNeYsor0fHRGmiFmMIvY9diDpjk2Xnrhz
- BX3El7wDplXzobc0ltJFwJfkeXNGcdaaaG7yIkoRVl2Ps0y4CMw1fGj3KWL4qiXV2EAEjZ
- 7Gf4iHVL0Ij2RMeOhN/wKCsFP/dkgCM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=W5yPa/CrSkiXKfoEvEjbGkVBxkpCeg24L8RyMBsrzzY=;
+ b=FYn2qC9a6zGyGiEizBYK/jxQYUraJYo3ckqq/XUb11ZXHwg3BX+9b8r0S1cRhdooy5gMHr
+ NjRP1d5dDIju34uUxuaADSDMg5eDveKYT6Ez+YUS1OYfP/3+GTvlatrByXYTNh2w6XEBhk
+ u3r7fNW0U5GsgCBxChWJDyvdXO/tbHA=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-512-fmJDKycCM4OC8KA3o2xJ4w-1; Wed,
- 12 Jun 2024 09:01:29 -0400
-X-MC-Unique: fmJDKycCM4OC8KA3o2xJ4w-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-279-gmDMMCbMNbSTVrRy6AGOcw-1; Wed,
+ 12 Jun 2024 09:01:39 -0400
+X-MC-Unique: gmDMMCbMNbSTVrRy6AGOcw-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF0A01956069; Wed, 12 Jun 2024 13:01:26 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 688331955E9F; Wed, 12 Jun 2024 13:01:38 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.49])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 79BE41956053; Wed, 12 Jun 2024 13:01:24 +0000 (UTC)
+ id 96D361956053; Wed, 12 Jun 2024 13:01:36 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v1 00/16] vfio: QOMify VFIOContainer
-Date: Wed, 12 Jun 2024 15:01:06 +0200
-Message-ID: <20240612130122.813935-1-clg@redhat.com>
+Subject: [PATCH v1 05/16] vfio/container: Introduce vfio_address_space_insert()
+Date: Wed, 12 Jun 2024 15:01:11 +0200
+Message-ID: <20240612130122.813935-6-clg@redhat.com>
+In-Reply-To: <20240612130122.813935-1-clg@redhat.com>
+References: <20240612130122.813935-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -81,54 +84,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+It will ease future changes.
 
-The series starts with simple changes (patch 1-4). Two of which were
-initialy sent by Joao in a series adding VFIO migration support with
-vIOMMU [1].
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/vfio/vfio-common.h | 2 ++
+ hw/vfio/common.c              | 6 ++++++
+ hw/vfio/container.c           | 2 +-
+ hw/vfio/iommufd.c             | 2 +-
+ 4 files changed, 10 insertions(+), 2 deletions(-)
 
-The changes following prepare VFIOContainer for QOMification, switch
-the container models to QOM when ready and add some final cleanups.
-
-Thanks,
-
-C.
-
-[1] https://lore.kernel.org/qemu-devel/20230622214845.3980-1-joao.m.martins@oracle.com/
-
-
-Avihai Horon (1):
-  vfio/common: Extract vIOMMU code from vfio_sync_dirty_bitmap()
-
-Cédric Le Goater (14):
-  vfio: Make vfio_devices_dma_logging_start() return bool
-  vfio: Remove unused declarations from vfio-common.h
-  vfio/container: Introduce vfio_address_space_insert()
-  vfio/container: Simplify vfio_container_init()
-  vfio/container: Modify vfio_get_iommu_type() to use a container fd
-  vfio/container: Introduce vfio_get_iommu_class_name()
-  vfio/container: Introduce vfio_create_container()
-  vfio/container: Discover IOMMU type before creating the container
-  vfio/container: Change VFIOContainerBase to use QOM
-  vfio/container: Switch to QOM
-  vfio/container: Introduce an instance_init() handler
-  vfio/container: Remove VFIOContainerBase::ops
-  vfio/container: Remove vfio_container_init()
-  vfio/container: Introduce vfio_iommu_legacy_instance_init()
-
-Joao Martins (1):
-  vfio/common: Move dirty tracking ranges update to helper
-
- include/hw/vfio/vfio-common.h         |  10 ++-
- include/hw/vfio/vfio-container-base.h |  16 +---
- hw/vfio/common.c                      | 124 ++++++++++++++++----------
- hw/vfio/container-base.c              |  66 ++++++++------
- hw/vfio/container.c                   | 104 +++++++++++----------
- hw/vfio/iommufd.c                     |  12 +--
- hw/vfio/pci.c                         |   4 +-
- hw/vfio/spapr.c                       |   3 +
- 8 files changed, 193 insertions(+), 146 deletions(-)
-
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index c19572f90b277193491020af28e8b5587f15bfd1..825d80130bd435fe50830c8ae5b7905d18104dd6 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -206,6 +206,8 @@ typedef struct VFIODisplay {
+ 
+ VFIOAddressSpace *vfio_get_address_space(AddressSpace *as);
+ void vfio_put_address_space(VFIOAddressSpace *space);
++void vfio_address_space_insert(VFIOAddressSpace *space,
++                               VFIOContainerBase *bcontainer);
+ 
+ void vfio_disable_irqindex(VFIODevice *vbasedev, int index);
+ void vfio_unmask_single_irqindex(VFIODevice *vbasedev, int index);
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index f28641bad5cf4b71fcdc0a6c9d42b24c8d786248..8cdf26c6f5a490cfa02bdf1087a91948709aaa33 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1508,6 +1508,12 @@ void vfio_put_address_space(VFIOAddressSpace *space)
+     }
+ }
+ 
++void vfio_address_space_insert(VFIOAddressSpace *space,
++                               VFIOContainerBase *bcontainer)
++{
++    QLIST_INSERT_HEAD(&space->containers, bcontainer, next);
++}
++
+ struct vfio_device_info *vfio_get_device_info(int fd)
+ {
+     struct vfio_device_info *info;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index edd0df6262a0fb48bc60476c0187b957b8544cf7..15ca3643bc1b4e1a50a5a3de4359d61ec1bda9de 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -637,7 +637,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+     vfio_kvm_device_add_group(group);
+ 
+     QLIST_INIT(&container->group_list);
+-    QLIST_INSERT_HEAD(&space->containers, bcontainer, next);
++    vfio_address_space_insert(space, bcontainer);
+ 
+     group->container = container;
+     QLIST_INSERT_HEAD(&container->group_list, group, container_next);
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 1706784063120dbb7f694addfbfadc3f9af4e813..19bb6419bdffd1c69cc14c7cd5684eb6d0231338 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -358,7 +358,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+ 
+     bcontainer = &container->bcontainer;
+     vfio_container_init(bcontainer, space, iommufd_vioc);
+-    QLIST_INSERT_HEAD(&space->containers, bcontainer, next);
++    vfio_address_space_insert(space, bcontainer);
+ 
+     if (!iommufd_cdev_attach_container(vbasedev, container, errp)) {
+         goto err_attach_container;
 -- 
 2.45.2
 
