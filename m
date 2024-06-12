@@ -4,137 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C05CC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 09:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88857C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 09:46:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHKY4-0007xH-N2; Wed, 12 Jun 2024 05:45:44 -0400
+	id 1sHKYo-00085u-E7; Wed, 12 Jun 2024 05:46:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHKY3-0007wo-B3
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 05:45:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHKY1-0005xN-La
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 05:45:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718185540;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=WpQuQGobTmlMXfL9Wxr2NEQyccacrmwF6/cGdT9n7ds=;
- b=Ey1kYH0zBKjWDZhcP1ppuf8nzxNKMA4yrisfehyPedNAqfLapDD2KeRgSBHS+2gXvqtqOr
- bsUgKHHBbtAZsNXaDP9s2+Wm+ruI1G2WCPbyIxFNC21SSe9QLqVOIm5Eku42HObX9U9uvI
- Pxxr7TQ3WnR3WTRbRcW/fZh15Uzf0K8=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-163-f794G_55OPmGoKo-7V_O2g-1; Wed, 12 Jun 2024 05:45:23 -0400
-X-MC-Unique: f794G_55OPmGoKo-7V_O2g-1
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-43fb0603968so21505141cf.3
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 02:45:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sHKYk-00085O-Nu
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 05:46:27 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sHKYi-00062V-GC
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 05:46:26 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-356c4e926a3so2220751f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 02:46:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718185582; x=1718790382; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=0AlRKaHD7La3xTbqXBCJp1i/Kv7vuW6pHEiZw9cisPg=;
+ b=M/48X7+huXGc7qn0foBAn+/FPTm3ij1YjNuNEDu5t8W8Ulv4eKKpb6gNq78xVAlMa+
+ dWVgVsRuGlI0RAsws4d8AX8JhtgZ81kYqymp6bUOd5AWnStBCgyXRmR1jTLK6tlsrTzY
+ TK/r1+yqbUVzjdci+kcfsLQ/cJmZapagAgNsTpPmpMek1zjm9R+yMWdS3/Sjnft/nIsd
+ MHctX8rW5vsKhm8NbAniY/WGNMjy1c07BfW5Nz+Epj1omAx+6Fu5RYnwf1863kymwcbS
+ Z/XFhqtnNX2jhW2EkKUbnTu9NJCpuTl9EPlNbrCRf4sAqYpjhMpHz8C5n+ag10OFZ98q
+ 0RyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718185522; x=1718790322;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WpQuQGobTmlMXfL9Wxr2NEQyccacrmwF6/cGdT9n7ds=;
- b=odkJjL9Ki5CDcR1iJ/gQSAVrYzN6U7ZiO2B4dFPDCbUf5i9hTPloT4c3GdKYvaenS0
- W3y1urjcK438RE9UtPWi8lD48so+M9N8aJlFKekdsaXtG2+WzSH6kHjxYOy9kh9ioNKZ
- LVUHJocFbSSgAY82hjzyNJGo19KVaFqKKHxYOhN0nRDiKYEtoD5CGCE0KdtNJ1IMoalE
- TQnvb24tDzECpJUcWbmSOI4XbTk60miWCQDMSK6ZeoLw9mmmuBG2NGel4rrY+5e1l4p1
- sNgIOJynnFpHv0xGk9Y9FYYdmwnjzIbN1H/PSh9dErpSDIyieA6EmJ6jby/uGRWlUmVc
- iJUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbTi1HHRrbtPYXLJDBhM5kmlVrtE6VrV9UFaW/9HZxYMasLYlNKeNY165C+Mu6WYugqZGsn2IJQ0xEcoiyayNlkeEviDs=
-X-Gm-Message-State: AOJu0YwA0IkNOMXaABlm9dDerv8gnnf2APqyr+2m/Bo60Hbkt8QqenmH
- PnjUbfP1AyCa3avSxLQhHzDJEIsCUJduTllAt4YfEFywVU50yNJdeFVvTJRJ4H68JoQDERADy7y
- WmlKA869GAtXhNGikwzSUY4Ahpngh2YGNVXskF0ZUrYnC8FZSB3/T
-X-Received: by 2002:a05:620a:2912:b0:795:81a4:6e3b with SMTP id
- af79cd13be357-797f610374cmr125097185a.54.1718185522002; 
- Wed, 12 Jun 2024 02:45:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQzvwW8DCAuBzho00QFD1SrmnvH0grmFy8zxlb0EMdecC1KCVVYD76je0vZjPUHSOdNELoFA==
-X-Received: by 2002:a05:620a:2912:b0:795:81a4:6e3b with SMTP id
- af79cd13be357-797f610374cmr125095385a.54.1718185521661; 
- Wed, 12 Jun 2024 02:45:21 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-176-68.web.vodafone.de.
- [109.43.176.68]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79532846bcbsm582850085a.31.2024.06.12.02.45.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Jun 2024 02:45:21 -0700 (PDT)
-Message-ID: <c52f6a33-8671-4ea4-bdfd-312aa5d7497e@redhat.com>
-Date: Wed, 12 Jun 2024 11:45:18 +0200
+ d=1e100.net; s=20230601; t=1718185582; x=1718790382;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0AlRKaHD7La3xTbqXBCJp1i/Kv7vuW6pHEiZw9cisPg=;
+ b=c3syL0HNHDMm6R9/A06c0aVQOfhudyySTh17r/xzrPhnNsDWZVQsIchgWNipIMVbDY
+ mbWz4g9hGxQrIly3OsMD1jevHcNJw769aot7TyrwQmGRUUgcxzTmK0iJTfszCoA8yQXJ
+ hRU8EmSN8bovH2tj+xClqC7Jufh8mk1RED4yN9lcooxSg/s1c+B9DNwTcCc3AojPJo6d
+ ZnvL6+YXvcDx/ePxJire1BjrWeRyFGwgDfZW4pT9kQXbFQ3cLq35cLQ68n31VCLsbSRr
+ 7SJSGtLnyQDKWukyw3ebx1aGhcXEXlYKcV9AvVmWpqou++F/9kOrv3lozf2lsMFgdxUQ
+ y50A==
+X-Gm-Message-State: AOJu0Yxhp9CPvTU/g3qq8rJ/ooFO2INUjgHZKDGKeUer2e4PIcKvRzwV
+ x6kd9Ll89+Z3R13AJa/a7qIu4z9IQEq90lKJzBMsZv+mqs321WlXo28AeGy9AeM=
+X-Google-Smtp-Source: AGHT+IGshuj98sDRZk/St96Auidn2ytxQn7H4QYl7m+kLL5pW2P2zJbFsWxjQwPLNpRB14ps5xZZoA==
+X-Received: by 2002:adf:ab13:0:b0:35f:24f5:e597 with SMTP id
+ ffacd0b85a97d-35fe8925654mr975243f8f.65.1718185582452; 
+ Wed, 12 Jun 2024 02:46:22 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-35ef5fc0a0dsm16158377f8f.91.2024.06.12.02.46.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Jun 2024 02:46:21 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 3941F5F893;
+ Wed, 12 Jun 2024 10:46:21 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org,  Zheyu Ma <zheyuma97@gmail.com>,  "Michael S.
+ Tsirkin" <mst@redhat.com>,  Eric Auger <eric.auger@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v1] virtio-iommu: add error check before assert
+In-Reply-To: <20240611122348.3613272-1-manos.pitsidianakis@linaro.org> (Manos
+ Pitsidianakis's message of "Tue, 11 Jun 2024 15:23:45 +0300")
+References: <20240611122348.3613272-1-manos.pitsidianakis@linaro.org>
+Date: Wed, 12 Jun 2024 10:46:21 +0100
+Message-ID: <87o786xzma.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/8] tests/unit/test-smp-parse: Use default parameters=0
- when not set in -smp
-To: Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, qemu-devel@nongnu.org
-Cc: Yongwei Ma <yongwei.ma@intel.com>
-References: <20240529061925.350323-1-zhao1.liu@intel.com>
- <20240529061925.350323-5-zhao1.liu@intel.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240529061925.350323-5-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,17 +97,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/05/2024 08.19, Zhao Liu wrote:
-> Since -smp allows parameters=1 whether the level is supported by
-> machine, to avoid the test scenarios where the parameter defaults to 1
-> cause some errors to be masked, explicitly set undesired parameters to
-> 0.
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+
+> A fuzzer case discovered by Zheyu Ma causes an assert failure.
+>
+> Add a check before the assert, and respond with an error before moving
+> on to the next queue element.
+>
+> To reproduce the failure:
+>
+> cat << EOF | \
+> qemu-system-x86_64 \
+> -display none -machine accel=3Dqtest -m 512M -machine q35 -nodefaults \
+> -device virtio-iommu -qtest stdio
+> outl 0xcf8 0x80000804
+> outw 0xcfc 0x06
+> outl 0xcf8 0x80000820
+> outl 0xcfc 0xe0004000
+> write 0x10000e 0x1 0x01
+> write 0xe0004020 0x4 0x00001000
+> write 0xe0004028 0x4 0x00101000
+> write 0xe000401c 0x1 0x01
+> write 0x106000 0x1 0x05
+> write 0x100001 0x1 0x60
+> write 0x100002 0x1 0x10
+> write 0x100009 0x1 0x04
+> write 0x10000c 0x1 0x01
+> write 0x100018 0x1 0x04
+> write 0x10001c 0x1 0x02
+> write 0x101003 0x1 0x01
+> write 0xe0007001 0x1 0x00
+> EOF
+>
+> Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2359
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 > ---
->   tests/unit/test-smp-parse.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+>  hw/virtio/virtio-iommu.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>
+> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+> index 1326c6ec41..9b99def39f 100644
+> --- a/hw/virtio/virtio-iommu.c
+> +++ b/hw/virtio/virtio-iommu.c
+> @@ -818,6 +818,18 @@ static void virtio_iommu_handle_command(VirtIODevice=
+ *vdev, VirtQueue *vq)
+>  out:
+>          sz =3D iov_from_buf(elem->in_sg, elem->in_num, 0,
+>                            buf ? buf : &tail, output_size);
+> +        if (unlikely(sz !=3D output_size)) {
+> +            tail.status =3D VIRTIO_IOMMU_S_DEVERR;
+> +            /* We checked that tail can fit earlier */
+> +            output_size =3D sizeof(tail);
+> +            g_free(buf);
+> +            buf =3D NULL;
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Hmm this is a similar pattern I noticed yesterday in:
 
+  Message-ID: <20240527133140.218300-2-frolov@swemel.ru>
+  Date: Mon, 27 May 2024 16:31:41 +0300
+  Subject: [PATCH] hw/net/virtio-net.c: fix crash in iov_copy()
+  From: Dmitry Frolov <frolov@swemel.ru>
+
+And I wonder if the same comment applies. Could we clean-up the loop
+with autofrees to avoid making sure all the g_free() calls are properly
+lined up?
+
+> +            sz =3D iov_from_buf(elem->in_sg,
+> +                              elem->in_num,
+> +                              0,
+> +                              &tail,
+> +                              output_size);
+> +        }
+
+Isn't this the next element? Could we continue; instead?
+
+>          assert(sz =3D=3D output_size);
+>=20=20
+>          virtqueue_push(vq, elem, sz);
+>
+> base-commit: 80e8f0602168f451a93e71cbb1d59e93d745e62e
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
