@@ -4,102 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5758AC27C77
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 15:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B305C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 16:08:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHQNN-0005Ka-PG; Wed, 12 Jun 2024 11:59:05 -0400
+	id 1sHQVI-0002BE-GZ; Wed, 12 Jun 2024 12:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sHQNM-0005KH-NI
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:59:04 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sHQNL-0000b6-0q
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 11:59:04 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2c4af25f7d7so571558a91.1
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 08:59:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718207941; x=1718812741; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=w09RxZOBny7Sg1bz7VrqcLEIzdlX8GfmywPXOlJGEc0=;
- b=E2e28Du4gJ7E935aY9kVw+g3WjP6Z1RgH/mqsH4AKjDSTRf5Cm9jPXk9K9Lg8RSojR
- j24UzylI8qM0V4TQj31a8h9LExEu2dCrpLE/vf/n+JiPOiuk/GHmi8r+lFFfMYRUhTQb
- krKB4Ctdti2w+aTwc76e2orL9FJbe01z0Cfhqdh6OjX7c3vRjFrulWIyDfq+qVz9VtF4
- UgS74kULsANk3Yo4OWx9yf25zSWD6IWMo4mrX65GhXcIAULt4zCTDrx3/tJU+ZL4e2Qi
- c6F5XAROJ1MrOq7w06JU+Lb6JKKNRAtM20Eb1aSZTIAOWNwdTpuO8NYubhbB+RVVw+dH
- 3lyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718207941; x=1718812741;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w09RxZOBny7Sg1bz7VrqcLEIzdlX8GfmywPXOlJGEc0=;
- b=s0vN72bpvqjE9tF11jLTKCRfshjzxLZUvsbVnuojfZ1WD6/ST5dLxYNpT11s077ten
- 2VPlN3UL1nK+yfZ1k48jNF3fvSX9oU0gP2V/PAC53+k5huvyDJNaXpyK9ccPQ/4Lwoqt
- jLCDJie/JWz/s2Mxb3BhCk2H9PXy71rcOQTRI2DRvKF1spux0Rlj+ems4JCyyZlrR17P
- xy04aQI6HnfHKPALApwPdOsOxSnq3v9mTtuElEkoniIHUPbFNvXr5Xk/Ykc3clmLQC4o
- iZdvxsIpGbdD/4yEH0jpUzyRGCAVUWpl/8rEuBdn3e4p4JcPsP2xaMHoHeTtrVtGozZQ
- 2K2g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWj2rPhz0fA2Xr4roG6ORKnm4Znjh8/qwqgKtxtYfme+YJIlLEh5T5xHT64ADkIVXT8YQeQvqDg6KpX3yIdhwMtcfH6A4g=
-X-Gm-Message-State: AOJu0YzkztA4KstZ3DLlX2PJiv/gnI3XiC41QsSUAHLSz6SzwynzCxxp
- ElSbO7zo41To7Qu75bsjlzUQ6Hb2CWkhKlvlW/FcwnHP6JcVeCgDgrLArWdseEs=
-X-Google-Smtp-Source: AGHT+IFoOB41A/pNuCVe7i10DhwZq0RfFVAAxo73DwlamIyd9qOnO1yuSNSWMDuxunZowX6e1t+sWA==
-X-Received: by 2002:a17:90a:5904:b0:2c2:f70a:3c17 with SMTP id
- 98e67ed59e1d1-2c4a772cbd0mr2100460a91.46.1718207941451; 
- Wed, 12 Jun 2024 08:59:01 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::2193? ([2604:3d08:9384:1d00::2193])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c4a75e1130sm1980891a91.3.2024.06.12.08.59.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 12 Jun 2024 08:59:01 -0700 (PDT)
-Message-ID: <757024bf-9da2-4f2e-9df1-dcbfac573582@linaro.org>
-Date: Wed, 12 Jun 2024 08:58:59 -0700
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHQVH-0002AZ-Fg
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 12:07:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHQVF-0002Tx-NQ
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 12:07:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718208432;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8gZC9sFbKgdeP7G05F9emmLdcMbSZ0QAmmc/5aZFAGA=;
+ b=CB1vEncb63OSQM73S3s/SpeM2blSi0Gagwh1w4FRkC3PtQNQLGxjVR9ARYWQvQCi+24Tix
+ 0akx8X+pPyiydlAAHz44a+RDQNrNFNaEuXuqrFpRfykbgHMd9UJJfLN8JlPCzBGAN74Edr
+ CbaKbN+5YCdvHZvQedbLXxtG8l4UpDY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-154-2hxNrrsYMNCt6-Jn_NhAUw-1; Wed,
+ 12 Jun 2024 12:07:08 -0400
+X-MC-Unique: 2hxNrrsYMNCt6-Jn_NhAUw-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8C5D31955F01; Wed, 12 Jun 2024 16:07:06 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.115])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F3E2F1956087; Wed, 12 Jun 2024 16:07:00 +0000 (UTC)
+Date: Wed, 12 Jun 2024 17:06:57 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?B?QmVubsOp?= e <alex.bennee@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
+Message-ID: <ZmnHoajecti472mi@redhat.com>
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+ <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
+ <CABgObfY8BS0yCw2CxgDQTBA4np9BZgGJF3N=t6eoBcdACAE=NA@mail.gmail.com>
+ <ez270.x96k6aeu0rpw@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/9] plugins: Ensure register handles are not NULL
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, Ilya Leoshkevich
- <iii@linux.ibm.com>, Daniel Henrique Barboza <danielhb413@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Burton <mburton@qti.qualcomm.com>, qemu-s390x@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
- Laurent Vivier <lvivier@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Alexandre Iooss <erdnaxe@crans.org>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Nicholas Piggin <npiggin@gmail.com>,
- Marco Liebel <mliebel@qti.qualcomm.com>, Thomas Huth <thuth@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, qemu-ppc@nongnu.org,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Cameron Esfahani <dirty@apple.com>,
- Jamie Iles <quic_jiles@quicinc.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20240612153508.1532940-1-alex.bennee@linaro.org>
- <20240612153508.1532940-4-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240612153508.1532940-4-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ez270.x96k6aeu0rpw@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,35 +94,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNi8xMi8yNCAwODozNSwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBGcm9tOiBBa2loaWtv
-IE9kYWtpIDxha2loaWtvLm9kYWtpQGRheW5peC5jb20+DQo+IA0KPiBFbnN1cmUgcmVnaXN0
-ZXIgaGFuZGxlcyBhcmUgbm90IE5VTEwgc28gdGhhdCBhIHBsdWdpbiBjYW4gYXNzdW1lIE5V
-TEwgaXMNCj4gaW52YWxpZCBhcyBhIHJlZ2lzdGVyIGhhbmRsZS4NCj4gDQo+IFNpZ25lZC1v
-ZmYtYnk6IEFraWhpa28gT2Rha2kgPGFraWhpa28ub2Rha2lAZGF5bml4LmNvbT4NCj4gTWVz
-c2FnZS1JZDogPDIwMjQwMjI5LW51bGwtdjEtMS1lNzE2NTAxZDk4MWVAZGF5bml4LmNvbT4N
-Cj4gU2lnbmVkLW9mZi1ieTogQWxleCBCZW5uw6llIDxhbGV4LmJlbm5lZUBsaW5hcm8ub3Jn
-Pg0KPiAtLS0NCj4gICBwbHVnaW5zL2FwaS5jIHwgNCArKy0tDQo+ICAgMSBmaWxlIGNoYW5n
-ZWQsIDIgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkNCj4gDQo+IGRpZmYgLS1naXQg
-YS9wbHVnaW5zL2FwaS5jIGIvcGx1Z2lucy9hcGkuYw0KPiBpbmRleCA1YTBhN2Y4YzcxLi42
-YmRiMjZiYmUzIDEwMDY0NA0KPiAtLS0gYS9wbHVnaW5zL2FwaS5jDQo+ICsrKyBiL3BsdWdp
-bnMvYXBpLmMNCj4gQEAgLTUwNyw3ICs1MDcsNyBAQCBzdGF0aWMgR0FycmF5ICpjcmVhdGVf
-cmVnaXN0ZXJfaGFuZGxlcyhHQXJyYXkgKmdkYnN0dWJfcmVncykNCj4gICAgICAgICAgIH0N
-Cj4gICANCj4gICAgICAgICAgIC8qIENyZWF0ZSBhIHJlY29yZCBmb3IgdGhlIHBsdWdpbiAq
-Lw0KPiAtICAgICAgICBkZXNjLmhhbmRsZSA9IEdJTlRfVE9fUE9JTlRFUihncmQtPmdkYl9y
-ZWcpOw0KPiArICAgICAgICBkZXNjLmhhbmRsZSA9IEdJTlRfVE9fUE9JTlRFUihncmQtPmdk
-Yl9yZWcgKyAxKTsNCj4gICAgICAgICAgIGRlc2MubmFtZSA9IGdfaW50ZXJuX3N0cmluZyhn
-cmQtPm5hbWUpOw0KPiAgICAgICAgICAgZGVzYy5mZWF0dXJlID0gZ19pbnRlcm5fc3RyaW5n
-KGdyZC0+ZmVhdHVyZV9uYW1lKTsNCj4gICAgICAgICAgIGdfYXJyYXlfYXBwZW5kX3ZhbChm
-aW5kX2RhdGEsIGRlc2MpOw0KPiBAQCAtNTI4LDcgKzUyOCw3IEBAIGludCBxZW11X3BsdWdp
-bl9yZWFkX3JlZ2lzdGVyKHN0cnVjdCBxZW11X3BsdWdpbl9yZWdpc3RlciAqcmVnLCBHQnl0
-ZUFycmF5ICpidWYpDQo+ICAgew0KPiAgICAgICBnX2Fzc2VydChjdXJyZW50X2NwdSk7DQo+
-ICAgDQo+IC0gICAgcmV0dXJuIGdkYl9yZWFkX3JlZ2lzdGVyKGN1cnJlbnRfY3B1LCBidWYs
-IEdQT0lOVEVSX1RPX0lOVChyZWcpKTsNCj4gKyAgICByZXR1cm4gZ2RiX3JlYWRfcmVnaXN0
-ZXIoY3VycmVudF9jcHUsIGJ1ZiwgR1BPSU5URVJfVE9fSU5UKHJlZykgLSAxKTsNCj4gICB9
-DQo+ICAgDQo+ICAgc3RydWN0IHFlbXVfcGx1Z2luX3Njb3JlYm9hcmQgKnFlbXVfcGx1Z2lu
-X3Njb3JlYm9hcmRfbmV3KHNpemVfdCBlbGVtZW50X3NpemUpDQoNClJldmlld2VkLWJ5OiBQ
-aWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo=
+On Wed, Jun 12, 2024 at 05:14:56PM +0300, Manos Pitsidianakis wrote:
+> On Wed, 12 Jun 2024 15:29, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> > I think this is extremely useful to show where we could go in the task
+> > of creating more idiomatic bindings.
+> > 
+> > On Tue, Jun 11, 2024 at 12:34 PM Manos Pitsidianakis
+> > <manos.pitsidianakis@linaro.org> wrote:
+> > > +pub const PL011_ARM_INFO: TypeInfo = TypeInfo {
+> > > +    name: TYPE_PL011.as_ptr(),
+> > > +    parent: TYPE_SYS_BUS_DEVICE.as_ptr(),
+> > > +    instance_size: core::mem::size_of::<PL011State>(),
+> > > +    instance_align: core::mem::align_of::<PL011State>(),
+> > > +    instance_init: Some(pl011_init),
+> > > +    instance_post_init: None,
+> > > +    instance_finalize: None,
+> > > +    abstract_: false,
+> > > +    class_size: 0,
+> > > +    class_init: Some(pl011_class_init),
+> > > +    class_base_init: None,
+> > > +    class_data: core::ptr::null_mut(),
+> > > +    interfaces: core::ptr::null_mut(),
+> > > +};
+> > 
+> > QOM is certainly a major part of what we need to do for idiomatic
+> > bindings. This series includes both using QOM objects (chardev) and
+> > defining them.
+> > 
+> > For using QOM objects, there is only one strategy that we need to
+> > implement for both Chardev and DeviceState/SysBusDevice which is nice.
+> > We can probably take inspiration from glib-rs, see for example
+> > - https://docs.rs/glib/latest/glib/object/trait.Cast.html
+> > - https://docs.rs/glib/latest/glib/object/trait.ObjectType.html
+> > - https://docs.rs/glib/latest/glib/object/struct.ObjectRef.html
+> 
+> 
+> There was consensus in the community call that we won't be writing Rust APIs
+> for internal C QEMU interfaces; or at least, that's not the goal
+
+I think that is over-stating things. This was only mentioned in passing
+and my feeling was that we didn't have that detailed of a discussion
+because at this stage such a discussion is a bit like putting the cart
+before the horse.
+
+While the initial focus might be to just consume a Rust API that is a
+1:1 mapping of the C API, I expect that over time we'll end up writing
+various higher level Rust wrappers around the C API. If we didn't do that,
+then in effect we'd be making ourselves write psuedo-C code in Rust,
+undermining many of the benefits we could get.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
