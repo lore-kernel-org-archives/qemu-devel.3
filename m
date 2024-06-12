@@ -4,105 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 578E7C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4141AC27C53
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 14:28:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHOws-0000I8-T5; Wed, 12 Jun 2024 10:27:38 -0400
+	id 1sHOx6-0000uX-Ug; Wed, 12 Jun 2024 10:27:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sHOws-0000Bz-04
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 10:27:38 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sHOwp-0000Go-KC
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 10:27:37 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2D63E34507;
- Wed, 12 Jun 2024 14:27:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718202452; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=euzO7BKKPaNSkrdgQBHeImIa7/2qybrOxx0gqRMVxLU=;
- b=Poywe6nn89jkpWKBo3cdDxG2wLWoxPJxqNxIKfpOMm/PGVPUc1RUo+sr1Qhh9urBmVtUkP
- cLY7ONI3oM9IORC7LVWnzPeVHqIaiS+38TeLwtboV9X150knCjaCHgARrmjW6WU6KDQNPY
- 1HNGN1gIpwzUShqp4DQ/VBq1DQjrcOM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718202452;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=euzO7BKKPaNSkrdgQBHeImIa7/2qybrOxx0gqRMVxLU=;
- b=mOLipUIeMuRILzeCafZJH6STX3O+3k18ykDNhu5FOszgJA2labhjXA+XEmPcNEJgrY3Qir
- Kwox41uNJxi1fkAg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718202452; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=euzO7BKKPaNSkrdgQBHeImIa7/2qybrOxx0gqRMVxLU=;
- b=Poywe6nn89jkpWKBo3cdDxG2wLWoxPJxqNxIKfpOMm/PGVPUc1RUo+sr1Qhh9urBmVtUkP
- cLY7ONI3oM9IORC7LVWnzPeVHqIaiS+38TeLwtboV9X150knCjaCHgARrmjW6WU6KDQNPY
- 1HNGN1gIpwzUShqp4DQ/VBq1DQjrcOM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718202452;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=euzO7BKKPaNSkrdgQBHeImIa7/2qybrOxx0gqRMVxLU=;
- b=mOLipUIeMuRILzeCafZJH6STX3O+3k18ykDNhu5FOszgJA2labhjXA+XEmPcNEJgrY3Qir
- Kwox41uNJxi1fkAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A37761372E;
- Wed, 12 Jun 2024 14:27:31 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ML6hGlOwaWZrSwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 12 Jun 2024 14:27:31 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Yuan Liu <yuan1.liu@intel.com>, peterx@redhat.com, pbonzini@redhat.com,
- marcandre.lureau@redhat.com, berrange@redhat.com, thuth@redhat.com,
- philmd@linaro.org
-Cc: qemu-devel@nongnu.org, yuan1.liu@intel.com, nanhai.zou@intel.com,
- shameerali.kolothum.thodi@huawei.com
-Subject: Re: [PATCH v8 4/7] migration/multifd: add qpl compression method
-In-Reply-To: <20240610102110.900410-5-yuan1.liu@intel.com>
-References: <20240610102110.900410-1-yuan1.liu@intel.com>
- <20240610102110.900410-5-yuan1.liu@intel.com>
-Date: Wed, 12 Jun 2024 11:27:29 -0300
-Message-ID: <87msnqck32.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
+ id 1sHOx4-0000oY-JS
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 10:27:50 -0400
+Received: from mail.ispras.ru ([83.149.199.84])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amonakov@ispras.ru>)
+ id 1sHOx2-0000RE-8w
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 10:27:50 -0400
+Received: from [10.10.3.121] (unknown [10.10.3.121])
+ by mail.ispras.ru (Postfix) with ESMTPS id 8D9C54073CEB;
+ Wed, 12 Jun 2024 14:27:44 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 8D9C54073CEB
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+ s=default; t=1718202464;
+ bh=szqoqOVA/fGsYuoahLeAXh3ebM+0iS2cfKVMzur9gXA=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=tuX1WV997bGIj6pqkRdYaj+Ay/YhlW2WgMY2rmbq0l9+zUdPUrvUObAsbqs/K/iPw
+ ADhu1nJgKpnzeSQV3YLbfnerzl3EfB7QfTl1mTGxHRk5OdcVIEKGDCkHqZey9vKkxg
+ kCkEy1PSbSGmhCaaS6GuFBieHhqG9oRCWuhsFjnk=
+Date: Wed, 12 Jun 2024 17:27:44 +0300 (MSK)
+From: Alexander Monakov <amonakov@ispras.ru>
+To: Paolo Bonzini <pbonzini@redhat.com>
+cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 0/5] Reinstate ability to use Qemu on pre-SSE4.1 x86 hosts
+In-Reply-To: <CABgObfbPu10_jEuT2sEHJmF91Vov9M7bTmLR9dQXRR5gicNF5Q@mail.gmail.com>
+Message-ID: <86bc893e-12cf-3dd2-32e6-66ebd9887e77@ispras.ru>
+References: <20240612105525.8795-1-amonakov@ispras.ru>
+ <ZmmAq8fbJLuaX4Qg@redhat.com>
+ <CABgObfbGa=xpp9-cLwzqCpPFsf27qM+K-svfXEvc6ffjb=_VAg@mail.gmail.com>
+ <e26ac8a0-5cb0-22a8-fbf9-54f198cdc7ed@ispras.ru>
+ <CABgObfYf8=3yXu1p6q6jzyZ7uHy92BHaBXtJY8AMYXBdd9+HGA@mail.gmail.com>
+ <caa7d068-a2c6-28a4-51d5-93c61f004bc0@ispras.ru>
+ <CABgObfaswAJRffjdu9h8crD6jvFAP78CaDDbutvoa7EGxwuy1w@mail.gmail.com>
+ <e292326a-0f71-3d4d-4ec1-562efe94271b@ispras.ru>
+ <CABgObfZEmA6DrN-8f_nTg8DHfN+m7DO+DbabW1AtdtMtHjbgyQ@mail.gmail.com>
+ <b5fac5cc-40af-2437-44c4-4e0d5747691d@ispras.ru>
+ <CABgObfbPu10_jEuT2sEHJmF91Vov9M7bTmLR9dQXRR5gicNF5Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.29 / 50.00]; BAYES_HAM(-2.99)[99.97%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[11]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email, suse.de:email,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed; boundary="8323328-380214561-1718202464=:10393"
+Received-SPF: pass client-ip=83.149.199.84; envelope-from=amonakov@ispras.ru;
+ helo=mail.ispras.ru
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,27 +75,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yuan Liu <yuan1.liu@intel.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> add the Query Processing Library (QPL) compression method
->
-> Introduce the qpl as a new multifd migration compression method, it can
-> use In-Memory Analytics Accelerator(IAA) to accelerate compression and
-> decompression, which can not only reduce network bandwidth requirement
-> but also reduce host compression and decompression CPU overhead.
->
-> How to enable qpl compression during migration:
-> migrate_set_parameter multifd-compression qpl
->
-> There is no qpl compression level parameter added since it only supports
-> level one, users do not need to specify the qpl compression level.
->
-> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
-> Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+--8323328-380214561-1718202464=:10393
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-I don't think I ever reviewed this patch. Please drop this when you
-resubmit.
 
+On Wed, 12 Jun 2024, Paolo Bonzini wrote:
+
+> On Wed, Jun 12, 2024 at 3:34 PM Alexander Monakov <amonakov@ispras.ru> wrote:
+> > On Wed, 12 Jun 2024, Paolo Bonzini wrote:
+> > > > I found out from the mailing list. My Core2-based desktop would be affected.
+> > >
+> > > Do you run QEMU on it? With KVM or TCG?
+> >
+> > Excuse me? Are you going to ask for SSH access to ensure my computer really
+> > exists and is in working order?
+> 
+> Come on. The thing is, I'm not debating the existence of computers
+> that don't have x86_64-v2, but I *am* debating the usefulness of
+> making QEMU run on them and any extra information can be interesting.
+
+I think it will be useful to me, with KVM and TCG both.
+
+> > Can you tell me why you never commented on buffer_is_zero improvements, where
+> > v1 was sent in October?  Just trying to understand how you care for 2% of L1D
+> > use but could be ok with those kinds of speedups be dropped on the floor.
+> 
+> I'm not sure if there is any overlap in the scenarios where
+> buffer_is_zero performance matters, and x86 emulation. People can care
+> about thing A but not thing B. If there's anything that you think I
+> can help reviewing, feel free to let me know offlist.
+
+In that case I would've appreciated an early indication you're not interested,
+making Cc'ing you on followups unnecessary.
+
+Alexander
+--8323328-380214561-1718202464=:10393--
 
