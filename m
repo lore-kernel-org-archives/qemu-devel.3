@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38A50C27C77
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 17:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D6D5C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 17:06:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHRLK-0004AM-2o; Wed, 12 Jun 2024 13:01:02 -0400
+	id 1sHRPS-0006g6-Rg; Wed, 12 Jun 2024 13:05:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sHRLI-00049t-Hw
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 13:01:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1sHRPQ-0006fl-UI; Wed, 12 Jun 2024 13:05:17 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sHRLG-0004Qz-PP
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 13:01:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718211657;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SL2zEOS8hU6MfsVNBY8LLR5zL2TBZYCAQwvWuGvidfk=;
- b=QpQN33vMsTTvdihuuVHpxv9Q03vvmwBmoXmk7MclipGA9JWT2Abint8V8asLf9KMCngn9n
- YLiVn/f+8RfHwzyNw8Bcg+9ruxOSgKoW7HT1RyrEGSnNqyIO+5aYWZaY4S6xALzXhCGcm+
- ZtE4ZkyFqIMhNvJkGQpbtjIV+2G4Hq0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-353-dqydhG-wO-K9FhO0Rt1SZQ-1; Wed,
- 12 Jun 2024 13:00:54 -0400
-X-MC-Unique: dqydhG-wO-K9FhO0Rt1SZQ-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 853331956094; Wed, 12 Jun 2024 17:00:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.115])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D3DFF19560AA; Wed, 12 Jun 2024 17:00:49 +0000 (UTC)
-Date: Wed, 12 Jun 2024 18:00:45 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Alexander Monakov <amonakov@ispras.ru>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 0/5] Reinstate ability to use Qemu on pre-SSE4.1 x86 hosts
-Message-ID: <ZmnUPZ0fDZBok6YQ@redhat.com>
-References: <20240612105525.8795-1-amonakov@ispras.ru>
- <ZmmAq8fbJLuaX4Qg@redhat.com>
- <CABgObfbGa=xpp9-cLwzqCpPFsf27qM+K-svfXEvc6ffjb=_VAg@mail.gmail.com>
- <ZmmIpr5f0sQy-VGl@redhat.com>
- <CABgObfZHBGxS-D9LdM1v0oDXBHoKm2-A4FknixmqjfJeQR1YLw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1sHRPP-0005bG-2V; Wed, 12 Jun 2024 13:05:16 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45CGP1go011703;
+ Wed, 12 Jun 2024 17:05:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=h4DiGOn+TewBWqIUqH9t7H
+ Vu/MZAlmdByx5eKKIVB0s=; b=IxNvUS+Co3cWnUzg2+uAm4azmpZCrEY1MSVOh0
+ of+GEZkD6tKo1pNNgLSKIPw3P8kGfCriGeRMAZntiQS2BcYqEaO1aspZ3AUMFCMT
+ vVuuB2oPf3hSX+vgFt4gkRPH23NykNVXiEAqbVmi9VGNfO7u3ZWUT/TJX1qNT+bD
+ mbWtlNpxCfIfZYQH1d04Tpdroey/xDADWWMOLutI5DjeVJw0jR2cBnJK6e6Sj7JJ
+ Cmiq3smeLVhTD58fFKHMM65wAi6v+o4PEorcjt6c2c2pdX4F3JjBuzCI5j8ktsoY
+ I3Ky3DSzoNnYQWcf0tnbpa6LA845cdE4X0vcCaO0YmvjZFOQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yq83wh05a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Jun 2024 17:05:01 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
+ [10.47.209.196])
+ by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id
+ 45CH4xZn008591
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 12 Jun 2024 17:04:59 GMT
+Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 12 Jun 2024 10:04:59 -0700
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+To: <qemu-devel@nongnu.org>
+CC: <alex.bennee@linaro.org>, <pierrick.bouvier@linaro.org>,
+ <philmd@linaro.org>, <qemu-trivial@nongnu.org>, Richard Henderson
+ <richard.henderson@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PATCH] cpu: fix memleak of 'halt_cond' and 'thread'
+Date: Wed, 12 Jun 2024 14:04:46 -0300
+Message-ID: <3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfZHBGxS-D9LdM1v0oDXBHoKm2-A4FknixmqjfJeQR1YLw@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-GUID: ltFrEk61xI18zjQg6xFx6EBbd0rtHzCj
+X-Proofpoint-ORIG-GUID: ltFrEk61xI18zjQg6xFx6EBbd0rtHzCj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-12_08,2024-06-12_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0
+ bulkscore=0 spamscore=0 mlxlogscore=614 suspectscore=0 clxscore=1011
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406120122
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=quic_mathbern@quicinc.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,41 +97,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 12, 2024 at 01:51:31PM +0200, Paolo Bonzini wrote:
-> On Wed, Jun 12, 2024 at 1:38 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > If we want to use POPCNT in the TCG code, can we not do a runtime check
-> > and selectively build pieces of code with  __attribute__((target("popcnt"))),
-> > as we've done historically for the bufferiszero.c code, rather than
-> > changing the entire QEMU baseline ?
-> 
-> bufferiszero.c has a very quick check in front of the indirect call
-> and runs for several hundred clock cycles, so the tradeoff is
-> different there.
-> 
-> I guess that, because these helpers are called by TCG, you wouldn't
-> pay the price of the indirect call. However, adding all this
-> infrastructure for 13-15 year old CPUs is not very enthralling.
+Since a4c2735f35 (cpu: move Qemu[Thread|Cond] setup into common code,
+2024-05-30) these fields are now allocated at cpu_common_initfn(). So
+let's make sure we also free them at cpu_common_finalize().
 
-Ah, so the distinction is that the old code had a runtime check
-on 'have_popcnt' (and similar), where as now that check is eliminated
-at compile time, since the condition is a constant.
+Furthermore, the code also frees these on round robin, but we missed
+'halt_cond'.
 
-Rather than re-introducing a runtime check again for everyone, could
-we make it a configure time argument whether to assume x86_64-v2 ?
-So those who are happy with a increased baseline can achieve the
-maximum performance with all checks eliminated at compile time,
-while still allowing the tradeoff of a dynamic check for those who
-prefer compatibility over peak perfr ?
+Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+---
+ accel/tcg/tcg-accel-ops-rr.c | 1 +
+ hw/core/cpu-common.c         | 3 +++
+ 2 files changed, 4 insertions(+)
 
-With regards,
-Daniel
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index 84c36c1450..48c38714bd 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -329,6 +329,7 @@ void rr_start_vcpu_thread(CPUState *cpu)
+         /* we share the thread, dump spare data */
+         g_free(cpu->thread);
+         qemu_cond_destroy(cpu->halt_cond);
++        g_free(cpu->halt_cond);
+         cpu->thread = single_tcg_cpu_thread;
+         cpu->halt_cond = single_tcg_halt_cond;
+ 
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index bf1a7b8892..f131cde2c0 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -286,6 +286,9 @@ static void cpu_common_finalize(Object *obj)
+     g_array_free(cpu->gdb_regs, TRUE);
+     qemu_lockcnt_destroy(&cpu->in_ioctl_lock);
+     qemu_mutex_destroy(&cpu->work_mutex);
++    qemu_cond_destroy(cpu->halt_cond);
++    g_free(cpu->halt_cond);
++    g_free(cpu->thread);
+ }
+ 
+ static int64_t cpu_common_get_arch_id(CPUState *cpu)
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.37.2
 
 
