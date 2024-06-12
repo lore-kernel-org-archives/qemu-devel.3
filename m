@@ -4,107 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 635B8C27C53
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 785A6C41513
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 13:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHNcg-0004Ly-UI; Wed, 12 Jun 2024 09:02:42 -0400
+	id 1sHNbn-000358-A1; Wed, 12 Jun 2024 09:01:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sHNca-0004Ac-Dd
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNbk-00034B-Qs
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:01:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sHNcY-00083H-U3
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:02:36 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHNbh-0007lo-EP
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 09:01:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718197354;
+ s=mimecast20190719; t=1718197297;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lCSYM/hkoNpk10raw3aulgVh0FcgzvIKh+wFjcoj8Zs=;
- b=ZTWZXThCX5gnEnzpb5s+hccsFbytTf+/abWe5zmWZaaB/7u8bLhbybfZa6gKXIPby3qyNv
- qtS/LaVc0nJvxvNr/D4Yt5zNJ9/PmrHpvT5Qd7g7OkndrY00thWG9KIiGhUoW4JYkvLu/s
- j6bpiQ+W22yFgtHk1tWKIdjWgt4rHEY=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-471-D9tDz7aCO96wnUHxmQZJIQ-1; Wed, 12 Jun 2024 09:02:33 -0400
-X-MC-Unique: D9tDz7aCO96wnUHxmQZJIQ-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7955f8b4bcfso247153185a.3
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 06:02:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718197350; x=1718802150;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lCSYM/hkoNpk10raw3aulgVh0FcgzvIKh+wFjcoj8Zs=;
- b=PLp9K2CUpu7zpvzLt96q+0Vja5EX/aW+1IoGyqmtwbYjmeZkiigKwbQpsyYObOoykM
- bKMALLljWwyDlmk49SYkeV511cnPb7pgd95JyoV27/ohwzW8C2lvfd5U6hJM8QrLG0+x
- Rep2F70QG1S+nUg9FzRJlCHOAALlKkz7HOWg09V5EpRRo6Cq3K41JLZl8ISY4IixvoED
- HcXlzj8xkegpQmu1tsZz24OhdXpuBqbP+O/0f2S/L/9WnR716P10xBsGcXUbttxe00ze
- RkPZs9KanpnKh55rfaFmYH/NzO4/meQ1pAgOztSp+NF9tHbmhASs3+KVKWHF94SwwlFk
- vLJg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUoSJ5gzxxKsWGqrVr2bon42zd5tUD27IkfBPHquaS0Qd/MsI9zBWDMTpUZ6BLFbTudIL/QpZW+Y6y5OmGHrECQJASoR9Q=
-X-Gm-Message-State: AOJu0YzNR3qxK9gD6674wWDZ3n8dGCT23Vo7b2OkOB24slb3NrfwWRp/
- VwsM2Q4TYJm+cM74dVwOU/X64HHacHIkSGO1T4C/K0LW/3+2uYYYHUa1ZBBJ+jN2GpBm6/KTCWN
- glta4sa/1do4cKdVPONpkURIkLzSkJlNa//NRDAXR/mv3v2g/3I3x3YE9AOcR
-X-Received: by 2002:a05:620a:468c:b0:795:5ad1:a218 with SMTP id
- af79cd13be357-797f6037e2cmr175909185a.17.1718197350385; 
- Wed, 12 Jun 2024 06:02:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFsSt0RZcRr9OnR/vocJe+Xf951H24BU/vf4cjqFxivopk9gMGwG0l+M54Y6TKmUFpaT1EfIw==
-X-Received: by 2002:a05:620a:468c:b0:795:5ad1:a218 with SMTP id
- af79cd13be357-797f6037e2cmr175904785a.17.1718197349908; 
- Wed, 12 Jun 2024 06:02:29 -0700 (PDT)
-Received: from step1.redhat.com ([193.207.132.52])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7978863766dsm233919685a.5.2024.06.12.06.02.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Jun 2024 06:02:27 -0700 (PDT)
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: mst@redhat.com,
-	qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
- Brad Smith <brad@comstyle.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, gmaglione@redhat.com,
- stefanha@redhat.com, Coiby Xu <Coiby.Xu@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>, slp@redhat.com,
- Igor Mammedov <imammedo@redhat.com>,
- Raphael Norwitz <raphael@enfabrica.net>, Thomas Huth <thuth@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- David Hildenbrand <david@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jason Wang <jasowang@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Eric Blake <eblake@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH RESEND v7 03/12] libvhost-user: mask F_INFLIGHT_SHMFD if memfd
- is not supported
-Date: Wed, 12 Jun 2024 15:01:31 +0200
-Message-ID: <20240612130140.63004-4-sgarzare@redhat.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240612130140.63004-1-sgarzare@redhat.com>
-References: <20240612130140.63004-1-sgarzare@redhat.com>
+ bh=80UiQ6GEHogTpKZyXdTxaFHGnmMR0uKIi2Wc/ALYM8Y=;
+ b=AfqmX4OHAgAK/vTxPFGV8GQwpRoAHDThzHVPJXozcDZWg4aYmqwm4OYhGcMdpSbm3ws8RW
+ Sdyzi2Q90Qda38za/dthklFxadviWDrLeBlTrZ5gJ8njYwrFZ2XHYBMbkbrWHRRa/zJ3O1
+ dzMJ/3VVypHPXOaA5wOOx3w73NOn7+Y=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-hO4xi5BgOy6Mirris-3uSw-1; Wed,
+ 12 Jun 2024 09:01:30 -0400
+X-MC-Unique: hO4xi5BgOy6Mirris-3uSw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40CEB1955D75; Wed, 12 Jun 2024 13:01:29 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.49])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3C6371956053; Wed, 12 Jun 2024 13:01:27 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v1 01/16] vfio: Make vfio_devices_dma_logging_start() return
+ bool
+Date: Wed, 12 Jun 2024 15:01:07 +0200
+Message-ID: <20240612130122.813935-2-clg@redhat.com>
+In-Reply-To: <20240612130122.813935-1-clg@redhat.com>
+References: <20240612130122.813935-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,46 +85,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-libvhost-user will panic when receiving VHOST_USER_GET_INFLIGHT_FD
-message if MFD_ALLOW_SEALING is not defined, since it's not able
-to create a memfd.
+Since vfio_devices_dma_logging_start() takes an 'Error **' argument,
+best practices suggest to return a bool. See the api/error.h Rules
+section. It will simplify potential changes coming after.
 
-VHOST_USER_GET_INFLIGHT_FD is used only if
-VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD is negotiated. So, let's mask
-that feature if the backend is not able to properly handle these
-messages.
+vfio_container_set_dirty_page_tracking() could be modified in the same
+way but the errno value can be saved in the migration stream when
+called from vfio_listener_log_global_stop().
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ hw/vfio/common.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index a11afd1960..2c20cdc16e 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1674,6 +1674,17 @@ vu_get_protocol_features_exec(VuDev *dev, VhostUserMsg *vmsg)
-         features |= dev->iface->get_protocol_features(dev);
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 9e4c0cc95ff90209d3e8184035af0806a2bf890b..d48cd9b9361a92d184e423ffc60aabaff40fb487 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1020,7 +1020,7 @@ static void vfio_device_feature_dma_logging_start_destroy(
+     g_free(feature);
+ }
+ 
+-static int vfio_devices_dma_logging_start(VFIOContainerBase *bcontainer,
++static bool vfio_devices_dma_logging_start(VFIOContainerBase *bcontainer,
+                                           Error **errp)
+ {
+     struct vfio_device_feature *feature;
+@@ -1033,7 +1033,7 @@ static int vfio_devices_dma_logging_start(VFIOContainerBase *bcontainer,
+                                                            &ranges);
+     if (!feature) {
+         error_setg_errno(errp, errno, "Failed to prepare DMA logging");
+-        return -errno;
++        return false;
      }
  
-+#ifndef MFD_ALLOW_SEALING
-+    /*
-+     * If MFD_ALLOW_SEALING is not defined, we are not able to handle
-+     * VHOST_USER_GET_INFLIGHT_FD messages, since we can't create a memfd.
-+     * Those messages are used only if VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD
-+     * is negotiated. A device implementation can enable it, so let's mask
-+     * it to avoid a runtime panic.
-+     */
-+    features &= ~(1ULL << VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD);
-+#endif
-+
-     vmsg_set_reply_u64(vmsg, features);
-     return true;
+     QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
+@@ -1058,7 +1058,7 @@ out:
+ 
+     vfio_device_feature_dma_logging_start_destroy(feature);
+ 
+-    return ret;
++    return ret == 0;
  }
+ 
+ static bool vfio_listener_log_global_start(MemoryListener *listener,
+@@ -1067,18 +1067,18 @@ static bool vfio_listener_log_global_start(MemoryListener *listener,
+     ERRP_GUARD();
+     VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
+                                                  listener);
+-    int ret;
++    bool ret;
+ 
+     if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
+         ret = vfio_devices_dma_logging_start(bcontainer, errp);
+     } else {
+-        ret = vfio_container_set_dirty_page_tracking(bcontainer, true, errp);
++        ret = vfio_container_set_dirty_page_tracking(bcontainer, true, errp) == 0;
+     }
+ 
+-    if (ret) {
++    if (!ret) {
+         error_prepend(errp, "vfio: Could not start dirty page tracking - ");
+     }
+-    return !ret;
++    return ret;
+ }
+ 
+ static void vfio_listener_log_global_stop(MemoryListener *listener)
 -- 
 2.45.2
 
