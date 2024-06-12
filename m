@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7255AC27C53
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D02DC27C75
 	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 19:53:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHU0w-0001Vt-LH; Wed, 12 Jun 2024 15:52:10 -0400
+	id 1sHU0v-0001V2-NU; Wed, 12 Jun 2024 15:52:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sHU0s-0001Uj-UU
+ id 1sHU0q-0001UT-Ob
  for qemu-devel@nongnu.org; Wed, 12 Jun 2024 15:52:06 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sHU0r-0001ir-7w
- for qemu-devel@nongnu.org; Wed, 12 Jun 2024 15:52:06 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-705c424ebbbso187342b3a.1
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 12:52:04 -0700 (PDT)
+ id 1sHU0o-0001hh-Kt
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 15:52:04 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-70109d34a16so201704b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 12:52:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718221923; x=1718826723; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8gy0JxlZS4txlKe3nUnoxbsxzsnpPJAtrjxoA7hdB8Y=;
- b=iI+Hm9JLoTd/WsBG2Hhqt1PlEoyzr0D9G55LZ1j0IqaiU2aPuJLDjceSe+GD3ySjWj
- lWVhmyk4LWHEPjoUKgE7dcYE9kJ62q248s70rWq81Mk58D4qEdQ7Z/OVfwURSC6+eNdt
- Hf2/0cnztpfLjdEoQ9F+W0jyg+Rds8Dj5RVUrrgyC77IcIlkDk64M6f/qlhSIplHx9eV
- yIjZPYfQXli9AgASScpXhSt4eaNqfXwF90WNMcjmJRdkonp87LTcIsQtTZQcVkppt9tn
- RSlyhiHdZVkzp+ObJxdV9x0fk+VHg59X/EigFRRKCclVxPIobTT4NvA6cXBhn28tUQV/
- 512A==
+ d=linaro.org; s=google; t=1718221920; x=1718826720; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZCFt+tldr1rW+0NreK8qY40FuQCSjQhtCWx/uKeVdGY=;
+ b=J7tZ6yME1FKeDUN2jg23lgI16Gjbij4Yf9byHcurW1D6gABwZ7oN3wHXBVT69BsSQt
+ YER9gCqNZ64kFl9/kkFmSfIEmS/R5HS6/+4Uw51GDkP1wiFrYjVx1WkFLfqn4zRnxW52
+ xKFSEcJYO+8y1yjlt+IUWz3zTKBLQsZXcuTyBiq53o3h5FEhSSksHklXsMftG2EM3MV5
+ f/B0CNl4J7nrm9zzM+vHa1i+ZxnxinsBL34jFK8UOaDOQeG27Ra9RrlVyswsGQp4Pyc4
+ xC8PPuiuCKKEtrrOI8HkzsxvF1UFe6JZ902t6frlRZwnRHxqx9OS59QOlVdljQhiaojv
+ 3rRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718221923; x=1718826723;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8gy0JxlZS4txlKe3nUnoxbsxzsnpPJAtrjxoA7hdB8Y=;
- b=GX/6MKFWzzgSXqrzVEmAFmzums9NDyCm1DbfpEmgT5cU6KFLMYSjkWNT0eIZqPXvDy
- mL1eopHk/pR7Zd4J4sG80MjKzBhbuRLny+IC0JtFGaE0sl3BRmYTx959KjGDN5ZNMnRd
- i+6f4ETS7Pl+C0vgHKdcPU4M57gyxU8mnhr3lznNCMSnzLQIGZS6lphfCK8qR/cSLAyY
- 1PBkff61cFZuqTFHNfUisXFR/KazrPGD2szeaWGw/SfQwRfb3hDNKp68r8MIROlZ2lqb
- wTypx7ssNHdPB62OOhoDih554PVsslX14qfTEjN9mCm8cVOsXv3l+cE72VI1COwwYQkk
- fCcA==
-X-Gm-Message-State: AOJu0YzgYiEu9n9a7s1HJjG9BLdvz1Ax7zH4RHPMGnjeq//t+riVZRJa
- juuPlXU5JfpW6gzz1ACZz/6zNK4eQYF+6dwz2+vVV9kmhCeCea5LOrouLq8q51B9z6KKNk1kyp/
- j
-X-Google-Smtp-Source: AGHT+IGDdcINSwUlJBEf9TcaaMioP2hJISS68IxBgf2AF7xpmHq+S8QVdUndcgYr38vIu83dKlSdSw==
-X-Received: by 2002:a05:6a00:21d1:b0:704:37b2:4ced with SMTP id
- d2e1a72fcca58-705bcdffe08mr3484327b3a.11.1718221922699; 
- Wed, 12 Jun 2024 12:52:02 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718221920; x=1718826720;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZCFt+tldr1rW+0NreK8qY40FuQCSjQhtCWx/uKeVdGY=;
+ b=Pya6NvWE8gE8CnEYB59lq56Xc6OVee4K3/yUoTw3j2J8GffPsBEfxQc7rscDXwmAl5
+ qTckJOL+4ExPTD4NLe4dZZ3KhcAyji6iFrPKobm5g2FscRMRFRwBPlyvS1q9ppMDn32d
+ NzAZCsOQPpulL6akw9UQ1gUOGUvc5xDH1yVBIC1D6RymtOQYDUFrWezqOcWpP/MEP4Kb
+ cR1wqNpZW5iZyXsZ6CLnDNyO8eK6wbInnKiiOBPe5euHFfBSzEjso6CwPDUoUtUAlrRs
+ udYWKOKjLeOl8WC5N0RweOZOzNO/Gt34Pb8EUl2JhPps52E+brRCi/L2j/GF7mleRbxx
+ Ulbw==
+X-Gm-Message-State: AOJu0YwNIhTE2Au+aiRrIrKW4YsDA7wgWUS+ojJvbsuMH25IhJIJPxY1
+ FkOxhbYXTeWufPKjm8GWX6beR6bRKAtWIt+ajODFLlRwcvWyjm66WkwHEkOs7qFtRkzuY5N3ZWs
+ g
+X-Google-Smtp-Source: AGHT+IHEjpoqzT1K53MYa00GcBzaGroJRiJFyPEvwwiRaxrbdAWO8qnl5hsoT2BEsTb9DYeCSf4rBw==
+X-Received: by 2002:a05:6a20:3d8a:b0:1b8:54f8:3856 with SMTP id
+ adf61e73a8af0-1b8a9b3514amr3611704637.5.1718221920425; 
+ Wed, 12 Jun 2024 12:52:00 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::2193])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70424c7fc99sm8009927b3a.157.2024.06.12.12.52.01
+ d2e1a72fcca58-70424c7fc99sm8009927b3a.157.2024.06.12.12.51.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Jun 2024 12:52:02 -0700 (PDT)
+ Wed, 12 Jun 2024 12:52:00 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -67,16 +66,15 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH 2/2] plugins: fix inject_mem_cb rw masking
-Date: Wed, 12 Jun 2024 12:51:47 -0700
-Message-Id: <20240612195147.93121-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH 0/2] Bug fixes for plugins
+Date: Wed, 12 Jun 2024 12:51:45 -0700
+Message-Id: <20240612195147.93121-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240612195147.93121-1-pierrick.bouvier@linaro.org>
-References: <20240612195147.93121-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,59 +97,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are not booleans, but masks.
-Issue found by Richard Henderson.
+Those two commits are meant to be applied on top of current series
+<20240612153508.1532940-1-alex.bennee@linaro.org>
 
-Fixes: f86fd4d8721 ("plugins: distinct types for callbacks")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- accel/tcg/plugin-gen.c | 4 ++--
- plugins/core.c         | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+The first fixes issue with windows plugins, while the second is a bug that
+concerns memory callbacks, and due to a previous refactoring.
 
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index cc1634e7a6b..b6bae32b997 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -240,13 +240,13 @@ static void inject_mem_cb(struct qemu_plugin_dyn_cb *cb,
- {
-     switch (cb->type) {
-     case PLUGIN_CB_MEM_REGULAR:
--        if (rw && cb->regular.rw) {
-+        if (rw & cb->regular.rw) {
-             gen_mem_cb(&cb->regular, meminfo, addr);
-         }
-         break;
-     case PLUGIN_CB_INLINE_ADD_U64:
-     case PLUGIN_CB_INLINE_STORE_U64:
--        if (rw && cb->inline_insn.rw) {
-+        if (rw & cb->inline_insn.rw) {
-             inject_cb(cb);
-         }
-         break;
-diff --git a/plugins/core.c b/plugins/core.c
-index badede28cf9..9d737d82787 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -589,7 +589,7 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
- 
-         switch (cb->type) {
-         case PLUGIN_CB_MEM_REGULAR:
--            if (rw && cb->regular.rw) {
-+            if (rw & cb->regular.rw) {
-                 cb->regular.f.vcpu_mem(cpu->cpu_index,
-                                        make_plugin_meminfo(oi, rw),
-                                        vaddr, cb->regular.userp);
-@@ -597,7 +597,7 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
-             break;
-         case PLUGIN_CB_INLINE_ADD_U64:
-         case PLUGIN_CB_INLINE_STORE_U64:
--            if (rw && cb->inline_insn.rw) {
-+            if (rw & cb->inline_insn.rw) {
-                 exec_inline_op(cb->type, &cb->inline_insn, cpu->cpu_index);
-             }
-             break;
+Pierrick Bouvier (2):
+  plugins: missing QEMU_PLUGIN_API for time control
+  plugins: fix inject_mem_cb rw masking
+
+ include/qemu/qemu-plugin.h | 2 ++
+ accel/tcg/plugin-gen.c     | 4 ++--
+ plugins/core.c             | 4 ++--
+ 3 files changed, 6 insertions(+), 4 deletions(-)
+
 -- 
 2.39.2
 
