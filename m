@@ -4,49 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CD69C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 03:37:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB823C27C77
+	for <qemu-devel@archiver.kernel.org>; Wed, 12 Jun 2024 04:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHEn5-0006UG-VY; Tue, 11 Jun 2024 23:36:51 -0400
+	id 1sHFjV-0007EA-4U; Wed, 12 Jun 2024 00:37:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sHEn4-0006U8-Fu
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 23:36:50 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sHEn1-0007NB-VP
- for qemu-devel@nongnu.org; Tue, 11 Jun 2024 23:36:50 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Axz+vGF2lml90FAA--.8012S3;
- Wed, 12 Jun 2024 11:36:38 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxNMXFF2lm5a8cAA--.59802S2; 
- Wed, 12 Jun 2024 11:36:37 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH] hw/loongarch/virt: Remove unused assignment
-Date: Wed, 12 Jun 2024 11:36:37 +0800
-Message-Id: <20240612033637.167787-1-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1sHFjU-0007Dy-0i
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 00:37:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1sHFjS-0000UT-L7
+ for qemu-devel@nongnu.org; Wed, 12 Jun 2024 00:37:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718167029;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=SrPmXAa27xscV/3MOBy7pJT+ntgDtpZwdgANC6pFgs0=;
+ b=MztYT8902u/H/9iNFVUrZw8QuaCCLOEwMPynRB4nzu9C7MsnM2mFmjjOlgexzoy3L5YhO9
+ Vd6L7i1XdS+7goy1X1ngCb4a7xC6rchdIyc85RtXfBhO8VHqIK0A+0kAucCiawsv4xrHUL
+ eBeUKLsGEAGXFEg51w28wDr9K3Wm2ow=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-SQ73EhU_OhOKr8l--FDXpw-1; Wed,
+ 12 Jun 2024 00:35:58 -0400
+X-MC-Unique: SQ73EhU_OhOKr8l--FDXpw-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 696F11956094; Wed, 12 Jun 2024 04:35:57 +0000 (UTC)
+Received: from fedora.redhat.com (unknown [10.72.112.216])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5FB8C30000C4; Wed, 12 Jun 2024 04:35:53 +0000 (UTC)
+From: Dehan Meng <demeng@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: demeng@redhat.com,
+	kkostiuk@redhat.com,
+	michael.roth@amd.com
+Subject: [PATCH v4 0/1] qga/linux: Add new api 'guest-network-get-route'
+Date: Wed, 12 Jun 2024 12:35:46 +0800
+Message-Id: <20240612043547.282552-1-demeng@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DxNMXFF2lm5a8cAA--.59802S2
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=demeng@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,56 +79,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is abuse usage about local variable gap. Remove
-duplicated assignment and solve Coverity reported error.
+v3 -> v4
+- Fix some indentation issues
+- Update 'Since 8.2' to 'Since 9.1'
+- Remove useless enum and adjust this change.
 
-Resolves: Coverity CID 1546441
-Fixes: 3cc451cbce ("hw/loongarch: Refine fwcfg memory map")
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/loongarch/virt.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+v2 -> v3
+- Remove this declaration and make the function 'hexToIPAddress' as static.
+- Define 'IFNAMSIZ' from kernel instead of a hardcode
+- Remove 'GUEST_NETWORK_ROUTE_TYPE_LINUX'
+- Set flags 'has_xxx' for checking if a field exists or has a value set
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 66cef201ab..2fe08583b8 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -1054,7 +1054,6 @@ static void fw_cfg_add_memory(MachineState *ms)
-         memmap_add_entry(base, gap, 1);
-         size -= gap;
-         base = VIRT_HIGHMEM_BASE;
--        gap = ram_size - VIRT_LOWMEM_SIZE;
-     }
- 
-     if (size) {
-@@ -1067,17 +1066,17 @@ static void fw_cfg_add_memory(MachineState *ms)
-     }
- 
-     /* add fw_cfg memory map of other nodes */
--    size = ram_size - numa_info[0].node_mem;
--    gap  = VIRT_LOWMEM_BASE + VIRT_LOWMEM_SIZE;
--    if (base < gap && (base + size) > gap) {
-+    if (numa_info[0].node_mem < gap && ram_size > gap) {
-         /*
-          * memory map for the maining nodes splited into two part
--         *   lowram:  [base, +(gap - base))
--         *   highram: [VIRT_HIGHMEM_BASE, +(size - (gap - base)))
-+         * lowram:  [base, +(gap - numa_info[0].node_mem))
-+         * highram: [VIRT_HIGHMEM_BASE, +(ram_size - gap))
-          */
--        memmap_add_entry(base, gap - base, 1);
--        size -= gap - base;
-+        memmap_add_entry(base, gap - numa_info[0].node_mem, 1);
-+        size = ram_size - gap;
-         base = VIRT_HIGHMEM_BASE;
-+    } else {
-+        size = ram_size - numa_info[0].node_mem;
-     }
- 
-    if (size)
+v1 -> v2
+- Replace snprintf() to g_strdup_printf() to avoid memory problems.
+- Remove the parameter 'char ipAddress[16]' in function 'char *hexToIPAddress()'.
+- Add a piece of logic to skip traversing the first line of the file
 
-base-commit: 80e8f0602168f451a93e71cbb1d59e93d745e62e
+Dehan Meng (1):
+  qga/linux: Add new api 'guest-network-get-route'
+
+ qga/commands-posix.c | 73 ++++++++++++++++++++++++++++++++++++++++++++
+ qga/commands-win32.c |  6 ++++
+ qga/qapi-schema.json | 68 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 147 insertions(+)
+
 -- 
-2.39.3
+2.40.1
 
 
