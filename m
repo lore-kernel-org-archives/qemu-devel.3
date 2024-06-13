@@ -4,137 +4,205 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3589FC27C6E
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 17:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 257EBC27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 17:28:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHo9x-0004rN-QH; Thu, 13 Jun 2024 13:22:50 -0400
+	id 1sHoF2-0003Hb-Dl; Thu, 13 Jun 2024 13:28:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHo9t-0004W2-CC
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:22:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1sHoF0-0003E5-3d
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:28:02 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHo9q-0005vN-Gs
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:22:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718299361;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=VKpd9OVyhw3p8ruzm8h2nyli6BEmva8zw89xIxVd7TE=;
- b=QJgaD49ulT+6FeXjJSeEOyiP/ar/nJnu0in+XL5j5CFh+C/QmScBWm+koDb+vvPetc0/Ua
- XttGCd9ADsaf5vVz47Z4ZoK5HmMpnre3lUq9lbdFM7XV04CDUzUDwK1yAfKakLA1WWQBKQ
- eybVRjkCr+w6qmz/vbSHaXATgxv4mi8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-226-AgQ4sepMOMC3XKJcWHpGvA-1; Thu, 13 Jun 2024 13:22:37 -0400
-X-MC-Unique: AgQ4sepMOMC3XKJcWHpGvA-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-421179fd82bso8319035e9.1
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 10:22:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718299356; x=1718904156;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VKpd9OVyhw3p8ruzm8h2nyli6BEmva8zw89xIxVd7TE=;
- b=uWBkhJ+47W58HKFlZY8Yi2W/VKfgXgxd080a/EGTSj/6Ev65RGeWkgrZu28JcZPYY9
- iVLiv1x4C3YLgpaKWqbwcYH3oZGHYNslZt+enJtJQBvlzsGvyh1kDtHcwEQs11JQVB56
- 3EQ9AvpVgdV1O14EFta1s1tS1gBsPY7EvDOS8CSQ9qChLjJYEAZ2bzjS9MpsYK18v9XY
- Bgou336nSISLGUNEDZfv3M1Rwr8ePsHK+u+edSZz+r3zr7vS9BgxTkTGHz9ei9DqbpsX
- gbZ3ubLN3ZZ4a6Cl6zuNFJ9+W+x9oVnKZKATlNg1SW/KUYo+cN9DPji4sKq/cYbnQijT
- M4lQ==
-X-Gm-Message-State: AOJu0YxcIP+0qCuxPpgmwL9pW4I4sgrBG8UcMR45vktQ8Ckj9d9SAXkP
- fQee+CIzY0I0kNkqS/6VZYz20bPP49uetizAkkqP2wwxBayZ94UCAeL3Jo1DV0WPB9ehq5klyDB
- DnjCWzQqJrwlS4WbwPXDzSv9PwFGzPGJm6WcSSno6G9qP5KhVPkgq
-X-Received: by 2002:a05:600c:1913:b0:421:72f3:33b5 with SMTP id
- 5b1f17b1804b1-42304849197mr3644345e9.35.1718299355861; 
- Thu, 13 Jun 2024 10:22:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGwf4ztC/Jzx3bc7nWNsg0RL3AhdZsAsP3H3k7If9JGxD1GwpAVr1OEEvL9IkLKyKKaVQDFJg==
-X-Received: by 2002:a05:600c:1913:b0:421:72f3:33b5 with SMTP id
- 5b1f17b1804b1-42304849197mr3644155e9.35.1718299355453; 
- Thu, 13 Jun 2024 10:22:35 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-242-210.web.vodafone.de.
- [109.43.242.210]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422f5f33bdasm32672545e9.8.2024.06.13.10.22.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Jun 2024 10:22:35 -0700 (PDT)
-Message-ID: <feaa5adc-01ed-45fa-9a13-e66836f33ef9@redhat.com>
-Date: Thu, 13 Jun 2024 19:22:33 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1sHoEt-0006s0-Rj
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:27:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1718299677; x=1749835677;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=XYZin/E9P6pwzeCJnYvwOWDcp2ll0QxcW5oWIL1ojJc=;
+ b=jsFLi1j5kd2X8J99A4/DFCc8dSnmXjs3Ax2th5ZKvrom29YDq/xmeck4
+ LlhdY+8mUVChG9UE3/UQheIIFYCRX5cSeE7D1Ivf8iMs6km8Xr4YltZcE
+ j4iGItz5K0e+k7EDaOES7poEvwL+hMqt8uun6uc36QLRrql/n2iqvOIzp
+ KciA3CF92w93/F/qJ8Z8AIy8UlSh9cWHUbakv3eC+eKWCbW9OajxAEwqx
+ h4NFzaU7N6jgW5WNW4ID1whayQEHq1h6kEeJYwkM3nXLgRfTU7r8n2Z5R
+ gmRTY5Nqd+Y3XiocmeUKm9QD0fb9EYXsIrcBmdWm+rRe0tYkdupPOH0g1 A==;
+X-CSE-ConnectionGUID: u88ukPSJSoOwu6cfu5zu0Q==
+X-CSE-MsgGUID: V4WZ+HdfQiG55vKYfzl7Gg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11102"; a="15274780"
+X-IronPort-AV: E=Sophos;i="6.08,235,1712646000"; d="scan'208";a="15274780"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Jun 2024 10:27:54 -0700
+X-CSE-ConnectionGUID: 6hA1OnfxTwqcRzu5ZcxB+g==
+X-CSE-MsgGUID: KMuK7/MpQHGGjE+UiZAjxQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,235,1712646000"; d="scan'208";a="71017222"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+ by orviesa002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 13 Jun 2024 10:27:52 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Thu, 13 Jun 2024 10:27:52 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Thu, 13 Jun 2024 10:27:51 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Thu, 13 Jun 2024 10:27:51 -0700
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.175)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Thu, 13 Jun 2024 10:27:51 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=mAj6RZIvQVp5XxDflRKRfRlbZ7lTV2isKXjnKF5kfPe4+BAI50Di0aMxbuIKV4/1iA+ocGUHkUC72XcpZS3N2cql9pRj8DaKNmhXnv+ld/cHGucZG+i16u7u2658D7Z+m58Twh72P2pEnLOoxxeR131uANam8Lqy/HEwmA1R2T12nVno0WvT3NUqeBhEIo/vS/BCJ81q0lUxfw0iD2hFVB4B0wlpG2eYrdmJgOiXJBO/q3R35OpBSAq/XCv9YAcZKgC8ry3dwkMUslwk3qqcH11eNIT8BUDK1mKAl01KY0zSIq4H+Vu6EvEJfV5xiITnzVK+i/Hgn78OF4o/RqbZXw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dzm1+az/aXoAJTiwM1Vd02B1cPItvtzSWt2rP3SSr/g=;
+ b=kYweyF9PBk30YMLHSmxnjwXHb3+FN7X25sy4ocrUHUNAbnbvmQxXcvANtuJQQ0IbYKprf6lXU3b98L1VzxRRpJlFrK4w6+pQ26F98hQzPKpt2J4GUrR0VYCZRyYOAf7XO+mctm+Ce2VoIhgX6kZPrCdClHgbNqTa6SQHFmzohDZ0En4jxjsaCEC6wNx0Xc8lVZtsVs5O+za/wfX1H9sj2jEouQ/54+qxUVjSx0VnRv8khSAZ8ofzPIqYbwuNlMYVcjeRxY4iDOj3KVq0r9HJbJuvBiiz4XyVr+sFFGIMj/zFtZAyGCjAlkBMPtGw1+D0YoAiAQtcuyIrq6Q0WOl79g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from PH8PR11MB6879.namprd11.prod.outlook.com (2603:10b6:510:229::22)
+ by CH0PR11MB5234.namprd11.prod.outlook.com (2603:10b6:610:e1::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.21; Thu, 13 Jun
+ 2024 17:27:48 +0000
+Received: from PH8PR11MB6879.namprd11.prod.outlook.com
+ ([fe80::bd3d:59f2:9d29:346]) by PH8PR11MB6879.namprd11.prod.outlook.com
+ ([fe80::bd3d:59f2:9d29:346%5]) with mapi id 15.20.7633.036; Thu, 13 Jun 2024
+ 17:27:48 +0000
+Message-ID: <200c1b14-0439-484e-8681-d525a73929bb@intel.com>
+Date: Thu, 13 Jun 2024 10:27:46 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/s390x: Add a CONFIG switch to disable legacy CPUs
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Ani Sinha <anisinha@redhat.com>
-References: <20240613170702.523591-1-thuth@redhat.com>
- <856c9c4e-8e8b-4d63-a897-ee80fb7ed92a@linaro.org>
+Subject: Re: [PATCH] ui/gtk: Wait until the current guest frame is rendered
+ before switching to RUN_STATE_SAVE_VM
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Peter Xu
+ <peterx@redhat.com>
+References: <20240529224252.80395-1-dongwon.kim@intel.com>
+ <CAJ+F1CJFWRtyXvpCJuSVPssJcBx8ecP1HCkWCJ=HBWxXovj+Dw@mail.gmail.com>
+ <ed6a1963-b079-4fdc-a6ca-6ba98b95c0de@intel.com>
+ <CAJ+F1CJW3b9D4nU3x4XSjpG=KrBpJMLWqdR3tpdipObODZRvgQ@mail.gmail.com>
+ <PH8PR11MB68796CDE59AA75FD1D6089A1FAC02@PH8PR11MB6879.namprd11.prod.outlook.com>
+ <CAJ+F1C+L=5cSPhEXrAczfN27sXEH_2Xwohk7Bt2r4KmhteDguQ@mail.gmail.com>
+ <d1534c51-bb11-4439-afc9-0a95f2dc4cf5@intel.com>
+ <CAJ+F1C+kYEHrCGKcwxyGiaiHhRyN7+uKvEj4yWBDxEK2nKUOdA@mail.gmail.com>
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <856c9c4e-8e8b-4d63-a897-ee80fb7ed92a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: "Kim, Dongwon" <dongwon.kim@intel.com>
+In-Reply-To: <CAJ+F1C+kYEHrCGKcwxyGiaiHhRyN7+uKvEj4yWBDxEK2nKUOdA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+X-ClientProxiedBy: SJ0PR13CA0161.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c7::16) To PH8PR11MB6879.namprd11.prod.outlook.com
+ (2603:10b6:510:229::22)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH8PR11MB6879:EE_|CH0PR11MB5234:EE_
+X-MS-Office365-Filtering-Correlation-Id: 73d092df-8e22-4002-3c3b-08dc8bce24e2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230035|376009|1800799019|366011;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?V0k0c0FneWVsZ0dORVBYLzlmajMwa1NTV2dKWkNjVkRaMnVTbGJpangvMENB?=
+ =?utf-8?B?eXduSzNCclNFbkpVMzlybWhDNzFzT1k1ZEZRK3VJYVFFRWd3dHZSQlh1eGZL?=
+ =?utf-8?B?aWxDQVpGYzlTUi9lalBhMVYwa1ViSnVCWHRBSFp6eFFIT050NlNjaTgwRy96?=
+ =?utf-8?B?VzFPKzlVNlJNZlZXVjM5eGY1ZHFOUFZHOGlIemZvdGhnZE5MRXIvdE1DcU1h?=
+ =?utf-8?B?bitRY2JNeXhaMTBCL3QrQnV4a2hySnBGVHBCZFdPVHduMmt2UkEzMjZhWmQ4?=
+ =?utf-8?B?clF1N1Q4WFlzeisydHhFUzNEaFpNdXh4UXVlZVlrM3N1aUJZaWJ2dzlSaVBL?=
+ =?utf-8?B?VC9nTGxubFNzeVh2aGZDZFoxWitmZGh4a0tjRTNaMExqT1RHalNzdHdhWmdt?=
+ =?utf-8?B?UnhJeHRqQWpweENUT09IaEV0Wng0dUtDaUFJZmN1bktNTHB2eUxLY2RBQkJS?=
+ =?utf-8?B?TjE1WjRXenJRbWh0V3U1WVVBZ00reWN4SytJOGd4enJXdTFwdjlhRFB1SWhO?=
+ =?utf-8?B?YnVpZjVtcENMQW9tRi81N1B4cDZqWkpKYzNzdU9xV1YrMEIwMHNvV1hEbzZE?=
+ =?utf-8?B?WWo2a2xzazhkYktDNmszN1RjaXRYN3ViWUFibHJIU3I2bUxSNVRGVWZnZTY1?=
+ =?utf-8?B?VDNpSkNBb3ZzNVk2K3BMWXZRRVVwY1lVbVcwejZQNzVlc2RhTWtpQ1BmcVdH?=
+ =?utf-8?B?dzQzTHUwZTErdG0zZzVydUZERUs2NjRyZUxIL0ZFWGpzam10WDU4RGtZQ3cv?=
+ =?utf-8?B?ekxCN1pRNEJxVU1iaXVQcGZ5SFVCSFZmYUMyd1N3RWlhaFZDOUpkVWUrNndL?=
+ =?utf-8?B?b0R4SGl0MjJ3TE53ZE5mU0dSRHVHZGZTdmNMQkxYNnVmNzhmR08wTjBEMSs4?=
+ =?utf-8?B?RU80czRVdDFObnhMWk5wZFZEOUdSOEt4TnJLbmpmdXBsWi9uTGMvUUdubE1J?=
+ =?utf-8?B?elVLZ3YvVFFocndubW5qbUdBNnlxU1M5aiszZlhmVFE4dXFzclVnSmwwejBz?=
+ =?utf-8?B?NGtJUHoxRFBGM3NENVd0MkxDR3lCMW5BVVVYdVVvdlZpNEszVGd3dnNrVVZi?=
+ =?utf-8?B?djNXd1ZpTm1EcERzUWhGZEVYRTFKUkFtaExBaTExWTdBOHpRcGhGamtJR2JO?=
+ =?utf-8?B?RnB5ajVMUDV5MkRDOTNjRXZONG1EWHVBTkFKY0ZnWG90MXJuZ2J3bXJibEdQ?=
+ =?utf-8?B?MzYvUkxhK0dwcjR0S3NDUHcyZ1dNNmxvWkVSTDF2Q1hDQVh1Z1hPWWl2c0JC?=
+ =?utf-8?B?TGlaeWx3VXVGcmkvblFaNk9iSC9DT1NmUzNRQlNkMnVlcU0rOTRELzI2UWND?=
+ =?utf-8?B?b3ljcWpMVytYMndkTXVycWtMZ0NIb1g5OGdBU0xLWnRiN01mQ2JuSFZRZndU?=
+ =?utf-8?B?NDNOWGZ4YWlYcjZIYTF5WFZMTXRLY3I2d2VnTnBOSytjbHlNemlvVThlLzFy?=
+ =?utf-8?B?TU1Kb0dMK20yWjh0bDFFREczdkRjcEJMbzhsRks4dWVOcWk4VUFZL1ZjMDlQ?=
+ =?utf-8?B?NEZaTTFFNWdoZW1RNDdwUFdMaG5Tdk5QVHNvdmdLbWxjSHNWNjJHVFB1K2cy?=
+ =?utf-8?B?Z2hqaERmdkFTQllrNTJsMHYzNzIzR0lJanhadC9zckF6OU5lRHR3WGE3NHdY?=
+ =?utf-8?B?VWZ4a01JcHQxWDdLN0kwbTkwTzlVd2Z5d0RrVTg1VktjcVIzenYvWVRla28r?=
+ =?utf-8?B?NVNQMFR3bW1iN3lxSG9ONngwM2xXNXhoelNBWjVSaGpGd3FaU3ZlNTRRUm9B?=
+ =?utf-8?Q?e0OJ7UH/89GsNtD0VfCOGcjyv2MBm//jnjasLQ3?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH8PR11MB6879.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230035)(376009)(1800799019)(366011); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TFBNREhVR2U5enh0cHNMakhmd2loQjkvVW9yNFlMZXZCeDNVYWFjdzBwTi9N?=
+ =?utf-8?B?YkdDZ01JY1NpeU96YXZHMjFHbnJ6ZkpkaEw4UXZBaGtHOVN4eTVDd3RxSG5w?=
+ =?utf-8?B?RnlUMTNRRS9VcytqQlY3MFdUcDlyQXZINDNYK0NTamJMdTZvKzhWZ0lSTkd3?=
+ =?utf-8?B?dW5mU2c4ZDlRWExLd3lidGN2VncrdW5DT1dZQW85RThod01oQnBuZktJMkFr?=
+ =?utf-8?B?TjN1S0x5QkNrSStwT0xUTnllMzN5TmN4bjZJQXd5L3B5azAxVHJRTlVGdHJ0?=
+ =?utf-8?B?VTRUSW9vand5S2p5NmcvSEFkSEVwWktWSENzQ0N2bWN6ZThYb3V4WDFFejE4?=
+ =?utf-8?B?WE9SbVFxNllMalFVNVVLQWZyWHFBcm1CQnF4MFdnSjdGMk4yTHBrOFQyZmUr?=
+ =?utf-8?B?SEVOZU5UanlaNGpWU2FibEFrNHNxT2RHOFViMjV3dndTZmtxVVk5RDl2QytN?=
+ =?utf-8?B?T0RacmNJRks2V25YVWR4K0xnT0kvQ0lJRUFiZ3NRQnlqOWFPWEpVMDAwdktC?=
+ =?utf-8?B?RlpPcXlpeHdNS2lkeVltcXlnZnZKd1BRZnk5bkF4U3BWbzNqMk5xQkZ6VndM?=
+ =?utf-8?B?ejlvMjFDd3pndkRCaVo1anVJVi9wb043SHVOcXRDcTdxcEhIYWNnR2ZTWEE5?=
+ =?utf-8?B?S3ozbnoveDlxTEdyVEE1bFVyUXN0Um8yYmhFTFRtR1U2eStUY0xhVFpPUi9r?=
+ =?utf-8?B?bmFuNWp4dGxiQWVITEFYRFAwaUJyRHIxbStLSmlDb1QrZEVRTnlSYVBrQ2Yx?=
+ =?utf-8?B?eGdBQXhEWVBIRUQ1TWVidVVoQzNRbklFcVpNMlVBejJ1N0J5OXlyclI1cTM4?=
+ =?utf-8?B?endXTi8zL05yWndSQ2pmNFNYR3JOQ2RocjVGbElrVy9jc3F4N3VEQUVCK2JN?=
+ =?utf-8?B?UTl0TjV3T0UwNzJZaC9sM1Z6WjZHZU9qSm9CQ1N4VHJoQThrbjREMm1XSFFv?=
+ =?utf-8?B?Nm5iS3MwdjRZUlp1bE9TakJueExkd1pzZ1IyaU9ObEdkblJLRkhqeWNiNzJD?=
+ =?utf-8?B?OHVCUVRTMHBOdmFOSU96ZTZQQUhYbS9HMDBPc1Jud2N3dWpBeUE1L0RxZk1N?=
+ =?utf-8?B?bGttR2hoTlZUNnpOcWR2VTc5UWNyRXlRTG1kV2xzSjNPNHFPUHlSZFJydjYx?=
+ =?utf-8?B?N1R1ak96dEZxbmt2ems0M0FuaXVzQ293VHordkNWb0hmcGxyZkNNZitHVVZr?=
+ =?utf-8?B?V1JSSFZWRlNQbktMcG56b3BkQjJydXN1K1JJazNBYnkrM3ZPc0ljaFJOK1h3?=
+ =?utf-8?B?MitqTWU3UVhNUEl0ak9Eb2lVQ2hrWXpUWFJQcEpJSEJMMkwzVXQvQWE2UzIr?=
+ =?utf-8?B?cWlPV3Vpa3Q2cWRNblpUUkdTMXdHTlZ5YTgxdGkvWk1TS3k1eTZESFN2bkZT?=
+ =?utf-8?B?Y3JPTExsUkIzZXpjRndVRDU2ckVaY0dLMnZ6bWdCdXhvSDlrcWhyUW53WXpL?=
+ =?utf-8?B?T3IvUW5oTHpEa3ZpWGZZdkQ2KzAyQ2Z5djFrU1A2OUU0UHlqNW5OTTdkNDZB?=
+ =?utf-8?B?OXQwRmt6cEoxVmtLVGZPY1NtQlluK2lHQjRGc1NScW8ySHF1WUNQZlZldkZ1?=
+ =?utf-8?B?U0RKNmF4bW9lV2s0TVYyeHZFa1R1QzhheSs0ZndxVU0vZlE5aXZPQkpLN2NK?=
+ =?utf-8?B?V0FyRGg1eVdCcWQ0RUtoc2ZmL0NaQjd1NWRleUZ4a3FYaFJvdkN1N2x5czBN?=
+ =?utf-8?B?SEV4M2lheEV3ZDhmcjhXY2Zab2tHeDhwUFNicE5iMVpiRDF5Sko3K1RNVC9u?=
+ =?utf-8?B?TlB5aXpHNmZwbE5BMko2VUI2WWsrbG9EUldLL2x3Z1haSitWNVMrQ3hxU0gw?=
+ =?utf-8?B?cFBQR1ExZCtBNlkvWGtmZEt3SDRiOUowQnpLVFk3N3ZtcWVIRUltSDRKbEhT?=
+ =?utf-8?B?ZzFQZG1iVW12NTZLQS9yMXNjVkR5cW9oNE5yWXpXd05MZSt0QWZ2N2hGT0dY?=
+ =?utf-8?B?dk9RRUZBVk05dlZBTjBNSWNGQm5oSGQzOXhoSk5OQmh4K1lYT3RUam5pUnR6?=
+ =?utf-8?B?TDhYc3M2Nm5rc3hwZk9iMkM3aHRYZFhEMVVrV0cvbWtyU21RNmFjT0FTL3Q3?=
+ =?utf-8?B?UjQrTDAwWjg2VDF2cFl0akF4MllUcXhlWkluWU51UjBGMHhmZ2RvdkFXOFpQ?=
+ =?utf-8?Q?SfS3pqEIi7W1habLqqYKfml7m?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 73d092df-8e22-4002-3c3b-08dc8bce24e2
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB6879.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jun 2024 17:27:47.9286 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0vXn4cERea5icfY+/jP6H0WRCpqL2TCmguXPx2Fq2Ieu0L7zZs5dc7PC78MxJgwCVtZR5nGEdmTf7l49ti+2kw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR11MB5234
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=dongwon.kim@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,124 +218,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/06/2024 19.17, Philippe Mathieu-Daudé wrote:
-> Hi Thomas,
-> 
-> On 13/6/24 19:07, Thomas Huth wrote:
->> Old CPU models are not officially supported anymore by IBM, and for
->> downstream builds of QEMU, we would like to be able to disable these
->> CPUs in the build. Thus add a CONFIG switch that can be used to
->> disable these CPUs (and old machine types that use them by default).
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   If you're interested, the PDF that can be downloaded from
->>   https://www.ibm.com/support/pages/ibm-mainframe-life-cycle-history
->>   shows the supported CPUs in a nice diagram
-> 
-> I'd add this link ...
-> 
->>   hw/s390x/s390-virtio-ccw.c | 9 +++++++++
->>   target/s390x/cpu_models.c  | 3 +++
->>   target/s390x/Kconfig       | 5 +++++
->>   3 files changed, 17 insertions(+)
->>
->> diff --git a/target/s390x/Kconfig b/target/s390x/Kconfig
->> index d886be48b4..8a95f2bc3f 100644
->> --- a/target/s390x/Kconfig
->> +++ b/target/s390x/Kconfig
->> @@ -2,3 +2,8 @@ config S390X
->>       bool
->>       select PCI
->>       select S390_FLIC
->> +
->> +config S390X_LEGACY_CPUS
->> +    bool
->> +    default y
->> +    depends on S390X
->> diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
->> index efb508cd2e..ffae95dcb3 100644
->> --- a/target/s390x/cpu_models.c
->> +++ b/target/s390x/cpu_models.c
->> @@ -22,6 +22,7 @@
->>   #include "qemu/module.h"
->>   #include "qemu/hw-version.h"
->>   #include "qemu/qemu-print.h"
->> +#include CONFIG_DEVICES
->>   #ifndef CONFIG_USER_ONLY
->>   #include "sysemu/sysemu.h"
->>   #include "target/s390x/kvm/pv.h"
->> @@ -47,6 +48,7 @@
->>    * generation 15 one base feature and one optional feature have been 
->> deprecated.
->>    */
->>   static S390CPUDef s390_cpu_defs[] = {
->> +#ifdef CONFIG_S390X_LEGACY_CPUS
-> 
-> ... here :)
+Hi Marc-André,
 
-Can do ... let's just hope that the link is stable in the course of time!
-
->>       CPUDEF_INIT(0x2064, 7, 1, 38, 0x00000000U, "z900", "IBM zSeries 900 
->> GA1"),
->>       CPUDEF_INIT(0x2064, 7, 2, 38, 0x00000000U, "z900.2", "IBM zSeries 
->> 900 GA2"),
->>       CPUDEF_INIT(0x2064, 7, 3, 38, 0x00000000U, "z900.3", "IBM zSeries 
->> 900 GA3"),
->> @@ -78,6 +80,7 @@ static S390CPUDef s390_cpu_defs[] = {
->>       CPUDEF_INIT(0x2964, 13, 1, 47, 0x08000000U, "z13", "IBM z13 GA1"),
->>       CPUDEF_INIT(0x2964, 13, 2, 47, 0x08000000U, "z13.2", "IBM z13 GA2"),
->>       CPUDEF_INIT(0x2965, 13, 2, 47, 0x08000000U, "z13s", "IBM z13s GA1"),
->> +#endif
->>       CPUDEF_INIT(0x3906, 14, 1, 47, 0x08000000U, "z14", "IBM z14 GA1"),
->>       CPUDEF_INIT(0x3906, 14, 2, 47, 0x08000000U, "z14.2", "IBM z14 GA2"),
->>       CPUDEF_INIT(0x3907, 14, 1, 47, 0x08000000U, "z14ZR1", "IBM z14 Model 
->> ZR1 GA1"),
->> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
->> index 3d0bc3e7f2..7529d2fba8 100644
->> --- a/hw/s390x/s390-virtio-ccw.c
->> +++ b/hw/s390x/s390-virtio-ccw.c
->> @@ -47,6 +47,7 @@
->>   #include "migration/blocker.h"
->>   #include "qapi/visitor.h"
->>   #include "hw/s390x/cpu-topology.h"
->> +#include CONFIG_DEVICES
->>   static Error *pv_mig_blocker;
->> @@ -603,6 +604,8 @@ static void s390_nmi(NMIState *n, int cpu_index, Error 
->> **errp)
->>       s390_cpu_restart(S390_CPU(cs));
->>   }
->> +#ifdef CONFIG_S390X_LEGACY_CPUS
->> +
->>   static ram_addr_t s390_fixup_ram_size(ram_addr_t sz)
->>   {
->>       /* same logic as in sclp.c */
->> @@ -623,6 +626,8 @@ static ram_addr_t s390_fixup_ram_size(ram_addr_t sz)
->>       return newsz;
->>   }
->> +#endif
->> +
->>   static inline bool machine_get_aes_key_wrap(Object *obj, Error **errp)
->>   {
->>       S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
->> @@ -989,6 +994,8 @@ static void ccw_machine_6_1_class_options(MachineClass 
->> *mc)
->>   }
->>   DEFINE_CCW_MACHINE(6_1, "6.1", false);
->> +#ifdef CONFIG_S390X_LEGACY_CPUS
->> +
->>   static void ccw_machine_6_0_instance_options(MachineState *machine)
->>   {
->>       static const S390FeatInit qemu_cpu_feat = { S390_FEAT_LIST_QEMU_V6_0 };
+On 6/13/2024 6:16 AM, Marc-André Lureau wrote:
+> Hi
 > 
-> Should we deprecate machines up to v6.0?
+> On Wed, Jun 12, 2024 at 10:50 PM Kim, Dongwon <dongwon.kim@intel.com 
+> <mailto:dongwon.kim@intel.com>> wrote:
+> 
+>     On 6/11/2024 10:44 PM, Marc-André Lureau wrote:
+>      > Hi
+>      >
+>      > On Wed, Jun 12, 2024 at 5:29 AM Kim, Dongwon
+>     <dongwon.kim@intel.com <mailto:dongwon.kim@intel.com>
+>      > <mailto:dongwon.kim@intel.com <mailto:dongwon.kim@intel.com>>> wrote:
+>      >
+>      >     Hi,
+>      >
+>      >     From: Marc-André Lureau <marcandre.lureau@gmail.com
+>     <mailto:marcandre.lureau@gmail.com>
+>      >     <mailto:marcandre.lureau@gmail.com
+>     <mailto:marcandre.lureau@gmail.com>>>
+>      >     Sent: Wednesday, June 5, 2024 12:56 AM
+>      >     To: Kim, Dongwon <dongwon.kim@intel.com
+>     <mailto:dongwon.kim@intel.com> <mailto:dongwon.kim@intel.com
+>     <mailto:dongwon.kim@intel.com>>>
+>      >     Cc: qemu-devel@nongnu.org <mailto:qemu-devel@nongnu.org>
+>     <mailto:qemu-devel@nongnu.org <mailto:qemu-devel@nongnu.org>>; Peter Xu
+>      >     <peterx@redhat.com <mailto:peterx@redhat.com>
+>     <mailto:peterx@redhat.com <mailto:peterx@redhat.com>>>
+>      >     Subject: Re: [PATCH] ui/gtk: Wait until the current guest
+>     frame is
+>      >     rendered before switching to RUN_STATE_SAVE_VM
+>      >
+>      >     Hi
+>      >
+>      >     On Tue, Jun 4, 2024 at 9:49 PM Kim, Dongwon
+>      >     <mailto:dongwon.kim@intel.com <mailto:dongwon.kim@intel.com>
+>     <mailto:dongwon.kim@intel.com <mailto:dongwon.kim@intel.com>>> wrote:
+>      >     On 6/4/2024 4:12 AM, Marc-André Lureau wrote:
+>      >      > Hi
+>      >      >
+>      >      > On Thu, May 30, 2024 at 2:44 AM
+>     <mailto:dongwon.kim@intel.com <mailto:dongwon.kim@intel.com>
+>      >     <mailto:dongwon.kim@intel.com <mailto:dongwon.kim@intel.com>>
+>      >      > <mailto:mailto <mailto:mailto> <mailto:mailto
+>     <mailto:mailto>>:dongwon.kim@intel.com <mailto:dongwon.kim@intel.com>
+>      >     <mailto:dongwon.kim@intel.com
+>     <mailto:dongwon.kim@intel.com>>>> wrote:
+>      >      >
+>      >      >     From: Dongwon <mailto:dongwon.kim@intel.com
+>     <mailto:dongwon.kim@intel.com>
+>      >     <mailto:dongwon.kim@intel.com <mailto:dongwon.kim@intel.com>>
+>     <mailto:mailto <mailto:mailto>
+>      >     <mailto:mailto <mailto:mailto>>:dongwon.kim@intel.com
+>     <mailto:dongwon.kim@intel.com> <mailto:dongwon.kim@intel.com
+>     <mailto:dongwon.kim@intel.com>>>>
+>      >      >
+>      >      >     Make sure rendering of the current frame is finished
+>     before
+>      >     switching
+>      >      >     the run state to RUN_STATE_SAVE_VM by waiting for egl-sync
+>      >     object to be
+>      >      >     signaled.
+>      >      >
+>      >      >
+>      >      > Can you expand on what this solves?
+>      >
+>      >     In current scheme, guest waits for the fence to be signaled
+>     for each
+>      >     frame it submits before moving to the next frame. If the
+>     guest’s state
+>      >     is saved while it is still waiting for the fence, The guest will
+>      >     continue to  wait for the fence that was signaled while ago
+>     when it is
+>      >     restored to the point. One way to prevent it is to get it
+>     finish the
+>      >     current frame before changing the state.
+>      >
+>      >     After the UI sets a fence, hw_ops->gl_block(true) gets
+>     called, which
+>      >     will block virtio-gpu/virgl from processing commands (until the
+>      >     fence is signaled and gl_block/false called again).
+>      >
+>      >     But this "blocking" state is not saved. So how does this affect
+>      >     save/restore? Please give more details, thanks
+>      >
+>      >     Yeah sure. "Blocking" state is not saved but guest's state is
+>     saved
+>      >     while it was still waiting for the response for its last
+>      >     resource-flush virtio msg. This virtio response, by the way
+>     is set
+>      >     to be sent to the guest when the pipeline is unblocked (and
+>     when the
+>      >     fence is signaled.). Once the guest's state is saved, current
+>      >     instance of guest will be continued and receives the response as
+>      >     usual. The problem is happening when we restore the saved guest's
+>      >     state again because what guest does will be waiting for the
+>     response
+>      >     that was sent a while ago to the original instance.
+>      >
+>      >
+>      > Where is the pending response saved? Can you detail how you test
+>     this?
+>      >
+> 
+>     There is no pending response for the guest's restored point, which is a
+>     problem. The response is sent out after saving is done.
+> 
+>     Normal cycle :
+> 
+>     resource-flush (scanout flush) -> gl block -> render -> gl unblock
+>     (after fence is signaled) -> pending response sent out to the guest ->
+>     guest (virtio-gpu drv) processes the next scanout frame -> (next cycle)
+>     resource-flush -> gl block ......
+> 
+>     When vm state is saved in the middle :
+> 
+>     resource-flush (scanout-flush) -> gl block -> saving vm-state -> render
+>     -> gl unblock -> pending response (resp #1) sent out to the guest ->
+>     guest (virtio-gpu drv) processes the next scanout frame -> (next cycle)
+>     resource-flush -> gl block ......
+> 
+>     Now, we restore the vm-state we saved
+> 
+>     vm-state is restored -> guest (virtio-gpu drv) can't move on as this
+>     state is still waiting for the response (resp #1)
+> 
+> 
+> Ok, so actually it's more of a device state issue than a UI/GTK. We end 
+> up not saving a state that reflects the guest state. My understanding is 
+> that the guest is waiting for a fence reply, and we don't save that. 
+> Imho, a better fix would be to either save the fenceq (but then, what 
+> else is missing to complete the operation on resume?), or have a wait to 
+> delay the migration until the fences are flushed.
 
-I'm still hoping that Daniel will be able to get his auto-deprecation 
-patches merged in this cycle - then we shouldn't derive from that, I think.
+The second method you are proposing here - 'have a wait'. I understand 
+you mean delaying the start point of migration but don't you think the 
+current patch is basically doing the similar thing? Assuming egl wait 
+sync is what we need to use for a wait, do you have any suggestion where 
+that should be called other than 'gd_change_runstate'?
 
-By the way, what's up with your i440fx removal series? ... it would be good 
-to get this finally merged now...?
+> 
+> 
+>     So we need to make sure vm-state is saved after the cycle is completed.
+> 
+>     This situation would be only happening if you use blob=true with
+>     virtio-gpu drv as KMS on the linux guest. Do you have any similar setup?
+> 
+> 
+> No, further details to reproduce would help. Even better would be having 
+> some automated test.
 
-  Thomas
+I will think about this. We use GPU shared via SRIOV as a GPU deviceand 
+virtio-gpu as a display device on the guest. I think I need to find and 
+test more general cases.
+
+> 
+> 
+> -- 
+> Marc-André Lureau
 
 
