@@ -4,95 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3D72C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 12:22:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89AE4C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 12:27:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHjSk-0001hx-D2; Thu, 13 Jun 2024 08:21:54 -0400
+	id 1sHjXJ-00039x-AS; Thu, 13 Jun 2024 08:26:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHjSi-0001hW-LE
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 08:21:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sHjSg-00066y-NC
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 08:21:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718281309;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4rPaBg7HWVPZeRtnZ++AvQKlgIgzKeTurzZpcdtelKw=;
- b=co6Uv3TtRUtz1RtIKORCdj777SJ3BzzrC4pNol3Af/IJHFee5samOD0RZTKLcA43+IxcFz
- FqeZTycdv076ycotr8mBTAZ0aTUzZY/mtIlc/W/1w9UufH7EFX7KCp5oK5p/U3VDHycOdM
- BqcwIvWeOHysoW72IK0gLcmM+iLC1d0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-E3U_utRINMekBfJNvGrULw-1; Thu, 13 Jun 2024 08:21:47 -0400
-X-MC-Unique: E3U_utRINMekBfJNvGrULw-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-35f27bfa618so499017f8f.2
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 05:21:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHjXF-00039L-8b
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 08:26:33 -0400
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHjX5-0006xE-Gx
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 08:26:25 -0400
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2e95a75a90eso9305871fa.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 05:26:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718281581; x=1718886381; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=giCHOHNsy3BfGKL+Sh9AjXY1j8duQRjVND9kW7j4Nck=;
+ b=mQ1vT6lRge5aJGU4sOZFox8hzsAwlE1oBQlU40HXLOXkpxpy0tiqzTdTlmAmENtB1A
+ 2EnPAQPjCSnhhdKU7vD6++P6oCn0uSWgVKMRfOYhPnEAQXL4K583M2iyhqY0umrB7ITm
+ okhyS7/ttA0/UNOpRvCwTk+aGnkAFfU5E8skfB/5a/WHL5ukjGvhdwu2SXL7+geZGhVs
+ pjvd/p9US+5XSMqCTmHZ/MA4gY4yUS8Ov7H7UqQahCkoEyvsWVO7iUhvTBVfHIwiKAEx
+ /JPrWGbK7PO9fs9sm0OkOVpAgymOx/p/PbNKMZSM72/BloaHEeEtblkJ8fpnZAH8CpQE
+ jnPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718281306; x=1718886106;
+ d=1e100.net; s=20230601; t=1718281581; x=1718886381;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4rPaBg7HWVPZeRtnZ++AvQKlgIgzKeTurzZpcdtelKw=;
- b=V4UqIBQJ0hwQxMeAu3qCM7pLivB93aZ2VOfDvNG7C8glFLzC4IUMshBnPicuvbx8f2
- Z6fFxA+yMPU2H+A3jtXPOq5ayc3urPRGwER88/Z75SH6x7WWPDrxUhD25evyj+Hopr9X
- h0MvlU2VOfXJcvnZZCkpj810jeEs6aIiPostIbRa4WeNPDCTpfu7HfnT13wJEGRBlrzJ
- dJr7ZD+TEpRnxlGzoG9Ion+nydsuy4qRIjIEbpfXaHTFjVo3E56204JzXeSvJkIKqRf6
- POf4HgVU4SZAPnuNp1y4DhzPlVxLdhRmXPY3CKczflurYEIvOfYZZiunBE1B31fBixPF
- 1Pog==
+ bh=giCHOHNsy3BfGKL+Sh9AjXY1j8duQRjVND9kW7j4Nck=;
+ b=xD7mtWz7XkK4lJng76va92IXoLZNu4W2gvDGzbfSytLpZnI6jvQXHpc2B8HYrCrBfI
+ HK+hPyA7bLaW+scrI8ibq8Ky0qbvAxOxR6joYZav3F4D6Jh81QnEAr1ZM88pOzaQkGmG
+ rJnPt0IJmxtSONxRDKyADKub59nfLtiPvlgBz1xC24pUiMoCdIa3qweTuykyGB2DZCQg
+ w/v+wlxzZgq6sb0Zn8TrUcA0Kis4H6FQIwRj0tOI5LBh06nVQyLHV6Ye5vt/2bLVSzQo
+ /ikhkq2SfOtQb+0tCSFf1DSur/DjXT4YeWgr9ZQFHoNekLMZQIX4aMTXS+vz0CMBRUdp
+ tKUg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWz067FKBuxwCjDWlY4QKsUgPtDw14gPolSIlYLy2Ms0s76FyyXAwFJL9L93fC/V6lghkX6iDIue6Etg4vbMIVbI7lfCE0=
-X-Gm-Message-State: AOJu0Yz/IwZ+yk64MqLmhnhhxWfn5NcN3aNSTUEguEuwKcdsUBaEIv8K
- fBJSI/tB0kjt5Yfp7g9+8krCtv8XcBYKDudGhFrHFUamdTVabAiy7VM+6c/bCiom15amnJFNTLe
- IxUQ33TOuOdhRe/3D/kRXqXMK4mL2vkXL6tWepMVvIQ5bk6VP69EO
-X-Received: by 2002:adf:e70f:0:b0:35f:2635:5b82 with SMTP id
- ffacd0b85a97d-35fe8937a66mr3480344f8f.59.1718281306665; 
- Thu, 13 Jun 2024 05:21:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGZHss+MmvB6ZGe+17ItJ5nmRALNeRwl5q1hOCuNEl4VX9rNCdLfmTkgmChXRHOoMIU/4wQKg==
-X-Received: by 2002:adf:e70f:0:b0:35f:2635:5b82 with SMTP id
- ffacd0b85a97d-35fe8937a66mr3480323f8f.59.1718281306236; 
- Thu, 13 Jun 2024 05:21:46 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ AJvYcCVvXp/SiRWSyq5a7E3vV7ZTiRyRj8hqp0ruLEHwBRbJsfD2147riOamlDHqpsMididmJW6/YL6XjY1X7RSA/csSNb6U158=
+X-Gm-Message-State: AOJu0Yy25AM/j4dDYcKFVn+NljP6V7PfJTqV5h8Z0AM15hufVJhVuuF/
+ JlyDCJ6Gn3nLUnbudQYWJpkux+cS65x+niYvNAaqQ+ZNGQwA4t/UD7FYcSBBmxM=
+X-Google-Smtp-Source: AGHT+IE9dJhFwlrzcCgiiKV+WujnCnD8SzSnkYBqSYmwXH78uT6dMac+8uVTFvugGE/cFbFnFXldjg==
+X-Received: by 2002:a2e:bc0e:0:b0:2eb:ebc1:f20a with SMTP id
+ 38308e7fff4ca-2ebfc8d622amr36076441fa.20.1718281581150; 
+ Thu, 13 Jun 2024 05:26:21 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.148.226])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36075104b8bsm1624444f8f.105.2024.06.13.05.21.45
+ 5b1f17b1804b1-422f61277fesm24678805e9.21.2024.06.13.05.26.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Jun 2024 05:21:45 -0700 (PDT)
-Message-ID: <d07b9b63-2a51-4af8-8dc1-58484ac934a4@redhat.com>
-Date: Thu, 13 Jun 2024 14:21:44 +0200
+ Thu, 13 Jun 2024 05:26:20 -0700 (PDT)
+Message-ID: <9a8380ac-0b68-49b0-9da2-348873674131@linaro.org>
+Date: Thu, 13 Jun 2024 14:26:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 11/16] vfio/container: Change VFIOContainerBase to use
- QOM
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Eric Auger <eric.auger@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20240612130122.813935-1-clg@redhat.com>
- <20240612130122.813935-12-clg@redhat.com>
- <SJ0PR11MB674436CD599BAA3FC4AD082892C12@SJ0PR11MB6744.namprd11.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <SJ0PR11MB674436CD599BAA3FC4AD082892C12@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Subject: Re: [PATCH 00/26] hw/ppc: Prefer HumanReadableText over Monitor
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>, David Gibson <david@gibson.dropbear.id.au>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+References: <20240610062105.49848-1-philmd@linaro.org>
+ <cd48f836-3017-4559-b509-9945d041a327@kaod.org>
+ <c44dcf6c-3e99-4a32-888d-3c7dfc305a01@linaro.org>
+ <2e9ad035-06bb-41e4-bdce-1256e4c17d46@kaod.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <2e9ad035-06bb-41e4-bdce-1256e4c17d46@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x232.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,191 +102,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/13/24 11:17 AM, Duan, Zhenzhong wrote:
-> Hi Cédric,
+On 13/6/24 12:29, Cédric Le Goater wrote:
+> On 6/13/24 11:48 AM, Philippe Mathieu-Daudé wrote:
+>> On 10/6/24 10:19, Cédric Le Goater wrote:
+>>> On 6/10/24 8:20 AM, Philippe Mathieu-Daudé wrote:
+>>>> Hi,
+>>>>
+>>>> This series remove uses of Monitor in hw/ppc/,
+>>>> replacing by the more generic HumanReadableText.
+>>>> Care is taken to keep the commit bisectables by
+>>>> updating functions one by one, also easing review.
+>>>
+>>> Did you do any testing ? POWER[8-10] CPUs on pseries and powernv 
+>>> machines
+>>> should be checked. A bit tedious I agree but not that long.
+>>
+>> I ran these smoke tests comparing monitor output with baseline:
+>>
+>> $ ./qemu-system-ppc64 -M powernv8 -S -monitor stdio
+>> QEMU 9.0.50 monitor - type 'help' for more information
+>> (qemu) info pic
+>> CPU 0 XIRR=00000000 (0x0) PP=ff MFRR=ff
+>> ICS 1000..1005 0x14c03d9c0
+>>    1000 LSI ff 00
+>>    1001 LSI ff 00
+>>    1002 LSI ff 00
+>>    1003 LSI ff 00
+>>    1004 LSI ff 00
+>>    1005 LSI ff 00
+>> ICS    0.. 7ff 0x14c0e93e8
+>> ICS    0..   7 0x14c0e9328
+>>       0 LSI ff 00
+>>       1 LSI ff 00
+>>       2 LSI ff 00
+>>       3 LSI ff 00
+>>       4 LSI ff 00
+>>       5 LSI ff 00
+>>       6 LSI ff 00
+>>       7 LSI ff 00
+>> ICS    0.. 7ff 0x14c16ffe8
+>> ICS    0..   7 0x14c16ff28
+>>       0 LSI ff 00
+>>       1 LSI ff 00
+>>       2 LSI ff 00
+>>       3 LSI ff 00
+>>       4 LSI ff 00
+>>       5 LSI ff 00
+>>       6 LSI ff 00
+>>       7 LSI ff 00
+>> ICS    0.. 7ff 0x14c2177e8
+>> ICS    0..   7 0x14c217728
+>>       0 LSI ff 00
+>>       1 LSI ff 00
+>>       2 LSI ff 00
+>>       3 LSI ff 00
+>>       4 LSI ff 00
+>>       5 LSI ff 00
+>>       6 LSI ff 00
+>>       7 LSI ff 00
+>> Interrupt controller information not available for 
+>> power8_v2.0-powerpc64-cpu.
 > 
->> -----Original Message-----
->> From: Cédric Le Goater <clg@redhat.com>
->> Subject: [PATCH v1 11/16] vfio/container: Change VFIOContainerBase to use
->> QOM
->>
->> VFIOContainerBase was made a QOM interface because we believed that a
->> QOM object would expose all the IOMMU backends to the QEMU machine
->> and
->> human interface. This only applies to user creatable devices or objects.
->>
->> Change the VFIOContainerBase nature from interface to object and make
->> the necessary adjustments in the VFIO_IOMMU hierarchy.
->>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->> include/hw/vfio/vfio-common.h         |  4 ++++
->> include/hw/vfio/vfio-container-base.h | 12 +++---------
->> hw/vfio/container-base.c              |  4 +++-
->> hw/vfio/container.c                   |  1 +
->> hw/vfio/iommufd.c                     |  1 +
->> hw/vfio/spapr.c                       |  3 +++
->> 6 files changed, 15 insertions(+), 10 deletions(-)
->>
->> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-
->> common.h
->> index
->> 825d80130bd435fe50830c8ae5b7905d18104dd6..5d0b8496cf85bac8d4ea
->> 770fae04acc02d84df82 100644
->> --- a/include/hw/vfio/vfio-common.h
->> +++ b/include/hw/vfio/vfio-common.h
->> @@ -84,6 +84,8 @@ typedef struct VFIOContainer {
->>      QLIST_HEAD(, VFIOGroup) group_list;
->> } VFIOContainer;
->>
->> +OBJECT_DECLARE_TYPE(VFIOContainer, VFIOIOMMUClass,
->> VFIO_IOMMU_LEGACY);
+> This is only checking the older interrupt controller. Please try powernv10.
 > 
-> What about using OBJECT_DECLARE_SIMPLE_TYPE?
+>> (qemu) q
+>>
+>> $ ./qemu-system-ppc64 -M pseries -cpu power10 -S -monitor stdio
+>> QEMU 9.0.50 monitor - type 'help' for more information
+>> qemu-system-ppc64: warning: TCG doesn't support requested feature, 
+>> cap-cfpc=workaround
+>> qemu-system-ppc64: warning: TCG doesn't support requested feature, 
+>> cap-sbbc=workaround
+>> qemu-system-ppc64: warning: TCG doesn't support requested feature, 
+>> cap-ibs=workaround
+>> qemu-system-ppc64: warning: TCG doesn't support requested feature, 
+>> cap-ccf-assist=on
+>> (qemu) info pic
+>> CPU 0 XIRR=00000000 (0x0) PP=ff MFRR=ff
+>> ICS 1000..1fff 0x600003b05b00
+>>    1000 MSI ff 00
+>>    1001 MSI ff 00
+>>    1100 MSI ff 00
+>>    1101 MSI ff 00
+>>    1102 MSI ff 00
+>>    1103 MSI ff 00
+>>    1200 LSI ff 00
+>>    1201 LSI ff 00
+>>    1202 LSI ff 00
+>>    1203 LSI ff 00
+>> irqchip: emulated
+>> Interrupt controller information not available for 
+>> power10_v2.0-powerpc64-cpu.
+>> (qemu) q
+> 
+> 
+> This is only checking the old interrupt controller. Please try :
+> 
+>    qemu-system-ppc64 -M pseries,ic-mode=xive -cpu power10 -S -monitor stdio
+> 
+> and we should be fine.
 
-Sure. Will change.
+No change in output:
 
-Thanks,
-
-C.
-
-
-> 
->> +
->> typedef struct VFIOHostDMAWindow {
->>      hwaddr min_iova;
->>      hwaddr max_iova;
->> @@ -99,6 +101,8 @@ typedef struct VFIOIOMMUFDContainer {
->>      uint32_t ioas_id;
->> } VFIOIOMMUFDContainer;
->>
->> +OBJECT_DECLARE_TYPE(VFIOIOMMUFDContainer, VFIOIOMMUClass,
->> VFIO_IOMMU_IOMMUFD);
-> 
-> Same here.
-> 
->> +
->> typedef struct VFIODeviceOps VFIODeviceOps;
->>
->> typedef struct VFIODevice {
->> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-
->> container-base.h
->> index
->> d505f63607ec40e6aa44aeb3e20848ac780562a1..b079b76f68975c5701a28
->> 9ce9012e912a8e44fc6 100644
->> --- a/include/hw/vfio/vfio-container-base.h
->> +++ b/include/hw/vfio/vfio-container-base.h
->> @@ -34,6 +34,7 @@ typedef struct VFIOAddressSpace {
->>   * This is the base object for vfio container backends
->>   */
->> typedef struct VFIOContainerBase {
->> +    Object parent;
->>      const VFIOIOMMUClass *ops;
->>      VFIOAddressSpace *space;
->>      MemoryListener listener;
->> @@ -96,17 +97,10 @@ void vfio_container_destroy(VFIOContainerBase
->> *bcontainer);
->> #define TYPE_VFIO_IOMMU_SPAPR TYPE_VFIO_IOMMU "-spapr"
->> #define TYPE_VFIO_IOMMU_IOMMUFD TYPE_VFIO_IOMMU "-iommufd"
->>
->> -/*
->> - * VFIOContainerBase is not an abstract QOM object because it felt
->> - * unnecessary to expose all the IOMMU backends to the QEMU machine
->> - * and human interface. However, we can still abstract the IOMMU
->> - * backend handlers using a QOM interface class. This provides more
->> - * flexibility when referencing the various implementations.
->> - */
->> -DECLARE_CLASS_CHECKERS(VFIOIOMMUClass, VFIO_IOMMU,
->> TYPE_VFIO_IOMMU)
->> +OBJECT_DECLARE_TYPE(VFIOContainerBase, VFIOIOMMUClass,
->> VFIO_IOMMU)
->>
->> struct VFIOIOMMUClass {
->> -    InterfaceClass parent_class;
->> +    ObjectClass parent_class;
->>
->>      /* Properties */
->>      const char *hiod_typename;
->> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
->> index
->> 280f0dd2db1fc3939fe9925ce00a2c50d0e14196..98c15e174dd78df5146ee8
->> 3c05c98f3ea9c1e52c 100644
->> --- a/hw/vfio/container-base.c
->> +++ b/hw/vfio/container-base.c
->> @@ -102,8 +102,10 @@ void vfio_container_destroy(VFIOContainerBase
->> *bcontainer)
->> static const TypeInfo types[] = {
->>      {
->>          .name = TYPE_VFIO_IOMMU,
->> -        .parent = TYPE_INTERFACE,
->> +        .parent = TYPE_OBJECT,
->> +        .instance_size = sizeof(VFIOContainerBase),
->>          .class_size = sizeof(VFIOIOMMUClass),
->> +        .abstract = true,
->>      },
->> };
->>
->> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
->> index
->> 983726f9514ec1106d521c9711a46a4780688ee1..f1519518d0b7efd2a6086
->> f07bc497596a5236abf 100644
->> --- a/hw/vfio/container.c
->> +++ b/hw/vfio/container.c
->> @@ -1194,6 +1194,7 @@ static const TypeInfo types[] = {
->>      {
->>          .name = TYPE_VFIO_IOMMU_LEGACY,
->>          .parent = TYPE_VFIO_IOMMU,
->> +        .instance_size = sizeof(VFIOContainer),
->>          .class_init = vfio_iommu_legacy_class_init,
->>      }, {
->>          .name = TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO,
->> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->> index
->> d97a4f7393791660b90e340436c6e084c0781444..80ba09b859a02bb89823
->> 460064a9f099fd98cff0 100644
->> --- a/hw/vfio/iommufd.c
->> +++ b/hw/vfio/iommufd.c
->> @@ -670,6 +670,7 @@ static const TypeInfo types[] = {
->>      {
->>          .name = TYPE_VFIO_IOMMU_IOMMUFD,
->>          .parent = TYPE_VFIO_IOMMU,
->> +        .instance_size = sizeof(VFIOIOMMUFDContainer),
->>          .class_init = vfio_iommu_iommufd_class_init,
->>      }, {
->>          .name = TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO,
->> diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
->> index
->> 47b040f1bcca7dd0b5cf052d941b43541e98a3c5..05a3cedc4b1703a615737
->> 30bc77fc15d44f7a9eb 100644
->> --- a/hw/vfio/spapr.c
->> +++ b/hw/vfio/spapr.c
->> @@ -30,6 +30,8 @@ typedef struct VFIOSpaprContainer {
->>      QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
->> } VFIOSpaprContainer;
->>
->> +OBJECT_DECLARE_TYPE(VFIOSpaprContainer, VFIOIOMMUClass,
->> VFIO_IOMMU_SPAPR);
->
-> Same here.
-> 
-> Thanks
-> Zhenzhong
-> 
->> +
->> static bool vfio_prereg_listener_skipped_section(MemoryRegionSection
->> *section)
->> {
->>      if (memory_region_is_iommu(section->mr)) {
->> @@ -548,6 +550,7 @@ static const TypeInfo types[] = {
->>      {
->>          .name = TYPE_VFIO_IOMMU_SPAPR,
->>          .parent = TYPE_VFIO_IOMMU_LEGACY,
->> +        .instance_size = sizeof(VFIOSpaprContainer),
->>          .class_init = vfio_iommu_spapr_class_init,
->>      },
->> };
->> --
->> 2.45.2
-> 
+$ ./qemu-system-ppc64 -M pseries,ic-mode=xive -cpu power10 -S -monitor 
+stdio
+QEMU 9.0.50 monitor - type 'help' for more information
+qemu-system-ppc64: warning: TCG doesn't support requested feature, 
+cap-cfpc=workaround
+qemu-system-ppc64: warning: TCG doesn't support requested feature, 
+cap-sbbc=workaround
+qemu-system-ppc64: warning: TCG doesn't support requested feature, 
+cap-ibs=workaround
+qemu-system-ppc64: warning: TCG doesn't support requested feature, 
+cap-ccf-assist=on
+(qemu) info pic
+CPU[0000]:   QW   NSR CPPR IPB LSMFB ACK# INC AGE PIPR  W2
+CPU[0000]: USER    00   00  00    00   00  00  00   00  00000000
+CPU[0000]:   OS    00   00  00    ff   ff  00  ff   ff  80000400
+CPU[0000]: POOL    00   00  00    00   00  00  00   00  00000000
+CPU[0000]: PHYS    00   00  00    00   00  00  00   ff  00000000
+   LISN         PQ    EISN     CPU/PRIO EQ
+   00000000 MSI -Q  M 00000000
+   00001000 MSI -Q  M 00000000
+   00001001 MSI -Q  M 00000000
+   00001100 MSI -Q  M 00000000
+   00001101 MSI -Q  M 00000000
+   00001102 MSI -Q  M 00000000
+   00001103 MSI -Q  M 00000000
+   00001200 LSI -Q  M 00000000
+   00001201 LSI -Q  M 00000000
+   00001202 LSI -Q  M 00000000
+   00001203 LSI -Q  M 00000000
+irqchip: emulated
+Interrupt controller information not available for 
+power10_v2.0-powerpc64-cpu.
+(qemu)
 
 
