@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8697BC27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 17:31:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0A66C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 17:31:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHoHM-0004eO-Ov; Thu, 13 Jun 2024 13:30:28 -0400
+	id 1sHoHK-0004co-HQ; Thu, 13 Jun 2024 13:30:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sHoHL-0004df-ES
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:30:27 -0400
-Received: from fhigh7-smtp.messagingengine.com ([103.168.172.158])
+ id 1sHoHI-0004bs-8l
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:30:24 -0400
+Received: from fout1-smtp.messagingengine.com ([103.168.172.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sHoHJ-0007J2-Q8
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:30:27 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
- by mailfhigh.nyi.internal (Postfix) with ESMTP id 5631A11401D6;
- Thu, 13 Jun 2024 13:30:25 -0400 (EDT)
+ id 1sHoHF-0007ET-Gc
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:30:24 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailfout.nyi.internal (Postfix) with ESMTP id 7873D13800E5;
+ Thu, 13 Jun 2024 13:30:19 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute6.internal (MEProxy); Thu, 13 Jun 2024 13:30:25 -0400
+ by compute4.internal (MEProxy); Thu, 13 Jun 2024 13:30:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1718299825;
- x=1718386225; bh=dAn6RhZVBQ411UgnvLVvJtB4CrT4+mRlgv05oQIOfNw=; b=
- FyTzrtxLN6H8iNyN85boyM1JcsxEpzxbQw8GwtXT2p2wJJEj8CLhjaFL3F0hyquc
- wi7yN9OVEvzYTvUpwqTXzTyjV9yKFYf4lxfWIud38Kcxo5Qf/WGvxYdJ/cF/MXGw
- 2qstueL9y8cEX6NRUJjr04lwdwB9Fhy+oDvPRzc0dFr5lOgGeFpfSBwbtodTK+S5
- DbCnXOfSHz3tpyH6wfynHO/BkhyFuY0JZzITx6MxIyWMLbyPVfQ+Tg886lUm6JSP
- FsMAs1beB1pR/z6ovTA4qj8XZiuwUfoOzr5fIhIxdOiHKAOaMHi26I8xtqUkrmnR
- khBYTMUkfvu6J97MrYC5MQ==
+ :date:from:from:in-reply-to:message-id:mime-version:reply-to
+ :subject:subject:to:to; s=fm2; t=1718299819; x=1718386219; bh=2Y
+ lomw0G04tS9jeu4S2jeUUKBm1VnFhpe0L3Kiu/arQ=; b=srYAd6OkMGBdRUG8x/
+ ZqbvAPDbPZAHneyPqVgB/1105fqDyo0yqqyzZjDbLW9wUdkKp3OHRCx8GK6rdEw0
+ BjWSFjWGNk4BU7o4IrCBKSqloi4bbu0t/5ROl4jj4tWLR+Lm84GUd2mJCUB7D9PD
+ PWSfoQR870qkusDKWhIDPMapz2XOhg1PfIgqUp93Sx9Tfy2DXQ3y0jpmDsJ5s+M1
+ M76i49rpLtgRsPg0J5lcEpJTYE2X9KaNrY4ZhX9jN3shfbdZSsRQI8rldn2WTnbe
+ suG80UIauK+S2noaMCZgiPJXhz7Rk9KP/fOtoCfjHCt0mNtEd8+W2tva9uww1wJ7
+ ib1w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1718299825; x=
- 1718386225; bh=dAn6RhZVBQ411UgnvLVvJtB4CrT4+mRlgv05oQIOfNw=; b=G
- MCGZjPVOhR/36xPUW4nlLi0RCJEtm/x1x7vUfZ2bmeQF1H5w2ik941HmAibl0gRo
- yMKQWZpPBYJq+Tbmb1gixW+B0bYFqSBs133tcDp1ct8KeKBjcRM9JkHSWWJMZL7c
- yE1NrTSCRLoeWB9M9TcARaZB2Pn8plKZbEu+OqMbKKy2zNwU2TESOuugFEvd3iVL
- zCcXILMnEhCfMmXP2qmsOpn4Iv696KPp33d7j9wvKAH/susGvYTGwlWJV9/t8OTD
- QAvkWcZ2a0gi2CoZqMcwxchxv1/PqaR+59H5xvPbHiPuCnJTwsFokRWGV7XfjO4f
- ekXk+BdvN8ncVe1IVSYyg==
-X-ME-Sender: <xms:sSxrZrCorMHitQrX2CnEjMJz0Rp3UU_Sl4GqjIdYLL6H6zcb2D8ELA>
- <xme:sSxrZhgPSABPNWCyzNEEd91bbKnGQEsqEvdMqjjM_g6Bz_BtxrHCFuvNH-ZmnHbLt
- F8rHgcCpdCV2XzyemY>
-X-ME-Received: <xmr:sSxrZmlVvo22zrRvC4gHOGfCgfXxu4qnK23I87PEDm7Xuu1fhmdB1Zw>
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm1; t=1718299819; x=1718386219; bh=2Ylomw0G04tS9
+ jeu4S2jeUUKBm1VnFhpe0L3Kiu/arQ=; b=LWJJ6MPLtN/+Zcuqv+D1mrU/Kg3bP
+ MtegnnqxCwnDTvgQ+39XrCbus/kFhvP7ml02fZXGGvUBQgHwCdAJ3IlFXtFQlFVY
+ NdJoLapkT2CJQY67HsDBMJFLSE9IkYoD5w4KbBVp8EUHVAIsB/ej9gdihf02GU26
+ tKckObYl8864c95XUhC0EAg+49SkDaFKiP4SJ0bszI9gMVK9TG5Vu+9kIVVipjha
+ BK5AXBDt90w8Vxfivnvz7t+SFRdncCLE/g1XKlN7eLoKDBb4xv1LOekyqz21jGKA
+ C9vDE33FOvIfvO7jWtbx/vBLDx0q3I0y6l161TZA0PWpnB8vHBPzE+lTg==
+X-ME-Sender: <xms:qixrZjWc7mroBqOXVB-acadTI8sKxSD9B2LkcUaBXz4owWihHfNZfw>
+ <xme:qixrZrk8wiZGFdZ-3i4f3Fd2jMPlP6vq0VIZZWCx70W6IWHO3tJEgmYyzfRqQxnxv
+ Sg3gb6HYZCZMU7GJbM>
+X-ME-Received: <xmr:qixrZvZoLmNpy3Lp2wLoWgHWG_TDj_bQhdVjamusuezpUkrNn5I5ipM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedujedgudduudcutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
  necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheplfhi
- rgiguhhnucgjrghnghcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmqe
- enucggtffrrghtthgvrhhnpedvkeeihfefveekueevteefleffkeegudeghfdtuddugefh
- ueevgeffgedukeejleenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
- hlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhm
-X-ME-Proxy: <xmx:sSxrZtwfdmpY7G1vAg76Lguc3LqL72KC5uHRApALMtRpuAbtRemQxA>
- <xmx:sSxrZgT9_tcrgnf1hPqTuk5LNHdX2Im6OfC1alW3hLvbjRVUlpWN_g>
- <xmx:sSxrZgbveUcvRk9a2KrDTw2hTACmRx2bWi7FcRmyOiI5uSqn8jrgjw>
- <xmx:sSxrZhS7z_spRbzTk9lPywmUQnKkA4to356Jw397r1wkxuB69QI5zg>
- <xmx:sSxrZkbPIed5TKUfPsrxjE086vn14BepMC7i55sjG0cq5lmuA_cx8V-O>
+ enucfjughrpefhufffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheplfhirgig
+ uhhnucgjrghnghcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmqeenuc
+ ggtffrrghtthgvrhhnpefgveffjeetgeejfeelgfekteelkefhuefggedvueeujeekjeet
+ keekvdffffefudenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrh
+ fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghes
+ fhhlhihgohgrthdrtghomh
+X-ME-Proxy: <xmx:qixrZuUgu0igV9ZGKb8KdnQZwhG9GYyP37gGqDDHRIa3or1j5A5idQ>
+ <xmx:qixrZtmDmjxTH1heLN5eRJJnNas1Zn533lzTzGPPs2OakP-HjzLdMw>
+ <xmx:qixrZre1MduTBlxwGo8gUH0DReP1Vgeyy6-7_NJaMLNy_A2O8jogGQ>
+ <xmx:qixrZnFavqZS2uS366Jg-NaGUnzIkwHvuJRPbMvC1WhpuWL50XnfsA>
+ <xmx:qyxrZjekjEAvAKtwh9ZvsdVOVv97wd8ExtjDYQmJmpDvcq937UV0eJ1u>
 Feedback-ID: ifd894703:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Jun 2024 13:30:23 -0400 (EDT)
+ 13 Jun 2024 13:30:16 -0400 (EDT)
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date: Thu, 13 Jun 2024 18:30:17 +0100
-Subject: [PATCH 3/3] hw/i386/microvm: Wire up S3 and S4 sleep
+Subject: [PATCH 0/3] S3 and S4 sleep for loongarch/virt & microvm
+Date: Thu, 13 Jun 2024 18:30:14 +0100
+Message-Id: <20240613-loongarch64-sleep-v1-0-d2ef0aaa543a@flygoat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240613-loongarch64-sleep-v1-3-d2ef0aaa543a@flygoat.com>
-References: <20240613-loongarch64-sleep-v1-0-d2ef0aaa543a@flygoat.com>
-In-Reply-To: <20240613-loongarch64-sleep-v1-0-d2ef0aaa543a@flygoat.com>
+X-B4-Tracking: v=1; b=H4sIAKYsa2YC/x3MQQqAIBBA0avIrBPMZIquEi1KJxsIFYUIpLsnL
+ d/i/wqFMlOBWVTIdHPhGBr6ToA9t+BJsmsGrbRR2A/yijH4LdsTjSwXUZLDuGuDuE9uRGhdynT
+ w8z+X9X0/HDhfsGMAAAA=
 To: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
  Igor Mammedov <imammedo@redhat.com>, Song Gao <gaosong@loongson.cn>, 
@@ -87,17 +88,17 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
  Sergio Lopez <slp@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2255;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1065;
  i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=9KDYfgTpJCYj+JrfLXnzk6WDZ9WRBqry0iqBAZw11Ms=;
- b=owGbwMvMwCXmXMhTe71c8zDjabUkhrRsnVV377SYNxgqmzY33PkVl75r5vfcbT5bNlds/xLh7
- /Ta1sG2o5SFQYyLQVZMkSVEQKlvQ+PFBdcfZP2BmcPKBDKEgYtTACbSvInhn3p50SOt2b1T/i86
- PFVapvP2wU439pLvAWJuK3VWvcoM/8Pwm/3+xmnv43n6fiwV8NKWl5y7o+m444Gtz6MXRnh2bP6
- 3gwcA
+ bh=XAnJmJpbuvqPjFRZcGPddcmvCUgokVhu06na45ZpMZ0=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhrRsnVUdsqkMElzy/Wsv3xORnv3qpUak1oYnl81ebhLvu
+ v5yA0NjRykLgxgXg6yYIkuIgFLfhsaLC64/yPoDM4eVCWQIAxenAExkrzbDf//t7ie3H18mWnj1
+ 5utr5c8/68yO3rmHadKykmq276rPXj9k+O93L4rLXe7KGhk9ofVl5z6fMXj60+jHjjcH3fyLv20
+ 4Mo0fAA==
 X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
  fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
-Received-SPF: pass client-ip=103.168.172.158;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh7-smtp.messagingengine.com
+Received-SPF: pass client-ip=103.168.172.144;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout1-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -120,60 +121,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up S3 and S4 sleep by setting relevant slp-typs bits for
-GED and generate _S3 and _S4 methods in acpi table.
+Hi all,
+
+This series implemented S3 and S4 sleep for loongarch virt machine
+and microvm.
+
+For loongarch/virt a kernel patch is requried [1].
+
+[1]: https://lore.kernel.org/loongarch/20240613-loongarch64-sleep-v1-0-a245232af5e4@flygoat.com/
+
+Please review.
+Thanks
 
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
- hw/i386/acpi-microvm.c | 18 ++++++++++++++++++
- hw/i386/microvm.c      |  3 +++
- 2 files changed, 21 insertions(+)
+Jiaxun Yang (3):
+      acpi/ged: Implement S3 and S4 sleep
+      hw/loongarch/virt: Wire up S3 and S4 sleep
+      hw/i386/microvm: Wire up S3 and S4 sleep
 
-diff --git a/hw/i386/acpi-microvm.c b/hw/i386/acpi-microvm.c
-index 279da6b4aa2f..7564de2b343b 100644
---- a/hw/i386/acpi-microvm.c
-+++ b/hw/i386/acpi-microvm.c
-@@ -129,6 +129,24 @@ build_dsdt_microvm(GArray *table_data, BIOSLinker *linker,
-     aml_append(dsdt, sb_scope);
- 
-     /* ACPI 5.0: Table 7-209 System State Package */
-+    scope = aml_scope("\\");
-+    pkg = aml_package(4);
-+    aml_append(pkg, aml_int(ACPI_GED_SLP_TYP_S3));
-+    aml_append(pkg, aml_int(0)); /* ignored */
-+    aml_append(pkg, aml_int(0)); /* reserved */
-+    aml_append(pkg, aml_int(0)); /* reserved */
-+    aml_append(scope, aml_name_decl("_S3", pkg));
-+    aml_append(dsdt, scope);
-+
-+    scope = aml_scope("\\");
-+    pkg = aml_package(4);
-+    aml_append(pkg, aml_int(ACPI_GED_SLP_TYP_S4));
-+    aml_append(pkg, aml_int(0)); /* ignored */
-+    aml_append(pkg, aml_int(0)); /* reserved */
-+    aml_append(pkg, aml_int(0)); /* reserved */
-+    aml_append(scope, aml_name_decl("_S4", pkg));
-+    aml_append(dsdt, scope);
-+
-     scope = aml_scope("\\");
-     pkg = aml_package(4);
-     aml_append(pkg, aml_int(ACPI_GED_SLP_TYP_S5));
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index fec63cacfa88..b9fb2d28e570 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -206,6 +206,9 @@ static void microvm_devices_init(MicrovmMachineState *mms)
-     if (x86_machine_is_acpi_enabled(x86ms)) {
-         DeviceState *dev = qdev_new(TYPE_ACPI_GED);
-         qdev_prop_set_uint32(dev, "ged-event", ACPI_GED_PWR_DOWN_EVT);
-+        qdev_prop_set_uint32(dev, "slp-typs", (1 << ACPI_GED_SLP_TYP_S3) |
-+                             (1 << ACPI_GED_SLP_TYP_S4) |
-+                             (1 << ACPI_GED_SLP_TYP_S5));
-         sysbus_realize(SYS_BUS_DEVICE(dev), &error_fatal);
-         sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, GED_MMIO_BASE);
-         /* sysbus_mmio_map(SYS_BUS_DEVICE(dev), 1, GED_MMIO_BASE_MEMHP); */
+ hw/acpi/generic_event_device.c         | 70 ++++++++++++++++++++++++++++++----
+ hw/i386/acpi-microvm.c                 | 18 +++++++++
+ hw/i386/microvm.c                      |  3 ++
+ hw/loongarch/acpi-build.c              | 18 +++++++++
+ hw/loongarch/virt.c                    |  3 ++
+ include/hw/acpi/generic_event_device.h | 12 +++++-
+ 6 files changed, 115 insertions(+), 9 deletions(-)
+---
+base-commit: f3e8cc47de2bc537d4991e883a85208e4e1c0f98
+change-id: 20240613-loongarch64-sleep-37b2466b8d76
 
+Best regards,
 -- 
-2.43.0
+Jiaxun Yang <jiaxun.yang@flygoat.com>
 
 
