@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DA69C27C75
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 07:14:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0015C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 07:14:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHeec-0007TA-FH; Thu, 13 Jun 2024 03:13:50 -0400
+	id 1sHeel-0007Ve-T1; Thu, 13 Jun 2024 03:13:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sHeea-0007Sj-Ol
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:13:48 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1sHeek-0007V8-KW
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:13:58 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sHeeX-00072Q-12
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:13:48 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1f64ecb1766so6012035ad.1
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 00:13:41 -0700 (PDT)
+ id 1sHeei-00074Y-R9
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:13:58 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1f8395a530dso7013465ad.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 00:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1718262820; x=1718867620; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1718262832; x=1718867632; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8aJGyXd0qvglzQlaZ9yErCe8LO14RzbPYCr6lrbExxk=;
- b=duark2yFAaqnmW80gKBvp2NTPVPpOIdOVgCZcHuvfK4qXPFbrP8faOFJwXrNljr5r9
- A4nUaioYL1f7H7FhUe2+Ks30bbd2nWMg0INVhkUmdl/tGibx9PeJ2HoymvKwhm2vDVBz
- NVLvgAUUP6HsZDoVKGv0ZrqW5Ma9EVzYUfe7vxiYt3KBUNEfUr6P3kCcMew8wg+hysjv
- ZaXpIWfgSJBlklFT6LyG6kws+UNLm4y6IAhDo2vVI/yIj0OI/Tp5Ygy7wQCxp0+14G73
- C458NSMdTo7z+RZ6DlL1aMCLr+1ZjFXqE5KkFE7/rxGTKIhDVy2s5Ad1P7N33KXUzHFq
- q77A==
+ bh=zLkwjmAys5Ra1hLbRsNe5mSovRHzzADAGuNQz2QELRM=;
+ b=QVzNdEe1cVwNNNKiwL0BoaoMoZvCUwgVbg4ZqeFqWUQza5x2ng/UUI5RaEK4Nuo30Z
+ aR1UwNjKIuWsq67szzozWhriVf762AzayvYhVp9gqbbtEFhmYrV2Vf5OtyheE7IX/Bww
+ /QTg/eYd/qQFo04zzBbkqcuCL3zz6XePnvChNNpKCHVIIyhGnCCTD4/fsSgQsPYZZk10
+ D7jr0EmcX8UkuSHbMLfcpJWC+cgdnz/tca7AbWPmQwO7ONI6tQJAm+IUQHE7SVUA6YN2
+ asE3+1TZ118ZcJyyeEs4+nq4ntHqOPbd4oM9a8wORvZtWdJH1KbR+YoZbwMK4CC2oaz6
+ Uz5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718262820; x=1718867620;
+ d=1e100.net; s=20230601; t=1718262832; x=1718867632;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8aJGyXd0qvglzQlaZ9yErCe8LO14RzbPYCr6lrbExxk=;
- b=PLiq/s9YOvYpF/tXa29ZszGr4OnoiH9Eeng2q0DIOKSpSHccDtsO8+x9UAGyoq4XNb
- N7rAWcWf0/P1NRY5CRGxfWD6QoKBWHekuNtmD3luuBRsA2JbYpr7KiQgqpVk1pxf5hsa
- cVwDqmbkKetI4uoWwqnDBz05GDVQs4WngAhBuFO7otzgXK9qM76sIuzEZ/A2SEVeXmxB
- A2iGP5N7BciNOPBcgYiOhm7HY7T47js87npSGia2VF+gq13ASWujEioEpPwxd8rc/h4i
- JzbO1geFv6WBmanzSimTlyepm4NR6FCbBFRnFPbIXbQPQ+mw+DxaDs/atbRkuP1HQ7n9
- PF7g==
+ bh=zLkwjmAys5Ra1hLbRsNe5mSovRHzzADAGuNQz2QELRM=;
+ b=nGLynfzSU22oUP6CBBRFk3FIgyogAzu/DAVCKjBOiSvtRfCtCq8N6w6P4HQkxKMrHH
+ Rc/LX+Wh+v2AQ/ownJQOTdfAavjCYTxd4/aBmbxSK/sP8m7A/wB6YyouUWP8av0mIaWp
+ nJiYWEOtwcvzPGva3Pi9h6InAr778Mo5LnRsJEaO1YA7cJF1LfZyp+dJRrN8A2A8h4ia
+ 1hIqJ6DCAbDzdSzRCdztAYNccVndcwUva2WRNjFc7xZVj/yNkx515KY81VkyG/ohISoL
+ GKDQFwYS+gbjHhriucO7hWcMNriIcPwFQCAZw+F3r5XHsz7ZDrMZ8FOdKcqBZiRSErpQ
+ HCEw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBhbCkN4dQlHM+oCjNl8NRijeNn8mbCdZXNAsnts5r+xqtaXu+9msDZ6LyhGwgGlCNWEnR9G1NIMnQX0saYPdJ+BBBS0k=
-X-Gm-Message-State: AOJu0YyAgfjKbS5BvJ9p9986kAodE3ra8lhLUTC/OkUxaxkxiYIB9rcO
- tKbRQ2LDqVid1/GMaB3ILrXmrFAGIFXP15Fi0XBXdVQtiBLYbaWcOcqKiTvVgS+VRsGV1eqxu/F
- QIRs=
-X-Google-Smtp-Source: AGHT+IE6o+r1J3hxVxp77jciYGoGRpvKVVu8AcpqlM8dc0viWRRdt3uRW1/95iAKizKUqt9WIp3Abg==
-X-Received: by 2002:a17:902:ab8a:b0:1f7:1b6c:b01 with SMTP id
- d9443c01a7336-1f83b7000b2mr36749045ad.36.1718262820025; 
- Thu, 13 Jun 2024 00:13:40 -0700 (PDT)
+ AJvYcCWyG5kQ2hTP1E2i8Bi5Or4r2tWY6LIWXRTyw/8+pjEYzIFrl+LLLq00zzweNsXqu5n5nRYv3m+3KQ/6WiAIV6Wu/qgSzyI=
+X-Gm-Message-State: AOJu0YxWWc4YiFZeajso1Kew+P0ky1Td9neb+iFm8ajZViP5u90g7D0T
+ idbo+ujkVKVA1fGYfu1ms2U0bMd9wfd0ku3o+/oa2jRGJKyASZ3Etl8aUyBakjo=
+X-Google-Smtp-Source: AGHT+IHJaWw5ZUz4KQIqjLhrHfhj1PcSZkdLLi1MGfltsdFbaZ9pttc7M5l4cmfOvFaaTDvQ66zXtQ==
+X-Received: by 2002:a17:902:e844:b0:1f7:317e:f4e0 with SMTP id
+ d9443c01a7336-1f83b566164mr46271865ad.12.1718262831820; 
+ Thu, 13 Jun 2024 00:13:51 -0700 (PDT)
 Received: from n37-006-243.byted.org ([180.184.84.173])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855ee6e7esm6378345ad.139.2024.06.13.00.13.36
+ d9443c01a7336-1f855ee6e7esm6378345ad.139.2024.06.13.00.13.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Jun 2024 00:13:39 -0700 (PDT)
+ Thu, 13 Jun 2024 00:13:51 -0700 (PDT)
 From: Changqi Lu <luchangqi.123@bytedance.com>
 To: qemu-block@nongnu.org,
 	qemu-devel@nongnu.org
@@ -68,16 +67,17 @@ Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
  ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
  kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
  pizhenwei@bytedance.com, Changqi Lu <luchangqi.123@bytedance.com>
-Subject: [PATCH v6 01/10] block: add persistent reservation in/out api
-Date: Thu, 13 Jun 2024 15:13:18 +0800
-Message-Id: <20240613071327.2498953-2-luchangqi.123@bytedance.com>
+Subject: [PATCH v6 04/10] scsi/util: add helper functions for persistent
+ reservation types conversion
+Date: Thu, 13 Jun 2024 15:13:21 +0800
+Message-Id: <20240613071327.2498953-5-luchangqi.123@bytedance.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20240613071327.2498953-1-luchangqi.123@bytedance.com>
 References: <20240613071327.2498953-1-luchangqi.123@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,836 +100,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add persistent reservation in/out operations
-at the block level. The following operations
-are included:
-
-- read_keys:        retrieves the list of registered keys.
-- read_reservation: retrieves the current reservation status.
-- register:         registers a new reservation key.
-- reserve:          initiates a reservation for a specific key.
-- release:          releases a reservation for a specific key.
-- clear:            clears all existing reservations.
-- preempt:          preempts a reservation held by another key.
+This commit introduces two helper functions
+that facilitate the conversion between the
+persistent reservation types used in the SCSI
+protocol and those used in the block layer.
 
 Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
 Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
 ---
- block/block-backend.c             | 403 ++++++++++++++++++++++++++++++
- block/io.c                        | 163 ++++++++++++
- include/block/block-common.h      |  40 +++
- include/block/block-io.h          |  20 ++
- include/block/block_int-common.h  |  84 +++++++
- include/sysemu/block-backend-io.h |  24 ++
- 6 files changed, 734 insertions(+)
+ include/scsi/utils.h |  8 +++++
+ scsi/utils.c         | 81 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 89 insertions(+)
 
-diff --git a/block/block-backend.c b/block/block-backend.c
-index db6f9b92a3..b74aaba23f 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -1770,6 +1770,409 @@ BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
-     return blk_aio_prwv(blk, req, 0, buf, blk_aio_ioctl_entry, 0, cb, opaque);
+diff --git a/include/scsi/utils.h b/include/scsi/utils.h
+index d5c8efa16e..89a0b082fb 100644
+--- a/include/scsi/utils.h
++++ b/include/scsi/utils.h
+@@ -1,6 +1,8 @@
+ #ifndef SCSI_UTILS_H
+ #define SCSI_UTILS_H
+ 
++#include "block/block-common.h"
++#include "scsi/constants.h"
+ #ifdef CONFIG_LINUX
+ #include <scsi/sg.h>
+ #endif
+@@ -135,6 +137,12 @@ uint32_t scsi_data_cdb_xfer(uint8_t *buf);
+ uint32_t scsi_cdb_xfer(uint8_t *buf);
+ int scsi_cdb_length(uint8_t *buf);
+ 
++BlockPrType scsi_pr_type_to_block(SCSIPrType type);
++SCSIPrType block_pr_type_to_scsi(BlockPrType type);
++
++uint8_t scsi_pr_cap_to_block(uint16_t scsi_pr_cap);
++uint16_t block_pr_cap_to_scsi(uint8_t block_pr_cap);
++
+ /* Linux SG_IO interface.  */
+ #ifdef CONFIG_LINUX
+ #define SG_ERR_DRIVER_TIMEOUT  0x06
+diff --git a/scsi/utils.c b/scsi/utils.c
+index 357b036671..0dfdeb499d 100644
+--- a/scsi/utils.c
++++ b/scsi/utils.c
+@@ -658,3 +658,84 @@ int scsi_sense_from_host_status(uint8_t host_status,
+     }
+     return GOOD;
  }
- 
-+typedef struct BlkPrInCo {
-+    BlockBackend *blk;
-+    uint32_t *generation;
-+    uint32_t num_keys;
-+    BlockPrType *type;
-+    uint64_t *keys;
-+    int ret;
-+} BlkPrInCo;
 +
-+typedef struct BlkPrInCB {
-+    BlockAIOCB common;
-+    BlkPrInCo prco;
-+    bool has_returned;
-+} BlkPrInCB;
-+
-+static const AIOCBInfo blk_pr_in_aiocb_info = {
-+    .aiocb_size         = sizeof(BlkPrInCB),
-+};
-+
-+static void blk_pr_in_complete(BlkPrInCB *acb)
++BlockPrType scsi_pr_type_to_block(SCSIPrType type)
 +{
-+    if (acb->has_returned) {
-+        acb->common.cb(acb->common.opaque, acb->prco.ret);
-+
-+        /* This is paired with blk_inc_in_flight() in blk_aio_pr_in(). */
-+        blk_dec_in_flight(acb->prco.blk);
-+        qemu_aio_unref(acb);
-+    }
-+}
-+
-+static void blk_pr_in_complete_bh(void *opaque)
-+{
-+    BlkPrInCB *acb = opaque;
-+    assert(acb->has_returned);
-+    blk_pr_in_complete(acb);
-+}
-+
-+static BlockAIOCB *blk_aio_pr_in(BlockBackend *blk, uint32_t *generation,
-+                                 uint32_t num_keys, BlockPrType *type,
-+                                 uint64_t *keys, CoroutineEntry co_entry,
-+                                 BlockCompletionFunc *cb, void *opaque)
-+{
-+    BlkPrInCB *acb;
-+    Coroutine *co;
-+
-+    /* This is paired with blk_dec_in_flight() in blk_pr_in_complete(). */
-+    blk_inc_in_flight(blk);
-+    acb = blk_aio_get(&blk_pr_in_aiocb_info, blk, cb, opaque);
-+    acb->prco = (BlkPrInCo) {
-+        .blk        = blk,
-+        .generation = generation,
-+        .num_keys   = num_keys,
-+        .type       = type,
-+        .ret        = NOT_DONE,
-+        .keys       = keys,
-+    };
-+    acb->has_returned = false;
-+
-+    co = qemu_coroutine_create(co_entry, acb);
-+    aio_co_enter(qemu_get_current_aio_context(), co);
-+
-+    acb->has_returned = true;
-+    if (acb->prco.ret != NOT_DONE) {
-+        replay_bh_schedule_oneshot_event(qemu_get_current_aio_context(),
-+                                         blk_pr_in_complete_bh, acb);
++    switch (type) {
++    case SCSI_PR_WRITE_EXCLUSIVE:
++        return BLK_PR_WRITE_EXCLUSIVE;
++    case SCSI_PR_EXCLUSIVE_ACCESS:
++        return BLK_PR_EXCLUSIVE_ACCESS;
++    case SCSI_PR_WRITE_EXCLUSIVE_REGS_ONLY:
++        return BLK_PR_WRITE_EXCLUSIVE_REGS_ONLY;
++    case SCSI_PR_EXCLUSIVE_ACCESS_REGS_ONLY:
++        return BLK_PR_EXCLUSIVE_ACCESS_REGS_ONLY;
++    case SCSI_PR_WRITE_EXCLUSIVE_ALL_REGS:
++        return BLK_PR_WRITE_EXCLUSIVE_ALL_REGS;
++    case SCSI_PR_EXCLUSIVE_ACCESS_ALL_REGS:
++        return BLK_PR_EXCLUSIVE_ACCESS_ALL_REGS;
 +    }
 +
-+    return &acb->common;
++    return 0;
 +}
 +
-+/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-+static int coroutine_fn
-+blk_aio_pr_do_read_keys(BlockBackend *blk, uint32_t *generation,
-+                        uint32_t num_keys, uint64_t *keys)
++SCSIPrType block_pr_type_to_scsi(BlockPrType type)
 +{
-+    IO_CODE();
-+
-+    blk_wait_while_drained(blk);
-+    GRAPH_RDLOCK_GUARD();
-+
-+    if (!blk_co_is_available(blk)) {
-+        return -ENOMEDIUM;
++    switch (type) {
++    case BLK_PR_WRITE_EXCLUSIVE:
++        return SCSI_PR_WRITE_EXCLUSIVE;
++    case BLK_PR_EXCLUSIVE_ACCESS:
++        return SCSI_PR_EXCLUSIVE_ACCESS;
++    case BLK_PR_WRITE_EXCLUSIVE_REGS_ONLY:
++        return SCSI_PR_WRITE_EXCLUSIVE_REGS_ONLY;
++    case BLK_PR_EXCLUSIVE_ACCESS_REGS_ONLY:
++        return SCSI_PR_EXCLUSIVE_ACCESS_REGS_ONLY;
++    case BLK_PR_WRITE_EXCLUSIVE_ALL_REGS:
++        return SCSI_PR_WRITE_EXCLUSIVE_ALL_REGS;
++    case BLK_PR_EXCLUSIVE_ACCESS_ALL_REGS:
++        return SCSI_PR_EXCLUSIVE_ACCESS_ALL_REGS;
 +    }
 +
-+    return bdrv_co_pr_read_keys(blk_bs(blk), generation, num_keys, keys);
++    return 0;
 +}
 +
-+static void coroutine_fn blk_aio_pr_read_keys_entry(void *opaque)
++
++uint8_t scsi_pr_cap_to_block(uint16_t scsi_pr_cap)
 +{
-+    BlkPrInCB *acb = opaque;
-+    BlkPrInCo *prco = &acb->prco;
++    uint8_t res = 0;
 +
-+    prco->ret = blk_aio_pr_do_read_keys(prco->blk, prco->generation,
-+                                        prco->num_keys, prco->keys);
-+    blk_pr_in_complete(acb);
++    res |= (scsi_pr_cap & SCSI_PR_CAP_WR_EX) ?
++           BLK_PR_CAP_WR_EX : 0;
++    res |= (scsi_pr_cap & SCSI_PR_CAP_EX_AC) ?
++           BLK_PR_CAP_EX_AC : 0;
++    res |= (scsi_pr_cap & SCSI_PR_CAP_WR_EX_RO) ?
++           BLK_PR_CAP_WR_EX_RO : 0;
++    res |= (scsi_pr_cap & SCSI_PR_CAP_EX_AC_RO) ?
++           BLK_PR_CAP_EX_AC_RO : 0;
++    res |= (scsi_pr_cap & SCSI_PR_CAP_WR_EX_AR) ?
++           BLK_PR_CAP_WR_EX_AR : 0;
++    res |= (scsi_pr_cap & SCSI_PR_CAP_EX_AC_AR) ?
++           BLK_PR_CAP_EX_AC_AR : 0;
++
++    return res;
 +}
 +
-+BlockAIOCB *blk_aio_pr_read_keys(BlockBackend *blk, uint32_t *generation,
-+                                 uint32_t num_keys, uint64_t *keys,
-+                                 BlockCompletionFunc *cb, void *opaque)
++uint16_t block_pr_cap_to_scsi(uint8_t block_pr_cap)
 +{
-+    IO_CODE();
-+    return blk_aio_pr_in(blk, generation, num_keys, NULL, keys,
-+                         blk_aio_pr_read_keys_entry, cb, opaque);
++    uint16_t res = 0;
++
++    res |= (block_pr_cap & BLK_PR_CAP_WR_EX) ?
++              SCSI_PR_CAP_WR_EX : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_EX_AC) ?
++              SCSI_PR_CAP_EX_AC : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_WR_EX_RO) ?
++              SCSI_PR_CAP_WR_EX_RO : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_EX_AC_RO) ?
++              SCSI_PR_CAP_EX_AC_RO : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_WR_EX_AR) ?
++              SCSI_PR_CAP_WR_EX_AR : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_EX_AC_AR) ?
++              SCSI_PR_CAP_EX_AC_AR : 0;
++
++    return res;
 +}
-+
-+/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-+static int coroutine_fn
-+blk_aio_pr_do_read_reservation(BlockBackend *blk, uint32_t *generation,
-+                               uint64_t *key, BlockPrType *type)
-+{
-+    IO_CODE();
-+
-+    blk_wait_while_drained(blk);
-+    GRAPH_RDLOCK_GUARD();
-+
-+    if (!blk_co_is_available(blk)) {
-+        return -ENOMEDIUM;
-+    }
-+
-+    return bdrv_co_pr_read_reservation(blk_bs(blk), generation, key, type);
-+}
-+
-+static void coroutine_fn blk_aio_pr_read_reservation_entry(void *opaque)
-+{
-+    BlkPrInCB *acb = opaque;
-+    BlkPrInCo *prco = &acb->prco;
-+
-+    prco->ret = blk_aio_pr_do_read_reservation(prco->blk, prco->generation,
-+                                               prco->keys, prco->type);
-+    blk_pr_in_complete(acb);
-+}
-+
-+BlockAIOCB *blk_aio_pr_read_reservation(BlockBackend *blk, uint32_t *generation,
-+                                        uint64_t *key, BlockPrType *type,
-+                                        BlockCompletionFunc *cb, void *opaque)
-+{
-+    IO_CODE();
-+    return blk_aio_pr_in(blk, generation, 0, type, key,
-+                         blk_aio_pr_read_reservation_entry, cb, opaque);
-+}
-+
-+typedef struct BlkPrOutCo {
-+    BlockBackend *blk;
-+    uint64_t old_key;
-+    uint64_t new_key;
-+    bool ptpl;
-+    BlockPrType type;
-+    bool ignore_key;
-+    bool abort;
-+    int ret;
-+} BlkPrOutCo;
-+
-+typedef struct BlkPrOutCB {
-+    BlockAIOCB common;
-+    BlkPrOutCo prco;
-+    bool has_returned;
-+} BlkPrOutCB;
-+
-+static const AIOCBInfo blk_pr_out_aiocb_info = {
-+    .aiocb_size         = sizeof(BlkPrOutCB),
-+};
-+
-+static void blk_pr_out_complete(BlkPrOutCB *acb)
-+{
-+    if (acb->has_returned) {
-+        acb->common.cb(acb->common.opaque, acb->prco.ret);
-+
-+        /* This is paired with blk_inc_in_flight() in blk_aio_pr_out(). */
-+        blk_dec_in_flight(acb->prco.blk);
-+        qemu_aio_unref(acb);
-+    }
-+}
-+
-+static void blk_pr_out_complete_bh(void *opaque)
-+{
-+    BlkPrOutCB *acb = opaque;
-+    assert(acb->has_returned);
-+    blk_pr_out_complete(acb);
-+}
-+
-+static BlockAIOCB *blk_aio_pr_out(BlockBackend *blk, uint64_t old_key,
-+                                  uint64_t new_key, bool ptpl,
-+                                  BlockPrType type, bool ignore_key,
-+                                  bool abort, CoroutineEntry co_entry,
-+                                  BlockCompletionFunc *cb, void *opaque)
-+{
-+    BlkPrOutCB *acb;
-+    Coroutine *co;
-+
-+    /* This is paired with blk_dec_in_flight() in blk_pr_out_complete(). */
-+    blk_inc_in_flight(blk);
-+    acb = blk_aio_get(&blk_pr_out_aiocb_info, blk, cb, opaque);
-+    acb->prco = (BlkPrOutCo) {
-+        .blk        = blk,
-+        .old_key    = old_key,
-+        .new_key    = new_key,
-+        .ptpl       = ptpl,
-+        .type       = type,
-+        .ignore_key = ignore_key,
-+        .abort      = abort,
-+        .ret        = NOT_DONE,
-+    };
-+    acb->has_returned = false;
-+
-+    co = qemu_coroutine_create(co_entry, acb);
-+    aio_co_enter(qemu_get_current_aio_context(), co);
-+
-+    acb->has_returned = true;
-+    if (acb->prco.ret != NOT_DONE) {
-+        replay_bh_schedule_oneshot_event(qemu_get_current_aio_context(),
-+                                         blk_pr_out_complete_bh, acb);
-+    }
-+
-+    return &acb->common;
-+}
-+
-+/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-+static int coroutine_fn
-+blk_aio_pr_do_register(BlockBackend *blk, uint64_t old_key,
-+                       uint64_t new_key, BlockPrType type,
-+                       bool ptpl, bool ignore_key)
-+{
-+    IO_CODE();
-+
-+    blk_wait_while_drained(blk);
-+    GRAPH_RDLOCK_GUARD();
-+
-+    if (!blk_co_is_available(blk)) {
-+        return -ENOMEDIUM;
-+    }
-+
-+    return bdrv_co_pr_register(blk_bs(blk), old_key, new_key, type,
-+                               ptpl, ignore_key);
-+}
-+
-+static void coroutine_fn blk_aio_pr_register_entry(void *opaque)
-+{
-+    BlkPrOutCB *acb = opaque;
-+    BlkPrOutCo *prco = &acb->prco;
-+
-+    prco->ret = blk_aio_pr_do_register(prco->blk, prco->old_key, prco->new_key,
-+                                       prco->type, prco->ptpl,
-+                                       prco->ignore_key);
-+    blk_pr_out_complete(acb);
-+}
-+
-+BlockAIOCB *blk_aio_pr_register(BlockBackend *blk, uint64_t old_key,
-+                                uint64_t new_key, BlockPrType type,
-+                                bool ptpl, bool ignore_key,
-+                                BlockCompletionFunc *cb,
-+                                void *opaque)
-+{
-+    IO_CODE();
-+    return blk_aio_pr_out(blk, old_key, new_key, ptpl, type, ignore_key, false,
-+                          blk_aio_pr_register_entry, cb, opaque);
-+}
-+
-+/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-+static int coroutine_fn
-+blk_aio_pr_do_reserve(BlockBackend *blk, uint64_t key, BlockPrType type)
-+{
-+    IO_CODE();
-+
-+    blk_wait_while_drained(blk);
-+    GRAPH_RDLOCK_GUARD();
-+
-+    if (!blk_co_is_available(blk)) {
-+        return -ENOMEDIUM;
-+    }
-+
-+    return bdrv_co_pr_reserve(blk_bs(blk), key, type);
-+}
-+
-+static void coroutine_fn blk_aio_pr_reserve_entry(void *opaque)
-+{
-+    BlkPrOutCB *acb = opaque;
-+    BlkPrOutCo *prco = &acb->prco;
-+
-+    prco->ret = blk_aio_pr_do_reserve(prco->blk, prco->old_key,
-+                                      prco->type);
-+    blk_pr_out_complete(acb);
-+}
-+
-+
-+BlockAIOCB *blk_aio_pr_reserve(BlockBackend *blk,  uint64_t key,
-+                               BlockPrType type,
-+                               BlockCompletionFunc *cb,
-+                               void *opaque)
-+{
-+    IO_CODE();
-+    return blk_aio_pr_out(blk, key, 0, false, type, false, false,
-+                          blk_aio_pr_reserve_entry, cb, opaque);
-+}
-+
-+/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-+static int coroutine_fn
-+blk_aio_pr_do_release(BlockBackend *blk, uint64_t key, BlockPrType type)
-+{
-+    IO_CODE();
-+
-+    blk_wait_while_drained(blk);
-+    GRAPH_RDLOCK_GUARD();
-+
-+    if (!blk_co_is_available(blk)) {
-+        return -ENOMEDIUM;
-+    }
-+
-+    return bdrv_co_pr_release(blk_bs(blk), key, type);
-+}
-+
-+static void coroutine_fn blk_aio_pr_release_entry(void *opaque)
-+{
-+    BlkPrOutCB *acb = opaque;
-+    BlkPrOutCo *prco = &acb->prco;
-+
-+    prco->ret = blk_aio_pr_do_release(prco->blk, prco->old_key, prco->type);
-+    blk_pr_out_complete(acb);
-+}
-+
-+
-+BlockAIOCB *blk_aio_pr_release(BlockBackend *blk, uint64_t key,
-+                               BlockPrType type, BlockCompletionFunc *cb,
-+                               void *opaque)
-+{
-+    IO_CODE();
-+    return blk_aio_pr_out(blk, key, 0, false, type, false, false,
-+                          blk_aio_pr_release_entry, cb, opaque);
-+}
-+
-+/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-+static int coroutine_fn
-+blk_aio_pr_do_clear(BlockBackend *blk, uint64_t key)
-+{
-+    IO_CODE();
-+
-+    blk_wait_while_drained(blk);
-+    GRAPH_RDLOCK_GUARD();
-+
-+    if (!blk_co_is_available(blk)) {
-+        return -ENOMEDIUM;
-+    }
-+
-+    return bdrv_co_pr_clear(blk_bs(blk), key);
-+}
-+
-+static void coroutine_fn blk_aio_pr_clear_entry(void *opaque)
-+{
-+    BlkPrOutCB *acb = opaque;
-+    BlkPrOutCo *prco = &acb->prco;
-+
-+    prco->ret = blk_aio_pr_do_clear(prco->blk, prco->old_key);
-+    blk_pr_out_complete(acb);
-+}
-+
-+
-+BlockAIOCB *blk_aio_pr_clear(BlockBackend *blk, uint64_t key,
-+                             BlockCompletionFunc *cb, void *opaque)
-+{
-+    IO_CODE();
-+    return blk_aio_pr_out(blk, key, 0, false, 0, false, false,
-+                          blk_aio_pr_clear_entry, cb, opaque);
-+}
-+
-+/* To be called between exactly one pair of blk_inc/dec_in_flight() */
-+static int coroutine_fn
-+blk_aio_pr_do_preempt(BlockBackend *blk, uint64_t cr_key,
-+                      uint64_t pr_key, BlockPrType type, bool abort)
-+{
-+    IO_CODE();
-+
-+    blk_wait_while_drained(blk);
-+    GRAPH_RDLOCK_GUARD();
-+
-+    if (!blk_co_is_available(blk)) {
-+        return -ENOMEDIUM;
-+    }
-+
-+    return bdrv_co_pr_preempt(blk_bs(blk), cr_key, pr_key, type, abort);
-+}
-+
-+static void coroutine_fn blk_aio_pr_preempt_entry(void *opaque)
-+{
-+    BlkPrOutCB *acb = opaque;
-+    BlkPrOutCo *prco = &acb->prco;
-+
-+    prco->ret = blk_aio_pr_do_preempt(prco->blk, prco->old_key,
-+                                      prco->new_key, prco->type,
-+                                      prco->abort);
-+    blk_pr_out_complete(acb);
-+}
-+
-+
-+BlockAIOCB *blk_aio_pr_preempt(BlockBackend *blk, uint64_t cr_key,
-+                               uint64_t pr_key, BlockPrType type,
-+                               bool abort, BlockCompletionFunc *cb,
-+                               void *opaque)
-+{
-+    IO_CODE();
-+    return blk_aio_pr_out(blk, cr_key, pr_key, false, type, false, abort,
-+                          blk_aio_pr_preempt_entry, cb, opaque);
-+}
-+
- /* To be called between exactly one pair of blk_inc/dec_in_flight() */
- static int coroutine_fn
- blk_co_do_pdiscard(BlockBackend *blk, int64_t offset, int64_t bytes)
-diff --git a/block/io.c b/block/io.c
-index 7217cf811b..87a363c94f 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -3220,6 +3220,169 @@ out:
-     return co.ret;
- }
- 
-+int coroutine_fn bdrv_co_pr_read_keys(BlockDriverState *bs,
-+                 uint32_t *generation, uint32_t num_keys,
-+                 uint64_t *keys)
-+{
-+    BlockDriver *drv = bs->drv;
-+    CoroutineIOCompletion co = {
-+        .coroutine = qemu_coroutine_self(),
-+    };
-+
-+    IO_CODE();
-+    assert_bdrv_graph_readable();
-+
-+    bdrv_inc_in_flight(bs);
-+    if (!drv || !drv->bdrv_co_pr_read_keys) {
-+        co.ret = -ENOTSUP;
-+        goto out;
-+    }
-+
-+    co.ret = drv->bdrv_co_pr_read_keys(bs, generation, num_keys, keys);
-+out:
-+    bdrv_dec_in_flight(bs);
-+    return co.ret;
-+}
-+
-+int coroutine_fn bdrv_co_pr_read_reservation(BlockDriverState *bs,
-+                 uint32_t *generation, uint64_t *key, BlockPrType *type)
-+{
-+    BlockDriver *drv = bs->drv;
-+    CoroutineIOCompletion co = {
-+        .coroutine = qemu_coroutine_self(),
-+    };
-+
-+    IO_CODE();
-+    assert_bdrv_graph_readable();
-+
-+    bdrv_inc_in_flight(bs);
-+    if (!drv || !drv->bdrv_co_pr_read_reservation) {
-+        co.ret = -ENOTSUP;
-+        goto out;
-+    }
-+
-+    co.ret = drv->bdrv_co_pr_read_reservation(bs, generation, key, type);
-+out:
-+    bdrv_dec_in_flight(bs);
-+    return co.ret;
-+}
-+
-+int coroutine_fn bdrv_co_pr_register(BlockDriverState *bs, uint64_t old_key,
-+                 uint64_t new_key, BlockPrType type, bool ptpl,
-+                 bool ignore_key)
-+{
-+    BlockDriver *drv = bs->drv;
-+    CoroutineIOCompletion co = {
-+        .coroutine = qemu_coroutine_self(),
-+    };
-+
-+    IO_CODE();
-+    assert_bdrv_graph_readable();
-+
-+    bdrv_inc_in_flight(bs);
-+    if (!drv || !drv->bdrv_co_pr_register) {
-+        co.ret = -ENOTSUP;
-+        goto out;
-+    }
-+
-+    co.ret = drv->bdrv_co_pr_register(bs, old_key, new_key, type,
-+    ptpl, ignore_key);
-+out:
-+    bdrv_dec_in_flight(bs);
-+    return co.ret;
-+}
-+
-+int coroutine_fn bdrv_co_pr_reserve(BlockDriverState *bs, uint64_t key,
-+                                    BlockPrType type)
-+{
-+    BlockDriver *drv = bs->drv;
-+    CoroutineIOCompletion co = {
-+        .coroutine = qemu_coroutine_self(),
-+    };
-+
-+    IO_CODE();
-+    assert_bdrv_graph_readable();
-+
-+    bdrv_inc_in_flight(bs);
-+    if (!drv || !drv->bdrv_co_pr_reserve) {
-+        co.ret = -ENOTSUP;
-+        goto out;
-+    }
-+
-+    co.ret = drv->bdrv_co_pr_reserve(bs, key, type);
-+out:
-+    bdrv_dec_in_flight(bs);
-+    return co.ret;
-+}
-+
-+int coroutine_fn bdrv_co_pr_release(BlockDriverState *bs, uint64_t key,
-+                                    BlockPrType type)
-+{
-+    BlockDriver *drv = bs->drv;
-+    CoroutineIOCompletion co = {
-+        .coroutine = qemu_coroutine_self(),
-+    };
-+
-+    IO_CODE();
-+    assert_bdrv_graph_readable();
-+
-+    bdrv_inc_in_flight(bs);
-+    if (!drv || !drv->bdrv_co_pr_release) {
-+        co.ret = -ENOTSUP;
-+        goto out;
-+    }
-+
-+    co.ret = drv->bdrv_co_pr_release(bs, key, type);
-+out:
-+    bdrv_dec_in_flight(bs);
-+    return co.ret;
-+}
-+
-+int coroutine_fn bdrv_co_pr_clear(BlockDriverState *bs, uint64_t key)
-+{
-+    BlockDriver *drv = bs->drv;
-+    CoroutineIOCompletion co = {
-+        .coroutine = qemu_coroutine_self(),
-+    };
-+
-+    IO_CODE();
-+    assert_bdrv_graph_readable();
-+
-+    bdrv_inc_in_flight(bs);
-+    if (!drv || !drv->bdrv_co_pr_clear) {
-+        co.ret = -ENOTSUP;
-+        goto out;
-+    }
-+
-+    co.ret = drv->bdrv_co_pr_clear(bs, key);
-+out:
-+    bdrv_dec_in_flight(bs);
-+    return co.ret;
-+}
-+
-+int coroutine_fn bdrv_co_pr_preempt(BlockDriverState *bs, uint64_t cr_key,
-+                 uint64_t pr_key, BlockPrType type, bool abort)
-+{
-+    BlockDriver *drv = bs->drv;
-+    CoroutineIOCompletion co = {
-+        .coroutine = qemu_coroutine_self(),
-+    };
-+
-+    IO_CODE();
-+    assert_bdrv_graph_readable();
-+
-+    bdrv_inc_in_flight(bs);
-+    if (!drv || !drv->bdrv_co_pr_preempt) {
-+        co.ret = -ENOTSUP;
-+        goto out;
-+    }
-+
-+    co.ret = drv->bdrv_co_pr_preempt(bs, cr_key, pr_key, type, abort);
-+out:
-+    bdrv_dec_in_flight(bs);
-+    return co.ret;
-+}
-+
- int coroutine_fn bdrv_co_zone_report(BlockDriverState *bs, int64_t offset,
-                         unsigned int *nr_zones,
-                         BlockZoneDescriptor *zones)
-diff --git a/include/block/block-common.h b/include/block/block-common.h
-index a846023a09..7ca4e2328f 100644
---- a/include/block/block-common.h
-+++ b/include/block/block-common.h
-@@ -524,6 +524,46 @@ typedef enum {
-     BDRV_FIX_ERRORS   = 2,
- } BdrvCheckMode;
- 
-+/**
-+ *  According SCSI protocol(chapter 5.9 of SCSI Primary Commands - 4)
-+ *  and NVMe protocol(chapter 7.2 of NVMe Base Specification 2.0),
-+ *  the persistent reservation types and persistent capabilities of
-+ *  the public layer block are abstracted.
-+ */
-+typedef enum {
-+    BLK_PR_WRITE_EXCLUSIVE              = 0x1,
-+    BLK_PR_EXCLUSIVE_ACCESS             = 0x2,
-+    BLK_PR_WRITE_EXCLUSIVE_REGS_ONLY    = 0x3,
-+    BLK_PR_EXCLUSIVE_ACCESS_REGS_ONLY   = 0x4,
-+    BLK_PR_WRITE_EXCLUSIVE_ALL_REGS     = 0x5,
-+    BLK_PR_EXCLUSIVE_ACCESS_ALL_REGS    = 0x6,
-+} BlockPrType;
-+
-+typedef enum BLKPrCap {
-+    /* Persist Through Power Loss */
-+    BLK_PR_CAP_PTPL = 1 << 0,
-+    /* Write Exclusive reservation type */
-+    BLK_PR_CAP_WR_EX = 1 << 1,
-+    /* Exclusive Access reservation type */
-+    BLK_PR_CAP_EX_AC = 1 << 2,
-+    /* Write Exclusive Registrants Only reservation type */
-+    BLK_PR_CAP_WR_EX_RO = 1 << 3,
-+    /* Exclusive Access Registrants Only reservation type */
-+    BLK_PR_CAP_EX_AC_RO = 1 << 4,
-+    /* Write Exclusive All Registrants reservation type */
-+    BLK_PR_CAP_WR_EX_AR = 1 << 5,
-+    /* Exclusive Access All Registrants reservation type */
-+    BLK_PR_CAP_EX_AC_AR = 1 << 6,
-+
-+    BLK_PR_CAP_ALL = (BLK_PR_CAP_PTPL |
-+                     BLK_PR_CAP_WR_EX |
-+                     BLK_PR_CAP_EX_AC |
-+                     BLK_PR_CAP_WR_EX_RO |
-+                     BLK_PR_CAP_EX_AC_RO |
-+                     BLK_PR_CAP_WR_EX_AR |
-+                     BLK_PR_CAP_EX_AC_AR),
-+} BLKPrCap;
-+
- typedef struct BlockSizes {
-     uint32_t phys;
-     uint32_t log;
-diff --git a/include/block/block-io.h b/include/block/block-io.h
-index b49e0537dd..908361862b 100644
---- a/include/block/block-io.h
-+++ b/include/block/block-io.h
-@@ -106,6 +106,26 @@ void bdrv_aio_cancel_async(BlockAIOCB *acb);
- int coroutine_fn GRAPH_RDLOCK
- bdrv_co_ioctl(BlockDriverState *bs, int req, void *buf);
- 
-+int coroutine_fn GRAPH_RDLOCK
-+bdrv_co_pr_read_keys(BlockDriverState *bs, uint32_t *generation,
-+                     uint32_t num_keys, uint64_t *keys);
-+int coroutine_fn GRAPH_RDLOCK
-+bdrv_co_pr_read_reservation(BlockDriverState *bs, uint32_t *generation,
-+                            uint64_t *key, BlockPrType *type);
-+int coroutine_fn GRAPH_RDLOCK
-+bdrv_co_pr_register(BlockDriverState *bs, uint64_t old_key,
-+                    uint64_t new_key, BlockPrType type,
-+                    bool ptpl, bool ignore_key);
-+int coroutine_fn GRAPH_RDLOCK
-+bdrv_co_pr_reserve(BlockDriverState *bs, uint64_t key, BlockPrType type);
-+int coroutine_fn GRAPH_RDLOCK
-+bdrv_co_pr_release(BlockDriverState *bs, uint64_t key, BlockPrType type);
-+int coroutine_fn GRAPH_RDLOCK
-+bdrv_co_pr_clear(BlockDriverState *bs, uint64_t key);
-+int coroutine_fn GRAPH_RDLOCK
-+bdrv_co_pr_preempt(BlockDriverState *bs, uint64_t cr_key, uint64_t pr_key,
-+                   BlockPrType type, bool abort);
-+
- /* Ensure contents are flushed to disk.  */
- int coroutine_fn GRAPH_RDLOCK bdrv_co_flush(BlockDriverState *bs);
- 
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index 761276127e..6e628069e9 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -766,6 +766,87 @@ struct BlockDriver {
-     int coroutine_fn GRAPH_RDLOCK_PTR (*bdrv_co_ioctl)(
-         BlockDriverState *bs, unsigned long int req, void *buf);
- 
-+    /*
-+     * Persistent reservation series api.
-+     * Please refer to chapter 5.9 of SCSI Primary Commands - 4 or
-+     * chapter 7 of NVMe Base Specification 2.0.
-+     *
-+     * The block layer driver should implement all the following APIs
-+     * or none at all, including: bdrv_co_pr_read_keys,
-+     * bdrv_co_pr_read_reservation, bdrv_co_pr_register,
-+     * bdrv_co_pr_reserve, bdrv_co_pr_release,
-+     * bdrv_co_pr_clear and bdrv_co_pr_preempt.
-+     *
-+     * Read the registered keys and return them in the @keys.
-+     * @generation: The generation of the reservation key.
-+     * @num_keys:   The maximum number of keys that can be transmitted.
-+     * @keys:       Registered keys array.
-+     *
-+     * On success, store generation in @generation and store keys @keys
-+     * and return the number of @keys.
-+     * On failure return -errno.
-+     */
-+    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_read_keys)(
-+        BlockDriverState *bs, uint32_t *generation,
-+        uint32_t num_keys, uint64_t *keys);
-+    /*
-+     * Read the reservation key and store it in the @key.
-+     * @generation: The generation of the reservation key.
-+     * @key:        The reservation key.
-+     * @type:       Type of the reservation key.
-+     *
-+     * On success, store generation in @generation, store the
-+     * reservation key in @key and return the number of @key
-+     * which used to determine whether the reservation key exists.
-+     * On failure return -errno.
-+     */
-+    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_read_reservation)(
-+        BlockDriverState *bs, uint32_t *generation,
-+        uint64_t *key, BlockPrType *type);
-+    /*
-+     * Register, unregister, or replace a reservation key.
-+     * @old_key:    The current reservation key associated with the host.
-+     * @new_key:    The new reservation Key.
-+     * @type:       Type of the reservation key.
-+     * @ignore_key: Ignore or not @old_key.
-+     * @ptpl:       Whether to support Persist Through Power Loss(PTPL).
-+     */
-+    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_register)(
-+        BlockDriverState *bs, uint64_t old_key,
-+        uint64_t new_key, BlockPrType type,
-+        bool ptpl, bool ignore_key);
-+    /*
-+     * Acquire a reservation on a host.
-+     * @key:  The current reservation key associated with the host.
-+     * @type: Type of the reservation key.
-+     */
-+    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_reserve)(
-+        BlockDriverState *bs, uint64_t key, BlockPrType type);
-+    /*
-+     * Release a reservation on a host.
-+     * @key:  The current reservation key associated with the host.
-+     * @type: Type of the reservation key.
-+     */
-+    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_release)(
-+        BlockDriverState *bs, uint64_t key, BlockPrType type);
-+    /**
-+     * Clear reservations on a host.
-+     * @key: The current reservation key associated with the host.
-+     */
-+    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_clear)(
-+        BlockDriverState *bs, uint64_t key);
-+    /*
-+     * Preempt a reservation held on a host.
-+     * @cr_key: The current reservation key associated with the host.
-+     * @pr_key: The preempt reservation Key which to be
-+     *          unregistered from the namespace.
-+     * @type:   Type of the reservation key.
-+     * @abort:  Whether to abort a reservation held on a host.
-+     */
-+    int coroutine_fn GRAPH_RDLOCK_PTR(*bdrv_co_pr_preempt)(
-+        BlockDriverState *bs, uint64_t cr_key,
-+        uint64_t pr_key, BlockPrType type, bool abort);
-+
-     /*
-      * Returns 0 for completed check, -errno for internal errors.
-      * The check results are stored in result.
-@@ -899,6 +980,9 @@ typedef struct BlockLimits {
-     uint32_t max_active_zones;
- 
-     uint32_t write_granularity;
-+
-+   /* Persistent reservation capacities. */
-+    uint8_t pr_cap;
- } BlockLimits;
- 
- typedef struct BdrvOpBlocker BdrvOpBlocker;
-diff --git a/include/sysemu/block-backend-io.h b/include/sysemu/block-backend-io.h
-index d174275a5c..b3d49a3c6f 100644
---- a/include/sysemu/block-backend-io.h
-+++ b/include/sysemu/block-backend-io.h
-@@ -62,6 +62,30 @@ void blk_aio_cancel_async(BlockAIOCB *acb);
- BlockAIOCB *blk_aio_ioctl(BlockBackend *blk, unsigned long int req, void *buf,
-                           BlockCompletionFunc *cb, void *opaque);
- 
-+BlockAIOCB *blk_aio_pr_read_keys(BlockBackend *blk, uint32_t *generation,
-+                                 uint32_t num_keys, uint64_t *keys,
-+                                 BlockCompletionFunc *cb, void *opaque);
-+BlockAIOCB *blk_aio_pr_read_reservation(BlockBackend *blk, uint32_t *generation,
-+                                        uint64_t *key, BlockPrType *type,
-+                                        BlockCompletionFunc *cb, void *opaque);
-+BlockAIOCB *blk_aio_pr_register(BlockBackend *blk, uint64_t old_key,
-+                                uint64_t new_key, BlockPrType type,
-+                                bool ptpl, bool ignore_key,
-+                                BlockCompletionFunc *cb,
-+                                void *opaque);
-+BlockAIOCB *blk_aio_pr_reserve(BlockBackend *blk,  uint64_t key,
-+                               BlockPrType type,
-+                               BlockCompletionFunc *cb,
-+                               void *opaque);
-+BlockAIOCB *blk_aio_pr_release(BlockBackend *blk, uint64_t key,
-+                               BlockPrType type, BlockCompletionFunc *cb,
-+                               void *opaque);
-+BlockAIOCB *blk_aio_pr_clear(BlockBackend *blk, uint64_t key,
-+                             BlockCompletionFunc *cb, void *opaque);
-+BlockAIOCB *blk_aio_pr_preempt(BlockBackend *blk, uint64_t cr_key,
-+                               uint64_t pr_key, BlockPrType type, bool abort,
-+                               BlockCompletionFunc *cb, void *opaque);
-+
- void blk_inc_in_flight(BlockBackend *blk);
- void blk_dec_in_flight(BlockBackend *blk);
- 
 -- 
 2.20.1
 
