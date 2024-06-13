@@ -4,68 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75862C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 13:09:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B675C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 13:17:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHkC9-0007SI-FS; Thu, 13 Jun 2024 09:08:49 -0400
+	id 1sHkJu-0000zF-TH; Thu, 13 Jun 2024 09:16:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sHkC7-0007S2-Fv
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 09:08:47 -0400
-Received: from mail-qv1-xf33.google.com ([2607:f8b0:4864:20::f33])
+ id 1sHkJt-0000xI-8o
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 09:16:49 -0400
+Received: from mail-qv1-xf2a.google.com ([2607:f8b0:4864:20::f2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sHkC5-00066r-Tl
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 09:08:47 -0400
-Received: by mail-qv1-xf33.google.com with SMTP id
- 6a1803df08f44-6b0745efaeeso5078656d6.1
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 06:08:45 -0700 (PDT)
+ id 1sHkJr-0007T1-1x
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 09:16:49 -0400
+Received: by mail-qv1-xf2a.google.com with SMTP id
+ 6a1803df08f44-6ae093e8007so2627846d6.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 06:16:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718284125; x=1718888925; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1718284606; x=1718889406; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=9A2UsVHaAsavVqOvvzKOoa54gyqgoUcFzdCp5G83Vc4=;
- b=VyXtfWA1K8Mh/1sX20DHjFbkPsopY0t3gDuO+L3ONcGhiHlF9s54dgyUYDv1pCLft4
- bGTwTlvHlXaxpCQuwOKePtjQ4Dp1k7QitC4ARAkcodv+xMJGDvTXidj1qefEvzYXVCtL
- I5TadX1sT5kM62lHiUc8qsm/dkCWR8/V8+vRGp5dmIIwXAqzyO7Ui9ZcFuTGAmR2Fy8C
- +tf1yx6DpH6xUGfgLMSwhK1prjq+6LzNsmEtK3e640WfWuOsmnfXF/F8UUnPOL423y5M
- iQdR0K06tO4QOAOD9yoUawzgbaTJotPr9wzR7aqT+bxL8iGDR3RXLBnikBGteZbiuYCn
- HzZQ==
+ bh=gs4uQdtqFlxYzu/Itfn5LPo8ZtT6N9QCr1Lolb7Yi78=;
+ b=QGffnnOuhzAoRM/iY2hHrMY3/WbtTLVAwaHi2mnW8ObbThJ/1bSTaXlLTRBk6yRpKL
+ Q9v2r2C5kNrX0ArZXmkkvp+ZQP+Ncb1D38Az+0r1BvQgyUahiZ8gKkOkjoq5ccAetTer
+ pg7UhXTjeuBrwVn4yOcHpj0Ehe/l/aL2Y2Z5roVa8mJIwDsKqd5+dFjOw6Z1uyDWVbnh
+ eYnv4TOrvLb73H/PVwBPur+mOSlkBL515OB0SS+XUSK+JmzcqG2b0FYPvCubb9tRfm6f
+ RWNy6ml73aAHSgJFu1LIVGvTkX3nOU7wQmHP/bWFMXSQ8kayZDpE7kSXkQrrl/8tVDV7
+ xemg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718284125; x=1718888925;
+ d=1e100.net; s=20230601; t=1718284606; x=1718889406;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9A2UsVHaAsavVqOvvzKOoa54gyqgoUcFzdCp5G83Vc4=;
- b=cpZCT1T68TuaCMy2lDLbeh2WcKB8wAbJbs2jTt+fI/U14xUpS2iorRy4igkPFXsrRw
- q5vkk5EYswwSaIcm1lFedpnpi2tGiJ+a6pmM6+HIBU+HeR8ih8Bm7XFBFeFi98UyYHbp
- 5dTCYMNAZGfW4NXrSIzdJeEBsGt1kY39+8h3tdME5jN1yPJ2zWS6gBUchzoXkz1Ri342
- XrgkqBatAio5lczhXCaVhrJhsFaxaVpHFtu5fo9HeyNxJaPh5O5q71L5rb4Fyhe7Mwj7
- 9XokkspG8xvlLXxK+JnA5bBkU/M6a0hHZAPlF3+rf/UB85pLUwWnl5W7fe6asG0kLxkK
- +/mQ==
-X-Gm-Message-State: AOJu0Yx7rGzajzcgo8kwVtUpffjJANrq1DD2aG/M6pT5x6WKtbrmwC2x
- sV2XKUDn2fmGTMsnn5XV5AI34amx7KZL2RopUXKh0xJiL4TOcLX6VkABYSVOu2WCXpPzaE6PeTt
- tuY1ow5YD3iV9476Lv7uJvG48VufyuMHn
-X-Google-Smtp-Source: AGHT+IGQoFc++kcN+sbCc5v74j7kARvTVmqCADToG+TAO/LMB7DGzLamjXeqOt+i2ktZiGK0Y9neWK7IpJ8K5wCIl1w=
-X-Received: by 2002:a05:6214:4520:b0:6b0:7fc4:7744 with SMTP id
- 6a1803df08f44-6b1a62a7675mr49331996d6.29.1718284123997; Thu, 13 Jun 2024
- 06:08:43 -0700 (PDT)
+ bh=gs4uQdtqFlxYzu/Itfn5LPo8ZtT6N9QCr1Lolb7Yi78=;
+ b=GUTk0RuEe2LsgcdANOw8eAvk7qkhE8yzu2RGSl/ewQi+phJpgAlXVqoRk/UZZ2AVMV
+ LIXSMvGKaWhqAf2f3nxfcyX3Sln2DBiq6zQfU4YWTw8Xdk6OdrwIoKRT+Qk9TQ1QMSkD
+ YGgkFMT8W0QUJoWQgkxp3o3ev7ODs24RnKjxoaYlXpH0DxzSC/PdzmdY37XSg1mCNOJ9
+ phkxf5VhxNjtvAzOAKH/0bHKcsDwGBBuhYOM0MpTDyQ7/IDkGIF7RAYeZ8uaV6s3lGvx
+ GAWtNfiNo7O/YPHibpvX+0w5EBrtVlX66kD7Z9v7c0hV12zdDCx06hi3jxZCaO2GsrLZ
+ FYRA==
+X-Gm-Message-State: AOJu0YwZvQtEipvM6wYmj91xuW0zwRumXQ0jcEyX0si/2xWnYYT7IMhb
+ SXDwYdC7xVc09wDvCKMOYDpbqg/mLVmKM4kZdqlTlswpYfjFfGXfymS+yIcIBKZuxc/5S69DvoH
+ 4OzBblyWhlHCw4AYQKmuodnNyA8geNfp1
+X-Google-Smtp-Source: AGHT+IElO1ALCKWlxiPeFFMZLlOZdt60P+P9ysYeQp9MXu3umqSzXvm0c113K8TnDP43ZjopKOytQc9Lx95biCN0t+E=
+X-Received: by 2002:a05:6214:448b:b0:6b0:732f:b92b with SMTP id
+ 6a1803df08f44-6b1910c226amr52142676d6.12.1718284605664; Thu, 13 Jun 2024
+ 06:16:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <readline-shortcuts-v1.1718265822.manos.pitsidianakis@linaro.org>
-In-Reply-To: <readline-shortcuts-v1.1718265822.manos.pitsidianakis@linaro.org>
+References: <20240529224252.80395-1-dongwon.kim@intel.com>
+ <CAJ+F1CJFWRtyXvpCJuSVPssJcBx8ecP1HCkWCJ=HBWxXovj+Dw@mail.gmail.com>
+ <ed6a1963-b079-4fdc-a6ca-6ba98b95c0de@intel.com>
+ <CAJ+F1CJW3b9D4nU3x4XSjpG=KrBpJMLWqdR3tpdipObODZRvgQ@mail.gmail.com>
+ <PH8PR11MB68796CDE59AA75FD1D6089A1FAC02@PH8PR11MB6879.namprd11.prod.outlook.com>
+ <CAJ+F1C+L=5cSPhEXrAczfN27sXEH_2Xwohk7Bt2r4KmhteDguQ@mail.gmail.com>
+ <d1534c51-bb11-4439-afc9-0a95f2dc4cf5@intel.com>
+In-Reply-To: <d1534c51-bb11-4439-afc9-0a95f2dc4cf5@intel.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Thu, 13 Jun 2024 17:08:31 +0400
-Message-ID: <CAJ+F1C+FhP4LGnmEWNYXp1CX4fQ4V41Cs-OEkZrZYmq1vtq6cA@mail.gmail.com>
-Subject: Re: [PATCH v1 0/3] util/readline.c: Add common but missing shortcuts
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000d592de061ac53250"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f33;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf33.google.com
+Date: Thu, 13 Jun 2024 17:16:33 +0400
+Message-ID: <CAJ+F1C+kYEHrCGKcwxyGiaiHhRyN7+uKvEj4yWBDxEK2nKUOdA@mail.gmail.com>
+Subject: Re: [PATCH] ui/gtk: Wait until the current guest frame is rendered
+ before switching to RUN_STATE_SAVE_VM
+To: "Kim, Dongwon" <dongwon.kim@intel.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Peter Xu <peterx@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000008b363f061ac54f6a"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2a;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qv1-xf2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,68 +95,324 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d592de061ac53250
+--0000000000008b363f061ac54f6a
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Hi
 
-On Thu, Jun 13, 2024 at 12:07=E2=80=AFPM Manos Pitsidianakis <
-manos.pitsidianakis@linaro.org> wrote:
+On Wed, Jun 12, 2024 at 10:50=E2=80=AFPM Kim, Dongwon <dongwon.kim@intel.co=
+m> wrote:
 
-> Some commonly used readline shortcuts are missing from our
-> implementation. This series adds:
+> On 6/11/2024 10:44 PM, Marc-Andr=C3=A9 Lureau wrote:
+> > Hi
+> >
+> > On Wed, Jun 12, 2024 at 5:29=E2=80=AFAM Kim, Dongwon <dongwon.kim@intel=
+.com
+> > <mailto:dongwon.kim@intel.com>> wrote:
+> >
+> >     Hi,
+> >
+> >     From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com
+> >     <mailto:marcandre.lureau@gmail.com>>
+> >     Sent: Wednesday, June 5, 2024 12:56 AM
+> >     To: Kim, Dongwon <dongwon.kim@intel.com <mailto:
+> dongwon.kim@intel.com>>
+> >     Cc: qemu-devel@nongnu.org <mailto:qemu-devel@nongnu.org>; Peter Xu
+> >     <peterx@redhat.com <mailto:peterx@redhat.com>>
+> >     Subject: Re: [PATCH] ui/gtk: Wait until the current guest frame is
+> >     rendered before switching to RUN_STATE_SAVE_VM
+> >
+> >     Hi
+> >
+> >     On Tue, Jun 4, 2024 at 9:49=E2=80=AFPM Kim, Dongwon
+> >     <mailto:dongwon.kim@intel.com <mailto:dongwon.kim@intel.com>> wrote=
+:
+> >     On 6/4/2024 4:12 AM, Marc-Andr=C3=A9 Lureau wrote:
+> >      > Hi
+> >      >
+> >      > On Thu, May 30, 2024 at 2:44=E2=80=AFAM <mailto:dongwon.kim@inte=
+l.com
+> >     <mailto:dongwon.kim@intel.com>
+> >      > <mailto:mailto <mailto:mailto>:dongwon.kim@intel.com
+> >     <mailto:dongwon.kim@intel.com>>> wrote:
+> >      >
+> >      >     From: Dongwon <mailto:dongwon.kim@intel.com
+> >     <mailto:dongwon.kim@intel.com> <mailto:mailto
+> >     <mailto:mailto>:dongwon.kim@intel.com <mailto:dongwon.kim@intel.com
+> >>>
+> >      >
+> >      >     Make sure rendering of the current frame is finished before
+> >     switching
+> >      >     the run state to RUN_STATE_SAVE_VM by waiting for egl-sync
+> >     object to be
+> >      >     signaled.
+> >      >
+> >      >
+> >      > Can you expand on what this solves?
+> >
+> >     In current scheme, guest waits for the fence to be signaled for eac=
+h
+> >     frame it submits before moving to the next frame. If the guest=E2=
+=80=99s
+> state
+> >     is saved while it is still waiting for the fence, The guest will
+> >     continue to  wait for the fence that was signaled while ago when it
+> is
+> >     restored to the point. One way to prevent it is to get it finish th=
+e
+> >     current frame before changing the state.
+> >
+> >     After the UI sets a fence, hw_ops->gl_block(true) gets called, whic=
+h
+> >     will block virtio-gpu/virgl from processing commands (until the
+> >     fence is signaled and gl_block/false called again).
+> >
+> >     But this "blocking" state is not saved. So how does this affect
+> >     save/restore? Please give more details, thanks
+> >
+> >     Yeah sure. "Blocking" state is not saved but guest's state is saved
+> >     while it was still waiting for the response for its last
+> >     resource-flush virtio msg. This virtio response, by the way is set
+> >     to be sent to the guest when the pipeline is unblocked (and when th=
+e
+> >     fence is signaled.). Once the guest's state is saved, current
+> >     instance of guest will be continued and receives the response as
+> >     usual. The problem is happening when we restore the saved guest's
+> >     state again because what guest does will be waiting for the respons=
+e
+> >     that was sent a while ago to the original instance.
+> >
+> >
+> > Where is the pending response saved? Can you detail how you test this?
+> >
 >
-> - Control-n next line, same as Down arrow key
-> - Control-p previous line, same as Up arrow key
-> - Control-u erase line starting from cursor
+> There is no pending response for the guest's restored point, which is a
+> problem. The response is sent out after saving is done.
 >
-> Manos Pitsidianakis (3):
->   util/readline.c:fix lints for readline_handle_byte
->   util/readline.c: add C-n, C-p shortcuts
->   util/readline.c: add C-u shortcut
+> Normal cycle :
 >
->  util/readline.c | 35 +++++++++++++++++++++++++++++++----
->  1 file changed, 31 insertions(+), 4 deletions(-)
+> resource-flush (scanout flush) -> gl block -> render -> gl unblock
+> (after fence is signaled) -> pending response sent out to the guest ->
+> guest (virtio-gpu drv) processes the next scanout frame -> (next cycle)
+> resource-flush -> gl block ......
+>
+> When vm state is saved in the middle :
+>
+> resource-flush (scanout-flush) -> gl block -> saving vm-state -> render
+> -> gl unblock -> pending response (resp #1) sent out to the guest ->
+> guest (virtio-gpu drv) processes the next scanout frame -> (next cycle)
+> resource-flush -> gl block ......
+>
+> Now, we restore the vm-state we saved
+>
+> vm-state is restored -> guest (virtio-gpu drv) can't move on as this
+> state is still waiting for the response (resp #1)
+>
+
+Ok, so actually it's more of a device state issue than a UI/GTK. We end up
+not saving a state that reflects the guest state. My understanding is that
+the guest is waiting for a fence reply, and we don't save that. Imho, a
+better fix would be to either save the fenceq (but then, what else is
+missing to complete the operation on resume?), or have a wait to delay the
+migration until the fences are flushed.
+
+
+> So we need to make sure vm-state is saved after the cycle is completed.
+>
+> This situation would be only happening if you use blob=3Dtrue with
+> virtio-gpu drv as KMS on the linux guest. Do you have any similar setup?
 >
 >
->
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+No, further details to reproduce would help. Even better would be having
+some automated test.
 
 
 --=20
 Marc-Andr=C3=A9 Lureau
 
---000000000000d592de061ac53250
+--0000000000008b363f061ac54f6a
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_quote=
-"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 13, 2024 at 12:07=E2=80=
-=AFPM Manos Pitsidianakis &lt;<a href=3D"mailto:manos.pitsidianakis@linaro.=
-org">manos.pitsidianakis@linaro.org</a>&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">Some commonly used readline shortcuts ar=
-e missing from our <br>
-implementation. This series adds:<br>
+"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jun 12, 2024 at 10:50=E2=80=
+=AFPM Kim, Dongwon &lt;<a href=3D"mailto:dongwon.kim@intel.com">dongwon.kim=
+@intel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">On 6/11/2024 10:44 PM, Marc-Andr=C3=A9 Lureau wrote:<br>
+&gt; Hi<br>
+&gt; <br>
+&gt; On Wed, Jun 12, 2024 at 5:29=E2=80=AFAM Kim, Dongwon &lt;<a href=3D"ma=
+ilto:dongwon.kim@intel.com" target=3D"_blank">dongwon.kim@intel.com</a> <br=
+>
+&gt; &lt;mailto:<a href=3D"mailto:dongwon.kim@intel.com" target=3D"_blank">=
+dongwon.kim@intel.com</a>&gt;&gt; wrote:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Hi,<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0From: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:=
+marcandre.lureau@gmail.com" target=3D"_blank">marcandre.lureau@gmail.com</a=
+><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:marcandre.lureau@gmail=
+.com" target=3D"_blank">marcandre.lureau@gmail.com</a>&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0Sent: Wednesday, June 5, 2024 12:56 AM<br>
+&gt;=C2=A0 =C2=A0 =C2=A0To: Kim, Dongwon &lt;<a href=3D"mailto:dongwon.kim@=
+intel.com" target=3D"_blank">dongwon.kim@intel.com</a> &lt;mailto:<a href=
+=3D"mailto:dongwon.kim@intel.com" target=3D"_blank">dongwon.kim@intel.com</=
+a>&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0Cc: <a href=3D"mailto:qemu-devel@nongnu.org" target=
+=3D"_blank">qemu-devel@nongnu.org</a> &lt;mailto:<a href=3D"mailto:qemu-dev=
+el@nongnu.org" target=3D"_blank">qemu-devel@nongnu.org</a>&gt;; Peter Xu<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;<a href=3D"mailto:peterx@redhat.com" target=3D"=
+_blank">peterx@redhat.com</a> &lt;mailto:<a href=3D"mailto:peterx@redhat.co=
+m" target=3D"_blank">peterx@redhat.com</a>&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0Subject: Re: [PATCH] ui/gtk: Wait until the current=
+ guest frame is<br>
+&gt;=C2=A0 =C2=A0 =C2=A0rendered before switching to RUN_STATE_SAVE_VM<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Hi<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0On Tue, Jun 4, 2024 at 9:49=E2=80=AFPM Kim, Dongwon=
 <br>
-- Control-n next line, same as Down arrow key<br>
-- Control-p previous line, same as Up arrow key<br>
-- Control-u erase line starting from cursor<br>
-<br></blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-Manos Pitsidianakis (3):<br>
-=C2=A0 util/readline.c:fix lints for readline_handle_byte<br>
-=C2=A0 util/readline.c: add C-n, C-p shortcuts<br>
-=C2=A0 util/readline.c: add C-u shortcut<br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:dongwon.kim@intel.com"=
+ target=3D"_blank">dongwon.kim@intel.com</a> &lt;mailto:<a href=3D"mailto:d=
+ongwon.kim@intel.com" target=3D"_blank">dongwon.kim@intel.com</a>&gt;&gt; w=
+rote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0On 6/4/2024 4:12 AM, Marc-Andr=C3=A9 Lureau wrote:<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Hi<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; On Thu, May 30, 2024 at 2:44=E2=80=AFAM &lt;m=
+ailto:<a href=3D"mailto:dongwon.kim@intel.com" target=3D"_blank">dongwon.ki=
+m@intel.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:dongwon.kim@intel.com"=
+ target=3D"_blank">dongwon.kim@intel.com</a>&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; &lt;mailto:<a href=3D"mailto:mailto" target=
+=3D"_blank">mailto</a> &lt;mailto:<a href=3D"mailto:mailto" target=3D"_blan=
+k">mailto</a>&gt;:<a href=3D"mailto:dongwon.kim@intel.com" target=3D"_blank=
+">dongwon.kim@intel.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:dongwon.kim@intel.com"=
+ target=3D"_blank">dongwon.kim@intel.com</a>&gt;&gt;&gt; wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0From: Dongwon &lt;mailto:<=
+a href=3D"mailto:dongwon.kim@intel.com" target=3D"_blank">dongwon.kim@intel=
+.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:dongwon.kim@intel.com"=
+ target=3D"_blank">dongwon.kim@intel.com</a>&gt; &lt;mailto:<a href=3D"mail=
+to:mailto" target=3D"_blank">mailto</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:mailto" target=3D"_bla=
+nk">mailto</a>&gt;:<a href=3D"mailto:dongwon.kim@intel.com" target=3D"_blan=
+k">dongwon.kim@intel.com</a> &lt;mailto:<a href=3D"mailto:dongwon.kim@intel=
+.com" target=3D"_blank">dongwon.kim@intel.com</a>&gt;&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0Make sure rendering of the=
+ current frame is finished before<br>
+&gt;=C2=A0 =C2=A0 =C2=A0switching<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0the run state to RUN_STATE=
+_SAVE_VM by waiting for egl-sync<br>
+&gt;=C2=A0 =C2=A0 =C2=A0object to be<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0signaled.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Can you expand on what this solves?<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0In current scheme, guest waits for the fence to be =
+signaled for each<br>
+&gt;=C2=A0 =C2=A0 =C2=A0frame it submits before moving to the next frame. I=
+f the guest=E2=80=99s state<br>
+&gt;=C2=A0 =C2=A0 =C2=A0is saved while it is still waiting for the fence, T=
+he guest will<br>
+&gt;=C2=A0 =C2=A0 =C2=A0continue to=C2=A0 wait for the fence that was signa=
+led while ago when it is<br>
+&gt;=C2=A0 =C2=A0 =C2=A0restored to the point. One way to prevent it is to =
+get it finish the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0current frame before changing the state.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0After the UI sets a fence, hw_ops-&gt;gl_block(true=
+) gets called, which<br>
+&gt;=C2=A0 =C2=A0 =C2=A0will block virtio-gpu/virgl from processing command=
+s (until the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0fence is signaled and gl_block/false called again).=
 <br>
-=C2=A0util/readline.c | 35 +++++++++++++++++++++++++++++++----<br>
-=C2=A01 file changed, 31 insertions(+), 4 deletions(-)<br>
-<br clear=3D"all"><br></blockquote><div><br></div><div>Reviewed-by: Marc-An=
-dr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@redhat.com">marcandr=
-e.lureau@redhat.com</a>&gt;</div><div>=C2=A0<br></div></div><br><span class=
-=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_s=
-ignature">Marc-Andr=C3=A9 Lureau<br></div></div>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0But this &quot;blocking&quot; state is not saved. S=
+o how does this affect<br>
+&gt;=C2=A0 =C2=A0 =C2=A0save/restore? Please give more details, thanks<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Yeah sure. &quot;Blocking&quot; state is not saved =
+but guest&#39;s state is saved<br>
+&gt;=C2=A0 =C2=A0 =C2=A0while it was still waiting for the response for its=
+ last<br>
+&gt;=C2=A0 =C2=A0 =C2=A0resource-flush virtio msg. This virtio response, by=
+ the way is set<br>
+&gt;=C2=A0 =C2=A0 =C2=A0to be sent to the guest when the pipeline is unbloc=
+ked (and when the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0fence is signaled.). Once the guest&#39;s state is =
+saved, current<br>
+&gt;=C2=A0 =C2=A0 =C2=A0instance of guest will be continued and receives th=
+e response as<br>
+&gt;=C2=A0 =C2=A0 =C2=A0usual. The problem is happening when we restore the=
+ saved guest&#39;s<br>
+&gt;=C2=A0 =C2=A0 =C2=A0state again because what guest does will be waiting=
+ for the response<br>
+&gt;=C2=A0 =C2=A0 =C2=A0that was sent a while ago to the original instance.=
+<br>
+&gt; <br>
+&gt; <br>
+&gt; Where is the pending response saved? Can you detail how you test this?=
+<br>
+&gt; <br>
+<br>
+There is no pending response for the guest&#39;s restored point, which is a=
+ <br>
+problem. The response is sent out after saving is done.<br>
+<br>
+Normal cycle :<br>
+<br>
+resource-flush (scanout flush) -&gt; gl block -&gt; render -&gt; gl unblock=
+ <br>
+(after fence is signaled) -&gt; pending response sent out to the guest -&gt=
+; <br>
+guest (virtio-gpu drv) processes the next scanout frame -&gt; (next cycle) =
+<br>
+resource-flush -&gt; gl block ......<br>
+<br>
+When vm state is saved in the middle :<br>
+<br>
+resource-flush (scanout-flush) -&gt; gl block -&gt; saving vm-state -&gt; r=
+ender <br>
+-&gt; gl unblock -&gt; pending response (resp #1) sent out to the guest -&g=
+t; <br>
+guest (virtio-gpu drv) processes the next scanout frame -&gt; (next cycle) =
+<br>
+resource-flush -&gt; gl block ......<br>
+<br>
+Now, we restore the vm-state we saved<br>
+<br>
+vm-state is restored -&gt; guest (virtio-gpu drv) can&#39;t move on as this=
+ <br>
+state is still waiting for the response (resp #1)<br></blockquote><div><br>=
+</div><div>Ok, so actually it&#39;s more of a device state issue than a UI/=
+GTK. We end up not saving a state that reflects the guest state. My underst=
+anding is that the guest is waiting for a fence reply, and we don&#39;t sav=
+e that. Imho, a better fix would be to either save the fenceq (but then, wh=
+at else is missing to complete the operation on resume?), or have a wait to=
+ delay the migration until the fences are flushed.<br></div><div><br></div>=
+<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
+left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+So we need to make sure vm-state is saved after the cycle is completed.<br>
+<br>
+This situation would be only happening if you use blob=3Dtrue with <br>
+virtio-gpu drv as KMS on the linux guest. Do you have any similar setup?<br=
+>
+<br></blockquote><div><br></div><div>No, further details to reproduce would=
+ help. Even better would be having some automated test. <br></div></div><br=
+ clear=3D"all"><br><span class=3D"gmail_signature_prefix">-- </span><br><di=
+v dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=A9 Lureau<br></div></d=
+iv>
 
---000000000000d592de061ac53250--
+--0000000000008b363f061ac54f6a--
 
