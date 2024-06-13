@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 371FAC27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 15:58:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 640C2C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 16:06:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHmqG-0006uf-Q8; Thu, 13 Jun 2024 11:58:24 -0400
+	id 1sHmxX-0005Sp-IW; Thu, 13 Jun 2024 12:05:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sHmqF-0006tI-0n
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 11:58:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sHmxU-0005Pu-L0
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 12:05:53 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sHmqD-00067h-B5
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 11:58:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718294300;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kpubRBwaYHCjb9hNKIpx/oOqBRIOQL8TECIXcTtLxXg=;
- b=OHN3Zjkz1749nPHgUGSSQgvDjgTivUHl3bV8P84tFeJo48YHKJEM/KoX3CWGv2/TvSd0ju
- iZuwOkz6nbkwo8GMGXg3Mjx8+sdmLpbdplSiRI61n/qBcbO7oFXsO5QRqYANUISwtI2oWp
- a46PjAmfSEPxpcY+/uUsCvxvuLUaf04=
-Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
- [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-28-GEI3FtNEMhydzX53DYlxJQ-1; Thu, 13 Jun 2024 11:58:18 -0400
-X-MC-Unique: GEI3FtNEMhydzX53DYlxJQ-1
-Received: by mail-oi1-f198.google.com with SMTP id
- 5614622812f47-3c9b91277a9so200478b6e.1
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 08:58:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718294298; x=1718899098;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kpubRBwaYHCjb9hNKIpx/oOqBRIOQL8TECIXcTtLxXg=;
- b=P/ZazuPkaxkr7KWl08WMztfdGXiu+1od5eDUDj8UwU/gpLZ3JL2hj7DbwbjMeT9MHF
- qS16jzq+LEeXmV3Fpfm4jiWhz6nbA6ACXKr5/L0cxRImSLjyIjaN3O12m0Wk2dfshLBZ
- bI3ynWyYO5m4h/0vWyl/KCIekuuE6/a/ZvH6JK+9kb8bXnpBvIcqQbuPAu0ZcI/V9H/3
- 5kRhPRMK/N4BLNSbNlQ8wmcMGcTMrnzvmvr8olvIVtGqX25MD3lgP1Fl0vLTzMz6doKu
- TfOSn9z6IPDaiBUOvRH2ifh+KOoAz3qQVb2jkWJkozYT2wiHqAvi7tA0mS8ZgVKqtql8
- 13wA==
-X-Gm-Message-State: AOJu0YwGvyHWkRnOYlhZt1iLBYN37QvrKpwMO/r0RTTvYAtyKjItsyMh
- 9g+yNRaid19ukXBB7/RNBbZjy3lPGY9nFRgBfo8eFuGRfmUfR0/8Fz7tZl1XGhba7HAslJdIabD
- gizKjzPvt/3zBNP5UFx2yktrIGJUKnW+4Ouajq8XfS06BY44CuImm
-X-Received: by 2002:a05:6870:798:b0:24f:e599:9168 with SMTP id
- 586e51a60fabf-2583e83d7femr743939fac.1.1718294297758; 
- Thu, 13 Jun 2024 08:58:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF4x7UJGV2KpchYjKm6DSrJhNh2tDNqnto80yc1pAdKH+dBiAiRb0kWblrJ2YpdI6laAaF5xQ==
-X-Received: by 2002:a05:6870:798:b0:24f:e599:9168 with SMTP id
- 586e51a60fabf-2583e83d7femr743920fac.1.1718294297186; 
- Thu, 13 Jun 2024 08:58:17 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-798abe69cd0sm62151185a.124.2024.06.13.08.58.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Jun 2024 08:58:16 -0700 (PDT)
-Date: Thu, 13 Jun 2024 11:58:15 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>, Bandan Das <bdas@redhat.com>
-Subject: Re: [PATCH 3/4] migration: Use MigrationStatus instead of int
-Message-ID: <ZmsXF2Fltf-iNByl@x1n>
-References: <20240612144228.1179240-1-peterx@redhat.com>
- <20240612144228.1179240-4-peterx@redhat.com> <Zmm4z0qbv8H39pC0@x1n>
- <87wmmsc2if.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sHmxS-00086U-2J
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 12:05:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1718294750; x=1749830750;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=UvvsdgRWck18Q33F0hqQ78KLGs23IkQhh+KmeDaTrJw=;
+ b=eFmbMsxcBce3vqdJlpkFHyuJQ6BAQkjQteCjFaDkMAE29BDO58xHKyBK
+ /O9+k10aIjduAp9t9aTphYYqXfCDlCjDQvkCzvq2ImRhgE9GQE+0gS5wT
+ OS4MeJGnboX0gZKrci8A8zP2jtmVUOaVk4KJ349F/MZ0ajLWIyeLnFDI7
+ OhZIZeOJztvAmOqiT9qrFlz8ADeDn2StAgw26hKKsMfUv98WOwGImrGCE
+ /zMVLfQweRXfR0iswQYc4Ineq7ht0AlR8Jdr1TJgav0Ic0Q+UMfoUloQD
+ smbKau7Lmm7LAJxAJVnBJX2dE9PJBaeXSpRZn6mT2m4LBJjrsfSRrnZLG A==;
+X-CSE-ConnectionGUID: tbbCZyZMRTWRQr6FztKBaA==
+X-CSE-MsgGUID: ru4YOlzhQ1+qdnhEICpB6A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11102"; a="15101905"
+X-IronPort-AV: E=Sophos;i="6.08,235,1712646000"; d="scan'208";a="15101905"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Jun 2024 09:04:47 -0700
+X-CSE-ConnectionGUID: oPGX4EA1QQK8sx8VLwtoEw==
+X-CSE-MsgGUID: z3n+imKgRFGwyz8f9wefBQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,235,1712646000"; d="scan'208";a="40270232"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa010.fm.intel.com with ESMTP; 13 Jun 2024 09:04:43 -0700
+Date: Fri, 14 Jun 2024 00:20:12 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9?= e <alex.bennee@linaro.org>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
+Message-ID: <ZmscPKyuK7RVgrMo@intel.com>
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+ <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
+ <CABgObfY8BS0yCw2CxgDQTBA4np9BZgGJF3N=t6eoBcdACAE=NA@mail.gmail.com>
+ <ez270.x96k6aeu0rpw@linaro.org> <ZmnHoajecti472mi@redhat.com>
+ <ezjl0.qx0tmsp6d6t@linaro.org>
+ <CABgObfbGwKc0RYBcDPzNkE8HOSouFj4D15Oh7TuiKOC+D7raaA@mail.gmail.com>
+ <ZmqcFf0xB9m4WkA3@redhat.com>
+ <CABgObfb4+FSsadFTVg6Dc1zehQV2Vei2_kSRd5CfxsGBLPN6Eg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=gb2312
 Content-Disposition: inline
-In-Reply-To: <87wmmsc2if.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfb4+FSsadFTVg6Dc1zehQV2Vei2_kSRd5CfxsGBLPN6Eg@mail.gmail.com>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,77 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 13, 2024 at 11:59:20AM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
+Hi Paolo,
+
+On Thu, Jun 13, 2024 at 09:56:39AM +0200, Paolo Bonzini wrote:
+> Date: Thu, 13 Jun 2024 09:56:39 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
 > 
-> > On Wed, Jun 12, 2024 at 10:42:27AM -0400, Peter Xu wrote:
-> >> @@ -1544,7 +1545,7 @@ bool migration_in_postcopy(void)
-> >>      }
-> >>  }
-> >>  
-> >> -bool migration_postcopy_is_alive(int state)
-> >> +bool migration_postcopy_is_alive(MigrationStatus state)
-> >>  {
-> >>      switch (state) {
-> >>      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
-> >> @@ -1598,7 +1599,7 @@ bool migration_is_idle(void)
-> >>      case MIGRATION_STATUS_DEVICE:
-> >>      case MIGRATION_STATUS_WAIT_UNPLUG:
-> >>          return false;
-> >> -    case MIGRATION_STATUS__MAX:
-> >> +    default:
-> >>          g_assert_not_reached();
-> >>      }
-> >
-> > This survives the tests, but I just found that it's risky, as it's not
-> > covering all the states..
-> >
-> > I'll squash below when I send v2 instead.
-> >
-> > ===8<===
-> > From 1fc42c76294044c0ccca8841e482472486de5459 Mon Sep 17 00:00:00 2001
-> > From: Peter Xu <peterx@redhat.com>
-> > Date: Wed, 12 Jun 2024 10:57:26 -0400
-> > Subject: [PATCH] fixup! migration: Use MigrationStatus instead of int
-> >
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  migration/migration.c | 13 +------------
-> >  1 file changed, 1 insertion(+), 12 deletions(-)
-> >
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index 9475dce7dc..706cee1b69 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -1637,20 +1637,9 @@ bool migration_is_idle(void)
-> >      case MIGRATION_STATUS_COMPLETED:
-> >      case MIGRATION_STATUS_FAILED:
-> >          return true;
-> > -    case MIGRATION_STATUS_SETUP:
-> > -    case MIGRATION_STATUS_CANCELLING:
-> > -    case MIGRATION_STATUS_ACTIVE:
-> > -    case MIGRATION_STATUS_POSTCOPY_ACTIVE:
-> > -    case MIGRATION_STATUS_COLO:
-> > -    case MIGRATION_STATUS_PRE_SWITCHOVER:
-> > -    case MIGRATION_STATUS_DEVICE:
-> > -    case MIGRATION_STATUS_WAIT_UNPLUG:
-> > -        return false;
-> >      default:
-> > -        g_assert_not_reached();
-> > +        return false;
-> >      }
+> Il gio 13 giu 2024, 09:13 Daniel P. Berrang¨¦ <berrange@redhat.com> ha
+> scritto:
 > 
-> Unrelated, but should we consider POSTCOPY_PAUSED as idle?
+> > On Wed, Jun 12, 2024 at 11:27:04PM +0200, Paolo Bonzini wrote:
+> > > Il mer 12 giu 2024, 22:58 Manos Pitsidianakis <
+> > > manos.pitsidianakis@linaro.org> ha scritto:
+> > >
+> > > > In any case, it is out of scope for this RFC. Introducing wrappers
+> > would
+> > > > be a gradual process.
+> > > >
+> > >
+> > > Sure, how would you feel about such bindings being developed on list, and
+> > > maintained in a (somewhat) long-lived experimental branch?
+> >
+> > IMHO any higher level binding APIs for Rust should be acceptable in the
+> > main QEMU tree as soon as we accept Rust functionality. They can evolve
+> > in-tree based on the needs of whomever is creating and/or consuming them.
+> >
+> 
+> My question is the opposite, should we accept Rust functionality without
+> proper high level bindings? I am afraid that, if more Rust devices are
+> contributed, it becomes technical debt to have a mix of idiomatic and C-ish
+> code. If the answer is no, then this PL011 device has to be developed out
+> of tree.
 
-I think not; idle should be about "whether a migration is in progress" in
-verbose, IMHO.
+I think deeper and higher level bindings will have more opens and will
+likely require more discussion and exploration. So could we explore this
+direction on another reference Rust device?
 
-E.g. see migrate_add_blocker_modes() -> is_busy(), otherwise we'll allow
-changing migration blockers when postcopy is paused.
+I also think there won¡¯t be too many Rust devices in the short term.
+Going back to tweak or enhance existing Rust devices may not require too
+much effort, once we have a definitive answer.
 
-PS: offtopic, but.. "is_busy" may deserve some better name in the future..
+I wonder if x86 could also implement a rust device (like the x86 timer
+you mentioned before, hw/i386/kvm/i8254.c or hw/timer/i8254.c IIRC) to
+try this? Or would you recommend another x86 device? :-)
 
--- 
-Peter Xu
+I'd be willing to help Manos try it if you think it's fine.
+
+Regards,
+Zhao
 
 
