@@ -4,81 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 983EFC27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 05:50:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00310C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 06:14:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHdLI-0007vS-IM; Thu, 13 Jun 2024 01:49:48 -0400
+	id 1sHdiN-0004LH-4A; Thu, 13 Jun 2024 02:13:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sHdLG-0007vK-Fx
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:49:46 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sHdLE-0000uS-Hm
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:49:46 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4217c7eb6b4so6893915e9.2
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 22:49:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718257781; x=1718862581; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1Pke5SnVgSyp7kc2reUGj589dsJKNLncqYWR1n+SCgo=;
- b=RSSDhc3GjnokU/Qyz/PXSRMMX8TIXDgSzdVKs79XLMtod32Fdmkl8jTdx5SGE2fyxW
- rocLHRTENs56hHNzF7nfoQJfV7Ek9j8PJf/SbhdbuTJ9O/3zIr70F9u++CQJOj4owWbQ
- XH27cQ2KLoxhTmDhKVQDYNpV0qErScuEfakKFjslCksWyrlgHZwjOtZPaJTjfPQiL6rZ
- Znl7eg1aaNqFsG31IgI4LIwtHSWOAXCcQ86pHNILhpJE6/9gpbUARwxcA0W6XPntUWRt
- 7sosq1s/DRHkUmBz3XyOxoeWO3mDsvXsaHdICJm9juPNEhJmYxCl+c6S7+E50cxHebxH
- HE0A==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sHdiL-0004KC-TA
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 02:13:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sHdiI-0005AK-RY
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 02:13:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718259213;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=P98GOJ4F1R9GbOTitSuY03rMVvIwbXQsLcigRv1jhsk=;
+ b=MM1KwWBLIeFo/wDpAa7BJamfVutKMK1geZBGtWyITQUYlae6rP30tV9rInbHFtJ3yR9XtB
+ aQcboNfE4DpHaF85E8UatxyCne1DJ94Y0OuS4LxvRqtTky9rvWYaY/BL+XEPwwTsHYWIUd
+ P3qAIwyzARQRgv9geyLrwFJfCc9go1s=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-473-ePuHVrYzOKG8158vMnEtXA-1; Thu, 13 Jun 2024 02:13:30 -0400
+X-MC-Unique: ePuHVrYzOKG8158vMnEtXA-1
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-649731dd35bso504027a12.0
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 23:13:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718257781; x=1718862581;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1Pke5SnVgSyp7kc2reUGj589dsJKNLncqYWR1n+SCgo=;
- b=pZpN8M+zeoOZquR7/dK6+Ipu8XWDhhSOfsLOrVxfc8Ca785rZ72OnzW54Upwk/jx+K
- mTFGE3IgZTVqxskG6E+jFxgyWw+vkO24JqwPPmMWOY1XnloOAPQDsXTenjE1krgaW7aV
- SVjI8fTWcp7FP6RqIBqwoUXa6b5ePNVcTU0YqxWfwVg6ipjPvjPhRDjLgPB6NVL6JT/R
- ClSwbBoLYFWJD049dZ+/mdx1pONPu2BTZu+LZmN8SnSWWCc9UJOGMYlkBSd8yMSunf8e
- S/MdVYfUIJbLNS/XOKmCSa2M1TvsbtSbT+t4PzdnKWdPCHSwKmobga/Q608ta10q3vvG
- xhBA==
-X-Gm-Message-State: AOJu0YzD7hqFxUdnFetHM9FCvHps0vN128s0SB+fhPWMf7NOD+DBBQGI
- GrpyBP9HA/PjgOS2s0dMF98GHb/mWC4ulAhKRHFlDJjpK+Urb2eETTxq4Nm6PyCkEHYGFPZ6Ypw
- ztVU=
-X-Google-Smtp-Source: AGHT+IHkorExO8QBf+zR+i6G4MUmZk2OwPv2XU8J4n9+uF1nm5mt4yedbFzzyup29H6+8t01IHeGTg==
-X-Received: by 2002:a05:600c:5487:b0:422:1a82:3ebf with SMTP id
- 5b1f17b1804b1-422867bec26mr35385055e9.35.1718257780857; 
- Wed, 12 Jun 2024 22:49:40 -0700 (PDT)
-Received: from localhost.localdomain (adsl-105.37.6.1.tellas.gr. [37.6.1.105])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422874de68asm48632175e9.29.2024.06.12.22.49.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Jun 2024 22:49:40 -0700 (PDT)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Zheyu Ma <zheyuma97@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Eric Auger <eric.auger@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2] virtio-iommu: add error check before assert
-Date: Thu, 13 Jun 2024 08:49:12 +0300
-Message-ID: <20240613-fuzz-2359-fix-v2-manos.pitsidianakis@linaro.org>
-X-Mailer: git-send-email 2.44.0
+ d=1e100.net; s=20230601; t=1718259209; x=1718864009;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=P98GOJ4F1R9GbOTitSuY03rMVvIwbXQsLcigRv1jhsk=;
+ b=N9O1J5jMrXYehxdhqSzzdns20RDv4YodseegS9tQqRlAaHydsQOIB58gJBsbYzAQ//
+ JEWJmV9BECKVQlnPMUyDMIoG4tTT/vroVws4Wt6AtaXTRLJuJyQwOpWw8SsR8bEpz5Fz
+ NPDyxQb/OlOB8ep2YkIuCXy3LBg1NAhtq4xW8rCQrxPxeb05DYDcNH3bjng/0CF51o78
+ hcMX9JsL8ezVJmCJM+2QO2ZoeGeo/0QWzVHIsAe2IxqM09CDKtSL8xk/mF8L3yeq2iAY
+ Mdm0Gs2QutPhD0/7DiOga+7l9eZGVxTHWA8rYyM9/hnyOE/qSByxYTwRa9gHpYKjSa4j
+ V29Q==
+X-Gm-Message-State: AOJu0YxMu8zu2KC64C9FwZoprk2xh+XzXTUC64ERap43MYivoHe6BtMG
+ M6dtCwEGyV07qlRzp+MPUvv7jaMHRtg1Mao+1t1BV4i0S0HmYEwE024XYuwFbq3BlNRmxMGAvHl
+ eJGme7jqBK7WXzBio4rvfcENhOci6wRaq+Y0Kgsevsv20xj1kzpV1skBQvF2yhiR27n++TOce6P
+ PLl6TrDd4iA1/7fSnNk79ziedaSu8=
+X-Received: by 2002:a05:6a20:3953:b0:1b8:4107:ce4f with SMTP id
+ adf61e73a8af0-1b8a9c73b76mr4858688637.49.1718259209120; 
+ Wed, 12 Jun 2024 23:13:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF4maRorEX+zES+bUgqgbTTohZYpC7O/SRYtbRXapvgB2s6VtaXxlE/sPyAR9qHlNXX8PZiGZOSgSlf31Lv9m8=
+X-Received: by 2002:a05:6a20:3953:b0:1b8:4107:ce4f with SMTP id
+ adf61e73a8af0-1b8a9c73b76mr4858677637.49.1718259208577; Wed, 12 Jun 2024
+ 23:13:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: John Snow <jsnow@redhat.com>
+Date: Thu, 13 Jun 2024 02:13:15 -0400
+Message-ID: <CAFn=p-ZmjLKRN1kKo1iM_tiijYbOEqt5=vRg7WoAXuQ6E8Rm+A@mail.gmail.com>
+Subject: Historical QAPI schema parser, "compiled schema", and qapi-schema-diff
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Victor Toso de Carvalho <victortoso@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000c27e2a061abf652c"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,120 +90,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A fuzzer case discovered by Zheyu Ma causes an assert failure.
+--000000000000c27e2a061abf652c
+Content-Type: text/plain; charset="UTF-8"
 
-Add a check before the assert, and respond with an error before moving
-on to the next queue element.
+Hi, recently I've been working on overhauling our QMP documentation; see
+https://jsnow.gitlab.io/qemu/qapi/index.html for a recent work-in-progress
+page showcasing this.
 
-To reproduce the failure:
+As part of this project, Markus and I decided it'd be nice to be able to
+auto-generate "Since" information. The short reason for 'why' is because
+since info hard-coded into doc comments may not be accurate with regards to
+the wire protocol availability for a given field when a QAPI definition is
+shared or inherited by multiple sources. If we can generate it, it should
+always be accurate.
 
-cat << EOF | \
-qemu-system-x86_64 \
--display none -machine accel=qtest -m 512M -machine q35 -nodefaults \
--device virtio-iommu -qtest stdio
-outl 0xcf8 0x80000804
-outw 0xcfc 0x06
-outl 0xcf8 0x80000820
-outl 0xcfc 0xe0004000
-write 0x10000e 0x1 0x01
-write 0xe0004020 0x4 0x00001000
-write 0xe0004028 0x4 0x00101000
-write 0xe000401c 0x1 0x01
-write 0x106000 0x1 0x05
-write 0x100001 0x1 0x60
-write 0x100002 0x1 0x10
-write 0x100009 0x1 0x04
-write 0x10000c 0x1 0x01
-write 0x100018 0x1 0x04
-write 0x10001c 0x1 0x02
-write 0x101003 0x1 0x01
-write 0xe0007001 0x1 0x00
-EOF
+So, I've prototyped three things:
 
-Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2359
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
-Range-diff against v1:
-1:  a665c6e73d ! 1:  8e50c1b00e virtio-iommu: add error check before assert
-    @@ Commit message
-     
-      ## hw/virtio/virtio-iommu.c ##
-     @@ hw/virtio/virtio-iommu.c: static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
-    +         iov = elem->out_sg;
-    +         sz = iov_to_buf(iov, iov_cnt, 0, &head, sizeof(head));
-    +         if (unlikely(sz != sizeof(head))) {
-    ++            qemu_log_mask(LOG_GUEST_ERROR,
-    ++                          "%s: read %zu bytes from command head"
-    ++                          "but expected %zu\n", __func__, sz, sizeof(head));
-    +             tail.status = VIRTIO_IOMMU_S_DEVERR;
-    +             goto out;
-    +         }
-    +@@ hw/virtio/virtio-iommu.c: static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
-      out:
-              sz = iov_from_buf(elem->in_sg, elem->in_num, 0,
-                                buf ? buf : &tail, output_size);
-     +        if (unlikely(sz != output_size)) {
-    ++            qemu_log_mask(LOG_GUEST_ERROR,
-    ++                          "%s: wrote %zu bytes to command response"
-    ++                          "but response size is %zu\n",
-    ++                          __func__, sz, output_size);
-     +            tail.status = VIRTIO_IOMMU_S_DEVERR;
-    -+            /* We checked that tail can fit earlier */
-    ++            /*
-    ++             * We checked that sizeof(tail) can fit to elem->in_sg at the
-    ++             * beginning of the loop
-    ++             */
-     +            output_size = sizeof(tail);
-     +            g_free(buf);
-     +            buf = NULL;
+(1) An out-of-tree fork of the QAPI generator that is capable of parsing
+qemu-commands.hx, qmp-commands.hx, and all versions of our qapi-schema.json
+files going all the way back to v0.12.0.
 
- hw/virtio/virtio-iommu.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+It accomplishes this with some fairly brutish hacks that I never expect to
+need to check in to qemu.git.
 
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 1326c6ec41..9d801fb180 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -782,6 +782,9 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
-         iov = elem->out_sg;
-         sz = iov_to_buf(iov, iov_cnt, 0, &head, sizeof(head));
-         if (unlikely(sz != sizeof(head))) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: read %zu bytes from command head"
-+                          "but expected %zu\n", __func__, sz, sizeof(head));
-             tail.status = VIRTIO_IOMMU_S_DEVERR;
-             goto out;
-         }
-@@ -818,6 +821,25 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
- out:
-         sz = iov_from_buf(elem->in_sg, elem->in_num, 0,
-                           buf ? buf : &tail, output_size);
-+        if (unlikely(sz != output_size)) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: wrote %zu bytes to command response"
-+                          "but response size is %zu\n",
-+                          __func__, sz, output_size);
-+            tail.status = VIRTIO_IOMMU_S_DEVERR;
-+            /*
-+             * We checked that sizeof(tail) can fit to elem->in_sg at the
-+             * beginning of the loop
-+             */
-+            output_size = sizeof(tail);
-+            g_free(buf);
-+            buf = NULL;
-+            sz = iov_from_buf(elem->in_sg,
-+                              elem->in_num,
-+                              0,
-+                              &tail,
-+                              output_size);
-+        }
-         assert(sz == output_size);
- 
-         virtqueue_push(vq, elem, sz);
+(2) A schema "compiler", a QAPI generator module that takes a parsed Schema
+and produces a single-file JSON Schema document that describes every
+command and event as it exists on the wire without using type names or any
+information not considered to be "API".
 
-base-commit: f3e8cc47de2bc537d4991e883a85208e4e1c0f98
--- 
-γαῖα πυρί μιχθήτω
+This part *would* need to be checked in to qemu.git (if we go in this
+direction.)
+The compiled historical schema would also get checked in, for the QAPI
+parser to reference against to generate the since information.
+
+(Or, some kind of meta-compiled document with just the since information.
+Either way; the idea is that we'll catalog the output without needing to
+commit the parser compatibility hacks.)
+
+(3) A script that can diff two compiled schema, showing a change report
+between two versions. (I sent an email earlier today/yesterday showing
+example output of this script.) This one was more for "fun", but it helped
+prove all the other parts were working correctly, and it might be useful in
+the future when auditing changes during the RC phase. We may well decide to
+commit this script upstream, or one like it.
+
+All of those things are here: https://gitlab.com/jsnow/externalized-qapi
+
+I'm sharing this in its out-of-tree form mostly for Markus's sake as we
+debate the pros/cons of various choices I've made in this prototype, but
+you're welcome to peep the early discussions if you'd like, too.
+
+Notes:
+
+1. If you want to try "compiling" schema yourself, clone the git repo and
+install it with "pip install .". Navigate to your qemu.git root and check
+out a release tag (such as v0.12.0 or v1.0 or v9.0.0) and then run
+"qapi-compile".
+
+(If your git tags are "weird", this might break. Sorry about that, it's a
+prototype... the hacky code that uses "git describe" is in qapi/compat.py
+if you run into troubles and wanna mess around with it.)
+
+2. The "qapi compiler" makes use of schema addendum files for some old
+versions to produce correct output. You can browse them on gitlab here:
+https://gitlab.com/jsnow/externalized-qapi/-/tree/main/qapi/schemata?ref_type=heads
+
+There are addendum files for v0.12.0 through v2.0.0. Other "errata" are
+handled in code; no errata of any kind are needed in v2.8.0 or later.
+
+3. If you don't wanna run the compiler yourself (or it broke because it's a
+real hackjob), I compiled all of the historical QAPI schema myself and
+checked them into the repo here:
+https://gitlab.com/jsnow/externalized-qapi/-/tree/main/compiled?ref_type=heads
+
+4. You can diff any two compiled schema with "qapi-schema-diff A.json
+B.json". Put the earlier version first.
+
+5.  qapi-compile and qapi-schema-diff don't yet support "if" and "features"
+everywhere they should, but everything else should work correctly.
+
+6. The commit history for this repo is actually pretty well factored; each
+compatibility hack for the QAPI parser has its own commit, so it's easy to
+suss out what work was required to make this work.
+
+I'm about to head off on a long weekend, I'll be back Tuesday.
+
+Have fun,
+--js
+
+--000000000000c27e2a061abf652c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi, recently I&#39;ve been working on overhauling our=
+ QMP documentation; see <a href=3D"https://jsnow.gitlab.io/qemu/qapi/index.=
+html">https://jsnow.gitlab.io/qemu/qapi/index.html</a> for a recent work-in=
+-progress page showcasing this.<br></div><div><br></div><div>As part of thi=
+s project, Markus and I decided it&#39;d be nice to be able to auto-generat=
+e &quot;Since&quot; information. The short reason for &#39;why&#39; is beca=
+use since info hard-coded into doc comments may not be accurate with regard=
+s to the wire protocol availability for a given field when a QAPI definitio=
+n is shared or inherited by multiple sources. If we can generate it, it sho=
+uld always be accurate.<br></div><div><br></div><div>So, I&#39;ve prototype=
+d three things:</div><div><br></div><div>(1) An out-of-tree fork of the QAP=
+I generator that is capable of parsing qemu-commands.hx, qmp-commands.hx, a=
+nd all versions of our qapi-schema.json files going all the way back to v0.=
+12.0.</div><div><br></div><div>It accomplishes this with some fairly brutis=
+h hacks that I never expect to need to check in to qemu.git.<br></div><div>=
+<br></div><div>(2) A schema &quot;compiler&quot;, a QAPI generator module t=
+hat takes a parsed Schema and produces a single-file JSON Schema document t=
+hat describes every command and event as it exists on the wire without usin=
+g type names or any information not considered to be &quot;API&quot;.</div>=
+<div><br></div><div>This part *would* need to be checked in to qemu.git (if=
+ we go in this direction.)</div><div>The compiled historical schema would a=
+lso get checked in, for the QAPI parser to reference against to generate th=
+e since information.</div><div><br></div><div>(Or, some kind of meta-compil=
+ed document with just the since information. Either way; the idea is that w=
+e&#39;ll catalog the output without needing to commit the parser compatibil=
+ity hacks.)<br></div><div><br></div><div>(3) A script that can diff two com=
+piled schema, showing a change report between two versions. (I sent an emai=
+l earlier today/yesterday showing example output of this script.) This one =
+was more for &quot;fun&quot;, but it helped prove all the other parts were =
+working correctly, and it might be useful in the future when auditing chang=
+es during the RC phase. We may well decide to commit this script upstream, =
+or one like it.<br></div><div><br></div><div>All of those things are here: =
+<a href=3D"https://gitlab.com/jsnow/externalized-qapi">https://gitlab.com/j=
+snow/externalized-qapi</a></div><div><br></div><div>I&#39;m sharing this in=
+ its out-of-tree form mostly for Markus&#39;s sake as we debate the pros/co=
+ns of various choices I&#39;ve made in this prototype, but you&#39;re welco=
+me to peep the early discussions if you&#39;d like, too.</div><div><br></di=
+v><div>Notes:</div><div><br></div><div>1. If you want to try &quot;compilin=
+g&quot; schema yourself, clone the git repo and install it with &quot;pip i=
+nstall .&quot;. Navigate to your qemu.git root and check out a release tag =
+(such as v0.12.0 or v1.0 or v9.0.0) and then run &quot;qapi-compile&quot;.<=
+/div><div><br></div><div>(If your git tags are &quot;weird&quot;, this migh=
+t break. Sorry about that, it&#39;s a prototype... the hacky code that uses=
+ &quot;git describe&quot; is in qapi/compat.py if you run into troubles and=
+ wanna mess around with it.)<br></div><div><br></div><div>2. The &quot;qapi=
+ compiler&quot; makes use of schema addendum files for some old versions to=
+ produce correct output. You can browse them on gitlab here: <a href=3D"htt=
+ps://gitlab.com/jsnow/externalized-qapi/-/tree/main/qapi/schemata?ref_type=
+=3Dheads">https://gitlab.com/jsnow/externalized-qapi/-/tree/main/qapi/schem=
+ata?ref_type=3Dheads</a></div><div><br></div><div>There are addendum files =
+for v0.12.0 through v2.0.0. Other &quot;errata&quot; are handled in code; n=
+o errata of any kind are needed in v2.8.0 or later.<br></div><div><br></div=
+><div>3. If you don&#39;t wanna run the compiler yourself (or it broke beca=
+use it&#39;s a real hackjob), I compiled all of the historical QAPI schema =
+myself and checked them into the repo here: <a href=3D"https://gitlab.com/j=
+snow/externalized-qapi/-/tree/main/compiled?ref_type=3Dheads">https://gitla=
+b.com/jsnow/externalized-qapi/-/tree/main/compiled?ref_type=3Dheads</a></di=
+v><div><br></div><div>4. You can diff any two compiled schema with &quot;qa=
+pi-schema-diff A.json B.json&quot;. Put the earlier version first.</div><di=
+v><br></div><div>5.=C2=A0 qapi-compile and qapi-schema-diff don&#39;t yet s=
+upport &quot;if&quot; and &quot;features&quot; everywhere they should, but =
+everything else should work correctly.</div><div><br></div><div>6. The comm=
+it history for this repo is actually pretty well factored; each compatibili=
+ty hack for the QAPI parser has its own commit, so it&#39;s easy to suss ou=
+t what work was required to make this work.<br></div><div><br></div><div>I&=
+#39;m about to head off on a long weekend, I&#39;ll be back Tuesday.</div><=
+div><br></div><div>Have fun,</div><div>--js<br></div></div>
+
+--000000000000c27e2a061abf652c--
 
 
