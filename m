@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C641C27C75
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 23:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 524DBC27C75
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 23:40:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHu1s-0005CS-6n; Thu, 13 Jun 2024 19:38:52 -0400
+	id 1sHu37-0007Mm-4G; Thu, 13 Jun 2024 19:40:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sHu1l-00057j-97; Thu, 13 Jun 2024 19:38:45 -0400
+ id 1sHu2u-0006qz-NV; Thu, 13 Jun 2024 19:39:58 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sHu1h-0002zT-No; Thu, 13 Jun 2024 19:38:44 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W0f4D540Wz6K6Bt;
- Fri, 14 Jun 2024 07:38:36 +0800 (CST)
+ id 1sHu2r-00035V-T9; Thu, 13 Jun 2024 19:39:56 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W0f402bDPz6H7Gh;
+ Fri, 14 Jun 2024 07:38:24 +0800 (CST)
 Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id 8C601140594;
- Fri, 14 Jun 2024 07:38:39 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id CB992140AE5;
+ Fri, 14 Jun 2024 07:39:47 +0800 (CST)
 Received: from 00293818-MRGF.china.huawei.com (10.195.245.24) by
  lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 14 Jun 2024 00:38:17 +0100
+ 15.1.2507.39; Fri, 14 Jun 2024 00:39:25 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -44,10 +44,10 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>
-Subject: [PATCH RFC V3 02/29] cpu-common: Add common CPU utility for possible
- vCPUs
-Date: Fri, 14 Jun 2024 00:36:12 +0100
-Message-ID: <20240613233639.202896-3-salil.mehta@huawei.com>
+Subject: [PATCH RFC V3 05/29] arm/virt,
+ target/arm: Machine init time change common to vCPU {cold|hot}-plug
+Date: Fri, 14 Jun 2024 00:36:15 +0100
+Message-ID: <20240613233639.202896-6-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240613233639.202896-1-salil.mehta@huawei.com>
 References: <20240613233639.202896-1-salil.mehta@huawei.com>
@@ -82,141 +82,239 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds various utility functions that may be required to fetch or check
-the state of possible vCPUs. It also introduces the concept of *disabled* vCPUs,
-which are part of the *possible* vCPUs but are not enabled. This state will be
-used during machine initialization and later during the plugging or unplugging
-of vCPUs. We release the QOM CPU objects for all disabled vCPUs.
+Introduce the common logic required during the initialization of both cold and
+hot-plugged vCPUs. Additionally, initialize the *disabled* state of the vCPUs,
+which will be used further during the initialization phases of various other
+components like GIC, PMU, ACPI, etc., as part of the virtual machine
+initialization.
+
+KVM vCPUs corresponding to unplugged or yet-to-be-plugged QOM CPUs are kept in a
+powered-off state in the KVM Host and do not run the guest code. Plugged vCPUs
+are also kept in a powered-off state, but vCPU threads exist and remain in a
+sleeping state.
+
+TBD:
+For cold-booted vCPUs, this change also exists in the `arm_load_kernel()`
+function in `boot.c`. However, for hot-plugged CPUs, this change should remain
+part of the pre-plug phase. We are duplicating the powering-off of the
+cold-booted CPUs. Should we remove the duplicate change from `boot.c`?
 
 Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+Reported-by: Gavin Shan <gshan@redhat.com>
+[GS: pointed the assertion due to wrong range check]
 ---
- cpu-common.c          | 31 +++++++++++++++++++++++++
- include/hw/core/cpu.h | 54 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 85 insertions(+)
+ hw/arm/virt.c      | 94 +++++++++++++++++++++++++++++++++++++++++++++-
+ target/arm/cpu.c   |  7 ++++
+ target/arm/cpu64.c | 14 +++++++
+ 3 files changed, 114 insertions(+), 1 deletion(-)
 
-diff --git a/cpu-common.c b/cpu-common.c
-index ce78273af5..49d2a50835 100644
---- a/cpu-common.c
-+++ b/cpu-common.c
-@@ -24,6 +24,7 @@
- #include "sysemu/cpus.h"
- #include "qemu/lockable.h"
- #include "trace/trace-root.h"
-+#include "hw/boards.h"
- 
- QemuMutex qemu_cpu_list_lock;
- static QemuCond exclusive_cond;
-@@ -107,6 +108,36 @@ void cpu_list_remove(CPUState *cpu)
-     cpu_list_generation_id++;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 2e0ec7d869..a285139165 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2817,6 +2817,26 @@ static int64_t virt_get_default_cpu_node_id(const MachineState *ms, int idx)
+     return socket_id % ms->numa_state->num_nodes;
  }
  
-+CPUState *qemu_get_possible_cpu(int index)
++static int
++virt_get_cpu_id_from_cpu_topo(const MachineState *ms, DeviceState *dev)
 +{
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    const CPUArchIdList *possible_cpus = ms->possible_cpus;
++    int cpu_id, sock_vcpu_num, clus_vcpu_num, core_vcpu_num;
++    ARMCPU *cpu = ARM_CPU(dev);
 +
-+    assert((index >= 0) && (index < possible_cpus->len));
++    /* calculate total logical cpus across socket/cluster/core */
++    sock_vcpu_num = cpu->socket_id * (ms->smp.threads * ms->smp.cores *
++                    ms->smp.clusters);
++    clus_vcpu_num = cpu->cluster_id * (ms->smp.threads * ms->smp.cores);
++    core_vcpu_num = cpu->core_id * ms->smp.threads;
 +
-+    return CPU(possible_cpus->cpus[index].cpu);
++    /* get vcpu-id(logical cpu index) for this vcpu from this topology */
++    cpu_id = (sock_vcpu_num + clus_vcpu_num + core_vcpu_num) + cpu->thread_id;
++
++    assert(cpu_id >= 0 && cpu_id < ms->possible_cpus->len);
++
++    return cpu_id;
 +}
 +
-+bool qemu_present_cpu(CPUState *cpu)
-+{
-+    return cpu;
-+}
-+
-+bool qemu_enabled_cpu(CPUState *cpu)
-+{
-+    return cpu && !cpu->disabled;
-+}
-+
-+uint64_t qemu_get_cpu_archid(int cpu_index)
-+{
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    const CPUArchIdList *possible_cpus = ms->possible_cpus;
-+
-+    assert((cpu_index >= 0) && (cpu_index < possible_cpus->len));
-+
-+    return possible_cpus->cpus[cpu_index].arch_id;
-+}
-+
- CPUState *qemu_get_cpu(int index)
+ static const CPUArchIdList *virt_possible_cpu_arch_ids(MachineState *ms)
  {
-     CPUState *cpu;
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 60b160d0b4..60b4778da9 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -528,6 +528,18 @@ struct CPUState {
-     CPUPluginState *plugin_state;
- #endif
+     int n;
+@@ -2899,6 +2919,72 @@ static void virt_memory_plug(HotplugHandler *hotplug_dev,
+                          dev, &error_abort);
+ }
  
++static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
++                              Error **errp)
++{
++    MachineState *ms = MACHINE(hotplug_dev);
++    ARMCPU *cpu = ARM_CPU(dev);
++    CPUState *cs = CPU(dev);
++    CPUArchId *cpu_slot;
++
++    /* sanity check the cpu */
++    if (!object_dynamic_cast(OBJECT(cpu), ms->cpu_type)) {
++        error_setg(errp, "Invalid CPU type, expected cpu type: '%s'",
++                   ms->cpu_type);
++        return;
++    }
++
++    if ((cpu->thread_id < 0) || (cpu->thread_id >= ms->smp.threads)) {
++        error_setg(errp, "Invalid thread-id %u specified, correct range 0:%u",
++                   cpu->thread_id, ms->smp.threads - 1);
++        return;
++    }
++
++    if ((cpu->core_id < 0) || (cpu->core_id >= ms->smp.cores)) {
++        error_setg(errp, "Invalid core-id %d specified, correct range 0:%u",
++                   cpu->core_id, ms->smp.cores - 1);
++        return;
++    }
++
++    if ((cpu->cluster_id < 0) || (cpu->cluster_id >= ms->smp.clusters)) {
++        error_setg(errp, "Invalid cluster-id %u specified, correct range 0:%u",
++                   cpu->cluster_id, ms->smp.clusters - 1);
++        return;
++    }
++
++    if ((cpu->socket_id < 0) || (cpu->socket_id >= ms->smp.sockets)) {
++        error_setg(errp, "Invalid socket-id %u specified, correct range 0:%u",
++                   cpu->socket_id, ms->smp.sockets - 1);
++        return;
++    }
++
++    cs->cpu_index = virt_get_cpu_id_from_cpu_topo(ms, dev);
++
++    cpu_slot = virt_find_cpu_slot(ms, cs->cpu_index);
++    if (qemu_present_cpu(CPU(cpu_slot->cpu))) {
++        error_setg(errp, "cpu(id%d=%d:%d:%d:%d) with arch-id %" PRIu64 " exist",
++                   cs->cpu_index, cpu->socket_id, cpu->cluster_id, cpu->core_id,
++                   cpu->thread_id, cpu_slot->arch_id);
++        return;
++    }
++    virt_cpu_set_properties(OBJECT(cs), cpu_slot, errp);
++}
++
++static void virt_cpu_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
++                          Error **errp)
++{
++    MachineState *ms = MACHINE(hotplug_dev);
++    CPUState *cs = CPU(dev);
++    CPUArchId *cpu_slot;
++
++    /* insert the cold/hot-plugged vcpu in the slot */
++    cpu_slot = virt_find_cpu_slot(ms, cs->cpu_index);
++    cpu_slot->cpu = CPU(dev);
++
++    cs->disabled = false;
++    return;
++}
++
+ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+                                             DeviceState *dev, Error **errp)
+ {
+@@ -2906,6 +2992,8 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+ 
+     if (object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM)) {
+         virt_memory_pre_plug(hotplug_dev, dev, errp);
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
++        virt_cpu_pre_plug(hotplug_dev, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+         virtio_md_pci_pre_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
+@@ -2962,6 +3050,8 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
+         virt_memory_plug(hotplug_dev, dev, errp);
+     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+         virtio_md_pci_plug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
++    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
++        virt_cpu_plug(hotplug_dev, dev, errp);
+     }
+ 
+     if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
+@@ -3046,7 +3136,8 @@ static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *machine,
+     if (device_is_dynamic_sysbus(mc, dev) ||
+         object_dynamic_cast(OBJECT(dev), TYPE_PC_DIMM) ||
+         object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI) ||
+-        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI)) {
++        object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_IOMMU_PCI) ||
++        object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+         return HOTPLUG_HANDLER(machine);
+     }
+     return NULL;
+@@ -3150,6 +3241,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
+     mc->valid_cpu_types = valid_cpu_types;
+     mc->get_default_cpu_node_id = virt_get_default_cpu_node_id;
+     mc->kvm_type = virt_kvm_type;
++    mc->has_hotpluggable_cpus = true;
+     assert(!mc->get_hotplug_handler);
+     mc->get_hotplug_handler = virt_machine_get_hotplug_handler;
+     hc->pre_plug = virt_machine_device_pre_plug_cb;
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index abc4ed0842..c92162fa97 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2639,6 +2639,12 @@ static const TCGCPUOps arm_tcg_ops = {
+ };
+ #endif /* CONFIG_TCG */
+ 
++static int64_t arm_cpu_get_arch_id(CPUState *cs)
++{
++    ARMCPU *cpu = ARM_CPU(cs);
++    return cpu->mp_affinity;
++}
++
+ static void arm_cpu_class_init(ObjectClass *oc, void *data)
+ {
+     ARMCPUClass *acc = ARM_CPU_CLASS(oc);
+@@ -2658,6 +2664,7 @@ static void arm_cpu_class_init(ObjectClass *oc, void *data)
+     cc->has_work = arm_cpu_has_work;
+     cc->mmu_index = arm_cpu_mmu_index;
+     cc->dump_state = arm_cpu_dump_state;
++    cc->get_arch_id = arm_cpu_get_arch_id;
+     cc->set_pc = arm_cpu_set_pc;
+     cc->get_pc = arm_cpu_get_pc;
+     cc->gdb_read_register = arm_cpu_gdb_read_register;
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index c15d086049..d6b48b3424 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -780,6 +780,17 @@ static void aarch64_cpu_set_aarch64(Object *obj, bool value, Error **errp)
+     }
+ }
+ 
++static void aarch64_cpu_initfn(Object *obj)
++{
++    CPUState *cs = CPU(obj);
++
 +    /*
-+     * Some architectures do not allow the *presence* of vCPUs to be changed
-+     * after the guest has booted, based on information specified by the
-+     * VMM/firmware via ACPI MADT at boot time. Thus, to enable vCPU hotplug on
-+     * these architectures, possible vCPUs can have a CPUState object in a
-+     * 'disabled' state or may not have a CPUState object at all. This is
-+     * possible when vCPU hotplug is supported, and vCPUs are
-+     * 'yet-to-be-plugged' in the QOM or have been hot-unplugged. By default,
-+     * every CPUState is enabled across all architectures.
++     * we start every ARM64 vcpu as disabled possible vCPU. It needs to be
++     * enabled explicitly
 +     */
-+    bool disabled;
++    cs->disabled = true;
++}
 +
-     /* TODO Move common fields from CPUArchState here. */
-     int cpu_index;
-     int cluster_index;
-@@ -914,6 +926,48 @@ static inline bool cpu_in_exclusive_context(const CPUState *cpu)
-  */
- CPUState *qemu_get_cpu(int index);
+ static void aarch64_cpu_finalizefn(Object *obj)
+ {
+ }
+@@ -792,7 +803,9 @@ static const gchar *aarch64_gdb_arch_name(CPUState *cs)
+ static void aarch64_cpu_class_init(ObjectClass *oc, void *data)
+ {
+     CPUClass *cc = CPU_CLASS(oc);
++    DeviceClass *dc = DEVICE_CLASS(oc);
  
-+/**
-+ * qemu_get_possible_cpu:
-+ * @index: The CPUState@cpu_index value of the CPU to obtain.
-+ *         Input index MUST be in range [0, Max Possible CPUs)
-+ *
-+ * If CPUState object exists,then it gets a CPU matching
-+ * @index in the possible CPU array.
-+ *
-+ * Returns: The possible CPU or %NULL if CPU does not exist.
-+ */
-+CPUState *qemu_get_possible_cpu(int index);
-+
-+/**
-+ * qemu_present_cpu:
-+ * @cpu: The vCPU to check
-+ *
-+ * Checks if the vCPU is amongst the present possible vcpus.
-+ *
-+ * Returns: True if it is present possible vCPU else false
-+ */
-+bool qemu_present_cpu(CPUState *cpu);
-+
-+/**
-+ * qemu_enabled_cpu:
-+ * @cpu: The vCPU to check
-+ *
-+ * Checks if the vCPU is enabled.
-+ *
-+ * Returns: True if it is 'enabled' else false
-+ */
-+bool qemu_enabled_cpu(CPUState *cpu);
-+
-+/**
-+ * qemu_get_cpu_archid:
-+ * @cpu_index: possible vCPU for which arch-id needs to be retreived
-+ *
-+ * Fetches the vCPU arch-id from the present possible vCPUs.
-+ *
-+ * Returns: arch-id of the possible vCPU
-+ */
-+uint64_t qemu_get_cpu_archid(int cpu_index);
-+
- /**
-  * cpu_exists:
-  * @id: Guest-exposed CPU ID to lookup.
++    dc->user_creatable = true;
+     cc->gdb_read_register = aarch64_cpu_gdb_read_register;
+     cc->gdb_write_register = aarch64_cpu_gdb_write_register;
+     cc->gdb_core_xml_file = "aarch64-core.xml";
+@@ -837,6 +850,7 @@ void aarch64_cpu_register(const ARMCPUInfo *info)
+ static const TypeInfo aarch64_cpu_type_info = {
+     .name = TYPE_AARCH64_CPU,
+     .parent = TYPE_ARM_CPU,
++    .instance_init = aarch64_cpu_initfn,
+     .instance_finalize = aarch64_cpu_finalizefn,
+     .abstract = true,
+     .class_init = aarch64_cpu_class_init,
 -- 
 2.34.1
 
