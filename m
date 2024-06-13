@@ -4,73 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51014C27C75
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 16:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C88CC27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 16:24:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHn4J-0008Or-CN; Thu, 13 Jun 2024 12:12:55 -0400
+	id 1sHnEI-0003A4-Ie; Thu, 13 Jun 2024 12:23:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sHn4G-0008Nb-Nl
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 12:12:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sHnEG-00039o-T1
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 12:23:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sHn4E-00015g-Ea
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 12:12:52 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sHnEE-000349-58
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 12:23:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718295169;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=V8kSWuKMRK0fpURoZ8jTcBnFyKoHrheYTuCO+wGXGS4=;
- b=bNZPE33G0pmavbJFIXIQw0ZnfMy/iJsAo4bJBgb3NlU2/xwabngC/eq1NE4ooLBDW31LV5
- blOfcxAQy6PFULrFnoYZefTvg9KhiDtW/DcHEx9EkadiS5NY5F38OZvckeHYuz4/fBslcp
- SPBKGyaQ8Rbor/CKZkcx72NQjulgKuA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-V1wxmZdqM1yJGv965IDpoQ-1; Thu,
- 13 Jun 2024 12:12:46 -0400
-X-MC-Unique: V1wxmZdqM1yJGv965IDpoQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 05F58195608F
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 16:12:46 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.52])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 889FB1956050; Thu, 13 Jun 2024 16:12:43 +0000 (UTC)
-Date: Thu, 13 Jun 2024 17:12:39 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- Victor Toso de Carvalho <victortoso@redhat.com>
-Subject: Re: Historical QAPI schema parser, "compiled schema", and
- qapi-schema-diff
-Message-ID: <Zmsad48PjR66xpA3@redhat.com>
-References: <CAFn=p-ZmjLKRN1kKo1iM_tiijYbOEqt5=vRg7WoAXuQ6E8Rm+A@mail.gmail.com>
+ s=mimecast20190719; t=1718295788;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VDAyXp8cNtozs8YLdBVGbvBK0bQGaFRmNgEFKpRze4s=;
+ b=g84icjCtsc4ob0CHRKJDXI2dI1wjw3hTFI7s/j5dlWANvuOnjcjXuAFj/0OgHeJ5al20k0
+ 0u71rBNPPbGPqjsXkReOs7ybZ/7aOa9HT9vC2U47mVbAcunAjHmPWjyUvBpk6oe6hIEZeD
+ jJmlW9l3KoVIyD60mpXzpptJ3VRH+Ak=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-456-C7rorfA-O2anJt1Qhg3E9w-1; Thu, 13 Jun 2024 12:23:07 -0400
+X-MC-Unique: C7rorfA-O2anJt1Qhg3E9w-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6b067843eb8so1607096d6.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 09:23:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718295787; x=1718900587;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VDAyXp8cNtozs8YLdBVGbvBK0bQGaFRmNgEFKpRze4s=;
+ b=v1m0Squ5XE6nqKcy8YasKgUpAPoqOa1M3ntzo/fKm+gCzioXd/jWYlbhbwEt9d8NE3
+ hCNCQn3Jr3OwN+wZlfMd5ZByWZ5GSynBIpoKbGalMk5v3f6LwZ0jRwBKfZkBU9PA52bv
+ WflrA2UmTrQBFi5qOFtBnSMhEf+H2DI6TNWprhAk4/poD1TqxJ0d6huXYlGias4c6Y95
+ EccJNkK3LBV+KDEqVy1QINPgtGVWq3TDgUhxOi/4DkzR+XoJ/Go9JbdWQpNOaJlfOSJV
+ da5M6BC6mPMFQh6hRMgmLt8rrlH43gBqKHumot8wLGpqGk9vJIAV6UZRIL+kkKJ/prQl
+ i0rQ==
+X-Gm-Message-State: AOJu0Ywj9201a+nUs2GMfPftrFzL7fYrt6DhPVgKsg/Pfu2Zgn36zbNw
+ yGKRauUfWP18jSZfsp3qnqetd2C9cow014Xq5Y14E9boP3bSx6dCQcxL8WO5Tx/nT4w1aXLhAtH
+ KvR9Th4MpCThXt02zwk8dgklwdaZixad87eUwUMy8TcjK3cF+L9CR
+X-Received: by 2002:a05:6214:4015:b0:6b0:6a38:e01d with SMTP id
+ 6a1803df08f44-6b2afb703a2mr1124616d6.0.1718295786211; 
+ Thu, 13 Jun 2024 09:23:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGvDlPh7n8yBJp3H+GqWopdmeGxrP1yHOP52AjvCDTsBL89VwRKLgGfcHTAl8pZU18Rn35LLA==
+X-Received: by 2002:a05:6214:4015:b0:6b0:6a38:e01d with SMTP id
+ 6a1803df08f44-6b2afb703a2mr1124326d6.0.1718295785594; 
+ Thu, 13 Jun 2024 09:23:05 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b2a5c202e8sm8274696d6.50.2024.06.13.09.23.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Jun 2024 09:23:05 -0700 (PDT)
+Date: Thu, 13 Jun 2024 12:23:02 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>, Bandan Das <bdas@redhat.com>
+Subject: Re: [PATCH 4/4] migration/postcopy: Add postcopy-recover-setup phase
+Message-ID: <Zmsc5pXGs4dLfiLB@x1n>
+References: <20240612144228.1179240-1-peterx@redhat.com>
+ <20240612144228.1179240-5-peterx@redhat.com>
+ <8734pgdhf5.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAFn=p-ZmjLKRN1kKo1iM_tiijYbOEqt5=vRg7WoAXuQ6E8Rm+A@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <8734pgdhf5.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,180 +98,414 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 13, 2024 at 02:13:15AM -0400, John Snow wrote:
-> Hi, recently I've been working on overhauling our QMP documentation; see
-> https://jsnow.gitlab.io/qemu/qapi/index.html for a recent work-in-progress
-> page showcasing this.
+On Thu, Jun 13, 2024 at 11:51:58AM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> As part of this project, Markus and I decided it'd be nice to be able to
-> auto-generate "Since" information. The short reason for 'why' is because
-> since info hard-coded into doc comments may not be accurate with regards to
-> the wire protocol availability for a given field when a QAPI definition is
-> shared or inherited by multiple sources. If we can generate it, it should
-> always be accurate.
+> > This patch adds a migration state on src called "postcopy-recover-setup".
+> > The new state will describe the intermediate step starting from when the
+> > src QEMU started an postcopy recovery request, until the migration channels
+> > are properly established, but before the recovery process take place.
+> >
+> > The request came from Libvirt where Libvirt currently rely on the migration
+> > state events to detect migration state changes.  That works for most of the
+> > migration process but except postcopy recovery failures at the beginning.
+> >
+> > Currently postcopy recovery only has two major states:
+> >
+> >   - postcopy-paused: this is the state that both sides of QEMU will be in
+> >     for a long time as long as the migration channel was interrupted.
+> >
+> >   - postcopy-recover: this is the state where both sides of QEMU handshake
+> >     with each other, preparing for a continuation of postcopy which used to
+> >     be interrupted.
+> >
+> > The issue here is when the recovery port is invalid, the src QEMU will take
+> > the URI/channels, noticing the ports are not valid, and it'll silently keep
+> > in the postcopy-paused state, with no event sent to Libvirt.  In this case,
+> > the only thing Libvirt can do is to poll the migration status with a proper
+> > interval, however that's less optimal.
+> >
+> > Considering that this is the only case where Libvirt won't get a
+> > notification from QEMU on such events, let's add postcopy-recover-setup
+> > state to mimic what we used to have with the "setup" state of a newly
 > 
-> So, I've prototyped three things:
+> s/used to //
+
+Fixed.
+
 > 
-> (1) An out-of-tree fork of the QAPI generator that is capable of parsing
-> qemu-commands.hx, qmp-commands.hx, and all versions of our qapi-schema.json
-> files going all the way back to v0.12.0.
+> > initialized migration, describing the phase of connection establishment.
+> >
+> > With that, postcopy recovery will have two paths to go now, and either path
+> > will guarantee an event generated.  Now the events will look like this
+> > during a recovery process on src QEMU:
+> >
+> >   - Initially when the recovery is initiated on src, QEMU will go from
+> >     "postcopy-paused" -> "postcopy-recover-setup".  Old QEMUs don't have
+> >     this event.
+> >
+> >   - Depending on whether the channel re-establishment is succeeded:
+> >
+> >     - In succeeded case, src QEMU will move from "postcopy-recover-setup"
+> >       to "postcopy-recover".  Old QEMUs also have this event.
+> >
+> >     - In failure case, src QEMU will move from "postcopy-recover-setup" to
+> >       "postcopy-paused" again.  Old QEMUs don't have this event.
+> >
+> > This guarantees that Libvirt will always receive a notification for
+> > recovery process properly.
+> >
+> > One thing to mention is, such new status is only needed on src QEMU not
+> > both.  On dest QEMU, the state machine doesn't change.  Hence the events
+> > don't change either.  It's done like so because dest QEMU may not have an
+> > explicit point of setup start.  E.g., it can happen that when dest QEMUs
+> > doesn't use migrate-recover command to use a new URI/channel, but the old
+> > URI/channels can be reused in recovery, in which case the old ports simply
+> > can work again after the network routes are fixed up.
+> >
+> > The patch has some touch-ups in the dest path too, but it's because there's
+> > some unclearness on using migrate_set_state(), so the change should make it
+> > crystal clear now by checking current status always.  The next step from
 > 
-> It accomplishes this with some fairly brutish hacks that I never expect to
-> need to check in to qemu.git.
+> Can we get a separate patch for these cleanups?
+
+We can, and I'll do.
+
 > 
-> (2) A schema "compiler", a QAPI generator module that takes a parsed Schema
-> and produces a single-file JSON Schema document that describes every
-> command and event as it exists on the wire without using type names or any
-> information not considered to be "API".
+> > that POV would be making migrate_set_state() not using cmpxchg() but always
+> > update the status, but that's for later.
+> >
+> > Cc: Jiri Denemark <jdenemar@redhat.com>
+> > Cc: Fabiano Rosas <farosas@suse.de>
+> > Cc: Prasad Pandit <ppandit@redhat.com>
+> > Buglink: https://issues.redhat.com/browse/RHEL-38485
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  qapi/migration.json      |  4 +++
+> >  migration/postcopy-ram.h |  3 ++
+> >  migration/migration.c    | 66 +++++++++++++++++++++++++++++++++++-----
+> >  migration/postcopy-ram.c |  6 ++++
+> >  migration/savevm.c       |  4 +--
+> >  5 files changed, 73 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/qapi/migration.json b/qapi/migration.json
+> > index a351fd3714..a135bbcd96 100644
+> > --- a/qapi/migration.json
+> > +++ b/qapi/migration.json
+> > @@ -142,6 +142,9 @@
+> >  #
+> >  # @postcopy-paused: during postcopy but paused.  (since 3.0)
+> >  #
+> > +# @postcopy-recover-setup: setup phase for a postcopy recover process,
+> > +#     preparing for a recover phase to start.  (since 9.1)
 > 
-> This part *would* need to be checked in to qemu.git (if we go in this
-> direction.)
-> The compiled historical schema would also get checked in, for the QAPI
-> parser to reference against to generate the since information.
+> recover*y* process
+> recover*y* phase
 
-The upside with checking in every historical schema is that we
-have a set of self-contained schemas where you can see everything
-at a glance for each version.
+OK.
 
-The downside with checking in every historical schema is that between
-any adjacent pair of schemas 99% of the content is identical. IOW we
-are very wasteful of storage.
+> 
+> > +#
+> >  # @postcopy-recover: trying to recover from a paused postcopy.  (since
+> >  #     3.0)
+> >  #
+> > @@ -166,6 +169,7 @@
+> >  { 'enum': 'MigrationStatus',
+> >    'data': [ 'none', 'setup', 'cancelling', 'cancelled',
+> >              'active', 'postcopy-active', 'postcopy-paused',
+> > +            'postcopy-recover-setup',
+> >              'postcopy-recover', 'completed', 'failed', 'colo',
+> >              'pre-switchover', 'device', 'wait-unplug' ] }
+> >  ##
+> > diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
+> > index ecae941211..a6df1b2811 100644
+> > --- a/migration/postcopy-ram.h
+> > +++ b/migration/postcopy-ram.h
+> > @@ -13,6 +13,8 @@
+> >  #ifndef QEMU_POSTCOPY_RAM_H
+> >  #define QEMU_POSTCOPY_RAM_H
+> >  
+> > +#include "qapi/qapi-types-migration.h"
+> > +
+> >  /* Return true if the host supports everything we need to do postcopy-ram */
+> >  bool postcopy_ram_supported_by_host(MigrationIncomingState *mis,
+> >                                      Error **errp);
+> > @@ -193,5 +195,6 @@ enum PostcopyChannels {
+> >  void postcopy_preempt_new_channel(MigrationIncomingState *mis, QEMUFile *file);
+> >  void postcopy_preempt_setup(MigrationState *s);
+> >  int postcopy_preempt_establish_channel(MigrationState *s);
+> > +bool postcopy_is_paused(MigrationStatus status);
+> >  
+> >  #endif
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index bfbd657035..9475dce7dc 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -595,6 +595,26 @@ bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
+> >      return true;
+> >  }
+> >  
+> > +static bool
+> > +migration_incoming_state_setup(MigrationIncomingState *mis, Error **errp)
+> > +{
+> > +    MigrationStatus current = mis->state;
+> > +
+> > +    if (current == MIGRATION_STATUS_POSTCOPY_PAUSED) {
+> > +        /* Postcopy paused state doesn't change when setup new ports */
+> 
+> The "setup new ports" part is a bit vague. Maybe:
+> 
+> /*
+>  * The SETUP state only happens at the start of migration. A postcopy
+>  * migration recovery migration stays in POSTCOPY_PAUSED.
+>  */
 
-Looking at your other mail about schema diffs, I wonder if we the
-diff format you show there can kill two birds with one stone.
+Mentioning SETUP in this if clause might be slightly confusing?  How about
+I only keep the latter sentence (and change it a bit; there's one extra
+"migration")?
 
-  https://lists.nongnu.org/archive/html/qemu-devel/2024-06/msg02398.html
+  /*
+   * Postcopy migration stays in POSTCOPY_PAUSED even if reconnection
+   * happens.
+   */
 
-In my reply I had illustrated a variant of your format:
+> 
+> > +        return true;
+> > +    }
+> > +
+> > +    if (current != MIGRATION_STATUS_NONE) {
+> > +        error_setg(errp, "Illegal migration incoming state: %s",
+> > +                   MigrationStatus_str(current));
+> > +        return false;
+> > +    }
+> 
+> This is a good candidate for a separate patch due to the extra change in
+> behavior not necessarily related to postcopy.
 
- - x-query-rdma
- -     returns.human-readable-text: str
- . blockdev-backup
- +     arguments.discard-source: Optional<boolean>
- . migrate
- -    arguments.blk: Optional<boolean>
- -    arguments.inc: Optional<boolean>
- . object-add
- .    arguments.qom-type: enum
- +        'sev-snp-guest'
- +    arguments[sev-guest].legacy-vm-type: Optional<boolean>
- +    arguments[sev-snp-guest].author-key-enabled: Optional<boolean>
- +    arguments[sev-snp-guest].cbitpos: Optional<integer>
+I'll split that, but just to mention, I think there should have no
+functional change, or we're doomed.
 
+The old code worked the same by ignoring migrate_set_state() when PAUSED in
+the cmpxchg(), which is implicit and unclear.
 
-Where '.' is just pre-existing context, and +/- have the obvious
-meaning for the 2 given versions.
+> 
+> > +
+> > +    migrate_set_state(&mis->state, current, MIGRATION_STATUS_SETUP);
+> > +    return true;
+> > +}
+> > +
+> >  static void qemu_start_incoming_migration(const char *uri, bool has_channels,
+> >                                            MigrationChannelList *channels,
+> >                                            Error **errp)
+> > @@ -633,8 +653,9 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
+> >          return;
+> >      }
+> >  
+> > -    migrate_set_state(&mis->state, MIGRATION_STATUS_NONE,
+> > -                      MIGRATION_STATUS_SETUP);
+> > +    if (!migration_incoming_state_setup(mis, errp)) {
+> > +        return;
+> > +    }
+> >  
+> >      if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET) {
+> >          SocketAddress *saddr = &addr->u.socket;
+> > @@ -1070,6 +1091,7 @@ bool migration_is_setup_or_active(void)
+> >      case MIGRATION_STATUS_ACTIVE:
+> >      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
+> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
+> >      case MIGRATION_STATUS_SETUP:
+> >      case MIGRATION_STATUS_PRE_SWITCHOVER:
+> > @@ -1092,6 +1114,7 @@ bool migration_is_running(void)
+> >      case MIGRATION_STATUS_ACTIVE:
+> >      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
+> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
+> >      case MIGRATION_STATUS_SETUP:
+> >      case MIGRATION_STATUS_PRE_SWITCHOVER:
+> > @@ -1229,6 +1252,7 @@ static void fill_source_migration_info(MigrationInfo *info)
+> >      case MIGRATION_STATUS_PRE_SWITCHOVER:
+> >      case MIGRATION_STATUS_DEVICE:
+> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
+> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
+> >          /* TODO add some postcopy stats */
+> >          populate_time_info(info, s);
+> > @@ -1279,6 +1303,7 @@ static void fill_destination_migration_info(MigrationInfo *info)
+> >      case MIGRATION_STATUS_ACTIVE:
+> >      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
+> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+> 
+> Does this need to be here? We don't reach this state on destination, right?
 
-What if, we append a version number to *every* line, and exclusively
-use +/-.
+Right, it won't hurt having that here, but let me drop it.
 
-Taking just one small command:
+> 
+> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
+> >      case MIGRATION_STATUS_FAILED:
+> >      case MIGRATION_STATUS_COLO:
+> > @@ -1435,9 +1460,30 @@ static void migrate_error_free(MigrationState *s)
+> >  
+> >  static void migrate_fd_error(MigrationState *s, const Error *error)
+> >  {
+> 
+> The default case of the swtich below is a bit surprising to me. Why
+> wouldn't we allow this function to be called from other places to set
+> STATUS_FAILED?
+> 
+> ...unless this is only mean for the connection phase, so:
+> 
+> just to check your understanding here because it seems we've drifted a
+> bit from the original definition on those, specially with
+> migrate_fd_cleanup(), but does this _fd_ in the function name implies
+> something like a "connection phase"? As in, "connect to the fd", "the fd
+> connection errored out" and "cleanup the fd connection". Maybe it's time
+> to switch this "fd" to something clearer...
 
- + 6.2.0: x-query-rdma
- + 6.2.0:    returns.human-readable-text: str
- - 9.1.0: x-query-rdma
+IIUC it's just that many functions around this area used to be called
+migrate_fd_*().  Let me know if you have some suggestions, though.
 
-This tell us 'x-query-rdma' was added in 6.2.0, the
-'human-readable-text' parameter arrived at the same
-time, and the whole command was then deleted in 9.1.0
-That has implicit property deletion, but for completeness
-we could be explicit about each property when deleting
-a command:
+> 
+> > +    MigrationStatus current = s->state;
+> > +    MigrationStatus next;
+> > +
+> >      assert(s->to_dst_file == NULL);
+> > -    migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+> > -                      MIGRATION_STATUS_FAILED);
+> > +
+> > +    switch (current) {
+> > +    case MIGRATION_STATUS_SETUP:
+> > +        next = MIGRATION_STATUS_FAILED;
+> > +        break;
+> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+> > +        /* Never fail a postcopy migration; switch back to PAUSED instead */
+> > +        next = MIGRATION_STATUS_POSTCOPY_PAUSED;
+> 
+> So presumably we can keep recovering the migration indefinitely?
 
- + 6.2.0: x-query-rdma
- + 6.2.0:    returns.human-readable-text: str
- - 9.1.0:    returns.human-readable-text: str
- - 9.1.0: x-query-rdma
+Yes, that's by design.
 
-Taking the more complex 'object-add' command
+> 
+> > +        break;
+> > +    default:
+> > +        /*
+> > +         * This really shouldn't happen. Just be careful to not crash a VM
+> > +         * just for this.  Instead, dump something.
+> > +         */
+> > +        error_report("%s: Illegal migration status (%s) detected",
+> > +                     __func__, MigrationStatus_str(current));
+> > +        return;
+> > +    }
+> > +
+> > +    migrate_set_state(&s->state, current, next);
+> >      migrate_set_error(s, error);
+> >  }
+> >  
+> > @@ -1538,6 +1584,7 @@ bool migration_in_postcopy(void)
+> >      switch (s->state) {
+> >      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
+> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
+> >          return true;
+> >      default:
+> > @@ -1936,6 +1983,9 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+> >              return false;
+> >          }
+> >  
+> > +        migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_PAUSED,
+> > +                          MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+> > +
+> >          /* This is a resume, skip init status */
+> >          return true;
+> >      }
+> > @@ -2968,9 +3018,9 @@ static MigThrError postcopy_pause(MigrationState *s)
+> >           * We wait until things fixed up. Then someone will setup the
+> >           * status back for us.
+> >           */
+> > -        while (s->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
+> > +        do {
+> >              qemu_sem_wait(&s->postcopy_pause_sem);
+> > -        }
+> > +        } while (postcopy_is_paused(s->state));
+> 
+> Is there a particular reason to go from while() to do{}while()?
 
- +  2.0.0: object-add
- +  2.0.0:   arguments.qom-type: enum
- +  2.0.0:     '....'
- + 2.11.0:     'sev-guest'
- +  9.1.0:     'sev-snp-guest'
- + 2.11.0:   arguments[sev-guest].policy: uint32
- + 2.11.0:   arguments[sev-guest].session-file: str
- + 2.11.0:   arguments[sev-guest].dh-cert: str
- +  9.1.0:   arguments[sev-guest].legacy-vm-type: Optional<boolean>
- +  9.1.0:   arguments[sev-snp-guest].author-key-enabled: Optional<boolean>
- +  9.1.0:   arguments[sev-snp-guest].cbitpos: Optional<integer>
+It'll be the same AFAICT, the 1st check should mostly be meaningless as the
+sem must be posted at least once.  Yes I should have had a comment
+somewhere but I didn't.. if you want me to keep the old way it's also fine,
+isn't a big deal here to check first either, just save some cycles when I
+worked on these lines.
 
+> 
+> >  
+> >          if (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER) {
+> >              /* Woken up by a recover procedure. Give it a shot */
+> > @@ -3666,7 +3716,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+> >  {
+> >      Error *local_err = NULL;
+> >      uint64_t rate_limit;
+> > -    bool resume = s->state == MIGRATION_STATUS_POSTCOPY_PAUSED;
+> > +    bool resume = migration_in_postcopy();
+> 
+> Here you're expecting just PAUSED or RECOVER_SETUP, right? We'll not
+> reach here in any of the other postcopy states.
 
-IOW, object-add was introduced in 2.0.0. The 'sev-guest' enum
-variant was added in 2.11.0 with various fields at the same
-time. The 'sev-guest' enum variant got an exctra field in 9.1.0
-The 'sev-snp-guest' enum variant was added in 9.1.0 with some
-fields.
+I think here it must be RECOVER_SETUP after this patch.  I changed it to
+use the helper as I think that's cleaner (precopy doesn't allow resume),
+and we don't need such change if the state machine trivially changes again.
 
+> 
+> >      int ret;
+> >  
+> >      /*
+> > @@ -3733,7 +3783,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+> >  
+> >      if (resume) {
+> >          /* Wakeup the main migration thread to do the recovery */
+> > -        migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_PAUSED,
+> > +        migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP,
+> >                            MIGRATION_STATUS_POSTCOPY_RECOVER);
+> >          qemu_sem_post(&s->postcopy_pause_sem);
+> >          return;
+> > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> > index 97701e6bb2..1c374b7ea1 100644
+> > --- a/migration/postcopy-ram.c
+> > +++ b/migration/postcopy-ram.c
+> > @@ -1770,3 +1770,9 @@ void *postcopy_preempt_thread(void *opaque)
+> >  
+> >      return NULL;
+> >  }
+> > +
+> > +bool postcopy_is_paused(MigrationStatus status)
+> > +{
+> > +    return status == MIGRATION_STATUS_POSTCOPY_PAUSED ||
+> > +        status == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP;
+> > +}
+> > diff --git a/migration/savevm.c b/migration/savevm.c
+> > index e71410d8c1..deb57833f8 100644
+> > --- a/migration/savevm.c
+> > +++ b/migration/savevm.c
+> > @@ -2864,9 +2864,9 @@ static bool postcopy_pause_incoming(MigrationIncomingState *mis)
+> >      error_report("Detected IO failure for postcopy. "
+> >                   "Migration paused.");
+> >  
+> > -    while (mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
+> > +    do {
+> >          qemu_sem_wait(&mis->postcopy_pause_sem_dst);
+> > -    }
+> > +    } while (postcopy_is_paused(mis->state));
+> >  
+> >      trace_postcopy_pause_incoming_continued();
+> 
 
-For fields which change from Optional <-> Required, that could
-be modelled simply as parameter deletion + addition in the
-same version eg hypothetically lets say the 'sev-guest' field
-'policy' had changed, we would see:
-
- +  2.0.0: object-add
- +  2.0.0:   arguments.qom-type: enum
- +  2.0.0:     '....'
- + 2.11.0:     'sev-guest'
- +  9.1.0:     'sev-snp-guest'
- + 2.11.0:   arguments[sev-guest].policy: uint32
- -  6.2.0:   arguments[sev-guest].policy: uint32
- +  6.2.0:   arguments[sev-guest].policy: Optional<uint32>
- + 2.11.0:   arguments[sev-guest].session-file: str
- + 2.11.0:   arguments[sev-guest].dh-cert: str
- +  9.1.0:   arguments[sev-guest].legacy-vm-type: Optional<boolean>
- +  9.1.0:   arguments[sev-snp-guest].author-key-enabled: Optional<boolean>
- +  9.1.0:   arguments[sev-snp-guest].cbitpos: Optional<integer>
-
-
-Incidentally, if going down this route, I think I would NOT
-have 1 file with the whole schema history, but have 1 file
-per command / event. eg qapi/history/object-add.txt,
-qapi/history/x-query-rdma.txt, qapi/history/VFIO_MIGRATION.txt,
-etc. This will make it trivial for a person to focus in on
-changes in the command they care about, likely without even
-needing a schema diff tool much of the time, as the per-command
-files will often be concise enough you can consider the full
-history without filtering.
-
-
-> (3) A script that can diff two compiled schema, showing a change report
-> between two versions. (I sent an email earlier today/yesterday showing
-> example output of this script.) This one was more for "fun", but it helped
-> prove all the other parts were working correctly, and it might be useful in
-> the future when auditing changes during the RC phase. We may well decide to
-> commit this script upstream, or one like it.
-
-With a single file containing all deltas, where each line is
-version annotated, the "diff" tool becomes little more than
-something which can 'grep' for lines in the file which have
-a version number within the desired range. In fact it can also
-optionally offer something better than a diff, as instead of
-showing you only the orignal state and result state, it
-can trivially shows you any intermediate changes and what
-version they happened with. 
-
-eg if you asked for a diff between 2.0.0 and 9.1.0, and there
-was a command or property that was added in 4.0.0 and deleted
-in 6.0.0, a traditional diff will not tell you about this. You'll
-never notice it ever existed. 
-
-A "history grep" showing the set of changes between 2 versions
-will highlight things that come + go, which can be quite
-useful for understanding API evolution I think.
-
-
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Peter Xu
 
 
