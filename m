@@ -4,50 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 072A8C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 09:49:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9436FC27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 09:50:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHh4d-0004Yv-3n; Thu, 13 Jun 2024 05:48:51 -0400
+	id 1sHh66-0005oT-Bm; Thu, 13 Jun 2024 05:50:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1sHh4b-0004Yi-RW
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:48:49 -0400
-Received: from rev.ng ([5.9.113.41])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1sHh63-0005o3-SO
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:50:19 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1sHh4a-0001gH-3Y
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:48:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
- :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=B3oKCLsgojvPJeUXy3Br6avn5OISxZRDz2aRErL2H/4=; b=EqMpsoebahg2Tkm
- Jp4Sm4baFX6vfQQofe7d2D8S+n0U7zlMOhnCT2Pov0+u/+Cvk57ztIUFPpLT5dDhpYmbjfOO9fQuQ
- IE/OQQ/FkCpTr8lGyUT6bgJ+r3ALLchrd4dRMCN/C80Y6GRVQY9B+DwhRdTL1APqQA9Mz0siFsxzY
- 5Q=;
-Date: Thu, 13 Jun 2024 11:50:12 +0200
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, ale@rev.ng, philmd@linaro.org
-Subject: Re: [RFC PATCH 27/34] accel/tcg: Make translate-all.c target
- independent
-Message-ID: <n5zuo5jky5zblncdnfitmch7fdy3qki6o5k5tyjpc7bmvkczck@7g6m6m7jukfb>
-References: <20240119144024.14289-1-anjo@rev.ng>
- <20240119144024.14289-28-anjo@rev.ng>
- <63dfead3-ddab-4502-b3aa-b7481a4f0ebc@linaro.org>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1sHh61-00027G-Rs
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:50:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1718272218; x=1749808218;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=6y4QQC9OFuWGXJq4CbQWs+OveQI9h7vXDqnwywuumfo=;
+ b=DeX0C/lIG0VhhNkjrLhEiguHoZ/lllgIHuaSLgSCUkEYxB9HbiITpaOn
+ 4eu112pb5/v2oJx8+P7IlxRAIObuWYB2AfjJ84PkjAGXi642pQLENiUj8
+ Vx+0H1HtqP/4B+9bRASZUsgSNy08TX1ynmu7B/jQBdjr/g3AjyOAK02TM
+ Vsu/MaAdy5MuKzYFXYvvwuDs80qcs/WWdQ5yoXrTxKfEPiqsWTrd3GynM
+ /YWbt2HV4vUOlO+GO+NyOWXaM1Qad8ZdnWSfegIpcMLyGUhHJzJ5RepFu
+ wBByRRxzX51G9IL6bpCvTnzoB92BSd+jW1QBZLe9wq+MUsmCkQiV5FRiV Q==;
+X-CSE-ConnectionGUID: 1y4H1KqBQEKo4y7seN13uA==
+X-CSE-MsgGUID: 833X7oQ9RASvHXjl909HKw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11101"; a="14878963"
+X-IronPort-AV: E=Sophos;i="6.08,234,1712646000"; d="scan'208";a="14878963"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Jun 2024 02:50:13 -0700
+X-CSE-ConnectionGUID: 6IiplG3QTDCj3YxYhuStCg==
+X-CSE-MsgGUID: KWnptnc6SR2LQm1USBa9pQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,234,1712646000"; d="scan'208";a="70877989"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.227.51])
+ ([10.124.227.51])
+ by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Jun 2024 02:50:12 -0700
+Message-ID: <c54d5f72-ecfd-46e0-baf9-324fdedd2ed3@intel.com>
+Date: Thu, 13 Jun 2024 17:50:08 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <63dfead3-ddab-4502-b3aa-b7481a4f0ebc@linaro.org>
-Received-SPF: pass client-ip=5.9.113.41; envelope-from=anjo@rev.ng; helo=rev.ng
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 39/42] i386: Add support for SUCCOR feature
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: John Allen <john.allen@amd.com>, William Roche
+ <william.roche@oracle.com>, Joao Martins <joao.m.martins@oracle.com>
+References: <20240608083415.2769160-1-pbonzini@redhat.com>
+ <20240608083415.2769160-40-pbonzini@redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20240608083415.2769160-40-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,54 +84,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Anton Johansson <anjo@rev.ng>
-From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/01/24, Richard Henderson wrote:
-> On 1/20/24 00:40, Anton Johansson wrote:
-> > Makes translate-all.c independent of softmmu target by switching
-> > 
-> >      TARGET_LONG_BITS        -> target_long_bits()
-> > 
-> >      TARGET_INSN_START_WORDS -> tcg_ctx->insn_start_words,
-> >                                 target_insn_start_words(),
-> > 
-> >      TCG_GUEST_DEFAULT_MO    -> target_default_memory_order()
-> > 
-> >      MO_TE                   -> target_endian_memory_order()
-> > 
-> > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > ---
-> >   accel/tcg/translate-all.c | 38 ++++++++++++++++++--------------------
-> >   1 file changed, 18 insertions(+), 20 deletions(-)
-> > 
-> > diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-> > index 9c981d1750..a3ae0c6910 100644
-> > --- a/accel/tcg/translate-all.c
-> > +++ b/accel/tcg/translate-all.c
-> > @@ -65,7 +65,6 @@
-> >   #include "internal-common.h"
-> >   #include "internal-target.h"
-> >   #include "perf.h"
-> > -#include "tcg/insn-start-words.h"
-> >   TBContext tb_ctx;
-> > @@ -106,7 +105,7 @@ static int64_t decode_sleb128(const uint8_t **pp)
-> >           val |= (int64_t)(byte & 0x7f) << shift;
-> >           shift += 7;
-> >       } while (byte & 0x80);
-> > -    if (shift < TARGET_LONG_BITS && (byte & 0x40)) {
-> > +    if (shift < target_long_bits() && (byte & 0x40)) {
+On 6/8/2024 4:34 PM, Paolo Bonzini wrote:
+> From: John Allen <john.allen@amd.com>
 > 
-> You just make TARGET_PAGE_SIZE etc target independent, right?
-> So you don't need this?  Or is this because of user-only still.
+> Add cpuid bit definition for the SUCCOR feature. This cpuid bit is required to
+> be exposed to guests to allow them to handle machine check exceptions on AMD
+> hosts.
+> 
+> ----
+> v2:
+>    - Add "succor" feature word.
+>    - Add case to kvm_arch_get_supported_cpuid for the SUCCOR feature.
+> 
+> Reported-by: William Roche <william.roche@oracle.com>
+> Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
+> Signed-off-by: John Allen <john.allen@amd.com>
+> Message-ID: <20240603193622.47156-3-john.allen@amd.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Hi, Richard!
+[snip]
+...
 
-I missed this piece of feedback previously.  I don't see how
-TARGET_PAGE_[SIZE|BITS] would be used here.  Are the values we're
-encoding always TARGET_PAGE_BITS in size?
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 55a9e8a70cf..56d8e2a89ec 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -532,6 +532,8 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
+>            */
+>           cpuid_1_edx = kvm_arch_get_supported_cpuid(s, 1, 0, R_EDX);
+>           ret |= cpuid_1_edx & CPUID_EXT2_AMD_ALIASES;
+> +    } else if (function == 0x80000007 && reg == R_EBX) {
+> +        ret |= CPUID_8000_0007_EBX_SUCCOR;
 
-//Anton
+IMO, this is incorrect.
+
+Why make it supported unconditionally? Shouldn't there be a KVM patch to 
+report it in KVM_GET_SUPPORTED_CPUID?
+
+If make it supported unconditionally, all VMs boot with "-cpu host/max" 
+will see the CPUID bits, even if it is Intel VMs.
+
+
+>       } else if (function == KVM_CPUID_FEATURES && reg == R_EAX) {
+>           /* kvm_pv_unhalt is reported by GET_SUPPORTED_CPUID, but it can't
+>            * be enabled without the in-kernel irqchip
+
 
