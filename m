@@ -4,67 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFB59C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 05:41:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 983EFC27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 05:50:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHdCW-0005qI-Vt; Thu, 13 Jun 2024 01:40:46 -0400
+	id 1sHdLI-0007vS-IM; Thu, 13 Jun 2024 01:49:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1sHdCN-0005pr-Ep; Thu, 13 Jun 2024 01:40:35 -0400
-Received: from 59-120-53-16.hinet-ip.hinet.net ([59.120.53.16]
- helo=mail.andestech.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1sHdCK-0007yx-Ol; Thu, 13 Jun 2024 01:40:34 -0400
-Received: from ethan84-VirtualBox (10.0.12.12) by ATCPCS31.andestech.com
- (10.0.1.89) with Microsoft SMTP Server id 14.3.498.0; Thu, 13 Jun 2024
- 13:34:12 +0800
-Date: Thu, 13 Jun 2024 13:34:05 +0800
-To: Jim Shu <jim.shu@sifive.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-riscv@nongnu.org"
- <qemu-riscv@nongnu.org>, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Eduardo Habkost <eduardo@habkost.net>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, Peter Xu
- <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Michael Rolnik <mrolnik@gmail.com>, "Edgar E.
- Iglesias" <edgar.iglesias@gmail.com>, Song Gao <gaosong@loongson.cn>,
- "Laurent Vivier" <laurent@vivier.eu>, Aurelien Jarno <aurelien@aurel32.net>,
- "Jiaxun Yang" <jiaxun.yang@flygoat.com>, Aleksandar Rikalo
- <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>, Nicholas Piggin
- <npiggin@gmail.com>, Yoshinori Sato <ysato@users.sourceforge.jp>, Ilya
- Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, Mark
- Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Artyom Tarasenko
- <atar4qemu@gmail.com>, Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Max Filippov <jcmvbkbc@gmail.com>, "open list:ARM TCG CPUs"
- <qemu-arm@nongnu.org>, "open list:PowerPC TCG CPUs" <qemu-ppc@nongnu.org>,
- "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
-Subject: Re: [RFC PATCH 02/16] accel/tcg: memory access from CPU will pass
- access_type to IOMMU
-Message-ID: <ZmqEzUPsJwFs7w4+@ethan84-VirtualBox>
-References: <20240612081416.29704-1-jim.shu@sifive.com>
- <20240612081416.29704-3-jim.shu@sifive.com>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sHdLG-0007vK-Fx
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:49:46 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sHdLE-0000uS-Hm
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:49:46 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4217c7eb6b4so6893915e9.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 22:49:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718257781; x=1718862581; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=1Pke5SnVgSyp7kc2reUGj589dsJKNLncqYWR1n+SCgo=;
+ b=RSSDhc3GjnokU/Qyz/PXSRMMX8TIXDgSzdVKs79XLMtod32Fdmkl8jTdx5SGE2fyxW
+ rocLHRTENs56hHNzF7nfoQJfV7Ek9j8PJf/SbhdbuTJ9O/3zIr70F9u++CQJOj4owWbQ
+ XH27cQ2KLoxhTmDhKVQDYNpV0qErScuEfakKFjslCksWyrlgHZwjOtZPaJTjfPQiL6rZ
+ Znl7eg1aaNqFsG31IgI4LIwtHSWOAXCcQ86pHNILhpJE6/9gpbUARwxcA0W6XPntUWRt
+ 7sosq1s/DRHkUmBz3XyOxoeWO3mDsvXsaHdICJm9juPNEhJmYxCl+c6S7+E50cxHebxH
+ HE0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718257781; x=1718862581;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1Pke5SnVgSyp7kc2reUGj589dsJKNLncqYWR1n+SCgo=;
+ b=pZpN8M+zeoOZquR7/dK6+Ipu8XWDhhSOfsLOrVxfc8Ca785rZ72OnzW54Upwk/jx+K
+ mTFGE3IgZTVqxskG6E+jFxgyWw+vkO24JqwPPmMWOY1XnloOAPQDsXTenjE1krgaW7aV
+ SVjI8fTWcp7FP6RqIBqwoUXa6b5ePNVcTU0YqxWfwVg6ipjPvjPhRDjLgPB6NVL6JT/R
+ ClSwbBoLYFWJD049dZ+/mdx1pONPu2BTZu+LZmN8SnSWWCc9UJOGMYlkBSd8yMSunf8e
+ S/MdVYfUIJbLNS/XOKmCSa2M1TvsbtSbT+t4PzdnKWdPCHSwKmobga/Q608ta10q3vvG
+ xhBA==
+X-Gm-Message-State: AOJu0YzD7hqFxUdnFetHM9FCvHps0vN128s0SB+fhPWMf7NOD+DBBQGI
+ GrpyBP9HA/PjgOS2s0dMF98GHb/mWC4ulAhKRHFlDJjpK+Urb2eETTxq4Nm6PyCkEHYGFPZ6Ypw
+ ztVU=
+X-Google-Smtp-Source: AGHT+IHkorExO8QBf+zR+i6G4MUmZk2OwPv2XU8J4n9+uF1nm5mt4yedbFzzyup29H6+8t01IHeGTg==
+X-Received: by 2002:a05:600c:5487:b0:422:1a82:3ebf with SMTP id
+ 5b1f17b1804b1-422867bec26mr35385055e9.35.1718257780857; 
+ Wed, 12 Jun 2024 22:49:40 -0700 (PDT)
+Received: from localhost.localdomain (adsl-105.37.6.1.tellas.gr. [37.6.1.105])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-422874de68asm48632175e9.29.2024.06.12.22.49.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Jun 2024 22:49:40 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Zheyu Ma <zheyuma97@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2] virtio-iommu: add error check before assert
+Date: Thu, 13 Jun 2024 08:49:12 +0300
+Message-ID: <20240613-fuzz-2359-fix-v2-manos.pitsidianakis@linaro.org>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240612081416.29704-3-jim.shu@sifive.com>
-User-Agent: Mutt/2.1.4 (2021-12-11)
-X-Originating-IP: [10.0.12.12]
-Received-SPF: pass client-ip=59.120.53.16; envelope-from=ethan84@andestech.com;
- helo=mail.andestech.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RDNS_DYNAMIC=0.982,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, TVD_RCVD_IP=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,31 +92,123 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Ethan Chen <ethan84@andestech.com>
-From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 12, 2024 at 04:14:02PM +0800, Jim Shu wrote:
-> [EXTERNAL MAIL]
-> 
-> It is the preparation patch for upcoming RISC-V wgChecker device.
-> 
-> Since RISC-V wgChecker could permit access in RO/WO permission, the
-> IOMMUMemoryRegion could return different section for read & write
-> access. The memory access from CPU should also pass the access_type to
-> IOMMU translate function so that IOMMU could return the correct section
-> of specified access_type.
-> 
+A fuzzer case discovered by Zheyu Ma causes an assert failure.
 
-Hi Jim,
+Add a check before the assert, and respond with an error before moving
+on to the next queue element.
 
-Does this method take into account the situation where the CPU access type is
-different from the access type when creating iotlb? I think the section
-might be wrong in this situation.
+To reproduce the failure:
 
-Thanks,
-Ethan
-> 
-> 
+cat << EOF | \
+qemu-system-x86_64 \
+-display none -machine accel=qtest -m 512M -machine q35 -nodefaults \
+-device virtio-iommu -qtest stdio
+outl 0xcf8 0x80000804
+outw 0xcfc 0x06
+outl 0xcf8 0x80000820
+outl 0xcfc 0xe0004000
+write 0x10000e 0x1 0x01
+write 0xe0004020 0x4 0x00001000
+write 0xe0004028 0x4 0x00101000
+write 0xe000401c 0x1 0x01
+write 0x106000 0x1 0x05
+write 0x100001 0x1 0x60
+write 0x100002 0x1 0x10
+write 0x100009 0x1 0x04
+write 0x10000c 0x1 0x01
+write 0x100018 0x1 0x04
+write 0x10001c 0x1 0x02
+write 0x101003 0x1 0x01
+write 0xe0007001 0x1 0x00
+EOF
+
+Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2359
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+---
+Range-diff against v1:
+1:  a665c6e73d ! 1:  8e50c1b00e virtio-iommu: add error check before assert
+    @@ Commit message
+     
+      ## hw/virtio/virtio-iommu.c ##
+     @@ hw/virtio/virtio-iommu.c: static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
+    +         iov = elem->out_sg;
+    +         sz = iov_to_buf(iov, iov_cnt, 0, &head, sizeof(head));
+    +         if (unlikely(sz != sizeof(head))) {
+    ++            qemu_log_mask(LOG_GUEST_ERROR,
+    ++                          "%s: read %zu bytes from command head"
+    ++                          "but expected %zu\n", __func__, sz, sizeof(head));
+    +             tail.status = VIRTIO_IOMMU_S_DEVERR;
+    +             goto out;
+    +         }
+    +@@ hw/virtio/virtio-iommu.c: static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
+      out:
+              sz = iov_from_buf(elem->in_sg, elem->in_num, 0,
+                                buf ? buf : &tail, output_size);
+     +        if (unlikely(sz != output_size)) {
+    ++            qemu_log_mask(LOG_GUEST_ERROR,
+    ++                          "%s: wrote %zu bytes to command response"
+    ++                          "but response size is %zu\n",
+    ++                          __func__, sz, output_size);
+     +            tail.status = VIRTIO_IOMMU_S_DEVERR;
+    -+            /* We checked that tail can fit earlier */
+    ++            /*
+    ++             * We checked that sizeof(tail) can fit to elem->in_sg at the
+    ++             * beginning of the loop
+    ++             */
+     +            output_size = sizeof(tail);
+     +            g_free(buf);
+     +            buf = NULL;
+
+ hw/virtio/virtio-iommu.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 1326c6ec41..9d801fb180 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -782,6 +782,9 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
+         iov = elem->out_sg;
+         sz = iov_to_buf(iov, iov_cnt, 0, &head, sizeof(head));
+         if (unlikely(sz != sizeof(head))) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: read %zu bytes from command head"
++                          "but expected %zu\n", __func__, sz, sizeof(head));
+             tail.status = VIRTIO_IOMMU_S_DEVERR;
+             goto out;
+         }
+@@ -818,6 +821,25 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
+ out:
+         sz = iov_from_buf(elem->in_sg, elem->in_num, 0,
+                           buf ? buf : &tail, output_size);
++        if (unlikely(sz != output_size)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: wrote %zu bytes to command response"
++                          "but response size is %zu\n",
++                          __func__, sz, output_size);
++            tail.status = VIRTIO_IOMMU_S_DEVERR;
++            /*
++             * We checked that sizeof(tail) can fit to elem->in_sg at the
++             * beginning of the loop
++             */
++            output_size = sizeof(tail);
++            g_free(buf);
++            buf = NULL;
++            sz = iov_from_buf(elem->in_sg,
++                              elem->in_num,
++                              0,
++                              &tail,
++                              output_size);
++        }
+         assert(sz == output_size);
+ 
+         virtqueue_push(vq, elem, sz);
+
+base-commit: f3e8cc47de2bc537d4991e883a85208e4e1c0f98
+-- 
+γαῖα πυρί μιχθήτω
+
 
