@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADA82C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 05:13:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16728C27C6E
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 05:18:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHclK-0003UZ-86; Thu, 13 Jun 2024 01:12:38 -0400
+	id 1sHcq8-00052D-N9; Thu, 13 Jun 2024 01:17:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sHclE-0003RY-UH
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:12:32 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ id 1sHcq7-000522-OJ
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:17:35 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sHclD-0003Iq-6d
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:12:32 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2ebdfe26226so5135081fa.1
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 22:12:30 -0700 (PDT)
+ id 1sHcq3-0003y7-NB
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:17:35 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-421bb51d81aso5311905e9.3
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 22:17:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718255549; x=1718860349; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718255850; x=1718860650; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=ccCWEPbIP3Yg2v6HjmxjF4lRR04h9g5vpJVJjNT8YGg=;
- b=ITdtWQNerIjtJc7yLssEgb0uYSyH7sGHWOLYf+SPr6lwAJoZNJ7sOaZyM7hPI5+3Y+
- 17SosXz8xLraKs3G8Umw2LikYEo0bzNBlx2ssrBADGOtTTWiqQvBswJUYQyujt2X8GiO
- qgB6eHHRh7F5ImYLiBGxYplSlY52Kuiy25I6SzxMTUCg75XwenuxSW7MPZ89wERhgOt5
- tXjZgAOWN5Z5LX9wJ45jlvx0pVz6EqcZ6NMUIZwXA9wTEwAAQRfp6knNQV1+Gtmv+90U
- MJclargnhkg2PnPFeLLjcu4MSOsypcatciRUGwJsh8kajwM59VGTWkBsyItmAwZ/Sc6s
- WyiA==
+ bh=K8SgNh1nDkEGD8LRgiuvMKUwRwWKuQzAh0qghPT0lbs=;
+ b=fb/a0sWATWsoUaDB9qFXxOIJWjqppuXdgks1hqy+QtomVdiOp4XDgjlZaAgH510h/8
+ hrZ4eWT/WQ14I8Pv9xs8ZM525HEWc3fEqhs4RhPU5QmJvlk2NPwyEvkfQjYIHq5upkXQ
+ UzNOUotInRtTxGHm+hxVHgCZOePuJdgS6SI4uZqfZYgdyHW3yVdze8LR2LamB15twzEe
+ ca2SXaTQuYzhRJIqXXQl9xgaWjyEkEG8O5ufy1ljlUxa7+It2utDg2RyiF2utRHl1XTo
+ frlDkrLU1d1FQgZSVOsVDP6A22HsKfpjmjKehRmwk2CeJGPGx54I+nS2eq11r66Nni/i
+ W0cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718255549; x=1718860349;
+ d=1e100.net; s=20230601; t=1718255850; x=1718860650;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ccCWEPbIP3Yg2v6HjmxjF4lRR04h9g5vpJVJjNT8YGg=;
- b=n+KB3ae9/PyFcvsKb80wYZNM53WdnYFpCjgPYU9CifBK9pjkCQygs7TiDrJ+IZDQKs
- Qf/ZmOQhgPOZd27OcvfO031vUtL4zOI45VIRc2v0KGzhbq2vrGnC/ANc6/IVqx1hhuyC
- gZEfB9ujhdf9ahGEyYvPUhrjeKs7JtjRPOayPDcWz3LlPHgn4dpazN/gyUt/G6+vos6Y
- XYF447N3ir/pb0BALOXQ2WPiawtZ+xFgNMieuJbzQ2NhspxES15n6fd4QAmQgybinJ5U
- b3/N3mE6tsFkUCH2BP0W6NjynxYACmXulmG4r34IwNF8TMjciIjBZCxlPBspoGjb+hz1
- QJSA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXHvm/1lQJHfHi1tzsOx+IlcqQ+oy4Zcg7QPVDdYlNt6j1kFbv3aNp5XZytSVRvuBv1OLvZvadLwS4RkYldxay1UG+Wyeo=
-X-Gm-Message-State: AOJu0Ywio5hhnmQ9UEMzLHyXSB6hw6Pw0jXLL9GzNkjmxV8YJ8dnWhWX
- 5KI1W4rGjDVMcEfmE2tth8vg4wB+Ty8DOFgE6tqNfs0M5jH8z6wLxSUqNXGO9J8=
-X-Google-Smtp-Source: AGHT+IEeRZYyHTAZDyyDw0FE5fLIhh4cmvRvmdEWpKeaLxr3qKr81j+1U/2N9ilsGgy2sF8OMpdH2w==
-X-Received: by 2002:a2e:8350:0:b0:2e9:8497:46ce with SMTP id
- 38308e7fff4ca-2ebfc9495ffmr24404691fa.46.1718255548951; 
- Wed, 12 Jun 2024 22:12:28 -0700 (PDT)
+ bh=K8SgNh1nDkEGD8LRgiuvMKUwRwWKuQzAh0qghPT0lbs=;
+ b=a/OBb8Z8KhgOSN2Cd1VuhfokwG74uPEUuJPxVP83AjhXI0xKT3hE59oaTYHicaMOam
+ FJGEprmygEWl3nGt8Ex8iqnWrPVMsBOZhW6c4zOVPJ8kYbi4BKIxJPRSO6Ob7kbfYvZe
+ mQZIlKngt7HC7Ip+dGuDWrXEU417RSaejDp9YBaf0ot5P0Vke2RXpSMknbrGh0v8bNEx
+ SIork9Kg7cZzh4h1V2vhcl5leD1pFlmrrkEqoLlIeUuJdkgvrGngpc+3/+gvX8OGqejQ
+ fTWAnWUi82umebUP1/EB4ITieKgKkk/tPRAY49BYqL/IuzAoPFCD0aBXi2VRn71/hmpp
+ cBwA==
+X-Gm-Message-State: AOJu0Yyikd0tPAlnQhFgCzDq1KbcUWSEnyentWZsiu4aji5Mmvqscq5a
+ 6lw99q7F2eCYVQSbUIXRVi4V9RbBFHzuIDWsxmuuYNZavf+L/MU4bEjNm96Bl9U=
+X-Google-Smtp-Source: AGHT+IFTqOFbZeRaYD7oKUiA9Kv2gAvnTWzUOY5OpzsIiCG9ABWbR/BG1xQj+0pnxdLHgnKgtc+Mow==
+X-Received: by 2002:a05:600c:4f4a:b0:421:1dde:cb5a with SMTP id
+ 5b1f17b1804b1-422865c302cmr32139415e9.35.1718255849650; 
+ Wed, 12 Jun 2024 22:17:29 -0700 (PDT)
 Received: from meli-email.org (adsl-33.109.242.225.tellas.gr. [109.242.225.33])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36075104a3dsm569606f8f.112.2024.06.12.22.12.28
+ 5b1f17b1804b1-422d0be1424sm14244815e9.12.2024.06.12.22.17.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Jun 2024 22:12:28 -0700 (PDT)
-Date: Thu, 13 Jun 2024 08:09:12 +0300
+ Wed, 12 Jun 2024 22:17:29 -0700 (PDT)
+Date: Thu, 13 Jun 2024 08:13:01 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
- Alex Benn=?UTF-8?B?w6kg?=e <alex.bennee@linaro.org>,
+To: "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>,
  Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
+Subject: Re: [RFC PATCH v2 0/5] Implement ARM PL011 in Rust
 User-Agent: meli 0.8.6
 References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
- <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
- <CABgObfY8BS0yCw2CxgDQTBA4np9BZgGJF3N=t6eoBcdACAE=NA@mail.gmail.com>
- <ez270.x96k6aeu0rpw@linaro.org> <ZmnHoajecti472mi@redhat.com>
- <ezjl0.qx0tmsp6d6t@linaro.org>
- <CABgObfbGwKc0RYBcDPzNkE8HOSouFj4D15Oh7TuiKOC+D7raaA@mail.gmail.com>
-In-Reply-To: <CABgObfbGwKc0RYBcDPzNkE8HOSouFj4D15Oh7TuiKOC+D7raaA@mail.gmail.com>
-Message-ID: <f06gr.8csaobu5kui2@linaro.org>
+ <ZmleLH1dQvPqPBAY@redhat.com>
+In-Reply-To: <ZmleLH1dQvPqPBAY@redhat.com>
+Message-ID: <f06p3.rb3vk3rb2kt4@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lj1-x236.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,23 +103,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Good morning Paolo,
+Good morning Daniel,
 
-On Thu, 13 Jun 2024 00:27, Paolo Bonzini <pbonzini@redhat.com> wrote:
->Il mer 12 giu 2024, 22:58 Manos Pitsidianakis < 
->manos.pitsidianakis@linaro.org> ha scritto:
+On Wed, 12 Jun 2024 11:37, "Daniel P. Berrangé" <berrange@redhat.com> wrote:
+>On Tue, Jun 11, 2024 at 01:33:29PM +0300, Manos Pitsidianakis wrote:
 >
->> In any case, it is out of scope for this RFC. Introducing wrappers 
->> would be a gradual process.
->>
+>> 
+>>  .gitignore                     |   2 +
+>>  .gitlab-ci.d/buildtest.yml     |  64 ++--
+>>  MAINTAINERS                    |  13 +
+>>  configure                      |  12 +
+>>  hw/arm/virt.c                  |   4 +
+>>  meson.build                    | 102 ++++++
+>>  meson_options.txt              |   4 +
+>>  rust/meson.build               |  93 ++++++
+>>  rust/pl011/.cargo/config.toml  |   2 +
+>>  rust/pl011/.gitignore          |   2 +
+>>  rust/pl011/Cargo.lock          | 120 +++++++
+>>  rust/pl011/Cargo.toml          |  66 ++++
+>>  rust/pl011/README.md           |  42 +++
+>>  rust/pl011/build.rs            |  44 +++
+>>  rust/pl011/deny.toml           |  57 ++++
+>>  rust/pl011/meson.build         |   7 +
+>>  rust/pl011/rustfmt.toml        |   1 +
+>>  rust/pl011/src/definitions.rs  |  95 ++++++
+>>  rust/pl011/src/device.rs       | 531 ++++++++++++++++++++++++++++++
+>>  rust/pl011/src/device_class.rs |  95 ++++++
+>>  rust/pl011/src/generated.rs    |   5 +
+>>  rust/pl011/src/lib.rs          | 581 +++++++++++++++++++++++++++++++++
+>>  rust/pl011/src/memory_ops.rs   |  38 +++
+>>  rust/rustfmt.toml              |   7 +
+>>  rust/wrapper.h                 |  39 +++
+>>  scripts/cargo_wrapper.py       | 221 +++++++++++++
+>>  scripts/meson-buildoptions.sh  |   6 +
 >
->Sure, how would you feel about such bindings being developed on list, 
->and maintained in a (somewhat) long-lived experimental branch?
+>Given the priority of getting the build system correct, what's missing
+>here is updates/integration into our standard GitLab CI pipeline. If
+>that can be shown to be working, that'll give alot more confidence in
+>the overall solution.
+>
+>Ideally this should not require anything more than updating the docker
+>container definitions to add in the rust toolchain, plus the appropriate
+>std library build for the given target - we cross compiler for every
+>arch we officially care about.
+>
+>Most of our dockerfiles these days are managed by lcitool, and it has
+>nearly sufficient support for cross compiling with the rust std library.
+>So to start with, this series should modify tests/lcitool/projects/qemu.yml
+>to add
+>
+>  - rust
+>  - rust-std
+>
+>to the package list, and run 'make lcitool-refresh' to re-create the
+>dockerfiles - see the docs/devel/testing.rst for more info about
+>lcitool if needed.
+>
+>Assuming these 2 rust packages are in the container, I would then
+>expect QEMU to just "do the right thing" when building this rust
+>code. If it does not, then that's a sign of gaps that need closing.
+>
+>Getting rid of the need to use --rust-target-triple will be the
+>immediate gap that needs fixing, as CI just passes --cross-prefix
+>for cross-builds and expects everything to be set from that.
+>
+>The main gap we have is that for Windows I need to update lcitool
+>to pull in the mingw std lib target for rust, which I something I
+>missed when adding rust cross compiler support.
+>
 
-Hm the only thing that worries me is keeping it synced and postponing 
-merge indefinitely. If we declare the rust parts as "experimental" we 
-could evolve them quickly even on master.  What do the other maintainers 
-think?
+
+Thanks very much for the pointers! I will start dealing with this in the 
+next RFC version.
+
+Re: the target triple, I agree 100%. In fact it wasn't my addition, I 
+kept it from the previous rust RFC patchset that was posted on the list 
+some years ago. It should be possible to construct the triplets 
+ourselves and let the user override if they want to as mentioned in 
+another email.
+
+The rust project has official Docker images, do you think it's something 
+we could use or is it unnecessary? 
+
+https://github.com/rust-lang/docker-rust
 
 Thanks,
 Manos
