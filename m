@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF971C27C75
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 23:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25535C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 23:40:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHu3Y-0008A6-DV; Thu, 13 Jun 2024 19:40:36 -0400
+	id 1sHu3i-0000pt-7v; Thu, 13 Jun 2024 19:40:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sHu3I-0007kb-CZ; Thu, 13 Jun 2024 19:40:22 -0400
+ id 1sHu3f-0000Z2-6x; Thu, 13 Jun 2024 19:40:43 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sHu3D-0003KP-NT; Thu, 13 Jun 2024 19:40:17 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W0f0c0zWJz6HJTY;
- Fri, 14 Jun 2024 07:35:28 +0800 (CST)
+ id 1sHu3c-0003SG-8u; Thu, 13 Jun 2024 19:40:42 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W0f1524dLz6HJTP;
+ Fri, 14 Jun 2024 07:35:53 +0800 (CST)
 Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id 6C9A8140594;
- Fri, 14 Jun 2024 07:40:10 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 95E051400D9;
+ Fri, 14 Jun 2024 07:40:35 +0800 (CST)
 Received: from 00293818-MRGF.china.huawei.com (10.195.245.24) by
  lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 14 Jun 2024 00:39:48 +0100
+ 15.1.2507.39; Fri, 14 Jun 2024 00:40:10 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -44,10 +44,10 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>
-Subject: [PATCH RFC V3 06/29] arm/virt,
- kvm: Pre-create disabled possible vCPUs @machine init
-Date: Fri, 14 Jun 2024 00:36:16 +0100
-Message-ID: <20240613233639.202896-7-salil.mehta@huawei.com>
+Subject: [PATCH RFC V3 07/29] arm/virt,
+ gicv3: Changes to pre-size GIC with possible vcpus @machine init
+Date: Fri, 14 Jun 2024 00:36:17 +0100
+Message-ID: <20240613233639.202896-8-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240613233639.202896-1-salil.mehta@huawei.com>
 References: <20240613233639.202896-1-salil.mehta@huawei.com>
@@ -82,219 +82,230 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the ARMv8 architecture, the GIC must know all the CPUs it is connected to
-during its initialization, and this cannot change afterward. This must be
-ensured during the initialization of the VGIC as well in KVM, which requires all
-vCPUs to be created and present during its initialization. This is necessary
-because:
+The GIC needs to be pre-sized with possible vCPUs at initialization time. This
+is necessary because memory regions and resources associated with GICC/GICR,
+etc., cannot be changed (added, deleted, or modified) after the VM has been
+initialized. Additionally, `GIC_TYPER` needs to be initialized with
+`mp_affinity` and CPU interface number association, which cannot be changed
+after the GIC has been initialized.
 
-1. The association between GICC and MPIDR must be fixed at VM initialization
-   time. This is represented by the register `GIC_TYPER(mp_affinity, proc_num)`.
-2. GICC (CPU interfaces), GICR (redistributors), etc., must all be initialized
-   at boot time.
-3. Memory regions associated with GICR, etc., cannot be changed (added, deleted,
-   or modified) after the VM has been initialized.
-
-This patch adds support to pre-create all possible vCPUs within the host using
-the KVM interface as part of the virtual machine initialization. These vCPUs can
-later be attached to QOM/ACPI when they are actually hot-plugged and made
-present.
+Once all the CPU interfaces of the GIC have been initialized, it must be ensured
+that any updates to the GICC during reset only take place for the *enabled*
+vCPUs and not the disabled ones. Therefore, proper checks are required at
+various places.
 
 Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-Reported-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-[VP: Identified CPU stall issue & suggested probable fix]
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+[changed the comment in arm_gicv3_icc_reset]
 ---
- hw/arm/virt.c         | 56 +++++++++++++++++++++++++++++++++++--------
- include/hw/core/cpu.h |  1 +
- target/arm/cpu64.c    |  1 +
- target/arm/kvm.c      | 41 ++++++++++++++++++++++++++++++-
- target/arm/kvm_arm.h  | 11 +++++++++
- 5 files changed, 99 insertions(+), 11 deletions(-)
+ hw/arm/virt.c              | 15 ++++++++-------
+ hw/intc/arm_gicv3_common.c |  7 +++++--
+ hw/intc/arm_gicv3_cpuif.c  |  8 ++++++++
+ hw/intc/arm_gicv3_kvm.c    | 34 +++++++++++++++++++++++++++++++---
+ include/hw/arm/virt.h      |  2 +-
+ 5 files changed, 53 insertions(+), 13 deletions(-)
 
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index a285139165..81e7a27786 100644
+index 81e7a27786..ac53bfadca 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -2383,14 +2383,8 @@ static void machvirt_init(MachineState *machine)
-         Object *cpuobj;
-         CPUState *cs;
+@@ -751,6 +751,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+     const char *gictype;
+     int i;
+     unsigned int smp_cpus = ms->smp.cpus;
++    unsigned int max_cpus = ms->smp.max_cpus;
+     uint32_t nb_redist_regions = 0;
+     int revision;
  
--        if (n >= smp_cpus) {
--            break;
--        }
--
-         cpuobj = object_new(possible_cpus->cpus[n].type);
--
-         cs = CPU(cpuobj);
--        cs->cpu_index = n;
+@@ -775,7 +776,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+     }
+     vms->gic = qdev_new(gictype);
+     qdev_prop_set_uint32(vms->gic, "revision", revision);
+-    qdev_prop_set_uint32(vms->gic, "num-cpu", smp_cpus);
++    qdev_prop_set_uint32(vms->gic, "num-cpu", max_cpus);
+     /* Note that the num-irq property counts both internal and external
+      * interrupts; there are always 32 of the former (mandated by GIC spec).
+      */
+@@ -787,7 +788,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+     if (vms->gic_version != VIRT_GIC_VERSION_2) {
+         QList *redist_region_count;
+         uint32_t redist0_capacity = virt_redist_capacity(vms, VIRT_GIC_REDIST);
+-        uint32_t redist0_count = MIN(smp_cpus, redist0_capacity);
++        uint32_t redist0_count = MIN(max_cpus, redist0_capacity);
  
-         aarch64 &= object_property_get_bool(cpuobj, "aarch64", NULL);
-         object_property_set_int(cpuobj, "socket-id",
-@@ -2402,11 +2396,53 @@ static void machvirt_init(MachineState *machine)
-         object_property_set_int(cpuobj, "thread-id",
-                                 virt_get_thread_id(machine, n), NULL);
+         nb_redist_regions = virt_gicv3_redist_region_count(vms);
  
--        cpu_slot = virt_find_cpu_slot(machine, cs->cpu_index);
--        virt_cpu_set_properties(cpuobj, cpu_slot, &error_fatal);
-+        if (n < smp_cpus) {
-+            qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
-+            object_unref(cpuobj);
-+        } else {
-+            /* handling for vcpus which are yet to be hot-plugged */
-+            cs->cpu_index = n;
-+            cpu_slot = virt_find_cpu_slot(machine, cs->cpu_index);
+@@ -798,7 +799,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+                 virt_redist_capacity(vms, VIRT_HIGH_GIC_REDIST2);
  
--        qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
--        object_unref(cpuobj);
-+            /*
-+             * ARM host vCPU features need to be fixed at the boot time. But as
-+             * per current approach this CPU object will be destroyed during
-+             * cpu_post_init(). During hotplug of vCPUs these properties are
-+             * initialized again.
-+             */
-+            virt_cpu_set_properties(cpuobj, cpu_slot, &error_fatal);
+             qlist_append_int(redist_region_count,
+-                MIN(smp_cpus - redist0_count, redist1_capacity));
++                MIN(max_cpus - redist0_count, redist1_capacity));
+         }
+         qdev_prop_set_array(vms->gic, "redist-region-count",
+                             redist_region_count);
+@@ -871,7 +872,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+         } else if (vms->virt) {
+             qemu_irq irq = qdev_get_gpio_in(vms->gic,
+                                             intidbase + ARCH_GIC_MAINT_IRQ);
+-            sysbus_connect_irq(gicbusdev, i + 4 * smp_cpus, irq);
++            sysbus_connect_irq(gicbusdev, i + 4 * max_cpus, irq);
+         }
+ 
+         qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
+@@ -879,11 +880,11 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+                                                      + VIRTUAL_PMU_IRQ));
+ 
+         sysbus_connect_irq(gicbusdev, i, qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
+-        sysbus_connect_irq(gicbusdev, i + smp_cpus,
++        sysbus_connect_irq(gicbusdev, i + max_cpus,
+                            qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
+-        sysbus_connect_irq(gicbusdev, i + 2 * smp_cpus,
++        sysbus_connect_irq(gicbusdev, i + 2 * max_cpus,
+                            qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
+-        sysbus_connect_irq(gicbusdev, i + 3 * smp_cpus,
++        sysbus_connect_irq(gicbusdev, i + 3 * max_cpus,
+                            qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
+ 
+         if (vms->gic_version != VIRT_GIC_VERSION_2) {
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index bd50a1b079..183d2de7eb 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -436,10 +436,13 @@ static void arm_gicv3_common_realize(DeviceState *dev, Error **errp)
+     s->cpu = g_new0(GICv3CPUState, s->num_cpu);
+ 
+     for (i = 0; i < s->num_cpu; i++) {
+-        CPUState *cpu = qemu_get_cpu(i);
++        CPUState *cpu = qemu_get_possible_cpu(i);
+         uint64_t cpu_affid;
+ 
+-        s->cpu[i].cpu = cpu;
++        if (qemu_enabled_cpu(cpu)) {
++            s->cpu[i].cpu = cpu;
++        }
 +
-+            /*
-+             * For KVM, we shall be pre-creating the now disabled/un-plugged
-+             * possbile host vcpus and park them till the time they are
-+             * actually hot plugged. This is required to pre-size the host
-+             * GICC and GICR with the all possible vcpus for this VM.
-+             */
-+            if (kvm_enabled()) {
-+                kvm_arm_create_host_vcpu(ARM_CPU(cs));
-+            }
-+            /*
-+             * Add disabled vCPU to CPU slot during the init phase of the virt
-+             * machine
-+             * 1. We need this ARMCPU object during the GIC init. This object
-+             *    will facilitate in pre-realizing the GIC. Any info like
-+             *    mp-affinity(required to derive gicr_type) etc. could still be
-+             *    fetched while preserving QOM abstraction akin to realized
-+             *    vCPUs.
-+             * 2. Now, after initialization of the virt machine is complete we
-+             *    could use two approaches to deal with this ARMCPU object:
-+             *    (i) re-use this ARMCPU object during hotplug of this vCPU.
-+             *                             OR
-+             *    (ii) defer release this ARMCPU object after gic has been
-+             *         initialized or during pre-plug phase when a vCPU is
-+             *         hotplugged.
-+             *
-+             *    We will use the (ii) approach and release the ARMCPU objects
-+             *    after GIC and machine has been fully initialized during
-+             *    machine_init_done() phase.
-+             */
-+             cpu_slot->cpu = cs;
+         s->cpu[i].gic = s;
+         /* Store GICv3CPUState in CPUARMState gicv3state pointer */
+         gicv3_set_gicv3state(cpu, &s->cpu[i]);
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index bdb13b00e9..2a8aff0b99 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -1052,6 +1052,10 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+     ARMCPU *cpu = ARM_CPU(cs->cpu);
+     CPUARMState *env = &cpu->env;
+ 
++    if (!qemu_enabled_cpu(cs->cpu)) {
++        return;
++    }
++
+     g_assert(bql_locked());
+ 
+     trace_gicv3_cpuif_update(gicv3_redist_affid(cs), cs->hppi.irq,
+@@ -2036,6 +2040,10 @@ static void icc_generate_sgi(CPUARMState *env, GICv3CPUState *cs,
+     for (i = 0; i < s->num_cpu; i++) {
+         GICv3CPUState *ocs = &s->cpu[i];
+ 
++        if (!qemu_enabled_cpu(ocs->cpu)) {
++            continue;
++        }
++
+         if (irm) {
+             /* IRM == 1 : route to all CPUs except self */
+             if (cs == ocs) {
+diff --git a/hw/intc/arm_gicv3_kvm.c b/hw/intc/arm_gicv3_kvm.c
+index 9ea6b8e218..8dbbd79e1b 100644
+--- a/hw/intc/arm_gicv3_kvm.c
++++ b/hw/intc/arm_gicv3_kvm.c
+@@ -24,6 +24,7 @@
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "qemu/error-report.h"
+ #include "qemu/module.h"
++#include "sysemu/cpus.h"
+ #include "sysemu/kvm.h"
+ #include "sysemu/runstate.h"
+ #include "kvm_arm.h"
+@@ -458,6 +459,18 @@ static void kvm_arm_gicv3_put(GICv3State *s)
+         GICv3CPUState *c = &s->cpu[ncpu];
+         int num_pri_bits;
+ 
++        /*
++         * To support hotplug of vcpus we need to make sure all gic cpuif/GICC
++         * are initialized at machvirt init time. Once the init is done we
++         * release the ARMCPU object for disabled vcpus but this leg could hit
++         * during reset of GICC later as well i.e. after init has happened and
++         * all of the cases we want to make sure we dont acess the GICC for
++         * the disabled VCPUs.
++         */
++        if (!qemu_enabled_cpu(c->cpu)) {
++            continue;
++        }
++
+         kvm_gicc_access(s, ICC_SRE_EL1, ncpu, &c->icc_sre_el1, true);
+         kvm_gicc_access(s, ICC_CTLR_EL1, ncpu,
+                         &c->icc_ctlr_el1[GICV3_NS], true);
+@@ -616,6 +629,11 @@ static void kvm_arm_gicv3_get(GICv3State *s)
+         GICv3CPUState *c = &s->cpu[ncpu];
+         int num_pri_bits;
+ 
++        /* don't access GICC for the disabled vCPUs. */
++        if (!qemu_enabled_cpu(c->cpu)) {
++            continue;
++        }
++
+         kvm_gicc_access(s, ICC_SRE_EL1, ncpu, &c->icc_sre_el1, false);
+         kvm_gicc_access(s, ICC_CTLR_EL1, ncpu,
+                         &c->icc_ctlr_el1[GICV3_NS], false);
+@@ -695,10 +713,19 @@ static void arm_gicv3_icc_reset(CPUARMState *env, const ARMCPRegInfo *ri)
+         return;
+     }
+ 
++    /*
++     * This shall be called even when vcpu is being hotplugged or onlined and
++     * other vcpus might be running. Host kernel KVM code to handle device
++     * access of IOCTLs KVM_{GET|SET}_DEVICE_ATTR might fail due to inability to
++     * grab vcpu locks for all the vcpus. Hence, we need to pause all vcpus to
++     * facilitate locking within host.
++     */
++    pause_all_vcpus();
+     /* Initialize to actual HW supported configuration */
+     kvm_device_access(s->dev_fd, KVM_DEV_ARM_VGIC_GRP_CPU_SYSREGS,
+                       KVM_VGIC_ATTR(ICC_CTLR_EL1, c->gicr_typer),
+                       &c->icc_ctlr_el1[GICV3_NS], false, &error_abort);
++    resume_all_vcpus();
+ 
+     c->icc_ctlr_el1[GICV3_S] = c->icc_ctlr_el1[GICV3_NS];
+ }
+@@ -813,9 +840,10 @@ static void kvm_arm_gicv3_realize(DeviceState *dev, Error **errp)
+     gicv3_init_irqs_and_mmio(s, kvm_arm_gicv3_set_irq, NULL);
+ 
+     for (i = 0; i < s->num_cpu; i++) {
+-        ARMCPU *cpu = ARM_CPU(qemu_get_cpu(i));
+-
+-        define_arm_cp_regs(cpu, gicv3_cpuif_reginfo);
++        CPUState *cs = qemu_get_cpu(i);
++        if (qemu_enabled_cpu(cs)) {
++            define_arm_cp_regs(ARM_CPU(cs), gicv3_cpuif_reginfo);
 +        }
      }
  
-     /* Now we've created the CPUs we can see if they have the hypvirt timer */
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 60b4778da9..62e68611c0 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -520,6 +520,7 @@ struct CPUState {
-     uint64_t dirty_pages;
-     int kvm_vcpu_stats_fd;
-     bool vcpu_dirty;
-+    VMChangeStateEntry *vmcse;
+     /* Try to create the device via the device control API */
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 780bd53ceb..36ac5ff4a2 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -209,7 +209,7 @@ static inline int virt_gicv3_redist_region_count(VirtMachineState *vms)
  
-     /* Use by accel-block: CPU is executing an ioctl() */
-     QemuLockCnt in_ioctl_lock;
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index d6b48b3424..9b7e8b032c 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -789,6 +789,7 @@ static void aarch64_cpu_initfn(Object *obj)
-      * enabled explicitly
-      */
-     cs->disabled = true;
-+    cs->thread_id = 0;
+     assert(vms->gic_version != VIRT_GIC_VERSION_2);
+ 
+-    return (MACHINE(vms)->smp.cpus > redist0_capacity &&
++    return (MACHINE(vms)->smp.max_cpus > redist0_capacity &&
+             vms->highmem_redists) ? 2 : 1;
  }
  
- static void aarch64_cpu_finalizefn(Object *obj)
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 7cf5cf31de..01c83c1994 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -1003,6 +1003,38 @@ void kvm_arm_reset_vcpu(ARMCPU *cpu)
-     write_list_to_cpustate(cpu);
- }
- 
-+void kvm_arm_create_host_vcpu(ARMCPU *cpu)
-+{
-+    CPUState *cs = CPU(cpu);
-+    unsigned long vcpu_id = cs->cpu_index;
-+    int ret;
-+
-+    ret = kvm_create_vcpu(cs);
-+    if (ret < 0) {
-+        error_report("Failed to create host vcpu %ld", vcpu_id);
-+        abort();
-+    }
-+
-+    /*
-+     * Initialize the vCPU in the host. This will reset the sys regs
-+     * for this vCPU and related registers like MPIDR_EL1 etc. also
-+     * gets programmed during this call to host. These are referred
-+     * later while setting device attributes of the GICR during GICv3
-+     * reset
-+     */
-+    ret = kvm_arch_init_vcpu(cs);
-+    if (ret < 0) {
-+        error_report("Failed to initialize host vcpu %ld", vcpu_id);
-+        abort();
-+    }
-+
-+    /*
-+     * park the created vCPU. shall be used during kvm_get_vcpu() when
-+     * threads are created during realization of ARM vCPUs.
-+     */
-+    kvm_park_vcpu(cs);
-+}
-+
- /*
-  * Update KVM's MP_STATE based on what QEMU thinks it is
-  */
-@@ -1874,7 +1906,14 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         return -EINVAL;
-     }
- 
--    qemu_add_vm_change_state_handler(kvm_arm_vm_state_change, cpu);
-+    /*
-+     * Install VM change handler only when vCPU thread has been spawned
-+     * i.e. vCPU is being realized
-+     */
-+    if (cs->thread_id) {
-+        cs->vmcse = qemu_add_vm_change_state_handler(kvm_arm_vm_state_change,
-+                                                     cpu);
-+    }
- 
-     /* Determine init features for this CPU */
-     memset(cpu->kvm_init_features, 0, sizeof(cpu->kvm_init_features));
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index cfaa0d9bc7..0be7e896d2 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -96,6 +96,17 @@ void kvm_arm_cpu_post_load(ARMCPU *cpu);
-  */
- void kvm_arm_reset_vcpu(ARMCPU *cpu);
- 
-+/**
-+ * kvm_arm_create_host_vcpu:
-+ * @cpu: ARMCPU
-+ *
-+ * Called at to pre create all possible kvm vCPUs within the the host at the
-+ * virt machine init time. This will also init this pre-created vCPU and
-+ * hence result in vCPU reset at host. These pre created and inited vCPUs
-+ * shall be parked for use when ARM vCPUs are actually realized.
-+ */
-+void kvm_arm_create_host_vcpu(ARMCPU *cpu);
-+
- #ifdef CONFIG_KVM
- /**
-  * kvm_arm_create_scratch_host_vcpu:
 -- 
 2.34.1
 
