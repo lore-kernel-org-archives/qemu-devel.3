@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17742C27C75
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 08:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7D8CC27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 08:57:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHgEJ-0004d5-GX; Thu, 13 Jun 2024 04:54:47 -0400
+	id 1sHgGv-0006ee-VD; Thu, 13 Jun 2024 04:57:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHgEH-0004cb-SS
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:54:46 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHgGu-0006dt-Qq
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:57:28 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHgEE-0008Bi-Ti
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:54:45 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a6f1dc06298so91498966b.1
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 01:54:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHgGt-0000HK-5m
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:57:28 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4217a96de38so6592665e9.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 01:57:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718268879; x=1718873679; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718269045; x=1718873845; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OSosgpSQsH3wF5+acrPONfzVPkjEd+Wi3xrEgOavQvA=;
- b=Ai8Tai6QVbpaP8TJd/gsvdr0QZsipOaxYi2jh9tdrjzS9Ky6OQyfr7BqDE9if11s3i
- zCpfzgZZN3QmztLNwJObP5azwLldoHZPXWil4Azs4mYxccq4+h83JLy695fE+71khOsi
- YU82a490kFoM+Jt67ywr70TgDwASt5B/H8SZjJysbv+h4CSOaNxEtRZtoaCuUJ1iBR6+
- DYHsP0wo1BUWIdUWDSfanNigaV9CqgSICvOiNNcB2+tPkAXBoI96k2v0FGB/gucAF6lP
- OOR40raasvfDzb5l8nKZ1/xxxTRnD3Vk4qeYjO215Fqzl5+tumRF4b2zJklAuiXi5dDE
- QSvw==
+ bh=O/Oay0j96x/9xQhPy6qZtNnk5WwDamzkfYnPefMdxU4=;
+ b=BdFKmTvSWlgp+5Rra3BLrTfiCZfj0m5pcUzMQzBw4EOauTtYIzRoIzL1CA0HR/lSiY
+ DtsDjPScJPIJ2q8VNWNuMq43ErACZJt/sJgqK+0yGtTHwzjx+wDhOWjC0I3SO0AUHVf8
+ dJe/5tVTxeLWLy4ZdjyNMXDx+/ec7gLc/QvFDnk32rql2MBUPgQ4a0l2KBNJsp8NrFlF
+ GcT5gFlOkj1jjUgrgUXDP01pmutHPuJJwOAt6/3q7JI471zsm89qzBDVyKWuCuOk68t6
+ zyp9CxbaVroFRe5ki/NzUlf7jiXPB/gFeyykWrMl9naui609OSYriGNXTW+EiWIscM3/
+ 4EIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718268879; x=1718873679;
+ d=1e100.net; s=20230601; t=1718269045; x=1718873845;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OSosgpSQsH3wF5+acrPONfzVPkjEd+Wi3xrEgOavQvA=;
- b=D+8TY5G1WEubmeXYZsdaKLSc/EibPhuVMGLQKReWuQ0w0yyQrgrC0Gy5cf/gAihtwD
- CUbjFBpwhNWY6Mus0HY9Cbh7UJLWXiotZ54BfvhD6mKAKs6Fpk4X82/1Wo5l0/LzoDVY
- fsaUHaMGB7KA7GPtwBT9cxmmWfZIozaxDQUYP9jsAmrhmwD9AlqCnv521RMebnOGgmnp
- ylF4w8DwI4DBYMDjSwpMaQqoBoBbXmgumx25TRy7Yge4qcAuDzN1piJY2Y+z6I6vjmJ3
- QqZuM0XYsL3iSWAwiTWZilMZ5cci17VdMFgzCzvTZhCq18CdWa5Cy0pcVGLtb8vua6E0
- LhmA==
+ bh=O/Oay0j96x/9xQhPy6qZtNnk5WwDamzkfYnPefMdxU4=;
+ b=fRwJpH+49suo3qXUi25xeyCoe10Wny14XJobEf3EjnYtrlqCcJ2hYuCwzfmM6MVE1J
+ aKlm8eP6o/92qTKzngGl2In7hmsi2GAAVO6tj9opfpdSi1NI+fX9lySKrEfmLh4dxbwo
+ 93vY4tDpoFIP5BwV3ynHfpDzyZr7lbuY3lZsn+4gEqEv8OHZorL4jiZ8ev9HJ3ZrDmhP
+ EdlxZotSEijitSNBGUGQ6WpNPkDDM9/8KPijLZ1l7wzLEE2ir7huU4uxIidlljehzhPp
+ GrUHXs5IPNsm22xhAeplbR/mIAiPwWqsj98GHlBpCoDNOvEtXgW7fy2e98uDgPe75qV9
+ z07Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCViPfARe/4Oe6MkOp3oJMBHnu74yk5O9Pwju6IQQ3En/qkdRpEx6syMUEvJsajVYeoLZKghwRIbls7iWRVZRmtn7NFo/OY=
-X-Gm-Message-State: AOJu0YzJIIf1sPWPLhDmdnfM1Uq2XI3T0yhH3M0DG/1m0tAMASyKyRKD
- xzVdiv6GNrB48llucirzaML4KztJf5CgGxPmYx9RYpMTlRdag4m7NrgbDwSGjC4=
-X-Google-Smtp-Source: AGHT+IFSKrJ8w4FyvGIuF2YLGd5N2judWSHl/BPRtdMcekWFGCtPgkKSJ0KoLlp2so+7sZANrQJZ3g==
-X-Received: by 2002:a17:906:6bc1:b0:a6f:3155:bb89 with SMTP id
- a640c23a62f3a-a6f47d5f3c8mr229050366b.70.1718268878803; 
- Thu, 13 Jun 2024 01:54:38 -0700 (PDT)
+ AJvYcCUACpQHrhXrRbSPSxPgCtCwdPuLhyrXoxXfV05spYxYc7RWRXIVzvFp99TvKDwvreYI65ktVDIgJGblcHUDZl8AL380R2o=
+X-Gm-Message-State: AOJu0Yx0Hlb9AcK21FTRcrK4xBS8vmVb0QM9u91QxYxwik868ar0FskP
+ 2hFUAh5szUMBnd3zhud+yfrvfTPp/6vpcsgB8K7cWfY0z0T4WVHpLWn89vGkUzA=
+X-Google-Smtp-Source: AGHT+IHqQKUydYMvnGx+8GuVXjDzbY5BbQSW9D4GkL9kXgAEi3BIQ6dHiOFa9P8ziL+HL52DDW4cpg==
+X-Received: by 2002:a05:600c:310a:b0:422:5b78:1c8f with SMTP id
+ 5b1f17b1804b1-422863a8b77mr33946525e9.8.1718269045561; 
+ Thu, 13 Jun 2024 01:57:25 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.148.226])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56da40a0sm50331866b.10.2024.06.13.01.54.35
+ 5b1f17b1804b1-42286fe8fb8sm53929895e9.11.2024.06.13.01.57.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Jun 2024 01:54:38 -0700 (PDT)
-Message-ID: <31ba8570-9009-4530-934d-3b73b07520d0@linaro.org>
-Date: Thu, 13 Jun 2024 10:54:34 +0200
+ Thu, 13 Jun 2024 01:57:24 -0700 (PDT)
+Message-ID: <c4d36875-c70d-4e2c-b3a8-c50459c9db0f@linaro.org>
+Date: Thu, 13 Jun 2024 10:57:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 9/9] contrib/plugins: add ips plugin example for cost
- modeling
+Subject: Re: [PATCH 8/9] plugins: add time control API
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>, Ilya Leoshkevich
@@ -83,21 +82,21 @@ Cc: David Hildenbrand <david@redhat.com>, Ilya Leoshkevich
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Richard Henderson <richard.henderson@linaro.org>
 References: <20240612153508.1532940-1-alex.bennee@linaro.org>
- <20240612153508.1532940-10-alex.bennee@linaro.org>
+ <20240612153508.1532940-9-alex.bennee@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240612153508.1532940-10-alex.bennee@linaro.org>
+In-Reply-To: <20240612153508.1532940-9-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,71 +113,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/6/24 17:35, Alex Bennée wrote:
-> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Expose the ability to control time through the plugin API. Only one
+> plugin can control time so it has to request control when loaded.
+> There are probably more corner cases to catch here.
 > 
-> This plugin uses the new time control interface to make decisions
-> about the state of time during the emulation. The algorithm is
-> currently very simple. The user specifies an ips rate which applies
+> From: Alex Bennée <alex.bennee@linaro.org>
 
-... IPS rate (Instructions Per Second) which ...
+Some of your patches include this dubious From: header, maybe strip?
 
-> per core. If the core runs ahead of its allocated execution time the
-> plugin sleeps for a bit to let real time catch up. Either way time is
-> updated for the emulation as a function of total executed instructions
-> with some adjustments for cores that idle.
-> 
-> Examples
-> --------
-> 
-> Slow down execution of /bin/true:
-> $ num_insn=$(./build/qemu-x86_64 -plugin ./build/tests/plugin/libinsn.so -d plugin /bin/true |& grep total | sed -e 's/.*: //')
-> $ time ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libips.so,ips=$(($num_insn/4)) /bin/true
-> real 4.000s
-> 
-> Boot a Linux kernel simulating a 250MHz cpu:
-> $ /build/qemu-system-x86_64 -kernel /boot/vmlinuz-6.1.0-21-amd64 -append "console=ttyS0" -plugin ./build/contrib/plugins/libips.so,ips=$((250*1000*1000)) -smp 1 -m 512
-> check time until kernel panic on serial0
-> 
-> Tested in system mode by booting a full debian system, and using:
-> $ sysbench cpu run
-> Performance decrease linearly with the given number of ips.
-> 
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Message-Id: <20240530220610.1245424-7-pierrick.bouvier@linaro.org>
-> ---
->   contrib/plugins/ips.c    | 164 +++++++++++++++++++++++++++++++++++++++
->   contrib/plugins/Makefile |   1 +
->   2 files changed, 165 insertions(+)
->   create mode 100644 contrib/plugins/ips.c
+> [AJB: tweaked user-mode handling]
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Message-Id: <20240530220610.1245424-6-pierrick.bouvier@linaro.org>
 > 
-> diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
-> new file mode 100644
-> index 0000000000..db77729264
-> --- /dev/null
-> +++ b/contrib/plugins/ips.c
-> @@ -0,0 +1,164 @@
-> +/*
-> + * ips rate limiting plugin.
-
-The plugin names are really to packed to my taste (each time I look for
-one I have to open most source files to figure out the correct one); so
-please ease my life by using a more descriptive header at least:
-
-      Instructions Per Second (IPS) rate limiting plugin.
-
-Thanks.
-
-> + * This plugin can be used to restrict the execution of a system to a
-> + * particular number of Instructions Per Second (ips). This controls
-> + * time as seen by the guest so while wall-clock time may be longer
-> + * from the guests point of view time will pass at the normal rate.
-> + *
-> + * This uses the new plugin API which allows the plugin to control
-> + * system time.
-> + *
-> + * Copyright (c) 2023 Linaro Ltd
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
+> ---
+> plugins/next
+>    - make qemu_plugin_update_ns a NOP in user-mode
+> ---
+>   include/qemu/qemu-plugin.h   | 25 +++++++++++++++++++++++++
+>   plugins/api.c                | 35 +++++++++++++++++++++++++++++++++++
+>   plugins/qemu-plugins.symbols |  2 ++
+>   3 files changed, 62 insertions(+)
 
 
