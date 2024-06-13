@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E90CC27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 23:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C813C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 23:45:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHu7e-0001S8-5M; Thu, 13 Jun 2024 19:44:50 -0400
+	id 1sHu80-0002RZ-7y; Thu, 13 Jun 2024 19:45:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sHu7c-0001OJ-Lt; Thu, 13 Jun 2024 19:44:48 -0400
+ id 1sHu7y-0002JO-41; Thu, 13 Jun 2024 19:45:10 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sHu7a-0004Dp-Lb; Thu, 13 Jun 2024 19:44:48 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W0fCF47Q5z6K69v;
- Fri, 14 Jun 2024 07:44:41 +0800 (CST)
+ id 1sHu7v-0004QQ-Gg; Thu, 13 Jun 2024 19:45:09 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W0fCd6sc2z6K6DJ;
+ Fri, 14 Jun 2024 07:45:01 +0800 (CST)
 Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id 6E33214065C;
- Fri, 14 Jun 2024 07:44:44 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id CAACD140594;
+ Fri, 14 Jun 2024 07:45:04 +0800 (CST)
 Received: from 00293818-MRGF.china.huawei.com (10.195.245.24) by
  lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 14 Jun 2024 00:44:19 +0100
+ 15.1.2507.39; Fri, 14 Jun 2024 00:44:42 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -44,9 +44,10 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>
-Subject: [PATCH RFC V3 18/29] arm/virt: Add/update basic hot-(un)plug framework
-Date: Fri, 14 Jun 2024 00:36:28 +0100
-Message-ID: <20240613233639.202896-19-salil.mehta@huawei.com>
+Subject: [PATCH RFC V3 19/29] arm/virt: Changes to (un)wire GICC<->vCPU IRQs
+ during hot-(un)plug
+Date: Fri, 14 Jun 2024 00:36:29 +0100
+Message-ID: <20240613233639.202896-20-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240613233639.202896-1-salil.mehta@huawei.com>
 References: <20240613233639.202896-1-salil.mehta@huawei.com>
@@ -81,194 +82,267 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add CPU hot-unplug hooks and update hotplug hooks with additional sanity checks
-for use in hotplug paths.
-
-Note: The functional contents of the hooks (currently left with TODO comments)
-will be gradually filled in subsequent patches in an incremental approach to
-patch and logic building, which would roughly include the following:
-
-1. (Un)wiring of interrupts between vCPU<->GIC.
-2. Sending events to the guest for hot-(un)plug so that the guest can take
-   appropriate actions.
-3. Notifying the GIC about the hot-(un)plug action so that the vCPU can be
-   (un)stitched to the GIC CPU interface.
-4. Updating the guest with next boot information for this vCPU in the firmware.
+Refactors the existing GIC create code to extract common code to wire the
+vcpu<->gic interrupts. This function could be used with cold-plug case and also
+used when vCPU is hot-plugged. It also introduces a new function to unwire the
+vcpu<->gic interrupts for the vCPU hot-unplug cases.
 
 Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+Reported-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+[4/05/2024: Issue with total number of PPI available during create GIC]
+Suggested-by: Miguel Luis <miguel.luis@oracle.com>
+[5/05/2024: Fix the total number of PPIs available as per ARM BSA to avoid overflow]
+Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 ---
- hw/arm/virt.c | 105 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 105 insertions(+)
+ hw/arm/virt.c          | 154 ++++++++++++++++++++++++++++-------------
+ hw/core/gpio.c         |   2 +-
+ include/hw/qdev-core.h |   2 +
+ target/arm/cpu-qom.h   |  18 +++--
+ 4 files changed, 118 insertions(+), 58 deletions(-)
 
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index a72cd3b20d..f6b8c21f26 100644
+index f6b8c21f26..1556c362f7 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -85,6 +85,7 @@
- #include "hw/virtio/virtio-iommu.h"
- #include "hw/char/pl011.h"
- #include "qemu/guest-random.h"
-+#include "qapi/qmp/qdict.h"
- 
- static GlobalProperty arm_virt_compat[] = {
-     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
-@@ -3002,11 +3003,23 @@ static void virt_memory_plug(HotplugHandler *hotplug_dev,
- static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-                               Error **errp)
- {
-+    VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
-     MachineState *ms = MACHINE(hotplug_dev);
-+    MachineClass *mc = MACHINE_GET_CLASS(ms);
-     ARMCPU *cpu = ARM_CPU(dev);
-     CPUState *cs = CPU(dev);
-     CPUArchId *cpu_slot;
- 
-+    if (dev->hotplugged && !vms->acpi_dev) {
-+        error_setg(errp, "GED acpi device does not exists");
-+        return;
-+    }
-+
-+    if (dev->hotplugged && !mc->has_hotpluggable_cpus) {
-+        error_setg(errp, "CPU hotplug not supported on this machine");
-+        return;
-+    }
-+
-     /* sanity check the cpu */
-     if (!object_dynamic_cast(OBJECT(cpu), ms->cpu_type)) {
-         error_setg(errp, "Invalid CPU type, expected cpu type: '%s'",
-@@ -3049,6 +3062,22 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-     }
-     virt_cpu_set_properties(OBJECT(cs), cpu_slot, errp);
- 
-+    /*
-+     * Fix the GIC for this new vCPU being plugged. The QOM CPU object for the
-+     * new vCPU need to be updated in the corresponding QOM GICv3CPUState object
-+     * We also need to re-wire the IRQs for this new CPU object. This update
-+     * is limited to the QOM only and does not affects the KVM. Later has
-+     * already been pre-sized with possible CPU at VM init time. This is a
-+     * workaround to the constraints posed by ARM architecture w.r.t supporting
-+     * CPU Hotplug. Specification does not exist for the later.
-+     * This patch-up is required both for {cold,hot}-plugged vCPUs. Cold-inited
-+     * vCPUs have their GIC state initialized during machvit_init().
-+     */
-+    if (vms->acpi_dev) {
-+        /* TODO: update GIC about this hotplug change here */
-+        /* TODO: wire the GIC<->CPU irqs */
-+    }
-+
-     /*
-      * To give persistent presence view of vCPUs to the guest, ACPI might need
-      * to fake the presence of the vCPUs to the guest but keep them disabled.
-@@ -3060,6 +3089,7 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
- static void virt_cpu_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-                           Error **errp)
- {
-+    VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
-     MachineState *ms = MACHINE(hotplug_dev);
-     CPUState *cs = CPU(dev);
-     CPUArchId *cpu_slot;
-@@ -3068,10 +3098,81 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-     cpu_slot = virt_find_cpu_slot(ms, cs->cpu_index);
-     cpu_slot->cpu = CPU(dev);
- 
-+    /*
-+     * Update the ACPI Hotplug state both for vCPUs being {hot,cold}-plugged.
-+     * vCPUs can be cold-plugged using '-device' option. For vCPUs being hot
-+     * plugged, guest is also notified.
-+     */
-+    if (vms->acpi_dev) {
-+        /* TODO: update acpi hotplug state. Send cpu hotplug event to guest */
-+        /* TODO: register cpu for reset & update F/W info for the next boot */
-+    }
-+
-     cs->disabled = false;
-     return;
+@@ -747,6 +747,107 @@ static bool gicv3_nmi_present(VirtMachineState *vms)
+            (vms->gic_version != VIRT_GIC_VERSION_2);
  }
  
-+static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
-+                                    DeviceState *dev, Error **errp)
++/*
++ * Mapping from the output timer irq lines from the CPU to the GIC PPI inputs
++ * we use for the virt board.
++ */
++const int timer_irq[] = {
++    [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
++    [GTIMER_VIRT] = ARCH_TIMER_VIRT_IRQ,
++    [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
++    [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ,
++};
++
++static void unwire_gic_cpu_irqs(VirtMachineState *vms, CPUState *cs)
 +{
-+    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
-+    VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
-+    ARMCPU *cpu = ARM_CPU(dev);
-+    CPUState *cs = CPU(dev);
++    MachineState *ms = MACHINE(vms);
++    unsigned int max_cpus = ms->smp.max_cpus;
++    DeviceState *cpudev = DEVICE(cs);
++    DeviceState *gicdev = vms->gic;
++    int cpu = CPU(cs)->cpu_index;
++    int type = vms->gic_version;
++    int irq, num_gpio_in;
 +
-+    if (!vms->acpi_dev || !dev->realized) {
-+        error_setg(errp, "GED does not exists or device is not realized!");
-+        return;
++    for (irq = 0; irq < ARRAY_SIZE(timer_irq); irq++) {
++        qdev_disconnect_gpio_out_named(cpudev, NULL, irq);
 +    }
 +
-+    if (!mc->has_hotpluggable_cpus) {
-+        error_setg(errp, "CPU hot(un)plug not supported on this machine");
-+        return;
++    if (type != VIRT_GIC_VERSION_2) {
++        qdev_disconnect_gpio_out_named(cpudev, "gicv3-maintenance-interrupt",
++                                       0);
++    } else if (vms->virt) {
++        qdev_disconnect_gpio_out_named(gicdev, SYSBUS_DEVICE_GPIO_IRQ,
++                                       cpu + 4 * max_cpus);
 +    }
 +
-+    if (cs->cpu_index == first_cpu->cpu_index) {
-+        error_setg(errp, "Boot CPU(id%d=%d:%d:%d:%d) hot-unplug not supported",
-+                   first_cpu->cpu_index, cpu->socket_id, cpu->cluster_id,
-+                   cpu->core_id, cpu->thread_id);
-+        return;
++    /*
++     * RFC: Question: This currently does not takes care of intimating the
++     * devices which might be sitting on system bus. Do we need a
++     * sysbus_disconnect_irq() which also does the job of notification beside
++     * disconnection?
++     */
++    qdev_disconnect_gpio_out_named(cpudev, "pmu-interrupt", 0);
++
++    /* Unwire GIC's IRQ/FIQ/VIRQ/VFIQ/NMI/VINMI interrupt outputs to CPU */
++    num_gpio_in = (vms->gic_version != VIRT_GIC_VERSION_2) ?
++                                                NUM_GPIO_IN : NUM_GICV2_GPIO_IN;
++    for (irq = 0; irq < num_gpio_in; irq++) {
++        qdev_disconnect_gpio_out_named(gicdev, SYSBUS_DEVICE_GPIO_IRQ,
++                                        cpu + irq * max_cpus);
 +    }
-+
-+    /* TODO: request cpu hotplug from guest */
-+
-+    return;
 +}
 +
-+static void virt_cpu_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
-+                            Error **errp)
++static void wire_gic_cpu_irqs(VirtMachineState *vms, CPUState *cs)
 +{
-+    VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
-+    MachineState *ms = MACHINE(hotplug_dev);
-+    CPUState *cs = CPU(dev);
-+    CPUArchId *cpu_slot;
++    MachineState *ms = MACHINE(vms);
++    unsigned int max_cpus = ms->smp.max_cpus;
++    DeviceState *cpudev = DEVICE(cs);
++    DeviceState *gicdev = vms->gic;
++    int cpu = CPU(cs)->cpu_index;
++    int type = vms->gic_version;
++    SysBusDevice *gicbusdev;
++    int intidbase;
++    int irqn;
 +
-+    if (!vms->acpi_dev || !dev->realized) {
-+        error_setg(errp, "GED does not exists or device is not realized!");
-+        return;
++    intidbase = NUM_IRQS + cpu * GIC_INTERNAL;
++
++    for (irqn = 0; irqn < ARRAY_SIZE(timer_irq); irqn++) {
++        qdev_connect_gpio_out(cpudev, irqn,
++                              qdev_get_gpio_in(gicdev,
++                                               intidbase + timer_irq[irqn]));
 +    }
 +
-+    cpu_slot = virt_find_cpu_slot(ms, cs->cpu_index);
++    gicbusdev = SYS_BUS_DEVICE(gicdev);
++    if (type != VIRT_GIC_VERSION_2) {
++        qemu_irq irq = qdev_get_gpio_in(gicdev,
++                                        intidbase + ARCH_GIC_MAINT_IRQ);
++        qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-interrupt",
++                                    0, irq);
++    } else if (vms->virt) {
++        qemu_irq irq = qdev_get_gpio_in(gicdev,
++                                        intidbase + ARCH_GIC_MAINT_IRQ);
++        sysbus_connect_irq(gicbusdev, cpu + 4 * max_cpus, irq);
++    }
 +
-+    /* TODO: update the acpi cpu hotplug state for cpu hot-unplug */
++    qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
++                                qdev_get_gpio_in(gicdev,
++                                                 intidbase + VIRTUAL_PMU_IRQ));
 +
-+    /* TODO: unwire the gic-cpu irqs here */
-+    /* TODO: update the GIC about this hot unplug change */
-+
-+    /* TODO: unregister cpu for reset & update F/W info for the next boot */
-+
-+    qobject_unref(dev->opts);
-+    dev->opts = NULL;
-+
-+    cpu_slot->cpu = NULL;
-+    cs->disabled = true;
-+
-+    return;
++    sysbus_connect_irq(gicbusdev, cpu, qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
++    sysbus_connect_irq(gicbusdev, cpu + max_cpus,
++                       qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
++    sysbus_connect_irq(gicbusdev, cpu + 2 * max_cpus,
++                       qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
++    sysbus_connect_irq(gicbusdev, cpu + 3 * max_cpus,
++                       qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
++    if (vms->gic_version != VIRT_GIC_VERSION_2) {
++        sysbus_connect_irq(gicbusdev, cpu + 4 * max_cpus,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_NMI));
++        sysbus_connect_irq(gicbusdev, cpu + 5 * max_cpus,
++                           qdev_get_gpio_in(cpudev, ARM_CPU_VINMI));
++    }
 +}
 +
- static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-                                             DeviceState *dev, Error **errp)
+ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
  {
-@@ -3196,6 +3297,8 @@ static void virt_machine_device_unplug_request_cb(HotplugHandler *hotplug_dev,
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
-         virtio_md_pci_unplug_request(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev),
-                                      errp);
-+    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-+        virt_cpu_unplug_request(hotplug_dev, dev, errp);
-     } else {
-         error_setg(errp, "device unplug request for unsupported device"
-                    " type: %s", object_get_typename(OBJECT(dev)));
-@@ -3209,6 +3312,8 @@ static void virt_machine_device_unplug_cb(HotplugHandler *hotplug_dev,
-         virt_dimm_unplug(hotplug_dev, dev, errp);
-     } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
-         virtio_md_pci_unplug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
-+    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
-+        virt_cpu_unplug(hotplug_dev, dev, errp);
-     } else {
-         error_setg(errp, "virt: device unplug for unsupported device"
-                    " type: %s", object_get_typename(OBJECT(dev)));
+     MachineState *ms = MACHINE(vms);
+@@ -849,54 +950,7 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+      * CPU's inputs.
+      */
+     for (i = 0; i < smp_cpus; i++) {
+-        DeviceState *cpudev = DEVICE(qemu_get_cpu(i));
+-        int intidbase = NUM_IRQS + i * GIC_INTERNAL;
+-        /* Mapping from the output timer irq lines from the CPU to the
+-         * GIC PPI inputs we use for the virt board.
+-         */
+-        const int timer_irq[] = {
+-            [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
+-            [GTIMER_VIRT] = ARCH_TIMER_VIRT_IRQ,
+-            [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
+-            [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ,
+-            [GTIMER_HYPVIRT] = ARCH_TIMER_NS_EL2_VIRT_IRQ,
+-        };
+-
+-        for (unsigned irq = 0; irq < ARRAY_SIZE(timer_irq); irq++) {
+-            qdev_connect_gpio_out(cpudev, irq,
+-                                  qdev_get_gpio_in(vms->gic,
+-                                                   intidbase + timer_irq[irq]));
+-        }
+-
+-        if (vms->gic_version != VIRT_GIC_VERSION_2) {
+-            qemu_irq irq = qdev_get_gpio_in(vms->gic,
+-                                            intidbase + ARCH_GIC_MAINT_IRQ);
+-            qdev_connect_gpio_out_named(cpudev, "gicv3-maintenance-interrupt",
+-                                        0, irq);
+-        } else if (vms->virt) {
+-            qemu_irq irq = qdev_get_gpio_in(vms->gic,
+-                                            intidbase + ARCH_GIC_MAINT_IRQ);
+-            sysbus_connect_irq(gicbusdev, i + 4 * max_cpus, irq);
+-        }
+-
+-        qdev_connect_gpio_out_named(cpudev, "pmu-interrupt", 0,
+-                                    qdev_get_gpio_in(vms->gic, intidbase
+-                                                     + VIRTUAL_PMU_IRQ));
+-
+-        sysbus_connect_irq(gicbusdev, i, qdev_get_gpio_in(cpudev, ARM_CPU_IRQ));
+-        sysbus_connect_irq(gicbusdev, i + max_cpus,
+-                           qdev_get_gpio_in(cpudev, ARM_CPU_FIQ));
+-        sysbus_connect_irq(gicbusdev, i + 2 * max_cpus,
+-                           qdev_get_gpio_in(cpudev, ARM_CPU_VIRQ));
+-        sysbus_connect_irq(gicbusdev, i + 3 * max_cpus,
+-                           qdev_get_gpio_in(cpudev, ARM_CPU_VFIQ));
+-
+-        if (vms->gic_version != VIRT_GIC_VERSION_2) {
+-            sysbus_connect_irq(gicbusdev, i + 4 * smp_cpus,
+-                               qdev_get_gpio_in(cpudev, ARM_CPU_NMI));
+-            sysbus_connect_irq(gicbusdev, i + 5 * smp_cpus,
+-                               qdev_get_gpio_in(cpudev, ARM_CPU_VINMI));
+-        }
++        wire_gic_cpu_irqs(vms, qemu_get_cpu(i));
+     }
+ 
+     fdt_add_gic_node(vms);
+@@ -3075,7 +3129,7 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+      */
+     if (vms->acpi_dev) {
+         /* TODO: update GIC about this hotplug change here */
+-        /* TODO: wire the GIC<->CPU irqs */
++        wire_gic_cpu_irqs(vms, cs);
+     }
+ 
+     /*
+@@ -3159,7 +3213,7 @@ static void virt_cpu_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+ 
+     /* TODO: update the acpi cpu hotplug state for cpu hot-unplug */
+ 
+-    /* TODO: unwire the gic-cpu irqs here */
++    unwire_gic_cpu_irqs(vms, cs);
+     /* TODO: update the GIC about this hot unplug change */
+ 
+     /* TODO: unregister cpu for reset & update F/W info for the next boot */
+diff --git a/hw/core/gpio.c b/hw/core/gpio.c
+index 80d07a6ec9..abb164d5c0 100644
+--- a/hw/core/gpio.c
++++ b/hw/core/gpio.c
+@@ -143,7 +143,7 @@ qemu_irq qdev_get_gpio_out_connector(DeviceState *dev, const char *name, int n)
+ 
+ /* disconnect a GPIO output, returning the disconnected input (if any) */
+ 
+-static qemu_irq qdev_disconnect_gpio_out_named(DeviceState *dev,
++qemu_irq qdev_disconnect_gpio_out_named(DeviceState *dev,
+                                                const char *name, int n)
+ {
+     char *propname = g_strdup_printf("%s[%d]",
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index 5336728a23..742e62e400 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -738,6 +738,8 @@ qemu_irq qdev_get_gpio_out_connector(DeviceState *dev, const char *name, int n);
+  */
+ qemu_irq qdev_intercept_gpio_out(DeviceState *dev, qemu_irq icpt,
+                                  const char *name, int n);
++qemu_irq qdev_disconnect_gpio_out_named(DeviceState *dev,
++                                               const char *name, int n);
+ 
+ BusState *qdev_get_child_bus(DeviceState *dev, const char *name);
+ 
+diff --git a/target/arm/cpu-qom.h b/target/arm/cpu-qom.h
+index b497667d61..e49fb096de 100644
+--- a/target/arm/cpu-qom.h
++++ b/target/arm/cpu-qom.h
+@@ -37,13 +37,17 @@ DECLARE_CLASS_CHECKERS(AArch64CPUClass, AARCH64_CPU,
+ #define ARM_CPU_TYPE_NAME(name) (name ARM_CPU_TYPE_SUFFIX)
+ 
+ /* Meanings of the ARMCPU object's seven inbound GPIO lines */
+-#define ARM_CPU_IRQ 0
+-#define ARM_CPU_FIQ 1
+-#define ARM_CPU_VIRQ 2
+-#define ARM_CPU_VFIQ 3
+-#define ARM_CPU_NMI 4
+-#define ARM_CPU_VINMI 5
+-#define ARM_CPU_VFNMI 6
++enum {
++    ARM_CPU_IRQ = 0,
++    ARM_CPU_FIQ = 1,
++    ARM_CPU_VIRQ = 2,
++    ARM_CPU_VFIQ = 3,
++    NUM_GICV2_GPIO_IN = (ARM_CPU_VFIQ+1),
++    ARM_CPU_NMI = 4,
++    ARM_CPU_VINMI = 5,
++    /* ARM_CPU_VFNMI = 6, */ /* not used? */
++    NUM_GPIO_IN = (ARM_CPU_VINMI+1),
++};
+ 
+ /* For M profile, some registers are banked secure vs non-secure;
+  * these are represented as a 2-element array where the first element
 -- 
 2.34.1
 
