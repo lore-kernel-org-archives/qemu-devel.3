@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D077C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 10:09:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 047F6C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 10:15:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHhO7-0002Sb-F2; Thu, 13 Jun 2024 06:08:59 -0400
+	id 1sHhTT-0003tJ-4v; Thu, 13 Jun 2024 06:14:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHhO6-0002SR-2C
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 06:08:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHhTS-0003sm-57
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 06:14:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHhO4-0005dz-KB
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 06:08:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sHhTQ-0006V2-I7
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 06:14:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718273335;
+ s=mimecast20190719; t=1718273667;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yF50Fu3YW72re3nJRKMaUbmikUDhQUEzENCafUaSfXg=;
- b=hXu3mnNRyV8Hxse+9RuJAczV9cHOXHOq8YAKQ4Pp9lxJodQpdra29RCv9mMbD4BDxf4S3J
- yzQ7E6DaP+i/RvkAgxUlLjsfDqU+cnKnb/FKVMITzoZbBGObf14Qqy3Uv2F9aNL/xXnoCu
- xtvRf/YzHYsnFdcOe6xQKH2/nmae0cM=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=U9TqOQ3d9tpAIBh4M/ou7IR1CrTE4i2d0ftuymzPeps=;
+ b=H9wPR4bBIqTp11Lc4BxG5+aFh6EvSj/IW5sDE0h2wMFrBezjTlH1XAWLgo/tEZgnPQ+0bI
+ +Y9gdarLxbTZ20mnLRCL4CVtfgM/UhU3iUSTF9bvBo+62v4UWFcEIyr57ssszVoK3OTbET
+ /RNzjluq+Sb99CtJOC2TOQhmbBoPuU4=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-OO3zBjW0OES7MZIuEOlslw-1; Thu, 13 Jun 2024 06:08:53 -0400
-X-MC-Unique: OO3zBjW0OES7MZIuEOlslw-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-57cad5dbcb7so433926a12.2
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 03:08:53 -0700 (PDT)
+ us-mta-599-ZQqnKajAMxeohtCdnvQkTA-1; Thu, 13 Jun 2024 06:14:24 -0400
+X-MC-Unique: ZQqnKajAMxeohtCdnvQkTA-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-52c983f4285so759496e87.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 03:14:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718273332; x=1718878132;
- h=content-transfer-encoding:in-reply-to:autocrypt:cc:from
- :content-language:references:to:subject:user-agent:mime-version:date
+ d=1e100.net; s=20230601; t=1718273662; x=1718878462;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=yF50Fu3YW72re3nJRKMaUbmikUDhQUEzENCafUaSfXg=;
- b=br7qrXH3pYU9v0w+UNakhZNKWTtDDeXZGHvcGOBG5QkX5FuvjeaaeV7cnIIBSosIqZ
- 08bo1SHm5HpdpmTUbAjxTdGhJEpBL5opzUGHmnKobUyxq0eralfk6MDajf+WPI+3WuPW
- 7rt2CsxaRbstPGe02vBXzxmzUuuY1ZHhR43ieXPE8Wkhc8U0gZ7ZByIy3BPXu/vnB1Sk
- mAaK0Kp+Df0hE67SiTSbDfB3PUwK8ablfGSXrMhJpJkSs229QrlBfP8cyiJxUFb3niuO
- gMFqBkHK7UNQKDdQdT77cH/z0H6gqvqc+9Q6FbgCmkkymyUscPC2CMD2lJpe6IJcnJaQ
- jE+g==
-X-Gm-Message-State: AOJu0YzzzZdbplcNFdngVyxkCKxikQeUoSCtfFEzGYoaovl1DiZ/CKlB
- YOPjLGsTBwaC4tt21uyD7Wl5anvezQIIcXwwgfbQ84eMQbC0SaSyNs13SOrlhzknLgS9/ef1FbK
- ryH23KKn+WhPLcWAEZzhlHCrNAHhu+8PrGGY8SsyDQiRt+PdSQg3B73tONyxipERZfk/62PR/5y
- oZDOraTTuskgDckSif0LfnnhQw9qPhhCtj
-X-Received: by 2002:a50:8d17:0:b0:57c:6861:d72a with SMTP id
- 4fb4d7f45d1cf-57ca97497e6mr2886504a12.4.1718273332460; 
- Thu, 13 Jun 2024 03:08:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFtW+G4HfUOCtzBJ053uLUwtCcsYMCvKc2oqwmsKkgeoqoAZuJ5weROSnAQTSeWP6B18QPGRQ==
-X-Received: by 2002:a50:8d17:0:b0:57c:6861:d72a with SMTP id
- 4fb4d7f45d1cf-57ca97497e6mr2886488a12.4.1718273332012; 
- Thu, 13 Jun 2024 03:08:52 -0700 (PDT)
+ bh=U9TqOQ3d9tpAIBh4M/ou7IR1CrTE4i2d0ftuymzPeps=;
+ b=UE/5bO45x1jmEwm3SdI/uvUtAhRhugB+tjHyTXsvz0HyGM63DFfVUWotyGJo3sbkl+
+ 33STxXVCv400GWdglzb+ZvferlqEX9L5XbiUmaRANwv1iX7pSx3yypY0AG64s9wiaNd6
+ VyXXCRMrbFBTcfEsmRlo/9ONeDDvVTU4OJ74lJIU1By6KcGB+QuxuB4OtmC6sQyTw32V
+ 7EGcfpNs8SH/CwzMLo+kN4Bsnz/Y4hfRDkleJHbiCn19pLMifT2xLpfVQsHbxnjWk/pc
+ Z2MVnk0P6Nr4Njd3tqRVOb4xWenwsSJKr5wF26AeZG8AW1osuudwTBaglGDmgm6typVW
+ 8Jxg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX7r3OSsxBp5auKYm95Bi5QiSYK0IIuNdTTQBb/y9PG0y1XLQR/U+6ogt1Y/19QvsH+KMb4HERSMN/0+kStBR0Mwr2kV9U=
+X-Gm-Message-State: AOJu0YzmZOJSjCqLbG2VfhzbRUlc1XqQTjqWQnWTZRF9GPZOSYZIF0zU
+ JAxEFayjNniP74RcZ06GRqhQYKRmieTSySHO2whjAFsAaR8p8KPyaPrugmA3qqW7+neCTuTIecU
+ Cn5NBEac+UbctzvU0cQZPCZWjJ2Q/LNuj8FkmVrS4UucF4MEulWVw
+X-Received: by 2002:a05:6512:3d18:b0:52c:8339:d09c with SMTP id
+ 2adb3069b0e04-52c9a3be48emr3758975e87.3.1718273662651; 
+ Thu, 13 Jun 2024 03:14:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERvhu/sxfULwLgkNsxEpRtfrsM1lfSV3fkWVhH1rvWiReCDC/mtq6rldHRuiNJ05Rbjxcz7g==
+X-Received: by 2002:a05:6512:3d18:b0:52c:8339:d09c with SMTP id
+ 2adb3069b0e04-52c9a3be48emr3758952e87.3.1718273662207; 
+ Thu, 13 Jun 2024 03:14:22 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-43-242-210.web.vodafone.de.
  [109.43.242.210]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57cb72cdff1sm722883a12.3.2024.06.13.03.08.50
+ ffacd0b85a97d-3607510340fsm1255428f8f.93.2024.06.13.03.14.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Jun 2024 03:08:51 -0700 (PDT)
-Message-ID: <2982b9c8-1325-4ca7-9e91-b1a94178c9d9@redhat.com>
-Date: Thu, 13 Jun 2024 12:08:49 +0200
+ Thu, 13 Jun 2024 03:14:21 -0700 (PDT)
+Message-ID: <ce50dc2f-2111-49a1-9b45-cb59a44a8239@redhat.com>
+Date: Thu, 13 Jun 2024 12:14:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/qtest/fuzz/virtio_net_fuzz.c: fix
- virtio_net_fuzz_multi
-To: qemu-devel@nongnu.org, Dmitry Frolov <frolov@swemel.ru>
-References: <20240523102813.396750-2-frolov@swemel.ru>
-Content-Language: en-US
+Subject: Re: [PATCH 2/2] QTest example for RISC-V CSR register
+To: Ivan Klokov <ivan.klokov@syntacore.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, bmeng.cn@gmail.com,
+ liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, lvivier@redhat.com, pbonzini@redhat.com
+References: <20240613095601.16299-1-ivan.klokov@syntacore.com>
+ <20240613095601.16299-3-ivan.klokov@syntacore.com>
 From: Thomas Huth <thuth@redhat.com>
-Cc: alxndr@bu.edu, sdl.qemu@linuxtesting.org,
- QEMU Trivial <qemu-trivial@nongnu.org>, Jason Wang <jasowang@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -119,10 +121,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240523102813.396750-2-frolov@swemel.ru>
+In-Reply-To: <20240613095601.16299-3-ivan.klokov@syntacore.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -147,31 +149,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/05/2024 12.28, Dmitry Frolov wrote:
-> If QTestState was already CLOSED due to error, calling qtest_clock_step()
-> afterwards makes no sense and only raises false-crash with message:
-> "assertion timer != NULL failed".
+On 13/06/2024 11.56, Ivan Klokov wrote:
+> Added demo for reading CSR register from qtest environment.
 > 
-> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
+> Signed-off-by: Ivan Klokov <ivan.klokov@syntacore.com>
 > ---
->   tests/qtest/fuzz/virtio_net_fuzz.c | 3 +++
->   1 file changed, 3 insertions(+)
+>   tests/qtest/meson.build      |  2 ++
+>   tests/qtest/riscv-csr-test.c | 68 ++++++++++++++++++++++++++++++++++++
+>   2 files changed, 70 insertions(+)
+>   create mode 100644 tests/qtest/riscv-csr-test.c
 > 
-> diff --git a/tests/qtest/fuzz/virtio_net_fuzz.c b/tests/qtest/fuzz/virtio_net_fuzz.c
-> index e239875e3b..2f57a8ddd8 100644
-> --- a/tests/qtest/fuzz/virtio_net_fuzz.c
-> +++ b/tests/qtest/fuzz/virtio_net_fuzz.c
-> @@ -81,6 +81,9 @@ static void virtio_net_fuzz_multi(QTestState *s,
->           /* Run the main loop */
->           qtest_clock_step(s, 100);
->           flush_events(s);
-> +        if (!qtest_probe_child(s)) {
-> +            return;
-> +        }
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 12792948ff..45d651da99 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -259,6 +259,8 @@ qtests_s390x = \
+>   qtests_riscv32 = \
+>     (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
+>   
+> +qtests_riscv32 += ['riscv-csr-test']
+> +
+>   qos_test_ss = ss.source_set()
+>   qos_test_ss.add(
+>     'ac97-test.c',
+> diff --git a/tests/qtest/riscv-csr-test.c b/tests/qtest/riscv-csr-test.c
+> new file mode 100644
+> index 0000000000..715d5fe4b7
+> --- /dev/null
+> +++ b/tests/qtest/riscv-csr-test.c
+> @@ -0,0 +1,68 @@
+> +/*
+> + * QTest testcase for RISC-V CSRs
+> + *
+> + * Copyright (c) 2024 Syntacore.
+> + *
+> + * This program is free software; you can redistribute it and/or modify it
+> + * under the terms of the GNU General Public License as published by the
+> + * Free Software Foundation; either version 2 of the License, or
+> + * (at your option) any later version.
+> + *
+> + * This program is distributed in the hope that it will be useful, but WITHOUT
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+> + * for more details.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "libqtest-single.h"
+> +#include "qemu/error-report.h"
+> +
+> +#include "qapi/qmp/qdict.h"
+> +#include "qapi/qmp/qjson.h"
+> +#include "qapi/qmp/qlist.h"
+> +#include "qapi/qmp/qstring.h"
+> +#include "qapi/qmp/qobject.h"
+> +#include "qapi/qobject-input-visitor.h"
+> +#include "qapi/qobject-output-visitor.h"
+> +#include "qom/object_interfaces.h"
 
-According to your patch description, it rather sounds like the check should 
-be done before the qtest_clock_step() ? ... or where does the QTestState get 
-closed? During flush_events() ?
+Do you really need all these headers for the short code below? Please double 
+check and trim the list.
+
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "qemu/error-report.h"
+> +#include "hw/qdev-properties.h"
+> +
+> +#include "qemu/osdep.h"
+
+Duplicate include statement, please remove.
+
+> +#include "qemu/cutils.h"
+> +#include "libqtest.h"
+> +
+> +#include "libqos/csr.h"
+> +#include "libqos/libqos.h"
+> +
+> +static void run_test_csr(void)
+> +{
+> +
+> +    uint64_t res;
+> +    uint64_t val = 0;
+> +
+> +    res = qcsr_get_csr(global_qtest, 0, 0xf11, &val);
+> +
+> +    g_assert_cmpint(res, ==, 0);
+> +    g_assert_cmpint(val, ==, 0x100);
+> +}
+> +
+> +int main(int argc, char **argv)
+> +{
+> +    g_test_init(&argc, &argv, NULL);
+> +
+> +    qtest_add_func("/cpu/csr", run_test_csr);
+> +
+> +    qtest_start("--nographic -machine virt -cpu any,mvendorid=0x100");
+
+You don't need --nographic, it's been taken care off by the libqtest 
+framework already.
+
+> +    g_test_run();
+> +
+> +    qtest_quit(global_qtest);
+> +
+> +    return 0;
+
+You should return the result of g_test_run() here, otherwise your test will 
+look like it always succeeds.
+
+> +}
 
   Thomas
 
