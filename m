@@ -4,74 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5C6BC27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 05:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97DE1C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 05:27:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHcur-0006jw-Nz; Thu, 13 Jun 2024 01:22:30 -0400
+	id 1sHcz9-0008Hb-O0; Thu, 13 Jun 2024 01:26:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sHcuf-0006dy-Fp
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:22:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sHcud-0004gb-QW
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:22:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718256135;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=W4tJD6nEmLUQ+lgmoW5qwufxAYUow4uw42ZLFyMQboc=;
- b=ai7tvn7nQiQZ2N0TJ5lZOc87VaPyktpAJM+99YkREjT8xeud/4hsysMhi4ozpSesvGTe8m
- RdMOElDeeG+Rg/JUi8ZB/BsWtLeOc4epGAkNvwxSGNO7zdLrcn3d2Zs9pzKYPCEiYQoDB9
- z1EJsu6BDj3jx1YsxhzioS11iGtMBPA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-q1M3J26wOFuXKljLX6Kvug-1; Thu,
- 13 Jun 2024 01:22:11 -0400
-X-MC-Unique: q1M3J26wOFuXKljLX6Kvug-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 68B0719560A5; Thu, 13 Jun 2024 05:22:10 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B199919560AB; Thu, 13 Jun 2024 05:22:09 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9440121E6687; Thu, 13 Jun 2024 07:22:07 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,  Peng Fan <peng.fan@nxp.com>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "stefanha@redhat.com" <stefanha@redhat.com>
-Subject: Re: Qemu License question
-In-Reply-To: <f06ai.hy2gx5h8080@linaro.org> (Manos Pitsidianakis's message of
- "Thu, 13 Jun 2024 08:06:09 +0300")
-References: <AM6PR04MB5941BDF756878B3CA208D07D88C12@AM6PR04MB5941.eurprd04.prod.outlook.com>
- <f06ai.hy2gx5h8080@linaro.org>
-Date: Thu, 13 Jun 2024 07:22:07 +0200
-Message-ID: <87h6dxct8g.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sHcz7-0008H8-Qg
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:26:53 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sHcz5-0005Wm-MK
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:26:53 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-35f27eed98aso608760f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 22:26:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718256410; x=1718861210; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=yobwlrOkHR9+DqmoMVp71TUqw6XdoejQY6Yh/RxW3Io=;
+ b=s2clC5KXku8YZKXVUqw7NCWFoEYD+mnwxf7jLmyI0lR5uz70zorj7Zu82ICHWiOTte
+ c6X/2fnSvNfkXflSDIcphgCH2eLwXDnjZN94ichxQoKDYlUNuzUl2Vcn8wJyUkx3PxW1
+ eQQjyFe+GmylheS8dK4U6bYHdGQCzkH0mktqqBZsTnFkaENJ/+4nxjBWvc06Z8cWraJd
+ 6pM0BkIiqZR0zLyXHjaIyPGmA6nVYcpCUhON9PEMqUN9qcFhnMuxFPPuOx73eXNpKJIF
+ kzDq0Z0opSmlxIG2nbZHRVNmJXqbsJVpjxfkLI2lMDlpwMqWyzyiHkpAaZkXQI3s3Pip
+ tSnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718256410; x=1718861210;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yobwlrOkHR9+DqmoMVp71TUqw6XdoejQY6Yh/RxW3Io=;
+ b=UWcfwL1cB0JjV+vy9w0o3/m8fCz52LPZhhUZdm2Vifkk68TH8A3a0ie9VrXLcxM8PS
+ 9A1Uh2UaqeD/Ij/t6DslJBhhZULMYPnmWDoXq8bzyjA06ad2XT5XQ3Byg9YuyICkEYby
+ mAdLYUU3zsmrlQDj4WRcIIBrzabJ8tjiRPhqgp7vdL4xmd4oKEdFu9F7Y5+9AurR2tqF
+ 35T6xA85ykjIYd+CtGW98Kt4ub2yiKB9Xvk23GDmf2yHmM9JZcLNFFdsMaU7VUPjfP4b
+ RS0Rw9o/ULkn97El/VTmwLlS+p7YW6SwmuSazuOIdY0sx/4xIP88FT7OW8cLS1Na89Q5
+ 8Veg==
+X-Gm-Message-State: AOJu0YxPfyhBbWDU/HqFOO15QYeg8fimOT0lR82WFcu92TK+DoS1B2Fa
+ UBwfpQmxhFoPmWxeQE5l9lgOA5NyyQvfLCQB0Q/epeFRCK6j3LzZHXgr00JjAE8=
+X-Google-Smtp-Source: AGHT+IFY3lA5BqKYWj4i/bMnSOd3WuVytTq8IQ40FbIbhdHtfe4eWNytlDDp0ogdMnukytq+WiRoUw==
+X-Received: by 2002:a5d:66d1:0:b0:35f:1bc5:6127 with SMTP id
+ ffacd0b85a97d-35fdf79b273mr2416892f8f.23.1718256409741; 
+ Wed, 12 Jun 2024 22:26:49 -0700 (PDT)
+Received: from meli-email.org (adsl-105.37.6.1.tellas.gr. [37.6.1.105])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-360750f23cdsm597850f8f.77.2024.06.12.22.26.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 12 Jun 2024 22:26:49 -0700 (PDT)
+Date: Thu, 13 Jun 2024 08:20:57 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Zheyu Ma <zheyuma97@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>
+Subject: Re: [PATCH v1] virtio-iommu: add error check before assert
+User-Agent: meli 0.8.6
+References: <20240611122348.3613272-1-manos.pitsidianakis@linaro.org>
+ <87o786xzma.fsf@draig.linaro.org>
+In-Reply-To: <87o786xzma.fsf@draig.linaro.org>
+Message-ID: <f074n.97fxykl1pml@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,37 +97,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
-
-> On Thu, 13 Jun 2024 06:26, Peng Fan <peng.fan@nxp.com> wrote:
->>Hi All,
->>
->>The following files are marked as GPL-3.0-or-later. Will these
->>Conflict with Qemu LICENSE?
->>
->>Should we update the files to GPL-2.0?
->>
->>./tests/tcg/aarch64/semicall.h:7: * SPDX-License-Identifier: GPL-3.0-or-later
->>./tests/tcg/x86_64/system/boot.S:13: * SPDX-License-Identifier: GPL-3.0-or-later
->>./tests/tcg/riscv64/semicall.h:7: * SPDX-License-Identifier: GPL-3.0-or-later
->>./tests/tcg/multiarch/float_convs.c:6: * SPDX-License-Identifier: GPL-3.0-or-later
->>./tests/tcg/multiarch/float_helpers.h:6: * SPDX-License-Identifier: GPL-3.0-or-later
->>./tests/tcg/multiarch/libs/float_helpers.c:10: * SPDX-License-Identifier: GPL-3.0-or-later
->>./tests/tcg/multiarch/arm-compat-semi/semihosting.c:7: * SPDX-License-Identifier: GPL-3.0-or-later
->>./tests/tcg/multiarch/arm-compat-semi/semiconsole.c:7: * SPDX-License-Identifier: GPL-3.0-or-later
->>./tests/tcg/multiarch/float_convd.c:6: * SPDX-License-Identifier: GPL-3.0-or-later
->>./tests/tcg/multiarch/float_madds.c:6: * SPDX-License-Identifier: GPL-3.0-or-later
->>./tests/tcg/i386/system/boot.S:10: * SPDX-License-Identifier: GPL-3.0-or-later
->>./tests/tcg/arm/semicall.h:7: * SPDX-License-Identifier: GPL-3.0-or-later
->>
->>Thanks,
->>Peng.
+On Wed, 12 Jun 2024 12:46, Alex Bennée <alex.bennee@linaro.org> wrote:
+>Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
 >
+>> A fuzzer case discovered by Zheyu Ma causes an assert failure.
+>>
+>> Add a check before the assert, and respond with an error before moving
+>> on to the next queue element.
+>>
+>> To reproduce the failure:
+>>
+>> cat << EOF | \
+>> qemu-system-x86_64 \
+>> -display none -machine accel=qtest -m 512M -machine q35 -nodefaults \
+>> -device virtio-iommu -qtest stdio
+>> outl 0xcf8 0x80000804
+>> outw 0xcfc 0x06
+>> outl 0xcf8 0x80000820
+>> outl 0xcfc 0xe0004000
+>> write 0x10000e 0x1 0x01
+>> write 0xe0004020 0x4 0x00001000
+>> write 0xe0004028 0x4 0x00101000
+>> write 0xe000401c 0x1 0x01
+>> write 0x106000 0x1 0x05
+>> write 0x100001 0x1 0x60
+>> write 0x100002 0x1 0x10
+>> write 0x100009 0x1 0x04
+>> write 0x10000c 0x1 0x01
+>> write 0x100018 0x1 0x04
+>> write 0x10001c 0x1 0x02
+>> write 0x101003 0x1 0x01
+>> write 0xe0007001 0x1 0x00
+>> EOF
+>>
+>> Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2359
+>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>> ---
+>>  hw/virtio/virtio-iommu.c | 12 ++++++++++++
+>>  1 file changed, 12 insertions(+)
+>>
+>> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+>> index 1326c6ec41..9b99def39f 100644
+>> --- a/hw/virtio/virtio-iommu.c
+>> +++ b/hw/virtio/virtio-iommu.c
+>> @@ -818,6 +818,18 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
+>>  out:
+>>          sz = iov_from_buf(elem->in_sg, elem->in_num, 0,
+>>                            buf ? buf : &tail, output_size);
+>> +        if (unlikely(sz != output_size)) {
+>> +            tail.status = VIRTIO_IOMMU_S_DEVERR;
+>> +            /* We checked that tail can fit earlier */
+>> +            output_size = sizeof(tail);
+>> +            g_free(buf);
+>> +            buf = NULL;
 >
-> Hello Peng,
+>Hmm this is a similar pattern I noticed yesterday in:
 >
-> These are all actually GPL-2.0-or-later, in fact I can't find the string GPL-3.0-or-later in the current master at all.
+>  Message-ID: <20240527133140.218300-2-frolov@swemel.ru>
+>  Date: Mon, 27 May 2024 16:31:41 +0300
+>  Subject: [PATCH] hw/net/virtio-net.c: fix crash in iov_copy()
+>  From: Dmitry Frolov <frolov@swemel.ru>
+>
+>And I wonder if the same comment applies. Could we clean-up the loop
+>with autofrees to avoid making sure all the g_free() calls are properly
+>lined up?
 
-See commit 542b10bd148a (tests/tcg: update licenses to GPLv2 as intended).
 
+The virtio-net.c patch adds an iov_size check for the virt queue element 
+to make sure it can fit a header len. In this function, 
+virtio_iommu_handle_command, a similar check is performed after popping 
+the element after the queue. That's what the "we checked that tail can 
+fit earlier" comment refers to.  Is this what you were referring to by 
+any chance?
+
+>
+>> +            sz = iov_from_buf(elem->in_sg,
+>> +                              elem->in_num,
+>> +                              0,
+>> +                              &tail,
+>> +                              output_size);
+>> +        }
+>
+>Isn't this the next element? Could we continue; instead?
+
+It's not, the element is popped on the beginning of the for loop. I 
+think we should not continue because we have written a VIRTIO error 
+value for the guest and have to give it back as a response.
+
+
+>
+>>          assert(sz == output_size);
+>>  
+>>          virtqueue_push(vq, elem, sz);
+>>
+>> base-commit: 80e8f0602168f451a93e71cbb1d59e93d745e62e
+>
+>-- 
+>Alex Bennée
+>Virtualisation Tech Lead @ Linaro
 
