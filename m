@@ -4,68 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1422C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 07:02:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFABBC27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 07:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHeSu-0004LG-9J; Thu, 13 Jun 2024 03:01:44 -0400
+	id 1sHeeu-0007aB-HP; Thu, 13 Jun 2024 03:14:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sHeSs-0004Kp-G1
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:01:42 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sHeSq-00055Z-0s
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:01:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1718262100; x=1749798100;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=nGflPj+S5UvQccF2IZArInW/ao7c5S61HaAnPLdJnxE=;
- b=bS+Du2WNQ5Qgsgoly7oMuK9EFncFKvUafOFLqhCVquL0jIRUgkzpMcR5
- KajT00jBsgtgF1fxUxDLynrBsZRB+JLIP1nfa3BftF7Z0+Gy0PWfZoMOq
- 6gVnhxhJlmDdeX1eoP+Hp0/JTWGKrmPUDLp04xt6y/U9V8SbjX6yFoZL/
- 9bGWt/yDVkRn+aJ8o+nPUs1tsRXDzH6dP89otpYOijni5L/BmvEmG7Bcj
- QnZEgVHWag4pipI7mf3rntyMzR5W1YdHzET6biJ7yHtjmZN7tf66x11h6
- /ILT5epOyGVV1+5lzEftDg10g7Fo4Zwz2WG3SWlQeh2PtmzaMeit6/yfQ Q==;
-X-CSE-ConnectionGUID: /DBChAVsS8660CbxoY3wDg==
-X-CSE-MsgGUID: XMt5S4ubQN+AaBC8f2J49A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11101"; a="15290735"
-X-IronPort-AV: E=Sophos;i="6.08,234,1712646000"; d="scan'208";a="15290735"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Jun 2024 00:01:36 -0700
-X-CSE-ConnectionGUID: m7uUozA2QJaigpRY+VqlnQ==
-X-CSE-MsgGUID: TrREHAvaTV6AvTb8sn2Y3g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,234,1712646000"; d="scan'208";a="45173204"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 13 Jun 2024 00:01:36 -0700
-Date: Thu, 13 Jun 2024 15:17:05 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Babu Moger <babu.moger@amd.com>
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [PATCH 4/4] i386/cpu: Add support for EPYC-Turin model
-Message-ID: <Zmqc8SjlgRlpgoBw@intel.com>
-References: <cover.1718218999.git.babu.moger@amd.com>
- <a4d4eaafb69d855a5c5d7dec98be68b3e948cefb.1718218999.git.babu.moger@amd.com>
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sHees-0007ZQ-QD
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:14:06 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sHeer-00078N-63
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:14:06 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1f70c457823so5698465ad.3
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 00:14:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1718262844; x=1718867644; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LacZkfFTIs+WwWhTp32Cf6oxkrCggAGRd8oJ1DAZ4Jg=;
+ b=AZSgxLVe5ezMG17JEOlG7M3wI+XxkwPqYcm9TzHrWLPvGU1P7r5OS7qUH6z2DlB8PN
+ HuKoKGKbONX1TFfyMhgWOjvVsj2XPjtncGtoBTFHpbMRzNmSCnj7dREU+hq/IJCABYcX
+ okeqZhePwuTf2FhTlbJaR/lIK2nBg4kuYV07KjA+XXwsEbxooepf24NTRr5RKPNPLjpf
+ YjkGTlFyrH5vECzDgkbItn9UzMz1Ye32C8a/NaNgnKQQZNZaJnSIMtbBTGEjdoelcocU
+ v8MJCvkpaHs3adZOHfmVzvNEf6k4KajEX5QQ3HTWJIPmF/O462T1ErXK/DAh3m7zKPJ0
+ sfeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718262844; x=1718867644;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LacZkfFTIs+WwWhTp32Cf6oxkrCggAGRd8oJ1DAZ4Jg=;
+ b=MgxU+t1htZILq+Vtc9pdWvtMjy18rJf86EVouA04AzMdLt7o09rF/JYlf2sGRkKFPG
+ ZhWlkj8AkaJZ2o24qfGeTYVLtl+/VS/upO1I6nUVwUmxsXVtyT+oVv2O5O6fjAPcyYWu
+ gbf6Luk80g12/nNohhLmTRjICp1fIJkPy+4KcoZYCxw9kyNfE/U46dvWL4FK8DTgv3t1
+ PtnjlDMeHVqNfRU1QNmzPoOVOA0VXW6KEOqbwdtvJeo6R6g/Iud+jeIY8cF68wV2pnbC
+ wptMYjEZRIBsKiockvTkvw+1y/T7TII6L/5rid8CSm/pXMM5g7g6ptox6MhJzVygDgX/
+ aqMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWmwylCB36TWHhLDCg+/La5VAk8YD7uWXKXDDeeIAAC4SiHGICmF5yRdOFStJoBV9g8eW/C4GFiObDrTxyfDlTTrByfDp8=
+X-Gm-Message-State: AOJu0YxWc1KF2NAEyGTcZUmx+vHe+2+rCenwQMgEkD+JLqRRv6e5MIPh
+ JEv+DZZh5Iv5NOqSu/iTJLOBn14ZHs3CMv80eQ8p5LcEWoj51bU6D9b5gFyFIic=
+X-Google-Smtp-Source: AGHT+IF/ogoThB7jbiIV93HTc+u7mBTyldLlKjrOmmXkKad2i7/HW2lLLSs4qQ3Vu1JJFTbXTD+VJg==
+X-Received: by 2002:a17:902:e5c6:b0:1f7:55e:1be with SMTP id
+ d9443c01a7336-1f83b6c7062mr48341305ad.41.1718262843909; 
+ Thu, 13 Jun 2024 00:14:03 -0700 (PDT)
+Received: from n37-006-243.byted.org ([180.184.84.173])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f855ee6e7esm6378345ad.139.2024.06.13.00.14.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Jun 2024 00:14:03 -0700 (PDT)
+From: Changqi Lu <luchangqi.123@bytedance.com>
+To: qemu-block@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
+ ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
+ kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
+ pizhenwei@bytedance.com, Changqi Lu <luchangqi.123@bytedance.com>
+Subject: [PATCH v6 07/10] hw/nvme: add helper functions for converting
+ reservation types
+Date: Thu, 13 Jun 2024 15:13:24 +0800
+Message-Id: <20240613071327.2498953-8-luchangqi.123@bytedance.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20240613071327.2498953-1-luchangqi.123@bytedance.com>
+References: <20240613071327.2498953-1-luchangqi.123@bytedance.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a4d4eaafb69d855a5c5d7dec98be68b3e948cefb.1718218999.git.babu.moger@amd.com>
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,33 +100,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 12, 2024 at 02:12:20PM -0500, Babu Moger wrote:
-> Date: Wed, 12 Jun 2024 14:12:20 -0500
-> From: Babu Moger <babu.moger@amd.com>
-> Subject: [PATCH 4/4] i386/cpu: Add support for EPYC-Turin model
-> X-Mailer: git-send-email 2.34.1
-> 
-> Adds the support for AMD EPYC zen 5 processors(EPYC-Turin).
+This commit introduces two helper functions
+that facilitate the conversion between the
+reservation types used in the NVME protocol
+and those used in the block layer.
 
-nit s/Adds/Add
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
+Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+---
+ hw/nvme/nvme.h | 80 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 80 insertions(+)
 
-> Adds the following new feature bits on top of the feature bits from
-
-s/Adds/Add/
-
-> the previous generation EPYC models.
-> 
-> movdiri            : Move Doubleword as Direct Store Instruction
-> movdir64b          : Move 64 Bytes as Direct Store Instruction
-> avx512-vp2intersect: AVX512 Vector Pair Intersection to a Pair
->                      of Mask Register
-> avx-vnni           : AVX VNNI Instruction
-> 
-> Signed-off-by: Babu Moger <babu.moger@amd.com>
-> ---
->  target/i386/cpu.c | 131 ++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 131 insertions(+)
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index bed8191bd5..b1ad27c8f2 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -474,6 +474,86 @@ static inline const char *nvme_io_opc_str(uint8_t opc)
+     }
+ }
+ 
++static inline NvmeResvType block_pr_type_to_nvme(BlockPrType type)
++{
++    switch (type) {
++    case BLK_PR_WRITE_EXCLUSIVE:
++        return NVME_RESV_WRITE_EXCLUSIVE;
++    case BLK_PR_EXCLUSIVE_ACCESS:
++        return NVME_RESV_EXCLUSIVE_ACCESS;
++    case BLK_PR_WRITE_EXCLUSIVE_REGS_ONLY:
++        return NVME_RESV_WRITE_EXCLUSIVE_REGS_ONLY;
++    case BLK_PR_EXCLUSIVE_ACCESS_REGS_ONLY:
++        return NVME_RESV_EXCLUSIVE_ACCESS_REGS_ONLY;
++    case BLK_PR_WRITE_EXCLUSIVE_ALL_REGS:
++        return NVME_RESV_WRITE_EXCLUSIVE_ALL_REGS;
++    case BLK_PR_EXCLUSIVE_ACCESS_ALL_REGS:
++        return NVME_RESV_EXCLUSIVE_ACCESS_ALL_REGS;
++    }
++
++    return 0;
++}
++
++static inline BlockPrType nvme_pr_type_to_block(NvmeResvType type)
++{
++    switch (type) {
++    case NVME_RESV_WRITE_EXCLUSIVE:
++        return BLK_PR_WRITE_EXCLUSIVE;
++    case NVME_RESV_EXCLUSIVE_ACCESS:
++        return BLK_PR_EXCLUSIVE_ACCESS;
++    case NVME_RESV_WRITE_EXCLUSIVE_REGS_ONLY:
++        return BLK_PR_WRITE_EXCLUSIVE_REGS_ONLY;
++    case NVME_RESV_EXCLUSIVE_ACCESS_REGS_ONLY:
++        return BLK_PR_EXCLUSIVE_ACCESS_REGS_ONLY;
++    case NVME_RESV_WRITE_EXCLUSIVE_ALL_REGS:
++        return BLK_PR_WRITE_EXCLUSIVE_ALL_REGS;
++    case NVME_RESV_EXCLUSIVE_ACCESS_ALL_REGS:
++        return BLK_PR_EXCLUSIVE_ACCESS_ALL_REGS;
++    }
++
++    return 0;
++}
++
++static inline uint8_t nvme_pr_cap_to_block(uint16_t nvme_pr_cap)
++{
++    uint8_t res = 0;
++
++    res |= (nvme_pr_cap & NVME_PR_CAP_WR_EX) ?
++           BLK_PR_CAP_WR_EX : 0;
++    res |= (nvme_pr_cap & NVME_PR_CAP_EX_AC) ?
++           BLK_PR_CAP_EX_AC : 0;
++    res |= (nvme_pr_cap & NVME_PR_CAP_WR_EX_RO) ?
++           BLK_PR_CAP_WR_EX_RO : 0;
++    res |= (nvme_pr_cap & NVME_PR_CAP_EX_AC_RO) ?
++           BLK_PR_CAP_EX_AC_RO : 0;
++    res |= (nvme_pr_cap & NVME_PR_CAP_WR_EX_AR) ?
++           BLK_PR_CAP_WR_EX_AR : 0;
++    res |= (nvme_pr_cap & NVME_PR_CAP_EX_AC_AR) ?
++           BLK_PR_CAP_EX_AC_AR : 0;
++
++    return res;
++}
++
++static inline uint8_t block_pr_cap_to_nvme(uint8_t block_pr_cap)
++{
++    uint16_t res = 0;
++
++    res |= (block_pr_cap & BLK_PR_CAP_WR_EX) ?
++              NVME_PR_CAP_WR_EX : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_EX_AC) ?
++              NVME_PR_CAP_EX_AC : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_WR_EX_RO) ?
++              NVME_PR_CAP_WR_EX_RO : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_EX_AC_RO) ?
++              NVME_PR_CAP_EX_AC_RO : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_WR_EX_AR) ?
++              NVME_PR_CAP_WR_EX_AR : 0;
++    res |= (block_pr_cap & BLK_PR_CAP_EX_AC_AR) ?
++              NVME_PR_CAP_EX_AC_AR : 0;
++
++    return res;
++}
++
+ typedef struct NvmeSQueue {
+     struct NvmeCtrl *ctrl;
+     uint16_t    sqid;
+-- 
+2.20.1
 
 
