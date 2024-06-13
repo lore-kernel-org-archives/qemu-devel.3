@@ -4,73 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE9CC27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 08:03:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0AE0C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 08:07:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHfPu-0006iZ-T7; Thu, 13 Jun 2024 04:02:42 -0400
+	id 1sHfTw-0000I8-IA; Thu, 13 Jun 2024 04:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sHfPt-0006iE-E1
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:02:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sHfPr-0007Z8-8f
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:02:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718265758;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Lf1YWxGvRCF5qvFxXmpJCBHNLnrO8MqZURtxRDNhyYM=;
- b=V9Ssv3EMwFLfGpzxO4WNKQW4Aqp7FitIExnqWhdIq76x0IVbLl64WL7pXBTu0tuis4mrlv
- Yx/wA+AlNqlB8mU8fQxY8zbuhX2Zk8uWoFsP4enmwTRB3vTjlIjSFh4vB/aSm/pTE9Tk4U
- awREPeY64aN1fXE9zV918/f6JiEQmAU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-323-st2rkfChMxGueBzC3CgtuQ-1; Thu,
- 13 Jun 2024 04:02:34 -0400
-X-MC-Unique: st2rkfChMxGueBzC3CgtuQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5F7F5195609F; Thu, 13 Jun 2024 08:02:32 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.192.41])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3943A1955F2D; Thu, 13 Jun 2024 08:02:28 +0000 (UTC)
-Date: Thu, 13 Jun 2024 10:02:26 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
- eblake@redhat.com, xiechanglong.d@gmail.com,
- wencongyang2@huawei.com, hreitz@redhat.com, jsnow@redhat.com,
- f.ebner@proxmox.com
-Subject: Re: [PATCH v4 5/5] iotests: add backup-discard-source
-Message-ID: <ZmqnkubkBeVYhW7_@redhat.com>
-References: <20240313152822.626493-1-vsementsov@yandex-team.ru>
- <20240313152822.626493-6-vsementsov@yandex-team.ru>
- <ZmiORpYFHEWUXQRI@redhat.com>
- <accc6cdc-7b1e-4d26-9352-380f93cc3853@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sHfTs-0000Hq-Ld
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:06:48 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sHfTq-0008DU-A4
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:06:48 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-35f188e09a8so612737f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 01:06:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718266003; x=1718870803; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Wo1aNRskEU811vF8mjPn+uW0WP5P56W3ZxgFYtWVrgI=;
+ b=rOF3F0OWosRfy1kPIjyYzDL7osclTIsiFD2sugHlTor4+vhwaTU4A1KR87f9FZnKRA
+ QJYz/PuHCVx2roS8nYtkkQMCkRMCzhe4RRYKjIsj9au2MR2wUWlUMSJpIJez7qJDEkxG
+ L5IhoKnwHXvJQyl7X6H3laC0UAfZsdiOjQVe2sfiv9IFPtHIIvLRxEzovjnlnXpucoay
+ BLdrAzpBY5IoXcNiRjCnjaSLbInt0/h//wggThN1S2gHNPFYA2j4a2hZNWjYoE2dO1WK
+ OaYp66bCi/JJ8mMlkzabcpGAS3sy/kioMrTQFtXEtJy9yuK3P7fVJoA8xzs20NWWZJYG
+ BuYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718266003; x=1718870803;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Wo1aNRskEU811vF8mjPn+uW0WP5P56W3ZxgFYtWVrgI=;
+ b=TG4vnb2cR1Qph8CDw4ZcK7c7sk99sbn3CZ1sSicCxOoTRzo75dje83jIgNMzNyh39T
+ pCd65flFHnxYOkXSx1zUr7lOs2pWRd2g6dRA+orwrfZrA74QH+crOisfXCTKeh+31krw
+ aYy0u2XWK3InJGJOpigAZAGozMipzHILrN8l6BvyI3neHZWetGZ4lFKwFNrWq97tl2zW
+ FKSSvEa1V7EkmCxzM5WrrVSS2seocerXMWInCgM5wmcf/2+8CaIcQL/ELWpZGPFSBwl9
+ ScZgmJFg1FnU+aYt0KGBujVmxgzob3u3ZADrA0X+fpX0VTJ5hOA7XQTkJQwbL+aONybB
+ lS4A==
+X-Gm-Message-State: AOJu0Yym5UvB40gYHD0C2rVvfyTA0Yu/bl+lXLR6x7xDatQ1xpB1hBAn
+ OtpWp2r2Ygr1oEYMBtEdZo7/ziIjwRsQqo/8kzH+48H2Kcd/zu9gXnCT2y1qmfTW/UbvkuRZGuV
+ G9t4=
+X-Google-Smtp-Source: AGHT+IHjxqayZhfHj5oT3LBqu08Sdst+4DionKRMkB0feQozuXq9cAVmCgZqITDMh/vF2cFPYUCllg==
+X-Received: by 2002:a5d:4a8e:0:b0:360:6e97:6f8e with SMTP id
+ ffacd0b85a97d-3606e977015mr2363526f8f.0.1718266003416; 
+ Thu, 13 Jun 2024 01:06:43 -0700 (PDT)
+Received: from localhost.localdomain (adsl-105.37.6.1.tellas.gr. [37.6.1.105])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36075104d88sm910811f8f.104.2024.06.13.01.06.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 13 Jun 2024 01:06:43 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v1 0/3] util/readline.c: Add common but missing shortcuts
+Date: Thu, 13 Jun 2024 11:06:10 +0300
+Message-ID: <readline-shortcuts-v1.1718265822.manos.pitsidianakis@linaro.org>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <accc6cdc-7b1e-4d26-9352-380f93cc3853@yandex-team.ru>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,35 +92,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 12.06.2024 um 21:21 hat Vladimir Sementsov-Ogievskiy geschrieben:
-> On 11.06.24 20:49, Kevin Wolf wrote:
-> > Am 13.03.2024 um 16:28 hat Vladimir Sementsov-Ogievskiy geschrieben:
-> > > Add test for a new backup option: discard-source.
-> > > 
-> > > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> > > Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-> > > Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-> > 
-> > This test fails for me, and it already does so after this commit that
-> > introduced it. I haven't checked what get_actual_size(), but I'm running
-> > on XFS, so its preallocation could be causing this. We generally avoid
-> > checking the number of allocated blocks in image files for this reason.
-> > 
-> 
-> Hmm right, I see that relying on allocated size is bad thing. Better
-> is to check block status, to see how many qcow2 clusters are
-> allocated.
-> 
-> Do we have some qmp command to get such information? The simplest way
-> I see is to add dirty to temp block-node, and then check its dirty
-> count through query-named-block-nodes
+Some commonly used readline shortcuts are missing from our 
+implementation. This series adds:
 
-Hm, does it have to be QMP in a running QEMU process? I'm not sure what
-the best way would be there.
+- Control-n next line, same as Down arrow key
+- Control-p previous line, same as Up arrow key
+- Control-u erase line starting from cursor
 
-Otherwise, my approach would be 'qemu-img check' or even 'qemu-img map',
-depending on what you want to verify with it.
+Manos Pitsidianakis (3):
+  util/readline.c:fix lints for readline_handle_byte
+  util/readline.c: add C-n, C-p shortcuts
+  util/readline.c: add C-u shortcut
 
-Kevin
+ util/readline.c | 35 +++++++++++++++++++++++++++++++----
+ 1 file changed, 31 insertions(+), 4 deletions(-)
+
+
+base-commit: f3e8cc47de2bc537d4991e883a85208e4e1c0f98
+-- 
+γαῖα πυρί μιχθήτω
 
 
