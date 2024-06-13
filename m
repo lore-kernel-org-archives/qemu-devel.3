@@ -4,89 +4,181 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C88CC27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 16:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AB28C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 16:25:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHnEI-0003A4-Ie; Thu, 13 Jun 2024 12:23:14 -0400
+	id 1sHnFl-0003zV-KS; Thu, 13 Jun 2024 12:24:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sHnEG-00039o-T1
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 12:23:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <tedwood@quicinc.com>)
+ id 1sHlyn-0003jd-2j
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 11:03:09 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sHnEE-000349-58
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 12:23:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718295788;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VDAyXp8cNtozs8YLdBVGbvBK0bQGaFRmNgEFKpRze4s=;
- b=g84icjCtsc4ob0CHRKJDXI2dI1wjw3hTFI7s/j5dlWANvuOnjcjXuAFj/0OgHeJ5al20k0
- 0u71rBNPPbGPqjsXkReOs7ybZ/7aOa9HT9vC2U47mVbAcunAjHmPWjyUvBpk6oe6hIEZeD
- jJmlW9l3KoVIyD60mpXzpptJ3VRH+Ak=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-456-C7rorfA-O2anJt1Qhg3E9w-1; Thu, 13 Jun 2024 12:23:07 -0400
-X-MC-Unique: C7rorfA-O2anJt1Qhg3E9w-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6b067843eb8so1607096d6.0
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 09:23:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718295787; x=1718900587;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VDAyXp8cNtozs8YLdBVGbvBK0bQGaFRmNgEFKpRze4s=;
- b=v1m0Squ5XE6nqKcy8YasKgUpAPoqOa1M3ntzo/fKm+gCzioXd/jWYlbhbwEt9d8NE3
- hCNCQn3Jr3OwN+wZlfMd5ZByWZ5GSynBIpoKbGalMk5v3f6LwZ0jRwBKfZkBU9PA52bv
- WflrA2UmTrQBFi5qOFtBnSMhEf+H2DI6TNWprhAk4/poD1TqxJ0d6huXYlGias4c6Y95
- EccJNkK3LBV+KDEqVy1QINPgtGVWq3TDgUhxOi/4DkzR+XoJ/Go9JbdWQpNOaJlfOSJV
- da5M6BC6mPMFQh6hRMgmLt8rrlH43gBqKHumot8wLGpqGk9vJIAV6UZRIL+kkKJ/prQl
- i0rQ==
-X-Gm-Message-State: AOJu0Ywj9201a+nUs2GMfPftrFzL7fYrt6DhPVgKsg/Pfu2Zgn36zbNw
- yGKRauUfWP18jSZfsp3qnqetd2C9cow014Xq5Y14E9boP3bSx6dCQcxL8WO5Tx/nT4w1aXLhAtH
- KvR9Th4MpCThXt02zwk8dgklwdaZixad87eUwUMy8TcjK3cF+L9CR
-X-Received: by 2002:a05:6214:4015:b0:6b0:6a38:e01d with SMTP id
- 6a1803df08f44-6b2afb703a2mr1124616d6.0.1718295786211; 
- Thu, 13 Jun 2024 09:23:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGvDlPh7n8yBJp3H+GqWopdmeGxrP1yHOP52AjvCDTsBL89VwRKLgGfcHTAl8pZU18Rn35LLA==
-X-Received: by 2002:a05:6214:4015:b0:6b0:6a38:e01d with SMTP id
- 6a1803df08f44-6b2afb703a2mr1124326d6.0.1718295785594; 
- Thu, 13 Jun 2024 09:23:05 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b2a5c202e8sm8274696d6.50.2024.06.13.09.23.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Jun 2024 09:23:05 -0700 (PDT)
-Date: Thu, 13 Jun 2024 12:23:02 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>, Bandan Das <bdas@redhat.com>
-Subject: Re: [PATCH 4/4] migration/postcopy: Add postcopy-recover-setup phase
-Message-ID: <Zmsc5pXGs4dLfiLB@x1n>
-References: <20240612144228.1179240-1-peterx@redhat.com>
- <20240612144228.1179240-5-peterx@redhat.com>
- <8734pgdhf5.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <tedwood@quicinc.com>)
+ id 1sHlyi-0003uW-7m
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 11:03:08 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45DBApWX004228;
+ Thu, 13 Jun 2024 15:02:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ TVJ2V8YBpGWjirXtOsdv+2BUSJdz+EI5xtnZ7bDcIx8=; b=eyFe1ciGvRvZgwnV
+ 6rwEfT8OECDJZfAxewyrbOy8H/QhvbJRR2+EHUC8cbX+oaag+YGiBIkm8RAt2Pns
+ 4d+CAZ9xqm0ljTN9d+SGf3g+Sorozo2Vma9374qEHkaN6mSuulsb+LgH5e27topM
+ 7RuI+axQTet73cQCI2c82MbruYnNq0IkJqzMR9GxNN+PetMTV1DV3iZL8SVlE5zo
+ Egc2pEGrS2MrWKXZhVXI+aE3c9PgudcXC9LirX0JJEtzfhpkEJwmgM7MpUzVgAjy
+ pCQNKJi5UkLXGrugTuJNAE/C6UPMDmXPRso3JBH4GjVDIhqpSrbAy/H+AgRekgAy
+ useauA==
+Received: from nam04-mw2-obe.outbound.protection.outlook.com
+ (mail-mw2nam04lp2172.outbound.protection.outlook.com [104.47.73.172])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yqqn31x43-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 13 Jun 2024 15:02:43 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=GSHmFTQqKJcsjAGQwxxWCl1+GEN9qlr0PPa/EIDmKYIqvtgL7N+tIcJyd06XpKIL22jdJnX5DmQ1STx2xJAz7aXylBQVtiyjc4kNMfjpluMMAuHT3mcEMeGMFdGcQpUG+CXBVKRysJIhFdw0nWyXaAh01H3OcNT0gv20f7gRoFlxdbfwIPmtYXVnam2sAw2YER/tr2wfUhpRkoFipRkr8qTaka9Nouy9KC6XdAb5zloxOqdCRUHKQKPUdvHkl9KbCOJHCrzVSdVd78pRvCxY2/FHNk5LbZmitQxh6147gmqpeAuB9YSGNbFcHB65uxIzAsMNGtSc1FVmNhqQwsUzZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TVJ2V8YBpGWjirXtOsdv+2BUSJdz+EI5xtnZ7bDcIx8=;
+ b=J+D0HEOxhx3qVJAQC4Cr+2tu427kjq/ELqwt43b47Kg3ZTy9V2lT1QM2Qa8CJiCSzkKTuxp+LDerpOgs2CyOHrurLrTW0Lb9lf0gxa1J6XMW1hB4Adn4kDslUrf+86FVTY2imz7SnWN7YGRvYD/ToVEfGV/GyLDAG6EWsJujagi947B7Dq8KzjeBz9QFrPmmzATZ/xuioQAoTN7mPKHoULMeTF/rL0PYNDJVl8fd0WyRqlWF4HMhd30jXB5A7GrApo2TW7JjX8n/+Ly/U5RvmgnxA3bwOGyBfjNY9p//mFE+s2Hiz4Smd+SLIzbJTbD0gCfezqu9Jd4YmSERhmUqnA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quicinc.com; dmarc=pass action=none header.from=quicinc.com;
+ dkim=pass header.d=quicinc.com; arc=none
+Received: from PH0PR02MB8422.namprd02.prod.outlook.com (2603:10b6:510:10f::13)
+ by DS0PR02MB9247.namprd02.prod.outlook.com (2603:10b6:8:134::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.20; Thu, 13 Jun
+ 2024 15:02:38 +0000
+Received: from PH0PR02MB8422.namprd02.prod.outlook.com
+ ([fe80::c1cb:a3c8:661c:8ea8]) by PH0PR02MB8422.namprd02.prod.outlook.com
+ ([fe80::c1cb:a3c8:661c:8ea8%4]) with mapi id 15.20.7677.024; Thu, 13 Jun 2024
+ 15:02:38 +0000
+From: Ted Woodward <tedwood@quicinc.com>
+To: "ltaylorsimpson@gmail.com" <ltaylorsimpson@gmail.com>, "Matheus Bernardino
+ (QUIC)" <quic_mathbern@quicinc.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Brian Cain
+ <bcain@quicinc.com>, "alex.bennee@linaro.org" <alex.bennee@linaro.org>, Sid
+ Manning <sidneym@quicinc.com>, "Marco Liebel (QUIC)"
+ <quic_mliebel@quicinc.com>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>,
+ "philmd@linaro.org" <philmd@linaro.org>, "ale@rev.ng" <ale@rev.ng>,
+ "anjo@rev.ng" <anjo@rev.ng>
+Subject: RE: [PATCH] Hexagon: lldb read/write predicate registers p0/p1/p2/p3
+Thread-Topic: [PATCH] Hexagon: lldb read/write predicate registers p0/p1/p2/p3
+Thread-Index: AQHavOeYspDfy4vbzE2hbivxnJt5fLHEc0sAgACLTACAAMqF8A==
+Date: Thu, 13 Jun 2024 15:02:38 +0000
+Message-ID: <PH0PR02MB842235CD70F3B06BB27FA447B9C12@PH0PR02MB8422.namprd02.prod.outlook.com>
+References: <20240612164239.90276-1-ltaylorsimpson@gmail.com>
+ <20240612183008.4123155-1-quic_mathbern@quicinc.com>
+ <066c01dabd3c$343be980$9cb3bc80$@gmail.com>
+In-Reply-To: <066c01dabd3c$343be980$9cb3bc80$@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH0PR02MB8422:EE_|DS0PR02MB9247:EE_
+x-ms-office365-filtering-correlation-id: 971e7e55-e134-4e5c-20a9-08dc8bb9dd94
+x-ld-processed: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d,ExtAddr
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230035|1800799019|366011|376009|38070700013;
+x-microsoft-antispam-message-info: =?us-ascii?Q?Ro1Vkx39h5fZAaOfIdAz0hpaPcRrGVsR21Ui23+ITM9iANw9ahO6cIFvOim0?=
+ =?us-ascii?Q?4d+P7OqMbFNxXrlQWNH5AYb6fTMadWk7WAj/d9rgmskGE+VfrMfKnVtgLD+9?=
+ =?us-ascii?Q?Su6/ZSImX568tM8NZwPwrVO+p4fhDjPdb75rW+MZnPUB4H+BonGhxNDoyXeI?=
+ =?us-ascii?Q?8vAaEIYkL2DQI/stxmnWlBPJ0BR5h6XXaqDMt5D1bg+HrkLg7MDshfCXjAxn?=
+ =?us-ascii?Q?5lVyI4IywOYyVhct1//jXTRJbRlXLn4WyPcEt8KpsAoTjW0lxCEbcLZf1oS3?=
+ =?us-ascii?Q?xhbV26VkVWYTUWBhe/NuEk3cxDsNsOgM7Te2Rk+eYdCPP87cM94skNYhK7Z8?=
+ =?us-ascii?Q?qbZoGOXtssudY76A/06e9s5IdV7eBM/xRVcRvWAAPxumrb7Zg01nut2/V/vJ?=
+ =?us-ascii?Q?IqvQo8GZL5uvCMdDicJQdH5J0h3pGFjTJyqORi9WiIxc3IowONidXPtcewoc?=
+ =?us-ascii?Q?Aoax95vtexMCJlTyLB9/TwA7sm3uaXzYT3e1BHV9t/+zaLbDbxGbMuXXe8Me?=
+ =?us-ascii?Q?SbSMSuhs28eXPVuUT1rWDqHTX4O3uzkm3I3tDVSg7S9Br0LnWJ/UDvSTA3Gd?=
+ =?us-ascii?Q?IHNX+amP+JgzrUdnNKXsYCgPDttaAEJW5Ihfbc+jN+CmL0WQHMby6tx7R0QP?=
+ =?us-ascii?Q?PFO37ig5pNgIcqxlQDsErvOvmtLUxTKyr9OnZ9VEGTwG+alzbe8nP3pnV5yJ?=
+ =?us-ascii?Q?B1gtddYfA3Y5LJMmMz826XXgB4jbzgF9Ot49t1W69yCgjVi0R5/iK9MxIJTl?=
+ =?us-ascii?Q?8m5Lr39LFbE9sjzjy8W5HQ/TKwqTJz4rHbfSIxGdzHX10zIq2OkRJUZqNdc9?=
+ =?us-ascii?Q?7kd6tJWc5Ke1+r1LJHJloAMayZ2MgV0fCh54wnw3XaZVd+QUjxNmnZ/7fSKo?=
+ =?us-ascii?Q?45mv/W1ERYo5jsOHXj5t3DFxmm0OCW8/Y7/Oeia6ADA6z4XMQt4K/ohLf1u/?=
+ =?us-ascii?Q?gkUba/SGJiHR1hvR490XlxDzdJa2R7MRJH03Tju/E7oelWGyPgGKdwMwR2pX?=
+ =?us-ascii?Q?BKyREGcEayE/BQ3TrSWTa0RETAyvKHnn04XeUeFsQkOrWV5OHvRTkPbF+0Nc?=
+ =?us-ascii?Q?uXV7V3RHFS8pocDNJvLlSRJ8YPZTxX8/eZxc2s7M1xCcTSCKGLcBEwteEzeR?=
+ =?us-ascii?Q?fFUxgILz7y/8Wb1/oNMyo/sug0WcwH15yTEb3LoZ3Vl9efXJthSTr2s12jPy?=
+ =?us-ascii?Q?nOh33xjb8qFB4RUWq0QEwSrmb8bH5QnjD9Xsv14zuWeDyZTfuIVycdvXcKbF?=
+ =?us-ascii?Q?aLO4Uiql4Pg0PRMaoN5L4FV2li9FriquSaSEJbaRsSiQU2szLOLatpqwjIvM?=
+ =?us-ascii?Q?2crnMcmeh03P0PJ/BwmKIjaUesobWJCHanVtpFhRZreQMLHvXyoE+vETZBke?=
+ =?us-ascii?Q?sZuZhmk=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB8422.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230035)(1800799019)(366011)(376009)(38070700013); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?mEm0B15kPkeAmY9IkqXKfha5xmNyMNZS2PIrhqQxT6mK5v1qTWu8Cn9ipBc9?=
+ =?us-ascii?Q?ZW01/XmxGBPTmBp8W6NJYX/qHN41bEmNW5JMH/AREeRnvrYkOl0s5gW4B812?=
+ =?us-ascii?Q?5y61LHlOs+XhGbI4gVOuHH8566erv1S4/uFQwgYbz/DK1oKoLZt/Y3wdAvqq?=
+ =?us-ascii?Q?O6SHAoegiMHprSOIIu5p2qHH3eYQKbetq7sVpum9XI7dU5S5kglDmaZ7eHMy?=
+ =?us-ascii?Q?gKO3YAqWcX7GmhKhhwnneYlqzkLXQTa+BXrhPOx6otQel/h86TP1nFj70rM4?=
+ =?us-ascii?Q?iH5y2m2E6O82XCDzVxx5JvKNP/4YE+I0iTf8eoxLYIaMSGL7RPdNDZGurdgS?=
+ =?us-ascii?Q?JSZOYfeTvg54X3Qn9+SwT/MxXKsLsmFVvHtwWePuBvyjNjKbpA81NBfZeUdz?=
+ =?us-ascii?Q?1IOY9jAnD2+uxanCoIWn9hHsthi8nqZRlo8xnMSbBZC1WU11b99NVpJz5Zlj?=
+ =?us-ascii?Q?aDoiUzmN9+AWII9ywkZQRBf6IAHLEefo/aAlCNfSA9CHZ/BrUyELKXEXyWVO?=
+ =?us-ascii?Q?gCpxPdtOaczmcetHdyleNDigbWJxztExuXWDxMnAPJNQx5Q6r6JkozUbzLpR?=
+ =?us-ascii?Q?CUYft3uItVm7TUxeUVqwpu3IhXzLEUDsco/4b0X4z5W9G95LKpG48KcZ/Vau?=
+ =?us-ascii?Q?9cRtyECEXiusp9z3wMtIoqyYlK4M1C6jGlyTWVxSPRXLhtK8hOcsOdlBcEfj?=
+ =?us-ascii?Q?aV52yx8aAEGRJ0CkjYFF0FFd4kESslNMKaXceVpyAywwQrf1to+RKsDYe27Z?=
+ =?us-ascii?Q?W2OO6FHoVcRWOYCuVDstag9oNtqHLeCAk8NHPh1PV/iVV/SRIPa4jeYJUG7L?=
+ =?us-ascii?Q?Ujv7RlRfp6lOHEj9df4YDb+fpVNaEMVCYZkhGwJcM6l/lKEgB44vWYqEOpzf?=
+ =?us-ascii?Q?4CVIlIUIy8CzBI4WN4w2srL6VLdoJOjq6Pc6O3nST0Cha4kOBADogYthitxY?=
+ =?us-ascii?Q?bT+L67Huyw6dtSPw9gJpvxowxMlwP7gQ10rGvs3LwC89Z/jFy4KqG45abSMB?=
+ =?us-ascii?Q?5ZEhQKMbkdew7cMjGK1jYn0rhcV9SGYIlXNc1lf+gs9PllbNMypnwsKACURi?=
+ =?us-ascii?Q?F6DlMc+M3d8IIF1QO8qjS99FhOv1U9Nz5KCtLvgGJc7+vizGVQ6Lgu2gKEnj?=
+ =?us-ascii?Q?QI//EIHZO3CPxKp4gVKTLS/2Xfe7743uU8ZE0Zjbj1PnZZeiV9EJQngujigh?=
+ =?us-ascii?Q?friFuOEzJHUJ7c3RTuiXhKO4VnGnvexDiNE/QLRmSP+s2pol40X9iSX/JtY5?=
+ =?us-ascii?Q?As7T/B6u6/3u/HkWXVQGsepc0IUFLPC2ZDRrS3qCt62P4FNYDQcvhYU7Ibx0?=
+ =?us-ascii?Q?xlQLdnh81x+4BaUm76WIINHe8FX19bApSeKE8xLkcgbBaAHhpXzsCym2fr3M?=
+ =?us-ascii?Q?pEi59qZsKlfD8LmQ5L2d2/H3pYqBwBqb9tFti1CM8j/O363PHB1I3pj2mC9w?=
+ =?us-ascii?Q?BshOnZX/32XpLM2vJuGpJtpy9bvJ/jOoIwRO7pRJM3ah7HcVJsk0wGojpHov?=
+ =?us-ascii?Q?ofc61hnH6zSVB6d8/k0PVoZKWbN9tFBtr21/hRoXFdNBNOHBykJB/xSJBZhm?=
+ =?us-ascii?Q?W8E/mMEISIPgxxQMhNnAKn4jiAMTDiKxs+TPD2sG?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <8734pgdhf5.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: Obl1nknFEo2Rkv5ocsFtLrsJyuKaZvO2TNIes2he+n8grZUdPsQL2Byi82CxIxCL+S0ZXXFxNxFUwWKOGf2CHVqUr6JPdezGQ2KPenlqKsVug8HQQCafMOhN+y6jQ5+0LInLMb7JX1cAPw6c1Q8rxnLHudxpSAOnHPkJqUF4QxbY9U6zRZyNcj5KqS1ax52S3GGV8AFU9GQjb9K7xJ6ds3lmE+0OvA1RxrhBmsWAkvaGEB1CF9b0KUL8g4er0+HK4LFxd5vnH8rM/EqABN29+KScT+rBXQPUm1Z7hGym3UeQfqUKoslJueWdDB0eYhrPkMODy3DEEQZEzK2A2iNiPZs9jVI3hVl+oUTDWS5QwjKRCetwNAA1xUDYVwgP8bPLhk+JSCO1gG2HLqlihbzxqvFUYmLjwbj4aYGOJaypLVOlW4G+HkL5p2ZPbVw/kITxHwa4zYRzR7QmjqgqqP+7trmNj3o9qjTNtLCHKx5qYfVnwtoaYcVg60lLn/NKpmmNR2M+v652aMYRXNgNfNPf++ydtKF0pv6U3E1Ful+Wkgy1FFpSXkU31EZ3gn9WVWOe7GFtBRZ0K6Iuy47KAOl9QNjSOsU0SbtctSXdV8l6Q8u8MrQGBSmnGy4oQfD7TT3T
+X-OriginatorOrg: quicinc.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB8422.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 971e7e55-e134-4e5c-20a9-08dc8bb9dd94
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Jun 2024 15:02:38.2061 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: r5xDI3PkfGQBbhiGzt7XY7JRPJ1Arzd23YQ1i8TMDYiP+RnFWaN6pzuMOA4JpXcnvHUXUXgwgkp2c35OGx/OrA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR02MB9247
+X-Proofpoint-GUID: MgcUMuxK0N9WtSiF1rdmjz2dZ21DyGbS
+X-Proofpoint-ORIG-GUID: MgcUMuxK0N9WtSiF1rdmjz2dZ21DyGbS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-13_08,2024-06-13_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 suspectscore=0
+ mlxlogscore=999 impostorscore=0 bulkscore=0 adultscore=0 phishscore=0
+ priorityscore=1501 clxscore=1011 spamscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406130110
+Received-SPF: pass client-ip=205.220.180.131; envelope-from=tedwood@quicinc.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 13 Jun 2024 12:24:34 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,411 +193,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 13, 2024 at 11:51:58AM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > This patch adds a migration state on src called "postcopy-recover-setup".
-> > The new state will describe the intermediate step starting from when the
-> > src QEMU started an postcopy recovery request, until the migration channels
-> > are properly established, but before the recovery process take place.
+
+
+> -----Original Message-----
+> From: ltaylorsimpson@gmail.com <ltaylorsimpson@gmail.com>
+> Sent: Wednesday, June 12, 2024 9:49 PM
+> To: Matheus Bernardino (QUIC) <quic_mathbern@quicinc.com>
+> Cc: qemu-devel@nongnu.org; Brian Cain <bcain@quicinc.com>; Ted
+> Woodward <tedwood@quicinc.com>; alex.bennee@linaro.org; Sid Manning
+> <sidneym@quicinc.com>; Marco Liebel (QUIC) <quic_mliebel@quicinc.com>;
+> richard.henderson@linaro.org; philmd@linaro.org; ale@rev.ng; anjo@rev.ng
+> Subject: RE: [PATCH] Hexagon: lldb read/write predicate registers
+> p0/p1/p2/p3
+>=20
+> > -----Original Message-----
+> > From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+> > Sent: Wednesday, June 12, 2024 12:30 PM
+> > To: ltaylorsimpson@gmail.com
+> > Cc: qemu-devel@nongnu.org; bcain@quicinc.com; tedwood@quicinc.com;
+> > alex.bennee@linaro.org; quic_mathbern@quicinc.com;
+> > sidneym@quicinc.com; quic_mliebel@quicinc.com;
+> > richard.henderson@linaro.org; philmd@linaro.org; ale@rev.ng;
+> > anjo@rev.ng
+> > Subject: Re: [PATCH] Hexagon: lldb read/write predicate registers
+> > p0/p1/p2/p3
 > >
-> > The request came from Libvirt where Libvirt currently rely on the migration
-> > state events to detect migration state changes.  That works for most of the
-> > migration process but except postcopy recovery failures at the beginning.
+> > On Wed, 12 Jun 2024 10:42:39 -0600 Taylor Simpson
+> > <ltaylorsimpson@gmail.com> wrote:
+> > >
+> > > diff --git a/target/hexagon/gdbstub.c b/target/hexagon/gdbstub.c
+> > > index
+> > > 502c6987f0..e67e627fc9 100644
+> > > --- a/target/hexagon/gdbstub.c
+> > > +++ b/target/hexagon/gdbstub.c
+> > > @@ -56,6 +64,15 @@ int hexagon_gdb_write_register(CPUState *cs,
+> > uint8_t *mem_buf, int n)
+> > >          return sizeof(target_ulong);
+> > >      }
+> > >
+> > > +    n -=3D TOTAL_PER_THREAD_REGS;
+> > > +
+> > > +    if (n < NUM_PREGS) {
+> > > +        env->pred[n] =3D ldtul_p(mem_buf);
+> > > +        return sizeof(uint8_t);
 > >
-> > Currently postcopy recovery only has two major states:
-> >
-> >   - postcopy-paused: this is the state that both sides of QEMU will be in
-> >     for a long time as long as the migration channel was interrupted.
-> >
-> >   - postcopy-recover: this is the state where both sides of QEMU handshake
-> >     with each other, preparing for a continuation of postcopy which used to
-> >     be interrupted.
-> >
-> > The issue here is when the recovery port is invalid, the src QEMU will take
-> > the URI/channels, noticing the ports are not valid, and it'll silently keep
-> > in the postcopy-paused state, with no event sent to Libvirt.  In this case,
-> > the only thing Libvirt can do is to poll the migration status with a proper
-> > interval, however that's less optimal.
-> >
-> > Considering that this is the only case where Libvirt won't get a
-> > notification from QEMU on such events, let's add postcopy-recover-setup
-> > state to mimic what we used to have with the "setup" state of a newly
-> 
-> s/used to //
+> > I wonder, shouldn't this be sizeof(target_ulong) since we wrote a
+> > target_ulong?
+>=20
+> Good question.
+>=20
+> From the architecture point of view, predicates are 8 bits (Section 2.2.5=
+ of the
+> v73 Hexagon PRM).  However, we model them in QEMU as target_ulong
+> because TCG variables must be either 32 bits or 64 bits.  There isn't an =
+option
+> for 8 bits.  Whenever we write to a predicate, do "and" with 0xff first t=
+o ensure
+> there are only 8 bits written (see gen_log_pred_write in
+> target/hexagon/genptr.c).
+>=20
+> I did some more digging and here is what I found:
+> - Since we have bitsize=3D"8" in hexagon-core.xml, lldb will reject any a=
+ttempt to
+> write something larger.
+>   (lldb) reg write p1 0x1ff
+>   error: Failed to write register 'p1' with value '0x1ff': value 0x1ff is=
+ too large to
+> fit in a 1 byte unsigned integer value
+> - For the lldb "reg write" command, the return value from
+> hexagon_gdb_write_register isn't used.
+> - The only place the return value is used is in handle_write_all_regs.  T=
+his
+> function is called in response to a "G" packet from the debugger.  I don'=
+t know
+> if/when lldb uses this packet, but it seems like it would count on it bei=
+ng 8 bits
+> since that's what is in hexagon-core.xml.
+>=20
+> Ted <tedwood@quicinc.com>, when would lldb generate a "G" packet, and
+> what assumptions will it make about the size of predicate registers?
 
-Fixed.
+When you use the expression parser to call a function, lldb will save the c=
+urrent state,
+set up the function call, set a breakpoint on a return (by changing the lr =
+register and setting
+a breakpoint on the new address), set the PC to the function address, and r=
+esume. After the
+breakpoint is hit, lldb will restore the saved state.
 
-> 
-> > initialized migration, describing the phase of connection establishment.
-> >
-> > With that, postcopy recovery will have two paths to go now, and either path
-> > will guarantee an event generated.  Now the events will look like this
-> > during a recovery process on src QEMU:
-> >
-> >   - Initially when the recovery is initiated on src, QEMU will go from
-> >     "postcopy-paused" -> "postcopy-recover-setup".  Old QEMUs don't have
-> >     this event.
-> >
-> >   - Depending on whether the channel re-establishment is succeeded:
-> >
-> >     - In succeeded case, src QEMU will move from "postcopy-recover-setup"
-> >       to "postcopy-recover".  Old QEMUs also have this event.
-> >
-> >     - In failure case, src QEMU will move from "postcopy-recover-setup" to
-> >       "postcopy-paused" again.  Old QEMUs don't have this event.
-> >
-> > This guarantees that Libvirt will always receive a notification for
-> > recovery process properly.
-> >
-> > One thing to mention is, such new status is only needed on src QEMU not
-> > both.  On dest QEMU, the state machine doesn't change.  Hence the events
-> > don't change either.  It's done like so because dest QEMU may not have an
-> > explicit point of setup start.  E.g., it can happen that when dest QEMUs
-> > doesn't use migrate-recover command to use a new URI/channel, but the old
-> > URI/channels can be reused in recovery, in which case the old ports simply
-> > can work again after the network routes are fixed up.
-> >
-> > The patch has some touch-ups in the dest path too, but it's because there's
-> > some unclearness on using migrate_set_state(), so the change should make it
-> > crystal clear now by checking current status always.  The next step from
-> 
-> Can we get a separate patch for these cleanups?
+Since QEMU doesn't support the lldb RSP extension QSaveRegisterState/QResto=
+reRegisterState,
+lldb will use G/g packets to save and restore the register state.
 
-We can, and I'll do.
+lldb doesn't interpret the values from the G/g packets. It just saves and r=
+estores them, so I don't
+think the new predicate definitions will matter for that. You can test this=
+ out by changing the
+predicate registers, then calling a function with the expression parser. No=
+t a varargs function,
+since the IR interpreter doesn't handle those.
 
-> 
-> > that POV would be making migrate_set_state() not using cmpxchg() but always
-> > update the status, but that's for later.
-> >
-> > Cc: Jiri Denemark <jdenemar@redhat.com>
-> > Cc: Fabiano Rosas <farosas@suse.de>
-> > Cc: Prasad Pandit <ppandit@redhat.com>
-> > Buglink: https://issues.redhat.com/browse/RHEL-38485
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  qapi/migration.json      |  4 +++
-> >  migration/postcopy-ram.h |  3 ++
-> >  migration/migration.c    | 66 +++++++++++++++++++++++++++++++++++-----
-> >  migration/postcopy-ram.c |  6 ++++
-> >  migration/savevm.c       |  4 +--
-> >  5 files changed, 73 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/qapi/migration.json b/qapi/migration.json
-> > index a351fd3714..a135bbcd96 100644
-> > --- a/qapi/migration.json
-> > +++ b/qapi/migration.json
-> > @@ -142,6 +142,9 @@
-> >  #
-> >  # @postcopy-paused: during postcopy but paused.  (since 3.0)
-> >  #
-> > +# @postcopy-recover-setup: setup phase for a postcopy recover process,
-> > +#     preparing for a recover phase to start.  (since 9.1)
-> 
-> recover*y* process
-> recover*y* phase
+Ted
 
-OK.
-
-> 
-> > +#
-> >  # @postcopy-recover: trying to recover from a paused postcopy.  (since
-> >  #     3.0)
-> >  #
-> > @@ -166,6 +169,7 @@
-> >  { 'enum': 'MigrationStatus',
-> >    'data': [ 'none', 'setup', 'cancelling', 'cancelled',
-> >              'active', 'postcopy-active', 'postcopy-paused',
-> > +            'postcopy-recover-setup',
-> >              'postcopy-recover', 'completed', 'failed', 'colo',
-> >              'pre-switchover', 'device', 'wait-unplug' ] }
-> >  ##
-> > diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
-> > index ecae941211..a6df1b2811 100644
-> > --- a/migration/postcopy-ram.h
-> > +++ b/migration/postcopy-ram.h
-> > @@ -13,6 +13,8 @@
-> >  #ifndef QEMU_POSTCOPY_RAM_H
-> >  #define QEMU_POSTCOPY_RAM_H
-> >  
-> > +#include "qapi/qapi-types-migration.h"
-> > +
-> >  /* Return true if the host supports everything we need to do postcopy-ram */
-> >  bool postcopy_ram_supported_by_host(MigrationIncomingState *mis,
-> >                                      Error **errp);
-> > @@ -193,5 +195,6 @@ enum PostcopyChannels {
-> >  void postcopy_preempt_new_channel(MigrationIncomingState *mis, QEMUFile *file);
-> >  void postcopy_preempt_setup(MigrationState *s);
-> >  int postcopy_preempt_establish_channel(MigrationState *s);
-> > +bool postcopy_is_paused(MigrationStatus status);
-> >  
-> >  #endif
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index bfbd657035..9475dce7dc 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -595,6 +595,26 @@ bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
-> >      return true;
-> >  }
-> >  
-> > +static bool
-> > +migration_incoming_state_setup(MigrationIncomingState *mis, Error **errp)
-> > +{
-> > +    MigrationStatus current = mis->state;
-> > +
-> > +    if (current == MIGRATION_STATUS_POSTCOPY_PAUSED) {
-> > +        /* Postcopy paused state doesn't change when setup new ports */
-> 
-> The "setup new ports" part is a bit vague. Maybe:
-> 
-> /*
->  * The SETUP state only happens at the start of migration. A postcopy
->  * migration recovery migration stays in POSTCOPY_PAUSED.
->  */
-
-Mentioning SETUP in this if clause might be slightly confusing?  How about
-I only keep the latter sentence (and change it a bit; there's one extra
-"migration")?
-
-  /*
-   * Postcopy migration stays in POSTCOPY_PAUSED even if reconnection
-   * happens.
-   */
-
-> 
-> > +        return true;
-> > +    }
-> > +
-> > +    if (current != MIGRATION_STATUS_NONE) {
-> > +        error_setg(errp, "Illegal migration incoming state: %s",
-> > +                   MigrationStatus_str(current));
-> > +        return false;
-> > +    }
-> 
-> This is a good candidate for a separate patch due to the extra change in
-> behavior not necessarily related to postcopy.
-
-I'll split that, but just to mention, I think there should have no
-functional change, or we're doomed.
-
-The old code worked the same by ignoring migrate_set_state() when PAUSED in
-the cmpxchg(), which is implicit and unclear.
-
-> 
-> > +
-> > +    migrate_set_state(&mis->state, current, MIGRATION_STATUS_SETUP);
-> > +    return true;
-> > +}
-> > +
-> >  static void qemu_start_incoming_migration(const char *uri, bool has_channels,
-> >                                            MigrationChannelList *channels,
-> >                                            Error **errp)
-> > @@ -633,8 +653,9 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
-> >          return;
-> >      }
-> >  
-> > -    migrate_set_state(&mis->state, MIGRATION_STATUS_NONE,
-> > -                      MIGRATION_STATUS_SETUP);
-> > +    if (!migration_incoming_state_setup(mis, errp)) {
-> > +        return;
-> > +    }
-> >  
-> >      if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET) {
-> >          SocketAddress *saddr = &addr->u.socket;
-> > @@ -1070,6 +1091,7 @@ bool migration_is_setup_or_active(void)
-> >      case MIGRATION_STATUS_ACTIVE:
-> >      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
-> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
-> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
-> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
-> >      case MIGRATION_STATUS_SETUP:
-> >      case MIGRATION_STATUS_PRE_SWITCHOVER:
-> > @@ -1092,6 +1114,7 @@ bool migration_is_running(void)
-> >      case MIGRATION_STATUS_ACTIVE:
-> >      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
-> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
-> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
-> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
-> >      case MIGRATION_STATUS_SETUP:
-> >      case MIGRATION_STATUS_PRE_SWITCHOVER:
-> > @@ -1229,6 +1252,7 @@ static void fill_source_migration_info(MigrationInfo *info)
-> >      case MIGRATION_STATUS_PRE_SWITCHOVER:
-> >      case MIGRATION_STATUS_DEVICE:
-> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
-> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
-> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
-> >          /* TODO add some postcopy stats */
-> >          populate_time_info(info, s);
-> > @@ -1279,6 +1303,7 @@ static void fill_destination_migration_info(MigrationInfo *info)
-> >      case MIGRATION_STATUS_ACTIVE:
-> >      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
-> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
-> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
-> 
-> Does this need to be here? We don't reach this state on destination, right?
-
-Right, it won't hurt having that here, but let me drop it.
-
-> 
-> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
-> >      case MIGRATION_STATUS_FAILED:
-> >      case MIGRATION_STATUS_COLO:
-> > @@ -1435,9 +1460,30 @@ static void migrate_error_free(MigrationState *s)
-> >  
-> >  static void migrate_fd_error(MigrationState *s, const Error *error)
-> >  {
-> 
-> The default case of the swtich below is a bit surprising to me. Why
-> wouldn't we allow this function to be called from other places to set
-> STATUS_FAILED?
-> 
-> ...unless this is only mean for the connection phase, so:
-> 
-> just to check your understanding here because it seems we've drifted a
-> bit from the original definition on those, specially with
-> migrate_fd_cleanup(), but does this _fd_ in the function name implies
-> something like a "connection phase"? As in, "connect to the fd", "the fd
-> connection errored out" and "cleanup the fd connection". Maybe it's time
-> to switch this "fd" to something clearer...
-
-IIUC it's just that many functions around this area used to be called
-migrate_fd_*().  Let me know if you have some suggestions, though.
-
-> 
-> > +    MigrationStatus current = s->state;
-> > +    MigrationStatus next;
-> > +
-> >      assert(s->to_dst_file == NULL);
-> > -    migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
-> > -                      MIGRATION_STATUS_FAILED);
-> > +
-> > +    switch (current) {
-> > +    case MIGRATION_STATUS_SETUP:
-> > +        next = MIGRATION_STATUS_FAILED;
-> > +        break;
-> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
-> > +        /* Never fail a postcopy migration; switch back to PAUSED instead */
-> > +        next = MIGRATION_STATUS_POSTCOPY_PAUSED;
-> 
-> So presumably we can keep recovering the migration indefinitely?
-
-Yes, that's by design.
-
-> 
-> > +        break;
-> > +    default:
-> > +        /*
-> > +         * This really shouldn't happen. Just be careful to not crash a VM
-> > +         * just for this.  Instead, dump something.
-> > +         */
-> > +        error_report("%s: Illegal migration status (%s) detected",
-> > +                     __func__, MigrationStatus_str(current));
-> > +        return;
-> > +    }
-> > +
-> > +    migrate_set_state(&s->state, current, next);
-> >      migrate_set_error(s, error);
-> >  }
-> >  
-> > @@ -1538,6 +1584,7 @@ bool migration_in_postcopy(void)
-> >      switch (s->state) {
-> >      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
-> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
-> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
-> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
-> >          return true;
-> >      default:
-> > @@ -1936,6 +1983,9 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
-> >              return false;
-> >          }
-> >  
-> > +        migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_PAUSED,
-> > +                          MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
-> > +
-> >          /* This is a resume, skip init status */
-> >          return true;
-> >      }
-> > @@ -2968,9 +3018,9 @@ static MigThrError postcopy_pause(MigrationState *s)
-> >           * We wait until things fixed up. Then someone will setup the
-> >           * status back for us.
-> >           */
-> > -        while (s->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
-> > +        do {
-> >              qemu_sem_wait(&s->postcopy_pause_sem);
-> > -        }
-> > +        } while (postcopy_is_paused(s->state));
-> 
-> Is there a particular reason to go from while() to do{}while()?
-
-It'll be the same AFAICT, the 1st check should mostly be meaningless as the
-sem must be posted at least once.  Yes I should have had a comment
-somewhere but I didn't.. if you want me to keep the old way it's also fine,
-isn't a big deal here to check first either, just save some cycles when I
-worked on these lines.
-
-> 
-> >  
-> >          if (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER) {
-> >              /* Woken up by a recover procedure. Give it a shot */
-> > @@ -3666,7 +3716,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
-> >  {
-> >      Error *local_err = NULL;
-> >      uint64_t rate_limit;
-> > -    bool resume = s->state == MIGRATION_STATUS_POSTCOPY_PAUSED;
-> > +    bool resume = migration_in_postcopy();
-> 
-> Here you're expecting just PAUSED or RECOVER_SETUP, right? We'll not
-> reach here in any of the other postcopy states.
-
-I think here it must be RECOVER_SETUP after this patch.  I changed it to
-use the helper as I think that's cleaner (precopy doesn't allow resume),
-and we don't need such change if the state machine trivially changes again.
-
-> 
-> >      int ret;
-> >  
-> >      /*
-> > @@ -3733,7 +3783,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
-> >  
-> >      if (resume) {
-> >          /* Wakeup the main migration thread to do the recovery */
-> > -        migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_PAUSED,
-> > +        migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP,
-> >                            MIGRATION_STATUS_POSTCOPY_RECOVER);
-> >          qemu_sem_post(&s->postcopy_pause_sem);
-> >          return;
-> > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-> > index 97701e6bb2..1c374b7ea1 100644
-> > --- a/migration/postcopy-ram.c
-> > +++ b/migration/postcopy-ram.c
-> > @@ -1770,3 +1770,9 @@ void *postcopy_preempt_thread(void *opaque)
-> >  
-> >      return NULL;
-> >  }
-> > +
-> > +bool postcopy_is_paused(MigrationStatus status)
-> > +{
-> > +    return status == MIGRATION_STATUS_POSTCOPY_PAUSED ||
-> > +        status == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP;
-> > +}
-> > diff --git a/migration/savevm.c b/migration/savevm.c
-> > index e71410d8c1..deb57833f8 100644
-> > --- a/migration/savevm.c
-> > +++ b/migration/savevm.c
-> > @@ -2864,9 +2864,9 @@ static bool postcopy_pause_incoming(MigrationIncomingState *mis)
-> >      error_report("Detected IO failure for postcopy. "
-> >                   "Migration paused.");
-> >  
-> > -    while (mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
-> > +    do {
-> >          qemu_sem_wait(&mis->postcopy_pause_sem_dst);
-> > -    }
-> > +    } while (postcopy_is_paused(mis->state));
-> >  
-> >      trace_postcopy_pause_incoming_continued();
-> 
-
--- 
-Peter Xu
+> Thanks,
+> Taylor
+>=20
+>=20
 
 
