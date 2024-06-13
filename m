@@ -4,78 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65971C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 05:09:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADA82C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 05:13:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHchf-00009N-CL; Thu, 13 Jun 2024 01:08:51 -0400
+	id 1sHclK-0003UZ-86; Thu, 13 Jun 2024 01:12:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sHchd-000090-KQ
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:08:49 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1sHclE-0003RY-UH
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:12:32 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sHchb-0002W2-Lo
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:08:49 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-35f27eed98aso601847f8f.2
- for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 22:08:46 -0700 (PDT)
+ id 1sHclD-0003Iq-6d
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 01:12:32 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2ebdfe26226so5135081fa.1
+ for <qemu-devel@nongnu.org>; Wed, 12 Jun 2024 22:12:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718255324; x=1718860124; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718255549; x=1718860349; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=gTXaqNSSsDYAEPUjrpC/YF3hm4eaFDRtbINcjV/Jorw=;
- b=VjF9xAoNeszp8rx8RW9/yaGS8w3KNVaIefqakAYKWqvINCuACQJzP7KSpOSNU3kMrK
- r3MqXbfZ3MLkDvkzgSG81k2+SSzFVHhayov7eXH6ZUbQ76GQygZPVK7RiUvo2l0xIADF
- SWVwuCwtLfXi2oTnBcpgxwNX7rs/6EQ92x5DRA0uAeO+CHf+IFVFP5rTh6A8SCcFUHqf
- zqZLoISuVD08P2zmUZ6jYQ2MnnNy7rtuGd0lIpICU5hwzxmWye6sLwXk+yGcvEBgu2Qf
- vQ3se1OJS4Xpfuih1S1QFidP/thjRKumSNx0xqZ9q1lEMtz7sn5mFZEmnt5jqW8H1no3
- F5Ow==
+ bh=ccCWEPbIP3Yg2v6HjmxjF4lRR04h9g5vpJVJjNT8YGg=;
+ b=ITdtWQNerIjtJc7yLssEgb0uYSyH7sGHWOLYf+SPr6lwAJoZNJ7sOaZyM7hPI5+3Y+
+ 17SosXz8xLraKs3G8Umw2LikYEo0bzNBlx2ssrBADGOtTTWiqQvBswJUYQyujt2X8GiO
+ qgB6eHHRh7F5ImYLiBGxYplSlY52Kuiy25I6SzxMTUCg75XwenuxSW7MPZ89wERhgOt5
+ tXjZgAOWN5Z5LX9wJ45jlvx0pVz6EqcZ6NMUIZwXA9wTEwAAQRfp6knNQV1+Gtmv+90U
+ MJclargnhkg2PnPFeLLjcu4MSOsypcatciRUGwJsh8kajwM59VGTWkBsyItmAwZ/Sc6s
+ WyiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718255324; x=1718860124;
+ d=1e100.net; s=20230601; t=1718255549; x=1718860349;
  h=content-transfer-encoding:mime-version:message-id:in-reply-to
  :references:user-agent:subject:cc:to:from:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gTXaqNSSsDYAEPUjrpC/YF3hm4eaFDRtbINcjV/Jorw=;
- b=feAhEMtJ4Oj1d7AsrWyipzlu5WM+e3Hlq/x5Q5oM7rPjv3KiEICiZuslrvCgPjSWCx
- XmDxBc6HVVnsEqsFWA91P4hr+a73q7blRLVOt3fOkNOpzZ1OQGpF4NAOkwybIDJ0m3yj
- hVd6wkHw8k2g9O5AVdbr/atxvK0wKHn4ZZlmugkiMWc5Nl0oZ8FgRpEnM21AHBY0uNl+
- 5Muuah9VPx5+BecwOHT/nVYBAjs+rtd87C9RQ0vnd1ccUAfVooaVFJLEdvxDoNWlIKrI
- NuFJEFVuuRxNO84ONGLoOdYhnXsdZaToqCya3vmskbi7HZAg+3Nc7qrIuLEx3turP7uS
- E6Mw==
-X-Gm-Message-State: AOJu0YwavcbCiaZK499a5ToFkVd2qEfP9PGILqecEGMkgMI2sZxC9HOq
- pkJzRWgYfpJ2lPu5LGSU3afcQq3/ozI8uewN2TUNyESBB6Qtf6k5KgPkMDLSTtUyWeUvcLxIuJ8
- 6v78=
-X-Google-Smtp-Source: AGHT+IH2eg3aeeGzWUSODdEoIOi8fO7tS8K5zuZ/z+4LnawJto/eJQBQRd0zxGHnt509F5Wzmf/KIw==
-X-Received: by 2002:a05:6000:104b:b0:35f:30cf:b4bd with SMTP id
- ffacd0b85a97d-35fdf79a736mr2535569f8f.20.1718255324525; 
- Wed, 12 Jun 2024 22:08:44 -0700 (PDT)
-Received: from meli-email.org (adsl-105.37.6.1.tellas.gr. [37.6.1.105])
+ bh=ccCWEPbIP3Yg2v6HjmxjF4lRR04h9g5vpJVJjNT8YGg=;
+ b=n+KB3ae9/PyFcvsKb80wYZNM53WdnYFpCjgPYU9CifBK9pjkCQygs7TiDrJ+IZDQKs
+ Qf/ZmOQhgPOZd27OcvfO031vUtL4zOI45VIRc2v0KGzhbq2vrGnC/ANc6/IVqx1hhuyC
+ gZEfB9ujhdf9ahGEyYvPUhrjeKs7JtjRPOayPDcWz3LlPHgn4dpazN/gyUt/G6+vos6Y
+ XYF447N3ir/pb0BALOXQ2WPiawtZ+xFgNMieuJbzQ2NhspxES15n6fd4QAmQgybinJ5U
+ b3/N3mE6tsFkUCH2BP0W6NjynxYACmXulmG4r34IwNF8TMjciIjBZCxlPBspoGjb+hz1
+ QJSA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXHvm/1lQJHfHi1tzsOx+IlcqQ+oy4Zcg7QPVDdYlNt6j1kFbv3aNp5XZytSVRvuBv1OLvZvadLwS4RkYldxay1UG+Wyeo=
+X-Gm-Message-State: AOJu0Ywio5hhnmQ9UEMzLHyXSB6hw6Pw0jXLL9GzNkjmxV8YJ8dnWhWX
+ 5KI1W4rGjDVMcEfmE2tth8vg4wB+Ty8DOFgE6tqNfs0M5jH8z6wLxSUqNXGO9J8=
+X-Google-Smtp-Source: AGHT+IEeRZYyHTAZDyyDw0FE5fLIhh4cmvRvmdEWpKeaLxr3qKr81j+1U/2N9ilsGgy2sF8OMpdH2w==
+X-Received: by 2002:a2e:8350:0:b0:2e9:8497:46ce with SMTP id
+ 38308e7fff4ca-2ebfc9495ffmr24404691fa.46.1718255548951; 
+ Wed, 12 Jun 2024 22:12:28 -0700 (PDT)
+Received: from meli-email.org (adsl-33.109.242.225.tellas.gr. [109.242.225.33])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3607509c8d8sm573554f8f.32.2024.06.12.22.08.43
+ ffacd0b85a97d-36075104a3dsm569606f8f.112.2024.06.12.22.12.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 12 Jun 2024 22:08:44 -0700 (PDT)
-Date: Thu, 13 Jun 2024 08:06:09 +0300
+ Wed, 12 Jun 2024 22:12:28 -0700 (PDT)
+Date: Thu, 13 Jun 2024 08:09:12 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org, Peng Fan <peng.fan@nxp.com>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "stefanha@redhat.com" <stefanha@redhat.com>
-Cc: 
-Subject: Re: Qemu License question
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
+ qemu-devel <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex Benn=?UTF-8?B?w6kg?=e <alex.bennee@linaro.org>,
+ Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
 User-Agent: meli 0.8.6
-References: <AM6PR04MB5941BDF756878B3CA208D07D88C12@AM6PR04MB5941.eurprd04.prod.outlook.com>
-In-Reply-To: <AM6PR04MB5941BDF756878B3CA208D07D88C12@AM6PR04MB5941.eurprd04.prod.outlook.com>
-Message-ID: <f06ai.hy2gx5h8080@linaro.org>
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+ <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
+ <CABgObfY8BS0yCw2CxgDQTBA4np9BZgGJF3N=t6eoBcdACAE=NA@mail.gmail.com>
+ <ez270.x96k6aeu0rpw@linaro.org> <ZmnHoajecti472mi@redhat.com>
+ <ezjl0.qx0tmsp6d6t@linaro.org>
+ <CABgObfbGwKc0RYBcDPzNkE8HOSouFj4D15Oh7TuiKOC+D7raaA@mail.gmail.com>
+In-Reply-To: <CABgObfbGwKc0RYBcDPzNkE8HOSouFj4D15Oh7TuiKOC+D7raaA@mail.gmail.com>
+Message-ID: <f06gr.8csaobu5kui2@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lj1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,35 +109,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 13 Jun 2024 06:26, Peng Fan <peng.fan@nxp.com> wrote:
->Hi All,
->
->The following files are marked as GPL-3.0-or-later. Will these
->Conflict with Qemu LICENSE?
->
->Should we update the files to GPL-2.0?
->
->./tests/tcg/aarch64/semicall.h:7: * SPDX-License-Identifier: GPL-3.0-or-later
->./tests/tcg/x86_64/system/boot.S:13: * SPDX-License-Identifier: GPL-3.0-or-later
->./tests/tcg/riscv64/semicall.h:7: * SPDX-License-Identifier: GPL-3.0-or-later
->./tests/tcg/multiarch/float_convs.c:6: * SPDX-License-Identifier: GPL-3.0-or-later
->./tests/tcg/multiarch/float_helpers.h:6: * SPDX-License-Identifier: GPL-3.0-or-later
->./tests/tcg/multiarch/libs/float_helpers.c:10: * SPDX-License-Identifier: GPL-3.0-or-later
->./tests/tcg/multiarch/arm-compat-semi/semihosting.c:7: * SPDX-License-Identifier: GPL-3.0-or-later
->./tests/tcg/multiarch/arm-compat-semi/semiconsole.c:7: * SPDX-License-Identifier: GPL-3.0-or-later
->./tests/tcg/multiarch/float_convd.c:6: * SPDX-License-Identifier: GPL-3.0-or-later
->./tests/tcg/multiarch/float_madds.c:6: * SPDX-License-Identifier: GPL-3.0-or-later
->./tests/tcg/i386/system/boot.S:10: * SPDX-License-Identifier: GPL-3.0-or-later
->./tests/tcg/arm/semicall.h:7: * SPDX-License-Identifier: GPL-3.0-or-later
->
->Thanks,
->Peng.
+Good morning Paolo,
 
+On Thu, 13 Jun 2024 00:27, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>Il mer 12 giu 2024, 22:58 Manos Pitsidianakis < 
+>manos.pitsidianakis@linaro.org> ha scritto:
+>
+>> In any case, it is out of scope for this RFC. Introducing wrappers 
+>> would be a gradual process.
+>>
+>
+>Sure, how would you feel about such bindings being developed on list, 
+>and maintained in a (somewhat) long-lived experimental branch?
 
-Hello Peng,
+Hm the only thing that worries me is keeping it synced and postponing 
+merge indefinitely. If we declare the rust parts as "experimental" we 
+could evolve them quickly even on master.  What do the other maintainers 
+think?
 
-These are all actually GPL-2.0-or-later, in fact I can't find the string 
-GPL-3.0-or-later in the current master at all.
-
+Thanks,
 Manos
 
