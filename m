@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69122C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 23:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B94AC27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 23:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHu53-0004kZ-8X; Thu, 13 Jun 2024 19:42:09 -0400
+	id 1sHu5W-0005K3-Q8; Thu, 13 Jun 2024 19:42:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sHu51-0004k2-Q8; Thu, 13 Jun 2024 19:42:07 -0400
+ id 1sHu5P-00059d-05; Thu, 13 Jun 2024 19:42:32 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sHu50-0003tm-7z; Thu, 13 Jun 2024 19:42:07 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W0f6c2x72z67MmR;
- Fri, 14 Jun 2024 07:40:40 +0800 (CST)
+ id 1sHu5N-0003xX-2i; Thu, 13 Jun 2024 19:42:30 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W0f72734Tz6H7LJ;
+ Fri, 14 Jun 2024 07:41:02 +0800 (CST)
 Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id D6E7314065C;
- Fri, 14 Jun 2024 07:42:03 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 687561400D9;
+ Fri, 14 Jun 2024 07:42:26 +0800 (CST)
 Received: from 00293818-MRGF.china.huawei.com (10.195.245.24) by
  lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 14 Jun 2024 00:41:41 +0100
+ 15.1.2507.39; Fri, 14 Jun 2024 00:42:04 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <mst@redhat.com>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -44,10 +44,10 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <shahuang@redhat.com>, <zhao1.liu@intel.com>, <linuxarm@huawei.com>
-Subject: [PATCH RFC V3 11/29] arm/virt: Create GED dev before *disabled* CPU
- Objs are destroyed
-Date: Fri, 14 Jun 2024 00:36:21 +0100
-Message-ID: <20240613233639.202896-12-salil.mehta@huawei.com>
+Subject: [PATCH RFC V3 12/29] arm/virt/acpi: Build CPUs AML with CPU Hotplug
+ support
+Date: Fri, 14 Jun 2024 00:36:22 +0100
+Message-ID: <20240613233639.202896-13-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240613233639.202896-1-salil.mehta@huawei.com>
 References: <20240613233639.202896-1-salil.mehta@huawei.com>
@@ -82,51 +82,49 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ACPI CPU hotplug state (is_present=_STA.PRESENT, is_enabled=_STA.ENABLED) for
-all the possible vCPUs MUST be initialized during machine init. This is done
-during the creation of the GED device. VMM/Qemu MUST expose/fake the ACPI state
-of the disabled vCPUs to the Guest kernel as 'present' (_STA.PRESENT) always
-i.e. ACPI persistent. if the 'disabled' vCPU objectes are destroyed before the
-GED device has been created then their ACPI hotplug state might not get
-initialized correctly as acpi_persistent flag is part of the CPUState. This will
-expose wrong status of the unplugged vCPUs to the Guest kernel.
-
-Hence, moving the GED device creation before disabled vCPU objects get destroyed
-as part of the post CPU init routine.
+Support for Virtual CPU Hotplug requires a sequence of ACPI handshakes between
+QEMU and the guest kernel when a vCPU is plugged or unplugged. Most of the AML
+code to support these handshakes already exists. This AML needs to be built
+during VM initialization for the ARM architecture as well, if GED support
+exists.
 
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 ---
- hw/arm/virt.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ hw/arm/virt-acpi-build.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 918bcb9a1b..5f98162587 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2467,6 +2467,12 @@ static void machvirt_init(MachineState *machine)
- 
-     create_gic(vms, sysmem);
- 
-+    has_ged = has_ged && aarch64 && firmware_loaded &&
-+              virt_is_acpi_enabled(vms);
-+    if (has_ged) {
-+        vms->acpi_dev = create_acpi_ged(vms);
-+    }
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index c3ccfef026..2d44567df5 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -799,6 +799,7 @@ static void
+ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+ {
+     VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
++    MachineClass *mc = MACHINE_GET_CLASS(vms);
+     Aml *scope, *dsdt;
+     MachineState *ms = MACHINE(vms);
+     const MemMapEntry *memmap = vms->memmap;
+@@ -815,7 +816,18 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+      * the RTC ACPI device at all when using UEFI.
+      */
+     scope = aml_scope("\\_SB");
+-    acpi_dsdt_add_cpus(scope, vms);
++    /* if GED is enabled then cpus AML shall be added as part build_cpus_aml */
++    if (vms->acpi_dev && mc->has_hotpluggable_cpus) {
++        CPUHotplugFeatures opts = {
++             .acpi_1_compatible = false,
++             .has_legacy_cphp = false
++        };
 +
-     virt_cpu_post_init(vms, sysmem);
- 
-     fdt_add_pmu_nodes(vms);
-@@ -2489,9 +2495,7 @@ static void machvirt_init(MachineState *machine)
- 
-     create_pcie(vms);
- 
--    if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
--        vms->acpi_dev = create_acpi_ged(vms);
--    } else {
-+    if (!has_ged) {
-         create_gpio_devices(vms, VIRT_GPIO, sysmem);
-     }
- 
++        build_cpus_aml(scope, ms, opts, NULL, memmap[VIRT_CPUHP_ACPI].base,
++                       "\\_SB", NULL, AML_SYSTEM_MEMORY);
++    } else {
++        acpi_dsdt_add_cpus(scope, vms);
++    }
+     acpi_dsdt_add_uart(scope, &memmap[VIRT_UART],
+                        (irqmap[VIRT_UART] + ARM_SPI_BASE));
+     if (vmc->acpi_expose_flash) {
 -- 
 2.34.1
 
