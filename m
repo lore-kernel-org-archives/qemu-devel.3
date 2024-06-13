@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60403C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 17:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 966ADC27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 17:37:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHoM3-0001c1-HP; Thu, 13 Jun 2024 13:35:19 -0400
+	id 1sHoNs-0002dt-Sr; Thu, 13 Jun 2024 13:37:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHoM1-0001bK-9W
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:35:17 -0400
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHoNq-0002co-Cc
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:37:10 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHoLy-000803-Tz
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:35:17 -0400
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-52bc274f438so1712476e87.0
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 10:35:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHoNo-0008Kj-6w
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:37:10 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-35f236a563cso1103358f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 10:37:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718300113; x=1718904913; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718300227; x=1718905027; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gVi2i17iwFKRNp1HuWOGx0blD5PjqRB1Gkpz7f6aBYo=;
- b=Xo9ukvcs1bojnBQSvIuzbWqYk5pLlI5eHgvh2ssMcJ4h7HajIeoe4L6gS7bkuljroV
- 132MrTHFCeiJgX+EnFNz/JpRVij2juVH4Zhf1pzcF5u8EVajzwEiM4mLuTOx7twfMZj9
- I1dgDhsKkjUbguF0b3mrAk5lt5Li6Ohnzj4nfASmrhgUd7aPLSeMt78qDpwMx+Dd9qQp
- sJucb4rYBnSsk9rNBytRrWXFoWLA2pYT+aFnWrhRtrmRr0PPV7Eng6XvjaxlbEhLJCp4
- BUNxtS1qxAZqkfmuttyMOu2IibCL6Bhl/x9O/bvr1HAGInGX7aiosuIrm9RAos3C82CZ
- RKRA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5rkNZOjcM2GBbUnYIP3hYAO4lu0rMYpRjuQ80g/Ed/U=;
+ b=QdlGWoSX6fDDo44g/1CnLdUU52Tr6tLKYLdvo1240otbTg4OESisM45DciM3Cc7EJw
+ gz0KkxNq7YIt6Z+1YjMO3huMLQwCIb4gdyetyRiMq86SVvaNAyrZk3gWza4nnOccUwOi
+ h1QnoZtsL0XuX/Z14U+dRJxRj77E5woHQ8Yr10dr5eLBpPLD3ny3pO8WLXMjEk2w2mC3
+ c6QFjhawWAT6aFTsM+f4r8o0wJYidvgEw+dyeWh1ZIykShm0az6PMe7yMlxORMt1MeLs
+ c1Z3lfzirLMfHBGOvGA1JLvZJX7xyHYa2i8kbDlvIiecgq6CZRByN7WFWLl181YFVVAJ
+ BbBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718300113; x=1718904913;
+ d=1e100.net; s=20230601; t=1718300227; x=1718905027;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gVi2i17iwFKRNp1HuWOGx0blD5PjqRB1Gkpz7f6aBYo=;
- b=Op8VScOnj7HGEwKXMqNkNVgkArVws1Lr4Fx3LiERibE3fsteqMjYjTyHKqJgd/fgXv
- iTGqRO6aQ1YMu4do0yO+Rn0FGT+Xi+ehAFjQlHTi3gDrMIv5cGEWT6WZMmLwgxzarcaW
- X5iNvgJwxm4AeZevz61Y24LHHl74E9aCAtSiWskpzdNg3570cGQFW/YQ9cRfBztPytHm
- jf9sP2m8caUcrqcAR8JNh85gvQTOXzerj5agh7tDoT8WhUoY2Ck265Jku/ZF+xD7YzkU
- 4hwdzQRC5NMcG52cdltqps6TF41MKl0M5SDTRff3ac1lt2iFM8BDhFFDxnbAvkDMkPli
- yHNw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDtIWbs/aM3bTaEU6cSFDCexDEdyAo3dD02UIZCgOVpIUYG+8JcvBe3S8l7ynayjg89mhMyfjJ9WthRaMQrxz4fKLNydE=
-X-Gm-Message-State: AOJu0YwQK+skg2vQQH5/K9psEbMvbPVm2/Vru+8Z60kmMdAbhoJnEmub
- AifQW57CCNz9A8frG8jAMP+xRH9M4BMWCCDWeYoQMm3oGvo61fL4JNGcmCGOJ84=
-X-Google-Smtp-Source: AGHT+IEtlyvkBEj/5mvqweuUYJMEhdWhta2wJxyNLabmdhxMlbwBPyHM8uYRMlJrgFqe3FVEWkjQyA==
-X-Received: by 2002:a05:6512:20c6:b0:52c:881b:73c0 with SMTP id
- 2adb3069b0e04-52ca6e64378mr269371e87.17.1718300112959; 
- Thu, 13 Jun 2024 10:35:12 -0700 (PDT)
+ bh=5rkNZOjcM2GBbUnYIP3hYAO4lu0rMYpRjuQ80g/Ed/U=;
+ b=CecCU66TIDK5H8E099EQGiCaILZPC2LaIiwtdQ7kl37MoZKGyd71iHeIjPGFEuGoh7
+ Sh3+OgWjKM726g432ERURWriN4OrFrmRFq2bm7JJN4FKlBlYsADCyhje+Wu0x/LLYekE
+ moYs42gWrzjHwZxg5oVaZyuTzb51cuMB494hFXW/8t6mXszVllPENUI7Hiqz0aFK0R+H
+ Gr2kS/S2hANATsSNjGkrqiueR3oSd4E+nWnUL/jBnNkbDJ+0ObzttyeefKz07JC+nSKv
+ fcfQAaVd+a3v54Z6+buW5y9gBq5NQBNUphwFkOobbigjt3QqhA828Q9kaqPw7doInacC
+ x48g==
+X-Gm-Message-State: AOJu0Yzxbzdp2TzpfLF5A0OB73gDG4xj5v2eLK0VbtomAimisR2J6c6H
+ QtjcvdocHsgjSypYAGIQSS6YVVYK35E1ScVfcRraeAcZaaLSLlr15tsT+c9tk1/xkxrfvKj5L/g
+ d
+X-Google-Smtp-Source: AGHT+IGqlstRyJ+VxqkYBrD/+dkt2YmQQy+L+EWtEc/hLFZN0GzS1+wFBNp4/+NL4QoIY6Tv1WNkjQ==
+X-Received: by 2002:a05:6000:1362:b0:35f:444:8715 with SMTP id
+ ffacd0b85a97d-3607a77fa1fmr222465f8f.45.1718300226658; 
+ Thu, 13 Jun 2024 10:37:06 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.148.226])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36074e0e5adsm2332186f8f.0.2024.06.13.10.35.11
+ ffacd0b85a97d-3607509346asm2315664f8f.20.2024.06.13.10.37.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Jun 2024 10:35:12 -0700 (PDT)
-Message-ID: <20996ca9-9feb-42ee-8850-af265f77f72b@linaro.org>
-Date: Thu, 13 Jun 2024 19:35:10 +0200
+ Thu, 13 Jun 2024 10:37:06 -0700 (PDT)
+Message-ID: <339a9024-f1ae-4520-90bb-ef71196fc8c0@linaro.org>
+Date: Thu, 13 Jun 2024 19:37:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/9] target/arm: Factor out code for setting MTE TCF0
- field
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org, alex.bennee@linaro.org,
- richard.henderson@linaro.org
-References: <20240613172103.2987519-1-gustavo.romero@linaro.org>
- <20240613172103.2987519-7-gustavo.romero@linaro.org>
+Subject: Re: [PATCH] target/s390x: Add a CONFIG switch to disable legacy CPUs
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ "Daniel P. Berrange" <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Ani Sinha <anisinha@redhat.com>
+References: <20240613170702.523591-1-thuth@redhat.com>
+ <856c9c4e-8e8b-4d63-a897-ee80fb7ed92a@linaro.org>
+ <feaa5adc-01ed-45fa-9a13-e66836f33ef9@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240613172103.2987519-7-gustavo.romero@linaro.org>
+In-Reply-To: <feaa5adc-01ed-45fa-9a13-e66836f33ef9@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x130.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,86 +101,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/6/24 19:21, Gustavo Romero wrote:
-> Factor out the code used for setting the MTE TCF0 field from the prctl
-> code into a convenient function. Other subsystems, like gdbstub, need to
-> set this field as well, so keep it as a separate function to avoid
-> duplication and ensure consistency in how this field is set across the
-> board.
+On 13/6/24 19:22, Thomas Huth wrote:
+> On 13/06/2024 19.17, Philippe Mathieu-Daudé wrote:
+>> Hi Thomas,
+>>
+>> On 13/6/24 19:07, Thomas Huth wrote:
+>>> Old CPU models are not officially supported anymore by IBM, and for
+>>> downstream builds of QEMU, we would like to be able to disable these
+>>> CPUs in the build. Thus add a CONFIG switch that can be used to
+>>> disable these CPUs (and old machine types that use them by default).
+>>>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>   If you're interested, the PDF that can be downloaded from
+>>>   https://www.ibm.com/support/pages/ibm-mainframe-life-cycle-history
+>>>   shows the supported CPUs in a nice diagram
+>>
+>> I'd add this link ...
+>>
+>>>   hw/s390x/s390-virtio-ccw.c | 9 +++++++++
+>>>   target/s390x/cpu_models.c  | 3 +++
+>>>   target/s390x/Kconfig       | 5 +++++
+>>>   3 files changed, 17 insertions(+)
+>>>
+>>> diff --git a/target/s390x/Kconfig b/target/s390x/Kconfig
+>>> index d886be48b4..8a95f2bc3f 100644
+>>> --- a/target/s390x/Kconfig
+>>> +++ b/target/s390x/Kconfig
+>>> @@ -2,3 +2,8 @@ config S390X
+>>>       bool
+>>>       select PCI
+>>>       select S390_FLIC
+>>> +
+>>> +config S390X_LEGACY_CPUS
+>>> +    bool
+>>> +    default y
+>>> +    depends on S390X
+>>> diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+>>> index efb508cd2e..ffae95dcb3 100644
+>>> --- a/target/s390x/cpu_models.c
+>>> +++ b/target/s390x/cpu_models.c
+>>> @@ -22,6 +22,7 @@
+>>>   #include "qemu/module.h"
+>>>   #include "qemu/hw-version.h"
+>>>   #include "qemu/qemu-print.h"
+>>> +#include CONFIG_DEVICES
+>>>   #ifndef CONFIG_USER_ONLY
+>>>   #include "sysemu/sysemu.h"
+>>>   #include "target/s390x/kvm/pv.h"
+>>> @@ -47,6 +48,7 @@
+>>>    * generation 15 one base feature and one optional feature have 
+>>> been deprecated.
+>>>    */
+>>>   static S390CPUDef s390_cpu_defs[] = {
+>>> +#ifdef CONFIG_S390X_LEGACY_CPUS
+>>
+>> ... here :)
 > 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->   linux-user/aarch64/target_prctl.h | 22 ++-----------
->   target/arm/mte.h                  | 53 +++++++++++++++++++++++++++++++
->   2 files changed, 55 insertions(+), 20 deletions(-)
->   create mode 100644 target/arm/mte.h
+> Can do ... let's just hope that the link is stable in the course of time!
 
+Else we'll use an archived version.
 
-> diff --git a/target/arm/mte.h b/target/arm/mte.h
-> new file mode 100644
-> index 0000000000..89712aad70
-> --- /dev/null
-> +++ b/target/arm/mte.h
-> @@ -0,0 +1,53 @@
-> +/*
-> + * ARM MemTag convenience functions.
-> + *
-> + * Copyright (c) 2024 Linaro, Ltd.
-> + *
-> + * This library is free software; you can redistribute it and/or
-> + * modify it under the terms of the GNU Lesser General Public
-> + * License as published by the Free Software Foundation; either
-> + * version 2.1 of the License, or (at your option) any later version.
-> + *
-> + * This library is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-> + * Lesser General Public License for more details.
-> + *
-> + * You should have received a copy of the GNU Lesser General Public
-> + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-> + */
-> +
-> +#ifndef MTE_H
-> +#define MTE_H
-> +
-> +#ifdef CONFIG_TCG
-> +#ifdef CONFIG_USER_ONLY
-> +#include "sys/prctl.h"
-> +
-> +static void set_mte_tcf0(CPUArchState *env, abi_long value)
+>>>       CPUDEF_INIT(0x2064, 7, 1, 38, 0x00000000U, "z900", "IBM zSeries 
+>>> 900 GA1"),
+>>>       CPUDEF_INIT(0x2064, 7, 2, 38, 0x00000000U, "z900.2", "IBM 
+>>> zSeries 900 GA2"),
+>>>       CPUDEF_INIT(0x2064, 7, 3, 38, 0x00000000U, "z900.3", "IBM 
+>>> zSeries 900 GA3"),
+>>> @@ -78,6 +80,7 @@ static S390CPUDef s390_cpu_defs[] = {
+>>>       CPUDEF_INIT(0x2964, 13, 1, 47, 0x08000000U, "z13", "IBM z13 GA1"),
+>>>       CPUDEF_INIT(0x2964, 13, 2, 47, 0x08000000U, "z13.2", "IBM z13 
+>>> GA2"),
+>>>       CPUDEF_INIT(0x2965, 13, 2, 47, 0x08000000U, "z13s", "IBM z13s 
+>>> GA1"),
+>>> +#endif
+>>>       CPUDEF_INIT(0x3906, 14, 1, 47, 0x08000000U, "z14", "IBM z14 GA1"),
+>>>       CPUDEF_INIT(0x3906, 14, 2, 47, 0x08000000U, "z14.2", "IBM z14 
+>>> GA2"),
+>>>       CPUDEF_INIT(0x3907, 14, 1, 47, 0x08000000U, "z14ZR1", "IBM z14 
+>>> Model ZR1 GA1"),
+>>> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+>>> index 3d0bc3e7f2..7529d2fba8 100644
+>>> --- a/hw/s390x/s390-virtio-ccw.c
+>>> +++ b/hw/s390x/s390-virtio-ccw.c
+>>> @@ -47,6 +47,7 @@
+>>>   #include "migration/blocker.h"
+>>>   #include "qapi/visitor.h"
+>>>   #include "hw/s390x/cpu-topology.h"
+>>> +#include CONFIG_DEVICES
+>>>   static Error *pv_mig_blocker;
+>>> @@ -603,6 +604,8 @@ static void s390_nmi(NMIState *n, int cpu_index, 
+>>> Error **errp)
+>>>       s390_cpu_restart(S390_CPU(cs));
+>>>   }
+>>> +#ifdef CONFIG_S390X_LEGACY_CPUS
+>>> +
+>>>   static ram_addr_t s390_fixup_ram_size(ram_addr_t sz)
+>>>   {
+>>>       /* same logic as in sclp.c */
+>>> @@ -623,6 +626,8 @@ static ram_addr_t s390_fixup_ram_size(ram_addr_t sz)
+>>>       return newsz;
+>>>   }
+>>> +#endif
+>>> +
+>>>   static inline bool machine_get_aes_key_wrap(Object *obj, Error **errp)
+>>>   {
+>>>       S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
+>>> @@ -989,6 +994,8 @@ static void 
+>>> ccw_machine_6_1_class_options(MachineClass *mc)
+>>>   }
+>>>   DEFINE_CCW_MACHINE(6_1, "6.1", false);
+>>> +#ifdef CONFIG_S390X_LEGACY_CPUS
+>>> +
+>>>   static void ccw_machine_6_0_instance_options(MachineState *machine)
+>>>   {
+>>>       static const S390FeatInit qemu_cpu_feat = { 
+>>> S390_FEAT_LIST_QEMU_V6_0 };
+>>
+>> Should we deprecate machines up to v6.0?
+> 
+> I'm still hoping that Daniel will be able to get his auto-deprecation 
+> patches merged in this cycle - then we shouldn't derive from that, I think.
 
-Either declare it inlined (otherwise we'll get multiple symbols
-declared if this header is included multiple times), or
-preferably only expose the prototype.
+OK.
 
-Also I'd use the 'arm_' prefix.
+> By the way, what's up with your i440fx removal series? ... it would be 
+> good to get this finally merged now...?
 
-> +{
-> +    /*
-> +     * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
-> +     *
-> +     * The kernel has a per-cpu configuration for the sysadmin,
-> +     * /sys/devices/system/cpu/cpu<N>/mte_tcf_preferred,
-> +     * which qemu does not implement.
-> +     *
-> +     * Because there is no performance difference between the modes, and
-> +     * because SYNC is most useful for debugging MTE errors, choose SYNC
-> +     * as the preferred mode.  With this preference, and the way the API
-> +     * uses only two bits, there is no way for the program to select
-> +     * ASYMM mode.
-> +     */
-> +    unsigned tcf = 0;
-> +    if (value & PR_MTE_TCF_SYNC) {
-> +        tcf = 1;
-> +    } else if (value & PR_MTE_TCF_ASYNC) {
-> +        tcf = 2;
-> +    }
-> +    env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
-> +}
-> +#endif /* CONFIG_USER_ONLY */
-> +#endif /* CONFIG_TCG */
-> +
-> +#endif /* MTE_H */
-
+Igor made some comments that I need to address before respining :/
 
