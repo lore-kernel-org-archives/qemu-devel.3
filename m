@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BD41C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 10:49:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA14C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 10:52:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHi0o-0000A6-06; Thu, 13 Jun 2024 06:48:58 -0400
+	id 1sHi49-00015k-Tw; Thu, 13 Jun 2024 06:52:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sHi0l-00009m-FJ
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 06:48:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sHi0j-0004VQ-L9
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 06:48:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718275732;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JYrAQwCLR73d4yNqRq6IopSshhFnMB8xgI+2NAN0pHc=;
- b=GKuve8tRTvhaVmCzqCLlKu6k+65B68UNCVCDXrFjgoI9q1foRXLAxTFiKTT4a4Vv6qRivo
- KVZ5zRUUBzBSTXuZyRNNSJcJZofZE4KjhY/Qki/04Q2E7XJlzCgkvMH0qlnYZTc2x4kXNM
- 9OfndYipJP/NAf5Yman3wqG1vb2ka+w=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-465-4ofOfHnnOVCfOKc9NPHt3Q-1; Thu,
- 13 Jun 2024 06:48:44 -0400
-X-MC-Unique: 4ofOfHnnOVCfOKc9NPHt3Q-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2925A1955E72; Thu, 13 Jun 2024 10:48:42 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.52])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A21F3000219; Thu, 13 Jun 2024 10:48:39 +0000 (UTC)
-Date: Thu, 13 Jun 2024 11:48:35 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v3 2/4] usb/hub: mark as deprecated
-Message-ID: <ZmrOgxutj7ETndGM@redhat.com>
-References: <20240606143010.1318226-1-kraxel@redhat.com>
- <20240606143010.1318226-3-kraxel@redhat.com>
- <ZmHKotWS7ywfIvOj@redhat.com> <87r0d2w431.fsf@draig.linaro.org>
- <87o785b5vn.fsf@pond.sub.org> <ZmqvJIekaW9jWP6F@redhat.com>
- <87y1799lg8.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHi47-00015L-Uv
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 06:52:23 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHi46-00058s-EI
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 06:52:23 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-35f2266edd8so691493f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 03:52:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718275940; x=1718880740; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fBtChbogusztsM0icl49lYDXuhamJgoufifuTk5HSko=;
+ b=J2nLABK78/RUdKxADFlMN7vdmG0/Fj10XcWVuNrtoydE30vFjykEEu2eCQxEsQUQUB
+ lWGMv1TQRKEYQZ7DTv4Yp6CWbq+xqG/qSc82mSUuToSPnQCy4GPFECljFRs+qLQ83b6Z
+ lnR2v9gBTQH29eTc6zcKBapzyIW24BHPZddbmyhAZ4YgVAVAfLSG/Gze4RFjcsagT/VF
+ mfRJMSHI1eM80bK81xZvI5+p4xYO7qlpzmwZM0d6tIgeH4cPW/PWtUd0gn/IsOXILUmh
+ srz9FOy3zKGaHfUcqcQe+VlABiUbYddCHJUeI+ZxM707gf/dtBsn24k6Lzvbl74u+iQ0
+ 71aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718275940; x=1718880740;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fBtChbogusztsM0icl49lYDXuhamJgoufifuTk5HSko=;
+ b=fIrGxWKtFIVwdjVR5UUNffuK9h6s/oKmSBE+jUzfIkCC3HIM5O59DcsU98FlOqk84K
+ muV4QOfaOXWvNpi4D52smQTuJP2JXao/OrEfmV5cSi1dTbc/j22jEx6zxN2XRiduTXa4
+ 2aigojtbTLdRNpJtK8Fw6vWL04rIUjjAG5VErCKGP78JVdlCl8GmzBz5HDhoUQ6zfkbb
+ herT5HagJhyqzZXJFrJOPXxbrehGFztWR0LyYvAnL+6chWvw50LAk78yRmbJeUKuidMc
+ yd6WG35JwfpesDsLOfOTfbbHe5hyNyQwuBtsRgHWHD2bsj3Mem6hJVJNh7Gjgfsr5hDA
+ knSg==
+X-Gm-Message-State: AOJu0YyU8ScIRww7gdRBORWv//k9e8tAN+kcGaPqRcMcBdjSlKhcjp57
+ h0O31hOH58U57y/q2tIdWdGUXNm4FmlFhZQAOmOJC9J2MDs4TWOiLQXrNODytoW25x9QsKgOn6B
+ u
+X-Google-Smtp-Source: AGHT+IEWZU2bUggOyM7Sa6Izt/vUX7udZbM5pYpZ2EzkTRWY/ucgr5zh0b7Rz4dYpR/+Qxg9GgXFcA==
+X-Received: by 2002:a5d:4bc1:0:b0:35f:2247:b5bb with SMTP id
+ ffacd0b85a97d-35fe88cb15cmr3065800f8f.39.1718275939785; 
+ Thu, 13 Jun 2024 03:52:19 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.148.226])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3607509353csm1360669f8f.22.2024.06.13.03.52.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Jun 2024 03:52:19 -0700 (PDT)
+Message-ID: <28fd8bda-708f-47eb-8336-3fd26d0d8657@linaro.org>
+Date: Thu, 13 Jun 2024 12:52:17 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] plugins: Few debugging cleanups
+To: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: Alexandre Iooss <erdnaxe@crans.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20240606124010.2460-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240606124010.2460-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87y1799lg8.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,65 +96,20 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 13, 2024 at 12:38:31PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+Ping? (series reviewed)
+
+On 6/6/24 14:40, Philippe Mathieu-Daudé wrote:
+> - Assert cpu_index is assigned in INIT/EXIT hooks
+> - Free cpu->plugin_state
+> - Restrict qemu_plugin_vcpu_init__async() to plugins/
 > 
-> > On Thu, Jun 13, 2024 at 10:31:56AM +0200, Markus Armbruster wrote:
-> >> Alex Bennée <alex.bennee@linaro.org> writes:
-> >> 
-> >> > Daniel P. Berrangé <berrange@redhat.com> writes:
-> >> >
-> >> >> On Thu, Jun 06, 2024 at 04:30:08PM +0200, Gerd Hoffmann wrote:
-> >> >>> The hub supports only USB 1.1.  When running out of usb ports it is in
-> >> >>> almost all cases the much better choice to add another usb host adapter
-> >> >>> (or increase the number of root ports when using xhci) instead of using
-> >> >>> the usb hub.
-> >> >>
-> >> >> Is that actually a strong enough reason to delete this device though ?
-> >> >> This reads like its merely something we don't expect to be commonly
-> >> >> used, rather than something we would actively want to delete.
-> >> >
-> >> > This does seem quite aggressive because there may be cases when users
-> >> > explicitly want to use old devices. Maybe there is need for a third
-> >> > state (better_alternatives?) so we can steer users away from old command
-> >> > lines they may have picked up from the web to the modern alternative?
-> >> 
-> >> What exactly do we mean when we call something deprecated?
-> >> 
-> >> For me, it means "you should not normally use this".
-> >> 
-> >> Important special case: "because we intend to remove it."
-> >
-> > That's not the special case, it is the regular case - the documented
-> > meaning of 'deprecated' in QEMU. When we deprecate something, it is
-> > a warning that we intend to delete it in 2 releases time.
-> 
-> It's the regular case in QEMU today because we made it so there, by
-> electing to limit deprecation to "because we intend to remove it."
+> Philippe Mathieu-Daudé (3):
+>    plugins: Ensure vCPU index is assigned in init/exit hooks
+>    plugins: Free CPUPluginState before destroying vCPU state
+>    accel/tcg: Move qemu_plugin_vcpu_init__async() to plugins/
 
-Fair point, but assigning additional meanings to the existing 'deprecation'
-concept will undermine the value QEMU & its consumers obtain from current
-usage.
-
-Consumers know if they see the "deprecated" marker, it has started a clock
-ticking and they must immediately plan work to stop using the feature.
-
-QEMU maintainers know if they see the 'deprecated' marker and it has been
-2 releases, then we can delete it.
-
-I don't want to loose that clear & easily understood meaning, by overloading
-"deprecated" for scenarios like "it is sometimes better to use a different
-device instead of this one, depending on factors X, Y & Z".
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
