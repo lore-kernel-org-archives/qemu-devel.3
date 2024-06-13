@@ -4,109 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75524C27C75
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 08:14:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3D44C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 08:15:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHfaA-0005qE-Qc; Thu, 13 Jun 2024 04:13:18 -0400
+	id 1sHfcF-0006cK-1L; Thu, 13 Jun 2024 04:15:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sHfa9-0005pn-15
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:13:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sHfcE-0006cA-4k
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:15:26 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sHfa7-0000zk-9N
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:13:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718266394;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=waa3WhU5CDGh+4DeM+IwdGCxmWc26gMoUuETCM0A7/I=;
- b=Gz1vCK89URn2FssYw3j09KtuLekcVVABb21B32lQVCXu2I3KjSblrLMjlJvXCth3RkrKC+
- XppDlT0eWNz5oiA83lx2J05+ONakf3chnf2V0cMvET2xte74CsaS/zVueXC0+FC43X8fih
- f8F410XPehNgmsRFgJ5Kvsw3YFKdIec=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-64-8XugwTBFOhO_LYPeJCV47g-1; Thu, 13 Jun 2024 04:13:08 -0400
-X-MC-Unique: 8XugwTBFOhO_LYPeJCV47g-1
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-43fb05ef704so7754791cf.2
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 01:13:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718266388; x=1718871188;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=waa3WhU5CDGh+4DeM+IwdGCxmWc26gMoUuETCM0A7/I=;
- b=oyp4UmiNByshuc1BzcaLt073K+27WrDLydj++ZOFF58+vRSw8q6byqVh/qpAARpAR4
- MM+zi8g57Pv0p55OHxqvmDwkXW2VB2f8WaPIwpP7iF6tOyw6u/6ZpE1umuRWV5CXL8D0
- IRl0v/FHGVPexkcvjIjiSwR4LJZCVdlmPkwmRJCNar7Ade5Se2Popy0DuhvJifUPgNMS
- NYOT5/3pxXrzLzDIUswfCQLYyoVLPHpUltT4UHn8RGxyAa8QJ0unxa3ZAYlrcFVHjlaj
- X9WLhm3C3xL/BQls+05UkJfeV2L4EB5XoLwmvfQyKHoU/NXinrWnPlL8MIj0Qk4A/5jE
- 18hg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWnNFuat9eqf1M/3i119sK7nLVGLhnIri9VXHKY3h7b7uTgfA7XMHFzs6pxE26Q0oIuoDJLTIOe70s1Nk12d/jGthJl8ME=
-X-Gm-Message-State: AOJu0Yxv26cjBJlgBrT7WKrTdbBuJMxyGfjtf6jpeFn/6kDhd71ExCVG
- pmxAS8edfB5uxLEngipWfJTp/AELWmNOT6nU+tLzxcrG7qsiAT6ZejOxf5UNJRgTNTBXfafA8KW
- ydloYzkaPfnoOmhA+81KOcp/oMA23MoT5lDYTBzucA4g6eD2Xg7bm
-X-Received: by 2002:ac8:5dc9:0:b0:440:6c89:378f with SMTP id
- d75a77b69052e-4415abb0a33mr40285721cf.9.1718266388078; 
- Thu, 13 Jun 2024 01:13:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFFLax7cRzYch7wabO6wdDKq2KPZMk/7upXFUeP1CZGrA3k/qAiSrIsFDyG9C1sG45PArqs/Q==
-X-Received: by 2002:ac8:5dc9:0:b0:440:6c89:378f with SMTP id
- d75a77b69052e-4415abb0a33mr40285501cf.9.1718266387731; 
- Thu, 13 Jun 2024 01:13:07 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-441f2ff9ef8sm4012831cf.89.2024.06.13.01.13.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Jun 2024 01:13:07 -0700 (PDT)
-Message-ID: <19e732e7-38c5-4164-b023-eb4bb534ddb8@redhat.com>
-Date: Thu, 13 Jun 2024 10:13:03 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sHfcA-0001L0-F2
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:15:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1718266522; x=1749802522;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=7IKR19ayympX7WKeS0vHrb/DbWgWoboRrJ4p5h/0qkU=;
+ b=C3QBfBpYczU8INIJGqUxF4KA3MiQd3jHCSvNEkKd5Ym3ocOU9VbsG9wI
+ gweg9lBOao0xY/j0DkRRVsOopSDntZ2NlxSVSWofPbhAwUTGXZifFkpu1
+ o3Ey+tq/mIfzX8P4RXzDtHgCb7LLa/eF8sgV+rK8UnIhrW8D2phUw/wne
+ A0hK/IQJ4fFCezUWeFuiTSiI33Cg4qaowlDJ3L4tMyPqrFteWoYE9k6ci
+ amPNCKUIW48DxMj7ujqP1lVbfTSTkF9g+qd8FIFT3+o95Ac2ZmAVxl33R
+ WmtaR++lgDBzLHf6kpfTSjjNoWqLVsW4VnaVk+KOA30YnrxzR9Jo0UYJ0 w==;
+X-CSE-ConnectionGUID: NqHIHiaBQGObs5+V/Qwssw==
+X-CSE-MsgGUID: Uf+h6cpIRI2UbqRt3k9vJA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11101"; a="15197641"
+X-IronPort-AV: E=Sophos;i="6.08,234,1712646000"; d="scan'208";a="15197641"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Jun 2024 01:15:19 -0700
+X-CSE-ConnectionGUID: v9xmRuCGQKutqsLYM8+9Dw==
+X-CSE-MsgGUID: /AGM21LtQQ64cnof1exuRg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,234,1712646000"; d="scan'208";a="70851494"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa002.jf.intel.com with ESMTP; 13 Jun 2024 01:15:15 -0700
+Date: Thu, 13 Jun 2024 16:30:45 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
+Message-ID: <ZmquNSnnVSdOe0Z3@intel.com>
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+ <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v2 2/7] virtio-iommu: Implement set|unset]_iommu_device()
- callbacks
-Content-Language: en-US
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "mst@redhat.com"
- <mst@redhat.com>, "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
- "imammedo@redhat.com" <imammedo@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "clg@redhat.com" <clg@redhat.com>, "yanghliu@redhat.com"
- <yanghliu@redhat.com>
-Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>
-References: <20240607143905.765133-1-eric.auger@redhat.com>
- <20240607143905.765133-3-eric.auger@redhat.com>
- <SJ0PR11MB6744E8907BBF000C73278B0A92C72@SJ0PR11MB6744.namprd11.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <SJ0PR11MB6744E8907BBF000C73278B0A92C72@SJ0PR11MB6744.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,202 +88,129 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
+On Tue, Jun 11, 2024 at 01:33:32PM +0300, Manos Pitsidianakis wrote:
+> Date: Tue, 11 Jun 2024 13:33:32 +0300
+> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Subject: [RFC PATCH v2 3/5] rust: add PL011 device model
+> X-Mailer: git-send-email 2.44.0
+> 
+> This commit adds a re-implementation of hw/char/pl011.c in Rust.
+> 
+> It uses generated Rust bindings (produced by `ninja
+> aarch64-softmmu-generated.rs`) to
+> register itself as a QOM type/class.
+> 
+> How to build:
+> 
+> 1. Make sure rust, cargo and bindgen (cargo install bindgen-cli) are
+>    installed
+> 2. Configure a QEMU build with:
+>    --enable-system --target-list=aarch64-softmmu --enable-with-rust
+> 3. Launching a VM with qemu-system-aarch64 should use the Rust version
+>    of the pl011 device (unless it is not set up so in hw/arm/virt.c; the
+>    type of the UART device is hardcoded).
+> 
+>    To confirm, inspect `info qom-tree` in the monitor and look for an
+>    `x-pl011-rust` device.
+> 
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> ---
 
-On 6/11/24 04:38, Duan, Zhenzhong wrote:
-> Hi Eric,
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Subject: [RFC v2 2/7] virtio-iommu: Implement set|unset]_iommu_device()
->> callbacks
->>
->> Implement PCIIOMMUOPs [set|unset]_iommu_device() callbacks.
->> In set(), a VirtioHostIOMMUDevice is allocated which holds
->> a reference to the HostIOMMUDevice. This object is stored in a hash
->> table indexed by PCI BDF. The handle to the Host IOMMU device
->> will allow to retrieve information related to the physical IOMMU.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> ---
->> include/hw/virtio/virtio-iommu.h |  9 ++++
->> hw/virtio/virtio-iommu.c         | 87
->> ++++++++++++++++++++++++++++++++
->> 2 files changed, 96 insertions(+)
->>
->> diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-
->> iommu.h
->> index 83a52cc446..4f664ea0c4 100644
->> --- a/include/hw/virtio/virtio-iommu.h
->> +++ b/include/hw/virtio/virtio-iommu.h
->> @@ -45,6 +45,14 @@ typedef struct IOMMUDevice {
->>     bool probe_done;
->> } IOMMUDevice;
->>
->> +typedef struct VirtioHostIOMMUDevice {
->> +    void *viommu;
->> +    PCIBus *bus;
->> +    uint8_t devfn;
->> +    HostIOMMUDevice *dev;
->> +    QLIST_ENTRY(VirtioHostIOMMUDevice) next;
->> +} VirtioHostIOMMUDevice;
->> +
->> typedef struct IOMMUPciBus {
->>     PCIBus       *bus;
->>     IOMMUDevice  *pbdev[]; /* Parent array is sparse, so dynamically alloc
->> */
->> @@ -57,6 +65,7 @@ struct VirtIOIOMMU {
->>     struct virtio_iommu_config config;
->>     uint64_t features;
->>     GHashTable *as_by_busptr;
->> +    GHashTable *host_iommu_devices;
->>     IOMMUPciBus *iommu_pcibus_by_bus_num[PCI_BUS_MAX];
->>     PCIBus *primary_bus;
->>     ReservedRegion *prop_resv_regions;
->> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
->> index 1326c6ec41..0680a357f0 100644
->> --- a/hw/virtio/virtio-iommu.c
->> +++ b/hw/virtio/virtio-iommu.c
->> @@ -28,6 +28,7 @@
->> #include "sysemu/kvm.h"
->> #include "sysemu/reset.h"
->> #include "sysemu/sysemu.h"
->> +#include "sysemu/host_iommu_device.h"
-> Not sure if better to move this to include/hw/virtio/virtio-iommu.h
-> as HostIOMMUDevice is used there.
-agreed!
->
->> #include "qemu/reserved-region.h"
->> #include "qemu/units.h"
->> #include "qapi/error.h"
->> @@ -69,6 +70,11 @@ typedef struct VirtIOIOMMUMapping {
->>     uint32_t flags;
->> } VirtIOIOMMUMapping;
->>
->> +struct hiod_key {
->> +    PCIBus *bus;
->> +    uint8_t devfn;
->> +};
->> +
->> static inline uint16_t virtio_iommu_get_bdf(IOMMUDevice *dev)
->> {
->>     return PCI_BUILD_BDF(pci_bus_num(dev->bus), dev->devfn);
->> @@ -462,8 +468,86 @@ static AddressSpace
->> *virtio_iommu_find_add_as(PCIBus *bus, void *opaque,
->>     return &sdev->as;
->> }
->>
->> +static gboolean hiod_equal(gconstpointer v1, gconstpointer v2)
->> +{
->> +    const struct hiod_key *key1 = v1;
->> +    const struct hiod_key *key2 = v2;
->> +
->> +    return (key1->bus == key2->bus) && (key1->devfn == key2->devfn);
->> +}
->> +
->> +static guint hiod_hash(gconstpointer v)
->> +{
->> +    const struct hiod_key *key = v;
->> +    guint value = (guint)(uintptr_t)key->bus;
->> +
->> +    return (guint)(value << 8 | key->devfn);
->> +}
->> +
->> +static VirtioHostIOMMUDevice *
->> +get_host_iommu_device(VirtIOIOMMU *viommu, PCIBus *bus, int devfn) {
->> +    struct hiod_key key = {
->> +        .bus = bus,
->> +        .devfn = devfn,
->> +    };
->> +
->> +    return g_hash_table_lookup(viommu->host_iommu_devices, &key);
->> +}
->> +
->> +static bool virtio_iommu_set_iommu_device(PCIBus *bus, void *opaque,
->> int devfn,
->> +                                          HostIOMMUDevice *hiod, Error **errp)
->> +{
->> +    VirtIOIOMMU *viommu = opaque;
->> +    VirtioHostIOMMUDevice *vhiod;
->> +    struct hiod_key *new_key;
->> +
->> +    assert(hiod);
->> +
->> +    vhiod = get_host_iommu_device(viommu, bus, devfn);
->> +    if (vhiod) {
->> +        error_setg(errp, "VirtioHostIOMMUDevice already exists");
->> +        return false;
->> +    }
->> +
->> +    vhiod = g_malloc0(sizeof(VirtioHostIOMMUDevice));
->> +    vhiod->bus = bus;
->> +    vhiod->devfn = (uint8_t)devfn;
->> +    vhiod->viommu = viommu;
->> +    vhiod->dev = hiod;
->> +
->> +    new_key = g_malloc(sizeof(*new_key));
->> +    new_key->bus = bus;
->> +    new_key->devfn = devfn;
->> +
->> +    object_ref(hiod);
->> +    g_hash_table_insert(viommu->host_iommu_devices, new_key, vhiod);
->> +
->> +    return true;
->> +}
->> +
->> +static void
->> +virtio_iommu_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
->> +{
->> +    VirtIOIOMMU *viommu = opaque;
->> +    VirtioHostIOMMUDevice *vhiod;
->> +    struct hiod_key key = {
->> +        .bus = bus,
->> +        .devfn = devfn,
->> +    };
->> +
->> +    vhiod = g_hash_table_lookup(viommu->host_iommu_devices, &key);
->> +    if (!vhiod) {
->> +        return;
->> +    }
->> +
->> +    g_hash_table_remove(viommu->host_iommu_devices, &key);
->> +    object_unref(vhiod->dev);
-> This looks a use-after-free.
-yes. Adopting the destroy function now in place in intel iommu
+Hi Manos,
 
-Thanks!
+Thanks for your example!
 
-Eric
->
-> Thanks
-> Zhenzhong
->
->> +}
->> +
->> static const PCIIOMMUOps virtio_iommu_ops = {
->>     .get_address_space = virtio_iommu_find_add_as,
->> +    .set_iommu_device = virtio_iommu_set_iommu_device,
->> +    .unset_iommu_device = virtio_iommu_unset_iommu_device,
->> };
->>
->> static int virtio_iommu_attach(VirtIOIOMMU *s,
->> @@ -1357,6 +1441,9 @@ static void
->> virtio_iommu_device_realize(DeviceState *dev, Error **errp)
->>
->>     s->as_by_busptr = g_hash_table_new_full(NULL, NULL, NULL, g_free);
->>
->> +    s->host_iommu_devices = g_hash_table_new_full(hiod_hash,
->> hiod_equal,
->> +                                                  g_free, g_free);
->> +
->>     if (s->primary_bus) {
->>         pci_setup_iommu(s->primary_bus, &virtio_iommu_ops, s);
->>     } else {
->> --
->> 2.41.0
+> diff --git a/rust/pl011/Cargo.toml b/rust/pl011/Cargo.toml
+> new file mode 100644
+> index 0000000000..db74f2b59f
+> --- /dev/null
+> +++ b/rust/pl011/Cargo.toml
+> @@ -0,0 +1,66 @@
+
+...
+
+> +[lints]
+> +[lints.rustdoc]
+> +broken_intra_doc_links = "deny"
+> +redundant_explicit_links = "deny"
+> +[lints.clippy]
+> +# lint groups
+> +correctness = { level = "deny", priority = -1 }
+> +suspicious = { level = "deny", priority = -1 }
+> +complexity = { level = "deny", priority = -1 }
+> +perf = { level = "deny", priority = -1 }
+> +cargo = { level = "deny", priority = -1 }
+> +nursery = { level = "deny", priority = -1 }
+> +style = { level = "deny", priority = -1 }
+> +# restriction group
+> +dbg_macro = "deny"
+> +rc_buffer = "deny"
+> +as_underscore = "deny"
+> +assertions_on_result_states = "deny"
+> +# pedantic group
+> +doc_markdown = "deny"
+> +expect_fun_call = "deny"
+> +borrow_as_ptr = "deny"
+> +case_sensitive_file_extension_comparisons = "deny"
+> +cast_lossless = "deny"
+> +cast_ptr_alignment = "allow"
+> +large_futures = "deny"
+> +waker_clone_wake = "deny"
+> +unused_enumerate_index = "deny"
+> +unnecessary_fallible_conversions = "deny"
+> +struct_field_names = "deny"
+> +manual_hash_one = "deny"
+> +into_iter_without_iter = "deny"
+> +option_if_let_else = "deny"
+> +missing_const_for_fn = "deny"
+> +significant_drop_tightening = "deny"
+> +multiple_crate_versions = "deny"
+> +significant_drop_in_scrutinee = "deny"
+> +cognitive_complexity = "deny"
+> +missing_safety_doc = "allow"
+
+...
+
+> diff --git a/rust/pl011/rustfmt.toml b/rust/pl011/rustfmt.toml
+> new file mode 120000
+> index 0000000000..39f97b043b
+> --- /dev/null
+> +++ b/rust/pl011/rustfmt.toml
+> @@ -0,0 +1 @@
+> +../rustfmt.toml
+
+...
+
+> diff --git a/rust/rustfmt.toml b/rust/rustfmt.toml
+> new file mode 100644
+> index 0000000000..ebecb99fe0
+> --- /dev/null
+> +++ b/rust/rustfmt.toml
+> @@ -0,0 +1,7 @@
+> +edition = "2021"
+> +format_generated_files = false
+> +format_code_in_doc_comments = true
+> +format_strings = true
+> +imports_granularity = "Crate"
+> +group_imports = "StdExternalCrate"
+> +wrap_comments = true
+> 
+
+About the Rust style, inspired from the discussion on my previous
+simpletrace-rust [1], it looks like people prefer the default rust style
+and use the default check without custom configurations.
+
+More style requirements are also an open, especially for unstable ones,
+and it would be better to split this part into a separate patch, so that
+the discussion about style doesn't overshadow the focus on your example.
+
+[1]: https://lore.kernel.org/qemu-devel/ZlnBGwk29Ds9FjUA@redhat.com/
+
+Regards,
+Zhao
+
 
 
