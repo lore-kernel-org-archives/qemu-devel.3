@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B68C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 09:40:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF83C41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 09:49:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHgw9-0002lW-On; Thu, 13 Jun 2024 05:40:05 -0400
+	id 1sHh4G-0004S2-8g; Thu, 13 Jun 2024 05:48:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHgw7-0002kb-E0
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:40:03 -0400
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHh4E-0004Rc-7f
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:48:26 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHgw5-0008W4-Nx
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:40:03 -0400
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-5295e488248so958610e87.2
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 02:40:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHh4C-0001fh-KI
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:48:25 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-35f0d6255bdso799173f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 02:48:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718271600; x=1718876400; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718272101; x=1718876901; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3aOunvMosKHTQ3tcT30IqrnVLnm+2Svo2x15/onrgnI=;
- b=YZrZ0W9geiHLvEKN5KgyRSjDk9YUXa+8NB0etF1TzdGy67g5XKPAgP5B4AYxj+HhJM
- Ynj+BUctMkefNjL77aHTjQD3FRkqUWsBAB1gxKxOKYZNHPjmRgS8I4SCfn3/WvvdJyQj
- uxh28deXbel0B/mzLJxCk//NPZhUwMR0Ug5pexiC33bF8D6EqSA0wpB4959TLnvlyTJa
- xOvuErHKCxYnmpFHyr2CYQK6wnepLnWgm85x5TjlZ1lv6YyX7Nk1b4ci+oFRf+b+LQS0
- pDG4PvozA1JTlyB7dk19B3FcViBOiXE8/NcG56+S8fmVZKJzgrg6Z3YHTzfKVVznSwjf
- dL9A==
+ bh=xGhk/spDP89wS2ZNe2S7gyQIoX1ZGRST+KHMCay608w=;
+ b=TcmCuvBgtwtW/1OmVl9g/KbgoyErR1u4GY67Roli63JcfrTmsca37cotoZNl1Qe5G7
+ 6y4gBEOONXtrQS/l0r/YNBAiSmHe5esTKii5pWFMtrv8K+nfjhrJMIi67aMgx/1GXUf7
+ 9rQ9vITIQ0QeGnPbc9JrHy/xffknLKkTQZtaSE0wZtGiF07BrpIsXTTZOjhSJMGGp2jN
+ xsBZXlx7neh4DV0gVPtIveQAFq5XkP2yX8WacB+YOIDJg++2vWa+v50ONG4jk2tCbO8j
+ Htaxz3FW4PwYEFP98WqihrJ/Bo2et7H+lDJ9o9CFaDob9y0Gta11FfqKiikBnmMjsIMh
+ FWRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718271600; x=1718876400;
+ d=1e100.net; s=20230601; t=1718272101; x=1718876901;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3aOunvMosKHTQ3tcT30IqrnVLnm+2Svo2x15/onrgnI=;
- b=V0RQYxOLAZvzihxJx5tFipkZtpd6Kgw/B6Mh8KB4Yhswtn/8CPfTgXp8g2UuibgGRZ
- zfCBge7xUovGOowSB1evinpcVRTKAzejJf61m5xGHkfBdwS8l/bfwQXV7NGZayiF7v9I
- 6ZqcL0hdx9/mtkoukJYlSrWdWU1mMnzSL+AOr7PzzgkBMRPi7l4TW8O89RBCmJycgJ03
- dqlgomN2efnMbcuc/QgrgfzFXGpG1iaHuLU1opSxhrU2iGmK9RcL0wG4DJr2QnFnfNtY
- 8wRbTHmBV+IJcdpwU769Is9Vh26E043ltNiqX2dEMg9KoKUOeY4pqReTeA/Gfjrvmufi
- LnmQ==
+ bh=xGhk/spDP89wS2ZNe2S7gyQIoX1ZGRST+KHMCay608w=;
+ b=jR9w9oi2+Kn8KgEO+kwvfKfYXEIbkuxeUSnp0F5BDIDwhd/pWhUSwha53d/81uJNAV
+ U9m2U5Fk1TcA07FJ5pjRBzRVNI5jFQ9BLtQH4lGQ5KRC8YRcR8usjqKCicH/h0B5gW2S
+ cyWvomgqXKTWM3pxVDlr3miTxJ5VQdhklf6nE/O0Aki5E+mDcYU+FlRysCCyM01v+HRI
+ yfMDWDic7oLS3BXZWsmErcI/gHTPwHFtV/V+e8XEZiRMmtbdMCrAHqhVe/PXnBOGZe/n
+ 6ImrCbXmaNUBzA3MQeaPuB0jaP5ChRlhi2FaC00oQWFVX85zY3ansJq3R/uKRs7sjTQY
+ UQcg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNCRuisyTdRVknS2fsQAmg12qA0Ri0cGDhq6EdaXUIbV97LmTKJaGdvsuf/qwiJj/cWbUqIqgptlH8QC2WFLinNIcUEIo=
-X-Gm-Message-State: AOJu0Yx/2wYMVWYY3EYzGSyDQgAJxl2czbkzEoFhPHWwCp31D6XF6Ttw
- qG5Fbzwm441g8ixE6YX8hnUqiQBdDQ3JprdHB+0gyn7ammsSHSgGgMqwAdgx9oY=
-X-Google-Smtp-Source: AGHT+IFOG/8FrgqA9XZ/w2p9VIFkSxQU0Sedis4nI++qNFKsZF2ng64Ha6M2ODVcCthbioPnL41stw==
-X-Received: by 2002:a05:6512:2255:b0:52c:6ff5:aecf with SMTP id
- 2adb3069b0e04-52c9a3fcc83mr3578819e87.42.1718271599618; 
- Thu, 13 Jun 2024 02:39:59 -0700 (PDT)
+ AJvYcCWGMZcFZXqhiwNZaNc+q8brgfQl403ABmZDZ2uZu9aIgO/k5X7hMgtZk597yzLPDcRE4AKlM9Kt7JZBYRR3XAbXaFMsmDs=
+X-Gm-Message-State: AOJu0Yz3miyQdntqwunT+4I90yVUf7J0Pu99/zkrDNgXLNoohBz3MZEk
+ I2f1KfE/pKLBPD2Qac+g7wNgcRrbe6n5rAjWbZE4j0uN5/H4YAgIm5fgG73mIHw=
+X-Google-Smtp-Source: AGHT+IHtjgQTe2IQDtIMBIABZMxKQjtjTUoPz/1QICH4eFhaT1N7pwGoXBStReN3MRQl+BKpHb63XA==
+X-Received: by 2002:a5d:5308:0:b0:35f:1e30:f69a with SMTP id
+ ffacd0b85a97d-35fe88c91f6mr3301679f8f.42.1718272101107; 
+ Thu, 13 Jun 2024 02:48:21 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.148.226])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-360750ad216sm1161830f8f.57.2024.06.13.02.39.58
+ ffacd0b85a97d-36075104c17sm1174740f8f.106.2024.06.13.02.48.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Jun 2024 02:39:59 -0700 (PDT)
-Message-ID: <0bdd0e28-8216-43c0-a415-c2148565900f@linaro.org>
-Date: Thu, 13 Jun 2024 11:39:57 +0200
+ Thu, 13 Jun 2024 02:48:20 -0700 (PDT)
+Message-ID: <c44dcf6c-3e99-4a32-888d-3c7dfc305a01@linaro.org>
+Date: Thu, 13 Jun 2024 11:48:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] cpu: fix memleak of 'halt_cond' and 'thread'
-To: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
- qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, pierrick.bouvier@linaro.org,
- qemu-trivial@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>
-References: <3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com>
+Subject: Re: [PATCH 00/26] hw/ppc: Prefer HumanReadableText over Monitor
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>, David Gibson <david@gibson.dropbear.id.au>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+References: <20240610062105.49848-1-philmd@linaro.org>
+ <cd48f836-3017-4559-b509-9945d041a327@kaod.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com>
+In-Reply-To: <cd48f836-3017-4559-b509-9945d041a327@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,20 +100,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/6/24 19:04, Matheus Tavares Bernardino wrote:
-> Since a4c2735f35 (cpu: move Qemu[Thread|Cond] setup into common code,
-> 2024-05-30) these fields are now allocated at cpu_common_initfn(). So
-> let's make sure we also free them at cpu_common_finalize().
+On 10/6/24 10:19, Cédric Le Goater wrote:
+> On 6/10/24 8:20 AM, Philippe Mathieu-Daudé wrote:
+>> Hi,
+>>
+>> This series remove uses of Monitor in hw/ppc/,
+>> replacing by the more generic HumanReadableText.
+>> Care is taken to keep the commit bisectables by
+>> updating functions one by one, also easing review.
 > 
-> Furthermore, the code also frees these on round robin, but we missed
-> 'halt_cond'.
-> 
-> Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-> ---
->   accel/tcg/tcg-accel-ops-rr.c | 1 +
->   hw/core/cpu-common.c         | 3 +++
->   2 files changed, 4 insertions(+)
+> Did you do any testing ? POWER[8-10] CPUs on pseries and powernv machines
+> should be checked. A bit tedious I agree but not that long.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I ran these smoke tests comparing monitor output with baseline:
+
+$ ./qemu-system-ppc64 -M powernv8 -S -monitor stdio
+QEMU 9.0.50 monitor - type 'help' for more information
+(qemu) info pic
+CPU 0 XIRR=00000000 (0x0) PP=ff MFRR=ff
+ICS 1000..1005 0x14c03d9c0
+   1000 LSI ff 00
+   1001 LSI ff 00
+   1002 LSI ff 00
+   1003 LSI ff 00
+   1004 LSI ff 00
+   1005 LSI ff 00
+ICS    0.. 7ff 0x14c0e93e8
+ICS    0..   7 0x14c0e9328
+      0 LSI ff 00
+      1 LSI ff 00
+      2 LSI ff 00
+      3 LSI ff 00
+      4 LSI ff 00
+      5 LSI ff 00
+      6 LSI ff 00
+      7 LSI ff 00
+ICS    0.. 7ff 0x14c16ffe8
+ICS    0..   7 0x14c16ff28
+      0 LSI ff 00
+      1 LSI ff 00
+      2 LSI ff 00
+      3 LSI ff 00
+      4 LSI ff 00
+      5 LSI ff 00
+      6 LSI ff 00
+      7 LSI ff 00
+ICS    0.. 7ff 0x14c2177e8
+ICS    0..   7 0x14c217728
+      0 LSI ff 00
+      1 LSI ff 00
+      2 LSI ff 00
+      3 LSI ff 00
+      4 LSI ff 00
+      5 LSI ff 00
+      6 LSI ff 00
+      7 LSI ff 00
+Interrupt controller information not available for 
+power8_v2.0-powerpc64-cpu.
+(qemu) q
+
+$ ./qemu-system-ppc64 -M pseries -cpu power10 -S -monitor stdio
+QEMU 9.0.50 monitor - type 'help' for more information
+qemu-system-ppc64: warning: TCG doesn't support requested feature, 
+cap-cfpc=workaround
+qemu-system-ppc64: warning: TCG doesn't support requested feature, 
+cap-sbbc=workaround
+qemu-system-ppc64: warning: TCG doesn't support requested feature, 
+cap-ibs=workaround
+qemu-system-ppc64: warning: TCG doesn't support requested feature, 
+cap-ccf-assist=on
+(qemu) info pic
+CPU 0 XIRR=00000000 (0x0) PP=ff MFRR=ff
+ICS 1000..1fff 0x600003b05b00
+   1000 MSI ff 00
+   1001 MSI ff 00
+   1100 MSI ff 00
+   1101 MSI ff 00
+   1102 MSI ff 00
+   1103 MSI ff 00
+   1200 LSI ff 00
+   1201 LSI ff 00
+   1202 LSI ff 00
+   1203 LSI ff 00
+irqchip: emulated
+Interrupt controller information not available for 
+power10_v2.0-powerpc64-cpu.
+(qemu) q
 
 
