@@ -4,60 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDC97C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 07:45:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F958C27C75
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 07:57:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHf8f-0001FW-OB; Thu, 13 Jun 2024 03:44:53 -0400
+	id 1sHfK5-0003DW-KM; Thu, 13 Jun 2024 03:56:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=9LeC=NP=kaod.org=clg@ozlabs.org>)
- id 1sHf8d-0001FB-7O
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:44:51 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHfK4-0003D9-PT
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:56:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=9LeC=NP=kaod.org=clg@ozlabs.org>)
- id 1sHf8a-0004OZ-T6
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:44:50 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W0DvX6Md0z4wyf;
- Thu, 13 Jun 2024 17:44:40 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHfK0-0006XU-RZ
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:56:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718265395;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=u/YLQd1l00KTFQ07VyVKuBnAoqm47W/9Ae+EMOt2H9Q=;
+ b=D6eu2m8AgUIKWmYJycMH2QNoJJkzUpi676/YPg4qY0IylfZGEeX7U7uw0UiogIeP2B3PsT
+ 9YWMiS/E7V28CKmWLMFvSGWvOl9X5cCIRpRbkWtPcM4U51MwVTDmNdVLJdbgoI9MLRu6eu
+ OkZmdC+1fcRDyxn54JYxib3cXEwXEBo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-261-YyzJe0S1Pve1kxitgPYlfA-1; Thu,
+ 13 Jun 2024 03:56:31 -0400
+X-MC-Unique: YyzJe0S1Pve1kxitgPYlfA-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W0DvT3CRzz4wc8;
- Thu, 13 Jun 2024 17:44:37 +1000 (AEST)
-Message-ID: <4d1777d6-0195-4ecb-a85f-09964268533d@kaod.org>
-Date: Thu, 13 Jun 2024 09:44:32 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 21/32] hw/sd: Add mmc switch function support
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Bin Meng <bin.meng@windriver.com>,
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BACDC195608C; Thu, 13 Jun 2024 07:56:28 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.52])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 92A5F1956087; Thu, 13 Jun 2024 07:56:24 +0000 (UTC)
+Date: Thu, 13 Jun 2024 08:56:21 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Lucien Murray-Pitts <lucienmp.qemu@gmail.com>,
- Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>,
- "Edgar E . Iglesias" <edgar.iglesias@xilinx.com>
-References: <20230703132509.2474225-1-clg@kaod.org>
- <20230703132509.2474225-22-clg@kaod.org>
- <d9a20624-1813-4a29-b819-1de3961cc3cf@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <d9a20624-1813-4a29-b819-1de3961cc3cf@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Alex =?utf-8?B?QmVubsOp?= e <alex.bennee@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v2 0/5] Implement ARM PL011 in Rust
+Message-ID: <ZmqmJZQGGKRhTvoW@redhat.com>
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+ <ZmleLH1dQvPqPBAY@redhat.com> <f06p3.rb3vk3rb2kt4@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=9LeC=NP=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <f06p3.rb3vk3rb2kt4@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,114 +92,97 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/13/24 12:49 AM, Philippe Mathieu-Daudé wrote:
-> On 3/7/23 15:24, Cédric Le Goater wrote:
->> From: Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>
->>
->> switch operation in mmc cards, updated the ext_csd register to
->> request changes in card operations. Here we implement similar
->> sequence but requests are mostly dummy and make no change.
->>
->> Implement SWITCH_ERROR if the write operation offset goes beyond length
->> of ext_csd.
->>
->> Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>
->> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@xilinx.com>
->> [ clg: - ported on SDProto framework ]
->> Signed-off-by: Cédric Le Goater <clg@kaod.org>
->> ---
->>   hw/sd/sd.c | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 52 insertions(+)
+On Thu, Jun 13, 2024 at 08:13:01AM +0300, Manos Pitsidianakis wrote:
+> Good morning Daniel,
 > 
+> On Wed, 12 Jun 2024 11:37, "Daniel P. Berrangé" <berrange@redhat.com> wrote:
+> > On Tue, Jun 11, 2024 at 01:33:29PM +0300, Manos Pitsidianakis wrote:
+> > 
+> > > 
+> > >  .gitignore                     |   2 +
+> > >  .gitlab-ci.d/buildtest.yml     |  64 ++--
+> > >  MAINTAINERS                    |  13 +
+> > >  configure                      |  12 +
+> > >  hw/arm/virt.c                  |   4 +
+> > >  meson.build                    | 102 ++++++
+> > >  meson_options.txt              |   4 +
+> > >  rust/meson.build               |  93 ++++++
+> > >  rust/pl011/.cargo/config.toml  |   2 +
+> > >  rust/pl011/.gitignore          |   2 +
+> > >  rust/pl011/Cargo.lock          | 120 +++++++
+> > >  rust/pl011/Cargo.toml          |  66 ++++
+> > >  rust/pl011/README.md           |  42 +++
+> > >  rust/pl011/build.rs            |  44 +++
+> > >  rust/pl011/deny.toml           |  57 ++++
+> > >  rust/pl011/meson.build         |   7 +
+> > >  rust/pl011/rustfmt.toml        |   1 +
+> > >  rust/pl011/src/definitions.rs  |  95 ++++++
+> > >  rust/pl011/src/device.rs       | 531 ++++++++++++++++++++++++++++++
+> > >  rust/pl011/src/device_class.rs |  95 ++++++
+> > >  rust/pl011/src/generated.rs    |   5 +
+> > >  rust/pl011/src/lib.rs          | 581 +++++++++++++++++++++++++++++++++
+> > >  rust/pl011/src/memory_ops.rs   |  38 +++
+> > >  rust/rustfmt.toml              |   7 +
+> > >  rust/wrapper.h                 |  39 +++
+> > >  scripts/cargo_wrapper.py       | 221 +++++++++++++
+> > >  scripts/meson-buildoptions.sh  |   6 +
+> > 
+> > Given the priority of getting the build system correct, what's missing
+> > here is updates/integration into our standard GitLab CI pipeline. If
+> > that can be shown to be working, that'll give alot more confidence in
+> > the overall solution.
+> > 
+> > Ideally this should not require anything more than updating the docker
+> > container definitions to add in the rust toolchain, plus the appropriate
+> > std library build for the given target - we cross compiler for every
+> > arch we officially care about.
+> > 
+> > Most of our dockerfiles these days are managed by lcitool, and it has
+> > nearly sufficient support for cross compiling with the rust std library.
+> > So to start with, this series should modify tests/lcitool/projects/qemu.yml
+> > to add
+> > 
+> >  - rust
+> >  - rust-std
+> > 
+> > to the package list, and run 'make lcitool-refresh' to re-create the
+> > dockerfiles - see the docs/devel/testing.rst for more info about
+> > lcitool if needed.
+> > 
+> > Assuming these 2 rust packages are in the container, I would then
+> > expect QEMU to just "do the right thing" when building this rust
+> > code. If it does not, then that's a sign of gaps that need closing.
+> > 
+> > Getting rid of the need to use --rust-target-triple will be the
+> > immediate gap that needs fixing, as CI just passes --cross-prefix
+> > for cross-builds and expects everything to be set from that.
+> > 
+> > The main gap we have is that for Windows I need to update lcitool
+> > to pull in the mingw std lib target for rust, which I something I
+> > missed when adding rust cross compiler support.
+
+I've updated lcitool for this gap:
+
+  https://gitlab.com/libvirt/libvirt-ci/-/merge_requests/492
+
+> The rust project has official Docker images, do you think it's something we
+> could use or is it unnecessary?
 > 
->> +static void mmc_function_switch(SDState *sd, uint32_t arg)
->> +{
->> +    uint32_t access = extract32(arg, 24, 2);
->> +    uint32_t index = extract32(arg, 16, 8);
->> +    uint32_t value = extract32(arg, 8, 8);
->> +    uint8_t b = sd->ext_csd[index];
-> 
-> This field is added in the next patch :)
-> 
-> ../../hw/sd/sd.c:927:21: error: no member named 'ext_csd' in 'struct SDState'
->      uint8_t b = sd->ext_csd[index];
->                  ~~  ^
-> ../../hw/sd/sd.c:949:9: error: no member named 'ext_csd' in 'struct SDState'
->      sd->ext_csd[index] = b;
->      ~~  ^
-> 
-> No need to respin, as I'm integrating your work.
+> https://github.com/rust-lang/docker-rust
 
+They're irrelevant - we need the containers with the full set of QEMU build
+dependencies present, and it is the Rust versions that are in the distros
+that matter to us.
 
-Ah good !
-
-There are 3 main parts :
-
-   * Base eMMC support:
-     hw/sd: Basis for eMMC support
-     hw/sd: Add emmc_cmd_SEND_OP_CMD() handler
-     hw/sd: Add emmc_cmd_ALL_SEND_CID() handler
-     hw/sd: Add emmc_cmd_SET_RELATIVE_ADDR() handler
-     hw/sd: Add emmc_cmd_APP_CMD() handler
-     hw/sd: add emmc_cmd_SEND_TUNING_BLOCK() handler
-     hw/sd: Add CMD21 tuning sequence
-     hw/sd: Add mmc switch function support
-     hw/sd: Add emmc_cmd_SEND_EXT_CSD() handler
-
-   * Boot area support
-     hw/sd: Support boot area in emmc image
-     hw/sd: Subtract bootarea size from blk
-     hw/sd: Add boot config support
-     hw/sd: Fix SET_BLOCK_COUNT command argument
-     hw/sd: Update CMD1 definition for MMC
-
-   * Aspeed eMMC support :
-     hw/arm/aspeed: Add eMMC device
-     hw/arm/aspeed: Load eMMC first boot area as a boot rom
-     hw/arm/aspeed: Set boot device to emmc
-     aspeed: Set bootconfig
-     aspeed: Introduce a 'boot-emmc' property for AST2600 based machines
-
-and I can rework the aspeed part if needed.
-
-Here is an image you can try boot on :
-
-   https://www.kaod.org/qemu/aspeed/rainier/mmc-p10bmc.qcow2
-
-Run with :
-
-   qemu-system-arm -M rainier-bmc -net nic,netdev=net0 -netdev user,id=net0 -drive file=./mmc-p10bmc.qcow2,format=qcow2,if=sd,id=sd2,index=2 -nographic -serial mon:stdio
-
-Thanks,
-
-C.
-  
-
->> +    switch (access) {
->> +    case MMC_CMD6_ACCESS_COMMAND_SET:
->> +        qemu_log_mask(LOG_UNIMP, "MMC Command set switching not supported\n");
->> +        return;
->> +    case MMC_CMD6_ACCESS_SET_BITS:
->> +        b |= value;
->> +        break;
->> +    case MMC_CMD6_ACCESS_CLEAR_BITS:
->> +        b &= ~value;
->> +        break;
->> +    case MMC_CMD6_ACCESS_WRITE_BYTE:
->> +        b = value;
->> +        break;
->> +    }
->> +
->> +    if (index >= 192) {
->> +        sd->card_status |= R_CSR_SWITCH_ERROR_MASK;
->> +        return;
->> +    }
->> +
->> +    sd->ext_csd[index] = b;
->> +}
-> 
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
