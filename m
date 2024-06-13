@@ -4,88 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC54DC27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 17:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2EAFC27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 17:57:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHobv-00076N-F6; Thu, 13 Jun 2024 13:51:43 -0400
+	id 1sHohI-0004U4-9e; Thu, 13 Jun 2024 13:57:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1sHobt-00075O-LS
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:51:41 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1sHobr-0002d0-Ag
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:51:41 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1f47f07aceaso12309045ad.0
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 10:51:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1718301098; x=1718905898; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pbbhXU+D2a2z0zlNrJgBTx/auUyPuzgul9ffEU9GMBY=;
- b=eO26abdSpgrabh7u/T6b+6zLvsCvC6emlbFtpYNuxG4Y6vOeJ473C5+pAiH6useNre
- wWsfuJCerhcI+AT4FPbP550n+40VGPTHQFZRMo6HTUgWZmOXPzApoWnwcYFag90U+WRH
- FQz71Gz6ibLc0gRVBrW2EIj1htsncG+FMTHwk4To/hYkCjep8ldGzSnJoqqGPYZbaUt9
- zw8+X20o/Fl3mvnv3kmdM+gUn1nubTu6NOcu6D2AJ2ow3H9+6XXBTlUlRawqH4NRDish
- 69yJdfLZLj4w3tAAFKD/KwBCDwCSvBMUgyJtYCKHlT1yMccz9TkAJ9GAEGK6zIJRTj+w
- CWCw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sHohH-0004Se-5E
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:57:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sHohF-0003UZ-Hf
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:57:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718301430;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Zb6pqNxI74iToge51ry0W/CKz8UHzczmMRz/HpWjWok=;
+ b=WZa5TpwIkCdkOk1CICEnoSRhtLQozAmRP+NwihXLbReaw31XXaE6utTJkCaE7rmkIIj89J
+ 7WeDix6MosO0F18dg9h7qwv8qSwW1DeL9RVl5um6W+cc+WInROPdo+VKvTn9y+jzc34gVu
+ ZbM8RQnNnmLgFzaeMGBVC79eFIe46uM=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-627-79bRkHCfNCy1GM0hZ-VL4A-1; Thu, 13 Jun 2024 13:57:09 -0400
+X-MC-Unique: 79bRkHCfNCy1GM0hZ-VL4A-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-421179fd82bso8490175e9.1
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 10:57:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718301098; x=1718905898;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1718301428; x=1718906228;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pbbhXU+D2a2z0zlNrJgBTx/auUyPuzgul9ffEU9GMBY=;
- b=aOdnvgBawSEg3Xu1sdXu+sdsgCivbzywa0ECACr9n0BBlqBftgZk+kZ8YKf87ekM9o
- 2k27FgVfmrvYmOmFqJ2Ssf+X3E4YyBYUMH3+2KDpQWh2YmA5TR0SY8oblUKr6KBZ+E0d
- TZLHeRHPSJDgk4ywGbRAFIt817sK9oTM+zUxNu2/s3Sued4QUq0ZnxV2OFLsPayyUyWM
- K5+byPr5Wc5Jj8TnD7b+VrBUIEb1nZtMj3AY1cwvs9qRsLlof/pX3zvMiHPzO9/sXy5c
- cIdjffOKLvbgy+d0CB+26oTdmMW0pzP2yTHQodY2S3IayvWlOT4x+73RvyQ5W4yg/dFm
- HjHg==
-X-Gm-Message-State: AOJu0Yyf16Dw+sbTncZ2478OEmfHlWUzjGW0XEKG8eXfK3YeA/UbBPIm
- xnbjzBjlNpJnGMEnoMpFkGo/+wGhGGAuLD+C04buQBKNoe14ECLOIUgHLacs1rCVpXaceTlgdAP
- 7MUJY0IaIO3NA+hOSrOFBcPN/9BQTCDuZTU+BG5DB2W3/YMJjkn4mRCJ6CUswPm+0UEZmzoivr7
- Pg0WMtUvUodle/hI6OdCMbvNqq1t7dScpeJdfjmQ==
-X-Google-Smtp-Source: AGHT+IHxuOeGGItFkst6d8wnU8yqm31Rw0Qs3molr4WIOT8xJeXogNQPT5IeOWEPdDxNh0IhT9Y/7g==
-X-Received: by 2002:a17:902:b711:b0:1f7:187f:cb63 with SMTP id
- d9443c01a7336-1f862a168e7mr3303525ad.47.1718301097695; 
- Thu, 13 Jun 2024 10:51:37 -0700 (PDT)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855e55d7dsm16780865ad.14.2024.06.13.10.51.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Jun 2024 10:51:37 -0700 (PDT)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>
-Subject: [RFC PATCH v4 3/5] target/riscv: rvv: Provide a fast path using
- direct access to host ram for unit-stride whole register load/store
-Date: Fri, 14 Jun 2024 01:51:20 +0800
-Message-Id: <20240613175122.1299212-4-max.chou@sifive.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240613175122.1299212-1-max.chou@sifive.com>
-References: <20240613175122.1299212-1-max.chou@sifive.com>
+ bh=Zb6pqNxI74iToge51ry0W/CKz8UHzczmMRz/HpWjWok=;
+ b=E0UwOVz10s16LptOvLiCmsI7R/FqxOrtrYvU5a4LIhKNedJGE9kEN/+RzxwWRk00F4
+ IeFDYoAULwNI0t/+E6vZg2KPi0HP1thUj4WVz3Bk5fxgV3O219c0zK1E55pt0SxpQCDU
+ b5fV7pt9RkWyL4za9rrGNGZH6yYTRycmyBODC90G2XdfM10VG/6TXGRL4TWBgiJS98bd
+ nOj8H9/4Pp/ugJdtTHZ+1EAVFkmehQ8UbNuOns2iqz4yMlatVD1W8Nb+zwiRLbnWFQaJ
+ 2sPd2l8lweS6x5jRhte0pPYbVxyHHQb4CkzAEl6MjE9kBCKt9P8HwnuuwTfZOSTzRPJE
+ d8tw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWCOTs9zfWj5Mn/W6aelfw8ilIOZ1EWe47MZzJUBrBnG2Dgt620udKcnwU50bN7VcOVRf10HRrzSrZkduNbNJ4bR8yAtFs=
+X-Gm-Message-State: AOJu0YymSK8jmot7sbdsBGiU6gKuyirr0P12aU4+7cw4Z18HOOnJme8+
+ W8kyNwCL5bN2qar/gNVInCgTyWzw39PEb/rJ2YK2gec00EXl6gRYBpRe+hTpswpJh1eQYVvqlyQ
+ kW0T6JZ65NnFaY7Z5ZQKgter0OPgXk3jMOHQunnaB6wWI1pZsLqvwRNsRloN6ieoSox6WQXynpN
+ SqcwUmeXd/2oUXdOIRg9X4P0F7pSI=
+X-Received: by 2002:a5d:6187:0:b0:35f:44c:b3ef with SMTP id
+ ffacd0b85a97d-3607a781a05mr313825f8f.52.1718301427989; 
+ Thu, 13 Jun 2024 10:57:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkhNaE3sJeI86A7DFYHW824xATcwyuO08K8XCPG7mWVQu3KZeD6PiAHGzz/fIdiP+VorcSf148hz6Sfg1jmHk=
+X-Received: by 2002:a5d:6187:0:b0:35f:44c:b3ef with SMTP id
+ ffacd0b85a97d-3607a781a05mr313804f8f.52.1718301427582; Thu, 13 Jun 2024
+ 10:57:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=max.chou@sifive.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+ <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
+ <CABgObfY8BS0yCw2CxgDQTBA4np9BZgGJF3N=t6eoBcdACAE=NA@mail.gmail.com>
+ <ez270.x96k6aeu0rpw@linaro.org> <ZmnHoajecti472mi@redhat.com>
+ <ezjl0.qx0tmsp6d6t@linaro.org>
+ <CABgObfbGwKc0RYBcDPzNkE8HOSouFj4D15Oh7TuiKOC+D7raaA@mail.gmail.com>
+ <ZmqcFf0xB9m4WkA3@redhat.com>
+ <CABgObfb4+FSsadFTVg6Dc1zehQV2Vei2_kSRd5CfxsGBLPN6Eg@mail.gmail.com>
+ <ZmscPKyuK7RVgrMo@intel.com>
+In-Reply-To: <ZmscPKyuK7RVgrMo@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 13 Jun 2024 19:56:55 +0200
+Message-ID: <CABgObfYnCQu9_yqL=CwO-O8qKqhXqnkZ0JGdZpTy23TX1AuHkw@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9_e?= <alex.bennee@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,235 +117,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The vector unit-stride whole register load/store instructions are
-similar to unmasked unit-stride load/store instructions that is suitable
-to be optimized by using a direct access to host ram fast path.
+On Thu, Jun 13, 2024 at 6:06=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wrot=
+e:
+> I think deeper and higher level bindings will have more opens and will
+> likely require more discussion and exploration. So could we explore this
+> direction on another reference Rust device?
+>
+> I also think there won=E2=80=99t be too many Rust devices in the short te=
+rm.
+> Going back to tweak or enhance existing Rust devices may not require too
+> much effort, once we have a definitive answer.
+>
+> I wonder if x86 could also implement a rust device (like the x86 timer
+> you mentioned before, hw/i386/kvm/i8254.c or hw/timer/i8254.c IIRC) to
+> try this? Or would you recommend another x86 device? :-)
 
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/vector_helper.c | 185 +++++++++++++++++++++++++----------
- 1 file changed, 133 insertions(+), 52 deletions(-)
+A timer device is a good idea, just because it's another pretty stable
+low-level QEMU API.
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 3d284138fb3..793337a6f96 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -935,81 +935,162 @@ GEN_VEXT_LDFF(vle64ff_v, int64_t, lde_d_tlb)
-  */
- static void
- vext_ldst_whole(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
--                vext_ldst_elem_fn_tlb *ldst_elem, uint32_t log2_esz,
--                uintptr_t ra)
-+                vext_ldst_elem_fn_tlb *ldst_tlb,
-+                vext_ldst_elem_fn_host *ldst_host, uint32_t log2_esz,
-+                uintptr_t ra, bool is_load)
- {
--    uint32_t i, k, off, pos;
-+    RVVContLdSt info;
-+    target_ulong addr;
-+    void *host;
-+    int flags;
-+    intptr_t reg_start, reg_last;
-+    uint32_t idx_nf, off, evl;
-     uint32_t nf = vext_nf(desc);
-     uint32_t vlenb = riscv_cpu_cfg(env)->vlenb;
-     uint32_t max_elems = vlenb >> log2_esz;
-+    uint32_t esz = 1 << log2_esz;
- 
-     if (env->vstart >= ((vlenb * nf) >> log2_esz)) {
-         env->vstart = 0;
-         return;
-     }
- 
--    k = env->vstart / max_elems;
--    off = env->vstart % max_elems;
-+    vext_cont_ldst_elements(&info, base, env->vreg, env->vstart,
-+                            nf * max_elems, desc, log2_esz, true);
-+    vext_cont_ldst_pages(env, &info, base, is_load, desc, esz, ra, true);
-+    vext_cont_ldst_watchpoints(env, &info, env->vreg, base, esz, is_load, ra,
-+                               desc);
-+
-+    flags = info.page[0].flags | info.page[1].flags;
-+    if (unlikely(flags != 0)) {
-+        /* At least one page includes MMIO. */
-+        reg_start = info.reg_idx_first[0];
-+        idx_nf = reg_start / max_elems;
-+        off = reg_start % max_elems;
-+        evl = (idx_nf + 1) * max_elems;
-+
-+        if (off) {
-+            /*
-+             * load/store rest of elements of current segment pointed by vstart
-+             */
-+            addr = base + (reg_start << log2_esz);
-+            for (; reg_start < evl; reg_start++, addr += esz) {
-+                ldst_tlb(env, adjust_addr(env, addr), reg_start << log2_esz,
-+                         vd, ra);
-+            }
-+            idx_nf++;
-+        }
-+
-+        /* load/store elements for rest of segments */
-+        evl = nf * max_elems;
-+        addr = base + (reg_start << log2_esz);
-+        for (; reg_start < evl; reg_start++, addr += esz) {
-+            ldst_tlb(env, adjust_addr(env, addr), reg_start << log2_esz, vd,
-+                     ra);
-+        }
-+
-+        env->vstart = 0;
-+        return;
-+    }
-+
-+    /* The entire operation is in RAM, on valid pages. */
-+    reg_start = info.reg_idx_first[0];
-+    reg_last = info.reg_idx_last[0] + 1;
-+    host = info.page[0].host;
-+    idx_nf = reg_start / max_elems;
-+    off = reg_start % max_elems;
-+    evl = (idx_nf + 1) * max_elems;
- 
-     if (off) {
-         /* load/store rest of elements of current segment pointed by vstart */
--        for (pos = off; pos < max_elems; pos++, env->vstart++) {
--            target_ulong addr = base + ((pos + k * max_elems) << log2_esz);
--            ldst_elem(env, adjust_addr(env, addr),
--                      (pos + k * max_elems) << log2_esz, vd, ra);
-+        for (; reg_start < evl; reg_start++) {
-+            ldst_host(vd, reg_start << log2_esz,
-+                      host + (reg_start << log2_esz));
-         }
--        k++;
-+        idx_nf++;
-     }
- 
-     /* load/store elements for rest of segments */
--    for (; k < nf; k++) {
--        for (i = 0; i < max_elems; i++, env->vstart++) {
--            target_ulong addr = base + ((i + k * max_elems) << log2_esz);
--            ldst_elem(env, adjust_addr(env, addr),
--                      (i + k * max_elems) << log2_esz, vd, ra);
-+    for (; reg_start < reg_last; reg_start++) {
-+        ldst_host(vd, reg_start << log2_esz, host + (reg_start << log2_esz));
-+    }
-+
-+    /*
-+     * Use the slow path to manage the cross-page misalignment.
-+     * But we know this is RAM and cannot trap.
-+     */
-+    if (unlikely(info.mem_off_split >= 0)) {
-+        reg_start = info.reg_idx_split;
-+        addr = base + (reg_start << log2_esz);
-+        ldst_tlb(env, adjust_addr(env, addr), reg_start << log2_esz, vd, ra);
-+    }
-+
-+    if (unlikely(info.mem_off_first[1] >= 0)) {
-+        reg_start = info.reg_idx_first[1];
-+        reg_last = info.reg_idx_last[1] + 1;
-+        host = info.page[1].host;
-+        idx_nf = reg_start / max_elems;
-+        off = reg_start % max_elems;
-+        evl = (idx_nf + 1) * max_elems;
-+
-+        if (off) {
-+            /*
-+             * load/store rest of elements of current segment pointed by vstart
-+             */
-+            for (; reg_start < evl; reg_start++) {
-+                ldst_host(vd, reg_start << log2_esz,
-+                          host + (reg_start << log2_esz));
-+            }
-+            idx_nf++;
-+        }
-+
-+        /* load/store elements for rest of segments */
-+        for (; reg_start < reg_last; reg_start++) {
-+            ldst_host(vd, reg_start << log2_esz,
-+                      host + (reg_start << log2_esz));
-         }
-     }
- 
-     env->vstart = 0;
- }
- 
--#define GEN_VEXT_LD_WHOLE(NAME, ETYPE, LOAD_FN)      \
--void HELPER(NAME)(void *vd, target_ulong base,       \
--                  CPURISCVState *env, uint32_t desc) \
--{                                                    \
--    vext_ldst_whole(vd, base, env, desc, LOAD_FN,    \
--                    ctzl(sizeof(ETYPE)), GETPC());   \
--}
--
--GEN_VEXT_LD_WHOLE(vl1re8_v,  int8_t,  lde_b_tlb)
--GEN_VEXT_LD_WHOLE(vl1re16_v, int16_t, lde_h_tlb)
--GEN_VEXT_LD_WHOLE(vl1re32_v, int32_t, lde_w_tlb)
--GEN_VEXT_LD_WHOLE(vl1re64_v, int64_t, lde_d_tlb)
--GEN_VEXT_LD_WHOLE(vl2re8_v,  int8_t,  lde_b_tlb)
--GEN_VEXT_LD_WHOLE(vl2re16_v, int16_t, lde_h_tlb)
--GEN_VEXT_LD_WHOLE(vl2re32_v, int32_t, lde_w_tlb)
--GEN_VEXT_LD_WHOLE(vl2re64_v, int64_t, lde_d_tlb)
--GEN_VEXT_LD_WHOLE(vl4re8_v,  int8_t,  lde_b_tlb)
--GEN_VEXT_LD_WHOLE(vl4re16_v, int16_t, lde_h_tlb)
--GEN_VEXT_LD_WHOLE(vl4re32_v, int32_t, lde_w_tlb)
--GEN_VEXT_LD_WHOLE(vl4re64_v, int64_t, lde_d_tlb)
--GEN_VEXT_LD_WHOLE(vl8re8_v,  int8_t,  lde_b_tlb)
--GEN_VEXT_LD_WHOLE(vl8re16_v, int16_t, lde_h_tlb)
--GEN_VEXT_LD_WHOLE(vl8re32_v, int32_t, lde_w_tlb)
--GEN_VEXT_LD_WHOLE(vl8re64_v, int64_t, lde_d_tlb)
--
--#define GEN_VEXT_ST_WHOLE(NAME, ETYPE, STORE_FN)     \
--void HELPER(NAME)(void *vd, target_ulong base,       \
--                  CPURISCVState *env, uint32_t desc) \
--{                                                    \
--    vext_ldst_whole(vd, base, env, desc, STORE_FN,   \
--                    ctzl(sizeof(ETYPE)), GETPC());   \
--}
--
--GEN_VEXT_ST_WHOLE(vs1r_v, int8_t, ste_b_tlb)
--GEN_VEXT_ST_WHOLE(vs2r_v, int8_t, ste_b_tlb)
--GEN_VEXT_ST_WHOLE(vs4r_v, int8_t, ste_b_tlb)
--GEN_VEXT_ST_WHOLE(vs8r_v, int8_t, ste_b_tlb)
-+#define GEN_VEXT_LD_WHOLE(NAME, ETYPE, LOAD_FN_TLB, LOAD_FN_HOST)   \
-+void HELPER(NAME)(void *vd, target_ulong base, CPURISCVState *env,  \
-+                  uint32_t desc)                                    \
-+{                                                                   \
-+    vext_ldst_whole(vd, base, env, desc, LOAD_FN_TLB, LOAD_FN_HOST, \
-+                    ctzl(sizeof(ETYPE)), GETPC(), true);            \
-+}
-+
-+GEN_VEXT_LD_WHOLE(vl1re8_v,  int8_t,  lde_b_tlb, lde_b_host)
-+GEN_VEXT_LD_WHOLE(vl1re16_v, int16_t, lde_h_tlb, lde_h_host)
-+GEN_VEXT_LD_WHOLE(vl1re32_v, int32_t, lde_w_tlb, lde_w_host)
-+GEN_VEXT_LD_WHOLE(vl1re64_v, int64_t, lde_d_tlb, lde_d_host)
-+GEN_VEXT_LD_WHOLE(vl2re8_v,  int8_t,  lde_b_tlb, lde_b_host)
-+GEN_VEXT_LD_WHOLE(vl2re16_v, int16_t, lde_h_tlb, lde_h_host)
-+GEN_VEXT_LD_WHOLE(vl2re32_v, int32_t, lde_w_tlb, lde_w_host)
-+GEN_VEXT_LD_WHOLE(vl2re64_v, int64_t, lde_d_tlb, lde_d_host)
-+GEN_VEXT_LD_WHOLE(vl4re8_v,  int8_t,  lde_b_tlb, lde_b_host)
-+GEN_VEXT_LD_WHOLE(vl4re16_v, int16_t, lde_h_tlb, lde_h_host)
-+GEN_VEXT_LD_WHOLE(vl4re32_v, int32_t, lde_w_tlb, lde_w_host)
-+GEN_VEXT_LD_WHOLE(vl4re64_v, int64_t, lde_d_tlb, lde_d_host)
-+GEN_VEXT_LD_WHOLE(vl8re8_v,  int8_t,  lde_b_tlb, lde_b_host)
-+GEN_VEXT_LD_WHOLE(vl8re16_v, int16_t, lde_h_tlb, lde_h_host)
-+GEN_VEXT_LD_WHOLE(vl8re32_v, int32_t, lde_w_tlb, lde_w_host)
-+GEN_VEXT_LD_WHOLE(vl8re64_v, int64_t, lde_d_tlb, lde_d_host)
-+
-+#define GEN_VEXT_ST_WHOLE(NAME, ETYPE, STORE_FN_TLB, STORE_FN_HOST)     \
-+void HELPER(NAME)(void *vd, target_ulong base, CPURISCVState *env,      \
-+                  uint32_t desc)                                        \
-+{                                                                       \
-+    vext_ldst_whole(vd, base, env, desc, STORE_FN_TLB, STORE_FN_HOST,   \
-+                    ctzl(sizeof(ETYPE)), GETPC(), false);               \
-+}
-+
-+GEN_VEXT_ST_WHOLE(vs1r_v, int8_t, ste_b_tlb, ste_b_host)
-+GEN_VEXT_ST_WHOLE(vs2r_v, int8_t, ste_b_tlb, ste_b_host)
-+GEN_VEXT_ST_WHOLE(vs4r_v, int8_t, ste_b_tlb, ste_b_host)
-+GEN_VEXT_ST_WHOLE(vs8r_v, int8_t, ste_b_tlb, ste_b_host)
- 
- /*
-  * Vector Integer Arithmetic Instructions
--- 
-2.34.1
+The problem with hw/timer/i8254.c is that it has the KVM version, as
+you found. The HPET is an alternative though.
+
+
+Paolo
 
 
