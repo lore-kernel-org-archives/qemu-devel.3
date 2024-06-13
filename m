@@ -4,106 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87C71C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 09:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 637A4C27C75
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 09:56:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHh8I-0006xx-VC; Thu, 13 Jun 2024 05:52:38 -0400
+	id 1sHhBq-0001Tk-3j; Thu, 13 Jun 2024 05:56:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sHh8G-0006qI-L2
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:52:37 -0400
-Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sHh8D-0002Ud-LN
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:52:36 -0400
-Received: by mail-lj1-x22d.google.com with SMTP id
- 38308e7fff4ca-2ebd95f136bso8548071fa.0
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 02:52:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1718272351; x=1718877151; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aLogVWHAGRbH0gsjEVsGMBY9pF7extElnz5kVcP2ry0=;
- b=KR2NUao0HlhHA5tG+zBao21WXp2V+p0U5gbbqmBUDv/ur7dNNFqAXhRIBm0g/DCP7d
- hNcVErBolhaf4jVHdiRlUwTVhpRS9ibi70otJhIQhx5mQxAB/EJXMppGFhmaXnadh/Zo
- B4ypwSNAeGvkOZbrZ//nBlqquJ1PlvLRz0A0kdce7eRCB8DMnNcsCI+mrRZL4tGUQjWx
- nTh6jc1kK+ZeQnPaRAHax1u/PhlcGbBOvyF5MI74JgkpqGlsyrKBbyOcGuxdX7ILmoBS
- ooCKWcnJ+qf3I8Q3qeTtwm/b305lh0Qiqa5UAVk0IvTocYis+agJaIWomF6J/KRE3RSw
- o7eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718272351; x=1718877151;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aLogVWHAGRbH0gsjEVsGMBY9pF7extElnz5kVcP2ry0=;
- b=P0Il9/yN1ndbbYtZCT+xY+FBq5h88Dmcrcr6ua2Bh6sTgONJ1gz7CkVTKx+h+YHUmp
- g3j/8jzJ8dXdf6WVz9UksQyloldssu9uU8WHnnjqPSLezWBDlUsI1Q7tgj9GZZp4DeUG
- TKzsf48VjIpbwHUNgZ3fkBzqhSCVIP9/pbTPB50Dsl+sHhJCVrnHpRmNPYsopT7hdIiD
- vw08p3xTU8W2BRV7PteBNkS595+c0tAi0ZWAR3PsPuE+kKRhvfpGCP+WVryPKn156Zvm
- vvot9VSiS+Jey6msCTKmRqs367ILCedxm437FK1zmeMhRaqmQKRh83rZFHyR7zFC4zQa
- 8cWA==
-X-Gm-Message-State: AOJu0Yw1eO5JGfQstUJ8II+o0RVqD+3cNtOJt0isrRp2Mc8ywStx87BW
- jL4k9n+DIt22CIRFcqNbka0C9PH2JWWVr0Jp4nDT3K19vxDaWAfVgveAqIySeKcvBNNfpa3m19A
- aw3BXJCic6DBR03RiGA4vNWDVGzbTajSO5YsgZg==
-X-Google-Smtp-Source: AGHT+IEJOZAGM7AxkDTXtjs/DdB5fNEBUIeQ1dETRGezPEIcKZFuoW0t7r7galVwGyP3isRuLhliDtJNHWD4FBb1rR8=
-X-Received: by 2002:a2e:850c:0:b0:2eb:e580:7ac7 with SMTP id
- 38308e7fff4ca-2ebfca6023emr25131191fa.43.1718272350888; Thu, 13 Jun 2024
- 02:52:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
+ id 1sHhBo-0001Qg-5z; Thu, 13 Jun 2024 05:56:16 -0400
+Received: from mta-04.yadro.com ([89.207.88.248])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ivan.klokov@syntacore.com>)
+ id 1sHhBm-0003AB-8j; Thu, 13 Jun 2024 05:56:15 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 8AF38C000E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1718272569;
+ bh=VwcNLD6groCCHJQ/lPenwhAy7Jffh+jeFQdqK1UBB+A=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=L2r38FwkF0gEo+s1QrFlWiWaFVcrla+HH5AhcN8KX3RdAFGDXBqBmKKfhpe2Om511
+ pLshnvu8WENQYIQQBzQNC64aALFK2REiOirs5S9DRuaaAqpEeQrkXhLg7NV5xiBnUb
+ DhFTT6qN2X2gxLphJs4yD6+VoKacov+ceWjC6WC1Y/wtGKisOkUkW+snX5rhkYjElk
+ 0dYM+6IoLf5eDuY6VphB24XD+Bvluo+QMdv9R7d4NE+FdielQl8O3vWptsr9fxhEDw
+ vuIZ8SDfbug8X2K/grAr5OeA42L2BG2dQhUGnI8RAIQwEHkKZJiO5DMN31nlMM49Iv
+ KgaHUbxfv+XOA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1718272569;
+ bh=VwcNLD6groCCHJQ/lPenwhAy7Jffh+jeFQdqK1UBB+A=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=m76VQfbKvFUtLFRkroMvChgy6vgxMdzMg7Q2C7PJnbJTO8PkZF8u2mjCroLzeVxxp
+ LMkbqypisjSHOqF1w8dO/410zs0vT2KLRpm2x3xjEscfq9TppphhXU1Rb5S4qrCjrw
+ aGGjY+vF0XRQTlr7ScpEQ4X5fjlQt1Dttpo1OKHhnpODwd1ASRhwAMJiv9h+hH0s/n
+ 7vts4QrDf0HENHynlu4+ihRbXFHAjOJhEeNHtRItFAEAhgYhgrpMsoiDzGpzkX9a8y
+ uYRbgZEjOtUQcXh5C8siMZBsVph9eUgBZr+FxJ42cccae6h6clC+WtGuyermE3kJbn
+ 2nzESIqadtCgw==
+From: Ivan Klokov <ivan.klokov@syntacore.com>
+To: <qemu-devel@nongnu.org>
+CC: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <bmeng.cn@gmail.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, <thuth@redhat.com>, <lvivier@redhat.com>,
+ <pbonzini@redhat.com>, Ivan Klokov <ivan.klokov@syntacore.com>
+Subject: [RFC PATCH 0/2] Support RISC-V CSR read/write in Qtest environment
+Date: Thu, 13 Jun 2024 12:55:59 +0300
+Message-ID: <20240613095601.16299-1-ivan.klokov@syntacore.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240612081416.29704-1-jim.shu@sifive.com>
- <20240612081416.29704-3-jim.shu@sifive.com>
- <ZmqEzUPsJwFs7w4+@ethan84-VirtualBox>
-In-Reply-To: <ZmqEzUPsJwFs7w4+@ethan84-VirtualBox>
-From: Jim Shu <jim.shu@sifive.com>
-Date: Thu, 13 Jun 2024 17:52:18 +0800
-Message-ID: <CALw707q1oSVZhq3kYEkbDvgZFV_bydN6EGgFpScbyE=6SSD9Yw@mail.gmail.com>
-Subject: Re: [RFC PATCH 02/16] accel/tcg: memory access from CPU will pass
- access_type to IOMMU
-To: Ethan Chen <ethan84@andestech.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Peter Xu <peterx@redhat.com>, 
- David Hildenbrand <david@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Michael Rolnik <mrolnik@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Song Gao <gaosong@loongson.cn>, Laurent Vivier <laurent@vivier.eu>, 
- Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Aleksandar Rikalo <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>, 
- Nicholas Piggin <npiggin@gmail.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>, 
- Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, 
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Max Filippov <jcmvbkbc@gmail.com>, 
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
- "open list:PowerPC TCG CPUs" <qemu-ppc@nongnu.org>, 
- "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
- envelope-from=jim.shu@sifive.com; helo=mail-lj1-x22d.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: T-EXCH-06.corp.yadro.com (172.17.10.110) To
+ S-Exch-01.corp.yadro.com (10.78.5.241)
+Received-SPF: permerror client-ip=89.207.88.248;
+ envelope-from=ivan.klokov@syntacore.com; helo=mta-04.yadro.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,58 +78,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ethan,
+These patches add functionality for unit testing RISC-V-specific registers.
+The first patch adds a Qtest backend, and the second implements a simple test.
 
-Yes, this mechanism could handle such situations.
+Ivan Klokov (2):
+  Add RISC-V CSR qtest support
+  QTest example for RISC-V CSR register
 
-The important part is that the translate() function of
-IOMMUMemoryRegion only returns the correct permission of the section
-related to CPU access type.
-For example, if wgChecker only permits RO permission, it will return
-"downstream_as" with RO perm or "blocked_io_as" with WO perm.
-(depending on CPU access type).
+ target/riscv/cpu.c             | 13 +++++++
+ target/riscv/cpu.h             |  3 ++
+ target/riscv/csr.c             | 49 +++++++++++++++++++++++-
+ tests/qtest/libqos/meson.build |  3 ++
+ tests/qtest/libqtest.c         | 27 ++++++++++++++
+ tests/qtest/libqtest.h         | 14 +++++++
+ tests/qtest/meson.build        |  2 +
+ tests/qtest/riscv-csr-test.c   | 68 ++++++++++++++++++++++++++++++++++
+ 8 files changed, 178 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/riscv-csr-test.c
 
-When the CPU access type is different from the previous one, it will
-get TLB miss due to mismatched permissions.
-Then, it will try to translate again, find the section of another
-access type, and fill into iotlb. (also kick out the previous iotlb
-entry).
+-- 
+2.34.1
 
-This mechanism has poor performance if alternatively doing read/write
-access from CPU to IOMMUMemoryRegion with RO/WO perm due to TLB miss.
-I think it is the limitation that CPUTLBEntry doesn't support having
-different sections of each permission. At least this mechanism has the
-correct behavior.
-
-Thanks,
-Jim
-
-
-
-On Thu, Jun 13, 2024 at 1:34=E2=80=AFPM Ethan Chen <ethan84@andestech.com> =
-wrote:
->
-> On Wed, Jun 12, 2024 at 04:14:02PM +0800, Jim Shu wrote:
-> > [EXTERNAL MAIL]
-> >
-> > It is the preparation patch for upcoming RISC-V wgChecker device.
-> >
-> > Since RISC-V wgChecker could permit access in RO/WO permission, the
-> > IOMMUMemoryRegion could return different section for read & write
-> > access. The memory access from CPU should also pass the access_type to
-> > IOMMU translate function so that IOMMU could return the correct section
-> > of specified access_type.
-> >
->
-> Hi Jim,
->
-> Does this method take into account the situation where the CPU access typ=
-e is
-> different from the access type when creating iotlb? I think the section
-> might be wrong in this situation.
->
-> Thanks,
-> Ethan
-> >
-> >
 
