@@ -4,103 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2EAFC27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 17:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 110D8C27C6E
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 18:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHohI-0004U4-9e; Thu, 13 Jun 2024 13:57:16 -0400
+	id 1sHonH-0006GZ-34; Thu, 13 Jun 2024 14:03:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sHohH-0004Se-5E
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:57:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sHohF-0003UZ-Hf
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:57:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718301430;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Zb6pqNxI74iToge51ry0W/CKz8UHzczmMRz/HpWjWok=;
- b=WZa5TpwIkCdkOk1CICEnoSRhtLQozAmRP+NwihXLbReaw31XXaE6utTJkCaE7rmkIIj89J
- 7WeDix6MosO0F18dg9h7qwv8qSwW1DeL9RVl5um6W+cc+WInROPdo+VKvTn9y+jzc34gVu
- ZbM8RQnNnmLgFzaeMGBVC79eFIe46uM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-79bRkHCfNCy1GM0hZ-VL4A-1; Thu, 13 Jun 2024 13:57:09 -0400
-X-MC-Unique: 79bRkHCfNCy1GM0hZ-VL4A-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-421179fd82bso8490175e9.1
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 10:57:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1sHonF-0006GK-IT
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 14:03:25 -0400
+Received: from mail-il1-x133.google.com ([2607:f8b0:4864:20::133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1sHonD-0004Zi-Qz
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 14:03:25 -0400
+Received: by mail-il1-x133.google.com with SMTP id
+ e9e14a558f8ab-375932c953aso6092035ab.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 11:03:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1718301801; x=1718906601; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3H34AuMlg7H7IpZ/aoI9mSNwD+sbwbn83dY+ZyAwmoQ=;
+ b=TpuPhc91Y/OIX8TIGLEGJqvL0J3LQFXQxWZ6jOswAyvdolypP9rw0GEjqF1pn+vw3l
+ AxfBXSbC+7wH1GXpZqc7V1ZiZqGTaYjmKXiDGcW+/iB4ApB7zrMHygn472mdgyEMmoLF
+ KckSWRgEwx7tQVcs+8qAtZ5TBwVXPycT1Q1EvJhwONTt4DQ6aS0VoTER+5PSDk9prbI8
+ 5fxv/wLYG643cLzB/BsR05uPv3E26cN6D2+kZo3mQ4re2e05GdDZL8jB0CeDuVrsutYb
+ cpBqkKVQzbDdt4nD82xUEPk2EfC9OkpH/REBFinBYlXv7D+faFzYPTjLH7TxDs+y6i6u
+ Bndg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718301428; x=1718906228;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Zb6pqNxI74iToge51ry0W/CKz8UHzczmMRz/HpWjWok=;
- b=E0UwOVz10s16LptOvLiCmsI7R/FqxOrtrYvU5a4LIhKNedJGE9kEN/+RzxwWRk00F4
- IeFDYoAULwNI0t/+E6vZg2KPi0HP1thUj4WVz3Bk5fxgV3O219c0zK1E55pt0SxpQCDU
- b5fV7pt9RkWyL4za9rrGNGZH6yYTRycmyBODC90G2XdfM10VG/6TXGRL4TWBgiJS98bd
- nOj8H9/4Pp/ugJdtTHZ+1EAVFkmehQ8UbNuOns2iqz4yMlatVD1W8Nb+zwiRLbnWFQaJ
- 2sPd2l8lweS6x5jRhte0pPYbVxyHHQb4CkzAEl6MjE9kBCKt9P8HwnuuwTfZOSTzRPJE
- d8tw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWCOTs9zfWj5Mn/W6aelfw8ilIOZ1EWe47MZzJUBrBnG2Dgt620udKcnwU50bN7VcOVRf10HRrzSrZkduNbNJ4bR8yAtFs=
-X-Gm-Message-State: AOJu0YymSK8jmot7sbdsBGiU6gKuyirr0P12aU4+7cw4Z18HOOnJme8+
- W8kyNwCL5bN2qar/gNVInCgTyWzw39PEb/rJ2YK2gec00EXl6gRYBpRe+hTpswpJh1eQYVvqlyQ
- kW0T6JZ65NnFaY7Z5ZQKgter0OPgXk3jMOHQunnaB6wWI1pZsLqvwRNsRloN6ieoSox6WQXynpN
- SqcwUmeXd/2oUXdOIRg9X4P0F7pSI=
-X-Received: by 2002:a5d:6187:0:b0:35f:44c:b3ef with SMTP id
- ffacd0b85a97d-3607a781a05mr313825f8f.52.1718301427989; 
- Thu, 13 Jun 2024 10:57:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGkhNaE3sJeI86A7DFYHW824xATcwyuO08K8XCPG7mWVQu3KZeD6PiAHGzz/fIdiP+VorcSf148hz6Sfg1jmHk=
-X-Received: by 2002:a5d:6187:0:b0:35f:44c:b3ef with SMTP id
- ffacd0b85a97d-3607a781a05mr313804f8f.52.1718301427582; Thu, 13 Jun 2024
- 10:57:07 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718301801; x=1718906601;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3H34AuMlg7H7IpZ/aoI9mSNwD+sbwbn83dY+ZyAwmoQ=;
+ b=oZN/04VpZ1IZAPpr4qQGDHLeJOb+AIPX7qwyXnwcLTYkGhqh8LDdwXau/Lxzj+3/We
+ BgX52bQTWh0FqZc/LcE23ex47keTH0/Anrkc/wH/AicQXk3NsWDxEFuoT/0dk4NnzApP
+ 2neKqamPSOVOatBD9PExceEhbyKZWbxPzdxSi3yzUNkKBmJRfoz6o2Ky0GRhawWo6+cX
+ GXbY9H9bCWH+9NrNbXByZtxafo7SrlCmTvP8yxvwJkoTVb7aW3A15E96v8uxAZlItTrk
+ 0LOq+lxWDq9g9Dxhtwb4KpoZnkNdJiw5fXZ4gLLIuop29vSLU6re2hFqySJmAvstBP0H
+ pEOQ==
+X-Gm-Message-State: AOJu0YyvpKi8q6XnkCiFs15dE3I6HWuInJ31i4cEBMKAp9WnV9K2x53H
+ pEKtB2B6yVtz/gLVDs37CqGUJzHh0K9JxBS9v7zCtgd2g7w1ecUS
+X-Google-Smtp-Source: AGHT+IEQODMx9Om6Y/C7MkuCMz2GgiTajWvNVgvD5DUYu9LfXQ/W1BlukwAphChD6y4QBC6bYRaqBg==
+X-Received: by 2002:a05:6e02:198f:b0:375:a3a9:db41 with SMTP id
+ e9e14a558f8ab-375e0e3129fmr3867705ab.15.1718301801506; 
+ Thu, 13 Jun 2024 11:03:21 -0700 (PDT)
+Received: from DESKTOPUU50BPD ([2601:284:8201:81c0:582b:6312:c6b:a6f0])
+ by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4b9568ddeb0sm465072173.3.2024.06.13.11.03.20
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 13 Jun 2024 11:03:20 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Ted Woodward'" <tedwood@quicinc.com>,
+ "'Matheus Bernardino \(QUIC\)'" <quic_mathbern@quicinc.com>
+Cc: <qemu-devel@nongnu.org>, "'Brian Cain'" <bcain@quicinc.com>,
+ <alex.bennee@linaro.org>, "'Sid Manning'" <sidneym@quicinc.com>,
+ "'Marco Liebel \(QUIC\)'" <quic_mliebel@quicinc.com>,
+ <richard.henderson@linaro.org>, <philmd@linaro.org>, <ale@rev.ng>,
+ <anjo@rev.ng>
+References: <20240612164239.90276-1-ltaylorsimpson@gmail.com>
+ <20240612183008.4123155-1-quic_mathbern@quicinc.com>
+ <066c01dabd3c$343be980$9cb3bc80$@gmail.com>
+ <PH0PR02MB842235CD70F3B06BB27FA447B9C12@PH0PR02MB8422.namprd02.prod.outlook.com>
+In-Reply-To: <PH0PR02MB842235CD70F3B06BB27FA447B9C12@PH0PR02MB8422.namprd02.prod.outlook.com>
+Subject: RE: [PATCH] Hexagon: lldb read/write predicate registers p0/p1/p2/p3
+Date: Thu, 13 Jun 2024 12:03:19 -0600
+Message-ID: <06e801dabdbb$f9de7250$ed9b56f0$@gmail.com>
 MIME-Version: 1.0
-References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
- <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
- <CABgObfY8BS0yCw2CxgDQTBA4np9BZgGJF3N=t6eoBcdACAE=NA@mail.gmail.com>
- <ez270.x96k6aeu0rpw@linaro.org> <ZmnHoajecti472mi@redhat.com>
- <ezjl0.qx0tmsp6d6t@linaro.org>
- <CABgObfbGwKc0RYBcDPzNkE8HOSouFj4D15Oh7TuiKOC+D7raaA@mail.gmail.com>
- <ZmqcFf0xB9m4WkA3@redhat.com>
- <CABgObfb4+FSsadFTVg6Dc1zehQV2Vei2_kSRd5CfxsGBLPN6Eg@mail.gmail.com>
- <ZmscPKyuK7RVgrMo@intel.com>
-In-Reply-To: <ZmscPKyuK7RVgrMo@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 13 Jun 2024 19:56:55 +0200
-Message-ID: <CABgObfYnCQu9_yqL=CwO-O8qKqhXqnkZ0JGdZpTy23TX1AuHkw@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9_e?= <alex.bennee@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHMHiXUmCnzvbCFbV64tIsn2swJnwIEBIVEAir82UQCs7Xr6bGsIe7A
+Content-Language: en-us
+Received-SPF: pass client-ip=2607:f8b0:4864:20::133;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-il1-x133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,28 +105,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 13, 2024 at 6:06=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wrot=
-e:
-> I think deeper and higher level bindings will have more opens and will
-> likely require more discussion and exploration. So could we explore this
-> direction on another reference Rust device?
->
-> I also think there won=E2=80=99t be too many Rust devices in the short te=
-rm.
-> Going back to tweak or enhance existing Rust devices may not require too
-> much effort, once we have a definitive answer.
->
-> I wonder if x86 could also implement a rust device (like the x86 timer
-> you mentioned before, hw/i386/kvm/i8254.c or hw/timer/i8254.c IIRC) to
-> try this? Or would you recommend another x86 device? :-)
-
-A timer device is a good idea, just because it's another pretty stable
-low-level QEMU API.
-
-The problem with hw/timer/i8254.c is that it has the KVM version, as
-you found. The HPET is an alternative though.
 
 
-Paolo
+> -----Original Message-----
+> From: Ted Woodward <tedwood@quicinc.com>
+> Sent: Thursday, June 13, 2024 9:03 AM
+> To: ltaylorsimpson@gmail.com; Matheus Bernardino (QUIC)
+> <quic_mathbern@quicinc.com>
+> Cc: qemu-devel@nongnu.org; Brian Cain <bcain@quicinc.com>;
+> alex.bennee@linaro.org; Sid Manning <sidneym@quicinc.com>; Marco
+> Liebel (QUIC) <quic_mliebel@quicinc.com>; richard.henderson@linaro.org;
+> philmd@linaro.org; ale@rev.ng; anjo@rev.ng
+> Subject: RE: [PATCH] Hexagon: lldb read/write predicate registers
+> p0/p1/p2/p3
+> 
+> 
+> 
+> > -----Original Message-----
+> > From: ltaylorsimpson@gmail.com <ltaylorsimpson@gmail.com>
+> > Sent: Wednesday, June 12, 2024 9:49 PM
+> > To: Matheus Bernardino (QUIC) <quic_mathbern@quicinc.com>
+> > Cc: qemu-devel@nongnu.org; Brian Cain <bcain@quicinc.com>; Ted
+> > Woodward <tedwood@quicinc.com>; alex.bennee@linaro.org; Sid
+> Manning
+> > <sidneym@quicinc.com>; Marco Liebel (QUIC)
+> <quic_mliebel@quicinc.com>;
+> > richard.henderson@linaro.org; philmd@linaro.org; ale@rev.ng;
+> > anjo@rev.ng
+> > Subject: RE: [PATCH] Hexagon: lldb read/write predicate registers
+> > p0/p1/p2/p3
+> >
+> > > -----Original Message-----
+> > > From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+> > > Sent: Wednesday, June 12, 2024 12:30 PM
+> > > To: ltaylorsimpson@gmail.com
+> > > Cc: qemu-devel@nongnu.org; bcain@quicinc.com;
+> tedwood@quicinc.com;
+> > > alex.bennee@linaro.org; quic_mathbern@quicinc.com;
+> > > sidneym@quicinc.com; quic_mliebel@quicinc.com;
+> > > richard.henderson@linaro.org; philmd@linaro.org; ale@rev.ng;
+> > > anjo@rev.ng
+> > > Subject: Re: [PATCH] Hexagon: lldb read/write predicate registers
+> > > p0/p1/p2/p3
+> > >
+> > > On Wed, 12 Jun 2024 10:42:39 -0600 Taylor Simpson
+> > > <ltaylorsimpson@gmail.com> wrote:
+> > > >
+> > > > diff --git a/target/hexagon/gdbstub.c b/target/hexagon/gdbstub.c
+> > > > index
+> > > > 502c6987f0..e67e627fc9 100644
+> > > > --- a/target/hexagon/gdbstub.c
+> > > > +++ b/target/hexagon/gdbstub.c
+> > > > @@ -56,6 +64,15 @@ int hexagon_gdb_write_register(CPUState *cs,
+> > > uint8_t *mem_buf, int n)
+> > > >          return sizeof(target_ulong);
+> > > >      }
+> > > >
+> > > > +    n -= TOTAL_PER_THREAD_REGS;
+> > > > +
+> > > > +    if (n < NUM_PREGS) {
+> > > > +        env->pred[n] = ldtul_p(mem_buf);
+> > > > +        return sizeof(uint8_t);
+> > >
+> > > I wonder, shouldn't this be sizeof(target_ulong) since we wrote a
+> > > target_ulong?
+> >
+> > Good question.
+> >
+> > From the architecture point of view, predicates are 8 bits (Section
+> > 2.2.5 of the
+> > v73 Hexagon PRM).  However, we model them in QEMU as target_ulong
+> > because TCG variables must be either 32 bits or 64 bits.  There isn't
+> > an option for 8 bits.  Whenever we write to a predicate, do "and" with
+> > 0xff first to ensure there are only 8 bits written (see
+> > gen_log_pred_write in target/hexagon/genptr.c).
+> >
+> > I did some more digging and here is what I found:
+> > - Since we have bitsize="8" in hexagon-core.xml, lldb will reject any
+> > attempt to write something larger.
+> >   (lldb) reg write p1 0x1ff
+> >   error: Failed to write register 'p1' with value '0x1ff': value 0x1ff
+> > is too large to fit in a 1 byte unsigned integer value
+> > - For the lldb "reg write" command, the return value from
+> > hexagon_gdb_write_register isn't used.
+> > - The only place the return value is used is in handle_write_all_regs.
+> > This function is called in response to a "G" packet from the debugger.
+> > I don't know if/when lldb uses this packet, but it seems like it would
+> > count on it being 8 bits since that's what is in hexagon-core.xml.
+> >
+> > Ted <tedwood@quicinc.com>, when would lldb generate a "G" packet, and
+> > what assumptions will it make about the size of predicate registers?
+> 
+> When you use the expression parser to call a function, lldb will save the
+> current state, set up the function call, set a breakpoint on a return (by
+> changing the lr register and setting a breakpoint on the new address), set
+the
+> PC to the function address, and resume. After the breakpoint is hit, lldb
+will
+> restore the saved state.
+> 
+> Since QEMU doesn't support the lldb RSP extension
+> QSaveRegisterState/QRestoreRegisterState,
+> lldb will use G/g packets to save and restore the register state.
+> 
+> lldb doesn't interpret the values from the G/g packets. It just saves and
+> restores them, so I don't think the new predicate definitions will matter
+for
+> that. You can test this out by changing the predicate registers, then
+calling a
+> function with the expression parser. Not a varargs function, since the IR
+> interpreter doesn't handle those.
+> 
+> Ted
+
+Thanks Ted!  We do indeed execute handle_write_all_regs when we print the
+result of a function call in lldb.
+
+So, the answer to Metheus' question is "no".  We should return sizeof
+uint8_t.  However, we should also mask off the high bits from the value
+returned from ldtul_p before assigning to the predicate register.  This
+avoids putting bits from subsequent items in the buffer into the register.
+    env->pred[n] = ldtul_p(mem_buf) & 0xff;
+
+I'll send v2 of the patch with this change shortly.
+
+Taylor
+
+
+
+
+
 
 
