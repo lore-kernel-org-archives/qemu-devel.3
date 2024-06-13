@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A92B0C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 07:16:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F0B4C27C75
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 07:16:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHeea-0007Rz-9g; Thu, 13 Jun 2024 03:13:48 -0400
+	id 1sHeep-0007Xb-NW; Thu, 13 Jun 2024 03:14:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sHeeY-0007RY-3c
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:13:46 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sHeeV-00071Z-KR
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:13:45 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1f8395a530dso7012085ad.0
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 00:13:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1718262816; x=1718867616; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=VEapZkZteW4qeme8HOj8a7YKtrOu1VtdYrrvlphJVHo=;
- b=EujvQEmG/6xAFIQ0l2yfPwxzsVX4xHmR/9eqsKnXJHqs5zmDUNtUL36jDogmGNoTjb
- FdjSW5FiwCDC9N3poSw6Lzg13REngcS28rRZF1TuOIoMpzDsuxoZjmtUNKjp4WssaiWm
- v0fOpp/859ESKlibjO7NJO6l8aJ5l9AevPlsTNV/QTj8VP/O/M2ivWDg+aFahTOtphva
- nGIIkf+nFGwdkB0rgbw93x1damiyBHSh++PZqEUycbAZYjbnuoVvMwurM5J02Nc+YroO
- BArqUeGTq9LVp8oigYj13kOKVY/iPXPrhyvGfPmY9y+8MimB6jgKV+AFmADrK+eGmq2d
- /VJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718262816; x=1718867616;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VEapZkZteW4qeme8HOj8a7YKtrOu1VtdYrrvlphJVHo=;
- b=EeXq2uyVjH1fdEw9uMzKePWUJp2zuZzl1RlujieCUq/8vBIyUFF8pOz/Sxh0OjsuoS
- w2cH3dLy9XJ8eENPGjvzhiq0zEXBd/t2qSUbembZC43kJXUzvYie0FgSr9+IR+MM7sHw
- ERPX9MLdASuCmggBgctaHfHxwdkRdncVnfVaQ/W6yy0MM1HsLiB0Svaoy+oncjf3YkN+
- MvDP0nD1FDicaYWWP5B3/w4wWmNsiNGxEUF/56l5aZG6ks1HIW7BS6UjOQkFQ+M/fEbM
- AQR2VAvaAk3ZjBMZf44dcnvOnN/YbwCp69br0Ft1hCGQNoiak+yrAJOOEgIq1UVL2zTg
- GWZg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWqp229P0ZTKrNq3T91V5apqS3q5H8zG/kzePauMLZNGyyEiajEehwpxC+NT/98sZlvBjPHRxnu/1wjwv87uq3Er03priQ=
-X-Gm-Message-State: AOJu0Yy0BXzNEL6apcXzloKPGKHLYIKjz3x4qCBs+JwmTcTJzNsd6sJQ
- uw2RzjoDd1/qXJ2yMDCWAEvcAjN0xrl0iZ1eF2tdZvXYeL35ULP5KA4mPZWwUrI=
-X-Google-Smtp-Source: AGHT+IGkW+wkgaTZ/6CMQsZUYnsgp93HOMCC6/jyYjYLy+l6/ZzzKbJuJg4jfNO8nziau2W+uhFBgQ==
-X-Received: by 2002:a17:902:f541:b0:1f7:21fd:ab83 with SMTP id
- d9443c01a7336-1f83b710598mr42153655ad.54.1718262815896; 
- Thu, 13 Jun 2024 00:13:35 -0700 (PDT)
-Received: from n37-006-243.byted.org ([180.184.84.173])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855ee6e7esm6378345ad.139.2024.06.13.00.13.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Jun 2024 00:13:35 -0700 (PDT)
-From: Changqi Lu <luchangqi.123@bytedance.com>
-To: qemu-block@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
- ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
- kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
- pizhenwei@bytedance.com, Changqi Lu <luchangqi.123@bytedance.com>
-Subject: [PATCH v6 00/10] Support persistent reservation operations
-Date: Thu, 13 Jun 2024 15:13:17 +0800
-Message-Id: <20240613071327.2498953-1-luchangqi.123@bytedance.com>
-X-Mailer: git-send-email 2.20.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHeen-0007Wa-Ny
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:14:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHeel-00075h-PU
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 03:14:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718262838;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=he7I7QLsIq4Xt7o+RlILfOlFFsmLDSylxMJNpqKlhak=;
+ b=FbFfQJS/5tkLar6Wavk3VLHZFS8NNriJFrWWoC8y6A0A6FFtsLT4S69qhA1ddIcWkpdiV+
+ 9RDGTupk78JccPHlC6ysZHinnXvxi3egrpQDyCCEE77NRdTDhEB3g2yaTuXaYd3tVCJcJG
+ 3C5XIp6WtP4mRgpKew86ffw+s4HHki8=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-BeWghd8yMRq2AP8oQGM3OA-1; Thu,
+ 13 Jun 2024 03:13:52 -0400
+X-MC-Unique: BeWghd8yMRq2AP8oQGM3OA-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A9A64195609F; Thu, 13 Jun 2024 07:13:50 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.52])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3DF7519560AD; Thu, 13 Jun 2024 07:13:45 +0000 (UTC)
+Date: Thu, 13 Jun 2024 08:13:43 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?B?QmVubsOp?= e <alex.bennee@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
+Message-ID: <ZmqcFf0xB9m4WkA3@redhat.com>
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+ <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
+ <CABgObfY8BS0yCw2CxgDQTBA4np9BZgGJF3N=t6eoBcdACAE=NA@mail.gmail.com>
+ <ez270.x96k6aeu0rpw@linaro.org> <ZmnHoajecti472mi@redhat.com>
+ <ezjl0.qx0tmsp6d6t@linaro.org>
+ <CABgObfbGwKc0RYBcDPzNkE8HOSouFj4D15Oh7TuiKOC+D7raaA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABgObfbGwKc0RYBcDPzNkE8HOSouFj4D15Oh7TuiKOC+D7raaA@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,76 +94,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Wed, Jun 12, 2024 at 11:27:04PM +0200, Paolo Bonzini wrote:
+> Il mer 12 giu 2024, 22:58 Manos Pitsidianakis <
+> manos.pitsidianakis@linaro.org> ha scritto:
+> 
+> > In any case, it is out of scope for this RFC. Introducing wrappers would
+> > be a gradual process.
+> >
+> 
+> Sure, how would you feel about such bindings being developed on list, and
+> maintained in a (somewhat) long-lived experimental branch?
 
-patch v6 has been modified.
+IMHO any higher level binding APIs for Rust should be acceptable in the
+main QEMU tree as soon as we accept Rust functionality. They can evolve
+in-tree based on the needs of whomever is creating and/or consuming them.
 
-v5->v6:
-- Add relevant comments in the io layer.
 
-v4->v5:
-- Fixed a memory leak bug at hw/nvme/ctrl.c.
-
-v3->v4:
-- At the nvme layer, the two patches of enabling the ONCS
-  function and enabling rescap are combined into one.
-- At the nvme layer, add helper functions for pr capacity
-  conversion between the block layer and the nvme layer.
-
-v2->v3:
-In v2 Persist Through Power Loss(PTPL) is enable default.
-In v3 PTPL is supported, which is passed as a parameter.
-
-v1->v2:
-- Add sg_persist --report-capabilities for SCSI protocol and enable
-  oncs and rescap for NVMe protocol.
-- Add persistent reservation capabilities constants and helper functions for
-  SCSI and NVMe protocol.
-- Add comments for necessary APIs.
-
-v1:
-- Add seven APIs about persistent reservation command for block layer.
-  These APIs including reading keys, reading reservations, registering,
-  reserving, releasing, clearing and preempting.
-- Add the necessary pr-related operation APIs for both the
-  SCSI protocol and NVMe protocol at the device layer.
-- Add scsi driver at the driver layer to verify the functions
-
-Changqi Lu (10):
-  block: add persistent reservation in/out api
-  block/raw: add persistent reservation in/out driver
-  scsi/constant: add persistent reservation in/out protocol constants
-  scsi/util: add helper functions for persistent reservation types
-    conversion
-  hw/scsi: add persistent reservation in/out api for scsi device
-  block/nvme: add reservation command protocol constants
-  hw/nvme: add helper functions for converting reservation types
-  hw/nvme: enable ONCS and rescap function
-  hw/nvme: add reservation protocal command
-  block/iscsi: add persistent reservation in/out driver
-
- block/block-backend.c             | 403 +++++++++++++++++++++++++++
- block/io.c                        | 163 +++++++++++
- block/iscsi.c                     | 443 ++++++++++++++++++++++++++++++
- block/raw-format.c                |  56 ++++
- hw/nvme/ctrl.c                    | 326 +++++++++++++++++++++-
- hw/nvme/ns.c                      |   5 +
- hw/nvme/nvme.h                    |  84 ++++++
- hw/scsi/scsi-disk.c               | 352 ++++++++++++++++++++++++
- include/block/block-common.h      |  40 +++
- include/block/block-io.h          |  20 ++
- include/block/block_int-common.h  |  84 ++++++
- include/block/nvme.h              |  98 +++++++
- include/scsi/constants.h          |  52 ++++
- include/scsi/utils.h              |   8 +
- include/sysemu/block-backend-io.h |  24 ++
- scsi/utils.c                      |  81 ++++++
- 16 files changed, 2237 insertions(+), 2 deletions(-)
-
+With regards,
+Daniel
 -- 
-2.20.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
