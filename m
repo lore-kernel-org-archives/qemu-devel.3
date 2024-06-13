@@ -4,89 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5105DC27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 08:42:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DABA8C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 08:45:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHg24-0008Lo-2S; Thu, 13 Jun 2024 04:42:08 -0400
+	id 1sHg4x-0000o6-1T; Thu, 13 Jun 2024 04:45:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHg22-0008LR-Px
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:42:06 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sHg20-0005wW-MI
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:42:06 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2eaafda3b5cso8142031fa.3
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 01:42:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718268122; x=1718872922; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TBBYI4Z1ffe5PmxZgsGFv6Z2Up/NWIII1ukQdHVgO34=;
- b=mq+BBeOw/SabKH+mrVHAr0xq9u8bUL9Vb3m7Xma9eHPSfDjzuvv4oGM+yYS8J2O0Lp
- X3HAGSmV9CTrY5zJ9wnXKfW6QEV5gmu5m4RLNFQ/NxrezlBttDnDi7ezdlZW5xR2cN/o
- Po/IqJVVQJEVZ/mnx2Gtw8gJoeYG8Ks6XK3dWZFrhbLhZszPW8ic6l6dbTNJvP54qjEo
- tSmtKAx6k+bxkeZNjZgVu7mta4tyHNxGh0ZUXG4VQqGMufYhekrPmx36EJT2JMd3jJL6
- jFOAKRvD3rueo/3MpYDw7HW8dQw/+8+6csG19Q5LPFGgUF8jjiNJmmlWiwMpvW44SCGu
- EOGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718268122; x=1718872922;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TBBYI4Z1ffe5PmxZgsGFv6Z2Up/NWIII1ukQdHVgO34=;
- b=XGt/02nmyRYCBfq4EjyeJ2VFeF4bRqy0do/hxvb9DP6hEVfAdyHbYjrcPTBs22PkN8
- q6B5kW3mpTKEb2ev/QP97oSi5vV+iHa6mrFtn1fdvpms5FE3pCArBOoXTrKbeLSDXyUj
- uMR6J91wPOLENRQGgnso3OVsd7qbQw2lfHRlCikeMwVlnsNwhpr4xbDLsQ9fyGiJslMZ
- 2a07xvZq1bCPcD9CO9lSB56THcWga9F0ehDJT338XcEG4N+Q/X+FsNv+X5E5PyL9Oefl
- dJfAyYth1R7mlkDzW0dMXu+S5UX/0eTynkjvxHJIR9qQmmyY/DYKIX/R7iZVDRubnH5A
- RgBw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXjQR2YtmquugcIuGPxuW+hszh8+SXI6g7S9tq0a7qQI+MsQvk7/UQ2LookzYhkSO5OSaY3XjCaocnPTuf9q1Xmn1VNRrc=
-X-Gm-Message-State: AOJu0YyeWVgGFJoe7s1SjeZW2CWQywsMwq6vUXTr/k8cnFiMAxGElK9l
- xM04CzTmiMNxZTZ4y2FBfRMr9mzs79CK2Z6agjnpMD/YAmoQfNcVu0JtC9rRENQ=
-X-Google-Smtp-Source: AGHT+IHL0IhAGPUkUa1rEqF2KWWEnR9FHKJONGG42wvuQMf/nhtSJ93YnZzr3gCrWl9400gYJXPXww==
-X-Received: by 2002:a2e:954f:0:b0:2eb:ea9e:648c with SMTP id
- 38308e7fff4ca-2ebfc948831mr23804071fa.31.1718268122222; 
- Thu, 13 Jun 2024 01:42:02 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.148.226])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42286fe9263sm52479675e9.15.2024.06.13.01.42.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Jun 2024 01:42:01 -0700 (PDT)
-Message-ID: <57d7f1ae-e499-4859-a74e-53ba29ba0be3@linaro.org>
-Date: Thu, 13 Jun 2024 10:41:59 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHg4w-0000nv-3t
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:45:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sHg4t-0006Lo-6s
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 04:45:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718268301;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CxqMQGq92Xwwnv3EpYXW5u/8xaVhPtkkusQHbb5hspk=;
+ b=SjOB7D5T/iqdW0D8gl2LlXlBYPzdVSP8OgoFQeYepy/wx5BymCW+JHdOtjqwph/1LRWleF
+ lPKzt0FhFSvM1jXXTWPgIXhMrgun9jS3jGUfNtl+Qn82PI0W2RlkszEwEJsuc6uH2wciQV
+ 1rwl8sqjmwx8id4amYppwlbAHk3oYPA=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-197--VChXxsgOjmYAUK8cS4GAA-1; Thu,
+ 13 Jun 2024 04:44:56 -0400
+X-MC-Unique: -VChXxsgOjmYAUK8cS4GAA-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7743C19560B2; Thu, 13 Jun 2024 08:44:54 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.52])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16C7119560BF; Thu, 13 Jun 2024 08:44:51 +0000 (UTC)
+Date: Thu, 13 Jun 2024 09:44:48 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v3 2/4] usb/hub: mark as deprecated
+Message-ID: <ZmqxgAh1v6-Y8zjH@redhat.com>
+References: <20240606143010.1318226-1-kraxel@redhat.com>
+ <20240606143010.1318226-3-kraxel@redhat.com>
+ <ZmHKotWS7ywfIvOj@redhat.com> <87r0d2w431.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 21/32] hw/sd: Add mmc switch function support
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org
-Cc: Bin Meng <bin.meng@windriver.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Lucien Murray-Pitts <lucienmp.qemu@gmail.com>,
- Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>,
- "Edgar E . Iglesias" <edgar.iglesias@xilinx.com>
-References: <20230703132509.2474225-1-clg@kaod.org>
- <20230703132509.2474225-22-clg@kaod.org>
- <d9a20624-1813-4a29-b819-1de3961cc3cf@linaro.org>
- <4d1777d6-0195-4ecb-a85f-09964268533d@kaod.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <4d1777d6-0195-4ecb-a85f-09964268533d@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x236.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <87r0d2w431.fsf@draig.linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,107 +87,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/6/24 09:44, Cédric Le Goater wrote:
-> On 6/13/24 12:49 AM, Philippe Mathieu-Daudé wrote:
->> On 3/7/23 15:24, Cédric Le Goater wrote:
->>> From: Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>
->>>
->>> switch operation in mmc cards, updated the ext_csd register to
->>> request changes in card operations. Here we implement similar
->>> sequence but requests are mostly dummy and make no change.
->>>
->>> Implement SWITCH_ERROR if the write operation offset goes beyond length
->>> of ext_csd.
->>>
->>> Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>
->>> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@xilinx.com>
->>> [ clg: - ported on SDProto framework ]
->>> Signed-off-by: Cédric Le Goater <clg@kaod.org>
->>> ---
->>>   hw/sd/sd.c | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
->>>   1 file changed, 52 insertions(+)
->>
->>
->>> +static void mmc_function_switch(SDState *sd, uint32_t arg)
->>> +{
->>> +    uint32_t access = extract32(arg, 24, 2);
->>> +    uint32_t index = extract32(arg, 16, 8);
->>> +    uint32_t value = extract32(arg, 8, 8);
->>> +    uint8_t b = sd->ext_csd[index];
->>
->> This field is added in the next patch :)
->>
->> ../../hw/sd/sd.c:927:21: error: no member named 'ext_csd' in 'struct 
->> SDState'
->>      uint8_t b = sd->ext_csd[index];
->>                  ~~  ^
->> ../../hw/sd/sd.c:949:9: error: no member named 'ext_csd' in 'struct 
->> SDState'
->>      sd->ext_csd[index] = b;
->>      ~~  ^
->>
->> No need to respin, as I'm integrating your work.
+On Wed, Jun 12, 2024 at 04:52:50PM +0100, Alex Bennée wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
+> > On Thu, Jun 06, 2024 at 04:30:08PM +0200, Gerd Hoffmann wrote:
+> >> The hub supports only USB 1.1.  When running out of usb ports it is in
+> >> almost all cases the much better choice to add another usb host adapter
+> >> (or increase the number of root ports when using xhci) instead of using
+> >> the usb hub.
+> >
+> > Is that actually a strong enough reason to delete this device though ?
+> > This reads like its merely something we don't expect to be commonly
+> > used, rather than something we would actively want to delete.
 > 
-> Ah good !
-> 
-> There are 3 main parts :
-> 
->    * Base eMMC support:
->      hw/sd: Basis for eMMC support
->      hw/sd: Add emmc_cmd_SEND_OP_CMD() handler
->      hw/sd: Add emmc_cmd_ALL_SEND_CID() handler
->      hw/sd: Add emmc_cmd_SET_RELATIVE_ADDR() handler
->      hw/sd: Add emmc_cmd_APP_CMD() handler
->      hw/sd: add emmc_cmd_SEND_TUNING_BLOCK() handler
->      hw/sd: Add CMD21 tuning sequence
->      hw/sd: Add mmc switch function support
->      hw/sd: Add emmc_cmd_SEND_EXT_CSD() handler
-> 
- >      hw/sd: Fix SET_BLOCK_COUNT command argument
- >      hw/sd: Update CMD1 definition for MMC
+> This does seem quite aggressive because there may be cases when users
+> explicitly want to use old devices. Maybe there is need for a third
+> state (better_alternatives?) so we can steer users away from old command
+> lines they may have picked up from the web to the modern alternative?
 
-I am focusing on these for now and should include them
-in the next SD pull request, but I'll repost them with
-more patches to be reviewed first.
+We've got 2 flags proposed in patch 1 - "deprecated" and "not_secure" -
+which we formally expose to mgmt apps/users. Both of these are actionable
+in an unambiguous way. An application can query this info, and can also
+tell QEMU to enforce policy on this. Both are good.
 
->    * Boot area support
->      hw/sd: Support boot area in emmc image
->      hw/sd: Subtract bootarea size from blk
->      hw/sd: Add boot config support
+The "better alternatives" conceptable, however, is an inherantly fuzzy
+concept, because "better" is very much a use-case depedent / eye of the
+beholder concept. This would makes it difficult/impractical for an
+application to take action based on such a "better-alternatives' schema
+marker. It would imply the application has to understands the better
+alternatives ahead of time, as well as understanding the end users'
+intent and that's not really viable.
 
-I haven't studied them yet and plan to look at them
-after mentioned repost. I'll try to also include them
-in the PR.
 
->    * Aspeed eMMC support :
->      hw/arm/aspeed: Add eMMC device
->      hw/arm/aspeed: Load eMMC first boot area as a boot rom
->      hw/arm/aspeed: Set boot device to emmc
->      aspeed: Set bootconfig
->      aspeed: Introduce a 'boot-emmc' property for AST2600 based machines
 
-Once my PR posted I'll review them and let you merge them.
-Then I'll invite you a beer at the next KVM forum :)
+This is a long winded way of saying that while "better alternatives"
+is certainly a concept that is relevant, I'm not convinced it belongs
+in the schema, as opposed to being a documentation task.
 
-> and I can rework the aspeed part if needed.
-> 
-> Here is an image you can try boot on :
-> 
->    https://www.kaod.org/qemu/aspeed/rainier/mmc-p10bmc.qcow2
-> 
-> Run with :
-> 
->    qemu-system-arm -M rainier-bmc -net nic,netdev=net0 -netdev 
-> user,id=net0 -drive 
-> file=./mmc-p10bmc.qcow2,format=qcow2,if=sd,id=sd2,index=2 -nographic 
-> -serial mon:stdio
-> 
-> Thanks,
-> 
-> C.
+We haven't consistently provided documentation in the manual for every
+device, so in many cases '-device help' is all that exists, but in the
+case of USB we do actually have docs:
+
+  https://www.qemu.org/docs/master/system/devices/usb.html
+
+and those docs give little guidance to users about 'usb-hub', so IMHO
+that's where we should be documenting the tradeoffs of the different
+USB config scenarios.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
