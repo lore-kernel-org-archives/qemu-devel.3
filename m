@@ -4,84 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C57DC27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 12:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 646A2C27C4F
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 12:45:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHjff-0005vn-JM; Thu, 13 Jun 2024 08:35:15 -0400
+	id 1sHjog-0000Zr-L5; Thu, 13 Jun 2024 08:44:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sHjfd-0005tW-Sv
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 08:35:13 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sHjfc-000079-66
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 08:35:13 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-57ca578ce8dso1013242a12.2
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 05:35:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718282108; x=1718886908; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=xsWT4b3y3NMawCOFvh2U/P9gaPJIhjmuV+d7jXet5BY=;
- b=saw+xxysivueil9CppBZJHPg+fnCSf85x5RuKYhdkayj3DYMKsB5N7aIunjOBR6NbJ
- VxtCv5xYxkbm7MdQ0bJCWZ+EpwXM6tEJizgzlftrlJgSrievp7irA4zGUguAar+IG5zr
- L8/hGRe3XmrTAyWaMweykLQcufAd1puzRk9VUqyPf7WpGfPMiVonKfcUofabl9Rpvi4U
- FCKr4pawAA34GpvL4esmtJB/3BvcI9Ep90R+lGaWYGkqAVNDwRivsC36hPX8nXp28OJv
- TwlTQjxZAxgMq/Q5v6ld4fTs/Wj13feNq4i21fGBE5a9ds5iiZDv+HldvIGb+T55Gdtu
- X9Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718282108; x=1718886908;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xsWT4b3y3NMawCOFvh2U/P9gaPJIhjmuV+d7jXet5BY=;
- b=dzO34FCgNsc/1t+C+g4brJVsJBQtkBr02763e3hSAxc55iZBCXYdJwR6sj1SCLoYGG
- Sg4RhJ1OvglaXgaxVlvwZ3Dp7gMhoua66MSI5oTV4aHbS5qXuqcFg2jMtnCNvqkfIgYa
- oFI1bdmFMqsQRfgma9me5yF6rCAxwJVBCFYzZXphq99nY3+gDuVTMWlgT5YRCI7raChe
- kbECNKAV+CZn0pxsmGmayMcqrnkhX62TWmM/eYBm3Bxx1cv+RWOWspSF0w+EFWQTMZiB
- eRh6NosmPl0fxdaXgq1CE6r7kM6yLEFGTsE/6ADXLbXXrC4OvID5bbE2YdRkZ9vJtV8h
- sjuA==
-X-Gm-Message-State: AOJu0YwoMoCzkJMeJlXrxoFmTv+aXM2U1F+kg/NQ/ta1eTsvWJJQl/LM
- pUldLXDYah/G0arGIanwNFmjUyml7WIOkl1tcqqrEAjGFuIQ0xBLIEOfQLMVf5Q=
-X-Google-Smtp-Source: AGHT+IEj2rxfbDph7WYanlJZ1uCIbQZ2O7hXqwikG5pyz22qEmiLCZWq85VCfiQHjOzbKpCqLLKu9w==
-X-Received: by 2002:a17:906:2b9a:b0:a6f:18ed:254f with SMTP id
- a640c23a62f3a-a6f47d56f0cmr318681266b.58.1718282107852; 
- Thu, 13 Jun 2024 05:35:07 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f5c416f7asm32756866b.92.2024.06.13.05.35.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Jun 2024 05:35:07 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EC0DB5F7A1;
- Thu, 13 Jun 2024 13:35:06 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org
-Subject: Re: [PATCH v2 8/9] target/arm: Add aarch64_tcg_ops
-In-Reply-To: <eaa422eb-d616-44fe-ac7e-79baec8d60ce@linaro.org> (Richard
- Henderson's message of "Wed, 12 Jun 2024 08:45:59 -0700")
-References: <20240606032926.83599-1-richard.henderson@linaro.org>
- <20240606032926.83599-9-richard.henderson@linaro.org>
- <878qzaxm6n.fsf@draig.linaro.org>
- <eaa422eb-d616-44fe-ac7e-79baec8d60ce@linaro.org>
-Date: Thu, 13 Jun 2024 13:35:06 +0100
-Message-ID: <87a5jpvx51.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <SRS0=9LeC=NP=kaod.org=clg@ozlabs.org>)
+ id 1sHjod-0000ZP-Qp; Thu, 13 Jun 2024 08:44:31 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=9LeC=NP=kaod.org=clg@ozlabs.org>)
+ id 1sHjoa-0001jY-Ph; Thu, 13 Jun 2024 08:44:31 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W0MYK4qVqz4xsB;
+ Thu, 13 Jun 2024 22:44:21 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W0MYG23SVz4xsD;
+ Thu, 13 Jun 2024 22:44:17 +1000 (AEST)
+Message-ID: <e2113792-8715-4d75-b730-fdd29492566e@kaod.org>
+Date: Thu, 13 Jun 2024 14:44:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/26] hw/ppc: Prefer HumanReadableText over Monitor
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>, David Gibson <david@gibson.dropbear.id.au>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+References: <20240610062105.49848-1-philmd@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240610062105.49848-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=9LeC=NP=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,19 +69,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+On 6/10/24 8:20 AM, Philippe Mathieu-Daudé wrote:
+> Hi,
+> 
+> This series remove uses of Monitor in hw/ppc/,
+> replacing by the more generic HumanReadableText.
+> Care is taken to keep the commit bisectables by
+> updating functions one by one, also easing review.
+> 
+> For rationale see previous series from Daniel:
+> https://lore.kernel.org/qemu-devel/20211028155457.967291-1-berrange@redhat.com/
+> 
+> Regards,
+> 
+> Phil.
+> 
+> Philippe Mathieu-Daudé (26):
+>    hw/ppc: Avoid using Monitor in pnv_phb3_msi_pic_print_info()
+>    hw/ppc: Avoid using Monitor in icp_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_tctx_pic_print_info()
+>    hw/ppc: Avoid using Monitor in ics_pic_print_info()
+>    hw/ppc: Avoid using Monitor in PnvChipClass::intc_print_info()
+>    hw/ppc: Avoid using Monitor in xive_end_queue_pic_print_info()
+>    hw/ppc: Avoid using Monitor in spapr_xive_end_pic_print_info()
+>    hw/ppc: Avoid using Monitor in spapr_xive_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_source_pic_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_phb4_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_eas_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_end_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_end_eas_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_nvt_pic_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_xive_pic_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_psi_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_eas_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_end_eas_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_end_queue_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_end_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_nvp_pic_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_xive2_pic_print_info()
+>    hw/ppc: Avoid using Monitor in
+>      SpaprInterruptControllerClass::print_info()
+>    hw/ppc: Avoid using Monitor in spapr_irq_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_chip_power9_pic_print_info_child()
+>    hw/ppc: Avoid using Monitor in pic_print_info()
+> 
+>   include/hw/pci-host/pnv_phb3.h |   2 +-
+>   include/hw/pci-host/pnv_phb4.h |   2 +-
+>   include/hw/ppc/pnv_chip.h      |   4 +-
+>   include/hw/ppc/pnv_psi.h       |   2 +-
+>   include/hw/ppc/pnv_xive.h      |   4 +-
+>   include/hw/ppc/spapr_irq.h     |   4 +-
+>   include/hw/ppc/xics.h          |   4 +-
+>   include/hw/ppc/xive.h          |   4 +-
+>   include/hw/ppc/xive2_regs.h    |   8 +--
+>   include/hw/ppc/xive_regs.h     |   8 +--
+>   hw/intc/pnv_xive.c             |  38 ++++++------
+>   hw/intc/pnv_xive2.c            |  48 +++++++--------
+>   hw/intc/spapr_xive.c           |  41 ++++++-------
+>   hw/intc/xics.c                 |  25 ++++----
+>   hw/intc/xics_spapr.c           |   7 +--
+>   hw/intc/xive.c                 | 108 ++++++++++++++++-----------------
+>   hw/intc/xive2.c                |  87 +++++++++++++-------------
+>   hw/pci-host/pnv_phb3_msi.c     |  21 +++----
+>   hw/pci-host/pnv_phb4.c         |  17 +++---
+>   hw/ppc/pnv.c                   |  52 ++++++++--------
+>   hw/ppc/pnv_psi.c               |   9 ++-
+>   hw/ppc/spapr.c                 |  11 +++-
+>   hw/ppc/spapr_irq.c             |   4 +-
+>   23 files changed, 256 insertions(+), 254 deletions(-)
+> 
 
-> On 6/12/24 07:36, Alex Benn=C3=A9e wrote:
->> What happens when the CPU is running mixed mode code and jumping between
->> 64 and 32 bit? Wouldn't it be easier to have a helper that routes to the
->> correct unwinder, c.f. gen_intermediate_code
->
-> GDB can't switch modes, so there is *never* any mode switching.
 
-Hmm but code can. We do want to solve the gdb mode switching case as
-well although that requires some work on the gdbstub.
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Thanks,
+
+C.
+
+
 
