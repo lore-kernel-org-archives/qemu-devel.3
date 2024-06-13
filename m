@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B549C27C4F
-	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 09:25:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C7A7C27C75
+	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 09:25:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHgh0-00049v-LM; Thu, 13 Jun 2024 05:24:26 -0400
+	id 1sHghG-0004Gx-V9; Thu, 13 Jun 2024 05:24:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sHggx-00048g-Vh
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:24:23 -0400
+ id 1sHghF-0004G5-7Q
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:24:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sHggv-0005UH-7f
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:24:23 -0400
+ id 1sHghD-0005Yi-Ks
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 05:24:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718270660;
+ s=mimecast20190719; t=1718270679;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=6fQcYwBDqzqIEliJoJWNwtiA5HjDOa1xVW7iitplEK8=;
- b=Qk8/rPTJtAP93w8ZOyXQGlHHLrADqFKyZRe+qsG8Rc2gIFMpQZyheeaRv/IBejNKLqWo+e
- GqsZmJgQouJjKolhmq2zfMQ4VCui08Tc+09+xft9uVomRPPKZmrT4+zM8ug02KgMj6uld4
- XIxIZssahL7esgbtkRaxaPO8TLp5D1g=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Gty/qhcqM8rKctZ2Q3JKdiXCyNc7WkVbI04fYcS5z1M=;
+ b=DrZokMmGFR2zaLjpXdkaKvnRuAkGMbAHuyd0VQSSeS/HJLNeaJxjHVtniqq5r8F0Sz0SNo
+ xW2+h/zwv0D9ysAGg+N8p37Dxj8+UorRn2Aduh29BQDsM/tMux+bZcoZqmDCcYrWiEeg51
+ t+67qG6EG8+bIi0q4dnrN3fAWC6g62E=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-9iMMkfM0Pj2p7Ab1djEd2w-1; Thu,
- 13 Jun 2024 05:24:11 -0400
-X-MC-Unique: 9iMMkfM0Pj2p7Ab1djEd2w-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-DzpBEYxkNDmNTh96v-PnFQ-1; Thu,
+ 13 Jun 2024 05:24:35 -0400
+X-MC-Unique: DzpBEYxkNDmNTh96v-PnFQ-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A75BF195605F; Thu, 13 Jun 2024 09:24:10 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 38A3819560B7; Thu, 13 Jun 2024 09:24:34 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.39.193.191])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3C8631956053; Thu, 13 Jun 2024 09:24:03 +0000 (UTC)
+ id 023401956050; Thu, 13 Jun 2024 09:24:29 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
@@ -52,10 +53,12 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  zhenzhong.duan@intel.com
 Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
  berrange@redhat.com
-Subject: [PATCH v3 0/7] VIRTIO-IOMMU/VFIO: Fix host iommu geometry handling
- for hotplugged devices
-Date: Thu, 13 Jun 2024 11:20:02 +0200
-Message-ID: <20240613092359.847145-1-eric.auger@redhat.com>
+Subject: [PATCH v3 5/7] virtio-iommu: Remove the implementation of
+ iommu_set_iova_range
+Date: Thu, 13 Jun 2024 11:20:07 +0200
+Message-ID: <20240613092359.847145-6-eric.auger@redhat.com>
+In-Reply-To: <20240613092359.847145-1-eric.auger@redhat.com>
+References: <20240613092359.847145-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
@@ -84,112 +87,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series is based on Zhenzhong HostIOMMUDevice:
+Now that we use PCIIOMMUOps to convey information about usable IOVA
+ranges we do not to implement the iommu_set_iova_ranges IOMMU MR
+callback.
 
-[PATCH v7 00/17] Add a host IOMMU device abstraction to check with vIOMMU
-https://lore.kernel.org/all/20240605083043.317831-1-zhenzhong.duan@intel.com/
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/virtio/virtio-iommu.c | 67 ----------------------------------------
+ 1 file changed, 67 deletions(-)
 
-It allows to convey host IOVA reserved regions to the virtio-iommu and
-uses the HostIOMMUDevice infrastructure. This replaces the usage of
-IOMMU MR ops which fail to satisfy this need for hotplugged devices.
-
-See below for additional background.
-
-In [1] we attempted to fix a case where a VFIO-PCI device protected
-with a virtio-iommu was assigned to an x86 guest. On x86 the physical
-IOMMU may have an address width (gaw) of 39 or 48 bits whereas the
-virtio-iommu used to expose a 64b address space by default.
-Hence the guest was trying to use the full 64b space and we hit
-DMA MAP failures. To work around this issue we managed to pass
-usable IOVA regions (excluding the out of range space) from VFIO
-to the virtio-iommu device. This was made feasible by introducing
-a new IOMMU Memory Region callback dubbed iommu_set_iova_regions().
-This latter gets called when the IOMMU MR is enabled which
-causes the vfio_listener_region_add() to be called.
-
-For coldplugged devices the technique works because we make sure all
-the IOMMU MR are enabled once on the machine init done: 94df5b2180
-("virtio-iommu: Fix 64kB host page size VFIO device assignment")
-for granule freeze. But I would be keen to get rid of this trick.
-
-However with VFIO-PCI hotplug, this technique fails due to the
-race between the call to the callback in the add memory listener
-and the virtio-iommu probe request. Indeed the probe request gets
-called before the attach to the domain. So in that case the usable
-regions are communicated after the probe request and fail to be
-conveyed to the guest.
-
-Using an IOMMU MR Ops is unpractical because this relies on the IOMMU
-MR to have been enabled and the corresponding vfio_listener_region_add()
-to be executed. Instead this series proposes to replace the usage of this
-API by the recently introduced PCIIOMMUOps: ba7d12eb8c  ("hw/pci: modify
-pci_setup_iommu() to set PCIIOMMUOps"). That way, the callback can be
-called earlier, once the usable IOVA regions have been collected by
-VFIO, without the need for the IOMMU MR to be enabled.
-
-This series also removes the spurious message:
-qemu-system-aarch64: warning: virtio-iommu-memory-region-7-0: Notified about new host reserved regions after probe
-
-In the short term this may also be used for passing the page size
-mask, which would allow to get rid of the hacky transient IOMMU
-MR enablement mentionned above.
-
-[1] [PATCH v4 00/12] VIRTIO-IOMMU/VFIO: Don't assume 64b IOVA space
-    https://lore.kernel.org/all/20231019134651.842175-1-eric.auger@redhat.com/
-
-Extra Notes:
-With that series, the reserved memory regions are communicated on time
-so that the virtio-iommu probe request grabs them. However this is not
-sufficient. In some cases (my case), I still see some DMA MAP failures
-and the guest keeps on using IOVA ranges outside the geometry of the
-physical IOMMU. This is due to the fact the VFIO-PCI device is in the
-same iommu group as the pcie root port. Normally the kernel
-iova_reserve_iommu_regions (dma-iommu.c) is supposed to call reserve_iova()
-for each reserved IOVA, which carves them out of the allocator. When
-iommu_dma_init_domain() gets called for the hotplugged vfio-pci device
-the iova domain is already allocated and set and we don't call
-iova_reserve_iommu_regions() again for the vfio-pci device. So its
-corresponding reserved regions are not properly taken into account.
-
-This is not trivial to fix because theoretically the 1st attached
-devices could already have allocated IOVAs within the reserved regions
-of the second device. Also we are somehow hijacking the reserved
-memory regions to model the geometry of the physical IOMMU so not sure
-any attempt to fix that upstream will be accepted. At the moment one
-solution is to make sure assigned devices end up in singleton group.
-Another solution is to work on a different approach where the gaw
-can be passed as an option to the virtio-iommu device, similarly at
-what is done with intel iommu.
-
-This series can be found at:
-https://github.com/eauger/qemu/tree/iommufd_nesting_preq_v7_resv_regions_v3
-
-History:
-v2 -> v3:
-- moved the series from RFC to patch
-- collected Zhenzhong's R-bs and took into account most of his comments
-  (see replies on on v2)
-
-
-Eric Auger (7):
-  HostIOMMUDevice: Store the VFIO/VDPA agent
-  virtio-iommu: Implement set|unset]_iommu_device() callbacks
-  HostIOMMUDevice: Introduce get_iova_ranges callback
-  virtio-iommu: Compute host reserved regions
-  virtio-iommu: Remove the implementation of iommu_set_iova_range
-  hw/vfio: Remove memory_region_iommu_set_iova_ranges() call
-  memory: Remove IOMMU MR iommu_set_iova_range API
-
- include/exec/memory.h              |  32 ---
- include/hw/virtio/virtio-iommu.h   |  10 +
- include/sysemu/host_iommu_device.h |   9 +
- hw/vfio/common.c                   |  10 -
- hw/vfio/container.c                |  17 ++
- hw/vfio/iommufd.c                  |  18 ++
- hw/virtio/virtio-iommu.c           | 303 +++++++++++++++++++----------
- system/memory.c                    |  13 --
- 8 files changed, 256 insertions(+), 156 deletions(-)
-
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 04474ebd74..22288885f1 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -1358,72 +1358,6 @@ static int virtio_iommu_set_page_size_mask(IOMMUMemoryRegion *mr,
+     return 0;
+ }
+ 
+-/**
+- * virtio_iommu_set_iova_ranges: Conveys the usable IOVA ranges
+- *
+- * The function turns those into reserved ranges. Once some
+- * reserved ranges have been set, new reserved regions cannot be
+- * added outside of the original ones.
+- *
+- * @mr: IOMMU MR
+- * @iova_ranges: list of usable IOVA ranges
+- * @errp: error handle
+- */
+-static int virtio_iommu_set_iova_ranges(IOMMUMemoryRegion *mr,
+-                                        GList *iova_ranges,
+-                                        Error **errp)
+-{
+-    IOMMUDevice *sdev = container_of(mr, IOMMUDevice, iommu_mr);
+-    GList *current_ranges = sdev->host_resv_ranges;
+-    GList *l, *tmp, *new_ranges = NULL;
+-    int ret = -EINVAL;
+-
+-    /* check that each new resv region is included in an existing one */
+-    if (sdev->host_resv_ranges) {
+-        range_inverse_array(iova_ranges,
+-                            &new_ranges,
+-                            0, UINT64_MAX);
+-
+-        for (tmp = new_ranges; tmp; tmp = tmp->next) {
+-            Range *newr = (Range *)tmp->data;
+-            bool included = false;
+-
+-            for (l = current_ranges; l; l = l->next) {
+-                Range * r = (Range *)l->data;
+-
+-                if (range_contains_range(r, newr)) {
+-                    included = true;
+-                    break;
+-                }
+-            }
+-            if (!included) {
+-                goto error;
+-            }
+-        }
+-        /* all new reserved ranges are included in existing ones */
+-        ret = 0;
+-        goto out;
+-    }
+-
+-    if (sdev->probe_done) {
+-        warn_report("%s: Notified about new host reserved regions after probe",
+-                    mr->parent_obj.name);
+-    }
+-
+-    range_inverse_array(iova_ranges,
+-                        &sdev->host_resv_ranges,
+-                        0, UINT64_MAX);
+-    rebuild_resv_regions(sdev);
+-
+-    return 0;
+-error:
+-    error_setg(errp, "IOMMU mr=%s Conflicting host reserved ranges set!",
+-               mr->parent_obj.name);
+-out:
+-    g_list_free_full(new_ranges, g_free);
+-    return ret;
+-}
+-
+ static void virtio_iommu_system_reset(void *opaque)
+ {
+     VirtIOIOMMU *s = opaque;
+@@ -1749,7 +1683,6 @@ static void virtio_iommu_memory_region_class_init(ObjectClass *klass,
+     imrc->replay = virtio_iommu_replay;
+     imrc->notify_flag_changed = virtio_iommu_notify_flag_changed;
+     imrc->iommu_set_page_size_mask = virtio_iommu_set_page_size_mask;
+-    imrc->iommu_set_iova_ranges = virtio_iommu_set_iova_ranges;
+ }
+ 
+ static const TypeInfo virtio_iommu_info = {
 -- 
 2.41.0
 
