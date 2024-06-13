@@ -4,81 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA32BC27C4F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3F5DC41513
 	for <qemu-devel@archiver.kernel.org>; Thu, 13 Jun 2024 17:22:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHo8m-0000dr-OJ; Thu, 13 Jun 2024 13:21:36 -0400
+	id 1sHo8P-0000Y1-3u; Thu, 13 Jun 2024 13:21:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sHo8l-0000db-En
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:21:35 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sHo8N-0000XZ-Qg
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:21:11 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sHo8i-0005p1-9n
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:21:35 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1f8507aac31so11528975ad.3
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 10:21:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718299290; x=1718904090; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QLZzQ3DvFvzyweQTIeQUri8sy89Kt4aPtz5SQfGQIJ8=;
- b=EYI8x9u+0VAFcNS52DRK0loIR6JOP+UF4/IXawH7r3sm4SGl/arFTWtke9FQuzHxdl
- tHfiD42+1AfBTK++J/uFVYB3JIZmHN/QNCTKvLGpWb07kzaX+KD0NJYuDkTzKQNg9wQW
- baLkUctjGNrp+4i1k6bKgOQa7EEJv+m89pS4e4520L5TsasquX2CU1F8i8XhMNWM9zAN
- 6FUaUHNAUpBFQO4fDoxlBKeXE5oC5oi1F9iQSun561tGvKUdBoz1FpVAnSdn+t2v86eB
- 2O+AaLhqh+yEn9nvmtHnRqkjoEfRNdxEJem6fXCEfbTqoYre/NO2ZizTA2ZPgHcJVrkR
- 6a8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718299290; x=1718904090;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QLZzQ3DvFvzyweQTIeQUri8sy89Kt4aPtz5SQfGQIJ8=;
- b=Qa8HBXDMIzoXqacBUqLVRjG9gyOh3WtY3NfPk8zvP1dQYu3kiLWe/hUqDH9nV4BgIz
- 9qhdRvKZ/lIWRjkLp8BzWCJM9H/LT0vg2QTHdOBCsP4EEHk0467jDPsJmY0LIcLO6ZT0
- 0zzr8gBHWtdFvMArxphEzLtqbgxkcRFUDRCIezlcmvLkvLmwh8liZGn80mI4zfovhMwp
- 3fWnf6IA1r6FkmWl/lH8mnzK1VNYPqJzJZ5VmcuQhDgv7eMGBbqRSIVxgXzrl+yZ61kM
- Bds4KpIle2EcJqHvhIG9suTNufMPai/mZYPMM04kriGpRTvezSHWWKSv+s8PF0TKrJBL
- uSBA==
-X-Gm-Message-State: AOJu0YyjKGZARWfgHxUE+aVFE1VBISNMSiMnDEWOHy8thInzDVfunfQ8
- f+6Mgyif0u7Kks5WNns7g/05umUI0Q1O7V6HFNz+3IpcaWIvdeBm712buvkS32ILHPdLUPajRGf
- z
-X-Google-Smtp-Source: AGHT+IF+HE0QL6BXUOhutRej0h2aF10WcEq4PceddrHb9IFNC8A/XcKSVt3Rwsca4z7e7OdF2o2iHA==
-X-Received: by 2002:a17:902:ce8f:b0:1f6:3596:7c61 with SMTP id
- d9443c01a7336-1f8625d4ad9mr3728175ad.2.1718299290237; 
- Thu, 13 Jun 2024 10:21:30 -0700 (PDT)
-Received: from amd.. ([2804:7f0:b400:8dcb:3e7c:3fff:fe7a:e83b])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855e5b85bsm16443885ad.32.2024.06.13.10.21.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 13 Jun 2024 10:21:29 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org, philmd@linaro.org, peter.maydell@linaro.org,
- alex.bennee@linaro.org, richard.henderson@linaro.org
-Cc: gustavo.romero@linaro.org
-Subject: [PATCH v2 2/9] gdbstub: Move GdbCmdParseEntry into a new header file
-Date: Thu, 13 Jun 2024 17:20:56 +0000
-Message-Id: <20240613172103.2987519-3-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240613172103.2987519-1-gustavo.romero@linaro.org>
-References: <20240613172103.2987519-1-gustavo.romero@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sHo8K-0005hh-LB
+ for qemu-devel@nongnu.org; Thu, 13 Jun 2024 13:21:11 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 171191FCFB;
+ Thu, 13 Jun 2024 17:21:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718299267; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ahM9ZulMfAXOHQSBkXrBnMIOtmtqddIDrrwWJl2l0i8=;
+ b=DddtJQuzWByQ6EraUrE08tf2KVY/sVURedYK7CiQlfPa1jjPofwxn12cZtT8HieQcviw3z
+ fztZsygNmbkGl0eVdB0x7+OKgTY4S1NaFOKm6sxRXdWjucHDEPMLhD+z6y3yjOvoja5yW7
+ gy4pvcV9m0fXQGuhPz1K70HlQS2MTnw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718299267;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ahM9ZulMfAXOHQSBkXrBnMIOtmtqddIDrrwWJl2l0i8=;
+ b=C1YpaWVcIvW0Pimfb38Rr7YTIWhVs2HHD75qFqqyo7dG+WXw9e5RLxkOOCU67NxJFZi5IW
+ ZZsHs35eyuyKAPCA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DddtJQuz;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=C1YpaWVc
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718299267; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ahM9ZulMfAXOHQSBkXrBnMIOtmtqddIDrrwWJl2l0i8=;
+ b=DddtJQuzWByQ6EraUrE08tf2KVY/sVURedYK7CiQlfPa1jjPofwxn12cZtT8HieQcviw3z
+ fztZsygNmbkGl0eVdB0x7+OKgTY4S1NaFOKm6sxRXdWjucHDEPMLhD+z6y3yjOvoja5yW7
+ gy4pvcV9m0fXQGuhPz1K70HlQS2MTnw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718299267;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ahM9ZulMfAXOHQSBkXrBnMIOtmtqddIDrrwWJl2l0i8=;
+ b=C1YpaWVcIvW0Pimfb38Rr7YTIWhVs2HHD75qFqqyo7dG+WXw9e5RLxkOOCU67NxJFZi5IW
+ ZZsHs35eyuyKAPCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8CB7913A87;
+ Thu, 13 Jun 2024 17:21:06 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id rpbsFIIqa2ZtBAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 13 Jun 2024 17:21:06 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Jiri Denemark <jdenemar@redhat.com>, Prasad
+ Pandit <ppandit@redhat.com>, Bandan Das <bdas@redhat.com>
+Subject: Re: [PATCH 4/4] migration/postcopy: Add postcopy-recover-setup phase
+In-Reply-To: <Zmsc5pXGs4dLfiLB@x1n>
+References: <20240612144228.1179240-1-peterx@redhat.com>
+ <20240612144228.1179240-5-peterx@redhat.com> <8734pgdhf5.fsf@suse.de>
+ <Zmsc5pXGs4dLfiLB@x1n>
+Date: Thu, 13 Jun 2024 14:21:04 -0300
+Message-ID: <87tthwbvy7.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: 171191FCFB
+X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,696 +128,435 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move GdbCmdParseEntry and its associated types into a separate header
-file to allow the use of GdbCmdParseEntry and other gdbstub command
-functions outside of gdbstub.c.
+Peter Xu <peterx@redhat.com> writes:
 
-Since GdbCmdParseEntry and get_param are now public, kdoc
-GdbCmdParseEntry and rename get_param to gdb_get_cmd_param.
+> On Thu, Jun 13, 2024 at 11:51:58AM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > This patch adds a migration state on src called "postcopy-recover-setup".
+>> > The new state will describe the intermediate step starting from when the
+>> > src QEMU started an postcopy recovery request, until the migration channels
+>> > are properly established, but before the recovery process take place.
+>> >
+>> > The request came from Libvirt where Libvirt currently rely on the migration
+>> > state events to detect migration state changes.  That works for most of the
+>> > migration process but except postcopy recovery failures at the beginning.
+>> >
+>> > Currently postcopy recovery only has two major states:
+>> >
+>> >   - postcopy-paused: this is the state that both sides of QEMU will be in
+>> >     for a long time as long as the migration channel was interrupted.
+>> >
+>> >   - postcopy-recover: this is the state where both sides of QEMU handshake
+>> >     with each other, preparing for a continuation of postcopy which used to
+>> >     be interrupted.
+>> >
+>> > The issue here is when the recovery port is invalid, the src QEMU will take
+>> > the URI/channels, noticing the ports are not valid, and it'll silently keep
+>> > in the postcopy-paused state, with no event sent to Libvirt.  In this case,
+>> > the only thing Libvirt can do is to poll the migration status with a proper
+>> > interval, however that's less optimal.
+>> >
+>> > Considering that this is the only case where Libvirt won't get a
+>> > notification from QEMU on such events, let's add postcopy-recover-setup
+>> > state to mimic what we used to have with the "setup" state of a newly
+>> 
+>> s/used to //
+>
+> Fixed.
+>
+>> 
+>> > initialized migration, describing the phase of connection establishment.
+>> >
+>> > With that, postcopy recovery will have two paths to go now, and either path
+>> > will guarantee an event generated.  Now the events will look like this
+>> > during a recovery process on src QEMU:
+>> >
+>> >   - Initially when the recovery is initiated on src, QEMU will go from
+>> >     "postcopy-paused" -> "postcopy-recover-setup".  Old QEMUs don't have
+>> >     this event.
+>> >
+>> >   - Depending on whether the channel re-establishment is succeeded:
+>> >
+>> >     - In succeeded case, src QEMU will move from "postcopy-recover-setup"
+>> >       to "postcopy-recover".  Old QEMUs also have this event.
+>> >
+>> >     - In failure case, src QEMU will move from "postcopy-recover-setup" to
+>> >       "postcopy-paused" again.  Old QEMUs don't have this event.
+>> >
+>> > This guarantees that Libvirt will always receive a notification for
+>> > recovery process properly.
+>> >
+>> > One thing to mention is, such new status is only needed on src QEMU not
+>> > both.  On dest QEMU, the state machine doesn't change.  Hence the events
+>> > don't change either.  It's done like so because dest QEMU may not have an
+>> > explicit point of setup start.  E.g., it can happen that when dest QEMUs
+>> > doesn't use migrate-recover command to use a new URI/channel, but the old
+>> > URI/channels can be reused in recovery, in which case the old ports simply
+>> > can work again after the network routes are fixed up.
+>> >
+>> > The patch has some touch-ups in the dest path too, but it's because there's
+>> > some unclearness on using migrate_set_state(), so the change should make it
+>> > crystal clear now by checking current status always.  The next step from
+>> 
+>> Can we get a separate patch for these cleanups?
+>
+> We can, and I'll do.
+>
+>> 
+>> > that POV would be making migrate_set_state() not using cmpxchg() but always
+>> > update the status, but that's for later.
+>> >
+>> > Cc: Jiri Denemark <jdenemar@redhat.com>
+>> > Cc: Fabiano Rosas <farosas@suse.de>
+>> > Cc: Prasad Pandit <ppandit@redhat.com>
+>> > Buglink: https://issues.redhat.com/browse/RHEL-38485
+>> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>> > ---
+>> >  qapi/migration.json      |  4 +++
+>> >  migration/postcopy-ram.h |  3 ++
+>> >  migration/migration.c    | 66 +++++++++++++++++++++++++++++++++++-----
+>> >  migration/postcopy-ram.c |  6 ++++
+>> >  migration/savevm.c       |  4 +--
+>> >  5 files changed, 73 insertions(+), 10 deletions(-)
+>> >
+>> > diff --git a/qapi/migration.json b/qapi/migration.json
+>> > index a351fd3714..a135bbcd96 100644
+>> > --- a/qapi/migration.json
+>> > +++ b/qapi/migration.json
+>> > @@ -142,6 +142,9 @@
+>> >  #
+>> >  # @postcopy-paused: during postcopy but paused.  (since 3.0)
+>> >  #
+>> > +# @postcopy-recover-setup: setup phase for a postcopy recover process,
+>> > +#     preparing for a recover phase to start.  (since 9.1)
+>> 
+>> recover*y* process
+>> recover*y* phase
+>
+> OK.
+>
+>> 
+>> > +#
+>> >  # @postcopy-recover: trying to recover from a paused postcopy.  (since
+>> >  #     3.0)
+>> >  #
+>> > @@ -166,6 +169,7 @@
+>> >  { 'enum': 'MigrationStatus',
+>> >    'data': [ 'none', 'setup', 'cancelling', 'cancelled',
+>> >              'active', 'postcopy-active', 'postcopy-paused',
+>> > +            'postcopy-recover-setup',
+>> >              'postcopy-recover', 'completed', 'failed', 'colo',
+>> >              'pre-switchover', 'device', 'wait-unplug' ] }
+>> >  ##
+>> > diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
+>> > index ecae941211..a6df1b2811 100644
+>> > --- a/migration/postcopy-ram.h
+>> > +++ b/migration/postcopy-ram.h
+>> > @@ -13,6 +13,8 @@
+>> >  #ifndef QEMU_POSTCOPY_RAM_H
+>> >  #define QEMU_POSTCOPY_RAM_H
+>> >  
+>> > +#include "qapi/qapi-types-migration.h"
+>> > +
+>> >  /* Return true if the host supports everything we need to do postcopy-ram */
+>> >  bool postcopy_ram_supported_by_host(MigrationIncomingState *mis,
+>> >                                      Error **errp);
+>> > @@ -193,5 +195,6 @@ enum PostcopyChannels {
+>> >  void postcopy_preempt_new_channel(MigrationIncomingState *mis, QEMUFile *file);
+>> >  void postcopy_preempt_setup(MigrationState *s);
+>> >  int postcopy_preempt_establish_channel(MigrationState *s);
+>> > +bool postcopy_is_paused(MigrationStatus status);
+>> >  
+>> >  #endif
+>> > diff --git a/migration/migration.c b/migration/migration.c
+>> > index bfbd657035..9475dce7dc 100644
+>> > --- a/migration/migration.c
+>> > +++ b/migration/migration.c
+>> > @@ -595,6 +595,26 @@ bool migrate_uri_parse(const char *uri, MigrationChannel **channel,
+>> >      return true;
+>> >  }
+>> >  
+>> > +static bool
+>> > +migration_incoming_state_setup(MigrationIncomingState *mis, Error **errp)
+>> > +{
+>> > +    MigrationStatus current = mis->state;
+>> > +
+>> > +    if (current == MIGRATION_STATUS_POSTCOPY_PAUSED) {
+>> > +        /* Postcopy paused state doesn't change when setup new ports */
+>> 
+>> The "setup new ports" part is a bit vague. Maybe:
+>> 
+>> /*
+>>  * The SETUP state only happens at the start of migration. A postcopy
+>>  * migration recovery migration stays in POSTCOPY_PAUSED.
+>>  */
+>
+> Mentioning SETUP in this if clause might be slightly confusing?  How about
+> I only keep the latter sentence (and change it a bit; there's one extra
+> "migration")?
+>
+>   /*
+>    * Postcopy migration stays in POSTCOPY_PAUSED even if reconnection
+>    * happens.
+>    */
 
-This commit also makes gdb_put_packet public since is used in gdbstub
-command handling.
+Yep.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
----
- gdbstub/gdbstub.c          | 134 ++++++++++++++-----------------------
- gdbstub/internals.h        |  22 ------
- gdbstub/syscalls.c         |   7 +-
- gdbstub/system.c           |   7 +-
- gdbstub/user-target.c      |  25 +++----
- gdbstub/user.c             |   7 +-
- include/gdbstub/commands.h |  74 ++++++++++++++++++++
- 7 files changed, 148 insertions(+), 128 deletions(-)
- create mode 100644 include/gdbstub/commands.h
+>
+>> 
+>> > +        return true;
+>> > +    }
+>> > +
+>> > +    if (current != MIGRATION_STATUS_NONE) {
+>> > +        error_setg(errp, "Illegal migration incoming state: %s",
+>> > +                   MigrationStatus_str(current));
+>> > +        return false;
+>> > +    }
+>> 
+>> This is a good candidate for a separate patch due to the extra change in
+>> behavior not necessarily related to postcopy.
+>
+> I'll split that, but just to mention, I think there should have no
+> functional change, or we're doomed.
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 37314b92e5..9ff2f4177d 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -30,6 +30,7 @@
- #include "qemu/error-report.h"
- #include "trace.h"
- #include "exec/gdbstub.h"
-+#include "gdbstub/commands.h"
- #include "gdbstub/syscalls.h"
- #ifdef CONFIG_USER_ONLY
- #include "accel/tcg/vcpu-state.h"
-@@ -920,43 +921,6 @@ static int cmd_parse_params(const char *data, const char *schema,
-     return 0;
- }
- 
--typedef void (*GdbCmdHandler)(GArray *params, void *user_ctx);
--
--/*
-- * cmd_startswith -> cmd is compared using startswith
-- *
-- * allow_stop_reply -> true iff the gdbstub can respond to this command with a
-- *   "stop reply" packet. The list of commands that accept such response is
-- *   defined at the GDB Remote Serial Protocol documentation. see:
-- *   https://sourceware.org/gdb/onlinedocs/gdb/Stop-Reply-Packets.html#Stop-Reply-Packets.
-- *
-- * schema definitions:
-- * Each schema parameter entry consists of 2 chars,
-- * the first char represents the parameter type handling
-- * the second char represents the delimiter for the next parameter
-- *
-- * Currently supported schema types:
-- * 'l' -> unsigned long (stored in .val_ul)
-- * 'L' -> unsigned long long (stored in .val_ull)
-- * 's' -> string (stored in .data)
-- * 'o' -> single char (stored in .opcode)
-- * 't' -> thread id (stored in .thread_id)
-- * '?' -> skip according to delimiter
-- *
-- * Currently supported delimiters:
-- * '?' -> Stop at any delimiter (",;:=\0")
-- * '0' -> Stop at "\0"
-- * '.' -> Skip 1 char unless reached "\0"
-- * Any other value is treated as the delimiter value itself
-- */
--typedef struct GdbCmdParseEntry {
--    GdbCmdHandler handler;
--    const char *cmd;
--    bool cmd_startswith;
--    const char *schema;
--    bool allow_stop_reply;
--} GdbCmdParseEntry;
--
- static inline int startswith(const char *string, const char *pattern)
- {
-   return !strncmp(string, pattern, strlen(pattern));
-@@ -1023,7 +987,7 @@ static void handle_detach(GArray *params, void *user_ctx)
-             return;
-         }
- 
--        pid = get_param(params, 0)->val_ul;
-+        pid = gdb_get_cmd_param(params, 0)->val_ul;
-     }
- 
- #ifdef CONFIG_USER_ONLY
-@@ -1061,13 +1025,13 @@ static void handle_thread_alive(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    if (get_param(params, 0)->thread_id.kind == GDB_READ_THREAD_ERR) {
-+    if (gdb_get_cmd_param(params, 0)->thread_id.kind == GDB_READ_THREAD_ERR) {
-         gdb_put_packet("E22");
-         return;
-     }
- 
--    cpu = gdb_get_cpu(get_param(params, 0)->thread_id.pid,
--                      get_param(params, 0)->thread_id.tid);
-+    cpu = gdb_get_cpu(gdb_get_cmd_param(params, 0)->thread_id.pid,
-+                      gdb_get_cmd_param(params, 0)->thread_id.tid);
-     if (!cpu) {
-         gdb_put_packet("E22");
-         return;
-@@ -1079,7 +1043,7 @@ static void handle_thread_alive(GArray *params, void *user_ctx)
- static void handle_continue(GArray *params, void *user_ctx)
- {
-     if (params->len) {
--        gdb_set_cpu_pc(get_param(params, 0)->val_ull);
-+        gdb_set_cpu_pc(gdb_get_cmd_param(params, 0)->val_ull);
-     }
- 
-     gdbserver_state.signal = 0;
-@@ -1095,7 +1059,7 @@ static void handle_cont_with_sig(GArray *params, void *user_ctx)
-      *       omit the addr parameter
-      */
-     if (params->len) {
--        signal = get_param(params, 0)->val_ul;
-+        signal = gdb_get_cmd_param(params, 0)->val_ul;
-     }
- 
-     gdbserver_state.signal = gdb_signal_to_target(signal);
-@@ -1115,18 +1079,18 @@ static void handle_set_thread(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    if (get_param(params, 1)->thread_id.kind == GDB_READ_THREAD_ERR) {
-+    if (gdb_get_cmd_param(params, 1)->thread_id.kind == GDB_READ_THREAD_ERR) {
-         gdb_put_packet("E22");
-         return;
-     }
- 
--    if (get_param(params, 1)->thread_id.kind != GDB_ONE_THREAD) {
-+    if (gdb_get_cmd_param(params, 1)->thread_id.kind != GDB_ONE_THREAD) {
-         gdb_put_packet("OK");
-         return;
-     }
- 
--    pid = get_param(params, 1)->thread_id.pid;
--    tid = get_param(params, 1)->thread_id.tid;
-+    pid = gdb_get_cmd_param(params, 1)->thread_id.pid;
-+    tid = gdb_get_cmd_param(params, 1)->thread_id.tid;
- #ifdef CONFIG_USER_ONLY
-     if (gdb_handle_set_thread_user(pid, tid)) {
-         return;
-@@ -1142,7 +1106,7 @@ static void handle_set_thread(GArray *params, void *user_ctx)
-      * Note: This command is deprecated and modern gdb's will be using the
-      *       vCont command instead.
-      */
--    switch (get_param(params, 0)->opcode) {
-+    switch (gdb_get_cmd_param(params, 0)->opcode) {
-     case 'c':
-         gdbserver_state.c_cpu = cpu;
-         gdb_put_packet("OK");
-@@ -1167,9 +1131,9 @@ static void handle_insert_bp(GArray *params, void *user_ctx)
-     }
- 
-     res = gdb_breakpoint_insert(gdbserver_state.c_cpu,
--                                get_param(params, 0)->val_ul,
--                                get_param(params, 1)->val_ull,
--                                get_param(params, 2)->val_ull);
-+                                gdb_get_cmd_param(params, 0)->val_ul,
-+                                gdb_get_cmd_param(params, 1)->val_ull,
-+                                gdb_get_cmd_param(params, 2)->val_ull);
-     if (res >= 0) {
-         gdb_put_packet("OK");
-         return;
-@@ -1191,9 +1155,9 @@ static void handle_remove_bp(GArray *params, void *user_ctx)
-     }
- 
-     res = gdb_breakpoint_remove(gdbserver_state.c_cpu,
--                                get_param(params, 0)->val_ul,
--                                get_param(params, 1)->val_ull,
--                                get_param(params, 2)->val_ull);
-+                                gdb_get_cmd_param(params, 0)->val_ul,
-+                                gdb_get_cmd_param(params, 1)->val_ull,
-+                                gdb_get_cmd_param(params, 2)->val_ull);
-     if (res >= 0) {
-         gdb_put_packet("OK");
-         return;
-@@ -1225,10 +1189,10 @@ static void handle_set_reg(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    reg_size = strlen(get_param(params, 1)->data) / 2;
--    gdb_hextomem(gdbserver_state.mem_buf, get_param(params, 1)->data, reg_size);
-+    reg_size = strlen(gdb_get_cmd_param(params, 1)->data) / 2;
-+    gdb_hextomem(gdbserver_state.mem_buf, gdb_get_cmd_param(params, 1)->data, reg_size);
-     gdb_write_register(gdbserver_state.g_cpu, gdbserver_state.mem_buf->data,
--                       get_param(params, 0)->val_ull);
-+                       gdb_get_cmd_param(params, 0)->val_ull);
-     gdb_put_packet("OK");
- }
- 
-@@ -1243,7 +1207,7 @@ static void handle_get_reg(GArray *params, void *user_ctx)
- 
-     reg_size = gdb_read_register(gdbserver_state.g_cpu,
-                                  gdbserver_state.mem_buf,
--                                 get_param(params, 0)->val_ull);
-+                                 gdb_get_cmd_param(params, 0)->val_ull);
-     if (!reg_size) {
-         gdb_put_packet("E14");
-         return;
-@@ -1264,16 +1228,16 @@ static void handle_write_mem(GArray *params, void *user_ctx)
-     }
- 
-     /* gdb_hextomem() reads 2*len bytes */
--    if (get_param(params, 1)->val_ull >
--        strlen(get_param(params, 2)->data) / 2) {
-+    if (gdb_get_cmd_param(params, 1)->val_ull >
-+        strlen(gdb_get_cmd_param(params, 2)->data) / 2) {
-         gdb_put_packet("E22");
-         return;
-     }
- 
--    gdb_hextomem(gdbserver_state.mem_buf, get_param(params, 2)->data,
--                 get_param(params, 1)->val_ull);
-+    gdb_hextomem(gdbserver_state.mem_buf, gdb_get_cmd_param(params, 2)->data,
-+                 gdb_get_cmd_param(params, 1)->val_ull);
-     if (gdb_target_memory_rw_debug(gdbserver_state.g_cpu,
--                                   get_param(params, 0)->val_ull,
-+                                   gdb_get_cmd_param(params, 0)->val_ull,
-                                    gdbserver_state.mem_buf->data,
-                                    gdbserver_state.mem_buf->len, true)) {
-         gdb_put_packet("E14");
-@@ -1291,16 +1255,16 @@ static void handle_read_mem(GArray *params, void *user_ctx)
-     }
- 
-     /* gdb_memtohex() doubles the required space */
--    if (get_param(params, 1)->val_ull > MAX_PACKET_LENGTH / 2) {
-+    if (gdb_get_cmd_param(params, 1)->val_ull > MAX_PACKET_LENGTH / 2) {
-         gdb_put_packet("E22");
-         return;
-     }
- 
-     g_byte_array_set_size(gdbserver_state.mem_buf,
--                          get_param(params, 1)->val_ull);
-+                          gdb_get_cmd_param(params, 1)->val_ull);
- 
-     if (gdb_target_memory_rw_debug(gdbserver_state.g_cpu,
--                                   get_param(params, 0)->val_ull,
-+                                   gdb_get_cmd_param(params, 0)->val_ull,
-                                    gdbserver_state.mem_buf->data,
-                                    gdbserver_state.mem_buf->len, false)) {
-         gdb_put_packet("E14");
-@@ -1324,8 +1288,8 @@ static void handle_write_all_regs(GArray *params, void *user_ctx)
-     }
- 
-     cpu_synchronize_state(gdbserver_state.g_cpu);
--    len = strlen(get_param(params, 0)->data) / 2;
--    gdb_hextomem(gdbserver_state.mem_buf, get_param(params, 0)->data, len);
-+    len = strlen(gdb_get_cmd_param(params, 0)->data) / 2;
-+    gdb_hextomem(gdbserver_state.mem_buf, gdb_get_cmd_param(params, 0)->data, len);
-     registers = gdbserver_state.mem_buf->data;
-     for (reg_id = 0;
-          reg_id < gdbserver_state.g_cpu->gdb_num_g_regs && len > 0;
-@@ -1360,7 +1324,7 @@ static void handle_read_all_regs(GArray *params, void *user_ctx)
- static void handle_step(GArray *params, void *user_ctx)
- {
-     if (params->len) {
--        gdb_set_cpu_pc(get_param(params, 0)->val_ull);
-+        gdb_set_cpu_pc(gdb_get_cmd_param(params, 0)->val_ull);
-     }
- 
-     cpu_single_step(gdbserver_state.c_cpu, gdbserver_state.sstep_flags);
-@@ -1373,7 +1337,7 @@ static void handle_backward(GArray *params, void *user_ctx)
-         gdb_put_packet("E22");
-     }
-     if (params->len == 1) {
--        switch (get_param(params, 0)->opcode) {
-+        switch (gdb_get_cmd_param(params, 0)->opcode) {
-         case 's':
-             if (replay_reverse_step()) {
-                 gdb_continue();
-@@ -1408,7 +1372,7 @@ static void handle_v_cont(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    res = gdb_handle_vcont(get_param(params, 0)->data);
-+    res = gdb_handle_vcont(gdb_get_cmd_param(params, 0)->data);
-     if ((res == -EINVAL) || (res == -ERANGE)) {
-         gdb_put_packet("E22");
-     } else if (res) {
-@@ -1426,7 +1390,7 @@ static void handle_v_attach(GArray *params, void *user_ctx)
-         goto cleanup;
-     }
- 
--    process = gdb_get_process(get_param(params, 0)->val_ul);
-+    process = gdb_get_process(gdb_get_cmd_param(params, 0)->val_ul);
-     if (!process) {
-         goto cleanup;
-     }
-@@ -1523,7 +1487,7 @@ static void handle_v_commands(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    if (!process_string_cmd(get_param(params, 0)->data,
-+    if (!process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-                             gdb_v_commands_table,
-                             ARRAY_SIZE(gdb_v_commands_table))) {
-         gdb_put_packet("");
-@@ -1555,7 +1519,7 @@ static void handle_set_qemu_sstep(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    new_sstep_flags = get_param(params, 0)->val_ul;
-+    new_sstep_flags = gdb_get_cmd_param(params, 0)->val_ul;
- 
-     if (new_sstep_flags  & ~gdbserver_state.supported_sstep_flags) {
-         gdb_put_packet("E22");
-@@ -1615,13 +1579,13 @@ static void handle_query_thread_extra(GArray *params, void *user_ctx)
-     CPUState *cpu;
- 
-     if (!params->len ||
--        get_param(params, 0)->thread_id.kind == GDB_READ_THREAD_ERR) {
-+        gdb_get_cmd_param(params, 0)->thread_id.kind == GDB_READ_THREAD_ERR) {
-         gdb_put_packet("E22");
-         return;
-     }
- 
--    cpu = gdb_get_cpu(get_param(params, 0)->thread_id.pid,
--                      get_param(params, 0)->thread_id.tid);
-+    cpu = gdb_get_cpu(gdb_get_cmd_param(params, 0)->thread_id.pid,
-+                      gdb_get_cmd_param(params, 0)->thread_id.tid);
-     if (!cpu) {
-         return;
-     }
-@@ -1673,7 +1637,7 @@ static void handle_query_supported(GArray *params, void *user_ctx)
- #endif
- 
-     if (params->len) {
--        const char *gdb_supported = get_param(params, 0)->data;
-+        const char *gdb_supported = gdb_get_cmd_param(params, 0)->data;
- 
-         if (strstr(gdb_supported, "multiprocess+")) {
-             gdbserver_state.multiprocess = true;
-@@ -1707,15 +1671,15 @@ static void handle_query_xfer_features(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    p = get_param(params, 0)->data;
-+    p = gdb_get_cmd_param(params, 0)->data;
-     xml = get_feature_xml(p, &p, process);
-     if (!xml) {
-         gdb_put_packet("E00");
-         return;
-     }
- 
--    addr = get_param(params, 1)->val_ul;
--    len = get_param(params, 2)->val_ul;
-+    addr = gdb_get_cmd_param(params, 1)->val_ul;
-+    len = gdb_get_cmd_param(params, 2)->val_ul;
-     total_len = strlen(xml);
-     if (addr > total_len) {
-         gdb_put_packet("E00");
-@@ -1889,13 +1853,13 @@ static void handle_gen_query(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    if (process_string_cmd(get_param(params, 0)->data,
-+    if (process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-                            gdb_gen_query_set_common_table,
-                            ARRAY_SIZE(gdb_gen_query_set_common_table))) {
-         return;
-     }
- 
--    if (!process_string_cmd(get_param(params, 0)->data,
-+    if (!process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-                             gdb_gen_query_table,
-                             ARRAY_SIZE(gdb_gen_query_table))) {
-         gdb_put_packet("");
-@@ -1908,13 +1872,13 @@ static void handle_gen_set(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    if (process_string_cmd(get_param(params, 0)->data,
-+    if (process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-                            gdb_gen_query_set_common_table,
-                            ARRAY_SIZE(gdb_gen_query_set_common_table))) {
-         return;
-     }
- 
--    if (!process_string_cmd(get_param(params, 0)->data,
-+    if (!process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-                            gdb_gen_set_table,
-                            ARRAY_SIZE(gdb_gen_set_table))) {
-         gdb_put_packet("");
-diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index 32f9f63297..34121dc61a 100644
---- a/gdbstub/internals.h
-+++ b/gdbstub/internals.h
-@@ -106,7 +106,6 @@ static inline int tohex(int v)
-  */
- 
- void gdb_put_strbuf(void);
--int gdb_put_packet(const char *buf);
- int gdb_put_packet_binary(const char *buf, int len, bool dump);
- void gdb_hextomem(GByteArray *mem, const char *buf, int len);
- void gdb_memtohex(GString *buf, const uint8_t *mem, int len);
-@@ -166,27 +165,6 @@ void gdb_put_buffer(const uint8_t *buf, int len);
-  */
- void gdb_init_gdbserver_state(void);
- 
--typedef enum GDBThreadIdKind {
--    GDB_ONE_THREAD = 0,
--    GDB_ALL_THREADS,     /* One process, all threads */
--    GDB_ALL_PROCESSES,
--    GDB_READ_THREAD_ERR
--} GDBThreadIdKind;
--
--typedef union GdbCmdVariant {
--    const char *data;
--    uint8_t opcode;
--    unsigned long val_ul;
--    unsigned long long val_ull;
--    struct {
--        GDBThreadIdKind kind;
--        uint32_t pid;
--        uint32_t tid;
--    } thread_id;
--} GdbCmdVariant;
--
--#define get_param(p, i)    (&g_array_index(p, GdbCmdVariant, i))
--
- void gdb_handle_query_rcmd(GArray *params, void *ctx); /* system */
- void gdb_handle_query_offsets(GArray *params, void *user_ctx); /* user */
- void gdb_handle_query_xfer_auxv(GArray *params, void *user_ctx); /*user */
-diff --git a/gdbstub/syscalls.c b/gdbstub/syscalls.c
-index 02e3a8f74c..4e1295b782 100644
---- a/gdbstub/syscalls.c
-+++ b/gdbstub/syscalls.c
-@@ -16,6 +16,7 @@
- #include "sysemu/runstate.h"
- #include "gdbstub/user.h"
- #include "gdbstub/syscalls.h"
-+#include "gdbstub/commands.h"
- #include "trace.h"
- #include "internals.h"
- 
-@@ -154,9 +155,9 @@ void gdb_handle_file_io(GArray *params, void *user_ctx)
-         uint64_t ret;
-         int err;
- 
--        ret = get_param(params, 0)->val_ull;
-+        ret = gdb_get_cmd_param(params, 0)->val_ull;
-         if (params->len >= 2) {
--            err = get_param(params, 1)->val_ull;
-+            err = gdb_get_cmd_param(params, 1)->val_ull;
-         } else {
-             err = 0;
-         }
-@@ -196,7 +197,7 @@ void gdb_handle_file_io(GArray *params, void *user_ctx)
-         gdbserver_syscall_state.current_syscall_cb = NULL;
-     }
- 
--    if (params->len >= 3 && get_param(params, 2)->opcode == (uint8_t)'C') {
-+    if (params->len >= 3 && gdb_get_cmd_param(params, 2)->opcode == (uint8_t)'C') {
-         gdb_put_packet("T02");
-         return;
-     }
-diff --git a/gdbstub/system.c b/gdbstub/system.c
-index d235403855..1ad87fe7fd 100644
---- a/gdbstub/system.c
-+++ b/gdbstub/system.c
-@@ -16,6 +16,7 @@
- #include "qemu/cutils.h"
- #include "exec/gdbstub.h"
- #include "gdbstub/syscalls.h"
-+#include "gdbstub/commands.h"
- #include "exec/hwaddr.h"
- #include "exec/tb-flush.h"
- #include "sysemu/cpus.h"
-@@ -501,7 +502,7 @@ void gdb_handle_set_qemu_phy_mem_mode(GArray *params, void *ctx)
-         return;
-     }
- 
--    if (!get_param(params, 0)->val_ul) {
-+    if (!gdb_get_cmd_param(params, 0)->val_ul) {
-         phy_memory_mode = 0;
-     } else {
-         phy_memory_mode = 1;
-@@ -519,7 +520,7 @@ void gdb_handle_query_rcmd(GArray *params, void *ctx)
-         return;
-     }
- 
--    len = strlen(get_param(params, 0)->data);
-+    len = strlen(gdb_get_cmd_param(params, 0)->data);
-     if (len % 2) {
-         gdb_put_packet("E01");
-         return;
-@@ -527,7 +528,7 @@ void gdb_handle_query_rcmd(GArray *params, void *ctx)
- 
-     g_assert(gdbserver_state.mem_buf->len == 0);
-     len = len / 2;
--    gdb_hextomem(gdbserver_state.mem_buf, get_param(params, 0)->data, len);
-+    gdb_hextomem(gdbserver_state.mem_buf, gdb_get_cmd_param(params, 0)->data, len);
-     g_byte_array_append(gdbserver_state.mem_buf, &zero, 1);
-     qemu_chr_be_write(gdbserver_system_state.mon_chr,
-                       gdbserver_state.mem_buf->data,
-diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
-index a9c6c64512..b5e01fd8b0 100644
---- a/gdbstub/user-target.c
-+++ b/gdbstub/user-target.c
-@@ -9,6 +9,7 @@
- 
- #include "qemu/osdep.h"
- #include "exec/gdbstub.h"
-+#include "gdbstub/commands.h"
- #include "qemu.h"
- #include "internals.h"
- #ifdef CONFIG_LINUX
-@@ -250,8 +251,8 @@ void gdb_handle_query_xfer_auxv(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    offset = get_param(params, 0)->val_ul;
--    len = get_param(params, 1)->val_ul;
-+    offset = gdb_get_cmd_param(params, 0)->val_ul;
-+    len = gdb_get_cmd_param(params, 1)->val_ul;
-     ts = get_task_state(gdbserver_state.c_cpu);
-     saved_auxv = ts->info->saved_auxv;
-     auxv_len = ts->info->auxv_len;
-@@ -288,7 +289,7 @@ void gdb_handle_query_xfer_auxv(GArray *params, void *user_ctx)
- 
- static const char *get_filename_param(GArray *params, int i)
- {
--    const char *hex_filename = get_param(params, i)->data;
-+    const char *hex_filename = gdb_get_cmd_param(params, i)->data;
-     gdb_hextomem(gdbserver_state.mem_buf, hex_filename,
-                  strlen(hex_filename) / 2);
-     g_byte_array_append(gdbserver_state.mem_buf, (const guint8 *)"", 1);
-@@ -306,8 +307,8 @@ static void hostio_reply_with_data(const void *buf, size_t n)
- void gdb_handle_v_file_open(GArray *params, void *user_ctx)
- {
-     const char *filename = get_filename_param(params, 0);
--    uint64_t flags = get_param(params, 1)->val_ull;
--    uint64_t mode = get_param(params, 2)->val_ull;
-+    uint64_t flags = gdb_get_cmd_param(params, 1)->val_ull;
-+    uint64_t mode = gdb_get_cmd_param(params, 2)->val_ull;
- 
- #ifdef CONFIG_LINUX
-     int fd = do_guest_openat(cpu_env(gdbserver_state.g_cpu), 0, filename,
-@@ -325,7 +326,7 @@ void gdb_handle_v_file_open(GArray *params, void *user_ctx)
- 
- void gdb_handle_v_file_close(GArray *params, void *user_ctx)
- {
--    int fd = get_param(params, 0)->val_ul;
-+    int fd = gdb_get_cmd_param(params, 0)->val_ul;
- 
-     if (close(fd) == -1) {
-         g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
-@@ -338,9 +339,9 @@ void gdb_handle_v_file_close(GArray *params, void *user_ctx)
- 
- void gdb_handle_v_file_pread(GArray *params, void *user_ctx)
- {
--    int fd = get_param(params, 0)->val_ul;
--    size_t count = get_param(params, 1)->val_ull;
--    off_t offset = get_param(params, 2)->val_ull;
-+    int fd = gdb_get_cmd_param(params, 0)->val_ul;
-+    size_t count = gdb_get_cmd_param(params, 1)->val_ull;
-+    off_t offset = gdb_get_cmd_param(params, 2)->val_ull;
- 
-     size_t bufsiz = MIN(count, BUFSIZ);
-     g_autofree char *buf = g_try_malloc(bufsiz);
-@@ -383,9 +384,9 @@ void gdb_handle_v_file_readlink(GArray *params, void *user_ctx)
- 
- void gdb_handle_query_xfer_exec_file(GArray *params, void *user_ctx)
- {
--    uint32_t pid = get_param(params, 0)->val_ul;
--    uint32_t offset = get_param(params, 1)->val_ul;
--    uint32_t length = get_param(params, 2)->val_ul;
-+    uint32_t pid = gdb_get_cmd_param(params, 0)->val_ul;
-+    uint32_t offset = gdb_get_cmd_param(params, 1)->val_ul;
-+    uint32_t length = gdb_get_cmd_param(params, 2)->val_ul;
- 
-     GDBProcess *process = gdb_get_process(pid);
-     if (!process) {
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index e34b58b407..b36033bc7a 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -16,6 +16,7 @@
- #include "exec/hwaddr.h"
- #include "exec/tb-flush.h"
- #include "exec/gdbstub.h"
-+#include "gdbstub/commands.h"
- #include "gdbstub/syscalls.h"
- #include "gdbstub/user.h"
- #include "gdbstub/enums.h"
-@@ -793,7 +794,7 @@ void gdb_syscall_return(CPUState *cs, int num)
- 
- void gdb_handle_set_catch_syscalls(GArray *params, void *user_ctx)
- {
--    const char *param = get_param(params, 0)->data;
-+    const char *param = gdb_get_cmd_param(params, 0)->data;
-     GDBSyscallsMask catch_syscalls_mask;
-     bool catch_all_syscalls;
-     unsigned int num;
-@@ -858,8 +859,8 @@ void gdb_handle_query_xfer_siginfo(GArray *params, void *user_ctx)
-     unsigned long offset, len;
-     uint8_t *siginfo_offset;
- 
--    offset = get_param(params, 0)->val_ul;
--    len = get_param(params, 1)->val_ul;
-+    offset = gdb_get_cmd_param(params, 0)->val_ul;
-+    len = gdb_get_cmd_param(params, 1)->val_ul;
- 
-     if (offset + len > gdbserver_user_state.siginfo_len) {
-         /* Invalid offset and/or requested length. */
-diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
-new file mode 100644
-index 0000000000..dd45c38472
---- /dev/null
-+++ b/include/gdbstub/commands.h
-@@ -0,0 +1,74 @@
-+#ifndef GDBSTUB_COMMANDS_H
-+#define GDBSTUB
-+
-+typedef void (*GdbCmdHandler)(GArray *params, void *user_ctx);
-+
-+typedef enum GDBThreadIdKind {
-+    GDB_ONE_THREAD = 0,
-+    GDB_ALL_THREADS,     /* One process, all threads */
-+    GDB_ALL_PROCESSES,
-+    GDB_READ_THREAD_ERR
-+} GDBThreadIdKind;
-+
-+typedef union GdbCmdVariant {
-+    const char *data;
-+    uint8_t opcode;
-+    unsigned long val_ul;
-+    unsigned long long val_ull;
-+    struct {
-+        GDBThreadIdKind kind;
-+        uint32_t pid;
-+        uint32_t tid;
-+    } thread_id;
-+} GdbCmdVariant;
-+
-+#define gdb_get_cmd_param(p, i)    (&g_array_index(p, GdbCmdVariant, i))
-+
-+/**
-+ * typedef GdbCmdParseEntry - gdb command parser
-+ *
-+ * This structure keeps the information necessary to match a gdb command,
-+ * parse it (extract its parameters), and select the correct handler for it.
-+ *
-+ * @cmd: The command to be matched
-+ * @cmd_startswith: If true, @cmd is compared using startswith
-+ * @schema: Each schema for the command parameter entry consists of 2 chars,
-+ * the first char represents the parameter type handling the second char
-+ * represents the delimiter for the next parameter.
-+ *
-+ * Currently supported schema types:
-+ * 'l' -> unsigned long (stored in .val_ul)
-+ * 'L' -> unsigned long long (stored in .val_ull)
-+ * 's' -> string (stored in .data)
-+ * 'o' -> single char (stored in .opcode)
-+ * 't' -> thread id (stored in .thread_id)
-+ * '?' -> skip according to delimiter
-+ *
-+ * Currently supported delimiters:
-+ * '?' -> Stop at any delimiter (",;:=\0")
-+ * '0' -> Stop at "\0"
-+ * '.' -> Skip 1 char unless reached "\0"
-+ * Any other value is treated as the delimiter value itself
-+ *
-+ * @allow_stop_reply: True iff the gdbstub can respond to this command with a
-+ * "stop reply" packet. The list of commands that accept such response is
-+ * defined at the GDB Remote Serial Protocol documentation. See:
-+ * https://sourceware.org/gdb/onlinedocs/gdb/Stop-Reply-Packets.html#Stop-Reply-Packets.
-+ */
-+typedef struct GdbCmdParseEntry {
-+    GdbCmdHandler handler;
-+    const char *cmd;
-+    bool cmd_startswith;
-+    const char *schema;
-+    bool allow_stop_reply;
-+} GdbCmdParseEntry;
-+
-+#define get_cmd_parsers(p) (&g_array_index(p, GdbCmdParseEntry, 0))
-+
-+/**
-+ * gdb_put_packet() - put string into gdb server's buffer so it is sent
-+ * to the client
-+ */
-+int gdb_put_packet(const char *buf);
-+
-+#endif /* GDBSTUB_COMMANDS_H */
--- 
-2.34.1
+Right, but it's technically not impossible, so better to have it
+separate anyway.
 
+>
+> The old code worked the same by ignoring migrate_set_state() when PAUSED in
+> the cmpxchg(), which is implicit and unclear.
+>
+
+Agreed.
+
+>> 
+>> > +
+>> > +    migrate_set_state(&mis->state, current, MIGRATION_STATUS_SETUP);
+>> > +    return true;
+>> > +}
+>> > +
+>> >  static void qemu_start_incoming_migration(const char *uri, bool has_channels,
+>> >                                            MigrationChannelList *channels,
+>> >                                            Error **errp)
+>> > @@ -633,8 +653,9 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
+>> >          return;
+>> >      }
+>> >  
+>> > -    migrate_set_state(&mis->state, MIGRATION_STATUS_NONE,
+>> > -                      MIGRATION_STATUS_SETUP);
+>> > +    if (!migration_incoming_state_setup(mis, errp)) {
+>> > +        return;
+>> > +    }
+>> >  
+>> >      if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET) {
+>> >          SocketAddress *saddr = &addr->u.socket;
+>> > @@ -1070,6 +1091,7 @@ bool migration_is_setup_or_active(void)
+>> >      case MIGRATION_STATUS_ACTIVE:
+>> >      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+>> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
+>> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+>> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
+>> >      case MIGRATION_STATUS_SETUP:
+>> >      case MIGRATION_STATUS_PRE_SWITCHOVER:
+>> > @@ -1092,6 +1114,7 @@ bool migration_is_running(void)
+>> >      case MIGRATION_STATUS_ACTIVE:
+>> >      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+>> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
+>> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+>> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
+>> >      case MIGRATION_STATUS_SETUP:
+>> >      case MIGRATION_STATUS_PRE_SWITCHOVER:
+>> > @@ -1229,6 +1252,7 @@ static void fill_source_migration_info(MigrationInfo *info)
+>> >      case MIGRATION_STATUS_PRE_SWITCHOVER:
+>> >      case MIGRATION_STATUS_DEVICE:
+>> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
+>> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+>> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
+>> >          /* TODO add some postcopy stats */
+>> >          populate_time_info(info, s);
+>> > @@ -1279,6 +1303,7 @@ static void fill_destination_migration_info(MigrationInfo *info)
+>> >      case MIGRATION_STATUS_ACTIVE:
+>> >      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+>> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
+>> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+>> 
+>> Does this need to be here? We don't reach this state on destination, right?
+>
+> Right, it won't hurt having that here, but let me drop it.
+>
+>> 
+>> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
+>> >      case MIGRATION_STATUS_FAILED:
+>> >      case MIGRATION_STATUS_COLO:
+>> > @@ -1435,9 +1460,30 @@ static void migrate_error_free(MigrationState *s)
+>> >  
+>> >  static void migrate_fd_error(MigrationState *s, const Error *error)
+>> >  {
+>> 
+>> The default case of the swtich below is a bit surprising to me. Why
+>> wouldn't we allow this function to be called from other places to set
+>> STATUS_FAILED?
+>> 
+>> ...unless this is only mean for the connection phase, so:
+>> 
+>> just to check your understanding here because it seems we've drifted a
+>> bit from the original definition on those, specially with
+>> migrate_fd_cleanup(), but does this _fd_ in the function name implies
+>> something like a "connection phase"? As in, "connect to the fd", "the fd
+>> connection errored out" and "cleanup the fd connection". Maybe it's time
+>> to switch this "fd" to something clearer...
+>
+> IIUC it's just that many functions around this area used to be called
+> migrate_fd_*().  Let me know if you have some suggestions, though.
+>
+
+At some other point I think we need to rename those. Very little going
+on in these functions that relates directly to an fd. It needs a closer
+inspection, however.
+
+>> 
+>> > +    MigrationStatus current = s->state;
+>> > +    MigrationStatus next;
+>> > +
+>> >      assert(s->to_dst_file == NULL);
+>> > -    migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+>> > -                      MIGRATION_STATUS_FAILED);
+>> > +
+>> > +    switch (current) {
+>> > +    case MIGRATION_STATUS_SETUP:
+>> > +        next = MIGRATION_STATUS_FAILED;
+>> > +        break;
+>> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+>> > +        /* Never fail a postcopy migration; switch back to PAUSED instead */
+>> > +        next = MIGRATION_STATUS_POSTCOPY_PAUSED;
+>> 
+>> So presumably we can keep recovering the migration indefinitely?
+>
+> Yes, that's by design.
+>
+
+ok
+
+>> 
+>> > +        break;
+>> > +    default:
+>> > +        /*
+>> > +         * This really shouldn't happen. Just be careful to not crash a VM
+>> > +         * just for this.  Instead, dump something.
+>> > +         */
+>> > +        error_report("%s: Illegal migration status (%s) detected",
+>> > +                     __func__, MigrationStatus_str(current));
+>> > +        return;
+>> > +    }
+>> > +
+>> > +    migrate_set_state(&s->state, current, next);
+>> >      migrate_set_error(s, error);
+>> >  }
+>> >  
+>> > @@ -1538,6 +1584,7 @@ bool migration_in_postcopy(void)
+>> >      switch (s->state) {
+>> >      case MIGRATION_STATUS_POSTCOPY_ACTIVE:
+>> >      case MIGRATION_STATUS_POSTCOPY_PAUSED:
+>> > +    case MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP:
+>> >      case MIGRATION_STATUS_POSTCOPY_RECOVER:
+>> >          return true;
+>> >      default:
+>> > @@ -1936,6 +1983,9 @@ static bool migrate_prepare(MigrationState *s, bool resume, Error **errp)
+>> >              return false;
+>> >          }
+>> >  
+>> > +        migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_PAUSED,
+>> > +                          MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+>> > +
+>> >          /* This is a resume, skip init status */
+>> >          return true;
+>> >      }
+>> > @@ -2968,9 +3018,9 @@ static MigThrError postcopy_pause(MigrationState *s)
+>> >           * We wait until things fixed up. Then someone will setup the
+>> >           * status back for us.
+>> >           */
+>> > -        while (s->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
+>> > +        do {
+>> >              qemu_sem_wait(&s->postcopy_pause_sem);
+>> > -        }
+>> > +        } while (postcopy_is_paused(s->state));
+>> 
+>> Is there a particular reason to go from while() to do{}while()?
+>
+> It'll be the same AFAICT, the 1st check should mostly be meaningless as the
+> sem must be posted at least once.  Yes I should have had a comment
+> somewhere but I didn't.. if you want me to keep the old way it's also fine,
+> isn't a big deal here to check first either, just save some cycles when I
+> worked on these lines.
+>
+
+That's fine. Just making sure there wasn't some hidden purpose here.
+
+>> 
+>> >  
+>> >          if (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER) {
+>> >              /* Woken up by a recover procedure. Give it a shot */
+>> > @@ -3666,7 +3716,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+>> >  {
+>> >      Error *local_err = NULL;
+>> >      uint64_t rate_limit;
+>> > -    bool resume = s->state == MIGRATION_STATUS_POSTCOPY_PAUSED;
+>> > +    bool resume = migration_in_postcopy();
+>> 
+>> Here you're expecting just PAUSED or RECOVER_SETUP, right? We'll not
+>> reach here in any of the other postcopy states.
+>
+> I think here it must be RECOVER_SETUP after this patch.  I changed it to
+> use the helper as I think that's cleaner (precopy doesn't allow resume),
+> and we don't need such change if the state machine trivially changes again.
+>
+
+Intent matters for anyone reading the code in the future. I would use
+the state explicitly, but I don't have a strong opinion, feel free to
+ignore.
+
+>> 
+>> >      int ret;
+>> >  
+>> >      /*
+>> > @@ -3733,7 +3783,7 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+>> >  
+>> >      if (resume) {
+>> >          /* Wakeup the main migration thread to do the recovery */
+>> > -        migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_PAUSED,
+>> > +        migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP,
+>> >                            MIGRATION_STATUS_POSTCOPY_RECOVER);
+>> >          qemu_sem_post(&s->postcopy_pause_sem);
+>> >          return;
+>> > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+>> > index 97701e6bb2..1c374b7ea1 100644
+>> > --- a/migration/postcopy-ram.c
+>> > +++ b/migration/postcopy-ram.c
+>> > @@ -1770,3 +1770,9 @@ void *postcopy_preempt_thread(void *opaque)
+>> >  
+>> >      return NULL;
+>> >  }
+>> > +
+>> > +bool postcopy_is_paused(MigrationStatus status)
+>> > +{
+>> > +    return status == MIGRATION_STATUS_POSTCOPY_PAUSED ||
+>> > +        status == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP;
+>> > +}
+>> > diff --git a/migration/savevm.c b/migration/savevm.c
+>> > index e71410d8c1..deb57833f8 100644
+>> > --- a/migration/savevm.c
+>> > +++ b/migration/savevm.c
+>> > @@ -2864,9 +2864,9 @@ static bool postcopy_pause_incoming(MigrationIncomingState *mis)
+>> >      error_report("Detected IO failure for postcopy. "
+>> >                   "Migration paused.");
+>> >  
+>> > -    while (mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
+>> > +    do {
+>> >          qemu_sem_wait(&mis->postcopy_pause_sem_dst);
+>> > -    }
+>> > +    } while (postcopy_is_paused(mis->state));
+>> >  
+>> >      trace_postcopy_pause_incoming_continued();
+>> 
 
