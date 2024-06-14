@@ -4,135 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C6AFC27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 08:25:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01338C27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 08:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI2Ej-0006Zs-IY; Fri, 14 Jun 2024 04:24:41 -0400
+	id 1sI2O1-000539-UN; Fri, 14 Jun 2024 04:34:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sI2Ei-0006ZW-Cu
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 04:24:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1sI2O0-000511-AP
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 04:34:16 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sI2Eg-0002dT-Hy
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 04:24:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718353477;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=oEdhGTrVtRaqF35u4TZs1tsp9BKWxNTmMK0HYGZcH7A=;
- b=jDIzqRoGsS0ym0P6fLwhftyI3fbCHTQ0DbAUnCA3wn5rIHT7B44r3dYWb/nnV8l0Hmbu4/
- fGeIaQYlnk1vYr1RkDE9sDJ3fAlGjcnqeXiKLAkX96pvAhGJnwwSfpGaZS5svGfusbDEGh
- yaRqMV88G1Zpv+30t+KBOnxakx8haxc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-290-_2ZU0wmTP7GY6FKoKpXD4w-1; Fri, 14 Jun 2024 04:24:32 -0400
-X-MC-Unique: _2ZU0wmTP7GY6FKoKpXD4w-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-36073f6db77so881583f8f.0
- for <qemu-devel@nongnu.org>; Fri, 14 Jun 2024 01:24:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718353472; x=1718958272;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oEdhGTrVtRaqF35u4TZs1tsp9BKWxNTmMK0HYGZcH7A=;
- b=e4GiK9ZxTjnFE+LSvJUxUaiLZlOpOUvfe1etFjSb8crM7hrwM/mhlboYDaDeZ4bVik
- +sRIwX4khkl3CKGtS3JHObgwcZrWYeLX4eZDNm69EVkEjJh4u5DNFRFPwsba4oCb7m46
- CHueFKjKCzD5Q34M6mX8dt09vr+4/14FYpwvQhXNey3gOtHoI/BGuH7sEKm1zaiwg50C
- +/UoOTtFd8YI4WeB3P9PquGT1tMjATJNUR2sdJnHG537KCWamt58LhwKcuYkOYgt+PJC
- g5182GMrpngPlzcdX7q2cBC6XasvvBYrUssql0mlRAK/bDPF7akZFHe1Rqekq/BF/0pG
- mOkw==
-X-Gm-Message-State: AOJu0Ywwlp74yQBAMKPDYbfw+Amxze7tZ4HgAy/tsQf86aMPIEpCyHUB
- tHXkfvP9Yz3IYFJFkTPWEqF5x2cLyOjtDX/DiybSUzUoMCutPML8qW5hS+ZZIthqyFacbAea/xz
- eFUOCgfppX34n9SVCnuFQ/VHnpgdWJcNkSUgsVcF418mL2APdEP0k
-X-Received: by 2002:adf:e0ce:0:b0:35f:2092:39fd with SMTP id
- ffacd0b85a97d-3607a7675a7mr1235910f8f.36.1718353471851; 
- Fri, 14 Jun 2024 01:24:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrwYvfPZJfrelgk53hXzrHUW+mFwHNV/Q/vMbhReA3eVsdjU4I9Eq5jI0M+ynsV9P+gJiBJA==
-X-Received: by 2002:adf:e0ce:0:b0:35f:2092:39fd with SMTP id
- ffacd0b85a97d-3607a7675a7mr1235896f8f.36.1718353471489; 
- Fri, 14 Jun 2024 01:24:31 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-242-210.web.vodafone.de.
- [109.43.242.210]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36075093568sm3671100f8f.2.2024.06.14.01.24.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Jun 2024 01:24:31 -0700 (PDT)
-Message-ID: <c752752a-c45c-4428-948f-b27c18510007@redhat.com>
-Date: Fri, 14 Jun 2024 10:24:29 +0200
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1sI2Nx-0004os-Fb
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 04:34:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1718354054; x=1749890054;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=NC5NOlSne8d0qmG34/IP21rBACHo8yPr9eKqSZdP9mk=;
+ b=Rug8DD+6bjDGoiquyIo09QQDlcLw81Y2mgIgvIhEHxNugC6xvHXFb96K
+ dhmJNJNhg9HaMtqJyBGq1asjMKtQZ3L5umxoWmE/jtoeUuKyhlJSzHhyr
+ dzH4oV8TvQtfcYJ1onGUYH6oEB/iBRg/LmCRPEBjEwb17m5CJyID6l41F
+ F9duzNSn+L+QPodnF8/CXzUmaJ40WOPOitS/Kx2rS7q4y4k5VCKWi47cD
+ UsYGbMKw/XWo0n7sl7m3ML1/qptS5SFMNCCzjvrsZrNWzLqRPG42uT0ZY
+ jgkxubOUPPFfNHSetAlMpvX9bJNDfJV5YAAEbE9lOA9NY6q7pXBheZNNy Q==;
+X-CSE-ConnectionGUID: XBsUTvyKSpG2uPLD9oEskQ==
+X-CSE-MsgGUID: UOfzCKAeTvKfWChkEnFzag==
+X-IronPort-AV: E=McAfee;i="6700,10204,11102"; a="26347434"
+X-IronPort-AV: E=Sophos;i="6.08,237,1712646000"; d="scan'208";a="26347434"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jun 2024 01:34:10 -0700
+X-CSE-ConnectionGUID: J62/y7vPS4CD01cPxopgww==
+X-CSE-MsgGUID: Xo+hnqw9QCaM/x7I9GYzOQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,237,1712646000"; d="scan'208";a="45389342"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
+ ([10.124.238.14])
+ by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Jun 2024 01:34:07 -0700
+Message-ID: <434b5332-a7fb-44e4-88f5-4ac93de9c09b@intel.com>
+Date: Fri, 14 Jun 2024 16:34:03 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/s390x: Add a CONFIG switch to disable legacy CPUs
-To: Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-s390x@nongnu.org, 
- Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Ani Sinha <anisinha@redhat.com>
-References: <20240613170702.523591-1-thuth@redhat.com>
- <3c138eeb-83df-4953-bdc9-3cf8343a0533@linux.ibm.com>
- <0b932efb-bd0c-435d-a75a-a6608097cb07@redhat.com>
- <dd562095-f104-48d8-abe9-9b22b53b8743@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v4 28/31] hw/i386: Add support for loading BIOS using
+ guest_memfd
+To: Pankaj Gupta <pankaj.gupta@amd.com>, qemu-devel@nongnu.org
+Cc: brijesh.singh@amd.com, dovmurik@linux.ibm.com, armbru@redhat.com,
+ michael.roth@amd.com, pbonzini@redhat.com, thomas.lendacky@amd.com,
+ isaku.yamahata@intel.com, berrange@redhat.com, kvm@vger.kernel.org,
+ anisinha@redhat.com
+References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
+ <20240530111643.1091816-29-pankaj.gupta@amd.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <dd562095-f104-48d8-abe9-9b22b53b8743@linux.ibm.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20240530111643.1091816-29-pankaj.gupta@amd.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -150,49 +90,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/06/2024 10.17, Christian Borntraeger wrote:
+On 5/30/2024 7:16 PM, Pankaj Gupta wrote:
+> From: Michael Roth <michael.roth@amd.com>
 > 
+> When guest_memfd is enabled, the BIOS is generally part of the initial
+> encrypted guest image and will be accessed as private guest memory. Add
+> the necessary changes to set up the associated RAM region with a
+> guest_memfd backend to allow for this.
 > 
-> Am 14.06.24 um 09:15 schrieb Thomas Huth:
->> On 14/06/2024 08.07, Christian Borntraeger wrote:
->>>
->>>
->>> Am 13.06.24 um 19:07 schrieb Thomas Huth:
->>>> Old CPU models are not officially supported anymore by IBM, and for
->>>> downstream builds of QEMU, we would like to be able to disable these
->>>> CPUs in the build. Thus add a CONFIG switch that can be used to
->>>> disable these CPUs (and old machine types that use them by default).
->>>>
->>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>>> ---
->>>>   If you're interested, the PDF that can be downloaded from
->>>>   https://www.ibm.com/support/pages/ibm-mainframe-life-cycle-history
->>>>   shows the supported CPUs in a nice diagram
->>>
->>> z13 is still supported so the patch needs to be fixed at least.
->>
->> Oh, drat, I misread the diagram, indeed. 'should have looked at the table 
->> instead :-/
->>
->>> Furthermore, z14 has the IBC/VAL cabability to behave like a z13,
->>> same for z15. (we do support VAL to N-2)
->>
->> Hmm, so if z13 is still supported, and also has the possibility to do N-2, 
->> I assume the z114/196 and z12 should still be considered as non-legacy, too?
+> Current support centers around using -bios to load the BIOS data.
+> Support for loading the BIOS via pflash requires additional enablement
+> since those interfaces rely on the use of ROM memory regions which make
+> use of the KVM_MEM_READONLY memslot flag, which is not supported for
+> guest_memfd-backed memslots.
 > 
-> Yes. z9 and older is no longer relevant (only for people that collect old 
-> HW) but the upstream kernel has an minimum requirement for z10 so maybe we 
-> still want to support that for testing purposes.
+> Signed-off-by: Michael Roth <michael.roth@amd.com>
+> Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
+> ---
+>   hw/i386/x86-common.c | 22 ++++++++++++++++------
+>   1 file changed, 16 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> index f41cb0a6a8..059de65f36 100644
+> --- a/hw/i386/x86-common.c
+> +++ b/hw/i386/x86-common.c
+> @@ -999,10 +999,18 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+>       }
+>       if (bios_size <= 0 ||
+>           (bios_size % 65536) != 0) {
+> -        goto bios_error;
+> +        if (!machine_require_guest_memfd(MACHINE(x86ms))) {
+> +                g_warning("%s: Unaligned BIOS size %d", __func__, bios_size);
+> +                goto bios_error;
+> +        }
+> +    }
+> +    if (machine_require_guest_memfd(MACHINE(x86ms))) {
+> +        memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
+> +                                           bios_size, &error_fatal);
+> +    } else {
+> +        memory_region_init_ram(&x86ms->bios, NULL, "pc.bios",
+> +                               bios_size, &error_fatal);
+>       }
+> -    memory_region_init_ram(&x86ms->bios, NULL, "pc.bios", bios_size,
+> -                           &error_fatal);
+>       if (sev_enabled()) {
+>           /*
+>            * The concept of a "reset" simply doesn't exist for
+> @@ -1023,9 +1031,11 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+>       }
+>       g_free(filename);
+>   
+> -    /* map the last 128KB of the BIOS in ISA space */
+> -    x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
+> -                      !isapc_ram_fw);
+> +    if (!machine_require_guest_memfd(MACHINE(x86ms))) {
+> +        /* map the last 128KB of the BIOS in ISA space */
+> +        x86_isa_bios_init(&x86ms->isa_bios, rom_memory, &x86ms->bios,
+> +                          !isapc_ram_fw);
+> +    }
 
-Ok, fair point, kernel support is a good hint, too.
+Could anyone explain to me why above change is related to this patch and 
+why need it?
 
-> For upstream I prefer to keep the full list but I would be ok to hide those 
-> ancient things behind a config switch.
+because inside x86_isa_bios_init(), the alias isa_bios is set to 
+read_only while guest_memfd doesn't support readonly?
 
-That's what this patch is trying to do - by default, all CPUs are still 
-enabled, you have actively disable the switch to get rid of the old ones.
-
-  Thomas
-
+>       /* map all the bios at the top of memory */
+>       memory_region_add_subregion(rom_memory,
 
 
