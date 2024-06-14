@@ -4,79 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24A33C27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 12:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8124C41513
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 13:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI6TT-0006YE-Kn; Fri, 14 Jun 2024 08:56:11 -0400
+	id 1sI6Yl-0002Fn-9a; Fri, 14 Jun 2024 09:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <trentmhuber@gmail.com>)
- id 1sHzHE-0003uE-0m; Fri, 14 Jun 2024 01:15:04 -0400
-Received: from mail-qv1-xf31.google.com ([2607:f8b0:4864:20::f31])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sI6Yi-0002FW-Kb
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 09:01:36 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <trentmhuber@gmail.com>)
- id 1sHzHC-0008OJ-Co; Fri, 14 Jun 2024 01:15:03 -0400
-Received: by mail-qv1-xf31.google.com with SMTP id
- 6a1803df08f44-6b0871bd288so2635956d6.2; 
- Thu, 13 Jun 2024 22:15:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718342100; x=1718946900; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=7GTksfZRb2NSXlR1E0cPWHKFmqRx4/aAfvMPhoC8MME=;
- b=j+hqaxfrcCRIUauXzn/0COvKt8jqBLZFPJk1xmQAQOzGCwoz5wuDaDkISDCNFnZGgj
- UzM+83cPLhD0jAFUFsShfmuuNgiiCl++R5xPU6HFcO/Pkgaaqb7SPKYzc6gZhKzcpnvC
- nedEnLhT5bm+NgFUP4EoP4DFVR76S+2J8Ci1007CAcRJcUaKCGnf0kLC+GZ23ov/Dl4B
- NH7auCcUQrlZ9yYL9u+10mvbi9NiYaOxlRD3dGsDeuxnVsfhpWFeBaB1B4mBhGxwbodH
- Z2CFA1thpoO/h8dWvbAW31FXJUh+Jpt+qA8aariqB14aq/9eUsjKyOy35i1snii0H2aQ
- Wgjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718342100; x=1718946900;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7GTksfZRb2NSXlR1E0cPWHKFmqRx4/aAfvMPhoC8MME=;
- b=S+LGjIpCHiJfv1zEaAdvMUSa9B/fo7kWT8WWrYXTGV6ZoihfgEjtEIUlBAfZTA4B9i
- giD4pzyUnkCLpDsyHAvHbCzmvrNpuq/U44FqagB+XJupnAizFdAxopudWj1Qo6WV2oR8
- LtvqmMcbuOBuuhZtBSe/oyG7LcB/y1Gv0YREM58NI6BNotht1ZFhWzDKL+kV3W3URNFW
- 6Oh/1aRBNyolxqxl+z3nTulNkPSuGe93VFysm9I873O1x4Wo4J7TCOFBQz/lyXh9AF71
- VyIiUBkyufbZqep9hqEA/FOmDOOxNB6cuhGN/4JvjJMDDQ3JkURdClq94Jyh4r0nVmWj
- kSJw==
-X-Gm-Message-State: AOJu0YwnMEpxKHYfgr/olqrMvtIX5+U6QGBKoPOrDdXGZ0r9bwvp6UWR
- 5Nr60QF/Bc4S3SuwzDQI95A1foEI445EMAAg5Oa6Tu+xHHOYARwiJ2pt8b2XpcY=
-X-Google-Smtp-Source: AGHT+IGcZDGWNahJgfpt3OZT3Ts7iQqObbRjGY1bDAyCAJvWbozfx8mvVJRPjappPKA0P6+9Maf8KA==
-X-Received: by 2002:a05:620a:8903:b0:795:59b1:526a with SMTP id
- af79cd13be357-798d1f81d99mr180965085a.0.1718342100048; 
- Thu, 13 Jun 2024 22:15:00 -0700 (PDT)
-Received: from localhost.localdomain
- (pool-96-227-82-228.phlapa.fios.verizon.net. [96.227.82.228])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-798abe47c96sm113217485a.102.2024.06.13.22.14.59
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Thu, 13 Jun 2024 22:14:59 -0700 (PDT)
-From: Trent Huber <trentmhuber@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, pbonzini@redhat.com,
- Trent Huber <trentmhuber@gmail.com>
-Subject: [PATCH] os-posix: Expand setrlimit() syscall compatibility
-Date: Fri, 14 Jun 2024 01:14:22 -0400
-Message-Id: <20240614051422.13532-1-trentmhuber@gmail.com>
-X-Mailer: git-send-email 2.24.3 (Apple Git-128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sI6Yg-0004qp-UH
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 09:01:36 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 9FB053382D;
+ Fri, 14 Jun 2024 13:01:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718370092; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IvhOUy3mfYzmAHZlbx2s99bBmfo8oP2zcOVedPC2JEc=;
+ b=Q7NnsbcgJVWEnEmWosH4emMVm2oyJEc9rW9hHYfhzhblJY03U9xd1pSuGDTJD7jtOojoGQ
+ 61WetcEpuGqAc7qNiB1qmuu2JAQpvt2XY6i/K67kgC0WzMeAPBl6Mj3bMmrSjtuI/L9dZa
+ nNJwrv+95+LDkbDtj1FJmKRltktOQ7Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718370092;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IvhOUy3mfYzmAHZlbx2s99bBmfo8oP2zcOVedPC2JEc=;
+ b=ms/CV8GGAh+1Sh4N9fkoTX9UQI+fvwDwKWmF0VQRElaltd5I2wJzs9kKoo3BAMVCLQTFU8
+ iGDUAJqUn9+rlvCA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=JIgR52Gj;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=1SwGqxOM
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718370091; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IvhOUy3mfYzmAHZlbx2s99bBmfo8oP2zcOVedPC2JEc=;
+ b=JIgR52Gji/ZE/MMTDY36Ngovb/2zW+4r8LQqTzRDcDUQOynwnF6O+ZVS0EbtgPp3lnYqIe
+ ARnJv/lQuJ4JaV4TUjEEPnXhcDdDjdFlDd8rQtTwcslCmed7mohasU7a5/iVEr5JRA1YA0
+ 6zCG8EvxlWa5vYvHd/OkLbYyWDfLLXU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718370091;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IvhOUy3mfYzmAHZlbx2s99bBmfo8oP2zcOVedPC2JEc=;
+ b=1SwGqxOMMaUHlGEzEX07kE7VOialGltk51kScjdH9I1t+HP0OVdStt1MrF9SQHwjxC4pxf
+ tkDxuaoe4jOKfpBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2447313AB1;
+ Fri, 14 Jun 2024 13:01:27 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 1pbONic/bGbCNAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Jun 2024 13:01:27 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: peterx@redhat.com,
+	Shameer Kolothum via <qemu-devel@nongnu.org>
+Cc: yuan1.liu@intel.com, pbonzini@redhat.com, berrange@redhat.com,
+ marcandre.lureau@redhat.com, thuth@redhat.com, armbru@redhat.com,
+ lvivier@redhat.com, linuxarm@huawei.com, linwenkai6@hisilicon.com,
+ zhangfei.gao@linaro.org, huangchenghai2@huawei.com
+Subject: Re: [PATCH v2 0/7] Live migration acceleration with UADK
+Date: Fri, 14 Jun 2024 10:01:24 -0300
+Message-Id: <171836984520.3095.16653663002388005147.b4-ty@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240607135310.46320-1-shameerali.kolothum.thodi@huawei.com>
+References: <20240607135310.46320-1-shameerali.kolothum.thodi@huawei.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f31;
- envelope-from=trentmhuber@gmail.com; helo=mail-qv1-xf31.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Rspamd-Queue-Id: 9FB053382D
+X-Spamd-Result: default: False [-3.29 / 50.00]; BAYES_HAM(-1.78)[93.66%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_TLS_ALL(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_TWELVE(0.00)[13];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 14 Jun 2024 08:56:09 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,30 +134,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Darwin (I'm running version 19.6.0) uses a subtly different version
-of the setrlimit() syscall as described in the COMPATIBILITY section
-of the macOS man page. I adjusted the way the rlim_cur member is set
-to accommodate and which shouldn't affect any non-Darwin systems.
+On Fri, 07 Jun 2024 14:53:03 +0100, Shameer Kolothum via wrote:
+> v1 --> v2
+> (v1: https://lore.kernel.org/qemu-devel/20240529094435.11140-1-shameerali.kolothum.thodi@huawei.com/)
+> 
+> -Rebased on top of Intel IAA v7 series[0].
+> -Addressed comments from Fabiano. Thanks.
+> -Gathered tags received.
+> 
+> [...]
 
-Signed-off-by: Trent Huber <trentmhuber@gmail.com>
----
- os-posix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/os-posix.c b/os-posix.c
-index a4284e2c07..5766346521 100644
---- a/os-posix.c
-+++ b/os-posix.c
-@@ -270,7 +270,7 @@ void os_setup_limits(void)
-         return;
-     }
- 
--    nofile.rlim_cur = nofile.rlim_max;
-+    nofile.rlim_cur = OPEN_MAX < nofile.rlim_max ? OPEN_MAX : nofile.rlim_max;
- 
-     if (setrlimit(RLIMIT_NOFILE, &nofile) < 0) {
-         warn_report("unable to set NOFILE limit: %s", strerror(errno));
--- 
-2.24.3 (Apple Git-128)
-
+Queued, thanks!
 
