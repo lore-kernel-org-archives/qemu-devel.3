@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 619DEC27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 19:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8234CC27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 20:12:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sICcN-0008Q7-Gc; Fri, 14 Jun 2024 15:29:47 -0400
+	id 1sIDGe-0007kJ-Lb; Fri, 14 Jun 2024 16:11:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3JppsZgQKCkc0tr0pxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--rkir.bounces.google.com>)
- id 1sICcL-0008Nf-Ux
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 15:29:45 -0400
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
+ (Exim 4.90_1) (envelope-from <trentmhuber@gmail.com>)
+ id 1sIDGd-0007jo-Ch; Fri, 14 Jun 2024 16:11:23 -0400
+Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3JppsZgQKCkc0tr0pxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--rkir.bounces.google.com>)
- id 1sICcK-0001es-9j
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 15:29:45 -0400
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-6313189f622so39197357b3.2
- for <qemu-devel@nongnu.org>; Fri, 14 Jun 2024 12:29:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <trentmhuber@gmail.com>)
+ id 1sIDGb-0008In-HG; Fri, 14 Jun 2024 16:11:23 -0400
+Received: by mail-vk1-xa2e.google.com with SMTP id
+ 71dfb90a1353d-4ee282a4fbfso47436e0c.0; 
+ Fri, 14 Jun 2024 13:11:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1718393382; x=1718998182; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=TtK1C8YlLW0pbgXYspCN1hMQKNtzaDRkikncqCvQKRM=;
- b=TMPuvFQD+b+ZX5uTEcZOonVVSoHP97nr5jhwyegPzs3QdnvWogEWamYhg7sOgTu7n1
- lQG8MrlqjC3Qls3m1U5C1SsDiEMmowX0oiPL6eDUCEXjsx3jT4D9YbZYrfX1uWU32R6o
- liYjimA87vNnRlVb2fjxYwug+iRKmWnKISnL7GkcdRsMfMJJDD9AX9KZR5+ssUzE+VU+
- vAIpvtJNiEgOxNWxhb3MMU2BTGmz/3l52dgal8ImQrZWudsIBVspiW0uNPzv/cWVCVk2
- tE+A+KOBkHY7kpHRwuPeTTIHu06hwAtEFAu4kCPpAU0zulq2dCykJTBwBwMu8T3YjHeX
- fdrA==
+ d=gmail.com; s=20230601; t=1718395880; x=1719000680; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6oQJFnirZVYqSW44JTug1VwwUs8LLBBR2L468hP+eYk=;
+ b=Lo7rwUsXkgLl4hEpSJ1Vx3sRmyVsyKv86hELHNf6oK7k/ZOzv+abOJBrhQWQYwWPux
+ g+RXJ1xqrO4PBJhFIzxppyx2ngbbonuy1PpLmAGhvJ7sfvbIdiZU4QxHDQSv3W7K3Bdl
+ bnNfKKfDn2CkhWq7GyitOAvcnOL/Kk87NdpH1JwnCNq+h/4LBsidwUnlyy3yJP2Sl9O8
+ 8E6Qx9QxaIyvI1KQ6IML3NzI1oU5yxZrjcM3aMyvrnBjHibNVwQdb2VjbCauptCL8Lkt
+ Hs/okzro90vQzGSBtiU5IL28qp3qZPte9boWdBd0Kz2p9AMZIXi4+/M1BHjazJbaXLH4
+ j9HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718393382; x=1718998182;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TtK1C8YlLW0pbgXYspCN1hMQKNtzaDRkikncqCvQKRM=;
- b=nESSE0ZK8BsQVIC12ssl2oyxD+I53+9jl/qWED5AaUtQTmyt+UJSfy+4K7oVnhvidW
- exVHXJjqXyo11POKcAYFH7gQr5UOe59UHFy/O99Ow1JfNaIgU0J3D7ZdGabbsMY1n3nN
- +N1AoGPG509g2uZ6kDNHnZP24zdTq7810hQcb2dyX0nT3gSsJqTzWGKOeAAmxDgkcHS6
- AjsW2IRK9Ke5+D/dLOq84+6c9Mk2FtSwkp+c5sl5k4OjB/NLj6K7gmrbZrn5ZnPZjJv1
- TINjEsNrirgq7IuEKpB4ncFvL1RMHO5I/zQw0s2MiGW9JfwDlyqR1srXqiHICqqPdd5m
- NgpQ==
-X-Gm-Message-State: AOJu0YxwVTUOoe1VZVvSXoVQeWhD2gGo3a69HXHQKVF4rA45vVtMMUCZ
- 1oUtinQ7fbdtCP1dw8KPkwKrEll+tDA2VCdLSKag8vZ35JTmzf034x6jynL6EysqMqNwp3dwzOl
- FvA/lkk6wCuxDpdBAYzGZrOKA5nF93pRIup6Gkob1pMRWo8HrNnfZ5Z4wzTMOsGFPwQuqpQXHCh
- MYYdZT3y8G3lPz1B7wEXco
-X-Google-Smtp-Source: AGHT+IEYEKVE92+46WTtQRpWE85vzRAcQ46cbipvhhgbRZ/Ra0wlObPUMlvx0uZGnIDMNASPXt6mMNv9
-X-Received: from rkir98.kir.corp.google.com
- ([2620:15c:7d:4:cd17:b746:5266:1aa9])
- (user=rkir job=sendgmr) by 2002:a05:6902:2b0a:b0:dff:83e:b259 with SMTP id
- 3f1490d57ef6-dff1538b16bmr1009711276.6.1718393382011; Fri, 14 Jun 2024
- 12:29:42 -0700 (PDT)
-Date: Fri, 14 Jun 2024 12:29:38 -0700
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.45.2.627.g7a2c4fd464-goog
-Message-ID: <20240614192938.1690188-1-rkir@google.com>
-Subject: [PATCH] Make TARGET_PAGE_MASK typed as target_ulong
-From: Roman Kiryanov <rkir@google.com>
-To: qemu-devel@nongnu.org
-Cc: jansene@google.com, Roman Kiryanov <rkir@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3JppsZgQKCkc0tr0pxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--rkir.bounces.google.com;
- helo=mail-yw1-x114a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ d=1e100.net; s=20230601; t=1718395880; x=1719000680;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6oQJFnirZVYqSW44JTug1VwwUs8LLBBR2L468hP+eYk=;
+ b=YwGL8Quk3/5PilFksldex0GhY/7iWZchGXPmY1FyGWt3bTuy4fVV3llgDtOEJj0fEE
+ t0r5DeFer8ReXVSm84+BJUMjVFjKMqdwz1lpQaFsH2KkfjEUHJ1Ko+rOYsN2NLYgaY5k
+ +GLm9lRoYq/VZJ/OM/kCM8vJW4ZOOtm9a5pnorsOcklC09T0NtkGDsQz9AuRGi2L6xXs
+ Qwb7D0Ul3nWWuj1VPymus4ub794rO1TDFsrlh4E/dGoIcP4JaE4jEx2ELUT6Gfwwin3k
+ bx6FWIp4WfJtX/TltqTHCwZbXUNVtZ96iz9L1+Un/BqvRcnbBbbVhwhVQ7LeJvLh3Gkh
+ 2TBw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVvMxpGmVvbwox10WAgYLa7WxyYyynD63QhR3wXMUDKHdZNDCS9l2DTjJI5y9uvne7zZnJ5txT4ztju90KD0jCWcWgs3uA5Vw==
+X-Gm-Message-State: AOJu0YxmNYjDSIqpftkRkIf03JSi5lhYTvSLufp04ewJfZysqd4PP0a/
+ iNKvw/E4BNgW2RNH0R2gSzf8ayL7JOR+6ENCa/1Mkg/JF2s0Ky1myeO1pTVbeW0=
+X-Google-Smtp-Source: AGHT+IEm6kwvRSrBg+pEMG3cUM9CuKzrAV65lCJgWmEPRUVAN1JK9sDwNWys8NyO/s+9abiP9jI/QA==
+X-Received: by 2002:a05:6122:2642:b0:4eb:2012:f5ed with SMTP id
+ 71dfb90a1353d-4ee404322d9mr4239326e0c.1.1718395878282; 
+ Fri, 14 Jun 2024 13:11:18 -0700 (PDT)
+Received: from [192.168.1.19] (pool-96-227-82-228.phlapa.fios.verizon.net.
+ [96.227.82.228]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-798aacb1ebcsm177190085a.8.2024.06.14.13.11.17
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 14 Jun 2024 13:11:18 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 13.4 \(3608.120.23.2.7\))
+Subject: Re: [PATCH] os-posix: Expand setrlimit() syscall compatibility
+From: Trent Huber <trentmhuber@gmail.com>
+In-Reply-To: <ZmxF2lTY0hvS_HqV@redhat.com>
+Date: Fri, 14 Jun 2024 16:11:17 -0400
+Cc: qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org,
+ pbonzini@redhat.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <A91E989D-E646-4258-B080-67C9A29CBE80@gmail.com>
+References: <20240614051422.13532-1-trentmhuber@gmail.com>
+ <ZmxF2lTY0hvS_HqV@redhat.com>
+To: =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>
+X-Mailer: Apple Mail (2.3608.120.23.2.7)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
+ envelope-from=trentmhuber@gmail.com; helo=mail-vk1-xa2e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,67 +98,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-this fixes the build warnings like
+> On Jun 14, 2024, at 9:30 AM, Daniel P. Berrang=C3=A9 =
+<berrange@redhat.com> wrote:
+>=20
+> On Fri, Jun 14, 2024 at 01:14:22AM -0400, Trent Huber wrote:
+>> Darwin (I'm running version 19.6.0) uses a subtly different version
+>> of the setrlimit() syscall as described in the COMPATIBILITY section
+>> of the macOS man page. I adjusted the way the rlim_cur member is set
+>> to accommodate and which shouldn't affect any non-Darwin systems.
+>>=20
+>> Signed-off-by: Trent Huber <trentmhuber@gmail.com>
+>> ---
+>> os-posix.c | 2 +-
+>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>=20
+>> diff --git a/os-posix.c b/os-posix.c
+>> index a4284e2c07..5766346521 100644
+>> --- a/os-posix.c
+>> +++ b/os-posix.c
+>> @@ -270,7 +270,7 @@ void os_setup_limits(void)
+>>         return;
+>>     }
+>>=20
+>> -    nofile.rlim_cur =3D nofile.rlim_max;
+>> +    nofile.rlim_cur =3D OPEN_MAX < nofile.rlim_max ? OPEN_MAX : =
+nofile.rlim_max;
+>=20
+> There's no such constant OPEN_MAX on Linux, so this doesn't compile.
+>=20
+> There is a sysconf() parameter _SC_OPEN_MAX, but we should not use
+> that as it is a dynamic value that just reflects what 'rlim_cur'
+> is set to, and would thus turn this into a no-op.
+>=20
+> This should just be made conditional to macOS, since its the only
+> problematic platform that we known of.
+>=20
+> With regards,
+> Daniel
+> --=20
+> |: https://berrange.com      -o-    =
+https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-            =
+https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-    =
+https://www.instagram.com/dberrange :|
 
-accel/tcg/cputlb.c:416:13: warning: shifting a negative signed value is undefined [-Wshift-negative-value]
-    mask &= TARGET_PAGE_MASK | TLB_INVALID_MASK;
-            ^~~~~~~~~~~~~~~~
-include/exec/cpu-all.h:169:45: note: expanded from macro 'TARGET_PAGE_MASK'
-                            ~~~~~~~~~~~~~~~ ^
+Thanks for looking this over, I'll add some conditionals and send a v2 =
+of the patch.
 
-also this fixes the inconsitency in the return
-type of qemu_target_page_mask (int could be
-shorter than target_long).
-
-Signed-off-by: Roman Kiryanov <rkir@google.com>
----
- include/exec/cpu-all.h     | 4 ++--
- include/exec/target_page.h | 2 +-
- page-target.c              | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 6f09b86e7f..238a847eca 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -152,8 +152,8 @@ extern const TargetPageBits target_page;
- # define TARGET_PAGE_SIZE    (-(int)TARGET_PAGE_MASK)
- #else
- # define TARGET_PAGE_BITS_MIN TARGET_PAGE_BITS
--# define TARGET_PAGE_SIZE    (1 << TARGET_PAGE_BITS)
--# define TARGET_PAGE_MASK    ((target_long)-1 << TARGET_PAGE_BITS)
-+# define TARGET_PAGE_SIZE    ((target_ulong)1 << TARGET_PAGE_BITS)
-+# define TARGET_PAGE_MASK    ((target_ulong)-1 << TARGET_PAGE_BITS)
- #endif
- 
- #define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
-diff --git a/include/exec/target_page.h b/include/exec/target_page.h
-index 98ffbb5c23..57d60f2b06 100644
---- a/include/exec/target_page.h
-+++ b/include/exec/target_page.h
-@@ -15,7 +15,7 @@
- #define EXEC_TARGET_PAGE_H
- 
- size_t qemu_target_page_size(void);
--int qemu_target_page_mask(void);
-+target_ulong qemu_target_page_mask(void);
- int qemu_target_page_bits(void);
- int qemu_target_page_bits_min(void);
- 
-diff --git a/page-target.c b/page-target.c
-index 82211c8593..7176c29555 100644
---- a/page-target.c
-+++ b/page-target.c
-@@ -17,7 +17,7 @@ size_t qemu_target_page_size(void)
-     return TARGET_PAGE_SIZE;
- }
- 
--int qemu_target_page_mask(void)
-+target_ulong qemu_target_page_mask(void)
- {
-     return TARGET_PAGE_MASK;
- }
--- 
-2.45.2.627.g7a2c4fd464-goog
+Kindly,
+Trent
 
 
