@@ -4,97 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FEB0C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D2C3C27C6E
 	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 17:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIAZB-000124-2x; Fri, 14 Jun 2024 13:18:21 -0400
+	id 1sIAZV-0001AF-9N; Fri, 14 Jun 2024 13:18:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sIAZA-00011m-36
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:18:20 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sIAZS-00018u-I7
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:18:38 -0400
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sIAZ7-00043Q-Ik
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:18:19 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sIAZQ-00047g-KM
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:18:38 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 3BA4C20727;
- Fri, 14 Jun 2024 17:18:16 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 0017220728;
+ Fri, 14 Jun 2024 17:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718385496; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1718385515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4hUPgvDKyi/wtpUXOmTf8v57I6UfGLNlrkJdxsx0ACY=;
- b=NqWzXQffxN07XsbXp5hOF9g2IFVQ2zdhXXSi3r9lnzDl+0GfN7wKozwrvaJ7ZFX7B7bc4+
- obUY1OwisDAM2l8rxV8CRtmnaQDZUFUBrbCBgQoFFPPW4PwFk+gRFGaOYzBwFDf/KpbUKh
- +KgQ7B4z+vWNfwJ8l39o+EfVWAqEr3s=
+ bh=QraaRodgcIYNu8jkrWwRQj/dxHjZULEGFRoh2RfEryk=;
+ b=KHY/b444rPNGff9q5EDmIo5AZSyBwI1hYkp0eyN/5KiSoI/2wzzL3AUi8xbQshDCyz+lK4
+ FMXI+dm3QHf90DNk4t501XKoXMguXmpfKS3QAO009sNb3unaC65V0HwU3dvFcsoyUZo0pQ
+ 48Lb3bZWXmZRRar9MklpiV5TPAxPHVA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718385496;
+ s=susede2_ed25519; t=1718385515;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4hUPgvDKyi/wtpUXOmTf8v57I6UfGLNlrkJdxsx0ACY=;
- b=dmKK6DFQevoEiVwknMTSdDF+JTrSMOpFX+tzgMv/r1dWtTyJUMD0obUWoOJy7FhVzk2lQz
- LY44ZSa61XamSTAQ==
+ bh=QraaRodgcIYNu8jkrWwRQj/dxHjZULEGFRoh2RfEryk=;
+ b=WP4jw/PkHiAuphfR6s62H5V9jNXGokKy1+DPUF4GcqVngJwPOzWDLB/epBN2EpWFChIdWO
+ fQH3kFrD92oCXLCw==
 Authentication-Results: smtp-out2.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="KHY/b444";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="WP4jw/Pk"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718385496; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1718385515; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4hUPgvDKyi/wtpUXOmTf8v57I6UfGLNlrkJdxsx0ACY=;
- b=NqWzXQffxN07XsbXp5hOF9g2IFVQ2zdhXXSi3r9lnzDl+0GfN7wKozwrvaJ7ZFX7B7bc4+
- obUY1OwisDAM2l8rxV8CRtmnaQDZUFUBrbCBgQoFFPPW4PwFk+gRFGaOYzBwFDf/KpbUKh
- +KgQ7B4z+vWNfwJ8l39o+EfVWAqEr3s=
+ bh=QraaRodgcIYNu8jkrWwRQj/dxHjZULEGFRoh2RfEryk=;
+ b=KHY/b444rPNGff9q5EDmIo5AZSyBwI1hYkp0eyN/5KiSoI/2wzzL3AUi8xbQshDCyz+lK4
+ FMXI+dm3QHf90DNk4t501XKoXMguXmpfKS3QAO009sNb3unaC65V0HwU3dvFcsoyUZo0pQ
+ 48Lb3bZWXmZRRar9MklpiV5TPAxPHVA=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718385496;
+ s=susede2_ed25519; t=1718385515;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4hUPgvDKyi/wtpUXOmTf8v57I6UfGLNlrkJdxsx0ACY=;
- b=dmKK6DFQevoEiVwknMTSdDF+JTrSMOpFX+tzgMv/r1dWtTyJUMD0obUWoOJy7FhVzk2lQz
- LY44ZSa61XamSTAQ==
+ bh=QraaRodgcIYNu8jkrWwRQj/dxHjZULEGFRoh2RfEryk=;
+ b=WP4jw/PkHiAuphfR6s62H5V9jNXGokKy1+DPUF4GcqVngJwPOzWDLB/epBN2EpWFChIdWO
+ fQH3kFrD92oCXLCw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9883213AB1;
- Fri, 14 Jun 2024 17:18:14 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1B9F513AB5;
+ Fri, 14 Jun 2024 17:18:32 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id GBy+F1Z7bGaVAgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 14 Jun 2024 17:18:14 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id UEn6NGh7bGaVAgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Jun 2024 17:18:32 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Yuan Liu <yuan1.liu@intel.com>, Nanhai Zou <nanhai.zou@intel.com>
-Subject: [PULL 05/18] docs/migration: add qpl compression feature
-Date: Fri, 14 Jun 2024 14:17:49 -0300
-Message-Id: <20240614171802.28451-6-farosas@suse.de>
+ Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Zhangfei Gao <zhangfei.gao@linaro.org>
+Subject: [PULL 14/18] migration/multifd: add uadk compression framework
+Date: Fri, 14 Jun 2024 14:17:58 -0300
+Message-Id: <20240614171802.28451-15-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240614171802.28451-1-farosas@suse.de>
 References: <20240614171802.28451-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+X-Rspamd-Queue-Id: 0017220728
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; MIME_TRACE(0.00)[0:+];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,intel.com:url,suse.de:email];
- RCVD_TLS_ALL(0.00)[]
+ TO_DN_SOME(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ ARC_NA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_FIVE(0.00)[6];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,linaro.org:email]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
  envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
@@ -119,297 +133,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yuan Liu <yuan1.liu@intel.com>
+From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 
-add Intel Query Processing Library (QPL) compression method
-introduction
+Adds the skeleton to support uadk compression method.
+Complete functionality will be added in subsequent patches.
 
-Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
-Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Acked-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Reviewed-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- docs/devel/migration/features.rst        |   1 +
- docs/devel/migration/qpl-compression.rst | 260 +++++++++++++++++++++++
- 2 files changed, 261 insertions(+)
- create mode 100644 docs/devel/migration/qpl-compression.rst
+ hw/core/qdev-properties-system.c |  2 +-
+ migration/meson.build            |  1 +
+ migration/multifd-uadk.c         | 20 ++++++++++++++++++++
+ migration/multifd.h              |  5 +++--
+ qapi/migration.json              |  5 ++++-
+ 5 files changed, 29 insertions(+), 4 deletions(-)
+ create mode 100644 migration/multifd-uadk.c
 
-diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
-index d5ca7b86d5..bc98b65075 100644
---- a/docs/devel/migration/features.rst
-+++ b/docs/devel/migration/features.rst
-@@ -12,3 +12,4 @@ Migration has plenty of features to support different use cases.
-    virtio
-    mapped-ram
-    CPR
-+   qpl-compression
-diff --git a/docs/devel/migration/qpl-compression.rst b/docs/devel/migration/qpl-compression.rst
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index 6ccd7224f6..f13350b4fb 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -659,7 +659,7 @@ const PropertyInfo qdev_prop_fdc_drive_type = {
+ const PropertyInfo qdev_prop_multifd_compression = {
+     .name = "MultiFDCompression",
+     .description = "multifd_compression values, "
+-                   "none/zlib/zstd/qpl",
++                   "none/zlib/zstd/qpl/uadk",
+     .enum_table = &MultiFDCompression_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+diff --git a/migration/meson.build b/migration/meson.build
+index 5f146fe8a9..5ce2acb41e 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -40,6 +40,7 @@ endif
+ system_ss.add(when: rdma, if_true: files('rdma.c'))
+ system_ss.add(when: zstd, if_true: files('multifd-zstd.c'))
+ system_ss.add(when: qpl, if_true: files('multifd-qpl.c'))
++system_ss.add(when: uadk, if_true: files('multifd-uadk.c'))
+ 
+ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
+                 if_true: files('ram.c',
+diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
 new file mode 100644
-index 0000000000..990992d786
+index 0000000000..c2bb07535b
 --- /dev/null
-+++ b/docs/devel/migration/qpl-compression.rst
-@@ -0,0 +1,260 @@
-+===============
-+QPL Compression
-+===============
-+The Intel Query Processing Library (Intel ``QPL``) is an open-source library to
-+provide compression and decompression features and it is based on deflate
-+compression algorithm (RFC 1951).
-+
-+The ``QPL`` compression relies on Intel In-Memory Analytics Accelerator(``IAA``)
-+and Shared Virtual Memory(``SVM``) technology, they are new features supported
-+from Intel 4th Gen Intel Xeon Scalable processors, codenamed Sapphire Rapids
-+processor(``SPR``).
-+
-+For more ``QPL`` introduction, please refer to `QPL Introduction
-+<https://intel.github.io/qpl/documentation/introduction_docs/introduction.html>`_
-+
-+QPL Compression Framework
-+=========================
-+
-+::
-+
-+  +----------------+       +------------------+
-+  | MultiFD Thread |       |accel-config tool |
-+  +-------+--------+       +--------+---------+
-+          |                         |
-+          |                         |
-+          |compress/decompress      |
-+  +-------+--------+                | Setup IAA
-+  |  QPL library   |                | Resources
-+  +-------+---+----+                |
-+          |   |                     |
-+          |   +-------------+-------+
-+          |   Open IAA      |
-+          |   Devices +-----+-----+
-+          |           |idxd driver|
-+          |           +-----+-----+
-+          |                 |
-+          |                 |
-+          |           +-----+-----+
-+          +-----------+IAA Devices|
-+      Submit jobs     +-----------+
-+      via enqcmd
-+
-+
-+QPL Build And Installation
-+--------------------------
-+
-+.. code-block:: shell
-+
-+  $git clone --recursive https://github.com/intel/qpl.git qpl
-+  $mkdir qpl/build
-+  $cd qpl/build
-+  $cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DQPL_LIBRARY_TYPE=SHARED ..
-+  $sudo cmake --build . --target install
-+
-+For more details about ``QPL`` installation, please refer to `QPL Installation
-+<https://intel.github.io/qpl/documentation/get_started_docs/installation.html>`_
-+
-+IAA Device Management
-+---------------------
-+
-+The number of ``IAA`` devices will vary depending on the Xeon product model.
-+On a ``SPR`` server, there can be a maximum of 8 ``IAA`` devices, with up to
-+4 devices per socket.
-+
-+By default, all ``IAA`` devices are disabled and need to be configured and
-+enabled by users manually.
-+
-+Check the number of devices through the following command
-+
-+.. code-block:: shell
-+
-+  #lspci -d 8086:0cfe
-+  6a:02.0 System peripheral: Intel Corporation Device 0cfe
-+  6f:02.0 System peripheral: Intel Corporation Device 0cfe
-+  74:02.0 System peripheral: Intel Corporation Device 0cfe
-+  79:02.0 System peripheral: Intel Corporation Device 0cfe
-+  e7:02.0 System peripheral: Intel Corporation Device 0cfe
-+  ec:02.0 System peripheral: Intel Corporation Device 0cfe
-+  f1:02.0 System peripheral: Intel Corporation Device 0cfe
-+  f6:02.0 System peripheral: Intel Corporation Device 0cfe
-+
-+IAA Device Configuration And Enabling
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The ``accel-config`` tool is used to enable ``IAA`` devices and configure
-+``IAA`` hardware resources(work queues and engines). One ``IAA`` device
-+has 8 work queues and 8 processing engines, multiple engines can be assigned
-+to a work queue via ``group`` attribute.
-+
-+For ``accel-config`` installation, please refer to `accel-config installation
-+<https://github.com/intel/idxd-config>`_
-+
-+One example of configuring and enabling an ``IAA`` device.
-+
-+.. code-block:: shell
-+
-+  #accel-config config-engine iax1/engine1.0 -g 0
-+  #accel-config config-engine iax1/engine1.1 -g 0
-+  #accel-config config-engine iax1/engine1.2 -g 0
-+  #accel-config config-engine iax1/engine1.3 -g 0
-+  #accel-config config-engine iax1/engine1.4 -g 0
-+  #accel-config config-engine iax1/engine1.5 -g 0
-+  #accel-config config-engine iax1/engine1.6 -g 0
-+  #accel-config config-engine iax1/engine1.7 -g 0
-+  #accel-config config-wq iax1/wq1.0 -g 0 -s 128 -p 10 -b 1 -t 128 -m shared -y user -n app1 -d user
-+  #accel-config enable-device iax1
-+  #accel-config enable-wq iax1/wq1.0
-+
-+.. note::
-+   IAX is an early name for IAA
-+
-+- The ``IAA`` device index is 1, use ``ls -lh /sys/bus/dsa/devices/iax*``
-+  command to query the ``IAA`` device index.
-+
-+- 8 engines and 1 work queue are configured in group 0, so all compression jobs
-+  submitted to this work queue can be processed by all engines at the same time.
-+
-+- Set work queue attributes including the work mode, work queue size and so on.
-+
-+- Enable the ``IAA1`` device and work queue 1.0
-+
-+.. note::
-+
-+  Set work queue mode to shared mode, since ``QPL`` library only supports
-+  shared mode
-+
-+For more detailed configuration, please refer to `IAA Configuration Samples
-+<https://github.com/intel/idxd-config/tree/stable/Documentation/accfg>`_
-+
-+IAA Unit Test
-+^^^^^^^^^^^^^
-+
-+- Enabling ``IAA`` devices for Xeon platform, please refer to `IAA User Guide
-+  <https://www.intel.com/content/www/us/en/content-details/780887/intel-in-memory-analytics-accelerator-intel-iaa.html>`_
-+
-+- ``IAA`` device driver is Intel Data Accelerator Driver (idxd), it is
-+  recommended that the minimum version of Linux kernel is 5.18.
-+
-+- Add ``"intel_iommu=on,sm_on"`` parameter to kernel command line
-+  for ``SVM`` feature enabling.
-+
-+Here is an easy way to verify ``IAA`` device driver and ``SVM`` with `iaa_test
-+<https://github.com/intel/idxd-config/tree/stable/test>`_
-+
-+.. code-block:: shell
-+
-+  #./test/iaa_test
-+   [ info] alloc wq 0 shared size 128 addr 0x7f26cebe5000 batch sz 0xfffffffe xfer sz 0x80000000
-+   [ info] test noop: tflags 0x1 num_desc 1
-+   [ info] preparing descriptor for noop
-+   [ info] Submitted all noop jobs
-+   [ info] verifying task result for 0x16f7e20
-+   [ info] test with op 0 passed
-+
-+
-+IAA Resources Allocation For Migration
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+There is no ``IAA`` resource configuration parameters for migration and
-+``accel-config`` tool configuration cannot directly specify the ``IAA``
-+resources used for migration.
-+
-+The multifd migration with ``QPL`` compression method  will use all work
-+queues that are enabled and shared mode.
-+
-+.. note::
-+
-+  Accessing IAA resources requires ``sudo`` command or ``root`` privileges
-+  by default. Administrators can modify the IAA device node ownership
-+  so that QEMU can use IAA with specified user permissions.
-+
-+  For example
-+
-+  #chown -R qemu /dev/iax
-+
-+Shared Virtual Memory(SVM) Introduction
-+=======================================
-+
-+An ability for an accelerator I/O device to operate in the same virtual
-+memory space of applications on host processors. It also implies the
-+ability to operate from pageable memory, avoiding functional requirements
-+to pin memory for DMA operations.
-+
-+When using ``SVM`` technology, users do not need to reserve memory for the
-+``IAA`` device and perform pin memory operation. The ``IAA`` device can
-+directly access data using the virtual address of the process.
-+
-+For more ``SVM`` technology, please refer to
-+`Shared Virtual Addressing (SVA) with ENQCMD
-+<https://docs.kernel.org/next/x86/sva.html>`_
-+
-+
-+How To Use QPL Compression In Migration
-+=======================================
-+
-+1 - Installation of ``QPL`` library and ``accel-config`` library if using IAA
-+
-+2 - Configure and enable ``IAA`` devices and work queues via ``accel-config``
-+
-+3 - Build ``QEMU`` with ``--enable-qpl`` parameter
-+
-+  E.g. configure --target-list=x86_64-softmmu --enable-kvm ``--enable-qpl``
-+
-+4 - Enable ``QPL`` compression during migration
-+
-+  Set ``migrate_set_parameter multifd-compression qpl`` when migrating, the
-+  ``QPL`` compression does not support configuring the compression level, it
-+  only supports one compression level.
-+
-+The Difference Between QPL And ZLIB
-+===================================
-+
-+Although both ``QPL`` and ``ZLIB`` are based on the deflate compression
-+algorithm, and ``QPL`` can support the header and tail of ``ZLIB``, ``QPL``
-+is still not fully compatible with the ``ZLIB`` compression in the migration.
-+
-+``QPL`` only supports 4K history buffer, and ``ZLIB`` is 32K by default.
-+``ZLIB`` compresses data that ``QPL`` may not decompress correctly and
-+vice versa.
-+
-+``QPL`` does not support the ``Z_SYNC_FLUSH`` operation in ``ZLIB`` streaming
-+compression, current ``ZLIB`` implementation uses ``Z_SYNC_FLUSH``, so each
-+``multifd`` thread has a ``ZLIB`` streaming context, and all page compression
-+and decompression are based on this stream. ``QPL`` cannot decompress such data
-+and vice versa.
-+
-+The introduction for ``Z_SYNC_FLUSH``, please refer to `Zlib Manual
-+<https://www.zlib.net/manual.html>`_
-+
-+The Best Practices
-+==================
-+When user enables the IAA device for ``QPL`` compression, it is recommended
-+to add ``-mem-prealloc`` parameter to the destination boot parameters. This
-+parameter can avoid the occurrence of I/O page fault and reduce the overhead
-+of IAA compression and decompression.
-+
-+The example of booting with ``-mem-prealloc`` parameter
-+
-+.. code-block:: shell
-+
-+   $qemu-system-x86_64 --enable-kvm -cpu host --mem-prealloc ...
-+
-+
-+An example about I/O page fault measurement of destination without
-+``-mem-prealloc``, the ``svm_prq`` indicates the number of I/O page fault
-+occurrences and processing time.
-+
-+.. code-block:: shell
-+
-+  #echo 1 > /sys/kernel/debug/iommu/intel/dmar_perf_latency
-+  #echo 2 > /sys/kernel/debug/iommu/intel/dmar_perf_latency
-+  #echo 3 > /sys/kernel/debug/iommu/intel/dmar_perf_latency
-+  #echo 4 > /sys/kernel/debug/iommu/intel/dmar_perf_latency
-+  #cat /sys/kernel/debug/iommu/intel/dmar_perf_latency
-+  IOMMU: dmar18 Register Base Address: c87fc000
-+                  <0.1us   0.1us-1us    1us-10us  10us-100us   100us-1ms    1ms-10ms      >=10ms     min(us)     max(us) average(us)
-+   inv_iotlb           0         286         123           0           0           0           0           0           1           0
-+  inv_devtlb           0         276         133           0           0           0           0           0           2           0
-+     inv_iec           0           0           0           0           0           0           0           0           0           0
-+     svm_prq           0           0       25206         364         395           0           0           1         556           9
++++ b/migration/multifd-uadk.c
+@@ -0,0 +1,20 @@
++/*
++ * Multifd UADK compression accelerator implementation
++ *
++ * Copyright (c) 2024 Huawei Technologies R & D (UK) Ltd
++ *
++ * Authors:
++ *  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/module.h"
++
++static void multifd_uadk_register(void)
++{
++    /* noop for now */
++}
++migration_init(multifd_uadk_register);
+diff --git a/migration/multifd.h b/migration/multifd.h
+index 5b7d9b15f8..0ecd6f47d7 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -34,13 +34,14 @@ MultiFDRecvData *multifd_get_recv_data(void);
+ /* Multifd Compression flags */
+ #define MULTIFD_FLAG_SYNC (1 << 0)
+ 
+-/* We reserve 3 bits for compression methods */
+-#define MULTIFD_FLAG_COMPRESSION_MASK (7 << 1)
++/* We reserve 4 bits for compression methods */
++#define MULTIFD_FLAG_COMPRESSION_MASK (0xf << 1)
+ /* we need to be compatible. Before compression value was 0 */
+ #define MULTIFD_FLAG_NOCOMP (0 << 1)
+ #define MULTIFD_FLAG_ZLIB (1 << 1)
+ #define MULTIFD_FLAG_ZSTD (2 << 1)
+ #define MULTIFD_FLAG_QPL (4 << 1)
++#define MULTIFD_FLAG_UADK (8 << 1)
+ 
+ /* This value needs to be a multiple of qemu_target_page_size() */
+ #define MULTIFD_PACKET_SIZE (512 * 1024)
+diff --git a/qapi/migration.json b/qapi/migration.json
+index a35d0b5b83..470f746cc5 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -559,12 +559,15 @@
+ #       In-Memory Analytics Accelerator(IAA) accelerated compression
+ #       and decompression.  (Since 9.1)
+ #
++# @uadk: use UADK library compression method.  (Since 9.1)
++#
+ # Since: 5.0
+ ##
+ { 'enum': 'MultiFDCompression',
+   'data': [ 'none', 'zlib',
+             { 'name': 'zstd', 'if': 'CONFIG_ZSTD' },
+-            { 'name': 'qpl', 'if': 'CONFIG_QPL' } ] }
++            { 'name': 'qpl', 'if': 'CONFIG_QPL' },
++            { 'name': 'uadk', 'if': 'CONFIG_UADK' } ] }
+ 
+ ##
+ # @MigMode:
 -- 
 2.35.3
 
