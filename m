@@ -4,82 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74F2CC27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 09:46:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D976C27C79
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 09:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI3VW-0002mZ-Ax; Fri, 14 Jun 2024 05:46:06 -0400
+	id 1sI3dk-0006DH-PF; Fri, 14 Jun 2024 05:54:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sI3VV-0002ly-4X
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:46:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sI3df-0006At-7I
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:54:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sI3VT-0001iW-If
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:46:04 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sI3dd-0003XD-IP
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:54:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718358362;
+ s=mimecast20190719; t=1718358868;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l1u0TV69+cUzaR1ed4t6cfxWYAi6miyO4GiySt4yFa8=;
- b=VOWSmhIo4ghwa6/RK06IhBevwXWg8HnuNJ01O+PiIdlU0TU/WoJY1ubT1l+Sz/ttm6Ej6e
- RS0VA99lQxLwKHiIZpWm6Z6Z4L4GhyYKvinqdZILPtfVMDIklDk647oPom/XYD/S7Kw8S9
- xsmMCFeHkDtezpDh8JtCOo6dXpt6tRI=
+ bh=TYVDyBaXbId670jhHS4RsXy3i9UaSll07aLmdQKxZ4M=;
+ b=DnQNUaLPgK5oIIaQ1lQBNtOwy76La8Y6p0jEHSO+p4y+Gt4kDu6i65iOgq+pEHNlnrYTG+
+ nKRVv1oi0y5TkJ3K+PPJWHjpPTQbLEKpIx9CwqVpvR6PjpGs3rrkeCHf9UKsk3kjtnjSWv
+ 9hwi4kiwkMPWJ9hqtPMpzvQti3CbM5c=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-574-MuT_urGnMnCZDuEUv5E9GA-1; Fri,
- 14 Jun 2024 05:45:58 -0400
-X-MC-Unique: MuT_urGnMnCZDuEUv5E9GA-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-577-krIfCD_2NC-8vCAhyz746g-1; Fri,
+ 14 Jun 2024 05:54:24 -0400
+X-MC-Unique: krIfCD_2NC-8vCAhyz746g-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE8701955DCD; Fri, 14 Jun 2024 09:45:55 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F77B19560BF; Fri, 14 Jun 2024 09:45:48 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 13E7C21E6682; Fri, 14 Jun 2024 11:45:46 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Fabiano
- Rosas <farosas@suse.de>,  Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,  Ani
- Sinha <anisinha@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Kevin
- Wolf <kwolf@redhat.com>,  Jiri Pirko <jiri@resnulli.us>,  Mads Ynddal
- <mads@ynddal.dk>,  Jason Wang <jasowang@redhat.com>,  Igor Mammedov
- <imammedo@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-block@nongnu.org,  Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Victor Toso de Carvalho <victortoso@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,  Lukas Straub
- <lukasstraub2@web.de>,  Yanan Wang <wangyanan55@huawei.com>,  Hanna Reitz
- <hreitz@redhat.com>
-Subject: Re: [PATCH 13/20] docs/qapidoc: fix nested parsing under untagged
- sections
-In-Reply-To: <20240514215740.940155-14-jsnow@redhat.com> (John Snow's message
- of "Tue, 14 May 2024 17:57:32 -0400")
-References: <20240514215740.940155-1-jsnow@redhat.com>
- <20240514215740.940155-14-jsnow@redhat.com>
-Date: Fri, 14 Jun 2024 11:45:46 +0200
-Message-ID: <871q4z5039.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ id 8220119560A2; Fri, 14 Jun 2024 09:54:23 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.39.193.191])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2CFE4300021A; Fri, 14 Jun 2024 09:54:18 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
+ peter.maydell@linaro.org, clg@redhat.com, yanghliu@redhat.com,
+ zhenzhong.duan@intel.com
+Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
+ berrange@redhat.com
+Subject: [PATCH v4 2/8] virtio-iommu: Implement set|unset]_iommu_device()
+ callbacks
+Date: Fri, 14 Jun 2024 11:52:52 +0200
+Message-ID: <20240614095402.904691-3-eric.auger@redhat.com>
+In-Reply-To: <20240614095402.904691-1-eric.auger@redhat.com>
+References: <20240614095402.904691-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
 X-Spam_bar: +
@@ -103,61 +87,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Implement PCIIOMMUOPs [set|unset]_iommu_device() callbacks.
+In set(), the HostIOMMUDevice handle is stored in a hash
+table indexed by PCI BDF. The object will allow to retrieve
+information related to the physical IOMMU.
 
-> Sphinx does not like sections without titles, because it wants to
-> convert every section into a reference. When there is no title, it
-> struggles to do this and transforms the tree inproperly.
->
-> Depending on the rST used, this may result in an assertion error deep in
-> the docutils HTMLWriter.
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
-I'm getting vibes of someone having had hours of "fun" with Sphinx...
+---
+v3 -> v4:
+- Simply use native HostIOMMUDevice instead of VirtioHostIOMMUDevice
 
-Can you give you an idea of how a reproducer would look like?
+v2 -> v3:
+- include host_iommu_device.h in virtio-iommu.h header
+- introduce hiod_destroy() and fix UAF in
+  virtio_iommu_unset_iommu_device()
+---
+ include/hw/virtio/virtio-iommu.h |  2 +
+ hw/virtio/virtio-iommu.c         | 82 ++++++++++++++++++++++++++++++++
+ 2 files changed, 84 insertions(+)
 
-> When parsing an untagged section (free paragraphs), skip making a hollow
-> section and instead append the parse results to the prior section.
->
-> Many Bothans died to bring us this information.
-
-Terribly sad.
-
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  docs/sphinx/qapidoc.py | 16 +++++++++++-----
->  1 file changed, 11 insertions(+), 5 deletions(-)
->
-> diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-> index 34e95bd168d..cfc0cf169ef 100644
-> --- a/docs/sphinx/qapidoc.py
-> +++ b/docs/sphinx/qapidoc.py
-> @@ -286,14 +286,20 @@ def _nodes_for_sections(self, doc):
->              if section.tag and section.tag == 'TODO':
->                  # Hide TODO: sections
->                  continue
-> +
-> +            if not section.tag:
-> +                # Sphinx cannot handle sectionless titles;
-> +                # Instead, just append the results to the prior section.
-> +                container = nodes.container()
-> +                self._parse_text_into_node(section.text, container)
-> +                nodelist += container.children
-> +                continue
-> +
->              snode = self._make_section(section.tag)
-> -            if section.tag and section.tag.startswith('Example'):
-> +            if section.tag.startswith('Example'):
->                  snode += self._nodes_for_example(dedent(section.text))
->              else:
-> -                self._parse_text_into_node(
-> -                    dedent(section.text) if section.tag else section.text,
-> -                    snode,
-> -                )
-> +                self._parse_text_into_node(dedent(section.text), snode)
->              nodelist.append(snode)
->          return nodelist
-
-Looks plausible.  I lack the Sphinx-fu to say more.
+diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
+index 83a52cc446..bdb3da72d0 100644
+--- a/include/hw/virtio/virtio-iommu.h
++++ b/include/hw/virtio/virtio-iommu.h
+@@ -25,6 +25,7 @@
+ #include "hw/pci/pci.h"
+ #include "qom/object.h"
+ #include "qapi/qapi-types-virtio.h"
++#include "sysemu/host_iommu_device.h"
+ 
+ #define TYPE_VIRTIO_IOMMU "virtio-iommu-device"
+ #define TYPE_VIRTIO_IOMMU_PCI "virtio-iommu-pci"
+@@ -57,6 +58,7 @@ struct VirtIOIOMMU {
+     struct virtio_iommu_config config;
+     uint64_t features;
+     GHashTable *as_by_busptr;
++    GHashTable *host_iommu_devices;
+     IOMMUPciBus *iommu_pcibus_by_bus_num[PCI_BUS_MAX];
+     PCIBus *primary_bus;
+     ReservedRegion *prop_resv_regions;
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 1326c6ec41..16c8ec3ca4 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -69,6 +69,11 @@ typedef struct VirtIOIOMMUMapping {
+     uint32_t flags;
+ } VirtIOIOMMUMapping;
+ 
++struct hiod_key {
++    PCIBus *bus;
++    uint8_t devfn;
++};
++
+ static inline uint16_t virtio_iommu_get_bdf(IOMMUDevice *dev)
+ {
+     return PCI_BUILD_BDF(pci_bus_num(dev->bus), dev->devfn);
+@@ -462,8 +467,82 @@ static AddressSpace *virtio_iommu_find_add_as(PCIBus *bus, void *opaque,
+     return &sdev->as;
+ }
+ 
++static gboolean hiod_equal(gconstpointer v1, gconstpointer v2)
++{
++    const struct hiod_key *key1 = v1;
++    const struct hiod_key *key2 = v2;
++
++    return (key1->bus == key2->bus) && (key1->devfn == key2->devfn);
++}
++
++static guint hiod_hash(gconstpointer v)
++{
++    const struct hiod_key *key = v;
++    guint value = (guint)(uintptr_t)key->bus;
++
++    return (guint)(value << 8 | key->devfn);
++}
++
++static void hiod_destroy(gpointer v)
++{
++    object_unref(v);
++}
++
++static HostIOMMUDevice *
++get_host_iommu_device(VirtIOIOMMU *viommu, PCIBus *bus, int devfn) {
++    struct hiod_key key = {
++        .bus = bus,
++        .devfn = devfn,
++    };
++
++    return g_hash_table_lookup(viommu->host_iommu_devices, &key);
++}
++
++static bool virtio_iommu_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
++                                          HostIOMMUDevice *hiod, Error **errp)
++{
++    VirtIOIOMMU *viommu = opaque;
++    struct hiod_key *new_key;
++
++    assert(hiod);
++
++    if (get_host_iommu_device(viommu, bus, devfn)) {
++        error_setg(errp, "Host IOMMU device already exists");
++        return false;
++    }
++
++    new_key = g_malloc(sizeof(*new_key));
++    new_key->bus = bus;
++    new_key->devfn = devfn;
++
++    object_ref(hiod);
++    g_hash_table_insert(viommu->host_iommu_devices, new_key, hiod);
++
++    return true;
++}
++
++static void
++virtio_iommu_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
++{
++    VirtIOIOMMU *viommu = opaque;
++    HostIOMMUDevice *hiod;
++    struct hiod_key key = {
++        .bus = bus,
++        .devfn = devfn,
++    };
++
++    hiod = g_hash_table_lookup(viommu->host_iommu_devices, &key);
++    if (!hiod) {
++        return;
++    }
++
++    g_hash_table_remove(viommu->host_iommu_devices, &key);
++}
++
+ static const PCIIOMMUOps virtio_iommu_ops = {
+     .get_address_space = virtio_iommu_find_add_as,
++    .set_iommu_device = virtio_iommu_set_iommu_device,
++    .unset_iommu_device = virtio_iommu_unset_iommu_device,
+ };
+ 
+ static int virtio_iommu_attach(VirtIOIOMMU *s,
+@@ -1357,6 +1436,9 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
+ 
+     s->as_by_busptr = g_hash_table_new_full(NULL, NULL, NULL, g_free);
+ 
++    s->host_iommu_devices = g_hash_table_new_full(hiod_hash, hiod_equal,
++                                                  g_free, hiod_destroy);
++
+     if (s->primary_bus) {
+         pci_setup_iommu(s->primary_bus, &virtio_iommu_ops, s);
+     } else {
+-- 
+2.41.0
 
 
