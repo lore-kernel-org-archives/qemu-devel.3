@@ -4,79 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAFEFC27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 07:04:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82AF5C27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 07:04:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI0ye-000444-RU; Fri, 14 Jun 2024 03:04:00 -0400
+	id 1sI0yy-0004HC-0b; Fri, 14 Jun 2024 03:04:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sI0yd-00042O-Hl
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:03:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sI0yc-00050x-54
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:03:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718348636;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KGlHMv7GgAdtmwNwvoEVn2WtwzNvEl24MYmPZfAC67E=;
- b=EbRkh7fVry2aF5bM08vSTRz/qn6BhW8Wuihsn1cEYMD5veK/4vAb3isyvqwzPRVH1Ev5py
- bCEfmk9JnjTFEKfJ6FhaNLr5+Qb9vn68SMPB4pE5MWiJdce8Mkua9uiLx+mrYp/sE6RKmG
- HatyfjH6FbW9acas9qsKOigFjvt0llc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-z5XXioZRNSy2i8pCFGDltA-1; Fri,
- 14 Jun 2024 03:03:52 -0400
-X-MC-Unique: z5XXioZRNSy2i8pCFGDltA-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0E82419560B4; Fri, 14 Jun 2024 07:03:51 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.192.178])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6B5733000219; Fri, 14 Jun 2024 07:03:50 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 5ED391800D65; Fri, 14 Jun 2024 09:03:48 +0200 (CEST)
-Date: Fri, 14 Jun 2024 09:03:48 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v3 2/4] usb/hub: mark as deprecated
-Message-ID: <ikx6c6o45yvwyrnzulrwt6bzentxmpclffod5djizycbfhcmmu@zuunl6mrz3kd>
-References: <20240606143010.1318226-1-kraxel@redhat.com>
- <20240606143010.1318226-3-kraxel@redhat.com>
- <ZmHKotWS7ywfIvOj@redhat.com> <87r0d2w431.fsf@draig.linaro.org>
- <87o785b5vn.fsf@pond.sub.org> <ZmqvJIekaW9jWP6F@redhat.com>
- <87y1799lg8.fsf@pond.sub.org> <ZmrOgxutj7ETndGM@redhat.com>
- <8734pgx5ho.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sI0yw-0004Gf-84
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:04:18 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sI0yu-00059p-E1
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:04:18 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-35e1fcd0c0fso1486254f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 14 Jun 2024 00:04:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718348654; x=1718953454; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=ELcYFfboRwhxj6i36xhUJqb2REz8NmqDEdgnN2O4J5M=;
+ b=BIKhVZnLQknt64bPXeIX28ChBUtsXIyoNX20qbg15nlD1EWsVxK4uAv1dlomeXf01O
+ LHamhw4amVn27XHKxXrARH8cu0Za+S2YEfOkDh2ek5AJ2OjLuClQSL4nmS5YBCbQyJey
+ 8ylYMjDrn4rZVHLaqMBcljwq8/JOO9QdtUYB++3THZ7tcnDDi0nhjX3t7UNe4s6Hjn6P
+ S7fkTOF7ATHharTpoVgr7zyTBtnb7AO7cm5lMu3dU/uH7H+K7kWu/FvYadBbBMw4BNUm
+ qk3IVawpErOeV1w3WlJBIM6XgRcohVmd1MWWSugKYOL6ME2sJy3EZpZ2PRitKaBkwxFZ
+ ss/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718348654; x=1718953454;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ELcYFfboRwhxj6i36xhUJqb2REz8NmqDEdgnN2O4J5M=;
+ b=fwBOh8hyOkddq4cyDmc1A8yxq+3/BgUU4NeD/6tuPSm8B+NB7ijMe896WEJdJAASWS
+ iwinXmOlRrUJf2ZemSPAc8Wms2M7B/XjU7yeAisrn8xB7hyaIN/3PRpARSRrhzinF1tM
+ IQuIMsd0vhne1YVbDK+xK8zQ6sgry/RWsxQ775LzGY6TAdv/wSQhVrD8dKWVu6lAE9SZ
+ 4S4F3Zj0KXE4THiDFTMVQmeguWzfYXur/rQp5te/w4ITbsTzXsBkLLRK+Nd5oLmKYI0Y
+ LxuFFud7T2+wFKEHg+7DrXIBMogXySPCc3PmeIWHLQI/XAiUtA1l45O2odWGkt+55qIp
+ 3dnQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUmi3eNYloaPXyoMWTEP5MDgmxnKTk5Z9RYxsvEJwuWESlO1PhQQqcLLbRab+tbkCythyXzwxRoxKpP1vsiAKscZs95UlU=
+X-Gm-Message-State: AOJu0YwjWk5DVMStZ2NW8L6BiKkEVN8Rejn4BPiHPgUkij6Zbrj8M8nb
+ U5Wcmvw055jXt/U82/T5ZceKhN5P9FX3LW11zzeM81yfHZ3Y6c0N/tvt1uKo2Lg=
+X-Google-Smtp-Source: AGHT+IFbhwUhTYw3Uqws0hI72DXsEcLeSB4s0EieSx9DHdoUvcqn8yk+DJRo/U64iXuOY49Zr3Uo3A==
+X-Received: by 2002:adf:fe90:0:b0:35f:28e1:501f with SMTP id
+ ffacd0b85a97d-3607a788c70mr1128317f8f.66.1718348654465; 
+ Fri, 14 Jun 2024 00:04:14 -0700 (PDT)
+Received: from meli-email.org (adsl-33.109.242.225.tellas.gr. [109.242.225.33])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36075c6fa4esm3380861f8f.67.2024.06.14.00.04.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Jun 2024 00:04:14 -0700 (PDT)
+Date: Fri, 14 Jun 2024 09:38:01 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex Benn=?UTF-8?B?w6kg?=e <alex.bennee@linaro.org>,
+ Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
+User-Agent: meli 0.8.6
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+ <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
+ <CABgObfY8BS0yCw2CxgDQTBA4np9BZgGJF3N=t6eoBcdACAE=NA@mail.gmail.com>
+ <ez270.x96k6aeu0rpw@linaro.org> <ZmnHoajecti472mi@redhat.com>
+ <ezjl0.qx0tmsp6d6t@linaro.org>
+ <CABgObfbGwKc0RYBcDPzNkE8HOSouFj4D15Oh7TuiKOC+D7raaA@mail.gmail.com>
+ <ZmqcFf0xB9m4WkA3@redhat.com>
+ <CABgObfb4+FSsadFTVg6Dc1zehQV2Vei2_kSRd5CfxsGBLPN6Eg@mail.gmail.com>
+ <Zmq47yQV-sQ0hGMy@redhat.com>
+ <CABgObfYaxBxc8GS3=YU=EwNLEihEoD4ikZ595P4m_KTZCAAaBw@mail.gmail.com>
+In-Reply-To: <CABgObfYaxBxc8GS3=YU=EwNLEihEoD4ikZ595P4m_KTZCAAaBw@mail.gmail.com>
+Message-ID: <f26b0.f15017t08v16@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <8734pgx5ho.fsf@draig.linaro.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,30 +114,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 13, 2024 at 03:49:23PM GMT, Alex Bennée wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> > I don't want to loose that clear & easily understood meaning, by overloading
-> > "deprecated" for scenarios like "it is sometimes better to use a different
-> > device instead of this one, depending on factors X, Y & Z".
-> 
-> I agree we shouldn't overload the meaning if deprecated.
-> 
-> So to this case in point. Is there anything you can do with usb/hub that
-> you can't do with the newer xhci based one?
+On Thu, 13 Jun 2024 23:57, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>On Thu, Jun 13, 2024 at 11:16â€¯AM Daniel P. BerrangÃ© <berrange@redhat.com> wrote:
+>> I guess there's a balance to be had somewhere on the spectrum between doing
+>> everything against the raw C binding, vs everything against a perfectly
+>> idiomatic Rust API wrapping the C bniding. The latter might be the ideal,
+>> but from a pragmmatic POV I doubt we want the barrier to entry to be that
+>> high.
+>
+>Yes, I agree. I guess we could make things work step by step, even
+>committing something that only focuses on the build system like
+>Manos's work (I'll review it).
+>
+>I can try to look at the basic QOM interface.
+>
+>Manos, can you create a page on the wiki? Something like
+>https://wiki.qemu.org/Features/Meson.
 
-Well, it's a hub.  You can (virtually) plug it into a usb root port of a
-ohci/uhci/ehci/xhci host adapter and get 8 more usb ports.  Those new
-ports are usb 1.1 only though, so not very useful in a modern world,
-except maybe for HID devices which don't need much bandwidth.
 
-> Is it backward compatible
-> enough that an old kernel would work? Or are we talking really old
-> kernels at this point?
+Certainly! Just to make sure I understood correctly, you mean a wiki 
+page describing how things work and tracking the progress?
 
-Pretty much everything should be able to drive the usb hub.
+I added https://wiki.qemu.org/Features/Meson/Rust
 
-take care,
-  Gerd
+And a Meson category https://wiki.qemu.org/Category:Meson
 
+Thanks,
+Manos
 
