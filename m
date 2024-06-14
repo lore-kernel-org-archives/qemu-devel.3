@@ -4,89 +4,165 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A21FC27C77
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 14:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7BCBC27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 15:07:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI852-0003al-5t; Fri, 14 Jun 2024 10:39:04 -0400
+	id 1sI8Vr-0007kp-D2; Fri, 14 Jun 2024 11:06:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sI850-0003Zx-Ga
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 10:39:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <sai.pavan.boddu@amd.com>)
+ id 1sI8Vp-0007ju-BI; Fri, 14 Jun 2024 11:06:45 -0400
+Received: from mail-bn8nam11on20621.outbound.protection.outlook.com
+ ([2a01:111:f403:2414::621]
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sI84v-000839-TT
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 10:39:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718375936;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=l01UuDnab8fmfmdh5E4vLPtoCAjjCMEKUUiwVS52l38=;
- b=Bg/PulEIG8I2nzgFCOX3bT5BM4C2QXGavLjOHxilGC2e1HycbH5DZKiE3oSFl09RBwVMen
- z5v+Lom4CLmvh2BtT1JulnHlTNkFOQKt60lc4/TIxGi49lWBVrWerRh8fDCl/1FcRN8E5y
- pimtoASQohIJ0opPDbNfGfCZYMTh4so=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-2jcvyzzMNNSjyZBk8vQRgg-1; Fri,
- 14 Jun 2024 10:38:51 -0400
-X-MC-Unique: 2jcvyzzMNNSjyZBk8vQRgg-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7CA7D1944D19; Fri, 14 Jun 2024 14:38:29 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 036571955DB0; Fri, 14 Jun 2024 14:38:22 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0AD6721E6687; Fri, 14 Jun 2024 16:38:20 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Fabiano
- Rosas <farosas@suse.de>,  Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,  Ani
- Sinha <anisinha@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Kevin
- Wolf <kwolf@redhat.com>,  Jiri Pirko <jiri@resnulli.us>,  Mads Ynddal
- <mads@ynddal.dk>,  Jason Wang <jasowang@redhat.com>,  Igor Mammedov
- <imammedo@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-block@nongnu.org,  Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Victor Toso de Carvalho <victortoso@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,  Lukas Straub
- <lukasstraub2@web.de>,  Yanan Wang <wangyanan55@huawei.com>,  Hanna Reitz
- <hreitz@redhat.com>
-Subject: Re: [PATCH 20/20] qapi: convert "Example" sections to rST
-In-Reply-To: <20240514215740.940155-21-jsnow@redhat.com> (John Snow's message
- of "Tue, 14 May 2024 17:57:39 -0400")
-References: <20240514215740.940155-1-jsnow@redhat.com>
- <20240514215740.940155-21-jsnow@redhat.com>
-Date: Fri, 14 Jun 2024 16:38:20 +0200
-Message-ID: <87r0czy4gz.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <sai.pavan.boddu@amd.com>)
+ id 1sI8Vl-0004g1-OJ; Fri, 14 Jun 2024 11:06:45 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=VeFkvJomMcltRm0LSkJDS+v3MH8eBBGHqMmuey4+8hjnH2pJu2tBC+PYw0jCOgyru/yFocaF07tjuKIuf8jJZb4zE+vA8NqI64qMJIYNk766xywYTc3pC1ZK5hTSx9aqkLjn91ZBgh3mgb1UnI4U1sy1VLkoS54oRhb/BPtMzk7TC5/DHjiBssm85fnsyS8lQ4AvGJvexv8A8WxAYlX+/sBJ+q/vbJqJsBkOghQ7aQFMLAGQI6YAT0cf6HEKdS+uKmIzFevfHw1DFNxIx41tISd1CJyJq9zbLABpiYv8/bTRjHRbwrK1QIaaKZIuTHm7gjtDMXhbMcoHgDWym1QMqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=X7yDH7vSxms3BJaxXjLvgBExRvzXCBeA2pJGJDvEchE=;
+ b=MK6dYtpJwfJnKnU7w7Zig+nA4ERRRHOy9x24xLx1xApEGNCbqTtgkX8fIL0pM9hiA7/kp60mz9x/sQJFZ+UFqa78cmfkEvro3XrUNjdRY1VYaiiz2UkCXhOUfk4WjSXZgdcnnkbWueA8C5Fgr9yKbOegIVFEbKqZGY6ZEJyZfsnYNviRcqZPqqljdaEmS/OGVKE+OcuI2VIzoWrH690HB+ep9yhjEMS2zbcYC5JMYyo87DOcU0UvGOnL8nHPC5DzzlS80H8cRUkAW5tZyktMMBwN0JWC7hTMlHdCwCFiLeA+eaNrFLTvR37wuFlo53nc7EYUqEwCWgUfJTcxO7IduQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=X7yDH7vSxms3BJaxXjLvgBExRvzXCBeA2pJGJDvEchE=;
+ b=vl1mo0MqUSaNcbtfOv2btI173XIKRfEXaHFtG97lu6ywha2ggjT31yBNjL3h5Nxc0iFr+m879AiETskoBrPJIY5BAkoM8hOcQmsLh8MYfHwei4ORX1H3s5s3Jc+dpYb4Hd/o8dyDybe1wJ6Dwg5lyfpxc8QH25Nmi1FdwEJBsRg=
+Received: from DS7PR12MB5741.namprd12.prod.outlook.com (2603:10b6:8:70::7) by
+ SA1PR12MB8744.namprd12.prod.outlook.com (2603:10b6:806:38c::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.26; Fri, 14 Jun
+ 2024 15:06:33 +0000
+Received: from DS7PR12MB5741.namprd12.prod.outlook.com
+ ([fe80::4a06:1053:ead5:ef39]) by DS7PR12MB5741.namprd12.prod.outlook.com
+ ([fe80::4a06:1053:ead5:ef39%5]) with mapi id 15.20.7677.021; Fri, 14 Jun 2024
+ 15:06:33 +0000
+From: "Boddu, Sai Pavan" <sai.pavan.boddu@amd.com>
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Alistair Francis <alistair@alistair23.me>, Peter
+ Maydell <peter.maydell@linaro.org>, "Iglesias, Francisco"
+ <francisco.iglesias@amd.com>
+Subject: RE: [PATCH 2/2] hw/arm/xilinx_zynq: Add boot-mode property
+Thread-Topic: [PATCH 2/2] hw/arm/xilinx_zynq: Add boot-mode property
+Thread-Index: AQHavksYsPCxvVQjYEe4xwq3sUne5rHHW1IA
+Date: Fri, 14 Jun 2024 15:06:33 +0000
+Message-ID: <DS7PR12MB5741EA2D0928F481DB6F4E1FB6C22@DS7PR12MB5741.namprd12.prod.outlook.com>
+References: <20240613153638.3858853-1-sai.pavan.boddu@amd.com>
+ <20240613153638.3858853-3-sai.pavan.boddu@amd.com>
+ <CAJy5ezoo5bCMVG6GETvWTYn-y0VEFths0Uj3foXMQbyKPduU=A@mail.gmail.com>
+In-Reply-To: <CAJy5ezoo5bCMVG6GETvWTYn-y0VEFths0Uj3foXMQbyKPduU=A@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DS7PR12MB5741:EE_|SA1PR12MB8744:EE_
+x-ms-office365-filtering-correlation-id: 4189681f-e74e-4c63-36b8-08dc8c839405
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230037|366013|376011|1800799021|38070700015;
+x-microsoft-antispam-message-info: =?utf-8?B?RFB3RmpEZk9oajhPa0hoaUZRSzRSTm1YNjllZ2VtL3BDZzJBN0VEK256TzBr?=
+ =?utf-8?B?VDZNVTdyK3JXV2hKTjUyWkwrTUJJa1NMT2ZLTVF0R0kySlRhWk1raklTVTky?=
+ =?utf-8?B?NHowaDBIOEU5ZmxsYTJIc2JGSGRaM1BXTkRJZ0hLNDJsKzBvQ1crSm5RV3Ew?=
+ =?utf-8?B?dEJHRzRSNEhoeWU5c2x5alRnSyszc3ZUNW00TDV2WWhHZnhMRU9qVFlOYmVI?=
+ =?utf-8?B?S3F4T1p0ek1pcmZaQzZWdFBsTHlLM3pPZEZjNmRBVkdXNm5uS1YxYWdrZzB4?=
+ =?utf-8?B?ZjVsSFBxa3RYS2hOQ0VQMHIycUVEWXdOdjVYOHYvempXNmNFR1pVU2s5eDA3?=
+ =?utf-8?B?bUt4QnpReGsza1FlMWxsdlRXUkJzRm5VWlJFZEtybG5abGZIYkg3TGJvVkVw?=
+ =?utf-8?B?SDJXL3hnUzVxcU9BQ2hIVEJiOGJZZU42VjZ3NXRKM2FiWTh2OGxQUGFrc1My?=
+ =?utf-8?B?b2ExTUpOWm1yUm0zc0srNVRFNmRwazJJRWlpTnE5OGxOeDhqSXlZVlpzNXJt?=
+ =?utf-8?B?cWo5TFc5UnNiUFNyeUowVWJHNHZzQnM3UUE2d0Rja3k1MWd5bU0wZWROMEVm?=
+ =?utf-8?B?dlkxQ1VNc0lFZXF5RWhaT0lWRWdXaU5IRDg3Z2RubnZjL3hxS0IyTWloSWV5?=
+ =?utf-8?B?dnFpMjlIbnpVSjdoajhIaFJ0MnZsR010Z096aHVBZ3V5NEhhZlA2NjhzTy9o?=
+ =?utf-8?B?NGVTSFpoekpXaGNZem8reUs4czNieTl5dEdZam84ekRKcFVjY0RQREQxNDZI?=
+ =?utf-8?B?S2FCcU1RSmdCOUxXeFFETlJoamJGMFNQLzliZ2l2T2Q3YTloK1RLMk5XN3Er?=
+ =?utf-8?B?U3BNbVN2bkt0MjBwc0NTdVdIeUdwb25lVjZIUU94OTVzYjNoQ2VUdTN5OFk5?=
+ =?utf-8?B?R2lvMDVxK1RnNVczRy9oN29kRW1uUGhJbE9DUkJJR2NPWlBpZ011MHdrUmk1?=
+ =?utf-8?B?cUhPVy9QUFV2K3hHMS9sanFvTmJBbXlvOW80Z2VZdUR4bzRZZnRpbGd3aGNj?=
+ =?utf-8?B?VGpzTUsvUkNDQ1NtRkt6amdiemtOSmdMT3hqYWFUTUlVVW1LSDZyTFMwR3VD?=
+ =?utf-8?B?MVZWZURhWDRqblRJUTFtRUpmSms0V3hxNzU2aGpmblUyMkFlVU9KTkJTMzBC?=
+ =?utf-8?B?Wm8xbjVOUlgrdUM4QWVmRFNJdUt6blZuRkE3Uzk2RGJHcU5YSGxHTWI4RDlN?=
+ =?utf-8?B?ZkxOMmpXaFk4azFNd2xGRWZETmhqSjA2VUM5blhodTF3TTNiNThvQUFnWE1D?=
+ =?utf-8?B?ZkJ3UjFROEFWbDc0MnprcGo2VFJGaGdreEcyRnZnZHNjTk5XMitvVmphQ0I0?=
+ =?utf-8?B?VTdXd29rd0tCWUJqSmt6bWZWR0FOM0ZqOERDZTI0ajJIRU5wbmZaVHJlb1RR?=
+ =?utf-8?B?dXFWVlBxTE85MmY4V3BqRlRXZ0taZzZJUlRvRnA5eFRjYXA3bUtFdzlWaS9E?=
+ =?utf-8?B?MTdXTVl5Y2NvUkc0dWt6TjB2ZVozeTlmbW5HRC9DYlptRy85clFtT1NpcWZZ?=
+ =?utf-8?B?K2ttMDJsZjNCd3d2bjBsb3FYejVRQ0V2VlJ0c3A0YWNJWjY0M3BRcjdsRk5w?=
+ =?utf-8?B?cnVFZ1dKZGhsTXB1TFByY0NHbVZ6V3dKTXd6d2w0Sk5qZC9sQlpTVnFvejJo?=
+ =?utf-8?B?WDFJWkxuSXFWZzQ5eVRQR1RxOWVQSUdPZHVpMUpnNFNUc25NaXRjZExpSjFj?=
+ =?utf-8?B?WEZyeE9NRTA3NUVHYU1aaVpRT1dPUXRzWVN1cHMzMnpaMGVWQUVkVTVBaEll?=
+ =?utf-8?Q?OGdp2CbEIsW1t7hFftvMKT3yqMgEV1P/+VwQNRF?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS7PR12MB5741.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230037)(366013)(376011)(1800799021)(38070700015); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?TE40M21zZ2ZYaDJuaVEwZVZodGFtUVFwWTBnQnZ1SzRIam1BTjdoTnlnYm0r?=
+ =?utf-8?B?Skx2bWxTSE8waTBra1A0endWSTBuUVphU1FmTkltYlZKWHdybERpMStqdFRx?=
+ =?utf-8?B?b1FOVVp2VVg3NHRSMGJZVXFieWVtRVdNN0ZJMVFrL0Y3YTg3VHNYSXV6TVJ5?=
+ =?utf-8?B?R0dQL01zZmRoVGFiMXRSblFZQWViTUlRaS9UNHlYUzNVUXdBbVRxdzFVdWJ3?=
+ =?utf-8?B?MEQrSjQ2eDRwMTBBcVZVNDYvZEZhVm9zS05ZWVBRaHl0RnZ6T21IQWtxMFkx?=
+ =?utf-8?B?RXA3TmVSb2EyaEdHbXZwUG11ckFZeEVJdUszMlFjM2FFSnpNV3djRGp2SUp2?=
+ =?utf-8?B?Q3RyMmQ5SUJNeG5ncnpBRlNPdVd3QWVuQTI3S21XUVJTNnpodjM5WWppMEI2?=
+ =?utf-8?B?Z21wMjBGMWoycVpYbElBWUJ2dkMxeGVlb1gyVWJpQVVMMGtUWGxob0M1VnNU?=
+ =?utf-8?B?YUR5cXNvcTlzUkRMbmsyN3lZMWdIRStjRVdTUkJ6SitBcDRuZEN6ME9zbWlY?=
+ =?utf-8?B?cXJUTUJGT0QybVU3eVdHTDNtOHV0Z1JmWkVSK28xeUluOHFUOUpORm9BdjZj?=
+ =?utf-8?B?YVB5QmozZFM4Vkc0TndCMFV6SEhObGkvNEJJbGVUbU9FNjFmTnpXSWl4dno5?=
+ =?utf-8?B?dnk4aWY5SEtEN2VYeVhQa1MvSHlCQU1mZ0l5TE1ha0YzQnJQR3ErNE5FbGRk?=
+ =?utf-8?B?R3NkWTRXK2p5YktsMTNCQnZ0MHFvNHFmOGNXWWNxMmRIUlRtdUJQZlRZNitG?=
+ =?utf-8?B?a2MwMmVNNWJRaitieitjdE5oaWtTem5zT0pGa2djdktrRzI2bTZIOVp3ZlBm?=
+ =?utf-8?B?TkptY2dlNmowQjBEa3hDcWwxZEw0R1hmMVR5L3pTQ2hTYVp6M3NJOTljTElw?=
+ =?utf-8?B?dHNEK01ia0FkZi9lalVPVzJvMFUxN3NxR0Y1RHhCVEhjemc0T2ZkQ0N6NUd3?=
+ =?utf-8?B?RFBXSUNwcFFEMXNZVFZOeWVUS2RDYllLWHpGY0s1MC8zdSsyWmNqbXFvd2xa?=
+ =?utf-8?B?b2M4RFRsenoyMFI1VjQyeTVQTTMzT2FsOTZtQ0lKMEs4WnUrMWtXTlkvTVpZ?=
+ =?utf-8?B?ZkoycXJWV28vRytQbXdWeWs0STltWDA4a1A3UUNENUJVenVEUTczdEVSWWI1?=
+ =?utf-8?B?MzVqd3J6cXdiemRKZ04wNE1wTmM5ZjgzWWluQ3VDaWplb1FYTWZDaldSOERC?=
+ =?utf-8?B?WlRIcVNxOHhqMkxzZU4vQjVsNXVkZUhnU2QreGkyazNtMEUxTTk1YVJwVTlL?=
+ =?utf-8?B?ZFozcE42dGxKNWYzWkFxYkQ4YXkvYzFhSjczMmFNT0xTS0RydExWQkJ2WnNn?=
+ =?utf-8?B?c3N0Qm8xeC9LV21xZ1cxRHdnL2dBNlBzVmZYcEp5cHVLVmNTVkxUWEkrTDg1?=
+ =?utf-8?B?L0lqZ3NSNndOalhLczNYVWtoQ1VoLzBWZVY0cE5rTmVsd1MrNCsyWk1aOVQv?=
+ =?utf-8?B?RWMxdnEyaGllbkgwTDJXRnJBZ3Q5SUxEV3d1dktINnk1MDhWeVVPNkVnNW44?=
+ =?utf-8?B?RlVtcC9PelBPS1ZGanVEaWhXeWtrOHZHS1l0NmJmRmJVQm9jYTRDVFlRL3gv?=
+ =?utf-8?B?OFp4MnZHa2tUSGVZQ2FJNllQclB1bmFsVXExZnB0Q2RIcDVoZUtCcTg5UnRK?=
+ =?utf-8?B?ZWM5dk1lK0JzS0poWWpBNjhjVzBzM0ZZdFQ1NzM0VjBlNVJYWncxUTJvR1I0?=
+ =?utf-8?B?UGdzeHFGeUQzOWdWSXJybGJZVVJyL0E2eVBka3A1Q0VwWGpxRXB1a1pBZENv?=
+ =?utf-8?B?R2lsMWJ0NGRUNUtiRklWVnltZmpqaFI2OVV4ZWl6a0lYeTU5alhjdThTNTN0?=
+ =?utf-8?B?eHhNSlByVmhGRlF3eVVScUFDbUdmZnFWempiSWMyRTdkcnkrRnRUSCtsYlR2?=
+ =?utf-8?B?a3Nha3Q1Smo4b2tzems2dUQ1Zkx3RWFtWVltcHB1WE4rMnNqS0pON1FRekZ0?=
+ =?utf-8?B?MCt3N0RXSi9vbGJVblVNNjVPaFhxSmdKVFNEcWJxeFJKZklsOCtxYWt1YjBO?=
+ =?utf-8?B?SkRvQ0p3cG9LT3dXa2xZSDFhZ09NZmcraGpvQ0drUVNsaTFkUFFyMmo1aWRp?=
+ =?utf-8?B?OUlucWNOcURVeFZMOVZ5Q1RPL0ZFZ21UeGZjakUyUVRjUThvVWUzTnVOL0Ni?=
+ =?utf-8?Q?4Gy0=3D?=
+Content-Type: multipart/alternative;
+ boundary="_000_DS7PR12MB5741EA2D0928F481DB6F4E1FB6C22DS7PR12MB5741namp_"
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB5741.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4189681f-e74e-4c63-36b8-08dc8c839405
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Jun 2024 15:06:33.1702 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: S0CEMsZVYEGvHT0ayEFyrI67kovsZl5mamPOX/InV19Wn0x+5g6jUFb24/FMzb8E
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB8744
+Received-SPF: permerror client-ip=2a01:111:f403:2414::621;
+ envelope-from=sai.pavan.boddu@amd.com;
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ HTML_MESSAGE=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,3012 +178,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+--_000_DS7PR12MB5741EA2D0928F481DB6F4E1FB6C22DS7PR12MB5741namp_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-> Eliminate the "Example" sections in QAPI doc blocks, converting them
-> into QMP example code blocks. This is generally done by converting
-> "Example:" or "Examples:" lines into ".. code-block:: QMP" lines.
->
-> This patch does also allow for the use of the rST syntax "Example::" by
-> exempting double-colon syntax from the QAPI doc parser, but that form is
-> not used by this conversion patch. The phrase "Example" here is not
-> special, it is the double-colon syntax that transforms the following
-> block into a code-block. By default, *this* form does not apply QMP
-> highlighting.
->
-> This patch has several benefits:
->
-> 1. Example sections can now be written more arbitrarily, mixing
->    explanatory paragraphs and code blocks however desired.
->
-> 2. Example sections can now use fully arbitrary rST.
->
-> 3. All code blocks are now lexed and validated as QMP; increasing
->    usability of the docs and ensuring validity of example snippets.
->
-> 4. Each code-block can be captioned independently without bypassing the
->    QMP lexer/validator.
->
-> For any sections with more than one example, examples are split up into
-> multiple code-block regions. If annotations are present, those
-> annotations are converted into code-block captions instead, e.g.
->
-> ```
-> Examples:
->
->    1. Lorem Ipsum
->
->    -> { "foo": "bar" }
-> ```
->
-> Is rewritten as:
->
-> ```
-> .. code-block:: QMP
->    :caption: Example: Lorem Ipsum
->
->    -> { "foo": "bar" }
-> ```
->
-> This process was only semi-automated:
->
-> 1. Replace "Examples?:" sections with sed:
->
-> sed -i 's|# Example:|# .. code-block:: QMP|' *.json
-> sed -i 's|# Examples:|# .. code-block:: QMP|' *.json
->
-> 2. Identify sections that no longer parse successfully by attempting the
->    doc build, convert annotations into captions manually.
->    (Tedious, oh well.)
->
-> 3. Add captions where still needed:
->
-> sed -zi 's|# .. code-block:: QMP\n#\n|# .. code-block:: QMP\n#    :caption: Example\n#\n|g' *.json
->
-> Not fully ideal, but hopefully not something that has to be done very
-> often. (Or ever again.)
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  qapi/acpi.json                  |   6 +-
->  qapi/block-core.json            | 120 ++++++++++++++++----------
->  qapi/block.json                 |  60 +++++++------
->  qapi/char.json                  |  36 ++++++--
->  qapi/control.json               |  16 ++--
->  qapi/dump.json                  |  12 ++-
->  qapi/machine-target.json        |   3 +-
->  qapi/machine.json               |  79 ++++++++++-------
->  qapi/migration.json             | 145 +++++++++++++++++++++++---------
->  qapi/misc-target.json           |  33 +++++---
->  qapi/misc.json                  |  48 +++++++----
->  qapi/net.json                   |  30 +++++--
->  qapi/pci.json                   |   6 +-
->  qapi/qapi-schema.json           |   6 +-
->  qapi/qdev.json                  |  15 +++-
->  qapi/qom.json                   |  20 +++--
->  qapi/replay.json                |  12 ++-
->  qapi/rocker.json                |  12 ++-
->  qapi/run-state.json             |  45 ++++++----
->  qapi/tpm.json                   |   9 +-
->  qapi/trace.json                 |   6 +-
->  qapi/transaction.json           |   3 +-
->  qapi/ui.json                    |  62 +++++++++-----
->  qapi/virtio.json                |  38 +++++----
->  qapi/yank.json                  |   6 +-
->  scripts/qapi/parser.py          |  15 +++-
->  tests/qapi-schema/doc-good.json |  12 +--
->  tests/qapi-schema/doc-good.out  |  17 ++--
->  tests/qapi-schema/doc-good.txt  |  17 +---
->  29 files changed, 574 insertions(+), 315 deletions(-)
+SGkgRWRnYXIsDQoNCkZyb206IEVkZ2FyIEUuIElnbGVzaWFzIDxlZGdhci5pZ2xlc2lhc0BnbWFp
+bC5jb20+DQpTZW50OiBGcmlkYXksIEp1bmUgMTQsIDIwMjQgNDozOCBQTQ0KVG86IEJvZGR1LCBT
+YWkgUGF2YW4gPHNhaS5wYXZhbi5ib2RkdUBhbWQuY29tPg0KQ2M6IHFlbXUtYXJtQG5vbmdudS5v
+cmc7IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZzsgQWxpc3RhaXIgRnJhbmNpcyA8YWxpc3RhaXJAYWxp
+c3RhaXIyMy5tZT47IFBldGVyIE1heWRlbGwgPHBldGVyLm1heWRlbGxAbGluYXJvLm9yZz47IEln
+bGVzaWFzLCBGcmFuY2lzY28gPGZyYW5jaXNjby5pZ2xlc2lhc0BhbWQuY29tPg0KU3ViamVjdDog
+UmU6IFtQQVRDSCAyLzJdIGh3L2FybS94aWxpbnhfenlucTogQWRkIGJvb3QtbW9kZSBwcm9wZXJ0
+eQ0KDQpPbiBUaHUsIEp1biAxMywgMjAyNCBhdCA1OjM24oCvUE0gU2FpIFBhdmFuIEJvZGR1IDxz
+YWkucGF2YW4uYm9kZHVAYW1kLmNvbTxtYWlsdG86c2FpLnBhdmFuLmJvZGR1QGFtZC5jb20+PiB3
+cm90ZToNClJlYWQgYm9vdC1tb2RlIHZhbHVlIGFzIG1hY2hpbmUgcHJvcGVydHkgYW5kIHByb3Bh
+Z2F0ZSB0aGF0IHRvDQpTTENSLkJPT1RfTU9ERSByZWdpc3Rlci4NCg0KSGkgU2FpLA0KDQpEaXJl
+Y3RseSBleHBvc2luZyB0aGUgcmVnaXN0ZXIgZmllbGQgdG8gdGhlIHVzZXIgdG8gc2V0IG9uIHRo
+ZSBjb21tYW5kLWxpbmUgcHJvYmFibHkgbWFrZXMgdXNhYmlsaXR5IGEgbGl0dGxlIHRvbyByb3Vn
+aCAodXNlciBoYXMgdG8gY2hlY2sgdGhlIHJlZ2lzdGVyIHNwZWNzIGluIHRoZSBUUk0gdG8gY2hh
+bmdlIGJvb3QtbW9kZSkuDQpXZSBjb3VsZCBwZXJoYXBzIGFkZCBmcmllbmRseSBuYW1lcyB0aGF0
+IHdlIGludGVybmFsbHkgbWFwIHRvIHRoZSByZWdpc3RlciBmaWVsZCB2YWx1ZXMuDQoNCkFub3Ro
+ZXIgcXVlc3Rpb24sIGNhbiB3ZSB1c2UgdGhlIGV4aXN0aW5nIC1ib290IGNvbW1hbmQtbGluZSBh
+cmcgZm9yIHRoaXM/DQpTb21ldGhpbmcgYWxvbmcgdGhlIGxpbmVzIG9mIHdoYXQgeDg2IFBDIGRv
+ZXM6DQpodHRwczovL2dpdGh1Yi5jb20vcWVtdS9xZW11L2Jsb2IvbWFzdGVyL2h3L2kzODYvcGMu
+YyNMMzk1DQoNCkkgZG9uJ3Qga25vdyBpZiB0aGUgZnJhbWV3b3JrIGFsbG93cyBmb3IgbG9uZyBu
+YW1lcyBidXQgc29tZXRoaW5nIGxpa2UgdGhlIGZvbGxvd2luZyB3b3VsZCBiZSBuaWNlOg0KcWVt
+dSAtYm9vdCBzcGksZXRoZXJuZXQsanRhZyx1YXJ0LGV0Yw0KW0JvZGR1LCBTYWkgUGF2YW5dIE9r
+IGl0IG1ha2VzIG11Y2ggc2Vuc2UsIE90aGVyd2lzZSBJIHdvdWxkIGFkZCBtb3JlIGRldGFpbHMg
+aW4gdGhlIGRlc2NyaXB0aW9uIG9mIHRoZSBuZXcgcHJvcGVydHkgYWJvdXQgdGhlIHBvc3NpYmxl
+IGJvb3QgbW9kZXMuDQoNCldvdWxkIGFsc28gYmUgZ3JlYXQgdG8gZG9jdW1lbnQgYSBzbWFsbCBl
+eGFtcGxlLCBwZXJoYXBzIGluIGh0dHBzOi8vZ2l0aHViLmNvbS9xZW11L3FlbXUvdHJlZS9tYXN0
+ZXIvZG9jcy9zeXN0ZW0vYXJtDQpbQm9kZHUsIFNhaSBQYXZhbl0gU3VyZS4NCg0KUmVnYXJkcywN
+ClNhaSBQYXZhbg0KDQpCZXN0IHJlZ2FyZHMsDQpFZGdhcg0KDQoNClNpZ25lZC1vZmYtYnk6IFNh
+aSBQYXZhbiBCb2RkdSA8c2FpLnBhdmFuLmJvZGR1QGFtZC5jb208bWFpbHRvOnNhaS5wYXZhbi5i
+b2RkdUBhbWQuY29tPj4NCi0tLQ0KIGh3L2FybS94aWxpbnhfenlucS5jIHwgMjIgKysrKysrKysr
+KysrKysrKysrKysrKw0KIDEgZmlsZSBjaGFuZ2VkLCAyMiBpbnNlcnRpb25zKCspDQoNCmRpZmYg
+LS1naXQgYS9ody9hcm0veGlsaW54X3p5bnEuYyBiL2h3L2FybS94aWxpbnhfenlucS5jDQppbmRl
+eCA3ZjdhM2QyM2ZiLi40ZGZhOTE4NGFjIDEwMDY0NA0KLS0tIGEvaHcvYXJtL3hpbGlueF96eW5x
+LmMNCisrKyBiL2h3L2FybS94aWxpbnhfenlucS5jDQpAQCAtMzgsNiArMzgsNyBAQA0KICNpbmNs
+dWRlICJxb20vb2JqZWN0LmgiDQogI2luY2x1ZGUgImV4ZWMvdHN3YXAuaCINCiAjaW5jbHVkZSAi
+dGFyZ2V0L2FybS9jcHUtcW9tLmgiDQorI2luY2x1ZGUgInFhcGkvdmlzaXRvci5oIg0KDQogI2Rl
+ZmluZSBUWVBFX1pZTlFfTUFDSElORSBNQUNISU5FX1RZUEVfTkFNRSgieGlsaW54LXp5bnEtYTki
+KQ0KIE9CSkVDVF9ERUNMQVJFX1NJTVBMRV9UWVBFKFp5bnFNYWNoaW5lU3RhdGUsIFpZTlFfTUFD
+SElORSkNCkBAIC05MCw2ICs5MSw3IEBAIHN0cnVjdCBaeW5xTWFjaGluZVN0YXRlIHsNCiAgICAg
+TWFjaGluZVN0YXRlIHBhcmVudDsNCiAgICAgQ2xvY2sgKnBzX2NsazsNCiAgICAgQVJNQ1BVICpj
+cHVbWllOUV9NQVhfQ1BVU107DQorICAgIHVpbnQ4X3QgQm9vdE1vZGU7DQogfTsNCg0KIHN0YXRp
+YyB2b2lkIHp5bnFfd3JpdGVfYm9hcmRfc2V0dXAoQVJNQ1BVICpjcHUsDQpAQCAtMTc2LDYgKzE3
+OCwxOSBAQCBzdGF0aWMgaW5saW5lIGludCB6eW5xX2luaXRfc3BpX2ZsYXNoZXModWludDMyX3Qg
+YmFzZV9hZGRyLCBxZW11X2lycSBpcnEsDQogICAgIHJldHVybiB1bml0Ow0KIH0NCg0KK3N0YXRp
+YyB2b2lkIHp5bnFfc2V0X2Jvb3RfbW9kZShPYmplY3QgKm9iaiwgVmlzaXRvciAqdiwNCisgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgY29uc3QgY2hhciAqbmFtZSwgdm9pZCAqb3BhcXVl
+LA0KKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBFcnJvciAqKmVycnApDQorew0KKyAg
+ICBaeW5xTWFjaGluZVN0YXRlICptID0gWllOUV9NQUNISU5FKG9iaik7DQorICAgIHVpbnQ4X3Qg
+dmFsOw0KKw0KKyAgICBpZiAoIXZpc2l0X3R5cGVfdWludDgodiwgbmFtZSwgJnZhbCwgZXJycCkp
+IHsNCisgICAgICAgIHJldHVybjsNCisgICAgfQ0KKyAgICBtLT5Cb290TW9kZSA9IHZhbDsNCit9
+DQorDQogc3RhdGljIHZvaWQgenlucV9pbml0KE1hY2hpbmVTdGF0ZSAqbWFjaGluZSkNCiB7DQog
+ICAgIFp5bnFNYWNoaW5lU3RhdGUgKnp5bnFfbWFjaGluZSA9IFpZTlFfTUFDSElORShtYWNoaW5l
+KTsNCkBAIC0yNDEsNiArMjU2LDcgQEAgc3RhdGljIHZvaWQgenlucV9pbml0KE1hY2hpbmVTdGF0
+ZSAqbWFjaGluZSkNCiAgICAgLyogQ3JlYXRlIHNsY3IsIGtlZXAgYSBwb2ludGVyIHRvIGNvbm5l
+Y3QgY2xvY2tzICovDQogICAgIHNsY3IgPSBxZGV2X25ldygieGlsaW54LXp5bnFfc2xjciIpOw0K
+ICAgICBxZGV2X2Nvbm5lY3RfY2xvY2tfaW4oc2xjciwgInBzX2NsayIsIHp5bnFfbWFjaGluZS0+
+cHNfY2xrKTsNCisgICAgcWRldl9wcm9wX3NldF91aW50OChzbGNyLCAiYm9vdC1tb2RlIiwgenlu
+cV9tYWNoaW5lLT5Cb290TW9kZSk7DQogICAgIHN5c2J1c19yZWFsaXplX2FuZF91bnJlZihTWVNf
+QlVTX0RFVklDRShzbGNyKSwgJmVycm9yX2ZhdGFsKTsNCiAgICAgc3lzYnVzX21taW9fbWFwKFNZ
+U19CVVNfREVWSUNFKHNsY3IpLCAwLCAweEY4MDAwMDAwKTsNCg0KQEAgLTM3Miw2ICszODgsNyBA
+QCBzdGF0aWMgdm9pZCB6eW5xX21hY2hpbmVfY2xhc3NfaW5pdChPYmplY3RDbGFzcyAqb2MsIHZv
+aWQgKmRhdGEpDQogICAgICAgICBOVUxMDQogICAgIH07DQogICAgIE1hY2hpbmVDbGFzcyAqbWMg
+PSBNQUNISU5FX0NMQVNTKG9jKTsNCisgICAgT2JqZWN0UHJvcGVydHkgKnByb3A7DQogICAgIG1j
+LT5kZXNjID0gIlhpbGlueCBaeW5xIFBsYXRmb3JtIEJhc2Vib2FyZCBmb3IgQ29ydGV4LUE5IjsN
+CiAgICAgbWMtPmluaXQgPSB6eW5xX2luaXQ7DQogICAgIG1jLT5tYXhfY3B1cyA9IFpZTlFfTUFY
+X0NQVVM7DQpAQCAtMzc5LDYgKzM5NiwxMSBAQCBzdGF0aWMgdm9pZCB6eW5xX21hY2hpbmVfY2xh
+c3NfaW5pdChPYmplY3RDbGFzcyAqb2MsIHZvaWQgKmRhdGEpDQogICAgIG1jLT5pZ25vcmVfbWVt
+b3J5X3RyYW5zYWN0aW9uX2ZhaWx1cmVzID0gdHJ1ZTsNCiAgICAgbWMtPnZhbGlkX2NwdV90eXBl
+cyA9IHZhbGlkX2NwdV90eXBlczsNCiAgICAgbWMtPmRlZmF1bHRfcmFtX2lkID0gInp5bnEuZXh0
+X3JhbSI7DQorICAgIHByb3AgPSBvYmplY3RfY2xhc3NfcHJvcGVydHlfYWRkKG9jLCAiYm9vdC1t
+b2RlIiwgInVpbnQ4X3QiLCBOVUxMLA0KKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHp5
+bnFfc2V0X2Jvb3RfbW9kZSwgTlVMTCwgTlVMTCk7DQorICAgIG9iamVjdF9jbGFzc19wcm9wZXJ0
+eV9zZXRfZGVzY3JpcHRpb24ob2MsICJib290LW1vZGUiLA0KKyAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICJVcGRhdGUgU0xDUi5CT09UX01PREUgcmVnaXN0ZXIiKTsN
+CisgICAgb2JqZWN0X3Byb3BlcnR5X3NldF9kZWZhdWx0X3VpbnQocHJvcCwgMSk7DQogfQ0KDQog
+c3RhdGljIGNvbnN0IFR5cGVJbmZvIHp5bnFfbWFjaGluZV90eXBlID0gew0KLS0NCjIuMzQuMQ0K
 
-Missing: update of docs/devel/qapi-code-gen.rst.
+--_000_DS7PR12MB5741EA2D0928F481DB6F4E1FB6C22DS7PR12MB5741namp_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-> diff --git a/qapi/acpi.json b/qapi/acpi.json
-> index aa4dbe57943..3da01f1b7fc 100644
-> --- a/qapi/acpi.json
-> +++ b/qapi/acpi.json
-> @@ -111,7 +111,8 @@
->  #
->  # Since: 2.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
+PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
+YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
+IDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpBcHRvczt9DQovKiBTdHlsZSBEZWZpbml0
+aW9ucyAqLw0KcC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1hbA0KCXttYXJn
+aW46MGluOw0KCWZvbnQtc2l6ZToxMi4wcHQ7DQoJZm9udC1mYW1pbHk6IkFwdG9zIixzYW5zLXNl
+cmlmO30NCmE6bGluaywgc3Bhbi5Nc29IeXBlcmxpbmsNCgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5
+Ow0KCWNvbG9yOmJsdWU7DQoJdGV4dC1kZWNvcmF0aW9uOnVuZGVybGluZTt9DQpzcGFuLkVtYWls
+U3R5bGUxOQ0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25hbC1jb21wb3NlOw0KCWZvbnQtZmFtaWx5
+OiJBcHRvcyIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCi5Nc29DaHBEZWZhdWx0
+DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQtc2l6ZToxMS4wcHQ7fQ0KQHBh
+Z2UgV29yZFNlY3Rpb24xDQoJe3NpemU6OC41aW4gMTEuMGluOw0KCW1hcmdpbjoxLjBpbiAxLjBp
+biAxLjBpbiAxLjBpbjt9DQpkaXYuV29yZFNlY3Rpb24xDQoJe3BhZ2U6V29yZFNlY3Rpb24xO30N
+Ci0tPjwvc3R5bGU+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWRlZmF1bHRzIHY6
+ZXh0PSJlZGl0IiBzcGlkbWF4PSIxMDI2IiAvPg0KPC94bWw+PCFbZW5kaWZdLS0+PCEtLVtpZiBn
+dGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWxheW91dCB2OmV4dD0iZWRpdCI+DQo8bzppZG1hcCB2
+OmV4dD0iZWRpdCIgZGF0YT0iMSIgLz4NCjwvbzpzaGFwZWxheW91dD48L3htbD48IVtlbmRpZl0t
+LT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9IkVOLVVTIiBsaW5rPSJibHVlIiB2bGluaz0icHVycGxl
+IiBzdHlsZT0id29yZC13cmFwOmJyZWFrLXdvcmQiPg0KPGRpdiBjbGFzcz0iV29yZFNlY3Rpb24x
+Ij4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5I
+aSBFZGdhciw8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3Bh
+biBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0K
+PGRpdiBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLWxlZnQ6c29saWQgYmx1ZSAxLjVwdDtwYWRk
+aW5nOjBpbiAwaW4gMGluIDQuMHB0Ij4NCjxkaXY+DQo8ZGl2IHN0eWxlPSJib3JkZXI6bm9uZTti
+b3JkZXItdG9wOnNvbGlkICNFMUUxRTEgMS4wcHQ7cGFkZGluZzozLjBwdCAwaW4gMGluIDBpbiI+
+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdDtm
+b250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LHNhbnMtc2VyaWYiPkZyb206PC9zcGFuPjwv
+Yj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdDtmb250LWZhbWlseTomcXVvdDtDYWxpYnJp
+JnF1b3Q7LHNhbnMtc2VyaWYiPiBFZGdhciBFLiBJZ2xlc2lhcyAmbHQ7ZWRnYXIuaWdsZXNpYXNA
+Z21haWwuY29tJmd0Ow0KPGJyPg0KPGI+U2VudDo8L2I+IEZyaWRheSwgSnVuZSAxNCwgMjAyNCA0
+OjM4IFBNPGJyPg0KPGI+VG86PC9iPiBCb2RkdSwgU2FpIFBhdmFuICZsdDtzYWkucGF2YW4uYm9k
+ZHVAYW1kLmNvbSZndDs8YnI+DQo8Yj5DYzo8L2I+IHFlbXUtYXJtQG5vbmdudS5vcmc7IHFlbXUt
+ZGV2ZWxAbm9uZ251Lm9yZzsgQWxpc3RhaXIgRnJhbmNpcyAmbHQ7YWxpc3RhaXJAYWxpc3RhaXIy
+My5tZSZndDs7IFBldGVyIE1heWRlbGwgJmx0O3BldGVyLm1heWRlbGxAbGluYXJvLm9yZyZndDs7
+IElnbGVzaWFzLCBGcmFuY2lzY28gJmx0O2ZyYW5jaXNjby5pZ2xlc2lhc0BhbWQuY29tJmd0Ozxi
+cj4NCjxiPlN1YmplY3Q6PC9iPiBSZTogW1BBVENIIDIvMl0gaHcvYXJtL3hpbGlueF96eW5xOiBB
+ZGQgYm9vdC1tb2RlIHByb3BlcnR5PG86cD48L286cD48L3NwYW4+PC9wPg0KPC9kaXY+DQo8L2Rp
+dj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPGRpdj4NCjxk
+aXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5PbiBUaHUsIEp1biAxMywgMjAyNCBhdCA1OjM2PHNw
+YW4gc3R5bGU9ImZvbnQtZmFtaWx5OiZxdW90O0FyaWFsJnF1b3Q7LHNhbnMtc2VyaWYiPuKArzwv
+c3Bhbj5QTSBTYWkgUGF2YW4gQm9kZHUgJmx0OzxhIGhyZWY9Im1haWx0bzpzYWkucGF2YW4uYm9k
+ZHVAYW1kLmNvbSI+c2FpLnBhdmFuLmJvZGR1QGFtZC5jb208L2E+Jmd0OyB3cm90ZTo8bzpwPjwv
+bzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxibG9ja3F1b3RlIHN0eWxlPSJib3JkZXI6bm9uZTti
+b3JkZXItbGVmdDpzb2xpZCAjQ0NDQ0NDIDEuMHB0O3BhZGRpbmc6MGluIDBpbiAwaW4gNi4wcHQ7
+bWFyZ2luLWxlZnQ6NC44cHQ7bWFyZ2luLXJpZ2h0OjBpbiI+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
+IiBzdHlsZT0ibWFyZ2luLWJvdHRvbToxMi4wcHQiPlJlYWQgYm9vdC1tb2RlIHZhbHVlIGFzIG1h
+Y2hpbmUgcHJvcGVydHkgYW5kIHByb3BhZ2F0ZSB0aGF0IHRvPGJyPg0KU0xDUi5CT09UX01PREUg
+cmVnaXN0ZXIuPG86cD48L286cD48L3A+DQo8L2Jsb2NrcXVvdGU+DQo8ZGl2Pg0KPHAgY2xhc3M9
+Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFz
+cz0iTXNvTm9ybWFsIj5IaSBTYWksPG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBj
+bGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxw
+IGNsYXNzPSJNc29Ob3JtYWwiPkRpcmVjdGx5IGV4cG9zaW5nIHRoZSByZWdpc3RlciBmaWVsZCB0
+byB0aGUgdXNlciB0byBzZXQgb24gdGhlIGNvbW1hbmQtbGluZSBwcm9iYWJseSBtYWtlcyB1c2Fi
+aWxpdHkgYSBsaXR0bGUgdG9vIHJvdWdoICh1c2VyIGhhcyB0byBjaGVjayB0aGUgcmVnaXN0ZXIg
+c3BlY3MgaW4gdGhlIFRSTSB0byBjaGFuZ2UgYm9vdC1tb2RlKS48bzpwPjwvbzpwPjwvcD4NCjwv
+ZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPldlIGNvdWxkIHBlcmhhcHMgYWRkIGZy
+aWVuZGx5IG5hbWVzIHRoYXQgd2UgaW50ZXJuYWxseSBtYXAgdG8gdGhlIHJlZ2lzdGVyIGZpZWxk
+IHZhbHVlcy48bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05v
+cm1hbCI+QW5vdGhlciBxdWVzdGlvbiwgY2FuIHdlIHVzZSB0aGUgZXhpc3RpbmcgLWJvb3QgY29t
+bWFuZC1saW5lIGFyZyBmb3IgdGhpcz88bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxw
+IGNsYXNzPSJNc29Ob3JtYWwiPlNvbWV0aGluZyBhbG9uZyB0aGUgbGluZXMgb2Ygd2hhdCB4ODYg
+UEMgZG9lczo8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiPjxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9xZW11L3FlbXUvYmxvYi9tYXN0ZXIvaHcv
+aTM4Ni9wYy5jI0wzOTUiPmh0dHBzOi8vZ2l0aHViLmNvbS9xZW11L3FlbXUvYmxvYi9tYXN0ZXIv
+aHcvaTM4Ni9wYy5jI0wzOTU8L2E+PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBj
+bGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxw
+IGNsYXNzPSJNc29Ob3JtYWwiPkkgZG9uJ3Qga25vdyBpZiB0aGUgZnJhbWV3b3JrIGFsbG93cyBm
+b3IgbG9uZyBuYW1lcyBidXQgc29tZXRoaW5nIGxpa2UgdGhlIGZvbGxvd2luZyB3b3VsZCBiZSBu
+aWNlOjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
+cWVtdSAtYm9vdCBzcGksZXRoZXJuZXQsanRhZyx1YXJ0LGV0YzxvOnA+PC9vOnA+PC9wPg0KPHAg
+Y2xhc3M9Ik1zb05vcm1hbCI+PGI+PGk+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPltC
+b2RkdSwgU2FpIFBhdmFuXSBPayBpdCBtYWtlcyBtdWNoIHNlbnNlLCBPdGhlcndpc2UgSSB3b3Vs
+ZCBhZGQgbW9yZSBkZXRhaWxzIGluIHRoZSBkZXNjcmlwdGlvbiBvZiB0aGUgbmV3IHByb3BlcnR5
+IGFib3V0IHRoZSBwb3NzaWJsZSBib290IG1vZGVzLjwvc3Bhbj48L2k+PC9iPjxzcGFuIHN0eWxl
+PSJmb250LXNpemU6MTEuMHB0Ij48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjxkaXY+
+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRp
+dj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPldvdWxkIGFsc28gYmUgZ3JlYXQgdG8gZG9jdW1lbnQg
+YSBzbWFsbCBleGFtcGxlLCBwZXJoYXBzIGluJm5ic3A7PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIu
+Y29tL3FlbXUvcWVtdS90cmVlL21hc3Rlci9kb2NzL3N5c3RlbS9hcm0iPmh0dHBzOi8vZ2l0aHVi
+LmNvbS9xZW11L3FlbXUvdHJlZS9tYXN0ZXIvZG9jcy9zeXN0ZW0vYXJtPC9hPjxvOnA+PC9vOnA+
+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGI+PGk+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTox
+MS4wcHQiPltCb2RkdSwgU2FpIFBhdmFuXSBTdXJlLjxvOnA+PC9vOnA+PC9zcGFuPjwvaT48L2I+
+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PGI+PGk+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTox
+MS4wcHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvaT48L2I+PC9wPg0KPHAgY2xhc3M9Ik1z
+b05vcm1hbCI+PGI+PGk+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPlJlZ2FyZHMsPGJy
+Pg0KU2FpIFBhdmFuPC9zcGFuPjwvaT48L2I+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQi
+PjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05v
+cm1hbCI+QmVzdCByZWdhcmRzLDxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xh
+c3M9Ik1zb05vcm1hbCI+RWRnYXI8bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNs
+YXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAg
+Y2xhc3M9Ik1zb05vcm1hbCI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxibG9ja3F1
+b3RlIHN0eWxlPSJib3JkZXI6bm9uZTtib3JkZXItbGVmdDpzb2xpZCAjQ0NDQ0NDIDEuMHB0O3Bh
+ZGRpbmc6MGluIDBpbiAwaW4gNi4wcHQ7bWFyZ2luLWxlZnQ6NC44cHQ7bWFyZ2luLXJpZ2h0OjBp
+biI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibWFyZ2luLWJvdHRvbToxMi4wcHQiPlNp
+Z25lZC1vZmYtYnk6IFNhaSBQYXZhbiBCb2RkdSAmbHQ7PGEgaHJlZj0ibWFpbHRvOnNhaS5wYXZh
+bi5ib2RkdUBhbWQuY29tIiB0YXJnZXQ9Il9ibGFuayI+c2FpLnBhdmFuLmJvZGR1QGFtZC5jb208
+L2E+Jmd0Ozxicj4NCi0tLTxicj4NCiZuYnNwO2h3L2FybS94aWxpbnhfenlucS5jIHwgMjIgKysr
+KysrKysrKysrKysrKysrKysrKzxicj4NCiZuYnNwOzEgZmlsZSBjaGFuZ2VkLCAyMiBpbnNlcnRp
+b25zKCspPGJyPg0KPGJyPg0KZGlmZiAtLWdpdCBhL2h3L2FybS94aWxpbnhfenlucS5jIGIvaHcv
+YXJtL3hpbGlueF96eW5xLmM8YnI+DQppbmRleCA3ZjdhM2QyM2ZiLi40ZGZhOTE4NGFjIDEwMDY0
+NDxicj4NCi0tLSBhL2h3L2FybS94aWxpbnhfenlucS5jPGJyPg0KKysrIGIvaHcvYXJtL3hpbGlu
+eF96eW5xLmM8YnI+DQpAQCAtMzgsNiArMzgsNyBAQDxicj4NCiZuYnNwOyNpbmNsdWRlICZxdW90
+O3FvbS9vYmplY3QuaCZxdW90Ozxicj4NCiZuYnNwOyNpbmNsdWRlICZxdW90O2V4ZWMvdHN3YXAu
+aCZxdW90Ozxicj4NCiZuYnNwOyNpbmNsdWRlICZxdW90O3RhcmdldC9hcm0vY3B1LXFvbS5oJnF1
+b3Q7PGJyPg0KKyNpbmNsdWRlICZxdW90O3FhcGkvdmlzaXRvci5oJnF1b3Q7PGJyPg0KPGJyPg0K
+Jm5ic3A7I2RlZmluZSBUWVBFX1pZTlFfTUFDSElORSBNQUNISU5FX1RZUEVfTkFNRSgmcXVvdDt4
+aWxpbngtenlucS1hOSZxdW90Oyk8YnI+DQombmJzcDtPQkpFQ1RfREVDTEFSRV9TSU1QTEVfVFlQ
+RShaeW5xTWFjaGluZVN0YXRlLCBaWU5RX01BQ0hJTkUpPGJyPg0KQEAgLTkwLDYgKzkxLDcgQEAg
+c3RydWN0IFp5bnFNYWNoaW5lU3RhdGUgezxicj4NCiZuYnNwOyAmbmJzcDsgJm5ic3A7TWFjaGlu
+ZVN0YXRlIHBhcmVudDs8YnI+DQombmJzcDsgJm5ic3A7ICZuYnNwO0Nsb2NrICpwc19jbGs7PGJy
+Pg0KJm5ic3A7ICZuYnNwOyAmbmJzcDtBUk1DUFUgKmNwdVtaWU5RX01BWF9DUFVTXTs8YnI+DQor
+Jm5ic3A7ICZuYnNwOyB1aW50OF90IEJvb3RNb2RlOzxicj4NCiZuYnNwO307PGJyPg0KPGJyPg0K
+Jm5ic3A7c3RhdGljIHZvaWQgenlucV93cml0ZV9ib2FyZF9zZXR1cChBUk1DUFUgKmNwdSw8YnI+
+DQpAQCAtMTc2LDYgKzE3OCwxOSBAQCBzdGF0aWMgaW5saW5lIGludCB6eW5xX2luaXRfc3BpX2Zs
+YXNoZXModWludDMyX3QgYmFzZV9hZGRyLCBxZW11X2lycSBpcnEsPGJyPg0KJm5ic3A7ICZuYnNw
+OyAmbmJzcDtyZXR1cm4gdW5pdDs8YnI+DQombmJzcDt9PGJyPg0KPGJyPg0KK3N0YXRpYyB2b2lk
+IHp5bnFfc2V0X2Jvb3RfbW9kZShPYmplY3QgKm9iaiwgVmlzaXRvciAqdiw8YnI+DQorJm5ic3A7
+ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7Y29uc3QgY2hh
+ciAqbmFtZSwgdm9pZCAqb3BhcXVlLDxicj4NCismbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtFcnJvciAqKmVycnApPGJyPg0KK3s8YnI+DQorJm5i
+c3A7ICZuYnNwOyBaeW5xTWFjaGluZVN0YXRlICptID0gWllOUV9NQUNISU5FKG9iaik7PGJyPg0K
+KyZuYnNwOyAmbmJzcDsgdWludDhfdCB2YWw7PGJyPg0KKzxicj4NCismbmJzcDsgJm5ic3A7IGlm
+ICghdmlzaXRfdHlwZV91aW50OCh2LCBuYW1lLCAmYW1wO3ZhbCwgZXJycCkpIHs8YnI+DQorJm5i
+c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7IHJldHVybjs8YnI+DQorJm5ic3A7ICZuYnNwOyB9PGJy
+Pg0KKyZuYnNwOyAmbmJzcDsgbS0mZ3Q7Qm9vdE1vZGUgPSB2YWw7PGJyPg0KK308YnI+DQorPGJy
+Pg0KJm5ic3A7c3RhdGljIHZvaWQgenlucV9pbml0KE1hY2hpbmVTdGF0ZSAqbWFjaGluZSk8YnI+
+DQombmJzcDt7PGJyPg0KJm5ic3A7ICZuYnNwOyAmbmJzcDtaeW5xTWFjaGluZVN0YXRlICp6eW5x
+X21hY2hpbmUgPSBaWU5RX01BQ0hJTkUobWFjaGluZSk7PGJyPg0KQEAgLTI0MSw2ICsyNTYsNyBA
+QCBzdGF0aWMgdm9pZCB6eW5xX2luaXQoTWFjaGluZVN0YXRlICptYWNoaW5lKTxicj4NCiZuYnNw
+OyAmbmJzcDsgJm5ic3A7LyogQ3JlYXRlIHNsY3IsIGtlZXAgYSBwb2ludGVyIHRvIGNvbm5lY3Qg
+Y2xvY2tzICovPGJyPg0KJm5ic3A7ICZuYnNwOyAmbmJzcDtzbGNyID0gcWRldl9uZXcoJnF1b3Q7
+eGlsaW54LXp5bnFfc2xjciZxdW90Oyk7PGJyPg0KJm5ic3A7ICZuYnNwOyAmbmJzcDtxZGV2X2Nv
+bm5lY3RfY2xvY2tfaW4oc2xjciwgJnF1b3Q7cHNfY2xrJnF1b3Q7LCB6eW5xX21hY2hpbmUtJmd0
+O3BzX2Nsayk7PGJyPg0KKyZuYnNwOyAmbmJzcDsgcWRldl9wcm9wX3NldF91aW50OChzbGNyLCAm
+cXVvdDtib290LW1vZGUmcXVvdDssIHp5bnFfbWFjaGluZS0mZ3Q7Qm9vdE1vZGUpOzxicj4NCiZu
+YnNwOyAmbmJzcDsgJm5ic3A7c3lzYnVzX3JlYWxpemVfYW5kX3VucmVmKFNZU19CVVNfREVWSUNF
+KHNsY3IpLCAmYW1wO2Vycm9yX2ZhdGFsKTs8YnI+DQombmJzcDsgJm5ic3A7ICZuYnNwO3N5c2J1
+c19tbWlvX21hcChTWVNfQlVTX0RFVklDRShzbGNyKSwgMCwgMHhGODAwMDAwMCk7PGJyPg0KPGJy
+Pg0KQEAgLTM3Miw2ICszODgsNyBAQCBzdGF0aWMgdm9pZCB6eW5xX21hY2hpbmVfY2xhc3NfaW5p
+dChPYmplY3RDbGFzcyAqb2MsIHZvaWQgKmRhdGEpPGJyPg0KJm5ic3A7ICZuYnNwOyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwO05VTEw8YnI+DQombmJzcDsgJm5ic3A7ICZuYnNwO307PGJyPg0KJm5ic3A7
+ICZuYnNwOyAmbmJzcDtNYWNoaW5lQ2xhc3MgKm1jID0gTUFDSElORV9DTEFTUyhvYyk7PGJyPg0K
+KyZuYnNwOyAmbmJzcDsgT2JqZWN0UHJvcGVydHkgKnByb3A7PGJyPg0KJm5ic3A7ICZuYnNwOyAm
+bmJzcDttYy0mZ3Q7ZGVzYyA9ICZxdW90O1hpbGlueCBaeW5xIFBsYXRmb3JtIEJhc2Vib2FyZCBm
+b3IgQ29ydGV4LUE5JnF1b3Q7Ozxicj4NCiZuYnNwOyAmbmJzcDsgJm5ic3A7bWMtJmd0O2luaXQg
+PSB6eW5xX2luaXQ7PGJyPg0KJm5ic3A7ICZuYnNwOyAmbmJzcDttYy0mZ3Q7bWF4X2NwdXMgPSBa
+WU5RX01BWF9DUFVTOzxicj4NCkBAIC0zNzksNiArMzk2LDExIEBAIHN0YXRpYyB2b2lkIHp5bnFf
+bWFjaGluZV9jbGFzc19pbml0KE9iamVjdENsYXNzICpvYywgdm9pZCAqZGF0YSk8YnI+DQombmJz
+cDsgJm5ic3A7ICZuYnNwO21jLSZndDtpZ25vcmVfbWVtb3J5X3RyYW5zYWN0aW9uX2ZhaWx1cmVz
+ID0gdHJ1ZTs8YnI+DQombmJzcDsgJm5ic3A7ICZuYnNwO21jLSZndDt2YWxpZF9jcHVfdHlwZXMg
+PSB2YWxpZF9jcHVfdHlwZXM7PGJyPg0KJm5ic3A7ICZuYnNwOyAmbmJzcDttYy0mZ3Q7ZGVmYXVs
+dF9yYW1faWQgPSAmcXVvdDt6eW5xLmV4dF9yYW0mcXVvdDs7PGJyPg0KKyZuYnNwOyAmbmJzcDsg
+cHJvcCA9IG9iamVjdF9jbGFzc19wcm9wZXJ0eV9hZGQob2MsICZxdW90O2Jvb3QtbW9kZSZxdW90
+OywgJnF1b3Q7dWludDhfdCZxdW90OywgTlVMTCw8YnI+DQorJm5ic3A7ICZuYnNwOyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgenlucV9zZXRfYm9vdF9tb2RlLCBOVUxMLCBOVUxM
+KTs8YnI+DQorJm5ic3A7ICZuYnNwOyBvYmplY3RfY2xhc3NfcHJvcGVydHlfc2V0X2Rlc2NyaXB0
+aW9uKG9jLCAmcXVvdDtib290LW1vZGUmcXVvdDssPGJyPg0KKyZuYnNwOyAmbmJzcDsgJm5ic3A7
+ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsg
+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
+bmJzcDsgJm5ic3A7ICZxdW90O1VwZGF0ZSBTTENSLkJPT1RfTU9ERSByZWdpc3RlciZxdW90Oyk7
+PGJyPg0KKyZuYnNwOyAmbmJzcDsgb2JqZWN0X3Byb3BlcnR5X3NldF9kZWZhdWx0X3VpbnQocHJv
+cCwgMSk7PGJyPg0KJm5ic3A7fTxicj4NCjxicj4NCiZuYnNwO3N0YXRpYyBjb25zdCBUeXBlSW5m
+byB6eW5xX21hY2hpbmVfdHlwZSA9IHs8YnI+DQotLSA8YnI+DQoyLjM0LjE8bzpwPjwvbzpwPjwv
+cD4NCjwvYmxvY2txdW90ZT4NCjwvZGl2Pg0KPC9kaXY+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5
+Pg0KPC9odG1sPg0K
 
-I wish this was a bit less verbose.  Oh well, we'll live.
-
->  #
->  #     -> { "execute": "query-acpi-ospm-status" }
->  #     <- { "return": [ { "device": "d1", "slot": "0", "slot-type": "DIMM", "source": 1, "status": 0},
-
-This is rendered as a light green box with the caption on top, in
-italics and centered.  I'm not sure I like the use of the caption.  The
-previous patch's Note boxes look nicer.
-
-The contents of the box is highlighted.  I am sure I like that.
-
-> @@ -131,7 +132,8 @@
->  #
->  # Since: 2.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "ACPI_DEVICE_OST",
->  #          "data": { "info": { "device": "d1", "slot": "0",
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index 530af40404d..bb0447207df 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -763,7 +763,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-block" }
->  #     <- {
-> @@ -1167,7 +1168,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-blockstats" }
->  #     <- {
-> @@ -1460,7 +1462,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "block_resize",
->  #          "arguments": { "device": "scratch", "size": 1073741824 } }
-> @@ -1678,7 +1681,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "blockdev-snapshot-sync",
->  #          "arguments": { "device": "ide-hd0",
-> @@ -1711,7 +1715,8 @@
->  #
->  # Since: 2.5
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "blockdev-add",
->  #          "arguments": { "driver": "qcow2",
-> @@ -1857,7 +1862,8 @@
->  #
->  # Since: 1.3
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "block-commit",
->  #          "arguments": { "device": "virtio0",
-> @@ -1895,7 +1901,8 @@
->  #
->  # Since: 1.6
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "drive-backup",
->  #          "arguments": { "device": "drive0",
-> @@ -1921,7 +1928,8 @@
->  #
->  # Since: 2.3
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "blockdev-backup",
->  #          "arguments": { "device": "src-id",
-> @@ -1945,7 +1953,8 @@
->  #
->  # Since: 2.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-named-block-nodes" }
->  #     <- { "return": [ { "ro":false,
-> @@ -2126,7 +2135,8 @@
->  #
->  # Since: 1.3
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "drive-mirror",
->  #          "arguments": { "device": "ide-hd0",
-> @@ -2302,7 +2312,8 @@
->  #
->  # Since: 2.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "block-dirty-bitmap-add",
->  #          "arguments": { "node": "drive0", "name": "bitmap0" } }
-> @@ -2326,7 +2337,8 @@
->  #
->  # Since: 2.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "block-dirty-bitmap-remove",
->  #          "arguments": { "node": "drive0", "name": "bitmap0" } }
-> @@ -2349,7 +2361,8 @@
->  #
->  # Since: 2.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "block-dirty-bitmap-clear",
->  #          "arguments": { "node": "drive0", "name": "bitmap0" } }
-> @@ -2370,7 +2383,8 @@
->  #
->  # Since: 4.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "block-dirty-bitmap-enable",
->  #          "arguments": { "node": "drive0", "name": "bitmap0" } }
-> @@ -2391,7 +2405,8 @@
->  #
->  # Since: 4.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "block-dirty-bitmap-disable",
->  #          "arguments": { "node": "drive0", "name": "bitmap0" } }
-> @@ -2423,7 +2438,8 @@
->  #
->  # Since: 4.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "block-dirty-bitmap-merge",
->  #          "arguments": { "node": "drive0", "target": "bitmap0",
-> @@ -2532,7 +2548,8 @@
->  #
->  # Since: 2.6
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "blockdev-mirror",
->  #          "arguments": { "device": "ide-hd0",
-> @@ -2856,7 +2873,8 @@
->  #
->  # Since: 1.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "block-stream",
->  #          "arguments": { "device": "virtio0",
-> @@ -4790,7 +4808,8 @@
->  #
->  # Since: 2.9
->  #
-> -# Examples:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "blockdev-add",
->  #          "arguments": {
-> @@ -4804,6 +4823,9 @@
->  #         }
->  #     <- { "return": {} }
->  #
-> +# .. code-block:: QMP
-> +#    :caption: Example
-> +#
->  #     -> { "execute": "blockdev-add",
->  #          "arguments": {
->  #               "driver": "qcow2",
-> @@ -4888,7 +4910,8 @@
->  #
->  # Since: 2.9
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "blockdev-add",
->  #          "arguments": {
-> @@ -5537,7 +5560,8 @@
->  # .. note:: If action is "stop", a STOP event will eventually follow the
->  #    BLOCK_IO_ERROR event.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "BLOCK_IMAGE_CORRUPTED",
->  #          "data": { "device": "", "node-name": "drive", "fatal": false,
-> @@ -5586,7 +5610,8 @@
->  #
->  # Since: 0.13
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "BLOCK_IO_ERROR",
->  #          "data": { "device": "ide0-hd1",
-> @@ -5626,7 +5651,8 @@
->  #
->  # Since: 1.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "BLOCK_JOB_COMPLETED",
->  #          "data": { "type": "stream", "device": "virtio-disk0",
-> @@ -5661,7 +5687,8 @@
->  #
->  # Since: 1.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "BLOCK_JOB_CANCELLED",
->  #          "data": { "type": "stream", "device": "virtio-disk0",
-> @@ -5690,7 +5717,8 @@
->  #
->  # Since: 1.3
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "BLOCK_JOB_ERROR",
->  #          "data": { "device": "ide0-hd1",
-> @@ -5725,7 +5753,8 @@
->  #
->  # Since: 1.3
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "BLOCK_JOB_READY",
->  #          "data": { "device": "drive0", "type": "mirror", "speed": 0,
-> @@ -5753,7 +5782,8 @@
->  #
->  # Since: 2.12
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "BLOCK_JOB_PENDING",
->  #          "data": { "type": "mirror", "id": "backup_1" },
-> @@ -5827,7 +5857,8 @@
->  #
->  # Since: 2.3
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "block-set-write-threshold",
->  #          "arguments": { "node-name": "mydev",
-> @@ -5872,9 +5903,8 @@
->  #
->  # Since: 2.7
->  #
-> -# Examples:
-> -#
-> -#     1. Add a new node to a quorum
-> +# .. code-block:: QMP
-> +#    :caption: Example: Add a new node to a quorum
->  #
->  #     -> { "execute": "blockdev-add",
->  #          "arguments": {
-> @@ -5888,7 +5918,8 @@
->  #                         "node": "new_node" } }
->  #     <- { "return": {} }
->  #
-> -#     2. Delete a quorum's node
-> +# .. code-block:: QMP
-> +#    :caption: Example: Delete a quorum's node
->  #
->  #     -> { "execute": "x-blockdev-change",
->  #          "arguments": { "parent": "disk1",
-> @@ -5924,16 +5955,16 @@
->  #
->  # Since: 2.12
->  #
-> -# Examples:
-> -#
-> -#     1. Move a node into an IOThread
-> +# .. code-block:: QMP
-> +#    :caption: Example: Move a node into an IOThread
->  #
->  #     -> { "execute": "x-blockdev-set-iothread",
->  #          "arguments": { "node-name": "disk1",
->  #                         "iothread": "iothread0" } }
->  #     <- { "return": {} }
->  #
-> -#     2. Move a node into the main loop
-> +# .. code-block:: QMP
-> +#    :caption: Example: Move a node into the main loop
->  #
->  #     -> { "execute": "x-blockdev-set-iothread",
->  #          "arguments": { "node-name": "disk1",
-> @@ -5978,7 +6009,8 @@
->  #
->  # Since: 2.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "QUORUM_FAILURE",
->  #          "data": { "reference": "usr1", "sector-num": 345435, "sectors-count": 5 },
-> @@ -6009,16 +6041,16 @@
->  #
->  # Since: 2.0
->  #
-> -# Examples:
-> -#
-> -#     1. Read operation
-> +# .. code-block:: QMP
-> +#    :caption: Example: Read operation
->  #
->  #     <- { "event": "QUORUM_REPORT_BAD",
->  #          "data": { "node-name": "node0", "sector-num": 345435, "sectors-count": 5,
->  #                    "type": "read" },
->  #          "timestamp": { "seconds": 1344522075, "microseconds": 745528 } }
->  #
-> -#     2. Flush operation
-> +# .. code-block:: QMP
-> +#    :caption: Example: Flush operation
->  #
->  #     <- { "event": "QUORUM_REPORT_BAD",
->  #          "data": { "node-name": "node0", "sector-num": 0, "sectors-count": 2097120,
-> @@ -6066,7 +6098,8 @@
->  #
->  # Since: 1.7
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "blockdev-snapshot-internal-sync",
->  #          "arguments": { "device": "ide-hd0",
-> @@ -6105,7 +6138,8 @@
->  #
->  # Since: 1.7
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "blockdev-snapshot-delete-internal-sync",
->  #          "arguments": { "device": "ide-hd0",
-> diff --git a/qapi/block.json b/qapi/block.json
-> index ea81d9e1921..c67bda708a2 100644
-> --- a/qapi/block.json
-> +++ b/qapi/block.json
-> @@ -117,7 +117,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "eject", "arguments": { "id": "ide1-0-1" } }
->  #     <- { "return": {} }
-> @@ -161,7 +162,8 @@
->  #
->  # Since: 2.5
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "blockdev-open-tray",
->  #          "arguments": { "id": "ide0-1-0" } }
-> @@ -199,7 +201,8 @@
->  #
->  # Since: 2.5
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "blockdev-close-tray",
->  #          "arguments": { "id": "ide0-1-0" } }
-> @@ -231,7 +234,8 @@
->  #
->  # Since: 2.12
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "blockdev-remove-medium",
->  #          "arguments": { "id": "ide0-1-0" } }
-> @@ -272,7 +276,8 @@
->  #
->  # Since: 2.12
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "blockdev-add",
->  #          "arguments": {
-> @@ -342,9 +347,8 @@
->  #
->  # Since: 2.5
->  #
-> -# Examples:
-> -#
-> -#     1. Change a removable medium
-> +# .. code-block:: QMP
-> +#    :caption: Example: Change a removable medium
->  #
->  #     -> { "execute": "blockdev-change-medium",
->  #          "arguments": { "id": "ide0-1-0",
-> @@ -352,7 +356,8 @@
->  #                         "format": "raw" } }
->  #     <- { "return": {} }
->  #
-> -#     2. Load a read-only medium into a writable drive
-> +# .. code-block:: QMP
-> +#    :caption: Example: Load a read-only medium into a writable drive
->  #
->  #     -> { "execute": "blockdev-change-medium",
->  #          "arguments": { "id": "floppyA",
-> @@ -397,7 +402,8 @@
->  #
->  # Since: 1.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "DEVICE_TRAY_MOVED",
->  #          "data": { "device": "ide1-cd0",
-> @@ -421,7 +427,8 @@
->  #
->  # Since: 3.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "PR_MANAGER_STATUS_CHANGED",
->  #          "data": { "id": "pr-helper0",
-> @@ -463,7 +470,8 @@
->  #
->  # Since: 1.1
->  #
-> -# Examples:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "block_set_io_throttle",
->  #          "arguments": { "id": "virtio-blk-pci0/virtio-backend",
-> @@ -483,6 +491,9 @@
->  #                         "iops_size": 0 } }
->  #     <- { "return": {} }
->  #
-> +# .. code-block:: QMP
-> +#    :caption: Example
-> +#
->  #     -> { "execute": "block_set_io_throttle",
->  #          "arguments": { "id": "ide0-1-0",
->  #                         "bps": 1000000,
-> @@ -543,29 +554,27 @@
->  #
->  # Since: 4.0
->  #
-> -# Example:
-> -#
-> -#     Set new histograms for all io types with intervals
-> -#     [0, 10), [10, 50), [50, 100), [100, +inf):
-> +# .. code-block:: QMP
-> +#    :caption: Example:
-> +#      Set new histograms for all io types with intervals
-> +#      [0, 10), [10, 50), [50, 100), [100, +inf):
-
-Captions long enough to be rendered as multiple lines look particularly
-bad to me.  The centering...
-
->  #
->  #     -> { "execute": "block-latency-histogram-set",
->  #          "arguments": { "id": "drive0",
->  #                         "boundaries": [10, 50, 100] } }
->  #     <- { "return": {} }
->  #
-> -# Example:
-> -#
-> -#     Set new histogram only for write, other histograms will remain
-> -#     not changed (or not created):
-> +# .. code-block:: QMP
-> +#    :caption: Example: Set new histogram only for write, other
-> +#       histograms will remain not changed (or not created):
->  #
->  #     -> { "execute": "block-latency-histogram-set",
->  #          "arguments": { "id": "drive0",
->  #                         "boundaries-write": [10, 50, 100] } }
->  #     <- { "return": {} }
->  #
-> -# Example:
-> -#
-> -#     Set new histograms with the following intervals:
-> +# .. code-block:: QMP
-> +#    :caption: Example: Set new histograms with the following intervals:
->  #       read, flush: [0, 10), [10, 50), [50, 100), [100, +inf)
->  #       write: [0, 1000), [1000, 5000), [5000, +inf)
->  #
-> @@ -575,9 +584,8 @@
->  #                         "boundaries-write": [1000, 5000] } }
->  #     <- { "return": {} }
->  #
-> -# Example:
-> -#
-> -#     Remove all latency histograms:
-> +# .. code-block:: QMP
-> +#    :caption: Example: Remove all latency histograms:
->  #
->  #     -> { "execute": "block-latency-histogram-set",
->  #          "arguments": { "id": "drive0" } }
-> diff --git a/qapi/char.json b/qapi/char.json
-> index 0f39c2d5cdf..a119bbb70b5 100644
-> --- a/qapi/char.json
-> +++ b/qapi/char.json
-> @@ -40,7 +40,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-chardev" }
->  #     <- {
-> @@ -86,7 +87,8 @@
->  #
->  # Since: 2.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-chardev-backends" }
->  #     <- {
-> @@ -141,7 +143,8 @@
->  #
->  # Since: 1.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "ringbuf-write",
->  #          "arguments": { "device": "foo",
-> @@ -177,7 +180,8 @@
->  #
->  # Since: 1.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "ringbuf-read",
->  #          "arguments": { "device": "foo",
-> @@ -698,19 +702,26 @@
->  #
->  # Since: 1.4
->  #
-> -# Examples:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute" : "chardev-add",
->  #          "arguments" : { "id" : "foo",
->  #                          "backend" : { "type" : "null", "data" : {} } } }
->  #     <- { "return": {} }
->  #
-> +# .. code-block:: QMP
-> +#    :caption: Example
-> +#
->  #     -> { "execute" : "chardev-add",
->  #          "arguments" : { "id" : "bar",
->  #                          "backend" : { "type" : "file",
->  #                                        "data" : { "out" : "/tmp/bar.log" } } } }
->  #     <- { "return": {} }
->  #
-> +# .. code-block:: QMP
-> +#    :caption: Example
-> +#
->  #     -> { "execute" : "chardev-add",
->  #          "arguments" : { "id" : "baz",
->  #                          "backend" : { "type" : "pty", "data" : {} } } }
-> @@ -734,13 +745,17 @@
->  #
->  # Since: 2.10
->  #
-> -# Examples:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute" : "chardev-change",
->  #          "arguments" : { "id" : "baz",
->  #                          "backend" : { "type" : "pty", "data" : {} } } }
->  #     <- { "return": { "pty" : "/dev/pty/42" } }
->  #
-> +# .. code-block:: QMP
-> +#    :caption: Example
-> +#
->  #     -> {"execute" : "chardev-change",
->  #         "arguments" : {
->  #             "id" : "charchannel2",
-> @@ -771,7 +786,8 @@
->  #
->  # Since: 1.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "chardev-remove", "arguments": { "id" : "foo" } }
->  #     <- { "return": {} }
-> @@ -788,7 +804,8 @@
->  #
->  # Since: 2.10
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "chardev-send-break", "arguments": { "id" : "foo" } }
->  #     <- { "return": {} }
-> @@ -809,7 +826,8 @@
->  #
->  # Since: 2.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "VSERPORT_CHANGE",
->  #          "data": { "id": "channel0", "open": true },
-> diff --git a/qapi/control.json b/qapi/control.json
-> index 2498e5dd6ba..938c94eb3ce 100644
-> --- a/qapi/control.json
-> +++ b/qapi/control.json
-> @@ -16,7 +16,8 @@
->  #     the QMP greeting message.  If the field is not provided, it
->  #     means no QMP capabilities will be enabled.  (since 2.12)
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "qmp_capabilities",
->  #          "arguments": { "enable": [ "oob" ] } }
-> @@ -97,7 +98,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-version" }
->  #     <- {
-> @@ -134,7 +136,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-commands" }
->  #     <- {
-> @@ -149,8 +152,8 @@
->  #          ]
->  #        }
->  #
-> -#     Note: This example has been shortened as the real response is too
-> -#     long.
-> +# This example has been shortened as the real response is too long.
-
-Squash into the previous patch?
-
-> +#
->  ##
->  { 'command': 'query-commands', 'returns': ['CommandInfo'],
->    'allow-preconfig': true }
-> @@ -165,7 +168,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "quit" }
->  #     <- { "return": {} }
-> diff --git a/qapi/dump.json b/qapi/dump.json
-> index f9aee7ea1dd..758dc90755a 100644
-> --- a/qapi/dump.json
-> +++ b/qapi/dump.json
-> @@ -94,7 +94,8 @@
->  #
->  # Since: 1.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "dump-guest-memory",
->  #          "arguments": { "paging": false, "protocol": "fd:dump" } }
-> @@ -150,7 +151,8 @@
->  #
->  # Since: 2.6
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-dump" }
->  #     <- { "return": { "status": "active", "completed": 1024000,
-> @@ -171,7 +173,8 @@
->  #
->  # Since: 2.6
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "DUMP_COMPLETED",
->  #          "data": { "result": { "total": 1090650112, "status": "completed",
-> @@ -202,7 +205,8 @@
->  #
->  # Since: 2.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-dump-guest-memory-capability" }
->  #     <- { "return": { "formats":
-> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-> index a8d9ec87f59..5d31408abfa 100644
-> --- a/qapi/machine-target.json
-> +++ b/qapi/machine-target.json
-> @@ -475,7 +475,8 @@
->  #
->  # Since: 8.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "CPU_POLARIZATION_CHANGE",
->  #          "data": { "polarization": "horizontal" },
-> diff --git a/qapi/machine.json b/qapi/machine.json
-> index e9c9bef940d..42f65ce1525 100644
-> --- a/qapi/machine.json
-> +++ b/qapi/machine.json
-> @@ -104,7 +104,8 @@
->  #
->  # Since: 2.12
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-cpus-fast" }
->  #     <- { "return": [
-> @@ -221,7 +222,8 @@
->  #
->  # Since: 1.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-machines", "arguments": { "compat-props": true } }
->  #     <- { "return": [
-> @@ -320,7 +322,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-uuid" }
->  #     <- { "return": { "UUID": "550e8400-e29b-41d4-a716-446655440000" } }
-> @@ -354,7 +357,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "system_reset" }
->  #     <- { "return": {} }
-> @@ -373,7 +377,8 @@
->  #    request or that it has shut down.  Many guests will respond to this
->  #    command by prompting the user in some way.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "system_powerdown" }
->  #     <- { "return": {} }
-> @@ -393,7 +398,8 @@
->  # .. note:: Prior to 4.0, this command does nothing in case the guest
->  #    isn't suspended.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "system_wakeup" }
->  #     <- { "return": {} }
-> @@ -444,7 +450,8 @@
->  # .. note:: Prior to 2.1, this command was only supported for x86 and
->  #    s390 VMs
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "inject-nmi" }
->  #     <- { "return": {} }
-> @@ -473,7 +480,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-kvm" }
->  #     <- { "return": { "enabled": true, "present": true } }
-> @@ -841,7 +849,8 @@
->  #
->  # .. caution:: Errors were not reliably returned until 1.1.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "memsave",
->  #          "arguments": { "val": 10,
-> @@ -867,7 +876,8 @@
->  #
->  # .. caution:: Errors were not reliably returned until 1.1.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "pmemsave",
->  #          "arguments": { "val": 10,
-> @@ -928,7 +938,8 @@
->  #
->  # Since: 2.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-memdev" }
->  #     <- { "return": [
-> @@ -1046,10 +1057,8 @@
->  #
->  # Since: 2.7
->  #
-> -# Examples:
-> -#
-> -#     For pseries machine type started with -smp 2,cores=2,maxcpus=4
-> -#     -cpu POWER8:
-> +# .. code-block:: QMP
-> +#    :caption: Example: For pseries machine type started with ``-smp 2,cores=2,maxcpus=4 -cpu POWER8``:
->  #
->  #     -> { "execute": "query-hotpluggable-cpus" }
->  #     <- {"return": [
-> @@ -1059,7 +1068,8 @@
->  #            "vcpus-count": 1, "qom-path": "/machine/unattached/device[0]"}
->  #        ]}
->  #
-> -#     For pc machine type started with -smp 1,maxcpus=2:
-> +# .. code-block:: QMP
-> +#    :caption: Example: For pc machine type started with ``-smp 1,maxcpus=2``:
->  #
->  #     -> { "execute": "query-hotpluggable-cpus" }
->  #     <- {"return": [
-> @@ -1074,8 +1084,8 @@
->  #          }
->  #        ]}
->  #
-> -#     For s390x-virtio-ccw machine type started with -smp 1,maxcpus=2
-> -#     -cpu qemu (Since: 2.11):
-> +# .. code-block:: QMP
-> +#    :caption: Example: For s390x-virtio-ccw machine type started with ``-smp 1,maxcpus=2 -cpu qemu`` (Since: 2.11):
->  #
->  #     -> { "execute": "query-hotpluggable-cpus" }
->  #     <- {"return": [
-> @@ -1129,12 +1139,14 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "balloon", "arguments": { "value": 536870912 } }
->  #     <- { "return": {} }
->  #
-> -#     With a 2.5GiB guest this command inflated the ballon to 3GiB.
-> +# With a 2.5GiB guest this command inflated the ballon to 3GiB.
-> +#
->  ##
->  { 'command': 'balloon', 'data': {'value': 'int'} }
->  
-> @@ -1165,7 +1177,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-balloon" }
->  #     <- { "return": {
-> @@ -1189,7 +1202,8 @@
->  #
->  # Since: 1.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "BALLOON_CHANGE",
->  #          "data": { "actual": 944766976 },
-> @@ -1230,7 +1244,8 @@
->  #
->  # Since: 8.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-hv-balloon-status-report" }
->  #     <- { "return": {
-> @@ -1251,7 +1266,8 @@
->  #
->  # Since: 8.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "HV_BALLOON_STATUS_REPORT",
->  #          "data": { "committed": 816640000, "available": 3333054464 },
-> @@ -1283,7 +1299,8 @@
->  # Return the amount of initially allocated and present hotpluggable
->  # (if enabled) memory in bytes.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-memory-size-summary" }
->  #     <- { "return": { "base-memory": 4294967296, "plugged-memory": 0 } }
-> @@ -1562,7 +1579,8 @@
->  #
->  # Since: 2.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-memory-devices" }
->  #     <- { "return": [ { "data":
-> @@ -1596,7 +1614,8 @@
->  #
->  # Since: 5.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "MEMORY_DEVICE_SIZE_CHANGE",
->  #          "data": { "id": "vm0", "size": 1073741824,
-> @@ -1622,7 +1641,8 @@
->  #
->  # Since: 2.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "MEM_UNPLUG_ERROR",
->  #          "data": { "device": "dimm1",
-> @@ -1882,7 +1902,8 @@
->  #
->  # Since: 7.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "dumpdtb" }
->  #          "arguments": { "filename": "fdt.dtb" } }
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index a7b8ff138e3..a30d519d7c1 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -283,14 +283,14 @@
->  #
->  # Since: 0.14
->  #
-> -# Examples:
-> -#
-> -#     1. Before the first migration
-> +# .. code-block:: QMP
-> +#    :caption: Example: Before the first migration
->  #
->  #     -> { "execute": "query-migrate" }
->  #     <- { "return": {} }
->  #
-> -#     2. Migration is done and has succeeded
-> +# .. code-block:: QMP
-> +#    :caption: Example: Migration is done and has succeeded
->  #
->  #     -> { "execute": "query-migrate" }
->  #     <- { "return": {
-> @@ -310,12 +310,14 @@
->  #          }
->  #        }
->  #
-> -#     3. Migration is done and has failed
-> +# .. code-block:: QMP
-> +#    :caption: Example: Migration is done and has failed
->  #
->  #     -> { "execute": "query-migrate" }
->  #     <- { "return": { "status": "failed" } }
->  #
-> -#     4. Migration is being performed:
-> +# .. code-block:: QMP
-> +#    :caption: Example: Migration is being performed
->  #
->  #     -> { "execute": "query-migrate" }
->  #     <- {
-> @@ -336,7 +338,35 @@
->  #           }
->  #        }
->  #
-> -#     5. Migration is being performed and XBZRLE is active:
-> +# .. code-block:: QMP
-> +#    :caption: Example: Migration is being performed and XBZRLE is active
-> +#
-> +#     -> { "execute": "query-migrate" }
-> +#     <- {
-> +#           "return":{
-> +#              "status":"active",
-> +#              "total-time":12345,
-> +#              "setup-time":12345,
-> +#              "expected-downtime":12345,
-> +#              "ram":{
-> +#                 "total":1057024,
-> +#                 "remaining":1053304,
-> +#                 "transferred":3720,
-> +#                 "duplicate":123,
-> +#                 "normal":123,
-> +#                 "normal-bytes":123456,
-> +#                 "dirty-sync-count":15
-> +#              },
-> +#              "disk":{
-> +#                 "total":20971520,
-> +#                 "remaining":20880384,
-> +#                 "transferred":91136
-> +#              }
-> +#           }
-> +#        }
-> +#
-> +# .. code-block:: QMP
-> +#    :caption: Example: Migration is being performed and XBZRLE is active
->  #
->  #     -> { "execute": "query-migrate" }
->  #     <- {
-> @@ -510,7 +540,8 @@
->  #
->  # Since: 1.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "migrate-set-capabilities" , "arguments":
->  #          { "capabilities": [ { "capability": "xbzrle", "state": true } ] } }
-> @@ -528,7 +559,8 @@
->  #
->  # Since: 1.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-migrate-capabilities" }
->  #     <- { "return": [
-> @@ -1030,7 +1062,8 @@
->  #
->  # Since: 2.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "migrate-set-parameters" ,
->  #          "arguments": { "multifd-channels": 5 } }
-> @@ -1228,7 +1261,8 @@
->  #
->  # Since: 2.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-migrate-parameters" }
->  #     <- { "return": {
-> @@ -1252,7 +1286,8 @@
->  #
->  # Since: 2.5
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "migrate-start-postcopy" }
->  #     <- { "return": {} }
-> @@ -1268,7 +1303,8 @@
->  #
->  # Since: 2.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- {"timestamp": {"seconds": 1432121972, "microseconds": 744001},
->  #         "event": "MIGRATION",
-> @@ -1287,7 +1323,8 @@
->  #
->  # Since: 2.6
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "timestamp": {"seconds": 1449669631, "microseconds": 239225},
->  #           "event": "MIGRATION_PASS", "data": {"pass": 2} }
-> @@ -1371,7 +1408,8 @@
->  #
->  # Since: 3.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "timestamp": {"seconds": 2032141960, "microseconds": 417172},
->  #          "event": "COLO_EXIT", "data": {"mode": "primary", "reason": "request" } }
-> @@ -1414,7 +1452,8 @@
->  #
->  # Since: 2.8
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "x-colo-lost-heartbeat" }
->  #     <- { "return": {} }
-> @@ -1433,7 +1472,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "migrate_cancel" }
->  #     <- { "return": {} }
-> @@ -1449,7 +1489,8 @@
->  #
->  # Since: 2.11
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "migrate-continue" , "arguments":
->  #          { "state": "pre-switchover" } }
-> @@ -1582,7 +1623,8 @@
->  #     6. The 'uri' and 'channels' arguments are mutually exclusive;
->  #        exactly one of the two should be present.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "migrate", "arguments": { "uri": "tcp:0:4446" } }
->  #     <- { "return": {} }
-> @@ -1661,7 +1703,8 @@
->  #     5. The 'uri' and 'channels' arguments are mutually exclusive;
->  #        exactly one of the two should be present.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "migrate-incoming",
->  #          "arguments": { "uri": "tcp:0:4446" } }
-> @@ -1712,7 +1755,8 @@
->  #
->  # Since: 1.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "xen-save-devices-state",
->  #          "arguments": { "filename": "/tmp/save" } }
-> @@ -1730,7 +1774,8 @@
->  #
->  # Since: 1.3
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "xen-set-global-dirty-log",
->  #          "arguments": { "enable": true } }
-> @@ -1750,7 +1795,8 @@
->  #
->  # Since: 2.7
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "xen-load-devices-state",
->  #          "arguments": { "filename": "/tmp/resume" } }
-> @@ -1770,7 +1816,8 @@
->  # @failover: true to do failover, false to stop.  Cannot be specified
->  #     if 'enable' is true.  Default value is false.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "xen-set-replication",
->  #          "arguments": {"enable": true, "primary": false} }
-> @@ -1805,7 +1852,8 @@
->  #
->  # Returns: A @ReplicationStatus object showing the status.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-xen-replication-status" }
->  #     <- { "return": { "error": false } }
-> @@ -1821,7 +1869,8 @@
->  #
->  # Xen uses this command to notify replication to trigger a checkpoint.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "xen-colo-do-checkpoint" }
->  #     <- { "return": {} }
-> @@ -1859,7 +1908,8 @@
->  #
->  # Returns: A @COLOStatus object showing the status.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-colo-status" }
->  #     <- { "return": { "mode": "primary", "last-mode": "none", "reason": "request" } }
-> @@ -1877,7 +1927,8 @@
->  #
->  # @uri: the URI to be used for the recovery of migration stream.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "migrate-recover",
->  #          "arguments": { "uri": "tcp:192.168.1.200:12345" } }
-> @@ -1894,7 +1945,8 @@
->  #
->  # Pause a migration.  Currently it only supports postcopy.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "migrate-pause" }
->  #     <- { "return": {} }
-> @@ -1915,7 +1967,8 @@
->  #
->  # Since: 4.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "UNPLUG_PRIMARY",
->  #          "data": { "device-id": "hostdev0" },
-> @@ -2075,13 +2128,15 @@
->  #
->  # Since: 5.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example:
->  #
->  #     -> {"execute": "calc-dirty-rate", "arguments": {"calc-time": 1,
->  #                                                     "sample-pages": 512} }
->  #     <- { "return": {} }
->  #
-> -#     Measure dirty rate using dirty bitmap for 500 milliseconds:
-> +# .. code-block:: QMP
-> +#    :caption: Example: Measure dirty rate using dirty bitmap for 500 milliseconds:
->  #
->  #     -> {"execute": "calc-dirty-rate", "arguments": {"calc-time": 500,
->  #         "calc-time-unit": "millisecond", "mode": "dirty-bitmap"} }
-> @@ -2103,15 +2158,15 @@
->  #
->  # Since: 5.2
->  #
-> -# Examples:
-> -#
-> -#     1. Measurement is in progress:
-> +# .. code-block:: QMP
-> +#    :caption: Example: Measurement is in progress
->  #
->  #     <- {"status": "measuring", "sample-pages": 512,
->  #         "mode": "page-sampling", "start-time": 1693900454, "calc-time": 10,
->  #         "calc-time-unit": "second"}
->  #
-> -#     2. Measurement has been completed:
-> +# .. code-block:: QMP
-> +#    :caption: Example: Measurement has been completed
->  #
->  #     <- {"status": "measured", "sample-pages": 512, "dirty-rate": 108,
->  #         "mode": "page-sampling", "start-time": 1693900454, "calc-time": 10,
-> @@ -2154,7 +2209,8 @@
->  #
->  # Since: 7.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> {"execute": "set-vcpu-dirty-limit"}
->  #         "arguments": { "dirty-rate": 200,
-> @@ -2178,7 +2234,8 @@
->  #
->  # Since: 7.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> {"execute": "cancel-vcpu-dirty-limit"},
->  #         "arguments": { "cpu-index": 1 } }
-> @@ -2195,7 +2252,8 @@
->  #
->  # Since: 7.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> {"execute": "query-vcpu-dirty-limit"}
->  #     <- {"return": [
-> @@ -2259,7 +2317,8 @@
->  #
->  # If @tag already exists, an error will be reported
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "snapshot-save",
->  #          "arguments": {
-> @@ -2329,7 +2388,8 @@
->  # device nodes that can have changed since the original @snapshot-save
->  # command execution.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "snapshot-load",
->  #          "arguments": {
-> @@ -2390,7 +2450,8 @@
->  # to determine completion and to fetch details of any errors that
->  # arise.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "snapshot-delete",
->  #          "arguments": {
-> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-> index 4e0a6492a9a..ccbed866195 100644
-> --- a/qapi/misc-target.json
-> +++ b/qapi/misc-target.json
-> @@ -11,7 +11,8 @@
->  #
->  # Since: 2.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "rtc-reset-reinjection" }
->  #     <- { "return": {} }
-> @@ -89,7 +90,8 @@
->  #
->  # Since: 2.12
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-sev" }
->  #     <- { "return": { "enabled": true, "api-major" : 0, "api-minor" : 0,
-> @@ -120,7 +122,8 @@
->  #
->  # Since: 2.12
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-sev-launch-measure" }
->  #     <- { "return": { "data": "4l8LXeNlSPUDlXPJG5966/8%YZ" } }
-> @@ -165,7 +168,8 @@
->  #
->  # Since: 2.12
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-sev-capabilities" }
->  #     <- { "return": { "pdh": "8CCDD8DDD", "cert-chain": "888CCCDDDEE",
-> @@ -219,7 +223,8 @@
->  #
->  # Since: 6.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute" : "query-sev-attestation-report",
->  #                      "arguments": { "mnonce": "aaaaaaa" } }
-> @@ -239,7 +244,8 @@
->  #
->  # Since: 2.5
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "dump-skeys",
->  #          "arguments": { "filename": "/tmp/skeys" } }
-> @@ -284,7 +290,8 @@
->  #
->  # Since: 2.6
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-gic-capabilities" }
->  #     <- { "return": [{ "version": 2, "emulated": true, "kernel": false },
-> @@ -342,7 +349,8 @@
->  #
->  # Since: 6.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-sgx" }
->  #     <- { "return": { "sgx": true, "sgx1" : true, "sgx2" : true,
-> @@ -361,7 +369,8 @@
->  #
->  # Since: 6.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-sgx-capabilities" }
->  #     <- { "return": { "sgx": true, "sgx1" : true, "sgx2" : true,
-> @@ -436,7 +445,8 @@
->  #
->  # Since: 8.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "xen-event-list" }
->  #     <- { "return": [
-> @@ -474,7 +484,8 @@
->  #
->  # Since: 8.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "xen-event-inject", "arguments": { "port": 1 } }
->  #     <- { "return": { } }
-> diff --git a/qapi/misc.json b/qapi/misc.json
-> index b04efbadec6..39bf8e30df1 100644
-> --- a/qapi/misc.json
-> +++ b/qapi/misc.json
-> @@ -30,7 +30,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "add_client", "arguments": { "protocol": "vnc",
->  #                                                  "fdname": "myclient" } }
-> @@ -60,7 +61,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-name" }
->  #     <- { "return": { "name": "qemu-name" } }
-> @@ -111,7 +113,8 @@
->  #
->  # Since: 2.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-iothreads" }
->  #     <- { "return": [
-> @@ -144,7 +147,8 @@
->  #    In the "suspended" state, it will completely stop the VM and cause
->  #    a transition to the "paused" state.  (Since 9.0)
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "stop" }
->  #     <- { "return": {} }
-> @@ -168,7 +172,8 @@
->  #    this command will transition back to the "suspended" state.  (Since
->  #    9.0)
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "cont" }
->  #     <- { "return": {} }
-> @@ -192,7 +197,8 @@
->  #
->  # Since: 3.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "x-exit-preconfig" }
->  #     <- { "return": {} }
-> @@ -232,7 +238,8 @@
->  #
->  #    * Commands that prompt the user for data don't currently work.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "human-monitor-command",
->  #          "arguments": { "command-line": "info kvm" } }
-> @@ -258,7 +265,8 @@
->  #    The 'closefd' command can be used to explicitly close the file
->  #    descriptor when it is no longer needed.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "getfd", "arguments": { "fdname": "fd1" } }
->  #     <- { "return": {} }
-> @@ -285,7 +293,8 @@
->  #    The 'closefd' command can be used to explicitly close the file
->  #    descriptor when it is no longer needed.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "get-win32-socket",
->  #          "arguments": { "info": "abcd123..", "fdname": "skclient" } }
-> @@ -302,7 +311,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "closefd", "arguments": { "fdname": "fd1" } }
->  #     <- { "return": {} }
-> @@ -345,7 +355,8 @@
->  #
->  # Since: 1.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "add-fd", "arguments": { "fdset-id": 1 } }
->  #     <- { "return": { "fdset-id": 1, "fd": 3 } }
-> @@ -374,7 +385,8 @@
->  # .. note:: If @fd is not specified, all file descriptors in @fdset-id
->  #    will be removed.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "remove-fd", "arguments": { "fdset-id": 1, "fd": 3 } }
->  #     <- { "return": {} }
-> @@ -420,7 +432,8 @@
->  #
->  # .. note:: The list of fd sets is shared by all monitor connections.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-fdsets" }
->  #     <- { "return": [
-> @@ -523,7 +536,8 @@
->  #
->  # Since: 1.5
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-command-line-options",
->  #          "arguments": { "option": "option-rom" } }
-> @@ -565,7 +579,8 @@
->  #
->  # Since: 0.13
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "RTC_CHANGE",
->  #          "data": { "offset": 78 },
-> @@ -592,7 +607,8 @@
->  #
->  # Since: 7.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "VFU_CLIENT_HANGUP",
->  #          "data": { "vfu-id": "vfu1",
-> diff --git a/qapi/net.json b/qapi/net.json
-> index 4ac7fdc7e6c..adef3e6633d 100644
-> --- a/qapi/net.json
-> +++ b/qapi/net.json
-> @@ -26,7 +26,8 @@
->  #    command will succeed even if the network adapter does not support
->  #    link status notification.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "set_link",
->  #          "arguments": { "name": "e1000.0", "up": false } }
-> @@ -46,7 +47,8 @@
->  # Errors:
->  #     - If @type is not a valid network backend, DeviceNotFound
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "netdev_add",
->  #          "arguments": { "type": "user", "id": "netdev1",
-> @@ -68,7 +70,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "netdev_del", "arguments": { "id": "netdev1" } }
->  #     <- { "return": {} }
-> @@ -835,7 +838,8 @@
->  #
->  # Since: 1.6
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-rx-filter", "arguments": { "name": "vnet0" } }
->  #     <- { "return": [
-> @@ -880,7 +884,8 @@
->  #
->  # Since: 1.6
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "NIC_RX_FILTER_CHANGED",
->  #          "data": { "name": "vnet0",
-> @@ -927,7 +932,8 @@
->  # switches.  This can be useful when network bonds fail-over the
->  # active slave.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "announce-self",
->  #          "arguments": {
-> @@ -952,7 +958,8 @@
->  #
->  # Since: 4.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "FAILOVER_NEGOTIATED",
->  #          "data": { "device-id": "net1" },
-> @@ -972,7 +979,8 @@
->  #
->  # Since: 7.2
->  #
-> -# Examples:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "NETDEV_STREAM_CONNECTED",
->  #          "data": { "netdev-id": "netdev0",
-> @@ -980,6 +988,9 @@
->  #                              "host": "::1", "type": "inet" } },
->  #          "timestamp": { "seconds": 1666269863, "microseconds": 311222 } }
->  #
-> +# .. code-block:: QMP
-> +#    :caption: Example
-> +#
->  #     <- { "event": "NETDEV_STREAM_CONNECTED",
->  #          "data": { "netdev-id": "netdev0",
->  #                    "addr": { "path": "/tmp/qemu0", "type": "unix" } },
-> @@ -998,7 +1009,8 @@
->  #
->  # Since: 7.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "NETDEV_STREAM_DISCONNECTED",
->  #          "data": {"netdev-id": "netdev0"},
-> diff --git a/qapi/pci.json b/qapi/pci.json
-> index f51159a2c4c..9192212661b 100644
-> --- a/qapi/pci.json
-> +++ b/qapi/pci.json
-> @@ -182,7 +182,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-pci" }
->  #     <- { "return": [
-> @@ -311,8 +312,7 @@
->  #           ]
->  #        }
->  #
-> -#     Note: This example has been shortened as the real response is too
-> -#     long.
-> +# This example has been shortened as the real response is too long.
-
-Squash into the previous patch?
-
->  #
->  ##
->  { 'command': 'query-pci', 'returns': ['PciInfo'] }
-> diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
-> index 5e33da7228f..66fbcbd3619 100644
-> --- a/qapi/qapi-schema.json
-> +++ b/qapi/qapi-schema.json
-> @@ -20,11 +20,7 @@
->  # understand.  However, in real protocol usage, they're emitted as a
->  # single line.
->  #
-> -# Also, the following notation is used to denote data flow:
-> -#
-> -# Example:
-> -#
-> -# ::
-> +# Also, the following notation is used to denote data flow::
->  #
->  #   -> data issued by the Client
->  #   <- Server data response
-
-No use of caption here.  Looks better, I think.
-
-> diff --git a/qapi/qdev.json b/qapi/qdev.json
-> index d031fc3590d..cfe403fea20 100644
-> --- a/qapi/qdev.json
-> +++ b/qapi/qdev.json
-> @@ -62,7 +62,8 @@
->  #        the ``-device DEVICE,help`` command-line argument, where DEVICE
->  #        is the device's name.
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "device_add",
->  #          "arguments": { "driver": "e1000", "id": "net1",
-
-How does
-
-   # Example:
-  +# .. code-block:: QMP
-   #
-   #     -> { "execute": "device_add",
-   #          "arguments": { "driver": "e1000", "id": "net1",
-
-look?  Requires nerfing the error you add to parser.py.
-
-> @@ -104,12 +105,16 @@
->  #
->  # Since: 0.14
->  #
-> -# Examples:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "device_del",
->  #          "arguments": { "id": "net1" } }
->  #     <- { "return": {} }
->  #
-> +# .. code-block:: QMP
-> +#    :caption: Example
-> +#
->  #     -> { "execute": "device_del",
->  #          "arguments": { "id": "/machine/peripheral-anon/device[0]" } }
->  #     <- { "return": {} }
-> @@ -130,7 +135,8 @@
->  #
->  # Since: 1.5
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "DEVICE_DELETED",
->  #          "data": { "device": "virtio-net-pci-0",
-> @@ -152,7 +158,8 @@
->  #
->  # Since: 6.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "DEVICE_UNPLUG_GUEST_ERROR",
->  #          "data": { "device": "core1",
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index e927f4a3c5d..80357537b65 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -59,7 +59,8 @@
->  #
->  # Since: 1.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "qom-list",
->  #          "arguments": { "path": "/chardevs" } }
-> @@ -104,16 +105,16 @@
->  #
->  # Since: 1.2
->  #
-> -# Examples:
-> -#
-> -#     1. Use absolute path
-> +# .. code-block:: QMP
-> +#    :caption: Example: Use absolute path
->  #
->  #     -> { "execute": "qom-get",
->  #          "arguments": { "path": "/machine/unattached/device[0]",
->  #                         "property": "hotplugged" } }
->  #     <- { "return": false }
->  #
-> -#     2. Use partial path
-> +# .. code-block:: QMP
-> +#    :caption: Example: Use partial path
->  #
->  #     -> { "execute": "qom-get",
->  #          "arguments": { "path": "unattached/sysbus",
-> @@ -139,7 +140,8 @@
->  #
->  # Since: 1.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "qom-set",
->  #          "arguments": { "path": "/machine",
-> @@ -1080,7 +1082,8 @@
->  #
->  # Since: 2.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "object-add",
->  #          "arguments": { "qom-type": "rng-random", "id": "rng1",
-> @@ -1102,7 +1105,8 @@
->  #
->  # Since: 2.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "object-del", "arguments": { "id": "rng1" } }
->  #     <- { "return": {} }
-> diff --git a/qapi/replay.json b/qapi/replay.json
-> index d3559f9c8f7..f0351b6d9c1 100644
-> --- a/qapi/replay.json
-> +++ b/qapi/replay.json
-> @@ -54,7 +54,8 @@
->  #
->  # Since: 5.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-replay" }
->  #     <- { "return": { "mode": "play", "filename": "log.rr", "icount": 220414 } }
-> @@ -76,7 +77,8 @@
->  #
->  # Since: 5.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "replay-break", "arguments": { "icount": 220414 } }
->  #     <- { "return": {} }
-> @@ -91,7 +93,8 @@
->  #
->  # Since: 5.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "replay-delete-break" }
->  #     <- { "return": {} }
-> @@ -112,7 +115,8 @@
->  #
->  # Since: 5.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "replay-seek", "arguments": { "icount": 220414 } }
->  #     <- { "return": {} }
-> diff --git a/qapi/rocker.json b/qapi/rocker.json
-> index 9f95e638309..da5cc2b9e01 100644
-> --- a/qapi/rocker.json
-> +++ b/qapi/rocker.json
-> @@ -30,7 +30,8 @@
->  #
->  # Since: 2.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-rocker", "arguments": { "name": "sw1" } }
->  #     <- { "return": {"name": "sw1", "ports": 2, "id": 1327446905938}}
-> @@ -98,7 +99,8 @@
->  #
->  # Since: 2.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-rocker-ports", "arguments": { "name": "sw1" } }
->  #     <- { "return": [ {"duplex": "full", "enabled": true, "name": "sw1.1",
-> @@ -240,7 +242,8 @@
->  #
->  # Since: 2.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-rocker-of-dpa-flows",
->  #          "arguments": { "name": "sw1" } }
-> @@ -315,7 +318,8 @@
->  #
->  # Since: 2.4
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-rocker-of-dpa-groups",
->  #          "arguments": { "name": "sw1" } }
-> diff --git a/qapi/run-state.json b/qapi/run-state.json
-> index 252d7d6afa7..6b0322de4d7 100644
-> --- a/qapi/run-state.json
-> +++ b/qapi/run-state.json
-> @@ -123,7 +123,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-status" }
->  #     <- { "return": { "running": true,
-> @@ -152,7 +153,8 @@
->  #
->  # Since: 0.12
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "SHUTDOWN",
->  #          "data": { "guest": true, "reason": "guest-shutdown" },
-> @@ -168,7 +170,8 @@
->  #
->  # Since: 0.12
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "POWERDOWN",
->  #          "timestamp": { "seconds": 1267040730, "microseconds": 682951 } }
-> @@ -189,7 +192,8 @@
->  #
->  # Since: 0.12
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "RESET",
->  #          "data": { "guest": false, "reason": "guest-reset" },
-> @@ -204,7 +208,8 @@
->  #
->  # Since: 0.12
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "STOP",
->  #          "timestamp": { "seconds": 1267041730, "microseconds": 281295 } }
-> @@ -218,7 +223,8 @@
->  #
->  # Since: 0.12
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "RESUME",
->  #          "timestamp": { "seconds": 1271770767, "microseconds": 582542 } }
-> @@ -233,7 +239,8 @@
->  #
->  # Since: 1.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "SUSPEND",
->  #          "timestamp": { "seconds": 1344456160, "microseconds": 309119 } }
-> @@ -252,7 +259,8 @@
->  #
->  # Since: 1.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "SUSPEND_DISK",
->  #          "timestamp": { "seconds": 1344456160, "microseconds": 309119 } }
-> @@ -267,7 +275,8 @@
->  #
->  # Since: 1.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "WAKEUP",
->  #          "timestamp": { "seconds": 1344522075, "microseconds": 745528 } }
-> @@ -289,7 +298,8 @@
->  #
->  # Since: 0.13
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "WATCHDOG",
->  #          "data": { "action": "reset" },
-> @@ -382,7 +392,8 @@
->  #
->  # Since: 2.11
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "watchdog-set-action",
->  #          "arguments": { "action": "inject-nmi" } }
-> @@ -406,7 +417,8 @@
->  #
->  # Since: 6.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "set-action",
->  #          "arguments": { "reboot": "shutdown",
-> @@ -433,7 +445,8 @@
->  #
->  # Since: 1.5
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "GUEST_PANICKED",
->  #          "data": { "action": "pause" },
-> @@ -453,7 +466,8 @@
->  #
->  # Since: 5.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "GUEST_CRASHLOADED",
->  #          "data": { "action": "run" },
-> @@ -597,7 +611,8 @@
->  #
->  # Since: 5.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "MEMORY_FAILURE",
->  #          "data": { "recipient": "hypervisor",
-> diff --git a/qapi/tpm.json b/qapi/tpm.json
-> index 1577b5c259d..07b7b5bd9fd 100644
-> --- a/qapi/tpm.json
-> +++ b/qapi/tpm.json
-> @@ -31,7 +31,8 @@
->  #
->  # Since: 1.5
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-tpm-models" }
->  #     <- { "return": [ "tpm-tis", "tpm-crb", "tpm-spapr" ] }
-> @@ -62,7 +63,8 @@
->  #
->  # Since: 1.5
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-tpm-types" }
->  #     <- { "return": [ "passthrough", "emulator" ] }
-> @@ -168,7 +170,8 @@
->  #
->  # Since: 1.5
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-tpm" }
->  #     <- { "return":
-> diff --git a/qapi/trace.json b/qapi/trace.json
-> index 043d12f83e0..3af64027759 100644
-> --- a/qapi/trace.json
-> +++ b/qapi/trace.json
-> @@ -64,7 +64,8 @@
->  #
->  # Since: 2.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "trace-event-get-state",
->  #          "arguments": { "name": "qemu_memalign" } }
-> @@ -94,7 +95,8 @@
->  #
->  # Since: 2.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "trace-event-set-state",
->  #          "arguments": { "name": "qemu_memalign", "enable": true } }
-> diff --git a/qapi/transaction.json b/qapi/transaction.json
-> index bcb05fdedd6..3f06ce9c1c6 100644
-> --- a/qapi/transaction.json
-> +++ b/qapi/transaction.json
-> @@ -244,7 +244,8 @@
->  #
->  # Since: 1.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "transaction",
->  #          "arguments": { "actions": [
-> diff --git a/qapi/ui.json b/qapi/ui.json
-> index ec72998e28e..856b3779d77 100644
-> --- a/qapi/ui.json
-> +++ b/qapi/ui.json
-> @@ -81,7 +81,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "set_password", "arguments": { "protocol": "vnc",
->  #                                                    "password": "secret" } }
-> @@ -140,7 +141,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "expire_password", "arguments": { "protocol": "vnc",
->  #                                                       "time": "+60" } }
-> @@ -182,7 +184,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "screendump",
->  #          "arguments": { "filename": "/tmp/image" } }
-> @@ -324,7 +327,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-spice" }
->  #     <- { "return": {
-> @@ -373,7 +377,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "timestamp": {"seconds": 1290688046, "microseconds": 388707},
->  #          "event": "SPICE_CONNECTED",
-> @@ -399,7 +404,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "timestamp": {"seconds": 1290688046, "microseconds": 417172},
->  #          "event": "SPICE_INITIALIZED",
-> @@ -426,7 +432,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "timestamp": {"seconds": 1290688046, "microseconds": 388707},
->  #          "event": "SPICE_DISCONNECTED",
-> @@ -447,7 +454,8 @@
->  #
->  # Since: 1.3
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "timestamp": {"seconds": 1290688046, "microseconds": 417172},
->  #          "event": "SPICE_MIGRATE_COMPLETED" }
-> @@ -653,7 +661,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-vnc" }
->  #     <- { "return": {
-> @@ -718,7 +727,8 @@
->  #
->  # Since: 0.13
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "VNC_CONNECTED",
->  #          "data": {
-> @@ -745,7 +755,8 @@
->  #
->  # Since: 0.13
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <-  { "event": "VNC_INITIALIZED",
->  #           "data": {
-> @@ -771,7 +782,8 @@
->  #
->  # Since: 0.13
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     <- { "event": "VNC_DISCONNECTED",
->  #          "data": {
-> @@ -819,7 +831,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-mice" }
->  #     <- { "return": [
-> @@ -1028,7 +1041,8 @@
->  #
->  # Since: 1.3
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "send-key",
->  #          "arguments": { "keys": [ { "type": "qcode", "data": "ctrl" },
-> @@ -1264,9 +1278,8 @@
->  #    property, so it is possible to map which console belongs to which
->  #    device and display.
->  #
-> -# Examples:
-> -#
-> -#     1. Press left mouse button.
-> +# .. code-block:: QMP
-> +#    :caption: Example: Press left mouse button.
->  #
->  #     -> { "execute": "input-send-event",
->  #         "arguments": { "device": "video0",
-> @@ -1280,7 +1293,8 @@
->  #                        "data" : { "down": false, "button": "left" } } ] } }
->  #     <- { "return": {} }
->  #
-> -#     2. Press ctrl-alt-del.
-> +# .. code-block:: QMP
-> +#    :caption: Example: Press ctrl-alt-del.
->  #
->  #     -> { "execute": "input-send-event",
->  #          "arguments": { "events": [
-> @@ -1292,7 +1306,8 @@
->  #               "key": {"type": "qcode", "data": "delete" } } } ] } }
->  #     <- { "return": {} }
->  #
-> -#     3. Move mouse pointer to absolute coordinates (20000, 400).
-> +# .. code-block:: QMP
-> +#    :caption: Example: Move mouse pointer to absolute coordinates (20000, 400).
->  #
->  #     -> { "execute": "input-send-event" ,
->  #       "arguments": { "events": [
-> @@ -1605,7 +1620,8 @@
->  #
->  # Since: 6.0
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "display-reload",
->  #          "arguments": { "type": "vnc", "tls-certs": true  } }
-> @@ -1658,7 +1674,8 @@
->  #
->  # Since: 7.1
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "display-update",
->  #          "arguments": { "type": "vnc", "addresses":
-> @@ -1689,7 +1706,8 @@
->  #
->  # Since: 0.14
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "client_migrate_info",
->  #          "arguments": { "protocol": "spice",
-> diff --git a/qapi/virtio.json b/qapi/virtio.json
-> index b91f3cdd0df..adf5def9dd6 100644
-> --- a/qapi/virtio.json
-> +++ b/qapi/virtio.json
-> @@ -34,7 +34,8 @@
->  #
->  # Since: 7.2
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "x-query-virtio" }
->  #     <- { "return": [
-> @@ -203,9 +204,8 @@
->  #
->  # Since: 7.2
->  #
-> -# Examples:
-> -#
-> -#     1. Poll for the status of virtio-crypto (no vhost-crypto active)
-> +# .. code-block:: QMP
-> +#    :caption: Example: Poll for the status of virtio-crypto (no vhost-crypto active)
->  #
->  #     -> { "execute": "x-query-virtio-status",
->  #          "arguments": { "path": "/machine/peripheral/crypto0/virtio-backend" }
-> @@ -261,7 +261,8 @@
->  #          }
->  #        }
->  #
-> -#     2. Poll for the status of virtio-net (vhost-net is active)
-> +# .. code-block:: QMP
-> +#    :caption: Example: Poll for the status of virtio-net (vhost-net is active)
->  #
->  #     -> { "execute": "x-query-virtio-status",
->  #          "arguments": { "path": "/machine/peripheral-anon/device[1]/virtio-backend" }
-> @@ -568,9 +569,8 @@
->  #
->  # Since: 7.2
->  #
-> -# Examples:
-> -#
-> -#     1. Get VirtQueueStatus for virtio-vsock (vhost-vsock running)
-> +# .. code-block:: QMP
-> +#    :caption: Example: Get VirtQueueStatus for virtio-vsock (vhost-vsock running)
->  #
->  #     -> { "execute": "x-query-virtio-queue-status",
->  #          "arguments": { "path": "/machine/peripheral/vsock0/virtio-backend",
-> @@ -593,7 +593,8 @@
->  #          }
->  #        }
->  #
-> -#     2. Get VirtQueueStatus for virtio-serial (no vhost)
-> +# .. code-block:: QMP
-> +#    :caption: Example: Get VirtQueueStatus for virtio-serial (no vhost)
->  #
->  #     -> { "execute": "x-query-virtio-queue-status",
->  #          "arguments": { "path": "/machine/peripheral-anon/device[0]/virtio-backend",
-> @@ -690,9 +691,8 @@
->  #
->  # Since: 7.2
->  #
-> -# Examples:
-> -#
-> -#     1. Get vhost_virtqueue status for vhost-crypto
-> +# .. code-block:: QMP
-> +#    :caption: Example: Get vhost_virtqueue status for vhost-crypto
->  #
->  #     -> { "execute": "x-query-virtio-vhost-queue-status",
->  #          "arguments": { "path": "/machine/peripheral/crypto0/virtio-backend",
-> @@ -715,7 +715,8 @@
->  #          }
->  #        }
->  #
-> -#     2. Get vhost_virtqueue status for vhost-vsock
-> +# .. code-block:: QMP
-> +#    :caption: Example: Get vhost_virtqueue status for vhost-vsock
->  #
->  #     -> { "execute": "x-query-virtio-vhost-queue-status",
->  #          "arguments": { "path": "/machine/peripheral/vsock0/virtio-backend",
-> @@ -839,9 +840,8 @@
->  #
->  # Since: 7.2
->  #
-> -# Examples:
-> -#
-> -#     1. Introspect on virtio-net's VirtQueue 0 at index 5
-> +# .. code-block:: QMP
-> +#    :caption: Example: Introspect on virtio-net's VirtQueue 0 at index 5
->  #
->  #     -> { "execute": "x-query-virtio-queue-element",
->  #          "arguments": { "path": "/machine/peripheral-anon/device[1]/virtio-backend",
-> @@ -870,7 +870,8 @@
->  #          }
->  #        }
->  #
-> -#     2. Introspect on virtio-crypto's VirtQueue 1 at head
-> +# .. code-block:: QMP
-> +#    :caption: Example: Introspect on virtio-crypto's VirtQueue 1 at head
->  #
->  #     -> { "execute": "x-query-virtio-queue-element",
->  #          "arguments": { "path": "/machine/peripheral/crypto0/virtio-backend",
-> @@ -898,7 +899,8 @@
->  #          }
->  #        }
->  #
-> -#     3. Introspect on virtio-scsi's VirtQueue 2 at head
-> +# .. code-block:: QMP
-> +#    :caption: Example: Introspect on virtio-scsi's VirtQueue 2 at head
->  #
->  #     -> { "execute": "x-query-virtio-queue-element",
->  #          "arguments": { "path": "/machine/peripheral-anon/device[2]/virtio-backend",
-> diff --git a/qapi/yank.json b/qapi/yank.json
-> index 89f2f4d199b..a64b77e846c 100644
-> --- a/qapi/yank.json
-> +++ b/qapi/yank.json
-> @@ -81,7 +81,8 @@
->  # Errors:
->  #     - If any of the YankInstances doesn't exist, DeviceNotFound
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "yank",
->  #          "arguments": {
-> @@ -104,7 +105,8 @@
->  #
->  # Returns: list of @YankInstance
->  #
-> -# Example:
-> +# .. code-block:: QMP
-> +#    :caption: Example
->  #
->  #     -> { "execute": "query-yank" }
->  #     <- { "return": [
-> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-> index 8b1da96124e..afc0b444034 100644
-> --- a/scripts/qapi/parser.py
-> +++ b/scripts/qapi/parser.py
-> @@ -554,9 +554,12 @@ def get_doc(self) -> 'QAPIDoc':
->                      no_more_args = True
->                      intro = False
->                  elif match := re.match(
-> -                        r'(Returns|Errors|Since|Notes?|Examples?|TODO): *',
-> +                        r'(Returns|Errors|Since|Notes?|Examples?(?!::)|TODO)'
-> +                        r': *',
->                          line):
-
-Hmm, I wonder...
-
-https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#literal-blocks has:
-
-    Literal code blocks (ref) are introduced by ending a paragraph with
-    the special marker ::.
-
-Not capturing regular rST markup like
-
-    Example::
-
-        mumble mumble
-
-for our own purposes makes sense.  But it makes exactly as much sense
-for any of the tags, doesn'it?
-
-Should we instead change the regexp to match only when there's a
-*single* colon?
-
-> -                    # tagged section
-> +                    # tagged section.
-
-Spurious comment change.
-
-> +                    # Examples sections followed by two colons are excluded;
-> +                    # those are raw rST syntax!
->  
->                      if 'Note' in match.group(1):
->                          emsg = (
-> @@ -566,6 +569,14 @@ def get_doc(self) -> 'QAPIDoc':
->                          )
->                          raise QAPIParseError(self, emsg)
->  
-> +                    if match.group(1).startswith("Example"):
-> +                        emsg = (
-> +                            f"The '{match.group(1)}' section is deprecated. "
-> +                            "Please use rST's '.. code-block:: QMP' directive,"
-> +                            " 'Example::', or other suitable markup instead."
-> +                        )
-> +                        raise QAPIParseError(self, emsg)
-> +
-
-I guess this will be helpful while people get used to the changed
-syntax.  Once they are, I'd like to get rid of it.  Same for "Note"
-right above.
-
->                      doc.new_tagged_section(self.info, match.group(1))
->                      text = line[match.end():]
->                      if text:
-> diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-good.json
-> index 0a294eb324e..57e2e591938 100644
-> --- a/tests/qapi-schema/doc-good.json
-> +++ b/tests/qapi-schema/doc-good.json
-> @@ -46,11 +46,12 @@
->  #
->  # Duis aute irure dolor
->  #
-> -# Example:
-> +# .. code-block:: QMP
-
-No captions here?
-
->  #
->  # -> in
->  # <- out
-> -# Examples:
-> +# .. code-block::
-> +#
->  # - *verbatim*
->  # - {braces}
->  ##
-> @@ -170,12 +171,13 @@
->  #
->  #  Duis aute irure dolor
->  #
-> -# Example:
-> +# .. code-block::
->  #
->  #  -> in
->  #  <- out
->  #
-> -# Examples:
-> +# .. code-block::
-> +#
->  #  - *verbatim*
->  #  - {braces}
->  #
-> @@ -194,7 +196,7 @@
->  # @cmd-feat1: a feature
->  # @cmd-feat2: another feature
->  #
-> -# Example:
-> +# .. code-block::
->  #
->  #  -> in
->  #
-> diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-> index 2c9b4e419cb..cd967c8b2e0 100644
-> --- a/tests/qapi-schema/doc-good.out
-> +++ b/tests/qapi-schema/doc-good.out
-> @@ -93,11 +93,12 @@ Notes:
->  
->  Duis aute irure dolor
->  
-> -Example:
-> +.. code-block:: QMP
->  
->  -> in
->  <- out
-> -Examples:
-> +.. code-block::
-> +
->  - *verbatim*
->  - {braces}
->  doc symbol=Enum
-> @@ -184,10 +185,14 @@ frobnicate
->   - Ut enim ad minim veniam
->  
->   Duis aute irure dolor
-> -    section=Example
-> +
-> +.. code-block::
-> +
->   -> in
->   <- out
-> -    section=Examples
-> +
-> +.. code-block::
-> +
->   - *verbatim*
->   - {braces}
->      section=Since
-> @@ -199,7 +204,9 @@ If you're bored enough to read this, go see a video of boxed cats
->  a feature
->      feature=cmd-feat2
->  another feature
-> -    section=Example
-> +    section=None
-> +.. code-block::
-> +
->   -> in
->  
->   <- out
-> diff --git a/tests/qapi-schema/doc-good.txt b/tests/qapi-schema/doc-good.txt
-> index b89f35d5476..808ca7f73a1 100644
-> --- a/tests/qapi-schema/doc-good.txt
-> +++ b/tests/qapi-schema/doc-good.txt
-> @@ -33,9 +33,10 @@ Returns: the King Since: the first age Notes:
->  
->  Duis aute irure dolor
->  
-> -Example:
-> +-> in <- out .. code-block:
->  
-> --> in <- out Examples: - *verbatim* - {braces}
-> +   - *verbatim*
-> +   - {braces}
->  
->  
->  "Enum" (Enum)
-> @@ -219,17 +220,9 @@ Notes:
->  
->  Duis aute irure dolor
->  
-> -
-> -Example
-> -~~~~~~~
-> -
->     -> in
->     <- out
->  
-> -
-> -Examples
-> -~~~~~~~~
-> -
->     - *verbatim*
->     - {braces}
->  
-> @@ -260,10 +253,6 @@ Features
->  "cmd-feat2"
->     another feature
->  
-> -
-> -Example
-> -~~~~~~~
-> -
->     -> in
->  
->     <- out
-
-I want this just as much as the previous patch.
-
+--_000_DS7PR12MB5741EA2D0928F481DB6F4E1FB6C22DS7PR12MB5741namp_--
 
