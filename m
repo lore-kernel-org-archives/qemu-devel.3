@@ -4,90 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD66FC27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 17:49:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF851C27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 17:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIB31-0001ti-TM; Fri, 14 Jun 2024 13:49:11 -0400
+	id 1sIB4T-00033k-CA; Fri, 14 Jun 2024 13:50:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sIB30-0001mf-9Z
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:49:10 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sIB2y-0001NB-O5
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:49:10 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-70435f4c330so1931876b3a.1
- for <qemu-devel@nongnu.org>; Fri, 14 Jun 2024 10:49:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718387347; x=1718992147; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DSstIyNLINljXew1LhEHJRICYF2flOq5uVlCCGe9IvI=;
- b=isKJKw1Vh7/HsO/gvUZlmyjgIZCje7Klcuff/8Jss7aLCci9PXdF6/PEdVx+cvsh+8
- +i5pK0/9TCo5CiYmEeJ+Siw5C9z5Ve14rbe4goJpwE2Rd2SzPMViQ0tT8KXgsDnm/1Fp
- uZMctz7Rhd//jxRgdp6dT1Os2MqGQSMCRSJ9DuWJyvlAE+12TVEKiV8O/zuhrtdFiVXY
- ghrpyQrbyYzDzdEdiGldITv0peCqitpWMIClTXfIfelQp2RE7+CZjAmJSIpwyAv4IEOJ
- FHX+6F6OOD3ijr/S/URSqEpkpAuyl8GhySncIXrRSgamoxBC/5fUnPwGNEOEdz6/lXQu
- Mq6A==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sIB4Q-000330-Sr
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:50:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sIB4O-0001dv-SH
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:50:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718387435;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qhz1hllXNq5z8XvXMyp4QBaSbTcjW19hXQTXGSHLySg=;
+ b=TKrZNURrUc+1J4BNzf+nyxrTLYvJ88xlDJ7iz59SzRsvQNnRJ5+Q2xkS/knW6AoCEYXEPn
+ tzJdSIMI/LvwMbMrZhIxzpXTQrV2xr5D4FgA16V3t+BLaMZWHyIQHR3L7OjZ5N4g7OYRSO
+ R7jlxXQozhu3tX3Do2Bt6eUWh36Ey2g=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-124-3kEXxEyEMyWeIIQPwSb23Q-1; Fri, 14 Jun 2024 13:50:33 -0400
+X-MC-Unique: 3kEXxEyEMyWeIIQPwSb23Q-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2c2dfa5cfa5so2201786a91.0
+ for <qemu-devel@nongnu.org>; Fri, 14 Jun 2024 10:50:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718387347; x=1718992147;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DSstIyNLINljXew1LhEHJRICYF2flOq5uVlCCGe9IvI=;
- b=YARXrJTHy03/OlsQMLnasrw9WotFObcmN43QvOWS646aRVPYRSiQEMOOnea4/phvYj
- LyquSI1y9AFXbYGTyVkkaKpGVnXLiPqk7g43QXBP96Qt8SV7Gpen4YYkwZ22S4AtYluN
- HKgFKGZp5d0tAREsVu0a8ifDuNgovlafIsu7DRDx7cotLGA5BtLidwv39C8gI3LZafB4
- qr3jQZ6ETSWsF0tqq7L9xxRrDTMF84MT525zN3zte5ISWe8Ne1tVQb1QxzSmOwHGawa0
- u6Wn5BWcgrwPtiQHddXqUx4aRm3kFXS2B9ZgqbuJCkeUGkM2LXPB8Qa9C9yYkG48X+lV
- w8ig==
+ d=1e100.net; s=20230601; t=1718387432; x=1718992232;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qhz1hllXNq5z8XvXMyp4QBaSbTcjW19hXQTXGSHLySg=;
+ b=T1aqoLWK3nX5RxsOpSD92ROslqUC48kAkTXPN3AEi/qyClG4tTvAVghRKNrrhJCHy0
+ 3hqeV4MJqrttax8kniD+6NXwuQyy8Yadu14QlL1UFf4SR9acZ7+4+O6HQWBEFaUKgNP/
+ byiTAXZIcnmF+0bBb1PIUuLyqLqu+Jdm+xlF0rVP2pIBEi9tYIo9u7cvIt2d8QOiB1gl
+ xB4h+IDSWYi0z+MFcmjUELha9qT9fEHiKURcahk+H874jDHxr1Zfknv7YynXqIkS915/
+ kE41Waj29GaLtUkkcY8bPeuIsnQHbroKT3bLNVAnjLJn49QnEFr1+qSZWPtqIEAMSkyL
+ 1NbQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXJHjHBhcEHHQ0n5/VwsbGeAoiO3vvkRVPz02/5aR2nDOJ7VUjrJo1s9qbv6LEl29QORC9cjLkOjnoF1oElGoSxNsu8Fd4=
-X-Gm-Message-State: AOJu0Ywf+MWM9qGTilkiCMd8evGrp2dLgCNxPaJDROaC61+XFoA7qAAB
- 9mOIr6KJLvLgPQ5kAz9TxnNZ4pA2u/E/RIrwBA8KfitnmGgUTv0jCfOMDDpzrtESybSzsO+6MR3
- RxYg=
-X-Google-Smtp-Source: AGHT+IHYJqZpp9oj0xE0sNK4OWP400qudps0+BRC3X45J4VYyPtYUKIxQK10HYQmvQU1fEEsTp0tYQ==
-X-Received: by 2002:a05:6a00:2b1:b0:705:bd9d:a7c8 with SMTP id
- d2e1a72fcca58-705d70f71a9mr3150301b3a.4.1718387347155; 
- Fri, 14 Jun 2024 10:49:07 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00:5b09:8db7:b002:cf61?
- ([2604:3d08:9384:1d00:5b09:8db7:b002:cf61])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-6fedcf36b7dsm2913677a12.6.2024.06.14.10.49.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Jun 2024 10:49:06 -0700 (PDT)
-Message-ID: <baf59b50-c6b0-4904-839f-2e13565db92c@linaro.org>
-Date: Fri, 14 Jun 2024 10:49:05 -0700
+ AJvYcCWT/uvAsksZ9MiXjRz6MhTEBaG0pxxG7zv8J1Sbe963/S7Z7XtmkdH6ke+Mvyir2xrJgLtXNFQlhUa08Emk3laR84nVX4k=
+X-Gm-Message-State: AOJu0Yxa0ncMKwkyKDyxlXerEc+L0Fsu1xsXZAUVtknUi9U17KxMy9eZ
+ wZqLIEWSGHwjRtHztTlwJsfnQ3LRsCxO7brhq9DmVdLmtqZEn2Y58PoAdF0tQA/H6VdH3XIEreX
+ AksUZVV6B+m7hq8nExnfgyBlGXT2RZUi/Kg/vljYfC+SwR9uxG427jDZOTUqNbgXDV4olsYvFR3
+ s341dG9FDpV3ZBK50C8dIQJgZqX5w=
+X-Received: by 2002:a17:90a:8581:b0:2c2:fed1:769f with SMTP id
+ 98e67ed59e1d1-2c4db24c1a4mr3520172a91.13.1718387432622; 
+ Fri, 14 Jun 2024 10:50:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOary0DWdpOA9lkKKPDIisTLbTjrOLkcMoFkW0jLiUPGWbbYLWACLh7pg7nCFqIVEx5pfZ/40mHRiTeYqfmzI=
+X-Received: by 2002:a17:90a:8581:b0:2c2:fed1:769f with SMTP id
+ 98e67ed59e1d1-2c4db24c1a4mr3520148a91.13.1718387432258; Fri, 14 Jun 2024
+ 10:50:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] cpu: fix memleak of 'halt_cond' and 'thread'
-Content-Language: en-US
-To: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
- qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, philmd@linaro.org, qemu-trivial@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>
-References: <3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+ <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
+ <CABgObfY8BS0yCw2CxgDQTBA4np9BZgGJF3N=t6eoBcdACAE=NA@mail.gmail.com>
+ <ez270.x96k6aeu0rpw@linaro.org> <ZmnHoajecti472mi@redhat.com>
+ <ezjl0.qx0tmsp6d6t@linaro.org>
+ <CABgObfbGwKc0RYBcDPzNkE8HOSouFj4D15Oh7TuiKOC+D7raaA@mail.gmail.com>
+ <ZmqcFf0xB9m4WkA3@redhat.com>
+ <CABgObfb4+FSsadFTVg6Dc1zehQV2Vei2_kSRd5CfxsGBLPN6Eg@mail.gmail.com>
+ <Zmq47yQV-sQ0hGMy@redhat.com>
+ <CABgObfYaxBxc8GS3=YU=EwNLEihEoD4ikZ595P4m_KTZCAAaBw@mail.gmail.com>
+ <f26b0.f15017t08v16@linaro.org>
+In-Reply-To: <f26b0.f15017t08v16@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 14 Jun 2024 19:50:19 +0200
+Message-ID: <CABgObfaYUCU0Tj-jj66n8AaxOpqXFKcQA-E6G0W6q3MjjwQkiQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?Q?Alex_Benn=C3=A9_e?= <alex.bennee@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,46 +117,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/12/24 10:04, Matheus Tavares Bernardino wrote:
-> Since a4c2735f35 (cpu: move Qemu[Thread|Cond] setup into common code,
-> 2024-05-30) these fields are now allocated at cpu_common_initfn(). So
-> let's make sure we also free them at cpu_common_finalize().
-> 
-> Furthermore, the code also frees these on round robin, but we missed
-> 'halt_cond'.
-> 
-> Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
-> ---
->   accel/tcg/tcg-accel-ops-rr.c | 1 +
->   hw/core/cpu-common.c         | 3 +++
->   2 files changed, 4 insertions(+)
-> 
-> diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-> index 84c36c1450..48c38714bd 100644
-> --- a/accel/tcg/tcg-accel-ops-rr.c
-> +++ b/accel/tcg/tcg-accel-ops-rr.c
-> @@ -329,6 +329,7 @@ void rr_start_vcpu_thread(CPUState *cpu)
->           /* we share the thread, dump spare data */
->           g_free(cpu->thread);
->           qemu_cond_destroy(cpu->halt_cond);
-> +        g_free(cpu->halt_cond);
->           cpu->thread = single_tcg_cpu_thread;
->           cpu->halt_cond = single_tcg_halt_cond;
->   
-> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-> index bf1a7b8892..f131cde2c0 100644
-> --- a/hw/core/cpu-common.c
-> +++ b/hw/core/cpu-common.c
-> @@ -286,6 +286,9 @@ static void cpu_common_finalize(Object *obj)
->       g_array_free(cpu->gdb_regs, TRUE);
->       qemu_lockcnt_destroy(&cpu->in_ioctl_lock);
->       qemu_mutex_destroy(&cpu->work_mutex);
-> +    qemu_cond_destroy(cpu->halt_cond);
-> +    g_free(cpu->halt_cond);
-> +    g_free(cpu->thread);
->   }
->   
->   static int64_t cpu_common_get_arch_id(CPUState *cpu)
+On Fri, Jun 14, 2024 at 9:04=E2=80=AFAM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+>
+> On Thu, 13 Jun 2024 23:57, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> >On Thu, Jun 13, 2024 at 11:16=E2=80=AFAM Daniel P. Berrang=C3=A9 <berran=
+ge@redhat.com> wrote:
+> >> I guess there's a balance to be had somewhere on the spectrum between =
+doing
+> >> everything against the raw C binding, vs everything against a perfectl=
+y
+> >> idiomatic Rust API wrapping the C bniding. The latter might be the ide=
+al,
+> >> but from a pragmmatic POV I doubt we want the barrier to entry to be t=
+hat
+> >> high.
+> >
+> >Yes, I agree. I guess we could make things work step by step, even
+> >committing something that only focuses on the build system like
+> >Manos's work (I'll review it).
+> >
+> >I can try to look at the basic QOM interface.
+> >
+> >Manos, can you create a page on the wiki? Something like
+> >https://wiki.qemu.org/Features/Meson.
+>
+>
+> Certainly! Just to make sure I understood correctly, you mean a wiki
+> page describing how things work and tracking the progress?
+>
+> I added https://wiki.qemu.org/Features/Meson/Rust
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+I moved it to https://wiki.qemu.org/Features/Rust/Meson :) and wrote
+https://wiki.qemu.org/Features/Rust/QOM. I got to the point where at
+least this compiles:
+
+qdev_define_type!(c"test-device", TestDevice);
+impl ObjectImpl for TestDevice {}
+impl DeviceImpl for TestDevice {}
+
+fn main() {
+    let d =3D TestDevice::new();
+    d.cold_reset();
+}
+
+Of course the code makes no sense but it's a start.
+
+One thing that would be very useful is to have an Error
+implementation. Looking at what Marc-Andr=C3=A9 did for Error*
+(https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@redhat.=
+com/20210907121943.3498701-13-marcandre.lureau@redhat.com/),
+his precise implementation relies on his code to go back and forth
+between Rust representation, borrowed C object with Rust bindings and
+owned C object with Rust bindings. But I think we can at least have
+something like this:
+
+// qemu::Error
+pub struct Error {
+    msg: String,
+    /// Appends the print string of the error to the msg if not None
+    cause: Option<Box<dyn std::error::Error>>,
+    location: Option<(String, u32)>
+}
+
+impl std::error::Error for Error { ... }
+
+impl Error {
+  ...
+  fn into_c_error(self) -> *const bindings::Error { ... }
+}
+
+// qemu::Result<T>
+type Result<T> =3D Result<T, Error>;
+
+which can be implemented without too much code. This way any "bool
+f(..., Error *)" function (example: realize :)) could be implemented
+as returning qemu::Result<()>.
+
+Paolo
+
 
