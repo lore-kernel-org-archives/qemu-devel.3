@@ -4,114 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8124C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90F8AC27C6E
 	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 13:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI6Yl-0002Fn-9a; Fri, 14 Jun 2024 09:01:39 -0400
+	id 1sI6Yn-0002Gp-FP; Fri, 14 Jun 2024 09:01:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sI6Yi-0002FW-Kb
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 09:01:36 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sI6Yl-0002Fr-9u
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 09:01:39 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sI6Yg-0004qp-UH
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 09:01:36 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sI6Yj-0004qv-Fy
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 09:01:39 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 9FB053382D;
- Fri, 14 Jun 2024 13:01:31 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id D2745204FA;
+ Fri, 14 Jun 2024 13:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718370092; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1718370094; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IvhOUy3mfYzmAHZlbx2s99bBmfo8oP2zcOVedPC2JEc=;
- b=Q7NnsbcgJVWEnEmWosH4emMVm2oyJEc9rW9hHYfhzhblJY03U9xd1pSuGDTJD7jtOojoGQ
- 61WetcEpuGqAc7qNiB1qmuu2JAQpvt2XY6i/K67kgC0WzMeAPBl6Mj3bMmrSjtuI/L9dZa
- nNJwrv+95+LDkbDtj1FJmKRltktOQ7Y=
+ bh=D8RTbbyVFlt6Bcrg5Dq7GwFuB0tFCWskTFGfDYLtBMA=;
+ b=AteQB24B+NLJa4SLdLVtdoGWzKoxEjDWgLaQlP/pEU9bfm+tjx/z1l9pdwSvvwg4afyIQe
+ Qn62Jx7yXyieTYC1sYmKYCHjJiwTCoBoPpXcuNwr+NXBDjeCSCSGiVATxWNO2ygNRZr576
+ n3Zy77vpRChEsQEZqTopwOYW9IF/+O0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718370092;
+ s=susede2_ed25519; t=1718370094;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IvhOUy3mfYzmAHZlbx2s99bBmfo8oP2zcOVedPC2JEc=;
- b=ms/CV8GGAh+1Sh4N9fkoTX9UQI+fvwDwKWmF0VQRElaltd5I2wJzs9kKoo3BAMVCLQTFU8
- iGDUAJqUn9+rlvCA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=JIgR52Gj;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=1SwGqxOM
+ bh=D8RTbbyVFlt6Bcrg5Dq7GwFuB0tFCWskTFGfDYLtBMA=;
+ b=Yt1i8aeSzUa7aja1Zt9iGeFseo5JqP5iQScccpZ2zyjNCnvTjGwQMSsjoWZAcrlpYBiayr
+ GewbxvlMVmmpKDBg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=AteQB24B;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Yt1i8aeS
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718370091; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1718370094; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IvhOUy3mfYzmAHZlbx2s99bBmfo8oP2zcOVedPC2JEc=;
- b=JIgR52Gji/ZE/MMTDY36Ngovb/2zW+4r8LQqTzRDcDUQOynwnF6O+ZVS0EbtgPp3lnYqIe
- ARnJv/lQuJ4JaV4TUjEEPnXhcDdDjdFlDd8rQtTwcslCmed7mohasU7a5/iVEr5JRA1YA0
- 6zCG8EvxlWa5vYvHd/OkLbYyWDfLLXU=
+ bh=D8RTbbyVFlt6Bcrg5Dq7GwFuB0tFCWskTFGfDYLtBMA=;
+ b=AteQB24B+NLJa4SLdLVtdoGWzKoxEjDWgLaQlP/pEU9bfm+tjx/z1l9pdwSvvwg4afyIQe
+ Qn62Jx7yXyieTYC1sYmKYCHjJiwTCoBoPpXcuNwr+NXBDjeCSCSGiVATxWNO2ygNRZr576
+ n3Zy77vpRChEsQEZqTopwOYW9IF/+O0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718370091;
+ s=susede2_ed25519; t=1718370094;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IvhOUy3mfYzmAHZlbx2s99bBmfo8oP2zcOVedPC2JEc=;
- b=1SwGqxOMMaUHlGEzEX07kE7VOialGltk51kScjdH9I1t+HP0OVdStt1MrF9SQHwjxC4pxf
- tkDxuaoe4jOKfpBQ==
+ bh=D8RTbbyVFlt6Bcrg5Dq7GwFuB0tFCWskTFGfDYLtBMA=;
+ b=Yt1i8aeSzUa7aja1Zt9iGeFseo5JqP5iQScccpZ2zyjNCnvTjGwQMSsjoWZAcrlpYBiayr
+ GewbxvlMVmmpKDBg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2447313AB1;
- Fri, 14 Jun 2024 13:01:27 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1329313AB5;
+ Fri, 14 Jun 2024 13:01:31 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 1pbONic/bGbCNAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 14 Jun 2024 13:01:27 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id AOm2Mis/bGbCNAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Jun 2024 13:01:31 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: peterx@redhat.com,
-	Shameer Kolothum via <qemu-devel@nongnu.org>
-Cc: yuan1.liu@intel.com, pbonzini@redhat.com, berrange@redhat.com,
- marcandre.lureau@redhat.com, thuth@redhat.com, armbru@redhat.com,
- lvivier@redhat.com, linuxarm@huawei.com, linwenkai6@hisilicon.com,
- zhangfei.gao@linaro.org, huangchenghai2@huawei.com
-Subject: Re: [PATCH v2 0/7] Live migration acceleration with UADK
-Date: Fri, 14 Jun 2024 10:01:24 -0300
-Message-Id: <171836984520.3095.16653663002388005147.b4-ty@suse.de>
+To: peterx@redhat.com, pbonzini@redhat.com, marcandre.lureau@redhat.com,
+ berrange@redhat.com, thuth@redhat.com, philmd@linaro.org,
+ Yuan Liu <yuan1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, nanhai.zou@intel.com,
+ shameerali.kolothum.thodi@huawei.com
+Subject: Re: [PATCH v8 0/7] Live Migration With IAA
+Date: Fri, 14 Jun 2024 10:01:25 -0300
+Message-Id: <171836984519.3095.4699095490413367.b4-ty@suse.de>
 X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240607135310.46320-1-shameerali.kolothum.thodi@huawei.com>
-References: <20240607135310.46320-1-shameerali.kolothum.thodi@huawei.com>
+In-Reply-To: <20240610102110.900410-1-yuan1.liu@intel.com>
+References: <20240610102110.900410-1-yuan1.liu@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 9FB053382D
-X-Spamd-Result: default: False [-3.29 / 50.00]; BAYES_HAM(-1.78)[93.66%];
+X-Rspamd-Queue-Id: D2745204FA
+X-Spamd-Result: default: False [-4.41 / 50.00]; BAYES_HAM(-2.90)[99.59%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_TLS_ALL(0.00)[];
+ MX_GOOD(-0.01)[];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_TWELVE(0.00)[13];
+ RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ ARC_NA(0.00)[]; DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_SEVEN(0.00)[10];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
  DKIM_TRACE(0.00)[suse.de:+]
 X-Rspamd-Action: no action
 X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -134,13 +133,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 07 Jun 2024 14:53:03 +0100, Shameer Kolothum via wrote:
-> v1 --> v2
-> (v1: https://lore.kernel.org/qemu-devel/20240529094435.11140-1-shameerali.kolothum.thodi@huawei.com/)
+On Mon, 10 Jun 2024 18:21:03 +0800, Yuan Liu wrote:
+> I am writing to submit a code change aimed at enhancing live migration
+> acceleration by leveraging the compression capability of the Intel
+> In-Memory Analytics Accelerator (IAA).
 > 
-> -Rebased on top of Intel IAA v7 series[0].
-> -Addressed comments from Fabiano. Thanks.
-> -Gathered tags received.
+> The implementation of the IAA (de)compression code is based on Intel Query
+> Processing Library (QPL), an open-source software project designed for
+> high-performance query processing operations on Intel CPUs.
+> https://github.com/intel/qpl
 > 
 > [...]
 
