@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29572C27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 07:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22D06C27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 07:29:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI1M5-00046k-N9; Fri, 14 Jun 2024 03:28:13 -0400
+	id 1sI1Li-0003IA-0f; Fri, 14 Jun 2024 03:27:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sI1M3-00041p-Fg
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:28:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sI1Lg-0003HN-IO
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:27:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sI1M1-0000qK-MI
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:28:11 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sI1Le-0000ll-VR
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:27:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718350089;
+ s=mimecast20190719; t=1718350066;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DD7IqWfzysHo+dhyuOS1AX1QrIdW6VQkyKxnzc60i1g=;
- b=Tb1nqC0TZnD1X5km8+yK7MHGlGyJe9uwElA4GxiYGQunHmOVwubqJ6mmfJS/Xc1GxWl5vR
- Vw4MJUqkkVOlmreDvf27qkbOjN1v0YlMQ7uxdrhEVF0HeDRXgpJhJr9iQrxdBN8dqwu5Mw
- CxOElOt5pSDdYge3WjO+qGMy10ph/zo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=GG/7nIx9q8EFSXqOPcSvBh4zIHq/fXW6byZ08I1yz/Y=;
+ b=bqiVRdbBrTuD5pMDHwBQ0FE0BBRBOgKRgEFFdc8iryCu7ISVGQ5Q3v+XYmoGmaR9Q9ytNQ
+ NiN/nP+H3V8C7mdSMnCzzOHAGeUgzbKvxxHGGayu3XCt+BNYG4Th/NIP5nFA25vamf3AXe
+ Zm9R5H6ayq4VzIFC79P8O0OIlI1vi+4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-mlGD9wMyP6CfWBBRZ3yAtw-1; Fri,
- 14 Jun 2024 03:27:58 -0400
-X-MC-Unique: mlGD9wMyP6CfWBBRZ3yAtw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-384-LzW7ZURgPWeI16W83EmJXg-1; Fri,
+ 14 Jun 2024 03:27:37 -0400
+X-MC-Unique: LzW7ZURgPWeI16W83EmJXg-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 80E1B1956094; Fri, 14 Jun 2024 07:27:57 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 146D5195609D; Fri, 14 Jun 2024 07:27:36 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.49])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B46D13000219; Fri, 14 Jun 2024 07:27:55 +0000 (UTC)
+ id 37FC73000219; Fri, 14 Jun 2024 07:27:32 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PULL 15/19] aspeed: Add an AST2700 eval board
-Date: Fri, 14 Jun 2024 09:26:16 +0200
-Message-ID: <20240614072620.1262053-16-clg@redhat.com>
+Subject: [PULL 05/19] aspeed/sdmc: fix coding style
+Date: Fri, 14 Jun 2024 09:26:06 +0200
+Message-ID: <20240614072620.1262053-6-clg@redhat.com>
 In-Reply-To: <20240614072620.1262053-1-clg@redhat.com>
 References: <20240614072620.1262053-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -85,81 +85,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-AST2700 CPU is ARM Cortex-A35 which is 64 bits.
-Add TARGET_AARCH64 to build this machine.
+Fix coding style issues from checkpatch.pl
 
-According to the design of ast2700, it has a bootmcu(riscv-32) which
-is used for executing SPL.
-Then, CPUs(cortex-a35) execute u-boot, kernel and rofs.
-
-Currently, qemu not support emulate two CPU architectures
-at the same machine. Therefore, qemu will only support
-to emulate CPU(cortex-a35) side for ast2700
+Test command:
+scripts/checkpatch.pl --no-tree -f hw/misc/aspeed_sdmc.c
 
 Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
 ---
- hw/arm/aspeed.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ hw/misc/aspeed_sdmc.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 93ca87fda266..40dc0e4c76db 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -178,6 +178,12 @@ struct AspeedMachineState {
- #define AST2600_EVB_HW_STRAP1 0x000000C0
- #define AST2600_EVB_HW_STRAP2 0x00000003
- 
-+#ifdef TARGET_AARCH64
-+/* AST2700 evb hardware value */
-+#define AST2700_EVB_HW_STRAP1 0x000000C0
-+#define AST2700_EVB_HW_STRAP2 0x00000003
-+#endif
-+
- /* Tacoma hardware value */
- #define TACOMA_BMC_HW_STRAP1  0x00000000
- #define TACOMA_BMC_HW_STRAP2  0x00000040
-@@ -1588,6 +1594,26 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
-     aspeed_machine_class_init_cpus_defaults(mc);
- }
- 
-+#ifdef TARGET_AARCH64
-+static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
-+
-+    mc->desc = "Aspeed AST2700 EVB (Cortex-A35)";
-+    amc->soc_name  = "ast2700-a0";
-+    amc->hw_strap1 = AST2700_EVB_HW_STRAP1;
-+    amc->hw_strap2 = AST2700_EVB_HW_STRAP2;
-+    amc->fmc_model = "w25q01jvq";
-+    amc->spi_model = "w25q512jv";
-+    amc->num_cs    = 2;
-+    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
-+    amc->uart_default = ASPEED_DEV_UART12;
-+    mc->default_ram_size = 1 * GiB;
-+    aspeed_machine_class_init_cpus_defaults(mc);
-+}
-+#endif
-+
- static void aspeed_machine_qcom_dc_scm_v1_class_init(ObjectClass *oc,
-                                                      void *data)
+diff --git a/hw/misc/aspeed_sdmc.c b/hw/misc/aspeed_sdmc.c
+index 74279bbe8ee7..873d67c592d8 100644
+--- a/hw/misc/aspeed_sdmc.c
++++ b/hw/misc/aspeed_sdmc.c
+@@ -296,7 +296,8 @@ static void aspeed_2400_sdmc_write(AspeedSDMCState *s, uint32_t reg,
+                                    uint32_t data)
  {
-@@ -1711,6 +1737,12 @@ static const TypeInfo aspeed_machine_types[] = {
-         .name           = MACHINE_TYPE_NAME("ast1030-evb"),
-         .parent         = TYPE_ASPEED_MACHINE,
-         .class_init     = aspeed_minibmc_machine_ast1030_evb_class_init,
-+#ifdef TARGET_AARCH64
-+    }, {
-+        .name          = MACHINE_TYPE_NAME("ast2700-evb"),
-+        .parent        = TYPE_ASPEED_MACHINE,
-+        .class_init    = aspeed_machine_ast2700_evb_class_init,
-+#endif
-     }, {
-         .name          = TYPE_ASPEED_MACHINE,
-         .parent        = TYPE_MACHINE,
+     if (reg == R_PROT) {
+-        s->regs[reg] = (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
++        s->regs[reg] =
++            (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
+         return;
+     }
+ 
+@@ -354,7 +355,8 @@ static void aspeed_2500_sdmc_write(AspeedSDMCState *s, uint32_t reg,
+                                    uint32_t data)
+ {
+     if (reg == R_PROT) {
+-        s->regs[reg] = (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
++        s->regs[reg] =
++            (data == PROT_KEY_UNLOCK) ? PROT_UNLOCKED : PROT_SOFTLOCKED;
+         return;
+     }
+ 
+@@ -434,8 +436,9 @@ static void aspeed_2600_sdmc_write(AspeedSDMCState *s, uint32_t reg,
+     }
+ 
+     if (s->regs[R_PROT] == PROT_HARDLOCKED) {
+-        qemu_log_mask(LOG_GUEST_ERROR, "%s: SDMC is locked until system reset!\n",
+-                __func__);
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: SDMC is locked until system reset!\n",
++                      __func__);
+         return;
+     }
+ 
 -- 
 2.45.2
 
