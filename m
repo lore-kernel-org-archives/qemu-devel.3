@@ -4,83 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3DADC27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 11:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A554C27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 11:28:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI562-0000PE-GK; Fri, 14 Jun 2024 07:27:54 -0400
+	id 1sI564-0000Pg-4h; Fri, 14 Jun 2024 07:27:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sI55z-0000Og-K2
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 07:27:51 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sI55x-0003uq-O7
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 07:27:51 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a6f3efa1cc7so538075366b.0
- for <qemu-devel@nongnu.org>; Fri, 14 Jun 2024 04:27:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718364468; x=1718969268; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nZ1h6BeOohe7AYMx72y+6B8RNjrQAIM6siTTy4NaYy8=;
- b=CQLFz979cSTb6nyn6unxNpFFbNN8lyy+pYj5vnej4VvzFFnLBUH+CI5X8VAAhf+AU9
- 9DFDYfChrQc15AWIu7D3KBFAouHFVfUOhYs9T3a6slAKL0rstLFtGffLo1hxCMGFS9GR
- HsEFXY/1IDKAER5mgPqhgTqKZyA5JoJkhq9tXF1KP52iAOhrGYVBStxsp2FzZo5UxapK
- Wnyy7NN4ZxEs7KJpoxY3XeF6pZVNyFghS/JC5JuXRiYHXaOsv/pThEKWKIc432d6KLwD
- aNFlIUdTTAToZdmdD4Os8qgmOTObHX6HFc9yXrvJ7Xp7CWm35YxbZVeQ/fhP5+uq4AGX
- IjkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718364468; x=1718969268;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nZ1h6BeOohe7AYMx72y+6B8RNjrQAIM6siTTy4NaYy8=;
- b=jhcE2qaBejKk2/gK/eL9HFanMUL596U4pHvQcNUjGoih1Exdhm+BCp/+AHw4VqZVhw
- AB3js55K22vmcDfMbck5rzryNMcZGA/M4bi/l3apAbeBaO/pRxvEclb/fnPvsCC1umMK
- J2bz4wfWa8/ZonIu+0cuV/DKhgJkdUYzmrCPPTy1nacaBa7Vt4zHdQeR9yytQj8zd4WU
- WIOnuWiRmPWquScoLFNRBFk6Dyue6Sd0Lfp001Ej13b6AVI0eQLryEznN0hd5TrQp7cq
- 5CAk8njEf5y4Dxg4S2ijVyoNqadFby8N/9o1GWioiE7guKCaFhjncd8CMlIPwlgXFzJY
- /98Q==
-X-Gm-Message-State: AOJu0Yxu3JVeOMmgZv8rTg1WtncjUiw5JaxbKSo8+WBXs+WxMf0p7maF
- 2qaHksuup9N0dCYWclq41yFBL+xzRrj2o/On7j+qHH4W8OGUmLHMO/1P4iias/o=
-X-Google-Smtp-Source: AGHT+IGQayWjKf5trJ9U0Jnxm11j2RgPipDfBvSQLzDeG5ptbUKQZeMrguty6KprQLb5lCk52PUIhA==
-X-Received: by 2002:a17:907:971f:b0:a6f:1464:e1ef with SMTP id
- a640c23a62f3a-a6f52474275mr451967566b.31.1718364467847; 
- Fri, 14 Jun 2024 04:27:47 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56ed34b0sm174327766b.101.2024.06.14.04.27.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 14 Jun 2024 04:27:47 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 299675F794;
- Fri, 14 Jun 2024 12:27:47 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: qemu-devel@nongnu.org,  philmd@linaro.org,  peter.maydell@linaro.org,
- richard.henderson@linaro.org
-Subject: Re: [PATCH v2 3/9] gdbstub: Add support for target-specific stubs
-In-Reply-To: <20240613172103.2987519-4-gustavo.romero@linaro.org> (Gustavo
- Romero's message of "Thu, 13 Jun 2024 17:20:57 +0000")
-References: <20240613172103.2987519-1-gustavo.romero@linaro.org>
- <20240613172103.2987519-4-gustavo.romero@linaro.org>
-Date: Fri, 14 Jun 2024 12:27:47 +0100
-Message-ID: <871q4zvk5o.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <SRS0=g5qb=NQ=kaod.org=clg@ozlabs.org>)
+ id 1sI563-0000PF-1J; Fri, 14 Jun 2024 07:27:55 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=g5qb=NQ=kaod.org=clg@ozlabs.org>)
+ id 1sI560-0003tX-Jm; Fri, 14 Jun 2024 07:27:54 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W0xpR70KKz4wcC;
+ Fri, 14 Jun 2024 21:27:43 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W0xpN0yv2z4wyh;
+ Fri, 14 Jun 2024 21:27:39 +1000 (AEST)
+Message-ID: <ceefb013-7e8a-47ae-9450-2601db9872aa@kaod.org>
+Date: Fri, 14 Jun 2024 13:27:34 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/5] ppc/pnv: Add SPI controller model
+To: Chalapathi V <chalapathi.v@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ calebs@us.ibm.com, chalapathi.v@ibm.com, saif.abrar@linux.vnet.ibm.com,
+ dantan@us.ibm.com, milesg@linux.vnet.ibm.com
+References: <20240515174149.17713-1-chalapathi.v@linux.ibm.com>
+ <20240515174149.17713-2-chalapathi.v@linux.ibm.com>
+ <a671f38a-f7b0-433d-b016-a024964be8be@kaod.org>
+ <38161823-19d4-4cd1-b85b-33b9beadb56b@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <38161823-19d4-4cd1-b85b-33b9beadb56b@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=g5qb=NQ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,187 +69,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gustavo Romero <gustavo.romero@linaro.org> writes:
+On 6/13/24 3:45 PM, Chalapathi V wrote:
+> 
+> On 20-05-2024 11:19, Cédric Le Goater wrote:
+>> On 5/15/24 19:41, Chalapathi V wrote:
+>>> SPI controller device model supports a connection to a single SPI responder.
+>>> This provide access to SPI seeproms, TPM, flash device and an ADC controller.
+>>>
+>>> All SPI function control is mapped into the SPI register space to enable full
+>>> control by firmware. In this commit SPI configuration component is modelled
+>>> which contains all SPI configuration and status registers as well as the hold
+>>> registers for data to be sent or having been received.
+>>>
+>>> An existing QEMU SSI framework is used and SSI_BUS is created.
+>>>
+>>> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+>>> ---
+>>>   include/hw/ppc/pnv_xscom.h    |   3 +
+>>>   include/hw/ssi/pnv_spi.h      |  44 +++++++
+>>>   include/hw/ssi/pnv_spi_regs.h | 114 +++++++++++++++++
+>>>   hw/ppc/pnv_spi_controller.c   | 228 ++++++++++++++++++++++++++++++++++
+>>
+>> The file names are not consistent.
+>>
+>> Please rename hw/ppc/pnv_spi_controller.c to /hw/ssi/pnv_spi.c.
+> 
+> Hello Cedric,
+> 
+> I could not compile hw/ssi/pnv_spi.c because of target specific code.
+> 
+> /FAILED: libcommon.fa.p/hw_ssi_pnv_spi.c.o
+> cc -m64 -mcx16 -Ilibcommon.fa.p -I/usr/include/p11-kit-1 -I/usr/include/pixman-1 -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/gio-unix-2.0/ -I/usr/include/slirp -fdiagnostics-color=auto -Wall -Winvalid-pch -Werror -std=gnu11 -O2 -g -fstack-protector-strong -Wundef -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes -Wredundant-decls -Wold-style-declaration -Wold-style-definition -Wtype-limits -Wformat-security -Wformat-y2k -Winit-self -Wignored-qualifiers -Wempty-body -Wnested-externs -Wendif-labels -Wexpansion-to-defined -Wimplicit-fallthrough=2 -Wmissing-format-attribute -Wno-missing-include-dirs -Wno-shift-negative-value -Wno-psabi -isystem <qemu_dir>/linux-headers -isystem linux-headers -iquote . -iquote <qemu_dir> -iquote <<qemu_dir>>/include -iquote <qemu_dir>/host/include/x86_64 -iquote <qemu_dir>/host/include/generic -iquote <qemu_dir>/tcg/i386 -pthread -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -fno-strict-aliasing 
+> -fno-common -fwrapv -fPIE -MD -MQ libcommon.fa.p/hw_ssi_pnv_spi.c.o -MF libcommon.fa.p/hw_ssi_pnv_spi.c.o.d -o libcommon.fa.p/hw_ssi_pnv_spi.c.o -c ../hw/ssi/pnv_spi.c
+> In file included from <qemu_dir>/target/ppc/cpu.h:25,
+> from <qemu_dir>/include/hw/ppc/pnv.h:24,
+> from <qemu_dir>/include/hw/ppc/pnv_xscom.h:24,
+>                   from ../hw/ssi/pnv_spi.c:12:
+> <qemu_dir>/include/exec/cpu-defs.h:23:2: error: #error cpu.h included from common code
+>   #error cpu.h included from common code
+>    ^~~~~
+> In file included from /<qemu_dir>/target/ppc/cpu.h:25,
+> from <qemu_dir>/include/hw/ppc/pnv.h:24,
+> from <qemu_dir>/include/hw/ppc/pnv_xscom.h:24,
+>                   from ../hw/ssi/pnv_spi.c:12:
+> <qemu_dir>/include/exec/cpu-defs.h:34:10: fatal error: cpu-param.h: No such file or directory
+>   #include "cpu-param.h"
+>            ^~~~~~~~~~~~~
+> compilation terminated.
+> /
+> 
+> Hence shall I keep pnv_spi.c in /hw/ppc/ ?
 
-> Currently, it's not possible to have stubs specific to a given target,
-> even though there are GDB features which are target-specific, like, for
-> instance, memory tagging.
->
-> This commit introduces gdb_extend_qsupported_features,
-> gdb_extend_query_table, and gdb_extend_set_table functions as interfaces
-> to extend the qSupported string, the query handler table, and the set
-> handler table, allowing target-specific stub implementations.
->
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->  gdbstub/gdbstub.c          | 59 ++++++++++++++++++++++++++++++++++----
->  include/gdbstub/commands.h | 22 ++++++++++++++
->  2 files changed, 75 insertions(+), 6 deletions(-)
->
-> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-> index 9ff2f4177d..e69cc5131e 100644
-> --- a/gdbstub/gdbstub.c
-> +++ b/gdbstub/gdbstub.c
-> @@ -1609,6 +1609,12 @@ static void handle_query_thread_extra(GArray *para=
-ms, void *user_ctx)
->      gdb_put_strbuf();
->  }
->=20=20
-> +static char *extended_qsupported_features;
-> +void gdb_extend_qsupported_features(char *qsupported_features)
-> +{
 
-Maybe g_assert(!extended_qsupported_features)?
+Can't we "fix" pnv_xscom.h to be more friendly ? with forward declarations
+of the Pnv* types ?
 
-> +    extended_qsupported_features =3D qsupported_features;
-> +}
-> +
->  static void handle_query_supported(GArray *params, void *user_ctx)
->  {
->      CPUClass *cc;
-> @@ -1648,6 +1654,11 @@ static void handle_query_supported(GArray *params,=
- void *user_ctx)
->      }
->=20=20
->      g_string_append(gdbserver_state.str_buf, ";vContSupported+;multiproc=
-ess+");
-> +
-> +    if (extended_qsupported_features) {
-> +        g_string_append(gdbserver_state.str_buf, extended_qsupported_fea=
-tures);
-> +    }
-> +
->      gdb_put_strbuf();
->  }
->=20=20
-> @@ -1729,6 +1740,14 @@ static const GdbCmdParseEntry gdb_gen_query_set_co=
-mmon_table[] =3D {
->      },
->  };
->=20=20
-> +static GdbCmdParseEntry *extended_query_table;
-> +static int extended_query_table_size;
-> +void gdb_extend_query_table(GdbCmdParseEntry *table, int size)
-> +{
 
-g_assert(!extended_query_table)
+Thanks,
 
-> +    extended_query_table =3D table;
-> +    extended_query_table_size =3D size;
-> +}
-> +
->  static const GdbCmdParseEntry gdb_gen_query_table[] =3D {
->      {
->          .handler =3D handle_query_curr_tid,
-> @@ -1821,6 +1840,14 @@ static const GdbCmdParseEntry gdb_gen_query_table[=
-] =3D {
->  #endif
->  };
->=20=20
-> +static GdbCmdParseEntry *extended_set_table;
-> +static int extended_set_table_size;
-> +void gdb_extend_set_table(GdbCmdParseEntry *table, int size)
-> +{
-> +    extended_set_table =3D table;
-> +    extended_set_table_size =3D size;
-> +}
-> +
->  static const GdbCmdParseEntry gdb_gen_set_table[] =3D {
->      /* Order is important if has same prefix */
->      {
-> @@ -1859,11 +1886,21 @@ static void handle_gen_query(GArray *params, void=
- *user_ctx)
->          return;
->      }
->=20=20
-> -    if (!process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-> -                            gdb_gen_query_table,
-> -                            ARRAY_SIZE(gdb_gen_query_table))) {
-> -        gdb_put_packet("");
-> +    if (process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-> +                           gdb_gen_query_table,
-> +                           ARRAY_SIZE(gdb_gen_query_table))) {
-> +        return;
-> +    }
-> +
-> +    if (extended_query_table &&
-> +        process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-> +                           extended_query_table,
-> +                           extended_query_table_size)) {
-> +        return;
->      }
-> +
-> +    /* Can't handle query, return Empty response. */
-> +    gdb_put_packet("");
->  }
->=20=20
->  static void handle_gen_set(GArray *params, void *user_ctx)
-> @@ -1878,11 +1915,21 @@ static void handle_gen_set(GArray *params, void *=
-user_ctx)
->          return;
->      }
->=20=20
-> -    if (!process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-> +    if (process_string_cmd(gdb_get_cmd_param(params, 0)->data,
->                             gdb_gen_set_table,
->                             ARRAY_SIZE(gdb_gen_set_table))) {
-> -        gdb_put_packet("");
-> +        return;
->      }
-> +
-> +    if (extended_set_table &&
-> +        process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-> +                           extended_set_table,
-> +                           extended_set_table_size)) {
-> +        return;
-> +    }
-> +
-> +    /* Can't handle set, return Empty response. */
-> +    gdb_put_packet("");
->  }
->=20=20
->  static void handle_target_halt(GArray *params, void *user_ctx)
-> diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
-> index dd45c38472..2204c3ddbe 100644
-> --- a/include/gdbstub/commands.h
-> +++ b/include/gdbstub/commands.h
-> @@ -71,4 +71,26 @@ typedef struct GdbCmdParseEntry {
->   */
->  int gdb_put_packet(const char *buf);
->=20=20
-> +/**
-> + * gdb_extend_query_table() - Extend query table.
-> + * @table: The table with the additional query packet handlers.
-> + * @size: The number of handlers to be added.
-> + */
-> +void gdb_extend_query_table(GdbCmdParseEntry *table, int size);
-> +
-> +/**
-> + * gdb_extend_set_table() - Extend set table.
-> + * @table: The table with the additional set packet handlers.
-> + * @size: The number of handlers to be added.
-> + */
-> +void gdb_extend_set_table(GdbCmdParseEntry *table, int size);
-> +
-> +/**
-> + * gdb_extend_qsupported_features() - Extend the qSupported features str=
-ing.
-> + * @qsupported_features: The additional qSupported feature(s) string. Th=
-e string
-> + * should start with a semicolon and, if there are more than one feature=
-, the
-> + * features should be separate by a semiocolon.
-> + */
-> +void gdb_extend_qsupported_features(char *qsupported_features);
-> +
+C.
 
-We should make it clear these functions should only be called once
-(although I guess in a heterogeneous future we might have to do something
-more clever).
-
->  #endif /* GDBSTUB_COMMANDS_H */
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
