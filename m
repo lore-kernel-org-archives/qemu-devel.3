@@ -4,106 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61FE0C27C75
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 12:26:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1531C27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 12:35:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI60E-0001P5-Cf; Fri, 14 Jun 2024 08:25:58 -0400
+	id 1sI68l-0007l3-Nj; Fri, 14 Jun 2024 08:34:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1sI60C-0001OC-Je; Fri, 14 Jun 2024 08:25:56 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1sI60A-0006fF-Dv; Fri, 14 Jun 2024 08:25:56 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45EC6BZZ005017;
- Fri, 14 Jun 2024 12:25:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=6
- viIaOcaVme5NKyCLSpR9y4eRUM7VZiReg8xGRGEbFI=; b=Jf/BWKzuvs333mB0W
- cfPW84jM/IFhmaqczK/1boO65iOiOpHh0FxRNfxUp4RV5+W2Omv0U29zkgnVu6CY
- P1vmOGGTqDW06C9rJFR0JviofQObVJoysSdRqp39krP3dQyz9tPVyVotkbVJDzBx
- oPWTa58NDlOZS/DLaa2cIFwkmV6yF2vXpBlWOKzK32seODZ24bZKwsbvYzdWGlvp
- 0RPEpsPrwxwqGD4lmWwxqA3KaAfZ391AgdmCi/RKkkMVntEwq+D/ZSKs17MXJxx9
- 7oezq16qPF1iKXIQk+ckTCB3zZwW3P45cU172WmXxvERL+SGJuxXiV4Lh4L7Qdkn
- ISpWQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yrn15g479-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Jun 2024 12:25:44 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45ECPhmL001476;
- Fri, 14 Jun 2024 12:25:43 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yrn15g44y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Jun 2024 12:25:43 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45ECD2C9028690; Fri, 14 Jun 2024 12:23:17 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3yn1mv1m09-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Jun 2024 12:23:17 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45ECNE6747644980
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Jun 2024 12:23:16 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EACCA20043;
- Fri, 14 Jun 2024 12:23:13 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 157E020040;
- Fri, 14 Jun 2024 12:23:11 +0000 (GMT)
-Received: from [9.43.14.142] (unknown [9.43.14.142])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 14 Jun 2024 12:23:10 +0000 (GMT)
-Message-ID: <0d3b4ece-a41e-4108-843d-067d56f3eff2@linux.ibm.com>
-Date: Fri, 14 Jun 2024 17:53:08 +0530
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sI68j-0007kf-Qk
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 08:34:45 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sI68h-00081o-S5
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 08:34:45 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a6265d3ba8fso243863966b.0
+ for <qemu-devel@nongnu.org>; Fri, 14 Jun 2024 05:34:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718368481; x=1718973281; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ztpk4cEgoI92Jk1i/3O/V5DzxdGlU1Uh35xrKqy062c=;
+ b=WoAESHiIJzLWEQRLBZWc82z9k6e+3Ca0SZsUexFr82QWPr9qD+6zYq/DaJOL/I4Ici
+ tcBVwjkoxFpvRAgqs5/Ys1USBOiiq3haJurjsARclWOWI+zqUvdfasOQANCRYsRFqvnq
+ YDKbTTXOfOdgCEU6vkTgepMTxXajktTIwRdpfT5VmoFMK9og22oIh8L5vOIl8h5TIM9z
+ ZEBqTFcZAt70Lp0cO6UFRxbJ+whqyZP/MQO8lRk1fBgnRFxI1f0iA0UFa1RrB1qhG/TH
+ GO2N/d9bhYKm30NEBetDxaBrKFT+xowfYoCstiU4wRRUvytdyioy4zhQS7h8o8fxTS2w
+ umGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718368481; x=1718973281;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ztpk4cEgoI92Jk1i/3O/V5DzxdGlU1Uh35xrKqy062c=;
+ b=PU+kVSVL13Gj99jBbwCdG3eoDZRGbPef5gIkUJLgcIiGArloiNMLbPMswvZC4pbKaL
+ WpdLbP7MWgFDv2CvwVRjCUrdZm+ER352WeI9LSdbcJ46mr5fDhVPbR+v+UcXVosWnnIy
+ wmLQ+WhTmY5ClbmP+RyuKw/1S19lyrpNardT2vBxKsQlsq5512XcQ9zY6Uw8DR6PoUbc
+ jY2CL5Zxh1jRLDXBWBXVIlf6qqAWwLxMB1KizbKFqFBa/mvp3FvX7Vu81QBCdlZ/oAZD
+ n0cMIihEiofzMF88+oVntOSdUjHm/sQV0RUcfKJmlc8vjYqMJdusvM0A/3xtHeGz/Ncf
+ G6vQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUwm1JP9qzgGYFQIbxOqJe/c5khSNnZXQBtrB5/eQd/0goSWStlbZ5pgvHs3dsN4xHHHm35RwcltIzxslz7V0NyImd0H3A=
+X-Gm-Message-State: AOJu0Yx1XqrokCK3H3E6geD/YxfIayrYOjV56TBkBc/TCKOJPqdgIiN9
+ qHXrQ4N+ap3HVfJJqeHPBvS8h30xZ5+qEoESe4e/FKNT/JxKmDg7KCxxwT/6flo=
+X-Google-Smtp-Source: AGHT+IFa3Hs4PkwnQ/v10ytOcapl8az8tbpVAy0KhgsIGgx79tLLUOT95Bk4HuGLWX+SZIWefO+uVg==
+X-Received: by 2002:a17:906:4555:b0:a6f:523a:8e93 with SMTP id
+ a640c23a62f3a-a6f60de2129mr165404166b.71.1718368480702; 
+ Fri, 14 Jun 2024 05:34:40 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.216.145])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6f56f42badsm180661066b.184.2024.06.14.05.34.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 14 Jun 2024 05:34:40 -0700 (PDT)
+Message-ID: <18b942c0-ffc9-48c6-aded-cd68fd54384a@linaro.org>
+Date: Fri, 14 Jun 2024 14:34:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] ppc/pnv: Add SPI controller model
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- calebs@us.ibm.com, chalapathi.v@ibm.com, saif.abrar@linux.vnet.ibm.com,
- dantan@us.ibm.com, milesg@linux.vnet.ibm.com
-References: <20240515174149.17713-1-chalapathi.v@linux.ibm.com>
- <20240515174149.17713-2-chalapathi.v@linux.ibm.com>
- <a671f38a-f7b0-433d-b016-a024964be8be@kaod.org>
- <38161823-19d4-4cd1-b85b-33b9beadb56b@linux.ibm.com>
- <ceefb013-7e8a-47ae-9450-2601db9872aa@kaod.org>
+Subject: Re: [PATCH v2 5/9] target/arm: Make some MTE helpers widely available
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org, alex.bennee@linaro.org,
+ richard.henderson@linaro.org
+References: <20240613172103.2987519-1-gustavo.romero@linaro.org>
+ <20240613172103.2987519-6-gustavo.romero@linaro.org>
+ <49457f87-2b07-4e62-98ee-893f57a3ca2a@linaro.org>
+ <e1a79665-62c3-5511-b7ad-baf8e72a17b1@linaro.org>
 Content-Language: en-US
-From: Chalapathi V <chalapathi.v@linux.ibm.com>
-In-Reply-To: <ceefb013-7e8a-47ae-9450-2601db9872aa@kaod.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <e1a79665-62c3-5511-b7ad-baf8e72a17b1@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: O3QxuIH_ecKib5CsgOfVvjrXL9YNbgCG
-X-Proofpoint-GUID: bYi59NQWrpn20yB9A_nhbengqm3_4Bsz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-14_09,2024-06-14_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- adultscore=0 suspectscore=0 phishscore=0 mlxlogscore=662 impostorscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 spamscore=0 mlxscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406140085
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=chalapathi.v@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,100 +99,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 14-06-2024 16:57, Cédric Le Goater wrote:
-> On 6/13/24 3:45 PM, Chalapathi V wrote:
+On 13/6/24 20:13, Gustavo Romero wrote:
+> Hi Phil!
+> 
+> On 6/13/24 2:32 PM, Philippe Mathieu-Daudé wrote:
+>> Hi Gustavo,
 >>
->> On 20-05-2024 11:19, Cédric Le Goater wrote:
->>> On 5/15/24 19:41, Chalapathi V wrote:
->>>> SPI controller device model supports a connection to a single SPI 
->>>> responder.
->>>> This provide access to SPI seeproms, TPM, flash device and an ADC 
->>>> controller.
->>>>
->>>> All SPI function control is mapped into the SPI register space to 
->>>> enable full
->>>> control by firmware. In this commit SPI configuration component is 
->>>> modelled
->>>> which contains all SPI configuration and status registers as well 
->>>> as the hold
->>>> registers for data to be sent or having been received.
->>>>
->>>> An existing QEMU SSI framework is used and SSI_BUS is created.
->>>>
->>>> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
->>>> ---
->>>>   include/hw/ppc/pnv_xscom.h    |   3 +
->>>>   include/hw/ssi/pnv_spi.h      |  44 +++++++
->>>>   include/hw/ssi/pnv_spi_regs.h | 114 +++++++++++++++++
->>>>   hw/ppc/pnv_spi_controller.c   | 228 
->>>> ++++++++++++++++++++++++++++++++++
+>> On 13/6/24 19:20, Gustavo Romero wrote:
+>>> Make the MTE helpers allocation_tag_mem_probe, load_tag1, and store_tag1
+>>> available to other subsystems by moving them from mte_helper.c to a new
+>>> header file, mte_helper.h.
 >>>
->>> The file names are not consistent.
->>>
->>> Please rename hw/ppc/pnv_spi_controller.c to /hw/ssi/pnv_spi.c.
->>
->> Hello Cedric,
->>
->> I could not compile hw/ssi/pnv_spi.c because of target specific code.
->>
->> /FAILED: libcommon.fa.p/hw_ssi_pnv_spi.c.o
->> cc -m64 -mcx16 -Ilibcommon.fa.p -I/usr/include/p11-kit-1 
->> -I/usr/include/pixman-1 -I/usr/include/glib-2.0 
->> -I/usr/lib64/glib-2.0/include -I/usr/include/gio-unix-2.0/ 
->> -I/usr/include/slirp -fdiagnostics-color=auto -Wall -Winvalid-pch 
->> -Werror -std=gnu11 -O2 -g -fstack-protector-strong -Wundef 
->> -Wwrite-strings -Wmissing-prototypes -Wstrict-prototypes 
->> -Wredundant-decls -Wold-style-declaration -Wold-style-definition 
->> -Wtype-limits -Wformat-security -Wformat-y2k -Winit-self 
->> -Wignored-qualifiers -Wempty-body -Wnested-externs -Wendif-labels 
->> -Wexpansion-to-defined -Wimplicit-fallthrough=2 
->> -Wmissing-format-attribute -Wno-missing-include-dirs 
->> -Wno-shift-negative-value -Wno-psabi -isystem 
->> <qemu_dir>/linux-headers -isystem linux-headers -iquote . -iquote 
->> <qemu_dir> -iquote <<qemu_dir>>/include 
->> -iquote <qemu_dir>/host/include/x86_64 
->> -iquote <qemu_dir>/host/include/generic -iquote <qemu_dir>/tcg/i386 
->> -pthread -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE 
->> -fno-strict-aliasing -fno-common -fwrapv -fPIE -MD -MQ 
->> libcommon.fa.p/hw_ssi_pnv_spi.c.o -MF 
->> libcommon.fa.p/hw_ssi_pnv_spi.c.o.d -o 
->> libcommon.fa.p/hw_ssi_pnv_spi.c.o -c ../hw/ssi/pnv_spi.c
->> In file included from <qemu_dir>/target/ppc/cpu.h:25,
->> from <qemu_dir>/include/hw/ppc/pnv.h:24,
->> from <qemu_dir>/include/hw/ppc/pnv_xscom.h:24,
->>                   from ../hw/ssi/pnv_spi.c:12:
->> <qemu_dir>/include/exec/cpu-defs.h:23:2: error: #error cpu.h included 
->> from common code
->>   #error cpu.h included from common code
->>    ^~~~~
->> In file included from /<qemu_dir>/target/ppc/cpu.h:25,
->> from <qemu_dir>/include/hw/ppc/pnv.h:24,
->> from <qemu_dir>/include/hw/ppc/pnv_xscom.h:24,
->>                   from ../hw/ssi/pnv_spi.c:12:
->> <qemu_dir>/include/exec/cpu-defs.h:34:10: fatal error: cpu-param.h: 
->> No such file or directory
->>   #include "cpu-param.h"
->>            ^~~~~~~~~~~~~
->> compilation terminated.
->> /
->>
->> Hence shall I keep pnv_spi.c in /hw/ppc/ ?
->
->
-> Can't we "fix" pnv_xscom.h to be more friendly ? with forward 
-> declarations
-> of the Pnv* types ?
->
->
-> Thanks,
->
-> C.
+>>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>>> ---
+>>>   target/arm/tcg/mte_helper.c | 184 +------------------------------
+>>>   target/arm/tcg/mte_helper.h | 211 ++++++++++++++++++++++++++++++++++++
+>>>   2 files changed, 212 insertions(+), 183 deletions(-)
+>>>   create mode 100644 target/arm/tcg/mte_helper.h
 
-Sure, Thank you for the suggestions, I will test and update the patch ASAP.
 
-Thank You,
+>>> + */
+>>> +
+>>> +#ifndef TARGET_ARM_MTE_H
+>>> +#define TARGET_ARM_MTE_H
+>>> +
+>>> +#include "exec/exec-all.h"
+>>
+>> Why do you need "exec/exec-all.h"?
+> 
+> Otherwise one gets:
+> 
+> In file included from ../target/arm/gdbstub.c:30:
+> ../target/arm/tcg/mte_helper.h: In function ‘allocation_tag_mem_probe’:
+> ../target/arm/tcg/mte_helper.h:77:9: error: implicit declaration of 
+> function ‘cpu_loop_exit_sigsegv’; did you mean ‘cpu_loop_exit_noexc’? 
+> [-Werror=implicit-function-declaration]
+>     77 |         cpu_loop_exit_sigsegv(env_cpu(env), ptr, ptr_access,
+>        |         ^~~~~~~~~~~~~~~~~~~~~
+>        |         cpu_loop_exit_noexc
+> ../target/arm/tcg/mte_helper.h:77:9: error: nested extern declaration of 
+> ‘cpu_loop_exit_sigsegv’ [-Werror=nested-externs]
+> 
+> Any other idea on how to satisfy it?
 
-Chalapathi
+OK, I'll fix once I get my include/exec/ rework merged.
+
+>>> +#include "exec/ram_addr.h"
+>>> +#include "hw/core/tcg-cpu-ops.h"
+>>> +#include "qemu/log.h"
+>>> +
+>>> +/**
+>>> + * allocation_tag_mem_probe:
+>>> + * @env: the cpu environment
+>>> + * @ptr_mmu_idx: the addressing regime to use for the virtual address
+>>> + * @ptr: the virtual address for which to look up tag memory
+>>> + * @ptr_access: the access to use for the virtual address
+>>> + * @ptr_size: the number of bytes in the normal memory access
+>>> + * @tag_access: the access to use for the tag memory
+>>> + * @probe: true to merely probe, never taking an exception
+>>> + * @ra: the return address for exception handling
+>>> + *
+>>> + * Our tag memory is formatted as a sequence of little-endian nibbles.
+>>> + * That is, the byte at (addr >> (LOG2_TAG_GRANULE + 1)) contains two
+>>> + * tags, with the tag at [3:0] for the lower addr and the tag at [7:4]
+>>> + * for the higher addr.
+>>> + *
+>>> + * Here, resolve the physical address from the virtual address, and 
+>>> return
+>>> + * a pointer to the corresponding tag byte.
+>>> + *
+>>> + * If there is no tag storage corresponding to @ptr, return NULL.
+>>> + *
+>>> + * If the page is inaccessible for @ptr_access, or has a watchpoint, 
+>>> there are
+>>> + * three options:
+>>> + * (1) probe = true, ra = 0 : pure probe -- we return NULL if the 
+>>> page is not
+>>> + *     accessible, and do not take watchpoint traps. The calling 
+>>> code must
+>>> + *     handle those cases in the right priority compared to MTE traps.
+>>> + * (2) probe = false, ra = 0 : probe, no fault expected -- the 
+>>> caller guarantees
+>>> + *     that the page is going to be accessible. We will take 
+>>> watchpoint traps.
+>>> + * (3) probe = false, ra != 0 : non-probe -- we will take both 
+>>> memory access
+>>> + *     traps and watchpoint traps.
+>>> + * (probe = true, ra != 0 is invalid and will assert.)
+>>> + */
+>>> +static inline uint8_t *allocation_tag_mem_probe(CPUARMState *env, 
+>>> int ptr_mmu_idx,
+>>> +                                         uint64_t ptr, MMUAccessType 
+>>> ptr_access,
+>>> +                                         int ptr_size, MMUAccessType 
+>>> tag_access,
+>>> +                                         bool probe, uintptr_t ra)
+>>
+>> Do we really need an inlined function? Since it calls non-inlined
+>> methods, I don't really see the point.
+> 
+> inline is just a hint and I think that in general at least the overhead
+> for calling this function is reduced, but it's hard to say what the
+> compile heuristics will do exactly without looking at the compiled code.
+
+My question is about having the function definition in an header,
+instead of its prototype (and the definition in a .c source file).
+
+> But I can remove it for this function and leave it just for 
+> {load,store}_tag1.
 
 
