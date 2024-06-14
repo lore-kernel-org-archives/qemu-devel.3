@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C730C27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 09:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53C32C27C75
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 09:32:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI3Gn-00086F-5e; Fri, 14 Jun 2024 05:30:53 -0400
+	id 1sI3Gl-00084u-G3; Fri, 14 Jun 2024 05:30:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sai.pavan.boddu@amd.com>)
- id 1sI3Gj-00083X-R2; Fri, 14 Jun 2024 05:30:49 -0400
-Received: from mail-mw2nam10on20626.outbound.protection.outlook.com
- ([2a01:111:f403:2412::626]
- helo=NAM10-MW2-obe.outbound.protection.outlook.com)
+ id 1sI3Gh-00082q-Sj; Fri, 14 Jun 2024 05:30:47 -0400
+Received: from mail-bn7nam10on2061c.outbound.protection.outlook.com
+ ([2a01:111:f403:2009::61c]
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sai.pavan.boddu@amd.com>)
- id 1sI3Gi-0006xN-4G; Fri, 14 Jun 2024 05:30:49 -0400
+ id 1sI3Gf-0006vh-9D; Fri, 14 Jun 2024 05:30:47 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=PDnjiKbqr3+sBj3NjNiPLLaZfy1toAs6AoNEafHP0IXpJsH2TfC4mMSivFe2XOY1vfmYJVRRgrqenVHeVU/xTFL6Ck0ksGalnAn7yk6yG11wcun+PVso+aGAVRxnObgu3NizFJwp2ykUqESFBXy6FIwNWersipclynWjWnjXXN39FV9o5/4oNn/VZoHYOG57jdYUD0tgIjHDErAAel7thUTJiN1DNMDLhLlUzXr6TWeV+RkgzqVyO06AGMfDhoKHUTojNffK8iK42LuoG7rv8/kzIykLYztTg+BDfz35TVcw+Y/b7VeQpjoTBAVY531xrKoEJ1sTlX5KsrHWmhWkYg==
+ b=CYu9caLWUEzszkpRzk8hVRTQ7wBCZcFFC1Wcu5mjW5iaFXih7a7dZYyFijhekShhzmTZViJ1c9IOquMW1tnqxclo0oIbwHdydL/a6lxMbEdhiv9318ZqCL9tZXbTtLDm8fnJRXsm+cS0ilhm6j8gDlCVpQMn2/Nn33a3sZmMNoLm25LXOiYjIAWIu3s3pAMlYKeIzA7PVVDlXqIEpqxl7PMga53yu5Mwc1LL31Uh8LW/SmCyv+iGXJyVfjO5WJNYlF9/2oGNoYaDk6zmS9UhV5z/1G8tPY/5qNwvlwj1Hg8oQ3opzo9sHc9CF4kg/8G1gnfSbc5IIk6JixSAICSdWg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HyNBX4L1WkbunR5hjsblvsULo3b072zs80fc/CU/47o=;
- b=guX3VntTak8MFcgmUicPEGekZJvVPXoo1UBWey7RedGD5yEBbZircaRsEOEtByzSLn9UsutxfaPbjUFOwhbY1WVWHvdf+h0MPWGlzfC74GW4AdFDTKdeWd+UTFuJHNPIZyn94nKfLBPqtze8yXHwDRhu2s63L/WU8jSjgZgZEGgd7Qr3o5ZPJgVh3IMKy9UronsmHgV5mCNTFFO2kNcjNEVe4ElZXurWzO2xOdgdEQliWc6ScM+gHwN5kWGgH6a8gQ3HXvmDP0wOsSu5T3cLpl1JB6UrmgxK99ZB1cyNdRDds4aD7gh/emlcVwTvc1O9V2BvCOvmp5aY8WjWEqJjpQ==
+ bh=CEAkfvPlzjkVKDakRzgzWnQQxLEbZQZrOiysI4IvU5s=;
+ b=VU666WYox70HmeOsUE1jQ39/RztadNHPXVgQnSkegoSENJxP9SXzw/DI7tD4kYxBH1phNHLhw1ms7XT1E038wVE0gJ+hm/+mVYc0en7CpyBNnoOhr9wXYJx30xSzJDP8H+L71dN2KM3XuS1AVjPw71r3BGty77HtDf5fqmj5gsqECFsuutuy/o2zSiAwhXwFboAh1mlGRS4nXBjEzobEx2D2h8mVDszoR3x9tG+9DB/ZktdwXfvAwLb6kOPbAgNYGnnFMuRVlradJke57m2TiZC6xhz8QBLs6cTIfaqcFfC/dyQe6qnWvD+eiM1jhVarGlIEhOk8JPYCvsKZEjAJaA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HyNBX4L1WkbunR5hjsblvsULo3b072zs80fc/CU/47o=;
- b=FdwIu92q4Nu5THIGSPTaw2vjQg0sY6NIcCGED6Dgi1W8YOOJmWz6CiM1Ew3dEMRQs50p0D+0qPyILknd4LPvWQudoPMgMINlI+1uVsXm0mAdSI5Kvl6n56eH42G67efti0Fzi/ULJD1R//z5R0GnYaex+cEMbdmsBh137c9zJuo=
-Received: from BYAPR01CA0030.prod.exchangelabs.com (2603:10b6:a02:80::43) by
- DS0PR12MB9059.namprd12.prod.outlook.com (2603:10b6:8:c5::18) with Microsoft
+ bh=CEAkfvPlzjkVKDakRzgzWnQQxLEbZQZrOiysI4IvU5s=;
+ b=eIZyFDjK7w97qxTemfRQDSK0W9pXYfk2g5KFEJ0fSMDIxMUegqzrYvZZP2cdyuM4AynG/VRzDYwYxp2FSLWLikoXghkLKc228yZI5M70I25CJ6y9r2ur6Ne/d2H8UQEkYRIySfuCxHUh+1wbGKgTMxIF4zFiq1ewMbKytPW1geA=
+Received: from BYAPR01CA0031.prod.exchangelabs.com (2603:10b6:a02:80::44) by
+ IA0PR12MB8253.namprd12.prod.outlook.com (2603:10b6:208:402::5) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7677.20; Fri, 14 Jun 2024 09:30:41 +0000
+ 15.20.7677.25; Fri, 14 Jun 2024 09:30:40 +0000
 Received: from SJ5PEPF000001E8.namprd05.prod.outlook.com
- (2603:10b6:a02:80:cafe::45) by BYAPR01CA0030.outlook.office365.com
- (2603:10b6:a02:80::43) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.26 via Frontend
- Transport; Fri, 14 Jun 2024 09:30:41 +0000
+ (2603:10b6:a02:80:cafe::e6) by BYAPR01CA0031.outlook.office365.com
+ (2603:10b6:a02:80::44) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.25 via Frontend
+ Transport; Fri, 14 Jun 2024 09:30:39 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -53,82 +53,78 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
  SJ5PEPF000001E8.mail.protection.outlook.com (10.167.242.196) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7677.15 via Frontend Transport; Fri, 14 Jun 2024 09:30:40 +0000
-Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB04.amd.com
+ 15.20.7677.15 via Frontend Transport; Fri, 14 Jun 2024 09:30:38 +0000
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 14 Jun
- 2024 04:30:39 -0500
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
- (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 14 Jun
- 2024 04:30:39 -0500
+ 2024 04:30:37 -0500
 Received: from xhdsaipava41.xilinx.com (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39 via
- Frontend Transport; Fri, 14 Jun 2024 04:30:37 -0500
+ Frontend Transport; Fri, 14 Jun 2024 04:30:35 -0500
 From: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
 CC: "'Edgar E . Iglesias'" <edgar.iglesias@gmail.com>, Peter Maydell
  <peter.maydell@linaro.org>, <francisco.iglesias@amd.com>
-Subject: [PATCH RFC 2/3] target/arm: Enable dcc console for a53 and R5
-Date: Fri, 14 Jun 2024 15:00:25 +0530
-Message-ID: <20240614093026.328271-3-sai.pavan.boddu@amd.com>
+Subject: [PATCH RFC 1/3] target/arm: Add dcc uart support
+Date: Fri, 14 Jun 2024 15:00:24 +0530
+Message-ID: <20240614093026.328271-2-sai.pavan.boddu@amd.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240614093026.328271-1-sai.pavan.boddu@amd.com>
 References: <20240614093026.328271-1-sai.pavan.boddu@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-Received-SPF: None (SATLEXMB05.amd.com: sai.pavan.boddu@amd.com does not
+Received-SPF: None (SATLEXMB04.amd.com: sai.pavan.boddu@amd.com does not
  designate permitted sender hosts)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001E8:EE_|DS0PR12MB9059:EE_
-X-MS-Office365-Filtering-Correlation-Id: fc110b81-cb98-4c80-5f91-08dc8c54a869
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001E8:EE_|IA0PR12MB8253:EE_
+X-MS-Office365-Filtering-Correlation-Id: fbe94256-eaf1-4dee-903c-08dc8c54a797
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230035|36860700008|1800799019|376009|82310400021; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?WW3fB9gYZCTs7tqD60KDHrPod2heGUeZlDKRyz2f7sSxrcXiElQ9jxSN86T+?=
- =?us-ascii?Q?rt+LIQ6ZReaZmPIVmUez5lh3d/Wsc9pTTLN6MjE+Rxi6m/BmV7HpUVyGoG1j?=
- =?us-ascii?Q?av1ANKuaeEnqzDZyXjfgtYNOzZVxaAE6Tg+WlJyG6ZaphTTVepE7XnRcTR61?=
- =?us-ascii?Q?H6BWyzfm8Q/zlC4FOZf/D96iHdSqToeNrCZ71bGBgoDMloiPW31qA2tcw2g2?=
- =?us-ascii?Q?vyulQTPe/GBRAFEjR+iF3qXCAuI31mQ3n2n6C3dWrB+8bcQdfc7H116+xY/2?=
- =?us-ascii?Q?+lFv302vYqTDLVe0JVA1/sdaTOQgDdWFNnESyx8oTyV/u3JJsUbwGxAkjj+i?=
- =?us-ascii?Q?u3Rn7MelDerpHavdKfBN/t4pDCZca5ivKkbY+HJ/zIE0kvB8S6Y7HCT234Ug?=
- =?us-ascii?Q?S8DBFzWa9Z1Kkwo/T8imHBJEadiUXWV3TWJrHZya5uiJtvROwrhgy9Tchp+R?=
- =?us-ascii?Q?KUjHnIkf81SlUCN3QjxJHG4GVHL2g3VevLwwFXjKzF/dzkSXeo/cET5m7Z15?=
- =?us-ascii?Q?joHQT3E5MSIR2HCWtuNfS+uFjbTmE3b8wZ08bP30nFFAXyL8dDerB4GI7k91?=
- =?us-ascii?Q?eGVu/ahBXS9mpBkZNhgSA0KSDhlTFb+9k0/O4Yj60UFEeWbnh60Kowxru5XV?=
- =?us-ascii?Q?pevg+vnu5Jd8oRtoxGKzZ8bhuuLE9xYOOg2447ly4XqVFwfIJ9K/aHBR0RIn?=
- =?us-ascii?Q?LDK+X3rzls3Oqg7dIflIwMSngQKERK0MdyXM8gWWlZEVxBS4J1SRfMxszY+0?=
- =?us-ascii?Q?C10555dyUh0TZ+IEcezVsrKeV6tX3z0IiueACAOUBfnwXFEASNuY07vsyHko?=
- =?us-ascii?Q?TebTlKnxQXUSR2Xe5vPcxqtygCG2Iz1nOOmuYFlRiCkAfc6efhRrCdIbRfSw?=
- =?us-ascii?Q?dem2XzxWMJP+PEr+CGoavy2hRclm0jUQLnAZuzzkM3FrceFF3fQypBFQMr8z?=
- =?us-ascii?Q?exNDvLrYh0qhR4nfa4UmtdCjHAvBOm+vCkFvVJH7YgqAkPSFbRxjJRXsSfIx?=
- =?us-ascii?Q?8EICSlChwSvO+OgkOOhsJuREqjCzD0pnsfVe2jwFvipS3shBMz3O192Jp7pO?=
- =?us-ascii?Q?PFDvvlhbUYN9v38Ob5VU9447SWhW/A4wL6E48duKRwHuYwJT2qEWFfLhXEI1?=
- =?us-ascii?Q?4x8dZAdFkDfZosemiwJAzTNP73TB6ivOEM8Jobc6WcISCUq4Ovo9N5I0mXlO?=
- =?us-ascii?Q?bt5pFcKBLTSQTIQxjYxdnpbjX8Iyv+AUHeLN+a14h+3Jvl32fZENVGjCrXVQ?=
- =?us-ascii?Q?C4wIWyDHkdADCyR9JerVAkdNk54rZb3wwIC2wog7Rxr51yJwlS7iBOfDxaP9?=
- =?us-ascii?Q?8eH43fzQZi7vjV1qckUF+jhYHTPO1As/HgwuSLCuEfZnHseE98r+2a/8v0iq?=
- =?us-ascii?Q?aMt1sZeqXKyT7h087nTp+MCn9lVfyrq4xDhBf1DXcTsgdsEPQA=3D=3D?=
+ ARA:13230035|36860700008|376009|82310400021|1800799019; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?BIWFeajcSmc067v9ObP8xXwJaHIpcnbL2AKtGQLF1WA3LevphnT4YVzrBmy7?=
+ =?us-ascii?Q?ejuI/ijmKWCfRBKUO3x/FvfLIKFrVQsHrxRoc109uyjVidQ2TJajDVh4Twfo?=
+ =?us-ascii?Q?K4Sugk9H962ee3XUehm2b3gXDUFVT2FftEMvGZq7IFaOU5gTIq9XVrvxBHNv?=
+ =?us-ascii?Q?/T9RoLpUh4B8CsosG0WVXQsN7EfV+aghTXAP6FODgd83UbI7Cc5adeHQUj3z?=
+ =?us-ascii?Q?TNYsxxM8Da3lGttu2qGT4G2nuD+Xa64sT2leE+NslCMZ47Jy0i8ut8Q+O3/M?=
+ =?us-ascii?Q?kJI3HAjXLPB7iES8RD/jp15P+UmCOkMlGd2pF/9SXbisjoX2hKVV4BYfGny/?=
+ =?us-ascii?Q?zQuYndj9EkG1QO2yGpU+1NlFfhQmkF+9Z2RQG1MfOn/8NILn4+/H0yN4ac7J?=
+ =?us-ascii?Q?UXVfRvQDenRK2nlMkza2PdjJUWzuL8HUsutjDiAA116nm8++lB1jaPDCGlS6?=
+ =?us-ascii?Q?VuyQWIYcAhtXTyhmds/LZF/+zATXSg1R61rxITWhaKZkOke/SbZh+RI17Jbf?=
+ =?us-ascii?Q?T43tQ04FuZ3UQIECAf8ENGg7peeyedJNx6spH8HiuoAOOKGy0E6XnvMUEjC+?=
+ =?us-ascii?Q?Nc3YjTDtEOhubhpRIDu3LoZNMpXmqAQP/f7PrDKe1/UMvRi6DdXf7Gc39l/p?=
+ =?us-ascii?Q?fAeSvLDn3lqlCn0VP5nReaQ1DdsxsPR0tS/VXtmEMRJRMcA9BwPitEo18hVJ?=
+ =?us-ascii?Q?ADkSVMXgCTUwRS8DtymmnsvNC9/H6qkK+dtjWEKunvB7fTPBqH/iEH61fZFy?=
+ =?us-ascii?Q?LST6jbU0WHR53a/1tp1j0aKbqbg11dRbTfPs87ljaQjKq8TL+dp62lSDyXtk?=
+ =?us-ascii?Q?/5MXrT5LoTmTw+26T6O5nDXp7UkE1YziHlW6+eMjUzj7u8dC9jvKiP8F64sE?=
+ =?us-ascii?Q?rR+vqv9V3adSiNkqHDtWmNmilCLSzt7dU3W5/RHLOctb9ktxMTG+ry+tT3QJ?=
+ =?us-ascii?Q?FgNPf/EvDukTjRldfIXt6uFa2rbpF/FrEhgcNnvxGiVSVOVJ5VPdfA2zRa2A?=
+ =?us-ascii?Q?r6sc/DHL9/KrCLT0VJoXgM8MdREMcP540oPwDaGymq6zcYooZIi79+NNW1rl?=
+ =?us-ascii?Q?tkILcFyjsTkpNy0bUnS7GJZmL2FWHjsnEGv8nsIkMSCcUsX6Aa9WqE+1filh?=
+ =?us-ascii?Q?pcvD18Wbm8hF4rSVsgNhGaHqlT5iVovgE31LZncWMiU0M7+uz+FDBBJNXJrH?=
+ =?us-ascii?Q?ll10AGw2LDU1YGMdCbMzkydz1M0z23kXs7zPurMR6130u2NT4q6/Ng4K60Wt?=
+ =?us-ascii?Q?4bx5McQr+CUP3kCfqYDgz08CGAL4a99wv3QT76mxj0M7Lxy6lMa2+jhByM+s?=
+ =?us-ascii?Q?lSKckQC8vWrSJ6PBIRPMC418oevT3rHA4Q50XrCsuLTJhrOzETgFVo04PRoC?=
+ =?us-ascii?Q?uFtLMS7QQJUTCwws77fDw5gw2WZJQXca656tN1Lsg5Gaflff8w=3D=3D?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230035)(36860700008)(1800799019)(376009)(82310400021); DIR:OUT;
+ SFS:(13230035)(36860700008)(376009)(82310400021)(1800799019); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jun 2024 09:30:40.7106 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: fc110b81-cb98-4c80-5f91-08dc8c54a869
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jun 2024 09:30:38.8824 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: fbe94256-eaf1-4dee-903c-08dc8c54a797
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
 X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001E8.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB9059
-Received-SPF: permerror client-ip=2a01:111:f403:2412::626;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8253
+Received-SPF: permerror client-ip=2a01:111:f403:2009::61c;
  envelope-from=sai.pavan.boddu@amd.com;
- helo=NAM10-MW2-obe.outbound.protection.outlook.com
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
@@ -151,38 +147,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This enabled DCC support.
+DCC is a debug port to transfer some data between debugger and
+processor, we are using this feature to connect a chardev device.
+Chardev frontends should be named as "dcc<cpu-index>" inorder to connect
+to this interface.
 
 Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
 ---
- target/arm/cpu64.c     | 1 +
- target/arm/tcg/cpu32.c | 1 +
- 2 files changed, 2 insertions(+)
+ target/arm/cpu.h       | 11 +++++
+ target/arm/internals.h |  4 ++
+ target/arm/debug-dcc.c | 99 ++++++++++++++++++++++++++++++++++++++++++
+ target/arm/helper.c    |  3 ++
+ target/arm/meson.build |  1 +
+ 5 files changed, 118 insertions(+)
+ create mode 100644 target/arm/debug-dcc.c
 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 262a1d6c0b..e39740303b 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -667,6 +667,7 @@ static void aarch64_a53_initfn(Object *obj)
-     set_feature(&cpu->env, ARM_FEATURE_EL2);
-     set_feature(&cpu->env, ARM_FEATURE_EL3);
-     set_feature(&cpu->env, ARM_FEATURE_PMU);
-+    set_feature(&cpu->env, ARM_FEATURE_DCC);
-     cpu->kvm_target = QEMU_KVM_ARM_TARGET_CORTEX_A53;
-     cpu->midr = 0x410fd034;
-     cpu->revidr = 0x00000100;
-diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-index bdd82d912a..b0ef51a9bf 100644
---- a/target/arm/tcg/cpu32.c
-+++ b/target/arm/tcg/cpu32.c
-@@ -562,6 +562,7 @@ static void cortex_r5_initfn(Object *obj)
-     set_feature(&cpu->env, ARM_FEATURE_V7MP);
-     set_feature(&cpu->env, ARM_FEATURE_PMSA);
-     set_feature(&cpu->env, ARM_FEATURE_PMU);
-+    set_feature(&cpu->env, ARM_FEATURE_DCC);
-     cpu->midr = 0x411fc153; /* r1p3 */
-     cpu->isar.id_pfr0 = 0x0131;
-     cpu->isar.id_pfr1 = 0x001;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 3841359d0f..6b3cb8e70e 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -30,6 +30,8 @@
+ #include "qapi/qapi-types-common.h"
+ #include "target/arm/multiprocessing.h"
+ #include "target/arm/gtimer.h"
++#include "chardev/char.h"
++#include "chardev/char-fe.h"
+ 
+ #ifdef TARGET_AARCH64
+ #define KVM_HAVE_MCE_INJECTION 1
+@@ -523,6 +525,11 @@ typedef struct CPUArchState {
+ 
+         /* NV2 register */
+         uint64_t vncr_el2;
++        /*
++         * Debug Trace regsiters
++         */
++        uint32_t dbgdtr_tx;
++        uint32_t dbgdtr_rx;
+     } cp15;
+ 
+     struct {
+@@ -1097,6 +1104,9 @@ struct ArchCPU {
+ 
+     /* Generic timer counter frequency, in Hz */
+     uint64_t gt_cntfrq_hz;
++
++    /* dcc chardev */
++    CharBackend dcc;
+ };
+ 
+ typedef struct ARMCPUInfo {
+@@ -2388,6 +2398,7 @@ enum arm_features {
+      * CPU types added in future.
+      */
+     ARM_FEATURE_BACKCOMPAT_CNTFRQ, /* 62.5MHz timer default */
++    ARM_FEATURE_DCC,
+ };
+ 
+ static inline int arm_feature(CPUARMState *env, int feature)
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 11b5da2562..2fa797c5df 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1778,4 +1778,8 @@ uint64_t gt_get_countervalue(CPUARMState *env);
+  * and CNTVCT_EL0 (this will be either 0 or the value of CNTVOFF_EL2).
+  */
+ uint64_t gt_virt_cnt_offset(CPUARMState *env);
++/*
++ * Initialise Coresight Debug interface
++ */
++void arm_dcc_init(ARMCPU *cpu);
+ #endif
+diff --git a/target/arm/debug-dcc.c b/target/arm/debug-dcc.c
+new file mode 100644
+index 0000000000..9144b54994
+--- /dev/null
++++ b/target/arm/debug-dcc.c
+@@ -0,0 +1,99 @@
++#include "qemu/osdep.h"
++#include "cpu.h"
++#include "internals.h"
++#include "cpregs.h"
++#include "chardev/char-fe.h"
++
++#define MDCCSR_EL0_RXFULL_MASK (1 << 30)
++#define MDCCSR_EL0_TXFULL_MASK (1 << 29)
++
++static void debug_dcc_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                        uint64_t value)
++{
++    ARMCPU *cpu = ri->opaque;
++    env->cp15.dbgdtr_tx = value;
++
++    if (qemu_chr_fe_get_driver(&cpu->dcc)) {
++        /*
++         * Usually dcc is used for putc/getc calls which expect only
++         * 1 byte from external debugger.
++         * TODO: This needs to be generalized for other use-cases.
++         */
++        qemu_chr_fe_write_all(&cpu->dcc, (uint8_t *)&env->cp15.dbgdtr_tx, 1);
++    }
++}
++
++static uint64_t debug_dcc_read(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    uint32_t ret = 0;
++    ARMCPU *cpu = ri->opaque;
++
++    if (env->cp15.mdscr_el1 & MDCCSR_EL0_RXFULL_MASK) {
++        ret = env->cp15.dbgdtr_rx;
++        env->cp15.dbgdtr_rx = 0;
++        env->cp15.mdscr_el1 &= ~MDCCSR_EL0_RXFULL_MASK;
++        qemu_chr_fe_accept_input(&cpu->dcc);
++    }
++    return ret;
++}
++
++static const ARMCPRegInfo dcc_cp_reginfo[] = {
++    /* DBGDTRTX_EL0/DBGDTRRX_EL0 depend on direction */
++    { .name = "DBGDTR_EL0", .state = ARM_CP_STATE_AA64,
++      .opc0 = 2, .opc1 = 3, .crn = 0, .crm = 5, .opc2 = 0,
++      .access = PL0_RW, .writefn = debug_dcc_write,
++      .readfn = debug_dcc_read,
++      .type = ARM_CP_OVERRIDE, .resetvalue = 0 },
++    /* DBGDTRTXint/DBGDTRRXint depend on direction */
++    { .name = "DBGDTRint", .state = ARM_CP_STATE_AA32, .cp = 14,
++      .opc1 = 0, .crn = 0, .crm = 5, .opc2 = 0,
++      .access = PL0_RW, .writefn = debug_dcc_write,
++      .readfn = debug_dcc_read,
++      .type = ARM_CP_OVERRIDE, .resetvalue = 0 },
++};
++
++
++static int dcc_chr_can_read(void *opaque)
++{
++    ARMCPU *cpu = opaque;
++    CPUARMState *env = &cpu->env;
++
++    if (!(env->cp15.mdscr_el1 & MDCCSR_EL0_RXFULL_MASK)) {
++        /*
++         * Usually dcc is used for putc/getc calls which expect only
++         * 1 byte from external debugger.
++         * TODO: This needs to be generalized for other use-cases.
++         */
++        return 1;
++    }
++
++    return 0;
++}
++
++static void dcc_chr_read(void *opaque, const uint8_t *buf, int size)
++{
++    ARMCPU *cpu = opaque;
++    CPUARMState *env = &cpu->env;
++
++    env->cp15.dbgdtr_rx = *buf;
++    env->cp15.mdscr_el1 |= MDCCSR_EL0_RXFULL_MASK;
++}
++
++void arm_dcc_init(ARMCPU *cpu)
++{
++    Chardev *chr;
++    char *dcc_name;
++    CPUState *p = CPU(cpu);
++
++    dcc_name = g_strdup_printf("dcc%d", p->cpu_index);
++    chr = qemu_chr_find(dcc_name);
++    define_arm_cp_regs_with_opaque(cpu, dcc_cp_reginfo, cpu);
++    if (chr) {
++        qemu_chr_fe_init(&cpu->dcc, chr, NULL);
++        qemu_chr_fe_set_handlers(&cpu->dcc,
++                      dcc_chr_can_read,
++                      dcc_chr_read,
++                      NULL, NULL, cpu, NULL, true);
++    }
++    g_free(dcc_name);
++}
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index ce31957235..2b594f91cb 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -9268,6 +9268,9 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+         }
+     }
+ 
++    if (arm_feature(&cpu->env, ARM_FEATURE_DCC)) {
++        arm_dcc_init(cpu);
++    }
+     /*
+      * Register the base EL2 cpregs.
+      * Pre v8, these registers are implemented only as part of the
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 2e10464dbb..3ee38c6b45 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -5,6 +5,7 @@ arm_ss.add(files(
+   'gdbstub.c',
+   'helper.c',
+   'vfp_helper.c',
++  'debug-dcc.c',
+ ))
+ arm_ss.add(zlib)
+ 
 -- 
 2.34.1
 
