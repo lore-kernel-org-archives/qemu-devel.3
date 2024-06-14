@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36B15C27C77
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 17:20:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33917C27C79
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 17:20:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIAZW-0001As-FI; Fri, 14 Jun 2024 13:18:42 -0400
+	id 1sIAZj-0001MU-RX; Fri, 14 Jun 2024 13:18:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sIAZU-00019l-3B
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:18:40 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sIAZc-0001FD-4S
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:18:49 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sIAZS-000480-BG
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:18:39 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sIAZY-000495-DT
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:18:46 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id F3681227BF;
- Fri, 14 Jun 2024 17:18:36 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id E06F020724;
+ Fri, 14 Jun 2024 17:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718385517; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1718385522; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rRyPkSc3TYWVxDutYkXNAPRAADM09kh1d2QpwzpjCVU=;
- b=iXCMCRUcP0ExAD/ndjZoMXnM8rJ5ao4w+htoFDEUE8UlHMNwFLyxN90SyJfRA30XOmgSOP
- CoaOnlK4tNY3/AeqfcKc8+ioJfNTr7AhrlNJjKW8yOwEujQw90nnmRKFP4rMZUWIghiFST
- lLZf66B5q+Xmoo2BxTsYgJyiAjq4S9Q=
+ bh=W4uSWMK+zakMhIXRijyp3RM/ddH0uOyYITEpZS1y8eQ=;
+ b=sOJryaaTH3ETk83ARX2HjB91fIxvxEHWXEKlukilcRlqJ01yB+oWn7K5mR1le8BcTLTWtp
+ wREX5tiZ75xTHtBRBCkagddMIYNhl2S5BynWREwU41YgaLeiGnMn6wtngqfzKiX0eLmW9G
+ 0lKvjz2udFFCvQ6HVnLbsjsTZVPGXko=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718385517;
+ s=susede2_ed25519; t=1718385522;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rRyPkSc3TYWVxDutYkXNAPRAADM09kh1d2QpwzpjCVU=;
- b=lw1/Ow+6MchfCPG5ZMDw07Mf31QEDKHZwBVLHaqsoABclIIijl8gyXTemVSQTPfFSswxBP
- GfW/mEyO3QbIdXAg==
-Authentication-Results: smtp-out1.suse.de;
+ bh=W4uSWMK+zakMhIXRijyp3RM/ddH0uOyYITEpZS1y8eQ=;
+ b=wKAT1mBrZbc41HDE/d8RDcBfrFXFj/t1R95borAstxiofD4M18QrU2yiEZj3s3iyPDzyZc
+ hKgYmp7/erj7rhBQ==
+Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718385517; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1718385522; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rRyPkSc3TYWVxDutYkXNAPRAADM09kh1d2QpwzpjCVU=;
- b=iXCMCRUcP0ExAD/ndjZoMXnM8rJ5ao4w+htoFDEUE8UlHMNwFLyxN90SyJfRA30XOmgSOP
- CoaOnlK4tNY3/AeqfcKc8+ioJfNTr7AhrlNJjKW8yOwEujQw90nnmRKFP4rMZUWIghiFST
- lLZf66B5q+Xmoo2BxTsYgJyiAjq4S9Q=
+ bh=W4uSWMK+zakMhIXRijyp3RM/ddH0uOyYITEpZS1y8eQ=;
+ b=sOJryaaTH3ETk83ARX2HjB91fIxvxEHWXEKlukilcRlqJ01yB+oWn7K5mR1le8BcTLTWtp
+ wREX5tiZ75xTHtBRBCkagddMIYNhl2S5BynWREwU41YgaLeiGnMn6wtngqfzKiX0eLmW9G
+ 0lKvjz2udFFCvQ6HVnLbsjsTZVPGXko=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718385517;
+ s=susede2_ed25519; t=1718385522;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rRyPkSc3TYWVxDutYkXNAPRAADM09kh1d2QpwzpjCVU=;
- b=lw1/Ow+6MchfCPG5ZMDw07Mf31QEDKHZwBVLHaqsoABclIIijl8gyXTemVSQTPfFSswxBP
- GfW/mEyO3QbIdXAg==
+ bh=W4uSWMK+zakMhIXRijyp3RM/ddH0uOyYITEpZS1y8eQ=;
+ b=wKAT1mBrZbc41HDE/d8RDcBfrFXFj/t1R95borAstxiofD4M18QrU2yiEZj3s3iyPDzyZc
+ hKgYmp7/erj7rhBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6027013AB1;
- Fri, 14 Jun 2024 17:18:35 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 81FCE13AB1;
+ Fri, 14 Jun 2024 17:18:41 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id kFAGCmt7bGaVAgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 14 Jun 2024 17:18:35 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id kMMrEnF7bGaVAgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Jun 2024 17:18:41 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: [PULL 15/18] migration/multifd: Add UADK initialization
-Date: Fri, 14 Jun 2024 14:17:59 -0300
-Message-Id: <20240614171802.28451-16-farosas@suse.de>
+ Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Subject: [PULL 18/18] tests/migration-test: add uadk compression test
+Date: Fri, 14 Jun 2024 14:18:02 -0300
+Message-Id: <20240614171802.28451-19-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240614171802.28451-1-farosas@suse.de>
 References: <20240614171802.28451-1-farosas@suse.de>
@@ -92,12 +91,12 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
  RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
  RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -122,239 +121,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 
-Initialize UADK session and allocate buffers required. The actual
-compression/decompression will only be done in a subsequent patch.
-
-Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd-uadk.c | 209 ++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 208 insertions(+), 1 deletion(-)
+ tests/qtest/migration-test.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
-index c2bb07535b..535411a405 100644
---- a/migration/multifd-uadk.c
-+++ b/migration/multifd-uadk.c
-@@ -12,9 +12,216 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/module.h"
-+#include "qapi/error.h"
-+#include "migration.h"
-+#include "multifd.h"
-+#include "options.h"
-+#include "uadk/wd_comp.h"
-+#include "uadk/wd_sched.h"
-+
-+struct wd_data {
-+    handle_t handle;
-+    uint8_t *buf;
-+    uint32_t *buf_hdr;
-+};
-+
-+static bool uadk_hw_init(void)
-+{
-+    char alg[] = "zlib";
-+    int ret;
-+
-+    ret = wd_comp_init2(alg, SCHED_POLICY_RR, TASK_HW);
-+    if (ret && ret != -WD_EEXIST) {
-+        return false;
-+    } else {
-+        return true;
-+    }
-+}
-+
-+static struct wd_data *multifd_uadk_init_sess(uint32_t count,
-+                                              uint32_t page_size,
-+                                              bool compress, Error **errp)
-+{
-+    struct wd_comp_sess_setup ss = {0};
-+    struct sched_params param = {0};
-+    uint32_t size = count * page_size;
-+    struct wd_data *wd;
-+
-+    if (!uadk_hw_init()) {
-+        error_setg(errp, "multifd: UADK hardware not available");
-+        return NULL;
-+    }
-+
-+    wd = g_new0(struct wd_data, 1);
-+    ss.alg_type = WD_ZLIB;
-+    if (compress) {
-+        ss.op_type = WD_DIR_COMPRESS;
-+        /* Add an additional page for handling output > input */
-+        size += page_size;
-+    } else {
-+        ss.op_type = WD_DIR_DECOMPRESS;
-+    }
-+
-+    /* We use default level 1 compression and 4K window size */
-+    param.type = ss.op_type;
-+    ss.sched_param = &param;
-+
-+    wd->handle = wd_comp_alloc_sess(&ss);
-+    if (!wd->handle) {
-+        error_setg(errp, "multifd: failed wd_comp_alloc_sess");
-+        goto out;
-+    }
-+
-+    wd->buf = g_try_malloc(size);
-+    if (!wd->buf) {
-+        error_setg(errp, "multifd: out of mem for uadk buf");
-+        goto out_free_sess;
-+    }
-+    wd->buf_hdr = g_new0(uint32_t, count);
-+    return wd;
-+
-+out_free_sess:
-+    wd_comp_free_sess(wd->handle);
-+out:
-+    wd_comp_uninit2();
-+    g_free(wd);
-+    return NULL;
-+}
-+
-+static void multifd_uadk_uninit_sess(struct wd_data *wd)
-+{
-+    wd_comp_free_sess(wd->handle);
-+    wd_comp_uninit2();
-+    g_free(wd->buf);
-+    g_free(wd->buf_hdr);
-+    g_free(wd);
-+}
-+
-+/**
-+ * multifd_uadk_send_setup: setup send side
-+ *
-+ * Returns 0 for success or -1 for error
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static int multifd_uadk_send_setup(MultiFDSendParams *p, Error **errp)
-+{
-+    struct wd_data *wd;
-+
-+    wd = multifd_uadk_init_sess(p->page_count, p->page_size, true, errp);
-+    if (!wd) {
-+        return -1;
-+    }
-+
-+    p->compress_data = wd;
-+    assert(p->iov == NULL);
-+    /*
-+     * Each page will be compressed independently and sent using an IOV. The
-+     * additional two IOVs are used to store packet header and compressed data
-+     * length
-+     */
-+
-+    p->iov = g_new0(struct iovec, p->page_count + 2);
-+    return 0;
-+}
-+
-+/**
-+ * multifd_uadk_send_cleanup: cleanup send side
-+ *
-+ * Close the channel and return memory.
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static void multifd_uadk_send_cleanup(MultiFDSendParams *p, Error **errp)
-+{
-+    struct wd_data *wd = p->compress_data;
-+
-+    multifd_uadk_uninit_sess(wd);
-+    p->compress_data = NULL;
-+}
-+
-+/**
-+ * multifd_uadk_send_prepare: prepare data to be able to send
-+ *
-+ * Create a compressed buffer with all the pages that we are going to
-+ * send.
-+ *
-+ * Returns 0 for success or -1 for error
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error **errp)
-+{
-+    return -1;
-+}
-+
-+/**
-+ * multifd_uadk_recv_setup: setup receive side
-+ *
-+ * Create the compressed channel and buffer.
-+ *
-+ * Returns 0 for success or -1 for error
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static int multifd_uadk_recv_setup(MultiFDRecvParams *p, Error **errp)
-+{
-+    struct wd_data *wd;
-+
-+    wd = multifd_uadk_init_sess(p->page_count, p->page_size, false, errp);
-+    if (!wd) {
-+        return -1;
-+    }
-+    p->compress_data = wd;
-+    return 0;
-+}
-+
-+/**
-+ * multifd_uadk_recv_cleanup: cleanup receive side
-+ *
-+ * Close the channel and return memory.
-+ *
-+ * @p: Params for the channel that we are using
-+ */
-+static void multifd_uadk_recv_cleanup(MultiFDRecvParams *p)
-+{
-+    struct wd_data *wd = p->compress_data;
-+
-+    multifd_uadk_uninit_sess(wd);
-+    p->compress_data = NULL;
-+}
-+
-+/**
-+ * multifd_uadk_recv: read the data from the channel into actual pages
-+ *
-+ * Read the compressed buffer, and uncompress it into the actual
-+ * pages.
-+ *
-+ * Returns 0 for success or -1 for error
-+ *
-+ * @p: Params for the channel that we are using
-+ * @errp: pointer to an error
-+ */
-+static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
-+{
-+    return -1;
-+}
-+
-+static MultiFDMethods multifd_uadk_ops = {
-+    .send_setup = multifd_uadk_send_setup,
-+    .send_cleanup = multifd_uadk_send_cleanup,
-+    .send_prepare = multifd_uadk_send_prepare,
-+    .recv_setup = multifd_uadk_recv_setup,
-+    .recv_cleanup = multifd_uadk_recv_cleanup,
-+    .recv = multifd_uadk_recv,
-+};
- 
- static void multifd_uadk_register(void)
- {
--    /* noop for now */
-+    multifd_register_ops(MULTIFD_COMPRESSION_UADK, &multifd_uadk_ops);
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 887cd9fe42..0dccb4beff 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -2646,6 +2646,14 @@ test_migrate_precopy_tcp_multifd_qpl_start(QTestState *from,
+     return test_migrate_precopy_tcp_multifd_start_common(from, to, "qpl");
  }
- migration_init(multifd_uadk_register);
+ #endif /* CONFIG_QPL */
++#ifdef CONFIG_UADK
++static void *
++test_migrate_precopy_tcp_multifd_uadk_start(QTestState *from,
++                                            QTestState *to)
++{
++    return test_migrate_precopy_tcp_multifd_start_common(from, to, "uadk");
++}
++#endif /* CONFIG_UADK */
+ 
+ static void test_multifd_tcp_uri_none(void)
+ {
+@@ -2738,6 +2746,17 @@ static void test_multifd_tcp_qpl(void)
+ }
+ #endif
+ 
++#ifdef CONFIG_UADK
++static void test_multifd_tcp_uadk(void)
++{
++    MigrateCommon args = {
++        .listen_uri = "defer",
++        .start_hook = test_migrate_precopy_tcp_multifd_uadk_start,
++    };
++    test_precopy_common(&args);
++}
++#endif
++
+ #ifdef CONFIG_GNUTLS
+ static void *
+ test_migrate_multifd_tcp_tls_psk_start_match(QTestState *from,
+@@ -3617,6 +3636,10 @@ int main(int argc, char **argv)
+     migration_test_add("/migration/multifd/tcp/plain/qpl",
+                        test_multifd_tcp_qpl);
+ #endif
++#ifdef CONFIG_UADK
++    migration_test_add("/migration/multifd/tcp/plain/uadk",
++                       test_multifd_tcp_uadk);
++#endif
+ #ifdef CONFIG_GNUTLS
+     migration_test_add("/migration/multifd/tcp/tls/psk/match",
+                        test_multifd_tcp_tls_psk_match);
 -- 
 2.35.3
 
