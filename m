@@ -4,69 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A887C27C75
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 09:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42EDEC27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 09:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI3MQ-0006q9-Cr; Fri, 14 Jun 2024 05:36:42 -0400
+	id 1sI3Py-0000Ac-7C; Fri, 14 Jun 2024 05:40:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sI3MO-0006pk-JK
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:36:40 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sI3ML-0007xO-Hg
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:36:40 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Dx2OkeD2xmYtkGAA--.14962S3;
- Fri, 14 Jun 2024 17:36:32 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxWcYeD2xmHQwgAA--.13152S3; 
- Fri, 14 Jun 2024 17:36:30 +0800 (CST)
-Subject: Re: [PATCH v3] target/loongarch/kvm: Add software breakpoint support
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org
-References: <20240607035016.2975799-1-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <9b1f2238-dc57-6c8b-1630-61615c58ea8b@loongson.cn>
-Date: Fri, 14 Jun 2024 17:35:49 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sI3Pw-00009h-4t
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:40:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sI3Pu-0000vv-IH
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:40:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718358017;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mdesrs1l0Lk7EZsEEX2Iewh3bNF/VYM3fBJSW3lR6ik=;
+ b=h6fSrwVG2DW7/zoJx5IXx2jhVnIxsLLFhaH18Xno/MzzL6arl5QQzMGQyCY91DjFiPvyRX
+ JM4voAsXJmF5Z+ZbIKtGs+6Ds9Ql/i6N3WhSS5XU5guSCdhQdEx7QiM08DsLgw+scwa7WV
+ /QNp7JbONk1sA8NEpcKe69NJRXlba1M=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-118-wD5nlUt6MEuiE-O2K8JYHg-1; Fri,
+ 14 Jun 2024 05:40:13 -0400
+X-MC-Unique: wD5nlUt6MEuiE-O2K8JYHg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0F611195608C; Fri, 14 Jun 2024 09:40:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 85F8C1956056; Fri, 14 Jun 2024 09:40:08 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 764F621E6682; Fri, 14 Jun 2024 11:40:06 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Fabiano
+ Rosas <farosas@suse.de>,  Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,  Ani
+ Sinha <anisinha@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Kevin
+ Wolf <kwolf@redhat.com>,  Jiri Pirko <jiri@resnulli.us>,  Mads Ynddal
+ <mads@ynddal.dk>,  Jason Wang <jasowang@redhat.com>,  Igor Mammedov
+ <imammedo@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-block@nongnu.org,  Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Victor Toso de Carvalho <victortoso@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>,  Lukas Straub
+ <lukasstraub2@web.de>,  Yanan Wang <wangyanan55@huawei.com>,  Hanna Reitz
+ <hreitz@redhat.com>
+Subject: Re: [PATCH 11/20] qapi/schema: add doc_visible property to
+ QAPISchemaDefinition
+In-Reply-To: <20240514215740.940155-12-jsnow@redhat.com> (John Snow's message
+ of "Tue, 14 May 2024 17:57:30 -0400")
+References: <20240514215740.940155-1-jsnow@redhat.com>
+ <20240514215740.940155-12-jsnow@redhat.com>
+Date: Fri, 14 Jun 2024 11:40:06 +0200
+Message-ID: <878qz750cp.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-In-Reply-To: <20240607035016.2975799-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8BxWcYeD2xmHQwgAA--.13152S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxWr1fCFWrKF47JFy7Kr4fCrX_yoWruw1fpF
- W3ZFn5Gr48t39rJw1fJa4qvFsxArs7WwnrXFyfKrySkw4DtrnxZr1kK39rAFWfu34jgFyF
- vF1SgF129F4DtrgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CP
- fJUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-1.395, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,155 +103,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2024/6/7 ÉÏÎç11:50, Bibo Mao Ð´µÀ:
-> With KVM virtualization, debug exception is injected to guest kernel
-> rather than host for normal break intruction. Here hypercall
-> instruction with special code is used for sw breakpoint usage,
-> and detailed instruction comes from kvm kernel with user API
-> KVM_REG_LOONGARCH_DEBUG_INST.
->
-> Now only software breakpoint is supported, and it is allowed to
-> insert/remove software breakpoint. We can debug guest kernel with gdb
-> method after kernel is loaded, hardware breakpoint will be added in later.
->
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Tested-by: Song Gao <gaosong@loongson.cn>
+John Snow <jsnow@redhat.com> writes:
 
-Thanks.
-Song Gao
-> v2 ... v3:
->    1. Refresh patch based on the latest version, succeed in compile and
-> run since kvm uapi header files is updated.
-> v1 ... v2:
->    1. Enable TARGET_KVM_HAVE_GUEST_DEBUG on loongarch64 platform
-> ---
->   configs/targets/loongarch64-softmmu.mak |  1 +
->   target/loongarch/kvm/kvm.c              | 76 +++++++++++++++++++++++++
->   2 files changed, 77 insertions(+)
+> The intent here is to mark only certain definitions as visible in the
+> end-user docs.
 >
-> diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
-> index 84beb19b90..65b65e0c34 100644
-> --- a/configs/targets/loongarch64-softmmu.mak
-> +++ b/configs/targets/loongarch64-softmmu.mak
-> @@ -1,5 +1,6 @@
->   TARGET_ARCH=loongarch64
->   TARGET_BASE_ARCH=loongarch
-> +TARGET_KVM_HAVE_GUEST_DEBUG=y
->   TARGET_SUPPORTS_MTTCG=y
->   TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml
->   # all boards require libfdt
-> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-> index 8e6e27c8bf..e1be6a6959 100644
-> --- a/target/loongarch/kvm/kvm.c
-> +++ b/target/loongarch/kvm/kvm.c
-> @@ -28,6 +28,7 @@
->   #include "trace.h"
->   
->   static bool cap_has_mp_state;
-> +static unsigned int brk_insn;
->   const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
->       KVM_CAP_LAST_INFO
->   };
-> @@ -664,7 +665,14 @@ static void kvm_loongarch_vm_stage_change(void *opaque, bool running,
->   
->   int kvm_arch_init_vcpu(CPUState *cs)
->   {
-> +    uint64_t val;
-> +
->       qemu_add_vm_change_state_handler(kvm_loongarch_vm_stage_change, cs);
-> +
-> +    if (!kvm_get_one_reg(cs, KVM_REG_LOONGARCH_DEBUG_INST, &val)) {
-> +        brk_insn = val;
-> +    }
-> +
->       return 0;
->   }
->   
-> @@ -739,6 +747,67 @@ bool kvm_arch_stop_on_emulation_error(CPUState *cs)
->       return true;
->   }
->   
-> +void kvm_arch_update_guest_debug(CPUState *cpu, struct kvm_guest_debug *dbg)
-> +{
-> +    if (kvm_sw_breakpoints_active(cpu)) {
-> +        dbg->control |= KVM_GUESTDBG_ENABLE | KVM_GUESTDBG_USE_SW_BP;
-> +    }
-> +}
-> +
-> +int kvm_arch_insert_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-> +{
-> +    if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&bp->saved_insn, 4, 0) ||
-> +        cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&brk_insn, 4, 1)) {
-> +        error_report("%s failed", __func__);
-> +        return -EINVAL;
-> +    }
-> +    return 0;
-> +}
-> +
-> +int kvm_arch_remove_sw_breakpoint(CPUState *cs, struct kvm_sw_breakpoint *bp)
-> +{
-> +    static uint32_t brk;
-> +
-> +    if (cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&brk, 4, 0) ||
-> +        brk != brk_insn ||
-> +        cpu_memory_rw_debug(cs, bp->pc, (uint8_t *)&bp->saved_insn, 4, 1)) {
-> +        error_report("%s failed", __func__);
-> +        return -EINVAL;
-> +    }
-> +    return 0;
-> +}
-> +
-> +int kvm_arch_insert_hw_breakpoint(vaddr addr, vaddr len, int type)
-> +{
-> +    return -ENOSYS;
-> +}
-> +
-> +int kvm_arch_remove_hw_breakpoint(vaddr addr, vaddr len, int type)
-> +{
-> +    return -ENOSYS;
-> +}
-> +
-> +void kvm_arch_remove_all_hw_breakpoints(void)
-> +{
-> +}
-> +
-> +static bool kvm_loongarch_handle_debug(CPUState *cs, struct kvm_run *run)
-> +{
-> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-> +    CPULoongArchState *env = &cpu->env;
-> +
-> +    kvm_cpu_synchronize_state(cs);
-> +    if (cs->singlestep_enabled) {
-> +        return true;
-> +    }
-> +
-> +    if (kvm_find_sw_breakpoint(cs, env->pc)) {
-> +        return true;
-> +    }
-> +
-> +    return false;
-> +}
-> +
->   int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
->   {
->       int ret = 0;
-> @@ -757,6 +826,13 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
->                            run->iocsr_io.len,
->                            run->iocsr_io.is_write);
->           break;
-> +
-> +    case KVM_EXIT_DEBUG:
-> +        if (kvm_loongarch_handle_debug(cs, run)) {
-> +            ret = EXCP_DEBUG;
-> +        }
-> +        break;
-> +
->       default:
->           ret = -1;
->           warn_report("KVM: unknown exit reason %d", run->exit_reason);
+> All commands and events are inherently visible. Everything else is
+> visible only if it is a member (or a branch member) of a type that is
+> visible, or if it is named as a return type for a command.
 >
-> base-commit: dec9742cbc59415a8b83e382e7ae36395394e4bd
+> Notably, this excludes arg_type for commands and events, and any
+> base_types specified for structures/unions. Those objects may still be
+> marked visible if they are named as members from a visible type.
+
+Why?  I figure the answer is "because the transmogrifier inlines the
+things excluded".  Correct?
+
+> This does not necessarily match the data revealed by introspection: in
+> this case, we want anything that we are cross-referencing in generated
+> documentation to be available to target.
+
+I don't get the part after the colon.
+
+> Some internal and built-in types may be marked visible with this
+> approach, but if they do not have a documentation block, they'll be
+> skipped by the generator anyway. This includes array types and built-in
+> primitives which do not get their own documentation objects.
+>
+> This information is not yet used by qapidoc, which continues to render
+> documentation exactly as it has. This information will be used by the
+> new qapidoc (the "transmogrifier"), to be introduced later. The new
+> generator verifies that all of the objects that should be rendered *are*
+> by failing if any cross-references are missing, verifying everything is
+> in place.
+
+So... we decide "doc should be visible" here, and then the
+transmogrifier decides again, and we check the two decisions match?
+
+> Signed-off-by: John Snow <jsnow@redhat.com>
 
 
