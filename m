@@ -4,86 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28BF2C27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 21:15:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7280C27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 22:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIEFZ-0005rZ-95; Fri, 14 Jun 2024 17:14:21 -0400
+	id 1sIEyz-0001IB-D4; Fri, 14 Jun 2024 18:01:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sIEFY-0005rP-DJ
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 17:14:20 -0400
-Received: from mail-qv1-xf2c.google.com ([2607:f8b0:4864:20::f2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sIEFS-00020B-JO
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 17:14:20 -0400
-Received: by mail-qv1-xf2c.google.com with SMTP id
- 6a1803df08f44-6b09072c9d9so20843076d6.1
- for <qemu-devel@nongnu.org>; Fri, 14 Jun 2024 14:14:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cs.unc.edu; s=google; t=1718399652; x=1719004452; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5sP5JHcRU1kY29i/XT3PnYYFnnX8Pia+ADKz9m65QKc=;
- b=T96z5tKy0KXGMpkVKgWT4Z8oJj02ukJ/ZAOv7RO1Gjwk66+MZuc1g+SjGR6XMZ/3Vd
- OODmDP2NJOuzMB7ZoZQD5LSXDa7lkHN0YAzH+GjuQacCXcKdyzsfV6NZtGjbvn0AeBK+
- +Qj3SfiAGnWxkufJsF9DN5MnaBqrBZgk0aiiPvFpoACw9kbp9VhSO06T2uBgkfOKh8Vp
- UFTk8kQdI+8ViGB9nHlvROiKv0LteRc7wyOhEF06RL0G6W0RWLiH7UrcL5i3eTrUSF/l
- tXjevjlMOgBltRsDJHJwtHcqh8uhgDxnYJKQ9Xe0k2lOHJcyvO+RAP3zvzNEVgM1sH72
- UO9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718399652; x=1719004452;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5sP5JHcRU1kY29i/XT3PnYYFnnX8Pia+ADKz9m65QKc=;
- b=r/CB2dWEBGVxbpLIID8h3nlizgTyoPJ3xT0zTe+7bUXA7YIhKA/W7z64NPSTPwbv8T
- DGV1vD+dOy28cMg8bexG7VinudBpy9gB/o26+mTd+SEvgV3Qzh8VpgZG9qPGlpKKOc+c
- stLmnKuAG972U/YR48gqh3xGdVeyfw6xT0op1jqsFPbMAV/MPCtA05dR3oCotWJmGVML
- 2diPU4T9OQWE8ieFSu4AcYJIeasBMI54MrtfcprPVdfDiwufcsHVlsvqv0WWILtssmWw
- Ow9z6Lm0mpKVC2ZabHSvjEbrwgMkWji2gEBB7k4K10fG7yEr3mwlfwrNTzp1p8KfHLu4
- UA2A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUEPkLvj7ZKe5cgfXNUmFRFF1kp491scn5EwskgCW/4MSAG3CiQa4pgfrROTGyiGBy5old04mIrKisPnVEIvPfL2cdkul4=
-X-Gm-Message-State: AOJu0YzmuVaKrGWuV1ziCtexShd0WW5I4ZMJnYKLx5F5NYeS+o1/u0+S
- 9xFNsPHmL9eEFpr7U3oGeDkoKOl7D1Osgscc4EzFGZ/GTA76YG2iBLSe7sGxHQ==
-X-Google-Smtp-Source: AGHT+IF/gAF8CH1Lj9WFy8ylE6K+TS9Yo78aulplPtfcoLlqD8OjPGKV4XE4fSOKAD8qVxDZ0fm+QQ==
-X-Received: by 2002:a0c:db91:0:b0:6af:7b2e:1868 with SMTP id
- 6a1803df08f44-6b2af288446mr82119546d6.18.1718399652095; 
- Fri, 14 Jun 2024 14:14:12 -0700 (PDT)
-Received: from [192.168.86.22] ([136.56.85.135])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b2a5bf240csm22638806d6.18.2024.06.14.14.14.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Jun 2024 14:14:11 -0700 (PDT)
-Message-ID: <08e2c726-0788-4c36-99be-88e6cd2c2825@cs.unc.edu>
-Date: Fri, 14 Jun 2024 17:14:09 -0400
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sIEyx-0001ED-BB; Fri, 14 Jun 2024 18:01:15 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sIEyu-0001H2-Vz; Fri, 14 Jun 2024 18:01:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=gvkzE80Zx1aHM1GM+SHSE0nbTlEwUCR4IoOEEsugEgA=; b=Hz+C7lLIw1mUgWdS
+ blI/UuhUPxrfhFZEl6eH3BIxRdwl3hntBxoMHNlCc/ZtJ2yNqlrdGYsDm/4Vlbqo0Jtl0AaDoZRkR
+ nY0oLejtrrIE8Y9V+lwWdITLq9Kmr1KK7MZiCrlcS3EgxqRpBdnO72bAePcTZ8aXgegupgtjxzPGJ
+ BgQkddXImomxqWUF3O1pszjp+Z9vwzsyUmO3dE9S2yRr2KilDhnCvVGkGFZNqbUriRhpg169ecIdg
+ KpTd+xHzQiiWns/q97VAgBAUQptVeSFWIOVlgnly/b6O76KmBxqiNDMbYrTZUoWUr50eO0NcTH/Fu
+ SbH/+/OSU0tzx9SMkg==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1sIEyJ-006LYG-2n;
+ Fri, 14 Jun 2024 22:00:35 +0000
+Date: Fri, 14 Jun 2024 22:00:35 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Mark Burton <mburton@qti.qualcomm.com>, qemu-s390x@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
+ Laurent Vivier <lvivier@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Nicholas Piggin <npiggin@gmail.com>,
+ Marco Liebel <mliebel@qti.qualcomm.com>, Thomas Huth <thuth@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, qemu-ppc@nongnu.org,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Cameron Esfahani <dirty@apple.com>, Jamie Iles <quic_jiles@quicinc.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 9/9] contrib/plugins: add ips plugin example for cost
+ modeling
+Message-ID: <Zmy9g1U1uP1Vhx9N@gallifrey>
+References: <20240612153508.1532940-1-alex.bennee@linaro.org>
+ <20240612153508.1532940-10-alex.bennee@linaro.org>
+ <ZmoM2Sac97PdXWcC@gallifrey>
+ <777e1b13-9a4f-4c32-9ff7-9cedf7417695@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/6] Add an "info pg" command that prints the current
- page tables
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: dave@treblig.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
- philmd@linaro.org
-References: <20240606140253.2277760-1-porter@cs.unc.edu>
- <20240606140253.2277760-2-porter@cs.unc.edu>
- <e6e3f493-214b-4fd0-bff2-c9a7b0661a74@linaro.org>
-Content-Language: en-US
-From: Don Porter <porter@cs.unc.edu>
-In-Reply-To: <e6e3f493-214b-4fd0-bff2-c9a7b0661a74@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2c;
- envelope-from=porter@cs.unc.edu; helo=mail-qv1-xf2c.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+In-Reply-To: <777e1b13-9a4f-4c32-9ff7-9cedf7417695@linaro.org>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 21:54:02 up 37 days, 9:08, 1 user, load average: 0.00, 0.00, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,98 +89,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/7/24 1:43 PM, Richard Henderson wrote:
-> On 6/6/24 07:02, Don Porter wrote:
->> +/**
->> + * get_pte - Copy the contents of the page table entry at node[i] 
->> into pt_entry.
->> + *           Optionally, add the relevant bits to the virtual 
->> address in
->> + *           vaddr_pte.
->> + *
->> + * @cs - CPU state
->> + * @node - physical address of the current page table node
->> + * @i - index (in page table entries, not bytes) of the page table
->> + *      entry, within node
->> + * @height - height of node within the tree (leaves are 1, not 0)
->> + * @pt_entry - Poiter to a PTE_t, stores the contents of the page 
->> table entry
->> + * @vaddr_parent - The virtual address bits already translated in 
->> walking the
->> + *                 page table to node.  Optional: only used if 
->> vaddr_pte is set.
->> + * @vaddr_pte - Optional pointer to a variable storing the virtual 
->> address bits
->> + *              translated by node[i].
->> + * @pte_paddr - Pointer to the physical address of the PTE within node.
->> + *              Optional parameter.
->> + */
->> +void
->> +x86_get_pte(CPUState *cs, hwaddr node, int i, int height,
->> +            PTE_t *pt_entry, vaddr vaddr_parent, vaddr *vaddr_pte,
->> +            hwaddr *pte_paddr)
->> +
->> +{
->> +    X86CPU *cpu = X86_CPU(cs);
->> +    CPUX86State *env = &cpu->env;
->> +    int32_t a20_mask = x86_get_a20_mask(env);
->> +    hwaddr pte;
->> +
->> +    if (env->hflags & HF_LMA_MASK) {
->> +        /* 64 bit */
->> +        int pte_width = 8;
->> +        pte = (node + (i * pte_width)) & a20_mask;
->> +        pt_entry->pte64_t = address_space_ldq(cs->as, pte,
->> + MEMTXATTRS_UNSPECIFIED, NULL);
->> +    } else {
->> +        /* 32 bit */
->> +        int pte_width = 4;
->> +        pte = (node + (i * pte_width)) & a20_mask;
->> +        pt_entry->pte32_t = address_space_ldl(cs->as, pte,
->> + MEMTXATTRS_UNSPECIFIED, NULL);
->> +    }
->> +
->> +    if (vaddr_pte) {
->> +        int shift = 0;
->> +        _mmu_decode_va_parameters(cs, height, &shift, NULL);
->> +        *vaddr_pte = vaddr_parent | ((i & 0x1ffULL) << shift);
->> +    }
->> +
->> +    if (pte_paddr) {
->> +        *pte_paddr = pte;
->> +    }
->> +}
->
-> This fails to recurse with nested page tables, which definitely breaks 
-> the TCG walker.
+* Pierrick Bouvier (pierrick.bouvier@linaro.org) wrote:
+> Hi Dave,
+> 
+> On 6/12/24 14:02, Dr. David Alan Gilbert wrote:
+> > * Alex Benn�e (alex.bennee@linaro.org) wrote:
+> > > From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > > 
+> > > This plugin uses the new time control interface to make decisions
+> > > about the state of time during the emulation. The algorithm is
+> > > currently very simple. The user specifies an ips rate which applies
+> > > per core. If the core runs ahead of its allocated execution time the
+> > > plugin sleeps for a bit to let real time catch up. Either way time is
+> > > updated for the emulation as a function of total executed instructions
+> > > with some adjustments for cores that idle.
+> > 
+> > A few random thoughts:
+> >    a) Are there any definitions of what a plugin that controls time
+> >       should do with a live migration?
+> 
+> It's not something that was considered as part of this work.
 
-Hi Richard,
+That's OK, the only thing is we need to stop anyone from hitting problems
+when they don't realise it's not been addressed.
+One way might be to add a migration blocker; see include/migration/blocker.h
+then you might print something like 'Migration not available due to plugin ....'
 
-Thank you again for all of the advice and feedback.
+> >    b) The sleep in migration/dirtyrate.c points out g_usleep might
+> >       sleep for longer, so reads the actual wall clock time to
+> >       figure out a new 'now'.
+> 
+> The current API mentions time starts at 0 from qemu startup. Maybe we could
+> consider in the future to change this behavior to retrieve time from an
+> existing migrated machine.
 
-What do you think the correct semantics should be for nested paging?
+Ah, I meant for (b) to be independent of (a) - not related to migration; just
+down to the fact you used g_usleep in the plugin and a g_usleep might sleep
+for a different amount of time than you asked.
 
-My understanding is that the current 'info mem' command on x86 does not 
-recur on nested page tables, but this does seem like a useful 
-extension.  Same for 'info tlb'.
+> >    c) A fun thing to do with this would be to follow an external simulation
+> >       or 2nd qemu, trying to keep the two from running too far past
+> >       each other.
+> > 
+> 
+> Basically, to slow the first one, waiting for the replicated one to catch
+> up?
 
-In the case of 'info pg', I might want to print each page table 
-separately, rather than a combined/shadow view.
+Yes, something like that.
 
-My reading of the tcg code is that it also walks the guest page tables 
-first, then uses probe_access_full() to query the guest->host physical 
-translation, but I may be misunderstanding the code: 
-https://github.com/qemu/qemu/blob/046a64b9801343e2e89eef10c7a48eec8d8c0d4f/target/i386/tcg/sysemu/excp_helper.c#L432
+Dave
 
-In patch 6 of the series, I replace the chunk of mmu_translate() in tcg 
-that walks the guest page tables, but leave the portion alone that does 
-the nested page walk.
-
-I'm open to implementing a nested walker, but it might be better not to 
-add more functionality/changes to this patch series.
-
-Thank you,
-
-Don
-
+> > Dave >
+> > > Examples
+> > > --------
+> > > 
+> > > Slow down execution of /bin/true:
+> > > $ num_insn=$(./build/qemu-x86_64 -plugin ./build/tests/plugin/libinsn.so -d plugin /bin/true |& grep total | sed -e 's/.*: //')
+> > > $ time ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libips.so,ips=$(($num_insn/4)) /bin/true
+> > > real 4.000s
+> > > 
+> > > Boot a Linux kernel simulating a 250MHz cpu:
+> > > $ /build/qemu-system-x86_64 -kernel /boot/vmlinuz-6.1.0-21-amd64 -append "console=ttyS0" -plugin ./build/contrib/plugins/libips.so,ips=$((250*1000*1000)) -smp 1 -m 512
+> > > check time until kernel panic on serial0
+> > > 
+> > > Tested in system mode by booting a full debian system, and using:
+> > > $ sysbench cpu run
+> > > Performance decrease linearly with the given number of ips.
+> > > 
+> > > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > > Message-Id: <20240530220610.1245424-7-pierrick.bouvier@linaro.org>
+> > > ---
+> > >   contrib/plugins/ips.c    | 164 +++++++++++++++++++++++++++++++++++++++
+> > >   contrib/plugins/Makefile |   1 +
+> > >   2 files changed, 165 insertions(+)
+> > >   create mode 100644 contrib/plugins/ips.c
+> > > 
+> > > diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
+> > > new file mode 100644
+> > > index 0000000000..db77729264
+> > > --- /dev/null
+> > > +++ b/contrib/plugins/ips.c
+> > > @@ -0,0 +1,164 @@
+> > > +/*
+> > > + * ips rate limiting plugin.
+> > > + *
+> > > + * This plugin can be used to restrict the execution of a system to a
+> > > + * particular number of Instructions Per Second (ips). This controls
+> > > + * time as seen by the guest so while wall-clock time may be longer
+> > > + * from the guests point of view time will pass at the normal rate.
+> > > + *
+> > > + * This uses the new plugin API which allows the plugin to control
+> > > + * system time.
+> > > + *
+> > > + * Copyright (c) 2023 Linaro Ltd
+> > > + *
+> > > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > > + */
+> > > +
+> > > +#include <stdio.h>
+> > > +#include <glib.h>
+> > > +#include <qemu-plugin.h>
+> > > +
+> > > +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+> > > +
+> > > +/* how many times do we update time per sec */
+> > > +#define NUM_TIME_UPDATE_PER_SEC 10
+> > > +#define NSEC_IN_ONE_SEC (1000 * 1000 * 1000)
+> > > +
+> > > +static GMutex global_state_lock;
+> > > +
+> > > +static uint64_t max_insn_per_second = 1000 * 1000 * 1000; /* ips per core, per second */
+> > > +static uint64_t max_insn_per_quantum; /* trap every N instructions */
+> > > +static int64_t virtual_time_ns; /* last set virtual time */
+> > > +
+> > > +static const void *time_handle;
+> > > +
+> > > +typedef struct {
+> > > +    uint64_t total_insn;
+> > > +    uint64_t quantum_insn; /* insn in last quantum */
+> > > +    int64_t last_quantum_time; /* time when last quantum started */
+> > > +} vCPUTime;
+> > > +
+> > > +struct qemu_plugin_scoreboard *vcpus;
+> > > +
+> > > +/* return epoch time in ns */
+> > > +static int64_t now_ns(void)
+> > > +{
+> > > +    return g_get_real_time() * 1000;
+> > > +}
+> > > +
+> > > +static uint64_t num_insn_during(int64_t elapsed_ns)
+> > > +{
+> > > +    double num_secs = elapsed_ns / (double) NSEC_IN_ONE_SEC;
+> > > +    return num_secs * (double) max_insn_per_second;
+> > > +}
+> > > +
+> > > +static int64_t time_for_insn(uint64_t num_insn)
+> > > +{
+> > > +    double num_secs = (double) num_insn / (double) max_insn_per_second;
+> > > +    return num_secs * (double) NSEC_IN_ONE_SEC;
+> > > +}
+> > > +
+> > > +static void update_system_time(vCPUTime *vcpu)
+> > > +{
+> > > +    int64_t elapsed_ns = now_ns() - vcpu->last_quantum_time;
+> > > +    uint64_t max_insn = num_insn_during(elapsed_ns);
+> > > +
+> > > +    if (vcpu->quantum_insn >= max_insn) {
+> > > +        /* this vcpu ran faster than expected, so it has to sleep */
+> > > +        uint64_t insn_advance = vcpu->quantum_insn - max_insn;
+> > > +        uint64_t time_advance_ns = time_for_insn(insn_advance);
+> > > +        int64_t sleep_us = time_advance_ns / 1000;
+> > > +        g_usleep(sleep_us);
+> > > +    }
+> > > +
+> > > +    vcpu->total_insn += vcpu->quantum_insn;
+> > > +    vcpu->quantum_insn = 0;
+> > > +    vcpu->last_quantum_time = now_ns();
+> > > +
+> > > +    /* based on total number of instructions, what should be the new time? */
+> > > +    int64_t new_virtual_time = time_for_insn(vcpu->total_insn);
+> > > +
+> > > +    g_mutex_lock(&global_state_lock);
+> > > +
+> > > +    /* Time only moves forward. Another vcpu might have updated it already. */
+> > > +    if (new_virtual_time > virtual_time_ns) {
+> > > +        qemu_plugin_update_ns(time_handle, new_virtual_time);
+> > > +        virtual_time_ns = new_virtual_time;
+> > > +    }
+> > > +
+> > > +    g_mutex_unlock(&global_state_lock);
+> > > +}
+> > > +
+> > > +static void vcpu_init(qemu_plugin_id_t id, unsigned int cpu_index)
+> > > +{
+> > > +    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
+> > > +    vcpu->total_insn = 0;
+> > > +    vcpu->quantum_insn = 0;
+> > > +    vcpu->last_quantum_time = now_ns();
+> > > +}
+> > > +
+> > > +static void vcpu_exit(qemu_plugin_id_t id, unsigned int cpu_index)
+> > > +{
+> > > +    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
+> > > +    update_system_time(vcpu);
+> > > +}
+> > > +
+> > > +static void every_quantum_insn(unsigned int cpu_index, void *udata)
+> > > +{
+> > > +    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
+> > > +    g_assert(vcpu->quantum_insn >= max_insn_per_quantum);
+> > > +    update_system_time(vcpu);
+> > > +}
+> > > +
+> > > +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+> > > +{
+> > > +    size_t n_insns = qemu_plugin_tb_n_insns(tb);
+> > > +    qemu_plugin_u64 quantum_insn =
+> > > +        qemu_plugin_scoreboard_u64_in_struct(vcpus, vCPUTime, quantum_insn);
+> > > +    /* count (and eventually trap) once per tb */
+> > > +    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+> > > +        tb, QEMU_PLUGIN_INLINE_ADD_U64, quantum_insn, n_insns);
+> > > +    qemu_plugin_register_vcpu_tb_exec_cond_cb(
+> > > +        tb, every_quantum_insn,
+> > > +        QEMU_PLUGIN_CB_NO_REGS, QEMU_PLUGIN_COND_GE,
+> > > +        quantum_insn, max_insn_per_quantum, NULL);
+> > > +}
+> > > +
+> > > +static void plugin_exit(qemu_plugin_id_t id, void *udata)
+> > > +{
+> > > +    qemu_plugin_scoreboard_free(vcpus);
+> > > +}
+> > > +
+> > > +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> > > +                                           const qemu_info_t *info, int argc,
+> > > +                                           char **argv)
+> > > +{
+> > > +    for (int i = 0; i < argc; i++) {
+> > > +        char *opt = argv[i];
+> > > +        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+> > > +        if (g_strcmp0(tokens[0], "ips") == 0) {
+> > > +            max_insn_per_second = g_ascii_strtoull(tokens[1], NULL, 10);
+> > > +            if (!max_insn_per_second && errno) {
+> > > +                fprintf(stderr, "%s: couldn't parse %s (%s)\n",
+> > > +                        __func__, tokens[1], g_strerror(errno));
+> > > +                return -1;
+> > > +            }
+> > > +        } else {
+> > > +            fprintf(stderr, "option parsing failed: %s\n", opt);
+> > > +            return -1;
+> > > +        }
+> > > +    }
+> > > +
+> > > +    vcpus = qemu_plugin_scoreboard_new(sizeof(vCPUTime));
+> > > +    max_insn_per_quantum = max_insn_per_second / NUM_TIME_UPDATE_PER_SEC;
+> > > +
+> > > +    time_handle = qemu_plugin_request_time_control();
+> > > +    g_assert(time_handle);
+> > > +
+> > > +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+> > > +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+> > > +    qemu_plugin_register_vcpu_exit_cb(id, vcpu_exit);
+> > > +    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+> > > +
+> > > +    return 0;
+> > > +}
+> > > diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+> > > index 0b64d2c1e3..449ead1130 100644
+> > > --- a/contrib/plugins/Makefile
+> > > +++ b/contrib/plugins/Makefile
+> > > @@ -27,6 +27,7 @@ endif
+> > >   NAMES += hwprofile
+> > >   NAMES += cache
+> > >   NAMES += drcov
+> > > +NAMES += ips
+> > >   ifeq ($(CONFIG_WIN32),y)
+> > >   SO_SUFFIX := .dll
+> > > -- 
+> > > 2.39.2
+> > > 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
