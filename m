@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D3A2C27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 11:25:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F46C27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 11:25:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI52s-0004lr-Mx; Fri, 14 Jun 2024 07:24:38 -0400
+	id 1sI53N-0005ri-E0; Fri, 14 Jun 2024 07:25:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sI52r-0004lX-Uo
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 07:24:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sI52q-000346-Fp
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 07:24:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718364275;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0mseRudq5NDbh/8LQLtOdvWWZmSQfDqbSMIDvJ9X77U=;
- b=Narl1086B5C6g8cVc/LUg7SaOb6aZeBwBZTkM4cuxYXzkkx+VrgpFKUPLfRiHgB9CaRKP8
- c1K6ahy/vRFqA0sJWY33dj1wBk7nm8mDykFTl/LnNtvkFTH14h3VP5RAt5wU50njtbyL12
- 8ZKJNg+3aJFR4KwVSV0UqeS/0iUrHyc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-OjTyOAaxPtWt4Cc3UoxYvA-1; Fri,
- 14 Jun 2024 07:24:31 -0400
-X-MC-Unique: OjTyOAaxPtWt4Cc3UoxYvA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 329901956095; Fri, 14 Jun 2024 11:24:29 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2800119560AA; Fri, 14 Jun 2024 11:24:28 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 088FE21E6757; Fri, 14 Jun 2024 13:24:26 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Fabiano
- Rosas <farosas@suse.de>,  Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,  Ani
- Sinha <anisinha@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Kevin
- Wolf <kwolf@redhat.com>,  Jiri Pirko <jiri@resnulli.us>,  Mads Ynddal
- <mads@ynddal.dk>,  Jason Wang <jasowang@redhat.com>,  Igor Mammedov
- <imammedo@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-block@nongnu.org,  Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Victor Toso de Carvalho <victortoso@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,  Lukas Straub
- <lukasstraub2@web.de>,  Yanan Wang <wangyanan55@huawei.com>,  Hanna Reitz
- <hreitz@redhat.com>
-Subject: Re: [PATCH 18/20] qapi: ensure all errors sections are uniformly
- typset
-In-Reply-To: <20240514215740.940155-19-jsnow@redhat.com> (John Snow's message
- of "Tue, 14 May 2024 17:57:37 -0400")
-References: <20240514215740.940155-1-jsnow@redhat.com>
- <20240514215740.940155-19-jsnow@redhat.com>
-Date: Fri, 14 Jun 2024 13:24:26 +0200
-Message-ID: <87a5jn3gyd.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sI53L-0005q6-Jk
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 07:25:07 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sI53J-0003Hq-Tl
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 07:25:07 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a62ef52e837so276543766b.3
+ for <qemu-devel@nongnu.org>; Fri, 14 Jun 2024 04:25:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718364304; x=1718969104; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=79IKEzHCVQTpvU9IKk9aIRX16VqR5YZo8M1iOMcFzG8=;
+ b=o3sjxyGJ9tkzDcH8j8Jq79tUHvV/0WxMePaxJvdZqeU6766R2vBv3GdOJvK6zAu/oU
+ +fYMmDACX8NCDTp7s2xpTdXOByrGDg61vkfvnLLVJmpX9Sp7JLzVxqWqACSrb//Ia7hO
+ 98s3aBtem/OXJLJulLWLxS2EzecWnShtqFK5FOr8wdpBNxYRRdU5F56hOXk9PbaBfpQW
+ gHCpN/LhhEdo4typ8dNsRunP+4D3HPRqDaCiIFoHv4YcqyTUA7Ga6zfvPicdpJClicZ1
+ thn8Roz9iLwCqVdAt43C9XTJ27m+34AYD7GVJBOd/g6p8tcpTjEaBvIvZSCi28ZUXY0E
+ xGUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718364304; x=1718969104;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=79IKEzHCVQTpvU9IKk9aIRX16VqR5YZo8M1iOMcFzG8=;
+ b=KvpygLnkl+qRBJwf6uZOjH24CHHj3WMGpB06EcEyUlgr+4cRId8wRVKQ3+8qAcT4ru
+ QiWjzP9MbL6ZLNjlyDn1acJ0Ok0pX5mM902QgLHGvzJzD/sYDhSecrftkOY0bG+Ff/bM
+ SvrKMGvw6gBRtotNKbsTkdUjkM74UrtlTPIpdaiqLDodd2rQuJ85LLcswWMd4AaRUAjx
+ /aW/w3mGZrPBnxRZ4/KaTqV/BCgRy9HfijY1pVI/oOsMUiFr1+6EUoNNhvewt0e8086C
+ Zn2EpVsHoNyu/1B4ZiXIcIIxawcvEUOGwors3qd7ZlDLYtvzPv+rBVdDYGJdDES/0C89
+ lUNQ==
+X-Gm-Message-State: AOJu0YzD5bxh2NYss55NTUkDFDlptpf01L2A/g0iCYHc7e6Swz0lUdQM
+ 80oqLIMzpgr68S7UHix4i4WTP3Jye4C34MiLAoDfc0BsV7EoaKiIBEWLWGEfLbW/rifMGPpB5Vl
+ a
+X-Google-Smtp-Source: AGHT+IH5gYYI/ThY5Yp+mGY7p91GJ1yiDS3GcAY75F7d+3NGBFJqV4EAKmvjoHlaDAvqBmHQAMej5g==
+X-Received: by 2002:a17:906:3e13:b0:a6f:da1:d077 with SMTP id
+ a640c23a62f3a-a6f60d296f3mr161225566b.25.1718364304290; 
+ Fri, 14 Jun 2024 04:25:04 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6f56dd135esm175579166b.96.2024.06.14.04.25.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Jun 2024 04:25:04 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 473BE5F794;
+ Fri, 14 Jun 2024 12:25:03 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org,  philmd@linaro.org,  peter.maydell@linaro.org,
+ richard.henderson@linaro.org
+Subject: Re: [PATCH v2 2/9] gdbstub: Move GdbCmdParseEntry into a new header
+ file
+In-Reply-To: <20240613172103.2987519-3-gustavo.romero@linaro.org> (Gustavo
+ Romero's message of "Thu, 13 Jun 2024 17:20:56 +0000")
+References: <20240613172103.2987519-1-gustavo.romero@linaro.org>
+ <20240613172103.2987519-3-gustavo.romero@linaro.org>
+Date: Fri, 14 Jun 2024 12:25:03 +0100
+Message-ID: <875xubvka8.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,16 +99,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Gustavo Romero <gustavo.romero@linaro.org> writes:
 
-> Transactions have the only instance of an Errors section that isn't a
-> rST list; turn it into one.
+> Move GdbCmdParseEntry and its associated types into a separate header
+> file to allow the use of GdbCmdParseEntry and other gdbstub command
+> functions outside of gdbstub.c.
+>
+> Since GdbCmdParseEntry and get_param are now public, kdoc
+> GdbCmdParseEntry and rename get_param to gdb_get_cmd_param.
+>
+> This commit also makes gdb_put_packet public since is used in gdbstub
+> command handling.
+>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 
-Just for consistency?  Or do you have other shenanigans up your sleeve?
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-If we want the Errors sections to remain all rST lists, we should update
-docs/devel/qapi-code-gen.rst to say so.
-
-> Signed-off-by: John Snow <jsnow@redhat.com>
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
