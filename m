@@ -4,111 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C98C27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 17:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C2FC27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 17:20:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIAZd-0001FI-Rj; Fri, 14 Jun 2024 13:18:49 -0400
+	id 1sIAZa-0001Ba-2c; Fri, 14 Jun 2024 13:18:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sIAZa-0001Bb-7o
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:18:46 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sIAZW-0001At-IM
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:18:43 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sIAZW-00048m-Jh
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:18:44 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sIAZU-00048S-Ep
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 13:18:42 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 236FB228B2;
- Fri, 14 Jun 2024 17:18:41 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 0CC39227EA;
+ Fri, 14 Jun 2024 17:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718385521; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1718385519; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Xtlv/iJp31EbgfFZ2ZGN/+gGwSneOADkPzuBXNQmve4=;
- b=rOZMCK/Z7LbLDFGBHCteAVndhSKVyzGZJqrvIoTT6W9ZSq81BpMWtS8d2OrnsHXUvZTmhm
- paVhe5k2aCRua1GP0IURuWsnMGwXbjUV5yN4KeqZmtMrgYYyfX905l7xwM0f2/q47YwkQZ
- z8xE51L9LcJcHBXVMEYLWOOCQJ8SHIc=
+ bh=xiYfKzaoqYgWx2X7V35EUZ3Y/jAjSllIfrc0d1B/zZ0=;
+ b=bTJEz1v6aNPt38+BmX06Emra1hagcg3M1pvmK4mE89nrhxAINRWS/wItxRxcgK5la+6pTN
+ 2yEgJU/1XcBUeYGzEbR/07sKaxqkPm8kZxmhJw25n60XN6tOVOu+spGjqBXskTLM8jCjPk
+ p+pr42Gdh7gb0BI0c2ppEOsKbFtrlMM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718385521;
+ s=susede2_ed25519; t=1718385519;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Xtlv/iJp31EbgfFZ2ZGN/+gGwSneOADkPzuBXNQmve4=;
- b=mkwgXbW0qcJLHJUqnGMSBXcOAsXRy9miLVSot+FDDaM7DL/5CdhRr2dqVsn8v7wA9ohx3/
- OETf3KTiYtUK+AAw==
+ bh=xiYfKzaoqYgWx2X7V35EUZ3Y/jAjSllIfrc0d1B/zZ0=;
+ b=OLYmx9lum2Alouxkiz1VJrXR/emxR4cyDSqWMFWRe0wkd6vD3kayI0lhHxgLhQFxdKTFBh
+ 5Iy6e3/ErQQ6XnAw==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="rOZMCK/Z";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=mkwgXbW0
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=bTJEz1v6;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=OLYmx9lu
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718385521; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ t=1718385519; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Xtlv/iJp31EbgfFZ2ZGN/+gGwSneOADkPzuBXNQmve4=;
- b=rOZMCK/Z7LbLDFGBHCteAVndhSKVyzGZJqrvIoTT6W9ZSq81BpMWtS8d2OrnsHXUvZTmhm
- paVhe5k2aCRua1GP0IURuWsnMGwXbjUV5yN4KeqZmtMrgYYyfX905l7xwM0f2/q47YwkQZ
- z8xE51L9LcJcHBXVMEYLWOOCQJ8SHIc=
+ bh=xiYfKzaoqYgWx2X7V35EUZ3Y/jAjSllIfrc0d1B/zZ0=;
+ b=bTJEz1v6aNPt38+BmX06Emra1hagcg3M1pvmK4mE89nrhxAINRWS/wItxRxcgK5la+6pTN
+ 2yEgJU/1XcBUeYGzEbR/07sKaxqkPm8kZxmhJw25n60XN6tOVOu+spGjqBXskTLM8jCjPk
+ p+pr42Gdh7gb0BI0c2ppEOsKbFtrlMM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718385521;
+ s=susede2_ed25519; t=1718385519;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Xtlv/iJp31EbgfFZ2ZGN/+gGwSneOADkPzuBXNQmve4=;
- b=mkwgXbW0qcJLHJUqnGMSBXcOAsXRy9miLVSot+FDDaM7DL/5CdhRr2dqVsn8v7wA9ohx3/
- OETf3KTiYtUK+AAw==
+ bh=xiYfKzaoqYgWx2X7V35EUZ3Y/jAjSllIfrc0d1B/zZ0=;
+ b=OLYmx9lum2Alouxkiz1VJrXR/emxR4cyDSqWMFWRe0wkd6vD3kayI0lhHxgLhQFxdKTFBh
+ 5Iy6e3/ErQQ6XnAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7695613AB1;
- Fri, 14 Jun 2024 17:18:39 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6A14313AB1;
+ Fri, 14 Jun 2024 17:18:37 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id mDQkD297bGaVAgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 14 Jun 2024 17:18:39 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id iEJCDG17bGaVAgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 14 Jun 2024 17:18:37 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
  Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: [PULL 17/18] migration/multifd: Switch to no compression when no
- hardware support
-Date: Fri, 14 Jun 2024 14:18:01 -0300
-Message-Id: <20240614171802.28451-18-farosas@suse.de>
+Subject: [PULL 16/18] migration/multifd: Add UADK based compression and
+ decompression
+Date: Fri, 14 Jun 2024 14:18:00 -0300
+Message-Id: <20240614171802.28451-17-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240614171802.28451-1-farosas@suse.de>
 References: <20240614171802.28451-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Queue-Id: 0CC39227EA
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
+ MX_GOOD(-0.01)[]; MIME_TRACE(0.00)[0:+];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_DN_SOME(0.00)[];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MIME_TRACE(0.00)[0:+];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_DN_SOME(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ ARC_NA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
  RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_TLS_ALL(0.00)[];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_FIVE(0.00)[5];
  DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,suse.de:email,suse.de:dkim]
 X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 236FB228B2
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -135,160 +135,181 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 
-Send raw packets over if UADK hardware support is not available. This is to
-satisfy  Qemu qtest CI which may run on platforms that don't have UADK
-hardware support. Subsequent patch will add support for uadk migration
-qtest.
+Uses UADK wd_do_comp_sync() API to (de)compress a normal page using
+hardware accelerator.
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 Reviewed-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd-uadk.c | 92 +++++++++++++++++++++++-----------------
- 1 file changed, 53 insertions(+), 39 deletions(-)
+ migration/multifd-uadk.c | 132 ++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 130 insertions(+), 2 deletions(-)
 
 diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
-index 70bba92eaa..d12353fb21 100644
+index 535411a405..70bba92eaa 100644
 --- a/migration/multifd-uadk.c
 +++ b/migration/multifd-uadk.c
-@@ -17,6 +17,7 @@
+@@ -13,6 +13,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/module.h"
+ #include "qapi/error.h"
++#include "exec/ramblock.h"
  #include "migration.h"
  #include "multifd.h"
  #include "options.h"
-+#include "qemu/error-report.h"
- #include "uadk/wd_comp.h"
- #include "uadk/wd_sched.h"
+@@ -142,6 +143,15 @@ static void multifd_uadk_send_cleanup(MultiFDSendParams *p, Error **errp)
+     p->compress_data = NULL;
+ }
  
-@@ -48,29 +49,29 @@ static struct wd_data *multifd_uadk_init_sess(uint32_t count,
-     uint32_t size = count * page_size;
-     struct wd_data *wd;
- 
--    if (!uadk_hw_init()) {
--        error_setg(errp, "multifd: UADK hardware not available");
--        return NULL;
--    }
--
-     wd = g_new0(struct wd_data, 1);
--    ss.alg_type = WD_ZLIB;
--    if (compress) {
--        ss.op_type = WD_DIR_COMPRESS;
--        /* Add an additional page for handling output > input */
--        size += page_size;
++static inline void prepare_next_iov(MultiFDSendParams *p, void *base,
++                                    uint32_t len)
++{
++    p->iov[p->iovs_num].iov_base = (uint8_t *)base;
++    p->iov[p->iovs_num].iov_len = len;
++    p->next_packet_size += len;
++    p->iovs_num++;
++}
 +
-+    if (uadk_hw_init()) {
-+        ss.alg_type = WD_ZLIB;
-+        if (compress) {
-+            ss.op_type = WD_DIR_COMPRESS;
-+            /* Add an additional page for handling output > input */
-+            size += page_size;
-+        } else {
-+            ss.op_type = WD_DIR_DECOMPRESS;
-+        }
-+        /* We use default level 1 compression and 4K window size */
-+        param.type = ss.op_type;
-+        ss.sched_param = &param;
-+
-+        wd->handle = wd_comp_alloc_sess(&ss);
-+        if (!wd->handle) {
-+            error_setg(errp, "multifd: failed wd_comp_alloc_sess");
-+            goto out;
-+        }
-     } else {
--        ss.op_type = WD_DIR_DECOMPRESS;
--    }
--
--    /* We use default level 1 compression and 4K window size */
--    param.type = ss.op_type;
--    ss.sched_param = &param;
--
--    wd->handle = wd_comp_alloc_sess(&ss);
--    if (!wd->handle) {
--        error_setg(errp, "multifd: failed wd_comp_alloc_sess");
--        goto out;
-+        /* For CI test use */
-+        warn_report_once("UADK hardware not available. Switch to no compression mode");
-     }
- 
-     wd->buf = g_try_malloc(size);
-@@ -82,7 +83,9 @@ static struct wd_data *multifd_uadk_init_sess(uint32_t count,
-     return wd;
- 
- out_free_sess:
--    wd_comp_free_sess(wd->handle);
-+    if (wd->handle) {
-+        wd_comp_free_sess(wd->handle);
-+    }
- out:
-     wd_comp_uninit2();
-     g_free(wd);
-@@ -91,7 +94,9 @@ out:
- 
- static void multifd_uadk_uninit_sess(struct wd_data *wd)
+ /**
+  * multifd_uadk_send_prepare: prepare data to be able to send
+  *
+@@ -155,7 +165,56 @@ static void multifd_uadk_send_cleanup(MultiFDSendParams *p, Error **errp)
+  */
+ static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error **errp)
  {
--    wd_comp_free_sess(wd->handle);
-+    if (wd->handle) {
-+        wd_comp_free_sess(wd->handle);
+-    return -1;
++    struct wd_data *uadk_data = p->compress_data;
++    uint32_t hdr_size;
++    uint8_t *buf = uadk_data->buf;
++    int ret = 0;
++
++    if (!multifd_send_prepare_common(p)) {
++        goto out;
 +    }
-     wd_comp_uninit2();
-     g_free(wd->buf);
-     g_free(wd->buf_hdr);
-@@ -188,23 +193,26 @@ static int multifd_uadk_send_prepare(MultiFDSendParams *p, Error **errp)
-             .dst_len = p->page_size * 2,
-         };
- 
--        ret = wd_do_comp_sync(uadk_data->handle, &creq);
--        if (ret || creq.status) {
--            error_setg(errp, "multifd %u: failed compression, ret %d status %d",
--                       p->id, ret, creq.status);
--            return -1;
-+        if (uadk_data->handle) {
-+            ret = wd_do_comp_sync(uadk_data->handle, &creq);
-+            if (ret || creq.status) {
-+                error_setg(errp, "multifd %u: failed compression, ret %d status %d",
-+                           p->id, ret, creq.status);
-+                return -1;
-+            }
-+            if (creq.dst_len < p->page_size) {
-+                uadk_data->buf_hdr[i] = cpu_to_be32(creq.dst_len);
-+                prepare_next_iov(p, buf, creq.dst_len);
-+                buf += creq.dst_len;
-+            }
-         }
--        if (creq.dst_len < p->page_size) {
--            uadk_data->buf_hdr[i] = cpu_to_be32(creq.dst_len);
--            prepare_next_iov(p, buf, creq.dst_len);
--            buf += creq.dst_len;
--        } else {
--            /*
--             * Send raw data if compressed out >= page_size. We might be better
--             * off sending raw data if output is slightly less than page_size
--             * as well because at the receive end we can skip the decompression.
--             * But it is tricky to find the right number here.
--             */
-+        /*
-+         * Send raw data if no UADK hardware or if compressed out >= page_size.
-+         * We might be better off sending raw data if output is slightly less
-+         * than page_size as well because at the receive end we can skip the
-+         * decompression. But it is tricky to find the right number here.
-+         */
-+        if (!uadk_data->handle || creq.dst_len >= p->page_size) {
-             uadk_data->buf_hdr[i] = cpu_to_be32(p->page_size);
-             prepare_next_iov(p, p->pages->block->host + p->pages->offset[i],
-                              p->page_size);
-@@ -323,6 +331,12 @@ static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
-             continue;
-         }
- 
-+        if (unlikely(!uadk_data->handle)) {
-+            error_setg(errp, "multifd %u: UADK HW not available for decompression",
-+                       p->id);
++
++    hdr_size = p->pages->normal_num * sizeof(uint32_t);
++    /* prepare the header that stores the lengths of all compressed data */
++    prepare_next_iov(p, uadk_data->buf_hdr, hdr_size);
++
++    for (int i = 0; i < p->pages->normal_num; i++) {
++        struct wd_comp_req creq = {
++            .op_type = WD_DIR_COMPRESS,
++            .src     = p->pages->block->host + p->pages->offset[i],
++            .src_len = p->page_size,
++            .dst     = buf,
++            /* Set dst_len to double the src in case compressed out >= page_size */
++            .dst_len = p->page_size * 2,
++        };
++
++        ret = wd_do_comp_sync(uadk_data->handle, &creq);
++        if (ret || creq.status) {
++            error_setg(errp, "multifd %u: failed compression, ret %d status %d",
++                       p->id, ret, creq.status);
 +            return -1;
 +        }
++        if (creq.dst_len < p->page_size) {
++            uadk_data->buf_hdr[i] = cpu_to_be32(creq.dst_len);
++            prepare_next_iov(p, buf, creq.dst_len);
++            buf += creq.dst_len;
++        } else {
++            /*
++             * Send raw data if compressed out >= page_size. We might be better
++             * off sending raw data if output is slightly less than page_size
++             * as well because at the receive end we can skip the decompression.
++             * But it is tricky to find the right number here.
++             */
++            uadk_data->buf_hdr[i] = cpu_to_be32(p->page_size);
++            prepare_next_iov(p, p->pages->block->host + p->pages->offset[i],
++                             p->page_size);
++            buf += p->page_size;
++        }
++    }
++out:
++    p->flags |= MULTIFD_FLAG_UADK;
++    multifd_send_fill_packet(p);
++    return 0;
+ }
+ 
+ /**
+@@ -208,7 +267,76 @@ static void multifd_uadk_recv_cleanup(MultiFDRecvParams *p)
+  */
+ static int multifd_uadk_recv(MultiFDRecvParams *p, Error **errp)
+ {
+-    return -1;
++    struct wd_data *uadk_data = p->compress_data;
++    uint32_t in_size = p->next_packet_size;
++    uint32_t flags = p->flags & MULTIFD_FLAG_COMPRESSION_MASK;
++    uint32_t hdr_len = p->normal_num * sizeof(uint32_t);
++    uint32_t data_len = 0;
++    uint8_t *buf = uadk_data->buf;
++    int ret = 0;
 +
-         ret = wd_do_comp_sync(uadk_data->handle, &creq);
-         if (ret || creq.status) {
-             error_setg(errp, "multifd %u: failed decompression, ret %d status %d",
++    if (flags != MULTIFD_FLAG_UADK) {
++        error_setg(errp, "multifd %u: flags received %x flags expected %x",
++                   p->id, flags, MULTIFD_FLAG_ZLIB);
++        return -1;
++    }
++
++    multifd_recv_zero_page_process(p);
++    if (!p->normal_num) {
++        assert(in_size == 0);
++        return 0;
++    }
++
++    /* read compressed data lengths */
++    assert(hdr_len < in_size);
++    ret = qio_channel_read_all(p->c, (void *) uadk_data->buf_hdr,
++                               hdr_len, errp);
++    if (ret != 0) {
++        return ret;
++    }
++
++    for (int i = 0; i < p->normal_num; i++) {
++        uadk_data->buf_hdr[i] = be32_to_cpu(uadk_data->buf_hdr[i]);
++        data_len += uadk_data->buf_hdr[i];
++        assert(uadk_data->buf_hdr[i] <= p->page_size);
++    }
++
++    /* read compressed data */
++    assert(in_size == hdr_len + data_len);
++    ret = qio_channel_read_all(p->c, (void *)buf, data_len, errp);
++    if (ret != 0) {
++        return ret;
++    }
++
++    for (int i = 0; i < p->normal_num; i++) {
++        struct wd_comp_req creq = {
++            .op_type = WD_DIR_DECOMPRESS,
++            .src     = buf,
++            .src_len = uadk_data->buf_hdr[i],
++            .dst     = p->host + p->normal[i],
++            .dst_len = p->page_size,
++        };
++
++        if (uadk_data->buf_hdr[i] == p->page_size) {
++            memcpy(p->host + p->normal[i], buf, p->page_size);
++            buf += p->page_size;
++            continue;
++        }
++
++        ret = wd_do_comp_sync(uadk_data->handle, &creq);
++        if (ret || creq.status) {
++            error_setg(errp, "multifd %u: failed decompression, ret %d status %d",
++                       p->id, ret, creq.status);
++            return -1;
++        }
++        if (creq.dst_len != p->page_size) {
++            error_setg(errp, "multifd %u: decompressed length error", p->id);
++            return -1;
++        }
++        buf += uadk_data->buf_hdr[i];
++     }
++
++    return 0;
+ }
+ 
+ static MultiFDMethods multifd_uadk_ops = {
 -- 
 2.35.3
 
