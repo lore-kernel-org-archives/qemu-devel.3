@@ -4,105 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56A4FC27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 06:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAFEFC27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 07:04:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI064-0004lR-NE; Fri, 14 Jun 2024 02:07:36 -0400
+	id 1sI0ye-000444-RU; Fri, 14 Jun 2024 03:04:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1sI063-0004ky-1o; Fri, 14 Jun 2024 02:07:35 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sI0yd-00042O-Hl
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:03:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1sI060-0000HD-7M; Fri, 14 Jun 2024 02:07:34 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45E4U1hu026778;
- Fri, 14 Jun 2024 06:07:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- JXrsJKstxKq8wswjFJ1S5wxfQ/Iy5jkfmrcpg5jrMv0=; b=aoWHnVUx9+uPWnuM
- xPVxlMUdtJtY+l3EiUN/l96TNsm2yf6p1HGhivjAwOc+xpJWiIOqxC1JPWI2YL5d
- Nfx0uhZy6WsqXJ1l3P5+NGywlofUORDUfmD71ieXcBuD8xAVQJ1ey1D3YRYMR6Iu
- QBv7IPQdHUE4WI6yzZWL8wD0p0GT7n2RM+de68oOuHcg/TR5YC44eVyMRw/aOoGi
- C3/RyzK3Cu8qeJ5762SB/qJmyG8Pdxo6zp+VYZW9aUbVhVyoLf3Vf3jkGbPgqQc7
- hJ+DFpkIIGKQf1giGYyEGwuPUtwk7XvTDhwUotQyA6c+sYzoVnC1SpOFQi0HSvaF
- SNY89Q==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yrev687v6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Jun 2024 06:07:28 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45E67ST5012187;
- Fri, 14 Jun 2024 06:07:28 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yrev687v3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Jun 2024 06:07:28 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45E5DI7P023566; Fri, 14 Jun 2024 06:07:27 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3yn3un6d6t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Jun 2024 06:07:27 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45E67MNV14221706
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Jun 2024 06:07:24 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 25D792006C;
- Fri, 14 Jun 2024 06:07:22 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8E0222004E;
- Fri, 14 Jun 2024 06:07:21 +0000 (GMT)
-Received: from [9.171.17.142] (unknown [9.171.17.142])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 14 Jun 2024 06:07:21 +0000 (GMT)
-Message-ID: <3c138eeb-83df-4953-bdc9-3cf8343a0533@linux.ibm.com>
-Date: Fri, 14 Jun 2024 08:07:21 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/s390x: Add a CONFIG switch to disable legacy CPUs
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Ani Sinha <anisinha@redhat.com>
-References: <20240613170702.523591-1-thuth@redhat.com>
-Content-Language: en-US
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <20240613170702.523591-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: QwNcGeXX-jNnop0UYdYY1Kry352u6Sti
-X-Proofpoint-ORIG-GUID: an5o5ve2EebZ3LrJQq13zFFZPy9gn0-S
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sI0yc-00050x-54
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:03:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718348636;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KGlHMv7GgAdtmwNwvoEVn2WtwzNvEl24MYmPZfAC67E=;
+ b=EbRkh7fVry2aF5bM08vSTRz/qn6BhW8Wuihsn1cEYMD5veK/4vAb3isyvqwzPRVH1Ev5py
+ bCEfmk9JnjTFEKfJ6FhaNLr5+Qb9vn68SMPB4pE5MWiJdce8Mkua9uiLx+mrYp/sE6RKmG
+ HatyfjH6FbW9acas9qsKOigFjvt0llc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-z5XXioZRNSy2i8pCFGDltA-1; Fri,
+ 14 Jun 2024 03:03:52 -0400
+X-MC-Unique: z5XXioZRNSy2i8pCFGDltA-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0E82419560B4; Fri, 14 Jun 2024 07:03:51 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.192.178])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B5733000219; Fri, 14 Jun 2024 07:03:50 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 5ED391800D65; Fri, 14 Jun 2024 09:03:48 +0200 (CEST)
+Date: Fri, 14 Jun 2024 09:03:48 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH v3 2/4] usb/hub: mark as deprecated
+Message-ID: <ikx6c6o45yvwyrnzulrwt6bzentxmpclffod5djizycbfhcmmu@zuunl6mrz3kd>
+References: <20240606143010.1318226-1-kraxel@redhat.com>
+ <20240606143010.1318226-3-kraxel@redhat.com>
+ <ZmHKotWS7ywfIvOj@redhat.com> <87r0d2w431.fsf@draig.linaro.org>
+ <87o785b5vn.fsf@pond.sub.org> <ZmqvJIekaW9jWP6F@redhat.com>
+ <87y1799lg8.fsf@pond.sub.org> <ZmrOgxutj7ETndGM@redhat.com>
+ <8734pgx5ho.fsf@draig.linaro.org>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-13_15,2024-06-13_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0
- lowpriorityscore=0 malwarescore=0 bulkscore=0 phishscore=0 mlxlogscore=902
- impostorscore=0 suspectscore=0 clxscore=1011 spamscore=0 mlxscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406140038
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8734pgx5ho.fsf@draig.linaro.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,23 +92,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-Am 13.06.24 um 19:07 schrieb Thomas Huth:
-> Old CPU models are not officially supported anymore by IBM, and for
-> downstream builds of QEMU, we would like to be able to disable these
-> CPUs in the build. Thus add a CONFIG switch that can be used to
-> disable these CPUs (and old machine types that use them by default).
+On Thu, Jun 13, 2024 at 03:49:23PM GMT, Alex Bennée wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   If you're interested, the PDF that can be downloaded from
->   https://www.ibm.com/support/pages/ibm-mainframe-life-cycle-history
->   shows the supported CPUs in a nice diagram
+> > I don't want to loose that clear & easily understood meaning, by overloading
+> > "deprecated" for scenarios like "it is sometimes better to use a different
+> > device instead of this one, depending on factors X, Y & Z".
+> 
+> I agree we shouldn't overload the meaning if deprecated.
+> 
+> So to this case in point. Is there anything you can do with usb/hub that
+> you can't do with the newer xhci based one?
 
-z13 is still supported so the patch needs to be fixed at least.
-Furthermore, z14 has the IBC/VAL cabability to behave like a z13,
-same for z15. (we do support VAL to N-2)
+Well, it's a hub.  You can (virtually) plug it into a usb root port of a
+ohci/uhci/ehci/xhci host adapter and get 8 more usb ports.  Those new
+ports are usb 1.1 only though, so not very useful in a modern world,
+except maybe for HID devices which don't need much bandwidth.
 
-I fail to see the value of this given how stable this code is.
+> Is it backward compatible
+> enough that an old kernel would work? Or are we talking really old
+> kernels at this point?
+
+Pretty much everything should be able to drive the usb hub.
+
+take care,
+  Gerd
+
 
