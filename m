@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A173C27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 18:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 619DEC27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 19:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIBTb-0005PG-E2; Fri, 14 Jun 2024 14:16:39 -0400
+	id 1sICcN-0008Q7-Gc; Fri, 14 Jun 2024 15:29:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sIBTZ-0005Ou-7y
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 14:16:37 -0400
-Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
+ (Exim 4.90_1) (envelope-from
+ <3JppsZgQKCkc0tr0pxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--rkir.bounces.google.com>)
+ id 1sICcL-0008Nf-Ux
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 15:29:45 -0400
+Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sIBTW-0006KU-RB
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 14:16:36 -0400
-Received: by mail-ot1-x335.google.com with SMTP id
- 46e09a7af769-6f971cb3c9cso1297052a34.1
- for <qemu-devel@nongnu.org>; Fri, 14 Jun 2024 11:16:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <3JppsZgQKCkc0tr0pxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--rkir.bounces.google.com>)
+ id 1sICcK-0001es-9j
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 15:29:45 -0400
+Received: by mail-yw1-x114a.google.com with SMTP id
+ 00721157ae682-6313189f622so39197357b3.2
+ for <qemu-devel@nongnu.org>; Fri, 14 Jun 2024 12:29:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cs.unc.edu; s=google; t=1718388993; x=1718993793; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=g+Mhqbia3eQmAClwnX55SVi1EbUauFA6Ps8P3T2JbI8=;
- b=BYc0I0TrGGbfuLJHyVPiQMfNtlPxby+4VEyMvv7BzqLrH3AMf75LGXWdbQFGtS8JgP
- R/TE8J/u30b46+orzo7cd+JP3NCHjnaFzJChrCmc4dZvejFXyM/jeMpVgWPWT63ILA0W
- EeLw2wqKch5kpAC3WIMBp1BQYD9zPlZMhfT+Pl3xtdgQCUf5trtIrs3cntv2mb3Pvn6T
- m2nmWiMhEyR9y0NwglIiL7K1Yl9BhID84I8KF+pOduR0DAgAg0a85cSJqhjyr3rekUUs
- 2/oZZU/1CZsf8qWmic70vxWoWLH8Z8kGXVz52H2MRC7gssDBYpsi1bs9YtOuuyiILMf4
- 4DOQ==
+ d=google.com; s=20230601; t=1718393382; x=1718998182; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=TtK1C8YlLW0pbgXYspCN1hMQKNtzaDRkikncqCvQKRM=;
+ b=TMPuvFQD+b+ZX5uTEcZOonVVSoHP97nr5jhwyegPzs3QdnvWogEWamYhg7sOgTu7n1
+ lQG8MrlqjC3Qls3m1U5C1SsDiEMmowX0oiPL6eDUCEXjsx3jT4D9YbZYrfX1uWU32R6o
+ liYjimA87vNnRlVb2fjxYwug+iRKmWnKISnL7GkcdRsMfMJJDD9AX9KZR5+ssUzE+VU+
+ vAIpvtJNiEgOxNWxhb3MMU2BTGmz/3l52dgal8ImQrZWudsIBVspiW0uNPzv/cWVCVk2
+ tE+A+KOBkHY7kpHRwuPeTTIHu06hwAtEFAu4kCPpAU0zulq2dCykJTBwBwMu8T3YjHeX
+ fdrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718388993; x=1718993793;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=g+Mhqbia3eQmAClwnX55SVi1EbUauFA6Ps8P3T2JbI8=;
- b=dNh7xp0JXKIF/wzzpjAgHh3LFT/Y4DqePQ2/5eQ+Ozvw7bK6pxpETe9nR7gw5nT08B
- Ll3wdx9XVWCI5xd2UlPcle4b+x2+qqMufDmYkzAC0qtd3x6InjajGfP9vrjU+IgKf953
- M9/GfxNTuwGDCJMUQ9kWREfNp3b4/nKVOsVlsuluxboA8zcxJFdyK63OBfwOabshr03L
- BClbY0wgHijyxB35AlcMLtFj7iFR6DVWBOoIon6P6M2UlBWoTuUOvypI/+EKUI750PG+
- u4g7UMSAkw0ezm9RyYpjrNe/8YrdPx4/ePv8qag2X4mLPUPFbChCXYTv0wpTeoSdMSLe
- L5MA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXd3qRqoKDp0Kz27bjV58PMaRXNmlCCJb2YPv2uiTVcCsDDmtVmI60JPZZCZ0Ar08lRt7MMMmBZelMF0lm0B2jFOvU6jFA=
-X-Gm-Message-State: AOJu0YxpaIdgZoz66Iw+4hG2dhvqnu94G/9sFs1mQ0ay8uDBXSiU56yr
- tntMWZqtgI1m3jsJs647FxoOQ61y3OwVaFUH83/uLqq6tPhB9yJjPhjItQPYJg==
-X-Google-Smtp-Source: AGHT+IHmAXtY9XY4smz6nHoJygph6p6OwVt02KcnbTJBIV+KFje7fSpmEEY4ijKqZnazeuTPmuIVbA==
-X-Received: by 2002:a9d:5605:0:b0:6f9:a1fd:85c8 with SMTP id
- 46e09a7af769-6fb9364b2afmr3739233a34.2.1718388992711; 
- Fri, 14 Jun 2024 11:16:32 -0700 (PDT)
-Received: from [192.168.86.22] ([136.56.85.135])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-44212efe609sm14757601cf.52.2024.06.14.11.16.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 14 Jun 2024 11:16:32 -0700 (PDT)
-Message-ID: <58b3ac8a-b4cc-4211-8b40-528ff8f186d3@cs.unc.edu>
-Date: Fri, 14 Jun 2024 14:16:30 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/6] Add an "info pg" command that prints the current
- page tables
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: dave@treblig.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
- philmd@linaro.org
-References: <20240606140253.2277760-1-porter@cs.unc.edu>
- <20240606140253.2277760-2-porter@cs.unc.edu>
- <101886bb-12f2-43f9-8a7b-d2bf8e8f596c@linaro.org>
-Content-Language: en-US
-From: Don Porter <porter@cs.unc.edu>
-In-Reply-To: <101886bb-12f2-43f9-8a7b-d2bf8e8f596c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
- envelope-from=porter@cs.unc.edu; helo=mail-ot1-x335.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20230601; t=1718393382; x=1718998182;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TtK1C8YlLW0pbgXYspCN1hMQKNtzaDRkikncqCvQKRM=;
+ b=nESSE0ZK8BsQVIC12ssl2oyxD+I53+9jl/qWED5AaUtQTmyt+UJSfy+4K7oVnhvidW
+ exVHXJjqXyo11POKcAYFH7gQr5UOe59UHFy/O99Ow1JfNaIgU0J3D7ZdGabbsMY1n3nN
+ +N1AoGPG509g2uZ6kDNHnZP24zdTq7810hQcb2dyX0nT3gSsJqTzWGKOeAAmxDgkcHS6
+ AjsW2IRK9Ke5+D/dLOq84+6c9Mk2FtSwkp+c5sl5k4OjB/NLj6K7gmrbZrn5ZnPZjJv1
+ TINjEsNrirgq7IuEKpB4ncFvL1RMHO5I/zQw0s2MiGW9JfwDlyqR1srXqiHICqqPdd5m
+ NgpQ==
+X-Gm-Message-State: AOJu0YxwVTUOoe1VZVvSXoVQeWhD2gGo3a69HXHQKVF4rA45vVtMMUCZ
+ 1oUtinQ7fbdtCP1dw8KPkwKrEll+tDA2VCdLSKag8vZ35JTmzf034x6jynL6EysqMqNwp3dwzOl
+ FvA/lkk6wCuxDpdBAYzGZrOKA5nF93pRIup6Gkob1pMRWo8HrNnfZ5Z4wzTMOsGFPwQuqpQXHCh
+ MYYdZT3y8G3lPz1B7wEXco
+X-Google-Smtp-Source: AGHT+IEYEKVE92+46WTtQRpWE85vzRAcQ46cbipvhhgbRZ/Ra0wlObPUMlvx0uZGnIDMNASPXt6mMNv9
+X-Received: from rkir98.kir.corp.google.com
+ ([2620:15c:7d:4:cd17:b746:5266:1aa9])
+ (user=rkir job=sendgmr) by 2002:a05:6902:2b0a:b0:dff:83e:b259 with SMTP id
+ 3f1490d57ef6-dff1538b16bmr1009711276.6.1718393382011; Fri, 14 Jun 2024
+ 12:29:42 -0700 (PDT)
+Date: Fri, 14 Jun 2024 12:29:38 -0700
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.45.2.627.g7a2c4fd464-goog
+Message-ID: <20240614192938.1690188-1-rkir@google.com>
+Subject: [PATCH] Make TARGET_PAGE_MASK typed as target_ulong
+From: Roman Kiryanov <rkir@google.com>
+To: qemu-devel@nongnu.org
+Cc: jansene@google.com, Roman Kiryanov <rkir@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
+ envelope-from=3JppsZgQKCkc0tr0pxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--rkir.bounces.google.com;
+ helo=mail-yw1-x114a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,53 +92,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+this fixes the build warnings like
 
-Thank you for all of the helpful comments!  v4 will be much cleaner as a 
-result.
+accel/tcg/cputlb.c:416:13: warning: shifting a negative signed value is undefined [-Wshift-negative-value]
+    mask &= TARGET_PAGE_MASK | TLB_INVALID_MASK;
+            ^~~~~~~~~~~~~~~~
+include/exec/cpu-all.h:169:45: note: expanded from macro 'TARGET_PAGE_MASK'
+                            ~~~~~~~~~~~~~~~ ^
 
-A few follow-ups inline.
+also this fixes the inconsitency in the return
+type of qemu_target_page_mask (int could be
+shorter than target_long).
 
-On 6/7/24 12:57 PM, Richard Henderson wrote:
-> On 6/6/24 07:02, Don Porter wrote:
->> +
->> +    /**
->> +     * @mon_init_page_table_iterator: Callback to configure a page 
->> table
->> +     * iterator for use by a monitor function.
->> +     * Returns true on success, false if not supported (e.g., no 
->> paging disabled
->> +     * or not implemented on this CPU).
->> +     */
->> +    bool (*mon_init_page_table_iterator)(Monitor *mon,
->> +                                         struct mem_print_state 
->> *state);
->
-> I don't understand the purpose of this one as a target-specific hook.
+Signed-off-by: Roman Kiryanov <rkir@google.com>
+---
+ include/exec/cpu-all.h     | 4 ++--
+ include/exec/target_page.h | 2 +-
+ page-target.c              | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-The iterator needs some architecture-specific initialization, such as 
-getting the virtual
-and physical address width.
-
->
->> +    /**
->> +     * @flush_page_table_iterator_state: Prints the last entry,
->> +     * if one is present.  Useful for iterators that aggregate 
->> information
->> +     * across page table entries.
->> +     */
->> +    bool (*mon_flush_page_print_state)(CPUState *cs,
->> +                                       struct mem_print_state *state);
->
-> Is this specific to "info pg" or not?
-> It appears to be, but the description suggests it is not.
-
-It is.
-
-Thank you,
-
-Don
-
-
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index 6f09b86e7f..238a847eca 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -152,8 +152,8 @@ extern const TargetPageBits target_page;
+ # define TARGET_PAGE_SIZE    (-(int)TARGET_PAGE_MASK)
+ #else
+ # define TARGET_PAGE_BITS_MIN TARGET_PAGE_BITS
+-# define TARGET_PAGE_SIZE    (1 << TARGET_PAGE_BITS)
+-# define TARGET_PAGE_MASK    ((target_long)-1 << TARGET_PAGE_BITS)
++# define TARGET_PAGE_SIZE    ((target_ulong)1 << TARGET_PAGE_BITS)
++# define TARGET_PAGE_MASK    ((target_ulong)-1 << TARGET_PAGE_BITS)
+ #endif
+ 
+ #define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
+diff --git a/include/exec/target_page.h b/include/exec/target_page.h
+index 98ffbb5c23..57d60f2b06 100644
+--- a/include/exec/target_page.h
++++ b/include/exec/target_page.h
+@@ -15,7 +15,7 @@
+ #define EXEC_TARGET_PAGE_H
+ 
+ size_t qemu_target_page_size(void);
+-int qemu_target_page_mask(void);
++target_ulong qemu_target_page_mask(void);
+ int qemu_target_page_bits(void);
+ int qemu_target_page_bits_min(void);
+ 
+diff --git a/page-target.c b/page-target.c
+index 82211c8593..7176c29555 100644
+--- a/page-target.c
++++ b/page-target.c
+@@ -17,7 +17,7 @@ size_t qemu_target_page_size(void)
+     return TARGET_PAGE_SIZE;
+ }
+ 
+-int qemu_target_page_mask(void)
++target_ulong qemu_target_page_mask(void)
+ {
+     return TARGET_PAGE_MASK;
+ }
+-- 
+2.45.2.627.g7a2c4fd464-goog
 
 
