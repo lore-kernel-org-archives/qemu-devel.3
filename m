@@ -4,94 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A01C27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 15:48:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4DD1C27C77
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 15:50:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI99M-0000N6-3f; Fri, 14 Jun 2024 11:47:38 -0400
+	id 1sI9Bg-0001sr-Dm; Fri, 14 Jun 2024 11:50:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1sI99C-0000MU-Vy; Fri, 14 Jun 2024 11:47:27 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1sI99A-0003n8-JL; Fri, 14 Jun 2024 11:47:26 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45EFQgN0015338;
- Fri, 14 Jun 2024 15:47:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:content-type
- :content-transfer-encoding:mime-version; s=pp1; bh=5MFds10zWD3zc
- eWHv0GwXy87AqEaI2GojlTAiivj6EY=; b=YWHihgYa9F0M14N5pcG8TcdT87t3G
- w16rMgPqEns/WlCPg0RWL8aGY5V6DDuCTl8E/15pM0Aj1p4lOs/0gAEA+9GhRF+o
- gQdmUHC3jZ+onoeXCGyCceDIgRndgsueH7O/nAauwBLrs4Tar33VQnryTTo7vgNj
- ngIdxUdQxfFPtPjfSI8q65yYB3rYi5Mpi0varz6aVSV0GtnhaKqS3JIMBk8vV3K7
- uxOWK7+RWt9h6YLstGwcCDaXN0q9VUadO5RfDQrGRoBmVcQNhodif+5ZbVul/4Hx
- 2o1noSGzWnl/hZvg3BE7GJlz18+j9H9Qm7MxDZl/niqOQckd6o86MJKoA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yrnwa0hq2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Jun 2024 15:47:18 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45EF8lw6020048; Fri, 14 Jun 2024 15:47:17 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3yn34ntshc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 14 Jun 2024 15:47:17 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45EFlDWJ54001938
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 14 Jun 2024 15:47:15 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7908E2004D;
- Fri, 14 Jun 2024 15:47:13 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4E0AC20040;
- Fri, 14 Jun 2024 15:47:13 +0000 (GMT)
-Received: from black.boeblingen.de.ibm.com (unknown [9.155.200.166])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 14 Jun 2024 15:47:13 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2] linux-user: Make TARGET_NR_setgroups affect only the
- current thread
-Date: Fri, 14 Jun 2024 17:46:40 +0200
-Message-ID: <20240614154710.1078766-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.45.1
-Content-Type: text/plain; charset=UTF-8
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: bcSDLV4PhNa2vBS2kKEQ7BMrIrtnfJzV
-X-Proofpoint-ORIG-GUID: bcSDLV4PhNa2vBS2kKEQ7BMrIrtnfJzV
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sI9Be-0001sJ-98
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 11:49:58 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sI9Bc-0003z1-FL
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 11:49:58 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-35f223e7691so1491093f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 14 Jun 2024 08:49:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718380194; x=1718984994; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=AH1T8j+snYwiM53VlnL+FCmC0JkGpA0roAN8nA3hzcQ=;
+ b=qHgNFTIL4lkIV/8796txxGCqGasSjD6mwv6k/Lq2i8+urKTownX5nafrSOhwU92Pw9
+ b3OWVaL+L03oo24eqRIDxqbO2FrWuXhT9O6kidkQUGHDocoUXQZo/WHWKyxSrKMiKkZZ
+ X2Njc6LZfns210kCo86m2ap7bPdXLK5J31V0G3IJPwP6dycNuDtnkdHDFQsxkgnWpwwO
+ f62EPnWlu6hGYO3Zsy8+b2p5sc8mTm2UlXmurI4/THhaZAYROVd+pb0X6kni8wa5+6Yf
+ 1N+2LcuGLt8W304WJRRX4YUKcJpFxtM193wSMANT7MWrDJLtwineWj5UlHg/BJVm4/Uw
+ I/8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718380194; x=1718984994;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AH1T8j+snYwiM53VlnL+FCmC0JkGpA0roAN8nA3hzcQ=;
+ b=DWtK+fbQeBU77iMXoRxoJCjxVF7Oc+zkxo5RtumT1KuUN6ve3Kk1ll34G0XfPp8LJM
+ eSzUn3O6+N2GaHREQ66NGOrr2s1aL8pNDrNXnWSWnLyW7SGUh9HIqH2UYpMsabh0vODe
+ XuTGtTrLML5pHlHaP48p/ds563Q1VhRjOUgJyv76v96kzQzWn9SmZ+gMV+KQrJYFpbQu
+ qx4u9NyQOGHDqFjtByu+qM9fRbxBBxJ9PHTnHR9xyQRr9E6NZzkBHp+0tr+i+qgQKy2C
+ R64URa1eYW5HeFnCpfK6EyDVVTb/BArm22SRyfR6KXjyW796eufkTJe4to3XOSUQ+D5U
+ 1oLw==
+X-Gm-Message-State: AOJu0Yw42Z7jGGJqLGmoFeMv6R6QZIuxZQbWfHkuiiaRyv4QN8mQh55k
+ vSlim55ysSF74x3gKEnd9jzod1RspzEAp1dVnDMl4tQAsqPiwAU2iKmTGylhdiw=
+X-Google-Smtp-Source: AGHT+IEo2W5Bk5x+bcsTCGGm2Q2evLjPCDlXlXk1y8BEqslphp2/NXVLqBmZ4T527DU584vaqRotuQ==
+X-Received: by 2002:adf:f906:0:b0:360:715f:faf with SMTP id
+ ffacd0b85a97d-3607a4cd26bmr3840822f8f.10.1718380194168; 
+ Fri, 14 Jun 2024 08:49:54 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36075104c17sm4703898f8f.106.2024.06.14.08.49.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 14 Jun 2024 08:49:53 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 2DC3B5F794;
+ Fri, 14 Jun 2024 16:49:53 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org,  philmd@linaro.org,  peter.maydell@linaro.org,
+ richard.henderson@linaro.org
+Subject: Re: [PATCH v2 0/9] Add MTE stubs for aarch64 user mode
+In-Reply-To: <20240613172103.2987519-1-gustavo.romero@linaro.org> (Gustavo
+ Romero's message of "Thu, 13 Jun 2024 17:20:54 +0000")
+References: <20240613172103.2987519-1-gustavo.romero@linaro.org>
+Date: Fri, 14 Jun 2024 16:49:53 +0100
+Message-ID: <87ed8zttge.fsf@draig.linaro.org>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-14_13,2024-06-14_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 mlxlogscore=999
- mlxscore=0 suspectscore=0 adultscore=0 clxscore=1011 spamscore=0
- impostorscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406140103
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,63 +96,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Like TARGET_NR_setuid, TARGET_NR_setgroups should affect only the
-calling thread, and not the entire process. Therefore, implement it
-using a syscall, and not a libc call.
+Gustavo Romero <gustavo.romero@linaro.org> writes:
 
-Cc: qemu-stable@nongnu.org
-Fixes: 19b84f3c35d7 ("added setgroups and getgroups syscalls")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
+> This patchset adds the stubs necessary to support GDB memory tagging
+> commands on QEMU aarch64 user mode.
+>
+> These new stubs handle the qIsAddressTagged, qMemTag, and QMemTag
+> packets, which allow GDB memory tagging subcommands 'check',
+> 'print-allocation-tag', and 'set-allocation-tag' to work. The remaining
+> memory tagging commands ('print-logical-tag' and 'with-logical-tag')
+> will also work, but they don't rely on any stub because they perform
+> local operations.
+>
+> Since the memory tagging stubs are not common to all architectures, this
+> patchset also introduces three functions: gdb_extend_qsupported_features,
+> gdb_extend_query_table, and gdb_extend_set_table. These functions can be
+> used to extend the target-specific 'qSupported' feature string and the
+> handlers for the 'q' (query) and 'Q' (set) packets. These new functions
+> are used to add the MTE stubs for the aarch64 gdbstub.
+>=20=20
+> Note that this patchset requires a GDB that supports the
+> qIsAddressTagged packet (recently added to GDB), so the gdbstub MTE
+> tests introduced by it must be run using GDB's master branch, since the
+> GDB in the distros hasn't picked up the change yet.
+>
+> Once GDB is built and installed locally, the tests can be exercised, for
+> example, this way:
+>
+> make GDB=3D~/.local/bin/gdb run-tcg-tests-aarch64-linux-user -j 32
 
-v1: https://patchew.org/QEMU/20240131001851.15932-1-iii@linux.ibm.com/
-v1 -> v2: Rebase, add Philippe's R-b.
+It looks like there might be some BSD build failures as well:
 
- linux-user/syscall.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+  https://gitlab.com/stsquad/qemu/-/pipelines/1332635371/failures
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index b9b5a387b33..e2804312fcd 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -7209,11 +7209,17 @@ static inline int tswapid(int id)
- #else
- #define __NR_sys_setresgid __NR_setresgid
- #endif
-+#ifdef __NR_setgroups32
-+#define __NR_sys_setgroups __NR_setgroups32
-+#else
-+#define __NR_sys_setgroups __NR_setgroups
-+#endif
- 
- _syscall1(int, sys_setuid, uid_t, uid)
- _syscall1(int, sys_setgid, gid_t, gid)
- _syscall3(int, sys_setresuid, uid_t, ruid, uid_t, euid, uid_t, suid)
- _syscall3(int, sys_setresgid, gid_t, rgid, gid_t, egid, gid_t, sgid)
-+_syscall2(int, sys_setgroups, int, size, gid_t *, grouplist)
- 
- void syscall_init(void)
- {
-@@ -11891,7 +11897,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-                 unlock_user(target_grouplist, arg2,
-                             gidsetsize * sizeof(target_id));
-             }
--            return get_errno(setgroups(gidsetsize, grouplist));
-+            return get_errno(sys_setgroups(gidsetsize, grouplist));
-         }
-     case TARGET_NR_fchown:
-         return get_errno(fchown(arg1, low2highuid(arg2), low2highgid(arg3)));
-@@ -12227,7 +12233,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-                 }
-                 unlock_user(target_grouplist, arg2, 0);
-             }
--            return get_errno(setgroups(gidsetsize, grouplist));
-+            return get_errno(sys_setgroups(gidsetsize, grouplist));
-         }
- #endif
- #ifdef TARGET_NR_fchown32
--- 
-2.45.1
+>
+> v2:
+>  - Addressed comments from Richard, Phil, and Alex
+>  - Made the series more granular by splitting it into more patches
+>  - Moved gdbstub command-specific structs and functions into a new header=
+, gdbstub/commands.h
+>  - Fixed exception in allocation_tag_mem_probe()
+>  - Used MTE helpers ({store,load}_tag1 and allocation_tag_mem_probe) in t=
+he MTE stubs
+>  - Factored out MTE code to set TCF0, avoiding duplication (both prctl an=
+d gdbstub code use it)
+>  - Hoisted sscanf() out of loop in handle_Q_memtag stub and use gdb_hexto=
+mem instead
+>  - Rebased this series on Alex's gdb/next branch
+>
+>
+> Cheers,
+> Gustavo
+>
+> Gustavo Romero (9):
+>   gdbstub: Clean up process_string_cmd
+>   gdbstub: Move GdbCmdParseEntry into a new header file
+>   gdbstub: Add support for target-specific stubs
+>   target/arm: Fix exception case in allocation_tag_mem_probe
+>   target/arm: Make some MTE helpers widely available
+>   target/arm: Factor out code for setting MTE TCF0 field
+>   gdbstub: Make get cpu and hex conversion functions non-internal
+>   gdbstub: Add support for MTE in user mode
+>   tests/tcg/aarch64: Add MTE gdbstub tests
+>
+>  configs/targets/aarch64-linux-user.mak |   2 +-
+>  gdb-xml/aarch64-mte.xml                |  11 ++
+>  gdbstub/gdbstub.c                      | 211 +++++++++++----------
+>  gdbstub/internals.h                    |  24 ---
+>  gdbstub/syscalls.c                     |   7 +-
+>  gdbstub/system.c                       |   7 +-
+>  gdbstub/user-target.c                  |  25 +--
+>  gdbstub/user.c                         |   7 +-
+>  include/exec/gdbstub.h                 |   5 +
+>  include/gdbstub/commands.h             | 102 ++++++++++
+>  linux-user/aarch64/target_prctl.h      |  22 +--
+>  target/arm/cpu.c                       |   1 +
+>  target/arm/gdbstub.c                   | 253 +++++++++++++++++++++++++
+>  target/arm/internals.h                 |   2 +
+>  target/arm/mte.h                       |  53 ++++++
+>  target/arm/tcg/mte_helper.c            | 181 +-----------------
+>  target/arm/tcg/mte_helper.h            | 211 +++++++++++++++++++++
+>  tests/tcg/aarch64/Makefile.target      |  11 +-
+>  tests/tcg/aarch64/gdbstub/test-mte.py  |  86 +++++++++
+>  tests/tcg/aarch64/mte-8.c              | 102 ++++++++++
+>  20 files changed, 975 insertions(+), 348 deletions(-)
+>  create mode 100644 gdb-xml/aarch64-mte.xml
+>  create mode 100644 include/gdbstub/commands.h
+>  create mode 100644 target/arm/mte.h
+>  create mode 100644 target/arm/tcg/mte_helper.h
+>  create mode 100644 tests/tcg/aarch64/gdbstub/test-mte.py
+>  create mode 100644 tests/tcg/aarch64/mte-8.c
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
