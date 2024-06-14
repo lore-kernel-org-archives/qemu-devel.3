@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBCE0C27C77
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 07:29:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17F2CC27C77
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 07:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI1LO-00039w-LB; Fri, 14 Jun 2024 03:27:30 -0400
+	id 1sI1MB-0004Ji-Fs; Fri, 14 Jun 2024 03:28:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sI1LN-00039f-GD
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:27:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sI1M9-0004Dg-0O
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:28:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sI1LL-0000jp-T8
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:27:29 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sI1M7-0000sM-94
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:28:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718350045;
+ s=mimecast20190719; t=1718350094;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aGFz00sOMUVuWd2OQ1tTLKSKBb3ZvhqhnSttbL2LqJc=;
- b=DyldFP4qTJ8KLm5fxnYGmm1MFvEN4R6d5Dgl8WAVu6IQ54qLkaLjVYRLSk/fkhIW0IRibQ
- N6/qSkZS4DdG2VJLNy3Nd87QM83IlXgMSNMjmzVJUJ0UIlvr+6LYrCUlYjlbenQ+JSYEOf
- hOe8O5d3ybQcq5Bgn+vwkD8sbHSogy8=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=+aHLk7nwr1ukJ4voNXZNsv4nvrC5BSxbI4+G89eCwJ4=;
+ b=XvdadcurmScwe3ZoSYcbcviCPMKPMd0J1286IHtZmL4FYBSULxiU37ZUMZPjDXA/mK+QTl
+ jUz3yC1QrViUomslTyz/GwiGPfFIgkmoBXyqOUQNKT4R+HfnpDBmHFKPk1ogyj8VeNt/5p
+ vBe3b375q6P2/TDqLgS9LhIsBjG8rhY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-07hMO7kWOwSXBowTwymhZA-1; Fri,
- 14 Jun 2024 03:27:21 -0400
-X-MC-Unique: 07hMO7kWOwSXBowTwymhZA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-198-5ulapZ1FNUKx_HNa_MglrQ-1; Fri,
+ 14 Jun 2024 03:28:07 -0400
+X-MC-Unique: 5ulapZ1FNUKx_HNa_MglrQ-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C02AA19560B8; Fri, 14 Jun 2024 07:27:19 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1BFF919560B8; Fri, 14 Jun 2024 07:28:05 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.49])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C08FE300021A; Fri, 14 Jun 2024 07:27:10 +0000 (UTC)
+ id 6E21B3000219; Fri, 14 Jun 2024 07:28:03 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>
-Subject: [PULL 01/19] aspeed/smc: Reintroduce "dram-base" property for AST2700
-Date: Fri, 14 Jun 2024 09:26:02 +0200
-Message-ID: <20240614072620.1262053-2-clg@redhat.com>
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PULL 18/19] docs:aspeed: Add AST2700 Evaluation board
+Date: Fri, 14 Jun 2024 09:26:19 +0200
+Message-ID: <20240614072620.1262053-19-clg@redhat.com>
 In-Reply-To: <20240614072620.1262053-1-clg@redhat.com>
 References: <20240614072620.1262053-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -84,51 +83,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Aspeed SMC device model use to have a 'sdram_base' property. It
-was removed by commit d177892d4a48 ("aspeed/smc: Remove unused
-"sdram-base" property") because previous changes simplified the DMA
-transaction model to use an offset in RAM and not the physical
-address.
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-The AST2700 SoC has larger address space (64-bit) and a new register
-DMA DRAM Side Address High Part (0x7C) is introduced to deal with the
-high bits of the DMA address. To be able to compute the offset of the
-DMA transaction, as done on the other SoCs, we will need to know where
-the DRAM is mapped in the address space. Re-introduce a "dram-base"
-property to hold this value.
+Add AST2700 Evaluation board and its boot command.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 ---
- include/hw/ssi/aspeed_smc.h | 1 +
- hw/ssi/aspeed_smc.c         | 1 +
- 2 files changed, 2 insertions(+)
+ docs/system/arm/aspeed.rst | 39 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 35 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/ssi/aspeed_smc.h b/include/hw/ssi/aspeed_smc.h
-index 8e1dda556b91..8791cc0ecb11 100644
---- a/include/hw/ssi/aspeed_smc.h
-+++ b/include/hw/ssi/aspeed_smc.h
-@@ -76,6 +76,7 @@ struct AspeedSMCState {
-     AddressSpace flash_as;
-     MemoryRegion *dram_mr;
-     AddressSpace dram_as;
-+    uint64_t     dram_base;
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index b2dea54eedad..cd9559e3e291 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -1,11 +1,12 @@
+-Aspeed family boards (``*-bmc``, ``ast2500-evb``, ``ast2600-evb``)
+-==================================================================
++Aspeed family boards (``*-bmc``, ``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``)
++===================================================================================
  
-     AspeedSMCFlash flashes[ASPEED_SMC_CS_MAX];
+ The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+ Aspeed evaluation boards. They are based on different releases of the
+ Aspeed SoC : the AST2400 integrating an ARM926EJ-S CPU (400MHz), the
+-AST2500 with an ARM1176JZS CPU (800MHz) and more recently the AST2600
+-with dual cores ARM Cortex-A7 CPUs (1.2GHz).
++AST2500 with an ARM1176JZS CPU (800MHz), the AST2600
++with dual cores ARM Cortex-A7 CPUs (1.2GHz) and more recently the AST2700
++with quad cores ARM Cortex-A35 64 bits CPUs (1.6GHz)
  
-diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
-index 6e1a84c19713..7075bc9d61b0 100644
---- a/hw/ssi/aspeed_smc.c
-+++ b/hw/ssi/aspeed_smc.c
-@@ -1220,6 +1220,7 @@ static const VMStateDescription vmstate_aspeed_smc = {
+ The SoC comes with RAM, Gigabit ethernet, USB, SD/MMC, USB, SPI, I2C,
+ etc.
+@@ -38,6 +39,10 @@ AST2600 SoC based machines :
+ - ``qcom-dc-scm-v1-bmc``   Qualcomm DC-SCM V1 BMC
+ - ``qcom-firework-bmc``    Qualcomm Firework BMC
  
- static Property aspeed_smc_properties[] = {
-     DEFINE_PROP_BOOL("inject-failure", AspeedSMCState, inject_failure, false),
-+    DEFINE_PROP_UINT64("dram-base", AspeedSMCState, dram_base, 0),
-     DEFINE_PROP_LINK("dram", AspeedSMCState, dram_mr,
-                      TYPE_MEMORY_REGION, MemoryRegion *),
-     DEFINE_PROP_END_OF_LIST(),
++AST2700 SoC based machines :
++
++- ``ast2700-evb``          Aspeed AST2700 Evaluation board (Cortex-A35)
++
+ Supported devices
+ -----------------
+ 
+@@ -66,6 +71,7 @@ Supported devices
+  * eMMC Boot Controller (dummy)
+  * PECI Controller (minimal)
+  * I3C Controller
++ * Internal Bridge Controller (SLI dummy)
+ 
+ 
+ Missing devices
+@@ -95,6 +101,10 @@ or directly from the OpenBMC GitHub release repository :
+ 
+    https://github.com/openbmc/openbmc/releases
+ 
++or directly from the ASPEED Forked OpenBMC GitHub release repository :
++
++   https://github.com/AspeedTech-BMC/openbmc/releases
++
+ To boot a kernel directly from a Linux build tree:
+ 
+ .. code-block:: bash
+@@ -164,6 +174,27 @@ under Linux), use :
+ 
+   -M ast2500-evb,bmc-console=uart3
+ 
++
++Boot the AST2700 machine from the flash image, use an MTD drive :
++
++.. code-block:: bash
++
++  IMGDIR=ast2700-default
++  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
++
++  $ qemu-system-aarch64 -M ast2700-evb \
++       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
++       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
++       -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
++       -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
++       -device loader,cpu-num=0,addr=0x430000000 \
++       -device loader,cpu-num=1,addr=0x430000000 \
++       -device loader,cpu-num=2,addr=0x430000000 \
++       -device loader,cpu-num=3,addr=0x430000000 \
++       -smp 4 \
++       -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
++       -nographic
++
+ Aspeed minibmc family boards (``ast1030-evb``)
+ ==================================================================
+ 
 -- 
 2.45.2
 
