@@ -4,76 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4743EC27C77
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 05:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56A4FC27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 06:08:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHzJz-0004WW-0b; Fri, 14 Jun 2024 01:17:55 -0400
+	id 1sI064-0004lR-NE; Fri, 14 Jun 2024 02:07:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sHzJx-0004WA-8N
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 01:17:53 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sHzJu-0000VV-Cj
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 01:17:53 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxW+p30mtmpMgGAA--.27452S3;
- Fri, 14 Jun 2024 13:17:43 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxssRz0mtmnMofAA--.953S3; 
- Fri, 14 Jun 2024 13:17:42 +0800 (CST)
-Subject: Re: [PATCH 0/3] S3 and S4 sleep for loongarch/virt & microvm
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, QEMU devel
- <qemu-devel@nongnu.org>, Ani Sinha <anisinha@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov
- <imammedo@redhat.com>, Song Gao <gaosong@loongson.cn>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>
-References: <20240613-loongarch64-sleep-v1-0-d2ef0aaa543a@flygoat.com>
- <002b6625-9fed-beeb-700c-93438023d873@loongson.cn>
- <ac2dbd67-97f7-4748-b545-3d05cb1d9a36@app.fastmail.com>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <b1aacf5a-382f-99fc-9901-fdbce07c8381@loongson.cn>
-Date: Fri, 14 Jun 2024 13:17:39 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <ac2dbd67-97f7-4748-b545-3d05cb1d9a36@app.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1sI063-0004ky-1o; Fri, 14 Jun 2024 02:07:35 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1sI060-0000HD-7M; Fri, 14 Jun 2024 02:07:34 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45E4U1hu026778;
+ Fri, 14 Jun 2024 06:07:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:subject:to:cc:references:from:in-reply-to
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ JXrsJKstxKq8wswjFJ1S5wxfQ/Iy5jkfmrcpg5jrMv0=; b=aoWHnVUx9+uPWnuM
+ xPVxlMUdtJtY+l3EiUN/l96TNsm2yf6p1HGhivjAwOc+xpJWiIOqxC1JPWI2YL5d
+ Nfx0uhZy6WsqXJ1l3P5+NGywlofUORDUfmD71ieXcBuD8xAVQJ1ey1D3YRYMR6Iu
+ QBv7IPQdHUE4WI6yzZWL8wD0p0GT7n2RM+de68oOuHcg/TR5YC44eVyMRw/aOoGi
+ C3/RyzK3Cu8qeJ5762SB/qJmyG8Pdxo6zp+VYZW9aUbVhVyoLf3Vf3jkGbPgqQc7
+ hJ+DFpkIIGKQf1giGYyEGwuPUtwk7XvTDhwUotQyA6c+sYzoVnC1SpOFQi0HSvaF
+ SNY89Q==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yrev687v6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 14 Jun 2024 06:07:28 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45E67ST5012187;
+ Fri, 14 Jun 2024 06:07:28 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yrev687v3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 14 Jun 2024 06:07:28 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45E5DI7P023566; Fri, 14 Jun 2024 06:07:27 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3yn3un6d6t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 14 Jun 2024 06:07:27 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45E67MNV14221706
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 14 Jun 2024 06:07:24 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 25D792006C;
+ Fri, 14 Jun 2024 06:07:22 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8E0222004E;
+ Fri, 14 Jun 2024 06:07:21 +0000 (GMT)
+Received: from [9.171.17.142] (unknown [9.171.17.142])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 14 Jun 2024 06:07:21 +0000 (GMT)
+Message-ID: <3c138eeb-83df-4953-bdc9-3cf8343a0533@linux.ibm.com>
+Date: Fri, 14 Jun 2024 08:07:21 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/s390x: Add a CONFIG switch to disable legacy CPUs
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Ani Sinha <anisinha@redhat.com>
+References: <20240613170702.523591-1-thuth@redhat.com>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DxssRz0mtmnMofAA--.953S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7ZF4xJFWUCw15Aw4xtry3KFX_yoW8AFy7pa
- yj9F15KF1xJryxCanIqwnaqFyYqrWkGw12qFnxCry8Grs0vF1rA3WvkrnYgF98Z34xGF1S
- vr1jga9rWF4DArXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
- 67AKxVWUAVWUtwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
- CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
- 1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
- daVFxhVjvjDU0xZFpf9x07j0sjUUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.395,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <20240613170702.523591-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: QwNcGeXX-jNnop0UYdYY1Kry352u6Sti
+X-Proofpoint-ORIG-GUID: an5o5ve2EebZ3LrJQq13zFFZPy9gn0-S
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-13_15,2024-06-13_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0
+ lowpriorityscore=0 malwarescore=0 bulkscore=0 phishscore=0 mlxlogscore=902
+ impostorscore=0 suspectscore=0 clxscore=1011 spamscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406140038
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,70 +120,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2024/6/14 下午12:27, Jiaxun Yang wrote:
+Am 13.06.24 um 19:07 schrieb Thomas Huth:
+> Old CPU models are not officially supported anymore by IBM, and for
+> downstream builds of QEMU, we would like to be able to disable these
+> CPUs in the build. Thus add a CONFIG switch that can be used to
+> disable these CPUs (and old machine types that use them by default).
 > 
-> 
-> 在2024年6月14日六月 上午4:32，maobibo写道：
->> It is interesting.
->>
->> How to wakeup VM if it sleeps in S3/S4, from emulated keyboard or
->> ethernet magic packet or qemu monitor command in background?
-> 
-> Hi Bibo,
-> 
-> The best way to wake the guest is system_wakeup command in monitor.
-Ok, I see.
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   If you're interested, the PDF that can be downloaded from
+>   https://www.ibm.com/support/pages/ibm-mainframe-life-cycle-history
+>   shows the supported CPUs in a nice diagram
 
-It is useful and it can be used to test S3/S4 in TCG mode at least.
+z13 is still supported so the patch needs to be fixed at least.
+Furthermore, z14 has the IBC/VAL cabability to behave like a z13,
+same for z15. (we do support VAL to N-2)
 
-Can we add feature capability, enabled in TCG mode, disabled in KVM mode 
-by default? If vm deploys in cloud, users in general help it is power-on 
-always.
-
-Regards
-Bibo Mao
-> 
-> Thanks
-> - Jiaxun
-> 
->>
->> Regards
->> Bibo Mao
->>
->>
->> On 2024/6/14 上午1:30, Jiaxun Yang wrote:
->>> Hi all,
->>>
->>> This series implemented S3 and S4 sleep for loongarch virt machine
->>> and microvm.
->>>
->>> For loongarch/virt a kernel patch is requried [1].
->>>
->>> [1]: https://lore.kernel.org/loongarch/20240613-loongarch64-sleep-v1-0-a245232af5e4@flygoat.com/
->>>
->>> Please review.
->>> Thanks
->>>
->>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
->>> ---
->>> Jiaxun Yang (3):
->>>         acpi/ged: Implement S3 and S4 sleep
->>>         hw/loongarch/virt: Wire up S3 and S4 sleep
->>>         hw/i386/microvm: Wire up S3 and S4 sleep
->>>
->>>    hw/acpi/generic_event_device.c         | 70 ++++++++++++++++++++++++++++++----
->>>    hw/i386/acpi-microvm.c                 | 18 +++++++++
->>>    hw/i386/microvm.c                      |  3 ++
->>>    hw/loongarch/acpi-build.c              | 18 +++++++++
->>>    hw/loongarch/virt.c                    |  3 ++
->>>    include/hw/acpi/generic_event_device.h | 12 +++++-
->>>    6 files changed, 115 insertions(+), 9 deletions(-)
->>> ---
->>> base-commit: f3e8cc47de2bc537d4991e883a85208e4e1c0f98
->>> change-id: 20240613-loongarch64-sleep-37b2466b8d76
->>>
->>> Best regards,
->>>
-> 
-
+I fail to see the value of this given how stable this code is.
 
