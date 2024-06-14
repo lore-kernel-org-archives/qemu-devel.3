@@ -4,74 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8E9C27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 03:33:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94D0DC27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 04:05:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHxg4-0007dO-B6; Thu, 13 Jun 2024 23:32:36 -0400
+	id 1sHyAj-0000mk-WE; Fri, 14 Jun 2024 00:04:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sHxfy-0007cy-V4
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 23:32:32 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sHxfv-0000BB-SD
- for qemu-devel@nongnu.org; Thu, 13 Jun 2024 23:32:30 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Cxe+rBuWtmwMIGAA--.27451S3;
- Fri, 14 Jun 2024 11:32:17 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxssS9uWtm_7MfAA--.761S3; 
- Fri, 14 Jun 2024 11:32:15 +0800 (CST)
-Subject: Re: [PATCH 0/3] S3 and S4 sleep for loongarch/virt & microvm
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
- Ani Sinha <anisinha@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov
- <imammedo@redhat.com>, Song Gao <gaosong@loongson.cn>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>
-References: <20240613-loongarch64-sleep-v1-0-d2ef0aaa543a@flygoat.com>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <002b6625-9fed-beeb-700c-93438023d873@loongson.cn>
-Date: Fri, 14 Jun 2024 11:32:13 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sHyAe-0000mA-40
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 00:04:12 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sHyAc-0005Kq-FU
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 00:04:11 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-70599522368so1361095b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 21:04:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718337848; x=1718942648; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=WR+bSGwaz3JxiheEsbEXyfG1JX84QzKTuS5N6g0o8fw=;
+ b=eKWXjPkaNtfkB+HtUuWTqnIaCi1aoyk8v50D0rrvt8jCfpjl+L13rCmWWvqgBPm2+6
+ Sfn16gQppzrvexIu8VCf8FDOOKeu/9YRIv90hs/pzWy//XjLQIHM5CTMOGQNi0okhae0
+ cNF1HE1Vd875ChCSir6MwldnUJ0Sjnu8SvranN+D8koAIBK0oPkVT5sGythM9uFeji9D
+ FixQxOKqivg9VOyb40AIobLfUVFJsZ1zOM4w7jluadnGY1qMAkENO3NOacUBa3GkUZbi
+ OGV29EfaFllUpOYWTZ6s8monagQnASf4v1Lxy7ZLFqLhZNc6KNdmplik4R+chZHV1cLe
+ qufw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718337848; x=1718942648;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WR+bSGwaz3JxiheEsbEXyfG1JX84QzKTuS5N6g0o8fw=;
+ b=UyQr7q1RVg1GYw+l1IyxPMj5jNBRu4BCRw3pCEwRLJQfV1TXGI9Qj0whTCoQuJGudG
+ 7l+mWgf6+PlD2enmPY0DG1rriOnyHjkCc2cJE29QVZVanYJlUwDCTp8BGcRNDUjUUXJ6
+ x9FSqapdiG0eLihXh+Gd5/8t9Hcd0VWF69cDoShi8wsYjwB3sWAy80I1ZDZrZGZuTjn4
+ BQhoJXDLivPW5c66nUSwtxlZ7cbZ0sQp3Tycgt7cNiAZVh6DuaFxLGt/riWTc65y5jnZ
+ cFEzSlZ2dw+LGeX4dTSbNT0zkfBKrcXdKRezEG1sB7xrkMj+v3Zdx9pyuo0vI3NGfcyS
+ udmQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUmOJ9uUlHwxYHGN0XSmTWqUKN1McLT9RhrUIQRdWhn4wsRR9TgnX5D7v/Ign+oHBk+sjv0/JAypQwcrhranubDLHpBWDg=
+X-Gm-Message-State: AOJu0YwLO0sXZaUNQni1OipV1M2VTPwW1uwZF3adBLxZqHp7cqwIWjFy
+ tRp0q+A5Lk/GbHwZlTcOgr3MGCes0TKipQ6LKgv3mJDwGwDEGPAohgENoO9+FIM=
+X-Google-Smtp-Source: AGHT+IGC/3tM1NkymX2hXQpFvDfqaOdGAIi7F/aYflP/gDFXsKUP5NJ1+nJG2/ks6/RYrNEXYPIQWA==
+X-Received: by 2002:aa7:85d1:0:b0:705:98c0:bdb1 with SMTP id
+ d2e1a72fcca58-705d71d0b35mr1426427b3a.32.1718337847845; 
+ Thu, 13 Jun 2024 21:04:07 -0700 (PDT)
+Received: from ?IPV6:2607:fb91:1ee0:d48d:29a6:b8ab:ce2d:2641?
+ ([2607:fb91:1ee0:d48d:29a6:b8ab:ce2d:2641])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-705cc9696b5sm2118438b3a.66.2024.06.13.21.04.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 13 Jun 2024 21:04:07 -0700 (PDT)
+Message-ID: <9cda5d67-d79d-4ba4-a6db-51aee3c0f3c3@linaro.org>
+Date: Thu, 13 Jun 2024 20:59:00 -0700
 MIME-Version: 1.0
-In-Reply-To: <20240613-loongarch64-sleep-v1-0-d2ef0aaa543a@flygoat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/15] CPU-related test updates
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+References: <20240612132055.326889-1-thuth@redhat.com>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DxssS9uWtm_7MfAA--.761S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoWrur47Aw4fWF47uw45CryrXwc_yoWkKwc_Wr
- n3J34kGr48XF47ta4DtF98A345Ww48tF98Aa4xXr48KFy5JrZxJFs7Jwn8Zr98tr4UJFW5
- Jrn8Cr1rCw17GosvyTuYvTs0mTUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbI8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4j6r4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
- wI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUcVc_
- UUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.395,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240612132055.326889-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,48 +97,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 6/12/24 06:20, Thomas Huth wrote:
+> The following changes since commit 80e8f0602168f451a93e71cbb1d59e93d745e62e:
+> 
+>    Merge tag 'bsd-user-misc-2024q2-pull-request' of gitlab.com:bsdimp/qemu into staging (2024-06-09 11:21:55 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/thuth/qemu.git  tags/pull-request-2024-06-12
+> 
+> for you to fetch changes up to 26a09ead7351f117ae780781b347f014da03c20b:
+> 
+>    tests/tcg/s390x: Allow specifying extra QEMU options on the command line (2024-06-12 12:12:28 +0200)
+> 
+> ----------------------------------------------------------------
+> * Fix loongarch64 avocado test
+> * Make qtests more flexible with regards to non-available CPU models
+> * Improvements for the test-smp-parse unit test
 
-It is interesting.
-
-How to wakeup VM if it sleeps in S3/S4, from emulated keyboard or 
-ethernet magic packet or qemu monitor command in background?
-
-Regards
-Bibo Mao
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
 
-On 2024/6/14 上午1:30, Jiaxun Yang wrote:
-> Hi all,
-> 
-> This series implemented S3 and S4 sleep for loongarch virt machine
-> and microvm.
-> 
-> For loongarch/virt a kernel patch is requried [1].
-> 
-> [1]: https://lore.kernel.org/loongarch/20240613-loongarch64-sleep-v1-0-a245232af5e4@flygoat.com/
-> 
-> Please review.
-> Thanks
-> 
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> ---
-> Jiaxun Yang (3):
->        acpi/ged: Implement S3 and S4 sleep
->        hw/loongarch/virt: Wire up S3 and S4 sleep
->        hw/i386/microvm: Wire up S3 and S4 sleep
-> 
->   hw/acpi/generic_event_device.c         | 70 ++++++++++++++++++++++++++++++----
->   hw/i386/acpi-microvm.c                 | 18 +++++++++
->   hw/i386/microvm.c                      |  3 ++
->   hw/loongarch/acpi-build.c              | 18 +++++++++
->   hw/loongarch/virt.c                    |  3 ++
->   include/hw/acpi/generic_event_device.h | 12 +++++-
->   6 files changed, 115 insertions(+), 9 deletions(-)
-> ---
-> base-commit: f3e8cc47de2bc537d4991e883a85208e4e1c0f98
-> change-id: 20240613-loongarch64-sleep-37b2466b8d76
-> 
-> Best regards,
-> 
+r~
 
 
