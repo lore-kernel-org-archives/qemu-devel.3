@@ -4,90 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42EDEC27C6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 09:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF060C27C75
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 09:41:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI3Py-0000Ac-7C; Fri, 14 Jun 2024 05:40:22 -0400
+	id 1sI3R9-0001EY-Vo; Fri, 14 Jun 2024 05:41:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sI3Pw-00009h-4t
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:40:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <frolov@swemel.ru>)
+ id 1sI3R8-0001EN-Ih; Fri, 14 Jun 2024 05:41:34 -0400
+Received: from mx.swemel.ru ([95.143.211.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sI3Pu-0000vv-IH
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:40:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718358017;
+ (Exim 4.90_1) (envelope-from <frolov@swemel.ru>)
+ id 1sI3R6-00019l-1f; Fri, 14 Jun 2024 05:41:34 -0400
+Message-ID: <8e9e9e21-2d00-49f2-8563-aee494c5bbe5@swemel.ru>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=swemel.ru; s=mail;
+ t=1718358087;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mdesrs1l0Lk7EZsEEX2Iewh3bNF/VYM3fBJSW3lR6ik=;
- b=h6fSrwVG2DW7/zoJx5IXx2jhVnIxsLLFhaH18Xno/MzzL6arl5QQzMGQyCY91DjFiPvyRX
- JM4voAsXJmF5Z+ZbIKtGs+6Ds9Ql/i6N3WhSS5XU5guSCdhQdEx7QiM08DsLgw+scwa7WV
- /QNp7JbONk1sA8NEpcKe69NJRXlba1M=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-118-wD5nlUt6MEuiE-O2K8JYHg-1; Fri,
- 14 Jun 2024 05:40:13 -0400
-X-MC-Unique: wD5nlUt6MEuiE-O2K8JYHg-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0F611195608C; Fri, 14 Jun 2024 09:40:10 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 85F8C1956056; Fri, 14 Jun 2024 09:40:08 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 764F621E6682; Fri, 14 Jun 2024 11:40:06 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Fabiano
- Rosas <farosas@suse.de>,  Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,  Ani
- Sinha <anisinha@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Kevin
- Wolf <kwolf@redhat.com>,  Jiri Pirko <jiri@resnulli.us>,  Mads Ynddal
- <mads@ynddal.dk>,  Jason Wang <jasowang@redhat.com>,  Igor Mammedov
- <imammedo@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-block@nongnu.org,  Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Victor Toso de Carvalho <victortoso@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,  Lukas Straub
- <lukasstraub2@web.de>,  Yanan Wang <wangyanan55@huawei.com>,  Hanna Reitz
- <hreitz@redhat.com>
-Subject: Re: [PATCH 11/20] qapi/schema: add doc_visible property to
- QAPISchemaDefinition
-In-Reply-To: <20240514215740.940155-12-jsnow@redhat.com> (John Snow's message
- of "Tue, 14 May 2024 17:57:30 -0400")
-References: <20240514215740.940155-1-jsnow@redhat.com>
- <20240514215740.940155-12-jsnow@redhat.com>
-Date: Fri, 14 Jun 2024 11:40:06 +0200
-Message-ID: <878qz750cp.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=3lCW7ZXf+t8QzQHdfXVaXQ1vxu7+8YHaWGGh0EYQP5Y=;
+ b=Qo8herkT1LBZJwKAobmVUT/72ufoh1kJWPDY0bVEZXCK0iMHjRmSsiPHQ7pm03BSL9j7YP
+ H/EEqPdbK2c20rhAYqjLdRfEdDQVo0sCwK0UuJQSQF6J4rwmOoCBf28+hzOO9wbmT0+og9
+ 82rUhA87YRxIBsH7GS4AbPzFk4IrYjE=
+Date: Fri, 14 Jun 2024 12:41:27 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Subject: Re: [PATCH] tests/qtest/fuzz/virtio_net_fuzz.c: fix
+ virtio_net_fuzz_multi
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: alxndr@bu.edu, sdl.qemu@linuxtesting.org,
+ QEMU Trivial <qemu-trivial@nongnu.org>, Jason Wang <jasowang@redhat.com>
+References: <20240523102813.396750-2-frolov@swemel.ru>
+ <2982b9c8-1325-4ca7-9e91-b1a94178c9d9@redhat.com>
+ <ee6ee73c-9714-40b2-9a0a-3f835bcf0c95@swemel.ru>
+ <9d456ca1-0a63-483d-bfe1-1ff8ccfbe0a0@redhat.com>
+From: =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0KTRgNC+0LvQvtCy?= <frolov@swemel.ru>
+In-Reply-To: <9d456ca1-0a63-483d-bfe1-1ff8ccfbe0a0@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=95.143.211.150; envelope-from=frolov@swemel.ru;
+ helo=mx.swemel.ru
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,43 +68,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
-
-> The intent here is to mark only certain definitions as visible in the
-> end-user docs.
+On 13.06.2024 19:50, Thomas Huth wrote:
+> On 13/06/2024 13.59, Дмитрий Фролов wrote:
+>>
+>>
+>> On 13.06.2024 13:08, Thomas Huth wrote:
+>>> On 23/05/2024 12.28, Dmitry Frolov wrote:
+>>>> If QTestState was already CLOSED due to error, calling 
+>>>> qtest_clock_step()
+>>>> afterwards makes no sense and only raises false-crash with message:
+>>>> "assertion timer != NULL failed".
+>>>>
+>>>> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
+>>>> ---
+>>>>   tests/qtest/fuzz/virtio_net_fuzz.c | 3 +++
+>>>>   1 file changed, 3 insertions(+)
+>>>>
+>>>> diff --git a/tests/qtest/fuzz/virtio_net_fuzz.c 
+>>>> b/tests/qtest/fuzz/virtio_net_fuzz.c
+>>>> index e239875e3b..2f57a8ddd8 100644
+>>>> --- a/tests/qtest/fuzz/virtio_net_fuzz.c
+>>>> +++ b/tests/qtest/fuzz/virtio_net_fuzz.c
+>>>> @@ -81,6 +81,9 @@ static void virtio_net_fuzz_multi(QTestState *s,
+>>>>           /* Run the main loop */
+>>>>           qtest_clock_step(s, 100);
+>>>>           flush_events(s);
+>>>> +        if (!qtest_probe_child(s)) {
+>>>> +            return;
+>>>> +        }
+>>>
+>>> According to your patch description, it rather sounds like the check 
+>>> should be done before the qtest_clock_step() ? ... or where does the 
+>>> QTestState get closed? During flush_events() ?
+>> To my understanding, the main loop is executed during flush_events(), 
+>> where an error may occur. This behavior is legit and should not 
+>> produce any crash report.
+>> Without the check, the test continues to wait on used descriptors, 
+>> and finally fails with message: "assertion timer != NULL failed".
+>> Thus, any invalid input data produces a meaningless crash report.
 >
-> All commands and events are inherently visible. Everything else is
-> visible only if it is a member (or a branch member) of a type that is
-> visible, or if it is named as a return type for a command.
+> Ok, makes sense now, thanks!
 >
-> Notably, this excludes arg_type for commands and events, and any
-> base_types specified for structures/unions. Those objects may still be
-> marked visible if they are named as members from a visible type.
-
-Why?  I figure the answer is "because the transmogrifier inlines the
-things excluded".  Correct?
-
-> This does not necessarily match the data revealed by introspection: in
-> this case, we want anything that we are cross-referencing in generated
-> documentation to be available to target.
-
-I don't get the part after the colon.
-
-> Some internal and built-in types may be marked visible with this
-> approach, but if they do not have a documentation block, they'll be
-> skipped by the generator anyway. This includes array types and built-in
-> primitives which do not get their own documentation objects.
+> There seems to be another while loop with a flush_events() call later 
+> in this file, does it maybe need the same treatment, too?
+With this fix, the number of crashes reduced significantly, but I guess, 
+you are right...
+If another similar crash will occur - I`ll make another patch.
+Many thanks!
+Dmitry
+>  Thomas
 >
-> This information is not yet used by qapidoc, which continues to render
-> documentation exactly as it has. This information will be used by the
-> new qapidoc (the "transmogrifier"), to be introduced later. The new
-> generator verifies that all of the objects that should be rendered *are*
-> by failing if any cross-references are missing, verifying everything is
-> in place.
-
-So... we decide "doc should be visible" here, and then the
-transmogrifier decides again, and we check the two decisions match?
-
-> Signed-off-by: John Snow <jsnow@redhat.com>
 
 
