@@ -4,52 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7049C27C6E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 062EFC41513
 	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 07:28:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI1LD-00036b-R0; Fri, 14 Jun 2024 03:27:19 -0400
+	id 1sI1LS-0003CB-Nb; Fri, 14 Jun 2024 03:27:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sI1LC-000364-Gq
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:27:18 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sI1LR-0003BX-J6
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:27:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sI1LA-0000fW-IB
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:27:18 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sI1LQ-0000kK-5I
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 03:27:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718350035;
+ s=mimecast20190719; t=1718350051;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=LmUK3dtZoFocAHNTXO1aZ0xYU1Vw2Shh1J7+ySA/5Sg=;
- b=eg1Vq9VI4PbhklcRXCwoN6O/9ILmNZPLjc+iSgMUJ5ZmZGd8MqL7gc3POnCpuAdXkju9fA
- EcLjkGFwL9aXCz1VHEfUUnuBjV6OC0LsM0LwTcR+GrbSwCbMXQvBwwH8q7H8IdL5/bXoiX
- 5CVxN4ko2FAPV3+10WgpSobunL2iLio=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JxbWMx16HGQpOdBAfmbUiIqd5HPEH8JtjB2wrwjzgZ0=;
+ b=dyx0vdV4ewi8WSUr5jBKdYACp6skmuwqN0tEQc2IelrSUgbGzbFlNP/BX3Bjrc6p2l4lg3
+ 4naIIpsDbHI5XsBQa/pOGFKSFgGceOfxaUlgdmsvkLwLGYVEAOaGxd501fCXp9bqF9bK6v
+ r5ZOjZVlu9ouAuvXFGZhW8iIuKf60+k=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-XJomsqWPMzeNmJGoKFbA5A-1; Fri,
- 14 Jun 2024 03:27:11 -0400
-X-MC-Unique: XJomsqWPMzeNmJGoKFbA5A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-wf7NeazrNFa9fm1fJeajkQ-1; Fri,
+ 14 Jun 2024 03:27:24 -0400
+X-MC-Unique: wf7NeazrNFa9fm1fJeajkQ-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 80C92195608C; Fri, 14 Jun 2024 07:27:10 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B57D19560B5; Fri, 14 Jun 2024 07:27:23 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.49])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F2A623000219; Fri, 14 Jun 2024 07:27:07 +0000 (UTC)
+ id 5A93E3000219; Fri, 14 Jun 2024 07:27:19 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 00/19] aspeed queue
-Date: Fri, 14 Jun 2024 09:26:01 +0200
-Message-ID: <20240614072620.1262053-1-clg@redhat.com>
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PULL 02/19] aspeed/wdt: Add AST2700 support
+Date: Fri, 14 Jun 2024 09:26:03 +0200
+Message-ID: <20240614072620.1262053-3-clg@redhat.com>
+In-Reply-To: <20240614072620.1262053-1-clg@redhat.com>
+References: <20240614072620.1262053-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,76 +83,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 046a64b9801343e2e89eef10c7a48eec8d8c0d4f:
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-  Merge tag 'pull-request-2024-06-12' of https://gitlab.com/thuth/qemu into staging (2024-06-13 07:51:58 -0700)
+AST2700 wdt controller is similiar to AST2600's wdt, but
+the AST2700 has 8 watchdogs, and they each have 0x80 of registers.
+Introduce ast2700 object class and increase the number of regs(offset) of
+ast2700 model.
 
-are available in the Git repository at:
+Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+---
+ include/hw/watchdog/wdt_aspeed.h |  3 ++-
+ hw/watchdog/wdt_aspeed.c         | 24 ++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 1 deletion(-)
 
-  https://github.com/legoater/qemu/ tags/pull-aspeed-20240614
-
-for you to fetch changes up to d9f6311f5393da897e73be8a29c261125d0c1ac2:
-
-  MAINTAINERS: Add reviewers for ASPEED BMCs (2024-06-14 07:36:09 +0200)
-
-----------------------------------------------------------------
-aspeed queue:
-
-* Add AST2700 support
-
-----------------------------------------------------------------
-Cédric Le Goater (1):
-      aspeed/smc: Reintroduce "dram-base" property for AST2700
-
-Jamin Lin (18):
-      aspeed/wdt: Add AST2700 support
-      aspeed/sli: Add AST2700 support
-      aspeed/sdmc: remove redundant macros
-      aspeed/sdmc: fix coding style
-      aspeed/sdmc: Add AST2700 support
-      aspeed/smc: correct device description
-      aspeed/smc: support dma start length and 1 byte length unit
-      aspeed/smc: support 64 bits dma dram address
-      aspeed/smc: support different memory region ops for SMC flash region
-      aspeed/smc: Add AST2700 support
-      aspeed/scu: Add AST2700 support
-      aspeed/intc: Add AST2700 support
-      aspeed/soc: Add AST2700 support
-      aspeed: Add an AST2700 eval board
-      aspeed/soc: fix incorrect dram size for AST2700
-      test/avocado/machine_aspeed.py: Add AST2700 test case
-      docs:aspeed: Add AST2700 Evaluation board
-      MAINTAINERS: Add reviewers for ASPEED BMCs
-
- MAINTAINERS                      |   3 +
- docs/system/arm/aspeed.rst       |  39 ++-
- include/hw/arm/aspeed_soc.h      |  30 +-
- include/hw/intc/aspeed_intc.h    |  44 +++
- include/hw/misc/aspeed_scu.h     |  47 ++-
- include/hw/misc/aspeed_sdmc.h    |   5 +-
- include/hw/misc/aspeed_sli.h     |  27 ++
- include/hw/ssi/aspeed_smc.h      |   3 +
- include/hw/watchdog/wdt_aspeed.h |   3 +-
- hw/arm/aspeed.c                  |  32 ++
- hw/arm/aspeed_ast27x0.c          | 648 +++++++++++++++++++++++++++++++++++++++
- hw/intc/aspeed_intc.c            | 360 ++++++++++++++++++++++
- hw/misc/aspeed_scu.c             | 306 +++++++++++++++++-
- hw/misc/aspeed_sdmc.c            | 220 +++++++++++--
- hw/misc/aspeed_sli.c             | 177 +++++++++++
- hw/ssi/aspeed_smc.c              | 347 +++++++++++++++++++--
- hw/watchdog/wdt_aspeed.c         |  24 ++
- hw/arm/meson.build               |   1 +
- hw/intc/meson.build              |   1 +
- hw/intc/trace-events             |  13 +
- hw/misc/meson.build              |   3 +-
- hw/misc/trace-events             |  11 +
- hw/ssi/trace-events              |   2 +-
- tests/avocado/machine_aspeed.py  |  62 ++++
- 24 files changed, 2350 insertions(+), 58 deletions(-)
- create mode 100644 include/hw/intc/aspeed_intc.h
- create mode 100644 include/hw/misc/aspeed_sli.h
- create mode 100644 hw/arm/aspeed_ast27x0.c
- create mode 100644 hw/intc/aspeed_intc.c
- create mode 100644 hw/misc/aspeed_sli.c
+diff --git a/include/hw/watchdog/wdt_aspeed.h b/include/hw/watchdog/wdt_aspeed.h
+index e90ef86651e8..830b0a79368a 100644
+--- a/include/hw/watchdog/wdt_aspeed.h
++++ b/include/hw/watchdog/wdt_aspeed.h
+@@ -19,9 +19,10 @@ OBJECT_DECLARE_TYPE(AspeedWDTState, AspeedWDTClass, ASPEED_WDT)
+ #define TYPE_ASPEED_2400_WDT TYPE_ASPEED_WDT "-ast2400"
+ #define TYPE_ASPEED_2500_WDT TYPE_ASPEED_WDT "-ast2500"
+ #define TYPE_ASPEED_2600_WDT TYPE_ASPEED_WDT "-ast2600"
++#define TYPE_ASPEED_2700_WDT TYPE_ASPEED_WDT "-ast2700"
+ #define TYPE_ASPEED_1030_WDT TYPE_ASPEED_WDT "-ast1030"
+ 
+-#define ASPEED_WDT_REGS_MAX        (0x30 / 4)
++#define ASPEED_WDT_REGS_MAX        (0x80 / 4)
+ 
+ struct AspeedWDTState {
+     /*< private >*/
+diff --git a/hw/watchdog/wdt_aspeed.c b/hw/watchdog/wdt_aspeed.c
+index d70b656f8e75..75685c56470d 100644
+--- a/hw/watchdog/wdt_aspeed.c
++++ b/hw/watchdog/wdt_aspeed.c
+@@ -422,12 +422,36 @@ static const TypeInfo aspeed_1030_wdt_info = {
+     .class_init = aspeed_1030_wdt_class_init,
+ };
+ 
++static void aspeed_2700_wdt_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedWDTClass *awc = ASPEED_WDT_CLASS(klass);
++
++    dc->desc = "ASPEED 2700 Watchdog Controller";
++    awc->iosize = 0x80;
++    awc->ext_pulse_width_mask = 0xfffff; /* TODO */
++    awc->reset_ctrl_reg = AST2600_SCU_RESET_CONTROL1;
++    awc->reset_pulse = aspeed_2500_wdt_reset_pulse;
++    awc->wdt_reload = aspeed_wdt_reload_1mhz;
++    awc->sanitize_ctrl = aspeed_2600_sanitize_ctrl;
++    awc->default_status = 0x014FB180;
++    awc->default_reload_value = 0x014FB180;
++}
++
++static const TypeInfo aspeed_2700_wdt_info = {
++    .name = TYPE_ASPEED_2700_WDT,
++    .parent = TYPE_ASPEED_WDT,
++    .instance_size = sizeof(AspeedWDTState),
++    .class_init = aspeed_2700_wdt_class_init,
++};
++
+ static void wdt_aspeed_register_types(void)
+ {
+     type_register_static(&aspeed_wdt_info);
+     type_register_static(&aspeed_2400_wdt_info);
+     type_register_static(&aspeed_2500_wdt_info);
+     type_register_static(&aspeed_2600_wdt_info);
++    type_register_static(&aspeed_2700_wdt_info);
+     type_register_static(&aspeed_1030_wdt_info);
+ }
+ 
+-- 
+2.45.2
 
 
