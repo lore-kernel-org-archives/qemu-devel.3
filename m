@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94D0DC27C6E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEF40C27C7B
 	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 04:05:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sHyAj-0000mk-WE; Fri, 14 Jun 2024 00:04:18 -0400
+	id 1sHyAl-0000px-Jg; Fri, 14 Jun 2024 00:04:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sHyAe-0000mA-40
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 00:04:12 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1sHyAg-0000mN-4R
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 00:04:15 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sHyAc-0005Kq-FU
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 00:04:11 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-70599522368so1361095b3a.2
- for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 21:04:09 -0700 (PDT)
+ id 1sHyAe-0005L8-Go
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 00:04:13 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-7024d571d8eso1415661b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 13 Jun 2024 21:04:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718337848; x=1718942648; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718337851; x=1718942651; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WR+bSGwaz3JxiheEsbEXyfG1JX84QzKTuS5N6g0o8fw=;
- b=eKWXjPkaNtfkB+HtUuWTqnIaCi1aoyk8v50D0rrvt8jCfpjl+L13rCmWWvqgBPm2+6
- Sfn16gQppzrvexIu8VCf8FDOOKeu/9YRIv90hs/pzWy//XjLQIHM5CTMOGQNi0okhae0
- cNF1HE1Vd875ChCSir6MwldnUJ0Sjnu8SvranN+D8koAIBK0oPkVT5sGythM9uFeji9D
- FixQxOKqivg9VOyb40AIobLfUVFJsZ1zOM4w7jluadnGY1qMAkENO3NOacUBa3GkUZbi
- OGV29EfaFllUpOYWTZ6s8monagQnASf4v1Lxy7ZLFqLhZNc6KNdmplik4R+chZHV1cLe
- qufw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8nCdeKEu4ZxIEPzH6/UOhej3HkL5Q6WpuA4Qml5CZg8=;
+ b=ng4E/PIq5UZth7kISUwCbFPqPXYKai/+XV8Zio5XUKRb7Yz6o1Fmo6b75jA7uRU6n+
+ 5KgYp3/Uq2B328xCSiNBQclk7o58+MPhNjalXALGdX83wUDt0wh0i0gGOo0XFyJvdhtc
+ PMGzO74lguO2jU4vVv7gcPhrCvHYz12hDnt8/aInAxFH6p02qOgdflXkasmLKW1ILmuX
+ 9mBqqwCHEtO8EHoHx6u9IEld9W7/sX392UgGq+eXYS/qNx06notF4jJkuA9QfsY2cn06
+ NhxGBvSdI68AUkZEvuECYGpUteoh91Z2VnTJ9lJK7o5geuUhSAjxJD7mjzRQTDI3wtQl
+ 7gDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718337848; x=1718942648;
+ d=1e100.net; s=20230601; t=1718337851; x=1718942651;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WR+bSGwaz3JxiheEsbEXyfG1JX84QzKTuS5N6g0o8fw=;
- b=UyQr7q1RVg1GYw+l1IyxPMj5jNBRu4BCRw3pCEwRLJQfV1TXGI9Qj0whTCoQuJGudG
- 7l+mWgf6+PlD2enmPY0DG1rriOnyHjkCc2cJE29QVZVanYJlUwDCTp8BGcRNDUjUUXJ6
- x9FSqapdiG0eLihXh+Gd5/8t9Hcd0VWF69cDoShi8wsYjwB3sWAy80I1ZDZrZGZuTjn4
- BQhoJXDLivPW5c66nUSwtxlZ7cbZ0sQp3Tycgt7cNiAZVh6DuaFxLGt/riWTc65y5jnZ
- cFEzSlZ2dw+LGeX4dTSbNT0zkfBKrcXdKRezEG1sB7xrkMj+v3Zdx9pyuo0vI3NGfcyS
- udmQ==
+ bh=8nCdeKEu4ZxIEPzH6/UOhej3HkL5Q6WpuA4Qml5CZg8=;
+ b=P8mxFg4F5wW4p/9QA9RajTuCP+6G2H5X2nzvmGxgqbg8HEgtnx6X9//+QmUcw6u5pp
+ jExpwKaPvSK+wXF//6s5Wr6HMoTE4UrEjqtijBM+eqVrVJ/ljbkJ1WMTI4YcqRaCH3Ir
+ CxbS/SOX4lB3wYv+Gy/shWh/mcHFc0Wv0q3/ddT0K+J9rTMsQTCOhM7jgpuVez7I2skQ
+ /wh++mqRV95OhA/4xGIe7HAkWmfv4OnvK0JlQafGRGutg2NP3ai2Rsg7kBAXEAM2VA5B
+ e5q7CamlZIbuROqcWgrhgtUtsf8XzDA0d2KJnybOSFA+psM70w9dZmwRDq+Haw7Hzl61
+ qbaQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUmOJ9uUlHwxYHGN0XSmTWqUKN1McLT9RhrUIQRdWhn4wsRR9TgnX5D7v/Ign+oHBk+sjv0/JAypQwcrhranubDLHpBWDg=
-X-Gm-Message-State: AOJu0YwLO0sXZaUNQni1OipV1M2VTPwW1uwZF3adBLxZqHp7cqwIWjFy
- tRp0q+A5Lk/GbHwZlTcOgr3MGCes0TKipQ6LKgv3mJDwGwDEGPAohgENoO9+FIM=
-X-Google-Smtp-Source: AGHT+IGC/3tM1NkymX2hXQpFvDfqaOdGAIi7F/aYflP/gDFXsKUP5NJ1+nJG2/ks6/RYrNEXYPIQWA==
-X-Received: by 2002:aa7:85d1:0:b0:705:98c0:bdb1 with SMTP id
- d2e1a72fcca58-705d71d0b35mr1426427b3a.32.1718337847845; 
- Thu, 13 Jun 2024 21:04:07 -0700 (PDT)
+ AJvYcCWr3fRzbVB9nw8n8jjh1OWQsEpWMzTVZLczqCJmP6z19+F+Klmu5mNShG/xCdNIaK9oZ6a+b+zpkCsY0SKRZSbXmyVfK7Q=
+X-Gm-Message-State: AOJu0YxQUHyfTXMFaWDxZxOG76vjGp8DAHeQfaS6YmbVDIRCxWDj+slc
+ A4nRMY4PWPAzCFC6j7FSbSWREMf3MwVpyyP0QO1MMWW7c0SyXTQMpRE2NxO+qos=
+X-Google-Smtp-Source: AGHT+IGDgdi73841X+6Nv8FPqSpOz4djvg8pEuxLLk8BY8BHowUqhjqW8Ylwr2OKpmY8qsXZvFY/Pg==
+X-Received: by 2002:aa7:9a5a:0:b0:704:151d:dcd4 with SMTP id
+ d2e1a72fcca58-705d71d0c25mr1845294b3a.28.1718337850701; 
+ Thu, 13 Jun 2024 21:04:10 -0700 (PDT)
 Received: from ?IPV6:2607:fb91:1ee0:d48d:29a6:b8ab:ce2d:2641?
  ([2607:fb91:1ee0:d48d:29a6:b8ab:ce2d:2641])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705cc9696b5sm2118438b3a.66.2024.06.13.21.04.06
+ d2e1a72fcca58-705cc9696b5sm2118438b3a.66.2024.06.13.21.04.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 13 Jun 2024 21:04:07 -0700 (PDT)
-Message-ID: <9cda5d67-d79d-4ba4-a6db-51aee3c0f3c3@linaro.org>
-Date: Thu, 13 Jun 2024 20:59:00 -0700
+ Thu, 13 Jun 2024 21:04:10 -0700 (PDT)
+Message-ID: <e3ab44a4-d5cb-421d-9530-69bf376a928d@linaro.org>
+Date: Thu, 13 Jun 2024 21:04:04 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/15] CPU-related test updates
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-References: <20240612132055.326889-1-thuth@redhat.com>
+Subject: Re: [PULL 0/5] virtio-grants-v8-tag
+To: Stefano Stabellini <sstabellini@kernel.org>, qemu-devel@nongnu.org,
+ stefanha@redhat.com
+Cc: peter.maydell@linaro.org, Edgar.Iglesias@amd.com
+References: <alpine.DEB.2.22.394.2406121625590.1328433@ubuntu-linux-20-04-desktop>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240612132055.326889-1-thuth@redhat.com>
+In-Reply-To: <alpine.DEB.2.22.394.2406121625590.1328433@ubuntu-linux-20-04-desktop>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,27 +99,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/12/24 06:20, Thomas Huth wrote:
+On 6/12/24 14:29, Stefano Stabellini wrote:
 > The following changes since commit 80e8f0602168f451a93e71cbb1d59e93d745e62e:
 > 
->    Merge tag 'bsd-user-misc-2024q2-pull-request' of gitlab.com:bsdimp/qemu into staging (2024-06-09 11:21:55 -0700)
+>    Merge tag 'virtio-grants-v8-tag' into staging (2024-06-09 11:21:55 -0700)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/thuth/qemu.git  tags/pull-request-2024-06-12
+>    https://gitlab.com/sstabellini/qemu.git  
 > 
-> for you to fetch changes up to 26a09ead7351f117ae780781b347f014da03c20b:
+> for you to fetch changes up to 6d87a2a311fe4a8363143e6914d000697ea0cd83:
 > 
->    tests/tcg/s390x: Allow specifying extra QEMU options on the command line (2024-06-12 12:12:28 +0200)
-> 
-> ----------------------------------------------------------------
-> * Fix loongarch64 avocado test
-> * Make qtests more flexible with regards to non-available CPU models
-> * Improvements for the test-smp-parse unit test
+>    hw/arm: xen: Enable use of grant mappings (2024-06-09 20:16:14 +0200)
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+gpg: Signature made Wed 12 Jun 2024 02:25:34 PM PDT
+gpg:                using RSA key D04E33ABA51F67BA07D30AEA894F8F4870E1AE90
+gpg: Good signature from "Stefano Stabellini <sstabellini@kernel.org>" [expired]
+gpg:                 aka "Stefano Stabellini <stefano.stabellini@eu.citrix.com>" [expired]
+gpg: Note: This key has expired!
+
+
+Have you posted a refreshed key?
+The latest I can find is from 2023-10-19.
 
 
 r~
+
 
 
