@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7630C27C75
-	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 09:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C921C27C6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 14 Jun 2024 09:55:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sI3df-0006Ar-1T; Fri, 14 Jun 2024 05:54:31 -0400
+	id 1sI3dz-0006IU-65; Fri, 14 Jun 2024 05:54:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sI3dd-00069w-0M
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:54:29 -0400
+ id 1sI3dx-0006Gy-5J
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:54:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sI3da-0003Vn-4K
- for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:54:28 -0400
+ id 1sI3dv-0003e0-Hq
+ for qemu-devel@nongnu.org; Fri, 14 Jun 2024 05:54:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718358865;
+ s=mimecast20190719; t=1718358886;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=b468c27YIaodWhCUoR2euqW9Eev+chYW0+hCXZU8pBE=;
- b=F9Pkn5AwbuilwVVqgR8T5iB8f3hyzCLeEdTJ89yIHCVFwI8nHJHcQNBZgvG26mgK546hdL
- EKU2fERuOrLEVVc70vlL5Neffdm8U/CaihxGVETNU04BTItz+zFcNwTJPeDoJR6cY5dFe7
- IYWA1PlsQ9WzEKCKO9i4oVLwDUoBj8g=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=chQAASCdJMVJpwPeCfLJqL1+p+AwMmYdve8qkSRIxgs=;
+ b=C1yaVUJ1/V0+9QaZfC/Uv0A+R1S3kGQF7H71lJ741salnnWhh8ZhyNgaCwkcExkDNcaj32
+ OrkW+2XgkxNIps2M4pfmZp1BR87/eD/xZdAVfsO6Q7IrkP1s7MazOriCtlTykSze9IlYUU
+ YESax89MAgjBY9nAZBGgsQ0KMaGCWbo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-Wem5vcc-MSSzI1p_gLSWkA-1; Fri,
- 14 Jun 2024 05:54:19 -0400
-X-MC-Unique: Wem5vcc-MSSzI1p_gLSWkA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-385-JHbAOESMNcKgA_Em8MzUYQ-1; Fri,
+ 14 Jun 2024 05:54:45 -0400
+X-MC-Unique: JHbAOESMNcKgA_Em8MzUYQ-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF09A195608C; Fri, 14 Jun 2024 09:54:18 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C9DDC195608B; Fri, 14 Jun 2024 09:54:43 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.39.193.191])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2E871300021A; Fri, 14 Jun 2024 09:54:13 +0000 (UTC)
+ id 7B2AB3000219; Fri, 14 Jun 2024 09:54:39 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
@@ -53,9 +53,10 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  zhenzhong.duan@intel.com
 Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
  berrange@redhat.com
-Subject: [PATCH v4 1/8] HostIOMMUDevice: Store the VFIO/VDPA agent
-Date: Fri, 14 Jun 2024 11:52:51 +0200
-Message-ID: <20240614095402.904691-2-eric.auger@redhat.com>
+Subject: [PATCH v4 6/8] virtio-iommu: Remove the implementation of
+ iommu_set_iova_range
+Date: Fri, 14 Jun 2024 11:52:56 +0200
+Message-ID: <20240614095402.904691-7-eric.auger@redhat.com>
 In-Reply-To: <20240614095402.904691-1-eric.auger@redhat.com>
 References: <20240614095402.904691-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -86,54 +87,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Store the agent device (VFIO or VDPA) in the host IOMMU device.
-This will allow easy access to some of its resources.
+Now that we use PCIIOMMUOps to convey information about usable IOVA
+ranges we do not to implement the iommu_set_iova_ranges IOMMU MR
+callback.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/sysemu/host_iommu_device.h | 1 +
- hw/vfio/container.c                | 1 +
- hw/vfio/iommufd.c                  | 2 ++
- 3 files changed, 4 insertions(+)
+ hw/virtio/virtio-iommu.c | 67 ----------------------------------------
+ 1 file changed, 67 deletions(-)
 
-diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
-index a57873958b..3e5f058e7b 100644
---- a/include/sysemu/host_iommu_device.h
-+++ b/include/sysemu/host_iommu_device.h
-@@ -34,6 +34,7 @@ struct HostIOMMUDevice {
-     Object parent_obj;
- 
-     char *name;
-+    void *agent; /* pointer to agent device, ie. VFIO or VDPA device */
-     HostIOMMUDeviceCaps caps;
- };
- 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 26e6f7fb4f..b728b978a2 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -1145,6 +1145,7 @@ static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
- 
-     hiod->name = g_strdup(vdev->name);
-     hiod->caps.aw_bits = vfio_device_get_aw_bits(vdev);
-+    hiod->agent = opaque;
- 
-     return true;
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index a4c0cceb65..b9a7ddcd14 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -1351,72 +1351,6 @@ static int virtio_iommu_set_page_size_mask(IOMMUMemoryRegion *mr,
+     return 0;
  }
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 409ed3dcc9..dbdae1adbb 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -631,6 +631,8 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
-         struct iommu_hw_info_vtd vtd;
-     } data;
  
-+    hiod->agent = opaque;
-+
-     if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
-                                          &type, &data, sizeof(data), errp)) {
-         return false;
+-/**
+- * virtio_iommu_set_iova_ranges: Conveys the usable IOVA ranges
+- *
+- * The function turns those into reserved ranges. Once some
+- * reserved ranges have been set, new reserved regions cannot be
+- * added outside of the original ones.
+- *
+- * @mr: IOMMU MR
+- * @iova_ranges: list of usable IOVA ranges
+- * @errp: error handle
+- */
+-static int virtio_iommu_set_iova_ranges(IOMMUMemoryRegion *mr,
+-                                        GList *iova_ranges,
+-                                        Error **errp)
+-{
+-    IOMMUDevice *sdev = container_of(mr, IOMMUDevice, iommu_mr);
+-    GList *current_ranges = sdev->host_resv_ranges;
+-    GList *l, *tmp, *new_ranges = NULL;
+-    int ret = -EINVAL;
+-
+-    /* check that each new resv region is included in an existing one */
+-    if (sdev->host_resv_ranges) {
+-        range_inverse_array(iova_ranges,
+-                            &new_ranges,
+-                            0, UINT64_MAX);
+-
+-        for (tmp = new_ranges; tmp; tmp = tmp->next) {
+-            Range *newr = (Range *)tmp->data;
+-            bool included = false;
+-
+-            for (l = current_ranges; l; l = l->next) {
+-                Range * r = (Range *)l->data;
+-
+-                if (range_contains_range(r, newr)) {
+-                    included = true;
+-                    break;
+-                }
+-            }
+-            if (!included) {
+-                goto error;
+-            }
+-        }
+-        /* all new reserved ranges are included in existing ones */
+-        ret = 0;
+-        goto out;
+-    }
+-
+-    if (sdev->probe_done) {
+-        warn_report("%s: Notified about new host reserved regions after probe",
+-                    mr->parent_obj.name);
+-    }
+-
+-    range_inverse_array(iova_ranges,
+-                        &sdev->host_resv_ranges,
+-                        0, UINT64_MAX);
+-    rebuild_resv_regions(sdev);
+-
+-    return 0;
+-error:
+-    error_setg(errp, "IOMMU mr=%s Conflicting host reserved ranges set!",
+-               mr->parent_obj.name);
+-out:
+-    g_list_free_full(new_ranges, g_free);
+-    return ret;
+-}
+-
+ static void virtio_iommu_system_reset(void *opaque)
+ {
+     VirtIOIOMMU *s = opaque;
+@@ -1742,7 +1676,6 @@ static void virtio_iommu_memory_region_class_init(ObjectClass *klass,
+     imrc->replay = virtio_iommu_replay;
+     imrc->notify_flag_changed = virtio_iommu_notify_flag_changed;
+     imrc->iommu_set_page_size_mask = virtio_iommu_set_page_size_mask;
+-    imrc->iommu_set_iova_ranges = virtio_iommu_set_iova_ranges;
+ }
+ 
+ static const TypeInfo virtio_iommu_info = {
 -- 
 2.41.0
 
