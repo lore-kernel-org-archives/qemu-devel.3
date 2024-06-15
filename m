@@ -4,56 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F52CC27C4F
-	for <qemu-devel@archiver.kernel.org>; Sat, 15 Jun 2024 23:56:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60BBFC27C4F
+	for <qemu-devel@archiver.kernel.org>; Sat, 15 Jun 2024 23:59:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIdFQ-0001bt-9D; Sat, 15 Jun 2024 19:55:52 -0400
+	id 1sIdIm-0005q6-F6; Sat, 15 Jun 2024 19:59:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1sIdFM-0001au-75; Sat, 15 Jun 2024 19:55:48 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1sIdFK-0000aK-2x; Sat, 15 Jun 2024 19:55:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=q8pHLb4NS79pOg3qhGn+hXWfgBDpH6U6Cngkex8HSWU=; b=T89SOEdPYMukbcr6
- E9R5KkBndFedJB6tuVK6kLwDx8JrwU7ph75bASyCau1l7KOpOL7DR4cAhBljlvaCcrpJCk7ZoVWQP
- 3pirWQQ3uBYoj6sDf6XYufyEdZiPYn3LKgbGx4BhZisSsK8JlCatIzARu0A0QKamCUza2tVHTMOOv
- heqgk9C6CWNi722EzFByfC/CtNrNJJebephaPfUI5VsH5uah0E9nDFI9EKukCclOsmUeEEi6HV/yA
- wbJ2O5NoCXXjih652TX3xHl/lSS9QPPKeH4RYxut6+ZrZhI7Fb6qydhhD1XUT+3TFJX2E+oCbmDsc
- ONdupFxIkjQju6yN6w==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1sIdFG-006RFN-0k;
- Sat, 15 Jun 2024 23:55:42 +0000
-Date: Sat, 15 Jun 2024 23:55:42 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Martin Joerg <martin.joerg@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-Subject: Re: [PATCH] hmp-commands-info.hx: Add missing info command for stats
- subcommand
-Message-ID: <Zm4p_kmbp8lh6rFF@gallifrey>
-References: <20240615114323.30550-1-martin.joerg@gmail.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sIdIl-0005pX-9K
+ for qemu-devel@nongnu.org; Sat, 15 Jun 2024 19:59:19 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sIdIj-0000sP-PP
+ for qemu-devel@nongnu.org; Sat, 15 Jun 2024 19:59:19 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2c315b569c8so2764347a91.0
+ for <qemu-devel@nongnu.org>; Sat, 15 Jun 2024 16:59:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718495956; x=1719100756; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QwRbPkLDVSDP4h/lqOJebwcfM7nvYiuCYzLbifpmZfU=;
+ b=yJ5bV33/dYJglndMBdt51S9KCuMCaCfdkddcaVWRUfSTHxp9tpczjb6FZMQAYgiMA8
+ 4wBuJHaL5FwQzaFYeQIYGfAUoAu0SdhB7kxDUP1bRqBgCZd5+Y+rHi/dEdJhRIJeu9nw
+ ls1ITRpODQ+crvpg8Oba3PSrX8vrSRS9sJ8n7M0cRTXV8zbbkz/EYF/m7eyGGtPTH2VD
+ 17C6l0NvvjH2rfbw2yOETJkD4OdM9Zexn2mB0KhwkqwaXgmVc/m9ZwFXuA6zMfq+mU1o
+ mmeDKKBFattNg8qNL5CwKM9A3tsLVxGlrVEI6OIlMU2oVzfjquY4jUu/aToNSBu/cjJP
+ 04ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718495956; x=1719100756;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QwRbPkLDVSDP4h/lqOJebwcfM7nvYiuCYzLbifpmZfU=;
+ b=ugy950bKXqRWtTXuZ8D1lJ+IQHQJuu1FASjKdzjir3Qk1//8FmeWFmfgfpPa1WCzLy
+ NET4spQT9Kl6PAYdNhbuI4RRo//+Uxu8sbB4krL5Xz8BrUKaysMYzp1VXoG9/JrqH+is
+ Z6hwc7JQFDyQgSU6x75YsVKxVwkcJ1J17w2YJW9sJMtC/DNzp0MHgDlkqQYOntA4EvHK
+ 4gRDbTjpGl/LktXHvQv021CA6Vdol+SQX3y/GzgrkScwel99tS9Cu0SU+JBBinqb1T7C
+ YMV4Uk/0iGp5gKquB+Qo6PHy9g6LLH8fVu5E0onliV+KvQFeuouD5/F4M/aR4iyDNh1i
+ XiRg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVQ4X5YOSkDwPyO7JK2LgQUBiSwQWlyZcfrnVkhDWi5RptXlE7AK88eVYR8MaqE8lE6unmEh6WESx/HGKfvQcBVe7thUuU=
+X-Gm-Message-State: AOJu0YwWRUrWQtJeP+7Uu86/doKokmOw8wFZ5QtHzLRu23/dt5n3w7gV
+ J27F03l79TG+cnlBaLDspwbQXaxi8jMpfBfDK2OmRE7R3RMGFqB89r2NzxPMXjg=
+X-Google-Smtp-Source: AGHT+IHNW881ajHV074FT/zI9IGJnnx8xHbRChJIS358sYFo8IQhYXaN2p9won18g2+jflPOujGO6w==
+X-Received: by 2002:a17:90a:db06:b0:2c4:de4d:f9ad with SMTP id
+ 98e67ed59e1d1-2c4de4e193bmr5576904a91.1.1718495955753; 
+ Sat, 15 Jun 2024 16:59:15 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c4a769beb8sm8615589a91.41.2024.06.15.16.59.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 15 Jun 2024 16:59:15 -0700 (PDT)
+Message-ID: <e486aaee-9c2d-4bfa-adaa-d36b6ca64435@linaro.org>
+Date: Sat, 15 Jun 2024 16:59:13 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <20240615114323.30550-1-martin.joerg@gmail.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
-X-Uptime: 23:55:04 up 38 days, 11:09, 1 user, load average: 0.00, 0.00, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Make TARGET_PAGE_MASK typed as target_ulong
+To: Roman Kiryanov <rkir@google.com>, qemu-devel@nongnu.org
+Cc: jansene@google.com
+References: <20240614192938.1690188-1-rkir@google.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240614192938.1690188-1-rkir@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,34 +97,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Martin Joerg (martin.joerg@gmail.com) wrote:
-> Signed-off-by: Martin Joerg <martin.joerg@gmail.com>
-
-Thanks!
-(Trivial please take that).
-
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-
-> ---
->  hmp-commands-info.hx | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On 6/14/24 12:29, Roman Kiryanov wrote:
+> this fixes the build warnings like
 > 
-> diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-> index 20a9835ea8..f5639af517 100644
-> --- a/hmp-commands-info.hx
-> +++ b/hmp-commands-info.hx
-> @@ -892,7 +892,7 @@ ERST
->      },
->  
->  SRST
-> -  ``stats``
-> +  ``info stats``
->      Show runtime-collected statistics
->  ERST
->  
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+> accel/tcg/cputlb.c:416:13: warning: shifting a negative signed value is undefined [-Wshift-negative-value]
+>      mask &= TARGET_PAGE_MASK | TLB_INVALID_MASK;
+>              ^~~~~~~~~~~~~~~~
+> include/exec/cpu-all.h:169:45: note: expanded from macro 'TARGET_PAGE_MASK'
+>                              ~~~~~~~~~~~~~~~ ^
+> 
+> also this fixes the inconsitency in the return
+> type of qemu_target_page_mask (int could be
+> shorter than target_long).
+> 
+> Signed-off-by: Roman Kiryanov <rkir@google.com>
+
+No, this will cause failures, because we need this value to sign-extend to when the 
+context includes {u}int64_t, and target_ulong is uint32_t.
+
+What options are you using, because this warning should not be generated with -fwrapv.
+
+
+r~
 
