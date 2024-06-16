@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49EFCC27C53
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 01:06:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C155C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 01:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIeK1-0005Hm-Qd; Sat, 15 Jun 2024 21:04:41 -0400
+	id 1sIeKI-0005OW-H5; Sat, 15 Jun 2024 21:04:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sIeJz-0005H2-T3
- for qemu-devel@nongnu.org; Sat, 15 Jun 2024 21:04:39 -0400
+ id 1sIeKH-0005O9-PK
+ for qemu-devel@nongnu.org; Sat, 15 Jun 2024 21:04:57 -0400
 Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sIeJy-00030T-4b
- for qemu-devel@nongnu.org; Sat, 15 Jun 2024 21:04:39 -0400
+ id 1sIeKG-00033f-2x
+ for qemu-devel@nongnu.org; Sat, 15 Jun 2024 21:04:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1718499877;
- bh=oTTZjrZ5kzi2UB5KLr+wFSPptVrHvH8P+St+NXtZdKI=;
+ s=mail; t=1718499895;
+ bh=CrHvnrhD2BxSCXa8LWr97n4E36Dj74Koq2xDk/vgxCM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=qna1AC6XUr2DerG1lGM6DWosM3YgiSUhqClJloK4Ti4Cvqynw5bOwVAQ16Q5/WEWO
- k2qLRu/hC+isQf9/7vyFeUzlJTkC0DIE3Y/ZeHW261/6KIhM3xH6du7exomfbFXGbJ
- z8qXDyIypMJSDGhSP6+Q1Zt8V6fgG7/4zJdtdfwxSPgyPCk9RbqHKx8nfPlKfZEQht
- PaDdWC7la3y1qGMT7YBTVsGbcD/UZZQjOueTn3sXTwIVo3K+0SR40tjPl7NldYB56W
- RyjndZDDPyxXWeDQgpF9kHF34MF7PkkEviHvpkaBlI8jN9s66/2WQ5gtTkqNNcTPte
- 4aB4ShZ4BXfNw==
+ b=NBiVTYGXjE9ATuXSMYnBu6OOAJbhFRk21CbIvApkabyhGuOIj3/vUrDvttdeiTXDt
+ WAp6NdgbhPfNv6L0khdFaf1UkN/ArFxRfidMXopA7nOzDwF6b1NGdmGQD9N9IuOvit
+ 8b8ZnzLIIrNMoq7YuNiTJxtkw4sBQwti6q0FBqy5d26UR+4Q/KeONiKEC8MfTbCXUJ
+ 7tJnOTmw7Gpn+4AHOu27hTVq1GYfnUITDmm/ZfGAIMGyX15/I2tAtORl8wDHJOd/P4
+ CreZvhA1biY8AID5oS4rXz9Baw0EDdQzAl0srxF3rrr4twL0zQlW9vQlk0c3KaADpt
+ jUlGT6YJKnqRQ==
 Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 32074378213C;
- Sun, 16 Jun 2024 01:04:35 +0000 (UTC)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 3415337820A7;
+ Sun, 16 Jun 2024 01:04:53 +0000 (UTC)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
@@ -58,9 +58,9 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v14 05/14] virtio-gpu: Unrealize GL device
-Date: Sun, 16 Jun 2024 04:03:48 +0300
-Message-ID: <20240616010357.2874662-6-dmitry.osipenko@collabora.com>
+Subject: [PATCH v14 13/14] virtio-gpu: Register capsets dynamically
+Date: Sun, 16 Jun 2024 04:03:56 +0300
+Message-ID: <20240616010357.2874662-14-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240616010357.2874662-1-dmitry.osipenko@collabora.com>
 References: <20240616010357.2874662-1-dmitry.osipenko@collabora.com>
@@ -89,49 +89,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Even though GL GPU doesn't support hotplugging today, free virgl
-resources when GL device is unrealized. For consistency.
+From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 
+virtio_gpu_virgl_get_num_capsets will return "num_capsets", but we can't
+assume that capset_index 1 is always VIRGL2 once we'll support more capsets,
+like Venus and DRM capsets. Register capsets dynamically to avoid that problem.
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu-gl.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ hw/display/virtio-gpu-gl.c     |  6 ++++--
+ hw/display/virtio-gpu-virgl.c  | 33 +++++++++++++++++++++------------
+ include/hw/virtio/virtio-gpu.h |  4 +++-
+ 3 files changed, 28 insertions(+), 15 deletions(-)
 
 diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index 21a1e9a05c5d..0109244276fc 100644
+index 5f27568d3ec8..20a7c316bb23 100644
 --- a/hw/display/virtio-gpu-gl.c
 +++ b/hw/display/virtio-gpu-gl.c
-@@ -150,6 +150,22 @@ static Property virtio_gpu_gl_properties[] = {
-     DEFINE_PROP_END_OF_LIST(),
- };
+@@ -138,8 +138,8 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+     }
  
-+static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+     g->parent_obj.conf.flags |= (1 << VIRTIO_GPU_FLAG_VIRGL_ENABLED);
+-    VIRTIO_GPU_BASE(g)->virtio_config.num_capsets =
+-        virtio_gpu_virgl_get_num_capsets(g);
++    g->capset_ids = virtio_gpu_virgl_get_capsets(g);
++    VIRTIO_GPU_BASE(g)->virtio_config.num_capsets = g->capset_ids->len;
+ 
+ #if VIRGL_VERSION_MAJOR >= 1
+     g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED;
+@@ -171,6 +171,8 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+     }
+ 
+     gl->renderer_state = RS_START;
++
++    g_array_unref(g->capset_ids);
+ }
+ 
+ static void virtio_gpu_gl_class_init(ObjectClass *klass, void *data)
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index fed3e27b2fc9..8f3920800517 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -630,19 +630,13 @@ static void virgl_cmd_get_capset_info(VirtIOGPU *g,
+     VIRTIO_GPU_FILL_CMD(info);
+ 
+     memset(&resp, 0, sizeof(resp));
+-    if (info.capset_index == 0) {
+-        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL;
+-        virgl_renderer_get_cap_set(resp.capset_id,
+-                                   &resp.capset_max_version,
+-                                   &resp.capset_max_size);
+-    } else if (info.capset_index == 1) {
+-        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL2;
++
++    if (info.capset_index < g->capset_ids->len) {
++        resp.capset_id = g_array_index(g->capset_ids, uint32_t,
++                                       info.capset_index);
+         virgl_renderer_get_cap_set(resp.capset_id,
+                                    &resp.capset_max_version,
+                                    &resp.capset_max_size);
+-    } else {
+-        resp.capset_max_version = 0;
+-        resp.capset_max_size = 0;
+     }
+     resp.hdr.type = VIRTIO_GPU_RESP_OK_CAPSET_INFO;
+     virtio_gpu_ctrl_response(g, cmd, &resp.hdr, sizeof(resp));
+@@ -1164,12 +1158,27 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     return 0;
+ }
+ 
+-int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g)
++static void virtio_gpu_virgl_add_capset(GArray *capset_ids, uint32_t capset_id)
 +{
-+    VirtIOGPU *g = VIRTIO_GPU(qdev);
-+    VirtIOGPUGL *gl = VIRTIO_GPU_GL(qdev);
-+
-+    if (gl->renderer_state >= RS_INITED) {
-+        if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
-+            timer_free(gl->print_stats);
-+        }
-+        timer_free(gl->fence_poll);
-+        virgl_renderer_cleanup(NULL);
-+    }
-+
-+    gl->renderer_state = RS_START;
++    g_array_append_val(capset_ids, capset_id);
 +}
 +
- static void virtio_gpu_gl_class_init(ObjectClass *klass, void *data)
++GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
  {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -163,6 +179,7 @@ static void virtio_gpu_gl_class_init(ObjectClass *klass, void *data)
-     vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
+     uint32_t capset2_max_ver, capset2_max_size;
++    GArray *capset_ids;
++
++    capset_ids = g_array_new(false, false, sizeof(uint32_t));
++
++    /* VIRGL is always supported. */
++    virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL);
++
+     virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_VIRGL2,
+                               &capset2_max_ver,
+                               &capset2_max_size);
++    if (capset2_max_ver) {
++        virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL2);
++    }
  
-     vdc->realize = virtio_gpu_gl_device_realize;
-+    vdc->unrealize = virtio_gpu_gl_device_unrealize;
-     vdc->reset = virtio_gpu_gl_reset;
-     device_class_set_props(dc, virtio_gpu_gl_properties);
+-    return capset2_max_ver ? 2 : 1;
++    return capset_ids;
  }
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 775005abb337..83232f4b4bfa 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -209,6 +209,8 @@ struct VirtIOGPU {
+         QTAILQ_HEAD(, VGPUDMABuf) bufs;
+         VGPUDMABuf *primary[VIRTIO_GPU_MAX_SCANOUTS];
+     } dmabuf;
++
++    GArray *capset_ids;
+ };
+ 
+ struct VirtIOGPUClass {
+@@ -354,6 +356,6 @@ void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
+ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+ void virtio_gpu_virgl_reset(VirtIOGPU *g);
+ int virtio_gpu_virgl_init(VirtIOGPU *g);
+-int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g);
++GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+ 
+ #endif
 -- 
 2.44.0
 
