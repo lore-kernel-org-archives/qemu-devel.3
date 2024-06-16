@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB89C27C6E
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 09:22:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 930FEC27C77
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 09:24:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIm4L-0003Ux-RP; Sun, 16 Jun 2024 05:21:02 -0400
+	id 1sIm70-0004SX-7v; Sun, 16 Jun 2024 05:23:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sIm4K-0003UI-Ec
- for qemu-devel@nongnu.org; Sun, 16 Jun 2024 05:21:00 -0400
-Received: from mail-io1-xd2f.google.com ([2607:f8b0:4864:20::d2f])
+ id 1sIm6y-0004SM-R5
+ for qemu-devel@nongnu.org; Sun, 16 Jun 2024 05:23:44 -0400
+Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sIm4G-0000Ok-V4
- for qemu-devel@nongnu.org; Sun, 16 Jun 2024 05:21:00 -0400
-Received: by mail-io1-xd2f.google.com with SMTP id
- ca18e2360f4ac-7eb75c0d0a7so114375639f.3
- for <qemu-devel@nongnu.org>; Sun, 16 Jun 2024 02:20:54 -0700 (PDT)
+ id 1sIm6x-0000lI-9k
+ for qemu-devel@nongnu.org; Sun, 16 Jun 2024 05:23:44 -0400
+Received: by mail-oo1-xc36.google.com with SMTP id
+ 006d021491bc7-5b96a78639aso1412838eaf.1
+ for <qemu-devel@nongnu.org>; Sun, 16 Jun 2024 02:23:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1718529653; x=1719134453;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1718529822; x=1719134622;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=WJTITI7d6cxE49mcL6eEYXUnlLOz8oJzi5iQhh15Hz0=;
- b=B1VZizSzRIvbpMlsxbHVHlhTchC1/FiljnU3rEcHbq1SDQ7ZVYhPIJ0tLkZx4X1FHI
- AztF0/uJFRKX0Txw+2Al6N6DoIWjr4j7rX9tran3x2fwfrciQLfPDE0HAZ3R2i8YUVms
- Ah7TSnZru9pkoedTPxcIV99GG83viEu/OVR72y7j+Vz5zBsNguiPWd07RFo2Bq8NBcfx
- 8GNk1TfgqIj2DqEgI8XsGZS6n7eGepkxGCtY0YOWWWtVCAqSzoY0bz9Q17KqTMHwqBHr
- vG4B49LDDwz4/obcDQ/XkEmxjjYziRyrRobmT3jZHJa4QO4j18qH0k/f0o/3XuLHnwhi
- sgkw==
+ bh=Vh9If7REgHphTrzZwceRt61TncJOTmK4Bc5Has2fkhA=;
+ b=CfrD9IBf5iyPI5Q/ORo6OcJfX9ANg3W9rTUtZemjGYRqQUSebGhSzupq6embTzb0Dq
+ sKajUaoRsto6atQ58w55VERv9KnzE0b5AW9tNPcKty+ko9j2IIlY93s7KX2htGBsC/50
+ WY4Mco9m8J/GRwL/JFd7r0mPSTDhHREdBOBVZqR9XGlvK6J2tu5oAF87sAeQ9anrSy00
+ d1bZWSKSmcwjwHpEHYb9zT4RejQVk9TA0cXCq8aClPJ403tCX2QUyj7J8MPjszXihQLQ
+ Vuagah4Xo5bsl5lv1nwGaKqBs2NYSI+oXJVKrdNy7zvX2b4WbpuXUTdcaaNlJ2LfHfBM
+ 0rKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718529653; x=1719134453;
+ d=1e100.net; s=20230601; t=1718529822; x=1719134622;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WJTITI7d6cxE49mcL6eEYXUnlLOz8oJzi5iQhh15Hz0=;
- b=IjngBctwg1D6HQGpVKOvhe23XMmDb+U8PNQuCcrAa8u96Ko6FyqnHA0ntOhbLOMXpw
- dIZ8TvCsBcDjTcOmZhwcP0ZQgXV/uURWcRRYALp9x8UiuleIsmi5ouEfRNueXDu56e1Z
- bvjhT1yFu9VnaV2MSM6om+lEwwgI+ScM18PHMEAtT5noWcWKkxaKPCO8HMRMUxyDJlWp
- GRUZ3JMRGhy1RJrRfMfeTWchnkrnEDoUbD5sW26j3bNMaCiSh634+B4lzyL24lRcHVvz
- WUVCKbWm75mGL1bSnlZcLBQHJ9dTDk+Z8rvprfiHLjJFRaA93B5k1G9cz8fUgoSS0kBV
- by3g==
-X-Gm-Message-State: AOJu0Yx7Fsez9wcP2QLDrk4O5barjNCpiQL3OHEdeYs1UueITJUJpPMS
- qG6byDVi10Hvrlx1nY3YLJM3LgAbSr/wh5x2h86LgBKqy4ztLR7ZDjZUHWd3w6A=
-X-Google-Smtp-Source: AGHT+IE1SrKyJDhVDITnRD4EDPz1qhCyLPKc6xhU8//330Dvzb6h7/jXeQwYNkKGMzKafUq96/aJnQ==
-X-Received: by 2002:a92:c24c:0:b0:374:a6de:19b7 with SMTP id
- e9e14a558f8ab-375e0ec366fmr82673045ab.26.1718529653064; 
- Sun, 16 Jun 2024 02:20:53 -0700 (PDT)
+ bh=Vh9If7REgHphTrzZwceRt61TncJOTmK4Bc5Has2fkhA=;
+ b=wt3m5Us8uOxiuHYI9qWDKGkXgcpkD3sDl5bxK8PHNicP8uKtS2MnbMyvMCZBLlk3EI
+ 91DPy8v1tzQmyoNRHlQWOJu+RbNG5lXnTASiy7kVJlw+t9BdqPgr8dj4mcsFWfMfR6Xn
+ aGKOP7cWcyCEOljjjplVFGvXo5l9tGvQhfxnXQeqFs2i8b2zdH6X3YbARHmvCGkrgJ7v
+ 2wD+oqfGOUNxuZu6wT9Isz7Vx/72+n8ZUigDjguXvOsw0q3LSaaH5Bu6zDpBp9An3LF8
+ cC4S1PxCpcCBNGAKiGoL/71n8yYzrp7XSA1u1uSzo6HtzsP/6H99rEtmC14M22Tnf5dS
+ CyXg==
+X-Gm-Message-State: AOJu0Yykc3qNSopLZHlzZOnQyiNw4jWQdK8xuCNikJp/f0tAggn6s6pD
+ stIpXluN2QkUH2hjRIsjsL8hGoqMPGNwPZj71qDRnQ2j6Py9X1vn96av6/OjubI=
+X-Google-Smtp-Source: AGHT+IESu5nANgLtmt/e76VqVHlSm1V5KiXZ2s1mMw3grw5pK/Vw0EBUgNEZ21qrQptQxkCOWvd91g==
+X-Received: by 2002:a05:6358:7184:b0:19f:5631:97cd with SMTP id
+ e5c5f4694b2df-19fa9e5c312mr972610455d.15.1718529821942; 
+ Sun, 16 Jun 2024 02:23:41 -0700 (PDT)
 Received: from [10.4.77.246] ([118.103.63.129])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705cc96c442sm5695914b3a.77.2024.06.16.02.20.47
+ d9443c01a7336-1f855e5c0e8sm60867645ad.38.2024.06.16.02.23.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Jun 2024 02:20:52 -0700 (PDT)
-Message-ID: <1bacb98f-d264-40ef-b241-04e5b888ce37@daynix.com>
-Date: Sun, 16 Jun 2024 18:20:46 +0900
+ Sun, 16 Jun 2024 02:23:41 -0700 (PDT)
+Message-ID: <547a6d27-60ca-46df-a5d7-e0030182e9d0@daynix.com>
+Date: Sun, 16 Jun 2024 18:23:35 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 10/14] virtio-gpu: Support blob scanout using dmabuf fd
+Subject: Re: [PATCH v14 12/14] virtio-gpu: Handle resource blob commands
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
  <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
@@ -86,14 +86,14 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240616010357.2874662-1-dmitry.osipenko@collabora.com>
- <20240616010357.2874662-11-dmitry.osipenko@collabora.com>
+ <20240616010357.2874662-13-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240616010357.2874662-11-dmitry.osipenko@collabora.com>
+In-Reply-To: <20240616010357.2874662-13-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::d2f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-io1-xd2f.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c36;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oo1-xc36.google.com
 X-Spam_score_int: 14
 X-Spam_score: 1.4
 X-Spam_bar: +
@@ -116,117 +116,56 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2024/06/16 10:03, Dmitry Osipenko wrote:
-> From: Robert Beckett <bob.beckett@collabora.com>
+> From: Antonio Caggiano <antonio.caggiano@collabora.com>
 > 
-> Support displaying blob resources by handling SET_SCANOUT_BLOB
-> command.
+> Support BLOB resources creation, mapping and unmapping by calling the
+> new stable virglrenderer 0.10 interface. Only enabled when available and
+> via the blob config. E.g. -device virtio-vga-gl,blob=true
 > 
-> Signed-by: Antonio Caggiano <antonio.caggiano@collabora.com>
-> Signed-off-by: Robert Beckett <bob.beckett@collabora.com>
+> Signed-off-by: Antonio Caggiano <antonio.caggiano@collabora.com>
+> Signed-off-by: Xenia Ragiadakou <xenia.ragiadakou@amd.com>
 > Signed-off-by: Huang Rui <ray.huang@amd.com>
-> Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
 > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > ---
->   hw/display/virtio-gpu-virgl.c  | 109 +++++++++++++++++++++++++++++++++
->   hw/display/virtio-gpu.c        |  12 ++--
->   include/hw/virtio/virtio-gpu.h |   7 +++
->   3 files changed, 122 insertions(+), 6 deletions(-)
+>   hw/display/virtio-gpu-gl.c     |   3 +
+>   hw/display/virtio-gpu-virgl.c  | 309 ++++++++++++++++++++++++++++++++-
+>   hw/display/virtio-gpu.c        |   6 +-
+>   include/hw/virtio/virtio-gpu.h |   2 +
+>   4 files changed, 316 insertions(+), 4 deletions(-)
 > 
+> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> index 4fe9e6a0c21c..5f27568d3ec8 100644
+> --- a/hw/display/virtio-gpu-gl.c
+> +++ b/hw/display/virtio-gpu-gl.c
+> @@ -160,6 +160,9 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+>       VirtIOGPUGL *gl = VIRTIO_GPU_GL(qdev);
+>   
+>       if (gl->renderer_state >= RS_INITED) {
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +        qemu_bh_delete(gl->cmdq_resume_bh);
+> +#endif
+>           if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+>               timer_free(gl->print_stats);
+>           }
 > diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index 3ffea478e723..60befab7efc2 100644
+> index 60befab7efc2..fed3e27b2fc9 100644
 > --- a/hw/display/virtio-gpu-virgl.c
 > +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -17,6 +17,8 @@
->   #include "trace.h"
->   #include "hw/virtio/virtio.h"
->   #include "hw/virtio/virtio-gpu.h"
-> +#include "hw/virtio/virtio-gpu-bswap.h"
-> +#include "hw/virtio/virtio-gpu-pixman.h"
+> @@ -26,6 +26,7 @@
 >   
->   #include "ui/egl-helpers.h"
+>   struct virtio_gpu_virgl_resource {
+>       struct virtio_gpu_simple_resource base;
+> +    MemoryRegion *mr;
+>   };
 >   
-> @@ -78,6 +80,7 @@ static void virgl_cmd_create_resource_2d(VirtIOGPU *g,
->       res->base.height = c2d.height;
->       res->base.format = c2d.format;
->       res->base.resource_id = c2d.resource_id;
-> +    res->base.dmabuf_fd = -1;
->       QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
->   
->       args.handle = c2d.resource_id;
-> @@ -125,6 +128,7 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
->       res->base.height = c3d.height;
->       res->base.format = c3d.format;
->       res->base.resource_id = c3d.resource_id;
-> +    res->base.dmabuf_fd = -1;
->       QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
->   
->       args.handle = c3d.resource_id;
-> @@ -509,6 +513,106 @@ static void virgl_cmd_get_capset(VirtIOGPU *g,
->       g_free(resp);
+>   static struct virtio_gpu_virgl_resource *
+> @@ -49,6 +50,153 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
 >   }
+>   #endif
 >   
 > +#if VIRGL_VERSION_MAJOR >= 1
-> +static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
-> +                                       struct virtio_gpu_ctrl_command *cmd)
-> +{
-> +    struct virtio_gpu_framebuffer fb = { 0 };
-> +    struct virgl_renderer_resource_info info;
-> +    struct virtio_gpu_virgl_resource *res;
-> +    struct virtio_gpu_set_scanout_blob ss;
-> +    uint64_t fbend;
-> +
-> +    VIRTIO_GPU_FILL_CMD(ss);
-> +    virtio_gpu_scanout_blob_bswap(&ss);
-> +    trace_virtio_gpu_cmd_set_scanout_blob(ss.scanout_id, ss.resource_id,
-> +                                          ss.r.width, ss.r.height, ss.r.x,
-> +                                          ss.r.y);
-> +
-> +    if (ss.scanout_id >= g->parent_obj.conf.max_outputs) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout id specified %d",
-> +                      __func__, ss.scanout_id);
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_SCANOUT_ID;
-> +        return;
-> +    }
-> +
-> +    if (ss.resource_id == 0) {
-> +        virtio_gpu_disable_scanout(g, ss.scanout_id);
-> +        return;
-> +    }
-> +
-> +    if (ss.width < 16 ||
-> +        ss.height < 16 ||
-> +        ss.r.x + ss.r.width > ss.width ||
-> +        ss.r.y + ss.r.height > ss.height) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
-> +                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
-> +                      __func__, ss.scanout_id, ss.resource_id,
-> +                      ss.r.x, ss.r.y, ss.r.width, ss.r.height,
-> +                      ss.width, ss.height);
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-> +        return;
-> +    }
-> +
-> +    res = virtio_gpu_virgl_find_resource(g, ss.resource_id);
-> +    if (!res) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource does not exist %d\n",
-> +                      __func__, ss.resource_id);
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-> +        return;
-> +    }
-> +    if (virgl_renderer_resource_get_info(ss.resource_id, &info)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource does not have info %d\n",
-> +                      __func__, ss.resource_id);
-> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
-> +        return;
-> +    }
-> +    if (res->base.dmabuf_fd < 0) {
-> +        res->base.dmabuf_fd = info.fd;
+> +typedef enum {
+> +    HOSTMEM_MR_MAPPED,
 
-res->base.dmabuf_fd is conditionally assigned but 
-virgl_renderer_resource_get_info() is called unconditionally, which is 
-inconsistent.
-
-The relevant code is better to be moved into 
-virgl_cmd_resource_create_blob() for consistenty with 
-virtio_gpu_resource_create_blob().
+HOSTMEM_MR_MAPPED is no longer used.
 
