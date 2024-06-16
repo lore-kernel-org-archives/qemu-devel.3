@@ -4,78 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF1CC27C53
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 22:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05969C27C53
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 23:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIycJ-0002pH-Td; Sun, 16 Jun 2024 18:44:55 -0400
+	id 1sIzYD-0007Z8-5x; Sun, 16 Jun 2024 19:44:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rrh.henry@gmail.com>)
- id 1sIycH-0002ou-TZ
- for qemu-devel@nongnu.org; Sun, 16 Jun 2024 18:44:54 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rrh.henry@gmail.com>)
- id 1sIycF-0001iL-Sg
- for qemu-devel@nongnu.org; Sun, 16 Jun 2024 18:44:53 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2eae70fb324so3171511fa.2
- for <qemu-devel@nongnu.org>; Sun, 16 Jun 2024 15:44:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718577889; x=1719182689; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Xviu+UP8hwey+nKuQrae//O8kwthi9M/9z9v7YOLads=;
- b=eXhMNGP14mLdReL7dgEjy6WE7MtSa9VrsG77DIUTvC2cqalilFKC+s0q1Y6+aEx+wQ
- FMlq188pjwchrVNqECAIhZHBBbsl+UogPboxzed37gWG4UoFqdyUQrgKgWUJjgWKTJU7
- mLjx+Juyfj4AADX9fw0nfh1AJfAsBN7FRKPvx6Npzj3buOdN37lJCbgR4EEp+yQ7F13R
- DQJYcjz4m25noDXJuyOf9tKC5i4dJZqMwl82fP+DgDBGVJkY3tISiZvm/QbArbw09Xpj
- fe2fdJK7H3KdlTlin56gF+99RN7Fp/ywQEEm6hgPwFO0u5sSfejLBuoLpCoxYEk0urkG
- Ky2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718577889; x=1719182689;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Xviu+UP8hwey+nKuQrae//O8kwthi9M/9z9v7YOLads=;
- b=nDSDXvm81jw0Kl+Lig+z4rjQb5GwVGUNt6J1EFs6g0YcweN3Iv8MaujaONsXbHhWTF
- 2ZXCkQKMkL4wwvikSXZ0rfCD29sdoMfUEKdl8O4R9SU5Znb8g1DzJL8pzHP87g2kN9Nt
- W66NbEZ4iTxJtU6bYs+n+jniAob6I7SSsTbIUVELrovz7eyH4lha4cEfALQOQQWhFr1r
- ryGFEpq9Vd1mb2lidcTEIOAtm9Lc6r6Zrd92qXuzKH5dVYRblBtEJGYKm/k5SGqRud5i
- VV3AzFVMUropXBETyUpdMBiPIloceQn+LO8J6R3kFhdzxkwEnr8oqWFqMCp077uZF9yj
- jxLA==
-X-Gm-Message-State: AOJu0YxMSqVoButWYScX78O08VRt8DTDGwgiNiq9JwZ+h+IyEfHdieKg
- aFNUVOBHyayUNVS0Gx+NnSLXpRu5BEiEHXpcoVgEFjebKDKsf46aMyMo1x+jbdrjwtlV/mDHNU7
- Sirfhdmv2vO3D8G3QQQ4cqRF1U18=
-X-Google-Smtp-Source: AGHT+IEAQUX3P2T6Ta6hjwrktHT8XATTK98WjvlJbFyGrkTzHxkli28kJK1k2A6Bi6SrvthIu+qtkH1sXk6sIg+D/rI=
-X-Received: by 2002:a2e:979a:0:b0:2ec:daf:85d2 with SMTP id
- 38308e7fff4ca-2ec0e5caf8fmr42057311fa.5.1718577888664; Sun, 16 Jun 2024
- 15:44:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1sIzYA-0007YG-K6; Sun, 16 Jun 2024 19:44:42 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1sIzY8-0002mA-Q9; Sun, 16 Jun 2024 19:44:42 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45GNQuLW006544;
+ Sun, 16 Jun 2024 23:44:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=y
+ LqF9YQCPtVk5ZgVJCxRgQsBP2XNF2M7X2DPN1rT/lQ=; b=qjYhi8BoSVbwyKKCz
+ iGwDv8W5qAed1QRxLYcLAUj77DAliLI5DsRRorMjc7sCRDV+UJfp8Ec3oUXogNi/
+ Vq0h+YhmvjHlWL7KXmKtapafVfcJgBgGPDouq/ST7qWX/KId83zXRlmLIyze1cN+
+ yuxjJ59tKe2xbOnDhTf0K4+/LjqGS99PkFrx73ImI/dmjOD20PUDXofljQB7Q8TP
+ cLE19K4VmPoOnJ//Hh7X3e9twG8eH5vAr4+siKPjcLR/zz3UCV97OsFFe2vIN85t
+ WlOxbPJsd+PMTG2Rn5cXmeLXvz4SQ5KcwVBaQF2i7JrsfzjHYp05UrS2fs3VAbVB
+ /KNvQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yt8efg54j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 16 Jun 2024 23:44:37 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45GNiboP000497;
+ Sun, 16 Jun 2024 23:44:37 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yt8efg54f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 16 Jun 2024 23:44:37 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45GMB2ZW006227; Sun, 16 Jun 2024 23:44:36 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ysn9u5pn7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 16 Jun 2024 23:44:36 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45GNiXPv53608908
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+ Sun, 16 Jun 2024 23:44:36 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CDA2B58060;
+ Sun, 16 Jun 2024 23:44:33 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F3D6E5803F;
+ Sun, 16 Jun 2024 23:44:32 +0000 (GMT)
+Received: from [9.67.62.243] (unknown [9.67.62.243])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Sun, 16 Jun 2024 23:44:32 +0000 (GMT)
+Message-ID: <062b6182-7599-4012-bc10-6ba85e624df1@linux.ibm.com>
+Date: Sun, 16 Jun 2024 19:44:31 -0400
 MIME-Version: 1.0
-References: <20240611162021.269457-1-robhenry@microsoft.com>
- <20240611162021.269457-2-robhenry@microsoft.com>
- <71f86082-05df-48c8-9581-68f6417c525e@linaro.org>
-In-Reply-To: <71f86082-05df-48c8-9581-68f6417c525e@linaro.org>
-From: Robert Henry <rrh.henry@gmail.com>
-Date: Sun, 16 Jun 2024 15:44:37 -0700
-Message-ID: <CAEYr_8mY3cqnL1dsm-dA2k+T+M4YAQpHxeaYoZ805Ax-FSp8rA@mail.gmail.com>
-Subject: Re: [PATCH 1/1] i386/tcg: Allow IRET from user mode to user mode for
- dotnet runtime
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, 
- "Robert R. Henry" <robhenry@microsoft.com>
-Content-Type: multipart/alternative; boundary="00000000000092a443061b0998b2"
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=rrh.henry@gmail.com; helo=mail-lj1-x234.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] s390x: Enable and document boot device fallback on
+ panic
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: frankja@linux.ibm.com, nsg@linux.ibm.com
+References: <20240529154311.734548-1-jrossi@linux.ibm.com>
+ <20240529154311.734548-6-jrossi@linux.ibm.com>
+ <53920fad-888c-441b-b301-ca177f04f0fa@redhat.com>
+ <6407dc07-8f16-4765-9da4-fd2b0e4e94e9@linux.ibm.com>
+ <e421b171-ae66-4282-b204-f29847d6a80e@redhat.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <e421b171-ae66-4282-b204-f29847d6a80e@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 0m2LzVVz1l7aqDg2Sks1NRrMPdjvjOkm
+X-Proofpoint-GUID: PPtlCEzmI1V71I69X39_dzhdykMryMlW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-16_12,2024-06-14_03,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 adultscore=0
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0
+ clxscore=1011 mlxlogscore=999 suspectscore=0 impostorscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406160183
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,204 +120,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000092a443061b0998b2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-I do not think I will have the time or focus to work on improving this
-patch this summer, as I will retire in 2 weeks and need to make a clean
-break to focus on other things (health, for one) for a while.
 
-If anyone wants to put into place Richard's ideas, I will not be offended!
-
-I do not see any of this chatter in this email thread on the bug report
-https://gitlab.com/qemu-project/qemu/-/issues/249
-
-Robert Henry
-
-On Sat, Jun 15, 2024 at 4:25=E2=80=AFPM Richard Henderson <
-richard.henderson@linaro.org> wrote:
-
-> On 6/11/24 09:20, Robert R. Henry wrote:
-> > This fixes a bug wherein i386/tcg assumed an interrupt return using
-> > the IRET instruction was always returning from kernel mode to either
-> > kernel mode or user mode. This assumption is violated when IRET is used
-> > as a clever way to restore thread state, as for example in the dotnet
-> > runtime. There, IRET returns from user mode to user mode.
-> >
-> > This bug manifested itself as a page fault in the guest Linux kernel.
-> >
-> > This bug appears to have been in QEMU since the beginning.
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/249
-> > Signed-off-by: Robert R. Henry <robhenry@microsoft.com>
-> > ---
-> >   target/i386/tcg/seg_helper.c | 78 ++++++++++++++++++++++-------------=
--
-> >   1 file changed, 47 insertions(+), 31 deletions(-)
-> >
-> > diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.=
-c
-> > index 715db1f232..815d26e61d 100644
-> > --- a/target/i386/tcg/seg_helper.c
-> > +++ b/target/i386/tcg/seg_helper.c
-> > @@ -843,20 +843,35 @@ static void do_interrupt_protected(CPUX86State
-> *env, int intno, int is_int,
-> >
-> >   #ifdef TARGET_X86_64
-> >
-> > -#define PUSHQ_RA(sp, val, ra)                   \
-> > -    {                                           \
-> > -        sp -=3D 8;                                \
-> > -        cpu_stq_kernel_ra(env, sp, (val), ra);  \
-> > -    }
-> > -
-> > -#define POPQ_RA(sp, val, ra)                    \
-> > -    {                                           \
-> > -        val =3D cpu_ldq_kernel_ra(env, sp, ra);   \
-> > -        sp +=3D 8;                                \
-> > -    }
-> > +#define PUSHQ_RA(sp, val, ra, cpl, dpl) \
-> > +  FUNC_PUSHQ_RA(env, &sp, val, ra, cpl, dpl)
-> > +
-> > +static inline void FUNC_PUSHQ_RA(
-> > +    CPUX86State *env, target_ulong *sp,
-> > +    target_ulong val, target_ulong ra, int cpl, int dpl) {
-> > +  *sp -=3D 8;
-> > +  if (dpl =3D=3D 0) {
-> > +    cpu_stq_kernel_ra(env, *sp, val, ra);
-> > +  } else {
-> > +    cpu_stq_data_ra(env, *sp, val, ra);
-> > +  }
-> > +}
+On 6/7/24 1:57 AM, Thomas Huth wrote:
+> On 05/06/2024 16.48, Jared Rossi wrote:
+>>
+>>>> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+>>>> index c977a52b50..de3d1f0d5a 100644
+>>>> --- a/pc-bios/s390-ccw/s390-ccw.h
+>>>> +++ b/pc-bios/s390-ccw/s390-ccw.h
+>>>> @@ -43,6 +43,7 @@ typedef unsigned long long u64;
+>>>>   #include "iplb.h"
+>>>>     /* start.s */
+>>>> +extern char _start[];
+>>>>   void disabled_wait(void) __attribute__ ((__noreturn__));
+>>>>   void consume_sclp_int(void);
+>>>>   void consume_io_int(void);
+>>>> @@ -88,6 +89,11 @@ __attribute__ ((__noreturn__))
+>>>>   static inline void panic(const char *string)
+>>>>   {
+>>>>       sclp_print(string);
+>>>> +    if (load_next_iplb()) {
+>>>> +        sclp_print("\nTrying next boot device...");
+>>>> +        jump_to_IPL_code((long)_start);
+>>>> +    }
+>>>> +
+>>>>       disabled_wait();
+>>>>   }
+>>>
+>>> Honestly, I am unsure whether this is a really cool idea or a very 
+>>> ugly hack ... but I think I tend towards the latter, sorry. Jumping 
+>>> back to the startup code might cause various problem, e.g. 
+>>> pre-initialized variables don't get their values reset, causing 
+>>> different behavior when the s390-ccw bios runs a function a second 
+>>> time this way. Thus this sounds very fragile. Could we please try to 
+>>> get things cleaned up correctly, so that functions return with error 
+>>> codes instead of panicking when we can continue with another boot 
+>>> device? Even if its more work right now, I think this will be much 
+>>> more maintainable in the future.
+>>>
+>>>  Thomas
+>>>
+>>
+>> Thanks Thomas, I appreciate your insight.  Your hesitation is 
+>> perfectly understandable as well.  My initial design was like you 
+>> suggest, where the functions return instead of panic, but the issue I 
+>> ran into is that netboot uses a separate image, which we jump in to 
+>> at the start of IPL from a network device (see zipl_load() in 
+>> pc-bios/s390-ccw/bootmap.c). I wasn't able to come up with a simple 
+>> way to return to the main BIOS code if a netboot fails other than by 
+>> jumping back.  So, it seems to me that netboot kind of throws a 
+>> monkeywrench into the basic idea of reworking the panics into returns.
+>>
+>> I'm open to suggestions on a better way to recover from a failed 
+>> netboot, and it's certainly possible I've overlooked something, but 
+>> as far as I can tell a jump is necessary in that particular case at 
+>> least. Netboot could perhaps be handled as a special case where the 
+>> jump back is permitted whereas other device types return, but I don't 
+>> think that actually solves the main issue.
+>>
+>> What are your thoughts on this?
 >
-> This doesn't seem quite right.
+> Yes, I agree that jumping is currently required to get back from the 
+> netboot code. So if you could rework your patches in a way that limits 
+> the jumping to a failed netboot, that would be acceptable, I think.
 >
-> I would be much happier if we were to resolve the proper mmu index
-> earlier, once, rather
-> than within each call to cpu_{ld,st}*_{kernel,data}_ra.  With the mmu
-> index in hand, use
-> cpu_{ld,st}*_mmuidx_ra instead.
+> Apart from that: We originally decided to put the netboot code into a 
+> separate binary since the required roms/SLOF module might not always 
+> have been checked out (it needed to be done manually), so we were not 
+> able to compile it in all cases. But nowadays, this is handled in a 
+> much nicer way, the submodule is automatically checked out once you 
+> compile the s390x-softmmu target and have a s390x compiler available, 
+> so I wonder whether we should maybe do the next step and integrate the 
+> netboot code into the main s390-ccw.img now? Anybody got an opinion on 
+> this?
 >
-> I believe you will want to factor out a subroutine of x86_cpu_mmu_index
-> which passes in
-> the pl, rather than reading cpl from env->hflags.  This will also allow
-> cpu_mmu_index_kernel to be eliminated or simplified, which is written to
-> assume pl=3D0.
->
->
-> r~
+>  Thomas
 >
 
---00000000000092a443061b0998b2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Thomas,
 
-<div dir=3D"ltr">I do not think I will have the time or focus to work on im=
-proving this patch this summer, as I will retire in 2 weeks and need to mak=
-e a clean break to focus on other things (health, for one) for a while.<div=
-><br></div><div>If anyone wants to put into place Richard&#39;s ideas, I wi=
-ll not be offended!<br><div><br></div><div>I do not see any of this chatter=
- in this email thread on the bug report <a href=3D"https://gitlab.com/qemu-=
-project/qemu/-/issues/249">https://gitlab.com/qemu-project/qemu/-/issues/24=
-9</a></div></div><div><br></div><div>Robert Henry</div></div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Jun 15, 2024=
- at 4:25=E2=80=AFPM Richard Henderson &lt;<a href=3D"mailto:richard.henders=
-on@linaro.org">richard.henderson@linaro.org</a>&gt; wrote:<br></div><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
-x solid rgb(204,204,204);padding-left:1ex">On 6/11/24 09:20, Robert R. Henr=
-y wrote:<br>
-&gt; This fixes a bug wherein i386/tcg assumed an interrupt return using<br=
->
-&gt; the IRET instruction was always returning from kernel mode to either<b=
-r>
-&gt; kernel mode or user mode. This assumption is violated when IRET is use=
-d<br>
-&gt; as a clever way to restore thread state, as for example in the dotnet<=
-br>
-&gt; runtime. There, IRET returns from user mode to user mode.<br>
-&gt; <br>
-&gt; This bug manifested itself as a page fault in the guest Linux kernel.<=
-br>
-&gt; <br>
-&gt; This bug appears to have been in QEMU since the beginning.<br>
-&gt; <br>
-&gt; Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/249=
-" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qemu=
-/-/issues/249</a><br>
-&gt; Signed-off-by: Robert R. Henry &lt;<a href=3D"mailto:robhenry@microsof=
-t.com" target=3D"_blank">robhenry@microsoft.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0target/i386/tcg/seg_helper.c | 78 ++++++++++++++++++++++--=
-------------<br>
-&gt;=C2=A0 =C2=A01 file changed, 47 insertions(+), 31 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper=
-.c<br>
-&gt; index 715db1f232..815d26e61d 100644<br>
-&gt; --- a/target/i386/tcg/seg_helper.c<br>
-&gt; +++ b/target/i386/tcg/seg_helper.c<br>
-&gt; @@ -843,20 +843,35 @@ static void do_interrupt_protected(CPUX86State *=
-env, int intno, int is_int,<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0#ifdef TARGET_X86_64<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; -#define PUSHQ_RA(sp, val, ra)=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>
-&gt; -=C2=A0 =C2=A0 {=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 sp -=3D 8;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 \<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu_stq_kernel_ra(env, sp, (val), ra);=C2=
-=A0 \<br>
-&gt; -=C2=A0 =C2=A0 }<br>
-&gt; -<br>
-&gt; -#define POPQ_RA(sp, val, ra)=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>
-&gt; -=C2=A0 =C2=A0 {=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 val =3D cpu_ldq_kernel_ra(env, sp, ra);=
-=C2=A0 =C2=A0\<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 sp +=3D 8;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 \<br>
-&gt; -=C2=A0 =C2=A0 }<br>
-&gt; +#define PUSHQ_RA(sp, val, ra, cpl, dpl) \<br>
-&gt; +=C2=A0 FUNC_PUSHQ_RA(env, &amp;sp, val, ra, cpl, dpl)<br>
-&gt; +<br>
-&gt; +static inline void FUNC_PUSHQ_RA(<br>
-&gt; +=C2=A0 =C2=A0 CPUX86State *env, target_ulong *sp,<br>
-&gt; +=C2=A0 =C2=A0 target_ulong val, target_ulong ra, int cpl, int dpl) {<=
-br>
-&gt; +=C2=A0 *sp -=3D 8;<br>
-&gt; +=C2=A0 if (dpl =3D=3D 0) {<br>
-&gt; +=C2=A0 =C2=A0 cpu_stq_kernel_ra(env, *sp, val, ra);<br>
-&gt; +=C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 cpu_stq_data_ra(env, *sp, val, ra);<br>
-&gt; +=C2=A0 }<br>
-&gt; +}<br>
-<br>
-This doesn&#39;t seem quite right.<br>
-<br>
-I would be much happier if we were to resolve the proper mmu index earlier,=
- once, rather <br>
-than within each call to cpu_{ld,st}*_{kernel,data}_ra.=C2=A0 With the mmu =
-index in hand, use <br>
-cpu_{ld,st}*_mmuidx_ra instead.<br>
-<br>
-I believe you will want to factor out a subroutine of x86_cpu_mmu_index whi=
-ch passes in <br>
-the pl, rather than reading cpl from env-&gt;hflags.=C2=A0 This will also a=
-llow <br>
-cpu_mmu_index_kernel to be eliminated or simplified, which is written to as=
-sume pl=3D0.<br>
-<br>
-<br>
-r~<br>
-</blockquote></div>
+I would generally defer the decision about integrating the netboot code 
+to someone with more insight than me, but for what it's worth, I am of 
+the opinion that if we want to rework all of panics into returns, then 
+it would make the most sense to also do the integration now so that we 
+can avoid using jump altogether.  Unless I'm missing something simple, I 
+don't think the panic/return conversion will be trivial, and actually I 
+think it will be quite invasive since there are dozens of calls to panic 
+and assert that will need to be changed.   It doesn't seem worthwhile to 
+do all of these conversions in order to avoid using jump, but then still 
+being exposed to possible problems caused by jumping due to netboot 
+requiring it anyway.
 
---00000000000092a443061b0998b2--
+Regards,
+
+Jared Rossi
 
