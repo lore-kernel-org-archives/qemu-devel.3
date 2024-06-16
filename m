@@ -4,77 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EDA1C27C53
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 18:39:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAF6DC27C53
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 18:44:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIumu-0005fm-D5; Sun, 16 Jun 2024 14:39:36 -0400
+	id 1sIuqu-0006uN-0L; Sun, 16 Jun 2024 14:43:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sIumr-0005fI-Tq
- for qemu-devel@nongnu.org; Sun, 16 Jun 2024 14:39:34 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sIuqs-0006te-8J
+ for qemu-devel@nongnu.org; Sun, 16 Jun 2024 14:43:42 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sIumq-0004rE-EH
- for qemu-devel@nongnu.org; Sun, 16 Jun 2024 14:39:33 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2c2c6277ef3so3024697a91.3
- for <qemu-devel@nongnu.org>; Sun, 16 Jun 2024 11:39:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sIuqq-0005hl-G3
+ for qemu-devel@nongnu.org; Sun, 16 Jun 2024 14:43:42 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-35f1dc4ab9aso3016192f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 16 Jun 2024 11:43:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718563171; x=1719167971; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=y0whSaGs0Xb1H7zbB+JZu7tGyUaEXqwwgTP8pjulQKw=;
- b=lFaUcwoJ48Cww/eBg8ER27Rf3Pnmtq6qcalhc6IhJhD+TKAzji8T/QcRmIqYo21ISN
- jh/Wgk6c7x5OyEfBY2PvR7I0Vbb94eW0/3ej6jNI7LDfiyaKdXs+HM1bkKIhwUqbihzP
- gSCjL2o2vkyVvNcgfBBOlarHx3O1e7wSUZZpokPPgKITGpIsgt2qgVX0i+VjTqeDbFKa
- ZIaKgZPIKr+MkveNFMLkNUPREu1rbcgszsQxzmALNRwV09u1obP9dzjybhtNmBn+Lv/+
- cJpEqtAQz0/frgI85KK2xs6+zI7V6oQut0rS1MQ5v8MfvEXMv6vIBOLXPB7MM9e/8p8y
- 2Bkw==
+ d=linaro.org; s=google; t=1718563418; x=1719168218; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=61uU3w5r/LIuL9mGfsdmC7+uInEtZsL4PLydE/0gEyQ=;
+ b=as4qR4uQL5Zkrb0gpPFWStPX1h0wlhOXEz5jee2M6ewotppitV4nrPZbneJo6zR6oZ
+ p0zwE8tvwQZ017xwPMqVgD03of0OUjYFDsaOZX+lv04VVBQFCn05NQ+bqbvenBKfmAkS
+ uCVU9Uz/nx+J6ldvkW4O1w3uyXHhOX5guInUoS+i/ZiDH3q5+ZT77NvQcftH/PN+i7BQ
+ 3ntUTP1AJyPXogaPnylKqzbYB7JkRrOx0EewkSa2UC1/mYO8zZ7eQ8TrEhStezW6fRK/
+ NM1NdhEUvGHRFvdbCNAYjpQ7u2oyQ/goMeFyQfE0G3vx/Tl0uEXDdgGVGvUpMJWnJISA
+ 0A1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718563171; x=1719167971;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y0whSaGs0Xb1H7zbB+JZu7tGyUaEXqwwgTP8pjulQKw=;
- b=VRwrFomcxWo7Ig+PEpYY9egFQhv8foy4AL7fc88DLR5/FnptHDrDSzFpkcETfMZxjO
- jfnEFGgnr4pWwdwpTkdq6th0wA4rjkHvsldQKNAQqvN9+LumsJ6F7UplXE6ARHQ6pTLG
- lxrsLU2/t7nGvbaBcepWoZj+fjoGOR7sgnXiTGwL/tyM2HyDxd9aH1QJcnrZqsMpiPF6
- w8q1zXsMrhM3F7FDS02pDC2nahMfGOJAwB5JNlanI0JGisJP1b0BzP61Bd4EZ1JSmEDz
- KVKDxo/1zkjSzQo4ZGNZIrrPJAS1NjQzu+5FzIpG3CTHFnuO9iCMLvX5SB0DYR5dONX6
- oT1w==
+ d=1e100.net; s=20230601; t=1718563418; x=1719168218;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=61uU3w5r/LIuL9mGfsdmC7+uInEtZsL4PLydE/0gEyQ=;
+ b=ZqNr5Z8Mh5QY67Z/teA6uSfalTTjZVZYsoVTo0ujMSV13nlXUeLuHHeHwlR9oazHh6
+ l75vngFRcoRQez6HxVhWGDagqy/iidAOqQ+aNgZop67vT7XmNJRyKWRrcXrETGaSKrJx
+ 5Rx96ACrB7PxplW6Psv/dyvy7iSFX9NIraRDvcGovMKOBjg5hxkxwP0QAUyp2XNCrYgP
+ vdNXapQvHOP+P+HnN0amrZRpj4VjOUmGwjLMYiOTt1dTTyJLgSSeXcDh/y2r25DS9tnS
+ XiDpSc9glXZ2Ehlgr+OAIwvl7h19nyBsNtV5Rf6Rfuz6EU3Jxepm8Ri4GsyR1IVuNT/B
+ +Q9A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9XH2VTAW12qo5gDGpPHdcWHxP+OL3CbMNuvfU4ehbHToFtgR8TYxw3Q88PQY4LBIE3zepG5TIoBEMNcswObT3XINfzGo=
-X-Gm-Message-State: AOJu0YzAkvAZjVcwCjo8WMDekQ8I1JTkqDB7HmPsmjggIBK+uF5VtHC0
- wvy79pxs7Dw0ngJDB/4oAJJDEiWN9ZJbMjtBkvQ0DDqVV+ioSi45T3l+xCC+yQrp1+WCjWEYq4i
- E
-X-Google-Smtp-Source: AGHT+IGMUYVlxdbvY4dLovpJ+J0juWkfQbKl7yjoe6lsw9bAXYd481rTHEJ3B13OakHanOuKlt/vHA==
-X-Received: by 2002:a17:902:d482:b0:1f6:f336:899f with SMTP id
- d9443c01a7336-1f8628062bbmr81607015ad.54.1718563170792; 
- Sun, 16 Jun 2024 11:39:30 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.132.216])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855e55f74sm66493675ad.62.2024.06.16.11.39.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Jun 2024 11:39:30 -0700 (PDT)
-Message-ID: <7f883f16-ed2b-47f7-b31f-a92f42fddfb8@linaro.org>
-Date: Sun, 16 Jun 2024 11:39:28 -0700
+ AJvYcCUVP7/gRS2N9aAY1CyVCqaCFRSYMFdglvyXKcuXnztiwz+WPR3Hbn0awN01+8lz1NcUM06Ql/bGUy0YNm/kB+LxvS8neY0=
+X-Gm-Message-State: AOJu0YxsTOLreQd2iKHtenKLEf22io97D+F2PZqAOqMJPzIvemLgs469
+ 8KIrtUwiTCRNcSbVKPOg86UC38CsSIm0ou2Xbj98dqYMO4lNG6I9iynK6bmAyhs=
+X-Google-Smtp-Source: AGHT+IEldkSREus3vB6BTyry8+OqgS+HADxfRtbrtfhNZMy3m6/pRi886sUQFFDfdu2/VhLJuWDQFg==
+X-Received: by 2002:a5d:4a4c:0:b0:35f:1d29:db8d with SMTP id
+ ffacd0b85a97d-3607a76374dmr4589048f8f.25.1718563418197; 
+ Sun, 16 Jun 2024 11:43:38 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36075104a3dsm10173809f8f.112.2024.06.16.11.43.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 16 Jun 2024 11:43:37 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 429C85F91D;
+ Sun, 16 Jun 2024 19:43:37 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,
+ David Hildenbrand <david@redhat.com>,  Ilya Leoshkevich
+ <iii@linux.ibm.com>,  Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Mark Burton <mburton@qti.qualcomm.com>,
+ qemu-s390x@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ kvm@vger.kernel.org,  Laurent Vivier <lvivier@redhat.com>,  Halil Pasic
+ <pasic@linux.ibm.com>,  Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,  qemu-arm@nongnu.org,  Alexander
+ Graf <agraf@csgraf.de>,  Nicholas Piggin <npiggin@gmail.com>,  Marco
+ Liebel <mliebel@qti.qualcomm.com>,  Thomas Huth <thuth@redhat.com>,  Roman
+ Bolshakov <rbolshakov@ddn.com>,  qemu-ppc@nongnu.org,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  Cameron Esfahani <dirty@apple.com>,  Jamie Iles
+ <quic_jiles@quicinc.com>,  "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 9/9] contrib/plugins: add ips plugin example for cost
+ modeling
+In-Reply-To: <db8d82d4-c88d-45ac-bc99-e85a4240add2@linaro.org> (Pierrick
+ Bouvier's message of "Fri, 14 Jun 2024 10:39:38 -0700")
+References: <20240612153508.1532940-1-alex.bennee@linaro.org>
+ <20240612153508.1532940-10-alex.bennee@linaro.org>
+ <31ba8570-9009-4530-934d-3b73b07520d0@linaro.org>
+ <db8d82d4-c88d-45ac-bc99-e85a4240add2@linaro.org>
+Date: Sun, 16 Jun 2024 19:43:37 +0100
+Message-ID: <87frtcsp7q.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/sparc: use signed denominator in sdiv helper
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
-References: <20240606144331.698361-1-chigot@adacore.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240606144331.698361-1-chigot@adacore.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,32 +116,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/6/24 07:43, Clément Chigot wrote:
-> The result has to be done with the signed denominator (b32) instead of
-> the unsigned value passed in argument (b).
-> 
-> Fixes: 1326010322d6 ("target/sparc: Remove CC_OP_DIV")
-> Signed-off-by: Clément Chigot <chigot@adacore.com>
-> ---
->   target/sparc/helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/sparc/helper.c b/target/sparc/helper.c
-> index 2247e243b5..7846ddd6f6 100644
-> --- a/target/sparc/helper.c
-> +++ b/target/sparc/helper.c
-> @@ -121,7 +121,7 @@ uint64_t helper_sdiv(CPUSPARCState *env, target_ulong a, target_ulong b)
->           return (uint32_t)(b32 < 0 ? INT32_MAX : INT32_MIN) | (-1ull << 32);
->       }
->   
-> -    a64 /= b;
-> +    a64 /= b32;
->       r = a64;
->       if (unlikely(r != a64)) {
->           return (uint32_t)(a64 < 0 ? INT32_MIN : INT32_MAX) | (-1ull << 32);
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-Queued, thanks.
+> On 6/13/24 01:54, Philippe Mathieu-Daud=C3=A9 wrote:
+>> On 12/6/24 17:35, Alex Benn=C3=A9e wrote:
+>>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>
+>>> This plugin uses the new time control interface to make decisions
+>>> about the state of time during the emulation. The algorithm is
+>>> currently very simple. The user specifies an ips rate which applies
+>> ... IPS rate (Instructions Per Second) which ...
+>>=20
+>>> per core. If the core runs ahead of its allocated execution time the
+>>> plugin sleeps for a bit to let real time catch up. Either way time is
+>>> updated for the emulation as a function of total executed instructions
+>>> with some adjustments for cores that idle.
+>>>
+>>> Examples
+>>> --------
+>>>
+>>> Slow down execution of /bin/true:
+>>> $ num_insn=3D$(./build/qemu-x86_64 -plugin ./build/tests/plugin/libinsn=
+.so -d plugin /bin/true |& grep total | sed -e 's/.*: //')
+>>> $ time ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libips.so,ip=
+s=3D$(($num_insn/4)) /bin/true
+>>> real 4.000s
+>>>
+>>> Boot a Linux kernel simulating a 250MHz cpu:
+>>> $ /build/qemu-system-x86_64 -kernel /boot/vmlinuz-6.1.0-21-amd64 -appen=
+d "console=3DttyS0" -plugin ./build/contrib/plugins/libips.so,ips=3D$((250*=
+1000*1000)) -smp 1 -m 512
+>>> check time until kernel panic on serial0
+>>>
+>>> Tested in system mode by booting a full debian system, and using:
+>>> $ sysbench cpu run
+>>> Performance decrease linearly with the given number of ips.
+>>>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> Message-Id: <20240530220610.1245424-7-pierrick.bouvier@linaro.org>
+>>> ---
+>>>    contrib/plugins/ips.c    | 164 +++++++++++++++++++++++++++++++++++++=
+++
+>>>    contrib/plugins/Makefile |   1 +
+>>>    2 files changed, 165 insertions(+)
+>>>    create mode 100644 contrib/plugins/ips.c
+>>>
+>>> diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
+>>> new file mode 100644
+>>> index 0000000000..db77729264
+>>> --- /dev/null
+>>> +++ b/contrib/plugins/ips.c
+>>> @@ -0,0 +1,164 @@
+>>> +/*
+>>> + * ips rate limiting plugin.
+>> The plugin names are really to packed to my taste (each time I look
+>> for
+>> one I have to open most source files to figure out the correct one); so
+>> please ease my life by using a more descriptive header at least:
+>>        Instructions Per Second (IPS) rate limiting plugin.
+>> Thanks.
+>>=20
+>
+> I agree most of the plugin names are pretty cryptic, and they are
+> lacking a common "help" system, to describe what they do, and which
+> options are available for them. It's definitely something we could add
+> in the future.
+>
+> Regarding what you reported, I'm totally ok with the change.
+>
+> However, since this is a new series, I'm not if I or Alex should
+> change it. If it's ok for you to modify this Alex, it could be simpler
+> than waiting for me to push a new patch with just this.
 
+Its my tree so I'll fix it up. I'll ask you if I want a respin ;-)
 
-r~
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
