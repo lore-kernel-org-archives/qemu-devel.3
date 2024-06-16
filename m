@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBE00C27C4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 02:48:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00F56C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 03:13:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIfvM-0007R3-BH; Sat, 15 Jun 2024 22:47:20 -0400
+	id 1sIgJo-0001i0-Cd; Sat, 15 Jun 2024 23:12:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1sIfvC-0007N7-QR
- for qemu-devel@nongnu.org; Sat, 15 Jun 2024 22:47:12 -0400
-Received: from mail-io1-xd2c.google.com ([2607:f8b0:4864:20::d2c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sIgJn-0001hf-3x
+ for qemu-devel@nongnu.org; Sat, 15 Jun 2024 23:12:35 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1sIfvB-0001h3-9E
- for qemu-devel@nongnu.org; Sat, 15 Jun 2024 22:47:10 -0400
-Received: by mail-io1-xd2c.google.com with SMTP id
- ca18e2360f4ac-7e23dc4bda0so136488239f.3
- for <qemu-devel@nongnu.org>; Sat, 15 Jun 2024 19:47:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sIgJl-0006Bn-Dq
+ for qemu-devel@nongnu.org; Sat, 15 Jun 2024 23:12:34 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1f6f38b1ab0so25691545ad.1
+ for <qemu-devel@nongnu.org>; Sat, 15 Jun 2024 20:12:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1718506027; x=1719110827; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nQNMf+6wuwd34N5Qpr2xVvlJAXmEbxY00fEA9ntvmsU=;
- b=Id6k+gNGqYDaXqUCcYCjdInyx2wD+ChSgT0ylo5NP32BOJg9CEQ+rodU5gax2SAkjX
- oufOUknvvbY+zfFwEZo6yke9dveKoVw/rM8c9LkY+kmgv/nS4W0C7lEliVBCDOGf/vza
- +8HMBalh7oZ1buS2UGGjEn70cyLWr5K7rRysC+WrgE8cqla/fZOHVlleI5VpUI/oLGpp
- BmC5ayRUxXitm5KIOXqxd47LPT0r7EPdUTElnD2k9lauthRebbMK7cAlkjOC8Ub0YFCW
- B9wBDvnVp+sipbGAMUP4Cp29RipWiL3kRvdS4T6JddLFzPrKV7fX2e0FXwoll9kVOP+V
- KGfQ==
+ d=linaro.org; s=google; t=1718507552; x=1719112352; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9k7jbQ2rPLcAPpMaFP/XavHjyCuJefA6QQTNxe+AW/Q=;
+ b=UzuDSb7bmk4iTwYwsAXX38rcZR6ZjdsI8Lcdtz2kg+8d3e9PfA2c8W1fktl4UF5s2C
+ zhxtIrEeZaqEtuh3PpZH8yRhFk+7mAfVE8Gi+VrPA3UwQfB8nIXPwdVGlK5TiGugzHkK
+ RNeHJPVw+ltCMuLQMzmddX/g329S9+k5j9DLuKQTph2uIebSorLIxSgfpBdpB/VAd5KS
+ RJHNOX4tPA9BjkqqWTGLg4LV0H9cgPLU1WtXaLgZcVqOxmLByYlStwWiHDpH44s4O/k4
+ 05tmzduyQr/ZIRKN1LS+njuqGSzja87v1AIwvCMX0b113amG2Cj09LR2h3J1oLaTfyx7
+ mL+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718506027; x=1719110827;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nQNMf+6wuwd34N5Qpr2xVvlJAXmEbxY00fEA9ntvmsU=;
- b=iEWkMGQ2be0hWfszgzdZ4wGjOxFSyfu7IB2AVx2RuMocaoNEOyJbGnKRhZev3d5pB6
- LaNPHNn+ipolizaKbSwD/rtJZE669fnK3+Ob3EWBjQgfc95OdijHsimt0QBarzd3BFMz
- bnujUp88CqikAegCE8e8wbk8hsFzDnRK62+n3CyDeTmEuE1+NNYHkAnE7jzpZGekflJD
- k5VMt53t96g/aqkKlEmjIYYTwXtCNJGjgW+SMWVWdN8sL/CjaCIS3Oe1Awn4rjEvmjX1
- uug6Kzow/eh+D3KeRvEd0/5Tz6TDN7XrHmHC8XNJAGOHHLgZI4OGNX90QLxqGQXXQdlC
- RZWQ==
-X-Gm-Message-State: AOJu0YwlS6ZXy8aPmjYU7v4O8IZvYaX3ID5ucv6oi7Ojw6aSH4HYNGkb
- T2pt4Vth7YGwTK86g9YxN+YiS3z0s13w/RkDMD6LCbaqErPW7Zuo74FygMSS6hTbX/QFdZm2FQZ
- t0adLDS0xUnmSG+Y1K5cAq+PVPVBxMW2st/nn5zw2hriNj9+E9f4w49XaM0GAKXxgvcj+bBpu8W
- g4U3SoU9xvG8pJ2WEl4ic48PpXml5GS1oZJ0j5iDE=
-X-Google-Smtp-Source: AGHT+IE0xIguhYHUiCnDxVpXM9r8oyIGirxsikhdNDjAwryUuR86cq1+ajvEmVL8nopuAmjKl/NKBw==
-X-Received: by 2002:a05:6602:1503:b0:7eb:78b4:faee with SMTP id
- ca18e2360f4ac-7ebeb4909cbmr763582639f.3.1718506027140; 
- Sat, 15 Jun 2024 19:47:07 -0700 (PDT)
-Received: from hsinchu16.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
+ d=1e100.net; s=20230601; t=1718507552; x=1719112352;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9k7jbQ2rPLcAPpMaFP/XavHjyCuJefA6QQTNxe+AW/Q=;
+ b=IpYiIEfjwiTLCFy34qrtoeAFnRlMFpKKdC8jemD0jYK59lDfZxjDX+7HKbRcT0rrlf
+ RkAVyYagmnGSmfFW7OAlCsy3XJjffI8QBwlaJQ5+GHBwB54pIxBT6cihJGIBb2bjlVMB
+ Pzn3Eyu01vW1qk3Z3eSfWlYwUbpgXSL7uQFgHaMzchwVfVq2HtZdRRHFgEXC83L0wm52
+ sKTvtHjo6fxlR0EQZ/ky57ojASkYIDZMCUBfSArc93tGADMfQQ22ejfniWL4RE5SmWrB
+ L0XwgN8MbSGgaPAslGMs1/gmHHGakFJabtN7oiZh3kL2K8rGzQB+zZ4oXJL28zVQp+vK
+ Gghw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVyuUwW7rbIV5Tnfp3DBiZ2v7UbD/2raO1wkwCS3Lc4C/nHmrv5EeKJWEapGVUCGhyxWHDPTBizRLKgJ3rdjuhAcWv6ty8=
+X-Gm-Message-State: AOJu0YzGgwtnlbcdiCOu1Jiu7QoJQBkL3uiu44UMLnGYpEBLIFFBkPju
+ rGJ1gu/tEIYKiilNra9sIxBx9MqAe/03UahqO0ePgtf69g6M60g3pM2qIoU7a4HmeNe7byxCYuT
+ 9
+X-Google-Smtp-Source: AGHT+IEKuuW1FfDSr4uS7Zzd4iOz13PfMd1WJ7GZU6LCPQsFp7LcnV01AgIzyvQyn+KSBnAv/b+0EA==
+X-Received: by 2002:a17:902:8b8c:b0:1f7:111c:2d53 with SMTP id
+ d9443c01a7336-1f8629feaa7mr48715615ad.45.1718507551648; 
+ Sat, 15 Jun 2024 20:12:31 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855e7ca78sm56258705ad.106.2024.06.15.19.47.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 15 Jun 2024 19:47:06 -0700 (PDT)
-From: frank.chang@sifive.com
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
- Frank Chang <frank.chang@sifive.com>,
- Jerry Zhang Jian <jerry.zhangjian@sifive.com>,
- Max Chou <max.chou@sifive.com>
-Subject: [PATCH v2 1/6] target/riscv: Introduce extension implied rules
- definition
-Date: Sun, 16 Jun 2024 10:46:52 +0800
-Message-ID: <20240616024657.17948-2-frank.chang@sifive.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240616024657.17948-1-frank.chang@sifive.com>
-References: <20240616024657.17948-1-frank.chang@sifive.com>
+ d9443c01a7336-1f855f52b82sm56820295ad.295.2024.06.15.20.12.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 15 Jun 2024 20:12:31 -0700 (PDT)
+Message-ID: <58b9adfa-be9e-4ece-865b-54f0118788e4@linaro.org>
+Date: Sat, 15 Jun 2024 20:12:29 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2c;
- envelope-from=frank.chang@sifive.com; helo=mail-io1-xd2c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/18] Migration patches for 2024-06-14
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+References: <20240614171802.28451-1-farosas@suse.de>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240614171802.28451-1-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,80 +98,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+On 6/14/24 10:17, Fabiano Rosas wrote:
+> The following changes since commit 046a64b9801343e2e89eef10c7a48eec8d8c0d4f:
+> 
+>    Merge tag 'pull-request-2024-06-12' ofhttps://gitlab.com/thuth/qemu  into staging (2024-06-13 07:51:58 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/farosas/qemu.git  tags/migration-20240614-pull-request
+> 
+> for you to fetch changes up to c519caa825f5eba6e204bed5a464df167a5421d0:
+> 
+>    tests/migration-test: add uadk compression test (2024-06-14 14:01:30 -0300)
+> 
+> ----------------------------------------------------------------
+> Migration pull request
+> 
+> - Nick's reenabling of ppc64 tests + speed improvements
+> - Yuan's IAA/QPL compression support for multifd
+> - Shameer's UADK compression support for multifd
 
-RISCVCPUImpliedExtsRule is created to store the implied rules.
-'is_misa' flag is used to distinguish whether the rule is derived
-from the MISA or other extensions.
-'ext' stores the MISA bit if 'is_misa' is true. Otherwise, it stores
-the offset of the extension defined in RISCVCPUConfig. 'ext' will also
-serve as the key of the hash tables to look up the rule in the following
-commit.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jerry Zhang Jian <jerry.zhangjian@sifive.com>
-Tested-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/cpu.c |  8 ++++++++
- target/riscv/cpu.h | 25 +++++++++++++++++++++++++
- 2 files changed, 33 insertions(+)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 4760cb2cc1..bacbb32120 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2250,6 +2250,14 @@ RISCVCPUProfile *riscv_profiles[] = {
-     NULL,
- };
- 
-+RISCVCPUImpliedExtsRule *riscv_misa_implied_rules[] = {
-+    NULL
-+};
-+
-+RISCVCPUImpliedExtsRule *riscv_ext_implied_rules[] = {
-+    NULL
-+};
-+
- static Property riscv_cpu_properties[] = {
-     DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
- 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 90b8f1b08f..6b31731fa8 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -124,6 +124,31 @@ typedef enum {
-     EXT_STATUS_DIRTY,
- } RISCVExtStatus;
- 
-+typedef struct riscv_cpu_implied_exts_rule RISCVCPUImpliedExtsRule;
-+
-+struct riscv_cpu_implied_exts_rule {
-+#ifndef CONFIG_USER_ONLY
-+    /*
-+     * Bitmask indicates the rule enabled status for the harts.
-+     * This enhancement is only available in system-mode QEMU,
-+     * as we don't have a good way (e.g. mhartid) to distinguish
-+     * the SMP cores in user-mode QEMU.
-+     */
-+    uint64_t enabled;
-+#endif
-+    /* True if this is a MISA implied rule. */
-+    bool is_misa;
-+    /* ext is MISA bit if is_misa flag is true, else extension offset. */
-+    const uint32_t ext;
-+    const uint32_t implied_misas;
-+    const uint32_t implied_exts[];
-+};
-+
-+extern RISCVCPUImpliedExtsRule *riscv_misa_implied_rules[];
-+extern RISCVCPUImpliedExtsRule *riscv_ext_implied_rules[];
-+
-+#define RISCV_IMPLIED_EXTS_RULE_END -1
-+
- #define MMU_USER_IDX 3
- 
- #define MAX_RISCV_PMPS (16)
--- 
-2.43.2
+r~
 
 
