@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ACD2C41513
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 02:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA2F1C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 02:48:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIfvQ-0007TQ-P0; Sat, 15 Jun 2024 22:47:24 -0400
+	id 1sIfvK-0007P6-81; Sat, 15 Jun 2024 22:47:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1sIfvP-0007Ss-LR
- for qemu-devel@nongnu.org; Sat, 15 Jun 2024 22:47:23 -0400
-Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
+ id 1sIfvF-0007NM-JM
+ for qemu-devel@nongnu.org; Sat, 15 Jun 2024 22:47:17 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1sIfvN-0001j1-Rl
- for qemu-devel@nongnu.org; Sat, 15 Jun 2024 22:47:23 -0400
-Received: by mail-oo1-xc32.google.com with SMTP id
- 006d021491bc7-5b9778bb7c8so1709906eaf.3
- for <qemu-devel@nongnu.org>; Sat, 15 Jun 2024 19:47:21 -0700 (PDT)
+ id 1sIfvD-0001hW-UZ
+ for qemu-devel@nongnu.org; Sat, 15 Jun 2024 22:47:13 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1f480624d10so28588435ad.1
+ for <qemu-devel@nongnu.org>; Sat, 15 Jun 2024 19:47:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1718506039; x=1719110839; darn=nongnu.org;
+ d=sifive.com; s=google; t=1718506030; x=1719110830; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OmFiATPm95+4kWSDn9aSKWPJ0UC08eg4l8qOQUPIprs=;
- b=doSi+e5bf+4PZ61Y/x1a+hMeK85eEf6Npdz/8xPxJvvWJLQyexoOhwz8LEK7AmQA1k
- GpQuPYtbLq1TKRh3ERI/Y6A2mwvEizQJiY6RZudo5oHmJHH8sWeuengLZPguLzHSj4sL
- 4inBMTFSCWeZSSVZAM1baNdUCslQ+CvTiZBdte4Z9tI/9v1i0aCYvUEm7kdEMUDvyPmY
- ksXHK7gWJryMe9XgH2NhAdqjPV4FUck0wBfVyqC4vOZKn+/u8geAXUaahS1boG+dkTqe
- MpeSH8SEeQ4Vmg7AVHisG7NWxKEBP1ILhVKPWic8GVcmoH++Lli2ZkAICePRjbD5L4mB
- pV8w==
+ bh=LwRAet0mSxwn7I1Ml7pPtqRUk6TOfkcuiooaSBrc9bc=;
+ b=TZIjMHr6gK/0X7VuaT7u6TjtPA+zWSTRV2QDToikjO8scBaDCuzpovmZ9GCGte5Fy/
+ zf91oWU2FSl6EDNVCKFtAM9vk89EfTc4Djl+FNDKNqkpOFkwoYH5FBJUjsUu1CO2ueSz
+ k2t+M92x0zx32OX3LGxPxH5dYPnqYKzOLd67XOJppnWZuMQMhcAkJNxg1OLz3JYfgst1
+ g9TkGBqcaIQUzA2JLadQBuGIqShrWNprFZwqd4x4chquatXTSRFGHRXkDrI/Q4w6LRUE
+ qYVf78Fdf0ULMQZg72tBi5zR4sHm9wjKyzEOpB3cuR1JRwvjJaG8ne3RP0ByUCs1BDG5
+ saGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718506039; x=1719110839;
+ d=1e100.net; s=20230601; t=1718506030; x=1719110830;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OmFiATPm95+4kWSDn9aSKWPJ0UC08eg4l8qOQUPIprs=;
- b=e2eK4aGNhZ0DCBSCjcCefpU8WRW2llCrTgTI1LwxTCt6YMBb7KghuzILAmavS+CY86
- FEyAeZamj206CEBGrhQmTKywJZQszOkj9euT1v5X9HLZXkY/ans8KkrG0CZhykcaRXeE
- Ogh91LN1x1N6w44/NPU01ZXIfv249jzBvjxClI0K77KgnqOZdgYRnSzHx6vol1aPML0D
- CfVTBFnG8y/iSzANzEvOGWlbU73bJ3YAgI6oN+iqZCwwR5tmViDqpGq4N1cSdwsR9Nfp
- rlqnwBqZvw88lbKCkPTypQB+l49puS5tsT282HetVZWXVKsLrKIL7r+adaJ7+IaMmPQV
- 619Q==
-X-Gm-Message-State: AOJu0Yxi+kZAsdfThbQHXnSkRj7uXLguWlFdNzk/zBYvsafHKRlooO+N
- vQyjm8B433I1cB9dU54TGhyThev2S2eHzf+wH5hJJmchaOePfmnoUcXW9CTb5ANvfEIf9wTOciQ
- MhkxJaQ0hDzdnamTOch7sPBe+LbiOb5um6vRhiNc74zJlVb64DQ7xxYACaMufUjaaxsebRx53pX
- nspChTV1FKF+p2ZMPaddemr1plgGkgg7R6n3GRT+o=
-X-Google-Smtp-Source: AGHT+IGIGNdf8H4+ttp0asKeVEKhyFwPrQHuW9kxhEgoGo8whK873Nq6JJ5PFsWsbWxNvdO3db7VOw==
-X-Received: by 2002:a05:6358:938c:b0:19f:3ee1:d1c4 with SMTP id
- e5c5f4694b2df-19fa9dcf95dmr857367855d.2.1718506039371; 
- Sat, 15 Jun 2024 19:47:19 -0700 (PDT)
+ bh=LwRAet0mSxwn7I1Ml7pPtqRUk6TOfkcuiooaSBrc9bc=;
+ b=G6Y6NsfSuK2B9apw1MZ8/vW4LrIVKCAY82Vm6TcaLu1RXFEETJf+Y7wYf/wiRynHaL
+ JpEkvK6WI2ZrEsHlUAvQ+DHhbFReKcTlemaVwxZXNhd4bwLiXmWDjbrT9/ZRFwSnr2ey
+ M2ftxrJGE2tWM9tqkZfkk2pwJzTDKoBks6X/+uNJUw/M9/ZvdhTFtkuAPBQ7BM1/MPN5
+ ktvmN3s0/+BmSjczWj2Un8b68Rxb54nOMi3T6897ZRcs1Z/yfT2cVQ/YYvvhzzukH5jX
+ UXAkJrpoc/RJ7xLUL7iBdUHbm6RsW8+xdWo/pwToFv27MQZWjKV3W6hLpK7usHwWnxaz
+ 8aTA==
+X-Gm-Message-State: AOJu0YxaeVPpZIO+PGxuSUVuGaxjhGBZjDXC3iQyEn32NLIf6wFm0eid
+ MZulIbnRkXFquqospabt0kJY1DK8eKx3gKWYdySe9Hf1Zr+VvmZbFgfw3wuHMpS0AHKzm9ztkY5
+ S/TD/5Qezw7YgnBlb93NTnVOBUrQHw1GJ5/eZL5EgfAgLWVqezUxS/tFQl/g+KyioYb8oBIg/cA
+ ElOBwMu9JJK1Z8oX5A34+BCsNKhZJ4ye1gVLDUyFE=
+X-Google-Smtp-Source: AGHT+IF/vCFYU/v2WIebT7m51cTFH2hbWo7OVrqdOAnfFq9PZAwq4QPJZSYfDLjHHOQN2nrQdpVjBQ==
+X-Received: by 2002:a17:902:c943:b0:1f6:efd9:bec4 with SMTP id
+ d9443c01a7336-1f8625cf93bmr87046655ad.19.1718506029564; 
+ Sat, 15 Jun 2024 19:47:09 -0700 (PDT)
 Received: from hsinchu16.internal.sifive.com
  (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855e7ca78sm56258705ad.106.2024.06.15.19.47.17
+ d9443c01a7336-1f855e7ca78sm56258705ad.106.2024.06.15.19.47.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 15 Jun 2024 19:47:19 -0700 (PDT)
+ Sat, 15 Jun 2024 19:47:09 -0700 (PDT)
 From: frank.chang@sifive.com
 To: qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -72,17 +72,16 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Frank Chang <frank.chang@sifive.com>,
  Jerry Zhang Jian <jerry.zhangjian@sifive.com>,
  Max Chou <max.chou@sifive.com>
-Subject: [PATCH v2 6/6] target/riscv: Remove extension auto-update check
- statements
-Date: Sun, 16 Jun 2024 10:46:57 +0800
-Message-ID: <20240616024657.17948-7-frank.chang@sifive.com>
+Subject: [PATCH v2 2/6] target/riscv: Introduce extension implied rule helpers
+Date: Sun, 16 Jun 2024 10:46:53 +0800
+Message-ID: <20240616024657.17948-3-frank.chang@sifive.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240616024657.17948-1-frank.chang@sifive.com>
 References: <20240616024657.17948-1-frank.chang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
- envelope-from=frank.chang@sifive.com; helo=mail-oo1-xc32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=frank.chang@sifive.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,195 +106,141 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Frank Chang <frank.chang@sifive.com>
 
-Remove the old-fashioned extension auto-update check statements as
-they are replaced by the extension implied rules.
+Introduce helpers to enable the extensions based on the implied rules.
+The implied extensions are enabled recursively, so we don't have to
+expand all of them manually. This also eliminates the old-fashioned
+ordering requirement. For example, Zvksg implies Zvks, Zvks implies
+Zvksed, etc., removing the need to check the implied rules of Zvksg
+before Zvks.
 
 Signed-off-by: Frank Chang <frank.chang@sifive.com>
 Reviewed-by: Jerry Zhang Jian <jerry.zhangjian@sifive.com>
 Tested-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/tcg/tcg-cpu.c | 119 -------------------------------------
- 1 file changed, 119 deletions(-)
+ target/riscv/tcg/tcg-cpu.c | 91 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 91 insertions(+)
 
 diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index fe84d4402e..94875c8ec9 100644
+index eb6f7b9d12..f8d6371764 100644
 --- a/target/riscv/tcg/tcg-cpu.c
 +++ b/target/riscv/tcg/tcg-cpu.c
-@@ -468,10 +468,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
+@@ -36,6 +36,9 @@
+ static GHashTable *multi_ext_user_opts;
+ static GHashTable *misa_ext_user_opts;
  
--    if (cpu->cfg.ext_zfh) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zfhmin), true);
--    }
--
-     if (cpu->cfg.ext_zfhmin && !riscv_has_ext(env, RVF)) {
-         error_setg(errp, "Zfh/Zfhmin extensions require F extension");
-         return;
-@@ -493,9 +489,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-             error_propagate(errp, local_err);
-             return;
-         }
--
--        /* The V vector extension depends on the Zve64d extension */
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve64d), true);
++static GHashTable *misa_implied_rules;
++static GHashTable *ext_implied_rules;
++
+ static bool cpu_cfg_ext_is_user_set(uint32_t ext_offset)
+ {
+     return g_hash_table_contains(multi_ext_user_opts,
+@@ -836,11 +839,97 @@ static void riscv_cpu_validate_profiles(RISCVCPU *cpu)
      }
+ }
  
-     /* The Zve64d extension depends on the Zve64f extension */
-@@ -504,18 +497,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-             error_setg(errp, "Zve64d/V extensions require D extension");
-             return;
-         }
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve64f), true);
--    }
--
--    /* The Zve64f extension depends on the Zve64x and Zve32f extensions */
--    if (cpu->cfg.ext_zve64f) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve64x), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve32f), true);
--    }
--
--    /* The Zve64x extension depends on the Zve32x extension */
--    if (cpu->cfg.ext_zve64x) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve32x), true);
-     }
++static void riscv_cpu_init_implied_exts_rules(void)
++{
++    RISCVCPUImpliedExtsRule *rule;
++    int i;
++
++    for (i = 0; (rule = riscv_misa_implied_rules[i]); i++) {
++        g_hash_table_insert(misa_implied_rules, GUINT_TO_POINTER(rule->ext),
++                            (gpointer)rule);
++    }
++
++    for (i = 0; (rule = riscv_ext_implied_rules[i]); i++) {
++        g_hash_table_insert(ext_implied_rules, GUINT_TO_POINTER(rule->ext),
++                            (gpointer)rule);
++    }
++}
++
++static void cpu_enable_implied_rule(RISCVCPU *cpu,
++                                    RISCVCPUImpliedExtsRule *rule)
++{
++    CPURISCVState *env = &cpu->env;
++    RISCVCPUImpliedExtsRule *ir;
++    bool enabled = false;
++    int i;
++
++#ifndef CONFIG_USER_ONLY
++    enabled = qatomic_read(&rule->enabled) & BIT_ULL(cpu->env.mhartid);
++#endif
++
++    if (!enabled) {
++        /* Enable the implied MISAs. */
++        if (rule->implied_misas) {
++            riscv_cpu_set_misa_ext(env, env->misa_ext | rule->implied_misas);
++
++            for (i = 0; misa_bits[i] != 0; i++) {
++                if (rule->implied_misas & misa_bits[i]) {
++                    ir = g_hash_table_lookup(misa_implied_rules,
++                                             GUINT_TO_POINTER(misa_bits[i]));
++
++                    if (ir) {
++                        cpu_enable_implied_rule(cpu, ir);
++                    }
++                }
++            }
++        }
++
++        /* Enable the implied extensions. */
++        for (i = 0; rule->implied_exts[i] != RISCV_IMPLIED_EXTS_RULE_END; i++) {
++            cpu_cfg_ext_auto_update(cpu, rule->implied_exts[i], true);
++
++            ir = g_hash_table_lookup(ext_implied_rules,
++                                     GUINT_TO_POINTER(rule->implied_exts[i]));
++
++            if (ir) {
++                cpu_enable_implied_rule(cpu, ir);
++            }
++        }
++
++#ifndef CONFIG_USER_ONLY
++        qatomic_or(&rule->enabled, BIT_ULL(cpu->env.mhartid));
++#endif
++    }
++}
++
++static void riscv_cpu_enable_implied_rules(RISCVCPU *cpu)
++{
++    RISCVCPUImpliedExtsRule *rule;
++    int i;
++
++    /* Enable the implied MISAs. */
++    for (i = 0; (rule = riscv_misa_implied_rules[i]); i++) {
++        if (riscv_has_ext(&cpu->env, rule->ext)) {
++            cpu_enable_implied_rule(cpu, rule);
++        }
++    }
++
++    /* Enable the implied extensions. */
++    for (i = 0; (rule = riscv_ext_implied_rules[i]); i++) {
++        if (isa_ext_is_enabled(cpu, rule->ext)) {
++            cpu_enable_implied_rule(cpu, rule);
++        }
++    }
++}
++
+ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+ {
+     CPURISCVState *env = &cpu->env;
+     Error *local_err = NULL;
  
-     /* The Zve32f extension depends on the Zve32x extension */
-@@ -524,11 +505,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-             error_setg(errp, "Zve32f/Zve64f extensions require F extension");
-             return;
-         }
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve32x), true);
--    }
--
--    if (cpu->cfg.ext_zvfh) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvfhmin), true);
-     }
++    riscv_cpu_init_implied_exts_rules();
++    riscv_cpu_enable_implied_rules(cpu);
++
+     riscv_cpu_validate_misa_priv(env, &local_err);
+     if (local_err != NULL) {
+         error_propagate(errp, local_err);
+@@ -1346,6 +1435,8 @@ static void riscv_tcg_cpu_instance_init(CPUState *cs)
  
-     if (cpu->cfg.ext_zvfhmin && !cpu->cfg.ext_zve32f) {
-@@ -551,11 +527,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
+     misa_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
+     multi_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
++    misa_implied_rules = g_hash_table_new(NULL, g_direct_equal);
++    ext_implied_rules = g_hash_table_new(NULL, g_direct_equal);
+     riscv_cpu_add_user_properties(obj);
  
--    /* Set the ISA extensions, checks should have happened above */
--    if (cpu->cfg.ext_zhinx) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zca), true);
--    }
--
-     if ((cpu->cfg.ext_zdinx || cpu->cfg.ext_zhinxmin) && !cpu->cfg.ext_zfinx) {
-         error_setg(errp, "Zdinx/Zhinx/Zhinxmin extensions require Zfinx");
-         return;
-@@ -573,27 +544,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         }
-     }
- 
--    if (cpu->cfg.ext_zce) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zca), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcmp), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcmt), true);
--        if (riscv_has_ext(env, RVF) && mcc->misa_mxl_max == MXL_RV32) {
--            cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcf), true);
--        }
--    }
--
--    /* zca, zcd and zcf has a PRIV 1.12.0 restriction */
--    if (riscv_has_ext(env, RVC) && env->priv_ver >= PRIV_VERSION_1_12_0) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zca), true);
--        if (riscv_has_ext(env, RVF) && mcc->misa_mxl_max == MXL_RV32) {
--            cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcf), true);
--        }
--        if (riscv_has_ext(env, RVD)) {
--            cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcd), true);
--        }
--    }
--
-     if (mcc->misa_mxl_max != MXL_RV32 && cpu->cfg.ext_zcf) {
-         error_setg(errp, "Zcf extension is only relevant to RV32");
-         return;
-@@ -627,52 +577,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
- 
--    /*
--     * Shorthand vector crypto extensions
--     */
--    if (cpu->cfg.ext_zvknc) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkn), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvbc), true);
--    }
--
--    if (cpu->cfg.ext_zvkng) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkn), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkg), true);
--    }
--
--    if (cpu->cfg.ext_zvkn) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkned), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvknhb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkt), true);
--    }
--
--    if (cpu->cfg.ext_zvksc) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvks), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvbc), true);
--    }
--
--    if (cpu->cfg.ext_zvksg) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvks), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkg), true);
--    }
--
--    if (cpu->cfg.ext_zvks) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvksed), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvksh), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkt), true);
--    }
--
--    if (cpu->cfg.ext_zvkt) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvbb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvbc), true);
--    }
--
--    if (cpu->cfg.ext_zvbb) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkb), true);
--    }
--
-     if ((cpu->cfg.ext_zvbb || cpu->cfg.ext_zvkb || cpu->cfg.ext_zvkg ||
-          cpu->cfg.ext_zvkned || cpu->cfg.ext_zvknha || cpu->cfg.ext_zvksed ||
-          cpu->cfg.ext_zvksh) && !cpu->cfg.ext_zve32x) {
-@@ -688,29 +592,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
- 
--    if (cpu->cfg.ext_zk) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zkn), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zkr), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zkt), true);
--    }
--
--    if (cpu->cfg.ext_zkn) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zbkb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zbkc), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zbkx), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zkne), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zknd), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zknh), true);
--    }
--
--    if (cpu->cfg.ext_zks) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zbkb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zbkc), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zbkx), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zksed), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zksh), true);
--    }
--
-     if (cpu->cfg.ext_zicntr && !cpu->cfg.ext_zicsr) {
-         if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_zicntr))) {
-             error_setg(errp, "zicntr requires zicsr");
+     if (riscv_cpu_has_max_extensions(obj)) {
 -- 
 2.43.2
 
