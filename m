@@ -4,103 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAF6DC27C53
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 18:44:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C45C27C53
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 19:15:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIuqu-0006uN-0L; Sun, 16 Jun 2024 14:43:44 -0400
+	id 1sIvK8-0006GU-0n; Sun, 16 Jun 2024 15:13:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sIuqs-0006te-8J
- for qemu-devel@nongnu.org; Sun, 16 Jun 2024 14:43:42 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sIvK5-0006FL-Ma
+ for qemu-devel@nongnu.org; Sun, 16 Jun 2024 15:13:53 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sIuqq-0005hl-G3
- for qemu-devel@nongnu.org; Sun, 16 Jun 2024 14:43:42 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-35f1dc4ab9aso3016192f8f.3
- for <qemu-devel@nongnu.org>; Sun, 16 Jun 2024 11:43:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sIvK3-0001t6-VC
+ for qemu-devel@nongnu.org; Sun, 16 Jun 2024 15:13:53 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-681953ad4f2so2927903a12.2
+ for <qemu-devel@nongnu.org>; Sun, 16 Jun 2024 12:13:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718563418; x=1719168218; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=61uU3w5r/LIuL9mGfsdmC7+uInEtZsL4PLydE/0gEyQ=;
- b=as4qR4uQL5Zkrb0gpPFWStPX1h0wlhOXEz5jee2M6ewotppitV4nrPZbneJo6zR6oZ
- p0zwE8tvwQZ017xwPMqVgD03of0OUjYFDsaOZX+lv04VVBQFCn05NQ+bqbvenBKfmAkS
- uCVU9Uz/nx+J6ldvkW4O1w3uyXHhOX5guInUoS+i/ZiDH3q5+ZT77NvQcftH/PN+i7BQ
- 3ntUTP1AJyPXogaPnylKqzbYB7JkRrOx0EewkSa2UC1/mYO8zZ7eQ8TrEhStezW6fRK/
- NM1NdhEUvGHRFvdbCNAYjpQ7u2oyQ/goMeFyQfE0G3vx/Tl0uEXDdgGVGvUpMJWnJISA
- 0A1g==
+ d=linaro.org; s=google; t=1718565230; x=1719170030; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lyan6J1k/Fm3Jekvcijd/2r4pqKilvni/X0ntym3Fs4=;
+ b=U0PSDscX8C8PuLAhlwzcjPyPmXi+uTD/H+RDo+dWdZWR7YJ59ZkY64HX7Ag1snvBP2
+ juJpN7VT0mc5hZdJPyucEK+9sdWbGQpEyZvrjQgcKuzsvZCiTPFYc1lsbzZp2fvnA/Q5
+ d70owARcRcIwb+QCvlqShlNw/+kXSwMfrm2CwDH7qjw4mqD07undx0J5yqr9NGVIPLpk
+ XGQYgy3S846GhwuELpps8wyOulx8SchoFFdy11t9Bp3m0jfnBLQdaA/Xvqr9ritTPEQF
+ Mxs+yUhhkm0ZZrtL1UaHwv5UxHnwUgVwcjrMLM+qTgyKRq5OyXYsmmKPIbsnNH7CmZ+x
+ S0Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718563418; x=1719168218;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=61uU3w5r/LIuL9mGfsdmC7+uInEtZsL4PLydE/0gEyQ=;
- b=ZqNr5Z8Mh5QY67Z/teA6uSfalTTjZVZYsoVTo0ujMSV13nlXUeLuHHeHwlR9oazHh6
- l75vngFRcoRQez6HxVhWGDagqy/iidAOqQ+aNgZop67vT7XmNJRyKWRrcXrETGaSKrJx
- 5Rx96ACrB7PxplW6Psv/dyvy7iSFX9NIraRDvcGovMKOBjg5hxkxwP0QAUyp2XNCrYgP
- vdNXapQvHOP+P+HnN0amrZRpj4VjOUmGwjLMYiOTt1dTTyJLgSSeXcDh/y2r25DS9tnS
- XiDpSc9glXZ2Ehlgr+OAIwvl7h19nyBsNtV5Rf6Rfuz6EU3Jxepm8Ri4GsyR1IVuNT/B
- +Q9A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUVP7/gRS2N9aAY1CyVCqaCFRSYMFdglvyXKcuXnztiwz+WPR3Hbn0awN01+8lz1NcUM06Ql/bGUy0YNm/kB+LxvS8neY0=
-X-Gm-Message-State: AOJu0YxsTOLreQd2iKHtenKLEf22io97D+F2PZqAOqMJPzIvemLgs469
- 8KIrtUwiTCRNcSbVKPOg86UC38CsSIm0ou2Xbj98dqYMO4lNG6I9iynK6bmAyhs=
-X-Google-Smtp-Source: AGHT+IEldkSREus3vB6BTyry8+OqgS+HADxfRtbrtfhNZMy3m6/pRi886sUQFFDfdu2/VhLJuWDQFg==
-X-Received: by 2002:a5d:4a4c:0:b0:35f:1d29:db8d with SMTP id
- ffacd0b85a97d-3607a76374dmr4589048f8f.25.1718563418197; 
- Sun, 16 Jun 2024 11:43:38 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36075104a3dsm10173809f8f.112.2024.06.16.11.43.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 16 Jun 2024 11:43:37 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 429C85F91D;
- Sun, 16 Jun 2024 19:43:37 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org,
- David Hildenbrand <david@redhat.com>,  Ilya Leoshkevich
- <iii@linux.ibm.com>,  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Mark Burton <mburton@qti.qualcomm.com>,
- qemu-s390x@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- kvm@vger.kernel.org,  Laurent Vivier <lvivier@redhat.com>,  Halil Pasic
- <pasic@linux.ibm.com>,  Christian Borntraeger <borntraeger@linux.ibm.com>,
- Alexandre Iooss <erdnaxe@crans.org>,  qemu-arm@nongnu.org,  Alexander
- Graf <agraf@csgraf.de>,  Nicholas Piggin <npiggin@gmail.com>,  Marco
- Liebel <mliebel@qti.qualcomm.com>,  Thomas Huth <thuth@redhat.com>,  Roman
- Bolshakov <rbolshakov@ddn.com>,  qemu-ppc@nongnu.org,  Mahmoud Mandour
- <ma.mandourr@gmail.com>,  Cameron Esfahani <dirty@apple.com>,  Jamie Iles
- <quic_jiles@quicinc.com>,  "Dr. David Alan Gilbert" <dave@treblig.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 9/9] contrib/plugins: add ips plugin example for cost
- modeling
-In-Reply-To: <db8d82d4-c88d-45ac-bc99-e85a4240add2@linaro.org> (Pierrick
- Bouvier's message of "Fri, 14 Jun 2024 10:39:38 -0700")
-References: <20240612153508.1532940-1-alex.bennee@linaro.org>
- <20240612153508.1532940-10-alex.bennee@linaro.org>
- <31ba8570-9009-4530-934d-3b73b07520d0@linaro.org>
- <db8d82d4-c88d-45ac-bc99-e85a4240add2@linaro.org>
-Date: Sun, 16 Jun 2024 19:43:37 +0100
-Message-ID: <87frtcsp7q.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1718565230; x=1719170030;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lyan6J1k/Fm3Jekvcijd/2r4pqKilvni/X0ntym3Fs4=;
+ b=jNVYqh3K0KxJ/r8cER9otAo9r72z9CuoUkqdAiIAx7UHndTZAWjsVzGhJB0elAJTY3
+ FsUvUnVpVd/KmuUqkpRh1x7y92c9y1PY6YQLdtBk7i1Km5ocSyba5N4vG2JKmQXsmCih
+ p7dEhqI8+XwX6tY4MOl0tvoHcy2KLiv/oxf4YgDNrJg5MGX6RHM8CUeJd0VJD9UwxhJq
+ xAfl7PP53D4H5LBh/YlbT2A1leKEt8Et0SWZKot+D46jitfOB9LQ9cAMzTomJJVHUG+A
+ rBISW/wp2AQNB6iVUUlaBvQ46aw8G+EduwH8YJJKGtiqIQDlvH0sX20/iOYBlJyFQn3N
+ alwg==
+X-Gm-Message-State: AOJu0Yz/cc0oSWYR0F4VKdYYYJo5vssxgG3EOnGuyFO54Up05neGaRzz
+ MHSBOKzx8o2bzb3g+KMqUCxUW1wehqWjaGOVeQs8/pMV7uGsk4X8J7lnKax/URk=
+X-Google-Smtp-Source: AGHT+IGBkxdG3sn6DQyunx8IdM2aKlFDyQNnhf2MOWHXfRnSe3VGkT3FWyx0R+e2afj2bZheSrqdQA==
+X-Received: by 2002:a17:903:2301:b0:1f6:6a94:76be with SMTP id
+ d9443c01a7336-1f862900706mr82063825ad.46.1718565230291; 
+ Sun, 16 Jun 2024 12:13:50 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f855e739b7sm66797185ad.93.2024.06.16.12.13.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 16 Jun 2024 12:13:49 -0700 (PDT)
+Message-ID: <6638b813-f4ef-4587-b94f-3c24d90ca09e@linaro.org>
+Date: Sun, 16 Jun 2024 12:13:48 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] target/ppc: Move VSX vector with length storage
+ access insns to decodetree.
+To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com
+References: <20240613093318.314913-1-rathc@linux.ibm.com>
+ <20240613093318.314913-3-rathc@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240613093318.314913-3-rathc@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,81 +98,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 6/13/24 02:33, Chinmay Rath wrote:
+> +/* EA <- (ra == 0) ? 0 : GPR[ra] */
+> +static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
+> +{
+> +    TCGv EA;
+> +    if (!ra) {
+> +        EA = tcg_constant_tl(0);
+> +        return EA;
+> +    }
+> +    EA = tcg_temp_new();
+> +    if (NARROW_MODE(ctx)) {
+> +        tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
+> +    } else {
+> +        tcg_gen_mov_tl(EA, cpu_gpr[ra]);
 
-> On 6/13/24 01:54, Philippe Mathieu-Daud=C3=A9 wrote:
->> On 12/6/24 17:35, Alex Benn=C3=A9e wrote:
->>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>
->>> This plugin uses the new time control interface to make decisions
->>> about the state of time during the emulation. The algorithm is
->>> currently very simple. The user specifies an ips rate which applies
->> ... IPS rate (Instructions Per Second) which ...
->>=20
->>> per core. If the core runs ahead of its allocated execution time the
->>> plugin sleeps for a bit to let real time catch up. Either way time is
->>> updated for the emulation as a function of total executed instructions
->>> with some adjustments for cores that idle.
->>>
->>> Examples
->>> --------
->>>
->>> Slow down execution of /bin/true:
->>> $ num_insn=3D$(./build/qemu-x86_64 -plugin ./build/tests/plugin/libinsn=
-.so -d plugin /bin/true |& grep total | sed -e 's/.*: //')
->>> $ time ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libips.so,ip=
-s=3D$(($num_insn/4)) /bin/true
->>> real 4.000s
->>>
->>> Boot a Linux kernel simulating a 250MHz cpu:
->>> $ /build/qemu-system-x86_64 -kernel /boot/vmlinuz-6.1.0-21-amd64 -appen=
-d "console=3DttyS0" -plugin ./build/contrib/plugins/libips.so,ips=3D$((250*=
-1000*1000)) -smp 1 -m 512
->>> check time until kernel panic on serial0
->>>
->>> Tested in system mode by booting a full debian system, and using:
->>> $ sysbench cpu run
->>> Performance decrease linearly with the given number of ips.
->>>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> Message-Id: <20240530220610.1245424-7-pierrick.bouvier@linaro.org>
->>> ---
->>>    contrib/plugins/ips.c    | 164 +++++++++++++++++++++++++++++++++++++=
-++
->>>    contrib/plugins/Makefile |   1 +
->>>    2 files changed, 165 insertions(+)
->>>    create mode 100644 contrib/plugins/ips.c
->>>
->>> diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
->>> new file mode 100644
->>> index 0000000000..db77729264
->>> --- /dev/null
->>> +++ b/contrib/plugins/ips.c
->>> @@ -0,0 +1,164 @@
->>> +/*
->>> + * ips rate limiting plugin.
->> The plugin names are really to packed to my taste (each time I look
->> for
->> one I have to open most source files to figure out the correct one); so
->> please ease my life by using a more descriptive header at least:
->>        Instructions Per Second (IPS) rate limiting plugin.
->> Thanks.
->>=20
->
-> I agree most of the plugin names are pretty cryptic, and they are
-> lacking a common "help" system, to describe what they do, and which
-> options are available for them. It's definitely something we could add
-> in the future.
->
-> Regarding what you reported, I'm totally ok with the change.
->
-> However, since this is a new series, I'm not if I or Alex should
-> change it. If it's ok for you to modify this Alex, it could be simpler
-> than waiting for me to push a new patch with just this.
+Why are you making a copy, rather than just returning cpu_gpr[ra]?
+If you need to modify the resulting EA, then you also need to make a copy for 0.
 
-Its my tree so I'll fix it up. I'll ask you if I want a respin ;-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
