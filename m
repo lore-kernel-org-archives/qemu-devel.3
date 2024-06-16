@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 552BBC27C53
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 18:33:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90DD6C27C53
+	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 18:37:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIufx-0001tI-E9; Sun, 16 Jun 2024 14:32:25 -0400
+	id 1sIujq-0004Rq-KF; Sun, 16 Jun 2024 14:36:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sIufw-0001sl-CP
- for qemu-devel@nongnu.org; Sun, 16 Jun 2024 14:32:24 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1sIujp-0004RE-1k
+ for qemu-devel@nongnu.org; Sun, 16 Jun 2024 14:36:25 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sIufu-0003Vj-PH
- for qemu-devel@nongnu.org; Sun, 16 Jun 2024 14:32:24 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-6c5a6151ff8so2632045a12.2
- for <qemu-devel@nongnu.org>; Sun, 16 Jun 2024 11:32:21 -0700 (PDT)
+ id 1sIujn-0004Iy-Dg
+ for qemu-devel@nongnu.org; Sun, 16 Jun 2024 14:36:24 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-70601bcfddcso275920b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 16 Jun 2024 11:36:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718562741; x=1719167541; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718562982; x=1719167782; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=A1/WGOHDhXDp6Z8WsbyeZtoO0y/1fLSI8IszjDjfFfc=;
- b=lLueV0Q9Owz7l3WB2C0HEKaP/qZos4cno8BoE5ohEIM1OILnXSqJJmEgZVTAQhLXM/
- GoiI/gJojDtiylm0Uv3HtRS5Vm35LoqNxcoL7GyXBnA8ipLTC+NDeHQmIk2xv7bgiqHI
- 88AdeyMTcxp+boB0lLiGL56nt1Lt/XSd1e5nuo1n7okUAxcMYBtSWQDg5/tWkf0iLXYS
- cXObSW30F2gxSji572LmQrgFJlatBCU+TR5W0Panm8g3iwE+1NpMT/6jI0ibbzGNRpB+
- 2pkbaXCOMgoci24Z7gcLmtZ2rrnrIXHgueb4zdgP6N9qtntelwb5gJkcveeEEkoW8kHw
- cOCQ==
+ bh=waI3WE09vh9QpQ8foEBWjcGa4i8IQHbzyXLqb7YYH4E=;
+ b=Plf9lmllBkyHNpieRRefVpm3mzI2BRnK8ClWwjlIZAy/EJsy6HByZhp4iKthRXhERe
+ xRZwXLYNr40S9j4xvEf7X0r5n3dBiJTEtyeEYpE5CYo30aQ5m0cG0SVAflK37WgFSin5
+ EIFw0JIuQHUcz2GLCzxqnIpG7a4PSKX+bSkVumvHpeiB2yTEDSNYWDQkxK00o+WMgDll
+ V4uNGkCE4jyEa5/QZZMHnHWciusxoAVcn/pDbxdOSyBBHfHx42bgbhLAaMsSPOLhJDP9
+ Mi7Eh73ypNZfur4K+Gg/NS/STKBG/BbA1+IG2tXQuf4WA3koYYmw53ysvgnf1pvCgYrK
+ JG5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718562741; x=1719167541;
+ d=1e100.net; s=20230601; t=1718562982; x=1719167782;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=A1/WGOHDhXDp6Z8WsbyeZtoO0y/1fLSI8IszjDjfFfc=;
- b=eF9EF8Z2TLOXNY6058l+RiiSJC4dgeU8uUhAE60dC6KqH3eLZiiWo2KzqxEnUhpkGg
- a5OydWLRMGC0YI+6M8Unt7t+IWTZac2pqrgFEuWJNjiRBop9V3fi18go6IqxpNqJLW1D
- 5BJa+gz87SWq0wl9gJWIEhv7LPXEWF4nFwSVdql+aLHTeDJSQ7QC6wiPdDgJXD1HrSDk
- QkVXrQcO0XqYFMI4OHbzcuXqPsvWfwCfsWao1nmtjNBALS/1xxNIjKSyID7AWgv7VQNq
- rz7sVYwlsIKvt5ZcUqMbx9aaGXwvjLg5/P4jM0T68iUZiZENMLdFu+VirtsX0S55eiuQ
- xOWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW2MBhVdxhUmaSJoII5Y6DUx1iDcE35knYPvEWZBc1x6P4n5+oOfAWMNQfQ/CGBAvtmMPopM+MetPpoCcGI4uauTeY+IGY=
-X-Gm-Message-State: AOJu0YxSQaf7Kww+K4uth+JkWCamFhwAlqLMDPMxjWbqoAf1FLtE26D/
- 2o0GtFFOnp0QdLPHl7ajGBUixCBgQ8lG2FjAWd8E2oFJr5Zsc96dt2ngsybP4ic=
-X-Google-Smtp-Source: AGHT+IHHgSjE+7Pgx/D6eAivoj0vwtFK8TsMAXB/gsCaA8SAcC9vLuCisbSI6ei0ah3yHB9GYLDi/Q==
-X-Received: by 2002:a05:6a20:12c5:b0:1b5:d106:78a4 with SMTP id
- adf61e73a8af0-1bae7f3cdd1mr8180497637.36.1718562740581; 
- Sun, 16 Jun 2024 11:32:20 -0700 (PDT)
+ bh=waI3WE09vh9QpQ8foEBWjcGa4i8IQHbzyXLqb7YYH4E=;
+ b=CVuLGJl5C/H5YUE35OFlpNsqrGlShZZryxm7c5WF+/iX+Rmf4xApCsZBniWO3t1WCm
+ yMjHWrhGOYJ4mhaHsKBUHZcGdRnXjOo4E37kykzYQoJ/RY3nUQUb9IMJOYiyEX4dOIVk
+ v4gYEcWEebmMQRSeLsXWLSCCzCRvAF79Lj5dHosvUbdu7g4BhAv4LyDNV9LpZMweCRJZ
+ Fs0e9iwpCRe2lYDhS3cksLF81ywBUwmMetQmM8R0kwDRlpR79v+nga4h1FP1g3raZyWJ
+ BxhH9MpGtfxIuKfqgsGBYBM6q1OZLchRToDnBoyW3LkSgMP7Q5usuGC6SmY1lQ2FXbpj
+ vhjg==
+X-Gm-Message-State: AOJu0Yz9HYTNCbjkYc+Kt7e6/59Er8p4mE4ZEqYQ2w+joRvf2i4ysfOF
+ wG7pXwc6exVBKPuX88yp8Onm5tkYC+76oVJzCix+/o/ZwZqR1JSfO622BWTWwf8=
+X-Google-Smtp-Source: AGHT+IGd6nkBFQY9g51IvVEUunHjpUkwh6fNrfNArBos7lPuwmsaZGxlqdmIYYRTIUEOgkQhbRj66Q==
+X-Received: by 2002:a62:b50c:0:b0:704:24fb:11c6 with SMTP id
+ d2e1a72fcca58-705d715b493mr7982362b3a.12.1718562981701; 
+ Sun, 16 Jun 2024 11:36:21 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.132.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c4a76aa3f4sm9882043a91.53.2024.06.16.11.32.19
+ d2e1a72fcca58-705cc927a33sm6215142b3a.40.2024.06.16.11.36.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 16 Jun 2024 11:32:19 -0700 (PDT)
-Message-ID: <b388b34f-e947-4dcf-9b5c-e4b17637c24b@linaro.org>
-Date: Sun, 16 Jun 2024 11:32:18 -0700
+ Sun, 16 Jun 2024 11:36:21 -0700 (PDT)
+Message-ID: <8cf1327d-c841-4bde-869b-12ec5dc6beb5@linaro.org>
+Date: Sun, 16 Jun 2024 11:36:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] accel/tcg: Fix typo causing tb->page_addr[1] to not be
- recorded
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+Subject: Re: [PATCH v2] linux-user: Make TARGET_NR_setgroups affect only the
+ current thread
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240612133031.15298-1-anjo@rev.ng>
+References: <20240614154710.1078766-1-iii@linux.ibm.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240612133031.15298-1-anjo@rev.ng>
+In-Reply-To: <20240614154710.1078766-1-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,48 +97,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/12/24 06:30, Anton Johansson wrote:
-> For TBs crossing page boundaries, the 2nd page will never be
-> recorded/removed, as the index of the 2nd page is computed from the
-> address of the 1st page. This is due to a typo, fix it.
+On 6/14/24 08:46, Ilya Leoshkevich wrote:
+> Like TARGET_NR_setuid, TARGET_NR_setgroups should affect only the
+> calling thread, and not the entire process. Therefore, implement it
+> using a syscall, and not a libc call.
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: deba78709a ("accel/tcg: Always lock pages before translation")
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Cc:qemu-stable@nongnu.org
+> Fixes: 19b84f3c35d7 ("added setgroups and getgroups syscalls")
+> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
+> Reviewed-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   accel/tcg/tb-maint.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> v1:https://patchew.org/QEMU/20240131001851.15932-1-iii@linux.ibm.com/
+> v1 -> v2: Rebase, add Philippe's R-b.
+> 
+>   linux-user/syscall.c | 10 ++++++++--
+>   1 file changed, 8 insertions(+), 2 deletions(-)
 
-Brown paper bag time.
-Queued, thanks.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+Queued.
 
 
 r~
-
-> 
-> diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
-> index 19ae6793f3..cc0f5afd47 100644
-> --- a/accel/tcg/tb-maint.c
-> +++ b/accel/tcg/tb-maint.c
-> @@ -713,7 +713,7 @@ static void tb_record(TranslationBlock *tb)
->       tb_page_addr_t paddr0 = tb_page_addr0(tb);
->       tb_page_addr_t paddr1 = tb_page_addr1(tb);
->       tb_page_addr_t pindex0 = paddr0 >> TARGET_PAGE_BITS;
-> -    tb_page_addr_t pindex1 = paddr0 >> TARGET_PAGE_BITS;
-> +    tb_page_addr_t pindex1 = paddr1 >> TARGET_PAGE_BITS;
->   
->       assert(paddr0 != -1);
->       if (unlikely(paddr1 != -1) && pindex0 != pindex1) {
-> @@ -745,7 +745,7 @@ static void tb_remove(TranslationBlock *tb)
->       tb_page_addr_t paddr0 = tb_page_addr0(tb);
->       tb_page_addr_t paddr1 = tb_page_addr1(tb);
->       tb_page_addr_t pindex0 = paddr0 >> TARGET_PAGE_BITS;
-> -    tb_page_addr_t pindex1 = paddr0 >> TARGET_PAGE_BITS;
-> +    tb_page_addr_t pindex1 = paddr1 >> TARGET_PAGE_BITS;
->   
->       assert(paddr0 != -1);
->       if (unlikely(paddr1 != -1) && pindex0 != pindex1) {
-
 
