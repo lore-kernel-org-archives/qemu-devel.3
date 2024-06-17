@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1198EC27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:58:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FA9DC2BA1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJHZ1-0004hm-U4; Mon, 17 Jun 2024 14:58:49 -0400
+	id 1sJHYf-0003xx-UX; Mon, 17 Jun 2024 14:58:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHYr-0004P2-8k
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:37 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1sJHYe-0003xY-Ci
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:24 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHYp-0004y8-DW
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:36 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-705b9a89e08so4054919b3a.1
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:35 -0700 (PDT)
+ id 1sJHYc-0004vn-OY
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:24 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-70435f4c330so3765201b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718650714; x=1719255514; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dzc68h1Ua4UnQlWlrtm3BT2YNpP7DWO6KFC5L451s7M=;
- b=PnZiXsaa/+IHj+XfhJRuqgmIec7M7y2ZdLeITcRM2gmHvfHY/Dx6Bp6Wxjl+IKVaR6
- EQTPNA/l18p+eUNItLDXlAOFNjHB7PN00KfwBZapQo0jyl1wW4wbJE66B7riGUaKR6cG
- lF2+duerN6/3QJt8uo2S/15qriOhd+SPXb+8XO/GYOGvRc+Fkd2Mio9Is+/Zm8M6MOz1
- z6M0M4x3qDzhsVWujxkPxc8YseG83X9CcnTbUth74P/tI69WrtIQO3SmTKq9FvTb3Rzd
- 0dDioxVH9/WbbgA4Q89KkNT5S151Aep5rfvNs2kWaoYRbCdn/cUieX3xF8lozaF8+Ql2
- YcrQ==
+ d=gmail.com; s=20230601; t=1718650700; x=1719255500; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=2lue1NYs8pzYvkVM8I+Vf9elZ0KvTkfQjkhNGZa4vlA=;
+ b=UZZolZNlBVDALp+f7G0XEVvFRHyo7LHwSZCU4KYGU+CyWk1dzJxkBF56YgCKb25LFz
+ 9/Z5/B7IPLsOtDfx7AN3eZzY34BKrXvq4dnCJ6DPG/wLmdlyEj95WErcQ5sjJ1pOugrW
+ WT0OJW5KDhsyh+l0e0PoDWz8QVrFtjVioOnG+QKb19+pIbq5gb0O7Wa5hJU8NlrfMF3X
+ oH8jQcn/+5C5z1BEG5CEDGV+SCX7pBNnLUd1IHZjva/lbhLMadrcHNytPbyJ/PFVhk8m
+ 2mMCF3xzM2eJ9IOcgBEneik5N3rr3970HkZUb9bZqo+Y5K6AlrMM+hBS8/KRreQmUDl3
+ nJwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718650714; x=1719255514;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dzc68h1Ua4UnQlWlrtm3BT2YNpP7DWO6KFC5L451s7M=;
- b=u2NGdPSYfJqRQwh8HlZaAMxKnGgCeVTlbWLU4OimrgBCKRbDYr4ZYvhKoxEGl4fXwD
- oGZsK2Dt4i/9TCufJ6M/r4AzqBVHuHR25b5AMwfwSNx9Uk5HhdTPcJ8BGhBlqj/MDQY4
- 5jhz1VLZl+yDXpBKysrN9kDKiW9zPVgf4b/cKYwy+SnrLk+Qwqm2tqIBRIdY0SjFkNky
- BvC+NkSjWXYiyOdQpPo9/VFvX8Nfz0gD98hy/h07KaxtaNJiUzXBP1lWyK9lSZ5u4I5U
- 06/UhT7yaxAB/TNWuV5YxXQ6YcEkTolnj2CT92QiJ4b5qPGbXQ/f13URzEm0nXkYgJjX
- iqCw==
-X-Gm-Message-State: AOJu0YyMJX4K1DObhk2Sql8YZkq8xLypwx6CyEWg+WZ0YSCiLgwD8UVj
- lBGgK3MGoB15GSXOvCrfI+qoC2WWA7aH5laM2JGY4QrMnR5tZN26sD+KtNJfcSc=
-X-Google-Smtp-Source: AGHT+IEm89zSSI9qpDrXwyBv1Iz+uCiI0Hu/9U2j9Lihg9g4w0hn8lPi/9e5C8qTwtApRtsaWODDeQ==
-X-Received: by 2002:a05:6a00:38cc:b0:705:f5c0:8ba2 with SMTP id
- d2e1a72fcca58-705f5c08bf9mr5667571b3a.2.1718650713675; 
- Mon, 17 Jun 2024 11:58:33 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718650700; x=1719255500;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2lue1NYs8pzYvkVM8I+Vf9elZ0KvTkfQjkhNGZa4vlA=;
+ b=dRCBqwGsOU9h6tru2qusRFlK9LOaGHWWHE6ZhHut1Gf/e76iH1ChUwHUaDVoJJ591z
+ rXx9HyEHBPdLA/Kwa1AdilJ2aZVs9Br8VjM2wCEEuG4kILU/ofq5aEyZ3Dh3zd3QJ1Sf
+ 5EP0/genT+JwWqmhZfc/88S6vCSdR+Mymp+j8IZhPb/OjMffzm9ZRQU/MbGjVByaqoUR
+ tF++8fv7Vr38lBnbWY8D0nM8HJKnMbN7AOaXudIuJzgZz2GYUGBEcGU7aDTKnu6QwnEb
+ cfEmCqbLbF6yWj41krBugM9FJUBcqppD97Ks2kbkrnBDXYpOipqxtOlU608w5C3Rv922
+ OvKA==
+X-Gm-Message-State: AOJu0YwZlEQwaavxjtWGsbPd/oaAwFFyxOzH8vPeazAzCEiYYB1pzE9Y
+ Y+JIQENX/i4TmrmEs1DwkTwiJCSMdJ66P5uuRrHWSXHOJuM5/7vBFpJceVOFCik=
+X-Google-Smtp-Source: AGHT+IE0rOOemu0InWND8vW9CAm87ESOdH2Dc3rNpuW+SLCbiXyViu/dkHyHSIeXL8LxeoJMSW1KQA==
+X-Received: by 2002:a05:6a20:9148:b0:1b2:cf6c:d5a4 with SMTP id
+ adf61e73a8af0-1bae82ecde1mr11046839637.61.1718650700311; 
+ Mon, 17 Jun 2024 11:58:20 -0700 (PDT)
 Received: from localhost.localdomain ([106.222.222.115])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.31
+ d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 11:58:33 -0700 (PDT)
+ Mon, 17 Jun 2024 11:58:20 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>,
- Stacey Son <sson@FreeBSD.org>, Ajeet Singh <itachis@FreeBSD.org>
-Subject: [PATCH 06/23] Add Aarch64 register handling
-Date: Tue, 18 Jun 2024 00:27:47 +0530
-Message-Id: <20240617185804.25075-7-itachis@FreeBSD.org>
+ Ajeet Singh <itachis@FreeBSD.org>
+Subject: [PATCH 00/23] ARM AArch64 Support for BSD
+Date: Tue, 18 Jun 2024 00:27:41 +0530
+Message-Id: <20240617185804.25075-1-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240617185804.25075-1-itachis@FreeBSD.org>
-References: <20240617185804.25075-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=itachis6234@gmail.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=itachis6234@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,80 +93,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stacey Son <sson@FreeBSD.org>
+making sure to credit all the authors correctly
 
-Header file for managing CPU register states in
-FreeBSD user mode
+Stacey Son (18):
+  Add CPU initialization function
+  Added CPU loop function
+  Added function to clone CPU state
+  AArch64 specific CPU for bsd-user
+  Managing CPU register for BSD-USER
+  Add Aarch64 register handling
+  Add ARM AArch64 TLS Management Prototypes for BSD-User
+  Add Aarch64 sysarch() system call emulation for BSD-USER
+  Add thread setup for BSD-USER
+  Add thread initialization for BSD-USER
+  Update ARM AArch64 VM parameter definitions for bsd-user
+  Add ARM AArch64 ELF definitions for bsd-user
+  Add ARM AArch64 sigcode setup function for bsd-user
+  Add ARM AArch64 specific signal definitions for bsd-user
+  Add ARM AArch64 signal trampoline argument setup for bsd-user
+  Add get_mcontext function for ARM AArch64 in bsd-user
+  Add set_mcontext function for ARM AArch64 in bsd-user
+  Add get_ucontext_sigreturn function
 
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
----
- bsd-user/aarch64/target_arch_reg.h | 56 ++++++++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
+Warner Losh (5):
+  Add ability to get rval2
+  Add ARM AArch64 hardware capability definitions
+  Add function to retrieve ARM AArch64 hardware capabilities
+  Add function to retrieve additional ARM AArch64 hwcap
+  Add setup_sigframe_arch function for ARM AArch64 in bsd-user
+
+ bsd-user/aarch64/signal.c               | 137 +++++++++++++++++
+ bsd-user/aarch64/target_arch.h          |  28 ++++
+ bsd-user/aarch64/target_arch_cpu.c      |  34 +++++
+ bsd-user/aarch64/target_arch_cpu.h      | 191 ++++++++++++++++++++++++
+ bsd-user/aarch64/target_arch_elf.h      | 165 ++++++++++++++++++++
+ bsd-user/aarch64/target_arch_reg.h      |  56 +++++++
+ bsd-user/aarch64/target_arch_signal.h   |  80 ++++++++++
+ bsd-user/aarch64/target_arch_sigtramp.h |  48 ++++++
+ bsd-user/aarch64/target_arch_sysarch.h  |  42 ++++++
+ bsd-user/aarch64/target_arch_thread.h   |  61 ++++++++
+ bsd-user/aarch64/target_arch_vmparam.h  |  74 +++++++++
+ bsd-user/aarch64/target_syscall.h       |  51 +++++++
+ 12 files changed, 967 insertions(+)
+ create mode 100644 bsd-user/aarch64/signal.c
+ create mode 100644 bsd-user/aarch64/target_arch.h
+ create mode 100644 bsd-user/aarch64/target_arch_cpu.c
+ create mode 100644 bsd-user/aarch64/target_arch_cpu.h
+ create mode 100644 bsd-user/aarch64/target_arch_elf.h
  create mode 100644 bsd-user/aarch64/target_arch_reg.h
+ create mode 100644 bsd-user/aarch64/target_arch_signal.h
+ create mode 100644 bsd-user/aarch64/target_arch_sigtramp.h
+ create mode 100644 bsd-user/aarch64/target_arch_sysarch.h
+ create mode 100644 bsd-user/aarch64/target_arch_thread.h
+ create mode 100644 bsd-user/aarch64/target_arch_vmparam.h
+ create mode 100644 bsd-user/aarch64/target_syscall.h
 
-diff --git a/bsd-user/aarch64/target_arch_reg.h b/bsd-user/aarch64/target_arch_reg.h
-new file mode 100644
-index 0000000000..5c7154f0c1
---- /dev/null
-+++ b/bsd-user/aarch64/target_arch_reg.h
-@@ -0,0 +1,56 @@
-+/*
-+ *  FreeBSD arm64 register structures
-+ *
-+ *  Copyright (c) 2015 Stacey Son
-+ *  All rights reserved.
-+ *
-+ *  This program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2 of the License, or
-+ *  (at your option) any later version.
-+ *
-+ *  This program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ *  GNU General Public License for more details.
-+ *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef TARGET_ARCH_REG_H
-+#define TARGET_ARCH_REG_H
-+
-+/* See sys/arm64/include/reg.h */
-+typedef struct target_reg {
-+    uint64_t        x[30];
-+    uint64_t        lr;
-+    uint64_t        sp;
-+    uint64_t        elr;
-+    uint64_t        spsr;
-+} target_reg_t;
-+
-+typedef struct target_fpreg {
-+    __uint128_t     fp_q[32];
-+    uint32_t        fp_sr;
-+    uint32_t        fp_cr;
-+} target_fpreg_t;
-+
-+#define tswapreg(ptr)   tswapal(ptr)
-+
-+static inline void target_copy_regs(target_reg_t *regs, CPUARMState *env)
-+{
-+    int i;
-+
-+    for (i = 0; i < 30; i++) {
-+        regs->x[i] = tswapreg(env->xregs[i]);
-+    }
-+    regs->lr = tswapreg(env->xregs[30]);
-+    regs->sp = tswapreg(env->xregs[31]);
-+    regs->elr = tswapreg(env->pc);
-+    regs->spsr = tswapreg(pstate_read(env));
-+}
-+
-+#undef tswapreg
-+
-+#endif /* TARGET_ARCH_REG_H */
 -- 
 2.34.1
 
