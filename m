@@ -4,102 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9757DC27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 21:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC83EC2BB85
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 21:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJJkL-0004cd-4a; Mon, 17 Jun 2024 17:18:37 -0400
+	id 1sJJnr-0000lx-CF; Mon, 17 Jun 2024 17:22:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.vnet.ibm.com>)
- id 1sJJDB-0002PO-Tn; Mon, 17 Jun 2024 16:44:21 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kowal@linux.vnet.ibm.com>)
- id 1sJJD9-0006Vj-TL; Mon, 17 Jun 2024 16:44:21 -0400
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45HJuXU1007791;
- Mon, 17 Jun 2024 20:43:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=OlOp9lKvRgAMo
- W0U1hFxpxrrkj7UkKIm3U8cxNg7020=; b=hVMZg82k7xmLbOQr+D+D1FHgupizf
- ldZ5mDN47BnHdCVK92T6BSHwFnVwwNOFwngpiC6j7F0dsPjtQSIeU5e/rr/CHSdU
- 3knCHMqPfGR+VYhvo4hxelj4/EyMmCQ9L7oc7zr+jbsCrQRaWlvdwhpyMtTUcyXq
- 9jSnEAAgkfF/euedXDkbDnfu51ltaSZCG9OJHHUwRUChyv4rYYSgLoyJseFGi1zU
- XDWTJb+R2ypifCUnPfmiW/in2KVKjyEEL46lcjeI5ZpC8cZop5N73ncxajjhObqJ
- M6P1C+GpGBcM+Pf2IX31AAK4c/RQgMI7vQxswDm7EPj61UTv6kcCAeQJQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yts568gss-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Jun 2024 20:43:49 +0000 (GMT)
-Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45HKhmmJ013653;
- Mon, 17 Jun 2024 20:43:48 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yts568gsq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Jun 2024 20:43:48 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45HJtqqq006210; Mon, 17 Jun 2024 20:43:47 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ysn9udjuu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Jun 2024 20:43:47 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45HKhgNA50594060
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Jun 2024 20:43:44 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 168032004E;
- Mon, 17 Jun 2024 20:43:42 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DAA5820043;
- Mon, 17 Jun 2024 20:43:40 +0000 (GMT)
-Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Jun 2024 20:43:40 +0000 (GMT)
-From: Michael Kowal <kowal@linux.vnet.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
- npiggin@gmail.com, milesg@linux.ibm.com
-Subject: [PATCH 4/5] pnv/xive2: Fail VST entry address computation if table
- has no VSD
-Date: Mon, 17 Jun 2024 15:43:01 -0500
-Message-Id: <20240617204302.12323-5-kowal@linux.vnet.ibm.com>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240617204302.12323-1-kowal@linux.vnet.ibm.com>
-References: <20240617204302.12323-1-kowal@linux.vnet.ibm.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sJJno-0000lI-Lw
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 17:22:13 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sJJnm-0004UQ-Lz
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 17:22:12 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-2c2ecd25e5aso3749298a91.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 14:22:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718659329; x=1719264129; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=axqYhybjB7slhZtkU6bf3usBou+XlE9yZzb5DRJQwqI=;
+ b=kQqOZZErqhsZfpWXu7sWb3nDGEgdVuYdJ9jYKqfSl7wXDku1M3CoAzwl9Jbga1aAN8
+ Xnlf/HCO5EoN39CZf3FQ2MhWweGgN3YnUk2dBWLwNrKal/eRwZle6i7cU22ZWrfk8ef7
+ H+L3QPyVfyfVlksp1i+IwKAXwj8q4lmh7RlSgR4o2W5hB+TA7rJIpBitLNtWK1AdjH2e
+ jpTQSWnWit921WGwuNVIKkb+RjiEXVXuXOpDVsZBK0jduIbKEkTv3vPyTSsdjIhTWinw
+ M1BCBU0IbnxRItVjLu3n47yqMu0usOmAZuaiqEO2Y4duyZehZdqJI3x091CTo7zIcjmz
+ 8k9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718659329; x=1719264129;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=axqYhybjB7slhZtkU6bf3usBou+XlE9yZzb5DRJQwqI=;
+ b=c1fMkmyF0NTTRkEQzb7MOR0Y7MyOgYxrW/slMyP1zXaugSljhZAULomMHkJPZBaw0K
+ pnvVswZXEOIApiwiPRhk0hFXtjVB7r8GeNYF0dLUknUzp2HTqDk6Q2XFUcUFqw/qdh7D
+ 8a6/CMYXHLJYUqr/nz2fi/LaZZ83OSgSyujbQXCanzrsMOIx6Y8Pgq0DfpAMswBRVGzk
+ +W5ocS851nN4t4MFvHYk4skMkxuetLtAoVtvupwlija956f5STfK4bDe4fthsMPPwgTV
+ kP3n6laWCTx566Qs1nhgDLnYJfkNaN3Xy9OBXf8QCIbuqtgf8rKr6t4Z9Z5U0iqfE8ix
+ fAYQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWnLe0jmEq2iXQMZ1ZCVvAWGvsfpKRnjg+5vNUTCtdUOmcuzW0BH8kcIgEimG5V9yK/DQIW4J/umCLVtqNgz6oWnTyFYwE=
+X-Gm-Message-State: AOJu0Yyl4F4YCboe4ADGow5lO40xOXcUjdmgnvLLDa3Y+W+TraPVMQxz
+ lFwMGvcqEfgibI2dej0FxHE+84lbg0NMkWfuMkQeTuTWi90m4hOy9IWbAhEt0+M=
+X-Google-Smtp-Source: AGHT+IGnlGJbSWsImpGObHB7sx2aQHulcTy7yk8EqGA9Rz2Xnj0rkwBpjbBboxa3iFC0XlBuKoBtzw==
+X-Received: by 2002:a17:90a:bd97:b0:2bd:d2f9:c22a with SMTP id
+ 98e67ed59e1d1-2c4db44b8c5mr9540675a91.29.1718659328955; 
+ Mon, 17 Jun 2024 14:22:08 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c4a7603200sm11788674a91.26.2024.06.17.14.22.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Jun 2024 14:22:08 -0700 (PDT)
+Message-ID: <f2c4d2be-9fc9-41c9-a47e-4bef99a7b907@linaro.org>
+Date: Mon, 17 Jun 2024 14:22:06 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: E4ObE7hbeXM1kIfrXAKgX5iSqDDW92eT
-X-Proofpoint-ORIG-GUID: -BbmnqTSaKl997O403X4eDXQ3knMhfq9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-17_14,2024-06-17_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 mlxlogscore=798
- priorityscore=1501 bulkscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
- mlxscore=0 suspectscore=0 clxscore=1015 impostorscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
- definitions=main-2406170157
-Received-SPF: none client-ip=148.163.158.5;
- envelope-from=kowal@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 00/25] target/i386, SCSI changes for 2024-06-11
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240617081319.88956-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240617081319.88956-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 17 Jun 2024 17:18:34 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -114,35 +96,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frederic Barrat <fbarrat@linux.ibm.com>
+On 6/17/24 01:13, Paolo Bonzini wrote:
+> The following changes since commit 80e8f0602168f451a93e71cbb1d59e93d745e62e:
+> 
+>    Merge tag 'bsd-user-misc-2024q2-pull-request' of gitlab.com:bsdimp/qemu into staging (2024-06-09 11:21:55 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/bonzini/qemu.git  tags/for-upstream
+> 
+> for you to fetch changes up to 109238a8d97cd8e85ca614109724a0b1222b21f5:
+> 
+>    target/i386: SEV: do not assume machine->cgs is SEV (2024-06-17 09:47:39 +0200)
+> 
+> ----------------------------------------------------------------
+> * i386: fix issue with cache topology passthrough
+> * scsi-disk: migrate emulated requests
+> * i386/sev: fix Coverity issues
+> * i386/tcg: more conversions to new decoder
+> 
+> ----------------------------------------------------------------
+> 
+> v1->v2: fixed MOV from/to CR and DR in 64-bit modes (does not need REX.W)
 
-Fail VST entry address computatio if firmware doesn't define a descriptor
-for one of the Virtualization Structure Tables (VST), there's no point in
-trying to compute the address of its entry.  Abort the operation and log
-an error.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
----
- hw/intc/pnv_xive2.c | 5 +++++
- 1 file changed, 5 insertions(+)
 
-diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-index a1146311a3..e473109196 100644
---- a/hw/intc/pnv_xive2.c
-+++ b/hw/intc/pnv_xive2.c
-@@ -244,6 +244,11 @@ static uint64_t pnv_xive2_vst_addr(PnvXive2 *xive, uint32_t type, uint8_t blk,
-     }
- 
-     vsd = xive->vsds[type][blk];
-+    if (vsd == 0) {
-+        xive2_error(xive, "VST: vsd == 0 block id %d for VST %s %d !?",
-+                   blk, info->name, idx);
-+        return 0;
-+    }
- 
-     /* Remote VST access */
-     if (GETFIELD(VSD_MODE, vsd) == VSD_MODE_FORWARD) {
--- 
-2.39.3
+r~
 
 
