@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC83EC2BB85
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 21:22:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE8E2C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 21:22:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJJnr-0000lx-CF; Mon, 17 Jun 2024 17:22:15 -0400
+	id 1sJJo7-0000vm-HS; Mon, 17 Jun 2024 17:22:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJJno-0000lI-Lw
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 17:22:13 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1sJJo3-0000nH-4E
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 17:22:27 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJJnm-0004UQ-Lz
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 17:22:12 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2c2ecd25e5aso3749298a91.2
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 14:22:10 -0700 (PDT)
+ id 1sJJo1-0004Uy-G5
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 17:22:26 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-70436ac8882so3600975b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 14:22:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718659329; x=1719264129; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718659344; x=1719264144; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=axqYhybjB7slhZtkU6bf3usBou+XlE9yZzb5DRJQwqI=;
- b=kQqOZZErqhsZfpWXu7sWb3nDGEgdVuYdJ9jYKqfSl7wXDku1M3CoAzwl9Jbga1aAN8
- Xnlf/HCO5EoN39CZf3FQ2MhWweGgN3YnUk2dBWLwNrKal/eRwZle6i7cU22ZWrfk8ef7
- H+L3QPyVfyfVlksp1i+IwKAXwj8q4lmh7RlSgR4o2W5hB+TA7rJIpBitLNtWK1AdjH2e
- jpTQSWnWit921WGwuNVIKkb+RjiEXVXuXOpDVsZBK0jduIbKEkTv3vPyTSsdjIhTWinw
- M1BCBU0IbnxRItVjLu3n47yqMu0usOmAZuaiqEO2Y4duyZehZdqJI3x091CTo7zIcjmz
- 8k9Q==
+ bh=y36ZiYqkAIJ6fWa4QGmtNTHrqRiR/+P64PjK5zzGgCE=;
+ b=meMTCMX/t+WgCD8ZU0RLhs5ul6+7CfGopPK9xbpQm2gzCIVsQT6oKx4WSzGbfJUKAW
+ 9jXHbQ4cmErzgI/7XsgqAz/X3vgoLeLITmPFzii/3MnfEgf8V7MTqYg4mL/uOnbD1TI8
+ JSh1B6ENFjz2zaYY1TVqJwPj5ni3ApmhDNsN6Z4pfOIYuIp6uU08eQeneYRRZzRwwrtQ
+ WE6CMonOFoL0yts2cPbJsSpnYfpcDA1EMijsDNiXLXopHJ0IeXfNkjWZs/0PsunzmUg0
+ LPTvMG6119SfCVTw6Wn5DHbf7+idjfmkMO1ty78hvkJstZygnYG+Z4QuRiot2fQT+14r
+ Uyzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718659329; x=1719264129;
+ d=1e100.net; s=20230601; t=1718659344; x=1719264144;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=axqYhybjB7slhZtkU6bf3usBou+XlE9yZzb5DRJQwqI=;
- b=c1fMkmyF0NTTRkEQzb7MOR0Y7MyOgYxrW/slMyP1zXaugSljhZAULomMHkJPZBaw0K
- pnvVswZXEOIApiwiPRhk0hFXtjVB7r8GeNYF0dLUknUzp2HTqDk6Q2XFUcUFqw/qdh7D
- 8a6/CMYXHLJYUqr/nz2fi/LaZZ83OSgSyujbQXCanzrsMOIx6Y8Pgq0DfpAMswBRVGzk
- +W5ocS851nN4t4MFvHYk4skMkxuetLtAoVtvupwlija956f5STfK4bDe4fthsMPPwgTV
- kP3n6laWCTx566Qs1nhgDLnYJfkNaN3Xy9OBXf8QCIbuqtgf8rKr6t4Z9Z5U0iqfE8ix
- fAYQ==
+ bh=y36ZiYqkAIJ6fWa4QGmtNTHrqRiR/+P64PjK5zzGgCE=;
+ b=t7+wJyJjsJHX81+FwBKaeIHrn+tUxYqP8gK/ov1xu8uyS+DK1fSy55eycV7dlZW5fk
+ C80WdNLmYib3xXOhrucyF1LFg0FX4//4ZqLKJ/eYstCB84Bx9SW9csIMakhtXfvKI4L0
+ 1bYk6vacKReCLHklK5iDkEElVIdgM1f6D0cQ++QPp/SGwe6iQFQ09l4P7ckJF2keBVFn
+ vn3+qgJ9CC8gMpzczr+pEJS/xtVHLDO/uPJI5TK7UIUn3QPidCUSHUSrKWqodVfHNTS2
+ tC1TVwfYtBADBVLZISRyDJToexlPAJlMTHNb78Vh+sEuJkZisphNj/VbG0JiSE41ZsKp
+ TY/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWnLe0jmEq2iXQMZ1ZCVvAWGvsfpKRnjg+5vNUTCtdUOmcuzW0BH8kcIgEimG5V9yK/DQIW4J/umCLVtqNgz6oWnTyFYwE=
-X-Gm-Message-State: AOJu0Yyl4F4YCboe4ADGow5lO40xOXcUjdmgnvLLDa3Y+W+TraPVMQxz
- lFwMGvcqEfgibI2dej0FxHE+84lbg0NMkWfuMkQeTuTWi90m4hOy9IWbAhEt0+M=
-X-Google-Smtp-Source: AGHT+IGnlGJbSWsImpGObHB7sx2aQHulcTy7yk8EqGA9Rz2Xnj0rkwBpjbBboxa3iFC0XlBuKoBtzw==
-X-Received: by 2002:a17:90a:bd97:b0:2bd:d2f9:c22a with SMTP id
- 98e67ed59e1d1-2c4db44b8c5mr9540675a91.29.1718659328955; 
- Mon, 17 Jun 2024 14:22:08 -0700 (PDT)
+ AJvYcCXEaCOUmtXPvTZTZ7lRNKXGSdbCASaZvLwB/gIC9plWcQVTImngcT/9bvbMDLzJiMdQdZfykWg+iEvxQDxJrAu2DjTRXSc=
+X-Gm-Message-State: AOJu0Yx61NnrMbfII/sKgFaApRpOmpP4ECMdyCK+qp7qre3F46fl9SZA
+ tnSa/huU7DX94L0mmTOJFC/oPaDYoWnJ1/YEkwRhzBXdYHcoINRa3BmXtEkm10GTCdlMur3ANdq
+ Z
+X-Google-Smtp-Source: AGHT+IHnAXhsqCqB9GO0DkyjIITvRSmP4Xfc9KUtbsxk7yYTg0wBLg77a3KKYDcmZBBpMIl6XosOiQ==
+X-Received: by 2002:a05:6a00:1817:b0:705:cade:1f50 with SMTP id
+ d2e1a72fcca58-705d721898amr14778672b3a.34.1718659343653; 
+ Mon, 17 Jun 2024 14:22:23 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.132.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c4a7603200sm11788674a91.26.2024.06.17.14.22.08
+ d2e1a72fcca58-705ccb91b62sm7759672b3a.203.2024.06.17.14.22.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Jun 2024 14:22:08 -0700 (PDT)
-Message-ID: <f2c4d2be-9fc9-41c9-a47e-4bef99a7b907@linaro.org>
-Date: Mon, 17 Jun 2024 14:22:06 -0700
+ Mon, 17 Jun 2024 14:22:23 -0700 (PDT)
+Message-ID: <e54bfcdb-d0e9-4e76-9451-e457546736ec@linaro.org>
+Date: Mon, 17 Jun 2024 14:22:21 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/25] target/i386, SCSI changes for 2024-06-11
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240617081319.88956-1-pbonzini@redhat.com>
+Subject: Re: [PULL 0/1] Dirty page rate and dirty page limit 20240617 patches
+To: Hyman Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org
+References: <cover.1718638495.git.yong.huang@smartx.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240617081319.88956-1-pbonzini@redhat.com>
+In-Reply-To: <cover.1718638495.git.yong.huang@smartx.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,28 +97,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/17/24 01:13, Paolo Bonzini wrote:
-> The following changes since commit 80e8f0602168f451a93e71cbb1d59e93d745e62e:
+On 6/17/24 08:49, Hyman Huang wrote:
+> The following changes since commit 05ad1440b8428b0ade9b8e5c01469adb8fbf83e3:
 > 
->    Merge tag 'bsd-user-misc-2024q2-pull-request' of gitlab.com:bsdimp/qemu into staging (2024-06-09 11:21:55 -0700)
+>    Merge tag 'virtio-grants-v8-tag' ofhttps://gitlab.com/sstabellini/qemu  into staging (2024-06-15 20:13:06 -0700)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/bonzini/qemu.git  tags/for-upstream
+>    https://github.com/newfriday/qemu.git  tags/dirtylimit-dirtyrate-pull-request-20240617
 > 
-> for you to fetch changes up to 109238a8d97cd8e85ca614109724a0b1222b21f5:
+> for you to fetch changes up to e65152d5483b2c847ec7a947ed52650152cfdcc0:
 > 
->    target/i386: SEV: do not assume machine->cgs is SEV (2024-06-17 09:47:39 +0200)
-> 
-> ----------------------------------------------------------------
-> * i386: fix issue with cache topology passthrough
-> * scsi-disk: migrate emulated requests
-> * i386/sev: fix Coverity issues
-> * i386/tcg: more conversions to new decoder
-> 
-> ----------------------------------------------------------------
-> 
-> v1->v2: fixed MOV from/to CR and DR in 64-bit modes (does not need REX.W)
+>    migration/dirtyrate: Fix segmentation fault (2024-06-17 23:29:21 +0800)
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
