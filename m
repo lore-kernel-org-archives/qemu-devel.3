@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B19C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 19:02:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23B31C27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 19:03:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJHYm-00049T-NW; Mon, 17 Jun 2024 14:58:32 -0400
+	id 1sJHZK-0006kd-3G; Mon, 17 Jun 2024 14:59:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHYk-00044p-Jy
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:30 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1sJHZ0-0004uJ-BQ
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:47 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHYj-0004wY-3A
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:30 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-705c739b878so3731708b3a.1
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:28 -0700 (PDT)
+ id 1sJHYy-00050g-3Y
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:46 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-701b0b0be38so4189589b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718650707; x=1719255507; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1718650722; x=1719255522; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kmiGU0XGOgkNkeKrlW4wG8IDU2PioKKg7Y5d+i/ULYE=;
- b=jTxHPqyQQkEFVako2s8NLJbsDmO0eX6kJgKcKVJ7WR40DguifIJ1aFPQ0Fbqh514Xz
- Q1exrHYZWb0ZOgs8XGFRG5dpz4bWXpiVfvh7RH81A6SwpV1x4LzMLL/17TApRq6zXKzz
- 9sEAKNbRrNjXmVhIn1D2A3MUksmqTd5Nh7ndzUu9VwMw/K8gVWj47yqKd/KjNy+bbJoJ
- g2STylLymFR9iddLtB50jEIKWXqIz+Y4YeE01m/0FN+welvkG+2cmiYo33kIiAhyWpZH
- AXJCiXBLvdCpeaD//4Qxw4frODyVwAu9bQ/YsjkRnbNyZ2tue7Y8Boj2J7VQHh5nTKEf
- 7gXQ==
+ bh=EYrmA0vk2Zd3/clu1etzd70moyuztxZzOi8TsOsOvYU=;
+ b=lrU7Hiph/155Gua7+3tiEt/GajwCI8xVvGvA5SFhhBHMdKFrGxRVt9Hw7E9Xd1uekC
+ +wk0DBu0434YzJ0rXgyWdP8iNmAN3BsgainXiH6fw/ISuiWoSepDdy6zRnZabLisBsDv
+ Oc97bOl+wzfsHoum31KsdpRl9+IK2Gx86B0WgppNfWhLw6g4HALORamtDkxK3orQ3FpN
+ q+MV5I7RyAujt8qXjhGk9/pY4e1Vj1CIQ2fcgYsETYifvjM+1zBtS3PiA7BRVUDxKcQl
+ O+y78dUxj8vW+g9vw/tWoIwduAAuSOqYHBE+P3cWcYS13DC1YiIO7m6nEuw+mu0OpUpe
+ 4wnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718650707; x=1719255507;
+ d=1e100.net; s=20230601; t=1718650722; x=1719255522;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kmiGU0XGOgkNkeKrlW4wG8IDU2PioKKg7Y5d+i/ULYE=;
- b=nA/572UE2sFb5lkdZxqFV1TVYtcVW9G+7nV/FrLiGN1Qo/MTvoOBUXqXKwJAHZVc9K
- XPcTwGMrHULte/i4Y9wwga5nF+7ignJ7ToOw9rA2HVh7LxFU7TiIjs+bhp2J4MZOHOsG
- Pvi+FA8Ddod/EI985/vg4Ki1Ttwv5cK/grZ+Fb+9rZDWdQNgW4R3EHCo0rcW+nRBqrPg
- nk7i1cFWiLV+ZhsSQXUWYHdGnncs2V63x1AYmezPB5bU+y8MMpSZ4DMd8y+u4SZq+Ixh
- poG/UMMee8HaVptrz63AGA3Owv0q98iMKZAM/ddzrfNJoHi/XGMYUp9VABQVjZ7EPR0f
- OHCw==
-X-Gm-Message-State: AOJu0YxKKhmiHbdJSancrzoU9Insv027DNYbWub64JWWr1v4nCwPKBFK
- D5y0l2e+7lE3FpTeWCMGOL7lW1AWqH2bWsOyRLmYc73WFGTNv+qqAlnsFfqbU1I=
-X-Google-Smtp-Source: AGHT+IFK2TgqUuHnvf3PHdJbDqbq54NEpzQq5HOcHRcDHcrV1+l1KI4ggxTOxN8svyLso7qjSTt+9A==
-X-Received: by 2002:a05:6a20:a924:b0:1ba:ee32:e7f0 with SMTP id
- adf61e73a8af0-1bcaafaf6dfmr694283637.4.1718650707243; 
- Mon, 17 Jun 2024 11:58:27 -0700 (PDT)
+ bh=EYrmA0vk2Zd3/clu1etzd70moyuztxZzOi8TsOsOvYU=;
+ b=ML2ZrbiAFQNIcAAar5eJhjd/LR0tdK2UsgVrxQ8AboqP2HEUDidvXtjOgTWX+beX0z
+ q6ip77x7l4PT87xaUi6QiDxZSxe2t+F9bmhvb8KSR/TXoN7Lzbgng9iEChEjhSBi2mCN
+ XxHPC9PQGo9IyWWDI43ImLm+RxNFb5o3adEg21o4sHzNRt9Owny8xQfDnaO9/YSSK09A
+ 1VUJm0f5DQhi6C+NB5GJXftDeO+jfP2vOnelVmL8OuRCxUfovvBT9EsVmYrHDd1dff7A
+ DBMAxDXwd6kg8eWZP42i3+Ryliflbs7Cl+QnYFZDIbu1rj7UDEv/qMNa9sv2Lm4ICFE6
+ 1t9w==
+X-Gm-Message-State: AOJu0YzUp+8Gfe8wSwH0SyN4IzfizYIM+5z7Jg7ezflSJ3IskVc/kc8o
+ D2QMLwcrthd4/nSXnNyFESMJjBCEdM4rGug6ITe29kg6DSA9AlilE6RWcn4UjkQ=
+X-Google-Smtp-Source: AGHT+IE3+z5PYLzh3MyGQGqM79KRSmOhWdAle+kbNEKnvUZlFLZtUszy56tS/DkoRgoAJ3+chVQvaA==
+X-Received: by 2002:a05:6a20:7489:b0:1b8:622a:cf8f with SMTP id
+ adf61e73a8af0-1bae82c1a36mr11850309637.57.1718650722335; 
+ Mon, 17 Jun 2024 11:58:42 -0700 (PDT)
 Received: from localhost.localdomain ([106.222.222.115])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.25
+ d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 11:58:26 -0700 (PDT)
+ Mon, 17 Jun 2024 11:58:42 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>,
- Stacey Son <sson@FreeBSD.org>, Ajeet Singh <itachis@FreeBSD.org>
-Subject: [PATCH 03/23] Added function to clone CPU state
-Date: Tue, 18 Jun 2024 00:27:44 +0530
-Message-Id: <20240617185804.25075-4-itachis@FreeBSD.org>
+ Stacey Son <sson@FreeBSD.org>, Ajeet Singh <itachis@FreeBSD.org>,
+ Jessica Clarke <jrtc27@jrtc27.com>
+Subject: [PATCH 10/23] Add thread initialization for BSD-USER
+Date: Tue, 18 Jun 2024 00:27:51 +0530
+Message-Id: <20240617185804.25075-11-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240617185804.25075-1-itachis@FreeBSD.org>
 References: <20240617185804.25075-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=itachis6234@gmail.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=itachis6234@gmail.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,40 +99,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stacey Son <sson@FreeBSD.org>
 
-Function can copy cpu state to create new thread
+Initializes thread's register state
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
 ---
- bsd-user/aarch64/target_arch_cpu.h | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ bsd-user/aarch64/target_arch_thread.h | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/bsd-user/aarch64/target_arch_cpu.h b/bsd-user/aarch64/target_arch_cpu.h
-index 1962d2c99b..4e950305d3 100644
---- a/bsd-user/aarch64/target_arch_cpu.h
-+++ b/bsd-user/aarch64/target_arch_cpu.h
-@@ -171,4 +171,21 @@ static inline void target_cpu_loop(CPUARMState *env)
-     } /* for (;;) */
+diff --git a/bsd-user/aarch64/target_arch_thread.h b/bsd-user/aarch64/target_arch_thread.h
+index d2f2dea7ce..bfc9050cb1 100644
+--- a/bsd-user/aarch64/target_arch_thread.h
++++ b/bsd-user/aarch64/target_arch_thread.h
+@@ -42,4 +42,20 @@ static inline void target_thread_set_upcall(CPUARMState *regs, abi_ulong entry,
+     pstate_write(regs, PSTATE_MODE_EL0t);
  }
  
-+
-+/* See arm64/arm64/vm_machdep.c cpu_fork() */
-+static inline void target_cpu_clone_regs(CPUARMState *env, target_ulong newsp)
++static inline void target_thread_init(struct target_pt_regs *regs,
++        struct image_info *infop)
 +{
-+    if (newsp) {
-+        env->xregs[31] = newsp;
-+    }
-+    env->regs[0] = 0;
-+    env->regs[1] = 0;
-+    pstate_write(env, 0);
++    abi_long stack = infop->start_stack;
++
++    /*
++     * Make sure the stack is properly aligned.
++     * arm64/include/param.h (STACKLIGN() macro)
++     */
++
++    memset(regs, 0, sizeof(*regs));
++    regs->regs[0] = infop->start_stack;
++    regs->pc = infop->entry;
++    regs->sp = stack & ~(16 - 1);
 +}
 +
-+static inline void target_cpu_reset(CPUArchState *env)
-+{
-+}
-+
-+
- #endif /* TARGET_ARCH_CPU_H */
+ #endif /* TARGET_ARCH_THREAD_H */
 -- 
 2.34.1
 
