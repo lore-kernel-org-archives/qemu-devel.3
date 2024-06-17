@@ -4,70 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B5ECC27C6E
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 08:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C86FC27C6E
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 08:13:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJ7TV-0006xD-4L; Mon, 17 Jun 2024 04:12:25 -0400
+	id 1sJ7Ub-0007g0-NC; Mon, 17 Jun 2024 04:13:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sJ7TR-0006wn-RB
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 04:12:21 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sJ7TN-00041q-MW
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 04:12:21 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8BxLuvZ729mRIIHAA--.29851S3;
- Mon, 17 Jun 2024 16:12:10 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxfcfW729mdDslAA--.24749S3; 
- Mon, 17 Jun 2024 16:12:09 +0800 (CST)
-Subject: Re: [PATCH 02/18] tcg/loongarch64: Use fp load/store for I32 and I64
- into vector regs
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: git@xen0n.name
-References: <20240527211912.14060-1-richard.henderson@linaro.org>
- <20240527211912.14060-3-richard.henderson@linaro.org>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <972b9c61-33b0-dcba-7fcf-61cc496844d6@loongson.cn>
-Date: Mon, 17 Jun 2024 16:12:10 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sJ7Ua-0007fa-7b
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 04:13:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sJ7UY-00046P-EC
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 04:13:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718612006;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=GFINyzwIJ6GDW/gMEHHmSEluXNLZ8Afdl7RJ281J00A=;
+ b=gFEjH4i0dZUkci5GNh+Tit3sBCzJDvYd2HjCH4m3Z5mpP3PDuEKKm7dDEagU4yBzkZjc+i
+ eFsE9MWWaco1SBcWoKyXyRDRle1R7Szwa+iUJbZxBwpe6kRWz6VasOd7GE63RdcNJlgNbg
+ qA2AdWBcjfyilye2FDa6VyXRWyh0lgw=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-480-K_ezqkRANs-M5PpSn2vtQA-1; Mon, 17 Jun 2024 04:13:23 -0400
+X-MC-Unique: K_ezqkRANs-M5PpSn2vtQA-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a6def6e9ef2so367565066b.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 01:13:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718612002; x=1719216802;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GFINyzwIJ6GDW/gMEHHmSEluXNLZ8Afdl7RJ281J00A=;
+ b=N5OZPT7PQd41wxy/YeG0XgXc3Hn/zcmalmD1ARVauzXlzMgbUS8G3xGbDx45FjmDtX
+ aeI2nI9ecQyenxVmYEOTmnxdW0FYsnwmhSM+Xp05zV15ce3HdwFjsn/pltRyMW+vwdyF
+ 83I9iniG2a5Q2I6XBjnUHkgjp0e98Vp3W5ZWZJe1nH+lS8CCqs/4pjxqlOwwbkGLGZnB
+ 4NzhlOrZAVJwiGtD09iqUyoW0U+W3nl6afxTzoCTw7XS5cuwNOPsdtvneKp5NkANV6hk
+ QYQQyCHiamSm90llxhZU/Dnbq29JZeE6HzNzYVHn25yLKPK+dth+aEdoRF/tgxp3Ditp
+ udSQ==
+X-Gm-Message-State: AOJu0YxqrRTTvBK9WNJGJTU6niRSwpsXUDebXY8cJ7TFr7dHQ+gkokK1
+ djbML5mDz6/GreFA6R3phZD+cwdL28Vybajwgh8ZIQQtOYt3+0md6tA3FuB9dhUnfNYQIxikIXu
+ PGmacFSrgfRJm+6B8jXxmHvouxg8oCUr1N7Xdu/XF5N3ot6yaoapIFfSX5vvm+FEwe5xLN06zaB
+ K+Ocl29Vaw/CcXDIhMkffR2rlsidSFmeFX0jKZ
+X-Received: by 2002:a17:906:f953:b0:a6f:624e:741a with SMTP id
+ a640c23a62f3a-a6f624e76bdmr568598066b.3.1718612001908; 
+ Mon, 17 Jun 2024 01:13:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFfdVB2+frDRjwVQeg7aDLKywDkiY4CIokM1WzB/lspYcvm28s7+FyeGnjt6STJdo10N3lQPA==
+X-Received: by 2002:a17:906:f953:b0:a6f:624e:741a with SMTP id
+ a640c23a62f3a-a6f624e76bdmr568597066b.3.1718612001473; 
+ Mon, 17 Jun 2024 01:13:21 -0700 (PDT)
+Received: from avogadro.local ([151.62.196.71])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6f56db67c4sm492147566b.60.2024.06.17.01.13.20
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Jun 2024 01:13:20 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL v2 00/25] target/i386, SCSI changes for 2024-06-11
+Date: Mon, 17 Jun 2024 10:13:18 +0200
+Message-ID: <20240617081319.88956-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-In-Reply-To: <20240527211912.14060-3-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=gbk; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8DxfcfW729mdDslAA--.24749S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxuryUWF45Kw4xuFykJFyUtwc_yoW5WF18pr
- nxXrsIqF98Ja17Jw4ayF1DXryIgFs3Cr1qgFZ8GF4kXryvyryvv3ykAr1Sg34UX34Ivr4D
- A3Z8Xr13uF4qkabCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1QV
- y3UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-2.677, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,87 +99,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2024/5/28 ÉÏÎç5:18, Richard Henderson Ð´µÀ:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/loongarch64/tcg-target.c.inc | 36 +++++++++-----------------------
->   1 file changed, 10 insertions(+), 26 deletions(-)
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+The following changes since commit 80e8f0602168f451a93e71cbb1d59e93d745e62e:
 
-Thanks.
-Song Gao
-> diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-> index 06ca1ab11c..b9078ac793 100644
-> --- a/tcg/loongarch64/tcg-target.c.inc
-> +++ b/tcg/loongarch64/tcg-target.c.inc
-> @@ -803,6 +803,12 @@ static void tcg_out_ldst(TCGContext *s, LoongArchInsn opc, TCGReg data,
->       case OPC_ST_D:
->           tcg_out32(s, encode_djsk12_insn(opc, data, addr, imm12));
->           break;
-> +    case OPC_FLD_S:
-> +    case OPC_FLD_D:
-> +    case OPC_FST_S:
-> +    case OPC_FST_D:
-> +        tcg_out32(s, encode_fdjsk12_insn(opc, data, addr, imm12));
-> +        break;
->       default:
->           g_assert_not_reached();
->       }
-> @@ -816,14 +822,14 @@ static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg dest,
->           if (dest < TCG_REG_V0) {
->               tcg_out_ldst(s, OPC_LD_W, dest, base, offset);
->           } else {
-> -            tcg_out_dupm_vec(s, TCG_TYPE_I128, MO_32, dest, base, offset);
-> +            tcg_out_ldst(s, OPC_FLD_S, dest, base, offset);
->           }
->           break;
->       case TCG_TYPE_I64:
->           if (dest < TCG_REG_V0) {
->               tcg_out_ldst(s, OPC_LD_D, dest, base, offset);
->           } else {
-> -            tcg_out_dupm_vec(s, TCG_TYPE_I128, MO_64, dest, base, offset);
-> +            tcg_out_ldst(s, OPC_FLD_D, dest, base, offset);
->           }
->           break;
->       case TCG_TYPE_V128:
-> @@ -847,36 +853,14 @@ static void tcg_out_st(TCGContext *s, TCGType type, TCGReg src,
->           if (src < TCG_REG_V0) {
->               tcg_out_ldst(s, OPC_ST_W, src, base, offset);
->           } else {
-> -            /* TODO: Could use fst_s, fstx_s */
-> -            if (offset < -0x100 || offset > 0xff || (offset & 3)) {
-> -                if (-0x800 <= offset && offset <= 0x7ff) {
-> -                    tcg_out_opc_addi_d(s, TCG_REG_TMP0, base, offset);
-> -                } else {
-> -                    tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-> -                    tcg_out_opc_add_d(s, TCG_REG_TMP0, TCG_REG_TMP0, base);
-> -                }
-> -                base = TCG_REG_TMP0;
-> -                offset = 0;
-> -            }
-> -            tcg_out_opc_vstelm_w(s, src, base, offset, 0);
-> +            tcg_out_ldst(s, OPC_FST_S, src, base, offset);
->           }
->           break;
->       case TCG_TYPE_I64:
->           if (src < TCG_REG_V0) {
->               tcg_out_ldst(s, OPC_ST_D, src, base, offset);
->           } else {
-> -            /* TODO: Could use fst_d, fstx_d */
-> -            if (offset < -0x100 || offset > 0xff || (offset & 7)) {
-> -                if (-0x800 <= offset && offset <= 0x7ff) {
-> -                    tcg_out_opc_addi_d(s, TCG_REG_TMP0, base, offset);
-> -                } else {
-> -                    tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
-> -                    tcg_out_opc_add_d(s, TCG_REG_TMP0, TCG_REG_TMP0, base);
-> -                }
-> -                base = TCG_REG_TMP0;
-> -                offset = 0;
-> -            }
-> -            tcg_out_opc_vstelm_d(s, src, base, offset, 0);
-> +            tcg_out_ldst(s, OPC_FST_D, src, base, offset);
->           }
->           break;
->       case TCG_TYPE_V128:
+  Merge tag 'bsd-user-misc-2024q2-pull-request' of gitlab.com:bsdimp/qemu into staging (2024-06-09 11:21:55 -0700)
+
+are available in the Git repository at:
+
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to 109238a8d97cd8e85ca614109724a0b1222b21f5:
+
+  target/i386: SEV: do not assume machine->cgs is SEV (2024-06-17 09:47:39 +0200)
+
+----------------------------------------------------------------
+* i386: fix issue with cache topology passthrough
+* scsi-disk: migrate emulated requests
+* i386/sev: fix Coverity issues
+* i386/tcg: more conversions to new decoder
+
+----------------------------------------------------------------
+
+v1->v2: fixed MOV from/to CR and DR in 64-bit modes (does not need REX.W)
+
+Chuang Xu (1):
+      i386/cpu: fixup number of addressable IDs for processor cores in the physical package
+
+Hyman Huang (1):
+      scsi-disk: Fix crash for VM configured with USB CDROM after live migration
+
+Pankaj Gupta (3):
+      i386/sev: fix unreachable code coverity issue
+      i386/sev: Move SEV_COMMON null check before dereferencing
+      i386/sev: Return when sev_common is null
+
+Paolo Bonzini (20):
+      target/i386: remove CPUX86State argument from generator functions
+      target/i386: rewrite flags writeback for ADCX/ADOX
+      target/i386: put BLS* input in T1, use generic flag writeback
+      target/i386: change X86_ENTRYr to use T0
+      target/i386: change X86_ENTRYwr to use T0, use it for moves
+      target/i386: replace NoSeg special with NoLoadEA
+      target/i386: fix processing of intercept 0 (read CR0)
+      target/i386: convert MOV from/to CR and DR to new decoder
+      target/i386: replace read_crN helper with read_cr8
+      target/i386: fix bad sorting of entries in the 0F table
+      target/i386: finish converting 0F AE to the new decoder
+      target/i386: split X86_CHECK_prot into PE and VM86 checks
+      target/i386: convert non-grouped, helper-based 2-byte opcodes
+      target/i386: pull load/writeback out of gen_shiftd_rm_T1
+      target/i386: adapt gen_shift_count for SHLD/SHRD
+      target/i386: convert SHLD/SHRD to new decoder
+      target/i386: convert LZCNT/TZCNT/BSF/BSR/POPCNT to new decoder
+      target/i386: convert XADD to new decoder
+      target/i386: convert CMPXCHG to new decoder
+      target/i386: SEV: do not assume machine->cgs is SEV
+
+ target/i386/cpu.h                    |    9 +-
+ target/i386/helper.h                 |    2 +-
+ target/i386/tcg/decode-new.h         |   32 +-
+ hw/core/machine.c                    |    1 +
+ hw/scsi/scsi-disk.c                  |   24 +-
+ target/i386/cpu.c                    |    6 +-
+ target/i386/sev.c                    |   11 +-
+ target/i386/tcg/seg_helper.c         |   16 +-
+ target/i386/tcg/sysemu/misc_helper.c |   20 +-
+ target/i386/tcg/translate.c          |  716 +--------------------
+ target/i386/tcg/decode-new.c.inc     |  389 ++++++++----
+ target/i386/tcg/emit.c.inc           | 1166 +++++++++++++++++++++++-----------
+ 12 files changed, 1173 insertions(+), 1219 deletions(-)
+-- 
+2.45.2
 
 
