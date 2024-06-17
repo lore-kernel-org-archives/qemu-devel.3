@@ -4,102 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50364C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 20:14:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A9AFC2BA1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 20:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJIj0-0002TY-Ko; Mon, 17 Jun 2024 16:13:10 -0400
+	id 1sJJOy-0005S2-1U; Mon, 17 Jun 2024 16:56:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sJIiy-0002Sw-OL
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 16:13:08 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sJIiw-0001hb-V4
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 16:13:08 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 056C51F37C;
- Mon, 17 Jun 2024 20:13:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718655183; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=moN3foLxNDneuMcwABcVaJKsVlb0CkC9ub2WsAL8rd8=;
- b=dWXeE3FsVCczx6mEXMUKUufk00Hm+jac2Ts27RDD3c2XbGklBedjFUPvtusAHSrvD+plGY
- nSM/K0hfbEcAeP7dN+PiDeQUwfvo1eR/4tf8LairNtxXCqoMmPLaB+tp5FwFnppulaVXup
- Yji7lEyEClYKsXOi1Ko5AOdjTX8lQ6M=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718655183;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=moN3foLxNDneuMcwABcVaJKsVlb0CkC9ub2WsAL8rd8=;
- b=yOFu/3Jo0kyGbq3Ezkqx8MoCA/mII0uscd5W5x4HWP30os8U2SobuxdvHeO3Xb2beX5P8U
- frjQ+nOz54g0aMBA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718655183; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=moN3foLxNDneuMcwABcVaJKsVlb0CkC9ub2WsAL8rd8=;
- b=dWXeE3FsVCczx6mEXMUKUufk00Hm+jac2Ts27RDD3c2XbGklBedjFUPvtusAHSrvD+plGY
- nSM/K0hfbEcAeP7dN+PiDeQUwfvo1eR/4tf8LairNtxXCqoMmPLaB+tp5FwFnppulaVXup
- Yji7lEyEClYKsXOi1Ko5AOdjTX8lQ6M=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718655183;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=moN3foLxNDneuMcwABcVaJKsVlb0CkC9ub2WsAL8rd8=;
- b=yOFu/3Jo0kyGbq3Ezkqx8MoCA/mII0uscd5W5x4HWP30os8U2SobuxdvHeO3Xb2beX5P8U
- frjQ+nOz54g0aMBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7CCA6139AB;
- Mon, 17 Jun 2024 20:13:02 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id MNmtEM6YcGbMPAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 17 Jun 2024 20:13:02 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Eric Blake <eblake@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>, Jiri Denemark <jdenemar@redhat.com>,
- Bandan Das <bdas@redhat.com>
-Subject: Re: [PATCH v2 00/10] migration: New postcopy state, and some cleanups
-In-Reply-To: <ZnCP1uVDNP2GQ4ZA@x1n>
-References: <20240617181534.1425179-1-peterx@redhat.com> <ZnCP1uVDNP2GQ4ZA@x1n>
-Date: Mon, 17 Jun 2024 17:12:59 -0300
-Message-ID: <871q4vba5w.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sJJOw-0005Ql-JS; Mon, 17 Jun 2024 16:56:30 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1sJJOt-0000M5-LP; Mon, 17 Jun 2024 16:56:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=rzuWFGH9nz0Vt6FWTS7gnA6FC7azHhR2rkN/N3vGe58=; b=bfsfFEQ1jqjK9vmd
+ 6+LJ7dz+maV/a3RkzAOh31Pmvf6ROfXGZCwQ2OPDI9KSmcAZ7QYu2OFxtnk+WT/phuflTnsxK6pkM
+ hsZ8sTYfePTPAodOax6krwdQIFZs4rp9qwexgaPElbXUw3FviusSPVA37F0VYm9OsMPTPMDN5sOjc
+ 4n++TSoDiHQguNtB82FndKLlOa/0QSCQ4QcmW4pvyC4nDyITB++qT1wPTvQMenYpfKygH65KbNNJz
+ y/VzHR+QRXuZbCEJyeysM3tNsSGYkjMGf29/3sdCLVjMdhnwymDuoAOlEfDEQdiEd1UaTYBcEF0Gr
+ gswHtRxt4P9fhkEhTw==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1sJJOU-006le1-2O;
+ Mon, 17 Jun 2024 20:56:02 +0000
+Date: Mon, 17 Jun 2024 20:56:02 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Mark Burton <mburton@qti.qualcomm.com>, qemu-s390x@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
+ Laurent Vivier <lvivier@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>, Nicholas Piggin <npiggin@gmail.com>,
+ Marco Liebel <mliebel@qti.qualcomm.com>, Thomas Huth <thuth@redhat.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, qemu-ppc@nongnu.org,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Cameron Esfahani <dirty@apple.com>, Jamie Iles <quic_jiles@quicinc.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 9/9] contrib/plugins: add ips plugin example for cost
+ modeling
+Message-ID: <ZnCi4hcyR8wMMnK4@gallifrey>
+References: <20240612153508.1532940-1-alex.bennee@linaro.org>
+ <20240612153508.1532940-10-alex.bennee@linaro.org>
+ <ZmoM2Sac97PdXWcC@gallifrey>
+ <777e1b13-9a4f-4c32-9ff7-9cedf7417695@linaro.org>
+ <Zmy9g1U1uP1Vhx9N@gallifrey>
+ <616df287-a167-4a05-8f08-70a78a544929@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_SEVEN(0.00)[9];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
- MIME_TRACE(0.00)[0:+]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_DN_SOME(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <616df287-a167-4a05-8f08-70a78a544929@linaro.org>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 20:53:22 up 40 days,  8:07,  2 users,  load average: 0.03, 0.02, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,96 +91,297 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+* Pierrick Bouvier (pierrick.bouvier@linaro.org) wrote:
+> On 6/14/24 15:00, Dr. David Alan Gilbert wrote:
+> > * Pierrick Bouvier (pierrick.bouvier@linaro.org) wrote:
+> > > Hi Dave,
+> > > 
+> > > On 6/12/24 14:02, Dr. David Alan Gilbert wrote:
+> > > > * Alex Bennée (alex.bennee@linaro.org) wrote:
+> > > > > From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > > > > 
+> > > > > This plugin uses the new time control interface to make decisions
+> > > > > about the state of time during the emulation. The algorithm is
+> > > > > currently very simple. The user specifies an ips rate which applies
+> > > > > per core. If the core runs ahead of its allocated execution time the
+> > > > > plugin sleeps for a bit to let real time catch up. Either way time is
+> > > > > updated for the emulation as a function of total executed instructions
+> > > > > with some adjustments for cores that idle.
+> > > > 
+> > > > A few random thoughts:
+> > > >     a) Are there any definitions of what a plugin that controls time
+> > > >        should do with a live migration?
+> > > 
+> > > It's not something that was considered as part of this work.
+> > 
+> > That's OK, the only thing is we need to stop anyone from hitting problems
+> > when they don't realise it's not been addressed.
+> > One way might be to add a migration blocker; see include/migration/blocker.h
+> > then you might print something like 'Migration not available due to plugin ....'
+> > 
+> 
+> So basically, we could make a call to migrate_add_blocker(), when someone
+> request time_control through plugin API?
+> 
+> IMHO, it's something that should be part of plugin API (if any plugin calls
+> qemu_plugin_request_time_control()), instead of the plugin code itself. This
+> way, any plugin getting time control automatically blocks any potential
+> migration.
 
-> Hello,
->
-> On Mon, Jun 17, 2024 at 02:15:24PM -0400, Peter Xu wrote:
->> v2:
->> - Collect tags
->> - Patch 3
->>   - cover all states in migration_postcopy_is_alive()
->> - Patch 4 (old)
->>   - English changes [Fabiano]
->>   - Split the migration_incoming_state_setup() cleanup into a new patch
->>     [Fabiano]
->>   - Drop RECOVER_SETUP in fill_destination_migration_info() [Fabiano]
->>   - Keep using explicit state check in migrate_fd_connect() for resume
->>     [Fabiano]
->> - New patches
->>   - New doc update: "migration/docs: Update postcopy recover session for
->>     SETUP phase"
->>   - New test case: last four patches
->
-> I just found that this won't apply on top of latest master, and also has a
-> trivial conflict against the direct-io stuffs.  Fabiano, I'll wait for a
-> few days on comments, and resend v3 on top of your direct-io stuff.
->
-> Meanwhile I also plan to squash below fixup to the last test patch, just to
-> fix up a spelling error I just found, and also renamed the test cases (as
-> the new test is actually also a "double failure" test, just at different
-> phase).  Comments welcomed for that fixup even before a repost.
->
-> ===8<===
-> From 5b8fbc3a9d9e87ebfef1a3e5592fd196eecd5923 Mon Sep 17 00:00:00 2001
-> From: Peter Xu <peterx@redhat.com>
-> Date: Mon, 17 Jun 2024 14:40:15 -0400
-> Subject: [PATCH] fixup! tests/migration-tests: Cover postcopy failure on
->  reconnect
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  tests/qtest/migration-test.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index a4fed4cc6b..fe33b86783 100644
-> --- a/tests/qtest/migration-test.c
-> +++ b/tests/qtest/migration-test.c
-> @@ -1474,7 +1474,7 @@ static void postcopy_recover_fail(QTestState *from, QTestState *to,
->  
->      /*
->       * Kick dest QEMU out too. This is normally not needed in reality
-> -     * because when the channel is shutdown it should also happens on src.
-> +     * because when the channel is shutdown it should also happen on src.
->       * However here we used separate socket pairs so we need to do that
->       * explicitly.
->       */
-> @@ -1565,7 +1565,7 @@ static void test_postcopy_recovery(void)
->      test_postcopy_recovery_common(&args);
->  }
->  
-> -static void test_postcopy_recovery_double_fail(void)
-> +static void test_postcopy_recovery_fail_handshake(void)
->  {
->      MigrateCommon args = {
->          .postcopy_recovery_fail_stage = POSTCOPY_FAIL_RECOVERY,
-> @@ -1574,7 +1574,7 @@ static void test_postcopy_recovery_double_fail(void)
->      test_postcopy_recovery_common(&args);
->  }
->  
-> -static void test_postcopy_recovery_channel_reconnect(void)
-> +static void test_postcopy_recovery_fail_reconnect(void)
->  {
->      MigrateCommon args = {
->          .postcopy_recovery_fail_stage = POSTCOPY_FAIL_CHANNEL_ESTABLISH,
-> @@ -3759,10 +3759,10 @@ int main(int argc, char **argv)
->                             test_postcopy_preempt);
->          migration_test_add("/migration/postcopy/preempt/recovery/plain",
->                             test_postcopy_preempt_recovery);
-> -        migration_test_add("/migration/postcopy/recovery/double-failures",
-> -                           test_postcopy_recovery_double_fail);
-> -        migration_test_add("/migration/postcopy/recovery/channel-reconnect",
-> -                           test_postcopy_recovery_channel_reconnect);
-> +        migration_test_add("/migration/postcopy/recovery/double-failures/handshake",
-> +                           test_postcopy_recovery_fail_handshake);
-> +        migration_test_add("/migration/postcopy/recovery/double-failures/reconnect",
-> +                           test_postcopy_recovery_fail_reconnect);
->          if (is_x86) {
->              migration_test_add("/migration/postcopy/suspend",
->                                 test_postcopy_suspend);
-> -- 
-> 2.45.0
+Note my question asked for a 'any definitions of what a plugin ..' - so
+you could define it that way, another one is to think that in the future
+you may allow it and the plugin somehow interacts with migration not to
+change time at certain migration phases.
 
-LGTM
+> > > >     b) The sleep in migration/dirtyrate.c points out g_usleep might
+> > > >        sleep for longer, so reads the actual wall clock time to
+> > > >        figure out a new 'now'.
+> > > 
+> > > The current API mentions time starts at 0 from qemu startup. Maybe we could
+> > > consider in the future to change this behavior to retrieve time from an
+> > > existing migrated machine.
+> > 
+> > Ah, I meant for (b) to be independent of (a) - not related to migration; just
+> > down to the fact you used g_usleep in the plugin and a g_usleep might sleep
+> > for a different amount of time than you asked.
+> > 
+> 
+> We know that, and the plugin is not meant to be "cycle accurate" in general,
+> we just set a upper bound for number of instructions we can execute in a
+> given amount of time (1/10 second for now).
+> 
+> We compute the new time based on how many instructions effectively ran on
+> the most used cpu, so even if we slept a bit more than expected, it's
+> correct.
+
+Ah OK.
+
+Dave
+
+> > > >     c) A fun thing to do with this would be to follow an external simulation
+> > > >        or 2nd qemu, trying to keep the two from running too far past
+> > > >        each other.
+> > > > 
+> > > 
+> > > Basically, to slow the first one, waiting for the replicated one to catch
+> > > up?
+> > 
+> > Yes, something like that.
+> > 
+> > Dave
+> > 
+> > > > Dave >
+> > > > > Examples
+> > > > > --------
+> > > > > 
+> > > > > Slow down execution of /bin/true:
+> > > > > $ num_insn=$(./build/qemu-x86_64 -plugin ./build/tests/plugin/libinsn.so -d plugin /bin/true |& grep total | sed -e 's/.*: //')
+> > > > > $ time ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libips.so,ips=$(($num_insn/4)) /bin/true
+> > > > > real 4.000s
+> > > > > 
+> > > > > Boot a Linux kernel simulating a 250MHz cpu:
+> > > > > $ /build/qemu-system-x86_64 -kernel /boot/vmlinuz-6.1.0-21-amd64 -append "console=ttyS0" -plugin ./build/contrib/plugins/libips.so,ips=$((250*1000*1000)) -smp 1 -m 512
+> > > > > check time until kernel panic on serial0
+> > > > > 
+> > > > > Tested in system mode by booting a full debian system, and using:
+> > > > > $ sysbench cpu run
+> > > > > Performance decrease linearly with the given number of ips.
+> > > > > 
+> > > > > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > > > > Message-Id: <20240530220610.1245424-7-pierrick.bouvier@linaro.org>
+> > > > > ---
+> > > > >    contrib/plugins/ips.c    | 164 +++++++++++++++++++++++++++++++++++++++
+> > > > >    contrib/plugins/Makefile |   1 +
+> > > > >    2 files changed, 165 insertions(+)
+> > > > >    create mode 100644 contrib/plugins/ips.c
+> > > > > 
+> > > > > diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
+> > > > > new file mode 100644
+> > > > > index 0000000000..db77729264
+> > > > > --- /dev/null
+> > > > > +++ b/contrib/plugins/ips.c
+> > > > > @@ -0,0 +1,164 @@
+> > > > > +/*
+> > > > > + * ips rate limiting plugin.
+> > > > > + *
+> > > > > + * This plugin can be used to restrict the execution of a system to a
+> > > > > + * particular number of Instructions Per Second (ips). This controls
+> > > > > + * time as seen by the guest so while wall-clock time may be longer
+> > > > > + * from the guests point of view time will pass at the normal rate.
+> > > > > + *
+> > > > > + * This uses the new plugin API which allows the plugin to control
+> > > > > + * system time.
+> > > > > + *
+> > > > > + * Copyright (c) 2023 Linaro Ltd
+> > > > > + *
+> > > > > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > > > > + */
+> > > > > +
+> > > > > +#include <stdio.h>
+> > > > > +#include <glib.h>
+> > > > > +#include <qemu-plugin.h>
+> > > > > +
+> > > > > +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+> > > > > +
+> > > > > +/* how many times do we update time per sec */
+> > > > > +#define NUM_TIME_UPDATE_PER_SEC 10
+> > > > > +#define NSEC_IN_ONE_SEC (1000 * 1000 * 1000)
+> > > > > +
+> > > > > +static GMutex global_state_lock;
+> > > > > +
+> > > > > +static uint64_t max_insn_per_second = 1000 * 1000 * 1000; /* ips per core, per second */
+> > > > > +static uint64_t max_insn_per_quantum; /* trap every N instructions */
+> > > > > +static int64_t virtual_time_ns; /* last set virtual time */
+> > > > > +
+> > > > > +static const void *time_handle;
+> > > > > +
+> > > > > +typedef struct {
+> > > > > +    uint64_t total_insn;
+> > > > > +    uint64_t quantum_insn; /* insn in last quantum */
+> > > > > +    int64_t last_quantum_time; /* time when last quantum started */
+> > > > > +} vCPUTime;
+> > > > > +
+> > > > > +struct qemu_plugin_scoreboard *vcpus;
+> > > > > +
+> > > > > +/* return epoch time in ns */
+> > > > > +static int64_t now_ns(void)
+> > > > > +{
+> > > > > +    return g_get_real_time() * 1000;
+> > > > > +}
+> > > > > +
+> > > > > +static uint64_t num_insn_during(int64_t elapsed_ns)
+> > > > > +{
+> > > > > +    double num_secs = elapsed_ns / (double) NSEC_IN_ONE_SEC;
+> > > > > +    return num_secs * (double) max_insn_per_second;
+> > > > > +}
+> > > > > +
+> > > > > +static int64_t time_for_insn(uint64_t num_insn)
+> > > > > +{
+> > > > > +    double num_secs = (double) num_insn / (double) max_insn_per_second;
+> > > > > +    return num_secs * (double) NSEC_IN_ONE_SEC;
+> > > > > +}
+> > > > > +
+> > > > > +static void update_system_time(vCPUTime *vcpu)
+> > > > > +{
+> > > > > +    int64_t elapsed_ns = now_ns() - vcpu->last_quantum_time;
+> > > > > +    uint64_t max_insn = num_insn_during(elapsed_ns);
+> > > > > +
+> > > > > +    if (vcpu->quantum_insn >= max_insn) {
+> > > > > +        /* this vcpu ran faster than expected, so it has to sleep */
+> > > > > +        uint64_t insn_advance = vcpu->quantum_insn - max_insn;
+> > > > > +        uint64_t time_advance_ns = time_for_insn(insn_advance);
+> > > > > +        int64_t sleep_us = time_advance_ns / 1000;
+> > > > > +        g_usleep(sleep_us);
+> > > > > +    }
+> > > > > +
+> > > > > +    vcpu->total_insn += vcpu->quantum_insn;
+> > > > > +    vcpu->quantum_insn = 0;
+> > > > > +    vcpu->last_quantum_time = now_ns();
+> > > > > +
+> > > > > +    /* based on total number of instructions, what should be the new time? */
+> > > > > +    int64_t new_virtual_time = time_for_insn(vcpu->total_insn);
+> > > > > +
+> > > > > +    g_mutex_lock(&global_state_lock);
+> > > > > +
+> > > > > +    /* Time only moves forward. Another vcpu might have updated it already. */
+> > > > > +    if (new_virtual_time > virtual_time_ns) {
+> > > > > +        qemu_plugin_update_ns(time_handle, new_virtual_time);
+> > > > > +        virtual_time_ns = new_virtual_time;
+> > > > > +    }
+> > > > > +
+> > > > > +    g_mutex_unlock(&global_state_lock);
+> > > > > +}
+> > > > > +
+> > > > > +static void vcpu_init(qemu_plugin_id_t id, unsigned int cpu_index)
+> > > > > +{
+> > > > > +    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
+> > > > > +    vcpu->total_insn = 0;
+> > > > > +    vcpu->quantum_insn = 0;
+> > > > > +    vcpu->last_quantum_time = now_ns();
+> > > > > +}
+> > > > > +
+> > > > > +static void vcpu_exit(qemu_plugin_id_t id, unsigned int cpu_index)
+> > > > > +{
+> > > > > +    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
+> > > > > +    update_system_time(vcpu);
+> > > > > +}
+> > > > > +
+> > > > > +static void every_quantum_insn(unsigned int cpu_index, void *udata)
+> > > > > +{
+> > > > > +    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
+> > > > > +    g_assert(vcpu->quantum_insn >= max_insn_per_quantum);
+> > > > > +    update_system_time(vcpu);
+> > > > > +}
+> > > > > +
+> > > > > +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+> > > > > +{
+> > > > > +    size_t n_insns = qemu_plugin_tb_n_insns(tb);
+> > > > > +    qemu_plugin_u64 quantum_insn =
+> > > > > +        qemu_plugin_scoreboard_u64_in_struct(vcpus, vCPUTime, quantum_insn);
+> > > > > +    /* count (and eventually trap) once per tb */
+> > > > > +    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+> > > > > +        tb, QEMU_PLUGIN_INLINE_ADD_U64, quantum_insn, n_insns);
+> > > > > +    qemu_plugin_register_vcpu_tb_exec_cond_cb(
+> > > > > +        tb, every_quantum_insn,
+> > > > > +        QEMU_PLUGIN_CB_NO_REGS, QEMU_PLUGIN_COND_GE,
+> > > > > +        quantum_insn, max_insn_per_quantum, NULL);
+> > > > > +}
+> > > > > +
+> > > > > +static void plugin_exit(qemu_plugin_id_t id, void *udata)
+> > > > > +{
+> > > > > +    qemu_plugin_scoreboard_free(vcpus);
+> > > > > +}
+> > > > > +
+> > > > > +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> > > > > +                                           const qemu_info_t *info, int argc,
+> > > > > +                                           char **argv)
+> > > > > +{
+> > > > > +    for (int i = 0; i < argc; i++) {
+> > > > > +        char *opt = argv[i];
+> > > > > +        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+> > > > > +        if (g_strcmp0(tokens[0], "ips") == 0) {
+> > > > > +            max_insn_per_second = g_ascii_strtoull(tokens[1], NULL, 10);
+> > > > > +            if (!max_insn_per_second && errno) {
+> > > > > +                fprintf(stderr, "%s: couldn't parse %s (%s)\n",
+> > > > > +                        __func__, tokens[1], g_strerror(errno));
+> > > > > +                return -1;
+> > > > > +            }
+> > > > > +        } else {
+> > > > > +            fprintf(stderr, "option parsing failed: %s\n", opt);
+> > > > > +            return -1;
+> > > > > +        }
+> > > > > +    }
+> > > > > +
+> > > > > +    vcpus = qemu_plugin_scoreboard_new(sizeof(vCPUTime));
+> > > > > +    max_insn_per_quantum = max_insn_per_second / NUM_TIME_UPDATE_PER_SEC;
+> > > > > +
+> > > > > +    time_handle = qemu_plugin_request_time_control();
+> > > > > +    g_assert(time_handle);
+> > > > > +
+> > > > > +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+> > > > > +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+> > > > > +    qemu_plugin_register_vcpu_exit_cb(id, vcpu_exit);
+> > > > > +    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+> > > > > +
+> > > > > +    return 0;
+> > > > > +}
+> > > > > diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+> > > > > index 0b64d2c1e3..449ead1130 100644
+> > > > > --- a/contrib/plugins/Makefile
+> > > > > +++ b/contrib/plugins/Makefile
+> > > > > @@ -27,6 +27,7 @@ endif
+> > > > >    NAMES += hwprofile
+> > > > >    NAMES += cache
+> > > > >    NAMES += drcov
+> > > > > +NAMES += ips
+> > > > >    ifeq ($(CONFIG_WIN32),y)
+> > > > >    SO_SUFFIX := .dll
+> > > > > -- 
+> > > > > 2.39.2
+> > > > > 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
