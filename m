@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C57BC27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:17:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A701C27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJGtl-0000QE-Mc; Mon, 17 Jun 2024 14:16:09 -0400
+	id 1sJGte-0000EQ-24; Mon, 17 Jun 2024 14:16:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJGtd-0000EI-A2
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:16:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJGtV-0000CY-O0
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:15:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJGtb-0006JU-FR
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:16:01 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJGtN-0006I4-OU
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:15:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718648158;
+ s=mimecast20190719; t=1718648143;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HIZg7f7EMSb4DXS9WhlUqeNfOnQttCV1Q7L9oJ5REA8=;
- b=S6Al0s5AGXqKvyonOKaiTdiN8eRtLCOMUSI7rADMdbk+d9VYPSpKuOuv4fXsWBQSZt6z/H
- uOLeAu8f+o1I5YBrpNRsu5bddKl0zZUIxEOJq5qvr1QkqnErnWRq4xWpRT74/cPEkzRESq
- GSG+tR5f/A2M8sg3k4sShZos6a44iOQ=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MuGX7ZrplnQVNu3mzfk0/QaBka3Pq8F7w1QCH59y4VI=;
+ b=AI8Z4EnaHPdRwYeBGI1jYAAQ+dnca4vwwTYmCIJoB8Kp5zTV9KgoyT/iBt2ZJ5+PgNgcDa
+ VSeAJj03tYQJwqaKwmYGO090mCubsXfcjJnH6WHO8Ei8n2fQ9l3AcPrvKziOqV3X67HPxc
+ UW9guJYQC+Cg0afN7YqUxdWqlIy9yhM=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-XDT_jXlzPBWVfTX4b-Ko5Q-1; Mon, 17 Jun 2024 14:15:57 -0400
-X-MC-Unique: XDT_jXlzPBWVfTX4b-Ko5Q-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6b2cbdb07fcso834166d6.3
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:15:56 -0700 (PDT)
+ us-mta-345-fwspiEccOWG0hgcxik13Ug-1; Mon, 17 Jun 2024 14:15:41 -0400
+X-MC-Unique: fwspiEccOWG0hgcxik13Ug-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6ad803bc570so9577796d6.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:15:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718648156; x=1719252956;
+ d=1e100.net; s=20230601; t=1718648141; x=1719252941;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HIZg7f7EMSb4DXS9WhlUqeNfOnQttCV1Q7L9oJ5REA8=;
- b=g2B4I05U6GiAHL+DgmpAHmDGHuSz7hklq7V6rZuz96jf8iQnKtnlgid4o6UMm79X2p
- qiBGMSOzdBCTIDfv1E5uNTjs5mb8ttmV4NvQwVaH+by2Id1IUO0ncuhVooEBTe702Vmh
- +h96TQMyI2QqTSMuZnaX0tluycjQ+8eElPki9nK0qHAun8JpIhXX2oPxqk+IyKd166/S
- 4d/7QRATK/ExGthKattLZSbUFVebz6wPtXje0T8MjeR01vhmKW/c7bvQCEOUNqO/k1Aj
- MzOI7vYEBT/f/POzdPGoONucCgLzscEB0JahuVyDkkzb//eWZVRj51KVi+2reH1ZPTXE
- +GhQ==
-X-Gm-Message-State: AOJu0YwYoXI+bnXFPhKv3I3e9qaW738t+YC1DRgatzAu8yt6ChjUTNic
- MkZzkjkPrWJ806bVeouUneXcZEAATRpX3lxteNBOSz6fOrSTnSTdQnURVCF7fuYxrgika/T3Lin
- X4lm/IjsGr1Va2sjf0/8qBUmllBR7SasMtAjGpb6cfb4/mkWm6EpXypLmM33G48hLQNcqK524Wx
- TF0Ximv0IVmBsLU7K6K8KnS026Z+PfJbQVTw==
-X-Received: by 2002:a05:620a:2b41:b0:798:da55:1269 with SMTP id
- af79cd13be357-798da5517dcmr1103938685a.1.1718648155629; 
- Mon, 17 Jun 2024 11:15:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEENFI7nLdoDmqZEc7XQVS3SR0APG3J2rMVthD9C+jBu6T6x1HaOUSULK7B7QqJx/NFJTMW0w==
-X-Received: by 2002:a05:620a:2b41:b0:798:da55:1269 with SMTP id
- af79cd13be357-798da5517dcmr1103933885a.1.1718648154756; 
- Mon, 17 Jun 2024 11:15:54 -0700 (PDT)
+ bh=MuGX7ZrplnQVNu3mzfk0/QaBka3Pq8F7w1QCH59y4VI=;
+ b=cuvBCk5dBPO70EsSyLCHrf1CVD9/3tfuG4qg6H3z3SAb/TqGqQthd8fuqcb/tKXvfg
+ iLWaOFZzP6l9WwNy4ILL2R2kj9DTS1FPM4QmMVaT8oCqDftnLPI11Y72x/9KVBVnf9FS
+ FpIUE9XCFoK773qKJYbkiV/Cv4/RTAftT2UVITCffX9NVGKXBy3raI46rNRKpsNWV36o
+ yEA/qHI7V8PBJ7NuTlLIXNwcni422YPimZ1Bz52rp0HU39GWrudsyNuwwuQYc/KTfNYF
+ UKfXXsVCKFLGmlThnohTd9hl/WX5yzLXmDfkgwFU4LWm6jbaySYQ0ZVeptoqbLHOZyCZ
+ Djcw==
+X-Gm-Message-State: AOJu0Yzv0QvMjKw2xj8+1odYBoo2HFbSxRcxcUjtEDx9sUMggnSkg5p+
+ B/vkzdq+FO5Lak2S/wV/ori4zEhzcqkWOT9wtn841b/eROHSrtOD3E+yv6U30zMWQwSwX8N7cSO
+ 46XXjEXN+/AcX/0knZ7eJAAJ61IrSIzwUnIGrEvGyunOmM0AFaeKQxpvrwvRYcoIhq5FwhGV9bY
+ pghBfCAQKaEieHMXLtHFISa7JgUGR11RVMNw==
+X-Received: by 2002:a05:620a:319f:b0:79a:26e5:de5f with SMTP id
+ af79cd13be357-79a26e5e0demr955282885a.7.1718648140423; 
+ Mon, 17 Jun 2024 11:15:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGx5ufs4Nr42yGtP/qOs6txcgNJcFhJXLfuzHSr/3uouBhC7pgvgXsnNo0SIOOwAlqrtbN3sg==
+X-Received: by 2002:a05:620a:319f:b0:79a:26e5:de5f with SMTP id
+ af79cd13be357-79a26e5e0demr955278785a.7.1718648139532; 
+ Mon, 17 Jun 2024 11:15:39 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-798abc07501sm449643685a.89.2024.06.17.11.15.53
+ af79cd13be357-798abc07501sm449643685a.89.2024.06.17.11.15.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 11:15:53 -0700 (PDT)
+ Mon, 17 Jun 2024 11:15:39 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
@@ -71,16 +71,15 @@ Cc: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Eric Blake <eblake@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
  peterx@redhat.com, Jiri Denemark <jdenemar@redhat.com>,
  Bandan Das <bdas@redhat.com>
-Subject: [PATCH v2 10/10] tests/migration-tests: Cover postcopy failure on
- reconnect
-Date: Mon, 17 Jun 2024 14:15:34 -0400
-Message-ID: <20240617181534.1425179-11-peterx@redhat.com>
+Subject: [PATCH v2 02/10] migration: Rename thread debug names
+Date: Mon, 17 Jun 2024 14:15:26 -0400
+Message-ID: <20240617181534.1425179-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240617181534.1425179-1-peterx@redhat.com>
 References: <20240617181534.1425179-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -105,192 +104,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make sure there will be an event for postcopy recovery, irrelevant of
-whether the reconnect will success, or when the failure happens.
+The postcopy thread names on dest QEMU are slightly confusing, partly I'll
+need to blame myself on 36f62f11e4 ("migration: Postcopy preemption
+preparation on channel creation").  E.g., "fault-fast" reads like a fast
+version of "fault-default", but it's actually the fast version of
+"postcopy/listen".
 
-The added new case is to fail early in postcopy recovery, in which case it
-didn't even reach RECOVER stage on src (and in real life it'll be the same
-to dest, but the test case is just slightly more involved due to the dual
-socketpair setup).
+Taking this chance, rename all the migration threads with proper rules.
+Considering we only have 15 chars usable, prefix all threads with "mig/",
+meanwhile identify src/dst threads properly this time.  So now most thread
+names will look like "mig/DIR/xxx", where DIR will be "src"/"dst", except
+the bg-snapshot thread which doesn't have a direction.
 
-To do that, rename the postcopy_recovery_test_fail to reflect either stage
-to fail, instead of a boolean.
+For multifd threads, making them "mig/{src|dst}/{send|recv}_%d".
 
+We used to have "live_migration" thread for a very long time, now it's
+called "mig/src/main".  We may hope to have "mig/dst/main" soon but not
+yet.
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- tests/qtest/migration-test.c | 89 ++++++++++++++++++++++++++++++------
- 1 file changed, 74 insertions(+), 15 deletions(-)
+ migration/colo.c         | 2 +-
+ migration/migration.c    | 6 +++---
+ migration/multifd.c      | 6 +++---
+ migration/postcopy-ram.c | 4 ++--
+ migration/savevm.c       | 2 +-
+ 5 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index a16b1a4824..3e237a1499 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -70,6 +70,17 @@ static QTestMigrationState dst_state;
- #define QEMU_ENV_SRC "QTEST_QEMU_BINARY_SRC"
- #define QEMU_ENV_DST "QTEST_QEMU_BINARY_DST"
+diff --git a/migration/colo.c b/migration/colo.c
+index f96c2ee069..6449490221 100644
+--- a/migration/colo.c
++++ b/migration/colo.c
+@@ -935,7 +935,7 @@ void coroutine_fn colo_incoming_co(void)
+     assert(bql_locked());
+     assert(migration_incoming_colo_enabled());
  
-+typedef enum PostcopyRecoveryFailStage {
-+    /*
-+     * "no failure" must be 0 as it's the default.  OTOH, real failure
-+     * cases must be >0 to make sure they trigger by a "if" test.
-+     */
-+    POSTCOPY_FAIL_NONE = 0,
-+    POSTCOPY_FAIL_CHANNEL_ESTABLISH,
-+    POSTCOPY_FAIL_RECOVERY,
-+    POSTCOPY_FAIL_MAX
-+} PostcopyRecoveryFailStage;
-+
- #if defined(__linux__)
- #include <sys/syscall.h>
- #include <sys/vfs.h>
-@@ -680,7 +691,7 @@ typedef struct {
-     /* Postcopy specific fields */
-     void *postcopy_data;
-     bool postcopy_preempt;
--    bool postcopy_recovery_test_fail;
-+    PostcopyRecoveryFailStage postcopy_recovery_fail_stage;
- } MigrateCommon;
+-    qemu_thread_create(&th, "COLO incoming", colo_process_incoming_thread,
++    qemu_thread_create(&th, "mig/dst/colo", colo_process_incoming_thread,
+                        mis, QEMU_THREAD_JOINABLE);
  
- static int test_migrate_start(QTestState **from, QTestState **to,
-@@ -1360,12 +1371,16 @@ static void wait_for_postcopy_status(QTestState *one, const char *status)
-                                                   "completed", NULL });
- }
+     mis->colo_incoming_co = qemu_coroutine_self();
+diff --git a/migration/migration.c b/migration/migration.c
+index e1b269624c..d41e00ed4c 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2408,7 +2408,7 @@ static int open_return_path_on_source(MigrationState *ms)
  
--static void postcopy_recover_fail(QTestState *from, QTestState *to)
-+static void postcopy_recover_fail(QTestState *from, QTestState *to,
-+                                  PostcopyRecoveryFailStage stage)
- {
- #ifndef _WIN32
-+    bool fail_early = (stage == POSTCOPY_FAIL_CHANNEL_ESTABLISH);
-     int ret, pair1[2], pair2[2];
-     char c;
+     trace_open_return_path_on_source();
  
-+    g_assert(stage > POSTCOPY_FAIL_NONE && stage < POSTCOPY_FAIL_MAX);
-+
-     /* Create two unrelated socketpairs */
-     ret = qemu_socketpair(PF_LOCAL, SOCK_STREAM, 0, pair1);
-     g_assert_cmpint(ret, ==, 0);
-@@ -1399,6 +1414,14 @@ static void postcopy_recover_fail(QTestState *from, QTestState *to)
-     ret = send(pair2[1], &c, 1, 0);
-     g_assert_cmpint(ret, ==, 1);
+-    qemu_thread_create(&ms->rp_state.rp_thread, "return path",
++    qemu_thread_create(&ms->rp_state.rp_thread, "mig/src/rp-thr",
+                        source_return_path_thread, ms, QEMU_THREAD_JOINABLE);
+     ms->rp_state.rp_thread_created = true;
  
-+    if (stage == POSTCOPY_FAIL_CHANNEL_ESTABLISH) {
-+        /*
-+         * This will make src QEMU to fail at an early stage when trying to
-+         * resume later, where it shouldn't reach RECOVER stage at all.
-+         */
-+        close(pair1[1]);
-+    }
-+
-     migrate_recover(to, "fd:fd-mig");
-     migrate_qmp(from, to, "fd:fd-mig", NULL, "{'resume': true}");
- 
-@@ -1408,28 +1431,53 @@ static void postcopy_recover_fail(QTestState *from, QTestState *to)
-      */
-     migration_event_wait(from, "postcopy-recover-setup");
- 
-+    if (fail_early) {
-+        /*
-+         * When fails at reconnection, src QEMU will automatically goes
-+         * back to PAUSED state.  Making sure there is an event in this
-+         * case: Libvirt relies on this to detect early reconnection
-+         * errors.
-+         */
-+        migration_event_wait(from, "postcopy-paused");
-+    } else {
-+        /*
-+         * We want to test "fail later" at RECOVER stage here.  Make sure
-+         * both QEMU instances will go into RECOVER stage first, then test
-+         * kicking them out using migrate-pause.
-+         *
-+         * Explicitly check the RECOVER event on src, that's what Libvirt
-+         * relies on, rather than polling.
-+         */
-+        migration_event_wait(from, "postcopy-recover");
-+        wait_for_postcopy_status(from, "postcopy-recover");
-+
-+        /* Need an explicit kick on src QEMU in this case */
-+        migrate_pause(from);
-+    }
-+
-     /*
--     * Make sure both QEMU instances will go into RECOVER stage, then test
--     * kicking them out using migrate-pause.
-+     * For all failure cases, we'll reach such states on both sides now.
-+     * Check them.
-      */
--    wait_for_postcopy_status(from, "postcopy-recover");
-+    wait_for_postcopy_status(from, "postcopy-paused");
-     wait_for_postcopy_status(to, "postcopy-recover");
- 
-     /*
--     * This would be issued by the admin upon noticing the hang, we should
--     * make sure we're able to kick this out.
-+     * Kick dest QEMU out too. This is normally not needed in reality
-+     * because when the channel is shutdown it should also happens on src.
-+     * However here we used separate socket pairs so we need to do that
-+     * explicitly.
-      */
--    migrate_pause(from);
--    wait_for_postcopy_status(from, "postcopy-paused");
--
--    /* Do the same test on dest */
-     migrate_pause(to);
-     wait_for_postcopy_status(to, "postcopy-paused");
- 
-     close(pair1[0]);
--    close(pair1[1]);
-     close(pair2[0]);
-     close(pair2[1]);
-+
-+    if (stage != POSTCOPY_FAIL_CHANNEL_ESTABLISH) {
-+        close(pair1[1]);
-+    }
- #endif
- }
- 
-@@ -1471,12 +1519,12 @@ static void test_postcopy_recovery_common(MigrateCommon *args)
-     wait_for_postcopy_status(to, "postcopy-paused");
-     wait_for_postcopy_status(from, "postcopy-paused");
- 
--    if (args->postcopy_recovery_test_fail) {
-+    if (args->postcopy_recovery_fail_stage) {
-         /*
-          * Test when a wrong socket specified for recover, and then the
-          * ability to kick it out, and continue with a correct socket.
-          */
--        postcopy_recover_fail(from, to);
-+        postcopy_recover_fail(from, to, args->postcopy_recovery_fail_stage);
-         /* continue with a good recovery */
+@@ -3747,10 +3747,10 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
      }
  
-@@ -1510,7 +1558,16 @@ static void test_postcopy_recovery(void)
- static void test_postcopy_recovery_double_fail(void)
- {
-     MigrateCommon args = {
--        .postcopy_recovery_test_fail = true,
-+        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_RECOVERY,
-+    };
-+
-+    test_postcopy_recovery_common(&args);
-+}
-+
-+static void test_postcopy_recovery_channel_reconnect(void)
-+{
-+    MigrateCommon args = {
-+        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_CHANNEL_ESTABLISH,
-     };
+     if (migrate_background_snapshot()) {
+-        qemu_thread_create(&s->thread, "bg_snapshot",
++        qemu_thread_create(&s->thread, "mig/snapshot",
+                 bg_migration_thread, s, QEMU_THREAD_JOINABLE);
+     } else {
+-        qemu_thread_create(&s->thread, "live_migration",
++        qemu_thread_create(&s->thread, "mig/src/main",
+                 migration_thread, s, QEMU_THREAD_JOINABLE);
+     }
+     s->migration_thread_running = true;
+diff --git a/migration/multifd.c b/migration/multifd.c
+index f317bff077..7afc0965f6 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1059,7 +1059,7 @@ static bool multifd_tls_channel_connect(MultiFDSendParams *p,
+     args->p = p;
  
-     test_postcopy_recovery_common(&args);
-@@ -3497,6 +3554,8 @@ int main(int argc, char **argv)
-                            test_postcopy_preempt_recovery);
-         migration_test_add("/migration/postcopy/recovery/double-failures",
-                            test_postcopy_recovery_double_fail);
-+        migration_test_add("/migration/postcopy/recovery/channel-reconnect",
-+                           test_postcopy_recovery_channel_reconnect);
-         if (is_x86) {
-             migration_test_add("/migration/postcopy/suspend",
-                                test_postcopy_suspend);
+     p->tls_thread_created = true;
+-    qemu_thread_create(&p->tls_thread, "multifd-tls-handshake-worker",
++    qemu_thread_create(&p->tls_thread, "mig/src/tls",
+                        multifd_tls_handshake_thread, args,
+                        QEMU_THREAD_JOINABLE);
+     return true;
+@@ -1185,7 +1185,7 @@ bool multifd_send_setup(void)
+         } else {
+             p->iov = g_new0(struct iovec, page_count);
+         }
+-        p->name = g_strdup_printf("multifdsend_%d", i);
++        p->name = g_strdup_printf("mig/src/send_%d", i);
+         p->page_size = qemu_target_page_size();
+         p->page_count = page_count;
+         p->write_flags = 0;
+@@ -1601,7 +1601,7 @@ int multifd_recv_setup(Error **errp)
+                 + sizeof(uint64_t) * page_count;
+             p->packet = g_malloc0(p->packet_len);
+         }
+-        p->name = g_strdup_printf("multifdrecv_%d", i);
++        p->name = g_strdup_printf("mig/dst/recv_%d", i);
+         p->iov = g_new0(struct iovec, page_count);
+         p->normal = g_new0(ram_addr_t, page_count);
+         p->zero = g_new0(ram_addr_t, page_count);
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 3419779548..97701e6bb2 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -1238,7 +1238,7 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
+         return -1;
+     }
+ 
+-    postcopy_thread_create(mis, &mis->fault_thread, "fault-default",
++    postcopy_thread_create(mis, &mis->fault_thread, "mig/dst/fault",
+                            postcopy_ram_fault_thread, QEMU_THREAD_JOINABLE);
+     mis->have_fault_thread = true;
+ 
+@@ -1258,7 +1258,7 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
+          * This thread needs to be created after the temp pages because
+          * it'll fetch RAM_CHANNEL_POSTCOPY PostcopyTmpPage immediately.
+          */
+-        postcopy_thread_create(mis, &mis->postcopy_prio_thread, "fault-fast",
++        postcopy_thread_create(mis, &mis->postcopy_prio_thread, "mig/dst/preempt",
+                                postcopy_preempt_thread, QEMU_THREAD_JOINABLE);
+         mis->preempt_thread_status = PREEMPT_THREAD_CREATED;
+     }
+diff --git a/migration/savevm.c b/migration/savevm.c
+index c621f2359b..e71410d8c1 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -2129,7 +2129,7 @@ static int loadvm_postcopy_handle_listen(MigrationIncomingState *mis)
+     }
+ 
+     mis->have_listen_thread = true;
+-    postcopy_thread_create(mis, &mis->listen_thread, "postcopy/listen",
++    postcopy_thread_create(mis, &mis->listen_thread, "mig/dst/listen",
+                            postcopy_ram_listen_thread, QEMU_THREAD_DETACHED);
+     trace_loadvm_postcopy_handle_listen("return");
+ 
 -- 
 2.45.0
 
