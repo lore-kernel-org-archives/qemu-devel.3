@@ -4,87 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08200C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 17:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCCFFC2BA1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 17:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJGQ5-0004HG-El; Mon, 17 Jun 2024 13:45:29 -0400
+	id 1sJGXu-00074J-Gy; Mon, 17 Jun 2024 13:53:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJGQ3-0004Fv-EI
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 13:45:27 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJGQ1-00015H-Bg
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 13:45:27 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-6819d785528so3338235a12.3
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 10:45:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718646324; x=1719251124; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TZycXPIJeATqTBwgqDIlWYvGVpaGv3tewO1hIk0yg6M=;
- b=cwKNTbrOhN5ydejZYywHFbeFPqdG4k5dOs+3OqeQsGvkGPKa4KWNtAT79uwRsHTL0B
- FPFCaKudDv74dC/D6kf8JsObJISrIwhSO4u6QrM+s86ja25rbjjfMMIcP6hOs4G61YfM
- HsyQyQrtErq1ofBxT446OTTz31pfEqEbRyAuua7+qw28jdKHq3WqB2PqRQVzb46HFc2i
- 5JgWdkMZC5t4LBTo30DdQ2LKmwo3qBMpLevOmTRNaHqCM8y8R9/+hvvbZrgWSW5Ica9m
- RL2lMMvaB8BnEa4ArgGIQ1AzWu/wkZJR8+8eVJQp2W2two2h3HO+vbe/EkPKuRCnfO5N
- eGQQ==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJGXs-00073y-Ur
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 13:53:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJGXr-0002iB-Bi
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 13:53:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718646810;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jgAnQ2VGTD1LEJPqihlP2fJyDfTq50PNDO45zT7E3SI=;
+ b=WCRQ/NLMbv9zI8dwOczsnI4642vHYIZiW4TJoZJffcFbqo0z9VXaQLQaCRrm0JKUWll0WH
+ 9ALYwETYt3lvbJBZKr9t7tgmGUCYt9Hcs2Wmsr6bLYFyoajIGt3HAxPDq3eALIA+k1aqS5
+ ZUwYHyRZMe5WVYbtv/YPD1E41b0ovuM=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-92-u_uHgJHFOiyYPcwz7OHA-g-1; Mon, 17 Jun 2024 13:53:09 -0400
+X-MC-Unique: u_uHgJHFOiyYPcwz7OHA-g-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2c1e953176cso4814607a91.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 10:53:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718646324; x=1719251124;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TZycXPIJeATqTBwgqDIlWYvGVpaGv3tewO1hIk0yg6M=;
- b=WMyvt4skVkDrx08cgO9+xqvvylB41SD+XlADojPMpCEpq0ok5bx4IEypTa1Zxp4+nU
- FAKpftxkmQQH+mUEJhdsKqWAJRf4lDDMMaqPSwj46Nqy1SiZUV1Qj5B/hngIaw3jn1xh
- v8dGrf798aELCr9pYZETp0ZPZ2oVb44aodKOKsr/t849D1e12oHSzAb6UwhDF6odCYca
- Cm4eE37ekLLS9Q1gyLCvdA0XWTM2U2M3YrAzj+xbJhmKcHsEO0bLeUkXEyGEWcoSMOYv
- CGAVU6XL2GZ2JqdoHOpocKk23Xpw34MjEe1A02JLu95M22nl5cjNm+H+guTxEPPVCxl/
- FNnw==
-X-Gm-Message-State: AOJu0YxsRt3Avn0HYmGqCkUVWTaoZY89t12DpE2ikWvvXTH7GHYeNzoE
- FjTpKHOR0XNwpboLiDiE0S5imgVeZT9+zXaFAevIJzwb4sKHNa15jo1MaykSgSQ=
-X-Google-Smtp-Source: AGHT+IGyLPcmSTMUDaE+Im/mrZrYIu53/NPjCo2Oj+ro668O+0Ir9c0fsPVXc2bbCZ+nMChR3sIl2Q==
-X-Received: by 2002:a17:902:d511:b0:1f4:5c81:ba97 with SMTP id
- d9443c01a7336-1f8625c1461mr115677685ad.9.1718646323703; 
- Mon, 17 Jun 2024 10:45:23 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.132.216])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855f06123sm81925855ad.209.2024.06.17.10.45.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Jun 2024 10:45:23 -0700 (PDT)
-Message-ID: <76ba68c3-64ae-43dd-bed6-8312232b221c@linaro.org>
-Date: Mon, 17 Jun 2024 10:45:21 -0700
+ d=1e100.net; s=20230601; t=1718646789; x=1719251589;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jgAnQ2VGTD1LEJPqihlP2fJyDfTq50PNDO45zT7E3SI=;
+ b=NvIYeRFKMJo7M4uYzGyRy32E5pJs0iGhXP7ea/Mx7VQZqHTeUj9Rifr0bDyR+rvIzM
+ jIyhILeKr36D2R6s4d5J8yTnO6XXDTblgjB9AoVTFJQ9FCrNvjNNeOWxeA5aEMItsP9Z
+ ZFqeSI1yvW96PFJlRHboNKIwBgh/nPZJaeAE50XvRNFltmOSikJd0/geRGfW5xg68Him
+ YgiRRE6t15rNkzey10MBrioBc7OHM7t2WMHLgHBrc+65QmNtXCetBHEmLHWDW7Y9HHBJ
+ AuZbkVHr6oTI7mR4q1d6Q+UJq9hLbmzic6X5oVtyvtwwekiy3DHZf2R87Edeloaho6mN
+ qWoQ==
+X-Gm-Message-State: AOJu0Yxr5V2tcL6awMTWYVFJjJYXJvb8Wv4qBXxjEd76d/5PBX8jQCFR
+ nyYMRf2qRIUClhCLe9Rl3MwAnuNP/TPDSt8Knvb6LgfdEhH46H0Kc0pqXC3A+uzW/6QDt9LvNXw
+ oddyC30YiKTIFyB+P0nAZXnV8L+yqKnKiDdpjKAd31z3MdgCM+tNjCyUXujhz9YwCXTjgeh5PO0
+ cg2t3C9zx9QkFA2uBi30NLFVH0gGI=
+X-Received: by 2002:a17:90a:4418:b0:2c3:514:e0 with SMTP id
+ 98e67ed59e1d1-2c4dbb43cecmr9913103a91.35.1718646788837; 
+ Mon, 17 Jun 2024 10:53:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGOK8Jeduf3tuvUHFs93npeTMkeTP9+cyI/Em3HnJpG4y6mfRJ0rFU85BnhBRPIvfsiU5AZ1EokOQ/muPV7tFA=
+X-Received: by 2002:a17:90a:4418:b0:2c3:514:e0 with SMTP id
+ 98e67ed59e1d1-2c4dbb43cecmr9913084a91.35.1718646788495; Mon, 17 Jun 2024
+ 10:53:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] target/ppc: Move VSX vector with length storage
- access insns to decodetree.
-To: Chinmay Rath <rathc@linux.vnet.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
-References: <20240613093318.314913-1-rathc@linux.ibm.com>
- <20240613093318.314913-3-rathc@linux.ibm.com>
- <6638b813-f4ef-4587-b94f-3c24d90ca09e@linaro.org>
- <358b393d-7c43-4a28-b8da-8221df5031a5@linux.vnet.ibm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <358b393d-7c43-4a28-b8da-8221df5031a5@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240514215740.940155-1-jsnow@redhat.com>
+ <20240514215740.940155-15-jsnow@redhat.com>
+ <87frtf3iad.fsf@pond.sub.org>
+In-Reply-To: <87frtf3iad.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 17 Jun 2024 13:52:56 -0400
+Message-ID: <CAFn=p-YKEnSW=EOqJGz=vne7FCh-4xth4eGtCKrp2ywEzdVTtQ@mail.gmail.com>
+Subject: Re: [PATCH 14/20] qapi: fix non-compliant JSON examples
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>, 
+ Ani Sinha <anisinha@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Jiri Pirko <jiri@resnulli.us>,
+ Mads Ynddal <mads@ynddal.dk>, 
+ Jason Wang <jasowang@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Qemu-block <qemu-block@nongnu.org>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ Victor Toso de Carvalho <victortoso@redhat.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Lukas Straub <lukasstraub2@web.de>, 
+ Yanan Wang <wangyanan55@huawei.com>, Hanna Reitz <hreitz@redhat.com>
+Content-Type: multipart/alternative; boundary="00000000000052bcbf061b19a316"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,42 +113,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/17/24 03:40, Chinmay Rath wrote:
-> static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
-> {
->      TCGv EA;
->      if (!ra) {
->          return tcg_constant_tl(0);
->      }
->      if (NARROW_MODE(ctx)) {
->          EA = tcg_temp_new();
->          tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
->      } else {
->          return cpu_gpr[ra];
->      }
->      return EA;
-> }
-> 
->> If you need to modify the resulting EA, then you also need to make a copy for 0.
->>
-> Hey, didn't properly get what you meant here.
-> Did you mean : Since I'm using a tcg_constant for 0, if the EA is to be modified later, 
-> this constant would be an issue, in which case, I should make a copy for it ??
+--00000000000052bcbf061b19a316
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yes.
+On Fri, Jun 14, 2024, 6:55=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
+ wrote:
 
-> Considering that, there are no tcg level modifications with this EA.
+> John Snow <jsnow@redhat.com> writes:
+>
+> > If we parse all examples as QMP, we need them to conform to a standard
+> > so that they render correctly. Once the QMP lexer is active for
+> > examples, these will produce warning messages and fail the build.
+> >
+> > The QMP lexer still supports elisions, but they must be represented as
+> > the value "...", so two examples have been adjusted to support that
+> > format here.
+>
+> I think this could use a bit more context.  I believe you're referring
+> to docs/sphinx/qmp_lexer.py.  It describes itself as "a Sphinx extension
+> that provides a QMP lexer for code blocks."
+>
 
-Ok, good.
+That's our guy! I explain its use a bit more in ... some other patch,
+somewhere...
 
 
-> However, the 
-> underlying helper method, which considers this EA as a target_ulong type does modify it, 
-> which I don't think should be an issue.
+> "If we parse all examples as QMP" and "Once the QMP lexer is active for
+> examples" suggests we're *not* using it for (some?) examples.  So what
+> are we using it for?
+>
 
-Correct, that's fine.
+My incremental backup doc makes use of it; you have to "opt in" to using
+the QMP lexer instead of the generic lexer.
+
+The example conversion patch later in this series opts all of the qapi docs
+into using it.
+
+((Later, it's possible to make "Example::" choose the QMP lexer by default
+on any of our generated QMP pages. (and opting out would require explicit
+code-block syntax with the lexer of choice named.)))
 
 
-r~
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+>
+> Patch looks lovely.
+>
+> Hat tip to Victor Toso, who fixed up most examples two years ago.  Back
+> then we couldn't decide how to do elisions, so we left some unfixed.
+>
+
+Sorry I didn't chime in back then! "..." is arbitrary, but it's what we
+already use for the qmp lexer and in the incremental backup/bitmap docs, so
+I figured consistency was good.
+
+The QMP lexer has syntax support for ->, <- and ... and otherwise requires
+the examples to be valid JSON. It doesn't understand grammar, though, so
+it's kind of "dumb", but this is one small protection.
+
+>
+
+--00000000000052bcbf061b19a316
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Fri, Jun 14, 2024, 6:55=E2=80=AFAM Markus Armbruste=
+r &lt;<a href=3D"mailto:armbru@redhat.com" target=3D"_blank" rel=3D"norefer=
+rer">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1e=
+x">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" rel=3D"noreferrer nore=
+ferrer" target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; If we parse all examples as QMP, we need them to conform to a standard=
+<br>
+&gt; so that they render correctly. Once the QMP lexer is active for<br>
+&gt; examples, these will produce warning messages and fail the build.<br>
+&gt;<br>
+&gt; The QMP lexer still supports elisions, but they must be represented as=
+<br>
+&gt; the value &quot;...&quot;, so two examples have been adjusted to suppo=
+rt that<br>
+&gt; format here.<br>
+<br>
+I think this could use a bit more context.=C2=A0 I believe you&#39;re refer=
+ring<br>
+to docs/sphinx/qmp_lexer.py.=C2=A0 It describes itself as &quot;a Sphinx ex=
+tension<br>
+that provides a QMP lexer for code blocks.&quot;<br></blockquote></div></di=
+v><div dir=3D"auto"><br></div><div dir=3D"auto">That&#39;s our guy! I expla=
+in its use a bit more in ... some other patch, somewhere...</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc sol=
+id;padding-left:1ex">
+<br>
+&quot;If we parse all examples as QMP&quot; and &quot;Once the QMP lexer is=
+ active for<br>
+examples&quot; suggests we&#39;re *not* using it for (some?) examples.=C2=
+=A0 So what<br>
+are we using it for?<br></blockquote></div></div><div dir=3D"auto"><br></di=
+v><div dir=3D"auto">My incremental backup doc makes use of it; you have to =
+&quot;opt in&quot; to using the QMP lexer instead of the generic lexer.</di=
+v><div dir=3D"auto"><br></div><div dir=3D"auto">The example conversion patc=
+h later in this series opts all of the qapi docs into using it.</div><div d=
+ir=3D"auto"><br></div><div dir=3D"auto">((Later, it&#39;s possible to make =
+&quot;Example::&quot; choose the QMP lexer by default on any of our generat=
+ed QMP pages. (and opting out would require explicit code-block syntax with=
+ the lexer of choice named.)))</div><div dir=3D"auto"><br></div><div dir=3D=
+"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=
+=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" rel=
+=3D"noreferrer noreferrer" target=3D"_blank">jsnow@redhat.com</a>&gt;<br>
+<br>
+Patch looks lovely.<br>
+<br>
+Hat tip to Victor Toso, who fixed up most examples two years ago.=C2=A0 Bac=
+k<br>
+then we couldn&#39;t decide how to do elisions, so we left some unfixed.<br=
+></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Sor=
+ry I didn&#39;t chime in back then! &quot;...&quot; is arbitrary, but it&#3=
+9;s what we already use for the qmp lexer and in the incremental backup/bit=
+map docs, so I figured consistency was good.</div><div dir=3D"auto"><br></d=
+iv><div dir=3D"auto">The QMP lexer has syntax support for -&gt;, &lt;- and =
+... and otherwise requires the examples to be valid JSON. It doesn&#39;t un=
+derstand grammar, though, so it&#39;s kind of &quot;dumb&quot;, but this is=
+ one small protection.</div><div dir=3D"auto"><div class=3D"gmail_quote"><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px =
+#ccc solid;padding-left:1ex">
+</blockquote></div></div></div>
+
+--00000000000052bcbf061b19a316--
 
 
