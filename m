@@ -4,109 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD3BDC27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 13:31:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44BD5C27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 13:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJCRV-0002Xi-Cm; Mon, 17 Jun 2024 09:30:41 -0400
+	id 1sJCWX-0004QM-Pg; Mon, 17 Jun 2024 09:35:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sJCRJ-0002VP-AL; Mon, 17 Jun 2024 09:30:38 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sJCRF-0001kW-N2; Mon, 17 Jun 2024 09:30:28 -0400
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45HC0eOj006925;
- Mon, 17 Jun 2024 13:30:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- rJ5HHrSgY3g0DgoDYJxNq7yUQo2yzrbJn+3wCyxypGI=; b=n+p9MDGoctnPWf+W
- zD263M0bhM3hcOSIOUHJD7Jl5XOJhRUfZp6g2VLTVjkg7Bw4Vr21NDRg890Wywut
- B3F8OZdSukqw6/AjEuLjhydtv+DHGqw/zcfBqZUqS08VElqTrdVo5G0GjEj3j3P1
- nNzYyN8q+E7nMJgKoLi/oprUQlsRA4KRGl+Z+y7wDOU4+K2E1U8wPKH3JNopFgCV
- X/D8mnnQcLS9nfYZHF3kcXNcFD4VZH+iSiUWH4iX3yZM9e3yeYgMYVYUa3fKWxAz
- LQjOHIn++kj4yised7DbUkqxclJgmrem8WalrWwFnLH5rurYp4tDuDTAcI/E3Frs
- R+utyA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ytj408mer-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Jun 2024 13:30:11 +0000 (GMT)
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45HDUB89011424;
- Mon, 17 Jun 2024 13:30:11 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ytj408mem-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Jun 2024 13:30:11 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45HC3Qqf011031; Mon, 17 Jun 2024 13:30:10 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3yspsmt8kk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Jun 2024 13:30:10 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45HDU71v24117984
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Jun 2024 13:30:09 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CF4D55807D;
- Mon, 17 Jun 2024 13:30:07 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3083458070;
- Mon, 17 Jun 2024 13:30:04 +0000 (GMT)
-Received: from [9.195.47.7] (unknown [9.195.47.7])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Jun 2024 13:30:03 +0000 (GMT)
-Message-ID: <21ac5eca-dd22-40de-a21e-af9985e2c62f@linux.ibm.com>
-Date: Mon, 17 Jun 2024 19:00:02 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/26] hw/ppc: Prefer HumanReadableText over Monitor
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240610062105.49848-1-philmd@linaro.org>
-Content-Language: en-US
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20240610062105.49848-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Smrl2P5jb1zaTnt8V94rUl-pAd7jHPLs
-X-Proofpoint-GUID: olYVnKHB2gkj1qcKLji9ivp0DSFyxfiX
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <chris.chenfeiyang@gmail.com>)
+ id 1sJC5d-0003ZS-U3
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 09:08:05 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chris.chenfeiyang@gmail.com>)
+ id 1sJC5b-0005W6-Ov
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 09:08:05 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-6bce380eb9bso2403137a12.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 06:08:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1718629682; x=1719234482; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=72X5/3yhGLA4LtRdZgA1t3m8TQab25KcJhLKaM5WnaI=;
+ b=fbAWEnM+x/qrrxVeUjsgBgZbM5FAUdvQPoRX/7v07A0XZ24xu/TjAJU+W/irPwgWKu
+ 8GI0LgWXxsjuj7JGN+5ZfjbFRo93tNy1exUIx9TbcABk68GL57PDRFbSdUQJ0a+FYhv8
+ 9zKnElq2ToZACCytXV0GVD7jlzgO7EosRkRDbLSWKPEZTqx3ejIoRUA2bT0ajmnQdX+V
+ 7O8Noo/k1A2+5q9bXjPbf0OizMYYnAavmDtL29r6YDzFXYJD5lVIbXF7/wgSy25IlE7/
+ 3usYvRrPQyzRxpHVGC05tgWaB63xRIN2fL95/TdegT2V8AR0spBq0ULs5B21jVRdVEtF
+ MKOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718629682; x=1719234482;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=72X5/3yhGLA4LtRdZgA1t3m8TQab25KcJhLKaM5WnaI=;
+ b=u49ItMTFjTA6lVZAmCqfU42H6k3D0BxO88l7nvSVuPXmnfi+ypfO3U/fu02bEwm/uH
+ l42jnpWfo2nqpkRMPZuCl3AQxoD0wty0oyczSm55YKR5h8LZwSc3CuicKEZNQl76Lauc
+ wrEMfIxNya297pDoLVJT4ww7kjFI/RTVsXp3gZfhFn98kl4e0ljkFsOoYdK5iF/Y68xM
+ +EihTt7phAQc3hOFnCsN2Asf9Z7AKYfBfpCX3WIJK8JSDKvjm5TPGWmqn8UP5s1ANG9u
+ xQsbFn/Z+41fhQK2G8TXvZ4oMaVjmDzwjB4xUpZJDLu0OHjc7a3PhoK1pZjrQ6ESUM6h
+ 0SXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVxz1E2EGluGHmJbDVtjzRO+Cr3uvmU85pwvMyiToK71kQuRlJ0J0o3UQbNAAGUOJqkFOSU+TreN1PEVXApxxZrwqzscZU=
+X-Gm-Message-State: AOJu0YxyWrEmQupjEsKUs+IeKzy5AD5M51hqrnT+M0ia+s1DkVnVG0xz
+ QMtwb1XhcyNQW4S9tis7qHAFmT+/kFfaoRAXVS+CnAYpm3GVoRBK
+X-Google-Smtp-Source: AGHT+IGm/3qNyecsSOWeqmgEEVelwlU4M7Wj231Wp6tKTc2Tdu5/xT86vQDqs890EeeJw5TZP7VP9Q==
+X-Received: by 2002:a17:90a:4a02:b0:2c3:40b6:293b with SMTP id
+ 98e67ed59e1d1-2c4db951e74mr8844278a91.39.1718629681667; 
+ Mon, 17 Jun 2024 06:08:01 -0700 (PDT)
+Received: from localhost.localdomain ([58.164.66.62])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c52f98f0c9sm1376970a91.7.2024.06.17.06.07.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Jun 2024 06:08:00 -0700 (PDT)
+From: Feiyang Chen <chris.chenfeiyang@gmail.com>
+To: gaosong@loongson.cn
+Cc: Feiyang Chen <chris.chenfeiyang@gmail.com>, c@jia.je, qemu-devel@nongnu.org
+Subject: [PATCH] target/loongarch: Remove avail_64 in trans_srai_w()
+Date: Mon, 17 Jun 2024 23:07:32 +1000
+Message-Id: <20240617130732.40183-1-chris.chenfeiyang@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-17_11,2024-06-17_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=610 spamscore=0
- priorityscore=1501 phishscore=0 mlxscore=0 suspectscore=0 bulkscore=0
- malwarescore=0 impostorscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406170104
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=chris.chenfeiyang@gmail.com; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 17 Jun 2024 09:35:52 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -121,80 +93,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Since srai.w is a valid instruction on la32, simply remove the avail_64 check.
 
+Fixes: c0c0461e3a06 ("target/loongarch: Add avail_64 to check la64-only instructions")
+Signed-off-by: Feiyang Chen <chris.chenfeiyang@gmail.com>
+---
+ target/loongarch/tcg/insn_trans/trans_shift.c.inc | 4 ----
+ 1 file changed, 4 deletions(-)
 
-On 6/10/24 11:50, Philippe Mathieu-Daudé wrote:
-> Hi,
-> 
-> This series remove uses of Monitor in hw/ppc/,
-> replacing by the more generic HumanReadableText.
-> Care is taken to keep the commit bisectables by
-> updating functions one by one, also easing review.
-> 
-> For rationale see previous series from Daniel:
-> https://lore.kernel.org/qemu-devel/20211028155457.967291-1-berrange@redhat.com/
-> 
-> Regards,
-> 
-> Phil.
-> 
+diff --git a/target/loongarch/tcg/insn_trans/trans_shift.c.inc b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
+index 2f4bd6ff28..8bcf341b22 100644
+--- a/target/loongarch/tcg/insn_trans/trans_shift.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
+@@ -72,10 +72,6 @@ static bool trans_srai_w(DisasContext *ctx, arg_srai_w *a)
+     TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
+     TCGv src1 = gpr_src(ctx, a->rj, EXT_ZERO);
+ 
+-    if (!avail_64(ctx)) {
+-        return false;
+-    }
+-
+     tcg_gen_sextract_tl(dest, src1, a->imm, 32 - a->imm);
+     gen_set_gpr(a->rd, dest, EXT_NONE);
+ 
+-- 
+2.34.1
 
-For the series:
-
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-
-> Philippe Mathieu-Daudé (26):
->    hw/ppc: Avoid using Monitor in pnv_phb3_msi_pic_print_info()
->    hw/ppc: Avoid using Monitor in icp_pic_print_info()
->    hw/ppc: Avoid using Monitor in xive_tctx_pic_print_info()
->    hw/ppc: Avoid using Monitor in ics_pic_print_info()
->    hw/ppc: Avoid using Monitor in PnvChipClass::intc_print_info()
->    hw/ppc: Avoid using Monitor in xive_end_queue_pic_print_info()
->    hw/ppc: Avoid using Monitor in spapr_xive_end_pic_print_info()
->    hw/ppc: Avoid using Monitor in spapr_xive_pic_print_info()
->    hw/ppc: Avoid using Monitor in xive_source_pic_print_info()
->    hw/ppc: Avoid using Monitor in pnv_phb4_pic_print_info()
->    hw/ppc: Avoid using Monitor in xive_eas_pic_print_info()
->    hw/ppc: Avoid using Monitor in xive_end_pic_print_info()
->    hw/ppc: Avoid using Monitor in xive_end_eas_pic_print_info()
->    hw/ppc: Avoid using Monitor in xive_nvt_pic_print_info()
->    hw/ppc: Avoid using Monitor in pnv_xive_pic_print_info()
->    hw/ppc: Avoid using Monitor in pnv_psi_pic_print_info()
->    hw/ppc: Avoid using Monitor in xive2_eas_pic_print_info()
->    hw/ppc: Avoid using Monitor in xive2_end_eas_pic_print_info()
->    hw/ppc: Avoid using Monitor in xive2_end_queue_pic_print_info()
->    hw/ppc: Avoid using Monitor in xive2_end_pic_print_info()
->    hw/ppc: Avoid using Monitor in xive2_nvp_pic_print_info()
->    hw/ppc: Avoid using Monitor in pnv_xive2_pic_print_info()
->    hw/ppc: Avoid using Monitor in
->      SpaprInterruptControllerClass::print_info()
->    hw/ppc: Avoid using Monitor in spapr_irq_print_info()
->    hw/ppc: Avoid using Monitor in pnv_chip_power9_pic_print_info_child()
->    hw/ppc: Avoid using Monitor in pic_print_info()
-> 
->   include/hw/pci-host/pnv_phb3.h |   2 +-
->   include/hw/pci-host/pnv_phb4.h |   2 +-
->   include/hw/ppc/pnv_chip.h      |   4 +-
->   include/hw/ppc/pnv_psi.h       |   2 +-
->   include/hw/ppc/pnv_xive.h      |   4 +-
->   include/hw/ppc/spapr_irq.h     |   4 +-
->   include/hw/ppc/xics.h          |   4 +-
->   include/hw/ppc/xive.h          |   4 +-
->   include/hw/ppc/xive2_regs.h    |   8 +--
->   include/hw/ppc/xive_regs.h     |   8 +--
->   hw/intc/pnv_xive.c             |  38 ++++++------
->   hw/intc/pnv_xive2.c            |  48 +++++++--------
->   hw/intc/spapr_xive.c           |  41 ++++++-------
->   hw/intc/xics.c                 |  25 ++++----
->   hw/intc/xics_spapr.c           |   7 +--
->   hw/intc/xive.c                 | 108 ++++++++++++++++-----------------
->   hw/intc/xive2.c                |  87 +++++++++++++-------------
->   hw/pci-host/pnv_phb3_msi.c     |  21 +++----
->   hw/pci-host/pnv_phb4.c         |  17 +++---
->   hw/ppc/pnv.c                   |  52 ++++++++--------
->   hw/ppc/pnv_psi.c               |   9 ++-
->   hw/ppc/spapr.c                 |  11 +++-
->   hw/ppc/spapr_irq.c             |   4 +-
->   23 files changed, 256 insertions(+), 254 deletions(-)
-> 
 
