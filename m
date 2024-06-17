@@ -4,106 +4,208 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05969C27C53
-	for <qemu-devel@archiver.kernel.org>; Sun, 16 Jun 2024 23:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7508C27C53
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 01:26:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sIzYD-0007Z8-5x; Sun, 16 Jun 2024 19:44:45 -0400
+	id 1sJ17q-0007YC-Rc; Sun, 16 Jun 2024 21:25:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sIzYA-0007YG-K6; Sun, 16 Jun 2024 19:44:42 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sJ17p-0007XT-AZ; Sun, 16 Jun 2024 21:25:37 -0400
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1sIzY8-0002mA-Q9; Sun, 16 Jun 2024 19:44:42 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45GNQuLW006544;
- Sun, 16 Jun 2024 23:44:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=y
- LqF9YQCPtVk5ZgVJCxRgQsBP2XNF2M7X2DPN1rT/lQ=; b=qjYhi8BoSVbwyKKCz
- iGwDv8W5qAed1QRxLYcLAUj77DAliLI5DsRRorMjc7sCRDV+UJfp8Ec3oUXogNi/
- Vq0h+YhmvjHlWL7KXmKtapafVfcJgBgGPDouq/ST7qWX/KId83zXRlmLIyze1cN+
- yuxjJ59tKe2xbOnDhTf0K4+/LjqGS99PkFrx73ImI/dmjOD20PUDXofljQB7Q8TP
- cLE19K4VmPoOnJ//Hh7X3e9twG8eH5vAr4+siKPjcLR/zz3UCV97OsFFe2vIN85t
- WlOxbPJsd+PMTG2Rn5cXmeLXvz4SQ5KcwVBaQF2i7JrsfzjHYp05UrS2fs3VAbVB
- /KNvQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yt8efg54j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 16 Jun 2024 23:44:37 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45GNiboP000497;
- Sun, 16 Jun 2024 23:44:37 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yt8efg54f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 16 Jun 2024 23:44:37 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45GMB2ZW006227; Sun, 16 Jun 2024 23:44:36 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ysn9u5pn7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 16 Jun 2024 23:44:36 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45GNiXPv53608908
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
- Sun, 16 Jun 2024 23:44:36 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CDA2B58060;
- Sun, 16 Jun 2024 23:44:33 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F3D6E5803F;
- Sun, 16 Jun 2024 23:44:32 +0000 (GMT)
-Received: from [9.67.62.243] (unknown [9.67.62.243])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Sun, 16 Jun 2024 23:44:32 +0000 (GMT)
-Message-ID: <062b6182-7599-4012-bc10-6ba85e624df1@linux.ibm.com>
-Date: Sun, 16 Jun 2024 19:44:31 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] s390x: Enable and document boot device fallback on
- panic
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: frankja@linux.ibm.com, nsg@linux.ibm.com
-References: <20240529154311.734548-1-jrossi@linux.ibm.com>
- <20240529154311.734548-6-jrossi@linux.ibm.com>
- <53920fad-888c-441b-b301-ca177f04f0fa@redhat.com>
- <6407dc07-8f16-4765-9da4-fd2b0e4e94e9@linux.ibm.com>
- <e421b171-ae66-4282-b204-f29847d6a80e@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sJ17m-00028v-UN; Sun, 16 Jun 2024 21:25:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1718587535; x=1750123535;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=cvvGz6eeKartbMCsJeHdT/y1x6ncIFtukvyWzG0IbLY=;
+ b=Umx+S2BB6g4N7jHbvyR03pxB25z74lK486n/w3OH+E6dAgGU/g2UJdUh
+ n4OCVy1mEoJKwdkQ4ewxmBr1v0VtybYPTz8GJs9xPmQx9R71ms94IB68Y
+ abz2a+IW2XlxqcqDlKAd8v6ySf+QRNZD6Cw0ThMeyyx2giSktuWUTTfEy
+ s7FxEGo8W7N4hUESNxIIs1UcrprjXA+tNj1lamDjtPVVnPsscPovzuZ02
+ SN7z3dhlxU/MF6SdsKI8sBshPa7leLCpf4L7FAUQBmaojnjgEA3RPxxiw
+ IFq8OWPRR1RRnz7ftEKa0vqcqn0uTv0VEXs0XOGQVSkW8EhXrgLl2D6GP w==;
+X-CSE-ConnectionGUID: ILZ8fpl8TFOgpwRVeccTew==
+X-CSE-MsgGUID: BmawauiISFuhUbV72D6reg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11105"; a="15633423"
+X-IronPort-AV: E=Sophos;i="6.08,243,1712646000"; d="scan'208";a="15633423"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Jun 2024 18:25:30 -0700
+X-CSE-ConnectionGUID: GnDbcx16R7aaqk29AnwsgQ==
+X-CSE-MsgGUID: A0GsqgTLRSqs3VTLKA1F/w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,243,1712646000"; d="scan'208";a="40903010"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
+ by fmviesa007.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 16 Jun 2024 18:25:30 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Sun, 16 Jun 2024 18:25:29 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Sun, 16 Jun 2024 18:25:29 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Sun, 16 Jun 2024 18:25:29 -0700
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (104.47.57.41) by
+ edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Sun, 16 Jun 2024 18:25:29 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=bUssCJp3O+mgP52Mb3QIkbyCBfSUH5b71PLDlgxe7MspAtBOts5LtBv195DOZNx9hrc8ki0637AhHVMcN7gUumlpuI/yw/uJolB469iZSwkSutPRcKw9F0XeAcA8y/lY3ekrDVq3gT6MR/MQ0TrNWh4t1CEOqw7asahfaN3WbPuPbyfVm2VdJTvhtpE478ymgAYzAIOQBEtQcq3y20hw3d/IhuiPRTPaievls91/r36WG43F0dBfjPPhBIUUZRdu3xvYM+5Oejwr+NbakwrHxVCqowuEYuQVMCU74se/jrUYppcuoA5l0HmTZW0zXEjTI63VMPhO/e72H3g4D4k70w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cvvGz6eeKartbMCsJeHdT/y1x6ncIFtukvyWzG0IbLY=;
+ b=QljznFNV1WonRdW4dw1oeAjjEh/WzuK192/s2nA90Q2y6PYsbJzA2xzhHOd/SJnEZdUIe+L0n8woW4EevDDh9f1HQmpY3F9I6IOpdeCOwmGwl2rxgsVi+t1X5LwEjBJL23Lh46E+EkfTKHBPLEE+Xh4T8xQuOBSBGKq+BK4ovITOPVb23s71Lcs3ylRYhY2PjH0AytEIfzHNbsgTI46/GlfQiPIs0a8oBcCGXQLl7TCxmJ9JR/s9+iEeKnSWtcaLbWJGIOQeevOKbSyhcZsSWYBr4hXcck92fxKHVMej4oxoUNi+MJQhvp4nJG9xU33y7yri4Ffqq3R9QBVM2g93wQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by DS0PR11MB7852.namprd11.prod.outlook.com (2603:10b6:8:fc::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.30; Mon, 17 Jun
+ 2024 01:25:24 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%7]) with mapi id 15.20.7677.030; Mon, 17 Jun 2024
+ 01:25:24 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
+ <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "mst@redhat.com"
+ <mst@redhat.com>, "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "yanghliu@redhat.com"
+ <yanghliu@redhat.com>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>
+Subject: RE: [PATCH v3 1/7] HostIOMMUDevice: Store the VFIO/VDPA agent
+Thread-Topic: [PATCH v3 1/7] HostIOMMUDevice: Store the VFIO/VDPA agent
+Thread-Index: AQHavXOC/oNuGumRbUykLJrCMOqnurHG+3QAgAANL4CAAAERAIAEIbdg
+Date: Mon, 17 Jun 2024 01:25:24 +0000
+Message-ID: <SJ0PR11MB674408FB45B20DC52E42193692CD2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20240613092359.847145-1-eric.auger@redhat.com>
+ <20240613092359.847145-2-eric.auger@redhat.com>
+ <ef400920-dcf4-4f37-b4ce-c5560b92d9c5@redhat.com>
+ <f6473f76-1d8f-41cb-9488-73edc960c996@redhat.com>
+ <ec740f33-44ae-4d50-be65-5f717122f4f0@redhat.com>
+In-Reply-To: <ec740f33-44ae-4d50-be65-5f717122f4f0@redhat.com>
+Accept-Language: en-US
 Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <e421b171-ae66-4282-b204-f29847d6a80e@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 0m2LzVVz1l7aqDg2Sks1NRrMPdjvjOkm
-X-Proofpoint-GUID: PPtlCEzmI1V71I69X39_dzhdykMryMlW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-16_12,2024-06-14_03,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 adultscore=0
- priorityscore=1501 spamscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0
- clxscore=1011 mlxlogscore=999 suspectscore=0 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406160183
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|DS0PR11MB7852:EE_
+x-ms-office365-filtering-correlation-id: e7621316-351c-4043-8432-08dc8e6c5c93
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230037|366013|7416011|376011|1800799021|38070700015; 
+x-microsoft-antispam-message-info: =?utf-8?B?MGpKckEraHN1UC9FRXhxbThyN05TbHdMTUE5MDFCZU1mLzFra0IybzNad1hx?=
+ =?utf-8?B?RTRqTjFUWlBrbDdjMnh6VG5MM0J4VmE0WTZSWnorNDR2ZHZJRmVJNjhlQ29F?=
+ =?utf-8?B?ZXpyZndCZFVnZXR3c3dIZ3VjS3NGblpNM2wvRjN3K3RuTytaVTBtTjJWYURI?=
+ =?utf-8?B?UHRVN3VsTUVCRE53MnVIQ0QvTGlwbXY2TFozOGpZUCtCcW5ob1d3RjNMYnpv?=
+ =?utf-8?B?RjlDK0RHc0NiOHAweThNekhTYUVVY3RGY0VFeGQ1WDh0N1dKMFNFUkRERFI1?=
+ =?utf-8?B?alBreGlPbGFqWlFzZWwySXl3MWt3RlNVNXZrck9BaWdtZnJBbS8wRjNQM0d0?=
+ =?utf-8?B?NFJUZXpCUEdqM1pFOGVPd0hyS2pLZ1BCc0Z5NXFXRHRtL01lVjFRZlQ5dTVO?=
+ =?utf-8?B?Zy82SHFmNzIwMWszMndZWnluTHZ6RnJxV2xaUHdFVW0wcHd2cnZMYW1rWHJz?=
+ =?utf-8?B?VTI4Qk14NUlDd2VUL0hCTVg1OHhjWGtFUTNUOThCMFF0K2QzcmxnZ29makdH?=
+ =?utf-8?B?ckwxN2hSUUlxM0J2elBnV1ZyUHpiL1U0UDBLSmZVL1J1RHIvSUxHVkFEeVdB?=
+ =?utf-8?B?N2F1RUwrSThnaHhRaGtEZmYzQ0VNQTV0Rkl6bVlWWW9TVDFOanNseklPdnB1?=
+ =?utf-8?B?Vm5Sc05zQlF5TU5Ka0R5cGh1LzB5dEdEK2EyQzdoM1RBYTRuUHBDczhFZ2xD?=
+ =?utf-8?B?eDN4VEdKRXdOUXFqUmpBWllGWDVUeHNpTFhOVVNuUzFuQkRFUDM4N2ZaQ1I2?=
+ =?utf-8?B?V0luK2s0eXg5TXRwNXhCREFMeG40eXB1ZXlIQnd2c013OXBDazV4aExYZWZO?=
+ =?utf-8?B?UUQyREVTVjlWTkRzNjlrZWtXZUhYZ1JsMUV5VEJ1SDg5aGp3ZHc2TWJON0N3?=
+ =?utf-8?B?czkzajFnSFlsMDFDcExIYTdMWDR5ZlZvb3NoZG9QVnlMcGVXMG5UOGtlRm0y?=
+ =?utf-8?B?SmZlWmd2YkZ3b3oxVkRvREtmM3UwSTMrV1pRQWV6dlNTVTF4UUdNekJvczgx?=
+ =?utf-8?B?bUNneDZZaFlrT0xRbnVBaXM5bzBlK3RkU010NXVCR0lOa1kreVdjWXkvRVVV?=
+ =?utf-8?B?ZjNmY2tXK1RQRE54MGtRcHh6MDhGcVI4YXV5bmlmbE00eTBPRTdSRnl0SjJ1?=
+ =?utf-8?B?d25QSURuTXNDYVcrT0k2dnNtanBvS3BsNVlzUmFicHdYRHJUMWpHNjNIRVdh?=
+ =?utf-8?B?VXNlaHlXYXdMZDVQMXZ2TlJJRStWMHdCRDhZUWI0RFFMZlQrQzhTclYvVXpB?=
+ =?utf-8?B?RlkwNGxuWjIwWDVvTE1qOGVpM2NiL1hmR2k3UUxpOU9QbzlZYW9uZWNNUHQ3?=
+ =?utf-8?B?QnlJWHJHcnR3aU9oOU1XaytmWFZVSlpwME9CQnBCRWlCNFZZZWJkNW9YK1pC?=
+ =?utf-8?B?YWhIVkhJSm5VNlRzTEUvNUtIV2lGMGhGeVlzOXp5SktIbEJROEZTa2pNdTVN?=
+ =?utf-8?B?NUc2L0ZpSFhqbEtXaGQrTHo4dFRHUEhZZStSTm13QlZvRFNHajFXVVROdTlB?=
+ =?utf-8?B?WlhJMmpjSmpUNmZ0QkdBeCtZWEYvSmN3bzZwbWg2dU1WdGZWRXZWYXNPa1Z1?=
+ =?utf-8?B?UzFsYkllWGVHY1ZqYVNMb01qc3A5YUtvd1JXanNpNHF1RTFtWXV0QSt6OG5P?=
+ =?utf-8?B?SmthZDJmWlBhMGJlMGthcXpKVWt5QnBiRktjMDZNVCtVeThXWkp4SGVWTUpM?=
+ =?utf-8?B?dVA4TnRIWkY0akhHbDY0NVEvSW5jQldXVkZKUE9WNVFlQVRSYTRVOTJiOTJC?=
+ =?utf-8?Q?zps9vYRlbYsQngk8rlY7UKZWsohgF9unIhn6bii?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230037)(366013)(7416011)(376011)(1800799021)(38070700015); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?MHhMQ0pmWFd5NlBuYzJkdVRCVDF4cjZiVnZGSjdLWVJZWk1FS1pITk5BUFN1?=
+ =?utf-8?B?ZUo2NlZIMWRQUjZxWUlPNkswNUZnMWpXeVZTYyttN2VMZHVJMEVKYnZPV28y?=
+ =?utf-8?B?RnYwK1c2V3NpT3pCV1d5MTlGMWtweGR4YzlKSStpK0FScnBpL25Pd0dldUNn?=
+ =?utf-8?B?a28vZ2NtUlZCVE1lbGI2Qlp4MGViczhydnBpTEpXY1F0MlF6Q1RJSmhHa05M?=
+ =?utf-8?B?dmV4ZkFUYThvWHUrUEh1MGg5bjFBdnNoSXBMR3BuTk1vQndlUkl5MTZCZG9m?=
+ =?utf-8?B?aGtiSlBKWVR3b1Bxd1BZcFFQbXZwc0I5Z1czOHNCeUJnZlpRY0xkaXViTzZa?=
+ =?utf-8?B?Q1VVdFdGdllacDFGM0VUcVpWYTBNME1aT3hzTUNMdmZPU1l3VFc3VWR2Mkh6?=
+ =?utf-8?B?emRKcVFzc3BRRCsxUGYzVkZzMWNkZzZWY1dyeTk3OE5ZL1EzN013alVWMjlG?=
+ =?utf-8?B?elF6R0VjemdseHRhcG1DUDJiSDRLb2paN2pxUWdjMEk2V2Q3OTRnZDRIaWFD?=
+ =?utf-8?B?Q0JpbUhOYU5DbVQ5NThublVPVXFCOThnM2dUODhCQ3VPbCtrdVBJWXJFL0F2?=
+ =?utf-8?B?WitDRzBBYTNXbDRrSnZjakN6NDB2TUpyOGt5WUlDeC9aRjJoK21sRHlFYXJp?=
+ =?utf-8?B?bFdYVzVyRjdFTnc3dXNDdXdIZERHMW44RUhja0JnQkJ5ZWZjM3RlRzJzSjdX?=
+ =?utf-8?B?emtYSUFPako5YkRHT25GY3BIWllYTzdHNmhTNkt3dXJHeGFrN1ZGd2p5bGpE?=
+ =?utf-8?B?NFdOZm1OWm5hb3NzRy93VmZRekFlTlVmZS9wV1k3VlhBMzd0L1A0UXI1cHc5?=
+ =?utf-8?B?bGRnVi9scUQ2OHExTHVUMEpmRGtJY3dZSi9rKzk3MzB2S3ZlUnpGY3A4SEZH?=
+ =?utf-8?B?Q0pUTEg5ZWdvaFRHTHYvOUFZM2k0bTZEMmhhTjNsOGU4RnJNMCtmKzJqOFV2?=
+ =?utf-8?B?UjVNWlB5OG80Y2JlS241WU9tcFlOMjBQb1RKVVc2U0owaE50WnU5MU9YbG5i?=
+ =?utf-8?B?SmExN2Y4WXRFV09aS1o4bDJ6QnJ0ckJIMUVoNVZIQmFlNVF3aCsrUnMxUXZK?=
+ =?utf-8?B?YUlGQmdnTUtoTitYM3lVb2t3TWpCakVpcFlOTUw4d2VPY1JoekZZNUFxVm1M?=
+ =?utf-8?B?bm5PL21ZQjcwcFBwR1VPKzBDTDEweEVSYW9HVllNZ2ErNy90eW02NHZSM2Jp?=
+ =?utf-8?B?S09ucUhzenlGQTFRb3NoQXJOeTJOSXprZC8xR3ZKeUF4RjY4ZHBnRS9uaStq?=
+ =?utf-8?B?YkNkZm5SbFpOQkZYZTIvTENSWnlsZjMrcGxmaWFjcGpGWm1YSVo3OGhPMSs4?=
+ =?utf-8?B?NXU5MlZXajF5RTk3akNyeFlraHlKWmNHNTN4U3p5UFpReE40WU5rQnAyMCsy?=
+ =?utf-8?B?dlgrUERsOHB1UVd0eWh6MlJCMXJFb0xTS1Q5SldRYWJOTXlZUXJpYlBWM1dU?=
+ =?utf-8?B?MmZ0T3RQZ2lRcmdhS0liUzU1ZXhLbmZhcU5aU3pNcXZwWllQM3hYejVQTmt2?=
+ =?utf-8?B?ZTdiNDgvaWRna3J2M0NQayt3SktMRlNZRXFZNHRVb0Z2aWZvY1JOZCtyd2Yv?=
+ =?utf-8?B?MHdEeFBpdFdBRUhRQ0p4SHRVTWxwRnc1RXVxcmpQZlN1MlV2WlA5S1V6UXp2?=
+ =?utf-8?B?THQrRmkzT2U0czdrOGx4dW1xclJxQmhWTW8wRWJGQVczQzVYSXk3U0c5TVJh?=
+ =?utf-8?B?K0t0WVFhaFZ3L2pTZWZsRlFYTnplcC9qZ1IwL1RhemsrSGkzRDRITDRXelpJ?=
+ =?utf-8?B?V1V4WmlTR1RGelpJcUtpMGVNWkxnYTBhUjFFeklWVnJFbjdleWcrdlZtYklL?=
+ =?utf-8?B?bUc0OHZUTFFGejFnK25KNzJKV09Ua3VvWW5GZjJ1NVJQU0R2NHJRSVo2TFFD?=
+ =?utf-8?B?MUVETmc0S1VkOTVybG9lU3ZFVXVDN3RqMGsvSzE3REtHaC9OUDR3cllmN2Zj?=
+ =?utf-8?B?ZFdzOFpsOWR3Y0pkdHRPYytBYkdPQ25lMDNXTjZYWjBQU2MxM0tVR05KajFq?=
+ =?utf-8?B?Y3IveTFucmRuMUlyTFIyRGkyaVEwOXZiaFZHaURTV2p0YUJSVURiMi9uZ0R1?=
+ =?utf-8?B?Mlk4Z1VjM0RFSlhkVENVZXZiekphWDg4Z1hYVThKUHY3NVFXa01YbW9yMTdF?=
+ =?utf-8?Q?pjX+HNXcyElMEFFE9UlSd/L0r?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e7621316-351c-4043-8432-08dc8e6c5c93
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jun 2024 01:25:24.0241 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ACMxqTVVRopgJBVeZ96J/0D38wyFgWCPChZzcU1jR1N+M3dMCERHzJHzFe+oPnMLK2AtPsUHtTcfAlW041/bBdtvYIeYbQYkaqQc44qCELA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7852
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.14;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,99 +222,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/7/24 1:57 AM, Thomas Huth wrote:
-> On 05/06/2024 16.48, Jared Rossi wrote:
->>
->>>> diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
->>>> index c977a52b50..de3d1f0d5a 100644
->>>> --- a/pc-bios/s390-ccw/s390-ccw.h
->>>> +++ b/pc-bios/s390-ccw/s390-ccw.h
->>>> @@ -43,6 +43,7 @@ typedef unsigned long long u64;
->>>>   #include "iplb.h"
->>>>     /* start.s */
->>>> +extern char _start[];
->>>>   void disabled_wait(void) __attribute__ ((__noreturn__));
->>>>   void consume_sclp_int(void);
->>>>   void consume_io_int(void);
->>>> @@ -88,6 +89,11 @@ __attribute__ ((__noreturn__))
->>>>   static inline void panic(const char *string)
->>>>   {
->>>>       sclp_print(string);
->>>> +    if (load_next_iplb()) {
->>>> +        sclp_print("\nTrying next boot device...");
->>>> +        jump_to_IPL_code((long)_start);
->>>> +    }
->>>> +
->>>>       disabled_wait();
->>>>   }
->>>
->>> Honestly, I am unsure whether this is a really cool idea or a very 
->>> ugly hack ... but I think I tend towards the latter, sorry. Jumping 
->>> back to the startup code might cause various problem, e.g. 
->>> pre-initialized variables don't get their values reset, causing 
->>> different behavior when the s390-ccw bios runs a function a second 
->>> time this way. Thus this sounds very fragile. Could we please try to 
->>> get things cleaned up correctly, so that functions return with error 
->>> codes instead of panicking when we can continue with another boot 
->>> device? Even if its more work right now, I think this will be much 
->>> more maintainable in the future.
->>>
->>>  Thomas
->>>
->>
->> Thanks Thomas, I appreciate your insight.  Your hesitation is 
->> perfectly understandable as well.  My initial design was like you 
->> suggest, where the functions return instead of panic, but the issue I 
->> ran into is that netboot uses a separate image, which we jump in to 
->> at the start of IPL from a network device (see zipl_load() in 
->> pc-bios/s390-ccw/bootmap.c). I wasn't able to come up with a simple 
->> way to return to the main BIOS code if a netboot fails other than by 
->> jumping back.  So, it seems to me that netboot kind of throws a 
->> monkeywrench into the basic idea of reworking the panics into returns.
->>
->> I'm open to suggestions on a better way to recover from a failed 
->> netboot, and it's certainly possible I've overlooked something, but 
->> as far as I can tell a jump is necessary in that particular case at 
->> least. Netboot could perhaps be handled as a special case where the 
->> jump back is permitted whereas other device types return, but I don't 
->> think that actually solves the main issue.
->>
->> What are your thoughts on this?
->
-> Yes, I agree that jumping is currently required to get back from the 
-> netboot code. So if you could rework your patches in a way that limits 
-> the jumping to a failed netboot, that would be acceptable, I think.
->
-> Apart from that: We originally decided to put the netboot code into a 
-> separate binary since the required roms/SLOF module might not always 
-> have been checked out (it needed to be done manually), so we were not 
-> able to compile it in all cases. But nowadays, this is handled in a 
-> much nicer way, the submodule is automatically checked out once you 
-> compile the s390x-softmmu target and have a s390x compiler available, 
-> so I wonder whether we should maybe do the next step and integrate the 
-> netboot code into the main s390-ccw.img now? Anybody got an opinion on 
-> this?
->
->  Thomas
->
-
-Hi Thomas,
-
-I would generally defer the decision about integrating the netboot code 
-to someone with more insight than me, but for what it's worth, I am of 
-the opinion that if we want to rework all of panics into returns, then 
-it would make the most sense to also do the integration now so that we 
-can avoid using jump altogether.  Unless I'm missing something simple, I 
-don't think the panic/return conversion will be trivial, and actually I 
-think it will be quite invasive since there are dozens of calls to panic 
-and assert that will need to be changed.   It doesn't seem worthwhile to 
-do all of these conversions in order to avoid using jump, but then still 
-being exposed to possible problems caused by jumping due to netboot 
-requiring it anyway.
-
-Regards,
-
-Jared Rossi
+SGkgQ8OpZHJpYywNCg0KPi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+RnJvbTogQ8OpZHJp
+YyBMZSBHb2F0ZXIgPGNsZ0ByZWRoYXQuY29tPg0KPlNlbnQ6IEZyaWRheSwgSnVuZSAxNCwgMjAy
+NCA2OjA1IFBNDQo+VG86IGVyaWMuYXVnZXJAcmVkaGF0LmNvbTsgZXJpYy5hdWdlci5wcm9AZ21h
+aWwuY29tOyBxZW11LQ0KPmRldmVsQG5vbmdudS5vcmc7IHFlbXUtYXJtQG5vbmdudS5vcmc7IG1z
+dEByZWRoYXQuY29tOyBqZWFuLQ0KPnBoaWxpcHBlQGxpbmFyby5vcmc7IHBldGVyLm1heWRlbGxA
+bGluYXJvLm9yZzsgeWFuZ2hsaXVAcmVkaGF0LmNvbTsgRHVhbiwNCj5aaGVuemhvbmcgPHpoZW56
+aG9uZy5kdWFuQGludGVsLmNvbT4NCj5DYzogYWxleC53aWxsaWFtc29uQHJlZGhhdC5jb207IGph
+c293YW5nQHJlZGhhdC5jb207DQo+cGJvbnppbmlAcmVkaGF0LmNvbTsgYmVycmFuZ2VAcmVkaGF0
+LmNvbQ0KPlN1YmplY3Q6IFJlOiBbUEFUQ0ggdjMgMS83XSBIb3N0SU9NTVVEZXZpY2U6IFN0b3Jl
+IHRoZSBWRklPL1ZEUEEgYWdlbnQNCj4NCj4NCj4+PiBUYWxraW5nIG9mIHdoaWNoLCB3aHkgYXJl
+IHdlIHBhc3NpbmcgYSAnVkZJT0RldmljZSAqJyBwYXJhbWV0ZXIgdG8NCj4+PiBIb3N0SU9NTVVE
+ZXZpY2VDbGFzczo6cmVhbGl6ZSA/IEkgZG9uJ3Qgc2VlIGEgZ29vZCByZWFzb24NCj4+Pg0KPj4+
+IEkgdGhpbmsgYSAnVkZJT0NvbnRhaW5lckJhc2UgKicgd291bGQgYmUgbW9yZSBhcHByb3ByaWF0
+ZSBzaW5jZQ0KPj4+ICdIb3N0SU9NTVVEZXZpY2UnIHJlcHJlc2VudHMgYSBkZXZpY2Ugb24gdGhl
+IGhvc3Qgd2hpY2ggaXMgY29tbW9uDQo+Pj4gdG8gYWxsIFZGSU8gZGV2aWNlcy4NCj4+Pg0KPj4+
+IEluIHRoYXQgY2FzZSwgSG9zdElPTU1VRGV2aWNlOjphZ2VudCB3b3VsZG4ndCBuZWVkIHRvIGJl
+IG9wYXF1ZQ0KPj4+IGFueW1vcmUuIEl0IGNvdWxkwqAgc2ltcGx5IGJlIGEgJ1ZGSU9Db250YWlu
+ZXJCYXNlIConIGFuZA0KPj4+IGhpb2RfbGVnYWN5X3ZmaW9fZ2V0X2lvdmFfcmFuZ2VzKCkgaW4g
+cGF0Y2ggMyB3b3VsZCBncmFiIHRoZQ0KPj4+ICdpb3ZhX3JhbmdlcycgZnJvbSB0aGUgJ1ZGSU9D
+b250YWluZXJCYXNlIConIGRpcmVjdGx5Lg0KPj4+DQo+Pj4gVGhpcyBtZWFucyBzb21lIHJld29y
+ayA6DQo+Pj4NCj4+PiAqIHZmaW9fZGV2aWNlX2dldF9hd19iaXRzKCkgd291bGQgdXNlIGHCoCAn
+VkZJT0NvbnRhaW5lckJhc2UgKicgaW5zdGVhZC4NCj4+PiAqIEhvc3RJT01NVURldmljZTo6bmFt
+ZSB3b3VsZCBiZSByZW1vdmVkLiBUaGlzIGlzIGp1c3QgZm9yIGVycm9yDQo+Pj4gbWVzc2FnZXMu
+DQo+Pj4gKiBoaW9kX2lvbW11ZmRfdmZpb19yZWFsaXplKCkgd291bGQgdXNlIFZGSU9JT01NVUZE
+Q29udGFpbmVyOjpiZS4NCj4+Pg0KPj4+IFRoYXQgc2FpZCwgSSB0aGluayB3ZSBuZWVkIHRoZSBR
+T01pZmljYXRpb24gY2hhbmdlcyBmaXJzdC4NCj4+DQo+PiBPSyBJIG5lZWQgdG8gcmV2aWV3IHlv
+dXIgc2VyaWVzIGZpcnN0LiBBdCB0aGUgbW9tZW50IEkgaGF2ZSBqdXN0DQo+PiBhZGRyZXNzZWQg
+Wmhlbnpob25nJ3MgY29tbWVudCBpbiB2NCwganVzdCBzZW50Lg0KPg0KPlllcC4gSnVzdCB0YWtl
+IGEgbG9vayBhdCBtaW5lLiBJZiBib3RoIG9mIHlvdSBhZ3JlZSB3aXRoIGFib3ZlDQo+cHJvcG9z
+YWwsIEkgY2FuIGNhcmUgb2YgaXQgYW5kIHJlc2VuZCBhbGwgMy4gSXQncyBhIHNtYWxsIGNoYW5n
+ZS4NCg0KSSB3b3VsZCBzdWdnZXN0IHVzaW5nIG9wYXF1ZSBwb2ludGVyIGFuZCBWRklPRGV2aWNl
+IGZvciB0d28gcmVhc29ucywNCjEuIGluIG5lc3Rpbmcgc2VyaWVzIHZJT01NVSBuZWVkcyB0byBh
+dHRhY2gvZGV0YWNoaW5nIGh3cHQgd2hpY2ggaXMgVkZJT0RldmljZSBvcGVyYXRpb25zLg0KU2Vl
+IGh0dHBzOi8vZ2l0aHViLmNvbS95aWxpdTE3NjUvcWVtdS9jb21taXQvM2NhNTU5ZDM1YWRjOTg0
+MDU1NWUzNjFhNTY3MDhhZjRjNjMzOGIzZA0KDQoyLiBJZiB3ZSBwbGFuIHRvIHN1cHBvcnQgVkRQ
+QSBEZXZpY2UgaW4gZnV0dXJlLCB0aGUgb3BhcXVlIHBvaW50ZXIgY2FuIGFsc28gcG9pbnQNCnRv
+IGFuIFZEUEFEZXZpY2Ugc3RydWN0dXJlLg0KDQpUaGFua3MNClpoZW56aG9uZw0K
 
