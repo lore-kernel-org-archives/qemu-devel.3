@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D1CEC2BA1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 19:02:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 887F3C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 19:02:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJHZH-0006Cn-2i; Mon, 17 Jun 2024 14:59:03 -0400
+	id 1sJHZ3-0004jv-R5; Mon, 17 Jun 2024 14:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHZC-0005NI-0i
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:58 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1sJHYt-0004RN-1Q
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:39 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHZ9-00051n-Vm
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:57 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-70436048c25so3565429b3a.0
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:55 -0700 (PDT)
+ id 1sJHYr-0004yQ-B9
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:38 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-705b9a89e08so4054948b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718650734; x=1719255534; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1718650716; x=1719255516; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GAGICjPOsf8qlBYaZrf0UehAmpN+2Vvp/a0MWtmp8us=;
- b=i/FIa7h0VQbLu4R/wKa17W54LUmV19KACOECYtzP1tGtNJjSgl3K1ht37jnc91HJxD
- iyV9Ld5Bk4hR4io5kE72H3Cr9nm0YrNnL/xBKeQeanPOzJHqUv+Dmp4fTAttoJl8eE0O
- KwRnhYLOI8VdTNMl18v6SbWRUsDwv2TrvbtzUxKbA8YAdBfwt7uNNoR4yBs8vNJG7dl1
- HJ46VH51vCVSiyVD7/JkBBlh3RDkYeoxBF7vsKZYKcranw7Ld4EcnYRJ+9LQe96x6wSc
- ik3zBwONTocUl8p4zSuMAvCMKuuKSG5/2Z2d3zKLhFIHi1O+tBgdA6Eysi/2IzBTDMQv
- 2kEA==
+ bh=BKxS0/De0h1OuVT3aoFJuagPA3gXdMM1tQtaPW9ssyc=;
+ b=DWl1C3y7+cJD2iq0nAY8eXr8cymqcRF06S3OxfL4Y8Muym2pCXbm4NGRZyvQVBIPvN
+ rxR5fNhII6yqybwoFonpwko2J2jUgbDwPkY3ikO7POkg+bHEgdr/MsDH0rzw5v1YVTxW
+ RnI6tJYPxfDDUz1g36s3/l3yzBOT34Ek/RVpCJ/5VRtoBTdSWYSFiLb7h0o12FmRbimy
+ zejsmW9C/1D7UepvnvZeVs6qWcwS+szdPxSyf9S0Mshs9ZuJwataR5RY8XFtzk8TLNHW
+ cW0sFjvpTd4MGxk8aY/rZTOyArxWYaswYhQRck9QX3R/+x1AOXuK3KMFiuPclm8/ie5C
+ MC5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718650734; x=1719255534;
+ d=1e100.net; s=20230601; t=1718650716; x=1719255516;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GAGICjPOsf8qlBYaZrf0UehAmpN+2Vvp/a0MWtmp8us=;
- b=GOpY0FzzOHyxB6D3AAQKdvFUyOkuME6yTp2MYcMck4VUR/SgfDQ8JIzsSkuIW+3+c+
- ZC5P+tZvbF++ZFX/kV+Z9txLqpWX8P94dbWO8WnkA6hzqx2J843FVG7md3szx19UtdyG
- ZWr6rd3XIH5Ebg2fhUa8glkIuNAeseAvxoLw4ZCHuvVZDyPZ1LiGHZwaXzoVdhSkRDeM
- 0SzF21ESz+laWzWlQuZ3eqGRL6oSV6PndI24jHXAhZLraCUzSMieeKybEJb7QJW/U7ui
- Ai1+oiYa2Ror2dKbSlNGh9oOV9q3E+vA6rUotzyF0oxD6MgcJ7CtTpGjAPFDT9TooLv5
- UFwA==
-X-Gm-Message-State: AOJu0YySz+PFkmtwGXX6HzV3idO/X24Y4vSsOkclPvfmZFaNljK4wOpt
- qhQdVQ/cHMY1f4bnkFyLJ2UpYDvrXZPKagfg4oPAoLdiIkfsKZtfO/cgsENf8C8=
-X-Google-Smtp-Source: AGHT+IFY9pAHmOb3hrJQx+wHnCY8wSifWr+1gCkV7w5tgE1Ur0akp+t027UL68BxPhvAnPWuGoP4Gw==
-X-Received: by 2002:a05:6a21:9988:b0:1b6:da8b:9c with SMTP id
- adf61e73a8af0-1bae7f142demr10584627637.28.1718650734208; 
- Mon, 17 Jun 2024 11:58:54 -0700 (PDT)
+ bh=BKxS0/De0h1OuVT3aoFJuagPA3gXdMM1tQtaPW9ssyc=;
+ b=NtqbQF9K1i6CRtF7NnIQis2utIt+15VLsYGZv9gGfUwj7PmCQchailyAav/a2L761K
+ aokIZlvb2aSm2oqt93DL7zuxriqZxIZ9gRVs+dU21ClivZ8pF8SVpFWik6A6FhN9GFuu
+ yPtOBEerZMi2BHCq6M7hSVHbeZzdEj71Exq7CMU6MA7g5ja2ycPiGiehdYJVWJ+8oukS
+ rSvksUR2PQRs8EOYvyA3YaiQ1yZ3IV0XhdwN+ev2pu75v6795thU3IJqvFKN5SpYI4ck
+ LWTwy0O8bAuJ4SmoQfYHS3Rh1B2VYZvmqWnPT2t9ve56CCz12sSMSdc6LEq47lJtU/nM
+ 7Bvw==
+X-Gm-Message-State: AOJu0YzbOSQ6JjngDIEcas/4d6YRyEpOut3IFpOe0P+e4COVRwYDTZCz
+ DQ1xS6GrWZ5MVfrIE/Es/zn4gFhON9kt1XH9ii1Bcq0rmE/XScqfH29WmMOBs0M=
+X-Google-Smtp-Source: AGHT+IFXPx9+NnaJ12o3LRv0Xz/+IIYcKeMMRBkz8ZkjeebPlQdTK5wiL/yH2MRlsiT/OSRULEb2cw==
+X-Received: by 2002:aa7:91cc:0:b0:705:c310:60b0 with SMTP id
+ d2e1a72fcca58-705d719331cmr10467354b3a.25.1718650715747; 
+ Mon, 17 Jun 2024 11:58:35 -0700 (PDT)
 Received: from localhost.localdomain ([106.222.222.115])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.52
+ d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 11:58:54 -0700 (PDT)
+ Mon, 17 Jun 2024 11:58:35 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>,
- Ajeet Singh <itachis@FreeBSD.org>
-Subject: [PATCH 16/23] Add function to retrieve additional ARM AArch64 hwcap
-Date: Tue, 18 Jun 2024 00:27:57 +0530
-Message-Id: <20240617185804.25075-17-itachis@FreeBSD.org>
+ Stacey Son <sson@FreeBSD.org>, Ajeet Singh <itachis@FreeBSD.org>
+Subject: [PATCH 07/23] Add ARM AArch64 TLS Management Prototypes for BSD-User
+Date: Tue, 18 Jun 2024 00:27:48 +0530
+Message-Id: <20240617185804.25075-8-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240617185804.25075-1-itachis@FreeBSD.org>
 References: <20240617185804.25075-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=itachis6234@gmail.com; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=itachis6234@gmail.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,54 +96,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Warner Losh <imp@bsdimp.com>
+From: Stacey Son <sson@FreeBSD.org>
 
-Function to retrieve the extended hardware capability flags
+Prototypes for setting and getting TLS( thread local storage)
 
-Signed-off-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
 ---
- bsd-user/aarch64/target_arch_elf.h | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ bsd-user/aarch64/target_arch.h | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+ create mode 100644 bsd-user/aarch64/target_arch.h
 
-diff --git a/bsd-user/aarch64/target_arch_elf.h b/bsd-user/aarch64/target_arch_elf.h
-index ed2419408e..7202cd8334 100644
---- a/bsd-user/aarch64/target_arch_elf.h
-+++ b/bsd-user/aarch64/target_arch_elf.h
-@@ -133,4 +133,33 @@ static uint32_t get_elf_hwcap(void)
-     return hwcaps;
- }
- 
-+static uint32_t get_elf_hwcap2(void)
-+{
-+    ARMCPU *cpu = ARM_CPU(thread_cpu);
-+    uint32_t hwcaps = 0;
+diff --git a/bsd-user/aarch64/target_arch.h b/bsd-user/aarch64/target_arch.h
+new file mode 100644
+index 0000000000..27f47de8eb
+--- /dev/null
++++ b/bsd-user/aarch64/target_arch.h
+@@ -0,0 +1,28 @@
++/*
++ * ARM AArch64 specific prototypes for bsd-user
++ *
++ * Copyright (c) 2015 Stacey D. Son <sson at FreeBSD>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ */
 +
-+    GET_FEATURE_ID(aa64_dcpodp, ARM_HWCAP2_A64_DCPODP);
-+    GET_FEATURE_ID(aa64_sve2, ARM_HWCAP2_A64_SVE2);
-+    GET_FEATURE_ID(aa64_sve2_aes, ARM_HWCAP2_A64_SVEAES);
-+    GET_FEATURE_ID(aa64_sve2_pmull128, ARM_HWCAP2_A64_SVEPMULL);
-+    GET_FEATURE_ID(aa64_sve2_bitperm, ARM_HWCAP2_A64_SVEBITPERM);
-+    GET_FEATURE_ID(aa64_sve2_sha3, ARM_HWCAP2_A64_SVESHA3);
-+    GET_FEATURE_ID(aa64_sve2_sm4, ARM_HWCAP2_A64_SVESM4);
-+    GET_FEATURE_ID(aa64_condm_5, ARM_HWCAP2_A64_FLAGM2);
-+    GET_FEATURE_ID(aa64_frint, ARM_HWCAP2_A64_FRINT);
-+    GET_FEATURE_ID(aa64_sve_i8mm, ARM_HWCAP2_A64_SVEI8MM);
-+    GET_FEATURE_ID(aa64_sve_f32mm, ARM_HWCAP2_A64_SVEF32MM);
-+    GET_FEATURE_ID(aa64_sve_f64mm, ARM_HWCAP2_A64_SVEF64MM);
-+    GET_FEATURE_ID(aa64_sve_bf16, ARM_HWCAP2_A64_SVEBF16);
-+    GET_FEATURE_ID(aa64_i8mm, ARM_HWCAP2_A64_I8MM);
-+    GET_FEATURE_ID(aa64_bf16, ARM_HWCAP2_A64_BF16);
-+    GET_FEATURE_ID(aa64_rndr, ARM_HWCAP2_A64_RNG);
-+    GET_FEATURE_ID(aa64_bti, ARM_HWCAP2_A64_BTI);
-+    GET_FEATURE_ID(aa64_mte, ARM_HWCAP2_A64_MTE);
++#ifndef TARGET_ARCH_H
++#define TARGET_ARCH_H
 +
-+    return hwcaps;
-+}
++#include "qemu.h"
 +
-+#undef GET_FEATURE_ID
++void target_cpu_set_tls(CPUARMState *env, target_ulong newtls);
++target_ulong target_cpu_get_tls(CPUARMState *env);
 +
- #endif /* TARGET_ARCH_ELF_H */
++#endif /* TARGET_ARCH_H */
 -- 
 2.34.1
 
