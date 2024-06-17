@@ -4,105 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 228AAC2BA1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 10:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C67C2BA18
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 10:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJ9mv-00007E-Sn; Mon, 17 Jun 2024 06:40:37 -0400
+	id 1sJ9oN-0000zO-1v; Mon, 17 Jun 2024 06:42:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1sJ9mu-00006f-3u; Mon, 17 Jun 2024 06:40:36 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sJ9oK-0000yi-VH
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 06:42:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1sJ9mr-0002v7-QS; Mon, 17 Jun 2024 06:40:35 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45HAM6fR006872;
- Mon, 17 Jun 2024 10:40:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=I
- if0/jIeBhoDxdaPq3MPJ0x/PDF8IpTg33GN8IVNyUo=; b=kYf+HrPFORsgXs+Fm
- XeDcBgpwPjwosGyNcNkdnTF0eWXwDFr3yuHO4vmKFCa00T7bn3YV/yJSfpjq3ZiU
- sTqmy++hYfFZtdhNY5IyQMLUizneXHGmzGL/mNsW+d7VPsWQgI1am6ZCsmb/Enrc
- MbieYbR81Q68w61MWQQuqRZR4LNg0z3b0gc7tOItRekyPuAH1/BiY8XWP7ZY3x1s
- OXUYLNbMbAU4gM35W/V0pzkC3Wji2eW8AkwT9Ma7fALtzQL9WFCNJ+gVdcgKHH9W
- QDTdb2sQpViNz3rDWxt32eY2iLTl3ZpyQMkSF85jKids9yMmMctRvY1fxLrldABF
- T6CIg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yth7jgbxg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Jun 2024 10:40:29 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45HAeSWV001519;
- Mon, 17 Jun 2024 10:40:28 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yth7jgbxd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Jun 2024 10:40:28 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45H9GxMc019670; Mon, 17 Jun 2024 10:40:27 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ysnp0sba8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Jun 2024 10:40:27 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45HAeLsf46858660
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Jun 2024 10:40:23 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8DEF920043;
- Mon, 17 Jun 2024 10:40:21 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3826F20040;
- Mon, 17 Jun 2024 10:40:19 +0000 (GMT)
-Received: from [9.179.24.169] (unknown [9.179.24.169])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Jun 2024 10:40:18 +0000 (GMT)
-Message-ID: <358b393d-7c43-4a28-b8da-8221df5031a5@linux.vnet.ibm.com>
-Date: Mon, 17 Jun 2024 16:10:17 +0530
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sJ9oJ-0003Hd-GB
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 06:42:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718620921;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Cam83kMeg7LJA9PMFUt3qYhC86g+Z5t8VkWEJcETwtY=;
+ b=eKWv8EuKXSMSIZyuzPp5816UtK0llruNe1QLUTHBIB6wI1dZLQKGQxJERKy7i+ndIW+uhy
+ 9sUknq+HbSb/BM0pOx91zbznYpQWNehllTb2sMDqFKsXTZf3Q8+vqZ3IGm+PMxNXnsxdNt
+ /1iP3EQ8wl1xTjUeX7A4XmisbC7evik=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-689-MzTCAgnvPgijaAxGvTGN4Q-1; Mon, 17 Jun 2024 06:42:00 -0400
+X-MC-Unique: MzTCAgnvPgijaAxGvTGN4Q-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-35f1f958b7dso2301970f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 03:42:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718620919; x=1719225719;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Cam83kMeg7LJA9PMFUt3qYhC86g+Z5t8VkWEJcETwtY=;
+ b=XGUNUNTqaec5xUEdQrmSJll84UuMXhYHZdp387OmU5ep/Lnf9xERjVjK4s57xeq2MG
+ kg8DqAaLKXyByEAWocCpTw4LcUX9YEioIBxn/EqABm5s6MY+A+ln/p5p1Z3NqbIXoMG8
+ tL1SGIHcE+ZQYZ2Sc72t4hWF5sJUXEAtAS2gBo+AHM+icZUNxfvbYJNz6QQ0wl1unccs
+ xROXX77WlZIVqHdinGHm1Dj8cpJyGYkQcqF2jx9ZWcJqK180vV+z1hyZLoPeNDl1bbZM
+ TnoqTC3vd36TAS0/OAll1pKBK8WfzZHSBXPKQ9vY5T1l1/D4iSKx6lga8M+Q8dLrkFCm
+ sDOA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWB2z0OomWYbxnQhp/Lo7mHNeXonbdpGKYkxX60xiaXNHbqvtBWJCXkxtL+erCtkfsZlRujLO4+1desrAEhpdI8tL3jXVA=
+X-Gm-Message-State: AOJu0Yz20kW8itRmc/ia1zEwmVt+S3Ak1/mD3DXzlALWAIO53IEXpqMM
+ XPOBKJQ6pQiXV3OVb/U/KjXhVyMcmN1w/XnhJaxsFxYP8kS+TZmpEBktdY+lsUz8gTx1TFmmq6/
+ 4ptdJb9SobdGQo+VfOwepIRwlqvr6dOc76jvxq3YmFKeR8PRdFveX
+X-Received: by 2002:adf:e88b:0:b0:360:8f85:a5f1 with SMTP id
+ ffacd0b85a97d-3608f85a70amr4118722f8f.5.1718620919040; 
+ Mon, 17 Jun 2024 03:41:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGqfqngjsn+8M/zfc9Qn9zbJHk58ElixIVy4SK1HHBL2qn5IfIUNNlzVBr7shBmQnO1GHi9pg==
+X-Received: by 2002:adf:e88b:0:b0:360:8f85:a5f1 with SMTP id
+ ffacd0b85a97d-3608f85a70amr4118701f8f.5.1718620918529; 
+ Mon, 17 Jun 2024 03:41:58 -0700 (PDT)
+Received: from redhat.com ([2a06:c701:741d:ed00:9efe:886c:c2d8:ae8c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3607509c790sm11599448f8f.38.2024.06.17.03.41.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Jun 2024 03:41:58 -0700 (PDT)
+Date: Mon, 17 Jun 2024 06:41:55 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: peter.maydell@linaro.org, wangxingang5@huawei.com,
+ shannon.zhaosl@gmail.com, imammedo@redhat.com, anisinha@redhat.com,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH] hw/arm/virt-acpi-build: Fix IORT id_count
+Message-ID: <20240617063156-mutt-send-email-mst@kernel.org>
+References: <20240613234802.828265-1-nicolinc@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] target/ppc: Move VSX vector with length storage
- access insns to decodetree.
-To: Richard Henderson <richard.henderson@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
-References: <20240613093318.314913-1-rathc@linux.ibm.com>
- <20240613093318.314913-3-rathc@linux.ibm.com>
- <6638b813-f4ef-4587-b94f-3c24d90ca09e@linaro.org>
-Content-Language: en-US
-From: Chinmay Rath <rathc@linux.vnet.ibm.com>
-In-Reply-To: <6638b813-f4ef-4587-b94f-3c24d90ca09e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ujcveigVstEZJZH58W7hqzrRsFzQHLss
-X-Proofpoint-ORIG-GUID: qIY-kiPwH97opVhf9n6JPqsTOvLLe7H7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-17_08,2024-06-17_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- adultscore=0 suspectscore=0 spamscore=0 mlxscore=0 mlxlogscore=764
- impostorscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406170076
-Received-SPF: none client-ip=148.163.156.1;
- envelope-from=rathc@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240613234802.828265-1-nicolinc@nvidia.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,62 +102,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+On Thu, Jun 13, 2024 at 04:48:02PM -0700, Nicolin Chen wrote:
+> The IORT doc defines "Number of IDs" ("id_count" in the virt-acpi-build)
+> to be "the number of IDs in the range minus one". Otherwise, Linux kernel
+> reports "conflicting mapping for input ID" FW_BUG at the overlapped ID.
+> 
+> Fixes: 42e0f050e3a5 ("hw/arm/virt-acpi-build: Add IORT support to bypass SMMUv3")
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> ---
+>  hw/arm/virt-acpi-build.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index c3ccfef026..b9343dde0f 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -243,7 +243,8 @@ iort_host_bridges(Object *obj, void *opaque)
+>  
+>              AcpiIortIdMapping idmap = {
+>                  .input_base = min_bus << 8,
+> -                .id_count = (max_bus - min_bus + 1) << 8,
+> +                /* id_count is the number of IDs in the range minus one */
+> +                .id_count = ((max_bus - min_bus + 1) << 8) - 1,
+>              };
+>              g_array_append_val(idmap_blob, idmap);
+>          }
+> @@ -298,7 +299,9 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>              idmap = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
+>  
+>              if (next_range.input_base < idmap->input_base) {
+> +                /* id_count is the number of IDs in the range minus one */
+>                  next_range.id_count = idmap->input_base - next_range.input_base;
+> +                next_range.id_count -= 1;
 
-On 6/17/24 00:43, Richard Henderson wrote:
-> On 6/13/24 02:33, Chinmay Rath wrote:
->> +/* EA <- (ra == 0) ? 0 : GPR[ra] */
->> +static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
->> +{
->> +    TCGv EA;
->> +    if (!ra) {
->> +        EA = tcg_constant_tl(0);
->> +        return EA;
->> +    }
->> +    EA = tcg_temp_new();
->> +    if (NARROW_MODE(ctx)) {
->> +        tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
->> +    } else {
->> +        tcg_gen_mov_tl(EA, cpu_gpr[ra]);
->
-> Why are you making a copy, rather than just returning cpu_gpr[ra]?
-True, this tcg move is redundant. Was carried away to maintain 
-uniformity with the original do_ea_calc function. My bad!
+I would just add - 1 on the previous line, instead of making it
+incorrect then correcting it.
 
-This can rather just be :
-/* ea <- (ra == 0) ? 0 : GPR[ra] */
-static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
+>                  g_array_append_val(its_idmaps, next_range);
+>              }
+
+
+But the value is used later:
+
+            next_range.input_base = idmap->input_base + idmap->id_count;
+
+Wouldn't that make next_range incorrect?
+
+
+I also note that
+
+static void build_iort_id_mapping(GArray *table_data, uint32_t input_base,
+                                  uint32_t id_count, uint32_t out_ref)
 {
-     TCGv EA;
-     if (!ra) {
-         return tcg_constant_tl(0);
-     }
-     if (NARROW_MODE(ctx)) {
-         EA = tcg_temp_new();
-         tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
-     } else {
-         return cpu_gpr[ra];
-     }
-     return EA;
+    /* Table 4 ID mapping format */
+    build_append_int_noprefix(table_data, input_base, 4); /* Input base */
+    build_append_int_noprefix(table_data, id_count, 4); /* Number of IDs */
+    build_append_int_noprefix(table_data, input_base, 4); /* Output base */
+    build_append_int_noprefix(table_data, out_ref, 4); /* Output Reference */
+    /* Flags */
+    build_append_int_noprefix(table_data, 0 /* Single mapping (disabled) */, 4);
 }
 
-> If you need to modify the resulting EA, then you also need to make a 
-> copy for 0.
->
-Hey, didn't properly get what you meant here.
-Did you mean : Since I'm using a tcg_constant for 0, if the EA is to be 
-modified later, this constant would be an issue, in which case, I should 
-make a copy for it ??
 
-Considering that, there are no tcg level modifications with this EA. 
-However, the underlying helper method, which considers this EA as a 
-target_ulong type does modify it, which I don't think should be an issue.
+That comment 
+    /* Table 4 ID mapping format */
 
-Please let me know if I missed something.
+really should be before the function and it should mention the spec
+it's from - specifically the earliest spec including the relevant table.
 
-Thanks & Regards,
-Chinmay
-> r~
->
+
+
+
+
+>  
+> -- 
+> 2.43.0
 
 
