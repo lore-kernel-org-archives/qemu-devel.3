@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD05EC27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83B4EC2BA1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:59:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJHZF-0005v4-3l; Mon, 17 Jun 2024 14:59:01 -0400
+	id 1sJHYp-0004NL-FE; Mon, 17 Jun 2024 14:58:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHZ7-0005EM-Tu
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:53 -0400
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
+ id 1sJHYn-0004BA-0a
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:33 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHZ4-000519-My
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:53 -0400
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-5ba33b08550so2187045eaf.2
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:49 -0700 (PDT)
+ id 1sJHYl-0004wq-6Z
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:32 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-705e9e193caso1749191b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718650729; x=1719255529; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1718650709; x=1719255509; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KXCAWBNkEFL7RtMWqPmqBDwDa9EwuUs2bp+eoNQh6Bc=;
- b=EAhUfXnRT15utVQeZavQjJzStymB9ZeIxuMIOTE34/Thz0/dxS9BjY5/DABxO9SI3Y
- i2eY7Y2HHoKa20lznccn5spjmFOO8F0NDAifDirwIjCK7qJ/UEd1CdMqUAs4wiKRL7/v
- uY/L11fwdHx835s7DLaPFbAKTB5VoZEw/kmhwoMHpzfkmxHCma7Ie+52bQI4Avvk5N8Q
- +r8dCQmU2Do92lGsYwJkcBQJLdY7gjcePJykYZm52/vCOaO+Uqeiyds8S3tIUTT4UZzx
- pCXQ0wc2oxGlesul5C1b1sHZXUUYY3xum1cC7viJxTSOUBXwDC4vtz9cpUwW44lwb+0x
- bedw==
+ bh=dwK71C7tTjhNtrxFdTarX2bhgrmlVdQhmyIGbCJ+smo=;
+ b=A8p3KcKiivlXvSuMdCceRgr/OiUbb/rKjx0CYD4zLmlOtMnwhBQtPbSRCGHZkgReXo
+ MIVXbLMkP1mD+WKZ8D0Nol02nUWHORUizYhtxd/WxpyaIFhXPu9zmIBxnHoimGT+1Jn9
+ LqJapfBMZCCSMeK/KhIkl44Ho9egd4xhIFNwlOYFw2LnwaXXsZ4PXU9qaxbHouwkapNG
+ bBGbJlKnQOmc2re/EhSwp2j1MLjViuPvVqRHPH436teQ1Za3Z5HaM3Aw+k0LLPHmS23/
+ fuKinW16K02vJZMq5gVncDZ192Ue6EFriLUze+eh+xopTrXfNP9/L6x1DAp73TLJLyD6
+ EUlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718650729; x=1719255529;
+ d=1e100.net; s=20230601; t=1718650709; x=1719255509;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KXCAWBNkEFL7RtMWqPmqBDwDa9EwuUs2bp+eoNQh6Bc=;
- b=gX9oXG/vuC1+zRfXDAMIuotugxAFZXIJcE76hNqR10SQobSZhx3KH455ntmo7EIKod
- OUbUxHQAKlZ0tdN81ueUHGIKrF6Xo8t/vTHXcZXikYOIsDRPmWtp2rhbxTqczd0QSiaE
- uxboI4N27BFhr4Z5FLrsN33InGG5P/Z6Ek+tX0GbSlYT+KVfXdWQnIWihT/zVDfFx4LO
- IGDH3vfI0hLV2wUq9I991SIADXHmvT7Aap4Pixc6C/Ltz3YM3AZivtSBjvmkZc/xPyeO
- ULyuoGjxeGF1K46IwsGtsCNUgwauyDxywNiFdJexVKMVSVir83ze6ZVwDF0j+wYilciF
- e84A==
-X-Gm-Message-State: AOJu0YyA7yu2+RN1MUhTZwTK7jq2S63o+mg7rn6oLmJj1p7XIYCRbiBq
- beqJzBRMIT5toIhG4lQWaZ4juIuxUIOb+rwgFHVAcoQp3KHDwaDOoCib05h8m2Q=
-X-Google-Smtp-Source: AGHT+IHocEAvQVGqvIPHrRScbgVTQEHVre3JJn9syRoleAFMoZNti/IJZodQYbrYZd+hjpaqvMcRsQ==
-X-Received: by 2002:a05:6870:a18a:b0:24c:ae57:b4ab with SMTP id
- 586e51a60fabf-25842893a0fmr11304216fac.11.1718650728678; 
- Mon, 17 Jun 2024 11:58:48 -0700 (PDT)
+ bh=dwK71C7tTjhNtrxFdTarX2bhgrmlVdQhmyIGbCJ+smo=;
+ b=Gn1ExcUaDa9nyLDf5L3ykwwPzb/0GASO1dCySUWKZUrqUD53sKN4uWt0yx27rVl0FX
+ GcelUenhF/KgD33dx1utLOPrN89YHQUzre5ElSE0WjVoVRhVN62GdFunO5i330QKpM/w
+ PB+KoPSQFi2NhmyuxY5/0X6dtDse8GkPqKuNoa4JNnnxRw6K5F7aTfGpA+H/Idbkeedw
+ Fja5TqRT5wPMJKmE9I4Ud+bIIs1wZ0xJ/y3it9KJbTCoEXqP/XAzvKxfcPhUE6AqzXzI
+ Evy9TWKaobFelPEFxAeqqDICVGJ4BX776BarWm7qGFXR4d4jG0nkukQd36K1eoqmUtLy
+ u8KQ==
+X-Gm-Message-State: AOJu0YxUQvPYtMkZbwKS0+OwqlLnAxjgRIfy74x85v6F2KVy7XJI+BDi
+ udft30ujMLxVfZ08RPA4XsuyCKowFAacHx/OU/SB0mpBxaYq/qm9Ctw5zs0GeyU=
+X-Google-Smtp-Source: AGHT+IFqgN6h2P/8K0byogXjl41jdzz+l0KsyXEjxQI9vH7AUIwNfcdLQUoHOhAtN3EkOIJFXsHPpg==
+X-Received: by 2002:a05:6a00:178e:b0:705:b0c0:d7d7 with SMTP id
+ d2e1a72fcca58-705d70e3f01mr15639141b3a.7.1718650709331; 
+ Mon, 17 Jun 2024 11:58:29 -0700 (PDT)
 Received: from localhost.localdomain ([106.222.222.115])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.46
+ d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 11:58:48 -0700 (PDT)
+ Mon, 17 Jun 2024 11:58:29 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>,
- Stacey Son <sson@FreeBSD.org>, Ajeet Singh <itachis@FreeBSD.org>,
- Kyle Evans <kevans@FreeBSD.org>
-Subject: [PATCH 13/23] Add ARM AArch64 ELF definitions for bsd-user
-Date: Tue, 18 Jun 2024 00:27:54 +0530
-Message-Id: <20240617185804.25075-14-itachis@FreeBSD.org>
+ Stacey Son <sson@FreeBSD.org>, Ajeet Singh <itachis@FreeBSD.org>
+Subject: [PATCH 04/23] AArch64 specific CPU for bsd-user
+Date: Tue, 18 Jun 2024 00:27:45 +0530
+Message-Id: <20240617185804.25075-5-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240617185804.25075-1-itachis@FreeBSD.org>
 References: <20240617185804.25075-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
- envelope-from=itachis6234@gmail.com; helo=mail-oo1-xc31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=itachis6234@gmail.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,27 +98,26 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stacey Son <sson@FreeBSD.org>
 
-Defined mmap and dynamic load adresses and
-set various elf parameters
+Function to set and recieve thread-local-storage value
+from tpidr_el0 register
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
 ---
- bsd-user/aarch64/target_arch_elf.h | 37 ++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
- create mode 100644 bsd-user/aarch64/target_arch_elf.h
+ bsd-user/aarch64/target_arch_cpu.c | 34 ++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+ create mode 100644 bsd-user/aarch64/target_arch_cpu.c
 
-diff --git a/bsd-user/aarch64/target_arch_elf.h b/bsd-user/aarch64/target_arch_elf.h
+diff --git a/bsd-user/aarch64/target_arch_cpu.c b/bsd-user/aarch64/target_arch_cpu.c
 new file mode 100644
-index 0000000000..6d0fa3525f
+index 0000000000..70ef651827
 --- /dev/null
-+++ b/bsd-user/aarch64/target_arch_elf.h
-@@ -0,0 +1,37 @@
++++ b/bsd-user/aarch64/target_arch_cpu.c
+@@ -0,0 +1,34 @@
 +/*
-+ * ARM AArch64 ELF definitions for bsd-user
++ * ARM AArch64 specific CPU for bsd-user
 + *
-+ * Copyright (c) 2015 Stacey D. Son
++ * Copyright (c) 2015 Stacey Son
 + *
 + * This library is free software; you can redistribute it and/or
 + * modify it under the terms of the GNU Lesser General Public
@@ -134,25 +132,22 @@ index 0000000000..6d0fa3525f
 + * You should have received a copy of the GNU Lesser General Public
 + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
 + */
++#include "qemu/osdep.h"
 +
-+#ifndef TARGET_ARCH_ELF_H
-+#define TARGET_ARCH_ELF_H
++#include "target_arch.h"
 +
-+#include "target/arm/cpu-features.h"
++/* See cpu_set_user_tls() in arm64/arm64/vm_machdep.c */
++void target_cpu_set_tls(CPUARMState *env, target_ulong newtls)
++{
 +
-+#define ELF_START_MMAP 0x80000000
-+#define ELF_ET_DYN_LOAD_ADDR    0x100000
++    env->cp15.tpidr_el[0] = newtls;
++}
 +
-+#define elf_check_arch(x) ((x) == EM_AARCH64)
++target_ulong target_cpu_get_tls(CPUARMState *env)
++{
 +
-+#define ELF_CLASS       ELFCLASS64
-+#define ELF_DATA        ELFDATA2LSB
-+#define ELF_ARCH        EM_AARCH64
-+
-+#define USE_ELF_CORE_DUMP
-+#define ELF_EXEC_PAGESIZE       4096
-+
-+#endif /* TARGET_ARCH_ELF_H */
++    return env->cp15.tpidr_el[0];
++}
 -- 
 2.34.1
 
