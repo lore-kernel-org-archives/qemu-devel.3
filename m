@@ -4,99 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ED7DC27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 11:40:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A9CFC27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 11:48:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJAhx-0007GL-FH; Mon, 17 Jun 2024 07:39:33 -0400
+	id 1sJAqP-0002gi-Bp; Mon, 17 Jun 2024 07:48:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sJAhu-0007GA-Tc
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 07:39:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sJAhr-0005aV-0V
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 07:39:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718624365;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6j8h4DMAExfmM24pdJZ3+dbVUQLXnADczzooquStYXQ=;
- b=eCuI5FxksTgTVJMAy+nmCaeicP3EzU1k3GNg8VQ+bBJG3IgGc/dzYcFSlfLHb86C9SpW8k
- tkqQ7+GbSCURqHxj4W654IqANnRDy08+emN+a/0V4XmQIG0pLiN1fbaN8WW3gxF5X4Kqgk
- TZ+/Iu4qnkYIa1TsokxvjC1JsI1KR5c=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-280-XRkbQLKsPkqOymE45vVccA-1; Mon, 17 Jun 2024 07:39:24 -0400
-X-MC-Unique: XRkbQLKsPkqOymE45vVccA-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4227e29cd39so24048335e9.1
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 04:39:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sJAqN-0002gD-2T
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 07:48:15 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sJAqK-0007Ep-Q7
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 07:48:14 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-70417a6c328so3243228b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 04:48:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1718624891; x=1719229691;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3whCFEkgOfgkGnJ6VfCDr4OUD71FsTa7JT0YgrUOPtw=;
+ b=0vWhDsY2r+UV1X+5fPhz0YhNDTUgaLMirj3LekP3PEDukf/iF6NlSB3qC0GL0A1GGF
+ CXoaRNeeWWsZZyr/7V77oZ9ISHyBzbVXPnmIMMoYARo9lkNPnmv7/4Kvexli88nil7F7
+ 6ni+wuaI8HhpGjTwuH10qFEAm0GnsN8TAPys3wS6A9J0en9tJ0ohDpbNEcxn5cY27SyP
+ Zx2FiyxiLLDwOD4LA2K4ploRxHs7W25hcl4ssHi3bYU0oHZ1XRjo2C5M8EI1MmrsIYxv
+ lKml+0fkG/x5uZ/+jD8FNoZEFp/eqZqmrr4hpr7F2l2OTOLUjIsmBoPN0QiY4pxLiAA2
+ j5DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718624363; x=1719229163;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6j8h4DMAExfmM24pdJZ3+dbVUQLXnADczzooquStYXQ=;
- b=cpEopMxwuuV9xZhoQ5pIvWKilyic5mFZRYdhl2sdP11PMCk54THCj4FmZ18/2I9CvV
- BsFyCsrKXKgSaoTnMEN1F12Szn8fwcq4Ht6QwJxiPDblD/DPyxxE021Y5BQnV3dt3o4g
- CFm5wek7mSV18quzc/rXKr7DSTHDv3wBZ7Zusi4nnQFU1jbubsky79Mg1OqqXojmgC0o
- lz08E/cRXhL4SbyATDgpUNzd72lUL3/7fkfreSQMKMVIquaY4yPoXvsGVbM40ThG43QL
- Xsb+628BF+Q1V6757xKWELcjVnSR/Cwe/dFQWDI+wlOAooEr3WULYXyj5/ds60IhlkOh
- rqVA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWqh/MrdISNqeQwuFJ6tnBb/VwNWpZipF7WJLZehuVXW7juSpMzrWK7zizy3XTi0eR4AbjykxGTGOtecaBlZGDUOxYXDfQ=
-X-Gm-Message-State: AOJu0YwWGaKDqEfWygy2YXZjzYYVBznRl2ii59WSfier2gHExTfPX2PU
- LCVEWwNzYi9J1784DlvJiztCC6KQCHFdNl3xvl/X/uB5TI9ES2x0x//tUL4U4bS+9e3ZsHj6s5b
- NS2haMIb9O4bpcje3w2zu3oHLg8eqwIvWM/m7Km+lFvwtqLarN+D1
-X-Received: by 2002:a05:600c:1c13:b0:421:f346:6b06 with SMTP id
- 5b1f17b1804b1-42304848abfmr93783905e9.28.1718624363010; 
- Mon, 17 Jun 2024 04:39:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH70wIBH5GOnsZAiIzAWKOxjBSUl5IOWk+y22gARrlnaAsBwfANKWUCiSquUjZmfzQQPVk27A==
-X-Received: by 2002:a05:600c:1c13:b0:421:f346:6b06 with SMTP id
- 5b1f17b1804b1-42304848abfmr93783745e9.28.1718624362575; 
- Mon, 17 Jun 2024 04:39:22 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ d=1e100.net; s=20230601; t=1718624891; x=1719229691;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3whCFEkgOfgkGnJ6VfCDr4OUD71FsTa7JT0YgrUOPtw=;
+ b=n8+MQsV9FsZhhcdXZh4mKMcprd5iyN4UACb/h2TKhPZ83BakNmB5fslCbzbfsdeU/w
+ 95G3ylu/TY6jElbO2b32o5kt5J9GzXJxZPG5dIdhUxCf/UTVrInwZy0dshPZQm7GWwbP
+ RDwNzJEPN+xiuk6Zi3j3ns4gffzXKutMrHbf82nmA5/2wxJuXis9B64m4R8CD+K5nd0g
+ cjCEWzsfMeSvJW8lI0rGpsj2VWv0XSfYETBrFLrvq+E/kto5nwG4X9THCvO5IefragCL
+ YiM44adCvQNvSdNu8EJ+9edUt7Tz05ykinNQKzYf+gXJC+bra/Xe8Q7t9PeV28YYvjlQ
+ W+fw==
+X-Gm-Message-State: AOJu0Yw83ddm0y+A758gcDL7VNIjF6zN5V+LFAiaOvK+b3WxnmrVfkQY
+ xmH946yJ0VfqHa+hr5FHD0hyLZCyh4gk0JhDXHeV8MIaIQ1+5ePHlCXlCrdhqGk=
+X-Google-Smtp-Source: AGHT+IFNbaVWpao5MRiQfdxiiquJ3v0wVQpEgFZfFNGu+HSznAPjn2U5WlyjhnvIVRnk0tjFcUmhBg==
+X-Received: by 2002:a05:6a00:2349:b0:705:bc88:612a with SMTP id
+ d2e1a72fcca58-705d70e4c2cmr11824150b3a.1.1718624890989; 
+ Mon, 17 Jun 2024 04:48:10 -0700 (PDT)
+Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422f5f33be5sm159162745e9.2.2024.06.17.04.39.21
+ d2e1a72fcca58-705ccb6bf4fsm7187260b3a.169.2024.06.17.04.48.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Jun 2024 04:39:21 -0700 (PDT)
-Message-ID: <81fa58ce-a4e6-41f1-8d9a-75ad674fe472@redhat.com>
-Date: Mon, 17 Jun 2024 13:39:20 +0200
+ Mon, 17 Jun 2024 04:48:10 -0700 (PDT)
+Message-ID: <454b686c-5c96-4a4d-b3e6-11f059e2148e@daynix.com>
+Date: Mon, 17 Jun 2024 20:48:07 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/17] vfio/common: Move dirty tracking ranges update
- to helper
+Subject: Re: [RFC PATCH] subprojects: add a wrapper for libvirglrenderer
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20240605133527.529950-1-alex.bennee@linaro.org>
+ <43f3ae5f-4bb8-4330-a79d-b0a50d2e397a@daynix.com>
+ <87cyofeu0q.fsf@draig.linaro.org>
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>
-References: <20240617063409.34393-1-clg@redhat.com>
- <20240617063409.34393-4-clg@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240617063409.34393-4-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <87cyofeu0q.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,96 +102,122 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cédric,
-On 6/17/24 08:33, Cédric Le Goater wrote:
-> From: Joao Martins <joao.m.martins@oracle.com>
->
-> Separate the changes that updates the ranges from the listener, to
-s/updates/update
-> make it reusable in preparation to expand its use to vIOMMU support.
->
-> [ clg: - Rebased on upstream
->        - Introduced vfio_dirty_tracking_update_range() ]
->
-> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  hw/vfio/common.c | 38 ++++++++++++++++++++++----------------
->  1 file changed, 22 insertions(+), 16 deletions(-)
->
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index d48cd9b9361a92d184e423ffc60aabaff40fb487..fe215918bdf66ddbe3c5db803e10ce1aa9756b90 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -839,20 +839,11 @@ static bool vfio_section_is_vfio_pci(MemoryRegionSection *section,
->      return false;
->  }
->  
-> -static void vfio_dirty_tracking_update(MemoryListener *listener,
-> -                                       MemoryRegionSection *section)
-> +static void vfio_dirty_tracking_update_range(VFIODirtyRanges *range,
-> +                                             hwaddr iova, hwaddr end,
-> +                                             bool update_pci)
->  {
-> -    VFIODirtyRangesListener *dirty = container_of(listener,
-> -                                                  VFIODirtyRangesListener,
-> -                                                  listener);
-> -    VFIODirtyRanges *range = &dirty->ranges;
-> -    hwaddr iova, end, *min, *max;
-> -
-> -    if (!vfio_listener_valid_section(section, "tracking_update") ||
-> -        !vfio_get_section_iova_range(dirty->bcontainer, section,
-> -                                     &iova, &end, NULL)) {
-> -        return;
-> -    }
-> +    hwaddr *min, *max;
->  
->      /*
->       * The address space passed to the dirty tracker is reduced to three ranges:
-> @@ -873,8 +864,7 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
->       * The alternative would be an IOVATree but that has a much bigger runtime
->       * overhead and unnecessary complexity.
->       */
-> -    if (vfio_section_is_vfio_pci(section, dirty->bcontainer) &&
-> -        iova >= UINT32_MAX) {
-> +    if (update_pci && iova >= UINT32_MAX) {
->          min = &range->minpci64;
->          max = &range->maxpci64;
->      } else {
-> @@ -889,7 +879,23 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
->      }
->  
->      trace_vfio_device_dirty_tracking_update(iova, end, *min, *max);
-don't you want to update the name of the trace point?
-> -    return;
-> +}
-> +
-> +static void vfio_dirty_tracking_update(MemoryListener *listener,
-> +                                       MemoryRegionSection *section)
-> +{
-> +    VFIODirtyRangesListener *dirty =
-> +        container_of(listener, VFIODirtyRangesListener, listener);
-> +    hwaddr iova, end;
-> +
-> +    if (!vfio_listener_valid_section(section, "tracking_update") ||
-> +        !vfio_get_section_iova_range(dirty->bcontainer, section,
-> +                                     &iova, &end, NULL)) {
-> +        return;
-> +    }
-> +
-> +    vfio_dirty_tracking_update_range(&dirty->ranges, iova, end,
-> +                      vfio_section_is_vfio_pci(section, dirty->bcontainer));
->  }
->  
->  static const MemoryListener vfio_dirty_tracking_listener = {
-Besides
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+On 2024/06/17 19:35, Alex Bennée wrote:
+> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+> 
+>> On 2024/06/05 22:35, Alex Bennée wrote:
+>>> As the latest features for virtio-gpu need a pretty recent version of
+>>> libvirglrenderer. When it is not available on the system we can use a
+>>> meson wrapper and provide it when --download is specified in
+>>> configure.
+>>> We have to take some additional care as currently QEMU will hang
+>>> libvirglrenderer fails to exec the render server. As the error isn't
+>>> back propagated we make sure we at least test we have a path to an
+>>> executable before tweaking the environment.
+>>
+>> Hi,
+>>
+>> The intent of this patch sounds good to me. It is the responsibility
+>> of users to set up virglrenderer in principle, but we can just be kind
+>> for them.
+>>
+>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>>> Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>> ---
+>>>    meson.build                    |  7 ++++++-
+>>>    hw/display/virtio-gpu-virgl.c  | 24 ++++++++++++++++++++++++
+>>>    subprojects/virglrenderer.wrap |  6 ++++++
+>>>    3 files changed, 36 insertions(+), 1 deletion(-)
+>>>    create mode 100644 subprojects/virglrenderer.wrap
+>>> diff --git a/meson.build b/meson.build
+>>> index 1d7346b703..e4e270df78 100644
+>>> --- a/meson.build
+>>> +++ b/meson.build
+>>> @@ -1203,7 +1203,8 @@ have_vhost_user_gpu = have_tools and host_os == 'linux' and pixman.found()
+>>>    if not get_option('virglrenderer').auto() or have_system or have_vhost_user_gpu
+>>>      virgl = dependency('virglrenderer',
+>>>                         method: 'pkg-config',
+>>> -                     required: get_option('virglrenderer'))
+>>> +                     required: get_option('virglrenderer'),
+>>> +                     default_options: ['default_library=static', 'render-server=true', 'venus=true'])
+>>
+>> meson_options.txt of virglrenderer says:
+>>> DEPRECATED: render server is enabled by venus automatically
+>>
+>> I'm also a bit concerned to enable Venus by default when the upstream
+>> virglrenderer doesn't. Why is it disabled by the upstream? Perhaps is
+>> it time for upstream to enable it by default?
+>>
+>>>    endif
+>>>    rutabaga = not_found
+>>>    if not get_option('rutabaga_gfx').auto() or have_system or have_vhost_user_gpu
+>>> @@ -2314,6 +2315,10 @@ if virgl.version().version_compare('>=1.0.0')
+>>>      config_host_data.set('HAVE_VIRGL_RESOURCE_BLOB', 1)
+>>>      config_host_data.set('HAVE_VIRGL_VENUS', 1)
+>>>    endif
+>>> +if virgl.type_name().contains('internal')
+>>> +  config_host_data.set('HAVE_BUNDLED_VIRGL_SERVER', 1)
+>>> +endif
+>>> +
+>>>    config_host_data.set('CONFIG_VIRTFS', have_virtfs)
+>>>    config_host_data.set('CONFIG_VTE', vte.found())
+>>>    config_host_data.set('CONFIG_XKBCOMMON', xkbcommon.found())
+>>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+>>> index c9d20a8a60..53d6742e79 100644
+>>> --- a/hw/display/virtio-gpu-virgl.c
+>>> +++ b/hw/display/virtio-gpu-virgl.c
+>>> @@ -14,6 +14,7 @@
+>>>    #include "qemu/osdep.h"
+>>>    #include "qemu/error-report.h"
+>>>    #include "qemu/iov.h"
+>>> +#include "qemu/cutils.h"
+>>>    #include "trace.h"
+>>>    #include "hw/virtio/virtio.h"
+>>>    #include "hw/virtio/virtio-gpu.h"
+>>> @@ -1122,6 +1123,26 @@ void virtio_gpu_virgl_reset(VirtIOGPU *g)
+>>>        virgl_renderer_reset();
+>>>    }
+>>>    +/*
+>>> + * If we fail to spawn the render server things tend to hang so it is
+>>> + * important to do our due diligence before then. If QEMU has bundled
+>>> + * the virgl server we want to ensure we can run it from the build
+>>> + * directory and if installed.
+>>
+>> This comment sounds a bit misleading. The following code does not
+>> ensure the render server exists; it just opportunistically sets the
+>> path to the bundled render server or let it fail otherwise.
+>>
+>> It also sounds like virgl_set_render_env() does an extra step to
+>> prevent hangs, but it is actually mandatory for relocated scenarios;
+>> the lack of render server always results in a non-functional Venus
+>> setup even if the hang is fixed.
+>>
+>> The hang is better to be noted in subprojects/virglrenderer.wrap since
+>> that is the reason we would want to wrap the project.
+>>
+>>> + *
+>>> + * The principle way we can override the libvirglrenders behaviour is
+>>> + * by setting environment variables.
+>>> + */
+>>> +static void virgl_set_render_env(void)
+>>> +{
+>>> +#ifdef HAVE_BUNDLED_VIRGL_SERVER
+>>> +    g_autofree char *file = get_relocated_path(CONFIG_QEMU_HELPERDIR "/virgl_render_server");
+>>> +    if (g_file_test(file, G_FILE_TEST_EXISTS | G_FILE_TEST_IS_EXECUTABLE)) {
+>>
+>> I think this g_file_test() should be removed; we would not want to let
+>> virglrenderer pick a random render server when the bundled server
+>> exists since the ABI between them can be different in theory.
+> 
+> I was thinking mainly of validating it was built, maybe that should be
+> an assert instead because if we failed to build the server we got the
+> bundling wrong?
 
-Eric
-
+virglrenderer should emit errors and refuse to function in such a case 
+so we don't have to do that ourselves.
 
