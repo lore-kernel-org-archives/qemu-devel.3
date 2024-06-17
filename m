@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E694DC27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29F2EC41513
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:17:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJGtg-0000Ha-JJ; Mon, 17 Jun 2024 14:16:05 -0400
+	id 1sJGtg-0000Gl-1z; Mon, 17 Jun 2024 14:16:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJGta-0000Dw-RG
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:16:00 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJGtV-0000CZ-Nx
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:15:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJGtX-0006Ir-La
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:15:58 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJGtN-0006Hx-In
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:15:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718648154;
+ s=mimecast20190719; t=1718648141;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nEHrtQENt0LFtN0vcvE5nOEIasmLrG79F51JvU/6ieg=;
- b=bmkuCIRWL2qTVG+zPosi944rk4GWkuW0SuIOp7mQhqDJW127a2qw6C3SIL7Xp3OODW7cRX
- dfgrWHXd4enEJUnESTdzQ5QAsD1UyK/jxeCCY52/RmavKu3S/apnlL04A4tliDnHntv9uj
- WYq40jT+QddolKNwGgQwXvdw0ZQ4Faw=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OZx3RDBPKVVhAKOuoTfczOFnKvOvgl7AGFwqYvU/uPI=;
+ b=PYLl2dJLchzkyiAYTb5tsqUvx3aqdocWL49BLJKGA5ELTf+K6vAYqI024M5FpiLl/iTvXq
+ t2MrXOaxClaFeYgPRNBF+wHdZx2+sWrdqUqZ0yMvzkBCsc1fAd1bmmDhDW9+Qb7clnM3ir
+ M8qrwdHdjaWe0mp/JxGQd2/o71YvhV0=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-320-WKtl73LcNF6pTtNzhaRqaw-1; Mon, 17 Jun 2024 14:15:50 -0400
-X-MC-Unique: WKtl73LcNF6pTtNzhaRqaw-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6b07a472e83so3991916d6.1
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:15:50 -0700 (PDT)
+ us-mta-340-kpMjgFhhOsy9ctdDWnGmuQ-1; Mon, 17 Jun 2024 14:15:38 -0400
+X-MC-Unique: kpMjgFhhOsy9ctdDWnGmuQ-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-797cde3c2f8so87855485a.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:15:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718648149; x=1719252949;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nEHrtQENt0LFtN0vcvE5nOEIasmLrG79F51JvU/6ieg=;
- b=s4GMdVi+wEiEjcyx+IFg5JBkmylryZkN7JAKmrhxROj28ZlksoXstCHukNE6AdzUs5
- aZXdXzLGFHRJNwVFZ0Vn7FrgEsFAL445wWAXES+i+/4nKG3Xcnd8dM5IeR8FlP4qkGYV
- 3I3sUzkKO6vvlTFUPbWEMEUrnyQYQo5KmLjiBwSQjcZgkn6CrFujB6PJfBi0E8FGVsbq
- xkGlPXD5XPCpM8cn+zsYAu8hoNzAPnPAn6vq5FrPVET0nnoP7uXL6jcxESH53M7c/mTF
- a44q9PgW/ZAfAjk9SUnWNTkL+ftgTIfMdY1F004ZP+Xc5vNbrzhDE+0jnTenxcfcEURM
- PZTA==
-X-Gm-Message-State: AOJu0YzyV6FywRrNa6q576Bw0cyZ9P7bFF4shKeGFqh4duw3Yxi8L+1U
- E/qOt8JDvrQB1LNZj7Y6UU4/IQFf/8uHzVrm2vINpfGIn74LbZgvSRFJq7oaQlaFgozjeG+R2+i
- 5TX1UjcKjEb+MIRR5GOVMCRbGciTs7oDII/jHgH2zyw4w70iMfeV3hzUbYeNwuMVC0Cs+AbaNNq
- +5iz20R6jwNCVNM9DVCMQEwJMHOBhnVvop7A==
-X-Received: by 2002:a05:620a:4893:b0:797:74ba:8b8 with SMTP id
- af79cd13be357-798d23e0698mr1366899485a.2.1718648148811; 
- Mon, 17 Jun 2024 11:15:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFasbENddxnm/6ekdse/p/TgRpfH51FOrKDEuAZV6APu5bsFDqKlxS7FDarb4wTo0k8DjXoQ==
-X-Received: by 2002:a05:620a:4893:b0:797:74ba:8b8 with SMTP id
- af79cd13be357-798d23e0698mr1366894685a.2.1718648147973; 
- Mon, 17 Jun 2024 11:15:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718648138; x=1719252938;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OZx3RDBPKVVhAKOuoTfczOFnKvOvgl7AGFwqYvU/uPI=;
+ b=hFhPm3AL5QKWQdcZDT3F4prpqx1scEnQzg8VRr5FNGiEx8d1dUsHf1XOKkMOsPCTXj
+ KQr+O5k3GlVScoyA8iSdrK7sTDvpr/jGezVRnnyUXVV+Ll+yCtqJuMMBfOFpZzf+k33B
+ g2k3Jk0P4HCMZJHeqCojjP6DnxzHLuSHdYxVrfpcHqgEYymh0nBv4m7Wm5bae1aaNyvl
+ YPa4g4zUDg3zpnKnbNcxCnI50WFnexPuS1CxXBTojTjkvbtnILhcqOI/ttEFPvHcm72/
+ 8rQOpY9lkdF/vY6KO7lXaEoH6h1RreN+fEhH9KmNW1BSRp4hfoqddGQIG5gWseNw1yTC
+ wLAQ==
+X-Gm-Message-State: AOJu0YwIi1ZqzUtuJqM13n/pt2SVReq6YKLtVm5uhWWEqKfaWxMjxN+g
+ 3vyZpnB4uSgjRth6XWdB+M7q+8nYzT2vhP5XtmJsl1hfgOvUF4h5IZpZtxzFuwyq+jWYMqJ5kay
+ boRkIS8tXjiEpPbdWRAdrH0Kq9yNyUfE8x3p/RbD8HgiNT6jewaIh8zmx7I/WhClAhzQp5djFM1
+ z9rsrFK/9utw11OrPeugbMJWt2+phESx5cqQ==
+X-Received: by 2002:a05:620a:260e:b0:795:c5a1:cbac with SMTP id
+ af79cd13be357-798d26fa8bamr1154421085a.5.1718648137721; 
+ Mon, 17 Jun 2024 11:15:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFiJGbkS7EMWtE/1VFl+mK8g7XYo0w2+Fu3slplT/XXUDraXSrF0KkRZ8OuDBry/5GShpGA1Q==
+X-Received: by 2002:a05:620a:260e:b0:795:c5a1:cbac with SMTP id
+ af79cd13be357-798d26fa8bamr1154416485a.5.1718648136998; 
+ Mon, 17 Jun 2024 11:15:36 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-798abc07501sm449643685a.89.2024.06.17.11.15.46
+ af79cd13be357-798abc07501sm449643685a.89.2024.06.17.11.15.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 11:15:47 -0700 (PDT)
+ Mon, 17 Jun 2024 11:15:36 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
@@ -71,13 +70,11 @@ Cc: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Eric Blake <eblake@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
  peterx@redhat.com, Jiri Denemark <jdenemar@redhat.com>,
  Bandan Das <bdas@redhat.com>
-Subject: [PATCH v2 06/10] migration/docs: Update postcopy recover session for
- SETUP phase
-Date: Mon, 17 Jun 2024 14:15:30 -0400
-Message-ID: <20240617181534.1425179-7-peterx@redhat.com>
+Subject: [PATCH v2 00/10] migration: New postcopy state, and some cleanups
+Date: Mon, 17 Jun 2024 14:15:24 -0400
+Message-ID: <20240617181534.1425179-1-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
-In-Reply-To: <20240617181534.1425179-1-peterx@redhat.com>
-References: <20240617181534.1425179-1-peterx@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
@@ -105,74 +102,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Firstly, the "Paused" state was added in the wrong place before. The state
-machine section was describing PostcopyState, rather than MigrationStatus.
-Drop the Paused state descriptions.
+v2:
+- Collect tags
+- Patch 3
+  - cover all states in migration_postcopy_is_alive()
+- Patch 4 (old)
+  - English changes [Fabiano]
+  - Split the migration_incoming_state_setup() cleanup into a new patch
+    [Fabiano]
+  - Drop RECOVER_SETUP in fill_destination_migration_info() [Fabiano]
+  - Keep using explicit state check in migrate_fd_connect() for resume
+    [Fabiano]
+- New patches
+  - New doc update: "migration/docs: Update postcopy recover session for
+    SETUP phase"
+  - New test case: last four patches
 
-Then in the postcopy recover session, add more information on the state
-machine for MigrationStatus in the lines.  Add the new RECOVER_SETUP phase.
+v1: https://lore.kernel.org/r/20240612144228.1179240-1-peterx@redhat.com
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- docs/devel/migration/postcopy.rst | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+The major goal of this patchset is patch 5, which introduced a new postcopy
+state so that we will send an event in postcopy reconnect failures that
+Libvirt would prefer to have.  There's more information for that issue in
+the commit message alone.
 
-diff --git a/docs/devel/migration/postcopy.rst b/docs/devel/migration/postcopy.rst
-index 6c51e96d79..a15594e11f 100644
---- a/docs/devel/migration/postcopy.rst
-+++ b/docs/devel/migration/postcopy.rst
-@@ -99,17 +99,6 @@ ADVISE->DISCARD->LISTEN->RUNNING->END
-     (although it can't do the cleanup it would do as it
-     finishes a normal migration).
- 
-- - Paused
--
--    Postcopy can run into a paused state (normally on both sides when
--    happens), where all threads will be temporarily halted mostly due to
--    network errors.  When reaching paused state, migration will make sure
--    the qemu binary on both sides maintain the data without corrupting
--    the VM.  To continue the migration, the admin needs to fix the
--    migration channel using the QMP command 'migrate-recover' on the
--    destination node, then resume the migration using QMP command 'migrate'
--    again on source node, with resume=true flag set.
--
-  - End
- 
-     The listen thread can now quit, and perform the cleanup of migration
-@@ -221,7 +210,8 @@ paused postcopy migration.
- 
- The recovery phase normally contains a few steps:
- 
--  - When network issue occurs, both QEMU will go into PAUSED state
-+  - When network issue occurs, both QEMU will go into **POSTCOPY_PAUSED**
-+    migration state.
- 
-   - When the network is recovered (or a new network is provided), the admin
-     can setup the new channel for migration using QMP command
-@@ -229,9 +219,20 @@ The recovery phase normally contains a few steps:
- 
-   - On source host, the admin can continue the interrupted postcopy
-     migration using QMP command 'migrate' with resume=true flag set.
--
--  - After the connection is re-established, QEMU will continue the postcopy
--    migration on both sides.
-+    Source QEMU will go into **POSTCOPY_RECOVER_SETUP** state trying to
-+    re-establish the channels.
-+
-+  - When both sides of QEMU successfully reconnects using a new or fixed up
-+    channel, they will go into **POSTCOPY_RECOVER** state, some handshake
-+    procedure will be needed to properly synchronize the VM states between
-+    the two QEMUs to continue the postcopy migration.  For example, there
-+    can be pages sent right during the window when the network is
-+    interrupted, then the handshake will guarantee pages lost in-flight
-+    will be resent again.
-+
-+  - After a proper handshake synchronization, QEMU will continue the
-+    postcopy migration on both sides and go back to **POSTCOPY_ACTIVE**
-+    state.  Postcopy migration will continue.
- 
- During a paused postcopy migration, the VM can logically still continue
- running, and it will not be impacted from any page access to pages that
+Patch 1-2 are cleanups that are not directly relevant but I found/stored
+that could be good to have.  I made it simple by putting them together in
+one thread to make patch management easier, but I can send them separately
+when necessary.
+
+Patch 3 is also a cleanup, but will be needed for patch 4 as dependency.
+
+Patch 4-5 is the core patches.
+
+Patch 6 updates doc for the new state.
+
+Patch 7-10 adds a new test for the new state.
+
+Comments welcomed, thanks.
+
+CI: https://gitlab.com/peterx/qemu/-/pipelines/1335604588
+    (check-dco & check-patch fail to git-fetch, but doesn't look relevant)
+
+Peter Xu (10):
+  migration/multifd: Avoid the final FLUSH in complete()
+  migration: Rename thread debug names
+  migration: Use MigrationStatus instead of int
+  migration: Cleanup incoming migration setup state change
+  migration/postcopy: Add postcopy-recover-setup phase
+  migration/docs: Update postcopy recover session for SETUP phase
+  tests/migration-tests: Drop most WIN32 ifdefs for postcopy failure
+    tests
+  tests/migration-tests: Always enable migration events
+  tests/migration-tests: Verify postcopy-recover-setup status
+  tests/migration-tests: Cover postcopy failure on reconnect
+
+ docs/devel/migration/postcopy.rst |  31 +++++----
+ qapi/migration.json               |   4 ++
+ migration/migration.h             |   9 +--
+ migration/postcopy-ram.h          |   3 +
+ tests/qtest/migration-helpers.h   |   2 +
+ migration/colo.c                  |   2 +-
+ migration/migration.c             |  98 ++++++++++++++++++--------
+ migration/multifd.c               |   6 +-
+ migration/postcopy-ram.c          |  10 ++-
+ migration/ram.c                   |   4 --
+ migration/savevm.c                |   6 +-
+ tests/qtest/migration-helpers.c   |  20 ++++++
+ tests/qtest/migration-test.c      | 110 ++++++++++++++++++++++++------
+ 13 files changed, 223 insertions(+), 82 deletions(-)
+
 -- 
 2.45.0
 
