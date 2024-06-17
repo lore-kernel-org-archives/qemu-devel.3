@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08120C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 10:07:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE6D5C27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 10:07:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJ9G1-0004km-0H; Mon, 17 Jun 2024 06:06:37 -0400
+	id 1sJ9H1-0005OG-Hm; Mon, 17 Jun 2024 06:07:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sJ9Fx-0004kS-HJ
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 06:06:33 -0400
+ id 1sJ9Gy-0005O0-7Z
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 06:07:36 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sJ9Fv-0005Xz-4c
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 06:06:33 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1sJ9Gw-0005cg-C8
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 06:07:35 -0400
 Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Bx3+ujCnBm8YkHAA--.14359S3;
- Mon, 17 Jun 2024 18:06:28 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxSurjCnBmCIoHAA--.30430S3;
+ Mon, 17 Jun 2024 18:07:31 +0800 (CST)
 Received: from [10.20.42.239] (unknown [10.20.42.239])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxmsagCnBmP2UlAA--.25025S3; 
- Mon, 17 Jun 2024 18:06:27 +0800 (CST)
-Subject: Re: [PATCH 09/18] tcg/loongarch64: Use tcg_out_dup_vec in
- tcg_out_dupi_vec
+ AQAAf8CxZcXjCnBmpmUlAA--.14130S3; 
+ Mon, 17 Jun 2024 18:07:31 +0800 (CST)
+Subject: Re: [PATCH 10/18] tcg/loongarch64: Support LASX in tcg_out_dupi_vec
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: git@xen0n.name
 References: <20240527211912.14060-1-richard.henderson@linaro.org>
- <20240527211912.14060-10-richard.henderson@linaro.org>
+ <20240527211912.14060-11-richard.henderson@linaro.org>
 From: gaosong <gaosong@loongson.cn>
-Message-ID: <1c185e6f-e282-3eef-6edd-49f75ee1401f@loongson.cn>
-Date: Mon, 17 Jun 2024 18:06:28 +0800
+Message-ID: <f9c9239a-3728-ec87-2067-2176adb9adac@loongson.cn>
+Date: Mon, 17 Jun 2024 18:07:35 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20240527211912.14060-10-richard.henderson@linaro.org>
+In-Reply-To: <20240527211912.14060-11-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-CM-TRANSID: AQAAf8BxmsagCnBmP2UlAA--.25025S3
+X-CM-TRANSID: AQAAf8CxZcXjCnBmpmUlAA--.14130S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7WFWDKr4UAr45Kr1fXw15KFX_yoW8Jw45pr
- yS9r1UJF4rJa1kAFsIvayDKry2qr15Zw1Yva4fJw1kWrWvyw1DXr4rJr1Sqryay3s2vF4U
- Z3Zaqr47XFWqk3XCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r126r1DMcIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j1
- q2_UUUUU=
+X-Coremail-Antispam: 1Uk129KBj9xXoWrKFW5JrW7GF4kAw4kCFW7trc_yoWftFXEqF
+ n7Jw1DGrWqgay7CasIvr18Ja18KrZxtr9Y9F4UJw4fG3sIqr15KrW8XFnxXr1qvFs5uF9x
+ Ca9xGF9xuwnrZosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbIxYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
+ 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
+ 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8vD
+ 73UUUUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -20
@@ -87,41 +86,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 ÔÚ 2024/5/28 ÉÏÎç5:19, Richard Henderson Ð´µÀ:
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tcg/loongarch64/tcg-target.c.inc | 18 +-----------------
->   1 file changed, 1 insertion(+), 17 deletions(-)
+>   tcg/loongarch64/tcg-target.c.inc | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
 Reviewed-by: Song Gao <gaosong@loongson.cn>
 
 Thanks.
 Song Gao
 > diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-> index 1e721b8b20..9a8f67cf3e 100644
+> index 9a8f67cf3e..c7d0c7839b 100644
 > --- a/tcg/loongarch64/tcg-target.c.inc
 > +++ b/tcg/loongarch64/tcg-target.c.inc
-> @@ -1749,24 +1749,8 @@ static void tcg_out_dupi_vec(TCGContext *s, TCGType type, unsigned vece,
+> @@ -1743,7 +1743,12 @@ static void tcg_out_dupi_vec(TCGContext *s, TCGType type, unsigned vece,
+>       int64_t value = sextract64(v64, 0, 8 << vece);
+>       if (-0x200 <= value && value <= 0x1FF) {
+>           uint32_t imm = (vece << 10) | ((uint32_t)v64 & 0x3FF);
+> -        tcg_out_opc_vldi(s, rd, imm);
+> +
+> +        if (type == TCG_TYPE_V256) {
+> +            tcg_out_opc_xvldi(s, rd, imm);
+> +        } else {
+> +            tcg_out_opc_vldi(s, rd, imm);
+> +        }
+>           return;
+>       }
 >   
->       /* TODO: vldi patterns when imm 12 is set */
->   
-> -    /* Fallback to vreplgr2vr */
->       tcg_out_movi(s, TCG_TYPE_I64, TCG_REG_TMP0, value);
-> -    switch (vece) {
-> -    case MO_8:
-> -        tcg_out_opc_vreplgr2vr_b(s, rd, TCG_REG_TMP0);
-> -        break;
-> -    case MO_16:
-> -        tcg_out_opc_vreplgr2vr_h(s, rd, TCG_REG_TMP0);
-> -        break;
-> -    case MO_32:
-> -        tcg_out_opc_vreplgr2vr_w(s, rd, TCG_REG_TMP0);
-> -        break;
-> -    case MO_64:
-> -        tcg_out_opc_vreplgr2vr_d(s, rd, TCG_REG_TMP0);
-> -        break;
-> -    default:
-> -        g_assert_not_reached();
-> -    }
-> +    tcg_out_dup_vec(s, type, vece, rd, TCG_REG_TMP0);
->   }
->   
->   static void tcg_out_addsub_vec(TCGContext *s, unsigned vece, const TCGArg a0,
 
 
