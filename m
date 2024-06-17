@@ -4,95 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78478C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 21:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5D10C27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 21:19:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJJU7-0000M5-2k; Mon, 17 Jun 2024 17:01:53 -0400
+	id 1sJJkM-0004cy-7Q; Mon, 17 Jun 2024 17:18:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sJJU5-0000Lu-UY
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 17:01:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kowal@linux.vnet.ibm.com>)
+ id 1sJJDG-0002QT-J6; Mon, 17 Jun 2024 16:44:27 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sJJU1-0001gV-QS
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 17:01:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718658104;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=euGjkon8gjRW1fYoRK8Sk2Xmvyl9K4RQGXs4IFjPHF4=;
- b=Phzv+TQ2NPt+z94fXDNGRakcmBthRvwURr0H58QnrdYNVrPZmgFBg6m7eIz5iLAwbciPl4
- xGluLBpKZHt451tWy4Ky1v5J2uaYUosfT8yoRI7IwekJBe4Qs7XnwBs57yv5OYYRwLix2L
- PEIjhmzwZPO0FvtcyPraOn9g5PLklJU=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-5-M-l5GiRqNw6xu98vOfTANg-1; Mon, 17 Jun 2024 17:01:38 -0400
-X-MC-Unique: M-l5GiRqNw6xu98vOfTANg-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-358f9dffbedso2637247f8f.3
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 14:01:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718658097; x=1719262897;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=euGjkon8gjRW1fYoRK8Sk2Xmvyl9K4RQGXs4IFjPHF4=;
- b=phyoCC4tfMq1Ulb+iHlSKvDQd0UAwA85k/AJHuIHx0wYxo52CFNXHDw/quDGLcloe8
- M7lgcP2Usb4yLDYPATTroIFVB+WO8SFDWu9F2CoOBzSbWIW1NWAqBlpts6lcAFBSxj3Y
- L3nXCbJGSXjTmiRra26ZbkAEwbN5IGZQhiRNqH33+/V5fVl2AKhE7/1Pe94Xo20rmyks
- QEetxSJZ+0WzzQHg96BoesUzLx6S0PbDIKlFRPal3kzfEVnwG5U4YdzygNCuuduA9rWC
- NvAmevvegnM8b1ly6pn4JsIAKs0c1QNSshiZk5V4AZviu0PHhe1nQVPA6lW/xLquBTB5
- ysnQ==
-X-Gm-Message-State: AOJu0Yz0JH9Gl0EnlI5DXapp63/jp/CWs2FYRx65QsHV8tM+elupSzo8
- b+zn0E4M463f02OTiMr95irJaYkA5e6r4g78Iwa+qfPO+sb3n/TcDZVco+i9ya5np59uoXS/CRw
- yrHcEW/wBstpYQ5a3NBKCSEYF9xkgGCYT5o41rIjGXlkXKzKz6mOr+mQgPLcvxbqC0cWFQ03A6M
- 81imefcEeuhqfymFYWMCThG4ygwxY=
-X-Received: by 2002:adf:e789:0:b0:360:9bf5:1eab with SMTP id
- ffacd0b85a97d-3609bf51f31mr1802203f8f.36.1718658097044; 
- Mon, 17 Jun 2024 14:01:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEp9pHDIJAXp1Yod3wHjOqnTR7K7g7E/gJr4DhgKlvnuDUKr6YmLf3gkq0wxCc69p4VtTnQwvMghI8e2WMR5Ro=
-X-Received: by 2002:adf:e789:0:b0:360:9bf5:1eab with SMTP id
- ffacd0b85a97d-3609bf51f31mr1802182f8f.36.1718658096676; Mon, 17 Jun 2024
- 14:01:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kowal@linux.vnet.ibm.com>)
+ id 1sJJD9-0006Vp-Sy; Mon, 17 Jun 2024 16:44:25 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45HKRHCY018827;
+ Mon, 17 Jun 2024 20:43:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=pp1; bh=kSEvuZKjHy0bxDDpd3H2sRaNIX
+ 8jPxdNxdbE/YcdrrM=; b=f5/CPVL+nU7uUZyixBBHYElIK/MqYiIPsaxUsXsZlB
+ 0YKwbAIXIDRudxUDNma+wG8us+9a5BABOJKfqnTwurr7yzd45frYjOBqMAwelyjm
+ ZORFNXOlOVKqM5RzSRNtxNABgSuKSkGNI+aOvo2f1Ysavv0vpqlzTVOGtpZ9JZ6K
+ ESmg65pfcqt6D5k5kuDluUO4/BsAN1W+WsQK6AtZYnZOJ/bSfgtc9QLaDrKnyfv7
+ 0ZaBxgTzebnha3eu3xoE6M1qTNv+iQ7z/IcdQRZSb9vXsUqLDrGdgyxJaz48K9C/
+ zMGMNrIVmjtHRQD86KqD2N1U7F/slzMShFDueu4yN7sQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yttwc871h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Jun 2024 20:43:43 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45HKhhEm010300;
+ Mon, 17 Jun 2024 20:43:43 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yttwc871f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Jun 2024 20:43:43 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45HIQoqj011027; Mon, 17 Jun 2024 20:43:42 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3yspsmw3wv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Jun 2024 20:43:42 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45HKhaGF51839388
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 17 Jun 2024 20:43:38 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 336CB2004D;
+ Mon, 17 Jun 2024 20:43:36 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 01DD02004B;
+ Mon, 17 Jun 2024 20:43:35 +0000 (GMT)
+Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 17 Jun 2024 20:43:34 +0000 (GMT)
+From: Michael Kowal <kowal@linux.vnet.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
+ npiggin@gmail.com, milesg@linux.ibm.com
+Subject: [PATCH 0/5] XIVE changes for Cache Watch, VSTs, STT and info pic
+Date: Mon, 17 Jun 2024 15:42:57 -0500
+Message-Id: <20240617204302.12323-1-kowal@linux.vnet.ibm.com>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
- <ef980fb29deb81d574a7301365d9b9db72c015eb.1718101832.git.manos.pitsidianakis@linaro.org>
-In-Reply-To: <ef980fb29deb81d574a7301365d9b9db72c015eb.1718101832.git.manos.pitsidianakis@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 17 Jun 2024 23:01:24 +0200
-Message-ID: <CABgObfaP7DRD8dbSKNmUzhZNyxeHWO0MztaW3_EFYt=vf6SbzA@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 2/5] rust: add bindgen step as a meson dependency
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, John Snow <jsnow@redhat.com>, 
- Cleber Rosa <crosa@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: HiFufm1alBdJTDhxKJAa4ILbEnchztRd
+X-Proofpoint-GUID: qEdNnIt1X7yBhdgsq-T1fZGPRTWK582h
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-17_14,2024-06-17_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0
+ mlxlogscore=309 mlxscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
+ phishscore=0 clxscore=1011 bulkscore=0 adultscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2406170157
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=kowal@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 17 Jun 2024 17:18:34 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,157 +111,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just one somewhat larger request, otherwise just a collection of ideas.
+These changes provide enhanced support of the External Interrupt Virtualization
+Engine.  The changes are focused on the following areas:
+ - Cache Watch, Cache Flush and Sync Injection
+ - Virtual Structure Tables
+ - Set Translation Table
+ - 'info pic' command data that is dumped
 
-On Tue, Jun 11, 2024 at 12:34=E2=80=AFPM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
-> diff --git a/rust/meson.build b/rust/meson.build
-> new file mode 100644
-> index 0000000000..e9660a3045
-> --- /dev/null
-> +++ b/rust/meson.build
-> @@ -0,0 +1,91 @@
-> +rust_targets =3D {}
-> +
-> +cargo_wrapper =3D [
-> +  find_program(meson.global_source_root() / 'scripts/cargo_wrapper.py'),
-> +  '--config-headers', meson.project_build_root() / 'config-host.h',
-> +  '--meson-build-root', meson.project_build_root(),
-> +  '--meson-build-dir', meson.current_build_dir(),
-> +  '--meson-source-dir', meson.current_source_dir(),
-> +]
->
-> +
-> +# TODO: verify rust_target_triple if given as an option
-> +if rust_target_triple =3D=3D ''
-> +  if not supported_oses.contains(host_os)
-> +    message()
-> +    error('QEMU does not support `' + host_os +'` as a Rust platform.')
-> +  elif not supported_cpus.contains(host_arch)
-> +    message()
-> +    error('QEMU does not support `' + host_arch +'` as a Rust architectu=
-re.')
-> +  endif
-> +  rust_target_triple =3D host_arch + rust_supported_oses[host_os]
-> +  if host_os =3D=3D 'windows' and host_arch =3D=3D 'aarch64'
-> +    rust_target_triple +=3D 'llvm'
-> +  endif
-> +endif
-> +
-> +if get_option('optimization') in ['0', '1', 'g']
-> +  rs_build_type =3D 'debug'
-> +else
-> +  rs_build_type =3D 'release'
-> +endif
-> +
-> +rust_hw_target_list =3D {}
-> +
-> +foreach rust_hw_target, rust_hws: rust_hw_target_list
-> +  foreach rust_hw_dev: rust_hws
-> +    output =3D meson.current_build_dir() / rust_target_triple / rs_build=
-_type / rust_hw_dev['output']
-> +    crate_metadata =3D {
-> +      'name': rust_hw_dev['name'],
-> +      'output': [rust_hw_dev['output']],
-> +      'output-path': output,
-> +      'command': [cargo_wrapper,
-> +        '--crate-dir',
-> +        meson.current_source_dir() / rust_hw_dev['dirname'],
-> +        '--profile',
-> +        rs_build_type,
-> +        '--target-triple',
-> +        rust_target_triple,
-> +        '--outdir',
-> +        '@OUTDIR@',
-> +        'build-lib'
+Frederic Barrat (5):
+  pnv/xive2: XIVE2 Cache Watch, Cache Flush and Sync Injection support
+  pnv/xive2: Enable VST NVG and NVC index compression
+  pnv/xive2: Set Translation Table for the NVC port space
+  pnv/xive2: Fail VST entry address computation if table has no VSD
+  pnv/xive2: Move xive2_nvp_pic_print_info() to xive2.c
 
-Probably needs to add config-devices.h as well to --config-headers? I
-think that we can have just one crate that is built per target,
-instead of many small crates like your rust_pl011_cargo. And then that
-crate is built many times with a rust/src/ hierarchy that resembles
-the meson.build files we use for C.
+ hw/intc/pnv_xive2_regs.h    | 108 +++++++
+ include/hw/ppc/pnv_chip.h   |   1 +
+ include/hw/ppc/xive2_regs.h |   9 +
+ hw/intc/pnv_xive2.c         | 564 ++++++++++++++++++++++++++++++------
+ hw/intc/xive.c              |  11 +-
+ hw/intc/xive2.c             |  33 ++-
+ 6 files changed, 631 insertions(+), 95 deletions(-)
 
-rust/src/mod.rs:
-pub mod hw;
-
-rust/src/hw/mod.rs:
-pub mod char;
-
-rust/src/hw/char/mod.rs:
-#[cfg(feature =3D "CONFIG_PL011")] pub mod pl011;
-
-(perhaps just src/? And we could even move all sources down one level
-to src/ for QEMU as well? But that can be done later, for now it can
-be rust/src/). This basically gives Kconfig integration for free if it
-works, so I'd ask you to try doing this for the next version?
-
-Also, sooner or later we'll have to tackle building a set of common
-dependencies (similar to common_ss), and then bringing those as a
-dependency to the build of the per-target crates. Even if we don't get
-to the point of building devices once for all targets, I'd rather at
-least avoid having to build a dozen times the common deps of
-procedural macros.
-
-This is not trivial, but should not be hard either, by using build.rs
-(cargo::rustc-link-search) to add the -Ldependency=3D/path/to/rlibs
-option to the per-target rustc invocations. This may also require
-grabbing the compilation log via "cargo build
---message-format=3Djson-render-diagnostics", but that's not hard to do
-in cargo_wrapper.py. And unlike the previous request about Kconfig, it
-can be done after the first merge.
-
-> +#include "qemu/osdep.h"
-> +#include "qemu/module.h"
-> +#include "qemu-io.h"
-> +#include "sysemu/sysemu.h"
-> +#include "hw/sysbus.h"
-> +#include "exec/memory.h"
-> +#include "chardev/char-fe.h"
-> +#include "hw/clock.h"
-> +#include "hw/qdev-clock.h"
-> +#include "hw/qdev-properties.h"
-> +#include "hw/qdev-properties-system.h"
-> +#include "hw/irq.h"
-> +#include "qapi/error.h"
-> +#include "migration/vmstate.h"
-> +#include "chardev/char-serial.h"
-
-Please check for any headers included indirectly and whether it's
-worth including them here (e.g. it seems that qapi/error.h,
-qom/object.h, hw/qdev-core.h should be there).
-
-> diff --git a/scripts/cargo_wrapper.py b/scripts/cargo_wrapper.py
-> index d338effdaa..a36a4fc86d 100644
-> --- a/scripts/cargo_wrapper.py
-> +++ b/scripts/cargo_wrapper.py
-> @@ -94,6 +94,8 @@ def get_cargo_rustc(args: argparse.Namespace) -> tuple[=
-Dict[str, Any], List[str]
->
->      env =3D os.environ
->      env["CARGO_ENCODED_RUSTFLAGS"] =3D cfg
-> +    env["MESON_BUILD_DIR"] =3D str(target_dir)
-> +    env["MESON_BUILD_ROOT"] =3D str(args.meson_build_root)
->
->      return (env, cargo_cmd)
->
-> @@ -164,6 +166,14 @@ def main() -> None:
->          required=3DTrue,
->      )
->      parser.add_argument(
-> +        "--meson-build-root",
-> +        metavar=3D"BUILD_ROOT",
-> +        help=3D"meson.project_build_root()",
-> +        type=3Dpathlib.Path,
-> +        dest=3D"meson_build_root",
-> +        required=3DTrue,
-> +    )
-> +    parser.add_argument(
->          "--meson-source-dir",
->          metavar=3D"SOURCE_DIR",
->          help=3D"meson.current_source_dir()",
-
-Probably all of cargo_wrapper.py can be moved to this patch.
-
-Paolo
+--
+2.39.3
 
 
