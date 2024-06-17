@@ -4,72 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9ED3C2BA15
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 13:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A05C7C2BA15
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 13:06:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJBxL-00083A-V6; Mon, 17 Jun 2024 08:59:32 -0400
+	id 1sJC35-0002RR-QC; Mon, 17 Jun 2024 09:05:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sJBxK-00081Y-9a; Mon, 17 Jun 2024 08:59:30 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1sJC34-0002R4-C2
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 09:05:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sJBxG-0003Vo-Sb; Mon, 17 Jun 2024 08:59:30 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3196A70FB1;
- Mon, 17 Jun 2024 16:00:34 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 74EFBEABE3;
- Mon, 17 Jun 2024 15:59:21 +0300 (MSK)
-Message-ID: <e928571e-0420-4c10-ba9e-aade4cfd3c7c@tls.msk.ru>
-Date: Mon, 17 Jun 2024 15:59:21 +0300
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1sJC32-00058i-3a
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 09:05:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718629523;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=Y4y3xCjdobtpYMRY8oPv3IwIwhNcXF7Okmc8yMpWAxs=;
+ b=ZSTUkTpiDKODlyNUUB/7A5mTBWMgw4rEjRH6YF9cEQPt9kWBirSQQRGNsTowYzMxj6MzFM
+ JZsPHBY0HWB39fE79OQKjnLQ2eJFMB+pOJCndMG/GVJf73wP0jvgKL5LtA1y3VQJLQ7PVv
+ kooII3A9+LDNR2olEgDtLN31Fs1AqpI=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-690-FvaxYny3N1WQsqhxQc4tBA-1; Mon, 17 Jun 2024 09:05:19 -0400
+X-MC-Unique: FvaxYny3N1WQsqhxQc4tBA-1
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-62f43c95de4so89385647b3.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 06:05:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718629518; x=1719234318;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Y4y3xCjdobtpYMRY8oPv3IwIwhNcXF7Okmc8yMpWAxs=;
+ b=vvCIQ+ig0RgiX0gEIk5oqFaMPWBd2h8YdKs3uj8R9vxiKSE5lUUSa1vGML79lP5urk
+ /oq7I3maY5uKadgGknIRCMOitGoVuCTlVOjnZFUr8MCq43K4+IT1z2o+FFtMblX0bW22
+ j06iU1OQ5iENEHVUgtfKJEfZ4uxUOwX6FfX6Otqsce+kiHtbnPO1FjI2Klzn37CTD0I7
+ kPD/5sY0fLKROoUYtZRW61MQ7Wby4Np+9KjZ3Uy+p1lNkH4ymNr4cW+hnT+I0bZJXj+x
+ 4Taebs2cQzNj7VMnXfnOOCpTQkxWhnsFVMM8v7EkHZsvkli8qmnrO1w+2bwiUxYkH+NI
+ x8Ng==
+X-Gm-Message-State: AOJu0YyCZCl2/fr4YeE4lvdlrQEPytROiVgpJpmZTj9nOD3CK39UATe4
+ 2Ilcj/QtemTCbJb8vfADkkSi1eRQiddKs08Fz6nPvwMqE+cpawD/BuuHEw2dMLgHDYlH18irwuZ
+ unwbNA+OEcPX447dTDbNHfU/5cepji4BUeIGn0Zbs3edryR3fD7k6ZOUK7tNhtZ6oSLzWj/Arap
+ 3eK9eLd207+LQToAOW8yJ8IyQF7OMJXDekSP/WvQ==
+X-Received: by 2002:a25:908:0:b0:dff:435b:ca99 with SMTP id
+ 3f1490d57ef6-dff435bcf8amr2755861276.41.1718629518207; 
+ Mon, 17 Jun 2024 06:05:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFSZQKcLHFga3GO+ELBOWwGdc79BOlSxpnrfAljEKfO18UfnTkyBssqcGy/MSp4anoVllGJHp0QB6bWRPRWGPA=
+X-Received: by 2002:a25:908:0:b0:dff:435b:ca99 with SMTP id
+ 3f1490d57ef6-dff435bcf8amr2755833276.41.1718629517827; Mon, 17 Jun 2024
+ 06:05:17 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] Remove some unused structures
-To: "Dr. David Alan Gilbert" <dave@treblig.org>, peter.maydell@linaro.org,
- laurent@vivier.eu, qemu-trivial@nongnu.org
-Cc: qemu-devel@nongnu.org
-References: <20240505171444.333302-1-dave@treblig.org>
- <ZmMTPvLUaB4tGvbk@gallifrey>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <ZmMTPvLUaB4tGvbk@gallifrey>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Mon, 17 Jun 2024 16:05:07 +0300
+Message-ID: <CAPMcbCpER8hvza6fO8D5Pt-8TN4fx8yP-YR0o8WSorOE44dmJw@mail.gmail.com>
+Subject: Guest agent guest-exec memory usage
+To: QEMU <qemu-devel@nongnu.org>
+Cc: Dehan Meng <demeng@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Michael Roth <michael.roth@amd.com>, Daniel Berrange <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Yan Vugenfirer <yvugenfi@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000e93346061b159d54"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,34 +95,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-07.06.2024 17:04, Dr. David Alan Gilbert пишет:
-> * Dr. David Alan Gilbert (dave@treblig.org) wrote:
->> A bunch of structs that are currently unused,
->> found with a simple script and a bit of eyeballing.
->>
->> The only one I'm that suspicious of is the SPARC
->> one, where the patch which removed the use is a bit
->> confusing to me.
-> 
-> Copying in Trivial; I think there are 4 of these that
-> are still outstanding:
-> 
->     [PATCH 1/7] linux-user: cris: Remove unused struct 'rt_signal_frame'
->        (Although cris is going)
->     [PATCH 3/7] linux-user: sparc: Remove unused struct 'target_mc_fq'
->     [PATCH 5/7] hw/arm/bcm2836: Remove unusued struct 'BCM283XClass'
->     [PATCH 7/7] net/can: Remove unused struct 'CanBusState'
-> 
-> Can Trivial pick these up please?
+--000000000000e93346061b159d54
+Content-Type: text/plain; charset="UTF-8"
 
-Applied to qemu-trivial, thanks!
+Hi All,
 
-/mjt
+During the investigation of a possible memory leak in the `guest-exec`
+command of guest-agent, I found unexpected behavior for me. When we execute
+the `guest-exec` command with `capture-output = true`, guest-agent stores
+stdout/stderr until someone calls `guest-exec-status`.
 
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+Just for testing, I executed the `man man` command 1000 times with
+`capture-output = true` and guest-agent allocated 36Mb to store the results
+and it fully depends on output size.
+
+I want to ask your opinion about this behavior. Is this behavior expected
+or not? Should we store all output forever or should we limit it by memory
+size/execution time/execution count?
+
+Best Regards,
+Konstantin Kostiuk.
+
+--000000000000e93346061b159d54
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi All,<br><br>During the investigation of a possible memo=
+ry leak in the `guest-exec` command of guest-agent, I found unexpected beha=
+vior for me. When we execute the `guest-exec` command with `capture-output =
+=3D true`, guest-agent stores stdout/stderr until someone calls `guest-exec=
+-status`. <br><br>Just for testing, I executed the `man man` command 1000 t=
+imes with `capture-output =3D true` and guest-agent allocated 36Mb to store=
+ the results and it fully depends on output size.<br><br><div>I want to ask=
+ your opinion about this behavior. Is this behavior expected or not? Should=
+ we store all output forever or should we limit it by memory size/execution=
+ time/execution count?</div><div><br></div><div><div dir=3D"ltr" class=3D"g=
+mail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><div>Be=
+st Regards,</div><div>Konstantin Kostiuk.</div></div></div></div></div>
+
+--000000000000e93346061b159d54--
 
 
