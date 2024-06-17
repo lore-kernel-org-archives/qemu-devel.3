@@ -4,89 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED586C27C77
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 08:14:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7DF9C27C6E
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 08:28:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJ7Ue-0007gp-7j; Mon, 17 Jun 2024 04:13:36 -0400
+	id 1sJ7iH-00034G-TI; Mon, 17 Jun 2024 04:27:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sJ7Uc-0007gL-RU
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 04:13:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1sJ7iF-00032S-UP
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 04:27:40 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sJ7Ua-00046a-Rw
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 04:13:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718612011;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HAulm+0QuDXZoYr6o3YtGXPXSxWLUWzolcMF4udbNmc=;
- b=E6PdaiBtrvEYUefKNbHCd0fzHYTUKriS/nG5UA+vngj+SPA1tepxlSczv8zARbW9/lz7AC
- hpYTemrKwGW7zHoPdc0+VegQz4XvHV6FtX9jisVi4Rh1CJkgOWhyKu0vJzT45RX3onBBSy
- D4Y/RQJF8mrxqMNtA5ON69u1XXb9Q6w=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-qRQquLlCNSu9Q_N_SGqmiQ-1; Mon, 17 Jun 2024 04:13:26 -0400
-X-MC-Unique: qRQquLlCNSu9Q_N_SGqmiQ-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-57c5fd78483so2151104a12.2
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 01:13:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718612004; x=1719216804;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HAulm+0QuDXZoYr6o3YtGXPXSxWLUWzolcMF4udbNmc=;
- b=AG/3rQGyXeLJ/wOw8yyjzCyMwN6nFwhTJFc1ChDlcYyXR4RCnCIGWHY2e/3wSxMVy2
- 4hfBy81she8hw0PqIqpaRpNbcZZUMNhzDLcAnaEpxkyGsYR7Ny8d8Skh2p0dlvE9cQ2o
- t3EltuORUDrslmQUOtMVj/XUYd+LTVx92q86SCHv4RxioCRS4o4QEDkR/a64ccZZ6B4b
- OB6E7tff5An03RliSOPtqHCGvdUqjekwYSx1/lo4sItzfyHPCDrgAQOqVXfz6rLnvLe/
- Ex6XJSlT4KgJNLlg6SkF2ffyAWd//fxOwfkq5OV+DVP30J7WMlOKe0JKvqthXtcWhPg6
- Zwnw==
-X-Gm-Message-State: AOJu0YyLXx6wF57qEHBAx9CJgmVb6N/Uy8jjMnijfeS32RnmQM6bTHjB
- 2fgh7vzW8sAfERbVVjMIMmOkJTOuAp3OuK+phDDl2l5LILw0scI1EfKOqDdfTmDsX+/QS04ENHK
- +Knh/YoNPy1utWKAEyuF6amq2rUl2HenVjqlRJoOY9lQHKvwwW/BgynGzCfcrfz2nGOc6H/6/2Z
- 8ASGt9+p/eG1xF1hKNXVrpQl6arN2XPGExiZw6
-X-Received: by 2002:a50:d4d8:0:b0:57c:6953:2cac with SMTP id
- 4fb4d7f45d1cf-57cbd67ed7dmr6232888a12.22.1718612004433; 
- Mon, 17 Jun 2024 01:13:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHN5II3gNThpq00wlwbaUQD+llh1N4RBhk4dBkUH2kfsJxThHnMLZlwerbFRb9Yp4XVtjoHqQ==
-X-Received: by 2002:a50:d4d8:0:b0:57c:6953:2cac with SMTP id
- 4fb4d7f45d1cf-57cbd67ed7dmr6232863a12.22.1718612003691; 
- Mon, 17 Jun 2024 01:13:23 -0700 (PDT)
-Received: from avogadro.local ([151.62.196.71])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57cb72cdfc4sm6007789a12.19.2024.06.17.01.13.21
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 01:13:22 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 13/25] target/i386: convert MOV from/to CR and DR to new decoder
-Date: Mon, 17 Jun 2024 10:13:19 +0200
-Message-ID: <20240617081319.88956-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240617081319.88956-1-pbonzini@redhat.com>
-References: <20240617081319.88956-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1sJ7iC-0006LG-Ps
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 04:27:39 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c10:3196:0:640:fabe:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 73DEA60B3B;
+ Mon, 17 Jun 2024 11:27:28 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:0:419:5239:4476:3612:5752] (unknown
+ [2a02:6b8:0:419:5239:4476:3612:5752])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id RRCbDS1RrSw0-XxtxMn5O; Mon, 17 Jun 2024 11:27:27 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1718612847;
+ bh=yU+7XVx1G5+P55A0lxd5C21zkOVKlRPtPwaKy+ez7aI=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=PnLtPzG0fyaaMcQqy/dlfwRSQBTovpLp60hZs5Rc0pMGnmFfLzBokP3wY22k7LhBH
+ XKqifc62RYXNDV4PCVS/jIX8NMO+TekxCLOuuSz4kzfOvMcDVjqViWEPHBVB1VuXZe
+ I6SG4x7IeifLGw9KA6bmPgg6osMEmWMSg8N3ORLY=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <7d9da58f-71cc-4693-89b2-9ea30d490a00@yandex-team.ru>
+Date: Mon, 17 Jun 2024 11:27:27 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] mc146818rtc: add a way to generate RTC interrupts via
+ QMP
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
+References: <20240528072242.493056-1-d-tatianin@yandex-team.ru>
+ <87mso8n7tw.fsf@pond.sub.org>
+ <9a4ae973-5ad0-4dd1-9818-489833352936@linaro.org>
+ <c8ef6f8f-411d-4f25-bfec-d9f2dfa4b55d@yandex-team.ru>
+ <079a43b9-52db-4428-9ae4-52a31fbf5e74@linaro.org>
+ <bbe49906-26b5-4443-9be1-c621a76c53d8@yandex-team.ru>
+ <874jaglm9x.fsf@pond.sub.org>
+ <a585832f-87ff-4416-be3c-9f5513e99876@linaro.org>
+Content-Language: en-US
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+In-Reply-To: <a585832f-87ff-4416-be3c-9f5513e99876@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,285 +87,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Complete implementation of C and D operand types, then the operations
-are just MOVs.
+On 5/29/24 6:27 PM, Philippe Mathieu-Daudé wrote:
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/decode-new.h     |  1 +
- target/i386/tcg/translate.c      | 79 --------------------------------
- target/i386/tcg/decode-new.c.inc | 61 ++++++++++++++++++++++--
- target/i386/tcg/emit.c.inc       | 24 +++++++++-
- 4 files changed, 81 insertions(+), 84 deletions(-)
+> On 29/5/24 16:34, Markus Armbruster wrote:
+>> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
+>>
+>>> On 5/29/24 4:39 PM, Philippe Mathieu-Daudé wrote:
+>>>
+>>>> On 29/5/24 14:43, Daniil Tatianin wrote:
+>>>>> On 5/29/24 3:36 PM, Philippe Mathieu-Daudé wrote:
+>>>>>
+>>>>>> On 29/5/24 14:03, Markus Armbruster wrote:
+>>>>>>> Daniil Tatianin <d-tatianin@yandex-team.ru> writes:
+>>>>>>>
+>>>>>>>> This can be used to force-synchronize the time in guest after a 
+>>>>>>>> long
+>>>>>>>> stop-cont pause, which can be useful for serverless-type workload.
+>>>>>>>>
+>>>>>>>> Also add a comment to highlight the fact that this (and one 
+>>>>>>>> other QMP
+>>>>>>>> command) only works for the MC146818 RTC controller.
+>>>>>>>>
+>>>>>>>> Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>>>>> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+>>>>>>>> ---
+>>>>>>>>
+>>>>>>>> Changes since v0:
+>>>>>>>> - Rename to rtc-inject-irq to match other similar API
+>>>>>>>> - Add a comment to highlight that this only works for the I386 RTC
+>>>>>>>>
+>>>>>>>> Changes since v1:
+>>>>>>>> - Added a description below the QMP command to explain how it 
+>>>>>>>> can be
+>>>>>>>>     used and what it does.
+>>>>>>>>
+>>>>>>>> Changes since v2:
+>>>>>>>> - Add a 'broadcast' suffix.
+>>>>>>>> - Change the comments to explain the flags we're setting.
+>>>>>>>> - Change the command description to fix styling & explain that 
+>>>>>>>> it's a broadcast command.
+>>>>>>>>
+>>>>>>>> Changes since v3:
+>>>>>>>> - Fix checkpatch complaints about usage of C99 comments
+>>>>>>>>
+>>>>>>>> ---
+>>>>>>>>    hw/rtc/mc146818rtc.c         | 20 ++++++++++++++++++++
+>>>>>>>>    include/hw/rtc/mc146818rtc.h |  1 +
+>>>>>>>>    qapi/misc-target.json        | 19 +++++++++++++++++++
+>>>>>>>>    3 files changed, 40 insertions(+)
+>>>>
+>>>>
+>>>>>>>> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+>>>>>>>> index 4e0a6492a9..7d388a3753 100644
+>>>>>>>> --- a/qapi/misc-target.json
+>>>>>>>> +++ b/qapi/misc-target.json
+>>>>>>>> @@ -19,6 +19,25 @@
+>>>>>>>>    { 'command': 'rtc-reset-reinjection',
+>>>>>>>>      'if': 'TARGET_I386' }
+>>>>>>>>    +##
+>>>>>>>> +# @rtc-inject-irq-broadcast:
+>>>>>>>> +#
+>>>>>>>> +# Inject an RTC interrupt for all existing RTCs on the system.
+>>>>>>>> +# The interrupt forces the guest to synchronize the time with 
+>>>>>>>> RTC.
+>>>>>>>> +# This is useful after a long stop-cont pause, which is common 
+>>>>>>>> for
+>>>>>>>> +# serverless-type workload.
+>>>>>>
+>>>>>> In previous version you said:
+>>>>>>
+>>>>>>    > This isn't really related to migration though. Serverless is 
+>>>>>> based
+>>>>>>    > on constantly stopping and resuming the VM on e.g. every HTTP
+>>>>>>    > request to an endpoint.
+>>>>>>
+>>>>>> Which made some sense. Maybe mention HTTP? And point to that use 
+>>>>>> case
+>>>>>> (possibly with QMP commands) in the commit description?
+>>>>>
+>>>>> Hmm, maybe it would be helpful for people who don't know what 
+>>>>> serverless means.
+>>>>>
+>>>>> How about:
+>>>>>       This is useful after a long stop-const pause, which is 
+>>>>> common for serverless-type workloads,
+>>>>>       e.g. stopping/resuming the VM on every HTTP request to an 
+>>>>> endpoint, which might involve
+>>>>>       a long pause in between the requests, causing time drift in 
+>>>>> the guest.
+>>>>
+>>>> Please help me understand your workflow. Your management layer call
+>>>> @stop and @cont QMP commands, is that right?
+>>>
+>>> Yes, that is correct.
+>>>
+>>>> @cont will emit a @RESUME event.
+>>>>
+>>>> If we could listen to QAPI events from C code, we could have the
+>>>> mc146818rtc device automatically sync on VM resume, and no need for
+>>>> this async command.
+>>>
+>>> Perhaps? I'm not sure how that would be implemented, but let's see 
+>>> what Markus has to say.
+>>
+>> You can't listen on an event in QEMU itself.  You can only hook into the
+>> place that generates the event.
+>
+> Apparently "qemu/notify.h" could be use for QAPI events (currently
+> only used by migration). Big change, to be discussed later.
+>
+>> The RESUME event is sent from vm_prepare_start() in system/cpus.c.
+>
+> Good spot, it is where we call synchronize_pre_resume() for vCPUs,
+> which is exactly what Daniil wants for RTC devices.
+>
+> I'd rather we call here rtc_synchronize_pre_resume(), which would
+> mostly be qmp_rtc_inject_irq_broadcast() content, without using QMP
+> at all.
+>
+> But for back-compat we need some CLI option "sync-rtc-on-resume"
+> default to false. Preferably a mc146818rtc property to KISS.
+>
+> That would solve Daniil problem and make Markus/myself happier.
+>
+> Paolo, any objection?
+>
+Hey there!
 
-diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
-index 8465717ea21..60a191ee763 100644
---- a/target/i386/tcg/decode-new.h
-+++ b/target/i386/tcg/decode-new.h
-@@ -90,6 +90,7 @@ typedef enum X86OpSize {
-     X86_SIZE_w,  /* 16-bit */
-     X86_SIZE_x,  /* 128/256-bit, based on operand size */
-     X86_SIZE_y,  /* 32/64-bit, based on operand size */
-+    X86_SIZE_y_d64,  /* 32/64-bit, based on 64-bit mode */
-     X86_SIZE_z,  /* 16-bit for 16-bit operand size, else 32-bit */
-     X86_SIZE_z_f64,  /* 32-bit for 32-bit operand size or 64-bit mode, else 16-bit */
- 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index fcba9c155f9..4958f4c45d5 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -247,9 +247,6 @@ STUB_HELPER(outb, TCGv_env env, TCGv_i32 port, TCGv_i32 val)
- STUB_HELPER(outw, TCGv_env env, TCGv_i32 port, TCGv_i32 val)
- STUB_HELPER(outl, TCGv_env env, TCGv_i32 port, TCGv_i32 val)
- STUB_HELPER(rdmsr, TCGv_env env)
--STUB_HELPER(read_crN, TCGv ret, TCGv_env env, TCGv_i32 reg)
--STUB_HELPER(get_dr, TCGv ret, TCGv_env env, TCGv_i32 reg)
--STUB_HELPER(set_dr, TCGv_env env, TCGv_i32 reg, TCGv val)
- STUB_HELPER(stgi, TCGv_env env)
- STUB_HELPER(svm_check_intercept, TCGv_env env, TCGv_i32 type)
- STUB_HELPER(vmload, TCGv_env env, TCGv_i32 aflag)
-@@ -4192,82 +4189,6 @@ static void disas_insn_old(DisasContext *s, CPUState *cpu, int b)
-         gen_nop_modrm(env, s, modrm);
-         break;
- 
--    case 0x120: /* mov reg, crN */
--    case 0x122: /* mov crN, reg */
--        if (!check_cpl0(s)) {
--            break;
--        }
--        modrm = x86_ldub_code(env, s);
--        /*
--         * Ignore the mod bits (assume (modrm&0xc0)==0xc0).
--         * AMD documentation (24594.pdf) and testing of Intel 386 and 486
--         * processors all show that the mod bits are assumed to be 1's,
--         * regardless of actual values.
--         */
--        rm = (modrm & 7) | REX_B(s);
--        reg = ((modrm >> 3) & 7) | REX_R(s);
--        switch (reg) {
--        case 0:
--            if ((prefixes & PREFIX_LOCK) &&
--                (s->cpuid_ext3_features & CPUID_EXT3_CR8LEG)) {
--                reg = 8;
--            }
--            break;
--        case 2:
--        case 3:
--        case 4:
--        case 8:
--            break;
--        default:
--            goto unknown_op;
--        }
--        ot  = (CODE64(s) ? MO_64 : MO_32);
--
--        translator_io_start(&s->base);
--        if (b & 2) {
--            gen_svm_check_intercept(s, SVM_EXIT_WRITE_CR0 + reg);
--            gen_op_mov_v_reg(s, ot, s->T0, rm);
--            gen_helper_write_crN(tcg_env, tcg_constant_i32(reg), s->T0);
--            s->base.is_jmp = DISAS_EOB_NEXT;
--        } else {
--            gen_svm_check_intercept(s, SVM_EXIT_READ_CR0 + reg);
--            gen_helper_read_crN(s->T0, tcg_env, tcg_constant_i32(reg));
--            gen_op_mov_reg_v(s, ot, rm, s->T0);
--        }
--        break;
--
--    case 0x121: /* mov reg, drN */
--    case 0x123: /* mov drN, reg */
--        if (check_cpl0(s)) {
--            modrm = x86_ldub_code(env, s);
--            /* Ignore the mod bits (assume (modrm&0xc0)==0xc0).
--             * AMD documentation (24594.pdf) and testing of
--             * intel 386 and 486 processors all show that the mod bits
--             * are assumed to be 1's, regardless of actual values.
--             */
--            rm = (modrm & 7) | REX_B(s);
--            reg = ((modrm >> 3) & 7) | REX_R(s);
--            if (CODE64(s))
--                ot = MO_64;
--            else
--                ot = MO_32;
--            if (reg >= 8) {
--                goto illegal_op;
--            }
--            if (b & 2) {
--                gen_svm_check_intercept(s, SVM_EXIT_WRITE_DR0 + reg);
--                gen_op_mov_v_reg(s, ot, s->T0, rm);
--                tcg_gen_movi_i32(s->tmp2_i32, reg);
--                gen_helper_set_dr(tcg_env, s->tmp2_i32, s->T0);
--                s->base.is_jmp = DISAS_EOB_NEXT;
--            } else {
--                gen_svm_check_intercept(s, SVM_EXIT_READ_DR0 + reg);
--                tcg_gen_movi_i32(s->tmp2_i32, reg);
--                gen_helper_get_dr(s->T0, tcg_env, s->tmp2_i32);
--                gen_op_mov_reg_v(s, ot, rm, s->T0);
--            }
--        }
--        break;
-     case 0x106: /* clts */
-         if (check_cpl0(s)) {
-             gen_svm_check_intercept(s, SVM_EXIT_WRITE_CR0);
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index cd925fe3589..0f31e1f455d 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -151,6 +151,8 @@
-     X86_OP_GROUP3(op, op0, s0, 2op, s0, op1, s1, ## __VA_ARGS__)
- #define X86_OP_GROUPw(op, op0, s0, ...)                           \
-     X86_OP_GROUP3(op, op0, s0, None, None, None, None, ## __VA_ARGS__)
-+#define X86_OP_GROUPwr(op, op0, s0, op1, s1, ...)                 \
-+    X86_OP_GROUP3(op, op0, s0, op1, s1, None, None, ## __VA_ARGS__)
- #define X86_OP_GROUP0(op, ...)                                    \
-     X86_OP_GROUP3(op, None, None, None, None, None, None, ## __VA_ARGS__)
- 
-@@ -985,6 +987,24 @@ static void decode_0FE6(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
-     *entry = *decode_by_prefix(s, opcodes_0FE6);
- }
- 
-+/*
-+ * These ignore the mod bits (assume (modrm&0xc0)==0xc0), so group the
-+ * pre-decode tweak here for all MOVs from/to CR and DR.
-+ *
-+ * AMD documentation (24594.pdf) and testing of Intel 386 and 486
-+ * processors all show that the mod bits are assumed to be 1's,
-+ * regardless of actual values.
-+ */
-+static void decode_MOV_CR_DR(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
-+{
-+    /*
-+     */
-+    get_modrm(s, env);
-+    s->modrm |= 0xC0;
-+
-+    entry->gen = gen_MOV;
-+}
-+
- static const X86OpEntry opcodes_0F[256] = {
-     [0x0E] = X86_OP_ENTRY0(EMMS,                              cpuid(3DNOW)), /* femms */
-     /*
-@@ -1004,6 +1024,15 @@ static const X86OpEntry opcodes_0F[256] = {
-     /* Incorrectly listed as Mq,Vq in the manual */
-     [0x17] = X86_OP_ENTRY3(VMOVHPx_st,  M,q, None,None, V,dq, vex5 p_00_66),
- 
-+    /*
-+     * Incorrectly listed as using "d" operand type in the manual.  In reality
-+     * there's no 16-bit version (like y) and it does not use REX.W (like d64).
-+     */
-+    [0x20] = X86_OP_GROUPwr(MOV_CR_DR,   R,y_d64, C,y_d64, chk(cpl0) svm(READ_CR0)),
-+    [0x21] = X86_OP_GROUPwr(MOV_CR_DR,   R,y_d64, D,y_d64, chk(cpl0) svm(READ_DR0)),
-+    [0x22] = X86_OP_GROUPwr(MOV_CR_DR,   C,y_d64, R,y_d64, zextT0 chk(cpl0) svm(WRITE_CR0)),
-+    [0x23] = X86_OP_GROUPwr(MOV_CR_DR,   D,y_d64, R,y_d64, zextT0 chk(cpl0) svm(WRITE_DR0)),
-+
-     [0x40] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
-     [0x41] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
-     [0x42] = X86_OP_ENTRY2(CMOVcc,     G,v, E,v, cpuid(CMOV)),
-@@ -1725,6 +1754,10 @@ static bool decode_op_size(DisasContext *s, X86OpEntry *e, X86OpSize size, MemOp
-         *ot = s->dflag == MO_16 ? MO_32 : s->dflag;
-         return true;
- 
-+    case X86_SIZE_y_d64:  /* Full (not 16-bit) register access */
-+        *ot = CODE64(s) ? MO_64 : MO_32;
-+        return true;
-+
-     case X86_SIZE_z:  /* 16-bit for 16-bit operand size, else 32-bit */
-         *ot = s->dflag == MO_16 ? MO_16 : MO_32;
-         return true;
-@@ -1802,11 +1835,34 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
- 
-     case X86_TYPE_C:  /* REG in the modrm byte selects a control register */
-         op->unit = X86_OP_CR;
--        goto get_reg;
-+        op->n = ((get_modrm(s, env) >> 3) & 7) | REX_R(s);
-+        if (op->n == 0 && (s->prefix & PREFIX_LOCK) &&
-+            (s->cpuid_ext3_features & CPUID_EXT3_CR8LEG)) {
-+            op->n = 8;
-+            s->prefix &= ~PREFIX_LOCK;
-+        }
-+        if (op->n != 0 && op->n != 2 && op->n != 3 && op->n != 4 && op->n != 8) {
-+            return false;
-+        }
-+        if (decode->e.intercept) {
-+            decode->e.intercept += op->n;
-+        }
-+        break;
- 
-     case X86_TYPE_D:  /* REG in the modrm byte selects a debug register */
-         op->unit = X86_OP_DR;
--        goto get_reg;
-+        op->n = ((get_modrm(s, env) >> 3) & 7) | REX_R(s);
-+        if (op->n >= 8) {
-+            /*
-+             * illegal opcode.  The DR4 and DR5 case is checked in the generated
-+             * code instead, to save on hflags bits.
-+             */
-+            return false;
-+        }
-+        if (decode->e.intercept) {
-+            decode->e.intercept += op->n;
-+        }
-+        break;
- 
-     case X86_TYPE_G:  /* REG in the modrm byte selects a GPR */
-         op->unit = X86_OP_INT;
-@@ -2431,7 +2487,6 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-             case 0x00 ... 0x03: /* mostly privileged instructions */
-             case 0x05 ... 0x09:
-             case 0x1a ... 0x1b: /* MPX */
--            case 0x20 ... 0x23: /* mov from/to CR and DR */
-             case 0x30 ... 0x35: /* more privileged instructions */
-             case 0xa2 ... 0xa5: /* CPUID, BT, SHLD */
-             case 0xaa ... 0xae: /* RSM, SHRD, grp15 */
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index e6521632edd..db56bf7aee1 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -242,12 +242,20 @@ static void gen_load(DisasContext *s, X86DecodedInsn *decode, int opn, TCGv v)
-         tcg_gen_ld32u_tl(v, tcg_env,
-                          offsetof(CPUX86State,segs[op->n].selector));
-         break;
-+#ifndef CONFIG_USER_ONLY
-     case X86_OP_CR:
--        tcg_gen_ld_tl(v, tcg_env, offsetof(CPUX86State, cr[op->n]));
-+        if (op->n == 8) {
-+            translator_io_start(&s->base);
-+            gen_helper_read_crN(v, tcg_env, tcg_constant_i32(op->n));
-+        } else {
-+            tcg_gen_ld_tl(v, tcg_env, offsetof(CPUX86State, cr[op->n]));
-+        }
-         break;
-     case X86_OP_DR:
--        tcg_gen_ld_tl(v, tcg_env, offsetof(CPUX86State, dr[op->n]));
-+        /* CR4.DE tested in the helper.  */
-+        gen_helper_get_dr(v, tcg_env, tcg_constant_i32(op->n));
-         break;
-+#endif
-     case X86_OP_INT:
-         if (op->has_ea) {
-             if (v == s->T0 && decode->e.special == X86_SPECIAL_SExtT0) {
-@@ -343,8 +351,20 @@ static void gen_writeback(DisasContext *s, X86DecodedInsn *decode, int opn, TCGv
-                                  16, 16, 0);
-         }
-         break;
-+#ifndef CONFIG_USER_ONLY
-     case X86_OP_CR:
-+        if (op->n == 8) {
-+            translator_io_start(&s->base);
-+        }
-+        gen_helper_write_crN(tcg_env, tcg_constant_i32(op->n), v);
-+        s->base.is_jmp = DISAS_EOB_NEXT;
-+        break;
-     case X86_OP_DR:
-+        /* CR4.DE tested in the helper.  */
-+        gen_helper_set_dr(tcg_env, tcg_constant_i32(op->n), v);
-+        s->base.is_jmp = DISAS_EOB_NEXT;
-+        break;
-+#endif
-     default:
-         g_assert_not_reached();
-     }
--- 
-2.45.2
+Since Paolo never replied I'm going to take that as a no then. Is 
+everyone else okay with this idea?
 
+If there are no objections I'm going to try and implement this.
+
+Thanks!
+
+> Regards,
+>
+> Phil.
 
