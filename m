@@ -4,35 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69977C2BA15
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9060DC41513
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 12:48:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJBm7-0007cp-Q2; Mon, 17 Jun 2024 08:47:55 -0400
+	id 1sJBmU-0007sS-3c; Mon, 17 Jun 2024 08:48:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sJBm5-0007c1-Rr; Mon, 17 Jun 2024 08:47:53 -0400
+ id 1sJBmT-0007ph-55; Mon, 17 Jun 2024 08:48:17 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sJBm3-0001bH-Lc; Mon, 17 Jun 2024 08:47:53 -0400
+ id 1sJBmR-0001dS-DC; Mon, 17 Jun 2024 08:48:16 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A671A70F91;
- Mon, 17 Jun 2024 15:49:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 553BB70F94;
+ Mon, 17 Jun 2024 15:49:25 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 000FFEAB90;
- Mon, 17 Jun 2024 15:47:49 +0300 (MSK)
-Message-ID: <c4a7aaf7-3524-4d53-bce8-4d4fdd6360ed@tls.msk.ru>
-Date: Mon, 17 Jun 2024 15:47:49 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9B328EAB92;
+ Mon, 17 Jun 2024 15:48:12 +0300 (MSK)
+Message-ID: <193b4d59-c498-4896-92b0-69437109f3d1@tls.msk.ru>
+Date: Mon, 17 Jun 2024 15:48:12 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hmp-commands-info.hx: Add missing info command for stats
- subcommand
-To: Martin Joerg <martin.joerg@gmail.com>, qemu-devel@nongnu.org
-Cc: dave@treblig.org, qemu-trivial@nongnu.org
-References: <20240615114323.30550-1-martin.joerg@gmail.com>
+Subject: Re: [PATCH] cpu: fix memleak of 'halt_cond' and 'thread'
+To: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
+ qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, pierrick.bouvier@linaro.org, philmd@linaro.org,
+ qemu-trivial@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+References: <3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -59,7 +63,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240615114323.30550-1-martin.joerg@gmail.com>
+In-Reply-To: <3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -85,14 +89,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+12.06.2024 20:04, Matheus Tavares Bernardino wrote:
+> Since a4c2735f35 (cpu: move Qemu[Thread|Cond] setup into common code,
+> 2024-05-30) these fields are now allocated at cpu_common_initfn(). So
+> let's make sure we also free them at cpu_common_finalize().
+> 
+> Furthermore, the code also frees these on round robin, but we missed
+> 'halt_cond'.
+
 Applied to trivial-patches, thanks!
 
 /mjt
-
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
-
 
