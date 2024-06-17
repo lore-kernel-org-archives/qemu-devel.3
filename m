@@ -4,76 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2210AC2BA18
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 13:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C8C8C2BA15
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 13:55:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJCm0-0002AA-0p; Mon, 17 Jun 2024 09:51:52 -0400
+	id 1sJCpe-0003IU-FB; Mon, 17 Jun 2024 09:55:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
- id 1sJClx-00029s-Kz; Mon, 17 Jun 2024 09:51:49 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
- id 1sJClv-0005lZ-FK; Mon, 17 Jun 2024 09:51:49 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4218008c613so33388835e9.2; 
- Mon, 17 Jun 2024 06:51:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718632306; x=1719237106; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=c28mHYw5xfDhTn1H7rpMiBM1Ge3t2t9bRtHVIajFd9s=;
- b=R/9KoPDg5vqnyNY+l3KCq9ipAiSVF7T4235R7+bZ2eoT0003q0OW5cNNyWq+CGNYhL
- Zx2dY6tHXMeRwyQT37Z8n4JQQMyyJCFga1850GGRggflV3ROEB7DmYijnDZsnC0L8iYv
- l1qAvaWEqDbpr69ts/20qmcIfXBpEr9CLVQz52F+5epsVdxqYn5y21O+VTd4xUcBBFjB
- M/28HxSBGqMMBDjiYFBKqFFnH0hHddhNxnuiLQ2EazITaJVADHHKuziqANvuep4Lhrka
- tSMp6pB38bMJotMBm5SvMui0yrz9Sq7lKJwk4UQ5YrsnV4ZsOifGwHf6zKcMvIGyFl7u
- 3qWA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sJCpc-0003Hi-Dl
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 09:55:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sJCpa-0006Qu-B7
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 09:55:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718632533;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zEeS1xJ9TtrzPgm3WzmvMD/jkKvrPQDkt8PrIiLMux0=;
+ b=QNzrYNuMkSbmnYzOudVNdka4wxLz01m/c+vFZTJWUfEl4aOnlvitd8DZX3uLTGk66Jmqq1
+ Agbz76IhVygNbR1lB4WXnIY6zbcXFaZkMMYCIF0kUCWRk7ih9dpvTJmhyLIZufuffWG4ni
+ UpEI10gj6sLMbcRU5aP+I/byg6ZdfzU=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-54-620pds3oM4GCsmy7CbQEZg-1; Mon, 17 Jun 2024 09:55:31 -0400
+X-MC-Unique: 620pds3oM4GCsmy7CbQEZg-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-52c6f37cc97so2724544e87.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 06:55:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718632306; x=1719237106;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1718632530; x=1719237330;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=c28mHYw5xfDhTn1H7rpMiBM1Ge3t2t9bRtHVIajFd9s=;
- b=CByoayA3yI/KyjwDWbfALboWVDCVKK2fY3Ly6d6NlRmlFxhpv+TEoZo9DGwFHir5eB
- 1HuWS/aB2FxD5TDKvxYcwiP8npI2g2MoXPYpLIUNyTCzoRt2Anj2L1vIHsaVNMI1OUAU
- 05ESfzAEMduzr15U6ZIcp0itXLrhzFFIbcZtwyiVleckg7cLI5oqf5NkoRrq0SfuGuz7
- iS/ufTpRtRIc1tOuFx1mN84/++3GIefT3n68hZUUFfnMCDNdnCdccGriSxhFN3AaqZBO
- otM0evrs+9dpMQJ8K9qwSwzW07rLewUIwaSLGlC83UO2g0xfQhMz2tbLlKfIcYzfxPhm
- YXSA==
+ bh=zEeS1xJ9TtrzPgm3WzmvMD/jkKvrPQDkt8PrIiLMux0=;
+ b=LLXuQD5fTBed3LyIUUCbgMgYeAShcje3q0+7m/sgQjW9/dngiSBkJCGdxkrtz9eRu8
+ vMsRwMC1FZmb05bk3J+cOHh/heyjjOCnLh2pjaBt5Z3K0x8nspElY3JPuRQLYrcvHbTK
+ FaHgv/ZMziDMRCD2TQS+uRXRTjaCrywGoQUgSx+oC7CX9d0CM9kuhHWz37Ti9fG4iSwz
+ BqPR6ng7ECWQrrpqt0cYc/MHY237QgHue8zisFWjcjsMA8D9TE6COD03ld1ZPfSR/Gft
+ gnaZLrS2ZeqopnmMBaBT2aMBOeRMaPR/en5/wCTwOb9GuLVqbeEkYDSVtICriiizVE5z
+ 3k/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU9KxVzXhX/ikIBok8+AeGUPAkkhzkcIJmGf5q8cR+xP+ePsHJnznThYIAMzILwvE50xfsv81mFf9xmgX4XNKFz+NwtocS/
-X-Gm-Message-State: AOJu0YyNlSiMU3j5+qtTftJyn1mQ8mVfFTjFDjlkzp8mJt2qYWney2da
- scHWJfIEtdJD+rpDBY3Jf5LdHUS21Jngu+p+2I6/p5VWRMfjIl934ZTP0I54EMKHSsJLQMDGx0Z
- YGCIWLOQMpeWJChUq3nUaWFyHJNA=
-X-Google-Smtp-Source: AGHT+IFX2rALWPnue2biN7KWxLFQ0Dny22Wurax5SdafKVKgv0z9ZJ0cfdloaLtnyXDu8LCVpmfJH+18XoSfhAJTor4=
-X-Received: by 2002:a05:600c:c88:b0:422:9e15:3ff6 with SMTP id
- 5b1f17b1804b1-4230482fc06mr88039025e9.22.1718632305452; Mon, 17 Jun 2024
- 06:51:45 -0700 (PDT)
+ AJvYcCU4LtR+fVQBxllM+xbNkMbmrsYMQOSoGFZ2oIvHLZLouYkgweu4fAQvSlEgQg6q7k8XKAecnnR4keyo2ks6M+3YqKcyekw=
+X-Gm-Message-State: AOJu0YzTx/nYxLbDgRMRBBBi3yyKSsIkP0hybB7zloiYii6tLcCtDpYW
+ QUaYylR82abJtPJF+ZLuLm86LCFoUZnFAQldbMCZXE5SshKnFJHSpQ4ivIb/9BdlnYFLPWIidPH
+ 54QDIfN8v1ePdAKePlWoSCBjjd/0tvqCPOnbQ9VMRd1omP/90MJRK
+X-Received: by 2002:ac2:53a7:0:b0:52c:84b0:bd21 with SMTP id
+ 2adb3069b0e04-52ca6e653femr6656375e87.16.1718632530004; 
+ Mon, 17 Jun 2024 06:55:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGThT+NN+eLb0GIdUGNW6bpMy4o/j1ETjXmS2D+THpLKdv3gqLjX4mf74sc+49ixLLz9WzvFA==
+X-Received: by 2002:ac2:53a7:0:b0:52c:84b0:bd21 with SMTP id
+ 2adb3069b0e04-52ca6e653femr6656368e87.16.1718632529552; 
+ Mon, 17 Jun 2024 06:55:29 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-360750935ecsm11981655f8f.3.2024.06.17.06.55.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Jun 2024 06:55:29 -0700 (PDT)
+Message-ID: <d830b55b-b45c-43cc-aee7-cd996985c4f3@redhat.com>
+Date: Mon, 17 Jun 2024 15:55:27 +0200
 MIME-Version: 1.0
-References: <20240613022147.5886-1-east.moutain.yang@gmail.com>
- <20240617065455-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240617065455-mutt-send-email-mst@kernel.org>
-From: Yang Dongshan <east.moutain.yang@gmail.com>
-Date: Mon, 17 Jun 2024 21:51:33 +0800
-Message-ID: <CALrP2iV14404dq+5xO8Ziq4fEuacvkU=SjJLT=FJGLAq1Xanhg@mail.gmail.com>
-Subject: Re: [PATCH] Update event idx if guest has made extra buffers during
- double check
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, jasowang@redhat.com, qemu-stable@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000010eeb8061b164408"
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=east.moutain.yang@gmail.com; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 01/17] vfio: Make vfio_devices_dma_logging_start()
+ return bool
+Content-Language: en-US
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240617063409.34393-1-clg@redhat.com>
+ <20240617063409.34393-2-clg@redhat.com>
+ <a1c5811d-f376-483f-8ab4-e09ca8f874b6@redhat.com>
+ <c998c442-f873-4409-804a-fcba1f53efc2@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <c998c442-f873-4409-804a-fcba1f53efc2@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,209 +112,156 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000010eeb8061b164408
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Cédric,
 
-hi,
+On 6/17/24 14:34, Cédric Le Goater wrote:
+> Hello Eric,
+>
+> On 6/17/24 1:31 PM, Eric Auger wrote:
+>> Hi Cédric,
+>>
+>> On 6/17/24 08:33, Cédric Le Goater wrote:
+>>> Since vfio_devices_dma_logging_start() takes an 'Error **' argument,
+>>> best practices suggest to return a bool. See the api/error.h Rules
+>>> section. It will simplify potential changes coming after.
+>>
+>>
+>> As I already mentionned the Rules section does not say that, as far as I
+>> understand:
+>> It is allowed to either return a bool, a pointer-value, an integer,
+>> along with an error handle:
+>>
+>> "
+>>   *   • bool-valued functions return true on success / false on failure,
+>>   *   • pointer-valued functions return non-null / null pointer, and
+>>   *   • integer-valued functions return non-negative / negative.
+>> "
+>>
+>> Personally I don't like much returning a bool as I think it rather
+>> complexifies the code and to me that kind of change is error prone.
+>
+> Returning an int could be misleading too, since there are multiple ways
+> it could be interpreted. You can find in QEMU routines returning -1 for
+> error which is later used as an errno :/
+yes no good!
+>
+> The error framework in QEMU provides a way to to save and return any
+> kind of errors, using the error_seg_*() routines. I tend to prefer
+> the basic approach: return fail or pass and use the Error parameter
+> for details.
+>
+> Now, the problem, as always, is doing the conversion in all the
+> code. This is probably why people, with a kernel background, find
+> it confusing.
+>
+>
+>>
+>>
+>>>
+>>> vfio_container_set_dirty_page_tracking() could be modified in the same
+>>> way but the errno value can be saved in the migration stream when
+>>> called from vfio_listener_log_global_stop().
+>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>>> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>> ---
+>>>   hw/vfio/common.c | 14 +++++++-------
+>>>   1 file changed, 7 insertions(+), 7 deletions(-)
+>>>
+>>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+>>> index
+>>> 9e4c0cc95ff90209d3e8184035af0806a2bf890b..d48cd9b9361a92d184e423ffc60aabaff40fb487
+>>> 100644
+>>> --- a/hw/vfio/common.c
+>>> +++ b/hw/vfio/common.c
+>>> @@ -1020,7 +1020,7 @@ static void
+>>> vfio_device_feature_dma_logging_start_destroy(
+>>>       g_free(feature);
+>>>   }
+>>>   -static int vfio_devices_dma_logging_start(VFIOContainerBase
+>>> *bcontainer,
+>>> +static bool vfio_devices_dma_logging_start(VFIOContainerBase
+>>> *bcontainer,
+>>>                                             Error **errp)
+>>>   {
+>>>       struct vfio_device_feature *feature;
+>>> @@ -1033,7 +1033,7 @@ static int
+>>> vfio_devices_dma_logging_start(VFIOContainerBase *bcontainer,
+>>>                                                              &ranges);
+>>>       if (!feature) {
+>>>           error_setg_errno(errp, errno, "Failed to prepare DMA
+>>> logging");
+>>> -        return -errno;
+>>> +        return false;
+>>>       }
+>>>         QLIST_FOREACH(vbasedev, &bcontainer->device_list,
+>>> container_next) {
+>>> @@ -1058,7 +1058,7 @@ out:
+>>>         vfio_device_feature_dma_logging_start_destroy(feature);
+>>>   -    return ret;
+>>> +    return ret == 0;
+>>>   }
+>>>     static bool vfio_listener_log_global_start(MemoryListener
+>>> *listener,
+>>> @@ -1067,18 +1067,18 @@ static bool
+>>> vfio_listener_log_global_start(MemoryListener *listener,
+>>>       ERRP_GUARD();
+>>>       VFIOContainerBase *bcontainer = container_of(listener,
+>>> VFIOContainerBase,
+>>>                                                    listener);
+>>> -    int ret;
+>>> +    bool ret;
+>>>         if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
+>>>           ret = vfio_devices_dma_logging_start(bcontainer, errp);
+>>>       } else {
+>>> -        ret = vfio_container_set_dirty_page_tracking(bcontainer,
+>>> true, errp);
+>>> +        ret = vfio_container_set_dirty_page_tracking(bcontainer,
+>>> true, errp) == 0;
+>>
+>> why vfio_container_set_dirty_page_tracking(bcontainer, true, errp)
+>> doesn't return a bool then?
+>
+> The errno value can be saved in the migration stream when called from
+> vfio_listener_log_global_stop(). So this would require changes in the
+> migration subsystem, like we did for vfio_listener_log_global_start().
 
-subject should list the affected component, and be shorter.
+OK
 
-ok, I will rewrite the subject:
-"update the latest available idx seen by the host to event idx"
+so although I am not a big fan of that kind of change and once
+highlighted this is not mandated by the error.h doc, please feel free to
+add my
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-Fixes: 06b12970174 ("virtio-net: fix network stall under load")
+Thanks
 
-this should come at the end.
-
-I have submitted v2, it's at the end now.
-
-and what exactly does this refer to?
+Eric
 >
-Commit 06b12970174 double-checks whether the guest has made some
-buffers available after the first check,  it will be lucky if the available
-buffer
-size can satisfy the request.
-
-did this commit cause a regression of some sort?
+> Thanks,
 >
-No regression. If the buffer size still can't satisfy the request even if
-the
-guest has made some buffers.  this commit doesn't notify the latest
-shadow_avail_idx seen by the host to the guest. Similar to the first
-check, if the available buffer is not enough, notify the guest with the
-updated shadow_avail_idx.
-
-what does "double check" refer to?
->
-it refers to the second nested if condition judgment in
-virtio_net_has_buffers().
-
-which makes sense why?  And which changes the correct behavious of what
-> to a new behaviour of what which is better why?
->
-Similar to the first check, if the buffer size still can't satisfy the
-request, notify the
-guest with the updated shadow_avail_idx, it's better than the old one.
-
-On Mon, Jun 17, 2024 at 6:58=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
-
->
-> Thanks for the patch!
-> Yet something to improve:
+> C.
 >
 >
 >
-> subject should list the affected component, and be shorter.
->
-> On Thu, Jun 13, 2024 at 10:21:47AM +0800, thomas wrote:
-> > Fixes: 06b12970174 ("virtio-net: fix network stall under load")
->
-> this should come at the end. and what exactly does this
-> refer to? did this commit cause a regression of some sort?
->
-> > If guest has made some buffers available during double check,
->
-> what does "double check" refer to?
->
-> > but the total buffer size available is lower than @bufsize,
-> > notify the guest with the latest available idx(event idx)
-> > seen by the host.
->
-> which makes sense why?  And which changes the correct behavious of what
-> to a new behaviour of what which is better why?
->
-> Pls review docs/devel/submitting-a-patch.rst and follow the
-> process there.
 >
 >
->
-> > ---
-> >  hw/net/virtio-net.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> > index 9c7e85caea..23c6c8c898 100644
-> > --- a/hw/net/virtio-net.c
-> > +++ b/hw/net/virtio-net.c
-> > @@ -1654,6 +1654,7 @@ static int virtio_net_has_buffers(VirtIONetQueue
-> *q, int bufsize)
-> >          if (virtio_queue_empty(q->rx_vq) ||
-> >              (n->mergeable_rx_bufs &&
-> >               !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
-> > +            virtio_queue_set_notification(q->rx_vq, 1);
-> >              return 0;
-> >          }
-> >      }
-> > --
-> > 2.39.0
->
+>>
+>> Eric
+>>
+>>>       }
+>>>   -    if (ret) {
+>>> +    if (!ret) {
+>>>           error_prepend(errp, "vfio: Could not start dirty page
+>>> tracking - ");
+>>>       }
+>>> -    return !ret;
+>>> +    return ret;
+>>>   }
+>>>     static void vfio_listener_log_global_stop(MemoryListener *listener)
+>>
 >
 
---00000000000010eeb8061b164408
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>hi,=C2=A0</div><div><br></div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">subject should list the affected component, and =
-be shorter.</blockquote><div>ok, I will rewrite the subject:=C2=A0</div><di=
-v>&quot;update the latest available idx seen by the host to event idx&quot;=
-</div><div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Fixe=
-s: 06b12970174 (&quot;virtio-net: fix network stall under load&quot;)=C2=A0=
-</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">this should =
-come at the end.=C2=A0</blockquote><div>I have submitted v2, it&#39;s at th=
-e end now.</div><div><br></div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
-:1ex">and what exactly does this refer to?<br></blockquote><div>Commit 06b1=
-2970174 double-checks whether the guest has made some</div><div>buffers ava=
-ilable after the first check,=C2=A0 it will be lucky if the available buffe=
-r</div><div>size can satisfy the request.=C2=A0</div><div><br></div><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
-x solid rgb(204,204,204);padding-left:1ex">did this commit cause a regressi=
-on of some sort?<br></blockquote><div>No regression. If the buffer size sti=
-ll can&#39;t satisfy=C2=A0the request even if the</div><div>guest has made =
-some buffers.=C2=A0 this commit doesn&#39;t notify the latest=C2=A0</div><d=
-iv>shadow_avail_idx seen by the host to the guest. Similar=C2=A0to the firs=
-t<br></div><div>check, if the available buffer is not enough, notify the gu=
-est with the</div><div>updated shadow_avail_idx.</div><div><br></div><block=
-quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
-px solid rgb(204,204,204);padding-left:1ex">what does &quot;double check&qu=
-ot; refer to?<br></blockquote><div>it refers to the second nested if condit=
-ion judgment in</div><div>virtio_net_has_buffers().=C2=A0</div><div><br></d=
-iv><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
-er-left:1px solid rgb(204,204,204);padding-left:1ex">which makes sense why?=
-=C2=A0 And which changes the correct behavious of what<br>to a new behaviou=
-r of what which is better why?<br></blockquote><div><div>Similar=C2=A0to th=
-e first check, if the buffer size still can&#39;t satisfy the request, noti=
-fy the</div></div><div>guest with the updated shadow_avail_idx, it&#39;s be=
-tter than the old one.</div><div>=C2=A0</div><div class=3D"gmail_quote"><di=
-v dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 17, 2024 at 6:58=E2=80=AFPM =
-Michael S. Tsirkin &lt;<a href=3D"mailto:mst@redhat.com">mst@redhat.com</a>=
-&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><br>
-Thanks for the patch!<br>
-Yet something to improve:<br>
-<br>
-<br>
-<br>
-subject should list the affected component, and be shorter.<br>
-<br>
-On Thu, Jun 13, 2024 at 10:21:47AM +0800, thomas wrote:<br>
-&gt; Fixes: 06b12970174 (&quot;virtio-net: fix network stall under load&quo=
-t;)<br>
-<br>
-this should come at the end. and what exactly does this<br>
-refer to? did this commit cause a regression of some sort?<br>
-<br>
-&gt; If guest has made some buffers available during double check,<br>
-<br>
-what does &quot;double check&quot; refer to?<br>
-<br>
-&gt; but the total buffer size available is lower than @bufsize,<br>
-&gt; notify the guest with the latest available idx(event idx)<br>
-&gt; seen by the host.<br>
-<br>
-which makes sense why?=C2=A0 And which changes the correct behavious of wha=
-t<br>
-to a new behaviour of what which is better why?<br>
-<br>
-Pls review docs/devel/submitting-a-patch.rst and follow the<br>
-process there.<br>
-<br>
-<br>
-<br>
-&gt; ---<br>
-&gt;=C2=A0 hw/net/virtio-net.c | 1 +<br>
-&gt;=C2=A0 1 file changed, 1 insertion(+)<br>
-&gt; <br>
-&gt; diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c<br>
-&gt; index 9c7e85caea..23c6c8c898 100644<br>
-&gt; --- a/hw/net/virtio-net.c<br>
-&gt; +++ b/hw/net/virtio-net.c<br>
-&gt; @@ -1654,6 +1654,7 @@ static int virtio_net_has_buffers(VirtIONetQueue=
- *q, int bufsize)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (virtio_queue_empty(q-&gt;rx_vq) =
-||<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (n-&gt;mergeable_rx_bu=
-fs &amp;&amp;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0!virtqueue_avail=
-_bytes(q-&gt;rx_vq, bufsize, 0))) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 virtio_queue_set_notificati=
-on(q-&gt;rx_vq, 1);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; -- <br>
-&gt; 2.39.0<br>
-<br>
-</blockquote></div></div>
-
---00000000000010eeb8061b164408--
 
