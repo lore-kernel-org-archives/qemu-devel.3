@@ -4,102 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7EE9C27C79
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9ED3C2BA15
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 13:00:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJBxL-00082F-0t; Mon, 17 Jun 2024 08:59:31 -0400
+	id 1sJBxL-00083A-V6; Mon, 17 Jun 2024 08:59:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sJBxI-000811-GC
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 08:59:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sJBxK-00081Y-9a; Mon, 17 Jun 2024 08:59:30 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sJBxG-0003Yg-VO
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 08:59:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718629165;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zSz/TeUgSGRTf3LqOqpLd7wvDa/mmxOG3fnuIoPgX6w=;
- b=Q4gMgqJPEobbVjx2Ur1Bj85ukObSNF8hc02zlmpulS/ii5v+VyU7Yl7cf4+DHvvXcYxJfs
- 1I3U3UukGyogJQrtasGuh7lUUyiSWppdLOWsjr2mv9jVjx2wF7V0bOV2iWhHagghT/JyNx
- UqNGHEAkH0SCbzGTEQLJxPtwD8b0upE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-38-BsHIECZxM1C6dM5dLZb9Ig-1; Mon, 17 Jun 2024 08:59:23 -0400
-X-MC-Unique: BsHIECZxM1C6dM5dLZb9Ig-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42120e123beso38036235e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 05:59:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718629162; x=1719233962;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zSz/TeUgSGRTf3LqOqpLd7wvDa/mmxOG3fnuIoPgX6w=;
- b=Rf45iYUcCSgCRIp+oFX/25yTW5feK+wyN3ipiP8l2C5NTA7OeftIvUvlceVO0PHIm9
- xj+4XPDfhMykEUMyIYLJ7xl2PFbA65fd+V8MnLXIajTzAK+MnJeg0X8BA2L72gMkeD8+
- hsuGS/tpKXk6MdCD+VjFE8O8IpbvCg2/OLOQrJEa1lQyMxKf0EMBcJ7Os4eSwjKt9i5s
- sh8dSrTqDjxsorueEDL2oOYZOMNH85kHkhIzKA3YMsIaBwPW0gSwJImZEcZxOnUUM+aI
- cadaDNKMqsNuM5rN50e3zrAMkxMTwjV9Xw8lBnmbXjzI1UJzOdjxiGhHuQPYI2wBsWSu
- bKpQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVK+fV5i+fZKHPVFJqPU9Apdx5sCBeYCTgmVw/t1K72CM91M6AKKaMTP7HQSi6dq/q030UdeCgk9VfAFykwcC4jGDq3WxM=
-X-Gm-Message-State: AOJu0YwF4GN7/PX+WRFoSMxsuDOG1B8OZuEm+6SrP66DVLHy9Sn0oZen
- 0BvZAiNPGzvcDdZZ4d2wxj9+l38kegWlybzIls8oBQDaNWyN6hJsyOqqS6xXVrWNufErjUAfirK
- WZ/XqL7AmWWjrXFUJyqP+GGWNyybHYy7s1VU0En9ZWrlsTHXmj0Yt
-X-Received: by 2002:a05:600c:a44:b0:421:7f07:92cf with SMTP id
- 5b1f17b1804b1-4230484c563mr96644825e9.36.1718629162680; 
- Mon, 17 Jun 2024 05:59:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHhtjGtNWWymL7LYJ2SALBi9/sXNXWeZu011WgwQGbTRUVr2sDicu9hvxLFJ3G9Jl72bB4EGg==
-X-Received: by 2002:a05:600c:a44:b0:421:7f07:92cf with SMTP id
- 5b1f17b1804b1-4230484c563mr96644635e9.36.1718629162289; 
- Mon, 17 Jun 2024 05:59:22 -0700 (PDT)
-Received: from sgarzare-redhat ([193.207.177.169])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422f5f33c2dsm159343555e9.10.2024.06.17.05.59.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 05:59:21 -0700 (PDT)
-Date: Mon, 17 Jun 2024 14:59:14 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: mst@redhat.com, qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Hanna Reitz <hreitz@redhat.com>, Brad Smith <brad@comstyle.com>, 
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, gmaglione@redhat.com, stefanha@redhat.com,
- Coiby Xu <Coiby.Xu@gmail.com>, Gerd Hoffmann <kraxel@redhat.com>,
- slp@redhat.com, 
- Igor Mammedov <imammedo@redhat.com>, Raphael Norwitz <raphael@enfabrica.net>, 
- Thomas Huth <thuth@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
- David Hildenbrand <david@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Jason Wang <jasowang@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH RESEND v7 00/12] vhost-user: support any POSIX system
- (tested on macOS, FreeBSD, OpenBSD)
-Message-ID: <ngknr5yzaqso2aaw3baxq5sa4syo36igyk63lcvymjbtu3eqos@aolclgpjy2cy>
-References: <20240612130140.63004-1-sgarzare@redhat.com>
- <rx5hvcffqzmixgmlroko7t6qvjciifr77nvpwrakpl5oovw3ec@mihi4k5nhse6>
- <87iky7eq09.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sJBxG-0003Vo-Sb; Mon, 17 Jun 2024 08:59:30 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3196A70FB1;
+ Mon, 17 Jun 2024 16:00:34 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 74EFBEABE3;
+ Mon, 17 Jun 2024 15:59:21 +0300 (MSK)
+Message-ID: <e928571e-0420-4c10-ba9e-aade4cfd3c7c@tls.msk.ru>
+Date: Mon, 17 Jun 2024 15:59:21 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <87iky7eq09.fsf@pond.sub.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] Remove some unused structures
+To: "Dr. David Alan Gilbert" <dave@treblig.org>, peter.maydell@linaro.org,
+ laurent@vivier.eu, qemu-trivial@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20240505171444.333302-1-dave@treblig.org>
+ <ZmMTPvLUaB4tGvbk@gallifrey>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <ZmMTPvLUaB4tGvbk@gallifrey>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -117,33 +86,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 17, 2024 at 02:02:30PM GMT, Markus Armbruster wrote:
->Stefano Garzarella <sgarzare@redhat.com> writes:
->
->> Hi Michael,
+07.06.2024 17:04, Dr. David Alan Gilbert пишет:
+> * Dr. David Alan Gilbert (dave@treblig.org) wrote:
+>> A bunch of structs that are currently unused,
+>> found with a simple script and a bit of eyeballing.
 >>
->> On Wed, Jun 12, 2024 at 03:01:28PM GMT, Stefano Garzarella wrote:
->>>This series should be in a good shape, in which tree should we queue it?
->>>@Micheal would your tree be okay?
->>
->> Markus suggested a small change to patch 10, so do you want me to resend the whole series, or is it okay to resend just the last 3 patches (which are also the ones that depend on the other patch queued by Markus)?
->
->I guess you mean
->
->    [PATCH v2] qapi: clarify that the default is backend dependent
->    Message-ID: <20240611130231.83152-1-sgarzare@redhat.com>
+>> The only one I'm that suspicious of is the SPARC
+>> one, where the patch which removed the use is a bit
+>> confusing to me.
+> 
+> Copying in Trivial; I think there are 4 of these that
+> are still outstanding:
+> 
+>     [PATCH 1/7] linux-user: cris: Remove unused struct 'rt_signal_frame'
+>        (Although cris is going)
+>     [PATCH 3/7] linux-user: sparc: Remove unused struct 'target_mc_fq'
+>     [PATCH 5/7] hw/arm/bcm2836: Remove unusued struct 'BCM283XClass'
+>     [PATCH 7/7] net/can: Remove unused struct 'CanBusState'
+> 
+> Can Trivial pick these up please?
 
-Yep!
+Applied to qemu-trivial, thanks!
 
->
->> In the last case I would ask you to queue up the first 9 patches of this series if that is okay with you.
->
->Michael, feel free to merge the patch I queued.
->
+/mjt
 
-I can also include it in v8 if it helps.
-
-Thanks,
-Stefano
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
 
