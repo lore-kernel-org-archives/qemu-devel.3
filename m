@@ -4,107 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F4CCC2BB85
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1198EC27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJHYB-0003oC-3E; Mon, 17 Jun 2024 14:57:55 -0400
+	id 1sJHZ1-0004hm-U4; Mon, 17 Jun 2024 14:58:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sJHY8-0003mr-VD
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:57:52 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
+ id 1sJHYr-0004P2-8k
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:37 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sJHY7-0004p8-2c
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:57:52 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 80A681F7B0;
- Mon, 17 Jun 2024 18:57:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718650669; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ej2WTQ/a70FEnSwNeGX5ZJIjI8llyrpp7m9fi688FQk=;
- b=r2Bp8P2buLBhzvab6jVtWB1hCUtEcc//ifK+d8o3f+gIMV+Ri8fGFFjibQw9sn5iVhOAPj
- nAG78rhBxnRSCdvnFawtS/3DGXjcVYkdKJRHUDTgyQlGsog0ESyZOR7Bk8Sk1rQ2A2KDOj
- 42/cVdHHos4VVgNn6LOegyHFzKXWOiU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718650669;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ej2WTQ/a70FEnSwNeGX5ZJIjI8llyrpp7m9fi688FQk=;
- b=toSTv19mCAhQxVmbHds/EnkN9EUmetcnunRtJPqsWwaMtBtNspQiy/IIP5qvsi1hUubnQj
- pXCHG1JHP8nM9FDw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718650669; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ej2WTQ/a70FEnSwNeGX5ZJIjI8llyrpp7m9fi688FQk=;
- b=r2Bp8P2buLBhzvab6jVtWB1hCUtEcc//ifK+d8o3f+gIMV+Ri8fGFFjibQw9sn5iVhOAPj
- nAG78rhBxnRSCdvnFawtS/3DGXjcVYkdKJRHUDTgyQlGsog0ESyZOR7Bk8Sk1rQ2A2KDOj
- 42/cVdHHos4VVgNn6LOegyHFzKXWOiU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718650669;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ej2WTQ/a70FEnSwNeGX5ZJIjI8llyrpp7m9fi688FQk=;
- b=toSTv19mCAhQxVmbHds/EnkN9EUmetcnunRtJPqsWwaMtBtNspQiy/IIP5qvsi1hUubnQj
- pXCHG1JHP8nM9FDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 00464139AB;
- Mon, 17 Jun 2024 18:57:46 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ODwSLiqHcGYJKAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 17 Jun 2024 18:57:46 +0000
-From: Fabiano Rosas <farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
+ id 1sJHYp-0004y8-DW
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:36 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-705b9a89e08so4054919b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1718650714; x=1719255514; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dzc68h1Ua4UnQlWlrtm3BT2YNpP7DWO6KFC5L451s7M=;
+ b=PnZiXsaa/+IHj+XfhJRuqgmIec7M7y2ZdLeITcRM2gmHvfHY/Dx6Bp6Wxjl+IKVaR6
+ EQTPNA/l18p+eUNItLDXlAOFNjHB7PN00KfwBZapQo0jyl1wW4wbJE66B7riGUaKR6cG
+ lF2+duerN6/3QJt8uo2S/15qriOhd+SPXb+8XO/GYOGvRc+Fkd2Mio9Is+/Zm8M6MOz1
+ z6M0M4x3qDzhsVWujxkPxc8YseG83X9CcnTbUth74P/tI69WrtIQO3SmTKq9FvTb3Rzd
+ 0dDioxVH9/WbbgA4Q89KkNT5S151Aep5rfvNs2kWaoYRbCdn/cUieX3xF8lozaF8+Ql2
+ YcrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718650714; x=1719255514;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dzc68h1Ua4UnQlWlrtm3BT2YNpP7DWO6KFC5L451s7M=;
+ b=u2NGdPSYfJqRQwh8HlZaAMxKnGgCeVTlbWLU4OimrgBCKRbDYr4ZYvhKoxEGl4fXwD
+ oGZsK2Dt4i/9TCufJ6M/r4AzqBVHuHR25b5AMwfwSNx9Uk5HhdTPcJ8BGhBlqj/MDQY4
+ 5jhz1VLZl+yDXpBKysrN9kDKiW9zPVgf4b/cKYwy+SnrLk+Qwqm2tqIBRIdY0SjFkNky
+ BvC+NkSjWXYiyOdQpPo9/VFvX8Nfz0gD98hy/h07KaxtaNJiUzXBP1lWyK9lSZ5u4I5U
+ 06/UhT7yaxAB/TNWuV5YxXQ6YcEkTolnj2CT92QiJ4b5qPGbXQ/f13URzEm0nXkYgJjX
+ iqCw==
+X-Gm-Message-State: AOJu0YyMJX4K1DObhk2Sql8YZkq8xLypwx6CyEWg+WZ0YSCiLgwD8UVj
+ lBGgK3MGoB15GSXOvCrfI+qoC2WWA7aH5laM2JGY4QrMnR5tZN26sD+KtNJfcSc=
+X-Google-Smtp-Source: AGHT+IEm89zSSI9qpDrXwyBv1Iz+uCiI0Hu/9U2j9Lihg9g4w0hn8lPi/9e5C8qTwtApRtsaWODDeQ==
+X-Received: by 2002:a05:6a00:38cc:b0:705:f5c0:8ba2 with SMTP id
+ d2e1a72fcca58-705f5c08bf9mr5667571b3a.2.1718650713675; 
+ Mon, 17 Jun 2024 11:58:33 -0700 (PDT)
+Received: from localhost.localdomain ([106.222.222.115])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Jun 2024 11:58:33 -0700 (PDT)
+From: Ajeet Singh <itachis6234@gmail.com>
+X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 05/16] monitor: Drop monitor_fdset_dup_fd_find/_remove()
-Date: Mon, 17 Jun 2024 15:57:20 -0300
-Message-Id: <20240617185731.9725-6-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240617185731.9725-1-farosas@suse.de>
-References: <20240617185731.9725-1-farosas@suse.de>
+Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>,
+ Stacey Son <sson@FreeBSD.org>, Ajeet Singh <itachis@FreeBSD.org>
+Subject: [PATCH 06/23] Add Aarch64 register handling
+Date: Tue, 18 Jun 2024 00:27:47 +0530
+Message-Id: <20240617185804.25075-7-itachis@FreeBSD.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240617185804.25075-1-itachis@FreeBSD.org>
+References: <20240617185804.25075-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.998]; MIME_GOOD(-0.10)[text/plain];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; RCPT_COUNT_SEVEN(0.00)[9];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=itachis6234@gmail.com; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,137 +96,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Stacey Son <sson@FreeBSD.org>
 
-Those functions are not needed, one remove function should already
-work.  Clean it up.
+Header file for managing CPU register states in
+FreeBSD user mode
 
-Here the code doesn't really care about whether we need to keep that dupfd
-around if close() failed: when that happens something got very wrong,
-keeping the dup_fd around the fdsets may not help that situation so far.
-
-Cc: Dr. David Alan Gilbert <dave@treblig.org>
-Cc: Markus Armbruster <armbru@redhat.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-[add missing return statement, removal during traversal is not safe]
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
 ---
- include/monitor/monitor.h |  1 -
- monitor/fds.c             | 28 ++++++----------------------
- stubs/fdset.c             |  5 -----
- util/osdep.c              | 15 +--------------
- 4 files changed, 7 insertions(+), 42 deletions(-)
+ bsd-user/aarch64/target_arch_reg.h | 56 ++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+ create mode 100644 bsd-user/aarch64/target_arch_reg.h
 
-diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index 965f5d5450..fd9b3f538c 100644
---- a/include/monitor/monitor.h
-+++ b/include/monitor/monitor.h
-@@ -53,7 +53,6 @@ AddfdInfo *monitor_fdset_add_fd(int fd, bool has_fdset_id, int64_t fdset_id,
-                                 const char *opaque, Error **errp);
- int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags);
- void monitor_fdset_dup_fd_remove(int dup_fd);
--int64_t monitor_fdset_dup_fd_find(int dup_fd);
- 
- void monitor_register_hmp(const char *name, bool info,
-                           void (*cmd)(Monitor *mon, const QDict *qdict));
-diff --git a/monitor/fds.c b/monitor/fds.c
-index d86c2c674c..fb9f58c056 100644
---- a/monitor/fds.c
-+++ b/monitor/fds.c
-@@ -458,7 +458,7 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
- #endif
- }
- 
--static int64_t monitor_fdset_dup_fd_find_remove(int dup_fd, bool remove)
-+void monitor_fdset_dup_fd_remove(int dup_fd)
- {
-     MonFdset *mon_fdset;
-     MonFdsetFd *mon_fdset_fd_dup;
-@@ -467,31 +467,15 @@ static int64_t monitor_fdset_dup_fd_find_remove(int dup_fd, bool remove)
-     QLIST_FOREACH(mon_fdset, &mon_fdsets, next) {
-         QLIST_FOREACH(mon_fdset_fd_dup, &mon_fdset->dup_fds, next) {
-             if (mon_fdset_fd_dup->fd == dup_fd) {
--                if (remove) {
--                    QLIST_REMOVE(mon_fdset_fd_dup, next);
--                    g_free(mon_fdset_fd_dup);
--                    if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
--                        monitor_fdset_cleanup(mon_fdset);
--                    }
--                    return -1;
--                } else {
--                    return mon_fdset->id;
-+                QLIST_REMOVE(mon_fdset_fd_dup, next);
-+                g_free(mon_fdset_fd_dup);
-+                if (QLIST_EMPTY(&mon_fdset->dup_fds)) {
-+                    monitor_fdset_cleanup(mon_fdset);
-                 }
-+                return;
-             }
-         }
-     }
--
--    return -1;
--}
--
--int64_t monitor_fdset_dup_fd_find(int dup_fd)
--{
--    return monitor_fdset_dup_fd_find_remove(dup_fd, false);
--}
--
--void monitor_fdset_dup_fd_remove(int dup_fd)
--{
--    monitor_fdset_dup_fd_find_remove(dup_fd, true);
- }
- 
- int monitor_fd_param(Monitor *mon, const char *fdname, Error **errp)
-diff --git a/stubs/fdset.c b/stubs/fdset.c
-index d7c39a28ac..389e368a29 100644
---- a/stubs/fdset.c
-+++ b/stubs/fdset.c
-@@ -9,11 +9,6 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags)
-     return -1;
- }
- 
--int64_t monitor_fdset_dup_fd_find(int dup_fd)
--{
--    return -1;
--}
--
- void monitor_fdset_dup_fd_remove(int dupfd)
- {
- }
-diff --git a/util/osdep.c b/util/osdep.c
-index 5d23bbfbec..756de9a745 100644
---- a/util/osdep.c
-+++ b/util/osdep.c
-@@ -398,21 +398,8 @@ int qemu_open_old(const char *name, int flags, ...)
- 
- int qemu_close(int fd)
- {
--    int64_t fdset_id;
--
-     /* Close fd that was dup'd from an fdset */
--    fdset_id = monitor_fdset_dup_fd_find(fd);
--    if (fdset_id != -1) {
--        int ret;
--
--        ret = close(fd);
--        if (ret == 0) {
--            monitor_fdset_dup_fd_remove(fd);
--        }
--
--        return ret;
--    }
--
-+    monitor_fdset_dup_fd_remove(fd);
-     return close(fd);
- }
- 
+diff --git a/bsd-user/aarch64/target_arch_reg.h b/bsd-user/aarch64/target_arch_reg.h
+new file mode 100644
+index 0000000000..5c7154f0c1
+--- /dev/null
++++ b/bsd-user/aarch64/target_arch_reg.h
+@@ -0,0 +1,56 @@
++/*
++ *  FreeBSD arm64 register structures
++ *
++ *  Copyright (c) 2015 Stacey Son
++ *  All rights reserved.
++ *
++ *  This program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2 of the License, or
++ *  (at your option) any later version.
++ *
++ *  This program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef TARGET_ARCH_REG_H
++#define TARGET_ARCH_REG_H
++
++/* See sys/arm64/include/reg.h */
++typedef struct target_reg {
++    uint64_t        x[30];
++    uint64_t        lr;
++    uint64_t        sp;
++    uint64_t        elr;
++    uint64_t        spsr;
++} target_reg_t;
++
++typedef struct target_fpreg {
++    __uint128_t     fp_q[32];
++    uint32_t        fp_sr;
++    uint32_t        fp_cr;
++} target_fpreg_t;
++
++#define tswapreg(ptr)   tswapal(ptr)
++
++static inline void target_copy_regs(target_reg_t *regs, CPUARMState *env)
++{
++    int i;
++
++    for (i = 0; i < 30; i++) {
++        regs->x[i] = tswapreg(env->xregs[i]);
++    }
++    regs->lr = tswapreg(env->xregs[30]);
++    regs->sp = tswapreg(env->xregs[31]);
++    regs->elr = tswapreg(env->pc);
++    regs->spsr = tswapreg(pstate_read(env));
++}
++
++#undef tswapreg
++
++#endif /* TARGET_ARCH_REG_H */
 -- 
-2.35.3
+2.34.1
 
 
