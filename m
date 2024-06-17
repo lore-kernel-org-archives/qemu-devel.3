@@ -4,93 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71638C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 10:49:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4517C2BA18
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 10:58:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJ9vC-0003Vo-NC; Mon, 17 Jun 2024 06:49:10 -0400
+	id 1sJA3n-0006Go-1k; Mon, 17 Jun 2024 06:58:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sJ9vA-0003VP-T2
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 06:49:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sJA3l-0006Ed-06
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 06:58:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sJ9v8-0004ab-IT
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 06:49:08 -0400
+ id 1sJA3j-0005ot-0M
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 06:58:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718621345;
+ s=mimecast20190719; t=1718621878;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OeLOrYdqNIe9xnia3NPaYjN4cLPbwMTRo24zrDjzKuY=;
- b=Xj62MYlP8Zn5idiINo7+veGvrUxsfNEGDh1I58BTdQ+4cbFmTk1x4J1kA9K5GiJh4WryDy
- CKk6wi8I31njeOuHNuh4dwhkTmZnk0mFvNJXqXBoAvQI5obditAeOjdBH9fGzZjlOnf34J
- euDSw8YkWEtaKDmn0lZv4Z5BeR8b7KI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6DeTxpaZPoE5n/6sn1qKBhGwPu3TeW8vls9mSrVjkrM=;
+ b=UwHXffR6yInv4WkpHhr4Psb7RmAn/cub+p28ulCU+kg2XtSKEsN1Bs1ZOCngQ/u6sfFWrH
+ o+Ev41Sk81ff84TQYV4HXYBjsyeOWwMRcBUMTGQmPcJnr8HXPWwS1Pfjr8/2VpOvMJf1eF
+ uy+0F2BFMQxsIUJWbOCHdfB1uGSqbl4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-17-aP_8oE1UOEC7oIvHAE9Seg-1; Mon, 17 Jun 2024 06:49:04 -0400
-X-MC-Unique: aP_8oE1UOEC7oIvHAE9Seg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4229a964745so25562695e9.2
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 03:49:03 -0700 (PDT)
+ us-mta-332-IFXTmKBiMLqLKuTi3kYQsw-1; Mon, 17 Jun 2024 06:57:56 -0400
+X-MC-Unique: IFXTmKBiMLqLKuTi3kYQsw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4210d151c5bso30358295e9.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 03:57:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718621343; x=1719226143;
+ d=1e100.net; s=20230601; t=1718621875; x=1719226675;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OeLOrYdqNIe9xnia3NPaYjN4cLPbwMTRo24zrDjzKuY=;
- b=D0hRCJJc+CL26HAP4B60VkCzVyncuKXHpF7NaFQwwAXu+eP/pCbpT7VvaDfdTmxDcE
- gw3LjP3ity4Bf3SQJEVbrRvFIyIu1zvaYrvwopgUHCsnCPu7b9lczyy5l1CwqGvc34kY
- 3AtP7SuMsMPUg2taKHnN7F/JsD1wcX2hzwYTmSVlSJoSr7VLuF8pt952v67sRcRAx0B1
- /7HGriR8F8j+j/z4MP0VlXsE/Do5c1WLVdMmMk71jgKaDHPSSpx4lfaRzrCaY+V3MuhJ
- dWHIXpwHEy07yYXLeEQW5/yF48v8vSfkVR2i++rrI69KH+tXWdmHm8s4Cvga5jpvm3hj
- MiRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUhVOXqinlum5JH0hCIEPo7M2JAjaw7FD3QFognfcJfSQ7kiczATMXvWHwp6tgjjINv5PerN+GNa5hLAJB3Zff50vlEdeM=
-X-Gm-Message-State: AOJu0YxebwPnky/Ve3+qJ+XM/+7gjQwOwVN22va8nP2+DtswL6VLQqmI
- HsLRdlPwnYLU3Y4wNxOrAcOIK2k3rt8TQKlujdCK++ORLJfwxJyTXUy+upHc/65z7UbgUvoRgtQ
- IVfRvqGZueO/jBVOrx8TKD11C/kmr42sQEnBHhmvZKMnatB/R+FRr
-X-Received: by 2002:a05:600c:4749:b0:422:fdae:b687 with SMTP id
- 5b1f17b1804b1-4230482bcf3mr84277745e9.17.1718621342938; 
- Mon, 17 Jun 2024 03:49:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGxo4epXBkaJ/SEuKW7JNXupVHhBKXiqldSRQvefBXXsQeA607huJvrQkfyEKRH7LWmQsf9Yw==
-X-Received: by 2002:a05:600c:4749:b0:422:fdae:b687 with SMTP id
- 5b1f17b1804b1-4230482bcf3mr84277605e9.17.1718621342459; 
- Mon, 17 Jun 2024 03:49:02 -0700 (PDT)
+ bh=6DeTxpaZPoE5n/6sn1qKBhGwPu3TeW8vls9mSrVjkrM=;
+ b=hgh7jV5m5BpTgOeb0DqOReVz7iapk0Dm+vfPdBGjIWlarkcjRK4vyizG2IreLyGd20
+ Dq0JKDzFA37mxDpojukDx0G4KxOQBBV3KjZktNbY6VT9w/ve9hRUejcZntwiieu6vjsV
+ YjeLBsSlt1G9j3UGOIfunqyy7P8PnZgY9ZSXI4VN+ttMsCmy4a8kmC9MxQnR8UsXxsca
+ mK/n03dppfHjuO/XEAG4PLe8RLy939wBHZ5l3htFiqf6gAJyMsOGsNePdLMVsSxzwZ0Q
+ nATpd9WTcf4JUzs1bYfdrEXZlKoHGmLyDD2s3i7q++pdmcvtmbzURQv9KVImTOROhrTI
+ /vFQ==
+X-Gm-Message-State: AOJu0YwITA8zww02XseQ+P3KWh/1yH1vkdeWCYNhXPgvIQ8BI5v8jkV/
+ Mrww6XOnV8V/jzaWDXrV2PqXXd+M/PwdkAANlgeJTBLx7Wg0Y8MIV3djN4ZP10HQt3mBdYQ1rz3
+ P4wU2RosabdiRlrv6bFFlYH9ROqyW+lDlGfSGmVGwMNCFUlUpdV6T
+X-Received: by 2002:a05:600c:4688:b0:422:7c50:18ff with SMTP id
+ 5b1f17b1804b1-4230485bacdmr69804675e9.39.1718621875266; 
+ Mon, 17 Jun 2024 03:57:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHXhP/wXXOEsfzBCh5KspiD6hT4auKqFLZcZLYvwDYQFdXBrhHYoxxZ32/dTcJzneZ7MLP1xg==
+X-Received: by 2002:a05:600c:4688:b0:422:7c50:18ff with SMTP id
+ 5b1f17b1804b1-4230485bacdmr69804535e9.39.1718621874789; 
+ Mon, 17 Jun 2024 03:57:54 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422870e9676sm189887695e9.24.2024.06.17.03.49.01
+ 5b1f17b1804b1-422f641f522sm153026565e9.48.2024.06.17.03.57.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 03:49:02 -0700 (PDT)
-Date: Mon, 17 Jun 2024 12:49:01 +0200
+ Mon, 17 Jun 2024 03:57:54 -0700 (PDT)
+Date: Mon, 17 Jun 2024 12:57:53 +0200
 From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-Cc: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <philmd@linaro.org>, "Richard
- Henderson" <richard.henderson@linaro.org>, Dave Jiang
- <dave.jiang@intel.com>, Huang Ying <ying.huang@intel.com>, Paolo Bonzini
- <pbonzini@redhat.com>, <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>,
- <linuxarm@huawei.com>, Michael Roth <michael.roth@amd.com>, Ani Sinha
- <anisinha@redhat.com>
-Subject: Re: [PATCH qemu ] hw/acpi: Fix big endian host creation of Generic
- Port Affinity Structures
-Message-ID: <20240617124901.1414a93f@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240614150835.00000674@Huawei.com>
-References: <20240605180455.18193-1-Jonathan.Cameron@huawei.com>
- <20240606160653.27226def@imammedo.users.ipa.redhat.com>
- <20240606184716.00000708@Huawei.com>
- <20240614125725.730f8914@imammedo-mac>
- <20240614150835.00000674@Huawei.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, "Daniel P . =?UTF-8?B?QmVycmFuZ8Op?="
+ <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>, Zhao Liu
+ <zhao1.liu@intel.com>
+Subject: Re: [PATCH v6 21/23] hw/i386/pc: Simplify DEFINE_I440FX_MACHINE()
+ macro
+Message-ID: <20240617125753.52300d4e@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240617071118.60464-22-philmd@linaro.org>
+References: <20240617071118.60464-1-philmd@linaro.org>
+ <20240617071118.60464-22-philmd@linaro.org>
 X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -115,188 +107,339 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 14 Jun 2024 15:08:35 +0100
-Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
+On Mon, 17 Jun 2024 09:11:16 +0200
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-> On Fri, 14 Jun 2024 12:57:25 +0200
-> Igor Mammedov <imammedo@redhat.com> wrote:
-> 
-> > On Thu, 6 Jun 2024 18:47:16 +0100
-> > Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
-> >   
-> > > On Thu, 6 Jun 2024 16:06:53 +0200
-> > > Igor Mammedov <imammedo@redhat.com> wrote:
-> > >     
-> > > > On Wed, 5 Jun 2024 19:04:55 +0100
-> > > > Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
-> > > >     
-> > > > > Treating the HID as an integer caused it to get bit reversed
-> > > > > on big endian hosts running little endian guests.  Treat it
-> > > > > as a character array instead.
-> > > > > 
-> > > > > Fixes hw/acpi: Generic Port Affinity Structure Support
-> > > > > Tested-by: Richard Henderson <richard.henderson@linaro.org>
-> > > > > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > > > 
-> > > > > ---
-> > > > > Richard ran the version posted in the thread on an s390 instance.
-> > > > > Thanks for the help!
-> > > > > 
-> > > > > Difference from version in thread:
-> > > > > - Instantiate i in the for loop.
-> > > > > 
-> > > > > Sending out now so Michael can decide whether to fold this in, or
-> > > > > drop the GP series for now from his pull request (in which case
-> > > > > I'll do an updated version with this and Markus' docs feedback
-> > > > > folded in.)
-> > > > > 
-> > > > > ---
-> > > > >  include/hw/acpi/acpi_generic_initiator.h | 2 +-
-> > > > >  hw/acpi/acpi_generic_initiator.c         | 4 +++-
-> > > > >  2 files changed, 4 insertions(+), 2 deletions(-)
-> > > > > 
-> > > > > diff --git a/include/hw/acpi/acpi_generic_initiator.h b/include/hw/acpi/acpi_generic_initiator.h
-> > > > > index 1a899af30f..5baefda33a 100644
-> > > > > --- a/include/hw/acpi/acpi_generic_initiator.h
-> > > > > +++ b/include/hw/acpi/acpi_generic_initiator.h
-> > > > > @@ -61,7 +61,7 @@ typedef struct PCIDeviceHandle {
-> > > > >              uint16_t bdf;
-> > > > >          };
-> > > > >          struct {
-> > > > > -            uint64_t hid;
-> > > > > +            char hid[8];
-> > > > >              uint32_t uid;
-> > > > >          };
-> > > > >      };      
-> > > > 
-> > > > not sure on top of what this patch applies but I have some generic comments wrt it    
-> > > 
-> > > https://lore.kernel.org/qemu-devel/20240524100507.32106-1-Jonathan.Cameron@huawei.com/
-> > > 
-> > > Comments are all on elements of the existing upstream code, but I'm touching it
-> > > anyway so will look at making the improvements you suggest as new precursors
-> > > to v3 given we are going around again anyway.
-> > >     
-> > > > 
-> > > > why PCIDeviceHandle is in header file? is there plan for it
-> > > > being used outside of acpi_generic_initiator.c?    
-> > > 
-> > > I'll add a precursor patch to my series that moves
-> > > it and anything else that should be more local.  May well move
-> > > to being local in aml_build.c given your later comments with the
-> > > various fields passed in as parameters.
-> > >     
-> > > > 
-> > > >     
-> > > > > diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-> > > > > index 78b80dcf08..f064753b67 100644
-> > > > > --- a/hw/acpi/acpi_generic_initiator.c
-> > > > > +++ b/hw/acpi/acpi_generic_initiator.c
-> > > > > @@ -151,7 +151,9 @@ build_srat_generic_node_affinity(GArray *table_data, int node,
-> > > > >          build_append_int_noprefix(table_data, 0, 12);
-> > > > >      } else {
-> > > > >          /* Device Handle - ACPI */
-> > > > > -        build_append_int_noprefix(table_data, handle->hid, 8);
-> > > > > +        for (int i = 0; i < sizeof(handle->hid); i++) {
-> > > > > +            build_append_int_noprefix(table_data, handle->hid[i], 1);
-> > > > > +        }
-> > > > >          build_append_int_noprefix(table_data, handle->uid, 4);
-> > > > >          build_append_int_noprefix(table_data, 0, 4);      
-> > > > 
-> > > > instead of open codding structure
-> > > > 
-> > > > it might be better to introduce helper in aml_build.c
-> > > > something like 
-> > > >   /* proper reference to spec as we do for other ACPI primitives */
-> > > >   build_append_srat_acpi_device_handle(GArray *table_data, char* hid, unit32_t uid)
-> > > >       assert(strlen(hid) ...
-> > > >       for() {
-> > > >             build_append_byte()
-> > > >       }          
-> > > >       ...
-> > > > 
-> > > > the same applies to "Device Handle - PCI" structure    
-> > > 
-> > > I'll look at moving that stuff and the affinity structure creation
-> > > code themselves in there. I think they ended up in this file because
-> > > of the other infrastructure needed to create these nodes and it
-> > > will have felt natural to keep this together.
-> > > 
-> > > Putting it in aml_build.c will put it with similar code though
-> > > which makes sense to me.    
-> > 
-> > the point of moving handle packing to aml-build.c,
-> > is to isolate primitives that likely could be reused later on elsewhere
-> > and hide little endiannes from API user.
-> > So shuch errors as you are fixing wouldn't be easy to introduce
-> > (as long as API does it right)
-> > 
-> > 
-> > Also this API probably should take not packed BDF, i.e. something like this:
-> >     build_append_srat_pci_device_handle(GArray *table_data, bus, dev, func)
-> > 
-> > Or a packed BDF as you suggest in the later email, but then API function wold have
-> > to 'decode' that before putting numbers into table, which complicates things
-> > and likely would pull in PCI deps to unpack BDF, which I'd rather avoid in
-> > generic aml-build.c  
-> 
-> Ok. I can split it up. My motivation for the encoded version was that
-> the spec field is defined as a 2 byte field, but it is also broken out
-> in the description into byte 2 then various bits of byte 3 so we can construct
-> it that way instead. (were it defined as bits in the 16 bit field this would
-> make less sense).  Should still be obvious enough to anyone trying to
-> correlate the two.
-> 
-> Splitting the devfn bit up though is tricky as that doesn't really
-> have a separate meaning in PCI any more given ARI where it becomes an 8 bit
-> function ID. So probably makes more sense to keep that as devfn as it's
-> coming from pci->devfn in that form anyway and they both forms get encoded
-> into a byte anyway.
+> Last commit removed the last non-NULL use of DEFINE_I440FX_MACHINE
+> 3rd parameter. 'compatfn' is now obsolete, remove it.
+>=20
+> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-ack, 
-as long as acpi API user doesn't have to worry about byte order it should be fine
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-> 
-> Jonathan
-> 
-> 
-> >   
-> > >     
-> > > > 
-> > > > Also get rid of PCI deps in acpi_generic_initiator.c 
-> > > > move build_all_acpi_generic_initiators/build_srat_generic_pci_initiator into
-> > > > hw/acpi/pci.c    
-> > > 
-> > > Today it's used only for PCI devices, but that's partly an artifact
-> > > of how we get to the root complex via the bus below it.
-> > > 
-> > > Spec wise, it's just as applicable to platform devices etc, but maybe
-> > > we can move it to pci.c for now and move it out again if it gains other
-> > > users. Or leave it in acpi_generic_initiator.c but have all the aml
-> > > stuff in aml_build.c as you suggest. 
-> > >     
-> > > > file if it has to access PCI code/structures directly
-> > > > (which I'm not convinced it should, can we get/expose what it needs as QOM properties?)    
-> > > 
-> > > Maybe. I'll see what I can come up with.  This feels involved
-> > > however so I'm more doubtful about this as a precursor.
-> > >     
-> > > > 
-> > > > btw:
-> > > > build_all_acpi_generic_initiators() name doesn't match what it's doing.
-> > > > it composes only one initiator entry.    
-> > > 
-> > > I'll look at tidying up all the relevant naming.
-> > > 
-> > > Jonathan
-> > >     
-> > > >     
-> > > > >      }      
-> > > > 
-> > > >     
-> > >     
-> > 
-> >   
-> 
+> ---
+>  hw/i386/pc_piix.c | 69 ++++++++++++++++++++---------------------------
+>  1 file changed, 29 insertions(+), 40 deletions(-)
+>=20
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index 217c749705..e4930b7f48 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -414,13 +414,6 @@ static void pc_set_south_bridge(Object *obj, int val=
+ue, Error **errp)
+>      pcms->south_bridge =3D PCSouthBridgeOption_lookup.array[value];
+>  }
+> =20
+> -/* Looking for a pc_compat_2_4() function? It doesn't exist.
+> - * pc_compat_*() functions that run on machine-init time and
+> - * change global QEMU state are deprecated. Please don't create
+> - * one, and implement any pc-*-2.4 (and newer) compat code in
+> - * hw_compat_*, pc_compat_*, or * pc_*_machine_options().
+> - */
+> -
+>  #ifdef CONFIG_ISAPC
+>  static void pc_init_isa(MachineState *machine)
+>  {
+> @@ -452,13 +445,9 @@ static void pc_xen_hvm_init(MachineState *machine)
+>  }
+>  #endif
+> =20
+> -#define DEFINE_I440FX_MACHINE(suffix, name, compatfn, optionfn) \
+> +#define DEFINE_I440FX_MACHINE(suffix, name, optionfn) \
+>      static void pc_init_##suffix(MachineState *machine) \
+>      { \
+> -        void (*compat)(MachineState *m) =3D (compatfn); \
+> -        if (compat) { \
+> -            compat(machine); \
+> -        } \
+>          pc_init1(machine, TYPE_I440FX_PCI_DEVICE); \
+>      } \
+>      DEFINE_PC_MACHINE(suffix, name, pc_init_##suffix, optionfn)
+> @@ -496,7 +485,7 @@ static void pc_i440fx_9_1_machine_options(MachineClas=
+s *m)
+>      m->is_default =3D true;
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v9_1, "pc-i440fx-9.1", NULL,
+> +DEFINE_I440FX_MACHINE(v9_1, "pc-i440fx-9.1",
+>                        pc_i440fx_9_1_machine_options);
+> =20
+>  static void pc_i440fx_9_0_machine_options(MachineClass *m)
+> @@ -512,7 +501,7 @@ static void pc_i440fx_9_0_machine_options(MachineClas=
+s *m)
+>      pcmc->isa_bios_alias =3D false;
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v9_0, "pc-i440fx-9.0", NULL,
+> +DEFINE_I440FX_MACHINE(v9_0, "pc-i440fx-9.0",
+>                        pc_i440fx_9_0_machine_options);
+> =20
+>  static void pc_i440fx_8_2_machine_options(MachineClass *m)
+> @@ -527,7 +516,7 @@ static void pc_i440fx_8_2_machine_options(MachineClas=
+s *m)
+>      pcmc->default_smbios_ep_type =3D SMBIOS_ENTRY_POINT_TYPE_64;
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v8_2, "pc-i440fx-8.2", NULL,
+> +DEFINE_I440FX_MACHINE(v8_2, "pc-i440fx-8.2",
+>                        pc_i440fx_8_2_machine_options);
+> =20
+>  static void pc_i440fx_8_1_machine_options(MachineClass *m)
+> @@ -541,7 +530,7 @@ static void pc_i440fx_8_1_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_8_1, pc_compat_8_1_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v8_1, "pc-i440fx-8.1", NULL,
+> +DEFINE_I440FX_MACHINE(v8_1, "pc-i440fx-8.1",
+>                        pc_i440fx_8_1_machine_options);
+> =20
+>  static void pc_i440fx_8_0_machine_options(MachineClass *m)
+> @@ -556,7 +545,7 @@ static void pc_i440fx_8_0_machine_options(MachineClas=
+s *m)
+>      pcmc->default_smbios_ep_type =3D SMBIOS_ENTRY_POINT_TYPE_32;
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v8_0, "pc-i440fx-8.0", NULL,
+> +DEFINE_I440FX_MACHINE(v8_0, "pc-i440fx-8.0",
+>                        pc_i440fx_8_0_machine_options);
+> =20
+>  static void pc_i440fx_7_2_machine_options(MachineClass *m)
+> @@ -566,7 +555,7 @@ static void pc_i440fx_7_2_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_7_2, pc_compat_7_2_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v7_2, "pc-i440fx-7.2", NULL,
+> +DEFINE_I440FX_MACHINE(v7_2, "pc-i440fx-7.2",
+>                        pc_i440fx_7_2_machine_options);
+> =20
+>  static void pc_i440fx_7_1_machine_options(MachineClass *m)
+> @@ -576,7 +565,7 @@ static void pc_i440fx_7_1_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_7_1, pc_compat_7_1_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v7_1, "pc-i440fx-7.1", NULL,
+> +DEFINE_I440FX_MACHINE(v7_1, "pc-i440fx-7.1",
+>                        pc_i440fx_7_1_machine_options);
+> =20
+>  static void pc_i440fx_7_0_machine_options(MachineClass *m)
+> @@ -588,7 +577,7 @@ static void pc_i440fx_7_0_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_7_0, pc_compat_7_0_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v7_0, "pc-i440fx-7.0", NULL,
+> +DEFINE_I440FX_MACHINE(v7_0, "pc-i440fx-7.0",
+>                        pc_i440fx_7_0_machine_options);
+> =20
+>  static void pc_i440fx_6_2_machine_options(MachineClass *m)
+> @@ -598,7 +587,7 @@ static void pc_i440fx_6_2_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_6_2, pc_compat_6_2_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v6_2, "pc-i440fx-6.2", NULL,
+> +DEFINE_I440FX_MACHINE(v6_2, "pc-i440fx-6.2",
+>                        pc_i440fx_6_2_machine_options);
+> =20
+>  static void pc_i440fx_6_1_machine_options(MachineClass *m)
+> @@ -609,7 +598,7 @@ static void pc_i440fx_6_1_machine_options(MachineClas=
+s *m)
+>      m->smp_props.prefer_sockets =3D true;
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v6_1, "pc-i440fx-6.1", NULL,
+> +DEFINE_I440FX_MACHINE(v6_1, "pc-i440fx-6.1",
+>                        pc_i440fx_6_1_machine_options);
+> =20
+>  static void pc_i440fx_6_0_machine_options(MachineClass *m)
+> @@ -619,7 +608,7 @@ static void pc_i440fx_6_0_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_6_0, pc_compat_6_0_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v6_0, "pc-i440fx-6.0", NULL,
+> +DEFINE_I440FX_MACHINE(v6_0, "pc-i440fx-6.0",
+>                        pc_i440fx_6_0_machine_options);
+> =20
+>  static void pc_i440fx_5_2_machine_options(MachineClass *m)
+> @@ -629,7 +618,7 @@ static void pc_i440fx_5_2_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_5_2, pc_compat_5_2_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v5_2, "pc-i440fx-5.2", NULL,
+> +DEFINE_I440FX_MACHINE(v5_2, "pc-i440fx-5.2",
+>                        pc_i440fx_5_2_machine_options);
+> =20
+>  static void pc_i440fx_5_1_machine_options(MachineClass *m)
+> @@ -643,7 +632,7 @@ static void pc_i440fx_5_1_machine_options(MachineClas=
+s *m)
+>      pcmc->pci_root_uid =3D 1;
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v5_1, "pc-i440fx-5.1", NULL,
+> +DEFINE_I440FX_MACHINE(v5_1, "pc-i440fx-5.1",
+>                        pc_i440fx_5_1_machine_options);
+> =20
+>  static void pc_i440fx_5_0_machine_options(MachineClass *m)
+> @@ -655,7 +644,7 @@ static void pc_i440fx_5_0_machine_options(MachineClas=
+s *m)
+>      m->auto_enable_numa_with_memdev =3D false;
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v5_0, "pc-i440fx-5.0", NULL,
+> +DEFINE_I440FX_MACHINE(v5_0, "pc-i440fx-5.0",
+>                        pc_i440fx_5_0_machine_options);
+> =20
+>  static void pc_i440fx_4_2_machine_options(MachineClass *m)
+> @@ -665,7 +654,7 @@ static void pc_i440fx_4_2_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_4_2, pc_compat_4_2_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v4_2, "pc-i440fx-4.2", NULL,
+> +DEFINE_I440FX_MACHINE(v4_2, "pc-i440fx-4.2",
+>                        pc_i440fx_4_2_machine_options);
+> =20
+>  static void pc_i440fx_4_1_machine_options(MachineClass *m)
+> @@ -675,7 +664,7 @@ static void pc_i440fx_4_1_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_4_1, pc_compat_4_1_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v4_1, "pc-i440fx-4.1", NULL,
+> +DEFINE_I440FX_MACHINE(v4_1, "pc-i440fx-4.1",
+>                        pc_i440fx_4_1_machine_options);
+> =20
+>  static void pc_i440fx_4_0_machine_options(MachineClass *m)
+> @@ -687,7 +676,7 @@ static void pc_i440fx_4_0_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_4_0, pc_compat_4_0_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v4_0, "pc-i440fx-4.0", NULL,
+> +DEFINE_I440FX_MACHINE(v4_0, "pc-i440fx-4.0",
+>                        pc_i440fx_4_0_machine_options);
+> =20
+>  static void pc_i440fx_3_1_machine_options(MachineClass *m)
+> @@ -701,7 +690,7 @@ static void pc_i440fx_3_1_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_3_1, pc_compat_3_1_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v3_1, "pc-i440fx-3.1", NULL,
+> +DEFINE_I440FX_MACHINE(v3_1, "pc-i440fx-3.1",
+>                        pc_i440fx_3_1_machine_options);
+> =20
+>  static void pc_i440fx_3_0_machine_options(MachineClass *m)
+> @@ -711,7 +700,7 @@ static void pc_i440fx_3_0_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_3_0, pc_compat_3_0_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v3_0, "pc-i440fx-3.0", NULL,
+> +DEFINE_I440FX_MACHINE(v3_0, "pc-i440fx-3.0",
+>                        pc_i440fx_3_0_machine_options);
+> =20
+>  static void pc_i440fx_2_12_machine_options(MachineClass *m)
+> @@ -722,7 +711,7 @@ static void pc_i440fx_2_12_machine_options(MachineCla=
+ss *m)
+>      compat_props_add(m->compat_props, pc_compat_2_12, pc_compat_2_12_len=
+);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v2_12, "pc-i440fx-2.12", NULL,
+> +DEFINE_I440FX_MACHINE(v2_12, "pc-i440fx-2.12",
+>                        pc_i440fx_2_12_machine_options);
+> =20
+>  static void pc_i440fx_2_11_machine_options(MachineClass *m)
+> @@ -732,7 +721,7 @@ static void pc_i440fx_2_11_machine_options(MachineCla=
+ss *m)
+>      compat_props_add(m->compat_props, pc_compat_2_11, pc_compat_2_11_len=
+);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v2_11, "pc-i440fx-2.11", NULL,
+> +DEFINE_I440FX_MACHINE(v2_11, "pc-i440fx-2.11",
+>                        pc_i440fx_2_11_machine_options);
+> =20
+>  static void pc_i440fx_2_10_machine_options(MachineClass *m)
+> @@ -743,7 +732,7 @@ static void pc_i440fx_2_10_machine_options(MachineCla=
+ss *m)
+>      m->auto_enable_numa_with_memhp =3D false;
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v2_10, "pc-i440fx-2.10", NULL,
+> +DEFINE_I440FX_MACHINE(v2_10, "pc-i440fx-2.10",
+>                        pc_i440fx_2_10_machine_options);
+> =20
+>  static void pc_i440fx_2_9_machine_options(MachineClass *m)
+> @@ -753,7 +742,7 @@ static void pc_i440fx_2_9_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_2_9, pc_compat_2_9_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v2_9, "pc-i440fx-2.9", NULL,
+> +DEFINE_I440FX_MACHINE(v2_9, "pc-i440fx-2.9",
+>                        pc_i440fx_2_9_machine_options);
+> =20
+>  static void pc_i440fx_2_8_machine_options(MachineClass *m)
+> @@ -763,7 +752,7 @@ static void pc_i440fx_2_8_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_2_8, pc_compat_2_8_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v2_8, "pc-i440fx-2.8", NULL,
+> +DEFINE_I440FX_MACHINE(v2_8, "pc-i440fx-2.8",
+>                        pc_i440fx_2_8_machine_options);
+> =20
+>  static void pc_i440fx_2_7_machine_options(MachineClass *m)
+> @@ -773,7 +762,7 @@ static void pc_i440fx_2_7_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_2_7, pc_compat_2_7_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v2_7, "pc-i440fx-2.7", NULL,
+> +DEFINE_I440FX_MACHINE(v2_7, "pc-i440fx-2.7",
+>                        pc_i440fx_2_7_machine_options);
+> =20
+>  static void pc_i440fx_2_6_machine_options(MachineClass *m)
+> @@ -788,7 +777,7 @@ static void pc_i440fx_2_6_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_2_6, pc_compat_2_6_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v2_6, "pc-i440fx-2.6", NULL,
+> +DEFINE_I440FX_MACHINE(v2_6, "pc-i440fx-2.6",
+>                        pc_i440fx_2_6_machine_options);
+> =20
+>  static void pc_i440fx_2_5_machine_options(MachineClass *m)
+> @@ -802,7 +791,7 @@ static void pc_i440fx_2_5_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_2_5, pc_compat_2_5_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v2_5, "pc-i440fx-2.5", NULL,
+> +DEFINE_I440FX_MACHINE(v2_5, "pc-i440fx-2.5",
+>                        pc_i440fx_2_5_machine_options);
+> =20
+>  static void pc_i440fx_2_4_machine_options(MachineClass *m)
+> @@ -816,7 +805,7 @@ static void pc_i440fx_2_4_machine_options(MachineClas=
+s *m)
+>      compat_props_add(m->compat_props, pc_compat_2_4, pc_compat_2_4_len);
+>  }
+> =20
+> -DEFINE_I440FX_MACHINE(v2_4, "pc-i440fx-2.4", NULL,
+> +DEFINE_I440FX_MACHINE(v2_4, "pc-i440fx-2.4",
+>                        pc_i440fx_2_4_machine_options)
+> =20
+>  #ifdef CONFIG_ISAPC
 
 
