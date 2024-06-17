@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB119C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 19:00:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB7DC27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 19:01:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJHZN-000754-DM; Mon, 17 Jun 2024 14:59:09 -0400
+	id 1sJHYk-00044W-0H; Mon, 17 Jun 2024 14:58:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHZL-0006se-IS
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:59:07 -0400
+ id 1sJHYj-00042K-2d
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:29 -0400
 Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHZK-00052t-0C
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:59:07 -0400
+ id 1sJHYh-0004wP-8M
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:28 -0400
 Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7041053c0fdso3154840b3a.3
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:59:05 -0700 (PDT)
+ d2e1a72fcca58-704189f1225so4131483b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718650744; x=1719255544; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1718650705; x=1719255505; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RS52m5Rtxu4YyXgEJCG8PR37BWo6RzXvr9iG3e006XM=;
- b=R+LxjGRJO+FCfK44DNy8MDOvef7BoG9TPopd4fZzDzdYNKWtmxK8yVsF5OiwvaLwCX
- hMsYhQadgsfRtwsGXyzloHT1G3B8jJsaeg4JEetTEeof3bXtmMkbnSUib9jje7caG72h
- 2ZwZuEERHK6+38SoZeT08IhA/NARYtRNpNba/lDxWv7HA28lOqUMngtWvQjpbR06ytnj
- VsrVidBtF83VkxLV93ZC40y9fvBcHjegkcCFRhVT8XwtxgwzCiKn9hJfqoJdGGfSzwzZ
- Du4T3CXi0mNQkPdDPslMMOOJz3ATiQcPwA/rSgs6VJScADKA+C0p8T6JcRrCyX9yr3TF
- zSwQ==
+ bh=cXJTs0J9+UWD2AkXsLlcdFj04Dwj/u1B6kCGoJ8H+e8=;
+ b=D5zkQnmuYOaXmsFgffK3pY2E7kvLCYl6bdTjhztEPNfY7ci3jfpHMqpcR2GGHFblUi
+ 3E3bito/vmQ99yc4Rshpj/3TzOVPbDpy5cFpVgv35ABRgSVmkCsHQ3SXXJyAEfABtUS4
+ KNuBgRc9Th3cg+c+pLSQKVbTYXgw+xBbac/Df6vvulX8Sf3gI/YGtlNwYHmuOpCgj83H
+ oUdW/27c3GcvR5z8Ks8hXCYWtVhyPPE2eYtFYgGUAkgeXv5Z/xFeeSsupxwQe3D3gsvW
+ olFXdRuNJFOad/1XW5uJZRCndrxOXFZpd9NGM/ha59AdTwBu4vnBlj9Yw4oANrT+J+wH
+ ZgSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718650744; x=1719255544;
+ d=1e100.net; s=20230601; t=1718650705; x=1719255505;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RS52m5Rtxu4YyXgEJCG8PR37BWo6RzXvr9iG3e006XM=;
- b=qeTg3Tth8T8+7MIlrtjFAMjEcCA5DPcDzlaXGwTzlHd4jRcvtcGq8wgAhJEY+hEgg0
- pzArk7TiaYle8bBHNLh17gOMyeNZFj5oSFMdU7CfF5yvZ3Ooyexhi8tDnRMcZaDAqney
- lYhi10IiDeEErsFgTIsN0ueCpS5P0dKX9K9/rNHtEC733vhDqF/Q25TyCbqGSwb1Ub0n
- Pc1O1JkJIenRnH/WjYl8anIETL55gKmc6pqAUWI3exmgsCa16/C6ncMaucjhuxpTZ/A2
- X7+J+eIoLsTdRpSq1KD6vamtoSzoEFGMiv0XCiY1GxfEX1Ni1RcoE+RCW2UKc1yZVfJs
- 8yGQ==
-X-Gm-Message-State: AOJu0YzC9JINBb3E53nSUljnNihjnZrtlI2ECCSI2SlvDyTbADfEwT/J
- OrHgv3b6qAl9RhHJ+miy1rHLFsKUi5c3SQy0MY9As1vATdM/usVwSuGSat9svho=
-X-Google-Smtp-Source: AGHT+IFxIq0b/W3Kcd5CLPPgBeZea3DOF76vTJei6zxr/pk+elRk8k5TyyDtiiYYjMhkPj4K9/EmeA==
-X-Received: by 2002:a05:6a21:4603:b0:1b5:d172:91e8 with SMTP id
- adf61e73a8af0-1bae800c427mr10780039637.49.1718650744396; 
- Mon, 17 Jun 2024 11:59:04 -0700 (PDT)
+ bh=cXJTs0J9+UWD2AkXsLlcdFj04Dwj/u1B6kCGoJ8H+e8=;
+ b=ZB8G1SaMVwTKJtRX8ae+6ykA2c2Kp3qhIzC8IF3K4JkbKCsGf5+l63nLMjIboY9a2Z
+ GkE/uuhUqPBtSnbFYGXzfjtld2xFb67ve2DUZvytUaxzxVeRw/g9m0NPSr75kEpicOHL
+ ZHdBo0oxKd7kOxhkK3W8GtII5+I8abCyL/rrng24PR96EEFVm/DiPg5ZXSXDVqM5Klrc
+ 6GFtvZjB//5xR30RqX9C/ZjJKyWrZD6KmL5PAjdSQ5Sofbui37vGBMCRmpwU5SHMbGnK
+ J/heFHaQGYILGRbd/6bBPC0UerovEAybYV/qA/QmOM7VNqyIHnla7ilokbGP/gMZmH0U
+ B6lg==
+X-Gm-Message-State: AOJu0Yx2wG3uRr/gGufx19THYh9jYxYJHn3hOU23tqJ7YGzgn7XCSuK7
+ o4gPHoXiwsRh33wy7qI7YiU2/WtROXL/TblydyRuczOIM2VEp1Aa9swCdhAk4Gc=
+X-Google-Smtp-Source: AGHT+IF9YCPk869H7ThvJc0nHDnSauwHqFWHmlzQDT8wBpY6zC6pDQldExWTVNIpbwmLdyTx/1mzHA==
+X-Received: by 2002:aa7:8e92:0:b0:705:a450:a9a9 with SMTP id
+ d2e1a72fcca58-705d70e3e1emr10489681b3a.1.1718650705172; 
+ Mon, 17 Jun 2024 11:58:25 -0700 (PDT)
 Received: from localhost.localdomain ([106.222.222.115])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.59.02
+ d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 11:59:04 -0700 (PDT)
+ Mon, 17 Jun 2024 11:58:24 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>,
- Ajeet Singh <itachis@FreeBSD.org>
-Subject: [PATCH 21/23] Add setup_sigframe_arch function for ARM AArch64 in
- bsd-user
-Date: Tue, 18 Jun 2024 00:28:02 +0530
-Message-Id: <20240617185804.25075-22-itachis@FreeBSD.org>
+ Stacey Son <sson@FreeBSD.org>, Ajeet Singh <itachis@FreeBSD.org>,
+ Kyle Evans <kevans@freebsd.org>, Sean Bruno <sbruno@freebsd.org>,
+ Jessica Clarke <jrtc27@jrtc27.com>
+Subject: [PATCH 02/23] Added CPU loop function
+Date: Tue, 18 Jun 2024 00:27:43 +0530
+Message-Id: <20240617185804.25075-3-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240617185804.25075-1-itachis@FreeBSD.org>
 References: <20240617185804.25075-1-itachis@FreeBSD.org>
@@ -97,39 +98,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Warner Losh <imp@bsdimp.com>
+From: Stacey Son <sson@FreeBSD.org>
 
-The function utilizes the `get_mcontext` function to retrieve the machine
-context for the current CPUARMState
+CPU loop function to handle exceptions
+and emulate execution of instructions
 
-Signed-off-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Co-authored-by: Kyle Evans <kevans@freebsd.org>
+Co-authored-by: Sean Bruno <sbruno@freebsd.org>
+Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
 ---
- bsd-user/aarch64/signal.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ bsd-user/aarch64/target_arch_cpu.h | 132 +++++++++++++++++++++++++++++
+ 1 file changed, 132 insertions(+)
 
-diff --git a/bsd-user/aarch64/signal.c b/bsd-user/aarch64/signal.c
-index ab3bf8558a..43c886e603 100644
---- a/bsd-user/aarch64/signal.c
-+++ b/bsd-user/aarch64/signal.c
-@@ -81,3 +81,17 @@ abi_long get_mcontext(CPUARMState *regs, target_mcontext_t *mcp, int flags)
- 
-     return err;
+diff --git a/bsd-user/aarch64/target_arch_cpu.h b/bsd-user/aarch64/target_arch_cpu.h
+index db5c7062b9..1962d2c99b 100644
+--- a/bsd-user/aarch64/target_arch_cpu.h
++++ b/bsd-user/aarch64/target_arch_cpu.h
+@@ -40,3 +40,135 @@ static inline void target_cpu_init(CPUARMState *env,
+     env->pc = regs->pc;
+     env->xregs[31] = regs->sp;
  }
 +
-+/*
-+ * Compare to arm64/arm64/exec_machdep.c sendsig()
-+ * Assumes that the memory is locked if frame points to user memory.
-+ */
-+abi_long setup_sigframe_arch(CPUARMState *env, abi_ulong frame_addr,
-+                             struct target_sigframe *frame, int flags)
-+{
-+    target_mcontext_t *mcp = &frame->sf_uc.uc_mcontext;
 +
-+    get_mcontext(env, mcp, flags);
-+    return 0;
++static inline void target_cpu_loop(CPUARMState *env)
++{
++    CPUState *cs = env_cpu(env);
++    int trapnr, ec, fsc, si_code, si_signo;
++    uint64_t code, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8;
++    uint32_t pstate;
++    abi_long ret;
++
++    for (;;) {
++        cpu_exec_start(cs);
++        trapnr = cpu_exec(cs);
++        cpu_exec_end(cs);
++        process_queued_cpu_work(cs);
++
++        switch (trapnr) {
++        case EXCP_SWI:
++            /* See arm64/arm64/trap.c cpu_fetch_syscall_args() */
++            code = env->xregs[8];
++            if (code == TARGET_FREEBSD_NR_syscall ||
++                code == TARGET_FREEBSD_NR___syscall) {
++                code = env->xregs[0];
++                arg1 = env->xregs[1];
++                arg2 = env->xregs[2];
++                arg3 = env->xregs[3];
++                arg4 = env->xregs[4];
++                arg5 = env->xregs[5];
++                arg6 = env->xregs[6];
++                arg7 = env->xregs[7];
++                arg8 = 0;
++            } else {
++                arg1 = env->xregs[0];
++                arg2 = env->xregs[1];
++                arg3 = env->xregs[2];
++                arg4 = env->xregs[3];
++                arg5 = env->xregs[4];
++                arg6 = env->xregs[5];
++                arg7 = env->xregs[6];
++                arg8 = env->xregs[7];
++            }
++            ret = do_freebsd_syscall(env, code, arg1, arg2, arg3,
++                    arg4, arg5, arg6, arg7, arg8);
++            /*
++             * The carry bit is cleared for no error; set for error.
++             * See arm64/arm64/vm_machdep.c cpu_set_syscall_retval()
++             */
++            pstate = pstate_read(env);
++            if (ret >= 0) {
++                pstate &= ~PSTATE_C;
++                env->xregs[0] = ret;
++            } else if (ret == -TARGET_ERESTART) {
++                env->pc -= 4;
++                break;
++            } else if (ret != -TARGET_EJUSTRETURN) {
++                pstate |= PSTATE_C;
++                env->xregs[0] = -ret;
++            }
++            pstate_write(env, pstate);
++            break;
++
++        case EXCP_INTERRUPT:
++            /* Just indicate that signals should be handle ASAP. */
++            break;
++
++        case EXCP_UDEF:
++            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPN, env->pc);
++            break;
++
++
++        case EXCP_PREFETCH_ABORT:
++        case EXCP_DATA_ABORT:
++            /* We should only arrive here with EC in {DATAABORT, INSNABORT}. */
++            ec = syn_get_ec(env->exception.syndrome);
++            assert(ec == EC_DATAABORT || ec == EC_INSNABORT);
++
++            /* Both EC have the same format for FSC, or close enough. */
++            fsc = extract32(env->exception.syndrome, 0, 6);
++            switch (fsc) {
++            case 0x04 ... 0x07: /* Translation fault, level {0-3} */
++                si_signo = TARGET_SIGSEGV;
++                si_code = TARGET_SEGV_MAPERR;
++                break;
++            case 0x09 ... 0x0b: /* Access flag fault, level {1-3} */
++            case 0x0d ... 0x0f: /* Permission fault, level {1-3} */
++                si_signo = TARGET_SIGSEGV;
++                si_code = TARGET_SEGV_ACCERR;
++                break;
++            case 0x11: /* Synchronous Tag Check Fault */
++                si_signo = TARGET_SIGSEGV;
++                si_code = /* TARGET_SEGV_MTESERR; */ TARGET_SEGV_ACCERR;
++                break;
++            case 0x21: /* Alignment fault */
++                si_signo = TARGET_SIGBUS;
++                si_code = TARGET_BUS_ADRALN;
++                break;
++            default:
++                g_assert_not_reached();
++            }
++            force_sig_fault(si_signo, si_code, env->exception.vaddress);
++            break;
++
++        case EXCP_DEBUG:
++        case EXCP_BKPT:
++            force_sig_fault(TARGET_SIGTRAP, TARGET_TRAP_BRKPT, env->pc);
++            break;
++
++        case EXCP_ATOMIC:
++            cpu_exec_step_atomic(cs);
++            break;
++
++        case EXCP_YIELD:
++            /* nothing to do here for user-mode, just resume guest code */
++            break;
++        default:
++            fprintf(stderr, "qemu: unhandled CPU exception 0x%x - aborting\n",
++                    trapnr);
++            cpu_dump_state(cs, stderr, 0);
++            abort();
++        } /* switch() */
++        process_pending_signals(env);
++        /*
++         * Exception return on AArch64 always clears the exclusive
++         * monitor, so any return to running guest code implies this.
++         * A strex (successful or otherwise) also clears the monitor, so
++         * we don't need to specialcase EXCP_STREX.
++         */
++        env->exclusive_addr = -1;
++    } /* for (;;) */
 +}
 +
++#endif /* TARGET_ARCH_CPU_H */
 -- 
 2.34.1
 
