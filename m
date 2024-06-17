@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 341D9C2BA18
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 11:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1513DC27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 11:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJASc-0007pe-E3; Mon, 17 Jun 2024 07:23:42 -0400
+	id 1sJAWH-0001UC-MM; Mon, 17 Jun 2024 07:27:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJASR-0007mj-Qx
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 07:23:31 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1sJAWE-0001Rn-EU
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 07:27:26 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJASP-0002HM-FT
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 07:23:31 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-57c60b13a56so5009778a12.0
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 04:23:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1sJAWC-0003Ky-Ne
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 07:27:26 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2ebe785b234so41772841fa.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 04:27:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718623408; x=1719228208; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YUM2qgT8yh9/vvQa5VxbrizX1nhNn6mWSdBf+rOIRA8=;
- b=k8IR1fVguozzg7kQijOxelCmwb6YhQzkG5rb4MXFPlQ5YylfSaJZhNgcArzVk6n43/
- TElZHnpIVat6J5EVhN8t3V47vEhDoaoh80Olsjm/ntX3nwe1mGktWmsUaqXSFJslH2M5
- KyaOnZSKiZ+JxhWeghqbhM5rUm9KywtmP89EZF1NdZkhaV0d5kY1mOGaStRv2RAJWEwO
- RTjPbJz1BCHpXSeQSrIEVD6bn21WusyDjnp78YH5uGLMXcidAuvKjx9yENIl6k4WzSOn
- 8jJSeZjY+vHzxWpKaiZtH0jRpkGevL19m05GG1Ce8PCDO1UL0Vj2yC8rVR9UHS1JFJuy
- bYcA==
+ d=linaro.org; s=google; t=1718623643; x=1719228443; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=JuweiNJFENCvFRlLMFOOuEoczdw5ZlaYJTV+EhmlyPU=;
+ b=Jr32cep0JRNKUSHeHNm3CV+KHlH4NWEQzotLTC2xXQhOYp74/WJ602DHUTtGvOzE0p
+ iN8UhXFx3f+shH6lWSWKuHDaGghs5VRMHI5ijWaLHrvV4hXkr12FKblfR7wrbFO9IgXJ
+ oLdq1jP7Az5Hixw2QQcpR3+dyVAjwYlHLFC+ufTEuSXw+KE2NaV0RwImtBqC8RCHGF3B
+ A+FXwB0LvkkM4Fy+f8K6YOAz4JVjO5N5/PeJ2Jd6I/7HV5uEDOPLFI0iU8kSmcWOgNzQ
+ lP1c/PDnQ236kbcj/uEn3VnyKl+lQYKbPkGGkPxejSEFsFm/tyoO5r+V0+4829QpgWLz
+ C80Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718623408; x=1719228208;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YUM2qgT8yh9/vvQa5VxbrizX1nhNn6mWSdBf+rOIRA8=;
- b=Ulc1CadKMeriMBPQR2rE7iOZtIWyehwvS30hArBBvVGlLg4x+GS2u3Vj6LPzQgPNWi
- jvW7uVxf9AMumO4J5VdMHIdq6avkl/d8S/Nn+nc7MG+cK/5fpKF614fVlTzkOyfMC2Oy
- MMXZH9f7QI3ISax9KR2HmD+7UEkR8+oqyEQzVwXt/pt5BOQ8bKwb8TppwGvJy5tWdXY5
- gituVtge9VIXAHt+QYbCScWzu/e1VtT1vPkmxoMIy8UcWLFVsIFiJ76EkEAm5/ZCnm/7
- Dwu2xSB6D7+8oHhgaYPbImVJF1FgRktJweFIcz2nF2kA0r8GMGWRvDHi3oDA3M4J/jO+
- yLJw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVzdss9upvWJ2WJuhRpE1ZCCaUyPmbDbKZotJr8Wz15QxESLBq776bg83QfdE5ru6yXIZ5tPr3W6ZrqZP9pqqpK5PKGKWs=
-X-Gm-Message-State: AOJu0YzUZDpTYITlkFyeJWAJCNb5GMAFjsO2YN62oSYquaahX4Ax4GJn
- zZrR7vdmpu6tnt11n/GZgq2qbNO0QEXlLYwM2Leo7w6jZAPhQzvee6E4YLSiQ28=
-X-Google-Smtp-Source: AGHT+IFnnG9aijmNroB3F/m9W5KPd8wZ1F7ClllLQeFWFu6YwXIcf0SzPonWujcWK0bNG7HYRFNYqA==
-X-Received: by 2002:a50:a458:0:b0:57a:322c:b1a5 with SMTP id
- 4fb4d7f45d1cf-57cbd6a6d1dmr5404020a12.38.1718623407721; 
- Mon, 17 Jun 2024 04:23:27 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.169.90])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57cb741e5a3sm6233761a12.65.2024.06.17.04.23.26
+ d=1e100.net; s=20230601; t=1718623643; x=1719228443;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JuweiNJFENCvFRlLMFOOuEoczdw5ZlaYJTV+EhmlyPU=;
+ b=Oo7b7E76rpoUCf7K5WAk0/1esmrGGbbEOW4LK0RCVx/b979wmcgemh9k6G8HfiAfQn
+ BgfJjRHvY7eGL48zWVx5DktPu6vypAPS4zJ0kkQhqYr1kcSrf6tSrC8FDn9VjSVa9mRf
+ mK+hn/06xW9RUHTKznqI5TP8EjUsgzxsY5p+XaqUnUitJBcjHPmeBJaAcJR+V4Qdykxv
+ agyQ9mXADAAmjwoc/nCQu0s3Pqx75gPzbSA6j8/0F/rnr7VIcg1Mzgv2ykFXy63GEpdO
+ 02K237OB6rzbBD/RtRoqyZyldRTxHY+tsIz65MAgFqPK9c+2UbE/RLCgK5WKRG2exGn4
+ ym4w==
+X-Gm-Message-State: AOJu0YzyHR9u0Vb7E53VNFiaQ9pJASrmGm1KrYdalMy4EbFYhvTbCz8A
+ VUAvBPDwRm5xwBR7A9KZGB7AqgTyTM55IOiGXjTshLSxnV7hyogEkaJU8bOU9aM=
+X-Google-Smtp-Source: AGHT+IEkJVQpfc3fCqW38Grx+ajwaGUV8zh4iraL0e0nBOTcQBQIXeGRrBF7OvO3HhV8MlhOyakOAw==
+X-Received: by 2002:a05:651c:10d2:b0:2ec:17c6:bbf with SMTP id
+ 38308e7fff4ca-2ec17c60f14mr53025161fa.2.1718623642732; 
+ Mon, 17 Jun 2024 04:27:22 -0700 (PDT)
+Received: from [192.168.200.106] (83.11.22.244.ipv4.supernova.orange.pl.
+ [83.11.22.244]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-57cb7439606sm6283809a12.90.2024.06.17.04.27.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Jun 2024 04:23:27 -0700 (PDT)
-Message-ID: <5f2f61f8-3dbc-4f03-8e60-a39cd1180e1b@linaro.org>
-Date: Mon, 17 Jun 2024 13:23:25 +0200
+ Mon, 17 Jun 2024 04:27:22 -0700 (PDT)
+Message-ID: <a896b9ab-8d49-4ce0-82f0-c40704fe0e1d@linaro.org>
+Date: Mon, 17 Jun 2024 13:27:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/26] hw/ppc: Avoid using Monitor in
- xive_tctx_pic_print_info()
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240610062105.49848-1-philmd@linaro.org>
- <20240610062105.49848-4-philmd@linaro.org>
- <0c72e586-9905-49e2-90ac-10426ea5691e@linux.ibm.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0c72e586-9905-49e2-90ac-10426ea5691e@linux.ibm.com>
+Subject: Re: [PATCH 1/1] BootLogoLib: align logo coords to be even
+To: Ard Biesheuvel <ardb@kernel.org>
+Cc: qemu-devel@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
+ Ard Biesheuvel <ardb+tianocore@kernel.org>, qemu-arm@nongnu.org,
+ Taylor Beebe <taylor.d.beebe@gmail.com>,
+ Pedro Falcato <pedro.falcato@gmail.com>, Theo Jehl <theojehl76@gmail.com>,
+ Rebecca Cran <rebecca@bsdio.com>
+References: <fcdc0626-a0f7-4796-a05d-2462c896f5ba@bsdio.com>
+ <20240617083639.379608-1-marcin.juszkiewicz@linaro.org>
+ <CAMj1kXEukirF7UZTRbdHCx-ppyX=7Msrwpw-b-OJpV33R8d0=g@mail.gmail.com>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Language: pl-PL, en-GB, en-HK
+Organization: Linaro
+In-Reply-To: <CAMj1kXEukirF7UZTRbdHCx-ppyX=7Msrwpw-b-OJpV33R8d0=g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,59 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Harsh,
+W dniu 17.06.2024 o 10:39, Ard Biesheuvel pisze:
+>> If we draw logo at odd coords then BootLogoLib goes into exception and
+>> boot process ends:
+>>
+>> Synchronous Exception at 0x00000101FB943E48
+>> PC 0x0101FB943E48 (0x0101FB93F000+0x00004E48) [ 0] QemuVideoDxe.dll
+>> PC 0x0101FB943314 (0x0101FB93F000+0x00004314) [ 0] QemuVideoDxe.dll
+>> PC 0x0101FB92F798 (0x0101FB92D000+0x00002798) [ 1] ConSplitterDxe.dll
+>> PC 0x0101FBA96BC4 (0x0101FBA8E000+0x00008BC4) [ 2] BdsDxe.dll
+>> PC 0x0101FF7FDF50 (0x0101FF7F3000+0x0000AF50) [ 3] DxeCore.dll
+>>
+>> This change resizes logo from 193x58 to 194x58px to make it's sizes
+>> even. And if coords are odd then they are bumped a bit to make things
+>> work.
+>>
+>> Signed-off-by: Marcin Juszkiewicz<marcin.juszkiewicz@linaro.org>
 
-On 17/6/24 12:19, Harsh Prateek Bora wrote:
-> On 6/10/24 11:50, Philippe Mathieu-Daudé wrote:
->> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
->> index fa23b27a2b..5854358f65 100644
->> --- a/hw/ppc/pnv.c
->> +++ b/hw/ppc/pnv.c
->> @@ -1223,7 +1223,13 @@ static void 
->> pnv_chip_power9_intc_destroy(PnvChip *chip, PowerPCCPU *cpu)
->>   static void pnv_chip_power9_intc_print_info(PnvChip *chip, 
->> PowerPCCPU *cpu,
->>                                               Monitor *mon)
->>   {
->> -    xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), mon);
->> +    g_autoptr(GString) buf = g_string_new("");
->> +    g_autoptr(HumanReadableText) info = NULL;
->> +
->> +    xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), buf);
->> +
->> +    info = human_readable_text_from_str(buf);
->> +    monitor_puts(mon, info->human_readable_text);
->>   }
->>   static void pnv_chip_power10_intc_create(PnvChip *chip, PowerPCCPU 
->> *cpu,
->> @@ -1267,7 +1273,13 @@ static void 
->> pnv_chip_power10_intc_destroy(PnvChip *chip, PowerPCCPU *cpu)
->>   static void pnv_chip_power10_intc_print_info(PnvChip *chip, 
->> PowerPCCPU *cpu,
->>                                                Monitor *mon)
->>   {
->> -    xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), mon);
->> +    g_autoptr(GString) buf = g_string_new("");
->> +    g_autoptr(HumanReadableText) info = NULL;
->> +
->> +    xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), buf);
->> +
->> +    info = human_readable_text_from_str(buf);
->> +    monitor_puts(mon, info->human_readable_text);
->>   }
-> 
-> We have an existing code duplication in above two routines which is 
-> getting worse with these multi-lines getting duplicated. Could _power9_ 
-> be changed to inline and called from _power10_ as well?
+> This should be fixed in the SBSA firmware
 
-The duplicated lines get removed later. This series is a mere API
-upgrade, the final diff is smaller (although harder to review, which
-is why I did it with many trivial patches).
+One coffee was not enough so I sent it to QEMU devel instead of EDK2 
+devel mailing list...
 
-_power9_ / _power10_ simplification could be done but as a separate
-patch from this series, since different matter IMHO.
+> unaligned accesses are fine on arm64 as long as they don't target
+> device memory. So this likely implies that the framebuffer is
+> mapped with device attributes while it should be mapped  > normal-non-cacheable.
 
-Thanks for your reviews!
-
-Phil.
+OK, so need to go through QEMU source now.
 
