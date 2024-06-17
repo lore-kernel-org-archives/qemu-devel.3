@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 897B8C27C6E
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 07:13:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08E50C27C77
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 07:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJ6XJ-00043m-71; Mon, 17 Jun 2024 03:12:17 -0400
+	id 1sJ6Y2-00080k-Cd; Mon, 17 Jun 2024 03:13:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJ6XH-00043G-Ia
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 03:12:15 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJ6Y0-0007rg-Mz
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 03:13:00 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJ6XF-0002HZ-Nz
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 03:12:15 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2ec17eb4493so38856011fa.2
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 00:12:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJ6Xy-0002Qn-Qd
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 03:13:00 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a6f85f82ffeso85996466b.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 00:12:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718608331; x=1719213131; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718608376; x=1719213176; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nvc+2nJitsMvQxJjJxYIfcnmMlZJKY5kgeCJ20XwK8E=;
- b=uQjs8mLS7/HH3ti4VN2+IeMi7uQF54xocKYiPRVGoK5EQcSzLnezsk61OqUjtFSKvn
- cIe6GsbGnZc738luNtMccrB8adqTUqI7pi2MWklUKXu1mhf9x+sAj9VHabMZYe/6eIo3
- h3w9ahDczmflutLeD351YGrhP38kBY/00I5r0B/tCzolBp/6laTinc/CKForPW/HZo6C
- h1ONVdGapXdNVcmGwQlZJQJ1G0tUh+OAE107sHKCEG033qeVLoxqzMDVKxPhpby175zN
- 5ije2n0O1gYzyyL/GxPVRZGzkMqe0DWU/8uQGZMZyOQm3xATmG4SLe6UUVU5ThM9VIo5
- jWaw==
+ bh=eGcfGHDvtroaYyz+NeEr2C8tnUxSYTqOW0jpLqEw7ts=;
+ b=X+R2aPmidusnCur9j8KPwn22af2bW3wDLnFXUN3TR2cAxUGuJ7l5k4WoHZ5bu28R7v
+ vshSB7UE714nmx5vGqSftmqfGxqMIYA4MLXKSFNgp3u/Ce1zANcmg/VC7k1uiS8tEiFL
+ T1+oTI9A4kAQyYYZNFJEwtSEDXDOfv+j2TySslycJFpYWNyyurClswqDBlQIQfTdUTs+
+ 62GLYdLwchDjMt1XDQQOIHg6p/Qj10y782UXbVJ+oQoeCi08F+PrcSAeyXamURCnm0qx
+ ViqxOiTXR1dNTAOXHV8dmU5hiL4sNmdHnc26NjqN13Ge0FfVRNQrxx6PfpHAqLHSU4Sm
+ w/HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718608331; x=1719213131;
+ d=1e100.net; s=20230601; t=1718608376; x=1719213176;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nvc+2nJitsMvQxJjJxYIfcnmMlZJKY5kgeCJ20XwK8E=;
- b=RL0DHxJYPfgiDfMetqeu5ygRgQjZWesIY+XBFSWq0LNlQ8BdP/qq8DwU6DcXPragMf
- sN4X2OUlqqhIj2/NoSNSmEKLZGHR/KZsr+DhDdlUYCAi//qyp7qzxNfyIF9VXnUB4trl
- 4Prbb1iwtwcllx1fsmSZmAi9vCCfftNtrExzBig7kcTOOLYlwRxMNSPKUVuGuRWYSqdU
- k4fWnSd/l2lyxkE0gW1uARmrIJDK/a7A4UnrNgSDjENd0oYjl7CzkjX648Kbd2YYjzGf
- vJ4tgykNXMDidRzRgpzUk3ehBlenPQ2Ko4nth4h/8LsPxIWYdkFgR0vC64g99tur0G8c
- EiKQ==
-X-Gm-Message-State: AOJu0Ywn/YMg1P1caCfCNBcpV09my9LUw/M42j0DuFNn5tKHuusOWEib
- K/jWn7RK5234B5VdFguQJa8hWTnbm6E5PhLaG5zXL14F/HIyX+eAXd0tI4HmscPtL7g/po00/1A
- Vs94=
-X-Google-Smtp-Source: AGHT+IHfQZy61kL+HgRYKqrkUAOLe+Rg9UAMlmRtVWM95LMWxntUKXqGxbOtYYPfDxUxytrjggCsug==
-X-Received: by 2002:ac2:5602:0:b0:52c:905b:ea5f with SMTP id
- 2adb3069b0e04-52ca6e9b7eemr7219020e87.63.1718608331383; 
- Mon, 17 Jun 2024 00:12:11 -0700 (PDT)
+ bh=eGcfGHDvtroaYyz+NeEr2C8tnUxSYTqOW0jpLqEw7ts=;
+ b=r2CR3mxZQjF2y5ziwFsCtQvieYTqzSziSrfZIkWarpa+yZhACZ/O79aDFW5tcgMkFS
+ QVCYZX3abbQJPG/CralPBMCfyZ2H0Uh04MMvv6ZBI4pTTXpGKMOqUfBQNxLZoXklYD5y
+ kwo+Egd/ibeAa6/Uoga+1GaPMQ9+Qe4Ssa+6MuHF/PkDmHxjHWm1J9tV3uCsdqJ3YP3v
+ BuFXTCsszS1VzlVU1VApukAXJ3sUYmRQqES1MbggjaWu7fzL2k3YiFc612s3yuyowziY
+ Xl7ceg8ooI1xQH4syrb5rJqW/KSvASi3uYBqjK9nTDYsC7fPIQvmE96n3RWJzHt44Inn
+ +vLQ==
+X-Gm-Message-State: AOJu0Yz9y9oSnJrv2q97LD78ELILwtBDmWNm3ihGLjfxMPF+ZGSi7o3W
+ yB0J67byrA8nwWFaEPCQ1ZVg6IxrChqWeNOjTtc7ojAhBG2OuTG0wiscOipDZZjoeF3RwKCTUC8
+ shP0=
+X-Google-Smtp-Source: AGHT+IHcDXYu46bFL6JGRCnTxIpQxbkMYaHSwt82MauMVVYk8aHDGbwFMzAIMINEuDLcmVaTr3flMA==
+X-Received: by 2002:a17:906:bf45:b0:a6f:7826:41ea with SMTP id
+ a640c23a62f3a-a6f78264e1amr399158066b.39.1718608376562; 
+ Mon, 17 Jun 2024 00:12:56 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.169.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56f427b0sm483367766b.156.2024.06.17.00.12.10
+ a640c23a62f3a-a6f56da32c3sm493440566b.13.2024.06.17.00.12.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 17 Jun 2024 00:12:10 -0700 (PDT)
+ Mon, 17 Jun 2024 00:12:56 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v6 09/23] target/i386/kvm: Remove x86_cpu_change_kvm_default()
- and 'kvm-cpu.h'
-Date: Mon, 17 Jun 2024 09:11:04 +0200
-Message-ID: <20240617071118.60464-10-philmd@linaro.org>
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v6 17/23] hw/i386/pc: Remove
+ PCMachineClass::resizable_acpi_blob
+Date: Mon, 17 Jun 2024 09:11:12 +0200
+Message-ID: <20240617071118.60464-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240617071118.60464-1-philmd@linaro.org>
 References: <20240617071118.60464-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,88 +97,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-x86_cpu_change_kvm_default() was only used out of kvm-cpu.c by
-the pc-i440fx-2.1 machine, which got removed. Make it static,
-and remove its declaration. "kvm-cpu.h" is now empty, remove it.
+PCMachineClass::resizable_acpi_blob was only used by the
+pc-i440fx-2.2 machine, which got removed. It is now always
+true. Remove it, simplifying acpi_build().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
- target/i386/kvm/kvm-cpu.h | 41 ---------------------------------------
- target/i386/kvm/kvm-cpu.c |  3 +--
- 2 files changed, 1 insertion(+), 43 deletions(-)
- delete mode 100644 target/i386/kvm/kvm-cpu.h
+ include/hw/i386/pc.h |  3 ---
+ hw/i386/acpi-build.c | 10 ----------
+ hw/i386/pc.c         |  1 -
+ 3 files changed, 14 deletions(-)
 
-diff --git a/target/i386/kvm/kvm-cpu.h b/target/i386/kvm/kvm-cpu.h
-deleted file mode 100644
-index e858ca21e5..0000000000
---- a/target/i386/kvm/kvm-cpu.h
-+++ /dev/null
-@@ -1,41 +0,0 @@
--/*
-- * i386 KVM CPU type and functions
-- *
-- *  Copyright (c) 2003 Fabrice Bellard
-- *
-- * This library is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU Lesser General Public
-- * License as published by the Free Software Foundation; either
-- * version 2 of the License, or (at your option) any later version.
-- *
-- * This library is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- * Lesser General Public License for more details.
-- *
-- * You should have received a copy of the GNU Lesser General Public
-- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-- */
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 155a02b1b5..d01ddc4618 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -125,9 +125,6 @@ struct PCMachineClass {
+     /* create kvmclock device even when KVM PV features are not exposed */
+     bool kvmclock_create_always;
+ 
+-    /* resizable acpi blob compat */
+-    bool resizable_acpi_blob;
 -
--#ifndef KVM_CPU_H
--#define KVM_CPU_H
--
--#ifdef CONFIG_KVM
--/*
-- * Change the value of a KVM-specific default
-- *
-- * If value is NULL, no default will be set and the original
-- * value from the CPU model table will be kept.
-- *
-- * It is valid to call this function only for properties that
-- * are already present in the kvm_default_props table.
-- */
--void x86_cpu_change_kvm_default(const char *prop, const char *value);
--
--#else /* !CONFIG_KVM */
--
--#define x86_cpu_change_kvm_default(a, b)
--
--#endif /* CONFIG_KVM */
--
--#endif /* KVM_CPU_H */
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index f76972e47e..f9b99b5f50 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -10,7 +10,6 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "host-cpu.h"
--#include "kvm-cpu.h"
- #include "qapi/error.h"
- #include "sysemu/sysemu.h"
- #include "hw/boards.h"
-@@ -178,7 +177,7 @@ static PropValue kvm_default_props[] = {
- /*
-  * Only for builtin_x86_defs models initialized with x86_register_cpudef_types.
-  */
--void x86_cpu_change_kvm_default(const char *prop, const char *value)
-+static void x86_cpu_change_kvm_default(const char *prop, const char *value)
- {
-     PropValue *pv;
-     for (pv = kvm_default_props; pv->prop; pv++) {
+     /*
+      * whether the machine type implements broken 32-bit address space bound
+      * check for memory.
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index f5d74e2b4b..eafc3761c8 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -2687,16 +2687,6 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+      * keep the table size stable for all (max_cpus, max_memory_slots)
+      * combinations.
+      */
+-    /* Make sure we have a buffer in case we need to resize the tables. */
+-    if ((tables_blob->len > ACPI_BUILD_TABLE_SIZE / 2) &&
+-        !pcmc->resizable_acpi_blob) {
+-        /* As of QEMU 2.1, this fires with 160 VCPUs and 255 memory slots.  */
+-        warn_report("ACPI table size %u exceeds %d bytes,"
+-                    " migration may not work",
+-                    tables_blob->len, ACPI_BUILD_TABLE_SIZE / 2);
+-        error_printf("Try removing CPUs, NUMA nodes, memory slots"
+-                     " or PCI bridges.\n");
+-    }
+     acpi_align_size(tables_blob, ACPI_BUILD_TABLE_SIZE);
+ 
+     acpi_align_size(tables->linker->cmd_blob, ACPI_BUILD_ALIGN_SIZE);
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 21a9b7a5ae..a6d50df500 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1774,7 +1774,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+     pcmc->acpi_data_size = 0x20000 + 0x8000;
+     pcmc->pvh_enabled = true;
+     pcmc->kvmclock_create_always = true;
+-    pcmc->resizable_acpi_blob = true;
+     x86mc->apic_xrupt_override = true;
+     assert(!mc->get_hotplug_handler);
+     mc->get_hotplug_handler = pc_get_hotplug_handler;
 -- 
 2.41.0
 
