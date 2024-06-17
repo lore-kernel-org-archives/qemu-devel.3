@@ -4,98 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8672C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 14:01:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61D34C27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 14:04:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJCuf-0005xt-VQ; Mon, 17 Jun 2024 10:00:50 -0400
+	id 1sJCxr-0007Ob-Ps; Mon, 17 Jun 2024 10:04:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sJCuQ-0005xH-V0
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 10:00:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sJCuP-0007Yy-BQ
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 10:00:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718632832;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xL9wG7XSDjPcH4nmlxGq0Q9pePyBWLa34hUS9Ngbu1M=;
- b=gKav5c3qW0268XM8DuF6kH+3YuWgkJ2uvynng9RHPNMIlETTorqDww7aObStbLYN4yxYNE
- bFxWrEY+a3PIaBpaifGyLLMlW9n+6kWXPbAZ9xzv6MRwuSpagp2FTMgjOGuohZSKRJgPtZ
- Wirf6b6zq4U529CUBM3bAZtYdebyFMc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-fIV_S6ffPl2vR6HvITL9IA-1; Mon, 17 Jun 2024 10:00:30 -0400
-X-MC-Unique: fIV_S6ffPl2vR6HvITL9IA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-421811b92bcso26764865e9.0
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 07:00:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sJCxr-0007NL-3h
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 10:04:07 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sJCxo-0008Bo-S6
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 10:04:06 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-356c4e926a3so4142290f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 07:04:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718633043; x=1719237843; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=upwh+9aX960hm0pe0J+pkloZdzlqSBfkZTlA0IWgaRY=;
+ b=XZ70hq79ANYkqct5XatUekItKd07h5HgGWxyRwlGAmNduWJgnZPavI3oima6tdtvrg
+ mMJt9RCQsnpP8Wbzluvu82ghfmfw8akZLYsYIH8Y4QnmFCLMvmWoVY6q14373hG5pyXe
+ rHsq5AXORvCtV49F6mIljeA8FfikrBOfVnGAUJry8zDoKIGaeeWUwcSRiySFpfJaqDc2
+ D9uZoIfUNBmwez2Ju7W+1B9mNQ1rwvGHxtZ0NnMfBXC7By1RD/F5RblTZ0AF9pepo1Q+
+ XILWrKITLiB+/5tIqW0hbuPy7LluD46HkfHcVTpkK1SYlZz3J6n8LKufjxz81M5cyD3x
+ vqvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718632828; x=1719237628;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xL9wG7XSDjPcH4nmlxGq0Q9pePyBWLa34hUS9Ngbu1M=;
- b=i6OL9954tA3TImJijVDmT5PJ9tjf4Lmy5p+y2mrmXhCE84ykkiYJV10Jy3fVwCI/RY
- Im1IMAu2tpiJaCEmEFqpEu/mZTk7zodToURHkpd89vJX/+jiQVcT5fH6dHlhu/sDYZkK
- lJWry87WUDPe77hrodhOqIj75DfOK6SdQkqzrL4yZEBpY1bpbKqH2sNaD0PS3FoQ2TqQ
- tX0JLwE8oulzejLfexTgpJ/yy97TZYqMt0ireJ1H6C22cPhOpti50wx8R7R59inYN5RH
- s0pOS4OoVzIYOqQ/yBS1SQP43wmfcqA283ZgIoll898xXvVG8W2gp+KQSzganOEYxPgi
- XydA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVb+BEE+U1/He+T0sEEYkTUS+w61bTe83T986y10/+60hskovSeoR+SOtykbww3dDLGl3PtqRTEcMtbgGnOUoV7oPlFN+s=
-X-Gm-Message-State: AOJu0YzIs1r6x87Q0oBvd4UIIDaqUkjmUQ7+0AKwhdx06qxK1ExnhrUr
- +j44XPfw3bG8LJDlFtdYhGjht44dYIPyGEfMj0A92Q77VGVU76PM3a6jxhqHvBImdAsIQ1a63xp
- Wz1gUnOJCVcbVPIEZLuMRSZdUujGp8UESG9Myf67IL0xWTRy5I9GX
-X-Received: by 2002:adf:f48d:0:b0:360:71a8:695f with SMTP id
- ffacd0b85a97d-3607a78390emr8803867f8f.62.1718632828705; 
- Mon, 17 Jun 2024 07:00:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF7H2tk9APjBTcnF3Jp4Fj/f2yBzLBnmBxcypJ5j+b4pVkhjxDL+labDWM/cb3Kp/62FHjz8Q==
-X-Received: by 2002:adf:f48d:0:b0:360:71a8:695f with SMTP id
- ffacd0b85a97d-3607a78390emr8803846f8f.62.1718632828332; 
- Mon, 17 Jun 2024 07:00:28 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ d=1e100.net; s=20230601; t=1718633043; x=1719237843;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=upwh+9aX960hm0pe0J+pkloZdzlqSBfkZTlA0IWgaRY=;
+ b=Brkg2KCQr32TyZ2zlbXiCamn+3DJLT/t4yXAU2Vlf5txDCB115vTKigAVclSERGL5u
+ YZXzYD/WLgb8bnldSQtE6sRTOmzAlpMGXhY+PGLgF5IiEOBUH8BlkNIIugpDQ2j7P8sT
+ f/+YsK1kpBZDaVsvtv+GUfNNhCKqKGmqqhNg9/Z45nSO016GS7AOoDCQc3GioL/NbkWw
+ 6ZWDZMkYBdrF5UokVdwbF9s+lEqNXx7OY946p6TfUBiK0nLJYbK8k8o4MnPzJ4Rp9+mt
+ 3GuFoniepFJ0HlO7tEv9o9cyy1GfipSp5hDKkhlUSLzcCpgfoeuHxSgyDGc7TTM+YXoU
+ Bfvg==
+X-Gm-Message-State: AOJu0YyJ7e0zmKBaDz5iQIFmbY1echVbXVROkikd0/nxLgHO246nE8TY
+ 7A+JeIyvTA+F/JAW1E3qLlSfLQO/YFE3QVL9l+Mnc3WP5iEkZ7Lpvi/+4ZHaThQ=
+X-Google-Smtp-Source: AGHT+IFfEtks9aXyz4s+Su2vNp4YhtyRRRhAYYuMLRfROsY3Lka7iChIblqJKMNiNHlz6VfQNewU5g==
+X-Received: by 2002:adf:cd8c:0:b0:360:791c:aff0 with SMTP id
+ ffacd0b85a97d-3607a72039cmr7195011f8f.8.1718633043001; 
+ Mon, 17 Jun 2024 07:04:03 -0700 (PDT)
+Received: from meli-email.org (adsl-33.37.6.162.tellas.gr. [37.6.162.33])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3607509c8cdsm11860760f8f.35.2024.06.17.07.00.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Jun 2024 07:00:27 -0700 (PDT)
-Message-ID: <b02d50c5-7cb8-4903-9c12-f7ec9c29151e@redhat.com>
-Date: Mon, 17 Jun 2024 16:00:25 +0200
+ ffacd0b85a97d-360750ad082sm11811656f8f.59.2024.06.17.07.04.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 17 Jun 2024 07:04:02 -0700 (PDT)
+Date: Mon, 17 Jun 2024 16:54:11 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex Benn=?UTF-8?B?w6kg?=e <alex.bennee@linaro.org>,
+ Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
+User-Agent: meli 0.8.6
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+ <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
+ <CABgObfY8BS0yCw2CxgDQTBA4np9BZgGJF3N=t6eoBcdACAE=NA@mail.gmail.com>
+ <ez270.x96k6aeu0rpw@linaro.org> <ZmnHoajecti472mi@redhat.com>
+ <ezjl0.qx0tmsp6d6t@linaro.org>
+ <CABgObfbGwKc0RYBcDPzNkE8HOSouFj4D15Oh7TuiKOC+D7raaA@mail.gmail.com>
+ <ZmqcFf0xB9m4WkA3@redhat.com>
+ <CABgObfb4+FSsadFTVg6Dc1zehQV2Vei2_kSRd5CfxsGBLPN6Eg@mail.gmail.com>
+ <Zmq47yQV-sQ0hGMy@redhat.com>
+ <CABgObfYaxBxc8GS3=YU=EwNLEihEoD4ikZ595P4m_KTZCAAaBw@mail.gmail.com>
+ <f26b0.f15017t08v16@linaro.org>
+ <CABgObfaYUCU0Tj-jj66n8AaxOpqXFKcQA-E6G0W6q3MjjwQkiQ@mail.gmail.com>
+ <f7vmg.s9przvzs9y9y@linaro.org>
+ <CABgObfayPDfcrFJ5ckFFms_raD25ARFEvLNhP1qLmda_rjrLfg@mail.gmail.com>
+In-Reply-To: <CABgObfayPDfcrFJ5ckFFms_raD25ARFEvLNhP1qLmda_rjrLfg@mail.gmail.com>
+Message-ID: <f89qp.6kmlv39qhntz@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/17] vfio/common: Extract vIOMMU code from
- vfio_sync_dirty_bitmap()
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>
-References: <20240617063409.34393-1-clg@redhat.com>
- <20240617063409.34393-5-clg@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240617063409.34393-5-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,115 +113,135 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cédric,
-
-On 6/17/24 08:33, Cédric Le Goater wrote:
-> From: Avihai Horon <avihaih@nvidia.com>
+On Mon, 17 Jun 2024 14:32, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>Il lun 17 giu 2024, 10:59 Manos Pitsidianakis <
+>manos.pitsidianakis@linaro.org> ha scritto:
 >
-> Extract vIOMMU code from vfio_sync_dirty_bitmap() to a new function and
-> restructure the code.
+>> >qdev_define_type!(c"test-device", TestDevice);
+>> >impl ObjectImpl for TestDevice {}
+>> >impl DeviceImpl for TestDevice {}
+>> >
+>> >fn main() {
+>> >    let d = TestDevice::new();
+>> >    d.cold_reset();
+>> >}
+>> >
+>> >Of course the code makes no sense but it's a start.
+>>
+>> Let's not rush into making interfaces without the need for them arising
+>> first. It's easy to wander off into bikeshedding territory; case in
+>> point, there has been little discussion on the code of this RFC and much
+>> more focus on hypotheticals.
+>>
 >
-> This is done in preparation for optimizing vIOMMU deviice dirty page
-device
-> tracking. No functional changes intended.
+>I see your point but I think it's important to understand the road ahead of
+>us.
 >
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-> [ clg: - Rebased on upstream ]
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  hw/vfio/common.c | 63 +++++++++++++++++++++++++++++-------------------
->  1 file changed, 38 insertions(+), 25 deletions(-)
+>Knowing that we can build and maintain a usable (does not have to be
+>perfect) interface to QOM is important, and in fact it's already useful for
+>the pl011 device's chardev. It's also important to play with more advanced
+>usage of the language to ascertain what features of the language will be
+>useful; for example, my current implementation uses generic associated
+>types which are not available on Debian Bookworm—it should be easy to
+>remove them but if I am wrong that's also a data point, and an important
+>one.
 >
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index fe215918bdf66ddbe3c5db803e10ce1aa9756b90..f28641bad5cf4b71fcdc0a6c9d42b24c8d786248 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -1302,37 +1302,50 @@ vfio_sync_ram_discard_listener_dirty_bitmap(VFIOContainerBase *bcontainer,
->                                                  &vrdl);
->  }
->  
-> +static int vfio_sync_iommu_dirty_bitmap(VFIOContainerBase *bcontainer,
-> +                                        MemoryRegionSection *section)
-> +{
-> +    VFIOGuestIOMMU *giommu;
-> +    bool found = false;
-> +    Int128 llend;
-> +    vfio_giommu_dirty_notifier gdn;
-> +    int idx;
-> +
-> +    QLIST_FOREACH(giommu, &bcontainer->giommu_list, giommu_next) {
-> +        if (MEMORY_REGION(giommu->iommu_mr) == section->mr &&
-> +            giommu->n.start == section->offset_within_region) {
-> +            found = true;
-> +            break;
-> +        }
-> +    }
-> +
-> +    if (!found) {
-> +        return 0;
-> +    }
-> +
-> +    gdn.giommu = giommu;
-> +    idx = memory_region_iommu_attrs_to_index(giommu->iommu_mr,
-> +                                             MEMTXATTRS_UNSPECIFIED);
-> +
-> +    llend = int128_add(int128_make64(section->offset_within_region),
-> +                       section->size);
-> +    llend = int128_sub(llend, int128_one());
-> +
-> +    iommu_notifier_init(&gdn.n, vfio_iommu_map_dirty_notify, IOMMU_NOTIFIER_MAP,
-> +                        section->offset_within_region, int128_get64(llend),
-> +                        idx);
-> +    memory_region_iommu_replay(giommu->iommu_mr, &gdn.n);
-> +
-> +    return 0;
-if this does not return anything else than 0, shouldn't it be void?
+>Don't get me wrong: *for this first device* only, it makes a lot of sense
+>to have a very C-ish implementation. It lets us sort out the build system
+>integration, tackle idiomatic bindings one piece at a time, and is easier
+>to review than Marc-André's approach of building the whole QAPI bindings.
+>But at the same time, I don't consider a C-ish device better just because
+>it's written in Rust: as things stand your code has all the disadvantages
+>of C and all the disadvantages of Rust. What makes it (extremely) valuable
+>is that your code can lead us along the path towards reaping the advantages
+>of Rust.
 
-Thanks
+I respectfully disagree and recommend taking another look at the code.
 
-Eric
-> +}
-> +
->  static int vfio_sync_dirty_bitmap(VFIOContainerBase *bcontainer,
->                                    MemoryRegionSection *section, Error **errp)
->  {
->      ram_addr_t ram_addr;
->  
->      if (memory_region_is_iommu(section->mr)) {
-> -        VFIOGuestIOMMU *giommu;
-> -
-> -        QLIST_FOREACH(giommu, &bcontainer->giommu_list, giommu_next) {
-> -            if (MEMORY_REGION(giommu->iommu_mr) == section->mr &&
-> -                giommu->n.start == section->offset_within_region) {
-> -                Int128 llend;
-> -                vfio_giommu_dirty_notifier gdn = { .giommu = giommu };
-> -                int idx = memory_region_iommu_attrs_to_index(giommu->iommu_mr,
-> -                                                       MEMTXATTRS_UNSPECIFIED);
-> -
-> -                llend = int128_add(int128_make64(section->offset_within_region),
-> -                                   section->size);
-> -                llend = int128_sub(llend, int128_one());
-> -
-> -                iommu_notifier_init(&gdn.n,
-> -                                    vfio_iommu_map_dirty_notify,
-> -                                    IOMMU_NOTIFIER_MAP,
-> -                                    section->offset_within_region,
-> -                                    int128_get64(llend),
-> -                                    idx);
-> -                memory_region_iommu_replay(giommu->iommu_mr, &gdn.n);
-> -                break;
-> -            }
-> -        }
-> -        return 0;
-> +        return vfio_sync_iommu_dirty_bitmap(bcontainer, section);
->      } else if (memory_region_has_ram_discard_manager(section->mr)) {
->          int ret;
->  
+The device actually performs all logic in non-unsafe methods and is 
+typed instead of operating on raw integers as fields/state. The C stuff 
+is the FFI boundary calls which you cannot avoid; they are the same 
+things you'd wrap under these bindings we're talking about.
 
+QEMU calls the device's FFI callbacks with its pointer and arguments, 
+the pointer gets dereferenced to the actual Rust type which qemu 
+guarantees is valid, then the Rust struct's methods are called to handle 
+each functionality. There is nothing actually unsafe here, assuming 
+QEMU's invariants and code are correct.
+
+>
+>I think we're actually in a great position. We have a PoC from Marc-André,
+>plus the experience of glib-rs (see below), that shows us that our goal of
+>idiomatic bindings is doable; and a complementary PoC from you that will
+>guide us and let us reach it in little steps. The first 90% of the work is
+>done, now we only have to do the second 90%... :) but then we can open the
+>floodgates for Rust code in QEMU.
+>
+>For what it's worth, in my opinion looking at glib-rs for inspiration is
+>> a bad idea, because that project has to support an immutable public
+>> interface (glib) while we do not.
+>>
+>
+>glib-rs includes support for GObject, which was itself an inspiration for
+>QOM (with differences, granted).
+>
+>There are a lot of libraries that we can take inspiration from: in addition
+>to glib-rs, zbus has an interesting approach to
+>serialization/deserialization for example that could inform future work on
+>QAPI. It's not a coincidence that these libraries integrate with more
+>traditional C code, because we are doing the same. Rust-vmm crates will
+>also become an interesting topic sooner or later.
+>
+>There's more to discuss about this topic which I am open to continuing
+>> on IRC instead!
+>>
+>
+>Absolutely, I will try to post code soonish and also review the build
+>system integration.
+>
+>Thanks,
+>
+>Paolo
+>
+>
+>> -- Manos Pitsidianakis
+>> Emulation and Virtualization Engineer at Linaro Ltd
+>>
+>> >
+>> >One thing that would be very useful is to have an Error
+>> >implementation. Looking at what Marc-André did for Error*
+>> >(
+>> https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@redhat.com/20210907121943.3498701-13-marcandre.lureau@redhat.com/
+>> ),
+>> >his precise implementation relies on his code to go back and forth
+>> >between Rust representation, borrowed C object with Rust bindings and
+>> >owned C object with Rust bindings. But I think we can at least have
+>> >something like this:
+>> >
+>> >// qemu::Error
+>> >pub struct Error {
+>> >    msg: String,
+>> >    /// Appends the print string of the error to the msg if not None
+>> >    cause: Option<Box<dyn std::error::Error>>,
+>> >    location: Option<(String, u32)>
+>> >}
+>> >
+>> >impl std::error::Error for Error { ... }
+>> >
+>> >impl Error {
+>> >  ...
+>> >  fn into_c_error(self) -> *const bindings::Error { ... }
+>> >}
+>> >
+>> >// qemu::Result<T>
+>> >type Result<T> = Result<T, Error>;
+>> >
+>> >which can be implemented without too much code. This way any "bool
+>> >f(..., Error *)" function (example: realize :)) could be implemented
+>> >as returning qemu::Result<()>.
+>>
+>>
 
