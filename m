@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEEA8C27C7B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 06:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57ECEC27C6E
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 06:36:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJ5xM-0003TV-3o; Mon, 17 Jun 2024 02:35:08 -0400
+	id 1sJ5xN-0003a8-KA; Mon, 17 Jun 2024 02:35:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJ5x3-0002vR-Td
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 02:34:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJ5xA-0002zJ-Pe
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 02:34:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJ5x2-0004MP-Fd
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 02:34:49 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJ5x9-0004P6-9J
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 02:34:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718606087;
+ s=mimecast20190719; t=1718606094;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xDxXHtaojtyXbbx4CzGZnxL4Ol0JclFopDWBLWsp7Js=;
- b=X8qaWAgUTTy6/gtsPHE4ttK7iNJAEz2e9aWwcrFU8Pcuq9UM+gr6Pyq1HL0pS3R/+4wWRx
- AVo+cDco84p8YEfeYTNL9BPDir4mdRfGniXFgK13FIqEduGk00BwYDl9EY7kNyDh80FUCh
- qs1NU+AgMfJYN0/7jlLUj4l4sxUuopk=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=rQ03fDex+vcLSTu4ScySL5pRDCdGampzP8xDSdhzxUc=;
+ b=d3SM2HdwybacW5CZ4bw6NkKWKzmKxmYrMkwnNXeYrgGNOb+Ct3GcKRw8Wql9H+0kDAxlP5
+ 6Yf469C/BOAV8A5LIreltp7Omv4Zo/p7StEPLhXHMBWN9m6rIPNgHCHPsnc258nUfjSd3j
+ ffTi/LcDQmtWRSkB4OfTLmZre7n5/Hc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-qFlfE1tON7-L7QT4NJeftA-1; Mon,
- 17 Jun 2024 02:34:45 -0400
-X-MC-Unique: qFlfE1tON7-L7QT4NJeftA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-110-QzeBSKlYONejMyk6g0ff6A-1; Mon,
+ 17 Jun 2024 02:34:52 -0400
+X-MC-Unique: QzeBSKlYONejMyk6g0ff6A-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A1384195609F; Mon, 17 Jun 2024 06:34:44 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7E66E195608A; Mon, 17 Jun 2024 06:34:51 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.49])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F2DE53000218; Mon, 17 Jun 2024 06:34:42 +0000 (UTC)
+ id D063F3000220; Mon, 17 Jun 2024 06:34:49 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 12/17] vfio/container: Switch to QOM
-Date: Mon, 17 Jun 2024 08:34:04 +0200
-Message-ID: <20240617063409.34393-13-clg@redhat.com>
+Subject: [PATCH v2 15/17] vfio/container: Remove vfio_container_init()
+Date: Mon, 17 Jun 2024 08:34:07 +0200
+Message-ID: <20240617063409.34393-16-clg@redhat.com>
 In-Reply-To: <20240617063409.34393-1-clg@redhat.com>
 References: <20240617063409.34393-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -84,69 +84,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of allocating the container struct, create a QOM object of the
-appropriate type.
+It's now empty.
 
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/vfio/container.c | 6 +++---
- hw/vfio/iommufd.c   | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ include/hw/vfio/vfio-container-base.h | 2 --
+ hw/vfio/container-base.c              | 5 -----
+ hw/vfio/container.c                   | 3 ---
+ hw/vfio/iommufd.c                     | 1 -
+ 4 files changed, 11 deletions(-)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 3ae52530a9b500bd53ec9f9e66c73253d97c9aba..ff3a6831da83c0fe11060cd57918c4d87b10197c 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -435,7 +435,7 @@ static VFIOContainer *vfio_create_container(int fd, VFIOGroup *group,
-     vioc_name = vfio_get_iommu_class_name(iommu_type);
-     vioc = VFIO_IOMMU_CLASS(object_class_by_name(vioc_name));
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index 6b57cd8e7f5d7d2817f6e3b96ce4566d2630bb12..6242a62771caa8cf19440a53ad6f4db862ca12d7 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -86,8 +86,6 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+                    VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
  
--    container = g_malloc0(sizeof(*container));
-+    container = VFIO_IOMMU_LEGACY(object_new(vioc_name));
-     container->fd = fd;
-     container->iommu_type = iommu_type;
-     vfio_container_init(&container->bcontainer, vioc);
-@@ -674,7 +674,7 @@ unregister_container_exit:
-     vfio_cpr_unregister_container(bcontainer);
+-void vfio_container_init(VFIOContainerBase *bcontainer,
+-                         const VFIOIOMMUClass *ops);
+ void vfio_container_destroy(VFIOContainerBase *bcontainer);
  
- free_container_exit:
--    g_free(container);
-+    object_unref(container);
  
- close_fd_exit:
-     close(fd);
-@@ -718,7 +718,7 @@ static void vfio_disconnect_container(VFIOGroup *group)
-         trace_vfio_disconnect_container(container->fd);
-         vfio_cpr_unregister_container(bcontainer);
-         close(container->fd);
--        g_free(container);
-+        object_unref(container);
- 
-         vfio_put_address_space(space);
-     }
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 3e9d642034c2d2234ea701952c94a78ab32e9147..d59df858407f3cadb9405386ad673c99cdad61d0 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -239,7 +239,7 @@ static void iommufd_cdev_container_destroy(VFIOIOMMUFDContainer *container)
-     memory_listener_unregister(&bcontainer->listener);
-     vfio_container_destroy(bcontainer);
-     iommufd_backend_free_id(container->be, container->ioas_id);
--    g_free(container);
-+    object_unref(container);
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index 24669d4d7472f49ac3adf2618a32bf7d82c5c344..970ae2356a92f87df44e1dd58ff8c67045a24ef1 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -83,11 +83,6 @@ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+                                                errp);
  }
  
- static int iommufd_cdev_ram_block_discard_disable(bool state)
-@@ -352,7 +352,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+-void vfio_container_init(VFIOContainerBase *bcontainer,
+-                         const VFIOIOMMUClass *ops)
+-{
+-}
+-
+ void vfio_container_destroy(VFIOContainerBase *bcontainer)
+ {
+     VFIOGuestIOMMU *giommu, *tmp;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index a2f5fbad00cd228e27a47df5cd683dbb34296113..3f2032d5c496de078c277ebacc49d7db89f4cc65 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -419,7 +419,6 @@ static VFIOContainer *vfio_create_container(int fd, VFIOGroup *group,
+                                             Error **errp)
+ {
+     int iommu_type;
+-    const VFIOIOMMUClass *vioc;
+     const char *vioc_name;
+     VFIOContainer *container;
  
-     trace_iommufd_cdev_alloc_ioas(vbasedev->iommufd->fd, ioas_id);
+@@ -433,12 +432,10 @@ static VFIOContainer *vfio_create_container(int fd, VFIOGroup *group,
+     }
  
--    container = g_malloc0(sizeof(*container));
-+    container = VFIO_IOMMU_IOMMUFD(object_new(TYPE_VFIO_IOMMU_IOMMUFD));
-     container->be = vbasedev->iommufd;
+     vioc_name = vfio_get_iommu_class_name(iommu_type);
+-    vioc = VFIO_IOMMU_CLASS(object_class_by_name(vioc_name));
+ 
+     container = VFIO_IOMMU_LEGACY(object_new(vioc_name));
+     container->fd = fd;
+     container->iommu_type = iommu_type;
+-    vfio_container_init(&container->bcontainer, vioc);
+     return container;
+ }
+ 
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 7bc76f80b48ea5422e68fd4d4cb3f5bca90993f6..09b71a6617807c621275c74b924cfd39eb643961 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -357,7 +357,6 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
      container->ioas_id = ioas_id;
  
+     bcontainer = &container->bcontainer;
+-    vfio_container_init(bcontainer, iommufd_vioc);
+     vfio_address_space_insert(space, bcontainer);
+ 
+     if (!iommufd_cdev_attach_container(vbasedev, container, errp)) {
 -- 
 2.45.2
 
