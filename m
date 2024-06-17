@@ -4,106 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67EA6C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 11:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10832C2BA15
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 12:04:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJAtO-0003oT-NI; Mon, 17 Jun 2024 07:51:22 -0400
+	id 1sJB4c-0008SO-Jy; Mon, 17 Jun 2024 08:02:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1sJAtN-0003nz-D7; Mon, 17 Jun 2024 07:51:21 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sJB4S-0008RN-Bs
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 08:02:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1sJAtL-00087K-53; Mon, 17 Jun 2024 07:51:21 -0400
-Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45HBROpd018591;
- Mon, 17 Jun 2024 11:51:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=W
- /ceKtcW81SVPJNviqBOLPRmiCuRFjpzeUEUnEimiOQ=; b=EWkc7GnixK7sNIM0U
- OEJTF6/hLHLSmnsA50R7pTN5Tt1wZ1jChH3FIQo6RoDpUuq+L8cYLpnY+7oxOWpS
- RBZ7CsoJmdFFfhnl2u1GtC7vXo+ok7+lt2n6WuvXHf5AJNG3RbzpWZBZatv2n9LV
- SWNXlDVayhgrDa/ggUoEIKMYgZ0TSr4gtpko2T9MTbIPWIoybUrviKzZ+Yb9dHwl
- 981Z/jX5ZWEIP0L9JhXAEyW4rAnq+sjk4CXTCb2ip/vZzmsV85m66cXCCDEcfgw6
- AN6ArLo5/a/oP+lswHHHQQJ+q8y9x0jfZFAYuqTQxabIEBAxpSuQNnvMXurnl0xP
- c9Udw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ytkv603y7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Jun 2024 11:51:12 +0000 (GMT)
-Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45HBpCLQ025128;
- Mon, 17 Jun 2024 11:51:12 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ytkv603y5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Jun 2024 11:51:12 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45HAhJ5J013477; Mon, 17 Jun 2024 11:51:11 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ysr03982u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 17 Jun 2024 11:51:11 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45HBp5jE36176136
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 17 Jun 2024 11:51:07 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9BEFE20040;
- Mon, 17 Jun 2024 11:51:05 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5726D2004E;
- Mon, 17 Jun 2024 11:51:03 +0000 (GMT)
-Received: from [9.179.24.169] (unknown [9.179.24.169])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 17 Jun 2024 11:51:03 +0000 (GMT)
-Message-ID: <94d97af2-62e2-4fde-909b-c57af8ef814f@linux.vnet.ibm.com>
-Date: Mon, 17 Jun 2024 17:21:01 +0530
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sJB4P-0001o4-GC
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 08:02:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718625763;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=l1ZpAb/wn44XrchjUzZ/TXnIKUVrqz6gutVzuvMieDA=;
+ b=QlwkzYB4MC4kanLHNrzFpqYbgCMQ79VAh8pANso5q9K3b1veqwPuSTLMyIZDzEbiZiWutZ
+ xH6cgxjy4vWRMVF/HhqwzINlVG17+hxRVEnqt9cCJ9aNeh9gkae0BaXhY8CjDi9snHaqoK
+ TcEjqwAHO1OBgfzy0xOrppmceEShUfc=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-117-syqApElrM4CpngTVAoUWTQ-1; Mon,
+ 17 Jun 2024 08:02:37 -0400
+X-MC-Unique: syqApElrM4CpngTVAoUWTQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A07D419560B6; Mon, 17 Jun 2024 12:02:35 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 159B81955E80; Mon, 17 Jun 2024 12:02:33 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id BD50221E6757; Mon, 17 Jun 2024 14:02:30 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: mst@redhat.com,  qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Hanna
+ Reitz <hreitz@redhat.com>,  Brad Smith <brad@comstyle.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  =?utf-8?Q?Marc-Andr?=
+ =?utf-8?Q?=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Laurent Vivier <lvivier@redhat.com>,
+ gmaglione@redhat.com,  stefanha@redhat.com,  Coiby Xu
+ <Coiby.Xu@gmail.com>,  Gerd Hoffmann <kraxel@redhat.com>,  slp@redhat.com,
+ Igor Mammedov <imammedo@redhat.com>,  Raphael Norwitz
+ <raphael@enfabrica.net>,  Thomas Huth <thuth@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  David Hildenbrand <david@redhat.com>,  Kevin Wolf
+ <kwolf@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Jason Wang
+ <jasowang@redhat.com>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH RESEND v7 00/12] vhost-user: support any POSIX system
+ (tested on macOS, FreeBSD, OpenBSD)
+In-Reply-To: <rx5hvcffqzmixgmlroko7t6qvjciifr77nvpwrakpl5oovw3ec@mihi4k5nhse6>
+ (Stefano Garzarella's message of "Mon, 17 Jun 2024 12:35:47 +0200")
+References: <20240612130140.63004-1-sgarzare@redhat.com>
+ <rx5hvcffqzmixgmlroko7t6qvjciifr77nvpwrakpl5oovw3ec@mihi4k5nhse6>
+Date: Mon, 17 Jun 2024 14:02:30 +0200
+Message-ID: <87iky7eq09.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] target/ppc: Move VSX vector with length storage
- access insns to decodetree.
-To: Richard Henderson <richard.henderson@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
-References: <20240613093318.314913-1-rathc@linux.ibm.com>
- <20240613093318.314913-3-rathc@linux.ibm.com>
- <6638b813-f4ef-4587-b94f-3c24d90ca09e@linaro.org>
-Content-Language: en-US
-From: Chinmay Rath <rathc@linux.vnet.ibm.com>
-In-Reply-To: <6638b813-f4ef-4587-b94f-3c24d90ca09e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 2YBDqL9cvRGNG3tErwgQQjx-4gZ3s828
-X-Proofpoint-ORIG-GUID: MbEQjA-XzkDJKZDcziNB2wFGul0wuvLj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-17_10,2024-06-17_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 priorityscore=1501
- suspectscore=0 phishscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0
- bulkscore=0 adultscore=0 mlxlogscore=806 impostorscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
- definitions=main-2406170088
-Received-SPF: none client-ip=148.163.156.1;
- envelope-from=rathc@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,55 +97,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Stefano Garzarella <sgarzare@redhat.com> writes:
 
-
-Hi Richard,
-On 6/17/24 00:43, Richard Henderson wrote:
-> On 6/13/24 02:33, Chinmay Rath wrote:
->> +/* EA <- (ra == 0) ? 0 : GPR[ra] */
->> +static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
->> +{
->> +    TCGv EA;
->> +    if (!ra) {
->> +        EA = tcg_constant_tl(0);
->> +        return EA;
->> +    }
->> +    EA = tcg_temp_new();
->> +    if (NARROW_MODE(ctx)) {
->> +        tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
->> +    } else {
->> +        tcg_gen_mov_tl(EA, cpu_gpr[ra]);
+> Hi Michael,
 >
-> Why are you making a copy, rather than just returning cpu_gpr[ra]?
-> If you need to modify the resulting EA, then you also need to make a 
-> copy for 0.
+> On Wed, Jun 12, 2024 at 03:01:28PM GMT, Stefano Garzarella wrote:
+>>This series should be in a good shape, in which tree should we queue it?
+>>@Micheal would your tree be okay?
 >
-Please ignore my previous response.
-I think do_ea_calc_ra should allow modification to the resulting EA, 
-hence below change appears more appropriate to me :
+> Markus suggested a small change to patch 10, so do you want me to resend the whole series, or is it okay to resend just the last 3 patches (which are also the ones that depend on the other patch queued by Markus)?
 
-/* EA <- (ra == 0) ? 0 : GPR[ra] */
-static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
-{
-     TCGv EA = tcg_temp_new();
-     if (!ra) {
-         tcg_gen_movi_tl(EA, 0);
-         return EA;
-     }
-     if (NARROW_MODE(ctx)) {
-         tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
-     } else {
-         tcg_gen_mov_tl(EA, cpu_gpr[ra]);
-     }
-     return EA;
-}
+I guess you mean
 
-Let me know your thoughts.
+    [PATCH v2] qapi: clarify that the default is backend dependent
+    Message-ID: <20240611130231.83152-1-sgarzare@redhat.com>
 
-Thanks & Regards,
-Chinmay
->
-> r~
->
+> In the last case I would ask you to queue up the first 9 patches of this series if that is okay with you.
+
+Michael, feel free to merge the patch I queued.
 
 
