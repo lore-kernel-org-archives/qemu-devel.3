@@ -4,75 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC820C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 11:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 341D9C2BA18
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 11:24:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJAP8-0006DB-3v; Mon, 17 Jun 2024 07:20:06 -0400
+	id 1sJASc-0007pe-E3; Mon, 17 Jun 2024 07:23:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJAP5-0006BD-W1
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 07:20:04 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJASR-0007mj-Qx
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 07:23:31 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJAP4-0001Fr-3V
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 07:20:03 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a63359aaaa6so640079266b.2
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 04:20:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJASP-0002HM-FT
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 07:23:31 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-57c60b13a56so5009778a12.0
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 04:23:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718623200; x=1719228000; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=inpK6xOJiiNz3UpLvpncRJOWvp4Nl5gzWl7O7h7KLjY=;
- b=tjTunuaQaQ5hqRlpDuV6Wx1NRCdVVIu+CnsMW/xABQV8sFfYq8eBLY3inXy8/JaFig
- s5JEjgSPO3cs+URRjcn3KNIFg5yDHRT/0f436ITRWbooye68K4S2Yn+PZ4MKL0hQduzZ
- jg5GIsSp8cqd47Mp6OvfjhK93HFP6Na6juStOX7uzk2Olj/q5ZvoWxiJd6Pu4/6Ko/jR
- kSich3YIGlnPhQF6jCabL7HGfBpCoYHUMqglCX24Oxm3p88xe+wrRti/Y9+o4y7btXVA
- UgmH0BcMs+37UgHJsCwRbxl9RS7qlrg0YrDn7/6kxullvQnd8uKH9zCKXdUM4ZI5gtcs
- ZzKQ==
+ d=linaro.org; s=google; t=1718623408; x=1719228208; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YUM2qgT8yh9/vvQa5VxbrizX1nhNn6mWSdBf+rOIRA8=;
+ b=k8IR1fVguozzg7kQijOxelCmwb6YhQzkG5rb4MXFPlQ5YylfSaJZhNgcArzVk6n43/
+ TElZHnpIVat6J5EVhN8t3V47vEhDoaoh80Olsjm/ntX3nwe1mGktWmsUaqXSFJslH2M5
+ KyaOnZSKiZ+JxhWeghqbhM5rUm9KywtmP89EZF1NdZkhaV0d5kY1mOGaStRv2RAJWEwO
+ RTjPbJz1BCHpXSeQSrIEVD6bn21WusyDjnp78YH5uGLMXcidAuvKjx9yENIl6k4WzSOn
+ 8jJSeZjY+vHzxWpKaiZtH0jRpkGevL19m05GG1Ce8PCDO1UL0Vj2yC8rVR9UHS1JFJuy
+ bYcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718623200; x=1719228000;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=inpK6xOJiiNz3UpLvpncRJOWvp4Nl5gzWl7O7h7KLjY=;
- b=S6cXnZ95HH49UU9EYjsvhswfCeAKg6aeRTLNF7lJVwbQgxxCfW5d5E+PVeRUxJyZ7T
- ilEsYWQlcqGtP4sIBZlOcoFMJgd2nvDCnK+dG8O8rjmAZ30CBG3Xc5yeW20O9EP31F9T
- XLMBQTTckbRD8jvDD/Ejc6KtSNInBCW28PrLlnra0o6fH6aZmUta8y2uukHVf3ubyUUr
- XSwVWOke97BnVb6W6YNXiX4PUsSbHcu1echDb0aJmPzmrQLJMKKjZQL2biUdFbMCDmWV
- ICKc4+7apa73MOKglGHRwvCUvihSxxryfvwjxqb/T3mu85pfm3yUltbIZaIeb+aKwLSe
- Q2FQ==
-X-Gm-Message-State: AOJu0YztdeC10Fu0y7Xfs24QjEFh2mSxVC0kQ159Pbs4+lbKwgQIz9gV
- yq36pQyjbwX897fRAj9X3ZLlGO1rkA2RROl3y18NTwLUzfusm47Z+/bbs4dfc+NpwiY+4vv7x75
- S
-X-Google-Smtp-Source: AGHT+IFiVEjkQuyVL0KZnqOJOxWY9ArSOzC4LPvnXnz+EHCdkEa8nSXyILOfVgK4DXEAQJcdtndJAg==
-X-Received: by 2002:a17:906:40d7:b0:a6f:585d:626d with SMTP id
- a640c23a62f3a-a6f60dc896amr534351666b.48.1718623199966; 
- Mon, 17 Jun 2024 04:19:59 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.169.90])
+ d=1e100.net; s=20230601; t=1718623408; x=1719228208;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YUM2qgT8yh9/vvQa5VxbrizX1nhNn6mWSdBf+rOIRA8=;
+ b=Ulc1CadKMeriMBPQR2rE7iOZtIWyehwvS30hArBBvVGlLg4x+GS2u3Vj6LPzQgPNWi
+ jvW7uVxf9AMumO4J5VdMHIdq6avkl/d8S/Nn+nc7MG+cK/5fpKF614fVlTzkOyfMC2Oy
+ MMXZH9f7QI3ISax9KR2HmD+7UEkR8+oqyEQzVwXt/pt5BOQ8bKwb8TppwGvJy5tWdXY5
+ gituVtge9VIXAHt+QYbCScWzu/e1VtT1vPkmxoMIy8UcWLFVsIFiJ76EkEAm5/ZCnm/7
+ Dwu2xSB6D7+8oHhgaYPbImVJF1FgRktJweFIcz2nF2kA0r8GMGWRvDHi3oDA3M4J/jO+
+ yLJw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVzdss9upvWJ2WJuhRpE1ZCCaUyPmbDbKZotJr8Wz15QxESLBq776bg83QfdE5ru6yXIZ5tPr3W6ZrqZP9pqqpK5PKGKWs=
+X-Gm-Message-State: AOJu0YzUZDpTYITlkFyeJWAJCNb5GMAFjsO2YN62oSYquaahX4Ax4GJn
+ zZrR7vdmpu6tnt11n/GZgq2qbNO0QEXlLYwM2Leo7w6jZAPhQzvee6E4YLSiQ28=
+X-Google-Smtp-Source: AGHT+IFnnG9aijmNroB3F/m9W5KPd8wZ1F7ClllLQeFWFu6YwXIcf0SzPonWujcWK0bNG7HYRFNYqA==
+X-Received: by 2002:a50:a458:0:b0:57a:322c:b1a5 with SMTP id
+ 4fb4d7f45d1cf-57cbd6a6d1dmr5404020a12.38.1718623407721; 
+ Mon, 17 Jun 2024 04:23:27 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.169.90])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56f4182fsm511208766b.178.2024.06.17.04.19.58
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 17 Jun 2024 04:19:59 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2] ppc/pnv: Introduce pnv_chip_foreach_cpu()
-Date: Mon, 17 Jun 2024 13:19:56 +0200
-Message-ID: <20240617111956.78414-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ 4fb4d7f45d1cf-57cb741e5a3sm6233761a12.65.2024.06.17.04.23.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Jun 2024 04:23:27 -0700 (PDT)
+Message-ID: <5f2f61f8-3dbc-4f03-8e60-a39cd1180e1b@linaro.org>
+Date: Mon, 17 Jun 2024 13:23:25 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/26] hw/ppc: Avoid using Monitor in
+ xive_tctx_pic_print_info()
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+References: <20240610062105.49848-1-philmd@linaro.org>
+ <20240610062105.49848-4-philmd@linaro.org>
+ <0c72e586-9905-49e2-90ac-10426ea5691e@linux.ibm.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <0c72e586-9905-49e2-90ac-10426ea5691e@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,111 +103,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+Hi Harsh,
 
-This helper routine uses the machine definition, sockets, cores and
-threads, to loop on all CPUs of the machine. Replace CPU_FOREACH()
-with it.
+On 17/6/24 12:19, Harsh Prateek Bora wrote:
+> On 6/10/24 11:50, Philippe Mathieu-Daudé wrote:
+>> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+>> index fa23b27a2b..5854358f65 100644
+>> --- a/hw/ppc/pnv.c
+>> +++ b/hw/ppc/pnv.c
+>> @@ -1223,7 +1223,13 @@ static void 
+>> pnv_chip_power9_intc_destroy(PnvChip *chip, PowerPCCPU *cpu)
+>>   static void pnv_chip_power9_intc_print_info(PnvChip *chip, 
+>> PowerPCCPU *cpu,
+>>                                               Monitor *mon)
+>>   {
+>> -    xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), mon);
+>> +    g_autoptr(GString) buf = g_string_new("");
+>> +    g_autoptr(HumanReadableText) info = NULL;
+>> +
+>> +    xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), buf);
+>> +
+>> +    info = human_readable_text_from_str(buf);
+>> +    monitor_puts(mon, info->human_readable_text);
+>>   }
+>>   static void pnv_chip_power10_intc_create(PnvChip *chip, PowerPCCPU 
+>> *cpu,
+>> @@ -1267,7 +1273,13 @@ static void 
+>> pnv_chip_power10_intc_destroy(PnvChip *chip, PowerPCCPU *cpu)
+>>   static void pnv_chip_power10_intc_print_info(PnvChip *chip, 
+>> PowerPCCPU *cpu,
+>>                                                Monitor *mon)
+>>   {
+>> -    xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), mon);
+>> +    g_autoptr(GString) buf = g_string_new("");
+>> +    g_autoptr(HumanReadableText) info = NULL;
+>> +
+>> +    xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), buf);
+>> +
+>> +    info = human_readable_text_from_str(buf);
+>> +    monitor_puts(mon, info->human_readable_text);
+>>   }
+> 
+> We have an existing code duplication in above two routines which is 
+> getting worse with these multi-lines getting duplicated. Could _power9_ 
+> be changed to inline and called from _power10_ as well?
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240424093048.180966-1-clg@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-v2: Rebased
-Based-on: <20240610062105.49848-1-philmd@linaro.org>
-(Since Nick reviewed it, I plan to queue this patch for my
-own maintainer convenience).
----
- hw/ppc/pnv.c | 50 +++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 37 insertions(+), 13 deletions(-)
+The duplicated lines get removed later. This series is a mere API
+upgrade, the final diff is smaller (although harder to review, which
+is why I did it with many trivial patches).
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 03c595788f..6b41d1d2dd 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -2261,6 +2261,21 @@ PowerPCCPU *pnv_chip_find_cpu(PnvChip *chip, uint32_t pir)
-     return NULL;
- }
- 
-+static void pnv_chip_foreach_cpu(PnvChip *chip,
-+                   void (*fn)(PnvChip *chip, PowerPCCPU *cpu, void *opaque),
-+                   void *opaque)
-+{
-+    int i, j;
-+
-+    for (i = 0; i < chip->nr_cores; i++) {
-+        PnvCore *pc = chip->cores[i];
-+
-+        for (j = 0; j < CPU_CORE(pc)->nr_threads; j++) {
-+            fn(chip, pc->threads[j], opaque);
-+        }
-+    }
-+}
-+
- static ICSState *pnv_ics_get(XICSFabric *xi, int irq)
- {
-     PnvMachineState *pnv = PNV_MACHINE(xi);
-@@ -2329,22 +2344,25 @@ static ICPState *pnv_icp_get(XICSFabric *xi, int pir)
-     return cpu ? ICP(pnv_cpu_state(cpu)->intc) : NULL;
- }
- 
-+static void pnv_pic_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
-+                                    void *opaque)
-+{
-+    PNV_CHIP_GET_CLASS(chip)->intc_print_info(chip, cpu, opaque);
-+}
-+
- static void pnv_pic_print_info(InterruptStatsProvider *obj, GString *buf)
- {
-     PnvMachineState *pnv = PNV_MACHINE(obj);
-     int i;
--    CPUState *cs;
--
--    CPU_FOREACH(cs) {
--        PowerPCCPU *cpu = POWERPC_CPU(cs);
--
--        /* XXX: loop on each chip/core/thread instead of CPU_FOREACH() */
--        PNV_CHIP_GET_CLASS(pnv->chips[0])->intc_print_info(pnv->chips[0], cpu,
--                                                           buf);
--    }
- 
-     for (i = 0; i < pnv->num_chips; i++) {
--        PNV_CHIP_GET_CLASS(pnv->chips[i])->pic_print_info(pnv->chips[i], buf);
-+        PnvChip *chip = pnv->chips[i];
-+
-+        /* First CPU presenters */
-+        pnv_chip_foreach_cpu(chip, pnv_pic_intc_print_info, buf);
-+
-+        /* Then other devices, PHB, PSI, XIVE */
-+        PNV_CHIP_GET_CLASS(chip)->pic_print_info(chip, buf);
-     }
- }
- 
-@@ -2545,12 +2563,18 @@ static void pnv_cpu_do_nmi_on_cpu(CPUState *cs, run_on_cpu_data arg)
-     }
- }
- 
-+static void pnv_cpu_do_nmi(PnvChip *chip, PowerPCCPU *cpu, void *opaque)
-+{
-+    async_run_on_cpu(CPU(cpu), pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
-+}
-+
- static void pnv_nmi(NMIState *n, int cpu_index, Error **errp)
- {
--    CPUState *cs;
-+    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-+    int i;
- 
--    CPU_FOREACH(cs) {
--        async_run_on_cpu(cs, pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
-+    for (i = 0; i < pnv->num_chips; i++) {
-+        pnv_chip_foreach_cpu(pnv->chips[i], pnv_cpu_do_nmi, NULL);
-     }
- }
- 
--- 
-2.41.0
+_power9_ / _power10_ simplification could be done but as a separate
+patch from this series, since different matter IMHO.
 
+Thanks for your reviews!
+
+Phil.
 
