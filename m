@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A662C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 15:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7E70C27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 15:50:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJEcR-0003YN-1p; Mon, 17 Jun 2024 11:50:07 -0400
+	id 1sJEcS-0003YZ-DF; Mon, 17 Jun 2024 11:50:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sJEcO-0003XV-E4
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 11:50:04 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1sJEcP-0003Xv-Fq
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 11:50:05 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sJEcM-0002xt-CK
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 11:50:04 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-70423e8e6c9so3930166b3a.0
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 08:50:01 -0700 (PDT)
+ id 1sJEcM-0002xm-6w
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 11:50:05 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-705cffc5bcfso3955077b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 08:49:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1718639401; x=1719244201;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1718639398; x=1719244198;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Nz0BTkYy8+cNUSoTKA9mAzm5fhe13UqTIL2SbM27/78=;
- b=1eVEg6S1GMjqWkkoFeJxKVJbI0eU501eaHhyaNbJVxNsR5rxnxKRUp8VSXSA8sENVd
- D/REZRyjr4P3hFekxJUDuDdNdyCuHZKZCJaJpHNMHvSs1dYsEPlEbWtxax8QrJL/G+dl
- yPxiX/Gr8XWChptFUDHGOj1x3K2DBTdLUhBKrAXi6IScDUwHaBulFAYE+eEyPE0BSq2z
- EGiPxDO65wCivruPiE4AJemQDMxSL58xbk6eXuQVb2YqblMTnYZqt5dzlXL8dm6S/JEv
- PhuhvHlmTARr2s7oVNbyN+pIjhgnVXEuACHZMNWVnp4jR50Jy0xnDKDjg/SNVCF+KmiH
- 7zvw==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=w7/U6o+BgH0Tm5LHP61xSs3qxjcfLPKxbfufuaiUDXo=;
+ b=kyEInJp3mo2lFdrt6aMrrM+IMGF2cRg4b7jTqv6btk7viW9d7KEwArrr5dcZP8TlTc
+ F4zc70WAwEW1Y9cznfAu2+JQfCQ5yRsCH0SSCR1JHacHOi3xF0uHb5yaNZ4rWFtk8qij
+ jYWbZLXvsqoHs8vOmUjrDoHSz8T8WFrBUkbliY5J3idUKSa21aIGtr7jbqOlREtDqGRx
+ qUylQVwsKT82I3th8z7FX2kBUvgknGIbPXaFvLDdpTcG3+bQH6z2ABI2Rcuu1ncrrXVA
+ OM/LZWIB1sF4MTj4MgAjaaNSEmal3mz6vCWrH21DB2cillxGjp97K8JZ5I+L74YxmkNO
+ fqRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718639401; x=1719244201;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Nz0BTkYy8+cNUSoTKA9mAzm5fhe13UqTIL2SbM27/78=;
- b=mqrXp2tbneK3tcpJphNpA6xE1SbWAlNPRSVDWwKlN2lAtxMq7/VsXyXa8bbXyzXZYv
- tXSpb7MD8h9JDqKA6WP7i9Ch0gWxKZkxuhsoi2Ni6Zf/NX1tg4ftgVnpzhe3RTfUB/hS
- Sj6gfomqpyzgLjmaVq3Np4wpkt2aMAZ0sAccGR11Fojjn7GhUKeFsE8Vu7ZR8D+x8SKU
- EAuGoZxVt9eEY1L7eJH0hViHI2TbrQhZ/hMSrbTEMyylE29VvmZY9Q3T8Ap+1ATfAeYP
- fWisrSNtjbh7ywysE8BAyPkXSK1oHGdtZFkHZ89wP3NnDmgqN7EIUncaYtZEKo6JwY3L
- XmbA==
-X-Gm-Message-State: AOJu0Yz90ORDJwSdLyY+E1I+KSHdZfAxGP7O1u2wUbQ1+P9cVR+ZnK5s
- /AjD75G5y3xdoF+WObo1m3BKgyvaUYSHh7yR0qCGAmKMvATsYASH4GrnPzAKhLMMp0v9FpoctPQ
- KQBhDLg==
-X-Google-Smtp-Source: AGHT+IEiTcv5mU30QLoUGjEbM2J0dKOWTsvwgEfvm3gRTGyT52vfAPrZdomYtQTf9OeFw8ndECf1KA==
-X-Received: by 2002:a05:6a00:1748:b0:705:ab2b:2fe with SMTP id
- d2e1a72fcca58-705d71e3634mr13288997b3a.33.1718639400259; 
- Mon, 17 Jun 2024 08:50:00 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718639398; x=1719244198;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=w7/U6o+BgH0Tm5LHP61xSs3qxjcfLPKxbfufuaiUDXo=;
+ b=W0fYZag3AbBzBY3/FWCo8VG+lnW/oHjPaFbKWdjvj2s77h4dAF09n908Z97COLH+tN
+ aRiWLFC72K13oyMYYWBSKkgod8aT6T1HmC6AaL6reuTcWZvq+2gMgO9kfvz9EKvb8lp9
+ +qDm7aKoyUzHmWPagyIWSRGNVt/g1U3XAvhDZe4e2Di2rnS5yPlVWhC2Y8YlloAK5rNC
+ RC6MxmXocF8UMQ5mg1z/uPcAMPcu2Lro01SeigJy4Be30jYPSYGU31JKYxB4yHTLA6pM
+ H8vPzPg4liakfMyXePx2ykoMVsrSD11cqK09UJH4l6qlLBjhY1qy+R8bNln3Ofag+ceo
+ 2v6A==
+X-Gm-Message-State: AOJu0Yzw9ImH0lyTHqciMPKuKBxm+38Sh4V3KdLn3n3G0hfyy7qR37bs
+ +X/c6rNA3w6mt7AJ/YaE+1LEyQl+v03xNFHTrTBAHwPz2PbElIl0WPwNm9JSBttz/vyPjasCq/X
+ P4K4u0g==
+X-Google-Smtp-Source: AGHT+IFvrNghZSun1pJib1ggYRbxKpl/yZ3Jsc9DfVR+TNgkdiaL7ftMuRZoSgNHseDdveqpnAFRaw==
+X-Received: by 2002:a05:6a20:9689:b0:1b8:a3f5:3557 with SMTP id
+ adf61e73a8af0-1bae7e7d73bmr11514385637.24.1718639397596; 
+ Mon, 17 Jun 2024 08:49:57 -0700 (PDT)
 Received: from localhost.localdomain ([125.71.94.151])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705cc924ed0sm7511138b3a.4.2024.06.17.08.49.58
+ d2e1a72fcca58-705cc924ed0sm7511138b3a.4.2024.06.17.08.49.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 08:49:59 -0700 (PDT)
+ Mon, 17 Jun 2024 08:49:57 -0700 (PDT)
 From: Hyman Huang <yong.huang@smartx.com>
 To: qemu-devel@nongnu.org
-Cc: Masato Imai <mii@sfc.wide.ad.jp>,
-	Hyman Huang <yong.huang@smartx.com>
-Subject: [PULL 1/1] migration/dirtyrate: Fix segmentation fault
-Date: Mon, 17 Jun 2024 23:49:51 +0800
-Message-Id: <e65152d5483b2c847ec7a947ed52650152cfdcc0.1718638495.git.yong.huang@smartx.com>
+Cc: Hyman Huang <yong.huang@smartx.com>
+Subject: [PULL 0/1] Dirty page rate and dirty page limit 20240617 patches
+Date: Mon, 17 Jun 2024 23:49:50 +0800
+Message-Id: <cover.1718638495.git.yong.huang@smartx.com>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <cover.1718638495.git.yong.huang@smartx.com>
-References: <cover.1718638495.git.yong.huang@smartx.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::431;
- envelope-from=yong.huang@smartx.com; helo=mail-pf1-x431.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::432;
+ envelope-from=yong.huang@smartx.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -95,33 +91,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Masato Imai <mii@sfc.wide.ad.jp>
+The following changes since commit 05ad1440b8428b0ade9b8e5c01469adb8fbf83e3:
 
-Since the kvm_dirty_ring_enabled function accesses a null kvm_state
-pointer when the KVM acceleration parameter is not specified, running
-calc_dirty_rate with the -r or -b option causes a segmentation fault.
+  Merge tag 'virtio-grants-v8-tag' of https://gitlab.com/sstabellini/qemu into staging (2024-06-15 20:13:06 -0700)
 
-Signed-off-by: Masato Imai <mii@sfc.wide.ad.jp>
-Message-ID: <20240507025010.1968881-1-mii@sfc.wide.ad.jp>
-[Assert kvm_state when kvm_dirty_ring_enabled was called to fix it. - Hyman]
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
----
+are available in the Git repository at:
+
+  https://github.com/newfriday/qemu.git tags/dirtylimit-dirtyrate-pull-request-20240617
+
+for you to fetch changes up to e65152d5483b2c847ec7a947ed52650152cfdcc0:
+
+  migration/dirtyrate: Fix segmentation fault (2024-06-17 23:29:21 +0800)
+
+----------------------------------------------------------------
+dirtylimit-dirtyrate-pull-request-20240617: Fix a segmentation fault
+
+Please apply, thanks, Yong.
+
+----------------------------------------------------------------
+Masato Imai (1):
+      migration/dirtyrate: Fix segmentation fault
+
  accel/kvm/kvm-all.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 009b49de44..854cb86b22 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2329,7 +2329,7 @@ bool kvm_vcpu_id_is_valid(int vcpu_id)
- 
- bool kvm_dirty_ring_enabled(void)
- {
--    return kvm_state->kvm_dirty_ring_size ? true : false;
-+    return kvm_state && kvm_state->kvm_dirty_ring_size;
- }
- 
- static void query_stats_cb(StatsResultList **result, StatsTarget target,
 -- 
 2.39.1
 
