@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D78CEC27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:17:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76684C27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJGtj-0000NO-Cc; Mon, 17 Jun 2024 14:16:07 -0400
+	id 1sJGti-0000KU-DU; Mon, 17 Jun 2024 14:16:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJGtb-0000E4-N8
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJGta-0000Du-Bp
  for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:16:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJGtY-0006Iw-Oh
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:15:59 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJGtX-0006Ic-By
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:15:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718648155;
+ s=mimecast20190719; t=1718648153;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eGE+LgWMbS91EIDfvnLwsxRRHX55rP0Vg3VR2s70yow=;
- b=jJRFBbF/OaDlLjuISOaw0DOqa1h2xd1QlK+xYdQ/OCZjT6ilnQytHfEA9VF1kmcuLH3w29
- 88lXoIzsNZhw+7+toVXTrE7qJf+6yG2JY3YR788+gYZOCfw9W5QnlAwyrbqSwfzD9EhszF
- 673JOnGQBTlvwYAEttpL105Q6qUhEA4=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tz8mAzBKLZeeLf11HYzcmc5ZaFjBtDHCXl7INRqRcO0=;
+ b=cKw1qHDT/HVXqr7pWjlDlsqGIrzB3CswvtjP3KJKH4VMLAyBOjb2lzyJNlx9mHmGX3HDG/
+ oEc5DEIXXgL0vIC2fGu90mLC0l58sv3pbPzg7JQycgkdzuDo+pbONOila213rbM20Xo67A
+ evO+3MzIPZHLm7ZCe1ivlUXXpk1SYmU=
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
+ [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-541-Crk093aFOryObvx0_g-Ugg-1; Mon, 17 Jun 2024 14:15:53 -0400
-X-MC-Unique: Crk093aFOryObvx0_g-Ugg-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-794fa90409eso2870285a.3
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:15:53 -0700 (PDT)
+ us-mta-139-JdCNRSCiMQi51s2HSTKBng-1; Mon, 17 Jun 2024 14:15:51 -0400
+X-MC-Unique: JdCNRSCiMQi51s2HSTKBng-1
+Received: by mail-il1-f198.google.com with SMTP id
+ e9e14a558f8ab-375938907fbso6495385ab.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:15:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718648152; x=1719252952;
+ d=1e100.net; s=20230601; t=1718648150; x=1719252950;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eGE+LgWMbS91EIDfvnLwsxRRHX55rP0Vg3VR2s70yow=;
- b=wQIJu3nae4eLlS+WDzZOm4bUB1YWDO7c6KVKo4n8q8/cftwfgcNm+9w/ng+n4X7O2c
- XW/dzxrKNkgOEfujCqlc/GO487X4ovOsJsppW8LwmAFsUMH27an2u8AgsmquZSbyRrq1
- pLCEYel9DlqVc5yTUlj+pDlF4Jnb4R8HbzDl98/dUNf+3mFGcQt0t21h8umk0f/8N3N5
- 73xrRvp4veDd5bkJoixMlwJByeS0L73v0ZqhQ0GZD5OmKpFCxtMPFC0373gq6mWnA7D/
- bwL+3xBBgykhKJOJ3/AGzj625KPyV1b9rLbQsoseij3hCqEQ3zeNcWSX72EdJNOnNDoF
- /hYw==
-X-Gm-Message-State: AOJu0YyDUC31dnTTPc1sDO8Cao7rx7zBgYHHTsqJlUUO/nPwEunYIp5V
- /ZuxCKGXcO8hbIStlCwCkFQVZqszVdam/xifXXDbSZo5eBS9Tk4mK7IQ5KojChPU6gzUlJf3iGr
- AbObou9jtPWLhaCJkdPIfw5V6mz9u/bTJGJacRXLvXE+1jROpUCQOa9gJtyD7zQDvV+BIn1q82p
- oDG+QMcoK8B/zPh5UK1tpptFGUdyw4hJoI6g==
-X-Received: by 2002:a05:620a:272a:b0:795:493f:9f3f with SMTP id
- af79cd13be357-798d269f370mr1142520885a.4.1718648152261; 
- Mon, 17 Jun 2024 11:15:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGO5xIs0uWkac8wmMuslSAq5i21szSRTWc65eVf0Kuqaq+1dlWGdGdzxvWiCqpDXZFGsj3wyg==
-X-Received: by 2002:a05:620a:272a:b0:795:493f:9f3f with SMTP id
- af79cd13be357-798d269f370mr1142516585a.4.1718648151541; 
- Mon, 17 Jun 2024 11:15:51 -0700 (PDT)
+ bh=tz8mAzBKLZeeLf11HYzcmc5ZaFjBtDHCXl7INRqRcO0=;
+ b=dAe1A+LKKU+tq036a+Mj/uU1VtCGu4ytTu/XNzyremDx3OYscUU5//XQ/TZGhfBZb7
+ LJESN4rbTGgO1X78LynFdqDkeZpxeYEj1UENur2Ff3qyB+QMoBUT5OcESSAcSLQZdWDS
+ mvv6DbS9ZEotAjmU+yy+z4Hxkbmg0k7aXRC8l5HPL8k0adyxDWB+HsUT5nAm8eodvtt7
+ Uwq+JZOlhT6SHdtC5L1I28hBigg9LGfWBWq7IJJTTdVInnwU6+7Hwgy1LW+O/LXTaual
+ X31TVVEyEB/8ipXFHGohdBrQ0JphUPovFszgBVTiN8G++QM9bhnDE/kvkXzZZSmh2/Ce
+ iNSg==
+X-Gm-Message-State: AOJu0YyRQhXJKE8/QJ0UaqyMcWjPCIqYCgaoUt34j45OAepPPjSV/8LB
+ ABNtHfVG1XV4CdmFs05kSF2v958hYdnzXvdDKl6iE3wEqnEd4gP1Id0iBkBwis90XQZXdeaI17h
+ xhkWIqfwJ0eQJPuUSA+GyKn9u5HRmvHnDv3915saYEwNWIO7rG1EfDFBs4FyExtwTd9lDJln9sr
+ RxmURg+P1FAlB6hebBAtTc6QF1E+ZWw5DMQw==
+X-Received: by 2002:a92:b707:0:b0:375:ca48:75e9 with SMTP id
+ e9e14a558f8ab-375e0dfb7a1mr104926535ab.1.1718648149903; 
+ Mon, 17 Jun 2024 11:15:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGsdpZwwufKvv9xaiXPMQn4/OiydT5swjg2BC61HW1ns9+5wQhZNDmup98t4nik66MpxjpovQ==
+X-Received: by 2002:a92:b707:0:b0:375:ca48:75e9 with SMTP id
+ e9e14a558f8ab-375e0dfb7a1mr104926225ab.1.1718648149313; 
+ Mon, 17 Jun 2024 11:15:49 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-798abc07501sm449643685a.89.2024.06.17.11.15.49
+ af79cd13be357-798abc07501sm449643685a.89.2024.06.17.11.15.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 11:15:50 -0700 (PDT)
+ Mon, 17 Jun 2024 11:15:48 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
@@ -71,9 +71,10 @@ Cc: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Eric Blake <eblake@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
  peterx@redhat.com, Jiri Denemark <jdenemar@redhat.com>,
  Bandan Das <bdas@redhat.com>
-Subject: [PATCH v2 08/10] tests/migration-tests: Always enable migration events
-Date: Mon, 17 Jun 2024 14:15:32 -0400
-Message-ID: <20240617181534.1425179-9-peterx@redhat.com>
+Subject: [PATCH v2 07/10] tests/migration-tests: Drop most WIN32 ifdefs for
+ postcopy failure tests
+Date: Mon, 17 Jun 2024 14:15:31 -0400
+Message-ID: <20240617181534.1425179-8-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240617181534.1425179-1-peterx@redhat.com>
 References: <20240617181534.1425179-1-peterx@redhat.com>
@@ -104,33 +105,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Libvirt should always enable it, so it'll be nice qtest also cover that for
-all tests.  Though this patch only enables it, no extra tests are done on
-these events yet.
+Most of them are not needed, we can stick with one ifdef inside
+postcopy_recover_fail() so as to cover the scm right tricks only.
+The tests won't run on windows anyway due to has_uffd always false.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- tests/qtest/migration-test.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tests/qtest/migration-test.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 13b59d4c10..9ae8892e26 100644
+index b7e3406471..13b59d4c10 100644
 --- a/tests/qtest/migration-test.c
 +++ b/tests/qtest/migration-test.c
-@@ -841,6 +841,13 @@ static int test_migrate_start(QTestState **from, QTestState **to,
-         unlink(shmem_path);
-     }
- 
-+    /*
-+     * Always enable migration events.  Libvirt always uses it, let's try
-+     * to mimic as closer as that.
-+     */
-+    migrate_set_capability(*from, "events", true);
-+    migrate_set_capability(*to, "events", true);
-+
-     return 0;
+@@ -1353,9 +1353,9 @@ static void wait_for_postcopy_status(QTestState *one, const char *status)
+                                                   "completed", NULL });
  }
  
+-#ifndef _WIN32
+ static void postcopy_recover_fail(QTestState *from, QTestState *to)
+ {
++#ifndef _WIN32
+     int ret, pair1[2], pair2[2];
+     char c;
+ 
+@@ -1417,8 +1417,8 @@ static void postcopy_recover_fail(QTestState *from, QTestState *to)
+     close(pair1[1]);
+     close(pair2[0]);
+     close(pair2[1]);
++#endif
+ }
+-#endif /* _WIN32 */
+ 
+ static void test_postcopy_recovery_common(MigrateCommon *args)
+ {
+@@ -1458,7 +1458,6 @@ static void test_postcopy_recovery_common(MigrateCommon *args)
+     wait_for_postcopy_status(to, "postcopy-paused");
+     wait_for_postcopy_status(from, "postcopy-paused");
+ 
+-#ifndef _WIN32
+     if (args->postcopy_recovery_test_fail) {
+         /*
+          * Test when a wrong socket specified for recover, and then the
+@@ -1467,7 +1466,6 @@ static void test_postcopy_recovery_common(MigrateCommon *args)
+         postcopy_recover_fail(from, to);
+         /* continue with a good recovery */
+     }
+-#endif /* _WIN32 */
+ 
+     /*
+      * Create a new socket to emulate a new channel that is different
+@@ -1496,7 +1494,6 @@ static void test_postcopy_recovery(void)
+     test_postcopy_recovery_common(&args);
+ }
+ 
+-#ifndef _WIN32
+ static void test_postcopy_recovery_double_fail(void)
+ {
+     MigrateCommon args = {
+@@ -1505,7 +1502,6 @@ static void test_postcopy_recovery_double_fail(void)
+ 
+     test_postcopy_recovery_common(&args);
+ }
+-#endif /* _WIN32 */
+ 
+ #ifdef CONFIG_GNUTLS
+ static void test_postcopy_recovery_tls_psk(void)
+@@ -3486,10 +3482,8 @@ int main(int argc, char **argv)
+                            test_postcopy_preempt);
+         migration_test_add("/migration/postcopy/preempt/recovery/plain",
+                            test_postcopy_preempt_recovery);
+-#ifndef _WIN32
+         migration_test_add("/migration/postcopy/recovery/double-failures",
+                            test_postcopy_recovery_double_fail);
+-#endif /* _WIN32 */
+         if (is_x86) {
+             migration_test_add("/migration/postcopy/suspend",
+                                test_postcopy_suspend);
 -- 
 2.45.0
 
