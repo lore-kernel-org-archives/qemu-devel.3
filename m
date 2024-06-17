@@ -4,74 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA247C2BA15
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 13:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CCAC2BA15
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 13:25:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJCC5-0005JU-DZ; Mon, 17 Jun 2024 09:14:46 -0400
+	id 1sJCL7-0008VQ-F0; Mon, 17 Jun 2024 09:24:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sJCC2-0005JG-8x
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 09:14:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJCL5-0008VC-MU
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 09:24:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sJCC0-0006cr-BO
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 09:14:42 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJCL4-00008a-5b
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 09:24:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718630078;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=MRYCUGewdtJETCsAHD7caB1J0V7Rg1cDwaAL6tfgqzU=;
- b=Slka7zHDM5+gf4wuFh2CnDP5YQY0w2t4e3yhpZmLzcgHtyANLDKcuRBLkmtvmGLSGF8rvd
- 6S/CYjyPr7ce03oyjSg2Ugvj4soPIZuBmQHhrRPHLwiI4OxtXVRyChcCi5M6ORcWICyyG9
- XRcO9Hclwx7j79Xwj93cJrPPa2+VbK4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-qfEfo0hIPQW3nHDyGvPAeg-1; Mon,
- 17 Jun 2024 09:14:33 -0400
-X-MC-Unique: qfEfo0hIPQW3nHDyGvPAeg-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 43AA8195608C; Mon, 17 Jun 2024 13:14:32 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.46])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A36ED1955F2D; Mon, 17 Jun 2024 13:14:26 +0000 (UTC)
-Date: Mon, 17 Jun 2024 14:14:22 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Konstantin Kostiuk <kkostiuk@redhat.com>
-Cc: QEMU <qemu-devel@nongnu.org>, Dehan Meng <demeng@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Yan Vugenfirer <yvugenfi@redhat.com>
-Subject: Re: Guest agent guest-exec memory usage
-Message-ID: <ZnA2rrQ--1liaOH1@redhat.com>
-References: <CAPMcbCpER8hvza6fO8D5Pt-8TN4fx8yP-YR0o8WSorOE44dmJw@mail.gmail.com>
+ s=mimecast20190719; t=1718630641;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=b313t8QGbzWNmuRQH1B7TpBmfxi6fefKIpZa+ZnqFTM=;
+ b=LML4WpgNqVHrLA/w2V9+cZNxdHOoqF8c/3ddLOgNxxQE5nwSVAqBXcu2p4ZXY1YcpElHbS
+ 2oFxMtiwc4WQrGXp4uyMpCzWyRXL+rMgj2JzcwQ8Pa1sBgWjEVKpxdg4VoOUazi9tIH+wM
+ gm1rtjzqsrpGJpXnt32QOC1LrwAcxDI=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-136-qCCSgSWLPBWqRvVkL4BtOQ-1; Mon, 17 Jun 2024 09:23:57 -0400
+X-MC-Unique: qCCSgSWLPBWqRvVkL4BtOQ-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-52c849a1f64so2680813e87.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 06:23:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718630636; x=1719235436;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=b313t8QGbzWNmuRQH1B7TpBmfxi6fefKIpZa+ZnqFTM=;
+ b=MlqzzKrn3YZkIGlCGvUXzH0Q1yCPqEZSC9deigncYkOC6oqHbZxq+aVa6ljTu9VSJc
+ 0L8RyHeQfwHyDOW/LFV4tc+c8Ikc1ffP3SE4inxZKf1llFJB8Vp9MhJnZmLbETzebvjP
+ /3AZ09sXmKC1CbSBEI52Wht/Y68m4MPRh4hf5dYxoyt2RC6thD9lcIB24h5azIVEZJIg
+ FWlTKT8bY0ks+mcq4mSHJvzi71tEa7qIjJzmYxP9pi3tSB9qoBv5yxQ+KDjlwB1V5hO2
+ EtYejrECv3u+M4IH0IZsMBmJCYWL7VY7wlXGMnHCxxUh/tZxzV54DkeGKMnTfR6GUX0t
+ +wRg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX0iNsxCTnHU2jpDUincyVnYa99Q2giUC1wRixcQbGUN/kGGolzGHjTGLd8evwR2VTxg+4SG7oKEv9DYfUektbotBnx2d4=
+X-Gm-Message-State: AOJu0Yy7AvjzUt/xE1I/8sjbPWAqZgxU3Mwkeouw5iet1Wk4ScQpgGbY
+ cDAX67RNuk/tGIyBiturrimqddj0bw+K+m3jRLueNf1b7xoKMqLIdQLEjwRCEmqOHRXPDHxDy1N
+ Tghu/W+1O/m285D0luc1UHWYEvVe+MlsCh0PDhQ7uLa4kysyZEeQT
+X-Received: by 2002:ac2:560a:0:b0:52c:8abe:5204 with SMTP id
+ 2adb3069b0e04-52ca6e6d562mr6347061e87.32.1718630636218; 
+ Mon, 17 Jun 2024 06:23:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG1nD0rKkhfmM/x/BPDmBdX3253dypsX7VRJ1XdJnvvyo2Q/6DLpr87jBGoVMHKmt3T1pU8qg==
+X-Received: by 2002:ac2:560a:0:b0:52c:8abe:5204 with SMTP id
+ 2adb3069b0e04-52ca6e6d562mr6347045e87.32.1718630635793; 
+ Mon, 17 Jun 2024 06:23:55 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-422870e9193sm196065245e9.21.2024.06.17.06.23.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Jun 2024 06:23:55 -0700 (PDT)
+Message-ID: <8b8ac158-ffc4-4d2e-aaf5-2893f1b680f7@redhat.com>
+Date: Mon, 17 Jun 2024 15:23:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPMcbCpER8hvza6fO8D5Pt-8TN4fx8yP-YR0o8WSorOE44dmJw@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/8] HostIOMMUDevice: Introduce get_iova_ranges callback
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
+ jean-philippe@linaro.org, peter.maydell@linaro.org, yanghliu@redhat.com,
+ zhenzhong.duan@intel.com
+Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
+ berrange@redhat.com
+References: <20240614095402.904691-1-eric.auger@redhat.com>
+ <20240614095402.904691-4-eric.auger@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240614095402.904691-4-eric.auger@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,48 +106,122 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 17, 2024 at 04:05:07PM +0300, Konstantin Kostiuk wrote:
-> Hi All,
+On 6/14/24 11:52 AM, Eric Auger wrote:
+> Introduce a new HostIOMMUDevice callback that allows to
+> retrieve the usable IOVA ranges.
 > 
-> During the investigation of a possible memory leak in the `guest-exec`
-> command of guest-agent, I found unexpected behavior for me. When we execute
-> the `guest-exec` command with `capture-output = true`, guest-agent stores
-> stdout/stderr until someone calls `guest-exec-status`.
+> Implement this callback in the legacy VFIO and IOMMUFD VFIO
+> host iommu devices. This relies on the VFIODevice agent's
+> base container iova_ranges resource.
 > 
-> Just for testing, I executed the `man man` command 1000 times with
-> `capture-output = true` and guest-agent allocated 36Mb to store the results
-> and it fully depends on output size.
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > 
-> I want to ask your opinion about this behavior. Is this behavior expected
-> or not? Should we store all output forever or should we limit it by memory
-> size/execution time/execution count?
+> ---
+> 
+> v2 -> v3:
+> - add g_assert(vdev)
+> ---
+>   include/sysemu/host_iommu_device.h |  8 ++++++++
+>   hw/vfio/container.c                | 16 ++++++++++++++++
+>   hw/vfio/iommufd.c                  | 16 ++++++++++++++++
+>   3 files changed, 40 insertions(+)
+> 
+> diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+> index 3e5f058e7b..40e0fa13ef 100644
+> --- a/include/sysemu/host_iommu_device.h
+> +++ b/include/sysemu/host_iommu_device.h
+> @@ -80,6 +80,14 @@ struct HostIOMMUDeviceClass {
+>        * i.e., HOST_IOMMU_DEVICE_CAP_AW_BITS.
+>        */
+>       int (*get_cap)(HostIOMMUDevice *hiod, int cap, Error **errp);
+> +    /**
+> +     * @get_iova_ranges: Return the list of usable iova_ranges along with
+> +     * @hiod Host IOMMU device
+> +     *
+> +     * @hiod: handle to the host IOMMU device
+> +     * @errp: error handle
+> +     */
+> +    GList* (*get_iova_ranges)(HostIOMMUDevice *hiod, Error **errp);
+>   };
+>   
+>   /*
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index b728b978a2..c48749c089 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -1164,12 +1164,28 @@ static int hiod_legacy_vfio_get_cap(HostIOMMUDevice *hiod, int cap,
+>       }
+>   }
+>   
+> +static GList *
+> +hiod_legacy_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
+> +{
+> +    VFIODevice *vdev = hiod->agent;
+> +    GList *l = NULL;
+> +
+> +    g_assert(vdev);
+> +
+> +    if (vdev->bcontainer) {
+> +        l = g_list_copy(vdev->bcontainer->iova_ranges);
+> +    }
+> +
+> +    return l;
+> +}
+> +
+>   static void hiod_legacy_vfio_class_init(ObjectClass *oc, void *data)
+>   {
+>       HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
+>   
+>       hioc->realize = hiod_legacy_vfio_realize;
+>       hioc->get_cap = hiod_legacy_vfio_get_cap;
+> +    hioc->get_iova_ranges = hiod_legacy_vfio_get_iova_ranges;
+>   };
+>   
+>   static const TypeInfo types[] = {
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index dbdae1adbb..e502081c2a 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -645,11 +645,27 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+>       return true;
+>   }
+>   
+> +static GList *
+> +hiod_iommufd_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
+> +{
+> +    VFIODevice *vdev = hiod->agent;
+> +    GList *l = NULL;
+> +
+> +    g_assert(vdev);
+> +
+> +    if (vdev->bcontainer) {
+> +        l = g_list_copy(vdev->bcontainer->iova_ranges);
+> +    }
+> +
+> +    return l;
+> +}
 
-If 'guest-exec' is enabled in the agent, this says that the host OS users
-of the guest-agent are inherently trusted. If they're issuing many guest-exec
-commands with capture-output = true, and then batching up the calls to
-guest-exec-status for a later time, that's their perogative and not any
-worse than other things they can already do with 'guest-exec', such as
-requesting a fork-bomb.
+May be introduce a common vfio_container_get_iova_ranges() to be called from
+the get_iova_ranges() handlers ?
 
-Or to put it another way, if the guest OS admin is worried about malicious
-usage of 'guest-exec' they should block this command entirely.
 
-One of the patches I have in this series:
+Thanks,
 
-  https://lists.nongnu.org/archive/html/qemu-devel/2024-06/threads.html
+C.
 
-proposes blocking guest-exec by default in the agent, as it is an
-inherantly risky command to expose.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>   static void hiod_iommufd_vfio_class_init(ObjectClass *oc, void *data)
+>   {
+>       HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_CLASS(oc);
+>   
+>       hiodc->realize = hiod_iommufd_vfio_realize;
+> +    hiodc->get_iova_ranges = hiod_iommufd_vfio_get_iova_ranges;
+>   };
+>   
+>   static const TypeInfo types[] = {
 
 
