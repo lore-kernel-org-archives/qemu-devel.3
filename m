@@ -4,78 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A9AFC2BA1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 20:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78478C27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 21:02:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJJOy-0005S2-1U; Mon, 17 Jun 2024 16:56:32 -0400
+	id 1sJJU7-0000M5-2k; Mon, 17 Jun 2024 17:01:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1sJJOw-0005Ql-JS; Mon, 17 Jun 2024 16:56:30 -0400
-Received: from mx.treblig.org ([2a00:1098:5b::1])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sJJU5-0000Lu-UY
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 17:01:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1sJJOt-0000M5-LP; Mon, 17 Jun 2024 16:56:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=rzuWFGH9nz0Vt6FWTS7gnA6FC7azHhR2rkN/N3vGe58=; b=bfsfFEQ1jqjK9vmd
- 6+LJ7dz+maV/a3RkzAOh31Pmvf6ROfXGZCwQ2OPDI9KSmcAZ7QYu2OFxtnk+WT/phuflTnsxK6pkM
- hsZ8sTYfePTPAodOax6krwdQIFZs4rp9qwexgaPElbXUw3FviusSPVA37F0VYm9OsMPTPMDN5sOjc
- 4n++TSoDiHQguNtB82FndKLlOa/0QSCQ4QcmW4pvyC4nDyITB++qT1wPTvQMenYpfKygH65KbNNJz
- y/VzHR+QRXuZbCEJyeysM3tNsSGYkjMGf29/3sdCLVjMdhnwymDuoAOlEfDEQdiEd1UaTYBcEF0Gr
- gswHtRxt4P9fhkEhTw==;
-Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1sJJOU-006le1-2O;
- Mon, 17 Jun 2024 20:56:02 +0000
-Date: Mon, 17 Jun 2024 20:56:02 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Mark Burton <mburton@qti.qualcomm.com>, qemu-s390x@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
- Laurent Vivier <lvivier@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Alexandre Iooss <erdnaxe@crans.org>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>, Nicholas Piggin <npiggin@gmail.com>,
- Marco Liebel <mliebel@qti.qualcomm.com>, Thomas Huth <thuth@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>, qemu-ppc@nongnu.org,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Cameron Esfahani <dirty@apple.com>, Jamie Iles <quic_jiles@quicinc.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 9/9] contrib/plugins: add ips plugin example for cost
- modeling
-Message-ID: <ZnCi4hcyR8wMMnK4@gallifrey>
-References: <20240612153508.1532940-1-alex.bennee@linaro.org>
- <20240612153508.1532940-10-alex.bennee@linaro.org>
- <ZmoM2Sac97PdXWcC@gallifrey>
- <777e1b13-9a4f-4c32-9ff7-9cedf7417695@linaro.org>
- <Zmy9g1U1uP1Vhx9N@gallifrey>
- <616df287-a167-4a05-8f08-70a78a544929@linaro.org>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sJJU1-0001gV-QS
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 17:01:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718658104;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=euGjkon8gjRW1fYoRK8Sk2Xmvyl9K4RQGXs4IFjPHF4=;
+ b=Phzv+TQ2NPt+z94fXDNGRakcmBthRvwURr0H58QnrdYNVrPZmgFBg6m7eIz5iLAwbciPl4
+ xGluLBpKZHt451tWy4Ky1v5J2uaYUosfT8yoRI7IwekJBe4Qs7XnwBs57yv5OYYRwLix2L
+ PEIjhmzwZPO0FvtcyPraOn9g5PLklJU=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-5-M-l5GiRqNw6xu98vOfTANg-1; Mon, 17 Jun 2024 17:01:38 -0400
+X-MC-Unique: M-l5GiRqNw6xu98vOfTANg-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-358f9dffbedso2637247f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 14:01:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718658097; x=1719262897;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=euGjkon8gjRW1fYoRK8Sk2Xmvyl9K4RQGXs4IFjPHF4=;
+ b=phyoCC4tfMq1Ulb+iHlSKvDQd0UAwA85k/AJHuIHx0wYxo52CFNXHDw/quDGLcloe8
+ M7lgcP2Usb4yLDYPATTroIFVB+WO8SFDWu9F2CoOBzSbWIW1NWAqBlpts6lcAFBSxj3Y
+ L3nXCbJGSXjTmiRra26ZbkAEwbN5IGZQhiRNqH33+/V5fVl2AKhE7/1Pe94Xo20rmyks
+ QEetxSJZ+0WzzQHg96BoesUzLx6S0PbDIKlFRPal3kzfEVnwG5U4YdzygNCuuduA9rWC
+ NvAmevvegnM8b1ly6pn4JsIAKs0c1QNSshiZk5V4AZviu0PHhe1nQVPA6lW/xLquBTB5
+ ysnQ==
+X-Gm-Message-State: AOJu0Yz0JH9Gl0EnlI5DXapp63/jp/CWs2FYRx65QsHV8tM+elupSzo8
+ b+zn0E4M463f02OTiMr95irJaYkA5e6r4g78Iwa+qfPO+sb3n/TcDZVco+i9ya5np59uoXS/CRw
+ yrHcEW/wBstpYQ5a3NBKCSEYF9xkgGCYT5o41rIjGXlkXKzKz6mOr+mQgPLcvxbqC0cWFQ03A6M
+ 81imefcEeuhqfymFYWMCThG4ygwxY=
+X-Received: by 2002:adf:e789:0:b0:360:9bf5:1eab with SMTP id
+ ffacd0b85a97d-3609bf51f31mr1802203f8f.36.1718658097044; 
+ Mon, 17 Jun 2024 14:01:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEp9pHDIJAXp1Yod3wHjOqnTR7K7g7E/gJr4DhgKlvnuDUKr6YmLf3gkq0wxCc69p4VtTnQwvMghI8e2WMR5Ro=
+X-Received: by 2002:adf:e789:0:b0:360:9bf5:1eab with SMTP id
+ ffacd0b85a97d-3609bf51f31mr1802182f8f.36.1718658096676; Mon, 17 Jun 2024
+ 14:01:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <616df287-a167-4a05-8f08-70a78a544929@linaro.org>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
-X-Uptime: 20:53:22 up 40 days,  8:07,  2 users,  load average: 0.03, 0.02, 0.00
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+ <ef980fb29deb81d574a7301365d9b9db72c015eb.1718101832.git.manos.pitsidianakis@linaro.org>
+In-Reply-To: <ef980fb29deb81d574a7301365d9b9db72c015eb.1718101832.git.manos.pitsidianakis@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 17 Jun 2024 23:01:24 +0200
+Message-ID: <CABgObfaP7DRD8dbSKNmUzhZNyxeHWO0MztaW3_EFYt=vf6SbzA@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 2/5] rust: add bindgen step as a meson dependency
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, John Snow <jsnow@redhat.com>, 
+ Cleber Rosa <crosa@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,297 +107,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Pierrick Bouvier (pierrick.bouvier@linaro.org) wrote:
-> On 6/14/24 15:00, Dr. David Alan Gilbert wrote:
-> > * Pierrick Bouvier (pierrick.bouvier@linaro.org) wrote:
-> > > Hi Dave,
-> > > 
-> > > On 6/12/24 14:02, Dr. David Alan Gilbert wrote:
-> > > > * Alex Bennée (alex.bennee@linaro.org) wrote:
-> > > > > From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> > > > > 
-> > > > > This plugin uses the new time control interface to make decisions
-> > > > > about the state of time during the emulation. The algorithm is
-> > > > > currently very simple. The user specifies an ips rate which applies
-> > > > > per core. If the core runs ahead of its allocated execution time the
-> > > > > plugin sleeps for a bit to let real time catch up. Either way time is
-> > > > > updated for the emulation as a function of total executed instructions
-> > > > > with some adjustments for cores that idle.
-> > > > 
-> > > > A few random thoughts:
-> > > >     a) Are there any definitions of what a plugin that controls time
-> > > >        should do with a live migration?
-> > > 
-> > > It's not something that was considered as part of this work.
-> > 
-> > That's OK, the only thing is we need to stop anyone from hitting problems
-> > when they don't realise it's not been addressed.
-> > One way might be to add a migration blocker; see include/migration/blocker.h
-> > then you might print something like 'Migration not available due to plugin ....'
-> > 
-> 
-> So basically, we could make a call to migrate_add_blocker(), when someone
-> request time_control through plugin API?
-> 
-> IMHO, it's something that should be part of plugin API (if any plugin calls
-> qemu_plugin_request_time_control()), instead of the plugin code itself. This
-> way, any plugin getting time control automatically blocks any potential
-> migration.
+Just one somewhat larger request, otherwise just a collection of ideas.
 
-Note my question asked for a 'any definitions of what a plugin ..' - so
-you could define it that way, another one is to think that in the future
-you may allow it and the plugin somehow interacts with migration not to
-change time at certain migration phases.
+On Tue, Jun 11, 2024 at 12:34=E2=80=AFPM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+> diff --git a/rust/meson.build b/rust/meson.build
+> new file mode 100644
+> index 0000000000..e9660a3045
+> --- /dev/null
+> +++ b/rust/meson.build
+> @@ -0,0 +1,91 @@
+> +rust_targets =3D {}
+> +
+> +cargo_wrapper =3D [
+> +  find_program(meson.global_source_root() / 'scripts/cargo_wrapper.py'),
+> +  '--config-headers', meson.project_build_root() / 'config-host.h',
+> +  '--meson-build-root', meson.project_build_root(),
+> +  '--meson-build-dir', meson.current_build_dir(),
+> +  '--meson-source-dir', meson.current_source_dir(),
+> +]
+>
+> +
+> +# TODO: verify rust_target_triple if given as an option
+> +if rust_target_triple =3D=3D ''
+> +  if not supported_oses.contains(host_os)
+> +    message()
+> +    error('QEMU does not support `' + host_os +'` as a Rust platform.')
+> +  elif not supported_cpus.contains(host_arch)
+> +    message()
+> +    error('QEMU does not support `' + host_arch +'` as a Rust architectu=
+re.')
+> +  endif
+> +  rust_target_triple =3D host_arch + rust_supported_oses[host_os]
+> +  if host_os =3D=3D 'windows' and host_arch =3D=3D 'aarch64'
+> +    rust_target_triple +=3D 'llvm'
+> +  endif
+> +endif
+> +
+> +if get_option('optimization') in ['0', '1', 'g']
+> +  rs_build_type =3D 'debug'
+> +else
+> +  rs_build_type =3D 'release'
+> +endif
+> +
+> +rust_hw_target_list =3D {}
+> +
+> +foreach rust_hw_target, rust_hws: rust_hw_target_list
+> +  foreach rust_hw_dev: rust_hws
+> +    output =3D meson.current_build_dir() / rust_target_triple / rs_build=
+_type / rust_hw_dev['output']
+> +    crate_metadata =3D {
+> +      'name': rust_hw_dev['name'],
+> +      'output': [rust_hw_dev['output']],
+> +      'output-path': output,
+> +      'command': [cargo_wrapper,
+> +        '--crate-dir',
+> +        meson.current_source_dir() / rust_hw_dev['dirname'],
+> +        '--profile',
+> +        rs_build_type,
+> +        '--target-triple',
+> +        rust_target_triple,
+> +        '--outdir',
+> +        '@OUTDIR@',
+> +        'build-lib'
 
-> > > >     b) The sleep in migration/dirtyrate.c points out g_usleep might
-> > > >        sleep for longer, so reads the actual wall clock time to
-> > > >        figure out a new 'now'.
-> > > 
-> > > The current API mentions time starts at 0 from qemu startup. Maybe we could
-> > > consider in the future to change this behavior to retrieve time from an
-> > > existing migrated machine.
-> > 
-> > Ah, I meant for (b) to be independent of (a) - not related to migration; just
-> > down to the fact you used g_usleep in the plugin and a g_usleep might sleep
-> > for a different amount of time than you asked.
-> > 
-> 
-> We know that, and the plugin is not meant to be "cycle accurate" in general,
-> we just set a upper bound for number of instructions we can execute in a
-> given amount of time (1/10 second for now).
-> 
-> We compute the new time based on how many instructions effectively ran on
-> the most used cpu, so even if we slept a bit more than expected, it's
-> correct.
+Probably needs to add config-devices.h as well to --config-headers? I
+think that we can have just one crate that is built per target,
+instead of many small crates like your rust_pl011_cargo. And then that
+crate is built many times with a rust/src/ hierarchy that resembles
+the meson.build files we use for C.
 
-Ah OK.
+rust/src/mod.rs:
+pub mod hw;
 
-Dave
+rust/src/hw/mod.rs:
+pub mod char;
 
-> > > >     c) A fun thing to do with this would be to follow an external simulation
-> > > >        or 2nd qemu, trying to keep the two from running too far past
-> > > >        each other.
-> > > > 
-> > > 
-> > > Basically, to slow the first one, waiting for the replicated one to catch
-> > > up?
-> > 
-> > Yes, something like that.
-> > 
-> > Dave
-> > 
-> > > > Dave >
-> > > > > Examples
-> > > > > --------
-> > > > > 
-> > > > > Slow down execution of /bin/true:
-> > > > > $ num_insn=$(./build/qemu-x86_64 -plugin ./build/tests/plugin/libinsn.so -d plugin /bin/true |& grep total | sed -e 's/.*: //')
-> > > > > $ time ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libips.so,ips=$(($num_insn/4)) /bin/true
-> > > > > real 4.000s
-> > > > > 
-> > > > > Boot a Linux kernel simulating a 250MHz cpu:
-> > > > > $ /build/qemu-system-x86_64 -kernel /boot/vmlinuz-6.1.0-21-amd64 -append "console=ttyS0" -plugin ./build/contrib/plugins/libips.so,ips=$((250*1000*1000)) -smp 1 -m 512
-> > > > > check time until kernel panic on serial0
-> > > > > 
-> > > > > Tested in system mode by booting a full debian system, and using:
-> > > > > $ sysbench cpu run
-> > > > > Performance decrease linearly with the given number of ips.
-> > > > > 
-> > > > > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> > > > > Message-Id: <20240530220610.1245424-7-pierrick.bouvier@linaro.org>
-> > > > > ---
-> > > > >    contrib/plugins/ips.c    | 164 +++++++++++++++++++++++++++++++++++++++
-> > > > >    contrib/plugins/Makefile |   1 +
-> > > > >    2 files changed, 165 insertions(+)
-> > > > >    create mode 100644 contrib/plugins/ips.c
-> > > > > 
-> > > > > diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
-> > > > > new file mode 100644
-> > > > > index 0000000000..db77729264
-> > > > > --- /dev/null
-> > > > > +++ b/contrib/plugins/ips.c
-> > > > > @@ -0,0 +1,164 @@
-> > > > > +/*
-> > > > > + * ips rate limiting plugin.
-> > > > > + *
-> > > > > + * This plugin can be used to restrict the execution of a system to a
-> > > > > + * particular number of Instructions Per Second (ips). This controls
-> > > > > + * time as seen by the guest so while wall-clock time may be longer
-> > > > > + * from the guests point of view time will pass at the normal rate.
-> > > > > + *
-> > > > > + * This uses the new plugin API which allows the plugin to control
-> > > > > + * system time.
-> > > > > + *
-> > > > > + * Copyright (c) 2023 Linaro Ltd
-> > > > > + *
-> > > > > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > > > > + */
-> > > > > +
-> > > > > +#include <stdio.h>
-> > > > > +#include <glib.h>
-> > > > > +#include <qemu-plugin.h>
-> > > > > +
-> > > > > +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-> > > > > +
-> > > > > +/* how many times do we update time per sec */
-> > > > > +#define NUM_TIME_UPDATE_PER_SEC 10
-> > > > > +#define NSEC_IN_ONE_SEC (1000 * 1000 * 1000)
-> > > > > +
-> > > > > +static GMutex global_state_lock;
-> > > > > +
-> > > > > +static uint64_t max_insn_per_second = 1000 * 1000 * 1000; /* ips per core, per second */
-> > > > > +static uint64_t max_insn_per_quantum; /* trap every N instructions */
-> > > > > +static int64_t virtual_time_ns; /* last set virtual time */
-> > > > > +
-> > > > > +static const void *time_handle;
-> > > > > +
-> > > > > +typedef struct {
-> > > > > +    uint64_t total_insn;
-> > > > > +    uint64_t quantum_insn; /* insn in last quantum */
-> > > > > +    int64_t last_quantum_time; /* time when last quantum started */
-> > > > > +} vCPUTime;
-> > > > > +
-> > > > > +struct qemu_plugin_scoreboard *vcpus;
-> > > > > +
-> > > > > +/* return epoch time in ns */
-> > > > > +static int64_t now_ns(void)
-> > > > > +{
-> > > > > +    return g_get_real_time() * 1000;
-> > > > > +}
-> > > > > +
-> > > > > +static uint64_t num_insn_during(int64_t elapsed_ns)
-> > > > > +{
-> > > > > +    double num_secs = elapsed_ns / (double) NSEC_IN_ONE_SEC;
-> > > > > +    return num_secs * (double) max_insn_per_second;
-> > > > > +}
-> > > > > +
-> > > > > +static int64_t time_for_insn(uint64_t num_insn)
-> > > > > +{
-> > > > > +    double num_secs = (double) num_insn / (double) max_insn_per_second;
-> > > > > +    return num_secs * (double) NSEC_IN_ONE_SEC;
-> > > > > +}
-> > > > > +
-> > > > > +static void update_system_time(vCPUTime *vcpu)
-> > > > > +{
-> > > > > +    int64_t elapsed_ns = now_ns() - vcpu->last_quantum_time;
-> > > > > +    uint64_t max_insn = num_insn_during(elapsed_ns);
-> > > > > +
-> > > > > +    if (vcpu->quantum_insn >= max_insn) {
-> > > > > +        /* this vcpu ran faster than expected, so it has to sleep */
-> > > > > +        uint64_t insn_advance = vcpu->quantum_insn - max_insn;
-> > > > > +        uint64_t time_advance_ns = time_for_insn(insn_advance);
-> > > > > +        int64_t sleep_us = time_advance_ns / 1000;
-> > > > > +        g_usleep(sleep_us);
-> > > > > +    }
-> > > > > +
-> > > > > +    vcpu->total_insn += vcpu->quantum_insn;
-> > > > > +    vcpu->quantum_insn = 0;
-> > > > > +    vcpu->last_quantum_time = now_ns();
-> > > > > +
-> > > > > +    /* based on total number of instructions, what should be the new time? */
-> > > > > +    int64_t new_virtual_time = time_for_insn(vcpu->total_insn);
-> > > > > +
-> > > > > +    g_mutex_lock(&global_state_lock);
-> > > > > +
-> > > > > +    /* Time only moves forward. Another vcpu might have updated it already. */
-> > > > > +    if (new_virtual_time > virtual_time_ns) {
-> > > > > +        qemu_plugin_update_ns(time_handle, new_virtual_time);
-> > > > > +        virtual_time_ns = new_virtual_time;
-> > > > > +    }
-> > > > > +
-> > > > > +    g_mutex_unlock(&global_state_lock);
-> > > > > +}
-> > > > > +
-> > > > > +static void vcpu_init(qemu_plugin_id_t id, unsigned int cpu_index)
-> > > > > +{
-> > > > > +    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
-> > > > > +    vcpu->total_insn = 0;
-> > > > > +    vcpu->quantum_insn = 0;
-> > > > > +    vcpu->last_quantum_time = now_ns();
-> > > > > +}
-> > > > > +
-> > > > > +static void vcpu_exit(qemu_plugin_id_t id, unsigned int cpu_index)
-> > > > > +{
-> > > > > +    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
-> > > > > +    update_system_time(vcpu);
-> > > > > +}
-> > > > > +
-> > > > > +static void every_quantum_insn(unsigned int cpu_index, void *udata)
-> > > > > +{
-> > > > > +    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
-> > > > > +    g_assert(vcpu->quantum_insn >= max_insn_per_quantum);
-> > > > > +    update_system_time(vcpu);
-> > > > > +}
-> > > > > +
-> > > > > +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-> > > > > +{
-> > > > > +    size_t n_insns = qemu_plugin_tb_n_insns(tb);
-> > > > > +    qemu_plugin_u64 quantum_insn =
-> > > > > +        qemu_plugin_scoreboard_u64_in_struct(vcpus, vCPUTime, quantum_insn);
-> > > > > +    /* count (and eventually trap) once per tb */
-> > > > > +    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-> > > > > +        tb, QEMU_PLUGIN_INLINE_ADD_U64, quantum_insn, n_insns);
-> > > > > +    qemu_plugin_register_vcpu_tb_exec_cond_cb(
-> > > > > +        tb, every_quantum_insn,
-> > > > > +        QEMU_PLUGIN_CB_NO_REGS, QEMU_PLUGIN_COND_GE,
-> > > > > +        quantum_insn, max_insn_per_quantum, NULL);
-> > > > > +}
-> > > > > +
-> > > > > +static void plugin_exit(qemu_plugin_id_t id, void *udata)
-> > > > > +{
-> > > > > +    qemu_plugin_scoreboard_free(vcpus);
-> > > > > +}
-> > > > > +
-> > > > > +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-> > > > > +                                           const qemu_info_t *info, int argc,
-> > > > > +                                           char **argv)
-> > > > > +{
-> > > > > +    for (int i = 0; i < argc; i++) {
-> > > > > +        char *opt = argv[i];
-> > > > > +        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-> > > > > +        if (g_strcmp0(tokens[0], "ips") == 0) {
-> > > > > +            max_insn_per_second = g_ascii_strtoull(tokens[1], NULL, 10);
-> > > > > +            if (!max_insn_per_second && errno) {
-> > > > > +                fprintf(stderr, "%s: couldn't parse %s (%s)\n",
-> > > > > +                        __func__, tokens[1], g_strerror(errno));
-> > > > > +                return -1;
-> > > > > +            }
-> > > > > +        } else {
-> > > > > +            fprintf(stderr, "option parsing failed: %s\n", opt);
-> > > > > +            return -1;
-> > > > > +        }
-> > > > > +    }
-> > > > > +
-> > > > > +    vcpus = qemu_plugin_scoreboard_new(sizeof(vCPUTime));
-> > > > > +    max_insn_per_quantum = max_insn_per_second / NUM_TIME_UPDATE_PER_SEC;
-> > > > > +
-> > > > > +    time_handle = qemu_plugin_request_time_control();
-> > > > > +    g_assert(time_handle);
-> > > > > +
-> > > > > +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-> > > > > +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
-> > > > > +    qemu_plugin_register_vcpu_exit_cb(id, vcpu_exit);
-> > > > > +    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-> > > > > +
-> > > > > +    return 0;
-> > > > > +}
-> > > > > diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
-> > > > > index 0b64d2c1e3..449ead1130 100644
-> > > > > --- a/contrib/plugins/Makefile
-> > > > > +++ b/contrib/plugins/Makefile
-> > > > > @@ -27,6 +27,7 @@ endif
-> > > > >    NAMES += hwprofile
-> > > > >    NAMES += cache
-> > > > >    NAMES += drcov
-> > > > > +NAMES += ips
-> > > > >    ifeq ($(CONFIG_WIN32),y)
-> > > > >    SO_SUFFIX := .dll
-> > > > > -- 
-> > > > > 2.39.2
-> > > > > 
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+rust/src/hw/char/mod.rs:
+#[cfg(feature =3D "CONFIG_PL011")] pub mod pl011;
+
+(perhaps just src/? And we could even move all sources down one level
+to src/ for QEMU as well? But that can be done later, for now it can
+be rust/src/). This basically gives Kconfig integration for free if it
+works, so I'd ask you to try doing this for the next version?
+
+Also, sooner or later we'll have to tackle building a set of common
+dependencies (similar to common_ss), and then bringing those as a
+dependency to the build of the per-target crates. Even if we don't get
+to the point of building devices once for all targets, I'd rather at
+least avoid having to build a dozen times the common deps of
+procedural macros.
+
+This is not trivial, but should not be hard either, by using build.rs
+(cargo::rustc-link-search) to add the -Ldependency=3D/path/to/rlibs
+option to the per-target rustc invocations. This may also require
+grabbing the compilation log via "cargo build
+--message-format=3Djson-render-diagnostics", but that's not hard to do
+in cargo_wrapper.py. And unlike the previous request about Kconfig, it
+can be done after the first merge.
+
+> +#include "qemu/osdep.h"
+> +#include "qemu/module.h"
+> +#include "qemu-io.h"
+> +#include "sysemu/sysemu.h"
+> +#include "hw/sysbus.h"
+> +#include "exec/memory.h"
+> +#include "chardev/char-fe.h"
+> +#include "hw/clock.h"
+> +#include "hw/qdev-clock.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/qdev-properties-system.h"
+> +#include "hw/irq.h"
+> +#include "qapi/error.h"
+> +#include "migration/vmstate.h"
+> +#include "chardev/char-serial.h"
+
+Please check for any headers included indirectly and whether it's
+worth including them here (e.g. it seems that qapi/error.h,
+qom/object.h, hw/qdev-core.h should be there).
+
+> diff --git a/scripts/cargo_wrapper.py b/scripts/cargo_wrapper.py
+> index d338effdaa..a36a4fc86d 100644
+> --- a/scripts/cargo_wrapper.py
+> +++ b/scripts/cargo_wrapper.py
+> @@ -94,6 +94,8 @@ def get_cargo_rustc(args: argparse.Namespace) -> tuple[=
+Dict[str, Any], List[str]
+>
+>      env =3D os.environ
+>      env["CARGO_ENCODED_RUSTFLAGS"] =3D cfg
+> +    env["MESON_BUILD_DIR"] =3D str(target_dir)
+> +    env["MESON_BUILD_ROOT"] =3D str(args.meson_build_root)
+>
+>      return (env, cargo_cmd)
+>
+> @@ -164,6 +166,14 @@ def main() -> None:
+>          required=3DTrue,
+>      )
+>      parser.add_argument(
+> +        "--meson-build-root",
+> +        metavar=3D"BUILD_ROOT",
+> +        help=3D"meson.project_build_root()",
+> +        type=3Dpathlib.Path,
+> +        dest=3D"meson_build_root",
+> +        required=3DTrue,
+> +    )
+> +    parser.add_argument(
+>          "--meson-source-dir",
+>          metavar=3D"SOURCE_DIR",
+>          help=3D"meson.current_source_dir()",
+
+Probably all of cargo_wrapper.py can be moved to this patch.
+
+Paolo
+
 
