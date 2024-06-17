@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93C50C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:59:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C69C27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJHYx-0004Xe-Ca; Mon, 17 Jun 2024 14:58:43 -0400
+	id 1sJHZI-0006ex-Sm; Mon, 17 Jun 2024 14:59:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHYq-0004O6-2x
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:36 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1sJHZ3-00053M-Lw
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:49 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHYn-0004xQ-Fc
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:35 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-705c739b878so3731769b3a.1
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:33 -0700 (PDT)
+ id 1sJHZ0-00050s-KZ
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:48 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-70599522368so3239788b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718650712; x=1719255512; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1718650725; x=1719255525; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wZAkE2x+3rn50ou2R0RV1RQgcl9m9dXIeubdRtD95RA=;
- b=D2VvmA/HxodUXhiR52QsmwJHMoU4RI1ql9lkLKZQys1O1bq7Sijt70VmWjCmVb24ED
- RlFHra5jIwvNtEkvDAUDLHs31p5DG3pDRvl+GOCjf464uFoad62cUcrug6z9ruEZiEW3
- tYvR3AyJqC3uu3Be2UI3Y73N30UXmO8gys7uYRmBYMmo0uBz7lHdyzjGG3X1B4WdB7ps
- 5SS6fPk5Rqi7qgSNYqABk4YRDmNgpVENTVjk8gf0mdodXzhyW9QTPeI6+LU2564xnkeB
- h5Tl6FIzV/Z2ABGkgYD0gMNI/A2T2VYMiltL2F7yoa5oyAgohDxsfS5SM4c3jrn+ZWUk
- 9CAA==
+ bh=BAd8HJ17iktB7tRhvtL5nkQqb3WYzbcst6424yQv9pA=;
+ b=m3KXzpR1ApjwfOGUeJ+Q7Ua702rZZqJNhE0YhYYdfEvRI4jjNR58EkHb4gHBJysuuB
+ qFp8jVyrx9V/q93YaPwVJGql3t6nPyRCiil79nak/YbnkHIsfSpZPnbYmZMYe/+WcsSq
+ 3BlNitaenkTLzmSESTDTTm7XiZeu69c9ro9WAXphjaQ2rLpaP2vd+Z/uWjIbl+iGnqjQ
+ JKGYyKUHe53mRM6V5D9bddh9WAGOeVrzW11vXFBqCHLF/ETYyMOcWLGl9KUU0W+EbUfA
+ D1GM+9GmgiPUnBrD+C2WwMZQ+wGJTF2VO2wczMrHCZqxjdP8OfFDXS6XdE7m5x9V8OK8
+ IXKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718650712; x=1719255512;
+ d=1e100.net; s=20230601; t=1718650725; x=1719255525;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wZAkE2x+3rn50ou2R0RV1RQgcl9m9dXIeubdRtD95RA=;
- b=kJgK3pwUiJGc1RYizGFwzxW/v6oQ7SqCnI0Shgt9JGI3wx76aJMTQu6gTOHVi9wbz1
- FXVQdqikjErre/UfHSOQxgkhGwbeVC4SCg3fHYPJo2RNojzx1hNPCZ2bZFEK1uBV6xNI
- WD6VUfwRESXmfXKcAak65oA52eTcJ1Qc2YE7VjXCpUdRawNPEU4T/UvgzFGPMra/57qE
- 2SrHMIrTwTUiV3fwHBljBHrae1tdr7QsKwS7+TLrqdeT549ejl+Gk2LN01gMIcoBt6Lo
- yNkaeSCCBUlpFhKwUA43SA5AIAbfv+F5YUGlm6WNk/BxvITFy8WxeE7lepcXvA07HU1/
- MnyQ==
-X-Gm-Message-State: AOJu0YwJM6oPh6BcOq0YhcKFncFZ6fbTPD59ue/Kq5qnHX6ZAn0y9WYQ
- M9bSvbFc1TjFKtqj+SHV/O/iUORQwpGuwLSXRzE71WbWr9QIsr3jx8gv+BuqKr0=
-X-Google-Smtp-Source: AGHT+IHRbFlCvKBEpVFR2cz9r34zw2KyjxSwv+TKD93wEBRq+yIk2O0b4TwQXgKzQAag03a9z2GYnw==
-X-Received: by 2002:a05:6a20:aa82:b0:1b7:bdb3:7bb6 with SMTP id
- adf61e73a8af0-1bcaadd3da5mr741610637.0.1718650711553; 
- Mon, 17 Jun 2024 11:58:31 -0700 (PDT)
+ bh=BAd8HJ17iktB7tRhvtL5nkQqb3WYzbcst6424yQv9pA=;
+ b=MoHdx375U1dVcl63VtHY6zwGood7LVcEncKIFmfKEwMqOW8IQG/K3ppsj/2SrJNSN5
+ q9iWM6ihsNT5sECBV4hziMKLtiOOG/ydTj5V77fbG32SeaDoSZLNlolkA5LaIyJ/6Zfa
+ yyes1n4ccnutffDjINaMRkm/g4YVmo+pkirVJr4N7EjUV5rTxRd0Qgfe85eyb9eHmjRc
+ AVI6D8un1VBYqQwFTnH8uymZzf9oaV9xpn3LZ0WucDinZIbiIAn+fBA76K406VuTTGUA
+ RWTRBQG/5yz3tyRR4LapaXaYd88e0sMOig1TBrojxS39qNXqPWbRcH/sUEMhLCw3ohtw
+ uQWA==
+X-Gm-Message-State: AOJu0YzOsQFxB/cgqW6LofRD1ay/dwSWnj4gYFVJnOvacyQPpqwL8iOZ
+ zi53QLL2JD/GC1a3rrzSaH5q897RqZv8xuFsxOlmPRvW1yfRlD76961Yk7n6uEo=
+X-Google-Smtp-Source: AGHT+IHWUFWvbNiCzT9J2QIDgji/4PIdsFY1BYIQgFWTTXCdfdhCCOiJcYTTvFt2CW6aGJZdg9jx5w==
+X-Received: by 2002:a05:6a21:78a8:b0:1b8:14aa:b594 with SMTP id
+ adf61e73a8af0-1bae7ba33c9mr10481320637.0.1718650724595; 
+ Mon, 17 Jun 2024 11:58:44 -0700 (PDT)
 Received: from localhost.localdomain ([106.222.222.115])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.29
+ d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 11:58:31 -0700 (PDT)
+ Mon, 17 Jun 2024 11:58:44 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>,
  Stacey Son <sson@FreeBSD.org>, Ajeet Singh <itachis@FreeBSD.org>,
  Sean Bruno <sbruno@freebsd.org>
-Subject: [PATCH 05/23] Managing CPU register for BSD-USER
-Date: Tue, 18 Jun 2024 00:27:46 +0530
-Message-Id: <20240617185804.25075-6-itachis@FreeBSD.org>
+Subject: [PATCH 11/23] Update ARM AArch64 VM parameter definitions for bsd-user
+Date: Tue, 18 Jun 2024 00:27:52 +0530
+Message-Id: <20240617185804.25075-12-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240617185804.25075-1-itachis@FreeBSD.org>
 References: <20240617185804.25075-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=itachis6234@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=itachis6234@gmail.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,26 +99,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Stacey Son <sson@FreeBSD.org>
 
-Added structure for storing register states
+Defined address spaces for FreeBSD/arm64 and added function for
+getting stack pointer from CPU and setting a return value.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
 Co-authored-by: Sean Bruno <sbruno@freebsd.org>
+Co-authored-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/aarch64/target_syscall.h | 51 +++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
- create mode 100644 bsd-user/aarch64/target_syscall.h
+ bsd-user/aarch64/target_arch_vmparam.h | 68 ++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
+ create mode 100644 bsd-user/aarch64/target_arch_vmparam.h
 
-diff --git a/bsd-user/aarch64/target_syscall.h b/bsd-user/aarch64/target_syscall.h
+diff --git a/bsd-user/aarch64/target_arch_vmparam.h b/bsd-user/aarch64/target_arch_vmparam.h
 new file mode 100644
-index 0000000000..08ae913c42
+index 0000000000..dc66e1289b
 --- /dev/null
-+++ b/bsd-user/aarch64/target_syscall.h
-@@ -0,0 +1,51 @@
++++ b/bsd-user/aarch64/target_arch_vmparam.h
+@@ -0,0 +1,68 @@
 +/*
-+ * ARM AArch64 specific CPU for bsd-user
++ * ARM AArch64 VM parameters definitions for bsd-user.
 + *
-+ * Copyright (c) 2015 Stacey D. Son <sson at Freebsd>
++ * Copyright (c) 2015 Stacey D. Son <sson at FreeBSD>
 + *
 + * This library is free software; you can redistribute it and/or
 + * modify it under the terms of the GNU Lesser General Public
@@ -134,38 +137,55 @@ index 0000000000..08ae913c42
 + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
 + */
 +
-+#ifndef BSD_USER_AARCH64_TARGET_SYSCALL_H
-+#define BSD_USER_AARCH64_TARGET_SYSCALL_H
++#ifndef TARGET_ARCH_VMPARAM_H
++#define TARGET_ARCH_VMPARAM_H
 +
-+/*
-+ * The aarch64 registers are named:
++#include "cpu.h"
++
++/**
++ * FreeBSD/arm64 Address space layout.
 + *
-+ * x0 through x30 - for 64-bit-wide access (same registers)
-+ * Register '31' is one of two registers depending on the instruction context:
-+ *  For instructions dealing with the stack, it is the stack pointer, named rsp
-+ *  For all other instructions, it is a "zero" register, which returns 0 when
-+ *  read and discards data when written - named rzr (xzr, wzr)
++ * ARMv8 implements up to a 48 bit virtual address space. The address space is
++ * split into 2 regions at each end of the 64 bit address space, with an
++ * out of range "hole" in the middle.
 + *
-+ * Usage during syscall/function call:
-+ * r0-r7 are used for arguments and return values
-+ * For syscalls, the syscall number is in r8
-+ * r9-r15 are for temporary values (may get trampled)
-+ * r16-r18 are used for intra-procedure-call and platform values (avoid)
-+ * The called routine is expected to preserve r19-r28
-+ * r29 and r30 are used as the frame register and link register (avoid)
-+ * See the ARM Procedure Call Reference for details.
++ * We limit the size of the two spaces to 39 bits each.
++ *
++ * Upper region:        0xffffffffffffffff
++ *                      0xffffff8000000000
++ *
++ * Hole:                0xffffff7fffffffff
++ *                      0x0000008000000000
++ *
++ * Lower region:        0x0000007fffffffff
++ *                      0x0000000000000000
++ *
++ * The upper region for the kernel, and the lower region for userland.
 + */
-+struct target_pt_regs {
-+    uint64_t    regs[31];
-+    uint64_t    sp;
-+    uint64_t    pc;
-+    uint64_t    pstate;
-+};
 +
-+#define TARGET_HW_MACHINE       "arm64"
-+#define TARGET_HW_MACHINE_ARCH  "aarch64"
 +
-+#endif /* BSD_USER_AARCH64_TARGET_SYSCALL_H */
++/* compare to sys/arm64/include/vmparam.h */
++#define TARGET_MAXTSIZ      (1 * GiB)           /* max text size */
++#define TARGET_DFLDSIZ      (128 * MiB)         /* initial data size limit */
++#define TARGET_MAXDSIZ      (1 * GiB)           /* max data size */
++#define TARGET_DFLSSIZ      (128 * MiB)         /* initial stack size limit */
++#define TARGET_MAXSSIZ      (1 * GiB)           /* max stack size */
++#define TARGET_SGROWSIZ     (128 * KiB)         /* amount to grow stack */
++
++                /* KERNBASE - 512 MB */
++#define TARGET_VM_MAXUSER_ADDRESS   (0x00007fffff000000ULL - (512 * MiB))
++#define TARGET_USRSTACK             TARGET_VM_MAXUSER_ADDRESS
++
++static inline abi_ulong get_sp_from_cpustate(CPUARMState *state)
++{
++    return state->xregs[31]; /* sp */
++}
++
++static inline void set_second_rval(CPUARMState *state, abi_ulong retval2)
++{
++    state->xregs[1] = retval2; /* XXX not really used on 64-bit arch */
++}
++#endif /* TARGET_ARCH_VMPARAM_H */
 -- 
 2.34.1
 
