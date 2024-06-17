@@ -4,95 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DAA7C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 17:36:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C573EC2BA1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 17:43:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJGHE-0001Mg-Cx; Mon, 17 Jun 2024 13:36:20 -0400
+	id 1sJGNc-00037T-RL; Mon, 17 Jun 2024 13:42:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJGHA-0001Il-KL
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 13:36:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJGNZ-00036z-Nt
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 13:42:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJGH7-0008CM-OZ
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 13:36:15 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJGNX-0000jH-I8
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 13:42:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718645772;
+ s=mimecast20190719; t=1718646170;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DxI5iVshJquNI/TqRcQHFevNIbkEjKSgsfyxVppwjdA=;
- b=EJUEQpfZxZP+VQeXlybw5HgLfFGoKK6zYVVZk17go050AqELRQXv7KHTs+f4eLJzyoxaZk
- JA9Qq9ynwWPAuQW+r4WXmIUOBVvufcJ+X4wXowMv9ptHxwOvN0n8M1O44hYEN3/nWBWPuL
- 2w7APz0PxyTEOOKFkvk82BcP/on6MkA=
-Received: from mail-yb1-f198.google.com (mail-yb1-f198.google.com
- [209.85.219.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2iH2avmUGLmY35A4rTBBzlKbE39Hh8bZpQcKOwGn7s4=;
+ b=GL6dmz/ecF04eYWIUBg72QuOHR81UfHeUgTw+XCXNBGECTp5hiGOcdtF/Ou9g6Uj/L9Mc0
+ pAzZfLELHybJxSUYIr7Uxk2IhlgaSc0sZtUcLOQMq7TjERmFDUUtLBmsnM/b6bm+pIRXMf
+ mchyPNJdJu8c4r1+DQxazz/dHc1gfmE=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-148-aLAOn6FqPOWr4_n_YuuO6g-1; Mon, 17 Jun 2024 13:36:11 -0400
-X-MC-Unique: aLAOn6FqPOWr4_n_YuuO6g-1
-Received: by mail-yb1-f198.google.com with SMTP id
- 3f1490d57ef6-dff151b19f0so6851205276.2
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 10:36:11 -0700 (PDT)
+ us-mta-275-PxIJIgWbOkWdt8c1tDMNNg-1; Mon, 17 Jun 2024 13:42:45 -0400
+X-MC-Unique: PxIJIgWbOkWdt8c1tDMNNg-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2c2db1fc2fbso4789830a91.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 10:42:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718645771; x=1719250571;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DxI5iVshJquNI/TqRcQHFevNIbkEjKSgsfyxVppwjdA=;
- b=S/3vaR7S1dx+okP1aHfih1q9oWU7jd7ZHfqI9occNiAeQh1Owz65WfEE5u7wHwVeJW
- cJCH7kiBNkiLLutFARKpSFss4A6zW5YSwgm8IgBHW3LXYvXQjqF7xeE4upzKaWONEWuC
- iqUQiE1zFp5lNsjBbR93wucH9cmREhO1yPyoUNtqrwigYse+tW/FNDSNbzYdZE0F5n+/
- 5D3EdMsz5q7QOSb1DmKlkf1CeQpbJINOOiakdzGQNJ65gQanHmt1ozEyTa4t5aFVJBB4
- bRcOf0JKCvKcXstZl+IEiTVxQPQ6880rxma8L0mVVBR9Up9NTZHtMSzLPr/nkVsocKxn
- bFbA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUfQPpXWezKbbOBVtGxZZ/axLwcSNhKR5TEZxOOR1yFDlc2om4ZL/9PPnVxzr4S4U8ogKqOEtC+3FrNrw67NvVZXzsj4oM=
-X-Gm-Message-State: AOJu0Yw4pjxnYcEHivGw2GOfTrvhTVHWOGg6AaffJxf6ptSaRpQvBeDG
- gb1c3KyQNDrgDD7d0ez11xMsxKf5Sa+xijJBdDJH/umYOI2fCoHfedCXBPOR5oUgLauTDu+21Ae
- N65+h3w2FRhdOauHoVQ03f6qdJr/zb4KgJA9ZTbguhj7yVCpi2Jqo
-X-Received: by 2002:a25:aea4:0:b0:dcd:19ba:10df with SMTP id
- 3f1490d57ef6-dff154c4a34mr9856567276.56.1718645770811; 
- Mon, 17 Jun 2024 10:36:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSNHRwqDgQP1evwZy3k1hAiDt1Et/QL078o6Px4he7oHpTUtH9KFR+UKu72UcNziLUW4H4GA==
-X-Received: by 2002:a25:aea4:0:b0:dcd:19ba:10df with SMTP id
- 3f1490d57ef6-dff154c4a34mr9856546276.56.1718645770422; 
- Mon, 17 Jun 2024 10:36:10 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b2a5ee0346sm57483816d6.115.2024.06.17.10.36.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Jun 2024 10:36:10 -0700 (PDT)
-Message-ID: <94056c98-21bd-4a19-9c33-a549e0cb5dd1@redhat.com>
-Date: Mon, 17 Jun 2024 19:36:07 +0200
+ d=1e100.net; s=20230601; t=1718646164; x=1719250964;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2iH2avmUGLmY35A4rTBBzlKbE39Hh8bZpQcKOwGn7s4=;
+ b=qFYHd5+2vh19MDT92csqBfO/2nAnsf/VbHW4Pk0b/yCkRy30gAbSiqF/NzfaeWD3+/
+ 06WFUalDU5ox8DSRm1sJ9whlybyWtF7dJv2dhogCCLZlwrgc+MX3pjtrUS7Y6P/s3Njz
+ nTkIl8K4IaNy8NFf9dyutQrf2CUS7MHZwSNhMhhW3ls/QJ3e9G6j7riX7Oho8cxKO2c0
+ sEEKnfYsiKqKB2S6D6cY89RLiWDizWaaErt7p/7PquTRV1ZT0kybMLGB0gGARguOkePp
+ fzUMIhOWWDH6BpFkjRfAMWKNFV324t59HM1y0Q/dvncSCCpsG+6KY+vm0mNdmgvb021Q
+ 3Mtg==
+X-Gm-Message-State: AOJu0YzRvBoDs8kBbkp56VKXNL/Z+wMEBncD6Z8ngR3Y6iUgzwZowWNm
+ swLwmdDgVmZ1tj5cEfA2791eM9dkrUb29JY0Uug4m8dudsB9uq4kUhg+FWtoOFC1tVMM2dnYx/n
+ 2hgBxaBZXDvRJSDkrQSGt1Wp4BII57V9ay5XxYs7Kd0YOcfnOyFCO+CotYnN9sPpd9pP88lSEuP
+ krh2gTAuV4WfWN28l+gsa7j1TNDIo=
+X-Received: by 2002:a17:90a:c7d0:b0:2c3:3cee:7d7b with SMTP id
+ 98e67ed59e1d1-2c4da9ceaa8mr10700651a91.0.1718646164285; 
+ Mon, 17 Jun 2024 10:42:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHGdS0KjKgewO2ZADxUItM9y3B1ZYA2xZ7daAiT8Eq8OBZCVX6WcNlLoAn842RWHxZgrIEnCgzdIjo1nWdTQ8s=
+X-Received: by 2002:a17:90a:c7d0:b0:2c3:3cee:7d7b with SMTP id
+ 98e67ed59e1d1-2c4da9ceaa8mr10700600a91.0.1718646163756; Mon, 17 Jun 2024
+ 10:42:43 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 00/17] Add a host IOMMU device abstraction to check
- with vIOMMU
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
-References: <20240605083043.317831-1-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240605083043.317831-1-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+References: <20240514215740.940155-1-jsnow@redhat.com>
+ <20240514215740.940155-14-jsnow@redhat.com>
+ <871q4z5039.fsf@pond.sub.org>
+In-Reply-To: <871q4z5039.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 17 Jun 2024 13:42:31 -0400
+Message-ID: <CAFn=p-a1kkP7V6C_c2UD7K50XzBtaweHfKU08oQ9fonnpjZmQQ@mail.gmail.com>
+Subject: Re: [PATCH 13/20] docs/qapidoc: fix nested parsing under untagged
+ sections
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>, 
+ Ani Sinha <anisinha@redhat.com>, Michael Roth <michael.roth@amd.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Jiri Pirko <jiri@resnulli.us>,
+ Mads Ynddal <mads@ynddal.dk>, 
+ Jason Wang <jasowang@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Qemu-block <qemu-block@nongnu.org>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ Victor Toso de Carvalho <victortoso@redhat.com>, Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Lukas Straub <lukasstraub2@web.de>, 
+ Yanan Wang <wangyanan55@huawei.com>, Hanna Reitz <hreitz@redhat.com>
+Content-Type: multipart/alternative; boundary="00000000000015ed6d061b197e38"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,209 +114,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Michael,
+--00000000000015ed6d061b197e38
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/5/24 10:30 AM, Zhenzhong Duan wrote:
-> Hi,
-> 
-> This series introduce a HostIOMMUDevice abstraction and sub-classes.
-> Also HostIOMMUDeviceCaps structure in HostIOMMUDevice and a new interface
-> between vIOMMU and HostIOMMUDevice.
-> 
-> A HostIOMMUDevice is an abstraction for an assigned device that is protected
-> by a physical IOMMU (aka host IOMMU). The userspace interaction with this
-> physical IOMMU can be done either through the VFIO IOMMU type 1 legacy
-> backend or the new iommufd backend. The assigned device can be a VFIO device
-> or a VDPA device. The HostIOMMUDevice is needed to interact with the host
-> IOMMU that protects the assigned device. It is especially useful when the
-> device is also protected by a virtual IOMMU as this latter use the translation
-> services of the physical IOMMU and is constrained by it. In that context the
-> HostIOMMUDevice can be passed to the virtual IOMMU to collect physical IOMMU
-> capabilities such as the supported address width. In the future, the virtual
-> IOMMU will use the HostIOMMUDevice to program the guest page tables in the
-> first translation stage of the physical IOMMU.
+On Fri, Jun 14, 2024, 5:46=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
+ wrote:
+
+> John Snow <jsnow@redhat.com> writes:
+>
+> > Sphinx does not like sections without titles, because it wants to
+> > convert every section into a reference. When there is no title, it
+> > struggles to do this and transforms the tree inproperly.
+> >
+> > Depending on the rST used, this may result in an assertion error deep i=
+n
+> > the docutils HTMLWriter.
+>
+> I'm getting vibes of someone having had hours of "fun" with Sphinx...
+>
+> Can you give you an idea of how a reproducer would look like?
+>
+
+Yes - this is necessary for captioned example blocks that appear in
+untagged sections, because those have titles.
+
+When the sphinx html writer encounters a title under a section without a
+title field, it malforms the tree (I cannot give you an example of this
+easily, it's deep in the bowels) and produces an assertion error.
+
+If you want to see it explode for yourself, just modify any untagged
+section to include a captioned codeblock and watch it die.
+
+If you apply either the note or Example conversion patches without this
+fix, the old generator will choke. (Note patch dies because of my use of
+".. admonition:: Notes", which also creates a title element.)
+
+Simply put - docutils can tolerate title-less sections, Sphinx cannot. (And
+it is not graceful about it.)
 
 
-This series has been the subject of reviews and tests on various
-architectures and platforms. It prepares ground for more IOMMU changes
-related to the new IOMMUFD backend.
+> > When parsing an untagged section (free paragraphs), skip making a hollo=
+w
+> > section and instead append the parse results to the prior section.
+> >
+> > Many Bothans died to bring us this information.
+>
+> Terribly sad.
+>
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  docs/sphinx/qapidoc.py | 16 +++++++++++-----
+> >  1 file changed, 11 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+> > index 34e95bd168d..cfc0cf169ef 100644
+> > --- a/docs/sphinx/qapidoc.py
+> > +++ b/docs/sphinx/qapidoc.py
+> > @@ -286,14 +286,20 @@ def _nodes_for_sections(self, doc):
+> >              if section.tag and section.tag =3D=3D 'TODO':
+> >                  # Hide TODO: sections
+> >                  continue
+> > +
+> > +            if not section.tag:
+> > +                # Sphinx cannot handle sectionless titles;
+> > +                # Instead, just append the results to the prior sectio=
+n.
+> > +                container =3D nodes.container()
+> > +                self._parse_text_into_node(section.text, container)
+> > +                nodelist +=3D container.children
+> > +                continue
+> > +
+> >              snode =3D self._make_section(section.tag)
+> > -            if section.tag and section.tag.startswith('Example'):
+> > +            if section.tag.startswith('Example'):
+> >                  snode +=3D self._nodes_for_example(dedent(section.text=
+))
+> >              else:
+> > -                self._parse_text_into_node(
+> > -                    dedent(section.text) if section.tag else
+> section.text,
+> > -                    snode,
+> > -                )
+> > +                self._parse_text_into_node(dedent(section.text), snode=
+)
+> >              nodelist.append(snode)
+> >          return nodelist
+>
+> Looks plausible.  I lack the Sphinx-fu to say more.
+>
 
-I have queued them in the VFIO 9.1 tree for now, awaiting approval
-from the PCI maintainers. Could please take look at the pci part which
-introduces new IOMMU callbacks ?
+Recommend just observing a before/after; the hash changes but the output
+doesn't meaningfully change.
 
-Thanks,
+I intend to remove the old generator when we're done, so I think this is
+probably safe to wave through with an ACK so long as there isn't
+tremendously obvious regression (And, I have tested these patches from 3.x
+to 7.x so I do not believe there is any compat risk.)
 
-C
+>
 
+--00000000000015ed6d061b197e38
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Fri, Jun 14, 2024, 5:46=E2=80=AFAM Markus Armbruste=
+r &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrote:=
+<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bord=
+er-left:1px #ccc solid;padding-left:1ex">John Snow &lt;<a href=3D"mailto:js=
+now@redhat.com" target=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&g=
+t; writes:<br>
+<br>
+&gt; Sphinx does not like sections without titles, because it wants to<br>
+&gt; convert every section into a reference. When there is no title, it<br>
+&gt; struggles to do this and transforms the tree inproperly.<br>
+&gt;<br>
+&gt; Depending on the rST used, this may result in an assertion error deep =
+in<br>
+&gt; the docutils HTMLWriter.<br>
+<br>
+I&#39;m getting vibes of someone having had hours of &quot;fun&quot; with S=
+phinx...<br>
+<br>
+Can you give you an idea of how a reproducer would look like?<br></blockquo=
+te></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Yes - this is =
+necessary for captioned example blocks that appear in untagged sections, be=
+cause those have titles.</div><div dir=3D"auto"><br></div><div dir=3D"auto"=
+>When the sphinx html writer encounters a title under a section without a t=
+itle field, it malforms the tree (I cannot give you an example of this easi=
+ly, it&#39;s deep in the bowels) and produces an assertion error.</div><div=
+ dir=3D"auto"><br></div><div dir=3D"auto">If you want to see it explode for=
+ yourself, just modify any untagged section to include a captioned codebloc=
+k and watch it die.</div><div dir=3D"auto"><br></div><div dir=3D"auto">If y=
+ou apply either the note or Example conversion patches without this fix, th=
+e old generator will choke. (Note patch dies because of my use of &quot;.. =
+admonition:: Notes&quot;, which also creates a title element.)</div><div di=
+r=3D"auto"><br></div><div dir=3D"auto">Simply put - docutils can tolerate t=
+itle-less sections, Sphinx cannot. (And it is not graceful about it.)</div>=
+<div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px =
+#ccc solid;padding-left:1ex">
+<br>
+&gt; When parsing an untagged section (free paragraphs), skip making a holl=
+ow<br>
+&gt; section and instead append the parse results to the prior section.<br>
+&gt;<br>
+&gt; Many Bothans died to bring us this information.<br>
+<br>
+Terribly sad.<br>
+<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 docs/sphinx/qapidoc.py | 16 +++++++++++-----<br>
+&gt;=C2=A0 1 file changed, 11 insertions(+), 5 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py<br>
+&gt; index 34e95bd168d..cfc0cf169ef 100644<br>
+&gt; --- a/docs/sphinx/qapidoc.py<br>
+&gt; +++ b/docs/sphinx/qapidoc.py<br>
+&gt; @@ -286,14 +286,20 @@ def _nodes_for_sections(self, doc):<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if section.tag and sec=
+tion.tag =3D=3D &#39;TODO&#39;:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Hide T=
+ODO: sections<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue=
+<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if not section.tag:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Sphinx cann=
+ot handle sectionless titles;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 # Instead, ju=
+st append the results to the prior section.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 container =3D=
+ nodes.container()<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self._parse_t=
+ext_into_node(section.text, container)<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 nodelist +=3D=
+ container.children<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 snode =3D self._make_s=
+ection(section.tag)<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if section.tag and section.=
+tag.startswith(&#39;Example&#39;):<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if section.tag.startswith(&=
+#39;Example&#39;):<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 snode +=
+=3D self._nodes_for_example(dedent(section.text))<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else:<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self._parse_t=
+ext_into_node(<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ dedent(section.text) if section.tag else section.text,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ snode,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 )<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self._parse_t=
+ext_into_node(dedent(section.text), snode)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 nodelist.append(snode)=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return nodelist<br>
+<br>
+Looks plausible.=C2=A0 I lack the Sphinx-fu to say more.<br></blockquote></=
+div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Recommend just obse=
+rving a before/after; the hash changes but the output doesn&#39;t meaningfu=
+lly change.</div><div dir=3D"auto"><br></div><div dir=3D"auto">I intend to =
+remove the old generator when we&#39;re done, so I think this is probably s=
+afe to wave through with an ACK so long as there isn&#39;t tremendously obv=
+ious regression (And, I have tested these patches from 3.x to 7.x so I do n=
+ot believe there is any compat risk.)</div><div dir=3D"auto"><div class=3D"=
+gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;b=
+order-left:1px #ccc solid;padding-left:1ex">
+</blockquote></div></div></div>
 
-> HostIOMMUDeviceClass::realize() is introduced to initialize
-> HostIOMMUDeviceCaps and other fields of HostIOMMUDevice variants.
-> 
-> HostIOMMUDeviceClass::get_cap() is introduced to query host IOMMU
-> device capabilities.
-> 
-> The class tree is as below:
-> 
->                                HostIOMMUDevice
->                                       | .caps
->                                       | .realize()
->                                       | .get_cap()
->                                       |
->              .-----------------------------------------------.
->              |                        |                      |
-> HostIOMMUDeviceLegacyVFIO  {HostIOMMUDeviceLegacyVDPA}  HostIOMMUDeviceIOMMUFD
->              |                        |                      | [.iommufd]
->                                                              | [.devid]
->                                                              | [.ioas_id]
->                                                              | [.attach_hwpt()]
->                                                              | [.detach_hwpt()]
->                                                              |
->                                              .----------------------.
->                                              |                      |
->                           HostIOMMUDeviceIOMMUFDVFIO  {HostIOMMUDeviceIOMMUFDVDPA}
->                                            | [.vdev]                | {.vdev}
-> 
-> * The attributes in [] will be implemented in nesting series.
-> * The classes in {} will be implemented in future.
-> * .vdev in different class points to different agent device,
-> * i.e., VFIODevice or VDPADevice.
-> 
-> PATCH1-4: Introduce HostIOMMUDevice and its sub classes
-> PATCH5-10: Implement .realize() and .get_cap() handler
-> PATCH11-14: Create HostIOMMUDevice instance and pass to vIOMMU
-> PATCH15-17: Implement compatibility check between host IOMMU and vIOMMU(intel_iommu)
-> 
-> Test done:
-> make check
-> vfio device hotplug/unplug with different backend on linux
-> reboot, kexec
-> build test on linux and windows11
-> 
-> Qemu code can be found at:
-> https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_preq_v7
-> 
-> Besides the compatibility check in this series, in nesting series, this
-> host IOMMU device is extended for much wider usage. For anyone interested
-> on the nesting series, here is the link:
-> https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_rfcv2
-> 
-> Thanks
-> Zhenzhong
-> 
-> Changelog:
-> v7:
-> - drop config CONFIG_HOST_IOMMU_DEVICE (Cédric)
-> - introduce HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX (Eric)
-> - use iova_ranges method in iommufd.realize() (Eric)
-> - introduce HostIOMMUDevice::name to facilitate tracing (Eric)
-> - implement a custom destroy hash function (Cédric)
-> - drop VTDHostIOMMUDevice and save HostIOMMUDevice in hash table (Eric)
-> - move patch5 after patch1 (Eric)
-> - squash patch3 and 4, squash patch12 and 13 (Eric)
-> - refine comments (Eric)
-> - collect Eric's R-B
-> 
-> v6:
-> - open coded host_iommu_device_get_cap() to avoid #ifdef in intel_iommu.c (Cédric)
-> 
-> v5:
-> - pci_device_set_iommu_device return true (Cédric)
-> - fix build failure on windows (thanks Cédric found that issue)
-> 
-> v4:
-> - move properties vdev, iommufd and devid to nesting series where need it (Cédric)
-> - fix 32bit build with clz64 (Cédric)
-> - change check_cap naming to get_cap (Cédric)
-> - return bool if error is passed through errp (Cédric)
-> - drop HostIOMMUDevice[LegacyVFIO|IOMMUFD|IOMMUFDVFIO] declaration (Cédric)
-> - drop HOST_IOMMU_DEVICE_CAP_IOMMUFD (Cédric)
-> - replace include directive with forward declaration (Cédric)
-> 
-> v3:
-> - refine declaration and doc for HostIOMMUDevice (Cédric, Philippe)
-> - introduce HostIOMMUDeviceCaps, .realize() and .check_cap() (Cédric)
-> - introduce helper range_get_last_bit() for range operation (Cédric)
-> - separate pci_device_get_iommu_bus_devfn() in a prereq patch (Cédric)
-> - replace HIOD_ abbreviation with HOST_IOMMU_DEVICE_ (Cédric)
-> - add header in include/sysemu/iommufd.h (Cédric)
-> 
-> v2:
-> - use QOM to abstract host IOMMU device and its sub-classes (Cédric)
-> - move host IOMMU device creation in attach_device() (Cédric)
-> - refine pci_device_set/unset_iommu_device doc further (Eric)
-> - define host IOMMU info format of different backend
-> - implement get_host_iommu_info() for different backend (Cédric)
-> - drop cap/ecap update logic (MST)
-> - check aw-bits from get_host_iommu_info() in legacy mode
-> 
-> v1:
-> - use HostIOMMUDevice handle instead of union in VFIODevice (Eric)
-> - change host_iommu_device_init to host_iommu_device_create
-> - allocate HostIOMMUDevice in host_iommu_device_create callback
->    and set the VFIODevice base_hdev handle (Eric)
-> - refine pci_device_set/unset_iommu_device doc (Eric)
-> - use HostIOMMUDevice handle instead of union in VTDHostIOMMUDevice (Eric)
-> - convert HostIOMMUDevice to sub object pointer in vtd_check_hdev
-> 
-> rfcv2:
-> - introduce common abstract HostIOMMUDevice and sub struct for different BEs (Eric, Cédric)
-> - remove iommufd_device.[ch] (Cédric)
-> - remove duplicate iommufd/devid define from VFIODevice (Eric)
-> - drop the p in aliased_pbus and aliased_pdevfn (Eric)
-> - assert devfn and iommu_bus in pci_device_get_iommu_bus_devfn (Cédric, Eric)
-> - use errp in iommufd_device_get_info (Eric)
-> - split and simplify cap/ecap check/sync code in intel_iommu.c (Cédric)
-> - move VTDHostIOMMUDevice declaration to intel_iommu_internal.h (Cédric)
-> - make '(vtd->cap_reg >> 16) & 0x3fULL' a MACRO and add missed '+1' (Cédric)
-> - block migration if vIOMMU cap/ecap updated based on host IOMMU cap/ecap
-> - add R-B
-> 
-> Yi Liu (2):
->    hw/pci: Introduce pci_device_[set|unset]_iommu_device()
->    intel_iommu: Implement [set|unset]_iommu_device() callbacks
-> 
-> Zhenzhong Duan (15):
->    backends: Introduce HostIOMMUDevice abstract
->    backends/host_iommu_device: Introduce HostIOMMUDeviceCaps
->    vfio/container: Introduce TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO device
->    backends/iommufd: Introduce TYPE_HOST_IOMMU_DEVICE_IOMMUFD[_VFIO]
->      devices
->    range: Introduce range_get_last_bit()
->    vfio/container: Implement HostIOMMUDeviceClass::realize() handler
->    backends/iommufd: Introduce helper function
->      iommufd_backend_get_device_info()
->    vfio/iommufd: Implement HostIOMMUDeviceClass::realize() handler
->    vfio/container: Implement HostIOMMUDeviceClass::get_cap() handler
->    backends/iommufd: Implement HostIOMMUDeviceClass::get_cap() handler
->    vfio: Create host IOMMU device instance
->    hw/pci: Introduce helper function pci_device_get_iommu_bus_devfn()
->    vfio/pci: Pass HostIOMMUDevice to vIOMMU
->    intel_iommu: Extract out vtd_cap_init() to initialize cap/ecap
->    intel_iommu: Check compatibility with host IOMMU capabilities
-> 
->   MAINTAINERS                           |   2 +
->   include/hw/i386/intel_iommu.h         |   2 +
->   include/hw/pci/pci.h                  |  38 ++++-
->   include/hw/vfio/vfio-common.h         |   8 +
->   include/hw/vfio/vfio-container-base.h |   3 +
->   include/qemu/range.h                  |  11 ++
->   include/sysemu/host_iommu_device.h    |  91 ++++++++++++
->   include/sysemu/iommufd.h              |  19 +++
->   backends/host_iommu_device.c          |  33 +++++
->   backends/iommufd.c                    |  76 ++++++++--
->   hw/i386/intel_iommu.c                 | 203 ++++++++++++++++++++------
->   hw/pci/pci.c                          |  75 +++++++++-
->   hw/vfio/common.c                      |  16 +-
->   hw/vfio/container.c                   |  41 +++++-
->   hw/vfio/helpers.c                     |  17 +++
->   hw/vfio/iommufd.c                     |  37 ++++-
->   hw/vfio/pci.c                         |  19 ++-
->   backends/meson.build                  |   1 +
->   18 files changed, 623 insertions(+), 69 deletions(-)
->   create mode 100644 include/sysemu/host_iommu_device.h
->   create mode 100644 backends/host_iommu_device.c
-> 
+--00000000000015ed6d061b197e38--
 
 
