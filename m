@@ -4,101 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 574DFC2BA1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 17:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 651D1C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 17:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJGbA-0000HC-GJ; Mon, 17 Jun 2024 13:56:56 -0400
+	id 1sJGbl-0000Zu-T6; Mon, 17 Jun 2024 13:57:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJGb8-0000Gb-5Q
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 13:56:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJGb6-0003Bd-IX
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 13:56:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718647011;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=l7dyhWz8gr7NDR26pYNBX8y1J0a5QngWlo3nKPpVzMs=;
- b=jO+VUzeZ8QmvjJRPw2laknf8O9nl6GNRk4GMn1rZiR09NxTMnVcDCZXqDKTSLtqOjUAkNd
- vI1ZK7Vpe0bv3u9TdHkkgTbDHxrQ6mRg5EWVOFQPMUdd+COIj6Bj9bVGDAcaNXsMKF54/5
- L3m0voU7pqXgtT7x57BcVKuGALHakzE=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-178-NP8EZV5JPq66Ub0DJfL2gQ-1; Mon, 17 Jun 2024 13:56:50 -0400
-X-MC-Unique: NP8EZV5JPq66Ub0DJfL2gQ-1
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-1f733400d5fso54111585ad.0
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 10:56:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sJGbi-0000TX-VE
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 13:57:31 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sJGbf-0003Gh-Gg
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 13:57:30 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-6f6a045d476so3552995b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 10:57:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718647042; x=1719251842; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Xeze6laj5Ddscd3FgIMlrvPObdMTF/B5kdcGtpNJ++o=;
+ b=ymzn00XvmVejzCqaS6hGmQj92lPnY6YTrIOlAhhVgAk5f9ZhfFETnVeEluatpiwBUy
+ WLUTbp8jEVCTQCwSSaEjFk3lrIct0w49EgV13TFjv/QJ5b8nZPHETp+wyX/lSslpGZXk
+ R+u5s3kCGOfEG0oEisENT9dV807crOIOl7+zSFvTnoJDz8NooVvFVpZAz4BuNL7B39uA
+ cdvI89k6seYqMKJ4ik8nXxTfVAfb3DNlogImASk//petWRbpBO9TZbLV3NU7DVvX8Zb3
+ LtkQ8rkK347i7h9hcv76DoNqciggoO0MB1I4kOmkQR2enq47XNz3FRYPp0LoKBy34TXc
+ MEvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718647009; x=1719251809;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=l7dyhWz8gr7NDR26pYNBX8y1J0a5QngWlo3nKPpVzMs=;
- b=u3dfxCJ/iWzGvRhdi4pHEjMUF3IUhlDW+BiqAY/QgBZV+fFxL1VkqdrVe8xnKoPPVN
- a12BmcIUh3X0SlCLknKQf/THL5MrAsN2XsvdGuZ9uTkWtqzoraOAEdktPhrAEkfdF1gU
- jherGzfyRGc4RQfl0pIDwRs+Sgr4AeInC6mHtiJiPfxmP/EqeNX8YTIKk+UnG5JnWQrP
- tdEPaC0Hy/CRXaCl7UvcV+zw7xByuz8hYeBoagRTqE5CYHl7fteNWgH9o2jHfDGKPDtn
- cz1IRLB8OcZ6JfoI2hNcOtFYKhiFFlFToO2VDQdBgcuhf1O5zCzu6RyO9NbsUWVn1A0n
- kGSA==
-X-Gm-Message-State: AOJu0YxGkkea7lPMlNiVC/XGM8C9zaf6eg/Po6wScZ8EK9p80hhDCk2p
- VPGSnKWDSB8MPzC/GSO88ZuOsHJ6/1MQ/zlkago0A5Fi+ClsKiNmI/cuuAKfZp5pvxYQrEtCmJP
- sXz4Aj2sdxfu/RihWmzbMmWHGejiZvEvubprPoUG5KCwA+YJ2sSCryxcyY3h4o5SfXlKYJ4bLtN
- NyXGYBpqFJkeYGrG/GjmEoHUHSRdQ=
-X-Received: by 2002:a17:902:da8c:b0:1f8:7584:b25c with SMTP id
- d9443c01a7336-1f87584b4b8mr89579125ad.54.1718647008584; 
- Mon, 17 Jun 2024 10:56:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuwR1pKCymyKeSHEGXGouSWgX7M1ZkD8oeCzbdqCostumac8U5hZd7BuKFv7tVpIqAFrSUXXH7gKA91kEm/fc=
-X-Received: by 2002:a17:902:da8c:b0:1f8:7584:b25c with SMTP id
- d9443c01a7336-1f87584b4b8mr89578785ad.54.1718647008199; Mon, 17 Jun 2024
- 10:56:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718647042; x=1719251842;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Xeze6laj5Ddscd3FgIMlrvPObdMTF/B5kdcGtpNJ++o=;
+ b=fHXjeoHzEqA//n1BuXDFt0CKTz0eceHITPXc29HlV0HzPS84ODzej4MauDRyBqWMOb
+ qemWZwaMquKHf6dzxPSGgogAG+HHXFe74Xbs87V0Yo1aG1K2GNkQzWwjugVKgEAd4M3e
+ jh1yB4+GmsTPxEhwu44jA1whvB66vN8+/uMbv5yf9VbT3fKixRQB2YEBDd3NvWUqz5Fc
+ X8C7LOecXUzcy+Ik2KnDo3xd9/WJXs3Ql3wUj/+hG0DXsAz8A28LaviKxTGPK6fOnprx
+ ZeK68r2vvlhh1MdtzG9MjNkyIqw5ZZuj9GFeq69s6hkhOxKRRm3A6+1QpWl3QFwlLf5H
+ 80mQ==
+X-Gm-Message-State: AOJu0Yzigcmc2OurrKjijCL6mk43VQZgHs6jAYrBtya1IfSAkj0nNiYH
+ 6kE5fJNZw+6VKlcVnHoQUPq8uSj/T5ew0+Bi1r8kXhzqR8Flm6h+c4HrNnSc78g=
+X-Google-Smtp-Source: AGHT+IGtnsGrdqYbWrHT/cOk7B0AbLDBETUMbMaOVCQVuYVuAh2RLvyOuVNi7JC381SJnCCU4w/dhQ==
+X-Received: by 2002:a05:6a21:1506:b0:1b5:8ecf:4e7e with SMTP id
+ adf61e73a8af0-1bae8335933mr11617631637.58.1718647042535; 
+ Mon, 17 Jun 2024 10:57:22 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-705ccb6af5csm7632154b3a.162.2024.06.17.10.57.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 17 Jun 2024 10:57:21 -0700 (PDT)
+Message-ID: <a50d339b-d44a-41c1-bb28-82eb761771a1@linaro.org>
+Date: Mon, 17 Jun 2024 10:57:15 -0700
 MIME-Version: 1.0
-References: <20240514215740.940155-1-jsnow@redhat.com>
- <20240514215740.940155-19-jsnow@redhat.com>
- <87a5jn3gyd.fsf@pond.sub.org>
-In-Reply-To: <87a5jn3gyd.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Mon, 17 Jun 2024 13:56:36 -0400
-Message-ID: <CAFn=p-Y2BgKLx5gN2++DQ_dj_hQzfYLw=MGKwNEHB6vFWeh7GQ@mail.gmail.com>
-Subject: Re: [PATCH 18/20] qapi: ensure all errors sections are uniformly
- typset
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>, 
- Ani Sinha <anisinha@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Kevin Wolf <kwolf@redhat.com>, Jiri Pirko <jiri@resnulli.us>,
- Mads Ynddal <mads@ynddal.dk>, 
- Jason Wang <jasowang@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, "Michael S. Tsirkin" <mst@redhat.com>,
- Qemu-block <qemu-block@nongnu.org>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- Victor Toso de Carvalho <victortoso@redhat.com>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Konstantin Kostiuk <kkostiuk@redhat.com>, Lukas Straub <lukasstraub2@web.de>, 
- Yanan Wang <wangyanan55@huawei.com>, Hanna Reitz <hreitz@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000006b1937061b19b02a"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/4] target/ppc: Move VSX vector with length storage
+ access insns to decodetree.
+To: Chinmay Rath <rathc@linux.vnet.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com
+References: <20240613093318.314913-1-rathc@linux.ibm.com>
+ <20240613093318.314913-3-rathc@linux.ibm.com>
+ <6638b813-f4ef-4587-b94f-3c24d90ca09e@linaro.org>
+ <94d97af2-62e2-4fde-909b-c57af8ef814f@linux.vnet.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <94d97af2-62e2-4fde-909b-c57af8ef814f@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,84 +101,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006b1937061b19b02a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 6/17/24 04:51, Chinmay Rath wrote:
+> 
+> 
+> Hi Richard,
+> On 6/17/24 00:43, Richard Henderson wrote:
+>> On 6/13/24 02:33, Chinmay Rath wrote:
+>>> +/* EA <- (ra == 0) ? 0 : GPR[ra] */
+>>> +static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
+>>> +{
+>>> +    TCGv EA;
+>>> +    if (!ra) {
+>>> +        EA = tcg_constant_tl(0);
+>>> +        return EA;
+>>> +    }
+>>> +    EA = tcg_temp_new();
+>>> +    if (NARROW_MODE(ctx)) {
+>>> +        tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
+>>> +    } else {
+>>> +        tcg_gen_mov_tl(EA, cpu_gpr[ra]);
+>>
+>> Why are you making a copy, rather than just returning cpu_gpr[ra]?
+>> If you need to modify the resulting EA, then you also need to make a copy for 0.
+>>
+> Please ignore my previous response.
+> I think do_ea_calc_ra should allow modification to the resulting EA, hence below change 
+> appears more appropriate to me :
+> 
+> /* EA <- (ra == 0) ? 0 : GPR[ra] */
+> static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
+> {
+>      TCGv EA = tcg_temp_new();
+>      if (!ra) {
+>          tcg_gen_movi_tl(EA, 0);
+>          return EA;
+>      }
+>      if (NARROW_MODE(ctx)) {
+>          tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
+>      } else {
+>          tcg_gen_mov_tl(EA, cpu_gpr[ra]);
+>      }
+>      return EA;
+> }
 
-On Fri, Jun 14, 2024, 7:24=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
- wrote:
-
-> John Snow <jsnow@redhat.com> writes:
->
-> > Transactions have the only instance of an Errors section that isn't a
-> > rST list; turn it into one.
->
-> Just for consistency?  Or do you have other shenanigans up your sleeve?
->
-
-Just consistency at this precise moment in time, but it's *possible* I may
-introduce shenanigans for visual consistency in the rendered output, for
-which having a uniform format would make mechanical conversions in the
-generator easier/possible.
-
-It's an idea I had but didn't implement yet. I figured I'd write this patch
-anyway because it isn't wrong, and you yourself seemed to believe it would
-*always* be a RST list, when that isn't strictly true.
+If that's what's needed by the callers of do_ea_calc_ra, then yes.
+You can drop the first return EA and use else if instead.
 
 
-> If we want the Errors sections to remain all rST lists, we should update
-> docs/devel/qapi-code-gen.rst to say so.
->
-
-OK, will do.
-
-
-> > Signed-off-by: John Snow <jsnow@redhat.com>
->
->
-
---0000000000006b1937061b19b02a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Fri, Jun 14, 2024, 7:24=E2=80=AFAM Markus Armbruste=
-r &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrote:=
-<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bord=
-er-left:1px #ccc solid;padding-left:1ex">John Snow &lt;<a href=3D"mailto:js=
-now@redhat.com" target=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&g=
-t; writes:<br>
-<br>
-&gt; Transactions have the only instance of an Errors section that isn&#39;=
-t a<br>
-&gt; rST list; turn it into one.<br>
-<br>
-Just for consistency?=C2=A0 Or do you have other shenanigans up your sleeve=
-?<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto"=
->Just consistency at this precise moment in time, but it&#39;s *possible* I=
- may introduce shenanigans for visual consistency in the rendered output, f=
-or which having a uniform format would make mechanical conversions in the g=
-enerator easier/possible.</div><div dir=3D"auto"><br></div><div dir=3D"auto=
-">It&#39;s an idea I had but didn&#39;t implement yet. I figured I&#39;d wr=
-ite this patch anyway because it isn&#39;t wrong, and you yourself seemed t=
-o believe it would *always* be a RST list, when that isn&#39;t strictly tru=
-e.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_q=
-uote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-l=
-eft:1px #ccc solid;padding-left:1ex">
-<br>
-If we want the Errors sections to remain all rST lists, we should update<br=
->
-docs/devel/qapi-code-gen.rst to say so.<br></blockquote></div></div><div di=
-r=3D"auto"><br></div><div dir=3D"auto">OK, will do.</div><div dir=3D"auto">=
-<br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D=
-"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding=
--left:1ex">
-<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000006b1937061b19b02a--
-
+r~
 
