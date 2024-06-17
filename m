@@ -4,82 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2187EC2BA1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 19:03:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDB26C27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 19:03:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJHZP-0007MA-Bc; Mon, 17 Jun 2024 14:59:11 -0400
+	id 1sJHYL-0003sT-GG; Mon, 17 Jun 2024 14:58:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHZN-00076O-Io
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:59:09 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sJHYK-0003sK-Jk
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:04 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHZL-00053B-Vn
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:59:09 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-6f6a045d476so3601428b3a.1
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:59:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718650746; x=1719255546; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=e0dzrd+ciGxDD70aSvLklNlGUxbQ7sp9bKeESCi0z6s=;
- b=ZgLXrQHe+kBKAnv0yVYDf8+3M4VcxEakv+QB0BXfBXK9n0E0+eaz4LFP03lFqx69q2
- BdGBRlQQkUzeKE1YIsHQAtbGANgoiMH2/uoOSwY/lzjTj9y9H9DP6OOQFgoQmc275CzZ
- ohI2CDnHDrYEMrKNLLAUmBTaeP4Fky45a5m9ro9+6r5kY6SbJrYg/Imai2X1LPmnZXmD
- Nn+WLz/tqMzDxj/LdUE8ACyZuQNeSLgj5BjDmz009JKB9ZmbTpfvKVjPI4Ui2PG6deH/
- LAVxKGPXg0KdrPPmV/U2OG0KL7ueszxYimffZBI5ugpl8popAMtrd11ZEPK7s/kLUsKg
- ol5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718650746; x=1719255546;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=e0dzrd+ciGxDD70aSvLklNlGUxbQ7sp9bKeESCi0z6s=;
- b=eA6l3suF6gv4Na3CNjbaUzBHi5yMIRWBJsA+PiHW+X2QKQdwZibRxd4LRzULqU0D+/
- 9TrILj3ShckbQ4qzgrfgIWGnPsEZ0cHnegt7MRYmPIN13pIJs2KGC3d2xrXED9VEtCa6
- 8t1NuLGN0HepOsP23hv+AABDmdGpaKbWgNdISsHubPEI4EhTGGFxryYmHkVM3l0NG90x
- J3AbifoLH50Os4pIJNtgyA9JwRJZ2uAd70YjybY9dqhStlmgIyfQrgcbLKtrpwUPzM0E
- odvZzjyAuaDDxvZyzcmU81rig2nF3Sm1fLu9K0MptFWeD+KxvxYtQCr8KFZE9AT4n7DV
- vc0g==
-X-Gm-Message-State: AOJu0YxBqpO5ZNMreRoqxNRoUanvMqJ3oMVUBpHFcydKn3+828nOaAHs
- Df6Xxf1iR6UJ+wsJJQzhl21QIbHcjvgbd8uljesJdH8V6YeNVUirs+VrpifmGyc=
-X-Google-Smtp-Source: AGHT+IHbZvh05bXQRENKWWwIc+1eTP/T+hYJlk6yj29WGdDosCvzL6U+y0BZ64OOeQz0Eh9BLag8oQ==
-X-Received: by 2002:a05:6a20:4327:b0:1b7:406c:1081 with SMTP id
- adf61e73a8af0-1bae7e293e1mr10756463637.7.1718650746452; 
- Mon, 17 Jun 2024 11:59:06 -0700 (PDT)
-Received: from localhost.localdomain ([106.222.222.115])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.59.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 11:59:06 -0700 (PDT)
-From: Ajeet Singh <itachis6234@gmail.com>
-X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sJHYJ-0004tx-3e
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:04 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id A178921AD6;
+ Mon, 17 Jun 2024 18:58:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718650681; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iUojXKKi7au5lbz0GBdgGak+ICpTnFKCQZykBCuYuWk=;
+ b=m5HmwUY48raWZeD1wdUEvFcEujs5kgw3XQSyDFyUXoqM3Nrr3wIGnej27Qzs0+92wwTkIc
+ 8n7malZY7y8eDezj9R9GISDhN4qU+13CqLsjByT8d0HTRwp4bgkMQOh7Sd+OUKYEgSqjZ8
+ UJvxmT5dv9dpQ5aPeIsaxsaFEWXErY4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718650681;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iUojXKKi7au5lbz0GBdgGak+ICpTnFKCQZykBCuYuWk=;
+ b=ztbejBloYR6sRSqwzAyrh+PAIyLWFCv0/iJXKzikLFGq65U0ucAqzMvWpJO/Zf0LviJd8L
+ WCVd5lOGF6C/lSDQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718650681; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iUojXKKi7au5lbz0GBdgGak+ICpTnFKCQZykBCuYuWk=;
+ b=m5HmwUY48raWZeD1wdUEvFcEujs5kgw3XQSyDFyUXoqM3Nrr3wIGnej27Qzs0+92wwTkIc
+ 8n7malZY7y8eDezj9R9GISDhN4qU+13CqLsjByT8d0HTRwp4bgkMQOh7Sd+OUKYEgSqjZ8
+ UJvxmT5dv9dpQ5aPeIsaxsaFEWXErY4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718650681;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iUojXKKi7au5lbz0GBdgGak+ICpTnFKCQZykBCuYuWk=;
+ b=ztbejBloYR6sRSqwzAyrh+PAIyLWFCv0/iJXKzikLFGq65U0ucAqzMvWpJO/Zf0LviJd8L
+ WCVd5lOGF6C/lSDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C51D7139AB;
+ Mon, 17 Jun 2024 18:57:59 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id uBl/IjeHcGYJKAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 17 Jun 2024 18:57:59 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>,
- Stacey Son <sson@FreeBSD.org>, Ajeet Singh <itachis@FreeBSD.org>
-Subject: [PATCH 22/23] Add set_mcontext function for ARM AArch64 in bsd-user
-Date: Tue, 18 Jun 2024 00:28:03 +0530
-Message-Id: <20240617185804.25075-23-itachis@FreeBSD.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240617185804.25075-1-itachis@FreeBSD.org>
-References: <20240617185804.25075-1-itachis@FreeBSD.org>
+Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
+ Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
+Subject: [PATCH v3 10/16] io: Stop using qemu_open_old in channel-file
+Date: Mon, 17 Jun 2024 15:57:25 -0300
+Message-Id: <20240617185731.9725-11-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240617185731.9725-1-farosas@suse.de>
+References: <20240617185731.9725-1-farosas@suse.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=itachis6234@gmail.com; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ NEURAL_HAM_SHORT(-0.20)[-0.997]; MIME_GOOD(-0.10)[text/plain];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_FIVE(0.00)[6];
+ FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,48 +119,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stacey Son <sson@FreeBSD.org>
+We want to make use of the Error object to report fdset errors from
+qemu_open_internal() and passing the error pointer to qemu_open_old()
+would require changing all callers. Move the file channel to the new
+API instead.
 
-The function copies register values from the provided target_mcontext_t
-structure to the CPUARMState registers
-
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- bsd-user/aarch64/signal.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ io/channel-file.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/bsd-user/aarch64/signal.c b/bsd-user/aarch64/signal.c
-index 43c886e603..13faac8ce6 100644
---- a/bsd-user/aarch64/signal.c
-+++ b/bsd-user/aarch64/signal.c
-@@ -95,3 +95,25 @@ abi_long setup_sigframe_arch(CPUARMState *env, abi_ulong frame_addr,
-     return 0;
- }
+diff --git a/io/channel-file.c b/io/channel-file.c
+index 6436cfb6ae..2ea8d08360 100644
+--- a/io/channel-file.c
++++ b/io/channel-file.c
+@@ -68,11 +68,13 @@ qio_channel_file_new_path(const char *path,
  
-+/*
-+ * Compare to set_mcontext() in arm64/arm64/machdep.c
-+ * Assumes that the memory is locked if frame points to user memory.
-+ */
-+abi_long set_mcontext(CPUARMState *regs, target_mcontext_t *mcp, int srflag)
-+{
-+    int err = 0, i;
-+    const uint64_t *gr = mcp->mc_gpregs.gp_x;
-+
-+    for (i = 0; i < 30; i++) {
-+        regs->xregs[i] = tswap64(gr[i]);
+     ioc = QIO_CHANNEL_FILE(object_new(TYPE_QIO_CHANNEL_FILE));
+ 
+-    ioc->fd = qemu_open_old(path, flags, mode);
++    if (flags & O_CREAT) {
++        ioc->fd = qemu_create(path, flags & ~O_CREAT, mode, errp);
++    } else {
++        ioc->fd = qemu_open(path, flags, errp);
 +    }
-+
-+    regs->xregs[TARGET_REG_SP] = tswap64(mcp->mc_gpregs.gp_sp);
-+    regs->xregs[TARGET_REG_LR] = tswap64(mcp->mc_gpregs.gp_lr);
-+    regs->pc = mcp->mc_gpregs.gp_elr;
-+    pstate_write(regs, mcp->mc_gpregs.gp_spsr);
-+
-+    /* XXX FP? */
-+
-+    return err;
-+}
+     if (ioc->fd < 0) {
+         object_unref(OBJECT(ioc));
+-        error_setg_errno(errp, errno,
+-                         "Unable to open %s", path);
+         return NULL;
+     }
+ 
 -- 
-2.34.1
+2.35.3
 
 
