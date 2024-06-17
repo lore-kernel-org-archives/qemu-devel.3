@@ -4,84 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 591AEC2BA18
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 09:50:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05557C2BA18
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 09:52:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJ90E-000878-VY; Mon, 17 Jun 2024 05:50:18 -0400
+	id 1sJ923-0000Pu-EV; Mon, 17 Jun 2024 05:52:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sJ90D-00086t-Bn
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 05:50:17 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sJ90B-00034F-Hu
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 05:50:17 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-35f1691b18fso3298935f8f.2
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 02:50:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718617814; x=1719222614; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8FE70kgeh4OkrneOLHy165B7UwSvv/oNFSmQCf3r6Uo=;
- b=h6KgPqWLvT/JxH4qC8to20kP8yIr85j1Ze/qxWi6Sn+d+rBr0qe+lNA/lnuFzWZI+p
- WytC/Qa9GS+cxV073OBTs2zDSV1NRxsCM9WLUTjLyZuLeQxd4eaoxGbUD8ApNIG487f1
- k/HDzueiKcPS6kDJ1Jr76/7k30yvzlna1hP8L4pJEcBsrP684MFZD0aZN6sKAqdtnm4K
- CcPKRtsZmoA+DmXmjdEl9BNnsm6zIVhgPgIXvhcYI8B84Z87WOZI2j5B/ypGPnwNl5Jb
- orbp+r69iSdUE0onEvtyLOG1XiCZq1Sj2oMAT5FiV5HTJ5/CK96AmX7QuY9ibFRGeimz
- nk6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718617814; x=1719222614;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8FE70kgeh4OkrneOLHy165B7UwSvv/oNFSmQCf3r6Uo=;
- b=L36rSMcSmvtqlAi9OvsDtzow41ddC6hKpnVaTNksWpL+XEeQwHyS2QoBcbeNhR90rc
- qeOaqHleXBT12z8FZJ1sedxlf1L/WKmgtpH8u4/K9i9hhbYu6prm9crLS7vU/JP/a9GK
- 40xYg3QQG+KfYeaaKaDsyPXbxBpxtM96KpS1/9c5GL41NW8yL+/B15soNYWJJ0FwPA1h
- IjbMwxvhTrgDxVi1XRvu/ZObAm1jxceQJ3PDJIyD5vcl/1pakksCV0k6UFAxxrLit3/4
- sH2rdrW79gBGidp77ZSSgqFOe/b77DZao40gzmW8t5Ocvf2FzCP1+2rqT0b6otPH7Ifr
- rxfw==
-X-Gm-Message-State: AOJu0Yy9icIYWAdVW6pIDnK8MUWpZtSSqSbHmHIfyoznoov71McCwknF
- LSagXJaGSS3zGMB3c0A2fUdVbsFReEmUD2OZ18UQKU3PpHiSugWdyziBYQdL5TQ=
-X-Google-Smtp-Source: AGHT+IFvCT+Vv8GSoAsbJD01P3kQ/1wE52U+K1Kl8JWa1UDPzH9mDb/LaabVHd+s4ovZDKCTXhL4ZA==
-X-Received: by 2002:adf:e84b:0:b0:35f:1ed8:37ee with SMTP id
- ffacd0b85a97d-3607a7b0fd6mr6298830f8f.9.1718617813752; 
- Mon, 17 Jun 2024 02:50:13 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-360750f23cdsm11552798f8f.77.2024.06.17.02.50.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 02:50:13 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B72F15F78B;
- Mon, 17 Jun 2024 10:50:12 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: qemu-devel@nongnu.org,  philmd@linaro.org,  peter.maydell@linaro.org,
- richard.henderson@linaro.org
-Subject: Re: [PATCH v2 0/9] Add MTE stubs for aarch64 user mode
-In-Reply-To: <29b9c8e6-055d-f895-f178-dddd407bdc69@linaro.org> (Gustavo
- Romero's message of "Mon, 17 Jun 2024 04:02:13 -0300")
-References: <20240613172103.2987519-1-gustavo.romero@linaro.org>
- <87ed8zttge.fsf@draig.linaro.org>
- <29b9c8e6-055d-f895-f178-dddd407bdc69@linaro.org>
-Date: Mon, 17 Jun 2024 10:50:12 +0100
-Message-ID: <87h6drew4r.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1sJ920-0000PV-4G
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 05:52:08 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1sJ91x-0003NN-56
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 05:52:07 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxLus_B3Bm+YgHAA--.29958S3;
+ Mon, 17 Jun 2024 17:51:59 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxXcc8B3BmD2AlAA--.25423S3; 
+ Mon, 17 Jun 2024 17:51:58 +0800 (CST)
+Subject: Re: [PATCH 07/18] tcg/loongarch64: Support LASX in tcg_out_dup_vec
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: git@xen0n.name
+References: <20240527211912.14060-1-richard.henderson@linaro.org>
+ <20240527211912.14060-8-richard.henderson@linaro.org>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <0d4c67f2-25fd-1385-8592-b7ab8d0969d0@loongson.cn>
+Date: Mon, 17 Jun 2024 17:52:00 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
+In-Reply-To: <20240527211912.14060-8-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8BxXcc8B3BmD2AlAA--.25423S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7WFWDKr1xZr15uF45WryDurX_yoW8Gr1rpr
+ 1Yk3WrJr4rJFW8ArWa9a4rWFyfKrs3Ca47J3Zayw1kArsxu34UXw4rGr12qry2va4IqrW8
+ X3ZIv3sa9FWjy3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jO
+ F4_UUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-2.677, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,69 +83,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gustavo Romero <gustavo.romero@linaro.org> writes:
+ÔÚ 2024/5/28 ÉÏÎç5:19, Richard Henderson Ð´µÀ:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/loongarch64/tcg-target.c.inc | 10 +++++++---
+>   1 file changed, 7 insertions(+), 3 deletions(-)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-> Hi Alex,
->
-> On 6/14/24 12:49 PM, Alex Benn=C3=A9e wrote:
->> Gustavo Romero <gustavo.romero@linaro.org> writes:
->>=20
->>> This patchset adds the stubs necessary to support GDB memory tagging
->>> commands on QEMU aarch64 user mode.
->>>
->>> These new stubs handle the qIsAddressTagged, qMemTag, and QMemTag
->>> packets, which allow GDB memory tagging subcommands 'check',
->>> 'print-allocation-tag', and 'set-allocation-tag' to work. The remaining
->>> memory tagging commands ('print-logical-tag' and 'with-logical-tag')
->>> will also work, but they don't rely on any stub because they perform
->>> local operations.
->>>
->>> Since the memory tagging stubs are not common to all architectures, this
->>> patchset also introduces three functions: gdb_extend_qsupported_feature=
-s,
->>> gdb_extend_query_table, and gdb_extend_set_table. These functions can be
->>> used to extend the target-specific 'qSupported' feature string and the
->>> handlers for the 'q' (query) and 'Q' (set) packets. These new functions
->>> are used to add the MTE stubs for the aarch64 gdbstub.
->>>   Note that this patchset requires a GDB that supports the
->>> qIsAddressTagged packet (recently added to GDB), so the gdbstub MTE
->>> tests introduced by it must be run using GDB's master branch, since the
->>> GDB in the distros hasn't picked up the change yet.
->>>
->>> Once GDB is built and installed locally, the tests can be exercised, for
->>> example, this way:
->>>
->>> make GDB=3D~/.local/bin/gdb run-tcg-tests-aarch64-linux-user -j 32
->> It looks like there might be some BSD build failures as well:
->>    https://gitlab.com/stsquad/qemu/-/pipelines/1332635371/failures
->
-> I fixed the build for the BSD target in v3, however I think that the GDB =
-in
-> the test containers need to be bumped to GDB 15 so the MTE tests can pass,
-> because support for IsAddressTagged packet is necessary. GDB 15 branch
-> is created by it's not released yet, so I don't know to proceed..
+Thanks.
+Song Gao
+> diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+> index b1d652355d..cc54bc4a53 100644
+> --- a/tcg/loongarch64/tcg-target.c.inc
+> +++ b/tcg/loongarch64/tcg-target.c.inc
+> @@ -1674,12 +1674,16 @@ static void tcg_out_op(TCGContext *s, TCGOpcode opc,
+>   static bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
+>                               TCGReg rd, TCGReg rs)
+>   {
+> -    static const LoongArchInsn repl_insn[4] = {
+> -        OPC_VREPLGR2VR_B, OPC_VREPLGR2VR_H, OPC_VREPLGR2VR_W, OPC_VREPLGR2VR_D
+> +    static const LoongArchInsn repl_insn[2][4] = {
+> +        { OPC_VREPLGR2VR_B, OPC_VREPLGR2VR_H,
+> +          OPC_VREPLGR2VR_W, OPC_VREPLGR2VR_D },
+> +        { OPC_XVREPLGR2VR_B, OPC_XVREPLGR2VR_H,
+> +          OPC_XVREPLGR2VR_W, OPC_XVREPLGR2VR_D },
+>       };
+> +    bool lasx = type == TCG_TYPE_V256;
+>   
+>       tcg_debug_assert(vece <= MO_64);
+> -    tcg_out32(s, encode_vdj_insn(repl_insn[vece], rd, rs));
+> +    tcg_out32(s, encode_vdj_insn(repl_insn[lasx][vece], rd, rs));
+>       return true;
+>   }
+>   
 
-Two potential approaches, you could extend the configure segment:
-
-if test -n "$gdb_bin"; then
-    gdb_version=3D$($gdb_bin --version | head -n 1)
-    if version_ge ${gdb_version##* } 9.1; then
-        gdb_arches=3D$($python "$source_path/scripts/probe-gdb-support.py" =
-$gdb_bin)
-    else
-        gdb_bin=3D""
-    fi
-fi
-
-and set a variable exported to config-host.mak to then test in the tcg
-test makefiles.
-
-Or you could implement a gdb-version-test command in
-tests/tcg/Makefile.target which you could use like the existing
-cc-test/cc-option commands to extend config-cc.mak and use that to gate
-the tests.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
