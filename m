@@ -4,70 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B2BBC2BB9A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3781BC2BA18
 	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 16:13:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJExw-0005Dq-Hd; Mon, 17 Jun 2024 12:12:20 -0400
+	id 1sJExx-0005E8-CZ; Mon, 17 Jun 2024 12:12:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJExs-0005D5-Mm
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 12:12:16 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1sJExu-0005DI-3y
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 12:12:18 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJExp-00089K-PV
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 12:12:15 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1f44b594deeso42160635ad.2
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 09:12:12 -0700 (PDT)
+ id 1sJExs-00089q-Gf
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 12:12:17 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1f480624d0fso32880765ad.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 09:12:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718640731; x=1719245531; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=AJmbNQ3qV9DlrSTGH9JXiRNJJ32pUUItmIHzCusvT+k=;
- b=tM0E0V0Xs/UCqhHCqk77d+bbn/3tkPqNMsae55YlV8xMFw3oedElIaC0Kbabt5pJfT
- TscrukT3bc7S+Rt+JcKaqM0tN9DA+dGSKLbaJ2O71+dZCaRVabWUQe7mjXHnFx7Of34x
- v3VMGTijuvMucDELWvU9gnSoQOWxlN+u+ARWFsffjdR+iwfqA86KRVDQh8CKzmYGAM1x
- U7dTnlxgH8qc1DCQBqVlR1pxLO3RD4XKPF9chyvjg85H6bGZQ/n1j1reM1uktoUKsF7g
- W3Gxyfv1QC8voIiomy9S4B6X2J4aCY4GBdAfn2gx+dINeKSuOUo0XpcA7bsP9cKIr/wy
- cc/g==
+ d=linaro.org; s=google; t=1718640733; x=1719245533; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QTNFGS8vX+zjeGw3tiagWM4V6BogHHP8tAf3WNuhRt4=;
+ b=WrN4pQdHuflbOaFHjX/eIds0gyjBpdAwHMVIZ0CvKuHwuvLhPQDOv9h5bdBY7E8O76
+ PpT+oarg6/rNr5Jh+4SKehJ/QQ/bI9BjD+HR31KT9ZCzt8h/Hj7IPb2ftk8yZ91A+U5G
+ 59L+1272YkYLJao+t7yLE/SDUD9j7zeNH3Bn+1jiD4byvZx61gXoOUg+pQaKDGuUzMnp
+ dQQzto7jBio6H6AePDzOZmaALNs85pXJ/n2Hm+4S2Y8PLZ8IGmSZR4oddAQbWFbhSpuh
+ W0vZLEd/EKvJfFrpuMNzs8J3maJik97Vxxrnwtd9+ToUMBCOu9YVCDPbX5hPR5LJ+Vgo
+ FIQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718640731; x=1719245531;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AJmbNQ3qV9DlrSTGH9JXiRNJJ32pUUItmIHzCusvT+k=;
- b=FRWbdQVF7VaIqd4UkUl9ROuYr1FjWAe7fpLeKc4k2VUO8VfFRQdw+b2idKgYLu7BJn
- iA+n2NPvKBiZZfVSCkm647Nlt2Ubjx3NIKy/GD0BjhfJKZWJHPbs0ooRZNuCeuYp93mO
- cMxikg09UbJLliMVvKFlEvc7/tE5sXFG6bwQwGQNKZ+T8XKKlSsO2W7h+BWZ+aLnBh+2
- +lRJO58QQoaVqz422GQoU7cfQGos3I9L94J9iV6cvviiArsB6fJu4Mc3vd5r/XgYVncM
- Omhjr4ZrmG+BaU8M/yQfDCeunsOZ1GvuaM7E2YtwdNqOBUgFLik5hLdcRUB/FoekOa7P
- ecMw==
-X-Gm-Message-State: AOJu0YzfE8wsz3+OQLt+vCVVX2SiweEK8rkObwQ8dezjs6ZTGHx1mvOY
- bM557syiGov6IPho46f4nkrNwmQ1QbCBslaDf1XAeAt8vYuZ5af9nniegvTjD1bJhR47C5cE97F
- D
-X-Google-Smtp-Source: AGHT+IF7SKIbvBiO7hTA01Gky0mPhxyfr42iVuSrXZtDXsv7N9tJRr+jzUp7zrlFkKw5zp2RQeomfw==
-X-Received: by 2002:a17:902:e546:b0:1f8:3b7c:dff6 with SMTP id
- d9443c01a7336-1f862a0ab3bmr110236305ad.65.1718640731521; 
- Mon, 17 Jun 2024 09:12:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718640733; x=1719245533;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QTNFGS8vX+zjeGw3tiagWM4V6BogHHP8tAf3WNuhRt4=;
+ b=lpl1NHH//qFl6Wg+GXSFBBDw8kr5PriRdJnNAYInqFS6vIeTfJMVubcP265fDewUU6
+ sdSkBZDhXj6pWw7WHlQrpED+CjS34tggCXgrIkEZQVge5YlB9aShCQokTd4sxKgT4sLH
+ Ov97G/oTYJXme/ezltHNYhwvJEDcJ1u3gUbOGDm/eYbt2XRaGtusAa/8Xw+OVDwTxuah
+ AeQvyJFKSQeiL8feSGJcGE88QF0FuGJz28ezofPv2yeczMMpt86/5ipKnlksepaZLNsV
+ MnLyN5kfMBVA+3xB92IwfrcygTB0n9AaOeAhYohZv+Ewr23AZIz7L4NmurhWU/nQJTxM
+ AuWw==
+X-Gm-Message-State: AOJu0YyglZahS1gui7UstoIstJz7+hE7MeFgPcDF6bcDJDK8UoddaolY
+ +8KDt6v+5dhopCr5zQgQ7ys6OLPGA1W+cj/MpJ7onWPY5kU7bQPrNDCOT9GwtCQaQ+tIuHSaOiJ
+ f
+X-Google-Smtp-Source: AGHT+IHxG0vEwrNPtVdeLAo2FLq6k4ZvChThw1RPQjA4g7p2v5XqE2GUU40XGNJCKJTZ/r2O9zccZg==
+X-Received: by 2002:a17:902:c40f:b0:1f6:8157:b52f with SMTP id
+ d9443c01a7336-1f8625c60a2mr115174255ad.8.1718640733455; 
+ Mon, 17 Jun 2024 09:12:13 -0700 (PDT)
 Received: from stoup.. ([71.212.132.216]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855ee8317sm80829285ad.145.2024.06.17.09.12.10
+ d9443c01a7336-1f855ee8317sm80829285ad.145.2024.06.17.09.12.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 09:12:11 -0700 (PDT)
+ Mon, 17 Jun 2024 09:12:13 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com
-Subject: [RFC PATCH 0/3] target/i386: Reorg push/pop within seg_helper.c
-Date: Mon, 17 Jun 2024 09:12:07 -0700
-Message-Id: <20240617161210.4639-1-richard.henderson@linaro.org>
+Subject: [PATCH 2/3] target/i386: Remove SEG_ADDL
+Date: Mon, 17 Jun 2024 09:12:09 -0700
+Message-Id: <20240617161210.4639-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240617161210.4639-1-richard.henderson@linaro.org>
+References: <20240617161210.4639-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,37 +93,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+This truncation is now handled by MMU_*32_IDX, which is how
+this was working for PUSHW/POPW, which did not use SEG_ADDL.
 
-Thanks for offering to do the work to fix the memory access issues
-identified by Robert.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/i386/tcg/seg_helper.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-Here is a code dump from this weekend that I noodled with -- it is
-prep work only, not intending to change any semantics, but it may
-be helpful in finishing the work.
-
-I considered adding a MemOp member to the structure, which would
-allow the push/pop subroutine to choose the correct access width,
-which would allow the callers to stop having 3 nearly identical
-code paths.  But I didn't quite get that far, and I don't yet
-know if that would really work out wrt long-mode.
-
-Anyway, please you what you like, or not.
-
-
-r~
-
-
-Richard Henderson (3):
-  target/i386: Introduce x86_mmu_index_{kernel_,}pl
-  target/i386: Remove SEG_ADDL
-  target/i386: Reorg push/pop within seg_helper.c
-
- target/i386/cpu.h            |  12 +-
- target/i386/cpu.c            |  27 +-
- target/i386/tcg/seg_helper.c | 469 +++++++++++++++++++----------------
- 3 files changed, 280 insertions(+), 228 deletions(-)
-
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 715db1f232..8884d82b33 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -579,10 +579,6 @@ int exception_has_error_code(int intno)
+     } while (0)
+ #endif
+ 
+-/* in 64-bit machines, this can overflow. So this segment addition macro
+- * can be used to trim the value to 32-bit whenever needed */
+-#define SEG_ADDL(ssp, sp, sp_mask) ((uint32_t)((ssp) + (sp & (sp_mask))))
+-
+ /* XXX: add a is_user flag to have proper security support */
+ #define PUSHW_RA(ssp, sp, sp_mask, val, ra)                      \
+     {                                                            \
+@@ -593,7 +589,7 @@ int exception_has_error_code(int intno)
+ #define PUSHL_RA(ssp, sp, sp_mask, val, ra)                             \
+     {                                                                   \
+         sp -= 4;                                                        \
+-        cpu_stl_kernel_ra(env, SEG_ADDL(ssp, sp, sp_mask), (uint32_t)(val), ra); \
++        cpu_stl_kernel_ra(env, (ssp) + (sp & (sp_mask)), (val), ra); \
+     }
+ 
+ #define POPW_RA(ssp, sp, sp_mask, val, ra)                       \
+@@ -604,7 +600,7 @@ int exception_has_error_code(int intno)
+ 
+ #define POPL_RA(ssp, sp, sp_mask, val, ra)                              \
+     {                                                                   \
+-        val = (uint32_t)cpu_ldl_kernel_ra(env, SEG_ADDL(ssp, sp, sp_mask), ra); \
++        val = (uint32_t)cpu_ldl_kernel_ra(env, (ssp) + (sp & (sp_mask)), ra); \
+         sp += 4;                                                        \
+     }
+ 
 -- 
 2.34.1
 
