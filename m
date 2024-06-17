@@ -4,82 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DE16C2BA18
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 10:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 228AAC2BA1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 10:40:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJ9lF-0007m3-M0; Mon, 17 Jun 2024 06:38:54 -0400
+	id 1sJ9mv-00007E-Sn; Mon, 17 Jun 2024 06:40:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJ9lD-0007lq-Qn
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 06:38:51 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJ9lB-0002iA-Uy
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 06:38:51 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-42138eadf64so33789605e9.3
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 03:38:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718620728; x=1719225528; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CVVO/1598h8Z2p3HhSIIrqk5+1c5V6kWItLt96BvEy4=;
- b=qWZKAD7I6LZEUzOP7dXIFkhFvGgC61c0GLMgEAt36f1yPbS04yXzOVP13D4OJo9U1M
- m58xjEcBpOP0RHCp5KaDn5BRgTjMFuhdF2lk7fPSqCl5Uvs29uchdL3cb+72/WVX/um2
- Ui5mRCql4u9PpnEAl0f76xYrPl3EMjw3BxhDhHn40Fwh/hTbvFFEiZ54M3NmU/IDHpVm
- Y4zA4oAr/cI7pBhmEyUN/aLQxzCzG6L01+7AbtYZvWoHx0fmVD0eiJoVHfLYmLxiKjJp
- fQUdRwgMr1xZp+8xzdQQmsd4S1GomuGHoE8wQtmtn09ud32htUYruS7qlpeejUnvsYEr
- GhbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718620728; x=1719225528;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CVVO/1598h8Z2p3HhSIIrqk5+1c5V6kWItLt96BvEy4=;
- b=Zrs7wkHiwiXIoivskJAiWs9mbocUOUuxXrby6rD+YihbY92kFsoT5vvgXzKhLhJJnq
- e9x5iEsH2/aUXFV0M8/kDgeCMuSdsO0BPv4txSgsLsloEkFdvmF0YQJvEoNssnuKQnih
- wJ/zoMptI+AYubsn+iE/3D9DQzDQ1cNAfSBZWoUtHT4lR/3qfd2+MyXCOpTUzUzt6ATA
- JLb2AtttnkaIEgwcT6Bs8UqKU1YQevZZyvjN8MLCPBBJr86bkn0atlzwhSl1KaNBVPLu
- Mgc1Liz4gzJrMr/JqLvMBXvYvpxol5wfZK2f/zq6471jgHi9IZfv8HTTNAQ6o7TNMUA5
- llLA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhnMgvtZ1DM+NiLSNP1XGOlpBb7fuy9paPlm6UeuN1Xw1/c2YeIOHfu9JJaEjJaJFpgOHLKe96hmHEpYJl4o4fqFOJzrA=
-X-Gm-Message-State: AOJu0Yy8ewJpiqEpW5WBURdvXg9W6+rUI65gfGxKnCiC2cAbGfTdIftd
- 4BW2zfRIiReKjHRq8mOxW4jpnqdT8g1J44JWpnNEiSSS82fCQMykoaBUCf8I0I8=
-X-Google-Smtp-Source: AGHT+IGg4cyYNk8vdYbIuLzBE45XuZL2/KD+cYXzXmS7VWZ8KglSI/Ew+x7cfDcJRVR/BkFu65UT2g==
-X-Received: by 2002:a05:600c:5251:b0:421:c211:a57e with SMTP id
- 5b1f17b1804b1-4230485a5c6mr74161415e9.35.1718620728091; 
- Mon, 17 Jun 2024 03:38:48 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.169.90])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422f5f33c38sm157023065e9.9.2024.06.17.03.38.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Jun 2024 03:38:47 -0700 (PDT)
-Message-ID: <d68aeb35-3e31-48f1-81df-d85ed8d8381c@linaro.org>
-Date: Mon, 17 Jun 2024 12:38:45 +0200
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1sJ9mu-00006f-3u; Mon, 17 Jun 2024 06:40:36 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1sJ9mr-0002v7-QS; Mon, 17 Jun 2024 06:40:35 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45HAM6fR006872;
+ Mon, 17 Jun 2024 10:40:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=I
+ if0/jIeBhoDxdaPq3MPJ0x/PDF8IpTg33GN8IVNyUo=; b=kYf+HrPFORsgXs+Fm
+ XeDcBgpwPjwosGyNcNkdnTF0eWXwDFr3yuHO4vmKFCa00T7bn3YV/yJSfpjq3ZiU
+ sTqmy++hYfFZtdhNY5IyQMLUizneXHGmzGL/mNsW+d7VPsWQgI1am6ZCsmb/Enrc
+ MbieYbR81Q68w61MWQQuqRZR4LNg0z3b0gc7tOItRekyPuAH1/BiY8XWP7ZY3x1s
+ OXUYLNbMbAU4gM35W/V0pzkC3Wji2eW8AkwT9Ma7fALtzQL9WFCNJ+gVdcgKHH9W
+ QDTdb2sQpViNz3rDWxt32eY2iLTl3ZpyQMkSF85jKids9yMmMctRvY1fxLrldABF
+ T6CIg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yth7jgbxg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Jun 2024 10:40:29 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45HAeSWV001519;
+ Mon, 17 Jun 2024 10:40:28 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yth7jgbxd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Jun 2024 10:40:28 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45H9GxMc019670; Mon, 17 Jun 2024 10:40:27 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ysnp0sba8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Jun 2024 10:40:27 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45HAeLsf46858660
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 17 Jun 2024 10:40:23 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8DEF920043;
+ Mon, 17 Jun 2024 10:40:21 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3826F20040;
+ Mon, 17 Jun 2024 10:40:19 +0000 (GMT)
+Received: from [9.179.24.169] (unknown [9.179.24.169])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 17 Jun 2024 10:40:18 +0000 (GMT)
+Message-ID: <358b393d-7c43-4a28-b8da-8221df5031a5@linux.vnet.ibm.com>
+Date: Mon, 17 Jun 2024 16:10:17 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] virtio-pci: Fix the use of an uninitialized irqfd.
-To: Cindy Lu <lulu@redhat.com>, mst@redhat.com, jasowang@redhat.com,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20240617095529.115046-1-lulu@redhat.com>
+Subject: Re: [PATCH v2 2/4] target/ppc: Move VSX vector with length storage
+ access insns to decodetree.
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ harshpb@linux.ibm.com
+References: <20240613093318.314913-1-rathc@linux.ibm.com>
+ <20240613093318.314913-3-rathc@linux.ibm.com>
+ <6638b813-f4ef-4587-b94f-3c24d90ca09e@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240617095529.115046-1-lulu@redhat.com>
+From: Chinmay Rath <rathc@linux.vnet.ibm.com>
+In-Reply-To: <6638b813-f4ef-4587-b94f-3c24d90ca09e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: ujcveigVstEZJZH58W7hqzrRsFzQHLss
+X-Proofpoint-ORIG-GUID: qIY-kiPwH97opVhf9n6JPqsTOvLLe7H7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-17_08,2024-06-17_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ adultscore=0 suspectscore=0 spamscore=0 mlxscore=0 mlxlogscore=764
+ impostorscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406170076
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=rathc@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,71 +119,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cindy,
+Hi Richard,
 
-On 17/6/24 11:55, Cindy Lu wrote:
-> The crash was reported in MAC OS and NixOS, here is the link for this bug
-> https://gitlab.com/qemu-project/qemu/-/issues/2334
-> https://gitlab.com/qemu-project/qemu/-/issues/2321
-> 
-> The root cause is the function virtio_pci_set_guest_notifiers() was not called
-> in the virtio_input device.So the vector_irqfd was not initialized
-> 
-> So the fix is to add the check for vector_irqfd.
-> 
-> This fix is verified in vyatta,MacOS,NixOS,fedora system.
-> 
-> The bt tree for this bug is:
-> Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
-> [Switching to Thread 0x7c817be006c0 (LWP 1269146)]
-> kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
-> 817	    if (irqfd->users == 0) {
-> (gdb) thread apply all bt
-> ...
-> Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
-> 0  kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
-> 1  kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:893
-> 2  0x00005983657045e2 in memory_region_write_accessor () at ../qemu-9.0.0/system/memory.c:497
-> 3  0x0000598365704ba6 in access_with_adjusted_size () at ../qemu-9.0.0/system/memory.c:573
-> 4  0x0000598365705059 in memory_region_dispatch_write () at ../qemu-9.0.0/system/memory.c:1528
-> 5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at ../qemu-9.0.0/system/physmem.c:2713
-> 6  0x000059836570ba7d in flatview_write_continue () at ../qemu-9.0.0/system/physmem.c:2743
-> 7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
-> 8  0x000059836570bb76 in address_space_write () at ../qemu-9.0.0/system/physmem.c:2894
-> 9  0x0000598365763afe in address_space_rw () at ../qemu-9.0.0/system/physmem.c:2904
-> 10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
-> 11 0x000059836576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel/kvm/kvm-accel-ops.c:50
-> 12 0x0000598365926ca8 in qemu_thread_start () at ../qemu-9.0.0/util/qemu-thread-posix.c:541
-> 13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
-> 14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
-> 
-> Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
-> Cc: qemu-stable@nongnu.org
-> 
-> Signed-off-by: Cindy Lu <lulu@redhat.com>
-> ---
->   hw/virtio/virtio-pci.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index b1d02f4b3d..502aad28b2 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -1442,7 +1442,9 @@ static void virtio_pci_set_vector(VirtIODevice *vdev,
->        * Otherwise just need to set the new vector on the device.
->        */
->       if (kvm_irqfd && old_vector != VIRTIO_NO_VECTOR) {
-> -        kvm_virtio_pci_vector_release_one(proxy, queue_no);
-> +        if (proxy->vector_irqfd) {
+On 6/17/24 00:43, Richard Henderson wrote:
+> On 6/13/24 02:33, Chinmay Rath wrote:
+>> +/* EA <- (ra == 0) ? 0 : GPR[ra] */
+>> +static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
+>> +{
+>> +    TCGv EA;
+>> +    if (!ra) {
+>> +        EA = tcg_constant_tl(0);
+>> +        return EA;
+>> +    }
+>> +    EA = tcg_temp_new();
+>> +    if (NARROW_MODE(ctx)) {
+>> +        tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
+>> +    } else {
+>> +        tcg_gen_mov_tl(EA, cpu_gpr[ra]);
+>
+> Why are you making a copy, rather than just returning cpu_gpr[ra]?
+True, this tcg move is redundant. Was carried away to maintain 
+uniformity with the original do_ea_calc function. My bad!
 
-Shouldn't this go into called virtio_pci_get_notifier()?
+This can rather just be :
+/* ea <- (ra == 0) ? 0 : GPR[ra] */
+static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
+{
+     TCGv EA;
+     if (!ra) {
+         return tcg_constant_tl(0);
+     }
+     if (NARROW_MODE(ctx)) {
+         EA = tcg_temp_new();
+         tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
+     } else {
+         return cpu_gpr[ra];
+     }
+     return EA;
+}
 
-> +            kvm_virtio_pci_vector_release_one(proxy, queue_no);
+> If you need to modify the resulting EA, then you also need to make a 
+> copy for 0.
+>
+Hey, didn't properly get what you meant here.
+Did you mean : Since I'm using a tcg_constant for 0, if the EA is to be 
+modified later, this constant would be an issue, in which case, I should 
+make a copy for it ??
 
-We ignore this function return value, is it safe/expected?
+Considering that, there are no tcg level modifications with this EA. 
+However, the underlying helper method, which considers this EA as a 
+target_ulong type does modify it, which I don't think should be an issue.
 
-> +        }
->       }
+Please let me know if I missed something.
 
+Thanks & Regards,
+Chinmay
+> r~
+>
 
 
