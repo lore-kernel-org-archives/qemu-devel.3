@@ -4,96 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CCAC2BA15
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 13:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD3BDC27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 13:31:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJCL7-0008VQ-F0; Mon, 17 Jun 2024 09:24:05 -0400
+	id 1sJCRV-0002Xi-Cm; Mon, 17 Jun 2024 09:30:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJCL5-0008VC-MU
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 09:24:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sJCRJ-0002VP-AL; Mon, 17 Jun 2024 09:30:38 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJCL4-00008a-5b
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 09:24:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718630641;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=b313t8QGbzWNmuRQH1B7TpBmfxi6fefKIpZa+ZnqFTM=;
- b=LML4WpgNqVHrLA/w2V9+cZNxdHOoqF8c/3ddLOgNxxQE5nwSVAqBXcu2p4ZXY1YcpElHbS
- 2oFxMtiwc4WQrGXp4uyMpCzWyRXL+rMgj2JzcwQ8Pa1sBgWjEVKpxdg4VoOUazi9tIH+wM
- gm1rtjzqsrpGJpXnt32QOC1LrwAcxDI=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-136-qCCSgSWLPBWqRvVkL4BtOQ-1; Mon, 17 Jun 2024 09:23:57 -0400
-X-MC-Unique: qCCSgSWLPBWqRvVkL4BtOQ-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-52c849a1f64so2680813e87.2
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 06:23:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718630636; x=1719235436;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=b313t8QGbzWNmuRQH1B7TpBmfxi6fefKIpZa+ZnqFTM=;
- b=MlqzzKrn3YZkIGlCGvUXzH0Q1yCPqEZSC9deigncYkOC6oqHbZxq+aVa6ljTu9VSJc
- 0L8RyHeQfwHyDOW/LFV4tc+c8Ikc1ffP3SE4inxZKf1llFJB8Vp9MhJnZmLbETzebvjP
- /3AZ09sXmKC1CbSBEI52Wht/Y68m4MPRh4hf5dYxoyt2RC6thD9lcIB24h5azIVEZJIg
- FWlTKT8bY0ks+mcq4mSHJvzi71tEa7qIjJzmYxP9pi3tSB9qoBv5yxQ+KDjlwB1V5hO2
- EtYejrECv3u+M4IH0IZsMBmJCYWL7VY7wlXGMnHCxxUh/tZxzV54DkeGKMnTfR6GUX0t
- +wRg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX0iNsxCTnHU2jpDUincyVnYa99Q2giUC1wRixcQbGUN/kGGolzGHjTGLd8evwR2VTxg+4SG7oKEv9DYfUektbotBnx2d4=
-X-Gm-Message-State: AOJu0Yy7AvjzUt/xE1I/8sjbPWAqZgxU3Mwkeouw5iet1Wk4ScQpgGbY
- cDAX67RNuk/tGIyBiturrimqddj0bw+K+m3jRLueNf1b7xoKMqLIdQLEjwRCEmqOHRXPDHxDy1N
- Tghu/W+1O/m285D0luc1UHWYEvVe+MlsCh0PDhQ7uLa4kysyZEeQT
-X-Received: by 2002:ac2:560a:0:b0:52c:8abe:5204 with SMTP id
- 2adb3069b0e04-52ca6e6d562mr6347061e87.32.1718630636218; 
- Mon, 17 Jun 2024 06:23:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG1nD0rKkhfmM/x/BPDmBdX3253dypsX7VRJ1XdJnvvyo2Q/6DLpr87jBGoVMHKmt3T1pU8qg==
-X-Received: by 2002:ac2:560a:0:b0:52c:8abe:5204 with SMTP id
- 2adb3069b0e04-52ca6e6d562mr6347045e87.32.1718630635793; 
- Mon, 17 Jun 2024 06:23:55 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422870e9193sm196065245e9.21.2024.06.17.06.23.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Jun 2024 06:23:55 -0700 (PDT)
-Message-ID: <8b8ac158-ffc4-4d2e-aaf5-2893f1b680f7@redhat.com>
-Date: Mon, 17 Jun 2024 15:23:54 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sJCRF-0001kW-N2; Mon, 17 Jun 2024 09:30:28 -0400
+Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45HC0eOj006925;
+ Mon, 17 Jun 2024 13:30:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:subject:to:cc:references:from:in-reply-to
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ rJ5HHrSgY3g0DgoDYJxNq7yUQo2yzrbJn+3wCyxypGI=; b=n+p9MDGoctnPWf+W
+ zD263M0bhM3hcOSIOUHJD7Jl5XOJhRUfZp6g2VLTVjkg7Bw4Vr21NDRg890Wywut
+ B3F8OZdSukqw6/AjEuLjhydtv+DHGqw/zcfBqZUqS08VElqTrdVo5G0GjEj3j3P1
+ nNzYyN8q+E7nMJgKoLi/oprUQlsRA4KRGl+Z+y7wDOU4+K2E1U8wPKH3JNopFgCV
+ X/D8mnnQcLS9nfYZHF3kcXNcFD4VZH+iSiUWH4iX3yZM9e3yeYgMYVYUa3fKWxAz
+ LQjOHIn++kj4yised7DbUkqxclJgmrem8WalrWwFnLH5rurYp4tDuDTAcI/E3Frs
+ R+utyA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ytj408mer-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Jun 2024 13:30:11 +0000 (GMT)
+Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45HDUB89011424;
+ Mon, 17 Jun 2024 13:30:11 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ytj408mem-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Jun 2024 13:30:11 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45HC3Qqf011031; Mon, 17 Jun 2024 13:30:10 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3yspsmt8kk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Jun 2024 13:30:10 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45HDU71v24117984
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 17 Jun 2024 13:30:09 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CF4D55807D;
+ Mon, 17 Jun 2024 13:30:07 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3083458070;
+ Mon, 17 Jun 2024 13:30:04 +0000 (GMT)
+Received: from [9.195.47.7] (unknown [9.195.47.7])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 17 Jun 2024 13:30:03 +0000 (GMT)
+Message-ID: <21ac5eca-dd22-40de-a21e-af9985e2c62f@linux.ibm.com>
+Date: Mon, 17 Jun 2024 19:00:02 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/8] HostIOMMUDevice: Introduce get_iova_ranges callback
-To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
- jean-philippe@linaro.org, peter.maydell@linaro.org, yanghliu@redhat.com,
- zhenzhong.duan@intel.com
-Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
- berrange@redhat.com
-References: <20240614095402.904691-1-eric.auger@redhat.com>
- <20240614095402.904691-4-eric.auger@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240614095402.904691-4-eric.auger@redhat.com>
+Subject: Re: [PATCH 00/26] hw/ppc: Prefer HumanReadableText over Monitor
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+References: <20240610062105.49848-1-philmd@linaro.org>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20240610062105.49848-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: Smrl2P5jb1zaTnt8V94rUl-pAd7jHPLs
+X-Proofpoint-GUID: olYVnKHB2gkj1qcKLji9ivp0DSFyxfiX
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-17_11,2024-06-17_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=610 spamscore=0
+ priorityscore=1501 phishscore=0 mlxscore=0 suspectscore=0 bulkscore=0
+ malwarescore=0 impostorscore=0 lowpriorityscore=0 adultscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406170104
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,119 +121,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/14/24 11:52 AM, Eric Auger wrote:
-> Introduce a new HostIOMMUDevice callback that allows to
-> retrieve the usable IOVA ranges.
+
+
+On 6/10/24 11:50, Philippe Mathieu-Daudé wrote:
+> Hi,
 > 
-> Implement this callback in the legacy VFIO and IOMMUFD VFIO
-> host iommu devices. This relies on the VFIODevice agent's
-> base container iova_ranges resource.
+> This series remove uses of Monitor in hw/ppc/,
+> replacing by the more generic HumanReadableText.
+> Care is taken to keep the commit bisectables by
+> updating functions one by one, also easing review.
 > 
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> For rationale see previous series from Daniel:
+> https://lore.kernel.org/qemu-devel/20211028155457.967291-1-berrange@redhat.com/
 > 
-> ---
+> Regards,
 > 
-> v2 -> v3:
-> - add g_assert(vdev)
-> ---
->   include/sysemu/host_iommu_device.h |  8 ++++++++
->   hw/vfio/container.c                | 16 ++++++++++++++++
->   hw/vfio/iommufd.c                  | 16 ++++++++++++++++
->   3 files changed, 40 insertions(+)
+> Phil.
 > 
-> diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
-> index 3e5f058e7b..40e0fa13ef 100644
-> --- a/include/sysemu/host_iommu_device.h
-> +++ b/include/sysemu/host_iommu_device.h
-> @@ -80,6 +80,14 @@ struct HostIOMMUDeviceClass {
->        * i.e., HOST_IOMMU_DEVICE_CAP_AW_BITS.
->        */
->       int (*get_cap)(HostIOMMUDevice *hiod, int cap, Error **errp);
-> +    /**
-> +     * @get_iova_ranges: Return the list of usable iova_ranges along with
-> +     * @hiod Host IOMMU device
-> +     *
-> +     * @hiod: handle to the host IOMMU device
-> +     * @errp: error handle
-> +     */
-> +    GList* (*get_iova_ranges)(HostIOMMUDevice *hiod, Error **errp);
->   };
->   
->   /*
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index b728b978a2..c48749c089 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -1164,12 +1164,28 @@ static int hiod_legacy_vfio_get_cap(HostIOMMUDevice *hiod, int cap,
->       }
->   }
->   
-> +static GList *
-> +hiod_legacy_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
-> +{
-> +    VFIODevice *vdev = hiod->agent;
-> +    GList *l = NULL;
-> +
-> +    g_assert(vdev);
-> +
-> +    if (vdev->bcontainer) {
-> +        l = g_list_copy(vdev->bcontainer->iova_ranges);
-> +    }
-> +
-> +    return l;
-> +}
-> +
->   static void hiod_legacy_vfio_class_init(ObjectClass *oc, void *data)
->   {
->       HostIOMMUDeviceClass *hioc = HOST_IOMMU_DEVICE_CLASS(oc);
->   
->       hioc->realize = hiod_legacy_vfio_realize;
->       hioc->get_cap = hiod_legacy_vfio_get_cap;
-> +    hioc->get_iova_ranges = hiod_legacy_vfio_get_iova_ranges;
->   };
->   
->   static const TypeInfo types[] = {
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index dbdae1adbb..e502081c2a 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -645,11 +645,27 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
->       return true;
->   }
->   
-> +static GList *
-> +hiod_iommufd_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
-> +{
-> +    VFIODevice *vdev = hiod->agent;
-> +    GList *l = NULL;
-> +
-> +    g_assert(vdev);
-> +
-> +    if (vdev->bcontainer) {
-> +        l = g_list_copy(vdev->bcontainer->iova_ranges);
-> +    }
-> +
-> +    return l;
-> +}
 
-May be introduce a common vfio_container_get_iova_ranges() to be called from
-the get_iova_ranges() handlers ?
+For the series:
 
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-Thanks,
-
-C.
-
-
->   static void hiod_iommufd_vfio_class_init(ObjectClass *oc, void *data)
->   {
->       HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_CLASS(oc);
->   
->       hiodc->realize = hiod_iommufd_vfio_realize;
-> +    hiodc->get_iova_ranges = hiod_iommufd_vfio_get_iova_ranges;
->   };
->   
->   static const TypeInfo types[] = {
-
+> Philippe Mathieu-Daudé (26):
+>    hw/ppc: Avoid using Monitor in pnv_phb3_msi_pic_print_info()
+>    hw/ppc: Avoid using Monitor in icp_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_tctx_pic_print_info()
+>    hw/ppc: Avoid using Monitor in ics_pic_print_info()
+>    hw/ppc: Avoid using Monitor in PnvChipClass::intc_print_info()
+>    hw/ppc: Avoid using Monitor in xive_end_queue_pic_print_info()
+>    hw/ppc: Avoid using Monitor in spapr_xive_end_pic_print_info()
+>    hw/ppc: Avoid using Monitor in spapr_xive_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_source_pic_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_phb4_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_eas_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_end_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_end_eas_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive_nvt_pic_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_xive_pic_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_psi_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_eas_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_end_eas_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_end_queue_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_end_pic_print_info()
+>    hw/ppc: Avoid using Monitor in xive2_nvp_pic_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_xive2_pic_print_info()
+>    hw/ppc: Avoid using Monitor in
+>      SpaprInterruptControllerClass::print_info()
+>    hw/ppc: Avoid using Monitor in spapr_irq_print_info()
+>    hw/ppc: Avoid using Monitor in pnv_chip_power9_pic_print_info_child()
+>    hw/ppc: Avoid using Monitor in pic_print_info()
+> 
+>   include/hw/pci-host/pnv_phb3.h |   2 +-
+>   include/hw/pci-host/pnv_phb4.h |   2 +-
+>   include/hw/ppc/pnv_chip.h      |   4 +-
+>   include/hw/ppc/pnv_psi.h       |   2 +-
+>   include/hw/ppc/pnv_xive.h      |   4 +-
+>   include/hw/ppc/spapr_irq.h     |   4 +-
+>   include/hw/ppc/xics.h          |   4 +-
+>   include/hw/ppc/xive.h          |   4 +-
+>   include/hw/ppc/xive2_regs.h    |   8 +--
+>   include/hw/ppc/xive_regs.h     |   8 +--
+>   hw/intc/pnv_xive.c             |  38 ++++++------
+>   hw/intc/pnv_xive2.c            |  48 +++++++--------
+>   hw/intc/spapr_xive.c           |  41 ++++++-------
+>   hw/intc/xics.c                 |  25 ++++----
+>   hw/intc/xics_spapr.c           |   7 +--
+>   hw/intc/xive.c                 | 108 ++++++++++++++++-----------------
+>   hw/intc/xive2.c                |  87 +++++++++++++-------------
+>   hw/pci-host/pnv_phb3_msi.c     |  21 +++----
+>   hw/pci-host/pnv_phb4.c         |  17 +++---
+>   hw/ppc/pnv.c                   |  52 ++++++++--------
+>   hw/ppc/pnv_psi.c               |   9 ++-
+>   hw/ppc/spapr.c                 |  11 +++-
+>   hw/ppc/spapr_irq.c             |   4 +-
+>   23 files changed, 256 insertions(+), 254 deletions(-)
+> 
 
