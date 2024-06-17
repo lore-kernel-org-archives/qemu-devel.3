@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB1B1C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 19:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED9B5C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 19:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJHrP-0001BH-F5; Mon, 17 Jun 2024 15:17:47 -0400
+	id 1sJHtn-00028M-PE; Mon, 17 Jun 2024 15:20:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJHrN-0001Ax-NO
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 15:17:45 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJHtX-00020c-K3
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 15:19:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJHrM-0000TM-2n
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 15:17:45 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJHtV-0000aw-Kl
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 15:19:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718651862;
+ s=mimecast20190719; t=1718651996;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=+DXd1LTPn8LaoulIy+ErT35oPExmnD0ZvxR+lEP84Gk=;
- b=Kf9zSz/QZdLYp9C+lvm9gziLIDT1Yd4PRN6W11j8VibKiNlW/EWZY8aZqGVxXAiKDC1msr
- Wixw2htWyM/VT913fczVOKM5XY7/3fRVuwB3YrZl6OQaZBEr1lhKfV+n/hMF/wTG+Y9YSl
- 878/xRGJorTnK52GzE7idMyvcb5Y9vg=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yCUqyXgeAt3DigB96iTOqSCC+oQHEQcT+0S1sif4ysY=;
+ b=ZbdgzGVnbx/6EFJlZk1GSPpm7EmF49RSYp2K9eY9g8LV/WP9f82h1bjewp7bmwFSFxSn/P
+ 5HSN0bN4JC6KNlW+EeJOlkynjB2QEOK21j/eJGvKstnLIqZF22Dw/OVXqk1YosP2C/bfqN
+ ABZ8SwlrrGSvyLJu3tkcGy2ohfRv1XQ=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-159-5Yf6OYUKPEmV1xHMUFxMCA-1; Mon, 17 Jun 2024 15:17:41 -0400
-X-MC-Unique: 5Yf6OYUKPEmV1xHMUFxMCA-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4409ac6b7f2so12236431cf.0
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 12:17:41 -0700 (PDT)
+ us-mta-581-bXejdzKZMSGc1OVU5RF70w-1; Mon, 17 Jun 2024 15:19:54 -0400
+X-MC-Unique: bXejdzKZMSGc1OVU5RF70w-1
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-631fb63c2b4so2233237b3.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 12:19:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718651861; x=1719256661;
+ d=1e100.net; s=20230601; t=1718651994; x=1719256794;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+DXd1LTPn8LaoulIy+ErT35oPExmnD0ZvxR+lEP84Gk=;
- b=S9ZsxRyyc/UzgPENqXGz9lL+l67fmj89BU5DegJwcRg04qmjOiwYWZO9NScEakv3YF
- +IBo5hx9wNWEZXwhliiuwiHWJUH2n4zZw6Y6as7a+4+7gk7Tj0J/KtILOObBnjhdyA7U
- 7toO4ma9XFLU56JAnovcWINqgjfK4WBdMBAED1rY9fC+rxYGq4zl7SJ/sJ8qDUwNgJcr
- 5uvU3NHpfqwn/DWwE1vRTMHA2Eo5/ply4kstctM7zoTxrKR4YAV/OApjYNZHmpLRa3/y
- I2jQxvaUOlGF5fGOojRHGLHqZ/bkxFqYdKeX29/xRafSRNMsTh9wH5sI5teJ7jmRc9oi
- L2Tw==
-X-Gm-Message-State: AOJu0Yw0IvSl3HUywaUSDdS1+L1czUXWLAO4b9BK4nC2BlemxPYEc+Jx
- 1YIxtr/TZ463UdReAf4YMZYIxXVzvlIE6yMUEnS5/adK/VWnD73gerfk6nc/2xOtt1oqom+SaUd
- OOxqvKgRS14Oxj3KvGFspRY0R6QnCO/H2UPWeF37PiUJK8sfLYxGW
-X-Received: by 2002:ac8:5e4b:0:b0:441:322:af8f with SMTP id
- d75a77b69052e-44216dbfd47mr115427901cf.4.1718651860680; 
- Mon, 17 Jun 2024 12:17:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXJquKftMIX2YNJuchEQYUwLTl3RZoefa/EOG8wwP1RIrpGkdSfQrBbPApKsjhHFEYzrONOA==
-X-Received: by 2002:ac8:5e4b:0:b0:441:322:af8f with SMTP id
- d75a77b69052e-44216dbfd47mr115427671cf.4.1718651860098; 
- Mon, 17 Jun 2024 12:17:40 -0700 (PDT)
+ bh=yCUqyXgeAt3DigB96iTOqSCC+oQHEQcT+0S1sif4ysY=;
+ b=EbEhyfNlKxHi8BP4EE26inVZqu6WPEPMKKbhV9dVdVJ618Nc5wMHwCztpGjtqr8Dyx
+ t8pfTm9OjhdrcbiqogULDWKatWmW+Rqc4eBTyCcSDaokBYZGV/n3v5SPNjPZpQ5hwq0n
+ JDP65GSsNbXbVwBEVAy6yvOea+ZuYqvtDqQndOpeqvsmB2LJabfAXCl1ORNGLSHhOfeR
+ 1x1bZvCZ+d2aMrm+ZFb5wC7EtDSB4vO/VfrdpcP+gb77SuuPMriPbAyJ8XDq6uQ0n+Qk
+ xmmvLUMtcqn6m/1t2w7zXUOxHV1t34BUJVvgSw4DidCsKAnERuHevLggOAMgQnAQOLyy
+ z+PA==
+X-Gm-Message-State: AOJu0YxjbCZG1JlQz8VzPOXGhVQL/A+wQTNK5iHDoZFMA12Ypkz7l4QV
+ qOm3tL6GFpYUqKnmAFOlnFsWR6jNeN3abbOKiTSVjc4PWQi5guEtufnWxj01xxbNBk8xnqEvuY+
+ GkMDg/MZdg7HBkvSRSHNNUFB7It9Ot2SY6htsdCuldamn0kXPVsrj
+X-Received: by 2002:a05:690c:305:b0:631:52c:7b72 with SMTP id
+ 00721157ae682-63224718309mr85293737b3.3.1718651993992; 
+ Mon, 17 Jun 2024 12:19:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFSD3gplHt8W+7hwBkw7jkV1NP27cpxOkvM+82rX9eEowO2V7SXVziQnqvi8RlTeg4XqAPGqA==
+X-Received: by 2002:a05:690c:305:b0:631:52c:7b72 with SMTP id
+ 00721157ae682-63224718309mr85293437b3.3.1718651993355; 
+ Mon, 17 Jun 2024 12:19:53 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-442198f6133sm39367761cf.47.2024.06.17.12.17.39
+ 00721157ae682-631183d7d8fsm15412077b3.9.2024.06.17.12.19.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 12:17:39 -0700 (PDT)
-Date: Mon, 17 Jun 2024 15:17:37 -0400
+ Mon, 17 Jun 2024 12:19:52 -0700 (PDT)
+Date: Mon, 17 Jun 2024 15:19:50 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
  Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
-Subject: Re: [PATCH v3 01/16] migration: Drop reference to QIOChannel if file
- seeking fails
-Message-ID: <ZnCL0XFZkeKDgD-Y@x1n>
+Subject: Re: [PATCH v3 12/16] migration/multifd: Add direct-io support
+Message-ID: <ZnCMVl3F9m9Laazd@x1n>
 References: <20240617185731.9725-1-farosas@suse.de>
- <20240617185731.9725-2-farosas@suse.de>
+ <20240617185731.9725-13-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240617185731.9725-2-farosas@suse.de>
+In-Reply-To: <20240617185731.9725-13-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
@@ -101,9 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 17, 2024 at 03:57:16PM -0300, Fabiano Rosas wrote:
-> We forgot to drop the reference to the QIOChannel in the error path of
-> the offset adjustment. Do it now.
+On Mon, Jun 17, 2024 at 03:57:27PM -0300, Fabiano Rosas wrote:
+> When multifd is used along with mapped-ram, we can take benefit of a
+> filesystem that supports the O_DIRECT flag and perform direct I/O in
+> the multifd threads. This brings a significant performance improvement
+> because direct-io writes bypass the page cache which would otherwise
+> be thrashed by the multifd data which is unlikely to be needed again
+> in a short period of time.
+> 
+> To be able to use a multifd channel opened with O_DIRECT, we must
+> ensure that a certain aligment is used. Filesystems usually require a
+> block-size alignment for direct I/O. The way to achieve this is by
+> enabling the mapped-ram feature, which already aligns its I/O properly
+> (see MAPPED_RAM_FILE_OFFSET_ALIGNMENT at ram.c).
+> 
+> By setting O_DIRECT on the multifd channels, all writes to the same
+> file descriptor need to be aligned as well, even the ones that come
+> from outside multifd, such as the QEMUFile I/O from the main migration
+> code. This makes it impossible to use the same file descriptor for the
+> QEMUFile and for the multifd channels. The various flags and metadata
+> written by the main migration code will always be unaligned by virtue
+> of their small size. To workaround this issue, we'll require a second
+> file descriptor to be used exclusively for direct I/O.
+> 
+> The second file descriptor can be obtained by QEMU by re-opening the
+> migration file (already possible), or by being provided by the user or
+> management application (support to be added in future patches).
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
