@@ -4,79 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FA9DC2BA1A
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:59:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3330CC27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 18:59:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJHYf-0003xx-UX; Mon, 17 Jun 2024 14:58:26 -0400
+	id 1sJHYW-0003vM-VG; Mon, 17 Jun 2024 14:58:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHYe-0003xY-Ci
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:24 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sJHYV-0003ut-2d
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:15 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHYc-0004vn-OY
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:24 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-70435f4c330so3765201b3a.1
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718650700; x=1719255500; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=2lue1NYs8pzYvkVM8I+Vf9elZ0KvTkfQjkhNGZa4vlA=;
- b=UZZolZNlBVDALp+f7G0XEVvFRHyo7LHwSZCU4KYGU+CyWk1dzJxkBF56YgCKb25LFz
- 9/Z5/B7IPLsOtDfx7AN3eZzY34BKrXvq4dnCJ6DPG/wLmdlyEj95WErcQ5sjJ1pOugrW
- WT0OJW5KDhsyh+l0e0PoDWz8QVrFtjVioOnG+QKb19+pIbq5gb0O7Wa5hJU8NlrfMF3X
- oH8jQcn/+5C5z1BEG5CEDGV+SCX7pBNnLUd1IHZjva/lbhLMadrcHNytPbyJ/PFVhk8m
- 2mMCF3xzM2eJ9IOcgBEneik5N3rr3970HkZUb9bZqo+Y5K6AlrMM+hBS8/KRreQmUDl3
- nJwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718650700; x=1719255500;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2lue1NYs8pzYvkVM8I+Vf9elZ0KvTkfQjkhNGZa4vlA=;
- b=dRCBqwGsOU9h6tru2qusRFlK9LOaGHWWHE6ZhHut1Gf/e76iH1ChUwHUaDVoJJ591z
- rXx9HyEHBPdLA/Kwa1AdilJ2aZVs9Br8VjM2wCEEuG4kILU/ofq5aEyZ3Dh3zd3QJ1Sf
- 5EP0/genT+JwWqmhZfc/88S6vCSdR+Mymp+j8IZhPb/OjMffzm9ZRQU/MbGjVByaqoUR
- tF++8fv7Vr38lBnbWY8D0nM8HJKnMbN7AOaXudIuJzgZz2GYUGBEcGU7aDTKnu6QwnEb
- cfEmCqbLbF6yWj41krBugM9FJUBcqppD97Ks2kbkrnBDXYpOipqxtOlU608w5C3Rv922
- OvKA==
-X-Gm-Message-State: AOJu0YwZlEQwaavxjtWGsbPd/oaAwFFyxOzH8vPeazAzCEiYYB1pzE9Y
- Y+JIQENX/i4TmrmEs1DwkTwiJCSMdJ66P5uuRrHWSXHOJuM5/7vBFpJceVOFCik=
-X-Google-Smtp-Source: AGHT+IE0rOOemu0InWND8vW9CAm87ESOdH2Dc3rNpuW+SLCbiXyViu/dkHyHSIeXL8LxeoJMSW1KQA==
-X-Received: by 2002:a05:6a20:9148:b0:1b2:cf6c:d5a4 with SMTP id
- adf61e73a8af0-1bae82ecde1mr11046839637.61.1718650700311; 
- Mon, 17 Jun 2024 11:58:20 -0700 (PDT)
-Received: from localhost.localdomain ([106.222.222.115])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 11:58:20 -0700 (PDT)
-From: Ajeet Singh <itachis6234@gmail.com>
-X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sJHYT-0004uu-Hi
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:14 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id E6B381F443;
+ Mon, 17 Jun 2024 18:58:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718650692; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=a03gkYH2QZOFOSa6odfujVtphMi3cC8MquQiUv1hbjQ=;
+ b=nn95MGlxZUVVBkgXFal0UP+srQ4roZJG1GWR2F5msyOFxUegZ+rh3ghZs/zs63YQ6IGEnX
+ VNk8Z/jtlFoG6rzNE9sBSvmzPpWOafBP4Ra8tviDFBx6AlC2UQj0LTF2P7+JFmoV7+hFJY
+ R387U0hXjTvM3lBckVKvKhQWZqoqp8E=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718650692;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=a03gkYH2QZOFOSa6odfujVtphMi3cC8MquQiUv1hbjQ=;
+ b=ZPY2uyHVIxaC79NFBztdwkF4sfNCZdjtosjzITFufUR13DD1i7v6L9m9oyz+NEZwONxpLm
+ vyVXfkzg0uwBz+BA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718650691; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=a03gkYH2QZOFOSa6odfujVtphMi3cC8MquQiUv1hbjQ=;
+ b=wvOIINc1jbByhZLukz+gPKoz21DuLQpuWPcYxALqy3Nmleehuvfh4iL8ysmMb8uyWjQkvj
+ P43H6rXlK9SAhcf+r+La0hQxJ4AexoMBeyC4fbTh/jfO3VB7G3yY6iIbm3rM9mYWKgHNjG
+ XRRpqpZ9ZGUug0+kQMtEBX2yEcxPtvQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718650691;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=a03gkYH2QZOFOSa6odfujVtphMi3cC8MquQiUv1hbjQ=;
+ b=QYoVDsMTgrtn9ytRcHr2/v93N/f/Ry7Cz7TvEbKnyzyJy0jO0uX+m9XkPub8EXR9MLWtR/
+ iZdLVAC1HNyyjnDw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 17495139AB;
+ Mon, 17 Jun 2024 18:58:09 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id cP/FM0GHcGYJKAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 17 Jun 2024 18:58:09 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>,
- Ajeet Singh <itachis@FreeBSD.org>
-Subject: [PATCH 00/23] ARM AArch64 Support for BSD
-Date: Tue, 18 Jun 2024 00:27:41 +0530
-Message-Id: <20240617185804.25075-1-itachis@FreeBSD.org>
-X-Mailer: git-send-email 2.34.1
+Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
+ Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>
+Subject: [PATCH v3 14/16] monitor: fdset: Match against O_DIRECT
+Date: Mon, 17 Jun 2024 15:57:29 -0300
+Message-Id: <20240617185731.9725-15-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240617185731.9725-1-farosas@suse.de>
+References: <20240617185731.9725-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=itachis6234@gmail.com; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,62 +118,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-making sure to credit all the authors correctly
+We're about to enable the use of O_DIRECT in the migration code and
+due to the alignment restrictions imposed by filesystems we need to
+make sure the flag is only used when doing aligned IO.
 
-Stacey Son (18):
-  Add CPU initialization function
-  Added CPU loop function
-  Added function to clone CPU state
-  AArch64 specific CPU for bsd-user
-  Managing CPU register for BSD-USER
-  Add Aarch64 register handling
-  Add ARM AArch64 TLS Management Prototypes for BSD-User
-  Add Aarch64 sysarch() system call emulation for BSD-USER
-  Add thread setup for BSD-USER
-  Add thread initialization for BSD-USER
-  Update ARM AArch64 VM parameter definitions for bsd-user
-  Add ARM AArch64 ELF definitions for bsd-user
-  Add ARM AArch64 sigcode setup function for bsd-user
-  Add ARM AArch64 specific signal definitions for bsd-user
-  Add ARM AArch64 signal trampoline argument setup for bsd-user
-  Add get_mcontext function for ARM AArch64 in bsd-user
-  Add set_mcontext function for ARM AArch64 in bsd-user
-  Add get_ucontext_sigreturn function
+The migration will do parallel IO to different regions of a file, so
+we need to use more than one file descriptor. Those cannot be obtained
+by duplicating (dup()) since duplicated file descriptors share the
+file status flags, including O_DIRECT. If one migration channel does
+unaligned IO while another sets O_DIRECT to do aligned IO, the
+filesystem would fail the unaligned operation.
 
-Warner Losh (5):
-  Add ability to get rval2
-  Add ARM AArch64 hardware capability definitions
-  Add function to retrieve ARM AArch64 hardware capabilities
-  Add function to retrieve additional ARM AArch64 hwcap
-  Add setup_sigframe_arch function for ARM AArch64 in bsd-user
+The add-fd QMP command along with the fdset code are specifically
+designed to allow the user to pass a set of file descriptors with
+different access flags into QEMU to be later fetched by code that
+needs to alternate between those flags when doing IO.
 
- bsd-user/aarch64/signal.c               | 137 +++++++++++++++++
- bsd-user/aarch64/target_arch.h          |  28 ++++
- bsd-user/aarch64/target_arch_cpu.c      |  34 +++++
- bsd-user/aarch64/target_arch_cpu.h      | 191 ++++++++++++++++++++++++
- bsd-user/aarch64/target_arch_elf.h      | 165 ++++++++++++++++++++
- bsd-user/aarch64/target_arch_reg.h      |  56 +++++++
- bsd-user/aarch64/target_arch_signal.h   |  80 ++++++++++
- bsd-user/aarch64/target_arch_sigtramp.h |  48 ++++++
- bsd-user/aarch64/target_arch_sysarch.h  |  42 ++++++
- bsd-user/aarch64/target_arch_thread.h   |  61 ++++++++
- bsd-user/aarch64/target_arch_vmparam.h  |  74 +++++++++
- bsd-user/aarch64/target_syscall.h       |  51 +++++++
- 12 files changed, 967 insertions(+)
- create mode 100644 bsd-user/aarch64/signal.c
- create mode 100644 bsd-user/aarch64/target_arch.h
- create mode 100644 bsd-user/aarch64/target_arch_cpu.c
- create mode 100644 bsd-user/aarch64/target_arch_cpu.h
- create mode 100644 bsd-user/aarch64/target_arch_elf.h
- create mode 100644 bsd-user/aarch64/target_arch_reg.h
- create mode 100644 bsd-user/aarch64/target_arch_signal.h
- create mode 100644 bsd-user/aarch64/target_arch_sigtramp.h
- create mode 100644 bsd-user/aarch64/target_arch_sysarch.h
- create mode 100644 bsd-user/aarch64/target_arch_thread.h
- create mode 100644 bsd-user/aarch64/target_arch_vmparam.h
- create mode 100644 bsd-user/aarch64/target_syscall.h
+Extend the fdset matching to behave the same with the O_DIRECT flag.
 
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ monitor/fds.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/monitor/fds.c b/monitor/fds.c
+index fd87e7db8b..436d5d80b8 100644
+--- a/monitor/fds.c
++++ b/monitor/fds.c
+@@ -424,6 +424,11 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags, Error **errp)
+         int fd = -1;
+         int dup_fd;
+         int mon_fd_flags;
++        int mask = O_ACCMODE;
++
++#ifdef O_DIRECT
++        mask |= O_DIRECT;
++#endif
+ 
+         if (mon_fdset->id != fdset_id) {
+             continue;
+@@ -437,7 +442,7 @@ int monitor_fdset_dup_fd_add(int64_t fdset_id, int flags, Error **errp)
+                 return -1;
+             }
+ 
+-            if ((flags & O_ACCMODE) == (mon_fd_flags & O_ACCMODE)) {
++            if ((flags & mask) == (mon_fd_flags & mask)) {
+                 fd = mon_fdset_fd->fd;
+                 break;
+             }
 -- 
-2.34.1
+2.35.3
 
 
