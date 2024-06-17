@@ -4,75 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9060DC41513
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 12:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADDE2C27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 12:50:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJBmU-0007sS-3c; Mon, 17 Jun 2024 08:48:18 -0400
+	id 1sJBoc-0001Fh-7y; Mon, 17 Jun 2024 08:50:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sJBmT-0007ph-55; Mon, 17 Jun 2024 08:48:17 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sJBoZ-0001F8-UD; Mon, 17 Jun 2024 08:50:27 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sJBmR-0001dS-DC; Mon, 17 Jun 2024 08:48:16 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 553BB70F94;
- Mon, 17 Jun 2024 15:49:25 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9B328EAB92;
- Mon, 17 Jun 2024 15:48:12 +0300 (MSK)
-Message-ID: <193b4d59-c498-4896-92b0-69437109f3d1@tls.msk.ru>
-Date: Mon, 17 Jun 2024 15:48:12 +0300
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sJBoX-00023e-Td; Mon, 17 Jun 2024 08:50:27 -0400
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45HCTLUr004914;
+ Mon, 17 Jun 2024 12:50:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=r
+ Stl0isjzwhaQIUwKSOmgi2iLDvwA8fUamHtlkH1gxk=; b=m2U2zKwRHUPxE6Zgw
+ eiRghTr2Rb+QwJ9gSPBbEl1uoPGIxDapJXahQqwU9vk+PSxLNg0PDzrEdWCOXnC6
+ b42IbcfCaSo0cdCQfEULT5iNeO4l7S7dmyc/yTTaZYUSgegGQf8NN7pByfg44U6g
+ hcv/RLafeUKwfWmpSZfPFUmVgCgsPpH2O0q4fjSsnOPlj6GWebe0LKK8h/7aDwoq
+ I5vgv/bUwiyQGnJNczZntoJwLwTvOSqUS2zMAjvWQQll0d3ePob2If5OtmgaC6i2
+ igEMgtx1zMsKN5B7/bjhEsbwkcxw4ruAzlbOgnjwFlk4IUVOfvcn4b8dORpxvVsf
+ vERnQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ytn6j81hm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Jun 2024 12:50:19 +0000 (GMT)
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45HCoIBI005224;
+ Mon, 17 Jun 2024 12:50:18 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ytn6j81hg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Jun 2024 12:50:18 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45HCDP1l009422; Mon, 17 Jun 2024 12:50:18 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ysqgm9tr1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 17 Jun 2024 12:50:18 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45HCoFoF48955818
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+ Mon, 17 Jun 2024 12:50:17 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EC67A58076;
+ Mon, 17 Jun 2024 12:50:14 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C680258070;
+ Mon, 17 Jun 2024 12:50:11 +0000 (GMT)
+Received: from [9.124.223.158] (unknown [9.124.223.158])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 17 Jun 2024 12:50:10 +0000 (GMT)
+Message-ID: <9be09448-5740-41a6-b3ff-d1b5b10e13b1@linux.ibm.com>
+Date: Mon, 17 Jun 2024 18:20:09 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] cpu: fix memleak of 'halt_cond' and 'thread'
-To: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
+Subject: Re: [PATCH 08/26] hw/ppc: Avoid using Monitor in
+ spapr_xive_pic_print_info()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, pierrick.bouvier@linaro.org, philmd@linaro.org,
- qemu-trivial@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>
-References: <3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com>
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+References: <20240610062105.49848-1-philmd@linaro.org>
+ <20240610062105.49848-9-philmd@linaro.org>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20240610062105.49848-9-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 33lA1Mqcrhk2Wbz0m1WDJy1_SFWyDVoT
+X-Proofpoint-ORIG-GUID: kzVL9ahH3lorlbMiklhgYGDo_CuW8ZnT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-17_10,2024-06-17_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 spamscore=0
+ impostorscore=0 priorityscore=1501 adultscore=0 malwarescore=0
+ clxscore=1015 mlxscore=0 mlxlogscore=968 lowpriorityscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406170096
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,15 +122,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-12.06.2024 20:04, Matheus Tavares Bernardino wrote:
-> Since a4c2735f35 (cpu: move Qemu[Thread|Cond] setup into common code,
-> 2024-05-30) these fields are now allocated at cpu_common_initfn(). So
-> let's make sure we also free them at cpu_common_finalize().
-> 
-> Furthermore, the code also frees these on round robin, but we missed
-> 'halt_cond'.
 
-Applied to trivial-patches, thanks!
 
-/mjt
+On 6/10/24 11:50, Philippe Mathieu-Daudé wrote:
+> @@ -203,10 +201,8 @@ static void spapr_xive_pic_print_info(SpaprXive *xive, Monitor *mon)
+>                   spapr_xive_end_pic_print_info(xive, end, buf);
+>               }
+>   
+> -            info = human_readable_text_from_str(buf);
+> -            monitor_puts(mon, info->human_readable_text);
+>           }
+> -        monitor_printf(mon, "\n");
+> +        g_string_append_c(buf, '\n');
+
+Ok, I see caller specific changes are done in separate patches.
+Ideally one call flow could be squashed into a single patch, which would
+help avoid addition, followed by removal of common logic like above.
+However, assuming that would be increasing the patch size, I understand
+smaller patches are easier to review.
+
+Thanks
+Harsh
+
+>       }
+>   }
 
