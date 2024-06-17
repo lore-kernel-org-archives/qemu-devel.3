@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5479C27C79
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 19:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B29C27C79
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 19:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJHZE-0005nQ-DG; Mon, 17 Jun 2024 14:59:00 -0400
+	id 1sJHZL-0006sS-IS; Mon, 17 Jun 2024 14:59:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHZ3-00053N-Lw
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:49 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1sJHZJ-0006lx-UP
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:59:05 -0400
+Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sJHZ1-000511-Vd
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:58:49 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-705c0115192so4002569b3a.1
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:58:47 -0700 (PDT)
+ id 1sJHZI-00052f-9b
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 14:59:05 -0400
+Received: by mail-oo1-xc32.google.com with SMTP id
+ 006d021491bc7-5b9778bb7c8so2381222eaf.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 11:59:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718650726; x=1719255526; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1718650742; x=1719255542; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mSb4ge/oi7N04tkudfzAy1LJjUNLVfIVt+fkT6uQ/zo=;
- b=Vd8txHPTe5/dEI8YHWunZU1tTMsFciwVKGp8jLPnDyT8LacA6FZ1Z+nlqOFbaiV5IB
- 7lhUYk4VQ7NoPNnMcrg+BvHFw2Ar9FKMrhi6P0v/G5Z9/1g5M6dN7MSXVFxHQJwCiCGW
- h6yqD+JaL6S6hRqQlt+dERf2UgJWh6DMC3MNa+0FzUoFX5lQuCn2LR+KoEyeje/HcuzC
- GBlZSGd/jraTylrhZiWYvKLXSNfAyVtUjPsSwuNOKCoOh7PE5ncRFXSWqjX2ZYK1yFJK
- li9731JpqFoycaVLAkSmBFr+aGt0E7Q0gZPCE88cfTygJwKbM86VN+7fMrSGjIGFYvJ1
- JCoQ==
+ bh=n1ZNdfkD296PLmViWh+uFcrYLRqsmpQNhISj3YpSETo=;
+ b=FlxBEp5uYZi5wTWtUXvmY6o7v4IyY0MIsmnr4UtH5P5z/ZPRQCkEL+CzUODrE0je5W
+ 4COD7VX955a/c6NCqoiIkLXWXWkFeLTsFXpfVguW4Kj18RIDwZEgi7SxcBB4uy2+ZAgc
+ 7BNnWIkO9cs4p7zRUYp7AkPoJvrSDL8OAXB14qqIl00Xob6jW1AmhYah0ghEDp5q5h0i
+ KEmFflVD6QlAjDWAQXEGqRZxP6OBKyHkZecnq16PzahMg8EGeInUn2X5CLEnvF2bBqQQ
+ 4nAZu3oFKyR+SpP5agNLvPKVnPwd6zWUNBCuzlicy1hEjx2G+R3xK0Ck44sENv1xTz4X
+ R9gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718650726; x=1719255526;
+ d=1e100.net; s=20230601; t=1718650742; x=1719255542;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mSb4ge/oi7N04tkudfzAy1LJjUNLVfIVt+fkT6uQ/zo=;
- b=bPe65eCwfjsBTSBITPOoWDLiRl+2QRUtWRlpcB/G2ntTiRfiuAnSre2QwVF+5f5888
- l+tJOzUb3JmuoaBXh4uZCQOSIEm3AY1jfdNBB1TuotHMem1l1mbqoNGbLgcqJ1kYbPic
- ukLRPnyCVFelJtNEI4a7Lb1x+nm8izZVmVuBOMQwV4m3157JxuVJjDRgnsEyY/Qya+fa
- 6nMELSrY5l5xiWuwfbSC/3k6g+YKNmqQX1HZaIH0ccnw6K9sF7t79u26NRB1ZhqsmjYl
- Jx+DeXH200hrSJ3OvLNc+bRhNyQyhHLsymEhR332RzGphyPOkFuT6VcHHQR2SB489CL/
- EHYQ==
-X-Gm-Message-State: AOJu0Yxu//LHuGAmypGzYDnoffVNmyRnpryWRM3DLtv4HgCDph+Dc3hK
- tt/wN3bGV3Nx68kxZ2o4A7ChpWzjlRo3LUeM7SBVtjHdmrVQF6ey1RGD2OTRbmI=
-X-Google-Smtp-Source: AGHT+IHiXp1QbDanXfoL1XJhppOzPqy3C5996vD1ONIrkyBLaTMCD8wrWZnQOIG7gy/pIkw4Hu+Ivg==
-X-Received: by 2002:a05:6a21:3a4b:b0:1b4:82eb:61b8 with SMTP id
- adf61e73a8af0-1bae8002278mr14043670637.45.1718650726438; 
- Mon, 17 Jun 2024 11:58:46 -0700 (PDT)
+ bh=n1ZNdfkD296PLmViWh+uFcrYLRqsmpQNhISj3YpSETo=;
+ b=SH9DsDUviFJya/tlOrZ7/x2h/0Ns/dBigLotxHVEjA7rBNMD2zOpH1yt0lDodK3bde
+ VMpoDT8v3AK1aKXjSjs+oGaJ3UHVKYZlFMaRrR2nYZ0X4vchPwaMwJzLdXP6Qe2a8olK
+ ov3GtnoChaELLHRri1lNz1rdQw2b8qNO5Gbbwu08+SrR1G0zBSCFUIN4LGbH1/LRcdeh
+ P54qdH61Y8yZ4b3hBlXM+3WlxQgMvSN6WKtZ56beE1yQI+eiZ86SZwkVjC/Y64ct04Vk
+ TbU4OJ5HY9D8I+recGfGT8yO8mP2GaqyGFjSm67gpQL/58ugutTWjTPrZ21chgEPAo2K
+ lGEg==
+X-Gm-Message-State: AOJu0YxIIIjN96hkkub3ZJ5zk2VelTP4StGNwMVfI2NTdMX9yS0H/8RN
+ mYC4Jh7dxffSUVoZ8LJ6J0OEH8B57wpLWAKR3JgDxmREdM9ySH7bBU+wzE3fEhA=
+X-Google-Smtp-Source: AGHT+IFxH+j1o7/vxpe2HMoUYXx9INhS7yfHpU4MAT7kZbvuEvwWRDfq6OJzEFdH1ZkcPyT8erK01A==
+X-Received: by 2002:a05:6871:58d:b0:254:b74e:d654 with SMTP id
+ 586e51a60fabf-2584290fc96mr11589378fac.22.1718650742565; 
+ Mon, 17 Jun 2024 11:59:02 -0700 (PDT)
 Received: from localhost.localdomain ([106.222.222.115])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.58.44
+ d2e1a72fcca58-705ccb4aa4fsm7660637b3a.131.2024.06.17.11.59.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 17 Jun 2024 11:58:46 -0700 (PDT)
+ Mon, 17 Jun 2024 11:59:02 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>,
- Ajeet Singh <itachis@FreeBSD.org>
-Subject: [PATCH 12/23] Add ability to get rval2
-Date: Tue, 18 Jun 2024 00:27:53 +0530
-Message-Id: <20240617185804.25075-13-itachis@FreeBSD.org>
+ Stacey Son <sson@FreeBSD.org>, Ajeet Singh <itachis@FreeBSD.org>,
+ Kyle Evans <kevans@FreeBSD.org>
+Subject: [PATCH 20/23] Add get_mcontext function for ARM AArch64 in bsd-user
+Date: Tue, 18 Jun 2024 00:28:01 +0530
+Message-Id: <20240617185804.25075-21-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240617185804.25075-1-itachis@FreeBSD.org>
 References: <20240617185804.25075-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=itachis6234@gmail.com; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
+ envelope-from=itachis6234@gmail.com; helo=mail-oo1-xc32.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,31 +97,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Warner Losh <imp@bsdimp.com>
+From: Stacey Son <sson@FreeBSD.org>
 
-Function accesses the x1 register which holds the value
+function to retrieve machine context,it populates the provided
+target_mcontext_t structure with information from the CPUARMState
+registers
 
-Signed-off-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
 ---
- bsd-user/aarch64/target_arch_vmparam.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ bsd-user/aarch64/signal.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/bsd-user/aarch64/target_arch_vmparam.h b/bsd-user/aarch64/target_arch_vmparam.h
-index dc66e1289b..0c35491970 100644
---- a/bsd-user/aarch64/target_arch_vmparam.h
-+++ b/bsd-user/aarch64/target_arch_vmparam.h
-@@ -65,4 +65,10 @@ static inline void set_second_rval(CPUARMState *state, abi_ulong retval2)
- {
-     state->xregs[1] = retval2; /* XXX not really used on 64-bit arch */
+diff --git a/bsd-user/aarch64/signal.c b/bsd-user/aarch64/signal.c
+index 98861f9ab3..ab3bf8558a 100644
+--- a/bsd-user/aarch64/signal.c
++++ b/bsd-user/aarch64/signal.c
+@@ -51,3 +51,33 @@ abi_long set_sigtramp_args(CPUARMState *regs, int sig,
+ 
+     return 0;
  }
 +
-+static inline abi_ulong get_second_rval(CPUARMState *state)
++/*
++ * Compare to get_mcontext() in arm64/arm64/machdep.c
++ * Assumes that the memory is locked if mcp points to user memory.
++ */
++abi_long get_mcontext(CPUARMState *regs, target_mcontext_t *mcp, int flags)
 +{
-+    return state->xregs[1];
-+}
++    int err = 0, i;
++    uint64_t *gr = mcp->mc_gpregs.gp_x;
 +
- #endif /* TARGET_ARCH_VMPARAM_H */
++    mcp->mc_gpregs.gp_spsr = pstate_read(regs);
++    if (flags & TARGET_MC_GET_CLEAR_RET) {
++        gr[0] = 0UL;
++        mcp->mc_gpregs.gp_spsr &= ~CPSR_C;
++    } else {
++        gr[0] = tswap64(regs->xregs[0]);
++    }
++
++    for (i = 1; i < 30; i++) {
++        gr[i] = tswap64(regs->xregs[i]);
++    }
++
++    mcp->mc_gpregs.gp_sp = tswap64(regs->xregs[TARGET_REG_SP]);
++    mcp->mc_gpregs.gp_lr = tswap64(regs->xregs[TARGET_REG_LR]);
++    mcp->mc_gpregs.gp_elr = tswap64(regs->pc);
++
++    /* XXX FP? */
++
++    return err;
++}
 -- 
 2.34.1
 
