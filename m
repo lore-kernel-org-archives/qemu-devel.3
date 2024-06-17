@@ -4,85 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D125EC27C77
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 02:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D391C27C77
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 04:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJ1ub-000083-9t; Sun, 16 Jun 2024 22:16:01 -0400
+	id 1sJ3Zw-0008SS-Sy; Mon, 17 Jun 2024 00:02:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sJ1uY-00007p-Tu
- for qemu-devel@nongnu.org; Sun, 16 Jun 2024 22:15:59 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJ3Zp-0008S0-Ng
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 00:02:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sJ1uX-0002AO-5N
- for qemu-devel@nongnu.org; Sun, 16 Jun 2024 22:15:58 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJ3Zn-00047C-Ng
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 00:02:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718590554;
+ s=mimecast20190719; t=1718596957;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7TN/eUiCgwj3ZhEt2U35zTMZwaCRvnqrwDgnkVbHQqA=;
- b=AHRTuPFUCg7ZPL94HLxMBblIMjEW2UgC4cdZXw4WpBqqBKgdneZIuZcOEw0yMZgiV5hB6X
- /tJL3bSG+GMRsVBksAV1TSg3R/H+aBj1AxHjlnfpkYgd1lX9qU3i5RIIgwCEBHdtMhI9lc
- d4VAMp5iURyrVe+H2G2ynrsGmtCQF34=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-602-MLbYJBTBOBi3-7GY3_fzUw-1; Sun, 16 Jun 2024 22:15:49 -0400
-X-MC-Unique: MLbYJBTBOBi3-7GY3_fzUw-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2c2e6321120so3870061a91.3
- for <qemu-devel@nongnu.org>; Sun, 16 Jun 2024 19:15:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718590548; x=1719195348;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7TN/eUiCgwj3ZhEt2U35zTMZwaCRvnqrwDgnkVbHQqA=;
- b=tnAxUdY1rA9s3S5uwQHlLhgnIxIBwe6lRQ2tE4/NKbAxgFA+HuQfedh1tCOPLwPdgK
- o6fIJRWWjKoVok8x5RkVAMQCRCaujpInHNYJf+2hopuqQNcbqe/i2p6+BaYwvs9aIVgi
- +rkcE4MFNe83Pdyln8lqNmfcZIzDQhQMi0QUKCsJ+vtXiafn+WZGBa90Dr5aCODxV4vd
- o0ORiwIv4aeS8pI9PYWPYcnBNdfQFYArt0i0d2FO1RMlUCKFmpAmiMCfY5ZQ9IWq3Zjv
- 7sn7KY38GEVTRDHR1GiNM1q+2kkvXfJeq/kaR9AMG4Ep47jig1Csf5Y7r7bUS1GlrsQE
- kV6w==
-X-Gm-Message-State: AOJu0YyYaEfHSH9r9DEv3EvIe8xjT01znE55icP1RmFaBzWKj6iJlzrT
- pJel81SCLPPyvNkna/gbuhODiZfsfjm1sHfKRmieA353TKx7Pnk4YOinFS54YfQTPh7RQYw67VN
- 0rigtROEdJ0CQ7Ya9nSDYpkq+lp3lj/ZOVz0ziV/WD67ZIM0OSuDv71FYPGjVMTtTW2kn/qaEac
- 15NPUVjgWm3cQTRps6HNllYrWAg/s=
-X-Received: by 2002:a17:90a:1542:b0:2c0:f62:7b88 with SMTP id
- 98e67ed59e1d1-2c4db44b9dfmr7216837a91.25.1718590548250; 
- Sun, 16 Jun 2024 19:15:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHBmvPtRk5XCvXE3otD+pf940DcUuMOYScszVkhWp6rXMWXoNQZVAoNA7nT8j70VhFsgSC7AbKJ+WzARrUUsLY=
-X-Received: by 2002:a17:90a:1542:b0:2c0:f62:7b88 with SMTP id
- 98e67ed59e1d1-2c4db44b9dfmr7216819a91.25.1718590547544; Sun, 16 Jun 2024
- 19:15:47 -0700 (PDT)
+ content-transfer-encoding:content-transfer-encoding;
+ bh=z1EiM+JBmOU4rGn1SbVa7pe6q9WAw+D3Es9HXvdG6B4=;
+ b=BySnhDlwYrHTV8OrsBdtVigbdhpMgtfilENNqJVWnF+zf9j+XzzJPCgZ2UTcLroWJkDW7a
+ 6XCEywHbfMlKBo5OS/E/Rrr4htCggENc1a16woIVgaOTdVBpRmmDUEmEaBXgnDN1O62q5M
+ fphdaaQ7nCKJ9cW5lx+AD4Z+XSMlu+Q=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-V5jNBU_yN1yp3A6bQ8ATUg-1; Mon,
+ 17 Jun 2024 00:02:34 -0400
+X-MC-Unique: V5jNBU_yN1yp3A6bQ8ATUg-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 819951956094; Mon, 17 Jun 2024 04:02:33 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.12])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 376FA1956087; Mon, 17 Jun 2024 04:02:30 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL v2 00/19] aspeed queue
+Date: Mon, 17 Jun 2024 06:02:28 +0200
+Message-ID: <20240617040228.1878487-1-clg@redhat.com>
 MIME-Version: 1.0
-References: <20240613022147.5886-1-east.moutain.yang@gmail.com>
-In-Reply-To: <20240613022147.5886-1-east.moutain.yang@gmail.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 17 Jun 2024 10:15:36 +0800
-Message-ID: <CACGkMEssgrnF5tnJpzjd0NEu-G9qQdcyv7KsDjOmvLhUQkqUAQ@mail.gmail.com>
-Subject: Re: [PATCH] Update event idx if guest has made extra buffers during
- double check
-To: thomas <east.moutain.yang@gmail.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,43 +79,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 13, 2024 at 10:22=E2=80=AFAM thomas <east.moutain.yang@gmail.co=
-m> wrote:
->
-> Fixes: 06b12970174 ("virtio-net: fix network stall under load")
->
-> If guest has made some buffers available during double check,
-> but the total buffer size available is lower than @bufsize,
-> notify the guest with the latest available idx(event idx)
-> seen by the host.
-> ---
->  hw/net/virtio-net.c | 1 +
->  1 file changed, 1 insertion(+)
+The following changes since commit 05ad1440b8428b0ade9b8e5c01469adb8fbf83e3:
 
-Patch looks good to me, but it misses some other stuff for example:
+  Merge tag 'virtio-grants-v8-tag' of https://gitlab.com/sstabellini/qemu into staging (2024-06-15 20:13:06 -0700)
 
-- the sob tag.
-- fixes should be placed above sob tag
-- need to cc qemu-stable@nongnu.org
+are available in the Git repository at:
 
-Thanks
+  https://github.com/legoater/qemu/ tags/pull-aspeed-20240617
 
->
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 9c7e85caea..23c6c8c898 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -1654,6 +1654,7 @@ static int virtio_net_has_buffers(VirtIONetQueue *q=
-, int bufsize)
->          if (virtio_queue_empty(q->rx_vq) ||
->              (n->mergeable_rx_bufs &&
->               !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
-> +            virtio_queue_set_notification(q->rx_vq, 1);
->              return 0;
->          }
->      }
-> --
-> 2.39.0
->
+for you to fetch changes up to 5f44521242d2fdfa190206a6be40577a58a71ef9:
+
+  MAINTAINERS: Add reviewers for ASPEED BMCs (2024-06-16 21:08:54 +0200)
+
+----------------------------------------------------------------
+aspeed queue:
+
+* Add AST2700 support
+
+Changes in v2:
+
+  - Fixed class_size in TYPE_ASPEED_INTC definition 
+  - Fixed spelling : Unhandeled -> Unhandled 
+
+----------------------------------------------------------------
+Cédric Le Goater (1):
+      aspeed/smc: Reintroduce "dram-base" property for AST2700
+
+Jamin Lin (18):
+      aspeed/wdt: Add AST2700 support
+      aspeed/sli: Add AST2700 support
+      aspeed/sdmc: remove redundant macros
+      aspeed/sdmc: fix coding style
+      aspeed/sdmc: Add AST2700 support
+      aspeed/smc: correct device description
+      aspeed/smc: support dma start length and 1 byte length unit
+      aspeed/smc: support 64 bits dma dram address
+      aspeed/smc: support different memory region ops for SMC flash region
+      aspeed/smc: Add AST2700 support
+      aspeed/scu: Add AST2700 support
+      aspeed/intc: Add AST2700 support
+      aspeed/soc: Add AST2700 support
+      aspeed: Add an AST2700 eval board
+      aspeed/soc: fix incorrect dram size for AST2700
+      test/avocado/machine_aspeed.py: Add AST2700 test case
+      docs:aspeed: Add AST2700 Evaluation board
+      MAINTAINERS: Add reviewers for ASPEED BMCs
+
+ MAINTAINERS                      |   3 +
+ docs/system/arm/aspeed.rst       |  39 ++-
+ include/hw/arm/aspeed_soc.h      |  30 +-
+ include/hw/intc/aspeed_intc.h    |  44 +++
+ include/hw/misc/aspeed_scu.h     |  47 ++-
+ include/hw/misc/aspeed_sdmc.h    |   5 +-
+ include/hw/misc/aspeed_sli.h     |  27 ++
+ include/hw/ssi/aspeed_smc.h      |   3 +
+ include/hw/watchdog/wdt_aspeed.h |   3 +-
+ hw/arm/aspeed.c                  |  32 ++
+ hw/arm/aspeed_ast27x0.c          | 648 +++++++++++++++++++++++++++++++++++++++
+ hw/intc/aspeed_intc.c            | 361 ++++++++++++++++++++++
+ hw/misc/aspeed_scu.c             | 306 +++++++++++++++++-
+ hw/misc/aspeed_sdmc.c            | 220 +++++++++++--
+ hw/misc/aspeed_sli.c             | 177 +++++++++++
+ hw/ssi/aspeed_smc.c              | 347 +++++++++++++++++++--
+ hw/watchdog/wdt_aspeed.c         |  24 ++
+ hw/arm/meson.build               |   1 +
+ hw/intc/meson.build              |   1 +
+ hw/intc/trace-events             |  13 +
+ hw/misc/meson.build              |   3 +-
+ hw/misc/trace-events             |  11 +
+ hw/ssi/trace-events              |   2 +-
+ tests/avocado/machine_aspeed.py  |  62 ++++
+ 24 files changed, 2351 insertions(+), 58 deletions(-)
+ create mode 100644 include/hw/intc/aspeed_intc.h
+ create mode 100644 include/hw/misc/aspeed_sli.h
+ create mode 100644 hw/arm/aspeed_ast27x0.c
+ create mode 100644 hw/intc/aspeed_intc.c
+ create mode 100644 hw/misc/aspeed_sli.c
 
 
