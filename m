@@ -4,96 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30D3BC27C77
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 05:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA1F6C27C6E
+	for <qemu-devel@archiver.kernel.org>; Mon, 17 Jun 2024 05:46:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJ4tu-0006RB-Gz; Mon, 17 Jun 2024 01:27:31 -0400
+	id 1sJ5Bv-0001eU-9F; Mon, 17 Jun 2024 01:46:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenyzha@redhat.com>)
- id 1sJ4ts-0006Qo-9K
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 01:27:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenyzha@redhat.com>)
- id 1sJ4tp-0002Dj-Lr
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 01:27:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718602043;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aS3vDlpG5JAr0kUzKjXG6xA9B7QpFmkY+r7SXcqM/V4=;
- b=e4sTdkKfXDzyKOTLwZSqHLA3gufMcgeFvvmefRoXvu+RLuDTz2uiizFBOVNGEXEdAS9cuM
- w0weE346I6UV++K9P+Ia73GPKzHYYUTJGXynnls8l6Q8FtezX+IL/XlnAH0guV7CaYcDPR
- 4oCcsnvDFuiJEwxTQDC3yiBeNmZsUww=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-648-v96KCQHYMs-Zwd-QCdu6MQ-1; Mon, 17 Jun 2024 01:27:22 -0400
-X-MC-Unique: v96KCQHYMs-Zwd-QCdu6MQ-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a6e37310ebaso149365766b.1
- for <qemu-devel@nongnu.org>; Sun, 16 Jun 2024 22:27:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
+ id 1sJ5Bt-0001di-CY; Mon, 17 Jun 2024 01:46:05 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
+ id 1sJ5Br-0004ty-Uq; Mon, 17 Jun 2024 01:46:05 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1f4a0050b9aso32936905ad.2; 
+ Sun, 16 Jun 2024 22:46:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1718603160; x=1719207960; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=u1YMUclD7K+Lvt+g4sfxbER6myR58HfuHWxJNWm2Fds=;
+ b=jyzFJFCyvZ3FmwMr4ErEw+d+W/qBnWKcDjKstH1V9kTx2s4Ch7sO0WULp7DF1wSpva
+ 6KeD4thgLLZXEKnmf13vqey2JlidQCphdEwVfX3pGoP+BVEvVoJaBhZFlsgGMLpeDtnc
+ A7T8uoqTHFuvVERcExGzhT1oMyLtgLeHCTMD2xhD/48K6rhyEAnuKwmQNwT1DX+TzhLj
+ 547KVmV8BovLtxXNiyBFP9KHNflqF5VcaXKOsbXqWpZBaVSVxjh35KgAKAgDV+dTCnXX
+ 156uIsT3EjGR740PXOWBJA1KMRiWsdYp/JyZbfqAf3BCILektJZRORqmhf8t0H1/RkUZ
+ P3Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718602041; x=1719206841;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aS3vDlpG5JAr0kUzKjXG6xA9B7QpFmkY+r7SXcqM/V4=;
- b=XnailiuUQFJR2OnMeuUxfm8bEM9SzYdTzq9FRZU14z2ru7DYG7bzrPE8Q6zRvQc7hX
- weA9fOGYy/OteQFl5fQEmm9yu3V6HEm2X7oppjxK6k6/KPXBswS27MO2kZMa2LFUGid5
- rFTxGd46y/7BubCRvjpnfSyXw9SBrZBDn8eJY18hxpQ7h1gPkW8IiguTaJhGvkO1CnpM
- LfMGnJI7DFoAa1V9qlr6yRqBzcogjmcow2wR3iggWv7KXMToXMRNweCVYhCzdM5mBgBi
- oeiaO8w/f2kziezqxgKgK+NYN1Q+j49SrIvfsZkCEz1088YBPmsfGZ9fkdUrrs9Ydog6
- 2F/w==
+ d=1e100.net; s=20230601; t=1718603160; x=1719207960;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=u1YMUclD7K+Lvt+g4sfxbER6myR58HfuHWxJNWm2Fds=;
+ b=jD6rsU5PKGJLbUXrrB3IdODBxxe5gYC7E8w9AUBlRePDsIlP6JIXmd0IBdOqbzbSKe
+ FPaR3eKRfGjR6bb79Ibe4VQHPAmw51diVnW3ZvMXbkigb7/yYFysN2/DcV5PKQC6GPd2
+ wyYcR24BkVM0ukZ2pQ5+fsOSKFOaIAwpbwsYENW+TPvXiyYsFHj/uArSjHyVdnrGbXit
+ eViPrJZDayoxoDTs15Fi21oVPMq9V3PiNcp+uMkLnbZBNSCLOW+3zdFlCH3GF39/gDUl
+ Iq4ZikecQPFfo8mWXmXJIkDYttHzI80LLACUdr/gqC/R05iQMO2DkqceTmuGSXJHoz0w
+ TzJg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXF1x5R0ChwWydqjxmlO5s6fSbZiPn85nYgZ+sn7gS7jLxweqe6HXOicT32qqaImNyUjB3vf1yx1/dlrG0rC9hGlYtsu50=
-X-Gm-Message-State: AOJu0YxzlJ2xUn5KJ4fEpRhzdjA4homsKaS8C5x5rpq42YkKV8Ui/orX
- sMPrQzzuYPkyo3AwyLe2MOpap/8UHOp40aHmvHs/luwEVKo02Y7uTTVq+yqQJq+KK5r5UTZF0mn
- vli5LtDZT2OEHrPfHt0MFULgYC4ENHbpLLp+URTj73XY9ErAXI0AaJR118VxG/MVPGqboS9ZCiC
- /8YpGeOUa/qi+kYbu9XQKSUbHT+zU=
-X-Received: by 2002:a17:906:b44:b0:a6f:1e88:37c1 with SMTP id
- a640c23a62f3a-a6f60d41c02mr569092766b.45.1718602040829; 
- Sun, 16 Jun 2024 22:27:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMVZg9KUbBKxVURrO7d0Rv8mWhRpzg3fVh3nqrBPaolwgw8HNvgIcjA8DKaSoq0GUSWdeGIplmdePCMX4KgIk=
-X-Received: by 2002:a17:906:b44:b0:a6f:1e88:37c1 with SMTP id
- a640c23a62f3a-a6f60d41c02mr569090666b.45.1718602040445; Sun, 16 Jun 2024
- 22:27:20 -0700 (PDT)
+ AJvYcCWWE22tYVFCB+Y1XXzR/FzZyEBwDgUJzExnegnoSir/Mf923VbRbLiX+JfyXdMQlW9cdbnBjTlcZTJtgX1Xexr74tl+A8To
+X-Gm-Message-State: AOJu0YzXtcD0VL/90JOghh1u19B5V8aqTylXC+bwwNp7+or4p4htShCi
+ e3pLVMO+S7u1MkEl9MOYvx+CsgrpA7IJdI2wq+UhLtmNmaFrhqnuohIM6U14
+X-Google-Smtp-Source: AGHT+IFsQMzliLmaItUQqhx8S1HlVkC+HnBNxxSPPYOnOcaXl5hss/NUVi/pNV4VgMvqKqRzxJ4UWQ==
+X-Received: by 2002:a17:902:7c07:b0:1f7:2a95:f2d7 with SMTP id
+ d9443c01a7336-1f862b1b2bfmr70735085ad.59.1718603159923; 
+ Sun, 16 Jun 2024 22:45:59 -0700 (PDT)
+Received: from localhost.localdomain ([118.242.3.34])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f855eeaa07sm72667935ad.157.2024.06.16.22.45.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 16 Jun 2024 22:45:59 -0700 (PDT)
+From: thomas <east.moutain.yang@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, jasowang@redhat.com, qemu-stable@nongnu.org,
+ thomas <east.moutain.yang@gmail.com>
+Subject: [PATCH v2] Update event idx if guest has made extra buffers during
+ double check
+Date: Mon, 17 Jun 2024 13:45:51 +0800
+Message-Id: <20240617054551.20524-1-east.moutain.yang@gmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-References: <20240612020506.307793-1-zhenyzha@redhat.com>
- <69649622-e52c-4d24-809b-3d8a97786a69@linaro.org>
- <CAFEAcA9wEjONgLfTObNYwJbwn5Gs1BDJiDivc9PEwmfOeZW6ww@mail.gmail.com>
- <8d7e111b-4f74-4a67-b01b-2af5ce009a06@linaro.org>
- <ed3df37e-fddd-465c-8ae9-1c5791966995@arm.com>
-In-Reply-To: <ed3df37e-fddd-465c-8ae9-1c5791966995@arm.com>
-From: Zhenyu Zhang <zhenyzha@redhat.com>
-Date: Mon, 17 Jun 2024 13:26:44 +0800
-Message-ID: <CAJFLiBLt4ig0XpDScq0M1EAPo1PEvZNiumf9kKMOErSE_OJ_cQ@mail.gmail.com>
-Subject: Re: [PATCH v3] hw/arm/virt: Avoid unexpected warning from Linux guest
- on host with Fujitsu CPUs
-To: Robin Murphy <robin.murphy@arm.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com, 
- gshan@redhat.com, eauger@redhat.com, sebott@redhat.com, cohuck@redhat.com, 
- ddutile@redhat.com, shahuang@redhat.com, qemu-riscv <qemu-riscv@nongnu.org>,
- qemu-ppc <qemu-ppc@nongnu.org>, Song Gao <gaosong@loongson.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=zhenyzha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=east.moutain.yang@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,71 +92,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 13, 2024 at 1:48=E2=80=AFAM Robin Murphy <robin.murphy@arm.com>=
- wrote:
->
-> On 2024-06-12 1:50 pm, Philippe Mathieu-Daud=C3=A9 wrote:
-> > On 12/6/24 14:48, Peter Maydell wrote:
-> >> On Wed, 12 Jun 2024 at 13:33, Philippe Mathieu-Daud=C3=A9
-> >> <philmd@linaro.org> wrote:
-> >>>
-> >>> Hi Zhenyu,
-> >>>
-Hello Philippe,
+If guest has made some buffers available during double check,
+but the total buffer size available is lower than @bufsize,
+notify the guest with the latest available idx(event idx)
+seen by the host.
 
-> >>> On 12/6/24 04:05, Zhenyu Zhang wrote:
-> >>>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> >>>> index 3c93c0c0a6..3cefac6d43 100644
-> >>>> --- a/hw/arm/virt.c
-> >>>> +++ b/hw/arm/virt.c
-> >>>> @@ -271,6 +271,17 @@ static void create_fdt(VirtMachineState *vms)
-> >>>>        qemu_fdt_setprop_cell(fdt, "/", "#size-cells", 0x2);
-> >>>>        qemu_fdt_setprop_string(fdt, "/", "model", "linux,dummy-virt"=
-);
-> >>>>
-> >>>> +    /*
-> >>>> +     * For QEMU, all DMA is coherent. Advertising this in the root
-> >>>> node
-> >>>> +     * has two benefits:
-> >>>> +     *
-> >>>> +     * - It avoids potential bugs where we forget to mark a DMA
-> >>>> +     *   capable device as being dma-coherent
-> >>>> +     * - It avoids spurious warnings from the Linux kernel about
-> >>>> +     *   devices which can't do DMA at all
-> >>>> +     */
-> >>>> +    qemu_fdt_setprop(fdt, "/", "dma-coherent", NULL, 0);
-> >>>
-> >>> OK, but why restrict that to the Aarch64 virt machine?
-> >>> Shouldn't advertise this generically in create_device_tree()?
-> >>> Or otherwise at least in the other virt machines?
-> >>
-> >> create_device_tree() creates an empty device tree, not one
-> >> with stuff in it. It seems reasonable to me for this property
-> >> on the root to be set in the same place we set other properties
-> >> of the root node.
-> >
-> > OK. Still the question about other virt machines remains
-> > unanswered :)
->
->  From the DT consumer point of view, the interpretation and assumptions
-> around coherency *are* generally architecture- or platform-specific. For
-> instance on RISC-V, many platforms want to assume coherency by default
-> (and potentially use "dma-noncoherent" to mark individual devices that
-> aren't), while others may still want to do the opposite and use
-> "dma-coherent" in the same manner as Arm and AArch64. Neither property
-> existed back in ePAPR, so typical PowerPC systems wouldn't even be
-> looking and will just make their own assumptions by other means.
->
-As Robin's comment says, each platform wants to assume coherency
-by default may be different. Adding it to all virt machines may
-introduce new risks. Currently, the issue is only valid on Fujitsu CPUs
-where the cache line size is 256 bytes, meaning the combination of
-kvm+virt-platform is needed to trigger the warning. So I'd be inclined
-to add this "dma-coherent" property for the "virt" platform first
-and advertise the property to other platforms if we hit the issue
-on those platforms.
+Fixes: 06b12970174 ("virtio-net: fix network stall under load")
+Signed-off-by: wencheng Yang <east.moutain.yang@gmail.com>
+---
+ hw/net/virtio-net.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Thanks,
-Zhenyu
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 9c7e85caea..23c6c8c898 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1654,6 +1654,7 @@ static int virtio_net_has_buffers(VirtIONetQueue *q, int bufsize)
+         if (virtio_queue_empty(q->rx_vq) ||
+             (n->mergeable_rx_bufs &&
+              !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
++            virtio_queue_set_notification(q->rx_vq, 1);
+             return 0;
+         }
+     }
+-- 
+2.39.0
 
 
