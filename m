@@ -4,81 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCDA0C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 11:18:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 653BCC27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 11:22:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJWqk-0006WP-N3; Tue, 18 Jun 2024 07:18:06 -0400
+	id 1sJWuz-00082I-Pb; Tue, 18 Jun 2024 07:22:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1sJWqb-0006RM-1r
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:17:57 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1sJWqX-0005xu-Jv
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:17:56 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2ec3b282fedso598801fa.3
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 04:17:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1718709471; x=1719314271;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=0v7uteVDRSl1sGyj9u/oI9Vuada/Ql0A0kiqrgdJeqs=;
- b=mnspmBi0Anu1zFxbNwIKdtstLiaX9N4zne5PM69Jd4LXMjjvViYYUZwjbjqcac3C0A
- X7hStAG+iCNWXgBf3UISIoQHomoXnj6R+y9zgmliGlk3+TJgtmJ3dEwEX2hSAus8U2po
- x6q8zBWX4PUX/ClfN7OVIFsQEu8iK0ol1dSWnx5KJBL1dsGVN9JCxZBSVFcy0JWmxf6o
- KCszksEXc8bOLwbh045bkFOgMfkkUPCe0cumMPNWOuwt7nQLppY702BAcBQ02X8YJlId
- 6FxGYIHWRUCHCrb9iESb7E9Zob1phRAD9tHq496j+j40zS8dlHwfdh1uF2MaVFwqe3b+
- hetQ==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJWuw-00081y-Ul
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:22:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJWuv-0006ky-23
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:22:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718709743;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PKyT5iAXzsXt/u3rp0WLy5M6y+SEhTxaicjtOp6Xay8=;
+ b=DD0lzhXPApc7w0exnu8h+Ce+iAjuLQcm+hyhKXEs0YmUcqi2AUPYs6AnyKHm3Boxw/vZva
+ Qo8lebd/AEzV9wpVy+UovxErBrnKL3S3CJfV2GVKaIuV19bdHjNvM3prJJdqRqS9l3/cI/
+ 6exMWw+GOEiEMamd+IYajo4oRUegMqg=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-232-7dXdNpjcOTi5k1nyUEgsyg-1; Tue, 18 Jun 2024 07:22:20 -0400
+X-MC-Unique: 7dXdNpjcOTi5k1nyUEgsyg-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-35f27bfa618so2765586f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 04:22:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718709471; x=1719314271;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0v7uteVDRSl1sGyj9u/oI9Vuada/Ql0A0kiqrgdJeqs=;
- b=AoEtosz7emIVh+1OCph8IhUodgsZgcM7n9/lktEGJbuLJMnxugrt+5EE7iodzMaYbN
- /n905e/6vwv7Bsx8qFGOYRh6/Ldb4XcC+B7r5sVVp7O1hHlm0hkUFww4Nkqh93/94G5W
- D+5x3eGQwAReklfPF4nFQipsAbGyDXGXw57abOvAtttsenFf+LuknZ1Bi9Bng/uMrZKP
- pv3VGeGg/ttcght5UOVusH3b4dzJXyPRtBjuwCNsHMF5kX9RowRlHrVKS1579eEkJPVi
- eGDJ/gJG8V5MDUI1Pj9J+drwCII4ci0FqLQRjLeCVcaTZZlwCVhrcO34G3uE233p9L68
- hRjg==
-X-Gm-Message-State: AOJu0Yz1Xjtg38J7zPW+Hdi3HiKJFvOI2dMmYVRGY78F3RiH3poJdy81
- 3MqlFA2qetpem3pS4rKDazMXyEo9OqU/4UmZrrBB7t+CRAibJe4SrL0jfgEY0DECvMT1oakp9pY
- 1MIM=
-X-Google-Smtp-Source: AGHT+IHJhzfdRXObyvyABps8k3QmuRbwQEV7jTQFTwOaYg7gf4pd38aGjCmqdbUWA8lV9haNh9Aejw==
-X-Received: by 2002:a05:651c:1a1e:b0:2ea:8442:2096 with SMTP id
- 38308e7fff4ca-2ec0e47f142mr76313541fa.2.1718709470899; 
- Tue, 18 Jun 2024 04:17:50 -0700 (PDT)
-Received: from carbon-x1.. ([2a01:e0a:999:a3a0:45f5:4d94:4aa8:def4])
+ d=1e100.net; s=20230601; t=1718709739; x=1719314539;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PKyT5iAXzsXt/u3rp0WLy5M6y+SEhTxaicjtOp6Xay8=;
+ b=oRO8rxdDaOErsLLXqO2Qrtwi6bLINnroXZvS1m3znioOiRdSWELqVAJLuS904Bs5p/
+ jTlCq32IZ2OBsUCerOhYdzGqyps0MlnphY1uooBQm1i7N1nsgsi3JdLZSRWX0JaLKniP
+ ZmICDDWAl5a5MPJwwxl00+GJm0z/wBg5Hb5dBTmX44GoVKYh8Jnalpcnfv1Pvwlw7XR4
+ yyhzajICRD5gifUzi7TVsSEsTpxOUv0vsJ82OLIw+iwQ+UeGIwgaVDLi+ynTHf8PW1Wa
+ pDoxkxVa8r30IMc6sOZ0f4ByyIn/3iNSCeZ7ZVtZoDqxmBlxTxSoTxv4RBXHe7n28IYw
+ 6dqA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUlhUtyk0FWsSf8N2Kd9Nw41CcgOGoWjF95uLaHsgdfawgDxlDtjJOFykXV6BD3DCSOzvNY0IPRZi1PvZQ1fQ3yQEe9GPE=
+X-Gm-Message-State: AOJu0Ywuv0OpHr3HnWhJLwLpx8MwP+p/OebeKjy9fwbcm+O8QbUyz6iI
+ 23/mpWjJOjoRM6gYlTx4/lP4EgwiNZf0Ti6DPzAyzuZ3pJvb1ApbFJlZ8J9mtkmFKymqwYuh3j+
+ FEq88EPuNw4qJhoDsaQ1DfFt8SLNNu+aJ+JnAUfHhtmXbD3wKCg2Z
+X-Received: by 2002:adf:cd09:0:b0:35f:d6e:f7bd with SMTP id
+ ffacd0b85a97d-3607a76ae7emr7825274f8f.29.1718709739421; 
+ Tue, 18 Jun 2024 04:22:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENywWz9o9O59DwNgBz8MOb9ZUfHnhgxW1bdbmaD/obRa14HPmfZkyIS4fsM+IV5TpP6i/DyQ==
+X-Received: by 2002:adf:cd09:0:b0:35f:d6e:f7bd with SMTP id
+ ffacd0b85a97d-3607a76ae7emr7825261f8f.29.1718709739034; 
+ Tue, 18 Jun 2024 04:22:19 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422f61277fesm187080885e9.21.2024.06.18.04.17.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Jun 2024 04:17:50 -0700 (PDT)
-From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>
-Subject: [PATCH v2] osdep: add a qemu_close_all_open_fd() helper
-Date: Tue, 18 Jun 2024 13:17:03 +0200
-Message-ID: <20240618111704.63092-1-cleger@rivosinc.com>
-X-Mailer: git-send-email 2.45.2
+ ffacd0b85a97d-36289a4faeasm490251f8f.95.2024.06.18.04.22.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Jun 2024 04:22:18 -0700 (PDT)
+Message-ID: <9fa557c2-ad9f-47f0-ab40-17332badcb15@redhat.com>
+Date: Tue, 18 Jun 2024 13:22:17 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/17] vfio/common: Move dirty tracking ranges update
+ to helper
+To: eric.auger@redhat.com, qemu-devel@nongnu.org
+Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>
+References: <20240617063409.34393-1-clg@redhat.com>
+ <20240617063409.34393-4-clg@redhat.com>
+ <81fa58ce-a4e6-41f1-8d9a-75ad674fe472@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <81fa58ce-a4e6-41f1-8d9a-75ad674fe472@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=cleger@rivosinc.com; helo=mail-lj1-x232.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,295 +109,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 03e471c41d8b ("qemu_init: increase NOFILE soft limit on
-POSIX"), the maximum number of file descriptors that can be opened are
-raised to nofile.rlim_max. On recent debian distro, this yield a maximum
-of 1073741816 file descriptors. Now, when forking to start
-qemu-bridge-helper, this actually calls close() on the full possible file
-descriptor range (more precisely [3 - sysconf(_SC_OPEN_MAX)]) which
-takes a considerable amount of time. In order to reduce that time,
-factorize existing code to close all open files descriptors in a new
-qemu_close_all_open_fd() function. This function uses various methods
-to close all the open file descriptors ranging from the most efficient
-one to the least one. It also accepts an ordered array of file
-descriptors that should not be closed since this is required by the
-callers that calls it after forking.
+On 6/17/24 1:39 PM, Eric Auger wrote:
+> Hi Cédric,
+> On 6/17/24 08:33, Cédric Le Goater wrote:
+>> From: Joao Martins <joao.m.martins@oracle.com>
+>>
+>> Separate the changes that updates the ranges from the listener, to
+> s/updates/update
 
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
+fixed.
 
-----
+>> make it reusable in preparation to expand its use to vIOMMU support.
+>>
+>> [ clg: - Rebased on upstream
+>>         - Introduced vfio_dirty_tracking_update_range() ]
+>>
+>> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>> ---
+>>   hw/vfio/common.c | 38 ++++++++++++++++++++++----------------
+>>   1 file changed, 22 insertions(+), 16 deletions(-)
+>>
+>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+>> index d48cd9b9361a92d184e423ffc60aabaff40fb487..fe215918bdf66ddbe3c5db803e10ce1aa9756b90 100644
+>> --- a/hw/vfio/common.c
+>> +++ b/hw/vfio/common.c
+>> @@ -839,20 +839,11 @@ static bool vfio_section_is_vfio_pci(MemoryRegionSection *section,
+>>       return false;
+>>   }
+>>   
+>> -static void vfio_dirty_tracking_update(MemoryListener *listener,
+>> -                                       MemoryRegionSection *section)
+>> +static void vfio_dirty_tracking_update_range(VFIODirtyRanges *range,
+>> +                                             hwaddr iova, hwaddr end,
+>> +                                             bool update_pci)
+>>   {
+>> -    VFIODirtyRangesListener *dirty = container_of(listener,
+>> -                                                  VFIODirtyRangesListener,
+>> -                                                  listener);
+>> -    VFIODirtyRanges *range = &dirty->ranges;
+>> -    hwaddr iova, end, *min, *max;
+>> -
+>> -    if (!vfio_listener_valid_section(section, "tracking_update") ||
+>> -        !vfio_get_section_iova_range(dirty->bcontainer, section,
+>> -                                     &iova, &end, NULL)) {
+>> -        return;
+>> -    }
+>> +    hwaddr *min, *max;
+>>   
+>>       /*
+>>        * The address space passed to the dirty tracker is reduced to three ranges:
+>> @@ -873,8 +864,7 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
+>>        * The alternative would be an IOVATree but that has a much bigger runtime
+>>        * overhead and unnecessary complexity.
+>>        */
+>> -    if (vfio_section_is_vfio_pci(section, dirty->bcontainer) &&
+>> -        iova >= UINT32_MAX) {
+>> +    if (update_pci && iova >= UINT32_MAX) {
+>>           min = &range->minpci64;
+>>           max = &range->maxpci64;
+>>       } else {
+>> @@ -889,7 +879,23 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
+>>       }
+>>   
+>>       trace_vfio_device_dirty_tracking_update(iova, end, *min, *max);
+> don't you want to update the name of the trace point?
 
-v2:
- - Factorize async_teardown.c close_fds implementation as well as tap.c ones
- - Apply checkpatch
- - v1: https://lore.kernel.org/qemu-devel/20240617162520.4045016-1-cleger@rivosinc.com/
+There is only one caller. Let's reconsider when there are more users of this
+routine.
 
----
- include/qemu/osdep.h    |   8 +++
- net/tap.c               |  31 ++++++-----
- system/async-teardown.c |  37 +------------
- util/osdep.c            | 115 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 141 insertions(+), 50 deletions(-)
+Thanks,
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index f61edcfdc2..9369a97d3d 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -755,6 +755,14 @@ static inline void qemu_reset_optind(void)
- 
- int qemu_fdatasync(int fd);
- 
-+/**
-+ * Close all open file descriptors except the ones supplied in the @skip array
-+ *
-+ * @skip: ordered array of distinct file descriptors that should not be closed
-+ * @nskip: number of entries in the @skip array.
-+ */
-+void qemu_close_all_open_fd(const int *skip, unsigned int nskip);
-+
- /**
-  * Sync changes made to the memory mapped file back to the backing
-  * storage. For POSIX compliant systems this will fallback
-diff --git a/net/tap.c b/net/tap.c
-index 51f7aec39d..6fc3939078 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -385,6 +385,21 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
-     return s;
- }
- 
-+static void close_all_fds_after_fork(int excluded_fd)
-+{
-+        const int skip_fd[] = {0, 1, 2, 3, excluded_fd};
-+        unsigned int nskip = ARRAY_SIZE(skip_fd);
-+
-+        /*
-+         * skip_fd must be an ordered array of distinct fds, exclude
-+         * excluded_fd if already included in the [0 - 3] range
-+         */
-+        if (excluded_fd <= 3) {
-+            nskip--;
-+        }
-+        qemu_close_all_open_fd(skip_fd, nskip);
-+}
-+
- static void launch_script(const char *setup_script, const char *ifname,
-                           int fd, Error **errp)
- {
-@@ -400,13 +415,7 @@ static void launch_script(const char *setup_script, const char *ifname,
-         return;
-     }
-     if (pid == 0) {
--        int open_max = sysconf(_SC_OPEN_MAX), i;
--
--        for (i = 3; i < open_max; i++) {
--            if (i != fd) {
--                close(i);
--            }
--        }
-+        close_all_fds_after_fork(fd);
-         parg = args;
-         *parg++ = (char *)setup_script;
-         *parg++ = (char *)ifname;
-@@ -490,17 +499,11 @@ static int net_bridge_run_helper(const char *helper, const char *bridge,
-         return -1;
-     }
-     if (pid == 0) {
--        int open_max = sysconf(_SC_OPEN_MAX), i;
-         char *fd_buf = NULL;
-         char *br_buf = NULL;
-         char *helper_cmd = NULL;
- 
--        for (i = 3; i < open_max; i++) {
--            if (i != sv[1]) {
--                close(i);
--            }
--        }
--
-+        close_all_fds_after_fork(sv[1]);
-         fd_buf = g_strdup_printf("%s%d", "--fd=", sv[1]);
- 
-         if (strrchr(helper, ' ') || strrchr(helper, '\t')) {
-diff --git a/system/async-teardown.c b/system/async-teardown.c
-index 396963c091..9148ee8d04 100644
---- a/system/async-teardown.c
-+++ b/system/async-teardown.c
-@@ -26,40 +26,6 @@
- 
- static pid_t the_ppid;
- 
--/*
-- * Close all open file descriptors.
-- */
--static void close_all_open_fd(void)
--{
--    struct dirent *de;
--    int fd, dfd;
--    DIR *dir;
--
--#ifdef CONFIG_CLOSE_RANGE
--    int r = close_range(0, ~0U, 0);
--    if (!r) {
--        /* Success, no need to try other ways. */
--        return;
--    }
--#endif
--
--    dir = opendir("/proc/self/fd");
--    if (!dir) {
--        /* If /proc is not mounted, there is nothing that can be done. */
--        return;
--    }
--    /* Avoid closing the directory. */
--    dfd = dirfd(dir);
--
--    for (de = readdir(dir); de; de = readdir(dir)) {
--        fd = atoi(de->d_name);
--        if (fd != dfd) {
--            close(fd);
--        }
--    }
--    closedir(dir);
--}
--
- static void hup_handler(int signal)
- {
-     /* Check every second if this process has been reparented. */
-@@ -85,9 +51,8 @@ static int async_teardown_fn(void *arg)
-     /*
-      * Close all file descriptors that might have been inherited from the
-      * main qemu process when doing clone, needed to make libvirt happy.
--     * Not using close_range for increased compatibility with older kernels.
-      */
--    close_all_open_fd();
-+    qemu_close_all_open_fd(NULL, 0);
- 
-     /* Set up a handler for SIGHUP and unblock SIGHUP. */
-     sigaction(SIGHUP, &sa, NULL);
-diff --git a/util/osdep.c b/util/osdep.c
-index 5d23bbfbec..f3710710e3 100644
---- a/util/osdep.c
-+++ b/util/osdep.c
-@@ -625,3 +625,118 @@ int qemu_fdatasync(int fd)
-     return fsync(fd);
- #endif
- }
-+
-+#ifdef CONFIG_LINUX
-+static bool qemu_close_all_open_fd_proc(const int *skip, unsigned int nskip)
-+{
-+    struct dirent *de;
-+    int fd, dfd;
-+    bool close_fd;
-+    DIR *dir;
-+    int i;
-+
-+    dir = opendir("/proc/self/fd");
-+    if (!dir) {
-+        /* If /proc is not mounted, there is nothing that can be done. */
-+        return false;
-+    }
-+    /* Avoid closing the directory. */
-+    dfd = dirfd(dir);
-+
-+    for (de = readdir(dir); de; de = readdir(dir)) {
-+        fd = atoi(de->d_name);
-+        close_fd = true;
-+        if (fd == dfd) {
-+            close_fd = false;
-+        } else {
-+            for (i = 0; i < nskip; i++) {
-+                if (fd == skip[i]) {
-+                    close_fd = false;
-+                    break;
-+                }
-+            }
-+        }
-+        if (close_fd) {
-+            close(fd);
-+        }
-+    }
-+    closedir(dir);
-+
-+    return true;
-+}
-+#else
-+static bool qemu_close_all_open_fd_proc(const int *skip, unsigned int nskip)
-+{
-+    return false;
-+}
-+#endif
-+
-+#ifdef CONFIG_CLOSE_RANGE
-+static bool qemu_close_all_open_fd_close_range(const int *skip,
-+                                               unsigned int nskip)
-+{
-+    int max_fd = sysconf(_SC_OPEN_MAX) - 1;
-+    int first = 0, last = max_fd;
-+    int cur_skip = 0, ret;
-+
-+    do {
-+        if (nskip) {
-+            while (first == skip[cur_skip]) {
-+                cur_skip++;
-+                first++;
-+            }
-+            if (cur_skip < nskip) {
-+                last = skip[cur_skip] - 1;
-+            }
-+            if (last > max_fd) {
-+                last = max_fd;
-+                /*
-+                 * We can directly skip the remaining skip fds since the current
-+                 * one is already above the maximum supported one.
-+                 */
-+                cur_skip = nskip;
-+            }
-+            if (first > last) {
-+                break;
-+            }
-+        }
-+        ret = close_range(first, last, 0);
-+        if (ret < 0) {
-+            return false;
-+        }
-+        first = last + 1;
-+        last = max_fd;
-+    } while (cur_skip < nskip);
-+
-+    return true;
-+}
-+#else
-+static bool qemu_close_all_open_fd_close_range(const int *skip,
-+                                               unsigned int nskip)
-+{
-+    return false;
-+}
-+#endif
-+
-+void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
-+{
-+    int open_max = sysconf(_SC_OPEN_MAX);
-+    int cur_skip = 0, i;
-+
-+    if (qemu_close_all_open_fd_close_range(skip, nskip)) {
-+        return;
-+    }
-+
-+    if (qemu_close_all_open_fd_proc(skip, nskip)) {
-+        return;
-+    }
-+
-+    /* Fallback */
-+    for (i = 0; i < open_max; i++) {
-+        if (i == skip[cur_skip]) {
-+            cur_skip++;
-+            continue;
-+        }
-+        close(i);
-+    }
-+}
--- 
-2.45.2
+C.
+
+  
+>> -    return;
+>> +}
+>> +
+>> +static void vfio_dirty_tracking_update(MemoryListener *listener,
+>> +                                       MemoryRegionSection *section)
+>> +{
+>> +    VFIODirtyRangesListener *dirty =
+>> +        container_of(listener, VFIODirtyRangesListener, listener);
+>> +    hwaddr iova, end;
+>> +
+>> +    if (!vfio_listener_valid_section(section, "tracking_update") ||
+>> +        !vfio_get_section_iova_range(dirty->bcontainer, section,
+>> +                                     &iova, &end, NULL)) {
+>> +        return;
+>> +    }
+>> +
+>> +    vfio_dirty_tracking_update_range(&dirty->ranges, iova, end,
+>> +                      vfio_section_is_vfio_pci(section, dirty->bcontainer));
+>>   }
+>>   
+>>   static const MemoryListener vfio_dirty_tracking_listener = {
+> Besides
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> 
+> Eric
+> 
 
 
