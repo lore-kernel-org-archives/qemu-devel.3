@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AFE6C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 14:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19242C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 14:51:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJa0X-00006P-GZ; Tue, 18 Jun 2024 10:40:25 -0400
+	id 1sJaAw-0003qu-Hs; Tue, 18 Jun 2024 10:51:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sJa0V-00005f-IE; Tue, 18 Jun 2024 10:40:23 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1sJaAu-0003qL-KJ; Tue, 18 Jun 2024 10:51:08 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sJa0U-0001RN-0s; Tue, 18 Jun 2024 10:40:23 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a6f7b785a01so331729166b.1; 
- Tue, 18 Jun 2024 07:40:21 -0700 (PDT)
+ id 1sJaAs-0003DP-TS; Tue, 18 Jun 2024 10:51:08 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-52cc5d5179aso952439e87.0; 
+ Tue, 18 Jun 2024 07:51:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718721620; x=1719326420; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1718722264; x=1719327064; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=uvBxpZFONpTNQR9KQhhThzpJaQH2JB8uCMKlkJSlgzk=;
- b=is1tdFPbjoURFcZRyUSfPKmJPzAeKieEJqHenx2nFQK8NSrSDtU/Oktil+huNN2UWE
- tsP/uOkGBgFDiksgY9b/XQnnFOPKQJk/Fw+axY0Z+AKLw40srsyf+A6NpJ5jrKlITYKV
- wFIuO6zWBg5EqkydeZ9uBi6tu0Lr+HqmyLl1X5FQYTSCPAjVD3orEqgP3rvBVlmtqBa6
- wrxYet3J7QX6V1Z56kOqaUDb/YbkTiNghgunubN0N5jT8if/n/HKM2MiFEWOMJu3j8Ml
- 51uSe9qb4NA+Bi1RelIl7XA9yRVh2bFrT7uh2WuAL1BTJWfw5PonD5Za04PvnChrOmsq
- GBUA==
+ bh=XFOP2OQTAOjEHDiaLrKVn5ROR94pabwwhGZRP/1DVv4=;
+ b=RbWO2sq5/vvC8464jwHEd2i/bGFvWyCPQ0JOXTAhGq9oPQcsIoJX7a8aD+jifPTgEJ
+ hWix5/G0Ee6a7JtcR5mjECgqKAvUJNF/dOHL96dJs0eQ4SQdPl3dZM6UpklLjDE52jp0
+ 8MRLeKJGLplg+rOdi+/5S4ylUtrj6OfzfMAfv/DhzU4N8J5DJ7Zw9JtjrYzR0gIiJLhb
+ tWAME/9COxA23SdonSIsnrOjAQn8hjeF5uE6PMoMyz/JEFuahtn6JIUoPhBfogITuQaL
+ EJcZo4+Y5M2mhKvrOnYxrI/mqbdFlsJjs5kkRZJa3NYXVeX4z4/tuC/2kIbkLyIGJY97
+ SC9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718721620; x=1719326420;
+ d=1e100.net; s=20230601; t=1718722264; x=1719327064;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uvBxpZFONpTNQR9KQhhThzpJaQH2JB8uCMKlkJSlgzk=;
- b=gxOKNrczHfRx+TUqbK0FTgpPk6crMOXhr/IZxPp/l6igslseWFGmoZfn96CNtVbIFo
- BatCf47Mfz8TFw5T+KtxMnCNYRKBHkfNmGp4MePMs04UhKIpT/K5kAffijhyVGz+OKBO
- /815xjEG6zkQudy+xOQu8iAovMd6v08+URp/vQaA5ozS905z/tcILHl4PCRY+DXCcxHb
- k+kFU11MAuwz85bcqfgR/H8OA35hcYGI2aECJDlrpzkuqSHDFfcujPs9tFGBbl0AwK0J
- 23qltH00QGwd+RN+ZWF3dSg2IFQ+c0t7TTDH/Xz60D+2mpyO2f5dSJfR6aNdKcE9+0l+
- pP8Q==
+ bh=XFOP2OQTAOjEHDiaLrKVn5ROR94pabwwhGZRP/1DVv4=;
+ b=kzgrTBgsOwLOzr3tgHlqTU0mfR91eCF9F7DUTVWn4oL/5d8JLI2fpXfjFhVZ2DY1Dg
+ FC/dyNIF+GYW3kgU7cHuyxrhiqAdJUx/ddv3A/RN9j6mWVCjU5LJlAaP/GVFdNZcfUg4
+ R5Mp9hRdN8RUexn2CzljSCsE7dTm/DWlyUvLaxm0yyXG5nH14AxhAHhfUSHBGt4JMIt9
+ 8QkYKGr9XMXI0quhbTdSWRDhX66YSyZ+uheXA1SzeHQxLAjtGfnEderQiloyGgzG4nFd
+ zCHpein+7AUrjpvbTXcvFwD6EZVC8Gz8fk3LFtdvjwwPdDjbXLqRPLVcLgMk3xNZb1ea
+ ORDw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVi4iIu8LE3M7rdIT2TDWilDaW6irXNP9T2+za6S6Fjn7XnqBJNpgoHWONqr5yFCFV/89k/tMgu0Zo04ipva7bwi35ezIDMfet+u4lOA9TCdOz6uYdi/+dd9Ow=
-X-Gm-Message-State: AOJu0Yw/zRzHUiriGOmCHjjImK2+RouUGp87YGf/d+4S/dTQlAjL8plB
- zRNvG/TgjKqy2a2kN3qr7CAG0lBPX0txwcm38XoRKU4Hf5W6Z0c=
-X-Google-Smtp-Source: AGHT+IEKiy5Tc5VgwHMztvE6V1NuJuApHM0FcpgLEEuXbCVm4nvJujCZKSFtnrn6yfJJXHaWYjLXqA==
-X-Received: by 2002:a17:907:c00f:b0:a6f:6721:b06d with SMTP id
- a640c23a62f3a-a6f6721b860mr943923566b.24.1718721619942; 
- Tue, 18 Jun 2024 07:40:19 -0700 (PDT)
+ AJvYcCV/hBTei1Oc0wHNaDCRmEgoc6nBq+dNe1m35gMzeH/pAtQS5+YKDyyFT9R7QmfGESgZoYjwXFah81W0zePf8/chbb+ElYCLhpp6OPi6OTqWVPMlUnYOmo2UG3A=
+X-Gm-Message-State: AOJu0YyqOJXTtj9P14g4qrtMaOeJvHOs0DtE5QFjuV7JerKvqlqMvtlR
+ sosBKSgZ14XVHU/tQNKiFFIGTpoLcERUc4myBA74wwsxgVwAuf8=
+X-Google-Smtp-Source: AGHT+IHqoTd6vh0p2J7VHtVFpWsOkWkpgPODEBrKHh+VHBTfx6e7SF4li0UUKNrBlj9ktYaY6mj6wA==
+X-Received: by 2002:ac2:464f:0:b0:52c:93b1:3c78 with SMTP id
+ 2adb3069b0e04-52ca6e6596fmr9310370e87.23.1718722264113; 
+ Tue, 18 Jun 2024 07:51:04 -0700 (PDT)
 Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57cb741e884sm7745066a12.63.2024.06.18.07.40.19
+ ffacd0b85a97d-360750ad221sm14319598f8f.58.2024.06.18.07.51.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Jun 2024 07:40:19 -0700 (PDT)
+ Tue, 18 Jun 2024 07:51:03 -0700 (PDT)
 From: Zheyu Ma <zheyuma97@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
+To: Igor Mitsyanko <i.mitsyanko@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
 Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH] hw/timer/a9gtimer: Handle QTest mode in
- a9_gtimer_get_current_cpu
-Date: Tue, 18 Jun 2024 16:40:09 +0200
-Message-Id: <20240618144009.3137806-1-zheyuma97@gmail.com>
+Subject: [PATCH] hw/misc: Fix invalid size assertions in exynos4210_rng
+ read/write functions
+Date: Tue, 18 Jun 2024 16:50:54 +0200
+Message-Id: <20240618145054.3144311-1-zheyuma97@gmail.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=zheyuma97@gmail.com; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=zheyuma97@gmail.com; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -92,45 +93,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit updates the a9_gtimer_get_current_cpu() function to handle
-cases where QTest is enabled. When QTest is used, it returns 0 instead
-of dereferencing the current_cpu, which can be NULL. This prevents the
-program from crashing during QTest runs.
+This commit updates the exynos4210_rng_read() and exynos4210_rng_write()
+functions to handle cases where the size is not 4 bytes. Instead of
+asserting, which causes the program to abort, the functions now log an
+error message and return a default value for reads or do nothing for
+writes when the size is invalid.
 
 Reproducer:
-cat << EOF | qemu-system-aarch64 -display \
-none -machine accel=qtest, -m 512M -machine npcm750-evb -qtest stdio
-writel 0xf03fe20c 0x26d7468c
+cat << EOF | qemu-system-aarch64 -display none \
+-machine accel=qtest, -m 512M -machine smdkc210 -qtest stdio
+readb 0x10830454
 EOF
 
 Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
 ---
- hw/timer/a9gtimer.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/misc/exynos4210_rng.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/hw/timer/a9gtimer.c b/hw/timer/a9gtimer.c
-index a2ac5bdfb9..64d80cdf6a 100644
---- a/hw/timer/a9gtimer.c
-+++ b/hw/timer/a9gtimer.c
-@@ -32,6 +32,7 @@
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "hw/core/cpu.h"
-+#include "sysemu/qtest.h"
+diff --git a/hw/misc/exynos4210_rng.c b/hw/misc/exynos4210_rng.c
+index 0756bd3205..307d4eea43 100644
+--- a/hw/misc/exynos4210_rng.c
++++ b/hw/misc/exynos4210_rng.c
+@@ -146,7 +146,12 @@ static uint64_t exynos4210_rng_read(void *opaque, hwaddr offset,
+     Exynos4210RngState *s = (Exynos4210RngState *)opaque;
+     uint32_t val = 0;
  
- #ifndef A9_GTIMER_ERR_DEBUG
- #define A9_GTIMER_ERR_DEBUG 0
-@@ -48,6 +49,10 @@
- 
- static inline int a9_gtimer_get_current_cpu(A9GTimerState *s)
- {
-+    if (qtest_enabled()) {
+-    assert(size == 4);
++    if (size != 4) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: invalid read size %u at offset 0x%" HWADDR_PRIx
++                      "\n", __func__, size, offset);
 +        return 0;
 +    }
-+
-     if (current_cpu->cpu_index >= s->num_cpu) {
-         hw_error("a9gtimer: num-cpu %d but this cpu is %d!\n",
-                  s->num_cpu, current_cpu->cpu_index);
+ 
+     switch (offset) {
+     case EXYNOS4210_RNG_CONTROL_1:
+@@ -181,7 +186,12 @@ static void exynos4210_rng_write(void *opaque, hwaddr offset,
+ {
+     Exynos4210RngState *s = (Exynos4210RngState *)opaque;
+ 
+-    assert(size == 4);
++    if (size != 4) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: invalid write size %u at offset 0x%" HWADDR_PRIx
++                      "\n", __func__, size, offset);
++        return;
++    }
+ 
+     switch (offset) {
+     case EXYNOS4210_RNG_CONTROL_1:
 -- 
 2.34.1
 
