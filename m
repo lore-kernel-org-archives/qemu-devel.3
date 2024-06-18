@@ -4,107 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E59C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 08:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20FEBC2BA15
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 08:25:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJU4r-0003Iy-At; Tue, 18 Jun 2024 04:20:29 -0400
+	id 1sJU8W-0004jN-8y; Tue, 18 Jun 2024 04:24:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1sJU4q-0003IZ-5l; Tue, 18 Jun 2024 04:20:28 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sJU8U-0004iB-My; Tue, 18 Jun 2024 04:24:14 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1sJU4U-0007u1-Gb; Tue, 18 Jun 2024 04:20:27 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45I75YIA029476;
- Tue, 18 Jun 2024 08:19:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=m
- 3BaxC2uAfWIIJMv4rQdaKwNRRdQxZcKJEOSPQns5Ko=; b=eez0h61/j1PFMO3qv
- hOushOubXyX9oDbt025eTlhGSbcwfBY+4NKbXTrfbkTWMWotP98u6EXPS7kitnuj
- F4qPJrjvn9LCfbC37CGE//a/ejZSZejjxoPMzcvAMb5SFjxvqvmknkln641+DmWE
- fkFDfAdNUh8vPT8a4bHDu0zT5JVqSLMghtT0mfzfIQpW/SHnHfRyOgLjWkdXpTdN
- 6opLl4VzzwAUBXNckcrWHxW5j8P4bI4Qsd8dMzPdL0QHUvBzyQ4DFRJnHLB3kciM
- zSipbkiX40anx4Q/nf1OUVkNkBIJkxYKeaHEc/gPs5gn6TpFMtEmmZS1d2O84U7Z
- BCZcg==
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sJU8T-0000Tr-5H; Tue, 18 Jun 2024 04:24:14 -0400
+Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45I6SCW2017478;
+ Tue, 18 Jun 2024 08:24:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=pp1; bh=PuqnjpDd/9ttC
+ KEZsxkOPGCL9lRR7Oqyk9qLr1wbxPg=; b=SU/xjL3Yo1aj1S/Gt45MIJHsb3H3t
+ +WlVeGYMM5OGSJS3NLEBU4KvK424LBNs0dG1tlgMshogWrNMYUOHsgAX91HnU/dS
+ mmKgdQ/CZtztctU4J6eifHAn7WdOFCAuUAlvxZUzaSW4rybilq+n95ARls4AKhA2
+ T3ZYrc77KAWJuteLDIGVEoPe4KrqIUnh18AORvZaT1Ga2RLyYX98LMX5XFC2ZqOf
+ crTfFZ6eE1RvcM3qZFz+UKRtJQ2oSbsiYF5VO/CGOTrlrmJTJGjFNyAJDmpIlVHT
+ iwqK7UI+XCIaaQDija1Nrcyn625NCtL+joiXsFOm9w/6XGdYVxAJ/BfrQ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu4ja8ar0-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu44frcn9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Jun 2024 08:19:48 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45I8JloL017858;
- Tue, 18 Jun 2024 08:19:47 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu4ja8aqy-1
+ Tue, 18 Jun 2024 08:24:11 +0000 (GMT)
+Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45I8OABC032461;
+ Tue, 18 Jun 2024 08:24:10 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu44frcn7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Jun 2024 08:19:47 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45I7nP2r009422; Tue, 18 Jun 2024 08:19:47 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ysqgmgv14-1
+ Tue, 18 Jun 2024 08:24:10 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45I78ihC023963; Tue, 18 Jun 2024 08:24:10 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ysp9q1786-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Jun 2024 08:19:46 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45I8Jfr456557934
+ Tue, 18 Jun 2024 08:24:09 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45I8O4sM37880196
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Jun 2024 08:19:43 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8802B20043;
- Tue, 18 Jun 2024 08:19:41 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3E6502004D;
- Tue, 18 Jun 2024 08:19:40 +0000 (GMT)
-Received: from [9.199.192.140] (unknown [9.199.192.140])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 18 Jun 2024 08:19:40 +0000 (GMT)
-Message-ID: <46f033b8-a94c-4479-a9ae-8e8edcbf127d@linux.vnet.ibm.com>
-Date: Tue, 18 Jun 2024 13:49:39 +0530
+ Tue, 18 Jun 2024 08:24:06 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 45FB720067;
+ Tue, 18 Jun 2024 08:24:04 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C32B42005A;
+ Tue, 18 Jun 2024 08:24:02 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.109.242.165])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 18 Jun 2024 08:24:02 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: npiggin@gmail.com, pbonzini@redhat.com, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: danielhb413@gmail.com, vaibhav@linux.ibm.com, sbhat@linux.ibm.com
+Subject: [PATCH v4 2/3] cpu-common.c: export cpu_get_free_index to be reused
+ later
+Date: Tue, 18 Jun 2024 13:53:53 +0530
+Message-ID: <20240618082354.13919-3-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240618082354.13919-1-harshpb@linux.ibm.com>
+References: <20240618082354.13919-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] target/ppc: Move VSX vector with length storage
- access insns to decodetree.
-To: Richard Henderson <richard.henderson@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
-References: <20240613093318.314913-1-rathc@linux.ibm.com>
- <20240613093318.314913-3-rathc@linux.ibm.com>
- <6638b813-f4ef-4587-b94f-3c24d90ca09e@linaro.org>
- <94d97af2-62e2-4fde-909b-c57af8ef814f@linux.vnet.ibm.com>
- <a50d339b-d44a-41c1-bb28-82eb761771a1@linaro.org>
-Content-Language: en-US
-From: Chinmay Rath <rathc@linux.vnet.ibm.com>
-In-Reply-To: <a50d339b-d44a-41c1-bb28-82eb761771a1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: dYQhDw3TEsLwooFpZwcQzWHUi_5x33Do
-X-Proofpoint-ORIG-GUID: eiQwhnKdObQ-COoIrTDIUrDB_a7cn9Az
+X-Proofpoint-ORIG-GUID: QdbwXNKxRiuxES3D5Y513Oa0gNANuNSM
+X-Proofpoint-GUID: N3cxRA77EDHah9WiYQPWRc2jHd_I73z_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-18_02,2024-06-17_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0
- priorityscore=1501 impostorscore=0 mlxscore=0 lowpriorityscore=0
- suspectscore=0 phishscore=0 malwarescore=0 bulkscore=0 clxscore=1015
- mlxlogscore=604 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2405170001 definitions=main-2406180057
-Received-SPF: none client-ip=148.163.156.1;
- envelope-from=rathc@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
+ mlxscore=0 clxscore=1015
+ priorityscore=1501 malwarescore=0 spamscore=0 impostorscore=0 phishscore=0
+ mlxlogscore=897 lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2406180061
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,64 +113,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This helper provides an easy way to identify the next available free cpu
+index which can be used for vcpu creation. Until now, this is being
+called at a very later stage and there is a need to be able to call it
+earlier (for now, with ppc64) hence the need to export.
 
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ include/exec/cpu-common.h | 2 ++
+ cpu-common.c              | 7 ++++---
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-On 6/17/24 23:27, Richard Henderson wrote:
-> On 6/17/24 04:51, Chinmay Rath wrote:
->>
->>
->> Hi Richard,
->> On 6/17/24 00:43, Richard Henderson wrote:
->>> On 6/13/24 02:33, Chinmay Rath wrote:
->>>> +/* EA <- (ra == 0) ? 0 : GPR[ra] */
->>>> +static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
->>>> +{
->>>> +    TCGv EA;
->>>> +    if (!ra) {
->>>> +        EA = tcg_constant_tl(0);
->>>> +        return EA;
->>>> +    }
->>>> +    EA = tcg_temp_new();
->>>> +    if (NARROW_MODE(ctx)) {
->>>> +        tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
->>>> +    } else {
->>>> +        tcg_gen_mov_tl(EA, cpu_gpr[ra]);
->>>
->>> Why are you making a copy, rather than just returning cpu_gpr[ra]?
->>> If you need to modify the resulting EA, then you also need to make a 
->>> copy for 0.
->>>
->> Please ignore my previous response.
->> I think do_ea_calc_ra should allow modification to the resulting EA, 
->> hence below change appears more appropriate to me :
->>
->> /* EA <- (ra == 0) ? 0 : GPR[ra] */
->> static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
->> {
->>      TCGv EA = tcg_temp_new();
->>      if (!ra) {
->>          tcg_gen_movi_tl(EA, 0);
->>          return EA;
->>      }
->>      if (NARROW_MODE(ctx)) {
->>          tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
->>      } else {
->>          tcg_gen_mov_tl(EA, cpu_gpr[ra]);
->>      }
->>      return EA;
->> }
->
-> If that's what's needed by the callers of do_ea_calc_ra, then yes.
-> You can drop the first return EA and use else if instead.
-Sure.
-I shall stick to keeping EA modifiable, (even though it is not modified 
-by the callers in this patch),
-to allow its proper usage by (p){lx, stx}vp insns in future.
-
-Thanks & Regards,
-Chinmay
->
->
-> r~
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 240ee04369..2e1b499cb7 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -35,6 +35,8 @@ void cpu_list_lock(void);
+ void cpu_list_unlock(void);
+ unsigned int cpu_list_generation_id_get(void);
+ 
++int cpu_get_free_index(void);
++
+ void tcg_iommu_init_notifier_list(CPUState *cpu);
+ void tcg_iommu_free_notifier_list(CPUState *cpu);
+ 
+diff --git a/cpu-common.c b/cpu-common.c
+index ce78273af5..82bd1b432d 100644
+--- a/cpu-common.c
++++ b/cpu-common.c
+@@ -57,14 +57,12 @@ void cpu_list_unlock(void)
+     qemu_mutex_unlock(&qemu_cpu_list_lock);
+ }
+ 
+-static bool cpu_index_auto_assigned;
+ 
+-static int cpu_get_free_index(void)
++int cpu_get_free_index(void)
+ {
+     CPUState *some_cpu;
+     int max_cpu_index = 0;
+ 
+-    cpu_index_auto_assigned = true;
+     CPU_FOREACH(some_cpu) {
+         if (some_cpu->cpu_index >= max_cpu_index) {
+             max_cpu_index = some_cpu->cpu_index + 1;
+@@ -83,8 +81,11 @@ unsigned int cpu_list_generation_id_get(void)
+ 
+ void cpu_list_add(CPUState *cpu)
+ {
++    static bool cpu_index_auto_assigned;
++
+     QEMU_LOCK_GUARD(&qemu_cpu_list_lock);
+     if (cpu->cpu_index == UNASSIGNED_CPU_INDEX) {
++        cpu_index_auto_assigned = true;
+         cpu->cpu_index = cpu_get_free_index();
+         assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
+     } else {
+-- 
+2.45.1
 
 
