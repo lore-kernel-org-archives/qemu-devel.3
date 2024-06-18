@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08441C2BB85
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C5B3C41513
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbTC-0005dF-3W; Tue, 18 Jun 2024 12:14:06 -0400
+	id 1sJbSy-00057m-DQ; Tue, 18 Jun 2024 12:13:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sJbT2-0005K8-Ey
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:13:58 -0400
+ id 1sJbSv-00055D-E7
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:13:49 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sJbT0-0000vK-Sh
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:13:55 -0400
+ id 1sJbSt-0000uN-Dn
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:13:49 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1sJbSm-0001dZ-Qi; Tue, 18 Jun 2024 18:13:40 +0200
+ id 1sJbSc-0001cr-CI; Tue, 18 Jun 2024 18:13:30 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v1 10/13] migration/multifd: Add
- migration_has_device_state_support()
-Date: Tue, 18 Jun 2024 18:12:28 +0200
-Message-ID: <2dd6ec214193ecc7b1aba9e5f9655aeb9b213f28.1718717584.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v1 08/13] migration/multifd: Convert
+ multifd_send_pages::next_channel to atomic
+Date: Tue, 18 Jun 2024 18:12:26 +0200
+Message-ID: <9ca772abfb2cd8fbd180d981a97d06f57d9fa2d5.1718717584.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <cover.1718717584.git.maciej.szmigiero@oracle.com>
 References: <cover.1718717584.git.maciej.szmigiero@oracle.com>
@@ -66,44 +66,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-Since device state transfer via multifd channels requires multifd
-channels with packets and is currently not compatible with multifd
-compression add an appropriate query function so device can learn
-whether it can actually make use of it.
+This is necessary for multifd_send_pages() to be able to be called
+from multiple threads.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- include/migration/misc.h | 1 +
- migration/multifd.c      | 6 ++++++
- 2 files changed, 7 insertions(+)
+ migration/multifd.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index abf6f33eeae8..4f3de2f23819 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -112,6 +112,7 @@ bool migration_in_bg_snapshot(void);
- void dirty_bitmap_mig_init(void);
- 
- /* migration/multifd.c */
-+bool migration_has_device_state_support(void);
- int multifd_queue_device_state(char *idstr, uint32_t instance_id,
-                                char *data, size_t len);
- 
 diff --git a/migration/multifd.c b/migration/multifd.c
-index 6a7e5d659925..e5f7021465ec 100644
+index 6e0af84bb9a1..daa34172bf24 100644
 --- a/migration/multifd.c
 +++ b/migration/multifd.c
-@@ -804,6 +804,12 @@ retry:
-     return true;
- }
+@@ -614,26 +614,38 @@ static bool multifd_send_pages(void)
+         return false;
+     }
  
-+bool migration_has_device_state_support(void)
-+{
-+    return migrate_multifd() && !migrate_mapped_ram() &&
-+        migrate_multifd_compression() == MULTIFD_COMPRESSION_NONE;
-+}
+-    /* We wait here, until at least one channel is ready */
+-    qemu_sem_wait(&multifd_send_state->channels_ready);
+-
+     /*
+      * next_channel can remain from a previous migration that was
+      * using more channels, so ensure it doesn't overflow if the
+      * limit is lower now.
+      */
+-    next_channel %= migrate_multifd_channels();
+-    for (i = next_channel;; i = (i + 1) % migrate_multifd_channels()) {
++    i = qatomic_load_acquire(&next_channel);
++    if (unlikely(i >= migrate_multifd_channels())) {
++        qatomic_cmpxchg(&next_channel, i, 0);
++    }
 +
- int multifd_queue_device_state(char *idstr, uint32_t instance_id,
-                                char *data, size_t len)
- {
++    /* We wait here, until at least one channel is ready */
++    qemu_sem_wait(&multifd_send_state->channels_ready);
++
++    while (true) {
++        int i_next;
++
+         if (multifd_send_should_exit()) {
+             return false;
+         }
++
++        i = qatomic_load_acquire(&next_channel);
++        i_next = (i + 1) % migrate_multifd_channels();
++        if (qatomic_cmpxchg(&next_channel, i, i_next) != i) {
++            continue;
++        }
++
+         p = &multifd_send_state->params[i];
+         /*
+          * Lockless read to p->pending_job is safe, because only multifd
+          * sender thread can clear it.
+          */
+         if (qatomic_read(&p->pending_job) == false) {
+-            next_channel = (i + 1) % migrate_multifd_channels();
+             break;
+         }
+     }
 
