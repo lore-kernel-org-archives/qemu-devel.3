@@ -4,88 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00EEAC2BA15
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 09:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F842C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 09:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJVTv-0001QC-WE; Tue, 18 Jun 2024 05:50:28 -0400
+	id 1sJVXO-0003Wa-OD; Tue, 18 Jun 2024 05:54:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sJVTo-0001F8-1o
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 05:50:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sJVTl-00077w-Dl
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 05:50:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718704216;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LRf7y9SmTWS1O7rTRQ7LZA0XDng8aTzanJkZ6/HRnAE=;
- b=faxHAna5fo37BllvWk+rA5eszj3WEaudoE96iGuFZCdbFTIB1w951IEpzzhO7ZzVByiW/8
- f75usNtorgKHktS1Cu7Hvpf7qs5kocS9VGJdfum32RHrUDQNp5QfS6bfnbFbq+EnoZ4OIA
- 3zNe450nKf4OnW3sPf5rzcm8PdrKmsA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-155-11uRa1FTPVuW8r6COEjjew-1; Tue, 18 Jun 2024 05:50:10 -0400
-X-MC-Unique: 11uRa1FTPVuW8r6COEjjew-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-35f218c9950so2770568f8f.0
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 02:50:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sJVXM-0003VX-Uc
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 05:54:00 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sJVXK-0007dX-Pu
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 05:54:00 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-42121d27861so41680865e9.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 02:53:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718704437; x=1719309237; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=gXF1PJ4Uha8/rBYPYkTY+qderDnntrtGPsFK0GwQRRc=;
+ b=V6KgReMwjke9+DjRLlmLXgHgfUAPPUuZUS3eIlgxf534oJ98I1iT7Nbu7LvF/gRkcc
+ v33o16FJZJHJSQ0JMtSylfZsTWNjiGDmrTv/t35ngMePeou5UL9RO9B/XchYi12iL2yF
+ isHx7pvhsxn1COq+I8hXLbzO+1GknZM+kSykX+BOJdqc/Q5/SqN/mjH7nsMic/Z78qlU
+ utodDbzjGVwkqHmqzFXgyzQaY5I/q7UguzMKlAkOkiUrJNMAcY/AiD16+ivx9Qw6EtnZ
+ IuEWUK2Unn7FW+dqny/pgkEbAOUn1QgrXOIPthkbDclGB/15msvLHX5phtrmkYOSRn1j
+ cJ2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718704209; x=1719309009;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LRf7y9SmTWS1O7rTRQ7LZA0XDng8aTzanJkZ6/HRnAE=;
- b=CqR1Fv7AOYF/YaVOHXu0eBPi/tm6On63p4LI8z2ke1eRyzZ4dWhQH5pH1vY5Bzs5Ep
- QHS/RyIlmkmcne9myOVrW72Yd+3ju3/S2nuq6WsBbzl6fbupeX/dtpSp+et8on4vuPrg
- javcW/9xdM4sTRwci1CgSThusSWc99Ek9GPjm9Y8hOEFyqea+h4UDHF2eDuEKdTerGao
- EgV26xOshb8DhYbE9iQaecMtxvby0kojK99p6lDVEmHUs+6SWVwC9rnrT4gWx97oBLpa
- LMc+4w4tSF0975Aa43imrDXB6Mf1UZYJFecWBPiAuhsD4/HQcwhCpEgMdrCx9+r3CKKg
- bjSA==
+ d=1e100.net; s=20230601; t=1718704437; x=1719309237;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gXF1PJ4Uha8/rBYPYkTY+qderDnntrtGPsFK0GwQRRc=;
+ b=wEttmDUNosYcHw1alUFYIr0oD0X9XFVPYSNo/LHTfElz8kRNshB0rzQ86feOGQlVGx
+ awXLFYLGCS/0EVNZNarFjYQX4sx1V5WNcQdiyl7y1xpmYIASdHQuJcJEeWk1XwmnBu7G
+ 2pHhzCgESEQSrQxODBDhs7PMy3fvC/rxxUJCnTMe5tOBolVJ78kO2S0pJd3kFJ1xLkjg
+ gtQxq3jELBMJE9hN1mLjGC7nHcrrYlnZCwR7+3T+buUaO6PBXw80NPj3sJKctcmgnXRm
+ lJ4j7EcpOqQICqf8PqN/Dj/K/ouTY4rbrStnsDFaHwLvSSTYaCduqQrSTiMdCjvd8/eu
+ Vv1w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWS93p16r18MJ/LoW4+GiFjU7UDXfMqbQ06z04YNcLwYNAlue+jfj8xPSbfwNytEkbe4uKhQBhDiY3mAYDhsq4q41OuREQ=
-X-Gm-Message-State: AOJu0Yz9SH8+wvtY+vFqgpgmWhw4QMdR36prOnhO3Wl5Grqmog4BUKp/
- l/7gXLYBV2icAU0qY5YJGrH3C5pVBhUxEtDcxMYPvs+8s9bNPx+2Ww9ztnr/8XGWGG1dEL/7p7G
- NdyY1g1Wq5TSXeoTGSfqw/P8iS8Q6nnU7IgXIQaCauoefQQtfAGvk
-X-Received: by 2002:a5d:5452:0:b0:35f:2cd1:a394 with SMTP id
- ffacd0b85a97d-3607a745899mr10903704f8f.22.1718704209269; 
- Tue, 18 Jun 2024 02:50:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEg7COyriIZFF3aA/r0yjVjM+eFBMhYsMQq3W7pLycdasM9f1XJ5j3uY1aItc9TYMfN6MAYaQ==
-X-Received: by 2002:a5d:5452:0:b0:35f:2cd1:a394 with SMTP id
- ffacd0b85a97d-3607a745899mr10903659f8f.22.1718704208274; 
- Tue, 18 Jun 2024 02:50:08 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:441:67bf:ebbb:9f62:dc29:2bdc])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36075114dcfsm13731296f8f.114.2024.06.18.02.50.06
+ AJvYcCXq+w9Y7px26ln+xiGP0bOuD5nzmeBnB8DLHJ8P4ehMuGdNXpOPfPb7EgdmoEDRn/4qUeQHLVovn0q2Ij7oQs6qYqN4vXI=
+X-Gm-Message-State: AOJu0YwNkdfvpNmFBWlVct4tB2bgRCL5serQmJJ6Kr6PjV1ElYjULtCp
+ Y158e+9yHTDav62ml9Ag05CzjoEZ6ReiUCuGc4qbcChgrS0vqghQCTpzhhatg4A=
+X-Google-Smtp-Source: AGHT+IFhlF3hgJqwNC1kT5uuSbB14ovBJTJLMfQeME31lq2xN12DFaRayAEeSgz/ORSGrVl6+zvRkA==
+X-Received: by 2002:a05:600c:4448:b0:421:819c:5d6b with SMTP id
+ 5b1f17b1804b1-423048262c3mr89662145e9.23.1718704436656; 
+ Tue, 18 Jun 2024 02:53:56 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36075104b74sm13696342f8f.107.2024.06.18.02.53.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Jun 2024 02:50:07 -0700 (PDT)
-Date: Tue, 18 Jun 2024 05:49:58 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: peter.maydell@linaro.org, wangxingang5@huawei.com,
- shannon.zhaosl@gmail.com, imammedo@redhat.com, anisinha@redhat.com,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] hw/arm/virt-acpi-build: Fix IORT id_count
-Message-ID: <20240618054729-mutt-send-email-mst@kernel.org>
-References: <20240617223945.906996-1-nicolinc@nvidia.com>
+ Tue, 18 Jun 2024 02:53:56 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 87BFA5F8AC;
+ Tue, 18 Jun 2024 10:53:55 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,  qemu-devel@nongnu.org,
+ David Hildenbrand <david@redhat.com>,  Ilya Leoshkevich
+ <iii@linux.ibm.com>,  Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Mark
+ Burton <mburton@qti.qualcomm.com>,  qemu-s390x@nongnu.org,  Peter Maydell
+ <peter.maydell@linaro.org>,  kvm@vger.kernel.org,  Laurent Vivier
+ <lvivier@redhat.com>,  Halil Pasic <pasic@linux.ibm.com>,  Christian
+ Borntraeger <borntraeger@linux.ibm.com>,  Alexandre Iooss
+ <erdnaxe@crans.org>,  qemu-arm@nongnu.org,  Alexander Graf
+ <agraf@csgraf.de>,  Nicholas Piggin <npiggin@gmail.com>,  Marco Liebel
+ <mliebel@qti.qualcomm.com>,  Thomas Huth <thuth@redhat.com>,  Roman
+ Bolshakov <rbolshakov@ddn.com>,  qemu-ppc@nongnu.org,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  Cameron Esfahani <dirty@apple.com>,  Jamie Iles
+ <quic_jiles@quicinc.com>,  Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 9/9] contrib/plugins: add ips plugin example for cost
+ modeling
+In-Reply-To: <4e5fded0-d1a9-4494-a66d-6488ce1bcb33@linaro.org> (Pierrick
+ Bouvier's message of "Mon, 17 Jun 2024 15:29:56 -0700")
+References: <20240612153508.1532940-1-alex.bennee@linaro.org>
+ <20240612153508.1532940-10-alex.bennee@linaro.org>
+ <ZmoM2Sac97PdXWcC@gallifrey>
+ <777e1b13-9a4f-4c32-9ff7-9cedf7417695@linaro.org>
+ <Zmy9g1U1uP1Vhx9N@gallifrey>
+ <616df287-a167-4a05-8f08-70a78a544929@linaro.org>
+ <ZnCi4hcyR8wMMnK4@gallifrey>
+ <4e5fded0-d1a9-4494-a66d-6488ce1bcb33@linaro.org>
+Date: Tue, 18 Jun 2024 10:53:55 +0100
+Message-ID: <874j9qefv0.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240617223945.906996-1-nicolinc@nvidia.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,63 +120,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 17, 2024 at 03:39:45PM -0700, Nicolin Chen wrote:
-> The IORT doc defines "Number of IDs" ("id_count" in the virt-acpi-build)
-> to be "the number of IDs in the range minus one". Otherwise, Linux kernel
-> reports "conflicting mapping for input ID" FW_BUG at the overlapped ID.
-> 
-> Fixes: 42e0f050e3a5 ("hw/arm/virt-acpi-build: Add IORT support to bypass SMMUv3")
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> ---
-> Changelog
-> v2:
->  * Moved "-1" to the same line of id_count calculation
->  * Added "+1" to the next_range.input_base calculation
-> v1:
->  https://lore.kernel.org/all/20240613234802.828265-1-nicolinc@nvidia.com/
-> 
->  hw/arm/virt-acpi-build.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index c3ccfef026..631f2c6d04 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -243,7 +243,8 @@ iort_host_bridges(Object *obj, void *opaque)
->  
->              AcpiIortIdMapping idmap = {
->                  .input_base = min_bus << 8,
-> -                .id_count = (max_bus - min_bus + 1) << 8,
-> +                /* id_count is the number of IDs in the range minus one */
-> +                .id_count = ((max_bus - min_bus + 1) << 8) - 1,
->              };
->              g_array_append_val(idmap_blob, idmap);
->          }
-> @@ -298,11 +299,13 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->              idmap = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
->  
->              if (next_range.input_base < idmap->input_base) {
-> -                next_range.id_count = idmap->input_base - next_range.input_base;
-> +                /* id_count is the number of IDs in the range minus one */
-> +                next_range.id_count = idmap->input_base -
-> +                                      next_range.input_base - 1;
->                  g_array_append_val(its_idmaps, next_range);
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
+> On 6/17/24 13:56, Dr. David Alan Gilbert wrote:
+>> * Pierrick Bouvier (pierrick.bouvier@linaro.org) wrote:
+>>> On 6/14/24 15:00, Dr. David Alan Gilbert wrote:
+>>>> * Pierrick Bouvier (pierrick.bouvier@linaro.org) wrote:
+>>>>> Hi Dave,
+>>>>>
+>>>>> On 6/12/24 14:02, Dr. David Alan Gilbert wrote:
+>>>>>> * Alex Benn=C3=A9e (alex.bennee@linaro.org) wrote:
+>>>>>>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>>>>>
+>>>>>>> This plugin uses the new time control interface to make decisions
+>>>>>>> about the state of time during the emulation. The algorithm is
+>>>>>>> currently very simple. The user specifies an ips rate which applies
+>>>>>>> per core. If the core runs ahead of its allocated execution time the
+>>>>>>> plugin sleeps for a bit to let real time catch up. Either way time =
+is
+>>>>>>> updated for the emulation as a function of total executed instructi=
+ons
+>>>>>>> with some adjustments for cores that idle.
+>>>>>>
+>>>>>> A few random thoughts:
+>>>>>>      a) Are there any definitions of what a plugin that controls time
+>>>>>>         should do with a live migration?
+>>>>>
+>>>>> It's not something that was considered as part of this work.
+>>>>
+>>>> That's OK, the only thing is we need to stop anyone from hitting probl=
+ems
+>>>> when they don't realise it's not been addressed.
+>>>> One way might be to add a migration blocker; see include/migration/blo=
+cker.h
+>>>> then you might print something like 'Migration not available due to pl=
+ugin ....'
+>>>>
+>>>
+>>> So basically, we could make a call to migrate_add_blocker(), when someo=
+ne
+>>> request time_control through plugin API?
+>>>
+>>> IMHO, it's something that should be part of plugin API (if any plugin c=
+alls
+>>> qemu_plugin_request_time_control()), instead of the plugin code itself.=
+ This
+>>> way, any plugin getting time control automatically blocks any potential
+>>> migration.
+>> Note my question asked for a 'any definitions of what a plugin ..' -
+>> so
+>> you could define it that way, another one is to think that in the future
+>> you may allow it and the plugin somehow interacts with migration not to
+>> change time at certain migration phases.
+>>=20
+>
+> I would be in favor to forbid usage for now in this context. I'm not
+> sure why people would play with migration and plugins generally at
+> this time (there might be experiments or use cases I'm not aware of),
+> so a simple barrier preventing that seems ok.
+>
+> This plugin is part of an experiment where we implement a qemu feature
+> (icount=3Dauto in this case) by using plugins. If it turns into a
+> successful usage and this plugin becomes popular, we can always lift
+> the limitation later.
+>
+> @Alex, would you like to add this now (icount=3Dauto is still not
+> removed from qemu), or wait for integration, and add this as another
+> patch?
 
-What about other places where id_count is set?
+I think we follow the deprecation process so once integrated we post a
+deprecation notice in:
 
+  https://qemu.readthedocs.io/en/master/about/deprecated.html
 
->              }
->  
-> -            next_range.input_base = idmap->input_base + idmap->id_count;
-> +            next_range.input_base = idmap->input_base + idmap->id_count + 1;
->          }
->  
+and then remove it after a couple of releases.
 
-Given this was different previously, did you actually test with multiple ranges?
-
->          /* Append the last RC -> ITS ID mapping */
-> -- 
-> 2.43.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
