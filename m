@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1638C27C4F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6485C41513
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:04:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbIJ-00069H-5B; Tue, 18 Jun 2024 12:02:51 -0400
+	id 1sJbJ5-00083g-9R; Tue, 18 Jun 2024 12:03:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbHv-0005YB-3x
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:02:29 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJ2-0007xp-TT
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:03:36 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbHt-0006yM-CX
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:02:26 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a6f177b78dcso715784366b.1
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:02:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJ0-0007Aa-SZ
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:03:36 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a6efacd25ecso350321766b.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:03:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726543; x=1719331343; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726612; x=1719331412; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=S+nanogCLs1TtntQDLHWZlcaUmy7mJVDY5yva2wn6DY=;
- b=fe63QVUPQe1YaTN7jjaAbwpT2/EPMg1jqhO/7AHhh5reVCYgqXT86Q81dkB4NzaBUH
- c1gsuLjfHVwoz2nTAwRS9uz15KDJJAfu8WypCLh1uNu3z5HsIT/OSN8mvvcXFh4mnykd
- bcaEDUt6bl32zKNcquvE3Os5kwRpKdxd1ciom6ErF53Lj9fBBZCKdMOukLMD0x2GVvpI
- bivM9TlKjP2/5aovCWPSfMJO95WLeX/78el5928q0YUT4Y68+25bn7tEFMLHzhqBK0US
- sNhPWMcB0L1GnsVBUuzNxa23nHZjuKS7E7Y2TreiyftWSTlTgEuj/xJ7Y5Id7y8RObRg
- +/Qg==
+ bh=U9G2DPLJNs6E99rtv08P3G2cb9DYQeKMhfy51jfr6pg=;
+ b=mzFpzcRTaCdGoZXCP0+kga27c5YRgo5l829SqVAPtwkmwV3d99+ce7R4xdIvY+zNH4
+ M/jGowJUQtwNE6AC/5wETHS/7qyHfBNYGdyqD1TDaZroLoDioFlAV7lgTjH6D5JpW1XS
+ iA/JYw5L6caeu+dtE/nzQiRrjRZPte00gVec8G6gS/6WlO7u1nwPseofnObjCV76lZ3m
+ Q/nARMP6Jp0nGPbOzL7zheG+71mRlyyG1CHj02LYxPFIgUsn3VfLNrxwxCqraQKJq7D7
+ oQbqrUjDEbVcfxpgYSnmbVpEMbzIvy9lR+AutzQhPRfaapJybCNssUft76Yfe7uvZ8M7
+ az5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726543; x=1719331343;
+ d=1e100.net; s=20230601; t=1718726612; x=1719331412;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=S+nanogCLs1TtntQDLHWZlcaUmy7mJVDY5yva2wn6DY=;
- b=OvJivHgBkHufxyu8Pyqn2b+c11bWM5HOPvTXMPgOPIvfNBW5jrza8blP0VOJi9GYQU
- Qckivl0IpuZXVP16jtRm4/QoLcISFy5zcAaI2QEFPMFU+wQh99yTXlSTYC47uNY2BG0B
- wzo0+d9Xedj49BtQ8LU1m2z8mBVImN/CEjXswoaemBAZctn6c1mgZPJXaOiNkxXHRUu1
- wWCVeeGi3Ih759UGAyUE90SADu/jAoPH1KdfZw1tfsT7Szdp1DLMK/8ewNMcj1gOG74T
- fDAwU4G/CUsuJRbGbZVWfHJ/iBR2StK7/gTwKyHOMewufPLyGMaGT3aHeqzUCVxbPNSG
- eang==
-X-Gm-Message-State: AOJu0YzPvyREHX0N4rqKD9Qi0wzo2r3WEx50p/haEK7qde06WPKCMA6K
- Lf7ZYlTJjg37Dnw0GyQ5qq0+43jhTc+E7qMkX2WAYiBN19JXuQvkClhiYYkJ4WisYzJhIw6eVV0
- W
-X-Google-Smtp-Source: AGHT+IEYm6KCv1UPgZBaWhtS1ipyZG10D1iX00EW9+lQFjEGUa6xlXQ+br8FpuyyT32RqcX8yPBRMQ==
-X-Received: by 2002:a17:906:d296:b0:a6f:5c1a:c9a6 with SMTP id
- a640c23a62f3a-a6f60dc1fb3mr758303166b.62.1718726543200; 
- Tue, 18 Jun 2024 09:02:23 -0700 (PDT)
+ bh=U9G2DPLJNs6E99rtv08P3G2cb9DYQeKMhfy51jfr6pg=;
+ b=D+sI/osO1qHzNFQgMXz4XMRzmSGh9X+FjpBkAFnZBRZyhKsc3rJU61Fc42piMhDdk3
+ 5V/l2vQMX8I7bdiOJgErS7k01+/c2uhydRaLzcuqENnK7olM5LLE+v2x3d/8Dra5mPRH
+ gz0GdKb4k+oI9ebvj/eg8kpB1Zez/Z2X7YQzFSfdHRUP3dhklgNFBqEqFj1Lydxb6XCg
+ 0NoBHXC8vk73C3uxIiEaaVHIjurL+wjZC++36pIccykGs38Z9CZnUA8ep+tvPKiE+iqa
+ SIXjZpF9zk7d5rVdyI2kQK5BvO38TlsQeGd7LpxYQwtgCS8wf73V6t4PxRVOX6mxmTg3
+ nDaQ==
+X-Gm-Message-State: AOJu0YzeS4aLkvOYcuBUyqTb1hQdYV9GEehsb1PvJjcDNO1J2tessA5e
+ P7UnnGeRUjLlpmK3YlFxFXW/drSmWe4cHFeT/L16dS/9tSOhUzRb/wIe6ZnAFjuKEKPOWJmhb5Q
+ h
+X-Google-Smtp-Source: AGHT+IEBW1E4Rm9ooiPVPgwIy9fT+j1bQbLvVXl28p7E3dD07oFpeXE/bmv4NauG7YQq+e3Ft5Mv7g==
+X-Received: by 2002:a50:f61c:0:b0:57d:3df:f881 with SMTP id
+ 4fb4d7f45d1cf-57d03dff928mr1088220a12.3.1718726612244; 
+ Tue, 18 Jun 2024 09:03:32 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56dd135esm632707466b.96.2024.06.18.09.02.22
+ a640c23a62f3a-a6f86dfdb22sm253599366b.77.2024.06.18.09.03.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:02:22 -0700 (PDT)
+ Tue, 18 Jun 2024 09:03:31 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 17/76] hw/i386/pc: Remove PCMachineClass::resizable_acpi_blob
-Date: Tue, 18 Jun 2024 17:59:39 +0200
-Message-ID: <20240618160039.36108-18-philmd@linaro.org>
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 29/76] hw/ppc: Avoid using Monitor in
+ PnvChipClass::intc_print_info()
+Date: Tue, 18 Jun 2024 17:59:51 +0200
+Message-ID: <20240618160039.36108-30-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,67 +97,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PCMachineClass::resizable_acpi_blob was only used by the
-pc-i440fx-2.2 machine, which got removed. It is now always
-true. Remove it, simplifying acpi_build().
+Replace Monitor API by HumanReadableText one.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20240617071118.60464-18-philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Message-Id: <20240610062105.49848-6-philmd@linaro.org>
 ---
- include/hw/i386/pc.h |  3 ---
- hw/i386/acpi-build.c | 10 ----------
- hw/i386/pc.c         |  1 -
- 3 files changed, 14 deletions(-)
+ include/hw/ppc/pnv_chip.h |  2 +-
+ hw/ppc/pnv.c              | 30 ++++++++----------------------
+ 2 files changed, 9 insertions(+), 23 deletions(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 155a02b1b5..d01ddc4618 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -125,9 +125,6 @@ struct PCMachineClass {
-     /* create kvmclock device even when KVM PV features are not exposed */
-     bool kvmclock_create_always;
+diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
+index 8589f3291e..a5e428be7c 100644
+--- a/include/hw/ppc/pnv_chip.h
++++ b/include/hw/ppc/pnv_chip.h
+@@ -151,7 +151,7 @@ struct PnvChipClass {
+     void (*intc_create)(PnvChip *chip, PowerPCCPU *cpu, Error **errp);
+     void (*intc_reset)(PnvChip *chip, PowerPCCPU *cpu);
+     void (*intc_destroy)(PnvChip *chip, PowerPCCPU *cpu);
+-    void (*intc_print_info)(PnvChip *chip, PowerPCCPU *cpu, Monitor *mon);
++    void (*intc_print_info)(PnvChip *chip, PowerPCCPU *cpu, GString *buf);
+     ISABus *(*isa_create)(PnvChip *chip, Error **errp);
+     void (*dt_populate)(PnvChip *chip, void *fdt);
+     void (*pic_print_info)(PnvChip *chip, Monitor *mon);
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 3eaf674efa..aed6767c8d 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -1129,15 +1129,9 @@ static void pnv_chip_power8_intc_destroy(PnvChip *chip, PowerPCCPU *cpu)
+ }
  
--    /* resizable acpi blob compat */
--    bool resizable_acpi_blob;
+ static void pnv_chip_power8_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
+-                                            Monitor *mon)
++                                            GString *buf)
+ {
+-    g_autoptr(GString) buf = g_string_new("");
+-    g_autoptr(HumanReadableText) info = NULL;
 -
-     /*
-      * whether the machine type implements broken 32-bit address space bound
-      * check for memory.
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index f5d74e2b4b..eafc3761c8 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -2687,16 +2687,6 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
-      * keep the table size stable for all (max_cpus, max_memory_slots)
-      * combinations.
-      */
--    /* Make sure we have a buffer in case we need to resize the tables. */
--    if ((tables_blob->len > ACPI_BUILD_TABLE_SIZE / 2) &&
--        !pcmc->resizable_acpi_blob) {
--        /* As of QEMU 2.1, this fires with 160 VCPUs and 255 memory slots.  */
--        warn_report("ACPI table size %u exceeds %d bytes,"
--                    " migration may not work",
--                    tables_blob->len, ACPI_BUILD_TABLE_SIZE / 2);
--        error_printf("Try removing CPUs, NUMA nodes, memory slots"
--                     " or PCI bridges.\n");
--    }
-     acpi_align_size(tables_blob, ACPI_BUILD_TABLE_SIZE);
+     icp_pic_print_info(ICP(pnv_cpu_state(cpu)->intc), buf);
+-
+-    info = human_readable_text_from_str(buf);
+-    monitor_puts(mon, info->human_readable_text);
+ }
  
-     acpi_align_size(tables->linker->cmd_blob, ACPI_BUILD_ALIGN_SIZE);
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 21a9b7a5ae..a6d50df500 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1774,7 +1774,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
-     pcmc->acpi_data_size = 0x20000 + 0x8000;
-     pcmc->pvh_enabled = true;
-     pcmc->kvmclock_create_always = true;
--    pcmc->resizable_acpi_blob = true;
-     x86mc->apic_xrupt_override = true;
-     assert(!mc->get_hotplug_handler);
-     mc->get_hotplug_handler = pc_get_hotplug_handler;
+ /*
+@@ -1222,15 +1216,9 @@ static void pnv_chip_power9_intc_destroy(PnvChip *chip, PowerPCCPU *cpu)
+ }
+ 
+ static void pnv_chip_power9_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
+-                                            Monitor *mon)
++                                            GString *buf)
+ {
+-    g_autoptr(GString) buf = g_string_new("");
+-    g_autoptr(HumanReadableText) info = NULL;
+-
+     xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), buf);
+-
+-    info = human_readable_text_from_str(buf);
+-    monitor_puts(mon, info->human_readable_text);
+ }
+ 
+ static void pnv_chip_power10_intc_create(PnvChip *chip, PowerPCCPU *cpu,
+@@ -1272,15 +1260,9 @@ static void pnv_chip_power10_intc_destroy(PnvChip *chip, PowerPCCPU *cpu)
+ }
+ 
+ static void pnv_chip_power10_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
+-                                             Monitor *mon)
++                                             GString *buf)
+ {
+-    g_autoptr(GString) buf = g_string_new("");
+-    g_autoptr(HumanReadableText) info = NULL;
+-
+     xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), buf);
+-
+-    info = human_readable_text_from_str(buf);
+-    monitor_puts(mon, info->human_readable_text);
+ }
+ 
+ /*
+@@ -2363,14 +2345,18 @@ static void pnv_pic_print_info(InterruptStatsProvider *obj,
+     PnvMachineState *pnv = PNV_MACHINE(obj);
+     int i;
+     CPUState *cs;
++    g_autoptr(GString) buf = g_string_new("");
++    g_autoptr(HumanReadableText) info = NULL;
+ 
+     CPU_FOREACH(cs) {
+         PowerPCCPU *cpu = POWERPC_CPU(cs);
+ 
+         /* XXX: loop on each chip/core/thread instead of CPU_FOREACH() */
+         PNV_CHIP_GET_CLASS(pnv->chips[0])->intc_print_info(pnv->chips[0], cpu,
+-                                                           mon);
++                                                           buf);
+     }
++    info = human_readable_text_from_str(buf);
++    monitor_puts(mon, info->human_readable_text);
+ 
+     for (i = 0; i < pnv->num_chips; i++) {
+         PNV_CHIP_GET_CLASS(pnv->chips[i])->pic_print_info(pnv->chips[i], mon);
 -- 
 2.41.0
 
