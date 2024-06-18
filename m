@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F8CEC41513
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:07:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D303C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbI5-0005ca-5v; Tue, 18 Jun 2024 12:02:37 -0400
+	id 1sJbLb-0006gM-4r; Tue, 18 Jun 2024 12:06:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbHj-0005G6-Hv
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:02:17 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbLX-0006be-EU
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:06:11 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbHf-0006vZ-Sa
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:02:13 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a6f1c4800easo697027666b.3
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:02:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbLK-0007jj-VN
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:06:00 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-52c7f7fdd24so6967927e87.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:05:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726530; x=1719331330; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726756; x=1719331556; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8eJa9WK/V7TqG4Hnua6nIYiEaeNBOHfc3aooKNXlT7w=;
- b=AnIMnEVRwudsIzXSTDDZJNNnzyG9NvRT9ZOfDITV9KJCsO0Ot3oDYLSNlKuFn/+ZHB
- FLxoedZ8QP/CL8dZlzJJLzEkJsFCXUBkWMAPf4yjnyEE7VSdOTo2FRSYd1Y3quQOp13k
- +ukEIGRQuca4qYl7UOOn+oEUpWXzanh7NDDZLflu4IGZeQPzP37fntybp/cgPM1ok7Fp
- 7wIHCG8O6DQZABbdHjpsssBkNuRPVjbaGWCVkJkaMXy896Ev9jrjAdPky6LrpdE7x7LA
- /Pj20kYA43F4+1aLd9EO9hZPk4ijKD//DWpiLqINbrypKt9ZkXG8FaFz3s7OIuZ3YQem
- HtxQ==
+ bh=0/64oD6YGuylDgLtXH7Lbj+6VvSz1oEhiWnSPMdAPVU=;
+ b=HhHcU31jtoze88KvXQobPGm56ZERIATDlciQoSUeAwxAir2KY4W3DM6ySO9zLrM8FG
+ xQ7gCaJnV5gN2lk8p6D1rUbF41Js3YHFYcHOGpukqQdEZT2mpRIB6WtIXYVwgx9YKtiC
+ 2g5AMIKXA6SD8SxpzNstvtGbAfoEJdO+uWkyn3ka5SLZZoew0KwsCkGRdJsqekVlbsT7
+ ArDNbrx0Ary7pbz6QNnhTDbYR8R15mi4XZJuw90d9v5wQeXn/HdhPqSf0UDTKB1ghlC9
+ quk9fbOFWqB766DA2QsQOvdLUySxRYdWcojv4aeouK5an0N6VqJHnJVUiN43bRskNi9g
+ H/rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726530; x=1719331330;
+ d=1e100.net; s=20230601; t=1718726756; x=1719331556;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8eJa9WK/V7TqG4Hnua6nIYiEaeNBOHfc3aooKNXlT7w=;
- b=DaoYYbqNjVsplGyEIEfn92rjn1SYZzEKYEVxLBphhwBfFCaRaBiNrPjPYWC3ydZLSX
- PrTaIm1uzbWX3FLAM6T7RIvK7p4SN3OlRvRZ6OawpGX09Saejvr2WJ+zhZWlz0laxniU
- 0JK0240ugN/gr8ukNd5Rc+2EU3WoNRz+AU0t8pJuiC+Tl01Ud+WJMW+q9D359UrXpVOT
- w55JZg3RD755fJVrPWKizdg0oXDx2eC636xuiTb0k6nJHM1Xgy6ri/lBpq0ULOnBvvdA
- IzjEcxAEHQEQbBTHhgu12OIrBgKlkOusJhpMhsGOzHlhIyzMOLmQ6qaADVhPRmzLMXvs
- FReg==
-X-Gm-Message-State: AOJu0Yzs9f23dsrdiNmymfRxMXmseLkXHHUJJceOW/eOsaXpgHR/xPZX
- ugfTcWgBRrTv/bA2saKAniNU3T3L42hMn0FywIjRM7GGAI/+V6uzQ9Jej2cNWeYw7JoOBw8HuG3
- X
-X-Google-Smtp-Source: AGHT+IE2hpbE0h0y4ZogQDuiNsdMWu+bHAaI734ktfwBpmgOdXM8ohZolitkWic0NokXBHrMFyLxvg==
-X-Received: by 2002:a17:907:198e:b0:a6f:98b6:365 with SMTP id
- a640c23a62f3a-a6f98b60a51mr169213366b.10.1718726529924; 
- Tue, 18 Jun 2024 09:02:09 -0700 (PDT)
+ bh=0/64oD6YGuylDgLtXH7Lbj+6VvSz1oEhiWnSPMdAPVU=;
+ b=GjxAWsCWkOf8tmgEcrAdAYUABU2SyolbzZVqtSUmY2jAhHXhQF3NQUG08tQ34JOKzi
+ fG3mba8p6dIBSF/Fyh4tFwBdNqbfscX1Vqv7ndYS38NGye8omP7D3v2Xm9WO0767dNBx
+ 0GDRgfT+HwL0YwCD0Lu3O+eIFxDD9JQklx/qnm12OXi8+fB4N3jXZPO9kIo4d3dWnceC
+ zz9oW823nQ9EW2fBGtQHnGR5UnsjmSJ1E0FANqCeBHdmzhA9xkx3OEYdqb7t8zvIXNnW
+ wZneN+noyEz09O97UArPaMjBHR1aNadKEMFSvBCKHKOeIm1pH3md9R6dvjdKLfxUd4l2
+ vdew==
+X-Gm-Message-State: AOJu0Yzxh6pCFIMiITvbwCHBlXw95XMTW0c8xdMb1QgdTrU2Qg6tCC9r
+ nlm+wNfIEseE7un+XNjhKFiTm4vxGeEuFc2O2jjoAdugjFrkACnrr58Wa/I8oN0YTa0AFGDEYKX
+ O
+X-Google-Smtp-Source: AGHT+IHBXBTY6viwOoU8OhNCJ/fHbtWRmQQCfXfanA8mpfZo/0Zw3HCdz+V0j4tBBfJvQ5+YnnfLnA==
+X-Received: by 2002:a05:6512:1152:b0:52c:8ddd:7beb with SMTP id
+ 2adb3069b0e04-52ccaa5879amr57074e87.6.1718726756569; 
+ Tue, 18 Jun 2024 09:05:56 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56f411a7sm631061766b.158.2024.06.18.09.02.08
+ 5b1f17b1804b1-4246b67f0aesm60973935e9.45.2024.06.18.09.05.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:02:09 -0700 (PDT)
+ Tue, 18 Jun 2024 09:05:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 15/76] hw/mem/memory-device: Remove legacy_align from
- memory_device_pre_plug()
-Date: Tue, 18 Jun 2024 17:59:37 +0200
-Message-ID: <20240618160039.36108-16-philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 54/76] target/arm: Set arm_v7m_tcg_ops cpu_exec_halt to
+ arm_cpu_exec_halt()
+Date: Tue, 18 Jun 2024 18:00:16 +0200
+Message-ID: <20240618160039.36108-55-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,107 +96,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'legacy_align' is always NULL, remove it, simplifying
-memory_device_pre_plug().
+From: Peter Maydell <peter.maydell@linaro.org>
 
+In commit a96edb687e76 we set the cpu_exec_halt field of the
+TCGCPUOps arm_tcg_ops to arm_cpu_exec_halt(), but we left the
+arm_v7m_tcg_ops struct unchanged.  That isn't wrong, because for
+M-profile FEAT_WFxT doesn't exist and the default handling for "no
+cpu_exec_halt method" is correct, but it's perhaps a little
+confusing.  We would also like to make setting the cpu_exec_halt
+method mandatory.
+
+Initialize arm_v7m_tcg_ops cpu_exec_halt to the same function we use
+for A-profile.  (On M-profile we never set up the wfxt timer so there
+is no change in behaviour here.)
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240603160933.1141717-2-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20240617071118.60464-16-philmd@linaro.org>
 ---
- include/hw/mem/memory-device.h |  2 +-
- hw/i386/pc.c                   |  3 +--
- hw/mem/memory-device.c         | 12 ++++--------
- hw/mem/pc-dimm.c               |  2 +-
- hw/virtio/virtio-md-pci.c      |  2 +-
- 5 files changed, 8 insertions(+), 13 deletions(-)
+ target/arm/internals.h   | 3 +++
+ target/arm/cpu.c         | 2 +-
+ target/arm/tcg/cpu-v7m.c | 1 +
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/mem/memory-device.h b/include/hw/mem/memory-device.h
-index e0571c8a31..c0a58087cc 100644
---- a/include/hw/mem/memory-device.h
-+++ b/include/hw/mem/memory-device.h
-@@ -169,7 +169,7 @@ uint64_t get_plugged_memory_size(void);
- unsigned int memory_devices_get_reserved_memslots(void);
- bool memory_devices_memslot_auto_decision_active(void);
- void memory_device_pre_plug(MemoryDeviceState *md, MachineState *ms,
--                            const uint64_t *legacy_align, Error **errp);
-+                            Error **errp);
- void memory_device_plug(MemoryDeviceState *md, MachineState *ms);
- void memory_device_unplug(MemoryDeviceState *md, MachineState *ms);
- uint64_t memory_device_get_region_size(const MemoryDeviceState *md,
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 2d0a517c4c..8a9c025754 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1395,8 +1395,7 @@ static void pc_hv_balloon_pre_plug(HotplugHandler *hotplug_dev,
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 11b5da2562..e45ccd983e 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -364,6 +364,9 @@ void arm_restore_state_to_opc(CPUState *cs,
+ 
+ #ifdef CONFIG_TCG
+ void arm_cpu_synchronize_from_tb(CPUState *cs, const TranslationBlock *tb);
++
++/* Our implementation of TCGCPUOps::cpu_exec_halt */
++bool arm_cpu_exec_halt(CPUState *cs);
+ #endif /* CONFIG_TCG */
+ 
+ typedef enum ARMFPRounding {
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 35fa281f1b..948e904bd8 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1133,7 +1133,7 @@ static bool arm_cpu_virtio_is_big_endian(CPUState *cs)
+ }
+ 
+ #ifdef CONFIG_TCG
+-static bool arm_cpu_exec_halt(CPUState *cs)
++bool arm_cpu_exec_halt(CPUState *cs)
  {
-     /* The vmbus handler has no hotplug handler; we should never end up here. */
-     g_assert(!dev->hotplugged);
--    memory_device_pre_plug(MEMORY_DEVICE(dev), MACHINE(hotplug_dev), NULL,
--                           errp);
-+    memory_device_pre_plug(MEMORY_DEVICE(dev), MACHINE(hotplug_dev), errp);
- }
+     bool leave_halt = cpu_has_work(cs);
  
- static void pc_hv_balloon_plug(HotplugHandler *hotplug_dev,
-diff --git a/hw/mem/memory-device.c b/hw/mem/memory-device.c
-index e098585cda..a5f279adcc 100644
---- a/hw/mem/memory-device.c
-+++ b/hw/mem/memory-device.c
-@@ -345,7 +345,7 @@ uint64_t get_plugged_memory_size(void)
- }
- 
- void memory_device_pre_plug(MemoryDeviceState *md, MachineState *ms,
--                            const uint64_t *legacy_align, Error **errp)
-+                            Error **errp)
- {
-     const MemoryDeviceClass *mdc = MEMORY_DEVICE_GET_CLASS(md);
-     Error *local_err = NULL;
-@@ -388,14 +388,10 @@ void memory_device_pre_plug(MemoryDeviceState *md, MachineState *ms,
-         return;
-     }
- 
--    if (legacy_align) {
--        align = *legacy_align;
--    } else {
--        if (mdc->get_min_alignment) {
--            align = mdc->get_min_alignment(md);
--        }
--        align = MAX(align, memory_region_get_alignment(mr));
-+    if (mdc->get_min_alignment) {
-+        align = mdc->get_min_alignment(md);
-     }
-+    align = MAX(align, memory_region_get_alignment(mr));
-     addr = mdc->get_addr(md);
-     addr = memory_device_get_free_addr(ms, !addr ? NULL : &addr, align,
-                                        memory_region_size(mr), &local_err);
-diff --git a/hw/mem/pc-dimm.c b/hw/mem/pc-dimm.c
-index 836384a90f..27919ca45d 100644
---- a/hw/mem/pc-dimm.c
-+++ b/hw/mem/pc-dimm.c
-@@ -69,7 +69,7 @@ void pc_dimm_pre_plug(PCDIMMDevice *dimm, MachineState *machine, Error **errp)
-                             &error_abort);
-     trace_mhp_pc_dimm_assigned_slot(slot);
- 
--    memory_device_pre_plug(MEMORY_DEVICE(dimm), machine, NULL, errp);
-+    memory_device_pre_plug(MEMORY_DEVICE(dimm), machine, errp);
- }
- 
- void pc_dimm_plug(PCDIMMDevice *dimm, MachineState *machine)
-diff --git a/hw/virtio/virtio-md-pci.c b/hw/virtio/virtio-md-pci.c
-index 62bfb7920b..9ec5067662 100644
---- a/hw/virtio/virtio-md-pci.c
-+++ b/hw/virtio/virtio-md-pci.c
-@@ -37,7 +37,7 @@ void virtio_md_pci_pre_plug(VirtIOMDPCI *vmd, MachineState *ms, Error **errp)
-      * First, see if we can plug this memory device at all. If that
-      * succeeds, branch of to the actual hotplug handler.
-      */
--    memory_device_pre_plug(md, ms, NULL, &local_err);
-+    memory_device_pre_plug(md, ms, &local_err);
-     if (!local_err && bus_handler) {
-         hotplug_handler_pre_plug(bus_handler, dev, &local_err);
-     }
+diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+index c059c681e9..5496f14dc1 100644
+--- a/target/arm/tcg/cpu-v7m.c
++++ b/target/arm/tcg/cpu-v7m.c
+@@ -244,6 +244,7 @@ static const TCGCPUOps arm_v7m_tcg_ops = {
+ #else
+     .tlb_fill = arm_cpu_tlb_fill,
+     .cpu_exec_interrupt = arm_v7m_cpu_exec_interrupt,
++    .cpu_exec_halt = arm_cpu_exec_halt,
+     .do_interrupt = arm_v7m_cpu_do_interrupt,
+     .do_transaction_failed = arm_cpu_do_transaction_failed,
+     .do_unaligned_access = arm_cpu_do_unaligned_access,
 -- 
 2.41.0
 
