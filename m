@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11AA5C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 22:17:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3901AC2BA15
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 22:18:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJh7k-0007G1-Dc; Tue, 18 Jun 2024 18:16:20 -0400
+	id 1sJh9D-000875-Hz; Tue, 18 Jun 2024 18:17:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJh7b-0007FX-J5
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 18:16:19 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1sJh9A-00086p-CK
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 18:17:48 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJh7Z-0004lR-UC
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 18:16:11 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-6bce380eb96so4105006a12.0
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 15:16:08 -0700 (PDT)
+ id 1sJh98-0004si-SY
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 18:17:48 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-6e7e23b42c3so3867202a12.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 15:17:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718748968; x=1719353768; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718749065; x=1719353865; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UZ9HnConCLYss3NPb1usGOnfNoqUrrZd0MsIMaNbkys=;
- b=nagnqh4NbQtYORNeIEtIfzA5EDtNvkA0G59MGwOf9jivA9EsKHaV44+PrQLwEnLQxv
- yUiv7c8pWlEVy3E0UHQx6ZXNixxbrXJbzT82910uBUoLl4qkiLVWGFfUm/9whBmwYv34
- ruNvF9gVPRRDLr+zMUPe2Yu2SaOgeC9kBiZ/J/6dxIDuaroMzA5dz19Cs2sQsx+mMOGy
- SWMFKnO1C/AZ8P1qB7zk0HGqAMEn79wVulOtEVIXWTSqoNBd5r43CHiNkkzN6lOo6eRV
- IF4HVoRj57Tt0npac7WCzNtcybOe9iqjSjPlYqRkzasqs5Grn6Qh2mdlDriQGgfWosnZ
- Ygvw==
+ bh=D7/Vx/T/CL3qtziBC9pkDn9Sst5tuTypNfJzwdHwadY=;
+ b=MZBrbg7dLnCpu7Kaqafr+VJyK98a/jYeNSfFwBYyKc6Ou6GkPTF/CZs/OtFsXJUv9g
+ DKKcxryhNssg1iVVA5JIwlZYjgw+iP+i7sdUJxrQR5p6SM4JIf82YeZVnM0vxj3T40+H
+ mVt0TDVJkV8cd0G3/1alOTSkMLtJ+SQSNacw2aBL4zhzJlz+lahGYe85FYORv09hIaMk
+ KPrJctOMRtO7SR0Cyddv6kIq/bhUM4NS1yz1ijnqE8/rDLJyVYXxUe3E+q/GJaPJQ2fk
+ T+AMPHIciyG1vTR9I6w2bquZecFTZn9BPCEgomT6M/UknP+0YVaq1Jzwl1iejM7PunBG
+ gDpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718748968; x=1719353768;
+ d=1e100.net; s=20230601; t=1718749065; x=1719353865;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UZ9HnConCLYss3NPb1usGOnfNoqUrrZd0MsIMaNbkys=;
- b=bxZWZ3tRnsql+K5UHhuWnC48WVmf/zRzN4NTLth3yKsLOYyaaeH/ZLRYvvi8SQmCYy
- nGdbn2QLrnw5FYEmVjjagu+9VW4cdTwqehFZjbqizIfWFpBJPGTRyL3pMzct6BgvHR9A
- ZdgmK56V1QrPVU3NoKDsohJXM6ERpbOtFEeNp3xFVr2NFNlIvJNcfQMMrJJ/Pu3tNKvI
- xOHRdISYsDmfYjREQq2W9K65+Lp5mWZ+PZDclO7PcAK3ZTkhF/oH5qyTbCX1BN0LQ1jG
- QyQKjAM+VZ5EuFtb/JLQyyfQ6GPRj4S+DLV1X5cZXxNCQJmTUvhKBng+gbvAMCHQDyVU
- tipQ==
+ bh=D7/Vx/T/CL3qtziBC9pkDn9Sst5tuTypNfJzwdHwadY=;
+ b=s7USnypho8++btnaBLaQTpmVbSXMeNIFVTQMfw6dWrBSIQCsCIFlvyg/l+L53KqizT
+ RJUs9m6/6LBrAzRl9KqKOoS7kYaB+/15Xd9JkM1XNKomlEgysHEEBdvis4b0Hbwtiak1
+ +/aH3nvi2Qxm62NopZtA4r5/mCTXy47SEceRrEZfEmwVqKHAhaWN+sQPt7Njab3bRnPa
+ uNngNDAYRLishSvzuUnHrnYvOK33wx5n9Wff/jNiGlwCUGsEydleAfh3ggMVmLD9kStu
+ hg1xR2np1APnV01ylz0/LRatrfK5KMV+f7wKqUEEbcxkdFc8QF1hWqfxZvtR36XGuRSL
+ 9gLQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZOYNOWZ0gcI5Us16gpVHGtQ+wb/jEzVZ7RlPRCZjCxRSWXbSQrDe6uEWGkXutwXn7OxCfvBngVRLJ45OXapob8v+znKc=
-X-Gm-Message-State: AOJu0Yz9xj+h4jyWp6xRWiqXCzP6nfDxiUC6CJzdQb8fuXWwIC3BPUko
- dluoZLNHAypZGpO2sFYyqqqB7IPWNy8NQy2JEa2UHnzj5SBcPK+ynZoKE91wcPWS0LuOeKTZwz+
- p
-X-Google-Smtp-Source: AGHT+IFkYKPT/dCDOM3nVfPAziD8XUU1aNGtm9bMx+JZMBR0WeILoWsE/ETw9Xg4cNSpIxu26IbAHg==
-X-Received: by 2002:a17:903:1ce:b0:1f6:8be6:428d with SMTP id
- d9443c01a7336-1f9aa471097mr10343715ad.56.1718748967658; 
- Tue, 18 Jun 2024 15:16:07 -0700 (PDT)
+ AJvYcCWtSeFVvst6YRA73ZziNEmuLx++UX+WfSv2BbuiPdqqx3JvYpVHS94ieOWbozfMu2XAJ6l+Ue8X3nX1GaOFJ5otrGYPRF4=
+X-Gm-Message-State: AOJu0YwZnnrV+tOL7+IxuxdSckIdJHcwESOerTktQOhQDQBAmiGzFIgZ
+ 7U7BFfWOY97tT1kIfpIHzUYTGSNQQnHnsdA8cw9NNwYe6168c6wV6K/Vi9J7iTY=
+X-Google-Smtp-Source: AGHT+IHddzqdYm3R+hEV3npbQLFZbJ2G0FNWTzR5UUI24vqaXRbEoFV5mGJSmL6FioqLzv7wSP3E9A==
+X-Received: by 2002:a17:902:d504:b0:1f8:44f8:a390 with SMTP id
+ d9443c01a7336-1f9aa3e2e95mr11573105ad.33.1718749065361; 
+ Tue, 18 Jun 2024 15:17:45 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.132.216])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855e6e172sm102731175ad.67.2024.06.18.15.16.06
+ d9443c01a7336-1f855e5b85bsm102660695ad.32.2024.06.18.15.17.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 15:16:07 -0700 (PDT)
-Message-ID: <fbd46496-4bfb-4724-89da-1edf055619c6@linaro.org>
-Date: Tue, 18 Jun 2024 15:16:05 -0700
+ Tue, 18 Jun 2024 15:17:44 -0700 (PDT)
+Message-ID: <0c5af289-7ff6-4217-8cbf-b9119fe6c587@linaro.org>
+Date: Tue, 18 Jun 2024 15:17:43 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/23] Update ARM AArch64 VM parameter definitions for
- bsd-user
+Subject: Re: [PATCH 12/23] Add ability to get rval2
 To: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>,
- Stacey Son <sson@FreeBSD.org>, Sean Bruno <sbruno@freebsd.org>
+Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>
 References: <20240617185804.25075-1-itachis@FreeBSD.org>
- <20240617185804.25075-12-itachis@FreeBSD.org>
+ <20240617185804.25075-13-itachis@FreeBSD.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240617185804.25075-12-itachis@FreeBSD.org>
+In-Reply-To: <20240617185804.25075-13-itachis@FreeBSD.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,29 +99,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/17/24 11:57, Ajeet Singh wrote:
-> From: Stacey Son <sson@FreeBSD.org>
+> From: Warner Losh <imp@bsdimp.com>
 > 
-> Defined address spaces for FreeBSD/arm64 and added function for
-> getting stack pointer from CPU and setting a return value.
+> Function accesses the x1 register which holds the value
 > 
-> Signed-off-by: Stacey Son <sson@FreeBSD.org>
 > Signed-off-by: Warner Losh <imp@bsdimp.com>
 > Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-> Co-authored-by: Sean Bruno <sbruno@freebsd.org>
-> Co-authored-by: Warner Losh <imp@bsdimp.com>
 > ---
->   bsd-user/aarch64/target_arch_vmparam.h | 68 ++++++++++++++++++++++++++
->   1 file changed, 68 insertions(+)
->   create mode 100644 bsd-user/aarch64/target_arch_vmparam.h
+>   bsd-user/aarch64/target_arch_vmparam.h | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/bsd-user/aarch64/target_arch_vmparam.h b/bsd-user/aarch64/target_arch_vmparam.h
+> index dc66e1289b..0c35491970 100644
+> --- a/bsd-user/aarch64/target_arch_vmparam.h
+> +++ b/bsd-user/aarch64/target_arch_vmparam.h
+> @@ -65,4 +65,10 @@ static inline void set_second_rval(CPUARMState *state, abi_ulong retval2)
+>   {
+>       state->xregs[1] = retval2; /* XXX not really used on 64-bit arch */
+>   }
+> +
+> +static inline abi_ulong get_second_rval(CPUARMState *state)
+> +{
+> +    return state->xregs[1];
+> +}
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
-
-> +                /* KERNBASE - 512 MB */
-> +#define TARGET_VM_MAXUSER_ADDRESS   (0x00007fffff000000ULL - (512 * MiB))
-> +#define TARGET_USRSTACK             TARGET_VM_MAXUSER_ADDRESS
-
-I will note that this may conflict with -R reserved_size,
-and is an existing issue with the x86_64 port as well.
+The other two ports only define set_second_rval, and this one only defines get?  This 
+doesn't seem right...
 
 
 r~
