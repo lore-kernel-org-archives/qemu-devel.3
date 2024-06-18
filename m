@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9FA5C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2999C2BA18
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:07:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbJb-00031f-QA; Tue, 18 Jun 2024 12:04:11 -0400
+	id 1sJbLC-0006OZ-3k; Tue, 18 Jun 2024 12:05:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJa-0002rQ-Da
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:04:10 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbLA-0006OF-NW
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:05:48 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJY-0007EI-M5
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:04:10 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a63359aaacaso885654966b.1
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:04:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbL8-0007jD-Gq
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:05:48 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-57d05e0017aso264987a12.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:05:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726647; x=1719331447; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726744; x=1719331544; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZUJRlw74V6bj0hWvpTvL5p3m//nV/ZZAuP7J5GTceY8=;
- b=PSHsmvlNo3hQRASdIc6zbwDSrs7eYHXnyMQIYJeZULFlGgX3aCMS7pPbM8wiOgS1Ol
- cBLdmVMKal7iKnk6CODTzDzF/FH1jg5WIukK3iDCMcleq9ZhXG/ZqANZ/LnaRrGCyZbn
- Zz3fuXO1wXSLAKB3vMoZjE2zxvZKwcxzPzctkH7LtgDgo7qU0QFF1820lDy+Wy00fGXt
- cDbq7iwlCnxnybbEndpKZFUl3mz4+CHZSM/5jOLkh3Wvg/8u//giTo8vsFvnetQVTUEW
- stFZV2XEhj+ljEAmqfUsgAXbY6Q/SGAOaI7W0l4hlP/I1tRPpUgpJzzd7qU20X0aKM2a
- SnRA==
+ bh=hythfOpvKdnQtXG8QgrEpQziqfs8Kk/FNjGJNS+WjGI=;
+ b=BNjXYHErjlqlm3ifAFGeoB3OFnJD5OvpgzqL6CSiKutObcmT5dKCjgjfQMBsegAM4L
+ awI4NYnTlgrgbHNOW5oTOxojpQ1By29C8l4DzRp0ic7LnEMEUFSV05MLl00u3PrUxm7b
+ YE9YZiwl2N4Oj2UvZ8jsyx2qq/NIZT/y7J874013oTMsNhcZ9dcRuSSvBp2TOZHziNPZ
+ tvbnNxvgF5QW8+VK7gM8KndHHlxoNfxFAePODbBSfTO7ryGbSocXX/wAR1psHNc42fu+
+ g5uoGRYDclaQIAxPKjRR8PwVAamkKEqd1qnf/JuFol+ajJFCSsR0U6FeQnVO5ZMLTTUv
+ F3UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726647; x=1719331447;
+ d=1e100.net; s=20230601; t=1718726744; x=1719331544;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZUJRlw74V6bj0hWvpTvL5p3m//nV/ZZAuP7J5GTceY8=;
- b=tGYsnjfRzIgl6W0kUHqXA33ydHaxwNw6H9N1Ls3KEM3pc8/T78vvT/wZgGWJWlH2ty
- D8+RtYecrWhcy4S/KUfDnzBy400HwteFGsKQbcA3iglanEHZAdLjeipu+sahrmrPai5X
- SucAJ2k7eeqQ/4TlcE0mmSGHdaE5533CwJY7UBdf778mz7rInpmzh+S/XSq/eEeQy/pz
- aP/aHDZXmvKpxaDDjTCq9s+PxFRdrhdkMRFFehNv6y3WijqpBnczBmYhPVkFJg3/JEKh
- MG9M1RlntZKf3wr8sUYTzoGwERrPJVB3Qd5WJV7wv7+WzDskPZKkX08MCuHu5E0u256o
- L/KQ==
-X-Gm-Message-State: AOJu0YzIi68M46CKEaWsY2eJAssqsmSSjC3aBIBgbql6bLHly9zAlEzG
- 2MKvU/C7mHlWkItPK9AYVJ80SyAksQvbvYs/G15Fa+Bd+kOUFlUUiNAjtgy9XnQNhvtknNZv2Ll
- a
-X-Google-Smtp-Source: AGHT+IGFuR/tWexYuFHAhcP8RX+CEyGYW9ui2zbQucFoY+0ZjfEoOByyjnHs165AMqr8qlE3XrUYmA==
-X-Received: by 2002:a17:906:d791:b0:a68:bae4:d66f with SMTP id
- a640c23a62f3a-a6f60d29797mr891500666b.30.1718726647042; 
- Tue, 18 Jun 2024 09:04:07 -0700 (PDT)
+ bh=hythfOpvKdnQtXG8QgrEpQziqfs8Kk/FNjGJNS+WjGI=;
+ b=Zb5BDUHq07TEy5weRxIY7Q/RviJcvETKqRHUnil6X8I1TbQ5KAAAwq+d+POSoIsBR1
+ M+MU/QjkpPu1h/3Jq/rqwLL+zpfySv36RqASxysBlTxwH5+xArc7R6pRxdandobhf0R7
+ mxmHJ+GbMQnTks0/QUQWh7sU+lcNOiSH5aCBG7aD3/SA28NH3m0Axub1/UnD+pqRhTGt
+ o0Jcb9XVeV89ufVGVcjEnJXcx95C1kdUwH73BBs2DBtha7IeAsfHcyCHJYJxwAKQBMao
+ XqkuJu/Ex+NpYTRz16MGlhoVNyzwfpTNA/CrI/TcBxSJ6lyjG5xeB/GIckhVK7YWLKPP
+ a6qA==
+X-Gm-Message-State: AOJu0YzS2OACu2wQ97OfnI6aoVN1D2Q7ZzMx5q1Xr63WUFqjKCyZTgJb
+ TUiLCz9vmGe4PKqcD308eMcqaA8boW6yApzxZUQRy8kkn7+BR5AQeR2XU2Voz+/pwf7nOTH9zsQ
+ P
+X-Google-Smtp-Source: AGHT+IEspRNMV9GWzp1uzSiWH5Clmi5MoCQdX+bcNbpP6GOl8JXh9iUQjYGpsnS7eW3o8HD92O3V3g==
+X-Received: by 2002:a50:a402:0:b0:57c:d4e9:4a03 with SMTP id
+ 4fb4d7f45d1cf-57cd4e94b6emr3841204a12.41.1718726744386; 
+ Tue, 18 Jun 2024 09:05:44 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56db6dfesm624700466b.87.2024.06.18.09.04.05
+ ffacd0b85a97d-36075104a26sm14440062f8f.97.2024.06.18.09.05.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:04:05 -0700 (PDT)
+ Tue, 18 Jun 2024 09:05:44 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 35/76] hw/ppc: Avoid using Monitor in xive_eas_pic_print_info()
-Date: Tue, 18 Jun 2024 17:59:57 +0200
-Message-ID: <20240618160039.36108-36-philmd@linaro.org>
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 52/76] hw/intc: Introduce x-query-interrupt-controllers QMP
+ command
+Date: Tue, 18 Jun 2024 18:00:14 +0200
+Message-ID: <20240618160039.36108-53-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,89 +95,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace Monitor API by HumanReadableText one.
+This is a counterpart to the HMP "info pic" command. It is being
+added with an "x-" prefix because this QMP command is intended as an
+adhoc debugging tool and will thus not be modelled in QAPI as fully
+structured data, nor will it have long term guaranteed stability.
+The existing HMP command is rewritten to call the QMP command.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-Id: <20240610062105.49848-12-philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-Id: <20240610063518.50680-3-philmd@linaro.org>
 ---
- include/hw/ppc/xive_regs.h |  2 +-
- hw/intc/pnv_xive.c         | 10 +++++-----
- hw/intc/xive.c             | 12 ++++++------
- 3 files changed, 12 insertions(+), 12 deletions(-)
+ qapi/machine.json          | 17 +++++++++++++++++
+ hw/core/machine-qmp-cmds.c | 29 +++++++++++++++++++++++++++++
+ monitor/hmp-cmds.c         | 33 ---------------------------------
+ hmp-commands-info.hx       |  2 +-
+ 4 files changed, 47 insertions(+), 34 deletions(-)
 
-diff --git a/include/hw/ppc/xive_regs.h b/include/hw/ppc/xive_regs.h
-index 51e9a2152e..dd4a76bcf0 100644
---- a/include/hw/ppc/xive_regs.h
-+++ b/include/hw/ppc/xive_regs.h
-@@ -167,7 +167,7 @@ typedef struct XiveEAS {
- #define xive_eas_is_valid(eas)   (be64_to_cpu((eas)->w) & EAS_VALID)
- #define xive_eas_is_masked(eas)  (be64_to_cpu((eas)->w) & EAS_MASKED)
- 
--void xive_eas_pic_print_info(XiveEAS *eas, uint32_t lisn, Monitor *mon);
-+void xive_eas_pic_print_info(XiveEAS *eas, uint32_t lisn, GString *buf);
- 
- static inline uint64_t xive_get_field64(uint64_t mask, uint64_t word)
- {
-diff --git a/hw/intc/pnv_xive.c b/hw/intc/pnv_xive.c
-index 520d7e0acd..c377823522 100644
---- a/hw/intc/pnv_xive.c
-+++ b/hw/intc/pnv_xive.c
-@@ -1864,19 +1864,19 @@ void pnv_xive_pic_print_info(PnvXive *xive, Monitor *mon)
-     g_string_append_printf(buf, "XIVE[%x] #%d Source %08x .. %08x\n",
-                            chip_id, blk, srcno0, srcno0 + nr_ipis - 1);
-     xive_source_pic_print_info(&xive->ipi_source, srcno0, buf);
--    info = human_readable_text_from_str(buf);
--    monitor_puts(mon, info->human_readable_text);
- 
--    monitor_printf(mon, "XIVE[%x] #%d EAT %08x .. %08x\n", chip_id, blk,
--                   srcno0, srcno0 + nr_ipis - 1);
-+    g_string_append_printf(buf, "XIVE[%x] #%d EAT %08x .. %08x\n",
-+                           chip_id, blk, srcno0, srcno0 + nr_ipis - 1);
-     for (i = 0; i < nr_ipis; i++) {
-         if (xive_router_get_eas(xrtr, blk, i, &eas)) {
-             break;
-         }
-         if (!xive_eas_is_masked(&eas)) {
--            xive_eas_pic_print_info(&eas, i, mon);
-+            xive_eas_pic_print_info(&eas, i, buf);
-         }
-     }
-+    info = human_readable_text_from_str(buf);
-+    monitor_puts(mon, info->human_readable_text);
- 
-     monitor_printf(mon, "XIVE[%x] #%d ENDT\n", chip_id, blk);
-     i = 0;
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index 1adb0439c5..b2203b721b 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -1921,17 +1921,17 @@ static const TypeInfo xive_router_info = {
-     }
- };
- 
--void xive_eas_pic_print_info(XiveEAS *eas, uint32_t lisn, Monitor *mon)
-+void xive_eas_pic_print_info(XiveEAS *eas, uint32_t lisn, GString *buf)
- {
-     if (!xive_eas_is_valid(eas)) {
-         return;
-     }
- 
--    monitor_printf(mon, "  %08x %s end:%02x/%04x data:%08x\n",
--                   lisn, xive_eas_is_masked(eas) ? "M" : " ",
--                   (uint8_t)  xive_get_field64(EAS_END_BLOCK, eas->w),
--                   (uint32_t) xive_get_field64(EAS_END_INDEX, eas->w),
--                   (uint32_t) xive_get_field64(EAS_END_DATA, eas->w));
-+    g_string_append_printf(buf, "  %08x %s end:%02x/%04x data:%08x\n",
-+                           lisn, xive_eas_is_masked(eas) ? "M" : " ",
-+                           (uint8_t)  xive_get_field64(EAS_END_BLOCK, eas->w),
-+                           (uint32_t) xive_get_field64(EAS_END_INDEX, eas->w),
-+                           (uint32_t) xive_get_field64(EAS_END_DATA, eas->w));
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 453feb9347..2fd3e9c3d5 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1864,3 +1864,20 @@
+ { 'command': 'dumpdtb',
+   'data': { 'filename': 'str' },
+   'if': 'CONFIG_FDT' }
++
++##
++# @x-query-interrupt-controllers:
++#
++# Query information on interrupt controller devices
++#
++# Features:
++#
++# @unstable: This command is meant for debugging.
++#
++# Returns: Interrupt controller devices information
++#
++# Since: 9.1
++##
++{ 'command': 'x-query-interrupt-controllers',
++  'returns': 'HumanReadableText',
++  'features': [ 'unstable' ]}
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index 5972100b1f..130217da8f 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -361,6 +361,35 @@ HumanReadableText *qmp_x_query_irq(Error **errp)
+     return human_readable_text_from_str(buf);
  }
  
- /*
++static int qmp_x_query_intc_foreach(Object *obj, void *opaque)
++{
++    InterruptStatsProvider *intc;
++    InterruptStatsProviderClass *k;
++    GString *buf = opaque;
++
++    if (object_dynamic_cast(obj, TYPE_INTERRUPT_STATS_PROVIDER)) {
++        intc = INTERRUPT_STATS_PROVIDER(obj);
++        k = INTERRUPT_STATS_PROVIDER_GET_CLASS(obj);
++        if (k->print_info) {
++            k->print_info(intc, buf);
++        } else {
++            g_string_append_printf(buf,
++                                   "Interrupt controller information not available for %s.\n",
++                                   object_get_typename(obj));
++        }
++    }
++
++    return 0;
++}
++
++HumanReadableText *qmp_x_query_interrupt_controllers(Error **errp)
++{
++    g_autoptr(GString) buf = g_string_new("");
++    object_child_foreach_recursive(object_get_root(),
++                                   qmp_x_query_intc_foreach, buf);
++    return human_readable_text_from_str(buf);
++}
++
+ GuidInfo *qmp_query_vm_generation_id(Error **errp)
+ {
+     GuidInfo *info;
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index fbff7fdb57..45ee3a9e1f 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -25,9 +25,7 @@
+ #include "qapi/qapi-commands-machine.h"
+ #include "qapi/qapi-commands-misc.h"
+ #include "qapi/qmp/qdict.h"
+-#include "qapi/type-helpers.h"
+ #include "qemu/cutils.h"
+-#include "hw/intc/intc.h"
+ #include "qemu/log.h"
+ #include "sysemu/sysemu.h"
+ 
+@@ -83,37 +81,6 @@ void hmp_info_version(Monitor *mon, const QDict *qdict)
+     qapi_free_VersionInfo(info);
+ }
+ 
+-static int hmp_info_pic_foreach(Object *obj, void *opaque)
+-{
+-    InterruptStatsProvider *intc;
+-    InterruptStatsProviderClass *k;
+-    Monitor *mon = opaque;
+-
+-    if (object_dynamic_cast(obj, TYPE_INTERRUPT_STATS_PROVIDER)) {
+-        intc = INTERRUPT_STATS_PROVIDER(obj);
+-        k = INTERRUPT_STATS_PROVIDER_GET_CLASS(obj);
+-        if (k->print_info) {
+-            g_autoptr(GString) buf = g_string_new("");
+-            g_autoptr(HumanReadableText) info = NULL;
+-
+-            k->print_info(intc, buf);
+-            info = human_readable_text_from_str(buf);
+-            monitor_puts(mon, info->human_readable_text);
+-        } else {
+-            monitor_printf(mon, "Interrupt controller information not available for %s.\n",
+-                           object_get_typename(obj));
+-        }
+-    }
+-
+-    return 0;
+-}
+-
+-void hmp_info_pic(Monitor *mon, const QDict *qdict)
+-{
+-    object_child_foreach_recursive(object_get_root(),
+-                                   hmp_info_pic_foreach, mon);
+-}
+-
+ void hmp_quit(Monitor *mon, const QDict *qdict)
+ {
+     monitor_suspend(mon);
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 20a9835ea8..cfd4ad5651 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -174,7 +174,7 @@ ERST
+         .args_type  = "",
+         .params     = "",
+         .help       = "show PIC state",
+-        .cmd        = hmp_info_pic,
++        .cmd_info_hrt = qmp_x_query_interrupt_controllers,
+     },
+ 
+ SRST
 -- 
 2.41.0
 
