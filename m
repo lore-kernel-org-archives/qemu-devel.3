@@ -4,83 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 573E9C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 10:55:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51865C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 10:58:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJWU9-0003de-Db; Tue, 18 Jun 2024 06:54:45 -0400
+	id 1sJWXB-0006Q2-Tk; Tue, 18 Jun 2024 06:57:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJWU8-0003d8-4N
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 06:54:44 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJWXA-0006Oe-DH
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 06:57:52 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJWU6-0001fq-9I
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 06:54:43 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a6f04afcce1so674314366b.2
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 03:54:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJWX8-0002GX-T6
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 06:57:52 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a6f1dc06298so637099366b.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 03:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718708080; x=1719312880; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718708269; x=1719313069; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xgIw9IKUSsnidIbwU0XCTiXGMITo0Ef+Km6UW4Y49Fk=;
- b=aCF/d6nfyQ5Q/E4n0kz/gKvAxgGNZrpfaBwv4JTHxjnTOnrruB+YJBvKkcKqMa/17y
- SjBhFdk8pI0uuPfl7djQVDDvUnWl0JXAACTqudqZzAXacywrDE7AWXzWJTz3x3v90q0e
- GsdnGy8j59l3GJU2I6Z/ZOi3UAut9XbxmlZgzeTTpqfoYpMgH8OGkYauyOy0vTZRjAM5
- sOG6kdtGbdenis97fmqXj1NpqM8i+1rqm0tW/eDGqfMAGo60HpIBhGgPv53kHtPeFNw6
- 0Zf+PJ110IhkzdDIu34vakkgmALSJdODAjKIN8KfasfBie9pmn1uGng2hG/Eq1+exwAN
- J1hQ==
+ bh=4We8Y2vKgsnGooRtjXK3lNhHTqMXFx1CNtOn3Ir4OXc=;
+ b=E/DBJEOnwStwGENNFmf8KF5rAvBW4fxSHRxtKSLB2PBqqnA6IfkJuHFgxEJEmxOO5e
+ sfbB2J5D3/6sE0817fszI6Tg932kcwSg1SSSh36utDObpBl0cXeYauwjAJQJJBdxbgvL
+ F866n36G+ScFibcf7eTUq2nGG8B6CcfAv1Ahlz+moaa4RLW8pD1Dk+FYOpq9gwmequya
+ 79ia8zRPpY7JBR8LiIdOJqz7Rwxw9kIea/ZQtl7XFzfOa+mE4lV3xegKC/ZS0c1p+PXo
+ DBzyF0Y0CS1RsZgwWqCxwh2n25taiSPNXCRlylnwvMrCEhfvhW4IWYwgoZnb/cKVlFUh
+ BhcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718708080; x=1719312880;
+ d=1e100.net; s=20230601; t=1718708269; x=1719313069;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xgIw9IKUSsnidIbwU0XCTiXGMITo0Ef+Km6UW4Y49Fk=;
- b=cr/DSdxoRGmSPiGmOexaFLcjRn7CUKcyggalR0NQj6Uy8KuLCuZuIPtV1abfECCPbY
- o69cwX/rM+wJOXxOULSe3uU+DkBIZCsbYXkI3MUh//b1Haxdatd/G7mWESTlxoiRBmbS
- aeNUtz/4Nv8gacyU0p3Q6oImHapW9Q32eOt3IVy/9pRwYZQpnovSElsinAYfyN74q2jY
- dmtZCJOhyT+GJJx6cFhgQ14TmyCJAhV+EtwnxY7kKOQpKPwN4UT/GS+esL3fBiY6Xt/l
- vl3a335MaAS9r4EEQMvZezyCbNvHAuA3YFR7Gr8xFGZCNaNJi2PNFLSkOb7+lDU4unzl
- gWGA==
+ bh=4We8Y2vKgsnGooRtjXK3lNhHTqMXFx1CNtOn3Ir4OXc=;
+ b=ExWUehx90Uh+54pGXZfTljNGceQY0yI7K7ld11nSeJxSRby3MyBnbsla5KhNmgrLwQ
+ HhTFPuKXJCR2BPRUUCcC2OaYgnhUZshOyVYW/mehE0N6C0fd7lbMQKcC7S+47+1ocU3v
+ RpvMPeEOmktL47+fhdA0L/mzFYLxEcZmuE5Zs+NPtfPXNwVSlX6sLfgG/gamgC7ABl+N
+ 5vTA5mY5Vlnx+cf0YpR8nqgc8f9QpiMfxCFWNSvVco9j+2mhPzjFd70+UkLQzMU4n/tk
+ 7EsSnh35I1mtyLyNCU8G7QK0dKknXWDTJBu9dSab6if+PApDZgJoOlVLWwToqg7xM3st
+ P8cA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdCiN9MAw6jymXb1vo18K+Uoc8w8/9JT0ilYAMQOcf8R63peXPh0wZI/FE8PWxP5QtbifaI9uRF4sFyRVKc54FLj3jDVM=
-X-Gm-Message-State: AOJu0YyI9jjr3HXXWb+GIE576ug46Qehr3JYXr48P20J7plpbCR35B+W
- 8BO0KAyq8Xr4O6Z3iNyefNIP5C+HCNlwvB27XUaX3OP+wJR/pekz+ARGO/5J5As=
-X-Google-Smtp-Source: AGHT+IGxZyGzG0jvmNQ4ewG7UzcAp3hQC312ZJdOYdHrBTypjKckzf6MmQlGUmP6AUsp7l3GaJ6Igw==
-X-Received: by 2002:a17:907:c086:b0:a6f:6389:4aba with SMTP id
- a640c23a62f3a-a6f63894c9cmr1099538566b.3.1718708080320; 
- Tue, 18 Jun 2024 03:54:40 -0700 (PDT)
+ AJvYcCX4Z+3Y4TXyHJ/xcP9rxb1RkUax7V/OXyHXeWB7MWV3Pfyt6tfMC6WlAD9YFHGXXAgriWzWRvFK0fPoWhz6vCl6/+DBN2Q=
+X-Gm-Message-State: AOJu0YzHhZru9hiAj+MepSHWcsqhOvYYiOCjhNEytP+91sfVUb60Fsgo
+ cJjwajduz7pvyGreuui2/SjwFZbyTY3liOEXDDAxQY6BxxyhFG1lA950whZGMzw=
+X-Google-Smtp-Source: AGHT+IE3wmy4cSCNWHRrFc0EyvBNs+LIX+pYXWUWiYbqj/lySUBhGepzHE9qQYKRxwjVL14pKZtpDQ==
+X-Received: by 2002:a17:906:365b:b0:a6f:2448:a274 with SMTP id
+ a640c23a62f3a-a6f60dc1f00mr632573166b.59.1718708269136; 
+ Tue, 18 Jun 2024 03:57:49 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f5f1c8d6fsm546611866b.0.2024.06.18.03.54.38
+ a640c23a62f3a-a6f56db674esm604942366b.83.2024.06.18.03.57.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 03:54:39 -0700 (PDT)
-Message-ID: <dfa19fc2-b049-4856-b118-b7e5cc6a92ae@linaro.org>
-Date: Tue, 18 Jun 2024 12:54:37 +0200
+ Tue, 18 Jun 2024 03:57:48 -0700 (PDT)
+Message-ID: <8b2b8861-f916-4256-ba47-ff26dc25251c@linaro.org>
+Date: Tue, 18 Jun 2024 12:57:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] hw/dma: Add a trace log for a description loading
- failure
-To: "Fea.Wang" <fea.wang@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
- "open list:Xilinx Zynq" <qemu-arm@nongnu.org>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- Frank Chang <frank.chang@sifive.com>
-References: <20240613013501.426905-1-fea.wang@sifive.com>
- <20240613013501.426905-3-fea.wang@sifive.com>
+Subject: Re: [PATCH v2 0/3] hw/usb: Introduce x-query-usbhost QMP command
+To: =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20240611102305.60735-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240613013501.426905-3-fea.wang@sifive.com>
+In-Reply-To: <20240611102305.60735-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,18 +98,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/6/24 03:35, Fea.Wang wrote:
-> Due to a description loading failure, adding a trace log makes observing
-> the DMA behavior easy.
-> 
-> Signed-off-by: Fea.Wang <fea.wang@sifive.com>
-> Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> ---
->   hw/dma/trace-events    | 3 +++
->   hw/dma/xilinx_axidma.c | 3 +++
->   2 files changed, 6 insertions(+)
+On 11/6/24 12:23, Philippe Mathieu-Daudé wrote:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Philippe Mathieu-Daudé (3):
+>    hw/usb: Remove unused 'host.h' header
+>    hw/usb: Introduce x-query-usbhost QMP command
+>    monitor: Remove monitor_register_hmp()
 
+Series queued.
 
