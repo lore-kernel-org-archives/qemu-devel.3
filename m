@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AD0CC27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 15:40:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C10C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 15:40:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJaw2-0007mj-QV; Tue, 18 Jun 2024 11:39:50 -0400
+	id 1sJawm-0008WB-6V; Tue, 18 Jun 2024 11:40:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJaw1-0007mM-CC
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 11:39:49 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJawl-0008Vz-5F
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 11:40:35 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJavz-0003BM-MY
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 11:39:49 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-42172ed3597so35228755e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 08:39:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJawj-0003Qh-Ku
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 11:40:34 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4230366ad7bso50865585e9.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 08:40:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718725186; x=1719329986; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718725232; x=1719330032; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Yu6Dtl5Me2scqu5zqgdTdZQnMfpjxhir/OsuntZ3Lmk=;
- b=d5DvPYGMPiO+xLFXQlUzdzMwrMinM9IL/pPbGegb1nDWXuHenUc9tk/WzUwBG7SOOl
- 5TcbTrOoMQHprT22bBLcFrszIKg7qrZCA8ddiX4M5nGhuxtL46Fc+OfbR9GOiN3/LuAh
- o1MIlRx5h1wU6hh/+88Ml4F8wDS11vgXosgtbqJJXPN+tBb4N9+eHUUmuV9J5V+5tfm4
- sLJ4aqiCIhWbG8ZMQWAwoI06aopoB6ibf5LL1wghoVMRdhLzTIZFMdncSW4CdC7CKXos
- myLp9dDmbohZGwAXI8I/zcy/GhJYY9tsR6DpcDAoZVTAxzAELssUAdztNT0Fn8lrdJLa
- 1czA==
+ bh=3TH3VMND1OnLXBFvOhf0iTkyKP8jXTJBC9xtTqD4fu0=;
+ b=uqOoIToduTox74qrVBcARmGNAyDeXnupEWp60IwW5zbr21kXwrX7BuhHJ0KqtHDif8
+ D4a81bDA9T6vp0iTZJwpZYoG3k37opLXm1gyTUz58PJmydk3A2d6VFllbmmj7IiTyviY
+ 5vzMB7y91s/E6u7JTSYNsdwt0Jk2ZYCf1WAuKeNP4vRRrJgPCn23XiWre0wQZuoACuVv
+ U7ExhSZEo6wXOMygnKCpOO6JLvDhn36hOGIwzKjG3h9l951/UUCl5KvhEPIDUG9Es0HB
+ DotMKtTLbntaoSXqBwncNN7ooLWnTEc6xaluVVLsPGm2l4yO4PGLbukbv7ThapAOwXDo
+ J1kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718725186; x=1719329986;
+ d=1e100.net; s=20230601; t=1718725232; x=1719330032;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Yu6Dtl5Me2scqu5zqgdTdZQnMfpjxhir/OsuntZ3Lmk=;
- b=RlGkCJJYzmr0O7dduDtHo+QtQejXMh/ZgT7XLKh4Ol1q+RTihqEE/jB2fcRrKhtFxa
- ttVV06ld+cbnf4bL1Z95qRW/dTQUJB1DZTkkEK95NV8U9S2jgTOsv7iRM0VEtQwhG37A
- CzUJfUlXPGSMdTYqt3ISBeCmXURV1p/cvVcEd/dNSoAhcq0OKmrzR0Z+TxQiYAGD3Lg5
- tEddm1zNym9tYO2UQ+plstuvbjgx8PbSNNNU+ZTm0W1cqdzmJ71fJIXYk82p9P8uqp3m
- xQ4G9SJLpnEnuQYS7iCxJM4sBHukvZIJV06s9eWBEDmYIhf45dccDwg1bICddkbAjZyN
- yMlw==
+ bh=3TH3VMND1OnLXBFvOhf0iTkyKP8jXTJBC9xtTqD4fu0=;
+ b=DsF3hZBfjifhG3uC3Wo3rvGkOWQnxHyTwra+YkvLyNLHew82lblzg2gYoVVKTmeTGR
+ +fqM/s58MbYkRw+UbSimA6RhR+7pzozbhgrJ2rkUKMPgelOIp0kZhZugTduHtkzcVJmQ
+ djBt2/AfE48IkDCGvSbh9wYTfPbzc7OtqU0ZUvvlVc8Klbnf8/8egBuJeLG6FGG5VCaK
+ BgS8FTSsSek2IQuRSpoyvqwJXKMcaYoiNSSfpPZmNq7O56Ihp+AedJmxGCL7bBRhITtP
+ ZNG8tkjdHruCsD1XIt4OcN0ESZcqMQmR4km/D7C8nXIeG9Hs9b1SvLeFKIK1yP18OlvG
+ Du4w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUPlxebFLkFm6iZ6oBvFCYUyxvbl3Bv2WuIQmHZRqouRO7xGGZo2WF97tnhU4nstAIGnQvpyJ/my1Sc13Z05TB9ebv7OVI=
-X-Gm-Message-State: AOJu0YwvybXxADmTIIZzePLB7sjXeeci0BwbSjKCaY9eE5hZUHp6/iOV
- lE36SwvkUyBV/kYPaJOMlpxr46VItfACprdBnTwu40zsWxgHCiIYtvkFqcdjm1afOemKhoFiL4m
- e
-X-Google-Smtp-Source: AGHT+IFKCHLOzKeU/Pi/e6eQyzceAGhWTjq46RgDmM+Hb17HgP0Ngb4Ks5hqQgOHQROVaCndFSG25Q==
-X-Received: by 2002:a05:600c:2d88:b0:422:12bf:27be with SMTP id
- 5b1f17b1804b1-42474d1ee2bmr2522145e9.11.1718725186078; 
- Tue, 18 Jun 2024 08:39:46 -0700 (PDT)
+ AJvYcCXdIrlj0KEaF1pZbkWu01Dwqc9vUsufXcis3lwS4qxGB12KDmb0+JedvXoMRjadYmX24sfdQABzuPgTjrQtDSre8d01EgQ=
+X-Gm-Message-State: AOJu0YwR/JMM7QvdsCOWW4mjKbRNdaPghNT7HegCd0BEbDUvPj/NzTdA
+ GnZAekBXk0M+Rg32sgZ9P3cZoJg+5kDKCCMYj0ACewBbyvlC++Eqa39RkqHVF1o=
+X-Google-Smtp-Source: AGHT+IGl0O2YeHvYQg3Hc91XtFZghhVOWm5fGxusF4uKa718IAvFV+J2JpDpR+MlUwMd1dTPcEwIDA==
+X-Received: by 2002:a05:600c:17d0:b0:423:b5f9:203f with SMTP id
+ 5b1f17b1804b1-423b5f92170mr77583245e9.5.1718725232171; 
+ Tue, 18 Jun 2024 08:40:32 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422874e74c7sm228213845e9.47.2024.06.18.08.39.45
+ 5b1f17b1804b1-42286fe9230sm227170405e9.17.2024.06.18.08.40.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 08:39:45 -0700 (PDT)
-Message-ID: <9c61a7d8-c456-44ff-8062-c7eeca9dfd42@linaro.org>
-Date: Tue, 18 Jun 2024 17:39:43 +0200
+ Tue, 18 Jun 2024 08:40:31 -0700 (PDT)
+Message-ID: <d37c8eb0-afd2-45e2-a775-785f08987c3f@linaro.org>
+Date: Tue, 18 Jun 2024 17:40:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/misc: Fix invalid size assertions in exynos4210_rng
- read/write functions
-To: Zheyu Ma <zheyuma97@gmail.com>, Igor Mitsyanko <i.mitsyanko@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20240618145054.3144311-1-zheyuma97@gmail.com>
+Subject: Re: [PATCH] hw/usb/dev-mtp: Correctly report free space
+To: Fabio D'Urso <fdurso@google.com>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+References: <20240618003657.3344685-1-fdurso@google.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240618145054.3144311-1-zheyuma97@gmail.com>
+In-Reply-To: <20240618003657.3344685-1-fdurso@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,84 +95,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/6/24 16:50, Zheyu Ma wrote:
-> This commit updates the exynos4210_rng_read() and exynos4210_rng_write()
-> functions to handle cases where the size is not 4 bytes. Instead of
-> asserting, which causes the program to abort, the functions now log an
-> error message and return a default value for reads or do nothing for
-> writes when the size is invalid.
+On 18/6/24 02:36, Fabio D'Urso wrote:
+> In order to compute the amount of free space (in bytes), the number
+> of available blocks (f_bavail) should be multiplied by the block
+> size (f_frsize) instead of the total number of blocks (f_blocks).
 > 
-> Reproducer:
-> cat << EOF | qemu-system-aarch64 -display none \
-> -machine accel=qtest, -m 512M -machine smdkc210 -qtest stdio
-> readb 0x10830454
-> EOF
-> 
-> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> Signed-off-by: Fabio D'Urso <fdurso@google.com>
 > ---
->   hw/misc/exynos4210_rng.c | 14 ++++++++++++--
->   1 file changed, 12 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/misc/exynos4210_rng.c b/hw/misc/exynos4210_rng.c
-> index 0756bd3205..307d4eea43 100644
-> --- a/hw/misc/exynos4210_rng.c
-> +++ b/hw/misc/exynos4210_rng.c
-> @@ -146,7 +146,12 @@ static uint64_t exynos4210_rng_read(void *opaque, hwaddr offset,
->       Exynos4210RngState *s = (Exynos4210RngState *)opaque;
->       uint32_t val = 0;
->   
-> -    assert(size == 4);
+>   hw/usb/dev-mtp.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Here if these registers are 32-bit only:
-
--- >8 --
-diff --git a/hw/misc/exynos4210_rng.c b/hw/misc/exynos4210_rng.c
-index 0756bd3205..674d8eece5 100644
---- a/hw/misc/exynos4210_rng.c
-+++ b/hw/misc/exynos4210_rng.c
-@@ -217,6 +217,8 @@ static const MemoryRegionOps exynos4210_rng_ops = {
-      .read = exynos4210_rng_read,
-      .write = exynos4210_rng_write,
-      .endianness = DEVICE_NATIVE_ENDIAN,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 4,
-  };
----
-
-Otherwise:
-
--- >8 --
-static const MemoryRegionOps exynos4210_rng_ops = {
-     .read = exynos4210_rng_read,
-     .write = exynos4210_rng_write,
-     .endianness = DEVICE_NATIVE_ENDIAN,
-     .impl.min_access_size = 4,
-     .impl.max_access_size = 4,
-};
----
-
-> +    if (size != 4) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: invalid read size %u at offset 0x%" HWADDR_PRIx
-> +                      "\n", __func__, size, offset);
-> +        return 0;
-> +    }
->   
->       switch (offset) {
->       case EXYNOS4210_RNG_CONTROL_1:
-> @@ -181,7 +186,12 @@ static void exynos4210_rng_write(void *opaque, hwaddr offset,
->   {
->       Exynos4210RngState *s = (Exynos4210RngState *)opaque;
->   
-> -    assert(size == 4);
-> +    if (size != 4) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: invalid write size %u at offset 0x%" HWADDR_PRIx
-> +                      "\n", __func__, size, offset);
-> +        return;
-> +    }
->   
->       switch (offset) {
->       case EXYNOS4210_RNG_CONTROL_1:
-
+Patch queued, thanks!
 
