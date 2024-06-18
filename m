@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB5EBC27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE130C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:04:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbIU-0006iz-Lo; Tue, 18 Jun 2024 12:03:02 -0400
+	id 1sJbGb-0003OC-9Q; Tue, 18 Jun 2024 12:01:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbI6-0005mr-Da
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:02:38 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbGZ-0003MC-8d
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:01:03 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbI4-0006z2-P5
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:02:38 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-57d06101d76so316376a12.3
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:02:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbGX-0006kD-Jh
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:01:03 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a6ef8bf500dso636675366b.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:01:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726554; x=1719331354; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726459; x=1719331259; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=481P++9pg0zI2n/4exvP8oZom8l9jtwiiKGRbZrAgxw=;
- b=t/IFGzp0tf75LtSiVqmcNdMVqB3T80hQy8V7gS5dYbXVoG6NxhKtavRZ6P08RWUa3O
- Ed6j2KasFBpmBYMpSK5KB57nkLTGV8wlWIXpuDQrBqh0woALiJZJKUVFMKP9Qv2igAgo
- Il2yjk0rqs1Qwv9ky0WaQG0D8CQSb0kqxshvjbQoQIB5kfBRnF+cZ+ZiUpViBXveVW4E
- +xCpXym+ZFoNa3nSLfHrLcMeOV3EGxqi6C13DUFQXO/+zj30uXOM8XSNnrCgwYvUXJ12
- E0LYonXP+w/Mo9PEKG9hd2pXMYCNtnriJl/3j802f9enZBxnxxg7BnwO12/N5F6B89OL
- 76ug==
+ bh=LOG7Q1advPZZqyRZ93ugLO8dtsxdIWVJ2ikNItPvt4U=;
+ b=HU91M5IEkIVB2QmgmMoUunm+3f+8KtyF5nI11KWpIv6vghsMobam9Y12+6kwFajLzW
+ 3+wVP6+191U4blcNuxdBrFFPNeLVZ92e5Slnk2GGtFu9SlLRPbfKbTOgcXzQnYvgwyUr
+ d+rP5t3UCZHVsKaIEQY/4IebixoTKHnizdpKNXspTMJVrgMMBZ0SZwzZM8uzMlL08P3M
+ H2M1eyaxrK1XOUKGYSUBe8WiS1/F6EXgbKUMe2spuylvZ6d8EfxBLGlEQ6NiVlRJel2u
+ D0lWbEI6KIw5ExWcOC39v1kzfQfYt7Ic/N6w/SsPhyLoLM7Zrrbk4ue1VutT9dAlAYk/
+ qCIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726554; x=1719331354;
+ d=1e100.net; s=20230601; t=1718726459; x=1719331259;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=481P++9pg0zI2n/4exvP8oZom8l9jtwiiKGRbZrAgxw=;
- b=Qoz7/qAM4Fcm3JqYBj37D1+jMYb3F9BeTJ6tAVGFIMbm9ScWQi6cU1K4ijth7F1N5Y
- Ag2tW9mDTCXri3+kAQpvO6m7J5FsaaZbwFwYqTmvW0TZIltxrU0RCfkhqE+qvCbHRoUM
- oDVmmQPlAfsf7EFArzcxQzcNbo7HyYSrds0NtXfQQ9tjIKjhjSPfPVB4G2ZAsrDbPHU7
- /eVNFg/fRjnJtBl9OZ8iaddfwVZdSR14eECY6rMYHmIv8Bz53J54EOiCF0/LUXs8lbi1
- CRQNF0Zo/f8HpQEUmNSzSw2m0KtDACcsQG+PR93yNOEQjrrX9VKF5m94+WfhiSh5o7tM
- +yLQ==
-X-Gm-Message-State: AOJu0YwEgptqFirDwpMKMVwnFTK52EJ3ZybMGpC0kl3KFgpHXgKqZwAx
- jHrU5sLrY9xw/UVHzAjvg+U0wbIGBamBpq3p2ulj/UEAsJ1pxtf9t4HBQwvXTDMT4bOV8dh/f08
- r
-X-Google-Smtp-Source: AGHT+IEQYLMKnop7V14QlA7+fsqz+FTzEH9TeSJSqFqATfgbALiWEb24okkQNd+DuRSCRFfT4LMMRQ==
-X-Received: by 2002:a50:fb15:0:b0:57d:3be:5ec2 with SMTP id
- 4fb4d7f45d1cf-57d03be6373mr910594a12.30.1718726554554; 
- Tue, 18 Jun 2024 09:02:34 -0700 (PDT)
+ bh=LOG7Q1advPZZqyRZ93ugLO8dtsxdIWVJ2ikNItPvt4U=;
+ b=wP8tzSrjj3Mn5BDe6I8Hw19a6U7+wYvsF3UA6ul6QTh4B9X7YG0qTOXBbg409LBbf+
+ NA0U6ea5hatXsqfWhgRqNUbHPmUjVlDaOT1ROCe8l2jPKuKhMf3ab04d8F6oPuqgK7UP
+ xOorSJejywI4S4GwIbg/6sr5Z6HX3zTXuhG54kx1PK0BLgO+9Cp90cEXGFXCZZ1IMz7w
+ ZboreuuH8zNiPHwv4WF+s1pvrcMd26E0cxFuQfIAUNQelNSgxHwhbbF4q4mw3dXLmCaC
+ e93KK7MWtxb5AeFXrXHlou8QKB4LYpOH4D6WpGPpE3a/hTmNKyjjxBY9/cy3G5hwpess
+ l3Jg==
+X-Gm-Message-State: AOJu0YzZE/7prxAs24tAHXazn4y51I298BVKeawU0SL3J8B2l2sqw+jL
+ E6urkRlr87oB9TtWQafMsUdAP4b2gg92/QjM4VPs1IlfZQv7ZbfqEYugmw/EqdGMxxfG3zuiYqI
+ T
+X-Google-Smtp-Source: AGHT+IENuU80d+9DAX1EYYkYVpeOpJoWtqP7He8grXC4AvTm0xIbKkG6GPStFo/yFlk59Cm7/4Pm6Q==
+X-Received: by 2002:a17:907:bb94:b0:a6f:2a43:e956 with SMTP id
+ a640c23a62f3a-a6f60de6a0emr832989766b.74.1718726459399; 
+ Tue, 18 Jun 2024 09:00:59 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57cb72da32fsm7877548a12.36.2024.06.18.09.02.33
+ a640c23a62f3a-a6f56fa67ecsm621213766b.215.2024.06.18.09.00.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:02:34 -0700 (PDT)
+ Tue, 18 Jun 2024 09:00:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 19/76] hw/i386/acpi: Remove AcpiBuildState::rsdp field
-Date: Tue, 18 Jun 2024 17:59:41 +0200
-Message-ID: <20240618160039.36108-20-philmd@linaro.org>
+Subject: [PULL 03/76] hw/usb/hcd-xhci: Remove XHCI_FLAG_FORCE_PCIE_ENDCAP flag
+Date: Tue, 18 Jun 2024 17:59:25 +0200
+Message-ID: <20240618160039.36108-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,51 +95,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AcpiBuildState::rsdp is always NULL, remove it,
-simplifying acpi_build_update().
+XHCI_FLAG_FORCE_PCIE_ENDCAP was only used by the
+pc-i440fx-2.0 machine, which got removed. Remove it
+and simplify usb_xhci_pci_realize().
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20240617071118.60464-20-philmd@linaro.org>
+Message-Id: <20240617071118.60464-4-philmd@linaro.org>
 ---
- hw/i386/acpi-build.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ hw/usb/hcd-xhci.h     | 1 -
+ hw/usb/hcd-xhci-nec.c | 2 --
+ hw/usb/hcd-xhci-pci.c | 3 +--
+ 3 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 158e74f64a..f4e366f64f 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -2458,7 +2458,6 @@ struct AcpiBuildState {
-     MemoryRegion *table_mr;
-     /* Is table patched? */
-     uint8_t patched;
--    void *rsdp;
-     MemoryRegion *rsdp_mr;
-     MemoryRegion *linker_mr;
- } AcpiBuildState;
-@@ -2714,11 +2713,7 @@ static void acpi_build_update(void *build_opaque)
+diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
+index 98f598382a..1efa4858fb 100644
+--- a/hw/usb/hcd-xhci.h
++++ b/hw/usb/hcd-xhci.h
+@@ -37,7 +37,6 @@ typedef struct XHCIEPContext XHCIEPContext;
  
-     acpi_ram_update(build_state->table_mr, tables.table_data);
+ enum xhci_flags {
+     XHCI_FLAG_SS_FIRST = 1,
+-    XHCI_FLAG_FORCE_PCIE_ENDCAP,
+     XHCI_FLAG_ENABLE_STREAMS,
+ };
  
--    if (build_state->rsdp) {
--        memcpy(build_state->rsdp, tables.rsdp->data, acpi_data_len(tables.rsdp));
--    } else {
--        acpi_ram_update(build_state->rsdp_mr, tables.rsdp);
--    }
-+    acpi_ram_update(build_state->rsdp_mr, tables.rsdp);
+diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
+index 328e5bfe7c..5d5b069cf9 100644
+--- a/hw/usb/hcd-xhci-nec.c
++++ b/hw/usb/hcd-xhci-nec.c
+@@ -43,8 +43,6 @@ static Property nec_xhci_properties[] = {
+     DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_BIT("superspeed-ports-first", XHCINecState, flags,
+                     XHCI_FLAG_SS_FIRST, true),
+-    DEFINE_PROP_BIT("force-pcie-endcap", XHCINecState, flags,
+-                    XHCI_FLAG_FORCE_PCIE_ENDCAP, false),
+     DEFINE_PROP_UINT32("intrs", XHCINecState, intrs, XHCI_MAXINTRS),
+     DEFINE_PROP_UINT32("slots", XHCINecState, slots, XHCI_MAXSLOTS),
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+index 4423983308..cbad96f393 100644
+--- a/hw/usb/hcd-xhci-pci.c
++++ b/hw/usb/hcd-xhci-pci.c
+@@ -148,8 +148,7 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
+                      PCI_BASE_ADDRESS_MEM_TYPE_64,
+                      &s->xhci.mem);
  
-     acpi_ram_update(build_state->linker_mr, tables.linker->cmd_blob);
-     acpi_build_tables_cleanup(&tables, true);
-@@ -2804,7 +2799,6 @@ void acpi_setup(void)
-                            tables.vmgenid);
+-    if (pci_bus_is_express(pci_get_bus(dev)) ||
+-        xhci_get_flag(&s->xhci, XHCI_FLAG_FORCE_PCIE_ENDCAP)) {
++    if (pci_bus_is_express(pci_get_bus(dev))) {
+         ret = pcie_endpoint_cap_init(dev, 0xa0);
+         assert(ret > 0);
      }
- 
--    build_state->rsdp = NULL;
-     build_state->rsdp_mr = acpi_add_rom_blob(acpi_build_update,
-                                              build_state, tables.rsdp,
-                                              ACPI_BUILD_RSDP_FILE);
 -- 
 2.41.0
 
