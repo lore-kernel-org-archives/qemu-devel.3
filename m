@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73FF7C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0183C2BA18
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbKe-0005jv-GE; Tue, 18 Jun 2024 12:05:16 -0400
+	id 1sJbHD-0003rZ-Vz; Tue, 18 Jun 2024 12:01:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbKb-0005aj-Lj
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:05:14 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbH4-0003gV-6q
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:01:37 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbKZ-0007YX-Rq
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:05:13 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a6efe62f583so568368466b.3
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:05:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbH0-0006mH-Ra
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:01:33 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a6f253a06caso672301366b.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:01:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726709; x=1719331509; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726489; x=1719331289; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UQ/vKPLAFvWQQZA4qFYQnETyiIwxVEeu0Q/3lMWAKrA=;
- b=K/WB8J+4gGHPyztQnH9Q7qehrD0qHF3E8pYqEvAexxkegpnZEJboO107KyGm95dAMs
- cUkQHcB9MDvMD0vwzAeNRdKbA8mY0JmFDdGnEwwdux+VM79d87wCMfI8NJ7za5PVCHHZ
- AwZ+AKy/QLFkLrMPd0p7mWo+wJnRA75Np8PFMikvRz9OjE7Rnl+AzQ2flGpOHFOC/NtI
- Qt7wSLj4hi4VaoeKrdEABXVcSqjhfRdDKcfcJwItV1776t6FhBOIM3fNWM231b+rAZAJ
- LK7zLBScgquMuYWRiBHXtZtc43g1pVtVlI5IgGY97xeYadOyamedWZcLJv1bqdJTxeRm
- Cxjw==
+ bh=GKwfCk465sr7WgOHafBJgyo22SuG659wATLOZz6Tx48=;
+ b=oEJUch4Dc/caW6XAjaleA1rEpatNBqm53C76Iw0TZQSduwVuzdyc6m6+FbwdzZ+lef
+ Yw0qxKXpK1ePsD0olMUoTvKNBw9AA6GEVccXGC3G6LqwqhukLfDGda6gPTW8n99L8wUj
+ pDAoQeLaaXja8jlLKf1XrGUB66poVhJrZp2S6bUspJhbGZPWIMYCbjwtYLN6GWrApZ5+
+ zlYN/Nk6+LNHnavDFRsYJmk+upuqF+Rw6LUdpEkA5dVtz9Ux3Z9OtXnC2UuJtgnrnYIW
+ Z05o6y6HB0mKc3X5n5Fi9+/sM9ExnwJNdvd5O+jDECJyGS1uSXfYIGVLQUdV/vxhGufO
+ ue4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726709; x=1719331509;
+ d=1e100.net; s=20230601; t=1718726489; x=1719331289;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UQ/vKPLAFvWQQZA4qFYQnETyiIwxVEeu0Q/3lMWAKrA=;
- b=nkSUkmHHu5K8nOjqrX5146Y0gBr+0awcwvfvTezlapi36Zn43IhxSPxeU9D8uFVuh7
- Bql6+SzGCHPBZ/x/6dzW4FuVWKmzmVD5Ou3edNmzRF6JfRQvEXoM1T2WH8w7PqkeYfpS
- 39YhwckRp8nxE7JiHnjY16WD/6dtJ6h5g9HJzBtM486HxKMWBA0F2M8KZ2F92PVF1GRD
- 7cacmODvmLpQScNO8GFWnpv0RBh4PvX9JmwBkIFsBlW75N0i8h1F21eIf9mwxcI8OPLP
- XVF97hPQycLBsvUNXx844WoM4ELdmVInJL7ZcwAFR3szbsXFdh4XOwAu994pim1sU2ER
- SDPA==
-X-Gm-Message-State: AOJu0YxVNNT1nY0RNBgFh7PGEXBpRaJ5asaFFUtZ0USsVlbmCYLTRvlI
- MC2lFzFczdlRyfJeAZfwTtUTyQyqCTRq6KyipLL+wu4GSM+T1pRKsvBwqJmgzqdH/76nxrEL0dz
- 6
-X-Google-Smtp-Source: AGHT+IFykRa0PGNS6eCdb7IPjVQVm4WpA1jj6imDxrBYQ2/I1blsqacL5oELr7NeSsXionO1xR5NPg==
-X-Received: by 2002:a17:907:874e:b0:a6f:7834:d40a with SMTP id
- a640c23a62f3a-a6f7834d63fmr593235266b.24.1718726709556; 
- Tue, 18 Jun 2024 09:05:09 -0700 (PDT)
+ bh=GKwfCk465sr7WgOHafBJgyo22SuG659wATLOZz6Tx48=;
+ b=mPOQNP59bPVEA6iicOWp7VrDf2cCdrQmz6LYzdqcekz12foPm1cZz16XXI1kvDz9ts
+ 9I+rarTKICvJf8RhvFHqAJxdc+eEnFc1gzY9wpL71j2bPZp1XoSit7I1mf4ZWJ/JDoDQ
+ NWjkKEfo0jFnVOFjavUa0BFAUOb58V5Y4y9FzxsxHhVBEwXjHbXPKPY+S3ZJLLheqSJY
+ WXYhNCsX4hlfdpD8fCAcY5XNAtjuJiMMY4XPf7auIWDBA/5TdD3qJWLFPTNj92OoIdg2
+ O6FE8elQdnXm4H1EN107l40qCYrm1aKYGhPyDgmk8huFmbFxsaY7GRghGQtmuP52vgff
+ 2eyg==
+X-Gm-Message-State: AOJu0Yw0c3z8k9glS9Ab1J4lH7hMLrLGhGfv9IkHlgAYDQYsz+uhRWjo
+ ef5FWOztiot7qFMJeZpGPq+FzRaADV1hwcZW3y+i8ml+lswSIHBRyQcRsuhEFLqQFqdk4gFqEY1
+ T
+X-Google-Smtp-Source: AGHT+IGQQiYMDvRO71dvEcFEJctaLix1l9htSjRP2+coMaY+M/7vaQi9rR7exoCUmatmhjG38T3VTg==
+X-Received: by 2002:a17:906:fb8f:b0:a6f:49bc:e858 with SMTP id
+ a640c23a62f3a-a6f60dc5110mr1012212966b.53.1718726489107; 
+ Tue, 18 Jun 2024 09:01:29 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56f99b67sm625233066b.201.2024.06.18.09.05.08
+ a640c23a62f3a-a6f57552633sm625781966b.191.2024.06.18.09.01.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:05:09 -0700 (PDT)
+ Tue, 18 Jun 2024 09:01:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 46/76] hw/ppc: Avoid using Monitor in pnv_xive2_pic_print_info()
-Date: Tue, 18 Jun 2024 18:00:08 +0200
-Message-ID: <20240618160039.36108-47-philmd@linaro.org>
+ Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL 08/76] hw/i386/pc: Remove deprecated pc-i440fx-2.1 machine
+Date: Tue, 18 Jun 2024 17:59:30 +0200
+Message-ID: <20240618160039.36108-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,86 +95,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace Monitor API by HumanReadableText one.
+The pc-i440fx-2.1 machine was deprecated for the 8.2
+release (see commit c7437f0ddb "docs/about: Mark the
+old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
+time to remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-Id: <20240610062105.49848-23-philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240617071118.60464-9-philmd@linaro.org>
 ---
- include/hw/ppc/pnv_xive.h | 2 +-
- hw/intc/pnv_xive2.c       | 9 +--------
- hw/ppc/pnv.c              | 2 +-
- 3 files changed, 3 insertions(+), 10 deletions(-)
+ docs/about/deprecated.rst       |  2 +-
+ docs/about/removed-features.rst |  2 +-
+ include/hw/i386/pc.h            |  3 ---
+ hw/i386/pc.c                    |  7 -------
+ hw/i386/pc_piix.c               | 23 -----------------------
+ 5 files changed, 2 insertions(+), 35 deletions(-)
 
-diff --git a/include/hw/ppc/pnv_xive.h b/include/hw/ppc/pnv_xive.h
-index 7d634e469c..5b4cb4167b 100644
---- a/include/hw/ppc/pnv_xive.h
-+++ b/include/hw/ppc/pnv_xive.h
-@@ -163,6 +163,6 @@ typedef struct PnvXive2Class {
-     DeviceRealize parent_realize;
- } PnvXive2Class;
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index e12eab1f72..e332eb46e9 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -212,7 +212,7 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
+ better reflects the way this property affects all random data within
+ the device tree blob, not just the ``kaslr-seed`` node.
  
--void pnv_xive2_pic_print_info(PnvXive2 *xive, Monitor *mon);
-+void pnv_xive2_pic_print_info(PnvXive2 *xive, GString *buf);
+-``pc-i440fx-2.1`` up to ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.4`` up to ``pc-i440fx-2.12`` (since 9.1)
++``pc-i440fx-2.2`` up to ``pc-i440fx-2.3`` (since 8.2) and ``pc-i440fx-2.4`` up to ``pc-i440fx-2.12`` (since 9.1)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
  
- #endif /* PPC_PNV_XIVE_H */
-diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-index 10914b04df..2fb4fa29d4 100644
---- a/hw/intc/pnv_xive2.c
-+++ b/hw/intc/pnv_xive2.c
-@@ -10,11 +10,9 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "qapi/error.h"
--#include "qapi/type-helpers.h"
- #include "target/ppc/cpu.h"
- #include "sysemu/cpus.h"
- #include "sysemu/dma.h"
--#include "monitor/monitor.h"
- #include "hw/ppc/fdt.h"
- #include "hw/ppc/pnv.h"
- #include "hw/ppc/pnv_chip.h"
-@@ -2105,7 +2103,7 @@ static uint64_t pnv_xive2_vst_per_subpage(PnvXive2 *xive, uint32_t type)
-     return (1ull << page_shift) / info->size;
- }
+ These old machine types are quite neglected nowadays and thus might have
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index f84bfaf2b6..347e04e50e 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -948,7 +948,7 @@ mips ``fulong2e`` machine alias (removed in 6.0)
  
--void pnv_xive2_pic_print_info(PnvXive2 *xive, Monitor *mon)
-+void pnv_xive2_pic_print_info(PnvXive2 *xive, GString *buf)
- {
-     Xive2Router *xrtr = XIVE2_ROUTER(xive);
-     uint8_t blk = pnv_xive2_block_id(xive);
-@@ -2117,8 +2115,6 @@ void pnv_xive2_pic_print_info(PnvXive2 *xive, Monitor *mon)
-     Xive2Nvp nvp;
-     int i;
-     uint64_t xive_nvp_per_subpage;
--    g_autoptr(GString) buf = g_string_new("");
--    g_autoptr(HumanReadableText) info = NULL;
+ This machine has been renamed ``fuloong2e``.
  
-     g_string_append_printf(buf, "XIVE[%x] Source %08x .. %08x\n",
-                            blk, srcno0, srcno0 + nr_esbs - 1);
-@@ -2156,7 +2152,4 @@ void pnv_xive2_pic_print_info(PnvXive2 *xive, Monitor *mon)
-             xive2_nvp_pic_print_info(&nvp, i++, buf);
-         }
-     }
+-``pc-0.10`` up to ``pc-i440fx-2.0`` (removed in 4.0 up to 9.0)
++``pc-0.10`` up to ``pc-i440fx-2.1`` (removed in 4.0 up to 9.0)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ These machine types were very old and likely could not be used for live
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 434e531160..0d730318fe 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -314,9 +314,6 @@ extern const size_t pc_compat_2_3_len;
+ extern GlobalProperty pc_compat_2_2[];
+ extern const size_t pc_compat_2_2_len;
+ 
+-extern GlobalProperty pc_compat_2_1[];
+-extern const size_t pc_compat_2_1_len;
 -
--    info = human_readable_text_from_str(buf);
--    monitor_puts(mon, info->human_readable_text);
+ #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+     static void pc_machine_##suffix##_class_init(ObjectClass *oc, void *data) \
+     { \
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index d0f2628d46..b0b8ecd64d 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -313,13 +313,6 @@ GlobalProperty pc_compat_2_2[] = {
+ };
+ const size_t pc_compat_2_2_len = G_N_ELEMENTS(pc_compat_2_2);
+ 
+-GlobalProperty pc_compat_2_1[] = {
+-    PC_CPU_MODEL_IDS("2.1.0")
+-    { "coreduo" "-" TYPE_X86_CPU, "vmx", "on" },
+-    { "core2duo" "-" TYPE_X86_CPU, "vmx", "on" },
+-};
+-const size_t pc_compat_2_1_len = G_N_ELEMENTS(pc_compat_2_1);
+-
+ GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled)
+ {
+     GSIState *s;
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index a750a0e6ab..e0b421dd51 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -66,7 +66,6 @@
+ #include "hw/hyperv/vmbus-bridge.h"
+ #include "hw/mem/nvdimm.h"
+ #include "hw/i386/acpi-build.h"
+-#include "kvm/kvm-cpu.h"
+ #include "target/i386/cpu.h"
+ 
+ #define XEN_IOAPIC_NUM_PIRQS 128ULL
+@@ -435,12 +434,6 @@ static void pc_compat_2_2_fn(MachineState *machine)
+     pc_compat_2_3_fn(machine);
  }
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 4a1a302a25..5b9dbff754 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -864,7 +864,7 @@ static void pnv_chip_power10_pic_print_info(PnvChip *chip, Monitor *mon)
-     g_autoptr(GString) buf = g_string_new("");
-     g_autoptr(HumanReadableText) info = NULL;
  
--    pnv_xive2_pic_print_info(&chip10->xive, mon);
-+    pnv_xive2_pic_print_info(&chip10->xive, buf);
+-static void pc_compat_2_1_fn(MachineState *machine)
+-{
+-    pc_compat_2_2_fn(machine);
+-    x86_cpu_change_kvm_default("svm", NULL);
+-}
+-
+ #ifdef CONFIG_ISAPC
+ static void pc_init_isa(MachineState *machine)
+ {
+@@ -866,22 +859,6 @@ static void pc_i440fx_2_2_machine_options(MachineClass *m)
+ DEFINE_I440FX_MACHINE(v2_2, "pc-i440fx-2.2", pc_compat_2_2_fn,
+                       pc_i440fx_2_2_machine_options);
  
-     pnv_psi_pic_print_info(&chip10->psi, buf);
-     info = human_readable_text_from_str(buf);
+-static void pc_i440fx_2_1_machine_options(MachineClass *m)
+-{
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-
+-    pc_i440fx_2_2_machine_options(m);
+-    m->hw_version = "2.1.0";
+-    m->default_display = NULL;
+-    compat_props_add(m->compat_props, hw_compat_2_1, hw_compat_2_1_len);
+-    compat_props_add(m->compat_props, pc_compat_2_1, pc_compat_2_1_len);
+-    pcmc->smbios_uuid_encoded = false;
+-    pcmc->enforce_aligned_dimm = false;
+-}
+-
+-DEFINE_I440FX_MACHINE(v2_1, "pc-i440fx-2.1", pc_compat_2_1_fn,
+-                      pc_i440fx_2_1_machine_options);
+-
+ #ifdef CONFIG_ISAPC
+ static void isapc_machine_options(MachineClass *m)
+ {
 -- 
 2.41.0
 
