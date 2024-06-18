@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 099B3C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 614BEC2BB85
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbN6-0004Tn-1s; Tue, 18 Jun 2024 12:07:48 -0400
+	id 1sJbJp-0003vD-T3; Tue, 18 Jun 2024 12:04:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbN3-0004MM-T7
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:07:45 -0400
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJn-0003rJ-Ab
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:04:23 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbN1-00081v-UQ
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:07:45 -0400
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-52bc274f438so6003000e87.0
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:07:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJk-0007Ez-DW
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:04:23 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-57c778b5742so6562143a12.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:04:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726862; x=1719331662; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726658; x=1719331458; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s1CzEgsqs5Q5WzI+sZtnD/HRhJpPC0ikB+DYXS0unQ8=;
- b=uPbRMYM0U8RZ7tnUA1myn7e9KJzt8mn36dK6SePyQ9ap87NaySfyG9r9UHbv9bDnQk
- a+g3sdOtaHCev5uxhBf0FT91QgF2QqJQwa8KZtWRhRv10DG5FG+ERd4f0G8kZdg/Z9EY
- xEoSmu0sqIfDki2pG/r+icUkQXMTUtdXR78F61DVHuyCoooAIJg2cZwncFhoUKLcfUKU
- +fI9uX4hehZINTTeVxIb3YlX3JIjhXnDIHfaD7dCRk32ZBqJfqc87Jk03QXUk5zUNK/b
- kB6sR6UGXeROQ2pn284GJgB/lOPAvIyrJqZTvq9Ezc2dwH/f8N7jRfu3OHn1a9vIvfZ0
- f9Ug==
+ bh=VFMERdu5BxdLlmHi+3GbOTwf7lyqGeSd5tYPeFoN3L0=;
+ b=gVGPKBiDqFia8h3/YmO9Qb8WmIf5+YoAIMT/ZTIWNWiSSzfdhhgGMaszTJgbL1ocmD
+ uyUWSEfcvKPrNSLJ6iFOGPy1PcwBKupapzHrB6lQJpdppj+Pf8AUNOrinwJWbYDDNi3S
+ +ILMA3AU22ncZFk+8cWMMwbtnDcl0ssLAMWB0xS41J/l8q859KMAffCaEEsVoLy4SVjB
+ 6GuSdcqWevtN9+BPwi8OQmLMNLlahMRxtvgjJ2Sc3CmNbwgDns12ItBlovrOmx133S1J
+ eDWhXJ6RRcV8oLckRYlA0FReXht3dr2SlzpuYgTA9IX52+46AV1i174hpBn/ZcOmkPta
+ EzWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726862; x=1719331662;
+ d=1e100.net; s=20230601; t=1718726658; x=1719331458;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s1CzEgsqs5Q5WzI+sZtnD/HRhJpPC0ikB+DYXS0unQ8=;
- b=vS9MvPueT5sByr10nXNe5nPrlTPz8l/aF8QHWu1VBndtOj8VhKNAEHvYDSzar/Be5b
- gxztAg6BC79ImeRYDmbiOurOqaqDiUqSlFNwuNDVMDRPLXfIbiLgGn2Ztj4tZQUarSeB
- NuA02YFB5iZxyNBBsTGpiEa09PPg0ERqSlY9tL6At3CfPjzurVDL6y3Ai2spV4ht6yl3
- scnxQwFSeDNN1ijypUIusNJrxWFllVoq+1LJSJ+xwx8GVMie7dzltx6J2jrvl5mOaz0k
- umT/LPJlQBELMfr/z8lnhptRs75MSdfJ4143DphIFujAz8E9cAWOdPtYuVaX0A1zLgn0
- QYnA==
-X-Gm-Message-State: AOJu0Yw2VHU70I/Bc3HDnkxZWUBrW+cwbN6hpnDwajgc8E+/2BqbI2n4
- rzFTAzzVFYt5yGc8SpcJeEDOG1gY/6+XdlKTeHL8HJW0Vr0y+rHiN5oSQpPzOOJsZvZTKUTgYM5
- z
-X-Google-Smtp-Source: AGHT+IH1GGbEnEWEPgAzM0J6HLVaClLpbTIyMgRjED95w8TtbGrWkNHZfoPApX8OiSbbqidwunTuDg==
-X-Received: by 2002:a05:6512:b0d:b0:52c:a1ad:18bd with SMTP id
- 2adb3069b0e04-52ccaa59580mr58703e87.6.1718726860905; 
- Tue, 18 Jun 2024 09:07:40 -0700 (PDT)
+ bh=VFMERdu5BxdLlmHi+3GbOTwf7lyqGeSd5tYPeFoN3L0=;
+ b=hu2N9u2aEaQwF50Qvi5gt5EdMdJTGqQ2MyTkX1vgHtWR8E/O7hp0JMg+1btMaRhsy4
+ 6zmDWodyvpz1Lp9JIZmsvQ0qRQNngrsZnmRb+Z7Uj604VGjPqZw/yPSLpnPn2s8MxdX0
+ JwUWJkFtj+3wIFXjFRF/cc6dAcvbTLjXHwLFVgLndnussdufkHVVC3/Llyo+JNx6kAwD
+ AwINEbRFwzZb/klBSY5TEs5beghhIicyvcQqdZvvtUqzifIjZVmwja6zu+9IIIpfUA0C
+ GPuLT7agC4MVjXFBFtwtkPW0qzDXy3UOoTAK8ch9X4rPD4f3kmcX7gdInnKUiZzNo1PH
+ m12g==
+X-Gm-Message-State: AOJu0YwcNZ99NkrUTSOOdKmcLH1A7jTQ4q/D0/rWVViErq8s14E7b9SF
+ c5F3hSe1/HXSgkKLH5MVt8vTx6jhv8OV+oH6mJm9XazfSUnaFvQ1Jmt3MnlsH9Wsl9lNHtvYlJE
+ Z
+X-Google-Smtp-Source: AGHT+IFP0UUUCCIrNHBq+l4kw1cseuEgYyEK+/UjXIGr7uaigPcKgEUUsJBR/SmOdFLrxE5tIOa98Q==
+X-Received: by 2002:a17:906:9c89:b0:a6f:9f4a:fb11 with SMTP id
+ a640c23a62f3a-a6f9f4afccfmr77583866b.28.1718726658513; 
+ Tue, 18 Jun 2024 09:04:18 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36075104a8fsm14332891f8f.110.2024.06.18.09.07.39
+ a640c23a62f3a-a6f56f43220sm625702166b.185.2024.06.18.09.04.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:07:40 -0700 (PDT)
+ Tue, 18 Jun 2024 09:04:18 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 73/76] ui/cocoa: Use qemu_add_mouse_change_notifier
-Date: Tue, 18 Jun 2024 18:00:35 +0200
-Message-ID: <20240618160039.36108-74-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 37/76] hw/ppc: Avoid using Monitor in
+ xive_end_eas_pic_print_info()
+Date: Tue, 18 Jun 2024 17:59:59 +0200
+Message-ID: <20240618160039.36108-38-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x130.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,141 +97,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Replace Monitor API by HumanReadableText one.
 
-This eliminates the polling in cocoa_refresh and implements the
-propagation of the mouse mode change from absolute to relative.
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Message-ID: <20240322-mouse-v1-1-0b7d4d9bdfbf@daynix.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Message-Id: <20240610062105.49848-14-philmd@linaro.org>
 ---
- ui/cocoa.m | 62 +++++++++++++++++++++++++++++++++---------------------
- 1 file changed, 38 insertions(+), 24 deletions(-)
+ include/hw/ppc/xive_regs.h |  2 +-
+ hw/intc/pnv_xive.c         |  9 +++++----
+ hw/intc/xive.c             | 22 ++++++++++------------
+ 3 files changed, 16 insertions(+), 17 deletions(-)
 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index 981615a8b9..2935247cdd 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -296,6 +296,14 @@ @interface QemuCocoaView : NSView
- {
-     QEMUScreen screen;
-     pixman_image_t *pixman_image;
-+    /* The state surrounding mouse grabbing is potentially confusing.
-+     * isAbsoluteEnabled tracks qemu_input_is_absolute() [ie "is the emulated
-+     *   pointing device an absolute-position one?"], but is only updated on
-+     *   next refresh.
-+     * isMouseGrabbed tracks whether GUI events are directed to the guest;
-+     *   it controls whether special keys like Cmd get sent to the guest,
-+     *   and whether we capture the mouse when in non-absolute mode.
-+     */
-     BOOL isMouseGrabbed;
-     BOOL isAbsoluteEnabled;
-     CFMachPortRef eventsTap;
-@@ -307,17 +315,8 @@ - (void) setFullGrab:(id)sender;
- - (void) handleMonitorInput:(NSEvent *)event;
- - (bool) handleEvent:(NSEvent *)event;
- - (bool) handleEventLocked:(NSEvent *)event;
--- (void) setAbsoluteEnabled:(BOOL)tIsAbsoluteEnabled;
--/* The state surrounding mouse grabbing is potentially confusing.
-- * isAbsoluteEnabled tracks qemu_input_is_absolute() [ie "is the emulated
-- *   pointing device an absolute-position one?"], but is only updated on
-- *   next refresh.
-- * isMouseGrabbed tracks whether GUI events are directed to the guest;
-- *   it controls whether special keys like Cmd get sent to the guest,
-- *   and whether we capture the mouse when in non-absolute mode.
-- */
-+- (void) notifyMouseModeChange;
- - (BOOL) isMouseGrabbed;
--- (BOOL) isAbsoluteEnabled;
- - (QEMUScreen) gscreen;
- - (void) raiseAllKeys;
- @end
-@@ -404,6 +403,7 @@ - (void) selectConsoleLocked:(unsigned int)index
-     qkbd_state_switch_console(kbd, con);
-     dcl.con = con;
-     register_displaychangelistener(&dcl);
-+    [self notifyMouseModeChange];
-     [self updateUIInfo];
- }
+diff --git a/include/hw/ppc/xive_regs.h b/include/hw/ppc/xive_regs.h
+index 5e6f9d1be4..b9db7abc2e 100644
+--- a/include/hw/ppc/xive_regs.h
++++ b/include/hw/ppc/xive_regs.h
+@@ -263,7 +263,7 @@ static inline uint64_t xive_end_qaddr(XiveEND *end)
  
-@@ -1109,14 +1109,26 @@ - (void) ungrabMouse
-     [self raiseAllButtons];
- }
+ void xive_end_pic_print_info(XiveEND *end, uint32_t end_idx, GString *buf);
+ void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, GString *buf);
+-void xive_end_eas_pic_print_info(XiveEND *end, uint32_t end_idx, Monitor *mon);
++void xive_end_eas_pic_print_info(XiveEND *end, uint32_t end_idx, GString *buf);
  
--- (void) setAbsoluteEnabled:(BOOL)tIsAbsoluteEnabled {
-+- (void) notifyMouseModeChange {
-+    bool tIsAbsoluteEnabled = bool_with_bql(^{
-+        return qemu_input_is_absolute(dcl.con);
-+    });
-+
-+    if (tIsAbsoluteEnabled == isAbsoluteEnabled) {
-+        return;
-+    }
-+
-     isAbsoluteEnabled = tIsAbsoluteEnabled;
-+
-     if (isMouseGrabbed) {
--        CGAssociateMouseAndMouseCursorPosition(isAbsoluteEnabled);
-+        if (isAbsoluteEnabled) {
-+            [self ungrabMouse];
-+        } else {
-+            CGAssociateMouseAndMouseCursorPosition(isAbsoluteEnabled);
-+        }
+ /* Notification Virtual Target (NVT) */
+ typedef struct XiveNVT {
+diff --git a/hw/intc/pnv_xive.c b/hw/intc/pnv_xive.c
+index 1dddbf7827..a0c6dee5db 100644
+--- a/hw/intc/pnv_xive.c
++++ b/hw/intc/pnv_xive.c
+@@ -1881,14 +1881,15 @@ void pnv_xive_pic_print_info(PnvXive *xive, Monitor *mon)
+     while (!xive_router_get_end(xrtr, blk, i, &end)) {
+         xive_end_pic_print_info(&end, i++, buf);
      }
+-    info = human_readable_text_from_str(buf);
+-    monitor_puts(mon, info->human_readable_text);
+ 
+-    monitor_printf(mon, "XIVE[%x] #%d END Escalation EAT\n", chip_id, blk);
++    g_string_append_printf(buf, "XIVE[%x] #%d END Escalation EAT\n",
++                           chip_id, blk);
+     i = 0;
+     while (!xive_router_get_end(xrtr, blk, i, &end)) {
+-        xive_end_eas_pic_print_info(&end, i++, mon);
++        xive_end_eas_pic_print_info(&end, i++, buf);
+     }
++    info = human_readable_text_from_str(buf);
++    monitor_puts(mon, info->human_readable_text);
+ 
+     monitor_printf(mon, "XIVE[%x] #%d NVTT %08x .. %08x\n", chip_id, blk,
+                    0, XIVE_NVT_COUNT - 1);
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index f631d7cd6e..70f11f993b 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -17,7 +17,6 @@
+ #include "sysemu/reset.h"
+ #include "hw/qdev-properties.h"
+ #include "migration/vmstate.h"
+-#include "monitor/monitor.h"
+ #include "hw/irq.h"
+ #include "hw/ppc/xive.h"
+ #include "hw/ppc/xive2.h"
+@@ -1419,8 +1418,7 @@ static void xive_end_enqueue(XiveEND *end, uint32_t data)
+     end->w1 = xive_set_field32(END_W1_PAGE_OFF, end->w1, qindex);
  }
- - (BOOL) isMouseGrabbed {return isMouseGrabbed;}
--- (BOOL) isAbsoluteEnabled {return isAbsoluteEnabled;}
- - (QEMUScreen) gscreen {return screen;}
+ 
+-void xive_end_eas_pic_print_info(XiveEND *end, uint32_t end_idx,
+-                                   Monitor *mon)
++void xive_end_eas_pic_print_info(XiveEND *end, uint32_t end_idx, GString *buf)
+ {
+     XiveEAS *eas = (XiveEAS *) &end->w4;
+     uint8_t pq;
+@@ -1431,15 +1429,15 @@ void xive_end_eas_pic_print_info(XiveEND *end, uint32_t end_idx,
+ 
+     pq = xive_get_field32(END_W1_ESe, end->w1);
+ 
+-    monitor_printf(mon, "  %08x %c%c %c%c end:%02x/%04x data:%08x\n",
+-                   end_idx,
+-                   pq & XIVE_ESB_VAL_P ? 'P' : '-',
+-                   pq & XIVE_ESB_VAL_Q ? 'Q' : '-',
+-                   xive_eas_is_valid(eas) ? 'V' : ' ',
+-                   xive_eas_is_masked(eas) ? 'M' : ' ',
+-                   (uint8_t)  xive_get_field64(EAS_END_BLOCK, eas->w),
+-                   (uint32_t) xive_get_field64(EAS_END_INDEX, eas->w),
+-                   (uint32_t) xive_get_field64(EAS_END_DATA, eas->w));
++    g_string_append_printf(buf, "  %08x %c%c %c%c end:%02x/%04x data:%08x\n",
++                           end_idx,
++                           pq & XIVE_ESB_VAL_P ? 'P' : '-',
++                           pq & XIVE_ESB_VAL_Q ? 'Q' : '-',
++                           xive_eas_is_valid(eas) ? 'V' : ' ',
++                           xive_eas_is_masked(eas) ? 'M' : ' ',
++                           (uint8_t)  xive_get_field64(EAS_END_BLOCK, eas->w),
++                           (uint32_t) xive_get_field64(EAS_END_INDEX, eas->w),
++                           (uint32_t) xive_get_field64(EAS_END_DATA, eas->w));
+ }
  
  /*
-@@ -1791,6 +1803,17 @@ static void addRemovableDevicesMenuItems(void)
-     qapi_free_BlockInfoList(pointerToFree);
- }
- 
-+static void cocoa_mouse_mode_change_notify(Notifier *notifier, void *data)
-+{
-+    dispatch_async(dispatch_get_main_queue(), ^{
-+        [cocoaView notifyMouseModeChange];
-+    });
-+}
-+
-+static Notifier mouse_mode_change_notifier = {
-+    .notify = cocoa_mouse_mode_change_notify
-+};
-+
- @interface QemuCocoaPasteboardTypeOwner : NSObject<NSPasteboardTypeOwner>
- @end
- 
-@@ -1975,17 +1998,6 @@ static void cocoa_refresh(DisplayChangeListener *dcl)
-     COCOA_DEBUG("qemu_cocoa: cocoa_refresh\n");
-     graphic_hw_update(dcl->con);
- 
--    if (qemu_input_is_absolute(dcl->con)) {
--        dispatch_async(dispatch_get_main_queue(), ^{
--            if (![cocoaView isAbsoluteEnabled]) {
--                if ([cocoaView isMouseGrabbed]) {
--                    [cocoaView ungrabMouse];
--                }
--            }
--            [cocoaView setAbsoluteEnabled:YES];
--        });
--    }
--
-     if (cbchangecount != [[NSPasteboard generalPasteboard] changeCount]) {
-         qemu_clipboard_info_unref(cbinfo);
-         cbinfo = qemu_clipboard_info_new(&cbpeer, QEMU_CLIPBOARD_SELECTION_CLIPBOARD);
-@@ -2062,6 +2074,8 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
- 
-     // register vga output callbacks
-     register_displaychangelistener(&dcl);
-+    qemu_add_mouse_mode_change_notifier(&mouse_mode_change_notifier);
-+    [cocoaView notifyMouseModeChange];
-     [cocoaView updateUIInfo];
- 
-     qemu_event_init(&cbevent, false);
 -- 
 2.41.0
 
