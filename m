@@ -4,94 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9D00C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 11:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FAAFC2BA15
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 11:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJX5Q-0001YS-5P; Tue, 18 Jun 2024 07:33:17 -0400
+	id 1sJX5k-0001f1-LY; Tue, 18 Jun 2024 07:33:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sJX5J-0001Xi-5z
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:33:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sJX5H-0000lF-AE
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:33:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718710386;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tqBUnVwDi1Ytkc9nZ+8UC7nHlC1l06ln4Wn3LWka7q8=;
- b=IsWSXZrKOVdgktmz3hwFNfKMZFRHxyLpCICHAZV7577QAsCAspxEEl0lTKJd04+B7TZki1
- nWlmVd9oEd+iv59c7G11wd12tep8DTPs2Ur0YyMwYDR24J1jGH9MDUoR9rGi2Go6m95NLM
- 6NOG7vKsbyjNO3jARBb9pWs1jELMTkw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-zUyAOnxtOzyf2F9VmXwEhw-1; Tue,
- 18 Jun 2024 07:33:03 -0400
-X-MC-Unique: zUyAOnxtOzyf2F9VmXwEhw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 72EC119560AB; Tue, 18 Jun 2024 11:32:59 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4C85019560AF; Tue, 18 Jun 2024 11:32:58 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1BCF021E6621; Tue, 18 Jun 2024 13:32:56 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Fabiano
- Rosas <farosas@suse.de>,  Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,  Ani
- Sinha <anisinha@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Kevin
- Wolf <kwolf@redhat.com>,  Jiri Pirko <jiri@resnulli.us>,  Mads Ynddal
- <mads@ynddal.dk>,  Jason Wang <jasowang@redhat.com>,  Igor Mammedov
- <imammedo@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-block@nongnu.org,  Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Victor Toso de Carvalho <victortoso@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,  Lukas Straub
- <lukasstraub2@web.de>,  Yanan Wang <wangyanan55@huawei.com>,  Hanna Reitz
- <hreitz@redhat.com>
-Subject: Re: [PATCH 09/20] qapi/parser: add undocumented stub members to
- all_sections
-In-Reply-To: <CAFn=p-YTa=z5Y5p+S+MN__kEuxf_H36K+=QPNNBdh6wEaZBrkw@mail.gmail.com>
- (John Snow's message of "Mon, 17 Jun 2024 12:54:26 -0400")
-References: <20240514215740.940155-1-jsnow@redhat.com>
- <20240514215740.940155-10-jsnow@redhat.com>
- <87tthv52ja.fsf@pond.sub.org>
- <CAFn=p-YTa=z5Y5p+S+MN__kEuxf_H36K+=QPNNBdh6wEaZBrkw@mail.gmail.com>
-Date: Tue, 18 Jun 2024 13:32:56 +0200
-Message-ID: <87msni7afr.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJX5j-0001ed-3i
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:33:35 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJX5g-0000ny-3X
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:33:34 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a6ef8bf500dso599029066b.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 04:33:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718710410; x=1719315210; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=d5ML9b+eMPcJmw9zzsqMAKvF7/Tj1miwAlg/jvjxUfE=;
+ b=RAJp2qhAvL0+sECR076OPfDzW0kSy1YemQQeI7xSfdALA5TdvPgq6vBH/HVcD0D1Ka
+ Bos565iB5Q+Ujh0TJGQWnLv8l8GLQh2oSkAGp0bZJzA/Eunp++RgLSjhgvfz9Oi9BNqF
+ s4sQkizb9W5/qNHr47jZSHsAfPRCyZCrQT4r49TY8Rx3fKznxRYpH0Jms2P8EA79PABF
+ gSq+lKnuMIlBg8/gQVBCK9ZD+1YnYBQaYrHFTIoKnYrvo6UJ3SkDkZioT3wpW5Z3Dg0r
+ E04Veoj8224hSqptvkLB9TTI38gQvpnu9B8atC6T8feIr8nmQPwkYsZ9Pmv8zYASQTAn
+ fXuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718710410; x=1719315210;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=d5ML9b+eMPcJmw9zzsqMAKvF7/Tj1miwAlg/jvjxUfE=;
+ b=T3Tzfb5IlPfKbHDhA+lZ5GsUxfOQfbiPqUkhieNyWQkpL/X4Q1pTKiNoY9Y1QlDQVL
+ XYpYQwSUz/PyK72aCKCShFHm2Qd9WJUQLRoccuViP6trmZG+/n0ZsRt9l/jyeGYLSk4Z
+ iboWfHl9dGYCqwI+QAzck3zY1L9zc3/aTQRPcuj63k7P/csWw+8N479ZpKxMJdbhDRlb
+ rrHToiAIiCYAXsa2GgnZ8nrHiPCE8HLLUSLKrHGiA2nJJZAAy3EFryJpoxN7dP09NTwj
+ LEeIhcaZFLDhv1ZkzQPlD6Rp1ju17pD5auAHZPqej9RTfTDwwD47YIWShFBNlRab6Tsf
+ 9sCw==
+X-Gm-Message-State: AOJu0YwX3DxkY7Mrb8mm694rx5FH30rkObxU51K+ondiUergK5uqiztB
+ Pe2C5dD20dtZiIzR9yN5rY0FJjacMfEFtlxKD69YN2uvUIZEeVslUy8F+mapBTU=
+X-Google-Smtp-Source: AGHT+IEAzpLKduGr1bqlKHZYofw+trIEKDKG0gjAzQnqfAC4ds7XCHW/JPjk3vAfcxBlVGqN8qwr0A==
+X-Received: by 2002:a17:906:d104:b0:a6f:51d5:ef0d with SMTP id
+ a640c23a62f3a-a6f60dc7ffcmr841762966b.60.1718710410291; 
+ Tue, 18 Jun 2024 04:33:30 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.212.55])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6f56db67c4sm611979466b.60.2024.06.18.04.33.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Jun 2024 04:33:29 -0700 (PDT)
+Message-ID: <8a22ada3-34e6-4d6d-aebe-67bc07d0f38f@linaro.org>
+Date: Tue, 18 Jun 2024 13:33:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] semihosting: Restrict to TCG
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Anton Johansson <anjo@rev.ng>
+References: <20240529155548.5878-1-philmd@linaro.org>
+ <20240529155548.5878-4-philmd@linaro.org>
+ <CABgObfYmuvMq80Xz0ZBZQiHmKgoiSTVVqio8FmmpttT8rg64kA@mail.gmail.com>
+ <7ce86375-779d-43d6-9871-7f9587c95ba6@linaro.org>
+ <CABgObfbvjG9bBgCwM-kL+YhjhMw1qLnQdQToCEkKW+V3trskoA@mail.gmail.com>
+ <d2b81c56-a57c-4fbe-a65e-86e9755e7c48@linaro.org>
+ <5c913504-d917-4fd1-86d5-85d3bc293623@linaro.org>
+Content-Language: en-US
+In-Reply-To: <5c913504-d917-4fd1-86d5-85d3bc293623@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,188 +100,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+ping :)
 
-> On Fri, Jun 14, 2024 at 4:53=E2=80=AFAM Markus Armbruster <armbru@redhat.=
-com> wrote:
->
->> John Snow <jsnow@redhat.com> writes:
->>
->> > This helps simplify the doc generator if it doesn't have to check for
->> > undocumented members.
->> >
->> > Signed-off-by: John Snow <jsnow@redhat.com>
->> > ---
->> >  scripts/qapi/parser.py | 20 ++++++++++++++++++--
->> >  1 file changed, 18 insertions(+), 2 deletions(-)
->> >
->> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
->> > index b1794f71e12..3cd8e7ee295 100644
->> > --- a/scripts/qapi/parser.py
->> > +++ b/scripts/qapi/parser.py
->> > @@ -740,8 +740,24 @@ def connect_member(self, member: 'QAPISchemaMembe=
-r') -> None:
->> >                  raise QAPISemError(member.info,
->> >                                     "%s '%s' lacks documentation"
->> >                                     % (member.role, member.name))
->> > -            self.args[member.name] =3D QAPIDoc.ArgSection(
->> > -                self.info, '@' + member.name, 'member')
->> > +
->> > +            # Insert stub documentation section for missing member do=
-cs.
->> > +            section =3D QAPIDoc.ArgSection(
->> > +                self.info, f"@{member.name}", "member")
->>
->> Although I like f-strings in general, I'd pefer to stick to '@' +
->> member.name here, because it's simpler.
->
-> Tomayto, Tomahto. (OK.)
-
-Apropos healthy vegetables: at some time, we might want to mass-convert
-to f-strings where they are easier to read.
-
->> Also, let's not change 'member' to "member".  Existing practice: single
->> quotes for string literals unless double quotes avoid escapes.  Except
->> English prose (like error messages) is always in double quotes.
->>
->
-> OK. I realize I'm not consistent in this patch either, but I'll explain
-> that my using double quotes here is a black-ism that is sneaking in the
-> more I use it to auto-format my patches :)
->
-> Maybe time for a flag day when I move scripts/qapi to python/qemu/qapi ...
->
-> (Sorry, this type of stuff is ... invisible to me, and I really do rely on
-> the linters to make sure I don't do this kind of thing.)
->
->
->>
->> > +            self.args[member.name] =3D section
->> > +
->> > +            # Determine where to insert stub doc.
->>
->> If we have some member documentation, the member doc stubs clearly must
->> go there.  Inserting them at the end makes sense.
->>
->> Else we want to put them where the parser would accept real member
->> documentation.
->>
->> "The parser" is .get_doc().  This is what it accepts (I'm prepared to
->> explain this in detail if necessary):
->>
->>     One untagged section
->>
->>     Member documentation, if any
->>
->>     Zero ore more tagged or untagged sections
->>
->>     Feature documentation, if any
->>
->>     Zero or more tagged or untagged sections
->>
->> If we there is no member documentation, this is
->>
->>     One untagged section
->>
->>     Zero ore more tagged or untagged sections
->>
->>     Feature documentation, if any
->>
->>     Zero or more tagged or untagged sections
->>
->> Note that we cannot have two adjacent untagged sections (we only create
->> one if the current section isn't untagged; if it is, we extend it
->> instead).  Thus, the second section must be tagged or feature
->> documentation.
->>
->> Therefore, the member doc stubs must go right after the first section.
->>
->> This is also where qapidoc.py inserts member documentation.
->>
->> > +            index =3D 0
->> > +            for i, sect in enumerate(self.all_sections):
->> > +                # insert after these:
->> > +                if sect.kind in ('intro-paragraph', 'member'):
->> > +                    index =3D i + 1
->> > +                # but before these:
->> > +                elif sect.kind in ('tagged', 'feature', 'outro-paragr=
-aph'):
->> > +                    index =3D i
->> > +                    break
->>
->> Can you describe what this does in English?  As a specification; simply
->> paraphrasing the code is cheating.  I tried, and gave up.
->>
->
-> It inserts after any intro-paragraph or member section it finds, but befo=
-re
-> any tagged, feature, or outro-paragraph it finds.
->
-> The loop breaks on the very first instance of tagged/feature/outro, exiti=
-ng
-> immediately and leaving the insertion index set to the first occurrence of
-> such a section, so that the insertion will place the member documentation
-> prior to that section.
->
-> The loop doesn't break when it finds intro-paragraph or members, so it'll
-> continue to tick upwards until it reaches the end of the list or it finds
-> something disqualifying.
->
->
->>
->> Above, I derived what I believe we need to do.  It's simple enough: if
->> we have member documentation, it starts right after the first (untagged)
->> section, and the stub goes to the end of the member documentation.
->> Else, the stub goes right after the first section.
->>
->> Code:
->>
->>             index =3D 1;
->>             while self.all_sections[index].kind =3D=3D 'member':
->>                 index +=3D 1
->>
->
-> Wellp, yeah. That's certainly less code :)
->
-> I tossed in your algorithm alongside mine and asserted they were always
-> equal, and they are, so... yup. I think the only possible concern here is
-> if there is precisely one and only one section and 1 is beyond EOL, but
-> that's easy to fix. It apparently doesn't happen in practice, but I can't
-> presently imagine why it *couldn't* happen.
->
-> I'll just write a comment explaining the assumptions that make your algo
-> work (intro section always guaranteed even if empty; intro sections always
-> collapse into one section, members must start at i:=3D1 if they exist at =
-all,
-> members must be contiguous.)
-
-You could assert the first section exists and is untagged.  And maybe
-assert if we have members, the first is at index 1.
-
->> Of course future patches I haven't seen might change the invariants in
->> ways that break my simple code.  We'll see.
->>
->> > +            self.all_sections.insert(index, section)
->> > +
->> >          self.args[member.name].connect(member)
->> >
->> >      def connect_feature(self, feature: 'QAPISchemaFeature') -> None:
->>
->>
-> Now, for a critique of my own patch: this patch makes it difficult to aud=
-it
-> all of the cases where intro vs outro paragraphs sections may be ambiguous
-> because we automatically add members sections, so the warning yap I add
-> later on catches less cases.
->
-> It's possible we may want to add a warning yap about paragraph ambiguity
-> directly to the parser, OR just decide we don't really care and we just
-> *assume* and that it's fine.
->
-> We can discuss this pointedly on a call next time, and I'll come prepared
-> with examples and line numbers.... Or, if you'd prefer, you can get a
-> written report so you can take your time reading in silence.
-
-Let's try whatever feels easier for you first.
+On 12/6/24 15:12, Philippe Mathieu-Daudé wrote:
+> Hi Paolo,
+> 
+> On 30/5/24 15:58, Philippe Mathieu-Daudé wrote:
+>> On 30/5/24 09:31, Paolo Bonzini wrote:
+>>> On Thu, May 30, 2024 at 9:22 AM Philippe Mathieu-Daudé
+>>> <philmd@linaro.org> wrote:
+>>>>
+>>>> On 30/5/24 08:02, Paolo Bonzini wrote:
+>>>>> On Wed, May 29, 2024 at 5:56 PM Philippe Mathieu-Daudé
+>>>>> <philmd@linaro.org> wrote:
+>>>>>> It is pointless to build semihosting when TCG is not available.
+>>>>>
+>>>>> Why? I would have naively assumed that a suitable semihosting API
+>>>>> could be implemented by KVM. The justification (and thus the commit
+>>>>> message) needs to be different for each architecture if it's a matter
+>>>>> of instruction set or insufficient KVM userspace API.
+>>>>
+>>>> I wasn't sure where semihosting could be used so asked on IRC and
+>>>> Alex told me TCG only. Maybe the current implementation is TCG
+>>>> only, and I can reword. It certainly need some refactor to work
+>>>> on KVM, because currently semihosting end calling the TCG probe_access
+>>>> API, which I'm trying to restrict to TCG in order to ease linking
+>>>> multiple libtcg for the single binary (see
+>>>> https://lore.kernel.org/qemu-devel/20240529155918.6221-1-philmd@linaro.org/).
+>>>
+>>> Ok, that goes in the commit message though.
+>>>
+>>> "Semihosting currently uses the TCG probe_access API. It is pointless
+>>> to have it in the binary when TCG isn't".
+>>>
+>>> and in the first two patches:
+>>>
+>>> "Semihosting currently uses the TCG probe_access API. To prepare for
+>>> encoding the TCG dependency in Kconfig, do not enable it unless TCG is
+>>> available".
+>>>
+>>> But then, "select FOO if TCG" mean that it can be compiled out; so
+>>> perhaps "imply SEMIHOSTING if TCG" is better? Same for RISC-V's
+>>> "select ARM_COMPATIBLE_SEMIHOSTING if TCG".
+> 
+> Building qemu-system-mips configured with --without-default-devices:
+> 
+> Undefined symbols for architecture arm64:
+>    "_qemu_semihosting_console_write", referenced from:
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>    "_semihost_sys_close", referenced from:
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>    "_uaccess_strlen_user", referenced from:
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>    ...
+> 
+> So this one has to use "select".
+> 
+> Similarly m68k:
+> 
+> Undefined symbols for architecture arm64:
+>    "_semihost_sys_close", referenced from:
+>        _do_m68k_semihosting in target_m68k_m68k-semi.c.o
+>    ...
+> 
+> I can link m68k using semihosting stubs but I'm not sure it is right:
+> 
+> -- >8 --
+> diff --git a/semihosting/stubs-target-all.c 
+> b/semihosting/stubs-target-all.c
+> new file mode 100644
+> index 0000000000..1f33173f43
+> --- /dev/null
+> +++ b/semihosting/stubs-target-all.c
+> @@ -0,0 +1,97 @@
+> +/*
+> + * Semihosting Stubs
+> + *
+> + * Copyright (c) 2024 Linaro Ltd
+> + *
+> + * Stubs for semihosting targets that don't actually do semihosting.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "exec/exec-all.h"
+> +#include "semihosting/syscalls.h"
+> +
+> +void semihost_sys_open(CPUState *cs, gdb_syscall_complete_cb complete,
+> +                       target_ulong fname, target_ulong fname_len,
+> +                       int gdb_flags, int mode)
+> +{
+> +}
+> +
+> +void semihost_sys_close(CPUState *cs, gdb_syscall_complete_cb complete, 
+> int fd)
+> +{
+> +}
+> +
+> +void semihost_sys_read_gf(CPUState *cs, gdb_syscall_complete_cb complete,
+> +                          GuestFD *gf, target_ulong buf, target_ulong len)
+> +{
+> +}
+> +
+> +void semihost_sys_read(CPUState *cs, gdb_syscall_complete_cb complete,
+> +                       int fd, target_ulong buf, target_ulong len)
+> +{
+> +}
+> +
+> +void semihost_sys_write_gf(CPUState *cs, gdb_syscall_complete_cb complete,
+> +                           GuestFD *gf, target_ulong buf, target_ulong 
+> len)
+> +{
+> +}
+> +
+> +void semihost_sys_write(CPUState *cs, gdb_syscall_complete_cb complete,
+> +                        int fd, target_ulong buf, target_ulong len)
+> +{
+> +}
+> +
+> +void semihost_sys_lseek(CPUState *cs, gdb_syscall_complete_cb complete,
+> +                        int fd, int64_t off, int gdb_whence)
+> +{
+> +}
+> +
+> +void semihost_sys_isatty(CPUState *cs, gdb_syscall_complete_cb 
+> complete, int fd)
+> +{
+> +}
+> +
+> +void semihost_sys_flen(CPUState *cs, gdb_syscall_complete_cb fstat_cb,
+> +                       gdb_syscall_complete_cb flen_cb, int fd,
+> +                       target_ulong fstat_addr)
+> +{
+> +}
+> +
+> +void semihost_sys_fstat(CPUState *cs, gdb_syscall_complete_cb complete,
+> +                        int fd, target_ulong addr)
+> +{
+> +}
+> +
+> +void semihost_sys_stat(CPUState *cs, gdb_syscall_complete_cb complete,
+> +                       target_ulong fname, target_ulong fname_len,
+> +                       target_ulong addr)
+> +{
+> +}
+> +
+> +void semihost_sys_remove(CPUState *cs, gdb_syscall_complete_cb complete,
+> +                         target_ulong fname, target_ulong fname_len)
+> +{
+> +}
+> +
+> +void semihost_sys_rename(CPUState *cs, gdb_syscall_complete_cb complete,
+> +                         target_ulong oname, target_ulong oname_len,
+> +                         target_ulong nname, target_ulong nname_len)
+> +{
+> +}
+> +
+> +void semihost_sys_system(CPUState *cs, gdb_syscall_complete_cb complete,
+> +                         target_ulong cmd, target_ulong cmd_len)
+> +{
+> +}
+> +
+> +void semihost_sys_gettimeofday(CPUState *cs, gdb_syscall_complete_cb 
+> complete,
+> +                               target_ulong tv_addr, target_ulong tz_addr)
+> +{
+> +}
+> +
+> +#ifndef CONFIG_USER_ONLY
+> +void semihost_sys_poll_one(CPUState *cs, gdb_syscall_complete_cb complete,
+> +                           int fd, GIOCondition cond, int timeout)
+> +{
+> +}
+> +#endif
+> diff --git a/semihosting/meson.build b/semihosting/meson.build
+> index 34933e5a19..aa8b7a9913 100644
+> --- a/semihosting/meson.build
+> +++ b/semihosting/meson.build
+> @@ -7,7 +7,7 @@ specific_ss.add(when: ['CONFIG_SEMIHOSTING', 
+> 'CONFIG_SYSTEM_ONLY'], if_true: fil
+>     'config.c',
+>     'console.c',
+>     'uaccess.c',
+> -))
+> +), if_false: files('stubs-target-all.c'))
+> 
+>   common_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], 
+> if_false: files('stubs-all.c'))
+>   system_ss.add(when: ['CONFIG_SEMIHOSTING'], if_false: 
+> files('stubs-system.c'))
+> ---
+> 
+> For mips more stubs are needed:
+> 
+> Undefined symbols for architecture arm64:
+>    "_qemu_semihosting_console_write", referenced from:
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>    "_uaccess_lock_user", referenced from:
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>        _uhi_fstat_cb in target_mips_tcg_sysemu_mips-semi.c.o
+>    "_uaccess_lock_user_string", referenced from:
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>        _mips_semihosting.cold.6 in target_mips_tcg_sysemu_mips-semi.c.o
+>        _mips_semihosting.cold.6 in target_mips_tcg_sysemu_mips-semi.c.o
+>    "_uaccess_strlen_user", referenced from:
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>    "_uaccess_unlock_user", referenced from:
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>        _mips_semihosting in target_mips_tcg_sysemu_mips-semi.c.o
+>        _uhi_fstat_cb in target_mips_tcg_sysemu_mips-semi.c.o
+>        ...
+> 
 
 
