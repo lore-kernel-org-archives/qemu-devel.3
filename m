@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20FEBC2BA15
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 08:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBD6CC27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 08:25:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJU8W-0004jN-8y; Tue, 18 Jun 2024 04:24:16 -0400
+	id 1sJU8z-0004sG-6U; Tue, 18 Jun 2024 04:24:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sJU8U-0004iB-My; Tue, 18 Jun 2024 04:24:14 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1sJU8x-0004rJ-DA; Tue, 18 Jun 2024 04:24:43 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1sJU8T-0000Tr-5H; Tue, 18 Jun 2024 04:24:14 -0400
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45I6SCW2017478;
- Tue, 18 Jun 2024 08:24:11 GMT
+ id 1sJU8V-0000Tn-3L; Tue, 18 Jun 2024 04:24:43 -0400
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45I6kcZR007297;
+ Tue, 18 Jun 2024 08:24:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=PuqnjpDd/9ttC
- KEZsxkOPGCL9lRR7Oqyk9qLr1wbxPg=; b=SU/xjL3Yo1aj1S/Gt45MIJHsb3H3t
- +WlVeGYMM5OGSJS3NLEBU4KvK424LBNs0dG1tlgMshogWrNMYUOHsgAX91HnU/dS
- mmKgdQ/CZtztctU4J6eifHAn7WdOFCAuUAlvxZUzaSW4rybilq+n95ARls4AKhA2
- T3ZYrc77KAWJuteLDIGVEoPe4KrqIUnh18AORvZaT1Ga2RLyYX98LMX5XFC2ZqOf
- crTfFZ6eE1RvcM3qZFz+UKRtJQ2oSbsiYF5VO/CGOTrlrmJTJGjFNyAJDmpIlVHT
- iwqK7UI+XCIaaQDija1Nrcyn625NCtL+joiXsFOm9w/6XGdYVxAJ/BfrQ==
+ :mime-version:content-transfer-encoding; s=pp1; bh=PqSXuBSNBrku3
+ V7L4tbKgSoe2ubv6nZ9E/lWxRlEFGM=; b=IahB7HBd0JjIEmzj6QggoCZkC7iMh
+ jklVkgwgCGR5cjTcENPz5mtR79lQ2m9qs+SK9C3IcYD4hG0AsUoyXMEMOqP29el3
+ 6r64Q+EFqn5jGOiE+R4iKFOdveB9yjaXh1JEmoBcVax+gcDDYAHN55JmVFLQaQd2
+ r2B33SJiNesip9Q+RHhSGrCutNpo/tBD8sd+Zuan+7aotdzrLG9EzYztmiTB3s2n
+ sSO9sPuTcSxBEzc+VGxBbn8+09azPfX80+4uAX8R/7ffqj3G5mHXVoDHVzNwz9Xi
+ vm6Wj59J+Q76yFl26QqQLX8tNlmNZZglIHOC6WuWhUnO6OcLZaXmq2KPA==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu44frcn9-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu59087x5-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Jun 2024 08:24:11 +0000 (GMT)
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45I8OABC032461;
- Tue, 18 Jun 2024 08:24:10 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu44frcn7-1
+ Tue, 18 Jun 2024 08:24:09 +0000 (GMT)
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45I8O8ao032625;
+ Tue, 18 Jun 2024 08:24:08 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu59087wx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Jun 2024 08:24:10 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45I78ihC023963; Tue, 18 Jun 2024 08:24:10 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ysp9q1786-1
+ Tue, 18 Jun 2024 08:24:08 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45I6K26W006227; Tue, 18 Jun 2024 08:24:07 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ysn9uhg83-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Jun 2024 08:24:09 +0000
+ Tue, 18 Jun 2024 08:24:07 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45I8O4sM37880196
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45I8O2fP43844012
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Jun 2024 08:24:06 GMT
+ Tue, 18 Jun 2024 08:24:04 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 45FB720067;
- Tue, 18 Jun 2024 08:24:04 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C32B42005A;
+ by IMSVA (Postfix) with ESMTP id 5FDFB20043;
  Tue, 18 Jun 2024 08:24:02 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E8A962004B;
+ Tue, 18 Jun 2024 08:24:00 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.109.242.165])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 18 Jun 2024 08:24:02 +0000 (GMT)
+ Tue, 18 Jun 2024 08:24:00 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: npiggin@gmail.com, pbonzini@redhat.com, qemu-ppc@nongnu.org,
  qemu-devel@nongnu.org
 Cc: danielhb413@gmail.com, vaibhav@linux.ibm.com, sbhat@linux.ibm.com
-Subject: [PATCH v4 2/3] cpu-common.c: export cpu_get_free_index to be reused
- later
-Date: Tue, 18 Jun 2024 13:53:53 +0530
-Message-ID: <20240618082354.13919-3-harshpb@linux.ibm.com>
+Subject: [PATCH v4 1/3] accel/kvm: Introduce kvm_create_and_park_vcpu() helper
+Date: Tue, 18 Jun 2024 13:53:52 +0530
+Message-ID: <20240618082354.13919-2-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240618082354.13919-1-harshpb@linux.ibm.com>
 References: <20240618082354.13919-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: QdbwXNKxRiuxES3D5Y513Oa0gNANuNSM
-X-Proofpoint-GUID: N3cxRA77EDHah9WiYQPWRc2jHd_I73z_
+X-Proofpoint-GUID: Owe5KcOEDuD4iO6Gn1xepU5IuQ0J-oMV
+X-Proofpoint-ORIG-GUID: YQ-Z_2XcVUTHyHdHXyzT7Q82_IRtz5yX
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-18_02,2024-06-17_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015
- priorityscore=1501 malwarescore=0 spamscore=0 impostorscore=0 phishscore=0
- mlxlogscore=897 lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
- definitions=main-2406180061
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ bulkscore=0
+ lowpriorityscore=0 priorityscore=1501 suspectscore=0 mlxlogscore=999
+ malwarescore=0 impostorscore=0 phishscore=0 adultscore=0 clxscore=1015
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2405170001 definitions=main-2406180061
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
 X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
  RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,64 +112,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This helper provides an easy way to identify the next available free cpu
-index which can be used for vcpu creation. Until now, this is being
-called at a very later stage and there is a need to be able to call it
-earlier (for now, with ppc64) hence the need to export.
+There are distinct helpers for creating and parking a KVM vCPU.
+However, there can be cases where a platform needs to create and
+immediately park the vCPU during early stages of vcpu init which
+can later be reused when vcpu thread gets initialized. This would
+help detect failures with kvm_create_vcpu at an early stage.
 
 Suggested-by: Nicholas Piggin <npiggin@gmail.com>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
----
- include/exec/cpu-common.h | 2 ++
- cpu-common.c              | 7 ++++---
- 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 240ee04369..2e1b499cb7 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -35,6 +35,8 @@ void cpu_list_lock(void);
- void cpu_list_unlock(void);
- unsigned int cpu_list_generation_id_get(void);
+---
+Based on: <20240607115649.214622-1-salil.mehta@huawei.com>
+---
+---
+ include/sysemu/kvm.h |  8 ++++++++
+ accel/kvm/kvm-all.c  | 12 ++++++++++++
+ 2 files changed, 20 insertions(+)
+
+diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+index c4a914b3d8..9cf14ca3d5 100644
+--- a/include/sysemu/kvm.h
++++ b/include/sysemu/kvm.h
+@@ -338,6 +338,14 @@ void kvm_park_vcpu(CPUState *cpu);
+  */
+ int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id);
  
-+int cpu_get_free_index(void);
++/**
++ * kvm_create_and_park_vcpu - Create and park a KVM vCPU
++ * @cpu: QOM CPUState object for which KVM vCPU has to be created and parked.
++ *
++ * @returns: 0 when success, errno (<0) when failed.
++ */
++int kvm_create_and_park_vcpu(CPUState *cpu);
 +
- void tcg_iommu_init_notifier_list(CPUState *cpu);
- void tcg_iommu_free_notifier_list(CPUState *cpu);
+ /* Arch specific hooks */
  
-diff --git a/cpu-common.c b/cpu-common.c
-index ce78273af5..82bd1b432d 100644
---- a/cpu-common.c
-+++ b/cpu-common.c
-@@ -57,14 +57,12 @@ void cpu_list_unlock(void)
-     qemu_mutex_unlock(&qemu_cpu_list_lock);
+ extern const KVMCapabilityInfo kvm_arch_required_capabilities[];
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 4c5f521583..c0cbb6d480 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -398,6 +398,18 @@ int kvm_create_vcpu(CPUState *cpu)
+     return 0;
  }
  
--static bool cpu_index_auto_assigned;
- 
--static int cpu_get_free_index(void)
-+int cpu_get_free_index(void)
- {
-     CPUState *some_cpu;
-     int max_cpu_index = 0;
- 
--    cpu_index_auto_assigned = true;
-     CPU_FOREACH(some_cpu) {
-         if (some_cpu->cpu_index >= max_cpu_index) {
-             max_cpu_index = some_cpu->cpu_index + 1;
-@@ -83,8 +81,11 @@ unsigned int cpu_list_generation_id_get(void)
- 
- void cpu_list_add(CPUState *cpu)
- {
-+    static bool cpu_index_auto_assigned;
++int kvm_create_and_park_vcpu(CPUState *cpu)
++{
++    int ret = 0;
 +
-     QEMU_LOCK_GUARD(&qemu_cpu_list_lock);
-     if (cpu->cpu_index == UNASSIGNED_CPU_INDEX) {
-+        cpu_index_auto_assigned = true;
-         cpu->cpu_index = cpu_get_free_index();
-         assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
-     } else {
++    ret = kvm_create_vcpu(cpu);
++    if (!ret) {
++        kvm_park_vcpu(cpu);
++    }
++
++    return ret;
++}
++
+ static int do_kvm_destroy_vcpu(CPUState *cpu)
+ {
+     KVMState *s = kvm_state;
 -- 
 2.45.1
 
