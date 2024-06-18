@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72529C2BA18
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 04:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE70BC27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 04:40:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJQcR-0006K1-1X; Tue, 18 Jun 2024 00:38:55 -0400
+	id 1sJQdF-0006zl-Mx; Tue, 18 Jun 2024 00:39:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJQcP-0006JR-45
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 00:38:53 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1sJQdE-0006zX-D6
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 00:39:44 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJQcN-0008LK-8h
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 00:38:52 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1f6b0a40721so36937285ad.2
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 21:38:50 -0700 (PDT)
+ id 1sJQdC-0008P9-PE
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 00:39:44 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-70109d34a16so4432469b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 21:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718685529; x=1719290329; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718685581; x=1719290381; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oPN0ph7m5e6R1JV+YtGu+2sr5toqRHu9oqDV00vQqVU=;
- b=gVPuGY/K7agNcMa/GCVTn90fw6t0D2jTTJcih/otoybOGJztPrAJGw4hJ8PzRT7LHf
- UlQtRYYaMUmaSqRHtWx3obYnGEK/lbt4Yku0WmxUw0GkjQzGrZ0bgJgTwmDWzSfx88qW
- o0LUmoDKZHRBC01usATF5q5jBfY2AjfdsL2juLikKssdmwwaQ28CQSIsASjDY5rJCjxk
- K1q/0oQulqJ6IV+Krj5WLLMFsiEuEccIw30iMTb3sQOrJjGuYY9HZVgJIuBCrIxBmNhK
- g0HZg2KegY97/AwpO+CVjSePvAB/n6Axc0Ue2ATuWoFsFEsSmwdtH8kjfisTxMIHDy+U
- iNwg==
+ bh=3IIuZGyl/pBHAvozraK395biepbYK2UxoyGZ6Cd0u1I=;
+ b=Qg5os1RA4ncb2G9j/LBZ7Hwus+XUHRG0+UP+UInObP9bztJC7MczOgdwQTZ2lz23D4
+ BOn2Ec3TXKfEdo9Lduk+9iSuBfLYXvazPMtqDpJY0QLK61QwLVLCOr5ChM8ScNoOuEm/
+ dDdS5TF6Z8XcaDlybk7SWNWNlShsPlebt55Y+BaKbsGCuhUQNyayDBj0XPCdJZTj1mhO
+ X6WAu+RpbAw+qsr6GtIR5h/IF0P10c/hp5kaLrhZinztkwMvHsMEefWo4f01uF89Dge7
+ FF5r8tm6EKqcotJIye4h06l7x7nixjAnrg3iBShTOyXWkYbZAYtUNZyNbu7d3cVIQSiS
+ CK1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718685529; x=1719290329;
+ d=1e100.net; s=20230601; t=1718685581; x=1719290381;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oPN0ph7m5e6R1JV+YtGu+2sr5toqRHu9oqDV00vQqVU=;
- b=fWKgyczPxa7/xzieGz2Mydbm6ApDPB+CcLT1VQUsbD+Wxfuz8pOg16BSdDCkaa55qJ
- 5duMyzwMKldw2JazxATQYQqQ+rxxEyd9btv+raU+Y0Im95jTEWJSehZRcu4k9mou7Ebm
- LLSxr7IU0nv9CD450rS0PGwrOjV8NpnG52YSguz3HxTO15CRy0O1WlMdpTX6nMMFlEuR
- roKcaMYPjpNM/zGo2yuB0ITsakfe1u/JO+QK9ju2C40IA2StSDJLSjEB0m37g2d0tmbW
- RMkRw5oOVlo7BcI1i1Cl4S+gUBAWV/fa7naEybUMT5fiitd3x7Qs/7ZetX+6b4D/e9JZ
- cKPg==
+ bh=3IIuZGyl/pBHAvozraK395biepbYK2UxoyGZ6Cd0u1I=;
+ b=PZy6y4pmUfmX8PfrjxKbx0i2HE8W7i1EbMALR6NUIYUTH1NWGYCBUQBV/1obwXTwub
+ m/Uh2KbSrFTBNOr0/oFeOgYVm+q38PHX0XGEIIQ/vigoXmoE9ixiHexK7fPrUQy4D2AW
+ oFCZAqQCP+OKX4WTNgjZlN6scadwaNYI6KhiG3F9TzZDRBxk6/0gS6pcOJVaoIDEs49H
+ 5h/guQnhoySbuCZw+C44fMNd0Mx9LLHQGp6mpwHYWvSKuBn1gU7qrW9GJmb+cRudNG9z
+ gpOnK0AykC59FgveATLs+TiLPnwuFVmBhC8EC6pkT5ye5GqmREn7vd/oSwyjXXiYAWsQ
+ /SUw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsKhEzED0fbF3lpDKDfJoCrKPfwU9g/Nsm+JIIAHUcnSE9NExarjMHD+vZcQ2E/qIz8eH7f3yP6SAfsEUGdre5tzcdPZ4=
-X-Gm-Message-State: AOJu0YzY55hnDqMK3DkVSpwbO6hSv2ofqKZN386Ua+No9jHvDrRQrF6u
- 1fBhM0ftZ6+SMMVpikcxLbtTLK7gJO05W6gnOOYU+JO+DfOOkMKb6dRawSDJpKU=
-X-Google-Smtp-Source: AGHT+IF1buyRlxkyTusNdcs+MzSIKR2sDtx/+r3w6TYyLIXcjQF58emnlrBeBegPO/T5jSx8flIuNQ==
-X-Received: by 2002:a17:902:8b8c:b0:1f6:81f9:cf34 with SMTP id
- d9443c01a7336-1f8627e5672mr79945595ad.34.1718685529482; 
- Mon, 17 Jun 2024 21:38:49 -0700 (PDT)
+ AJvYcCWNtTajVvxTZGxSthmvnYneeydR2czd5PhKc+Rj/k0QsnTZMSr4+EsZyVDuNEPsOhGczmGc5tNP9kfJ7wA4DTfTtANDnYk=
+X-Gm-Message-State: AOJu0YxRozMDYKq4r4iBABBzs+1ZBXzdlrx5lEct/6fZadfz4MX5Ug2j
+ id/y08d9hkOHe9ToHJOBq0BvbrmAtwUeovzcWne9IUGhwGtyID8PPtJozppZ/lQ=
+X-Google-Smtp-Source: AGHT+IEf91QpMIGxgbE7p6S8IkuMTDWn2vQROa8IQdP44xbLjj+1GEiYv2w+aFdo0YV77JklLgaDfw==
+X-Received: by 2002:aa7:9e87:0:b0:705:983e:fc15 with SMTP id
+ d2e1a72fcca58-705d71470d0mr11769676b3a.10.1718685580990; 
+ Mon, 17 Jun 2024 21:39:40 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.132.216])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855ee847bsm88210125ad.168.2024.06.17.21.38.48
+ d2e1a72fcca58-705cc96752fsm8125512b3a.50.2024.06.17.21.39.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 17 Jun 2024 21:38:49 -0700 (PDT)
-Message-ID: <14d1f374-48df-4771-8da6-a979b4f299f4@linaro.org>
-Date: Mon, 17 Jun 2024 21:38:47 -0700
+ Mon, 17 Jun 2024 21:39:40 -0700 (PDT)
+Message-ID: <ad951cab-9c11-499c-bf9f-3db3ee201e30@linaro.org>
+Date: Mon, 17 Jun 2024 21:39:38 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/23] Add ARM AArch64 TLS Management Prototypes for
- BSD-User
+Subject: Re: [PATCH 08/23] Add Aarch64 sysarch() system call emulation for
+ BSD-USER
 To: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>,
  Stacey Son <sson@FreeBSD.org>
 References: <20240617185804.25075-1-itachis@FreeBSD.org>
- <20240617185804.25075-8-itachis@FreeBSD.org>
+ <20240617185804.25075-9-itachis@FreeBSD.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240617185804.25075-8-itachis@FreeBSD.org>
+In-Reply-To: <20240617185804.25075-9-itachis@FreeBSD.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,55 +101,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/17/24 11:57, Ajeet Singh wrote:
-> From: Stacey Son <sson@FreeBSD.org>
+> From: Stacey Son<sson@FreeBSD.org>
 > 
-> Prototypes for setting and getting TLS( thread local storage)
+> Initial implementation of sysarch() syscall and a printing function
 > 
-> Signed-off-by: Stacey Son <sson@FreeBSD.org>
-> Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+> Signed-off-by: Stacey Son<sson@FreeBSD.org>
+> Signed-off-by: Ajeet Singh<itachis@FreeBSD.org>
 > ---
->   bsd-user/aarch64/target_arch.h | 28 ++++++++++++++++++++++++++++
->   1 file changed, 28 insertions(+)
->   create mode 100644 bsd-user/aarch64/target_arch.h
-> 
-> diff --git a/bsd-user/aarch64/target_arch.h b/bsd-user/aarch64/target_arch.h
-> new file mode 100644
-> index 0000000000..27f47de8eb
-> --- /dev/null
-> +++ b/bsd-user/aarch64/target_arch.h
-> @@ -0,0 +1,28 @@
-> +/*
-> + * ARM AArch64 specific prototypes for bsd-user
-> + *
-> + * Copyright (c) 2015 Stacey D. Son <sson at FreeBSD>
-> + *
-> + * This library is free software; you can redistribute it and/or
-> + * modify it under the terms of the GNU Lesser General Public
-> + * License as published by the Free Software Foundation; either
-> + * version 2 of the License, or (at your option) any later version.
-> + *
-> + * This library is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-> + * Lesser General Public License for more details.
-> + *
-> + * You should have received a copy of the GNU Lesser General Public
-> + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-> + */
-> +
-> +#ifndef TARGET_ARCH_H
-> +#define TARGET_ARCH_H
-> +
-> +#include "qemu.h"
-> +
-> +void target_cpu_set_tls(CPUARMState *env, target_ulong newtls);
-> +target_ulong target_cpu_get_tls(CPUARMState *env);
-> +
-> +#endif /* TARGET_ARCH_H */
+>   bsd-user/aarch64/target_arch_sysarch.h | 42 ++++++++++++++++++++++++++
+>   1 file changed, 42 insertions(+)
+>   create mode 100644 bsd-user/aarch64/target_arch_sysarch.h
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
-
-I suggest that these declarations use CPUArchState, and be made common for all targets.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
