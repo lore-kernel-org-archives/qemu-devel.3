@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C094C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 13:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D405EC27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 14:06:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJZJe-00087I-Lo; Tue, 18 Jun 2024 09:56:06 -0400
+	id 1sJZSR-0005K6-9C; Tue, 18 Jun 2024 10:05:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sJZJd-00085b-4c; Tue, 18 Jun 2024 09:56:05 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJZSN-0005JQ-Bj
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 10:05:09 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sJZJa-00022k-MR; Tue, 18 Jun 2024 09:56:04 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a6265d3ba8fso642046466b.0; 
- Tue, 18 Jun 2024 06:56:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJZSK-0003Ru-Kr
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 10:05:06 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-35f225ac23bso5402463f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 07:05:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718718960; x=1719323760; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=u1cyBezRJri5KnZVsR+MFjuxJYCacR58JRUFpBBdC3g=;
- b=jNVFQnzrXOUt46rr/64ueaAxGBsKV81SwjuCZB7svoE+Tb1CyFWW3Ds6rp6eVLwuou
- v57DNbLUkOL/NL7l2eAS61xU97FHH54FKvkSidINA6HE56hqUVgDu3A4cdwyzftyEJf2
- T15+3lBUutL6jE2bM6bYewkFJNX6B/QIVT9RMrrl4+74qcYu3MdBTQMB8t/20tT6JYdU
- QAT9AGTil6yBqDLBm39IaLzSVySc/1FboRXW89giczqJjG38LCznHei+/LYZ+uR+iP1G
- 8qdRyPt+NaTcT/NAoPoXvVBv2eyJZhvO5m/MRj9Ue+XmkyJZ3kDUA4lh33CqmYsYqdiJ
- bedQ==
+ d=linaro.org; s=google; t=1718719500; x=1719324300; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cx7NBo/uziFpbQFcQsV1wyuyuUt+7AcfH2mrNHWJziA=;
+ b=mlcRIiunWgviSc6mph08k9RVxmPqi/ngQ+dbAwuVcXttM1T3kd8xETWYfZgky2ojKn
+ 1SYSufLZWLHKjhayRD715DiB4/Za6DD6mVCLB6KlNF3ahkoSrDuVNOqcVP6zEZziOvUP
+ VlMfmFCZNJSg10Z629s4tlLzxHpRctrYtSHvxh/2daCWRNo4uXrMLk+QDcph2dzs7BoB
+ YXfSB3c2IP2bm0qeV8Lpng2i74FqvuoA2WLJI8cWyBnzIkvNuSj6/HsSHkYy4RirFpE0
+ lA6h4EwW6v+zWWTY5Yj+4QZkW1WHAP7WCvkYGtK+ohntvoLU+2k4DDWSaVppYjraJZvf
+ KmEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718718960; x=1719323760;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=u1cyBezRJri5KnZVsR+MFjuxJYCacR58JRUFpBBdC3g=;
- b=UWinD22m+nYOYQ58ScJwzztpv4v+a9XFHFtN5mqzdcfJSmvzFsVp08mD8mRF2yBDqW
- 42VCgaUXV6bv0pfoislL+0trsVKn4Va+GjNrXEaox/oweB1CNsx3bfFPDMjHdWWnszFc
- N2Ebka4+MwIoFIACW4M3GYs2AR1OJL1ZMfOrUlncXmthvQm41otyTOu1bob1SNNHShk4
- BqbCEcZCWCRhdeFMJtf9x0LiTv6n0SnOlKIMTmIUOP3rgw3FlzeyMgjNLxvNB9uUqT4I
- hB8zVfin3g9PfhTFb5W4ntzdDlMLkgx9XDcciiggOqECUpqbkQjPyh7st+kgiC0w0HEJ
- +9WA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUB7umEBP9NGCamER/b+Fxp9RibgfTIQfZ8n0Pm0atLawRcIjDT3C7i/uJtXYAqYa8tsT6oEmgewh4uiO/DP/dkoI1+j1oZXoWRmmJdHfT+fM5NAJdIHmibELU=
-X-Gm-Message-State: AOJu0YzWqQr46DFrPv/QBGhGB4u8Q/4e7d3crDzfTROhZYM+71Lhw0kL
- SUk6+57+iPoJA7IowNQTMhbD+Te1SSmSiwj1M0AkrHEZGp92IXI=
-X-Google-Smtp-Source: AGHT+IECf99R/+pOY6WJuMaK3pMgr4IYX8PJie/hHXLP5R3+uWQSlXUPMCbUsQgU/8bAz5Pix8X1Fw==
-X-Received: by 2002:a17:907:874e:b0:a6f:8e42:b794 with SMTP id
- a640c23a62f3a-a6f8e42ca00mr273324166b.26.1718718960238; 
- Tue, 18 Jun 2024 06:56:00 -0700 (PDT)
-Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
+ d=1e100.net; s=20230601; t=1718719500; x=1719324300;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cx7NBo/uziFpbQFcQsV1wyuyuUt+7AcfH2mrNHWJziA=;
+ b=aQDW7Y3xAlUeD1kXFz+j22shfrm1o3aEGYAWz3fcuZPSM7OdEZK00t1lHFbssAZfcT
+ d4RFHAT1UzSVcyKQWwswZe0W0L2TKQPOZcLHyQ9lgNbLpBDwtkTJDxZX17N4AZMGbPJp
+ CZa1UfhzEW3ANkK54r4QjMqzjE+EXodEoUvwetD9glr0delo7YK/zmifn5Sfjz6n7g74
+ a6RwSJaGUF2kloV5Xv998Y1Y9sYdAeAf9XakvdMuJ/SZQPoRmDeYUT0Hwv5rUWtoy9Ng
+ SNi+qxb3VkP30aS+M3OwOJ4xEywfXF0SEqbAa8MvEsqZMEFe7JQRCIZg8yxuPj4n7uv4
+ tXgQ==
+X-Gm-Message-State: AOJu0Yz5Vacc9DSKXK50cgLy4laQzo2JTc7pkC4wFxhgzogdsa+St5/S
+ WvAqKvcBifghZ2xj5T9oqGTaJOoF5aTaowLLZJ93ZTDshsvr+pTCsTUO4dbXPMdpkLIcLwwACb6
+ u
+X-Google-Smtp-Source: AGHT+IH+AAG1xAGXSBQR2gi4fyqHmXSnqNszQYjYBr5OExtSRzlY3wuTfPrVfBEk/fHjhioWQ77a3g==
+X-Received: by 2002:adf:fe12:0:b0:35f:2f14:b98 with SMTP id
+ ffacd0b85a97d-3607a783420mr12141858f8f.48.1718719500309; 
+ Tue, 18 Jun 2024 07:05:00 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56f9c858sm617015966b.206.2024.06.18.06.55.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Jun 2024 06:56:00 -0700 (PDT)
-From: Zheyu Ma <zheyuma97@gmail.com>
-To: Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
-Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH] hw/misc/stm32l4x5_rcc: Add validation for MCOPRE and MCOSEL
- values
-Date: Tue, 18 Jun 2024 15:55:50 +0200
-Message-Id: <20240618135550.3108739-1-zheyuma97@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ ffacd0b85a97d-3607509c9a0sm14164508f8f.27.2024.06.18.07.04.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Jun 2024 07:04:59 -0700 (PDT)
+Message-ID: <ef0941df-ab08-4e1b-ade4-843a46356112@linaro.org>
+Date: Tue, 18 Jun 2024 16:04:57 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=zheyuma97@gmail.com; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/usb/hcd-dwc2: Handle invalid address access in read
+ and write functions
+To: Zheyu Ma <zheyuma97@gmail.com>, Paul Zimmerman <pauldzim@gmail.com>
+Cc: qemu-devel@nongnu.org
+References: <20240618135610.3109175-1-zheyuma97@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240618135610.3109175-1-zheyuma97@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,69 +95,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds validation checks for the MCOPRE and MCOSEL values in
-the rcc_update_cfgr_register function. If the MCOPRE value exceeds
-0b100 or the MCOSEL value exceeds 0b111, an error is logged and the
-corresponding clock mux is disabled. This helps in identifying and
-handling invalid configurations in the RCC registers.
+Cc'ing Paul.
 
-Reproducer:
-cat << EOF | qemu-system-aarch64 -display \
-none -machine accel=qtest, -m 512M -machine b-l475e-iot01a -qtest \
-stdio
-writeq 0x40021008 0xffffffff
-EOF
-
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
----
- hw/misc/stm32l4x5_rcc.c | 28 ++++++++++++++++++++--------
- 1 file changed, 20 insertions(+), 8 deletions(-)
-
-diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
-index 417bd5e85f..59d428fa66 100644
---- a/hw/misc/stm32l4x5_rcc.c
-+++ b/hw/misc/stm32l4x5_rcc.c
-@@ -543,19 +543,31 @@ static void rcc_update_cfgr_register(Stm32l4x5RccState *s)
-     uint32_t val;
-     /* MCOPRE */
-     val = FIELD_EX32(s->cfgr, CFGR, MCOPRE);
--    assert(val <= 0b100);
--    clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_MCO],
--                         1, 1 << val);
-+    if (val > 0b100) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Invalid MCOPRE value: 0x%"PRIx32"\n",
-+                      __func__, val);
-+        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_MCO], false);
-+    } else {
-+        clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_MCO],
-+                             1, 1 << val);
-+    }
- 
-     /* MCOSEL */
-     val = FIELD_EX32(s->cfgr, CFGR, MCOSEL);
--    assert(val <= 0b111);
--    if (val == 0) {
-+    if (val > 0b111) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: Invalid MCOSEL value: 0x%"PRIx32"\n",
-+                      __func__, val);
-         clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_MCO], false);
-     } else {
--        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_MCO], true);
--        clock_mux_set_source(&s->clock_muxes[RCC_CLOCK_MUX_MCO],
--                             val - 1);
-+        if (val == 0) {
-+            clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_MCO], false);
-+        } else {
-+            clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_MCO], true);
-+            clock_mux_set_source(&s->clock_muxes[RCC_CLOCK_MUX_MCO],
-+                                 val - 1);
-+        }
-     }
- 
-     /* STOPWUCK */
--- 
-2.34.1
+On 18/6/24 15:56, Zheyu Ma wrote:
+> This commit modifies the dwc2_hsotg_read() and dwc2_hsotg_write() functions
+> to handle invalid address access gracefully. Instead of using
+> g_assert_not_reached(), which causes the program to abort, the functions
+> now log an error message and return a default value for reads or do
+> nothing for writes.
+> 
+> This change prevents the program from aborting and provides clear log
+> messages indicating when an invalid memory address is accessed.
+> 
+> Reproducer:
+> cat << EOF | qemu-system-aarch64 -display none \
+> -machine accel=qtest, -m 512M -machine raspi2b -m 1G -nodefaults \
+> -usb -drive file=null-co://,if=none,format=raw,id=disk0 -device \
+> usb-storage,port=1,drive=disk0 -qtest stdio
+> readl 0x3f980dfb
+> EOF
+> 
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> ---
+>   hw/usb/hcd-dwc2.c | 9 +++++++--
+>   1 file changed, 7 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/usb/hcd-dwc2.c b/hw/usb/hcd-dwc2.c
+> index 8cac9c0a06..b4f0652c7d 100644
+> --- a/hw/usb/hcd-dwc2.c
+> +++ b/hw/usb/hcd-dwc2.c
+> @@ -1128,7 +1128,10 @@ static uint64_t dwc2_hsotg_read(void *ptr, hwaddr addr, unsigned size)
+>           val = dwc2_pcgreg_read(ptr, addr, (addr - HSOTG_REG(0xe00)) >> 2, size);
+>           break;
+>       default:
+> -        g_assert_not_reached();
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"HWADDR_PRIx"\n",
+> +                      __func__, addr);
+> +        val = 0;
+> +        break;
+>       }
+>   
+>       return val;
+> @@ -1160,7 +1163,9 @@ static void dwc2_hsotg_write(void *ptr, hwaddr addr, uint64_t val,
+>           dwc2_pcgreg_write(ptr, addr, (addr - HSOTG_REG(0xe00)) >> 2, val, size);
+>           break;
+>       default:
+> -        g_assert_not_reached();
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"HWADDR_PRIx"\n",
+> +                      __func__, addr);
+> +        break;
+>       }
+>   }
+>   
 
 
