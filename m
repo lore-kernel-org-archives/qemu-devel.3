@@ -4,84 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFF8AC2BA18
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 15:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99002C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 15:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJaeG-0006mF-E5; Tue, 18 Jun 2024 11:21:28 -0400
+	id 1sJagh-00089G-MM; Tue, 18 Jun 2024 11:23:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJaeE-0006lt-5d
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 11:21:26 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sJagd-00088Z-Oo; Tue, 18 Jun 2024 11:23:55 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJaeC-0008Pn-DL
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 11:21:25 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-704313fa830so4338583b3a.3
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 08:21:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sJaga-0000Ke-Sw; Tue, 18 Jun 2024 11:23:54 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-57d06101d76so242569a12.3; 
+ Tue, 18 Jun 2024 08:23:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718724082; x=1719328882; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zaS3i79kglVym64kFiPanOXSUpkMdn2FYkatJLQNJzw=;
- b=BqgIt8EatdOJe8UEJ7oM7N7JmTv1i8mS/37KSGc9Or9nV9MyHT0qflLGu2wP4JWLx2
- 916k7lbkp4YwPZ7beqAxDOQzLfX6S+WI+l58eQWsGj9EmcUsj1JwHTAcYsqRPxvG/WUK
- ihyV3sriAgrdVfr3lhlZXrJoI9l9ZFlEkpc3kSZ/w54pRDc8qb8144gzzI9+clb+D0sU
- oWfJN/s38EzyaXC/cU4Q7yOSV2Emh2uo9pedtfmC3eD8KPboY9pp0ou3o+i1R4CVZCOD
- Ar5qSKSCIt72PnbVICM5apm/b4st5Xl5og345sGWeu48bFIyUY87mIPWKIzES0AlXcQi
- 6uyw==
+ d=gmail.com; s=20230601; t=1718724231; x=1719329031; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/uBHlNgBwmPP4HqMSmFwFH4dWkgYw0I0gpooRc/762U=;
+ b=eD9Xi5qQt//ZLtApqBF6IlBE1alAFZqwsloCETx+5xdU3RWn2QoSpvIGvvSkHASaUz
+ Wc6T9VDw4W6xER/235GivkCqKTX+355XONq4LAVVRSWilu+ZmEuoB+KoCzdO+UHOywr/
+ TeAAl/pjhvLlUylkhzlgcWkVdSGN4yyNGCxxa/Zpu0u2oDKwNCshMSY3SvVGDRqvzl+o
+ HfAi/6iAts0pScvOIFPariFIiOhky0B5KLYSm7U4FWlT8lBeS2WfwosVawPNnom4056S
+ yiJ6Bz4kd+b7V3kPYeW0BOMSoNbEhHJ6xeDDDsrbFv8gdR0ScC5kufOyQrPyOOc7I89A
+ S/SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718724082; x=1719328882;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zaS3i79kglVym64kFiPanOXSUpkMdn2FYkatJLQNJzw=;
- b=KFpBQXV/nE9e7Oj4JrT4p6lwBCrU/jYcfcupLfS+9Vcn5cMLxUy9B7eqM7v0y6080W
- NQehDLXCb4E85zEt0vSc61yVMGD0J2dASVifCQaJDkS3V7LJgZWvXSiNOB68XJaTvALR
- wrJXAzhm8K66CopNnqU+UQxdWGRqZQmnPkmqPe4DYZYcP2BZI9Vyr0QWaMuAH/5Jn0K3
- T2lr/7bgMcu5QpTQuifZVUXLeAO4aULbqcM7lNyeBfu1mGcZg9F5pjHUeC4S4Fswrf+M
- /p19x1FD5Os/uBVIPHUJTXnVYdM2ya4Uuk0abCEfKHFRj8IEc6OPt+gRS47IjWGXZw2n
- 5IMg==
-X-Gm-Message-State: AOJu0YxA0odaV+7TJBb5+RZJlMavjVoQ9gHpdEsdrn7eQNeIZQkDiDcv
- d0O+1Rfa7GlkJdeWt3m3XDa5msG9FsppbGgmuRacx375nlY69SdXYvyPmal1M2U=
-X-Google-Smtp-Source: AGHT+IGyi91yjFOv9VhBlgsAb9jbfhT0CghlUz+FbYgUPj0Zf/BR+TE8hf8QrHcGmsc/Bskh++bNgA==
-X-Received: by 2002:a05:6a20:8427:b0:1b5:834b:ad75 with SMTP id
- adf61e73a8af0-1bae82f70b4mr13431331637.52.1718724081703; 
- Tue, 18 Jun 2024 08:21:21 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.132.216])
+ d=1e100.net; s=20230601; t=1718724231; x=1719329031;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/uBHlNgBwmPP4HqMSmFwFH4dWkgYw0I0gpooRc/762U=;
+ b=vHSnldSNBoXYBA4+ZAEZ5X+E0I1zhu8NIRuuCZrCN0830sJt2S+CLPARrmNmqZxg2D
+ HMNR2O54dbJaYDWJTc1rRm/E7B+EVbMv8lwwXpokXa27KMmHaJfadXgxtzCmrSGBqseX
+ k4BLe1nMcmGEaoIkPGmZlrf4ESGxybcBsfgeZuz0WH0iAYJ6hIEHVDjuopqNLcilmtl/
+ sIH4z/UM2/PWCqPndkDhGqWIP4W3uPz4o3/fsapOvjaWp03zxYUJUSfKzLGWnY8jhZ0F
+ ARFZLUI/txQJAeYDKbIxWUTpootqszPV4bBKMuEZHCr3sEqhPNVIPahS5UUAmkDqS5ys
+ KVcQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUhtWjaMtHvPPacfzA72wL5SXc0yaoAG4yAnXXPUDwmxzHwiS36yegkLDABccRplXri1ukRDogdajT2Ea2XI7jAbuA4nbwa06kWFRxTWJaWkLjhERIDTeDURb6dlw==
+X-Gm-Message-State: AOJu0Yxio3QPOPr8WZ+ax3oyANWG6H1QldO+IEHrHLXL3ygMWmrMA6Su
+ qI38WdcETva2GhrinTmS7Kcyg+wIQd+wZwFG0eENPGkp2XBdnas=
+X-Google-Smtp-Source: AGHT+IGGAgo+I0uUsmOiE39A0Ij2Q/wrs3bpJ0N42P58XlcEEN8+v/zaPN6CZTEk8mW9WhmHuMuVPQ==
+X-Received: by 2002:a50:9f2f:0:b0:57c:abf9:e6ad with SMTP id
+ 4fb4d7f45d1cf-57cbd6a6ea7mr7473062a12.42.1718724230742; 
+ Tue, 18 Jun 2024 08:23:50 -0700 (PDT)
+Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705ccb3e42fsm9093651b3a.100.2024.06.18.08.21.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 08:21:21 -0700 (PDT)
-Message-ID: <f0360d29-7348-4910-8057-849418049c6d@linaro.org>
-Date: Tue, 18 Jun 2024 08:21:19 -0700
+ 4fb4d7f45d1cf-57cfa753136sm954805a12.34.2024.06.18.08.23.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Jun 2024 08:23:50 -0700 (PDT)
+From: Zheyu Ma <zheyuma97@gmail.com>
+To: Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>
+Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH] block: m25p80: Fix heap-buffer-overflow in flash_erase
+ function
+Date: Tue, 18 Jun 2024 17:23:28 +0200
+Message-Id: <20240618152328.3163680-1-zheyuma97@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 27/34] accel/tcg: Make translate-all.c target
- independent
-To: Anton Johansson <anjo@rev.ng>
-Cc: qemu-devel@nongnu.org, ale@rev.ng, philmd@linaro.org
-References: <20240119144024.14289-1-anjo@rev.ng>
- <20240119144024.14289-28-anjo@rev.ng>
- <63dfead3-ddab-4502-b3aa-b7481a4f0ebc@linaro.org>
- <n5zuo5jky5zblncdnfitmch7fdy3qki6o5k5tyjpc7bmvkczck@7g6m6m7jukfb>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <n5zuo5jky5zblncdnfitmch7fdy3qki6o5k5tyjpc7bmvkczck@7g6m6m7jukfb>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=zheyuma97@gmail.com; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,57 +94,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/13/24 02:50, Anton Johansson wrote:
-> On 24/01/24, Richard Henderson wrote:
->> On 1/20/24 00:40, Anton Johansson wrote:
->>> Makes translate-all.c independent of softmmu target by switching
->>>
->>>       TARGET_LONG_BITS        -> target_long_bits()
->>>
->>>       TARGET_INSN_START_WORDS -> tcg_ctx->insn_start_words,
->>>                                  target_insn_start_words(),
->>>
->>>       TCG_GUEST_DEFAULT_MO    -> target_default_memory_order()
->>>
->>>       MO_TE                   -> target_endian_memory_order()
->>>
->>> Signed-off-by: Anton Johansson <anjo@rev.ng>
->>> ---
->>>    accel/tcg/translate-all.c | 38 ++++++++++++++++++--------------------
->>>    1 file changed, 18 insertions(+), 20 deletions(-)
->>>
->>> diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
->>> index 9c981d1750..a3ae0c6910 100644
->>> --- a/accel/tcg/translate-all.c
->>> +++ b/accel/tcg/translate-all.c
->>> @@ -65,7 +65,6 @@
->>>    #include "internal-common.h"
->>>    #include "internal-target.h"
->>>    #include "perf.h"
->>> -#include "tcg/insn-start-words.h"
->>>    TBContext tb_ctx;
->>> @@ -106,7 +105,7 @@ static int64_t decode_sleb128(const uint8_t **pp)
->>>            val |= (int64_t)(byte & 0x7f) << shift;
->>>            shift += 7;
->>>        } while (byte & 0x80);
->>> -    if (shift < TARGET_LONG_BITS && (byte & 0x40)) {
->>> +    if (shift < target_long_bits() && (byte & 0x40)) {
->>
->> You just make TARGET_PAGE_SIZE etc target independent, right?
->> So you don't need this?  Or is this because of user-only still.
-> 
-> Hi, Richard!
-> 
-> I missed this piece of feedback previously.  I don't see how
-> TARGET_PAGE_[SIZE|BITS] would be used here.  Are the values we're
-> encoding always TARGET_PAGE_BITS in size?
+This patch fixes a heap-buffer-overflow issue in the flash_erase function
+of the m25p80 flash memory emulation. The overflow occurs when the
+combination of offset and length exceeds the allocated memory for the
+storage. The patch adds a check to ensure that the erase length does not
+exceed the storage size and adjusts the length accordingly if necessary.
 
-I was obviously tired here, since they're obviously unrelated.
+Reproducer:
+cat << EOF | qemu-system-aarch64 -display none \
+-machine accel=qtest, -m 512M -machine kudo-bmc -qtest stdio
+writeq 0xc0000010 0x6
+writel 0xc000000c 0x9
+writeq 0xc0000010 0xf27f9412
+writeq 0xc000000f 0x2b5cdc26
+writeq 0xc000000c 0xffffffffffffffff
+writeq 0xc000000c 0xffffffffffffffff
+writeq 0xc000000c 0xffffffffffffffff
+writel 0xc000000c 0x9
+writeq 0xc000000c 0x9
+EOF
 
-However in this case I think TARGET_LONG_BITS is a red herring, and we should be using 
-int64_t not target_long at all, and thus the shift count must be less than 64.
+ASan log:
+==2614308==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7fd3fb7fc000 at pc 0x55aa77a442dc bp 0x7fffaa155900 sp 0x7fffaa1550c8
+WRITE of size 65536 at 0x7fd3fb7fc000 thread T0
+    #0 0x55aa77a442db in __asan_memset llvm/compiler-rt/lib/asan/asan_interceptors_memintrinsics.cpp:26:3
+    #1 0x55aa77e7e6b3 in flash_erase hw/block/m25p80.c:631:5
+    #2 0x55aa77e6f8b1 in complete_collecting_data hw/block/m25p80.c:773:9
+    #3 0x55aa77e6aaa9 in m25p80_transfer8 hw/block/m25p80.c:1550:13
+    #4 0x55aa78e9a691 in ssi_transfer_raw_default hw/ssi/ssi.c:92:16
+    #5 0x55aa78e996c0 in ssi_transfer hw/ssi/ssi.c:165:14
+    #6 0x55aa78e8d76a in npcm7xx_fiu_uma_transaction hw/ssi/npcm7xx_fiu.c:336:9
+    #7 0x55aa78e8be4b in npcm7xx_fiu_ctrl_write hw/ssi/npcm7xx_fiu.c:428:13
 
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+---
+ hw/block/m25p80.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-r~
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index 8dec134832..e9a59f6616 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -617,6 +617,12 @@ static void flash_erase(Flash *s, int offset, FlashCMD cmd)
+         abort();
+     }
+ 
++    if (offset + len > s->size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "M25P80: Erase exceeds storage size, adjusting length\n");
++        len = s->size - offset;
++    }
++
+     trace_m25p80_flash_erase(s, offset, len);
+ 
+     if ((s->pi->flags & capa_to_assert) != capa_to_assert) {
+-- 
+2.34.1
 
 
