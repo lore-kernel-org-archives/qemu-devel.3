@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23822C27C79
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 02:29:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB904C2BB85
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 02:38:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJOai-0006qm-OJ; Mon, 17 Jun 2024 22:29:00 -0400
+	id 1sJOjV-0001JY-Td; Mon, 17 Jun 2024 22:38:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sJOag-0006qI-8S
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 22:28:58 -0400
+ id 1sJOjQ-0001Ig-NN
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 22:38:01 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sJOad-0004Cc-Dd
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 22:28:58 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1sJOjN-0005fy-Ns
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 22:38:00 -0400
 Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8DxFPDe8HBmeckHAA--.31285S3;
- Tue, 18 Jun 2024 10:28:47 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Axz+v+8nBm1ckHAA--.15288S3;
+ Tue, 18 Jun 2024 10:37:51 +0800 (CST)
 Received: from [10.20.42.239] (unknown [10.20.42.239])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxZcXc8HBmAbYmAA--.17316S3; 
- Tue, 18 Jun 2024 10:28:46 +0800 (CST)
-Subject: Re: [PATCH 13/18] tcg/loongarch64: Split out vdvjvk in tcg_out_vec_op
+ AQAAf8Bxmsb78nBmVLgmAA--.28221S3; 
+ Tue, 18 Jun 2024 10:37:50 +0800 (CST)
+Subject: Re: [PATCH 14/18] tcg/loongarch64: Support LASX in tcg_out_{mov,ld,st}
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: git@xen0n.name
 References: <20240527211912.14060-1-richard.henderson@linaro.org>
- <20240527211912.14060-14-richard.henderson@linaro.org>
+ <20240527211912.14060-15-richard.henderson@linaro.org>
 From: gaosong <gaosong@loongson.cn>
-Message-ID: <7494ab33-5dad-a11c-1614-a640213cc3f9@loongson.cn>
-Date: Tue, 18 Jun 2024 10:28:47 +0800
+Message-ID: <937038d0-b702-87cf-d6f5-6fe5dc1377c1@loongson.cn>
+Date: Tue, 18 Jun 2024 10:37:51 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20240527211912.14060-14-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20240527211912.14060-15-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-CM-TRANSID: AQAAf8CxZcXc8HBmAbYmAA--.17316S3
+X-CM-TRANSID: AQAAf8Bxmsb78nBmVLgmAA--.28221S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoWrKFW5Jr45XF4xJF1ftr43urX_yoWDGFgEyr
- 45WFy7tw47trsFvasxAr4rGrn5Grs0gr4ag3Wvv3W3GryDAryrGayUGF93Xr9Fqa4xJrWY
- 93srW3s7A3WIkosvyTuYvTs0mTUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbxAYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4j6r4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1Y6r17MI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UNvtZU
- UUUU=
+X-Coremail-Antispam: 1Uk129KBj93XoW7WFWDKr1xZr15uF45XrW8AFc_yoW8ArW8pr
+ 1UArW5tFn5Aan2krsI9a4UXFy0qwsYyry0gan3Gr1kXrWqv34Duw48Jr1aq345t34I9r48
+ Z3Z8Xr13WFWqyacCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
+ 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
+ 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8w0
+ eJUUUUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
  helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.388,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-1.388, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,49 +83,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-åœ¨ 2024/5/28 ä¸Šåˆ5:19, Richard Henderson å†™é“:
->       case INDEX_op_andc_vec:
->           /*
->            * vandn vd, vj, vk: vd = vk & ~vj
->            * andc_vec vd, vj, vk: vd = vj & ~vk
-> -         * vk and vk are swapped
-> +         * vj and vk are swapped
->            */
-> -        tcg_out_opc_vandn_v(s, a0, a2, a1);
-> -        break;
-> +        a1 = a2;
-> +        a2 = args[2];
-Should be args[1]?Â  Similar to op_not_vec 'a2 = a1'.
+ÔÚ 2024/5/28 ÉÏÎç5:19, Richard Henderson Ð´µÀ:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/loongarch64/tcg-target.c.inc | 19 +++++++++++++++++++
+>   1 file changed, 19 insertions(+)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
 Thanks.
 Song Gao
-> +        insn = OPC_VANDN_V;
-> +        goto vdvjvk;
->       case INDEX_op_or_vec:
-> -        tcg_out_opc_vor_v(s, a0, a1, a2);
-> -        break;
-> +        insn = OPC_VOR_V;
-> +        goto vdvjvk;
->       case INDEX_op_orc_vec:
-> -        tcg_out_opc_vorn_v(s, a0, a1, a2);
-> -        break;
-> +        insn = OPC_VORN_V;
-> +        goto vdvjvk;
->       case INDEX_op_xor_vec:
-> -        tcg_out_opc_vxor_v(s, a0, a1, a2);
-> -        break;
-> -    case INDEX_op_nor_vec:
-> -        tcg_out_opc_vnor_v(s, a0, a1, a2);
-> -        break;
-> +        insn = OPC_VXOR_V;
-> +        goto vdvjvk;
->       case INDEX_op_not_vec:
-> -        tcg_out_opc_vnor_v(s, a0, a1, a1);
-> -        break;
-> +        a2 = a1;
-> +        /* fall through */
-> +    case INDEX_op_nor_vec:
-> +        insn = OPC_VNOR_V;
-> +        goto vdvjvk;
+> diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+> index 5f4915c6ac..e633d268d0 100644
+> --- a/tcg/loongarch64/tcg-target.c.inc
+> +++ b/tcg/loongarch64/tcg-target.c.inc
+> @@ -325,6 +325,9 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
+>       case TCG_TYPE_V128:
+>           tcg_out_opc_vori_b(s, ret, arg, 0);
+>           break;
+> +    case TCG_TYPE_V256:
+> +        tcg_out_opc_xvori_b(s, ret, arg, 0);
+> +        break;
+>       default:
+>           g_assert_not_reached();
+>       }
+> @@ -854,6 +857,14 @@ static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg dest,
+>               tcg_out_opc_vldx(s, dest, base, TCG_REG_TMP0);
+>           }
+>           break;
+> +    case TCG_TYPE_V256:
+> +        if (-0x800 <= offset && offset <= 0x7ff) {
+> +            tcg_out_opc_xvld(s, dest, base, offset);
+> +        } else {
+> +            tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
+> +            tcg_out_opc_xvldx(s, dest, base, TCG_REG_TMP0);
+> +        }
+> +        break;
+>       default:
+>           g_assert_not_reached();
+>       }
+> @@ -886,6 +897,14 @@ static void tcg_out_st(TCGContext *s, TCGType type, TCGReg src,
+>               tcg_out_opc_vstx(s, src, base, TCG_REG_TMP0);
+>           }
+>           break;
+> +    case TCG_TYPE_V256:
+> +        if (-0x800 <= offset && offset <= 0x7ff) {
+> +            tcg_out_opc_xvst(s, src, base, offset);
+> +        } else {
+> +            tcg_out_movi(s, TCG_TYPE_PTR, TCG_REG_TMP0, offset);
+> +            tcg_out_opc_xvstx(s, src, base, TCG_REG_TMP0);
+> +        }
+> +        break;
+>       default:
+>           g_assert_not_reached();
+>       }
 
 
