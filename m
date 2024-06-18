@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FE89C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 20:37:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2085C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 20:40:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJfZr-0006kf-Pn; Tue, 18 Jun 2024 16:37:15 -0400
+	id 1sJfc8-0007dQ-PX; Tue, 18 Jun 2024 16:39:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJfZp-0006iX-Oy
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 16:37:13 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJfc5-0007dB-MR
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 16:39:33 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJfZo-0004TB-3E
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 16:37:13 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3626c29d3f0so650283f8f.1
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 13:37:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJfc3-0004uw-TO
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 16:39:33 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-5295e488248so6407413e87.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 13:39:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718743030; x=1719347830; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Y+IevKFTv76CndXUesLWrW8UhW8oXmg6HlB4ji2VHJo=;
- b=tGR53TfKH6TyDpRIB3Esku0J3uuQyRMfACMizu9NiXQeafEAn5kBxoZqSQgYPjQdr/
- Klkw+gmLf29wz43CZ+5cj5UHFv/qNLEQKAQ4TkYr2Ukeibg+WU4PpgqWZ98FL6C03DbU
- UOa4gk9hQ5ZSzL2yLNxByL/c4IZpZBvkOlBrAVhdg2kyUPC5sePsiPY5tuxQ9m3usWCi
- UBNWxxSV7ZGBdq2Y77g/pFjnHMc3QkJowaCj5SpF95F7BL8wUuWWN8+lDM+3oF4UZyof
- YPcMd+qLsgHQmnjr48aU7iBegD3vLzNUCzHOXpinuPfgJwpnge7149zHVd3zgUmBSdv8
- ssqg==
+ d=linaro.org; s=google; t=1718743169; x=1719347969; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pIa1SXe6DHWA4kS1mtyye7lcir+hPhPxuuGsztA2gtk=;
+ b=Id43MsSaWBCw/uYebsROl0QasCz0mmVzF2A4ZCqpskbM2SGxkOd8TkP7An254sS7o1
+ uFGFTNZx2e4MYhRlIzfHVyaRt+QK0chow/5shgTnX1NB/xiEWRfTFsXNE6/NKQfUiFTE
+ yVT1n+oOVtag4UPLDyB9/kJ5OR5Htf2MTrLtNjlGIGCBWhXcrSUNuZ9Hq1QnJFOKMUKI
+ aDiFQzW6fN+sy0pjr7xD/vJRM1nZxDpNsaRilCZSjZQ6jybRVuz5cWsbXOJCHV/r4muF
+ isO/wDnznI5JHeHW2xo9EUobHMKbfy+oua6dDt0hGoMUb5JavqbxKcmaua5DU7bVWQoH
+ 0LHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718743030; x=1719347830;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1718743169; x=1719347969;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y+IevKFTv76CndXUesLWrW8UhW8oXmg6HlB4ji2VHJo=;
- b=GQYL5gkOaDk9dOwhjVxeRpyI8KPoZS2t3QodGfq3+FMWlUKinKUevXX3LLPisGOi/0
- UFvyPcDoTzDH2lEF56fRKaW5VHIP9WOsETwnvFrGOos8G4KuR6+IxrYo+TJx8j1fgelZ
- xsGx+4ICMcblCtZyLAz9+xnuhxsjbgQ99KEnP4Gs0aJPQqQBJvXk1xGYfs/gL2x0STiP
- AhFrE82i09GHjm0EfuMG0bVqP58REnib15n98IIGOOQ9jeTp/mPWvIMDYmfgsu2ptamZ
- 1IOQ8xhv9VM3EPFzGnACBlazGzyDo7b9T0uBaCVdwGE2lkwP1jlcTpTjEY/UUYR/6BKj
- gLpw==
-X-Gm-Message-State: AOJu0YxmwtHF0SlqBBE8n+RuFu9f113ZRBg//pI7StcKg/yIsIREKrKt
- QDsK0iOHsUr2DKl0Oa5DQWPB2xhxTJHNsSgv58DCXh2quRUkoqGTn37Ixs/sJRo=
-X-Google-Smtp-Source: AGHT+IGBpAAVHbkS224WmucXvOZW8auH3g6riN+75rDCpHK2/k5F24fohtossJDzI/sRNGsNHD54IQ==
-X-Received: by 2002:a05:6000:1bc1:b0:360:9bf5:1eab with SMTP id
- ffacd0b85a97d-36317c79ff7mr456024f8f.36.1718743030314; 
- Tue, 18 Jun 2024 13:37:10 -0700 (PDT)
+ bh=pIa1SXe6DHWA4kS1mtyye7lcir+hPhPxuuGsztA2gtk=;
+ b=AmZReqfn+P5uPyLWDdJZIePdHCpIjo4IsVJfzraC3lu38+/UtqqG8XcXVCZ0n1CdYb
+ j7/NPpjF4xctlQ3TdTLhxQHsuO7ZeD7eiK2VJBh4HLNDkcSYs+8H5oUnD0Ywm0HRGIqR
+ hTbQ0tn4ftZx3QgEuLhQOBNace6yOVyBSxOn3PONt7tMLN7tDRdo3V05UC9Y4prcEE/d
+ cKZzaPgVDsJqNIo8VVNdftDi8xUDvvazvqLTPidGdvd6bHe4ZWo+lj5IMDhldH7BywaU
+ xrKPxaF1RABsajLTy3mN9vHJu//7Bb8PyQMw6gPbsNMwyE6CZpbCpH3ZPmBTnxe6cF2H
+ Dl5A==
+X-Gm-Message-State: AOJu0YwOeb1DvW4NJfQnAeIGHpMZFX3ffPeQeZxAHlypDFYxvlqZwPD3
+ aIbNcUIDCiQ4x5sqFkQzYxbwusNdyfh/MKvFgPv1RGV7dG8vbsdQqfu7MhGqbzfZlQeTFfOGA68
+ e
+X-Google-Smtp-Source: AGHT+IHt0ETTRt//IOnCDmiTZwJIAA51U6tZFTy7fFjyaodSBjwJZim3YbEZ1v5zVM9I/FxjUXMqnQ==
+X-Received: by 2002:ac2:46e4:0:b0:52c:83cf:d8f9 with SMTP id
+ 2adb3069b0e04-52ccaa2a8b6mr402403e87.13.1718743169395; 
+ Tue, 18 Jun 2024 13:39:29 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-362ba0b9b3esm1307332f8f.74.2024.06.18.13.37.09
+ 5b1f17b1804b1-42307d5b78fsm152643095e9.6.2024.06.18.13.39.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 13:37:09 -0700 (PDT)
-Message-ID: <c60ac5cc-c592-46bc-b09a-b918253cb6cd@linaro.org>
-Date: Tue, 18 Jun 2024 22:37:08 +0200
+ Tue, 18 Jun 2024 13:39:28 -0700 (PDT)
+Message-ID: <557f5fab-dfca-41c1-8764-1976a9a35b06@linaro.org>
+Date: Tue, 18 Jun 2024 22:39:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/usb/hcd-dwc2: Handle invalid address access in read
- and write functions
-To: Paul Zimmerman <pauldzim@gmail.com>, Zheyu Ma <zheyuma97@gmail.com>
-Cc: qemu-devel@nongnu.org
-References: <20240618135610.3109175-1-zheyuma97@gmail.com>
- <CADBGO7_XF5REzENPGupwMB-EOHXS78SG5v=yZ6TRZ_7yVgWUtg@mail.gmail.com>
+Subject: Re: [PULL v2 00/76] Misc patches for 2024-06-18
+To: QEMU Developers <qemu-devel@nongnu.org>
+References: <20240618202032.40268-1-philmd@linaro.org>
 Content-Language: en-US
+Cc: Richard Henderson <richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CADBGO7_XF5REzENPGupwMB-EOHXS78SG5v=yZ6TRZ_7yVgWUtg@mail.gmail.com>
+In-Reply-To: <20240618202032.40268-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,83 +94,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paul,
+On 18/6/24 22:20, Philippe Mathieu-Daudé wrote:
 
-On 18/6/24 20:58, Paul Zimmerman wrote:
-> On Tue, Jun 18, 2024 at 6:56 AM Zheyu Ma <zheyuma97@gmail.com 
-> <mailto:zheyuma97@gmail.com>> wrote:
->  >
->  > This commit modifies the dwc2_hsotg_read() and dwc2_hsotg_write() 
-> functions
->  > to handle invalid address access gracefully. Instead of using
->  > g_assert_not_reached(), which causes the program to abort, the functions
->  > now log an error message and return a default value for reads or do
->  > nothing for writes.
->  >
->  > This change prevents the program from aborting and provides clear log
->  > messages indicating when an invalid memory address is accessed.
->  >
->  > Reproducer:
->  > cat << EOF | qemu-system-aarch64 -display none \
->  > -machine accel=qtest, -m 512M -machine raspi2b -m 1G -nodefaults \
->  > -usb -drive file=null-co://,if=none,format=raw,id=disk0 -device \
->  > usb-storage,port=1,drive=disk0 -qtest stdio
->  > readl 0x3f980dfb
->  > EOF
->  >
->  > Signed-off-by: Zheyu Ma <zheyuma97@gmail.com 
-> <mailto:zheyuma97@gmail.com>>
->  > ---
->  >  hw/usb/hcd-dwc2.c | 9 +++++++--
->  >  1 file changed, 7 insertions(+), 2 deletions(-)
->  >
->  > diff --git a/hw/usb/hcd-dwc2.c b/hw/usb/hcd-dwc2.c
->  > index 8cac9c0a06..b4f0652c7d 100644
->  > --- a/hw/usb/hcd-dwc2.c
->  > +++ b/hw/usb/hcd-dwc2.c
->  > @@ -1128,7 +1128,10 @@ static uint64_t dwc2_hsotg_read(void *ptr, 
-> hwaddr addr, unsigned size)
->  >          val = dwc2_pcgreg_read(ptr, addr, (addr - HSOTG_REG(0xe00)) 
->  >> 2, size);
->  >          break;
->  >      default:
->  > -        g_assert_not_reached();
->  > +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 
-> 0x%"HWADDR_PRIx"\n",
->  > +                      __func__, addr);
->  > +        val = 0;
->  > +        break;
->  >      }
->  >
->  >      return val;
->  > @@ -1160,7 +1163,9 @@ static void dwc2_hsotg_write(void *ptr, hwaddr 
-> addr, uint64_t val,
->  >          dwc2_pcgreg_write(ptr, addr, (addr - HSOTG_REG(0xe00)) >> 2, 
-> val, size);
->  >          break;
->  >      default:
->  > -        g_assert_not_reached();
->  > +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 
-> 0x%"HWADDR_PRIx"\n",
->  > +                      __func__, addr);
->  > +        break;
->  >      }
->  >  }
->  >
->  > --
->  > 2.34.1
+Per 
+https://lore.kernel.org/qemu-devel/68014035-47e7-48b4-b11b-83b219f4ef63@linaro.org/, 
+please ignore this v2.
+
+> ----------------------------------------------------------------
+> Misc patches queue
 > 
-> Looks good to me.
+> . Remove deprecated pc-i440fx-2.0 -> 2.3 machines (Phil)
+> . Always use little endian audio format in virtio-snd (Phil)
+> . Avoid using Monitor in INTERRUPT_STATS_PROVIDER::print_info (Phil)
+> . Introduce x-query-interrupt-controllers QMP command (Phil)
+> . Introduce pnv_chip_foreach_cpu() to remove one CPU_FOREACH use (Cédric)
+> . Set arm_v7m_tcg_ops::cpu_exec_halt & mandate TCGCPUOps::cpu_exec_halt (Peter)
+> . Constify few uses of IOMMUTLBEvent (Phil)
+> . Wire loongson_ipi device to loongson3_virt/TCG (Jiaxun)
+> . Fix inclusion of tracing headers on s390x/TCG (Phil)
+> . Add few shortcuts missing to readline (Manos)
+> . Update ui/display entries in MAINTAINERS (Gerd)
+> . Use qemu_add_mouse_change_notifier on Cocoa (Akihiko)
+> . Fix Standard VGA screen blanking and cleanups (Gerd)
+> . Fix USB/MTP reported "free space" value (Fabio)
 > 
-> Reviewed-by: Paul Zimmerman <pauldzim@gmail.com <mailto:pauldzim@gmail.com>>
-> 
+> ----------------------------------------------------------------
 
-Does that mean on real HW the access to unassigned registers are
-silently ignored as RAZ/WI like this patch? (I don't have access
-to the specs -- IIRC you don't neither, but you might have real
-HW to test).
-
-Thanks,
-
-Phil.
 
