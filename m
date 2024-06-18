@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0322FC27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82D79C2BA18
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:04:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbJA-0008Fc-63; Tue, 18 Jun 2024 12:03:44 -0400
+	id 1sJbIH-00065E-5c; Tue, 18 Jun 2024 12:02:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJ7-0008AG-GL
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:03:41 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbI0-0005cb-B0
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:02:34 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJ5-0007CW-JC
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:03:41 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a6f176c5c10so689472866b.2
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:03:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbHy-0006yi-Km
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:02:32 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-57a44c2ce80so6727664a12.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:02:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726618; x=1719331418; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726549; x=1719331349; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RbmmnCUJBjQWo1lmiofvPL4byDgdBrAqOfBylHKE/0k=;
- b=oqNZLc/NhQz1X+mJbZsecpMWzGNcxBGSQkxsNbFMnftoS1wMSoblwQTqJNpVZ/0qZG
- sTsdPkTdLL+z7KHRYJeKntiDTvP+3YhmNcCAu9QH7WsdJTRCNGfqszaDKiTvfBsuzOPT
- qCHuwDW9I/QyHJXOQdZuooIop4HT+C5guTR0+KeQa0DxreuEYCPQYM4OJHfIlkKEteYj
- EO2xvqug3w+MRtRbyGQzsbhnYovg11OSaq6a3NNoi42gDcUgWcpRwg13Rlaiol/DUTO2
- vMZCSy/SGYS0XjQ3lGen4VMnDYLosFS1q72e+iJ7cwQuiUoaVR71g5jjye9JiGOb54KO
- DenA==
+ bh=CNrfF+9zyhqG7px96ZTTBVocmseyNqId2IhLUn86KlM=;
+ b=E42MexKaj0uqBcecbpBBt+TPukBqnAmatAvaWFZFl99tb6wV5JGNUWqbuI3kt7O2Fe
+ znFnAbuSdTiWrOM9zmc0mWxbQvHoVERu/XgKIG/8qns5zR1tnGzhAhbeTlwCzpfe71UJ
+ f1ZBbUthNLqmIFIaWs7ODNxzfN4RWddZh5TbMbU1PSNTD/OJUF1nsD/8gWinfY47LkPz
+ +rsMLHCPKkB3euCRnJV2DGoVIZ6iA9akIWDTm396FfyvOH2eiSl3UUl8ChYbV+OMAbqR
+ VegckJUglxDIZKdbmvfDgWE7KlXShhFq3wPF34txVo4wcK0BAyGdHI6oDIRa3/Uk1ho9
+ qOKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726618; x=1719331418;
+ d=1e100.net; s=20230601; t=1718726549; x=1719331349;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RbmmnCUJBjQWo1lmiofvPL4byDgdBrAqOfBylHKE/0k=;
- b=UedaKTOJ+1EEOamY3X100G5Eou6JDSnplCAX6IsR+EpjI9mII+b6QxwXQ3fC9sdaVm
- IioCcnMxAr4AAYcj1+DZQ0QGZYEjDlGTB/GvWTTi2AP6AEuFcEW/yJBuuD3NGWROSzhN
- hHu443zJBCHuW1qE8HKTP6uXy1EKc2dIN4HgHjDR+VenC1dodGlmdSWmOPXGBZtNkNqS
- SzlI9h4sJyuw8W2vSuA4FtJ2P91LZS7Ra9xgXmPAryEMb/+pMcHhNrJwgFoUDhgu/tBc
- coLyEXzdxAshh/dwuyj6BRzVyrOpYRzyU6KsK7sIvgO9TjkE1znMPHgy/4eivnASte0N
- guaQ==
-X-Gm-Message-State: AOJu0YxSPVYfCKLMfjWPWb1u2yj0NqZPhl1E4Wc0DrBC4oAsTkdNc/5k
- xUDAZPE/rlQgpJjT5Tms8zTtQAMR1eRRiq91sMGPlCbZT2yjQhrqXo1jD90byfFTEwvE1kHXUoa
- 2
-X-Google-Smtp-Source: AGHT+IEzIAb7UjCWs+OYgeQnjIr+/+N1Wd0JEhUYr+ZQytIe8DtzcwsaZd0WhpV/Yoy/dzGdcRDugQ==
-X-Received: by 2002:a17:906:3693:b0:a6f:5318:b8f7 with SMTP id
- a640c23a62f3a-a6f60d420f5mr964758566b.43.1718726617915; 
- Tue, 18 Jun 2024 09:03:37 -0700 (PDT)
+ bh=CNrfF+9zyhqG7px96ZTTBVocmseyNqId2IhLUn86KlM=;
+ b=OJrRGJlZdD5CE1eBoPooXyTizTqdxacFznNb0DjyjZRBOG8mlehhkkPHw64jO3gneR
+ Yz/WXZQ6R4blFfuVkGtLUZnY8ueey9s5tLQurW5sMMbWxXDAgLipDbI0YaXu6Shb/HuC
+ Ex1sc4/WHkfWhEyU837GoIe5aqVmZI36j1bRdV4wUwKlN9quaaV8KMa+gYKTTV2hMLke
+ amIJxB0lOpuuIIoviKNMot5gskcNvA/vy+8sDE6biXVrYZLO70SqtzFv6BWRZXkPMr3h
+ mpsutK4g0pkD/xitTipHt4WuQJcZCyA2oBv5uwix0vFjXH7TjerOS4F95TNau6kpgm93
+ zG0Q==
+X-Gm-Message-State: AOJu0Yy1zK5kNP1LBm34GcWHb2InQKFWlZzuJx5C10mzxlxP4Mg7eoag
+ wx6An+Ubjm0z6VvcFVilPbvGvMGossEo7iMcte33aBJOeTK07Si9Fm7uDPn1KJ8F4KmGanAv/WJ
+ /
+X-Google-Smtp-Source: AGHT+IFIzDA5tfjiF/bVIXS6gjimHOqPBprk8wn7sxmBTLAJqIPNEy9DifTVSgndNk0SBQIH0115zg==
+X-Received: by 2002:a50:cd09:0:b0:57c:947c:f9cf with SMTP id
+ 4fb4d7f45d1cf-57cbd6839b8mr8609721a12.11.1718726548977; 
+ Tue, 18 Jun 2024 09:02:28 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56db6182sm630018366b.51.2024.06.18.09.03.36
+ 4fb4d7f45d1cf-57cb72e9dd7sm7821785a12.57.2024.06.18.09.02.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:03:37 -0700 (PDT)
+ Tue, 18 Jun 2024 09:02:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 30/76] hw/ppc: Avoid using Monitor in
- xive_end_queue_pic_print_info()
-Date: Tue, 18 Jun 2024 17:59:52 +0200
-Message-ID: <20240618160039.36108-31-philmd@linaro.org>
+ Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL 18/76] hw/i386/pc: Remove PCMachineClass::rsdp_in_ram
+Date: Tue, 18 Jun 2024 17:59:40 +0200
+Message-ID: <20240618160039.36108-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,121 +95,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace Monitor API by HumanReadableText one.
+PCMachineClass::rsdp_in_ram was only used by the
+pc-i440fx-2.2 machine, which got removed. It is
+now always true. Remove it, simplifying acpi_setup().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-Id: <20240610062105.49848-7-philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240617071118.60464-19-philmd@linaro.org>
 ---
- include/hw/ppc/xive_regs.h |  2 +-
- hw/intc/spapr_xive.c       |  7 ++++++-
- hw/intc/xive.c             | 17 +++++++++++------
- 3 files changed, 18 insertions(+), 8 deletions(-)
+ include/hw/i386/pc.h |  1 -
+ hw/i386/acpi-build.c | 35 ++++-------------------------------
+ hw/i386/pc.c         |  1 -
+ 3 files changed, 4 insertions(+), 33 deletions(-)
 
-diff --git a/include/hw/ppc/xive_regs.h b/include/hw/ppc/xive_regs.h
-index 4a3c9badd3..51e9a2152e 100644
---- a/include/hw/ppc/xive_regs.h
-+++ b/include/hw/ppc/xive_regs.h
-@@ -262,7 +262,7 @@ static inline uint64_t xive_end_qaddr(XiveEND *end)
- }
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index d01ddc4618..0b7a18a882 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -100,7 +100,6 @@ struct PCMachineClass {
  
- void xive_end_pic_print_info(XiveEND *end, uint32_t end_idx, Monitor *mon);
--void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, Monitor *mon);
-+void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, GString *buf);
- void xive_end_eas_pic_print_info(XiveEND *end, uint32_t end_idx, Monitor *mon);
+     /* ACPI compat: */
+     bool has_acpi_build;
+-    bool rsdp_in_ram;
+     unsigned acpi_data_size;
+     int pci_root_uid;
  
- /* Notification Virtual Target (NVT) */
-diff --git a/hw/intc/spapr_xive.c b/hw/intc/spapr_xive.c
-index b7c12aa432..3357f6325f 100644
---- a/hw/intc/spapr_xive.c
-+++ b/hw/intc/spapr_xive.c
-@@ -142,12 +142,17 @@ static void spapr_xive_end_pic_print_info(SpaprXive *xive, XiveEND *end,
-     uint32_t qentries = 1 << (qsize + 10);
-     uint32_t nvt = xive_get_field32(END_W6_NVT_INDEX, end->w6);
-     uint8_t priority = xive_get_field32(END_W7_F0_PRIORITY, end->w7);
-+    g_autoptr(GString) buf = g_string_new("");
-+    g_autoptr(HumanReadableText) info = NULL;
- 
-     monitor_printf(mon, "%3d/%d % 6d/%5d @%"PRIx64" ^%d",
-                    spapr_xive_nvt_to_target(0, nvt),
-                    priority, qindex, qentries, qaddr_base, qgen);
- 
--    xive_end_queue_pic_print_info(end, 6, mon);
-+    xive_end_queue_pic_print_info(end, 6, buf);
-+
-+    info = human_readable_text_from_str(buf);
-+    monitor_puts(mon, info->human_readable_text);
- }
- 
- /*
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index a0d7e7ca67..260a94e2ca 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -11,6 +11,7 @@
- #include "qemu/log.h"
- #include "qemu/module.h"
- #include "qapi/error.h"
-+#include "qapi/type-helpers.h"
- #include "target/ppc/cpu.h"
- #include "sysemu/cpus.h"
- #include "sysemu/dma.h"
-@@ -1323,7 +1324,7 @@ static const TypeInfo xive_source_info = {
-  * XiveEND helpers
-  */
- 
--void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, Monitor *mon)
-+void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, GString *buf)
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index eafc3761c8..158e74f64a 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -2494,7 +2494,6 @@ static
+ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
  {
-     uint64_t qaddr_base = xive_end_qaddr(end);
-     uint32_t qsize = xive_get_field32(END_W0_QSIZE, end->w0);
-@@ -1334,7 +1335,7 @@ void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, Monitor *mon)
-     /*
-      * print out the [ (qindex - (width - 1)) .. (qindex + 1)] window
-      */
--    monitor_printf(mon, " [ ");
-+    g_string_append_printf(buf, " [ ");
-     qindex = (qindex - (width - 1)) & (qentries - 1);
-     for (i = 0; i < width; i++) {
-         uint64_t qaddr = qaddr_base + (qindex << 2);
-@@ -1346,11 +1347,11 @@ void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, Monitor *mon)
-                           HWADDR_PRIx "\n", qaddr);
-             return;
-         }
--        monitor_printf(mon, "%s%08x ", i == width - 1 ? "^" : "",
--                       be32_to_cpu(qdata));
-+        g_string_append_printf(buf, "%s%08x ", i == width - 1 ? "^" : "",
-+                               be32_to_cpu(qdata));
-         qindex = (qindex + 1) & (qentries - 1);
+     PCMachineState *pcms = PC_MACHINE(machine);
+-    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+     X86MachineState *x86ms = X86_MACHINE(machine);
+     DeviceState *iommu = pcms->iommu;
+     GArray *table_offsets;
+@@ -2666,16 +2665,6 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+             .rsdt_tbl_offset = &rsdt,
+         };
+         build_rsdp(tables->rsdp, tables->linker, &rsdp_data);
+-        if (!pcmc->rsdp_in_ram) {
+-            /* We used to allocate some extra space for RSDP revision 2 but
+-             * only used the RSDP revision 0 space. The extra bytes were
+-             * zeroed out and not used.
+-             * Here we continue wasting those extra 16 bytes to make sure we
+-             * don't break migration for machine types 2.2 and older due to
+-             * RSDP blob size mismatch.
+-             */
+-            build_append_int_noprefix(tables->rsdp, 0, 16);
+-        }
      }
--    monitor_printf(mon, "]");
-+    g_string_append_c(buf, ']');
- }
  
- void xive_end_pic_print_info(XiveEND *end, uint32_t end_idx, Monitor *mon)
-@@ -1365,6 +1366,8 @@ void xive_end_pic_print_info(XiveEND *end, uint32_t end_idx, Monitor *mon)
-     uint32_t nvt_idx = xive_get_field32(END_W6_NVT_INDEX, end->w6);
-     uint8_t priority = xive_get_field32(END_W7_F0_PRIORITY, end->w7);
-     uint8_t pq;
-+    g_autoptr(GString) buf = g_string_new("");
-+    g_autoptr(HumanReadableText) info = NULL;
- 
-     if (!xive_end_is_valid(end)) {
-         return;
-@@ -1389,8 +1392,10 @@ void xive_end_pic_print_info(XiveEND *end, uint32_t end_idx, Monitor *mon)
-     if (qaddr_base) {
-         monitor_printf(mon, " eq:@%08"PRIx64"% 6d/%5d ^%d",
-                        qaddr_base, qindex, qentries, qgen);
--        xive_end_queue_pic_print_info(end, 6, mon);
-+        xive_end_queue_pic_print_info(end, 6, buf);
+     /* We'll expose it all to Guest so we want to reduce
+@@ -2754,7 +2743,6 @@ static const VMStateDescription vmstate_acpi_build = {
+ void acpi_setup(void)
+ {
+     PCMachineState *pcms = PC_MACHINE(qdev_get_machine());
+-    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+     X86MachineState *x86ms = X86_MACHINE(pcms);
+     AcpiBuildTables tables;
+     AcpiBuildState *build_state;
+@@ -2816,25 +2804,10 @@ void acpi_setup(void)
+                            tables.vmgenid);
      }
-+    info = human_readable_text_from_str(buf);
-+    monitor_puts(mon, info->human_readable_text);
-     monitor_printf(mon, "\n");
- }
  
+-    if (!pcmc->rsdp_in_ram) {
+-        /*
+-         * Keep for compatibility with old machine types.
+-         * Though RSDP is small, its contents isn't immutable, so
+-         * we'll update it along with the rest of tables on guest access.
+-         */
+-        uint32_t rsdp_size = acpi_data_len(tables.rsdp);
+-
+-        build_state->rsdp = g_memdup(tables.rsdp->data, rsdp_size);
+-        fw_cfg_add_file_callback(x86ms->fw_cfg, ACPI_BUILD_RSDP_FILE,
+-                                 acpi_build_update, NULL, build_state,
+-                                 build_state->rsdp, rsdp_size, true);
+-        build_state->rsdp_mr = NULL;
+-    } else {
+-        build_state->rsdp = NULL;
+-        build_state->rsdp_mr = acpi_add_rom_blob(acpi_build_update,
+-                                                 build_state, tables.rsdp,
+-                                                 ACPI_BUILD_RSDP_FILE);
+-    }
++    build_state->rsdp = NULL;
++    build_state->rsdp_mr = acpi_add_rom_blob(acpi_build_update,
++                                             build_state, tables.rsdp,
++                                             ACPI_BUILD_RSDP_FILE);
+ 
+     qemu_register_reset(acpi_build_reset, build_state);
+     acpi_build_reset(build_state);
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index a6d50df500..b0fc8686d8 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1763,7 +1763,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+ 
+     pcmc->pci_enabled = true;
+     pcmc->has_acpi_build = true;
+-    pcmc->rsdp_in_ram = true;
+     pcmc->smbios_defaults = true;
+     pcmc->gigabyte_align = true;
+     pcmc->has_reserved_memory = true;
 -- 
 2.41.0
 
