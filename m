@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A2B5C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 22:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B48C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 22:21:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJhAD-0000KP-QN; Tue, 18 Jun 2024 18:18:53 -0400
+	id 1sJhCR-0001IX-07; Tue, 18 Jun 2024 18:21:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJhAC-0000KE-Gl
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 18:18:52 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1sJhCN-0001IB-I4
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 18:21:07 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJhAA-00050N-U4
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 18:18:52 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-7041053c0fdso4100184b3a.3
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 15:18:50 -0700 (PDT)
+ id 1sJhCK-0005Kg-6T
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 18:21:07 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1f480624d0dso47444925ad.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 15:21:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718749129; x=1719353929; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718749262; x=1719354062; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1Jdokwu765FJCWejpVJf4p5gTdeyXX0HupJARTqik3A=;
- b=baXFxNvOpuO9tvmhKM2KeG/T3PgW5ySuaOpBdtAUE3g6FC2EA0oOMiDXuG+HowZREM
- JI4zIIVNEpxcj6wY7r8a4eePDNzMl9fB7Ei+SuaAQTu5ct3mPWfTONOctMGnNCWSLJgD
- Dq16BBWhWABmHZtvnFGhUuszRiypae07IcH7X6utlSOTbkKtxoUf9z2okvT8dyWLRIDD
- nDaNgNqfniIjomXZR0yYLoD1S2LTDvZgaIj51zTdeQ+phWfV8X3wxGeF/2PMSH8jyYHs
- iN7oQrRR6/yCbW8kOqqAGkDfHjgwDHG4x/yGwCRTYxRqSuqkOW5+HrV7xBn7xgpudHt7
- 0A6g==
+ bh=r5PbntltpwcbC6fxAxMh+L8ky/pzswrk55bWOW9dXjw=;
+ b=MpvTRNDl/gd9Gm+eGxvfTcSZJUfOTbG07t01poUckqYo7AS8gnXD1CxxGYyvRdlwBo
+ mScTAqltT5opH7sYOwWBfub7Oys2fQFVYb3yw9DBgzs0w3snYIYhdSCt7OjD9/w1O4PF
+ NHnNnOcA9gtVP7Sq4gfmsh3iNYSicb4MubWMdycEfwslVY8XrfiMnNpKOKkS5bA5E0kE
+ deOHsLMQTvqlmsPTQ6Sg2tQF0jVHiGMKMBRkYrP3iqYtj72HQs+fPZ6PwgSsYsZ1BqnO
+ 4r7Y/16v0+sN//UvazwoJzKwMwlDA1Xg0eLUwcpPOzLUS2c27kH4k5m0M6jkUsZdBw/1
+ VNAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718749129; x=1719353929;
+ d=1e100.net; s=20230601; t=1718749262; x=1719354062;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1Jdokwu765FJCWejpVJf4p5gTdeyXX0HupJARTqik3A=;
- b=OW34WOlCQ6FNdvxSMPgjW/eaIvg4ZzAzds51BlJqbf+fjvAlkA8fjp20AjsjMzBal3
- 8WnSWa/AwKPEkduox+idZwBpR1Rwlbtc4vLna675KEVFhVH3DtDW16zs5BMXuA2KpH9f
- 5kiKNS9LUCCJQ4u+GZuDk9dKbHSy8AJoMPCE8qh00LfAurQXgG09h4QSTxd4DcSFTxGc
- 6OVZLdy0eSGq4fZqmNriPk6YeNGmN1BH4likU2R0OFx14g1Ps55s80B1D5DJPRsR+4BY
- Z6Vn0DcWZm9zz7xwgFu/xv6gBaqgFLrBi5HgFkcNYJrY8jlw04sJehqIg4d+9bdp4T8N
- qBlQ==
+ bh=r5PbntltpwcbC6fxAxMh+L8ky/pzswrk55bWOW9dXjw=;
+ b=BFFER93LXeTSH+I5mi+MkMNtYIArfyxVbVcgrxqwCptzQJO82fuZ/dwLRJFvMdYmPw
+ uGklHnGSX85FAnjsttYK4FUSaD6FGTccQYeP5BRLMhTYRjXzrGieK2J0bcwrOfffqMeN
+ Xj9mc6UVQSPry8eBokjrYgVMAp6dCk89I+TaNXDdF3QhH/iAD+GbToWlmxD9jeKnUJnY
+ r9yrIVKOOotheta6axTLDRFm3nBvoSEGQDGmh8E0A321DJzoeeTGf/hdA74JgjGKFGDH
+ g7bz+npaqkb/pOtoNwvlRxiI7iGaQLuITPvwiq8dfJQmDtDbpnvFm4sTUvxrQYxvtbH1
+ pIxw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU9+323SuZXduTu0TNqNnvepm3BUaww9o+oHYxo2obqXw32S27AAYTAVhER1NfzGAn+ktTqo+Gu/J/1MtOA60ygJbPtPDI=
-X-Gm-Message-State: AOJu0Yxr4p0BHzpQE4AebIMKc6MXwKMN5sZG9e5OP8aQ4iLrrsmlNWKD
- mrssyLo1W94bbKsm80rVf+1ab7Wfa+uQrpuyztDD+N8EPIsclULgAuF/g2PqrdU=
-X-Google-Smtp-Source: AGHT+IE4aZVOF1hlS92OGMiDfpKHTc4v4tXyj4ZaGebcgitpjno6pbJB9S7tmrNsOsTv9kSaWxfiYw==
-X-Received: by 2002:a05:6a20:c412:b0:1b2:b135:8efe with SMTP id
- adf61e73a8af0-1bcbb451684mr861663637.12.1718749129159; 
- Tue, 18 Jun 2024 15:18:49 -0700 (PDT)
+ AJvYcCXoomGU5l8Rite9p3vkM+Cy5ZG/UayD5SHnd6T1lzTnwTeHaRaSSh6fpZ/9c05dSXQuhQ+Q2H0E/hKxjLtQArqzreIg5sw=
+X-Gm-Message-State: AOJu0Yw6UXHjmiyCXZVKgYMlw6cN/2glyQjEXVQYbKpTXQ5hoRVrH4k1
+ /2ek+Tfk28PUrEyxLCufltIWhTqsy1vtUgJMy4XI/01puGPZalWWsT3Mi1XrDjp54qP//OTOvC8
+ l
+X-Google-Smtp-Source: AGHT+IEBoyXLWHCYqIBCyetSk+Xw8vZtNrpIANIKrw4+ii2omjN7+It00pVuxDALuzyIOVggvBF3Xw==
+X-Received: by 2002:a17:902:daca:b0:1f8:67e4:3985 with SMTP id
+ d9443c01a7336-1f9aa45eaa7mr12480715ad.49.1718749262152; 
+ Tue, 18 Jun 2024 15:21:02 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.132.216])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705ccb8a29bsm9409968b3a.184.2024.06.18.15.18.48
+ d9443c01a7336-1f855e5bca2sm102948935ad.17.2024.06.18.15.21.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 15:18:48 -0700 (PDT)
-Message-ID: <b723a419-e18d-4a45-bdda-fd8620322bd8@linaro.org>
-Date: Tue, 18 Jun 2024 15:18:46 -0700
+ Tue, 18 Jun 2024 15:21:01 -0700 (PDT)
+Message-ID: <786660ab-a74e-4ad9-8347-9bc1733867bd@linaro.org>
+Date: Tue, 18 Jun 2024 15:20:59 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/23] Add ARM AArch64 ELF definitions for bsd-user
+Subject: Re: [PATCH 14/23] Add ARM AArch64 hardware capability definitions
 To: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>,
- Stacey Son <sson@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>
+Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@freebsd.org>
 References: <20240617185804.25075-1-itachis@FreeBSD.org>
- <20240617185804.25075-14-itachis@FreeBSD.org>
+ <20240617185804.25075-15-itachis@FreeBSD.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240617185804.25075-14-itachis@FreeBSD.org>
+In-Reply-To: <20240617185804.25075-15-itachis@FreeBSD.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,20 +100,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/17/24 11:57, Ajeet Singh wrote:
-> From: Stacey Son<sson@FreeBSD.org>
+> From: Warner Losh<imp@bsdimp.com>
 > 
-> Defined mmap and dynamic load adresses and
-> set various elf parameters
+> Defined a huge list of hardware capabilites and added
+> macros for retrieving hwcap flags
 > 
-> Signed-off-by: Stacey Son<sson@FreeBSD.org>
+> Signed-off-by: Warner Losh<imp@bsdimp.com>
 > Signed-off-by: Ajeet Singh<itachis@FreeBSD.org>
-> Co-authored-by: Kyle Evans<kevans@FreeBSD.org>
 > ---
->   bsd-user/aarch64/target_arch_elf.h | 37 ++++++++++++++++++++++++++++++
->   1 file changed, 37 insertions(+)
->   create mode 100644 bsd-user/aarch64/target_arch_elf.h
+>   bsd-user/aarch64/target_arch_elf.h | 61 ++++++++++++++++++++++++++++++
+>   1 file changed, 61 insertions(+)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
