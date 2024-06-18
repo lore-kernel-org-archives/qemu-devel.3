@@ -4,92 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3725C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 11:46:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A3C3C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 11:47:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJXHv-00053K-At; Tue, 18 Jun 2024 07:46:11 -0400
+	id 1sJXJP-0006OU-IK; Tue, 18 Jun 2024 07:47:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJXHr-00052u-FI
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:46:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJXHn-0002zM-Mv
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:46:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718711162;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rKtRmevcUcXccckp7YSABqnmhA5/+P4gAgYuj17MY40=;
- b=YgGHY4EQOmOtexx7rymsYp9J/aK3HBj/gieBaoonmHSgI+Qj09c0RmJN5RKIFBUKd0llyF
- CCjcSEtrifxKpFcx0m795EVsPI01ZmHEkY7+6sd6eqQBu7TjGsEdAWzjZfqF2AtFed/2SW
- TJdcUuLwu80/KpK0sXnjgoH4967ZQAU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-JOFSa_M2Mrytu0Q9BlY4ig-1; Tue, 18 Jun 2024 07:46:00 -0400
-X-MC-Unique: JOFSa_M2Mrytu0Q9BlY4ig-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42120e123beso48127425e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 04:46:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJXJM-0006OC-3Z
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:47:41 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJXJK-0003Ol-Br
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:47:39 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4217d808034so47259915e9.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 04:47:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718711256; x=1719316056; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gyWVYjqU/kSDHPvII+VjMQSDjmPWlMk5TFRwViXidxw=;
+ b=oSCQDcbMcqh8+vwjRZN5aYM8NOW0K0lMW4bxYXjxrNy8XvJLd4dTTaSlc/mEmXFe7A
+ LBuzyZaQwWsqQxxNg+SYYg0NWDrHVmBmjMnXjCxqaVueQTtT/Mk3Flsajvt3LFQ9n8wR
+ rmqMOMgg7QL13MPev6lwnVKpv37SrbjLAL7rhATGQhQ5Tsp6lfsEM5FQThPXcszdfO85
+ t4Gv4i1etY3onDQ1jIINELQGrUX24wLYq0fVi5SKkQJpOVBPH1B7YAqxcAFW78i1N03Q
+ +Rnox0jar6Nw5m84vY3nLbV8Zt+D3LzcB5sat/QGahDnbmORDzbKTH+cF8E4uU06AnDL
+ y3cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718711160; x=1719315960;
+ d=1e100.net; s=20230601; t=1718711256; x=1719316056;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rKtRmevcUcXccckp7YSABqnmhA5/+P4gAgYuj17MY40=;
- b=jXUQNlvhYzI1wKihf7WU/dq+gNtmlQiw799zneSaFWk0nkj7/bvE5AuYkEKgSmUgO7
- JgjIenZtHRJtKKg5x6REmlYMoV/299RIm0JRqHyFx7BP/ZbObb8bbc20Mv2041ydll51
- E026pWuApw6RXJIx03mjWPTn5hRup0fNSyHHf6cRJ8wezf2R9aB8KjtqmQpg8rab5R8O
- GW1GRmME0YNSF9gy+9DrzK+VrNf85rpYIcr6PZiW+OJtpAgOl0bKSQaSyiU1L7b04pl0
- bK2ffxGaDK9Br3HjLdmdUT4qFE7iPd772I+r4pr9xHDimoIr1d9zq3liUczkvA2XncbH
- fHNg==
+ bh=gyWVYjqU/kSDHPvII+VjMQSDjmPWlMk5TFRwViXidxw=;
+ b=XLwzbv7rb0/Vac0SI+TUtA5zgj0YSwZnOSwxslcouZmEaCbEvdQ12BjcqRUDxu6yQd
+ 6xNIvKEW1OqmIBfQ2HF85cLSxTEYQM9BDKjRG09NTxESrtsBC7lg9vfC8FNCZJ9eEClx
+ flnlySdKbTY/0aU1orwQLTqCbp/0/the+nUHU8WU5F7OP4sH4FZ635hXaIJHUmzitbcq
+ RAykAGPMKaCc0d5tbqsNJIKFNJevOdXnEMoyv4hrwT4BACK2ML2BJTEWnXC2ONnu0K3e
+ 45ZxOL+4ROqMuymWwjDJ2SCft0edTqNxhsUjU4OWglELRrSzD3x8YBpkfGsW3txYu3Ro
+ tfXg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZO9babivyKqweEkeYRI6vFtessUMQbizUYAjwu0e3wM5KlqZ2IsVFSIcwtZKKKU4t3m43mDh64qGBvPkl1B3nPv7Vqrs=
-X-Gm-Message-State: AOJu0YwTivOXk9NFBCiVb6KggX9awAIBUX8TULIiFTqFnWiWqD5FNg0k
- QY8sWPuGqyOtMptpPhtTeVQ9RGTfHZGvJgJGpTxZnhAOurEYueTwKAZ/+MZVsppDuMy74uCLWmC
- d5B3ipQuPv45gCulB4aMiOrW6kKDh6bmlrcAj5mE8mRViJJsYDwAk
-X-Received: by 2002:a05:600c:3b06:b0:422:1705:7549 with SMTP id
- 5b1f17b1804b1-42304844acamr116103495e9.25.1718711159872; 
- Tue, 18 Jun 2024 04:45:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFndg0C6ud5RdS6VmKDuaUWCZJ92Pit3G40O9C4jBt2J9YF2lX4pVB3gSbxDWF2+wHf63j2ig==
-X-Received: by 2002:a05:600c:3b06:b0:422:1705:7549 with SMTP id
- 5b1f17b1804b1-42304844acamr116103365e9.25.1718711159509; 
- Tue, 18 Jun 2024 04:45:59 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ AJvYcCX+pYlp9xTfmNRU5OCKb2gj8cABM35nLV6mukIOzmBOjIYaexUZSxptL6RWc6AYrQRPhZ+iIjFQCop9s4sK2yWNUER5bNU=
+X-Gm-Message-State: AOJu0Ywo9UaaN/C27UC19LC45+HTUe3cIQm2lAoiNShaa46wd74XCndk
+ uJLb528ni8ssdMWYWsVGAFlf6I48zH8KoK+SDkR4qMzcwiBcUU3mhLCDNOwferE=
+X-Google-Smtp-Source: AGHT+IGExoTvYZPCBrSWfTBdjp+uk7Z7Z/8gT5gfjw7bKD+trceDCWgbew9ErfYJ2DtsKjtAQANmuQ==
+X-Received: by 2002:a05:600c:705:b0:424:6c83:a78e with SMTP id
+ 5b1f17b1804b1-4246c83a808mr28981545e9.40.1718711256565; 
+ Tue, 18 Jun 2024 04:47:36 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422f602e7e3sm187023525e9.12.2024.06.18.04.45.58
+ 5b1f17b1804b1-422f602efdesm186806365e9.17.2024.06.18.04.47.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 04:45:59 -0700 (PDT)
-Message-ID: <caa5e52b-f9a9-4e7e-94aa-7d3207fb9273@redhat.com>
-Date: Tue, 18 Jun 2024 13:45:58 +0200
+ Tue, 18 Jun 2024 04:47:36 -0700 (PDT)
+Message-ID: <150942af-8727-4594-a817-c53c5bb8e04f@linaro.org>
+Date: Tue, 18 Jun 2024 13:47:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/17] vfio: QOMify VFIOContainer
-To: eric.auger@redhat.com, qemu-devel@nongnu.org
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20240617063409.34393-1-clg@redhat.com>
- <f419417d-2346-4cfa-a7e4-068946d4bafc@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <f419417d-2346-4cfa-a7e4-068946d4bafc@redhat.com>
+Subject: Re: [PATCH 3/4] hw/m68k/virt: Add a pflash controller for BIOS
+ firmware
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+References: <20240527-m68k-bios-v1-0-6de26552fa77@flygoat.com>
+ <20240527-m68k-bios-v1-3-6de26552fa77@flygoat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240527-m68k-bios-v1-3-6de26552fa77@flygoat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,41 +98,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/17/24 6:22 PM, Eric Auger wrote:
-> Hi Cédric,
+Hi Jiaxun,
+
+On 27/5/24 19:15, Jiaxun Yang wrote:
+> Add a 8 MiB pflash controller for BIOS firmware, and boot
+> from it if possible.
 > 
-> On 6/17/24 08:33, Cédric Le Goater wrote:
->> Hello,
->>
->> The series starts with simple changes (patch 1-4). Two of which were
->> initially sent by Joao in a series adding VFIO migration support with
->> vIOMMU [1].
->>
->> The changes following prepare VFIOContainer for QOMification, switch
->> the container models to QOM when ready and add some final cleanups.
->>
->> Applies on top of :
->>
->>   * [v7] Add a host IOMMU device abstraction to check with vIOMMU
->>     https://lore.kernel.org/all/20240605083043.317831-1-zhenzhong.duan@intel.com
->>   * [v4] VIRTIO-IOMMU/VFIO: Fix host iommu geometry
->>     https://lore.kernel.org/all/20240614095402.904691-1-eric.auger@redhat.com
+> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> ---
+>   hw/m68k/Kconfig                                   |  1 +
+>   hw/m68k/virt.c                                    | 44 +++++++++++++++++++++++
+>   include/standard-headers/asm-m68k/bootinfo-virt.h |  1 +
+>   3 files changed, 46 insertions(+)
 > 
-> For the whole series, feel free to add my
+> diff --git a/hw/m68k/Kconfig b/hw/m68k/Kconfig
+> index 4501da56ff6d..f233a5948f19 100644
+> --- a/hw/m68k/Kconfig
+> +++ b/hw/m68k/Kconfig
+> @@ -42,6 +42,7 @@ config M68K_VIRT
+>       select M68K_IRQC
+>       select FW_CFG_DMA
+>       select VIRT_CTRL
+> +    select PFLASH_CFI01
+>       select GOLDFISH_PIC
+>       select GOLDFISH_TTY
+>       select GOLDFISH_RTC
+> diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+> index 7590e6515ac3..a2eebc0f2243 100644
+> --- a/hw/m68k/virt.c
+> +++ b/hw/m68k/virt.c
+> @@ -8,6 +8,7 @@
+>    */
+>   
+>   #include "qemu/osdep.h"
+> +#include "qemu/datadir.h"
+>   #include "qemu/units.h"
+>   #include "qemu/guest-random.h"
+>   #include "sysemu/sysemu.h"
+> @@ -28,6 +29,7 @@
+>   #include "sysemu/runstate.h"
+>   #include "sysemu/reset.h"
+>   
+> +#include "hw/block/flash.h"
+>   #include "hw/intc/m68k_irqc.h"
+>   #include "hw/misc/virt_ctrl.h"
+>   #include "hw/char/goldfish_tty.h"
+> @@ -97,6 +99,10 @@
+>   #define VIRT_XHCI_MMIO_BASE 0xff020000    /* MMIO: 0xff020000 - 0xff023fff */
+>   #define VIRT_XHCI_IRQ_BASE  PIC_IRQ(1, 2) /* PIC: #1, IRQ: #2 */
+>   
+> +#define VIRT_PFLASH_MMIO_BASE 0xff800000      /* MMIO: 0xff800000 - 0xffffffff */
+> +#define VIRT_PFLASH_SIZE      0x800000        /* 8 MiB */
+
+Do you need a real RW pflash or a ROM would be enough?
+
+> +#define VIRT_PFLASH_SECTOR_SIZE (128 * KiB)   /* 64 KiB */
+> +
+>   typedef struct {
+>       M68kCPU *cpu;
+>       hwaddr initial_pc;
+> @@ -139,6 +145,7 @@ static void virt_init(MachineState *machine)
+>       const char *initrd_filename = machine->initrd_filename;
+>       const char *kernel_cmdline = machine->kernel_cmdline;
+>       hwaddr parameters_base;
+> +    DriveInfo *dinfo;
+>       DeviceState *dev;
+>       DeviceState *irqc_dev;
+>       DeviceState *pic_dev[VIRT_GF_PIC_NB];
+> @@ -165,6 +172,8 @@ static void virt_init(MachineState *machine)
+>       cpu = M68K_CPU(cpu_create(machine->cpu_type));
+>   
+>       reset_info->cpu = cpu;
+> +    reset_info->initial_pc = VIRT_PFLASH_MMIO_BASE;
+> +    reset_info->initial_stack = ram_size;
+>       qemu_register_reset(main_cpu_reset, reset_info);
+>   
+>       /* RAM */
+> @@ -253,6 +262,39 @@ static void virt_init(MachineState *machine)
+>                           PIC_GPIO(VIRT_XHCI_IRQ_BASE));
+>       }
+>   
+> +    /* pflash */
+> +    dinfo = drive_get(IF_PFLASH, 0, 0);
+> +    pflash_cfi01_register(VIRT_PFLASH_MMIO_BASE,
+> +                          "virt.pflash0",
+> +                           VIRT_PFLASH_SIZE,
+> +                           dinfo ? blk_by_legacy_dinfo(dinfo) : NULL,
+> +                           VIRT_PFLASH_SECTOR_SIZE, 4,
+> +                           0x89, 0x18, 0, 0, 1);
+> +
+> +    if (machine->firmware) {
+> +        char *fn;
+> +        int image_size;
+> +
+> +        if (drive_get(IF_PFLASH, 0, 0)) {
+> +            error_report("The contents of the first flash device may be "
+> +                         "specified with -bios or with -drive if=pflash... "
+> +                         "but you cannot use both options at once");
+> +            exit(1);
+> +        }
+> +        fn = qemu_find_file(QEMU_FILE_TYPE_BIOS, machine->firmware);
+> +        if (!fn) {
+> +            error_report("Could not find ROM image '%s'", machine->firmware);
+> +            exit(1);
+> +        }
+> +        image_size = load_image_targphys(fn, VIRT_PFLASH_MMIO_BASE,
+> +                                         VIRT_PFLASH_SIZE);
+> +        g_free(fn);
+> +        if (image_size < 0) {
+> +            error_report("Could not load ROM image '%s'", machine->firmware);
+> +            exit(1);
+> +        }
+> +    }
+> +
+>       if (kernel_filename) {
+>           CPUState *cs = CPU(cpu);
+>           uint64_t high;
+> @@ -311,6 +353,8 @@ static void virt_init(MachineState *machine)
+>           }
+>           BOOTINFO2(param_ptr, BI_VIRT_FW_CFG_BASE,
+>                     VIRT_FW_CFG_MMIO_BASE, VIRT_FW_CFG_IRQ_BASE);
+> +        BOOTINFO2(param_ptr, BI_VIRT_PFLASH_BASE,
+> +                    VIRT_PFLASH_MMIO_BASE, 0);
+>   
+>           if (kernel_cmdline) {
+>               BOOTINFOSTR(param_ptr, BI_COMMAND_LINE,
+> diff --git a/include/standard-headers/asm-m68k/bootinfo-virt.h b/include/standard-headers/asm-m68k/bootinfo-virt.h
+> index 7f90be1aa7bd..21c9a98d2912 100644
+> --- a/include/standard-headers/asm-m68k/bootinfo-virt.h
+> +++ b/include/standard-headers/asm-m68k/bootinfo-virt.h
+> @@ -18,6 +18,7 @@
+>   
+>   #define BI_VIRT_XHCI_BASE	0x8007
+>   #define BI_VIRT_FW_CFG_BASE	0x8008
+> +#define BI_VIRT_PFLASH_BASE	0x8009
+>   
+>   #define VIRT_BOOTI_VERSION	MK_BI_VERSION(2, 0)
+>   
 > 
-> Tested-by: Eric Auger <eric.auger@redhat.com>
-> 
-> I tested with legacy/iommufd BE and with/without virtio-iommu
-
-Thanks !
-
-Here is an updated version, with the new commit logs :
-
-   https://github.com/legoater/qemu/commits/vfio-9.1
-
-I hope to push on vfio-next soon, without the series "vfio: VFIO
-migration support with vIOMMU".
-
-C.
 
 
