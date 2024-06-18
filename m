@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F23DC27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 11:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53691C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 11:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJX0H-0004TS-AW; Tue, 18 Jun 2024 07:27:57 -0400
+	id 1sJX1e-0006um-QH; Tue, 18 Jun 2024 07:29:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJX0G-0004TI-Gl
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:27:56 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJX1c-0006rn-G6
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:29:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJX0E-00081O-Uq
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:27:56 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sJX1Z-00089V-1B
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 07:29:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718710074;
+ s=mimecast20190719; t=1718710156;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5ebBhDRKsKAYeRnJMGyT5ncuJEKw5BwD3opjwB/Ufek=;
- b=JCdStiy6nrL6bhaC8H58/ZckcA2htnJTTtFa/UDxtTvr6RRJ/Fz7suPJlHQD8149Hxe49V
- gOPWF7JenEbt/r8FP3srxbhEPsgaK+1e3CwCVh3Cqj9CW9XPnrZDSDCQ6AoEWf/xKzEJnf
- 1V8eTHmCd12cXWlDAQxyF9iE3n+IBnA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QL2mCqxcTA/gR5pi/d5I9eeUirEcmK6GAkuaOzW5g9I=;
+ b=Nyb4y1BAKI6aMHQ5Iroz9QJK60T6HH1DtuiNCWTgaekLqx9YocV4IGMPGOJQLkJvD405e5
+ 0+7F1olRRTpGVQYpdjfo6N2zUanWfNwRCwfR9gG+kNDVC622zzfy7b8v8uzrpoKo6hr4Pw
+ e//jzeCawdauRyySkMM799faoGoV1W8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-JxmUr2IDMXmJClxczt8F5g-1; Tue, 18 Jun 2024 07:27:52 -0400
-X-MC-Unique: JxmUr2IDMXmJClxczt8F5g-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-36279cf642cso168635f8f.3
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 04:27:52 -0700 (PDT)
+ us-mta-362-byZ4hHRfNhytq8J6p958KA-1; Tue, 18 Jun 2024 07:29:15 -0400
+X-MC-Unique: byZ4hHRfNhytq8J6p958KA-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4218447b900so29025815e9.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 04:29:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718710071; x=1719314871;
+ d=1e100.net; s=20230601; t=1718710154; x=1719314954;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5ebBhDRKsKAYeRnJMGyT5ncuJEKw5BwD3opjwB/Ufek=;
- b=WxyYjU9B8s0dUwiQH4EufWYCsE6W5fyW53b7YOiPIFzPjjQWS193hViHFRRRG/yb88
- NpMNZfnFjuj88UOz4KsJoKP+2enQMfXzFzO+9ifTrasrBqi9T/9y6hl6lucDM/weSOYu
- tU4qJF3mvQLO8GFOOyT+GkIqI8SeKxGK8xc+LvMSEL6G9aE/FO2DPXRZcRQUenkGlHGT
- qNyBDDwkrsIb0UWdr0M9lnP1UHyfGBExvByG14nDni+m2DS/ezICoNCiDiLQ5+6bK3Zg
- nr3eYqOjt7ujcBuT8W7kj/oySC0iJdNfy7fLGpaqPKJXnp6Er3bSM0GzTeAF+jVJricY
- UXGg==
+ bh=QL2mCqxcTA/gR5pi/d5I9eeUirEcmK6GAkuaOzW5g9I=;
+ b=Y4QA6mLIHtFF9rplvqQRrZEm2JDxrXD9TP4MM0FzsZzVj7gX+gOC7E/xmNXZS6U2Su
+ FVBVa7JCmmvH5AW8XyxqmPx5QBLfu8cpuYfUMrg84Y0aQ8xvhlN0G4yBpboPyYZQYlQn
+ NifHPh8zRrd0L4kbE7rly8aDIBTRpM0So4KEWToCpQ2FWnX1NrBY+88At/Rc5k0UMVHC
+ 5i5vcSXip/OAgEeKL85QOpbZDJcGcojQB0CSpsWFU3zhELKAOYfvbwQuaabnUMhqg2eN
+ Bz75NP51XzJmKzX2NIuez24ZWjkTbVxW0grAbYSMAe12idKEuZDxe2/2GEObGapTzjCG
+ QMHg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWanYYVjUzzlajPbiCTdvg9xE/J0asRKvNcJk433cnuYZkiy32ia1WesjpHoNePJP3QQKl6zZbgDRS3UJcfArv/kYpd/iM=
-X-Gm-Message-State: AOJu0YwveUi0CU/5xTfqH6jCQM+hQbRQwsx3UiidE0EEmSBuyUgJwfVp
- F3pFenDPlUMFOhD83mzamunOkHrtbbLe1F4f/fhDtrboa4gox8Xtqa6moKwtoWR/Ko+kb4LtMsN
- lq9KYyNI8kxbkqTJUmTQ3Xm9ZG6uFz6ejh7tOqINpztphnSie2nhIcmV3aL5x
-X-Received: by 2002:adf:f00c:0:b0:362:a1e8:16c with SMTP id
- ffacd0b85a97d-362a1e80560mr386748f8f.2.1718710071412; 
- Tue, 18 Jun 2024 04:27:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGO0jFcpdJTjMFl8OpRmgMNFzwAQXyz4O1fcvol90KXf8wM9UjKlPvUwJaI/zV2TEgOHsAU/g==
-X-Received: by 2002:adf:f00c:0:b0:362:a1e8:16c with SMTP id
- ffacd0b85a97d-362a1e80560mr386738f8f.2.1718710071033; 
- Tue, 18 Jun 2024 04:27:51 -0700 (PDT)
+ AJvYcCUHQo6MpSn21TzcOo+tPg2UDhkLorIUiQlMeXlu9uxmjV28Ji5qsdeKbZ3KGcP7ZeM0k/nn6aUYXDF6erPXw/OV07BFHEQ=
+X-Gm-Message-State: AOJu0YxEpTYOnBI5PN1aTQdjobbS4hL31yu5vmEKCc/WVtpmx6UGgRDT
+ vPvTkos1msxgCRYON+N0If6tztWVacHilnpLG4PBGolN0dzfVP7lJVV8rkkfROvuNbHzL1F7Kid
+ pp66or3ykzx9KbNu37ykUnaiy/JeZdLrPlVMPz8DfuOLGVoawY+MJ
+X-Received: by 2002:a05:600c:1793:b0:421:da70:461a with SMTP id
+ 5b1f17b1804b1-4246f5c596dmr23176115e9.17.1718710154039; 
+ Tue, 18 Jun 2024 04:29:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEo4w5P3mvnOyk89WWpCxXfFwW45fZhkPdM1OsPYkjhacupQ9/T3wu3omKhFf1JWdLneOtDRg==
+X-Received: by 2002:a05:600c:1793:b0:421:da70:461a with SMTP id
+ 5b1f17b1804b1-4246f5c596dmr23175945e9.17.1718710153675; 
+ Tue, 18 Jun 2024 04:29:13 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-360750ad1absm13751995f8f.62.2024.06.18.04.27.50
+ 5b1f17b1804b1-42286eef9eesm224954005e9.9.2024.06.18.04.29.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 04:27:50 -0700 (PDT)
-Message-ID: <1e91d6be-3357-4030-ac18-af241e21b30c@redhat.com>
-Date: Tue, 18 Jun 2024 13:27:49 +0200
+ Tue, 18 Jun 2024 04:29:13 -0700 (PDT)
+Message-ID: <b2fb8ca4-ddd2-4034-b2f9-cc52bfe1c63b@redhat.com>
+Date: Tue, 18 Jun 2024 13:29:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/17] vfio/container: Introduce
- vfio_address_space_insert()
+Subject: Re: [PATCH v2 06/17] vfio/container: Simplify vfio_container_init()
 To: eric.auger@redhat.com, qemu-devel@nongnu.org
 Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Alex Williamson <alex.williamson@redhat.com>
 References: <20240617063409.34393-1-clg@redhat.com>
- <20240617063409.34393-6-clg@redhat.com>
- <4dd2cb75-c6dc-426e-bb0c-87e25ea057b7@redhat.com>
+ <20240617063409.34393-7-clg@redhat.com>
+ <fb3d29ca-6480-48fd-9e6b-4f90031d17ae@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <4dd2cb75-c6dc-426e-bb0c-87e25ea057b7@redhat.com>
+In-Reply-To: <fb3d29ca-6480-48fd-9e6b-4f90031d17ae@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -108,95 +107,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/17/24 4:04 PM, Eric Auger wrote:
-> 
+On 6/17/24 4:25 PM, Eric Auger wrote:
+> Hi Cédric,
 > 
 > On 6/17/24 08:33, Cédric Le Goater wrote:
->> It will ease future changes.
-> Does it, really?
+>> Assign the base container VFIOAddressSpace 'space' pointer in
+>> vfio_address_space_insert().
+> 
+> OK I get it now. Maybe in the previous patch, say that the
+> 
+> vfio_address_space_insert() will be enhanced with additional initializations.
 
-Changed to :
 
-   It prepares gound for a future change initializing the 'space' pointer
-   of VFIOContainerBase. The goal is to replace vfio_container_init() by
-   an .instance_init() handler when VFIOContainerBase is QOMified.
+
+> 
+>>
+>> To be noted that vfio_connect_container() will assign the 'space'
+>> pointer later in the execution flow. This should not have any
+>> consequence.
+> 
+> You do not explain the motivation of that change.
+
+Changed to:
+
+   Assign the base container VFIOAddressSpace 'space' pointer in
+   vfio_address_space_insert(). The ultimate goal is to remove
+   vfio_container_init() and instead rely on an .instance_init() handler
+   to perfom the initialization of VFIOContainerBase.
+
+   To be noted that vfio_connect_container() will assign the 'space'
+   pointer later in the execution flow. This should not have any
+   consequence.
 
 Thanks,
 
 C.
 
 
+
 > 
-> Besides
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> 
-> Eric
 >>
 >> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 >> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 >> ---
->>   include/hw/vfio/vfio-common.h | 2 ++
->>   hw/vfio/common.c              | 6 ++++++
->>   hw/vfio/container.c           | 2 +-
->>   hw/vfio/iommufd.c             | 2 +-
->>   4 files changed, 10 insertions(+), 2 deletions(-)
+>>   include/hw/vfio/vfio-container-base.h | 1 -
+>>   hw/vfio/common.c                      | 1 +
+>>   hw/vfio/container-base.c              | 3 +--
+>>   hw/vfio/container.c                   | 6 +++---
+>>   hw/vfio/iommufd.c                     | 2 +-
+>>   5 files changed, 6 insertions(+), 7 deletions(-)
 >>
->> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
->> index c19572f90b277193491020af28e8b5587f15bfd1..825d80130bd435fe50830c8ae5b7905d18104dd6 100644
->> --- a/include/hw/vfio/vfio-common.h
->> +++ b/include/hw/vfio/vfio-common.h
->> @@ -206,6 +206,8 @@ typedef struct VFIODisplay {
+>> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+>> index 442c0dfc4c1774753c239c2c8360dcd1540d44fa..d505f63607ec40e6aa44aeb3e20848ac780562a1 100644
+>> --- a/include/hw/vfio/vfio-container-base.h
+>> +++ b/include/hw/vfio/vfio-container-base.h
+>> @@ -87,7 +87,6 @@ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>>                      VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
 >>   
->>   VFIOAddressSpace *vfio_get_address_space(AddressSpace *as);
->>   void vfio_put_address_space(VFIOAddressSpace *space);
->> +void vfio_address_space_insert(VFIOAddressSpace *space,
->> +                               VFIOContainerBase *bcontainer);
+>>   void vfio_container_init(VFIOContainerBase *bcontainer,
+>> -                         VFIOAddressSpace *space,
+>>                            const VFIOIOMMUClass *ops);
+>>   void vfio_container_destroy(VFIOContainerBase *bcontainer);
 >>   
->>   void vfio_disable_irqindex(VFIODevice *vbasedev, int index);
->>   void vfio_unmask_single_irqindex(VFIODevice *vbasedev, int index);
 >> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->> index f28641bad5cf4b71fcdc0a6c9d42b24c8d786248..8cdf26c6f5a490cfa02bdf1087a91948709aaa33 100644
+>> index 8cdf26c6f5a490cfa02bdf1087a91948709aaa33..1686a0bed23bd95467bfb00a0c39a4d966e49cae 100644
 >> --- a/hw/vfio/common.c
 >> +++ b/hw/vfio/common.c
->> @@ -1508,6 +1508,12 @@ void vfio_put_address_space(VFIOAddressSpace *space)
->>       }
+>> @@ -1512,6 +1512,7 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
+>>                                  VFIOContainerBase *bcontainer)
+>>   {
+>>       QLIST_INSERT_HEAD(&space->containers, bcontainer, next);
+>> +    bcontainer->space = space;
 >>   }
 >>   
->> +void vfio_address_space_insert(VFIOAddressSpace *space,
->> +                               VFIOContainerBase *bcontainer)
->> +{
->> +    QLIST_INSERT_HEAD(&space->containers, bcontainer, next);
->> +}
->> +
 >>   struct vfio_device_info *vfio_get_device_info(int fd)
+>> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+>> index 760d9d0622b2e847ecb3368c88df772efb06043f..280f0dd2db1fc3939fe9925ce00a2c50d0e14196 100644
+>> --- a/hw/vfio/container-base.c
+>> +++ b/hw/vfio/container-base.c
+>> @@ -71,11 +71,10 @@ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+>>                                                  errp);
+>>   }
+>>   
+>> -void vfio_container_init(VFIOContainerBase *bcontainer, VFIOAddressSpace *space,
+>> +void vfio_container_init(VFIOContainerBase *bcontainer,
+>>                            const VFIOIOMMUClass *ops)
 >>   {
->>       struct vfio_device_info *info;
+>>       bcontainer->ops = ops;
+>> -    bcontainer->space = space;
+>>       bcontainer->error = NULL;
+>>       bcontainer->dirty_pages_supported = false;
+>>       bcontainer->dma_max_mappings = 0;
 >> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
->> index c48749c089a67ee4d0e6b8dd975562e2938500cd..0237c216987ff64a6d11bef8688bb000d93a7f09 100644
+>> index 0237c216987ff64a6d11bef8688bb000d93a7f09..dc85a79cb9e62b72312f79da994c53608b6cef48 100644
 >> --- a/hw/vfio/container.c
 >> +++ b/hw/vfio/container.c
->> @@ -637,7 +637,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
->>       vfio_kvm_device_add_group(group);
+>> @@ -394,7 +394,7 @@ static const VFIOIOMMUClass *vfio_get_iommu_class(int iommu_type, Error **errp)
+>>   }
 >>   
->>       QLIST_INIT(&container->group_list);
->> -    QLIST_INSERT_HEAD(&space->containers, bcontainer, next);
->> +    vfio_address_space_insert(space, bcontainer);
+>>   static bool vfio_set_iommu(VFIOContainer *container, int group_fd,
+>> -                           VFIOAddressSpace *space, Error **errp)
+>> +                           Error **errp)
+>>   {
+>>       int iommu_type;
+>>       const VFIOIOMMUClass *vioc;
+>> @@ -432,7 +432,7 @@ static bool vfio_set_iommu(VFIOContainer *container, int group_fd,
+>>           return false;
+>>       }
 >>   
->>       group->container = container;
->>       QLIST_INSERT_HEAD(&container->group_list, group, container_next);
+>> -    vfio_container_init(&container->bcontainer, space, vioc);
+>> +    vfio_container_init(&container->bcontainer, vioc);
+>>       return true;
+>>   }
+>>   
+>> @@ -614,7 +614,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+>>       container->fd = fd;
+>>       bcontainer = &container->bcontainer;
+>>   
+>> -    if (!vfio_set_iommu(container, group->fd, space, errp)) {
+>> +    if (!vfio_set_iommu(container, group->fd, errp)) {
+>>           goto free_container_exit;
+>>       }
+>>   
 >> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->> index e502081c2ad9eda31769176f875fef60a77e2b43..9f8f33e383a38827ceca0f73cb77f5ca6b123198 100644
+>> index 9f8f33e383a38827ceca0f73cb77f5ca6b123198..e5d9334142418514215528b9523f12c031792c7f 100644
 >> --- a/hw/vfio/iommufd.c
 >> +++ b/hw/vfio/iommufd.c
->> @@ -358,7 +358,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+>> @@ -357,7 +357,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+>>       container->ioas_id = ioas_id;
 >>   
 >>       bcontainer = &container->bcontainer;
->>       vfio_container_init(bcontainer, space, iommufd_vioc);
->> -    QLIST_INSERT_HEAD(&space->containers, bcontainer, next);
->> +    vfio_address_space_insert(space, bcontainer);
+>> -    vfio_container_init(bcontainer, space, iommufd_vioc);
+>> +    vfio_container_init(bcontainer, iommufd_vioc);
+>>       vfio_address_space_insert(space, bcontainer);
 >>   
 >>       if (!iommufd_cdev_attach_container(vbasedev, container, errp)) {
->>           goto err_attach_container;
+> Thanks
+> 
+> Eric
 > 
 
 
