@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63198C2BA18
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8121C2BA18
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:06:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbIV-0006oY-RN; Tue, 18 Jun 2024 12:03:03 -0400
+	id 1sJbJz-0004kA-Rq; Tue, 18 Jun 2024 12:04:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbII-00069J-BB
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:02:51 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJx-0004dD-Md
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:04:33 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbIG-00071H-5D
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:02:50 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a6f7b785a01so344951866b.1
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:02:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJv-0007Fs-R5
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:04:33 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a6ef793f4b8so579261166b.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:04:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726566; x=1719331366; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726670; x=1719331470; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AGkKAdLR9B1vxvYwpNEkYfLUZGJGkx4Kl51VrhM57lY=;
- b=qC6sy+K7Max8cSiYf9miFGsxEGcneBUZ2rSnb7ja+dlSNTjLwjISrbuGXfkhlqK99V
- cLjXXGwWAe0NrwxK5dmfcwSkpYmJTe2rCrzTYrH1fBRvbJ/atqLZxhv1RZZZPyjufIZi
- xM1Iy0Rq2Sy4hmOlKGL7ne8zXNajmAyIw5HVmNS/9UCcJngAGM+bQsOeubp40OWi3GIL
- E5vDcgiAdmMtB91H7aizDfwNRaT8vP2CenkwhpsZMtXo+IyQjWgiei0ldG4tmHhXi1VV
- GfkzhKOZRnWGnp+pYSY4fC2BOxNIW7airgUjAx6teK34Fp7zQSNyIHLCuHtgk8K5KKvG
- BdqA==
+ bh=KQOeE1YU7c9+9ll5qN8I/U6cfEvkRwOcyGoeslhCPQU=;
+ b=DbQrUav0EH3hE385aLcb3D+pazryUW96O8dpr/dT/7OnAPzh6/BJTrBiTNXLfTpHu6
+ qGYn1fP4p1HO+Jyn8AVfVWzEXHZh20kSN0IQjYJdyoPF/lPsNNpMdRKMEhT0vnyvrIEq
+ o/+OGNc9r2rJiKEpl6hpcMZta+WaYBKNeBjrh/aVsyWMYWH72xb/Q4/9Sscb2e1Fc1XY
+ ckfY1tl/BJy7PrrqXWI0oUf9uk4JIlfqFUZYUwA/xCmd7zOR2qZI72CO1V14m+XpE5/H
+ Zq8hLEUOcWgDHE7vlqH0PgkcT2Nox3pElbAs9iAbciXEZIiJxE7W8N/JZEbCCTu7SfCf
+ Lf1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726566; x=1719331366;
+ d=1e100.net; s=20230601; t=1718726670; x=1719331470;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AGkKAdLR9B1vxvYwpNEkYfLUZGJGkx4Kl51VrhM57lY=;
- b=QRQYerBbc/I/9QPAROO9tp0fYkE9DtS/1L9S+Vl2E61UGU8gG6H8KDgxGFNiEdg9Au
- 3hq3IF/x+NpWusl8kQbJ+eVrAAmWMTK8NOwUy70SNASCV+l0NUeIAhuedPCcS+KI5tuB
- R2M6cQgMw6ThfKeohX+MJl5S23cPKIqLxMWQzMmZ7l1HjlhublNJcPdiLd7VV9+nZ8Vd
- E2ynzPyVXaHyTY+KtcWiG1ZlWXm4rVfNVGcqTdo0eR48i+sthEVb5G72SF014aANnU3A
- FF70zMuLpZsp9RBJ12v2PatQmlG7B4uBUe4w5fCSPxBetRwj27iACVlT7VfenBgrAH/A
- Tq+Q==
-X-Gm-Message-State: AOJu0YwGVBybg8cs3pES2IDLCM7Yh8vLWrPex57ok7ptJQRE5E1SBMJb
- 7SGN5cVuKQEhRRg8ghteou/PYVSFRJ0YJB0amhwI0tdFrBMJitsVeRNQmpOrxtapNDQLeoDYoC+
- l
-X-Google-Smtp-Source: AGHT+IGOtCeqlqabrag0Up1ymLrxDhKpjrQQpb90ZyPjHMkb/ShmfqOdjopGjhdNcROptmg+2le3cA==
-X-Received: by 2002:a17:906:3ec4:b0:a6e:a97c:fc93 with SMTP id
- a640c23a62f3a-a6f60cefd2fmr773735366b.16.1718726566481; 
- Tue, 18 Jun 2024 09:02:46 -0700 (PDT)
+ bh=KQOeE1YU7c9+9ll5qN8I/U6cfEvkRwOcyGoeslhCPQU=;
+ b=LFcTnpORQPq9PuHPpPVUNBVO3thYYcM+NFiI1oXZGpuPkfz5py1TjSKN9lTZhmWWi9
+ /HZjzm1A4h++WgqUIAuoN578uUj2/NCBxQnMxDNI5qVLjTfhVMtLMPwu4MDUIDgm8stF
+ 6dkwp0UEt5iOKc7L6fOHnRB12Xw1ZQnMULis6shz7RlaUEhSOfEHpGeaT86Z9j9wwNed
+ pAp58A2SZ98M9Tw34vfkR9gWI0kTw0UD7N9x75zeH8Olk8RsZt/uIMViXVqg4GVag93c
+ TyXYG4R40DnG36buu5MNC5v1aScOOSyqPGcbcQq1hMWGQAA0x+/h2pYKLJ5mJoC8uWQp
+ DuDQ==
+X-Gm-Message-State: AOJu0Yye7/l/npYKkSC785roU3Nsyewalh/WWkg67KxpKqz+HIksnnA+
+ U45ZDeG+Jc7NqUHP3mLsJ1yrPPQOlCY3UKKUycABRkzBBgZloZjHyR6mu/EANZrFCosX+A4S3+h
+ s
+X-Google-Smtp-Source: AGHT+IGch9ZqM5DAjyexwC2JgCCq6DLZl9eXVtAmrQf98GIVVx1UKU3TpxVyBDJjHaeqonaGmh/fTQ==
+X-Received: by 2002:a17:906:b858:b0:a68:ece7:8db5 with SMTP id
+ a640c23a62f3a-a6f60d2c9e0mr786413166b.31.1718726670048; 
+ Tue, 18 Jun 2024 09:04:30 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56fa67ecsm621310566b.215.2024.06.18.09.02.44
+ a640c23a62f3a-a6f56db5bafsm630006166b.50.2024.06.18.09.04.28
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:02:45 -0700 (PDT)
+ Tue, 18 Jun 2024 09:04:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 21/76] hw/i386/pc: Simplify DEFINE_I440FX_MACHINE() macro
-Date: Tue, 18 Jun 2024 17:59:43 +0200
-Message-ID: <20240618160039.36108-22-philmd@linaro.org>
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 39/76] hw/ppc: Avoid using Monitor in pnv_xive_pic_print_info()
+Date: Tue, 18 Jun 2024 18:00:01 +0200
+Message-ID: <20240618160039.36108-40-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,305 +96,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Last commit removed the last non-NULL use of DEFINE_I440FX_MACHINE
-3rd parameter. 'compatfn' is now obsolete, remove it.
+Replace Monitor API by HumanReadableText one.
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20240617071118.60464-22-philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Message-Id: <20240610062105.49848-16-philmd@linaro.org>
 ---
- hw/i386/pc_piix.c | 69 ++++++++++++++++++++---------------------------
- 1 file changed, 29 insertions(+), 40 deletions(-)
+ include/hw/ppc/pnv_xive.h | 2 +-
+ hw/intc/pnv_xive.c        | 9 +--------
+ hw/ppc/pnv.c              | 8 +++++++-
+ 3 files changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 217c749705..e4930b7f48 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -414,13 +414,6 @@ static void pc_set_south_bridge(Object *obj, int value, Error **errp)
-     pcms->south_bridge = PCSouthBridgeOption_lookup.array[value];
+diff --git a/include/hw/ppc/pnv_xive.h b/include/hw/ppc/pnv_xive.h
+index 9c48430ee4..7d634e469c 100644
+--- a/include/hw/ppc/pnv_xive.h
++++ b/include/hw/ppc/pnv_xive.h
+@@ -93,7 +93,7 @@ struct PnvXiveClass {
+     DeviceRealize parent_realize;
+ };
+ 
+-void pnv_xive_pic_print_info(PnvXive *xive, Monitor *mon);
++void pnv_xive_pic_print_info(PnvXive *xive, GString *buf);
+ 
+ /*
+  * XIVE2 interrupt controller (POWER10)
+diff --git a/hw/intc/pnv_xive.c b/hw/intc/pnv_xive.c
+index 3ad4ac8e7d..5bacbce6a4 100644
+--- a/hw/intc/pnv_xive.c
++++ b/hw/intc/pnv_xive.c
+@@ -11,12 +11,10 @@
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+-#include "qapi/type-helpers.h"
+ #include "target/ppc/cpu.h"
+ #include "sysemu/cpus.h"
+ #include "sysemu/dma.h"
+ #include "sysemu/reset.h"
+-#include "monitor/monitor.h"
+ #include "hw/ppc/fdt.h"
+ #include "hw/ppc/pnv.h"
+ #include "hw/ppc/pnv_chip.h"
+@@ -1846,7 +1844,7 @@ static void xive_nvt_pic_print_info(XiveNVT *nvt, uint32_t nvt_idx,
+                            xive_get_field32(NVT_W4_IPB, nvt->w4));
  }
  
--/* Looking for a pc_compat_2_4() function? It doesn't exist.
-- * pc_compat_*() functions that run on machine-init time and
-- * change global QEMU state are deprecated. Please don't create
-- * one, and implement any pc-*-2.4 (and newer) compat code in
-- * hw_compat_*, pc_compat_*, or * pc_*_machine_options().
-- */
--
- #ifdef CONFIG_ISAPC
- static void pc_init_isa(MachineState *machine)
+-void pnv_xive_pic_print_info(PnvXive *xive, Monitor *mon)
++void pnv_xive_pic_print_info(PnvXive *xive, GString *buf)
  {
-@@ -452,13 +445,9 @@ static void pc_xen_hvm_init(MachineState *machine)
- }
- #endif
+     XiveRouter *xrtr = XIVE_ROUTER(xive);
+     uint8_t blk = pnv_xive_block_id(xive);
+@@ -1858,8 +1856,6 @@ void pnv_xive_pic_print_info(PnvXive *xive, Monitor *mon)
+     XiveNVT nvt;
+     int i;
+     uint64_t xive_nvt_per_subpage;
+-    g_autoptr(GString) buf = g_string_new("");
+-    g_autoptr(HumanReadableText) info = NULL;
  
--#define DEFINE_I440FX_MACHINE(suffix, name, compatfn, optionfn) \
-+#define DEFINE_I440FX_MACHINE(suffix, name, optionfn) \
-     static void pc_init_##suffix(MachineState *machine) \
-     { \
--        void (*compat)(MachineState *m) = (compatfn); \
--        if (compat) { \
--            compat(machine); \
--        } \
-         pc_init1(machine, TYPE_I440FX_PCI_DEVICE); \
-     } \
-     DEFINE_PC_MACHINE(suffix, name, pc_init_##suffix, optionfn)
-@@ -496,7 +485,7 @@ static void pc_i440fx_9_1_machine_options(MachineClass *m)
-     m->is_default = true;
- }
- 
--DEFINE_I440FX_MACHINE(v9_1, "pc-i440fx-9.1", NULL,
-+DEFINE_I440FX_MACHINE(v9_1, "pc-i440fx-9.1",
-                       pc_i440fx_9_1_machine_options);
- 
- static void pc_i440fx_9_0_machine_options(MachineClass *m)
-@@ -512,7 +501,7 @@ static void pc_i440fx_9_0_machine_options(MachineClass *m)
-     pcmc->isa_bios_alias = false;
+     g_string_append_printf(buf, "XIVE[%x] #%d Source %08x .. %08x\n",
+                            chip_id, blk, srcno0, srcno0 + nr_ipis - 1);
+@@ -1897,9 +1893,6 @@ void pnv_xive_pic_print_info(PnvXive *xive, Monitor *mon)
+             xive_nvt_pic_print_info(&nvt, i++, buf);
+         }
+     }
+-
+-    info = human_readable_text_from_str(buf);
+-    monitor_puts(mon, info->human_readable_text);
  }
  
--DEFINE_I440FX_MACHINE(v9_0, "pc-i440fx-9.0", NULL,
-+DEFINE_I440FX_MACHINE(v9_0, "pc-i440fx-9.0",
-                       pc_i440fx_9_0_machine_options);
+ static void pnv_xive_reset(void *dev)
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index df187c5180..7e6f923c7e 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -808,8 +808,14 @@ static int pnv_chip_power9_pic_print_info_child(Object *child, void *opaque)
+ static void pnv_chip_power9_pic_print_info(PnvChip *chip, Monitor *mon)
+ {
+     Pnv9Chip *chip9 = PNV9_CHIP(chip);
++    g_autoptr(GString) buf = g_string_new("");
++    g_autoptr(HumanReadableText) info = NULL;
++
++    pnv_xive_pic_print_info(&chip9->xive, buf);
++
++    info = human_readable_text_from_str(buf);
++    monitor_puts(mon, info->human_readable_text);
  
- static void pc_i440fx_8_2_machine_options(MachineClass *m)
-@@ -527,7 +516,7 @@ static void pc_i440fx_8_2_machine_options(MachineClass *m)
-     pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_64;
- }
+-    pnv_xive_pic_print_info(&chip9->xive, mon);
+     pnv_psi_pic_print_info(&chip9->psi, mon);
  
--DEFINE_I440FX_MACHINE(v8_2, "pc-i440fx-8.2", NULL,
-+DEFINE_I440FX_MACHINE(v8_2, "pc-i440fx-8.2",
-                       pc_i440fx_8_2_machine_options);
- 
- static void pc_i440fx_8_1_machine_options(MachineClass *m)
-@@ -541,7 +530,7 @@ static void pc_i440fx_8_1_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_8_1, pc_compat_8_1_len);
- }
- 
--DEFINE_I440FX_MACHINE(v8_1, "pc-i440fx-8.1", NULL,
-+DEFINE_I440FX_MACHINE(v8_1, "pc-i440fx-8.1",
-                       pc_i440fx_8_1_machine_options);
- 
- static void pc_i440fx_8_0_machine_options(MachineClass *m)
-@@ -556,7 +545,7 @@ static void pc_i440fx_8_0_machine_options(MachineClass *m)
-     pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_32;
- }
- 
--DEFINE_I440FX_MACHINE(v8_0, "pc-i440fx-8.0", NULL,
-+DEFINE_I440FX_MACHINE(v8_0, "pc-i440fx-8.0",
-                       pc_i440fx_8_0_machine_options);
- 
- static void pc_i440fx_7_2_machine_options(MachineClass *m)
-@@ -566,7 +555,7 @@ static void pc_i440fx_7_2_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_7_2, pc_compat_7_2_len);
- }
- 
--DEFINE_I440FX_MACHINE(v7_2, "pc-i440fx-7.2", NULL,
-+DEFINE_I440FX_MACHINE(v7_2, "pc-i440fx-7.2",
-                       pc_i440fx_7_2_machine_options);
- 
- static void pc_i440fx_7_1_machine_options(MachineClass *m)
-@@ -576,7 +565,7 @@ static void pc_i440fx_7_1_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_7_1, pc_compat_7_1_len);
- }
- 
--DEFINE_I440FX_MACHINE(v7_1, "pc-i440fx-7.1", NULL,
-+DEFINE_I440FX_MACHINE(v7_1, "pc-i440fx-7.1",
-                       pc_i440fx_7_1_machine_options);
- 
- static void pc_i440fx_7_0_machine_options(MachineClass *m)
-@@ -588,7 +577,7 @@ static void pc_i440fx_7_0_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_7_0, pc_compat_7_0_len);
- }
- 
--DEFINE_I440FX_MACHINE(v7_0, "pc-i440fx-7.0", NULL,
-+DEFINE_I440FX_MACHINE(v7_0, "pc-i440fx-7.0",
-                       pc_i440fx_7_0_machine_options);
- 
- static void pc_i440fx_6_2_machine_options(MachineClass *m)
-@@ -598,7 +587,7 @@ static void pc_i440fx_6_2_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_6_2, pc_compat_6_2_len);
- }
- 
--DEFINE_I440FX_MACHINE(v6_2, "pc-i440fx-6.2", NULL,
-+DEFINE_I440FX_MACHINE(v6_2, "pc-i440fx-6.2",
-                       pc_i440fx_6_2_machine_options);
- 
- static void pc_i440fx_6_1_machine_options(MachineClass *m)
-@@ -609,7 +598,7 @@ static void pc_i440fx_6_1_machine_options(MachineClass *m)
-     m->smp_props.prefer_sockets = true;
- }
- 
--DEFINE_I440FX_MACHINE(v6_1, "pc-i440fx-6.1", NULL,
-+DEFINE_I440FX_MACHINE(v6_1, "pc-i440fx-6.1",
-                       pc_i440fx_6_1_machine_options);
- 
- static void pc_i440fx_6_0_machine_options(MachineClass *m)
-@@ -619,7 +608,7 @@ static void pc_i440fx_6_0_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_6_0, pc_compat_6_0_len);
- }
- 
--DEFINE_I440FX_MACHINE(v6_0, "pc-i440fx-6.0", NULL,
-+DEFINE_I440FX_MACHINE(v6_0, "pc-i440fx-6.0",
-                       pc_i440fx_6_0_machine_options);
- 
- static void pc_i440fx_5_2_machine_options(MachineClass *m)
-@@ -629,7 +618,7 @@ static void pc_i440fx_5_2_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_5_2, pc_compat_5_2_len);
- }
- 
--DEFINE_I440FX_MACHINE(v5_2, "pc-i440fx-5.2", NULL,
-+DEFINE_I440FX_MACHINE(v5_2, "pc-i440fx-5.2",
-                       pc_i440fx_5_2_machine_options);
- 
- static void pc_i440fx_5_1_machine_options(MachineClass *m)
-@@ -643,7 +632,7 @@ static void pc_i440fx_5_1_machine_options(MachineClass *m)
-     pcmc->pci_root_uid = 1;
- }
- 
--DEFINE_I440FX_MACHINE(v5_1, "pc-i440fx-5.1", NULL,
-+DEFINE_I440FX_MACHINE(v5_1, "pc-i440fx-5.1",
-                       pc_i440fx_5_1_machine_options);
- 
- static void pc_i440fx_5_0_machine_options(MachineClass *m)
-@@ -655,7 +644,7 @@ static void pc_i440fx_5_0_machine_options(MachineClass *m)
-     m->auto_enable_numa_with_memdev = false;
- }
- 
--DEFINE_I440FX_MACHINE(v5_0, "pc-i440fx-5.0", NULL,
-+DEFINE_I440FX_MACHINE(v5_0, "pc-i440fx-5.0",
-                       pc_i440fx_5_0_machine_options);
- 
- static void pc_i440fx_4_2_machine_options(MachineClass *m)
-@@ -665,7 +654,7 @@ static void pc_i440fx_4_2_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_4_2, pc_compat_4_2_len);
- }
- 
--DEFINE_I440FX_MACHINE(v4_2, "pc-i440fx-4.2", NULL,
-+DEFINE_I440FX_MACHINE(v4_2, "pc-i440fx-4.2",
-                       pc_i440fx_4_2_machine_options);
- 
- static void pc_i440fx_4_1_machine_options(MachineClass *m)
-@@ -675,7 +664,7 @@ static void pc_i440fx_4_1_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_4_1, pc_compat_4_1_len);
- }
- 
--DEFINE_I440FX_MACHINE(v4_1, "pc-i440fx-4.1", NULL,
-+DEFINE_I440FX_MACHINE(v4_1, "pc-i440fx-4.1",
-                       pc_i440fx_4_1_machine_options);
- 
- static void pc_i440fx_4_0_machine_options(MachineClass *m)
-@@ -687,7 +676,7 @@ static void pc_i440fx_4_0_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_4_0, pc_compat_4_0_len);
- }
- 
--DEFINE_I440FX_MACHINE(v4_0, "pc-i440fx-4.0", NULL,
-+DEFINE_I440FX_MACHINE(v4_0, "pc-i440fx-4.0",
-                       pc_i440fx_4_0_machine_options);
- 
- static void pc_i440fx_3_1_machine_options(MachineClass *m)
-@@ -701,7 +690,7 @@ static void pc_i440fx_3_1_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_3_1, pc_compat_3_1_len);
- }
- 
--DEFINE_I440FX_MACHINE(v3_1, "pc-i440fx-3.1", NULL,
-+DEFINE_I440FX_MACHINE(v3_1, "pc-i440fx-3.1",
-                       pc_i440fx_3_1_machine_options);
- 
- static void pc_i440fx_3_0_machine_options(MachineClass *m)
-@@ -711,7 +700,7 @@ static void pc_i440fx_3_0_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_3_0, pc_compat_3_0_len);
- }
- 
--DEFINE_I440FX_MACHINE(v3_0, "pc-i440fx-3.0", NULL,
-+DEFINE_I440FX_MACHINE(v3_0, "pc-i440fx-3.0",
-                       pc_i440fx_3_0_machine_options);
- 
- static void pc_i440fx_2_12_machine_options(MachineClass *m)
-@@ -722,7 +711,7 @@ static void pc_i440fx_2_12_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_2_12, pc_compat_2_12_len);
- }
- 
--DEFINE_I440FX_MACHINE(v2_12, "pc-i440fx-2.12", NULL,
-+DEFINE_I440FX_MACHINE(v2_12, "pc-i440fx-2.12",
-                       pc_i440fx_2_12_machine_options);
- 
- static void pc_i440fx_2_11_machine_options(MachineClass *m)
-@@ -732,7 +721,7 @@ static void pc_i440fx_2_11_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_2_11, pc_compat_2_11_len);
- }
- 
--DEFINE_I440FX_MACHINE(v2_11, "pc-i440fx-2.11", NULL,
-+DEFINE_I440FX_MACHINE(v2_11, "pc-i440fx-2.11",
-                       pc_i440fx_2_11_machine_options);
- 
- static void pc_i440fx_2_10_machine_options(MachineClass *m)
-@@ -743,7 +732,7 @@ static void pc_i440fx_2_10_machine_options(MachineClass *m)
-     m->auto_enable_numa_with_memhp = false;
- }
- 
--DEFINE_I440FX_MACHINE(v2_10, "pc-i440fx-2.10", NULL,
-+DEFINE_I440FX_MACHINE(v2_10, "pc-i440fx-2.10",
-                       pc_i440fx_2_10_machine_options);
- 
- static void pc_i440fx_2_9_machine_options(MachineClass *m)
-@@ -753,7 +742,7 @@ static void pc_i440fx_2_9_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_2_9, pc_compat_2_9_len);
- }
- 
--DEFINE_I440FX_MACHINE(v2_9, "pc-i440fx-2.9", NULL,
-+DEFINE_I440FX_MACHINE(v2_9, "pc-i440fx-2.9",
-                       pc_i440fx_2_9_machine_options);
- 
- static void pc_i440fx_2_8_machine_options(MachineClass *m)
-@@ -763,7 +752,7 @@ static void pc_i440fx_2_8_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_2_8, pc_compat_2_8_len);
- }
- 
--DEFINE_I440FX_MACHINE(v2_8, "pc-i440fx-2.8", NULL,
-+DEFINE_I440FX_MACHINE(v2_8, "pc-i440fx-2.8",
-                       pc_i440fx_2_8_machine_options);
- 
- static void pc_i440fx_2_7_machine_options(MachineClass *m)
-@@ -773,7 +762,7 @@ static void pc_i440fx_2_7_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_2_7, pc_compat_2_7_len);
- }
- 
--DEFINE_I440FX_MACHINE(v2_7, "pc-i440fx-2.7", NULL,
-+DEFINE_I440FX_MACHINE(v2_7, "pc-i440fx-2.7",
-                       pc_i440fx_2_7_machine_options);
- 
- static void pc_i440fx_2_6_machine_options(MachineClass *m)
-@@ -788,7 +777,7 @@ static void pc_i440fx_2_6_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_2_6, pc_compat_2_6_len);
- }
- 
--DEFINE_I440FX_MACHINE(v2_6, "pc-i440fx-2.6", NULL,
-+DEFINE_I440FX_MACHINE(v2_6, "pc-i440fx-2.6",
-                       pc_i440fx_2_6_machine_options);
- 
- static void pc_i440fx_2_5_machine_options(MachineClass *m)
-@@ -802,7 +791,7 @@ static void pc_i440fx_2_5_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_2_5, pc_compat_2_5_len);
- }
- 
--DEFINE_I440FX_MACHINE(v2_5, "pc-i440fx-2.5", NULL,
-+DEFINE_I440FX_MACHINE(v2_5, "pc-i440fx-2.5",
-                       pc_i440fx_2_5_machine_options);
- 
- static void pc_i440fx_2_4_machine_options(MachineClass *m)
-@@ -816,7 +805,7 @@ static void pc_i440fx_2_4_machine_options(MachineClass *m)
-     compat_props_add(m->compat_props, pc_compat_2_4, pc_compat_2_4_len);
- }
- 
--DEFINE_I440FX_MACHINE(v2_4, "pc-i440fx-2.4", NULL,
-+DEFINE_I440FX_MACHINE(v2_4, "pc-i440fx-2.4",
-                       pc_i440fx_2_4_machine_options)
- 
- #ifdef CONFIG_ISAPC
+     object_child_foreach_recursive(OBJECT(chip),
 -- 
 2.41.0
 
