@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6485C41513
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0322FC27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbJ5-00083g-9R; Tue, 18 Jun 2024 12:03:39 -0400
+	id 1sJbJA-0008Fc-63; Tue, 18 Jun 2024 12:03:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJ2-0007xp-TT
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:03:36 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJ7-0008AG-GL
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:03:41 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJ0-0007Aa-SZ
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:03:36 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a6efacd25ecso350321766b.1
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:03:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJ5-0007CW-JC
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:03:41 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a6f176c5c10so689472866b.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:03:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726612; x=1719331412; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726618; x=1719331418; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=U9G2DPLJNs6E99rtv08P3G2cb9DYQeKMhfy51jfr6pg=;
- b=mzFpzcRTaCdGoZXCP0+kga27c5YRgo5l829SqVAPtwkmwV3d99+ce7R4xdIvY+zNH4
- M/jGowJUQtwNE6AC/5wETHS/7qyHfBNYGdyqD1TDaZroLoDioFlAV7lgTjH6D5JpW1XS
- iA/JYw5L6caeu+dtE/nzQiRrjRZPte00gVec8G6gS/6WlO7u1nwPseofnObjCV76lZ3m
- Q/nARMP6Jp0nGPbOzL7zheG+71mRlyyG1CHj02LYxPFIgUsn3VfLNrxwxCqraQKJq7D7
- oQbqrUjDEbVcfxpgYSnmbVpEMbzIvy9lR+AutzQhPRfaapJybCNssUft76Yfe7uvZ8M7
- az5A==
+ bh=RbmmnCUJBjQWo1lmiofvPL4byDgdBrAqOfBylHKE/0k=;
+ b=oqNZLc/NhQz1X+mJbZsecpMWzGNcxBGSQkxsNbFMnftoS1wMSoblwQTqJNpVZ/0qZG
+ sTsdPkTdLL+z7KHRYJeKntiDTvP+3YhmNcCAu9QH7WsdJTRCNGfqszaDKiTvfBsuzOPT
+ qCHuwDW9I/QyHJXOQdZuooIop4HT+C5guTR0+KeQa0DxreuEYCPQYM4OJHfIlkKEteYj
+ EO2xvqug3w+MRtRbyGQzsbhnYovg11OSaq6a3NNoi42gDcUgWcpRwg13Rlaiol/DUTO2
+ vMZCSy/SGYS0XjQ3lGen4VMnDYLosFS1q72e+iJ7cwQuiUoaVR71g5jjye9JiGOb54KO
+ DenA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726612; x=1719331412;
+ d=1e100.net; s=20230601; t=1718726618; x=1719331418;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=U9G2DPLJNs6E99rtv08P3G2cb9DYQeKMhfy51jfr6pg=;
- b=D+sI/osO1qHzNFQgMXz4XMRzmSGh9X+FjpBkAFnZBRZyhKsc3rJU61Fc42piMhDdk3
- 5V/l2vQMX8I7bdiOJgErS7k01+/c2uhydRaLzcuqENnK7olM5LLE+v2x3d/8Dra5mPRH
- gz0GdKb4k+oI9ebvj/eg8kpB1Zez/Z2X7YQzFSfdHRUP3dhklgNFBqEqFj1Lydxb6XCg
- 0NoBHXC8vk73C3uxIiEaaVHIjurL+wjZC++36pIccykGs38Z9CZnUA8ep+tvPKiE+iqa
- SIXjZpF9zk7d5rVdyI2kQK5BvO38TlsQeGd7LpxYQwtgCS8wf73V6t4PxRVOX6mxmTg3
- nDaQ==
-X-Gm-Message-State: AOJu0YzeS4aLkvOYcuBUyqTb1hQdYV9GEehsb1PvJjcDNO1J2tessA5e
- P7UnnGeRUjLlpmK3YlFxFXW/drSmWe4cHFeT/L16dS/9tSOhUzRb/wIe6ZnAFjuKEKPOWJmhb5Q
- h
-X-Google-Smtp-Source: AGHT+IEBW1E4Rm9ooiPVPgwIy9fT+j1bQbLvVXl28p7E3dD07oFpeXE/bmv4NauG7YQq+e3Ft5Mv7g==
-X-Received: by 2002:a50:f61c:0:b0:57d:3df:f881 with SMTP id
- 4fb4d7f45d1cf-57d03dff928mr1088220a12.3.1718726612244; 
- Tue, 18 Jun 2024 09:03:32 -0700 (PDT)
+ bh=RbmmnCUJBjQWo1lmiofvPL4byDgdBrAqOfBylHKE/0k=;
+ b=UedaKTOJ+1EEOamY3X100G5Eou6JDSnplCAX6IsR+EpjI9mII+b6QxwXQ3fC9sdaVm
+ IioCcnMxAr4AAYcj1+DZQ0QGZYEjDlGTB/GvWTTi2AP6AEuFcEW/yJBuuD3NGWROSzhN
+ hHu443zJBCHuW1qE8HKTP6uXy1EKc2dIN4HgHjDR+VenC1dodGlmdSWmOPXGBZtNkNqS
+ SzlI9h4sJyuw8W2vSuA4FtJ2P91LZS7Ra9xgXmPAryEMb/+pMcHhNrJwgFoUDhgu/tBc
+ coLyEXzdxAshh/dwuyj6BRzVyrOpYRzyU6KsK7sIvgO9TjkE1znMPHgy/4eivnASte0N
+ guaQ==
+X-Gm-Message-State: AOJu0YxSPVYfCKLMfjWPWb1u2yj0NqZPhl1E4Wc0DrBC4oAsTkdNc/5k
+ xUDAZPE/rlQgpJjT5Tms8zTtQAMR1eRRiq91sMGPlCbZT2yjQhrqXo1jD90byfFTEwvE1kHXUoa
+ 2
+X-Google-Smtp-Source: AGHT+IEzIAb7UjCWs+OYgeQnjIr+/+N1Wd0JEhUYr+ZQytIe8DtzcwsaZd0WhpV/Yoy/dzGdcRDugQ==
+X-Received: by 2002:a17:906:3693:b0:a6f:5318:b8f7 with SMTP id
+ a640c23a62f3a-a6f60d420f5mr964758566b.43.1718726617915; 
+ Tue, 18 Jun 2024 09:03:37 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f86dfdb22sm253599366b.77.2024.06.18.09.03.30
+ a640c23a62f3a-a6f56db6182sm630018366b.51.2024.06.18.09.03.36
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:03:31 -0700 (PDT)
+ Tue, 18 Jun 2024 09:03:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 29/76] hw/ppc: Avoid using Monitor in
- PnvChipClass::intc_print_info()
-Date: Tue, 18 Jun 2024 17:59:51 +0200
-Message-ID: <20240618160039.36108-30-philmd@linaro.org>
+Subject: [PULL 30/76] hw/ppc: Avoid using Monitor in
+ xive_end_queue_pic_print_info()
+Date: Tue, 18 Jun 2024 17:59:52 +0200
+Message-ID: <20240618160039.36108-31-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,100 +103,115 @@ Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
 Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-Id: <20240610062105.49848-6-philmd@linaro.org>
+Message-Id: <20240610062105.49848-7-philmd@linaro.org>
 ---
- include/hw/ppc/pnv_chip.h |  2 +-
- hw/ppc/pnv.c              | 30 ++++++++----------------------
- 2 files changed, 9 insertions(+), 23 deletions(-)
+ include/hw/ppc/xive_regs.h |  2 +-
+ hw/intc/spapr_xive.c       |  7 ++++++-
+ hw/intc/xive.c             | 17 +++++++++++------
+ 3 files changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
-index 8589f3291e..a5e428be7c 100644
---- a/include/hw/ppc/pnv_chip.h
-+++ b/include/hw/ppc/pnv_chip.h
-@@ -151,7 +151,7 @@ struct PnvChipClass {
-     void (*intc_create)(PnvChip *chip, PowerPCCPU *cpu, Error **errp);
-     void (*intc_reset)(PnvChip *chip, PowerPCCPU *cpu);
-     void (*intc_destroy)(PnvChip *chip, PowerPCCPU *cpu);
--    void (*intc_print_info)(PnvChip *chip, PowerPCCPU *cpu, Monitor *mon);
-+    void (*intc_print_info)(PnvChip *chip, PowerPCCPU *cpu, GString *buf);
-     ISABus *(*isa_create)(PnvChip *chip, Error **errp);
-     void (*dt_populate)(PnvChip *chip, void *fdt);
-     void (*pic_print_info)(PnvChip *chip, Monitor *mon);
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 3eaf674efa..aed6767c8d 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -1129,15 +1129,9 @@ static void pnv_chip_power8_intc_destroy(PnvChip *chip, PowerPCCPU *cpu)
+diff --git a/include/hw/ppc/xive_regs.h b/include/hw/ppc/xive_regs.h
+index 4a3c9badd3..51e9a2152e 100644
+--- a/include/hw/ppc/xive_regs.h
++++ b/include/hw/ppc/xive_regs.h
+@@ -262,7 +262,7 @@ static inline uint64_t xive_end_qaddr(XiveEND *end)
  }
  
- static void pnv_chip_power8_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
--                                            Monitor *mon)
-+                                            GString *buf)
- {
--    g_autoptr(GString) buf = g_string_new("");
--    g_autoptr(HumanReadableText) info = NULL;
--
-     icp_pic_print_info(ICP(pnv_cpu_state(cpu)->intc), buf);
--
--    info = human_readable_text_from_str(buf);
--    monitor_puts(mon, info->human_readable_text);
- }
+ void xive_end_pic_print_info(XiveEND *end, uint32_t end_idx, Monitor *mon);
+-void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, Monitor *mon);
++void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, GString *buf);
+ void xive_end_eas_pic_print_info(XiveEND *end, uint32_t end_idx, Monitor *mon);
  
- /*
-@@ -1222,15 +1216,9 @@ static void pnv_chip_power9_intc_destroy(PnvChip *chip, PowerPCCPU *cpu)
- }
- 
- static void pnv_chip_power9_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
--                                            Monitor *mon)
-+                                            GString *buf)
- {
--    g_autoptr(GString) buf = g_string_new("");
--    g_autoptr(HumanReadableText) info = NULL;
--
-     xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), buf);
--
--    info = human_readable_text_from_str(buf);
--    monitor_puts(mon, info->human_readable_text);
- }
- 
- static void pnv_chip_power10_intc_create(PnvChip *chip, PowerPCCPU *cpu,
-@@ -1272,15 +1260,9 @@ static void pnv_chip_power10_intc_destroy(PnvChip *chip, PowerPCCPU *cpu)
- }
- 
- static void pnv_chip_power10_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
--                                             Monitor *mon)
-+                                             GString *buf)
- {
--    g_autoptr(GString) buf = g_string_new("");
--    g_autoptr(HumanReadableText) info = NULL;
--
-     xive_tctx_pic_print_info(XIVE_TCTX(pnv_cpu_state(cpu)->intc), buf);
--
--    info = human_readable_text_from_str(buf);
--    monitor_puts(mon, info->human_readable_text);
- }
- 
- /*
-@@ -2363,14 +2345,18 @@ static void pnv_pic_print_info(InterruptStatsProvider *obj,
-     PnvMachineState *pnv = PNV_MACHINE(obj);
-     int i;
-     CPUState *cs;
+ /* Notification Virtual Target (NVT) */
+diff --git a/hw/intc/spapr_xive.c b/hw/intc/spapr_xive.c
+index b7c12aa432..3357f6325f 100644
+--- a/hw/intc/spapr_xive.c
++++ b/hw/intc/spapr_xive.c
+@@ -142,12 +142,17 @@ static void spapr_xive_end_pic_print_info(SpaprXive *xive, XiveEND *end,
+     uint32_t qentries = 1 << (qsize + 10);
+     uint32_t nvt = xive_get_field32(END_W6_NVT_INDEX, end->w6);
+     uint8_t priority = xive_get_field32(END_W7_F0_PRIORITY, end->w7);
 +    g_autoptr(GString) buf = g_string_new("");
 +    g_autoptr(HumanReadableText) info = NULL;
  
-     CPU_FOREACH(cs) {
-         PowerPCCPU *cpu = POWERPC_CPU(cs);
+     monitor_printf(mon, "%3d/%d % 6d/%5d @%"PRIx64" ^%d",
+                    spapr_xive_nvt_to_target(0, nvt),
+                    priority, qindex, qentries, qaddr_base, qgen);
  
-         /* XXX: loop on each chip/core/thread instead of CPU_FOREACH() */
-         PNV_CHIP_GET_CLASS(pnv->chips[0])->intc_print_info(pnv->chips[0], cpu,
--                                                           mon);
-+                                                           buf);
+-    xive_end_queue_pic_print_info(end, 6, mon);
++    xive_end_queue_pic_print_info(end, 6, buf);
++
++    info = human_readable_text_from_str(buf);
++    monitor_puts(mon, info->human_readable_text);
+ }
+ 
+ /*
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index a0d7e7ca67..260a94e2ca 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -11,6 +11,7 @@
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ #include "qapi/error.h"
++#include "qapi/type-helpers.h"
+ #include "target/ppc/cpu.h"
+ #include "sysemu/cpus.h"
+ #include "sysemu/dma.h"
+@@ -1323,7 +1324,7 @@ static const TypeInfo xive_source_info = {
+  * XiveEND helpers
+  */
+ 
+-void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, Monitor *mon)
++void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, GString *buf)
+ {
+     uint64_t qaddr_base = xive_end_qaddr(end);
+     uint32_t qsize = xive_get_field32(END_W0_QSIZE, end->w0);
+@@ -1334,7 +1335,7 @@ void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, Monitor *mon)
+     /*
+      * print out the [ (qindex - (width - 1)) .. (qindex + 1)] window
+      */
+-    monitor_printf(mon, " [ ");
++    g_string_append_printf(buf, " [ ");
+     qindex = (qindex - (width - 1)) & (qentries - 1);
+     for (i = 0; i < width; i++) {
+         uint64_t qaddr = qaddr_base + (qindex << 2);
+@@ -1346,11 +1347,11 @@ void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, Monitor *mon)
+                           HWADDR_PRIx "\n", qaddr);
+             return;
+         }
+-        monitor_printf(mon, "%s%08x ", i == width - 1 ? "^" : "",
+-                       be32_to_cpu(qdata));
++        g_string_append_printf(buf, "%s%08x ", i == width - 1 ? "^" : "",
++                               be32_to_cpu(qdata));
+         qindex = (qindex + 1) & (qentries - 1);
+     }
+-    monitor_printf(mon, "]");
++    g_string_append_c(buf, ']');
+ }
+ 
+ void xive_end_pic_print_info(XiveEND *end, uint32_t end_idx, Monitor *mon)
+@@ -1365,6 +1366,8 @@ void xive_end_pic_print_info(XiveEND *end, uint32_t end_idx, Monitor *mon)
+     uint32_t nvt_idx = xive_get_field32(END_W6_NVT_INDEX, end->w6);
+     uint8_t priority = xive_get_field32(END_W7_F0_PRIORITY, end->w7);
+     uint8_t pq;
++    g_autoptr(GString) buf = g_string_new("");
++    g_autoptr(HumanReadableText) info = NULL;
+ 
+     if (!xive_end_is_valid(end)) {
+         return;
+@@ -1389,8 +1392,10 @@ void xive_end_pic_print_info(XiveEND *end, uint32_t end_idx, Monitor *mon)
+     if (qaddr_base) {
+         monitor_printf(mon, " eq:@%08"PRIx64"% 6d/%5d ^%d",
+                        qaddr_base, qindex, qentries, qgen);
+-        xive_end_queue_pic_print_info(end, 6, mon);
++        xive_end_queue_pic_print_info(end, 6, buf);
      }
 +    info = human_readable_text_from_str(buf);
 +    monitor_puts(mon, info->human_readable_text);
+     monitor_printf(mon, "\n");
+ }
  
-     for (i = 0; i < pnv->num_chips; i++) {
-         PNV_CHIP_GET_CLASS(pnv->chips[i])->pic_print_info(pnv->chips[i], mon);
 -- 
 2.41.0
 
