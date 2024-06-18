@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF8BC27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D544EC27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:08:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbL1-0006Ky-EB; Tue, 18 Jun 2024 12:05:39 -0400
+	id 1sJbJV-0002Z6-2m; Tue, 18 Jun 2024 12:04:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbL0-0006KU-BA
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:05:38 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJU-0002WN-6Q
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:04:04 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbKx-0007h5-Ey
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:05:38 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-42172ed3597so35419755e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:05:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJS-0007Dx-Ck
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:04:03 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-57cbc2a2496so6075232a12.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:04:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726733; x=1719331533; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726640; x=1719331440; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PbhmY9JoTUClAzzbpCxEJXIDCxC/FdxyMxXmvUNLqdM=;
- b=XyY8y+Y/LJQahZi2bUle4r2HrSy7hIiI2K6N9qYaDwKGPmnwaaxvylooAW9unrDx4j
- xHyY54z+suKPoIjxx1L6J2g/atbclQ5lZY39DZV3C5vXUp2KNm2EV6qkIuyturJKezRn
- bG7dYABZhqU9BOis/RE4/NrOTFOzYTQnj9c9rSXnWtcaYOZuc4Z28v+lQAL5aA8aa2gf
- p/Je5G6FuNpxow6E6+I62Cg59ujaKJGOhyoLk0AlXSTPfqXpg95cB+rPtrdHRuEr9l5c
- UCweei7Js4iMYrUGMc2PZeh1H9xh0xZl6R86K5Pr082LdZSRn8dRmF5MbN6Y5o5FznDf
- B5dQ==
+ bh=P/fRH20LiiHNd6n6UxrfG9EvHyIfE/d9iyXREJbBrfA=;
+ b=gjRNJPIC4JkJK2X+4gRfoHS9hknM3VAqW05NzP0e1N0Ge+N7kJgVJTuaF17B2xPrFw
+ C43C77WZrTzUTxiRfTEw2Y8UwoWhsycE4iPlBo1UfrhRaz5wunrwKqZJxmz8nsPbWoji
+ 168SW7XeJDDAczeT32YtTu9PXwjMujrOlLcxgc5nwISmheSNVD9R6Ot6DTZKXfFSX33z
+ SNTHBP5SttqGtFguFoHUK/p26EGCKmtOIvv+tzS3ndcdlZd45yCi6pU9c9uEmeKMjR3Y
+ LFkkSXHmN5+uujvQ59Qq1jp5YJAXPTX6Fxrd3iMm8Ni+ZtC4mJMtKCrdd4Q2TU2jRj2s
+ 4wrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726733; x=1719331533;
+ d=1e100.net; s=20230601; t=1718726640; x=1719331440;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PbhmY9JoTUClAzzbpCxEJXIDCxC/FdxyMxXmvUNLqdM=;
- b=RyFc7735OyCmw3EyBOEJimNBLdJc36RkRrq0ZmZ6Lq5brYa+iC48Oi9kXhc7UAQLIe
- WVwplDy+Ss57V2X0iO7EDc2m8jrPqwXpQUpnxFynHLfsvLDZlO6bFB+pQ/EhTDEORwxX
- jloOaYELifvw4L6ULoOb9MDe7NMjoKOB/bsHS4CMEIWZxSl8Wxa/Rxhi9Pz2l95w1cWf
- Cc7EGAhSIhjj+hFAwyKErQ5fNHnH4DMXsMzU+7xuiotNWXl8j/3PAFmN0QVXAzcOpysM
- 5aUmNG2Z4z8X8wPraKaUj2V+Gf2WZ8zwrtwmuHKI/qK8t6rn0ydgFbS4I/Bya5ugXAYx
- 6Dtg==
-X-Gm-Message-State: AOJu0YxyiRcsB2QcfBHycY9bMqgFMA7YycF6vVqWor1+bxabsxX7bpOd
- AIlgqghEVG4MN4CMAI2BERL1tuYxavojkG3jWBXWX1O9XW8zf2I5WsOZAe4jWS/fPuQbhZEyYi6
- J
-X-Google-Smtp-Source: AGHT+IEAZwPuZvTPbHI8UGIowH0oGtT9h40Jv2edv4W1O5steLdNIvr1J+/pnFh5yVMiuIjUUKlmvw==
-X-Received: by 2002:a05:600c:1c93:b0:421:b906:8088 with SMTP id
- 5b1f17b1804b1-4246f514b4fmr30171935e9.0.1718726733468; 
- Tue, 18 Jun 2024 09:05:33 -0700 (PDT)
+ bh=P/fRH20LiiHNd6n6UxrfG9EvHyIfE/d9iyXREJbBrfA=;
+ b=eMYHjJwfNQ/XtwXKwdMUfyPW559D+NfiYxkoydxfj0XHUsrL3DmBakpPUsm7QLyOGu
+ 93gONMmyb9l4i7BIZQndU1y15ZP5Uo/xnoAyXP2Ad+X1aDvH/VZXuJddUYme8G53cY/k
+ RXgoVT4tMuj/UQmVbSyoM7jwjo+7mIwzUUWWgGfinLT5oJzhFi3PvtOj3GNCee/LlSib
+ lyz0PM1hLQ9T8UvqnjK4/f4NJYt3dxxC8Hij56GVlJTupuVnApAOLvEvq0dMV19VopHw
+ PB6HEymnkqIfEzgYd5hM9xmQHkxC4vyyFlzQeKf66/w01b/riFMUOkQZal7jFRs+HaI7
+ Fh/Q==
+X-Gm-Message-State: AOJu0Yxsyp6gxynib1xTqTZwJiOf0QgpY8BTDUxOe76xdG+dFUv/mauy
+ vtJceatkArpuM1/kJ0PGxpOBjWTHgI/YExcsZmToIdytXnX7rd9OD3c8o1sov5RgyH4zyGIrmWk
+ f
+X-Google-Smtp-Source: AGHT+IFmIWHSWOpj2CzRtduAV6CJQFU7m87V2fSwiFcm/MSYdVIJBqOYkhRz3ZF3n6hYardd3z4QYA==
+X-Received: by 2002:a17:906:489:b0:a6f:2253:d1f7 with SMTP id
+ a640c23a62f3a-a6f60dc5069mr999916866b.61.1718726640451; 
+ Tue, 18 Jun 2024 09:04:00 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422f602ee95sm196650265e9.13.2024.06.18.09.05.32
+ a640c23a62f3a-a6f56ecdd1fsm625207666b.102.2024.06.18.09.03.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:05:33 -0700 (PDT)
+ Tue, 18 Jun 2024 09:04:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 50/76] hw/ppc: Avoid using Monitor in pic_print_info()
-Date: Tue, 18 Jun 2024 18:00:12 +0200
-Message-ID: <20240618160039.36108-51-philmd@linaro.org>
+Subject: [PULL 34/76] hw/ppc: Avoid using Monitor in pnv_phb4_pic_print_info()
+Date: Tue, 18 Jun 2024 17:59:56 +0200
+Message-ID: <20240618160039.36108-35-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,114 +102,85 @@ Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
 Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-Id: <20240610062105.49848-27-philmd@linaro.org>
+Message-Id: <20240610062105.49848-11-philmd@linaro.org>
 ---
- include/hw/ppc/pnv_chip.h |  2 +-
- hw/ppc/pnv.c              | 29 +++++++----------------------
- 2 files changed, 8 insertions(+), 23 deletions(-)
+ include/hw/pci-host/pnv_phb4.h | 2 +-
+ hw/pci-host/pnv_phb4.c         | 9 +--------
+ hw/ppc/pnv.c                   | 6 +++++-
+ 3 files changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/include/hw/ppc/pnv_chip.h b/include/hw/ppc/pnv_chip.h
-index a5e428be7c..a4ed17ac59 100644
---- a/include/hw/ppc/pnv_chip.h
-+++ b/include/hw/ppc/pnv_chip.h
-@@ -154,7 +154,7 @@ struct PnvChipClass {
-     void (*intc_print_info)(PnvChip *chip, PowerPCCPU *cpu, GString *buf);
-     ISABus *(*isa_create)(PnvChip *chip, Error **errp);
-     void (*dt_populate)(PnvChip *chip, void *fdt);
--    void (*pic_print_info)(PnvChip *chip, Monitor *mon);
-+    void (*pic_print_info)(PnvChip *chip, GString *buf);
-     uint64_t (*xscom_core_base)(PnvChip *chip, uint32_t core_id);
-     uint32_t (*xscom_pcba)(PnvChip *chip, uint64_t addr);
+diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
+index 3212e68160..8abee78e4d 100644
+--- a/include/hw/pci-host/pnv_phb4.h
++++ b/include/hw/pci-host/pnv_phb4.h
+@@ -155,7 +155,7 @@ struct PnvPHB4 {
+     QLIST_HEAD(, PnvPhb4DMASpace) dma_spaces;
  };
+ 
+-void pnv_phb4_pic_print_info(PnvPHB4 *phb, Monitor *mon);
++void pnv_phb4_pic_print_info(PnvPHB4 *phb, GString *buf);
+ int pnv_phb4_pec_get_phb_id(PnvPhb4PecState *pec, int stack_index);
+ PnvPhb4PecState *pnv_pec_add_phb(PnvChip *chip, PnvPHB *phb, Error **errp);
+ void pnv_phb4_bus_init(DeviceState *dev, PnvPHB4 *phb);
+diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+index 4b453997e7..99991008c1 100644
+--- a/hw/pci-host/pnv_phb4.c
++++ b/hw/pci-host/pnv_phb4.c
+@@ -10,8 +10,6 @@
+ #include "qemu/log.h"
+ #include "qapi/visitor.h"
+ #include "qapi/error.h"
+-#include "qapi/type-helpers.h"
+-#include "monitor/monitor.h"
+ #include "target/ppc/cpu.h"
+ #include "hw/pci-host/pnv_phb4_regs.h"
+ #include "hw/pci-host/pnv_phb4.h"
+@@ -1802,14 +1800,12 @@ static void pnv_phb4_register_types(void)
+ 
+ type_init(pnv_phb4_register_types);
+ 
+-void pnv_phb4_pic_print_info(PnvPHB4 *phb, Monitor *mon)
++void pnv_phb4_pic_print_info(PnvPHB4 *phb, GString *buf)
+ {
+     uint64_t notif_port =
+         phb->regs[PHB_INT_NOTIFY_ADDR >> 3] & ~PHB_INT_NOTIFY_ADDR_64K;
+     uint32_t offset = phb->regs[PHB_INT_NOTIFY_INDEX >> 3];
+     bool abt = !!(phb->regs[PHB_CTRLR >> 3] & PHB_CTRLR_IRQ_ABT_MODE);
+-    g_autoptr(GString) buf = g_string_new("");
+-    g_autoptr(HumanReadableText) info = NULL;
+ 
+     g_string_append_printf(buf,
+                            "PHB4[%x:%x] Source %08x .. %08x "
+@@ -1819,7 +1815,4 @@ void pnv_phb4_pic_print_info(PnvPHB4 *phb, Monitor *mon)
+                            abt ? "ABT" : "",
+                            notif_port);
+     xive_source_pic_print_info(&phb->xsrc, 0, buf);
+-
+-    info = human_readable_text_from_str(buf);
+-    monitor_puts(mon, info->human_readable_text);
+ }
 diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 9039c1777a..df74f032d7 100644
+index aed6767c8d..df187c5180 100644
 --- a/hw/ppc/pnv.c
 +++ b/hw/ppc/pnv.c
-@@ -765,14 +765,11 @@ static ISABus *pnv_isa_create(PnvChip *chip, Error **errp)
-     return PNV_CHIP_GET_CLASS(chip)->isa_create(chip, errp);
- }
- 
--static void pnv_chip_power8_pic_print_info(PnvChip *chip, Monitor *mon)
-+static void pnv_chip_power8_pic_print_info(PnvChip *chip, GString *buf)
+@@ -791,12 +791,16 @@ static int pnv_chip_power9_pic_print_info_child(Object *child, void *opaque)
  {
-     Pnv8Chip *chip8 = PNV8_CHIP(chip);
-     int i;
+     Monitor *mon = opaque;
+     PnvPHB *phb =  (PnvPHB *) object_dynamic_cast(child, TYPE_PNV_PHB);
++    g_autoptr(GString) buf = g_string_new("");
++    g_autoptr(HumanReadableText) info = NULL;
  
--    g_autoptr(GString) buf = g_string_new("");
--    g_autoptr(HumanReadableText) info = NULL;
--
-     ics_pic_print_info(&chip8->psi.ics, buf);
- 
-     for (i = 0; i < chip8->num_phbs; i++) {
-@@ -782,9 +779,6 @@ static void pnv_chip_power8_pic_print_info(PnvChip *chip, Monitor *mon)
-         pnv_phb3_msi_pic_print_info(&phb3->msis, buf);
-         ics_pic_print_info(&phb3->lsis, buf);
+     if (!phb) {
+         return 0;
      }
--
--    info = human_readable_text_from_str(buf);
--    monitor_puts(mon, info->human_readable_text);
- }
  
- static int pnv_chip_power9_pic_print_info_child(Object *child, void *opaque)
-@@ -801,19 +795,14 @@ static int pnv_chip_power9_pic_print_info_child(Object *child, void *opaque)
-     return 0;
- }
- 
--static void pnv_chip_power9_pic_print_info(PnvChip *chip, Monitor *mon)
-+static void pnv_chip_power9_pic_print_info(PnvChip *chip, GString *buf)
- {
-     Pnv9Chip *chip9 = PNV9_CHIP(chip);
--    g_autoptr(GString) buf = g_string_new("");
--    g_autoptr(HumanReadableText) info = NULL;
- 
-     pnv_xive_pic_print_info(&chip9->xive, buf);
-     pnv_psi_pic_print_info(&chip9->psi, buf);
-     object_child_foreach_recursive(OBJECT(chip),
-                          pnv_chip_power9_pic_print_info_child, buf);
--
--    info = human_readable_text_from_str(buf);
--    monitor_puts(mon, info->human_readable_text);
- }
- 
- static uint64_t pnv_chip_power8_xscom_core_base(PnvChip *chip,
-@@ -853,19 +842,14 @@ static void pnv_ipmi_bt_init(ISABus *bus, IPMIBmc *bmc, uint32_t irq)
-     isa_realize_and_unref(dev, bus, &error_fatal);
- }
- 
--static void pnv_chip_power10_pic_print_info(PnvChip *chip, Monitor *mon)
-+static void pnv_chip_power10_pic_print_info(PnvChip *chip, GString *buf)
- {
-     Pnv10Chip *chip10 = PNV10_CHIP(chip);
--    g_autoptr(GString) buf = g_string_new("");
--    g_autoptr(HumanReadableText) info = NULL;
- 
-     pnv_xive2_pic_print_info(&chip10->xive, buf);
-     pnv_psi_pic_print_info(&chip10->psi, buf);
-     object_child_foreach_recursive(OBJECT(chip),
-                          pnv_chip_power9_pic_print_info_child, buf);
--
--    info = human_readable_text_from_str(buf);
--    monitor_puts(mon, info->human_readable_text);
- }
- 
- /* Always give the first 1GB to chip 0 else we won't boot */
-@@ -2363,12 +2347,13 @@ static void pnv_pic_print_info(InterruptStatsProvider *obj,
-         PNV_CHIP_GET_CLASS(pnv->chips[0])->intc_print_info(pnv->chips[0], cpu,
-                                                            buf);
-     }
--    info = human_readable_text_from_str(buf);
--    monitor_puts(mon, info->human_readable_text);
- 
-     for (i = 0; i < pnv->num_chips; i++) {
--        PNV_CHIP_GET_CLASS(pnv->chips[i])->pic_print_info(pnv->chips[i], mon);
-+        PNV_CHIP_GET_CLASS(pnv->chips[i])->pic_print_info(pnv->chips[i], buf);
-     }
-+
+-    pnv_phb4_pic_print_info(PNV_PHB4(phb->backend), mon);
++    pnv_phb4_pic_print_info(PNV_PHB4(phb->backend), buf);
 +    info = human_readable_text_from_str(buf);
 +    monitor_puts(mon, info->human_readable_text);
- }
  
- static int pnv_match_nvt(XiveFabric *xfb, uint8_t format,
+     return 0;
+ }
 -- 
 2.41.0
 
