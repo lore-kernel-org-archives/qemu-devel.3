@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F915C41513
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA32C2BB85
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:11:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbMM-0000Vc-0w; Tue, 18 Jun 2024 12:07:02 -0400
+	id 1sJbMP-00012Z-Tx; Tue, 18 Jun 2024 12:07:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbLu-0008UP-8v
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:06:34 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbM8-0000R1-VI
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:06:54 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbLs-0007m9-5C
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:06:33 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-362f62ae4c5so121444f8f.1
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:06:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbM4-0007mj-DK
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:06:45 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-35f23f3da44so5042982f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:06:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726790; x=1719331590; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726795; x=1719331595; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jmfqhTI871PevJRRppe1121NzLfqeW2EbWjz+frAkMg=;
- b=Yz858Glon500OPl1/YHcd2z7AzcnoykufjMlbK5APFYukpAx0xP/GDLWwCPvI7VBur
- nhDWbElh+yaLnPdwsWHiFS1gGlBusQwZOQnmrt35D8HkMXgLT6w5ZHvNbtJMcx/3E1Dw
- 79UdfwuQ2gkDWrRMAN6I0H9Rs0Ka8oLrDcgYEwp3z9n44bWwNk5DL4lYWdfqgVdYiTMZ
- IBiJtb4hwG+M+RZOorgrK3T0/mj/rJSDTvYacNDcQGcotPDHFliyeUZe6bvDMwnj3qEP
- 2zLBA9dg+I66j+JMse2jBf23S6yuih2lZQW+TlQN97k6JMQxo+tWKAQGPtowIDEoX8Mo
- Kr2w==
+ bh=kgk379QG4gces2QJuUS6NM5ocwUhk589UugM1F9rqoM=;
+ b=agBYO7DXcHMscWdtP7LQgpZKed52yeVyJ8X/jjEMjCtqtcwxL2Fzv1Rtr3NRGiRqwy
+ 1OhJfsIi+vhdIqqlBRbyr4+G+AL+C10afDGk78utDHuwIlfPBzBDoTe0s+nEenSBrhia
+ ppRZ1DgPY7qbB/f9H+Ol5xDG2gXqeM6OgBopao7fsjCzGw0WvAZH5DwB15bpLnQ8WtnR
+ wI7bUcX1OrYEhiLdmmGA7aXDa4EF++01tXTn4JtsFuR1chIHiNGI27Vw/rKry34Tv+EU
+ xXqmGrieO7k3+KVqUeb+nMYs/4LUur25fQqimEt3FUbftfVzMfw4f99FrtLEzdtbq4MV
+ pWug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726790; x=1719331590;
+ d=1e100.net; s=20230601; t=1718726795; x=1719331595;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jmfqhTI871PevJRRppe1121NzLfqeW2EbWjz+frAkMg=;
- b=fbWlyGD3/AnLClhByhLiDtH0eX4XzILSTxJ9OZjK8PjLHLHhxLFxoh7oJ/vF2NH/Kr
- C4vuix8/tuJhW8H3GLxw59eTaC0CQi9I26oi4Yhqy4/ecwiigNDNtrFPoGwiz2/ADOgv
- SDa34LDUKYBv6Yw0l8KSV+d4ydcxyS9Qys7QbmAHKeNrZxsbAAH2sW3n2ak30cyL+t0C
- z5geJPO+UXeUAtD5VsM3CZCQuBfd9Vop5RFnhFPmdE1pyj4HcgqR+aq2cP8UWD26XSMO
- VJ1jSkCeD8OMaTk1sTYuNbrT+HTVpQ6GBUHkDZsycf0S1RFAjZOu5xnUper24t5WVaHd
- XmWQ==
-X-Gm-Message-State: AOJu0Yx8VaADi5mNqxdvDhzpzIX+Rfo2+i/8/xFl71BGOuU1h2TrvkK/
- VABks3SaiIDT+TEkj2nuHkXoa0stPv/jYitGPqJqpPdXrhJvyydB3HWCRZXUyrmyAyfKhfXoYdJ
- x
-X-Google-Smtp-Source: AGHT+IGUvUMFNhyudRaUhMkk0vkYqO8vPOQnFlVduqLzonDCk+MZDB8bhTIC4HRHb/NQrPWsNbITjg==
-X-Received: by 2002:a05:6000:2:b0:362:363a:9594 with SMTP id
- ffacd0b85a97d-362363a95f1mr2093169f8f.11.1718726790083; 
- Tue, 18 Jun 2024 09:06:30 -0700 (PDT)
+ bh=kgk379QG4gces2QJuUS6NM5ocwUhk589UugM1F9rqoM=;
+ b=TAhzxVGyzZFNOBrIObauX+lS5ekyJs91Kn7lpxyYJz1u4PlJT/CTuZJ03yplZJUXQS
+ 7SDEOe2c9TJTOy6EK/qsOFKwjJ4I0MFlstlnT/HUTJUTuwD4YRzdz/qVqTavXculJBfZ
+ qLG3ajid2JOpGK7+uzhtAWiy9ehwmeavC1oJ6zk2LYGLrYcCL2WPFVcu2w20m2HQHTeI
+ IJOeDrlQlQfFekqv4SDyv38wtLZkrzH2j11ZRy7sAOWRsckS45jJfKmbB6rrv2dieVsc
+ MNvdKxrJbTwhKhVFbDLe75Z8qWYa9MIR2PpXizI/aorLY1yT2xdI6OmZtm0sj1r1E+DY
+ ngzg==
+X-Gm-Message-State: AOJu0YxD7ET8GHHNmKkFt15HEAphazoH54zatuwnJxUXZyfqIXh3ugX0
+ JY7TALdfUv5tQG/Y7gP+sKykpoToGq7cRTv70QNVodTZKW0YOfs6XGJmMH4dEIsajLnqvhMO9y/
+ v
+X-Google-Smtp-Source: AGHT+IGoGr4o8b5kJ+3OUkztPlXYAHnu6lxPeznPM7emiclS4Ry3gk4rTgc3kNQAl/e+gXYaW+wxIQ==
+X-Received: by 2002:adf:f04e:0:b0:360:9180:760f with SMTP id
+ ffacd0b85a97d-36319a85e94mr8325f8f.66.1718726795416; 
+ Tue, 18 Jun 2024 09:06:35 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422874e71dcsm227153835e9.44.2024.06.18.09.06.29
+ ffacd0b85a97d-3621a4a17e6sm1580858f8f.19.2024.06.18.09.06.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:06:29 -0700 (PDT)
+ Tue, 18 Jun 2024 09:06:35 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 60/76] hw/usb: Remove unused 'host.h' header
-Date: Tue, 18 Jun 2024 18:00:22 +0200
-Message-ID: <20240618160039.36108-61-philmd@linaro.org>
+Cc: Fabio D'Urso <fdurso@google.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 61/76] hw/usb/dev-mtp: Correctly report free space
+Date: Tue, 18 Jun 2024 18:00:23 +0200
+Message-ID: <20240618160039.36108-62-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,68 +94,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 99761176ee ("usb: Remove legacy -usbdevice options
-(host, serial, disk and net)") hw/usb/host.h is not used, remove
-it.
+From: Fabio D'Urso <fdurso@google.com>
 
+In order to compute the amount of free space (in bytes), the number
+of available blocks (f_bavail) should be multiplied by the block
+size (f_frsize) instead of the total number of blocks (f_blocks).
+
+Signed-off-by: Fabio D'Urso <fdurso@google.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240618003657.3344685-1-fdurso@google.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-Id: <20240611102305.60735-2-philmd@linaro.org>
 ---
- hw/usb/host.h | 44 --------------------------------------------
- 1 file changed, 44 deletions(-)
- delete mode 100644 hw/usb/host.h
+ hw/usb/dev-mtp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/usb/host.h b/hw/usb/host.h
-deleted file mode 100644
-index 048ff3b482..0000000000
---- a/hw/usb/host.h
-+++ /dev/null
-@@ -1,44 +0,0 @@
--/*
-- * Linux host USB redirector
-- *
-- * Copyright (c) 2005 Fabrice Bellard
-- *
-- * Copyright (c) 2008 Max Krasnyansky
-- *      Support for host device auto connect & disconnect
-- *      Major rewrite to support fully async operation
-- *
-- * Copyright 2008 TJ <linux@tjworld.net>
-- *      Added flexible support for /dev/bus/usb /sys/bus/usb/devices in addition
-- *      to the legacy /proc/bus/usb USB device discovery and handling
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining a copy
-- * of this software and associated documentation files (the "Software"), to deal
-- * in the Software without restriction, including without limitation the rights
-- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-- * copies of the Software, and to permit persons to whom the Software is
-- * furnished to do so, subject to the following conditions:
-- *
-- * The above copyright notice and this permission notice shall be included in
-- * all copies or substantial portions of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-- * THE SOFTWARE.
-- */
--
--#ifndef QEMU_USB_HOST_H
--#define QEMU_USB_HOST_H
--
--struct USBAutoFilter {
--    uint32_t bus_num;
--    uint32_t addr;
--    char     *port;
--    uint32_t vendor_id;
--    uint32_t product_id;
--};
--
--#endif /* QEMU_USB_HOST_H */
+diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
+index 7e4a0765ae..554b397e88 100644
+--- a/hw/usb/dev-mtp.c
++++ b/hw/usb/dev-mtp.c
+@@ -886,7 +886,7 @@ static MTPData *usb_mtp_get_storage_info(MTPState *s, MTPControl *c)
+     rc = statvfs(s->root, &buf);
+     if (rc == 0) {
+         usb_mtp_add_u64(d, (uint64_t)buf.f_frsize * buf.f_blocks);
+-        usb_mtp_add_u64(d, (uint64_t)buf.f_bavail * buf.f_blocks);
++        usb_mtp_add_u64(d, (uint64_t)buf.f_frsize * buf.f_bavail);
+         usb_mtp_add_u32(d, buf.f_ffree);
+     } else {
+         usb_mtp_add_u64(d, 0xffffffff);
 -- 
 2.41.0
 
