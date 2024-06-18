@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23DC8C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CA6CC2BB85
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbMQ-0001Bz-V2; Tue, 18 Jun 2024 12:07:07 -0400
+	id 1sJbJF-0000Ss-3c; Tue, 18 Jun 2024 12:03:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbMF-0000UT-FF
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:06:56 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJD-0000Jn-8D
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:03:47 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbMD-0007pI-RY
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:06:55 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-42281d8cd2dso39992775e9.3
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:06:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJB-0007Cp-Eu
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:03:47 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a6f958a3a69so128999266b.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726812; x=1719331612; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726623; x=1719331423; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hte3egNIkJ/sFzULQkXNn/TRVVq6KAGN1byrZgRqcoo=;
- b=RkTVKHrP8jQnl4Moe7m8vNYOoYo8ZyAOE468q+ciVzgKtYF1F4N2AHxubiO9z3OOA/
- uRdWng9uIgv6K9rzFLY7mxWiiczgykk7W/n0bza0JLzt3kkIoBpQX51LTbTMm1NZQKUd
- z9W4gLhnn0YYQKdjCI9+GT3Fuzq5TshCVNyEU41VR2y/HJpocS0jjIDZWknVNssmQMCL
- K+SX1q8xCYBM1xIvdUyC1TIeQQYUTLzN59/mooJoc6jalG6qB4j9vH5LXHGXno5qTLdF
- YRYUl+6AtHfwWA4Z/iIqnOWEogQj72Im31nEDk2Lx7Rap+z9NRDhiDIsDuRDjOgi14ge
- 1W2g==
+ bh=krPmmezu/ZiSsAEmiOwTBGR2YHLemSWbvTZgat4esgU=;
+ b=kXIMsOE91cmF24ygAsPh2qHliZMam4DFnwYhDLegrKb3tv+6ACPdU8ajX4ag4SkHmf
+ UubEKlf75Z6vdkCVBP/sEm6cLIKs1x4js9XioeI49LX0r7ptJJzRNEQsBaEoblnFVcm0
+ L6Q8/55gF+F+hgoKXDvDBFDtEBDkxIf2X2bMpTJq4KFeONg/OU8A5KPGLX/CzOeqU1Wd
+ 7e5ieuYmR/8ocdAbxjqaFE+U+rurMtKB5d92PcHm8ZLKb2Cvifa+zbIlSNwXbjtNFTy/
+ JPm6ScRLXMhbi5MZ14inmTUbcVx4Wgab5J70UScShqFja6cdQWy0FM7Str6EextsXUtd
+ ZACg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726812; x=1719331612;
+ d=1e100.net; s=20230601; t=1718726623; x=1719331423;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hte3egNIkJ/sFzULQkXNn/TRVVq6KAGN1byrZgRqcoo=;
- b=jXXed5dQrqsalNEmpkbdepz2JW2qAErkOsZYQx9uzc5yhgVTXo0VLzgFferH56PI9P
- OmHlVTWxijp3YDzgwSKvvK/CpWgm9HlqLd+9VvSnM+eB10UDZYm/prYmDN+Op1ynomXC
- 1gGIfM5vL4k7kmY5x4cRCy6f3SAV/u5z0TD/GG2K8opkc4EV+nnelzr+myy7K4ffCVQv
- DUK08SI/QIDW6o+SoTTZTb/FVz+2ZTrHFnNId5Jn8bpCsbGZu4+X84ZOKx59a9TzTVdm
- tVrMtTqV5LuLN9r67qEppSfS6oClMQcSGReIq7nIp0cTzMkBCcp1vqzteYG6KWVtn/QH
- HS0g==
-X-Gm-Message-State: AOJu0YxzNBvEXvjMMC8th5KPCVQ1GIEro9y7eG4t6OilKxrS1WxlbbSk
- 7dhR0iRtqQoaruVjzqNDuJSoG6Mr+xgEeg1CD1j39s3Z5uMvC615OziWN0+wozgkPBgKhddECbw
- L
-X-Google-Smtp-Source: AGHT+IGJqS56tduJSATqOY7HymER6vn43KQQTpHXgf6SwaZb4ZfIcnncCc4bHIauy9Cz0P7HtIrobQ==
-X-Received: by 2002:a05:600c:2e51:b0:41b:f979:e19b with SMTP id
- 5b1f17b1804b1-42304854eeamr106019825e9.39.1718726812035; 
- Tue, 18 Jun 2024 09:06:52 -0700 (PDT)
+ bh=krPmmezu/ZiSsAEmiOwTBGR2YHLemSWbvTZgat4esgU=;
+ b=TJaEI6XfeghORgC/Efb6x4rAu/M5qWZO4WSyz6kE+Nlei0CsINCAoFJIXmET52qaly
+ qqC4ohYa4z5i5wpSZkX0KaDmipU0MNd7fC9Scq1rHyCKliHdL7seZHc75ZrpeM7CNrPt
+ PMiltyGPXm7LSgHhS3PGxt+rhUVW443e0FwdYSZS8mm5u3rl4bwE25RW8DLZR9Hd6XG6
+ D2PczZjqDJhAEzRnhwLHN52/FdmHDRvh9Y+spBieE+QuYSEzRZJ998Ygo9g3/upzcS+C
+ T+62TG1wgIACVSIxLatq0V775BnrpLI91Er4k+4q3QCv0Qiewg3LTdufwluayTGTS75F
+ NNcg==
+X-Gm-Message-State: AOJu0YyITAttM8P3JLXxJdhfm5v+V2/4jCwm3HFOLQEq3ujNsclzjFFY
+ o5e/Kk7RzUgpBgV8Z29/aeha2wCtr6rwYboTlaG82jFvQT9DSTosS2CjonSK9bX7sTZAkqm5m/k
+ M
+X-Google-Smtp-Source: AGHT+IHai8HShAwOS7bG4/I7Ta5HFUmfP6zr3dUiwCjm569R+Mr3Vfy/gK0ODA/CDcmwP+vAIdBhUQ==
+X-Received: by 2002:a17:906:2288:b0:a6f:1443:1e24 with SMTP id
+ a640c23a62f3a-a6f60d3fd34mr839471766b.34.1718726623576; 
+ Tue, 18 Jun 2024 09:03:43 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422f641a633sm193554665e9.43.2024.06.18.09.06.51
+ a640c23a62f3a-a6f5f377dd8sm577968866b.146.2024.06.18.09.03.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:06:51 -0700 (PDT)
+ Tue, 18 Jun 2024 09:03:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 64/76] hw/intc/loongson_ipi: Replace ipi_getcpu with
- cpu_by_arch_id
-Date: Tue, 18 Jun 2024 18:00:26 +0200
-Message-ID: <20240618160039.36108-65-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 31/76] hw/ppc: Avoid using Monitor in
+ spapr_xive_end_pic_print_info()
+Date: Tue, 18 Jun 2024 17:59:53 +0200
+Message-ID: <20240618160039.36108-32-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,89 +97,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Replace Monitor API by HumanReadableText one.
 
-cpu_by_arch_id is doing the same thing as our ipi_getcpu logic.
-
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-ID: <20240605-loongson3-ipi-v3-4-ddd2c0e03fa3@flygoat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Message-Id: <20240610062105.49848-8-philmd@linaro.org>
 ---
- hw/intc/loongson_ipi.c | 39 +++------------------------------------
- 1 file changed, 3 insertions(+), 36 deletions(-)
+ hw/intc/spapr_xive.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
-index 08a74a0b4f..e6a7142480 100644
---- a/hw/intc/loongson_ipi.c
-+++ b/hw/intc/loongson_ipi.c
-@@ -118,39 +118,6 @@ static MemTxResult send_ipi_data(CPUState *cpu, uint64_t val, hwaddr addr,
-     return MEMTX_OK;
+diff --git a/hw/intc/spapr_xive.c b/hw/intc/spapr_xive.c
+index 3357f6325f..d571645e9e 100644
+--- a/hw/intc/spapr_xive.c
++++ b/hw/intc/spapr_xive.c
+@@ -133,7 +133,7 @@ static int spapr_xive_target_to_end(uint32_t target, uint8_t prio,
+  * structure dumping only the information related to the OS EQ.
+  */
+ static void spapr_xive_end_pic_print_info(SpaprXive *xive, XiveEND *end,
+-                                          Monitor *mon)
++                                          GString *buf)
+ {
+     uint64_t qaddr_base = xive_end_qaddr(end);
+     uint32_t qindex = xive_get_field32(END_W1_PAGE_OFF, end->w1);
+@@ -142,17 +142,12 @@ static void spapr_xive_end_pic_print_info(SpaprXive *xive, XiveEND *end,
+     uint32_t qentries = 1 << (qsize + 10);
+     uint32_t nvt = xive_get_field32(END_W6_NVT_INDEX, end->w6);
+     uint8_t priority = xive_get_field32(END_W7_F0_PRIORITY, end->w7);
+-    g_autoptr(GString) buf = g_string_new("");
+-    g_autoptr(HumanReadableText) info = NULL;
+ 
+-    monitor_printf(mon, "%3d/%d % 6d/%5d @%"PRIx64" ^%d",
+-                   spapr_xive_nvt_to_target(0, nvt),
+-                   priority, qindex, qentries, qaddr_base, qgen);
++    g_string_append_printf(buf, "%3d/%d % 6d/%5d @%"PRIx64" ^%d",
++                           spapr_xive_nvt_to_target(0, nvt),
++                           priority, qindex, qentries, qaddr_base, qgen);
+ 
+     xive_end_queue_pic_print_info(end, 6, buf);
+-
+-    info = human_readable_text_from_str(buf);
+-    monitor_puts(mon, info->human_readable_text);
  }
  
--static int archid_cmp(const void *a, const void *b)
--{
--   CPUArchId *archid_a = (CPUArchId *)a;
--   CPUArchId *archid_b = (CPUArchId *)b;
--
--   return archid_a->arch_id - archid_b->arch_id;
--}
--
--static CPUArchId *find_cpu_by_archid(MachineState *ms, uint32_t id)
--{
--    CPUArchId apic_id, *found_cpu;
--
--    apic_id.arch_id = id;
--    found_cpu = bsearch(&apic_id, ms->possible_cpus->cpus,
--        ms->possible_cpus->len, sizeof(*ms->possible_cpus->cpus),
--        archid_cmp);
--
--    return found_cpu;
--}
--
--static CPUState *ipi_getcpu(int arch_id)
--{
--    MachineState *machine = MACHINE(qdev_get_machine());
--    CPUArchId *archid;
--
--    archid = find_cpu_by_archid(machine, arch_id);
--    if (archid) {
--        return CPU(archid->cpu);
--    }
--
--    return NULL;
--}
--
- static MemTxResult mail_send(uint64_t val, MemTxAttrs attrs)
- {
-     uint32_t cpuid;
-@@ -158,7 +125,7 @@ static MemTxResult mail_send(uint64_t val, MemTxAttrs attrs)
-     CPUState *cs;
+ /*
+@@ -198,13 +193,18 @@ static void spapr_xive_pic_print_info(SpaprXive *xive, Monitor *mon)
+         if (!xive_eas_is_masked(eas)) {
+             uint32_t end_idx = xive_get_field64(EAS_END_INDEX, eas->w);
+             XiveEND *end;
++            g_autoptr(GString) buf = g_string_new("");
++            g_autoptr(HumanReadableText) info = NULL;
  
-     cpuid = extract32(val, 16, 10);
--    cs = ipi_getcpu(cpuid);
-+    cs = cpu_by_arch_id(cpuid);
-     if (cs == NULL) {
-         return MEMTX_DECODE_ERROR;
-     }
-@@ -176,7 +143,7 @@ static MemTxResult any_send(uint64_t val, MemTxAttrs attrs)
-     CPUState *cs;
+             assert(end_idx < xive->nr_ends);
+             end = &xive->endt[end_idx];
  
-     cpuid = extract32(val, 16, 10);
--    cs = ipi_getcpu(cpuid);
-+    cs = cpu_by_arch_id(cpuid);
-     if (cs == NULL) {
-         return MEMTX_DECODE_ERROR;
-     }
-@@ -227,7 +194,7 @@ static MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr,
-         cpuid = extract32(val, 16, 10);
-         /* IPI status vector */
-         vector = extract8(val, 0, 5);
--        cs = ipi_getcpu(cpuid);
-+        cs = cpu_by_arch_id(cpuid);
-         if (cs == NULL || cs->cpu_index >= ipi->num_cpu) {
-             return MEMTX_DECODE_ERROR;
+             if (xive_end_is_valid(end)) {
+-                spapr_xive_end_pic_print_info(xive, end, mon);
++                spapr_xive_end_pic_print_info(xive, end, buf);
+             }
++
++            info = human_readable_text_from_str(buf);
++            monitor_puts(mon, info->human_readable_text);
          }
+         monitor_printf(mon, "\n");
+     }
 -- 
 2.41.0
 
