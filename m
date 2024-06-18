@@ -4,83 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 614BEC2BB85
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF36BC2BC81
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:12:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbJp-0003vD-T3; Tue, 18 Jun 2024 12:04:25 -0400
+	id 1sJbRL-0005a6-Pv; Tue, 18 Jun 2024 12:12:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJn-0003rJ-Ab
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:04:23 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJk-0007Ez-DW
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:04:23 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-57c778b5742so6562143a12.2
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:04:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726658; x=1719331458; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VFMERdu5BxdLlmHi+3GbOTwf7lyqGeSd5tYPeFoN3L0=;
- b=gVGPKBiDqFia8h3/YmO9Qb8WmIf5+YoAIMT/ZTIWNWiSSzfdhhgGMaszTJgbL1ocmD
- uyUWSEfcvKPrNSLJ6iFOGPy1PcwBKupapzHrB6lQJpdppj+Pf8AUNOrinwJWbYDDNi3S
- +ILMA3AU22ncZFk+8cWMMwbtnDcl0ssLAMWB0xS41J/l8q859KMAffCaEEsVoLy4SVjB
- 6GuSdcqWevtN9+BPwi8OQmLMNLlahMRxtvgjJ2Sc3CmNbwgDns12ItBlovrOmx133S1J
- eDWhXJ6RRcV8oLckRYlA0FReXht3dr2SlzpuYgTA9IX52+46AV1i174hpBn/ZcOmkPta
- EzWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726658; x=1719331458;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VFMERdu5BxdLlmHi+3GbOTwf7lyqGeSd5tYPeFoN3L0=;
- b=hu2N9u2aEaQwF50Qvi5gt5EdMdJTGqQ2MyTkX1vgHtWR8E/O7hp0JMg+1btMaRhsy4
- 6zmDWodyvpz1Lp9JIZmsvQ0qRQNngrsZnmRb+Z7Uj604VGjPqZw/yPSLpnPn2s8MxdX0
- JwUWJkFtj+3wIFXjFRF/cc6dAcvbTLjXHwLFVgLndnussdufkHVVC3/Llyo+JNx6kAwD
- AwINEbRFwzZb/klBSY5TEs5beghhIicyvcQqdZvvtUqzifIjZVmwja6zu+9IIIpfUA0C
- GPuLT7agC4MVjXFBFtwtkPW0qzDXy3UOoTAK8ch9X4rPD4f3kmcX7gdInnKUiZzNo1PH
- m12g==
-X-Gm-Message-State: AOJu0YwcNZ99NkrUTSOOdKmcLH1A7jTQ4q/D0/rWVViErq8s14E7b9SF
- c5F3hSe1/HXSgkKLH5MVt8vTx6jhv8OV+oH6mJm9XazfSUnaFvQ1Jmt3MnlsH9Wsl9lNHtvYlJE
- Z
-X-Google-Smtp-Source: AGHT+IFP0UUUCCIrNHBq+l4kw1cseuEgYyEK+/UjXIGr7uaigPcKgEUUsJBR/SmOdFLrxE5tIOa98Q==
-X-Received: by 2002:a17:906:9c89:b0:a6f:9f4a:fb11 with SMTP id
- a640c23a62f3a-a6f9f4afccfmr77583866b.28.1718726658513; 
- Tue, 18 Jun 2024 09:04:18 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.212.55])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56f43220sm625702166b.185.2024.06.18.09.04.17
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:04:18 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 37/76] hw/ppc: Avoid using Monitor in
- xive_end_eas_pic_print_info()
-Date: Tue, 18 Jun 2024 17:59:59 +0200
-Message-ID: <20240618160039.36108-38-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
-References: <20240618160039.36108-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <SRS0=Of75=NU=kaod.org=clg@ozlabs.org>)
+ id 1sJbRI-0005MY-VO; Tue, 18 Jun 2024 12:12:09 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=Of75=NU=kaod.org=clg@ozlabs.org>)
+ id 1sJbRG-0000WL-7C; Tue, 18 Jun 2024 12:12:08 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W3Wwc6Jywz4wyl;
+ Wed, 19 Jun 2024 02:12:00 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W3WwY172vz4w2Q;
+ Wed, 19 Jun 2024 02:11:56 +1000 (AEST)
+Message-ID: <0b29566d-eb1e-4540-a7cd-efcab6cc6a32@kaod.org>
+Date: Tue, 18 Jun 2024 18:11:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/5] tests/qtest: Add pnv-spi-seeprom qtest
+To: Chalapathi V <chalapathi.v@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ calebs@us.ibm.com, chalapathi.v@ibm.com, saif.abrar@linux.ibm.com,
+ dantan@us.ibm.com, milesg@linux.ibm.com
+References: <20240617165419.8388-1-chalapathi.v@linux.ibm.com>
+ <20240617165419.8388-6-chalapathi.v@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240617165419.8388-6-chalapathi.v@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=Of75=NU=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,104 +67,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace Monitor API by HumanReadableText one.
+On 6/17/24 6:54 PM, Chalapathi V wrote:
+> In this commit Write a qtest pnv-spi-seeprom-test to check the
+> SPI transactions between spi controller and seeprom device.
+> 
+> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-Id: <20240610062105.49848-14-philmd@linaro.org>
----
- include/hw/ppc/xive_regs.h |  2 +-
- hw/intc/pnv_xive.c         |  9 +++++----
- hw/intc/xive.c             | 22 ++++++++++------------
- 3 files changed, 16 insertions(+), 17 deletions(-)
 
-diff --git a/include/hw/ppc/xive_regs.h b/include/hw/ppc/xive_regs.h
-index 5e6f9d1be4..b9db7abc2e 100644
---- a/include/hw/ppc/xive_regs.h
-+++ b/include/hw/ppc/xive_regs.h
-@@ -263,7 +263,7 @@ static inline uint64_t xive_end_qaddr(XiveEND *end)
- 
- void xive_end_pic_print_info(XiveEND *end, uint32_t end_idx, GString *buf);
- void xive_end_queue_pic_print_info(XiveEND *end, uint32_t width, GString *buf);
--void xive_end_eas_pic_print_info(XiveEND *end, uint32_t end_idx, Monitor *mon);
-+void xive_end_eas_pic_print_info(XiveEND *end, uint32_t end_idx, GString *buf);
- 
- /* Notification Virtual Target (NVT) */
- typedef struct XiveNVT {
-diff --git a/hw/intc/pnv_xive.c b/hw/intc/pnv_xive.c
-index 1dddbf7827..a0c6dee5db 100644
---- a/hw/intc/pnv_xive.c
-+++ b/hw/intc/pnv_xive.c
-@@ -1881,14 +1881,15 @@ void pnv_xive_pic_print_info(PnvXive *xive, Monitor *mon)
-     while (!xive_router_get_end(xrtr, blk, i, &end)) {
-         xive_end_pic_print_info(&end, i++, buf);
-     }
--    info = human_readable_text_from_str(buf);
--    monitor_puts(mon, info->human_readable_text);
- 
--    monitor_printf(mon, "XIVE[%x] #%d END Escalation EAT\n", chip_id, blk);
-+    g_string_append_printf(buf, "XIVE[%x] #%d END Escalation EAT\n",
-+                           chip_id, blk);
-     i = 0;
-     while (!xive_router_get_end(xrtr, blk, i, &end)) {
--        xive_end_eas_pic_print_info(&end, i++, mon);
-+        xive_end_eas_pic_print_info(&end, i++, buf);
-     }
-+    info = human_readable_text_from_str(buf);
-+    monitor_puts(mon, info->human_readable_text);
- 
-     monitor_printf(mon, "XIVE[%x] #%d NVTT %08x .. %08x\n", chip_id, blk,
-                    0, XIVE_NVT_COUNT - 1);
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index f631d7cd6e..70f11f993b 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -17,7 +17,6 @@
- #include "sysemu/reset.h"
- #include "hw/qdev-properties.h"
- #include "migration/vmstate.h"
--#include "monitor/monitor.h"
- #include "hw/irq.h"
- #include "hw/ppc/xive.h"
- #include "hw/ppc/xive2.h"
-@@ -1419,8 +1418,7 @@ static void xive_end_enqueue(XiveEND *end, uint32_t data)
-     end->w1 = xive_set_field32(END_W1_PAGE_OFF, end->w1, qindex);
- }
- 
--void xive_end_eas_pic_print_info(XiveEND *end, uint32_t end_idx,
--                                   Monitor *mon)
-+void xive_end_eas_pic_print_info(XiveEND *end, uint32_t end_idx, GString *buf)
- {
-     XiveEAS *eas = (XiveEAS *) &end->w4;
-     uint8_t pq;
-@@ -1431,15 +1429,15 @@ void xive_end_eas_pic_print_info(XiveEND *end, uint32_t end_idx,
- 
-     pq = xive_get_field32(END_W1_ESe, end->w1);
- 
--    monitor_printf(mon, "  %08x %c%c %c%c end:%02x/%04x data:%08x\n",
--                   end_idx,
--                   pq & XIVE_ESB_VAL_P ? 'P' : '-',
--                   pq & XIVE_ESB_VAL_Q ? 'Q' : '-',
--                   xive_eas_is_valid(eas) ? 'V' : ' ',
--                   xive_eas_is_masked(eas) ? 'M' : ' ',
--                   (uint8_t)  xive_get_field64(EAS_END_BLOCK, eas->w),
--                   (uint32_t) xive_get_field64(EAS_END_INDEX, eas->w),
--                   (uint32_t) xive_get_field64(EAS_END_DATA, eas->w));
-+    g_string_append_printf(buf, "  %08x %c%c %c%c end:%02x/%04x data:%08x\n",
-+                           end_idx,
-+                           pq & XIVE_ESB_VAL_P ? 'P' : '-',
-+                           pq & XIVE_ESB_VAL_Q ? 'Q' : '-',
-+                           xive_eas_is_valid(eas) ? 'V' : ' ',
-+                           xive_eas_is_masked(eas) ? 'M' : ' ',
-+                           (uint8_t)  xive_get_field64(EAS_END_BLOCK, eas->w),
-+                           (uint32_t) xive_get_field64(EAS_END_INDEX, eas->w),
-+                           (uint32_t) xive_get_field64(EAS_END_DATA, eas->w));
- }
- 
- /*
--- 
-2.41.0
+Acked-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   tests/qtest/pnv-spi-seeprom-test.c | 110 +++++++++++++++++++++++++++++
+>   tests/qtest/meson.build            |   1 +
+>   2 files changed, 111 insertions(+)
+>   create mode 100644 tests/qtest/pnv-spi-seeprom-test.c
+> 
+> diff --git a/tests/qtest/pnv-spi-seeprom-test.c b/tests/qtest/pnv-spi-seeprom-test.c
+> new file mode 100644
+> index 0000000000..92bc8a11ae
+> --- /dev/null
+> +++ b/tests/qtest/pnv-spi-seeprom-test.c
+> @@ -0,0 +1,110 @@
+> +/*
+> + * QTest testcase for PowerNV 10 Seeprom Communications
+> + *
+> + * Copyright (c) 2024, IBM Corporation.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +#include <unistd.h>
+> +#include "qemu/osdep.h"
+> +#include "libqtest.h"
+> +#include "qemu/bswap.h"
+> +#include "hw/ssi/pnv_spi_regs.h"
+> +#include "pnv-xscom.h"
+> +
+> +#define FLASH_SIZE              (512 * 1024)
+> +#define SPIC2_XSCOM_BASE        0xc0040
+> +
+> +/* To transmit READ opcode and address */
+> +#define READ_OP_TDR_DATA        0x0300010000000000
+> +/*
+> + * N1 shift - tx 4 bytes (transmit opcode and address)
+> + * N2 shift - tx and rx 8 bytes.
+> + */
+> +#define READ_OP_COUNTER_CONFIG  0x2040000000002b00
+> +/* SEQ_OP_SELECT_RESPONDER - N1 Shift - N2 Shift * 5 - SEQ_OP_STOP */
+> +#define READ_OP_SEQUENCER       0x1130404040404010
+> +
+> +/* To transmit WREN(Set Write Enable Latch in status0 register) opcode */
+> +#define WRITE_OP_WREN           0x0600000000000000
+> +/* To transmit WRITE opcode, address and data */
+> +#define WRITE_OP_TDR_DATA       0x0300010012345678
+> +/* N1 shift - tx 8 bytes (transmit opcode, address and data) */
+> +#define WRITE_OP_COUNTER_CONFIG 0x4000000000002000
+> +/* SEQ_OP_SELECT_RESPONDER - N1 Shift - SEQ_OP_STOP */
+> +#define WRITE_OP_SEQUENCER      0x1130100000000000
+> +
+> +static void pnv_spi_xscom_write(QTestState *qts, const PnvChip *chip,
+> +        uint32_t reg, uint64_t val)
+> +{
+> +    uint32_t pcba = SPIC2_XSCOM_BASE + reg;
+> +    qtest_writeq(qts, pnv_xscom_addr(chip, pcba), val);
+> +}
+> +
+> +static uint64_t pnv_spi_xscom_read(QTestState *qts, const PnvChip *chip,
+> +        uint32_t reg)
+> +{
+> +    uint32_t pcba = SPIC2_XSCOM_BASE + reg;
+> +    return qtest_readq(qts, pnv_xscom_addr(chip, pcba));
+> +}
+> +
+> +static void spi_seeprom_transaction(QTestState *qts, const PnvChip *chip)
+> +{
+> +    /* SPI transactions to SEEPROM to read from SEEPROM image */
+> +    pnv_spi_xscom_write(qts, chip, SPI_CTR_CFG_REG, READ_OP_COUNTER_CONFIG);
+> +    pnv_spi_xscom_write(qts, chip, SPI_SEQ_OP_REG, READ_OP_SEQUENCER);
+> +    pnv_spi_xscom_write(qts, chip, SPI_XMIT_DATA_REG, READ_OP_TDR_DATA);
+> +    pnv_spi_xscom_write(qts, chip, SPI_XMIT_DATA_REG, 0);
+> +    /* Read 5*8 bytes from SEEPROM at 0x100 */
+> +    uint64_t rdr_val = pnv_spi_xscom_read(qts, chip, SPI_RCV_DATA_REG);
+> +    g_test_message("RDR READ = 0x%lx", rdr_val);
+> +    rdr_val = pnv_spi_xscom_read(qts, chip, SPI_RCV_DATA_REG);
+> +    rdr_val = pnv_spi_xscom_read(qts, chip, SPI_RCV_DATA_REG);
+> +    rdr_val = pnv_spi_xscom_read(qts, chip, SPI_RCV_DATA_REG);
+> +    rdr_val = pnv_spi_xscom_read(qts, chip, SPI_RCV_DATA_REG);
+> +    g_test_message("RDR READ = 0x%lx", rdr_val);
+> +
+> +    /* SPI transactions to SEEPROM to write to SEEPROM image */
+> +    pnv_spi_xscom_write(qts, chip, SPI_CTR_CFG_REG, WRITE_OP_COUNTER_CONFIG);
+> +    /* Set Write Enable Latch bit of status0 register */
+> +    pnv_spi_xscom_write(qts, chip, SPI_SEQ_OP_REG, WRITE_OP_SEQUENCER);
+> +    pnv_spi_xscom_write(qts, chip, SPI_XMIT_DATA_REG, WRITE_OP_WREN);
+> +    /* write 8 bytes to SEEPROM at 0x100 */
+> +    pnv_spi_xscom_write(qts, chip, SPI_SEQ_OP_REG, WRITE_OP_SEQUENCER);
+> +    pnv_spi_xscom_write(qts, chip, SPI_XMIT_DATA_REG, WRITE_OP_TDR_DATA);
+> +}
+> +
+> +static void test_spi_seeprom(const void *data)
+> +{
+> +    const PnvChip *chip = data;
+> +    QTestState *qts = NULL;
+> +    g_autofree char *tmp_path = NULL;
+> +    int ret;
+> +    int fd;
+> +
+> +    /* Create a temporary raw image */
+> +    fd = g_file_open_tmp("qtest-seeprom-XXXXXX", &tmp_path, NULL);
+> +    g_assert(fd >= 0);
+> +    ret = ftruncate(fd, FLASH_SIZE);
+> +    g_assert(ret == 0);
+> +    close(fd);
+> +
+> +    qts = qtest_initf("-m 2G -machine powernv10 -smp 2,cores=2,"
+> +                      "threads=1 -accel tcg,thread=single -nographic "
+> +                      "-blockdev node-name=pib_spic2,driver=file,"
+> +                      "filename=%s -device 25csm04,bus=pnv-spi-bus.2,cs=0,"
+> +                      "drive=pib_spic2", tmp_path);
+> +    spi_seeprom_transaction(qts, chip);
+> +    qtest_quit(qts);
+> +    unlink(tmp_path);
+> +}
+> +
+> +int main(int argc, char **argv)
+> +{
+> +    g_test_init(&argc, &argv, NULL);
+> +    char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
+> +            pnv_chips[3].cpu_model);
+> +    qtest_add_data_func(tname, &pnv_chips[3], test_spi_seeprom);
+> +    g_free(tname);
+> +    return g_test_run();
+> +}
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 86293051dc..2fa98b2430 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -171,6 +171,7 @@ qtests_ppc64 = \
+>     qtests_ppc + \
+>     (config_all_devices.has_key('CONFIG_PSERIES') ? ['device-plug-test'] : []) +               \
+>     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-xscom-test'] : []) +                 \
+> +  (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-spi-seeprom-test'] : []) +           \
+>     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-host-i2c-test'] : []) +              \
+>     (config_all_devices.has_key('CONFIG_PSERIES') ? ['rtas-test'] : []) +                      \
+>     (slirp.found() ? ['pxe-test'] : []) +              \
 
 
