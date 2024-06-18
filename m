@@ -4,72 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4224BC27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 23:36:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD17DC27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 23:59:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJiMn-00078l-DD; Tue, 18 Jun 2024 19:35:57 -0400
+	id 1sJiiT-0005G9-2A; Tue, 18 Jun 2024 19:58:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave.jiang@intel.com>)
- id 1sJiMl-000771-VY
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 19:35:56 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1sJiiR-0005Ft-F9; Tue, 18 Jun 2024 19:58:19 -0400
+Received: from pi.codeconstruct.com.au ([203.29.241.158]
+ helo=codeconstruct.com.au)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave.jiang@intel.com>)
- id 1sJiMi-0000Y9-Mc
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 19:35:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1718753753; x=1750289753;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=M1FEDauRjB/4gINRNPjojWAMB+egJq4MMB0aPzU2x14=;
- b=C9iR8FsfDaVANjgG9WzHxYjg7lNM1W96Ha/90j0sEA+Anax2lQxLErrF
- 4d7ve8K4RcIMRJECxnvzlWkm+D667+TFeIyBagdLzkRvZeShsNqvDp6hN
- o5LjqG8DOcPawRNSiU+/ceGnGz1G1g3lU6MfZsNf8/+KsdFj1P4CH4BSp
- Gi9p4DzCJ+MeTTucEjUrwhUs5P1Aqf7DRX/oBdNrBW8xGxq5eN9ZdQd8Z
- jtPOSzufzlMIvrN+QDiUoyg+N4zmDKCIchcVuGNEpr0Cd/UH/66kpSDZm
- it9F2X4+pTg0mrq5Nhu7UQmR5ejeagxLuOsPfpmh4MCCzdwQDTQh8S9Hk g==;
-X-CSE-ConnectionGUID: LdAnkJ1DSlSrVEb5nK8RvQ==
-X-CSE-MsgGUID: AGnbgwwdR5S65xvOnoPqxg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11107"; a="15382251"
-X-IronPort-AV: E=Sophos;i="6.08,247,1712646000"; d="scan'208";a="15382251"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jun 2024 16:35:48 -0700
-X-CSE-ConnectionGUID: AMbu1aL7Ru6/aO4Vv+HzMw==
-X-CSE-MsgGUID: PIcFpnTxRFaosnHDijLJqA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,247,1712646000"; d="scan'208";a="79183071"
-Received: from djiang5-mobl3.amr.corp.intel.com (HELO [10.125.111.236])
- ([10.125.111.236])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Jun 2024 16:35:48 -0700
-Message-ID: <be14ee00-6d43-4db1-ad63-beac6aacb814@intel.com>
-Date: Tue, 18 Jun 2024 16:35:46 -0700
+ (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
+ id 1sJiiO-0004FL-IC; Tue, 18 Jun 2024 19:58:19 -0400
+Received: from [192.168.68.112]
+ (ppp118-210-79-194.adl-adc-lon-bras32.tpg.internode.on.net [118.210.79.194])
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 5D5AB20127;
+ Wed, 19 Jun 2024 07:58:01 +0800 (AWST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=codeconstruct.com.au; s=2022a; t=1718755084;
+ bh=9W4PW0zYObPWa5VvdZ80quLsqvmKQ+u5HW4UxMKxKOc=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References;
+ b=j+lt6iJsbEv5LIb73yh7jWH56TSu6s2/UJuREFIbcRWWPXGs6JIUIPlHF0Ph8UyHK
+ u50MI57fcojYjqnH55HjN7BxAICo0jc+Svf+EOeR+9qNVYk9UEn3tpd7v3qnHCIPAc
+ Gn7gj0OUvqX+Dv1Tx6Z+Bh/PpvC0YOuZjQCg0qnHzV43g4W8EtrKCCpMMmxmiDv/dQ
+ Xf7wqAz+irUIVrkY2Kz8pKi+/BIAMBevhs5AoDs6tyAfFb00AIXCKKsnJBG2OWKBq6
+ wGC9sgcESqcQZNGFND8R5LH+4h9FE1jOvcRNZCyDta+CFhdooo/jxaDuQ5JsOeyj0O
+ Ph7CU76BgjIbA==
+Message-ID: <bd15ab0597caad4564ca8f9498dfd3bbbe67df89.camel@codeconstruct.com.au>
+Subject: Re: [PATCH] hw/gpio/aspeed: Add bounds checking for register table
+ access
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Zheyu Ma <zheyuma97@gmail.com>, =?ISO-8859-1?Q?C=E9dric?= Le Goater
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Joel Stanley
+ <joel@jms.id.au>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Date: Wed, 19 Jun 2024 09:27:59 +0930
+In-Reply-To: <20240618130928.3075494-1-zheyuma97@gmail.com>
+References: <20240618130928.3075494-1-zheyuma97@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] cxl: avoid duplicating report from MCE & device
-To: Shiyang Ruan <ruansy.fnst@fujitsu.com>, qemu-devel@nongnu.org,
- linux-cxl@vger.kernel.org
-Cc: jonathan.cameron@huawei.com, dan.j.williams@intel.com, dave@stgolabs.net, 
- ira.weiny@intel.com, alison.schofield@intel.com, vishal.l.verma@intel.com
-References: <20240618165310.877974-1-ruansy.fnst@fujitsu.com>
-Content-Language: en-US
-From: Dave Jiang <dave.jiang@intel.com>
-In-Reply-To: <20240618165310.877974-1-ruansy.fnst@fujitsu.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=dave.jiang@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=203.29.241.158;
+ envelope-from=andrew@codeconstruct.com.au; helo=codeconstruct.com.au
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,274 +71,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Zheyu Ma,
 
+On Tue, 2024-06-18 at 15:09 +0200, Zheyu Ma wrote:
+> Added bounds checking in the aspeed_gpio_read() and aspeed_gpio_write()
+> functions to ensure the index idx is within the valid range of the
+> reg_table array.
+>=20
+> The correct size of reg_table is determined dynamically based on whether
+> it is aspeed_3_3v_gpios or aspeed_1_8v_gpios. If idx exceeds the
+> size of reg_table, an error is logged, and the function returns.
+>=20
+> AddressSanitizer log indicating the issue:
+>=20
+> =3D=3D2602930=3D=3DERROR: AddressSanitizer: global-buffer-overflow on add=
+ress 0x55a5da29e128 at pc 0x55a5d700dc62 bp 0x7fff096c4e90 sp 0x7fff096c4e8=
+8
+> READ of size 2 at 0x55a5da29e128 thread T0
+>     #0 0x55a5d700dc61 in aspeed_gpio_read hw/gpio/aspeed_gpio.c:564:14
+>     #1 0x55a5d933f3ab in memory_region_read_accessor system/memory.c:445:=
+11
+>     #2 0x55a5d92fba40 in access_with_adjusted_size system/memory.c:573:18
+>     #3 0x55a5d92f842c in memory_region_dispatch_read1 system/memory.c:142=
+6:16
+>     #4 0x55a5d92f7b68 in memory_region_dispatch_read system/memory.c:1459=
+:9
+>     #5 0x55a5d9376ad1 in flatview_read_continue_step system/physmem.c:283=
+6:18
+>     #6 0x55a5d9376399 in flatview_read_continue system/physmem.c:2877:19
+>     #7 0x55a5d93775b8 in flatview_read system/physmem.c:2907:12
 
-On 6/18/24 9:53 AM, Shiyang Ruan wrote:
-> Background:
-> Since CXL device is a memory device, while CPU consumes a poison page of 
-> CXL device, it always triggers a MCE by interrupt (INT18), no matter 
-> which-First path is configured.  This is the first report.  Then 
-> currently, in FW-First path, the poison event is transferred according 
-> to the following process: CXL device -> firmware -> OS:ACPI->APEI->GHES 
->  -> CPER -> trace report.  This is the second one.  These two reports
-> are indicating the same poisoning page, which is the so-called "duplicate
-> report"[1].  And the memory_failure() handling I'm trying to add in
-> OS-First path could also be another duplicate report.
-> 
-> Hope the flow below could make it easier to understand:
-> CPU accesses bad memory on CXL device, then
->  -> MCE (INT18), *always* report (1)
->  -> * FW-First (implemented now)
->       -> CXL device -> FW
-> 	      -> OS:ACPI->APEI->GHES->CPER -> trace report (2.a)
->     * OS-First (not implemented yet, I'm working on it)
->       -> CXL device -> MSI
-> 	      -> OS:CXL driver -> memory_failure() (2.b)
-> so, the (1) and (2.a/b) are duplicated.
-> 
-> (I didn't get response in my reply for [1] while I have to make patch to
-> solve this problem, so please correct me if my understanding is wrong.)
-> 
-> This patch adds a new notifier_block and MCE_PRIO_CXL, for CXL memdev
-> to check whether the current poison page has been reported (if yes,
-> stop the notifier chain, won't call the following memory_failure()
-> to report), into `x86_mce_decoder_chain`.  In this way, if the poison
-> page already handled(recorded and reported) in (1) or (2), the other one
-> won't duplicate the report.  The record could be clear when
-> cxl_clear_poison() is called.
-> 
-> [1] https://lore.kernel.org/linux-cxl/664d948fb86f0_e8be294f8@dwillia2-mobl3.amr.corp.intel.com.notmuch/
-> 
-> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+I'm mildly interested in what you were doing to trigger this. Certainly
+we could do with a guard in the model to prevent it, but I'm curious
+all the same.
+
+>=20
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
 > ---
->  arch/x86/include/asm/mce.h |   1 +
->  drivers/cxl/core/mbox.c    | 130 +++++++++++++++++++++++++++++++++++++
->  drivers/cxl/core/memdev.c  |   6 +-
->  drivers/cxl/cxlmem.h       |   3 +
->  4 files changed, 139 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/x86/include/asm/mce.h b/arch/x86/include/asm/mce.h
-> index dfd2e9699bd7..d8109c48e7d9 100644
-> --- a/arch/x86/include/asm/mce.h
-> +++ b/arch/x86/include/asm/mce.h
-> @@ -182,6 +182,7 @@ enum mce_notifier_prios {
->  	MCE_PRIO_NFIT,
->  	MCE_PRIO_EXTLOG,
->  	MCE_PRIO_UC,
-> +	MCE_PRIO_CXL,
->  	MCE_PRIO_EARLY,
->  	MCE_PRIO_CEC,
->  	MCE_PRIO_HIGHEST = MCE_PRIO_CEC
-> diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-> index 2626f3fff201..0eb3c5401e81 100644
-> --- a/drivers/cxl/core/mbox.c
-> +++ b/drivers/cxl/core/mbox.c
-> @@ -4,6 +4,8 @@
->  #include <linux/debugfs.h>
->  #include <linux/ktime.h>
->  #include <linux/mutex.h>
-> +#include <linux/notifier.h>
-> +#include <asm/mce.h>
->  #include <asm/unaligned.h>
->  #include <cxlpci.h>
->  #include <cxlmem.h>
-> @@ -880,6 +882,9 @@ void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
->  		if (cxlr)
->  			hpa = cxl_trace_hpa(cxlr, cxlmd, dpa);
->  
-> +		if (hpa != ULLONG_MAX && cxl_mce_recorded(hpa))
-> +			return;
-> +
->  		if (event_type == CXL_CPER_EVENT_GEN_MEDIA)
->  			trace_cxl_general_media(cxlmd, type, cxlr, hpa,
->  						&evt->gen_media);
-> @@ -1408,6 +1413,127 @@ int cxl_poison_state_init(struct cxl_memdev_state *mds)
->  }
->  EXPORT_SYMBOL_NS_GPL(cxl_poison_state_init, CXL);
->  
-> +struct cxl_mce_record {
-> +	struct list_head node;
-> +	u64 hpa;
-> +};
-> +LIST_HEAD(cxl_mce_records);
-> +DEFINE_MUTEX(cxl_mce_mutex);
-> +
-> +bool cxl_mce_recorded(u64 hpa)
-> +{
-> +	struct cxl_mce_record *cur, *next, *rec;
-> +	int rc;
-> +
-> +	rc = mutex_lock_interruptible(&cxl_mce_mutex);
-> +	if (rc)
-> +		return false;
-> +
-> +	list_for_each_entry_safe(cur, next, &cxl_mce_records, node) {
-> +		if (cur->hpa == hpa) {
-> +			mutex_unlock(&cxl_mce_mutex);
-> +			return true;
-> +		}
-> +	}
-> +
-> +	rec = kmalloc(sizeof(struct cxl_mce_record), GFP_KERNEL);
-> +	rec->hpa = hpa;
-> +	list_add(&cxl_mce_records, &rec->node);
-> +
-> +	mutex_unlock(&cxl_mce_mutex);
-> +
-> +	return false;
-> +}
-> +
-> +void cxl_mce_clear(u64 hpa)
-> +{
-> +	struct cxl_mce_record *cur, *next;
-> +	int rc;
-> +
-> +	rc = mutex_lock_interruptible(&cxl_mce_mutex);
-> +	if (rc)
-> +		return;
-> +
-> +	list_for_each_entry_safe(cur, next, &cxl_mce_records, node) {
-> +		if (cur->hpa == hpa) {
-> +			list_del(&cur->node);
-> +			break;
-> +		}
-> +	}
-> +
-> +	mutex_unlock(&cxl_mce_mutex);
-> +}
-> +
-> +struct cxl_contains_hpa_context {
-> +	bool contains;
-> +	u64 hpa;
-> +};
-> +
-> +static int __cxl_contains_hpa(struct device *dev, void *arg)
-> +{
-> +	struct cxl_contains_hpa_context *ctx = arg;
-> +	struct cxl_endpoint_decoder *cxled;
-> +	struct range *range;
-> +	u64 hpa = ctx->hpa;
-> +
-> +	if (!is_endpoint_decoder(dev))
-> +		return 0;
-> +
-> +	cxled = to_cxl_endpoint_decoder(dev);
-> +	range = &cxled->cxld.hpa_range;
-> +
-> +	if (range->start <= hpa && hpa <= range->end) {
-> +		ctx->contains = true;
-> +		return 1;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static bool cxl_contains_hpa(const struct cxl_memdev *cxlmd, u64 hpa)
-> +{
-> +	struct cxl_contains_hpa_context ctx = {
-> +		.contains = false,
-> +		.hpa = hpa,
-> +	};
-> +	struct cxl_port *port;
-> +
-> +	port = cxlmd->endpoint;
-> +	if (port && is_cxl_endpoint(port) && cxl_num_decoders_committed(port))
+>  hw/gpio/aspeed_gpio.c | 26 ++++++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
+>=20
+> diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
+> index c1781e2ba3..1441046f6c 100644
+> --- a/hw/gpio/aspeed_gpio.c
+> +++ b/hw/gpio/aspeed_gpio.c
+> @@ -550,6 +550,7 @@ static uint64_t aspeed_gpio_read(void *opaque, hwaddr=
+ offset, uint32_t size)
+>      GPIOSets *set;
+>      uint32_t value =3D 0;
+>      uint64_t debounce_value;
+> +    uint32_t reg_table_size;
+> =20
+>      idx =3D offset >> 2;
+>      if (idx >=3D GPIO_DEBOUNCE_TIME_1 && idx <=3D GPIO_DEBOUNCE_TIME_3) =
+{
+> @@ -559,6 +560,18 @@ static uint64_t aspeed_gpio_read(void *opaque, hwadd=
+r offset, uint32_t size)
+>          return debounce_value;
+>      }
+> =20
+> +    if (agc->reg_table =3D=3D aspeed_3_3v_gpios) {
+> +        reg_table_size =3D GPIO_3_3V_REG_ARRAY_SIZE;
+> +    } else {
+> +        reg_table_size =3D GPIO_1_8V_REG_ARRAY_SIZE;
+> +    }
 
-Maybe no need to check is_cxl_endpoint() if the port is retrieved from cxlmd->endpoint.
+I think I'd prefer we add reg_table_size as a member of AspeedGPIOClass
+and initialise it at the same time as we initialise reg_table. I feel
+it would help maintain safety in the face of future changes (i.e. if
+another reg table were introduced). With that approach the hunk above
+can be dropped.
 
-Also, in order to use cxl_num_decoders_committed(), cxl_region_rwsem must be held. See the lockdep_assert_held() in the function. Maybe add a
-guard(cxl_regoin_rwsem);
-before the if statement above.
+> +
+> +    if (idx >=3D reg_table_size) {
 
-DJ
+This condition would then become:
 
-> +		device_for_each_child(&port->dev, &ctx, __cxl_contains_hpa);
-> +
-> +	return ctx.contains;
-> +}
-> +
-> +static int cxl_handle_mce(struct notifier_block *nb, unsigned long val,
-> +			  void *data)
-> +{
-> +	struct mce *mce = (struct mce *)data;
-> +	struct cxl_memdev_state *mds = container_of(nb, struct cxl_memdev_state,
-> +						    mce_notifier);
-> +	u64 hpa;
-> +
-> +	if (!mce || !mce_usable_address(mce))
-> +		return NOTIFY_DONE;
-> +
-> +	hpa = mce->addr & MCI_ADDR_PHYSADDR;
-> +
-> +	/* Check if the PFN is located on this CXL device */
-> +	if (!pfn_valid(hpa >> PAGE_SHIFT) &&
-> +	    !cxl_contains_hpa(mds->cxlds.cxlmd, hpa))
-> +		return NOTIFY_DONE;
-> +
-> +	/*
-> +	 * Search PFN in the cxl_mce_records, if already exists, don't continue
-> +	 * to do memory_failure() to avoid a poison address being reported
-> +	 * more than once.
-> +	 */
-> +	if (cxl_mce_recorded(hpa))
-> +		return NOTIFY_STOP;
-> +	else
-> +		return NOTIFY_OK;
-> +}
-> +
->  struct cxl_memdev_state *cxl_memdev_state_create(struct device *dev)
->  {
->  	struct cxl_memdev_state *mds;
-> @@ -1427,6 +1553,10 @@ struct cxl_memdev_state *cxl_memdev_state_create(struct device *dev)
->  	mds->ram_perf.qos_class = CXL_QOS_CLASS_INVALID;
->  	mds->pmem_perf.qos_class = CXL_QOS_CLASS_INVALID;
->  
-> +	mds->mce_notifier.notifier_call = cxl_handle_mce;
-> +	mds->mce_notifier.priority = MCE_PRIO_CXL;
-> +	mce_register_decode_chain(&mds->mce_notifier);
-> +
->  	return mds;
->  }
->  EXPORT_SYMBOL_NS_GPL(cxl_memdev_state_create, CXL);
-> diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
-> index 0277726afd04..aa3ac89d17be 100644
-> --- a/drivers/cxl/core/memdev.c
-> +++ b/drivers/cxl/core/memdev.c
-> @@ -376,10 +376,14 @@ int cxl_clear_poison(struct cxl_memdev *cxlmd, u64 dpa)
->  		goto out;
->  
->  	cxlr = cxl_dpa_to_region(cxlmd, dpa);
-> -	if (cxlr)
-> +	if (cxlr) {
-> +		u64 hpa = cxl_trace_hpa(cxlr, cxlmd, dpa);
-> +
-> +		cxl_mce_clear(hpa);
->  		dev_warn_once(mds->cxlds.dev,
->  			      "poison clear dpa:%#llx region: %s\n", dpa,
->  			      dev_name(&cxlr->dev));
-> +	}
->  
->  	record = (struct cxl_poison_record) {
->  		.address = cpu_to_le64(dpa),
-> diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
-> index 19aba81cdf13..fbf8d9f46984 100644
-> --- a/drivers/cxl/cxlmem.h
-> +++ b/drivers/cxl/cxlmem.h
-> @@ -501,6 +501,7 @@ struct cxl_memdev_state {
->  	struct cxl_fw_state fw;
->  
->  	struct rcuwait mbox_wait;
-> +	struct notifier_block mce_notifier;
->  	int (*mbox_send)(struct cxl_memdev_state *mds,
->  			 struct cxl_mbox_cmd *cmd);
->  };
-> @@ -836,6 +837,8 @@ int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
->  int cxl_trigger_poison_list(struct cxl_memdev *cxlmd);
->  int cxl_inject_poison(struct cxl_memdev *cxlmd, u64 dpa);
->  int cxl_clear_poison(struct cxl_memdev *cxlmd, u64 dpa);
-> +bool cxl_mce_recorded(u64 pfn);
-> +void cxl_mce_clear(u64 pfn);
->  
->  #ifdef CONFIG_CXL_SUSPEND
->  void cxl_mem_active_inc(void);
+```
+if (idx >=3D agc->reg_table_size) {
+```
+
+Thoughts?
+
+Andrew
 
