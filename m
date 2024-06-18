@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94508C2BA18
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E6FC41513
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:09:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbNA-0004mU-Ps; Tue, 18 Jun 2024 12:07:52 -0400
+	id 1sJbHT-0004N5-SC; Tue, 18 Jun 2024 12:01:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbN9-0004ir-Au
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:07:51 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbHR-0004Gz-7I
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:01:57 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbN7-00082d-Dq
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:07:50 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2eaae2a6dc1so98808041fa.0
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:07:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbHO-0006um-O7
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:01:56 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-57a44c2ce80so6726733a12.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:01:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726867; x=1719331667; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726512; x=1719331312; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hgUnXKkoM7jtlbKnZKLo4tSSRCpVvLzL3fhZptpwhrQ=;
- b=qlzVBCzeNWM3z10jbymipWUzLbHCgfifZ/FNHa3JPNYy1YBOeerfO0Dsr/ZzxWJ+s1
- fZrf6xqe0fCQjBSXKFLAF1uK8X8eP+xQht6GKi1VP1j0r0aNmDzWURSZi1wfAoPhMmjk
- Mcg65UXs7Zm0DIIt1RINE3vLc0ey/Pgi8IBNzu8DYl6AQfWlYellXvRDn7HsNbYfElpG
- 2hFF6Q5Lb5Mdwj7Zi3VowJIjnAo/7NvGLpEpiohg+SSSFlo3wCWmZbjwPGiA+EhGYYmd
- M2exSL6FeGqQrJ6dxMu4Ybi/6q2rALaD4dIFKw1EckdGCWPUfQIxf81kRw0PN4h+BTSz
- 0aFQ==
+ bh=8FeF7HG1jBJoN+fgafsrLpLmoyytTa1LuFpsp6SO8ew=;
+ b=K5aw73PqCE3xWf9JyOfJRdV0uLMfNpEpYjvOLTuenXN7HD5LqCqOPRzk84MZx4ot8d
+ MaoAjeGnhpg0o2cvNLgEvy4qle5GXcALR/xbUdoRq9PnAEKMMhONZFpOq1Em23077jeZ
+ CG0dBYXQHRJIlY7Sg5NMyQo+rrC1p7NW+4CG6NngjeIVtPMOf8QQY6iCudciq3VLx6wS
+ +D00sha03xEljK4l+dOwjDahv9uJ2DiyclhzASac3WBvp0rbSOmeqP8HUCnp6I0sV7Do
+ 0LSN7khRQ/cDl0VRGsRE/OWQUmcjr0sC6c0yj45nSZ0IduTXJvdUFAK9c2uSsWvj3294
+ jKcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726867; x=1719331667;
+ d=1e100.net; s=20230601; t=1718726512; x=1719331312;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hgUnXKkoM7jtlbKnZKLo4tSSRCpVvLzL3fhZptpwhrQ=;
- b=XR5m8EJChQT3VYGyJjoxI1rBOuEH/v5QOgQj8mxh/454swanQOuAXF/+SfYygbCuQ5
- 18yj39Hon7/wMsB4zPfoti+uvUQCc0LQm4or4ReKv3b1IjxeW1P3N69IH1sFez/jp1UL
- eMG4n5zfJOzbUppsqXQHDOU5EXvyeoIyCfqKtXBRBLlx6jPNiM7703LFQTN5ExA3rkJD
- 918fKUilMJXRLscWI2+zl/YWWteYC/Pebt6dKbqFpgbAlgBVV6xzmWNIszs5y3LT513n
- iIJrinRKyTtdaO0RH2yVPVqwydmzhFFDeO9LYVfEA4UQ2qrT1HBDPMQpNczNeTciq5ou
- ASUg==
-X-Gm-Message-State: AOJu0YyoFuJng5XxFZIqKu5UsZK/p4/yFBZk8TsP54RiZjlsycXLw6BD
- 75/JFqxqSU+vdoz1tmo6E32MEvbuewGCQnOIVMR3wRFD3J3LC5JZHx/ba+B0wwg35LptVqX6Htl
- o
-X-Google-Smtp-Source: AGHT+IFoeIkxTwCxnVKltMzFdkLcbzr2PUSrlz6Mj1FvmWspmk7UJOEdPm6PsWgufO8vIz6EfT1lGQ==
-X-Received: by 2002:a2e:7814:0:b0:2eb:f365:8751 with SMTP id
- 38308e7fff4ca-2ec3ced1e1fmr2599821fa.31.1718726867397; 
- Tue, 18 Jun 2024 09:07:47 -0700 (PDT)
+ bh=8FeF7HG1jBJoN+fgafsrLpLmoyytTa1LuFpsp6SO8ew=;
+ b=i0S+685bo0qcvLngY101aAySC1e1l/hgmXrFcbAiirkhMwawKOU3dUaa8E0for5EYk
+ H1IEL0C/HsMfYT7xcQN2YZlUNSL5sKCzmyNIAmVllnaTugZJ/w9HDcmQ+N5d0zq0XIqH
+ m54K5KuBGOXg7lckbVIkemMTFI5ED6GqeyFabe21HL4iWA8SI1ApEsuPKJOGvmhcW/UF
+ 8OXpRJdXPAh06ktTDb+GOsLk72nuxDb4yU2a9Xl/Q/HcGTemOCgRYUAZ3o1aFVwFUrFc
+ 3bBLx271jpGaoykV+ENzrSyX/CI2oOllir+UrVS5yt2faUO4Zt1hYvxneE6afX3xi8Zw
+ Digg==
+X-Gm-Message-State: AOJu0YwOIuHzoY65lhl0uzTT4KiXgLS27h5QVGb9tfG5dUwR2Wyct/Zj
+ IhJcmj01nhKDTYmWY61JBzQpu2FLs5Ankfn0TR1oNDeWRMksUgtw97007DlM3XSJ4VlKOUPmm09
+ A
+X-Google-Smtp-Source: AGHT+IFm2Hk0qyf4cDdlcXryswae7t+8wBtK0Hzqu0SjxkzbP927WTJgZUnmlXLKWHJfPzuV0S4HUA==
+X-Received: by 2002:a50:d75a:0:b0:57c:6f1d:1926 with SMTP id
+ 4fb4d7f45d1cf-57cbd68f814mr8980753a12.22.1718726512425; 
+ Tue, 18 Jun 2024 09:01:52 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422f6320b11sm193452445e9.29.2024.06.18.09.07.46
+ 4fb4d7f45d1cf-57cb72cdfd0sm7894027a12.5.2024.06.18.09.01.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:07:46 -0700 (PDT)
+ Tue, 18 Jun 2024 09:01:52 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-stable@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 74/76] stdvga: fix screen blanking
-Date: Tue, 18 Jun 2024 18:00:36 +0200
-Message-ID: <20240618160039.36108-75-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL 12/76] hw/smbios: Remove 'smbios_uuid_encoded',
+ simplify smbios_encode_uuid()
+Date: Tue, 18 Jun 2024 17:59:34 +0200
+Message-ID: <20240618160039.36108-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,42 +95,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+'smbios_encode_uuid' is always true, remove it,
+simplifying smbios_encode_uuid().
 
-In case the display surface uses a shared buffer (i.e. uses vga vram
-directly instead of a shadow) go unshare the buffer before clearing it.
-
-This avoids vga memory corruption, which in turn fixes unblanking not
-working properly with X11.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2067
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20240605131444.797896-2-kraxel@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240617071118.60464-13-philmd@linaro.org>
 ---
- hw/display/vga.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/smbios/smbios.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index 30facc6c8e..be2b19b839 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -1762,6 +1762,13 @@ static void vga_draw_blank(VGACommonState *s, int full_update)
-     if (s->last_scr_width <= 0 || s->last_scr_height <= 0)
-         return;
+diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+index 8261eb716f..3b7703489d 100644
+--- a/hw/smbios/smbios.c
++++ b/hw/smbios/smbios.c
+@@ -30,7 +30,6 @@
+ #include "hw/pci/pci_device.h"
+ #include "smbios_build.h"
  
-+    if (is_buffer_shared(surface)) {
-+        /* unshare buffer, otherwise the blanking corrupts vga vram */
-+        surface = qemu_create_displaysurface(s->last_scr_width,
-+                                             s->last_scr_height);
-+        dpy_gfx_replace_surface(s->con, surface);
-+    }
-+
-     w = s->last_scr_width * surface_bytes_per_pixel(surface);
-     d = surface_data(surface);
-     for(i = 0; i < s->last_scr_height; i++) {
+-static const bool smbios_uuid_encoded = true;
+ /*
+  * SMBIOS tables provided by user with '-smbios file=<foo>' option
+  */
+@@ -600,11 +599,9 @@ static void smbios_build_type_0_table(void)
+ static void smbios_encode_uuid(struct smbios_uuid *uuid, QemuUUID *in)
+ {
+     memcpy(uuid, in, 16);
+-    if (smbios_uuid_encoded) {
+-        uuid->time_low = bswap32(uuid->time_low);
+-        uuid->time_mid = bswap16(uuid->time_mid);
+-        uuid->time_hi_and_version = bswap16(uuid->time_hi_and_version);
+-    }
++    uuid->time_low = bswap32(uuid->time_low);
++    uuid->time_mid = bswap16(uuid->time_mid);
++    uuid->time_hi_and_version = bswap16(uuid->time_hi_and_version);
+ }
+ 
+ static void smbios_build_type_1_table(void)
 -- 
 2.41.0
 
