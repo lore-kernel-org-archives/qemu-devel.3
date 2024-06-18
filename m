@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0306C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 20:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3883C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 20:35:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJfUz-0003zA-6m; Tue, 18 Jun 2024 16:32:13 -0400
+	id 1sJfXV-00053t-Jd; Tue, 18 Jun 2024 16:34:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJfUy-0003z0-5x
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 16:32:12 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJfUw-0003j4-Ee
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 16:32:11 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1f480624d0dso46836195ad.1
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 13:32:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718742729; x=1719347529; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1gnJIKkeYeE59GCBknJMToqb41XXegygF9Kpwwxv6IQ=;
- b=y9nY4SKQOYr/ycvhNHSuymTaLUn1gKMgQ6aj5zrEWlLxiovDeY/UFb9KFp38FoPPWm
- FCeZ54FEZkAL6PeQw2EahYpW6JzWhP2f5C0QclJhXTkIHKnsnHJpuPcPf+PY1evIGu4v
- DZ+J29+QMS98nCIVpuPgfTRq8YmVKvpNpEFDV7GIwUxrrLeTdVPQw9w+ZXWi08XJZ8Ez
- s70JrnX+1ZjMKpqRBGqz43SpqsborQDoliuJUp4a8IpaN2U52sOnnhcpgjfISNbYecew
- xBK8vNoSdv1bHKkCvr443AM8xWPs1vfayHqeT7mrPKXjI0sW+ncYyvJRTnUZmOBmbnVM
- D5yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718742729; x=1719347529;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1gnJIKkeYeE59GCBknJMToqb41XXegygF9Kpwwxv6IQ=;
- b=u2aZ2r4rRrhZJxHwf2rqvLm7SjG/DwDBUZwMpzmiagRv4mlhQWJBMnRDuIIxCdZkpo
- fMXm1fRWcCBKFLOz+Hn2bDL3UV1i9cqm77exzqlrAKYPlZTKxzpUBNGs9MGWpCS3Ruid
- wb2E+ZqVC7DWi4VjjGUo9Rhi0CoctE5+rWu7ApmAFRRhIwlY7x6HtKrDy7b0WyaSqMzP
- awIDvzY+/4QXKPS5pZuCd+kg0ocrIsVbhMwp0w/M3PVWHGR6ZpFSD+BeWTjjAgbKKEJ/
- +umcL/j26lwkZspkNE6rivyq2o4TB+fMFNmEOmyk8n83TEjHUKa/N8qNNbLpjp3RPyv4
- S8fw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWWMYbA55Wpfe9TSCAIrpoGFOUr0r1zzua2qTlsb2poJGB0xtHarU79Gm8QJU91hCn+K97nR9CshcQAaT3o8/0z4S56w1k=
-X-Gm-Message-State: AOJu0Yz0iiSNW31JyjN1cFkuOj8beRh00yXJIHNTP14DhriTwcQa+ghK
- WrMaaJ8nF2H0no5XsyelDmoA9fnXNAthUW0by+032uI1d91RzKIy7ysM4KDnL08=
-X-Google-Smtp-Source: AGHT+IEh69eUzk46VwWXixKTdyh41RRrOayr00Hf905U7XYaZq13J45lJziFR9swn9BB7vH9Hd7FPg==
-X-Received: by 2002:a17:903:249:b0:1f8:55dd:3c44 with SMTP id
- d9443c01a7336-1f9aa47156cmr8411255ad.61.1718742728571; 
- Tue, 18 Jun 2024 13:32:08 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.132.216])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855e70b52sm102120905ad.88.2024.06.18.13.32.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 13:32:08 -0700 (PDT)
-Message-ID: <68014035-47e7-48b4-b11b-83b219f4ef63@linaro.org>
-Date: Tue, 18 Jun 2024 13:32:06 -0700
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sJfXU-00053a-LW
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 16:34:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sJfXS-0003x9-Br
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 16:34:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718742882;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MUZfC/EpQ789z9/C2pcug55GL9wfL842JnnCXv695Lg=;
+ b=RysnfdRtMMImuUAg9//i0n6GuS+fvF+Tog78cKcpUd4nd3eGJYEBDKbTvjOLl9RVxd/IMV
+ qNJoTTGaAuO2k77OpOSQzHs5o7s07psr3295dXUtDhH9xJsL6Iv9CmVG6djoUbLY37iKSI
+ BJhUpsoKgXFKIHrjSLEeLQQmFybq3Fs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-wfcHsibdMEqgj9NWaCQbjg-1; Tue,
+ 18 Jun 2024 16:34:39 -0400
+X-MC-Unique: wfcHsibdMEqgj9NWaCQbjg-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C449A19560B2; Tue, 18 Jun 2024 20:34:37 +0000 (UTC)
+Received: from localhost (unknown [10.39.192.119])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8F6613000605; Tue, 18 Jun 2024 20:34:35 +0000 (UTC)
+Date: Tue, 18 Jun 2024 16:34:33 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org,
+ peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [RFC PATCH] migration/savevm: do not schedule
+ snapshot_save_job_bh in qemu_aio_context
+Message-ID: <20240618203433.GA29065@fedora.redhat.com>
+References: <20240605120848.358654-1-f.ebner@proxmox.com>
+ <20240606183638.GC198201@fedora.redhat.com>
+ <6d64f07d-1638-44dc-848b-b307c0ebd0ad@proxmox.com>
+ <20240611140449.GA366375@fedora.redhat.com>
+ <08689bad-80f3-4cc1-bdd9-39df04b40d89@proxmox.com>
+ <CAJSP0QUJ2dsAgMaoesTSF7Ni+EPQsCxzOavTvU0sgj7h+7vkQg@mail.gmail.com>
+ <1975e2c1-6c66-4249-8380-219b5f1c0ef2@proxmox.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/76] Misc patches for 2024-06-18
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20240618160039.36108-1-philmd@linaro.org>
- <5ae93d7c-0fd2-4ead-b903-6b5838e0c24b@linaro.org>
- <6dfa4bb0-e4c5-46c9-93e5-d30f3a26592a@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <6dfa4bb0-e4c5-46c9-93e5-d30f3a26592a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="tWaPEFnS8EZ1k7Jm"
+Content-Disposition: inline
+In-Reply-To: <1975e2c1-6c66-4249-8380-219b5f1c0ef2@proxmox.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,66 +92,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/18/24 13:15, Philippe Mathieu-Daudé wrote:
-> On 18/6/24 22:06, Richard Henderson wrote:
->> On 6/18/24 08:59, Philippe Mathieu-Daudé wrote:
->>> The following changes since commit 900536d3e97aed7fdd9cb4dadd3bf7023360e819:
->>>
->>>    Merge tag 'dirtylimit-dirtyrate-pull-request-20240617' 
->>> ofhttps://github.com/newfriday/qemu  into staging (2024-06-17 11:40:24 -0700)
->>>
->>> are available in the Git repository at:
->>>
->>>    https://github.com/philmd/qemu.git  tags/misc-20240618
->>>
->>> for you to fetch changes up to 02ad1f5b04bf2941852f405c87535307365f7041:
->>>
->>>    ui+display: rename is_buffer_shared() -> surface_is_allocated() (2024-06-18 17:54:40 
->>> +0200)
->>>
->>> Spurious warning (3 times):
->>>
->>>   WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
->>>
->>> Deliberately ignored in ui/ (also 3 times):
->>>
->>>    WARNING: line over 80 characters
->>>
->>> ----------------------------------------------------------------
->>> Misc patches queue
->>>
->>> . Remove deprecated pc-i440fx-2.0 -> 2.3 machines (Phil)
->>> . Always use little endian audio format in virtio-snd (Phil)
->>> . Avoid using Monitor in INTERRUPT_STATS_PROVIDER::print_info (Phil)
->>> . Introduce x-query-interrupt-controllers QMP command (Phil)
->>> . Introduce pnv_chip_foreach_cpu() to remove one CPU_FOREACH use (Cédric)
->>> . Set arm_v7m_tcg_ops::cpu_exec_halt & mandate TCGCPUOps::cpu_exec_halt (Peter)
->>> . Constify few uses of IOMMUTLBEvent (Phil)
->>> . Wire loongson_ipi device to loongson3_virt/TCG (Jiaxun)
->>> . Fix inclusion of tracing headers on s390x/TCG (Phil)
->>> . Add few shortcuts missing to readline (Manos)
->>> . Update ui/display entries in MAINTAINERS (Gerd)
->>> . Use qemu_add_mouse_change_notifier on Cocoa (Akihiko)
->>> . Fix Standard VGA screen blanking and cleanups (Gerd)
->>> . Fix USB/MTP reported "free space" value (Fabio)
->>
->> Fails testing:
->>
->> https://gitlab.com/qemu-project/qemu/-/jobs/7129004955
->>
->> qemu-system-tricore: ../accel/tcg/cpu-exec.c:1082: tcg_exec_realizefn: Assertion 
->> `cpu->cc->tcg_ops->cpu_exec_halt' failed.
-> 
-> Doh sorry, I tested but hit a libusb issue on this target and mingw64,
-> tested there and thought this was the only issue and missed that.
-> 
-> Hmm cpu_has_work() is defined inlined. I'll just drop the 3 lines
-> I added to Peter's patch and send his unmodified.
 
-No, the assert is exactly correct, and caught a bug in the previous patch (55/76).
-Without your assert, we will just SEGV in cpu_handle_halt instead with patch (56/76).
+--tWaPEFnS8EZ1k7Jm
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Fri, Jun 14, 2024 at 11:29:13AM +0200, Fiona Ebner wrote:
+> Am 12.06.24 um 17:34 schrieb Stefan Hajnoczi:
+> >=20
+> > Thank you for investigating! It looks like we would be trading one
+> > issue (the assertion failures you mentioned) for another (a rare, but
+> > possible, hang).
+> >=20
+> > I'm not sure what the best solution is. It seems like vm_stop() is the
+> > first place where things go awry. It's where we should exit device
+> > emulation code. Doing that probably requires an asynchronous API that
+> > takes a callback. Do you want to try that?
+> >=20
+>=20
+> I can try, but I'm afraid it will be a while (at least a few weeks)
+> until I can get around to it.
 
-r~
+I am wrapping current work up and then going on vacation at the end of
+June until mid-July. I'll let you know if I get a chance to look at it
+when I'm back.
+
+Stefan
+
+--tWaPEFnS8EZ1k7Jm
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZx71gACgkQnKSrs4Gr
+c8haAggAqKPTY9aABkaym7Vluvtm1jmXw7x51KR4Pdg1oJ63EBNYZ6j8Lh3UBS84
+1cUaVfFTaUa00OlX4QyuUOzjOf0cUjbP3NJuUL+IPbHChaIemeaFAClHFpEiUmUC
+bQk0BrhQeSfgYQN2PMriclXPUnA7aJq9SMxP44hVzHG349DByEbP8n3whhDC/msn
+/4DuazXX2pEnKhMUYpIRBDfJqU6VMPNlb3k7QfN2vCvDczCS3HsJ1HIS2zqV6763
+7ZotgL51i7IJaL7/xZteJhw8MBJvQZ/cU2rxwe9sSEn/kMh2VfEp0qPAhNm1+DX/
+l4hZkEahT8dSabfGkd0KirFyFRP4EA==
+=g02L
+-----END PGP SIGNATURE-----
+
+--tWaPEFnS8EZ1k7Jm--
 
 
