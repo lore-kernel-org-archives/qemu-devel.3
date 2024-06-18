@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA0BC2BA18
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9045C27C4F
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:13:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbSQ-0002q0-2K; Tue, 18 Jun 2024 12:13:18 -0400
+	id 1sJbSh-0003Q6-Uo; Tue, 18 Jun 2024 12:13:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sJbSO-0002ml-N3
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:13:16 -0400
+ id 1sJbSg-0003Jt-Hj
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:13:35 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sJbSN-0000ou-6L
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:13:16 -0400
+ id 1sJbSe-0000rs-RP
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:13:34 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1sJbS1-0001aT-BC; Tue, 18 Jun 2024 18:12:53 +0200
+ id 1sJbSR-0001c1-PX; Tue, 18 Jun 2024 18:13:19 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,10 +33,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v1 01/13] vfio/migration: Add save_{iterate,
- complete_precopy}_started trace events
-Date: Tue, 18 Jun 2024 18:12:19 +0200
-Message-ID: <8a5b0ed0530bfbecdc1a1a908da7dd7b2eb2687a.1718717584.git.maciej.szmigiero@oracle.com>
+Subject: [PATCH v1 06/13] migration: Add load_finish handler and associated
+ functions
+Date: Tue, 18 Jun 2024 18:12:24 +0200
+Message-ID: <659b661eef5e9dc47f06dc7a945c2195e936a441.1718717584.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <cover.1718717584.git.maciej.szmigiero@oracle.com>
 References: <cover.1718717584.git.maciej.szmigiero@oracle.com>
@@ -66,88 +66,174 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-This way both the start and end points of migrating a particular VFIO
-device are known.
+load_finish SaveVMHandler allows migration code to poll whether
+a device-specific asynchronous device state loading operation had finished.
 
-Add also a vfio_save_iterate_empty_hit trace event so it is known when
-there's no more data to send for that device.
+In order to avoid calling this handler needlessly the device is supposed
+to notify the migration code of its possible readiness via a call to
+qemu_loadvm_load_finish_ready_broadcast() while holding
+qemu_loadvm_load_finish_ready_lock.
 
 Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 ---
- hw/vfio/migration.c           | 13 +++++++++++++
- hw/vfio/trace-events          |  3 +++
- include/hw/vfio/vfio-common.h |  3 +++
- 3 files changed, 19 insertions(+)
+ include/migration/register.h | 21 +++++++++++++++
+ migration/migration.c        |  6 +++++
+ migration/migration.h        |  3 +++
+ migration/savevm.c           | 52 ++++++++++++++++++++++++++++++++++++
+ migration/savevm.h           |  4 +++
+ 5 files changed, 86 insertions(+)
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 34d4be2ce1b1..93f767e3c2dd 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -472,6 +472,9 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
-         return -ENOMEM;
+diff --git a/include/migration/register.h b/include/migration/register.h
+index ce7641c90cea..7c20a9fb86ff 100644
+--- a/include/migration/register.h
++++ b/include/migration/register.h
+@@ -276,6 +276,27 @@ typedef struct SaveVMHandlers {
+     int (*load_state_buffer)(void *opaque, char *data, size_t data_size,
+                              Error **errp);
+ 
++    /**
++     * @load_finish
++     *
++     * Poll whether all asynchronous device state loading had finished.
++     * Not called on the load failure path.
++     *
++     * Called while holding the qemu_loadvm_load_finish_ready_lock.
++     *
++     * If this method signals "not ready" then it might not be called
++     * again until qemu_loadvm_load_finish_ready_broadcast() is invoked
++     * while holding qemu_loadvm_load_finish_ready_lock.
++     *
++     * @opaque: data pointer passed to register_savevm_live()
++     * @is_finished: whether the loading had finished (output parameter)
++     * @errp: pointer to Error*, to store an error if it happens.
++     *
++     * Returns zero to indicate success and negative for error
++     * It's not an error that the loading still hasn't finished.
++     */
++    int (*load_finish)(void *opaque, bool *is_finished, Error **errp);
++
+     /**
+      * @load_setup
+      *
+diff --git a/migration/migration.c b/migration/migration.c
+index e1b269624c01..ff149e00132f 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -236,6 +236,9 @@ void migration_object_init(void)
+ 
+     current_incoming->exit_on_error = INMIGRATE_DEFAULT_EXIT_ON_ERROR;
+ 
++    qemu_mutex_init(&current_incoming->load_finish_ready_mutex);
++    qemu_cond_init(&current_incoming->load_finish_ready_cond);
++
+     migration_object_check(current_migration, &error_fatal);
+ 
+     ram_mig_init();
+@@ -387,6 +390,9 @@ void migration_incoming_state_destroy(void)
+         mis->postcopy_qemufile_dst = NULL;
      }
  
-+    migration->save_iterate_run = false;
-+    migration->save_iterate_empty_hit = false;
++    qemu_mutex_destroy(&mis->load_finish_ready_mutex);
++    qemu_cond_destroy(&mis->load_finish_ready_cond);
 +
-     if (vfio_precopy_supported(vbasedev)) {
-         switch (migration->device_state) {
-         case VFIO_DEVICE_STATE_RUNNING:
-@@ -605,9 +608,17 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
-     VFIOMigration *migration = vbasedev->migration;
-     ssize_t data_size;
+     yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+ }
  
-+    if (!migration->save_iterate_run) {
-+        trace_vfio_save_iterate_started(vbasedev->name);
-+        migration->save_iterate_run = true;
+diff --git a/migration/migration.h b/migration/migration.h
+index 6af01362d424..0f2716ac42c6 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -230,6 +230,9 @@ struct MigrationIncomingState {
+ 
+     /* Do exit on incoming migration failure */
+     bool exit_on_error;
++
++    QemuCond load_finish_ready_cond;
++    QemuMutex load_finish_ready_mutex;
+ };
+ 
+ MigrationIncomingState *migration_incoming_get_current(void);
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 2e538cb02936..46cfb73eae79 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -3020,6 +3020,37 @@ int qemu_loadvm_state(QEMUFile *f)
+         return ret;
+     }
+ 
++    qemu_loadvm_load_finish_ready_lock();
++    while (!ret) { /* Don't call load_finish() handlers on the load failure path */
++        bool all_ready = true;
++        SaveStateEntry *se = NULL;
++
++        QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
++            bool this_ready;
++
++            if (!se->ops || !se->ops->load_finish) {
++                continue;
++            }
++
++            ret = se->ops->load_finish(se->opaque, &this_ready, &local_err);
++            if (ret) {
++                error_report_err(local_err);
++
++                qemu_loadvm_load_finish_ready_unlock();
++                return -EINVAL;
++            } else if (!this_ready) {
++                all_ready = false;
++            }
++        }
++
++        if (all_ready) {
++            break;
++        }
++
++        qemu_cond_wait(&mis->load_finish_ready_cond, &mis->load_finish_ready_mutex);
 +    }
++    qemu_loadvm_load_finish_ready_unlock();
 +
-     data_size = vfio_save_block(f, migration);
-     if (data_size < 0) {
-         return data_size;
-+    } else if (data_size == 0 && !migration->save_iterate_empty_hit) {
-+        trace_vfio_save_iterate_empty_hit(vbasedev->name);
-+        migration->save_iterate_empty_hit = true;
+     if (ret == 0) {
+         ret = qemu_file_get_error(f);
      }
+@@ -3124,6 +3155,27 @@ int qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
+     return 0;
+ }
  
-     vfio_update_estimated_pending_data(migration, data_size);
-@@ -633,6 +644,8 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
-     int ret;
-     Error *local_err = NULL;
- 
-+    trace_vfio_save_complete_precopy_started(vbasedev->name);
++void qemu_loadvm_load_finish_ready_lock(void)
++{
++    MigrationIncomingState *mis = migration_incoming_get_current();
 +
-     /* We reach here with device state STOP or STOP_COPY only */
-     ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
-                                    VFIO_DEVICE_STATE_STOP, &local_err);
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 64161bf6f44c..814000796687 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -158,8 +158,11 @@ vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
- vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
- vfio_save_cleanup(const char *name) " (%s)"
- vfio_save_complete_precopy(const char *name, int ret) " (%s) ret %d"
-+vfio_save_complete_precopy_started(const char *name) " (%s)"
- vfio_save_device_config_state(const char *name) " (%s)"
- vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size 0x%"PRIx64" precopy dirty size 0x%"PRIx64
-+vfio_save_iterate_started(const char *name) " (%s)"
-+vfio_save_iterate_empty_hit(const char *name) " (%s)"
- vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer size 0x%"PRIx64
- vfio_state_pending_estimate(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy 0x%"PRIx64" postcopy 0x%"PRIx64" precopy initial size 0x%"PRIx64" precopy dirty size 0x%"PRIx64
- vfio_state_pending_exact(const char *name, uint64_t precopy, uint64_t postcopy, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy 0x%"PRIx64" postcopy 0x%"PRIx64" stopcopy size 0x%"PRIx64" precopy initial size 0x%"PRIx64" precopy dirty size 0x%"PRIx64
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 4cb1ab8645dc..510818f4dae3 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -71,6 +71,9 @@ typedef struct VFIOMigration {
-     uint64_t precopy_init_size;
-     uint64_t precopy_dirty_size;
-     bool initial_data_sent;
++    qemu_mutex_lock(&mis->load_finish_ready_mutex);
++}
 +
-+    bool save_iterate_run;
-+    bool save_iterate_empty_hit;
- } VFIOMigration;
++void qemu_loadvm_load_finish_ready_unlock(void)
++{
++    MigrationIncomingState *mis = migration_incoming_get_current();
++
++    qemu_mutex_unlock(&mis->load_finish_ready_mutex);
++}
++
++void qemu_loadvm_load_finish_ready_broadcast(void)
++{
++    MigrationIncomingState *mis = migration_incoming_get_current();
++
++    qemu_cond_broadcast(&mis->load_finish_ready_cond);
++}
++
+ bool save_snapshot(const char *name, bool overwrite, const char *vmstate,
+                   bool has_devices, strList *devices, Error **errp)
+ {
+diff --git a/migration/savevm.h b/migration/savevm.h
+index d388f1bfca98..69ae22cded7a 100644
+--- a/migration/savevm.h
++++ b/migration/savevm.h
+@@ -73,4 +73,8 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
+ int qemu_loadvm_load_state_buffer(const char *idstr, uint32_t instance_id,
+                                   char *buf, size_t len, Error **errp);
  
- struct VFIOGroup;
++void qemu_loadvm_load_finish_ready_lock(void);
++void qemu_loadvm_load_finish_ready_unlock(void);
++void qemu_loadvm_load_finish_ready_broadcast(void);
++
+ #endif
 
