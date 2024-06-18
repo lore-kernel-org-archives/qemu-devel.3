@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DAF9C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 09:00:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58391C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 09:14:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJUgV-0004rE-2Q; Tue, 18 Jun 2024 04:59:23 -0400
+	id 1sJUub-0004Dt-AV; Tue, 18 Jun 2024 05:13:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1sJUgS-0004ol-Ky; Tue, 18 Jun 2024 04:59:20 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sJUuZ-0004DZ-Qb
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 05:13:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1sJUgQ-0006kU-Uf; Tue, 18 Jun 2024 04:59:20 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45I8rmSY010165;
- Tue, 18 Jun 2024 08:58:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:content-transfer-encoding
- :mime-version; s=pp1; bh=mqTT+Ygafz8WcBnb2Ws2WlXTOOUtu0UYbjikxtk
- mGOk=; b=FJw2juGXyXRWrV3ql7v5Aau1A31YFRjEi0XGNDg3ZrlPIFZbquAqbQ5
- OjiUvhjRnKXySjTVMCPO+PEJF+7nERNoPIk/0lYh7ajQS0fAKFeITvdc+Fn1MMrq
- 8JF7hKp9L5wH+B8/0zrT6noVRRJjO+f3r+QYXEZ6LBW0sCM1inpQeQsIk9HR43fa
- 2eZUHs8HKTvFVvEi0qWLWJt0cFF8QAqvDbgUXie/FeYeOWmkL3sArSTRUMLKVQ9I
- 20UjvsAEg7tbjG0MSYvnsajfawdpisn9Vi3AZQGqwqBgnR/EDjtJyisGfdZNpRyl
- 0LV+ROS1tkU5glBu9K/vsWqACkgWw6Q==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu5vp08bt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Jun 2024 08:58:47 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45I8wleQ017828;
- Tue, 18 Jun 2024 08:58:47 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu5vp08bq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Jun 2024 08:58:47 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45I78iwQ023963; Tue, 18 Jun 2024 08:58:44 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ysp9q1e87-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Jun 2024 08:58:44 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45I8we1929885120
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Jun 2024 08:58:42 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CD1FA20040;
- Tue, 18 Jun 2024 08:58:40 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8EF6A2004B;
- Tue, 18 Jun 2024 08:58:39 +0000 (GMT)
-Received: from localhost.in.ibm.com (unknown [9.199.192.140])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 18 Jun 2024 08:58:39 +0000 (GMT)
-From: Chinmay Rath <rathc@linux.ibm.com>
-To: qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- richard.henderson@linaro.org, harshpb@linux.ibm.com
-Subject: [PATCH v3 0/4] target/ppc: Move VSX storage access and compare
-Date: Tue, 18 Jun 2024 14:28:27 +0530
-Message-Id: <20240618085831.546883-1-rathc@linux.ibm.com>
-X-Mailer: git-send-email 2.39.3
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: PjoTVZ1gESPuTRrWOKaFY12mlQDcWPY2
-X-Proofpoint-GUID: LXSu_7G3ixMX1p2UnESPLdyJJmKAgtDA
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sJUuX-00014B-Py
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 05:13:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718702031;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1H6lE8KDibPeGH8jYhuoxR4LSDKFNZRT91yudZ5bMXI=;
+ b=Z+4MZjNrZjqF1t4p7IdgC5XWEih6BnKaaw80vwUamIY+HN5BGT+faGpNybJKYdBKBktL2T
+ NE+vWUY5PZAkGP26+1FnXmQz6FobYlkaLx2iILzODZXlE7pessH0YrrpcQfvFbaRal6ObA
+ TE4ua1P7OpNnyyLtUoUamR3Q5keifXk=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-gaKHXr7jM9CZCOlj2QDNMA-1; Tue,
+ 18 Jun 2024 05:13:48 -0400
+X-MC-Unique: gaKHXr7jM9CZCOlj2QDNMA-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 77518195609F; Tue, 18 Jun 2024 09:13:46 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.57])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 77AEE19560B2; Tue, 18 Jun 2024 09:13:41 +0000 (UTC)
+Date: Tue, 18 Jun 2024 10:13:38 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?B?QmVubsOp?= e <alex.bennee@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
+Message-ID: <ZnFPwinlmxpgH3mV@redhat.com>
+References: <ezjl0.qx0tmsp6d6t@linaro.org>
+ <CABgObfbGwKc0RYBcDPzNkE8HOSouFj4D15Oh7TuiKOC+D7raaA@mail.gmail.com>
+ <ZmqcFf0xB9m4WkA3@redhat.com>
+ <CABgObfb4+FSsadFTVg6Dc1zehQV2Vei2_kSRd5CfxsGBLPN6Eg@mail.gmail.com>
+ <Zmq47yQV-sQ0hGMy@redhat.com>
+ <CABgObfYaxBxc8GS3=YU=EwNLEihEoD4ikZ595P4m_KTZCAAaBw@mail.gmail.com>
+ <f26b0.f15017t08v16@linaro.org>
+ <CABgObfaYUCU0Tj-jj66n8AaxOpqXFKcQA-E6G0W6q3MjjwQkiQ@mail.gmail.com>
+ <f7vmg.s9przvzs9y9y@linaro.org>
+ <CABgObfayPDfcrFJ5ckFFms_raD25ARFEvLNhP1qLmda_rjrLfg@mail.gmail.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-18_02,2024-06-17_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 mlxlogscore=737
- priorityscore=1501 mlxscore=0 clxscore=1015 malwarescore=0 suspectscore=0
- lowpriorityscore=0 impostorscore=0 spamscore=0 phishscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
- definitions=main-2406180065
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfayPDfcrFJ5ckFFms_raD25ARFEvLNhP1qLmda_rjrLfg@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,45 +101,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Moving all remaining VSX storage access instructions and all VSX compare
-instructions of XX3 form with RC field, to decodetree specification.
+On Mon, Jun 17, 2024 at 01:32:54PM +0200, Paolo Bonzini wrote:
+> Il lun 17 giu 2024, 10:59 Manos Pitsidianakis <
+> manos.pitsidianakis@linaro.org> ha scritto:
+> 
+> > >qdev_define_type!(c"test-device", TestDevice);
+> > >impl ObjectImpl for TestDevice {}
+> > >impl DeviceImpl for TestDevice {}
+> > >
+> > >fn main() {
+> > >    let d = TestDevice::new();
+> > >    d.cold_reset();
+> > >}
+> > >
+> > >Of course the code makes no sense but it's a start.
+> >
+> > Let's not rush into making interfaces without the need for them arising
+> > first. It's easy to wander off into bikeshedding territory; case in
+> > point, there has been little discussion on the code of this RFC and much
+> > more focus on hypotheticals.
+> >
+> 
+> I see your point but I think it's important to understand the road ahead of
+> us.
+> 
+> Knowing that we can build and maintain a usable (does not have to be
+> perfect) interface to QOM is important, and in fact it's already useful for
+> the pl011 device's chardev. It's also important to play with more advanced
+> usage of the language to ascertain what features of the language will be
+> useful; for example, my current implementation uses generic associated
+> types which are not available on Debian Bookworm—it should be easy to
+> remove them but if I am wrong that's also a data point, and an important
+> one.
+> 
+> Don't get me wrong: *for this first device* only, it makes a lot of sense
+> to have a very C-ish implementation. It lets us sort out the build system
+> integration, tackle idiomatic bindings one piece at a time, and is easier
+> to review than Marc-André's approach of building the whole QAPI bindings.
+> But at the same time, I don't consider a C-ish device better just because
+> it's written in Rust: as things stand your code has all the disadvantages
+> of C and all the disadvantages of Rust. What makes it (extremely) valuable
+> is that your code can lead us along the path towards reaping the advantages
+> of Rust.
 
-Change log :
+I wonder if starting with a device implementation is perhaps the
+wrong idea, in terms of a practical yet simple first step.
 
-v3:
-- Patch 2/4 : Updated the added function do_ea_calc_ra to return
-  modifiable EA, after discussions with Richard.
+As devices go, the pl011 device is simple, but compared to other
+QOM impls in QEMU, devices are still relatively complex things,
+especially if we want to write against safe abstraction.
 
-v2: https://lore.kernel.org/qemu-devel/20240613093318.314913-1-rathc@linux.ibm.com/
- - Addressed comments by Richard in v1 :
-   - Patch 2/4 : Handled proper ea calculation in narrow mode.
-     Also created a new function for ea calculation instead of inlining,
-     for later use by (p){lx,stx}vp insns.
-   - Patch 4/4 : Unified helper calls.
- - Retained Richard's "Reviewed-by" in patches 1, 3 and 4.
+How about we go simpler still, and focus on one of the object
+backends. For example, the RNG backend interface is practically
+the most trivial QOM impl we can do in QEMU. It has one virtual
+method that needs to be implemented, which is passed a callback
+to receive entropy, and one native method to call to indicate
+completion.
 
-v1: https://lore.kernel.org/qemu-devel/20240607144921.726730-1-rathc@linux.ibm.com/
+Providing a safe Rust abstraction for implementing an RNG
+backend looks like a much quicker proposition that a safe
+abstraction for implementing a device. The various RNG impls
+have a few places where they touch other QEMU code (rng-builtin
+uses qemu_bh, rng-egd lightly touches chardev APIs, rng-random
+touches main loop FD handlers). Each of those things though, are
+small & useful API problems to look it solving.
 
-Chinmay Rath (4):
-  target/ppc: Moving VSX scalar storage access insns to decodetree.
-  target/ppc: Move VSX vector with length storage access insns to
-    decodetree.
-  target/ppc: Move VSX vector storage access insns to decodetree.
-  target/ppc: Move VSX fp compare insns to decodetree.
+If we did this I think we would not have to give a "free pass"
+for a hackish C-like first Rust impl. We would have something
+designed well from day 1, showing small, but tangible benefits,
+with a path to incrementally broadening the effort.
 
- target/ppc/helper.h                 |  24 +-
- target/ppc/insn32.decode            |  41 +++
- target/ppc/fpu_helper.c             |  16 +-
- target/ppc/mem_helper.c             |   8 +-
- target/ppc/translate.c              |  15 +
- target/ppc/translate/vsx-impl.c.inc | 416 ++++++++++++++--------------
- target/ppc/translate/vsx-ops.c.inc  |  49 ----
- 7 files changed, 287 insertions(+), 282 deletions(-)
-
+With regards,
+Daniel
 -- 
-2.39.3
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
