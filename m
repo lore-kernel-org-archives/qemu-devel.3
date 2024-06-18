@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA32C2BB85
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:11:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99D68C41513
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbMP-00012Z-Tx; Tue, 18 Jun 2024 12:07:05 -0400
+	id 1sJbJQ-0001nb-42; Tue, 18 Jun 2024 12:04:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbM8-0000R1-VI
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:06:54 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJP-0001fL-3n
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:03:59 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbM4-0007mj-DK
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:06:45 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-35f23f3da44so5042982f8f.0
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:06:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbJM-0007Dc-U1
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:03:58 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a63359aaaa6so866090366b.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:03:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726795; x=1719331595; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726635; x=1719331435; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kgk379QG4gces2QJuUS6NM5ocwUhk589UugM1F9rqoM=;
- b=agBYO7DXcHMscWdtP7LQgpZKed52yeVyJ8X/jjEMjCtqtcwxL2Fzv1Rtr3NRGiRqwy
- 1OhJfsIi+vhdIqqlBRbyr4+G+AL+C10afDGk78utDHuwIlfPBzBDoTe0s+nEenSBrhia
- ppRZ1DgPY7qbB/f9H+Ol5xDG2gXqeM6OgBopao7fsjCzGw0WvAZH5DwB15bpLnQ8WtnR
- wI7bUcX1OrYEhiLdmmGA7aXDa4EF++01tXTn4JtsFuR1chIHiNGI27Vw/rKry34Tv+EU
- xXqmGrieO7k3+KVqUeb+nMYs/4LUur25fQqimEt3FUbftfVzMfw4f99FrtLEzdtbq4MV
- pWug==
+ bh=089XdY79KgdMF0Itsg2m4WYzfo4qdafqkNkAig9zmdA=;
+ b=sG3MdXkhH4/SU2EYspfzuNVSx4HK3kKSM5fpEj/xwjLG8MNTZnhG/g5pA7SxITFzQL
+ wOumYxxMRRXtGaWc8SBba+nw2yNYL4BDE586wKNCSN6YenC4OTSgzM5jNNAASXh4zSCt
+ dsRZEr/HrrE3sdUDNPdkIPx9fKR8Rr96+kpFL/4WzawXj0Yi4A5UdeALIy+gV6F8/noT
+ jhVEskLUamQq5u5bUr/eWBnNgx23SGsi0CvTae/LgLJTnqqqI8k/rZ3O3OZJ7TPcKuHI
+ Vd6jKzmUy/q7H3n8k0Eaujw0+ZuYU0OCzzCJaxF5vQs6ZjuAWTLmkL1A5tIs4UuNTo5S
+ ozgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726795; x=1719331595;
+ d=1e100.net; s=20230601; t=1718726635; x=1719331435;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kgk379QG4gces2QJuUS6NM5ocwUhk589UugM1F9rqoM=;
- b=TAhzxVGyzZFNOBrIObauX+lS5ekyJs91Kn7lpxyYJz1u4PlJT/CTuZJ03yplZJUXQS
- 7SDEOe2c9TJTOy6EK/qsOFKwjJ4I0MFlstlnT/HUTJUTuwD4YRzdz/qVqTavXculJBfZ
- qLG3ajid2JOpGK7+uzhtAWiy9ehwmeavC1oJ6zk2LYGLrYcCL2WPFVcu2w20m2HQHTeI
- IJOeDrlQlQfFekqv4SDyv38wtLZkrzH2j11ZRy7sAOWRsckS45jJfKmbB6rrv2dieVsc
- MNvdKxrJbTwhKhVFbDLe75Z8qWYa9MIR2PpXizI/aorLY1yT2xdI6OmZtm0sj1r1E+DY
- ngzg==
-X-Gm-Message-State: AOJu0YxD7ET8GHHNmKkFt15HEAphazoH54zatuwnJxUXZyfqIXh3ugX0
- JY7TALdfUv5tQG/Y7gP+sKykpoToGq7cRTv70QNVodTZKW0YOfs6XGJmMH4dEIsajLnqvhMO9y/
- v
-X-Google-Smtp-Source: AGHT+IGoGr4o8b5kJ+3OUkztPlXYAHnu6lxPeznPM7emiclS4Ry3gk4rTgc3kNQAl/e+gXYaW+wxIQ==
-X-Received: by 2002:adf:f04e:0:b0:360:9180:760f with SMTP id
- ffacd0b85a97d-36319a85e94mr8325f8f.66.1718726795416; 
- Tue, 18 Jun 2024 09:06:35 -0700 (PDT)
+ bh=089XdY79KgdMF0Itsg2m4WYzfo4qdafqkNkAig9zmdA=;
+ b=WsObFkX6Yq3bmXOPwhcxLO8iMox8nMO1pfwsPObYsRJ4ZqMisHa1YCOUOGCGY4ZgWe
+ VXWyzo86M/FEeQIHnXyiwlc4I7fLlFedNzKfYF6+E/kryNGM5MSAdQ3aBjPChJrnUIQa
+ TrHrGeH46uZtkiWT2tjiRxUoRS/LNOJqCs4lOb4NTqjp0rhI2IZ2B0DW7X+pIFYrMvwh
+ SHJDV5jctBallTNnHkIaDQ/2XdEcCskG1GYKHd2dOfT74ZNleKaenrZ61IcMC+6Engw1
+ UdV4VpqJ0V6gmNQzKzVZ79MsAwReiBwlxnROi9wJhmVe8jMT1RW1uW8qDt7hYqBxbVwz
+ jvWw==
+X-Gm-Message-State: AOJu0YyflrHsttVNeOFNnFz9gIDP3B3r3hCe3htR0Ns9fzdCajCnqm3j
+ Yqa3npCp19D4B+tHBQ9P9BhojD4rdYETsr1JVAP88wQ8ShIY2K1DnFzbDtT0VeljPm1HwIZg8oF
+ D
+X-Google-Smtp-Source: AGHT+IEoqWHAwBTF3RsaXQlbgNQnrwdaPnxNo+dyBYh7xxuQNp6aT2x3fwMTHmNb/+0irhcCKKqnaQ==
+X-Received: by 2002:a17:906:258b:b0:a6f:6014:6ccf with SMTP id
+ a640c23a62f3a-a6f60cf401bmr698840766b.16.1718726634856; 
+ Tue, 18 Jun 2024 09:03:54 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3621a4a17e6sm1580858f8f.19.2024.06.18.09.06.34
+ a640c23a62f3a-a6f56ed3690sm631055266b.128.2024.06.18.09.03.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:06:35 -0700 (PDT)
+ Tue, 18 Jun 2024 09:03:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Fabio D'Urso <fdurso@google.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 61/76] hw/usb/dev-mtp: Correctly report free space
-Date: Tue, 18 Jun 2024 18:00:23 +0200
-Message-ID: <20240618160039.36108-62-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 33/76] hw/ppc: Avoid using Monitor in
+ xive_source_pic_print_info()
+Date: Tue, 18 Jun 2024 17:59:55 +0200
+Message-ID: <20240618160039.36108-34-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,33 +97,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabio D'Urso <fdurso@google.com>
+Replace Monitor API by HumanReadableText one.
 
-In order to compute the amount of free space (in bytes), the number
-of available blocks (f_bavail) should be multiplied by the block
-size (f_frsize) instead of the total number of blocks (f_blocks).
-
-Signed-off-by: Fabio D'Urso <fdurso@google.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240618003657.3344685-1-fdurso@google.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Message-Id: <20240610062105.49848-10-philmd@linaro.org>
 ---
- hw/usb/dev-mtp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/ppc/xive.h  |  2 +-
+ hw/intc/pnv_xive.c     | 11 ++++++++---
+ hw/intc/pnv_xive2.c    |  8 +++++++-
+ hw/intc/xive.c         | 16 +++++++---------
+ hw/pci-host/pnv_phb4.c | 20 ++++++++++++++------
+ hw/ppc/pnv_psi.c       | 12 +++++++++---
+ 6 files changed, 46 insertions(+), 23 deletions(-)
 
-diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
-index 7e4a0765ae..554b397e88 100644
---- a/hw/usb/dev-mtp.c
-+++ b/hw/usb/dev-mtp.c
-@@ -886,7 +886,7 @@ static MTPData *usb_mtp_get_storage_info(MTPState *s, MTPControl *c)
-     rc = statvfs(s->root, &buf);
-     if (rc == 0) {
-         usb_mtp_add_u64(d, (uint64_t)buf.f_frsize * buf.f_blocks);
--        usb_mtp_add_u64(d, (uint64_t)buf.f_bavail * buf.f_blocks);
-+        usb_mtp_add_u64(d, (uint64_t)buf.f_frsize * buf.f_bavail);
-         usb_mtp_add_u32(d, buf.f_ffree);
-     } else {
-         usb_mtp_add_u64(d, 0xffffffff);
+diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
+index bc1cbad8a8..28c181faa2 100644
+--- a/include/hw/ppc/xive.h
++++ b/include/hw/ppc/xive.h
+@@ -314,7 +314,7 @@ static inline bool xive_source_is_asserted(XiveSource *xsrc, uint32_t srcno)
+ }
+ 
+ void xive_source_pic_print_info(XiveSource *xsrc, uint32_t offset,
+-                                Monitor *mon);
++                                GString *buf);
+ 
+ static inline bool xive_source_irq_is_lsi(XiveSource *xsrc, uint32_t srcno)
+ {
+diff --git a/hw/intc/pnv_xive.c b/hw/intc/pnv_xive.c
+index da10deceb8..520d7e0acd 100644
+--- a/hw/intc/pnv_xive.c
++++ b/hw/intc/pnv_xive.c
+@@ -11,6 +11,7 @@
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ #include "qapi/error.h"
++#include "qapi/type-helpers.h"
+ #include "target/ppc/cpu.h"
+ #include "sysemu/cpus.h"
+ #include "sysemu/dma.h"
+@@ -1857,10 +1858,14 @@ void pnv_xive_pic_print_info(PnvXive *xive, Monitor *mon)
+     XiveNVT nvt;
+     int i;
+     uint64_t xive_nvt_per_subpage;
++    g_autoptr(GString) buf = g_string_new("");
++    g_autoptr(HumanReadableText) info = NULL;
+ 
+-    monitor_printf(mon, "XIVE[%x] #%d Source %08x .. %08x\n", chip_id, blk,
+-                   srcno0, srcno0 + nr_ipis - 1);
+-    xive_source_pic_print_info(&xive->ipi_source, srcno0, mon);
++    g_string_append_printf(buf, "XIVE[%x] #%d Source %08x .. %08x\n",
++                           chip_id, blk, srcno0, srcno0 + nr_ipis - 1);
++    xive_source_pic_print_info(&xive->ipi_source, srcno0, buf);
++    info = human_readable_text_from_str(buf);
++    monitor_puts(mon, info->human_readable_text);
+ 
+     monitor_printf(mon, "XIVE[%x] #%d EAT %08x .. %08x\n", chip_id, blk,
+                    srcno0, srcno0 + nr_ipis - 1);
+diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+index 4b8d0a5d81..83e0f6b09f 100644
+--- a/hw/intc/pnv_xive2.c
++++ b/hw/intc/pnv_xive2.c
+@@ -10,6 +10,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+ #include "qapi/error.h"
++#include "qapi/type-helpers.h"
+ #include "target/ppc/cpu.h"
+ #include "sysemu/cpus.h"
+ #include "sysemu/dma.h"
+@@ -2116,10 +2117,15 @@ void pnv_xive2_pic_print_info(PnvXive2 *xive, Monitor *mon)
+     Xive2Nvp nvp;
+     int i;
+     uint64_t xive_nvp_per_subpage;
++    g_autoptr(GString) buf = g_string_new("");
++    g_autoptr(HumanReadableText) info = NULL;
+ 
+     monitor_printf(mon, "XIVE[%x] Source %08x .. %08x\n", blk, srcno0,
+                    srcno0 + nr_esbs - 1);
+-    xive_source_pic_print_info(&xive->ipi_source, srcno0, mon);
++    xive_source_pic_print_info(&xive->ipi_source, srcno0, buf);
++
++    info = human_readable_text_from_str(buf);
++    monitor_puts(mon, info->human_readable_text);
+ 
+     monitor_printf(mon, "XIVE[%x] EAT %08x .. %08x\n", blk, srcno0,
+                    srcno0 + nr_esbs - 1);
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index 260a94e2ca..1adb0439c5 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -1209,22 +1209,20 @@ void xive_source_set_irq(void *opaque, int srcno, int val)
+     }
+ }
+ 
+-void xive_source_pic_print_info(XiveSource *xsrc, uint32_t offset, Monitor *mon)
++void xive_source_pic_print_info(XiveSource *xsrc, uint32_t offset, GString *buf)
+ {
+-    int i;
+-
+-    for (i = 0; i < xsrc->nr_irqs; i++) {
++    for (unsigned i = 0; i < xsrc->nr_irqs; i++) {
+         uint8_t pq = xive_source_esb_get(xsrc, i);
+ 
+         if (pq == XIVE_ESB_OFF) {
+             continue;
+         }
+ 
+-        monitor_printf(mon, "  %08x %s %c%c%c\n", i + offset,
+-                       xive_source_irq_is_lsi(xsrc, i) ? "LSI" : "MSI",
+-                       pq & XIVE_ESB_VAL_P ? 'P' : '-',
+-                       pq & XIVE_ESB_VAL_Q ? 'Q' : '-',
+-                       xive_source_is_asserted(xsrc, i) ? 'A' : ' ');
++        g_string_append_printf(buf, "  %08x %s %c%c%c\n", i + offset,
++                               xive_source_irq_is_lsi(xsrc, i) ? "LSI" : "MSI",
++                               pq & XIVE_ESB_VAL_P ? 'P' : '-',
++                               pq & XIVE_ESB_VAL_Q ? 'Q' : '-',
++                               xive_source_is_asserted(xsrc, i) ? 'A' : ' ');
+     }
+ }
+ 
+diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+index 075499d36d..4b453997e7 100644
+--- a/hw/pci-host/pnv_phb4.c
++++ b/hw/pci-host/pnv_phb4.c
+@@ -10,6 +10,7 @@
+ #include "qemu/log.h"
+ #include "qapi/visitor.h"
+ #include "qapi/error.h"
++#include "qapi/type-helpers.h"
+ #include "monitor/monitor.h"
+ #include "target/ppc/cpu.h"
+ #include "hw/pci-host/pnv_phb4_regs.h"
+@@ -1807,11 +1808,18 @@ void pnv_phb4_pic_print_info(PnvPHB4 *phb, Monitor *mon)
+         phb->regs[PHB_INT_NOTIFY_ADDR >> 3] & ~PHB_INT_NOTIFY_ADDR_64K;
+     uint32_t offset = phb->regs[PHB_INT_NOTIFY_INDEX >> 3];
+     bool abt = !!(phb->regs[PHB_CTRLR >> 3] & PHB_CTRLR_IRQ_ABT_MODE);
++    g_autoptr(GString) buf = g_string_new("");
++    g_autoptr(HumanReadableText) info = NULL;
+ 
+-    monitor_printf(mon, "PHB4[%x:%x] Source %08x .. %08x %s @%"HWADDR_PRIx"\n",
+-                   phb->chip_id, phb->phb_id,
+-                   offset, offset + phb->xsrc.nr_irqs - 1,
+-                   abt ? "ABT" : "",
+-                   notif_port);
+-    xive_source_pic_print_info(&phb->xsrc, 0, mon);
++    g_string_append_printf(buf,
++                           "PHB4[%x:%x] Source %08x .. %08x "
++                           "%s @%"HWADDR_PRIx"\n",
++                           phb->chip_id, phb->phb_id,
++                           offset, offset + phb->xsrc.nr_irqs - 1,
++                           abt ? "ABT" : "",
++                           notif_port);
++    xive_source_pic_print_info(&phb->xsrc, 0, buf);
++
++    info = human_readable_text_from_str(buf);
++    monitor_puts(mon, info->human_readable_text);
+ }
+diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
+index 26460d210d..922ac07b2f 100644
+--- a/hw/ppc/pnv_psi.c
++++ b/hw/ppc/pnv_psi.c
+@@ -25,6 +25,7 @@
+ #include "qemu/module.h"
+ #include "sysemu/reset.h"
+ #include "qapi/error.h"
++#include "qapi/type-helpers.h"
+ #include "monitor/monitor.h"
+ 
+ 
+@@ -980,11 +981,16 @@ type_init(pnv_psi_register_types);
+ void pnv_psi_pic_print_info(Pnv9Psi *psi9, Monitor *mon)
+ {
+     PnvPsi *psi = PNV_PSI(psi9);
++    g_autoptr(GString) buf = g_string_new("");
++    g_autoptr(HumanReadableText) info = NULL;
+ 
+     uint32_t offset =
+         (psi->regs[PSIHB_REG(PSIHB9_IVT_OFFSET)] >> PSIHB9_IVT_OFF_SHIFT);
+ 
+-    monitor_printf(mon, "PSIHB Source %08x .. %08x\n",
+-                  offset, offset + psi9->source.nr_irqs - 1);
+-    xive_source_pic_print_info(&psi9->source, offset, mon);
++    g_string_append_printf(buf, "PSIHB Source %08x .. %08x\n",
++                           offset, offset + psi9->source.nr_irqs - 1);
++    xive_source_pic_print_info(&psi9->source, offset, buf);
++
++    info = human_readable_text_from_str(buf);
++    monitor_puts(mon, info->human_readable_text);
+ }
 -- 
 2.41.0
 
