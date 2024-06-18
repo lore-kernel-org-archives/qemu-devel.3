@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D9D8C2BA18
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 15:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76E1EC27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 15:37:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJasM-0005Q6-D0; Tue, 18 Jun 2024 11:36:02 -0400
+	id 1sJatF-0006bv-6F; Tue, 18 Jun 2024 11:36:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJasK-0005OO-JL
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 11:36:00 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sJatD-0006bH-Ok; Tue, 18 Jun 2024 11:36:55 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJasI-0002eG-SI
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 11:36:00 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3608545debbso3245336f8f.1
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 08:35:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sJatC-0002kt-4b; Tue, 18 Jun 2024 11:36:55 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a6ef8bf500dso633339566b.0; 
+ Tue, 18 Jun 2024 08:36:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718724957; x=1719329757; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yaAKq0ClcR6KnesF8Egd9IgeJapfP0lLHslc6XaJOGs=;
- b=deQcLDFl2ci0+OFgD+DdzsB+5rWa0Q7r1WoNr55pEdX3cO5jZPhKdt4FSPcC9IQLEI
- Hb4qOWk27tAVUNsudsuSGGzIwzM8g+CcIa4xIoQape2T00JIGeZs8w0HacY9yo/HrdCT
- gVLhLWujuHofzSkp2IT9E0iad4ZTzaq88qRCGFyUPIM89D4fEaET8LlzQpYA354UJMRc
- U/jycl9OPT1Vl60SFsyCDIeT4DL//O+8hOpInxR3G81SAcbxJ7IACfw7s6mgHh9xrqmN
- JVUslQW9lNsXHgF7eV0TbJEosVzwROVTbIW/XKjYYvxaC4zOsvcWsJJtCXNApY1zJIU+
- dpmw==
+ d=gmail.com; s=20230601; t=1718725012; x=1719329812; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QhbL8CkusD649lr7/uCKnJLNVOjDQnum1nYhn69OEEQ=;
+ b=JO5cFyaAmr7x7bifPKAU0orq/DzbYLz+xrZZyM9Sqn7b9mUq8kgLF0U+veYCdVO2Gd
+ mCIgeQXDg8VEuSi+TBYjMeELYJ1Lo4xAsO6JGtMLV+ZaZLsokZY1KIrcT2OLv8ocCCXl
+ 73j4LCe3UMJuhBdkV207IFLYyfRY/emj/IThZZNMqtU+bfJrPKF5nvV0t+QjM1dzxuYp
+ 5/oFpL+llhahRFckAJbY77dBM+fzxas+K9EVQpzJfI11rL8pX0Qh/5xwaZlAeSPxQvLg
+ i/a4aAUdv7QHH0zVDm02z8KulK//evIdG4uwDpe86fWVTRe2lCwD9n4ZdVodplx+8mK+
+ qtbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718724957; x=1719329757;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yaAKq0ClcR6KnesF8Egd9IgeJapfP0lLHslc6XaJOGs=;
- b=b5lbD6zd4MgAmG8Ct4yKBeWqzQRUt7yLbWd5FPvWfhV/I1XO26Z+15lTaAGLl4n1w7
- y56OVCoX+ZxBlMf6HBym2hM37qzR7uVhYLtZVKIFueLe7qyWfWlasl2XmqHU7K0eLDI3
- BL5vT4Pm/nnWtUYvu4gP5238NgP0g0+ZsKpN2P5GSiYwQoDNBoRktM/1+wZ5e68ePCiE
- NSat4A2RIX77NcVjaMgBE8smWAddgD4qoSqybb+X/h1tSBrpnHRS8if+mcje+55LnWzy
- V00d1xCTqI516wCRgV+xI3cptGqjjjruk26B57jCD5Ne62McNT/EIpPiCasmybOJ5oVH
- lrTQ==
+ d=1e100.net; s=20230601; t=1718725012; x=1719329812;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QhbL8CkusD649lr7/uCKnJLNVOjDQnum1nYhn69OEEQ=;
+ b=pLumtaN0dlR8gfrpf51FAvmXvPXL6Wa2KCc7OVJaOudWzztNiZsVZohf4Im9Uj0ase
+ inZyFt0aK1nbvCRJm/n+e8ZETL3mrfGAoVsImdY4SLOmVH00zzA9fYaGfiTV+GLwMEzy
+ dyyiq7qnLbe9KA02dXL7GXbrr3xq2e9QBI/ASsilRFcHqgec+GdaCrJ33nRPeYtj+asd
+ NCAfDeWSMoTYX6HbHTgJ9XyO6R0XDY/9Df7IUdO3JC/y1+omfE7cvXW6Q5ebwG8m5EQ2
+ Lc3AnrwfLg66b6MXTKxMRdbe310TpqSBcdG62spVBHZ0FsoF5IygOQV8pVZCOjLYJKfg
+ NAgA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUHwtUItTFb9A+qznWspoZTK1wl5cmHboF4QYo9fIVz0A13cLj+LTo11mcAzwpneFokQytW5mUFnoyLu7MU/4zvHDFbGXw=
-X-Gm-Message-State: AOJu0YxvU+7Ri/l0Eey5wKcTQ6b1Efe2BQSKTp6enn53+CfXkDAs+VBy
- jwMKTVq5OJTkFNOq0kptYRX1tZkv6Dce9Sv+4r7c8p2BGd5gZyEi0wTGy2bhqv83aSwxQKWrGyZ
- K
-X-Google-Smtp-Source: AGHT+IGkH2qwHEhXqKErBhrlWwknWkKgbpYu6VC63/W6tpznUSfcBcnA5p0YMwCO4LLKdcYbM5bOlQ==
-X-Received: by 2002:a05:6000:4014:b0:360:7558:49dd with SMTP id
- ffacd0b85a97d-3607a75c379mr12789512f8f.36.1718724957071; 
- Tue, 18 Jun 2024 08:35:57 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.212.55])
+ AJvYcCVVxME2B0V2y7FEUpEfvknWsFnRWeieM83AM5eqxSKJzaTgSlXSXCMOaVWYTQQNEuwRqk2sh3E8AHSNnlUlOLvFRCQGcYKRye71toRVVUgeIcescaKQlRVywPA=
+X-Gm-Message-State: AOJu0YypMuUM2ZUZhsi9rWuITrctAIcsthrcwx4PRUHbi5zLTVKBN3ZX
+ DiWHI9dWR1JIXwcqKc69nvKalaCBREv03EcbqW0J6RDh6s7x39mNJnNGa/hZDA==
+X-Google-Smtp-Source: AGHT+IFzL+E7GN/4jv7L1+9wB94b1pLRQuAO/kpOetdUlM5IE8jq/ng4zAenL3ry7HZddW/ANs5gSQ==
+X-Received: by 2002:a17:906:1854:b0:a6f:1dbb:d38b with SMTP id
+ a640c23a62f3a-a6f60d2bd6dmr861595066b.28.1718725011933; 
+ Tue, 18 Jun 2024 08:36:51 -0700 (PDT)
+Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-362e3e1abd5sm343471f8f.47.2024.06.18.08.35.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 08:35:56 -0700 (PDT)
-Message-ID: <896bbf08-7a3d-4a2c-b7f7-b260073255cb@linaro.org>
-Date: Tue, 18 Jun 2024 17:35:55 +0200
+ a640c23a62f3a-a6f56db62e5sm625400866b.84.2024.06.18.08.36.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Jun 2024 08:36:51 -0700 (PDT)
+From: Zheyu Ma <zheyuma97@gmail.com>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH] adb: Fix assertion failure in adb_request() by
+ blocking/unblocking autopoll
+Date: Tue, 18 Jun 2024 17:36:01 +0200
+Message-Id: <20240618153602.3169932-1-zheyuma97@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block: m25p80: Fix heap-buffer-overflow in flash_erase
- function
-To: Zheyu Ma <zheyuma97@gmail.com>, Alistair Francis
- <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
-References: <20240618152328.3163680-1-zheyuma97@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240618152328.3163680-1-zheyuma97@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=zheyuma97@gmail.com; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,65 +92,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zheyu,
+This commit addresses an assertion failure in the adb_request()
+function. The failure occurs because the autopoll feature is not
+properly blocked/unblocked during an ADB request. By calling
+adb_autopoll_block() at the beginning and adb_autopoll_unblock() at
+the end of the adb_request() function, we ensure that autopolling is
+correctly managed.
 
-On 18/6/24 17:23, Zheyu Ma wrote:
-> This patch fixes a heap-buffer-overflow issue in the flash_erase function
-> of the m25p80 flash memory emulation. The overflow occurs when the
-> combination of offset and length exceeds the allocated memory for the
-> storage. The patch adds a check to ensure that the erase length does not
-> exceed the storage size and adjusts the length accordingly if necessary.
-> 
-> Reproducer:
-> cat << EOF | qemu-system-aarch64 -display none \
-> -machine accel=qtest, -m 512M -machine kudo-bmc -qtest stdio
-> writeq 0xc0000010 0x6
-> writel 0xc000000c 0x9
-> writeq 0xc0000010 0xf27f9412
-> writeq 0xc000000f 0x2b5cdc26
-> writeq 0xc000000c 0xffffffffffffffff
-> writeq 0xc000000c 0xffffffffffffffff
-> writeq 0xc000000c 0xffffffffffffffff
-> writel 0xc000000c 0x9
-> writeq 0xc000000c 0x9
-> EOF
-> 
-> ASan log:
-> ==2614308==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7fd3fb7fc000 at pc 0x55aa77a442dc bp 0x7fffaa155900 sp 0x7fffaa1550c8
-> WRITE of size 65536 at 0x7fd3fb7fc000 thread T0
->      #0 0x55aa77a442db in __asan_memset llvm/compiler-rt/lib/asan/asan_interceptors_memintrinsics.cpp:26:3
->      #1 0x55aa77e7e6b3 in flash_erase hw/block/m25p80.c:631:5
->      #2 0x55aa77e6f8b1 in complete_collecting_data hw/block/m25p80.c:773:9
->      #3 0x55aa77e6aaa9 in m25p80_transfer8 hw/block/m25p80.c:1550:13
->      #4 0x55aa78e9a691 in ssi_transfer_raw_default hw/ssi/ssi.c:92:16
->      #5 0x55aa78e996c0 in ssi_transfer hw/ssi/ssi.c:165:14
->      #6 0x55aa78e8d76a in npcm7xx_fiu_uma_transaction hw/ssi/npcm7xx_fiu.c:336:9
->      #7 0x55aa78e8be4b in npcm7xx_fiu_ctrl_write hw/ssi/npcm7xx_fiu.c:428:13
-> 
-> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-> ---
->   hw/block/m25p80.c | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-> index 8dec134832..e9a59f6616 100644
-> --- a/hw/block/m25p80.c
-> +++ b/hw/block/m25p80.c
-> @@ -617,6 +617,12 @@ static void flash_erase(Flash *s, int offset, FlashCMD cmd)
->           abort();
->       }
->   
-> +    if (offset + len > s->size) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "M25P80: Erase exceeds storage size, adjusting length\n");
+Reproducer:
+cat << EOF | qemu-system-m68k -display none
+-machine accel=qtest, -m 512M -machine q800 -qtest stdio
+write 0x5000166d 0x1 0x10
+write 0x5000000b 0x1 0x10
+EOF
 
-Usually hardware doesn't "adjust" but report error earlier.
+Signed-off-by: Zheyu Ma zheyuma97@gmail.com
+---
+ hw/input/adb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-> +        len = s->size - offset;
-> +    }
-> +
->       trace_m25p80_flash_erase(s, offset, len);
->   
->       if ((s->pi->flags & capa_to_assert) != capa_to_assert) {
+diff --git a/hw/input/adb.c b/hw/input/adb.c
+index aff7130fd0..2d65ad3f4d 100644
+--- a/hw/input/adb.c
++++ b/hw/input/adb.c
+@@ -98,10 +98,12 @@ int adb_request(ADBBusState *s, uint8_t *obuf, const uint8_t *buf, int len)
+ 
+     trace_adb_bus_request(buf[0] >> 4, adb_commands[buf[0] & 0xf], len);
+ 
+-    assert(s->autopoll_blocked);
++    adb_autopoll_block(s);
+ 
+     ret = do_adb_request(s, obuf, buf, len);
+ 
++    adb_autopoll_unblock(s);
++
+     trace_adb_bus_request_done(buf[0] >> 4, adb_commands[buf[0] & 0xf], ret);
+     return ret;
+ }
+-- 
+2.34.1
 
 
