@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42A47C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 13:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DAB7C41513
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 13:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJZCy-00062i-ED; Tue, 18 Jun 2024 09:49:13 -0400
+	id 1sJZJq-0008HO-1Q; Tue, 18 Jun 2024 09:56:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sJZCs-000624-97
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 09:49:07 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sJZJo-0008G8-Ja
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 09:56:16 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sJZCq-0000md-GB
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 09:49:06 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-52cc14815c3so1298091e87.0
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 06:49:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sJZJm-000289-Ps
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 09:56:16 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-57cb9efd8d1so3658669a12.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 06:56:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718718542; x=1719323342; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=flw9SaA0nZN6x3YJjhuda53O4E/G6rHmnKdh+7Szslg=;
- b=bsA+2YLOk5T/jotrjSuRfgwSiGmRs50zaLCvPUAAtQjHuFreErQZ/RqdMBdwHyQ2m2
- dJPtjYYp3Jhvq3CtYY+JdfbI8MnoXvCdk3JCT1f/BGNTS0B7pwNoEoBn/UhYl28O2Esh
- xEq0fOj4A5GeqyvN6RFbCR/YL8fQ+RkLPATd4Np1QuJHliWf8DJQxYW19p7qZ1Tg3ZVU
- tYvyg7+jfUNn9UnEtcKPVYREfucHRjkPcL7owvmi/yY3qqze4rlJ2i6nKm2G2vOL22XZ
- 41yCAn2VKmGJqjinWYDQ6AyWKRzKXH5piNaSfSscEi71NiVl9VnsLjdzeuEfXt3bnaLQ
- hdZA==
+ d=gmail.com; s=20230601; t=1718718973; x=1719323773; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4CuWDGrXsYTHvxPtTrt3axmPm5v2kOqes49F3P7NwlU=;
+ b=MfyGsODAz1YPq63fuylOdQOQF6odxfEqEXFLyxDZ9JHx0qP3yO1eRP3X4355yRuZDY
+ yhpvB07BAXwpVh0H/DOfJ0077wVACeuoOvlYZltog6q6oYrIGnHgiq0+YQtuOzeUINBj
+ AeWH4M554DzN/Bpx+T2mdW1F236Jhe6+sfKjyLqrhz3ufdcDIC/lEDLPqS/Wyhq5XPql
+ jX1RMke9+NuWMmbQ1SPoNNDL39WmIECmbgya0dxAV/hD3goEVzTghmYQ0F7z1689Tzoi
+ 0RlqIifjJk4tjC0+JW186xkFd8pi1Ow/Vd8lS1QVE7Q5nZ6YZ2T1UPSrxsoHJeZPecmP
+ tGDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718718542; x=1719323342;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=flw9SaA0nZN6x3YJjhuda53O4E/G6rHmnKdh+7Szslg=;
- b=t5xr2WgPGiopOsRiDXFBPjai1Ec2D6R1eb9phKbefIerDZJv11AsgIm3NAjVmBWNav
- rrETRwBPx7XMafDS8B6sP5oPhWjNvkzBONzvVZ7tS6gDmpkGm8vxBVCz1rqRgHyJT3S1
- 3G5mG0+SfGG0fa7xQ45tYK4rVbdHnSLD22Wml0nRoi3EYZO5wwEA4qXLl52NHooODg9F
- 8Ihp2uAhUu3yJjClRFZhoVPII250jsp/tf0L+P0l7QzTIYYi7D38gHZiP+rTbt49iVZ5
- Rc4VvSnUfS4GjvVVPqR8x1jhKm7B8QtN6xIjW9TWdBsHQHGcxuRMEcJovZLkwXqrOhS+
- 0odA==
-X-Gm-Message-State: AOJu0YyR9QpGWyxaQnAUgj1EQXVmlZxLTOj9catjWHE1ZfJVKVfgqNLu
- N1+BFv71zu8A+cnvjZbax0JhBYrGVFJWTebCXe4n+Y/s2W2jD4Hg1hFveGDmOEFjPeOe1j5C2NA
- Uv7g=
-X-Google-Smtp-Source: AGHT+IF6tSuaJsF3lFhvZX2/bhCTxVC6A2k2r1delU0GJeK99tbnyvgfkTTBo8TeDsKji+PoTvE5pw==
-X-Received: by 2002:a19:9101:0:b0:52c:8aef:d16b with SMTP id
- 2adb3069b0e04-52ca6e6d5d5mr6614727e87.34.1718718539771; 
- Tue, 18 Jun 2024 06:48:59 -0700 (PDT)
-Received: from meli-email.org (adsl-103.37.6.162.tellas.gr. [37.6.162.103])
+ d=1e100.net; s=20230601; t=1718718973; x=1719323773;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4CuWDGrXsYTHvxPtTrt3axmPm5v2kOqes49F3P7NwlU=;
+ b=uf13/OmrzGZMT3gBMttGO4pqTJcFtkNIX3liqKHTOHPhw45IvGB/J7TB68st3fY/af
+ tb7h0vOy1xtZuPyKN8uD9RKDr9RFY1ccuAdybG8bfFtQZ7ikcu9MCy1t8eYMysL4xOpO
+ pOxqqoWUWvpGO8520MbjK2AQK7ujy2jSYaLxuRgS6lPOM4KYUSJSnihZyAjSLIgqPfng
+ YsblzJnSewj+uqbX1BrE57nlyPP26Ul27rW6mRKpCVZYTt78QF6JL1FUi+pRCg+qQYop
+ DucPi3ld3j9NIWHu29cp7Ru4n4z9VFB0LJIYPdWXb/AQ2leuGXiW/Uw8nRMfZa2w5KJm
+ EbzQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUw7kF/CQQoUotwNYHO4wqz+M2M+tdPIEZXZ0Pe+S4c0jxxrTQWjL2DmS1SCKHepTfJO1vbVUaCQnH2XAUx9NAm3+L20lk=
+X-Gm-Message-State: AOJu0YzqdJGXTc4wFH8nwjyHEIxNgU9NHk9Hko5PaH/hd7hgiieYJp86
+ bru5YsXKCnwUdXcwAy0adVrQ9/OWjHRmrB3eXuXkSr+uzDk1poSepzzuvwbGGw==
+X-Google-Smtp-Source: AGHT+IG3pgC3Odl2w7lg8LrbUh0Wy9f0DOa8IZ+yh2dd8ZbxrefrcyxgUgW7nQJ5/lm6yp8/p79UyA==
+X-Received: by 2002:a17:906:684b:b0:a6f:8f48:5d29 with SMTP id
+ a640c23a62f3a-a6f9506efbcmr165097966b.28.1718718972844; 
+ Tue, 18 Jun 2024 06:56:12 -0700 (PDT)
+Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-360750f2489sm14096413f8f.69.2024.06.18.06.48.59
+ a640c23a62f3a-a6f5f8f6eb3sm567549366b.143.2024.06.18.06.56.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Jun 2024 06:48:59 -0700 (PDT)
-Date: Tue, 18 Jun 2024 16:44:36 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>
-Cc: qemu-stable@nongnu.org, C=?UTF-8?B?w6k=?= dric Le Goater <clg@kaod.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH] hw/virtio: Fix the de-initialization of vhost-user devices
-User-Agent: meli 0.8.6
-References: <20240618121958.88673-1-thuth@redhat.com>
-In-Reply-To: <20240618121958.88673-1-thuth@redhat.com>
-Message-ID: <fa3pl.fcf892mzbx7@linaro.org>
+ Tue, 18 Jun 2024 06:56:12 -0700 (PDT)
+From: Zheyu Ma <zheyuma97@gmail.com>
+To: 
+Cc: Zheyu Ma <zheyuma97@gmail.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] hw/usb/hcd-dwc2: Handle invalid address access in read and
+ write functions
+Date: Tue, 18 Jun 2024 15:56:10 +0200
+Message-Id: <20240618135610.3109175-1-zheyuma97@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=zheyuma97@gmail.com; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,67 +95,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 18 Jun 2024 15:19, Thomas Huth <thuth@redhat.com> wrote:
->The unrealize functions of the various vhost-user devices are
->calling the corresponding vhost_*_set_status() functions with a
->status of 0 to shut down the device correctly.
->
->Now these vhost_*_set_status() functions all follow this scheme:
->
->    bool should_start = virtio_device_should_start(vdev, status);
->
->    if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
->        return;
->    }
->
->    if (should_start) {
->        /* ... do the initialization stuff ... */
->    } else {
->        /* ... do the cleanup stuff ... */
->    }
->
->The problem here is virtio_device_should_start(vdev, 0) currently
->always returns "true" since it internally only looks at vdev->started
->instead of looking at the "status" parameter. Thus once the device
->got started once, virtio_device_should_start() always returns true
+This commit modifies the dwc2_hsotg_read() and dwc2_hsotg_write() functions
+to handle invalid address access gracefully. Instead of using
+g_assert_not_reached(), which causes the program to abort, the functions
+now log an error message and return a default value for reads or do
+nothing for writes.
 
+This change prevents the program from aborting and provides clear log
+messages indicating when an invalid memory address is accessed.
 
-virtio_device_should_start() returning true if it's already started and 
-running looks like a code smell to me... it intuitively feels like a 
-ternary state instead of boolean: not startable, startable, already 
-started.
+Reproducer:
+cat << EOF | qemu-system-aarch64 -display none \
+-machine accel=qtest, -m 512M -machine raspi2b -m 1G -nodefaults \
+-usb -drive file=null-co://,if=none,format=raw,id=disk0 -device \
+usb-storage,port=1,drive=disk0 -qtest stdio
+readl 0x3f980dfb
+EOF
 
->and thus the vhost_*_set_status() functions return early, without
->ever doing any clean-up when being called with status == 0. This
->causes e.g. problems when trying to hot-plug and hot-unplug a vhost
->user devices multiple times since the de-initialization step is
->completely skipped during the unplug operation.
->
->This bug has been introduced in commit 9f6bcfd99f ("hw/virtio: move
->vm_running check to virtio_device_started") which replaced
->
-> should_start = status & VIRTIO_CONFIG_S_DRIVER_OK;
->
->with
->
-> should_start = virtio_device_started(vdev, status);
->
->which later got replaced by virtio_device_should_start(). This blocked
->the possibility to set should_start to false in case the status flag
->VIRTIO_CONFIG_S_DRIVER_OK was not set.
->
->Fix it by adjusting the virtio_device_should_start() function to
->only consider the status flag instead of vdev->started. Since this
->function is only used in the various vhost_*_set_status() functions
->for exactly the same purpose, it should be fine to fix it in this
->central place there without any risk to change the behavior of other
->code.
->
->Fixes: 9f6bcfd99f ("hw/virtio: move vm_running check to virtio_device_started")
->Buglink: https://issues.redhat.com/browse/RHEL-40708
->Signed-off-by: Thomas Huth <thuth@redhat.com>
->---
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+---
+ hw/usb/hcd-dwc2.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
+diff --git a/hw/usb/hcd-dwc2.c b/hw/usb/hcd-dwc2.c
+index 8cac9c0a06..b4f0652c7d 100644
+--- a/hw/usb/hcd-dwc2.c
++++ b/hw/usb/hcd-dwc2.c
+@@ -1128,7 +1128,10 @@ static uint64_t dwc2_hsotg_read(void *ptr, hwaddr addr, unsigned size)
+         val = dwc2_pcgreg_read(ptr, addr, (addr - HSOTG_REG(0xe00)) >> 2, size);
+         break;
+     default:
+-        g_assert_not_reached();
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"HWADDR_PRIx"\n",
++                      __func__, addr);
++        val = 0;
++        break;
+     }
+ 
+     return val;
+@@ -1160,7 +1163,9 @@ static void dwc2_hsotg_write(void *ptr, hwaddr addr, uint64_t val,
+         dwc2_pcgreg_write(ptr, addr, (addr - HSOTG_REG(0xe00)) >> 2, val, size);
+         break;
+     default:
+-        g_assert_not_reached();
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"HWADDR_PRIx"\n",
++                      __func__, addr);
++        break;
+     }
+ }
+ 
+-- 
+2.34.1
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
