@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2999C2BA18
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F8CEC41513
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:07:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbLC-0006OZ-3k; Tue, 18 Jun 2024 12:05:50 -0400
+	id 1sJbI5-0005ca-5v; Tue, 18 Jun 2024 12:02:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbLA-0006OF-NW
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:05:48 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbHj-0005G6-Hv
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:02:17 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbL8-0007jD-Gq
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:05:48 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-57d05e0017aso264987a12.1
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:05:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbHf-0006vZ-Sa
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:02:13 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a6f1c4800easo697027666b.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718726744; x=1719331544; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718726530; x=1719331330; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hythfOpvKdnQtXG8QgrEpQziqfs8Kk/FNjGJNS+WjGI=;
- b=BNjXYHErjlqlm3ifAFGeoB3OFnJD5OvpgzqL6CSiKutObcmT5dKCjgjfQMBsegAM4L
- awI4NYnTlgrgbHNOW5oTOxojpQ1By29C8l4DzRp0ic7LnEMEUFSV05MLl00u3PrUxm7b
- YE9YZiwl2N4Oj2UvZ8jsyx2qq/NIZT/y7J874013oTMsNhcZ9dcRuSSvBp2TOZHziNPZ
- tvbnNxvgF5QW8+VK7gM8KndHHlxoNfxFAePODbBSfTO7ryGbSocXX/wAR1psHNc42fu+
- g5uoGRYDclaQIAxPKjRR8PwVAamkKEqd1qnf/JuFol+ajJFCSsR0U6FeQnVO5ZMLTTUv
- F3UA==
+ bh=8eJa9WK/V7TqG4Hnua6nIYiEaeNBOHfc3aooKNXlT7w=;
+ b=AnIMnEVRwudsIzXSTDDZJNNnzyG9NvRT9ZOfDITV9KJCsO0Ot3oDYLSNlKuFn/+ZHB
+ FLxoedZ8QP/CL8dZlzJJLzEkJsFCXUBkWMAPf4yjnyEE7VSdOTo2FRSYd1Y3quQOp13k
+ +ukEIGRQuca4qYl7UOOn+oEUpWXzanh7NDDZLflu4IGZeQPzP37fntybp/cgPM1ok7Fp
+ 7wIHCG8O6DQZABbdHjpsssBkNuRPVjbaGWCVkJkaMXy896Ev9jrjAdPky6LrpdE7x7LA
+ /Pj20kYA43F4+1aLd9EO9hZPk4ijKD//DWpiLqINbrypKt9ZkXG8FaFz3s7OIuZ3YQem
+ HtxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718726744; x=1719331544;
+ d=1e100.net; s=20230601; t=1718726530; x=1719331330;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hythfOpvKdnQtXG8QgrEpQziqfs8Kk/FNjGJNS+WjGI=;
- b=Zb5BDUHq07TEy5weRxIY7Q/RviJcvETKqRHUnil6X8I1TbQ5KAAAwq+d+POSoIsBR1
- M+MU/QjkpPu1h/3Jq/rqwLL+zpfySv36RqASxysBlTxwH5+xArc7R6pRxdandobhf0R7
- mxmHJ+GbMQnTks0/QUQWh7sU+lcNOiSH5aCBG7aD3/SA28NH3m0Axub1/UnD+pqRhTGt
- o0Jcb9XVeV89ufVGVcjEnJXcx95C1kdUwH73BBs2DBtha7IeAsfHcyCHJYJxwAKQBMao
- XqkuJu/Ex+NpYTRz16MGlhoVNyzwfpTNA/CrI/TcBxSJ6lyjG5xeB/GIckhVK7YWLKPP
- a6qA==
-X-Gm-Message-State: AOJu0YzS2OACu2wQ97OfnI6aoVN1D2Q7ZzMx5q1Xr63WUFqjKCyZTgJb
- TUiLCz9vmGe4PKqcD308eMcqaA8boW6yApzxZUQRy8kkn7+BR5AQeR2XU2Voz+/pwf7nOTH9zsQ
- P
-X-Google-Smtp-Source: AGHT+IEspRNMV9GWzp1uzSiWH5Clmi5MoCQdX+bcNbpP6GOl8JXh9iUQjYGpsnS7eW3o8HD92O3V3g==
-X-Received: by 2002:a50:a402:0:b0:57c:d4e9:4a03 with SMTP id
- 4fb4d7f45d1cf-57cd4e94b6emr3841204a12.41.1718726744386; 
- Tue, 18 Jun 2024 09:05:44 -0700 (PDT)
+ bh=8eJa9WK/V7TqG4Hnua6nIYiEaeNBOHfc3aooKNXlT7w=;
+ b=DaoYYbqNjVsplGyEIEfn92rjn1SYZzEKYEVxLBphhwBfFCaRaBiNrPjPYWC3ydZLSX
+ PrTaIm1uzbWX3FLAM6T7RIvK7p4SN3OlRvRZ6OawpGX09Saejvr2WJ+zhZWlz0laxniU
+ 0JK0240ugN/gr8ukNd5Rc+2EU3WoNRz+AU0t8pJuiC+Tl01Ud+WJMW+q9D359UrXpVOT
+ w55JZg3RD755fJVrPWKizdg0oXDx2eC636xuiTb0k6nJHM1Xgy6ri/lBpq0ULOnBvvdA
+ IzjEcxAEHQEQbBTHhgu12OIrBgKlkOusJhpMhsGOzHlhIyzMOLmQ6qaADVhPRmzLMXvs
+ FReg==
+X-Gm-Message-State: AOJu0Yzs9f23dsrdiNmymfRxMXmseLkXHHUJJceOW/eOsaXpgHR/xPZX
+ ugfTcWgBRrTv/bA2saKAniNU3T3L42hMn0FywIjRM7GGAI/+V6uzQ9Jej2cNWeYw7JoOBw8HuG3
+ X
+X-Google-Smtp-Source: AGHT+IE2hpbE0h0y4ZogQDuiNsdMWu+bHAaI734ktfwBpmgOdXM8ohZolitkWic0NokXBHrMFyLxvg==
+X-Received: by 2002:a17:907:198e:b0:a6f:98b6:365 with SMTP id
+ a640c23a62f3a-a6f98b60a51mr169213366b.10.1718726529924; 
+ Tue, 18 Jun 2024 09:02:09 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36075104a26sm14440062f8f.97.2024.06.18.09.05.43
+ a640c23a62f3a-a6f56f411a7sm631061766b.158.2024.06.18.09.02.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Jun 2024 09:05:44 -0700 (PDT)
+ Tue, 18 Jun 2024 09:02:09 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 52/76] hw/intc: Introduce x-query-interrupt-controllers QMP
- command
-Date: Tue, 18 Jun 2024 18:00:14 +0200
-Message-ID: <20240618160039.36108-53-philmd@linaro.org>
+ Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL 15/76] hw/mem/memory-device: Remove legacy_align from
+ memory_device_pre_plug()
+Date: Tue, 18 Jun 2024 17:59:37 +0200
+Message-ID: <20240618160039.36108-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
 References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,152 +96,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a counterpart to the HMP "info pic" command. It is being
-added with an "x-" prefix because this QMP command is intended as an
-adhoc debugging tool and will thus not be modelled in QAPI as fully
-structured data, nor will it have long term guaranteed stability.
-The existing HMP command is rewritten to call the QMP command.
+'legacy_align' is always NULL, remove it, simplifying
+memory_device_pre_plug().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-Id: <20240610063518.50680-3-philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240617071118.60464-16-philmd@linaro.org>
 ---
- qapi/machine.json          | 17 +++++++++++++++++
- hw/core/machine-qmp-cmds.c | 29 +++++++++++++++++++++++++++++
- monitor/hmp-cmds.c         | 33 ---------------------------------
- hmp-commands-info.hx       |  2 +-
- 4 files changed, 47 insertions(+), 34 deletions(-)
+ include/hw/mem/memory-device.h |  2 +-
+ hw/i386/pc.c                   |  3 +--
+ hw/mem/memory-device.c         | 12 ++++--------
+ hw/mem/pc-dimm.c               |  2 +-
+ hw/virtio/virtio-md-pci.c      |  2 +-
+ 5 files changed, 8 insertions(+), 13 deletions(-)
 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 453feb9347..2fd3e9c3d5 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1864,3 +1864,20 @@
- { 'command': 'dumpdtb',
-   'data': { 'filename': 'str' },
-   'if': 'CONFIG_FDT' }
-+
-+##
-+# @x-query-interrupt-controllers:
-+#
-+# Query information on interrupt controller devices
-+#
-+# Features:
-+#
-+# @unstable: This command is meant for debugging.
-+#
-+# Returns: Interrupt controller devices information
-+#
-+# Since: 9.1
-+##
-+{ 'command': 'x-query-interrupt-controllers',
-+  'returns': 'HumanReadableText',
-+  'features': [ 'unstable' ]}
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 5972100b1f..130217da8f 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -361,6 +361,35 @@ HumanReadableText *qmp_x_query_irq(Error **errp)
-     return human_readable_text_from_str(buf);
- }
- 
-+static int qmp_x_query_intc_foreach(Object *obj, void *opaque)
-+{
-+    InterruptStatsProvider *intc;
-+    InterruptStatsProviderClass *k;
-+    GString *buf = opaque;
-+
-+    if (object_dynamic_cast(obj, TYPE_INTERRUPT_STATS_PROVIDER)) {
-+        intc = INTERRUPT_STATS_PROVIDER(obj);
-+        k = INTERRUPT_STATS_PROVIDER_GET_CLASS(obj);
-+        if (k->print_info) {
-+            k->print_info(intc, buf);
-+        } else {
-+            g_string_append_printf(buf,
-+                                   "Interrupt controller information not available for %s.\n",
-+                                   object_get_typename(obj));
-+        }
-+    }
-+
-+    return 0;
-+}
-+
-+HumanReadableText *qmp_x_query_interrupt_controllers(Error **errp)
-+{
-+    g_autoptr(GString) buf = g_string_new("");
-+    object_child_foreach_recursive(object_get_root(),
-+                                   qmp_x_query_intc_foreach, buf);
-+    return human_readable_text_from_str(buf);
-+}
-+
- GuidInfo *qmp_query_vm_generation_id(Error **errp)
+diff --git a/include/hw/mem/memory-device.h b/include/hw/mem/memory-device.h
+index e0571c8a31..c0a58087cc 100644
+--- a/include/hw/mem/memory-device.h
++++ b/include/hw/mem/memory-device.h
+@@ -169,7 +169,7 @@ uint64_t get_plugged_memory_size(void);
+ unsigned int memory_devices_get_reserved_memslots(void);
+ bool memory_devices_memslot_auto_decision_active(void);
+ void memory_device_pre_plug(MemoryDeviceState *md, MachineState *ms,
+-                            const uint64_t *legacy_align, Error **errp);
++                            Error **errp);
+ void memory_device_plug(MemoryDeviceState *md, MachineState *ms);
+ void memory_device_unplug(MemoryDeviceState *md, MachineState *ms);
+ uint64_t memory_device_get_region_size(const MemoryDeviceState *md,
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 2d0a517c4c..8a9c025754 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1395,8 +1395,7 @@ static void pc_hv_balloon_pre_plug(HotplugHandler *hotplug_dev,
  {
-     GuidInfo *info;
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index fbff7fdb57..45ee3a9e1f 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -25,9 +25,7 @@
- #include "qapi/qapi-commands-machine.h"
- #include "qapi/qapi-commands-misc.h"
- #include "qapi/qmp/qdict.h"
--#include "qapi/type-helpers.h"
- #include "qemu/cutils.h"
--#include "hw/intc/intc.h"
- #include "qemu/log.h"
- #include "sysemu/sysemu.h"
- 
-@@ -83,37 +81,6 @@ void hmp_info_version(Monitor *mon, const QDict *qdict)
-     qapi_free_VersionInfo(info);
+     /* The vmbus handler has no hotplug handler; we should never end up here. */
+     g_assert(!dev->hotplugged);
+-    memory_device_pre_plug(MEMORY_DEVICE(dev), MACHINE(hotplug_dev), NULL,
+-                           errp);
++    memory_device_pre_plug(MEMORY_DEVICE(dev), MACHINE(hotplug_dev), errp);
  }
  
--static int hmp_info_pic_foreach(Object *obj, void *opaque)
--{
--    InterruptStatsProvider *intc;
--    InterruptStatsProviderClass *k;
--    Monitor *mon = opaque;
--
--    if (object_dynamic_cast(obj, TYPE_INTERRUPT_STATS_PROVIDER)) {
--        intc = INTERRUPT_STATS_PROVIDER(obj);
--        k = INTERRUPT_STATS_PROVIDER_GET_CLASS(obj);
--        if (k->print_info) {
--            g_autoptr(GString) buf = g_string_new("");
--            g_autoptr(HumanReadableText) info = NULL;
--
--            k->print_info(intc, buf);
--            info = human_readable_text_from_str(buf);
--            monitor_puts(mon, info->human_readable_text);
--        } else {
--            monitor_printf(mon, "Interrupt controller information not available for %s.\n",
--                           object_get_typename(obj));
+ static void pc_hv_balloon_plug(HotplugHandler *hotplug_dev,
+diff --git a/hw/mem/memory-device.c b/hw/mem/memory-device.c
+index e098585cda..a5f279adcc 100644
+--- a/hw/mem/memory-device.c
++++ b/hw/mem/memory-device.c
+@@ -345,7 +345,7 @@ uint64_t get_plugged_memory_size(void)
+ }
+ 
+ void memory_device_pre_plug(MemoryDeviceState *md, MachineState *ms,
+-                            const uint64_t *legacy_align, Error **errp)
++                            Error **errp)
+ {
+     const MemoryDeviceClass *mdc = MEMORY_DEVICE_GET_CLASS(md);
+     Error *local_err = NULL;
+@@ -388,14 +388,10 @@ void memory_device_pre_plug(MemoryDeviceState *md, MachineState *ms,
+         return;
+     }
+ 
+-    if (legacy_align) {
+-        align = *legacy_align;
+-    } else {
+-        if (mdc->get_min_alignment) {
+-            align = mdc->get_min_alignment(md);
 -        }
--    }
--
--    return 0;
--}
--
--void hmp_info_pic(Monitor *mon, const QDict *qdict)
--{
--    object_child_foreach_recursive(object_get_root(),
--                                   hmp_info_pic_foreach, mon);
--}
--
- void hmp_quit(Monitor *mon, const QDict *qdict)
- {
-     monitor_suspend(mon);
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index 20a9835ea8..cfd4ad5651 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -174,7 +174,7 @@ ERST
-         .args_type  = "",
-         .params     = "",
-         .help       = "show PIC state",
--        .cmd        = hmp_info_pic,
-+        .cmd_info_hrt = qmp_x_query_interrupt_controllers,
-     },
+-        align = MAX(align, memory_region_get_alignment(mr));
++    if (mdc->get_min_alignment) {
++        align = mdc->get_min_alignment(md);
+     }
++    align = MAX(align, memory_region_get_alignment(mr));
+     addr = mdc->get_addr(md);
+     addr = memory_device_get_free_addr(ms, !addr ? NULL : &addr, align,
+                                        memory_region_size(mr), &local_err);
+diff --git a/hw/mem/pc-dimm.c b/hw/mem/pc-dimm.c
+index 836384a90f..27919ca45d 100644
+--- a/hw/mem/pc-dimm.c
++++ b/hw/mem/pc-dimm.c
+@@ -69,7 +69,7 @@ void pc_dimm_pre_plug(PCDIMMDevice *dimm, MachineState *machine, Error **errp)
+                             &error_abort);
+     trace_mhp_pc_dimm_assigned_slot(slot);
  
- SRST
+-    memory_device_pre_plug(MEMORY_DEVICE(dimm), machine, NULL, errp);
++    memory_device_pre_plug(MEMORY_DEVICE(dimm), machine, errp);
+ }
+ 
+ void pc_dimm_plug(PCDIMMDevice *dimm, MachineState *machine)
+diff --git a/hw/virtio/virtio-md-pci.c b/hw/virtio/virtio-md-pci.c
+index 62bfb7920b..9ec5067662 100644
+--- a/hw/virtio/virtio-md-pci.c
++++ b/hw/virtio/virtio-md-pci.c
+@@ -37,7 +37,7 @@ void virtio_md_pci_pre_plug(VirtIOMDPCI *vmd, MachineState *ms, Error **errp)
+      * First, see if we can plug this memory device at all. If that
+      * succeeds, branch of to the actual hotplug handler.
+      */
+-    memory_device_pre_plug(md, ms, NULL, &local_err);
++    memory_device_pre_plug(md, ms, &local_err);
+     if (!local_err && bus_handler) {
+         hotplug_handler_pre_plug(bus_handler, dev, &local_err);
+     }
 -- 
 2.41.0
 
