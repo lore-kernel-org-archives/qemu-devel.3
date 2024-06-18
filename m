@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E29C2BA18
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 17:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B15E2C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 17:27:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJcae-0008S3-D5; Tue, 18 Jun 2024 13:25:54 -0400
+	id 1sJcbg-00015y-Iu; Tue, 18 Jun 2024 13:26:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3CsNxZgwKCpE8vw32zDEz0v819916z.x97Bz7F-yzGz689818F.9C1@flex--nabihestefan.bounces.google.com>)
- id 1sJcaQ-0008Jd-T3
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 13:25:41 -0400
-Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
+ <3XMNxZgwKCuMSFGNMJXYJKFSLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--nabihestefan.bounces.google.com>)
+ id 1sJcbf-00015W-79
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 13:26:55 -0400
+Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3CsNxZgwKCpE8vw32zDEz0v819916z.x97Bz7F-yzGz689818F.9C1@flex--nabihestefan.bounces.google.com>)
- id 1sJcaL-00045h-4C
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 13:25:37 -0400
-Received: by mail-pf1-x449.google.com with SMTP id
- d2e1a72fcca58-7059fdafc78so4797675b3a.2
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 10:25:31 -0700 (PDT)
+ <3XMNxZgwKCuMSFGNMJXYJKFSLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--nabihestefan.bounces.google.com>)
+ id 1sJcbd-0004J2-Mp
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 13:26:54 -0400
+Received: by mail-yw1-x1149.google.com with SMTP id
+ 00721157ae682-63128f5eb5bso107734017b3.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 10:26:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1718731530; x=1719336330; darn=nongnu.org;
+ d=google.com; s=20230601; t=1718731612; x=1719336412; darn=nongnu.org;
  h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
  :date:message-id:reply-to;
  bh=mIz+uBMleWspMGOXrthG2m3FtkYnjCAe7akkH5AGnWM=;
- b=ujUJ/7jfuZI/QvaoX8GuGiMH2BqIFdGkwP/ncqfZB8Hpypjkj0QcwYxLsTYJQp/kCI
- IAn9gf1RD7U4Cu1pJzklLqUenzLSnJQolGJOQf0LKvH5tcrwTuVItRTv49RFj9tIDBrw
- JY1313x9bVHd4FOqxKc8MrMAbFN8ng7vJu51wDagkyZ8V70fR9pujuTefL5PFQ+48PsI
- zre6wVDrEXgsLmDx5y/DBiRibqAsVb0XdA0t8ym95/jS+sq0de5ndKQpJCrZL2tzDxpx
- 10hY6NociedyLqANbUdSlUzrpys63mjAG34wJNISDnmty/ctY5Wd1hnpS6pAU82WK5bD
- KlzQ==
+ b=Es6cdfBlp9sCXZu4Ze5lb6tBnzTabXJ0sVRgTqcJo21aQxFpGjvVqHxgbSXvc8WxYQ
+ 17Kn8yjRRfUF3eheEqN+LnLh5ESvqrUnKy00uY5PnuMAfm5O/BSIBDCQJnaA3xhKWV+h
+ A0AQHJ4Ve6Q5lIEkAzy2vfl2HQW1UDT3jZRk/hRDiITP5haka2tgMAE23WUEDRFnVMYL
+ HgihB0TVtlWUV9g1yDzyPOTo0Tb00rSDUda5jBGdOYjTWRdOqSNKcf/AMFk5naw3XWUD
+ AnVRWHj9kaLEgKEQ2g73hiYEZRi793QBK7O3aSR0MlB4ZdqEvi1dBYkRuGgu5QjSzq+s
+ 2XhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718731530; x=1719336330;
+ d=1e100.net; s=20230601; t=1718731612; x=1719336412;
  h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
  bh=mIz+uBMleWspMGOXrthG2m3FtkYnjCAe7akkH5AGnWM=;
- b=JI+MkI/pubo975jEfZgk4kT5q0fVGGpFVvI8CzJVe+50S/YGaRdpC4j8+go5lWPWKE
- 6Z0j+T/HNikKHDVRll/qJrLJZploP4OR32QDWl6FTIAWX0Tf6jauCUKR1NaM6KL+wB5T
- q1rVNs9ctWnJyxZWm201VVthtdbbcEd6MEuo+yL8/jp0Z88P66eplHxkFgJJFVDBgVan
- nVxvSCIG8cqDiMrWP/9wcllsBTfun3sBD3skG5Rt6eBWGTV8MJBpnqh/PmtbEOoDewoV
- bHQ/1bVvxkbZ+SzK3uuMiWEDyoLYYUMyiDV+eoyDg7+Xf0hMDeqY6jKtAb53lNIb5b/Z
- lGPA==
-X-Gm-Message-State: AOJu0YwCtAj3usM+2TMZnJtGIsMlT0PQgmzrVsXCUnBwBDmp5ZsUUyDQ
- xzt017O19IQ3QbptWZGeZJrdm8VaU7+GCve96s05mo6slkISMCFWIHc9leJsr7P9UWwPB196Thk
- pjqMs+Ah7NOZBcSJJOLtZAwiiVg==
-X-Google-Smtp-Source: AGHT+IF+IYqipwq+INBn+wOG+lXUlo0C+Cm0B5L6VFhjVrY0oSIpckGFc3xgh8obLRgb2s6tAby0QoYAtQzOUT2Vnf4=
+ b=efQfrb5iQUUwPLe5pdem4+FMUFTbWotqAX6QUmzABRAhnwwTqmI+su0P1VpwJqGD2o
+ ZLIPJDOaUc4w6Ussr6SsTl+aBlKvWJd6bTkOO/q2cE9fKkT/G3m2eHKBVllL5TCDTnwJ
+ psDxtrB0xKc9y0XMY+zA/3hpRzw6sCaFfHbQGPDYbwBHyRiKaYvpLIKJPg8tnqFQoB5e
+ 3r8Siit7NqsGv4Y10Jsb2mrG8dyTvoYVJb8O9roR56Z+1vw02QMVTMJK/+uirTv7ek2d
+ y10Mjo/E79XJu4nmlojbgTCbMAkvbxFDHL0/AKqgZqlVR1cT8MReiaYro6kXbqLFKMFX
+ JMqA==
+X-Gm-Message-State: AOJu0Yx4N6YZY/hTrgtaWpowQZ1hEGdc1wrA9qVoSN1VfyNWcLwO+BuM
+ 5kdcpICamUQ2XAk5/1dOaoGjkI2er9yGTJOQvVhzNpCV03lma6eOQJ408sz4lvgTpsTz/CGnK6T
+ 41lCuRZm5VdduGuClJbgHSWz5LA==
+X-Google-Smtp-Source: AGHT+IHBOv1PdzCsKuq4sgvs6nuKiYTfaU11URmwjnq63RTNBM7y7c0tAj7OawhkACJ5oysicz/1S0R00g03rPzsjlQ=
 X-Received: from nabihestefan.c.googlers.com
  ([fda3:e722:ac3:cc00:20:ed76:c0a8:2737])
- (user=nabihestefan job=sendgmr) by 2002:a05:6a00:1d84:b0:705:dbf5:1905 with
- SMTP id d2e1a72fcca58-70629ce5559mr814b3a.3.1718731530081; Tue, 18 Jun 2024
- 10:25:30 -0700 (PDT)
-Date: Tue, 18 Jun 2024 17:25:27 +0000
+ (user=nabihestefan job=sendgmr) by 2002:a05:690c:887:b0:627:dd6a:134 with
+ SMTP id 00721157ae682-63a8d923fc9mr908607b3.3.1718731612244; Tue, 18 Jun 2024
+ 10:26:52 -0700 (PDT)
+Date: Tue, 18 Jun 2024 17:26:43 +0000
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.45.2.627.g7a2c4fd464-goog
-Message-ID: <20240618172527.3450098-1-nabihestefan@google.com>
+Message-ID: <20240618172643.3451083-1-nabihestefan@google.com>
 Subject: [PATCH] hw/net: Fix Coverity Issue for npcm-gmac
 From: Nabih Estefan <nabihestefan@google.com>
 To: peter.maydell@linaro.org
 Cc: qemu-devel@nongnu.org, kfting@nuvoton.com, wuhaotsh@google.com, 
- jasowang@redhat.org, nabihestefan@google.com
+ jasowang@redhat.com, nabihestefan@google.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
- envelope-from=3CsNxZgwKCpE8vw32zDEz0v819916z.x97Bz7F-yzGz689818F.9C1@flex--nabihestefan.bounces.google.com;
- helo=mail-pf1-x449.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
+ envelope-from=3XMNxZgwKCuMSFGNMJXYJKFSLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--nabihestefan.bounces.google.com;
+ helo=mail-yw1-x1149.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
