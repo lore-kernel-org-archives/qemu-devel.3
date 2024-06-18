@@ -4,80 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27FA2C27C79
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 01:01:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C347C27C79
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 01:12:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJNCx-0006rc-Uj; Mon, 17 Jun 2024 21:00:23 -0400
+	id 1sJNNZ-00028r-Mu; Mon, 17 Jun 2024 21:11:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3sdZwZgYKClw97OLMIAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--fdurso.bounces.google.com>)
- id 1sJMqT-0001yK-Fz
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 20:37:09 -0400
-Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3sdZwZgYKClw97OLMIAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--fdurso.bounces.google.com>)
- id 1sJMqR-0002l3-RW
- for qemu-devel@nongnu.org; Mon, 17 Jun 2024 20:37:09 -0400
-Received: by mail-yw1-x1149.google.com with SMTP id
- 00721157ae682-62f4a831dd8so89438317b3.3
- for <qemu-devel@nongnu.org>; Mon, 17 Jun 2024 17:37:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1718671025; x=1719275825; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=8YP+JCisrP2EHv1oyPdw3Wt1GjDXWfQDW/Bjqlg8csI=;
- b=aeEIhLiZwmHqtJUUOyUQkV9nG/xxkyIE2V/+xZnWLDrzR9vXq0CL8KOGuih3Tqej0J
- lwnFd1ScMwrXD/LcvYm4CVrK9DybW7cHEQxXUudj5yrN0m11qO6PSbR1gH18sVIHiIm5
- uGZBuQgkNj1iRC37jpw17oCCxRlDCycxvX56Ys+t3koDETxJwPK0uLH3OInX8Bg25kM1
- sepCNLz+GYDxNLJSzMDgtxKLEJc6WL/s0OpSvPdUf3MZtTECs0ppNLc8yHu7CeK4dGyK
- 1cZUW4b5f1GGs/74M7Hd8nIU8eurkmMMfTuAbGOKUB+33UpFPOlBRhb1V3jRl1QH9QX6
- SddA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718671025; x=1719275825;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8YP+JCisrP2EHv1oyPdw3Wt1GjDXWfQDW/Bjqlg8csI=;
- b=tpwBAV+n9AKpWN2BCFoO2n1Eplsw54IKg8Z+wKJa2Id/rW4/mwKJuBtwZdS3i68afA
- 8E+Q3NUVK9/yUVoM1UiwhiuFDqT509G39JMAHNKSjoqbwi7kwtHxtxLwhF9nO4eIVQrh
- 9AvwNTi8NYBn9Y6QkMfh0hPDugJQMOBm9e4CHC5WnnWQry5g2AeK2liv0YbwRTsFhHkP
- VubRAo597JNQd9nNG9YioqJx5QjtyNYMG7Vm3d7R4TgdIHDp66rAq3myt4TN7vaY6Zqy
- G5WCdyOPTQFBrRFoqORGi4BjkCEvq69hykd2PIR+5L73L2BaMkMAfYEhONv2EHOe1cuM
- VVNA==
-X-Gm-Message-State: AOJu0YzkOO1WgHR9fuHR62Vq1C0r5gFqYhn88L5BcJFSrPuIbychpTZY
- nEBawmNxyPjzBhfBtDKPfos21CJyxnwcmcj7vtDfC4gOUJxf8+btUG4BVVpx2XgzpND00c3ULn0
- GWF8+i0+Don0V9oQfrDIHvv+vYuBRmH5d5crxhzUiy4otnFNfqimzeDwEy76VHXA5EN5NWN6TXE
- g1PXFFDGn0IwXhNrOPc/eI2q1JkHfo8qI=
-X-Google-Smtp-Source: AGHT+IEgB01OsSnyoCQxrSyANTpGk0aMo3/i8wQrS11RfoZ0U2h8mtisIHbpYrb/aR0Gzlkj0SDbL9orFmg=
-X-Received: from fdurso-c.c.googlers.com
- ([fda3:e722:ac3:cc00:28:9cb1:c0a8:24fd])
- (user=fdurso job=sendgmr) by 2002:a05:690c:7441:b0:630:28e3:2568 with SMTP id
- 00721157ae682-6322294d217mr33196677b3.3.1718671025114; Mon, 17 Jun 2024
- 17:37:05 -0700 (PDT)
-Date: Tue, 18 Jun 2024 02:36:57 +0200
-Mime-Version: 1.0
-Message-ID: <20240618003657.3344685-1-fdurso@google.com>
-Subject: [PATCH] hw/usb/dev-mtp: Correctly report free space
-From: "Fabio D'Urso" <fdurso@google.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, "Fabio D'Urso" <fdurso@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
- envelope-from=3sdZwZgYKClw97OLMIAIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--fdurso.bounces.google.com;
- helo=mail-yw1-x1149.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1sJNNW-00028O-Lz
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 21:11:18 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1sJNNT-0008VK-Ow
+ for qemu-devel@nongnu.org; Mon, 17 Jun 2024 21:11:18 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8Cx_eqs3nBmVMYHAA--.30978S3;
+ Tue, 18 Jun 2024 09:11:08 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxJMWq3nBm+qEmAA--.17246S3; 
+ Tue, 18 Jun 2024 09:11:08 +0800 (CST)
+Subject: Re: [PATCH 11/18] tcg/loongarch64: Simplify tcg_out_addsub_vec
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: git@xen0n.name
+References: <20240527211912.14060-1-richard.henderson@linaro.org>
+ <20240527211912.14060-12-richard.henderson@linaro.org>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <f0bcb557-8b8a-492f-8754-3565875a2c46@loongson.cn>
+Date: Tue, 18 Jun 2024 09:11:09 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <20240527211912.14060-12-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8CxJMWq3nBm+qEmAA--.17246S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7WFWDKr4UAF4xtrWxZryDCFX_yoW8ZF4fpr
+ nxKr43tFWFqF4fJFWaka4DGw1rur4F9as0qwsayw1xurs3twn8uryrKrnFvF9rA34Igw4Y
+ v3WYvr47Ga1jyFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-1.388, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 17 Jun 2024 21:00:22 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,29 +83,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to compute the amount of free space (in bytes), the number
-of available blocks (f_bavail) should be multiplied by the block
-size (f_frsize) instead of the total number of blocks (f_blocks).
+ÔÚ 2024/5/28 ÉÏÎç5:19, Richard Henderson Ð´µÀ:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/loongarch64/tcg-target.c.inc | 29 +++++++++++++++--------------
+>   1 file changed, 15 insertions(+), 14 deletions(-)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-Signed-off-by: Fabio D'Urso <fdurso@google.com>
----
- hw/usb/dev-mtp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/usb/dev-mtp.c b/hw/usb/dev-mtp.c
-index 7e4a0765ae..554b397e88 100644
---- a/hw/usb/dev-mtp.c
-+++ b/hw/usb/dev-mtp.c
-@@ -886,7 +886,7 @@ static MTPData *usb_mtp_get_storage_info(MTPState *s, MTPControl *c)
-     rc = statvfs(s->root, &buf);
-     if (rc == 0) {
-         usb_mtp_add_u64(d, (uint64_t)buf.f_frsize * buf.f_blocks);
--        usb_mtp_add_u64(d, (uint64_t)buf.f_bavail * buf.f_blocks);
-+        usb_mtp_add_u64(d, (uint64_t)buf.f_frsize * buf.f_bavail);
-         usb_mtp_add_u32(d, buf.f_ffree);
-     } else {
-         usb_mtp_add_u64(d, 0xffffffff);
--- 
-2.45.2.627.g7a2c4fd464-goog
+Thanks.
+Song Gao
+> diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+> index c7d0c7839b..47011488dd 100644
+> --- a/tcg/loongarch64/tcg-target.c.inc
+> +++ b/tcg/loongarch64/tcg-target.c.inc
+> @@ -1774,33 +1774,34 @@ static void tcg_out_addsub_vec(TCGContext *s, unsigned vece, const TCGArg a0,
+>       static const LoongArchInsn sub_vec_imm_insn[4] = {
+>           OPC_VSUBI_BU, OPC_VSUBI_HU, OPC_VSUBI_WU, OPC_VSUBI_DU
+>       };
+> +    LoongArchInsn insn;
+>   
+>       if (a2_is_const) {
+>           int64_t value = sextract64(a2, 0, 8 << vece);
+> +
+>           if (!is_add) {
+>               value = -value;
+>           }
+> -
+> -        /* Try vaddi/vsubi */
+> -        if (0 <= value && value <= 0x1f) {
+> -            tcg_out32(s, encode_vdvjuk5_insn(add_vec_imm_insn[vece], a0, \
+> -                                             a1, value));
+> -            return;
+> -        } else if (-0x1f <= value && value < 0) {
+> -            tcg_out32(s, encode_vdvjuk5_insn(sub_vec_imm_insn[vece], a0, \
+> -                                             a1, -value));
+> -            return;
+> +        if (value < 0) {
+> +            insn = sub_vec_imm_insn[vece];
+> +            value = -value;
+> +        } else {
+> +            insn = add_vec_imm_insn[vece];
+>           }
+>   
+> -        /* constraint TCG_CT_CONST_VADD ensures unreachable */
+> -        g_assert_not_reached();
+> +        /* Constraint TCG_CT_CONST_VADD ensures validity. */
+> +        tcg_debug_assert(0 <= value && value <= 0x1f);
+> +
+> +        tcg_out32(s, encode_vdvjuk5_insn(insn, a0, a1, value));
+> +        return;
+>       }
+>   
+>       if (is_add) {
+> -        tcg_out32(s, encode_vdvjvk_insn(add_vec_insn[vece], a0, a1, a2));
+> +        insn = add_vec_insn[vece];
+>       } else {
+> -        tcg_out32(s, encode_vdvjvk_insn(sub_vec_insn[vece], a0, a1, a2));
+> +        insn = sub_vec_insn[vece];
+>       }
+> +    tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
+>   }
+>   
+>   static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
 
 
