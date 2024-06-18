@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0971C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 08:18:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E59C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 08:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJU2O-0002Er-VY; Tue, 18 Jun 2024 04:17:57 -0400
+	id 1sJU4r-0003Iy-At; Tue, 18 Jun 2024 04:20:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1sJU2N-0002EV-9F; Tue, 18 Jun 2024 04:17:55 -0400
+ id 1sJU4q-0003IZ-5l; Tue, 18 Jun 2024 04:20:28 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1sJU1z-0007aL-8j; Tue, 18 Jun 2024 04:17:49 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45I6v6lM024646;
- Tue, 18 Jun 2024 08:17:08 GMT
+ id 1sJU4U-0007u1-Gb; Tue, 18 Jun 2024 04:20:27 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45I75YIA029476;
+ Tue, 18 Jun 2024 08:19:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
  message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=p
- 4rG2YaqzrRIO+MMINsQ3D5buVJiWdOwd4tF3/5pfn4=; b=Zb5p2ybTcXxmmpqHS
- xOGf3Dl3xD74lRW3dhhhapDf96ABgLvXpUi1vvMWr5JiXeEXbFllS0iA5hIhKxgU
- vXZTkKRVKP/Q8scdD9hBaY4e/MwsgRzM9yK+hpTaHkCugSIVxTz8suacroDPbSsb
- WWKW0sJpIJgrRi5H1fEqDsDy0ehjpzvkHaBWzVSADIYWP1TfbPUpTtsxoOdMlJBz
- E3nUmflWBPuPwkTu5NVQZ+kcWGcVSax6o6wcVUO05jiskw9/PAY+YNUyASSZFJng
- lflhhQ6atdobVX/51Lup/tHeg+TQ95UcYzi10b0drYuouCbwCPL8ewKlndsKZc97
- NMORA==
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=m
+ 3BaxC2uAfWIIJMv4rQdaKwNRRdQxZcKJEOSPQns5Ko=; b=eez0h61/j1PFMO3qv
+ hOushOubXyX9oDbt025eTlhGSbcwfBY+4NKbXTrfbkTWMWotP98u6EXPS7kitnuj
+ F4qPJrjvn9LCfbC37CGE//a/ejZSZejjxoPMzcvAMb5SFjxvqvmknkln641+DmWE
+ fkFDfAdNUh8vPT8a4bHDu0zT5JVqSLMghtT0mfzfIQpW/SHnHfRyOgLjWkdXpTdN
+ 6opLl4VzzwAUBXNckcrWHxW5j8P4bI4Qsd8dMzPdL0QHUvBzyQ4DFRJnHLB3kciM
+ zSipbkiX40anx4Q/nf1OUVkNkBIJkxYKeaHEc/gPs5gn6TpFMtEmmZS1d2O84U7Z
+ BCZcg==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu4jarbar-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu4ja8ar0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Jun 2024 08:17:08 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45I8H79W021541;
- Tue, 18 Jun 2024 08:17:07 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu4jarbag-1
+ Tue, 18 Jun 2024 08:19:48 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45I8JloL017858;
+ Tue, 18 Jun 2024 08:19:47 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yu4ja8aqy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Jun 2024 08:17:07 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45I7B7EO023990; Tue, 18 Jun 2024 08:17:01 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ysp9q161t-1
+ Tue, 18 Jun 2024 08:19:47 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45I7nP2r009422; Tue, 18 Jun 2024 08:19:47 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ysqgmgv14-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Jun 2024 08:17:01 +0000
+ Tue, 18 Jun 2024 08:19:46 +0000
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45I8Gtq546727628
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45I8Jfr456557934
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Jun 2024 08:16:57 GMT
+ Tue, 18 Jun 2024 08:19:43 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 407F62004E;
- Tue, 18 Jun 2024 08:16:55 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8802B20043;
+ Tue, 18 Jun 2024 08:19:41 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E5D3A20040;
- Tue, 18 Jun 2024 08:16:53 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3E6502004D;
+ Tue, 18 Jun 2024 08:19:40 +0000 (GMT)
 Received: from [9.199.192.140] (unknown [9.199.192.140])
  by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 18 Jun 2024 08:16:53 +0000 (GMT)
-Message-ID: <326e17c7-ee1d-4f5d-9450-eba74ecd2110@linux.vnet.ibm.com>
-Date: Tue, 18 Jun 2024 13:46:53 +0530
+ Tue, 18 Jun 2024 08:19:40 +0000 (GMT)
+Message-ID: <46f033b8-a94c-4479-a9ae-8e8edcbf127d@linux.vnet.ibm.com>
+Date: Tue, 18 Jun 2024 13:49:39 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 2/4] target/ppc: Move VSX vector with length storage
@@ -78,25 +78,25 @@ Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
 References: <20240613093318.314913-1-rathc@linux.ibm.com>
  <20240613093318.314913-3-rathc@linux.ibm.com>
  <6638b813-f4ef-4587-b94f-3c24d90ca09e@linaro.org>
- <358b393d-7c43-4a28-b8da-8221df5031a5@linux.vnet.ibm.com>
- <76ba68c3-64ae-43dd-bed6-8312232b221c@linaro.org>
+ <94d97af2-62e2-4fde-909b-c57af8ef814f@linux.vnet.ibm.com>
+ <a50d339b-d44a-41c1-bb28-82eb761771a1@linaro.org>
 Content-Language: en-US
 From: Chinmay Rath <rathc@linux.vnet.ibm.com>
-In-Reply-To: <76ba68c3-64ae-43dd-bed6-8312232b221c@linaro.org>
+In-Reply-To: <a50d339b-d44a-41c1-bb28-82eb761771a1@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: RS6_MtzkqSuRfkQWVt1wNsDV9-qPBPPs
-X-Proofpoint-GUID: j_QSGffaA6WZGssRlnB_IwWUj1KzmMEh
+X-Proofpoint-GUID: dYQhDw3TEsLwooFpZwcQzWHUi_5x33Do
+X-Proofpoint-ORIG-GUID: eiQwhnKdObQ-COoIrTDIUrDB_a7cn9Az
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-18_02,2024-06-17_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- phishscore=0 clxscore=1015 lowpriorityscore=0 impostorscore=0 adultscore=0
- spamscore=0 mlxscore=0 malwarescore=0 mlxlogscore=747 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406180057
+ spamscore=0
+ priorityscore=1501 impostorscore=0 mlxscore=0 lowpriorityscore=0
+ suspectscore=0 phishscore=0 malwarescore=0 bulkscore=0 clxscore=1015
+ mlxlogscore=604 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2405170001 definitions=main-2406180057
 Received-SPF: none client-ip=148.163.156.1;
  envelope-from=rathc@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
@@ -123,50 +123,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 6/17/24 23:15, Richard Henderson wrote:
-> On 6/17/24 03:40, Chinmay Rath wrote:
->> static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
->> {
->>      TCGv EA;
->>      if (!ra) {
->>          return tcg_constant_tl(0);
->>      }
->>      if (NARROW_MODE(ctx)) {
->>          EA = tcg_temp_new();
->>          tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
->>      } else {
->>          return cpu_gpr[ra];
->>      }
->>      return EA;
->> }
+On 6/17/24 23:27, Richard Henderson wrote:
+> On 6/17/24 04:51, Chinmay Rath wrote:
 >>
+>>
+>> Hi Richard,
+>> On 6/17/24 00:43, Richard Henderson wrote:
+>>> On 6/13/24 02:33, Chinmay Rath wrote:
+>>>> +/* EA <- (ra == 0) ? 0 : GPR[ra] */
+>>>> +static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
+>>>> +{
+>>>> +    TCGv EA;
+>>>> +    if (!ra) {
+>>>> +        EA = tcg_constant_tl(0);
+>>>> +        return EA;
+>>>> +    }
+>>>> +    EA = tcg_temp_new();
+>>>> +    if (NARROW_MODE(ctx)) {
+>>>> +        tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
+>>>> +    } else {
+>>>> +        tcg_gen_mov_tl(EA, cpu_gpr[ra]);
+>>>
+>>> Why are you making a copy, rather than just returning cpu_gpr[ra]?
 >>> If you need to modify the resulting EA, then you also need to make a 
 >>> copy for 0.
 >>>
->> Hey, didn't properly get what you meant here.
->> Did you mean : Since I'm using a tcg_constant for 0, if the EA is to 
->> be modified later, this constant would be an issue, in which case, I 
->> should make a copy for it ??
+>> Please ignore my previous response.
+>> I think do_ea_calc_ra should allow modification to the resulting EA, 
+>> hence below change appears more appropriate to me :
+>>
+>> /* EA <- (ra == 0) ? 0 : GPR[ra] */
+>> static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
+>> {
+>>      TCGv EA = tcg_temp_new();
+>>      if (!ra) {
+>>          tcg_gen_movi_tl(EA, 0);
+>>          return EA;
+>>      }
+>>      if (NARROW_MODE(ctx)) {
+>>          tcg_gen_ext32u_tl(EA, cpu_gpr[ra]);
+>>      } else {
+>>          tcg_gen_mov_tl(EA, cpu_gpr[ra]);
+>>      }
+>>      return EA;
+>> }
 >
-> Yes.
->
->> Considering that, there are no tcg level modifications with this EA.
->
-> Ok, good.
->
->
->> However, the underlying helper method, which considers this EA as a 
->> target_ulong type does modify it, which I don't think should be an 
->> issue.
->
-> Correct, that's fine.
-Awesome ! Thanks for the clarification.
+> If that's what's needed by the callers of do_ea_calc_ra, then yes.
+> You can drop the first return EA and use else if instead.
+Sure.
+I shall stick to keeping EA modifiable, (even though it is not modified 
+by the callers in this patch),
+to allow its proper usage by (p){lx, stx}vp insns in future.
 
-Regards,
+Thanks & Regards,
 Chinmay
 >
 >
 > r~
->
 
 
