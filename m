@@ -4,53 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF36BC2BC81
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23B89C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:12:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbRL-0005a6-Pv; Tue, 18 Jun 2024 12:12:11 -0400
+	id 1sJbLN-0006PY-Rr; Tue, 18 Jun 2024 12:06:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Of75=NU=kaod.org=clg@ozlabs.org>)
- id 1sJbRI-0005MY-VO; Tue, 18 Jun 2024 12:12:09 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=Of75=NU=kaod.org=clg@ozlabs.org>)
- id 1sJbRG-0000WL-7C; Tue, 18 Jun 2024 12:12:08 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W3Wwc6Jywz4wyl;
- Wed, 19 Jun 2024 02:12:00 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W3WwY172vz4w2Q;
- Wed, 19 Jun 2024 02:11:56 +1000 (AEST)
-Message-ID: <0b29566d-eb1e-4540-a7cd-efcab6cc6a32@kaod.org>
-Date: Tue, 18 Jun 2024 18:11:54 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbLF-0006PE-Hp
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:05:53 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJbLD-0007jV-LF
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:05:53 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-362f62ae4c5so120809f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 09:05:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718726750; x=1719331550; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KzZq3iGA+Ys+b27eQPwLx5mcriu5b6pZoRIjvgOYd8M=;
+ b=e8h/2AfyKnK3l7aVl4AN8Rzky0GrIIOYTQqJq0d3WaKkQTDGV43dJOgQhTREfKVjy9
+ Ypn1IEjrTS6DuacOnjbrOISQAyNPR8/1RlQWQoW9/mzKpP4uDPJGpjqltOdpcWdND47J
+ 06aeaBJ86FopD+JqCMB5ws8taqWhG8q0ZhPjjcbTr1MHRRkdMcLVotzD5pxtGzXmy/8i
+ 7USeyp0qwOQar+JfaaosRgoO+rn05OtBwoqW4iDvQmlQf7hbGdDMyuhwJT1SyBX/qNet
+ Lwm44tRYLBUeK7FgmeAqoNaqbwaBmnbExIOf/fqhCcbc5Mo3X5nsVpxG0LBoBW8+X17/
+ jN2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718726750; x=1719331550;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KzZq3iGA+Ys+b27eQPwLx5mcriu5b6pZoRIjvgOYd8M=;
+ b=ICS7q8s6PeuNlhGdMI/xlCttFN80RdJ4iJRodEBRJlnnHEEhe7G8kPUuyALbiGJfA2
+ OeSD1FaeuZKIDPKdeYsCeU4ezlbl4iWXl1zOHz+GIPc7H/AVGghy+nHtoKpC+JxUIeE+
+ Zgc2iEp/cwnYjt6BkN5/d/ckyZYIowIFC79NgWSseJ52c/9yNZqdMulHDmWUghGCaemF
+ M/Qyj7xVHtex89AOhPZeL6mOo7yjrHMuylvQ2VQRjIzo38G46v2WaO+xqIwzPC0wiVy1
+ 2w4TaUhgTAIi00RB9L02hlx3FIgXizhlpx5RC94q4ob76p1phZXcqma+xY/+DiembdX2
+ gEOA==
+X-Gm-Message-State: AOJu0YzlOJqA5sfKiuI6N8JxEXqf1YanNyIs2oWSTJyf5VFb6QtNDPyu
+ gLWXgnOjSCHpTCBb2GBUooj+3CxdjzTXOx4umg/9Q0BSlDmxKbssyXTLbhKP8nQbfB1jFH1V6ub
+ B
+X-Google-Smtp-Source: AGHT+IGwfHe86djaPMrWAqocVmLNPm1nYoZM7OOGcLLDZ/ENSv/6Ap22PcNYws88XdJc3NtaUGczDw==
+X-Received: by 2002:a5d:4052:0:b0:362:8138:f45e with SMTP id
+ ffacd0b85a97d-362ffb429d4mr362808f8f.17.1718726749759; 
+ Tue, 18 Jun 2024 09:05:49 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.212.55])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36075093a3fsm14582256f8f.1.2024.06.18.09.05.48
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 18 Jun 2024 09:05:49 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 53/76] ppc/pnv: Introduce pnv_chip_foreach_cpu()
+Date: Tue, 18 Jun 2024 18:00:15 +0200
+Message-ID: <20240618160039.36108-54-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240618160039.36108-1-philmd@linaro.org>
+References: <20240618160039.36108-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/5] tests/qtest: Add pnv-spi-seeprom qtest
-To: Chalapathi V <chalapathi.v@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- calebs@us.ibm.com, chalapathi.v@ibm.com, saif.abrar@linux.ibm.com,
- dantan@us.ibm.com, milesg@linux.ibm.com
-References: <20240617165419.8388-1-chalapathi.v@linux.ibm.com>
- <20240617165419.8388-6-chalapathi.v@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240617165419.8388-6-chalapathi.v@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=Of75=NU=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,153 +95,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/17/24 6:54 PM, Chalapathi V wrote:
-> In this commit Write a qtest pnv-spi-seeprom-test to check the
-> SPI transactions between spi controller and seeprom device.
-> 
-> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+From: Cédric Le Goater <clg@redhat.com>
 
+This helper routine uses the machine definition, sockets, cores and
+threads, to loop on all CPUs of the machine. Replace CPU_FOREACH()
+with it.
 
-Acked-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240424093048.180966-1-clg@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/ppc/pnv.c | 50 +++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 37 insertions(+), 13 deletions(-)
 
-Thanks,
-
-C.
-
-
-> ---
->   tests/qtest/pnv-spi-seeprom-test.c | 110 +++++++++++++++++++++++++++++
->   tests/qtest/meson.build            |   1 +
->   2 files changed, 111 insertions(+)
->   create mode 100644 tests/qtest/pnv-spi-seeprom-test.c
-> 
-> diff --git a/tests/qtest/pnv-spi-seeprom-test.c b/tests/qtest/pnv-spi-seeprom-test.c
-> new file mode 100644
-> index 0000000000..92bc8a11ae
-> --- /dev/null
-> +++ b/tests/qtest/pnv-spi-seeprom-test.c
-> @@ -0,0 +1,110 @@
-> +/*
-> + * QTest testcase for PowerNV 10 Seeprom Communications
-> + *
-> + * Copyright (c) 2024, IBM Corporation.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#include <unistd.h>
-> +#include "qemu/osdep.h"
-> +#include "libqtest.h"
-> +#include "qemu/bswap.h"
-> +#include "hw/ssi/pnv_spi_regs.h"
-> +#include "pnv-xscom.h"
-> +
-> +#define FLASH_SIZE              (512 * 1024)
-> +#define SPIC2_XSCOM_BASE        0xc0040
-> +
-> +/* To transmit READ opcode and address */
-> +#define READ_OP_TDR_DATA        0x0300010000000000
-> +/*
-> + * N1 shift - tx 4 bytes (transmit opcode and address)
-> + * N2 shift - tx and rx 8 bytes.
-> + */
-> +#define READ_OP_COUNTER_CONFIG  0x2040000000002b00
-> +/* SEQ_OP_SELECT_RESPONDER - N1 Shift - N2 Shift * 5 - SEQ_OP_STOP */
-> +#define READ_OP_SEQUENCER       0x1130404040404010
-> +
-> +/* To transmit WREN(Set Write Enable Latch in status0 register) opcode */
-> +#define WRITE_OP_WREN           0x0600000000000000
-> +/* To transmit WRITE opcode, address and data */
-> +#define WRITE_OP_TDR_DATA       0x0300010012345678
-> +/* N1 shift - tx 8 bytes (transmit opcode, address and data) */
-> +#define WRITE_OP_COUNTER_CONFIG 0x4000000000002000
-> +/* SEQ_OP_SELECT_RESPONDER - N1 Shift - SEQ_OP_STOP */
-> +#define WRITE_OP_SEQUENCER      0x1130100000000000
-> +
-> +static void pnv_spi_xscom_write(QTestState *qts, const PnvChip *chip,
-> +        uint32_t reg, uint64_t val)
-> +{
-> +    uint32_t pcba = SPIC2_XSCOM_BASE + reg;
-> +    qtest_writeq(qts, pnv_xscom_addr(chip, pcba), val);
-> +}
-> +
-> +static uint64_t pnv_spi_xscom_read(QTestState *qts, const PnvChip *chip,
-> +        uint32_t reg)
-> +{
-> +    uint32_t pcba = SPIC2_XSCOM_BASE + reg;
-> +    return qtest_readq(qts, pnv_xscom_addr(chip, pcba));
-> +}
-> +
-> +static void spi_seeprom_transaction(QTestState *qts, const PnvChip *chip)
-> +{
-> +    /* SPI transactions to SEEPROM to read from SEEPROM image */
-> +    pnv_spi_xscom_write(qts, chip, SPI_CTR_CFG_REG, READ_OP_COUNTER_CONFIG);
-> +    pnv_spi_xscom_write(qts, chip, SPI_SEQ_OP_REG, READ_OP_SEQUENCER);
-> +    pnv_spi_xscom_write(qts, chip, SPI_XMIT_DATA_REG, READ_OP_TDR_DATA);
-> +    pnv_spi_xscom_write(qts, chip, SPI_XMIT_DATA_REG, 0);
-> +    /* Read 5*8 bytes from SEEPROM at 0x100 */
-> +    uint64_t rdr_val = pnv_spi_xscom_read(qts, chip, SPI_RCV_DATA_REG);
-> +    g_test_message("RDR READ = 0x%lx", rdr_val);
-> +    rdr_val = pnv_spi_xscom_read(qts, chip, SPI_RCV_DATA_REG);
-> +    rdr_val = pnv_spi_xscom_read(qts, chip, SPI_RCV_DATA_REG);
-> +    rdr_val = pnv_spi_xscom_read(qts, chip, SPI_RCV_DATA_REG);
-> +    rdr_val = pnv_spi_xscom_read(qts, chip, SPI_RCV_DATA_REG);
-> +    g_test_message("RDR READ = 0x%lx", rdr_val);
-> +
-> +    /* SPI transactions to SEEPROM to write to SEEPROM image */
-> +    pnv_spi_xscom_write(qts, chip, SPI_CTR_CFG_REG, WRITE_OP_COUNTER_CONFIG);
-> +    /* Set Write Enable Latch bit of status0 register */
-> +    pnv_spi_xscom_write(qts, chip, SPI_SEQ_OP_REG, WRITE_OP_SEQUENCER);
-> +    pnv_spi_xscom_write(qts, chip, SPI_XMIT_DATA_REG, WRITE_OP_WREN);
-> +    /* write 8 bytes to SEEPROM at 0x100 */
-> +    pnv_spi_xscom_write(qts, chip, SPI_SEQ_OP_REG, WRITE_OP_SEQUENCER);
-> +    pnv_spi_xscom_write(qts, chip, SPI_XMIT_DATA_REG, WRITE_OP_TDR_DATA);
-> +}
-> +
-> +static void test_spi_seeprom(const void *data)
-> +{
-> +    const PnvChip *chip = data;
-> +    QTestState *qts = NULL;
-> +    g_autofree char *tmp_path = NULL;
-> +    int ret;
-> +    int fd;
-> +
-> +    /* Create a temporary raw image */
-> +    fd = g_file_open_tmp("qtest-seeprom-XXXXXX", &tmp_path, NULL);
-> +    g_assert(fd >= 0);
-> +    ret = ftruncate(fd, FLASH_SIZE);
-> +    g_assert(ret == 0);
-> +    close(fd);
-> +
-> +    qts = qtest_initf("-m 2G -machine powernv10 -smp 2,cores=2,"
-> +                      "threads=1 -accel tcg,thread=single -nographic "
-> +                      "-blockdev node-name=pib_spic2,driver=file,"
-> +                      "filename=%s -device 25csm04,bus=pnv-spi-bus.2,cs=0,"
-> +                      "drive=pib_spic2", tmp_path);
-> +    spi_seeprom_transaction(qts, chip);
-> +    qtest_quit(qts);
-> +    unlink(tmp_path);
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    g_test_init(&argc, &argv, NULL);
-> +    char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
-> +            pnv_chips[3].cpu_model);
-> +    qtest_add_data_func(tname, &pnv_chips[3], test_spi_seeprom);
-> +    g_free(tname);
-> +    return g_test_run();
-> +}
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 86293051dc..2fa98b2430 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -171,6 +171,7 @@ qtests_ppc64 = \
->     qtests_ppc + \
->     (config_all_devices.has_key('CONFIG_PSERIES') ? ['device-plug-test'] : []) +               \
->     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-xscom-test'] : []) +                 \
-> +  (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-spi-seeprom-test'] : []) +           \
->     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-host-i2c-test'] : []) +              \
->     (config_all_devices.has_key('CONFIG_PSERIES') ? ['rtas-test'] : []) +                      \
->     (slirp.found() ? ['pxe-test'] : []) +              \
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 03c595788f..6b41d1d2dd 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -2261,6 +2261,21 @@ PowerPCCPU *pnv_chip_find_cpu(PnvChip *chip, uint32_t pir)
+     return NULL;
+ }
+ 
++static void pnv_chip_foreach_cpu(PnvChip *chip,
++                   void (*fn)(PnvChip *chip, PowerPCCPU *cpu, void *opaque),
++                   void *opaque)
++{
++    int i, j;
++
++    for (i = 0; i < chip->nr_cores; i++) {
++        PnvCore *pc = chip->cores[i];
++
++        for (j = 0; j < CPU_CORE(pc)->nr_threads; j++) {
++            fn(chip, pc->threads[j], opaque);
++        }
++    }
++}
++
+ static ICSState *pnv_ics_get(XICSFabric *xi, int irq)
+ {
+     PnvMachineState *pnv = PNV_MACHINE(xi);
+@@ -2329,22 +2344,25 @@ static ICPState *pnv_icp_get(XICSFabric *xi, int pir)
+     return cpu ? ICP(pnv_cpu_state(cpu)->intc) : NULL;
+ }
+ 
++static void pnv_pic_intc_print_info(PnvChip *chip, PowerPCCPU *cpu,
++                                    void *opaque)
++{
++    PNV_CHIP_GET_CLASS(chip)->intc_print_info(chip, cpu, opaque);
++}
++
+ static void pnv_pic_print_info(InterruptStatsProvider *obj, GString *buf)
+ {
+     PnvMachineState *pnv = PNV_MACHINE(obj);
+     int i;
+-    CPUState *cs;
+-
+-    CPU_FOREACH(cs) {
+-        PowerPCCPU *cpu = POWERPC_CPU(cs);
+-
+-        /* XXX: loop on each chip/core/thread instead of CPU_FOREACH() */
+-        PNV_CHIP_GET_CLASS(pnv->chips[0])->intc_print_info(pnv->chips[0], cpu,
+-                                                           buf);
+-    }
+ 
+     for (i = 0; i < pnv->num_chips; i++) {
+-        PNV_CHIP_GET_CLASS(pnv->chips[i])->pic_print_info(pnv->chips[i], buf);
++        PnvChip *chip = pnv->chips[i];
++
++        /* First CPU presenters */
++        pnv_chip_foreach_cpu(chip, pnv_pic_intc_print_info, buf);
++
++        /* Then other devices, PHB, PSI, XIVE */
++        PNV_CHIP_GET_CLASS(chip)->pic_print_info(chip, buf);
+     }
+ }
+ 
+@@ -2545,12 +2563,18 @@ static void pnv_cpu_do_nmi_on_cpu(CPUState *cs, run_on_cpu_data arg)
+     }
+ }
+ 
++static void pnv_cpu_do_nmi(PnvChip *chip, PowerPCCPU *cpu, void *opaque)
++{
++    async_run_on_cpu(CPU(cpu), pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
++}
++
+ static void pnv_nmi(NMIState *n, int cpu_index, Error **errp)
+ {
+-    CPUState *cs;
++    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
++    int i;
+ 
+-    CPU_FOREACH(cs) {
+-        async_run_on_cpu(cs, pnv_cpu_do_nmi_on_cpu, RUN_ON_CPU_NULL);
++    for (i = 0; i < pnv->num_chips; i++) {
++        pnv_chip_foreach_cpu(pnv->chips[i], pnv_cpu_do_nmi, NULL);
+     }
+ }
+ 
+-- 
+2.41.0
 
 
