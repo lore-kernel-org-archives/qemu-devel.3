@@ -4,77 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76E1EC27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 15:37:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AD0CC27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 15:40:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJatF-0006bv-6F; Tue, 18 Jun 2024 11:36:57 -0400
+	id 1sJaw2-0007mj-QV; Tue, 18 Jun 2024 11:39:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sJatD-0006bH-Ok; Tue, 18 Jun 2024 11:36:55 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJaw1-0007mM-CC
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 11:39:49 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sJatC-0002kt-4b; Tue, 18 Jun 2024 11:36:55 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a6ef8bf500dso633339566b.0; 
- Tue, 18 Jun 2024 08:36:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJavz-0003BM-MY
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 11:39:49 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-42172ed3597so35228755e9.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 08:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718725012; x=1719329812; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QhbL8CkusD649lr7/uCKnJLNVOjDQnum1nYhn69OEEQ=;
- b=JO5cFyaAmr7x7bifPKAU0orq/DzbYLz+xrZZyM9Sqn7b9mUq8kgLF0U+veYCdVO2Gd
- mCIgeQXDg8VEuSi+TBYjMeELYJ1Lo4xAsO6JGtMLV+ZaZLsokZY1KIrcT2OLv8ocCCXl
- 73j4LCe3UMJuhBdkV207IFLYyfRY/emj/IThZZNMqtU+bfJrPKF5nvV0t+QjM1dzxuYp
- 5/oFpL+llhahRFckAJbY77dBM+fzxas+K9EVQpzJfI11rL8pX0Qh/5xwaZlAeSPxQvLg
- i/a4aAUdv7QHH0zVDm02z8KulK//evIdG4uwDpe86fWVTRe2lCwD9n4ZdVodplx+8mK+
- qtbg==
+ d=linaro.org; s=google; t=1718725186; x=1719329986; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Yu6Dtl5Me2scqu5zqgdTdZQnMfpjxhir/OsuntZ3Lmk=;
+ b=d5DvPYGMPiO+xLFXQlUzdzMwrMinM9IL/pPbGegb1nDWXuHenUc9tk/WzUwBG7SOOl
+ 5TcbTrOoMQHprT22bBLcFrszIKg7qrZCA8ddiX4M5nGhuxtL46Fc+OfbR9GOiN3/LuAh
+ o1MIlRx5h1wU6hh/+88Ml4F8wDS11vgXosgtbqJJXPN+tBb4N9+eHUUmuV9J5V+5tfm4
+ sLJ4aqiCIhWbG8ZMQWAwoI06aopoB6ibf5LL1wghoVMRdhLzTIZFMdncSW4CdC7CKXos
+ myLp9dDmbohZGwAXI8I/zcy/GhJYY9tsR6DpcDAoZVTAxzAELssUAdztNT0Fn8lrdJLa
+ 1czA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718725012; x=1719329812;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QhbL8CkusD649lr7/uCKnJLNVOjDQnum1nYhn69OEEQ=;
- b=pLumtaN0dlR8gfrpf51FAvmXvPXL6Wa2KCc7OVJaOudWzztNiZsVZohf4Im9Uj0ase
- inZyFt0aK1nbvCRJm/n+e8ZETL3mrfGAoVsImdY4SLOmVH00zzA9fYaGfiTV+GLwMEzy
- dyyiq7qnLbe9KA02dXL7GXbrr3xq2e9QBI/ASsilRFcHqgec+GdaCrJ33nRPeYtj+asd
- NCAfDeWSMoTYX6HbHTgJ9XyO6R0XDY/9Df7IUdO3JC/y1+omfE7cvXW6Q5ebwG8m5EQ2
- Lc3AnrwfLg66b6MXTKxMRdbe310TpqSBcdG62spVBHZ0FsoF5IygOQV8pVZCOjLYJKfg
- NAgA==
+ d=1e100.net; s=20230601; t=1718725186; x=1719329986;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Yu6Dtl5Me2scqu5zqgdTdZQnMfpjxhir/OsuntZ3Lmk=;
+ b=RlGkCJJYzmr0O7dduDtHo+QtQejXMh/ZgT7XLKh4Ol1q+RTihqEE/jB2fcRrKhtFxa
+ ttVV06ld+cbnf4bL1Z95qRW/dTQUJB1DZTkkEK95NV8U9S2jgTOsv7iRM0VEtQwhG37A
+ CzUJfUlXPGSMdTYqt3ISBeCmXURV1p/cvVcEd/dNSoAhcq0OKmrzR0Z+TxQiYAGD3Lg5
+ tEddm1zNym9tYO2UQ+plstuvbjgx8PbSNNNU+ZTm0W1cqdzmJ71fJIXYk82p9P8uqp3m
+ xQ4G9SJLpnEnuQYS7iCxJM4sBHukvZIJV06s9eWBEDmYIhf45dccDwg1bICddkbAjZyN
+ yMlw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVxME2B0V2y7FEUpEfvknWsFnRWeieM83AM5eqxSKJzaTgSlXSXCMOaVWYTQQNEuwRqk2sh3E8AHSNnlUlOLvFRCQGcYKRye71toRVVUgeIcescaKQlRVywPA=
-X-Gm-Message-State: AOJu0YypMuUM2ZUZhsi9rWuITrctAIcsthrcwx4PRUHbi5zLTVKBN3ZX
- DiWHI9dWR1JIXwcqKc69nvKalaCBREv03EcbqW0J6RDh6s7x39mNJnNGa/hZDA==
-X-Google-Smtp-Source: AGHT+IFzL+E7GN/4jv7L1+9wB94b1pLRQuAO/kpOetdUlM5IE8jq/ng4zAenL3ry7HZddW/ANs5gSQ==
-X-Received: by 2002:a17:906:1854:b0:a6f:1dbb:d38b with SMTP id
- a640c23a62f3a-a6f60d2bd6dmr861595066b.28.1718725011933; 
- Tue, 18 Jun 2024 08:36:51 -0700 (PDT)
-Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
+ AJvYcCUPlxebFLkFm6iZ6oBvFCYUyxvbl3Bv2WuIQmHZRqouRO7xGGZo2WF97tnhU4nstAIGnQvpyJ/my1Sc13Z05TB9ebv7OVI=
+X-Gm-Message-State: AOJu0YwvybXxADmTIIZzePLB7sjXeeci0BwbSjKCaY9eE5hZUHp6/iOV
+ lE36SwvkUyBV/kYPaJOMlpxr46VItfACprdBnTwu40zsWxgHCiIYtvkFqcdjm1afOemKhoFiL4m
+ e
+X-Google-Smtp-Source: AGHT+IFKCHLOzKeU/Pi/e6eQyzceAGhWTjq46RgDmM+Hb17HgP0Ngb4Ks5hqQgOHQROVaCndFSG25Q==
+X-Received: by 2002:a05:600c:2d88:b0:422:12bf:27be with SMTP id
+ 5b1f17b1804b1-42474d1ee2bmr2522145e9.11.1718725186078; 
+ Tue, 18 Jun 2024 08:39:46 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.212.55])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56db62e5sm625400866b.84.2024.06.18.08.36.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Jun 2024 08:36:51 -0700 (PDT)
-From: Zheyu Ma <zheyuma97@gmail.com>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH] adb: Fix assertion failure in adb_request() by
- blocking/unblocking autopoll
-Date: Tue, 18 Jun 2024 17:36:01 +0200
-Message-Id: <20240618153602.3169932-1-zheyuma97@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ 5b1f17b1804b1-422874e74c7sm228213845e9.47.2024.06.18.08.39.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Jun 2024 08:39:45 -0700 (PDT)
+Message-ID: <9c61a7d8-c456-44ff-8062-c7eeca9dfd42@linaro.org>
+Date: Tue, 18 Jun 2024 17:39:43 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=zheyuma97@gmail.com; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/misc: Fix invalid size assertions in exynos4210_rng
+ read/write functions
+To: Zheyu Ma <zheyuma97@gmail.com>, Igor Mitsyanko <i.mitsyanko@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20240618145054.3144311-1-zheyuma97@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240618145054.3144311-1-zheyuma97@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,44 +98,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit addresses an assertion failure in the adb_request()
-function. The failure occurs because the autopoll feature is not
-properly blocked/unblocked during an ADB request. By calling
-adb_autopoll_block() at the beginning and adb_autopoll_unblock() at
-the end of the adb_request() function, we ensure that autopolling is
-correctly managed.
+On 18/6/24 16:50, Zheyu Ma wrote:
+> This commit updates the exynos4210_rng_read() and exynos4210_rng_write()
+> functions to handle cases where the size is not 4 bytes. Instead of
+> asserting, which causes the program to abort, the functions now log an
+> error message and return a default value for reads or do nothing for
+> writes when the size is invalid.
+> 
+> Reproducer:
+> cat << EOF | qemu-system-aarch64 -display none \
+> -machine accel=qtest, -m 512M -machine smdkc210 -qtest stdio
+> readb 0x10830454
+> EOF
+> 
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> ---
+>   hw/misc/exynos4210_rng.c | 14 ++++++++++++--
+>   1 file changed, 12 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/misc/exynos4210_rng.c b/hw/misc/exynos4210_rng.c
+> index 0756bd3205..307d4eea43 100644
+> --- a/hw/misc/exynos4210_rng.c
+> +++ b/hw/misc/exynos4210_rng.c
+> @@ -146,7 +146,12 @@ static uint64_t exynos4210_rng_read(void *opaque, hwaddr offset,
+>       Exynos4210RngState *s = (Exynos4210RngState *)opaque;
+>       uint32_t val = 0;
+>   
+> -    assert(size == 4);
 
-Reproducer:
-cat << EOF | qemu-system-m68k -display none
--machine accel=qtest, -m 512M -machine q800 -qtest stdio
-write 0x5000166d 0x1 0x10
-write 0x5000000b 0x1 0x10
-EOF
+Here if these registers are 32-bit only:
 
-Signed-off-by: Zheyu Ma zheyuma97@gmail.com
+-- >8 --
+diff --git a/hw/misc/exynos4210_rng.c b/hw/misc/exynos4210_rng.c
+index 0756bd3205..674d8eece5 100644
+--- a/hw/misc/exynos4210_rng.c
++++ b/hw/misc/exynos4210_rng.c
+@@ -217,6 +217,8 @@ static const MemoryRegionOps exynos4210_rng_ops = {
+      .read = exynos4210_rng_read,
+      .write = exynos4210_rng_write,
+      .endianness = DEVICE_NATIVE_ENDIAN,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 4,
+  };
 ---
- hw/input/adb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/input/adb.c b/hw/input/adb.c
-index aff7130fd0..2d65ad3f4d 100644
---- a/hw/input/adb.c
-+++ b/hw/input/adb.c
-@@ -98,10 +98,12 @@ int adb_request(ADBBusState *s, uint8_t *obuf, const uint8_t *buf, int len)
- 
-     trace_adb_bus_request(buf[0] >> 4, adb_commands[buf[0] & 0xf], len);
- 
--    assert(s->autopoll_blocked);
-+    adb_autopoll_block(s);
- 
-     ret = do_adb_request(s, obuf, buf, len);
- 
-+    adb_autopoll_unblock(s);
-+
-     trace_adb_bus_request_done(buf[0] >> 4, adb_commands[buf[0] & 0xf], ret);
-     return ret;
- }
--- 
-2.34.1
+Otherwise:
+
+-- >8 --
+static const MemoryRegionOps exynos4210_rng_ops = {
+     .read = exynos4210_rng_read,
+     .write = exynos4210_rng_write,
+     .endianness = DEVICE_NATIVE_ENDIAN,
+     .impl.min_access_size = 4,
+     .impl.max_access_size = 4,
+};
+---
+
+> +    if (size != 4) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: invalid read size %u at offset 0x%" HWADDR_PRIx
+> +                      "\n", __func__, size, offset);
+> +        return 0;
+> +    }
+>   
+>       switch (offset) {
+>       case EXYNOS4210_RNG_CONTROL_1:
+> @@ -181,7 +186,12 @@ static void exynos4210_rng_write(void *opaque, hwaddr offset,
+>   {
+>       Exynos4210RngState *s = (Exynos4210RngState *)opaque;
+>   
+> -    assert(size == 4);
+> +    if (size != 4) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: invalid write size %u at offset 0x%" HWADDR_PRIx
+> +                      "\n", __func__, size, offset);
+> +        return;
+> +    }
+>   
+>       switch (offset) {
+>       case EXYNOS4210_RNG_CONTROL_1:
 
 
