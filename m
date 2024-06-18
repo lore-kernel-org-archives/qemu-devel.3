@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 141C9C2BA15
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 22:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2BAEC27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 22:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJhaH-0001y9-0j; Tue, 18 Jun 2024 18:45:49 -0400
+	id 1sJhaV-00022M-PV; Tue, 18 Jun 2024 18:46:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3FQ5yZgQKCjQhaYhWeeWbU.SecgUck-TUlUbdedWdk.ehW@flex--rkir.bounces.google.com>)
- id 1sJhaF-0001xh-BD
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 18:45:47 -0400
-Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
+ <3JQ5yZgQKCkQxqoxmuumrk.iuswks0-jk1krtutmt0.uxm@flex--rkir.bounces.google.com>)
+ id 1sJhaT-00021d-Ny
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 18:46:01 -0400
+Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3FQ5yZgQKCjQhaYhWeeWbU.SecgUck-TUlUbdedWdk.ehW@flex--rkir.bounces.google.com>)
- id 1sJhaD-0000sp-SA
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 18:45:47 -0400
-Received: by mail-pj1-x104a.google.com with SMTP id
- 98e67ed59e1d1-2c7a8949243so815625a91.0
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 15:45:42 -0700 (PDT)
+ <3JQ5yZgQKCkQxqoxmuumrk.iuswks0-jk1krtutmt0.uxm@flex--rkir.bounces.google.com>)
+ id 1sJhaS-0000vH-CE
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 18:46:01 -0400
+Received: by mail-yw1-x114a.google.com with SMTP id
+ 00721157ae682-627f43bec13so114787557b3.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 15:45:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1718750741; x=1719355541; darn=nongnu.org;
+ d=google.com; s=20230601; t=1718750757; x=1719355557; darn=nongnu.org;
  h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
  :date:message-id:reply-to;
- bh=sLRZ+W5a1GgYaQElKB7uBWALvxAWVGcbEd0ESEwZBlI=;
- b=ypbp9fD72T5SxFmu3G4OflCfOKiOB5lThEcIgcN3hbqxdMMHTTy8PQQKSfLUZT8tkI
- QXjqQKmT9N++qwtlSzhyHhQ8lLUSDJ7VUECCsj9c4lSX553LUk6XRjZsV9jsNw1zZ3d2
- jy+0PVoffoESpD1cw0w+kACWEXE00yHSZCCTRsHYH1UsCIkHNI77TuD3tA/q3FqsTUts
- wx6lp3HNuqnCiASaCMMB0J+i0l5wtgNtPC0P/QKxyK3XFmU2eF+GLCyRSN/hwobl6cuH
- gY2Z+ICn+EsP9++sM/xowWJiq6TH8rEjuCZ34l7qDT9hFDsEzLNSfu3y42STlNeIXt+y
- /YmQ==
+ bh=/FsgzP5gOq3lw1ZO8OOACBPPIdQdCifFEE2A6QE7Gg8=;
+ b=dQ9lS3S8xEkUyax+mjsinP+JUNN9cUzcRNcFHwTMHRbOiltBl1HTG0mc9+GUboZkvr
+ Rpkar9LEaTSBxeHEW5gGk1IRfKKay1m5HBCVVdhABNce5Vp8rcBZmsztKJGSN7q31CgW
+ AtOqqdchynXcErrIeY2ioTD6VC2wHZe05vTp12VuBtZrxZd3zlhklW5E5Ki0v1h8AQv1
+ SeDSCtSso5e5gW5mFie00WcdgUZZ1F/3ei/HeY6TQMo/ihFfRwytmnlS2Wh+mWkpjtY4
+ IgSJp4ECzxxAmv/m11m93Ig5E63As++MXaOES41cxJez0DeDXd5VD4NBeFpTcvf0P+b5
+ BkMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718750741; x=1719355541;
+ d=1e100.net; s=20230601; t=1718750757; x=1719355557;
  h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sLRZ+W5a1GgYaQElKB7uBWALvxAWVGcbEd0ESEwZBlI=;
- b=I6JmSq36QaIwBqSwWOrHTxKqPHdxVkXCjoAp88FBb5UZGioYJ1/ww9MpI6Ay5HzSwo
- pt0m5lZlilqG6wl428E15f9P9wfWFA9HZUSkR+Jn2TD1GNfXGAiRAnMdCjYgdmc7kWiN
- g+OgwPfXuNH7lIxQ/gyS0c+SQYi8w1DX43KsuJZzQ4BlnFePGXT0uqog8vVugtQsh0Iq
- d688tsqY4Nd8JIZiTt4G+K7oMadqW3kJS7fwETXRkONKnMUW9IFyWFYCWz2PkB1biqXY
- Zu+q9SArGvrTbpc23BW+hWKiu9h5PLtpVouk4zzU8lWwvlzPmawP2PE1rhBjgnFZRRXH
- 2ccw==
-X-Gm-Message-State: AOJu0YzmWLpwjV93mbwXT1Rhl/1+RbTx+nMmVBR09ij+WEMgmjz79tE2
- n5xqFl2if4o9iLL4ngvroTXIqKLVjackzYv67rTZV9dzfuf08om1avPHECHCS5X/x0SsHqNuXLw
- PazTri0EIkorB79Y36fuy5F/9PuZRhlf/FNQwk50TXZx37eKqEm5CzavFkhDsq8lInsbM+zhaYq
- 1TPvOk6vBvpTlIbek+EqLj
-X-Google-Smtp-Source: AGHT+IGLtYi0LS25uAEXiWPSxFOgSMMG/cYtXpu3vPw17ZqxYNTXIx8tgtjLhWA2bOWjYhiASwKb4AZb
+ bh=/FsgzP5gOq3lw1ZO8OOACBPPIdQdCifFEE2A6QE7Gg8=;
+ b=K0qIGy+/25gm74OrLlmp4FsJ0ebJZ0RCH1QXvFsjlxJRhtMCOpwbithIc0KQqdzElc
+ ZapEIUrd3AWtBl22RmtwLRkIcNrkv0BMChchYov9HEp/wUbVng21dYms1HSaHR1zyHlF
+ raTA48sUnbNVzAKpQX985XSL2LnizTN8NwnPBCH/NhvgV0kvBgf78cJuBAS15C5kCGar
+ qmd15SeNgkht+DxMH0tVCv5C7cd/eUNENMkZSU0CCuJ4HOEpYiPEY6w5xrAoK3Eu3IQB
+ cQgSrm6AHvENpKB1d8bmNPY1QdeeUrTNmlFsV9vhiYdFHJ9KsAX8A7KJNAWLOkbSLHft
+ dVaQ==
+X-Gm-Message-State: AOJu0YzOEOpUay5lNDZc8a3YP9a+MDS5Oa4+UruNHbljzcYkbaZkEO9n
+ xLqCGEm1Shbto/XoJU/01hq/sLNH6Tc7VRf6VXqlqNQWInN7RGr7hnL6SxQSW9fN9QBQsbgQLzN
+ qHfbzqmxqFeiVcnDI8J05oyoVFf0CpwM24NtUBlFT+H4qIDPELejVyHRcFH5K3I1oIfkIEZqh6f
+ CqZ55mly2jh34hthvqh+4b
+X-Google-Smtp-Source: AGHT+IGoeVeUfBrRoep4gm7CX9XFk9vIuYtfidl4od3BeszhDQ4FKilmZO01SB6tnV9yQ9yEfhHsDn0b
 X-Received: from rkir98.kir.corp.google.com
  ([2620:15c:7d:4:fddf:5bf:9eb2:410e])
- (user=rkir job=sendgmr) by 2002:a17:902:d2c5:b0:1f9:a0f5:7ec5 with SMTP id
- d9443c01a7336-1f9aa484e01mr344175ad.11.1718750741376; Tue, 18 Jun 2024
- 15:45:41 -0700 (PDT)
-Date: Tue, 18 Jun 2024 15:45:28 -0700
+ (user=rkir job=sendgmr) by 2002:a05:690c:b91:b0:62c:f6fd:5414 with SMTP id
+ 00721157ae682-63a8e1dad55mr2579827b3.3.1718750757082; Tue, 18 Jun 2024
+ 15:45:57 -0700 (PDT)
+Date: Tue, 18 Jun 2024 15:45:53 -0700
 Mime-Version: 1.0
 X-Mailer: git-send-email 2.45.2.627.g7a2c4fd464-goog
-Message-ID: <20240618224528.878425-1-rkir@google.com>
-Subject: [PATCH 1/3] exec: Make the MemOp enum cast explicit
+Message-ID: <20240618224553.878869-1-rkir@google.com>
+Subject: [PATCH 2/3] exec: avoid using C++ keywords in function parameters
 From: Roman Kiryanov <rkir@google.com>
 To: qemu-devel@nongnu.org
 Cc: jansene@google.com, mett@google.com, jpcottin@google.com, 
  Roman Kiryanov <rkir@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
- envelope-from=3FQ5yZgQKCjQhaYhWeeWbU.SecgUck-TUlUbdedWdk.ehW@flex--rkir.bounces.google.com;
- helo=mail-pj1-x104a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
+ envelope-from=3JQ5yZgQKCkQxqoxmuumrk.iuswks0-jk1krtutmt0.uxm@flex--rkir.bounces.google.com;
+ helo=mail-yw1-x114a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -96,25 +96,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 to use the QEMU headers with a C++ compiler.
 
 Google-Bug-Id: 331190993
-Change-Id: I785f2e65d192287f1f964d2840131b653755648c
+Change-Id: Ic4e49b9c791616bb22c973922772b0494706092c
 Signed-off-by: Roman Kiryanov <rkir@google.com>
 ---
- include/exec/memop.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/exec/memory.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/exec/memop.h b/include/exec/memop.h
-index 06417ff361..f881fe7af4 100644
---- a/include/exec/memop.h
-+++ b/include/exec/memop.h
-@@ -161,7 +161,7 @@ static inline MemOp size_memop(unsigned size)
-     /* Power of 2 up to 8.  */
-     assert((size & (size - 1)) == 0 && size >= 1 && size <= 8);
- #endif
--    return ctz32(size);
-+    return (MemOp)ctz32(size);
- }
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 1be58f694c..d7591a60d9 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -945,7 +945,7 @@ struct MemoryListener {
+      * the current transaction.
+      */
+     void (*log_start)(MemoryListener *listener, MemoryRegionSection *section,
+-                      int old, int new);
++                      int old_val, int new_val);
  
- /* Big endianness from MemOp.  */
+     /**
+      * @log_stop:
+@@ -964,7 +964,7 @@ struct MemoryListener {
+      * the current transaction.
+      */
+     void (*log_stop)(MemoryListener *listener, MemoryRegionSection *section,
+-                     int old, int new);
++                     int old_val, int new_val);
+ 
+     /**
+      * @log_sync:
 -- 
 2.45.2.627.g7a2c4fd464-goog
 
