@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 264A6C27C4F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82CF6C27C4F
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Jun 2024 16:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJbSX-00030f-VH; Tue, 18 Jun 2024 12:13:25 -0400
+	id 1sJbSP-0002o4-CJ; Tue, 18 Jun 2024 12:13:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sJbSW-0002zr-An
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:13:24 -0400
+ id 1sJbSN-0002ha-6M
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:13:15 -0400
 Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sJbSU-0000qR-OO
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:13:24 -0400
+ id 1sJbSL-0000nm-0P
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 12:13:14 -0400
 Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
  TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
  (envelope-from <mail@maciej.szmigiero.name>)
- id 1sJbSH-0001bF-Ao; Tue, 18 Jun 2024 18:13:09 +0200
+ id 1sJbRv-0001aK-VL; Tue, 18 Jun 2024 18:12:48 +0200
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 To: Peter Xu <peterx@redhat.com>,
 	Fabiano Rosas <farosas@suse.de>
@@ -33,14 +33,12 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Avihai Horon <avihaih@nvidia.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: [PATCH v1 04/13] migration: Add save_live_complete_precopy_{begin,
- end} handlers
-Date: Tue, 18 Jun 2024 18:12:22 +0200
-Message-ID: <ebcd3a48296564be553e26c064610e31aeaf6c16.1718717584.git.maciej.szmigiero@oracle.com>
+Subject: =?UTF-8?q?=5BPATCH=20v1=2000/13=5D=20Multifd=20=F0=9F=94=80=20device=20state=20transfer=20support=20with=20VFIO=20consumer?=
+Date: Tue, 18 Jun 2024 18:12:18 +0200
+Message-ID: <cover.1718717584.git.maciej.szmigiero@oracle.com>
 X-Mailer: git-send-email 2.45.1
-In-Reply-To: <cover.1718717584.git.maciej.szmigiero@oracle.com>
-References: <cover.1718717584.git.maciej.szmigiero@oracle.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=37.28.154.113;
  envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
@@ -66,117 +64,122 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 
-These SaveVMHandlers allow device to provide its own asynchronous
-transmission of the remaining data at the end of a precopy phase.
+This is an updated v1 patch series of the RFC (v0) series located here:
+https://lore.kernel.org/qemu-devel/cover.1713269378.git.maciej.szmigiero@oracle.com/
 
-In this use case the save_live_complete_precopy_begin handler is
-supposed to start such transmission (for example, by launching
-appropriate threads) while the save_live_complete_precopy_end
-handler is supposed to wait until such transfer has finished (for
-example, until the sending threads have exited).
 
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
----
- include/migration/register.h | 34 ++++++++++++++++++++++++++++++++++
- migration/savevm.c           | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 69 insertions(+)
+Changes from the RFC (v0):
+* Extend the existing multifd packet format instead of introducing a new
+migration channel header.
 
-diff --git a/include/migration/register.h b/include/migration/register.h
-index f60e797894e5..f7b3df799991 100644
---- a/include/migration/register.h
-+++ b/include/migration/register.h
-@@ -103,6 +103,40 @@ typedef struct SaveVMHandlers {
-      */
-     int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
- 
-+    /**
-+     * @save_live_complete_precopy_begin
-+     *
-+     * Called at the end of a precopy phase, before all @save_live_complete_precopy
-+     * handlers. The handler might, for example, arrange for device-specific
-+     * asynchronous transmission of the remaining data. When postcopy is enabled,
-+     * devices that support postcopy will skip this step.
-+     *
-+     * @f: QEMUFile where the handler can synchronously send data before returning
-+     * @idstr: this device section idstr
-+     * @instance_id: this device section instance_id
-+     * @opaque: data pointer passed to register_savevm_live()
-+     *
-+     * Returns zero to indicate success and negative for error
-+     */
-+    int (*save_live_complete_precopy_begin)(QEMUFile *f,
-+                                            char *idstr, uint32_t instance_id,
-+                                            void *opaque);
-+    /**
-+     * @save_live_complete_precopy_end
-+     *
-+     * Called at the end of a precopy phase, after all @save_live_complete_precopy
-+     * handlers. The handler might, for example, wait for the asynchronous
-+     * transmission started by the @save_live_complete_precopy_begin handler
-+     * to complete. When postcopy is enabled, devices that support postcopy will
-+     * skip this step.
-+     *
-+     * @f: QEMUFile where the handler can synchronously send data before returning
-+     * @opaque: data pointer passed to register_savevm_live()
-+     *
-+     * Returns zero to indicate success and negative for error
-+     */
-+    int (*save_live_complete_precopy_end)(QEMUFile *f, void *opaque);
-+
-     /* This runs both outside and inside the BQL.  */
- 
-     /**
-diff --git a/migration/savevm.c b/migration/savevm.c
-index c621f2359ba3..56fb1c4c2563 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1494,6 +1494,27 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
-     SaveStateEntry *se;
-     int ret;
- 
-+    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-+        if (!se->ops || (in_postcopy && se->ops->has_postcopy &&
-+             se->ops->has_postcopy(se->opaque)) ||
-+            !se->ops->save_live_complete_precopy_begin) {
-+            continue;
-+        }
-+
-+        save_section_header(f, se, QEMU_VM_SECTION_END);
-+
-+        ret = se->ops->save_live_complete_precopy_begin(f,
-+                                                        se->idstr, se->instance_id,
-+                                                        se->opaque);
-+
-+        save_section_footer(f, se);
-+
-+        if (ret < 0) {
-+            qemu_file_set_error(f, ret);
-+            return -1;
-+        }
-+    }
-+
-     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-         if (!se->ops ||
-             (in_postcopy && se->ops->has_postcopy &&
-@@ -1525,6 +1546,20 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
-                                     end_ts_each - start_ts_each);
-     }
- 
-+    QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-+        if (!se->ops || (in_postcopy && se->ops->has_postcopy &&
-+             se->ops->has_postcopy(se->opaque)) ||
-+            !se->ops->save_live_complete_precopy_end) {
-+            continue;
-+        }
-+
-+        ret = se->ops->save_live_complete_precopy_end(f, se->opaque);
-+        if (ret < 0) {
-+            qemu_file_set_error(f, ret);
-+            return -1;
-+        }
-+    }
-+
-     trace_vmstate_downtime_checkpoint("src-iterable-saved");
- 
-     return 0;
+* As the replacement of switching the migration channel header on or off
+introduce "x-migration-multifd-transfer" VFIO device property instead that
+allows configuring at runtime whether to send the particular device state
+via multifd channels when live migrating that device.
+
+This property defaults to "false" for bit stream compatibility with older
+QEMU versions.
+
+* Remove the support for having dedicated device state transfer multifd
+channels since the same downtime performance can be attained by simply
+reducing the total number of multifd channels in a shared channel
+configuration to the number of channels available for RAM transfer in
+the dedicated device state channels configuration.
+
+For example, the best downtime from the dedicated device state config
+on my setup (achieved in configuration of 10 total multifd channels /
+4 dedicated device state channels) can also be achieved in the
+shared RAM/device state channel configuration by reducing the total
+multifd channel count to 6.
+
+It looks like not having too many RAM transfer multifd channels is
+key to having a good downtime since the results are reproducibly
+worse with 15 shared channels total, while they are as good as with
+6 shared channels if there are 15 total channels but 4 of them are
+dedicated to transferring device state (leaving 11 for RAM transfer).
+
+* Make the next multifd channel selection more fair when converting
+multifd_send_pages::next_channel to atomic.
+
+* Convert the code to use QEMU thread sync primitives (QemuMutex with
+QemuLockable, QemuCond) instead of their Glib equivalents (GMutex,
+GMutexLocker and GCond).
+
+* Rename complete_precopy_async{,_wait} to complete_precopy_{begin,_end} as
+suggested.
+
+* Rebase onto the last week's QEMU git master and retest.
+
+
+When working on the updated patch set version I also investigated the
+possibility of refactoring VM live phase (non-downtime) transfers to
+happen via multifd channels.
+
+However, the VM live phase transfer works differently: it happens
+opportunistically until the remaining data drops below the switchover
+threshold, rather that transferring always the whole device state data
+until their exhaustion.
+
+For this reason, there would need to be some way in the migration
+framework to update the remaining data estimate from per-device
+saving/transfer queuing thread and then stop these threads when the
+decision has been reached in the migration core to stop the VM and
+switch over. Such functionality would need to be introduced first.
+
+There would also need to be some fairness guarantees so every device
+gets similar access to multifd channels - otherwise there could be a
+situation that the remaining data never drops below switchover
+threshold because some devices are starved with respect to access to
+the multifd transfer channels - as in the VM live phase additional
+device data is constantly being generated.
+
+Moreover, there's nothing stopping a QEMU device driver from requiring
+different handling (loading, etc.) of VM live phase data from the
+post-switchover data.
+For cases like this some kind of a new device VM live phase incoming
+data load handler would need to be introduced too.
+
+For the above reasons, the VM live phase multifd transfer functionality
+isn't a simple extension of the functionality introduced by this patch
+set.
+
+
+For convenience, this patch set is also available as a git tree:
+https://github.com/maciejsszmigiero/qemu/tree/multifd-device-state-transfer-vfio
+
+
+Maciej S. Szmigiero (13):
+  vfio/migration: Add save_{iterate,complete_precopy}_started trace
+    events
+  migration/ram: Add load start trace event
+  migration/multifd: Zero p->flags before starting filling a packet
+  migration: Add save_live_complete_precopy_{begin,end} handlers
+  migration: Add qemu_loadvm_load_state_buffer() and its handler
+  migration: Add load_finish handler and associated functions
+  migration/multifd: Device state transfer support - receive side
+  migration/multifd: Convert multifd_send_pages::next_channel to atomic
+  migration/multifd: Device state transfer support - send side
+  migration/multifd: Add migration_has_device_state_support()
+  vfio/migration: Multifd device state transfer support - receive side
+  vfio/migration: Add x-migration-multifd-transfer VFIO property
+  vfio/migration: Multifd device state transfer support - send side
+
+ hw/vfio/migration.c           | 545 +++++++++++++++++++++++++++++++++-
+ hw/vfio/pci.c                 |   7 +
+ hw/vfio/trace-events          |  15 +-
+ include/hw/vfio/vfio-common.h |  27 ++
+ include/migration/misc.h      |   5 +
+ include/migration/register.h  |  70 +++++
+ migration/migration.c         |   6 +
+ migration/migration.h         |   3 +
+ migration/multifd-zlib.c      |   2 +-
+ migration/multifd-zstd.c      |   2 +-
+ migration/multifd.c           | 336 +++++++++++++++++----
+ migration/multifd.h           |  57 +++-
+ migration/ram.c               |   1 +
+ migration/savevm.c            | 112 +++++++
+ migration/savevm.h            |   7 +
+ migration/trace-events        |   1 +
+ 16 files changed, 1132 insertions(+), 64 deletions(-)
+
 
