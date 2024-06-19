@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9468C2BA15
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 07:34:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A140EC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 07:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJpov-0000dF-5x; Wed, 19 Jun 2024 03:33:30 -0400
+	id 1sJptm-0003GN-MZ; Wed, 19 Jun 2024 03:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sJpos-0000cW-Vt; Wed, 19 Jun 2024 03:33:27 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1sJptk-0003Fv-LO; Wed, 19 Jun 2024 03:38:28 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sJpoq-0002eL-ID; Wed, 19 Jun 2024 03:33:26 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4217d808034so55354805e9.3; 
- Wed, 19 Jun 2024 00:33:23 -0700 (PDT)
+ id 1sJpti-0003dw-L0; Wed, 19 Jun 2024 03:38:28 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a6efae34c83so762447466b.0; 
+ Wed, 19 Jun 2024 00:38:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718782402; x=1719387202; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=feXgtXlTkQC9v0K3dfEGHl8JmANr4HegvWlnYc3fgvQ=;
- b=NZwPBQ0U9rQGMJEYQpresIbJlpWj4P4E2Ist1ruTxgvcbGL4qCoshLrDH4nribjZDb
- ktoRR2vuHt5m9nEMH9LJnZyUmABzKx1bmRzjlybGIhynpr+KYQJ4PPe0XI+umkBo3+gh
- eQ6Du+oFsuKvNg9rEmbHqexOTDILVSRyiUQRdE+KdYidBZh4NOKT+4xuLvHzYzSip+1+
- NoMr3KmzzGRmpSBTh6shp/niwvRobwsVRpeXOv6vt74ADaoK0EN42V/vevJZigdAI9Hp
- MqQV/a/8Z2WrpvUMXj/hnmcQsIZRx0NT+yO23ngJqNCgyVopGEvfVPn7sTA1Zgj+dTxN
- Hzsg==
+ d=gmail.com; s=20230601; t=1718782705; x=1719387505; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=jF8YKmJky0ligZq+RqcjWXXMsYLR2HbkDS/UDSAExK0=;
+ b=P5iCibzLLbtltYNauInainLA2MFEXxExfRNcw0hHrj08Ppq+vs+xaY21RwaB5twWlJ
+ /w92WLP/yvHMMzkvacwysf+CmY5VeUFT3AnWrpCoubIa0tf4KZOGRl4peHAJtzKzJCw5
+ Z5oCpNqCSlbO+Vl9sVucyQZclqBl6pshnrOBbUswtTJFnDMERsuvaY5NMrt8rsw9URKj
+ Ey+es+qcjlbEdV8vZDPTDwHWHjAIWVaa3YrwIoM/dUNXTP68f0bttq+kDoIkHCIR/LZI
+ tC4wszn64VJ/2NXum1Cv5ui4G8h0r0u9pg9stGiyvm6h1esE6Bjq/WBUaf4tKzpRRf1S
+ Ejtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718782402; x=1719387202;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1718782705; x=1719387505;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=feXgtXlTkQC9v0K3dfEGHl8JmANr4HegvWlnYc3fgvQ=;
- b=t9qKGs9EDmYGJm5MZhv2dx9B/tNhwf3zwGxfuT+IycUFIZtr3AR3/mphwPVlwQL/rw
- gntQKJBzEttRTxkj99RZGKcx9h+69cF/+uPE7myop/tGHSiye/wQr/yR/UruYOuCfrpb
- WvwPAnqqU+lQR8WzxEMpvYy/mZ49nx9zqWQYKwgtsOj/AFQtF8hag18U8MmDnny3OT/6
- wPm5Q9+/998TRY4G35YOK3uepwjyevaOAg/T6aRzY0cdFOcBLP2xtQWo/ZKT373rtMQu
- 5phhPnIWdTOOnz/GzdQU5UyHBUa8I3gVuOk5ql9gzIUHSHsVmZ5ytf6KeUgw4esFFQhl
- tz4w==
+ bh=jF8YKmJky0ligZq+RqcjWXXMsYLR2HbkDS/UDSAExK0=;
+ b=nkK9oP9NWqGvqinRbr4NilB31WpHU9s6swHIPqlTcTDfXaq1NgqemTbtfJ2IOCvBkf
+ 2FAg2OToJVj4SwN1ms1F07rWVfhIegEq8XZGMlBM4OPm+n5CmhTS2/HvZ9+/W1vsKgeM
+ M6Pudv/KyVfjCB06yZ0CReeNRsoF7f80EX+bpdp6Wfd1PWxWq8aZ2syC8/PYC5cyElpP
+ Mu5s70pmAjbCk1YSccoUKnwBZ5fbpKV53iNTQzSqtcQZEMXF3lnpxiZpNJgpaT7hIBAW
+ +9VTzRPXeGwiH1C87T12J1jdcxwT/stWSfzPFq0X+iIVq993nJmiCtvb14GNDZQ5Tz2f
+ FY6g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUUmjXN5vl7FAxlEzu1dLTkJOTkSvArNTSgg4e3xkrH0Clh5EznTJ2LPb2R1cnkvbI4+A4C1ml90n4Hp16ZXdXg4x0x4HbrRGosJ0MAKzWaWHaJU3BalKrR3dA=
-X-Gm-Message-State: AOJu0YwLVtm/UAGQZ2rNzrfrUJjYyiCt5SNTSNDj3bRX2ujbMa4IMBpK
- BkqQo6kXsdhot9abpVmsotPO3Un7h1Qrs566d+/rYcAFF23uEnU=
-X-Google-Smtp-Source: AGHT+IGl5rFMdnjxu75kj4DwXN+4fy+eaZLQMgPAvrWEXyDY8d5RpZU9QdHfLAic7y8jGYt4pgwllg==
-X-Received: by 2002:a05:600c:2317:b0:424:76db:3583 with SMTP id
- 5b1f17b1804b1-42476db371emr6452235e9.30.1718782402019; 
- Wed, 19 Jun 2024 00:33:22 -0700 (PDT)
-Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422f5f33be5sm221301565e9.2.2024.06.19.00.33.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Jun 2024 00:33:21 -0700 (PDT)
-From: Zheyu Ma <zheyuma97@gmail.com>
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v2] hw/gpio/aspeed: Add reg_table_size to AspeedGPIOClass
-Date: Wed, 19 Jun 2024 09:33:01 +0200
-Message-Id: <20240619073301.3706650-1-zheyuma97@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ AJvYcCUKD8JBXxLjbiUpu4a30I78aut/Q6tv5Z+GCU6QCThIGAkU0rfNT6MiEJQS6a6IyyzQ/5EjA71RfSigNLvSJOcWHcrhztaeHIE4NyTt64hGFGYjodwkOiqcreC10A==
+X-Gm-Message-State: AOJu0YwMH6aOb8Po+lr81jXrJ4XBy0JYxTFbdk3G/tJDIpwE+jHQnCK6
+ VZLIw6Bizsk0nSBtBj6BerjLVfT9sk0jelRIOIPDrdEiIp7DtXoTPW+DlaTvpdU8izu+RYhuD9I
+ TNICgATu9VlCfyqmerovFI3iSzQ==
+X-Google-Smtp-Source: AGHT+IGSPz563xfjLne2RLDqm8vIeoTIgb0D6hZ2gtkvKLzx8rrF+263Il4o1zABfVX/jblS152bVmVAYRToMHI+oFw=
+X-Received: by 2002:a17:907:590:b0:a6f:b717:cb6 with SMTP id
+ a640c23a62f3a-a6fb7171592mr17234066b.53.1718782704482; Wed, 19 Jun 2024
+ 00:38:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=zheyuma97@gmail.com; helo=mail-wm1-x329.google.com
+References: <20240618152328.3163680-1-zheyuma97@gmail.com>
+ <896bbf08-7a3d-4a2c-b7f7-b260073255cb@linaro.org>
+ <CAMhUBjmpYLFuRfsHACUjGvwfydEU7R89AEWToLAyo-0kQ-B41A@mail.gmail.com>
+ <8feeec5d-4287-42f4-97a8-5d9cf9df4a72@linaro.org>
+In-Reply-To: <8feeec5d-4287-42f4-97a8-5d9cf9df4a72@linaro.org>
+From: Zheyu Ma <zheyuma97@gmail.com>
+Date: Wed, 19 Jun 2024 09:38:13 +0200
+Message-ID: <CAMhUBjnR6G=b_Mp9379FoWwTUVhXTKqY4hZLdMqwGRpjFLdURQ@mail.gmail.com>
+Subject: Re: [PATCH] block: m25p80: Fix heap-buffer-overflow in flash_erase
+ function
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>, 
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000008bfeef061b394845"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=zheyuma97@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,121 +94,305 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ASan detected a global-buffer-overflow error in the aspeed_gpio_read()
-function. This issue occurred when reading beyond the bounds of the
-reg_table.
+--0000000000008bfeef061b394845
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-To enhance the safety and maintainability of the Aspeed GPIO code, this commit
-introduces a reg_table_size member to the AspeedGPIOClass structure. This
-change ensures that the size of the GPIO register table is explicitly tracked
-and initialized, reducing the risk of errors if new register tables are
-introduced in the future.
+Hi Philippe,
 
-AddressSanitizer log indicating the issue:
+On Tue, Jun 18, 2024 at 10:34=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philm=
+d@linaro.org>
+wrote:
 
-==2602930==ERROR: AddressSanitizer: global-buffer-overflow on address 0x55a5da29e128 at pc 0x55a5d700dc62 bp 0x7fff096c4e90 sp 0x7fff096c4e88
-READ of size 2 at 0x55a5da29e128 thread T0
-    #0 0x55a5d700dc61 in aspeed_gpio_read hw/gpio/aspeed_gpio.c:564:14
-    #1 0x55a5d933f3ab in memory_region_read_accessor system/memory.c:445:11
-    #2 0x55a5d92fba40 in access_with_adjusted_size system/memory.c:573:18
-    #3 0x55a5d92f842c in memory_region_dispatch_read1 system/memory.c:1426:16
-    #4 0x55a5d92f7b68 in memory_region_dispatch_read system/memory.c:1459:9
-    #5 0x55a5d9376ad1 in flatview_read_continue_step system/physmem.c:2836:18
-    #6 0x55a5d9376399 in flatview_read_continue system/physmem.c:2877:19
-    #7 0x55a5d93775b8 in flatview_read system/physmem.c:2907:12
+> On 18/6/24 21:11, Zheyu Ma wrote:
+> > Thanks for your useful advice!
+> >
+> > So how about report the issue and return:
+>
+> We might report the issue to the user, but there should
+> be a way the hardware report the issue to the guest software
+> running. Usually signaled as error condition, irq, ...
+> We need to figure out what check wasn't properly done.
+> The spec is the source of truth.
+>
 
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
----
-Changes in v2:
-- Introduce the reg_table_size to AspeedGPIOClass
----
- hw/gpio/aspeed_gpio.c         | 17 +++++++++++++++++
- include/hw/gpio/aspeed_gpio.h |  1 +
- 2 files changed, 18 insertions(+)
+Sure.
+Although I'm unfamiliar with the device, I'll try to figure it out.
 
-diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-index c1781e2ba3..fd4912edae 100644
---- a/hw/gpio/aspeed_gpio.c
-+++ b/hw/gpio/aspeed_gpio.c
-@@ -559,6 +559,12 @@ static uint64_t aspeed_gpio_read(void *opaque, hwaddr offset, uint32_t size)
-         return debounce_value;
-     }
- 
-+    if (idx >= agc->reg_table_size) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: idx 0x%" PRIx64 " out of bounds\n",
-+                      __func__, idx);
-+        return 0;
-+    }
-+
-     reg = &agc->reg_table[idx];
-     if (reg->set_idx >= agc->nr_gpio_sets) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: no getter for offset 0x%"
-@@ -785,6 +791,12 @@ static void aspeed_gpio_write(void *opaque, hwaddr offset, uint64_t data,
-         return;
-     }
- 
-+    if (idx >= agc->reg_table_size) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: idx 0x%" PRIx64 " out of bounds\n",
-+                      __func__, idx);
-+        return;
-+    }
-+
-     reg = &agc->reg_table[idx];
-     if (reg->set_idx >= agc->nr_gpio_sets) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: no setter for offset 0x%"
-@@ -1117,6 +1129,7 @@ static void aspeed_gpio_ast2400_class_init(ObjectClass *klass, void *data)
-     agc->nr_gpio_pins = 216;
-     agc->nr_gpio_sets = 7;
-     agc->reg_table = aspeed_3_3v_gpios;
-+    agc->reg_table_size = GPIO_3_3V_REG_ARRAY_SIZE;
- }
- 
- static void aspeed_gpio_2500_class_init(ObjectClass *klass, void *data)
-@@ -1127,6 +1140,7 @@ static void aspeed_gpio_2500_class_init(ObjectClass *klass, void *data)
-     agc->nr_gpio_pins = 228;
-     agc->nr_gpio_sets = 8;
-     agc->reg_table = aspeed_3_3v_gpios;
-+    agc->reg_table_size = GPIO_3_3V_REG_ARRAY_SIZE;
- }
- 
- static void aspeed_gpio_ast2600_3_3v_class_init(ObjectClass *klass, void *data)
-@@ -1137,6 +1151,7 @@ static void aspeed_gpio_ast2600_3_3v_class_init(ObjectClass *klass, void *data)
-     agc->nr_gpio_pins = 208;
-     agc->nr_gpio_sets = 7;
-     agc->reg_table = aspeed_3_3v_gpios;
-+    agc->reg_table_size = GPIO_3_3V_REG_ARRAY_SIZE;
- }
- 
- static void aspeed_gpio_ast2600_1_8v_class_init(ObjectClass *klass, void *data)
-@@ -1147,6 +1162,7 @@ static void aspeed_gpio_ast2600_1_8v_class_init(ObjectClass *klass, void *data)
-     agc->nr_gpio_pins = 36;
-     agc->nr_gpio_sets = 2;
-     agc->reg_table = aspeed_1_8v_gpios;
-+    agc->reg_table_size = GPIO_1_8V_REG_ARRAY_SIZE;
- }
- 
- static void aspeed_gpio_1030_class_init(ObjectClass *klass, void *data)
-@@ -1157,6 +1173,7 @@ static void aspeed_gpio_1030_class_init(ObjectClass *klass, void *data)
-     agc->nr_gpio_pins = 151;
-     agc->nr_gpio_sets = 6;
-     agc->reg_table = aspeed_3_3v_gpios;
-+    agc->reg_table_size = GPIO_3_3V_REG_ARRAY_SIZE;
- }
- 
- static const TypeInfo aspeed_gpio_info = {
-diff --git a/include/hw/gpio/aspeed_gpio.h b/include/hw/gpio/aspeed_gpio.h
-index 904eecf62c..e66036ac39 100644
---- a/include/hw/gpio/aspeed_gpio.h
-+++ b/include/hw/gpio/aspeed_gpio.h
-@@ -75,6 +75,7 @@ struct AspeedGPIOClass {
-     uint32_t nr_gpio_pins;
-     uint32_t nr_gpio_sets;
-     const AspeedGPIOReg *reg_table;
-+    uint32_t reg_table_size;
- };
- 
- struct AspeedGPIOState {
--- 
-2.34.1
+Zheyu
 
+>
+> > diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+> > index 8dec134832..2121b43708 100644
+> > --- a/hw/block/m25p80.c
+> > +++ b/hw/block/m25p80.c
+> > @@ -617,6 +617,12 @@ static void flash_erase(Flash *s, int offset,
+> > FlashCMD cmd)
+> >           abort();
+> >       }
+> >
+> > +    if (offset + len > s->size) {
+> > +        qemu_log_mask(LOG_GUEST_ERROR,
+> > +                      "M25P80: Erase operation exceeds storage size\n"=
+);
+> > +        return;
+> > +    }
+> > +
+> >       trace_m25p80_flash_erase(s, offset, len);
+> >
+> >       if ((s->pi->flags & capa_to_assert) !=3D capa_to_assert) {
+> >
+> > regards,
+> > Zheyu
+> >
+> > On Tue, Jun 18, 2024 at 5:35=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+> > <philmd@linaro.org <mailto:philmd@linaro.org>> wrote:
+> >
+> >     Hi Zheyu,
+> >
+> >     On 18/6/24 17:23, Zheyu Ma wrote:
+> >      > This patch fixes a heap-buffer-overflow issue in the flash_erase
+> >     function
+> >      > of the m25p80 flash memory emulation. The overflow occurs when t=
+he
+> >      > combination of offset and length exceeds the allocated memory fo=
+r
+> the
+> >      > storage. The patch adds a check to ensure that the erase length
+> >     does not
+> >      > exceed the storage size and adjusts the length accordingly if
+> >     necessary.
+> >      >
+> >      > Reproducer:
+> >      > cat << EOF | qemu-system-aarch64 -display none \
+> >      > -machine accel=3Dqtest, -m 512M -machine kudo-bmc -qtest stdio
+> >      > writeq 0xc0000010 0x6
+> >      > writel 0xc000000c 0x9
+> >      > writeq 0xc0000010 0xf27f9412
+> >      > writeq 0xc000000f 0x2b5cdc26
+> >      > writeq 0xc000000c 0xffffffffffffffff
+> >      > writeq 0xc000000c 0xffffffffffffffff
+> >      > writeq 0xc000000c 0xffffffffffffffff
+> >      > writel 0xc000000c 0x9
+> >      > writeq 0xc000000c 0x9
+> >      > EOF
+> >      >
+> >      > ASan log:
+> >      > =3D=3D2614308=3D=3DERROR: AddressSanitizer: heap-buffer-overflow=
+ on
+> >     address 0x7fd3fb7fc000 at pc 0x55aa77a442dc bp 0x7fffaa155900 sp
+> >     0x7fffaa1550c8
+> >      > WRITE of size 65536 at 0x7fd3fb7fc000 thread T0
+> >      >      #0 0x55aa77a442db in __asan_memset
+> >     llvm/compiler-rt/lib/asan/asan_interceptors_memintrinsics.cpp:26:3
+> >      >      #1 0x55aa77e7e6b3 in flash_erase hw/block/m25p80.c:631:5
+> >      >      #2 0x55aa77e6f8b1 in complete_collecting_data
+> >     hw/block/m25p80.c:773:9
+> >      >      #3 0x55aa77e6aaa9 in m25p80_transfer8
+> hw/block/m25p80.c:1550:13
+> >      >      #4 0x55aa78e9a691 in ssi_transfer_raw_default
+> hw/ssi/ssi.c:92:16
+> >      >      #5 0x55aa78e996c0 in ssi_transfer hw/ssi/ssi.c:165:14
+> >      >      #6 0x55aa78e8d76a in npcm7xx_fiu_uma_transaction
+> >     hw/ssi/npcm7xx_fiu.c:336:9
+> >      >      #7 0x55aa78e8be4b in npcm7xx_fiu_ctrl_write
+> >     hw/ssi/npcm7xx_fiu.c:428:13
+> >      >
+> >      > Signed-off-by: Zheyu Ma <zheyuma97@gmail.com
+> >     <mailto:zheyuma97@gmail.com>>
+> >      > ---
+> >      >   hw/block/m25p80.c | 6 ++++++
+> >      >   1 file changed, 6 insertions(+)
+> >      >
+> >      > diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+> >      > index 8dec134832..e9a59f6616 100644
+> >      > --- a/hw/block/m25p80.c
+> >      > +++ b/hw/block/m25p80.c
+> >      > @@ -617,6 +617,12 @@ static void flash_erase(Flash *s, int
+> >     offset, FlashCMD cmd)
+> >      >           abort();
+> >      >       }
+> >      >
+> >      > +    if (offset + len > s->size) {
+> >      > +        qemu_log_mask(LOG_GUEST_ERROR,
+> >      > +                      "M25P80: Erase exceeds storage size,
+> >     adjusting length\n");
+> >
+> >     Usually hardware doesn't "adjust" but report error earlier.
+> >
+> >      > +        len =3D s->size - offset;
+> >      > +    }
+> >      > +
+> >      >       trace_m25p80_flash_erase(s, offset, len);
+> >      >
+> >      >       if ((s->pi->flags & capa_to_assert) !=3D capa_to_assert) {
+> >
+>
+>
+
+--0000000000008bfeef061b394845
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi=C2=A0Philippe,</div><br><div class=3D"=
+gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jun 18, 2024 at =
+10:34=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@l=
+inaro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"g=
+mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
+,204,204);padding-left:1ex">On 18/6/24 21:11, Zheyu Ma wrote:<br>
+&gt; Thanks for your useful advice!<br>
+&gt; <br>
+&gt; So how about report the issue and return:<br>
+<br>
+We might report the issue to the user, but there should<br>
+be a way the hardware report the issue to the guest software<br>
+running. Usually signaled as error condition, irq, ...<br>
+We need to figure out what check wasn&#39;t properly done.<br>
+The spec is the source of truth.<br></blockquote><div><br>Sure.</div><div>A=
+lthough I&#39;m unfamiliar with the device, I&#39;ll try to figure=C2=A0it =
+out.<br><br>Zheyu</div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c<br>
+&gt; index 8dec134832..2121b43708 100644<br>
+&gt; --- a/hw/block/m25p80.c<br>
+&gt; +++ b/hw/block/m25p80.c<br>
+&gt; @@ -617,6 +617,12 @@ static void flash_erase(Flash *s, int offset, <br=
+>
+&gt; FlashCMD cmd)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0abort();<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt; <br>
+&gt; + =C2=A0 =C2=A0if (offset + len &gt; s-&gt;size) {<br>
+&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_log_mask(LOG_GUEST_ERROR,<br>
+&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0&quot;M25P80: Erase operation exceeds storage size\n&quot;);<br>
+&gt; + =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
+&gt; + =C2=A0 =C2=A0}<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0trace_m25p80_flash_erase(s, offset, len);<br=
+>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if ((s-&gt;pi-&gt;flags &amp; capa_to_assert=
+) !=3D capa_to_assert) {<br>
+&gt; <br>
+&gt; regards,<br>
+&gt; Zheyu<br>
+&gt; <br>
+&gt; On Tue, Jun 18, 2024 at 5:35=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <b=
+r>
+&gt; &lt;<a href=3D"mailto:philmd@linaro.org" target=3D"_blank">philmd@lina=
+ro.org</a> &lt;mailto:<a href=3D"mailto:philmd@linaro.org" target=3D"_blank=
+">philmd@linaro.org</a>&gt;&gt; wrote:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Hi Zheyu,<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0On 18/6/24 17:23, Zheyu Ma wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; This patch fixes a heap-buffer-overflow issue=
+ in the flash_erase<br>
+&gt;=C2=A0 =C2=A0 =C2=A0function<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; of the m25p80 flash memory emulation. The ove=
+rflow occurs when the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; combination of offset and length exceeds the =
+allocated memory for the<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; storage. The patch adds a check to ensure tha=
+t the erase length<br>
+&gt;=C2=A0 =C2=A0 =C2=A0does not<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; exceed the storage size and adjusts the lengt=
+h accordingly if<br>
+&gt;=C2=A0 =C2=A0 =C2=A0necessary.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Reproducer:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; cat &lt;&lt; EOF | qemu-system-aarch64 -displ=
+ay none \<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; -machine accel=3Dqtest, -m 512M -machine kudo=
+-bmc -qtest stdio<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; writeq 0xc0000010 0x6<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; writel 0xc000000c 0x9<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; writeq 0xc0000010 0xf27f9412<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; writeq 0xc000000f 0x2b5cdc26<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; writeq 0xc000000c 0xffffffffffffffff<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; writeq 0xc000000c 0xffffffffffffffff<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; writeq 0xc000000c 0xffffffffffffffff<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; writel 0xc000000c 0x9<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; writeq 0xc000000c 0x9<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; EOF<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; ASan log:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; =3D=3D2614308=3D=3DERROR: AddressSanitizer: h=
+eap-buffer-overflow on<br>
+&gt;=C2=A0 =C2=A0 =C2=A0address 0x7fd3fb7fc000 at pc 0x55aa77a442dc bp 0x7f=
+ffaa155900 sp<br>
+&gt;=C2=A0 =C2=A0 =C2=A00x7fffaa1550c8<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; WRITE of size 65536 at 0x7fd3fb7fc000 thread =
+T0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 #0 0x55aa77a442db in __as=
+an_memset<br>
+&gt;=C2=A0 =C2=A0 =C2=A0llvm/compiler-rt/lib/asan/asan_interceptors_memintr=
+insics.cpp:26:3<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 #1 0x55aa77e7e6b3 in flas=
+h_erase hw/block/m25p80.c:631:5<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 #2 0x55aa77e6f8b1 in comp=
+lete_collecting_data<br>
+&gt;=C2=A0 =C2=A0 =C2=A0hw/block/m25p80.c:773:9<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 #3 0x55aa77e6aaa9 in m25p=
+80_transfer8 hw/block/m25p80.c:1550:13<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 #4 0x55aa78e9a691 in ssi_=
+transfer_raw_default hw/ssi/ssi.c:92:16<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 #5 0x55aa78e996c0 in ssi_=
+transfer hw/ssi/ssi.c:165:14<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 #6 0x55aa78e8d76a in npcm=
+7xx_fiu_uma_transaction<br>
+&gt;=C2=A0 =C2=A0 =C2=A0hw/ssi/npcm7xx_fiu.c:336:9<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 #7 0x55aa78e8be4b in npcm=
+7xx_fiu_ctrl_write<br>
+&gt;=C2=A0 =C2=A0 =C2=A0hw/ssi/npcm7xx_fiu.c:428:13<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Signed-off-by: Zheyu Ma &lt;<a href=3D"mailto=
+:zheyuma97@gmail.com" target=3D"_blank">zheyuma97@gmail.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:zheyuma97@gmail.com" t=
+arget=3D"_blank">zheyuma97@gmail.com</a>&gt;&gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; ---<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0hw/block/m25p80.c | 6 ++++++<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A01 file changed, 6 insertions(+)<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; diff --git a/hw/block/m25p80.c b/hw/block/m25=
+p80.c<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; index 8dec134832..e9a59f6616 100644<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; --- a/hw/block/m25p80.c<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +++ b/hw/block/m25p80.c<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; @@ -617,6 +617,12 @@ static void flash_erase(=
+Flash *s, int<br>
+&gt;=C2=A0 =C2=A0 =C2=A0offset, FlashCMD cmd)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0abort=
+();<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 if (offset + len &gt; s-&gt;si=
+ze) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_log_mask(LO=
+G_GUEST_ERROR,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;M25P80: Erase exceeds storage size=
+,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0adjusting length\n&quot;);<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Usually hardware doesn&#39;t &quot;adjust&quot; but=
+ report error earlier.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 len =3D s-&gt;si=
+ze - offset;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0trace_m25p80_flash_=
+erase(s, offset, len);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if ((s-&gt;pi-&gt;f=
+lags &amp; capa_to_assert) !=3D capa_to_assert) {<br>
+&gt; <br>
+<br>
+</blockquote></div></div>
+
+--0000000000008bfeef061b394845--
 
