@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C8F7C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 09:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39A17C2BA15
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 09:19:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJrS7-0005Ou-Kf; Wed, 19 Jun 2024 05:18:04 -0400
+	id 1sJrTN-0007iC-3C; Wed, 19 Jun 2024 05:19:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sJrRy-0005De-60
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 05:17:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sJrTJ-0007hO-KH
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 05:19:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sJrRw-0003yS-Fq
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 05:17:53 -0400
+ id 1sJrTD-00048q-P7
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 05:19:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718788671;
+ s=mimecast20190719; t=1718788750;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5GC+hv8iinl3emo8lYof8BsSRuYtckLmPNXIswLbt2E=;
- b=QOE7HMCGCoiEsZwgOkn+Zco6IhnOH6d5jHJi5Wv0cDZ+R8JD5kOqrmt8N/0XLRiv2KPV3n
- jbLvnFCMg9jvLTR8+1ahsCwIjN4eAXV/waklkg+/8W5dejXud1pnMrwHphERq7esAGvSo3
- t/CHKlCmMLMP+JHokLBS2lKrfLmsGOA=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yxjXpMluHxc52Vobqk0TATP11svHSV6pn9tJ8XYJc34=;
+ b=aTdirws68UyLI0/6dFyrT7TzHH2QVGGdgGwECOQXg3CGfwrDPcVKrk+Wx1/bF8rKS2Md0A
+ fHmryHIrPxROdJxV5ZUAH18ezTT5AC/o9L9NBP6eE4whUSL3nIvZzbDLzueh5/hWvcjlA0
+ rM9r+wsk33V7q1We5/a4Ee3WuV9rMhg=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-410-xgxB3COoOZaY46fSLhIPqQ-1; Wed, 19 Jun 2024 05:17:46 -0400
-X-MC-Unique: xgxB3COoOZaY46fSLhIPqQ-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2ec01fa1a72so48800291fa.2
- for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 02:17:46 -0700 (PDT)
+ us-mta-593-dD3F01XWP7uK1DBXCpd0Mg-1; Wed, 19 Jun 2024 05:19:08 -0400
+X-MC-Unique: dD3F01XWP7uK1DBXCpd0Mg-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-52c968340c8so5575191e87.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 02:19:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718788665; x=1719393465;
+ d=1e100.net; s=20230601; t=1718788744; x=1719393544;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5GC+hv8iinl3emo8lYof8BsSRuYtckLmPNXIswLbt2E=;
- b=YmtAbjyYK0tUOQcyhkm1aVSRx3aKor4ZIfc9n1DVopRjR/mEbisu57Mo4TDuaj1Qf3
- pjDHrm2gLwrM6iKjtYMm/K3TWpSwDpfur8bhZ3m2rXKzF8GSxvEjHuM04wVie8cA3w/r
- mTG2YdjFkc83HzTY8LImbGQGus34X8pE250GSl/Q7zusLQSIzTrYItWAtZYqu8bkrHPt
- XrV1mXpopv16wGLNDFrHRjgBvl3KWyVdU+/lgDK4L1R6T/iVU2IV+jwcSAVjYFgO1Twg
- v0K9xotdRJEqn56R3UGAqUGqS3sar4o5I3YHPzF0LxOdoAvDfOuIQjXm9tnvBLPhfXdQ
- UYVQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVMpD1SKS7VltQx6a+ceW6AoQyREQrPzbXTH80U9PZrA62axQmAy25y3YqGQklGgy4ulAdT2WkTgMJIyPDe1lU41MVX+aw=
-X-Gm-Message-State: AOJu0YxpMhuNTpihmm478r+3o40u5hKIzgCqkObfpwBAv0dSkzyq+7ET
- gl2JG0JpZeowAfXsnlab7DjjovpZUODDfbuzi6Z+nmu+o3cKYpf9D3jaR64mU4oKdW0NTc3s+eS
- dI7zKSPWu4X2Sqmz3DyD18AOO8fQkdbTlLQukv3Nk6aVeBKHKd9X+
-X-Received: by 2002:a2e:be93:0:b0:2ec:4096:4bc6 with SMTP id
- 38308e7fff4ca-2ec40965033mr7105421fa.7.1718788665567; 
- Wed, 19 Jun 2024 02:17:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE0B5WaLWPRj9oPygysfhHieKtXBUf5T/kk8ziat0RwgGhq3MrYjMUXLan7Cd+S60+vXFl6Cw==
-X-Received: by 2002:a2e:be93:0:b0:2ec:4096:4bc6 with SMTP id
- 38308e7fff4ca-2ec40965033mr7105201fa.7.1718788665183; 
- Wed, 19 Jun 2024 02:17:45 -0700 (PDT)
+ bh=yxjXpMluHxc52Vobqk0TATP11svHSV6pn9tJ8XYJc34=;
+ b=fX1Hd5wzl6u8SScqMZjjJWwyqIXRxf+Hr8J/0+LxovgReQ/9Pf0pYzqJwYY95GJbVZ
+ 5bbcctuKi5pRjZmdfTxhjHR5Lqj6SMTHMJi2B4DSaPl8+XGEnm9q7BmB/ugqxqpWxUL8
+ 1Idc+OQ7I29O/hnMFvNQ2iVww0tgE7AwGIkdTLTCPFWbF10gnjVxUiF3QT1YN8qT5S1c
+ fXxtW+ri1K5qR4BsgXlCBL908H77wO/N42navOW8eEeUxREfQVeUYv7NqvZvJGYb89OK
+ QSlvIdAsDGWusdQLFSZs9a5TaGj2G168IANSzQLrWD0ckN0M+LzmPsGHgUppdNMykzyq
+ a09w==
+X-Gm-Message-State: AOJu0Yx1PPbCy7v3lVhXQjZ5UJPgq2k5W/jNzTApHSInu2ysP4rr82gP
+ HqT9vc2OGrkaLpJl4JwGLfR9Y+KjaRhwMQ+9FO0jGcCoVvCke6UaHKqEaiwZETQKTstZsqWm/0n
+ v9gOQoeg/J7XdLwVu1/cPf58kBai5S2RMbIJIhvTalhVz9txLVw27
+X-Received: by 2002:ac2:5605:0:b0:52c:891d:2ac4 with SMTP id
+ 2adb3069b0e04-52ccaa37401mr1300792e87.35.1718788744533; 
+ Wed, 19 Jun 2024 02:19:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHHfRW9tMc8QVRrzctKNOxvx9HWw/3XU+KapdD/SGF8j4lVSWwVSs09rqpWpdId4VkCsB6fDw==
+X-Received: by 2002:ac2:5605:0:b0:52c:891d:2ac4 with SMTP id
+ 2adb3069b0e04-52ccaa37401mr1300774e87.35.1718788744114; 
+ Wed, 19 Jun 2024 02:19:04 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42471584311sm31892615e9.0.2024.06.19.02.17.44
+ 5b1f17b1804b1-4247101a955sm41879905e9.0.2024.06.19.02.19.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Jun 2024 02:17:44 -0700 (PDT)
-Date: Wed, 19 Jun 2024 11:17:43 +0200
+ Wed, 19 Jun 2024 02:19:03 -0700 (PDT)
+Date: Wed, 19 Jun 2024 11:19:02 +0200
 From: Igor Mammedov <imammedo@redhat.com>
 To: Sunil V L <sunilvl@ventanamicro.com>
-Cc: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org, Paolo
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org, Paolo
  Bonzini <pbonzini@redhat.com>, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
  <marcandre.lureau@redhat.com>, "Daniel P . =?UTF-8?B?QmVycmFuZ8Op?="
- <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>, "Michael S .
- Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Laurent Vivier
+ <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>, Philippe
+ =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Laurent Vivier
  <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, Alistair Francis
  <alistair23@gmail.com>, Sia Jee Heng <jeeheng.sia@starfivetech.com>, Haibo1
  Xu <haibo1.xu@intel.com>, Anup Patel <apatel@ventanamicro.com>, Andrew
@@ -84,19 +82,16 @@ Cc: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
  Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>, Weiwei
  Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [PATCH v2 06/12] tests/data/acpi/virt: Move ACPI tables under
- aarch64
-Message-ID: <20240619111743.58930119@imammedo.users.ipa.redhat.com>
-In-Reply-To: <ZlSjzfSj8MwDcJk6@sunil-laptop>
+Subject: Re: [PATCH v2 07/12] meson.build: Add RISC-V to the edk2-target list
+Message-ID: <20240619111902.241adcc3@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240524061411.341599-8-sunilvl@ventanamicro.com>
 References: <20240524061411.341599-1-sunilvl@ventanamicro.com>
- <20240524061411.341599-7-sunilvl@ventanamicro.com>
- <27cef750-262a-402a-97fe-c4a55700a376@linaro.org>
- <ZlSjzfSj8MwDcJk6@sunil-laptop>
+ <20240524061411.341599-8-sunilvl@ventanamicro.com>
 X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -121,51 +116,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 27 May 2024 20:46:29 +0530
+On Fri, 24 May 2024 11:44:06 +0530
 Sunil V L <sunilvl@ventanamicro.com> wrote:
 
-> On Mon, May 27, 2024 at 12:12:10PM +0200, Philippe Mathieu-Daud=C3=A9 wro=
-te:
-> > Hi Sunil,
-> >=20
-> > On 24/5/24 08:14, Sunil V L wrote: =20
-> > > Since virt is a common machine name across architectures like ARM64 a=
-nd
-> > > RISC-V, move existing ARM64 ACPI tables under aarch64 folder so that
-> > > RISC-V tables can be added under riscv64 folder in future.
-> > >=20
-> > > Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-> > > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> > > ---
-> > >   tests/data/acpi/virt/{ =3D> aarch64}/APIC             | Bin =20
-> >=20
-> > The usual pattern is {target}/{machine}, so instead of:
-> >=20
-> >   microvm/
-> >   pc/
-> >   q35/
-> >   virt/aarch64/
-> >   virt/riscv64/
-> >=20
-> > (which is odd because q35 is the x86 'virt'), I'd rather see:
-> >=20
-> >   x86/microvm/
-> >   x86/pc/
-> >   x86/q35/
-> >   aarch64/virt/
-> >   riscv64/virt/
-> >=20
-> > Anyhow just my 2 cents, up to the ACPI maintainers :)
-> >  =20
-> Hi Phil,
->=20
-> Your suggestion does make sense to me. Let me wait for feedback from
-> ARM/ACPI maintainers.
+> so that ACPI table test can be supported.
+> 
+> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-I'd prefer  {target}/{machine} hierarchy like Philippe suggests
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-> Thanks,
-> Sunil
->=20
+> ---
+>  meson.build | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/meson.build b/meson.build
+> index a9de71d450..576c803a8a 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -93,7 +93,7 @@ else
+>    iasl = find_program(get_option('iasl'), required: true)
+>  endif
+>  
+> -edk2_targets = [ 'arm-softmmu', 'aarch64-softmmu', 'i386-softmmu', 'x86_64-softmmu' ]
+> +edk2_targets = [ 'arm-softmmu', 'aarch64-softmmu', 'i386-softmmu', 'x86_64-softmmu', 'riscv64-softmmu' ]
+>  unpack_edk2_blobs = false
+>  foreach target : edk2_targets
+>    if target in target_dirs
 
 
