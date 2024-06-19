@@ -4,73 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA162C2BA1A
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 21:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8117C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 21:03:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sK2Pk-0002Nr-PM; Wed, 19 Jun 2024 17:00:20 -0400
+	id 1sK2PZ-0002Dx-DG; Wed, 19 Jun 2024 17:00:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sK2Pi-0002Lu-Df
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 17:00:18 -0400
+ id 1sK2PX-0002DT-O4
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 17:00:07 -0400
 Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sK2Pg-0000jK-Lc
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 17:00:18 -0400
+ id 1sK2PW-0000Yh-0N
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 17:00:07 -0400
 Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1f44b594deeso1815165ad.2
- for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 14:00:16 -0700 (PDT)
+ d9443c01a7336-1f480624d0dso1642815ad.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 14:00:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718830815; x=1719435615; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718830804; x=1719435604; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3SDNjdEkTqvqZmekms95ys+/GW3YEsb5HtHOIrwzGFc=;
- b=ikZHgM/rWxdhby3f+G9r9wK03T2EXP902AVvaZAzoTFTTbAPhk7bSnLDz8lGVw4Zk0
- HooAv3VvguuYyLuVuqM0QQfdhXIiWCknH8qktNl5hUAag9dbg8QS2bkzaRx8mFd0axFv
- O9tC0yWyDOZb/5zgMWA16X1jjrHqJOi5d9EByxRB047hIhB+xTVOfkxmgAIl8TDB9ZSt
- PvOSllYJZtEhLlCfL+OlgCt16PW6jikv5mOdCasVkc4yxG86iFN+V5Rc8y0lLSwvtG08
- +9qmzAy0rPMHcV0Pm5NzVPyEs7YDQNSZEISF1QA1enHAED6E6v02DvsEU3T4mxwOL5oV
- jg4w==
+ bh=r0UfmwlzZKdf3qRpICgNO4rdEb11HLtqXJQ3Mp0c5Cw=;
+ b=WEiMmB8rbFLyRZcZCrJUuel3DIeQVWir2hLWPiiqhFyQ7tBqHvL5b2XiP7KaeQbQ/v
+ Q6WXLzraMRRBZ6US/wYR6ywMNl1nrjRBDdse7HMPdscO6PqfGYvHi+0XW5++XPk5maa7
+ Yuk4T1elWBF4im/09Xdr0TqRhPJIfseb9XdRhPwKNX5iQa8GyVFn2YZwZ8PFahhMKX9m
+ WK+HX6EEwzCDsh6QmNYSeT4eFKNamI5v0OsQGpRPG9u7IsYgjRUdlQOU9iTWDvyDHabp
+ KcmfmnArWyGwW63uzzoJfOOPVj6Z9UqOed/d+VIb/TdersQuowouEjsjLxTxmdUhBkM1
+ m9/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718830815; x=1719435615;
+ d=1e100.net; s=20230601; t=1718830804; x=1719435604;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3SDNjdEkTqvqZmekms95ys+/GW3YEsb5HtHOIrwzGFc=;
- b=eA98S0ZX3FeUOl9+C007iEq0g4O7Wxe3H1FLgwCdgiNk+RtfNR087vhx+pCoQt4w0y
- 5Q1Awc1w7zOC/inUjASIYI470dRQBNPKSfK3cIpsZ1Rv6vABTsGMD26xVaXnMG1U14Ys
- tZ3QBdx0qh3JGv2UEfXySRBJ9A+/v3LsPTbPRjYe8ANze/YZefwkzyPZXQAn6OdvKQ6f
- HmuBj2CKEHuGGkH38ahJLCEsjI3OXfOBnrWwtWYJibrU+n8DFDlbze93Qg98IHajUymn
- qwHs/J9y8nGzGnZNeSaj6qGw1mvkMFvdvn2IHV4b0COFempTn638lI8Xvd2TyR5o+Qhd
- X5Iw==
-X-Gm-Message-State: AOJu0YwDDXEcoAtVThTvGJ/mbgFcgbI0uBwQ4KtF1n27956QiUK1ij/j
- Hb0tsRCVZr0F2U34PvkuS8/klzPjmxch2s8I3K3l/vQ+tV0xdUeHQ+vuu9K9a6IH3+aSakznp5B
- p
-X-Google-Smtp-Source: AGHT+IEt7vg2zXSLcYT77RvKKVM5+GVigK52UQ2JgkqcrNEYyfxGwdjKmoJotdtwYtzc7h57bbusVg==
-X-Received: by 2002:a17:902:d581:b0:1f9:93fe:a1ea with SMTP id
- d9443c01a7336-1f9aa4335cbmr40059525ad.35.1718830814139; 
- Wed, 19 Jun 2024 14:00:14 -0700 (PDT)
+ bh=r0UfmwlzZKdf3qRpICgNO4rdEb11HLtqXJQ3Mp0c5Cw=;
+ b=O8gfWZ2I1OvlP7aNrmF4JMoNPI+6EjJBVHJ29N5L9X7m11GGJmqKzEDdHyS+kaD8GY
+ Wre9Gs1MDj+lTt7J7SEOcRhMUitz55aBRVjs63tOyIJseJSR47rl5/DUvGr730BaWY+2
+ LJ6QYdBPG65DOnuEB8KbvF21AY5OlhnSljMy22LEJp6QbnhH3XFawg5McpxmgdGoe61v
+ vVN20pP2uFAVzv/FwjhyFdwboDVnuoIV8td/gwhcmZKbuAjGxQWlHRzNNm7+v7NO6/1D
+ Zq9YZEIgniNM+/sy5piJ4fAI5RQM61ZA3rkfzgfKR+TjdDxRt8iDG/V11OXIG3A7cr55
+ 1hjw==
+X-Gm-Message-State: AOJu0YwdXdxKRGcMldk1zxbfuKIfXGFcm0kLSlMAyki4Or0M43KXxBV0
+ I2UFSnLt8+rFc1yL1NQp994KiqMUPcJHFn7GB6qM/Ya2RRZs+T3twIKCK9uAsdgDxImT/u83/FO
+ O
+X-Google-Smtp-Source: AGHT+IEZeHU6fwkwernpMpRdXGpQuOTAVejIYHkr6QekagWezbS9vfLc9vdBOGZqy7kmLG2SSdnnTg==
+X-Received: by 2002:a17:902:e748:b0:1f9:9a59:871e with SMTP id
+ d9443c01a7336-1f9aa45eb2dmr42889535ad.52.1718830804225; 
+ Wed, 19 Jun 2024 14:00:04 -0700 (PDT)
 Received: from stoup.. ([71.212.132.216]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f98f8f8c42sm39183765ad.162.2024.06.19.14.00.13
+ d9443c01a7336-1f98f8f8c42sm39183765ad.162.2024.06.19.14.00.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Jun 2024 14:00:13 -0700 (PDT)
+ Wed, 19 Jun 2024 14:00:03 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 22/24] linux-user: Make TARGET_NR_setgroups affect only the
- current thread
-Date: Wed, 19 Jun 2024 13:59:50 -0700
-Message-Id: <20240619205952.235946-23-richard.henderson@linaro.org>
+Cc: Song Gao <gaosong@loongson.cn>
+Subject: [PULL 10/24] tcg/loongarch64: Support LASX in tcg_out_dupi_vec
+Date: Wed, 19 Jun 2024 13:59:38 -0700
+Message-Id: <20240619205952.235946-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240619205952.235946-1-richard.henderson@linaro.org>
 References: <20240619205952.235946-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
  envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
@@ -96,63 +93,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-
-Like TARGET_NR_setuid, TARGET_NR_setgroups should affect only the
-calling thread, and not the entire process. Therefore, implement it
-using a syscall, and not a libc call.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 19b84f3c35d7 ("added setgroups and getgroups syscalls")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240614154710.1078766-1-iii@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/syscall.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tcg/loongarch64/tcg-target.c.inc | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index b9b5a387b3..e2804312fc 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -7209,11 +7209,17 @@ static inline int tswapid(int id)
- #else
- #define __NR_sys_setresgid __NR_setresgid
- #endif
-+#ifdef __NR_setgroups32
-+#define __NR_sys_setgroups __NR_setgroups32
-+#else
-+#define __NR_sys_setgroups __NR_setgroups
-+#endif
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index 9a8f67cf3e..c7d0c7839b 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -1743,7 +1743,12 @@ static void tcg_out_dupi_vec(TCGContext *s, TCGType type, unsigned vece,
+     int64_t value = sextract64(v64, 0, 8 << vece);
+     if (-0x200 <= value && value <= 0x1FF) {
+         uint32_t imm = (vece << 10) | ((uint32_t)v64 & 0x3FF);
+-        tcg_out_opc_vldi(s, rd, imm);
++
++        if (type == TCG_TYPE_V256) {
++            tcg_out_opc_xvldi(s, rd, imm);
++        } else {
++            tcg_out_opc_vldi(s, rd, imm);
++        }
+         return;
+     }
  
- _syscall1(int, sys_setuid, uid_t, uid)
- _syscall1(int, sys_setgid, gid_t, gid)
- _syscall3(int, sys_setresuid, uid_t, ruid, uid_t, euid, uid_t, suid)
- _syscall3(int, sys_setresgid, gid_t, rgid, gid_t, egid, gid_t, sgid)
-+_syscall2(int, sys_setgroups, int, size, gid_t *, grouplist)
- 
- void syscall_init(void)
- {
-@@ -11891,7 +11897,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-                 unlock_user(target_grouplist, arg2,
-                             gidsetsize * sizeof(target_id));
-             }
--            return get_errno(setgroups(gidsetsize, grouplist));
-+            return get_errno(sys_setgroups(gidsetsize, grouplist));
-         }
-     case TARGET_NR_fchown:
-         return get_errno(fchown(arg1, low2highuid(arg2), low2highgid(arg3)));
-@@ -12227,7 +12233,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-                 }
-                 unlock_user(target_grouplist, arg2, 0);
-             }
--            return get_errno(setgroups(gidsetsize, grouplist));
-+            return get_errno(sys_setgroups(gidsetsize, grouplist));
-         }
- #endif
- #ifdef TARGET_NR_fchown32
 -- 
 2.34.1
 
