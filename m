@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07720C27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 00:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA6EAC41513
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 00:32:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJjEX-0006eD-TA; Tue, 18 Jun 2024 20:31:29 -0400
+	id 1sJjF9-0001aK-4q; Tue, 18 Jun 2024 20:32:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjEW-0006as-8f
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:31:28 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjF8-0001Oz-0S
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:32:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjEU-0001Qi-RV
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:31:28 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjF6-0001T2-7U
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:32:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718757086;
+ s=mimecast20190719; t=1718757123;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PKn8SIxGob2pKMM70MaK6Zu4lcrmGDuuPfEZ9b3S+uQ=;
- b=SpJWRUGht3tE81yX0TJpPKN0zmw8AySpTbAzHFY/zEHpoCvRREdtO2GxVlMz6yFMYZ/ujf
- wlhnEzYfsivsNoYLb2KjlfFhW5GzRf6D14wGqexJjHqCaAdMGLxN9cpAZXd1wu6FMSTMRs
- RTikvAPY8EgPtVqDbLrpaRxqLH6eX3s=
+ bh=L6AnbYZO/P56oES7EE5cq3UJCGzylUH7FETDvELDxTI=;
+ b=K+jj4oso4FVdcHF7CwOv+P9+aPpJN/vT8uTjC0axwo0E7Zc2amlk6DPlQ8mFSFnTKziFDN
+ +EZZXTIUA9xS+mgzB8sydOU2wPwOwtdLs3KDdhq+cvKdqGS+O4Sm1fMBn4v9zA9ec2P7kl
+ jiEvUwlCLzREFxEc2GqWvioyNWBiCr8=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-402-4OkzGxRBOvGFq_PlNjrGvQ-1; Tue,
- 18 Jun 2024 20:31:23 -0400
-X-MC-Unique: 4OkzGxRBOvGFq_PlNjrGvQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-346-EK4KF4UvNm2wymuHGYDrEw-1; Tue,
+ 18 Jun 2024 20:32:00 -0400
+X-MC-Unique: EK4KF4UvNm2wymuHGYDrEw-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6E40319560B2; Wed, 19 Jun 2024 00:31:20 +0000 (UTC)
+ id 8356119560B2; Wed, 19 Jun 2024 00:31:58 +0000 (UTC)
 Received: from scv.localdomain (unknown [10.22.16.38])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F122A1955E80; Wed, 19 Jun 2024 00:31:12 +0000 (UTC)
+ id 5E0BC1955E80; Wed, 19 Jun 2024 00:31:51 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -70,9 +70,9 @@ Cc: Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Eric Blake <eblake@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 06/13] docs/qapidoc: fix nested parsing under untagged sections
-Date: Tue, 18 Jun 2024 20:30:05 -0400
-Message-ID: <20240619003012.1753577-7-jsnow@redhat.com>
+Subject: [PATCH 11/13] qapi: add markup to note blocks
+Date: Tue, 18 Jun 2024 20:30:10 -0400
+Message-ID: <20240619003012.1753577-12-jsnow@redhat.com>
 In-Reply-To: <20240619003012.1753577-1-jsnow@redhat.com>
 References: <20240619003012.1753577-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -103,58 +103,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sphinx does not like sections without titles, because it wants to
-convert every section into a reference. When there is no title, it
-struggles to do this and transforms the tree inproperly.
+Generally, surround command-line options with ``literal`` markup to help
+it stand out from prose in rendered HTML, and add cross-references to
+replace "see also" messages.
 
-Depending on the rST used, this may result in an assertion error deep in
-the docutils HTMLWriter.
-
-(Observed when using ".. admonition:: Notes" under such a section - When
-this is transformed with its own <title> element, Sphinx is fooled into
-believing this title belongs to the section and incorrect mutates the
-docutils tree, leading to errors during rendering time.)
-
-When parsing an untagged section (free paragraphs), skip making a hollow
-section and instead append the parse results to the prior section.
-
-Many Bothans died to bring us this information.
+References to types, values, and other QAPI definitions are not yet
+adjusted here; they will be converted en masse in a subsequent patch
+after the new QAPI doc generator is merged.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ qapi/control.json   | 4 ++--
+ qapi/misc.json      | 8 ++++----
+ qapi/qdev.json      | 2 +-
+ qapi/run-state.json | 2 +-
+ qapi/sockets.json   | 2 +-
+ qapi/ui.json        | 2 +-
+ 6 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index f2f2005dd5f..66cf254a624 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -286,14 +286,20 @@ def _nodes_for_sections(self, doc):
-             if section.tag and section.tag == 'TODO':
-                 # Hide TODO: sections
-                 continue
-+
-+            if not section.tag:
-+                # Sphinx cannot handle sectionless titles;
-+                # Instead, just append the results to the prior section.
-+                container = nodes.container()
-+                self._parse_text_into_node(section.text, container)
-+                nodelist += container.children
-+                continue
-+
-             snode = self._make_section(section.tag)
--            if section.tag and section.tag.startswith('Example'):
-+            if section.tag.startswith('Example'):
-                 snode += self._nodes_for_example(dedent(section.text))
-             else:
--                self._parse_text_into_node(
--                    dedent(section.text) if section.tag else section.text,
--                    snode,
--                )
-+                self._parse_text_into_node(dedent(section.text), snode)
-             nodelist.append(snode)
-         return nodelist
- 
+diff --git a/qapi/control.json b/qapi/control.json
+index 59d5e00c151..fe2af45120b 100644
+--- a/qapi/control.json
++++ b/qapi/control.json
+@@ -24,8 +24,8 @@
+ #
+ # .. note:: This command is valid exactly when first connecting: it must
+ #    be issued before any other command will be accepted, and will fail
+-#    once the monitor is accepting other commands.  (see qemu
+-#    docs/interop/qmp-spec.rst)
++#    once the monitor is accepting other commands.
++#    (see :doc:`/interop/qmp-spec`)
+ #
+ # .. note:: The QMP client needs to explicitly enable QMP capabilities,
+ #    otherwise all the QMP capabilities will be turned off by default.
+diff --git a/qapi/misc.json b/qapi/misc.json
+index 13ea82f5254..b04efbadec6 100644
+--- a/qapi/misc.json
++++ b/qapi/misc.json
+@@ -104,7 +104,7 @@
+ # Returns a list of information about each iothread.
+ #
+ # .. note:: This list excludes the QEMU main loop thread, which is not
+-#    declared using the -object iothread command-line option.  It is
++#    declared using the ``-object iothread`` command-line option.  It is
+ #    always the main thread of the process.
+ #
+ # Returns: a list of @IOThreadInfo for each iothread
+@@ -138,8 +138,8 @@
+ #
+ # .. note:: This function will succeed even if the guest is already in
+ #    the stopped state.  In "inmigrate" state, it will ensure that the
+-#    guest remains paused once migration finishes, as if the -S option
+-#    was passed on the command line.
++#    guest remains paused once migration finishes, as if the ``-S``
++#    option was passed on the command line.
+ #
+ #    In the "suspended" state, it will completely stop the VM and cause
+ #    a transition to the "paused" state.  (Since 9.0)
+@@ -161,7 +161,7 @@
+ # .. note:: This command will succeed if the guest is currently running.
+ #    It will also succeed if the guest is in the "inmigrate" state; in
+ #    this case, the effect of the command is to make sure the guest
+-#    starts once migration finishes, removing the effect of the -S
++#    starts once migration finishes, removing the effect of the ``-S``
+ #    command line option if it was passed.
+ #
+ #    If the VM was previously suspended, and not been reset or woken,
+diff --git a/qapi/qdev.json b/qapi/qdev.json
+index f5b35a814fe..d031fc3590d 100644
+--- a/qapi/qdev.json
++++ b/qapi/qdev.json
+@@ -59,7 +59,7 @@
+ #        the 'docs/qdev-device-use.txt' file.
+ #
+ #     3. It's possible to list device properties by running QEMU with
+-#        the "-device DEVICE,help" command-line argument, where DEVICE
++#        the ``-device DEVICE,help`` command-line argument, where DEVICE
+ #        is the device's name.
+ #
+ # Example:
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index dc524234ace..252d7d6afa7 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -146,7 +146,7 @@
+ # @reason: The @ShutdownCause which resulted in the SHUTDOWN.
+ #     (since 4.0)
+ #
+-# .. note:: If the command-line option "-no-shutdown" has been
++# .. note:: If the command-line option ``-no-shutdown`` has been
+ #    specified, qemu will not exit, and a STOP event will eventually
+ #    follow the SHUTDOWN event.
+ #
+diff --git a/qapi/sockets.json b/qapi/sockets.json
+index 20e05ca7ac2..f46113ab1b8 100644
+--- a/qapi/sockets.json
++++ b/qapi/sockets.json
+@@ -181,7 +181,7 @@
+ #
+ # .. note:: This type is deprecated in favor of SocketAddress.  The
+ #    difference between SocketAddressLegacy and SocketAddress is that
+-#    the latter has fewer {} on the wire.
++#    the latter has fewer ``{}`` on the wire.
+ #
+ # Since: 1.3
+ ##
+diff --git a/qapi/ui.json b/qapi/ui.json
+index a1999965e44..5bcccbfc930 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -1268,7 +1268,7 @@
+ # Since: 2.6
+ #
+ # .. note:: The consoles are visible in the qom tree, under
+-#    /backend/console[$index]. They have a device link and head
++#    ``/backend/console[$index]``. They have a device link and head
+ #    property, so it is possible to map which console belongs to which
+ #    device and display.
+ #
 -- 
 2.44.0
 
