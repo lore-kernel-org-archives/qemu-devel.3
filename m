@@ -4,77 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DEEAC27C79
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 05:35:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E559C27C79
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 05:50:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJnxU-0001Lc-F9; Wed, 19 Jun 2024 01:34:12 -0400
+	id 1sJoCv-0005Iy-AY; Wed, 19 Jun 2024 01:50:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJnxS-0001LI-5V
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 01:34:10 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1sJoCt-0005Il-KH
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 01:50:07 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJnxO-0007Ps-4q
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 01:34:09 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7041053c0fdso4258318b3a.3
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 22:34:05 -0700 (PDT)
+ id 1sJoCr-0001Xl-If
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 01:50:07 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-711b1512aeaso146536a12.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 22:50:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718775244; x=1719380044; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=r/MTxxEp0N4+fC+mq3wmPNYfLu0PEEsgXoGWnCIY71c=;
- b=Ncv3hLYb+qMIqWg5v3FzdJk87IPL1ElHff6rFUSC9grVyafCeE+caOWbq63NdNDm9V
- B82yHkb/lrOT3ttv+075FH4vn6O7tOUbY/gGOgHnaYqS63pWfuDA4Xt/6YEXis14JIct
- Q1lLSljfrniUOHhjHM1fP0ipG65a65Zs3ffCLCaFs369oiXSYiTm0ZDgthuGwnEP70lZ
- /nmH+ETKhPCDqNqaZ2AIMS8h0ClUXCUxf+X3pN0/v1HGLYd+9jwxDW5Ua5Juo/FgJr0H
- jAu6Gxh+ymoj8ci0rIk4PuhZXLQJCcKD0eB5knIiEV1M5eAX90SpEXb4iWQCl/vGkLki
- HfEA==
+ d=linaro.org; s=google; t=1718776203; x=1719381003; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Q87yEelvlvLrbbH45z9fgatLb5Vc2yZq2nrn8gRhdVI=;
+ b=WGDdx2kVk1rRyT0ipJNnsSheCfVWFhj7PuHOPMz5M7k0BoPuXAG0TH5uEJ3CZ16U+Q
+ F/aDEfTuQWvmeSi3+SLi3aZJ+TskLs2HIK0GLmStsH6hgjJcyaQDvC6Fl54wA+e+OwDd
+ 4hjENLcF8nHW+7XjUEb4auFaPL4FSsD7JdwvgmiHK8YZY/pL/nmzm7F9QUYlADphb1WN
+ /SnsGcyPWHyCu1tFkoLqxRc9PgsrumYKQfCoevCP7bP75VR7m4LgeDBoPzTSA7OCxezy
+ r0VMo1QBc7pjbk52M1VTLqyxnA4NhhNWlPTkoZ7RDLg4LlX8jZUVW5tWAO2mPyu+LT5X
+ usuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718775244; x=1719380044;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r/MTxxEp0N4+fC+mq3wmPNYfLu0PEEsgXoGWnCIY71c=;
- b=wiQXNGpI5rv8jzYuuZAf/xeznoxVD6Y5MYrGUiJ5wPUT1W0ag5FL7qu3bDH/gv8za1
- USQ5GIl+E2cgIacHSIRP+uouXqm151V15KkhhAqS5GDAtaAdEmghR/Yd8wDTM2xvzmuO
- 2wQDc2e6uNb6pBpnbJMEB/DMHHtk8mlAQJE4N9WkQ20gpFpUc9MBbMRXhXww2Rt+e/1e
- F2iUBcSiEy84PL4TiiGnEedPo4fq8gxLfTh3Co/WRn0FqwCgnWrEG+ZoTkdTuuwA+oBF
- neqAKRWIdJbp5/8Jp1o/DXusB/0KBll5B72J/TIOD5EyyHHF0GRKqly2NGBJijSyL79H
- Yp6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVpL+AcqM7KKfMJXjjVCdF9JI70gW7aNrAdMzFt8mj9GUOVPEVpIO0+T5NEPSmoTDR+mnlJOFjCHd/O1xsFLg+9wa/TVac=
-X-Gm-Message-State: AOJu0YwKNxgA4JOVP5I9+CHDRwSvwDj9MBNJ77ClAjKdnImNVhzC3QuD
- H8CS+xR+oKWqzMlnLmd3bOaqOeW9WptwX+xom6KCG5i2iNHKul1s9gBA5+VCg6w=
-X-Google-Smtp-Source: AGHT+IGRrJG25weEmsweO1f5/MPkdAdZXKHA7ykPxAzdEjkBW3GG+olU4cf9+ATGtJmhOEAQlM+UPw==
-X-Received: by 2002:a05:6a20:491e:b0:1b4:772d:2885 with SMTP id
- adf61e73a8af0-1bcbb45643emr1530092637.3.1718775243810; 
- Tue, 18 Jun 2024 22:34:03 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.132.216])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705ed9e6a0bsm6247805b3a.6.2024.06.18.22.34.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 22:34:03 -0700 (PDT)
-Message-ID: <0841ddd2-d962-4f1d-a818-be9a1ec4d9bf@linaro.org>
-Date: Tue, 18 Jun 2024 22:34:01 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
- <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
-Content-Language: en-US
+ d=1e100.net; s=20230601; t=1718776203; x=1719381003;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Q87yEelvlvLrbbH45z9fgatLb5Vc2yZq2nrn8gRhdVI=;
+ b=VTlhRCp/t6hXNiHoYJMADzQyPlTv2qSTN4cc2/LPjZl0wLKlDzSyhHJ7Jd3FhWlzKH
+ nEo7nRDgggpQhFbt/Kg0dUCYGVkjtZPLDpPSscJ+RCOsewCsAQSnyZvB7sLHW/GqdWYH
+ CiBKUS7xE06VY0E6TOpQYqSZwpVLbEyV46g63Y58YCt/SADCzLihY2+zjIhJ8xSjXvys
+ TyEOt5kxSWD3/qbLqf9XUoZMTfpI0S5zwNoh9aIRj838WC/prH5+StZJxrhaB0uPjMLE
+ g9dz/j5Q8255705wXO0p0DPjazxyH3hE3YXob/hZQQYtpp8vtCXbE+XsnRkpG5G3avL1
+ NR4Q==
+X-Gm-Message-State: AOJu0YxZGMztp519syzChkaSHh4BcKINLG9QX3UimkDLhClVWSVs8Lmh
+ 5acC4vpo6HtrVoKSJ/+LPKLNRWaJD0FSEhbQqnxpsnLbtIgT7KF3AX0VwP2C61NUpKhO4LyHsqh
+ C
+X-Google-Smtp-Source: AGHT+IFmcFRat3hc5Hc84QMPp6j0HN8hw4EIVYty/OrX2EjtCgp5ITwp5Ml9HE/sPGiwrAVYA297Lw==
+X-Received: by 2002:a05:6a20:968e:b0:1b6:bb61:3784 with SMTP id
+ adf61e73a8af0-1bcbb60d5b2mr1776280637.55.1718776203444; 
+ Tue, 18 Jun 2024 22:50:03 -0700 (PDT)
+Received: from stoup.. ([71.212.132.216]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f855f15231sm107430885ad.220.2024.06.18.22.50.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Jun 2024 22:50:02 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+To: qemu-devel@nongnu.org
+Cc: gaosong@loongson.cn
+Subject: [PATCH v2] tcg/loongarch64: Fix tcg_out_movi vs some pcrel pointers
+Date: Tue, 18 Jun 2024 22:50:02 -0700
+Message-Id: <20240619055002.119042-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,171 +90,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/11/24 03:33, Manos Pitsidianakis wrote:
-> This commit adds a re-implementation of hw/char/pl011.c in Rust.
-> 
-> It uses generated Rust bindings (produced by `ninja
-> aarch64-softmmu-generated.rs`) to
-> register itself as a QOM type/class.
-> 
-> How to build:
-> 
-> 1. Make sure rust, cargo and bindgen (cargo install bindgen-cli) are
->     installed
+Simplify the logic for two-part, 32-bit pc-relative addresses.
+Rather than assume all such fit in int32_t, do some arithmetic
+and assert a result, do some arithmetic first and then check
+to see if the pieces are in range.
 
-Ah hah.  Nevermind my previous question -- cargo install produces bindgen v0.69.4, quite a 
-bit newer than the ubuntu 22.04 packaged version.  I have progressed a bit.
+Reported-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
 
-Please bear with me as I attempt to learn Rust in the process of reviewing this.  I 
-promise no bikesheding and only to ask silly questions.
+Hi Song.  I was not thrilled by the "goto out" that you introduced in
 
+  20240618125044.687443-1-gaosong@loongson.cn
 
->   rust/pl011/.cargo/config.toml  |   2 +
->   rust/pl011/.gitignore          |   2 +
->   rust/pl011/Cargo.lock          | 120 +++++++
->   rust/pl011/Cargo.toml          |  66 ++++
->   rust/pl011/README.md           |  42 +++
->   rust/pl011/build.rs            |  44 +++
->   rust/pl011/deny.toml           |  57 ++++
->   rust/pl011/meson.build         |   7 +
->   rust/pl011/rustfmt.toml        |   1 +
-
-First silly question: how much of this is boiler plate that gets moved the moment that the 
-second rust subdirectory is added?
-
-
-> diff --git a/rust/pl011/.cargo/config.toml b/rust/pl011/.cargo/config.toml
-> new file mode 100644
-> index 0000000000..241210ffa7
-> --- /dev/null
-> +++ b/rust/pl011/.cargo/config.toml
-> @@ -0,0 +1,2 @@
-> +[build]
-> +rustflags = ["-Crelocation-model=pic", "-Ctarget-feature=+crt-static"]
-
-It seems certain that this is not specific to pl011, and will be commot to other rust 
-subdirectories.  Or, given the .cargo directory name, is this generated by cargo and 
-committed by mistake?
-
-
-> diff --git a/rust/pl011/.gitignore b/rust/pl011/.gitignore
-> new file mode 100644
-> index 0000000000..28a02c847f
-> --- /dev/null
-> +++ b/rust/pl011/.gitignore
-> @@ -0,0 +1,2 @@
-> +target
-> +src/generated.rs.inc
-
-Is this a symptom of generating files into the source directory and not build directory?
-
-
-> diff --git a/rust/pl011/Cargo.lock b/rust/pl011/Cargo.lock
-> new file mode 100644
-> index 0000000000..d0fa46f9f5
-> --- /dev/null
-> +++ b/rust/pl011/Cargo.lock
-> @@ -0,0 +1,120 @@
-> +# This file is automatically @generated by Cargo.
-> +# It is not intended for manual editing.
-
-Second silly question: does this really need to be committed to the repository? It 
-*appears* to be specific to the host+os-version of the build.  It is certainly very 
-specific about versions and checksums...
-
-
-> diff --git a/rust/pl011/Cargo.toml b/rust/pl011/Cargo.toml
-> new file mode 100644
-> index 0000000000..db74f2b59f
-> --- /dev/null
-> +++ b/rust/pl011/Cargo.toml
-> @@ -0,0 +1,66 @@
-> +[package]
-> +name = "pl011"
-> +version = "0.1.0"
-> +edition = "2021"
-> +authors = ["Manos Pitsidianakis <manos.pitsidianakis@linaro.org>"]
-> +license = "GPL-2.0 OR GPL-3.0-or-later"
-> +readme = "README.md"
-> +homepage = "https://www.qemu.org"
-> +description = "pl011 device model for QEMU"
-> +repository = "https://gitlab.com/epilys/rust-for-qemu"
-> +resolver = "2"
-> +publish = false
-> +keywords = []
-> +categories = []
-> +
-> +[lib]
-> +crate-type = ["staticlib"]
-> +
-> +# bilge deps included here to include them with docs
-> +[dependencies]
-> +arbitrary-int = { version = "1.2.7" }
-> +bilge = { version = "0.2.0" }
-> +bilge-impl = { version = "0.2.0" }
-
-Likewise.
-
-> diff --git a/rust/pl011/deny.toml b/rust/pl011/deny.toml
-> new file mode 100644
-> index 0000000000..3992380509
-> --- /dev/null
-> +++ b/rust/pl011/deny.toml
-> @@ -0,0 +1,57 @@
-> +# cargo-deny configuration file
-> +
-> +[graph]
-> +targets = [
-> +    "aarch64-unknown-linux-gnu",
-> +    "x86_64-unknown-linux-gnu",
-> +    "x86_64-apple-darwin",
-> +    "aarch64-apple-darwin",
-> +    "x86_64-pc-windows-gnu",
-> +    "aarch64-pc-windows-gnullvm",
-> +]
-
-Very much likewise.
-Since aarch64-pc-windows-gnullvm is not a host that qemu supports, if this is not 
-auto-generated, I am confused.
-
-> diff --git a/rust/pl011/rustfmt.toml b/rust/pl011/rustfmt.toml
-> new file mode 120000
-> index 0000000000..39f97b043b
-> --- /dev/null
-> +++ b/rust/pl011/rustfmt.toml
-> @@ -0,0 +1 @@
-> +../rustfmt.toml
-> \ No newline at end of file
-
-Newline.  Also, third silly question: is there a way we can avoid replicating this within 
-every rust subdirectory?  E.g. some search path option within one of the build tools?
-
-
-> +++ b/rust/pl011/src/definitions.rs
-> +++ b/rust/pl011/src/device.rs
-> +++ b/rust/pl011/src/device_class.rs
-> +++ b/rust/pl011/src/lib.rs
-> +++ b/rust/pl011/src/memory_ops.rs
-
-Eek! Actual Rust! Skipping until I am better educated.
-
-
-> diff --git a/rust/pl011/src/generated.rs b/rust/pl011/src/generated.rs
-> new file mode 100644
-> index 0000000000..670e7b541d
-> --- /dev/null
-> +++ b/rust/pl011/src/generated.rs
-> @@ -0,0 +1,5 @@
-> +#[cfg(MESON_GENERATED_RS)]
-> +include!(concat!(env!("OUT_DIR"), "/generated.rs"));
-> +
-> +#[cfg(not(MESON_GENERATED_RS))]
-> +include!("generated.rs.inc");
-
-Is this indicative of Rust not being prepared to separate source and build directories? 
-I'm surprised there would have to be a file in the source to direct the compiler to look 
-for a file in the build.
+Instead, I copied the logic from tcg/aarch64/ for adrp+add.
 
 
 r~
+
+---
+ tcg/loongarch64/tcg-target.c.inc | 32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
+
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index 7ca52d0248..e915e97bba 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -382,8 +382,7 @@ static void tcg_out_movi(TCGContext *s, TCGType type, TCGReg rd,
+      * back to the slow path.
+      */
+ 
+-    intptr_t pc_offset;
+-    tcg_target_long val_lo, val_hi, pc_hi, offset_hi;
++    intptr_t src_rx, pc_offset;
+     tcg_target_long hi12, hi32, hi52;
+ 
+     /* Value fits in signed i32.  */
+@@ -393,24 +392,23 @@ static void tcg_out_movi(TCGContext *s, TCGType type, TCGReg rd,
+     }
+ 
+     /* PC-relative cases.  */
+-    pc_offset = tcg_pcrel_diff(s, (void *)val);
+-    if (pc_offset == sextreg(pc_offset, 0, 22) && (pc_offset & 3) == 0) {
+-        /* Single pcaddu2i.  */
+-        tcg_out_opc_pcaddu2i(s, rd, pc_offset >> 2);
+-        return;
++    src_rx = (intptr_t)tcg_splitwx_to_rx(s->code_ptr);
++    if ((val & 3) == 0) {
++        pc_offset = val - src_rx;
++        if (pc_offset == sextreg(pc_offset, 0, 22)) {
++            /* Single pcaddu2i.  */
++            tcg_out_opc_pcaddu2i(s, rd, pc_offset >> 2);
++            return;
++        }
+     }
+ 
+-    if (pc_offset == (int32_t)pc_offset) {
+-        /* Offset within 32 bits; load with pcalau12i + ori.  */
+-        val_lo = sextreg(val, 0, 12);
+-        val_hi = val >> 12;
+-        pc_hi = (val - pc_offset) >> 12;
+-        offset_hi = val_hi - pc_hi;
+-
+-        tcg_debug_assert(offset_hi == sextreg(offset_hi, 0, 20));
+-        tcg_out_opc_pcalau12i(s, rd, offset_hi);
++    pc_offset = (val >> 12) - (src_rx >> 12);
++    if (pc_offset == sextreg(pc_offset, 0, 20)) {
++        /* Load with pcalau12i + ori.  */
++        tcg_target_long val_lo = val & 0xfff;
++        tcg_out_opc_pcalau12i(s, rd, pc_offset);
+         if (val_lo != 0) {
+-            tcg_out_opc_ori(s, rd, rd, val_lo & 0xfff);
++            tcg_out_opc_ori(s, rd, rd, val_lo);
+         }
+         return;
+     }
+-- 
+2.34.1
+
 
