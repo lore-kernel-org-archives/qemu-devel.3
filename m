@@ -4,76 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76967C2BA15
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 12:57:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0693CC2BA15
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 13:00:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJus5-0004mY-0h; Wed, 19 Jun 2024 08:57:05 -0400
+	id 1sJuuf-0008Og-EX; Wed, 19 Jun 2024 08:59:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sJus3-0004m0-5q; Wed, 19 Jun 2024 08:57:03 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sJus1-0001US-1m; Wed, 19 Jun 2024 08:57:02 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-57c68682d1aso7564029a12.3; 
- Wed, 19 Jun 2024 05:56:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718801818; x=1719406618; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GykKotq+Xu6NBL9HsTh683SxXw7P1fYNZfL+DkQRrLY=;
- b=KYivfY22OxBpabK2hfZzLEJHkT0liyr91DKInaJuzIeRG3PgpvY7HGv4A0xqflgYgn
- m9wOsUS6yIZpBLG0tG3bo9/lHBjIF7Irtb/FbUSupk0JGcjs2Ht3xFoYGKSq5zJadVFY
- ZvpySqJfQ/fgtJ3pPKkJdVHXPjjlalu2as9C9yPh6VZ1vJgNVJ9ovgG4MFphbm9V8/oA
- BlkJ44F1AVF7Rv0crT4IREPDDwIwXyBc59eU69I4dGWQVvq9C162fqkl+f3LUZswgQzL
- YA3XXowWSsCfPJbz0hLzxaQ/HRL+OGXYrI6jqE8RiLZ+KN5cqb08txne929giQJsGoBT
- S8lw==
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1sJuud-0008No-RL
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 08:59:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1sJuuc-0001nf-10
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 08:59:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718801980;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ndgKULfHbBt7KqzR0WHBvj2CUdfnVHZDXVN3f2R9o8I=;
+ b=hQwjQeM+FCSqFfP5oJPz2KqgHKt+I8X4iOAK+9QYa6zgFT8l8SnLdn/Xgk60ars2uP4TM1
+ iPCcJ5o9yfdK53lSV/GdncFo0UFeEo89XKlHaEcxQMT0AZedtdIaC79L7NJG/l6+EAgIqC
+ q8GHSl7qrKN84zyASVGgzavQLEXypAA=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-553-ETm-Dl1ZPKmasLqRzXAvOA-1; Wed, 19 Jun 2024 08:59:39 -0400
+X-MC-Unique: ETm-Dl1ZPKmasLqRzXAvOA-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-44055f6d991so15892671cf.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 05:59:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718801818; x=1719406618;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GykKotq+Xu6NBL9HsTh683SxXw7P1fYNZfL+DkQRrLY=;
- b=dp4jcYmFdtiUuNNzSIyazvSG56FzjsJFWCM6wof1tPLVZOCcVFA6g3M29dnTQ9mejR
- zyolO0lPz9GQ9YANQxnQ5rhRvC8h0asCrGmQ2W3E0WZ9B8wNVdnukeE21GHmXJeohZ9E
- mMIDcgZvZnJW9x9nWYtPYes4rh0vZ+HdwUTEb9zWi4PB05SDICIO+V5fFjQSFRZ4K942
- t/1GEd0FpJJtA820yo9L/tG5VjBiFDaLWxAKvLNaAXbc285HwMFyKCHiCqDJ6pPpJEXV
- qsL9jwCJbeo2/vYTufCGUyEF8bihiJw423q4tEUxymKH6uHyWUiRKvPZuN6iSSV9jKQZ
- 8q7w==
+ d=1e100.net; s=20230601; t=1718801979; x=1719406779;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ndgKULfHbBt7KqzR0WHBvj2CUdfnVHZDXVN3f2R9o8I=;
+ b=vALNZpTFbVZPt7/UWOvVLv0QJEaKkfr6XgqvvBiXkMmTfZaTo4tlE00+qA3F7PYbbk
+ 4rKlD2I+zqsKjYEQNPL0xdh8ePx74jvRf/+KyeLo2PqLe514p6vNBckzbF06RSzEiNwO
+ bgN384Kj6BrHkOsOD/KKAarCCN2Vr4xicPDhfim809PNiOuZY+028TzfSAJ02xLTKLYa
+ f+uku9CX6HfaY+jseQifeuv/soXQbaQlHnXwt6b48DIqsSdjYXTSlDdcBw22V0y8Vduy
+ nAmCxXIVxkZ5TsrWswbajpUKxO13dgc/hc3VIlvXLljruPSvuqRMDLMtUsmn2fF+LagP
+ plKw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdwhx+DJ8KfP/oUI1i4IgayJCoGZ9zLymPml0WNuVoiDFtNfJHn8f27pfeg5Z2QVBpUqs+oWkh3+2oeBP5WmN1dMu5x4E=
-X-Gm-Message-State: AOJu0YyZv9Z450Mc7pBTuB/yyIosk5HJnSQY3KS0pRrGUIN+cVBi7nou
- JyNIjvKW0XO3SpR5zNZTS2itpytrVRm0Wzxd5W5Cu/2wdRKoDAtsqhEnRtzQ80MnJL+YEM8c4qd
- FZTFvqL7m/BO4ZJ7IM+wDg5gy5mQ=
-X-Google-Smtp-Source: AGHT+IEI674xXk3SxGjKgNjyODm2+p/sFr9A9l97NImERkuBsMrV96mJBL5T0ODXZkclgXIgroATm+qvr3l3VRoCtw4=
-X-Received: by 2002:a50:d5dd:0:b0:578:649e:e63e with SMTP id
- 4fb4d7f45d1cf-57d07e43795mr1303341a12.16.1718801818374; Wed, 19 Jun 2024
- 05:56:58 -0700 (PDT)
+ AJvYcCWRfmjeZBkqSNOvWID5/GIwX5RbyKY8nSYVIXd1IyGPTsC55LRJxtqqRAGSiN+Ln6ZSm5h9znN3P2OnNyxEMjNT+ncGbz0=
+X-Gm-Message-State: AOJu0YxI0fdYICVkhdbwap0L/rj9qb/2jIZmpSaKW882kf6o3XPVnfIr
+ jZWb1KNqdlvYGDpCZ8ORrgHWiawGAuScfFyYtGmBta6CD4BIPATh+3iNlZk2VC50uRJAID19iYl
+ 4KEw5Rtk9+ZAxR+XvuLuMKMNdjXww6k9A/hMAnHl80TJY7DN7u1bB
+X-Received: by 2002:a05:622a:144e:b0:444:a0b9:2ca3 with SMTP id
+ d75a77b69052e-444a0b97bccmr74751621cf.7.1718801978813; 
+ Wed, 19 Jun 2024 05:59:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHebZEnDoy3lYSlOcAlXN7Si4PSFWnkTkc+4+0FriTphhOcn+lN53wV0O2F2bFL6EBj84oGpA==
+X-Received: by 2002:a05:622a:144e:b0:444:a0b9:2ca3 with SMTP id
+ d75a77b69052e-444a0b97bccmr74751361cf.7.1718801978482; 
+ Wed, 19 Jun 2024 05:59:38 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-441f2ffb37bsm64689611cf.90.2024.06.19.05.59.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Jun 2024 05:59:38 -0700 (PDT)
+Message-ID: <de7fd33e-b076-4743-80ae-99c146b42171@redhat.com>
+Date: Wed, 19 Jun 2024 14:59:32 +0200
 MIME-Version: 1.0
-References: <20240619091632.2825550-1-sai.pavan.boddu@amd.com>
- <20240619091632.2825550-3-sai.pavan.boddu@amd.com>
-In-Reply-To: <20240619091632.2825550-3-sai.pavan.boddu@amd.com>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Wed, 19 Jun 2024 14:56:46 +0200
-Message-ID: <CAJy5ezqp5suYCceq-=7Q=_kvuj2tvkoNm=_TxmP4JEXwBpObaw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] hw/arm/xilinx_zynq: Add boot-mode property
-To: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>, francisco.iglesias@amd.com
-Content-Type: multipart/alternative; boundary="000000000000d2d91f061b3dbb1b"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/arm/virt-acpi-build: Drop local iort_node_offset
+To: Nicolin Chen <nicolinc@nvidia.com>, peter.maydell@linaro.org,
+ mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ shannon.zhaosl@gmail.com
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20240619001708.926511-1-nicolinc@nvidia.com>
+Content-Language: en-US
+From: Eric Auger <eauger@redhat.com>
+In-Reply-To: <20240619001708.926511-1-nicolinc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eauger@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,244 +106,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d2d91f061b3dbb1b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Nicolin,
 
-On Wed, Jun 19, 2024 at 11:16=E2=80=AFAM Sai Pavan Boddu <sai.pavan.boddu@a=
-md.com>
-wrote:
+On 6/19/24 02:17, Nicolin Chen wrote:
+> Both the other two callers of build_iort_id_mapping() just directly pass
+> in the IORT_NODE_OFFSET macro. Keeping a "const uint32_t" local variable
+> storing the same value doesn't have any gain.
+> 
+> Simplify this by replacing the only place using this local variable with
+> the macro directly.
+> 
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-> Read boot-mode value as machine property and propagate that to
-> SLCR.BOOT_MODE register.
->
->
-Hi Sai,
-
-It seems a little odd to have -machine boot-mode and -boot. Perhaps someone
-else has a better idea how this could be done?
-
-Anyway, I'm OK with your approach:
-Acked-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-
-
-
-> Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+Eric
 > ---
->  hw/arm/xilinx_zynq.c | 31 +++++++++++++++++++++++++++++++
->  1 file changed, 31 insertions(+)
->
-> diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-> index 7f7a3d23fbe..39f07e6dfd8 100644
-> --- a/hw/arm/xilinx_zynq.c
-> +++ b/hw/arm/xilinx_zynq.c
-> @@ -38,6 +38,7 @@
->  #include "qom/object.h"
->  #include "exec/tswap.h"
->  #include "target/arm/cpu-qom.h"
-> +#include "qapi/visitor.h"
->
->  #define TYPE_ZYNQ_MACHINE MACHINE_TYPE_NAME("xilinx-zynq-a9")
->  OBJECT_DECLARE_SIMPLE_TYPE(ZynqMachineState, ZYNQ_MACHINE)
-> @@ -90,6 +91,7 @@ struct ZynqMachineState {
->      MachineState parent;
->      Clock *ps_clk;
->      ARMCPU *cpu[ZYNQ_MAX_CPUS];
-> +    uint8_t boot_mode;
->  };
->
->  static void zynq_write_board_setup(ARMCPU *cpu,
-> @@ -176,6 +178,27 @@ static inline int zynq_init_spi_flashes(uint32_t
-> base_addr, qemu_irq irq,
->      return unit;
->  }
->
-> +static void zynq_set_boot_mode(Object *obj, const char *str,
-> +                                               Error **errp)
-> +{
-> +    ZynqMachineState *m =3D ZYNQ_MACHINE(obj);
-> +    uint8_t mode =3D 0;
-> +
-> +    if (!strcasecmp(str, "QSPI")) {
-> +        mode =3D 1;
-> +    } else if (!strcasecmp(str, "SD")) {
-> +        mode =3D 5;
-> +    } else if (!strcasecmp(str, "NOR")) {
-> +        mode =3D 2;
-> +    } else if (!strcasecmp(str, "JTAG")) {
-> +        mode =3D 0;
-> +    } else {
-> +        error_setg(errp, "%s bootmode is not supported", str);
-> +        return;
-> +    }
-> +    m->boot_mode =3D mode;
-> +}
-> +
->  static void zynq_init(MachineState *machine)
+>  hw/arm/virt-acpi-build.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index ee6f56b410..05af407bbd 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -277,7 +277,6 @@ static void
+>  build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
 >  {
->      ZynqMachineState *zynq_machine =3D ZYNQ_MACHINE(machine);
-> @@ -241,6 +264,7 @@ static void zynq_init(MachineState *machine)
->      /* Create slcr, keep a pointer to connect clocks */
->      slcr =3D qdev_new("xilinx-zynq_slcr");
->      qdev_connect_clock_in(slcr, "ps_clk", zynq_machine->ps_clk);
-> +    qdev_prop_set_uint8(slcr, "boot-mode", zynq_machine->boot_mode);
->      sysbus_realize_and_unref(SYS_BUS_DEVICE(slcr), &error_fatal);
->      sysbus_mmio_map(SYS_BUS_DEVICE(slcr), 0, 0xF8000000);
->
-> @@ -372,6 +396,7 @@ static void zynq_machine_class_init(ObjectClass *oc,
-> void *data)
->          NULL
->      };
->      MachineClass *mc =3D MACHINE_CLASS(oc);
-> +    ObjectProperty *prop;
->      mc->desc =3D "Xilinx Zynq Platform Baseboard for Cortex-A9";
->      mc->init =3D zynq_init;
->      mc->max_cpus =3D ZYNQ_MAX_CPUS;
-> @@ -379,6 +404,12 @@ static void zynq_machine_class_init(ObjectClass *oc,
-> void *data)
->      mc->ignore_memory_transaction_failures =3D true;
->      mc->valid_cpu_types =3D valid_cpu_types;
->      mc->default_ram_id =3D "zynq.ext_ram";
-> +    prop =3D object_class_property_add_str(oc, "boot-mode", NULL,
-> +                              zynq_set_boot_mode);
-> +    object_class_property_set_description(oc, "boot-mode",
-> +                                          "Supported boot modes:"
-> +                                          " JTAG QSPI SD NOR");
-> +    object_property_set_default_str(prop, "QSPI");
->  }
->
->  static const TypeInfo zynq_machine_type =3D {
-> --
-> 2.34.1
->
->
+>      int i, nb_nodes, rc_mapping_count;
+> -    const uint32_t iort_node_offset = IORT_NODE_OFFSET;
+>      size_t node_size, smmu_offset = 0;
+>      AcpiIortIdMapping *idmap;
+>      uint32_t id = 0;
+> @@ -423,7 +422,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>              range = &g_array_index(its_idmaps, AcpiIortIdMapping, i);
+>              /* output IORT node is the ITS group node (the first node) */
+>              build_iort_id_mapping(table_data, range->input_base,
+> -                                  range->id_count, iort_node_offset);
+> +                                  range->id_count, IORT_NODE_OFFSET);
+>          }
+>      } else {
+>          /* output IORT node is the ITS group node (the first node) */
 
---000000000000d2d91f061b3dbb1b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">On Wed, Jun 19, 2024 at 11:16=E2=80=AFAM =
-Sai Pavan Boddu &lt;<a href=3D"mailto:sai.pavan.boddu@amd.com">sai.pavan.bo=
-ddu@amd.com</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
-id rgb(204,204,204);padding-left:1ex">Read boot-mode value as machine prope=
-rty and propagate that to<br>
-SLCR.BOOT_MODE register.<br>
-<br></blockquote><div><br></div><div>Hi Sai,</div><div><br></div><div>It se=
-ems a little odd to have -machine boot-mode=C2=A0and -boot. Perhaps someone=
- else has a better idea how this could be done?</div><div><br></div><div>An=
-yway, I&#39;m OK with your approach:</div><div>Acked-by: Edgar E. Iglesias =
-&lt;<a href=3D"mailto:edgar.iglesias@amd.com">edgar.iglesias@amd.com</a>&gt=
-;<br></div><div><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote=
-" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
-padding-left:1ex">
-Signed-off-by: Sai Pavan Boddu &lt;<a href=3D"mailto:sai.pavan.boddu@amd.co=
-m" target=3D"_blank">sai.pavan.boddu@amd.com</a>&gt;<br>
----<br>
-=C2=A0hw/arm/xilinx_zynq.c | 31 +++++++++++++++++++++++++++++++<br>
-=C2=A01 file changed, 31 insertions(+)<br>
-<br>
-diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c<br>
-index 7f7a3d23fbe..39f07e6dfd8 100644<br>
---- a/hw/arm/xilinx_zynq.c<br>
-+++ b/hw/arm/xilinx_zynq.c<br>
-@@ -38,6 +38,7 @@<br>
-=C2=A0#include &quot;qom/object.h&quot;<br>
-=C2=A0#include &quot;exec/tswap.h&quot;<br>
-=C2=A0#include &quot;target/arm/cpu-qom.h&quot;<br>
-+#include &quot;qapi/visitor.h&quot;<br>
-<br>
-=C2=A0#define TYPE_ZYNQ_MACHINE MACHINE_TYPE_NAME(&quot;xilinx-zynq-a9&quot=
-;)<br>
-=C2=A0OBJECT_DECLARE_SIMPLE_TYPE(ZynqMachineState, ZYNQ_MACHINE)<br>
-@@ -90,6 +91,7 @@ struct ZynqMachineState {<br>
-=C2=A0 =C2=A0 =C2=A0MachineState parent;<br>
-=C2=A0 =C2=A0 =C2=A0Clock *ps_clk;<br>
-=C2=A0 =C2=A0 =C2=A0ARMCPU *cpu[ZYNQ_MAX_CPUS];<br>
-+=C2=A0 =C2=A0 uint8_t boot_mode;<br>
-=C2=A0};<br>
-<br>
-=C2=A0static void zynq_write_board_setup(ARMCPU *cpu,<br>
-@@ -176,6 +178,27 @@ static inline int zynq_init_spi_flashes(uint32_t base_=
-addr, qemu_irq irq,<br>
-=C2=A0 =C2=A0 =C2=A0return unit;<br>
-=C2=A0}<br>
-<br>
-+static void zynq_set_boot_mode(Object *obj, const char *str,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0Error **errp)<br>
-+{<br>
-+=C2=A0 =C2=A0 ZynqMachineState *m =3D ZYNQ_MACHINE(obj);<br>
-+=C2=A0 =C2=A0 uint8_t mode =3D 0;<br>
-+<br>
-+=C2=A0 =C2=A0 if (!strcasecmp(str, &quot;QSPI&quot;)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 mode =3D 1;<br>
-+=C2=A0 =C2=A0 } else if (!strcasecmp(str, &quot;SD&quot;)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 mode =3D 5;<br>
-+=C2=A0 =C2=A0 } else if (!strcasecmp(str, &quot;NOR&quot;)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 mode =3D 2;<br>
-+=C2=A0 =C2=A0 } else if (!strcasecmp(str, &quot;JTAG&quot;)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 mode =3D 0;<br>
-+=C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;%s bootmode is not supp=
-orted&quot;, str);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 m-&gt;boot_mode =3D mode;<br>
-+}<br>
-+<br>
-=C2=A0static void zynq_init(MachineState *machine)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0ZynqMachineState *zynq_machine =3D ZYNQ_MACHINE(machine=
-);<br>
-@@ -241,6 +264,7 @@ static void zynq_init(MachineState *machine)<br>
-=C2=A0 =C2=A0 =C2=A0/* Create slcr, keep a pointer to connect clocks */<br>
-=C2=A0 =C2=A0 =C2=A0slcr =3D qdev_new(&quot;xilinx-zynq_slcr&quot;);<br>
-=C2=A0 =C2=A0 =C2=A0qdev_connect_clock_in(slcr, &quot;ps_clk&quot;, zynq_ma=
-chine-&gt;ps_clk);<br>
-+=C2=A0 =C2=A0 qdev_prop_set_uint8(slcr, &quot;boot-mode&quot;, zynq_machin=
-e-&gt;boot_mode);<br>
-=C2=A0 =C2=A0 =C2=A0sysbus_realize_and_unref(SYS_BUS_DEVICE(slcr), &amp;err=
-or_fatal);<br>
-=C2=A0 =C2=A0 =C2=A0sysbus_mmio_map(SYS_BUS_DEVICE(slcr), 0, 0xF8000000);<b=
-r>
-<br>
-@@ -372,6 +396,7 @@ static void zynq_machine_class_init(ObjectClass *oc, vo=
-id *data)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NULL<br>
-=C2=A0 =C2=A0 =C2=A0};<br>
-=C2=A0 =C2=A0 =C2=A0MachineClass *mc =3D MACHINE_CLASS(oc);<br>
-+=C2=A0 =C2=A0 ObjectProperty *prop;<br>
-=C2=A0 =C2=A0 =C2=A0mc-&gt;desc =3D &quot;Xilinx Zynq Platform Baseboard fo=
-r Cortex-A9&quot;;<br>
-=C2=A0 =C2=A0 =C2=A0mc-&gt;init =3D zynq_init;<br>
-=C2=A0 =C2=A0 =C2=A0mc-&gt;max_cpus =3D ZYNQ_MAX_CPUS;<br>
-@@ -379,6 +404,12 @@ static void zynq_machine_class_init(ObjectClass *oc, v=
-oid *data)<br>
-=C2=A0 =C2=A0 =C2=A0mc-&gt;ignore_memory_transaction_failures =3D true;<br>
-=C2=A0 =C2=A0 =C2=A0mc-&gt;valid_cpu_types =3D valid_cpu_types;<br>
-=C2=A0 =C2=A0 =C2=A0mc-&gt;default_ram_id =3D &quot;zynq.ext_ram&quot;;<br>
-+=C2=A0 =C2=A0 prop =3D object_class_property_add_str(oc, &quot;boot-mode&q=
-uot;, NULL,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 zynq_set_boot_mode);<br>
-+=C2=A0 =C2=A0 object_class_property_set_description(oc, &quot;boot-mode&qu=
-ot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &=
-quot;Supported boot modes:&quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &=
-quot; JTAG QSPI SD NOR&quot;);<br>
-+=C2=A0 =C2=A0 object_property_set_default_str(prop, &quot;QSPI&quot;);<br>
-=C2=A0}<br>
-<br>
-=C2=A0static const TypeInfo zynq_machine_type =3D {<br>
--- <br>
-2.34.1<br>
-<br>
-</blockquote></div></div>
-
---000000000000d2d91f061b3dbb1b--
 
