@@ -4,87 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EA16C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 16:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CE8CC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 16:37:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJyBN-0004sv-Qk; Wed, 19 Jun 2024 12:29:13 -0400
+	id 1sJyIx-0007b3-Tp; Wed, 19 Jun 2024 12:37:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJyBM-0004s7-52
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 12:29:12 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJyBK-0000fX-2X
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 12:29:11 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-421798185f0so133025e9.1
- for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 09:29:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718814548; x=1719419348; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6McMYb4tODsXiOnKF4xaY6QdMGubIuN3c32Tk0SrYzQ=;
- b=XUQScL4HTQONfMoUFGjHlPMyj0jydmBB8GwCvOWAqu91A/juVS2KTJeqj9/WfWhEph
- n1yO6DCD0mRaXLo5CVRkI0WYTxfJ5OIn7tb07Y+y9Sj6rBvymJmNt50S8hO6CD4iLf+y
- JjZHXejzrwwaXrBUmCnBBLzMjYlWxNtYNMhOk5PonkESLMZpUcbtPOfhnbVeGUqlUcsB
- lHMmnk9coWR5tNuuNfDh+QkjAHDlZYID8Btly7ko120oSqMHx25FWlggeOf8ddUzQtlv
- Ifui/T6GzKMyGzxLPH0K7yc3dZ9sov6wwtNH1+s2RsIkF9Dad06lkrIvl71JkNLVMwZp
- 4HjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718814548; x=1719419348;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6McMYb4tODsXiOnKF4xaY6QdMGubIuN3c32Tk0SrYzQ=;
- b=sWkfyEUWOjDyUeoL37GgHjdTG3iiegQYKN6g8AvYUSvjXeG/FiNVREB1+NQCuONtIp
- bTo+mnfu9QvjtixbZHHOkpNW2YTqOtm6PGhQRfqc6Ophvo0i9t8qdQlA/6xAj5fm1p+E
- lKVMSJ395NOiGXEzqKcrVCh5ppsiRGNQS+OFrMZPlZGOGzJc4P5yvwdEyg80sCd346en
- qoUkiUUnZWvDkli4s3pXYmlwkUgVafe5IA2kB+QqsOFkmLEXYTdUpbMBEcZ2GGR4RTwt
- ICVY93MGjVxS/TutPQEuWDQeGL6qN/cQWLSJdWyMwUK0xdtl58tNIhgbOtQ6N//iI7mc
- WbsA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWSybRDTFhqciEAOG3PuguYBjz9NBCSjeKrpTcwDwCzrcEWISma5EGZYvfd1WGhE7joNuQ4bq92RmoOm/LwNm0CCdgV9Ro=
-X-Gm-Message-State: AOJu0Yyx5tt7lQkEUeQ+LQ6go3qK+h0JzsmHhHC9pgzXfieNrJzfktlx
- 7ApSGMWmJepEgUva3GLv7YhM75aVrBKgGFAynP9SFTHjd/Ptb9mhc/HtNY6zGV8=
-X-Google-Smtp-Source: AGHT+IGomLXkwnBEdEtpYgFv+teXGUFprTyC/qFjKP2jZ06Dhnm7ukgMqUawqFf5pLkNE+uZMqEJqw==
-X-Received: by 2002:a05:600c:3b8d:b0:421:7ac9:460c with SMTP id
- 5b1f17b1804b1-4247529a970mr20910195e9.39.1718814548438; 
- Wed, 19 Jun 2024 09:29:08 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.133.105])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-422f6127d6dsm236265685e9.26.2024.06.19.09.29.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Jun 2024 09:29:07 -0700 (PDT)
-Message-ID: <49028fcf-40a9-446c-9606-da4471a4456f@linaro.org>
-Date: Wed, 19 Jun 2024 18:29:05 +0200
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1sJyIq-0007ZM-PM; Wed, 19 Jun 2024 12:36:56 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1sJyIn-00029f-At; Wed, 19 Jun 2024 12:36:56 -0400
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45JGSKUi002664;
+ Wed, 19 Jun 2024 16:36:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=n
+ G1dhxxAgBTltKV8IuVwed/i86w1pLnYSP/5aXD0oPE=; b=MCozZKKYx5kjasTwe
+ zxjBGFViyNAQjdTvOewxqKRJriJA/z4lSnioC/1d0a+M+2gnYricmqSRGsj0LXLJ
+ +4TkBymw+wljHXf8RRTJpz51mp15sFPQfsrlgUZ5hDs3d8howEF5z4GyPTgYKm9V
+ JVY0lDar5a147idDINkAoVoqQRAXlFBdC3eR53uRDGRyXbz2w87Zq1kI4dqZo8kb
+ uRN8TrtJhxVcwyQg0/h/AAJHir8liWNQ46C2hOsgUa02cMk6BVNegg19sQH4MwdU
+ zP8oX8jon0wJj70S7omkWtQVY/XeRmbumBFcXPPIgUuNvxgMSmTfbniyLtH75AO5
+ U8qnA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yv2vm00xc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 19 Jun 2024 16:36:41 +0000 (GMT)
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45JGaf4x017827;
+ Wed, 19 Jun 2024 16:36:41 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yv2vm00xa-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 19 Jun 2024 16:36:41 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45JFhxGM023990; Wed, 19 Jun 2024 16:36:40 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ysp9qee4w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 19 Jun 2024 16:36:39 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45JGaYRr40239582
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 19 Jun 2024 16:36:36 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 16CB32004E;
+ Wed, 19 Jun 2024 16:36:34 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7908D2004D;
+ Wed, 19 Jun 2024 16:36:31 +0000 (GMT)
+Received: from [9.43.121.132] (unknown [9.43.121.132])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 19 Jun 2024 16:36:31 +0000 (GMT)
+Message-ID: <7c6f0c44-98ac-4245-8f1c-248181143111@linux.ibm.com>
+Date: Wed, 19 Jun 2024 22:06:28 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/gpio/aspeed: Add bounds checking for register table
- access
-To: Zheyu Ma <zheyuma97@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20240618130928.3075494-1-zheyuma97@gmail.com>
- <bd15ab0597caad4564ca8f9498dfd3bbbe67df89.camel@codeconstruct.com.au>
- <CAMhUBjm6vBO8RWx9OqCvFqGBNVRy3j2FyhZM4tTp0dZwh3L2aA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/5] ppc/pnv: Add SPI model
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ calebs@us.ibm.com, chalapathi.v@ibm.com, saif.abrar@linux.ibm.com,
+ dantan@us.ibm.com, milesg@linux.ibm.com
+References: <20240617165419.8388-1-chalapathi.v@linux.ibm.com>
+ <20240617165419.8388-2-chalapathi.v@linux.ibm.com>
+ <29251dbf-1e17-4476-a1e8-31da86958b4c@kaod.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAMhUBjm6vBO8RWx9OqCvFqGBNVRy3j2FyhZM4tTp0dZwh3L2aA@mail.gmail.com>
+From: Chalapathi V <chalapathi.v@linux.ibm.com>
+In-Reply-To: <29251dbf-1e17-4476-a1e8-31da86958b4c@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: HuaLrk44rEEMuVexMRMyC-rpWigkZaHW
+X-Proofpoint-GUID: qPwT_91vzs9T7v6vB6mSf9L2TAljkPu0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-19_02,2024-06-19_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0
+ suspectscore=0 adultscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
+ malwarescore=0 priorityscore=1501 mlxscore=0 mlxlogscore=999 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
+ definitions=main-2406190123
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=chalapathi.v@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,112 +118,563 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/6/24 08:49, Zheyu Ma wrote:
-> Hi Andrew,
-> 
-> On Wed, Jun 19, 2024 at 1:58 AM Andrew Jeffery 
-> <andrew@codeconstruct.com.au <mailto:andrew@codeconstruct.com.au>> wrote:
-> 
->     Hello Zheyu Ma,
-> 
->     On Tue, 2024-06-18 at 15:09 +0200, Zheyu Ma wrote:
->      > Added bounds checking in the aspeed_gpio_read() and
->     aspeed_gpio_write()
->      > functions to ensure the index idx is within the valid range of the
->      > reg_table array.
->      >
->      > The correct size of reg_table is determined dynamically based on
->     whether
->      > it is aspeed_3_3v_gpios or aspeed_1_8v_gpios. If idx exceeds the
->      > size of reg_table, an error is logged, and the function returns.
->      >
->      > AddressSanitizer log indicating the issue:
->      >
->      > ==2602930==ERROR: AddressSanitizer: global-buffer-overflow on
->     address 0x55a5da29e128 at pc 0x55a5d700dc62 bp 0x7fff096c4e90 sp
->     0x7fff096c4e88
->      > READ of size 2 at 0x55a5da29e128 thread T0
->      >     #0 0x55a5d700dc61 in aspeed_gpio_read
->     hw/gpio/aspeed_gpio.c:564:14
->      >     #1 0x55a5d933f3ab in memory_region_read_accessor
->     system/memory.c:445:11
->      >     #2 0x55a5d92fba40 in access_with_adjusted_size
->     system/memory.c:573:18
->      >     #3 0x55a5d92f842c in memory_region_dispatch_read1
->     system/memory.c:1426:16
->      >     #4 0x55a5d92f7b68 in memory_region_dispatch_read
->     system/memory.c:1459:9
->      >     #5 0x55a5d9376ad1 in flatview_read_continue_step
->     system/physmem.c:2836:18
->      >     #6 0x55a5d9376399 in flatview_read_continue
->     system/physmem.c:2877:19
->      >     #7 0x55a5d93775b8 in flatview_read system/physmem.c:2907:12
-> 
->     I'm mildly interested in what you were doing to trigger this. Certainly
->     we could do with a guard in the model to prevent it, but I'm curious
->     all the same.
-> 
-> 
-> Actually, I'm doing the virtual device fuzzing test and trying to 
-> discover bugs.
+Hello Cedric,
 
-Could you share the reproducer? (As you did in your other patches,
-it is very useful to reproduce).
+Thank You for reviewing this patch series.
 
-> 
->      >
->      > Signed-off-by: Zheyu Ma <zheyuma97@gmail.com
->     <mailto:zheyuma97@gmail.com>>
->      > ---
->      >  hw/gpio/aspeed_gpio.c | 26 ++++++++++++++++++++++++++
->      >  1 file changed, 26 insertions(+)
->      >
->      > diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
->      > index c1781e2ba3..1441046f6c 100644
->      > --- a/hw/gpio/aspeed_gpio.c
->      > +++ b/hw/gpio/aspeed_gpio.c
->      > @@ -550,6 +550,7 @@ static uint64_t aspeed_gpio_read(void
->     *opaque, hwaddr offset, uint32_t size)
->      >      GPIOSets *set;
->      >      uint32_t value = 0;
->      >      uint64_t debounce_value;
->      > +    uint32_t reg_table_size;
->      >
->      >      idx = offset >> 2;
->      >      if (idx >= GPIO_DEBOUNCE_TIME_1 && idx <=
->     GPIO_DEBOUNCE_TIME_3) {
->      > @@ -559,6 +560,18 @@ static uint64_t aspeed_gpio_read(void
->     *opaque, hwaddr offset, uint32_t size)
->      >          return debounce_value;
->      >      }
->      >
->      > +    if (agc->reg_table == aspeed_3_3v_gpios) {
->      > +        reg_table_size = GPIO_3_3V_REG_ARRAY_SIZE;
->      > +    } else {
->      > +        reg_table_size = GPIO_1_8V_REG_ARRAY_SIZE;
->      > +    }
-> 
->     I think I'd prefer we add reg_table_size as a member of AspeedGPIOClass
->     and initialise it at the same time as we initialise reg_table. I feel
->     it would help maintain safety in the face of future changes (i.e. if
->     another reg table were introduced). With that approach the hunk above
->     can be dropped.
-> 
->      > +
->      > +    if (idx >= reg_table_size) {
-> 
->     This condition would then become:
-> 
->     ```
->     if (idx >= agc->reg_table_size) {
->     ```
-> 
->     Thoughts?
-> 
-> 
-> I agree with you, adding a new member is a more maintainable way, I'll 
-> send a v2 patch, thanks!
-> 
-> Zheyu
+Regards,
 
+Chalapathi
+
+On 18-06-2024 21:18, Cédric Le Goater wrote:
+> Hello Chalapathi,
+>
+> On 6/17/24 6:54 PM, Chalapathi V wrote:
+>> SPI controller device model supports a connection to a single SPI 
+>> responder.
+>> This provide access to SPI seeproms, TPM, flash device and an ADC 
+>> controller.
+>>
+>> All SPI function control is mapped into the SPI register space to 
+>> enable full
+>> control by firmware. In this commit SPI configuration component is 
+>> modelled
+>> which contains all SPI configuration and status registers as well as 
+>> the hold
+>> registers for data to be sent or having been received.
+>>
+>> An existing QEMU SSI framework is used and SSI_BUS is created.
+>>
+>> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+>> ---
+>>   include/hw/ppc/pnv_xscom.h    |   5 +-
+>>   include/hw/ssi/pnv_spi.h      |  59 ++++++++++
+>>   include/hw/ssi/pnv_spi_regs.h | 114 +++++++++++++++++++
+>>   hw/ssi/pnv_spi.c              | 202 ++++++++++++++++++++++++++++++++++
+>>   hw/ppc/Kconfig                |   3 +
+>>   hw/ssi/Kconfig                |   4 +
+>>   hw/ssi/meson.build            |   1 +
+>>   hw/ssi/trace-events           |   6 +
+>>   8 files changed, 393 insertions(+), 1 deletion(-)
+>>   create mode 100644 include/hw/ssi/pnv_spi.h
+>>   create mode 100644 include/hw/ssi/pnv_spi_regs.h
+>>   create mode 100644 hw/ssi/pnv_spi.c
+>>
+>> diff --git a/include/hw/ppc/pnv_xscom.h b/include/hw/ppc/pnv_xscom.h
+>> index 6209e18492..0020dd172f 100644
+>> --- a/include/hw/ppc/pnv_xscom.h
+>> +++ b/include/hw/ppc/pnv_xscom.h
+>> @@ -21,9 +21,9 @@
+>>   #define PPC_PNV_XSCOM_H
+>>     #include "exec/memory.h"
+>> -#include "hw/ppc/pnv.h"
+>>     typedef struct PnvXScomInterface PnvXScomInterface;
+>> +typedef struct PnvChip PnvChip;
+>>     #define TYPE_PNV_XSCOM_INTERFACE "pnv-xscom-interface"
+>>   #define PNV_XSCOM_INTERFACE(obj) \
+>
+> Could please provide the above change in its own patch ?
+Sure.
+>
+>> @@ -194,6 +194,9 @@ struct PnvXScomInterfaceClass {
+>>   #define PNV10_XSCOM_PEC_PCI_BASE   0x8010800 /* index goes upwards 
+>> ... */
+>>   #define PNV10_XSCOM_PEC_PCI_SIZE   0x200
+>>   +#define PNV10_XSCOM_PIB_SPIC_BASE 0xc0000
+>> +#define PNV10_XSCOM_PIB_SPIC_SIZE 0x20
+>> +
+>>   void pnv_xscom_init(PnvChip *chip, uint64_t size, hwaddr addr);
+>>   int pnv_dt_xscom(PnvChip *chip, void *fdt, int root_offset,
+>>                    uint64_t xscom_base, uint64_t xscom_size,
+>> diff --git a/include/hw/ssi/pnv_spi.h b/include/hw/ssi/pnv_spi.h
+>> new file mode 100644
+>> index 0000000000..71c53d4a17
+>> --- /dev/null
+>> +++ b/include/hw/ssi/pnv_spi.h
+>> @@ -0,0 +1,59 @@
+>> +/*
+>> + * QEMU PowerPC SPI model
+>> + *
+>> + * Copyright (c) 2024, IBM Corporation.
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + *
+>> + * This model Supports a connection to a single SPI responder.
+>> + * Introduced for P10 to provide access to SPI seeproms, TPM, flash 
+>> device
+>> + * and an ADC controller.
+>> + */
+>> +#include "hw/ssi/ssi.h"
+>> +#include "hw/sysbus.h"
+>
+> The include should be protected by PPC_PNV_SPI_H also.
+>
+>> +#ifndef PPC_PNV_SPI_H
+>> +#define PPC_PNV_SPI_H
+>> +
+>> +/* Userful macros */
+>
+> /* Macros from target/ppc/cpu.h */
+>
+> please explain why they are copied in the comment and move them in the .c
+> file for now. We don't want them to conflict with other definitions.
+
+Sure. Will move these to pnv_spi_regs.h as they are used in 
+pnv_spi_regs.h and pnv_spi.c
+
+Thank You
+
+Chalapathi
+
+>
+>> +#define PPC_BIT(bit) (0x8000000000000000ULL >> (bit))
+>> +#define PPC_BIT8(bit)           (0x80 >> (bit))
+>> +#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | 
+>> PPC_BIT(bs))
+>> +#define PPC_BITMASK8(bs, be)    ((PPC_BIT8(bs) - PPC_BIT8(be)) | 
+>> PPC_BIT8(bs))
+>> +#define MASK_TO_LSH(m)          (__builtin_ffsll(m) - 1)
+>> +#define GETFIELD(m, v)          (((v) & (m)) >> MASK_TO_LSH(m))
+>> +#define SETFIELD(m, v, val) \
+>> +        (((v) & ~(m)) | ((((typeof(v))(val)) << MASK_TO_LSH(m)) & (m)))
+>
+> same comment for _FDT() which comes from include/hw/ppc/fdt.h.
+Sure.
+>
+> The rest looks OK.
+>
+> Thanks,
+>
+> C.
+>
+>
+>
+>> +#define _FDT(exp)                                                  \
+>> +    do {                                                           \
+>> +        int _ret = (exp);                                          \
+>> +        if (_ret < 0) {                                            \
+>> +            error_report("error creating device tree: %s: %s",     \
+>> +                    #exp, fdt_strerror(_ret));                     \
+>> + exit(1);                                               \
+>> + }                                                          \
+>> +    } while (0)
+>> +
+>> +#define TYPE_PNV_SPI "pnv-spi"
+>> +OBJECT_DECLARE_SIMPLE_TYPE(PnvSpi, PNV_SPI)
+>> +
+>> +#define PNV_SPI_REG_SIZE 8
+>> +#define PNV_SPI_REGS 7
+>> +
+>> +#define TYPE_PNV_SPI_BUS "pnv-spi-bus"
+>> +typedef struct PnvSpi {
+>> +    SysBusDevice parent_obj;
+>> +
+>> +    SSIBus *ssi_bus;
+>> +    qemu_irq *cs_line;
+>> +    MemoryRegion    xscom_spic_regs;
+>> +    /* SPI object number */
+>> +    uint32_t        spic_num;
+>> +
+>> +    /* SPI registers */
+>> +    uint64_t        regs[PNV_SPI_REGS];
+>> +    uint8_t         seq_op[PNV_SPI_REG_SIZE];
+>> +    uint64_t        status;
+>> +} PnvSpi;
+>> +#endif /* PPC_PNV_SPI_H */
+>> diff --git a/include/hw/ssi/pnv_spi_regs.h 
+>> b/include/hw/ssi/pnv_spi_regs.h
+>> new file mode 100644
+>> index 0000000000..a0b5f3973d
+>> --- /dev/null
+>> +++ b/include/hw/ssi/pnv_spi_regs.h
+>> @@ -0,0 +1,114 @@
+>> +/*
+>> + * QEMU PowerPC SPI model
+>> + *
+>> + * Copyright (c) 2024, IBM Corporation.
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#ifndef PNV_SPI_CONTROLLER_REGS_H
+>> +#define PNV_SPI_CONTROLLER_REGS_H
+>> +
+>> +/* Error Register */
+>> +#define ERROR_REG               0x00
+>> +
+>> +/* counter_config_reg */
+>> +#define SPI_CTR_CFG_REG         0x01
+>> +#define SPI_CTR_CFG_N1          PPC_BITMASK(0, 7)
+>> +#define SPI_CTR_CFG_N2          PPC_BITMASK(8, 15)
+>> +#define SPI_CTR_CFG_CMP1        PPC_BITMASK(24, 31)
+>> +#define SPI_CTR_CFG_CMP2        PPC_BITMASK(32, 39)
+>> +#define SPI_CTR_CFG_N1_CTRL     PPC_BITMASK(48, 51)
+>> +#define SPI_CTR_CFG_N2_CTRL     PPC_BITMASK(52, 55)
+>> +
+>> +/* config_reg */
+>> +#define CONFIG_REG1             0x02
+>> +
+>> +/* clock_config_reset_control_ecc_enable_reg */
+>> +#define SPI_CLK_CFG_REG         0x03
+>> +#define SPI_CLK_CFG_HARD_RST    0x0084000000000000;
+>> +#define SPI_CLK_CFG_RST_CTRL    PPC_BITMASK(24, 27)
+>> +#define SPI_CLK_CFG_ECC_CTRL    PPC_BITMASK(28, 30)
+>> +
+>> +/* memory_mapping_reg */
+>> +#define SPI_MM_REG              0x04
+>> +#define SPI_MM_BASE_ADDR        PPC_BITMASK(0, 15)
+>> +#define SPI_MM_ADDR_MASK        PPC_BITMASK(16, 31)
+>> +#define SPI_MM_RDR_MATCH_VAL    PPC_BITMASK(32, 47)
+>> +#define SPI_MM_RDR_MATCH_MASK   PPC_BITMASK(48, 63)
+>> +
+>> +/* transmit_data_reg */
+>> +#define SPI_XMIT_DATA_REG       0x05
+>> +
+>> +/* receive_data_reg */
+>> +#define SPI_RCV_DATA_REG        0x06
+>> +
+>> +/* sequencer_operation_reg */
+>> +#define SPI_SEQ_OP_REG          0x07
+>> +
+>> +/* status_reg */
+>> +#define SPI_STS_REG             0x08
+>> +#define SPI_STS_RDR_FULL        PPC_BIT(0)
+>> +#define SPI_STS_RDR_OVERRUN     PPC_BIT(1)
+>> +#define SPI_STS_RDR_UNDERRUN    PPC_BIT(2)
+>> +#define SPI_STS_TDR_FULL        PPC_BIT(4)
+>> +#define SPI_STS_TDR_OVERRUN     PPC_BIT(5)
+>> +#define SPI_STS_TDR_UNDERRUN    PPC_BIT(6)
+>> +#define SPI_STS_SEQ_FSM         PPC_BITMASK(8, 15)
+>> +#define SPI_STS_SHIFTER_FSM     PPC_BITMASK(16, 27)
+>> +#define SPI_STS_SEQ_INDEX       PPC_BITMASK(28, 31)
+>> +#define SPI_STS_GEN_STATUS      PPC_BITMASK(32, 63)
+>> +#define SPI_STS_RDR             PPC_BITMASK(1, 3)
+>> +#define SPI_STS_TDR             PPC_BITMASK(5, 7)
+>> +
+>> +/*
+>> + * Shifter states
+>> + *
+>> + * These are the same values defined for the Shifter FSM field of the
+>> + * status register.  It's a 12 bit field so we will represent it as 
+>> three
+>> + * nibbles in the constants.
+>> + *
+>> + * These are shifter_fsm values
+>> + *
+>> + * Status reg bits 16-27 -> field bits 0-11
+>> + * bits 0,1,2,5 unused/reserved
+>> + * bit 4 crc shift in (unused)
+>> + * bit 8 crc shift out (unused)
+>> + */
+>> +
+>> +#define FSM_DONE                        0x100   /* bit 3 */
+>> +#define FSM_SHIFT_N2                    0x020   /* bit 6 */
+>> +#define FSM_WAIT                        0x010   /* bit 7 */
+>> +#define FSM_SHIFT_N1                    0x004   /* bit 9 */
+>> +#define FSM_START                       0x002   /* bit 10 */
+>> +#define FSM_IDLE                        0x001   /* bit 11 */
+>> +
+>> +/*
+>> + * Sequencer states
+>> + *
+>> + * These are sequencer_fsm values
+>> + *
+>> + * Status reg bits 8-15 -> field bits 0-7
+>> + * bits 0-3 unused/reserved
+>> + *
+>> + */
+>> +#define SEQ_STATE_INDEX_INCREMENT       0x08    /* bit 4 */
+>> +#define SEQ_STATE_EXECUTE               0x04    /* bit 5 */
+>> +#define SEQ_STATE_DECODE                0x02    /* bit 6 */
+>> +#define SEQ_STATE_IDLE                  0x01    /* bit 7 */
+>> +
+>> +/*
+>> + * These are the supported sequencer operations.
+>> + * Only the upper nibble is significant because for many operations
+>> + * the lower nibble is a variable specific to the operation.
+>> + */
+>> +#define SEQ_OP_STOP                     0x00
+>> +#define SEQ_OP_SELECT_SLAVE             0x10
+>> +#define SEQ_OP_SHIFT_N1                 0x30
+>> +#define SEQ_OP_SHIFT_N2                 0x40
+>> +#define SEQ_OP_BRANCH_IFNEQ_RDR         0x60
+>> +#define SEQ_OP_TRANSFER_TDR             0xC0
+>> +#define SEQ_OP_BRANCH_IFNEQ_INC_1       0xE0
+>> +#define SEQ_OP_BRANCH_IFNEQ_INC_2       0xF0
+>> +
+>> +#endif
+>> diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
+>> new file mode 100644
+>> index 0000000000..da9e3925dd
+>> --- /dev/null
+>> +++ b/hw/ssi/pnv_spi.c
+>> @@ -0,0 +1,202 @@
+>> +/*
+>> + * QEMU PowerPC SPI model
+>> + *
+>> + * Copyright (c) 2024, IBM Corporation.
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "qemu/log.h"
+>> +#include "hw/qdev-properties.h"
+>> +#include "hw/ppc/pnv_xscom.h"
+>> +#include "hw/ssi/pnv_spi.h"
+>> +#include "hw/ssi/pnv_spi_regs.h"
+>> +#include "hw/ssi/ssi.h"
+>> +#include <libfdt.h>
+>> +#include "hw/irq.h"
+>> +#include "trace.h"
+>> +
+>> +static uint64_t pnv_spi_xscom_read(void *opaque, hwaddr addr, 
+>> unsigned size)
+>> +{
+>> +    PnvSpi *s = PNV_SPI(opaque);
+>> +    uint32_t reg = addr >> 3;
+>> +    uint64_t val = ~0ull;
+>> +
+>> +    switch (reg) {
+>> +    case ERROR_REG:
+>> +    case SPI_CTR_CFG_REG:
+>> +    case CONFIG_REG1:
+>> +    case SPI_CLK_CFG_REG:
+>> +    case SPI_MM_REG:
+>> +    case SPI_XMIT_DATA_REG:
+>> +        val = s->regs[reg];
+>> +        break;
+>> +    case SPI_RCV_DATA_REG:
+>> +        val = s->regs[reg];
+>> +        trace_pnv_spi_read_RDR(val);
+>> +        s->status = SETFIELD(SPI_STS_RDR_FULL, s->status, 0);
+>> +        break;
+>> +    case SPI_SEQ_OP_REG:
+>> +        val = 0;
+>> +        for (int i = 0; i < PNV_SPI_REG_SIZE; i++) {
+>> +            val = (val << 8) | s->seq_op[i];
+>> +        }
+>> +        break;
+>> +    case SPI_STS_REG:
+>> +        val = s->status;
+>> +        break;
+>> +    default:
+>> +        qemu_log_mask(LOG_GUEST_ERROR, "pnv_spi_regs: Invalid xscom "
+>> +                 "read at 0x%" PRIx32 "\n", reg);
+>> +    }
+>> +
+>> +    trace_pnv_spi_read(addr, val);
+>> +    return val;
+>> +}
+>> +
+>> +static void pnv_spi_xscom_write(void *opaque, hwaddr addr,
+>> +                                 uint64_t val, unsigned size)
+>> +{
+>> +    PnvSpi *s = PNV_SPI(opaque);
+>> +    uint32_t reg = addr >> 3;
+>> +
+>> +    trace_pnv_spi_write(addr, val);
+>> +
+>> +    switch (reg) {
+>> +    case ERROR_REG:
+>> +    case SPI_CTR_CFG_REG:
+>> +    case CONFIG_REG1:
+>> +    case SPI_MM_REG:
+>> +    case SPI_RCV_DATA_REG:
+>> +        s->regs[reg] = val;
+>> +        break;
+>> +    case SPI_CLK_CFG_REG:
+>> +        /*
+>> +         * To reset the SPI controller write the sequence 0x5 0xA to
+>> +         * reset_control field
+>> +         */
+>> +        if ((GETFIELD(SPI_CLK_CFG_RST_CTRL, 
+>> s->regs[SPI_CLK_CFG_REG]) == 0x5)
+>> +             && (GETFIELD(SPI_CLK_CFG_RST_CTRL, val) == 0xA)) {
+>> +                /* SPI controller reset sequence completed, 
+>> resetting */
+>> +            s->regs[reg] = SPI_CLK_CFG_HARD_RST;
+>> +        } else {
+>> +            s->regs[reg] = val;
+>> +        }
+>> +        break;
+>> +    case SPI_XMIT_DATA_REG:
+>> +        /*
+>> +         * Writing to the transmit data register causes the transmit 
+>> data
+>> +         * register full status bit in the status register to be 
+>> set.  Writing
+>> +         * when the transmit data register full status bit is 
+>> already set
+>> +         * causes a "Resource Not Available" condition.  This is not 
+>> possible
+>> +         * in the model since writes to this register are not 
+>> asynchronous to
+>> +         * the operation sequence like it would be in hardware.
+>> +         */
+>> +        s->regs[reg] = val;
+>> +        trace_pnv_spi_write_TDR(val);
+>> +        s->status = SETFIELD(SPI_STS_TDR_FULL, s->status, 1);
+>> +        s->status = SETFIELD(SPI_STS_TDR_UNDERRUN, s->status, 0);
+>> +        break;
+>> +    case SPI_SEQ_OP_REG:
+>> +        for (int i = 0; i < PNV_SPI_REG_SIZE; i++) {
+>> +            s->seq_op[i] = (val >> (56 - i * 8)) & 0xFF;
+>> +        }
+>> +        break;
+>> +    case SPI_STS_REG:
+>> +        /* other fields are ignore_write */
+>> +        s->status = SETFIELD(SPI_STS_RDR_OVERRUN, s->status,
+>> +                                  GETFIELD(SPI_STS_RDR, val));
+>> +        s->status = SETFIELD(SPI_STS_TDR_OVERRUN, s->status,
+>> +                                  GETFIELD(SPI_STS_TDR, val));
+>> +        break;
+>> +    default:
+>> +        qemu_log_mask(LOG_GUEST_ERROR, "pnv_spi_regs: Invalid xscom "
+>> +                 "write at 0x%" PRIx32 "\n", reg);
+>> +    }
+>> +    return;
+>> +}
+>> +
+>> +static const MemoryRegionOps pnv_spi_xscom_ops = {
+>> +    .read = pnv_spi_xscom_read,
+>> +    .write = pnv_spi_xscom_write,
+>> +    .valid.min_access_size = 8,
+>> +    .valid.max_access_size = 8,
+>> +    .impl.min_access_size = 8,
+>> +    .impl.max_access_size = 8,
+>> +    .endianness = DEVICE_BIG_ENDIAN,
+>> +};
+>> +
+>> +static Property pnv_spi_properties[] = {
+>> +    DEFINE_PROP_UINT32("spic_num", PnvSpi, spic_num, 0),
+>> +    DEFINE_PROP_END_OF_LIST(),
+>> +};
+>> +
+>> +static void pnv_spi_realize(DeviceState *dev, Error **errp)
+>> +{
+>> +    PnvSpi *s = PNV_SPI(dev);
+>> +    g_autofree char *name = g_strdup_printf(TYPE_PNV_SPI_BUS ".%d",
+>> +                    s->spic_num);
+>> +    s->ssi_bus = ssi_create_bus(dev, name);
+>> +    s->cs_line = g_new0(qemu_irq, 1);
+>> +    qdev_init_gpio_out_named(DEVICE(s), s->cs_line, "cs", 1);
+>> +
+>> +    /* spi scoms */
+>> +    pnv_xscom_region_init(&s->xscom_spic_regs, OBJECT(s),
+>> +                          &pnv_spi_xscom_ops, s,
+>> +                          "xscom-spi-regs",
+>> +                          PNV10_XSCOM_PIB_SPIC_SIZE);
+>> +}
+>> +
+>> +static int pnv_spi_dt_xscom(PnvXScomInterface *dev, void *fdt,
+>> +                             int offset)
+>> +{
+>> +    PnvSpi *s = PNV_SPI(dev);
+>> +    g_autofree char *name;
+>> +    int s_offset;
+>> +    const char compat[] = "ibm,power10-spi";
+>> +    uint32_t spic_pcba = PNV10_XSCOM_PIB_SPIC_BASE +
+>> +        s->spic_num * PNV10_XSCOM_PIB_SPIC_SIZE;
+>> +    uint32_t reg[] = {
+>> +        cpu_to_be32(spic_pcba),
+>> +        cpu_to_be32(PNV10_XSCOM_PIB_SPIC_SIZE)
+>> +    };
+>> +    name = g_strdup_printf("pnv_spi@%x", spic_pcba);
+>> +    s_offset = fdt_add_subnode(fdt, offset, name);
+>> +    _FDT(s_offset);
+>> +
+>> +    _FDT(fdt_setprop(fdt, s_offset, "reg", reg, sizeof(reg)));
+>> +    _FDT(fdt_setprop(fdt, s_offset, "compatible", compat, 
+>> sizeof(compat)));
+>> +    _FDT((fdt_setprop_cell(fdt, s_offset, "spic_num#", s->spic_num)));
+>> +    return 0;
+>> +}
+>> +
+>> +static void pnv_spi_class_init(ObjectClass *klass, void *data)
+>> +{
+>> +    DeviceClass *dc = DEVICE_CLASS(klass);
+>> +    PnvXScomInterfaceClass *xscomc = PNV_XSCOM_INTERFACE_CLASS(klass);
+>> +
+>> +    xscomc->dt_xscom = pnv_spi_dt_xscom;
+>> +
+>> +    dc->desc = "PowerNV SPI";
+>> +    dc->realize = pnv_spi_realize;
+>> +    device_class_set_props(dc, pnv_spi_properties);
+>> +}
+>> +
+>> +static const TypeInfo pnv_spi_info = {
+>> +    .name          = TYPE_PNV_SPI,
+>> +    .parent        = TYPE_SYS_BUS_DEVICE,
+>> +    .instance_size = sizeof(PnvSpi),
+>> +    .class_init    = pnv_spi_class_init,
+>> +    .interfaces    = (InterfaceInfo[]) {
+>> +        { TYPE_PNV_XSCOM_INTERFACE },
+>> +        { }
+>> +    }
+>> +};
+>> +
+>> +static void pnv_spi_register_types(void)
+>> +{
+>> +    type_register_static(&pnv_spi_info);
+>> +}
+>> +
+>> +type_init(pnv_spi_register_types);
+>> diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
+>> index 78f83e78ce..4668d59eab 100644
+>> --- a/hw/ppc/Kconfig
+>> +++ b/hw/ppc/Kconfig
+>> @@ -39,6 +39,9 @@ config POWERNV
+>>       select PCI_POWERNV
+>>       select PCA9552
+>>       select PCA9554
+>> +    select SSI
+>> +    select SSI_M25P80
+>> +    select PNV_SPI
+>>     config PPC405
+>>       bool
+>> diff --git a/hw/ssi/Kconfig b/hw/ssi/Kconfig
+>> index 83ee53c1d0..8d180de7cf 100644
+>> --- a/hw/ssi/Kconfig
+>> +++ b/hw/ssi/Kconfig
+>> @@ -24,3 +24,7 @@ config STM32F2XX_SPI
+>>   config BCM2835_SPI
+>>       bool
+>>       select SSI
+>> +
+>> +config PNV_SPI
+>> +    bool
+>> +    select SSI
+>> diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
+>> index b999aeb027..b7ad7fca3b 100644
+>> --- a/hw/ssi/meson.build
+>> +++ b/hw/ssi/meson.build
+>> @@ -12,3 +12,4 @@ system_ss.add(when: 'CONFIG_IMX', if_true: 
+>> files('imx_spi.c'))
+>>   system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_spi.c'))
+>>   system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
+>>   system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: 
+>> files('bcm2835_spi.c'))
+>> +system_ss.add(when: 'CONFIG_PNV_SPI', if_true: files('pnv_spi.c'))
+>> diff --git a/hw/ssi/trace-events b/hw/ssi/trace-events
+>> index 2d5bd2b83d..4388024a05 100644
+>> --- a/hw/ssi/trace-events
+>> +++ b/hw/ssi/trace-events
+>> @@ -32,3 +32,9 @@ ibex_spi_host_reset(const char *msg) "%s"
+>>   ibex_spi_host_transfer(uint32_t tx_data, uint32_t rx_data) 
+>> "tx_data: 0x%" PRIx32 " rx_data: @0x%" PRIx32
+>>   ibex_spi_host_write(uint64_t addr, uint32_t size, uint64_t data) 
+>> "@0x%" PRIx64 " size %u: 0x%" PRIx64
+>>   ibex_spi_host_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " 
+>> size %u:"
+>> +
+>> +#pnv_spi.c
+>> +pnv_spi_read(uint64_t addr, uint64_t val) "addr 0x%" PRIx64 " val 
+>> 0x%" PRIx64
+>> +pnv_spi_write(uint64_t addr, uint64_t val) "addr 0x%" PRIx64 " val 
+>> 0x%" PRIx64
+>> +pnv_spi_read_RDR(uint64_t val) "data extracted = 0x%" PRIx64
+>> +pnv_spi_write_TDR(uint64_t val) "being written, data written = 0x%" 
+>> PRIx64
+>
 
