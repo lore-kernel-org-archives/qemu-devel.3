@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE30C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FDEEC27C53
 	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 21:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sK2PS-0002Bh-ON; Wed, 19 Jun 2024 17:00:02 -0400
+	id 1sK2PS-0002Br-Ny; Wed, 19 Jun 2024 17:00:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sK2PQ-0002Ad-P7
+ id 1sK2PQ-0002AO-4O
  for qemu-devel@nongnu.org; Wed, 19 Jun 2024 17:00:00 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sK2PP-0000Jb-0z
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 17:00:00 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1f6fabe9da3so1747425ad.0
+ id 1sK2PO-0000JO-HX
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 16:59:59 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-656d8b346d2so158975a12.2
  for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 13:59:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718830797; x=1719435597; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718830796; x=1719435596; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hRI+iU8AoyX8CSaqkMr42RrHAGDYxA7DtYX1JOZeQXQ=;
- b=o8aDzx1sEFnKy7+asrBgPek3J3U0+D8o+A/9Fo8l7B66o8xOPaM4Cr8pA5OakA/0G3
- fB74MtxuTb8VCcFDtRAuank6G+5NfGZBtIfTGexT4OLPEcjoPZuasnMKYZCrdQzu4QG0
- LTJ5G3x4UTq6PXdOzxV+ao9/q25oRkI6hqXfweaxqzub0KfWargkQNrt/v5WOH/HPXjw
- 6o2ybKdzqNFrqI2aCCDbFdWtk0PJFQghP5q5OiTT1Wx3PGNrV5Y92v5i97vxBJ5I0noH
- VC9P3WBuFJ6LjzyAdEI79mlGlf8t505w9r68bsQ9FKGv6ypl1pXkwst/mbmGeTECbxAu
- yoyg==
+ bh=sJSgr0Lrw8auwaqOO9jWXlr9TbttWDWK1ZwpPbwzIGM=;
+ b=cH/EVC5NeAVNDE2e5YHkq1FIrmHm7M55IXSHCURsdPgRBMnxvisW8ubOknjTDxiS43
+ NvNlbN618Ai1ToDryqVLqif9XAk2hNQ1NYVNqD5QmRhgRHE1Jzfxw99AXk7IbAdIHKnx
+ 6fR95Sy0J0Z7FBhAWt74l0ivQ5PrycDh7bEmLg0ssMACbgzDUzoDxg/w1oHvxU4dbxp5
+ ksYI305jNE56yFJrMzKRUcETIQjY0P/Zm+h0yG/Ol0An7UyN6I/6ceqkhslA4wUWpdaN
+ hPubuvT4oEwCdr441WjbhWHEcW/QWKgjcriHH47CQqI6am+ia1bTTdKpa0A8lXtD21s1
+ L6dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718830797; x=1719435597;
+ d=1e100.net; s=20230601; t=1718830796; x=1719435596;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hRI+iU8AoyX8CSaqkMr42RrHAGDYxA7DtYX1JOZeQXQ=;
- b=GBPiqt8iz6X81+lE4RRqBpCnNukI0TuED2AS1rorLjAR0+s3MkiQdCjrewzGCT9dLF
- tlS3twB3qxKYg3e5i5iVL0Az3v1eb1hymYq2vZ2rBf5UA9/aIdiFJbTwuhFv+TpcwWIy
- H8fFmlANTVU9V57nBUruRuh/Aquh2Q2fUm5N4LXgBPhI5vypVCAXSKH+XOl1wqC4jOux
- inD/Qb6CnE0sVV//qVHyBwms2rmtyLMbI1/mFqwMVQFKLGgQS0CGI/oa/C8Fc1M/tiAD
- 3fY1WasftA7PCE0FpqOYz/HMa3OHMq7lOGrB9wk8UMXlLwjsuFVzn64hl9Z3HRJcmE1O
- OHYQ==
-X-Gm-Message-State: AOJu0YyNGHYFMmhalJHWTwFIPmlfp01Yuvr7QupKbGFmKfDSVx00gFeZ
- Dh+KPgzxifYNhryELmsia/cG5WXsjv5o4GoSOKtEIhX7da6dPfv6YR1H/0Rkcr4cz7dMCztdqB2
- a
-X-Google-Smtp-Source: AGHT+IGIGXzjtKqqN1tc3yHA3aOPWmsoeMcKUn3cGHNBmmoLBn6P49PpJMX4fU2gbs50WEb+WSyOzQ==
-X-Received: by 2002:a17:903:22d1:b0:1f6:e20f:86ab with SMTP id
- d9443c01a7336-1f9aa44c98cmr37708065ad.40.1718830797361; 
- Wed, 19 Jun 2024 13:59:57 -0700 (PDT)
+ bh=sJSgr0Lrw8auwaqOO9jWXlr9TbttWDWK1ZwpPbwzIGM=;
+ b=ToW+TnwuHMAIVQnL1XVrhBpyMnjHNV9yFh7QFjfqqODmGdpw66ALOdDUKXvkOqKbno
+ 9IlSTMDLdxHZJ0fPTs/EoF1aM8zMPT+2sKe4haXxxnFfG49NRTcS4k9l2IDBPJYlbEmS
+ 8c/BzwMOr5ePM+p3u9L/LxmNNCzcdrcUi3jC1g6NgH0XK125Ok6f79cGIcpC9XN9+Rae
+ 082a9Qz5oHxdlqA36kHt16y8aTZ7Zvx+vMyfHTCBBYOmKE7tU9XOo/8yDGB3LVB4Pki1
+ uWu1EZqTuqB6mTR2qafZDEFLhD0jcVoFKG2w2/0U3JgVVq2sAddR5UDiUOFqb7PTtVJJ
+ qM1w==
+X-Gm-Message-State: AOJu0YyfyPvB3V3nbus8Mzm2MN7LgK0Phwcg79LU41FCfyylV1wjdNpl
+ /GI8zDNM+ZRW5wqPXOgALGBNWBf9q67T+opA2TLqCa+DctbRr0UCRx6r3byiBMP1Pdm0XrfAWei
+ 5
+X-Google-Smtp-Source: AGHT+IHEsM8zOWPUT/O0bOB9kZVg9/0MFB9A1blGUwdBsosP6zZJMMl/VWpAsBlKamjjRvkrKKN4Gg==
+X-Received: by 2002:a17:902:db0e:b0:1f9:c3e4:4c0f with SMTP id
+ d9443c01a7336-1f9c3e45052mr7190845ad.34.1718830796494; 
+ Wed, 19 Jun 2024 13:59:56 -0700 (PDT)
 Received: from stoup.. ([71.212.132.216]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f98f8f8c42sm39183765ad.162.2024.06.19.13.59.56
+ d9443c01a7336-1f98f8f8c42sm39183765ad.162.2024.06.19.13.59.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 19 Jun 2024 13:59:56 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 04/24] tcg/loongarch64: Support TCG_TYPE_V64
-Date: Wed, 19 Jun 2024 13:59:32 -0700
-Message-Id: <20240619205952.235946-5-richard.henderson@linaro.org>
+Cc: Song Gao <gaosong@loongson.cn>
+Subject: [PULL 03/24] tcg/loongarch64: Handle i32 and i64 moves between gr and
+ fr
+Date: Wed, 19 Jun 2024 13:59:31 -0700
+Message-Id: <20240619205952.235946-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240619205952.235946-1-richard.henderson@linaro.org>
 References: <20240619205952.235946-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,78 +94,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We can implement this with fld_d, fst_d for load and store,
-and then use the normal v128 operations in registers.
-This will improve support for guests which use v64.
-
 Reviewed-by: Song Gao <gaosong@loongson.cn>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/loongarch64/tcg-target.h     | 2 +-
- tcg/loongarch64/tcg-target.c.inc | 8 ++++++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ tcg/loongarch64/tcg-target.c.inc | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/tcg/loongarch64/tcg-target.h b/tcg/loongarch64/tcg-target.h
-index 29e4860d20..990bad1d51 100644
---- a/tcg/loongarch64/tcg-target.h
-+++ b/tcg/loongarch64/tcg-target.h
-@@ -171,7 +171,7 @@ typedef enum {
- 
- #define TCG_TARGET_HAS_tst              0
- 
--#define TCG_TARGET_HAS_v64              0
-+#define TCG_TARGET_HAS_v64              (cpuinfo & CPUINFO_LSX)
- #define TCG_TARGET_HAS_v128             (cpuinfo & CPUINFO_LSX)
- #define TCG_TARGET_HAS_v256             0
- 
 diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index de5369536e..980ea10211 100644
+index b9078ac793..de5369536e 100644
 --- a/tcg/loongarch64/tcg-target.c.inc
 +++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -321,6 +321,7 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
-             }
-         }
+@@ -303,11 +303,23 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
+     switch (type) {
+     case TCG_TYPE_I32:
+     case TCG_TYPE_I64:
+-        /*
+-         * Conventional register-register move used in LoongArch is
+-         * `or dst, src, zero`.
+-         */
+-        tcg_out_opc_or(s, ret, arg, TCG_REG_ZERO);
++        if (ret < TCG_REG_V0) {
++            if (arg < TCG_REG_V0) {
++                /*
++                 * Conventional register-register move used in LoongArch is
++                 * `or dst, src, zero`.
++                 */
++                tcg_out_opc_or(s, ret, arg, TCG_REG_ZERO);
++            } else {
++                tcg_out_opc_movfr2gr_d(s, ret, arg);
++            }
++        } else {
++            if (arg < TCG_REG_V0) {
++                tcg_out_opc_movgr2fr_d(s, ret, arg);
++            } else {
++                tcg_out_opc_fmov_d(s, ret, arg);
++            }
++        }
          break;
-+    case TCG_TYPE_V64:
      case TCG_TYPE_V128:
          tcg_out_opc_vori_b(s, ret, arg, 0);
-         break;
-@@ -838,6 +839,7 @@ static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg dest,
-         }
-         break;
-     case TCG_TYPE_I64:
-+    case TCG_TYPE_V64:
-         if (dest < TCG_REG_V0) {
-             tcg_out_ldst(s, OPC_LD_D, dest, base, offset);
-         } else {
-@@ -869,6 +871,7 @@ static void tcg_out_st(TCGContext *s, TCGType type, TCGReg src,
-         }
-         break;
-     case TCG_TYPE_I64:
-+    case TCG_TYPE_V64:
-         if (src < TCG_REG_V0) {
-             tcg_out_ldst(s, OPC_ST_D, src, base, offset);
-         } else {
-@@ -1880,8 +1883,8 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-     a2 = args[2];
-     a3 = args[3];
- 
--    /* Currently only supports V128 */
--    tcg_debug_assert(type == TCG_TYPE_V128);
-+    /* Currently only supports V64 & V128 */
-+    tcg_debug_assert(type == TCG_TYPE_V64 || type == TCG_TYPE_V128);
- 
-     switch (opc) {
-     case INDEX_op_st_vec:
-@@ -2394,6 +2397,7 @@ static void tcg_target_init(TCGContext *s)
-     tcg_regset_reset_reg(tcg_target_call_clobber_regs, TCG_REG_S9);
- 
-     if (cpuinfo & CPUINFO_LSX) {
-+        tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
-         tcg_target_available_regs[TCG_TYPE_V128] = ALL_VECTOR_REGS;
-         tcg_regset_reset_reg(tcg_target_call_clobber_regs, TCG_REG_V24);
-         tcg_regset_reset_reg(tcg_target_call_clobber_regs, TCG_REG_V25);
 -- 
 2.34.1
 
