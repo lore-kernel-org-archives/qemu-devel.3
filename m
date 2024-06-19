@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CE4DC2BA15
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 00:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EE64C2BA15
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 00:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJjEe-0006tL-Ki; Tue, 18 Jun 2024 20:31:36 -0400
+	id 1sJjF3-0000mZ-04; Tue, 18 Jun 2024 20:32:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjEd-0006sZ-Ju
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:31:35 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjF1-0000dn-Su
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:31:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjEb-0001R5-Sf
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:31:35 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjF0-0001SP-8G
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:31:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718757093;
+ s=mimecast20190719; t=1718757117;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gtUtRTr0ns8EVnOWvZszpK56MSdOOIfvNba7TfLQpLI=;
- b=VgHjUuFOCHbi8ZqwH0jq4boO7LK1EyWuVBFMFKd1Jg83JGhbYh2860xTlPtcghAogkotA6
- nFk1ac0AbZR5HdpQuaQfij8//J0Csw1B41nNU1TezBOyhwivme8g10HfVBbqlBR2FszAEo
- 85zSk5G1a6utCF1EbysP8xHEa13dscc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=HiXSAuzEdzgitdd236attDgC+aqt3d64fl1N8CQCCn8=;
+ b=ivHLGfMmzGLL6dMHcFTFuci1fyWmvJ6pyEhc/VAFnirpDEAN4VyslR0DaT4e4xfd0FnUE0
+ 43uy9Fm6vYrs5Nuea6gEMBFMQsz8iaa+EP7hJ280n5w7keP4NsYm2+nAHDk7supbODGUBe
+ 9rHzsKGpjVB2mlLS0WNU1xP6zwDIoWA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-7AAmCngNO5iDhe-8opDphQ-1; Tue,
- 18 Jun 2024 20:31:30 -0400
-X-MC-Unique: 7AAmCngNO5iDhe-8opDphQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-X6PQE9U4OJe_0JtB1PP6uw-1; Tue,
+ 18 Jun 2024 20:31:53 -0400
+X-MC-Unique: X6PQE9U4OJe_0JtB1PP6uw-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C48C119560B0; Wed, 19 Jun 2024 00:31:27 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5FA5819560B3; Wed, 19 Jun 2024 00:31:51 +0000 (UTC)
 Received: from scv.localdomain (unknown [10.22.16.38])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BCA831956087; Wed, 19 Jun 2024 00:31:20 +0000 (UTC)
+ id 1C6831956087; Wed, 19 Jun 2024 00:31:43 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -70,9 +70,9 @@ Cc: Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Eric Blake <eblake@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 07/13] qapi: fix non-compliant JSON examples
-Date: Tue, 18 Jun 2024 20:30:06 -0400
-Message-ID: <20240619003012.1753577-8-jsnow@redhat.com>
+Subject: [PATCH 10/13] qapi: update prose in note blocks
+Date: Tue, 18 Jun 2024 20:30:09 -0400
+Message-ID: <20240619003012.1753577-11-jsnow@redhat.com>
 In-Reply-To: <20240619003012.1753577-1-jsnow@redhat.com>
 References: <20240619003012.1753577-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -103,131 +103,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The new QMP documentation generator wants to parse all examples as
-"QMP". We have an existing QMP lexer in docs/sphinx/qmp_lexer.py (Seen
-in-use here: https://qemu-project.gitlab.io/qemu/interop/bitmaps.html)
-that allows the use of "->", "<-" and "..." tokens to denote QMP
-protocol flow with elisions, but otherwise defers to the JSON lexer.
-
-To utilize this lexer for the existing QAPI documentation, we need them
-to conform to a standard so that they lex and render correctly. Once the
-QMP lexer is active for examples, errant QMP/JSON will produce warning
-messages and fail the build.
-
-Fix any invalid JSON found in QAPI documentation (identified by
-attempting to lex all examples as QMP; see subsequent commits). Further,
-the QMP lexer still supports elisions, but they must be represented as
-the value "...", so three examples have been adjusted to support that
-format here.
+Where I've noticed, rephrase the note to read more fluently.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/control.json   | 3 ++-
- qapi/machine.json   | 2 +-
- qapi/migration.json | 2 +-
- qapi/misc.json      | 3 ++-
- qapi/net.json       | 6 +++---
- qapi/rocker.json    | 2 +-
- qapi/ui.json        | 2 +-
- 7 files changed, 11 insertions(+), 9 deletions(-)
+ qapi/block-core.json | 4 ++--
+ qga/qapi-schema.json | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/qapi/control.json b/qapi/control.json
-index 6bdbf077c2e..10c906fa0e7 100644
---- a/qapi/control.json
-+++ b/qapi/control.json
-@@ -145,7 +145,8 @@
- #             },
- #             {
- #                "name":"system_powerdown"
--#             }
-+#             },
-+#             ...
- #          ]
- #        }
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index cacedfb771c..9ef23ec02ae 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -6048,9 +6048,9 @@
  #
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 453feb93473..172b38e343e 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1057,7 +1057,7 @@
- #            "vcpus-count": 1 },
- #          { "props": { "core-id": 0 }, "type": "POWER8-spapr-cpu-core",
- #            "vcpus-count": 1, "qom-path": "/machine/unattached/device[0]"}
--#        ]}'
-+#        ]}
+ # @name: the name of the internal snapshot to be created
  #
- #     For pc machine type started with -smp 1,maxcpus=2:
+-# .. note:: In transaction, if @name is empty, or any snapshot matching
++# .. note:: In a transaction, if @name is empty or any snapshot matching
+ #    @name exists, the operation will fail.  Only some image formats
+-#    support it, for example, qcow2, and rbd.
++#    support it; for example, qcow2, and rbd.
  #
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 470f746cc5f..7d4b567eb59 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -2087,7 +2087,7 @@
- # Example:
- #
- #     -> {"execute": "calc-dirty-rate", "arguments": {"calc-time": 1,
--#                                                     'sample-pages': 512} }
-+#                                                     "sample-pages": 512} }
- #     <- { "return": {} }
- #
- #     Measure dirty rate using dirty bitmap for 500 milliseconds:
-diff --git a/qapi/misc.json b/qapi/misc.json
-index ec30e5c570a..4b41e15dcd4 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -287,7 +287,8 @@
- #
- # Example:
- #
--#     -> { "execute": "get-win32-socket", "arguments": { "info": "abcd123..", fdname": "skclient" } }
-+#     -> { "execute": "get-win32-socket",
-+#          "arguments": { "info": "abcd123..", "fdname": "skclient" } }
- #     <- { "return": {} }
+ # Since: 1.7
  ##
- { 'command': 'get-win32-socket', 'data': {'info': 'str', 'fdname': 'str'}, 'if': 'CONFIG_WIN32' }
-diff --git a/qapi/net.json b/qapi/net.json
-index 0f5a259475e..c19df435a53 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -1003,9 +1003,9 @@
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 57598331c5c..1273d85bb5f 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -480,7 +480,7 @@
  #
- # Example:
+ # Returns: Number of file systems thawed by this call
  #
--#     <- { 'event': 'NETDEV_STREAM_DISCONNECTED',
--#          'data': {'netdev-id': 'netdev0'},
--#          'timestamp': {'seconds': 1663330937, 'microseconds': 526695} }
-+#     <- { "event": "NETDEV_STREAM_DISCONNECTED",
-+#          "data": {"netdev-id": "netdev0"},
-+#          "timestamp": {"seconds": 1663330937, "microseconds": 526695} }
- ##
- { 'event': 'NETDEV_STREAM_DISCONNECTED',
-   'data': { 'netdev-id': 'str' } }
-diff --git a/qapi/rocker.json b/qapi/rocker.json
-index 5635cf174fd..f5225eb62cc 100644
---- a/qapi/rocker.json
-+++ b/qapi/rocker.json
-@@ -250,7 +250,7 @@
- #                       "action": {"goto-tbl": 10},
- #                       "mask": {"in-pport": 4294901760}
- #                      },
--#                      {...more...},
-+#                      {...},
- #        ]}
- ##
- { 'command': 'query-rocker-of-dpa-flows',
-diff --git a/qapi/ui.json b/qapi/ui.json
-index f610bce118a..c12f5292571 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -361,7 +361,7 @@
- #                    "channel-id": 0,
- #                    "tls": false
- #                 },
--#                 [ ... more channels follow ... ]
-+#                 ...
- #              ]
- #           }
- #        }
+-# .. note:: If return value does not match the previous call to
++# .. note:: If the return value does not match the previous call to
+ #    guest-fsfreeze-freeze, this likely means some freezable filesystems
+ #    were unfrozen before this call, and that the filesystem state may
+ #    have changed before issuing this command.
 -- 
 2.44.0
 
