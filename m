@@ -4,72 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D80C27C79
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 14:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B54AC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 14:45:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJwOR-0002GA-TW; Wed, 19 Jun 2024 10:34:35 -0400
+	id 1sJwYG-0007t1-4u; Wed, 19 Jun 2024 10:44:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sJwOO-0002Fl-Dr
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 10:34:32 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sJwYD-0007rv-Og
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 10:44:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sJwOL-0003Xy-EJ
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 10:34:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1718807670; x=1750343670;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=nZDlhvUT6Rsc5q2kZ2/8XKGyU+Gz7O9C5IAeCTS2DhM=;
- b=MQHM9AftRf1y/4vBBuNDeDGl1BDkDAOFQLa+pqFdbayIlClGFaxBlb9i
- VXKeeiQmZhFJMlopJckl9VdWFELQ0CByUVQTtsFF6F13eMgovb53XCc31
- BcMTSiOq9Y26mG0WCQ+Oa7wT7x8qcTP0ZnRpNP/77VCXDY4YVCyGPRM+/
- IZ0bvys+PYK/nburF/OCDN/jyQULs7JZZQcYyb5E33r/WVQ25U09r0ouz
- k5fCHPEhrms5NfSIlU3Rz9csD4duLjNn9PrBfADOpVGupPGhX7EXwRwl3
- dNiJwxqie36uVVXAguJcZN2upCy80p63w+zBy0RDfXyv8Sx/eS8uITGUG g==;
-X-CSE-ConnectionGUID: 2VStCrZ5SyeHCyJ4XCE+GQ==
-X-CSE-MsgGUID: 5zPR7RujSoK//oG04J2vKw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11108"; a="38262409"
-X-IronPort-AV: E=Sophos;i="6.08,250,1712646000"; d="scan'208";a="38262409"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Jun 2024 07:34:27 -0700
-X-CSE-ConnectionGUID: hpNDQ1S4Q8Ciyu9raLmJFg==
-X-CSE-MsgGUID: /HlVoESnRLeDe5D7q/IjRw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,250,1712646000"; d="scan'208";a="73143909"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 19 Jun 2024 07:34:24 -0700
-Date: Wed, 19 Jun 2024 22:49:56 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <thuth@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH] hw/core: Rename CpuTopology to CPUTopology
-Message-ID: <ZnLwFPb3iLNiC8li@intel.com>
-References: <20240527131837.2630961-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sJwYB-0005fC-Qh
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 10:44:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718808278;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=c9QG8td8OJzqVsZj1ZAdo6ySqv2jMpAVszHcQa1tvzo=;
+ b=afzDZgP3InFDxcVsb4uUaMeT+tCuVmxJlAtWMccWQz5dUIi6PI4unq6OYLqms/Cv2+4EFz
+ YgFsIvk8hZhHzOEb2CknBrPAmPv85P0ohd+hBgEigB6RR7yWVdDF/vnCy0mwmye/x1iOfs
+ i7JX6mM5nsV7uCoyo6AaY4lq9r94d1w=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-501-cv8A2wTzPb-bjh2H4Bsxag-1; Wed,
+ 19 Jun 2024 10:44:35 -0400
+X-MC-Unique: cv8A2wTzPb-bjh2H4Bsxag-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 134771955E77; Wed, 19 Jun 2024 14:44:33 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.145])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 38E7A30030E2; Wed, 19 Jun 2024 14:44:22 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ David Hildenbrand <david@redhat.com>
+Cc: Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>
+Subject: [PATCH] hw/intc/s390_flic: Fix interrupt controller migration on
+ s390x with TCG
+Date: Wed, 19 Jun 2024 16:44:21 +0200
+Message-ID: <20240619144421.261342-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240527131837.2630961-1-zhao1.liu@intel.com>
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,191 +82,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi maintainers,
+Migration of a s390x guest with TCG was long known to be very unstable,
+so the tests in tests/qtest/migration-test.c are disabled if running
+with TCG instead of KVM.
 
-Per my communication with Markus, it seems this renaming matches the
-"local consistency" principle in (include/hw/boards.h). :-)
+Nicholas Piggin did a great analysis of the problem:
 
-So do you think this change is acceptable?
+"The flic pending state is not migrated, so if the machine is migrated
+ while an interrupt is pending, it can be lost. This shows up in
+ qtest migration test, an extint is pending (due to console writes?)
+ and the CPU waits via s390_cpu_set_psw and expects the interrupt to
+ wake it. However when the flic pending state is lost, s390_cpu_has_int
+ returns false, so s390_cpu_exec_interrupt falls through to halting
+ again."
 
-Thanks,
-Zhao
+Thus let's finally migrate the pending state, and to be on the safe
+side, also the other state variables of the QEMUS390FLICState structure.
 
-On Mon, May 27, 2024 at 09:18:37PM +0800, Zhao Liu wrote:
-> Date: Mon, 27 May 2024 21:18:37 +0800
-> From: Zhao Liu <zhao1.liu@intel.com>
-> Subject: [PATCH] hw/core: Rename CpuTopology to CPUTopology
-> X-Mailer: git-send-email 2.34.1
-> 
-> Use CPUTopology to honor the generic style of CPU capitalization
-> abbreviations.
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->  * Split from the previous SMP cache RFC:
->    https://lore.kernel.org/qemu-devel/20240220092504.726064-2-zhao1.liu@linux.intel.com/
-> ---
->  hw/s390x/cpu-topology.c         |  6 +++---
->  include/hw/boards.h             |  8 ++++----
->  include/hw/s390x/cpu-topology.h |  6 +++---
->  tests/unit/test-smp-parse.c     | 14 +++++++-------
->  4 files changed, 17 insertions(+), 17 deletions(-)
-> 
-> diff --git a/hw/s390x/cpu-topology.c b/hw/s390x/cpu-topology.c
-> index f16bdf65faa0..016f6c1c15ac 100644
-> --- a/hw/s390x/cpu-topology.c
-> +++ b/hw/s390x/cpu-topology.c
-> @@ -86,7 +86,7 @@ bool s390_has_topology(void)
->   */
->  static void s390_topology_init(MachineState *ms)
->  {
-> -    CpuTopology *smp = &ms->smp;
-> +    CPUTopology *smp = &ms->smp;
->  
->      s390_topology.cores_per_socket = g_new0(uint8_t, smp->sockets *
->                                              smp->books * smp->drawers);
-> @@ -181,7 +181,7 @@ void s390_topology_reset(void)
->   */
->  static bool s390_topology_cpu_default(S390CPU *cpu, Error **errp)
->  {
-> -    CpuTopology *smp = &current_machine->smp;
-> +    CPUTopology *smp = &current_machine->smp;
->      CPUS390XState *env = &cpu->env;
->  
->      /* All geometry topology attributes must be set or all unset */
-> @@ -234,7 +234,7 @@ static bool s390_topology_check(uint16_t socket_id, uint16_t book_id,
->                                  uint16_t drawer_id, uint16_t entitlement,
->                                  bool dedicated, Error **errp)
->  {
-> -    CpuTopology *smp = &current_machine->smp;
-> +    CPUTopology *smp = &current_machine->smp;
->  
->      if (socket_id >= smp->sockets) {
->          error_setg(errp, "Unavailable socket: %d", socket_id);
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index 2fa800f11ae4..c1737f2a5736 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -334,7 +334,7 @@ typedef struct DeviceMemoryState {
->  } DeviceMemoryState;
->  
->  /**
-> - * CpuTopology:
-> + * CPUTopology:
->   * @cpus: the number of present logical processors on the machine
->   * @drawers: the number of drawers on the machine
->   * @books: the number of books in one drawer
-> @@ -346,7 +346,7 @@ typedef struct DeviceMemoryState {
->   * @threads: the number of threads in one core
->   * @max_cpus: the maximum number of logical processors on the machine
->   */
-> -typedef struct CpuTopology {
-> +typedef struct CPUTopology {
->      unsigned int cpus;
->      unsigned int drawers;
->      unsigned int books;
-> @@ -357,7 +357,7 @@ typedef struct CpuTopology {
->      unsigned int cores;
->      unsigned int threads;
->      unsigned int max_cpus;
-> -} CpuTopology;
-> +} CPUTopology;
->  
->  /**
->   * MachineState:
-> @@ -409,7 +409,7 @@ struct MachineState {
->      const char *cpu_type;
->      AccelState *accelerator;
->      CPUArchIdList *possible_cpus;
-> -    CpuTopology smp;
-> +    CPUTopology smp;
->      struct NVDIMMState *nvdimms_state;
->      struct NumaState *numa_state;
->  };
-> diff --git a/include/hw/s390x/cpu-topology.h b/include/hw/s390x/cpu-topology.h
-> index c064f427e948..ff09c57a4428 100644
-> --- a/include/hw/s390x/cpu-topology.h
-> +++ b/include/hw/s390x/cpu-topology.h
-> @@ -63,17 +63,17 @@ static inline void s390_topology_reset(void)
->  
->  extern S390Topology s390_topology;
->  
-> -static inline int s390_std_socket(int n, CpuTopology *smp)
-> +static inline int s390_std_socket(int n, CPUTopology *smp)
->  {
->      return (n / smp->cores) % smp->sockets;
->  }
->  
-> -static inline int s390_std_book(int n, CpuTopology *smp)
-> +static inline int s390_std_book(int n, CPUTopology *smp)
->  {
->      return (n / (smp->cores * smp->sockets)) % smp->books;
->  }
->  
-> -static inline int s390_std_drawer(int n, CpuTopology *smp)
-> +static inline int s390_std_drawer(int n, CPUTopology *smp)
->  {
->      return (n / (smp->cores * smp->sockets * smp->books)) % smp->drawers;
->  }
-> diff --git a/tests/unit/test-smp-parse.c b/tests/unit/test-smp-parse.c
-> index 9fdba24fce56..f51138794ca1 100644
-> --- a/tests/unit/test-smp-parse.c
-> +++ b/tests/unit/test-smp-parse.c
-> @@ -120,8 +120,8 @@
->   */
->  typedef struct SMPTestData {
->      SMPConfiguration config;
-> -    CpuTopology expect_prefer_sockets;
-> -    CpuTopology expect_prefer_cores;
-> +    CPUTopology expect_prefer_sockets;
-> +    CPUTopology expect_prefer_cores;
->      const char *expect_error;
->  } SMPTestData;
->  
-> @@ -643,7 +643,7 @@ static char *smp_config_to_string(const SMPConfiguration *config)
->  }
->  
->  /* Use the different calculation than machine_topo_get_threads_per_socket(). */
-> -static unsigned int cpu_topology_get_threads_per_socket(const CpuTopology *topo)
-> +static unsigned int cpu_topology_get_threads_per_socket(const CPUTopology *topo)
->  {
->      /* Check the divisor to avoid invalid topology examples causing SIGFPE. */
->      if (!topo->drawers || !topo->books || !topo->sockets) {
-> @@ -654,7 +654,7 @@ static unsigned int cpu_topology_get_threads_per_socket(const CpuTopology *topo)
->  }
->  
->  /* Use the different calculation than machine_topo_get_cores_per_socket(). */
-> -static unsigned int cpu_topology_get_cores_per_socket(const CpuTopology *topo)
-> +static unsigned int cpu_topology_get_cores_per_socket(const CPUTopology *topo)
->  {
->      /* Check the divisor to avoid invalid topology examples causing SIGFPE. */
->      if (!topo->threads) {
-> @@ -664,13 +664,13 @@ static unsigned int cpu_topology_get_cores_per_socket(const CpuTopology *topo)
->      }
->  }
->  
-> -static char *cpu_topology_to_string(const CpuTopology *topo,
-> +static char *cpu_topology_to_string(const CPUTopology *topo,
->                                      unsigned int threads_per_socket,
->                                      unsigned int cores_per_socket,
->                                      bool has_clusters)
->  {
->      return g_strdup_printf(
-> -        "(CpuTopology) {\n"
-> +        "(CPUTopology) {\n"
->          "    .cpus               = %u,\n"
->          "    .drawers            = %u,\n"
->          "    .books              = %u,\n"
-> @@ -692,7 +692,7 @@ static char *cpu_topology_to_string(const CpuTopology *topo,
->  }
->  
->  static void check_parse(MachineState *ms, const SMPConfiguration *config,
-> -                        const CpuTopology *expect_topo, const char *expect_err,
-> +                        const CPUTopology *expect_topo, const char *expect_err,
->                          bool is_valid)
->  {
->      MachineClass *mc = MACHINE_GET_CLASS(ms);
-> -- 
-> 2.34.1
-> 
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ Once this has been merged, we can enable the migration-test again
+ with Nicholas' patch here:
+ https://lore.kernel.org/qemu-devel/20240525131241.378473-3-npiggin@gmail.com/
+
+ include/hw/s390x/s390_flic.h |  1 +
+ hw/intc/s390_flic.c          | 75 ++++++++++++++++++++++++++++++++++--
+ hw/s390x/s390-virtio-ccw.c   |  5 +++
+ 3 files changed, 78 insertions(+), 3 deletions(-)
+
+diff --git a/include/hw/s390x/s390_flic.h b/include/hw/s390x/s390_flic.h
+index 382d9833f1..4d66c5e42e 100644
+--- a/include/hw/s390x/s390_flic.h
++++ b/include/hw/s390x/s390_flic.h
+@@ -116,6 +116,7 @@ struct QEMUS390FLICState {
+     uint8_t simm;
+     uint8_t nimm;
+     QLIST_HEAD(, QEMUS390FlicIO) io[8];
++    bool migrate_all_state;
+ };
+ 
+ uint32_t qemu_s390_flic_dequeue_service(QEMUS390FLICState *flic);
+diff --git a/hw/intc/s390_flic.c b/hw/intc/s390_flic.c
+index 6771645699..a91a4a47e8 100644
+--- a/hw/intc/s390_flic.c
++++ b/hw/intc/s390_flic.c
+@@ -361,15 +361,77 @@ bool ais_needed(void *opaque)
+     return s->ais_supported;
+ }
+ 
++static bool ais_needed_v(void *opaque, int version_id)
++{
++    return ais_needed(opaque);
++}
++
++static bool qemu_s390_flic_full_state_needed(void *opaque)
++{
++    QEMUS390FLICState *s = opaque;
++
++    return s->migrate_all_state;
++}
++
++static bool qemu_s390_flic_state_needed(void *opaque)
++{
++    return ais_needed(opaque) || qemu_s390_flic_full_state_needed(opaque);
++}
++
++static const VMStateDescription vmstate_qemu_s390_flic_io = {
++     .name = "qemu-s390-flic-io",
++     .version_id = 1,
++     .minimum_version_id = 1,
++     .fields = (const VMStateField[]) {
++         VMSTATE_UINT16(id, QEMUS390FlicIO),
++         VMSTATE_UINT16(nr, QEMUS390FlicIO),
++         VMSTATE_UINT32(parm, QEMUS390FlicIO),
++         VMSTATE_UINT32(word, QEMUS390FlicIO),
++         VMSTATE_END_OF_LIST()
++     },
++};
++
++static const VMStateDescription vmstate_qemu_s390_flic_full = {
++    .name = "qemu-s390-flic-full",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = qemu_s390_flic_full_state_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(pending, QEMUS390FLICState),
++        VMSTATE_UINT32(service_param, QEMUS390FLICState),
++        VMSTATE_QLIST_V(io[0], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[1], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[2], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[3], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[4], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[5], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[6], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[7], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const VMStateDescription qemu_s390_flic_vmstate = {
+     .name = "qemu-s390-flic",
+     .version_id = 1,
+     .minimum_version_id = 1,
+-    .needed = ais_needed,
++    .needed = qemu_s390_flic_state_needed,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINT8(simm, QEMUS390FLICState),
+-        VMSTATE_UINT8(nimm, QEMUS390FLICState),
++        VMSTATE_UINT8_TEST(simm, QEMUS390FLICState, ais_needed_v),
++        VMSTATE_UINT8_TEST(nimm, QEMUS390FLICState, ais_needed_v),
+         VMSTATE_END_OF_LIST()
++    },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_qemu_s390_flic_full,
++        NULL
+     }
+ };
+ 
+@@ -383,11 +445,18 @@ static void qemu_s390_flic_instance_init(Object *obj)
+     }
+ }
+ 
++static Property qemu_s390_flic_properties[] = {
++    DEFINE_PROP_BOOL("migrate-all-state", QEMUS390FLICState,
++                     migrate_all_state, true),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
+ static void qemu_s390_flic_class_init(ObjectClass *oc, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+     S390FLICStateClass *fsc = S390_FLIC_COMMON_CLASS(oc);
+ 
++    device_class_set_props(dc, qemu_s390_flic_properties);
+     dc->reset = qemu_s390_flic_reset;
+     dc->vmsd = &qemu_s390_flic_vmstate;
+     fsc->register_io_adapter = qemu_s390_register_io_adapter;
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index cd063f8b64..f87ca36264 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -863,8 +863,13 @@ static void ccw_machine_9_0_instance_options(MachineState *machine)
+ 
+ static void ccw_machine_9_0_class_options(MachineClass *mc)
+ {
++    static GlobalProperty compat[] = {
++        { TYPE_QEMU_S390_FLIC, "migrate-all-state", "off", },
++    };
++
+     ccw_machine_9_1_class_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
++    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+ }
+ DEFINE_CCW_MACHINE(9_0, "9.0", false);
+ 
+-- 
+2.45.2
+
 
