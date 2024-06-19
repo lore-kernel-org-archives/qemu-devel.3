@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B5DDC27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 00:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18256C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 00:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJiri-0007Iw-NH; Tue, 18 Jun 2024 20:07:54 -0400
+	id 1sJitK-00085R-Cx; Tue, 18 Jun 2024 20:09:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3TCFyZgQKCpEC53C19916z.x97Bz7F-yzGz689818F.9C1@flex--rkir.bounces.google.com>)
- id 1sJira-0007IP-4t
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:07:47 -0400
-Received: from mail-yb1-xb49.google.com ([2607:f8b0:4864:20::b49])
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sJitI-00085D-EB
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:09:32 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3TCFyZgQKCpEC53C19916z.x97Bz7F-yzGz689818F.9C1@flex--rkir.bounces.google.com>)
- id 1sJirY-0005rU-Ck
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:07:45 -0400
-Received: by mail-yb1-xb49.google.com with SMTP id
- 3f1490d57ef6-dfe44496da9so10702954276.0
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 17:07:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sJitG-00061Q-0y
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:09:31 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1f70ec6ff8bso86085ad.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 17:09:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1718755661; x=1719360461; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=PswgJgfdGa9sop3DP6SyW+B2hdAbdt/AjMlIVsl0w8g=;
- b=iR3jcwi2LZ3fycJPpXZ+G+wGGsdbbY1xk6uTQHBuDouOgs6fDhHs7YNHuUH5e7X6/k
- +qqyEA9zdZu9cHbEYMPEzG1Va2M1Ps3RMhAsPMpX3Iy69UJnz1bQW7+nOu8FYQSdMAad
- dhfaQS7xr6IOF8WTSVIdQ6+FJHkKVa7CHIty0D+nPm4VFH45ASVVyiWP3MS5nun7G2cO
- E6GgFl7yLPCBWTYO2yDsxxmBvXaP7XB8c4AcjNr2GgCyhOZR4vLZGhkQ6CgcYiUTy6Ga
- 0SKLjTN29I30oa0rKf5c/xQiy2ipRZF8sKU3r3nVZ+dzjJxqjsplGQuoqHr/fr6r4rdD
- WQDg==
+ d=google.com; s=20230601; t=1718755766; x=1719360566; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Rxyf5g8UAW2bEEM6pY/sYRcRHjCvsO7D4Aq2yN0FjfQ=;
+ b=DPhqWS2J7j8zwF1h0mxFLCwBYH+XIZ0MkXZj1YGErCu2IfvCubybUo3wcOvXblHyzv
+ noX8IEBptxPXsn42ieSuubRnVX82bfAOyihcBKYZtqHqXhakyqX204HS+wfR5XHzZKjs
+ WLK36WneluCiD/p3Gg3OIm1fiigiegc8GLhTBvm2l6Wi6a+zV1frnCmQZ8Rd9dYUCGWb
+ WNB0fQtpP1YclvO4TMBmWAGuJ2QQY7AqZVP5SNc2uvzNazsuKmEnS+VYdDufSUDw7H9q
+ QWLDkwJXCtewopLJX6LnSbJBopxch2g3V+ZWWSnf+yd3EiqVXsyHE+lPbWU9BQ/ALIhy
+ 2WSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718755661; x=1719360461;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PswgJgfdGa9sop3DP6SyW+B2hdAbdt/AjMlIVsl0w8g=;
- b=pXD4bbHCTTR2ZYSpOaTVA1TdB8NW9eydKsahOHtSQPgyyW11Z3dfsCzDVNHwPzrSrR
- YNcHVoltOBGuYtweN7L9abC6FHF0ZgCa6xXQkJjJGxtXHY8hvkjCulSsU+Nu0PvAPge9
- L9jmOadS7fZ/5EJ5ChM+Ly1tjD+i25aByhexDA9w0uUZRkwN+BhnEChsRS18Tcjihxwf
- BoYFn2ZHrwu39SURYKLy+VMObKDKM/hm82mO8236kadTvQy8IN5rBtVLCpsYWQLir3e6
- R9pfC0H0OUknfxW8fHpILCY3SirnBdoIBiOUOqQghNlDGVQHOWWfCDdlaRwUIRcfmItM
- /MJA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUwa+54EtJj7HQhy1c/rHPPPWVpkePGxjmWs+RaGXBZHukGvGhXsHKbOpVjD2vCSjN9Ycl+BqanrhLoSi0WNA3/0bltQks=
-X-Gm-Message-State: AOJu0YzNK8v/YAL4ZgURXFaRJ7c04OmSTBk3Ul7cs74RTJDVoLSywxJi
- gPiLMFaR8y1o/fXBjGJGrSCnrEIdkFeyw4CDDYtpwpFdJjQjCK8URzNRBamKQnUzXsRM5A==
-X-Google-Smtp-Source: AGHT+IHZzN2OsvyT9/tDfPbxt1RJOzPfmWC5wOlOCnjjn2R5lOlcwTB1pGtTbZAPk9TJfrBhKL0frUV8
-X-Received: from rkir98.kir.corp.google.com
- ([2620:15c:7d:4:fddf:5bf:9eb2:410e])
- (user=rkir job=sendgmr) by 2002:a05:6902:1890:b0:e02:5b08:d3a with SMTP id
- 3f1490d57ef6-e02bdf6420bmr260170276.0.1718755660868; Tue, 18 Jun 2024
- 17:07:40 -0700 (PDT)
-Date: Tue, 18 Jun 2024 17:04:50 -0700
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.45.2.627.g7a2c4fd464-goog
-Message-ID: <20240619000450.893463-1-rkir@google.com>
-Subject: [PATCH v2] exec: use char* for pointer arithmetic
+ d=1e100.net; s=20230601; t=1718755766; x=1719360566;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Rxyf5g8UAW2bEEM6pY/sYRcRHjCvsO7D4Aq2yN0FjfQ=;
+ b=iCQJlCDkNy7O3IwscQFsJdRgMpaQSYYp+RRJF+v+Z2J4iV+w4kTVufCGqX0yVuKyd5
+ ft3GRzN6xjipq2y5Jvb/7wS6Jjk8U5IuQgI6Ljsei0jcX3rZP8MvBnDj4ieeQ+xbFOrF
+ TsRqNSxxa9bonltxARAYCdP+KVRwVsWwEr1y+ECsGlYiTkGp5VGTo94tzES/shoE8wt7
+ i5+zkU2mkc9PHGKM4HL2PluKhtJehUhJjfN8RR8h5WGnJWBQIP9CLelfZcm4XhjgDNTJ
+ ULeeQwcyutKiuBHC2ZgubFR784zZkLn1xJe54kSe96UuLPRq6n+457LyQbYNvkqPZb+D
+ 9CCQ==
+X-Gm-Message-State: AOJu0YzMfZyUO848xLqU1Gi+ZKAwwlmbzNYv+ArOZGl7v8B5ntxs7kMG
+ NiMSgJqXvPrfArBqNAg8AZrioZb7/1fnV+8JEHFhHIupwwW8TiTlTWOSBj5i30h23wuJUq0L3GN
+ y6C/+Ud1g6XAQq+rX8z/qY0FW7sumllWS/xcV
+X-Google-Smtp-Source: AGHT+IGRVNwVMhW4pPpxSJuZVBmP4AObiR26wE0WB40pEY24dyDJT3EIZNbQHiKBnvcfQOptgrTTkVLc5mMzAS/6a9I=
+X-Received: by 2002:a17:902:6941:b0:1f6:8836:e43f with SMTP id
+ d9443c01a7336-1f9ae0a77e1mr703485ad.17.1718755765354; Tue, 18 Jun 2024
+ 17:09:25 -0700 (PDT)
+MIME-Version: 1.0
+References: <20240618224604.879275-1-rkir@google.com>
+ <495d3ddc-ce73-4ef5-badd-16ed61f9a5aa@linaro.org>
+In-Reply-To: <495d3ddc-ce73-4ef5-badd-16ed61f9a5aa@linaro.org>
 From: Roman Kiryanov <rkir@google.com>
-To: richard.henderson@linaro.org, qemu-devel@nongnu.org
-Cc: jansene@google.com, mett@google.com, jpcottin@google.com, 
- Roman Kiryanov <rkir@google.com>
+Date: Tue, 18 Jun 2024 17:09:14 -0700
+Message-ID: <CAOGAQeouhTW3ZcjCB5H5DpPLH85vc5r5Nnh8Aj+0woPvv3tmtw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] exec: use char* for pointer arithmetic
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, jansene@google.com, mett@google.com, 
+ jpcottin@google.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b49;
- envelope-from=3TCFyZgQKCpEC53C19916z.x97Bz7F-yzGz689818F.9C1@flex--rkir.bounces.google.com;
- helo=mail-yb1-xb49.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=rkir@google.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,119 +90,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-void* pointer arithmetic is not in the
-C standard. This change allows using
-the QEMU headers with a C++ compiler.
+Hi Richard,
 
-Google-Bug-Id: 331190993
-Change-Id: I5a064853429f627c17a9213910811dea4ced6174
-Signed-off-by: Roman Kiryanov <rkir@google.com>
----
-v2: change `char*` into `char *` (add the missing space).
+On Tue, Jun 18, 2024 at 4:05=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+> We require "char *" with a space.
 
- include/exec/memory.h                 |  8 ++++----
- include/exec/memory_ldst_cached.h.inc | 12 ++++++------
- 2 files changed, 10 insertions(+), 10 deletions(-)
-
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index d7591a60d9..a6d64e39a5 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -2839,7 +2839,7 @@ static inline uint8_t address_space_ldub_cached(MemoryRegionCache *cache,
- {
-     assert(addr < cache->len);
-     if (likely(cache->ptr)) {
--        return ldub_p(cache->ptr + addr);
-+        return ldub_p((char *)cache->ptr + addr);
-     } else {
-         return address_space_ldub_cached_slow(cache, addr, attrs, result);
-     }
-@@ -2850,7 +2850,7 @@ static inline void address_space_stb_cached(MemoryRegionCache *cache,
- {
-     assert(addr < cache->len);
-     if (likely(cache->ptr)) {
--        stb_p(cache->ptr + addr, val);
-+        stb_p((char *)cache->ptr + addr, val);
-     } else {
-         address_space_stb_cached_slow(cache, addr, val, attrs, result);
-     }
-@@ -3123,7 +3123,7 @@ address_space_read_cached(MemoryRegionCache *cache, hwaddr addr,
-     assert(addr < cache->len && len <= cache->len - addr);
-     fuzz_dma_read_cb(cache->xlat + addr, len, cache->mrs.mr);
-     if (likely(cache->ptr)) {
--        memcpy(buf, cache->ptr + addr, len);
-+        memcpy(buf, (char *)cache->ptr + addr, len);
-         return MEMTX_OK;
-     } else {
-         return address_space_read_cached_slow(cache, addr, buf, len);
-@@ -3144,7 +3144,7 @@ address_space_write_cached(MemoryRegionCache *cache, hwaddr addr,
- {
-     assert(addr < cache->len && len <= cache->len - addr);
-     if (likely(cache->ptr)) {
--        memcpy(cache->ptr + addr, buf, len);
-+        memcpy((char *)cache->ptr + addr, buf, len);
-         return MEMTX_OK;
-     } else {
-         return address_space_write_cached_slow(cache, addr, buf, len);
-diff --git a/include/exec/memory_ldst_cached.h.inc b/include/exec/memory_ldst_cached.h.inc
-index d7834f852c..9426663524 100644
---- a/include/exec/memory_ldst_cached.h.inc
-+++ b/include/exec/memory_ldst_cached.h.inc
-@@ -30,7 +30,7 @@ static inline uint16_t ADDRESS_SPACE_LD_CACHED(uw)(MemoryRegionCache *cache,
-     assert(addr < cache->len && 2 <= cache->len - addr);
-     fuzz_dma_read_cb(cache->xlat + addr, 2, cache->mrs.mr);
-     if (likely(cache->ptr)) {
--        return LD_P(uw)(cache->ptr + addr);
-+        return LD_P(uw)((char *)cache->ptr + addr);
-     } else {
-         return ADDRESS_SPACE_LD_CACHED_SLOW(uw)(cache, addr, attrs, result);
-     }
-@@ -42,7 +42,7 @@ static inline uint32_t ADDRESS_SPACE_LD_CACHED(l)(MemoryRegionCache *cache,
-     assert(addr < cache->len && 4 <= cache->len - addr);
-     fuzz_dma_read_cb(cache->xlat + addr, 4, cache->mrs.mr);
-     if (likely(cache->ptr)) {
--        return LD_P(l)(cache->ptr + addr);
-+        return LD_P(l)((char *)cache->ptr + addr);
-     } else {
-         return ADDRESS_SPACE_LD_CACHED_SLOW(l)(cache, addr, attrs, result);
-     }
-@@ -54,7 +54,7 @@ static inline uint64_t ADDRESS_SPACE_LD_CACHED(q)(MemoryRegionCache *cache,
-     assert(addr < cache->len && 8 <= cache->len - addr);
-     fuzz_dma_read_cb(cache->xlat + addr, 8, cache->mrs.mr);
-     if (likely(cache->ptr)) {
--        return LD_P(q)(cache->ptr + addr);
-+        return LD_P(q)((char *)cache->ptr + addr);
-     } else {
-         return ADDRESS_SPACE_LD_CACHED_SLOW(q)(cache, addr, attrs, result);
-     }
-@@ -76,7 +76,7 @@ static inline void ADDRESS_SPACE_ST_CACHED(w)(MemoryRegionCache *cache,
- {
-     assert(addr < cache->len && 2 <= cache->len - addr);
-     if (likely(cache->ptr)) {
--        ST_P(w)(cache->ptr + addr, val);
-+        ST_P(w)((char *)cache->ptr + addr, val);
-     } else {
-         ADDRESS_SPACE_ST_CACHED_SLOW(w)(cache, addr, val, attrs, result);
-     }
-@@ -87,7 +87,7 @@ static inline void ADDRESS_SPACE_ST_CACHED(l)(MemoryRegionCache *cache,
- {
-     assert(addr < cache->len && 4 <= cache->len - addr);
-     if (likely(cache->ptr)) {
--        ST_P(l)(cache->ptr + addr, val);
-+        ST_P(l)((char *)cache->ptr + addr, val);
-     } else {
-         ADDRESS_SPACE_ST_CACHED_SLOW(l)(cache, addr, val, attrs, result);
-     }
-@@ -98,7 +98,7 @@ static inline void ADDRESS_SPACE_ST_CACHED(q)(MemoryRegionCache *cache,
- {
-     assert(addr < cache->len && 8 <= cache->len - addr);
-     if (likely(cache->ptr)) {
--        ST_P(q)(cache->ptr + addr, val);
-+        ST_P(q)((char *)cache->ptr + addr, val);
-     } else {
-         ADDRESS_SPACE_ST_CACHED_SLOW(q)(cache, addr, val, attrs, result);
-     }
--- 
-2.45.2.627.g7a2c4fd464-goog
-
+thank you for looking into this. I sent v2 for this one.
 
