@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5202C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 10:21:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A90C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 10:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJsQH-0005V1-0k; Wed, 19 Jun 2024 06:20:13 -0400
+	id 1sJsSL-0006Ro-4Z; Wed, 19 Jun 2024 06:22:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sJsQF-0005U5-4Z
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 06:20:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sJsQD-00065A-1h
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 06:20:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718792407;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iE4SunOPRH64KCjZrylfiBNYuPUiYejPJ1XrCqIZ8mc=;
- b=DCubtcipW7EKrKDicn3TOeAnJVegk3zbJgOdwF3/Ul8BySfRXUq5zg2zmWFeqH1sOitT3S
- 4iajIZ2kmxuIcM5CNkhSZ8ZVazX2m46wpd1onltPDBrecBXNiiEfo4DE0EecBXlFutJenD
- NIrEUIDI/GQFFP/0JJCKDSZlUfb1KiY=
-Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
- [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-121-XE8BP-pUN1GXHivUW9lCUQ-1; Wed, 19 Jun 2024 06:20:06 -0400
-X-MC-Unique: XE8BP-pUN1GXHivUW9lCUQ-1
-Received: by mail-yb1-f200.google.com with SMTP id
- 3f1490d57ef6-dfa7a8147c3so12481514276.3
- for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 03:20:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJsSJ-0006RY-OL
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 06:22:19 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJsSH-0006JU-OH
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 06:22:19 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a63359aaaa6so990033366b.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 03:22:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718792536; x=1719397336; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=e0cmp6TtXj8ZZv5VruN2ldve+MWRF/k1BTlWxu6YMlA=;
+ b=BoBOL5U4I4jPmbISoJm/bUwr9zaZYXFS3Uwtlx68+xTlRhPOOEJbjc+b/NgtDLiXHu
+ 0p03Z7eC2z3LoMXl8rD7v3Q5y9zotYlS24wPWhh6WoF/Cqwn496VTaV/72rq2x0cUEfc
+ q5oKEkDfNtCr4kK44EyPP/TQT/ALCcJRMPdY2wlPx0OlPEAzccxSdqigVErFHpuzS6YG
+ y7Q8/LBs44ugRa1QxKjysdtUY5jDAMwcp5hLyr5MajDQloyR8YxxaA7wVsSixq5DuGqr
+ yBYpHR9jSnAHZ9TuAte5hii2fsE15ypRITGlbtPxfyCc2SDOFNvNAtbi02amr/wjt29I
+ glXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718792406; x=1719397206;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iE4SunOPRH64KCjZrylfiBNYuPUiYejPJ1XrCqIZ8mc=;
- b=BY7RHv/942Bhuvz4kcD+GquRUpSfLfEU6LdQ0/d8yN3iUtZdv4aGAkAhJFYzDSqEHq
- Z37fSQOGK5qp4EKH4KrrVzuCuKXfqjtw1RrC5hArX+H+UT/csLgqIWwQmFHiwz3ZZbdY
- zr7YWpQ7DGixJAfXkh08WlRPDL3cLeZwrQQ2jnNGivOnCh+Km3ysIIBB+1MeS17XK+ZD
- Yww+GvDJnRe4n4vx+Sl980SnHjYC0ri9MLXtucjR4N7HK8y6LBMbFDCLK5VALhUpCFLQ
- xCtt3prTOZAucH4QRsB2L+TTBeuRWWJD8qbIVnO1eo+P8onylmUHP/s1fGi6f/iTBkmm
- 3pEA==
+ d=1e100.net; s=20230601; t=1718792536; x=1719397336;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=e0cmp6TtXj8ZZv5VruN2ldve+MWRF/k1BTlWxu6YMlA=;
+ b=knDlvnXYC3MSNfRfByEqEuyaDy9WS0vJPktHphiD8B208j4HJFlZHIw+G85mfwb4Ka
+ b9UFF19Dn7YQgdJ6rT1SikggV1LP3/QXoLu5hZWM3UKeQysyAaQKkjK207TRx8u/shZF
+ Op8ozbEZ0VhMc2XrKll2MENz/EuQO1mFaRPZoP7dKjgyNZ2i3JRjSP/g3dd1777lI835
+ BBJazrROtuzStpxwmSD3FHEUeRNZ+lzvRPm3KojoC4zDhIo4OgS0tgePhsU5VXKoNVtq
+ wJIlyTl+k453E27Iv1BSPG1ZsAa5obpBp2MJ2d014U08y857eOzl57GZNx6BiLVugYh0
+ qtUw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWTQ/JhsQprMfhoPQyllmWoafZdHc8xxaRRpOA+To7KP5+i8lGPNfaHA8YtKtMtDV1MAEYozvM8qdr21axdu/fXNqUqApY=
-X-Gm-Message-State: AOJu0YyKnDUFZRMYjzhdMnU9Ty4Vo0L2jbl/wOS+SP9FR83rmBbHL+Bb
- 9Trd5zf1UQVWfonH6e+JlT9uARQ/W7AkWw3Jk/wwyX8flrKoqa6kdT3r2ChBBbjLFaFyfdKRUd6
- bNB3GePaPDMoyKUvc45GtDPLT8lkGi6xPeLKtyxRwS18Q2wTq88QyRwxgKNy2fwcjPwhDQ1Pg5Z
- Ssn1yH/vHSgNh4NMj6hKg4+Ox/M/c=
-X-Received: by 2002:a25:e30b:0:b0:e02:c434:8b2a with SMTP id
- 3f1490d57ef6-e02c4348dadmr989760276.54.1718792405875; 
- Wed, 19 Jun 2024 03:20:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEPYXTstGYeHgi6iZpfqcHh2RKRMucNuyith/bBBw4aDSL2u/vx6Xl+FmW5odf2IQwY2aB5lMe6Aw2lX95Ngjo=
-X-Received: by 2002:a25:e30b:0:b0:e02:c434:8b2a with SMTP id
- 3f1490d57ef6-e02c4348dadmr989743276.54.1718792405428; Wed, 19 Jun 2024
- 03:20:05 -0700 (PDT)
+ AJvYcCWIWaouXJoiwpdBjvEma7PHKb1sihQ8OiFtCiJbE5gIAE8bMwk0CHmCn6TBvUJFMqwuO91xZiHP3T1qYL5xtu4fOY3FSPM=
+X-Gm-Message-State: AOJu0YwX0spBEwr5dBlmWZ7QVJyyJ78WXhiwfYChwVWVt/3I/sVwLN4I
+ ojW6xuHlDRkimZFkMjALcLYoNLZDrlx8LJIEPORuPTcad1P9JB7FqfqEO+08K0c=
+X-Google-Smtp-Source: AGHT+IH9kjqjnq0Kze+0x+J4pIRj58OFZEnmahtVU9Zdt6RkUWpCAPiHxQ31RVBJnkjvNVj1oDTNnw==
+X-Received: by 2002:a17:907:c787:b0:a6f:392d:51a9 with SMTP id
+ a640c23a62f3a-a6fab60bb95mr117970666b.14.1718792536011; 
+ Wed, 19 Jun 2024 03:22:16 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.133.105])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6f56f4177csm652680766b.162.2024.06.19.03.22.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Jun 2024 03:22:15 -0700 (PDT)
+Message-ID: <ee4149fd-890d-43c6-a7c0-0d6df63bbb2f@linaro.org>
+Date: Wed, 19 Jun 2024 12:22:13 +0200
 MIME-Version: 1.0
-References: <20240618181834.14173-1-sahilcdq@proton.me>
-In-Reply-To: <20240618181834.14173-1-sahilcdq@proton.me>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 19 Jun 2024 12:19:29 +0200
-Message-ID: <CAJaqyWc8L2rZULeHgqmuieAqmQvePm9sicJFGq+POKPLYQMLJg@mail.gmail.com>
-Subject: Re: [RFC] vhost: Introduce packed vq and add buffer elements
-To: Sahil Siddiq <icegambit91@gmail.com>
-Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
- Sahil Siddiq <sahilcdq@proton.me>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] exec: avoid using C++ keywords in function parameters
+To: Roman Kiryanov <rkir@google.com>, qemu-devel@nongnu.org
+Cc: jansene@google.com, mett@google.com, jpcottin@google.com
+References: <20240618224553.878869-1-rkir@google.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240618224553.878869-1-rkir@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,324 +95,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 18, 2024 at 8:19=E2=80=AFPM Sahil Siddiq <icegambit91@gmail.com=
-> wrote:
->
-> This is the first patch in a series to add support for packed
-> virtqueues in vhost_shadow_virtqueue. This patch implements the
-> insertion of available buffers in the descriptor area. It takes
-> into account descriptor chains, but does not consider indirect
-> descriptors.
->
-> VhostShadowVirtqueue has also been modified so it acts as a layer
-> of abstraction for split and packed virtqueues.
->
-> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
+On 19/6/24 00:45, Roman Kiryanov wrote:
+> to use the QEMU headers with a C++ compiler.
+> 
+> Google-Bug-Id: 331190993
+> Change-Id: Ic4e49b9c791616bb22c973922772b0494706092c
+> Signed-off-by: Roman Kiryanov <rkir@google.com>
 > ---
-> Hi,
->
-> I am currently working on adding support for packed virtqueues in
-> vhost_shadow_virtqueue [1]. This patch only implements the insertion of
-> available buffers in the descriptor area. It does not take into
-> account indirect descriptors, event_idx or notifications.
->
-> I don't think these changes are testable yet but I thought I would
-> still post this patch for feedback. The following email annotates these
-> changes with a few comments and questions that I have.
->
-> Thanks,
-> Sahil
->
+>   include/exec/memory.h | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index 1be58f694c..d7591a60d9 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -945,7 +945,7 @@ struct MemoryListener {
+>        * the current transaction.
+>        */
+>       void (*log_start)(MemoryListener *listener, MemoryRegionSection *section,
+> -                      int old, int new);
+> +                      int old_val, int new_val);
+>   
+>       /**
+>        * @log_stop:
+> @@ -964,7 +964,7 @@ struct MemoryListener {
+>        * the current transaction.
+>        */
+>       void (*log_stop)(MemoryListener *listener, MemoryRegionSection *section,
+> -                     int old, int new);
+> +                     int old_val, int new_val);
 
-Hi Sahil,
+OK but please keep the implementations in sync with the prototype
+argument names:
 
-Just some nitpicks here and there,
+accel/hvf/hvf-accel-ops.c:264: 
+MemoryRegionSection *section, int old, int new)
+accel/hvf/hvf-accel-ops.c:274: 
+MemoryRegionSection *section, int old, int new)
+accel/kvm/kvm-all.c:549:                          int old, int new)
+accel/kvm/kvm-all.c:566:                          int old, int new)
+hw/i386/xen/xen-hvm.c:430:                          int old, int new)
+hw/i386/xen/xen-hvm.c:441:                         int old, int new)
+hw/virtio/vhost.c:1070:                            int old, int new)
+hw/virtio/vhost.c:1077:                           int old, int new)
+include/exec/memory.h:948:                      int old, int new);
+include/exec/memory.h:967:                     int old, int new);
 
-> [1] https://wiki.qemu.org/Internships/ProjectIdeas/PackedShadowVirtqueue
->
->  hw/virtio/vhost-shadow-virtqueue.c | 124 ++++++++++++++++++++++++++++-
->  hw/virtio/vhost-shadow-virtqueue.h |  66 ++++++++++-----
->  2 files changed, 167 insertions(+), 23 deletions(-)
->
-> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-=
-virtqueue.c
-> index fc5f408f77..e3b276a9e9 100644
-> --- a/hw/virtio/vhost-shadow-virtqueue.c
-> +++ b/hw/virtio/vhost-shadow-virtqueue.c
-> @@ -217,6 +217,122 @@ static bool vhost_svq_add_split(VhostShadowVirtqueu=
-e *svq,
->      return true;
->  }
->
-> +/**
-> + * Write descriptors to SVQ packed vring
-> + *
-> + * @svq: The shadow virtqueue
-> + * @sg: Cache for hwaddr
-> + * @out_sg: The iovec from the guest that is read-only for device
-> + * @out_num: iovec length
-> + * @in_sg: The iovec from the guest that is write-only for device
-> + * @in_num: iovec length
-> + * @head_flags: flags for first descriptor in list
-> + *
-> + * Return true if success, false otherwise and print error.
-> + */
-> +static bool vhost_svq_vring_write_descs_packed(VhostShadowVirtqueue *svq=
-, hwaddr *sg,
-> +                                        const struct iovec *out_sg, size=
-_t out_num,
-> +                                        const struct iovec *in_sg, size_=
-t in_num,
-> +                                        uint16_t *head_flags)
-> +{
-> +    uint16_t id, curr, head, i;
-> +    unsigned n;
-> +    struct vring_packed_desc *descs =3D svq->vring_packed.vring.desc;
-> +    bool ok;
-> +
-> +    head =3D svq->vring_packed.next_avail_idx;
-> +    i =3D head;
-> +    id =3D svq->free_head;
-> +    curr =3D id;
-> +
-> +    size_t num =3D out_num + in_num;
-> +
-> +    if (num =3D=3D 0) {
-> +        return true;
-> +    }
+See also:
+target/arm/tcg/translate-a64.c:2161:        int new = a->imm * 3;
+target/sparc/trace-events:23:sparc64_cpu_check_irqs_set_irq(unsigned int 
+i, int old, int new) "Set CPU IRQ %d old=0x%x new=0x%x"
+util/lockcnt.c:81:            int new = expected - 
+QEMU_LOCKCNT_STATE_LOCKED + QEMU_LOCKCNT_STATE_WAITING;
+util/trace-events:65:lockcnt_fast_path_attempt(const void *lockcnt, int 
+expected, int new) "lockcnt %p fast path %d->%d"
+util/trace-events:66:lockcnt_fast_path_success(const void *lockcnt, int 
+expected, int new) "lockcnt %p fast path %d->%d succeeded"
+util/trace-events:67:lockcnt_unlock_attempt(const void *lockcnt, int 
+expected, int new) "lockcnt %p unlock %d->%d"
+util/trace-events:68:lockcnt_unlock_success(const void *lockcnt, int 
+expected, int new) "lockcnt %p unlock %d->%d succeeded"
+util/trace-events:69:lockcnt_futex_wait_prepare(const void *lockcnt, int 
+expected, int new) "lockcnt %p preparing slow path %d->%d"
+util/trace-events:71:lockcnt_futex_wait_resume(const void *lockcnt, int 
+new) "lockcnt %p after wait: %d"
 
-num =3D=3D 0 is impossible now, the caller checks for that.
-
-> +
-> +    ok =3D vhost_svq_translate_addr(svq, sg, out_sg, out_num);
-> +    if (unlikely(!ok)) {
-> +        return false;
-> +    }
-> +
-> +    ok =3D vhost_svq_translate_addr(svq, sg + out_num, in_sg, in_num);
-> +    if (unlikely(!ok)) {
-> +        return false;
-> +    }
-> +
-> +    for (n =3D 0; n < num; n++) {
-> +        uint16_t flags =3D cpu_to_le16(svq->vring_packed.avail_used_flag=
-s |
-> +                (n < out_num ? 0 : VRING_DESC_F_WRITE) |
-> +                (n + 1 =3D=3D num ? 0 : VRING_DESC_F_NEXT));
-> +        if (i =3D=3D head) {
-> +            *head_flags =3D flags;
-> +        } else {
-> +            descs[i].flags =3D flags;
-> +        }
-> +
-> +        descs[i].addr =3D cpu_to_le64(sg[n]);
-> +        descs[i].id =3D id;
-> +        if (n < out_num) {
-> +            descs[i].len =3D cpu_to_le32(out_sg[n].iov_len);
-> +        } else {
-> +            descs[i].len =3D cpu_to_le32(in_sg[n - out_num].iov_len);
-> +        }
-> +
-> +        curr =3D cpu_to_le16(svq->desc_next[curr]);
-> +
-> +        if (++i >=3D svq->vring_packed.vring.num) {
-> +            i =3D 0;
-> +            svq->vring_packed.avail_used_flags ^=3D
-> +                    1 << VRING_PACKED_DESC_F_AVAIL |
-> +                    1 << VRING_PACKED_DESC_F_USED;
-> +        }
-> +    }
-> +
-> +    if (i <=3D head) {
-> +        svq->vring_packed.avail_wrap_counter ^=3D 1;
-> +    }
-> +
-> +    svq->vring_packed.next_avail_idx =3D i;
-> +    svq->free_head =3D curr;
-> +    return true;
-> +}
-> +
-> +static bool vhost_svq_add_packed(VhostShadowVirtqueue *svq,
-> +                                const struct iovec *out_sg, size_t out_n=
-um,
-> +                                const struct iovec *in_sg, size_t in_num=
-,
-> +                                unsigned *head)
-> +{
-> +    bool ok;
-> +    uint16_t head_flags =3D 0;
-> +    g_autofree hwaddr *sgs =3D g_new(hwaddr, out_num + in_num);
-> +
-> +    *head =3D svq->vring_packed.next_avail_idx;
-> +
-> +    /* We need some descriptors here */
-> +    if (unlikely(!out_num && !in_num)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "Guest provided element with no descriptors");
-> +        return false;
-> +    }
-> +
-> +    ok =3D vhost_svq_vring_write_descs_packed(svq, sgs, out_sg, out_num,
-> +                                            in_sg, in_num, &head_flags);
-> +    if (unlikely(!ok)) {
-> +        return false;
-> +    }
-> +
-
-Ok now I see why you switched sgs length from MAX to sum. But if we're
-here, why not just embed all vhost_svq_vring_write_descs_packed here?
-vhost_svq_vring_write_descs makes sense to split as we repeat the
-operation, but I think it adds nothing here. What do you think?
-
-> +    /*
-> +     * A driver MUST NOT make the first descriptor in the list
-> +     * available before all subsequent descriptors comprising
-> +     * the list are made available.
-> +     */
-> +    smp_wmb();
-> +    svq->vring_packed.vring.desc[*head].flags =3D head_flags;
-> +
-> +    return true;
-> +}
-> +
->  static void vhost_svq_kick(VhostShadowVirtqueue *svq)
->  {
->      bool needs_kick;
-> @@ -258,7 +374,13 @@ int vhost_svq_add(VhostShadowVirtqueue *svq, const s=
-truct iovec *out_sg,
->          return -ENOSPC;
->      }
->
-> -    ok =3D vhost_svq_add_split(svq, out_sg, out_num, in_sg, in_num, &qem=
-u_head);
-> +    if (virtio_vdev_has_feature(svq->vdev, VIRTIO_F_RING_PACKED)) {
-> +        ok =3D vhost_svq_add_packed(svq, out_sg, out_num,
-> +                                  in_sg, in_num, &qemu_head);
-> +    } else {
-> +        ok =3D vhost_svq_add_split(svq, out_sg, out_num,
-> +                                 in_sg, in_num, &qemu_head);
-> +    }
->      if (unlikely(!ok)) {
->          return -EINVAL;
->      }
-> diff --git a/hw/virtio/vhost-shadow-virtqueue.h b/hw/virtio/vhost-shadow-=
-virtqueue.h
-> index 19c842a15b..ee1a87f523 100644
-> --- a/hw/virtio/vhost-shadow-virtqueue.h
-> +++ b/hw/virtio/vhost-shadow-virtqueue.h
-> @@ -46,10 +46,53 @@ typedef struct VhostShadowVirtqueueOps {
->      VirtQueueAvailCallback avail_handler;
->  } VhostShadowVirtqueueOps;
->
-> +struct vring_packed {
-> +    /* Actual memory layout for this queue. */
-> +    struct {
-> +        unsigned int num;
-> +        struct vring_packed_desc *desc;
-> +        struct vring_packed_desc_event *driver;
-> +        struct vring_packed_desc_event *device;
-> +    } vring;
-> +
-> +    /* Avail used flags. */
-> +    uint16_t avail_used_flags;
-> +
-> +    /* Index of the next avail descriptor. */
-> +    uint16_t next_avail_idx;
-> +
-> +    /* Driver ring wrap counter */
-> +    bool avail_wrap_counter;
-> +};
-> +
->  /* Shadow virtqueue to relay notifications */
->  typedef struct VhostShadowVirtqueue {
-> +    /* Virtio queue shadowing */
-> +    VirtQueue *vq;
-> +
-> +    /* Virtio device */
-> +    VirtIODevice *vdev;
-> +
-> +    /* SVQ vring descriptors state */
-> +    SVQDescState *desc_state;
-> +
-> +    /*
-> +     * Backup next field for each descriptor so we can recover securely,=
- not
-> +     * needing to trust the device access.
-> +     */
-> +    uint16_t *desc_next;
-> +
-> +    /* Next free descriptor */
-> +    uint16_t free_head;
-> +
-> +    /* Size of SVQ vring free descriptors */
-> +    uint16_t num_free;
-> +
-
-Why the reorder of all of the previous members?
-
-Apart from the nitpicks I don't see anything wrong with this part of
-the project. Looking forward to the next!
-
-Thanks!
-
->      /* Shadow vring */
-> -    struct vring vring;
-> +    union {
-> +        struct vring vring;
-> +        struct vring_packed vring_packed;
-> +    };
->
->      /* Shadow kick notifier, sent to vhost */
->      EventNotifier hdev_kick;
-> @@ -69,27 +112,12 @@ typedef struct VhostShadowVirtqueue {
->      /* Guest's call notifier, where the SVQ calls guest. */
->      EventNotifier svq_call;
->
-> -    /* Virtio queue shadowing */
-> -    VirtQueue *vq;
-> -
-> -    /* Virtio device */
-> -    VirtIODevice *vdev;
-> -
->      /* IOVA mapping */
->      VhostIOVATree *iova_tree;
->
-> -    /* SVQ vring descriptors state */
-> -    SVQDescState *desc_state;
-> -
->      /* Next VirtQueue element that guest made available */
->      VirtQueueElement *next_guest_avail_elem;
->
-> -    /*
-> -     * Backup next field for each descriptor so we can recover securely,=
- not
-> -     * needing to trust the device access.
-> -     */
-> -    uint16_t *desc_next;
-> -
->      /* Caller callbacks */
->      const VhostShadowVirtqueueOps *ops;
->
-> @@ -99,17 +127,11 @@ typedef struct VhostShadowVirtqueue {
->      /* Next head to expose to the device */
->      uint16_t shadow_avail_idx;
->
-> -    /* Next free descriptor */
-> -    uint16_t free_head;
-> -
->      /* Last seen used idx */
->      uint16_t shadow_used_idx;
->
->      /* Next head to consume from the device */
->      uint16_t last_used_idx;
-> -
-> -    /* Size of SVQ vring free descriptors */
-> -    uint16_t num_free;
->  } VhostShadowVirtqueue;
->
->  bool vhost_svq_valid_features(uint64_t features, Error **errp);
-> --
-> 2.45.2
->
+and:
+$ git grep -wE 'u?int(8|16|32|64)_t new'
+hw/core/trace-events:28:clock_set(const char *clk, uint64_t old, 
+uint64_t new) "'%s', %"PRIu64"Hz->%"PRIu64"Hz"
+hw/display/trace-events:5:jazz_led_write(uint64_t addr, uint8_t new) 
+"write addr=0x%"PRIx64": 0x%x"
+hw/display/trace-events:14:g364fb_write(uint64_t addr, uint32_t new) 
+"write addr=0x%"PRIx64": 0x%x"
+hw/gpio/aspeed_gpio.c:276:    uint32_t new = value;
+hw/ide/trace-events:70:ahci_check_irq(void *s, uint32_t old, uint32_t 
+new) "ahci(%p): check irq 0x%08x --> 0x%08x"
+hw/ide/trace-events:71:ahci_trigger_irq(void *s, int port, const char 
+*name, uint32_t val, uint32_t old, uint32_t new, uint32_t effective) 
+"ahci(%p)[%d]: trigger irq +%s (0x%08x); irqstat: 0x%08x --> 0x%08x; 
+effective: 0x%08x"
+hw/intc/aspeed_vic.c:47:    uint64_t new = (s->raw & s->enable);
+hw/intc/imx_avic.c:63:    uint64_t new = s->pending & s->enabled;
+hw/net/opencores_eth.c:304:        uint32_t old, uint32_t new)
+hw/net/rocker/rocker.c:762:static void 
+rocker_port_phys_enable_write(Rocker *r, uint64_t new)
+hw/net/rocker/rocker_desc.c:252:bool desc_ring_set_head(DescRing *ring, 
+uint32_t new)
+hw/net/rocker/rocker_desc.h:35:bool desc_ring_set_head(DescRing *ring, 
+uint32_t new);
+hw/net/trace-events:208:e1000e_irq_clear(uint32_t offset, uint32_t old, 
+uint32_t new) "Clearing interrupt register 0x%x: 0x%x --> 0x%x"
+hw/net/trace-events:209:e1000e_irq_set(uint32_t offset, uint32_t old, 
+uint32_t new) "Setting interrupt register 0x%x: 0x%x --> 0x%x"
+hw/ssi/aspeed_smc.c:285: 
+uint64_t new)
+hw/timer/aspeed_timer.c:380:                                 uint8_t 
+old, uint8_t new)
+hw/timer/hpet.c:137:static uint64_t hpet_fixup_reg(uint64_t new, 
+uint64_t old, uint64_t mask)
+hw/timer/hpet.c:144:static int activating_bit(uint64_t old, uint64_t 
+new, uint64_t mask)
+hw/timer/hpet.c:149:static int deactivating_bit(uint64_t old, uint64_t 
+new, uint64_t mask)
+hw/usb/trace-events:82:usb_ehci_opreg_change(uint32_t addr, const char 
+*str, uint32_t new, uint32_t old) "ch mmio 0x%04x [%s] = 0x%x (old: 0x%x)"
+hw/usb/trace-events:85:usb_ehci_portsc_change(uint32_t addr, uint32_t 
+port, uint32_t new, uint32_t old) "ch mmio 0x%04x [port %d] = 0x%x (old: 
+0x%x)"
+hw/virtio/trace-events:134:virtio_iommu_set_page_size_mask(const char 
+*name, uint64_t old, uint64_t new) "mr=%s old_mask=0x%"PRIx64" 
+new_mask=0x%"PRIx64
+hw/virtio/virtio.c:2406:                                    uint16_t 
+off_wrap, uint16_t new,
+include/hw/timer/a9gtimer.h:94:    uint64_t new;
+target/arm/cpu.h:1202:void aarch64_set_svcr(CPUARMState *env, uint64_t 
+new, uint64_t mask);
+target/arm/helper.c:7350:void aarch64_set_svcr(CPUARMState *env, 
+uint64_t new, uint64_t mask)
+target/arm/tcg/mte_helper.c:334:        uint8_t new = deposit32(old, 
+ofs, 4, tag);
+target/i386/tcg/sysemu/excp_helper.c:107:static bool ptw_setl_slow(const 
+PTETranslate *in, uint32_t old, uint32_t new)
+target/i386/tcg/sysemu/excp_helper.c:124:        uint32_t new = old | set;
+util/trace-events:6:poll_shrink(void *ctx, int64_t old, int64_t new) 
+"ctx %p old %"PRId64" new %"PRId64
+util/trace-events:7:poll_grow(void *ctx, int64_t old, int64_t new) "ctx 
+%p old %"PRId64" new %"PRId64
 
 
