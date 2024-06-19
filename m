@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33E30C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 12:07:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54FB7C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 12:11:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJu6D-00083M-JZ; Wed, 19 Jun 2024 08:07:37 -0400
+	id 1sJu9U-0001cb-UA; Wed, 19 Jun 2024 08:11:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sJu6B-00080E-DW
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 08:07:35 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sJu9S-0001bO-UP
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 08:10:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sJu69-0000ox-NF
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 08:07:35 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sJu9R-0001PJ-DX
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 08:10:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718798853;
+ s=mimecast20190719; t=1718799056;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NZh8Tr9wU4lZ9c3h7+QOTMkKHMX/P+j6mE6yizR56WY=;
- b=N+isLgqQ18DP76KM9bOhFkppwrxIyaz1si+5TZ/fteiznBL9qEzZql8O6FCJ4zbckAHw+P
- RwbsURrsoqlCM2FnpzRTOgAU8CrL1t2O/ZIZ4HmyvtalgoLTZJrPR6fFoZFQt8MHAWOfK+
- TFFEmoIco3YUbUSVi0FVNHy1FWYsVOY=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=xzEHy9Lx0QkN79C+YBJdnpUx4fo3H3zijh18WueHhuQ=;
+ b=NoAdZxZyeqIxm7B33r97LWP8y1ynE0rrLOVwYy8A2bHu9xCdUWulp+nqyG44DeD1V5TbSr
+ CYZkm7272b9GbMUIwO2Dqw0Aoa6ckmJm8gMj25YFzO4hwX/wIaf5XTe1DbbMVVS/Fg+xVs
+ dIrMvos8UKoaud7occFnMF2GMkJfLoo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-47-nslLKb0OMQ62mnFTSJnJ-g-1; Wed,
- 19 Jun 2024 08:07:30 -0400
-X-MC-Unique: nslLKb0OMQ62mnFTSJnJ-g-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-_4MxRVBCPpKX1hfMzEQZWA-1; Wed,
+ 19 Jun 2024 08:10:54 -0400
+X-MC-Unique: _4MxRVBCPpKX1hfMzEQZWA-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 851B51955F32; Wed, 19 Jun 2024 12:07:28 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C3666195609D; Wed, 19 Jun 2024 12:10:50 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CB9EE1956087; Wed, 19 Jun 2024 12:07:27 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 404C13000218; Wed, 19 Jun 2024 12:10:49 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5EC4E21E64CD; Wed, 19 Jun 2024 14:07:25 +0200 (CEST)
+ id 1B21B21E6687; Wed, 19 Jun 2024 14:10:47 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Stefan Hajnoczi <stefanha@redhat.com>,  Hanna
@@ -67,17 +67,18 @@ Cc: qemu-devel@nongnu.org,  Stefan Hajnoczi <stefanha@redhat.com>,  Hanna
  qemu-block@nongnu.org,  Jiri Pirko <jiri@resnulli.us>,  Alex Williamson
  <alex.williamson@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Eric Blake
  <eblake@redhat.com>
-Subject: Re: [PATCH 07/13] qapi: fix non-compliant JSON examples
-In-Reply-To: <20240619003012.1753577-8-jsnow@redhat.com> (John Snow's message
- of "Tue, 18 Jun 2024 20:30:06 -0400")
+Subject: Re: [PATCH 08/13] qapi: ensure all errors sections are uniformly
+ typset
+In-Reply-To: <20240619003012.1753577-9-jsnow@redhat.com> (John Snow's message
+ of "Tue, 18 Jun 2024 20:30:07 -0400")
 References: <20240619003012.1753577-1-jsnow@redhat.com>
- <20240619003012.1753577-8-jsnow@redhat.com>
-Date: Wed, 19 Jun 2024 14:07:25 +0200
-Message-ID: <87tthp16gy.fsf@pond.sub.org>
+ <20240619003012.1753577-9-jsnow@redhat.com>
+Date: Wed, 19 Jun 2024 14:10:47 +0200
+Message-ID: <87plsd16bc.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
@@ -105,25 +106,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> The new QMP documentation generator wants to parse all examples as
-> "QMP". We have an existing QMP lexer in docs/sphinx/qmp_lexer.py (Seen
-> in-use here: https://qemu-project.gitlab.io/qemu/interop/bitmaps.html)
-> that allows the use of "->", "<-" and "..." tokens to denote QMP
-> protocol flow with elisions, but otherwise defers to the JSON lexer.
->
-> To utilize this lexer for the existing QAPI documentation, we need them
-> to conform to a standard so that they lex and render correctly. Once the
-> QMP lexer is active for examples, errant QMP/JSON will produce warning
-> messages and fail the build.
->
-> Fix any invalid JSON found in QAPI documentation (identified by
-> attempting to lex all examples as QMP; see subsequent commits). Further,
-> the QMP lexer still supports elisions, but they must be represented as
-> the value "...", so three examples have been adjusted to support that
-> format here.
+> Transactions have the only instance of an Errors section that isn't a
+> rST list; turn it into one.
 >
 > Signed-off-by: John Snow <jsnow@redhat.com>
 
+Let;s explain the "why" a bit more clearly.  Maybe
+
+    qapi: Nail down convention that Errors sections are lists
+
+    By unstated convention, Errors sections are rST lists.  Document the
+    convention, and make the one exception conform.
+
+> ---
+>  docs/devel/qapi-code-gen.rst | 7 +++++++
+>  qapi/transaction.json        | 2 +-
+>  2 files changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
+> index f453bd35465..cee43222f19 100644
+> --- a/docs/devel/qapi-code-gen.rst
+> +++ b/docs/devel/qapi-code-gen.rst
+> @@ -1011,6 +1011,13 @@ like this::
+>  "Returns" and "Errors" sections are only valid for commands.  They
+>  document the success and the error response, respectively.
+>  
+> +"Errors" sections should be formatted as an rST list, each entry
+> +detailing a relevant error condition. For example::
+> +
+> + # Errors:
+> + #     - If @device does not exist, DeviceNotFound
+> + #     - Any other error returns a GenericError.
+> +
+>  A "Since: x.y.z" tagged section lists the release that introduced the
+>  definition.
+>  
+> diff --git a/qapi/transaction.json b/qapi/transaction.json
+> index 5749c133d4a..07afc269d54 100644
+> --- a/qapi/transaction.json
+> +++ b/qapi/transaction.json
+> @@ -235,7 +235,7 @@
+>  #     additional detail.
+>  #
+>  # Errors:
+> -#     Any errors from commands in the transaction
+> +#     - Any errors from commands in the transaction
+>  #
+>  # Note: The transaction aborts on the first failure.  Therefore, there
+>  #     will be information on only one failed operation returned in an
+
+Preferably with an improved commit message
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
