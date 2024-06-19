@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11B2CC2BA1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A50AC2BA15
 	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 09:36:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJriw-0000dA-Kj; Wed, 19 Jun 2024 05:35:26 -0400
+	id 1sJrir-0000bL-Rf; Wed, 19 Jun 2024 05:35:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sJriv-0000cL-3R; Wed, 19 Jun 2024 05:35:25 -0400
+ id 1sJriq-0000au-HD; Wed, 19 Jun 2024 05:35:20 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sJrit-0006py-Mp; Wed, 19 Jun 2024 05:35:24 -0400
+ id 1sJrio-0006py-DE; Wed, 19 Jun 2024 05:35:20 -0400
 Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Wed, 19 Jun
@@ -27,7 +27,7 @@ Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
  2024 17:35:09 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 19 Jun 2024 17:35:09 +0800
+ Transport; Wed, 19 Jun 2024 17:35:08 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -35,12 +35,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 1/2] aspeed/soc: fix coverity issue
-Date: Wed, 19 Jun 2024 17:35:07 +0800
-Message-ID: <20240619093508.2528537-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 0/2] Fix coverity issues for AST2700
+Date: Wed, 19 Jun 2024 17:35:06 +0800
+Message-ID: <20240619093508.2528537-1-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240619093508.2528537-1-jamin_lin@aspeedtech.com>
-References: <20240619093508.2528537-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -72,30 +70,18 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix coverity defect: DIVIDE_BY_ZERO.
+change from v1:
+aspeed/soc: coverity defect: DIVIDE_BY_ZERO
+aspeed/sdmc: coverity defect: Control flow issues (DEADCODE)
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
+Jamin Lin (2):
+  aspeed/soc: fix coverity issue
+  aspeed/sdmc: fix coverity issue
+
  hw/arm/aspeed_ast27x0.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/misc/aspeed_sdmc.c   | 1 -
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index b6876b4862..d14a46df6f 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -211,6 +211,12 @@ static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
-     ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
-                                         &error_abort);
- 
-+    if (!ram_size) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: ram_size is zero",  __func__);
-+        return;
-+    }
-+
-     /*
-      * Emulate ddr capacity hardware behavior.
-      * If writes the data to the address which is beyond the ram size,
 -- 
 2.34.1
 
