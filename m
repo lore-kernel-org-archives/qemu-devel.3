@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96E57C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 21:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E300BC2BA1A
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 21:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sK2Pc-0002F8-3t; Wed, 19 Jun 2024 17:00:12 -0400
+	id 1sK2Pj-0002ML-2Q; Wed, 19 Jun 2024 17:00:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sK2PZ-0002Ds-2G
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 17:00:09 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1sK2Ph-0002L9-1r
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 17:00:17 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sK2PW-0000UG-0H
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 17:00:08 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1f9b364faddso1613935ad.3
- for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 14:00:04 -0700 (PDT)
+ id 1sK2Pf-0000h9-6e
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 17:00:16 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1f6fabe9da3so1749825ad.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 14:00:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718830803; x=1719435603; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718830813; x=1719435613; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1qLKoP392rGR/GwS6GK2IRdnJBtGIxW6JKIsV0GtUk4=;
- b=kaQE3RY9haltpv7tsT3jxiEdorhGA5ZkJp1FMtTIrqvnA5JEelCuOAieEmSayHkdPF
- st7bgMFfyRvn/3ezflGSADSEbpfnJQbzt4JIib2fDrld2WkG+R6B74ILSVYvgyB724Nw
- 9GLbB8iDUfvU4OTqYnHZ1DkMRZzfh4dBe6x9JQamDf4+dlN8Y7BmvB6HO/F0DZABadhW
- LPqGtbHt6jwY39IOpJEhTPe1FwcpglmNLYnI23DWkivnl1g1gnPiEVjP/tw9NPx7TqdH
- svTgq1fLJ9ceESYZBT1Z6gSW+PD3CR+yRzZQ7RxDgXYSdV47Vzxakku0huGcAPH7wcIk
- o+Qw==
+ bh=kWCrz2KU8h744vxLguDhIrWWg2q5qa6M3b4q4pYmIRw=;
+ b=mBXKUZ1I4lHVSJcaHvCDDCIQZSzQXEttWhrRkuewz7fa3Sm2YPMBPJ7QE9bfH9BudY
+ /j1+KHwKZYRdUEozPD+926N5OGM9UDNkIy2U4OQ8opPXUkSYDOftftzWJu8MFgoY+lOo
+ BFyekneKM2DG5en86zduLVmBoJxOLsbjo73mLn5r59KFTx3rOtj094QUTnOb0D2gOIH+
+ KI7wJMBZJOByEsYSuig1mNSO8QDCW+A5kTw5g/HmaRejv+eL5PEs96+gg6vaN+Q2mc5X
+ 1Li6IorUHOnWKw1EAokqp32fl8xBqfMK9b9XvRIlN18RcThA7+RrvGyu4PZbsbb6fFDE
+ chJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718830803; x=1719435603;
+ d=1e100.net; s=20230601; t=1718830813; x=1719435613;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1qLKoP392rGR/GwS6GK2IRdnJBtGIxW6JKIsV0GtUk4=;
- b=ClEvREwiEnCGbbjAxfVXailGGXg8qvMbucmpikhxmGVZlf7jFTOQoYutiAviN8Cta/
- 2wQe314oaj85u53iqfHfI/a8etksy/gsoI8dX76Yl1hybu4eRw42yUi4RSIuQamFcwcp
- 4swZ7oQ/dSpXj0bxykrKmhE0WD+p9xCpHw9gvyfmjgDpZhS8sgDHtEYtas0imL+EbnOg
- EyJjiCCxxWk+0TemoGlwFKyT6v+f7zr/+dg7KDuEx0YNEcjiVVF/B4MfR7tlbGhepiDy
- asr4FBWp/ull8NkvHH5kZQL3dMqGBtqAAWMuoryJD98L0NNv5B9akCxakU8nUVHGOpzd
- HZoQ==
-X-Gm-Message-State: AOJu0YwUMo8jVSWZkSpY+gWCPKNSbAiS608O6pjS0TnuCTRMCBS8Mi1+
- kHiPgijAoe4eQ21yLeNyipbedMf91tKTbZ9UMz3w7Ew5GxqeW6l6a3vGM17QMJl0H/85NqPxDDO
- V
-X-Google-Smtp-Source: AGHT+IFI/lVS+OhemSZz68sngTjzwlQkFkkn10Z4RRoir3l2AmVOkBhmVpZnxHqCKKihKEPztoLMYw==
-X-Received: by 2002:a17:902:d2c5:b0:1f7:2bfe:87a2 with SMTP id
- d9443c01a7336-1f9aa4734ccmr44844475ad.62.1718830803389; 
- Wed, 19 Jun 2024 14:00:03 -0700 (PDT)
+ bh=kWCrz2KU8h744vxLguDhIrWWg2q5qa6M3b4q4pYmIRw=;
+ b=TB9KTh3vxC+RcefLNsWuO4dpbQ70mubqW8KqddP0ZIPbbMPIJJhaVOv9bV/NAIa4PZ
+ WFbh/sZ3QP+EA5cgDeFo97f6iWk950qtt6F+7OmN5Z8VVeOWZAOkJy7YoZYL9bk24+Qy
+ AzpB0ZVB9yNpeLYuiuTj/K4jym6ckXNPK5XsuhX/EQuqNxTE0B6WtKs81NUCKlfCOmps
+ E7GHj9Kk/gsAD7q0PP36nSgB97rSbHtKiNAX8ofnGwxy9YWxYwZYZOn4equQ3k/uSor/
+ 6bpnuz2+Fstog55uOTvtngPn3HOtdRHiQY9xquT59eCJq24SVcZ9TZ3DsJEU5FfqUhxJ
+ n1Ug==
+X-Gm-Message-State: AOJu0YyKe8T828iTOnflt566cjKj2bJ83R0mKLE3Vsh0ULTc1gXDfLbE
+ WElK/OwimO6YvnTxxqqI0PCocpekPh+19TSe7rQu2J3s9PZ0ealG6nW9snYhoQlbOmzdiAgBfV4
+ s
+X-Google-Smtp-Source: AGHT+IGsiVlC5/n5NReTTVEIOzbQqsdsBwGfWiaK9qRMzHpJGy/7oKRzdKfzOhqluMUmiAAetxhPag==
+X-Received: by 2002:a17:902:fc4e:b0:1f9:c661:7b9 with SMTP id
+ d9443c01a7336-1f9c661092amr6024045ad.42.1718830813126; 
+ Wed, 19 Jun 2024 14:00:13 -0700 (PDT)
 Received: from stoup.. ([71.212.132.216]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f98f8f8c42sm39183765ad.162.2024.06.19.14.00.02
+ d9443c01a7336-1f98f8f8c42sm39183765ad.162.2024.06.19.14.00.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Jun 2024 14:00:03 -0700 (PDT)
+ Wed, 19 Jun 2024 14:00:12 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 09/24] tcg/loongarch64: Use tcg_out_dup_vec in tcg_out_dupi_vec
-Date: Wed, 19 Jun 2024 13:59:37 -0700
-Message-Id: <20240619205952.235946-10-richard.henderson@linaro.org>
+Cc: Anton Johansson <anjo@rev.ng>, qemu-stable@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 21/24] accel/tcg: Fix typo causing tb->page_addr[1] to not be
+ recorded
+Date: Wed, 19 Jun 2024 13:59:49 -0700
+Message-Id: <20240619205952.235946-22-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240619205952.235946-1-richard.henderson@linaro.org>
 References: <20240619205952.235946-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,43 +98,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+From: Anton Johansson <anjo@rev.ng>
+
+For TBs crossing page boundaries, the 2nd page will never be
+recorded/removed, as the index of the 2nd page is computed from the
+address of the 1st page. This is due to a typo, fix it.
+
+Cc: qemu-stable@nongnu.org
+Fixes: deba78709a ("accel/tcg: Always lock pages before translation")
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240612133031.15298-1-anjo@rev.ng>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/loongarch64/tcg-target.c.inc | 18 +-----------------
- 1 file changed, 1 insertion(+), 17 deletions(-)
+ accel/tcg/tb-maint.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index 1e721b8b20..9a8f67cf3e 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -1749,24 +1749,8 @@ static void tcg_out_dupi_vec(TCGContext *s, TCGType type, unsigned vece,
+diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+index 19ae6793f3..cc0f5afd47 100644
+--- a/accel/tcg/tb-maint.c
++++ b/accel/tcg/tb-maint.c
+@@ -713,7 +713,7 @@ static void tb_record(TranslationBlock *tb)
+     tb_page_addr_t paddr0 = tb_page_addr0(tb);
+     tb_page_addr_t paddr1 = tb_page_addr1(tb);
+     tb_page_addr_t pindex0 = paddr0 >> TARGET_PAGE_BITS;
+-    tb_page_addr_t pindex1 = paddr0 >> TARGET_PAGE_BITS;
++    tb_page_addr_t pindex1 = paddr1 >> TARGET_PAGE_BITS;
  
-     /* TODO: vldi patterns when imm 12 is set */
+     assert(paddr0 != -1);
+     if (unlikely(paddr1 != -1) && pindex0 != pindex1) {
+@@ -745,7 +745,7 @@ static void tb_remove(TranslationBlock *tb)
+     tb_page_addr_t paddr0 = tb_page_addr0(tb);
+     tb_page_addr_t paddr1 = tb_page_addr1(tb);
+     tb_page_addr_t pindex0 = paddr0 >> TARGET_PAGE_BITS;
+-    tb_page_addr_t pindex1 = paddr0 >> TARGET_PAGE_BITS;
++    tb_page_addr_t pindex1 = paddr1 >> TARGET_PAGE_BITS;
  
--    /* Fallback to vreplgr2vr */
-     tcg_out_movi(s, TCG_TYPE_I64, TCG_REG_TMP0, value);
--    switch (vece) {
--    case MO_8:
--        tcg_out_opc_vreplgr2vr_b(s, rd, TCG_REG_TMP0);
--        break;
--    case MO_16:
--        tcg_out_opc_vreplgr2vr_h(s, rd, TCG_REG_TMP0);
--        break;
--    case MO_32:
--        tcg_out_opc_vreplgr2vr_w(s, rd, TCG_REG_TMP0);
--        break;
--    case MO_64:
--        tcg_out_opc_vreplgr2vr_d(s, rd, TCG_REG_TMP0);
--        break;
--    default:
--        g_assert_not_reached();
--    }
-+    tcg_out_dup_vec(s, type, vece, rd, TCG_REG_TMP0);
- }
- 
- static void tcg_out_addsub_vec(TCGContext *s, unsigned vece, const TCGArg a0,
+     assert(paddr0 != -1);
+     if (unlikely(paddr1 != -1) && pindex0 != pindex1) {
 -- 
 2.34.1
 
