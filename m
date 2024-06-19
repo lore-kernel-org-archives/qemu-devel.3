@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85548C27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 02:41:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A217DC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 02:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJlGE-00006P-F5; Tue, 18 Jun 2024 22:41:22 -0400
+	id 1sJlJ4-0002Ej-OU; Tue, 18 Jun 2024 22:44:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJlGC-00005z-Ld
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 22:41:20 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1sJlJ3-0002EW-SH
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 22:44:17 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJlGB-0004nm-4V
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 22:41:20 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-2c2c6b27428so4768852a91.3
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 19:41:18 -0700 (PDT)
+ id 1sJlJ2-0005Ct-5M
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 22:44:17 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2c7b167fa12so602672a91.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 19:44:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718764877; x=1719369677; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718765054; x=1719369854; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=eey5CwDEoK4Tj9IoIG6YGpUiix2ArYCy4Snf1KNYUvY=;
- b=CWSw6F2IAaxMd+/Jv+XYwC1GO54KK5qJedE14PMwUCuIF9tImEvX950u7sj1KhBVqy
- XbNqF8JhQ0+8bdWIR5MGIUNkQW7xHWprdeBiUHt+nYrcBI8g8F9clqGSoWjzyOHkP7Hf
- 7Z08tN1chtxGVkXjOveftR12FJJR3csI16Fbc7v/NWSL3vwp1eSLx+4gr9w3NTYzelPm
- i833rnMt3OYxZnklBdSrnAlv+DXEANanTxls+Ap7vp7WV3PoGtd06/wXxz6vJw6TerlU
- QhOinFsohSP4Ywtija8R/2d6qKAGYZXNnhmbFbHQk3RrWYKKpK5lJ9jaAfYT12SJqjdP
- +7Hw==
+ bh=7NJ7PHOAaBt8nNBYNxvfdSRtZUjaIR6UPq0Upiq8y9Q=;
+ b=BYLOtAUW1ZI1lOQ4rpifMuSk+GLYbDh7qA4BUNewgBESdPuM3A9f/cpb63YE5fSVN0
+ qKboV2Ph4J73Z0+bO+Yw6HxqFKsSO8z3bsPBzm6kdP7khXTsTs9++74YTEl5bAkiDq5v
+ m5M02JOvs9v3DenaPD9x7EJ65apxi8lp+r+hIP9fCtnTjZgyrA6tTZO1dLjIFemIV4Af
+ KZBsdCoBhf1XuBFuLiVGUmfHGCMaTL3fEvVBbZFSw0Y/DDqKjvFV2IrZq/l27CthSs6T
+ 8yVyjcb/qsUy+osFwikolBv12aVRlhwdWKd3NQqk8icIvdQZa2eZtIXS5X1yrkOnOAEk
+ TLKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718764877; x=1719369677;
+ d=1e100.net; s=20230601; t=1718765054; x=1719369854;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eey5CwDEoK4Tj9IoIG6YGpUiix2ArYCy4Snf1KNYUvY=;
- b=cFMxvqKhpa87hDQhKwHzLmqn6cwrB2b2grjgLvR+/pl4P73Rf+jXrD/S7LP+UB8EG6
- X/9Aej3l72CIdChdus0VlKHGz537/Hk1goPFcJwSNHLWL0sTrj5mJ74sIyvdb97u1qw7
- BdKKzURnwxZwjc6G8UFXeIq79URUk/kHyWDZcd15kuUgSMRgMC13X1CtIx1xNfrWAnZb
- f71vURhE5aru6JRnWBk8QzlYIgQBF+qQi2mTvwee4dTDUvRteVQPkT1WNjvOpfJbuUNr
- +Q8Yx6LjHtpDoCObLhO5J43c0oKygRSpIZlJNCRw+1xkbWT4xjlN4bMfBipiGXcj7tcW
- 3xyg==
+ bh=7NJ7PHOAaBt8nNBYNxvfdSRtZUjaIR6UPq0Upiq8y9Q=;
+ b=eR/wpN+/5f6O4CCGuV8btSRNjDdhlAiTxiB/9AvTTTY9776zoKnVStha2eFJwm/4dc
+ us3KGzSWSbKeI/dvejEzltVfv3dpge+r9TQW/ktzKhy9q0BSfhBIkBa0dZcM8MiMcVAs
+ BIXZbh9t0yJxuECTnLm+6qiKFgPDasV2jTnB2xU15+WShkHTUbCfbV62X9kWe8DcZJLi
+ JNfVHOv7AGxHJ5M4XAgjtJNf13dSiImqMeSTRHpVanY5mu+eQ34MfIEot0s+Dn1/4xKM
+ zoDpBNNJ8w2Qv5msNbmDm9I+T/bob/WRhcFiaj+TCOa+aSX97vSWGCA6ebhTc1UMyVtF
+ Np7Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVBbIChGZNpBQYLNw3dcqoWYBxMyFOdW8fsD+eoM//9uqZ1y7Bii/kkGAMfkNa3Oucg4VD6dqyhUpFyy+Osn2DBL4AmYqs=
-X-Gm-Message-State: AOJu0YxplpmDAp5jJ1JOLYtORwOyvOIj6wvQwykNpFxx1IN7bYrFyHby
- 8eti4qg8N4Wz173lrDu1ityAlgGnThXdkEDkf6INuy2xSNfE/c2xT/L/IAm1IRcbWVrBoA9e+oU
- +
-X-Google-Smtp-Source: AGHT+IHCq+KA426uO6lIxlyqBQSLM2hfKgZKjJlnHPbfZd+4/p/RIC/zzOfHZjE05ij0qLJSklvk3A==
-X-Received: by 2002:a17:90a:db82:b0:2c3:7e3:6be0 with SMTP id
- 98e67ed59e1d1-2c7b5d6aea2mr1573034a91.31.1718764877471; 
- Tue, 18 Jun 2024 19:41:17 -0700 (PDT)
+ AJvYcCVSq0q3Tj6i39b1ac5AQxc9p0U0tBPYSo1ZJnSZ0er67USxzdlxXS8zUzpZd/XpyMRnZT6BQoaPofcIWHBA6V6OIzKjQK0=
+X-Gm-Message-State: AOJu0YyoWHFJ9XLiEi1ARtTgPWc4JGP6isHwRJjcDt7k1hvHPAvpOG9E
+ eR481lOS+WDhx4x+K8UsOVbFL+2r6sMY2qSxYXmxQ5YPoJ1O+sibKXuoUUhxfUo=
+X-Google-Smtp-Source: AGHT+IG+WjjQvy/BL/s7nju3Pq0Olyd7Ad8S3TsgmqTeTzIhgOGLFLFwCM2Jg2R1OrLuriLuRu2EgA==
+X-Received: by 2002:a17:902:b695:b0:1f2:fd49:9fcc with SMTP id
+ d9443c01a7336-1f9aa400e65mr11259365ad.34.1718765054530; 
+ Tue, 18 Jun 2024 19:44:14 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.132.216])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c4a75ee4e8sm14057149a91.16.2024.06.18.19.41.16
+ d9443c01a7336-1f8988c2e97sm29300595ad.170.2024.06.18.19.44.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 19:41:17 -0700 (PDT)
-Message-ID: <e66581c8-9216-496a-b7c7-7ad92f90e565@linaro.org>
-Date: Tue, 18 Jun 2024 19:41:15 -0700
+ Tue, 18 Jun 2024 19:44:14 -0700 (PDT)
+Message-ID: <7e51b3a2-ec3b-41b3-ae85-d70b04179b5f@linaro.org>
+Date: Tue, 18 Jun 2024 19:44:12 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm/virt-acpi-build: Drop local iort_node_offset
-To: Nicolin Chen <nicolinc@nvidia.com>, peter.maydell@linaro.org,
- mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
- shannon.zhaosl@gmail.com
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20240619001708.926511-1-nicolinc@nvidia.com>
+Subject: Re: [PULL v1 0/3] Xilinx DMA/Ethernet updates
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org
+Cc: edgar.iglesias@amd.com
+References: <20240618154935.203544-1-edgar.iglesias@gmail.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240619001708.926511-1-nicolinc@nvidia.com>
+In-Reply-To: <20240618154935.203544-1-edgar.iglesias@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,20 +97,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/18/24 17:17, Nicolin Chen wrote:
-> Both the other two callers of build_iort_id_mapping() just directly pass
-> in the IORT_NODE_OFFSET macro. Keeping a "const uint32_t" local variable
-> storing the same value doesn't have any gain.
+On 6/18/24 08:49, Edgar E. Iglesias wrote:
+> From: "Edgar E. Iglesias"<edgar.iglesias@amd.com>
 > 
-> Simplify this by replacing the only place using this local variable with
-> the macro directly.
+> The following changes since commit 900536d3e97aed7fdd9cb4dadd3bf7023360e819:
 > 
-> Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
-> ---
->   hw/arm/virt-acpi-build.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+>    Merge tag 'dirtylimit-dirtyrate-pull-request-20240617' ofhttps://github.com/newfriday/qemu  into staging (2024-06-17 11:40:24 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/edgar.iglesias/qemu.git  tags/edgar/xilinx-queue-2024-06-17.for-upstream
+> 
+> for you to fetch changes up to 3a6d374b754b4b345195ff6846eeaffedc96a7c5:
+> 
+>    hw/net: Fix the transmission return size (2024-06-18 14:52:05 +0200)
+> 
+> ----------------------------------------------------------------
+> Xilinx queue:
+> 
+> hw/dma: Add error handling for loading descriptions failing (Fea Wang)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+
 
 r~
+
 
