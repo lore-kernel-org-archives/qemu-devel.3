@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47E15C2BBCA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 433D2C27C53
 	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 22:32:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sK3pS-0001of-IN; Wed, 19 Jun 2024 18:30:58 -0400
+	id 1sK3pl-0001tU-1C; Wed, 19 Jun 2024 18:31:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sK3pR-0001oI-7r
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 18:30:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sK3pi-0001sw-OB
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 18:31:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sK3pP-0008Os-Ef
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 18:30:57 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sK3ph-0008Qr-8w
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 18:31:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718836252;
+ s=mimecast20190719; t=1718836272;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=tUXepmqjv4T+w5M3EORwUdyerwo6fhzNAvCWsOnkK2M=;
- b=SoM/VInsW93SJYc6WqPrS5tv8yeH69i/vR1ZGP7NfY3hdzw3ca/6zemIUDuk2IN11C3xoJ
- /aHv5g0GQR/x4noy7XkMrgu0NoSQATjdpIYVrQz7doVtnlzdajwzUr5F3OGHye8xox0hAb
- 5Vpwxir/1FqZMxu1dppYRBPow3BKR2g=
-Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
- [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=19AZ/BFvRgTzFKO3dCG34bGOqdNgmbaJrAQjFDpmRek=;
+ b=HLX8+Ye2sGO41sLRQp9BZVG8PEZ+eB6ns3Cq+tpGRsd/OuMBjnoB0G2KOfNSpT/gMhus0x
+ CzKvYNcNJT2ZrW+wDDsucf9KW270wNkGmH3ULY13RO1K8OaweFFdLl8SpbKRZslDrINrta
+ GUPcdlCV12JwMiqxL3Jq8tF9vrrcPVw=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-678-20Bx2ncZMLWj-ztrVB53rg-1; Wed, 19 Jun 2024 18:30:51 -0400
-X-MC-Unique: 20Bx2ncZMLWj-ztrVB53rg-1
-Received: by mail-yb1-f199.google.com with SMTP id
- 3f1490d57ef6-dff2e22678dso51450276.2
- for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 15:30:50 -0700 (PDT)
+ us-mta-1-OHX9OYWkOOS7pGLBFgX2nw-1; Wed, 19 Jun 2024 18:31:09 -0400
+X-MC-Unique: OHX9OYWkOOS7pGLBFgX2nw-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6b50433ada9so922816d6.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 15:31:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718836249; x=1719441049;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tUXepmqjv4T+w5M3EORwUdyerwo6fhzNAvCWsOnkK2M=;
- b=KIim4k0bjIvYM7gWPFTnn7pmrK6jaUBAsJ2fDLmyYaxjVZ7gk9N+dVRnFZIEvj5a0n
- RidJYXuPkIsKiUnNB2W0Ch8Mz/7/vxmzdRIQy9ISUVPcLsfQDOUsBzEq2H/LDNoZiIfV
- CD0DDy1TEywJsqAAvDGUiF+uLB770zNUR6DpITCEUDSUwoVPtqVZK2JCmvwaDS9ZYLO1
- tA6sC5l6E1F0iKvr3WjorXNzWH/j8sbbfsW4RwIMjuLHPEGnVzbWROtziv0G8nR20Tp2
- y2z1+2hC4swoiw/X/1lEf7HHAxqmPrN3LT4n2bHuyexIXoLa9a8a5PE/LSTuFyd1t2Uj
- uTcQ==
-X-Gm-Message-State: AOJu0YwT1uk5ldRZLQNWOmL6TkXKz/4W584LxLP4AcBLmH5W4wsk/qQ1
- volDOlk8ZF+jPdjJ+MtQyXP915dKHzfARXUJxyGmSF2Tpe2276BKGrSsBuDjoB4pFU7Ha/PDB0o
- Bgp1mAOhaZ8BrHY+S0z+wFa7pJOHgo6/uqk7tfnPNKnZi5zaKNblfLI0KEkph0lVdy4ephoIiiT
- hITt/OMsgOvfrquy0U5tiPmiN3vGfoIpVy6Q==
-X-Received: by 2002:a25:d882:0:b0:e02:575b:4883 with SMTP id
- 3f1490d57ef6-e02be25d91cmr3540650276.5.1718836249203; 
- Wed, 19 Jun 2024 15:30:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDHnGByRzm4FjtqcxqcaZnycbFh5WaiS+uQ3fkqK73T9ESU8+/++KynFUqlY5iC4bWYSWRLA==
-X-Received: by 2002:a25:d882:0:b0:e02:575b:4883 with SMTP id
- 3f1490d57ef6-e02be25d91cmr3540621276.5.1718836248454; 
- Wed, 19 Jun 2024 15:30:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718836268; x=1719441068;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=19AZ/BFvRgTzFKO3dCG34bGOqdNgmbaJrAQjFDpmRek=;
+ b=H+Xvaumf+bZ4VVWt+OuED0VUbGpxHHRFc/kNR/zZDIuRl+MeXyVcHLswiuagIyIcaE
+ wVAJ5bKcjY912wZIjwS1MJVWteoZM/NDWNG9VKiKUt240ZFEuKXNt+6ONwNFYYFB0c+/
+ KlRVc9iEcJTgMWwVO+kROxh7dwYtCVmRObf5BIERKoftGxBgLXhmMpfRI8VhWvyMfHkE
+ oInTXrJSqDuL2YQJ6IzkpiNrt3u/KrEtcSJhdC0qZK3DW6wNsF+cAeFBbTmt6gr3nmHc
+ 4O8/0azaWPSqCXL9ZYJNE0UxP9BTUZRF9FNDY8pNQiCC5Is168tAYKRCyZxyqC5k4h1m
+ WI4g==
+X-Gm-Message-State: AOJu0YySZN/Yr8xqsqH/al6oO+ipYFNIcvdJfKNYKBQ0gRIw/ev4W2OZ
+ 57YZ3D16Gq4PXT78rdoCV/8uu3eggOxP3O/kEnxKHoGI5lDwkXLb+5BRdiTgvsLzyLCnJUi6GFa
+ xLdqevTkR9v7LRcgw6hox8SS6MMi6u+ohRMgVRhAfPpY6y0geauNlEbcPSWDn4972e8pPPMuaCy
+ forSwDv/pIIpVKSz0mWL56pZC84Li89RAAyw==
+X-Received: by 2002:ad4:5ecc:0:b0:6aa:3158:e8c9 with SMTP id
+ 6a1803df08f44-6b501d24869mr40330086d6.0.1718836268485; 
+ Wed, 19 Jun 2024 15:31:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGbT5Xa4fdcxcAxZMlK8ui5n+/xVTbpenhsUJTEu2pPUTECIW0TZrdq59HkL7SgaJ9c7wyyBQ==
+X-Received: by 2002:ad4:5ecc:0:b0:6aa:3158:e8c9 with SMTP id
+ 6a1803df08f44-6b501d24869mr40329746d6.0.1718836267746; 
+ Wed, 19 Jun 2024 15:31:07 -0700 (PDT)
 Received: from x1n.redhat.com (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b2a5c466bfsm80844256d6.68.2024.06.19.15.30.47
+ 6a1803df08f44-6b2a5c466bfsm80844256d6.68.2024.06.19.15.31.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Jun 2024 15:30:47 -0700 (PDT)
+ Wed, 19 Jun 2024 15:31:06 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Bandan Das <bdas@redhat.com>,
  Zhijian Li <lizhijian@fujitsu.com>, Fabiano Rosas <farosas@suse.de>,
  Jiri Denemark <jdenemar@redhat.com>, Prasad Pandit <ppandit@redhat.com>,
  Eric Blake <eblake@redhat.com>, peterx@redhat.com
-Subject: [PATCH v3 00/11] migration: New postcopy state, and some cleanups
-Date: Wed, 19 Jun 2024 18:30:35 -0400
-Message-ID: <20240619223046.1798968-1-peterx@redhat.com>
+Subject: [PATCH v3 09/11] tests/migration-tests: migration_event_wait()
+Date: Wed, 19 Jun 2024 18:30:44 -0400
+Message-ID: <20240619223046.1798968-10-peterx@redhat.com>
 X-Mailer: git-send-email 2.45.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20240619223046.1798968-1-peterx@redhat.com>
+References: <20240619223046.1798968-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -101,70 +103,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based-on: <20240617185731.9725-1-farosas@suse.de>
+Introduce a small helper to wait for a migration event, generalized from
+the incoming migration path.  Make the helper easier to use by allowing it
+to keep waiting until the expected event is received.
 
-v3:
-- Added one comment in patch 8 explaining why migrate_incoming_qmp() needs
-  to keep enabling "events" capability.
-- Split patch 9 into two patches, which makes migration_event_wait() to be
-  used also in migrate_incoming_qmp()
-- Rename the tests in last patch, and a spell fix
-- Rebased to "[PATCH v3 00/16] migration/mapped-ram: Add direct-io support"
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ tests/qtest/migration-helpers.h |  2 ++
+ tests/qtest/migration-helpers.c | 31 ++++++++++++++++++++++---------
+ 2 files changed, 24 insertions(+), 9 deletions(-)
 
-v1: https://lore.kernel.org/r/20240612144228.1179240-1-peterx@redhat.com
-v2: https://lore.kernel.org/r/20240617181534.1425179-1-peterx@redhat.com
-
-The major goal of this patchset is patch 5, which introduced a new postcopy
-state so that we will send an event in postcopy reconnect failures that
-Libvirt would prefer to have.  There's more information for that issue in
-the commit message alone.
-
-Patch 1-2 are cleanups that are not directly relevant but I found/stored
-that could be good to have.  I made it simple by putting them together in
-one thread to make patch management easier, but I can send them separately
-when necessary.
-
-Patch 3 is also a cleanup, but will be needed for patch 4 as dependency.
-
-Patch 4-5 is the core patches.
-
-Patch 6 updates doc for the new state.
-
-Patch 7-11 adds a new test for the new state.
-
-CI: https://gitlab.com/peterx/qemu/-/pipelines/1339544694
-
-Comments welcomed, thanks.
-
-Peter Xu (11):
-  migration/multifd: Avoid the final FLUSH in complete()
-  migration: Rename thread debug names
-  migration: Use MigrationStatus instead of int
-  migration: Cleanup incoming migration setup state change
-  migration/postcopy: Add postcopy-recover-setup phase
-  migration/docs: Update postcopy recover session for SETUP phase
-  tests/migration-tests: Drop most WIN32 ifdefs for postcopy failure
-    tests
-  tests/migration-tests: Always enable migration events
-  tests/migration-tests: migration_event_wait()
-  tests/migration-tests: Verify postcopy-recover-setup status
-  tests/migration-tests: Cover postcopy failure on reconnect
-
- docs/devel/migration/postcopy.rst |  31 ++++----
- qapi/migration.json               |   4 ++
- migration/migration.h             |   9 +--
- migration/postcopy-ram.h          |   3 +
- tests/qtest/migration-helpers.h   |   2 +
- migration/colo.c                  |   2 +-
- migration/migration.c             |  98 +++++++++++++++++--------
- migration/multifd.c               |   6 +-
- migration/postcopy-ram.c          |  10 ++-
- migration/ram.c                   |   4 --
- migration/savevm.c                |   6 +-
- tests/qtest/migration-helpers.c   |  32 ++++++---
- tests/qtest/migration-test.c      | 116 +++++++++++++++++++++++-------
- 13 files changed, 229 insertions(+), 94 deletions(-)
-
+diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration-helpers.h
+index 50095fca4a..72dba369fb 100644
+--- a/tests/qtest/migration-helpers.h
++++ b/tests/qtest/migration-helpers.h
+@@ -63,4 +63,6 @@ static inline bool probe_o_direct_support(const char *tmpfs)
+ }
+ #endif
+ void migration_test_add(const char *path, void (*fn)(void));
++void migration_event_wait(QTestState *s, const char *target);
++
+ #endif /* MIGRATION_HELPERS_H */
+diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+index 2ca4425d71..84f49db85e 100644
+--- a/tests/qtest/migration-helpers.c
++++ b/tests/qtest/migration-helpers.c
+@@ -249,7 +249,7 @@ void migrate_set_capability(QTestState *who, const char *capability,
+ void migrate_incoming_qmp(QTestState *to, const char *uri, const char *fmt, ...)
+ {
+     va_list ap;
+-    QDict *args, *rsp, *data;
++    QDict *args, *rsp;
+ 
+     va_start(ap, fmt);
+     args = qdict_from_vjsonf_nofail(fmt, ap);
+@@ -272,14 +272,7 @@ void migrate_incoming_qmp(QTestState *to, const char *uri, const char *fmt, ...)
+     g_assert(qdict_haskey(rsp, "return"));
+     qobject_unref(rsp);
+ 
+-    rsp = qtest_qmp_eventwait_ref(to, "MIGRATION");
+-    g_assert(qdict_haskey(rsp, "data"));
+-
+-    data = qdict_get_qdict(rsp, "data");
+-    g_assert(qdict_haskey(data, "status"));
+-    g_assert_cmpstr(qdict_get_str(data, "status"), ==, "setup");
+-
+-    qobject_unref(rsp);
++    migration_event_wait(to, "setup");
+ }
+ 
+ /*
+@@ -518,3 +511,23 @@ bool probe_o_direct_support(const char *tmpfs)
+     return true;
+ }
+ #endif
++
++/*
++ * Wait for a "MIGRATION" event.  This is what Libvirt uses to track
++ * migration status changes.
++ */
++void migration_event_wait(QTestState *s, const char *target)
++{
++    QDict *response, *data;
++    const char *status;
++    bool found;
++
++    do {
++        response = qtest_qmp_eventwait_ref(s, "MIGRATION");
++        data = qdict_get_qdict(response, "data");
++        g_assert(data);
++        status = qdict_get_str(data, "status");
++        found = (strcmp(status, target) == 0);
++        qobject_unref(response);
++    } while (!found);
++}
 -- 
 2.45.0
 
