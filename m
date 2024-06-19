@@ -4,53 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 069BEC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 13:46:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E05D2C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 13:55:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJvcx-0006sB-1g; Wed, 19 Jun 2024 09:45:31 -0400
+	id 1sJvlk-0000bh-L0; Wed, 19 Jun 2024 09:54:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1sJvcu-0006qY-JI; Wed, 19 Jun 2024 09:45:28 -0400
-Received: from muminek.juszkiewicz.com.pl ([213.251.184.221])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJvlj-0000bU-B3
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 09:54:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1sJvcs-0001Yo-Nb; Wed, 19 Jun 2024 09:45:28 -0400
-Received: from localhost (localhost [127.0.0.1])
- by muminek.juszkiewicz.com.pl (Postfix) with ESMTP id 048832608AB;
- Wed, 19 Jun 2024 15:45:23 +0200 (CEST)
-X-Virus-Scanned: Debian amavis at juszkiewicz.com.pl
-Received: from muminek.juszkiewicz.com.pl ([127.0.0.1])
- by localhost (muminek.juszkiewicz.com.pl [127.0.0.1]) (amavis, port 10024)
- with ESMTP id Y8V-fgRnT4P0; Wed, 19 Jun 2024 15:45:21 +0200 (CEST)
-Received: from applejack.lan (83.11.22.244.ipv4.supernova.orange.pl
- [83.11.22.244])
- by muminek.juszkiewicz.com.pl (Postfix) with ESMTPSA id 5F78C2600D9;
- Wed, 19 Jun 2024 15:45:20 +0200 (CEST)
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Radoslaw Biernacki <rad@semihalf.com>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, qemu-arm@nongnu.org,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Subject: [PATCH 1/1] tests/avocado: use default amount of cores on sbsa-ref
-Date: Wed, 19 Jun 2024 15:45:12 +0200
-Message-ID: <20240619134512.595506-1-marcin.juszkiewicz@linaro.org>
-X-Mailer: git-send-email 2.45.1
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sJvlh-0003N7-26
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 09:54:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718805270;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=BCVVor4nlUsEpk8D0oz9kWvacktwHRi9VY4XBK9Xmv8=;
+ b=GDyxOI4ny0sOiP3UK+14+J+g6mV46Ip2nh9taAqCn/JpZFei93+qcrvpHA5KiA272UJ/B8
+ e/C7DSHVDQfKhzOXJzA6Aav9ST6Ud49wM8fkWIrNDy7bE/JL/oVdQ8fNlGrOrJPzhPHVvq
+ N+fJGhkiPKFOQCRijsfPFiWfvPQl7PQ=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-453-dJkY07qINJKSBFG4VAAeiQ-1; Wed, 19 Jun 2024 09:54:27 -0400
+X-MC-Unique: dJkY07qINJKSBFG4VAAeiQ-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6ad803bc570so13910566d6.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 06:54:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718805267; x=1719410067;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BCVVor4nlUsEpk8D0oz9kWvacktwHRi9VY4XBK9Xmv8=;
+ b=qX1d0kmpWQKC7Sy2tg+iQk2GD7B8BqT3bwGR17slLLwKoiNtVIKjNmUq4jexCuQBLw
+ rZi6d4YsZMSQftQB0izRmVEmHjnshfAhqTIlhlx4o0qIXrY7Vhh9OrULrzI+HuCwAY9J
+ M5uCE3xS0cTbS1Ldpx0iJXLtRPcsJ5VwcoWPun0ROXpzFWIbxeBelHyglZEYBH6eWhZz
+ 8uYyxlCuFUuSQ40LOIZKk1oe3wTAnK6FutForMt4sZxmqsKNt31vNZoSNNq2K0iEVgLI
+ jqR3mqUzZ8H1QshlBsb44BBFtQBcPjYTAy8f8cxohUVekJnh4FmQ519NhaxBWbEXa4Cy
+ oJQg==
+X-Gm-Message-State: AOJu0YxSPReUmkYZsQmofqpgj37irhaEwQX20kgqE+XWLTt3y/qU35c5
+ 8QPQOG41KR3BHJvj3fW3b8xktVlXkEPbDU3SxKWtAtOlytg2aGtm3XEvufOqpAGzy/4UZMniO42
+ F7p1r0xP5c5vqx+lvrUvQ8095nwHuxf/ur37xXIt3+tvdJj2fG/Qj
+X-Received: by 2002:ad4:5dc6:0:b0:6b2:ae54:7c88 with SMTP id
+ 6a1803df08f44-6b501e23be1mr28122376d6.2.1718805266833; 
+ Wed, 19 Jun 2024 06:54:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwoPHZxhtIbPumdtM9SoZ5jkLBLmkDk2pSrxxEz5RkxV6x+5lVKE5l4TOo7FnY3Gd2q5j43g==
+X-Received: by 2002:ad4:5dc6:0:b0:6b2:ae54:7c88 with SMTP id
+ 6a1803df08f44-6b501e23be1mr28122226d6.2.1718805266277; 
+ Wed, 19 Jun 2024 06:54:26 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b2a5f10739sm76691416d6.146.2024.06.19.06.54.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Jun 2024 06:54:25 -0700 (PDT)
+Date: Wed, 19 Jun 2024 09:54:24 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] MAINTAINERS: Cover all tests/qtest/migration-* files
+Message-ID: <ZnLjEAMoSkLagdK9@x1n>
+References: <20240619055447.129943-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: softfail client-ip=213.251.184.221;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=muminek.juszkiewicz.com.pl
-X-Spam_score_int: -11
-X-Spam_score: -1.2
-X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_SOFTFAIL=0.665, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240619055447.129943-1-thuth@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,30 +99,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I was wondering why avocado tests passed with firmware which crashes
-when anyone else is using it.
+On Wed, Jun 19, 2024 at 07:54:47AM +0200, Thomas Huth wrote:
+> Beside migration-test.c, there is nowadays migration-helpers.[ch],
+> too, so update the entry in the migration section to also cover these
+> files now.
+> While we're at it, exclude these files in the common qtest section,
+> since the migration test is well covered by the migration maintainers
+> already. Since the test is under very active development, it was causing
+> a lot of distraction to the generic qtest maintainers with regards to
+> the patches that need to be reviewed by the migration maintainers anyway.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-Turned out that amount of cores matters. Have to find out why still.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
----
- tests/avocado/machine_aarch64_sbsaref.py | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/machine_aarch64_sbsaref.py
-index 6bb82f2a03..136b495096 100644
---- a/tests/avocado/machine_aarch64_sbsaref.py
-+++ b/tests/avocado/machine_aarch64_sbsaref.py
-@@ -75,8 +75,6 @@ def fetch_firmware(self):
-             f"if=pflash,file={fs0_path},format=raw",
-             "-drive",
-             f"if=pflash,file={fs1_path},format=raw",
--            "-smp",
--            "1",
-             "-machine",
-             "sbsa-ref",
-         )
 -- 
-2.45.1
+Peter Xu
 
 
