@@ -4,84 +4,186 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9FCEC27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 00:57:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AD37C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 01:06:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJjci-0003Hq-Cf; Tue, 18 Jun 2024 20:56:28 -0400
+	id 1sJjm5-0007sU-Ry; Tue, 18 Jun 2024 21:06:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjcf-0003Gj-9j
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:56:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1sJjm4-0007rh-2F
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 21:06:08 -0400
+Received: from esa7.fujitsucc.c3s2.iphmx.com ([68.232.159.87])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjca-00053J-1a
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:56:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718758576;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=qfSKhom+OeCLrgTpu6WEhLwdpcmJcRar6Ox5TasflVw=;
- b=ipPEBwWfANWOUtY4HaZqeMcvTUDoCRgS5iqa7VVe1frsQ0dFzAcRs7HubliicjSa8QJQj+
- NnGJUdt2Y40E2FLqCNU5RG3fy0wJoKO/EgXVh08tGlJ0CPydHGoAO5sQlKEujL9WcKSl9b
- jg6vtz7RuT+eud2wHeWkmgVpQQ2l1EE=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-92-8G0W4gU1P-eowTzv7fTbFQ-1; Tue, 18 Jun 2024 20:56:12 -0400
-X-MC-Unique: 8G0W4gU1P-eowTzv7fTbFQ-1
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-1f733390185so49922005ad.3
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 17:56:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718758571; x=1719363371;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qfSKhom+OeCLrgTpu6WEhLwdpcmJcRar6Ox5TasflVw=;
- b=JZXgaZ9sDc8h4LQtjDQmAVPXF8NQSUwvEy1iQC66PKhB5p7YOYS2eWhH2OTa7NH00g
- jnl5OgWocqDDPZUw/RMU+/brYJZF5wLYaDqpUxlri21VEo/JwSOrzm3t5duqdGPFiZYv
- R1MughAbN9jrl10GuyTbXLU0Z33zNUykMHPlqrG/u5d+HrQxMQ6GWIqO7TgNuCAM7nS1
- w4DJz4PdRTOMF3neWc+5tv9W6oGxUTmno3wQ5pq4c+D6oAq+nbWipAuSLhxXqTR+cQNC
- yahtoac4vhGnV5nzCd9qgXaN1sefVWltj25tF18aU/rzNfHG211pMwqjnRjAl0Iiqp/L
- ovUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXQ5snhJU9iipqUeFGJnFTpLqbPIMhvAOAHrBbhpiWhHOZ06tHtiFiY43WzXPm+XZ8qVpWKYRi/h4edZKH9OFkqhcD10i8=
-X-Gm-Message-State: AOJu0YwoSywedTXkNJCK+It/gqKnJG41cDssJxRtt2uM4EF17+ccQxHN
- swnJ9qdqgHp6LgtxnKSoq8vkOU5aVdftJ4xJcxh/1zqX4bpV5uzgxEFpGcDfdrtCzPCW5P4z+C8
- qZ6Yy/sRmHqKPdvrflXUCed5jHMAj6hqd5qYFJmX1PL3Y3Z4hvDF02UBBfMgrwCuK596GInl+jj
- 6sLEh9CB+C+vYcd929bqUwVdN/rh8=
-X-Received: by 2002:a17:902:e543:b0:1f7:187f:cb5b with SMTP id
- d9443c01a7336-1f9aa46612bmr11437735ad.64.1718758570765; 
- Tue, 18 Jun 2024 17:56:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEe9OdyxkJrOKEelYR3vEoycV3YE248mRZK4GlWnotBunyVewhR5/8UzMU3EdzLaF9ERfLNNkhsx8NnKV4ZU4o=
-X-Received: by 2002:a17:902:e543:b0:1f7:187f:cb5b with SMTP id
- d9443c01a7336-1f9aa46612bmr11437525ad.64.1718758570098; Tue, 18 Jun 2024
- 17:56:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1sJjlz-0006dy-Mj
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 21:06:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj1;
+ t=1718759164; x=1750295164;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=COhG/rtIYO90sFxNNVtPvhXGcFTtowwVo+ysWZETJxc=;
+ b=bZjFDz3C5Aoy82bQsiMTjqt/nRhwCZTxO35SD8DxzaQss60iAyP3MxPr
+ +LE/94QdREWdy9qKt46WIU2m4mlp0FdoBplyv6KSaULoNWQsjA9KBWHf+
+ dvwwXj4mTbR87TvML3c1yQuMn5OYkszExj/QU7jk5lEXOfMEDeMPIJ8BQ
+ /+I1pqltXqt2qJ0SmHZnI6bzJ30fns8IYhsNyMZ0qPp1NHq5sXpDRxa9E
+ J3cJue21mFro4BcieCwrj1m1Atf0MuV2Rxa2GbnB80tNA6VOr/F0AndC9
+ suGcsorH2QQrniWkDobtzpplDz1KMCQE7NHQckLkqTUGGMxBKQTp5XQyZ g==;
+X-IronPort-AV: E=McAfee;i="6700,10204,11107"; a="122679747"
+X-IronPort-AV: E=Sophos;i="6.08,247,1712588400"; d="scan'208";a="122679747"
+Received: from mail-os0jpn01lp2107.outbound.protection.outlook.com (HELO
+ JPN01-OS0-obe.outbound.protection.outlook.com) ([104.47.23.107])
+ by ob1.fujitsucc.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Jun 2024 10:05:53 +0900
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=at7bPE5niIYYz4/caQAZzIHhlYensxFFFl4uWbXyUZKEo4xCGW/EnDMmsy82eGYrjcoZX4fLhXoqr7oxXvNXkmX0spGicBfaxQZ0m3rwpEAbhd78B46EBbQh5tLOuvlu7AB9/s216fXyR+JC7ItJrVvWgSbEqvAGwGSkiDGlU122Wc9JQ7KWCQa1rqYvYv8XM1H2VR6ppV9JV1IuaG00/2UmQUs2DtlJ5qJ7EUtriqNphN5oPrKfXTfMitiBnxCDHYQO0PeEIHAyS3XrWYB/wsLWevjgShKx7iHTS+ZJN5+DaLQi+2Q8HE1A0qy/jPtVnKjlaQdSIa0sRljcV9+hWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=COhG/rtIYO90sFxNNVtPvhXGcFTtowwVo+ysWZETJxc=;
+ b=drmaVITjIoBL40oDXDgmaIxf+kcnb9oT7WgtRptjx43MMsmheqUqBkItYujKwhHN1QqSRdnXm2CAX4Rcz6T5CgXMRHs+yB+Pd4zmjpCGxP+wfnGA51bXYICSKs+cEKJYiRTcPCHzbWn7gmtmUJm7UlNsdlWXpWzWe61m7/wZqqGDeVtNDckTJnKBx4BKBTRYCR3dd1Lb0UBiwI9y22DLWOzzcuMOJXho9FVvE3/7BABfpqgYZefv0MSbfo1G3vvTn3UoE60tRdqpy4PV1BUOplZdwbnfdOwJcHIffXhb0tAlMnUq6EDdhf+66fZMj6m0z1qWa5+GcFrV1yKKTH2DKw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
+ dkim=pass header.d=fujitsu.com; arc=none
+Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com (2603:1096:403:6::12)
+ by TYAPR01MB5404.jpnprd01.prod.outlook.com (2603:1096:404:8030::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.31; Wed, 19 Jun
+ 2024 01:05:48 +0000
+Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com
+ ([fe80::d9ba:425a:7044:6377]) by TY1PR01MB1562.jpnprd01.prod.outlook.com
+ ([fe80::d9ba:425a:7044:6377%3]) with mapi id 15.20.7677.030; Wed, 19 Jun 2024
+ 01:05:48 +0000
+To: Peter Xu <peterx@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>, Eric
+ Blake <eblake@redhat.com>, Prasad Pandit <ppandit@redhat.com>, Jiri Denemark
+ <jdenemar@redhat.com>, Bandan Das <bdas@redhat.com>
+Subject: Re: [PATCH v2 02/10] migration: Rename thread debug names
+Thread-Topic: [PATCH v2 02/10] migration: Rename thread debug names
+Thread-Index: AQHawOKlnbYGNPwi8k+Z1RoTogUfZbHOR9wA
+Date: Wed, 19 Jun 2024 01:05:48 +0000
+Message-ID: <854be059-6d1d-47c8-b503-05271f890ffe@fujitsu.com>
+References: <20240617181534.1425179-1-peterx@redhat.com>
+ <20240617181534.1425179-3-peterx@redhat.com>
+In-Reply-To: <20240617181534.1425179-3-peterx@redhat.com>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla Thunderbird
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=fujitsu.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY1PR01MB1562:EE_|TYAPR01MB5404:EE_
+x-ms-office365-filtering-correlation-id: 843031ae-3a08-42b7-d707-08dc8ffbf4c3
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230037|7416011|376011|366013|1800799021|1580799024|38070700015; 
+x-microsoft-antispam-message-info: =?utf-8?B?WUVwK21iTHlKak91MVVwMVFld1F3ZXF5U0pkdkZkQ1Ayb0tQZGpYVDZNeFVG?=
+ =?utf-8?B?eWhKbXAvZ0FWTWZhVUUzNGxrKzlydmNoa0d2M0laYlFISklPNTMvelNJS3VU?=
+ =?utf-8?B?MXFQOU8za0hSeXRySG1CU0dsWEpseld3cm1SQmhBMU9oZ3FQa25IKzh0eTB2?=
+ =?utf-8?B?Z0ZTVW1xNFl2RkhpbktBY0hsbnh1TUVmRW9uVGIvREZmNDZ0VU1YcjlMSTFh?=
+ =?utf-8?B?YXE1SmhGdWxVdzVRNGVvUTF3MStGdS9yQWlBM3laSWdpYmc5VFVkQURxL0Zl?=
+ =?utf-8?B?M3RsN2k3c3lJeWplUTVqazRtNFpKbWxyUlF1ZXZFbFZ6ZHRXRDJuVE5pazhF?=
+ =?utf-8?B?ZkZYbnBhU3FXb1BSNGxjK0xKQ2xqdTFVMnVNQjduc21GdjJMR1dabExQb1Z1?=
+ =?utf-8?B?akVHdUE2eWpsTVRTb2NlOTd5M3RkTXQvUngxbVkrK0tLbHovQnZSbmdLNFc0?=
+ =?utf-8?B?dkVJZWEyTTU2Tkx0a0p5bnZud3dER2JoN3M2TzZBMHZWRjlKUXJuNmxiNFhN?=
+ =?utf-8?B?WkpBbHJiYU8xTXVRdklPYTZwaE5tZUlnNWVrVzBhcDljcVBFRGRsY1FDWTRz?=
+ =?utf-8?B?enVIODVLQi8vVUo2TU5PQkNETzZ0ZWlpaTk1QzRWV2orRW5QWU1sdVdEcTYw?=
+ =?utf-8?B?Q2ZLS0RpL3BwU2JaYk9zd1lUWWhJbUhzY2FkQmxQOWdHWjVoTlNZc0hKNm5F?=
+ =?utf-8?B?Y2ljRFFqNEJWZ1pUMC9YZTNjMm5hQlMzbVJUaGVIWjkxZmQzMVQxUytlaEYy?=
+ =?utf-8?B?MHIzZjFGYzVtay9VanoxMGJ6NUhHa3FzSmlBdFBCdzhYelV0WDJtRXpXNFZn?=
+ =?utf-8?B?R2F2amE3ZHQyL3FvUkdrRG85cnlVQnhIZDR3a1kyWlN2QWM3dVBiR3IxOXlO?=
+ =?utf-8?B?RDdiMTZnL1JFaW9OYUFISmFJdExkWWowUVk1cWpvQUZnc0t0Q2pReW5ZTFpV?=
+ =?utf-8?B?Wk9CL050b0Q3dTFLZWxpby9iZjFOdU0veXBONGFoeFQwUEtkU3lqRjZJMHRU?=
+ =?utf-8?B?aDhVNmFGYlNoNTlzZi9UYlhiN1R6T0VzelNHZlBpQVNuYUFUVG5jTlgzL0FW?=
+ =?utf-8?B?NWlsbUFBNVgyTzhGYkRpVEEvQ0FYTGorcmg0NzZORFd1Z2VzV2krOVlWdkxZ?=
+ =?utf-8?B?QWhzcEpaeXFUdXhZZ2k2c2RXS0VVckIrZzh1WG1uTDlwbUtLMmpUOUd4RU9n?=
+ =?utf-8?B?akZzMjlQZ21sZTh0MUxsVWlhT1JBcEhBc04zbjY3dnpyVzg5ZUpBMnZLL2NS?=
+ =?utf-8?B?WHhma1VxUDNlOStrc0o0SlpNcnM2cXdyTG1uVXhLK2JiWnVsTW9aT3RlODNM?=
+ =?utf-8?B?UytFL005ZVVqUll6RzBnMmNTM1I3SXRRNVBzRktLT2NTa0swU1FYVEhTb2RB?=
+ =?utf-8?B?U0VlOXBzYkp0cHhjVXU5NnVOemdnUVVBLzQwRWxwTVlGTE8yUUo1K2NnbUpH?=
+ =?utf-8?B?eE5RK1EvV2JIa0tSRlNKSUt0Z2w2WnBZZmVaaEQzY3hWQjdUU3BnVXRuNEor?=
+ =?utf-8?B?VEhOUTRhWE95Nk9OVi9MUHd0VklmK0F0RGFpeDlOWVF4ZjJWM0NXYis5ZklT?=
+ =?utf-8?B?aVg3TWRJUk1uRzlZdkVDaWg3TnV4SW4wYjF6Y3U2TjFKTkM5WnphaHNjejJU?=
+ =?utf-8?B?ZmlmdlUycnZ1NkpjVjdObDFuaSs0dkc5RlNScUJvRlBRbUVsUS9qVi9WeHpq?=
+ =?utf-8?B?alNVTTJpb2JQdXJPN3pJRDZkYVd4Sy9mUHlSdjYzSUhwbUpNdGlqMGxJSFgz?=
+ =?utf-8?B?WnJkd3k1TWNqZUc1c0dZb21kbmhuellZV1Nyb1JzcFdtRThYVHlKRW5FcTMy?=
+ =?utf-8?B?ZHhSbEc1R3FCbFJFd2N3VjM3a2tlOWtyZUJqVDYzb0xvQnpacko4ZDVFSnEv?=
+ =?utf-8?B?eHlRZDNVSWR1amFHNTNObXgwWVNsbXQ0WVdlc3BTelVtR0E9PQ==?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TY1PR01MB1562.jpnprd01.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230037)(7416011)(376011)(366013)(1800799021)(1580799024)(38070700015);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?c05VbDVaT2lVczBLYUh4WXFGQTIrT2ZCUlNTbWtEZnFkWTltZ1hQc2pkR2NE?=
+ =?utf-8?B?dzZxNkFsNUpuM1NZc3dDTGozaTIvdDlhZHBQejVabHFrMWVQSjVZeVVUeFVm?=
+ =?utf-8?B?OUpKanBVNVVlRlhPaWpVT2ZzY1loZ1BTWDUyRFhXMkhQYVVoVi9NTmJzenVQ?=
+ =?utf-8?B?OWtTWXhtZGdVU2kvblpFWStrWmEwa1c3U3VVOU54N0hsVzZRVVpJTDJGYzlK?=
+ =?utf-8?B?NzhkTmZJSjFwaE5HY281THBuQXh1NWdKZnRURmd6OTlXZXNtcUpxRXVQNjZZ?=
+ =?utf-8?B?VHJCM0R2RHpLQ1F3L2lZbC9ac0xMNzdkN2lwM1pxUFJpMURTb012R2lhT1N6?=
+ =?utf-8?B?eXdYeXF1Qmlabi9rc0R4MkNkZU9BVDNyWmlYWUlBYmNucHFMUkg3S3hVbVh1?=
+ =?utf-8?B?MTgrOFZnaS9HTzBrRWx2WndVVEFnVmV3ZU5jZ2VmMTFiZStMRmllZHd6YTV2?=
+ =?utf-8?B?Q3JBdVU3M2E0dlBVSXhobHJzRU1qUWY5OW50T0xOUlIwTkx6Q1RCckl1Z1Z6?=
+ =?utf-8?B?dkxzT0dZVjRwdGpwcGRCMGtFQWxxL0g1ajRYZk14YTdNSGNBVUpVWG1mY0Qv?=
+ =?utf-8?B?Z2pqelY1YWRvSTQ4Sk10YTZwbVkzNFM2anVqTW54Q2RtOVRJVGdROHdZTTVt?=
+ =?utf-8?B?VVVSb0o0MVZveSthM1g3RlpNakVmSnYzUmtxTnRRM0tRcUxOb1lScUNYaTNs?=
+ =?utf-8?B?aUE4Rm5URWNQQnNWMkxpTU8xczI5SjZwb1dRZGJYZ3NPOFBLR0RCRHg1Ymwz?=
+ =?utf-8?B?Nkhpc3ZyYnI3MS9vczZpOFRKUTFRdloxTkNnL0xxTXJxYUtFT0tRZ3lhd0ZO?=
+ =?utf-8?B?bld1dFp5d05qdmsyZEpBV3BINXB2SkcrYWRITk4rR2N0S0R5UElRWi9oUWxh?=
+ =?utf-8?B?MlBzWjFJL2ZYS2FycG85b0RSWUhPK2NuTWsvMjFJaXdSWUxCVEFIWFR3OTVP?=
+ =?utf-8?B?VTllNG5WM1JBTGNveEc1c2tLMkVYeDRnanU4Z2JBci9pTzEvMUlaTlhHMFQ2?=
+ =?utf-8?B?UCtBOCtCdDc1bXJndU11NVRPWXFwZzFFN2dJMjQzOTZKRkJrenZDWlhVazNm?=
+ =?utf-8?B?UGYwQS9OdGZYWDZtY3ZEVDdjVmZaRmhocmdlay9GTkc3VVZrSHJYSk5DNmpW?=
+ =?utf-8?B?dUFBZGRRT0xCOWM3bnBXVmtwamY0VTdDZ2sxVTRHT0ltN3lMbThiQzBHc1Uy?=
+ =?utf-8?B?ZjIvUE1LRHA1cEhiWVhPTkUxYW4wSXljSExPRU53ZVdWWXlYWkEyK1FtVmZE?=
+ =?utf-8?B?VUZQSFlvOGlKR0lXTk9PbzZOSVVvY2p2SnV3RlAxajlDMXE5SHdKN3N2bnZQ?=
+ =?utf-8?B?VVF1UXBIeVBoWTh6Z0R3SFpCSjFwZHB2bklXOWxxQU5rYkF3UVFjeWdEMzRs?=
+ =?utf-8?B?dGszT0tXRTRNZ3ZQWUdtWUdxbkx3STZPOEFibjRhOEV4RStHdUZLNkJWWlVY?=
+ =?utf-8?B?TkUyK1IrKzJyWHlleDJ4TW9Ub083bEtTN0l3V3l4TzZwZDBLcGI4WkFoVGx1?=
+ =?utf-8?B?clU5bHJSQmRkRGM0QWdodEJxa0tYeHhNclloUWkwdXhSbXRjMVBGVUVjU0JD?=
+ =?utf-8?B?OFdlVXlNMGY3Y3k1ZkM2N0VIemZZZlk3L0s2ZW5KMHpvK2JKTEpYWHNydFQ4?=
+ =?utf-8?B?SnkwNFdzYVZPSm85eEpncVNvVzJ4SXN3UFVTWWF1VjFWZ1k4SURNenJTZ0xp?=
+ =?utf-8?B?c0xib1ZkL2t6WUEvWW9lbnZVQVYyMTgwY2hwRDZTa1RJY2l3UkJ4MnNjVlFt?=
+ =?utf-8?B?QmJ2ZE5aUlpVSzhhMFlHRDNKdnM0enBvY09KNlgvUEZxOUF0YndrYVVpaGpt?=
+ =?utf-8?B?V3c5ZTVGdGZNemNGcWhEem1jLzBVSWw4ekRvcUNYZkg3M0c5Wk1EZmdXRlVx?=
+ =?utf-8?B?cE1IQ2R4S0JUamlRTXFNcDZVdHkyRUtMQXp2TkNlSmhKR3hudTRrQUs0ckQ1?=
+ =?utf-8?B?ekZVWXRMbnp2VlBsa3hMQkg0RFBLZ2N2T09uZW90Wjd5OFNhNUFQMnFkRkdI?=
+ =?utf-8?B?NTJxRlVEOW9vS3VEdUxDMk5SZmdJN3hqbjF0MXVjTEgxaVJFbkZ0VkYzdmx0?=
+ =?utf-8?B?eUZGTHlMZHdLbXdlMzRxak1PU1ZjVGxmOFBtUUliTWV0M0laUXordGNkejV0?=
+ =?utf-8?B?T0RqdnVtd011dDVnRTlrL25HN0tBL29qLy90SUozSXlSaCtMbkhxNGF6dlFh?=
+ =?utf-8?B?bHc9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <4A3FDA4C7B3091409D70AA4FBD83C2AA@jpnprd01.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <CAFn=p-ZmjLKRN1kKo1iM_tiijYbOEqt5=vRg7WoAXuQ6E8Rm+A@mail.gmail.com>
- <Zmsad48PjR66xpA3@redhat.com>
-In-Reply-To: <Zmsad48PjR66xpA3@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 18 Jun 2024 20:55:58 -0400
-Message-ID: <CAFn=p-bsrCZKSpK9v3UxNT+SYnjebLyb=78dU8-HbCLMeJR=tA@mail.gmail.com>
-Subject: Re: Historical QAPI schema parser, "compiled schema",
- and qapi-schema-diff
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
- Victor Toso de Carvalho <victortoso@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000069ff6061b33aa1d"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: OTCYHWJg9LFjE2xoVaqnnlvDgjkUPmTnXVvXmMcrvx+AMB6uPaM60peaecXfkIPaAV+a7SzJrkclGdSVxsBkeHTC243cRTEM27EPT/rCSF2zIq2T06q+UmE0iXK4sAybl7N1omEjE2Pwc/cgFeYAx7bdMb9KmnOF5ccDJ8EmDqj8zxl85IzxAr6jRyEOLd8I3KOgp0bGJps8wGc/9dopj9ukRDq1gVn/dgUJiMDrlNGHM8JXMcQ6Wl9jDtgULBrq3v5eCsJ5tnleeKn+vRZYuaFRlvtVPRpGK7G8Rob3RehnTcq6LAmmHeXO2fNbXtLM5yTLq4wzwy/4/uAFvQHSXkzs9dSUHXfr0vN2+eVYaWCdvztgb+3tcPoERKxiUKrM9/9MPO+aKX+ksCQql0b9BFxZgn+7ViC7bDrwDT3QPWgrsxs8inpxN4YHowUhAhUJA6kmbjEOc0YUSFsqayq4oZO0+eKFrs9z6gsiQ2XUjDNzixVZWiVay9hiNKmoDIRDrZ+0Q67ZBatrOjTVLLO9t0NzjjwnQ2g3HBQz05LN9EBIlayNeGkWViWLzzJ3rkythmqNUppVM0xZP786Pu6yDN3l+nRk3y0nuW+JwTtm/y4Wey00lnRjSrnK+hwjyJF2
+X-OriginatorOrg: fujitsu.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY1PR01MB1562.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 843031ae-3a08-42b7-d707-08dc8ffbf4c3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Jun 2024 01:05:48.5543 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 2VaKkmRN3r/5iiLHXYFK8VJ61KC+0bI7r5+GKtucsS+cu12BtlTB0iHr2mBPkQYYIIhwQ//5q5BGFTn/Z/5esA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYAPR01MB5404
+Received-SPF: pass client-ip=68.232.159.87; envelope-from=lizhijian@fujitsu.com;
+ helo=esa7.fujitsucc.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,560 +197,121 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+From:  "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000069ff6061b33aa1d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Jun 13, 2024 at 12:12=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com>
-wrote:
-
-> On Thu, Jun 13, 2024 at 02:13:15AM -0400, John Snow wrote:
-> > Hi, recently I've been working on overhauling our QMP documentation; se=
-e
-> > https://jsnow.gitlab.io/qemu/qapi/index.html for a recent
-> work-in-progress
-> > page showcasing this.
-> >
-> > As part of this project, Markus and I decided it'd be nice to be able t=
-o
-> > auto-generate "Since" information. The short reason for 'why' is becaus=
-e
-> > since info hard-coded into doc comments may not be accurate with regard=
-s
-> to
-> > the wire protocol availability for a given field when a QAPI definition
-> is
-> > shared or inherited by multiple sources. If we can generate it, it shou=
-ld
-> > always be accurate.
-> >
-> > So, I've prototyped three things:
-> >
-> > (1) An out-of-tree fork of the QAPI generator that is capable of parsin=
-g
-> > qemu-commands.hx, qmp-commands.hx, and all versions of our
-> qapi-schema.json
-> > files going all the way back to v0.12.0.
-> >
-> > It accomplishes this with some fairly brutish hacks that I never expect
-> to
-> > need to check in to qemu.git.
-> >
-> > (2) A schema "compiler", a QAPI generator module that takes a parsed
-> Schema
-> > and produces a single-file JSON Schema document that describes every
-> > command and event as it exists on the wire without using type names or
-> any
-> > information not considered to be "API".
-> >
-> > This part *would* need to be checked in to qemu.git (if we go in this
-> > direction.)
-> > The compiled historical schema would also get checked in, for the QAPI
-> > parser to reference against to generate the since information.
->
-> The upside with checking in every historical schema is that we
-> have a set of self-contained schemas where you can see everything
-> at a glance for each version.
->
-
-Yep. It's "dumb" but very easy to access and work with.
-
-
->
-> The downside with checking in every historical schema is that between
-> any adjacent pair of schemas 99% of the content is identical. IOW we
-> are very wasteful of storage.
->
-
-... Also agree. Because these files avoid shared types as an explicit
-design goal, and JSON Schema is *very* verbose, these files get extremely
-large while saying little.
-
-I chose them for the proof of concept because they're an existing
-standard/format I didn't have to engineer or reason about heavily, and
-really no other reason.
-
-
->
-> Looking at your other mail about schema diffs, I wonder if we the
-> diff format you show there can kill two birds with one stone.
->
->   https://lists.nongnu.org/archive/html/qemu-devel/2024-06/msg02398.html
->
-> In my reply I had illustrated a variant of your format:
->
->  - x-query-rdma
->  -     returns.human-readable-text: str
->  . blockdev-backup
->  +     arguments.discard-source: Optional<boolean>
->  . migrate
->  -    arguments.blk: Optional<boolean>
->  -    arguments.inc: Optional<boolean>
->  . object-add
->  .    arguments.qom-type: enum
->  +        'sev-snp-guest'
->  +    arguments[sev-guest].legacy-vm-type: Optional<boolean>
->  +    arguments[sev-snp-guest].author-key-enabled: Optional<boolean>
->  +    arguments[sev-snp-guest].cbitpos: Optional<integer>
->
->
-> Where '.' is just pre-existing context, and +/- have the obvious
-> meaning for the 2 given versions.
->
-> What if, we append a version number to *every* line, and exclusively
-> use +/-.
->
-> Taking just one small command:
->
->  + 6.2.0: x-query-rdma
->  + 6.2.0:    returns.human-readable-text: str
->  - 9.1.0: x-query-rdma
->
-> This tell us 'x-query-rdma' was added in 6.2.0, the
-> 'human-readable-text' parameter arrived at the same
-> time, and the whole command was then deleted in 9.1.0
-> That has implicit property deletion, but for completeness
-> we could be explicit about each property when deleting
-> a command:
->
->  + 6.2.0: x-query-rdma
->  + 6.2.0:    returns.human-readable-text: str
->  - 9.1.0:    returns.human-readable-text: str
->  - 9.1.0: x-query-rdma
->
-> Taking the more complex 'object-add' command
->
->  +  2.0.0: object-add
->  +  2.0.0:   arguments.qom-type: enum
->  +  2.0.0:     '....'
->  + 2.11.0:     'sev-guest'
->  +  9.1.0:     'sev-snp-guest'
->  + 2.11.0:   arguments[sev-guest].policy: uint32
->  + 2.11.0:   arguments[sev-guest].session-file: str
->  + 2.11.0:   arguments[sev-guest].dh-cert: str
->  +  9.1.0:   arguments[sev-guest].legacy-vm-type: Optional<boolean>
->  +  9.1.0:   arguments[sev-snp-guest].author-key-enabled: Optional<boolea=
-n>
->  +  9.1.0:   arguments[sev-snp-guest].cbitpos: Optional<integer>
->
->
-> IOW, object-add was introduced in 2.0.0. The 'sev-guest' enum
-> variant was added in 2.11.0 with various fields at the same
-> time. The 'sev-guest' enum variant got an exctra field in 9.1.0
-> The 'sev-snp-guest' enum variant was added in 9.1.0 with some
-> fields.
->
->
-> For fields which change from Optional <-> Required, that could
-> be modelled simply as parameter deletion + addition in the
-> same version eg hypothetically lets say the 'sev-guest' field
-> 'policy' had changed, we would see:
->
->  +  2.0.0: object-add
->  +  2.0.0:   arguments.qom-type: enum
->  +  2.0.0:     '....'
->  + 2.11.0:     'sev-guest'
->  +  9.1.0:     'sev-snp-guest'
->  + 2.11.0:   arguments[sev-guest].policy: uint32
->  -  6.2.0:   arguments[sev-guest].policy: uint32
->  +  6.2.0:   arguments[sev-guest].policy: Optional<uint32>
->  + 2.11.0:   arguments[sev-guest].session-file: str
->  + 2.11.0:   arguments[sev-guest].dh-cert: str
->  +  9.1.0:   arguments[sev-guest].legacy-vm-type: Optional<boolean>
->  +  9.1.0:   arguments[sev-snp-guest].author-key-enabled: Optional<boolea=
-n>
->  +  9.1.0:   arguments[sev-snp-guest].cbitpos: Optional<integer>
->
->
-Very interesting idea, I think this could be a reasonable compromise. I'll
-have to spend some time prototyping it (and digesting your other mail,
-too), but tentatively, I like the idea. Thanks a lot for really digging
-into both of these mails to give your feedback on this subproject.
-
-(IOW: I think I like it, but haven't sat with it enough to really know if
-there's anything it doesn't do that I need it to do. Prototyping it will
-tell me. One concern I might have is that I'll need some custom code to
-compare a QAPISchema object against the stored history file in order to
-amend that history file. I'm not sure how complex that will be at present,
-but admit my current solution is very egregious with regards to SLOC in the
-git repo. And it's not as if the JSON Schema writing/reading code I
-prototyped is particularly short, either.)
-
-
->
-> Incidentally, if going down this route, I think I would NOT
-> have 1 file with the whole schema history, but have 1 file
-> per command / event. eg qapi/history/object-add.txt,
-> qapi/history/x-query-rdma.txt, qapi/history/VFIO_MIGRATION.txt,
-> etc. This will make it trivial for a person to focus in on
-> changes in the command they care about, likely without even
-> needing a schema diff tool much of the time, as the per-command
-> files will often be concise enough you can consider the full
-> history without filtering.
->
-
-Interesting idea... might be a lot of files, but I suppose those don't
-really *cost* anything, now do they? :)
-
-I guess you lose out on a good summary, but a tool can just parse
-qapi/history/*.txt or whatnot and concatenate the results to stdout for
-you; I suppose it'd be little more than `cat qapi/history/*.txt | grep
-"9\.0\.0"` or similar.
-
-
->
-> > (3) A script that can diff two compiled schema, showing a change report
-> > between two versions. (I sent an email earlier today/yesterday showing
-> > example output of this script.) This one was more for "fun", but it
-> helped
-> > prove all the other parts were working correctly, and it might be usefu=
-l
-> in
-> > the future when auditing changes during the RC phase. We may well decid=
-e
-> to
-> > commit this script upstream, or one like it.
->
-> With a single file containing all deltas, where each line is
-> version annotated, the "diff" tool becomes little more than
-> something which can 'grep' for lines in the file which have
-> a version number within the desired range. In fact it can also
-> optionally offer something better than a diff, as instead of
-> showing you only the orignal state and result state, it
-> can trivially shows you any intermediate changes and what
-> version they happened with.
->
-> eg if you asked for a diff between 2.0.0 and 9.1.0, and there
-> was a command or property that was added in 4.0.0 and deleted
-> in 6.0.0, a traditional diff will not tell you about this. You'll
-> never notice it ever existed.
->
-> A "history grep" showing the set of changes between 2 versions
-> will highlight things that come + go, which can be quite
-> useful for understanding API evolution I think.
->
-
-Good point. The existing diff tool I wrote was just a prototype to prove
-"this sort of thing was possible", but I didn't put much thought into its
-design beyond "It was quick to write as a proof of concept".
-
-Maximizing this information's utility for use with existing utilities
-without needing to maintain lots of our own script code is a great design
-goal to keep in mind.
-
-
->
->
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-
-> https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-
-> https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-
-> https://www.instagram.com/dberrange :|
->
-
-Thanks again! I'm going to re-focus on some of the more immediate changes
-for the documentation project for now, but I'll no doubt be returning to
-the historical parsing / since information subproject before too long --
-just didn't want to sit on your email for too long so as to appear
-ungrateful ;)
-
-I'll loop you into future discussions on this subproject when I pick it
-back up (Hopefully, not too far in the future.) -- and I'll make sure to
-keep it on-list. Markus and I haven't gone too in-depth on this part yet,
-so I figure I'll pick the prototyping back up when he's chewed through more
-of my other patches and all of the Maintainers that need to care about this
-are paying active attention. (Sorry for all the patches, Markus... You
-asked for it!)
-
---js
-
---000000000000069ff6061b33aa1d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 13, 2024 at 12:12=E2=80=
-=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">be=
-rrange@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex">On Thu, Jun 13, 2024 at 02:13:15AM -0400, John Snow wrote:=
-<br>
-&gt; Hi, recently I&#39;ve been working on overhauling our QMP documentatio=
-n; see<br>
-&gt; <a href=3D"https://jsnow.gitlab.io/qemu/qapi/index.html" rel=3D"norefe=
-rrer" target=3D"_blank">https://jsnow.gitlab.io/qemu/qapi/index.html</a> fo=
-r a recent work-in-progress<br>
-&gt; page showcasing this.<br>
-&gt; <br>
-&gt; As part of this project, Markus and I decided it&#39;d be nice to be a=
-ble to<br>
-&gt; auto-generate &quot;Since&quot; information. The short reason for &#39=
-;why&#39; is because<br>
-&gt; since info hard-coded into doc comments may not be accurate with regar=
-ds to<br>
-&gt; the wire protocol availability for a given field when a QAPI definitio=
-n is<br>
-&gt; shared or inherited by multiple sources. If we can generate it, it sho=
-uld<br>
-&gt; always be accurate.<br>
-&gt; <br>
-&gt; So, I&#39;ve prototyped three things:<br>
-&gt; <br>
-&gt; (1) An out-of-tree fork of the QAPI generator that is capable of parsi=
-ng<br>
-&gt; qemu-commands.hx, qmp-commands.hx, and all versions of our qapi-schema=
-.json<br>
-&gt; files going all the way back to v0.12.0.<br>
-&gt; <br>
-&gt; It accomplishes this with some fairly brutish hacks that I never expec=
-t to<br>
-&gt; need to check in to qemu.git.<br>
-&gt; <br>
-&gt; (2) A schema &quot;compiler&quot;, a QAPI generator module that takes =
-a parsed Schema<br>
-&gt; and produces a single-file JSON Schema document that describes every<b=
-r>
-&gt; command and event as it exists on the wire without using type names or=
- any<br>
-&gt; information not considered to be &quot;API&quot;.<br>
-&gt; <br>
-&gt; This part *would* need to be checked in to qemu.git (if we go in this<=
-br>
-&gt; direction.)<br>
-&gt; The compiled historical schema would also get checked in, for the QAPI=
-<br>
-&gt; parser to reference against to generate the since information.<br>
-<br>
-The upside with checking in every historical schema is that we<br>
-have a set of self-contained schemas where you can see everything<br>
-at a glance for each version.<br></blockquote><div><br></div><div>Yep. It&#=
-39;s &quot;dumb&quot; but very easy to access and work with.<br></div><div>=
-=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-The downside with checking in every historical schema is that between<br>
-any adjacent pair of schemas 99% of the content is identical. IOW we<br>
-are very wasteful of storage.<br></blockquote><div><br></div><div>... Also =
-agree. Because these files avoid shared types as an explicit design goal, a=
-nd JSON Schema is *very* verbose, these files get extremely large while say=
-ing little.</div><div><br></div><div>I chose them for the proof of concept =
-because they&#39;re an existing standard/format I didn&#39;t have to engine=
-er or reason about heavily, and really no other reason.<br></div><div>=C2=
-=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Looking at your other mail about schema diffs, I wonder if we the<br>
-diff format you show there can kill two birds with one stone.<br>
-<br>
-=C2=A0 <a href=3D"https://lists.nongnu.org/archive/html/qemu-devel/2024-06/=
-msg02398.html" rel=3D"noreferrer" target=3D"_blank">https://lists.nongnu.or=
-g/archive/html/qemu-devel/2024-06/msg02398.html</a><br>
-<br>
-In my reply I had illustrated a variant of your format:<br>
-<br>
-=C2=A0- x-query-rdma<br>
-=C2=A0-=C2=A0 =C2=A0 =C2=A0returns.human-readable-text: str<br>
-=C2=A0. blockdev-backup<br>
-=C2=A0+=C2=A0 =C2=A0 =C2=A0arguments.discard-source: Optional&lt;boolean&gt=
-;<br>
-=C2=A0. migrate<br>
-=C2=A0-=C2=A0 =C2=A0 arguments.blk: Optional&lt;boolean&gt;<br>
-=C2=A0-=C2=A0 =C2=A0 arguments.inc: Optional&lt;boolean&gt;<br>
-=C2=A0. object-add<br>
-=C2=A0.=C2=A0 =C2=A0 arguments.qom-type: enum<br>
-=C2=A0+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &#39;sev-snp-guest&#39;<br>
-=C2=A0+=C2=A0 =C2=A0 arguments[sev-guest].legacy-vm-type: Optional&lt;boole=
-an&gt;<br>
-=C2=A0+=C2=A0 =C2=A0 arguments[sev-snp-guest].author-key-enabled: Optional&=
-lt;boolean&gt;<br>
-=C2=A0+=C2=A0 =C2=A0 arguments[sev-snp-guest].cbitpos: Optional&lt;integer&=
-gt;<br>
-<br>
-<br>
-Where &#39;.&#39; is just pre-existing context, and +/- have the obvious<br=
->
-meaning for the 2 given versions.<br>
-<br>
-What if, we append a version number to *every* line, and exclusively<br>
-use +/-.<br>
-<br>
-Taking just one small command:<br>
-<br>
-=C2=A0+ 6.2.0: x-query-rdma<br>
-=C2=A0+ 6.2.0:=C2=A0 =C2=A0 returns.human-readable-text: str<br>
-=C2=A0- 9.1.0: x-query-rdma<br>
-<br>
-This tell us &#39;x-query-rdma&#39; was added in 6.2.0, the<br>
-&#39;human-readable-text&#39; parameter arrived at the same<br>
-time, and the whole command was then deleted in 9.1.0<br>
-That has implicit property deletion, but for completeness<br>
-we could be explicit about each property when deleting<br>
-a command:<br>
-<br>
-=C2=A0+ 6.2.0: x-query-rdma<br>
-=C2=A0+ 6.2.0:=C2=A0 =C2=A0 returns.human-readable-text: str<br>
-=C2=A0- 9.1.0:=C2=A0 =C2=A0 returns.human-readable-text: str<br>
-=C2=A0- 9.1.0: x-query-rdma<br>
-<br>
-Taking the more complex &#39;object-add&#39; command<br>
-<br>
-=C2=A0+=C2=A0 2.0.0: object-add<br>
-=C2=A0+=C2=A0 2.0.0:=C2=A0 =C2=A0arguments.qom-type: enum<br>
-=C2=A0+=C2=A0 2.0.0:=C2=A0 =C2=A0 =C2=A0&#39;....&#39;<br>
-=C2=A0+ 2.11.0:=C2=A0 =C2=A0 =C2=A0&#39;sev-guest&#39;<br>
-=C2=A0+=C2=A0 9.1.0:=C2=A0 =C2=A0 =C2=A0&#39;sev-snp-guest&#39;<br>
-=C2=A0+ 2.11.0:=C2=A0 =C2=A0arguments[sev-guest].policy: uint32<br>
-=C2=A0+ 2.11.0:=C2=A0 =C2=A0arguments[sev-guest].session-file: str<br>
-=C2=A0+ 2.11.0:=C2=A0 =C2=A0arguments[sev-guest].dh-cert: str<br>
-=C2=A0+=C2=A0 9.1.0:=C2=A0 =C2=A0arguments[sev-guest].legacy-vm-type: Optio=
-nal&lt;boolean&gt;<br>
-=C2=A0+=C2=A0 9.1.0:=C2=A0 =C2=A0arguments[sev-snp-guest].author-key-enable=
-d: Optional&lt;boolean&gt;<br>
-=C2=A0+=C2=A0 9.1.0:=C2=A0 =C2=A0arguments[sev-snp-guest].cbitpos: Optional=
-&lt;integer&gt;<br>
-<br>
-<br>
-IOW, object-add was introduced in 2.0.0. The &#39;sev-guest&#39; enum<br>
-variant was added in 2.11.0 with various fields at the same<br>
-time. The &#39;sev-guest&#39; enum variant got an exctra field in 9.1.0<br>
-The &#39;sev-snp-guest&#39; enum variant was added in 9.1.0 with some<br>
-fields.<br>
-<br>
-<br>
-For fields which change from Optional &lt;-&gt; Required, that could<br>
-be modelled simply as parameter deletion + addition in the<br>
-same version eg hypothetically lets say the &#39;sev-guest&#39; field<br>
-&#39;policy&#39; had changed, we would see:<br>
-<br>
-=C2=A0+=C2=A0 2.0.0: object-add<br>
-=C2=A0+=C2=A0 2.0.0:=C2=A0 =C2=A0arguments.qom-type: enum<br>
-=C2=A0+=C2=A0 2.0.0:=C2=A0 =C2=A0 =C2=A0&#39;....&#39;<br>
-=C2=A0+ 2.11.0:=C2=A0 =C2=A0 =C2=A0&#39;sev-guest&#39;<br>
-=C2=A0+=C2=A0 9.1.0:=C2=A0 =C2=A0 =C2=A0&#39;sev-snp-guest&#39;<br>
-=C2=A0+ 2.11.0:=C2=A0 =C2=A0arguments[sev-guest].policy: uint32<br>
-=C2=A0-=C2=A0 6.2.0:=C2=A0 =C2=A0arguments[sev-guest].policy: uint32<br>
-=C2=A0+=C2=A0 6.2.0:=C2=A0 =C2=A0arguments[sev-guest].policy: Optional&lt;u=
-int32&gt;<br>
-=C2=A0+ 2.11.0:=C2=A0 =C2=A0arguments[sev-guest].session-file: str<br>
-=C2=A0+ 2.11.0:=C2=A0 =C2=A0arguments[sev-guest].dh-cert: str<br>
-=C2=A0+=C2=A0 9.1.0:=C2=A0 =C2=A0arguments[sev-guest].legacy-vm-type: Optio=
-nal&lt;boolean&gt;<br>
-=C2=A0+=C2=A0 9.1.0:=C2=A0 =C2=A0arguments[sev-snp-guest].author-key-enable=
-d: Optional&lt;boolean&gt;<br>
-=C2=A0+=C2=A0 9.1.0:=C2=A0 =C2=A0arguments[sev-snp-guest].cbitpos: Optional=
-&lt;integer&gt;<br>
-<br></blockquote><div><br></div><div>Very interesting idea, I think this co=
-uld be a reasonable compromise. I&#39;ll have to spend some time prototypin=
-g it (and digesting your other mail, too), but tentatively, I like the idea=
-. Thanks a lot for really digging into both of these mails to give your fee=
-dback on this subproject.</div><div><br></div><div>(IOW: I think I like it,=
- but haven&#39;t sat with it enough to really know if there&#39;s anything =
-it doesn&#39;t do that I need it to do. Prototyping it will tell me. One co=
-ncern I might have is that I&#39;ll need some custom code to compare a QAPI=
-Schema object against the stored history file in order to amend that histor=
-y file. I&#39;m not sure how complex that will be at present, but admit my =
-current solution is very egregious with regards to SLOC in the git repo. An=
-d it&#39;s not as if the JSON Schema writing/reading code I prototyped is p=
-articularly short, either.)<br></div><div>=C2=A0</div><blockquote class=3D"=
-gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
-4,204,204);padding-left:1ex">
-<br>
-Incidentally, if going down this route, I think I would NOT<br>
-have 1 file with the whole schema history, but have 1 file<br>
-per command / event. eg qapi/history/object-add.txt,<br>
-qapi/history/x-query-rdma.txt, qapi/history/VFIO_MIGRATION.txt,<br>
-etc. This will make it trivial for a person to focus in on<br>
-changes in the command they care about, likely without even<br>
-needing a schema diff tool much of the time, as the per-command<br>
-files will often be concise enough you can consider the full<br>
-history without filtering.<br></blockquote><div><br></div><div>Interesting =
-idea... might be a lot of files, but I suppose those don&#39;t really *cost=
-* anything, now do they? :)</div><div><br></div><div>I guess you lose out o=
-n a good summary, but a tool can just parse qapi/history/*.txt or whatnot a=
-nd concatenate the results to stdout for you; I suppose it&#39;d be little =
-more than `cat qapi/history/*.txt | grep &quot;9\.0\.0&quot;` or similar.</=
-div><div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
-x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-<br>
-&gt; (3) A script that can diff two compiled schema, showing a change repor=
-t<br>
-&gt; between two versions. (I sent an email earlier today/yesterday showing=
-<br>
-&gt; example output of this script.) This one was more for &quot;fun&quot;,=
- but it helped<br>
-&gt; prove all the other parts were working correctly, and it might be usef=
-ul in<br>
-&gt; the future when auditing changes during the RC phase. We may well deci=
-de to<br>
-&gt; commit this script upstream, or one like it.<br>
-<br>
-With a single file containing all deltas, where each line is<br>
-version annotated, the &quot;diff&quot; tool becomes little more than<br>
-something which can &#39;grep&#39; for lines in the file which have<br>
-a version number within the desired range. In fact it can also<br>
-optionally offer something better than a diff, as instead of<br>
-showing you only the orignal state and result state, it<br>
-can trivially shows you any intermediate changes and what<br>
-version they happened with. <br>
-<br>
-eg if you asked for a diff between 2.0.0 and 9.1.0, and there<br>
-was a command or property that was added in 4.0.0 and deleted<br>
-in 6.0.0, a traditional diff will not tell you about this. You&#39;ll<br>
-never notice it ever existed. <br>
-<br>
-A &quot;history grep&quot; showing the set of changes between 2 versions<br=
->
-will highlight things that come + go, which can be quite<br>
-useful for understanding API evolution I think.<br></blockquote><div><br></=
-div><div>Good point. The existing diff tool I wrote was just a prototype to=
- prove &quot;this sort of thing was possible&quot;, but I didn&#39;t put mu=
-ch thought into its design beyond &quot;It was quick to write as a proof of=
- concept&quot;.</div><div><br></div><div>Maximizing this information&#39;s =
-utility for use with existing utilities without needing to maintain lots of=
- our own script code is a great design goal to keep in mind.<br></div><div>=
-=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-<br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"http=
-s://www.flickr.com/photos/dberrange" rel=3D"noreferrer" target=3D"_blank">h=
-ttps://www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"n=
-oreferrer" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer" target=3D"_bla=
-nk">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D=
-"https://www.instagram.com/dberrange" rel=3D"noreferrer" target=3D"_blank">=
-https://www.instagram.com/dberrange</a> :|<br></blockquote><div><br></div><=
-div>Thanks again! I&#39;m going to re-focus on some of the more immediate c=
-hanges for the documentation project for now, but I&#39;ll no doubt be retu=
-rning to the historical parsing / since information subproject before too l=
-ong -- just didn&#39;t want to sit on your email for too long so as to appe=
-ar ungrateful ;)</div><div><br></div><div>I&#39;ll loop you into future dis=
-cussions on this subproject when I pick it back up (Hopefully, not too far =
-in the future.) -- and I&#39;ll make sure to keep it on-list. Markus and I =
-haven&#39;t gone too in-depth on this part yet, so I figure I&#39;ll pick t=
-he prototyping back up when he&#39;s chewed through more of my other patche=
-s and all of the Maintainers that need to care about this are paying active=
- attention. (Sorry for all the patches, Markus... You asked for it!)<br></d=
-iv><div><br></div><div>--js <br></div></div></div>
-
---000000000000069ff6061b33aa1d--
-
+DQoNCk9uIDE4LzA2LzIwMjQgMDI6MTUsIFBldGVyIFh1IHdyb3RlOg0KPiBUaGUgcG9zdGNvcHkg
+dGhyZWFkIG5hbWVzIG9uIGRlc3QgUUVNVSBhcmUgc2xpZ2h0bHkgY29uZnVzaW5nLCBwYXJ0bHkg
+SSdsbA0KPiBuZWVkIHRvIGJsYW1lIG15c2VsZiBvbiAzNmY2MmYxMWU0ICgibWlncmF0aW9uOiBQ
+b3N0Y29weSBwcmVlbXB0aW9uDQo+IHByZXBhcmF0aW9uIG9uIGNoYW5uZWwgY3JlYXRpb24iKS4g
+IEUuZy4sICJmYXVsdC1mYXN0IiByZWFkcyBsaWtlIGEgZmFzdA0KPiB2ZXJzaW9uIG9mICJmYXVs
+dC1kZWZhdWx0IiwgYnV0IGl0J3MgYWN0dWFsbHkgdGhlIGZhc3QgdmVyc2lvbiBvZg0KPiAicG9z
+dGNvcHkvbGlzdGVuIi4NCj4gDQo+IFRha2luZyB0aGlzIGNoYW5jZSwgcmVuYW1lIGFsbCB0aGUg
+bWlncmF0aW9uIHRocmVhZHMgd2l0aCBwcm9wZXIgcnVsZXMuDQo+IENvbnNpZGVyaW5nIHdlIG9u
+bHkgaGF2ZSAxNSBjaGFycyB1c2FibGUsIHByZWZpeCBhbGwgdGhyZWFkcyB3aXRoICJtaWcvIiwN
+Cj4gbWVhbndoaWxlIGlkZW50aWZ5IHNyYy9kc3QgdGhyZWFkcyBwcm9wZXJseSB0aGlzIHRpbWUu
+ICBTbyBub3cgbW9zdCB0aHJlYWQNCj4gbmFtZXMgd2lsbCBsb29rIGxpa2UgIm1pZy9ESVIveHh4
+Iiwgd2hlcmUgRElSIHdpbGwgYmUgInNyYyIvImRzdCIsIGV4Y2VwdA0KPiB0aGUgYmctc25hcHNo
+b3QgdGhyZWFkIHdoaWNoIGRvZXNuJ3QgaGF2ZSBhIGRpcmVjdGlvbi4NCj4gDQo+IEZvciBtdWx0
+aWZkIHRocmVhZHMsIG1ha2luZyB0aGVtICJtaWcve3NyY3xkc3R9L3tzZW5kfHJlY3Z9XyVkIi4N
+Cj4gDQo+IFdlIHVzZWQgdG8gaGF2ZSAibGl2ZV9taWdyYXRpb24iIHRocmVhZCBmb3IgYSB2ZXJ5
+IGxvbmcgdGltZSwgbm93IGl0J3MNCj4gY2FsbGVkICJtaWcvc3JjL21haW4iLiAgV2UgbWF5IGhv
+cGUgdG8gaGF2ZSAibWlnL2RzdC9tYWluIiBzb29uIGJ1dCBub3QNCj4geWV0Lg0KPiANCj4gUmV2
+aWV3ZWQtYnk6IEZhYmlhbm8gUm9zYXMgPGZhcm9zYXNAc3VzZS5kZT4NCj4gU2lnbmVkLW9mZi1i
+eTogUGV0ZXIgWHUgPHBldGVyeEByZWRoYXQuY29tPg0KDQpSZXZpZXdlZC1ieTogTGkgWmhpamlh
+biA8bGl6aGlqaWFuQGZ1aml0c3UuY29tPg0KDQoNCj4gLS0tDQo+ICAgbWlncmF0aW9uL2NvbG8u
+YyAgICAgICAgIHwgMiArLQ0KPiAgIG1pZ3JhdGlvbi9taWdyYXRpb24uYyAgICB8IDYgKysrLS0t
+DQo+ICAgbWlncmF0aW9uL211bHRpZmQuYyAgICAgIHwgNiArKystLS0NCj4gICBtaWdyYXRpb24v
+cG9zdGNvcHktcmFtLmMgfCA0ICsrLS0NCj4gICBtaWdyYXRpb24vc2F2ZXZtLmMgICAgICAgfCAy
+ICstDQo+ICAgNSBmaWxlcyBjaGFuZ2VkLCAxMCBpbnNlcnRpb25zKCspLCAxMCBkZWxldGlvbnMo
+LSkNCj4gDQo+IGRpZmYgLS1naXQgYS9taWdyYXRpb24vY29sby5jIGIvbWlncmF0aW9uL2NvbG8u
+Yw0KPiBpbmRleCBmOTZjMmVlMDY5Li42NDQ5NDkwMjIxIDEwMDY0NA0KPiAtLS0gYS9taWdyYXRp
+b24vY29sby5jDQo+ICsrKyBiL21pZ3JhdGlvbi9jb2xvLmMNCj4gQEAgLTkzNSw3ICs5MzUsNyBA
+QCB2b2lkIGNvcm91dGluZV9mbiBjb2xvX2luY29taW5nX2NvKHZvaWQpDQo+ICAgICAgIGFzc2Vy
+dChicWxfbG9ja2VkKCkpOw0KPiAgICAgICBhc3NlcnQobWlncmF0aW9uX2luY29taW5nX2NvbG9f
+ZW5hYmxlZCgpKTsNCj4gICANCj4gLSAgICBxZW11X3RocmVhZF9jcmVhdGUoJnRoLCAiQ09MTyBp
+bmNvbWluZyIsIGNvbG9fcHJvY2Vzc19pbmNvbWluZ190aHJlYWQsDQo+ICsgICAgcWVtdV90aHJl
+YWRfY3JlYXRlKCZ0aCwgIm1pZy9kc3QvY29sbyIsIGNvbG9fcHJvY2Vzc19pbmNvbWluZ190aHJl
+YWQsDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICBtaXMsIFFFTVVfVEhSRUFEX0pPSU5BQkxF
+KTsNCj4gICANCj4gICAgICAgbWlzLT5jb2xvX2luY29taW5nX2NvID0gcWVtdV9jb3JvdXRpbmVf
+c2VsZigpOw0KPiBkaWZmIC0tZ2l0IGEvbWlncmF0aW9uL21pZ3JhdGlvbi5jIGIvbWlncmF0aW9u
+L21pZ3JhdGlvbi5jDQo+IGluZGV4IGUxYjI2OTYyNGMuLmQ0MWUwMGVkNGMgMTAwNjQ0DQo+IC0t
+LSBhL21pZ3JhdGlvbi9taWdyYXRpb24uYw0KPiArKysgYi9taWdyYXRpb24vbWlncmF0aW9uLmMN
+Cj4gQEAgLTI0MDgsNyArMjQwOCw3IEBAIHN0YXRpYyBpbnQgb3Blbl9yZXR1cm5fcGF0aF9vbl9z
+b3VyY2UoTWlncmF0aW9uU3RhdGUgKm1zKQ0KPiAgIA0KPiAgICAgICB0cmFjZV9vcGVuX3JldHVy
+bl9wYXRoX29uX3NvdXJjZSgpOw0KPiAgIA0KPiAtICAgIHFlbXVfdGhyZWFkX2NyZWF0ZSgmbXMt
+PnJwX3N0YXRlLnJwX3RocmVhZCwgInJldHVybiBwYXRoIiwNCj4gKyAgICBxZW11X3RocmVhZF9j
+cmVhdGUoJm1zLT5ycF9zdGF0ZS5ycF90aHJlYWQsICJtaWcvc3JjL3JwLXRociIsDQo+ICAgICAg
+ICAgICAgICAgICAgICAgICAgICBzb3VyY2VfcmV0dXJuX3BhdGhfdGhyZWFkLCBtcywgUUVNVV9U
+SFJFQURfSk9JTkFCTEUpOw0KPiAgICAgICBtcy0+cnBfc3RhdGUucnBfdGhyZWFkX2NyZWF0ZWQg
+PSB0cnVlOw0KPiAgIA0KPiBAQCAtMzc0NywxMCArMzc0NywxMCBAQCB2b2lkIG1pZ3JhdGVfZmRf
+Y29ubmVjdChNaWdyYXRpb25TdGF0ZSAqcywgRXJyb3IgKmVycm9yX2luKQ0KPiAgICAgICB9DQo+
+ICAgDQo+ICAgICAgIGlmIChtaWdyYXRlX2JhY2tncm91bmRfc25hcHNob3QoKSkgew0KPiAtICAg
+ICAgICBxZW11X3RocmVhZF9jcmVhdGUoJnMtPnRocmVhZCwgImJnX3NuYXBzaG90IiwNCj4gKyAg
+ICAgICAgcWVtdV90aHJlYWRfY3JlYXRlKCZzLT50aHJlYWQsICJtaWcvc25hcHNob3QiLA0KPiAg
+ICAgICAgICAgICAgICAgICBiZ19taWdyYXRpb25fdGhyZWFkLCBzLCBRRU1VX1RIUkVBRF9KT0lO
+QUJMRSk7DQo+ICAgICAgIH0gZWxzZSB7DQo+IC0gICAgICAgIHFlbXVfdGhyZWFkX2NyZWF0ZSgm
+cy0+dGhyZWFkLCAibGl2ZV9taWdyYXRpb24iLA0KPiArICAgICAgICBxZW11X3RocmVhZF9jcmVh
+dGUoJnMtPnRocmVhZCwgIm1pZy9zcmMvbWFpbiIsDQo+ICAgICAgICAgICAgICAgICAgIG1pZ3Jh
+dGlvbl90aHJlYWQsIHMsIFFFTVVfVEhSRUFEX0pPSU5BQkxFKTsNCj4gICAgICAgfQ0KPiAgICAg
+ICBzLT5taWdyYXRpb25fdGhyZWFkX3J1bm5pbmcgPSB0cnVlOw0KPiBkaWZmIC0tZ2l0IGEvbWln
+cmF0aW9uL211bHRpZmQuYyBiL21pZ3JhdGlvbi9tdWx0aWZkLmMNCj4gaW5kZXggZjMxN2JmZjA3
+Ny4uN2FmYzA5NjVmNiAxMDA2NDQNCj4gLS0tIGEvbWlncmF0aW9uL211bHRpZmQuYw0KPiArKysg
+Yi9taWdyYXRpb24vbXVsdGlmZC5jDQo+IEBAIC0xMDU5LDcgKzEwNTksNyBAQCBzdGF0aWMgYm9v
+bCBtdWx0aWZkX3Rsc19jaGFubmVsX2Nvbm5lY3QoTXVsdGlGRFNlbmRQYXJhbXMgKnAsDQo+ICAg
+ICAgIGFyZ3MtPnAgPSBwOw0KPiAgIA0KPiAgICAgICBwLT50bHNfdGhyZWFkX2NyZWF0ZWQgPSB0
+cnVlOw0KPiAtICAgIHFlbXVfdGhyZWFkX2NyZWF0ZSgmcC0+dGxzX3RocmVhZCwgIm11bHRpZmQt
+dGxzLWhhbmRzaGFrZS13b3JrZXIiLA0KPiArICAgIHFlbXVfdGhyZWFkX2NyZWF0ZSgmcC0+dGxz
+X3RocmVhZCwgIm1pZy9zcmMvdGxzIiwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgIG11bHRp
+ZmRfdGxzX2hhbmRzaGFrZV90aHJlYWQsIGFyZ3MsDQo+ICAgICAgICAgICAgICAgICAgICAgICAg
+ICBRRU1VX1RIUkVBRF9KT0lOQUJMRSk7DQo+ICAgICAgIHJldHVybiB0cnVlOw0KPiBAQCAtMTE4
+NSw3ICsxMTg1LDcgQEAgYm9vbCBtdWx0aWZkX3NlbmRfc2V0dXAodm9pZCkNCj4gICAgICAgICAg
+IH0gZWxzZSB7DQo+ICAgICAgICAgICAgICAgcC0+aW92ID0gZ19uZXcwKHN0cnVjdCBpb3ZlYywg
+cGFnZV9jb3VudCk7DQo+ICAgICAgICAgICB9DQo+IC0gICAgICAgIHAtPm5hbWUgPSBnX3N0cmR1
+cF9wcmludGYoIm11bHRpZmRzZW5kXyVkIiwgaSk7DQo+ICsgICAgICAgIHAtPm5hbWUgPSBnX3N0
+cmR1cF9wcmludGYoIm1pZy9zcmMvc2VuZF8lZCIsIGkpOw0KPiAgICAgICAgICAgcC0+cGFnZV9z
+aXplID0gcWVtdV90YXJnZXRfcGFnZV9zaXplKCk7DQo+ICAgICAgICAgICBwLT5wYWdlX2NvdW50
+ID0gcGFnZV9jb3VudDsNCj4gICAgICAgICAgIHAtPndyaXRlX2ZsYWdzID0gMDsNCj4gQEAgLTE2
+MDEsNyArMTYwMSw3IEBAIGludCBtdWx0aWZkX3JlY3Zfc2V0dXAoRXJyb3IgKiplcnJwKQ0KPiAg
+ICAgICAgICAgICAgICAgICArIHNpemVvZih1aW50NjRfdCkgKiBwYWdlX2NvdW50Ow0KPiAgICAg
+ICAgICAgICAgIHAtPnBhY2tldCA9IGdfbWFsbG9jMChwLT5wYWNrZXRfbGVuKTsNCj4gICAgICAg
+ICAgIH0NCj4gLSAgICAgICAgcC0+bmFtZSA9IGdfc3RyZHVwX3ByaW50ZigibXVsdGlmZHJlY3Zf
+JWQiLCBpKTsNCj4gKyAgICAgICAgcC0+bmFtZSA9IGdfc3RyZHVwX3ByaW50ZigibWlnL2RzdC9y
+ZWN2XyVkIiwgaSk7DQo+ICAgICAgICAgICBwLT5pb3YgPSBnX25ldzAoc3RydWN0IGlvdmVjLCBw
+YWdlX2NvdW50KTsNCj4gICAgICAgICAgIHAtPm5vcm1hbCA9IGdfbmV3MChyYW1fYWRkcl90LCBw
+YWdlX2NvdW50KTsNCj4gICAgICAgICAgIHAtPnplcm8gPSBnX25ldzAocmFtX2FkZHJfdCwgcGFn
+ZV9jb3VudCk7DQo+IGRpZmYgLS1naXQgYS9taWdyYXRpb24vcG9zdGNvcHktcmFtLmMgYi9taWdy
+YXRpb24vcG9zdGNvcHktcmFtLmMNCj4gaW5kZXggMzQxOTc3OTU0OC4uOTc3MDFlNmJiMiAxMDA2
+NDQNCj4gLS0tIGEvbWlncmF0aW9uL3Bvc3Rjb3B5LXJhbS5jDQo+ICsrKyBiL21pZ3JhdGlvbi9w
+b3N0Y29weS1yYW0uYw0KPiBAQCAtMTIzOCw3ICsxMjM4LDcgQEAgaW50IHBvc3Rjb3B5X3JhbV9p
+bmNvbWluZ19zZXR1cChNaWdyYXRpb25JbmNvbWluZ1N0YXRlICptaXMpDQo+ICAgICAgICAgICBy
+ZXR1cm4gLTE7DQo+ICAgICAgIH0NCj4gICANCj4gLSAgICBwb3N0Y29weV90aHJlYWRfY3JlYXRl
+KG1pcywgJm1pcy0+ZmF1bHRfdGhyZWFkLCAiZmF1bHQtZGVmYXVsdCIsDQo+ICsgICAgcG9zdGNv
+cHlfdGhyZWFkX2NyZWF0ZShtaXMsICZtaXMtPmZhdWx0X3RocmVhZCwgIm1pZy9kc3QvZmF1bHQi
+LA0KPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBvc3Rjb3B5X3JhbV9mYXVsdF90aHJl
+YWQsIFFFTVVfVEhSRUFEX0pPSU5BQkxFKTsNCj4gICAgICAgbWlzLT5oYXZlX2ZhdWx0X3RocmVh
+ZCA9IHRydWU7DQo+ICAgDQo+IEBAIC0xMjU4LDcgKzEyNTgsNyBAQCBpbnQgcG9zdGNvcHlfcmFt
+X2luY29taW5nX3NldHVwKE1pZ3JhdGlvbkluY29taW5nU3RhdGUgKm1pcykNCj4gICAgICAgICAg
+ICAqIFRoaXMgdGhyZWFkIG5lZWRzIHRvIGJlIGNyZWF0ZWQgYWZ0ZXIgdGhlIHRlbXAgcGFnZXMg
+YmVjYXVzZQ0KPiAgICAgICAgICAgICogaXQnbGwgZmV0Y2ggUkFNX0NIQU5ORUxfUE9TVENPUFkg
+UG9zdGNvcHlUbXBQYWdlIGltbWVkaWF0ZWx5Lg0KPiAgICAgICAgICAgICovDQo+IC0gICAgICAg
+IHBvc3Rjb3B5X3RocmVhZF9jcmVhdGUobWlzLCAmbWlzLT5wb3N0Y29weV9wcmlvX3RocmVhZCwg
+ImZhdWx0LWZhc3QiLA0KPiArICAgICAgICBwb3N0Y29weV90aHJlYWRfY3JlYXRlKG1pcywgJm1p
+cy0+cG9zdGNvcHlfcHJpb190aHJlYWQsICJtaWcvZHN0L3ByZWVtcHQiLA0KPiAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICBwb3N0Y29weV9wcmVlbXB0X3RocmVhZCwgUUVNVV9USFJF
+QURfSk9JTkFCTEUpOw0KPiAgICAgICAgICAgbWlzLT5wcmVlbXB0X3RocmVhZF9zdGF0dXMgPSBQ
+UkVFTVBUX1RIUkVBRF9DUkVBVEVEOw0KPiAgICAgICB9DQo+IGRpZmYgLS1naXQgYS9taWdyYXRp
+b24vc2F2ZXZtLmMgYi9taWdyYXRpb24vc2F2ZXZtLmMNCj4gaW5kZXggYzYyMWYyMzU5Yi4uZTcx
+NDEwZDhjMSAxMDA2NDQNCj4gLS0tIGEvbWlncmF0aW9uL3NhdmV2bS5jDQo+ICsrKyBiL21pZ3Jh
+dGlvbi9zYXZldm0uYw0KPiBAQCAtMjEyOSw3ICsyMTI5LDcgQEAgc3RhdGljIGludCBsb2Fkdm1f
+cG9zdGNvcHlfaGFuZGxlX2xpc3RlbihNaWdyYXRpb25JbmNvbWluZ1N0YXRlICptaXMpDQo+ICAg
+ICAgIH0NCj4gICANCj4gICAgICAgbWlzLT5oYXZlX2xpc3Rlbl90aHJlYWQgPSB0cnVlOw0KPiAt
+ICAgIHBvc3Rjb3B5X3RocmVhZF9jcmVhdGUobWlzLCAmbWlzLT5saXN0ZW5fdGhyZWFkLCAicG9z
+dGNvcHkvbGlzdGVuIiwNCj4gKyAgICBwb3N0Y29weV90aHJlYWRfY3JlYXRlKG1pcywgJm1pcy0+
+bGlzdGVuX3RocmVhZCwgIm1pZy9kc3QvbGlzdGVuIiwNCj4gICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICBwb3N0Y29weV9yYW1fbGlzdGVuX3RocmVhZCwgUUVNVV9USFJFQURfREVUQUNIRUQp
+Ow0KPiAgICAgICB0cmFjZV9sb2Fkdm1fcG9zdGNvcHlfaGFuZGxlX2xpc3RlbigicmV0dXJuIik7
+DQo+ICAg
 
