@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40460C2BA15
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 13:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1362EC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 13:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJvLc-0005N5-16; Wed, 19 Jun 2024 09:27:36 -0400
+	id 1sJvSU-0003Ez-7P; Wed, 19 Jun 2024 09:34:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sJvLX-0005Mk-Vl
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 09:27:31 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sJvLW-0006w7-5x
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 09:27:31 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-57ccd1111b0so2672486a12.3
- for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 06:27:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718803648; x=1719408448; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L3qLgBq+o7JVQDMYNxWh0zktfLyi/mma69twBe9PGq8=;
- b=UdsZXda3B1XH8EN7t6t4kAo+OsqQNTJ1uEEhOTknzhcsWKmWJPOJJWt2voMWgGQzMa
- ZzQ7wagQTk6hnW3buGCQ6SG8pXuakjsTi6268zG0KWy+KGD9jrhhy6U7fk5kSguiRdXv
- LcvxYL5dX1J9XMd20A1H8Vk6ekdDPZFKAfHXDSTFC9+UYIxkJBSlj7oEDKU1Tx+jI32I
- W0F2D4C2jo6U/XR20dOqyMqFNpcDDR0hSsaTPUd1DcBMthKw8RcUqeUGFS1zUlJUQD8k
- o+b66ZkmyiAmpM9b5b6OTwc1Jssn2QZNbpZZq68BNvBwhWjFEyGFGapURvKD1bqIPh93
- 6T+A==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sJvSS-0003ER-V1
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 09:34:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sJvSR-0007qm-AG
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 09:34:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718804078;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ckW/bLbhz6NquyaPfBKRNWwm2zNUxxWicrdTgvXv4qk=;
+ b=LQvjJ9Fys/6C/FXgRAJ8BVeGBpgoXH0DHMs18kYZ+WNxP8XRkv93w1pEtBX4PSgIrmcdEn
+ 0Icj3aUS9zkjWv/h7ESMyN4E78p0Xk6yladIcWkBYDbFu1XBH56FgC3/oANlqViUcyy0su
+ jNORQiLz2iDXNaDZ/oi53BGgpExdjGA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-245-oZZCdSSpOPqmBE3aLl2FZg-1; Wed, 19 Jun 2024 09:34:35 -0400
+X-MC-Unique: oZZCdSSpOPqmBE3aLl2FZg-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4246cf4c87dso17983835e9.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 06:34:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718803648; x=1719408448;
+ d=1e100.net; s=20230601; t=1718804074; x=1719408874;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=L3qLgBq+o7JVQDMYNxWh0zktfLyi/mma69twBe9PGq8=;
- b=rvyv2lL0t7IRUrVAtOZR/JJa1xSlZopBXKDy1vMZAtJMvAhmFMxUFwxCYLAchayffm
- iZ5hQ2/70STSoA/0kMAZuD0ZGqsUkiU3DpnNXxGsw7LnHG42bR01BvlXkUTYDX+snFIJ
- vs+1QNIxc4IN9hPYXdy8D2ljiL5bk32hKEdMGme/a9Cv42gpyaR0h9Hd6rLEGNhAcqBk
- cTVnPlO7N/WFtwtOsbQiZG/fasSWrH4vVSSS/0jLuJbXBjgcAdNFu2xeT2BR+Gc/LTPc
- pwrkll0F9xlWPtxpPpCOyCuvKLt2uaS8ve9j1++n+NRJ1mUfNsiWsVxg4QqmtS4d2p7K
- /Pfw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhoM+IUpVwozHZTjbIbzZVh7sLJ49PSGMaP7qUXjNuBbLrchpvg0iJVam/PjMI3Wuk3v0GisqUNuZiOJcOpR0nh9JCyrA=
-X-Gm-Message-State: AOJu0YwhozjtX9Mvy/CVe0pyyGhn1JdNdab/Z3gbLlifrNl0tA0PZOhf
- 4hVny1Z6KmHhQTe+9DLe6Z5dk1NKzyKkaxYiPxx/3ErG86Bi0egtAuHiKtUjag8a8jv78jsmC16
- 9evS8U6G6BrzUevCtSdjVH1FhJmFGVWK6KIG9/A==
-X-Google-Smtp-Source: AGHT+IFO57V9L6Wk44dqtbQ/UFIP/JJ/Z0DoRvWY495ZijgDLwTwSwGAPlU3WLFy9iP8JHFZr6D0G9rr/BglJPJ32KU=
-X-Received: by 2002:a50:d50a:0:b0:57d:4bd:731f with SMTP id
- 4fb4d7f45d1cf-57d07ebabbbmr1819320a12.37.1718803647834; Wed, 19 Jun 2024
- 06:27:27 -0700 (PDT)
+ bh=ckW/bLbhz6NquyaPfBKRNWwm2zNUxxWicrdTgvXv4qk=;
+ b=bPEpuT29tOpiykvL8YKntljOaotDDUpZ3YcZ9lSS+hOVVlB+qVWcSnG/zjxgLwlFDf
+ QP6yQ3BjZ5lc+5wm70PnxcCfyaorFiZTv/3yPMCWYADdDCxIZZ3G6PXRyY/PM6v1t6vs
+ uWMrButpE26/tVRQ8Scd/A/fG2oNVFYUguo6tbd4iybTek5y7QywAheuD5L9jHrEjEn5
+ 9zftu4rSkhUudZLf/jpyeAe0qAckHStXKWwSegGpSN4gqbpcksWAohfc2xCfsEBF7slL
+ DWGPywR4fTKI8HJH/rIIpU3nk6l2NxR0HyoJ3tPOnJ8EE4IfUqwDlC/z3n4J25twNyJg
+ GX0Q==
+X-Gm-Message-State: AOJu0YzuH5Ygt8JgLuOwZpn79uLFCRjKoL1AngjvpVbkASde2qPuhfWu
+ W6l1Q+Xr8nL0B8xzJrOjJ8EBznIBo5IxoqUbdduMVaR1GBI8pIPNog1MMTEa9PhdIJHu61uBufG
+ nVY1o+L9lit2VHk0YgfOwvqAsayqDcJrz0FXT5jA5rtklcbf72U7FAGrIKExJ6R+uwaIYlIQ+wf
+ xi3foFYUEKQzN7xMRlKOcnBrLM7hY=
+X-Received: by 2002:a5d:6783:0:b0:360:791c:aff2 with SMTP id
+ ffacd0b85a97d-363195b234amr1815820f8f.47.1718804074758; 
+ Wed, 19 Jun 2024 06:34:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGfkXq4McBWH4kOIE3HoV7pAi3VcmKAf4Bb97WPeSkw4L3SSPrGKEBEP9TETEp0isWAGiViaIRvRjvJRHkjExo=
+X-Received: by 2002:a5d:6783:0:b0:360:791c:aff2 with SMTP id
+ ffacd0b85a97d-363195b234amr1815809f8f.47.1718804074438; Wed, 19 Jun 2024
+ 06:34:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240618160039.36108-1-philmd@linaro.org>
- <5ae93d7c-0fd2-4ead-b903-6b5838e0c24b@linaro.org>
- <6dfa4bb0-e4c5-46c9-93e5-d30f3a26592a@linaro.org>
- <68014035-47e7-48b4-b11b-83b219f4ef63@linaro.org>
- <e3274b41-166f-4600-b631-2013efc4540d@linaro.org>
-In-Reply-To: <e3274b41-166f-4600-b631-2013efc4540d@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 19 Jun 2024 14:27:16 +0100
-Message-ID: <CAFEAcA-Meog7qje_8G3k-49us6JrdipszAQEMRmbgqv1t-3Wmw@mail.gmail.com>
-Subject: Re: [PULL 00/76] Misc patches for 2024-06-18
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240619114616.251610-1-pbonzini@redhat.com>
+ <0c71a089-47a7-4d07-954a-aa5071cb563f@redhat.com>
+In-Reply-To: <0c71a089-47a7-4d07-954a-aa5071cb563f@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 19 Jun 2024 15:34:23 +0200
+Message-ID: <CABgObfYn4niv9XN1qr+u2vyCtxepdezZdnLGyuW8ekj0v336ow@mail.gmail.com>
+Subject: Re: [PATCH] configure: detect --cpu=mipsisa64r6
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,86 +98,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 19 Jun 2024 at 11:44, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Wed, Jun 19, 2024 at 2:49=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
+e:
 >
-> On 18/6/24 22:32, Richard Henderson wrote:
-> > On 6/18/24 13:15, Philippe Mathieu-Daud=C3=A9 wrote:
-> >> On 18/6/24 22:06, Richard Henderson wrote:
-> >>> On 6/18/24 08:59, Philippe Mathieu-Daud=C3=A9 wrote:
-> >>>> The following changes since commit
-> >>>> 900536d3e97aed7fdd9cb4dadd3bf7023360e819:
-> >>>>
-> >>>>    Merge tag 'dirtylimit-dirtyrate-pull-request-20240617'
-> >>>> ofhttps://github.com/newfriday/qemu  into staging (2024-06-17
-> >>>> 11:40:24 -0700)
-> >>>>
-> >>>> are available in the Git repository at:
-> >>>>
-> >>>>    https://github.com/philmd/qemu.git  tags/misc-20240618
-> >>>>
-> >>>> for you to fetch changes up to
-> >>>> 02ad1f5b04bf2941852f405c87535307365f7041:
-> >>>>
-> >>>>    ui+display: rename is_buffer_shared() -> surface_is_allocated()
-> >>>> (2024-06-18 17:54:40 +0200)
-> >>>>
-> >>>> Spurious warning (3 times):
-> >>>>
-> >>>>   WARNING: added, moved or deleted file(s), does MAINTAINERS need
-> >>>> updating?
-> >>>>
-> >>>> Deliberately ignored in ui/ (also 3 times):
-> >>>>
-> >>>>    WARNING: line over 80 characters
-> >>>>
-> >>>> ----------------------------------------------------------------
-> >>>> Misc patches queue
-> >>>>
-> >>>> . Remove deprecated pc-i440fx-2.0 -> 2.3 machines (Phil)
-> >>>> . Always use little endian audio format in virtio-snd (Phil)
-> >>>> . Avoid using Monitor in INTERRUPT_STATS_PROVIDER::print_info (Phil)
-> >>>> . Introduce x-query-interrupt-controllers QMP command (Phil)
-> >>>> . Introduce pnv_chip_foreach_cpu() to remove one CPU_FOREACH use
-> >>>> (C=C3=A9dric)
-> >>>> . Set arm_v7m_tcg_ops::cpu_exec_halt & mandate
-> >>>> TCGCPUOps::cpu_exec_halt (Peter)
-> >>>> . Constify few uses of IOMMUTLBEvent (Phil)
-> >>>> . Wire loongson_ipi device to loongson3_virt/TCG (Jiaxun)
-> >>>> . Fix inclusion of tracing headers on s390x/TCG (Phil)
-> >>>> . Add few shortcuts missing to readline (Manos)
-> >>>> . Update ui/display entries in MAINTAINERS (Gerd)
-> >>>> . Use qemu_add_mouse_change_notifier on Cocoa (Akihiko)
-> >>>> . Fix Standard VGA screen blanking and cleanups (Gerd)
-> >>>> . Fix USB/MTP reported "free space" value (Fabio)
-> >>>
-> >>> Fails testing:
-> >>>
-> >>> https://gitlab.com/qemu-project/qemu/-/jobs/7129004955
-> >>>
-> >>> qemu-system-tricore: ../accel/tcg/cpu-exec.c:1082:
-> >>> tcg_exec_realizefn: Assertion `cpu->cc->tcg_ops->cpu_exec_halt' faile=
-d.
-> >>
-> >> Doh sorry, I tested but hit a libusb issue on this target and mingw64,
-> >> tested there and thought this was the only issue and missed that.
-> >>
-> >> Hmm cpu_has_work() is defined inlined. I'll just drop the 3 lines
-> >> I added to Peter's patch and send his unmodified.
+> On 19/06/2024 13.46, Paolo Bonzini wrote:
+> > Treat it as a MIPS64 machine.
+>
+> Where did you encounter it?
+
+It is handled by "config.sub" (the GNU script to canonicalize target
+triples). and is also in the list produced by "rustc --print
+target-list" on Fedora 40. So it seems like something that could be
+passed to --cpu.
+
+The argument to --cpu, plus an autodetected OS, is also as close as we
+can get to building the tuple for "cargo --target
+CPU-MACHINE-OS-VARIANT".
+
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > ---
+> >   configure | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
 > >
-> > No, the assert is exactly correct, and caught a bug in the previous
-> > patch (55/76).
-> > Without your assert, we will just SEGV in cpu_handle_halt instead with
-> > patch (56/76).
+> > diff --git a/configure b/configure
+> > index d0703ea279d..3669eec86e5 100755
+> > --- a/configure
+> > +++ b/configure
+> > @@ -452,7 +452,7 @@ case "$cpu" in
+> >       linux_arch=3Dloongarch
+> >       ;;
+> >
+> > -  mips64*)
+> > +  mips64*|mipsisa64*)
 >
-> Yeah, it was too late here to realize that.
->
-> Peter, I'll respin without your series. Do you mind taking your
-> "target/arm: Set arm_v7m_tcg_ops cpu_exec_halt to arm_cpu_exec_halt"
-> patch via your ARM tree, that way I don't delay you further.
+> Maybe simply switch to mips*64*) ?
 
-Sure, I can do that. (I don't think this series particularly
-is likely to conflict with anything else in flight.)
+Not sure if it's a good idea, since we know the exact prefixes.
 
--- PMM
+Paolo
+
 
