@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5F29C27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 00:31:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AB30C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 00:32:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJjDq-0005qC-RJ; Tue, 18 Jun 2024 20:30:46 -0400
+	id 1sJjEJ-0006GS-55; Tue, 18 Jun 2024 20:31:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjDq-0005p9-1T
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:30:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjEI-0006Fr-4J
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:31:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjDo-0001Gt-2V
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:30:45 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjEG-0001Pf-9S
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:31:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718757042;
+ s=mimecast20190719; t=1718757071;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=4gl0+5pfkZW2ghJc+QLiSsyQdXIc10W0zM/jWJDDcKY=;
- b=R54IGBz2YNiLM/hR/bT2+zpRrCKh8XwrgBT0+1zyAba5gPbJzowcJVT1qsdTX6N6G9asdA
- hJ3DHpvN5dZtAYVGx5qt6/gb+NkaeCt2flfzcIpKW0stRHGoDJIP2p9JYOO+UUludPmPOJ
- MmwzYqjLxHooY6AoAiD+YhyUwVmBoHo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=t7v4IUwQ2Vu8HBDp7pZw63iLhIi04GcZUKA2Bhf20o8=;
+ b=ASt40aAaJsRLhyG5hJHk2fvorAYDkovkajki61kLXEPqI1a0+jsEX/aoUgdR+7Wp7A5zYK
+ T4Hm4oZQfsqYGVe3U1uTKtsyi5GmJiQOSuf5tFbxmtTiySxE16NbhgTdF+u2jVQch8o29b
+ YdzPGIxHulrP0MdYcD3b/M5Ohng3GYM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-325-yeHTznzPNsC90jjuxjNpeQ-1; Tue,
- 18 Jun 2024 20:30:34 -0400
-X-MC-Unique: yeHTznzPNsC90jjuxjNpeQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-620-Hb3_E5i6MRydAjF8NvPkzw-1; Tue,
+ 18 Jun 2024 20:31:07 -0400
+X-MC-Unique: Hb3_E5i6MRydAjF8NvPkzw-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 47E5A1956051; Wed, 19 Jun 2024 00:30:31 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B3F731956083; Wed, 19 Jun 2024 00:31:04 +0000 (UTC)
 Received: from scv.localdomain (unknown [10.22.16.38])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EFE2D1955E80; Wed, 19 Jun 2024 00:30:13 +0000 (UTC)
+ id 587351955E80; Wed, 19 Jun 2024 00:30:57 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -69,14 +70,15 @@ Cc: Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Eric Blake <eblake@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 00/13] qapi: convert "Note" and "Example" sections to rST
-Date: Tue, 18 Jun 2024 20:29:59 -0400
-Message-ID: <20240619003012.1753577-1-jsnow@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH 04/13] qapi/parser: preserve indentation in QAPIDoc sections
+Date: Tue, 18 Jun 2024 20:30:03 -0400
+Message-ID: <20240619003012.1753577-5-jsnow@redhat.com>
+In-Reply-To: <20240619003012.1753577-1-jsnow@redhat.com>
+References: <20240619003012.1753577-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -101,99 +103,269 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series focuses primarily on converting our existing QAPI/QMP=0D
-documentation to remove special "Note" and "Example" sections in favor=0D
-of rST markup for the same.=0D
-=0D
-This is being done primarily to reduce the number of specially parsed=0D
-QAPI sections we have in favor of allowing fully arbitrary rST markup=0D
-for greater flexibility and freedom in styling the rendered HTML=0D
-documentation.=0D
-=0D
-(A tangible side benefit is that the new qapidoc generator has fewer=0D
-sections to reason about when it splices inherited documentation=0D
-together for the QMP reference manual; docs largely preserve the order=0D
-of documentation "as written" instead of needing to splice multiple=0D
-separate sections together. A goal of the new generator is to eventually=0D
-remove all tagged sections except for "members" and "features".)=0D
-=0D
-Known issues:=0D
-=0D
-- The caption syntax for QMP examples is a little ugly in rendered HTML=0D
-  output; My CSS intern wasn't available before publication time to fix=0D
-  it ;) -- Will fix with an amendment patch at next opportunity.=0D
-=0D
-Any feedback not implemented should be interpreted as evidence of a=0D
-forgetful (rather than a spiteful) mind. Please remind me where=0D
-appropriate.=0D
-=0D
---js=0D
-=0D
-John Snow (13):=0D
-  [DO-NOT-MERGE]: Add some ad-hoc linting helpers.=0D
-  qapi: linter fixups=0D
-  docs/qapidoc: delint a tiny portion of the module=0D
-  qapi/parser: preserve indentation in QAPIDoc sections=0D
-  qapi/parser: fix comment parsing immediately following a doc block=0D
-  docs/qapidoc: fix nested parsing under untagged sections=0D
-  qapi: fix non-compliant JSON examples=0D
-  qapi: ensure all errors sections are uniformly typset=0D
-  qapi: convert "Note" sections to plain rST=0D
-  qapi: update prose in note blocks=0D
-  qapi: add markup to note blocks=0D
-  qapi/parser: don't parse rST markup as section headers=0D
-  qapi: convert "Example" sections to rST=0D
-=0D
- docs/devel/qapi-code-gen.rst                  |  25 +--=0D
- docs/sphinx/qapidoc.py                        | 103 ++++++++----=0D
- qapi/acpi.json                                |   6 +-=0D
- qapi/block-core.json                          | 148 +++++++++-------=0D
- qapi/block.json                               |  62 ++++---=0D
- qapi/char.json                                |  48 ++++--=0D
- qapi/control.json                             |  32 ++--=0D
- qapi/dump.json                                |  14 +-=0D
- qapi/introspect.json                          |   6 +-=0D
- qapi/machine-target.json                      |  29 ++--=0D
- qapi/machine.json                             | 125 ++++++++------=0D
- qapi/migration.json                           | 159 ++++++++++++------=0D
- qapi/misc-target.json                         |  33 ++--=0D
- qapi/misc.json                                | 139 ++++++++-------=0D
- qapi/net.json                                 |  42 +++--=0D
- qapi/pci.json                                 |  11 +-=0D
- qapi/qapi-schema.json                         |   6 +-=0D
- qapi/qdev.json                                |  45 ++---=0D
- qapi/qom.json                                 |  39 +++--=0D
- qapi/replay.json                              |  12 +-=0D
- qapi/rocker.json                              |  30 ++--=0D
- qapi/run-state.json                           |  63 ++++---=0D
- qapi/sockets.json                             |  10 +-=0D
- qapi/stats.json                               |  22 +--=0D
- qapi/tpm.json                                 |   9 +-=0D
- qapi/trace.json                               |   6 +-=0D
- qapi/transaction.json                         |  13 +-=0D
- qapi/ui.json                                  |  93 +++++-----=0D
- qapi/vfio.json                                |   3 +-=0D
- qapi/virtio.json                              |  50 +++---=0D
- qapi/yank.json                                |   6 +-=0D
- qga/qapi-schema.json                          |  48 +++---=0D
- scripts/qapi-lint.sh                          |  59 +++++++=0D
- scripts/qapi/Makefile                         |   5 +=0D
- scripts/qapi/introspect.py                    |   8 +-=0D
- scripts/qapi/parser.py                        |  40 ++++-=0D
- scripts/qapi/schema.py                        |   6 +-=0D
- scripts/qapi/visit.py                         |   5 +-=0D
- tests/qapi-schema/doc-empty-section.err       |   2 +-=0D
- tests/qapi-schema/doc-empty-section.json      |   2 +-=0D
- tests/qapi-schema/doc-good.json               |  21 ++-=0D
- tests/qapi-schema/doc-good.out                |  62 ++++---=0D
- tests/qapi-schema/doc-good.txt                |  31 ++--=0D
- .../qapi-schema/doc-interleaved-section.json  |   2 +-=0D
- 44 files changed, 1036 insertions(+), 644 deletions(-)=0D
- create mode 100755 scripts/qapi-lint.sh=0D
- create mode 100644 scripts/qapi/Makefile=0D
-=0D
--- =0D
-2.44.0=0D
-=0D
+Change get_doc_indented() to preserve indentation on all subsequent text
+lines, and create a compatibility dedent() function for qapidoc.py to
+remove that indentation. This is being done for the benefit of a new
+qapidoc generator which requires that indentation in argument and
+features sections are preserved.
+
+Prior to this patch, a section like this:
+
+```
+@name: lorem ipsum
+   dolor sit amet
+     consectetur adipiscing elit
+```
+
+would have its body text be parsed as:
+(first and final newline only for presentation)
+
+```
+lorem ipsum
+dolor sit amet
+  consectetur adipiscing elit
+```
+
+We want to preserve the indentation for even the first body line so that
+the entire block can be parsed directly as rST. This patch would now
+parse that segment as:
+
+```
+lorem ipsum
+   dolor sit amet
+     consectetur adipiscing elit
+```
+
+This is helpful for formatting arguments and features as field lists in
+rST, where the new generator will format this information as:
+
+```
+:arg type name: lorem ipsum
+   dolor sit amet
+     consectetur apidiscing elit
+```
+
+...and can be formed by the simple concatenation of the field list
+construct and the body text. The indents help preserve the continuation
+of a block-level element, and further allow the use of additional rST
+block-level constructs such as code blocks, lists, and other such
+markup. Avoiding reflowing the text conditionally also helps preserve
+source line context for better rST error reporting from sphinx through
+generated source, too.
+
+This understandably breaks the existing qapidoc.py; so a new function is
+added there to dedent the text for compatibility. Once the new generator
+is merged, this function will not be needed any longer and can be
+dropped.
+
+I verified this patch changes absolutely nothing by comparing the
+md5sums of the QMP ref html pages both before and after the change, so
+it's certified inert. QAPI test output has been updated to reflect the
+new strategy of preserving indents for rST.
+
+before:
+
+69cde3d6f18b0f324badbb447d4381ce  manual_before/interop/qemu-ga-ref.html
+446e9381833def2adc779f1b90f2215f  manual_before/interop/qemu-qmp-ref.html
+df0ad6c26cb4c28b85d663fe44609c12  manual_before/interop/qemu-storage-daemon-qmp-ref.html
+
+after:
+
+69cde3d6f18b0f324badbb447d4381ce  manual/interop/qemu-ga-ref.html
+446e9381833def2adc779f1b90f2215f  manual/interop/qemu-qmp-ref.html
+df0ad6c26cb4c28b85d663fe44609c12  manual/interop/qemu-storage-daemon-qmp-ref.html
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ docs/sphinx/qapidoc.py         | 29 ++++++++++++++++++++++++-----
+ scripts/qapi/parser.py         |  5 +++--
+ tests/qapi-schema/doc-good.out | 32 ++++++++++++++++----------------
+ 3 files changed, 43 insertions(+), 23 deletions(-)
+
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index e675966defa..f2f2005dd5f 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -26,6 +26,7 @@
+ 
+ import os
+ import re
++import textwrap
+ 
+ from docutils import nodes
+ from docutils.parsers.rst import Directive, directives
+@@ -53,6 +54,21 @@
+ __version__ = "1.0"
+ 
+ 
++def dedent(text: str) -> str:
++    # Temporary: In service of the new QAPI Sphinx domain, the QAPI doc
++    # parser now preserves indents in args/members/features text.
++    # QAPIDoc does not handle this well, so undo that change here.
++
++    lines = text.splitlines(True)
++    if re.match(r"\s+", lines[0]):
++        # First line is indented; description started on the line after
++        # the name. dedent the whole block.
++        return textwrap.dedent(text)
++
++    # Descr started on same line. Dedent line 2+.
++    return lines[0] + textwrap.dedent("".join(lines[1:]))
++
++
+ # Disable black auto-formatter until re-enabled:
+ # fmt: off
+ 
+@@ -176,7 +192,7 @@ def _nodes_for_members(self, doc, what, base=None, branches=None):
+             term = self._nodes_for_one_member(section.member)
+             # TODO drop fallbacks when undocumented members are outlawed
+             if section.text:
+-                defn = section.text
++                defn = dedent(section.text)
+             else:
+                 defn = [nodes.Text('Not documented')]
+ 
+@@ -214,7 +230,7 @@ def _nodes_for_enum_values(self, doc):
+                 termtext.extend(self._nodes_for_ifcond(section.member.ifcond))
+             # TODO drop fallbacks when undocumented members are outlawed
+             if section.text:
+-                defn = section.text
++                defn = dedent(section.text)
+             else:
+                 defn = [nodes.Text('Not documented')]
+ 
+@@ -249,7 +265,7 @@ def _nodes_for_features(self, doc):
+         dlnode = nodes.definition_list()
+         for section in doc.features.values():
+             dlnode += self._make_dlitem(
+-                [nodes.literal('', section.member.name)], section.text)
++                [nodes.literal('', section.member.name)], dedent(section.text))
+             seen_item = True
+ 
+         if not seen_item:
+@@ -272,9 +288,12 @@ def _nodes_for_sections(self, doc):
+                 continue
+             snode = self._make_section(section.tag)
+             if section.tag and section.tag.startswith('Example'):
+-                snode += self._nodes_for_example(section.text)
++                snode += self._nodes_for_example(dedent(section.text))
+             else:
+-                self._parse_text_into_node(section.text, snode)
++                self._parse_text_into_node(
++                    dedent(section.text) if section.tag else section.text,
++                    snode,
++                )
+             nodelist.append(snode)
+         return nodelist
+ 
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index 7b13a583ac1..43167ef0ab3 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -437,6 +437,7 @@ def _match_at_name_colon(string: str) -> Optional[Match[str]]:
+         return re.match(r'@([^:]*): *', string)
+ 
+     def get_doc_indented(self, doc: 'QAPIDoc') -> Optional[str]:
++        """get_doc_indented preserves indentation for later rST parsing."""
+         self.accept(False)
+         line = self.get_doc_line()
+         while line == '':
+@@ -448,7 +449,7 @@ def get_doc_indented(self, doc: 'QAPIDoc') -> Optional[str]:
+         indent = must_match(r'\s*', line).end()
+         if not indent:
+             return line
+-        doc.append_line(line[indent:])
++        doc.append_line(line)
+         prev_line_blank = False
+         while True:
+             self.accept(False)
+@@ -465,7 +466,7 @@ def get_doc_indented(self, doc: 'QAPIDoc') -> Optional[str]:
+                     self,
+                     "unexpected de-indent (expected at least %d spaces)" %
+                     indent)
+-            doc.append_line(line[indent:])
++            doc.append_line(line)
+             prev_line_blank = True
+ 
+     def get_doc_paragraph(self, doc: 'QAPIDoc') -> Optional[str]:
+diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
+index 716a9a41026..435f6e6d768 100644
+--- a/tests/qapi-schema/doc-good.out
++++ b/tests/qapi-schema/doc-good.out
+@@ -117,8 +117,8 @@ doc symbol=Base
+     body=
+ 
+     arg=base1
+-description starts on a new line,
+-minimally indented
++ description starts on a new line,
++ minimally indented
+ doc symbol=Variant1
+     body=
+ A paragraph
+@@ -145,8 +145,8 @@ doc symbol=Alternate
+ 
+     arg=i
+ description starts on the same line
+-remainder indented the same
+-@b is undocumented
++    remainder indented the same
++    @b is undocumented
+     arg=b
+ 
+     feature=alt-feat
+@@ -158,11 +158,11 @@ doc symbol=cmd
+     body=
+ 
+     arg=arg1
+-description starts on a new line,
+-indented
++    description starts on a new line,
++    indented
+     arg=arg2
+ description starts on the same line
+-remainder indented differently
++    remainder indented differently
+     arg=arg3
+ 
+     feature=cmd-feat1
+@@ -178,16 +178,16 @@ some
+     section=TODO
+ frobnicate
+     section=Notes
+-- Lorem ipsum dolor sit amet
+-- Ut enim ad minim veniam
++ - Lorem ipsum dolor sit amet
++ - Ut enim ad minim veniam
+ 
+-Duis aute irure dolor
++ Duis aute irure dolor
+     section=Example
+--> in
+-<- out
++ -> in
++ <- out
+     section=Examples
+-- *verbatim*
+-- {braces}
++ - *verbatim*
++ - {braces}
+     section=Since
+ 2.10
+ doc symbol=cmd-boxed
+@@ -198,9 +198,9 @@ a feature
+     feature=cmd-feat2
+ another feature
+     section=Example
+--> in
++ -> in
+ 
+-<- out
++ <- out
+ doc symbol=EVT_BOXED
+     body=
+ 
+-- 
+2.44.0
 
 
