@@ -4,68 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D65CC27C79
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A7D1C41513
 	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 17:40:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJzIY-00010u-18; Wed, 19 Jun 2024 13:40:42 -0400
+	id 1sJzIW-0000zw-Ph; Wed, 19 Jun 2024 13:40:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
- id 1sJzIU-0000zO-Je
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 13:40:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
- id 1sJzIS-00064M-Jb
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 13:40:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718818835;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=RWTnPBXoi7xBZUVizuCq79T+SAn4e0qAr8xVuG97KVA=;
- b=Nn/26l/NX+p15w5kcW7zOBcZmmpT2HH+KO1ml+17HGIuc+5Z9bsP2aClkzaNTGVse0gB5w
- TD0WLJcRGpXUpRqoKc1d5lvbrFeUtLT4xYt0ZoNFtwctiwGFxGAqkxSJtv5vScckdWQElD
- XkOzxljhS0Vx0UfuEKnlhuJ7AO48t4I=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-cuOuFmIxOO2hEd6WIn0uvQ-1; Wed,
- 19 Jun 2024 13:40:31 -0400
-X-MC-Unique: cuOuFmIxOO2hEd6WIn0uvQ-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 43DE21956088; Wed, 19 Jun 2024 17:40:28 +0000 (UTC)
-Received: from sparse.local (unknown [10.47.238.15])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DD4C41956087; Wed, 19 Jun 2024 17:40:23 +0000 (UTC)
-From: Nir Soffer <nsoffer@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Fam Zheng <fam@euphon.net>, qemu-block@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Nir Soffer <nsoffer@redhat.com>
-Subject: [PATCH v2] Consider discard option when writing zeros
-Date: Wed, 19 Jun 2024 20:40:22 +0300
-Message-ID: <20240619174022.1298578-1-nsoffer@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJzIS-0000zB-SC
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 13:40:37 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJzIQ-00063s-MB
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 13:40:36 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-57cc1c00ba6so6449266a12.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 10:40:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718818833; x=1719423633; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=f4skJCa4wMR5/p1vPpn4GIPcC8hA65S+qZcd/sGER4E=;
+ b=QBRhGfYy3w+oSLiQvcU5HbCeg9JW2uC7bonsrLIotT2Pisc7ldmdGZRcfi3s7/Pj2D
+ e0b0AHs0PUvzpW57qFVcWpATwFpkYbkRjJoH5V408ywixeuuSEq3ART1RvXXYD1YjxrX
+ HY8DHEYV/uRlF2rj9R5CWSj2urvrk66jN0crmwdrEi4iRKvYwxo+E+xE2JZWA+Onw9VQ
+ ZMSX2lWUeaUzUFTfaBJ6KjLbDYK0Vx8pbHDFwo54PWysCegZhBFyqFECNz80t5HA1vv/
+ 6PAfAOZrw87foe4Sawfmr1LHGa5LHXiyvN98dj4CzUK0Qls4G9hC5TBamTqy33e+y5Rq
+ Iw8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718818833; x=1719423633;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=f4skJCa4wMR5/p1vPpn4GIPcC8hA65S+qZcd/sGER4E=;
+ b=rKfE5jYtT2fCOq/gGAHRS0FxW58l5DBvstXpOrPWcGyHtTVbrby8SwHvMECxqJwvSZ
+ mKaGf8vsoQ4e2h2c7zjR3eXzwI9BM8e7DZij8FlQj0avMIa7affAI0jOETSjeyzOJVe0
+ OLfJPWguF7PMm1mRRQAF5vSS/s2LKw719Fy5GzseruStlo6K1vy1G7mwtgl2O1MN1+A/
+ iuFodcXzGrZq3Q3jBaEmSX1mN+MVZCTC+RPDGDSUpAiIeXmf++Va8FgUoF+zHCe07dLl
+ qGMSs6MLb/0UWNAmDDBNYJBQwPRb8Y93b0tG3n1PbZoBW8dxqqAfnbchrMruNIrsXYFH
+ ahEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVf6Ygw6dOLpLiLAV8jbuPBjLJItC6e+dDcdAB5orklB2f8Hb7n6s0MTPB+o8ilpjDW9gfFEjsHgL5cHoHs1unJO3NO8YA=
+X-Gm-Message-State: AOJu0YxWCA0QDx/ROLo0SoCN9hF9JGH2VFleLOWF8agrtIPlYW8K24Z6
+ t5oub95F0wwLbZ5BbJsXsNM9J/bvyqD+z8/wHBpPnHjDiQQ21yiWS8Jfe1PGCiA=
+X-Google-Smtp-Source: AGHT+IGt5awq/V9cI3yWAlJE10x1aAboz7tqIYIVpYmP2fj6G+4CFlzBkBMa6GXnptqH1nbKRfsPlw==
+X-Received: by 2002:a50:ee92:0:b0:57c:765b:83a3 with SMTP id
+ 4fb4d7f45d1cf-57d0bff1a13mr1925322a12.25.1718818832015; 
+ Wed, 19 Jun 2024 10:40:32 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.133.105])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-57cb743890dsm8616920a12.83.2024.06.19.10.40.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Jun 2024 10:40:31 -0700 (PDT)
+Message-ID: <59f1da17-719d-4389-b21a-053b2ee980dd@linaro.org>
+Date: Wed, 19 Jun 2024 19:40:29 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 22/32] hw/sd: Add emmc_cmd_SEND_EXT_CSD() handler
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
+ Joel Stanley <joel@jms.id.au>
+Cc: Bin Meng <bin.meng@windriver.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Lucien Murray-Pitts <lucienmp.qemu@gmail.com>
+References: <20230703132509.2474225-1-clg@kaod.org>
+ <20230703132509.2474225-23-clg@kaod.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20230703132509.2474225-23-clg@kaod.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=nsoffer@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,72 +99,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When opening an image with discard=off, we punch hole in the image when
-writing zeroes, making the image sparse. This breaks users that want to
-ensure that writes cannot fail with ENOSPACE by using fully allocated
-images.
+Hi,
 
-bdrv_co_pwrite_zeroes() correctly disable BDRV_REQ_MAY_UNMAP if we
-opened the child without discard=unmap or discard=on. But we don't go
-through this function when accessing the top node. Move the check down
-to bdrv_co_do_pwrite_zeroes() which seems to be used in all code paths.
+On 3/7/23 15:24, Cédric Le Goater wrote:
+> The parameters mimick a real 4GB eMMC, but it can be set to various
+> sizes. Initially from Vincent Palatin <vpalatin@chromium.org>
+> 
+> Signed-off-by: Cédric Le Goater <clg@kaod.org>
+> ---
+>   hw/sd/sdmmc-internal.h |  97 ++++++++++++++++++++++++++++++++++++
+>   include/hw/sd/sd.h     |   1 +
+>   hw/sd/sd.c             | 109 ++++++++++++++++++++++++++++++++++++++++-
+>   3 files changed, 206 insertions(+), 1 deletion(-)
 
-Issues:
-- We don't punch hole by default, so images are kept allocated. Before
-  this change we punched holes by default. I'm not sure this is a good
-  change in behavior.
-- Need to run all block tests
-- Not sure that we have tests covering unmapping, we may need new tests
-- We may need new tests to cover this change
+First pass review, this will take time...
 
-Signed-off-by: Nir Soffer <nsoffer@redhat.com>
----
+> +static void mmc_set_ext_csd(SDState *sd, uint64_t size)
+> +{
+> +    uint32_t sectcount = size >> HWBLOCK_SHIFT;
+> +
+> +    memset(sd->ext_csd, 0, sizeof(sd->ext_csd));
+> +
+> +    sd->ext_csd[EXT_CSD_S_CMD_SET] = 0x1; /* supported command sets */
+> +    sd->ext_csd[EXT_CSD_HPI_FEATURES] = 0x3; /* HPI features  */
+> +    sd->ext_csd[EXT_CSD_BKOPS_SUPPORT] = 0x1; /* Background operations */
+> +    sd->ext_csd[241] = 0xA; /* 1st initialization time after partitioning */
+> +    sd->ext_csd[EXT_CSD_TRIM_MULT] = 0x1; /* Trim multiplier */
+> +    sd->ext_csd[EXT_CSD_SEC_FEATURE_SUPPORT] = 0x15; /* Secure feature */
 
-Changes since v1:
-- Replace the incorrect has_discard change with the right fix
+We do not support (and are not interested in) that. I'll use 0x0 for
+"do not support".
 
-v1 was here:
-https://lists.nongnu.org/archive/html/qemu-block/2024-06/msg00198.html
+> +    sd->ext_csd[EXT_CSD_SEC_ERASE_MULT] = 0x96; /* Secure erase support */
 
- block/io.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+This value is obsolete, so I'd use 0x0 to avoid confusions.
 
-diff --git a/block/io.c b/block/io.c
-index 7217cf811b..301514c880 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -1860,10 +1860,15 @@ bdrv_co_do_pwrite_zeroes(BlockDriverState *bs, int64_t offset, int64_t bytes,
-     /* By definition there is no user buffer so this flag doesn't make sense */
-     if (flags & BDRV_REQ_REGISTERED_BUF) {
-         return -EINVAL;
-     }
- 
-+    /* If opened with discard=off we should never unmap. */
-+    if (!(bs->open_flags & BDRV_O_UNMAP)) {
-+        flags &= ~BDRV_REQ_MAY_UNMAP;
-+    }
-+
-     /* Invalidate the cached block-status data range if this write overlaps */
-     bdrv_bsc_invalidate_range(bs, offset, bytes);
- 
-     assert(alignment % bs->bl.request_alignment == 0);
-     head = offset % alignment;
-@@ -2313,14 +2318,10 @@ int coroutine_fn bdrv_co_pwrite_zeroes(BdrvChild *child, int64_t offset,
- {
-     IO_CODE();
-     trace_bdrv_co_pwrite_zeroes(child->bs, offset, bytes, flags);
-     assert_bdrv_graph_readable();
- 
--    if (!(child->bs->open_flags & BDRV_O_UNMAP)) {
--        flags &= ~BDRV_REQ_MAY_UNMAP;
--    }
--
-     return bdrv_co_pwritev(child, offset, bytes, NULL,
-                            BDRV_REQ_ZERO_WRITE | flags);
- }
- 
- /*
--- 
-2.45.1
+> +    sd->ext_csd[EXT_CSD_SEC_TRIM_MULT] = 0x96; /* Secure TRIM multiplier */
+
+Again, 0x0 for "not defined".
+
+> +    sd->ext_csd[EXT_CSD_BOOT_INFO] = 0x7; /* Boot information */
+> +    sd->ext_csd[EXT_CSD_BOOT_MULT] = 0x8; /* Boot partition size. 128KB unit */
+> +    sd->ext_csd[EXT_CSD_ACC_SIZE] = 0x6; /* Access size */
+
+16KB of super_page_size hmm. Simpler could be the underlying block
+retrieved with bdrv_nb_sectors() or simply BDRV_SECTOR_SIZE (0x1).
+
+> +    sd->ext_csd[EXT_CSD_HC_ERASE_GRP_SIZE] = 0x4; /* HC Erase unit size */
+
+2MB of erase size hmmm why not.
+
+> +    sd->ext_csd[EXT_CSD_ERASE_TIMEOUT_MULT] = 0x1; /* HC erase timeout */
+
+We don't implement timeout, can we use 0?
+
+> +    sd->ext_csd[EXT_CSD_REL_WR_SEC_C] = 0x1; /* Reliable write sector count */
+> +    sd->ext_csd[EXT_CSD_HC_WP_GRP_SIZE] = 0x4; /* HC write protect group size */
+> +    sd->ext_csd[EXT_CSD_S_C_VCC] = 0x8; /* Sleep current VCC  */
+> +    sd->ext_csd[EXT_CSD_S_C_VCCQ] = 0x7; /* Sleep current VCCQ */
+> +    sd->ext_csd[EXT_CSD_S_A_TIMEOUT] = 0x11; /* Sleep/Awake timeout */
+> +    sd->ext_csd[215] = (sectcount >> 24) & 0xff; /* Sector count */
+> +    sd->ext_csd[214] = (sectcount >> 16) & 0xff; /* ... */
+> +    sd->ext_csd[213] = (sectcount >> 8) & 0xff;  /* ... */
+> +    sd->ext_csd[EXT_CSD_SEC_CNT] = (sectcount & 0xff);       /* ... */
+> +    sd->ext_csd[210] = 0xa; /* Min write perf for 8bit@52Mhz */
+> +    sd->ext_csd[209] = 0xa; /* Min read perf for 8bit@52Mhz  */
+> +    sd->ext_csd[208] = 0xa; /* Min write perf for 4bit@52Mhz */
+> +    sd->ext_csd[207] = 0xa; /* Min read perf for 4bit@52Mhz */
+> +    sd->ext_csd[206] = 0xa; /* Min write perf for 4bit@26Mhz */
+> +    sd->ext_csd[205] = 0xa; /* Min read perf for 4bit@26Mhz */
+
+Class B at 3MB/s. I suppose announcing up to J at 21MB/s is safe (0x46).
+
+> +    sd->ext_csd[EXT_CSD_PART_SWITCH_TIME] = 0x1;
+
+SWITCH command isn't implemented so far. We could use 0x0 for "not
+defined".
+
+> +    sd->ext_csd[EXT_CSD_OUT_OF_INTERRUPT_TIME] = 0x1;
+
+Similarly, 0x0 for "undefined" is legal.
+
+> +    sd->ext_csd[EXT_CSD_CARD_TYPE] = 0x7;
+
+You anounce dual data rate. Could we just use High-Speed mode (0x3)
+to ease modelling?
+
+> +    sd->ext_csd[EXT_CSD_STRUCTURE] = 0x2;
+> +    sd->ext_csd[EXT_CSD_REV] = 0x5;
+
+This is Revision 1.5 (for MMC v4.41)... The first QEMU implementation
+was based on Revision 1.3 (for MMC v4.3) and I'm seeing some features
+from Revision 1.6 (for MMC v4.5)...
+
+Do we want to implement all of them? Since we are adding from
+scratch, I suggest we directly start with v4.5 (0x6).
+
+Note, EXT_CSD_BUS_WIDTH is not set (0x0) meaning 1-bit data bus.
+I'd set it to 0x2 (8-bit):
+
+        sd->ext_csd[EXT_CSD_BUS_WIDTH] = EXT_CSD_BUS_WIDTH_8_MASK;
+
+> +    sd->ext_csd[EXT_CSD_RPMB_MULT] = 0x1; /* RPMB size */
+> +    sd->ext_csd[EXT_CSD_PARTITION_SUPPORT] = 0x3;
+> +    sd->ext_csd[159] = 0x00; /* Max enhanced area size */
+> +    sd->ext_csd[158] = 0x00; /* ... */
+> +    sd->ext_csd[157] = 0xEC; /* ... */
+> +}
 
 
