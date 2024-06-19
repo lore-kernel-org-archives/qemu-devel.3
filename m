@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7EB5C27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 03:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9B43C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 03:32:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJlZx-0000WB-Km; Tue, 18 Jun 2024 23:01:45 -0400
+	id 1sJm3I-0000wM-8s; Tue, 18 Jun 2024 23:32:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sJlZw-0000Vx-6K
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 23:01:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sJlZu-0007zq-81
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 23:01:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718766100;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ElwV8dwgp+H2cJ6q//q1b9Pa5X+3UciEUcashN/oUBI=;
- b=SW/NgWzfD89bQiimaHqD4UdE+jl9oiVM9SByPs3ERQEPiqrO4U8/L8GvbIK/l2BTzDspYR
- hePT++6bpn+oGlZkBa/Ai96PDTMECSfsIx4k+45EPnGSiSPFQHp+4I3dFcsq45SGoUAN/X
- AlDEGL8dro7KlJt+iwZQ8Nhk/MevS+A=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-577-A7lU4KBEOJ2VtAaqxn3YIA-1; Tue, 18 Jun 2024 23:01:38 -0400
-X-MC-Unique: A7lU4KBEOJ2VtAaqxn3YIA-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-57c93227bbeso4108212a12.3
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 20:01:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sJm3C-0000u3-K5
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 23:32:02 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sJm3B-0004RM-3b
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 23:31:58 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-25ca30072eeso45092fac.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 20:31:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718767915; x=1719372715; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BFjo2CMWaow1AyjC+jZcvadwWGyIjBbqjLni3Kn7s7g=;
+ b=zD1q7PNVoN/WyXRqwBn71qAsaOS/lf+K4PrT1u11Z+F92v2YubxokjGn1YmrM7behf
+ s+lveGDvMiMi/9VfOXJecODoA2qy2BWLM1IGrgKE0+h0CSy8wVif/yU/CSyl6Q7stgh8
+ l195WAjOll17Pcti6lVWe4rwiVwa77miu/3nwwntynfoZguRZnTgI31LUrFuEGrXyjIv
+ W56c71n7yCiP9DN4wJ4MCgP1a6l0dzB+01A+x3xDFg82SIQ0uLgsLemLdEGqmoEs32Ft
+ cmWl40LwFCYadjezP6ego9rkq3d644Qb2TL3rGZhZBzES6DfJxqZJcVXdtvss+vVyqQJ
+ yE4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718766096; x=1719370896;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ElwV8dwgp+H2cJ6q//q1b9Pa5X+3UciEUcashN/oUBI=;
- b=FUxE0UNXcInlLn2anD/FDwLozN9GzL0pc5LKREgzpJzPxl0ev30CYaR0yjKAoosc5P
- cModM9/g6vCFubcHjugtCqHTHCSOOpp0/DWKY7NvJhcDznGgfAv7fhRujm9zkA0/vhuQ
- 3qtkqE2HL/gDesbZIGAJQ18uOU6A/jnOPbzWreNnPlRwQ7rFYwvg8miueq+usL3tYVpZ
- b8I138yqkeo8c55dY1Xr7xsSFyAoHPf8cSRM36MYbMyrMcz7tRdc5sKIkCeQTPr4GD14
- e2iTMrkbkmS5XTSuMnOCCGtLz5p61kfedREo9tIWHvaCEo5uoVmCfsGX6OcnCQzvyr/1
- W3+A==
+ d=1e100.net; s=20230601; t=1718767915; x=1719372715;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BFjo2CMWaow1AyjC+jZcvadwWGyIjBbqjLni3Kn7s7g=;
+ b=BSxwuRwB3VYXuVotJnBDsJBF47/6NEmfCnSa8tFUtLntxQ604OpUs7SY5p5FQdSdHD
+ N7iunANgFFzJ5B/po8QpkfBtWb968ScQq0lP4O+LX2IJvhmDAT85RSI2iThOZ1NpE/8S
+ Is5M+hqMY8nMLeR36GjrgmbrsmYkEG6EUFjvtYHHdSsiM+oCy6V1S7Dpbkqh5NKYkiFc
+ anhioWl9ut0mfyBlosh7Uukvub8uuloEcVsDLZbgWNZsvBmuiioo8/93Ezu1zB5OFFtw
+ X8VxUd+EHUKCvj6NO0+uWfZyUarDDV1/ULhAHXM9HAEdLlUDlBCvYkyNh+HMBiX67b0X
+ aNQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUV8goBxvxOsX0wbVPgkd4CFclQmUYAUfdP2VJIJPkMZBiY3hBGNthq2aAYLosJGWZMFaqvIsMuYwxoOldodexfh2jQTBk=
-X-Gm-Message-State: AOJu0YyqKowkrBWoWWt2F/KAY8JiN9MS4RbyVmOzLbwP8EGhJNreztWi
- ITG0Fc2Vur+ASUgOHrj4MdWBGq0wXIofXF5UrYr6zRapdqJK2qhqL6TNF3cRY123x1/ePBufAzj
- bI0y5M0WyRAcqCDP0NtcsRXRYKRhd2uL4r9Ra2akvjlIv2D3ul7w0EKF4E8ii259+66FLSAlTeI
- yw+0pifLHJhZDWduwzZzmCt0fCO4K69In+FWY=
-X-Received: by 2002:a17:907:30d7:b0:a6f:56d2:8f0c with SMTP id
- a640c23a62f3a-a6fab643ee2mr53428666b.40.1718766096323; 
- Tue, 18 Jun 2024 20:01:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGu1i5I0JFjVMBwhcGOJZfK/jVrIjOBlB+mHMPdg9JvWv2JEqANUrDYkv6/MRtkhP9EsOvahc7cm+cAgULiqB8=
-X-Received: by 2002:a17:907:30d7:b0:a6f:56d2:8f0c with SMTP id
- a640c23a62f3a-a6fab643ee2mr53427766b.40.1718766095996; Tue, 18 Jun 2024
- 20:01:35 -0700 (PDT)
+ AJvYcCUSbUhKNl0GWxpI+J04+KyIfouJmqn1GG0IH3WeumUz9L8b37FLk5p4zI9xZgPHtMnuqgAO7MvBpOw5L5tln7wnH2aoy+Y=
+X-Gm-Message-State: AOJu0Yw3UMWgkQSXTRWL5toHf2HnEHZ5Z9PIw+Aa0wV3pCYScftzzN1B
+ 1b8eFfvB5C04Vp0rIUOAzjaSB0Q1NHaPuMGSRI7TRY/fd7dLv0woHijGcpHX0Ho=
+X-Google-Smtp-Source: AGHT+IE/+B8lbHeNn6g2SYBiZyGNSo3T7LDCLmgLj6eBREkHRDwmwRho+fkcxVKcoMLIUuxVMy3m4g==
+X-Received: by 2002:a05:6871:5c9:b0:254:6e4e:23d7 with SMTP id
+ 586e51a60fabf-25c94d722a6mr1866447fac.50.1718767915382; 
+ Tue, 18 Jun 2024 20:31:55 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-705cc987738sm9700993b3a.89.2024.06.18.20.31.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Jun 2024 20:31:54 -0700 (PDT)
+Message-ID: <7cd4838d-ab79-48a8-8f06-dd8145c6c82f@linaro.org>
+Date: Tue, 18 Jun 2024 20:31:52 -0700
 MIME-Version: 1.0
-References: <20240617095529.115046-1-lulu@redhat.com>
- <d68aeb35-3e31-48f1-81df-d85ed8d8381c@linaro.org>
-In-Reply-To: <d68aeb35-3e31-48f1-81df-d85ed8d8381c@linaro.org>
-From: Cindy Lu <lulu@redhat.com>
-Date: Wed, 19 Jun 2024 11:00:58 +0800
-Message-ID: <CACLfguUBmB_XK5h4eo4HBvOxv=A=NrTKv8GuBR=T=9ZLpfgRDA@mail.gmail.com>
-Subject: Re: [PATCH v2] virtio-pci: Fix the use of an uninitialized irqfd.
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org, 
- qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 0/5] Implement ARM PL011 in Rust
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,94 +96,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 17, 2024 at 6:38=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> Hi Cindy,
->
-> On 17/6/24 11:55, Cindy Lu wrote:
-> > The crash was reported in MAC OS and NixOS, here is the link for this b=
-ug
-> > https://gitlab.com/qemu-project/qemu/-/issues/2334
-> > https://gitlab.com/qemu-project/qemu/-/issues/2321
-> >
-> > The root cause is the function virtio_pci_set_guest_notifiers() was not=
- called
-> > in the virtio_input device.So the vector_irqfd was not initialized
-> >
-> > So the fix is to add the check for vector_irqfd.
-> >
-> > This fix is verified in vyatta,MacOS,NixOS,fedora system.
-> >
-> > The bt tree for this bug is:
-> > Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
-> > [Switching to Thread 0x7c817be006c0 (LWP 1269146)]
-> > kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c=
-:817
-> > 817       if (irqfd->users =3D=3D 0) {
-> > (gdb) thread apply all bt
-> > ...
-> > Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
-> > 0  kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pc=
-i.c:817
-> > 1  kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/hw/virtio/virtio-p=
-ci.c:893
-> > 2  0x00005983657045e2 in memory_region_write_accessor () at ../qemu-9.0=
-.0/system/memory.c:497
-> > 3  0x0000598365704ba6 in access_with_adjusted_size () at ../qemu-9.0.0/=
-system/memory.c:573
-> > 4  0x0000598365705059 in memory_region_dispatch_write () at ../qemu-9.0=
-.0/system/memory.c:1528
-> > 5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at ../q=
-emu-9.0.0/system/physmem.c:2713
-> > 6  0x000059836570ba7d in flatview_write_continue () at ../qemu-9.0.0/sy=
-stem/physmem.c:2743
-> > 7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
-> > 8  0x000059836570bb76 in address_space_write () at ../qemu-9.0.0/system=
-/physmem.c:2894
-> > 9  0x0000598365763afe in address_space_rw () at ../qemu-9.0.0/system/ph=
-ysmem.c:2904
-> > 10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
-> > 11 0x000059836576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel/k=
-vm/kvm-accel-ops.c:50
-> > 12 0x0000598365926ca8 in qemu_thread_start () at ../qemu-9.0.0/util/qem=
-u-thread-posix.c:541
-> > 13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
-> > 14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
-> >
-> > Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
-> > Cc: qemu-stable@nongnu.org
-> >
-> > Signed-off-by: Cindy Lu <lulu@redhat.com>
-> > ---
-> >   hw/virtio/virtio-pci.c | 8 ++++++--
-> >   1 file changed, 6 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> > index b1d02f4b3d..502aad28b2 100644
-> > --- a/hw/virtio/virtio-pci.c
-> > +++ b/hw/virtio/virtio-pci.c
-> > @@ -1442,7 +1442,9 @@ static void virtio_pci_set_vector(VirtIODevice *v=
-dev,
-> >        * Otherwise just need to set the new vector on the device.
-> >        */
-> >       if (kvm_irqfd && old_vector !=3D VIRTIO_NO_VECTOR) {
-> > -        kvm_virtio_pci_vector_release_one(proxy, queue_no);
-> > +        if (proxy->vector_irqfd) {
->
-> Shouldn't this go into called virtio_pci_get_notifier()?
->
-sure, will do
-> > +            kvm_virtio_pci_vector_release_one(proxy, queue_no);
->
-> We ignore this function return value, is it safe/expected?
->
-sure, will add the check here
-thanks
-Cindy
-> > +        }
-> >       }
->
->
+On 6/11/24 03:33, Manos Pitsidianakis wrote:
+> If `cargo` and `bindgen` is installed in your system, you should be able
+> to build qemu-system-aarch64 with configure flag --enable-rust and
+> launch an arm virt VM. One of the patches hardcodes the default UART of
+> the machine to the Rust one, so if something goes wrong you will see it
+> upon launching qemu-system-aarch64.
 
+What version is required?
+
+On my stock ubuntu 22.04 system, I get
+
+/usr/bin/bindgen aarch64-softmmu_wrapper.h ...
+error: Found argument '--formatter' which wasn't expected, or isn't valid in this context
+
+USAGE:
+     bindgen [FLAGS] [OPTIONS] <header> -- <clang-args>...
+
+$ bindgen --version
+bindgen 0.59.1
+
+
+r~
 
