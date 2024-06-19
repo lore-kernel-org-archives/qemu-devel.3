@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59A92C2BA15
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 00:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07720C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 00:32:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJjE0-00063h-S9; Tue, 18 Jun 2024 20:30:56 -0400
+	id 1sJjEX-0006eD-TA; Tue, 18 Jun 2024 20:31:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjDv-0005ta-Aq
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:30:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjEW-0006as-8f
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:31:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjDt-0001HR-Le
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:30:51 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sJjEU-0001Qi-RV
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 20:31:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718757048;
+ s=mimecast20190719; t=1718757086;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DIhyARDSiJAKf1IGFLgtu4n0qVqz5AupiUZ8Wv0Ht5I=;
- b=N1UbAGOt98zZYT19AeiAOsvPAQHo2Bn+9dkX2Crmi1zjREHc3Ye55HQcP9759ifPUmrR6g
- sFrY34TRru3s2+CZX8mlK3WHSsLW1HVmYzTTh8cgciOIYRegY8CKi3Y0LG4SjGe+GThzVw
- h1Dx0XyhNUJHrybg5/AG6PMMHySiTCA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=PKn8SIxGob2pKMM70MaK6Zu4lcrmGDuuPfEZ9b3S+uQ=;
+ b=SpJWRUGht3tE81yX0TJpPKN0zmw8AySpTbAzHFY/zEHpoCvRREdtO2GxVlMz6yFMYZ/ujf
+ wlhnEzYfsivsNoYLb2KjlfFhW5GzRf6D14wGqexJjHqCaAdMGLxN9cpAZXd1wu6FMSTMRs
+ RTikvAPY8EgPtVqDbLrpaRxqLH6eX3s=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-9ecJEb_JM6ew5-jrKb9tfA-1; Tue,
- 18 Jun 2024 20:30:44 -0400
-X-MC-Unique: 9ecJEb_JM6ew5-jrKb9tfA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-402-4OkzGxRBOvGFq_PlNjrGvQ-1; Tue,
+ 18 Jun 2024 20:31:23 -0400
+X-MC-Unique: 4OkzGxRBOvGFq_PlNjrGvQ-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D268E19560B8; Wed, 19 Jun 2024 00:30:40 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6E40319560B2; Wed, 19 Jun 2024 00:31:20 +0000 (UTC)
 Received: from scv.localdomain (unknown [10.22.16.38])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7FB131956087; Wed, 19 Jun 2024 00:30:31 +0000 (UTC)
+ id F122A1955E80; Wed, 19 Jun 2024 00:31:12 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -70,15 +70,15 @@ Cc: Stefan Hajnoczi <stefanha@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Eric Blake <eblake@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 01/13] [DO-NOT-MERGE]: Add some ad-hoc linting helpers.
-Date: Tue, 18 Jun 2024 20:30:00 -0400
-Message-ID: <20240619003012.1753577-2-jsnow@redhat.com>
+Subject: [PATCH 06/13] docs/qapidoc: fix nested parsing under untagged sections
+Date: Tue, 18 Jun 2024 20:30:05 -0400
+Message-ID: <20240619003012.1753577-7-jsnow@redhat.com>
 In-Reply-To: <20240619003012.1753577-1-jsnow@redhat.com>
 References: <20240619003012.1753577-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -103,107 +103,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These aren't ready for upstream inclusion, because they do not properly
-manage version dependencies, execution environment and so on. These are
-just the tools I use in my Own Special Environment :tm: for testing and
-debugging.
+Sphinx does not like sections without titles, because it wants to
+convert every section into a reference. When there is no title, it
+struggles to do this and transforms the tree inproperly.
 
-They've been tested only on Fedora 38 for right now, which means:
+Depending on the rST used, this may result in an assertion error deep in
+the docutils HTMLWriter.
 
-Python 3.11.4-1.fc38
-pylint 2.17.4-2.fc38
-mypy 1.4.0-1.fc38
-isort 5.12.0-1.fc38
-flake8 5.0.3-2.fc38
+(Observed when using ".. admonition:: Notes" under such a section - When
+this is transformed with its own <title> element, Sphinx is fooled into
+believing this title belongs to the section and incorrect mutates the
+docutils tree, leading to errors during rendering time.)
 
-"Soon" :tm: I'll move the qapi generator code under the python/
-directory to take advantage of the more robust linting infrastructure
-there, but that's going to happen after this series. Sorry about that!
+When parsing an untagged section (free paragraphs), skip making a hollow
+section and instead append the parse results to the prior section.
+
+Many Bothans died to bring us this information.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- scripts/qapi-lint.sh  | 59 +++++++++++++++++++++++++++++++++++++++++++
- scripts/qapi/Makefile |  5 ++++
- 2 files changed, 64 insertions(+)
- create mode 100755 scripts/qapi-lint.sh
- create mode 100644 scripts/qapi/Makefile
+ docs/sphinx/qapidoc.py | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/scripts/qapi-lint.sh b/scripts/qapi-lint.sh
-new file mode 100755
-index 00000000000..ba13306f09e
---- /dev/null
-+++ b/scripts/qapi-lint.sh
-@@ -0,0 +1,59 @@
-+#!/usr/bin/env bash
-+set -e
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index f2f2005dd5f..66cf254a624 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -286,14 +286,20 @@ def _nodes_for_sections(self, doc):
+             if section.tag and section.tag == 'TODO':
+                 # Hide TODO: sections
+                 continue
 +
-+if [[ -f qapi/.flake8 ]]; then
-+    echo "flake8 --config=qapi/.flake8 qapi/"
-+    flake8 --config=qapi/.flake8 qapi/
-+fi
-+if [[ -f qapi/pylintrc ]]; then
-+    echo "pylint --rcfile=qapi/pylintrc qapi/"
-+    pylint --rcfile=qapi/pylintrc qapi/
-+fi
-+if [[ -f qapi/mypy.ini ]]; then
-+    echo "mypy --config-file=qapi/mypy.ini qapi/"
-+    mypy --config-file=qapi/mypy.ini qapi/
-+fi
++            if not section.tag:
++                # Sphinx cannot handle sectionless titles;
++                # Instead, just append the results to the prior section.
++                container = nodes.container()
++                self._parse_text_into_node(section.text, container)
++                nodelist += container.children
++                continue
 +
-+if [[ -f qapi/.isort.cfg ]]; then
-+    pushd qapi
-+    echo "isort -c ."
-+    isort -c .
-+    popd
-+fi
-+
-+if [[ -f ../docs/sphinx/qapi-domain.py ]]; then
-+    pushd ../docs/sphinx
-+
-+    echo "mypy --strict qapi-domain.py"
-+    mypy --strict qapi-domain.py
-+    echo "flake8 qapi-domain.py --max-line-length=99"
-+    flake8 qapi-domain.py --max-line-length=99
-+    echo "isort qapi-domain.py"
-+    isort qapi-domain.py
-+    echo "black --check qapi-domain.py"
-+    black --check qapi-domain.py
-+
-+    popd
-+fi
-+
-+if [[ -f ../docs/sphinx/qapidoc.py ]]; then
-+    pushd ../docs/sphinx
-+
-+    echo "pylint --rc-file ../../scripts/qapi/pylintrc qapidoc.py"
-+    PYTHONPATH=${HOME}/src/qemu/scripts/ pylint --rc-file ../../scripts/qapi/pylintrc qapidoc.py
-+    echo "flake8 qapidoc.py --max-line-length=80"
-+    flake8 qapidoc.py --max-line-length=80
-+    echo "isort qapidoc.py"
-+    isort qapidoc.py
-+    echo "black --line-length 80 --check qapidoc.py"
-+    black --line-length 80 --check qapidoc.py
-+
-+    popd
-+fi
-+
-+pushd ../build
-+make -j13
-+make check-qapi-schema
-+make docs
-+make sphinxdocs
-+popd
-diff --git a/scripts/qapi/Makefile b/scripts/qapi/Makefile
-new file mode 100644
-index 00000000000..314e8a5505e
---- /dev/null
-+++ b/scripts/qapi/Makefile
-@@ -0,0 +1,5 @@
-+check:
-+	isort -c .
-+	flake8 .
-+	cd .. && pylint --rcfile=qapi/pylintrc qapi
-+	cd .. && mypy -p qapi --config-file=qapi/mypy.ini
+             snode = self._make_section(section.tag)
+-            if section.tag and section.tag.startswith('Example'):
++            if section.tag.startswith('Example'):
+                 snode += self._nodes_for_example(dedent(section.text))
+             else:
+-                self._parse_text_into_node(
+-                    dedent(section.text) if section.tag else section.text,
+-                    snode,
+-                )
++                self._parse_text_into_node(dedent(section.text), snode)
+             nodelist.append(snode)
+         return nodelist
+ 
 -- 
 2.44.0
 
