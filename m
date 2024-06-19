@@ -4,78 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6622C27C79
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 06:51:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 099EEC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 06:51:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJp8o-0003Y3-4Z; Wed, 19 Jun 2024 02:49:58 -0400
+	id 1sJp9i-00042w-2o; Wed, 19 Jun 2024 02:50:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sJp8h-0003Uq-9t; Wed, 19 Jun 2024 02:49:51 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sJp8e-0003No-W2; Wed, 19 Jun 2024 02:49:50 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a63359aaaa6so954150666b.2; 
- Tue, 18 Jun 2024 23:49:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718779787; x=1719384587; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=sROiLnN74b1tjP5dGp41RIIZzU0uLRAJzU+LlS8eF1Y=;
- b=luOFZUQwd5zh6MwymaV5lyjIL3ZCLBeXF/O3dmTFGLz3nFf3kC8+a3/7fYlEHhKL4R
- iVjSkMvVImjuHt/ebgUVyLblYQ2v6jPGc/Xbnt0oR/ySqhLUaQtIBGvBGm8BRMQr+g70
- WFXS0H3a3O93W/83vPCpZ3YVEHoUXn7qZOLL1EkT2tPnc7f8uySggltql9aDBNqFMCAH
- ISlc/8mL8jWYbpjpKVvs9+F+FCT7tI9H6KMzhmQVhpq+IpzR/u5zT54TiIbVoNSqX4bv
- CWo1J2gmwUn3esV1CQlNEJLNk5ycgruSgLoZNaqnkrToU5KXo4EI5b2SyiaNImlyaz5p
- +KrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718779787; x=1719384587;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sROiLnN74b1tjP5dGp41RIIZzU0uLRAJzU+LlS8eF1Y=;
- b=w1lVrKfIcq4FMTI9EGjf00BMUgbTbmsoYRSvTsfzsTNFrDKWeiTJtPxB+8QV1xEP6P
- 30XjqaWs9hch7IUJv7Z5RWWRWoGlPX/M1jvw4idTjuhq011fPWdveNRNVMYBPYDmVNq2
- hAhesDQK7xqa0ZejjDb3G9/Un1tkbRs1qgyPJfmO5hzova8RrEsA8TFjTWCOimV6yr7a
- 3RpB2PHs0QPCP/ymp2OFM5rWh9piBmYPHc+7jxcQvleiLk366MBZlZ9/2B42fZmM5vVK
- RjX3NtsB/qUr4iH1kWu1oS+eb60qCIswtgqeNwdsv6fqe7D/0t8+5lEhB3x6cAI/Qs4/
- 4SrA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU6wKfWQ1g6ectb20p7/KAsPwF2JFeMYpPoR+wnw6BOQSq51vUaVj77jqtfFNsyj3OUlEa0UwOVjgzvsNYkkORdF7P5p9h3BTjKHoo1tXFYLYWZv6Pste++ywU=
-X-Gm-Message-State: AOJu0YyEG5iXPSG2LlcmHaUMS1TN6RJgcu4dlUNSXYmBe4oFU+3v+AVE
- i3g5vM5P2xAOuuEWqBLBD1Ms2j02UMI8N77k1S4gaCyWIoRj6a2HiSBeuIYZKCdrU5Pin0xIyoO
- rjXFn3rJ5rBah4NP3Oe4DkmGkJrBqSC8=
-X-Google-Smtp-Source: AGHT+IHiNSmb7rXbFQDlllEvftLHmO4f70NWZZPKz6mFllzD7Nih3WsLxf1o8VasVVXNvjVvgK9eAW9sVb00wKeARv8=
-X-Received: by 2002:a17:907:72c4:b0:a6f:2e28:4008 with SMTP id
- a640c23a62f3a-a6fab77a1ddmr98737966b.54.1718779786378; Tue, 18 Jun 2024
- 23:49:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1sJp9a-0003tD-Ma; Wed, 19 Jun 2024 02:50:46 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>)
+ id 1sJp9V-0003hR-QM; Wed, 19 Jun 2024 02:50:46 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8DxSuq4f3JmYyoIAA--.33059S3;
+ Wed, 19 Jun 2024 14:50:32 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Cxaca0f3JmH8soAA--.32673S3; 
+ Wed, 19 Jun 2024 14:50:30 +0800 (CST)
+Subject: Re: [PATCH v2] tcg/loongarch64: Fix tcg_out_movi vs some pcrel
+ pointers
+To: Richard Henderson <richard.henderson@linaro.org>
+References: <20240619055002.119042-1-richard.henderson@linaro.org>
+From: gaosong <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, yijun@loongson.cn, qemu-stable@nongnu.org
+Message-ID: <06661142-5244-2ceb-d747-3220f7ef361a@loongson.cn>
+Date: Wed, 19 Jun 2024 14:50:32 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20240618130928.3075494-1-zheyuma97@gmail.com>
- <bd15ab0597caad4564ca8f9498dfd3bbbe67df89.camel@codeconstruct.com.au>
-In-Reply-To: <bd15ab0597caad4564ca8f9498dfd3bbbe67df89.camel@codeconstruct.com.au>
-From: Zheyu Ma <zheyuma97@gmail.com>
-Date: Wed, 19 Jun 2024 08:49:35 +0200
-Message-ID: <CAMhUBjm6vBO8RWx9OqCvFqGBNVRy3j2FyhZM4tTp0dZwh3L2aA@mail.gmail.com>
-Subject: Re: [PATCH] hw/gpio/aspeed: Add bounds checking for register table
- access
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000009d4402061b389a31"
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=zheyuma97@gmail.com; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+In-Reply-To: <20240619055002.119042-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8Cxaca0f3JmH8soAA--.32673S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxXr1UAr1xJryDGr4DKF13WrX_yoW5Gw45pr
+ 9xGa4Utayrt347CFsrZr4qqw18Jr4DKw1UJasrKr10v34vv3WDWan5Cw1Sga47ta45Ar17
+ ZFn0yw17WFWDAagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL
+ 05UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: 2
+X-Spam_score: 0.2
+X-Spam_bar: /
+X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-0.355, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,219 +82,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009d4402061b389a31
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ÔÚ 2024/6/19 ÏÂÎç1:50, Richard Henderson Ð´µÀ:
+> Simplify the logic for two-part, 32-bit pc-relative addresses.
+> Rather than assume all such fit in int32_t, do some arithmetic
+> and assert a result, do some arithmetic first and then check
+> to see if the pieces are in range.
+>
+> Reported-by: Song Gao <gaosong@loongson.cn>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>
+> Hi Song.  I was not thrilled by the "goto out" that you introduced in
+>
+>    20240618125044.687443-1-gaosong@loongson.cn
+>
+> Instead, I copied the logic from tcg/aarch64/ for adrp+add.
+>
+>   
+Thank you.
 
-Hi Andrew,
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-On Wed, Jun 19, 2024 at 1:58=E2=80=AFAM Andrew Jeffery <andrew@codeconstruc=
-t.com.au>
-wrote:
+Thanks.
+Song Gao
+> r~
+>
+> ---
+>   tcg/loongarch64/tcg-target.c.inc | 32 +++++++++++++++-----------------
+>   1 file changed, 15 insertions(+), 17 deletions(-)
+>
+> diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+> index 7ca52d0248..e915e97bba 100644
+> --- a/tcg/loongarch64/tcg-target.c.inc
+> +++ b/tcg/loongarch64/tcg-target.c.inc
+> @@ -382,8 +382,7 @@ static void tcg_out_movi(TCGContext *s, TCGType type, TCGReg rd,
+>        * back to the slow path.
+>        */
+>   
+> -    intptr_t pc_offset;
+> -    tcg_target_long val_lo, val_hi, pc_hi, offset_hi;
+> +    intptr_t src_rx, pc_offset;
+>       tcg_target_long hi12, hi32, hi52;
+>   
+>       /* Value fits in signed i32.  */
+> @@ -393,24 +392,23 @@ static void tcg_out_movi(TCGContext *s, TCGType type, TCGReg rd,
+>       }
+>   
+>       /* PC-relative cases.  */
+> -    pc_offset = tcg_pcrel_diff(s, (void *)val);
+> -    if (pc_offset == sextreg(pc_offset, 0, 22) && (pc_offset & 3) == 0) {
+> -        /* Single pcaddu2i.  */
+> -        tcg_out_opc_pcaddu2i(s, rd, pc_offset >> 2);
+> -        return;
+> +    src_rx = (intptr_t)tcg_splitwx_to_rx(s->code_ptr);
+> +    if ((val & 3) == 0) {
+> +        pc_offset = val - src_rx;
+> +        if (pc_offset == sextreg(pc_offset, 0, 22)) {
+> +            /* Single pcaddu2i.  */
+> +            tcg_out_opc_pcaddu2i(s, rd, pc_offset >> 2);
+> +            return;
+> +        }
+>       }
+>   
+> -    if (pc_offset == (int32_t)pc_offset) {
+> -        /* Offset within 32 bits; load with pcalau12i + ori.  */
+> -        val_lo = sextreg(val, 0, 12);
+> -        val_hi = val >> 12;
+> -        pc_hi = (val - pc_offset) >> 12;
+> -        offset_hi = val_hi - pc_hi;
+> -
+> -        tcg_debug_assert(offset_hi == sextreg(offset_hi, 0, 20));
+> -        tcg_out_opc_pcalau12i(s, rd, offset_hi);
+> +    pc_offset = (val >> 12) - (src_rx >> 12);
+> +    if (pc_offset == sextreg(pc_offset, 0, 20)) {
+> +        /* Load with pcalau12i + ori.  */
+> +        tcg_target_long val_lo = val & 0xfff;
+> +        tcg_out_opc_pcalau12i(s, rd, pc_offset);
+>           if (val_lo != 0) {
+> -            tcg_out_opc_ori(s, rd, rd, val_lo & 0xfff);
+> +            tcg_out_opc_ori(s, rd, rd, val_lo);
+>           }
+>           return;
+>       }
 
-> Hello Zheyu Ma,
->
-> On Tue, 2024-06-18 at 15:09 +0200, Zheyu Ma wrote:
-> > Added bounds checking in the aspeed_gpio_read() and aspeed_gpio_write()
-> > functions to ensure the index idx is within the valid range of the
-> > reg_table array.
-> >
-> > The correct size of reg_table is determined dynamically based on whethe=
-r
-> > it is aspeed_3_3v_gpios or aspeed_1_8v_gpios. If idx exceeds the
-> > size of reg_table, an error is logged, and the function returns.
-> >
-> > AddressSanitizer log indicating the issue:
-> >
-> > =3D=3D2602930=3D=3DERROR: AddressSanitizer: global-buffer-overflow on a=
-ddress
-> 0x55a5da29e128 at pc 0x55a5d700dc62 bp 0x7fff096c4e90 sp 0x7fff096c4e88
-> > READ of size 2 at 0x55a5da29e128 thread T0
-> >     #0 0x55a5d700dc61 in aspeed_gpio_read hw/gpio/aspeed_gpio.c:564:14
-> >     #1 0x55a5d933f3ab in memory_region_read_accessor
-> system/memory.c:445:11
-> >     #2 0x55a5d92fba40 in access_with_adjusted_size system/memory.c:573:=
-18
-> >     #3 0x55a5d92f842c in memory_region_dispatch_read1
-> system/memory.c:1426:16
-> >     #4 0x55a5d92f7b68 in memory_region_dispatch_read
-> system/memory.c:1459:9
-> >     #5 0x55a5d9376ad1 in flatview_read_continue_step
-> system/physmem.c:2836:18
-> >     #6 0x55a5d9376399 in flatview_read_continue system/physmem.c:2877:1=
-9
-> >     #7 0x55a5d93775b8 in flatview_read system/physmem.c:2907:12
->
-> I'm mildly interested in what you were doing to trigger this. Certainly
-> we could do with a guard in the model to prevent it, but I'm curious
-> all the same.
->
-
-Actually, I'm doing the virtual device fuzzing test and trying to discover
-bugs.
-
->
-> >
-> > Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-> > ---
-> >  hw/gpio/aspeed_gpio.c | 26 ++++++++++++++++++++++++++
-> >  1 file changed, 26 insertions(+)
-> >
-> > diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-> > index c1781e2ba3..1441046f6c 100644
-> > --- a/hw/gpio/aspeed_gpio.c
-> > +++ b/hw/gpio/aspeed_gpio.c
-> > @@ -550,6 +550,7 @@ static uint64_t aspeed_gpio_read(void *opaque,
-> hwaddr offset, uint32_t size)
-> >      GPIOSets *set;
-> >      uint32_t value =3D 0;
-> >      uint64_t debounce_value;
-> > +    uint32_t reg_table_size;
-> >
-> >      idx =3D offset >> 2;
-> >      if (idx >=3D GPIO_DEBOUNCE_TIME_1 && idx <=3D GPIO_DEBOUNCE_TIME_3=
-) {
-> > @@ -559,6 +560,18 @@ static uint64_t aspeed_gpio_read(void *opaque,
-> hwaddr offset, uint32_t size)
-> >          return debounce_value;
-> >      }
-> >
-> > +    if (agc->reg_table =3D=3D aspeed_3_3v_gpios) {
-> > +        reg_table_size =3D GPIO_3_3V_REG_ARRAY_SIZE;
-> > +    } else {
-> > +        reg_table_size =3D GPIO_1_8V_REG_ARRAY_SIZE;
-> > +    }
->
-> I think I'd prefer we add reg_table_size as a member of AspeedGPIOClass
-> and initialise it at the same time as we initialise reg_table. I feel
-> it would help maintain safety in the face of future changes (i.e. if
-> another reg table were introduced). With that approach the hunk above
-> can be dropped.
->
-> > +
-> > +    if (idx >=3D reg_table_size) {
->
-> This condition would then become:
->
-> ```
-> if (idx >=3D agc->reg_table_size) {
-> ```
->
-> Thoughts?
->
-
-I agree with you, adding a new member is a more maintainable way, I'll send
-a v2 patch, thanks!
-
-Zheyu
-
---0000000000009d4402061b389a31
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi=C2=A0Andrew,</div><br><div class=3D"gm=
-ail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jun 19, 2024 at 1:=
-58=E2=80=AFAM Andrew Jeffery &lt;<a href=3D"mailto:andrew@codeconstruct.com=
-.au">andrew@codeconstruct.com.au</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">Hello Zheyu Ma,<br>
-<br>
-On Tue, 2024-06-18 at 15:09 +0200, Zheyu Ma wrote:<br>
-&gt; Added bounds checking in the aspeed_gpio_read() and aspeed_gpio_write(=
-)<br>
-&gt; functions to ensure the index idx is within the valid range of the<br>
-&gt; reg_table array.<br>
-&gt; <br>
-&gt; The correct size of reg_table is determined dynamically based on wheth=
-er<br>
-&gt; it is aspeed_3_3v_gpios or aspeed_1_8v_gpios. If idx exceeds the<br>
-&gt; size of reg_table, an error is logged, and the function returns.<br>
-&gt; <br>
-&gt; AddressSanitizer log indicating the issue:<br>
-&gt; <br>
-&gt; =3D=3D2602930=3D=3DERROR: AddressSanitizer: global-buffer-overflow on =
-address 0x55a5da29e128 at pc 0x55a5d700dc62 bp 0x7fff096c4e90 sp 0x7fff096c=
-4e88<br>
-&gt; READ of size 2 at 0x55a5da29e128 thread T0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0#0 0x55a5d700dc61 in aspeed_gpio_read hw/gpio/aspee=
-d_gpio.c:564:14<br>
-&gt;=C2=A0 =C2=A0 =C2=A0#1 0x55a5d933f3ab in memory_region_read_accessor sy=
-stem/memory.c:445:11<br>
-&gt;=C2=A0 =C2=A0 =C2=A0#2 0x55a5d92fba40 in access_with_adjusted_size syst=
-em/memory.c:573:18<br>
-&gt;=C2=A0 =C2=A0 =C2=A0#3 0x55a5d92f842c in memory_region_dispatch_read1 s=
-ystem/memory.c:1426:16<br>
-&gt;=C2=A0 =C2=A0 =C2=A0#4 0x55a5d92f7b68 in memory_region_dispatch_read sy=
-stem/memory.c:1459:9<br>
-&gt;=C2=A0 =C2=A0 =C2=A0#5 0x55a5d9376ad1 in flatview_read_continue_step sy=
-stem/physmem.c:2836:18<br>
-&gt;=C2=A0 =C2=A0 =C2=A0#6 0x55a5d9376399 in flatview_read_continue system/=
-physmem.c:2877:19<br>
-&gt;=C2=A0 =C2=A0 =C2=A0#7 0x55a5d93775b8 in flatview_read system/physmem.c=
-:2907:12<br>
-<br>
-I&#39;m mildly interested in what you were doing to trigger this. Certainly=
-<br>
-we could do with a guard in the model to prevent it, but I&#39;m curious<br=
->
-all the same.<br></blockquote><div><br></div><div>Actually, I&#39;m doing t=
-he virtual device fuzzing test and trying to discover bugs.=C2=A0</div><blo=
-ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
-:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; <br>
-&gt; Signed-off-by: Zheyu Ma &lt;<a href=3D"mailto:zheyuma97@gmail.com" tar=
-get=3D"_blank">zheyuma97@gmail.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 hw/gpio/aspeed_gpio.c | 26 ++++++++++++++++++++++++++<br>
-&gt;=C2=A0 1 file changed, 26 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c<br>
-&gt; index c1781e2ba3..1441046f6c 100644<br>
-&gt; --- a/hw/gpio/aspeed_gpio.c<br>
-&gt; +++ b/hw/gpio/aspeed_gpio.c<br>
-&gt; @@ -550,6 +550,7 @@ static uint64_t aspeed_gpio_read(void *opaque, hwa=
-ddr offset, uint32_t size)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 GPIOSets *set;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 uint32_t value =3D 0;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 uint64_t debounce_value;<br>
-&gt; +=C2=A0 =C2=A0 uint32_t reg_table_size;<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 idx =3D offset &gt;&gt; 2;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 if (idx &gt;=3D GPIO_DEBOUNCE_TIME_1 &amp;&amp; id=
-x &lt;=3D GPIO_DEBOUNCE_TIME_3) {<br>
-&gt; @@ -559,6 +560,18 @@ static uint64_t aspeed_gpio_read(void *opaque, hw=
-addr offset, uint32_t size)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return debounce_value;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 <br>
-&gt; +=C2=A0 =C2=A0 if (agc-&gt;reg_table =3D=3D aspeed_3_3v_gpios) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 reg_table_size =3D GPIO_3_3V_REG_ARRAY_SI=
-ZE;<br>
-&gt; +=C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 reg_table_size =3D GPIO_1_8V_REG_ARRAY_SI=
-ZE;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-<br>
-I think I&#39;d prefer we add reg_table_size as a member of AspeedGPIOClass=
-<br>
-and initialise it at the same time as we initialise reg_table. I feel<br>
-it would help maintain safety in the face of future changes (i.e. if<br>
-another reg table were introduced). With that approach the hunk above<br>
-can be dropped.<br>
-<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (idx &gt;=3D reg_table_size) {<br>
-<br>
-This condition would then become:<br>
-<br>
-```<br>
-if (idx &gt;=3D agc-&gt;reg_table_size) {<br>
-```<br>
-<br>
-Thoughts?<br></blockquote><div><br></div><div>I agree with you, adding a ne=
-w member is a more maintainable way, I&#39;ll send a v2 patch, thanks!<br><=
-br></div><div>Zheyu=C2=A0</div></div></div>
-
---0000000000009d4402061b389a31--
 
