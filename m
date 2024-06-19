@@ -4,104 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CE8CC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 16:37:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3467C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 16:44:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJyIx-0007b3-Tp; Wed, 19 Jun 2024 12:37:03 -0400
+	id 1sJyP7-0001yM-T4; Wed, 19 Jun 2024 12:43:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1sJyIq-0007ZM-PM; Wed, 19 Jun 2024 12:36:56 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sJyP2-0001xS-0v
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 12:43:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1sJyIn-00029f-At; Wed, 19 Jun 2024 12:36:56 -0400
-Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45JGSKUi002664;
- Wed, 19 Jun 2024 16:36:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=n
- G1dhxxAgBTltKV8IuVwed/i86w1pLnYSP/5aXD0oPE=; b=MCozZKKYx5kjasTwe
- zxjBGFViyNAQjdTvOewxqKRJriJA/z4lSnioC/1d0a+M+2gnYricmqSRGsj0LXLJ
- +4TkBymw+wljHXf8RRTJpz51mp15sFPQfsrlgUZ5hDs3d8howEF5z4GyPTgYKm9V
- JVY0lDar5a147idDINkAoVoqQRAXlFBdC3eR53uRDGRyXbz2w87Zq1kI4dqZo8kb
- uRN8TrtJhxVcwyQg0/h/AAJHir8liWNQ46C2hOsgUa02cMk6BVNegg19sQH4MwdU
- zP8oX8jon0wJj70S7omkWtQVY/XeRmbumBFcXPPIgUuNvxgMSmTfbniyLtH75AO5
- U8qnA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yv2vm00xc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Jun 2024 16:36:41 +0000 (GMT)
-Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45JGaf4x017827;
- Wed, 19 Jun 2024 16:36:41 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yv2vm00xa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Jun 2024 16:36:41 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45JFhxGM023990; Wed, 19 Jun 2024 16:36:40 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ysp9qee4w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Jun 2024 16:36:39 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45JGaYRr40239582
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 19 Jun 2024 16:36:36 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 16CB32004E;
- Wed, 19 Jun 2024 16:36:34 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7908D2004D;
- Wed, 19 Jun 2024 16:36:31 +0000 (GMT)
-Received: from [9.43.121.132] (unknown [9.43.121.132])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 19 Jun 2024 16:36:31 +0000 (GMT)
-Message-ID: <7c6f0c44-98ac-4245-8f1c-248181143111@linux.ibm.com>
-Date: Wed, 19 Jun 2024 22:06:28 +0530
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sJyOx-0003We-5F
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 12:43:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718815393;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=TgB7gjl+/kTRq6JvyMDrRPZk9doMgSbDXT3hJexBGd4=;
+ b=eT5RxkEIPNK4YT+BhQZ2FBg5VQMNCJf5/3tS8Mw6al8XLdW7RwGq8dLmQDZTytGd3DzF3l
+ SsYty2I77QSIjXcVSlOUC/DAwa0mqyELl2Tb59V67cpcsKBoAZ6fSjVrzIqlV1hqigi6+M
+ HgloGGBp+clkXCvT+neUy+1NmZRZrVQ=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-615-5PXqKhrbO86qX2dnM5c_Mg-1; Wed, 19 Jun 2024 12:43:05 -0400
+X-MC-Unique: 5PXqKhrbO86qX2dnM5c_Mg-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a6f1db7e425so457919566b.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 09:43:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718815384; x=1719420184;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TgB7gjl+/kTRq6JvyMDrRPZk9doMgSbDXT3hJexBGd4=;
+ b=lI1QmFEiFsKMRbPlaYAh6WF+f2fNxENXMoQNOPPSsFnWbE4juljwHjBr1u6ZO9IbIU
+ yTnuKmh4IAYBEKAJokYQNd+eatrZDLR2XUcxLW9tOrNcn9sk9GAOgKbzEffhI8rMPu9k
+ O8Ji/wX8aER++JbnvmLH2RFJhiwDGDqwUYT+EXKzUnrMh8C3duNsurGIhWcDVmGlvqoV
+ C0P2EsOHaXQ7Q3MJH07SWenGdoSKepa4VLOiejxqYZna3W7tBQVqd8tQGipI5P3NtTBq
+ W1AaZpTOjvGl311V2un6nGF2azXz4r32m95Hi2GGM9uGa4IwIwu1sWHTmcetyA1RPfVh
+ 3bZw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWije1ediHf4aNBweOB72d/hoh6HJXmvNlRnpAI7kCnZfyuoMeud0U9HD1xWFvisOUKSfZTzWUEAhHG9Ax2TtRtWMXi0Oo=
+X-Gm-Message-State: AOJu0YwYX40CZjBdWwi2PTZy+DhkijlAJpZ8e8eF3Wx6cUtaerDN038K
+ bWJxQRat6cxT8DdgBdiRhVEjBQYHCxTsUWspDwIvRVwPI0mRLY0i/VJd75zHOMVnxanG1Fsh3Zv
+ V3/N5/+SIVIit8dLXMG2V1McbazqfUuoX/lvrwD3+cwNFFSKTzfdT
+X-Received: by 2002:a17:906:9c88:b0:a6f:b58f:ae47 with SMTP id
+ a640c23a62f3a-a6fb58fba6emr167312666b.10.1718815383765; 
+ Wed, 19 Jun 2024 09:43:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGjdl7OtKdxemCtPdhEAj+KIPWJE/Nn1hu5ux5aOdFKaAz/3Vp06zlZUCcEu9zACKtQ04Q2YA==
+X-Received: by 2002:a17:906:9c88:b0:a6f:b58f:ae47 with SMTP id
+ a640c23a62f3a-a6fb58fba6emr167307666b.10.1718815382270; 
+ Wed, 19 Jun 2024 09:43:02 -0700 (PDT)
+Received: from [192.168.10.81] ([151.62.196.71])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-a6f56da3fd8sm674579466b.42.2024.06.19.09.43.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Jun 2024 09:43:01 -0700 (PDT)
+Message-ID: <1c53f8d2-3b33-404c-bb1c-38475087d7ae@redhat.com>
+Date: Wed, 19 Jun 2024 18:43:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/5] ppc/pnv: Add SPI model
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
- calebs@us.ibm.com, chalapathi.v@ibm.com, saif.abrar@linux.ibm.com,
- dantan@us.ibm.com, milesg@linux.ibm.com
-References: <20240617165419.8388-1-chalapathi.v@linux.ibm.com>
- <20240617165419.8388-2-chalapathi.v@linux.ibm.com>
- <29251dbf-1e17-4476-a1e8-31da86958b4c@kaod.org>
+Subject: Re: [RFC PATCH v2 3/5] rust: add PL011 device model
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+References: <rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
+ <0fde311846394e9f7633be5d72cc30b25587d7a1.1718101832.git.manos.pitsidianakis@linaro.org>
+ <0841ddd2-d962-4f1d-a818-be9a1ec4d9bf@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: Chalapathi V <chalapathi.v@linux.ibm.com>
-In-Reply-To: <29251dbf-1e17-4476-a1e8-31da86958b4c@kaod.org>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <0841ddd2-d962-4f1d-a818-be9a1ec4d9bf@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: HuaLrk44rEEMuVexMRMyC-rpWigkZaHW
-X-Proofpoint-GUID: qPwT_91vzs9T7v6vB6mSf9L2TAljkPu0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-19_02,2024-06-19_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0
- suspectscore=0 adultscore=0 impostorscore=0 spamscore=0 lowpriorityscore=0
- malwarescore=0 priorityscore=1501 mlxscore=0 mlxlogscore=999 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2405170001
- definitions=main-2406190123
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=chalapathi.v@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,563 +142,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Cedric,
+On 6/19/24 07:34, Richard Henderson wrote:
+> First silly question: how much of this is boiler plate that gets moved 
+> the moment that the second rust subdirectory is added?
 
-Thank You for reviewing this patch series.
+If my suggestion at 
+https://lore.kernel.org/qemu-devel/CABgObfaP7DRD8dbSKNmUzhZNyxeHWO0MztaW3_EFYt=vf6SbzA@mail.gmail.com/ 
+works, we'd have only two directories that have a Cargo.toml in it.  For 
+example it could be rust/qemu/ (common code) and rust/hw/ (code that 
+depends on Kconfig).
 
-Regards,
+I think we can also have a rust/Cargo.toml file as in 
+https://doc.rust-lang.org/cargo/reference/workspaces.html#virtual-workspace, 
+and then the various configuration files under rust/ will be valid for 
+all subpackages.
 
-Chalapathi
+>> +[build]
+>> +rustflags = ["-Crelocation-model=pic", "-Ctarget-feature=+crt-static"]
+> 
+> It seems certain that this is not specific to pl011, and will be commot to other rust 
+> subdirectories.  Or, given the .cargo directory name, is this generated by cargo and 
+> committed by mistake?
 
-On 18-06-2024 21:18, Cédric Le Goater wrote:
-> Hello Chalapathi,
->
-> On 6/17/24 6:54 PM, Chalapathi V wrote:
->> SPI controller device model supports a connection to a single SPI 
->> responder.
->> This provide access to SPI seeproms, TPM, flash device and an ADC 
->> controller.
->>
->> All SPI function control is mapped into the SPI register space to 
->> enable full
->> control by firmware. In this commit SPI configuration component is 
->> modelled
->> which contains all SPI configuration and status registers as well as 
->> the hold
->> registers for data to be sent or having been received.
->>
->> An existing QEMU SSI framework is used and SSI_BUS is created.
->>
->> Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
->> ---
->>   include/hw/ppc/pnv_xscom.h    |   5 +-
->>   include/hw/ssi/pnv_spi.h      |  59 ++++++++++
->>   include/hw/ssi/pnv_spi_regs.h | 114 +++++++++++++++++++
->>   hw/ssi/pnv_spi.c              | 202 ++++++++++++++++++++++++++++++++++
->>   hw/ppc/Kconfig                |   3 +
->>   hw/ssi/Kconfig                |   4 +
->>   hw/ssi/meson.build            |   1 +
->>   hw/ssi/trace-events           |   6 +
->>   8 files changed, 393 insertions(+), 1 deletion(-)
->>   create mode 100644 include/hw/ssi/pnv_spi.h
->>   create mode 100644 include/hw/ssi/pnv_spi_regs.h
->>   create mode 100644 hw/ssi/pnv_spi.c
->>
->> diff --git a/include/hw/ppc/pnv_xscom.h b/include/hw/ppc/pnv_xscom.h
->> index 6209e18492..0020dd172f 100644
->> --- a/include/hw/ppc/pnv_xscom.h
->> +++ b/include/hw/ppc/pnv_xscom.h
->> @@ -21,9 +21,9 @@
->>   #define PPC_PNV_XSCOM_H
->>     #include "exec/memory.h"
->> -#include "hw/ppc/pnv.h"
->>     typedef struct PnvXScomInterface PnvXScomInterface;
->> +typedef struct PnvChip PnvChip;
->>     #define TYPE_PNV_XSCOM_INTERFACE "pnv-xscom-interface"
->>   #define PNV_XSCOM_INTERFACE(obj) \
->
-> Could please provide the above change in its own patch ?
-Sure.
->
->> @@ -194,6 +194,9 @@ struct PnvXScomInterfaceClass {
->>   #define PNV10_XSCOM_PEC_PCI_BASE   0x8010800 /* index goes upwards 
->> ... */
->>   #define PNV10_XSCOM_PEC_PCI_SIZE   0x200
->>   +#define PNV10_XSCOM_PIB_SPIC_BASE 0xc0000
->> +#define PNV10_XSCOM_PIB_SPIC_SIZE 0x20
->> +
->>   void pnv_xscom_init(PnvChip *chip, uint64_t size, hwaddr addr);
->>   int pnv_dt_xscom(PnvChip *chip, void *fdt, int root_offset,
->>                    uint64_t xscom_base, uint64_t xscom_size,
->> diff --git a/include/hw/ssi/pnv_spi.h b/include/hw/ssi/pnv_spi.h
+-Crelocation-mode should be pie.  But also, I am not sure it works 
+because I think it's always going to be overridden by cargo_wrapper.py? 
+See https://doc.rust-lang.org/cargo/reference/config.html#buildrustflags.
+
+(I'm not sure what +crt-static is for).
+
+I think the generate_cfg_flags() mechanism of cargo_wrapper.py has to be 
+rewritten from Python to Rust and moved to build.rs (using 
+cargo::rustc-cfg).  By doing this, the cfg flags are added to whatever 
+is in .cargo/config.toml, rather than replaced.
+
+>> diff --git a/rust/pl011/.gitignore b/rust/pl011/.gitignore
 >> new file mode 100644
->> index 0000000000..71c53d4a17
+>> index 0000000000..28a02c847f
 >> --- /dev/null
->> +++ b/include/hw/ssi/pnv_spi.h
->> @@ -0,0 +1,59 @@
->> +/*
->> + * QEMU PowerPC SPI model
->> + *
->> + * Copyright (c) 2024, IBM Corporation.
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + *
->> + * This model Supports a connection to a single SPI responder.
->> + * Introduced for P10 to provide access to SPI seeproms, TPM, flash 
->> device
->> + * and an ADC controller.
->> + */
->> +#include "hw/ssi/ssi.h"
->> +#include "hw/sysbus.h"
->
-> The include should be protected by PPC_PNV_SPI_H also.
->
->> +#ifndef PPC_PNV_SPI_H
->> +#define PPC_PNV_SPI_H
->> +
->> +/* Userful macros */
->
-> /* Macros from target/ppc/cpu.h */
->
-> please explain why they are copied in the comment and move them in the .c
-> file for now. We don't want them to conflict with other definitions.
+>> +++ b/rust/pl011/.gitignore
+>> @@ -0,0 +1,2 @@
+>> +target
+>> +src/generated.rs.inc
+> 
+> Is this a symptom of generating files into the source directory and not 
+> build directory?
 
-Sure. Will move these to pnv_spi_regs.h as they are used in 
-pnv_spi_regs.h and pnv_spi.c
+If I understand correctly, Manos considered two possible ways to invoke 
+cargo on the Rust code:
 
-Thank You
+- directly, in which case you need to copy the generated source file to 
+rust/pl011/src/generated.rs.inc, because cargo does not know where the 
+build tree
 
-Chalapathi
+- do everything through meson, which does the right thing because 
+cargo_wrapper.py knows about the build tree and passes the information.
 
->
->> +#define PPC_BIT(bit) (0x8000000000000000ULL >> (bit))
->> +#define PPC_BIT8(bit)           (0x80 >> (bit))
->> +#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | 
->> PPC_BIT(bs))
->> +#define PPC_BITMASK8(bs, be)    ((PPC_BIT8(bs) - PPC_BIT8(be)) | 
->> PPC_BIT8(bs))
->> +#define MASK_TO_LSH(m)          (__builtin_ffsll(m) - 1)
->> +#define GETFIELD(m, v)          (((v) & (m)) >> MASK_TO_LSH(m))
->> +#define SETFIELD(m, v, val) \
->> +        (((v) & ~(m)) | ((((typeof(v))(val)) << MASK_TO_LSH(m)) & (m)))
->
-> same comment for _FDT() which comes from include/hw/ppc/fdt.h.
-Sure.
->
-> The rest looks OK.
->
-> Thanks,
->
-> C.
->
->
->
->> +#define _FDT(exp)                                                  \
->> +    do {                                                           \
->> +        int _ret = (exp);                                          \
->> +        if (_ret < 0) {                                            \
->> +            error_report("error creating device tree: %s: %s",     \
->> +                    #exp, fdt_strerror(_ret));                     \
->> + exit(1);                                               \
->> + }                                                          \
->> +    } while (0)
->> +
->> +#define TYPE_PNV_SPI "pnv-spi"
->> +OBJECT_DECLARE_SIMPLE_TYPE(PnvSpi, PNV_SPI)
->> +
->> +#define PNV_SPI_REG_SIZE 8
->> +#define PNV_SPI_REGS 7
->> +
->> +#define TYPE_PNV_SPI_BUS "pnv-spi-bus"
->> +typedef struct PnvSpi {
->> +    SysBusDevice parent_obj;
->> +
->> +    SSIBus *ssi_bus;
->> +    qemu_irq *cs_line;
->> +    MemoryRegion    xscom_spic_regs;
->> +    /* SPI object number */
->> +    uint32_t        spic_num;
->> +
->> +    /* SPI registers */
->> +    uint64_t        regs[PNV_SPI_REGS];
->> +    uint8_t         seq_op[PNV_SPI_REG_SIZE];
->> +    uint64_t        status;
->> +} PnvSpi;
->> +#endif /* PPC_PNV_SPI_H */
->> diff --git a/include/hw/ssi/pnv_spi_regs.h 
->> b/include/hw/ssi/pnv_spi_regs.h
->> new file mode 100644
->> index 0000000000..a0b5f3973d
->> --- /dev/null
->> +++ b/include/hw/ssi/pnv_spi_regs.h
->> @@ -0,0 +1,114 @@
->> +/*
->> + * QEMU PowerPC SPI model
->> + *
->> + * Copyright (c) 2024, IBM Corporation.
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#ifndef PNV_SPI_CONTROLLER_REGS_H
->> +#define PNV_SPI_CONTROLLER_REGS_H
->> +
->> +/* Error Register */
->> +#define ERROR_REG               0x00
->> +
->> +/* counter_config_reg */
->> +#define SPI_CTR_CFG_REG         0x01
->> +#define SPI_CTR_CFG_N1          PPC_BITMASK(0, 7)
->> +#define SPI_CTR_CFG_N2          PPC_BITMASK(8, 15)
->> +#define SPI_CTR_CFG_CMP1        PPC_BITMASK(24, 31)
->> +#define SPI_CTR_CFG_CMP2        PPC_BITMASK(32, 39)
->> +#define SPI_CTR_CFG_N1_CTRL     PPC_BITMASK(48, 51)
->> +#define SPI_CTR_CFG_N2_CTRL     PPC_BITMASK(52, 55)
->> +
->> +/* config_reg */
->> +#define CONFIG_REG1             0x02
->> +
->> +/* clock_config_reset_control_ecc_enable_reg */
->> +#define SPI_CLK_CFG_REG         0x03
->> +#define SPI_CLK_CFG_HARD_RST    0x0084000000000000;
->> +#define SPI_CLK_CFG_RST_CTRL    PPC_BITMASK(24, 27)
->> +#define SPI_CLK_CFG_ECC_CTRL    PPC_BITMASK(28, 30)
->> +
->> +/* memory_mapping_reg */
->> +#define SPI_MM_REG              0x04
->> +#define SPI_MM_BASE_ADDR        PPC_BITMASK(0, 15)
->> +#define SPI_MM_ADDR_MASK        PPC_BITMASK(16, 31)
->> +#define SPI_MM_RDR_MATCH_VAL    PPC_BITMASK(32, 47)
->> +#define SPI_MM_RDR_MATCH_MASK   PPC_BITMASK(48, 63)
->> +
->> +/* transmit_data_reg */
->> +#define SPI_XMIT_DATA_REG       0x05
->> +
->> +/* receive_data_reg */
->> +#define SPI_RCV_DATA_REG        0x06
->> +
->> +/* sequencer_operation_reg */
->> +#define SPI_SEQ_OP_REG          0x07
->> +
->> +/* status_reg */
->> +#define SPI_STS_REG             0x08
->> +#define SPI_STS_RDR_FULL        PPC_BIT(0)
->> +#define SPI_STS_RDR_OVERRUN     PPC_BIT(1)
->> +#define SPI_STS_RDR_UNDERRUN    PPC_BIT(2)
->> +#define SPI_STS_TDR_FULL        PPC_BIT(4)
->> +#define SPI_STS_TDR_OVERRUN     PPC_BIT(5)
->> +#define SPI_STS_TDR_UNDERRUN    PPC_BIT(6)
->> +#define SPI_STS_SEQ_FSM         PPC_BITMASK(8, 15)
->> +#define SPI_STS_SHIFTER_FSM     PPC_BITMASK(16, 27)
->> +#define SPI_STS_SEQ_INDEX       PPC_BITMASK(28, 31)
->> +#define SPI_STS_GEN_STATUS      PPC_BITMASK(32, 63)
->> +#define SPI_STS_RDR             PPC_BITMASK(1, 3)
->> +#define SPI_STS_TDR             PPC_BITMASK(5, 7)
->> +
->> +/*
->> + * Shifter states
->> + *
->> + * These are the same values defined for the Shifter FSM field of the
->> + * status register.  It's a 12 bit field so we will represent it as 
->> three
->> + * nibbles in the constants.
->> + *
->> + * These are shifter_fsm values
->> + *
->> + * Status reg bits 16-27 -> field bits 0-11
->> + * bits 0,1,2,5 unused/reserved
->> + * bit 4 crc shift in (unused)
->> + * bit 8 crc shift out (unused)
->> + */
->> +
->> +#define FSM_DONE                        0x100   /* bit 3 */
->> +#define FSM_SHIFT_N2                    0x020   /* bit 6 */
->> +#define FSM_WAIT                        0x010   /* bit 7 */
->> +#define FSM_SHIFT_N1                    0x004   /* bit 9 */
->> +#define FSM_START                       0x002   /* bit 10 */
->> +#define FSM_IDLE                        0x001   /* bit 11 */
->> +
->> +/*
->> + * Sequencer states
->> + *
->> + * These are sequencer_fsm values
->> + *
->> + * Status reg bits 8-15 -> field bits 0-7
->> + * bits 0-3 unused/reserved
->> + *
->> + */
->> +#define SEQ_STATE_INDEX_INCREMENT       0x08    /* bit 4 */
->> +#define SEQ_STATE_EXECUTE               0x04    /* bit 5 */
->> +#define SEQ_STATE_DECODE                0x02    /* bit 6 */
->> +#define SEQ_STATE_IDLE                  0x01    /* bit 7 */
->> +
->> +/*
->> + * These are the supported sequencer operations.
->> + * Only the upper nibble is significant because for many operations
->> + * the lower nibble is a variable specific to the operation.
->> + */
->> +#define SEQ_OP_STOP                     0x00
->> +#define SEQ_OP_SELECT_SLAVE             0x10
->> +#define SEQ_OP_SHIFT_N1                 0x30
->> +#define SEQ_OP_SHIFT_N2                 0x40
->> +#define SEQ_OP_BRANCH_IFNEQ_RDR         0x60
->> +#define SEQ_OP_TRANSFER_TDR             0xC0
->> +#define SEQ_OP_BRANCH_IFNEQ_INC_1       0xE0
->> +#define SEQ_OP_BRANCH_IFNEQ_INC_2       0xF0
->> +
->> +#endif
->> diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
->> new file mode 100644
->> index 0000000000..da9e3925dd
->> --- /dev/null
->> +++ b/hw/ssi/pnv_spi.c
->> @@ -0,0 +1,202 @@
->> +/*
->> + * QEMU PowerPC SPI model
->> + *
->> + * Copyright (c) 2024, IBM Corporation.
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "qemu/log.h"
->> +#include "hw/qdev-properties.h"
->> +#include "hw/ppc/pnv_xscom.h"
->> +#include "hw/ssi/pnv_spi.h"
->> +#include "hw/ssi/pnv_spi_regs.h"
->> +#include "hw/ssi/ssi.h"
->> +#include <libfdt.h>
->> +#include "hw/irq.h"
->> +#include "trace.h"
->> +
->> +static uint64_t pnv_spi_xscom_read(void *opaque, hwaddr addr, 
->> unsigned size)
->> +{
->> +    PnvSpi *s = PNV_SPI(opaque);
->> +    uint32_t reg = addr >> 3;
->> +    uint64_t val = ~0ull;
->> +
->> +    switch (reg) {
->> +    case ERROR_REG:
->> +    case SPI_CTR_CFG_REG:
->> +    case CONFIG_REG1:
->> +    case SPI_CLK_CFG_REG:
->> +    case SPI_MM_REG:
->> +    case SPI_XMIT_DATA_REG:
->> +        val = s->regs[reg];
->> +        break;
->> +    case SPI_RCV_DATA_REG:
->> +        val = s->regs[reg];
->> +        trace_pnv_spi_read_RDR(val);
->> +        s->status = SETFIELD(SPI_STS_RDR_FULL, s->status, 0);
->> +        break;
->> +    case SPI_SEQ_OP_REG:
->> +        val = 0;
->> +        for (int i = 0; i < PNV_SPI_REG_SIZE; i++) {
->> +            val = (val << 8) | s->seq_op[i];
->> +        }
->> +        break;
->> +    case SPI_STS_REG:
->> +        val = s->status;
->> +        break;
->> +    default:
->> +        qemu_log_mask(LOG_GUEST_ERROR, "pnv_spi_regs: Invalid xscom "
->> +                 "read at 0x%" PRIx32 "\n", reg);
->> +    }
->> +
->> +    trace_pnv_spi_read(addr, val);
->> +    return val;
->> +}
->> +
->> +static void pnv_spi_xscom_write(void *opaque, hwaddr addr,
->> +                                 uint64_t val, unsigned size)
->> +{
->> +    PnvSpi *s = PNV_SPI(opaque);
->> +    uint32_t reg = addr >> 3;
->> +
->> +    trace_pnv_spi_write(addr, val);
->> +
->> +    switch (reg) {
->> +    case ERROR_REG:
->> +    case SPI_CTR_CFG_REG:
->> +    case CONFIG_REG1:
->> +    case SPI_MM_REG:
->> +    case SPI_RCV_DATA_REG:
->> +        s->regs[reg] = val;
->> +        break;
->> +    case SPI_CLK_CFG_REG:
->> +        /*
->> +         * To reset the SPI controller write the sequence 0x5 0xA to
->> +         * reset_control field
->> +         */
->> +        if ((GETFIELD(SPI_CLK_CFG_RST_CTRL, 
->> s->regs[SPI_CLK_CFG_REG]) == 0x5)
->> +             && (GETFIELD(SPI_CLK_CFG_RST_CTRL, val) == 0xA)) {
->> +                /* SPI controller reset sequence completed, 
->> resetting */
->> +            s->regs[reg] = SPI_CLK_CFG_HARD_RST;
->> +        } else {
->> +            s->regs[reg] = val;
->> +        }
->> +        break;
->> +    case SPI_XMIT_DATA_REG:
->> +        /*
->> +         * Writing to the transmit data register causes the transmit 
->> data
->> +         * register full status bit in the status register to be 
->> set.  Writing
->> +         * when the transmit data register full status bit is 
->> already set
->> +         * causes a "Resource Not Available" condition.  This is not 
->> possible
->> +         * in the model since writes to this register are not 
->> asynchronous to
->> +         * the operation sequence like it would be in hardware.
->> +         */
->> +        s->regs[reg] = val;
->> +        trace_pnv_spi_write_TDR(val);
->> +        s->status = SETFIELD(SPI_STS_TDR_FULL, s->status, 1);
->> +        s->status = SETFIELD(SPI_STS_TDR_UNDERRUN, s->status, 0);
->> +        break;
->> +    case SPI_SEQ_OP_REG:
->> +        for (int i = 0; i < PNV_SPI_REG_SIZE; i++) {
->> +            s->seq_op[i] = (val >> (56 - i * 8)) & 0xFF;
->> +        }
->> +        break;
->> +    case SPI_STS_REG:
->> +        /* other fields are ignore_write */
->> +        s->status = SETFIELD(SPI_STS_RDR_OVERRUN, s->status,
->> +                                  GETFIELD(SPI_STS_RDR, val));
->> +        s->status = SETFIELD(SPI_STS_TDR_OVERRUN, s->status,
->> +                                  GETFIELD(SPI_STS_TDR, val));
->> +        break;
->> +    default:
->> +        qemu_log_mask(LOG_GUEST_ERROR, "pnv_spi_regs: Invalid xscom "
->> +                 "write at 0x%" PRIx32 "\n", reg);
->> +    }
->> +    return;
->> +}
->> +
->> +static const MemoryRegionOps pnv_spi_xscom_ops = {
->> +    .read = pnv_spi_xscom_read,
->> +    .write = pnv_spi_xscom_write,
->> +    .valid.min_access_size = 8,
->> +    .valid.max_access_size = 8,
->> +    .impl.min_access_size = 8,
->> +    .impl.max_access_size = 8,
->> +    .endianness = DEVICE_BIG_ENDIAN,
->> +};
->> +
->> +static Property pnv_spi_properties[] = {
->> +    DEFINE_PROP_UINT32("spic_num", PnvSpi, spic_num, 0),
->> +    DEFINE_PROP_END_OF_LIST(),
->> +};
->> +
->> +static void pnv_spi_realize(DeviceState *dev, Error **errp)
->> +{
->> +    PnvSpi *s = PNV_SPI(dev);
->> +    g_autofree char *name = g_strdup_printf(TYPE_PNV_SPI_BUS ".%d",
->> +                    s->spic_num);
->> +    s->ssi_bus = ssi_create_bus(dev, name);
->> +    s->cs_line = g_new0(qemu_irq, 1);
->> +    qdev_init_gpio_out_named(DEVICE(s), s->cs_line, "cs", 1);
->> +
->> +    /* spi scoms */
->> +    pnv_xscom_region_init(&s->xscom_spic_regs, OBJECT(s),
->> +                          &pnv_spi_xscom_ops, s,
->> +                          "xscom-spi-regs",
->> +                          PNV10_XSCOM_PIB_SPIC_SIZE);
->> +}
->> +
->> +static int pnv_spi_dt_xscom(PnvXScomInterface *dev, void *fdt,
->> +                             int offset)
->> +{
->> +    PnvSpi *s = PNV_SPI(dev);
->> +    g_autofree char *name;
->> +    int s_offset;
->> +    const char compat[] = "ibm,power10-spi";
->> +    uint32_t spic_pcba = PNV10_XSCOM_PIB_SPIC_BASE +
->> +        s->spic_num * PNV10_XSCOM_PIB_SPIC_SIZE;
->> +    uint32_t reg[] = {
->> +        cpu_to_be32(spic_pcba),
->> +        cpu_to_be32(PNV10_XSCOM_PIB_SPIC_SIZE)
->> +    };
->> +    name = g_strdup_printf("pnv_spi@%x", spic_pcba);
->> +    s_offset = fdt_add_subnode(fdt, offset, name);
->> +    _FDT(s_offset);
->> +
->> +    _FDT(fdt_setprop(fdt, s_offset, "reg", reg, sizeof(reg)));
->> +    _FDT(fdt_setprop(fdt, s_offset, "compatible", compat, 
->> sizeof(compat)));
->> +    _FDT((fdt_setprop_cell(fdt, s_offset, "spic_num#", s->spic_num)));
->> +    return 0;
->> +}
->> +
->> +static void pnv_spi_class_init(ObjectClass *klass, void *data)
->> +{
->> +    DeviceClass *dc = DEVICE_CLASS(klass);
->> +    PnvXScomInterfaceClass *xscomc = PNV_XSCOM_INTERFACE_CLASS(klass);
->> +
->> +    xscomc->dt_xscom = pnv_spi_dt_xscom;
->> +
->> +    dc->desc = "PowerNV SPI";
->> +    dc->realize = pnv_spi_realize;
->> +    device_class_set_props(dc, pnv_spi_properties);
->> +}
->> +
->> +static const TypeInfo pnv_spi_info = {
->> +    .name          = TYPE_PNV_SPI,
->> +    .parent        = TYPE_SYS_BUS_DEVICE,
->> +    .instance_size = sizeof(PnvSpi),
->> +    .class_init    = pnv_spi_class_init,
->> +    .interfaces    = (InterfaceInfo[]) {
->> +        { TYPE_PNV_XSCOM_INTERFACE },
->> +        { }
->> +    }
->> +};
->> +
->> +static void pnv_spi_register_types(void)
->> +{
->> +    type_register_static(&pnv_spi_info);
->> +}
->> +
->> +type_init(pnv_spi_register_types);
->> diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
->> index 78f83e78ce..4668d59eab 100644
->> --- a/hw/ppc/Kconfig
->> +++ b/hw/ppc/Kconfig
->> @@ -39,6 +39,9 @@ config POWERNV
->>       select PCI_POWERNV
->>       select PCA9552
->>       select PCA9554
->> +    select SSI
->> +    select SSI_M25P80
->> +    select PNV_SPI
->>     config PPC405
->>       bool
->> diff --git a/hw/ssi/Kconfig b/hw/ssi/Kconfig
->> index 83ee53c1d0..8d180de7cf 100644
->> --- a/hw/ssi/Kconfig
->> +++ b/hw/ssi/Kconfig
->> @@ -24,3 +24,7 @@ config STM32F2XX_SPI
->>   config BCM2835_SPI
->>       bool
->>       select SSI
->> +
->> +config PNV_SPI
->> +    bool
->> +    select SSI
->> diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
->> index b999aeb027..b7ad7fca3b 100644
->> --- a/hw/ssi/meson.build
->> +++ b/hw/ssi/meson.build
->> @@ -12,3 +12,4 @@ system_ss.add(when: 'CONFIG_IMX', if_true: 
->> files('imx_spi.c'))
->>   system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_spi.c'))
->>   system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
->>   system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: 
->> files('bcm2835_spi.c'))
->> +system_ss.add(when: 'CONFIG_PNV_SPI', if_true: files('pnv_spi.c'))
->> diff --git a/hw/ssi/trace-events b/hw/ssi/trace-events
->> index 2d5bd2b83d..4388024a05 100644
->> --- a/hw/ssi/trace-events
->> +++ b/hw/ssi/trace-events
->> @@ -32,3 +32,9 @@ ibex_spi_host_reset(const char *msg) "%s"
->>   ibex_spi_host_transfer(uint32_t tx_data, uint32_t rx_data) 
->> "tx_data: 0x%" PRIx32 " rx_data: @0x%" PRIx32
->>   ibex_spi_host_write(uint64_t addr, uint32_t size, uint64_t data) 
->> "@0x%" PRIx64 " size %u: 0x%" PRIx64
->>   ibex_spi_host_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " 
->> size %u:"
->> +
->> +#pnv_spi.c
->> +pnv_spi_read(uint64_t addr, uint64_t val) "addr 0x%" PRIx64 " val 
->> 0x%" PRIx64
->> +pnv_spi_write(uint64_t addr, uint64_t val) "addr 0x%" PRIx64 " val 
->> 0x%" PRIx64
->> +pnv_spi_read_RDR(uint64_t val) "data extracted = 0x%" PRIx64
->> +pnv_spi_write_TDR(uint64_t val) "being written, data written = 0x%" 
->> PRIx64
->
+To avoid this, the first workflow could be adjusted so that cargo can 
+still be invoked directly, _but from the build tree_, not the source 
+tree.  For example configure could generate a 
+.../build/.cargo/config.toml with
+
+    [env]
+    MESON_BUILD_ROOT = ".../build"
+
+(extra advantage: -Crelocation-model=pie can be added based on 
+--enable-pie/--disable-pie).  configure can also create symlinks in the 
+build tree for the source tree's rust/, Cargo.toml and Cargo.lock.
+
+This allows rust/pl011/src/generated.rs (which probably will become 
+something like rust/common/src/generated.rs) to be:
+
+    include!(concat!(env!("MESON_BUILD_ROOT"), "/generated.rs.inc"));
+
+when cargo is invoked from the build tree.
+
+Putting everything together you'd have
+
+    build/
+      rust/
+        .cargo/
+          config.toml   # generated by configure or meson.build
+        Cargo.toml      # workspace generated by configure or meson.build
+        Cargo.lock      # can be either linked to srctree or generated
+        qemu/           # symlink to srctree/rust/qemu
+        aarch64-softmmu-hw/
+          Cargo.toml    # generated by meson.build (*)
+          src/          # symlink to srctree/rust/hw/
+        i386-softmmu-hw/
+          Cargo.toml    # generated by meson.build
+          src/          # symlink to srctree/rust/hw/
+        generated/      # files generated by rust/generated/meson.build
+
+(*) these have to be generated to change the package name, so 
+configure_file() seems like a good match for it.
+
+This is suspiciously similar to what tests/tcg/ looks like, except that 
+tests/tcg/*/Makefile is just a symbolic link.  I tried creating a 
+similar directory structure in a toy project, and it seemed to work...
+
+> Second silly question: does this really need to be committed to the 
+> repository? It *appears* to be specific to the host+os-version of the 
+> build.  It is certainly very specific about versions and checksums...
+
+Generally the idea is that libraries should not commit it, while 
+applications should commit it.  The idea is that the Cargo.lock file 
+reproduces a working configuration, and dependencies are updated to 
+known-good releases when CI passes.  I don't think I like this, but it 
+is what it is.  I ascribe it to me being from the Jurassic.
+
+But for now I would consider not committing Cargo.lock, because we don't 
+have the infrastructure to do that automatic dependency update (assuming 
+we want it).  But we could generate it at release time so that it is 
+included in tarballs, and create the symlink from 
+srctree/rust/Cargo.lock into build/rust/ only if the file is present in 
+the source tree.
+
+>> diff --git a/rust/pl011/Cargo.toml b/rust/pl011/Cargo.toml
+>> [...]
+>> +# bilge deps included here to include them with docs
+>> +[dependencies]
+>> +arbitrary-int = { version = "1.2.7" }
+>> +bilge = { version = "0.2.0" }
+>> +bilge-impl = { version = "0.2.0" }
+
+This one has to be included, but it is less restrictive than it seems.
+
+It is equivalent to
+
+arbitrary-int = { version = ">=1.2.7, <2.0.0" }
+bilge = { version = ">=0.2.0, <0.3.0" }
+bilge-impl = { version = ">=0.2.0, <0.3.0" }
+
+That is, it assumes an API breakage when the first nonzero component 
+changes in the version.  It is also possible to put a caret in front of 
+the version, so that it's clearer that this is a range; but the behavior 
+is the same.
+
+Paolo
+
 
