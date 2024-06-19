@@ -4,82 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9234DC27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 10:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 578FEC2BA15
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 10:53:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJst6-0000ey-7j; Wed, 19 Jun 2024 06:50:00 -0400
+	id 1sJswP-0001b9-7N; Wed, 19 Jun 2024 06:53:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJst4-0000el-M5
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 06:49:58 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sJswN-0001aY-8D
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 06:53:23 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJst3-0002Tc-5V
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 06:49:58 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a6f0e153eddso829807766b.0
- for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 03:49:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718794195; x=1719398995; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=fFVQUYkG4laYm54TlOEcC+w8V5GFvqf/W23gvKPtIlY=;
- b=X4X3pu5WLP9dxUVqpu8FeCM4IM7+Z0oo3ZFJ8bbrr/K0DBtGpnjIinHzMcn8j6lhKu
- sk0saturOBORUeV9WtiLSlSvqF+CgIB1oELCkR0p/Q8sdaW37qo0X4tKTfqmwwTsTo0c
- eyvlO+jwTpi0puelOxKrNoG86K1aq4My+5TqkXUs69KHwPwAqVzSULHG+zEIsfuxp7XP
- jRMMrByYco4mI+uRs44AAyBtjMWrTogorFSZz8jjLfOZ5XBwei/ZlzT7flXLJhYmYTz6
- gIEulm84N4niaCYPX4DrmDP52SXX5ug96pDZx37VH2/g4OsAPBHqP8vrpwHwQbQQd2lf
- PufQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718794195; x=1719398995;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fFVQUYkG4laYm54TlOEcC+w8V5GFvqf/W23gvKPtIlY=;
- b=o5wTBjNWLc/eQJo3qH4828R49e3U7PANCa/kHt3rJaAdJtXNqGxHNE11U4QmJ/RUCM
- muSc7TZa1MW8dMZuHwr5WlKmqkCGTl8010pPLyor/voCr7KpEPy0JU5YsUirTruB3J1S
- TuNIgylDpanHiHdBrwwKfwXwpb3UWCNV1BW7hngJQosYAqqb+q3wp2j5xCCPzGhNJddT
- OnQgC3RX5VqzZ/sw5EWxfr2+sJbEm4NAzQeK0GA5G1zBGO/7OEP+MLSpS1gLKxR8P+2R
- n5GBUqX64CZZUG73Hb3NBj7M7ccMQ6bJ1rhqwxFDEZEk58wBpTXWkQyW6ktnmKQC3wla
- kekQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/dYjgKc7UWaXfXQNuo8q0LV7UUadamRdkf9Tu7d6rFj0FV3zfp92FQjZdbNdglSx6ARb4OWAvhWaBNrgcwVul8upvRCw=
-X-Gm-Message-State: AOJu0YwtBvV236gAyZYh78zMbxH1gznGhlAZ45h6PmLPhU3kHeHIwsu1
- kcZuLruLmowbDQ1NGNUrsFR88e/1YXlPtNRalOaq/tIVd8JwVev6UVqdOYBfFgg=
-X-Google-Smtp-Source: AGHT+IEWjUs64ms9GV3+LTW4vsAdiZWLTevcTMfE5fvQijf/mjO7LwgASIkoZqLu+OEto5uRDGUiGg==
-X-Received: by 2002:a17:907:8688:b0:a6f:4d38:f40c with SMTP id
- a640c23a62f3a-a6fab77a60amr139198866b.62.1718794194471; 
- Wed, 19 Jun 2024 03:49:54 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.133.105])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56ecdd8fsm650837166b.107.2024.06.19.03.49.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Jun 2024 03:49:54 -0700 (PDT)
-Message-ID: <e865d8e3-e768-4b1f-86d3-aeabe8f1d511@linaro.org>
-Date: Wed, 19 Jun 2024 12:49:52 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sJswL-0003SG-NU
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 06:53:23 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B530D21A8E;
+ Wed, 19 Jun 2024 10:53:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718794398; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d7dl9qEna4iRQ2hD+NUEZaDLSUAnnzAOQNWH0W0vwhw=;
+ b=xIyoYpmk7dbfM/tIklLNYFpTcLBrKmsw+28MdQENVRHR7koINxdTPq5JRNU7igIlvagBzK
+ QaaA/Cc5HdsFOOC5KG96ojhLSWjqpbWGV8vesC+R4aCHPuxH5S532uu+KRKQ886rPWB5LM
+ aF4JZYSXxVEKwBC6nGpEaz0cD9E+ZIA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718794398;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d7dl9qEna4iRQ2hD+NUEZaDLSUAnnzAOQNWH0W0vwhw=;
+ b=sE3GnOoskCKRyRLn4NN9kkeajiwdV28Eeibx3qWARjp+zTFH4pP6EO++ncu5CtMItfwGWh
+ dYlRDcIdhcPPQABA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718794397; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d7dl9qEna4iRQ2hD+NUEZaDLSUAnnzAOQNWH0W0vwhw=;
+ b=Y0fvEu3LUcFKrKGVQK4laHT0K48BZYIMliLFpDhYzwOw2Ye3UPyPKvh+/tDpGMjf1NDWap
+ fiHrxY3xVhGEBCor1stybuM+KqWcSWpTvJLhKgpK/4A3WRu5aEsmDe/x873CF2qc3JP+gW
+ 60JzslM50+z/XkRsxP/70q/jJYN5LQk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718794397;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=d7dl9qEna4iRQ2hD+NUEZaDLSUAnnzAOQNWH0W0vwhw=;
+ b=ue4cUO16bmumWVkWtpDAnRoF8/qcjNhXj0SfFWKpYSIvdgbI9/K7oJIGS0Uhw2EnBVfTFx
+ KZkclaY177mO8RCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 329CC13AAA;
+ Wed, 19 Jun 2024 10:53:16 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 5m4aOZy4cmZMSQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 19 Jun 2024 10:53:16 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, Laurent Vivier
+ <lvivier@redhat.com>, Peter Xu <peterx@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] MAINTAINERS: Cover all tests/qtest/migration-* files
+In-Reply-To: <20240619055447.129943-1-thuth@redhat.com>
+References: <20240619055447.129943-1-thuth@redhat.com>
+Date: Wed, 19 Jun 2024 07:53:14 -0300
+Message-ID: <87y1719pb9.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] exec: Make the MemOp enum cast explicit
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Roman Kiryanov <rkir@google.com>, qemu-devel@nongnu.org
-Cc: jansene@google.com, mett@google.com, jpcottin@google.com
-References: <20240618224528.878425-1-rkir@google.com>
- <4e725d93-01fe-42ae-9873-d7324c30e50f@linaro.org>
-Content-Language: en-US
-In-Reply-To: <4e725d93-01fe-42ae-9873-d7324c30e50f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.28 / 50.00]; BAYES_HAM(-2.98)[99.93%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,24 +114,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/6/24 12:40, Philippe Mathieu-Daudé wrote:
-> On 19/6/24 00:45, Roman Kiryanov wrote:
->> to use the QEMU headers with a C++ compiler.
->>
->> Google-Bug-Id: 331190993
+Thomas Huth <thuth@redhat.com> writes:
 
-I searched for this on 
-https://developers.google.com/issue-tracker/concepts/searches but no 
-hit, is this public information?
+> Beside migration-test.c, there is nowadays migration-helpers.[ch],
+> too, so update the entry in the migration section to also cover these
+> files now.
+> While we're at it, exclude these files in the common qtest section,
+> since the migration test is well covered by the migration maintainers
+> already. Since the test is under very active development, it was causing
+> a lot of distraction to the generic qtest maintainers with regards to
+> the patches that need to be reviewed by the migration maintainers anyway.
+>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
->> Change-Id: I785f2e65d192287f1f964d2840131b653755648c
->> Signed-off-by: Roman Kiryanov <rkir@google.com>
->> ---
->>   include/exec/memop.h | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> and queued, thanks!
-
+Acked-by: Fabiano Rosas <farosas@suse.de>
 
