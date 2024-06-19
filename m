@@ -4,59 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA74AC41513
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 10:02:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C602C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 10:10:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJs7x-0004aV-HR; Wed, 19 Jun 2024 06:01:17 -0400
+	id 1sJsGF-0001Ly-6a; Wed, 19 Jun 2024 06:09:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sJs7w-0004Zn-Bk; Wed, 19 Jun 2024 06:01:16 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sJs7u-0002s9-FE; Wed, 19 Jun 2024 06:01:16 -0400
-Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Wed, 19 Jun
- 2024 18:01:03 +0800
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
- (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 19 Jun
- 2024 18:01:03 +0800
-Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 19 Jun 2024 18:01:02 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, Jason Wang <jasowang@redhat.com>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 2/2] hw/net:ftgmac100: support 64 bits dma dram address for
- AST2700
-Date: Wed, 19 Jun 2024 18:01:02 +0800
-Message-ID: <20240619100102.3137941-3-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240619100102.3137941-1-jamin_lin@aspeedtech.com>
-References: <20240619100102.3137941-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJsGD-0001Kx-U9
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 06:09:49 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sJsGC-0003z8-7H
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 06:09:49 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-52bc3130ae6so6790841e87.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 03:09:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718791786; x=1719396586; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kPIiuV9XeMyFnlI7yPEVH3ZhnTArwk4geNowAafyMSg=;
+ b=d5lHgxOhKF0/2eeyrM3E4Kg2fsooilV77zH9P0LADTy83v5iReNnXYq3CAXBz2f5Tm
+ 9J/rSMYmja8q4OL/1NPc25QewM9YUwUQDYlXx/nC8eOm/KmXC9etRhJXuA+FxywCWkWH
+ 8XDJJdBZuEXOUJ16BD1SLioON5W9YIw+nf7MdA4sw3iV85HG3ddKvR5s7TQabxD6TvDn
+ fh/WgeB2KJXNB+Vpid8NIKrGan4GIyjt37KGVAPgAKN6VyE8KzmiCAWHlg09jGx2CCp1
+ hd4WwhxpDGLA7ojOI5qe6PDXyIm+uNO7q7UbQbTl1BzRyGGOP55u82nNMnuZffWBJRcy
+ DUWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718791786; x=1719396586;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kPIiuV9XeMyFnlI7yPEVH3ZhnTArwk4geNowAafyMSg=;
+ b=ohXoMGMVkC2oZ0MZNXEJzi3ZC50dlWeLSDh1p96GsX6GPI/D5Lxdyy3KMGTkIICwiE
+ CLAMvfvf2xdcpCoz5J3ma7k2ct/W1byzzJ1tnPEJ8kIMCznggzzClxdVbR655cwQIpXE
+ vJzx/7GRqh65Ym02S2Ye7Tp3ZkGe6GIeREvitKRpIx1Q0pgzXRVMTBjJK1MB5BM0ouTI
+ l158mUBUpfMijkSenJDRhebmC5GxpdVIhcyUfzx7aKC9NLdy/IrEx1Yo4Njjb/yVGhGA
+ /xcbbsc9vYSkxZf1G10qM53ZWSZNwb4V4u5TUe8lgblfm2JDYGAsTsGfWH8chxyAM09N
+ T2ug==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVrpOqnVh5YXAp3nwMkYNlbrFhRcsVswsu0xxfxVvdJISmBCkt/mmijbgFbsyikbvggnoyC/GBNfCWMndFB7+qJWHXC5Xw=
+X-Gm-Message-State: AOJu0Yzz9Fl2eisysQZ4ut4nDwRmV0sNTKj7SPPY7rb2QaEEl9rKKD7w
+ +QtrQqmH6IdmXwRRZ4ARCqP5yjjDloXb8ra3xVC/eXdLDV3mh3+CHUfHMPYky80=
+X-Google-Smtp-Source: AGHT+IHtvul+7qlzmcDx61BMMq9v/cZ8VsNaawFpi8/zc35J3FrKjX0cAi7HwaUTchQSBV64MduwVQ==
+X-Received: by 2002:a05:6512:b16:b0:52c:a809:62e9 with SMTP id
+ 2adb3069b0e04-52cca8b4c62mr1572792e87.0.1718791785888; 
+ Wed, 19 Jun 2024 03:09:45 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.133.105])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42286fe9230sm258161305e9.17.2024.06.19.03.09.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Jun 2024 03:09:45 -0700 (PDT)
+Message-ID: <661fce24-5d14-4483-ac0c-f88b7f3cb997@linaro.org>
+Date: Wed, 19 Jun 2024 12:09:42 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/3] Deprecate the qemu-system-i386 binary
+To: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+References: <20230425133851.489283-1-thuth@redhat.com>
+ <5fc11d22-275d-cc8d-bf9c-f1c015cbee23@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5fc11d22-275d-cc8d-bf9c-f1c015cbee23@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
- does not designate 192.168.10.10 as permitted sender)
- receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
- helo=localhost.localdomain;
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_FAIL=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,277 +97,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ASPEED AST2700 SOC is a 64 bits quad core CPUs (Cortex-a35)
-And the base address of dram is "0x4 00000000" which
-is 64bits address.
+On 26/4/23 12:59, Paolo Bonzini wrote:
+> On 4/25/23 15:38, Thomas Huth wrote:
+>> - CPU types have different suffixes between the -x86_64 and -i386
+>>    variant (see TYPE_X86_CPU in cpu-qom.h) ... do we need to care
+>>    about this in the new qemu-system-i386 symlink run mode?
+>>
+>> - The code in target/i386/tcg/sysemu/smm_helper.c looks like it
+>>    maybe needs a runtime switch, too ... or is it ok to leave this
+>>    hard-coded to the x86_64 version?
+> 
+> Yes, it would have to switch based on the CPU's LM feature.
+> 
+>> Anyway, I'd like to get some feedback on this idea here... What
+>> do you think of the idea of getting rid of the qemu-system-i386
+>> binary this way in the future?
+> 
+> I wonder if we should take this a step further and rename 
+> qemu-system-x86_64 to qemu-system-x86!  Distros can if they wish create 
+> symlinks to both qemu-system-i386 and qemu-system-x86_64.
 
-It have "Normal Priority Transmit Ring Base Address Register High(0x17C)",
-"High Priority Transmit Ring Base Address Register High(0x184)" and
-"Receive Ring Base Address Register High(0x18C)" to save the high part physical
-address of descriptor manager.
-Ex: TX descriptor manager address [34:0]
-The "Normal Priority Transmit Ring Base Address Register High(0x17C)"
-bits [2:0] which corresponds the bits [34:32] of the 64 bits address of
-the TX ring buffer address.
-The "Normal Priority Transmit Ring Base Address Register(0x20)" bits [31:0]
-which corresponds the bits [31:0] of the 64 bits address
-of the TX ring buffer address.
+Is it simpler to *add* an experimental qemu-system-x86 binary, then
+once it support both i386/x86_64 modes, remove (symlinking) the other
+ones, or rename qemu-system-x86_64 and start with a symlink?
+(I know we are very reluctant to add new binaries due to distributions
+shipping them even if experimental).
 
-Besides, it have "TXDES 2 and 3" and "RXDES 2 and 3"
-to save the high part physical address of packet buffer.
-Ex: TX packet buffer address [34:0]
-The "TXDES 2" bits [18:16] which corresponds the bits [34:32]
-of the 64 bits address of the TX packet buffer address
-and "TXDES 3" bits [31:0] which corresponds the bits [31:0]
-of the 64 bits address of the TX packet buffer address.
-
-Update TX/RX ring and descriptor data type to uint64_t
-and supports TX/RX ring, descriptor and packet buffers
-64 bits address for all ASPEED SOCs models.
-
-Incrementing the version of vmstate to 2.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- hw/net/ftgmac100.c         | 71 ++++++++++++++++++++++++++------------
- include/hw/net/ftgmac100.h |  9 +++--
- 2 files changed, 53 insertions(+), 27 deletions(-)
-
-diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
-index 25e4c0cd5b..add3c0e270 100644
---- a/hw/net/ftgmac100.c
-+++ b/hw/net/ftgmac100.c
-@@ -56,6 +56,10 @@
- #define FTGMAC100_PHYDATA         0x64
- #define FTGMAC100_FCR             0x68
- 
-+#define FTGMAC100_NPTXR_BADR_HIGH   0x17C
-+#define FTGMAC100_HPTXR_BADR_HIGH   0x184
-+#define FTGMAC100_RXR_BADR_HIGH     0x18C
-+
- /*
-  * Interrupt status register & interrupt enable register
-  */
-@@ -165,6 +169,8 @@
- #define FTGMAC100_TXDES1_TX2FIC          (1 << 30)
- #define FTGMAC100_TXDES1_TXIC            (1 << 31)
- 
-+#define FTGMAC100_TXDES2_TXBUF_BADR_HI(x)   (((x) >> 16) & 0x7)
-+
- /*
-  * Receive descriptor
-  */
-@@ -198,6 +204,8 @@
- #define FTGMAC100_RXDES1_UDP_CHKSUM_ERR  (1 << 26)
- #define FTGMAC100_RXDES1_IP_CHKSUM_ERR   (1 << 27)
- 
-+#define FTGMAC100_RXDES2_RXBUF_BADR_HI(x)   (((x) >> 16) & 0x7)
-+
- /*
-  * Receive and transmit Buffer Descriptor
-  */
-@@ -515,12 +523,13 @@ out:
-     return frame_size;
- }
- 
--static void ftgmac100_do_tx(FTGMAC100State *s, uint32_t tx_ring,
--                            uint32_t tx_descriptor)
-+static void ftgmac100_do_tx(FTGMAC100State *s, uint64_t tx_ring,
-+                            uint64_t tx_descriptor)
- {
-     int frame_size = 0;
-     uint8_t *ptr = s->frame;
--    uint32_t addr = tx_descriptor;
-+    uint64_t addr = tx_descriptor;
-+    uint64_t buf_addr = 0;
-     uint32_t flags = 0;
- 
-     while (1) {
-@@ -559,7 +568,10 @@ static void ftgmac100_do_tx(FTGMAC100State *s, uint32_t tx_ring,
-             len =  sizeof(s->frame) - frame_size;
-         }
- 
--        if (dma_memory_read(&address_space_memory, bd.des3,
-+        buf_addr = deposit64(buf_addr, 32, 32,
-+                             FTGMAC100_TXDES2_TXBUF_BADR_HI(bd.des2));
-+        buf_addr = deposit64(buf_addr, 0, 32, bd.des3);
-+        if (dma_memory_read(&address_space_memory, buf_addr,
-                             ptr, len, MEMTXATTRS_UNSPECIFIED)) {
-             qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to read packet @ 0x%x\n",
-                           __func__, bd.des3);
-@@ -710,7 +722,7 @@ static uint64_t ftgmac100_read(void *opaque, hwaddr addr, unsigned size)
- {
-     FTGMAC100State *s = FTGMAC100(opaque);
- 
--    switch (addr & 0xff) {
-+    switch (addr) {
-     case FTGMAC100_ISR:
-         return s->isr;
-     case FTGMAC100_IER:
-@@ -726,9 +738,9 @@ static uint64_t ftgmac100_read(void *opaque, hwaddr addr, unsigned size)
-     case FTGMAC100_MATH1:
-         return s->math[1];
-     case FTGMAC100_RXR_BADR:
--        return s->rx_ring;
-+        return extract64(s->rx_ring, 0, 32);
-     case FTGMAC100_NPTXR_BADR:
--        return s->tx_ring;
-+        return extract64(s->tx_ring, 0, 32);
-     case FTGMAC100_ITC:
-         return s->itc;
-     case FTGMAC100_DBLAC:
-@@ -751,10 +763,15 @@ static uint64_t ftgmac100_read(void *opaque, hwaddr addr, unsigned size)
-         /* We might want to support these one day */
-     case FTGMAC100_HPTXPD: /* High Priority Transmit Poll Demand */
-     case FTGMAC100_HPTXR_BADR: /* High Priority Transmit Ring Base Address */
-+    case FTGMAC100_HPTXR_BADR_HIGH:
-     case FTGMAC100_MACSR: /* MAC Status Register (MACSR) */
-         qemu_log_mask(LOG_UNIMP, "%s: read to unimplemented register 0x%"
-                       HWADDR_PRIx "\n", __func__, addr);
-         return 0;
-+    case FTGMAC100_NPTXR_BADR_HIGH:
-+        return extract64(s->tx_ring, 32, 32);
-+    case FTGMAC100_RXR_BADR_HIGH:
-+        return extract64(s->rx_ring, 32, 32);
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad address at offset 0x%"
-                       HWADDR_PRIx "\n", __func__, addr);
-@@ -767,7 +784,7 @@ static void ftgmac100_write(void *opaque, hwaddr addr,
- {
-     FTGMAC100State *s = FTGMAC100(opaque);
- 
--    switch (addr & 0xff) {
-+    switch (addr) {
-     case FTGMAC100_ISR: /* Interrupt status */
-         s->isr &= ~value;
-         break;
-@@ -799,9 +816,8 @@ static void ftgmac100_write(void *opaque, hwaddr addr,
-                           HWADDR_PRIx "\n", __func__, value);
-             return;
-         }
--
--        s->rx_ring = value;
--        s->rx_descriptor = s->rx_ring;
-+        s->rx_ring = deposit64(s->rx_ring, 0, 32, value);
-+        s->rx_descriptor = deposit64(s->rx_descriptor, 0, 32, value);
-         break;
- 
-     case FTGMAC100_RBSR: /* DMA buffer size */
-@@ -814,8 +830,8 @@ static void ftgmac100_write(void *opaque, hwaddr addr,
-                           HWADDR_PRIx "\n", __func__, value);
-             return;
-         }
--        s->tx_ring = value;
--        s->tx_descriptor = s->tx_ring;
-+        s->tx_ring = deposit64(s->tx_ring, 0, 32, value);
-+        s->tx_descriptor = deposit64(s->tx_descriptor, 0, 32, value);
-         break;
- 
-     case FTGMAC100_NPTXPD: /* Trigger transmit */
-@@ -905,6 +921,14 @@ static void ftgmac100_write(void *opaque, hwaddr addr,
-         qemu_log_mask(LOG_UNIMP, "%s: write to unimplemented register 0x%"
-                       HWADDR_PRIx "\n", __func__, addr);
-         break;
-+    case FTGMAC100_NPTXR_BADR_HIGH: /* Transmit buffer address high */
-+        s->tx_ring = deposit64(s->tx_ring, 32, 32, value);
-+        s->tx_descriptor = deposit64(s->tx_descriptor, 32, 32, value);
-+        break;
-+    case FTGMAC100_RXR_BADR_HIGH: /* Ring buffer address high */
-+        s->rx_ring = deposit64(s->rx_ring, 32, 32, value);
-+        s->rx_descriptor = deposit64(s->rx_descriptor, 32, 32, value);
-+        break;
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad address at offset 0x%"
-                       HWADDR_PRIx "\n", __func__, addr);
-@@ -957,9 +981,9 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
-     FTGMAC100State *s = FTGMAC100(qemu_get_nic_opaque(nc));
-     FTGMAC100Desc bd;
-     uint32_t flags = 0;
--    uint32_t addr;
-+    uint64_t addr;
-     uint32_t crc;
--    uint32_t buf_addr;
-+    uint64_t buf_addr = 0;
-     uint8_t *crc_ptr;
-     uint32_t buf_len;
-     size_t size = len;
-@@ -1024,7 +1048,10 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
-         if (size < 4) {
-             buf_len += size - 4;
-         }
--        buf_addr = bd.des3;
-+
-+        buf_addr = deposit64(buf_addr, 32, 32,
-+                             FTGMAC100_RXDES2_RXBUF_BADR_HI(bd.des2));
-+        buf_addr = deposit64(buf_addr, 0, 32, bd.des3);
-         if (first && proto == ETH_P_VLAN && buf_len >= 18) {
-             bd.des1 = lduw_be_p(buf + 14) | FTGMAC100_RXDES1_VLANTAG_AVAIL;
- 
-@@ -1121,18 +1148,14 @@ static void ftgmac100_realize(DeviceState *dev, Error **errp)
- 
- static const VMStateDescription vmstate_ftgmac100 = {
-     .name = TYPE_FTGMAC100,
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(irq_state, FTGMAC100State),
-         VMSTATE_UINT32(isr, FTGMAC100State),
-         VMSTATE_UINT32(ier, FTGMAC100State),
-         VMSTATE_UINT32(rx_enabled, FTGMAC100State),
--        VMSTATE_UINT32(rx_ring, FTGMAC100State),
-         VMSTATE_UINT32(rbsr, FTGMAC100State),
--        VMSTATE_UINT32(tx_ring, FTGMAC100State),
--        VMSTATE_UINT32(rx_descriptor, FTGMAC100State),
--        VMSTATE_UINT32(tx_descriptor, FTGMAC100State),
-         VMSTATE_UINT32_ARRAY(math, FTGMAC100State, 2),
-         VMSTATE_UINT32(itc, FTGMAC100State),
-         VMSTATE_UINT32(aptcr, FTGMAC100State),
-@@ -1151,6 +1174,10 @@ static const VMStateDescription vmstate_ftgmac100 = {
-         VMSTATE_UINT32(phy_int_mask, FTGMAC100State),
-         VMSTATE_UINT32(txdes0_edotr, FTGMAC100State),
-         VMSTATE_UINT32(rxdes0_edorr, FTGMAC100State),
-+        VMSTATE_UINT64(rx_ring, FTGMAC100State),
-+        VMSTATE_UINT64(tx_ring, FTGMAC100State),
-+        VMSTATE_UINT64(rx_descriptor, FTGMAC100State),
-+        VMSTATE_UINT64(tx_descriptor, FTGMAC100State),
-         VMSTATE_END_OF_LIST()
-     }
- };
-diff --git a/include/hw/net/ftgmac100.h b/include/hw/net/ftgmac100.h
-index 765d1538a4..01e653b1b4 100644
---- a/include/hw/net/ftgmac100.h
-+++ b/include/hw/net/ftgmac100.h
-@@ -38,10 +38,6 @@ struct FTGMAC100State {
-     uint32_t isr;
-     uint32_t ier;
-     uint32_t rx_enabled;
--    uint32_t rx_ring;
--    uint32_t rx_descriptor;
--    uint32_t tx_ring;
--    uint32_t tx_descriptor;
-     uint32_t math[2];
-     uint32_t rbsr;
-     uint32_t itc;
-@@ -54,7 +50,10 @@ struct FTGMAC100State {
-     uint32_t phycr;
-     uint32_t phydata;
-     uint32_t fcr;
--
-+    uint64_t rx_ring;
-+    uint64_t rx_descriptor;
-+    uint64_t tx_ring;
-+    uint64_t tx_descriptor;
- 
-     uint32_t phy_status;
-     uint32_t phy_control;
--- 
-2.34.1
+> Then we would name the CPUs "foo-x86" and alias them to foo-x86_64 and, 
+> if they don't have LM set, to foo-i386 as well.
+> 
+> Paolo
+> 
 
 
