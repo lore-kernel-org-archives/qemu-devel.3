@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AE1DC27C79
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 05:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2329AC27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 06:02:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJoKY-0000MA-25; Wed, 19 Jun 2024 01:58:02 -0400
+	id 1sJoO3-0003o9-5x; Wed, 19 Jun 2024 02:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sJoKW-0000KC-Eu
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 01:58:00 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sJoNy-0003mt-GC
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 02:01:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sJoKU-0002vg-Am
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 01:58:00 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sJoNw-0003lK-AH
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 02:01:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718776677;
+ s=mimecast20190719; t=1718776891;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BW0f/jx+kDhhZS2H6o9qj2psvjx8/jWoOCoGT7/QvAg=;
- b=SRVswsTZhjSzHQNp4URrPgJ0flp17yG10BUXlhM9iE7hlhFgPi6bsnApwrzk3t7IfPNv+3
- uVii3A/B05WxT3PWxBQT0qrXwrUJhe5PnbLOlDQgf4NzXsAmcGclomi1QoQ+xYcPJl0gkR
- sAkmRZdOTxo7bBMT0toW7DBPuH3sl8E=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0Y0GtWcMX2y0zaI4VvqROSIOoPgBAf0RqtH/WOxhJiM=;
+ b=W45lbFePeTP6GcgjJKox2SpCneiC2Shjnkog7T3sULuVELEhcHEZqm5CsM3kwdDI4GnwF/
+ 9T+Q3trL0MIKTKd+AXt2HudfxnxNjsBiB/k+zy2e6bS1PEWR0xlcubgsvf/9rz+H+2bbYE
+ Sxq/yGPdc64ZVOVmbTMkdGWbg+of1cY=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-CF2gYEAyOA65tWMH6dLLQg-1; Wed, 19 Jun 2024 01:57:55 -0400
-X-MC-Unique: CF2gYEAyOA65tWMH6dLLQg-1
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-62f46f56353so106140407b3.3
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 22:57:55 -0700 (PDT)
+ us-mta-197-XjkHtg1EPJG9O2DmaRu1RA-1; Wed, 19 Jun 2024 02:01:25 -0400
+X-MC-Unique: XjkHtg1EPJG9O2DmaRu1RA-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6b05b8663ccso71548356d6.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 23:01:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718776675; x=1719381475;
+ d=1e100.net; s=20230601; t=1718776885; x=1719381685;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BW0f/jx+kDhhZS2H6o9qj2psvjx8/jWoOCoGT7/QvAg=;
- b=U9fCw2dUC1kqRlKcB7Czw24p5gGihkStjL4WtwfT/xKyW7/2OtL1Cyln6Q3/yvvL4k
- FAwTyjmptfV59Jq+oYbmjEwTvpI+KCdk9jdr2fM4U+CtBy81t1h4wJC/M0xQDl/d0FBw
- qCHdhAQe5E3xlIcLl+M1M7hSInP+Y6putcRN2E688tOCXsGrSUfvR/35uTBG2WpECVyr
- RvxPwAb9P98VdHSYa32Qz1YspSenh9rZITxR9cYoOK9lS/cejfZa09HDZhgyy47fcbLz
- qZvqY7OhQckOx9vQptrvScDKw4EBq/4C+29hZ4OiAfGGc7iHjDl/Jf6EHWgZK+NCkga9
- u2mA==
+ bh=0Y0GtWcMX2y0zaI4VvqROSIOoPgBAf0RqtH/WOxhJiM=;
+ b=S2VG2wUnhi+uNFLr60FVSvf01tjB2vQ5araSl7faT10MhbosDB6tjX32b5Jbeue3Qe
+ D494jYmf6SeTKnrmWxBC5+4YH3L/dfNOwZQGlsebvK/Gdq6mynIu1dwDVC7YO7ICHkv0
+ dD0Do+tGziK20lSP/09RLBukcbu+cUS8Mx/b5aBpVmE4Ep/GaUFqT8sa0vN7xstP9Cyu
+ rLmiSfliDLZr5mXPBN+nVxolFQEqjjKTi8QIjHZpfbUBhlVyTVTSTEyhv7seOF0Xlk/3
+ gL5nehlaFejhZ6kSJBBuQhlo251SgQLiQkzmbZSxROm8pPQQBBXvbIOtmVSzyXVt2quH
+ sXxw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0CzYeADpfLN68Zo0icQz9TvTHdJUU/Tjo12aaMTnZLziw61+bj9NCNNeNc8woXTl0ohkLS3q+nAq82WMwzKSBYml1s2o=
-X-Gm-Message-State: AOJu0Yxy+xdIK4IDN699f+XOM3bFFKnjgoZvWBZLWdw4+pWMMbKE+3tA
- NWO3VO6kbsy5ciDW/GFJaKTNIc65I8m1AnkOwyiMhORxQOwjni29Curl0Av7eCLpqhkI1W1+xRh
- CIz7Vc00oE3tR+nxz/qmsty6mWsprY7zd3B4ypN5hXs7qk/xYjuNj
-X-Received: by 2002:a81:9e0d:0:b0:62c:c65d:8d1c with SMTP id
- 00721157ae682-63a8faf2eb6mr15315937b3.52.1718776675033; 
- Tue, 18 Jun 2024 22:57:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFfdXU3DmXCfiJkGoBKT2c7MqL3WPW2xtqGkz9n54NjK9uaNzQI9DAZdpp0JE6Pq0XV+lOz+w==
-X-Received: by 2002:a81:9e0d:0:b0:62c:c65d:8d1c with SMTP id
- 00721157ae682-63a8faf2eb6mr15315857b3.52.1718776674643; 
- Tue, 18 Jun 2024 22:57:54 -0700 (PDT)
+ AJvYcCUB3XDOehRHMmIHMXu/KqgGgBglSxUhuGrfy5LP7E6jOYGk9Vxqmkc9Fo3+BzCzK3yazj1u/dVeV9XxByxwOrkvB3dUORI=
+X-Gm-Message-State: AOJu0Yzduyit1Lhi3AUXMNvqL8hBqiZ+FtUHF4ceJI/0Xyo3GtDDxRid
+ eCa8bDNtBIZXWBKyEHP8+qFlQPoOOQyHCoLj6zRpF76ssBjueUGlEnqyhpcnD1uXIMEKhp9d+af
+ d9UVmH1/Q3UblqbLcAV/mC+9zXWI0ncoU7fNFxMtTuFzPuRaV7ff1
+X-Received: by 2002:a0c:e0c3:0:b0:6b4:fe1a:eeee with SMTP id
+ 6a1803df08f44-6b501e9f637mr19468356d6.46.1718776884911; 
+ Tue, 18 Jun 2024 23:01:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOlQPtOt/WDLisxVRRXxxBkAti9S9bN87HfHM0ed0j5B1K960SeuORXaGfkqnNFcbzBoh5bA==
+X-Received: by 2002:a0c:e0c3:0:b0:6b4:fe1a:eeee with SMTP id
+ 6a1803df08f44-6b501e9f637mr19468126d6.46.1718776884528; 
+ Tue, 18 Jun 2024 23:01:24 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-43-178-117.web.vodafone.de.
  [109.43.178.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b2a5ef497esm73881606d6.124.2024.06.18.22.57.51
+ 6a1803df08f44-6b506e7525esm2400526d6.108.2024.06.18.23.01.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 22:57:54 -0700 (PDT)
-Message-ID: <4687c59a-1427-4215-a58d-cb84dd27f9ff@redhat.com>
-Date: Wed, 19 Jun 2024 07:57:49 +0200
+ Tue, 18 Jun 2024 23:01:24 -0700 (PDT)
+Message-ID: <431324a5-d455-464c-a4cb-1b2fc457b31b@redhat.com>
+Date: Wed, 19 Jun 2024 08:01:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/s390x/arch_dump: use correct byte order for pid
+Subject: Re: [PATCH 2/2] target/ppc/arch_dump: set prstatus pid to cpuid
 To: Omar Sandoval <osandov@osandov.com>, qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
@@ -79,7 +79,7 @@ Cc: qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  linux-debuggers@vger.kernel.org, QEMU Trivial <qemu-trivial@nongnu.org>
 References: <cover.1718771802.git.osandov@osandov.com>
- <5929f76d536d355afd04af51bf293695a1065118.1718771802.git.osandov@osandov.com>
+ <ac09da04c8e6dd777945219815d1c53b02291b5b.1718771802.git.osandov@osandov.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -124,7 +124,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <5929f76d536d355afd04af51bf293695a1065118.1718771802.git.osandov@osandov.com>
+In-Reply-To: <ac09da04c8e6dd777945219815d1c53b02291b5b.1718771802.git.osandov@osandov.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -153,28 +153,103 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 19/06/2024 07.00, Omar Sandoval wrote:
-> The pid field of prstatus needs to be big endian like all of the other
-> fields.
+> Every other architecture does this, and debuggers need it to be able to
+> identify which prstatus note corresponds to which CPU.
 > 
-> Fixes: f738f296eaae ("s390x/arch_dump: pass cpuid into notes sections")
 > Signed-off-by: Omar Sandoval <osandov@osandov.com>
 > ---
->   target/s390x/arch_dump.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/ppc/arch_dump.c | 21 ++++++++++++---------
+>   1 file changed, 12 insertions(+), 9 deletions(-)
 > 
-> diff --git a/target/s390x/arch_dump.c b/target/s390x/arch_dump.c
-> index 7e8a1b4fc0..029d91d93a 100644
-> --- a/target/s390x/arch_dump.c
-> +++ b/target/s390x/arch_dump.c
-> @@ -102,7 +102,7 @@ static void s390x_write_elf64_prstatus(Note *note, S390CPU *cpu, int id)
->           regs->acrs[i] = cpu_to_be32(cpu->env.aregs[i]);
->           regs->gprs[i] = cpu_to_be64(cpu->env.regs[i]);
->       }
-> -    note->contents.prstatus.pid = id;
-> +    note->contents.prstatus.pid = cpu_to_be32(id);
+> diff --git a/target/ppc/arch_dump.c b/target/ppc/arch_dump.c
+> index a8315659d9..78b4205319 100644
+> --- a/target/ppc/arch_dump.c
+> +++ b/target/ppc/arch_dump.c
+> @@ -47,9 +47,11 @@ struct PPCUserRegStruct {
+>   } QEMU_PACKED;
+>   
+>   struct PPCElfPrstatus {
+> -    char pad1[112];
+> +    char pad1[32];
+> +    uint32_t pid;
+> +    uint8_t pad2[76];
+>       struct PPCUserRegStruct pr_reg;
+> -    char pad2[40];
+> +    char pad3[40];
+>   } QEMU_PACKED;
+>   
+>   
+> @@ -96,7 +98,7 @@ typedef struct NoteFuncArg {
+>       DumpState *state;
+>   } NoteFuncArg;
+>   
+> -static void ppc_write_elf_prstatus(NoteFuncArg *arg, PowerPCCPU *cpu)
+> +static void ppc_write_elf_prstatus(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
+>   {
+>       int i;
+>       reg_t cr;
+> @@ -109,6 +111,7 @@ static void ppc_write_elf_prstatus(NoteFuncArg *arg, PowerPCCPU *cpu)
+>   
+>       prstatus = &note->contents.prstatus;
+>       memset(prstatus, 0, sizeof(*prstatus));
+> +    prstatus->pid = cpu_to_dump32(s, id);
+>       reg = &prstatus->pr_reg;
+>   
+>       for (i = 0; i < 32; i++) {
+> @@ -127,7 +130,7 @@ static void ppc_write_elf_prstatus(NoteFuncArg *arg, PowerPCCPU *cpu)
+>       reg->ccr = cpu_to_dump_reg(s, cr);
 >   }
 >   
->   static void s390x_write_elf64_fpregset(Note *note, S390CPU *cpu, int id)
+> -static void ppc_write_elf_fpregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+> +static void ppc_write_elf_fpregset(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
+>   {
+>       int i;
+>       struct PPCElfFpregset  *fpregset;
+> @@ -146,7 +149,7 @@ static void ppc_write_elf_fpregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+>       fpregset->fpscr = cpu_to_dump_reg(s, cpu->env.fpscr);
+>   }
+>   
+> -static void ppc_write_elf_vmxregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+> +static void ppc_write_elf_vmxregset(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
+>   {
+>       int i;
+>       struct PPCElfVmxregset *vmxregset;
+> @@ -178,7 +181,7 @@ static void ppc_write_elf_vmxregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+>       vmxregset->vscr.u32[3] = cpu_to_dump32(s, ppc_get_vscr(&cpu->env));
+>   }
+>   
+> -static void ppc_write_elf_vsxregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+> +static void ppc_write_elf_vsxregset(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
+>   {
+>       int i;
+>       struct PPCElfVsxregset *vsxregset;
+> @@ -195,7 +198,7 @@ static void ppc_write_elf_vsxregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+>       }
+>   }
+>   
+> -static void ppc_write_elf_speregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+> +static void ppc_write_elf_speregset(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
+>   {
+>       struct PPCElfSperegset *speregset;
+>       Note *note = &arg->note;
+> @@ -211,7 +214,7 @@ static void ppc_write_elf_speregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+>   
+>   static const struct NoteFuncDescStruct {
+>       int contents_size;
+> -    void (*note_contents_func)(NoteFuncArg *arg, PowerPCCPU *cpu);
+> +    void (*note_contents_func)(NoteFuncArg *arg, PowerPCCPU *cpu, int id);
+>   } note_func[] = {
+>       {sizeof_field(Note, contents.prstatus),  ppc_write_elf_prstatus},
+>       {sizeof_field(Note, contents.fpregset),  ppc_write_elf_fpregset},
+> @@ -282,7 +285,7 @@ static int ppc_write_all_elf_notes(const char *note_name,
+>           arg.note.hdr.n_descsz = cpu_to_dump32(s, nf->contents_size);
+>           strncpy(arg.note.name, note_name, sizeof(arg.note.name));
+>   
+> -        (*nf->note_contents_func)(&arg, cpu);
+> +        (*nf->note_contents_func)(&arg, cpu, id);
+>   
+>           note_size =
+>               sizeof(arg.note) - sizeof(arg.note.contents) + nf->contents_size;
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
