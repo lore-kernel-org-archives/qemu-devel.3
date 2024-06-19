@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5F3AC27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 02:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85548C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 02:41:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJlFf-0008O9-EL; Tue, 18 Jun 2024 22:40:47 -0400
+	id 1sJlGE-00006P-F5; Tue, 18 Jun 2024 22:41:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJlFd-0008NX-K0
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 22:40:45 -0400
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
+ id 1sJlGC-00005z-Ld
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 22:41:20 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sJlFc-0004lK-3K
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 22:40:45 -0400
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-5c19d338401so819612eaf.0
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 19:40:43 -0700 (PDT)
+ id 1sJlGB-0004nm-4V
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 22:41:20 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2c2c6b27428so4768852a91.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 19:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718764842; x=1719369642; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718764877; x=1719369677; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/1Hnq8xFabbTZezXjqEYEABUKtAYTe9eYkbzuVrdfvY=;
- b=LUuAdka76UBD8QQ0NSPVolDBT7AHHmWTfGFIeWEBoSbAI+1hBSTH3YzLOqnRATnbVb
- 7wrl1NevguoFtDIPhedjllYHTbM/Kh45h+VnYHIZC5fl4mLLF2Pz4tP1tn6WNlbxb3nC
- jc86KHp91kxYEQZsOqghdk4ZGKz88bGQDh0HkxYEwthywCAZnujLhnvVsKote82tQfCd
- 19GU2aHmcmINeDaW8cttgCS0AQJrEbuZEwwf73tSW0bFGLXusVdEdY/6wJG266FZXKgF
- LXmWp5g+WcZlqXDjm/DtIrZJCy+K1QCIjiIZkjdpecyq9cl5+RAwR299cbpU1pkdhnl6
- KjuQ==
+ bh=eey5CwDEoK4Tj9IoIG6YGpUiix2ArYCy4Snf1KNYUvY=;
+ b=CWSw6F2IAaxMd+/Jv+XYwC1GO54KK5qJedE14PMwUCuIF9tImEvX950u7sj1KhBVqy
+ XbNqF8JhQ0+8bdWIR5MGIUNkQW7xHWprdeBiUHt+nYrcBI8g8F9clqGSoWjzyOHkP7Hf
+ 7Z08tN1chtxGVkXjOveftR12FJJR3csI16Fbc7v/NWSL3vwp1eSLx+4gr9w3NTYzelPm
+ i833rnMt3OYxZnklBdSrnAlv+DXEANanTxls+Ap7vp7WV3PoGtd06/wXxz6vJw6TerlU
+ QhOinFsohSP4Ywtija8R/2d6qKAGYZXNnhmbFbHQk3RrWYKKpK5lJ9jaAfYT12SJqjdP
+ +7Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718764842; x=1719369642;
+ d=1e100.net; s=20230601; t=1718764877; x=1719369677;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/1Hnq8xFabbTZezXjqEYEABUKtAYTe9eYkbzuVrdfvY=;
- b=nHnalsDFMA5on95qiDwP8EGFoUPgaoOsm7eo+s7RsQtHODucpKDxUyI4bulnFgXaFC
- giixyJlbQMPaT/PlokDOSLZ28MSqoqybvzmsfmkdojwTQTTN6UjRT7W814iYvfgaKFWp
- fObA2UxmpyEiXT6lTCr3/k3e1iZfaM1Ii1iCoGlOnFTS9Sf+jBE9w5TdiQSWp4cbAiRo
- 6P2vCnDoLXHhf2wIKB+l39wPWCcvk5YdStw3Vpgm1L/lWfVMkcQT7ecMbLrci8ld+rOn
- FQbxtW3PhySlnPItvWMPA08ez1No0vJkonar3i0BB8zZnBRlXEjP3YWkrLxRfd/Ssb/7
- ND/A==
+ bh=eey5CwDEoK4Tj9IoIG6YGpUiix2ArYCy4Snf1KNYUvY=;
+ b=cFMxvqKhpa87hDQhKwHzLmqn6cwrB2b2grjgLvR+/pl4P73Rf+jXrD/S7LP+UB8EG6
+ X/9Aej3l72CIdChdus0VlKHGz537/Hk1goPFcJwSNHLWL0sTrj5mJ74sIyvdb97u1qw7
+ BdKKzURnwxZwjc6G8UFXeIq79URUk/kHyWDZcd15kuUgSMRgMC13X1CtIx1xNfrWAnZb
+ f71vURhE5aru6JRnWBk8QzlYIgQBF+qQi2mTvwee4dTDUvRteVQPkT1WNjvOpfJbuUNr
+ +Q8Yx6LjHtpDoCObLhO5J43c0oKygRSpIZlJNCRw+1xkbWT4xjlN4bMfBipiGXcj7tcW
+ 3xyg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXS5ppAe+/3BbmOCUoSchBaDRZRl7CMv8S7S13Jh4jnnw5ySo159Wf9aRQSjvhj/ehvHU0o976H4/pVWxcyloOGufr+xV8=
-X-Gm-Message-State: AOJu0YyujQWRHyOpZ5jnoKUbfCp6XZ/2PM/JOs3cEWkLzLCrhQxqvbrt
- r9hQ0qcBjTpUxkS8rYD9fiKSqvKnZprIJ5kCQyVgVys0wuvqTTwezVQWW3s3MJw=
-X-Google-Smtp-Source: AGHT+IEAMrhMqiU4vSuCABx6q8058dzhFiW6aPdqlCniT7rDZJ4GhRaVw04KmTTcPCOqPcmNI8WGKQ==
-X-Received: by 2002:a05:6358:b01a:b0:1a1:bbe5:5d4f with SMTP id
- e5c5f4694b2df-1a1fd656caamr141717455d.30.1718764842257; 
- Tue, 18 Jun 2024 19:40:42 -0700 (PDT)
+ AJvYcCVBbIChGZNpBQYLNw3dcqoWYBxMyFOdW8fsD+eoM//9uqZ1y7Bii/kkGAMfkNa3Oucg4VD6dqyhUpFyy+Osn2DBL4AmYqs=
+X-Gm-Message-State: AOJu0YxplpmDAp5jJ1JOLYtORwOyvOIj6wvQwykNpFxx1IN7bYrFyHby
+ 8eti4qg8N4Wz173lrDu1ityAlgGnThXdkEDkf6INuy2xSNfE/c2xT/L/IAm1IRcbWVrBoA9e+oU
+ +
+X-Google-Smtp-Source: AGHT+IHCq+KA426uO6lIxlyqBQSLM2hfKgZKjJlnHPbfZd+4/p/RIC/zzOfHZjE05ij0qLJSklvk3A==
+X-Received: by 2002:a17:90a:db82:b0:2c3:7e3:6be0 with SMTP id
+ 98e67ed59e1d1-2c7b5d6aea2mr1573034a91.31.1718764877471; 
+ Tue, 18 Jun 2024 19:41:17 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.132.216])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-6fedd21591csm8563966a12.14.2024.06.18.19.40.41
+ 98e67ed59e1d1-2c4a75ee4e8sm14057149a91.16.2024.06.18.19.41.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Jun 2024 19:40:41 -0700 (PDT)
-Message-ID: <da5c118f-cd5e-4ada-9de6-a793a0f6dfa0@linaro.org>
-Date: Tue, 18 Jun 2024 19:40:39 -0700
+ Tue, 18 Jun 2024 19:41:17 -0700 (PDT)
+Message-ID: <e66581c8-9216-496a-b7c7-7ad92f90e565@linaro.org>
+Date: Tue, 18 Jun 2024 19:41:15 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] exec: use char* for pointer arithmetic
-To: Roman Kiryanov <rkir@google.com>, qemu-devel@nongnu.org
-Cc: jansene@google.com, mett@google.com, jpcottin@google.com
-References: <20240619000450.893463-1-rkir@google.com>
+Subject: Re: [PATCH] hw/arm/virt-acpi-build: Drop local iort_node_offset
+To: Nicolin Chen <nicolinc@nvidia.com>, peter.maydell@linaro.org,
+ mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ shannon.zhaosl@gmail.com
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20240619001708.926511-1-nicolinc@nvidia.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240619000450.893463-1-rkir@google.com>
+In-Reply-To: <20240619001708.926511-1-nicolinc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,20 +100,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/18/24 17:04, Roman Kiryanov wrote:
-> void* pointer arithmetic is not in the
-> C standard. This change allows using
-> the QEMU headers with a C++ compiler.
+On 6/18/24 17:17, Nicolin Chen wrote:
+> Both the other two callers of build_iort_id_mapping() just directly pass
+> in the IORT_NODE_OFFSET macro. Keeping a "const uint32_t" local variable
+> storing the same value doesn't have any gain.
 > 
-> Google-Bug-Id: 331190993
-> Change-Id: I5a064853429f627c17a9213910811dea4ced6174
-> Signed-off-by: Roman Kiryanov<rkir@google.com>
+> Simplify this by replacing the only place using this local variable with
+> the macro directly.
+> 
+> Signed-off-by: Nicolin Chen<nicolinc@nvidia.com>
 > ---
-> v2: change `char*` into `char *` (add the missing space).
-> 
->   include/exec/memory.h                 |  8 ++++----
->   include/exec/memory_ldst_cached.h.inc | 12 ++++++------
->   2 files changed, 10 insertions(+), 10 deletions(-)
+>   hw/arm/virt-acpi-build.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
