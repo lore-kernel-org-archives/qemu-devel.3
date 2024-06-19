@@ -4,104 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2341C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 09:21:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A085C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 09:25:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJrV2-0000Nw-3b; Wed, 19 Jun 2024 05:21:04 -0400
+	id 1sJrYJ-0002QE-0q; Wed, 19 Jun 2024 05:24:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sJrUy-0000Me-BE
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 05:21:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1sJrYH-0002Pd-4C
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 05:24:25 -0400
+Received: from esa3.hc1455-7.c3s2.iphmx.com ([207.54.90.49])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sJrUw-0004Yo-I9
- for qemu-devel@nongnu.org; Wed, 19 Jun 2024 05:21:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718788857;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=15PO/GiZHNGhjiCnLI3XggftAI1ybcKgTqaDPZn+pQQ=;
- b=D+zBWGaymwtkQS885VSRzUQTtJNXvljKdjicNlAVecjsCGj+WNoflqvi4rRqUT/1anL/Jp
- i76kXEq/RtjGquW2IefSfk6ICL7eYhCUzlX20sTzRneCVgzdEePpSa08IQ9zuokJkz7I8z
- 244qfmqhNCiiq2JEVIS+9HEwTOJRXvI=
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
- [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-107-3oi-88zAPVqaqHGjWdhGrA-1; Wed, 19 Jun 2024 05:20:56 -0400
-X-MC-Unique: 3oi-88zAPVqaqHGjWdhGrA-1
-Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-48c46df1952so3578940137.3
- for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 02:20:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718788855; x=1719393655;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=15PO/GiZHNGhjiCnLI3XggftAI1ybcKgTqaDPZn+pQQ=;
- b=L7bqmcRH0jyDu3xSfA12E8wwtHS/Pl45U6zvKMJMBSJGeOjXMxf8e7Fo7+ut22ICnH
- FcJwUp4BAEPBO+GFXzvz0lgryj5bWriQI2zRyc9TR7EnBemSlf29fRvvpIyyA3U0Pcqm
- HcXNrTeLsr6w5NixXxfA0M0gqqP06Goz1luQjPLKjeFlnCZhQADrFxZYMt9MkoJd9an9
- igsyBokRSKETjj4Pm3gdFx/v4f039xDQAlC3pr9UZSWfAWhKIlSIiu0eTYd/xbtPwXAB
- IwHpziHt4yUbFiRC50iFioV76eUntiHPWyndOIvNzN4bh3Ab34Fpm6PJxn4+yp4Fl5y6
- wELw==
-X-Gm-Message-State: AOJu0YwgwznBNF0jH3sOoT6tc5e58pzhYCVtmSWJ2cz/iR7xaKIzbTqe
- kyDJ3nQkFkDDvV2VNPULqaiAkHAX8PjufNJEdMiPx9UsuJ9NejfmsxJCIe/7ep24imf90okIknx
- xzTy0sOczTEqMMybOjC5LC3vmruXxCzi3/In+Pi4RQJCpa+Wfk7FQ
-X-Received: by 2002:a05:6102:26d1:b0:48d:8fd7:a952 with SMTP id
- ada2fe7eead31-48f130d077fmr2500736137.32.1718788854044; 
- Wed, 19 Jun 2024 02:20:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJB6e1UOieMkZFXEtyquUdtB6QFFQD5JH+x/UX7c/jOuhKHPKZj1rgPKyD9RB77lsma0JoSA==
-X-Received: by 2002:a05:6102:26d1:b0:48d:8fd7:a952 with SMTP id
- ada2fe7eead31-48f130d077fmr2500652137.32.1718788852243; 
- Wed, 19 Jun 2024 02:20:52 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-798abe279cbsm589989085a.112.2024.06.19.02.20.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Jun 2024 02:20:51 -0700 (PDT)
-Date: Wed, 19 Jun 2024 11:20:47 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Sunil V L <sunilvl@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org, Paolo
- Bonzini <pbonzini@redhat.com>, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
- <marcandre.lureau@redhat.com>, "Daniel P . =?UTF-8?B?QmVycmFuZ8Op?="
- <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>, Philippe
- =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, "Michael S . Tsirkin"
- <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Laurent Vivier
- <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, Alistair Francis
- <alistair23@gmail.com>, Sia Jee Heng <jeeheng.sia@starfivetech.com>, Haibo1
- Xu <haibo1.xu@intel.com>, Anup Patel <apatel@ventanamicro.com>, Andrew
- Jones <ajones@ventanamicro.com>, Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>, Peter Maydell <peter.maydell@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>, Weiwei
- Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [PATCH v2 05/12] tests/qtest/bios-tables-test.c: Add support
- for arch in path
-Message-ID: <20240619112047.6b0e674c@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240524061411.341599-6-sunilvl@ventanamicro.com>
-References: <20240524061411.341599-1-sunilvl@ventanamicro.com>
- <20240524061411.341599-6-sunilvl@ventanamicro.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1sJrYE-0004wp-Ii
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 05:24:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1718789062; x=1750325062;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=P5qUMmTvxRhRm+xvXml4/gq2sDOAqp/7/NAm9NbVRRo=;
+ b=ChxMDk33ExFY5kUKyNwx4BRCUy9yzGNy6MpAhr7lBU5LYlEyArpdFNpb
+ kmsoGN7+KPjJA67wDkt2RSZux/NCPeI8YgIXGmXIsJX2RbvV3If2EKfm8
+ 6XSpczDnezh9Gu4K58eM6nR1N6l/t4Gkl1Hi7q1n7On3n5tFASf/QXBhc
+ J2Lvo9wS1flAmW4WmXNAwPtSRvriHz4QsMufZjCNXktUT9G7wn0mS+tgs
+ LA6pSNcgnAMo8LNZme+4csFGongEvAfrjw4ueTVwubac5TKFoEAyO7v7C
+ Sv/8HpYzlQE7c0bd5Moh6RKCIK1U7zVguLaEcH/huk6n3GcxXm/UuR2rZ A==;
+X-IronPort-AV: E=McAfee;i="6700,10204,11107"; a="164163246"
+X-IronPort-AV: E=Sophos;i="6.08,250,1712588400"; d="scan'208";a="164163246"
+Received: from unknown (HELO oym-r4.gw.nic.fujitsu.com) ([210.162.30.92])
+ by esa3.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Jun 2024 18:24:19 +0900
+Received: from oym-m1.gw.nic.fujitsu.com (oym-nat-oym-m1.gw.nic.fujitsu.com
+ [192.168.87.58])
+ by oym-r4.gw.nic.fujitsu.com (Postfix) with ESMTP id DDD62D800A
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 18:24:16 +0900 (JST)
+Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
+ [192.51.206.22])
+ by oym-m1.gw.nic.fujitsu.com (Postfix) with ESMTP id 26BA9D8B0F
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 18:24:16 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 974BEE3690
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 18:24:15 +0900 (JST)
+Received: from [192.168.50.5] (unknown [10.167.226.114])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 840D11A0002;
+ Wed, 19 Jun 2024 17:24:14 +0800 (CST)
+Message-ID: <b9bbf3bc-9125-4cbb-b127-613b841dc9a8@fujitsu.com>
+Date: Wed, 19 Jun 2024 17:24:14 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] cxl: avoid duplicating report from MCE & device
+To: Dave Jiang <dave.jiang@intel.com>, qemu-devel@nongnu.org,
+ linux-cxl@vger.kernel.org
+Cc: jonathan.cameron@huawei.com, dan.j.williams@intel.com, dave@stgolabs.net, 
+ ira.weiny@intel.com, alison.schofield@intel.com, vishal.l.verma@intel.com
+References: <20240618165310.877974-1-ruansy.fnst@fujitsu.com>
+ <be14ee00-6d43-4db1-ad63-beac6aacb814@intel.com>
+In-Reply-To: <be14ee00-6d43-4db1-ad63-beac6aacb814@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28462.006
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28462.006
+X-TMASE-Result: 10--16.853000-10.000000
+X-TMASE-MatchedRID: NuHz/06ZeuaPvrMjLFD6eKn9fPsu8s0a2q80vLACqaeqvcIF1TcLYLBk
+ jjdoOP1bp3Z/y3zTL9+zN6XcSN8uuHerlGbz8OXFolVO7uyOCDUXivwflisSrEJsNXD374+pO+W
+ Rk1kOc5MCcJ+0x3yT8twnF1a+MpDfC5dVqsgzBjuOFfLQqF6P0tUEOicf335WUoV94zwLp3VJ9L
+ 43nm/22bqZhYf6F5ZElyW1ZrZx68b/awIuxLRW1EhwlOfYeSqxlDt5PQMgj00zAwv94MqCLh8aR
+ hKglPt8mNVEdxRO2BKiQrGQ0QrIUcfdkIlEiI2knVTWWiNp+v9AApRfVHzqNN9RlPzeVuQQunqB
+ IQj+1Jm8HpxVQnR8jFIgVt7sAjKWDOQhvAmAT8UDccazfMVOqLFcDzCo2ZtWmWGz8DF0pgYRRLf
+ e6UPgvOt2gGXLArR6zG7gfWFsstqR9GF2J2xqM4MbH85DUZXyudR/NJw2JHcNYpvo9xW+mI6HM5
+ rqDwqtjBK61ITomYqktjwv041Qk/+6+AIb3vIoeBQZ5OZ7tJxxR93z5vKGpA==
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=207.54.90.49;
+ envelope-from=ruansy.fnst@fujitsu.com; helo=esa3.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,139 +100,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
+From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 May 2024 11:44:04 +0530
-Sunil V L <sunilvl@ventanamicro.com> wrote:
 
-> Since virt machine is common for multiple architectures, add "arch" in
-> the path to search expected AML files. Since the AML files are still
-> under old path, support both by searching with and without arch in the
-> path.
+
+在 2024/6/19 7:35, Dave Jiang 写道:
 > 
-> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-other than need to swap machine/arch order mentioned in
-the next patch look good to me
-
-> ---
->  tests/qtest/bios-tables-test.c | 31 ++++++++++++++++++++++++++++---
->  1 file changed, 28 insertions(+), 3 deletions(-)
 > 
-> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-> index c4a4d1c7bf..c73174ad00 100644
-> --- a/tests/qtest/bios-tables-test.c
-> +++ b/tests/qtest/bios-tables-test.c
-> @@ -78,6 +78,7 @@
->  typedef struct {
->      bool tcg_only;
->      const char *machine;
-> +    const char *arch;
->      const char *machine_param;
->      const char *variant;
->      const char *uefi_fl1;
-> @@ -262,8 +263,19 @@ static void dump_aml_files(test_data *data, bool rebuild)
->          g_assert(exp_sdt->aml);
->  
->          if (rebuild) {
-> -            aml_file = g_strdup_printf("%s/%s/%.4s%s", data_dir, data->machine,
-> +            aml_file = g_strdup_printf("%s/%s/%s/%.4s%s", data_dir,
-> +                                       data->machine, data->arch,
->                                         sdt->aml, ext);
-> +
-> +            /*
-> +             * To keep test cases not failing when the DATA files are moved to
-> +             * ARCH under virt folder, add this check as well.
-> +             */
-> +            if (!g_file_test(aml_file, G_FILE_TEST_EXISTS)) {
-> +                aml_file = g_strdup_printf("%s/%s/%.4s%s", data_dir,
-> +                                           data->machine, sdt->aml, ext);
-> +            }
-> +
->              if (!g_file_test(aml_file, G_FILE_TEST_EXISTS) &&
->                  sdt->aml_len == exp_sdt->aml_len &&
->                  !memcmp(sdt->aml, exp_sdt->aml, sdt->aml_len)) {
-> @@ -398,8 +410,13 @@ static GArray *load_expected_aml(test_data *data)
->          memset(&exp_sdt, 0, sizeof(exp_sdt));
->  
->  try_again:
-> -        aml_file = g_strdup_printf("%s/%s/%.4s%s", data_dir, data->machine,
-> -                                   sdt->aml, ext);
-> +        aml_file = g_strdup_printf("%s/%s/%s/%.4s%s", data_dir, data->machine,
-> +                                   data->arch, sdt->aml, ext);
-> +        if (!g_file_test(aml_file, G_FILE_TEST_EXISTS)) {
-> +            aml_file = g_strdup_printf("%s/%s/%.4s%s", data_dir, data->machine,
-> +                                       sdt->aml, ext);
-> +        }
-> +
->          if (verbosity_level >= 2) {
->              fprintf(stderr, "Looking for expected file '%s'\n", aml_file);
->          }
-> @@ -1574,6 +1591,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
->  {
->      test_data data = {
->          .machine = "virt",
-> +        .arch = "aarch64",
->          .tcg_only = true,
->          .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-> @@ -1667,6 +1685,7 @@ static void test_acpi_aarch64_virt_tcg_numamem(void)
->  {
->      test_data data = {
->          .machine = "virt",
-> +        .arch = "aarch64",
->          .tcg_only = true,
->          .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-> @@ -1689,6 +1708,7 @@ static void test_acpi_aarch64_virt_tcg_pxb(void)
->  {
->      test_data data = {
->          .machine = "virt",
-> +        .arch = "aarch64",
->          .tcg_only = true,
->          .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-> @@ -1762,6 +1782,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_hmat(void)
->  {
->      test_data data = {
->          .machine = "virt",
-> +        .arch = "aarch64",
->          .tcg_only = true,
->          .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-> @@ -1918,6 +1939,7 @@ static void test_acpi_aarch64_virt_tcg(void)
->  {
->      test_data data = {
->          .machine = "virt",
-> +        .arch = "aarch64",
->          .tcg_only = true,
->          .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-> @@ -1937,6 +1959,7 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
->  {
->      test_data data = {
->          .machine = "virt",
-> +        .arch = "aarch64",
->          .variant = ".topology",
->          .tcg_only = true,
->          .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-> @@ -2020,6 +2043,7 @@ static void test_acpi_aarch64_virt_viot(void)
->  {
->      test_data data = {
->          .machine = "virt",
-> +        .arch = "aarch64",
->          .tcg_only = true,
->          .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-> @@ -2196,6 +2220,7 @@ static void test_acpi_aarch64_virt_oem_fields(void)
->  {
->      test_data data = {
->          .machine = "virt",
-> +        .arch = "aarch64",
->          .tcg_only = true,
->          .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
+> On 6/18/24 9:53 AM, Shiyang Ruan wrote:
+>> Background:
+>> Since CXL device is a memory device, while CPU consumes a poison page of
+>> CXL device, it always triggers a MCE by interrupt (INT18), no matter
+>> which-First path is configured.  This is the first report.  Then
+>> currently, in FW-First path, the poison event is transferred according
+>> to the following process: CXL device -> firmware -> OS:ACPI->APEI->GHES
+>>   -> CPER -> trace report.  This is the second one.  These two reports
+>> are indicating the same poisoning page, which is the so-called "duplicate
+>> report"[1].  And the memory_failure() handling I'm trying to add in
+>> OS-First path could also be another duplicate report.
+>>
+>> Hope the flow below could make it easier to understand:
+>> CPU accesses bad memory on CXL device, then
+>>   -> MCE (INT18), *always* report (1)
+>>   -> * FW-First (implemented now)
+>>        -> CXL device -> FW
+>> 	      -> OS:ACPI->APEI->GHES->CPER -> trace report (2.a)
+>>      * OS-First (not implemented yet, I'm working on it)
+>>        -> CXL device -> MSI
+>> 	      -> OS:CXL driver -> memory_failure() (2.b)
+>> so, the (1) and (2.a/b) are duplicated.
+>>
+>> (I didn't get response in my reply for [1] while I have to make patch to
+>> solve this problem, so please correct me if my understanding is wrong.)
+>>
+>> This patch adds a new notifier_block and MCE_PRIO_CXL, for CXL memdev
+>> to check whether the current poison page has been reported (if yes,
+>> stop the notifier chain, won't call the following memory_failure()
+>> to report), into `x86_mce_decoder_chain`.  In this way, if the poison
+>> page already handled(recorded and reported) in (1) or (2), the other one
+>> won't duplicate the report.  The record could be clear when
+>> cxl_clear_poison() is called.
+>>
+>> [1] https://lore.kernel.org/linux-cxl/664d948fb86f0_e8be294f8@dwillia2-mobl3.amr.corp.intel.com.notmuch/
+>>
 
+...
+
+>> +
+>> +static bool cxl_contains_hpa(const struct cxl_memdev *cxlmd, u64 hpa)
+>> +{
+>> +	struct cxl_contains_hpa_context ctx = {
+>> +		.contains = false,
+>> +		.hpa = hpa,
+>> +	};
+>> +	struct cxl_port *port;
+>> +
+>> +	port = cxlmd->endpoint;
+>> +	if (port && is_cxl_endpoint(port) && cxl_num_decoders_committed(port))
+> 
+> Maybe no need to check is_cxl_endpoint() if the port is retrieved from cxlmd->endpoint.
+
+OK, I'll remove this.
+
+> 
+> Also, in order to use cxl_num_decoders_committed(), cxl_region_rwsem must be held. See the lockdep_assert_held() in the function. Maybe add a
+> guard(cxl_regoin_rwsem);
+> before the if statement above.
+
+Got it.  I didn't realize it before.  Will add it.
+
+
+BTW, may I have your opinion on this proposal?  I'm not sure if the 
+Background and problem described above are correct or not.  If not, it 
+could lead me in the wrong direction.
+
+Thank you very much!
+
+
+--
+Ruan.
+
+> 
+> DJ
+> 
 
