@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3F80C27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 02:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7EB5C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 03:02:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sJlOA-0003dH-EW; Tue, 18 Jun 2024 22:49:34 -0400
+	id 1sJlZx-0000WB-Km; Tue, 18 Jun 2024 23:01:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sJlO6-0003cX-Ue
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 22:49:30 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sJlO3-0006E4-Oi
- for qemu-devel@nongnu.org; Tue, 18 Jun 2024 22:49:30 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-57c68c3f8adso7385098a12.1
- for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 19:49:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1718765363; x=1719370163; darn=nongnu.org;
- h=cc:to:subject:message-id:date:user-agent:mime-version:from
- :references:in-reply-to:from:to:cc:subject:date:message-id:reply-to;
- bh=KByKPKbMrEO1XASLvRKDaZcgEq8T7PpYzMvojaXKfAk=;
- b=lhOGrF+AmR1NZYVqU705zZ22cBcKKQQlf7Odt38Iy7hsHxiIGIbOVFYfhS3McQS6hK
- /Px6v9eliuOZEMKf1DLVEAWPqbzZl8Z3UQsfMWLJ9LJrRbg/b1Rgzyhse/jVFPrD6ePX
- ElOezbs1at9NuPBtz3KHFQrG8e3YWQDczsBDQDwdXl4DBRaava+vpVdfHfdhvNjcKthy
- surVvaoHkpdfBzeceQTnF2YU7Jdni10n9eInq0z9Q8OaVWZwcz4kvMXHZ7VmhYbQf67q
- DUkgqvfTcnmSfnNTX5G9nYKN8AQsXteXoX5NbDJ6OvyB3ICmLe6RK0CfCnyQvDKqs8Y7
- uxGg==
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sJlZw-0000Vx-6K
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 23:01:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sJlZu-0007zq-81
+ for qemu-devel@nongnu.org; Tue, 18 Jun 2024 23:01:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718766100;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ElwV8dwgp+H2cJ6q//q1b9Pa5X+3UciEUcashN/oUBI=;
+ b=SW/NgWzfD89bQiimaHqD4UdE+jl9oiVM9SByPs3ERQEPiqrO4U8/L8GvbIK/l2BTzDspYR
+ hePT++6bpn+oGlZkBa/Ai96PDTMECSfsIx4k+45EPnGSiSPFQHp+4I3dFcsq45SGoUAN/X
+ AlDEGL8dro7KlJt+iwZQ8Nhk/MevS+A=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-577-A7lU4KBEOJ2VtAaqxn3YIA-1; Tue, 18 Jun 2024 23:01:38 -0400
+X-MC-Unique: A7lU4KBEOJ2VtAaqxn3YIA-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-57c93227bbeso4108212a12.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Jun 2024 20:01:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718765363; x=1719370163;
- h=cc:to:subject:message-id:date:user-agent:mime-version:from
- :references:in-reply-to:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KByKPKbMrEO1XASLvRKDaZcgEq8T7PpYzMvojaXKfAk=;
- b=oMXRcmYlu4vRYRT1BoBJLSJaCp9RuzrFdLpQn4ieLUJJNbwDDuTiMiHwxRFBMyjtg7
- yF6cKOunQjNWu/ykvpjk29oguM0MN/kYiS2HETzmrLxZkP0PUzWDur0U0VBuVOUOKDWK
- +fn/s8UOUaCZTtfKaYOTruLQT8yuEu9YRzQe20CS3XLqsSEK+xqf0VX/DpdOzE7LLZcR
- y0hJ37at/LZ5xnykhQEdZT77N41b5Iu1qbuQZzB9GSc+QsfFrB7nAto0sc2KIj1cPz3Q
- cG7ThYjIQUoRJgaPXB2+G8B+/w5Z6oSf8lb7mCYN21tirgmvBEx6nXQ8aKpSTOROw9Gm
- jQrw==
+ d=1e100.net; s=20230601; t=1718766096; x=1719370896;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ElwV8dwgp+H2cJ6q//q1b9Pa5X+3UciEUcashN/oUBI=;
+ b=FUxE0UNXcInlLn2anD/FDwLozN9GzL0pc5LKREgzpJzPxl0ev30CYaR0yjKAoosc5P
+ cModM9/g6vCFubcHjugtCqHTHCSOOpp0/DWKY7NvJhcDznGgfAv7fhRujm9zkA0/vhuQ
+ 3qtkqE2HL/gDesbZIGAJQ18uOU6A/jnOPbzWreNnPlRwQ7rFYwvg8miueq+usL3tYVpZ
+ b8I138yqkeo8c55dY1Xr7xsSFyAoHPf8cSRM36MYbMyrMcz7tRdc5sKIkCeQTPr4GD14
+ e2iTMrkbkmS5XTSuMnOCCGtLz5p61kfedREo9tIWHvaCEo5uoVmCfsGX6OcnCQzvyr/1
+ W3+A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxl6cbxOigTSkIJrVp2kxzQw5OIx7J2YQRdUT+Jwyt9T2JOTnHtSPYXhyWgYlokRekMajEUkoNW7eRLGc1LSycH4qy3dA=
-X-Gm-Message-State: AOJu0Yyj278UlQeaAAsXkniwRntYu06Stjdbhs7vV8SVE/7EJzvkazVN
- l3sYeZcMNnbZSq26pNiZMZ/QlWMHFFOlyvDBrM2ZmH/MXMLNOjm7KUujIBMijt5uSEYLMXkcTwK
- z/390aE/lw10xVvZcllNU+wYUHcZRym6tqmGnHg==
-X-Google-Smtp-Source: AGHT+IETjPJ9MPs35q2GusBMk7XJ5fO6ACevZwHdR39KEKGqPHEgsNX70j7a1nxQN5FwNPfq8zSoTH6D+8qBAWj6HTk=
-X-Received: by 2002:a05:6402:1605:b0:57d:b18:a0 with SMTP id
- 4fb4d7f45d1cf-57d0b1800d5mr596595a12.15.1718765363503; Tue, 18 Jun 2024
- 19:49:23 -0700 (PDT)
-Received: from 44278815321 named unknown by gmailapi.google.com with HTTPREST; 
- Tue, 18 Jun 2024 19:49:22 -0700
-In-Reply-To: <20240613071327.2498953-1-luchangqi.123@bytedance.com>
-X-Original-From: =?UTF-8?B?5Y2i6ZW/5aWHIDxsdWNoYW5ncWkuMTIzQGJ5dGVkYW5jZS5jb20+?=
-References: <20240613071327.2498953-1-luchangqi.123@bytedance.com>
-From: =?UTF-8?B?5Y2i6ZW/5aWH?= <luchangqi.123@bytedance.com>
-Mime-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Date: Tue, 18 Jun 2024 19:49:22 -0700
-Message-ID: <CAO5cSZDj=8Ehy11Pgz7AEEYdzsB-rK_E4LUX8DW5V38hYr0r2Q@mail.gmail.com>
-Subject: PING: [PATCH v6 00/10] Support persistent reservation operations
-To: qemu-block@nongnu.org, qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net, 
- ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de, 
- kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org, 
- pizhenwei@bytedance.com
-Content-Type: multipart/alternative; boundary="000000000000f1c1ae061b353ece"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_MUA_MOZILLA=2.309,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ AJvYcCUV8goBxvxOsX0wbVPgkd4CFclQmUYAUfdP2VJIJPkMZBiY3hBGNthq2aAYLosJGWZMFaqvIsMuYwxoOldodexfh2jQTBk=
+X-Gm-Message-State: AOJu0YyqKowkrBWoWWt2F/KAY8JiN9MS4RbyVmOzLbwP8EGhJNreztWi
+ ITG0Fc2Vur+ASUgOHrj4MdWBGq0wXIofXF5UrYr6zRapdqJK2qhqL6TNF3cRY123x1/ePBufAzj
+ bI0y5M0WyRAcqCDP0NtcsRXRYKRhd2uL4r9Ra2akvjlIv2D3ul7w0EKF4E8ii259+66FLSAlTeI
+ yw+0pifLHJhZDWduwzZzmCt0fCO4K69In+FWY=
+X-Received: by 2002:a17:907:30d7:b0:a6f:56d2:8f0c with SMTP id
+ a640c23a62f3a-a6fab643ee2mr53428666b.40.1718766096323; 
+ Tue, 18 Jun 2024 20:01:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGu1i5I0JFjVMBwhcGOJZfK/jVrIjOBlB+mHMPdg9JvWv2JEqANUrDYkv6/MRtkhP9EsOvahc7cm+cAgULiqB8=
+X-Received: by 2002:a17:907:30d7:b0:a6f:56d2:8f0c with SMTP id
+ a640c23a62f3a-a6fab643ee2mr53427766b.40.1718766095996; Tue, 18 Jun 2024
+ 20:01:35 -0700 (PDT)
+MIME-Version: 1.0
+References: <20240617095529.115046-1-lulu@redhat.com>
+ <d68aeb35-3e31-48f1-81df-d85ed8d8381c@linaro.org>
+In-Reply-To: <d68aeb35-3e31-48f1-81df-d85ed8d8381c@linaro.org>
+From: Cindy Lu <lulu@redhat.com>
+Date: Wed, 19 Jun 2024 11:00:58 +0800
+Message-ID: <CACLfguUBmB_XK5h4eo4HBvOxv=A=NrTKv8GuBR=T=9ZLpfgRDA@mail.gmail.com>
+Subject: Re: [PATCH v2] virtio-pci: Fix the use of an uninitialized irqfd.
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org, 
+ qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.148,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,168 +99,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f1c1ae061b353ece
-Content-Type: text/plain; charset="UTF-8"
+On Mon, Jun 17, 2024 at 6:38=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Hi Cindy,
+>
+> On 17/6/24 11:55, Cindy Lu wrote:
+> > The crash was reported in MAC OS and NixOS, here is the link for this b=
+ug
+> > https://gitlab.com/qemu-project/qemu/-/issues/2334
+> > https://gitlab.com/qemu-project/qemu/-/issues/2321
+> >
+> > The root cause is the function virtio_pci_set_guest_notifiers() was not=
+ called
+> > in the virtio_input device.So the vector_irqfd was not initialized
+> >
+> > So the fix is to add the check for vector_irqfd.
+> >
+> > This fix is verified in vyatta,MacOS,NixOS,fedora system.
+> >
+> > The bt tree for this bug is:
+> > Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
+> > [Switching to Thread 0x7c817be006c0 (LWP 1269146)]
+> > kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c=
+:817
+> > 817       if (irqfd->users =3D=3D 0) {
+> > (gdb) thread apply all bt
+> > ...
+> > Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
+> > 0  kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pc=
+i.c:817
+> > 1  kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/hw/virtio/virtio-p=
+ci.c:893
+> > 2  0x00005983657045e2 in memory_region_write_accessor () at ../qemu-9.0=
+.0/system/memory.c:497
+> > 3  0x0000598365704ba6 in access_with_adjusted_size () at ../qemu-9.0.0/=
+system/memory.c:573
+> > 4  0x0000598365705059 in memory_region_dispatch_write () at ../qemu-9.0=
+.0/system/memory.c:1528
+> > 5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at ../q=
+emu-9.0.0/system/physmem.c:2713
+> > 6  0x000059836570ba7d in flatview_write_continue () at ../qemu-9.0.0/sy=
+stem/physmem.c:2743
+> > 7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
+> > 8  0x000059836570bb76 in address_space_write () at ../qemu-9.0.0/system=
+/physmem.c:2894
+> > 9  0x0000598365763afe in address_space_rw () at ../qemu-9.0.0/system/ph=
+ysmem.c:2904
+> > 10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
+> > 11 0x000059836576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel/k=
+vm/kvm-accel-ops.c:50
+> > 12 0x0000598365926ca8 in qemu_thread_start () at ../qemu-9.0.0/util/qem=
+u-thread-posix.c:541
+> > 13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
+> > 14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
+> >
+> > Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
+> > Cc: qemu-stable@nongnu.org
+> >
+> > Signed-off-by: Cindy Lu <lulu@redhat.com>
+> > ---
+> >   hw/virtio/virtio-pci.c | 8 ++++++--
+> >   1 file changed, 6 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> > index b1d02f4b3d..502aad28b2 100644
+> > --- a/hw/virtio/virtio-pci.c
+> > +++ b/hw/virtio/virtio-pci.c
+> > @@ -1442,7 +1442,9 @@ static void virtio_pci_set_vector(VirtIODevice *v=
+dev,
+> >        * Otherwise just need to set the new vector on the device.
+> >        */
+> >       if (kvm_irqfd && old_vector !=3D VIRTIO_NO_VECTOR) {
+> > -        kvm_virtio_pci_vector_release_one(proxy, queue_no);
+> > +        if (proxy->vector_irqfd) {
+>
+> Shouldn't this go into called virtio_pci_get_notifier()?
+>
+sure, will do
+> > +            kvm_virtio_pci_vector_release_one(proxy, queue_no);
+>
+> We ignore this function return value, is it safe/expected?
+>
+sure, will add the check here
+thanks
+Cindy
+> > +        }
+> >       }
+>
+>
 
-Hi,
-
-Klaus, the pr related operations of the
-nvme layer are almost ready.
-
-Stefan, the block layer has been modified
-according to your comments.
-
-Please help review the code again. Thanks!
-
-On 2024/6/13 15:13, Changqi Lu wrote:
-> Hi,
->
-> patch v6 has been modified.
->
-> v5->v6:
-> - Add relevant comments in the io layer.
->
-> v4->v5:
-> - Fixed a memory leak bug at hw/nvme/ctrl.c.
->
-> v3->v4:
-> - At the nvme layer, the two patches of enabling the ONCS
-> function and enabling rescap are combined into one.
-> - At the nvme layer, add helper functions for pr capacity
-> conversion between the block layer and the nvme layer.
->
-> v2->v3:
-> In v2 Persist Through Power Loss(PTPL) is enable default.
-> In v3 PTPL is supported, which is passed as a parameter.
->
-> v1->v2:
-> - Add sg_persist --report-capabilities for SCSI protocol and enable
-> oncs and rescap for NVMe protocol.
-> - Add persistent reservation capabilities constants and helper functions
-for
-> SCSI and NVMe protocol.
-> - Add comments for necessary APIs.
->
-> v1:
-> - Add seven APIs about persistent reservation command for block layer.
-> These APIs including reading keys, reading reservations, registering,
-> reserving, releasing, clearing and preempting.
-> - Add the necessary pr-related operation APIs for both the
-> SCSI protocol and NVMe protocol at the device layer.
-> - Add scsi driver at the driver layer to verify the functions
->
-> Changqi Lu (10):
-> block: add persistent reservation in/out api
-> block/raw: add persistent reservation in/out driver
-> scsi/constant: add persistent reservation in/out protocol constants
-> scsi/util: add helper functions for persistent reservation types
-> conversion
-> hw/scsi: add persistent reservation in/out api for scsi device
-> block/nvme: add reservation command protocol constants
-> hw/nvme: add helper functions for converting reservation types
-> hw/nvme: enable ONCS and rescap function
-> hw/nvme: add reservation protocal command
-> block/iscsi: add persistent reservation in/out driver
->
-> block/block-backend.c | 403 +++++++++++++++++++++++++++
-> block/io.c | 163 +++++++++++
-> block/iscsi.c | 443 ++++++++++++++++++++++++++++++
-> block/raw-format.c | 56 ++++
-> hw/nvme/ctrl.c | 326 +++++++++++++++++++++-
-> hw/nvme/ns.c | 5 +
-> hw/nvme/nvme.h | 84 ++++++
-> hw/scsi/scsi-disk.c | 352 ++++++++++++++++++++++++
-> include/block/block-common.h | 40 +++
-> include/block/block-io.h | 20 ++
-> include/block/block_int-common.h | 84 ++++++
-> include/block/nvme.h | 98 +++++++
-> include/scsi/constants.h | 52 ++++
-> include/scsi/utils.h | 8 +
-> include/sysemu/block-backend-io.h | 24 ++
-> scsi/utils.c | 81 ++++++
-> 16 files changed, 2237 insertions(+), 2 deletions(-)
->
-
---000000000000f1c1ae061b353ece
-Content-Type: text/html; charset="UTF-8"
-
-<p>Hi,
-<br>
-<br>Klaus, the pr related operations of the
-<br>nvme layer are almost ready.
-<br>
-<br>Stefan, the block layer has been modified
-<br>according to your comments.
-<br>
-<br>Please help review the code again. Thanks!
-<br>
-<br>On 2024/6/13 15:13, Changqi Lu wrote:
-<br>&gt; Hi,
-<br>&gt; 
-<br>&gt; patch v6 has been modified.
-<br>&gt; 
-<br>&gt; v5-&gt;v6:
-<br>&gt; - Add relevant comments in the io layer.
-<br>&gt; 
-<br>&gt; v4-&gt;v5:
-<br>&gt; - Fixed a memory leak bug at hw/nvme/ctrl.c.
-<br>&gt; 
-<br>&gt; v3-&gt;v4:
-<br>&gt; - At the nvme layer, the two patches of enabling the ONCS
-<br>&gt;   function and enabling rescap are combined into one.
-<br>&gt; - At the nvme layer, add helper functions for pr capacity
-<br>&gt;   conversion between the block layer and the nvme layer.
-<br>&gt; 
-<br>&gt; v2-&gt;v3:
-<br>&gt; In v2 Persist Through Power Loss(PTPL) is enable default.
-<br>&gt; In v3 PTPL is supported, which is passed as a parameter.
-<br>&gt; 
-<br>&gt; v1-&gt;v2:
-<br>&gt; - Add sg_persist --report-capabilities for SCSI protocol and enable
-<br>&gt;   oncs and rescap for NVMe protocol.
-<br>&gt; - Add persistent reservation capabilities constants and helper functions for
-<br>&gt;   SCSI and NVMe protocol.
-<br>&gt; - Add comments for necessary APIs.
-<br>&gt; 
-<br>&gt; v1:
-<br>&gt; - Add seven APIs about persistent reservation command for block layer.
-<br>&gt;   These APIs including reading keys, reading reservations, registering,
-<br>&gt;   reserving, releasing, clearing and preempting.
-<br>&gt; - Add the necessary pr-related operation APIs for both the
-<br>&gt;   SCSI protocol and NVMe protocol at the device layer.
-<br>&gt; - Add scsi driver at the driver layer to verify the functions
-<br>&gt; 
-<br>&gt; Changqi Lu (10):
-<br>&gt;   block: add persistent reservation in/out api
-<br>&gt;   block/raw: add persistent reservation in/out driver
-<br>&gt;   scsi/constant: add persistent reservation in/out protocol constants
-<br>&gt;   scsi/util: add helper functions for persistent reservation types
-<br>&gt;     conversion
-<br>&gt;   hw/scsi: add persistent reservation in/out api for scsi device
-<br>&gt;   block/nvme: add reservation command protocol constants
-<br>&gt;   hw/nvme: add helper functions for converting reservation types
-<br>&gt;   hw/nvme: enable ONCS and rescap function
-<br>&gt;   hw/nvme: add reservation protocal command
-<br>&gt;   block/iscsi: add persistent reservation in/out driver
-<br>&gt; 
-<br>&gt;  block/block-backend.c             | 403 +++++++++++++++++++++++++++
-<br>&gt;  block/io.c                        | 163 +++++++++++
-<br>&gt;  block/iscsi.c                     | 443 ++++++++++++++++++++++++++++++
-<br>&gt;  block/raw-format.c                |  56 ++++
-<br>&gt;  hw/nvme/ctrl.c                    | 326 +++++++++++++++++++++-
-<br>&gt;  hw/nvme/ns.c                      |   5 +
-<br>&gt;  hw/nvme/nvme.h                    |  84 ++++++
-<br>&gt;  hw/scsi/scsi-disk.c               | 352 ++++++++++++++++++++++++
-<br>&gt;  include/block/block-common.h      |  40 +++
-<br>&gt;  include/block/block-io.h          |  20 ++
-<br>&gt;  include/block/block_int-common.h  |  84 ++++++
-<br>&gt;  include/block/nvme.h              |  98 +++++++
-<br>&gt;  include/scsi/constants.h          |  52 ++++
-<br>&gt;  include/scsi/utils.h              |   8 +
-<br>&gt;  include/sysemu/block-backend-io.h |  24 ++
-<br>&gt;  scsi/utils.c                      |  81 ++++++
-<br>&gt;  16 files changed, 2237 insertions(+), 2 deletions(-)
-<br>&gt;</p>
-
---000000000000f1c1ae061b353ece--
 
