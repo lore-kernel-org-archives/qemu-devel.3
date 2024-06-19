@@ -4,140 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAF61C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 20:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6FA8C27C53
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 20:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sK1gD-0001OP-L3; Wed, 19 Jun 2024 16:13:17 -0400
+	id 1sK1ha-00027f-TR; Wed, 19 Jun 2024 16:14:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1sK1gA-0001Nx-Vc; Wed, 19 Jun 2024 16:13:15 -0400
-Received: from mail-sn1nam02on20610.outbound.protection.outlook.com
- ([2a01:111:f400:7ea9::610]
- helo=NAM02-SN1-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1sK1g7-00018t-UK; Wed, 19 Jun 2024 16:13:14 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hfA291dvXFW5i5186SfBRBiuzWS8fZNboXz9kls8OlADzNES2Mt3mzP+JD3VcH8FttfBjErP30IDOr1OfNGC7A0o9W7GWm5gEJlvPXXz0g7L1U6uP4vBzivouPxN/dwSWV3yo5rasE72k6u6zcqmy0C35hh1shTpH6Vl9VuNLrXBDytjy6fhPJYWL3scoobGf6khPJsXrWJcboa6lRcVOvJ0IUWrPSgQUiGQpEybxkfivHGHlGPSPe9NxhZOpcKpWtTZOEh8VhvEKVGg3G4mXNFhjNWq2bNUP2X6LGnpxWivGjyz39uFWakRt8pDAkieXQJuZHAGHqauujRXNPhfDw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OFwxqNBfIzKguoiOu6s7wBkxaBzEBSWcq7N4bQUURVI=;
- b=RAwxoM5B+ppv6ZzR2f0lv161mmCoOhFNQivjV6gQKk0EUFObGoB//JIjMy1qVlmAEN5pkPflNK1JPYwuBBV2F701xbE3beqSmIKyydnlojahviLjSD6zcPBayVQosrmKOqmOiBXoVDJKbLIiIz2icxPoQAjR/nojvXCgJkm0h9OKZBBEs2AdPW5txR8D7SYGDpoyHBBPMgH9ZIsRozQwJjxNX2+5CfWDZrTrx4P3LfbFUzAu1hi17cU8Mz1iyX8Li1fMkMiKiRuMeXRsTYxd8tsP9l8S8kIcpG2nDqcPUXJ4vTZAUUDvGCmh1GOIIORjZlS/Zxx9D3dsr8VqZHK4Rw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=linaro.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OFwxqNBfIzKguoiOu6s7wBkxaBzEBSWcq7N4bQUURVI=;
- b=UGg5+tIAbvPlPBRx/Vkz0XmxoWPox5eiNBXGCesnMs8i8rPfn+ie6Y9YtG2copZ1c/C0HQOMihI26/eW4TFY1iHT2ig7kUM+APwqL18Fg1Gpm8wJsvbkSpN8TTiw7F7enQdGXf3RgK8qZkCrkpSLGsp6shGCVwbf9Dj8hA1EaxJ/6VtFbrFcCf3apc4s1sMUj4aajzk7qNdZmBIGZ7L6VqH1AdZAf1k1Pd/HfFCpBIMmoDAluqn+7U+AYVKLlVROu7gBh6iSovuCa+Tw3JA9r1LP9sS0SXpqSGY5Ta0xa+hgnuZHZu5EitK6KMtur0NV8onjREbPRh2LFpKAauuBhw==
-Received: from BYAPR08CA0030.namprd08.prod.outlook.com (2603:10b6:a03:100::43)
- by PH7PR12MB9128.namprd12.prod.outlook.com (2603:10b6:510:2f7::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.31; Wed, 19 Jun
- 2024 20:13:02 +0000
-Received: from MWH0EPF000989EB.namprd02.prod.outlook.com
- (2603:10b6:a03:100:cafe::ff) by BYAPR08CA0030.outlook.office365.com
- (2603:10b6:a03:100::43) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.33 via Frontend
- Transport; Wed, 19 Jun 2024 20:13:02 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- MWH0EPF000989EB.mail.protection.outlook.com (10.167.241.138) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7677.15 via Frontend Transport; Wed, 19 Jun 2024 20:13:01 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 19 Jun
- 2024 13:12:51 -0700
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 19 Jun
- 2024 13:12:51 -0700
-Received: from Asurada-Nvidia.nvidia.com (10.127.8.13) by mail.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server id 15.2.1544.4 via Frontend
- Transport; Wed, 19 Jun 2024 13:12:50 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: <peter.maydell@linaro.org>, <wangxingang5@huawei.com>,
- <shannon.zhaosl@gmail.com>, <mst@redhat.com>, <imammedo@redhat.com>,
- <anisinha@redhat.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>
-Subject: [PATCH v4] hw/arm/virt-acpi-build: Fix id_count in
- build_iort_id_mapping
-Date: Wed, 19 Jun 2024 13:12:43 -0700
-Message-ID: <20240619201243.936819-1-nicolinc@nvidia.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sK1hY-00025z-6S
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 16:14:40 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sK1hU-0001Xs-1Z
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 16:14:39 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-42172ed3597so1249615e9.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 13:14:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718828072; x=1719432872; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=i0gUORLGX8irBIGx/T6mM424PvPE0oZYbyFdZv7K4bE=;
+ b=a2Te/cpGrqHU0N6W5ikkOUcUku4N20rZhWQQM/5zLbZAzK9AOeDvvUyx4CPRLUXGFk
+ qH/d3fqPPRtp+olQStzefcdLzvItV9WPqajEExUmLphDwD/Od3KTBIswFYbUldWzsVaf
+ bPslwSyfZX2pwX+RxpkLzPqs5BygyqWyS3OdgS2kDUiVEu3KU6Qim6RUstHWBz7VgKjK
+ wOp038qp4wbhbavQijsraIoz1sW1obxi3nbR6Ta75inx9qt4w8Y6IPx/T+eTu1c1WikQ
+ mcgGQhMZ8DdZop+//W+188gWbcBXeN8r0jgArfn807KglhC2VdYHAI2oh0/20vnjg2eZ
+ JlFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718828072; x=1719432872;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=i0gUORLGX8irBIGx/T6mM424PvPE0oZYbyFdZv7K4bE=;
+ b=efCxzkIbGwiVMP3HJtFe/xUzsNBAk/uY8Cw19EgoBMRGMkT6CkObQUf+uxAAyudWrH
+ RJIc+B6xdkU0s6kIaatLdEpB+wqSwjB+hAVFL/s+s1jHK4aSHgQ/MGcqvf6h4DvwrAWr
+ 0rOHUKLOrv4Iy5uFhG9hzo4bC+VIhbZ5El4ZMd71x3HQJZQo9nJuJ3tDsOF9R57etltK
+ WrvZIcJx9lK+sXqoiaI4JIwGNyiBwOLP2xDIAfxS3aQ+o5xlkvEo3NmyaBooc+tv/jL+
+ bLxN0l9VjDkx+m+qTk8d1i4nSsyC5UhlxoIviK1j1IANSEhSj2JDM18m+EmOrF1Gy8xb
+ iigg==
+X-Gm-Message-State: AOJu0YyiGrssqBjct98lviqrv4jsc4YeElsWey15wZljEfMoJgl8l8tW
+ BprL6sbBKP2Wpnlj2fyFuBGn9BgFZVCCC8kBcWDkgVd+ELzDr9BLOvyFgWxmvX+CrUAPwi87Yx9
+ /Jvk=
+X-Google-Smtp-Source: AGHT+IE4A/mUFXkaaNBj95fbuEpzfeyTmJTs6gMoPG98mfpUOHoqA0TpAuZP9yI9cWzdzKZhwiF+yA==
+X-Received: by 2002:a05:600c:1c28:b0:424:737c:80e8 with SMTP id
+ 5b1f17b1804b1-42474d148c4mr40172635e9.2.1718828072025; 
+ Wed, 19 Jun 2024 13:14:32 -0700 (PDT)
+Received: from localhost.localdomain (adsl-103.37.6.162.tellas.gr.
+ [37.6.162.103]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4247101aac6sm45623235e9.0.2024.06.19.13.14.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Jun 2024 13:14:31 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [RFC PATCH v3 0/5] Implement ARM PL011 in Rust
+Date: Wed, 19 Jun 2024 23:13:57 +0300
+Message-ID: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000989EB:EE_|PH7PR12MB9128:EE_
-X-MS-Office365-Filtering-Correlation-Id: dc4f1075-e56c-40a8-6aed-08dc909c38b1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230037|376011|36860700010|82310400023|1800799021; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?1Bu2VfdPTVMlEonpi7AeBUmz71e7j/QLZDa3woZLP6LInCB8Uw0/LI2iHTJq?=
- =?us-ascii?Q?CYUI08lM39oLj0uh+JMBGNyH/z0KxT4fFOhkdL3WwUFXhJQzwBENi4v3epsK?=
- =?us-ascii?Q?SKxIZw9Fta/HIGZwkCBcSJ8QPwkJqH1VO3jxxAp7UwxpCwkG/o3q893uhY5I?=
- =?us-ascii?Q?Jy0VBwpanNinGoNG3ERnfLD0ZNPns287/x9ypDo9/zuhu3ceaJOHZPJ8v4y6?=
- =?us-ascii?Q?8Wjyj+i7slJYquNxKROFvFnp/WZAxdofAbt5aMIXyBZI5ZcUoYVcUrxjnVZb?=
- =?us-ascii?Q?9F0GDmBs6lFQJkNLzfgxmat1iB8XzAWqEehAjxEPT5xoJ0O05XvnNiCQ24/p?=
- =?us-ascii?Q?45jLV6CnVUJ4IwX54JiqzIEOWuYon3kZqmtE1w60ARchvpN7Kq7W7ytyayex?=
- =?us-ascii?Q?PTFOP5r9x+3Dc0CO3lnkzHROX16KdxYfhojlR6PLiAHD1ptsABZWPR1SpRCl?=
- =?us-ascii?Q?+Xh47NcyVrMQHBrNY3aGRHng0wXSXQpvDcCU0Om3FeCcnJxF5Q4441acDQLb?=
- =?us-ascii?Q?j6zQ7gZAex3XlFk9KU1fwsCCYinUPbTn8HkunZVj6T1XpRNjfjFuHD+cHAvD?=
- =?us-ascii?Q?KzZYLdJVMqqVxjM3J8BVHm3OhW1+06VFSR5rnCRdTvc1GK9QEl/Cql2MEJXG?=
- =?us-ascii?Q?miSQUH0C3i4WU6KeLKbgh+VAA7JR5QRd05LwMs/owmZg7ylwj0NqI5ctC/lq?=
- =?us-ascii?Q?cia6cIzQNDKTsUplT4aajLqZbuzIPRMCSVItxLus94I5gMLuaBuXMU73/KQj?=
- =?us-ascii?Q?7CpriV7KiokFN9gXiqStVNqJ6TxGpBlJsfyZxZUKGAslntjsAK0O7eL0415W?=
- =?us-ascii?Q?G+fNO+WmMURLO1lRMfoBB/FcnimDBKP6rDCUqojjU0bfpMFA9mhM6e0Z010m?=
- =?us-ascii?Q?LJ6sdlOepjoigQxpbhHiruKwPKxDJdeOjocFFk1LyG5iaBmetuQP6/QtUiNl?=
- =?us-ascii?Q?j3ZJOp1xQfPdD5gobr2tvVWv3JX75MyZzZDzJoTGEbsuXilxIu6BkzWpXdzD?=
- =?us-ascii?Q?U2JTwZ3NcHtgTpM2ZT5OIyH5ssnSVWFJ7PVsI4GaODTmGtszky7HxjyJgvYv?=
- =?us-ascii?Q?OlRiDom1c4V7mVByW1lserqs5H/X33iCel+CSFQ/r/TqPsto2NcZaTNy4bsW?=
- =?us-ascii?Q?NLYhH7Ss7+5Pb51L8zDaEZdPRS45t1UPO+G+szNk2bZA/03e4ISZyY/BVEN4?=
- =?us-ascii?Q?b6qFPHRMSQlod54x9tXd9cBvjVQyazhgrRWIRbOUc4ew6hQIfO5J8JytN1oP?=
- =?us-ascii?Q?CEJlC9IziQa9UBkMBJfKL5b8E+zeWq8muhnY966vG7OxZmoge6Afy3Cr9dMk?=
- =?us-ascii?Q?xjPEZQ7Wv4RdWNBVQGWLtifc6+Dt7HkQGYBd1WvqUNvneD20Ys3JjZhMUTgO?=
- =?us-ascii?Q?uh3mJmzdNlg3IBf4vGFsg7LO8u65DC9CNvhA0Sj8Hfpadf/Ar6piiuE++7c8?=
- =?us-ascii?Q?+1NiowTzrpY=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230037)(376011)(36860700010)(82310400023)(1800799021); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jun 2024 20:13:01.9279 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: dc4f1075-e56c-40a8-6aed-08dc909c38b1
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000989EB.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB9128
-Received-SPF: softfail client-ip=2a01:111:f400:7ea9::610;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM02-SN1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,101 +101,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's observed that Linux kernel booting with the VM reports a "conflicting
-mapping for input ID" FW_BUG.
+Changes from v2->v3:
+- Addressed minor mistakes (thanks Stefan)
+- Setup supported version checks for cargo, rustc and bindgen (thanks 
+  everyone who pointed it out / suggested it)
+- Fixed problem with bindgen failing if certain system headers where 
+  needed by defining an allowlist for headers instead of a blocklist for 
+  what we don't want (thanks Alex Bennée for reporting it)
+- Cleaned up bindgen target/dependendy definition in meson.build by 
+  removing unnecessary bits
 
-The IORT doc defines "Number of IDs" to be "the number of IDs in the range
-minus one", while virt-acpi-build.c simply stores the number of IDs in the
-id_count without the "minus one". Meanwhile, some of the callers pass in a
-0xFFFF following the spec. So, this is a mismatch between the function and
-its callers.
+Changes from v1->v2:
+- Create bindgen target first, then add commit for device (thanks 
+  Pierrick)
+- Create a special named generated.rs for each target as compilation 
+  would fail if more than one targets were defined. The generated.rs 
+  target names would clash.
+- Add more descriptive commit messages
+- Update MAINTAINERS
+- Cleanup patch order for better review, hopefully
 
-Fix build_iort_id_mapping() by internally subtracting one from the pass-in
-@id_count. Accordingly make sure that all existing callers pass in a value
-without the "minus one", i.e. change all 0xFFFFs to 0x10000s.
+v2 was:
+<rust-pl011-rfc-v2.git.manos.pitsidianakis@linaro.org>
 
-Also, add a few lines of comments to highlight this change along with the
-referencing document for this build_iort_id_mapping().
+v1 was:
+<cover.rust-pl011-rfc-v1.git.manos.pitsidianakis@linaro.org>
 
-Fixes: 42e0f050e3a5 ("hw/arm/virt-acpi-build: Add IORT support to bypass SMMUv3")
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
----
-Changelog
-v4:
- * Rephrased the function documentation and used the latest IORT spec ver.
- * Added "Reviewed-by" from Eric
-v3:
- https://lore.kernel.org/all/20240618211110.922809-1-nicolinc@nvidia.com/
- * Added "-1" internally in build_iort_id_mapping() instead
- * Added comments to highlight this and referencing doc
-v2:
- https://lore.kernel.org/all/20240617223945.906996-1-nicolinc@nvidia.com/
- * Moved "-1" to the same line of id_count calculation
- * Added "+1" to the next_range.input_base calculation
-v1:
- https://lore.kernel.org/all/20240613234802.828265-1-nicolinc@nvidia.com/
+Patches can be found online at 
+https://gitlab.com/epilys/rust-for-qemu/-/tags
 
- hw/arm/virt-acpi-build.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+Tag/refs:
+- rust-pl011-rfc-v3
+- rust-pl011-rfc-v2
+- rust-pl011-rfc-v1
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index c3ccfef026..60a79b91ca 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -209,12 +209,19 @@ static void acpi_dsdt_add_tpm(Aml *scope, VirtMachineState *vms)
- #define ROOT_COMPLEX_ENTRY_SIZE 36
- #define IORT_NODE_OFFSET 48
- 
-+/*
-+ * Append an ID mapping entry as described by "Table 4 ID mapping format" in
-+ * "IO Remapping Table System Software on ARM Platforms", Chapter 3.
-+ * Document number: ARM DEN 0049E.f, Apr 2024
-+ *
-+ * Note that @id_count gets internally subtracted by one, following the spec.
-+ */
- static void build_iort_id_mapping(GArray *table_data, uint32_t input_base,
-                                   uint32_t id_count, uint32_t out_ref)
- {
--    /* Table 4 ID mapping format */
-     build_append_int_noprefix(table_data, input_base, 4); /* Input base */
--    build_append_int_noprefix(table_data, id_count, 4); /* Number of IDs */
-+    /* Number of IDs - The number of IDs in the range minus one */
-+    build_append_int_noprefix(table_data, id_count - 1, 4);
-     build_append_int_noprefix(table_data, input_base, 4); /* Output base */
-     build_append_int_noprefix(table_data, out_ref, 4); /* Output Reference */
-     /* Flags */
-@@ -306,8 +313,8 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         }
- 
-         /* Append the last RC -> ITS ID mapping */
--        if (next_range.input_base < 0xFFFF) {
--            next_range.id_count = 0xFFFF - next_range.input_base;
-+        if (next_range.input_base < 0x10000) {
-+            next_range.id_count = 0x10000 - next_range.input_base;
-             g_array_append_val(its_idmaps, next_range);
-         }
- 
-@@ -366,7 +373,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         build_append_int_noprefix(table_data, 0, 4);
- 
-         /* output IORT node is the ITS group node (the first node) */
--        build_iort_id_mapping(table_data, 0, 0xFFFF, IORT_NODE_OFFSET);
-+        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
-     }
- 
-     /* Table 17 Root Complex Node */
-@@ -419,7 +426,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         }
-     } else {
-         /* output IORT node is the ITS group node (the first node) */
--        build_iort_id_mapping(table_data, 0, 0xFFFF, IORT_NODE_OFFSET);
-+        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
-     }
- 
-     acpi_table_end(linker, &table);
+Manos Pitsidianakis (5):
+  build-sys: Add rust feature option
+  rust: add bindgen step as a meson dependency
+  rust: add PL011 device model
+  DO NOT MERGE: add rustdoc build for gitlab pages
+  DO NOT MERGE: replace TYPE_PL011 with x-pl011-rust in arm virt machine
+
+ .gitlab-ci.d/buildtest.yml     |  64 ++--
+ MAINTAINERS                    |  15 +
+ configure                      |  11 +
+ hw/arm/virt.c                  |   4 +
+ meson.build                    |  71 ++++
+ meson_options.txt              |   4 +
+ rust/.cargo/config.toml        |   2 +
+ rust/.gitignore                |   3 +
+ rust/meson.build               | 131 ++++++++
+ rust/pl011/.gitignore          |   2 +
+ rust/pl011/Cargo.lock          | 120 +++++++
+ rust/pl011/Cargo.toml          |  66 ++++
+ rust/pl011/README.md           |  42 +++
+ rust/pl011/build.rs            |  44 +++
+ rust/pl011/deny.toml           |  57 ++++
+ rust/pl011/meson.build         |   7 +
+ rust/pl011/rustfmt.toml        |   1 +
+ rust/pl011/src/definitions.rs  |  95 ++++++
+ rust/pl011/src/device.rs       | 531 ++++++++++++++++++++++++++++++
+ rust/pl011/src/device_class.rs |  95 ++++++
+ rust/pl011/src/generated.rs    |   5 +
+ rust/pl011/src/lib.rs          | 581 +++++++++++++++++++++++++++++++++
+ rust/pl011/src/memory_ops.rs   |  38 +++
+ rust/rustfmt.toml              |   7 +
+ rust/wrapper.h                 |  39 +++
+ scripts/cargo_wrapper.py       | 289 ++++++++++++++++
+ scripts/meson-buildoptions.sh  |   6 +
+ 27 files changed, 2311 insertions(+), 19 deletions(-)
+ create mode 100644 rust/.cargo/config.toml
+ create mode 100644 rust/.gitignore
+ create mode 100644 rust/meson.build
+ create mode 100644 rust/pl011/.gitignore
+ create mode 100644 rust/pl011/Cargo.lock
+ create mode 100644 rust/pl011/Cargo.toml
+ create mode 100644 rust/pl011/README.md
+ create mode 100644 rust/pl011/build.rs
+ create mode 100644 rust/pl011/deny.toml
+ create mode 100644 rust/pl011/meson.build
+ create mode 120000 rust/pl011/rustfmt.toml
+ create mode 100644 rust/pl011/src/definitions.rs
+ create mode 100644 rust/pl011/src/device.rs
+ create mode 100644 rust/pl011/src/device_class.rs
+ create mode 100644 rust/pl011/src/generated.rs
+ create mode 100644 rust/pl011/src/lib.rs
+ create mode 100644 rust/pl011/src/memory_ops.rs
+ create mode 100644 rust/rustfmt.toml
+ create mode 100644 rust/wrapper.h
+ create mode 100644 scripts/cargo_wrapper.py
+
+
+base-commit: 01782d6b294f95bcde334386f0aaac593cd28c0d
 -- 
-2.43.0
+γαῖα πυρί μιχθήτω
 
 
