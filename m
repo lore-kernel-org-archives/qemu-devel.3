@@ -4,57 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CE30C27C53
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Jun 2024 23:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC39BC27C53
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 01:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sK52v-0000rE-PI; Wed, 19 Jun 2024 19:48:57 -0400
+	id 1sK6u5-0001nA-IY; Wed, 19 Jun 2024 21:47:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1sK52t-0000qx-Bh; Wed, 19 Jun 2024 19:48:55 -0400
-Received: from pi.codeconstruct.com.au ([203.29.241.158]
- helo=codeconstruct.com.au)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1sK52q-0003x1-Hi; Wed, 19 Jun 2024 19:48:55 -0400
-Received: from [192.168.68.112]
- (ppp118-210-79-194.adl-adc-lon-bras32.tpg.internode.on.net [118.210.79.194])
- by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 88E5A20154;
- Thu, 20 Jun 2024 07:48:43 +0800 (AWST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sK6u2-0001mh-DH
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 21:47:54 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sK6tz-0005Q6-Mt
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 21:47:53 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-6c4926bf9baso331006a12.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 18:47:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=codeconstruct.com.au; s=2022a; t=1718840925;
- bh=IEgncZSK+nXv6/fbH5xMKM4cWSDqyVFNFDNZAR7rAck=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=cnJeAxGRxdWrUM+S92Q/2YrFAKdVJHdxxh4dpNqLlknRL2slhLwYmZuc/tVr8k3o7
- 0ydTZhFmfnTggHp9A/4M8Wa6W474Z5UmF5aZgFkzXrexutOhLO2nS/hMGbS5sWNPDu
- J4hePohouezTKfKPs/Oi/Ne81W0i98XFnNaMpRZsmIFRDzvvA06ZN5ebk6lhcPISzx
- 11ZntAPrP10DtRCGr6rX1iP/BaDXQc3zEhd4hYvXybb9/9TvP7Dqc4pTTdi4TunoqJ
- 3mLbffNMGQZAQfXa4bjtYGvNg0fxkNqn0e1TvWeHfJrWoQ1JwyxHTb4d+DeJXAPKnb
- dMnv3ALSFwj0A==
-Message-ID: <7fcbf65de8bc5668e036249d6408bf4e4cbc6efe.camel@codeconstruct.com.au>
-Subject: Re: [PATCH v3] hw/gpio/aspeed: Add reg_table_size to AspeedGPIOClass
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Zheyu Ma <zheyuma97@gmail.com>, =?ISO-8859-1?Q?C=E9dric?= Le Goater
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Joel Stanley
- <joel@jms.id.au>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Date: Thu, 20 Jun 2024 09:18:43 +0930
-In-Reply-To: <20240619183638.4073070-1-zheyuma97@gmail.com>
-References: <20240619183638.4073070-1-zheyuma97@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+ d=linaro.org; s=google; t=1718848070; x=1719452870; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=z1WL/uXz6ZvN5PxBqQDIoSSId9n7AXghiUqdKP6Xmac=;
+ b=wYhbL9EgNLbI8h0TWhEEQKPZp7VOtcRfcXqCwxU0lFaawMCn2s5Rps0TZ7Cpe86gfJ
+ LMN16r84/p4rJ99I9TjuCYT33A8r2eebidseEppUcee313R12f6tTG9yvvc35RYRa+Nu
+ dPD8fT7CKd/ZmtRLot9VVmHXAtH5fzCTDf1ET+LCOOD1VZbU6szXrLxnfA+gvwLfXeTg
+ 8xSG4Lmr7Ourxz6gxMbuu+CpYtZtJNrdD3CnOVqAXHqS4saWefXWIzzdeaqe3dZQmbxC
+ DqvQvHSNpS5otkclosp60XKpFGfPAgSeI3c7F87uxdh/CsujSJkZcSm87HFcd0BQYieL
+ Njdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718848070; x=1719452870;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=z1WL/uXz6ZvN5PxBqQDIoSSId9n7AXghiUqdKP6Xmac=;
+ b=oKEr2cWZO9HNGs8qCEoP15QH1GHlvjpuU2AO91C1eAZ/zsEEEgchVCWb9zoyecVJRT
+ JLFniRFIep4/Cl47VNKJcVZpRRhxEtww9fWmdRoZC3wCGCOTxqdgZ7LVsoAgusz42WSY
+ BQnQh6pE/5mLGC0kdCV6cJRwixkFqdf/0yJ4hB1iWQomH5VOJ2X2EpZN2TY/dannqjNx
+ eL+hWQ1DZxPUjLg0bJj91ZVEnMZxqOqxEWLZOUCYX7vvdpaSOA/cXze0bvB3z1O9u7Ya
+ jlRdTPcD/bEHiz0/7/isSszEN2bYkF1K0Slazfr+Xbm+QOT+kV5G/pKHPGJo4Ua+l5MG
+ ju1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXagjl0GoUR4r95uh8TIeNyDCR9+gRmLVbhvC53w2iUqWh1pnyt/cwGM3RE3uERfzQ9F0Eq16LdvofXebLQzyyE0Te1068=
+X-Gm-Message-State: AOJu0YwSx5+0KWaAdU+CMKFU/cn7VDGjjX+9Ox658lses8l0Kjztw1j/
+ 4YaY2HDcVrf2880BB54QITO8O97X3PWMbryOfhUCwXpVstNxjkWke0/8dQY3A5U=
+X-Google-Smtp-Source: AGHT+IFEcbx4tZ8gcMLMY9Lb2QnNHw/u6ua66ly5SqKZKYepkuIXyV2x3L3/lTvWWeZMQKgw6uHM1g==
+X-Received: by 2002:a17:90b:60b:b0:2c2:ebc5:ffec with SMTP id
+ 98e67ed59e1d1-2c7b59fa605mr4217854a91.5.1718848069993; 
+ Wed, 19 Jun 2024 18:47:49 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c7e55dcc0asm371848a91.28.2024.06.19.18.47.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Jun 2024 18:47:49 -0700 (PDT)
+Message-ID: <d1bb7ffd-cdb2-4753-9503-a4a57f8cfe2b@linaro.org>
+Date: Wed, 19 Jun 2024 18:47:47 -0700
 MIME-Version: 1.0
-Received-SPF: pass client-ip=203.29.241.158;
- envelope-from=andrew@codeconstruct.com.au; helo=codeconstruct.com.au
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] exec: avoid using C++ keywords in function parameters
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Roman Kiryanov <rkir@google.com>, qemu-devel@nongnu.org
+Cc: jansene@google.com, mett@google.com, jpcottin@google.com
+References: <20240618224553.878869-1-rkir@google.com>
+ <ee4149fd-890d-43c6-a7c0-0d6df63bbb2f@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <ee4149fd-890d-43c6-a7c0-0d6df63bbb2f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,151 +99,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2024-06-19 at 20:36 +0200, Zheyu Ma wrote:
-> ASan detected a global-buffer-overflow error in the aspeed_gpio_read()
-> function. This issue occurred when reading beyond the bounds of the
-> reg_table.
->=20
-> To enhance the safety and maintainability of the Aspeed GPIO code, this c=
-ommit
-> introduces a reg_table_size member to the AspeedGPIOClass structure. This
-> change ensures that the size of the GPIO register table is explicitly tra=
-cked
-> and initialized, reducing the risk of errors if new register tables are
-> introduced in the future.
->=20
-> Reproducer:
-> cat << EOF | qemu-system-aarch64 -display none \
-> -machine accel=3Dqtest, -m 512M -machine ast1030-evb -qtest stdio
-> readq 0x7e780272
-> EOF
->=20
-> ASAN log indicating the issue:
-> =3D=3D2602930=3D=3DERROR: AddressSanitizer: global-buffer-overflow on add=
-ress 0x55a5da29e128 at pc 0x55a5d700dc62 bp 0x7fff096c4e90 sp 0x7fff096c4e8=
-8
-> READ of size 2 at 0x55a5da29e128 thread T0
->     #0 0x55a5d700dc61 in aspeed_gpio_read hw/gpio/aspeed_gpio.c:564:14
->     #1 0x55a5d933f3ab in memory_region_read_accessor system/memory.c:445:=
-11
->     #2 0x55a5d92fba40 in access_with_adjusted_size system/memory.c:573:18
->     #3 0x55a5d92f842c in memory_region_dispatch_read1 system/memory.c:142=
-6:16
->     #4 0x55a5d92f7b68 in memory_region_dispatch_read system/memory.c:1459=
-:9
->     #5 0x55a5d9376ad1 in flatview_read_continue_step system/physmem.c:283=
-6:18
->     #6 0x55a5d9376399 in flatview_read_continue system/physmem.c:2877:19
->     #7 0x55a5d93775b8 in flatview_read system/physmem.c:2907:12
->=20
-> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+On 6/19/24 03:22, Philippe Mathieu-Daudé wrote:
+> On 19/6/24 00:45, Roman Kiryanov wrote:
+>> to use the QEMU headers with a C++ compiler.
+>>
+>> Google-Bug-Id: 331190993
+>> Change-Id: Ic4e49b9c791616bb22c973922772b0494706092c
+>> Signed-off-by: Roman Kiryanov <rkir@google.com>
+>> ---
+>>   include/exec/memory.h | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/include/exec/memory.h b/include/exec/memory.h
+>> index 1be58f694c..d7591a60d9 100644
+>> --- a/include/exec/memory.h
+>> +++ b/include/exec/memory.h
+>> @@ -945,7 +945,7 @@ struct MemoryListener {
+>>        * the current transaction.
+>>        */
+>>       void (*log_start)(MemoryListener *listener, MemoryRegionSection *section,
+>> -                      int old, int new);
+>> +                      int old_val, int new_val);
+>>       /**
+>>        * @log_stop:
+>> @@ -964,7 +964,7 @@ struct MemoryListener {
+>>        * the current transaction.
+>>        */
+>>       void (*log_stop)(MemoryListener *listener, MemoryRegionSection *section,
+>> -                     int old, int new);
+>> +                     int old_val, int new_val);
+> 
+> OK but please keep the implementations in sync with the prototype
+> argument names:
+> 
+> accel/hvf/hvf-accel-ops.c:264: MemoryRegionSection *section, int old, int new)
+> accel/hvf/hvf-accel-ops.c:274: MemoryRegionSection *section, int old, int new)
+> accel/kvm/kvm-all.c:549:                          int old, int new)
+> accel/kvm/kvm-all.c:566:                          int old, int new)
+> hw/i386/xen/xen-hvm.c:430:                          int old, int new)
+> hw/i386/xen/xen-hvm.c:441:                         int old, int new)
+> hw/virtio/vhost.c:1070:                            int old, int new)
+> hw/virtio/vhost.c:1077:                           int old, int new)
+> include/exec/memory.h:948:                      int old, int new);
+> include/exec/memory.h:967:                     int old, int new);
+> 
+> See also:
+> target/arm/tcg/translate-a64.c:2161:        int new = a->imm * 3;
 
-Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+We're not trying to purge "new" from the entire tree, only (some) header files.
 
-> ---
-> Changes in v3:
-> - Add the reproducer
->=20
-> Changes in v2:
-> - Introduce the reg_table_size to AspeedGPIOClass
-> ---
->  hw/gpio/aspeed_gpio.c         | 17 +++++++++++++++++
->  include/hw/gpio/aspeed_gpio.h |  1 +
->  2 files changed, 18 insertions(+)
->=20
-> diff --git a/hw/gpio/aspeed_gpio.c b/hw/gpio/aspeed_gpio.c
-> index c1781e2ba3..fd4912edae 100644
-> --- a/hw/gpio/aspeed_gpio.c
-> +++ b/hw/gpio/aspeed_gpio.c
-> @@ -559,6 +559,12 @@ static uint64_t aspeed_gpio_read(void *opaque, hwadd=
-r offset, uint32_t size)
->          return debounce_value;
->      }
-> =20
-> +    if (idx >=3D agc->reg_table_size) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: idx 0x%" PRIx64 " out of bou=
-nds\n",
-> +                      __func__, idx);
-> +        return 0;
-> +    }
-> +
->      reg =3D &agc->reg_table[idx];
->      if (reg->set_idx >=3D agc->nr_gpio_sets) {
->          qemu_log_mask(LOG_GUEST_ERROR, "%s: no getter for offset 0x%"
-> @@ -785,6 +791,12 @@ static void aspeed_gpio_write(void *opaque, hwaddr o=
-ffset, uint64_t data,
->          return;
->      }
-> =20
-> +    if (idx >=3D agc->reg_table_size) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: idx 0x%" PRIx64 " out of bou=
-nds\n",
-> +                      __func__, idx);
-> +        return;
-> +    }
-> +
->      reg =3D &agc->reg_table[idx];
->      if (reg->set_idx >=3D agc->nr_gpio_sets) {
->          qemu_log_mask(LOG_GUEST_ERROR, "%s: no setter for offset 0x%"
-> @@ -1117,6 +1129,7 @@ static void aspeed_gpio_ast2400_class_init(ObjectCl=
-ass *klass, void *data)
->      agc->nr_gpio_pins =3D 216;
->      agc->nr_gpio_sets =3D 7;
->      agc->reg_table =3D aspeed_3_3v_gpios;
-> +    agc->reg_table_size =3D GPIO_3_3V_REG_ARRAY_SIZE;
->  }
-> =20
->  static void aspeed_gpio_2500_class_init(ObjectClass *klass, void *data)
-> @@ -1127,6 +1140,7 @@ static void aspeed_gpio_2500_class_init(ObjectClass=
- *klass, void *data)
->      agc->nr_gpio_pins =3D 228;
->      agc->nr_gpio_sets =3D 8;
->      agc->reg_table =3D aspeed_3_3v_gpios;
-> +    agc->reg_table_size =3D GPIO_3_3V_REG_ARRAY_SIZE;
->  }
-> =20
->  static void aspeed_gpio_ast2600_3_3v_class_init(ObjectClass *klass, void=
- *data)
-> @@ -1137,6 +1151,7 @@ static void aspeed_gpio_ast2600_3_3v_class_init(Obj=
-ectClass *klass, void *data)
->      agc->nr_gpio_pins =3D 208;
->      agc->nr_gpio_sets =3D 7;
->      agc->reg_table =3D aspeed_3_3v_gpios;
-> +    agc->reg_table_size =3D GPIO_3_3V_REG_ARRAY_SIZE;
->  }
-> =20
->  static void aspeed_gpio_ast2600_1_8v_class_init(ObjectClass *klass, void=
- *data)
-> @@ -1147,6 +1162,7 @@ static void aspeed_gpio_ast2600_1_8v_class_init(Obj=
-ectClass *klass, void *data)
->      agc->nr_gpio_pins =3D 36;
->      agc->nr_gpio_sets =3D 2;
->      agc->reg_table =3D aspeed_1_8v_gpios;
-> +    agc->reg_table_size =3D GPIO_1_8V_REG_ARRAY_SIZE;
->  }
-> =20
->  static void aspeed_gpio_1030_class_init(ObjectClass *klass, void *data)
-> @@ -1157,6 +1173,7 @@ static void aspeed_gpio_1030_class_init(ObjectClass=
- *klass, void *data)
->      agc->nr_gpio_pins =3D 151;
->      agc->nr_gpio_sets =3D 6;
->      agc->reg_table =3D aspeed_3_3v_gpios;
-> +    agc->reg_table_size =3D GPIO_3_3V_REG_ARRAY_SIZE;
->  }
-> =20
->  static const TypeInfo aspeed_gpio_info =3D {
-> diff --git a/include/hw/gpio/aspeed_gpio.h b/include/hw/gpio/aspeed_gpio.=
-h
-> index 904eecf62c..e66036ac39 100644
-> --- a/include/hw/gpio/aspeed_gpio.h
-> +++ b/include/hw/gpio/aspeed_gpio.h
-> @@ -75,6 +75,7 @@ struct AspeedGPIOClass {
->      uint32_t nr_gpio_pins;
->      uint32_t nr_gpio_sets;
->      const AspeedGPIOReg *reg_table;
-> +    uint32_t reg_table_size;
->  };
-> =20
->  struct AspeedGPIOState {
 
+r~
 
