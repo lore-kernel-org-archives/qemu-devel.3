@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61808C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 10:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF72C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 10:11:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKEfL-0006iR-KM; Thu, 20 Jun 2024 06:05:15 -0400
+	id 1sKEki-0007vO-IA; Thu, 20 Jun 2024 06:10:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKEfJ-0006i8-Bd
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 06:05:13 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1sKEke-0007uv-Is
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 06:10:45 -0400
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKEfH-0007ez-Hu
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 06:05:13 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-57cbc2a2496so768976a12.0
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 03:05:10 -0700 (PDT)
+ id 1sKEkc-0008U8-Qk
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 06:10:44 -0400
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2ebe40673d8so7146251fa.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 03:10:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718877910; x=1719482710; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BcjW6Xk7rpO6ZbCiQj+w7Y+/X3apRINHHNW3WYLCgSs=;
- b=bA2EcbFLn/JIYsbk1JvDrClaku8KEvj9mw6Z8pbG0PqfpPfxosSGNdGi8KbwBikdem
- NJWXleuiRZPOw04bp/BgPHo2FS+OzPh3oPP2cyCbB/BUK/Txk775xeWsTHd8G4cHfJKJ
- 8vDvlOsmhLV8MlbQBh0bV8DsfoAU18+AaRQJLUZmDfmxf7GunhrdAtKZFU2s/uLDt1VG
- 52NdMbXGyVC3UFyDzEJXCr0xxWT2U7SBWGcfDSJJYdXY9zXtO4+mFIp8mLsV7fUqoueJ
- n81u8zY8s0366xzhKo5dujuPw7GO8XKWpJFQ7jm27uTuFjEHqRSR8FV+AK7yZcZ+2D4f
- Ep5w==
+ d=linaro.org; s=google; t=1718878241; x=1719483041; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AtW2PjYDm2ZcTRvR96oon/PVVay2h/NrCdIjd+nEyTU=;
+ b=yVGDmmf7jo8FSepcMLKMwPO37+A4eDWSZljP2AjAv4H8vy7LRhKBeaW+PzgPQU08Lj
+ c+xle/jRI0Z19Jdxh1uuU6r8pTTITx5x0m/n7uz6UgW88M/UjEsELFy1msaJbp4KQV0L
+ R/f8hDMYB+ALRPFUxv8MXt2QyP/XCNx3HcxUkjWHU/JQ19hl3bW2HgIU8CSxMEfY5jf4
+ wAGpogun4jXK17sPjPozZpb91uYwNAsj3bRc1Jhra+HWkeyFSg1yHKcLEU729wujCPeW
+ XPwru7J4IMGBJ3UvUMjFAIl8CMlPyGSdXuAMOYzn/p3e0ZIgjd4gyO4LTW9IswMACrjc
+ cQXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718877910; x=1719482710;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BcjW6Xk7rpO6ZbCiQj+w7Y+/X3apRINHHNW3WYLCgSs=;
- b=JKwq7maXNiGSERLi1B4dD2tM7Hitog/MRghb7K1aqxrJvYO0mgLVudWQMGy1Ksa1Zz
- v3bWwxJx+yEYIlcHKfdPWTDY2uql92KPDxEImr+bEkLjvRRO5mZ6BZgBrhUB+9OeNlbT
- 9UVcOsfAdd1erJJ1qhnwZiDS2v5931c7bzNIOppk9+QXFGCEx5/rK2KQ8tig1ecSikOa
- hFty+8Y4QlHKN6JJYQeKnOMNfFaobJbLHsZjHckk+pFhgEhqilgB8uVmv/0okln0XNy9
- b/LWPLzXqlucePiwqfhgag0M1gvMDkxABYJ2y3xKSqwB6eMKvecvJr+WIk8PtdI3JYM2
- BVcw==
-X-Gm-Message-State: AOJu0YwhADhwpQDmNrbDG8GpOSVb0TqiXtM3bcZk5uj6MDQ7au5S1bMR
- d7efCy/wYg2KLXkLWvhrudtf8zhxT4mp9kKp4qBM2WhSHaaKxgVLzxGLNKyQ4a5725Z0TZB+gWn
- 8FCQet8rWmCXAjbHRyycHel++vdqZSiRgyeOvIw==
-X-Google-Smtp-Source: AGHT+IFv7Eu1nhZjoBKeP6GhPwaijFj6en0te5XlJgtig5U15lQsD+63LsqcKWsz9ViXw76U1u5kFf/UoYlHoJKerJw=
-X-Received: by 2002:a50:9312:0:b0:57a:234d:abc0 with SMTP id
- 4fb4d7f45d1cf-57d07e6eccemr3507510a12.1.1718877909680; Thu, 20 Jun 2024
- 03:05:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718878241; x=1719483041;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AtW2PjYDm2ZcTRvR96oon/PVVay2h/NrCdIjd+nEyTU=;
+ b=Z4FJSq/PztTihv3gvV3yKC4kJuGgbrgNXHij/F5Zz0mfe33ICLux3ThYPcCdbGrwkC
+ PngIz8tS5cDEfAROJiPx7h15uid06PfssWyNfkMdu/cP9NZm4XCwnTouLa97Tc+QcxRQ
+ YW0JyB10AYzvrOsS6fSXdaAA+XD3l7DZkyJ/3aBF6TdavsC+ufCsDo+oIKYK9ld5WPkG
+ BWPvyH1Ge72EQNVx8U7awyxRq1rArDCom/VfwT7/aTGHqxXcD1wDivnc14SZ3/AA2Ndg
+ 3t8d5ZOk23xH/uC//QHxSUZ/CDNmTmy6RLAIs2pyinDMUNd9R6ZmTmdjFQ7Pi+u6N3N1
+ DQ1A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUqzDG9qTgBxpr/bp/1m88vKXc01evEauRVEfTQ2dSdwKm0koOg3PbRA8pmjyCKfKOe+vSh8npeCitJeUql3hhNwm/GlcE=
+X-Gm-Message-State: AOJu0YxOZweWm29nyz1hp0GXM9KAaNF2qF3I5vJOVPY4un3FZVYBTpPN
+ 70ICeVRo6Vmi7N8wXYxJhsXrQaPIWd+At6HCePY27uTAtRoz5/XyQUGKcVHeJYyNvEIS18BbeSD
+ wcpx89j6TakJgexsR9xEPpWjMt/XUJYP0pTqBsQ==
+X-Google-Smtp-Source: AGHT+IEkpjfVgsIjQRpFjmpo0r2yPS6jeu5X8iKlHAtLVM+IEeHDOwrSVsOvcdBR9+HAolieW5euo13D7K4chFKW/go=
+X-Received: by 2002:a2e:9257:0:b0:2ec:27d0:b28b with SMTP id
+ 38308e7fff4ca-2ec3ce9f6d0mr32151901fa.5.1718878240607; Thu, 20 Jun 2024
+ 03:10:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240620060014.605563-1-marcin.juszkiewicz@linaro.org>
- <20240620060014.605563-2-marcin.juszkiewicz@linaro.org>
- <CAFEAcA9XbYr9jzYm908_stCUrZCqixB+cysFTRCe2MnAFW1FVA@mail.gmail.com>
- <d7880fca-2bfb-4368-9419-8227616f2ce9@linaro.org>
-In-Reply-To: <d7880fca-2bfb-4368-9419-8227616f2ce9@linaro.org>
+References: <20240618144009.3137806-1-zheyuma97@gmail.com>
+ <47a6e9d2-27f6-4e45-9de3-c4766bdf2566@linaro.org>
+In-Reply-To: <47a6e9d2-27f6-4e45-9de3-c4766bdf2566@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 20 Jun 2024 11:04:58 +0100
-Message-ID: <CAFEAcA9vM-5h8a_xmEUAiKTHoS3kOyutm4er+3+y1_T89U5biw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] tests/avocado: use default amount of cores on
- sbsa-ref
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc: qemu-devel@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>, 
- Radoslaw Biernacki <rad@semihalf.com>, Cleber Rosa <crosa@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, qemu-arm@nongnu.org, 
- Rebecca Cran <rebecca@bsdio.com>, Ard Biesheuvel <ardb+tianocore@kernel.org>
+Date: Thu, 20 Jun 2024 11:10:29 +0100
+Message-ID: <CAFEAcA82T-hS0Armp6PVBkrywfqv+-u+L4z8rtrjBpnwvE8Hxg@mail.gmail.com>
+Subject: Re: [PATCH] hw/timer/a9gtimer: Handle QTest mode in
+ a9_gtimer_get_current_cpu
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,63 +95,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Jun 2024 at 10:55, Marcin Juszkiewicz
-<marcin.juszkiewicz@linaro.org> wrote:
+On Tue, 18 Jun 2024 at 15:51, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> W dniu 20.06.2024 o 11:34, Peter Maydell pisze:
-> > On Thu, 20 Jun 2024 at 07:00, Marcin Juszkiewicz
-> > <marcin.juszkiewicz@linaro.org> wrote:
-> >>
-> >> I was wondering why avocado tests passed with firmware which
-> >> crashes when anyone else is using it.
-> >>
-> >> Turned out that amount of cores matters. Have to find out why
-> >> still.
+> On 18/6/24 16:40, Zheyu Ma wrote:
+> > This commit updates the a9_gtimer_get_current_cpu() function to handle
+> > cases where QTest is enabled. When QTest is used, it returns 0 instead
+> > of dereferencing the current_cpu, which can be NULL. This prevents the
+> > program from crashing during QTest runs.
 > >
-> > This commit message confuses me.
+> > Reproducer:
+> > cat << EOF | qemu-system-aarch64 -display \
+> > none -machine accel=3Dqtest, -m 512M -machine npcm750-evb -qtest stdio
+> > writel 0xf03fe20c 0x26d7468c
+> > EOF
+> >
+> > Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> > ---
+> >   hw/timer/a9gtimer.c | 5 +++++
+> >   1 file changed, 5 insertions(+)
+> >
+> > diff --git a/hw/timer/a9gtimer.c b/hw/timer/a9gtimer.c
+> > index a2ac5bdfb9..64d80cdf6a 100644
+> > --- a/hw/timer/a9gtimer.c
+> > +++ b/hw/timer/a9gtimer.c
+> > @@ -32,6 +32,7 @@
+> >   #include "qemu/log.h"
+> >   #include "qemu/module.h"
+> >   #include "hw/core/cpu.h"
+> > +#include "sysemu/qtest.h"
+> >
+> >   #ifndef A9_GTIMER_ERR_DEBUG
+> >   #define A9_GTIMER_ERR_DEBUG 0
+> > @@ -48,6 +49,10 @@
+> >
+> >   static inline int a9_gtimer_get_current_cpu(A9GTimerState *s)
+> >   {
+> > +    if (qtest_enabled()) {
+> > +        return 0;
 >
-> Had no idea how to write in more readable form. Will reword it for v3
-> (with reverse order of patches as recommended by Philippe.
+> Indeed this is how we fixed hw/intc/arm_gic in commit 09bbdb89bc,
+> so:
 >
-> > It reads like "running with two cores will make the guest crash",
-> > i.e. "apply this patch and the test suite will stop passing". I
-> > assume that's not the case, but what's actually going on here?
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 >
-> That's exactly the case. With sbsa-ref firmware which qemu uses now we
-> have crash if more than 1 core is used. Avocado test hardcoded "-smp 1"
-> and was passing fine.
+> > +    }
+> > +
+> >       if (current_cpu->cpu_index >=3D s->num_cpu) {
 >
-> And I forgot to mail qemu-devel when I got hit by that crash.
->
-> This week Rebecca Cran pointed me that crash is in BootLogoLib in EDK2
-> and I wrote some workaround for make things work. Then Ard Biesheuvel
-> found the real reason, fixed QemuVideoDxe in EDK2 and we got sbsa-ref
-> running with any amount of cores.
+> That said, such accesses of @current_cpu from hw/ are dubious.
 
-Oh, OK, so it's just random bad luck that enabling the second
-CPU means that we end up doing an unaligned access to the
-framebuffer, I guess.
+True, but I'm not sure we ever settled on the right way to avoid
+them, did we?
 
-Then, yes, Philippe is right and we need to update our sbsa-ref
-firmware we're using for the test first, to avoid breaking bisection.
+Anyway, I've applied this patch to target-arm.next.
 
-For a commit message for this patch, maybe something like:
-
- The version of the sbsa-ref EDK2 firmware we used to use in this
- test had a bug where it might make an unaligned access to the
- framebuffer, which causes a guest crash on newer versions of
- QEMU where we enforce the architectural requirement that
- unaligned accesses to Device memory should take an exception.
- We happened to not notice this because our test was booting with
- "-smp 1" and through luck this didn't write the boot logo to
- the framebuffer at an unaligned address; but trying to boot the
- same firmware with two CPUs would result in a guest crash.
- Now we have updated the firmware we're using for the test, we can
- make the test use all the cores on the board, so we are testing the
- SMP boot path.
-
-?
-
-thanks
 -- PMM
 
