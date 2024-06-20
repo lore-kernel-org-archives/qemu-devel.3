@@ -4,75 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3576FC27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 10:44:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22DC9C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 11:10:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKFGj-00053a-2C; Thu, 20 Jun 2024 06:43:55 -0400
+	id 1sKFfG-0003gZ-VR; Thu, 20 Jun 2024 07:09:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKFGQ-0004rK-8s
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 06:43:35 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKFfE-0003fg-RZ
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 07:09:12 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKFGM-0005ir-KI
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 06:43:33 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-57a4d7ba501so696690a12.2
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 03:43:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKFfC-00029z-UH
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 07:09:12 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-57d1782679fso853824a12.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 04:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718880209; x=1719485009; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VCHaOBI/pzcWFl4PSGNo6VIcNzZ9wgQjXBKizEWy4ek=;
- b=PodmgwQ++L+Idn51/gD95KMVDkesV9O82RrJaDs0NIK2ciYOiWkgqHs2f8cD1L/qJz
- 84cV9QeYnLlkxR2tt3fsoC6rifytvUxR/2Gj6uHyZD9dE/TNfFA34rgLXKadbyW5swkg
- s/vs64ied4zTt/x172/EwVhHLEf66cjFhjfaivUwv07zAcQ8bahqKLrwqJ/lxKZtKUVA
- sVv/3sQAQ14gQmOacOQcprer7CKjiFYOC5TrcVE1sIb8pFtXKc0Q+5caHRpvaq/+MDsk
- 5Y5h4rIMN5yrMe0r7aLbH/pwQ7ck0QmH9rgpEqCyeAzejpg2zV7B3K7UvPAsrff9I+7n
- EFIQ==
+ d=linaro.org; s=google; t=1718881749; x=1719486549; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=o6QJ9SZ3OegkAAa1flGgzs96XVQRrdVLEc+wLqwcKo0=;
+ b=xvW7647Xw6QUDsTWtH7/JGb3Zp8WVk9AN5EHlVMeQED8AeKUn2laH8wu32mXCaoFUV
+ J4Ft2vEmC+wt/N6xmgm4uL2n5GOBhFZo4B83el+WbdVUEIwne4+GOsFCIH2gvEU5mLpl
+ Q8cYExIKp0Y5NXU+uUFCKI3UG/ynqMip6ZyZ4PwZTMet+8vhAffINHmeGyXdbrgY54ew
+ xr3RTM9w0IHQiKYW6keW4Zrea6iwDGCwGVuI3Un9vsbjUlbSuFLVV9hU4tmDPeWs8HuW
+ WCB5J0ADwmlxM+yTosTlGM9nqxGinchzLMlKD4VK/ILUqcH98L2lgYwAxKr+pOIPFhnW
+ dGfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718880209; x=1719485009;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VCHaOBI/pzcWFl4PSGNo6VIcNzZ9wgQjXBKizEWy4ek=;
- b=AWaZZE1SVjPMqBfXpW8lb4jXt7zpH5BkUEKT/2P8D2bUwpcpXC4+d5dW4s+WGFUDL/
- ICeVA561NInRzH5/uW6Me+YAG0bjlqrI5EGc8Z1Dh9aV59ZHdz33mTDi//vmWCjWFIu/
- UjJvT4sf93H+Y4vAcyk0Od3FfwnYP43nZ464CcIKYhON9+kwWoE0fV3T0dmp+a9bbBWB
- KYbvh8vhxKJf35LAImWLDZGWIK98UR+N6gPanGOKPgVjpvBb37HiU/c3fsb/K4DsHo4s
- 0aSypxz1fM4M9VvHDDkxZVs8X4mzjm1choUCbKnNOvdmk02/QcGHz2PJyZDPSXfeKjE2
- Jhdw==
-X-Gm-Message-State: AOJu0YyB5V0LY5niK6kQfTqxctdHrPPycQJFaNz1Ycv99Cf6Vp2GkX0+
- pko1A/egON+dhwxTJ69JtR0ePnTp6OdguMJOj3APCPU5zRdbequ1C5AxyaR3XOaSVhWIpAHq8JI
- M6B6irwey7Pmt2YuOLa0rGCh6cO5fJCbW2mKihw==
-X-Google-Smtp-Source: AGHT+IHlHajhGew6hb6CDJS+myMTq399D0C/kt3Pf9YkCJ2NVejDx/snMlzMTRPm6hd6YghS/vqFJoDV3T5GwxqKM20=
-X-Received: by 2002:a50:9b15:0:b0:57c:6861:d735 with SMTP id
- 4fb4d7f45d1cf-57d07e6b560mr3081170a12.19.1718880208839; Thu, 20 Jun 2024
- 03:43:28 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718881749; x=1719486549;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=o6QJ9SZ3OegkAAa1flGgzs96XVQRrdVLEc+wLqwcKo0=;
+ b=o7cURfMGE63GR+UUqO1kPJOTe15Unp5oSLo+kZ9kWCu0vjJ2gm4220MJLfQvUk6gzT
+ W8puD+YYqBDI3w4RZXdkZOCuPWOUvOke53LO3BJjSdwDHH0KW5NzyVEUv5qkK7eLMBPM
+ WuKweZBXG+dEHdwWOugN+/ZMyNfVwXXufGba/gqdVYVvQbduDwNsIdlRKBSnj+Ik6CDD
+ lTA0T66LTLVD/z66T4OJ8j/a2CYEZWfBzOXBp9tz46styLsc0hp9KhpvXJDF13WrQB9E
+ mFZiTtjf9/7LrLKINjtMwrYIVGdOIbgzUbyj+9xLTTMCLbBcvuZjnnxa3XWJrAp22rjE
+ RDXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVy5JMSviTcunfB+ahoxC7M7XXMNeeo0pj5moiBTUNM2JqT3Ll9Wh7xzyHLZQlurb2zruo0job/hl3XBXFOEKXd0Xc6eW4=
+X-Gm-Message-State: AOJu0YwwD5+CVRUikxNnZQsV5/bwWy3RH7rqF2cLaTK3pr2Z9TYXBOBk
+ RAtISjwLfI1zv+oMsKDfLjdqegeFInNcVYVHAzEjUKM6vrNGylf4kC70+4sZ7Bs=
+X-Google-Smtp-Source: AGHT+IEjjZpSLIDnd08QJW+Lf9owKJVblZUB7C0BIgWI7vfAZk4k/TFa+GldlMpmpRZWPPJeIwPHrg==
+X-Received: by 2002:a50:d012:0:b0:57c:bd49:9969 with SMTP id
+ 4fb4d7f45d1cf-57d07ebf0cemr3567816a12.39.1718881748595; 
+ Thu, 20 Jun 2024 04:09:08 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.151.40])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-57cb72da82fsm9271355a12.32.2024.06.20.04.09.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Jun 2024 04:09:07 -0700 (PDT)
+Message-ID: <f446fdbf-90f2-4d07-8f1f-06b697ec8c01@linaro.org>
+Date: Thu, 20 Jun 2024 13:09:05 +0200
 MIME-Version: 1.0
-References: <20240615185423.49474-1-florian.lugou@provenrun.com>
-In-Reply-To: <20240615185423.49474-1-florian.lugou@provenrun.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 20 Jun 2024 11:43:17 +0100
-Message-ID: <CAFEAcA_+WrzM4fXQMUxMi3L5yiUWMrUGTSZH=NDdYDKUCP+8NQ@mail.gmail.com>
-Subject: Re: [PATCH] target/arm/helper: Fix timer interrupt masking when
- HCR_EL2.E2H == 0
-To: Florian Lugou <florian.lugou@provenrun.com>
-Cc: qemu-devel@nongnu.org, "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] hw/gpio/aspeed: Add reg_table_size to AspeedGPIOClass
+To: Zheyu Ma <zheyuma97@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20240619183638.4073070-1-zheyuma97@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240619183638.4073070-1-zheyuma97@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,51 +97,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 15 Jun 2024 at 19:56, Florian Lugou <florian.lugou@provenrun.com> wrote:
->
-> CNTHCTL_EL2 based masking of timer interrupts was introduced in
-> f6fc36deef6abcee406211f3e2f11ff894b87fa4. This masking was however
-> effective no matter whether EL2 was enabled in the current security
-> state or not, contrary to arm specification.
->
-> Signed-off-by: Florian Lugou <florian.lugou@provenrun.com>
+Hi,
+
+On 19/6/24 20:36, Zheyu Ma wrote:
+> ASan detected a global-buffer-overflow error in the aspeed_gpio_read()
+> function. This issue occurred when reading beyond the bounds of the
+> reg_table.
+> 
+> To enhance the safety and maintainability of the Aspeed GPIO code, this commit
+> introduces a reg_table_size member to the AspeedGPIOClass structure. This
+> change ensures that the size of the GPIO register table is explicitly tracked
+> and initialized, reducing the risk of errors if new register tables are
+> introduced in the future.
+> 
+> Reproducer:
+> cat << EOF | qemu-system-aarch64 -display none \
+> -machine accel=qtest, -m 512M -machine ast1030-evb -qtest stdio
+> readq 0x7e780272
+> EOF
+> 
+> ASAN log indicating the issue:
+> ==2602930==ERROR: AddressSanitizer: global-buffer-overflow on address 0x55a5da29e128 at pc 0x55a5d700dc62 bp 0x7fff096c4e90 sp 0x7fff096c4e88
+> READ of size 2 at 0x55a5da29e128 thread T0
+>      #0 0x55a5d700dc61 in aspeed_gpio_read hw/gpio/aspeed_gpio.c:564:14
+>      #1 0x55a5d933f3ab in memory_region_read_accessor system/memory.c:445:11
+>      #2 0x55a5d92fba40 in access_with_adjusted_size system/memory.c:573:18
+>      #3 0x55a5d92f842c in memory_region_dispatch_read1 system/memory.c:1426:16
+>      #4 0x55a5d92f7b68 in memory_region_dispatch_read system/memory.c:1459:9
+>      #5 0x55a5d9376ad1 in flatview_read_continue_step system/physmem.c:2836:18
+>      #6 0x55a5d9376399 in flatview_read_continue system/physmem.c:2877:19
+>      #7 0x55a5d93775b8 in flatview_read system/physmem.c:2907:12
+> 
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
 > ---
->  target/arm/helper.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index ce31957235..60e2344c68 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -2684,7 +2684,8 @@ static void gt_update_irq(ARMCPU *cpu, int timeridx)
->       * If bit CNTHCTL_EL2.CNT[VP]MASK is set, it overrides IMASK.
->       * It is RES0 in Secure and NonSecure state.
->       */
-> -    if ((ss == ARMSS_Root || ss == ARMSS_Realm) &&
-> +    if ((arm_hcr_el2_eff(env) & HCR_E2H) &&
-> +        (ss == ARMSS_Root || ss == ARMSS_Realm) &&
+> Changes in v3:
+> - Add the reproducer
+> 
+> Changes in v2:
+> - Introduce the reg_table_size to AspeedGPIOClass
+> ---
+>   hw/gpio/aspeed_gpio.c         | 17 +++++++++++++++++
+>   include/hw/gpio/aspeed_gpio.h |  1 +
+>   2 files changed, 18 insertions(+)
 
-When the architecture says "is EL2 enabled in the current security state"
-it doesn't mean "is HCR_EL2.E2H set?", it means "is this either NonSecure/Realm
-or else is SCR_EL2.EEL2 set?". Compare the pseudocode EL2Enabled()
-and QEMU's arm_is_el2_enabled() and arm_is_el2_enabled_secstate() functions.
-This doesn't mean much in Root state, and for Realm state EL2 is always
-enabled (assuming it is implemented).
 
-For this timer check, we're doing I think the same thing as the
-pseudocode AArch64.CheckTimerConditions(), which does:
+>   static const TypeInfo aspeed_gpio_info = {
+> diff --git a/include/hw/gpio/aspeed_gpio.h b/include/hw/gpio/aspeed_gpio.h
+> index 904eecf62c..e66036ac39 100644
+> --- a/include/hw/gpio/aspeed_gpio.h
+> +++ b/include/hw/gpio/aspeed_gpio.h
+> @@ -75,6 +75,7 @@ struct AspeedGPIOClass {
+>       uint32_t nr_gpio_pins;
+>       uint32_t nr_gpio_sets;
+>       const AspeedGPIOReg *reg_table;
+> +    uint32_t reg_table_size;
+>   };
 
-  if (IsFeatureImplemented(FEAT_RME) && ss IN {SS_Root, SS_Realm} &&
-      CNTHCTL_EL2.CNTPMASK == '1') then
-     imask = '1';
+- "reg_table_size" is a number of registers, using s/size/count/ might
+   be clearer.
+- No point in specifying 32-bit, "unsigned" is sufficient.
 
-so I'm inclined to say that our current implementation in QEMU is correct.
+(Cédric, if you agree, you might update your tree).
 
->          ((timeridx == GTIMER_VIRT && (cnthctl & R_CNTHCTL_CNTVMASK_MASK)) ||
->           (timeridx == GTIMER_PHYS && (cnthctl & R_CNTHCTL_CNTPMASK_MASK)))) {
->          irqstate = 0;
-> --
+Unrelated to this patch but figured out while reviewing, in
+aspeed_gpio_read/write 'idx' is
+- pointlessly assigned to -1
+- of type 'uint64_t', also pointless, 'unsigned' is clearer.
 
-thanks
--- PMM
+Regards,
+
+Phil.
+
 
