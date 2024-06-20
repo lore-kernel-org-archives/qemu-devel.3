@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BED5AC27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 16:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93975C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 16:05:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKKGP-0002Ke-3c; Thu, 20 Jun 2024 12:03:53 -0400
+	id 1sKKHB-0003C4-5Y; Thu, 20 Jun 2024 12:04:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sKKGJ-0002EW-De
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:03:47 -0400
+ id 1sKKH8-00037k-Am
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:04:38 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sKKGG-0007NL-6t
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:03:47 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W4ldK4gBNz6K6jw;
- Fri, 21 Jun 2024 00:03:01 +0800 (CST)
+ id 1sKKH6-0007Rv-Sz
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:04:38 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W4lfx04BPz6GD4R;
+ Fri, 21 Jun 2024 00:04:25 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 5E5BD1409EA;
- Fri, 21 Jun 2024 00:03:25 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 4AF2C140C72;
+ Fri, 21 Jun 2024 00:04:27 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
  lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 20 Jun 2024 17:03:24 +0100
+ 15.1.2507.39; Thu, 20 Jun 2024 17:04:26 +0100
 To: <imammedo@redhat.com>, <mst@redhat.com>, Markus Armbruster
  <armbru@redhat.com>, <qemu-devel@nongnu.org>, <ankita@nvidia.com>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, Richard Henderson
@@ -38,11 +38,12 @@ CC: <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
  <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
  <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PATCH v3 qemu 00/11] acpi: NUMA nodes for CXL HB as GP + complex
- NUMA test
-Date: Thu, 20 Jun 2024 17:03:08 +0100
-Message-ID: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
+Subject: [PATCH v3 02/11] hw/acpi/GI: Fix trivial parameter alignment issue.
+Date: Thu, 20 Jun 2024 17:03:10 +0100
+Message-ID: <20240620160324.109058-3-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
+References: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -74,107 +75,29 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v3: Thanks to Richard for help debugging BE issue and to Igor for
-    finding a bunch of other thing to improve via the context in
-    the fix patch.
-    
-- Fix the big endian host/little endian guest issue in the HID being
-  written to the Generic Port Affinity Structure ACPI Device Handle.
-- Fix a bug in the ordering of bus vs devfn in the BDF field which is
-  reversed in the ACPI table wrt to QEMU's internal handling. Note the
-  fix is minimal and refactored later in the series.
-- Move original GI code to hw/acpi/aml-build.c and hw/acpi/pc.c as
-  no need for a separate file and this keeps the SRAT entry building
-  all in one place.
-- Use properties for the pci bus number and the ACPI UID to avoid
-  using pci internal implementation details in hw/acpi.
-- Drop the GenericNode base object as much less code is unified with
-  the new approach to the aml building and that approach did not bring
-  sufficient advantages to be worthwhile after other refactors.
-  A little more duplication occurs in v3 but the code is easier to read.
+Before making additional modification, tidy up this misleading indentation.
 
-ACPI 6.5 introduced Generic Port Affinity Structures to close a system
-description gap that was a problem for CXL memory systems.
-It defines an new SRAT Affinity structure (and hence allows creation of an
-ACPI Proximity Node which can only be defined via an SRAT structure)
-for the boundary between a discoverable fabric and a non discoverable
-system interconnects etc.
+Reviewed-by: Ankit Agrawal <ankita@nvidia.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+---
+v3: Unchanged
+---
+ hw/acpi/acpi_generic_initiator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The HMAT data on latency and bandwidth is combined with discoverable
-information from the CXL bus (link speeds, lane counts) and CXL devices
-(switch port to port characteristics and USP to memory, via CDAT tables
-read from the device).  QEMU has supported the rest of the elements
-of this chain for a while but now the kernel has caught up and we need
-the missing element of Generic Ports (this code has been used extensively
-in testing and debugging that kernel support, some resulting fixes
-currently under review).
-
-Generic Port Affinity Structures are very similar to the recently
-added Generic Initiator Affinity Structures (GI) so this series
-factors out and reuses much of that infrastructure for reuse
-There are subtle differences (beyond the obvious structure ID change).
-
-- The ACPI spec example (and linux kernel support) has a Generic
-  Port not as associated with the CXL root port, but rather with
-  the CXL Host bridge. As a result, an ACPI handle is used (rather
-  than the PCI SBDF option for GIs). In QEMU the easiest way
-  to get to this is to target the root bridge PCI Bus, and
-  conveniently the root bridge bus number is used for the UID allowing
-  us to construct an appropriate entry.
-
-A key addition of this series is a complex NUMA topology example that
-stretches the QEMU emulation code for GI, GP and nodes with just
-CPUS, just memory, just hot pluggable memory, mixture of memory and CPUs.
-
-A similar test showed up a few NUMA related bugs with fixes applied for
-9.0 (note that one of these needs linux booted to identify that it
-rejects the HMAT table and this test is a regression test for the
-table generation only).
-
-https://lore.kernel.org/qemu-devel/2eb6672cfdaea7dacd8e9bb0523887f13b9f85ce.1710282274.git.mst@redhat.com/
-https://lore.kernel.org/qemu-devel/74e2845c5f95b0c139c79233ddb65bb17f2dd679.1710282274.git.mst@redhat.com/
-
-
-Jonathan Cameron (11):
-  hw/acpi: Fix ordering of BDF in Generic Initiator PCI Device Handle.
-  hw/acpi/GI: Fix trivial parameter alignment issue.
-  hw/acpi: Move AML building code for Generic Initiators to aml_build.c
-  hw/acpi: Rename build_all_acpi_generic_initiators() to
-    build_acpi_generic_initiator()
-  hw/pci: Add a bus property to pci_props and use for acpi/gi
-  acpi/pci: Move Generic Initiator object handling into acpi/pci.*
-  hw/pci-bridge: Add acpi_uid property to CXL PXB
-  hw/acpi: Generic Port Affinity Structure support
-  bios-tables-test: Allow for new acpihmat-generic-x test data.
-  bios-tables-test: Add complex SRAT / HMAT test for GI GP
-  bios-tables-test: Add data for complex numa test (GI, GP etc)
-
- qapi/qom.json                               |  34 +++
- include/hw/acpi/acpi_generic_initiator.h    |  30 +--
- include/hw/acpi/aml-build.h                 |   8 +
- include/hw/acpi/pci.h                       |   7 +
- include/hw/pci/pci_bridge.h                 |   1 +
- hw/acpi/acpi_generic_initiator.c            | 132 +++++++++---
- hw/acpi/aml-build.c                         |  84 ++++++++
- hw/acpi/pci.c                               | 226 ++++++++++++++++++++
- hw/arm/virt-acpi-build.c                    |   3 +-
- hw/i386/acpi-build.c                        |   3 +-
- hw/pci-bridge/pci_expander_bridge.c         |  18 +-
- hw/pci/pci.c                                |  14 ++
- tests/qtest/bios-tables-test.c              |  96 +++++++++
- hw/acpi/meson.build                         |   1 -
- tests/data/acpi/q35/APIC.acpihmat-generic-x | Bin 0 -> 136 bytes
- tests/data/acpi/q35/CEDT.acpihmat-generic-x | Bin 0 -> 68 bytes
- tests/data/acpi/q35/DSDT.acpihmat-generic-x | Bin 0 -> 10849 bytes
- tests/data/acpi/q35/HMAT.acpihmat-generic-x | Bin 0 -> 360 bytes
- tests/data/acpi/q35/SRAT.acpihmat-generic-x | Bin 0 -> 520 bytes
- 19 files changed, 597 insertions(+), 60 deletions(-)
- create mode 100644 tests/data/acpi/q35/APIC.acpihmat-generic-x
- create mode 100644 tests/data/acpi/q35/CEDT.acpihmat-generic-x
- create mode 100644 tests/data/acpi/q35/DSDT.acpihmat-generic-x
- create mode 100644 tests/data/acpi/q35/HMAT.acpihmat-generic-x
- create mode 100644 tests/data/acpi/q35/SRAT.acpihmat-generic-x
-
+diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
+index 3d2b567999..4a02c19468 100644
+--- a/hw/acpi/acpi_generic_initiator.c
++++ b/hw/acpi/acpi_generic_initiator.c
+@@ -133,7 +133,7 @@ static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
+ 
+     dev_handle.segment = 0;
+     dev_handle.bdf = PCI_BUILD_BDF(pci_bus_num(pci_get_bus(pci_dev)),
+-                                               pci_dev->devfn);
++                                   pci_dev->devfn);
+ 
+     build_srat_generic_pci_initiator_affinity(table_data,
+                                               gi->node, &dev_handle);
 -- 
 2.43.0
 
