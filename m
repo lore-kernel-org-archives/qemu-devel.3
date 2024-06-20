@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A075EC27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 09:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CA9AC27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 09:54:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKEC8-0006ea-1Q; Thu, 20 Jun 2024 05:35:04 -0400
+	id 1sKETi-0001cv-8m; Thu, 20 Jun 2024 05:53:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKEC7-0006e0-3M
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 05:35:03 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1sKETe-0001cB-4e
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 05:53:10 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKEC5-0001g2-Ar
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 05:35:02 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-57c83100cb4so635676a12.1
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 02:35:00 -0700 (PDT)
+ id 1sKETc-0005JQ-EK
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 05:53:09 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-57cfe600cbeso726631a12.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 02:53:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718876099; x=1719480899; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=hbBsbkBy2PdD0EA2Zs5jFS/sdRgXA2mOSZ7j4O4WgI8=;
- b=jzbQHIwdk8j85FPFAf1TNxoGofyzcS7n7mY7clxKEKMTGLgiUHYg472OOhdOTtyywe
- +uurQvAO2cC49e6hbygx6Ks6XBSowFK0SDr8Lr2okPHNsTfd0enPvoFH46GkcjnJcctK
- Yq/RR7ZLUJAVhzbeB9Si0OVtP5kn2LMEenT9XOBr95T6WSf8wTlp6QhrIMDF0Nlan6CC
- mmf4kOeGP5rNk/QkiVGMJCYxW9dnjBUIJG/3QHt+5uMVNfLCGt9w48bJDf88XEVPRkeo
- CcfOuKHZiKuT3Ggd8wQqLr8V2Dxr4QZLAaKwJ6EbR4LRlSH4RokwyN1CeBGEzS8uE7D2
- +DFw==
+ d=linaro.org; s=google; t=1718877181; x=1719481981; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7TsBQ3rcHz6afeqtu9RFubAOc02bqXltcu1rcXcLBnk=;
+ b=F1apOnTjfpYtDRLJx8YaM9xX/PC5PFuMdm99VviGDBsZOPeQD4U6v+PTOc16jejdWs
+ Pn0hHjxZVA5i393ma+RVvSyopzvtHbpT5f3pWaP406ZDnROnldGrsDvkAcWW0DwpnPoq
+ ayIt1KY80qCqLd7O4Ah2hVDUVVwCLUKOjc7IW0tzNhoArJ1QU6tc6z1seLpfk+mT4krT
+ pfYcH8dfPdzmS1OR/aqREuQawQKbSZS1ZQsIig9sLk2EP844BNr0uIMJ50ZltpV8bYG7
+ mewKuVw/Mt7f6piqHupZjzQBy9dem6d9t9x0aKgXU3XDiVTreejUt6oiYWO6SRwKRbPV
+ bRrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718876099; x=1719480899;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hbBsbkBy2PdD0EA2Zs5jFS/sdRgXA2mOSZ7j4O4WgI8=;
- b=bDmgKkR9BHSSXFYS19cfaobFSIIx4DoIf6aEXe0xIXsWFHxV91xIjoltBN5RS2Ptou
- 9SdtsQN0trXpKX0l0MMx8Sd+ZTdW6kNs2qJas6z4j/Tv4D2Essv68nGB4CuXSevSolXI
- R1BLaZS+GdhjdYfBwkxP0DrxEoAqveePwFbAjkGGLQNdKV/WT6LCWFS03014WJ3WRvF6
- KN32K6Gbk/KXthDzoSoSnIz7/IcINRcHcpeQuxsxUfAzxp7exPa5FxBzyPT/3FtBe+Y9
- +qIFHNrmC0DIek1vqOAa4V4nLvAdgI0Nu/DJORdluA1A7K1ge1iLVxdWGQZURl5gKXMM
- 2X9Q==
-X-Gm-Message-State: AOJu0Yz5KSOM/m+W20Ek1kaEbjawSxWP+8tb3yYfBR2mS8pHuOYB/s9c
- 1GHGFXkpk5p4gCfMPfDRVtpawjTBpnCbNwpU1JZInyvWcgoW0QubYeqPH0n95d2D247pvX8FrrG
- ZnsaQWIzuBStPujbc1GqRMFA4gLD0YqzUbxYY7w==
-X-Google-Smtp-Source: AGHT+IE35phRN2nwNf/Wsr76VOa3V9yap7XS7TajtluoMJs7DG5UtI04mDRzznLLHn/VorJM9H6UOnGlVYxXB73SEns=
-X-Received: by 2002:a05:6402:3414:b0:57c:a7dc:b0de with SMTP id
- 4fb4d7f45d1cf-57d07ee7906mr3004193a12.39.1718876099202; Thu, 20 Jun 2024
- 02:34:59 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718877181; x=1719481981;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7TsBQ3rcHz6afeqtu9RFubAOc02bqXltcu1rcXcLBnk=;
+ b=X2PGcKsA/ZzDaLUqB9qXxVTmSSxdmi6RWN0t5ym1t5pjoXD9eEvJxRs2QMcMiw6k8S
+ dtbwIlNKimWtfWH5BWWnU/do30tuIcv8xzMS1Ya/TE6kH9Umre/GQhXXaZauRIiKzNCp
+ HMVfbw8t1MJNBG7OBuVSfpsGLg/DUvqpjnDnUGC5i87NMG/dELhFzvl7Vn9At8Vi/97o
+ uJydNYP2LnOl3Mu6/vphhsIJzCJ4fkVVA1QrZRNUZx3nDq+CY6JHbXHsu5KyLgt9UNUp
+ +WwtKGOs05Ij0Y6xZIodSBbza8nPzRMZP4GtMCeBFihRz6H4Lo0vW4WObHSTFIQlvdkx
+ 4Beg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVB8EalhkQ/ATYI0m+EGpIEwJtUYo4PtdSPisviN8LRRTKwI/ciPLZkmjXXAztz73531ptmCvbYtp+2LNx5VGeqIRr8jbI=
+X-Gm-Message-State: AOJu0YzJabHGQXxVwoUJNfITcvBlxz1iFyAf6MsuSTkBwizUgutHmvlB
+ Xc1OyxPXKoACnMwYVv+2N5Hcz3hcrIP6dVNaJW/qo6kJrnCfATNqD8yeOMhdfCNS2hVvWEkZLSo
+ agjVaMcgg18WiecZNa3FAFwctJPPOnEz4TeRvaQ==
+X-Google-Smtp-Source: AGHT+IFLsiV2zhuLgF9KIUJT8YGCCwqazH7DUGuXB8h7b1yM9RhI7l8JZ4BpO9eedEifWm1rDCw+mFFafRheliS8W2A=
+X-Received: by 2002:a50:baa5:0:b0:57c:ff70:5429 with SMTP id
+ 4fb4d7f45d1cf-57d07e670a2mr2476238a12.8.1718877180797; Thu, 20 Jun 2024
+ 02:53:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240620060014.605563-1-marcin.juszkiewicz@linaro.org>
- <20240620060014.605563-2-marcin.juszkiewicz@linaro.org>
-In-Reply-To: <20240620060014.605563-2-marcin.juszkiewicz@linaro.org>
+References: <20240618172527.3450098-1-nabihestefan@google.com>
+ <87o77xcn2g.fsf@draig.linaro.org>
+In-Reply-To: <87o77xcn2g.fsf@draig.linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 20 Jun 2024 10:34:48 +0100
-Message-ID: <CAFEAcA9XbYr9jzYm908_stCUrZCqixB+cysFTRCe2MnAFW1FVA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] tests/avocado: use default amount of cores on
- sbsa-ref
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc: qemu-devel@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>, 
- Radoslaw Biernacki <rad@semihalf.com>, Cleber Rosa <crosa@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, qemu-arm@nongnu.org
+Date: Thu, 20 Jun 2024 10:52:49 +0100
+Message-ID: <CAFEAcA8Jx=CrXCSzOtjtEky5ikvtatk8N2gz=nKccpwEwO13+w@mail.gmail.com>
+Subject: Re: [PATCH] hw/net: Fix Coverity Issue for npcm-gmac
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Nabih Estefan <nabihestefan@google.com>, qemu-devel@nongnu.org,
+ kfting@nuvoton.com, wuhaotsh@google.com, jasowang@redhat.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,18 +93,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Jun 2024 at 07:00, Marcin Juszkiewicz
-<marcin.juszkiewicz@linaro.org> wrote:
+On Wed, 19 Jun 2024 at 10:13, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
-> I was wondering why avocado tests passed with firmware which crashes
-> when anyone else is using it.
+> Nabih Estefan <nabihestefan@google.com> writes:
 >
-> Turned out that amount of cores matters. Have to find out why still.
+> > There is an extra `buf=3D` set that is not used by npcm-gmac. Remove it
+> > for coverity to be happy.
 
-This commit message confuses me. It reads like "running with
-two cores will make the guest crash", i.e. "apply this patch
-and the test suite will stop passing". I assume that's not
-the case, but what's actually going on here?
+By the way, Nabih, it looks like the mailing list received five copies
+of this patch email. You might want to look at what happened on your
+end that resulted in all the duplicates.
+
+> Have you go the coverity reference to include in the commit message?
+
+This is CID 1534027.
+
+> > Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+> > ---
+> >  hw/net/npcm_gmac.c | 1 -
+> >  1 file changed, 1 deletion(-)
+> >
+> > diff --git a/hw/net/npcm_gmac.c b/hw/net/npcm_gmac.c
+> > index 1b71e2526e..b397fd5064 100644
+> > --- a/hw/net/npcm_gmac.c
+> > +++ b/hw/net/npcm_gmac.c
+> > @@ -614,7 +614,6 @@ static void gmac_try_send_next_packet(NPCMGMACState=
+ *gmac)
+> >              net_checksum_calculate(tx_send_buffer, length, csum);
+> >              qemu_send_packet(qemu_get_queue(gmac->nic), tx_send_buffer=
+, length);
+> >              trace_npcm_gmac_packet_sent(DEVICE(gmac)->canonical_path, =
+length);
+> > -            buf =3D tx_send_buffer;
+>
+> So coverity is saying that buf starts at tx_send_buffer and none of the
+> other legs that can mess with it are possible for the tx_desc.tdes1 &
+> TX_DESC_TDES1_LAST_SEG_MASK leg?
+
+Coverity is saying that in the loop body, we unconditionally
+(in "step 4") set "buf =3D &tx_send_buffer[prev_buf_size]" before
+we ever try to use "buf". This assignment "buf =3D tx_send_buffer"
+happens later in the loop body, but there is no further reference
+to buf either inside the loop body or after the loop ends. So we
+will never look at the value we assign to "buf" here (either we
+finish the loop and the function, or else we loop back around
+again and overwrite this value), and this assignment is dead code.
+
+What I'm wondering is whether this code for "last segment,
+send the packet" should be setting "prev_buf_size =3D 0" instead
+of "buf =3D tx_send_buffer" (meaning, I think "we've sent this packet,
+there is nothing currently in the tx_send_buffer, the next descriptor
+can start filling tx_send_buffer from byte 0".) Otherwise I think
+we will continue to accumulate data from the following descriptor
+into tx_send_buffer after the data from this packet, but when we
+send that second packet we will do it from the start of
+tx_send_buffer and so we will send the wrong data.
 
 thanks
 -- PMM
