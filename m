@@ -4,93 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87834C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AAD3C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:54:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKI33-0000Ld-0A; Thu, 20 Jun 2024 09:41:57 -0400
+	id 1sKIEL-00045r-2e; Thu, 20 Jun 2024 09:53:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sKI31-0000Kj-UX
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:41:55 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sKI2z-0005px-F6
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:41:55 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-57d280e2d5dso212316a12.1
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 06:41:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718890911; x=1719495711; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WGVE6bacOXyeyjuV9YJCqy1fmtZxN0dyDUEVXERGhAc=;
- b=U9Hce7ZcUImHb56K89EhQmGG9+MHCutlNRRgPu5qzz2i8i9hqvB5N1QOOc2bW+5oLF
- aEHtbikbqUXhAxMn4MVxlVMZIfrxsh5rH1PxfSs+04+QDGL8XxUkFKDg23Du4Oh2UQAy
- e8Ptq82imSmsPOAVRUC4X6wedp+pcjTj/kCc7QZ7WlR8VPgj1E/LlrkdGnq+hYl4fEc1
- XpQb+uBJSNwwiO73LCHBfIVX4O93Dl3ikofewFFCx431q2ZHhYAS1SUf44d5yu6cGEUH
- hr+o5+c6T0lCsBYvh+bYWbSpRq27BdO5fWaAjf+8ipcs6cwH+V2oEyqn9ZcrZaR/5lcb
- gizA==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sKIEJ-00045Q-IA
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:53:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sKIEH-0008GC-Km
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:53:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718891612;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ELadgWAZEaqWW9tZAl/glDSzS0OKSd1Zx7ZGWRCWr3Q=;
+ b=NQfupwR0t1zMN23U5v0vWn9nvmJOvEmI3Y1mYebvVWeQYZguHlXnKJ1Pe7o7OmtP1GUdPQ
+ bhLXZb9Xm9FZ3h4n7La6vdzRHGDficctikd/Wf1nNckHtWYFBCEThiV1kBcIG/QsGgt4G7
+ v4XKGDrVx+kAlCIwk4Kojm27yca233c=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-509-PR1jxBbxPteeT6OajhxgLg-1; Thu, 20 Jun 2024 09:53:31 -0400
+X-MC-Unique: PR1jxBbxPteeT6OajhxgLg-1
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-62fa71fbfc4so17386367b3.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 06:53:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718890911; x=1719495711;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1718891610; x=1719496410;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WGVE6bacOXyeyjuV9YJCqy1fmtZxN0dyDUEVXERGhAc=;
- b=u4NDPlhnC4Z8QDcNNauDB5ZR5fmKuoRf7UXLT+Rhut48yfFzt8VPurkEpK4IMouZHd
- OeQWLfr+lKHAS+NBYwOwj109hXub/2WrJsFLTpCsqiPobr/kyuxUUmS680UfAwKT1ori
- NWci/UqBZSYBm/cgGPUVX5SRK4y1ATjyUW2e0DHEyIGNQSEAafgwk67AbjNh22pgH08M
- k6+PdqGXTinsHtyjGN+ZEhFfKvgJ0kjYdHO5pQECYP7yMFHVG+y37LBW0uAyBdqZAJzc
- jMNZuHvHZEXiuhvscOhbr4dsnppweW8KvcdLwz9D8oB8N8vCgDw3/E0ClyyoM3StVUZA
- jJDA==
-X-Gm-Message-State: AOJu0Yw41YEb9pt36VwMUjB3wPaYjedPH/lS6QYZTH9Qy3vLAlJOnjxE
- /XyLILLsTJmWlh/TshXtqE4jiwe5FkYQ+7hg7ztjpw3Gzi5DhSFudVEbarL0Yro=
-X-Google-Smtp-Source: AGHT+IHNehz4YpJM3jbj5HbqG5OfsYBuNrUQITNacn4uv+g3RwhS2JK/O9X1T++OqUKAQafWHCNJJA==
-X-Received: by 2002:a17:907:c283:b0:a6f:d1f:6469 with SMTP id
- a640c23a62f3a-a6fab7d7eadmr311222966b.64.1718890910946; 
- Thu, 20 Jun 2024 06:41:50 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56f43220sm765024566b.185.2024.06.20.06.41.46
+ bh=ELadgWAZEaqWW9tZAl/glDSzS0OKSd1Zx7ZGWRCWr3Q=;
+ b=g0Tre1GlRg5ncm2gdqmAPloglVym+efsRyG66T56DMueBnV/X6GecLFU7164cM/0Y+
+ wof+Fw4JrnOdcM0/r36wuqNDMiXOl2wJ3m1kD3SP1HxUK5/I3yc7I91ocWmZAs1urvIk
+ wU4kkuVzMJBpT0IcF7enAQKL7fPnwObvyUo5f8kYy9LVXkGtLgnMbIdje0Nxu7Dplem0
+ SaIIB238Fk7WcPgkiNMhBYn3YOSw9ZRfFdAz3Fr6kXCOs6dptw/4k19DInSYMXQZSgG7
+ Une7KhQrujVipN5Vi/GjLJXc+KfyfyFr+p0r9D3YiVsGaqQc0wRwteuKR6bEJ1n996E9
+ NI7w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU05T7KaBEnAQbhmF9JIQ6vkCNkTTWaq3aGLShRSzBFRpL5tKNA/Ch1mhE6lQT23i7LZyPX63nnkcvEcahxdQ3O0AUKlYU=
+X-Gm-Message-State: AOJu0Yzjg7CgK88OYfoITTvlZ3W1snL+QImLNfYoIXuqzR2l1QfhIALS
+ 95IYmoTpvLnnES8N25CbhhlV8bDQH5zkyJg/0CJcI6qZ+vKsJhb0GG2+AxtG0GmXQWz2UC3OkXn
+ oGG/irBocqJapxUPTswy3maqkjVCDTjcyAE36L3zjpOYm24fJqUvL
+X-Received: by 2002:a0d:ead5:0:b0:62d:1139:779 with SMTP id
+ 00721157ae682-63a8d924c86mr49521147b3.19.1718891610542; 
+ Thu, 20 Jun 2024 06:53:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEtfQ5DqanAfpJBPJxkUnLssdQahDnVihRwBBiKXH6lf5Bj7oiF0e5+r7UYjKjoLVLMg/8www==
+X-Received: by 2002:a0d:ead5:0:b0:62d:1139:779 with SMTP id
+ 00721157ae682-63a8d924c86mr49520827b3.19.1718891610167; 
+ Thu, 20 Jun 2024 06:53:30 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b4ff61db92sm23720096d6.30.2024.06.20.06.53.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Jun 2024 06:41:46 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 65C335F7B1;
- Thu, 20 Jun 2024 14:41:45 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org,  Stefan Hajnoczi <stefanha@redhat.com>,  Mads
- Ynddal <mads@ynddal.dk>,  Peter Maydell <peter.maydell@linaro.org>,
- Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  =?utf-8?Q?Ma?=
- =?utf-8?Q?rc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Thomas Huth <thuth@redhat.com>,  Markus
- Armbruster <armbru@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Zhao Liu <zhao1.liu@intel.com>,  Gustavo Romero
- <gustavo.romero@linaro.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  rowan.hart@intel.com,  Richard Henderson
- <richard.henderson@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>
-Subject: Re: [RFC PATCH v3 1/5] build-sys: Add rust feature option
-In-Reply-To: <e74803e6b570ab36ebc538dd84dc7c4bc2fbe4e7.1718827153.git.manos.pitsidianakis@linaro.org>
- (Manos Pitsidianakis's message of "Wed, 19 Jun 2024 23:13:58 +0300")
-References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
- <e74803e6b570ab36ebc538dd84dc7c4bc2fbe4e7.1718827153.git.manos.pitsidianakis@linaro.org>
-Date: Thu, 20 Jun 2024 14:41:45 +0100
-Message-ID: <87y16zbujq.fsf@draig.linaro.org>
+ Thu, 20 Jun 2024 06:53:29 -0700 (PDT)
+Date: Thu, 20 Jun 2024 15:53:24 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Sunil V L <sunilvl@ventanamicro.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1E?=
+ =?UTF-8?B?YXVkw6k=?= <philmd@linaro.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, qemu-riscv@nongnu.org, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
+ <marcandre.lureau@redhat.com>, "Daniel P . =?UTF-8?B?QmVycmFuZ8Op?="
+ <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>, Ani Sinha
+ <anisinha@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann
+ <kraxel@redhat.com>, Alistair Francis <alistair23@gmail.com>, Sia Jee Heng
+ <jeeheng.sia@starfivetech.com>, Haibo1 Xu <haibo1.xu@intel.com>, Anup Patel
+ <apatel@ventanamicro.com>, Andrew Jones <ajones@ventanamicro.com>, Daniel
+ Henrique Barboza <dbarboza@ventanamicro.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng
+ <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Alistair Francis <alistair.francis@wdc.com>
+Subject: Re: [PATCH v2 06/12] tests/data/acpi/virt: Move ACPI tables under
+ aarch64
+Message-ID: <20240620155324.1d7157f9@imammedo.users.ipa.redhat.com>
+In-Reply-To: <ZnMcw2E83Voo1HBT@sunil-laptop>
+References: <20240524061411.341599-1-sunilvl@ventanamicro.com>
+ <20240524061411.341599-7-sunilvl@ventanamicro.com>
+ <27cef750-262a-402a-97fe-c4a55700a376@linaro.org>
+ <ZlSjzfSj8MwDcJk6@sunil-laptop>
+ <20240619111743.58930119@imammedo.users.ipa.redhat.com>
+ <20240619052043-mutt-send-email-mst@kernel.org>
+ <ZnMcw2E83Voo1HBT@sunil-laptop>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,68 +124,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+On Wed, 19 Jun 2024 23:30:35 +0530
+Sunil V L <sunilvl@ventanamicro.com> wrote:
 
-> Add options for Rust in meson_options.txt, meson.build, configure to
-> prepare for adding Rust code in the followup commits.
->
-> `rust` is a reserved meson name, so we have to use an alternative.
-> `with_rust` was chosen.
->
-> A cargo_wrapper.py script is added that is heavily based on the work of
-> Marc-Andr=C3=A9 Lureau from 2021.
->
-> https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@redhat=
-.com/
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-<snip>
->=20=20
-> +with_rust=3D"auto"
-> +with_rust_target_triple=3D""
-> +
->  ar=3D"${AR-${cross_prefix}ar}"
->  as=3D"${AS-${cross_prefix}as}"
->  ccas=3D"${CCAS-$cc}"
-> @@ -760,6 +763,12 @@ for opt do
->    ;;
->    --gdb=3D*) gdb_bin=3D"$optarg"
->    ;;
-> +  --enable-with-rust) with_rust=3Denabled
-> +  ;;
-> +  --disable-with-rust) with_rust=3Ddisabled
-> +  ;;
-> +  --with-rust-target-triple=3D*) with_rust_target_triple=3D"$optarg"
-> +  ;;
->    # everything else has the same name in configure and meson
->    --*) meson_option_parse "$opt" "$optarg"
->    ;;
-> @@ -1796,6 +1805,8 @@ if test "$skip_meson" =3D no; then
->    test -n "${LIB_FUZZING_ENGINE+xxx}" && meson_option_add "-Dfuzzing_eng=
-ine=3D$LIB_FUZZING_ENGINE"
->    test "$plugins" =3D yes && meson_option_add "-Dplugins=3Dtrue"
->    test "$tcg" !=3D enabled && meson_option_add "-Dtcg=3D$tcg"
-> +  test "$with_rust" !=3D enabled && meson_option_add "-Dwith_rust=3D$wit=
-h_rust"
-> +  test "$with_rust_target_triple" !=3D "" && meson_option_add "-Dwith_ru=
-st_target_triple=3D$with_rust_target_triple"
->    run_meson() {
->      NINJA=3D$ninja $meson setup "$@" "$PWD" "$source_path"
->    }
-<snip>
+> On Wed, Jun 19, 2024 at 05:20:50AM -0400, Michael S. Tsirkin wrote:
+> > On Wed, Jun 19, 2024 at 11:17:43AM +0200, Igor Mammedov wrote: =20
+> > > On Mon, 27 May 2024 20:46:29 +0530
+> > > Sunil V L <sunilvl@ventanamicro.com> wrote:
+> > >  =20
+> > > > On Mon, May 27, 2024 at 12:12:10PM +0200, Philippe Mathieu-Daud=C3=
+=A9 wrote: =20
+> > > > > Hi Sunil,
+> > > > >=20
+> > > > > On 24/5/24 08:14, Sunil V L wrote:   =20
+> > > > > > Since virt is a common machine name across architectures like A=
+RM64 and
+> > > > > > RISC-V, move existing ARM64 ACPI tables under aarch64 folder so=
+ that
+> > > > > > RISC-V tables can be added under riscv64 folder in future.
+> > > > > >=20
+> > > > > > Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+> > > > > > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> > > > > > ---
+> > > > > >   tests/data/acpi/virt/{ =3D> aarch64}/APIC             | Bin  =
+ =20
+> > > > >=20
+> > > > > The usual pattern is {target}/{machine}, so instead of:
+> > > > >=20
+> > > > >   microvm/
+> > > > >   pc/
+> > > > >   q35/
+> > > > >   virt/aarch64/
+> > > > >   virt/riscv64/
+> > > > >=20
+> > > > > (which is odd because q35 is the x86 'virt'), I'd rather see:
+> > > > >=20
+> > > > >   x86/microvm/
+> > > > >   x86/pc/
+> > > > >   x86/q35/
+> > > > >   aarch64/virt/
+> > > > >   riscv64/virt/
+> > > > >=20
+> > > > > Anyhow just my 2 cents, up to the ACPI maintainers :)
+> > > > >    =20
+> > > > Hi Phil,
+> > > >=20
+> > > > Your suggestion does make sense to me. Let me wait for feedback from
+> > > > ARM/ACPI maintainers. =20
+> > >=20
+> > > I'd prefer  {target}/{machine} hierarchy like Philippe suggests =20
+> >=20
+> > Agreed.
+> >  =20
+> Thanks for the confirmation!. Let me send the updated version soon.
+>=20
+> Moving pc/q35/microvm also under new x86 would need many changes in
+> bios-table-test.c. So, the question is, are you ok to combine x86
+> changes as well in this series or prefer to it later in separate series?
 
-> +summary_info +=3D {'Rust support':      with_rust}
-> +if with_rust and get_option('with_rust_target_triple') !=3D ''
-> +  summary_info +=3D {'Rust target':     get_option('with_rust_target_tri=
-ple')}
-> +endif
-<snip>
+it should be fine ok to include x86 changes here as well.
 
-I wonder if we should display the auto-probed triple here as well, not
-just when its been overridden?
+I'd basically split previous patch on path altering part and a 2nd adding
+ .arch =3D "aarch64"
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+then 3rd doing the same for x86
+
+as for this patch, I'd include all blobs movement here.
+
+>=20
+> Thanks,
+> Sunil
+>=20
+
 
