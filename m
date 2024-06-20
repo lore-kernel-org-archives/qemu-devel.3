@@ -4,103 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91AAEC27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 11:33:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EECEDC41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 12:33:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKG1s-0003o7-7x; Thu, 20 Jun 2024 07:32:36 -0400
+	id 1sKGxc-0007le-OQ; Thu, 20 Jun 2024 08:32:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1sKG1q-0003nm-1H
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 07:32:34 -0400
-Received: from mout.kundenserver.de ([217.72.192.73])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sKGxa-0007lO-9C
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 08:32:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1sKG1o-0006yK-3f
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 07:32:33 -0400
-Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue109 [213.165.67.119]) with ESMTPSA (Nemesis) id
- 1MXY2T-1rrToX3Lod-00N6ZJ; Thu, 20 Jun 2024 13:32:22 +0200
-Message-ID: <8822cee3-a971-4241-850e-14152e861ded@vivier.eu>
-Date: Thu, 20 Jun 2024 13:32:22 +0200
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sKGxY-0000vZ-1W
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 08:32:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718886729;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=z4NxfBZzk8F84z87xpVj4yfGTNAeBnyjJsQZegEKfyM=;
+ b=ea8uCernvc9np5WelhWIM3MuIswLEiBwM093+Bs/vejzzdHyiUOqcvtpbIq+6F4lYdSnKX
+ yJL0cC+hC3aa9r6PIF3SZTAyM7mRpSPSsIbtFajYLHWehaZUsa/sGY21k0FFqdEAxYXVSZ
+ pQIs0yoSBZDsC6v/jNBtfcp7HI7Xf2I=
+Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
+ [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-324-6UcixFPLMuCjqOMkkzBbyg-1; Thu, 20 Jun 2024 08:32:05 -0400
+X-MC-Unique: 6UcixFPLMuCjqOMkkzBbyg-1
+Received: by mail-oi1-f198.google.com with SMTP id
+ 5614622812f47-3d2296b144aso711934b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 05:32:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718886725; x=1719491525;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=z4NxfBZzk8F84z87xpVj4yfGTNAeBnyjJsQZegEKfyM=;
+ b=TanjfAlKXbNWYAmM9TrdsxL6DwLzuQ5YoDa0LV7GwgoZzV/lmp9Ksfk5q2dd1q4qkb
+ tQFCpHkgMtm2XYPzsxbPK4uS1rgJElKa5u5srCUyN086lpr9MRAI9HNPNhoArNP6oy19
+ /e37SN350DTSgUI/WmMsqHVwc+Jpl3Al0Eipha+h/5WJHWw1CbkdKAJA2CEW8F6WUvPK
+ BNciWDd6UEJg8Gb+hoCWZNni3t2TxI4O9OYA6/tZNdGfo9NBvw92lsTNHpiQt4Jw8ZOM
+ Hsgq0YSf+1i1TiRsfYNXDFxTOx1QF/S3FKstSlYXTASvKA7ZonoE+QqJYfG6bDNc9qMk
+ WfHA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUdr5YIPbKePabJa7gaztTr1wDQsFRr50VDZcWQhzV9lngYRZuH9uOYo2LOQMZ4gbOJPyRHo+fDXU2u9rurpDu4Vk7dUFQ=
+X-Gm-Message-State: AOJu0YwVF1hvmccobjmk3DvdxOaRZ0N4xfPYlHLl+wAyeL950WqDwRZF
+ A7DvU3T1XdfLOKQ2nQnPALkn7ESycIQ+IyZJcLnB8t9jiJMkGaVG+7QRZmy4NvblKdMS+I0TEhJ
+ bkns/zFaaH40+TYCa9SevGdz4f8bQJx/aVCGfVEUX+6faPPFwEgC1
+X-Received: by 2002:a05:6808:1923:b0:3d2:21a5:d3bd with SMTP id
+ 5614622812f47-3d51badd2abmr5902489b6e.52.1718886724680; 
+ Thu, 20 Jun 2024 05:32:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdXfpD1OcDLfbWs4+ENDkf1ma4WOEz5l+7JRMYNONLeCPOEL52r4Wgno9reGRZYPSKAtn3Yg==
+X-Received: by 2002:a05:6808:1923:b0:3d2:21a5:d3bd with SMTP id
+ 5614622812f47-3d51badd2abmr5902428b6e.52.1718886723971; 
+ Thu, 20 Jun 2024 05:32:03 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-441f310dcd8sm74195121cf.93.2024.06.20.05.32.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Jun 2024 05:32:03 -0700 (PDT)
+Message-ID: <157f2b6d-5899-41eb-9171-2deabae7108f@redhat.com>
+Date: Thu, 20 Jun 2024 14:31:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] hw/m68k/virt: Add some devices
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
-References: <20240527-m68k-bios-v1-0-6de26552fa77@flygoat.com>
-Content-Language: fr
-From: Laurent Vivier <laurent@vivier.eu>
-Autocrypt: addr=laurent@vivier.eu; keydata=
- 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
-In-Reply-To: <20240527-m68k-bios-v1-0-6de26552fa77@flygoat.com>
+Subject: Re: [PATCH v4 00/15] vfio: VFIO migration support with vIOMMU
+To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Avihai Horon <avihaih@nvidia.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Yi Liu <yi.l.liu@intel.com>,
+ Maciej Szmigiero <maciej.szmigiero@oracle.com>
+References: <20230622214845.3980-1-joao.m.martins@oracle.com>
+ <088a0db6-ae69-4d85-a817-1685d4053d17@redhat.com>
+ <8ca65f18-5a0d-4176-9bc1-f318d4ba4db5@oracle.com>
+ <d6ef8a37-9337-433e-a0bf-ce50af20a734@redhat.com>
+ <d97cd2cc-5cc4-46c1-bbe5-8ab6e97b1bca@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <d97cd2cc-5cc4-46c1-bbe5-8ab6e97b1bca@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:/k0W3/7oV9jGRY7AEHo2S1W9K6oDdvQSfQP4zWi5qq2+WMqh2ci
- NuzwBcgrh9hvC9AlPvSbcZQs3coOs9P6BjD7tryv/r2q67MaqPt7NdvzimD1ehXbDR83XQi
- O8yb52hvtVuGht/jPxGHhq7CayFZ0xswy3gmPDSsXDOtzIffCc7pMpDuH8K+0MV4yFdryA1
- wivbHIsiC+h1R4WQ+IyMg==
-UI-OutboundReport: notjunk:1;M01:P0:1pwOzdJNn/M=;8dgx5DYbfjfCWUJtLxEv4OoE6GR
- pY94WvbJwGf7iUX/5SS/T21TCYWH5wfm9f4ncxhrcWqGP4hRozf7foA9UXIP+xlnFNBoHKqMg
- Mhm+XR94kurw3yBYrQKvL1XwYQoZ+3OqPet9+hslfnzJcZnteYNX4tOAvAXNLnE0sKQbmXSFc
- tBu+x/bRRZp7nmOEK7E/w7Ft3MaBD+Xmh9tqkPs9/wjgIpmApqRnj6t+3LLJLYkUweH8EbnPm
- aTv9xB2PPv/9Ww697V/lo4F5xbLevAr6YCt0seaNWbgjroMoNMCpkovTgOAngwDNHpPs7r0lg
- V8Z3P31kubmqL6toms7YFwxabGP9AUhp54g8DBzY7tKLFfKv2m90xEYCRH+exz4/n5wR2bL8j
- ZQgxIKMDLlX3Hfz68/C613tWSLuwBeD7r/XU98KYIWVcvCUUxnLHsmlqM2nVIY436IpWmRqOh
- 55u0IKFv4OR5XNWaYypXiHm2zyfDPLfKE/eNlauTrPLG0glgv6qxJHT5J2OxsmP3mA/xhogSv
- 4nbhnw3Iz8Z8nORd23amRojF0vhtHmHBm33hljM78+7ouL841UqGLHnG08CZJM/R+mJlEaUg1
- AaLKx4Oj3291h6WUiwj92LxBgdjBAJpFQWrj2Sd5SWXf2lai+gTV/6cSj5OClWgBLy7gFoYlR
- mJEVQTQDWwrJfYHCIjfeQUy/GXo1W3Hy0foGDsSfOhh2J0VggKKfKhA+/xY3VwhAcPATxb0s4
- 0Yj/MzgoUNtlqt2rC/BwS6yiEpVNBGAhl6TrPYI/GSJa648kDwwe5c=
-Received-SPF: pass client-ip=217.72.192.73; envelope-from=laurent@vivier.eu;
- helo=mout.kundenserver.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,39 +118,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Le 27/05/2024 à 19:15, Jiaxun Yang a écrit :
-> Hi all,
-> 
-> This series added some devices that I found lacking when
-> I was trying to port U-Boot to m68k virt machine.
+[ ... ]
 
-I have a branch with a bootloader based on petitboot.
+>> * [v4] vfio: VFIO migration support with vIOMMU
+>>   
+>> https://lore.kernel.org/qemu-devel/20230622214845.3980-1-joao.m.martins@oracle.com/
+>>      Refreshed the patchset on upstream and pushed on vfio-9.1 branch.
+> 
+> /me nods Probably deserves an item on the list too related to this subject of
+> vIOMMU and migration after the vIOMMU series is done:
+> 
+> *
+> https://lore.kernel.org/qemu-devel/20230908120521.50903-1-joao.m.martins@oracle.com/
+> 
+>>    * [RFCv2] vfio/iommufd: IOMMUFD Dirty Tracking
+>>   
+>> https://lore.kernel.org/qemu-devel/20240212135643.5858-1-joao.m.martins@oracle.com/
+>>
+> I plan on still submitting a follow-up targetting 9.1 likely next week with
+> Avihai's comments on top of the vfio-9.1 branch after I sent some dirty tracking
+> fixes in kernel side. Though it is mostly to progress review as I think I am
+> still dependent on Zhenzhong prep series for merging because of this patch:
+> https://lore.kernel.org/all/20240605083043.317831-8-zhenzhong.duan@intel.com/
 
-See https://github.com/vivier/qemu-m68k/commits/m68k-virt/
+This is ready to be pushed.
 
-Thanks
-Laurent
+As soon as I get an ack, a nod, a smoke sign, from the PCI maintainers
+regarding the new PCIIOMMUOps callbacks I will send a PR for:
 
-> 
-> Please review.
-> Thanks
-> 
-> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> ---
-> Jiaxun Yang (4):
->        hw/m68k/virt: Add a XHCI controller
->        hw/m68k/virt: Add fw_cfg controller
->        hw/m68k/virt: Add a pflash controller for BIOS firmware
->        hw/m68k/virt: Supply bootinfo for BIOS
-> 
->   hw/m68k/Kconfig                                   |   3 +
->   hw/m68k/virt.c                                    | 231 ++++++++++++++++------
->   include/standard-headers/asm-m68k/bootinfo-virt.h |   4 +
->   3 files changed, 176 insertions(+), 62 deletions(-)
-> ---
-> base-commit: 60b54b67c63d8f076152e0f7dccf39854dfc6a77
-> change-id: 20240527-m68k-bios-a0a2370181f5
-> 
-> Best regards,
+   https://lore.kernel.org/all/20240522170107.289532-1-clg@redhat.com
+   https://lore.kernel.org/all/20240605083043.317831-1-zhenzhong.duan@intel.com
+   https://lore.kernel.org/all/20240614095402.904691-1-eric.auger@redhat.com
+   https://lore.kernel.org/all/20240617063409.34393-1-clg@redhat.com
+
+Thanks,
+
+C.
+
+
+
 
 
