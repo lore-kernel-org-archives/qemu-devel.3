@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65432C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 20:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3334FC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 21:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKOjp-00080q-Bs; Thu, 20 Jun 2024 16:50:33 -0400
+	id 1sKPDg-0000rP-UG; Thu, 20 Jun 2024 17:21:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sKOjj-00080W-7u
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 16:50:31 -0400
-Received: from fout4-smtp.messagingengine.com ([103.168.172.147])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sKOjh-0001tI-Ca
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 16:50:26 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailfout.nyi.internal (Postfix) with ESMTP id 7C6DA13801FE;
- Thu, 20 Jun 2024 16:50:17 -0400 (EDT)
-Received: from imap44 ([10.202.2.94])
- by compute3.internal (MEProxy); Thu, 20 Jun 2024 16:50:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1718916617;
- x=1719003017; bh=IFQyyZmVFMr8iChSh8C7HyGRGo57KJK6EX6rI6m/Peo=; b=
- TKsNja8xrzmSkKCdkKy4Qy49aCIM5ESjmc+pwwK4ocujgVxtj/F8mYpv1DxNa++0
- zoewXllBx/jMZnmWo6S6xVoBvU/6qwjX/j4q6dWQSrr3jQyBWMQAhAUaY22vmjXr
- 0xaHDkflp0a8yd5M0XOXBOZWh2Jb4/cDDJO/bmtIJ0UsXpxZjMfUs669ArS9h+et
- HIIFfuTuZs2zSROyMYBXLA1tIG/TNqOVNzCN/eu0VpxJaO/g0zcyPMmTLK3ljgLy
- oVIvyhVuCt4IROHhpMFzaoELZzaHZlq72i8/Ju8IFvfmUQBtAg6axLWo7MuSW+Mc
- 5Vj2nuqUzthmGZ7Ytounhw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1718916617; x=
- 1719003017; bh=IFQyyZmVFMr8iChSh8C7HyGRGo57KJK6EX6rI6m/Peo=; b=A
- ZJi8RXtlwst6LIscYeClICeyU6hPKI069F+ESfgy4kzC1H6PpOcI4u2hlACU/uS1
- TtooUsXRgfPQn9yBxWl6RJAnZcFYiv26kh76KyDXcTG/Ma8QmtXQZPi6SgxTa+UG
- PsmWKiYSinD5cHNmhZUy5e4srGUrSHMJ1ZTtXi5Z3nYrNZp0thObvRWi//+/4C3P
- xpHdrrnM3CBSKWz968D3FztZc3LS0k+VR1IqR+PG3wfy+WeVB2wbOmu/3LoYsq4F
- EPRmai/jJba3gIjlbdBO6BPH98gpYcSWwkopQiAvJvd1T1uAkvAR4EllZx3zOBSF
- of8UTzOVj63OPDch1K/HQ==
-X-ME-Sender: <xms:CJZ0ZiREt7tMJS-5NlGj754tzMah6ihhAziEpuVSj8HL_GCZbia4Dw>
- <xme:CJZ0Znx3ZuXix_OiFIruwebo6IDqjfY_uOPksPiPyz7fq04kxc3O-fCjvHyjD1BFT
- Xc0prX3EEXYaLRq5Yw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeefvddgudehiecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enucfjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedf
- lfhirgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtg
- homheqnecuggftrfgrthhtvghrnhephfdtkeefgeelkeeggfduhfegudelheefgfeggffh
- fefhffdtgfegvdfhtdfhtedvnecuffhomhgrihhnpehiohgtshhrrdhmrhenucevlhhush
- htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigr
- nhhgsehflhihghhorghtrdgtohhm
-X-ME-Proxy: <xmx:CJZ0Zv2fqmErHZCpPePBFmC_hOG-nyn8sSlACGJpxUCiOpu5IQrFCg>
- <xmx:CJZ0ZuDYggmk6eIY_nkgJ6MfSRAo8jwKzZO9RMraT1tctPXYWzyb9A>
- <xmx:CJZ0ZrhbUwZQEEya0KYU09ws57A-5VOgy5cqA1cRe3ot96cRKPhh8A>
- <xmx:CJZ0Zqr5azSzLxvVgIe63ZFK4-hs-zBeBPZNGYaGg3gxnBXf_oMxYQ>
- <xmx:CZZ0ZusnGd2Sq7UzBGHivwu55Gx_g5n2wKt6gRDr7q6MeAUf6yE_1HVX>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id AE1D236A0075; Thu, 20 Jun 2024 16:50:16 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-522-ga39cca1d5-fm-20240610.002-ga39cca1d
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKPDb-0000qp-My
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 17:21:20 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKPDZ-0007FI-VF
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 17:21:19 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id EE1D51F8B4;
+ Thu, 20 Jun 2024 21:21:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718918476; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=aVaFH4XdMgxk7t/Mo3rThFB3GkHGVkhOTNlHefWZn+w=;
+ b=ZqOUai+lX17f9h2zIMyeaJuo3Crgg71LCaHeTcZ3Qyq1K76mUbjZyPmOv3DwEE9++WHiGq
+ FrTiyUWDzSOnjnDHvcpGtSFedb1weNgSbiWwkpih77NDkjteYBuS5lF9Hycwl/3v3LgFLk
+ gWY6JCP6Jju5Pq0j1Pley0FnlkwCJFI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718918476;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=aVaFH4XdMgxk7t/Mo3rThFB3GkHGVkhOTNlHefWZn+w=;
+ b=M6ofqWiyE1EKyIXcJ4aFyv8o9QZS1zXdFGzy7ELQf+xqlmO9i0IpV6/sb620gTTjsB59D2
+ oUTJKr4OgmuH+tBg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1718918474; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=aVaFH4XdMgxk7t/Mo3rThFB3GkHGVkhOTNlHefWZn+w=;
+ b=v0y6JuHlite1lx+J5R6WUzo7DdAHhRYb5iawws/wudCabLYVUUfjnmo/UzipIb9l3ILOc4
+ 1KP7koqcZ5/U8jR1qm8U3cO0Lkn0gsO9pDBR4MZ0hR+X9Prjiha2xln05wh8z6ylAZ+zbg
+ nClhhPfy3S/8+dMVNtiIhYLhUp830wU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1718918474;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=aVaFH4XdMgxk7t/Mo3rThFB3GkHGVkhOTNlHefWZn+w=;
+ b=JEDj0o/T3aUcortx5PYaem2gNIOdtbQ+b3suKpmhd8hcYXSGkjF7vfJwxqqKm3JsrQQsuu
+ hM5GJhrsUcFB8ADw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C6C1F1369F;
+ Thu, 20 Jun 2024 21:21:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id WtkXI0mddGabYAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 20 Jun 2024 21:21:13 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
+Subject: [RFC PATCH 0/7] migration/multifd: Introduce storage slots
+Date: Thu, 20 Jun 2024 18:21:04 -0300
+Message-Id: <20240620212111.29319-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-Message-Id: <752417ad-ab72-4fed-8d1f-af41f15bc225@app.fastmail.com>
-In-Reply-To: <d1fb28b8-15a4-401f-933b-2388af390bd8@linaro.org>
-References: <20240618160039.36108-1-philmd@linaro.org>
- <20240618160039.36108-66-philmd@linaro.org>
- <d1fb28b8-15a4-401f-933b-2388af390bd8@linaro.org>
-Date: Thu, 20 Jun 2024 21:49:56 +0100
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "QEMU devel" <qemu-devel@nongnu.org>
-Cc: "Song Gao" <gaosong@loongson.cn>
-Subject: Re: [PULL 65/76] hw/mips/loongson3_virt: Wire up loongson_ipi device
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=103.168.172.147;
- envelope-from=jiaxun.yang@flygoat.com; helo=fout4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.998];
+ MIME_GOOD(-0.10)[text/plain]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,46 +109,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi folks,
+
+First of all, apologies for the roughness of the series. I'm off for
+the next couple of weeks and wanted to put something together early
+for your consideration.
+
+This series is a refactoring (based on an earlier, off-list
+attempt[0]), aimed to remove the usage of the MultiFDPages_t type in
+the multifd core. If we're going to add support for more data types to
+multifd, we first need to clean that up.
+
+This time around this work was prompted by Maciej's series[1]. I see
+you're having to add a bunch of is_device_state checks to work around
+the rigidity of the code.
+
+Aside from the VFIO work, there is also the intent (coming back from
+Juan's ideas) to make multifd the default code path for migration,
+which will have to include the vmstate migration and anything else we
+put on the stream via QEMUFile.
+
+I have long since been bothered by having 'pages' sprinkled all over
+the code, so I might be coming at this with a bit of a narrow focus,
+but I believe in order to support more types of payloads in multifd,
+we need to first allow the scheduling at multifd_send_pages() to be
+independent of MultiFDPages_t. So here it is. Let me know what you
+think.
+
+(as I said, I'll be off for a couple of weeks, so feel free to
+incorporate any of this code if it's useful. Or to ignore it
+completely).
+
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/1340992028
+
+0- https://github.com/farosas/qemu/commits/multifd-packet-cleanups/
+1- https://lore.kernel.org/r/cover.1718717584.git.maciej.szmigiero@oracle.com
+
+Fabiano Rosas (7):
+  migration/multifd: Reduce access to p->pages
+  migration/multifd: Pass in MultiFDPages_t to file_write_ramblock_iov
+  migration/multifd: Replace p->pages with an opaque pointer
+  migration/multifd: Move pages accounting into
+    multifd_send_zero_page_detect()
+  migration/multifd: Isolate ram pages packet data
+  migration/multifd: Move payload storage out of the channel parameters
+  migration/multifd: Hide multifd slots implementation
+
+ migration/file.c              |   3 +-
+ migration/file.h              |   2 +-
+ migration/multifd-qpl.c       |   8 +-
+ migration/multifd-uadk.c      |   9 +-
+ migration/multifd-zero-page.c |   6 +-
+ migration/multifd-zlib.c      |   4 +-
+ migration/multifd-zstd.c      |   4 +-
+ migration/multifd.c           | 263 ++++++++++++++++++++++++----------
+ migration/multifd.h           |  28 +++-
+ migration/ram.c               |   1 +
+ 10 files changed, 232 insertions(+), 96 deletions(-)
 
 
-=E5=9C=A82024=E5=B9=B46=E6=9C=8820=E6=97=A5=E5=85=AD=E6=9C=88 =E4=B8=8B=E5=
-=8D=888:50=EF=BC=8CPhilippe Mathieu-Daud=C3=A9=E5=86=99=E9=81=93=EF=BC=9A
-[...]
-> Do you mind posting a patch fixing it?
+base-commit: 79e6ec66ba1067a135394a330fec14b50cf49534
+-- 
+2.35.3
 
-I'll prepare a series tomorrow with your comments on this patch before.
-
-Thanks
-- Jiaxun
->
->> +            hwaddr base =3D ((hwaddr)node << 44) + virt_memmap[VIRT_=
-IPI].base;
->> +            base +=3D core * 0x100;
->> +            qdev_connect_gpio_out(ipi, i, cpu->env.irq[6]);
->> +            sysbus_mmio_map(SYS_BUS_DEVICE(ipi), i + 2, base);
->> +        }
->> +
->> +        if (ase_lcsr_available(&MIPS_CPU(cpu)->env)) {
->> +            MemoryRegion *core_iocsr =3D g_new(MemoryRegion, 1);
->> +            g_autofree char *name =3D g_strdup_printf("core%d_iocsr"=
-, i);
->> +            memory_region_init_alias(core_iocsr, OBJECT(cpu), name,
->> +                                     iocsr, 0, UINT32_MAX);
->> +            memory_region_add_subregion(&MIPS_CPU(cpu)->env.iocsr.mr,
->> +                                        0, core_iocsr);
->> +        }
->> +
->> +        if (node > 0) {
->>               continue; /* Only node-0 can be connected to LIOINTC */
->>           }
->>  =20
->>           for (ip =3D 0; ip < 4 ; ip++) {
->> -            int pin =3D i * 4 + ip;
->> +            int pin =3D core * LOONGSON3_CORE_PER_NODE + ip;
->>               sysbus_connect_irq(SYS_BUS_DEVICE(liointc),
->>                                  pin, cpu->env.irq[ip + 2]);
->>           }
-
---=20
-- Jiaxun
 
