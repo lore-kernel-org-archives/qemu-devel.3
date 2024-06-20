@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE5F0C2BA1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 15:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7CF7C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 15:41:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKJtH-0000QM-At; Thu, 20 Jun 2024 11:39:59 -0400
+	id 1sKJuD-00016U-0f; Thu, 20 Jun 2024 11:40:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sKJtF-0000PV-Mw
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:39:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sKJuA-00016H-Vv
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:40:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sKJtA-0002pY-Ll
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:39:56 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sKJu8-0003Gu-Qi
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:40:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718897991;
+ s=mimecast20190719; t=1718898051;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=cbOqVbTycNjZyeGv5WvJWOarMSHPZdrqMQjU1gXziEU=;
- b=ivI0ruci4OgbUXMu29YEuG21yzsup3VAy/VbpVDgr+XD9hzaUwffs+ES+mfmdHyTgQRd6t
- aL2rJICZkI7Izp6TD0ec1h46ogKxmi9jHh74qYTdWDDeFLHQs/QiVvoh2QwpvFHU6RVHrJ
- UvDxOPdzmj/llC+/M63xvjxaNK/2ToM=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Cdcb70U6lnMBVjxurnAdJ0azwCO7/L+Et6M/IpgzyBw=;
+ b=SUyw2mUWwxgMr89dkRbzhpWQkvG8e1Hip3Jghs6wAJpZvuVGPgbXiZJmldK9wUrsJRltVW
+ ZTQtppUGeLh79dR7j5yF8yhxK9QpQv1Y1xOjpMlWgJJiAgJvc9QvrVcLk6Pchz0rLSdkHX
+ gx4desnrPzCxqwjkqXh+9iinkhQPaw4=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-398-WlA0PsYRP16pAH7LKhx1Rw-1; Thu, 20 Jun 2024 11:39:49 -0400
-X-MC-Unique: WlA0PsYRP16pAH7LKhx1Rw-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2c7a6ce23c2so1156339a91.3
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 08:39:49 -0700 (PDT)
+ us-mta-637-6wKCcke_PoO94Zpr6yo10Q-1; Thu, 20 Jun 2024 11:40:50 -0400
+X-MC-Unique: 6wKCcke_PoO94Zpr6yo10Q-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2c79f32200aso1168537a91.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 08:40:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718897988; x=1719502788;
+ d=1e100.net; s=20230601; t=1718898049; x=1719502849;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=cbOqVbTycNjZyeGv5WvJWOarMSHPZdrqMQjU1gXziEU=;
- b=tZxQM/PIbWR53ooNzyEi0HDWYqXjNxzU/yI5oUmOeLPpks4f2ytdniUboN0gvXZHuP
- dYAzvMUGMJu6FlM3T0PB0F7vIY4LlcWnUbScHWIDe3oQMxKSbKnpnBh6FEKrPfQOdYKG
- Se3xBayX+jV2+4PXlutznqOGjoJaMb18aBYon9CKe+1sfPvgmzh3zc61D+X04p1H5gqp
- lqxuouCFlpLhuKq/y/m6Tl3ZljZgSKCS0mNV5lEzKJCzxxSKXcIpbUFquAC5mM04V3w+
- gi9WTfaBEWrk3PGKNSRXR6EMGuqwoiVMhYnwuqt2I6oIpmxHmUcCaV2EF9LaWndFznjJ
- mUrw==
-X-Gm-Message-State: AOJu0YwACdgvds1zbvsCeQKWRnWnJrSwV2UNY6YyNaq9wtLmtTAo1EUx
- S0xdfxMJ30QhowwnKXA5w0dMeuzCApYZ9gdYjZK+RAjjFM7zgv9FB+XDyl53tTbXn1myi04FNUP
- gncBTTmosEtTf3EVglixnfvD/Te3qUbywWgtNh17/B2HnmuH3wkVoBqXf6DR4DvCg0KqAXM31Hz
- fZumULAwt9OcEtlREeto8tpOSe9mw=
-X-Received: by 2002:a17:90a:1281:b0:2c8:7ea:8f45 with SMTP id
- 98e67ed59e1d1-2c807ea8fc3mr913455a91.35.1718897988466; 
- Thu, 20 Jun 2024 08:39:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzpz1FluVltnFauwLqKzfOCxunJJuZBCTH5RMxfFRkgve9DRJkXjtDA8oDJPaDRmWX9zhjL5EqaJQcNClWBpM=
-X-Received: by 2002:a17:90a:1281:b0:2c8:7ea:8f45 with SMTP id
- 98e67ed59e1d1-2c807ea8fc3mr913408a91.35.1718897987950; Thu, 20 Jun 2024
- 08:39:47 -0700 (PDT)
+ bh=Cdcb70U6lnMBVjxurnAdJ0azwCO7/L+Et6M/IpgzyBw=;
+ b=TpZXPTcLPsUTzoUxoJY1zJIfCK/WubcqF58+U2+27q+XM2NsWJIYg1GPy12LL073+S
+ VTpcagGImKf9rh6d7H7Qu73V5DubB5reH0bQ/mFYQnwBYTtM8duHNuaJoaqStsMkNPz6
+ 3L0KKK2I6rEk5bdCR2dasaHvlSMOF/0LSuBsoLRUMM3mjYSizIXlp3zLuSLY5/l1IZsn
+ aQLw4DP5p6WBAGNtA/5YhciqtrjKAEIHGojuxvJwZ+Vvf5307vaoHWTngoSN+n8W7u+M
+ VrpZYfwg/wpmij6Wwe2myCbBB0Q7YO6po70ebrAZgyNVAVLXBnsyoOXndkXGK9XKdQCV
+ O3NQ==
+X-Gm-Message-State: AOJu0YxkJ/KremYwkvcRxgATaeFibcMY0g3F3J+l4mq6cCkPSlozSMPG
+ lF2nVthOr13Foxkmsl9m/O7tL4z8cDsOHouD8yNbAgPx8/G82acLtXmfOB3WUYS1VRrzSaDp2lV
+ rBmvtfjwBoAPlUVSN9/bq0PeJRZeU4/QR9y19/CFECURhEN1XfJzIJ9Bf5iBPAhF1X8UZ2fiTEg
+ QuQHyEm5MlItIfCOuX4B76Chl+wfQ=
+X-Received: by 2002:a17:90a:3044:b0:2c4:fc64:6b81 with SMTP id
+ 98e67ed59e1d1-2c7b5d52cb7mr5938536a91.31.1718898049015; 
+ Thu, 20 Jun 2024 08:40:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFvk0/hMVhrTULLFjtB29bDDZLkMfvzIanmwUmc+p3GVEuqUqijkrFBHtsyR3sHtjrYMtMSHKwmZFKL41urKcA=
+X-Received: by 2002:a17:90a:3044:b0:2c4:fc64:6b81 with SMTP id
+ 98e67ed59e1d1-2c7b5d52cb7mr5938507a91.31.1718898048666; Thu, 20 Jun 2024
+ 08:40:48 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240619003012.1753577-1-jsnow@redhat.com>
  <20240619003012.1753577-10-jsnow@redhat.com>
- <87wmmlyu64.fsf@pond.sub.org>
-In-Reply-To: <87wmmlyu64.fsf@pond.sub.org>
+ <87zfrhxeqt.fsf@pond.sub.org>
+In-Reply-To: <87zfrhxeqt.fsf@pond.sub.org>
 From: John Snow <jsnow@redhat.com>
-Date: Thu, 20 Jun 2024 11:39:35 -0400
-Message-ID: <CAFn=p-aF1_1dvEyihagePrgRF_d7=JDXLUttyJzcxbo355xoCQ@mail.gmail.com>
+Date: Thu, 20 Jun 2024 11:40:36 -0400
+Message-ID: <CAFn=p-Y9k++Gj1BJTjHBine85EspcjsmF5B_hXi3RM=fGeParQ@mail.gmail.com>
 Subject: Re: [PATCH 09/13] qapi: convert "Note" sections to plain rST
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
@@ -88,8 +88,8 @@ Cc: qemu-devel <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>,
  Qemu-block <qemu-block@nongnu.org>, Jiri Pirko <jiri@resnulli.us>, 
  Alex Williamson <alex.williamson@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
  Eric Blake <eblake@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000fa2e3d061b541f93"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: multipart/alternative; boundary="00000000000098a3e5061b542397"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -114,11 +114,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000fa2e3d061b541f93
+--00000000000098a3e5061b542397
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 19, 2024, 8:49=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
+On Wed, Jun 19, 2024, 9:07=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
  wrote:
 
 > John Snow <jsnow@redhat.com> writes:
@@ -140,9 +140,6 @@ d
 .
 > >
 > > ... Update the QAPI parser to prohibit "Note" sections while suggesting
->
-> Scratch "... ..." and downcase "Update"?
->
 > > a new syntax. The exact formatting to use is a matter of taste, but a
 > > good candidate is simply:
 > >
@@ -194,359 +191,105 @@ d
 >
 > [...]
 >
-> > diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> > index b3de1fb6b3a..57598331c5c 100644
-> > --- a/qga/qapi-schema.json
-> > +++ b/qga/qapi-schema.json
-> > @@ -422,8 +422,9 @@
-> >  # Returns: GuestFsfreezeStatus ("thawed", "frozen", etc., as defined
-> >  #     below)
+> > diff --git a/qapi/control.json b/qapi/control.json
+> > index 10c906fa0e7..59d5e00c151 100644
+> > --- a/qapi/control.json
+> > +++ b/qapi/control.json
+> > @@ -22,14 +22,13 @@
+> >  #          "arguments": { "enable": [ "oob" ] } }
+> >  #     <- { "return": {} }
 > >  #
-> > -# Note: This may fail to properly report the current state as a result
-> > -#     of some other guest processes having issued an fs freeze/thaw.
-> > +# .. note:: This may fail to properly report the current state as a
-> > +#    result of some other guest processes having issued an fs
-> > +#    freeze/thaw.
+> > -# Notes: This command is valid exactly when first connecting: it must
+> > -#     be issued before any other command will be accepted, and will
+> > -#     fail once the monitor is accepting other commands.  (see qemu
+> > -#     docs/interop/qmp-spec.rst)
+> > +# .. note:: This command is valid exactly when first connecting: it mu=
+st
+> > +#    be issued before any other command will be accepted, and will fai=
+l
+> > +#    once the monitor is accepting other commands.  (see qemu
+> > +#    docs/interop/qmp-spec.rst)
 > >  #
-> >  # Since: 0.15.0
+> > -#     The QMP client needs to explicitly enable QMP capabilities,
+> > -#     otherwise all the QMP capabilities will be turned off by
+> > -#     default.
+> > +# .. note:: The QMP client needs to explicitly enable QMP capabilities=
+,
+> > +#    otherwise all the QMP capabilities will be turned off by default.
+> >  #
+> >  # Since: 0.13
 > >  ##
-> > @@ -443,9 +444,9 @@
+> > @@ -150,8 +149,8 @@
+> >  #          ]
+> >  #        }
 > >  #
-> >  # Returns: Number of file systems currently frozen.
-> >  #
-> > -# Note: On Windows, the command is implemented with the help of a
-> > -#     Volume Shadow-copy Service DLL helper.  The frozen state is
-> > -#     limited for up to 10 seconds by VSS.
-> > +# .. note:: On Windows, the command is implemented with the help of a
-> > +#    Volume Shadow-copy Service DLL helper.  The frozen state is limit=
-ed
-> > +#    for up to 10 seconds by VSS.
-> >  #
-> >  # Since: 0.15.0
+> > -# Note: This example has been shortened as the real response is too
+> > -#     long.
+> > +# This example has been shortened as the real response is too long.
+> > +#
+>
+> Here's one way to transform the elision note, ...
+>
 > >  ##
-> > @@ -479,10 +480,10 @@
+> >  { 'command': 'query-commands', 'returns': ['CommandInfo'],
+> >    'allow-preconfig': true }
+>
+> [...]
+>
+> > diff --git a/qapi/pci.json b/qapi/pci.json
+> > index 08bf6958634..f51159a2c4c 100644
+> > --- a/qapi/pci.json
+> > +++ b/qapi/pci.json
+> > @@ -146,8 +146,8 @@
 > >  #
-> >  # Returns: Number of file systems thawed by this call
+> >  # @regions: a list of the PCI I/O regions associated with the device
 > >  #
-> > -# Note: if return value does not match the previous call to
-> > -#     guest-fsfreeze-freeze, this likely means some freezable
-> > -#     filesystems were unfrozen before this call, and that the
-> > -#     filesystem state may have changed before issuing this command.
-> > +# .. note:: If return value does not match the previous call to
-> > +#    guest-fsfreeze-freeze, this likely means some freezable filesyste=
-ms
-> > +#    were unfrozen before this call, and that the filesystem state may
-> > +#    have changed before issuing this command.
+> > -# Notes: the contents of @class_info.desc are not stable and should
+> > -#     only be treated as informational.
+> > +# .. note:: The contents of @class_info.desc are not stable and should
+> > +#    only be treated as informational.
 > >  #
-> >  # Since: 0.15.0
+> >  # Since: 0.14
 > >  ##
-> > @@ -560,8 +561,8 @@
-> >  # Errors:
-> >  #     - If suspend to disk is not supported, Unsupported
+> > @@ -311,7 +311,8 @@
+> >  #           ]
+> >  #        }
 > >  #
-> > -# Notes: It's strongly recommended to issue the guest-sync command
-> > -#     before sending commands when the guest resumes
-> > +# .. note:: It's strongly recommended to issue the guest-sync command
-> > +#    before sending commands when the guest resumes.
-> >  #
-> >  # Since: 1.1
+> > -# Note: This example has been shortened as the real response is too
+> > +#     Note: This example has been shortened as the real response is to=
+o
+> >  #     long.
+> > +#
+>
+> ... and here's another way.  Same way would be better, wouldn't it?
+> They actually are after PATCH 13:
+>
+>   -#     Note: This example has been shortened as the real response is to=
+o
+>   -#     long.
+>   +# This example has been shortened as the real response is too long.
+>
+> Move that hunk here, please.
+>
 > >  ##
-> > @@ -596,8 +597,8 @@
-> >  # Errors:
-> >  #     - If suspend to ram is not supported, Unsupported
-> >  #
-> > -# Notes: It's strongly recommended to issue the guest-sync command
-> > -#     before sending commands when the guest resumes
-> > +# .. note:: It's strongly recommended to issue the guest-sync command
-> > +#    before sending commands when the guest resumes.
-> >  #
-> >  # Since: 1.1
-> >  ##
-> > @@ -631,8 +632,8 @@
-> >  # Errors:
-> >  #     - If hybrid suspend is not supported, Unsupported
-> >  #
-> > -# Notes: It's strongly recommended to issue the guest-sync command
-> > -#     before sending commands when the guest resumes
-> > +# .. note:: It's strongly recommended to issue the guest-sync command
-> > +#    before sending commands when the guest resumes.
-> >  #
-> >  # Since: 1.1
-> >  ##
-> > @@ -1461,16 +1462,15 @@
-> >  #     * POSIX: as defined by os-release(5)
-> >  #     * Windows: contains string "server" or "client"
-> >  #
-> > -# Notes: On POSIX systems the fields @id, @name, @pretty-name,
-> > -#     @version, @version-id, @variant and @variant-id follow the
-> > -#     definition specified in os-release(5). Refer to the manual page
-> > -#     for exact description of the fields.  Their values are taken
-> > -#     from the os-release file.  If the file is not present in the
-> > -#     system, or the values are not present in the file, the fields
-> > -#     are not included.
-> > +# .. note:: On POSIX systems the fields @id, @name, @pretty-name,
-> > +#    @version, @version-id, @variant and @variant-id follow the
-> > +#    definition specified in os-release(5). Refer to the manual page f=
-or
-> > +#    exact description of the fields.  Their values are taken from the
-> > +#    os-release file.  If the file is not present in the system, or th=
-e
-> > +#    values are not present in the file, the fields are not included.
-> >  #
-> > -#     On Windows the values are filled from information gathered from
-> > -#     the system.
-> > +#    On Windows the values are filled from information gathered from
-> > +#    the system.
+> >  { 'command': 'query-pci', 'returns': ['PciInfo'] }
 >
-> Please don't change the indentation here.  I get the same output with
->
->   @@ -1461,7 +1462,7 @@
->    #     * POSIX: as defined by os-release(5)
->    #     * Windows: contains string "server" or "client"
->    #
->   -# Notes: On POSIX systems the fields @id, @name, @pretty-name,
->   +# .. note:: On POSIX systems the fields @id, @name, @pretty-name,
->    #     @version, @version-id, @variant and @variant-id follow the
->    #     definition specified in os-release(5). Refer to the manual page
->    #     for exact description of the fields.  Their values are taken
->
->
-> >  #
-> >  # Since: 2.10
-> >  ##
-> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-> > index dfd6a6c5bee..53b06a94508 100644
-> > --- a/scripts/qapi/parser.py
-> > +++ b/scripts/qapi/parser.py
-> > @@ -548,6 +548,21 @@ def get_doc(self) -> 'QAPIDoc':
-> >                          r'(Returns|Errors|Since|Notes?|Examples?|TODO)=
-:
-> *',
-> >                          line):
-> >                      # tagged section
-> > +
-> > +                    # TODO: Remove this error sometime in 2025 or so
-> > +                    # after we've fully transitioned to the new qapido=
-c
-> > +                    # generator.
-> > +
-> > +                    # See commit message for more markup suggestions
-> O:-)
-> > +                    if 'Note' in match.group(1):
-> > +                        emsg =3D (
-> > +                            f"The '{match.group(1)}' section is no
-> longer "
-> > +                            "supported. Please use rST's '.. note::' o=
-r
-> "
-> > +                            "'.. admonition:: notes' directives, or
-> another "
-> > +                            "suitable admonition instead."
-> > +                        )
-> > +                        raise QAPIParseError(self, emsg)
-> > +
-> >                      doc.new_tagged_section(self.info, match.group(1))
-> >                      text =3D line[match.end():]
-> >                      if text:
-> > diff --git a/tests/qapi-schema/doc-empty-section.err
-> b/tests/qapi-schema/doc-empty-section.err
-> > index 5f03a6d733f..711a0d629c2 100644
-> > --- a/tests/qapi-schema/doc-empty-section.err
-> > +++ b/tests/qapi-schema/doc-empty-section.err
-> > @@ -1 +1 @@
-> > -doc-empty-section.json:6: text required after 'Note:'
-> > +doc-empty-section.json:6: text required after 'Errors:'
-> > diff --git a/tests/qapi-schema/doc-empty-section.json
-> b/tests/qapi-schema/doc-empty-section.json
-> > index f3384e9a3bb..f179d3eff6d 100644
-> > --- a/tests/qapi-schema/doc-empty-section.json
-> > +++ b/tests/qapi-schema/doc-empty-section.json
-> > @@ -3,6 +3,6 @@
-> >  ##
-> >  # @foo:
-> >  #
-> > -# Note:
-> > +# Errors:
-> >  ##
-> >  { 'command': 'foo', 'data': {'a': 'int'} }
-> > diff --git a/tests/qapi-schema/doc-good.json
-> b/tests/qapi-schema/doc-good.json
-> > index 8b39eb946af..4b338cc0186 100644
-> > --- a/tests/qapi-schema/doc-good.json
-> > +++ b/tests/qapi-schema/doc-good.json
-> > @@ -29,7 +29,7 @@
-> >  # - Second list
-> >  #   Note: still in list
-> >  #
-> > -# Note: not in list
-> > +# .. note:: not in list
->
-> Uh...  see [*] below.
->
-> >  #
-> >  # 1. Third list
-> >  #    is numbered
-> > @@ -157,7 +157,7 @@
-> >  # @cmd-feat1: a feature
-> >  # @cmd-feat2: another feature
-> >  #
-> > -# Note: @arg3 is undocumented
-> > +# .. note:: @arg3 is undocumented
-> >  #
-> >  # Returns: @Object
-> >  #
-> > @@ -165,7 +165,7 @@
-> >  #
-> >  # TODO: frobnicate
-> >  #
-> > -# Notes:
-> > +# .. admonition:: Notes
-> >  #
-> >  #  - Lorem ipsum dolor sit amet
-> >  #  - Ut enim ad minim veniam
-> > diff --git a/tests/qapi-schema/doc-good.out
-> b/tests/qapi-schema/doc-good.out
-> > index 435f6e6d768..2c9b4e419cb 100644
-> > --- a/tests/qapi-schema/doc-good.out
-> > +++ b/tests/qapi-schema/doc-good.out
-> > @@ -76,7 +76,7 @@ Not in list
-> >  - Second list
-> >    Note: still in list
-> >
-> > -Note: not in list
->
-> [*] This demonstrates the "Note: ..." is *not* recognized as a "Note"
-> section before the patch (compare to the change we get for recognized
-> sections below).
->
-> Obscure fact: the doc parser recognizes tagged sections *only* in
-> definition documentation.  Arguably a misfeature.
->
-> Your series makes the misfeature even more obscure, because afterwards,
-> the only tagged section left that could make sense in a free-form doc
-> comment is "TODO".  Let's not worry about the misfeature now.
+> [...]
 >
 
-Right, it's gonna go away or be heavily reduced. A fish for another fry.
+Apologies, I meant to do this but forgot there were two cases and only
+nabbed one.
 
-
-> Two sensible solutions:
->
-> 1. Since the patch converts tagged sections, and this isn't, don't touch
-> it.  If you feel you want to mention this in the commit message, go
-> ahead.
->
-
-Oh, uh. Alright. I wonder why I changed it then. I thought I was playing
-error message whackamole with this one, but maybe I did do a regexp at some
-point.
-
-I'll leave it be if I can. If I can't, for some reason, then ...
-
-
-> 2. Touch it anyway.  Do mention it in the commit message then.
->
-
-... This, with why I couldn't leave it be.
-
-
-> > +.. note:: not in list
-> >
-> >  1. Third list
-> >     is numbered
-> > @@ -169,15 +169,17 @@ description starts on the same line
-> >  a feature
-> >      feature=3Dcmd-feat2
-> >  another feature
-> > -    section=3DNote
-> > -@arg3 is undocumented
-> > +    section=3DNone
-> > +.. note:: @arg3 is undocumented
-> >      section=3DReturns
-> >  @Object
-> >      section=3DErrors
-> >  some
-> >      section=3DTODO
-> >  frobnicate
-> > -    section=3DNotes
-> > +    section=3DNone
-> > +.. admonition:: Notes
-> > +
-> >   - Lorem ipsum dolor sit amet
-> >   - Ut enim ad minim veniam
-> >
-> > diff --git a/tests/qapi-schema/doc-good.txt
-> b/tests/qapi-schema/doc-good.txt
-> > index 847db70412d..b89f35d5476 100644
-> > --- a/tests/qapi-schema/doc-good.txt
-> > +++ b/tests/qapi-schema/doc-good.txt
-> > @@ -17,7 +17,9 @@ Not in list
-> >
-> >  * Second list Note: still in list
-> >
-> > -Note: not in list
-> > +Note:
-> > +
-> > +  not in list
-> >
-> >  1. Third list is numbered
-> >
-> > @@ -193,11 +195,9 @@ Features
-> >  "cmd-feat2"
-> >     another feature
-> >
-> > +Note:
-> >
-> > -Note
-> > -~~~~
-> > -
-> > -"arg3" is undocumented
-> > +  "arg3" is undocumented
-> >
-> >
-> >  Returns
-> > @@ -211,9 +211,7 @@ Errors
-> >
-> >  some
-> >
-> > -
-> > -Notes
-> > -~~~~~
-> > +Notes:
-> >
-> >  * Lorem ipsum dolor sit amet
-> >
-> > diff --git a/tests/qapi-schema/doc-interleaved-section.json
-> b/tests/qapi-schema/doc-interleaved-section.json
-> > index adb29e98daa..b26bc0bbb79 100644
-> > --- a/tests/qapi-schema/doc-interleaved-section.json
-> > +++ b/tests/qapi-schema/doc-interleaved-section.json
-> > @@ -10,7 +10,7 @@
-> >  #
-> >  #           bao
-> >  #
-> > -# Note: a section.
-> > +# Returns: a section.
-> >  #
-> >  # @foobar: catch this
-> >  #
->
-> "Returns:" is only valid for commands, and this is a struct.  Let's use
-> "TODO:" instead.
->
-
-Weird that it didn't prohibit it. Bug?
-
---js
+Fixing.
 
 >
 
---000000000000fa2e3d061b541f93
+--00000000000098a3e5061b542397
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Wed, Jun 19, 2024, 8:49=E2=80=AFAM Markus Armbruste=
+class=3D"gmail_attr">On Wed, Jun 19, 2024, 9:07=E2=80=AFAM Markus Armbruste=
 r &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrote:=
 <br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bord=
 er-left:1px #ccc solid;padding-left:1ex">John Snow &lt;<a href=3D"mailto:js=
@@ -574,9 +317,6 @@ nd<br>
 &gt;<br>
 &gt; ... Update the QAPI parser to prohibit &quot;Note&quot; sections while=
  suggesting<br>
-<br>
-Scratch &quot;... ...&quot; and downcase &quot;Update&quot;?<br>
-<br>
 &gt; a new syntax. The exact formatting to use is a matter of taste, but a<=
 br>
 &gt; good candidate is simply:<br>
@@ -635,411 +375,115 @@ arget=3D"_blank" rel=3D"noreferrer">stefanha@redhat.com</a>&gt; [for block*=
 <br>
 [...]<br>
 <br>
-&gt; diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json<br>
-&gt; index b3de1fb6b3a..57598331c5c 100644<br>
-&gt; --- a/qga/qapi-schema.json<br>
-&gt; +++ b/qga/qapi-schema.json<br>
-&gt; @@ -422,8 +422,9 @@<br>
-&gt;=C2=A0 # Returns: GuestFsfreezeStatus (&quot;thawed&quot;, &quot;frozen=
-&quot;, etc., as defined<br>
-&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0below)<br>
+&gt; diff --git a/qapi/control.json b/qapi/control.json<br>
+&gt; index 10c906fa0e7..59d5e00c151 100644<br>
+&gt; --- a/qapi/control.json<br>
+&gt; +++ b/qapi/control.json<br>
+&gt; @@ -22,14 +22,13 @@<br>
+&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;arguments&quot;: { &qu=
+ot;enable&quot;: [ &quot;oob&quot; ] } }<br>
+&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0&lt;- { &quot;return&quot;: {} }<br>
 &gt;=C2=A0 #<br>
-&gt; -# Note: This may fail to properly report the current state as a resul=
-t<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0of some other guest processes having issued an f=
-s freeze/thaw.<br>
-&gt; +# .. note:: This may fail to properly report the current state as a<b=
-r>
-&gt; +#=C2=A0 =C2=A0 result of some other guest processes having issued an =
-fs<br>
-&gt; +#=C2=A0 =C2=A0 freeze/thaw.<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # Since: 0.15.0<br>
-&gt;=C2=A0 ##<br>
-&gt; @@ -443,9 +444,9 @@<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # Returns: Number of file systems currently frozen.<br>
-&gt;=C2=A0 #<br>
-&gt; -# Note: On Windows, the command is implemented with the help of a<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0Volume Shadow-copy Service DLL helper.=C2=A0 The=
- frozen state is<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0limited for up to 10 seconds by VSS.<br>
-&gt; +# .. note:: On Windows, the command is implemented with the help of a=
+&gt; -# Notes: This command is valid exactly when first connecting: it must=
 <br>
-&gt; +#=C2=A0 =C2=A0 Volume Shadow-copy Service DLL helper.=C2=A0 The froze=
-n state is limited<br>
-&gt; +#=C2=A0 =C2=A0 for up to 10 seconds by VSS.<br>
+&gt; -#=C2=A0 =C2=A0 =C2=A0be issued before any other command will be accep=
+ted, and will<br>
+&gt; -#=C2=A0 =C2=A0 =C2=A0fail once the monitor is accepting other command=
+s.=C2=A0 (see qemu<br>
+&gt; -#=C2=A0 =C2=A0 =C2=A0docs/interop/qmp-spec.rst)<br>
+&gt; +# .. note:: This command is valid exactly when first connecting: it m=
+ust<br>
+&gt; +#=C2=A0 =C2=A0 be issued before any other command will be accepted, a=
+nd will fail<br>
+&gt; +#=C2=A0 =C2=A0 once the monitor is accepting other commands.=C2=A0 (s=
+ee qemu<br>
+&gt; +#=C2=A0 =C2=A0 docs/interop/qmp-spec.rst)<br>
 &gt;=C2=A0 #<br>
-&gt;=C2=A0 # Since: 0.15.0<br>
+&gt; -#=C2=A0 =C2=A0 =C2=A0The QMP client needs to explicitly enable QMP ca=
+pabilities,<br>
+&gt; -#=C2=A0 =C2=A0 =C2=A0otherwise all the QMP capabilities will be turne=
+d off by<br>
+&gt; -#=C2=A0 =C2=A0 =C2=A0default.<br>
+&gt; +# .. note:: The QMP client needs to explicitly enable QMP capabilitie=
+s,<br>
+&gt; +#=C2=A0 =C2=A0 otherwise all the QMP capabilities will be turned off =
+by default.<br>
+&gt;=C2=A0 #<br>
+&gt;=C2=A0 # Since: 0.13<br>
 &gt;=C2=A0 ##<br>
-&gt; @@ -479,10 +480,10 @@<br>
+&gt; @@ -150,8 +149,8 @@<br>
+&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ]<br>
+&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
 &gt;=C2=A0 #<br>
-&gt;=C2=A0 # Returns: Number of file systems thawed by this call<br>
-&gt;=C2=A0 #<br>
-&gt; -# Note: if return value does not match the previous call to<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0guest-fsfreeze-freeze, this likely means some fr=
-eezable<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0filesystems were unfrozen before this call, and =
-that the<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0filesystem state may have changed before issuing=
- this command.<br>
-&gt; +# .. note:: If return value does not match the previous call to<br>
-&gt; +#=C2=A0 =C2=A0 guest-fsfreeze-freeze, this likely means some freezabl=
-e filesystems<br>
-&gt; +#=C2=A0 =C2=A0 were unfrozen before this call, and that the filesyste=
-m state may<br>
-&gt; +#=C2=A0 =C2=A0 have changed before issuing this command.<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # Since: 0.15.0<br>
+&gt; -# Note: This example has been shortened as the real response is too<b=
+r>
+&gt; -#=C2=A0 =C2=A0 =C2=A0long.<br>
+&gt; +# This example has been shortened as the real response is too long.<b=
+r>
+&gt; +#<br>
+<br>
+Here&#39;s one way to transform the elision note, ...<br>
+<br>
 &gt;=C2=A0 ##<br>
-&gt; @@ -560,8 +561,8 @@<br>
-&gt;=C2=A0 # Errors:<br>
-&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0- If suspend to disk is not supported, Unsu=
-pported<br>
+&gt;=C2=A0 { &#39;command&#39;: &#39;query-commands&#39;, &#39;returns&#39;=
+: [&#39;CommandInfo&#39;],<br>
+&gt;=C2=A0 =C2=A0 &#39;allow-preconfig&#39;: true }<br>
+<br>
+[...]<br>
+<br>
+&gt; diff --git a/qapi/pci.json b/qapi/pci.json<br>
+&gt; index 08bf6958634..f51159a2c4c 100644<br>
+&gt; --- a/qapi/pci.json<br>
+&gt; +++ b/qapi/pci.json<br>
+&gt; @@ -146,8 +146,8 @@<br>
 &gt;=C2=A0 #<br>
-&gt; -# Notes: It&#39;s strongly recommended to issue the guest-sync comman=
+&gt;=C2=A0 # @regions: a list of the PCI I/O regions associated with the de=
+vice<br>
+&gt;=C2=A0 #<br>
+&gt; -# Notes: the contents of @class_info.desc are not stable and should<b=
+r>
+&gt; -#=C2=A0 =C2=A0 =C2=A0only be treated as informational.<br>
+&gt; +# .. note:: The contents of @class_info.desc are not stable and shoul=
 d<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0before sending commands when the guest resumes<b=
+&gt; +#=C2=A0 =C2=A0 only be treated as informational.<br>
+&gt;=C2=A0 #<br>
+&gt;=C2=A0 # Since: 0.14<br>
+&gt;=C2=A0 ##<br>
+&gt; @@ -311,7 +311,8 @@<br>
+&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0]<br>
+&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 #<br>
+&gt; -# Note: This example has been shortened as the real response is too<b=
 r>
-&gt; +# .. note:: It&#39;s strongly recommended to issue the guest-sync com=
-mand<br>
-&gt; +#=C2=A0 =C2=A0 before sending commands when the guest resumes.<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # Since: 1.1<br>
+&gt; +#=C2=A0 =C2=A0 =C2=A0Note: This example has been shortened as the rea=
+l response is too<br>
+&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0long.<br>
+&gt; +#<br>
+<br>
+... and here&#39;s another way.=C2=A0 Same way would be better, wouldn&#39;=
+t it?<br>
+They actually are after PATCH 13:<br>
+<br>
+=C2=A0 -#=C2=A0 =C2=A0 =C2=A0Note: This example has been shortened as the r=
+eal response is too<br>
+=C2=A0 -#=C2=A0 =C2=A0 =C2=A0long.<br>
+=C2=A0 +# This example has been shortened as the real response is too long.=
+<br>
+<br>
+Move that hunk here, please.<br>
+<br>
 &gt;=C2=A0 ##<br>
-&gt; @@ -596,8 +597,8 @@<br>
-&gt;=C2=A0 # Errors:<br>
-&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0- If suspend to ram is not supported, Unsup=
-ported<br>
-&gt;=C2=A0 #<br>
-&gt; -# Notes: It&#39;s strongly recommended to issue the guest-sync comman=
-d<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0before sending commands when the guest resumes<b=
-r>
-&gt; +# .. note:: It&#39;s strongly recommended to issue the guest-sync com=
-mand<br>
-&gt; +#=C2=A0 =C2=A0 before sending commands when the guest resumes.<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # Since: 1.1<br>
-&gt;=C2=A0 ##<br>
-&gt; @@ -631,8 +632,8 @@<br>
-&gt;=C2=A0 # Errors:<br>
-&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0- If hybrid suspend is not supported, Unsup=
-ported<br>
-&gt;=C2=A0 #<br>
-&gt; -# Notes: It&#39;s strongly recommended to issue the guest-sync comman=
-d<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0before sending commands when the guest resumes<b=
-r>
-&gt; +# .. note:: It&#39;s strongly recommended to issue the guest-sync com=
-mand<br>
-&gt; +#=C2=A0 =C2=A0 before sending commands when the guest resumes.<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # Since: 1.1<br>
-&gt;=C2=A0 ##<br>
-&gt; @@ -1461,16 +1462,15 @@<br>
-&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0* POSIX: as defined by os-release(5)<br>
-&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0* Windows: contains string &quot;server&quo=
-t; or &quot;client&quot;<br>
-&gt;=C2=A0 #<br>
-&gt; -# Notes: On POSIX systems the fields @id, @name, @pretty-name,<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0@version, @version-id, @variant and @variant-id =
-follow the<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0definition specified in os-release(5). Refer to =
-the manual page<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0for exact description of the fields.=C2=A0 Their=
- values are taken<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0from the os-release file.=C2=A0 If the file is n=
-ot present in the<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0system, or the values are not present in the fil=
-e, the fields<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0are not included.<br>
-&gt; +# .. note:: On POSIX systems the fields @id, @name, @pretty-name,<br>
-&gt; +#=C2=A0 =C2=A0 @version, @version-id, @variant and @variant-id follow=
- the<br>
-&gt; +#=C2=A0 =C2=A0 definition specified in os-release(5). Refer to the ma=
-nual page for<br>
-&gt; +#=C2=A0 =C2=A0 exact description of the fields.=C2=A0 Their values ar=
-e taken from the<br>
-&gt; +#=C2=A0 =C2=A0 os-release file.=C2=A0 If the file is not present in t=
-he system, or the<br>
-&gt; +#=C2=A0 =C2=A0 values are not present in the file, the fields are not=
- included.<br>
-&gt;=C2=A0 #<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0On Windows the values are filled from informatio=
-n gathered from<br>
-&gt; -#=C2=A0 =C2=A0 =C2=A0the system.<br>
-&gt; +#=C2=A0 =C2=A0 On Windows the values are filled from information gath=
-ered from<br>
-&gt; +#=C2=A0 =C2=A0 the system.<br>
+&gt;=C2=A0 { &#39;command&#39;: &#39;query-pci&#39;, &#39;returns&#39;: [&#=
+39;PciInfo&#39;] }<br>
 <br>
-Please don&#39;t change the indentation here.=C2=A0 I get the same output w=
-ith<br>
-<br>
-=C2=A0 @@ -1461,7 +1462,7 @@<br>
-=C2=A0 =C2=A0#=C2=A0 =C2=A0 =C2=A0* POSIX: as defined by os-release(5)<br>
-=C2=A0 =C2=A0#=C2=A0 =C2=A0 =C2=A0* Windows: contains string &quot;server&q=
-uot; or &quot;client&quot;<br>
-=C2=A0 =C2=A0#<br>
-=C2=A0 -# Notes: On POSIX systems the fields @id, @name, @pretty-name,<br>
-=C2=A0 +# .. note:: On POSIX systems the fields @id, @name, @pretty-name,<b=
-r>
-=C2=A0 =C2=A0#=C2=A0 =C2=A0 =C2=A0@version, @version-id, @variant and @vari=
-ant-id follow the<br>
-=C2=A0 =C2=A0#=C2=A0 =C2=A0 =C2=A0definition specified in os-release(5). Re=
-fer to the manual page<br>
-=C2=A0 =C2=A0#=C2=A0 =C2=A0 =C2=A0for exact description of the fields.=C2=
-=A0 Their values are taken<br>
-<br>
-<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # Since: 2.10<br>
-&gt;=C2=A0 ##<br>
-&gt; diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py<br>
-&gt; index dfd6a6c5bee..53b06a94508 100644<br>
-&gt; --- a/scripts/qapi/parser.py<br>
-&gt; +++ b/scripts/qapi/parser.py<br>
-&gt; @@ -548,6 +548,21 @@ def get_doc(self) -&gt; &#39;QAPIDoc&#39;:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 r&#39;(Returns|Errors|Since|Notes?|Examples?|TODO): *&=
-#39;,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 line):<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 # tagged section<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- # TODO: Remove this error sometime in 2025 or so<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- # after we&#39;ve fully transitioned to the new qapidoc<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- # generator.<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- # See commit message for more markup suggestions O:-)<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- if &#39;Note&#39; in match.group(1):<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 emsg =3D (<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 f&quot;The &#39;{match.group(1)}&#39; section =
-is no longer &quot;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;supported. Please use rST&#39;s &#39;.. =
-note::&#39; or &quot;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;&#39;.. admonition:: notes&#39; directiv=
-es, or another &quot;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;suitable admonition instead.&quot;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 )<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 raise QAPIParseError(self, emsg)<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 doc.new_tagged_section(<a href=3D"http://self.info" rel=3D"noreferre=
-r noreferrer" target=3D"_blank">self.info</a>, match.group(1))<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 text =3D line[match.end():]<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 if text:<br>
-&gt; diff --git a/tests/qapi-schema/doc-empty-section.err b/tests/qapi-sche=
-ma/doc-empty-section.err<br>
-&gt; index 5f03a6d733f..711a0d629c2 100644<br>
-&gt; --- a/tests/qapi-schema/doc-empty-section.err<br>
-&gt; +++ b/tests/qapi-schema/doc-empty-section.err<br>
-&gt; @@ -1 +1 @@<br>
-&gt; -doc-empty-section.json:6: text required after &#39;Note:&#39;<br>
-&gt; +doc-empty-section.json:6: text required after &#39;Errors:&#39;<br>
-&gt; diff --git a/tests/qapi-schema/doc-empty-section.json b/tests/qapi-sch=
-ema/doc-empty-section.json<br>
-&gt; index f3384e9a3bb..f179d3eff6d 100644<br>
-&gt; --- a/tests/qapi-schema/doc-empty-section.json<br>
-&gt; +++ b/tests/qapi-schema/doc-empty-section.json<br>
-&gt; @@ -3,6 +3,6 @@<br>
-&gt;=C2=A0 ##<br>
-&gt;=C2=A0 # @foo:<br>
-&gt;=C2=A0 #<br>
-&gt; -# Note:<br>
-&gt; +# Errors:<br>
-&gt;=C2=A0 ##<br>
-&gt;=C2=A0 { &#39;command&#39;: &#39;foo&#39;, &#39;data&#39;: {&#39;a&#39;=
-: &#39;int&#39;} }<br>
-&gt; diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-g=
-ood.json<br>
-&gt; index 8b39eb946af..4b338cc0186 100644<br>
-&gt; --- a/tests/qapi-schema/doc-good.json<br>
-&gt; +++ b/tests/qapi-schema/doc-good.json<br>
-&gt; @@ -29,7 +29,7 @@<br>
-&gt;=C2=A0 # - Second list<br>
-&gt;=C2=A0 #=C2=A0 =C2=A0Note: still in list<br>
-&gt;=C2=A0 #<br>
-&gt; -# Note: not in list<br>
-&gt; +# .. note:: not in list<br>
-<br>
-Uh...=C2=A0 see [*] below.<br>
-<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # 1. Third list<br>
-&gt;=C2=A0 #=C2=A0 =C2=A0 is numbered<br>
-&gt; @@ -157,7 +157,7 @@<br>
-&gt;=C2=A0 # @cmd-feat1: a feature<br>
-&gt;=C2=A0 # @cmd-feat2: another feature<br>
-&gt;=C2=A0 #<br>
-&gt; -# Note: @arg3 is undocumented<br>
-&gt; +# .. note:: @arg3 is undocumented<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # Returns: @Object<br>
-&gt;=C2=A0 #<br>
-&gt; @@ -165,7 +165,7 @@<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # TODO: frobnicate<br>
-&gt;=C2=A0 #<br>
-&gt; -# Notes:<br>
-&gt; +# .. admonition:: Notes<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 #=C2=A0 - Lorem ipsum dolor sit amet<br>
-&gt;=C2=A0 #=C2=A0 - Ut enim ad minim veniam<br>
-&gt; diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-go=
-od.out<br>
-&gt; index 435f6e6d768..2c9b4e419cb 100644<br>
-&gt; --- a/tests/qapi-schema/doc-good.out<br>
-&gt; +++ b/tests/qapi-schema/doc-good.out<br>
-&gt; @@ -76,7 +76,7 @@ Not in list<br>
-&gt;=C2=A0 - Second list<br>
-&gt;=C2=A0 =C2=A0 Note: still in list<br>
-&gt;=C2=A0 <br>
-&gt; -Note: not in list<br>
-<br>
-[*] This demonstrates the &quot;Note: ...&quot; is *not* recognized as a &q=
-uot;Note&quot;<br>
-section before the patch (compare to the change we get for recognized<br>
-sections below).<br>
-<br>
-Obscure fact: the doc parser recognizes tagged sections *only* in<br>
-definition documentation.=C2=A0 Arguably a misfeature.<br>
-<br>
-Your series makes the misfeature even more obscure, because afterwards,<br>
-the only tagged section left that could make sense in a free-form doc<br>
-comment is &quot;TODO&quot;.=C2=A0 Let&#39;s not worry about the misfeature=
- now.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"a=
-uto">Right, it&#39;s gonna go away or be heavily reduced. A fish for anothe=
-r fry.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gma=
-il_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bord=
-er-left:1px #ccc solid;padding-left:1ex">
-<br>
-Two sensible solutions:<br>
-<br>
-1. Since the patch converts tagged sections, and this isn&#39;t, don&#39;t =
-touch<br>
-it.=C2=A0 If you feel you want to mention this in the commit message, go<br=
->
-ahead.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"=
-auto">Oh, uh. Alright. I wonder why I changed it then. I thought I was play=
-ing error message whackamole with this one, but maybe I did do a regexp at =
-some point.</div><div dir=3D"auto"><br></div><div dir=3D"auto">I&#39;ll lea=
-ve it be if I can. If I can&#39;t, for some reason, then ...</div><div dir=
-=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc sol=
-id;padding-left:1ex">
-<br>
-2. Touch it anyway.=C2=A0 Do mention it in the commit message then.<br></bl=
-ockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">... This=
-, with why I couldn&#39;t leave it be.</div><div dir=3D"auto"><br></div><di=
-v dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote"=
- style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-&gt; +.. note:: not in list<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 1. Third list<br>
-&gt;=C2=A0 =C2=A0 =C2=A0is numbered<br>
-&gt; @@ -169,15 +169,17 @@ description starts on the same line<br>
-&gt;=C2=A0 a feature<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 feature=3Dcmd-feat2<br>
-&gt;=C2=A0 another feature<br>
-&gt; -=C2=A0 =C2=A0 section=3DNote<br>
-&gt; -@arg3 is undocumented<br>
-&gt; +=C2=A0 =C2=A0 section=3DNone<br>
-&gt; +.. note:: @arg3 is undocumented<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 section=3DReturns<br>
-&gt;=C2=A0 @Object<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 section=3DErrors<br>
-&gt;=C2=A0 some<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 section=3DTODO<br>
-&gt;=C2=A0 frobnicate<br>
-&gt; -=C2=A0 =C2=A0 section=3DNotes<br>
-&gt; +=C2=A0 =C2=A0 section=3DNone<br>
-&gt; +.. admonition:: Notes<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0- Lorem ipsum dolor sit amet<br>
-&gt;=C2=A0 =C2=A0- Ut enim ad minim veniam<br>
-&gt;=C2=A0 <br>
-&gt; diff --git a/tests/qapi-schema/doc-good.txt b/tests/qapi-schema/doc-go=
-od.txt<br>
-&gt; index 847db70412d..b89f35d5476 100644<br>
-&gt; --- a/tests/qapi-schema/doc-good.txt<br>
-&gt; +++ b/tests/qapi-schema/doc-good.txt<br>
-&gt; @@ -17,7 +17,9 @@ Not in list<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 * Second list Note: still in list<br>
-&gt;=C2=A0 <br>
-&gt; -Note: not in list<br>
-&gt; +Note:<br>
-&gt; +<br>
-&gt; +=C2=A0 not in list<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 1. Third list is numbered<br>
-&gt;=C2=A0 <br>
-&gt; @@ -193,11 +195,9 @@ Features<br>
-&gt;=C2=A0 &quot;cmd-feat2&quot;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0another feature<br>
-&gt;=C2=A0 <br>
-&gt; +Note:<br>
-&gt;=C2=A0 <br>
-&gt; -Note<br>
-&gt; -~~~~<br>
-&gt; -<br>
-&gt; -&quot;arg3&quot; is undocumented<br>
-&gt; +=C2=A0 &quot;arg3&quot; is undocumented<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 Returns<br>
-&gt; @@ -211,9 +211,7 @@ Errors<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 some<br>
-&gt;=C2=A0 <br>
-&gt; -<br>
-&gt; -Notes<br>
-&gt; -~~~~~<br>
-&gt; +Notes:<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 * Lorem ipsum dolor sit amet<br>
-&gt;=C2=A0 <br>
-&gt; diff --git a/tests/qapi-schema/doc-interleaved-section.json b/tests/qa=
-pi-schema/doc-interleaved-section.json<br>
-&gt; index adb29e98daa..b26bc0bbb79 100644<br>
-&gt; --- a/tests/qapi-schema/doc-interleaved-section.json<br>
-&gt; +++ b/tests/qapi-schema/doc-interleaved-section.json<br>
-&gt; @@ -10,7 +10,7 @@<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 #=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0bao<br>
-&gt;=C2=A0 #<br>
-&gt; -# Note: a section.<br>
-&gt; +# Returns: a section.<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # @foobar: catch this<br>
-&gt;=C2=A0 #<br>
-<br>
-&quot;Returns:&quot; is only valid for commands, and this is a struct.=C2=
-=A0 Let&#39;s use<br>
-&quot;TODO:&quot; instead.<br></blockquote></div></div><div dir=3D"auto"><b=
-r></div><div dir=3D"auto">Weird that it didn&#39;t prohibit it. Bug?</div><=
-div dir=3D"auto"><br></div><div dir=3D"auto">--js</div><div dir=3D"auto"><d=
-iv class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:=
-0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+[...]<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto">Apologies, I meant to do this but forgot there were two cases and only=
+ nabbed one.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Fixing.</di=
+v><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1e=
+x">
 </blockquote></div></div></div>
 
---000000000000fa2e3d061b541f93--
+--00000000000098a3e5061b542397--
 
 
