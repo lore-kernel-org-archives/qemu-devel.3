@@ -4,140 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B49C2BA1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:22:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A75EC2BA18
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:23:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKHjL-0001tE-RJ; Thu, 20 Jun 2024 09:21:36 -0400
+	id 1sKHkz-0004iA-N8; Thu, 20 Jun 2024 09:23:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKHjH-0001ss-5h
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:21:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKHjE-0001VW-K1
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:21:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718889687;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Z47dqQVwPbEfDl4OieNGpfA9uRFwpbr52+huqD3lgBo=;
- b=WKByFmY/9iTt3XvyI4JLsLFsPG5tf5lI+qZK6hhcfmDtqIyBSdzazkrgTrcIp+8dlpj7H8
- NlRkno7PwoZa7FveDgOTL6HB28Asjw95+I/oS+byhUNzPeG+qikwznFuJnGetj4ysWAfpg
- xHe+iGiCd+9s6DbrTg334qhY7NkBVD8=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-313-P2_78G5wNbyurk8DZhhz-g-1; Thu, 20 Jun 2024 09:21:24 -0400
-X-MC-Unique: P2_78G5wNbyurk8DZhhz-g-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-57c6979daf7so462866a12.1
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 06:21:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cosocaf@gmail.com>) id 1sKEOE-0000rK-VK
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 05:47:34 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cosocaf@gmail.com>) id 1sKEOA-000424-J1
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 05:47:34 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1f480624d0fso5173045ad.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 02:47:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1718876848; x=1719481648; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PgQ2VWwSRJvrka/NwQyki/HUAVlNqzJSr4msKXGLKwc=;
+ b=Vx2uLfmU6nDf4Z8BrqGKpn+1mF9YGG/XZZYaZ3ivR7Zv8TWpHALJWItFVIzeHge0og
+ C34wpWO6Lw4oGMxAmoISXHoI6FHAcPbjK32B0qYuN9sYJ+TA4a9x4lvGHMDnHZmoGV4v
+ ba9gza9z/TjFmg22NMQps6vPjtLzOAEBXc5gOq2NaIxW6B/LDzGzXlVMBL7pCylFjaF3
+ E3zOGK+Pcieqbdbw2/ETdkmjuNuxB5tsNyP7aQRrmqwq5zc9HfHlbxrGhzBkbuCla7xn
+ U4xFhhc8O1RnhpMiFyFX4dN9Btdo2sFx85TQ337RlcqZhrOnMtrFbQa0TiCMsnU3kX5d
+ yaBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718889683; x=1719494483;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Z47dqQVwPbEfDl4OieNGpfA9uRFwpbr52+huqD3lgBo=;
- b=vuZ4PBsxAToW1S5IUJ6//FfGzqaleQlEmTYPm5cpMv90u4EvgDD8IQ84x29UHSTMkq
- WsvqSqIwvEFdxjHFdW2Xk6KfSaZFBz6GjFtYAlCckiGEKoCVuvlfYNgpkgfXfEv51lbP
- q2+/aheX2viSpCUZVYa8jIWvrJeTcXUgT/GTQNmAHKMevED8yvtzMRMKnd0cylmDzVJO
- SJFDLYhZCrQ1MTa7EU/D/aPZDCobrRMuZa/9QQNshF2DERPKhg/kPNN/dnKLrwBQ8h2N
- v+QHcpNI9OelHqyES5Mq5cFo/kDk7Wzm21GcfgOaM0mQ7hJdRIIQpWbFrKyTA5tGCOTC
- XtkA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVglskkQmR1DICznJjGEUjdxpz4brBTGGJJkN5RHSzRcQOpbgCwEnB+vllhT0MpS93ge4ib+4lArzknSeLmlBNBotciHa4=
-X-Gm-Message-State: AOJu0Yw2K4Vpsk1z0D8KywMkWIkPGlvbnNplEUBdFBN7ZCo4VgyBPPOm
- Wm1i4XgBYkC7kH9BAh/5P6MftzxfqZ0HejamU1ZAp82qThTC5CC5iyxKZpRJeFZwaVKmhrTb6xG
- 8pIWWd/njzQwRZpu/VkbvrzSse7SiC2zDflb4krQ+jXLbLK0egxw7
-X-Received: by 2002:aa7:d055:0:b0:57d:10c7:aa4b with SMTP id
- 4fb4d7f45d1cf-57d10c7aa78mr3064725a12.30.1718889683651; 
- Thu, 20 Jun 2024 06:21:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGuRhQo45SeRyWBmqH4Yt9Ol0ZHLYf0jb/JJB4lfrxvRaolMROiEkm3R7sHRAygxmx8XW1KDA==
-X-Received: by 2002:aa7:d055:0:b0:57d:10c7:aa4b with SMTP id
- 4fb4d7f45d1cf-57d10c7aa78mr3064693a12.30.1718889683234; 
- Thu, 20 Jun 2024 06:21:23 -0700 (PDT)
-Received: from [192.168.10.81] ([151.62.196.71])
- by smtp.googlemail.com with ESMTPSA id
- 4fb4d7f45d1cf-57cbbb5576csm9097047a12.89.2024.06.20.06.21.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Jun 2024 06:21:22 -0700 (PDT)
-Message-ID: <ae1397b5-4154-4aeb-bf5f-3a62adcc05fd@redhat.com>
-Date: Thu, 20 Jun 2024 15:21:19 +0200
+ d=1e100.net; s=20230601; t=1718876848; x=1719481648;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PgQ2VWwSRJvrka/NwQyki/HUAVlNqzJSr4msKXGLKwc=;
+ b=KWBIb37lw/TXLpPq4S5w9POFewcD6/8UbZRGwn9jelop6RlKVRN7VpYkIrnnxflwlV
+ rQpop/g8qn8gjIoSxuuIbqVqHHVCTbSNXcvy+dXTAFn6WNgX7Wg2tZ5c5GxxI1skb2So
+ wuU7aCgaglwgLabXhPT1PxXdTE1aFRYvy43ut8LernKwXXfDhNkhMDGfKjHExN+jXxqy
+ Gy0yXfhYQ7Mnm7V3mvJGqWb7c4/MWmsZFvLXKdneyHoa4hDOdnkCtWlovjgJH/UWd7OG
+ wET8fhRMPdbTR07mxeKN6+L17v5PZDwbuwvOIdMxw+zQBuad5yTJqO/uAbcQn5KdwCUO
+ xLVw==
+X-Gm-Message-State: AOJu0Yweu9IVthGA0apXiejF7HLqjFbaq3K34KO/GXPzISo4psv7+zei
+ Mb0G+je0/tQAIZvJg1YPomX3tUaaZAOTgA2nQU1uwG14hTAOZY96I8U9eXwWfUc=
+X-Google-Smtp-Source: AGHT+IHd28ZN6La1xBKTY8V5v1l/hzPQXsuSIg5jdcNTOMv+LGnSBUR0ECLIJuYXF7W5GRoA/6UpPg==
+X-Received: by 2002:a17:902:f68f:b0:1f6:f82d:a8cb with SMTP id
+ d9443c01a7336-1f9aa473dd4mr44952935ad.52.1718876847933; 
+ Thu, 20 Jun 2024 02:47:27 -0700 (PDT)
+Received: from localhost.localdomain (KD175132079186.ppp-bb.dion.ne.jp.
+ [175.132.79.186]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f993deb126sm49350585ad.219.2024.06.20.02.47.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Jun 2024 02:47:27 -0700 (PDT)
+From: Shota Imamura <cosocaf@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Shota Imamura <cosocaf@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ kvm@vger.kernel.org (open list:Overall KVM CPUs)
+Subject: [PATCH 1/2] migration: Implement dirty ring
+Date: Thu, 20 Jun 2024 18:47:13 +0900
+Message-Id: <20240620094714.871727-2-cosocaf@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240620094714.871727-1-cosocaf@gmail.com>
+References: <20240620094714.871727-1-cosocaf@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 1/5] build-sys: Add rust feature option
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
- Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
-References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
- <e74803e6b570ab36ebc538dd84dc7c4bc2fbe4e7.1718827153.git.manos.pitsidianakis@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <e74803e6b570ab36ebc538dd84dc7c4bc2fbe4e7.1718827153.git.manos.pitsidianakis@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=cosocaf@gmail.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 20 Jun 2024 09:23:08 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -152,179 +96,999 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/19/24 22:13, Manos Pitsidianakis wrote:
-> Add options for Rust in meson_options.txt, meson.build, configure to
-> prepare for adding Rust code in the followup commits.
-> 
-> `rust` is a reserved meson name, so we have to use an alternative.
-> `with_rust` was chosen.
-> 
-> A cargo_wrapper.py script is added that is heavily based on the work of
-> Marc-André Lureau from 2021.
-> 
-> https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@redhat.com/
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+This commit implements the dirty ring as an alternative dirty tracking
+method to the dirty bitmap.
 
-The cargo_wrapper.py script is not used yet, so it should be
-delayed until it's used.
+While the dirty ring has already been implemented in accel/kvm using KVM's
+dirty ring, it was designed to set bits in the ramlist and ramblock bitmap.
+This commit introduces a new dirty ring to replace the bitmap, allowing the
+use of the dirty ring even without KVM. When using KVM's dirty ring, this
+implementation maximizes its effectiveness.
 
-For the detection of the toolchain, I'd rather do everything in
-configure since that's where the cross file is built.  Something like:
+To enable the dirty ring, specify the startup option
+"-migration dirty-logging=ring,dirty-ring-size=N". To use the bitmap,
+either specify nothing or "-migration dirty-logging=bitmap". If the dirty
+ring becomes full, it falls back to the bitmap for that round.
 
-diff --git a/configure b/configure
-index 8b6a2f16ceb..6412a1021c3 100755
---- a/configure
-+++ b/configure
-@@ -173,6 +173,8 @@ fi
-  
-  # default parameters
-  container_engine="auto"
-+rust_target_triple=""
-+with_rust="no"
-  cpu=""
-  cross_compile="no"
-  cross_prefix=""
-@@ -201,6 +202,8 @@ for opt do
-    --cross-prefix=*) cross_prefix="$optarg"
-                      cross_compile="yes"
-    ;;
-+  --cargo=*) CARGO="$optarg"
-+  ;;
-    --cc=*) CC="$optarg"
-    ;;
-    --cxx=*) CXX="$optarg"
-@@ -317,6 +322,8 @@ windmc="${WINDMC-${cross_prefix}windmc}"
-  pkg_config="${PKG_CONFIG-${cross_prefix}pkg-config}"
-  sdl2_config="${SDL2_CONFIG-${cross_prefix}sdl2-config}"
-  
-+cargo="${CARGO-cargo}"
-+
-  check_define() {
-  cat > $TMPC <<EOF
-  #if !defined($1)
-@@ -628,6 +635,8 @@ for opt do
-    ;;
-    --cross-prefix=*)
-    ;;
-+  --cargo=*)
-+  ;;
-    --cc=*)
-    ;;
-    --host-cc=*) host_cc="$optarg"
-@@ -755,8 +764,14 @@ for opt do
-    ;;
-    --container-engine=*) container_engine="$optarg"
-    ;;
-+  --rust-target-triple=*) rust_target_triple="$optarg"
-+  ;;
-    --gdb=*) gdb_bin="$optarg"
-    ;;
-+  --with-rust) with_rust=yes
-+  ;;
-+  --without-rust) with_rust=no
-+  ;;
-    # everything else has the same name in configure and meson
-    --*) meson_option_parse "$opt" "$optarg"
-    ;;
-@@ -854,6 +869,7 @@ $(echo Available targets: $default_target_list | \
-  Advanced options (experts only):
-    -Dmesonoptname=val       passthrough option to meson unmodified
-    --cross-prefix=PREFIX    use PREFIX for compile tools, PREFIX can be blank [$cross_prefix]
-+  --cargo=CARGO            use Cargo binary CARGO [$cargo]
-    --cc=CC                  use C compiler CC [$cc]
-    --host-cc=CC             when cross compiling, use C compiler CC for code run
-                             at build time [$host_cc]
-@@ -869,11 +885,13 @@ Advanced options (experts only):
-    --python=PYTHON          use specified python [$python]
-    --ninja=NINJA            use specified ninja [$ninja]
-    --static                 enable static build [$static]
--  --without-default-features default all --enable-* options to "disabled"
--  --without-default-devices  do not include any device that is not needed to
-+  --rust-target-triple=TRIPLE  target for Rust cross compilation
-+  --without-default-features   default all --enable-* options to "disabled"
-+  --without-default-devices    do not include any device that is not needed to
-                             start the emulator (only use if you are including
-                             desired devices in configs/devices/)
-    --with-devices-ARCH=NAME override default configs/devices
-+  --with-rust              enable experimental Rust code
-    --enable-debug           enable common debug build options
-    --cpu=CPU                Build for host CPU [$cpu]
-    --disable-containers     don't use containers for cross-building
-@@ -1138,6 +1159,20 @@ EOF
-    fi
-  fi
-  
-+##########################################
-+# detect rust triples
-+
-+if test "$with_rust" = yes; then
-+  $CARGO -vV > "${TMPDIR1}/${TMPB}.out"
-+  if test $? != 0; then
-+    error_exit "could not execute cargo binary \"$CARGO\""
-+  fi
-+  rust_host_triple=$(sed -n 's/^host: //p' "${TMPDIR1}/${TMPB}.out")
-+  if test "$rust_target_triple" = ""; then
-+    rust_target_triple=$rust_host_triple
-+  fi
-+fi
-+
-  ##########################################
-  # functions to probe cross compilers
-  
-@@ -1604,6 +1639,10 @@ if test "$container" != no; then
-      echo "RUNC=$runc" >> $config_host_mak
-  fi
-  echo "SUBDIRS=$subdirs" >> $config_host_mak
-+if test "$with_rust" = yes; then
-+  echo "RUST_HOST_TRIPLE=$rust_host_triple" >> $config_host_mak
-+  echo "RUST_TARGET_TRIPLE=$rust_target_triple" >> $config_host_mak
-+fi
-  echo "PYTHON=$python" >> $config_host_mak
-  echo "MKVENV_ENSUREGROUP=$mkvenv ensuregroup $mkvenv_online_flag" >> $config_host_mak
-  echo "GENISOIMAGE=$genisoimage" >> $config_host_mak
-@@ -1731,6 +1770,13 @@ if test "$skip_meson" = no; then
-    echo "c = [$(meson_quote $cc $CPU_CFLAGS)]" >> $cross
-    test -n "$cxx" && echo "cpp = [$(meson_quote $cxx $CPU_CFLAGS)]" >> $cross
-    test -n "$objcc" && echo "objc = [$(meson_quote $objcc $CPU_CFLAGS)]" >> $cross
-+  if test "$with_rust" = yes; then
-+    if test "$rust_host_triple" != "$rust_target_triple"; then
-+      echo "cargo = [$(meson_quote $cargo --target "$rust_target_triple")]" >> $cross
-+    else
-+      echo "cargo = [$(meson_quote $cargo)]" >> $cross
-+    fi
-+  fi
-    echo "ar = [$(meson_quote $ar)]" >> $cross
-    echo "dlltool = [$(meson_quote $dlltool)]" >> $cross
-    echo "nm = [$(meson_quote $nm)]" >> $cross
-diff --git a/meson.build b/meson.build
-index c5360fbd299..ad7dbc0d641 100644
---- a/meson.build
-+++ b/meson.build
-@@ -290,6 +290,11 @@ foreach lang : all_languages
-    endif
-  endforeach
-  
-+cargo = not_found
-+if 'RUST_TARGET_TRIPLE' in config_host
-+  cargo = find_program('cargo', required: true)
-+endif
-+
-  # default flags for all hosts
-  # We use -fwrapv to tell the compiler that we require a C dialect where
-  # left shift of signed integers is well defined and has the expected
-@@ -4239,6 +4244,10 @@ if 'objc' in all_languages
-  else
-    summary_info += {'Objective-C compiler': false}
-  endif
-+summary_info += {'Rust support':      cargo.found()}
-+if cargo.found() and config_host['RUST_TARGET_TRIPLE']) != config_host['RUST_HOST_TRIPLE']
-+  summary_info += {'Rust target':     config_host['RUST_TARGET_TRIPLE']}
-+endif
-  option_cflags = (get_option('debug') ? ['-g'] : [])
-  if get_option('optimization') != 'plain'
-    option_cflags += ['-O' + get_option('optimization')]
+Signed-off-by: Shota Imamura <cosocaf@gmail.com>
+---
+ accel/kvm/kvm-all.c            |  36 ++++++++-
+ include/exec/ram_addr.h        | 131 +++++++++++++++++++++++++++++++--
+ include/exec/ramlist.h         |  48 ++++++++++++
+ include/migration/misc.h       |   4 +-
+ include/qemu/bitops.h          |  23 ++++++
+ migration/migration-hmp-cmds.c |   2 +
+ migration/migration.c          |  27 ++++++-
+ migration/migration.h          |   6 ++
+ migration/ram.c                | 127 ++++++++++++++++++++++++++++----
+ qemu-options.hx                |  29 ++++++++
+ system/physmem.c               | 128 +++++++++++++++++++++++++++++++-
+ system/vl.c                    |  63 +++++++++++++++-
+ 12 files changed, 597 insertions(+), 27 deletions(-)
 
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 854cb86b22..91410d682f 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -667,7 +667,13 @@ static void kvm_dirty_ring_mark_page(KVMState *s, uint32_t as_id,
+         return;
+     }
+ 
+-    set_bit(offset, mem->dirty_bmap);
++    if (!test_and_set_bit(offset, mem->dirty_bmap) &&
++        mem->flags & KVM_MEM_LOG_DIRTY_PAGES &&
++        migration_has_dirty_ring()) {
++        unsigned long pfn =
++            (mem->ram_start_offset >> TARGET_PAGE_BITS) + offset;
++        ram_list_enqueue_dirty(pfn);
++    }
+ }
+ 
+ static bool dirty_gfn_is_dirtied(struct kvm_dirty_gfn *gfn)
+@@ -1675,6 +1681,34 @@ static void kvm_log_sync_global(MemoryListener *l, bool last_stage)
+     /* Flush all kernel dirty addresses into KVMSlot dirty bitmap */
+     kvm_dirty_ring_flush();
+ 
++    if (!ram_list_enqueue_dirty_full()) {
++        cpu_physical_memory_set_dirty_ring(ram_list_get_enqueue_dirty());
++
++        if (s->kvm_dirty_ring_with_bitmap && last_stage) {
++            kvm_slots_lock();
++            for (i = 0; i < s->nr_slots; i++) {
++                mem = &kml->slots[i];
++                if (mem->memory_size &&
++                    mem->flags & KVM_MEM_LOG_DIRTY_PAGES &&
++                    kvm_slot_get_dirty_log(s, mem)) {
++                    kvm_slot_sync_dirty_pages(mem);
++                }
++            }
++            kvm_slots_unlock();
++        }
++
++        kvm_slots_lock();
++        for (i = 0; i < s->nr_slots; i++) {
++            mem = &kml->slots[i];
++            if (mem->memory_size && mem->flags & KVM_MEM_LOG_DIRTY_PAGES) {
++                kvm_slot_reset_dirty_pages(mem);
++            }
++        }
++        kvm_slots_unlock();
++
++        return;
++    }
++
+     /*
+      * TODO: make this faster when nr_slots is big while there are
+      * only a few used slots (small VMs).
+diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
+index 891c44cf2d..1eaebcf22f 100644
+--- a/include/exec/ram_addr.h
++++ b/include/exec/ram_addr.h
+@@ -27,6 +27,7 @@
+ #include "exec/ramblock.h"
+ #include "exec/exec-all.h"
+ #include "qemu/rcu.h"
++#include "migration/misc.h"
+ 
+ extern uint64_t total_dirty_pages;
+ 
+@@ -282,7 +283,11 @@ static inline void cpu_physical_memory_set_dirty_flag(ram_addr_t addr,
+ 
+     blocks = qatomic_rcu_read(&ram_list.dirty_memory[client]);
+ 
+-    set_bit_atomic(offset, blocks->blocks[idx]);
++    if (!test_and_set_bit_atomic(offset, blocks->blocks[idx]) &&
++        migration_has_dirty_ring() &&
++        client == DIRTY_MEMORY_MIGRATION) {
++        ram_list_enqueue_dirty(page);
++    }
+ }
+ 
+ static inline void cpu_physical_memory_set_dirty_range(ram_addr_t start,
+@@ -313,8 +318,24 @@ static inline void cpu_physical_memory_set_dirty_range(ram_addr_t start,
+             unsigned long next = MIN(end, base + DIRTY_MEMORY_BLOCK_SIZE);
+ 
+             if (likely(mask & (1 << DIRTY_MEMORY_MIGRATION))) {
+-                bitmap_set_atomic(blocks[DIRTY_MEMORY_MIGRATION]->blocks[idx],
+-                                  offset, next - page);
++                if (!migration_has_dirty_ring() ||
++                    ram_list_enqueue_dirty_full()) {
++                    use_dirty_bmap:
++                    bitmap_set_atomic(
++                        blocks[DIRTY_MEMORY_MIGRATION]->blocks[idx],
++                        offset,
++                        next - page);
++                } else {
++                    for (unsigned long p = page; p < next; p++) {
++                        if (!test_and_set_bit_atomic(
++                                p % DIRTY_MEMORY_BLOCK_SIZE,
++                                blocks[DIRTY_MEMORY_MIGRATION]->blocks[idx])) {
++                            if (unlikely(!ram_list_enqueue_dirty(p))) {
++                                goto use_dirty_bmap;
++                            }
++                        }
++                    }
++                }
+             }
+             if (unlikely(mask & (1 << DIRTY_MEMORY_VGA))) {
+                 bitmap_set_atomic(blocks[DIRTY_MEMORY_VGA]->blocks[idx],
+@@ -384,9 +405,29 @@ uint64_t cpu_physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
+                     qatomic_or(&blocks[DIRTY_MEMORY_VGA][idx][offset], temp);
+ 
+                     if (global_dirty_tracking) {
+-                        qatomic_or(
++                        if (!migration_has_dirty_ring() ||
++                            ram_list_enqueue_dirty_full()) {
++                            use_dirty_bmap:
++                            qatomic_or(
+                                 &blocks[DIRTY_MEMORY_MIGRATION][idx][offset],
+                                 temp);
++                        } else {
++                            for (unsigned long p = 0; p < BITS_PER_LONG; p++) {
++                                if (temp & (1ul << p)) {
++                                    unsigned long pfn =
++                                        (k * BITS_PER_LONG + p) +
++                                        (start >> TARGET_PAGE_BITS);
++                                    if (!test_and_set_bit_atomic(
++                                            pfn % DIRTY_MEMORY_BLOCK_SIZE,
++                                            blocks[DIRTY_MEMORY_MIGRATION][idx])) {
++                                        if (unlikely(!ram_list_enqueue_dirty(pfn))) {
++                                            goto use_dirty_bmap;
++                                        }
++                                    }
++                                }
++                            }
++                        }
++
+                         if (unlikely(
+                             global_dirty_tracking & GLOBAL_DIRTY_DIRTY_RATE)) {
+                             total_dirty_pages += nbits;
+@@ -443,6 +484,53 @@ uint64_t cpu_physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
+ 
+     return num_dirty;
+ }
++
++static inline
++uint64_t cpu_physical_memory_set_dirty_ring(DirtyRing *ring)
++{
++    uint64_t num_dirty = 0;
++    unsigned long **blocks[DIRTY_MEMORY_NUM];
++
++    WITH_RCU_READ_LOCK_GUARD() {
++        for (int i = 0; i < DIRTY_MEMORY_NUM; i++) {
++            blocks[i] =
++                qatomic_rcu_read(&ram_list.dirty_memory[i])->blocks;
++        }
++
++        for (unsigned long rpos = ring->rpos, wpos = ring->wpos;
++             rpos != wpos;
++             rpos++) {
++            unsigned long page = ring->buffer[rpos & ring->mask];
++            unsigned long idx = page / DIRTY_MEMORY_BLOCK_SIZE;
++            unsigned long offset = BIT_WORD(page % DIRTY_MEMORY_BLOCK_SIZE);
++
++            qatomic_or(&blocks[DIRTY_MEMORY_VGA][idx][offset], BIT_MASK(page));
++
++            if (global_dirty_tracking) {
++                qatomic_or(
++                    &blocks[DIRTY_MEMORY_MIGRATION][idx][offset],
++                    BIT_MASK(page));
++
++                if (unlikely(
++                    global_dirty_tracking & GLOBAL_DIRTY_DIRTY_RATE)) {
++                    total_dirty_pages++;
++                }
++            }
++
++            if (tcg_enabled()) {
++                qatomic_or(&blocks[DIRTY_MEMORY_CODE][idx][offset],
++                           BIT_MASK(page));
++            }
++
++            num_dirty++;
++
++            xen_hvm_modified_memory(page << TARGET_PAGE_BITS,
++                                    TARGET_PAGE_SIZE);
++        }
++    }
++
++    return num_dirty;
++}
+ #endif /* not _WIN32 */
+ 
+ static inline void cpu_physical_memory_dirty_bits_cleared(ram_addr_t start,
+@@ -484,8 +572,41 @@ uint64_t cpu_physical_memory_sync_dirty_bitmap(RAMBlock *rb,
+     uint64_t num_dirty = 0;
+     unsigned long *dest = rb->bmap;
+ 
++    if (migration_has_dirty_ring() && !ram_list_dequeue_dirty_full()) {
++        unsigned long *const *src = qatomic_rcu_read(
++                &ram_list.dirty_memory[DIRTY_MEMORY_MIGRATION])->blocks;
++
++        DirtyRing *ring = ram_list_get_dequeue_dirty();
++        for (unsigned long rpos = ring->rpos, wpos = ring->wpos;
++             rpos != wpos;
++             rpos++) {
++            unsigned long page = ring->buffer[rpos & ring->mask];
++            if (page >= ((start + rb->offset) >> TARGET_PAGE_BITS) &&
++                page < ((start + rb->offset + length) >> TARGET_PAGE_BITS)) {
++                if (!test_and_set_bit(page - (rb->offset >> TARGET_PAGE_BITS),
++                                      dest)) {
++                    num_dirty++;
++                }
++
++                unsigned long idx = page / DIRTY_MEMORY_BLOCK_SIZE;
++                unsigned long offset = BIT_WORD(page % DIRTY_MEMORY_BLOCK_SIZE);
++                src[idx][offset] &= ~BIT_MASK(page);
++            }
++        }
++
++        if (num_dirty) {
++            cpu_physical_memory_dirty_bits_cleared(start, length);
++        }
++
++        if (rb->clear_bmap) {
++            clear_bmap_set(rb, start >> TARGET_PAGE_BITS,
++                           length >> TARGET_PAGE_BITS);
++        } else {
++            memory_region_clear_dirty_bitmap(rb->mr, start, length);
++        }
++    }
+     /* start address and length is aligned at the start of a word? */
+-    if (((word * BITS_PER_LONG) << TARGET_PAGE_BITS) ==
++    else if (((word * BITS_PER_LONG) << TARGET_PAGE_BITS) ==
+          (start + rb->offset) &&
+         !(length & ((BITS_PER_LONG << TARGET_PAGE_BITS) - 1))) {
+         int k;
+diff --git a/include/exec/ramlist.h b/include/exec/ramlist.h
+index 2ad2a81acc..598b6d5a05 100644
+--- a/include/exec/ramlist.h
++++ b/include/exec/ramlist.h
+@@ -5,6 +5,7 @@
+ #include "qemu/thread.h"
+ #include "qemu/rcu.h"
+ #include "qemu/rcu_queue.h"
++#include "exec/cpu-common.h"
+ 
+ typedef struct RAMBlockNotifier RAMBlockNotifier;
+ 
+@@ -44,6 +45,37 @@ typedef struct {
+     unsigned long *blocks[];
+ } DirtyMemoryBlocks;
+ 
++/*
++ * Ring buffer for dirty memory tracking.
++ * This ring buffer does not support deletion of intermediate elements.
++ * Therefore, the dirty bitmap must be checked to determine if a region has
++ * been cleared.
++ */
++typedef struct {
++    /*
++     * The starting address of the dirty-ring. It is NULL if the dirty-ring
++     * is not enabled.
++     */
++    unsigned long *buffer;
++    /*
++     * The number of elements in the dirty-ring.
++     * Must be a power of 2. Note that the actual limit of elements that can
++     * be inserted is dirty_ring_size - 1 due to ring-buffer constraints.
++     */
++    unsigned long size;
++    /* The mask for obtaining the index in the dirty-ring. */
++    unsigned long mask;
++    /*
++     * The current read position in the dirty-ring.
++     * If dirty_ring_rpos == dirty_ring_wpos, the dirty-ring is empty.
++     * If dirty_ring_wpos - dirty_ring_rpos == dirty_ring_size, the dirty-ring
++     * is full.
++     */
++    unsigned long rpos;
++    /* The current write position in the dirty-ring. */
++    unsigned long wpos;
++} DirtyRing;
++
+ typedef struct RAMList {
+     QemuMutex mutex;
+     RAMBlock *mru_block;
+@@ -52,6 +84,9 @@ typedef struct RAMList {
+     DirtyMemoryBlocks *dirty_memory[DIRTY_MEMORY_NUM];
+     uint32_t version;
+     QLIST_HEAD(, RAMBlockNotifier) ramblock_notifiers;
++    /* Used only when dirty-ring is enabled */
++    uint32_t dirty_ring_switch;
++    DirtyRing dirty_rings[2];
+ } RAMList;
+ extern RAMList ram_list;
+ 
+@@ -63,6 +98,8 @@ extern RAMList ram_list;
+ 
+ void qemu_mutex_lock_ramlist(void);
+ void qemu_mutex_unlock_ramlist(void);
++/* Called from RCU critical section */
++RAMBlock *qemu_get_ram_block(ram_addr_t addr);
+ 
+ struct RAMBlockNotifier {
+     void (*ram_block_added)(RAMBlockNotifier *n, void *host, size_t size,
+@@ -80,6 +117,17 @@ void ram_block_notify_add(void *host, size_t size, size_t max_size);
+ void ram_block_notify_remove(void *host, size_t size, size_t max_size);
+ void ram_block_notify_resize(void *host, size_t old_size, size_t new_size);
+ 
++DirtyRing *ram_list_get_enqueue_dirty(void);
++DirtyRing *ram_list_get_dequeue_dirty(void);
++bool ram_list_enqueue_dirty(unsigned long page);
++bool ram_list_dequeue_dirty(unsigned long *page);
++unsigned long ram_list_enqueue_dirty_capacity(void);
++unsigned long ram_list_dequeue_dirty_capacity(void);
++bool ram_list_enqueue_dirty_full(void);
++bool ram_list_dequeue_dirty_full(void);
++void ram_list_dequeue_dirty_reset(void);
++void ram_list_dirty_ring_switch(void);
++
+ GString *ram_block_format(void);
+ 
+ #endif /* RAMLIST_H */
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index bfadc5613b..1335e0958e 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -51,13 +51,15 @@ AnnounceParameters *migrate_announce_params(void);
+ void dump_vmstate_json_to_file(FILE *out_fp);
+ 
+ /* migration/migration.c */
+-void migration_object_init(void);
++void migration_object_init(QDict *qdict);
+ void migration_shutdown(void);
+ bool migration_is_idle(void);
+ bool migration_is_active(void);
+ bool migration_is_device(void);
+ bool migration_thread_is_self(void);
+ bool migration_is_setup_or_active(void);
++bool migration_has_dirty_ring(void);
++unsigned long migration_get_dirty_ring_size(void);
+ 
+ typedef enum MigrationEventType {
+     MIG_EVENT_PRECOPY_SETUP,
+diff --git a/include/qemu/bitops.h b/include/qemu/bitops.h
+index 2c0a2fe751..ea5d02d0ec 100644
+--- a/include/qemu/bitops.h
++++ b/include/qemu/bitops.h
+@@ -108,6 +108,29 @@ static inline int test_and_set_bit(long nr, unsigned long *addr)
+     return (old & mask) != 0;
+ }
+ 
++/**
++ * test_and_set_bit_atomic - Set a bit and return its old value atomically
++ * @nr: Bit to set
++ * @addr: Address to count from
++ */
++static inline int test_and_set_bit_atomic(long nr, unsigned long *addr)
++{
++    unsigned long mask = BIT_MASK(nr);
++    unsigned long *p = addr + BIT_WORD(nr);
++    unsigned long old;
++    unsigned long desired;
++
++    do {
++        old = qatomic_read(p);
++        if (old & mask) {
++            return false;
++        }
++        desired = old | mask;
++    } while (qatomic_cmpxchg(p, old, desired) != desired);
++
++    return true;
++}
++
+ /**
+  * test_and_clear_bit - Clear a bit and return its old value
+  * @nr: Bit to clear
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 9f0e8029e0..02b1fa7b29 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -48,6 +48,8 @@ static void migration_global_dump(Monitor *mon)
+                    ms->send_section_footer ? "on" : "off");
+     monitor_printf(mon, "clear-bitmap-shift: %u\n",
+                    ms->clear_bitmap_shift);
++    monitor_printf(mon, "dirty-logging-method: %s\n",
++                   migration_has_dirty_ring() ? "ring" : "bitmap");
+ }
+ 
+ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
+diff --git a/migration/migration.c b/migration/migration.c
+index e1b269624c..a059ac7626 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -44,6 +44,7 @@
+ #include "qapi/qapi-events-migration.h"
+ #include "qapi/qmp/qerror.h"
+ #include "qapi/qmp/qnull.h"
++#include "qapi/qmp/qdict.h"
+ #include "qemu/rcu.h"
+ #include "postcopy-ram.h"
+ #include "qemu/thread.h"
+@@ -207,12 +208,20 @@ static int migration_stop_vm(MigrationState *s, RunState state)
+     return ret;
+ }
+ 
+-void migration_object_init(void)
++void migration_object_init(QDict *qdict)
+ {
+     /* This can only be called once. */
+     assert(!current_migration);
+     current_migration = MIGRATION_OBJ(object_new(TYPE_MIGRATION));
+ 
++    const char *logging_method = qdict_get_try_str(qdict, "dirty-logging");
++    if (logging_method == NULL || strcmp(logging_method, "bitmap") == 0) {
++        current_migration->dirty_ring_size = 0;
++    } else if (strcmp(logging_method, "ring") == 0) {
++        current_migration->dirty_ring_size = qdict_get_int(qdict,
++                                                           "dirty-ring-size");
++    }
++
+     /*
+      * Init the migrate incoming object as well no matter whether
+      * we'll use it or not.
+@@ -1632,6 +1641,20 @@ bool migrate_mode_is_cpr(MigrationState *s)
+     return s->parameters.mode == MIG_MODE_CPR_REBOOT;
+ }
+ 
++bool migration_has_dirty_ring(void)
++{
++    MigrationState *s = current_migration;
++
++    return s->dirty_ring_size != 0;
++}
++
++unsigned long migration_get_dirty_ring_size(void)
++{
++    MigrationState *s = current_migration;
++
++    return s->dirty_ring_size;
++}
++
+ int migrate_init(MigrationState *s, Error **errp)
+ {
+     int ret;
+@@ -3806,6 +3829,8 @@ static void migration_instance_init(Object *obj)
+     qemu_sem_init(&ms->wait_unplug_sem, 0);
+     qemu_sem_init(&ms->postcopy_qemufile_src_sem, 0);
+     qemu_mutex_init(&ms->qemu_file_lock);
++
++    ms->dirty_ring_size = 0;
+ }
+ 
+ /*
+diff --git a/migration/migration.h b/migration/migration.h
+index 6af01362d4..4dfdf98acc 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -457,6 +457,12 @@ struct MigrationState {
+     bool switchover_acked;
+     /* Is this a rdma migration */
+     bool rdma_migration;
++
++    /*
++     * The number of elements in the dirty-ring.
++     * It is 0 if the dirty-ring is not enabled.
++     */
++    unsigned long dirty_ring_size;
+ };
+ 
+ void migrate_set_state(int *state, int old_state, int new_state);
+diff --git a/migration/ram.c b/migration/ram.c
+index ceea586b06..5bf45268ec 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -387,6 +387,7 @@ struct RAMState {
+     bool xbzrle_started;
+     /* Are we on the last stage of migration */
+     bool last_stage;
++    bool first_bitmap_scanning;
+ 
+     /* total handled target pages at the beginning of period */
+     uint64_t target_page_count_prev;
+@@ -1041,6 +1042,29 @@ static void migration_trigger_throttle(RAMState *rs)
+     }
+ }
+ 
++static uint64_t migration_sync_dirty_ring(RAMBlock *block)
++{
++    uint64_t dirty_page_count = 0;
++
++    uint64_t base = block->offset >> TARGET_PAGE_BITS;
++    uint64_t size = block->used_length >> TARGET_PAGE_BITS;
++    uint64_t nr = BITS_TO_LONGS(size);
++    for (uint64_t i = 0; i < nr; i++) {
++        if (block->bmap[i]) {
++            uint64_t page = i * BITS_PER_LONG;
++            uint64_t end = MIN(page + BITS_PER_LONG, size);
++            for (; page < end; page++) {
++                if (test_bit(page, block->bmap)) {
++                    ram_list_enqueue_dirty(base + page);
++                    dirty_page_count++;
++                }
++            }
++        }
++    }
++
++    return dirty_page_count;
++}
++
+ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
+ {
+     RAMBlock *block;
+@@ -1052,9 +1076,48 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
+         rs->time_last_bitmap_sync = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
+     }
+ 
++    if (migration_has_dirty_ring()) {
++        if (unlikely(ram_list_dequeue_dirty_full())) {
++            ram_list_dequeue_dirty_reset();
++
++            if (ram_list_enqueue_dirty_capacity() >=
++                rs->migration_dirty_pages) {
++                uint64_t dirty_page_count = 0;
++                WITH_QEMU_LOCK_GUARD(&rs->bitmap_mutex) {
++                    WITH_RCU_READ_LOCK_GUARD() {
++                        RAMBLOCK_FOREACH_NOT_IGNORED(block) {
++                            dirty_page_count +=
++                                migration_sync_dirty_ring(block);
++                            if (dirty_page_count >=
++                                rs->migration_dirty_pages) {
++                                break;
++                            }
++                        }
++                    }
++                }
++            } else {
++                DirtyRing *ring = ram_list_get_enqueue_dirty();
++                ring->wpos = ring->rpos + ring->size;
++            }
++        } else {
++            unsigned long page;
++            while (ram_list_dequeue_dirty(&page)) {
++                block = qemu_get_ram_block(page << TARGET_PAGE_BITS);
++                if (test_bit(page - (block->offset >> TARGET_PAGE_BITS),
++                             block->bmap)) {
++                    ram_list_enqueue_dirty(page);
++                }
++            }
++        }
++    }
++
+     trace_migration_bitmap_sync_start();
+     memory_global_dirty_log_sync(last_stage);
+ 
++    if (migration_has_dirty_ring()) {
++        ram_list_dirty_ring_switch();
++    }
++
+     WITH_QEMU_LOCK_GUARD(&rs->bitmap_mutex) {
+         WITH_RCU_READ_LOCK_GUARD() {
+             RAMBLOCK_FOREACH_NOT_IGNORED(block) {
+@@ -2214,7 +2277,11 @@ static int ram_save_host_page(RAMState *rs, PageSearchStatus *pss)
+             return tmppages;
+         }
+ 
+-        pss_find_next_dirty(pss);
++        if (!migration_has_dirty_ring()) {
++            pss_find_next_dirty(pss);
++        } else {
++            break;
++        }
+     } while (pss_within_range(pss));
+ 
+     pss_host_page_finish(pss);
+@@ -2260,24 +2327,51 @@ static int ram_find_and_save_block(RAMState *rs)
+ 
+     pss_init(pss, rs->last_seen_block, rs->last_page);
+ 
+-    while (true){
+-        if (!get_queued_page(rs, pss)) {
+-            /* priority queue empty, so just search for something dirty */
+-            int res = find_dirty_block(rs, pss);
+-            if (res != PAGE_DIRTY_FOUND) {
+-                if (res == PAGE_ALL_CLEAN) {
+-                    break;
+-                } else if (res == PAGE_TRY_AGAIN) {
+-                    continue;
+-                } else if (res < 0) {
+-                    pages = res;
+-                    break;
++    if (rs->first_bitmap_scanning ||
++        !migration_has_dirty_ring() ||
++        ram_list_dequeue_dirty_full()) {
++        while (true) {
++            if (!get_queued_page(rs, pss)) {
++                /* priority queue empty, so just search for something dirty */
++                int res = find_dirty_block(rs, pss);
++                if (pss->complete_round) {
++                    rs->first_bitmap_scanning = false;
+                 }
++                if (res != PAGE_DIRTY_FOUND) {
++                    if (res == PAGE_ALL_CLEAN) {
++                        break;
++                    } else if (res == PAGE_TRY_AGAIN) {
++                        continue;
++                    } else if (res < 0) {
++                        pages = res;
++                        break;
++                    }
++                }
++            }
++            pages = ram_save_host_page(rs, pss);
++            if (pages) {
++                break;
+             }
+         }
+-        pages = ram_save_host_page(rs, pss);
+-        if (pages) {
+-            break;
++    } else {
++        while (get_queued_page(rs, pss)) {
++            pages = ram_save_host_page(rs, pss);
++            if (pages) {
++                break;
++            }
++        }
++
++        if (!pages) {
++            unsigned long page;
++            while (ram_list_dequeue_dirty(&page)) {
++                pss->block = qemu_get_ram_block(page << TARGET_PAGE_BITS);
++                pss->page = page - (pss->block->offset >> TARGET_PAGE_BITS);
++                pss->complete_round = false;
++                pages = ram_save_host_page(rs, pss);
++                if (pages) {
++                    break;
++                }
++            }
+         }
+     }
+ 
+@@ -2404,6 +2498,7 @@ static void ram_state_reset(RAMState *rs)
+     rs->last_page = 0;
+     rs->last_version = ram_list.version;
+     rs->xbzrle_started = false;
++    rs->first_bitmap_scanning = true;
+ }
+ 
+ #define MAX_WAIT 50 /* ms, half buffered_file limit */
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 8ca7f34ef0..f1ec592ec0 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -556,6 +556,35 @@ SRST
+         -numa hmat-cache,node-id=1,size=10K,level=1,associativity=direct,policy=write-back,line=8
+ ERST
+ 
++DEF("migration", HAS_ARG, QEMU_OPTION_migration,
++    "-migration [dirty-logging=method][,dirty-ring-size=n]\n"
++    "                Configure migration settings.\n"
++    "                dirty-logging: Specify the dirty logging method.\n"
++    "                    bitmap: Use bitmap-based dirty logging (default).\n"
++    "                    ring: Use ring-based dirty logging.\n"
++    "                dirty-ring-size: Specify the size of the dirty ring buffer.\n"
++    "                    This option is only applicable if dirty-logging is set to ring.\n"
++    "                    The size must be a power of 2.\n"
++    "                    Example: -migration dirty-logging=ring,dirty-ring-size=1024\n", QEMU_ARCH_ALL)
++SRST
++``-migration [dirty-logging=method,dirty-ring-size=n]``
++    Configure migration settings.
++
++    ``dirty-logging=bitmap``
++        Use bitmap-based dirty logging. This is the default method for tracking changes to memory pages during migration.
++
++    ``dirty-logging=ring``
++        Use ring-based dirty logging. This method uses a ring buffer to track changes to memory pages, which can be more efficient in some scenarios.
++
++    ``dirty-ring-size=n``
++        Specify the size of the dirty ring buffer when using ring-based dirty logging. The size must be a power of 2 (e.g., 1024, 2048, 4096). This option is only applicable if dirty-logging is set to ring.
++
++    Example:
++    ::
++
++        -migration dirty-logging=ring,dirty-ring-size=1024
++ERST
++
+ DEF("add-fd", HAS_ARG, QEMU_OPTION_add_fd,
+     "-add-fd fd=fd,set=set[,opaque=opaque]\n"
+     "                Add 'fd' to fd 'set'\n", QEMU_ARCH_ALL)
+diff --git a/system/physmem.c b/system/physmem.c
+index 33d09f7571..2c2ee54eae 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -783,7 +783,7 @@ AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)
+ }
+ 
+ /* Called from RCU critical section */
+-static RAMBlock *qemu_get_ram_block(ram_addr_t addr)
++RAMBlock *qemu_get_ram_block(ram_addr_t addr)
+ {
+     RAMBlock *block;
+ 
+@@ -1804,6 +1804,37 @@ static void dirty_memory_extend(ram_addr_t old_ram_size,
+     }
+ }
+ 
++/* Called with ram_list.mutex held */
++static bool dirty_ring_init(Error **errp)
++{
++    static bool initialized;
++    if (initialized) {
++        return true;
++    }
++
++    unsigned long dirty_ring_size = migration_get_dirty_ring_size();
++
++    for (int i = 0; i < 2; i++) {
++        DirtyRing *ring = &ram_list.dirty_rings[i];
++        ring->buffer = g_malloc(sizeof(ring->buffer[0]) * dirty_ring_size);
++
++        if (ring->buffer == NULL) {
++            error_setg(errp, "Failed to allocate dirty ring buffer");
++            return false;
++        }
++
++        ring->size = dirty_ring_size;
++        ring->mask = dirty_ring_size - 1;
++        ring->rpos = 0;
++        ring->wpos = 0;
++    }
++
++    ram_list.dirty_ring_switch = 0;
++
++    initialized = true;
++    return true;
++}
++
+ static void ram_block_add(RAMBlock *new_block, Error **errp)
+ {
+     const bool noreserve = qemu_ram_is_noreserve(new_block);
+@@ -1868,6 +1899,13 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+     if (new_ram_size > old_ram_size) {
+         dirty_memory_extend(old_ram_size, new_ram_size);
+     }
++
++    if (migration_has_dirty_ring()) {
++        if (!dirty_ring_init(errp)) {
++            goto out_free;
++        }
++    }
++
+     /* Keep the list sorted from biggest to smallest block.  Unlike QTAILQ,
+      * QLIST (which has an RCU-friendly variant) does not have insertion at
+      * tail, so save the last element in last_block.
+@@ -3888,3 +3926,91 @@ bool ram_block_discard_is_required(void)
+     return qatomic_read(&ram_block_discard_required_cnt) ||
+            qatomic_read(&ram_block_coordinated_discard_required_cnt);
+ }
++
++DirtyRing *ram_list_get_enqueue_dirty(void)
++{
++    return &ram_list.dirty_rings[ram_list.dirty_ring_switch & 1];
++}
++
++DirtyRing *ram_list_get_dequeue_dirty(void)
++{
++    return &ram_list.dirty_rings[(ram_list.dirty_ring_switch + 1) & 1];
++}
++
++bool ram_list_enqueue_dirty(unsigned long page)
++{
++    DirtyRing *ring = &ram_list.dirty_rings[ram_list.dirty_ring_switch & 1];
++
++    assert(ring->buffer);
++
++    if (unlikely(ring->wpos - ring->rpos == ring->size)) {
++        return false;
++    }
++
++    ring->buffer[ring->wpos & ring->mask] = page;
++    ring->wpos++;
++
++    return true;
++}
++
++bool ram_list_dequeue_dirty(unsigned long *page)
++{
++    DirtyRing *ring =
++        &ram_list.dirty_rings[(ram_list.dirty_ring_switch + 1) & 1];
++
++    assert(ring->buffer);
++
++    if (unlikely(ring->rpos == ring->wpos)) {
++        return false;
++    }
++
++    *page = ring->buffer[ring->rpos & ring->mask];
++    ring->rpos++;
++
++    return true;
++}
++
++unsigned long ram_list_enqueue_dirty_capacity(void)
++{
++    DirtyRing *ring = &ram_list.dirty_rings[ram_list.dirty_ring_switch & 1];
++
++    return ring->size - (ring->wpos - ring->rpos);
++
++}
++
++unsigned long ram_list_dequeue_dirty_capacity(void)
++{
++    DirtyRing *ring =
++        &ram_list.dirty_rings[(ram_list.dirty_ring_switch + 1) & 1];
++
++    return ring->wpos - ring->rpos;
++}
++
++bool ram_list_enqueue_dirty_full(void)
++{
++    DirtyRing *ring = &ram_list.dirty_rings[ram_list.dirty_ring_switch & 1];
++
++    return (ring->wpos - ring->rpos) == ring->size;
++}
++
++bool ram_list_dequeue_dirty_full(void)
++{
++    DirtyRing *ring =
++        &ram_list.dirty_rings[(ram_list.dirty_ring_switch + 1) & 1];
++
++    return (ring->wpos - ring->rpos) == ring->size;
++}
++
++void ram_list_dequeue_dirty_reset(void)
++{
++    DirtyRing *ring =
++        &ram_list.dirty_rings[(ram_list.dirty_ring_switch + 1) & 1];
++
++    ring->rpos = 0;
++    ring->wpos = 0;
++}
++
++void ram_list_dirty_ring_switch(void)
++{
++    ram_list.dirty_ring_switch++;
++}
+diff --git a/system/vl.c b/system/vl.c
+index a3eede5fa5..305a9386da 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -163,6 +163,7 @@ static const char *accelerators;
+ static bool have_custom_ram_size;
+ static const char *ram_memdev_id;
+ static QDict *machine_opts_dict;
++static QDict *migration_opts_dict;
+ static QTAILQ_HEAD(, ObjectOption) object_opts = QTAILQ_HEAD_INITIALIZER(object_opts);
+ static QTAILQ_HEAD(, DeviceOption) device_opts = QTAILQ_HEAD_INITIALIZER(device_opts);
+ static int display_remote;
+@@ -758,6 +759,22 @@ static QemuOptsList qemu_smp_opts = {
+     },
+ };
+ 
++static QemuOptsList qemu_migration_opts = {
++    .name = "migration-opts",
++    .merge_lists = true,
++    .head = QTAILQ_HEAD_INITIALIZER(qemu_smp_opts.head),
++    .desc = {
++        {
++            .name = "dirty-logging", /* bitmap/ring */
++            .type = QEMU_OPT_STRING,
++        }, {
++            .name = "dirty-ring-size",
++            .type = QEMU_OPT_SIZE,
++        },
++        { /*End of list */ }
++    },
++};
++
+ #if defined(CONFIG_POSIX)
+ static QemuOptsList qemu_run_with_opts = {
+     .name = "run-with",
+@@ -2742,7 +2759,7 @@ void qmp_x_exit_preconfig(Error **errp)
+ void qemu_init(int argc, char **argv)
+ {
+     QemuOpts *opts;
+-    QemuOpts *icount_opts = NULL, *accel_opts = NULL;
++    QemuOpts *icount_opts = NULL, *accel_opts = NULL, *migration_opts = NULL;
+     QemuOptsList *olist;
+     int optind;
+     const char *optarg;
+@@ -2781,6 +2798,7 @@ void qemu_init(int argc, char **argv)
+     qemu_add_opts(&qemu_semihosting_config_opts);
+     qemu_add_opts(&qemu_fw_cfg_opts);
+     qemu_add_opts(&qemu_action_opts);
++    qemu_add_opts(&qemu_migration_opts);
+     qemu_add_run_with_opts();
+     module_call_init(MODULE_INIT_OPTS);
+ 
+@@ -2812,6 +2830,7 @@ void qemu_init(int argc, char **argv)
+     }
+ 
+     machine_opts_dict = qdict_new();
++    migration_opts_dict = qdict_new();
+     if (userconfig) {
+         qemu_read_default_config_file(&error_fatal);
+     }
+@@ -3369,6 +3388,46 @@ void qemu_init(int argc, char **argv)
+                 machine_parse_property_opt(qemu_find_opts("smp-opts"),
+                                            "smp", optarg);
+                 break;
++            case QEMU_OPTION_migration:
++                migration_opts =
++                    qemu_opts_parse_noisily(qemu_find_opts("migration-opts"),
++                                            optarg,
++                                            false);
++
++                optarg = qemu_opt_get(migration_opts, "dirty-logging");
++                if (optarg == NULL || strcmp(optarg, "bitmap") == 0) {
++                    qdict_put_str(migration_opts_dict,
++                                  "dirty-logging",
++                                  "bitmap");
++
++                    if (qemu_opt_find(migration_opts, "dirty-ring-size")) {
++                        error_report("dirty-ring-size is only supported "
++                                     "with dirty-logging=ring");
++                        exit(1);
++                    }
++                } else if (strcmp(optarg, "ring") == 0) {
++                    qdict_put_str(migration_opts_dict, "dirty-logging", "ring");
++
++                    uint64_t dirty_ring_size = qemu_opt_get_size(migration_opts,
++                                                                 "dirty-ring-size",
++                                                                 0);
++                    if (ctpop64(dirty_ring_size) != 1) {
++                        error_report("dirty-ring-size must be a power of 2");
++                        exit(1);
++                    } else if (dirty_ring_size > (uint64_t)INT64_MAX) {
++                        error_report("dirty-ring-size is too large");
++                        exit(1);
++                    }
++
++                    qdict_put_int(migration_opts_dict,
++                                  "dirty-ring-size",
++                                  dirty_ring_size);
++                } else {
++                    error_report("invalid dirty-logging option: %s", optarg);
++                    exit(1);
++                }
++
++                break;
+ #ifdef CONFIG_VNC
+             case QEMU_OPTION_vnc:
+                 vnc_parse(optarg);
+@@ -3735,7 +3794,7 @@ void qemu_init(int argc, char **argv)
+      * Note: creates a QOM object, must run only after global and
+      * compat properties have been set up.
+      */
+-    migration_object_init();
++    migration_object_init(migration_opts_dict);
+ 
+     /* parse features once if machine provides default cpu_type */
+     current_machine->cpu_type = machine_class_default_cpu_type(machine_class);
+-- 
+2.34.1
 
 
