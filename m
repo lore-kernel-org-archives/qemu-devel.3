@@ -4,55 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C14CC27C53
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 02:30:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 412E6C27C53
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 02:49:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sK7ZM-0005me-B1; Wed, 19 Jun 2024 22:30:37 -0400
+	id 1sK7qZ-0000LN-VD; Wed, 19 Jun 2024 22:48:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1sK7ZK-0005kt-RL; Wed, 19 Jun 2024 22:30:34 -0400
-Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
- helo=Atcsqr.andestech.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
- id 1sK7ZI-0003wz-PM; Wed, 19 Jun 2024 22:30:34 -0400
-Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
- by Atcsqr.andestech.com with ESMTP id 45K2UBwp096336;
- Thu, 20 Jun 2024 10:30:11 +0800 (+08)
- (envelope-from ethan84@andestech.com)
-Received: from ethan84-VirtualBox (10.0.12.12) by ATCPCS31.andestech.com
- (10.0.1.89) with Microsoft SMTP Server id 14.3.498.0; Thu, 20 Jun 2024
- 10:30:07 +0800
-Date: Thu, 20 Jun 2024 10:30:06 +0800
-To: Stefan Weil <sw@weilnetz.de>
-CC: <qemu-devel@nongnu.org>, <pbonzini@redhat.com>, <palmer@dabbelt.com>,
- <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
- <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>
-Subject: Re: [PATCH v7 1/2] hw/misc/riscv_iopmp: Add RISC-V IOPMP device
-Message-ID: <ZnOULg2sd7YZHFQi@ethan84-VirtualBox>
-References: <20240612031706.2927602-1-ethan84@andestech.com>
- <20240612031706.2927602-2-ethan84@andestech.com>
- <8def1779-6fc8-4e53-9542-20fe83651c0b@weilnetz.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sK7qW-0000I0-I6
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 22:48:20 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sK7qU-0006k1-8b
+ for qemu-devel@nongnu.org; Wed, 19 Jun 2024 22:48:19 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-705c739b878so1175052b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Jun 2024 19:48:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718851696; x=1719456496; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=A8pSmz1Mo9Hb1eoGtaIX7FxiMbjYzcDmeVvWVqMFm1M=;
+ b=ydD08ZoOOd9a3i5M4+OheAiS+2MpGD+EwghNdfEb27nAHtcmr6PbhkvCA2NLfRCLmD
+ SydAJAsFWgh35RZy454b5WvqGohUxxQeQYX0CSG83Eti/hwmdrLBmLVq42TuQk7YZ1WA
+ ktxFgmBIhubZoLhGQyE+v04Ih9EOzVSpJCpPOmQisG/+mcnKbbs6MLa+WoQdIiiKVilr
+ xx1mq/riN1FBjKbkrnNy7qUacYJqrOEhe3M49zbD2uhMEZs3Jf+RyCdqUDKrEMjjB4QM
+ rEhoXM0d7CGBsyDTpHA4am95RqewNglDr69tnZxZWQYnsek/Cnj8xGv6J3GxywUAzq6C
+ MdXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718851696; x=1719456496;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=A8pSmz1Mo9Hb1eoGtaIX7FxiMbjYzcDmeVvWVqMFm1M=;
+ b=PBsU4sBGDjJLy3qVqO2ivOi0/Ok22t4Zhg390113AH1uCcrxKDSxEUFjEjcxBhTRvJ
+ njpN99ejRHnKlce875aYPIGLpuw7Nw1MqjvrfF/zCEdSJnDofObgifzI7lbWvJSBiMzy
+ F1HJxc2V/wMii2XEyjd1j/iQLkFrjOBrLND4u7FGgSdaWsg6Sog0n3Y/k2g2JWlDHDCn
+ 7uK7v4NhoFvzYDXJQRr+notLKULgwKIvc3hi493eeTsbO9u+bM8Ll6xbUrrcI1zgBEe4
+ vGdqlFNBoRU0FNFXK7N5UCDSCcU6NBBlBkZeGVLLeOSlTwY2YowCtWAu5/46eRsQ23jz
+ 7smw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWHDYr1l9pehj5BX/ixXKIchxSa08TGS4KihwaazVfQHxbh4XMB/I4zroBVOu+fRrCGAY5f/c7bTjsbCiQiUCc/AJ8B5+I=
+X-Gm-Message-State: AOJu0Yw8iGE2MkpFy0nRYSAVO3cBxXbDLnNk7sCOFMYEu9rvDmpTyu+T
+ l9NCrWDPQPywkS581CKFs2+8Cj7IutLb+W3xOK0cEqjngahAuQw6HI83MEghycw=
+X-Google-Smtp-Source: AGHT+IE8n840oSp3OQ46rKjT5PQ+SAqe+DC6ISXS+z+i4WqZWa/VnyUIPMgiiM/AkYAZ7RnoFOwZaQ==
+X-Received: by 2002:a05:6a20:3b98:b0:1b8:af57:7bba with SMTP id
+ adf61e73a8af0-1bcba179d0dmr5627353637.15.1718851695995; 
+ Wed, 19 Jun 2024 19:48:15 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-706352ea4f0sm1830146b3a.211.2024.06.19.19.48.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Jun 2024 19:48:15 -0700 (PDT)
+Message-ID: <1580f5f3-968e-4aed-916b-d3d5b5ee0cc7@linaro.org>
+Date: Wed, 19 Jun 2024 19:48:13 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <8def1779-6fc8-4e53-9542-20fe83651c0b@weilnetz.de>
-User-Agent: Mutt/2.1.4 (2021-12-11)
-X-Originating-IP: [10.0.12.12]
-X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 45K2UBwp096336
-Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
- helo=Atcsqr.andestech.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RDNS_DYNAMIC=0.982,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, TVD_RCVD_IP=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 1/5] accel/tcg: Avoid unnecessary call overhead
+ from qemu_plugin_vcpu_mem_cb
+To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20240613175122.1299212-1-max.chou@sifive.com>
+ <20240613175122.1299212-2-max.chou@sifive.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240613175122.1299212-2-max.chou@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,47 +101,20 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Ethan Chen <ethan84@andestech.com>
-From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 17, 2024 at 02:09:34PM +0200, Stefan Weil wrote:
-> [EXTERNAL MAIL]
+On 6/13/24 10:51, Max Chou wrote:
+> If there are not any QEMU plugin memory callback functions, checking
+> before calling the qemu_plugin_vcpu_mem_cb function can reduce the
+> function call overhead.
 > 
-> Am 12.06.24 um 05:17 schrieb Ethan Chen via:
-> > Support basic functions of IOPMP specification v0.9.1 rapid-k model.
-> > The specification url:
-> > https://github.com/riscv-non-isa/iopmp-spec/releases/tag/v0.9.1
-> > 
-> > IOPMP check memory access from device is valid or not. This implementation uses
-> > IOMMU to change address space that device access. There are three possible
-> > results of an access: valid, blocked, and stalled(stall is not supported in this
-> >   patch).
-> > 
-> > If an access is valid, target address space is downstream_as.
-> > If an access is blocked, it will go to blocked_io_as. The operation of
-> > blocked_io_as could be a bus error, or it can respond a success with fabricated
-> > data depending on IOPMP ERR_CFG register value.
-> > 
-> > Signed-off-by: Ethan Chen <ethan84@andestech.com>
-> > ---
-> >   hw/misc/Kconfig               |    3 +
-> >   hw/misc/meson.build           |    1 +
-> >   hw/misc/riscv_iopmp.c         | 1002 +++++++++++++++++++++++++++++++++
-> >   hw/misc/trace-events          |    4 +
-> >   include/hw/misc/riscv_iopmp.h |  152 +++++
-> >   5 files changed, 1162 insertions(+)
-> >   create mode 100644 hw/misc/riscv_iopmp.c
-> >   create mode 100644 include/hw/misc/riscv_iopmp.h
-> 
-> Should both new files have SPDX license identifiers?
-> 
-> Regards,
-> Stefan W.
+> Signed-off-by: Max Chou<max.chou@sifive.com>
+> ---
+>   accel/tcg/ldst_common.c.inc | 8 ++++++--
+>   1 file changed, 6 insertions(+), 2 deletions(-)
 
-Thank you for the reminder, I will add them.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Thanks,
-Ethan
+r~
 
