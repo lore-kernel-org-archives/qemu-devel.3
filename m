@@ -4,134 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 431D5C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 17:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B48C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 17:35:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKLg4-0006z9-15; Thu, 20 Jun 2024 13:34:28 -0400
+	id 1sKLgW-0007RJ-BI; Thu, 20 Jun 2024 13:34:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sKLfp-0006p3-Km
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 13:34:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1sKLgU-0007PX-3P
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 13:34:54 -0400
+Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sKLfi-0000AH-JU
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 13:34:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718904845;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JSOwfNu+nTkhUY1sTluCY+7F6Z5c4YIiIQfEmoTmHHg=;
- b=byCF8b82UlnPovU27x4+He6ijXjD8QAvUtIch4nh9nHo6QFLVVZ56e9zesgKKML/AM2hec
- vytq5bS3IPNIrGQqCMIGGzBelMZtEyBYJ0YlfgTYqhBRuc7Z5P3Ldu+C5P5PbU3uNQ+7Ir
- r5QzTLsudKJpwLdE+wi5iCelecVqOgo=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-357-RsCUT6i1ND-V0ULtkL49YQ-1; Thu, 20 Jun 2024 13:34:04 -0400
-X-MC-Unique: RsCUT6i1ND-V0ULtkL49YQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a6ef729b465so55702166b.1
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 10:34:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718904843; x=1719509643;
- h=content-transfer-encoding:in-reply-to:autocrypt:cc:from
- :content-language:references:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JSOwfNu+nTkhUY1sTluCY+7F6Z5c4YIiIQfEmoTmHHg=;
- b=uDLTx49bFifJ649rStYe7JdQ+XUvOwOtzJVsgzImGRZe95jgt48miWKqRMl7sWlVX4
- kG22rHcEp6U0sEK/hxqHqcqpy0J8ALJmxPZL7VQ6kn5hqJF8Nk0ACPPnxW38wZEEXEtC
- mkbp5QAvEIvDEkanaordviU5i06SbmCcb6L8ZdUueRQndORbDI5tKiWm4Orl+vhF25A4
- OaIVSFoyx2x/YFdPpm9rujvEZnYjH+W3q1F2qnBTnS0OhFz5srjCA/3saV5dYfn/ED0e
- 0s208eQBWpCwFsy4UGbGtSo/8lU/IgxEkxufJcaG8uI4jOnEqZ4T4nE1U8OnlCOJoRfV
- ygFA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXK9rwvMbG/zjJ3gKp922F9dezbMlR4VZooJ6AIFORNo+TcPKZgXf6TV9OIhDk/Jzjgi8PWkxnc84W2i1Fkp50MTAAcvVI=
-X-Gm-Message-State: AOJu0YxjxPy/xGzw1M+3ZVn4E9bcJaGIUxKmy2dUiNCJr/ySOILoCux8
- pyNht3NSrwosVKmKUQ/docxzJMpDgUu/v/+A6RjbKffXPxhpoGAfkzgG7iPk/z+HNrDRsb1lzx9
- l5ucNc1wtx4M/a3Xk9Ve+a9l2ZfVCnS8FXFmWg7IivrZTlrHOcL72
-X-Received: by 2002:a17:907:a4c5:b0:a6f:b5ff:a6fd with SMTP id
- a640c23a62f3a-a6fb5ffab3cmr377264666b.12.1718904842870; 
- Thu, 20 Jun 2024 10:34:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE9gSWZIuvo9fjB5Wxq+l+RAcUI8J1ntqQr6sSEiB5xalUOAPdL5VkhOU/z+tW6rUYwIUkkjQ==
-X-Received: by 2002:a17:907:a4c5:b0:a6f:b5ff:a6fd with SMTP id
- a640c23a62f3a-a6fb5ffab3cmr377262766b.12.1718904842534; 
- Thu, 20 Jun 2024 10:34:02 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-178-117.web.vodafone.de.
- [109.43.178.117]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6fb508211csm144940766b.19.2024.06.20.10.34.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Jun 2024 10:34:02 -0700 (PDT)
-Message-ID: <6b1daa9c-6f37-4edb-86d4-782941f1bcca@redhat.com>
-Date: Thu, 20 Jun 2024 19:34:00 +0200
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1sKLgS-0000df-0o
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 13:34:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+ s=mail; t=1718904886;
+ bh=sSwbi5Sr00dyvJujaidY8U/BQcfYOIqmpLfPY0XdX7Y=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=WTeDItdZAts+WmVpr58sef2ojjJ7ChGk6tkvYFX7HKVmsDHVclrIbiAVw/KMt4xS9
+ bA7+oieW0iQzl0epJdX5+G9mjAlGb+ELjJBXnLGPBcOh6ngkO8nCnmuKWWbRTQ4u5P
+ Wu1a36MlvotMUItL42mYTfC0bQX3h53dqlrCkNAwZuuRD1bGJ2x2t6L7Sdsgwm4lzh
+ jOvKuEiTnsOG3Nc7V72wfp67drgI/mGAvNHuozg2BG/SlfA27dxWL95uLPnJuAWXtp
+ a+yIzijnTRfRcSGSGcP1IydF3pdYp14zWHiRYFpzZNl8AWhFTxXlVuNsxDh3CZwyxc
+ mrQvZQlylll0g==
+Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: dmitry.osipenko)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id AC52337810CD;
+ Thu, 20 Jun 2024 17:34:44 +0000 (UTC)
+Message-ID: <f9880609-741b-4d18-b9b0-a9b3c28c930b@collabora.com>
+Date: Thu, 20 Jun 2024 20:34:41 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: How to use designware-root-port and designware-root-host devices ?
-To: Arthur Tumanyan <arthurtumanyan@gmail.com>, qemu-devel@nongnu.org
-References: <CADueUgQh-=vmoO9kqL589Xeuf_LOM_K2Rr-rBxwe8iArdNdzsA@mail.gmail.com>
+Subject: Re: [PATCH v14 00/14] Support blob memory and venus on qemu
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, ernunes@redhat.com,
+ Alyssa Ross <hi@alyssa.is>, =?UTF-8?Q?Roger_Pau_Monn=C3=A9?=
+ <roger.pau@citrix.com>, Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+References: <20240616010357.2874662-1-dmitry.osipenko@collabora.com>
+ <87bk3wdea9.fsf@draig.linaro.org>
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Cc: qemu-arm <qemu-arm@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, 
- Andrey Smirnov <andrew.smirnov@gmail.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CADueUgQh-=vmoO9kqL589Xeuf_LOM_K2Rr-rBxwe8iArdNdzsA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <87bk3wdea9.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Received-SPF: pass client-ip=2a00:1098:ed:100::25;
+ envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,57 +91,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/06/2024 10.28, Arthur Tumanyan wrote:
-> Hi all,
+On 6/19/24 20:37, Alex Bennée wrote:
+> So I've been experimenting with Aarch64 TCG with an Intel backend like
+> this:
 > 
-> My question may sound stupid, however...
-
-  Hi Arthur,
-
-no worries, the question how to use which device in QEMU can be quite tricky ;-)
-
-> Currently I'm trying to make 
-> available designware-root-{port,host} devices  in linux when I run it in qemu.
+> ./qemu-system-aarch64 \
+>            -M virt -cpu cortex-a76 \
+>            -device virtio-net-pci,netdev=unet \
+>            -netdev user,id=unet,hostfwd=tcp::2222-:22 \
+>            -m 8192 \
+>            -object memory-backend-memfd,id=mem,size=8G,share=on \
+>            -serial mon:stdio \
+>            -kernel ~/lsrc/linux.git/builds/arm64.initramfs/arch/arm64/boot/Image \
+>            -append "console=ttyAMA0" \
+>            -device qemu-xhci -device usb-kbd -device usb-tablet \
+>            -device virtio-gpu-gl-pci,blob=true,venus=true,hostmem=4G \
+>            -display sdl,gl=on -d plugin,guest_errors,trace:virtio_gpu_cmd_res_create_blob,trace:virtio_gpu_cmd_res_back_\*,trace:virtio_gpu_cmd_res_xfer_toh_3d,trace:virtio_gpu_cmd_res_xfer_fromh_3d,trace:address_space_map 
 > 
-> I try the following way to run:
+> And I've noticed a couple of things. First trying to launch vkmark to
+> run a KMS mode test fails with:
 > 
-> qemu-system-arm -M virt -m 2G \
->       -kernel images/Image \
->       -append "rootwait root=/dev/vda ro" \
->       -drive file=images/rootfs.ext2,format=raw,id=hd0 \
->       -device designware-root-port,id=rp0,chassis=1,slot=0,bus=pcie.0,addr=1 \
->       -device e1000,netdev=net0,mac=52:54:00:12:34:56,bus=rp0,addr=0 \
->       -netdev user,id=net0
-> 
-> but it seems designware device is not enabled by default: qemu-system-arm: 
-> -device designware-root-port,id=rp0,chassis=1,slot=0,bus=pcie.0,addr=1: 
-> 'designware-root-port' is not a valid device model name
-
-Are you sure about the names?
-
-$ grep -r 'designware' *
 ...
-include/hw/pci-host/designware.h:#define TYPE_DESIGNWARE_PCIE_HOST 
-"designware-pcie-host"
-include/hw/pci-host/designware.h:#define TYPE_DESIGNWARE_PCIE_ROOT 
-"designware-pcie-root"
-
-> when I enable it from Kconfig/meson.build it says the device is already 
-> registered and exits with abort().
+>   virgl_render_server[1875931]: vkr: failed to import resource: invalid res_id 5
+>   virgl_render_server[1875931]: vkr: vkAllocateMemory resulted in CS error 
+>   virgl_render_server[1875931]: vkr: ring_submit_cmd: vn_dispatch_command failed
 > 
->  From the other hand the device is declared as non pluggable: 
-> dc->user_creatable = false;
+> More interestingly when shutting stuff down we see weirdness like:
+> 
+>   address_space_map as:0x561b48ec48c0 addr 0x1008ac4b0:18 write:1 attrs:0x1                                                                                                    
+>   virgl_render_server[1875931]: vkr: destroying context 3 (vkmark) with a valid instance                                                                                       
+>   virgl_render_server[1875931]: vkr: destroying device with valid objects                                                                                                      
+>   vkr_context_remove_object: -7438602987017907480                                                                                                                              
+>   vkr_context_remove_object: 7                                                                                                                                                 
+>   vkr_context_remove_object: 5       
+> 
+> which indicates something has gone very wrong. I'm not super familiar
+> with the memory allocation patterns but should stuff that is done as
+> virtio_gpu_cmd_res_back_attach() be find-able in the list of resources?
 
-Well, that means that you cannot use those with "-device". They can only be 
-instantiated via the code that creates the machine.
+This is expected to fail. Vkmark creates shmem virgl GBM FB BO on guest
+that isn't exportable on host. AFAICT, more code changes should be
+needed to support this case.
 
-> Can you please help me to use designware-root-host/port devices ?
+Note that "destroying device with valid objects" msg is fine, won't hurt
+to silence it in Venus to avoid confusion. It will happen every time
+guest application is closed without explicitly releasing every VK object.
 
-It seems like the i.MX7 SABRE machine is using this device, so instead of 
-"-M virt", you could have a try with "-M mcimx7d-sabre" (and a kernel that 
-supports this machine) instead.
+> I tried running under RR to further debug but weirdly I can't get
+> working graphics with that. I did try running under threadsan which
+> complained about a potential data race:
+> 
+>   vkr_context_add_object: 1 -> 0x7b2c00000288
+>   vkr_context_add_object: 2 -> 0x7b2c00000270
+>   vkr_context_add_object: 3 -> 0x7b3800007f28
+>   vkr_context_add_object: 4 -> 0x7b3800007fa0
+>   vkr_context_add_object: 5 -> 0x7b48000103f8
+>   vkr_context_add_object: 6 -> 0x7b48000104a0
+>   vkr_context_add_object: 7 -> 0x7b4800010440
+>   virtio_gpu_cmd_res_back_attach res 0x5
+>   virtio_gpu_cmd_res_back_attach res 0x6
+>   vkr_context_add_object: 8 -> 0x7b48000103e0
+>   virgl_render_server[1751430]: vkr: failed to import resource: invalid res_id 5
+>   virgl_render_server[1751430]: vkr: vkAllocateMemory resulted in CS error
+>   virgl_render_server[1751430]: vkr: ring_submit_cmd: vn_dispatch_command failed
+>   ==================
+>   WARNING: ThreadSanitizer: data race (pid=1751256)
+>     Read of size 8 at 0x7f7fa0ea9138 by main thread (mutexes: write M0):
+>       #0 memcpy <null> (qemu-system-aarch64+0x41fede) (BuildId: 0bab171e77cb6782341ee3407e44af7267974025)
+..
+>   ==================
+>   SUMMARY: ThreadSanitizer: data race (/home/alex/lsrc/qemu.git/builds/system.threadsan/qemu-system-aarch64+0x41fede) (BuildId: 0bab171e77cb6782341ee3407e44af7267974025) in __interceptor_memcpy
+> 
+> This could be a false positive or it could be a race between the guest
+> kernel clearing memory while we are still doing
+> virtio_gpu_ctrl_response.
+> 
+> What do you think?
 
-  HTH,
-   Thomas
+The memcpy warning looks a bit suspicion, but likely is harmless. I
+don't see such warning with TSAN and x86 VM.
+
+-- 
+Best regards,
+Dmitry
 
 
