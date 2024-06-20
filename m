@@ -4,87 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD0C5C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 17:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8412BC27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 17:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKL7X-0005vZ-Hg; Thu, 20 Jun 2024 12:58:47 -0400
+	id 1sKLBV-0006xz-GQ; Thu, 20 Jun 2024 13:02:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sKL7V-0005tq-Mu
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:58:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sKLBS-0006pm-QI
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 13:02:50 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sKL7U-00010J-2u
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:58:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718902723;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=edYIAQPsyNTqsiVIVNO+4eC3DTlCCk5x2IKeT2Ev60Q=;
- b=Yle8S3LjfKBY7ywDKrLnU5ea8w/Czq0qTgwTCAuZs2vToiuCp1Ipb3gxYXAnSkP+3C1LQj
- p+xbL/M9VoFHAYdcc+eR3wlWdDntDC16Mej3Leg922nzkmklXDL8OqC/Ab3YXGVN2WsoMA
- mtHrAIZ7U3WtW4zzV93VktmoQhurXlo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-517--EY-h88KO6iH_uXLpO2WVQ-1; Thu,
- 20 Jun 2024 12:58:40 -0400
-X-MC-Unique: -EY-h88KO6iH_uXLpO2WVQ-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 130B219560B0; Thu, 20 Jun 2024 16:58:37 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.69])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CD58B19560AF; Thu, 20 Jun 2024 16:58:29 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Halil Pasic <pasic@linux.ibm.com>, devel@lists.libvirt.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- David Gibson <david@gibson.dropbear.id.au>, qemu-arm@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clegoate@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-ppc@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 05/14] hw/m68k: convert 'virt' machine definitions to use
- new macros
-Date: Thu, 20 Jun 2024 17:57:33 +0100
-Message-ID: <20240620165742.1711389-6-berrange@redhat.com>
-In-Reply-To: <20240620165742.1711389-1-berrange@redhat.com>
-References: <20240620165742.1711389-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sKLBP-00024Y-Dd
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 13:02:50 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W4my54BCjz6JB7w;
+ Fri, 21 Jun 2024 01:02:37 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 66567140D27;
+ Fri, 21 Jun 2024 01:02:40 +0800 (CST)
+Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 20 Jun
+ 2024 18:02:39 +0100
+Date: Thu, 20 Jun 2024 18:02:39 +0100
+To: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <dan.j.williams@intel.com>, <dave@stgolabs.net>, <ira.weiny@intel.com>,
+ <alison.schofield@intel.com>, <dave.jiang@intel.com>,
+ <vishal.l.verma@intel.com>, Borislav Petkov <bp@alien8.de>, Tony Luck
+ <tony.luck@intel.com>, "James Morse" <james.morse@arm.com>, Mauro Carvalho
+ Chehab <mchehab@kernel.org>, Robert Richter <rric@kernel.org>,
+ <linux-edac@vger.kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, Naoya
+ Horiguchi <nao.horiguchi@gmail.com>, <linux-mm@kvack.org>
+Subject: Re: [RFC PATCH] cxl: avoid duplicating report from MCE & device
+Message-ID: <20240620180239.00004d41@Huawei.com>
+In-Reply-To: <20240618165310.877974-1-ruansy.fnst@fujitsu.com>
+References: <20240618165310.877974-1-ruansy.fnst@fujitsu.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.174.77]
+X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,157 +72,294 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This changes the DEFINE_VIRT_MACHINE macro to use the common
-helpers for constructing versioned symbol names and strings,
-bringing greater consistency across targets.
+On Wed, 19 Jun 2024 00:53:10 +0800
+Shiyang Ruan <ruansy.fnst@fujitsu.com> wrote:
 
-A DEFINE_VIRT_MACHINE_AS_LATEST helper is added so that it
-is not required to pass 'false' for every single historical
-machine type.
+> Background:
+> Since CXL device is a memory device, while CPU consumes a poison page of 
+> CXL device, it always triggers a MCE by interrupt (INT18), no matter 
+> which-First path is configured.  This is the first report.  Then 
+> currently, in FW-First path, the poison event is transferred according 
+> to the following process: CXL device -> firmware -> OS:ACPI->APEI->GHES 
+>  -> CPER -> trace report.  This is the second one.  These two reports  
+> are indicating the same poisoning page, which is the so-called "duplicate
+> report"[1].  And the memory_failure() handling I'm trying to add in
+> OS-First path could also be another duplicate report.
+> 
+> Hope the flow below could make it easier to understand:
+> CPU accesses bad memory on CXL device, then
+>  -> MCE (INT18), *always* report (1)
+>  -> * FW-First (implemented now)
+>       -> CXL device -> FW
+> 	      -> OS:ACPI->APEI->GHES->CPER -> trace report (2.a)  
+>     * OS-First (not implemented yet, I'm working on it)
+>       -> CXL device -> MSI
+> 	      -> OS:CXL driver -> memory_failure() (2.b)  
+> so, the (1) and (2.a/b) are duplicated.
+> 
+> (I didn't get response in my reply for [1] while I have to make patch to
+> solve this problem, so please correct me if my understanding is wrong.)
+> 
+> This patch adds a new notifier_block and MCE_PRIO_CXL, for CXL memdev
+> to check whether the current poison page has been reported (if yes,
+> stop the notifier chain, won't call the following memory_failure()
+> to report), into `x86_mce_decoder_chain`.  In this way, if the poison
+> page already handled(recorded and reported) in (1) or (2), the other one
+> won't duplicate the report.  The record could be clear when
+> cxl_clear_poison() is called.
+> 
+> [1] https://lore.kernel.org/linux-cxl/664d948fb86f0_e8be294f8@dwillia2-mobl3.amr.corp.intel.com.notmuch/
+> 
+> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- hw/m68k/virt.c | 51 ++++++++++++++++++++++++++++----------------------
- 1 file changed, 29 insertions(+), 22 deletions(-)
+So poison can be cleared in a number of ways and a CXL poison clear command
+is unfortunately only one of them.  Some architectures have instructions
+that guarantee to write a whole cacheline and can clear things as well.
+I believe x86 does for starters.
 
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index 09bc9bdfef..cd6ee692f7 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -335,99 +335,106 @@ static void virt_machine_register_types(void)
- 
- type_init(virt_machine_register_types)
- 
--#define DEFINE_VIRT_MACHINE(major, minor, latest) \
--    static void virt_##major##_##minor##_class_init(ObjectClass *oc, \
--                                                    void *data) \
-+#define DEFINE_VIRT_MACHINE_IMPL(latest, ...) \
-+    static void MACHINE_VER_SYM(class_init, virt, __VA_ARGS__)( \
-+        ObjectClass *oc, \
-+        void *data) \
-     { \
-         MachineClass *mc = MACHINE_CLASS(oc); \
--        virt_machine_##major##_##minor##_options(mc); \
--        mc->desc = "QEMU " # major "." # minor " M68K Virtual Machine"; \
-+        MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
-+        mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " M68K Virtual Machine"; \
-         if (latest) { \
-             mc->alias = "virt"; \
-         } \
-     } \
--    static const TypeInfo machvirt_##major##_##minor##_info = { \
--        .name = MACHINE_TYPE_NAME("virt-" # major "." # minor), \
-+    static const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = \
-+    { \
-+        .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
-         .parent = MACHINE_TYPE_NAME("virt"), \
--        .class_init = virt_##major##_##minor##_class_init, \
-+        .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
-     }; \
--    static void machvirt_machine_##major##_##minor##_init(void) \
-+    static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
-     { \
--        type_register_static(&machvirt_##major##_##minor##_info); \
-+        type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
-     } \
--    type_init(machvirt_machine_##major##_##minor##_init);
-+    type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
-+
-+#define DEFINE_VIRT_MACHINE_AS_LATEST(major, minor) \
-+    DEFINE_VIRT_MACHINE_IMPL(true, major, minor)
-+#define DEFINE_VIRT_MACHINE(major, minor) \
-+    DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
- 
- static void virt_machine_9_1_options(MachineClass *mc)
- {
- }
--DEFINE_VIRT_MACHINE(9, 1, true)
-+DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
- 
- static void virt_machine_9_0_options(MachineClass *mc)
- {
-     virt_machine_9_1_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
- }
--DEFINE_VIRT_MACHINE(9, 0, false)
-+DEFINE_VIRT_MACHINE(9, 0)
- 
- static void virt_machine_8_2_options(MachineClass *mc)
- {
-     virt_machine_9_0_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_8_2, hw_compat_8_2_len);
- }
--DEFINE_VIRT_MACHINE(8, 2, false)
-+DEFINE_VIRT_MACHINE(8, 2)
- 
- static void virt_machine_8_1_options(MachineClass *mc)
- {
-     virt_machine_8_2_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_8_1, hw_compat_8_1_len);
- }
--DEFINE_VIRT_MACHINE(8, 1, false)
-+DEFINE_VIRT_MACHINE(8, 1)
- 
- static void virt_machine_8_0_options(MachineClass *mc)
- {
-     virt_machine_8_1_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_8_0, hw_compat_8_0_len);
- }
--DEFINE_VIRT_MACHINE(8, 0, false)
-+DEFINE_VIRT_MACHINE(8, 0)
- 
- static void virt_machine_7_2_options(MachineClass *mc)
- {
-     virt_machine_8_0_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_7_2, hw_compat_7_2_len);
- }
--DEFINE_VIRT_MACHINE(7, 2, false)
-+DEFINE_VIRT_MACHINE(7, 2)
- 
- static void virt_machine_7_1_options(MachineClass *mc)
- {
-     virt_machine_7_2_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_7_1, hw_compat_7_1_len);
- }
--DEFINE_VIRT_MACHINE(7, 1, false)
-+DEFINE_VIRT_MACHINE(7, 1)
- 
- static void virt_machine_7_0_options(MachineClass *mc)
- {
-     virt_machine_7_1_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_7_0, hw_compat_7_0_len);
- }
--DEFINE_VIRT_MACHINE(7, 0, false)
-+DEFINE_VIRT_MACHINE(7, 0)
- 
- static void virt_machine_6_2_options(MachineClass *mc)
- {
-     virt_machine_7_0_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_6_2, hw_compat_6_2_len);
- }
--DEFINE_VIRT_MACHINE(6, 2, false)
-+DEFINE_VIRT_MACHINE(6, 2)
- 
- static void virt_machine_6_1_options(MachineClass *mc)
- {
-     virt_machine_6_2_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_6_1, hw_compat_6_1_len);
- }
--DEFINE_VIRT_MACHINE(6, 1, false)
-+DEFINE_VIRT_MACHINE(6, 1)
- 
- static void virt_machine_6_0_options(MachineClass *mc)
- {
-     virt_machine_6_1_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_6_0, hw_compat_6_0_len);
- }
--DEFINE_VIRT_MACHINE(6, 0, false)
-+DEFINE_VIRT_MACHINE(6, 0)
--- 
-2.43.0
++CC linux-edac and related maintainers / reviewers.
+    linux-mm and hwpoison maintainer.
+
+So I think this needs a more general solution that encompasses 
+more general cleanup of poison.
+
+Trivial comments inline.
+
+Jonathan
+
+
+> ---
+>  arch/x86/include/asm/mce.h |   1 +
+>  drivers/cxl/core/mbox.c    | 130 +++++++++++++++++++++++++++++++++++++
+>  drivers/cxl/core/memdev.c  |   6 +-
+>  drivers/cxl/cxlmem.h       |   3 +
+>  4 files changed, 139 insertions(+), 1 deletion(-)
+> 
+> diff --git a/arch/x86/include/asm/mce.h b/arch/x86/include/asm/mce.h
+> index dfd2e9699bd7..d8109c48e7d9 100644
+> --- a/arch/x86/include/asm/mce.h
+> +++ b/arch/x86/include/asm/mce.h
+> @@ -182,6 +182,7 @@ enum mce_notifier_prios {
+>  	MCE_PRIO_NFIT,
+>  	MCE_PRIO_EXTLOG,
+>  	MCE_PRIO_UC,
+> +	MCE_PRIO_CXL,
+>  	MCE_PRIO_EARLY,
+>  	MCE_PRIO_CEC,
+>  	MCE_PRIO_HIGHEST = MCE_PRIO_CEC
+> diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+> index 2626f3fff201..0eb3c5401e81 100644
+> --- a/drivers/cxl/core/mbox.c
+> +++ b/drivers/cxl/core/mbox.c
+> @@ -4,6 +4,8 @@
+>  #include <linux/debugfs.h>
+>  #include <linux/ktime.h>
+>  #include <linux/mutex.h>
+> +#include <linux/notifier.h>
+> +#include <asm/mce.h>
+>  #include <asm/unaligned.h>
+>  #include <cxlpci.h>
+>  #include <cxlmem.h>
+> @@ -880,6 +882,9 @@ void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
+>  		if (cxlr)
+>  			hpa = cxl_trace_hpa(cxlr, cxlmd, dpa);
+>  
+> +		if (hpa != ULLONG_MAX && cxl_mce_recorded(hpa))
+> +			return;
+> +
+>  		if (event_type == CXL_CPER_EVENT_GEN_MEDIA)
+>  			trace_cxl_general_media(cxlmd, type, cxlr, hpa,
+>  						&evt->gen_media);
+> @@ -1408,6 +1413,127 @@ int cxl_poison_state_init(struct cxl_memdev_state *mds)
+>  }
+>  EXPORT_SYMBOL_NS_GPL(cxl_poison_state_init, CXL);
+>  
+> +struct cxl_mce_record {
+> +	struct list_head node;
+> +	u64 hpa;
+> +};
+> +LIST_HEAD(cxl_mce_records);
+> +DEFINE_MUTEX(cxl_mce_mutex);
+> +
+> +bool cxl_mce_recorded(u64 hpa)
+> +{
+> +	struct cxl_mce_record *cur, *next, *rec;
+> +	int rc;
+> +
+> +	rc = mutex_lock_interruptible(&cxl_mce_mutex);
+
+guard(mutex)(&cxl_mce_muted);
+
+> +	if (rc)
+> +		return false;
+> +
+> +	list_for_each_entry_safe(cur, next, &cxl_mce_records, node) {
+> +		if (cur->hpa == hpa) {
+> +			mutex_unlock(&cxl_mce_mutex);
+> +			return true;
+> +		}
+> +	}
+> +
+> +	rec = kmalloc(sizeof(struct cxl_mce_record), GFP_KERNEL);
+> +	rec->hpa = hpa;
+> +	list_add(&cxl_mce_records, &rec->node);
+> +
+> +	mutex_unlock(&cxl_mce_mutex);
+> +
+> +	return false;
+> +}
+> +
+> +void cxl_mce_clear(u64 hpa)
+> +{
+> +	struct cxl_mce_record *cur, *next;
+> +	int rc;
+> +
+> +	rc = mutex_lock_interruptible(&cxl_mce_mutex);
+
+Maybe cond_guard().
+
+> +	if (rc)
+> +		return;
+> +
+> +	list_for_each_entry_safe(cur, next, &cxl_mce_records, node) {
+> +		if (cur->hpa == hpa) {
+> +			list_del(&cur->node);
+> +			break;
+> +		}
+> +	}
+> +
+> +	mutex_unlock(&cxl_mce_mutex);
+> +}
+> +
+> +struct cxl_contains_hpa_context {
+> +	bool contains;
+> +	u64 hpa;
+> +};
+> +
+> +static int __cxl_contains_hpa(struct device *dev, void *arg)
+> +{
+> +	struct cxl_contains_hpa_context *ctx = arg;
+> +	struct cxl_endpoint_decoder *cxled;
+> +	struct range *range;
+> +	u64 hpa = ctx->hpa;
+> +
+> +	if (!is_endpoint_decoder(dev))
+> +		return 0;
+> +
+> +	cxled = to_cxl_endpoint_decoder(dev);
+> +	range = &cxled->cxld.hpa_range;
+> +
+> +	if (range->start <= hpa && hpa <= range->end) {
+> +		ctx->contains = true;
+> +		return 1;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static bool cxl_contains_hpa(const struct cxl_memdev *cxlmd, u64 hpa)
+> +{
+> +	struct cxl_contains_hpa_context ctx = {
+> +		.contains = false,
+> +		.hpa = hpa,
+> +	};
+> +	struct cxl_port *port;
+> +
+> +	port = cxlmd->endpoint;
+> +	if (port && is_cxl_endpoint(port) && cxl_num_decoders_committed(port))
+> +		device_for_each_child(&port->dev, &ctx, __cxl_contains_hpa);
+> +
+> +	return ctx.contains;
+> +}
+> +
+> +static int cxl_handle_mce(struct notifier_block *nb, unsigned long val,
+> +			  void *data)
+> +{
+> +	struct mce *mce = (struct mce *)data;
+> +	struct cxl_memdev_state *mds = container_of(nb, struct cxl_memdev_state,
+> +						    mce_notifier);
+> +	u64 hpa;
+> +
+> +	if (!mce || !mce_usable_address(mce))
+> +		return NOTIFY_DONE;
+> +
+> +	hpa = mce->addr & MCI_ADDR_PHYSADDR;
+> +
+> +	/* Check if the PFN is located on this CXL device */
+> +	if (!pfn_valid(hpa >> PAGE_SHIFT) &&
+> +	    !cxl_contains_hpa(mds->cxlds.cxlmd, hpa))
+> +		return NOTIFY_DONE;
+> +
+> +	/*
+> +	 * Search PFN in the cxl_mce_records, if already exists, don't continue
+> +	 * to do memory_failure() to avoid a poison address being reported
+> +	 * more than once.
+> +	 */
+> +	if (cxl_mce_recorded(hpa))
+> +		return NOTIFY_STOP;
+> +	else
+> +		return NOTIFY_OK;
+> +}
+> +
+>  struct cxl_memdev_state *cxl_memdev_state_create(struct device *dev)
+>  {
+>  	struct cxl_memdev_state *mds;
+> @@ -1427,6 +1553,10 @@ struct cxl_memdev_state *cxl_memdev_state_create(struct device *dev)
+>  	mds->ram_perf.qos_class = CXL_QOS_CLASS_INVALID;
+>  	mds->pmem_perf.qos_class = CXL_QOS_CLASS_INVALID;
+>  
+> +	mds->mce_notifier.notifier_call = cxl_handle_mce;
+> +	mds->mce_notifier.priority = MCE_PRIO_CXL;
+> +	mce_register_decode_chain(&mds->mce_notifier);
+> +
+>  	return mds;
+>  }
+>  EXPORT_SYMBOL_NS_GPL(cxl_memdev_state_create, CXL);
+> diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
+> index 0277726afd04..aa3ac89d17be 100644
+> --- a/drivers/cxl/core/memdev.c
+> +++ b/drivers/cxl/core/memdev.c
+> @@ -376,10 +376,14 @@ int cxl_clear_poison(struct cxl_memdev *cxlmd, u64 dpa)
+>  		goto out;
+>  
+>  	cxlr = cxl_dpa_to_region(cxlmd, dpa);
+> -	if (cxlr)
+> +	if (cxlr) {
+> +		u64 hpa = cxl_trace_hpa(cxlr, cxlmd, dpa);
+> +
+> +		cxl_mce_clear(hpa);
+>  		dev_warn_once(mds->cxlds.dev,
+>  			      "poison clear dpa:%#llx region: %s\n", dpa,
+>  			      dev_name(&cxlr->dev));
+> +	}
+>  
+>  	record = (struct cxl_poison_record) {
+>  		.address = cpu_to_le64(dpa),
+> diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
+> index 19aba81cdf13..fbf8d9f46984 100644
+> --- a/drivers/cxl/cxlmem.h
+> +++ b/drivers/cxl/cxlmem.h
+> @@ -501,6 +501,7 @@ struct cxl_memdev_state {
+>  	struct cxl_fw_state fw;
+>  
+>  	struct rcuwait mbox_wait;
+> +	struct notifier_block mce_notifier;
+>  	int (*mbox_send)(struct cxl_memdev_state *mds,
+>  			 struct cxl_mbox_cmd *cmd);
+>  };
+> @@ -836,6 +837,8 @@ int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
+>  int cxl_trigger_poison_list(struct cxl_memdev *cxlmd);
+>  int cxl_inject_poison(struct cxl_memdev *cxlmd, u64 dpa);
+>  int cxl_clear_poison(struct cxl_memdev *cxlmd, u64 dpa);
+> +bool cxl_mce_recorded(u64 pfn);
+> +void cxl_mce_clear(u64 pfn);
+>  
+>  #ifdef CONFIG_CXL_SUSPEND
+>  void cxl_mem_active_inc(void);
 
 
