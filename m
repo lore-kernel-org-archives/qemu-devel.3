@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2B63C2BA18
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B3D7C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:04:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKHRT-0001Pt-Cn; Thu, 20 Jun 2024 09:03:07 -0400
+	id 1sKHRY-0001Qt-5h; Thu, 20 Jun 2024 09:03:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKHRS-0001Pd-1V
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:06 -0400
+ id 1sKHRV-0001QF-Q3
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKHRQ-0006WT-7B
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:05 -0400
+ id 1sKHRU-0006Wk-1S
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718888582;
+ s=mimecast20190719; t=1718888587;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=QCI976/3sOBC9H/aNjSRBPY5v3P4X1vwvF1rF8Dw3q0=;
- b=DTW6K47+y/HvNl+1m+qnUBIVRvjtC+9emahWm6Lfb3V+6fd3dneHoXxPOXHuJIBeZMnh4n
- df7zpqXSxDmVSsvaB2fFJOSLrDgjB4WZUlo4dlVNEaMfumzFmB3zGCcnWPMSscxNWTh4GI
- hENfxO7lSLpwqvajkNyMkSzzs8hDaUQ=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i1Dd/q0yvFV1Rcm+rk+YwoeGVJGUNMen0d4jeqopdXw=;
+ b=QkhEdI6rCHFBYbj8ZcBmgbNzhY+BH2FpZAReDH/nR/8JS45KWXky8cBO65XvCJnO1eXq+O
+ HPql0YLO8Ui16TLSH+eLqkRdSbdztrQ8+VGwnPJgUH2MOCwsm9m/ruC4k7YbwOVmp6htug
+ tf3sMKaS47XinbNw3REY8yHAZGIErAI=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-oqaVSV3fNkWL_h_CcKqb1A-1; Thu, 20 Jun 2024 09:03:01 -0400
-X-MC-Unique: oqaVSV3fNkWL_h_CcKqb1A-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a6f1db7e425so53577766b.1
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 06:03:00 -0700 (PDT)
+ us-mta-79-rRws4LMSNFqBVquPjpmL8Q-1; Thu, 20 Jun 2024 09:03:05 -0400
+X-MC-Unique: rRws4LMSNFqBVquPjpmL8Q-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a6efbb08949so36771166b.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 06:03:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718888579; x=1719493379;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QCI976/3sOBC9H/aNjSRBPY5v3P4X1vwvF1rF8Dw3q0=;
- b=fuJHa3FfIySdpv0gW/BsGH21IozaVg2b/P0awlOCHXRfTzVA1GXxyf88MLqt/64dU1
- v2U5qUrswu5XgGZXLlcV6ZfBDpsFbpKxHUSZyFeMYmTG6MFMNbCKYIAFnWhtM0FzlMin
- kWcyKwtgta53kZrcQUxtQOBxZG5enqG0OmkZFzUz697WP8MZjyJUQX12WGHJI3+5BE2Z
- KV42yBlNemRaHibAjTBufx0MNwTc72ubQc3LFHf0TusvHSxGztpT1Anal40/0veyqFzZ
- WJTloz5oRLHeTmWD9jkAOyjpW0a4yNKzXxCDjHxKPFHpgWYMv/yo/C7r0/f2WRYN4FAp
- s6AA==
-X-Gm-Message-State: AOJu0YyexvSd83u56xVw23fOcoRqBIl5CYaDJYcgNtG7U/H4FP4kz7BL
- zpD57kOZuVwwA2Dr2iaRpQIpg/YzjGcu5y6W2fB0BkcIHLH21jRXzciWBC0AcyAkurINgHQW4nW
- l+sRfgtoors8ZxIbTIwhBQ8W5xanBqyYVYe7ziROjnrYf8e+K1CYGBNapNVyb6yHR3B/pXrcXz3
- wTUnrm9wnTobJvHfhWGE8P+NG+KTc+7Wou9vqY
-X-Received: by 2002:a17:906:1359:b0:a6f:5f26:4d91 with SMTP id
- a640c23a62f3a-a6fab7d14f7mr333905366b.69.1718888579140; 
- Thu, 20 Jun 2024 06:02:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHfQWeklky7wgsg2sBmX8DsrVun3SL5HuxQ3LhqBV+ScAkbmCuB0nnILN1m5Tv2o9STIC+6jQ==
-X-Received: by 2002:a17:906:1359:b0:a6f:5f26:4d91 with SMTP id
- a640c23a62f3a-a6fab7d14f7mr333902866b.69.1718888578617; 
- Thu, 20 Jun 2024 06:02:58 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718888584; x=1719493384;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=i1Dd/q0yvFV1Rcm+rk+YwoeGVJGUNMen0d4jeqopdXw=;
+ b=s3wn/Tn+yq4ok/sKwqjoJPtZupUxzmxJFqKDBFGvnPNZEKNJHBRBCeVgfs7S+2z0fO
+ 390Pu6t4dY1Wa6hBgbNHescyCDc92hUkxFkGl80UiTBMu/qZw+dkrGotcKgd/voxVpkD
+ XHxxM3QXnnsdM4XbmSBV5IxGPgeRCA9Ly42JjOjH8odD6RPiDiFCwSqE86NEEcpYEjQA
+ kuz0Y+aiv4m8OGYYpzLirMBUunDOm63quAQoOXpV6buQqvmaERX+i/+peENhoDjfZlxo
+ IgX2Wu8wE2ejX4mS64A8/9WiLZ29KHni7TgZKKjiM9HKZWVgixbM+oh3HvMy/J7r6ydj
+ nfWw==
+X-Gm-Message-State: AOJu0YyWL1H4lDEZACXtrtcL7lW7JaXKu2AyDrUbOK8Sf6ielH7YiBsl
+ J1+BHaIA2HnccXjNi2CiiDF5lI5xH1Bs4GLsKPG4cJ1NLPhVdGF0ZzsfMYh6qaepD+xT6eYR6AL
+ yqeGQAqcFLD85BsIzMms3CjV+ZUSHt5ReWOPF7vlmyMOP64CYh/b0Ns3q/X5XPIGRoQ60pEVMEf
+ mVY1sJnC8JOQ+fKrv1JvzeYpaDQmVawsoPfGJ0
+X-Received: by 2002:a17:907:d30c:b0:a6f:b1fa:aa24 with SMTP id
+ a640c23a62f3a-a6fb1faaa8dmr371966366b.5.1718888584329; 
+ Thu, 20 Jun 2024 06:03:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGHRVK/lLtA1fciNUQY7dGRTNR3lwYErop8nKJa0PTh/upPFcXV3U1WntbRveVeG1j0iC0pOA==
+X-Received: by 2002:a17:907:d30c:b0:a6f:b1fa:aa24 with SMTP id
+ a640c23a62f3a-a6fb1faaa8dmr371963766b.5.1718888583928; 
+ Thu, 20 Jun 2024 06:03:03 -0700 (PDT)
 Received: from avogadro.local ([151.62.196.71])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f8a6e58bdsm344477466b.187.2024.06.20.06.02.57
+ a640c23a62f3a-a6f56fa415dsm772240266b.220.2024.06.20.06.03.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Jun 2024 06:02:58 -0700 (PDT)
+ Thu, 20 Jun 2024 06:03:03 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  amonakov@ispras.ru
-Subject: [PATCH 0/6] host/i386: allow configuring the x86-64 baseline
-Date: Thu, 20 Jun 2024 15:02:48 +0200
-Message-ID: <20240620130254.415699-1-pbonzini@redhat.com>
+Subject: [PATCH 2/6] Revert "host/i386: assume presence of SSSE3"
+Date: Thu, 20 Jun 2024 15:02:50 +0200
+Message-ID: <20240620130254.415699-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240620130254.415699-1-pbonzini@redhat.com>
+References: <20240620130254.415699-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -101,35 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As discussed, add a Meson option to configure which x86-64 instruction
-set to use.  QEMU will now default to x86-64-v1 + cmpxchg16b for
-64-bit builds (that corresponds to a Pentium 4 for 32-bit builds).
+This reverts commit 433cd6d94a8256af70a5200f236dc8047c3c1468.
+The x86-64 instruction set can now be tuned down to x86-64 v1
+or i386 Pentium Pro.
 
-The baseline can be tuned down to Pentium Pro for 32-bit builds (with
--Dx86_version=0), or up as desired.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ util/cpuinfo-i386.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Patch "host/i386: assume presence of CMOV" is not reverted because
-CMOV appeared first in the Pentium Pro.
-
-Paolo
-
-Paolo Bonzini (6):
-  Revert "host/i386: assume presence of POPCNT"
-  Revert "host/i386: assume presence of SSSE3"
-  Revert "host/i386: assume presence of SSE2"
-  meson: allow configuring the x86-64 baseline
-  meson: remove dead optimization option
-  meson: require compiler support for chosen x86-64 instructions
-
- meson.build                      | 56 ++++++++++++++++++++------------
- host/include/i386/host/cpuinfo.h |  2 ++
- tcg/i386/tcg-target.h            |  5 +--
- util/bufferiszero.c              |  4 +--
- util/cpuinfo-i386.c              |  6 ++--
- meson_options.txt                |  5 +--
- scripts/meson-buildoptions.sh    |  3 ++
- 7 files changed, 52 insertions(+), 29 deletions(-)
-
+diff --git a/util/cpuinfo-i386.c b/util/cpuinfo-i386.c
+index 6d474a6259a..ca74ef04f54 100644
+--- a/util/cpuinfo-i386.c
++++ b/util/cpuinfo-i386.c
+@@ -38,8 +38,8 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+         info |= (c & bit_POPCNT ? CPUINFO_POPCNT : 0);
+         info |= (c & bit_PCLMUL ? CPUINFO_PCLMUL : 0);
+ 
+-        /* NOTE: our AES support requires SSSE3 (PSHUFB) as well. */
+-        info |= (c & bit_AES) ? CPUINFO_AES : 0;
++        /* Our AES support requires PSHUFB as well. */
++        info |= ((c & bit_AES) && (c & bit_SSSE3) ? CPUINFO_AES : 0);
+ 
+         /* For AVX features, we must check available and usable. */
+         if ((c & bit_AVX) && (c & bit_OSXSAVE)) {
 -- 
 2.45.2
 
