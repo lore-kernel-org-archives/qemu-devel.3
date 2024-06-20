@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFB76C2BA1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 16:24:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5566DC27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 16:33:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKKZn-0007o9-5V; Thu, 20 Jun 2024 12:23:55 -0400
+	id 1sKKi0-0003Fg-8Y; Thu, 20 Jun 2024 12:32:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sKKZm-0007nx-8l
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:23:54 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sKKhx-0003FV-Ss
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:32:21 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sKKZk-0002Qv-Co
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:23:53 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1f70ec6ff8bso357465ad.0
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 09:23:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sKKhv-0004Ce-2z
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:32:21 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-57d1012e52fso1218732a12.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 09:32:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1718900630; x=1719505430; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=puNEomUppI0lbgfiSMvHjV5koJDgqVwAWVy5Q7cT9j0=;
- b=A/Xt5ktkWaoL5HecMkk/LmyaI39ELRmuObbuWb4wAa9KU5jikGpghWCNtjhs7ao5Jr
- 8EFa8j3YcP4fEEljjJVMuWgsRlebFzBBVOKc0ChX9m3uytw1xe0NoGbUy+myHp5Xrukc
- cfwbfymiVFrWUVeX8WVlK6SbVYdcAQyPdOMgqlEyNcGLeIcOMDl1QaXqsn26ZqcoS0VV
- LBNyxm9oRajlOmmdOkaoRNQM/RM5tdNIIjwxK6ujbTe8V8cPvANxX7FD1jU9PG5FrW8M
- yMfp3qmcLLQswgScbvnY/QzpKXmuosVZsFKdHt72WA+afZk6bwMRjBJpLdadNI7ag9C2
- nu8Q==
+ d=linaro.org; s=google; t=1718901136; x=1719505936; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=BETFTTWU9xVFhpYusm7c0IREOV0G6oO8cUsS5wkRjSk=;
+ b=GKtnvsGhtBkn3rRQC4qx6bIBwHAILEFyXomr4R0Ah4zk+ksvjTolXa6pfyxqoyKro1
+ RtNGxoomD3xS41fd5vgwnVq5PDJ0TVkWhYnpewmUgcrUiqRSKAda/hxVb0JVcOMrsk6c
+ DAEBiTf0/HH2mEwBcrXKQ7jlmz2SNQ05CSDIRLpuCPTQsU6W2x1XeCFksTX+0HLFIa3V
+ FIj+tVnYCbxuC1dcjqsumK6NNJhZN9j4Noql/x/4UvrH9DXQAEhXaeTNXj0xON3SnpCo
+ qU8AkRXzLJgxaz5R3Rllo8FS2f0k2Sq/DBvIkz/U+5Uxh0txLppmoINBtAo/6Ozq+l1B
+ Wucg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718900630; x=1719505430;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=puNEomUppI0lbgfiSMvHjV5koJDgqVwAWVy5Q7cT9j0=;
- b=wLsdv/qA2bpClYbNK0XgTmFZbb1DAi2/pKY6ffcUKvq6ypJv+UBsWbnwlYkrvTUGqF
- 10JsSQN26x7s9nljp4dp1R4fHgwGo8jWXENxVEDub/xBaT0185/c3gwJ5MXrZ6zuDard
- 6O03bsuMXXxqJdy01gbj2tqGObhU7B+1/mVSc3Vyml0sl0/jDb7WXDsIfGda3jQgTmcP
- 61ys1FFP6m2uWGzA95NDYeWbzQh8pKvEHzb9O+tUVcHstA2TxB16Yz0DHadczi/uUS7k
- VIDcykou+iutod7fNvWPvSEUyEiL5L7WrN8pdmG1RtApNkjMOiMd3cXmgvtZ8Ir0OUEe
- qzcg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4nX+zCSEWlhjvL5Nznhn3csqX0WnZP1lQQS/fleFCqPqkQTdY7Un7qIHRZ+7bNDARx+fS0bXskBqK3V3MO9USWCvnyec=
-X-Gm-Message-State: AOJu0YwnEzn3sl7RBpTT1h3DGCQAZjzQC06mxOiIVKOHKDPsCyWnPLYw
- YWYpC7zUcFRH1r7wkShS8Mr/8lf8ffz3LIvkvzSIo5yV+GF0p2k7/5mcKuSUsTDhZUSjDnNowtY
- LVlzbtT3pOVRPLEFXJ8pUWwSqwCpxPCVnN1NSbfMQ291y4K6j6Q==
-X-Google-Smtp-Source: AGHT+IHf4Ku/qoS5AK41BCMqSaVUWGMM55ts1tmnUjbfR4y6ZTCgFbN5keHEqocJSu3QJ43pPS86Hw1WOKBlh5WQaN0=
-X-Received: by 2002:a17:902:fd06:b0:1f6:f96c:4a44 with SMTP id
- d9443c01a7336-1f9ac1ec02dmr6192335ad.22.1718900629725; Thu, 20 Jun 2024
- 09:23:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718901136; x=1719505936;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BETFTTWU9xVFhpYusm7c0IREOV0G6oO8cUsS5wkRjSk=;
+ b=IuqF8j2i5TQPm7tJ0X7NCYNjiBng3ksCKTAiPToM9vc2Nvjq8LBY4jO7/XK5FdYrKk
+ M4pzyQ3GIyOYJTEsDFcZ2eypkjOBu5hE5Y2EkPLMCwbXmtpHNcL+1/j1+XQNEC7R8vRl
+ 71IXSYFFLmCC0LxuH4v/fIxHdb1Jz8WrVUWy2qLznFAjfh5dutQKeSfCWbgiFqohrQqk
+ 6LIRJFemj8uFahCBADXovAL2V0uPt9IbqUD6jdSHI1LiZ43XEPcEvC8wW2x/M+az4cRS
+ vu8PLSuG5+5S0GUbUf4GUH8Mi7Z/xgbYjFxewm1l5m03R0WwvlNZAFmoQA3q27Ef8M4n
+ Q7XA==
+X-Gm-Message-State: AOJu0YyTYNEoIz0QeBfWjjI6rmNGrJ4wKrCbieEZUFlySvCxMtneiccU
+ L5Ppl6xHQSPk6lvmbdGkXdr3b2mOuPJnqib9OjRljzmkPaCuveId/+c1MhvQlXc=
+X-Google-Smtp-Source: AGHT+IGjDUPllxGrta/5OsME+eNu18MwDmIOp0EbhhMq0IuTYsxv6FD6sA1HaiJnpiXEt9DNSyQGGA==
+X-Received: by 2002:a50:ab52:0:b0:57d:50e:d76b with SMTP id
+ 4fb4d7f45d1cf-57d07e2c81amr3465198a12.7.1718901135916; 
+ Thu, 20 Jun 2024 09:32:15 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-57cb741e78fsm9927796a12.71.2024.06.20.09.32.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Jun 2024 09:32:11 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id ED5ED5F7B1;
+ Thu, 20 Jun 2024 17:32:09 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [RFC PATCH] hw/core/cpu.h: try and document CPU_FOREACH[_SAFE]
+Date: Thu, 20 Jun 2024 17:32:04 +0100
+Message-Id: <20240620163204.2213916-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-References: <20240618224604.879275-1-rkir@google.com>
- <495d3ddc-ce73-4ef5-badd-16ed61f9a5aa@linaro.org>
- <ZnKRLj3usYxmAIOE@redhat.com> <87le2zbqfx.fsf@draig.linaro.org>
-In-Reply-To: <87le2zbqfx.fsf@draig.linaro.org>
-From: Roman Kiryanov <rkir@google.com>
-Date: Thu, 20 Jun 2024 09:23:37 -0700
-Message-ID: <CAOGAQeov7kwbopVPyVZwS3mYvWqMb_0=K4te09ENdtg-P7M23g@mail.gmail.com>
-Subject: Re: [PATCH 3/3] exec: use char* for pointer arithmetic
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- jansene@google.com, mett@google.com, jpcottin@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=rkir@google.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,24 +97,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel and Alex,
+There is some confusion about when you should use one over the other.
+Lets try and address that by adding some kdoc comments.
 
-On Thu, Jun 20, 2024 at 8:10=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linar=
-o.org> wrote:
->
-> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-> > NB, QEMU is explicitly *NOT* targetting the C standard, we are
-> > targetting the C dialect supported by GCC and CLang only. IOW,
-> > if they have well defined behaviour for arithmetic on void *,
-> > then we are free to use it.
->
-> It looks like GNU C does support it:
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ include/hw/core/cpu.h | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-GCC does support void* pointer arithmetic as an extension. But if you
-decide to use other compilers, you might not have the same luck. We
-(and maybe other developers) would like to use the QEMU headers with a
-C++ compiler where this extension is not available.
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index a2c8536943..7122f742c1 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -587,8 +587,25 @@ extern CPUTailQ cpus_queue;
+ 
+ #define first_cpu        QTAILQ_FIRST_RCU(&cpus_queue)
+ #define CPU_NEXT(cpu)    QTAILQ_NEXT_RCU(cpu, node)
++
++/**
++ * CPU_FOREACH - Helper to iterate over all CPUs
++ *
++ * This macro iterates over all CPUs in the system. It must be used
++ * under an RCU read protection, e.g. WITH_RCU_READ_LOCK_GUARD(). If
++ * you don't want the CPU list to change while iterating use
++ * CPU_FOREACH_SAFE under the cpu_list_lock().
++ */
+ #define CPU_FOREACH(cpu) QTAILQ_FOREACH_RCU(cpu, &cpus_queue, node)
+-#define CPU_FOREACH_SAFE(cpu, next_cpu) \
++
++/**
++ * CPU_FOREACH_SAFE - Helper to iterate over all CPUs, safe against CPU changes
++ *
++ * This macro iterates over all CPUs in the system, and is safe
++ * against CPU list changes. The target data structure must be
++ * protected by cpu_list_lock(), and does not need RCU.
++ */
++#define CPU_FOREACH_SAFE(cpu, next_cpu)                         \
+     QTAILQ_FOREACH_SAFE_RCU(cpu, &cpus_queue, node, next_cpu)
+ 
+ extern __thread CPUState *current_cpu;
+-- 
+2.39.2
 
-Regards,
-Roman.
 
