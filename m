@@ -4,67 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73DA9C2BA18
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 14:16:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D014C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 14:21:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKIZw-0007UQ-7P; Thu, 20 Jun 2024 10:15:56 -0400
+	id 1sKIeT-0001Na-N7; Thu, 20 Jun 2024 10:20:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sKIZt-0007Te-Mh; Thu, 20 Jun 2024 10:15:53 -0400
-Received: from forwardcorp1a.mail.yandex.net
- ([2a02:6b8:c0e:500:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sKIZq-0003eE-8U; Thu, 20 Jun 2024 10:15:53 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 74E2160F98;
- Thu, 20 Jun 2024 17:15:42 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b486::1:24] (unknown
- [2a02:6b8:b081:b486::1:24])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id eFLBbs1IkW20-AfBrssHv; Thu, 20 Jun 2024 17:15:42 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1718892942;
- bh=FSArkQfp81Wy1AG+9F1TzKbASzcXnhdZRHhiEecmOpE=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=PYnEpwtF/bVsqaPhqXAnwl+VwXeKh+yzIZ8359ehN/u8BbKv+YNh9w4YLRZVgIpMa
- JhBeYFr8caEHsqQNZd/U/scdeJo370lpPnlB/43CBlrPGU3BTnPlZUNzx+Kkre5y/P
- UjuhHSnBul0LM8LYLWpIQ/aGAi1N8vKk7Y3okW2Y=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <33651964-e494-44ff-89ac-0876a184d5f1@yandex-team.ru>
-Date: Thu, 20 Jun 2024 17:15:40 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKIeR-0001N2-Pt
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 10:20:35 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKIeP-0004iB-Nz
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 10:20:35 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4230366ad7bso11496315e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 07:20:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718893232; x=1719498032; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mVya9DJzD9bylNtCQPe8SLuSJyriwTot/7zJT0BCCqw=;
+ b=ylOuzOM08MmY+DL6gPdsOjmGdG3ELZx6p09KyHLRGSPG7Cc2313d9BotD+KMfhfVfz
+ N85Cd2NWy99GoQW5Xe08gled1YTFZToMWw+w4wHuWK91RrD9iUYvUWIQQKYuspnmBwew
+ DXReC4TZz8SOdF+Vh/hmbN/3E3i2fIYZPnBM5TEv5WXSw9l2BHOmE6rIklnFPg/8YW1w
+ mavSxFB2ASWPJsejX//dn6r0nRT50NzQZGAeH3s75qNjOsgP2KO6p6iQkLJsk0yjWfuN
+ vynBXM/0/JVBtD+gN2g8xyZ4xFnpnc9veUy+1RWj7aJ4Q98ac9zyp+2zqivupbv8EmJm
+ pJgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718893232; x=1719498032;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mVya9DJzD9bylNtCQPe8SLuSJyriwTot/7zJT0BCCqw=;
+ b=jibfzqw/WzJKVInGaAeoxBdzcWY+vrsFI577y0PIIlh6O1tiLGZQtXT15vuXs/n62z
+ sLOgN0ZXT4YBfWHs2yrzknGkTtlXYwiFaYPe6HqiA/80y4DZ8zQqWNbMZ5K8p4eSRSTw
+ uJoSvfTRp1yS3K8nIXiw0lTXMLImhrg3Be1T3lAUl9F7rMoJYyOJI4i5DHPm1xM+TmXp
+ gqreO4pbwALO29BrpfXNmXSGt4ysNFaaInHEOdCMKXhNNB59w3pWJfHvHuZNalxmBhrn
+ xEk5NRyUHIS2/Dz3ZKxrLsgdx9QUT2lgWWoMi+3K65xhyQjhZ4JS2GrvqdMT7HasZksZ
+ iaZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEHYfuLDs58S8uI9ywa9c6CMckBNQNsA2U9EM7xXwUaNn7XD1s02Sjn6JCrEJP+psqKXbsjAJDk5hp6UdiAiT6jkpgwuc=
+X-Gm-Message-State: AOJu0YxAMrSVNBmD3V3QK6K59JsXMLkqTGo3TprSAEBUwhYgOmaUAaW4
+ TT3SOxK/kNM1mdS8wtmoeZWEyQwqOVYJXBz648Vc6F8MtbfFqxqhOPRUcU8y6ww=
+X-Google-Smtp-Source: AGHT+IHvClICaEuWpyEVswbnlv7IVc2ONawWuxzeM8RqIH2i8zjDcCOoNvvSkWNj+e75wu63aX7GhQ==
+X-Received: by 2002:a5d:444f:0:b0:35f:1ed7:f1fd with SMTP id
+ ffacd0b85a97d-363175b8fb7mr4542885f8f.19.1718893232055; 
+ Thu, 20 Jun 2024 07:20:32 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.151.40])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-364774423d5sm2453703f8f.70.2024.06.20.07.20.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Jun 2024 07:20:30 -0700 (PDT)
+Message-ID: <6a817f44-27fe-432a-8118-bbcec790535f@linaro.org>
+Date: Thu, 20 Jun 2024 16:20:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/5] iotests: add backup-discard-source
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
- eblake@redhat.com, xiechanglong.d@gmail.com, wencongyang2@huawei.com,
- hreitz@redhat.com, jsnow@redhat.com, f.ebner@proxmox.com
-References: <20240313152822.626493-1-vsementsov@yandex-team.ru>
- <20240313152822.626493-6-vsementsov@yandex-team.ru>
- <ZmiORpYFHEWUXQRI@redhat.com>
- <accc6cdc-7b1e-4d26-9352-380f93cc3853@yandex-team.ru>
- <ZmqnkubkBeVYhW7_@redhat.com>
+Subject: Re: [PATCH v4] hw/gpio/aspeed: Add reg_table_count to AspeedGPIOClass
+To: Zheyu Ma <zheyuma97@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20240620140239.375338-1-zheyuma97@gmail.com>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <ZmqnkubkBeVYhW7_@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240620140239.375338-1-zheyuma97@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,45 +97,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.06.24 11:02, Kevin Wolf wrote:
-> Am 12.06.2024 um 21:21 hat Vladimir Sementsov-Ogievskiy geschrieben:
->> On 11.06.24 20:49, Kevin Wolf wrote:
->>> Am 13.03.2024 um 16:28 hat Vladimir Sementsov-Ogievskiy geschrieben:
->>>> Add test for a new backup option: discard-source.
->>>>
->>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>> Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
->>>> Tested-by: Fiona Ebner <f.ebner@proxmox.com>
->>>
->>> This test fails for me, and it already does so after this commit that
->>> introduced it. I haven't checked what get_actual_size(), but I'm running
->>> on XFS, so its preallocation could be causing this. We generally avoid
->>> checking the number of allocated blocks in image files for this reason.
->>>
->>
->> Hmm right, I see that relying on allocated size is bad thing. Better
->> is to check block status, to see how many qcow2 clusters are
->> allocated.
->>
->> Do we have some qmp command to get such information? The simplest way
->> I see is to add dirty to temp block-node, and then check its dirty
->> count through query-named-block-nodes
+On 20/6/24 16:02, Zheyu Ma wrote:
+> ASan detected a global-buffer-overflow error in the aspeed_gpio_read()
+> function. This issue occurred when reading beyond the bounds of the
+> reg_table.
 > 
-> Hm, does it have to be QMP in a running QEMU process?
+> To enhance the safety and maintainability of the Aspeed GPIO code, this commit
+> introduces a reg_table_count member to the AspeedGPIOClass structure. This
+> change ensures that the size of the GPIO register table is explicitly tracked
+> and initialized, reducing the risk of errors if new register tables are
+> introduced in the future.
+> 
+> Reproducer:
+> cat << EOF | qemu-system-aarch64 -display none \
+> -machine accel=qtest, -m 512M -machine ast1030-evb -qtest stdio
+> readq 0x7e780272
+> EOF
+> 
+> ASAN log indicating the issue:
+> ==2602930==ERROR: AddressSanitizer: global-buffer-overflow on address 0x55a5da29e128 at pc 0x55a5d700dc62 bp 0x7fff096c4e90 sp 0x7fff096c4e88
+> READ of size 2 at 0x55a5da29e128 thread T0
+>      #0 0x55a5d700dc61 in aspeed_gpio_read hw/gpio/aspeed_gpio.c:564:14
+>      #1 0x55a5d933f3ab in memory_region_read_accessor system/memory.c:445:11
+>      #2 0x55a5d92fba40 in access_with_adjusted_size system/memory.c:573:18
+>      #3 0x55a5d92f842c in memory_region_dispatch_read1 system/memory.c:1426:16
+>      #4 0x55a5d92f7b68 in memory_region_dispatch_read system/memory.c:1459:9
+>      #5 0x55a5d9376ad1 in flatview_read_continue_step system/physmem.c:2836:18
+>      #6 0x55a5d9376399 in flatview_read_continue system/physmem.c:2877:19
+>      #7 0x55a5d93775b8 in flatview_read system/physmem.c:2907:12
+> 
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> ---
+> Changes in v4:
+> - Change the variable name to 'reg_table_count'
+> - Change the 'reg_table_count' type to unsigned
 
-hmm, yes, seems in test_discard_written() we do want to examine running process. I'll try to go with bitmap
+Thanks,
 
-> I'm not sure what
-> the best way would be there.
-> 
-> Otherwise, my approach would be 'qemu-img check' or even 'qemu-img map',
-> depending on what you want to verify with it.
-> 
-> Kevin
-> 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
--- 
-Best regards,
-Vladimir
+> Changes in v3:
+> - Add the reproducer
+> ---
+>   hw/gpio/aspeed_gpio.c         | 17 +++++++++++++++++
+>   include/hw/gpio/aspeed_gpio.h |  1 +
+>   2 files changed, 18 insertions(+)
 
 
