@@ -4,77 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 254D8C2BA1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 19:38:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18063C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 19:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKNbB-0002HI-GZ; Thu, 20 Jun 2024 15:37:33 -0400
+	id 1sKNfy-0005Ar-L1; Thu, 20 Jun 2024 15:42:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arthurtumanyan@gmail.com>)
- id 1sKNb9-0002H1-QJ; Thu, 20 Jun 2024 15:37:31 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKNfx-0005Ae-2G
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 15:42:29 -0400
+Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <arthurtumanyan@gmail.com>)
- id 1sKNb7-0006T6-TC; Thu, 20 Jun 2024 15:37:31 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2ec1ac1aed2so14409901fa.3; 
- Thu, 20 Jun 2024 12:37:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKNfu-0007Hb-H7
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 15:42:28 -0400
+Received: by mail-oo1-xc32.google.com with SMTP id
+ 006d021491bc7-5c1d42d4470so5304eaf.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 12:42:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718912247; x=1719517047; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5iWSTrdenQZ0Bs3RekQHuYDNJaVWimLzJ5W1w3z5xls=;
- b=BaLAAKQujL6dhrxUSRx4g28QsX/EhU0RODEMXigFX1uGlgclkn2J8JCOTvhvUHFhp8
- He1WW4ksim8w8znbgG8Doou93xxGCCnYISqRluxmBNPuChRhngeVgzRuXrmPIE9E/4a+
- tFYHVejrD2ehYNbAAOkSZJpdpMqhQ6hHteFcEcmYxb3pu57p4ej4JSNhjB1tNPDI6xg1
- XgAHuHvjR7nHncBGDi+Jp68mxyINgouSmVrEElZM1FDaFGCTLQgFanGjkNi1nBewnqsg
- Vc80qPkIAcOVdZTBdhVxtaCYqh3i+5rbim0ahJC9xeLw4u5M6tzlWiWTYxH7u9Ye91Sm
- Cwww==
+ d=linaro.org; s=google; t=1718912545; x=1719517345; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=B8c09gyVg4suTweViKzPKTHfMFZe6PO5yiNJHqcL+Uw=;
+ b=dFgxNulQhfHJt2PSPNBc2YpJgI97xB/8xONb1U6rxsrCLu5zk6Zn+vaxJt2UgjFt4V
+ LjGb/oQ09Gr8wHtfRDSozR+FMPURrvMoNR62qbvfiMIb0O1CN0QC2mnm+pspobz73bdT
+ UCBfeKbLYYldNZc+hGVQvQh1Qwj2tM9YqVsVwBtU7CU/EbELNJK+Rpse25XagexzrgWJ
+ eGluhKdh6vnQi3QgQlrOKNueSPIZ5t+LSxg1tD2jD47MfpvwLCyzRIF9DIkn0aaJq9CL
+ p55C11Lo4HxjLIsi3/JD1fdbL6nXbCBjS8BFJbvqDj0XDhbCHADjGzTaUvF3JH5YjDP9
+ EHSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718912247; x=1719517047;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5iWSTrdenQZ0Bs3RekQHuYDNJaVWimLzJ5W1w3z5xls=;
- b=ZcsFMh3OwdQJbnFclopA5WSGTmAJeyqdMDlI2jgczJE9uveIj59LlpKsjQ3amQ+pOf
- u0Upccrnd3kM3EsH6QQafKFKKXDEzqqaBT4kQPGQj2Vlx+UBVS0staQhLMTV4AgVNnAf
- 2ugOGiHEimJ6pzWQmwHoN9gCkKv/enOm7wi5ZYGZtB+kCkzaup+VfDbKBNg0E0FH3YDP
- c31pPnqlvcT5UfE3zem3jWwB+XagBmUb1Ad7rcbk2CXXZMk0zTIx2HjQPt2wm6c53avk
- BSRP7T5p4hNrPEgr68+eFKhNNootnZp8wIjCSZS7px2E13skggW1RDp8HFCE+4wNyz+4
- YpCQ==
+ d=1e100.net; s=20230601; t=1718912545; x=1719517345;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=B8c09gyVg4suTweViKzPKTHfMFZe6PO5yiNJHqcL+Uw=;
+ b=a+DlpiBqveNP2lgKiQRIRGrdxUYy9q49Fb8NgD2i3mSl2GjdkKScYcgyJ15bFk262N
+ NciL+QRTwR2bWdWViukZ4IgdBKwMla1X1m+ZLr42PuEF1wFyzXsMtz4Kn/AIuW3zROBR
+ C1xyt1w0amX1Ja60+Ybl722h7w1jCmv+EnheOTS9jgVys4adXDli/KOvUX4py/mMLsqp
+ rU0A7MjfzHQ+SKq5IMumX8oiAJAYSLnqmnMy5wwKVqv8RNCaz8LiOLW1dU9JDRE7nBM/
+ fiXwWEraVtOM6x++XAzYD8kzDk+yG/a6ertvdNEWHXLkCRROw27iFls8HAi0Ke4scDZu
+ qJeQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVA67Bt9Yly74q8Ka1pB4p46VGHg5F0FPHvAFPB0xvEbE1pZEOJNqspsn0+YdkpQGsNuwcO6b1jeV54hr9hUdAa36YvxZp+X5GjWMxj96YPy2osguUWrxqd/Wk=
-X-Gm-Message-State: AOJu0YwgHHSde8FqUfd4gumKMhnzjNY/9j58fY7JV3c86P8crheBC0K+
- F05mTX8j7OERJOaa/Ai6yBPsaRYT/vwsyT/e7jEE8tKj/mOGzaOBKVBTGThMVP4lBDrSo/cZxzs
- ccOuT1gjPprMPXsFM7hp8QhRKS4GRAu0n
-X-Google-Smtp-Source: AGHT+IHhfILptRWuQVqPT7Vxvm5yeQWfvbAGjMUxFpYaWoXW6ANbzm4JlWQBXUEhm8+0SPalneCrZCP0PNzK53NAJ1M=
-X-Received: by 2002:a2e:9dd4:0:b0:2ec:1ad3:fb0a with SMTP id
- 38308e7fff4ca-2ec3cfff3afmr40045111fa.43.1718912247344; Thu, 20 Jun 2024
- 12:37:27 -0700 (PDT)
+ AJvYcCWc0VYfot7sYYp62w338BIJUesrI5U2N+s3eRzeZ9rKacjtfUVzIFkLiKliGs9xmIeQZA+z0oxbuuy+oB7IbFWGN9kXu+Y=
+X-Gm-Message-State: AOJu0Yyd4tX5utJxS7chzx3yF/6PCWPet1RTevp75q9mt0Q/Vcfgr/vM
+ vu/mkEHQUk9QORnmQLzfVzIfFdchFSQO76H6Mx/cvJcsBuAgBo4jmDMUrT6o60o=
+X-Google-Smtp-Source: AGHT+IHE0JATf2n8P9GlJc2odLj02vFYjIQSiv4WlNCd5I4HSh4dYsyg4RppY/HdKQI5c55AYDUNKg==
+X-Received: by 2002:a05:6358:78a:b0:19f:5c8c:e2fe with SMTP id
+ e5c5f4694b2df-1a1fd3c5955mr769379555d.9.1718912545110; 
+ Thu, 20 Jun 2024 12:42:25 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-6fee2d3673dsm11432148a12.69.2024.06.20.12.42.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Jun 2024 12:42:24 -0700 (PDT)
+Message-ID: <bb72b78c-3b2f-426b-8d91-9252b10d6a54@linaro.org>
+Date: Thu, 20 Jun 2024 12:42:22 -0700
 MIME-Version: 1.0
-References: <CADueUgQh-=vmoO9kqL589Xeuf_LOM_K2Rr-rBxwe8iArdNdzsA@mail.gmail.com>
- <6b1daa9c-6f37-4edb-86d4-782941f1bcca@redhat.com>
- <CAFEAcA-Yda=XXspi49Z+-7bmBP-DzL2kFMg_XfNxMviHuAX18w@mail.gmail.com>
-In-Reply-To: <CAFEAcA-Yda=XXspi49Z+-7bmBP-DzL2kFMg_XfNxMviHuAX18w@mail.gmail.com>
-From: Arthur Tumanyan <arthurtumanyan@gmail.com>
-Date: Thu, 20 Jun 2024 23:37:15 +0400
-Message-ID: <CADueUgS1==4gAmNmTBLZzrnRUp9z2wxkce8+TcOeoR3w_Pg-bg@mail.gmail.com>
-Subject: Re: How to use designware-root-port and designware-root-host devices ?
-To: peter.maydell@linaro.org
-Cc: thuth@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- andrew.smirnov@gmail.com
-Content-Type: multipart/alternative; boundary="000000000000e73980061b5771cd"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=arthurtumanyan@gmail.com; helo=mail-lj1-x22b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 09/12] plugins: add migration blocker
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20240620152220.2192768-1-alex.bennee@linaro.org>
+ <20240620152220.2192768-10-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240620152220.2192768-10-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,100 +98,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e73980061b5771cd
-Content-Type: text/plain; charset="UTF-8"
+On 6/20/24 08:22, Alex Bennée wrote:
+> If the plugin in controlling time there is some state that might be
+> missing from the plugin tracking it. Migration is unlikely to work in
+> this case so lets put a migration blocker in to let the user know if
+> they try.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Suggested-by: "Dr. David Alan Gilbert" <dave@treblig.org>
+> ---
+>   plugins/api.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+> 
+> diff --git a/plugins/api.c b/plugins/api.c
+> index 4431a0ea7e..c4239153af 100644
+> --- a/plugins/api.c
+> +++ b/plugins/api.c
+> @@ -47,6 +47,8 @@
+>   #include "disas/disas.h"
+>   #include "plugin.h"
+>   #ifndef CONFIG_USER_ONLY
+> +#include "qapi/error.h"
+> +#include "migration/blocker.h"
+>   #include "exec/ram_addr.h"
+>   #include "qemu/plugin-memory.h"
+>   #include "hw/boards.h"
+> @@ -589,11 +591,17 @@ uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry)
+>    * Time control
+>    */
+>   static bool has_control;
+> +Error *migration_blocker;
 
-Thanks for the answers, I could move forward a bit more. I'm going/I need
-to to create a "virt" machine with designware PCI controller for simulation
-purposes. Will get back with progress in case anyone is interested in
-results. Thank you again for your time and support.
-Arthur
+static.
 
-On Thu, Jun 20, 2024, 23:05 Peter Maydell <peter.maydell@linaro.org> wrote:
+With that,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> On Thu, 20 Jun 2024 at 18:34, Thomas Huth <thuth@redhat.com> wrote:
-> >
-> > On 20/06/2024 10.28, Arthur Tumanyan wrote:
-> > >  From the other hand the device is declared as non pluggable:
-> > > dc->user_creatable = false;
-> >
-> > Well, that means that you cannot use those with "-device". They can only
-> be
-> > instantiated via the code that creates the machine.
-> >
-> > > Can you please help me to use designware-root-host/port devices ?
-> >
-> > It seems like the i.MX7 SABRE machine is using this device, so instead of
-> > "-M virt", you could have a try with "-M mcimx7d-sabre" (and a kernel
-> that
-> > supports this machine) instead.
->
-> Right -- these devices are the PCIe controller that's used on the i.MX7
-> and i.MX6 SoCs, and they're automatically created when you use a machine
-> type that uses one of those SoCs. The "virt" board doesn't use that
-> PCIe controller, it uses the "generic PCIe bridge" TYPE_GPEX_HOST
-> (and you automatically get a PCIe controller when you use the virt board).
-> You can't change the PCIe controller type of a QEMU machine from
-> the command line, you have to configure the guest to use the controller
-> the machine type provides.
->
-> thanks
-> -- PMM
->
 
---000000000000e73980061b5771cd
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<p dir=3D"ltr">Thanks for the answers, I could move forward a bit more. I&#=
-39;m going/I need to to create a &quot;virt&quot; machine with designware P=
-CI controller for simulation purposes. Will get back with progress in case =
-anyone is interested in results. Thank you again for your time and support.=
-<br>
-Arthur </p>
-<br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu=
-, Jun 20, 2024, 23:05 Peter Maydell &lt;<a href=3D"mailto:peter.maydell@lin=
-aro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padd=
-ing-left:1ex">On Thu, 20 Jun 2024 at 18:34, Thomas Huth &lt;<a href=3D"mail=
-to:thuth@redhat.com" target=3D"_blank" rel=3D"noreferrer">thuth@redhat.com<=
-/a>&gt; wrote:<br>
-&gt;<br>
-&gt; On 20/06/2024 10.28, Arthur Tumanyan wrote:<br>
-&gt; &gt;=C2=A0 From the other hand the device is declared as non pluggable=
-:<br>
-&gt; &gt; dc-&gt;user_creatable =3D false;<br>
-&gt;<br>
-&gt; Well, that means that you cannot use those with &quot;-device&quot;. T=
-hey can only be<br>
-&gt; instantiated via the code that creates the machine.<br>
-&gt;<br>
-&gt; &gt; Can you please help me to use designware-root-host/port devices ?=
-<br>
-&gt;<br>
-&gt; It seems like the i.MX7 SABRE machine is using this device, so instead=
- of<br>
-&gt; &quot;-M virt&quot;, you could have a try with &quot;-M mcimx7d-sabre&=
-quot; (and a kernel that<br>
-&gt; supports this machine) instead.<br>
-<br>
-Right -- these devices are the PCIe controller that&#39;s used on the i.MX7=
-<br>
-and i.MX6 SoCs, and they&#39;re automatically created when you use a machin=
-e<br>
-type that uses one of those SoCs. The &quot;virt&quot; board doesn&#39;t us=
-e that<br>
-PCIe controller, it uses the &quot;generic PCIe bridge&quot; TYPE_GPEX_HOST=
-<br>
-(and you automatically get a PCIe controller when you use the virt board).<=
-br>
-You can&#39;t change the PCIe controller type of a QEMU machine from<br>
-the command line, you have to configure the guest to use the controller<br>
-the machine type provides.<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div>
-
---000000000000e73980061b5771cd--
+r~
 
