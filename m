@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A983C2BA1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 18:42:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34928C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 18:42:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKMj2-0004Ig-6Y; Thu, 20 Jun 2024 14:41:36 -0400
+	id 1sKMjk-0004YA-Jm; Thu, 20 Jun 2024 14:42:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sKMj0-0004IA-OH
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 14:41:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sKMiu-0004xH-Qs
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 14:41:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718908885;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wsscq/JKdRzaJAqLqDYQ3/XL81ATahJqaYy9nUl82Zk=;
- b=M/xUDiIjtFsTvZfO3LbiR49Lf1mWO2RNy5M/NEo0E3kgu6DpIjiWdnSs4bCNDtEQGVYzUh
- BJDf2JOGvGYS2W/YbiGrjI13SmgE84+lKkog/LJ0pvqfv8mfzGaLLX+EOqMGUQjBjMtvqU
- 66Rf307JGYgAc+QRMSCx4Moi+1277Rc=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-167-EyYPgDMBNAKuk3BH_X2k4Q-1; Thu, 20 Jun 2024 14:41:24 -0400
-X-MC-Unique: EyYPgDMBNAKuk3BH_X2k4Q-1
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-63bf1d3fb2dso22021417b3.1
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 11:41:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sKMjf-0004V8-VE
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 14:42:16 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sKMjd-00050K-0G
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 14:42:15 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3632a6437d7so778306f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 11:42:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718908930; x=1719513730; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=1WrcPu6ux6xTIzc9Spckyx2sySwM5IjSq2MtY54hdJk=;
+ b=jKjHm85ICadYnvZjcpw8qP15vktZOcc63aMvcLEmxdfJ6tZKC6TcGcpkcjeuEJTChQ
+ HwbVMKC2bfQcvENTdwr3iY0VehFIT2WGZVNgA99QLdNqsCFlnibNp8ACRoFA15TasUnR
+ n5lGaAv81t05kyPGUhoqqjwMlSnsJpheE6gtM+ieyAZPu6ZjOKi7fT4Y0Hy1MHdJ+Vxk
+ ZdYtH7nAw1wnALiPcsSCl+VzGEMYLwmUw60nuVioWRNjifaaySZekLS9BY3enTno9dq+
+ hfEmIhp8nT7f2yuZLHa6PwEuC3n5Fg8mnAR3ATtVUaQP6uf/lIE4K5ZxMDRk7v+mgNRw
+ 25yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718908882; x=1719513682;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wsscq/JKdRzaJAqLqDYQ3/XL81ATahJqaYy9nUl82Zk=;
- b=F+xBl4iqVhL5Zg0ynTgaOpcZJMdbF3e48VBgSNgCDy0vVcHBBzAwFTtO84bseNB71o
- SjcnpNhjzKROuzcAyvSSqxYTaLPdInKQrVvtcUYOLy6xeNBrbYuchdA/ox24STkyEeTw
- KtIWoS6QSeoTMuev+I+UozN+MJqzM41QXMpblPdpXibZIRFZEtALC29tY3kCD8SA3TVg
- 43+ad8mzA+4BrPX2yqDj9vDMLqyHsRQHqRM9EoUtxZ3ny7TL8yivUDcf1wlxjby2gppS
- IcCLmEakscr2Onis2CR68N18R+sy+nhyj8CzVNMETwVDYvHrnux2NtXyTfcXTWVXd9Ix
- khtg==
-X-Gm-Message-State: AOJu0YxNfdlzEilSqXiEWRLYxGIvyJfpsMDBYrtnIK7iyO7Jdh5sV9az
- X5q6SyeNiHH0GInkxK8hgu+H7NFO7Zx3QNuhRxAvvfyruWFdeonmVX6PU6HYGSG+BtqRIK0iwy3
- ptyL7FnHlv0qHe1gC1/jokHlA7tJx+VeyZBoSq+Vhw3VxdN/B9JaiGhjZASUfkW/zuAEv0xj226
- gZ+y/7awNiviKVq4RaDjiyAbrLR1c=
-X-Received: by 2002:a25:ab88:0:b0:dff:237:4cca with SMTP id
- 3f1490d57ef6-e02be10be8dmr7442774276.7.1718908882465; 
- Thu, 20 Jun 2024 11:41:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF4NOc8UdwECRcgagRvhhRg0RC++NMIOkU5qBbwylbH8uEsAnb/uJVQro2hHQwMe9uPT4TyEs73SOY1xDM5AR4=
-X-Received: by 2002:a25:ab88:0:b0:dff:237:4cca with SMTP id
- 3f1490d57ef6-e02be10be8dmr7442758276.7.1718908882069; Thu, 20 Jun 2024
- 11:41:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718908930; x=1719513730;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1WrcPu6ux6xTIzc9Spckyx2sySwM5IjSq2MtY54hdJk=;
+ b=hTmr69t296eXZ36gBGeG91IVIxFxN7JPTnc5Ruf+yVnIHoUD6OEQ8Lag3wrEFXIUWK
+ G6tatytz0U3ZbagImxsg3RJ3T77a2Ow6P7OifT1Y9C7Y4HdLnw1nIU9lSOV3Ey8SLGC2
+ N2PglEy8U17j6XJ1dgscZF9dq3CQGJBVUT7V1c6ygKaLI3D/5OTftgOvbeC+Zd99MKuU
+ UTA96CGx2ghHjxa5rGAc85sogVJv49Vn/6Y6Rr4vfVSvvwD2Smwq6zZQNNXZE6j5gr8T
+ Fe2K9qhYxMvVfM4GzAF4WgaoSYm6Wh6z9tW1M4RFvv8ISaL6XuW6Pw0leLAPFeqhiRwj
+ If2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVHRI3wJnEb5t7QxeUUqBZvS/HqyXnt2s++3KC/+l4QDCr5VCEwP90UjUIYou40R7WMd61vaKG6NMQtUCujTSPq5qW1nRs=
+X-Gm-Message-State: AOJu0YxKi7QCx4CRRkp4EcgGibGtT5Agb8jnUHTOIT5yIFSGTwmRqdNN
+ ssotS7c/xvFLpiva+6irMwngwJ9snAGKiKVa29PeU3Qfh4vLEcKuMbRIDQlhNr/JfWsZmkX0SC2
+ 0OQM=
+X-Google-Smtp-Source: AGHT+IESCbxBq//EbhUjCjtaspYgZpQC/pM3jxIvaBp1EccgI6dovnnctO7Pi0vRex2n/FupPweoJA==
+X-Received: by 2002:a5d:45cf:0:b0:364:8f54:e0ec with SMTP id
+ ffacd0b85a97d-3648f54e17dmr2719527f8f.19.1718908930066; 
+ Thu, 20 Jun 2024 11:42:10 -0700 (PDT)
+Received: from meli-email.org (adsl-31.37.6.1.tellas.gr. [37.6.1.31])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36431476efasm3700260f8f.1.2024.06.20.11.42.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Jun 2024 11:42:09 -0700 (PDT)
+Date: Thu, 20 Jun 2024 21:36:47 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: 
+Subject: Re: [RFC PATCH v3 2/5] rust: add bindgen step as a meson dependency
+User-Agent: meli 0.8.6
+References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
+ <6bf311a35e6d3bfa8b3bfd10d8f896a9e655fa30.1718827153.git.manos.pitsidianakis@linaro.org>
+ <d32a653f-f741-4c59-8a6e-c2094e972009@linaro.org>
+In-Reply-To: <d32a653f-f741-4c59-8a6e-c2094e972009@linaro.org>
+Message-ID: <fe6m8.4d61etyid59f@linaro.org>
 MIME-Version: 1.0
-References: <20240620175612.2381019-1-jonah.palmer@oracle.com>
-In-Reply-To: <20240620175612.2381019-1-jonah.palmer@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 20 Jun 2024 20:40:46 +0200
-Message-ID: <CAJaqyWebry2dbn4EzfBeqadhzw25tMUFSOKLL6AsUXEFiH9gsQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] virtio,vhost: Add VIRTIO_F_IN_ORDER support
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net, 
- kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com, pbonzini@redhat.com, 
- fam@euphon.net, stefanha@redhat.com, qemu-block@nongnu.org, 
- schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,148 +99,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 20, 2024 at 7:56=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
-om> wrote:
+On Thu, 20 Jun 2024 17:01, Richard Henderson <richard.henderson@linaro.org> wrote:
+>On 6/19/24 13:13, Manos Pitsidianakis wrote:
+>> +# FIXME: These are the latest stable versions, refine to actual minimum ones.
+>> +msrv = {
+>> +  'rustc': '1.79.0',
+>> +  'cargo': '1.79.0',
+>> +  'bindgen': '0.69.4',
+>> +}
 >
-> The goal of these patches is to add support to a variety of virtio and
-> vhost devices for the VIRTIO_F_IN_ORDER transport feature. This feature
-> indicates that all buffers are used by the device in the same order in
-> which they were made available by the driver.
+>A note for other rust newbies:
 >
-> These patches attempt to implement a generalized, non-device-specific
-> solution to support this feature.
+>These versions are pretty darn close to actual minima.  Ubuntu 24.04 packages rust 1.77, 
+>which does not support (but has a warning reserving syntax for)
 >
-> The core feature behind this solution is a buffer mechanism in the form
-> of a VirtQueue's used_elems VirtQueueElement array. This allows devices
-> who always use buffers in-order by default to have a minimal overhead
-> impact. Devices that may not always use buffers in-order likely will
-> experience a performance hit. How large that performance hit is will
-> depend on how frequently elements are completed out-of-order.
->
-> A VirtQueue whose device uses this feature will use its used_elems
-> VirtQueueElement array to hold used VirtQueueElements. The index that
-> used elements are placed in used_elems is the same index on the
-> used/descriptor ring that would satisfy the in-order requirement. In
-> other words, used elements are placed in their in-order locations on
-> used_elems and are only written to the used/descriptor ring once the
-> elements on used_elems are able to continue their expected order.
->
-> To differentiate between a "used" and "unused" element on the used_elems
-> array (a "used" element being an element that has returned from
-> processing and an "unused" element being an element that has not yet
-> been processed), we added a boolean 'in_order_filled' member to the
-> VirtQueueElement struct. This flag is set to true when the element comes
-> back from processing (virtqueue_ordered_fill) and then set back to false
-> once it's been written to the used/descriptor ring
-> (virtqueue_ordered_flush).
->
-> Testing:
-> =3D=3D=3D=3D=3D=3D=3D=3D
-> Testing was done using the dpdk-testpmd application on both the host and
-> guest using the following configurations. Traffic was generated between
-> the host and guest after running 'start tx_first' on both the host and
-> guest dpdk-testpmd applications. Results are below after traffic was
-> generated for several seconds.
->
-> Relevant Qemu args:
-> -------------------
-> -chardev socket,id=3Dchar1,path=3D/tmp/vhost-user1,server=3Doff
-> -chardev socket,id=3Dchar2,path=3D/tmp/vhost-user2,server=3Doff
-> -netdev type=3Dvhost-user,id=3Dnet1,chardev=3Dchar1,vhostforce=3Don,queue=
-s=3D1
-> -netdev type=3Dvhost-user,id=3Dnet2,chardev=3Dchar2,vhostforce=3Don,queue=
-s=3D1
-> -device virtio-net-pci,in_order=3Dtrue,packed=3Dtrue,netdev=3Dnet1,
->         mac=3D56:48:4f:53:54:00,mq=3Don,vectors=3D4,rx_queue_size=3D256
-> -device virtio-net-pci,in_order=3Dtrue,packed=3Dtrue,netdev=3Dnet2,
->         mac=3D56:48:4f:53:54:01,mq=3Don,vectors=3D4,rx_queue_size=3D256
+>> +    println!("cargo::rerun-if-env-changed=MESON_BUILD_DIR");
 >
 
-Hi Jonah,
 
-These tests are great, but others should also be performed. In
-particular, QEMU should run ok with "tap" netdev with vhost=3Doff
-instead of vhost-user:
+rerun-if-env-changed is not new, I think, but the `cargo::` instead of 
+`cargo:` syntax is. Is this what the warning is saying?
 
--netdev type=3Dtap,id=3Dnet1,vhost=3Doff
--netdev type=3Dtap,id=3Dnet2,vhost=3Doff
+Source 
+<https://doc.rust-lang.org/cargo/reference/build-scripts.html#outputs-of-the-build-script>:
 
-This way, packets are going through the modified code. With this
-configuration, QEMU is the one forwarding the packets so testpmd is
-not needed in the host. It's still needed in the guest as linux guest
-driver does not support in_order. The guest kernel cmdline and testpmd
-cmdline should require no changes from the configuration you describe
-here.
+  Note: The old invocation prefix cargo: (one colon only) is deprecated
+  and won’t get any new features. To migrate, use two-colons prefix
+  cargo::, which was added in Rust 1.77. If you were using
+  cargo:KEY=VALUE for arbitrary links manifest key-value pairs, it is
+  encouraged to switch to cargo::metadata=KEY=VALUE. Stick to cargo:
+  only if the support of Rust version older than 1.77 is required.
 
-And then try with in_order=3Dtrue,packed=3Dfalse and
-in_order=3Dtrue,packed=3Doff in corresponding virtio-net-pci.
-
-Performance comparison between in_order=3Dtrue and in_order=3Dfalse is
-also interesting but we're not batching so I don't think we will get
-an extreme improvement.
-
-Does the plan work for you?
-
-Thanks!
-
-> Host dpdk-testpmd command:
-> --------------------------
-> dpdk-testpmd -l 0,2,3,4,5 --socket-mem=3D1024 -n 4
->     --vdev 'net_vhost0,iface=3D/tmp/vhost-user1'
->     --vdev 'net_vhost1,iface=3D/tmp/vhost-user2' --
->     --portmask=3Df -i --rxq=3D1 --txq=3D1 --nb-cores=3D4 --forward-mode=
-=3Dio
->
-> Guest dpdk-testpmd command:
-> ---------------------------
-> dpdk-testpmd -l 0,1 -a 0000:00:02.0 -a 0000:00:03.0 -- --portmask=3D3
->     --rxq=3D1 --txq=3D1 --nb-cores=3D1 --forward-mode=3Dio -i
->
-> Results:
-> --------
-> +++++++++++++++ Accumulated forward statistics for all ports+++++++++++++=
-++
-> RX-packets: 79067488       RX-dropped: 0             RX-total: 79067488
-> TX-packets: 79067552       TX-dropped: 0             TX-total: 79067552
-> +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-+++
->
-> ---
-> v3: Drop Tested-by tags until patches are re-tested.
->     Replace 'prev_avail_idx' with 'vq->last_avail_idx - 1' in
->     virtqueue_split_pop.
->     Remove redundant '+vq->vring.num' in 'max_steps' calculation in
->     virtqueue_ordered_fill.
->     Add test results to CV.
->
-> v2: Make 'in_order_filled' more descriptive.
->     Change 'j' to more descriptive var name in virtqueue_split_pop.
->     Use more definitive search conditional in virtqueue_ordered_fill.
->     Avoid code duplication in virtqueue_ordered_flush.
->
-> v1: Move series from RFC to PATCH for submission.
->
-> Jonah Palmer (6):
->   virtio: Add bool to VirtQueueElement
->   virtio: virtqueue_pop - VIRTIO_F_IN_ORDER support
->   virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER support
->   virtio: virtqueue_ordered_flush - VIRTIO_F_IN_ORDER support
->   vhost,vhost-user: Add VIRTIO_F_IN_ORDER to vhost feature bits
->   virtio: Add VIRTIO_F_IN_ORDER property definition
->
->  hw/block/vhost-user-blk.c    |   1 +
->  hw/net/vhost_net.c           |   2 +
->  hw/scsi/vhost-scsi.c         |   1 +
->  hw/scsi/vhost-user-scsi.c    |   1 +
->  hw/virtio/vhost-user-fs.c    |   1 +
->  hw/virtio/vhost-user-vsock.c |   1 +
->  hw/virtio/virtio.c           | 123 ++++++++++++++++++++++++++++++++++-
->  include/hw/virtio/virtio.h   |   6 +-
->  net/vhost-vdpa.c             |   1 +
->  9 files changed, 134 insertions(+), 3 deletions(-)
->
-> --
-> 2.43.0
->
-
+But this is not in any way necessary for us, we can ignore cargo's stale 
+build detection and force it from meson.
 
