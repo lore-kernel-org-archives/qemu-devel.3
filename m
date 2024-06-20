@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF72C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 10:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E95CC27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 10:14:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKEki-0007vO-IA; Thu, 20 Jun 2024 06:10:48 -0400
+	id 1sKEoF-0000iN-K7; Thu, 20 Jun 2024 06:14:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKEke-0007uv-Is
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 06:10:45 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ id 1sKEoC-0000hw-E9
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 06:14:24 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKEkc-0008U8-Qk
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 06:10:44 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2ebe40673d8so7146251fa.3
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 03:10:42 -0700 (PDT)
+ id 1sKEoA-0000WT-KR
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 06:14:24 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-52bc335e49aso732208e87.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 03:14:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718878241; x=1719483041; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718878461; x=1719483261; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AtW2PjYDm2ZcTRvR96oon/PVVay2h/NrCdIjd+nEyTU=;
- b=yVGDmmf7jo8FSepcMLKMwPO37+A4eDWSZljP2AjAv4H8vy7LRhKBeaW+PzgPQU08Lj
- c+xle/jRI0Z19Jdxh1uuU6r8pTTITx5x0m/n7uz6UgW88M/UjEsELFy1msaJbp4KQV0L
- R/f8hDMYB+ALRPFUxv8MXt2QyP/XCNx3HcxUkjWHU/JQ19hl3bW2HgIU8CSxMEfY5jf4
- wAGpogun4jXK17sPjPozZpb91uYwNAsj3bRc1Jhra+HWkeyFSg1yHKcLEU729wujCPeW
- XPwru7J4IMGBJ3UvUMjFAIl8CMlPyGSdXuAMOYzn/p3e0ZIgjd4gyO4LTW9IswMACrjc
- cQXQ==
+ bh=W3VlJWFkTFjdwflfWRkDRmIabG4LZ+0ZRQKIWtzhXrs=;
+ b=UYy0satvdz/B8hbowO0/JtIoxNj/wDjszYLISyyVcEzuiNC38AwnmYPbICXYXMaLd5
+ HYP6MYhPi4z2mqs4/nGu7NgKilDMidx52HCIqQ1Ra+FLS7WHisZ1BJwmNX74sMrU2GB0
+ Q47vlLXqhtlHQ8CLUrQn8Xf876rfYQ3GxlkelkG8sasr6JvLuI+29suoCd9jW9gyU01H
+ fiUw3J08R813ia6Nxgf3TdrxzgTud2Pv57gi8axWlGUZTToeFX3wdZykB+xKK5APQujE
+ D9oSSoyzjRLT+PIRoFFNR3xKFEsC9XeGlEa8PGuyLPij8F5LknyDQOIZMfShKuyFmphU
+ ksgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718878241; x=1719483041;
+ d=1e100.net; s=20230601; t=1718878461; x=1719483261;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AtW2PjYDm2ZcTRvR96oon/PVVay2h/NrCdIjd+nEyTU=;
- b=Z4FJSq/PztTihv3gvV3yKC4kJuGgbrgNXHij/F5Zz0mfe33ICLux3ThYPcCdbGrwkC
- PngIz8tS5cDEfAROJiPx7h15uid06PfssWyNfkMdu/cP9NZm4XCwnTouLa97Tc+QcxRQ
- YW0JyB10AYzvrOsS6fSXdaAA+XD3l7DZkyJ/3aBF6TdavsC+ufCsDo+oIKYK9ld5WPkG
- BWPvyH1Ge72EQNVx8U7awyxRq1rArDCom/VfwT7/aTGHqxXcD1wDivnc14SZ3/AA2Ndg
- 3t8d5ZOk23xH/uC//QHxSUZ/CDNmTmy6RLAIs2pyinDMUNd9R6ZmTmdjFQ7Pi+u6N3N1
- DQ1A==
+ bh=W3VlJWFkTFjdwflfWRkDRmIabG4LZ+0ZRQKIWtzhXrs=;
+ b=Jzul8NV0hE/XNp8Li2Zn3Y7UIZIEwBRWfTmjJYlJCMleuuEeJrKaPGa+Pn+8WE47n8
+ 9WuxA08v9xtWPi4knukv7lR8uJpvaBEvV2wgBafR/7JBtcD1gXOXoHyInny67ikdLldc
+ SV20S+ymortP8sLfh4WZ9tz1Evt4/EupybAC28teTfXhZ+GkmQu27tKJVYnJVYbEagyH
+ UduJKh7QK6r/qmBlVxZWW0yTOwDcRx9IRoL3S3F3jHu7KierwF7M2hTygoxxByHboR/X
+ +31l1LvLrqbijSAsyVMlfcMEHkmHaN/4pmg/GpgBhkdhfBgbYdPUTFZUw+PJFbSKNzmp
+ kuNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUqzDG9qTgBxpr/bp/1m88vKXc01evEauRVEfTQ2dSdwKm0koOg3PbRA8pmjyCKfKOe+vSh8npeCitJeUql3hhNwm/GlcE=
-X-Gm-Message-State: AOJu0YxOZweWm29nyz1hp0GXM9KAaNF2qF3I5vJOVPY4un3FZVYBTpPN
- 70ICeVRo6Vmi7N8wXYxJhsXrQaPIWd+At6HCePY27uTAtRoz5/XyQUGKcVHeJYyNvEIS18BbeSD
- wcpx89j6TakJgexsR9xEPpWjMt/XUJYP0pTqBsQ==
-X-Google-Smtp-Source: AGHT+IEkpjfVgsIjQRpFjmpo0r2yPS6jeu5X8iKlHAtLVM+IEeHDOwrSVsOvcdBR9+HAolieW5euo13D7K4chFKW/go=
-X-Received: by 2002:a2e:9257:0:b0:2ec:27d0:b28b with SMTP id
- 38308e7fff4ca-2ec3ce9f6d0mr32151901fa.5.1718878240607; Thu, 20 Jun 2024
- 03:10:40 -0700 (PDT)
+ AJvYcCV8dm4xw82ccRmt+JoekOpWs/XqqliKiqF5grI7GvSfo/ZeKJbL055iU7qoilV6D9Ws6YZbK75cdFYAp9cCl7EwQHe+Hu0=
+X-Gm-Message-State: AOJu0Yx/gIO8tgKm+6IfrB4RGAQgC4yOVccfH6E91H9BQRDWGM6tiPmA
+ gYfLkfRB+qPlJ446j8WMO4tcwFbpYcydmbrthjeVz4i2yY0s76GSv5DfuOz4ZrwJCrS7HMrpYjs
+ xisVP0M70hwIXGPPsez9abiTJo5Hoy+d3mP+19w==
+X-Google-Smtp-Source: AGHT+IHNlJW6nuWNkY80Jv6/L+Parf5GcoDLoVjj2ffG5wgghcx4lrrJM1r3rw3y1mv9HRIMV/3ramq36zgsXjKiw1M=
+X-Received: by 2002:a05:651c:1038:b0:2ea:ea40:5d4c with SMTP id
+ 38308e7fff4ca-2ec3cffe85emr34371021fa.48.1718878460588; Thu, 20 Jun 2024
+ 03:14:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240618144009.3137806-1-zheyuma97@gmail.com>
- <47a6e9d2-27f6-4e45-9de3-c4766bdf2566@linaro.org>
-In-Reply-To: <47a6e9d2-27f6-4e45-9de3-c4766bdf2566@linaro.org>
+References: <20240618135610.3109175-1-zheyuma97@gmail.com>
+ <CADBGO7_XF5REzENPGupwMB-EOHXS78SG5v=yZ6TRZ_7yVgWUtg@mail.gmail.com>
+ <c60ac5cc-c592-46bc-b09a-b918253cb6cd@linaro.org>
+ <CADBGO7_=_1SNB2EN9Up7QB4TGOFqWQekBTTvLAJvMtpb73nRug@mail.gmail.com>
+In-Reply-To: <CADBGO7_=_1SNB2EN9Up7QB4TGOFqWQekBTTvLAJvMtpb73nRug@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 20 Jun 2024 11:10:29 +0100
-Message-ID: <CAFEAcA82T-hS0Armp6PVBkrywfqv+-u+L4z8rtrjBpnwvE8Hxg@mail.gmail.com>
-Subject: Re: [PATCH] hw/timer/a9gtimer: Handle QTest mode in
- a9_gtimer_get_current_cpu
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+Date: Thu, 20 Jun 2024 11:14:08 +0100
+Message-ID: <CAFEAcA8vei_9jpOjemQeFh89qegdP9r+ANXB1dQRrz1+C1hu1w@mail.gmail.com>
+Subject: Re: [PATCH] hw/usb/hcd-dwc2: Handle invalid address access in read
+ and write functions
+To: Paul Zimmerman <pauldzim@gmail.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Zheyu Ma <zheyuma97@gmail.com>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,60 +96,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 18 Jun 2024 at 15:51, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Tue, 18 Jun 2024 at 22:33, Paul Zimmerman <pauldzim@gmail.com> wrote:
 >
-> On 18/6/24 16:40, Zheyu Ma wrote:
-> > This commit updates the a9_gtimer_get_current_cpu() function to handle
-> > cases where QTest is enabled. When QTest is used, it returns 0 instead
-> > of dereferencing the current_cpu, which can be NULL. This prevents the
-> > program from crashing during QTest runs.
-> >
-> > Reproducer:
-> > cat << EOF | qemu-system-aarch64 -display \
-> > none -machine accel=3Dqtest, -m 512M -machine npcm750-evb -qtest stdio
-> > writel 0xf03fe20c 0x26d7468c
-> > EOF
-> >
-> > Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-> > ---
-> >   hw/timer/a9gtimer.c | 5 +++++
-> >   1 file changed, 5 insertions(+)
-> >
-> > diff --git a/hw/timer/a9gtimer.c b/hw/timer/a9gtimer.c
-> > index a2ac5bdfb9..64d80cdf6a 100644
-> > --- a/hw/timer/a9gtimer.c
-> > +++ b/hw/timer/a9gtimer.c
-> > @@ -32,6 +32,7 @@
-> >   #include "qemu/log.h"
-> >   #include "qemu/module.h"
-> >   #include "hw/core/cpu.h"
-> > +#include "sysemu/qtest.h"
-> >
-> >   #ifndef A9_GTIMER_ERR_DEBUG
-> >   #define A9_GTIMER_ERR_DEBUG 0
-> > @@ -48,6 +49,10 @@
-> >
-> >   static inline int a9_gtimer_get_current_cpu(A9GTimerState *s)
-> >   {
-> > +    if (qtest_enabled()) {
-> > +        return 0;
->
-> Indeed this is how we fixed hw/intc/arm_gic in commit 09bbdb89bc,
-> so:
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-> > +    }
-> > +
-> >       if (current_cpu->cpu_index >=3D s->num_cpu) {
->
-> That said, such accesses of @current_cpu from hw/ are dubious.
+> On Tue, Jun 18, 2024 at 1:37=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <phil=
+md@linaro.org> wrote:
+>>
+>> Hi Paul,
+>>
+>> On 18/6/24 20:58, Paul Zimmerman wrote:
+>> > On Tue, Jun 18, 2024 at 6:56=E2=80=AFAM Zheyu Ma <zheyuma97@gmail.com
+>> > <mailto:zheyuma97@gmail.com>> wrote:
+>> >  >
+>> >  > This commit modifies the dwc2_hsotg_read() and dwc2_hsotg_write()
+>> > functions
+>> >  > to handle invalid address access gracefully. Instead of using
+>> >  > g_assert_not_reached(), which causes the program to abort, the func=
+tions
+>> >  > now log an error message and return a default value for reads or do
+>> >  > nothing for writes.
+>> >  >
+>> >  > This change prevents the program from aborting and provides clear l=
+og
+>> >  > messages indicating when an invalid memory address is accessed.
+>> >  >
+>> >  > Reproducer:
+>> >  > cat << EOF | qemu-system-aarch64 -display none \
+>> >  > -machine accel=3Dqtest, -m 512M -machine raspi2b -m 1G -nodefaults =
+\
+>> >  > -usb -drive file=3Dnull-co://,if=3Dnone,format=3Draw,id=3Ddisk0 -de=
+vice \
+>> >  > usb-storage,port=3D1,drive=3Ddisk0 -qtest stdio
+>> >  > readl 0x3f980dfb
+>> >  > EOF
+>> >  >
+>> >  > Signed-off-by: Zheyu Ma <zheyuma97@gmail.com
+>> > <mailto:zheyuma97@gmail.com>>
+>> >  > ---
+>> >  >  hw/usb/hcd-dwc2.c | 9 +++++++--
+>> >  >  1 file changed, 7 insertions(+), 2 deletions(-)
+>> >  >
+>> >  > diff --git a/hw/usb/hcd-dwc2.c b/hw/usb/hcd-dwc2.c
+>> >  > index 8cac9c0a06..b4f0652c7d 100644
+>> >  > --- a/hw/usb/hcd-dwc2.c
+>> >  > +++ b/hw/usb/hcd-dwc2.c
+>> >  > @@ -1128,7 +1128,10 @@ static uint64_t dwc2_hsotg_read(void *ptr, h=
+waddr addr, unsigned size)
+>> >  >          val =3D dwc2_pcgreg_read(ptr, addr, (addr - HSOTG_REG(0xe0=
+0)) >> 2, size);
+>> >  >          break;
+>> >  >      default:
+>> >  > -        g_assert_not_reached();
+>> >  > +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"HWADDR_=
+PRIx"\n",
+>> >  > +                      __func__, addr);
+>> >  > +        val =3D 0;
+>> >  > +        break;
+>> >  >      }
+>> >  >
+>> >  >      return val;
+>> >  > @@ -1160,7 +1163,9 @@ static void dwc2_hsotg_write(void *ptr, hwadd=
+r addr, uint64_t val,
+>> >  >          dwc2_pcgreg_write(ptr, addr, (addr - HSOTG_REG(0xe00)) >> =
+2, val, size);
+>> >  >          break;
+>> >  >      default:
+>> >  > -        g_assert_not_reached();
+>> >  > +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad offset 0x%"HWADDR_=
+PRIx"\n",
+>> >  > +                      __func__, addr);
+>> >  > +        break;
+>> >  >      }
+>> >  >  }
+>> >  >
+>> >  > --
+>> >  > 2.34.1
+>> >
+>> > Looks good to me.
+>> >
+>> > Reviewed-by: Paul Zimmerman <pauldzim@gmail.com <mailto:pauldzim@gmail=
+.com>>
+>> >
+>>
+>> Does that mean on real HW the access to unassigned registers are
+>> silently ignored as RAZ/WI like this patch? (I don't have access
+>> to the specs -- IIRC you don't neither, but you might have real
+>> HW to test).
 
-True, but I'm not sure we ever settled on the right way to avoid
-them, did we?
+> I have an old raspi around somewhere I could probably dig up and
+> test with, but I'm not familiar with qtest, so I don't know how I
+> would reproduce the failure on real hw.
+>
+> Besides, isn't it always better to fail and log an error than just crash?
 
-Anyway, I've applied this patch to target-arm.next.
+Yes, assert is definitely the wrong thing here. RAZ/WI and log a
+guest-error is what we typically do for devices where the spec doesn't
+give a behaviour for accesses to register offsets that aren't documented
+as having registers.
+
+I've applied this to target-arm.next; thanks.
 
 -- PMM
 
