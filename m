@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFE5DC27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 15:24:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9F5DC2BB85
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 15:24:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKJcV-0005uy-1v; Thu, 20 Jun 2024 11:22:39 -0400
+	id 1sKJcQ-0005qW-Fe; Thu, 20 Jun 2024 11:22:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sKJcT-0005t9-8e
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:22:37 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ id 1sKJcO-0005p8-Te
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:22:32 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sKJcP-0007yW-IG
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:22:36 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-52cc14815c3so1063507e87.0
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 08:22:33 -0700 (PDT)
+ id 1sKJcM-0007xk-NE
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:22:32 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-57d0eca877cso1157638a12.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 08:22:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718896952; x=1719501752; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718896949; x=1719501749; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a0NIpkhyGGYgnbxSmBPfzzcGZB9GrmkEzQVe5cCnoVc=;
- b=p9TrWohcr0ofM0C0tvh8djX/Ijp5UfvKqp+rLMhEnmfAW8mjqiamcyXWvG4PVh/i3n
- pGr4viTQGv+6lUoJcE8yGTgF7z5+9fMs0MzkG9AqMxPI1EFGxUPum6ksgQl0ZePQZUhG
- 7YnpnLLTCe4jP0XuR41PgAi5qYouJo4yRXa4Jp6WbmKx+0mCmf5tSYQFgQ6zMccsBorQ
- Lqj/D+d8QEAyITPyiiDULFNeGrSJtuzhxsPvU1wXtBp6Hv0SlwW3q3pLrztJ8UIcl5t8
- zyk+Wpr2W6Er+98RmRgeZ9a9jaJ8rQ2ZIQr7b2dU3oajF+92lVLnMIrmlMj1jvPEWind
- xnFA==
+ bh=/X0IxOQD+UVox1iqgN/w4twKxD3yeUu+cfpZug2C5Oo=;
+ b=H0tVDB9+7kuD8x7uXDZ79zkZgHFwKgo82FgNOgxBZ0KNBryUNvMD//aLkrmHsM2Gl+
+ jy3895wUQ5FBqREJ08qbmwCOJ0GHUL07CJltkP2wXov/mwms21hkCKNjJBcdlRJI1crL
+ rbiHBDyrsQ+yhYPk1XAWIm6R96q8afNxeO8z7xjnzpHq0IBpbc5WcDLAIOSA0CxQWHD4
+ fLCPCAODeSJPPUhG/3OHXB8qg0TxRIzaH1XD9Xfq8pULYervLCMwt02JbUplf4Ncq02o
+ nvsHjZ4elRNfcTbCtEM/BReGmLwFHCilOlLKiPmz80gP3Kj1xHDnx3yMcSykBmCnv+XH
+ 4Ymg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718896952; x=1719501752;
+ d=1e100.net; s=20230601; t=1718896949; x=1719501749;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=a0NIpkhyGGYgnbxSmBPfzzcGZB9GrmkEzQVe5cCnoVc=;
- b=ugQFj5KT3XYtgmt9SbFzOvuLXL5ZsDonk3arWk5g79RAif9Vl8pDLMuo8gdy+WhjHo
- qZNSkFCvyF2RGoJOHwsC4bJj20dTi6la5o9xf0CenXUIUVoqgIIpkw7XhOOAPqTuQmke
- iHwL4JFjNX+OGLRifQygII6+s4EbBb3bLRPybigpSKQl6hzQ6UAVUHC63+VBBNnfkaUa
- 5p9tt0ko626h1JHijR+mmBjTPAQWKQ8Lhobkplu+5RGOrhk2u3dnF+bajvDAxCkJy3Wy
- IAnAdATB6qLNSYkbxrexZ2N1vGHUftOuCFM3Rvtf4g1p4kGVnRyNndN1SvQxCtqSHtWA
- unXg==
-X-Gm-Message-State: AOJu0YzZOsmjK3HJgGLz1sNBW80mtu4/8iLOcuCE4KJuwTkOr6yt5dt1
- +hJ8E5+e89xZZ7Fucj0gDgFyKprDmMTNofU/LSRPrswnqCgm4wy5mkEuF4GmTsE=
-X-Google-Smtp-Source: AGHT+IF/Ow3t51hj2zvFm2LAur2fftlTRBJVGqnvOSs+DkFtw+O0hxF8fAtrEgLsUxfRTp/WRXnwOw==
-X-Received: by 2002:a05:6512:6d3:b0:52c:7f7f:dc1f with SMTP id
- 2adb3069b0e04-52ccaa5c755mr4114734e87.61.1718896951767; 
- Thu, 20 Jun 2024 08:22:31 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56ed0f2asm783454366b.131.2024.06.20.08.22.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=/X0IxOQD+UVox1iqgN/w4twKxD3yeUu+cfpZug2C5Oo=;
+ b=oi2T6ylKLsMOkO9Il0kANvyUEu6hyYLcEtBfMK5Sfi4umYByHKodYFeoDS0j9xYVp3
+ 7jEvwnQZkkpaNTIs89Rfd6AeNkIDMyzYploM64y0nyQ38CNT7fycRsvW7D3ODS2/hdKf
+ jZJwnfxLS3iNAUDYY0c2Ryb4uqYB+Z6dBl/qHA8gMsGkkpL9QOhzS13IZm3Y0yH5sB58
+ hSfreoW7hzq24L/2w3749Kb69oq4dt2wFfSW94GEbvjkIV42E4DciOx9NM3aw6ilsRj+
+ d/CfsiNPwXA/7LADzq0rQ/BeF+lT7LTwmVKgftAMtio76nzb/jiH38MIWPz+BBPHvFnZ
+ wlWA==
+X-Gm-Message-State: AOJu0YwzTYFCvcAVQlJjoFsrfBSLXWqtFYW8Xc5pdW15dQEAWD8Uq0f/
+ r0Qd4THc31wuXD4GJknFWCqo5BsdvbbaEZy31ww0qVXJlt0kLgcGkrfAiCHOegw=
+X-Google-Smtp-Source: AGHT+IFnftecJ/1MRTQF1ZOm+xWFpcYdRKEdC+4UG5LvASjIC+lNz5bhVZnty9lEhOtdxKLlbFvYZw==
+X-Received: by 2002:a50:ccca:0:b0:57a:2475:6a16 with SMTP id
+ 4fb4d7f45d1cf-57d07e7bc1bmr5166576a12.11.1718896948929; 
  Thu, 20 Jun 2024 08:22:28 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-57cb72e9943sm9855578a12.51.2024.06.20.08.22.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Jun 2024 08:22:22 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B3C945FA03;
+ by draig.lan (Postfix) with ESMTP id 6C5285F9FB;
  Thu, 20 Jun 2024 16:22:21 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -81,25 +81,24 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
  Marcelo Tosatti <mtosatti@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 07/12] qtest: move qtest_{get,
- set}_virtual_clock to accel/qtest/qtest.c
-Date: Thu, 20 Jun 2024 16:22:15 +0100
-Message-Id: <20240620152220.2192768-8-alex.bennee@linaro.org>
+Subject: [PATCH v2 04/12] sysemu: add set_virtual_time to accel ops
+Date: Thu, 20 Jun 2024 16:22:12 +0100
+Message-Id: <20240620152220.2192768-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240620152220.2192768-1-alex.bennee@linaro.org>
 References: <20240620152220.2192768-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,77 +114,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+We are about to remove direct calls to individual accelerators for
+this information and will need a central point for plugins to hook
+into time changes.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240530220610.1245424-5-pierrick.bouvier@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240530220610.1245424-2-pierrick.bouvier@linaro.org>
 ---
- include/sysemu/qtest.h |  3 ---
- accel/qtest/qtest.c    | 12 ++++++++++++
- system/qtest.c         | 12 ------------
- 3 files changed, 12 insertions(+), 15 deletions(-)
+ include/sysemu/accel-ops.h                     | 18 +++++++++++++++++-
+ include/sysemu/cpu-timers.h                    |  3 ++-
+ ...et-virtual-clock.c => cpus-virtual-clock.c} |  5 +++++
+ system/cpus.c                                  | 11 +++++++++++
+ stubs/meson.build                              |  2 +-
+ 5 files changed, 36 insertions(+), 3 deletions(-)
+ rename stubs/{cpus-get-virtual-clock.c => cpus-virtual-clock.c} (68%)
 
-diff --git a/include/sysemu/qtest.h b/include/sysemu/qtest.h
-index 45f3b7e1df..c161d75165 100644
---- a/include/sysemu/qtest.h
-+++ b/include/sysemu/qtest.h
-@@ -34,9 +34,6 @@ void qtest_server_init(const char *qtest_chrdev, const char *qtest_log, Error **
- void qtest_server_set_send_handler(void (*send)(void *, const char *),
-                                  void *opaque);
- void qtest_server_inproc_recv(void *opaque, const char *buf);
--
--int64_t qtest_get_virtual_clock(void);
--void qtest_set_virtual_clock(int64_t count);
- #endif
+diff --git a/include/sysemu/accel-ops.h b/include/sysemu/accel-ops.h
+index ef91fc28bb..a088672230 100644
+--- a/include/sysemu/accel-ops.h
++++ b/include/sysemu/accel-ops.h
+@@ -20,7 +20,12 @@
+ typedef struct AccelOpsClass AccelOpsClass;
+ DECLARE_CLASS_CHECKERS(AccelOpsClass, ACCEL_OPS, TYPE_ACCEL_OPS)
  
- #endif
-diff --git a/accel/qtest/qtest.c b/accel/qtest/qtest.c
-index 53182e6c2a..bf14032d29 100644
---- a/accel/qtest/qtest.c
-+++ b/accel/qtest/qtest.c
-@@ -24,6 +24,18 @@
- #include "qemu/main-loop.h"
- #include "hw/core/cpu.h"
+-/* cpus.c operations interface */
++/**
++ * struct AccelOpsClass - accelerator interfaces
++ *
++ * This structure is used to abstract accelerator differences from the
++ * core CPU code. Not all have to be implemented.
++ */
+ struct AccelOpsClass {
+     /*< private >*/
+     ObjectClass parent_class;
+@@ -44,7 +49,18 @@ struct AccelOpsClass {
  
-+static int64_t qtest_clock_counter;
+     void (*handle_interrupt)(CPUState *cpu, int mask);
+ 
++    /**
++     * @get_virtual_clock: fetch virtual clock
++     * @set_virtual_clock: set virtual clock
++     *
++     * These allow the timer subsystem to defer to the accelerator to
++     * fetch time. The set function is needed if the accelerator wants
++     * to track the changes to time as the timer is warped through
++     * various timer events.
++     */
+     int64_t (*get_virtual_clock)(void);
++    void (*set_virtual_clock)(int64_t time);
 +
-+static int64_t qtest_get_virtual_clock(void)
-+{
-+    return qatomic_read_i64(&qtest_clock_counter);
-+}
-+
-+static void qtest_set_virtual_clock(int64_t count)
-+{
-+    qatomic_set_i64(&qtest_clock_counter, count);
-+}
-+
- static int qtest_init_accel(MachineState *ms)
+     int64_t (*get_elapsed_ticks)(void);
+ 
+     /* gdbstub hooks */
+diff --git a/include/sysemu/cpu-timers.h b/include/sysemu/cpu-timers.h
+index d86738a378..7bfa960fbd 100644
+--- a/include/sysemu/cpu-timers.h
++++ b/include/sysemu/cpu-timers.h
+@@ -96,8 +96,9 @@ int64_t cpu_get_clock(void);
+ 
+ void qemu_timer_notify_cb(void *opaque, QEMUClockType type);
+ 
+-/* get the VIRTUAL clock and VM elapsed ticks via the cpus accel interface */
++/* get/set VIRTUAL clock and VM elapsed ticks via the cpus accel interface */
+ int64_t cpus_get_virtual_clock(void);
++void cpus_set_virtual_clock(int64_t new_time);
+ int64_t cpus_get_elapsed_ticks(void);
+ 
+ #endif /* SYSEMU_CPU_TIMERS_H */
+diff --git a/stubs/cpus-get-virtual-clock.c b/stubs/cpus-virtual-clock.c
+similarity index 68%
+rename from stubs/cpus-get-virtual-clock.c
+rename to stubs/cpus-virtual-clock.c
+index fd447d53f3..af7c1a1d40 100644
+--- a/stubs/cpus-get-virtual-clock.c
++++ b/stubs/cpus-virtual-clock.c
+@@ -6,3 +6,8 @@ int64_t cpus_get_virtual_clock(void)
  {
-     return 0;
-diff --git a/system/qtest.c b/system/qtest.c
-index 8cb98966b4..12703a2045 100644
---- a/system/qtest.c
-+++ b/system/qtest.c
-@@ -325,18 +325,6 @@ static void qtest_irq_handler(void *opaque, int n, int level)
-     }
+     return cpu_get_clock();
+ }
++
++void cpus_set_virtual_clock(int64_t new_time)
++{
++    /* do nothing */
++}
+diff --git a/system/cpus.c b/system/cpus.c
+index f8fa78f33d..d3640c9503 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -229,6 +229,17 @@ int64_t cpus_get_virtual_clock(void)
+     return cpu_get_clock();
  }
  
--static int64_t qtest_clock_counter;
--
--int64_t qtest_get_virtual_clock(void)
--{
--    return qatomic_read_i64(&qtest_clock_counter);
--}
--
--void qtest_set_virtual_clock(int64_t count)
--{
--    qatomic_set_i64(&qtest_clock_counter, count);
--}
--
- static bool (*process_command_cb)(CharBackend *chr, gchar **words);
- 
- void qtest_set_command_cb(bool (*pc_cb)(CharBackend *chr, gchar **words))
++/*
++ * Signal the new virtual time to the accelerator. This is only needed
++ * by accelerators that need to track the changes as we warp time.
++ */
++void cpus_set_virtual_clock(int64_t new_time)
++{
++    if (cpus_accel && cpus_accel->set_virtual_clock) {
++        cpus_accel->set_virtual_clock(new_time);
++    }
++}
++
+ /*
+  * return the time elapsed in VM between vm_start and vm_stop.  Unless
+  * icount is active, cpus_get_elapsed_ticks() uses units of the host CPU cycle
+diff --git a/stubs/meson.build b/stubs/meson.build
+index f15b48d01f..772a3e817d 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -29,7 +29,7 @@ endif
+ if have_block or have_ga
+   stub_ss.add(files('replay-tools.c'))
+   # stubs for hooks in util/main-loop.c, util/async.c etc.
+-  stub_ss.add(files('cpus-get-virtual-clock.c'))
++  stub_ss.add(files('cpus-virtual-clock.c'))
+   stub_ss.add(files('icount.c'))
+   stub_ss.add(files('graph-lock.c'))
+   if linux_io_uring.found()
 -- 
 2.39.2
 
