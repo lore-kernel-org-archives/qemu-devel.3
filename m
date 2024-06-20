@@ -4,81 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1C4C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 20:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB69C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 20:24:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKODd-0006Bg-4n; Thu, 20 Jun 2024 16:17:17 -0400
+	id 1sKOJg-0007Rz-Rq; Thu, 20 Jun 2024 16:23:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3Ro50ZgQKCm8eXVeTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--rkir.bounces.google.com>)
- id 1sKODa-0006B6-OA
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 16:17:14 -0400
-Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sKOJf-0007Ro-Eq
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 16:23:31 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3Ro50ZgQKCm8eXVeTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--rkir.bounces.google.com>)
- id 1sKODZ-0004uS-41
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 16:17:14 -0400
-Received: by mail-yw1-x1149.google.com with SMTP id
- 00721157ae682-63c08752872so24053787b3.0
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 13:17:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sKOJd-0005lC-QH
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 16:23:31 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1f70ec6ff8bso8695ad.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 13:23:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1718914630; x=1719519430; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=8n2UxX1gjpnCRLOUM68mlktH4IVD6wu5aMSgKQr0zZU=;
- b=AHb7SPZm83oqlZ0fmdPi0IvJteBRZlFC1Rx0gvEZCIuJXp0aqAm9QK9qaz7a6M+Rgk
- QMY91fjLmU4MVhhUNn7YNVKM+DSXRbIO4YXKFVTyQ9VsksoZ0JUWEoWC0BjSg2CYfwp6
- cuNeyzdOOeXBb0f1UP4s8lQbQ+MMtjyiLts2RpHLrGbIvYByn3dTuB9xKOS43oT1T22C
- cLWD3B+OQerIYJPR5Q/iQaLqyhBs+YgMw09S0Pifa04lh5I/p3l5HcbXJF2hcXOhkClw
- 0WiqYHhRNWahlOOBuKAd48kWxFm7ubSH7tgAwJ0CG1N9Q2Cc6LQWUoBisE9TBfe2D2il
- Fzsw==
+ d=google.com; s=20230601; t=1718915008; x=1719519808; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4zUAahtlNGZrDkGQ3q0IjdEuM8KQCiY8cI4hYs0WCYE=;
+ b=cKTWqqcmc2BG58mEkFmWosBh2ryCWo30yiSzGU/1i0vzVAsnaCZlW2OYqLlRRkiIZx
+ laTRJ4xak+lbW5qs4hsEPACdJ/f8CIEhmZMp8dVO/LKnPbITvO/a7Vp2hxrB03Xbu9ER
+ McwtQ2dNgi0xG4nOKJ85iZ1y5OyyATpXFiFekEUAlyX6tRd6OYeD8X2Xn2p9A54PI2aY
+ zb9jP778tJpWInIwSaLiUPvYvU5J4lNmI5I7tqPzPWezNns4gsx6rCNVx7riXVx5CU1I
+ i9j5nGzvaI6tMVlmiSGBuyMDeuU5GIwBwQuFL08R8BB4fxghFrAD9t+KDgBXLPpXCqgA
+ tSCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718914630; x=1719519430;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8n2UxX1gjpnCRLOUM68mlktH4IVD6wu5aMSgKQr0zZU=;
- b=qdEkdtshOEFzazELlvE7xlzcDz7lv3WzSF7oax1qiEqkvPlwp8qWGHky6A01MSBlSB
- 4b6r/41wpRB5N+1usIcsV/B07jgYLPzdIan4dh9UGCGUz6treYXoAH3Hywng4RO02WWB
- rBs/USvz+pZ3BAeEZRJTuZ7lKHjXbQkEgoJ8fziKILJDXpTkQhz86mnC8PnNbGIwKkH6
- 5prGI4b90sEQeRzpWpmEz1IlCFlmVlvBE4LupqTOGKXlsOemxFSqyc7q8M5715/AAwI/
- dobCz0epaw5Nh4kNwwDRt4mgx+ZUeNrB31riKP+hTUKkGnXw5SVGOuJEyrsvC5giKocJ
- QzOg==
+ d=1e100.net; s=20230601; t=1718915008; x=1719519808;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4zUAahtlNGZrDkGQ3q0IjdEuM8KQCiY8cI4hYs0WCYE=;
+ b=HropuJH9iBZ2kN69rFb377yk8zfKKIFX08d8tMPWzyG77U82NJfysge5iBq3cR8uc5
+ sML4SGRcMa139Kg2ac9LUkW/2jLhw+gSQGWdFreY1PSEtbTjCdq+4dF6HkUTphS57Dww
+ Ohu8JClRwKWXBkCm2T0/DodQiWRgetb9dBqiAfx1pVBasUOND4ALyFGe0Nt26VSUH0uZ
+ fp0Y0UVkmv3isrcWiV1SPb5EuOdp7wbjoGgavSVqJrH/N75i0FGvD6G8W/XcDESi65Uu
+ TKZU3OsKaciYSNXR0740YwYAN92I2p1xL8b1NSGWmDevDqyVZVoX9NfVdX1bpSRo+Pnv
+ Yvjw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEuNvHdWigdMkWwpj+xvboHCKEOZUqu5LUqQ7OHc9IUqx8luO5m0fGSsRDT9bo/YJzkOZ1EArwnktVRaWMUohe0fy7SSc=
-X-Gm-Message-State: AOJu0Yy0cHBu0TQ7Ix5jIi8YGb02a21hVpQN/tzzigZXEHZ73Azw+64p
- 5Ovcvjzy1EZwaZ1wmSuorHft5KLQiFAYblNAVqnbnXY9ffE1/w/FBHA8tOabYJVcroDFGA==
-X-Google-Smtp-Source: AGHT+IECIBUjzPkjAo4w7jy6kH3zMTvSFAoJYLFOZkC+9ry7HWPq46mAQkLYq5f+IMiT6BwGdnhQ2VEf
-X-Received: from rkir98.kir.corp.google.com
- ([2620:15c:7d:4:df4:7552:4ba4:9441])
- (user=rkir job=sendgmr) by 2002:a05:6902:1006:b0:dfe:1633:89e9 with SMTP id
- 3f1490d57ef6-e02be16c56dmr1753419276.1.1718914630473; Thu, 20 Jun 2024
- 13:17:10 -0700 (PDT)
-Date: Thu, 20 Jun 2024 13:16:54 -0700
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.45.2.741.gdbec12cfda-goog
-Message-ID: <20240620201654.598024-1-rkir@google.com>
-Subject: [PATCH v2] exec: don't use void* in pointer arithmetic in headers
+ AJvYcCXUbbwp1byLLfHKHoAVq27+ENo3fkjXPqIpC2nOjKzjoxgApPuLTmgajjmfa8LZFUd6WP+h5PDgER7N5YiePZMoSg6QYW4=
+X-Gm-Message-State: AOJu0Yw4J325jWTTg/FMrkwUrgLGVlhX8fslk5OTTv40R19c+nfTraPk
+ Ppor/wP0nUh8BPehZKgVrQHhh8PzFmPH39Zuhly9uvo/MVXXddFzAVRdNtDjEgxdokIbcXulNRc
+ FIVNC/r2U0AjPCBBdZbAyZXG7HeOUwX+mOckK
+X-Google-Smtp-Source: AGHT+IEf2yNr6fD7qv/w/fGK+c2jap3lCGTzYGTI2rajpAO/BJ1bZA5el48oBZevV5xHZv14PdUMAsxqs8aJLTCQNJw=
+X-Received: by 2002:a17:902:f905:b0:1f6:ee4f:23d6 with SMTP id
+ d9443c01a7336-1f9ec44a053mr28605ad.23.1718915007301; Thu, 20 Jun 2024
+ 13:23:27 -0700 (PDT)
+MIME-Version: 1.0
+References: <20240618224604.879275-1-rkir@google.com>
+ <495d3ddc-ce73-4ef5-badd-16ed61f9a5aa@linaro.org>
+ <ZnKRLj3usYxmAIOE@redhat.com> <87le2zbqfx.fsf@draig.linaro.org>
+ <CAOGAQeov7kwbopVPyVZwS3mYvWqMb_0=K4te09ENdtg-P7M23g@mail.gmail.com>
+ <CAFEAcA-Mh-kVB57jWWwS_0RexnvFzNLLiHjxZJKOm49YHwXSgQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA-Mh-kVB57jWWwS_0RexnvFzNLLiHjxZJKOm49YHwXSgQ@mail.gmail.com>
 From: Roman Kiryanov <rkir@google.com>
-To: richard.henderson@linaro.org, peter.maydell@linaro.org, 
- pbonzini@redhat.com, qemu-devel@nongnu.org
-Cc: jansene@google.com, mett@google.com, jpcottin@google.com, 
- alex.bennee@linaro.org, berrange@redhat.com, Roman Kiryanov <rkir@google.com>
+Date: Thu, 20 Jun 2024 13:23:16 -0700
+Message-ID: <CAOGAQeoda0GWHoki2-3Xvgigb4iaZhLeA_YCN_WJ_642n8HVag@mail.gmail.com>
+Subject: Re: [PATCH 3/3] exec: use char* for pointer arithmetic
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ jansene@google.com, mett@google.com, jpcottin@google.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
- envelope-from=3Ro50ZgQKCm8eXVeTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--rkir.bounces.google.com;
- helo=mail-yw1-x1149.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=rkir@google.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,39 +97,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-void* pointer arithmetic is a GCC extentension
-which could not be available in other build
-tools (e.g. C++). This changes removes this
-assumption.
+Hi Peter, thank you for looking.
 
-Google-Bug-Id: 331190993
-Change-Id: I5a064853429f627c17a9213910811dea4ced6174
-Signed-off-by: Roman Kiryanov <rkir@google.com>
----
-v2: renamed from "use char* for pointer arithmetic"
-    and removed all explicit extra cast with
-    one typedef in memory.h.
+On Thu, Jun 20, 2024 at 12:09=E2=80=AFPM Peter Maydell <peter.maydell@linar=
+o.org> wrote:
+> I think this is the point where I would say "you're making the
+> code worse for upstream and the only benefit is to your out-of-tree
+> downstream code". If you want to build QEMU, use one of the compilers
+> that QEMU supports.
 
- include/exec/memory.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+I think there is a value in letting other developers (not just us) to build
+their code with QEMU. I understand your concern and sent an
+updated version of the patch, which is only two lines long.
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index b1713f30b8..b616338f05 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -2795,8 +2795,10 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
- #define ARG1_DECL    AddressSpace *as
- #include "exec/memory_ldst_phys.h.inc"
- 
-+typedef uint8_t *MemoryRegionCachePtr;
-+
- struct MemoryRegionCache {
--    void *ptr;
-+    MemoryRegionCachePtr ptr;
-     hwaddr xlat;
-     hwaddr len;
-     FlatView *fv;
--- 
-2.45.2.741.gdbec12cfda-goog
+> There are lots and lots of places where we
+> assume the GCC-or-clang feature set over and above plain C.
 
+I am not changing this part.
 
