@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54A2DC27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 15:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFE5DC27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 15:24:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKJcZ-00064M-Ro; Thu, 20 Jun 2024 11:22:43 -0400
+	id 1sKJcV-0005uy-1v; Thu, 20 Jun 2024 11:22:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sKJcX-0005zm-Iv
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:22:41 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1sKJcT-0005t9-8e
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:22:37 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sKJcU-00081J-BT
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:22:41 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a6fb341a7f2so130464666b.1
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 08:22:37 -0700 (PDT)
+ id 1sKJcP-0007yW-IG
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:22:36 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52cc14815c3so1063507e87.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 08:22:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718896957; x=1719501757; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718896952; x=1719501752; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZQ8CEbgFXQ50Jx+/zMrlpDCus+bU22jqqVwm5sZfxvc=;
- b=qyTwHgqYX6E3DfIN8VEFe6Y71TU8F1nmaGduFYVpRCLkMoaXz96+iyyJkslvLOpOp4
- FF6nJjLkfCfRa7E5aEdJXHH95U5DYD6cvHa66P5t8rvUYTnjJdfet2SCynF4UBXXDYrZ
- aS5zd96v3Qof9gigW6Q12xT7tEmM/oQj5zBEgRdzFaWC3zk0f6hOzm3tBEP0dDX67vnl
- 40vEMer0v09Z2vn0AykHjiuKoAvdFl6rUPv+eeAUx1kkFTQMI/MZBleEKSTKoakEWBZc
- WRpE7epu6uFMgu1urh9ZHM2zVTyFA8m0y+UVGgrk7y8rg9QqS698kAzlu8JF3WbXcV5q
- AGhw==
+ bh=a0NIpkhyGGYgnbxSmBPfzzcGZB9GrmkEzQVe5cCnoVc=;
+ b=p9TrWohcr0ofM0C0tvh8djX/Ijp5UfvKqp+rLMhEnmfAW8mjqiamcyXWvG4PVh/i3n
+ pGr4viTQGv+6lUoJcE8yGTgF7z5+9fMs0MzkG9AqMxPI1EFGxUPum6ksgQl0ZePQZUhG
+ 7YnpnLLTCe4jP0XuR41PgAi5qYouJo4yRXa4Jp6WbmKx+0mCmf5tSYQFgQ6zMccsBorQ
+ Lqj/D+d8QEAyITPyiiDULFNeGrSJtuzhxsPvU1wXtBp6Hv0SlwW3q3pLrztJ8UIcl5t8
+ zyk+Wpr2W6Er+98RmRgeZ9a9jaJ8rQ2ZIQr7b2dU3oajF+92lVLnMIrmlMj1jvPEWind
+ xnFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718896957; x=1719501757;
+ d=1e100.net; s=20230601; t=1718896952; x=1719501752;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZQ8CEbgFXQ50Jx+/zMrlpDCus+bU22jqqVwm5sZfxvc=;
- b=aX8Ogj4VUdPP+PB/m7GkaOvtt8q4vBey5l22sRYE9RCbc+j/bHDMc15enMG8vOYeK5
- DK3jzI58h2sQdYHE5AyiWPadC+15EqT/tcykGYBymAuaUg6hOZcCvYUaxYRYJ+BwzvAL
- 6fd6TPaJMDcnEq6y6Bc/lMsmecUOAtnd/xNoHWl6Ci4hosZNZ+0vTedhNZfFiecgTZTN
- UJTaA4qbxjI+y1O1meMOR9nbmFEnpipfnPV1I0XVckFgqsMnTMCiOLV86rN9/FWbZiIU
- xqhjBRDLbQsLH52BGWsT3gS/iwTHvxFGJkhvZPHn+3FQshkNw8+PieQH+OhhqP0tY1U3
- 7HZw==
-X-Gm-Message-State: AOJu0YyOzbB/+Q9UBDURMXIuBJuscHLHL5mW+9zzwNYCFc2wx2rXhF3B
- 6fS3ZSYuog7wV/4/n7mt3MqLCKR3Sf49QlC5BgqRNjdTm/ZkSDYo4G0bCU4hXtk=
-X-Google-Smtp-Source: AGHT+IH9ydE3ImEmECu/jTqHbMKjkbdYKCQBP9DWZg1r82biwaNCpjgKg3b6KL1DuAkpxGXNwAJwVg==
-X-Received: by 2002:a17:907:a092:b0:a6f:4ae3:5327 with SMTP id
- a640c23a62f3a-a6fab609e5dmr478736466b.15.1718896956518; 
- Thu, 20 Jun 2024 08:22:36 -0700 (PDT)
+ bh=a0NIpkhyGGYgnbxSmBPfzzcGZB9GrmkEzQVe5cCnoVc=;
+ b=ugQFj5KT3XYtgmt9SbFzOvuLXL5ZsDonk3arWk5g79RAif9Vl8pDLMuo8gdy+WhjHo
+ qZNSkFCvyF2RGoJOHwsC4bJj20dTi6la5o9xf0CenXUIUVoqgIIpkw7XhOOAPqTuQmke
+ iHwL4JFjNX+OGLRifQygII6+s4EbBb3bLRPybigpSKQl6hzQ6UAVUHC63+VBBNnfkaUa
+ 5p9tt0ko626h1JHijR+mmBjTPAQWKQ8Lhobkplu+5RGOrhk2u3dnF+bajvDAxCkJy3Wy
+ IAnAdATB6qLNSYkbxrexZ2N1vGHUftOuCFM3Rvtf4g1p4kGVnRyNndN1SvQxCtqSHtWA
+ unXg==
+X-Gm-Message-State: AOJu0YzZOsmjK3HJgGLz1sNBW80mtu4/8iLOcuCE4KJuwTkOr6yt5dt1
+ +hJ8E5+e89xZZ7Fucj0gDgFyKprDmMTNofU/LSRPrswnqCgm4wy5mkEuF4GmTsE=
+X-Google-Smtp-Source: AGHT+IF/Ow3t51hj2zvFm2LAur2fftlTRBJVGqnvOSs+DkFtw+O0hxF8fAtrEgLsUxfRTp/WRXnwOw==
+X-Received: by 2002:a05:6512:6d3:b0:52c:7f7f:dc1f with SMTP id
+ 2adb3069b0e04-52ccaa5c755mr4114734e87.61.1718896951767; 
+ Thu, 20 Jun 2024 08:22:31 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56ed3590sm782032166b.98.2024.06.20.08.22.28
+ a640c23a62f3a-a6f56ed0f2asm783454366b.131.2024.06.20.08.22.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Jun 2024 08:22:29 -0700 (PDT)
+ Thu, 20 Jun 2024 08:22:28 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E6E735FA08;
+ by draig.lan (Postfix) with ESMTP id B3C945FA03;
  Thu, 20 Jun 2024 16:22:21 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -81,17 +81,18 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
  Marcelo Tosatti <mtosatti@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 09/12] plugins: add migration blocker
-Date: Thu, 20 Jun 2024 16:22:17 +0100
-Message-Id: <20240620152220.2192768-10-alex.bennee@linaro.org>
+Subject: [PATCH v2 07/12] qtest: move qtest_{get,
+ set}_virtual_clock to accel/qtest/qtest.c
+Date: Thu, 20 Jun 2024 16:22:15 +0100
+Message-Id: <20240620152220.2192768-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240620152220.2192768-1-alex.bennee@linaro.org>
 References: <20240620152220.2192768-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,48 +115,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the plugin in controlling time there is some state that might be
-missing from the plugin tracking it. Migration is unlikely to work in
-this case so lets put a migration blocker in to let the user know if
-they try.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Suggested-by: "Dr. David Alan Gilbert" <dave@treblig.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240530220610.1245424-5-pierrick.bouvier@linaro.org>
 ---
- plugins/api.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/sysemu/qtest.h |  3 ---
+ accel/qtest/qtest.c    | 12 ++++++++++++
+ system/qtest.c         | 12 ------------
+ 3 files changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/plugins/api.c b/plugins/api.c
-index 4431a0ea7e..c4239153af 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -47,6 +47,8 @@
- #include "disas/disas.h"
- #include "plugin.h"
- #ifndef CONFIG_USER_ONLY
-+#include "qapi/error.h"
-+#include "migration/blocker.h"
- #include "exec/ram_addr.h"
- #include "qemu/plugin-memory.h"
- #include "hw/boards.h"
-@@ -589,11 +591,17 @@ uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry)
-  * Time control
-  */
- static bool has_control;
-+Error *migration_blocker;
+diff --git a/include/sysemu/qtest.h b/include/sysemu/qtest.h
+index 45f3b7e1df..c161d75165 100644
+--- a/include/sysemu/qtest.h
++++ b/include/sysemu/qtest.h
+@@ -34,9 +34,6 @@ void qtest_server_init(const char *qtest_chrdev, const char *qtest_log, Error **
+ void qtest_server_set_send_handler(void (*send)(void *, const char *),
+                                  void *opaque);
+ void qtest_server_inproc_recv(void *opaque, const char *buf);
+-
+-int64_t qtest_get_virtual_clock(void);
+-void qtest_set_virtual_clock(int64_t count);
+ #endif
  
- const void *qemu_plugin_request_time_control(void)
+ #endif
+diff --git a/accel/qtest/qtest.c b/accel/qtest/qtest.c
+index 53182e6c2a..bf14032d29 100644
+--- a/accel/qtest/qtest.c
++++ b/accel/qtest/qtest.c
+@@ -24,6 +24,18 @@
+ #include "qemu/main-loop.h"
+ #include "hw/core/cpu.h"
+ 
++static int64_t qtest_clock_counter;
++
++static int64_t qtest_get_virtual_clock(void)
++{
++    return qatomic_read_i64(&qtest_clock_counter);
++}
++
++static void qtest_set_virtual_clock(int64_t count)
++{
++    qatomic_set_i64(&qtest_clock_counter, count);
++}
++
+ static int qtest_init_accel(MachineState *ms)
  {
-     if (!has_control) {
-         has_control = true;
-+#ifdef CONFIG_SOFTMMU
-+        error_setg(&migration_blocker,
-+                   "TCG plugin time control does not support migration");
-+        migrate_add_blocker(&migration_blocker, NULL);
-+#endif
-         return &has_control;
+     return 0;
+diff --git a/system/qtest.c b/system/qtest.c
+index 8cb98966b4..12703a2045 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -325,18 +325,6 @@ static void qtest_irq_handler(void *opaque, int n, int level)
      }
-     return NULL;
+ }
+ 
+-static int64_t qtest_clock_counter;
+-
+-int64_t qtest_get_virtual_clock(void)
+-{
+-    return qatomic_read_i64(&qtest_clock_counter);
+-}
+-
+-void qtest_set_virtual_clock(int64_t count)
+-{
+-    qatomic_set_i64(&qtest_clock_counter, count);
+-}
+-
+ static bool (*process_command_cb)(CharBackend *chr, gchar **words);
+ 
+ void qtest_set_command_cb(bool (*pc_cb)(CharBackend *chr, gchar **words))
 -- 
 2.39.2
 
