@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93C07C2BA1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 15:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34661C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 15:08:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKJJc-000565-CN; Thu, 20 Jun 2024 11:03:08 -0400
+	id 1sKJOq-0007Uh-Ub; Thu, 20 Jun 2024 11:08:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sKJJZ-00052l-Bb
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:03:05 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sKJJX-0004bd-MF
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:03:05 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1f992388bbbso8861195ad.3
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 08:03:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718895782; x=1719500582; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=H0iR1CqklhYsZeAcPYGBAPYi4F3ACQBXDV3k0qU66nw=;
- b=CQ62+7YA1bqnTcsA0AiuiOto+EHAcJCeXKKJ2qxyDeGyiGG8arZkAAB+U00JNjrVgb
- 8Zr51gCE+zkmGZr3t9mae14x7z2RRJhoQF8m8/+GwXbeFcjyVggPHRfD9F0MKNUsnOKX
- AsWW3eWoBi+kDd8cPOkvSWMgLKz3VkTNBeshMZTbCrBgule8jp8xPBvQbmvyaDlOIOBr
- Ml59VikP1cHzVxNGq6836dHxukS3jZ27y1JBcjq06hF6rYtNYX3+rjqa7fTpxNPp9hzl
- oC0szaFc5y8vON55Na3z4TETLbKbBFq2+4IBiqvqeCraiZ/ye+miOZK5v1l3BoXHorSB
- pAsw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sKJOk-0007SS-KV
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:08:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sKJOi-0005Qt-H0
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:08:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718896104;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tnwlUINMYdkSjNNUvhTv/cJTouCJchLU6F0iVgCDDKg=;
+ b=SG4ih+enNV5hkSUehPhPa7TLUVHACzCqN1ZrqwFbjkAfUB3FIyBrB1GDOQZ8z6JOcAw+b8
+ u9huEkmh81+V2HsjEVV/pmU6VJhYE4vpIhmibWGOiqzU2NFMnklwilM3UnuyVvxV1uPo7e
+ ZH2X0gHMdeRc4tKsrBOFsJel5j1K6Go=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-614-lZwKc3LzMl6x2GMw07Nh8w-1; Thu, 20 Jun 2024 11:08:22 -0400
+X-MC-Unique: lZwKc3LzMl6x2GMw07Nh8w-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-36279cf642cso367104f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 08:08:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718895782; x=1719500582;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H0iR1CqklhYsZeAcPYGBAPYi4F3ACQBXDV3k0qU66nw=;
- b=O+CBLMoYQtLqy9z9QshpG4A+UdfrP5WqLBmBowlsAFotJhlK1rFgE2MgtgXOxOt56H
- 3kyYkU2aSIA9Fab0AePBsSGbBpVmPftM+jgBu8nU8mdDodbkrxpmD8Wf5kouvuJGiuyJ
- BRcWJs3UHMp+hTmZLzfUf/jt9/xBb6o9T6zPLQ9HRZ2XZ7nR4PreoPr6MeWJ8IY+CtfI
- FlIz6CHxRZukYfvVvVsbwMPX0A0szjl7dCvvp/LCukfQ+rv3qalkwVZ6UXaFINoJznXy
- 4K71MP7czkvrd6WM54D2ybi0G9YjwpE1QYK8OntZ/q8feWYC24iD1UFBozsGrHYoQX5E
- QZjw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbC+jlnYajV7uAyO55UwYGxqiezZXnr8WGHhB+acTM4reUFZPBceEc5N6KioCbG4mmZ9meL728gPgQNhzSF5ngi1ENzb4=
-X-Gm-Message-State: AOJu0Ywq1Vwn7e8Bof99A5qP+1gveNk8KmUDruVoB9CHYRi8MUpT14sV
- bRD+Hz5hCv9dAzEFJ1m1Yff/k9JXtdeJ5ak1OwnGXUOmWs8tx2UQW6uux3TeTNg=
-X-Google-Smtp-Source: AGHT+IEb7MK5QgflqL7je+8bDBCw1SAfq130A1+AxaqyqwaF8yKVTHb8jwKJlEIARoy+xM/SpDSbHg==
-X-Received: by 2002:a17:902:f64c:b0:1f7:38a2:f1e6 with SMTP id
- d9443c01a7336-1f9aa473e72mr63536555ad.43.1718895781790; 
- Thu, 20 Jun 2024 08:03:01 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.132.216])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855f0580dsm137956765ad.208.2024.06.20.08.03.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Jun 2024 08:03:01 -0700 (PDT)
-Message-ID: <64d018d2-ab53-47b3-963e-ad9abf41896c@linaro.org>
-Date: Thu, 20 Jun 2024 08:02:59 -0700
+ d=1e100.net; s=20230601; t=1718896101; x=1719500901;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tnwlUINMYdkSjNNUvhTv/cJTouCJchLU6F0iVgCDDKg=;
+ b=HruH1j9mc32UNT+0CKP7igl5PwNWby7C5YWCrh4vQJR2o4K2vvNgz05xpNePCQst0X
+ z1mamQfcnrhv6wEYyev05oDXNgLghm8s+Y9tq47ITVr7ebklMbzAeOqRt3qertOmQGsc
+ mlhc4VBotb2xc5qT2GUyHRcxTrdh4fEFtcAmhH3C4zpisSGSiHLTnsfFkner/gLGzXXF
+ XnAg8ccyFZhlDd/3xBKjxT7pYIIZ2XXqKgIy/LIawRjGCAF2bhCj/LdPs6h6BxXcgxom
+ /Z3SSK2xwtGm6UN1l5VBovlUjaQqGTJDh0RG2zR6FjgpQEO0VJkJ+yd3i0R0Y+UE/SOx
+ hBiQ==
+X-Gm-Message-State: AOJu0Yydm6Eup974x2AglOf81yE7rsvwbNyFTflfLHsG5iEkmD3BpBFa
+ 4UbQU7t7lVRsmYlcUBkuQaV5x9kPN07scMmCMc/NjebTi1xK9uGFtv69ryXaVI1OA99ESS6QWee
+ CVoNT+H31VrG7tiqsk6Mp/Ihd17lDtXHEukegxXXVWzHMj49r0cfLb4wVJI5zQZEmhkeOzCbHoZ
+ PkHmm3UTnx3AXZTcG3IOiT3Rte/sw=
+X-Received: by 2002:a5d:4242:0:b0:364:9941:cf92 with SMTP id
+ ffacd0b85a97d-3649941d063mr1835949f8f.50.1718896101515; 
+ Thu, 20 Jun 2024 08:08:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE6GFNaXFlqpa9vAlz8WXSXb1ocs/ahi1wl+snM9E2atpiLaGE4Zy5lyurtMegh1WkonnFNsRFobdUbv0i7LEY=
+X-Received: by 2002:a5d:4242:0:b0:364:9941:cf92 with SMTP id
+ ffacd0b85a97d-3649941d063mr1835938f8f.50.1718896101178; Thu, 20 Jun 2024
+ 08:08:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] target/i386: use cpu_cc_dst for CC_OP_POPCNT
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240620095419.386958-1-pbonzini@redhat.com>
- <20240620095419.386958-2-pbonzini@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240620095419.386958-2-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240620130254.415699-1-pbonzini@redhat.com>
+ <20240620130254.415699-7-pbonzini@redhat.com>
+ <ZnRETaWTb57K0VO3@redhat.com>
+In-Reply-To: <ZnRETaWTb57K0VO3@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 20 Jun 2024 17:08:10 +0200
+Message-ID: <CABgObfZca69nJ-r2nqnmuSFREw+FZcvDKgengE_FfcP+CkiPwQ@mail.gmail.com>
+Subject: Re: [PATCH 6/6] meson: require compiler support for chosen x86-64
+ instructions
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, amonakov@ispras.ru
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,20 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/20/24 02:54, Paolo Bonzini wrote:
-> It is the only POPCNT that computes ZF from one of the cc_op_* registers,
-> but it uses cpu_cc_src instead of cpu_cc_dst like the others.  Do not
-> make it the odd one off.
-> 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   target/i386/cpu.h           | 2 +-
->   target/i386/tcg/cc_helper.c | 2 +-
->   target/i386/tcg/translate.c | 2 +-
->   target/i386/tcg/emit.c.inc  | 4 ++--
->   4 files changed, 5 insertions(+), 5 deletions(-)
+On Thu, Jun 20, 2024 at 5:01=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+> >  config_host_data.set('CONFIG_AVX2_OPT', get_option('avx2') \
+> > +  .enable_auto_if(get_option('x86_version') >=3D '3') \
+> >    .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot=
+ enable AVX2') \
+> >    .require(cc.links('''
+> >      #include <cpuid.h>
+> > @@ -2875,6 +2876,7 @@ config_host_data.set('CONFIG_AVX2_OPT', get_optio=
+n('avx2') \
+> >    '''), error_message: 'AVX2 not available').allowed())
+> >
+> >  config_host_data.set('CONFIG_AVX512BW_OPT', get_option('avx512bw') \
+> > +  .enable_auto_if(get_option('x86_version') >=3D '4') \
+> >    .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot=
+ enable AVX512BW') \
+> >    .require(cc.links('''
+> >      #include <cpuid.h>
+>
+> I'm not sure this makes sense. The CONFIG_AVX* options are used only
+> to validate whether the toolchain has support for this. The QEMU
+> code then has a runtime, so it automagically uses AVX2/AVX512
+> if-and-only-if running on a suitably new CPU.  IOW, we want this
+> enabled always when the toolchain supports it, regardless of what
+> x86_version is set.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+The difference is that if the toolchain does not support AVX2/AVX512
+intrinsics for some reason, and you require -Dx86_version=3D{3,4}, meson
+would report an error with this patch.
 
-r~
+Paolo
+
 
