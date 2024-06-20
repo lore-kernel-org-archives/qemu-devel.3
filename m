@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91734C2BA1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 16:15:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFB76C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 16:24:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKKQe-0003GC-N1; Thu, 20 Jun 2024 12:14:28 -0400
+	id 1sKKZn-0007o9-5V; Thu, 20 Jun 2024 12:23:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sKKQc-0003FU-Qu
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:14:26 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sKKZm-0007nx-8l
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:23:54 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sKKQb-0000ux-Bj
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:14:26 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-705cffc5bcfso1111503b3a.3
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 09:14:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sKKZk-0002Qv-Co
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:23:53 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1f70ec6ff8bso357465ad.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 09:23:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718900063; x=1719504863; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BT0+2I5QhZWKSnt01JkyZx28KQjoYRhZnazFQwh6FP4=;
- b=P4ssFVFXmBDsrQDBPjHpwWpkMYmNz9pIpaRpZoxSPMJ5Rj+dd+7YjdiQMhanXDDskM
- Gq66WYphMBL48mS7Ft8B0DEs+AsQPycaST21yLcBTWZ18AciBb0IyEC1LqYt1XJZ+c+/
- LPiO9k5aDNftsDr1CeDZP6Rw295xfposf0p+Bbgp6L71xVDtd/gNL3BujqM74dtMJ1Qc
- ajAiANYlyX+eyyaKNSNb7OzSG8UfhQMVAeP9X7TUI2hV3dQ2oviSSakz1+nvnC4vuqBH
- hjpCBGkC1A3PL3upqy8QqcMvT8GHdKlbjVC8mGR/J1fXwRO+vdG6D8RN3iBAC+wsVZH6
- hbHg==
+ d=google.com; s=20230601; t=1718900630; x=1719505430; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=puNEomUppI0lbgfiSMvHjV5koJDgqVwAWVy5Q7cT9j0=;
+ b=A/Xt5ktkWaoL5HecMkk/LmyaI39ELRmuObbuWb4wAa9KU5jikGpghWCNtjhs7ao5Jr
+ 8EFa8j3YcP4fEEljjJVMuWgsRlebFzBBVOKc0ChX9m3uytw1xe0NoGbUy+myHp5Xrukc
+ cfwbfymiVFrWUVeX8WVlK6SbVYdcAQyPdOMgqlEyNcGLeIcOMDl1QaXqsn26ZqcoS0VV
+ LBNyxm9oRajlOmmdOkaoRNQM/RM5tdNIIjwxK6ujbTe8V8cPvANxX7FD1jU9PG5FrW8M
+ yMfp3qmcLLQswgScbvnY/QzpKXmuosVZsFKdHt72WA+afZk6bwMRjBJpLdadNI7ag9C2
+ nu8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718900063; x=1719504863;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BT0+2I5QhZWKSnt01JkyZx28KQjoYRhZnazFQwh6FP4=;
- b=iZLbh9g2fPWhB7DkbThusrJ+ChMU0DVTPRFB2ZP4k4sZILG9BDPCcNJlf0vrUN49tK
- m3eLPszDlPan2nu/bR79bpEFDQob8WQScCmrcwRM1mr6Pu1vYFr9nfzTGvNXlKoTz+As
- /EiuY3DOXU3ii8X4EXKKY0OEzQ+f9BaxTPxZzEoewj2nuch0AHfYlOVs8QhzDtw8AClb
- lOOT5U2RsbDFYAEKrlF3WYWvvbBPFBSH/BZjuVxMXXhCIN+CrSE3SIUNb4kgb4DyA3Pl
- ChJWAiTT6gM2cRCjE/0enQj2uubZh7MbFHmcMARlLjkZYioWskn2wX9kCznUJRMy5Ec0
- p+Wg==
+ d=1e100.net; s=20230601; t=1718900630; x=1719505430;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=puNEomUppI0lbgfiSMvHjV5koJDgqVwAWVy5Q7cT9j0=;
+ b=wLsdv/qA2bpClYbNK0XgTmFZbb1DAi2/pKY6ffcUKvq6ypJv+UBsWbnwlYkrvTUGqF
+ 10JsSQN26x7s9nljp4dp1R4fHgwGo8jWXENxVEDub/xBaT0185/c3gwJ5MXrZ6zuDard
+ 6O03bsuMXXxqJdy01gbj2tqGObhU7B+1/mVSc3Vyml0sl0/jDb7WXDsIfGda3jQgTmcP
+ 61ys1FFP6m2uWGzA95NDYeWbzQh8pKvEHzb9O+tUVcHstA2TxB16Yz0DHadczi/uUS7k
+ VIDcykou+iutod7fNvWPvSEUyEiL5L7WrN8pdmG1RtApNkjMOiMd3cXmgvtZ8Ir0OUEe
+ qzcg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV85vwlbyKp2vbBbazEUVFUa7MBWsuaCkgJpVto0ghdfvn+MIFHdJVizaTQCPROSezisT0K/UaX/7NKptt4wn12a0ZCFTg=
-X-Gm-Message-State: AOJu0Yxhh0s6Nkl+XwdUped49Tx6NdjQM204pw6t74Ur2gcTUl1Jd8Gt
- 6FVuDjLcbmlgVLPKVIzyyWAhzhoehDrP+MVCSZIPjywraFTlgfb856Cqk6gLIY8=
-X-Google-Smtp-Source: AGHT+IHGU0RjPsV1K5Ei7VoLKsQ77ypEJOqUqMiMn6N93jc+Iz7JGUfI6R6V/k4Chz3cU6wHdX6ceA==
-X-Received: by 2002:a05:6a20:12d4:b0:1b5:d36a:5d68 with SMTP id
- adf61e73a8af0-1bcbb41737dmr7511560637.15.1718900063388; 
- Thu, 20 Jun 2024 09:14:23 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.132.216])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-705ccb6af5csm12566522b3a.162.2024.06.20.09.14.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Jun 2024 09:14:22 -0700 (PDT)
-Message-ID: <cfbba66b-c556-44d2-9be1-2159a6748a9f@linaro.org>
-Date: Thu, 20 Jun 2024 09:14:21 -0700
+ AJvYcCX4nX+zCSEWlhjvL5Nznhn3csqX0WnZP1lQQS/fleFCqPqkQTdY7Un7qIHRZ+7bNDARx+fS0bXskBqK3V3MO9USWCvnyec=
+X-Gm-Message-State: AOJu0YwnEzn3sl7RBpTT1h3DGCQAZjzQC06mxOiIVKOHKDPsCyWnPLYw
+ YWYpC7zUcFRH1r7wkShS8Mr/8lf8ffz3LIvkvzSIo5yV+GF0p2k7/5mcKuSUsTDhZUSjDnNowtY
+ LVlzbtT3pOVRPLEFXJ8pUWwSqwCpxPCVnN1NSbfMQ291y4K6j6Q==
+X-Google-Smtp-Source: AGHT+IHf4Ku/qoS5AK41BCMqSaVUWGMM55ts1tmnUjbfR4y6ZTCgFbN5keHEqocJSu3QJ43pPS86Hw1WOKBlh5WQaN0=
+X-Received: by 2002:a17:902:fd06:b0:1f6:f96c:4a44 with SMTP id
+ d9443c01a7336-1f9ac1ec02dmr6192335ad.22.1718900629725; Thu, 20 Jun 2024
+ 09:23:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/10] target/i386: convert CMPXCHG8B/CMPXCHG16B to new
- decoder
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240620095419.386958-1-pbonzini@redhat.com>
- <20240620095419.386958-7-pbonzini@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240620095419.386958-7-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240618224604.879275-1-rkir@google.com>
+ <495d3ddc-ce73-4ef5-badd-16ed61f9a5aa@linaro.org>
+ <ZnKRLj3usYxmAIOE@redhat.com> <87le2zbqfx.fsf@draig.linaro.org>
+In-Reply-To: <87le2zbqfx.fsf@draig.linaro.org>
+From: Roman Kiryanov <rkir@google.com>
+Date: Thu, 20 Jun 2024 09:23:37 -0700
+Message-ID: <CAOGAQeov7kwbopVPyVZwS3mYvWqMb_0=K4te09ENdtg-P7M23g@mail.gmail.com>
+Subject: Re: [PATCH 3/3] exec: use char* for pointer arithmetic
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ jansene@google.com, mett@google.com, jpcottin@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=rkir@google.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,24 +94,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/20/24 02:54, Paolo Bonzini wrote:
-> This moves the last LOCK-enabled instructions to the new decoder.  It is now
-> possible to assume that PREFIX_LOCK gen_multi0F is called only after checking
-> that LOCK was not specified.
-> 
-> The gen_cmpxchg8b and gen_cmpxchg16b functions even have the correct
-> prototype already; the only thing that needs to be done is removing the
-> gen_lea_modrm() call.
-> 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   target/i386/tcg/decode-new.h     |   2 +
->   target/i386/tcg/translate.c      | 121 +------------------------------
->   target/i386/tcg/decode-new.c.inc |  34 ++++++---
->   target/i386/tcg/emit.c.inc       |  96 ++++++++++++++++++++++++
->   4 files changed, 124 insertions(+), 129 deletions(-)
+Hi Daniel and Alex,
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On Thu, Jun 20, 2024 at 8:10=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
+>
+> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+> > NB, QEMU is explicitly *NOT* targetting the C standard, we are
+> > targetting the C dialect supported by GCC and CLang only. IOW,
+> > if they have well defined behaviour for arithmetic on void *,
+> > then we are free to use it.
+>
+> It looks like GNU C does support it:
 
-r~
+GCC does support void* pointer arithmetic as an extension. But if you
+decide to use other compilers, you might not have the same luck. We
+(and maybe other developers) would like to use the QEMU headers with a
+C++ compiler where this extension is not available.
+
+Regards,
+Roman.
 
