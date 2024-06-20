@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5021EC2BA1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83295C2BA18
 	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:22:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKHjA-0001rD-3f; Thu, 20 Jun 2024 09:21:24 -0400
+	id 1sKHja-0001ut-2X; Thu, 20 Jun 2024 09:21:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKHj8-0001r5-QF
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:21:22 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKHjY-0001uh-Kx
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:21:48 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKHj6-0001Ut-4Y
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:21:21 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKHjW-0001WC-7J
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:21:47 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id A429821A82;
- Thu, 20 Jun 2024 13:21:18 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 1A1C921A82;
+ Thu, 20 Jun 2024 13:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718889678; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1718889704; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ELavpL4FfrunJNAG8DOrrHydBtzVnP5HxrYDB2FY43c=;
- b=RlP8H/hu5bFeJyFGnZHZwXFWP7qN+Bocjr2ddeGswZ5QKgEIND3pGpOOxBMzCArjy4gz2E
- fstwfzOfkGbTXXZQzTYqG7Rti06XxfDHBMlCfuP5w1Jd1ED64dS4uW+uj2XipPxCiSvp4o
- aldhkDD79ce+duexzyRWiiZLSTo5QC4=
+ bh=q25OVBj89J7duSQ16hjB9WAQnvNasZEU/8VXHRgvNZk=;
+ b=ZkRo1RknRrK3Ks3k0rLexlmGLsw5pjehkBtD61jKEhRfDqUm2YiSQMARrW+jHst5mw3BXL
+ pr5QkeQucrlzq59HSqdmQ368MKumIqHupFBRqMLJ/s2zsN+q195/KFopoo+5FbI7AWmKRi
+ yxDkHSoVtftn1RHE3UDxuBUU5NCg2Ls=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718889678;
+ s=susede2_ed25519; t=1718889704;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ELavpL4FfrunJNAG8DOrrHydBtzVnP5HxrYDB2FY43c=;
- b=xzL4qhBkEZT2YR9XwemYq/fqBJF/U3mdVY+3vWJoDNCIhcH5uLbF5kNpGClFWER7BQy1ZF
- WJ/ZfR9w9SZODRDQ==
+ bh=q25OVBj89J7duSQ16hjB9WAQnvNasZEU/8VXHRgvNZk=;
+ b=pAvhCObcV+O952SrbrbkK5ShsOZcIOmilD5pELZoktEcOUd08In/0cM+L54upq3HWaEhWO
+ BzIP9t3ihLMG57Bw==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718889678; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1718889703; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ELavpL4FfrunJNAG8DOrrHydBtzVnP5HxrYDB2FY43c=;
- b=RlP8H/hu5bFeJyFGnZHZwXFWP7qN+Bocjr2ddeGswZ5QKgEIND3pGpOOxBMzCArjy4gz2E
- fstwfzOfkGbTXXZQzTYqG7Rti06XxfDHBMlCfuP5w1Jd1ED64dS4uW+uj2XipPxCiSvp4o
- aldhkDD79ce+duexzyRWiiZLSTo5QC4=
+ bh=q25OVBj89J7duSQ16hjB9WAQnvNasZEU/8VXHRgvNZk=;
+ b=Ze3/LCyddhrVeXNaoDhe0XhDf0NGAEcnr8Bre8h9MihrsXhCsnDXYtACDifAaN7qeCfbmI
+ LuG1LYZmJOfGep+jAlu0g0NWSc6JX5eByGC34s306lStnKP2/9RZfQUXEU8AbZxKOKQpfu
+ 9GVuggwg00V7X9bf2WB8bjhr8x5dQIg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718889678;
+ s=susede2_ed25519; t=1718889703;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ELavpL4FfrunJNAG8DOrrHydBtzVnP5HxrYDB2FY43c=;
- b=xzL4qhBkEZT2YR9XwemYq/fqBJF/U3mdVY+3vWJoDNCIhcH5uLbF5kNpGClFWER7BQy1ZF
- WJ/ZfR9w9SZODRDQ==
+ bh=q25OVBj89J7duSQ16hjB9WAQnvNasZEU/8VXHRgvNZk=;
+ b=L4PRDsFMJHNyQch6EQ4XstLVYgllBJVXSge6YxEVNYduYs90neiV7HgUGEYXwqO57mc7CX
+ TgVWOeXNmdv5RUDA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2D0D11369F;
- Thu, 20 Jun 2024 13:21:17 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9849D1369F;
+ Thu, 20 Jun 2024 13:21:42 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id PncaOc0sdGY6SAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 20 Jun 2024 13:21:17 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id NxpxF+YsdGZcSAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 20 Jun 2024 13:21:42 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Bandan Das <bdas@redhat.com>,
  Zhijian Li <lizhijian@fujitsu.com>, Jiri Denemark <jdenemar@redhat.com>,
  Prasad Pandit <ppandit@redhat.com>, Eric Blake <eblake@redhat.com>,
  peterx@redhat.com
-Subject: Re: [PATCH v3 09/11] tests/migration-tests: migration_event_wait()
-In-Reply-To: <20240619223046.1798968-10-peterx@redhat.com>
+Subject: Re: [PATCH v3 10/11] tests/migration-tests: Verify
+ postcopy-recover-setup status
+In-Reply-To: <20240619223046.1798968-11-peterx@redhat.com>
 References: <20240619223046.1798968-1-peterx@redhat.com>
- <20240619223046.1798968-10-peterx@redhat.com>
-Date: Thu, 20 Jun 2024 10:21:15 -0300
-Message-ID: <874j9nkawk.fsf@suse.de>
+ <20240619223046.1798968-11-peterx@redhat.com>
+Date: Thu, 20 Jun 2024 10:21:40 -0300
+Message-ID: <871q4rkavv.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-2.69 / 50.00]; BAYES_HAM(-1.39)[90.80%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[9]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
+X-Spamd-Result: default: False [-1.56 / 50.00]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ BAYES_HAM(-0.26)[73.77%]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_SEVEN(0.00)[9];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
@@ -119,11 +119,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> Introduce a small helper to wait for a migration event, generalized from
-> the incoming migration path.  Make the helper easier to use by allowing it
-> to keep waiting until the expected event is received.
+> Making sure the postcopy-recover-setup status is present in the postcopy
+> failure unit test.  Note that it only applies to src QEMU not dest.
 >
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+> This also introduces the tiny but helpful migration_event_wait() helper.
+
+Not anymore. I'll drop this line.
 
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
