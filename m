@@ -4,79 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71E13C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 18:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B95EC27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 18:22:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKMPf-00070h-Gf; Thu, 20 Jun 2024 14:21:35 -0400
+	id 1sKMPx-00072O-U3; Thu, 20 Jun 2024 14:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sKMPe-00070S-EJ
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 14:21:34 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sKMPw-000722-Ft
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 14:21:52 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sKMPc-0001Go-U1
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 14:21:34 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-6e5fd488d9fso852163a12.3
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 11:21:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sKMPu-0001I9-Qc
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 14:21:52 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-35f2c9e23d3so1532583f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 11:21:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718907691; x=1719512491; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lYybmh9Ei3+1TAs+4NB3zFjNe3lIw6ds/Q6O3NNq/Fs=;
- b=QpOgkBEsyEtmkUTinV7dCnOOZHylp8ASmDiTXp4GuBXkqy/tIeFMZjUjRUDq/gzWTx
- AWED15B9p/rW9YGpSp0X/pTW6JF8nUX2+xoPscMEabYJJkCkwFmqe0u3Z6g+iRxzHIwT
- EORo8ccaiMF5w+/COpYq5Kw5FVClO8TOsKJimsqdKd/nK4Nw+DcWu4a7VBoSqnGzIlKL
- YPFj67TGYJEz2igslIsFhv7bYP7iggyP1a8ZariWVrHiDkU/N+LFNdqjP7ELQlnEpgYn
- gMwvyB/vbpnaJQNduNbPXzAthRCaaZUDDRX/xkIlWeRflPalsLMUPUR8Ut3uprhGZ+DH
- 5ROQ==
+ d=linaro.org; s=google; t=1718907708; x=1719512508; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=rT7PHRJ4nPS9NYRqb1Y8b7l/QDxgC28f/1jxxvx4TJI=;
+ b=Sl4JUq7d7PQw4x/gOwKjdslUjYUkNXfirjMT5wo2YViuRh7JtQeq2xo2Psp3F03zB7
+ SmhfNxN7a9mCltTIC1NnrZdmXPMyb5bfe04lyFXj3092s/9Vl61UZixCe2RkUt0oxqis
+ tJ24rCdF174Kj4pu4AEsrQQRga0roG78L6DA70LQ9SbbzJ3puMTeTTP2nEQPvlUE5fRn
+ e8+G017XfWh9Z3ez6OG46CmAiurLDhY5Wk21pLKWt/fpd0FOv56Jhm6bubjAT7vo50tf
+ Ij1Ws/eBhRhGyvxH6pKU+SHqB3NImMSIateDpUTGFopKky8aOitR2Y1tBY17R8tP7XJQ
+ 4qbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718907691; x=1719512491;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lYybmh9Ei3+1TAs+4NB3zFjNe3lIw6ds/Q6O3NNq/Fs=;
- b=iIxT7jJDRUdvv9ahLLpnj0tPrxglUq7pD6RdG3j2O4z0SwUS9tLkl8kCCdRWIU/suo
- IQgPZWQM247QjAe53ktT03BJd9hduUb2fPtGJwRUyE7B/ZyDON7vJMJEsmt/zd/fc9B9
- T1tZOtCCzwMT/s5G19pIqIFfxHUWCulMjB9m5eKVrL0JAazoLljLfSv9bDFpCT+1lBTs
- w4KLQYrhOgV5xKuWorKqBmaLxpPz82fO0fTczEjTXfYCw+0eD61GjZq9lYLPCWlue5Vk
- WewhY2YDn0qW3LiYxmz2pH1xfeoNhoYabiBsZqBmc3N+faKwjFOLHPNAwKQQUB/YhTu3
- qs2w==
+ d=1e100.net; s=20230601; t=1718907708; x=1719512508;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rT7PHRJ4nPS9NYRqb1Y8b7l/QDxgC28f/1jxxvx4TJI=;
+ b=abyOz00+ACDAxTPROBislulFlmXUbqgtZp1bihXjPtMnX/DiekdpVIhBqRUbfKLq1h
+ 6Bk3DC8IzZpXrtrDCick4ilSyN+80yk8t8SssSunp0of3IwcOou5QA70RFxMhn1bB4ai
+ q3iLf1Q5GRyHgk0xCzwHbLDo8KQ2PTenPgkO8h2J+20CSJ0R/PUHMT/GguQs+ZLfnKo1
+ zVdksb/sQEkWcS2glST1U6F+vYTgjVnfGs/SXVuIRtH+oF0jYhPKf/qer7DoDW7lPn0V
+ tQAV0QYs4sMXk4r7I080avBbaVtiL5YLQnDh2jtI6BLGkKhf7YeuxrJjQYj8nHpgRYHr
+ pvSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUzfm/r/JCt3qzf5ikwBrbyqF2eDEGQbzlTaHK0i32mXFDx46YsWriqdgk4fu0HJ2J+qljz8Z+8roAFRIVgRobbwg8aIQU=
-X-Gm-Message-State: AOJu0YxRQpv/33/LW8675SmWtBz7NXY6DO9KjsqdsjsEy2iq09+70HFy
- PLpLNnL5J1SaZ4/gFi+Dkmz90438Q1qdtiEswdmRj3KEqi3IysDoYuEH5q814Zo=
-X-Google-Smtp-Source: AGHT+IGB86C88pOYbAKBa8c6M8KJ7rxQrgj+2DN4VmCoDmX4rlHi6Qt5VdxKZQa8M5ppTR1YS94c8g==
-X-Received: by 2002:a17:902:a503:b0:1f8:393e:8b9a with SMTP id
- d9443c01a7336-1f9aa3faf67mr56947325ad.33.1718907691174; 
- Thu, 20 Jun 2024 11:21:31 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.132.216])
+ AJvYcCXW5aIvuLHti9Qf+q36rDs3yNWuG2s57mqvatIhyATzHR+80Mr7kqwGp5Ifbnjj69yIda2tpRXU0MsrLO9fo2Og3vYZkls=
+X-Gm-Message-State: AOJu0YygdlatQjN5Hdqxn9W9aHtolx3BnvaKEgrBbE6veCyl7HnQEvWT
+ hH0pE/DYyQHSONQQzAkyTp6EVbE/dOvifwudBB7UxyxWpGqtP7gkPnirSFX5F+E=
+X-Google-Smtp-Source: AGHT+IEOcKDKG6hjiUMv0taBJBRELoYInhfVl7p032HdU1WrWjrmmZFX4jr51ptNPD/2CajQIABM3w==
+X-Received: by 2002:a5d:4d4f:0:b0:35f:1243:a956 with SMTP id
+ ffacd0b85a97d-36301358c2dmr6574033f8f.23.1718907707886; 
+ Thu, 20 Jun 2024 11:21:47 -0700 (PDT)
+Received: from meli-email.org (adsl-103.37.6.162.tellas.gr. [37.6.162.103])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f855ee6f01sm140888425ad.153.2024.06.20.11.21.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Jun 2024 11:21:30 -0700 (PDT)
-Message-ID: <2af6449a-f4c2-422c-a92b-cfb11a5ae2d5@linaro.org>
-Date: Thu, 20 Jun 2024 11:21:28 -0700
+ ffacd0b85a97d-36075104b8bsm20398011f8f.105.2024.06.20.11.21.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Jun 2024 11:21:47 -0700 (PDT)
+Date: Thu, 20 Jun 2024 21:18:46 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
+ Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
+ Richard Henderson <richard.henderson@linaro.org>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>
+Subject: Re: [RFC PATCH v3 2/5] rust: add bindgen step as a meson dependency
+User-Agent: meli 0.8.6
+References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
+ <6bf311a35e6d3bfa8b3bfd10d8f896a9e655fa30.1718827153.git.manos.pitsidianakis@linaro.org>
+ <877cejdg4c.fsf@draig.linaro.org>
+ <CABgObfbQPMjAS4eMP9=p6vqv_6WYrKk-bGauFkhRtzwY7rA00w@mail.gmail.com>
+In-Reply-To: <CABgObfbQPMjAS4eMP9=p6vqv_6WYrKk-bGauFkhRtzwY7rA00w@mail.gmail.com>
+Message-ID: <fe5oa.0duljr6rjpx6@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/arm: Move initialization of debug ID registers
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- alex.bennee@linaro.org
-Cc: philmd@linaro.org, peter.maydell@linaro.org
-References: <20240620181352.3590086-1-gustavo.romero@linaro.org>
- <20240620181352.3590086-2-gustavo.romero@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240620181352.3590086-2-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,25 +110,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/20/24 11:13, Gustavo Romero wrote:
-> @@ -1268,7 +1268,10 @@ void aarch64_max_tcg_initfn(Object *obj)
->       t = FIELD_DP64(t, ID_AA64SMFR0, FA64, 1);     /* FEAT_SME_FA64 */
->       cpu->isar.id_aa64smfr0 = t;
->   
-> -    /* Replicate the same data to the 32-bit id registers.  */
-> +    /*
-> +     * Replicate the same values from the 32-bit max CPU to the 32-bit ID
-> +     * registers.
-> +     */
->       aa32_max_features(cpu);
+On Thu, 20 Jun 2024 15:34, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>On Thu, Jun 20, 2024 at 1:10 PM Alex Bennée <alex.bennee@linaro.org> wrote:
+>> > +# FIXME: These are the latest stable versions, refine to actual minimum ones.
+>> > +msrv = {
+>> > +  'rustc': '1.79.0',
+>> > +  'cargo': '1.79.0',
+>> > +  'bindgen': '0.69.4',
+>> > +}
+>>
+>> So for Debian Bookworm this comes out as:
+>>
+>>   msrv = {
+>>     'rustc': '1.79.0',
+>>     'cargo': '1.79.0',
+>>     'bindgen': '0.69.4',
+>>   }
+>
+>I think it's 0.60.1 bindgen and 1.63.0 rustc/cargo? That means we
+>don't have generic associated types (1.65), which are nice to have but
+>not absolutely necessary.
+>
+>The only other one with an old version is Ubuntu 22.04 (1.58.1), but
+>it has 1.75.0 in updates
+>
+>Paolo
 
-I think the previous comment is more accurate.
+1.63 is definitely old at this point but we might still be in luck, 
+(Except for bindgen). I will try running cargo-msrv[0] which finds the 
+actual minimum supported version of a codebase with a binary search and 
+see if we can give up features if necessary.
 
-There is no separate "32-bit max CPU". There is one "max CPU", which supports both 32-bit 
-and 64-bit modes, and thus has both 32-bit and 64-bit ID registers.
-
-The rest of the patch looks good.
-
-
-r~
+[0]: https://github.com/foresterre/cargo-msrv
 
