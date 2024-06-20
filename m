@@ -4,65 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 310C8C2BA18
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 14:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60207C2BA18
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 14:00:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKIKL-00075U-DT; Thu, 20 Jun 2024 09:59:49 -0400
+	id 1sKIKa-0007Cb-2G; Thu, 20 Jun 2024 10:00:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <erdnaxe@crans.org>) id 1sKIKJ-00075M-FU
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:59:47 -0400
-Received: from redisdead.crans.org ([2a0c:700:2::ff:fe01:2402])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <erdnaxe@crans.org>) id 1sKIKH-0000aR-Gm
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:59:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crans.org; s=mail;
- t=1718891971; bh=utWa3G2ROFcZq2Bxifn6vY1dON8iJ2NFho33pEVqScE=;
- h=From:To:Cc:Subject:Date:From;
- b=K8LslR+ovaJIyxkxf9pPaOzNhP+Jcz4FKn+px6tK9JA9cJ1ObKiEi1tgn+elaQdBW
- jd7phTXUoj7tGZl27xRz/QMQ1owRMWk3IcptyXKHuVwMP6PsFQ4TySluvX0/mNCZ8U
- nknIsJ9SvmQIc0syeOWr48N+5ESJtD+1AcohRP6Ax5hRu4I8n86EA/QfGj3kv97+mi
- NqbXPyrVtYQW7iE+8jxW2RhTw+X6A8aoF8xuWioTFVDER1rVvisadMQAgoPYlM8ObA
- H+kt8X6YQXddj2mQgFk8xY5wQtOjjK9PkRlIa3vHPHGfeQyNkG4j7jjpyxqmDz0JOn
- yAY8c+HFGwvW2UwsnU6Z6mCew1wbSVbqwwKJXfQGhEM/qDETI5NI6W20q4TTwgOJ7y
- 6wZtmLHY0C7yqbfrNQjdfKX7jHf1BhdOHEfZWxMigWmtEcvFCjikXzkunnl07nt6tl
- K89v4smHRU4DrB4HrN+lFqL7tbpJfAIMNK63pzIYp5Tz+Azh0Iv73hpBR87hS4yo5H
- ckaJWG9+otfYDAmcYwPQPDGkagJ5kquPGXm4Dg4s4rb5OYQANL/pfVZ9Ev6irAlBKl
- oiDQ874jy8SrzQwlCuYt67iJRZqaigRrvQ4ZpKsK8pk/jp649B48F1JZuK91TCQoZs
- lq8mD0aTFQVnGg/L98eSf6jY=
-Received: from zamok.crans.org (users.adm.crans.org [172.16.10.31])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (No client certificate requested)
- by redisdead.crans.org (Postfix) with ESMTPS id 03716215;
- Thu, 20 Jun 2024 15:59:31 +0200 (CEST)
-Received: by zamok.crans.org (Postfix, from userid 11692)
- id E4E91E0123; Thu, 20 Jun 2024 15:59:30 +0200 (CEST)
-From: Alexandre Iooss <erdnaxe@crans.org>
-To: 
-Cc: Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH] docs: add precision about capstone for execlog plugin
-Date: Thu, 20 Jun 2024 15:57:32 +0200
-Message-Id: <20240620135731.977377-1-erdnaxe@crans.org>
-X-Mailer: git-send-email 2.30.2
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKIKX-00078a-Ty
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 10:00:01 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKIKU-0000eZ-TZ
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 10:00:01 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a6fbe639a76so152576366b.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 06:59:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718891997; x=1719496797; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BGsxEaTNuC57O6z4vFE9ymtQjGIOPiXQJYO+Jd5DRaI=;
+ b=WEDugNMpngrkelX2io24Y127O8SRT0s8wUSz24Yj1lwqZQBCQxUV2nsb47aoKsRvCy
+ aFwizEaEzXRLsYa/iNZGDZXM6O1hiOkxihMmrtZKwR5/fKLYPDbFyrmdADnu6xOLV7C9
+ U28ttHdOmVk0s4Yj7pFwYyOnMJAlgdsgpkG4TI2CUI2MLa5DIbIS1Xv3SqVC7Id1JtvV
+ IxvP/wlx6K/uoB0DknvuwxqBJrJG7YU2ikAU+oyiBCrUxV60KVlWgUpwJgs7kC/ioqc+
+ LxjAHjwbuLfAW7DsM+ydnm8oX2iEy8PHKhEMDFCU7WavLAd0JlksdS79BPgZ0DOVDDeW
+ c3ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718891997; x=1719496797;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BGsxEaTNuC57O6z4vFE9ymtQjGIOPiXQJYO+Jd5DRaI=;
+ b=Er2VAe4ZduF+TzoMrhuNcPbnYqmTi3T92CDQFCBU9tH/DjrsQ/eVXDU9M84El39oA3
+ G4xuTEdFlNKcJQ/2PLRkaErWaJfeLJmKakkgoV7uypK4nPj1SqjMAhuXgUNs9S7wV98D
+ H+oRnOxvci4bGJbmw+t49NYz20aWaVIizZa6Wo5/vw03U5qW+meliNJZwVpAf3FN3nY9
+ UEHJz5lgBzugw+CQrzOoQVpvYn3xthdbHlISD8axHZ2Ochi70NZ3XdcmWbTHMqCEBQSq
+ DLb+bRCE8Ki8Ixux8efuGhJwH2fakA0Sro2VLR//wTC/jEaeJlp4dgGT+FqDDX94jfQn
+ voxw==
+X-Gm-Message-State: AOJu0YyuAo+MleGCKj50T7FsWQ4Kpchr1dm8hOho7+OD0bMIz/UuCeRx
+ VBQlyO8b4xEGBDNNnsmihQl8Xe3HIyMuw9F/81Zlrep7CAWDQjp9TMjiBgnW4lEkQ26OsxqGeuf
+ n
+X-Google-Smtp-Source: AGHT+IGq4DN0lEzyURfwXzJzwBbaryjq0aGqetHdfWd+2/sd2FXNqQ+5iSmykGs9VXgHKJmK3Gu84g==
+X-Received: by 2002:a17:907:c5c3:b0:a6f:c24a:721e with SMTP id
+ a640c23a62f3a-a6fc24a7479mr138545466b.30.1718891997020; 
+ Thu, 20 Jun 2024 06:59:57 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.151.40])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6f56fa674bsm774690866b.210.2024.06.20.06.59.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Jun 2024 06:59:56 -0700 (PDT)
+Message-ID: <fb591600-31c3-44ad-a621-d14b6d84994e@linaro.org>
+Date: Thu, 20 Jun 2024 15:59:54 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.0? 0/2] hw/sd/sdcard: Avoid OOB in sd_read_byte()
+To: qemu-devel@nongnu.org
+Cc: Bin Meng <bin.meng@windriver.com>, qemu-arm@nongnu.org,
+ Alexander Bulekov <alxndr@bu.edu>, qemu-block@nongnu.org
+References: <20240408141717.66154-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240408141717.66154-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a0c:700:2::ff:fe01:2402;
- envelope-from=erdnaxe@crans.org; helo=redisdead.crans.org
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,31 +95,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some people are wondering why they get an empty string as disassembly.
-Most of the time, they configured QEMU without Capstone support.
-Let's document this behaviour to help users.
+On 8/4/24 16:17, Philippe Mathieu-Daudé wrote:
+> Since this is Fix day, I went over this old bug:
+> https://gitlab.com/qemu-project/qemu/-/issues/487
+> It happens to be a QEMU implementation detail not
+> really related to the spec.
+> 
+> Philippe Mathieu-Daudé (2):
+>    hw/sd/sdcard: Avoid OOB in sd_read_byte() during unexpected CMD switch
 
-Signed-off-by: Alexandre Iooss <erdnaxe@crans.org>
----
- docs/devel/tcg-plugins.rst | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
-index 9cc09d8c3d..f7d7b9e3a4 100644
---- a/docs/devel/tcg-plugins.rst
-+++ b/docs/devel/tcg-plugins.rst
-@@ -539,7 +539,9 @@ which will output an execution trace following this structure::
-   0, 0xd34, 0xf9c8f000, "bl #0x10c8"
-   0, 0x10c8, 0xfff96c43, "ldr r3, [r0, #0x44]", load, 0x200000e4, RAM
- 
--the output can be filtered to only track certain instructions or
-+Please note that you need to configure QEMU with Capstone support to get disassembly.
-+
-+The output can be filtered to only track certain instructions or
- addresses using the ``ifilter`` or ``afilter`` options. You can stack the
- arguments if required::
- 
--- 
-2.30.2
+First patch queued.
 
 
