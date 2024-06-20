@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B3D7C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:04:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 034ECC2BA1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKHRY-0001Qt-5h; Thu, 20 Jun 2024 09:03:12 -0400
+	id 1sKHRi-0001ha-T4; Thu, 20 Jun 2024 09:03:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKHRV-0001QF-Q3
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sKHRg-0001be-CO
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKHRU-0006Wk-1S
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:09 -0400
+ id 1sKHRe-0006Xd-Pm
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718888587;
+ s=mimecast20190719; t=1718888597;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=i1Dd/q0yvFV1Rcm+rk+YwoeGVJGUNMen0d4jeqopdXw=;
- b=QkhEdI6rCHFBYbj8ZcBmgbNzhY+BH2FpZAReDH/nR/8JS45KWXky8cBO65XvCJnO1eXq+O
- HPql0YLO8Ui16TLSH+eLqkRdSbdztrQ8+VGwnPJgUH2MOCwsm9m/ruC4k7YbwOVmp6htug
- tf3sMKaS47XinbNw3REY8yHAZGIErAI=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ggQxI/ZZR6ZKzmd07qXaus7hQHvI+R15IGE2EWs6qMQ=;
+ b=BvySuifaaRRcTusFyJwhtwEo5W7DZkhu0xZhRNRZbQl32k2rSaPgZal+8+/0UQ7mc1kDQS
+ 8Ui37NmiEF6/MXXor4k4jAMb7VLK58xsdhAmzuFxarp9wdM1snAVPC+4DP6heFsFxS3H5e
+ v8yasXi8wDFQyPCFgRVC7n8U+uZL/I8=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-79-rRws4LMSNFqBVquPjpmL8Q-1; Thu, 20 Jun 2024 09:03:05 -0400
-X-MC-Unique: rRws4LMSNFqBVquPjpmL8Q-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a6efbb08949so36771166b.0
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 06:03:05 -0700 (PDT)
+ us-mta-630-KHoSSO_EPxqDvmxsLgTwcA-1; Thu, 20 Jun 2024 09:03:15 -0400
+X-MC-Unique: KHoSSO_EPxqDvmxsLgTwcA-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-52bc1e919deso638387e87.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 06:03:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718888584; x=1719493384;
+ d=1e100.net; s=20230601; t=1718888592; x=1719493392;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i1Dd/q0yvFV1Rcm+rk+YwoeGVJGUNMen0d4jeqopdXw=;
- b=s3wn/Tn+yq4ok/sKwqjoJPtZupUxzmxJFqKDBFGvnPNZEKNJHBRBCeVgfs7S+2z0fO
- 390Pu6t4dY1Wa6hBgbNHescyCDc92hUkxFkGl80UiTBMu/qZw+dkrGotcKgd/voxVpkD
- XHxxM3QXnnsdM4XbmSBV5IxGPgeRCA9Ly42JjOjH8odD6RPiDiFCwSqE86NEEcpYEjQA
- kuz0Y+aiv4m8OGYYpzLirMBUunDOm63quAQoOXpV6buQqvmaERX+i/+peENhoDjfZlxo
- IgX2Wu8wE2ejX4mS64A8/9WiLZ29KHni7TgZKKjiM9HKZWVgixbM+oh3HvMy/J7r6ydj
- nfWw==
-X-Gm-Message-State: AOJu0YyWL1H4lDEZACXtrtcL7lW7JaXKu2AyDrUbOK8Sf6ielH7YiBsl
- J1+BHaIA2HnccXjNi2CiiDF5lI5xH1Bs4GLsKPG4cJ1NLPhVdGF0ZzsfMYh6qaepD+xT6eYR6AL
- yqeGQAqcFLD85BsIzMms3CjV+ZUSHt5ReWOPF7vlmyMOP64CYh/b0Ns3q/X5XPIGRoQ60pEVMEf
- mVY1sJnC8JOQ+fKrv1JvzeYpaDQmVawsoPfGJ0
-X-Received: by 2002:a17:907:d30c:b0:a6f:b1fa:aa24 with SMTP id
- a640c23a62f3a-a6fb1faaa8dmr371966366b.5.1718888584329; 
- Thu, 20 Jun 2024 06:03:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGHRVK/lLtA1fciNUQY7dGRTNR3lwYErop8nKJa0PTh/upPFcXV3U1WntbRveVeG1j0iC0pOA==
-X-Received: by 2002:a17:907:d30c:b0:a6f:b1fa:aa24 with SMTP id
- a640c23a62f3a-a6fb1faaa8dmr371963766b.5.1718888583928; 
- Thu, 20 Jun 2024 06:03:03 -0700 (PDT)
+ bh=ggQxI/ZZR6ZKzmd07qXaus7hQHvI+R15IGE2EWs6qMQ=;
+ b=V1QCWGbU+Xy8Xij2uG6upmdpLl8ae+IfxRSCqNYlv/Z0A0KWbn1huSAbZMo7A1qpKi
+ K5cEkZrU/Aemq2xfJF8qN+EvI5PsxUFakKJVBZFqqp/whHoCss489UmvtdZPcZXVgiYO
+ XpbAWauPXbGOCPZJ2PVvDVWt86G9YDPkxfecxuLefU9fGkaEM6LgT7D3jEEYJQG+dRy3
+ xwWuuJRho91LWTnpenA/KdtBEG4nbQ3bUxAFubBbGTGpXL/bYHeCAlrzT0MCWlGXHOQ/
+ fp8hFsxcOjJyrpGZS9U2IYjrrUAj7GqNPexxotI3MCoxSoHGcuX4+aNuaJTi9T8yYoM1
+ sTDA==
+X-Gm-Message-State: AOJu0YwxFKXfEAqRZOT5o6CMsAPU8IYQd/Kt5CPRrqQ/PbR9lvDLiV7P
+ lBtCgmy7wJ4oav59n4njeFoZL7TPJduR9JjoAC2snYqoVE/Q8HmIIhMhL+UqFq1mCFXLF240lD/
+ ziKmR57z9RtEVk5fw2k4xdw9frvt9q9XkBeQGjo+9/yQOeaFOj91tO2fvqS1K/rP3EweWgAR7E7
+ VjCiIZS9434NHuWPho9MOZ0IxPj8zbv8UZFqZI
+X-Received: by 2002:a05:6512:3d04:b0:52b:c262:99b3 with SMTP id
+ 2adb3069b0e04-52ccaa5693emr3925100e87.11.1718888592564; 
+ Thu, 20 Jun 2024 06:03:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEhv6hS4JyNuePMtR5yTE+SnK7i8YyUretc3E0b4KyrxqA7rxfJPgVzSU6GzYbMyUwE5+zVCg==
+X-Received: by 2002:a05:6512:3d04:b0:52b:c262:99b3 with SMTP id
+ 2adb3069b0e04-52ccaa5693emr3925070e87.11.1718888592095; 
+ Thu, 20 Jun 2024 06:03:12 -0700 (PDT)
 Received: from avogadro.local ([151.62.196.71])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56fa415dsm772240266b.220.2024.06.20.06.03.03
+ a640c23a62f3a-a6f56da3f50sm777493166b.14.2024.06.20.06.03.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Jun 2024 06:03:03 -0700 (PDT)
+ Thu, 20 Jun 2024 06:03:11 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  amonakov@ispras.ru
-Subject: [PATCH 2/6] Revert "host/i386: assume presence of SSSE3"
-Date: Thu, 20 Jun 2024 15:02:50 +0200
-Message-ID: <20240620130254.415699-3-pbonzini@redhat.com>
+Subject: [PATCH 5/6] meson: remove dead optimization option
+Date: Thu, 20 Jun 2024 15:02:53 +0200
+Message-ID: <20240620130254.415699-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240620130254.415699-1-pbonzini@redhat.com>
 References: <20240620130254.415699-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -104,30 +104,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 433cd6d94a8256af70a5200f236dc8047c3c1468.
-The x86-64 instruction set can now be tuned down to x86-64 v1
-or i386 Pentium Pro.
-
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- util/cpuinfo-i386.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ meson.build       | 13 -------------
+ meson_options.txt |  2 --
+ 2 files changed, 15 deletions(-)
 
-diff --git a/util/cpuinfo-i386.c b/util/cpuinfo-i386.c
-index 6d474a6259a..ca74ef04f54 100644
---- a/util/cpuinfo-i386.c
-+++ b/util/cpuinfo-i386.c
-@@ -38,8 +38,8 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
-         info |= (c & bit_POPCNT ? CPUINFO_POPCNT : 0);
-         info |= (c & bit_PCLMUL ? CPUINFO_PCLMUL : 0);
+diff --git a/meson.build b/meson.build
+index 6e694ecd9fe..54e6b09f4fb 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2874,18 +2874,6 @@ config_host_data.set('CONFIG_AVX2_OPT', get_option('avx2') \
+     int main(int argc, char *argv[]) { return bar(argv[argc - 1]); }
+   '''), error_message: 'AVX2 not available').allowed())
  
--        /* NOTE: our AES support requires SSSE3 (PSHUFB) as well. */
--        info |= (c & bit_AES) ? CPUINFO_AES : 0;
-+        /* Our AES support requires PSHUFB as well. */
-+        info |= ((c & bit_AES) && (c & bit_SSSE3) ? CPUINFO_AES : 0);
+-config_host_data.set('CONFIG_AVX512F_OPT', get_option('avx512f') \
+-  .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot enable AVX512F') \
+-  .require(cc.links('''
+-    #include <cpuid.h>
+-    #include <immintrin.h>
+-    static int __attribute__((target("avx512f"))) bar(void *a) {
+-      __m512i x = *(__m512i *)a;
+-      return _mm512_test_epi64_mask(x, x);
+-    }
+-    int main(int argc, char *argv[]) { return bar(argv[argc - 1]); }
+-  '''), error_message: 'AVX512F not available').allowed())
+-
+ config_host_data.set('CONFIG_AVX512BW_OPT', get_option('avx512bw') \
+   .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot enable AVX512BW') \
+   .require(cc.links('''
+@@ -4283,7 +4271,6 @@ summary_info += {'mutex debugging':   get_option('debug_mutex')}
+ summary_info += {'memory allocator':  get_option('malloc')}
+ summary_info += {'avx2 optimization': config_host_data.get('CONFIG_AVX2_OPT')}
+ summary_info += {'avx512bw optimization': config_host_data.get('CONFIG_AVX512BW_OPT')}
+-summary_info += {'avx512f optimization': config_host_data.get('CONFIG_AVX512F_OPT')}
+ summary_info += {'gcov':              get_option('b_coverage')}
+ summary_info += {'thread sanitizer':  get_option('tsan')}
+ summary_info += {'CFI support':       get_option('cfi')}
+diff --git a/meson_options.txt b/meson_options.txt
+index 6065ed2d352..0269fa0f16e 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -119,8 +119,6 @@ option('membarrier', type: 'feature', value: 'disabled',
  
-         /* For AVX features, we must check available and usable. */
-         if ((c & bit_AVX) && (c & bit_OSXSAVE)) {
+ option('avx2', type: 'feature', value: 'auto',
+        description: 'AVX2 optimizations')
+-option('avx512f', type: 'feature', value: 'disabled',
+-       description: 'AVX512F optimizations')
+ option('avx512bw', type: 'feature', value: 'auto',
+        description: 'AVX512BW optimizations')
+ option('keyring', type: 'feature', value: 'auto',
 -- 
 2.45.2
 
