@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D4FC41513
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 18:17:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71E13C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 18:22:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKMKt-0005Pb-Ci; Thu, 20 Jun 2024 14:16:39 -0400
+	id 1sKMPf-00070h-Gf; Thu, 20 Jun 2024 14:21:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKMKs-0005PI-9e
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 14:16:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKMKq-0000YS-NY
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 14:16:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718907395;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cOFo9a1pSEO6rzVfFmPzkV8fcGmbPGcrohOuXMRJmDY=;
- b=Of+HXwmNDy7tfJ5Erd4W5uapnfyOXRlzvK+B+O7bhhY+FcSEHKAO/himooKewpVER4pARc
- QHjaaSCxaYhBwe5rib95CrAIKmxSLZSzNQ578g3ni5YqXWMNCWlL34fFww8vxUpi5jpEEH
- AbrpwWdgZb6OP/WUBT0kZsv3mR3Rl5g=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-184-g7viuyHqP2OjGMHVoFJy5w-1; Thu, 20 Jun 2024 14:16:34 -0400
-X-MC-Unique: g7viuyHqP2OjGMHVoFJy5w-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-362763f8d2eso571557f8f.3
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 11:16:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKMPe-00070S-EJ
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 14:21:34 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKMPc-0001Go-U1
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 14:21:34 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-6e5fd488d9fso852163a12.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 11:21:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718907691; x=1719512491; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lYybmh9Ei3+1TAs+4NB3zFjNe3lIw6ds/Q6O3NNq/Fs=;
+ b=QpOgkBEsyEtmkUTinV7dCnOOZHylp8ASmDiTXp4GuBXkqy/tIeFMZjUjRUDq/gzWTx
+ AWED15B9p/rW9YGpSp0X/pTW6JF8nUX2+xoPscMEabYJJkCkwFmqe0u3Z6g+iRxzHIwT
+ EORo8ccaiMF5w+/COpYq5Kw5FVClO8TOsKJimsqdKd/nK4Nw+DcWu4a7VBoSqnGzIlKL
+ YPFj67TGYJEz2igslIsFhv7bYP7iggyP1a8ZariWVrHiDkU/N+LFNdqjP7ELQlnEpgYn
+ gMwvyB/vbpnaJQNduNbPXzAthRCaaZUDDRX/xkIlWeRflPalsLMUPUR8Ut3uprhGZ+DH
+ 5ROQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718907393; x=1719512193;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cOFo9a1pSEO6rzVfFmPzkV8fcGmbPGcrohOuXMRJmDY=;
- b=LVuNOiu7FZu/V1xRs2JuV6vTUV2X3/0KV/Ten8+YK6RikgcrGR+yNisM/nT2zvDAxG
- 6tlFQdhY1/i/te/4m5DGQE4E9MZShELMEz2nrtEdupDQkj+oyjGAKlR8Wl1Mlp50ADnX
- GAitPV1vY9N2KjHlPnFHJ/CCFKMPweQ/Y4MV1+SbJXPcdUfCa4QHP330kgJzbMzhiu1T
- 2h6ZOMjxZG4wTd+6ndn56XjGHZJ+AUagUAgega4nRE+RiBjwAWAlU2y2+76ytboLV+lw
- v/LmvAgKviTlvea7uU0rOK/Cu0gChPcCZlDQ+hqk7EeQPIVEmlknpJgpvvcaRuxtIF8b
- r7fA==
+ d=1e100.net; s=20230601; t=1718907691; x=1719512491;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lYybmh9Ei3+1TAs+4NB3zFjNe3lIw6ds/Q6O3NNq/Fs=;
+ b=iIxT7jJDRUdvv9ahLLpnj0tPrxglUq7pD6RdG3j2O4z0SwUS9tLkl8kCCdRWIU/suo
+ IQgPZWQM247QjAe53ktT03BJd9hduUb2fPtGJwRUyE7B/ZyDON7vJMJEsmt/zd/fc9B9
+ T1tZOtCCzwMT/s5G19pIqIFfxHUWCulMjB9m5eKVrL0JAazoLljLfSv9bDFpCT+1lBTs
+ w4KLQYrhOgV5xKuWorKqBmaLxpPz82fO0fTczEjTXfYCw+0eD61GjZq9lYLPCWlue5Vk
+ WewhY2YDn0qW3LiYxmz2pH1xfeoNhoYabiBsZqBmc3N+faKwjFOLHPNAwKQQUB/YhTu3
+ qs2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUjzYmltfdUt8CMA1SfajCEaJLwuXp2yfvqEwngQ4MKFz+IqVWh0TuCTrnW9WDbn2+PnRLwMZxCJA3Oy6tOY+S3EbqOmzc=
-X-Gm-Message-State: AOJu0YzLmDtipQ9myzkGHX7aWi3RatUOo+31GuYtafG+6IHQDJhOPp0E
- 4CmcApCUP/0y9ICR4HO/kwUljkfp9l3yPnxplo4HmcPQtf18+lm6BUWHS3mBo0DRBC/JZuEAY75
- 7IsAhWmXJ9GAcpSiokbncZDjiveHfmVGdmRVzye9aYxq3qFRCOG9uqShD6pv18ZzZAlWf6WlNtr
- d3oOPzSJGV2V4Tbby9sm0CoSz5w/4=
-X-Received: by 2002:a5d:6152:0:b0:360:709c:5040 with SMTP id
- ffacd0b85a97d-363171e2b5bmr4566082f8f.2.1718907393218; 
- Thu, 20 Jun 2024 11:16:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE3RXCJkRVg1RdRzXAtPMEs6FUnYu2qK8+8trm7/jok4nQ6l59EkV2ZcGXydyxhVm94AZVMlkK19OjcC7Kdq+M=
-X-Received: by 2002:a5d:6152:0:b0:360:709c:5040 with SMTP id
- ffacd0b85a97d-363171e2b5bmr4566069f8f.2.1718907392923; Thu, 20 Jun 2024
- 11:16:32 -0700 (PDT)
+ AJvYcCUzfm/r/JCt3qzf5ikwBrbyqF2eDEGQbzlTaHK0i32mXFDx46YsWriqdgk4fu0HJ2J+qljz8Z+8roAFRIVgRobbwg8aIQU=
+X-Gm-Message-State: AOJu0YxRQpv/33/LW8675SmWtBz7NXY6DO9KjsqdsjsEy2iq09+70HFy
+ PLpLNnL5J1SaZ4/gFi+Dkmz90438Q1qdtiEswdmRj3KEqi3IysDoYuEH5q814Zo=
+X-Google-Smtp-Source: AGHT+IGB86C88pOYbAKBa8c6M8KJ7rxQrgj+2DN4VmCoDmX4rlHi6Qt5VdxKZQa8M5ppTR1YS94c8g==
+X-Received: by 2002:a17:902:a503:b0:1f8:393e:8b9a with SMTP id
+ d9443c01a7336-1f9aa3faf67mr56947325ad.33.1718907691174; 
+ Thu, 20 Jun 2024 11:21:31 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f855ee6f01sm140888425ad.153.2024.06.20.11.21.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Jun 2024 11:21:30 -0700 (PDT)
+Message-ID: <2af6449a-f4c2-422c-a92b-cfb11a5ae2d5@linaro.org>
+Date: Thu, 20 Jun 2024 11:21:28 -0700
 MIME-Version: 1.0
-References: <20240618224604.879275-1-rkir@google.com>
- <4b3d0472-8b06-403a-9ab8-553aa858fb7f@redhat.com>
- <92be5dcf-c793-4c29-9a55-910b59c4c2c0@linaro.org>
-In-Reply-To: <92be5dcf-c793-4c29-9a55-910b59c4c2c0@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 20 Jun 2024 20:16:17 +0200
-Message-ID: <CABgObfbo=aLW7RhjymNDJpMbUXWNRQ2_LccdXqKKVrCq5o75bg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] exec: use char* for pointer arithmetic
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Roman Kiryanov <rkir@google.com>, qemu-devel@nongnu.org, jansene@google.com,
- mett@google.com, jpcottin@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] target/arm: Move initialization of debug ID registers
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ alex.bennee@linaro.org
+Cc: philmd@linaro.org, peter.maydell@linaro.org
+References: <20240620181352.3590086-1-gustavo.romero@linaro.org>
+ <20240620181352.3590086-2-gustavo.romero@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240620181352.3590086-2-gustavo.romero@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,32 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 20, 2024 at 8:14=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 6/20/24 11:06, Paolo Bonzini wrote:
-> > On 6/19/24 00:46, Roman Kiryanov wrote:
-> >> void* pointer arithmetic is not in the
-> >> C standard. This change allows using
-> >> the QEMU headers with a C++ compiler.
-> >>
-> >> Google-Bug-Id: 331190993
-> >> Change-Id: I5a064853429f627c17a9213910811dea4ced6174
-> >> Signed-off-by: Roman Kiryanov <rkir@google.com>
-> >
-> > Would it work instead to declare MemoryRegionCache's ptr field as char*=
-?
->
-> I prefer to use char* only where there are strings.  For unstructured dat=
-a such as
-> MemoryRegionCache, void* is more appropriate.
+On 6/20/24 11:13, Gustavo Romero wrote:
+> @@ -1268,7 +1268,10 @@ void aarch64_max_tcg_initfn(Object *obj)
+>       t = FIELD_DP64(t, ID_AA64SMFR0, FA64, 1);     /* FEAT_SME_FA64 */
+>       cpu->isar.id_aa64smfr0 = t;
+>   
+> -    /* Replicate the same data to the 32-bit id registers.  */
+> +    /*
+> +     * Replicate the same values from the 32-bit max CPU to the 32-bit ID
+> +     * registers.
+> +     */
+>       aa32_max_features(cpu);
 
-Or uint8_t*... I agree about char*, but unless casts are needed, I
-find uint8_t and void pointers to be more or less interchangeable.
+I think the previous comment is more accurate.
 
-The problem is that casts are a bit uglier and (while unlikely in this
-particular case) more subject to bit rot.
+There is no separate "32-bit max CPU". There is one "max CPU", which supports both 32-bit 
+and 64-bit modes, and thus has both 32-bit and 64-bit ID registers.
 
-Paolo
+The rest of the patch looks good.
 
+
+r~
 
