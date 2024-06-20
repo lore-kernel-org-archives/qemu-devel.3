@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 034ECC2BA1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:04:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4687DC27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:04:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKHRi-0001ha-T4; Thu, 20 Jun 2024 09:03:22 -0400
+	id 1sKHRh-0001dg-4G; Thu, 20 Jun 2024 09:03:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKHRg-0001be-CO
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sKHRf-0001ZN-FF
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKHRe-0006Xd-Pm
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:20 -0400
+ id 1sKHRd-0006XX-Nw
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718888597;
+ s=mimecast20190719; t=1718888596;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ggQxI/ZZR6ZKzmd07qXaus7hQHvI+R15IGE2EWs6qMQ=;
- b=BvySuifaaRRcTusFyJwhtwEo5W7DZkhu0xZhRNRZbQl32k2rSaPgZal+8+/0UQ7mc1kDQS
- 8Ui37NmiEF6/MXXor4k4jAMb7VLK58xsdhAmzuFxarp9wdM1snAVPC+4DP6heFsFxS3H5e
- v8yasXi8wDFQyPCFgRVC7n8U+uZL/I8=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Iwf7E6c/3J88Z/SA0VCe8inq5N9r0YamgWdaOJEaKjI=;
+ b=L5t2z541jz3njR7hqht4/0R4goSJspAvJg7z4baSikS5tPT58OQrW82cklj/rAxRpx/MN9
+ k1Qb7jXM7ZEx1L3SrYGRzRFc4WLcG0ZnZWKPQit2U1YfBcgnsMH/+8ATpPkF3AvLp7BVBV
+ vwHwlVgW80dlBjpC5pHaHCI2ODjmhxU=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-KHoSSO_EPxqDvmxsLgTwcA-1; Thu, 20 Jun 2024 09:03:15 -0400
-X-MC-Unique: KHoSSO_EPxqDvmxsLgTwcA-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-52bc1e919deso638387e87.0
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 06:03:14 -0700 (PDT)
+ us-mta-149-HT4FkgtSOBqficcKj9nQlA-1; Thu, 20 Jun 2024 09:03:14 -0400
+X-MC-Unique: HT4FkgtSOBqficcKj9nQlA-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a6f381ea95dso95997866b.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 06:03:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718888592; x=1719493392;
+ d=1e100.net; s=20230601; t=1718888589; x=1719493389;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ggQxI/ZZR6ZKzmd07qXaus7hQHvI+R15IGE2EWs6qMQ=;
- b=V1QCWGbU+Xy8Xij2uG6upmdpLl8ae+IfxRSCqNYlv/Z0A0KWbn1huSAbZMo7A1qpKi
- K5cEkZrU/Aemq2xfJF8qN+EvI5PsxUFakKJVBZFqqp/whHoCss489UmvtdZPcZXVgiYO
- XpbAWauPXbGOCPZJ2PVvDVWt86G9YDPkxfecxuLefU9fGkaEM6LgT7D3jEEYJQG+dRy3
- xwWuuJRho91LWTnpenA/KdtBEG4nbQ3bUxAFubBbGTGpXL/bYHeCAlrzT0MCWlGXHOQ/
- fp8hFsxcOjJyrpGZS9U2IYjrrUAj7GqNPexxotI3MCoxSoHGcuX4+aNuaJTi9T8yYoM1
- sTDA==
-X-Gm-Message-State: AOJu0YwxFKXfEAqRZOT5o6CMsAPU8IYQd/Kt5CPRrqQ/PbR9lvDLiV7P
- lBtCgmy7wJ4oav59n4njeFoZL7TPJduR9JjoAC2snYqoVE/Q8HmIIhMhL+UqFq1mCFXLF240lD/
- ziKmR57z9RtEVk5fw2k4xdw9frvt9q9XkBeQGjo+9/yQOeaFOj91tO2fvqS1K/rP3EweWgAR7E7
- VjCiIZS9434NHuWPho9MOZ0IxPj8zbv8UZFqZI
-X-Received: by 2002:a05:6512:3d04:b0:52b:c262:99b3 with SMTP id
- 2adb3069b0e04-52ccaa5693emr3925100e87.11.1718888592564; 
- Thu, 20 Jun 2024 06:03:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEhv6hS4JyNuePMtR5yTE+SnK7i8YyUretc3E0b4KyrxqA7rxfJPgVzSU6GzYbMyUwE5+zVCg==
-X-Received: by 2002:a05:6512:3d04:b0:52b:c262:99b3 with SMTP id
- 2adb3069b0e04-52ccaa5693emr3925070e87.11.1718888592095; 
- Thu, 20 Jun 2024 06:03:12 -0700 (PDT)
+ bh=Iwf7E6c/3J88Z/SA0VCe8inq5N9r0YamgWdaOJEaKjI=;
+ b=XCks3BOdljWVWllBsKCwxc8V6E8JiIISLv02whCEcSlxoL+aQ9KHq4jRZlpcR6lqKp
+ DjgeXx0kLRq6C3f7mmY46/894BeeXbLqUU4BCY8FTlfNl9ij5aW7QI58oJum8HvGpDrT
+ +aBrq4giDhV0tyLmTH6TQRqQMrDtq0Yp2tlqSnilPYFNtAfDQAo8jrwaJPZQz6g2YwD8
+ mJ3ua3hE5LI/NUkuS52DQOgP8hK0z/HEvy9u/MDGrwca7ob1NSicn8E5aFupnLq8sXnK
+ M6GzjLrZOzJ96VyYNbYcjqR5/gFa+5yB3oGs/+py91eai5Z/vS4Hgu0EuM0kZXRfombN
+ jaZQ==
+X-Gm-Message-State: AOJu0Yx1VhRQtiVWmjor2+0d+XVvdLHmEaDaj0fkpfWixEGMm/4MhWgU
+ Cg+ClMemTRYNREUYlNTe8kfQbp/joGxa93ucSg0IQmYnxJ2KnwcENGL2NKCs2BwXTnFfx0zqjfd
+ 3wnkEQJ3XlVFYcOPJ2aB8az7FmZU/HnP7NSnrMOVgJZSRBTgHGiZXWkkciIwq/lKglmXNRpEObp
+ Baify9TfLtK4ZZjXxAdLAxgJyHK3FooWpDpGOH
+X-Received: by 2002:a17:907:d406:b0:a6f:b3d3:fed1 with SMTP id
+ a640c23a62f3a-a6fb3d3ff9amr349855966b.10.1718888589526; 
+ Thu, 20 Jun 2024 06:03:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHiSJLs3cJDkV1a8dXVrEgjyYHTGJQZ9qlBvN3pTMTX7278kHPx4iAieDTnOiF58k34uOGKkA==
+X-Received: by 2002:a17:907:d406:b0:a6f:b3d3:fed1 with SMTP id
+ a640c23a62f3a-a6fb3d3ff9amr349853266b.10.1718888589199; 
+ Thu, 20 Jun 2024 06:03:09 -0700 (PDT)
 Received: from avogadro.local ([151.62.196.71])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56da3f50sm777493166b.14.2024.06.20.06.03.11
+ a640c23a62f3a-a6f56ecdd2asm778117266b.141.2024.06.20.06.03.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Jun 2024 06:03:11 -0700 (PDT)
+ Thu, 20 Jun 2024 06:03:08 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  amonakov@ispras.ru
-Subject: [PATCH 5/6] meson: remove dead optimization option
-Date: Thu, 20 Jun 2024 15:02:53 +0200
-Message-ID: <20240620130254.415699-6-pbonzini@redhat.com>
+Subject: [PATCH 4/6] meson: allow configuring the x86-64 baseline
+Date: Thu, 20 Jun 2024 15:02:52 +0200
+Message-ID: <20240620130254.415699-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240620130254.415699-1-pbonzini@redhat.com>
 References: <20240620130254.415699-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -106,54 +106,96 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build       | 13 -------------
- meson_options.txt |  2 --
- 2 files changed, 15 deletions(-)
+ meson.build                   | 41 ++++++++++++++++++++++++++++-------
+ meson_options.txt             |  3 +++
+ scripts/meson-buildoptions.sh |  3 +++
+ 3 files changed, 39 insertions(+), 8 deletions(-)
 
 diff --git a/meson.build b/meson.build
-index 6e694ecd9fe..54e6b09f4fb 100644
+index 97e00d6f59b..6e694ecd9fe 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -2874,18 +2874,6 @@ config_host_data.set('CONFIG_AVX2_OPT', get_option('avx2') \
-     int main(int argc, char *argv[]) { return bar(argv[argc - 1]); }
-   '''), error_message: 'AVX2 not available').allowed())
+@@ -336,15 +336,40 @@ if host_arch == 'i386' and not cc.links('''
+   qemu_common_flags = ['-march=i486'] + qemu_common_flags
+ endif
  
--config_host_data.set('CONFIG_AVX512F_OPT', get_option('avx512f') \
--  .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot enable AVX512F') \
--  .require(cc.links('''
--    #include <cpuid.h>
--    #include <immintrin.h>
--    static int __attribute__((target("avx512f"))) bar(void *a) {
--      __m512i x = *(__m512i *)a;
--      return _mm512_test_epi64_mask(x, x);
--    }
--    int main(int argc, char *argv[]) { return bar(argv[argc - 1]); }
--  '''), error_message: 'AVX512F not available').allowed())
--
- config_host_data.set('CONFIG_AVX512BW_OPT', get_option('avx512bw') \
-   .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot enable AVX512BW') \
-   .require(cc.links('''
-@@ -4283,7 +4271,6 @@ summary_info += {'mutex debugging':   get_option('debug_mutex')}
- summary_info += {'memory allocator':  get_option('malloc')}
- summary_info += {'avx2 optimization': config_host_data.get('CONFIG_AVX2_OPT')}
- summary_info += {'avx512bw optimization': config_host_data.get('CONFIG_AVX512BW_OPT')}
--summary_info += {'avx512f optimization': config_host_data.get('CONFIG_AVX512F_OPT')}
- summary_info += {'gcov':              get_option('b_coverage')}
- summary_info += {'thread sanitizer':  get_option('tsan')}
- summary_info += {'CFI support':       get_option('cfi')}
+-# Assume x86-64-v2 (minus CMPXCHG16B for 32-bit code)
+-if host_arch == 'i386'
+-  qemu_common_flags = ['-mfpmath=sse'] + qemu_common_flags
+-endif
++# Pick x86-64 baseline version
+ if host_arch in ['i386', 'x86_64']
+-  qemu_common_flags = ['-mpopcnt', '-msse4.2'] + qemu_common_flags
+-endif
+-if host_arch == 'x86_64'
+-  qemu_common_flags = ['-mcx16'] + qemu_common_flags
++  if get_option('x86_version') == '0' and host_arch == 'x86_64'
++    error('x86_64-v1 required for x86-64 hosts')
++  endif
++
++  # add flags for individual instruction set extensions
++  if get_option('x86_version') >= '1'
++    if host_arch == 'i386'
++      qemu_common_flags = ['-mfpmath=sse'] + qemu_common_flags
++    else
++      # present on basically all processors but technically not part of
++      # x86-64-v1, so only include -mneeded for x86-64 version 2 and above
++      qemu_common_flags = ['-mcx16'] + qemu_common_flags
++    endif
++  endif
++  if get_option('x86_version') >= '2'
++    qemu_common_flags = ['-mpopcnt'] + qemu_common_flags
++    qemu_common_flags = cc.get_supported_arguments('-mneeded') + qemu_common_flags
++  endif
++  if get_option('x86_version') >= '3'
++    qemu_common_flags = ['-mmovbe', '-mabm', '-mbmi1', '-mbmi2', '-mfma', '-mf16c'] + qemu_common_flags
++  endif
++
++  # add required vector instruction set (each level implies those below)
++  if get_option('x86_version') == '1'
++    qemu_common_flags = ['-msse2'] + qemu_common_flags
++  elif get_option('x86_version') == '2'
++    qemu_common_flags = ['-msse4.2'] + qemu_common_flags
++  elif get_option('x86_version') == '3'
++    qemu_common_flags = ['-mavx2'] + qemu_common_flags
++  elif get_option('x86_version') == '4'
++    qemu_common_flags = ['-mavx512f', '-mavx512bw', '-mavx512cd', '-mavx512dq', '-mavx512vl'] + qemu_common_flags
++  endif
+ endif
+ 
+ if get_option('prefer_static')
 diff --git a/meson_options.txt b/meson_options.txt
-index 6065ed2d352..0269fa0f16e 100644
+index 7a79dd89706..6065ed2d352 100644
 --- a/meson_options.txt
 +++ b/meson_options.txt
-@@ -119,8 +119,6 @@ option('membarrier', type: 'feature', value: 'disabled',
+@@ -370,3 +370,6 @@ option('qemu_ga_version', type: 'string', value: '',
  
- option('avx2', type: 'feature', value: 'auto',
-        description: 'AVX2 optimizations')
--option('avx512f', type: 'feature', value: 'disabled',
--       description: 'AVX512F optimizations')
- option('avx512bw', type: 'feature', value: 'auto',
-        description: 'AVX512BW optimizations')
- option('keyring', type: 'feature', value: 'auto',
+ option('hexagon_idef_parser', type : 'boolean', value : true,
+        description: 'use idef-parser to automatically generate TCG code for the Hexagon frontend')
++
++option('x86_version', type : 'combo', choices : ['0', '1', '2', '3', '4'], value: '1',
++       description: 'tweak required x86_64 architecture version beyond compiler default')
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 58d49a447d5..62842d47e88 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -82,6 +82,8 @@ meson_options_help() {
+   printf "%s\n" '  --with-suffix=VALUE      Suffix for QEMU data/modules/config directories'
+   printf "%s\n" '                           (can be empty) [qemu]'
+   printf "%s\n" '  --with-trace-file=VALUE  Trace file prefix for simple backend [trace]'
++  printf "%s\n" '  --x86-version=CHOICE     tweak required x86_64 architecture version beyond'
++  printf "%s\n" '                           compiler default [1] (choices: 0/1/2/3)'
+   printf "%s\n" ''
+   printf "%s\n" 'Optional features, enabled with --enable-FEATURE and'
+   printf "%s\n" 'disabled with --disable-FEATURE, default is enabled if available'
+@@ -552,6 +554,7 @@ _meson_option_parse() {
+     --disable-werror) printf "%s" -Dwerror=false ;;
+     --enable-whpx) printf "%s" -Dwhpx=enabled ;;
+     --disable-whpx) printf "%s" -Dwhpx=disabled ;;
++    --x86-version=*) quote_sh "-Dx86_version=$2" ;;
+     --enable-xen) printf "%s" -Dxen=enabled ;;
+     --disable-xen) printf "%s" -Dxen=disabled ;;
+     --enable-xen-pci-passthrough) printf "%s" -Dxen_pci_passthrough=enabled ;;
 -- 
 2.45.2
 
