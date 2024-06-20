@@ -4,84 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB69C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 20:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65432C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 20:51:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKOJg-0007Rz-Rq; Thu, 20 Jun 2024 16:23:32 -0400
+	id 1sKOjp-00080q-Bs; Thu, 20 Jun 2024 16:50:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sKOJf-0007Ro-Eq
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 16:23:31 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sKOJd-0005lC-QH
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 16:23:31 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1f70ec6ff8bso8695ad.0
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 13:23:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1718915008; x=1719519808; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4zUAahtlNGZrDkGQ3q0IjdEuM8KQCiY8cI4hYs0WCYE=;
- b=cKTWqqcmc2BG58mEkFmWosBh2ryCWo30yiSzGU/1i0vzVAsnaCZlW2OYqLlRRkiIZx
- laTRJ4xak+lbW5qs4hsEPACdJ/f8CIEhmZMp8dVO/LKnPbITvO/a7Vp2hxrB03Xbu9ER
- McwtQ2dNgi0xG4nOKJ85iZ1y5OyyATpXFiFekEUAlyX6tRd6OYeD8X2Xn2p9A54PI2aY
- zb9jP778tJpWInIwSaLiUPvYvU5J4lNmI5I7tqPzPWezNns4gsx6rCNVx7riXVx5CU1I
- i9j5nGzvaI6tMVlmiSGBuyMDeuU5GIwBwQuFL08R8BB4fxghFrAD9t+KDgBXLPpXCqgA
- tSCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718915008; x=1719519808;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4zUAahtlNGZrDkGQ3q0IjdEuM8KQCiY8cI4hYs0WCYE=;
- b=HropuJH9iBZ2kN69rFb377yk8zfKKIFX08d8tMPWzyG77U82NJfysge5iBq3cR8uc5
- sML4SGRcMa139Kg2ac9LUkW/2jLhw+gSQGWdFreY1PSEtbTjCdq+4dF6HkUTphS57Dww
- Ohu8JClRwKWXBkCm2T0/DodQiWRgetb9dBqiAfx1pVBasUOND4ALyFGe0Nt26VSUH0uZ
- fp0Y0UVkmv3isrcWiV1SPb5EuOdp7wbjoGgavSVqJrH/N75i0FGvD6G8W/XcDESi65Uu
- TKZU3OsKaciYSNXR0740YwYAN92I2p1xL8b1NSGWmDevDqyVZVoX9NfVdX1bpSRo+Pnv
- Yvjw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXUbbwp1byLLfHKHoAVq27+ENo3fkjXPqIpC2nOjKzjoxgApPuLTmgajjmfa8LZFUd6WP+h5PDgER7N5YiePZMoSg6QYW4=
-X-Gm-Message-State: AOJu0Yw4J325jWTTg/FMrkwUrgLGVlhX8fslk5OTTv40R19c+nfTraPk
- Ppor/wP0nUh8BPehZKgVrQHhh8PzFmPH39Zuhly9uvo/MVXXddFzAVRdNtDjEgxdokIbcXulNRc
- FIVNC/r2U0AjPCBBdZbAyZXG7HeOUwX+mOckK
-X-Google-Smtp-Source: AGHT+IEf2yNr6fD7qv/w/fGK+c2jap3lCGTzYGTI2rajpAO/BJ1bZA5el48oBZevV5xHZv14PdUMAsxqs8aJLTCQNJw=
-X-Received: by 2002:a17:902:f905:b0:1f6:ee4f:23d6 with SMTP id
- d9443c01a7336-1f9ec44a053mr28605ad.23.1718915007301; Thu, 20 Jun 2024
- 13:23:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sKOjj-00080W-7u
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 16:50:31 -0400
+Received: from fout4-smtp.messagingengine.com ([103.168.172.147])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sKOjh-0001tI-Ca
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 16:50:26 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailfout.nyi.internal (Postfix) with ESMTP id 7C6DA13801FE;
+ Thu, 20 Jun 2024 16:50:17 -0400 (EDT)
+Received: from imap44 ([10.202.2.94])
+ by compute3.internal (MEProxy); Thu, 20 Jun 2024 16:50:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1718916617;
+ x=1719003017; bh=IFQyyZmVFMr8iChSh8C7HyGRGo57KJK6EX6rI6m/Peo=; b=
+ TKsNja8xrzmSkKCdkKy4Qy49aCIM5ESjmc+pwwK4ocujgVxtj/F8mYpv1DxNa++0
+ zoewXllBx/jMZnmWo6S6xVoBvU/6qwjX/j4q6dWQSrr3jQyBWMQAhAUaY22vmjXr
+ 0xaHDkflp0a8yd5M0XOXBOZWh2Jb4/cDDJO/bmtIJ0UsXpxZjMfUs669ArS9h+et
+ HIIFfuTuZs2zSROyMYBXLA1tIG/TNqOVNzCN/eu0VpxJaO/g0zcyPMmTLK3ljgLy
+ oVIvyhVuCt4IROHhpMFzaoELZzaHZlq72i8/Ju8IFvfmUQBtAg6axLWo7MuSW+Mc
+ 5Vj2nuqUzthmGZ7Ytounhw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1718916617; x=
+ 1719003017; bh=IFQyyZmVFMr8iChSh8C7HyGRGo57KJK6EX6rI6m/Peo=; b=A
+ ZJi8RXtlwst6LIscYeClICeyU6hPKI069F+ESfgy4kzC1H6PpOcI4u2hlACU/uS1
+ TtooUsXRgfPQn9yBxWl6RJAnZcFYiv26kh76KyDXcTG/Ma8QmtXQZPi6SgxTa+UG
+ PsmWKiYSinD5cHNmhZUy5e4srGUrSHMJ1ZTtXi5Z3nYrNZp0thObvRWi//+/4C3P
+ xpHdrrnM3CBSKWz968D3FztZc3LS0k+VR1IqR+PG3wfy+WeVB2wbOmu/3LoYsq4F
+ EPRmai/jJba3gIjlbdBO6BPH98gpYcSWwkopQiAvJvd1T1uAkvAR4EllZx3zOBSF
+ of8UTzOVj63OPDch1K/HQ==
+X-ME-Sender: <xms:CJZ0ZiREt7tMJS-5NlGj754tzMah6ihhAziEpuVSj8HL_GCZbia4Dw>
+ <xme:CJZ0Znx3ZuXix_OiFIruwebo6IDqjfY_uOPksPiPyz7fq04kxc3O-fCjvHyjD1BFT
+ Xc0prX3EEXYaLRq5Yw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeefvddgudehiecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enucfjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedf
+ lfhirgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtg
+ homheqnecuggftrfgrthhtvghrnhephfdtkeefgeelkeeggfduhfegudelheefgfeggffh
+ fefhffdtgfegvdfhtdfhtedvnecuffhomhgrihhnpehiohgtshhrrdhmrhenucevlhhush
+ htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigr
+ nhhgsehflhihghhorghtrdgtohhm
+X-ME-Proxy: <xmx:CJZ0Zv2fqmErHZCpPePBFmC_hOG-nyn8sSlACGJpxUCiOpu5IQrFCg>
+ <xmx:CJZ0ZuDYggmk6eIY_nkgJ6MfSRAo8jwKzZO9RMraT1tctPXYWzyb9A>
+ <xmx:CJZ0ZrhbUwZQEEya0KYU09ws57A-5VOgy5cqA1cRe3ot96cRKPhh8A>
+ <xmx:CJZ0Zqr5azSzLxvVgIe63ZFK4-hs-zBeBPZNGYaGg3gxnBXf_oMxYQ>
+ <xmx:CZZ0ZusnGd2Sq7UzBGHivwu55Gx_g5n2wKt6gRDr7q6MeAUf6yE_1HVX>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id AE1D236A0075; Thu, 20 Jun 2024 16:50:16 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-522-ga39cca1d5-fm-20240610.002-ga39cca1d
 MIME-Version: 1.0
-References: <20240618224604.879275-1-rkir@google.com>
- <495d3ddc-ce73-4ef5-badd-16ed61f9a5aa@linaro.org>
- <ZnKRLj3usYxmAIOE@redhat.com> <87le2zbqfx.fsf@draig.linaro.org>
- <CAOGAQeov7kwbopVPyVZwS3mYvWqMb_0=K4te09ENdtg-P7M23g@mail.gmail.com>
- <CAFEAcA-Mh-kVB57jWWwS_0RexnvFzNLLiHjxZJKOm49YHwXSgQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA-Mh-kVB57jWWwS_0RexnvFzNLLiHjxZJKOm49YHwXSgQ@mail.gmail.com>
-From: Roman Kiryanov <rkir@google.com>
-Date: Thu, 20 Jun 2024 13:23:16 -0700
-Message-ID: <CAOGAQeoda0GWHoki2-3Xvgigb4iaZhLeA_YCN_WJ_642n8HVag@mail.gmail.com>
-Subject: Re: [PATCH 3/3] exec: use char* for pointer arithmetic
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- jansene@google.com, mett@google.com, jpcottin@google.com
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <752417ad-ab72-4fed-8d1f-af41f15bc225@app.fastmail.com>
+In-Reply-To: <d1fb28b8-15a4-401f-933b-2388af390bd8@linaro.org>
+References: <20240618160039.36108-1-philmd@linaro.org>
+ <20240618160039.36108-66-philmd@linaro.org>
+ <d1fb28b8-15a4-401f-933b-2388af390bd8@linaro.org>
+Date: Thu, 20 Jun 2024 21:49:56 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "QEMU devel" <qemu-devel@nongnu.org>
+Cc: "Song Gao" <gaosong@loongson.cn>
+Subject: Re: [PULL 65/76] hw/mips/loongson3_virt: Wire up loongson_ipi device
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=rkir@google.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=103.168.172.147;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,21 +109,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter, thank you for looking.
 
-On Thu, Jun 20, 2024 at 12:09=E2=80=AFPM Peter Maydell <peter.maydell@linar=
-o.org> wrote:
-> I think this is the point where I would say "you're making the
-> code worse for upstream and the only benefit is to your out-of-tree
-> downstream code". If you want to build QEMU, use one of the compilers
-> that QEMU supports.
 
-I think there is a value in letting other developers (not just us) to build
-their code with QEMU. I understand your concern and sent an
-updated version of the patch, which is only two lines long.
+=E5=9C=A82024=E5=B9=B46=E6=9C=8820=E6=97=A5=E5=85=AD=E6=9C=88 =E4=B8=8B=E5=
+=8D=888:50=EF=BC=8CPhilippe Mathieu-Daud=C3=A9=E5=86=99=E9=81=93=EF=BC=9A
+[...]
+> Do you mind posting a patch fixing it?
 
-> There are lots and lots of places where we
-> assume the GCC-or-clang feature set over and above plain C.
+I'll prepare a series tomorrow with your comments on this patch before.
 
-I am not changing this part.
+Thanks
+- Jiaxun
+>
+>> +            hwaddr base =3D ((hwaddr)node << 44) + virt_memmap[VIRT_=
+IPI].base;
+>> +            base +=3D core * 0x100;
+>> +            qdev_connect_gpio_out(ipi, i, cpu->env.irq[6]);
+>> +            sysbus_mmio_map(SYS_BUS_DEVICE(ipi), i + 2, base);
+>> +        }
+>> +
+>> +        if (ase_lcsr_available(&MIPS_CPU(cpu)->env)) {
+>> +            MemoryRegion *core_iocsr =3D g_new(MemoryRegion, 1);
+>> +            g_autofree char *name =3D g_strdup_printf("core%d_iocsr"=
+, i);
+>> +            memory_region_init_alias(core_iocsr, OBJECT(cpu), name,
+>> +                                     iocsr, 0, UINT32_MAX);
+>> +            memory_region_add_subregion(&MIPS_CPU(cpu)->env.iocsr.mr,
+>> +                                        0, core_iocsr);
+>> +        }
+>> +
+>> +        if (node > 0) {
+>>               continue; /* Only node-0 can be connected to LIOINTC */
+>>           }
+>>  =20
+>>           for (ip =3D 0; ip < 4 ; ip++) {
+>> -            int pin =3D i * 4 + ip;
+>> +            int pin =3D core * LOONGSON3_CORE_PER_NODE + ip;
+>>               sysbus_connect_irq(SYS_BUS_DEVICE(liointc),
+>>                                  pin, cpu->env.irq[ip + 2]);
+>>           }
+
+--=20
+- Jiaxun
 
