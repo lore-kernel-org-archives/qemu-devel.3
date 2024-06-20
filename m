@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0420C2BA1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:04:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAE83C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:07:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKHRZ-0001Qv-6E; Thu, 20 Jun 2024 09:03:13 -0400
+	id 1sKHVc-0006Nt-Pw; Thu, 20 Jun 2024 09:07:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKHRX-0001QX-HU
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sKHVb-0006NL-7V
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:07:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKHRV-0006Wo-Ot
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:03:11 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sKHVZ-0007At-C5
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 09:07:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718888588;
+ s=mimecast20190719; t=1718888839;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LuxMfRanQpqIe+rAUiRiqqmIxZ2Dd4XmJCnCNtxApfk=;
- b=MhXLm+7FghTej6orLIU9LVeDVkqiL/YNeBda0c/mIlrUPBxxnKhtJyTBA5fSoFMu0+VP+0
- sctyiZaiMZ3P3p9wTjQ8ZbxdjnzhjToWGHeuxxwalW553jQ/X/TV603lyY7J7PULCrQ35D
- bBZZ9FG+EHWt5aPmDRx3AOlHwLLGoKQ=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=l1ikVN6OTq3lBBgDbZD19s+d07/tvnfOkmUdi8S583g=;
+ b=RKZZ1zmIGZGJ7nvfKOtmoU29Ud0uUcL8PGhuTsh8ZrO9Yx2ZX1RnfxHb+BbevWP6J1y6NL
+ t5sowdOnSn79uz77BWrPf3fz8adn4d/qEKxhE1yW3RxRE6eJQAfNClvszi4Z0IeK4t9SMQ
+ P/eQ1SV7q09Jr04Ycg/bCDs8wbs1Lg4=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-126-FBHZiCqUPp2fdx3FT8e4yg-1; Thu, 20 Jun 2024 09:03:03 -0400
-X-MC-Unique: FBHZiCqUPp2fdx3FT8e4yg-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-57cdc3f0410so458793a12.2
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 06:03:03 -0700 (PDT)
+ us-mta-367-9sZeVjlRP3ykoOtCWwxOuA-1; Thu, 20 Jun 2024 09:07:17 -0400
+X-MC-Unique: 9sZeVjlRP3ykoOtCWwxOuA-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6b22e2dfa6cso11486686d6.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 06:07:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718888581; x=1719493381;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=LuxMfRanQpqIe+rAUiRiqqmIxZ2Dd4XmJCnCNtxApfk=;
- b=LSj/bR9I7E3MTPRi2vLF7ihxBCGJ1O5NtQreIdtTzPpCFw/APwvigiL8LVRM+GbzDi
- 9ZVBscPA06d/5TzdcFEi5xndhG42PKQmeDY12XraGZmkv6Sk3XJRPqBh36V4BeR2RFpB
- hnvLqhCVZjaVx9WDPjyBOnXzmbUp5/5ZOA+AtGxf6jc3n2DnhC3WPinElFrBaH26ztiM
- N3eR3AR1W8KWq4J0ReuulS35o1Kj9b67iXVEp206mSXJDLMd1s0qfiZn7aZTROLrmWJW
- FXdC6ZUiaQ23jMAu2/S50Zsn+q4cEq+eY1xxZWURYl1Ifth3+jvRwUH3ROL6nhuAN5Xe
- 8W0A==
-X-Gm-Message-State: AOJu0Yyo85HJI0tIGcUUmi5mhwivTcLH1GtlRD8J/nHD4iGtGyxhzdf9
- 6RbbRUhK9ji3X6LVq7CMPGMC5nnskmpJEDyGPwlFNYO9Axn4S0XjyeEwm0V4H2G1IgF5fAyMG5D
- hLvywkQ922Fk8dq9YoIgvMYTdBNiIg1Mh0XMCZ1xqLJAtEsp4LbogU13Np3KiPQ1h4G1k+0ABXN
- uYd7DzqrzvUio8xiGPlBTQ17Om5fu+XfXuIKNm
-X-Received: by 2002:a50:d707:0:b0:57c:5fca:ab25 with SMTP id
- 4fb4d7f45d1cf-57d07e84bf2mr3389304a12.25.1718888581680; 
- Thu, 20 Jun 2024 06:03:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHr6TmoysP21cnHNMxklPhbR8DW1eELX2UPuk1Q/bseUyUSNPxkRMEAAsVIYq+a7NaLoUE5Mg==
-X-Received: by 2002:a50:d707:0:b0:57c:5fca:ab25 with SMTP id
- 4fb4d7f45d1cf-57d07e84bf2mr3389285a12.25.1718888581227; 
- Thu, 20 Jun 2024 06:03:01 -0700 (PDT)
-Received: from avogadro.local ([151.62.196.71])
+ d=1e100.net; s=20230601; t=1718888837; x=1719493637;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=l1ikVN6OTq3lBBgDbZD19s+d07/tvnfOkmUdi8S583g=;
+ b=XpWGMFK9rPxaTvtiaycnA250e0Ubxt1Pc3GqCIjXNd5R1UczZT6t0QN82/FsAcaaQy
+ F2W2YkbE83NkXcEjUGLmw0hwA/0R1bkCfzOENkuJHRwc7ghcv826xNY5BGDOx7R7x6hv
+ lVUE4vHpPoj3XQymKUDDyTKrN47nXhpMGtLOmaLu0Xfb7weUmbzriTTxhxgP64b93xuP
+ gxAjL3IcTntDAwiYNIrwei+Ws4weLPD33Fudh42gQe8fiRJHlgHH8zec46Njon+8UGDN
+ hUmlstRIp7VxyAHcZjfrcsbMhCPzhI9A1WQVc5OyawsFYMd30nh10ONUcSVG3VEYJF5y
+ XJ2A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWJTs/CCiE+aslRNutYD9Wr5EVNp3z3RjOBXbsVsPlyJbpdAONIkdY05YFpPzUf0w+vaFIPiwQ6XvrdZeuyE7QXAUMs98g=
+X-Gm-Message-State: AOJu0Yw1g34pEHE3GUjrI89hFdI/aXDuzJJCKjAWzAhrrYAYYfQA0ZYt
+ eMGVImr3rg67E96F5L++vqAWjX0ib84tdiSgbyZS1+SaViRL9ig0PbGEeIG4VMHVZYjKeqMwUz1
+ lAawNUWdKuseMSPscrLUaZlZRLDaPOXFu4ZeJLvMsj/flbvHHTGuT
+X-Received: by 2002:a0c:f9c4:0:b0:6b2:b3cd:c329 with SMTP id
+ 6a1803df08f44-6b501ea9b39mr61214406d6.46.1718888837145; 
+ Thu, 20 Jun 2024 06:07:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGXk/+lm2Ya6ZhigAUu8KBz3Rqlk+4bRsLPSYWzOP1+EyK7RH83GUdZ2WPSgk6sQ0ZD0CIJmQ==
+X-Received: by 2002:a0c:f9c4:0:b0:6b2:b3cd:c329 with SMTP id
+ 6a1803df08f44-6b501ea9b39mr61214176d6.46.1718888836843; 
+ Thu, 20 Jun 2024 06:07:16 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57d21df986esm860455a12.72.2024.06.20.06.03.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Jun 2024 06:03:00 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- amonakov@ispras.ru
-Subject: [PATCH 1/6] Revert "host/i386: assume presence of POPCNT"
-Date: Thu, 20 Jun 2024 15:02:49 +0200
-Message-ID: <20240620130254.415699-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240620130254.415699-1-pbonzini@redhat.com>
-References: <20240620130254.415699-1-pbonzini@redhat.com>
+ 6a1803df08f44-6b2a5ee04fdsm87800046d6.117.2024.06.20.06.07.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Jun 2024 06:07:16 -0700 (PDT)
+Message-ID: <11578ca8-2bb3-4504-b7b9-022c1df65942@redhat.com>
+Date: Thu, 20 Jun 2024 15:07:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio: container: Fix missing allocation of
+ VFIOSpaprContainer
+To: Shivaprasad G Bhat <sbhat@linux.ibm.com>, harshpb@linux.ibm.com,
+ npiggin@gmail.com
+Cc: danielhb413@gmail.com, david@gibson.dropbear.id.au,
+ alex.williamson@redhat.com, qemu-ppc@nongnu.org, zhenzhong.duan@intel.com,
+ qemu-devel@nongnu.org
+References: <171528203026.8420.10620440513237875837.stgit@ltcd48-lp2.aus.stglabs.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <171528203026.8420.10620440513237875837.stgit@ltcd48-lp2.aus.stglabs.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -88,7 +92,7 @@ X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,72 +108,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 45ccdbcb24baf99667997fac5cf60318e5e7db51.
-The x86-64 instruction set can now be tuned down to x86-64 v1
-or i386 Pentium Pro.
+Shivaprasad,
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- host/include/i386/host/cpuinfo.h | 1 +
- tcg/i386/tcg-target.h            | 5 +++--
- util/cpuinfo-i386.c              | 1 +
- 3 files changed, 5 insertions(+), 2 deletions(-)
+On 5/9/24 9:14 PM, Shivaprasad G Bhat wrote:
+> The commit 6ad359ec29 "(vfio/spapr: Move prereg_listener into
+> spapr container)" began to use the newly introduced VFIOSpaprContainer
+> structure.
+> 
+> After several refactors, today the container_of(container,
+> VFIOSpaprContainer, ABC) is used when VFIOSpaprContainer is actually
+> not allocated. On PPC64 systems, this dereference is leading to corruption
+> showing up as glibc malloc assertion during guest start when using vfio.
+> 
+> Patch adds the missing allocation while also making the structure movement
+> to vfio common header file.
+> 
+> Fixes: 6ad359ec29 "(vfio/spapr: Move prereg_listener into spapr container)"
+> Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 
-diff --git a/host/include/i386/host/cpuinfo.h b/host/include/i386/host/cpuinfo.h
-index c1e94d75ce1..72f6fad61e5 100644
---- a/host/include/i386/host/cpuinfo.h
-+++ b/host/include/i386/host/cpuinfo.h
-@@ -11,6 +11,7 @@
- #define CPUINFO_ALWAYS          (1u << 0)  /* so cpuinfo is nonzero */
- #define CPUINFO_MOVBE           (1u << 2)
- #define CPUINFO_LZCNT           (1u << 3)
-+#define CPUINFO_POPCNT          (1u << 4)
- #define CPUINFO_BMI1            (1u << 5)
- #define CPUINFO_BMI2            (1u << 6)
- #define CPUINFO_AVX1            (1u << 9)
-diff --git a/tcg/i386/tcg-target.h b/tcg/i386/tcg-target.h
-index ecc69827287..2f67a97e059 100644
---- a/tcg/i386/tcg-target.h
-+++ b/tcg/i386/tcg-target.h
-@@ -111,6 +111,7 @@ typedef enum {
- #endif
- 
- #define have_bmi1         (cpuinfo & CPUINFO_BMI1)
-+#define have_popcnt       (cpuinfo & CPUINFO_POPCNT)
- #define have_avx1         (cpuinfo & CPUINFO_AVX1)
- #define have_avx2         (cpuinfo & CPUINFO_AVX2)
- #define have_movbe        (cpuinfo & CPUINFO_MOVBE)
-@@ -142,7 +143,7 @@ typedef enum {
- #define TCG_TARGET_HAS_nor_i32          0
- #define TCG_TARGET_HAS_clz_i32          1
- #define TCG_TARGET_HAS_ctz_i32          1
--#define TCG_TARGET_HAS_ctpop_i32        1
-+#define TCG_TARGET_HAS_ctpop_i32        have_popcnt
- #define TCG_TARGET_HAS_deposit_i32      1
- #define TCG_TARGET_HAS_extract_i32      1
- #define TCG_TARGET_HAS_sextract_i32     1
-@@ -177,7 +178,7 @@ typedef enum {
- #define TCG_TARGET_HAS_nor_i64          0
- #define TCG_TARGET_HAS_clz_i64          1
- #define TCG_TARGET_HAS_ctz_i64          1
--#define TCG_TARGET_HAS_ctpop_i64        1
-+#define TCG_TARGET_HAS_ctpop_i64        have_popcnt
- #define TCG_TARGET_HAS_deposit_i64      1
- #define TCG_TARGET_HAS_extract_i64      1
- #define TCG_TARGET_HAS_sextract_i64     0
-diff --git a/util/cpuinfo-i386.c b/util/cpuinfo-i386.c
-index 8f2694d88f2..6d474a6259a 100644
---- a/util/cpuinfo-i386.c
-+++ b/util/cpuinfo-i386.c
-@@ -35,6 +35,7 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
-         __cpuid(1, a, b, c, d);
- 
-         info |= (c & bit_MOVBE ? CPUINFO_MOVBE : 0);
-+        info |= (c & bit_POPCNT ? CPUINFO_POPCNT : 0);
-         info |= (c & bit_PCLMUL ? CPUINFO_PCLMUL : 0);
- 
-         /* NOTE: our AES support requires SSSE3 (PSHUFB) as well. */
--- 
-2.45.2
+Could you please give vfio-9.1 a try ? Thanks,
+
+C.
+
+https://github.com/legoater/qemu/commits/vfio-9.1
+
+> ---
+>   hw/vfio/container.c           |    6 ++++--
+>   hw/vfio/spapr.c               |    6 ------
+>   include/hw/vfio/vfio-common.h |    6 ++++++
+>   3 files changed, 10 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 77bdec276e..ecaf5786d9 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -539,6 +539,7 @@ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+>   {
+>       VFIOContainer *container;
+>       VFIOContainerBase *bcontainer;
+> +    VFIOSpaprContainer *scontainer;
+>       int ret, fd;
+>       VFIOAddressSpace *space;
+> 
+> @@ -611,7 +612,8 @@ static int vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+>           goto close_fd_exit;
+>       }
+> 
+> -    container = g_malloc0(sizeof(*container));
+> +    scontainer = g_malloc0(sizeof(*scontainer));
+> +    container = &scontainer->container;
+>       container->fd = fd;
+>       bcontainer = &container->bcontainer;
+> 
+> @@ -675,7 +677,7 @@ unregister_container_exit:
+>       vfio_cpr_unregister_container(bcontainer);
+> 
+>   free_container_exit:
+> -    g_free(container);
+> +    g_free(scontainer);
+> 
+>   close_fd_exit:
+>       close(fd);
+> diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+> index 0d949bb728..78d218b7e7 100644
+> --- a/hw/vfio/spapr.c
+> +++ b/hw/vfio/spapr.c
+> @@ -24,12 +24,6 @@
+>   #include "qapi/error.h"
+>   #include "trace.h"
+> 
+> -typedef struct VFIOSpaprContainer {
+> -    VFIOContainer container;
+> -    MemoryListener prereg_listener;
+> -    QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
+> -} VFIOSpaprContainer;
+> -
+>   static bool vfio_prereg_listener_skipped_section(MemoryRegionSection *section)
+>   {
+>       if (memory_region_is_iommu(section->mr)) {
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index b9da6c08ef..010fa68ac6 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -82,6 +82,12 @@ typedef struct VFIOContainer {
+>       QLIST_HEAD(, VFIOGroup) group_list;
+>   } VFIOContainer;
+> 
+> +typedef struct VFIOSpaprContainer {
+> +    VFIOContainer container;
+> +    MemoryListener prereg_listener;
+> +    QLIST_HEAD(, VFIOHostDMAWindow) hostwin_list;
+> +} VFIOSpaprContainer;
+> +
+>   typedef struct VFIOHostDMAWindow {
+>       hwaddr min_iova;
+>       hwaddr max_iova;
+> 
+> 
+> 
 
 
