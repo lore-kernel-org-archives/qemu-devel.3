@@ -4,70 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EBABC2BA1A
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA161C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 13:23:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKHl2-0004qf-WD; Thu, 20 Jun 2024 09:23:21 -0400
+	id 1sKHl2-0004pV-N5; Thu, 20 Jun 2024 09:23:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arthurtumanyan@gmail.com>)
- id 1sKD9e-0002FF-O8
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 04:28:26 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <arthurtumanyan@gmail.com>)
- id 1sKD9c-00059l-8s
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 04:28:25 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a6fbe639a76so99632566b.1
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 01:28:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718872102; x=1719476902; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=HVY7kz4o5AJEzQoHDnGHl7B3DMBernvumRCFXI7Sb6I=;
- b=Wyh2/esZwV/D08qqDHcZWsFWPrxW6Z2/sEL01Zmrm2I/smnWIiWGhQvM5SksWzutlC
- JhIJ2yEDG/fiXTCIw/8ulLiytZ67oH+RG9Ag1Qhvf8/J5Glm2Z8B5olXlWiW39K8fC+a
- md7q10cEZmwzXbP3WoOBG2ZJho7CdSDfWZlAX6V/OdFK6gryw/Vl4oG9hIVDKAFovnk6
- DdoHMlZ+rlhBsK+T/tQdpeF3tuEzZKo1qruF2qMDkcwqInN7N+wVKz/Slo27vJ3VCuu5
- 06WMrYyDpTzlE2x1O6aC9+pwefAn84AdagVWUUwSMY2eybCT7Z+gtEtYV89yGsS8jQIE
- ig1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718872102; x=1719476902;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HVY7kz4o5AJEzQoHDnGHl7B3DMBernvumRCFXI7Sb6I=;
- b=qf1I4j5YiskDsfl96cdqGCImwmE+THc4w5qS9NIeXw4bpGDUBGwv6wpIvGCOhvVvIY
- zwblk/4a68qlySZwsOWN2u70vd5q8lD4enNdKPcfiWGZJhxNB/SZiKOkjD6auDjusrbX
- bMsH6hxxts8ih0wsR96ajXMMrU6E6+ms4sujqkLiN3c6skmhpt7ztgPS6heWv+UDDb3W
- W/njayUfyjpsOJx70J0ZJ+lXUhrWAqZmd2DnFC5DHMEc3sPUTCP5lu/GNoA1EymAEuJw
- m92XODMxK6Y4iEVwTdXzQ3lFhPk/tJQu4MliGNrW/uhbae2CvNHq9ei5cOahzW2U01vb
- W9vQ==
-X-Gm-Message-State: AOJu0YzQHBKWKFdceu66MQjgc3qdp8HDUD2A3A2V0CW0qCqwTGapd/0+
- 6mZfW3d2nnodQpLHPICt7I6HeXVu2PhFvbmn2fBsc2JGqSRSftJCHCFYCu/EKZPMqxWAWKUmV6s
- UTUTxfdiQ7e10D1zIfDYE6x+GG1jrh7d8
-X-Google-Smtp-Source: AGHT+IFQmXnIWjljxAynXr0wPcDSltNljLas0c9fop5KhOe8oxM3oKHhp2XCotKhR4qb2ab76KVTUxhE4JPqO0Fy9ko=
-X-Received: by 2002:a17:906:144f:b0:a6f:935b:8777 with SMTP id
- a640c23a62f3a-a6f9506f561mr470208166b.25.1718872101709; Thu, 20 Jun 2024
- 01:28:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
+ id 1sKFmU-00068U-1m; Thu, 20 Jun 2024 07:16:42 -0400
+Received: from mail-dm6nam04on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2409::600]
+ helo=NAM04-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
+ id 1sKFmQ-0003qf-CU; Thu, 20 Jun 2024 07:16:41 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=gAPfQDeMKT3vBGBYRGXEx3WPKJjBZX/8mKNp+KYUVwzTJ1sSmmdn+NTv697nsbtIIFhS8+XnjycLCRY77Molt0QPy53ad2fyQk5V8xyigVNkURrVRremZyO9nNOBA5oA+1Symci1zTlRdXs8CNWisKbbvlCHk6G8y7K9HhLni7/mS2BC3oBsQSfpBVi7EdHuxWvUGcaHNz1Tb3QShrLc25g8rxOWydn4pKRIJJVThLx4zrtX8ZHVD0axsb3rbuUCWiAQqfBLmO7N3a4TWfIlzevTHtUzo6kCBilcPvJShqrG7NxYoiM8POYZRC8P6RNbVJS5EBMWJlOky38ALKWB2A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3JYV5r9jQozpZTODbYlbPhY3oxRLQHLs3kkf++DbqA0=;
+ b=ocgQgDrOpzvXoFxEu2266J3fv6OKUCKOxKO6Bx/Z9p84XbF2U9BTB4HhzDP9xchbMm0xOIR637Yqi7lmO37PVxmhAfIlihCEi+SsXZKtqjVvgo8qlTEcmY76v9GmTZYo0kGoHvesx3ReP6WxcdXRaMgtBuAXhwrE0bbg5O357pSP/UCK+DyO1Z2rB8bpL354rHl+LHpBNQ17/9Kqoexjz0k2kl6uu1vaDLgKNYG0tEIpzz6vvFFbWufoX9tmgEaZywqH9Xma9Z6mW+pCMw5zi6nXze5Pzsyee+7IXEZTCP9/wUd0JT0xzItG1QjFnRPvM5x+08besYeRKQL5aL4uIg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3JYV5r9jQozpZTODbYlbPhY3oxRLQHLs3kkf++DbqA0=;
+ b=wqpAQBjBI0QFvFcE+4Ero8HhvLFWY0t+rNZGYYQkPmGTGjCToWRTjNvxxvupe2L/bOYyPtvyFna0yy19TI32wPFBPuCmMDaN/s2DrTXlDWcaJBbm69l0YlusXB2VRaROqzvSDoPs+PcJbzMDYvPW6EPdfpS2BvEW7mMXY4n2j2Y=
+Received: from BN9P220CA0021.NAMP220.PROD.OUTLOOK.COM (2603:10b6:408:13e::26)
+ by MN0PR12MB6126.namprd12.prod.outlook.com (2603:10b6:208:3c6::5)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.21; Thu, 20 Jun
+ 2024 11:16:31 +0000
+Received: from BN2PEPF00004FBC.namprd04.prod.outlook.com
+ (2603:10b6:408:13e:cafe::b4) by BN9P220CA0021.outlook.office365.com
+ (2603:10b6:408:13e::26) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.32 via Frontend
+ Transport; Thu, 20 Jun 2024 11:16:31 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BN2PEPF00004FBC.mail.protection.outlook.com (10.167.243.182) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7677.15 via Frontend Transport; Thu, 20 Jun 2024 11:16:31 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 20 Jun
+ 2024 06:16:30 -0500
+Date: Thu, 20 Jun 2024 13:16:28 +0200
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+CC: Peter Maydell <peter.maydell@linaro.org>, Zheyu Ma <zheyuma97@gmail.com>, 
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>,
+ Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH] hw/timer/a9gtimer: Handle QTest mode in
+ a9_gtimer_get_current_cpu
+Message-ID: <ZnQPjL4HjevwHh8R@toto>
+References: <20240618144009.3137806-1-zheyuma97@gmail.com>
+ <47a6e9d2-27f6-4e45-9de3-c4766bdf2566@linaro.org>
+ <CAFEAcA82T-hS0Armp6PVBkrywfqv+-u+L4z8rtrjBpnwvE8Hxg@mail.gmail.com>
+ <12471213-83da-4226-ba2a-2b8b6452d46b@linaro.org>
 MIME-Version: 1.0
-From: Arthur Tumanyan <arthurtumanyan@gmail.com>
-Date: Thu, 20 Jun 2024 12:28:10 +0400
-Message-ID: <CADueUgQh-=vmoO9kqL589Xeuf_LOM_K2Rr-rBxwe8iArdNdzsA@mail.gmail.com>
-Subject: How to use designware-root-port and designware-root-host devices ?
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000096d51061b4e19ed"
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=arthurtumanyan@gmail.com; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <12471213-83da-4226-ba2a-2b8b6452d46b@linaro.org>
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF00004FBC:EE_|MN0PR12MB6126:EE_
+X-MS-Office365-Filtering-Correlation-Id: 34be9431-fe31-49fe-4ce2-08dc911a6fd0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230037|82310400023|36860700010|1800799021|376011; 
+X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?4lNpG/u6jcFyANEF4HwVkpBB9vRAaAxJq0PLfVZMseWoJLZ+dYhN3N3Ygy?=
+ =?iso-8859-1?Q?JPOdPmee9rLyKTWatcE17aGCzX+h+kQCyeDfPqkhVGx6+QMzsmasFnkShk?=
+ =?iso-8859-1?Q?xnDK96EfpcT9P5xxLWVw3RVKY35rlK0egA4rsGw5aDWGBNxhgzZZLGnbYl?=
+ =?iso-8859-1?Q?IA18XhAra3ypsuG6F4JNqRpW8tAS9LlSSKAgUE1vyoox17Bsq8QjrSiCKu?=
+ =?iso-8859-1?Q?3AO2BIK0xxgqrCTnXN1vXCIeWuhh+KWzRrGJz2JA0QGNblslURnAWu2LhA?=
+ =?iso-8859-1?Q?1qx8A1GivlkgEb5AU3scAHi9FhEyp8dQeXaQ8ftdbUKi3/FZbnSH8EVSov?=
+ =?iso-8859-1?Q?z59RSZmCXbT82HaEz4b0u6ZT+xbQ1umu9xLDvITZATn5ky2ZvUo088HdTo?=
+ =?iso-8859-1?Q?umdp3KXKRzKbweVIooqaF7ahux3TXcJXz+jwS7rwvk6HWvfaNe0gb/WDPs?=
+ =?iso-8859-1?Q?x6tTr5ouDg2A8C4U3xJUZiFYWzfzHWf3nFQE1ahB95ToWdNO8a95HU8E2Y?=
+ =?iso-8859-1?Q?Y5GK8WoYs9zZPFSBdmWdS9D9ftGP1lllFnMppEHxdmZIW5/UxsQ11nTeUF?=
+ =?iso-8859-1?Q?QtxGYIKkCiwwvwm1wIpVW8ke2nCPqmTMSKc4rlnYl305eWaVcktvznRHg+?=
+ =?iso-8859-1?Q?gOr5py3jjUQlYC36uUm2QHw7PL6TXD+artefdwD2olYqe6MYgiFlyqa+9F?=
+ =?iso-8859-1?Q?M03DRThzJKy+OAegeQKUDJmaOjP25P7pZTcmCdHCVyP5uoWehxF8XAX9Y7?=
+ =?iso-8859-1?Q?lRld4Gd2qjtIWBZkxYNjBmkDV0PQFY5J6xHOl/qhQ5un/hUszJY7kIqeMT?=
+ =?iso-8859-1?Q?2z2wixs2viinIkYOl+Rrpg9LbBy49CV6aSessFxdIzA1tUZCV7/pBCU2Qa?=
+ =?iso-8859-1?Q?yj28P6DRlkTbwxUxpcQ1dwB+bMe38Ufq3SPJmaGoRkVIsLMURgtI3a1oPL?=
+ =?iso-8859-1?Q?9V7hwGmNLZBzHy+GfWvqrXqe/omFvG6MtgrIEE5KBEIF5gtkfP35+uo58U?=
+ =?iso-8859-1?Q?chwQ/KOhgJAIt0KtyDd2rTkgdX/c0DOignoyqw9ZzBOlG1lrwS2r1Sux4o?=
+ =?iso-8859-1?Q?CcbgQW4VF+MZ3J9Nui1ffrUmwpEeJzdS5HCy3yT7xzk/ABUL02aR1bystA?=
+ =?iso-8859-1?Q?+Q1CDGVUGqA0kFMUpgCjl4YG/LdQpz74fuDgB5pBrfPjQgj9T/wNT5l3c1?=
+ =?iso-8859-1?Q?kunye9zYXMIpsuOBe+I7SIX5lvwVdfugbusLRIHnGk67/KfMYBsXmVNja3?=
+ =?iso-8859-1?Q?2qsa0BqBSCrdOs7zg7CtpqyKUNAOWu1tyRjz/Tc324I3s8KxLKerNslwNO?=
+ =?iso-8859-1?Q?JYo8UbmHinJGYLjQW19IoThEfBD9eML0TmleePaH43lBUYR/xXNAA/SDTy?=
+ =?iso-8859-1?Q?bo4q4kUTRm+w/P36xXDqZLbH0ZCF816CfZsHVtZIDUc3RfW1ww8ntCLpjX?=
+ =?iso-8859-1?Q?lPrex/yJiUX2oqz4il7/aE94ZRBpi2Cni9Ih/g=3D=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230037)(82310400023)(36860700010)(1800799021)(376011); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jun 2024 11:16:31.0242 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 34be9431-fe31-49fe-4ce2-08dc911a6fd0
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF00004FBC.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6126
+Received-SPF: permerror client-ip=2a01:111:f403:2409::600;
+ envelope-from=Edgar.Iglesias@amd.com;
+ helo=NAM04-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Thu, 20 Jun 2024 09:23:14 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,78 +148,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+From:  "Edgar E. Iglesias" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000096d51061b4e19ed
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Jun 20, 2024 at 12:25:51PM +0200, Philippe Mathieu-Daudé wrote:
+> On 20/6/24 12:10, Peter Maydell wrote:
+> > On Tue, 18 Jun 2024 at 15:51, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+> > > 
+> > > On 18/6/24 16:40, Zheyu Ma wrote:
+> > > > This commit updates the a9_gtimer_get_current_cpu() function to handle
+> > > > cases where QTest is enabled. When QTest is used, it returns 0 instead
+> > > > of dereferencing the current_cpu, which can be NULL. This prevents the
+> > > > program from crashing during QTest runs.
+> > > > 
+> > > > Reproducer:
+> > > > cat << EOF | qemu-system-aarch64 -display \
+> > > > none -machine accel=qtest, -m 512M -machine npcm750-evb -qtest stdio
+> > > > writel 0xf03fe20c 0x26d7468c
+> > > > EOF
+> > > > 
+> > > > Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> > > > ---
+> > > >    hw/timer/a9gtimer.c | 5 +++++
+> > > >    1 file changed, 5 insertions(+)
+> 
+> 
+> > > >        if (current_cpu->cpu_index >= s->num_cpu) {
+> > > 
+> > > That said, such accesses of @current_cpu from hw/ are dubious.
+> > 
+> > True, but I'm not sure we ever settled on the right way to avoid
+> > them, did we?
+> 
+> No we didn't, it is still in my TODO list; we might discuss it
+> when I post my RFC.
+>
 
-Hi all,
+Yeah, this way of getting the core id is a problem when having multiple
+ARM CPU subsystems (and for heterogenous cores).
 
-My question may sound stupid, however... Currently I'm trying to make
-available designware-root-{port,host} devices  in linux when I run it in
-qemu.
+IIRC, when I looked at what the GIC v2 HW does, the GIC exposes an AMBA
+port for each CPU. In my mental model that would translate to exposing
+multiple Memory Reginos (sysbus_init_mmio) and mapping the appropriate
+device MR to each CPU AddressSpace.
 
-I try the following way to run:
+We could also do it with memory attributes but I don't think the
+master Ids are standardised enough to extract a core-index from
+with out having SoC specific code,, at least not accross Xilinx devices.
 
-qemu-system-arm -M virt -m 2G \
-     -kernel images/Image \
-     -append "rootwait root=/dev/vda ro" \
-     -drive file=images/rootfs.ext2,format=raw,id=hd0 \
-     -device designware-root-port,id=rp0,chassis=1,slot=0,bus=pcie.0,addr=1
-\
-     -device e1000,netdev=net0,mac=52:54:00:12:34:56,bus=rp0,addr=0 \
-     -netdev user,id=net0
+I never looked at newer GIC versions nor the mmio mapped timers
+though...
 
-but it seems designware device is not enabled by default: qemu-system-arm:
--device designware-root-port,id=rp0,chassis=1,slot=0,bus=pcie.0,addr=1:
-'designware-root-port' is not a valid device model name
-
-when I enable it from Kconfig/meson.build it says the device is already
-registered and exits with abort().
-
-From the other hand the device is declared as non pluggable: dc->user_creatable
-= false;
-
-Can you please help me to use designware-root-host/port devices ?
-
-Thanks in advance,
-Arthur
-
---000000000000096d51061b4e19ed
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi all,<div><br></div><div>My question may sound stupid, h=
-owever... Currently I&#39;m trying to make available=C2=A0designware-root-{=
-port,host} devices=C2=A0 in linux when I run it in qemu.=C2=A0</div><div><b=
-r></div><div>I try the following way to run:=C2=A0</div><div><br></div><div=
->qemu-system-arm -M virt -m 2G \<br>=C2=A0 =C2=A0 =C2=A0-kernel images/Imag=
-e \<br>=C2=A0 =C2=A0 =C2=A0-append &quot;rootwait root=3D/dev/vda ro&quot; =
-\<br>=C2=A0 =C2=A0 =C2=A0-drive file=3Dimages/rootfs.ext2,format=3Draw,id=
-=3Dhd0 \<br>=C2=A0 =C2=A0 =C2=A0-device designware-root-port,id=3Drp0,chass=
-is=3D1,slot=3D0,bus=3Dpcie.0,addr=3D1 \<br>=C2=A0 =C2=A0 =C2=A0-device e100=
-0,netdev=3Dnet0,mac=3D52:54:00:12:34:56,bus=3Drp0,addr=3D0 \<br>=C2=A0 =C2=
-=A0 =C2=A0-netdev user,id=3Dnet0<br></div><div><br></div><div>but it seems =
-designware device is not enabled by default:=C2=A0qemu-system-arm: -device =
-designware-root-port,id=3Drp0,chassis=3D1,slot=3D0,bus=3Dpcie.0,addr=3D1: &=
-#39;designware-root-port&#39; is not a valid device model name</div><div><b=
-r></div><div>when I enable it from Kconfig/meson.build it says the device i=
-s already registered and exits with abort().=C2=A0</div><div><br></div><div=
->From the other hand the device is declared as non pluggable:=C2=A0<span st=
-yle=3D"font-family:&quot;JetBrains Mono&quot;,monospace;font-size:10.5pt;co=
-lor:rgb(0,0,0)">dc</span><span style=3D"font-family:&quot;JetBrains Mono&qu=
-ot;,monospace;font-size:10.5pt;color:rgb(8,8,8)">-&gt;</span><span style=3D=
-"font-family:&quot;JetBrains Mono&quot;,monospace;font-size:10.5pt;color:rg=
-b(102,14,122)">user_creatable </span><span style=3D"font-family:&quot;JetBr=
-ains Mono&quot;,monospace;font-size:10.5pt;color:rgb(8,8,8)">=3D </span><sp=
-an style=3D"font-family:&quot;JetBrains Mono&quot;,monospace;font-size:10.5=
-pt;color:rgb(0,51,179)">false</span><span style=3D"font-family:&quot;JetBra=
-ins Mono&quot;,monospace;font-size:10.5pt;color:rgb(8,8,8)">;</span></div><=
-div><span style=3D"font-family:&quot;JetBrains Mono&quot;,monospace;font-si=
-ze:10.5pt;color:rgb(8,8,8)"><br></span></div><div>Can you please help me to=
- use designware-root-host/port devices ?</div><div><br></div><div>Thanks in=
- advance,</div><div>Arthur</div><div><br></div></div>
-
---000000000000096d51061b4e19ed--
+Cheers,
+Edgar
 
