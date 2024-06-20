@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51519C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 15:03:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93C07C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 15:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKJJa-000552-KM; Thu, 20 Jun 2024 11:03:06 -0400
+	id 1sKJJc-000565-CN; Thu, 20 Jun 2024 11:03:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKJJY-00050r-80
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:03:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKJJW-0004ba-Nn
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:03:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718895781;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YFN4XwyER/PGFhtd2vEfPDpnGz5x3/GkLmQ/mVcfgJU=;
- b=Jd50b9fG58aS2meEqvr0ZImhT5uYM8jhNZV/Pmg2MaDsa6SOCRQxkSASfkP26hWlOkUbDV
- 5ppcf5A/3e+QojMQtEI43oSe38oIAT4DP9LRgiLc8XPnD1ZT8V6D/PtjtM7Gia5+Ctdk3L
- KcXsDyQGlMCjMGLR8++kK2aCz5e4iTE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-BVk3SocbPbaRdyNjAIWknw-1; Thu, 20 Jun 2024 11:02:57 -0400
-X-MC-Unique: BVk3SocbPbaRdyNjAIWknw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-363740a6f5fso463721f8f.1
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 08:02:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKJJZ-00052l-Bb
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:03:05 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKJJX-0004bd-MF
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:03:05 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1f992388bbbso8861195ad.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 08:03:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718895782; x=1719500582; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=H0iR1CqklhYsZeAcPYGBAPYi4F3ACQBXDV3k0qU66nw=;
+ b=CQ62+7YA1bqnTcsA0AiuiOto+EHAcJCeXKKJ2qxyDeGyiGG8arZkAAB+U00JNjrVgb
+ 8Zr51gCE+zkmGZr3t9mae14x7z2RRJhoQF8m8/+GwXbeFcjyVggPHRfD9F0MKNUsnOKX
+ AsWW3eWoBi+kDd8cPOkvSWMgLKz3VkTNBeshMZTbCrBgule8jp8xPBvQbmvyaDlOIOBr
+ Ml59VikP1cHzVxNGq6836dHxukS3jZ27y1JBcjq06hF6rYtNYX3+rjqa7fTpxNPp9hzl
+ oC0szaFc5y8vON55Na3z4TETLbKbBFq2+4IBiqvqeCraiZ/ye+miOZK5v1l3BoXHorSB
+ pAsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718895776; x=1719500576;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YFN4XwyER/PGFhtd2vEfPDpnGz5x3/GkLmQ/mVcfgJU=;
- b=f3Q4NaBFsiw5QEJcbbgTO3WSs0e3bjvomvFRVsvMTuirJzebj8zKD0QfkRqjokt0k9
- fHM3WXUWR90yFKmolkt47aIYOzbQ6RACN8PoaID88e3nFmxoMrb1kKLt6zg7BQGFC3Ur
- BCMEscpnNwuGRUBZ0c6ouuOpSGpFUEblceiehRwVcdNsugRIaMxBT7bM9K1nhlxTYbHS
- ZTA1gnFu4sO/HzUBdM4j6EB87dSO6G2G5BOr3zM01a48CNEgB2HmmtkRhGV3+iicbruS
- sleOS+MBcNwLGyFMU7D07NgI8oiqPyc/e3LBEYUSyOXVVok8GB2XQFSCCkyk+G+UisQh
- jRzQ==
-X-Gm-Message-State: AOJu0YyCCWLPqYinR25z+PICzol5hvb/vvAiDy13DLUtO3FGe/l04QMM
- 8zZZXmgGSk50plvQdm6qbHomDZ+a9f8vxvwysQ31xNcXJZMyjJU/hP5P4eQltSxbK4IPy61z6Js
- kQ3+TnQJkn4Vb3tdr9FAOKiczuBriYwBV9nMGqAdR3u8V2tcVvzfbBt5B5LJZew4iGYPxbGvVVR
- nl2DICtEcsRKsRMeLo6TdM277YSFg=
-X-Received: by 2002:a5d:58f5:0:b0:360:7dbf:d3f with SMTP id
- ffacd0b85a97d-363193c4f41mr3988641f8f.56.1718895776478; 
- Thu, 20 Jun 2024 08:02:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEbeoN8Ia/3C7bJinjFFJ9HEjY/TkLSt4DKoBjkL6CJarOyw5gCoiRwDQ1nn96wxrN4ybl2/hHDoXVlWKAn85c=
-X-Received: by 2002:a5d:58f5:0:b0:360:7dbf:d3f with SMTP id
- ffacd0b85a97d-363193c4f41mr3988621f8f.56.1718895776111; Thu, 20 Jun 2024
- 08:02:56 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718895782; x=1719500582;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=H0iR1CqklhYsZeAcPYGBAPYi4F3ACQBXDV3k0qU66nw=;
+ b=O+CBLMoYQtLqy9z9QshpG4A+UdfrP5WqLBmBowlsAFotJhlK1rFgE2MgtgXOxOt56H
+ 3kyYkU2aSIA9Fab0AePBsSGbBpVmPftM+jgBu8nU8mdDodbkrxpmD8Wf5kouvuJGiuyJ
+ BRcWJs3UHMp+hTmZLzfUf/jt9/xBb6o9T6zPLQ9HRZ2XZ7nR4PreoPr6MeWJ8IY+CtfI
+ FlIz6CHxRZukYfvVvVsbwMPX0A0szjl7dCvvp/LCukfQ+rv3qalkwVZ6UXaFINoJznXy
+ 4K71MP7czkvrd6WM54D2ybi0G9YjwpE1QYK8OntZ/q8feWYC24iD1UFBozsGrHYoQX5E
+ QZjw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbC+jlnYajV7uAyO55UwYGxqiezZXnr8WGHhB+acTM4reUFZPBceEc5N6KioCbG4mmZ9meL728gPgQNhzSF5ngi1ENzb4=
+X-Gm-Message-State: AOJu0Ywq1Vwn7e8Bof99A5qP+1gveNk8KmUDruVoB9CHYRi8MUpT14sV
+ bRD+Hz5hCv9dAzEFJ1m1Yff/k9JXtdeJ5ak1OwnGXUOmWs8tx2UQW6uux3TeTNg=
+X-Google-Smtp-Source: AGHT+IEb7MK5QgflqL7je+8bDBCw1SAfq130A1+AxaqyqwaF8yKVTHb8jwKJlEIARoy+xM/SpDSbHg==
+X-Received: by 2002:a17:902:f64c:b0:1f7:38a2:f1e6 with SMTP id
+ d9443c01a7336-1f9aa473e72mr63536555ad.43.1718895781790; 
+ Thu, 20 Jun 2024 08:03:01 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f855f0580dsm137956765ad.208.2024.06.20.08.03.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Jun 2024 08:03:01 -0700 (PDT)
+Message-ID: <64d018d2-ab53-47b3-963e-ad9abf41896c@linaro.org>
+Date: Thu, 20 Jun 2024 08:02:59 -0700
 MIME-Version: 1.0
-References: <20240620130254.415699-1-pbonzini@redhat.com>
- <20240620130254.415699-5-pbonzini@redhat.com>
- <ZnRC2cVcDSlKs72d@redhat.com>
-In-Reply-To: <ZnRC2cVcDSlKs72d@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 20 Jun 2024 17:02:40 +0200
-Message-ID: <CABgObfZ4sdXkC9Bf6jj5vwraE2_Nd_kfg6WVoiTGs4qnTdJppg@mail.gmail.com>
-Subject: Re: [PATCH 4/6] meson: allow configuring the x86-64 baseline
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, amonakov@ispras.ru
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/10] target/i386: use cpu_cc_dst for CC_OP_POPCNT
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240620095419.386958-1-pbonzini@redhat.com>
+ <20240620095419.386958-2-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240620095419.386958-2-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,35 +97,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 20, 2024 at 4:55=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
-> Any particular reason you chose to list various instructions individually
-> rather than just ask GCC for the full ABI ? I'd think all of the above
-> condences down to just
+On 6/20/24 02:54, Paolo Bonzini wrote:
+> It is the only POPCNT that computes ZF from one of the cc_op_* registers,
+> but it uses cpu_cc_src instead of cpu_cc_dst like the others.  Do not
+> make it the odd one off.
+> 
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> ---
+>   target/i386/cpu.h           | 2 +-
+>   target/i386/tcg/cc_helper.c | 2 +-
+>   target/i386/tcg/translate.c | 2 +-
+>   target/i386/tcg/emit.c.inc  | 4 ++--
+>   4 files changed, 5 insertions(+), 5 deletions(-)
 
-To avoid that the default ('1') forces a lower level than the compiler defa=
-ult.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Something like what you propose below could work by adding a 'default'
-value to the x86_version option, that leaves the flags entirely alone
-apart from -mcx16.
-
-However, doing so would prevent QEMU from changing the default to
-x86-64-v2 in meson_options.txt, because then even a compiler that
-defaults to x86-64-v3 would build a QEMU with AVX2 disabled.
-
-For AVX2 specifically this is not a huge deal because the decision to
-use AVX2 code is mostly done at runtime; but it would be a problem for
-future integer instruction set extensions---for example if the distro
-compiler uses APX you don't want to disable it.
-
->   # add flags for individual instruction set extensions
->   if get_option('x86_version') >=3D '1'
->     if host_arch =3D=3D 'i386'
->       qemu_common_flags =3D ['-mfpmath=3Dsse'] + qemu_common_flags
-
-Also -msse2 here, but yes.
-
-Paolo
-
+r~
 
