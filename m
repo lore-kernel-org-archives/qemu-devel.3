@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC145C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 15:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C82DC27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 15:10:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKJR0-0000so-Fd; Thu, 20 Jun 2024 11:10:46 -0400
+	id 1sKJR5-0000xK-Tm; Thu, 20 Jun 2024 11:10:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sKJQp-0000oR-VJ
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:10:38 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKJQz-0000u0-OO
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:10:46 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sKJQo-0005se-Bl
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:10:35 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a6f13dddf7eso123798366b.0
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 08:10:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKJQv-0005tL-8y
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 11:10:42 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-704189f1225so1083971b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 08:10:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718896231; x=1719501031; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GgQkLGFJAR6iua8CeDRfrSn52bPRLoZC1No0uNPWlQE=;
- b=SFByfYyrjdSFX5OygQ72g+XUtLfN+YQ91fktnzw5iYbyWqZnTYPmAWwNzwGJ+Fiba4
- gDSRgawJEAe/8ECQOc5WUN6VQsucsogGMxI8egzANKLr4AkheaA5pRAkZwmBaVB1Z8Ca
- 2D9Wsn5ZHuanRi6EWAIBcKCON/jdBKNGmEbWKu7gAR3W3bSFiz+dgh4LlkLJ3kF0oN+D
- xXKXXcekIxp3wz8fjtZ6pWrjI8atSWyqynauyJOEjH08Hb8nDAC4VeD93vtF1KugJq+Y
- NBm28a7rX7DIyZaqF9UAL8PM3dlj7R0Zfh6rdWDWw0WlxCUM8tG//Zq0wh1EZdaWRXK+
- KcZg==
+ d=linaro.org; s=google; t=1718896239; x=1719501039; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=couKp3+oioY7YLF7+lR3C8mYCozsX+bclXQNuCfCyE8=;
+ b=qcOgVNSz9sAJnmxEaUOb2F4f0uz+YisIIXTO1bTgbLiAahs41s8Yci/P3dDRJSbnYp
+ 1IifcPpOLPruB8I8/RIuVq//XTIiHgb5vtc3gFvL+6Jq8tRAlgl6ZegLS2PWZtO2/aPB
+ i7tKcZhLBL0KEfwuVc0jQes12aZotMEyeO75rPr/SUJeVFr/H+NW5u+EQN36/EyDb4Cw
+ rF92phB/ZAlKLtX6Lv0jb+tB/XKUL9kGvBEQYDetdBWQo+B0/qlOIGIY5uQIkSr7juNU
+ KYgOpZZSbeJ1LyXjlgSFfaw8VZyplI2A4bA3LKUpprNYK/gU+Na2BFmPtbEGNsDe1dIx
+ WiDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718896231; x=1719501031;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GgQkLGFJAR6iua8CeDRfrSn52bPRLoZC1No0uNPWlQE=;
- b=rE76njEZ0kjXpDDdniKQAbpDDavEGlClAo5ckTWj+mCK/TFsI3NEzq40QphiP4zlCN
- WvDcBJeujRgV1E6XzxljSAotmz5hJSgSYsric1wDxD2hv7vLORb1OvsBrD/fu/q+z5k5
- hn6pfpwZX+u6tSKZXL4UytG2WPJqIgmyQnMu+CaC4SGDN8aEdrjOqf41sewwzHJvWOYg
- accnq2QlEqy6vfOrDH93FX7WHnnr+Rnnlui4BFxqjXO5f1eMJrLdiadcOIE6ElURnaoR
- O2r9zs66Bl0lEei7Am6HqeIEphnqEwLH5KiNJAfBieit7YH8XKJF2DMHLwuk+36nwGbA
- 8nWQ==
+ d=1e100.net; s=20230601; t=1718896239; x=1719501039;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=couKp3+oioY7YLF7+lR3C8mYCozsX+bclXQNuCfCyE8=;
+ b=o8jW9Sr+tDf2j2pLQwyuWFCq5r1xmeH1JGaAOXDUfWie8mv2UgGhy0e9cmJYNF0Xmj
+ gZOv7ZWICPBbznVPoIYfpiEISaK36s4rJC0lkGXnnFPEvTnvJMPetEF6FzH8kLpTbSQG
+ OlcDF1ptGDx08cGo1IM6hdBC8QM4GfNXX3+FR7xM3pjrQV5N4kYQTTxFJKIrIdfR3Dd9
+ GgVm9VJgtx46RIkl5iPv33NuHLNBXvymWMOjTZSlQkD8D1di3qJyoW6TPkJrubaQzRlP
+ naL/A94g1TkttpVnNYbBfyPk6w440M785v6k/lK+I+tnfxXJEhy/wJCjnVFJwz/NM5yG
+ DwlQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVlgSxBESzyWKFGBfEIfjYHfY54mHU3HwO2jbCG9GhtIFNYzygKNZeOCqkV5ux7fF36Ce5yS69lN4lP+i0k8xKyEdX6g7U=
-X-Gm-Message-State: AOJu0YxDFDc88dl6qf96xBTzafUN1WUGXGdKgRfuDSAVblFVTkAcThGq
- ESLgRMdvyBc5ZGONfemE9/TapXQX8HWPGko/pObUeYjEDEuArVw53WbYNTyqptE=
-X-Google-Smtp-Source: AGHT+IFKpVjYsxTSvOEePgXeaDGdKN6Dn22Hj2+GiZGxz9tfEI6ew+tJvY4faqJtN5a22mLz3Wy6Kg==
-X-Received: by 2002:a17:906:3cb:b0:a6f:61c7:deaa with SMTP id
- a640c23a62f3a-a6fab615bcdmr348972966b.17.1718896230852; 
- Thu, 20 Jun 2024 08:10:30 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56dd2daasm779348366b.97.2024.06.20.08.10.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Jun 2024 08:10:27 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AD8255F7B1;
- Thu, 20 Jun 2024 16:10:26 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,  Roman Kiryanov
- <rkir@google.com>,  qemu-devel@nongnu.org,  jansene@google.com,
- mett@google.com,  jpcottin@google.com
-Subject: Re: [PATCH 3/3] exec: use char* for pointer arithmetic
-In-Reply-To: <ZnKRLj3usYxmAIOE@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Wed, 19 Jun 2024 09:05:02 +0100")
-References: <20240618224604.879275-1-rkir@google.com>
- <495d3ddc-ce73-4ef5-badd-16ed61f9a5aa@linaro.org>
- <ZnKRLj3usYxmAIOE@redhat.com>
-Date: Thu, 20 Jun 2024 16:10:26 +0100
-Message-ID: <87le2zbqfx.fsf@draig.linaro.org>
+ AJvYcCUucaR5mmtEvwU2T/vAqUDK1l4ocOR7+C7M1pfBqmhnWWLdGoSHW/FNWNqAteAnOiQjmnMV0AuKKPHl3Rz/PiAsK9DdhJs=
+X-Gm-Message-State: AOJu0YzdkCkTwqYDbaBPTXTdWcxJiHEwJXYc+JMzpevYTtybrv1WkBZA
+ pFGFxYqqIrj8ynzg/3LusFBcrvYEeNBzi6TcUB9V+V0JZkyzYN9rAO7rNGlt0dyP8XPYm6w2L0W
+ o
+X-Google-Smtp-Source: AGHT+IHR5jWxhqOfjgyf0S15ZaNGcYvPho27DW0uvNy0GOBIiblwQO9cErc4E+QjbDYz7M7RF5vx/A==
+X-Received: by 2002:a17:90a:8a02:b0:2c2:f704:5278 with SMTP id
+ 98e67ed59e1d1-2c7b5dc7f9emr5523033a91.42.1718896239300; 
+ Thu, 20 Jun 2024 08:10:39 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c7e55e0cd4sm1809589a91.25.2024.06.20.08.10.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Jun 2024 08:10:38 -0700 (PDT)
+Message-ID: <41ef1b35-f3cc-471f-b84a-ae90b31432da@linaro.org>
+Date: Thu, 20 Jun 2024 08:10:37 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/10] target/i386: give CC_OP_POPCNT low bits
+ corresponding to MO_TL
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240620095419.386958-1-pbonzini@redhat.com>
+ <20240620095419.386958-3-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240620095419.386958-3-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,39 +99,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 6/20/24 02:54, Paolo Bonzini wrote:
+> Handle it like the other arithmetic cc_ops.  This simplifies a
+> bit the implementation of bit test instructions.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   target/i386/cpu.h           | 13 +++++++++++--
+>   target/i386/tcg/translate.c |  3 +--
+>   2 files changed, 12 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index f54cd93b3f9..8504a7998fd 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -1275,6 +1275,7 @@ typedef enum {
+>       CC_OP_ADCX, /* CC_DST = C, CC_SRC = rest.  */
+>       CC_OP_ADOX, /* CC_SRC2 = O, CC_SRC = rest.  */
+>       CC_OP_ADCOX, /* CC_DST = C, CC_SRC2 = O, CC_SRC = rest.  */
+> +    CC_OP_CLR, /* Z and P set, all other flags clear.  */
+>   
+>       CC_OP_MULB, /* modify all flags, C, O = (CC_SRC != 0) */
+>       CC_OP_MULW,
+> @@ -1331,8 +1332,16 @@ typedef enum {
+>       CC_OP_BMILGL,
+>       CC_OP_BMILGQ,
+>   
+> -    CC_OP_CLR, /* Z set, all other flags clear.  */
+> -    CC_OP_POPCNT, /* Z via CC_DST, all other flags clear.  */
+> +    /*
+> +     * Note that only CC_OP_POPCNT (i.e. the one with MO_TL size)
+> +     * is used or implemented, because the translation needs
+> +     * to zero-extend CC_DST anyway.
+> +     */
+> +    CC_OP_POPCNTB__, /* Z via CC_DST, all other flags clear.  */
+> +    CC_OP_POPCNTW__,
+> +    CC_OP_POPCNTL__,
+> +    CC_OP_POPCNTQ__,
+> +    CC_OP_POPCNT = sizeof(target_ulong) == 8 ? CC_OP_POPCNTQ__ : CC_OP_POPCNTL__,
+>   
+>       CC_OP_NB,
+>   } CCOp;
+> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+> index f32cda4e169..934c514e64f 100644
+> --- a/target/i386/tcg/translate.c
+> +++ b/target/i386/tcg/translate.c
+> @@ -1019,8 +1019,6 @@ static CCPrepare gen_prepare_eflags_z(DisasContext *s, TCGv reg)
+>                                .imm = CC_Z };
+>       case CC_OP_CLR:
+>           return (CCPrepare) { .cond = TCG_COND_ALWAYS };
+> -    case CC_OP_POPCNT:
+> -        return (CCPrepare) { .cond = TCG_COND_EQ, .reg = cpu_cc_src };
 
-> On Tue, Jun 18, 2024 at 04:05:36PM -0700, Richard Henderson wrote:
->> On 6/18/24 15:46, Roman Kiryanov wrote:
->> > @@ -2839,7 +2839,7 @@ static inline uint8_t address_space_ldub_cached(=
-MemoryRegionCache *cache,
->> >   {
->> >       assert(addr < cache->len);
->> >       if (likely(cache->ptr)) {
->> > -        return ldub_p(cache->ptr + addr);
->> > +        return ldub_p((char*)cache->ptr + addr);
->>=20
->> We require "char *" with a space.
->>=20
->> With all of those fixed,
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->>=20
->> PS: I'm annoyed that standards never adopted arithmetic on void *.
->
-> NB, QEMU is explicitly *NOT* targetting the C standard, we are
-> targetting the C dialect supported by GCC and CLang only. IOW,
-> if they have well defined behaviour for arithmetic on void *,
-> then we are free to use it.
+The previous patch needs to have changed this to dst.
 
-It looks like GNU C does support it:
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-  https://gcc.gnu.org/onlinedocs/gcc/Pointer-Arith.html
 
->
-> With regards,
-> Daniel
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+r~
 
