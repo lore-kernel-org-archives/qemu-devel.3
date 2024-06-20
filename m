@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5566DC27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 16:33:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CFF7C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 16:58:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKKi0-0003Fg-8Y; Thu, 20 Jun 2024 12:32:24 -0400
+	id 1sKL6w-0005O6-2J; Thu, 20 Jun 2024 12:58:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sKKhx-0003FV-Ss
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:32:21 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sKKhv-0004Ce-2z
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:32:21 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-57d1012e52fso1218732a12.3
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 09:32:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718901136; x=1719505936; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=BETFTTWU9xVFhpYusm7c0IREOV0G6oO8cUsS5wkRjSk=;
- b=GKtnvsGhtBkn3rRQC4qx6bIBwHAILEFyXomr4R0Ah4zk+ksvjTolXa6pfyxqoyKro1
- RtNGxoomD3xS41fd5vgwnVq5PDJ0TVkWhYnpewmUgcrUiqRSKAda/hxVb0JVcOMrsk6c
- DAEBiTf0/HH2mEwBcrXKQ7jlmz2SNQ05CSDIRLpuCPTQsU6W2x1XeCFksTX+0HLFIa3V
- FIj+tVnYCbxuC1dcjqsumK6NNJhZN9j4Noql/x/4UvrH9DXQAEhXaeTNXj0xON3SnpCo
- qU8AkRXzLJgxaz5R3Rllo8FS2f0k2Sq/DBvIkz/U+5Uxh0txLppmoINBtAo/6Ozq+l1B
- Wucg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718901136; x=1719505936;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BETFTTWU9xVFhpYusm7c0IREOV0G6oO8cUsS5wkRjSk=;
- b=IuqF8j2i5TQPm7tJ0X7NCYNjiBng3ksCKTAiPToM9vc2Nvjq8LBY4jO7/XK5FdYrKk
- M4pzyQ3GIyOYJTEsDFcZ2eypkjOBu5hE5Y2EkPLMCwbXmtpHNcL+1/j1+XQNEC7R8vRl
- 71IXSYFFLmCC0LxuH4v/fIxHdb1Jz8WrVUWy2qLznFAjfh5dutQKeSfCWbgiFqohrQqk
- 6LIRJFemj8uFahCBADXovAL2V0uPt9IbqUD6jdSHI1LiZ43XEPcEvC8wW2x/M+az4cRS
- vu8PLSuG5+5S0GUbUf4GUH8Mi7Z/xgbYjFxewm1l5m03R0WwvlNZAFmoQA3q27Ef8M4n
- Q7XA==
-X-Gm-Message-State: AOJu0YyTYNEoIz0QeBfWjjI6rmNGrJ4wKrCbieEZUFlySvCxMtneiccU
- L5Ppl6xHQSPk6lvmbdGkXdr3b2mOuPJnqib9OjRljzmkPaCuveId/+c1MhvQlXc=
-X-Google-Smtp-Source: AGHT+IGjDUPllxGrta/5OsME+eNu18MwDmIOp0EbhhMq0IuTYsxv6FD6sA1HaiJnpiXEt9DNSyQGGA==
-X-Received: by 2002:a50:ab52:0:b0:57d:50e:d76b with SMTP id
- 4fb4d7f45d1cf-57d07e2c81amr3465198a12.7.1718901135916; 
- Thu, 20 Jun 2024 09:32:15 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57cb741e78fsm9927796a12.71.2024.06.20.09.32.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Jun 2024 09:32:11 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id ED5ED5F7B1;
- Thu, 20 Jun 2024 17:32:09 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sKL6u-0005Ll-P6
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:58:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sKL6p-0000sz-7K
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 12:58:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718902680;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=4HbnQUuOQS3cIi86liAy6Yj4hu5P2TTA0k+oQscPEc0=;
+ b=Y7Z9MsBGxkZp/2ovFbDsoVddPAhQkVIEMFMOgJIO15SHEwJzxXgNQhBnl2L6aG94zzDtW2
+ 1QgBup63TLWnIeYkgqTWSw+nXYxDMumRp5ohvspUW7HwiOgFMHHwHgiJ9jpoTSRfHDzLJP
+ m6hO2Rul/op34oElJ5tcRByAs1c0yqE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-259-zFEmxgAzORattmptFWOLUA-1; Thu,
+ 20 Jun 2024 12:57:58 -0400
+X-MC-Unique: zFEmxgAzORattmptFWOLUA-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 54B7419560B1; Thu, 20 Jun 2024 16:57:53 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.69])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CB03919560B0; Thu, 20 Jun 2024 16:57:43 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+Cc: Halil Pasic <pasic@linux.ibm.com>, devel@lists.libvirt.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: [RFC PATCH] hw/core/cpu.h: try and document CPU_FOREACH[_SAFE]
-Date: Thu, 20 Jun 2024 17:32:04 +0100
-Message-Id: <20240620163204.2213916-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
+ "Michael S. Tsirkin" <mst@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ David Gibson <david@gibson.dropbear.id.au>, qemu-arm@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clegoate@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 00/14] hw: define and enforce a standard lifecycle for
+ versioned machines
+Date: Thu, 20 Jun 2024 17:57:28 +0100
+Message-ID: <20240620165742.1711389-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,47 +97,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is some confusion about when you should use one over the other.
-Lets try and address that by adding some kdoc comments.
+Thomas proposed a new deprecation and removal policy for versioned
+machine types that would see them liable for deletion after 6 years:
 
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- include/hw/core/cpu.h | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+  https://lists.nongnu.org/archive/html/qemu-devel/2024-04/msg04683.html
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index a2c8536943..7122f742c1 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -587,8 +587,25 @@ extern CPUTailQ cpus_queue;
- 
- #define first_cpu        QTAILQ_FIRST_RCU(&cpus_queue)
- #define CPU_NEXT(cpu)    QTAILQ_NEXT_RCU(cpu, node)
-+
-+/**
-+ * CPU_FOREACH - Helper to iterate over all CPUs
-+ *
-+ * This macro iterates over all CPUs in the system. It must be used
-+ * under an RCU read protection, e.g. WITH_RCU_READ_LOCK_GUARD(). If
-+ * you don't want the CPU list to change while iterating use
-+ * CPU_FOREACH_SAFE under the cpu_list_lock().
-+ */
- #define CPU_FOREACH(cpu) QTAILQ_FOREACH_RCU(cpu, &cpus_queue, node)
--#define CPU_FOREACH_SAFE(cpu, next_cpu) \
-+
-+/**
-+ * CPU_FOREACH_SAFE - Helper to iterate over all CPUs, safe against CPU changes
-+ *
-+ * This macro iterates over all CPUs in the system, and is safe
-+ * against CPU list changes. The target data structure must be
-+ * protected by cpu_list_lock(), and does not need RCU.
-+ */
-+#define CPU_FOREACH_SAFE(cpu, next_cpu)                         \
-     QTAILQ_FOREACH_SAFE_RCU(cpu, &cpus_queue, node, next_cpu)
- 
- extern __thread CPUState *current_cpu;
+This suggest was met with broad approval, however, I suggested that we
+could take it further and actually mark them deprecated sooner, at the
+3 year timeframe, and also fully automate the enablement of the runtime
+deprecation warning without developer intervention on every release
+cycle.
+
+This series implements my suggestions.
+
+The first patch introduces some helper macros and documents a standard
+code pattern for defining versioned machine types across targets.
+
+The next 6 patches convert existing targets with versioned machine
+types (arm, s390x, ppc, m68k, i386) to use the new helper macros and
+code patterns.
+
+A further patch introduces some helper macros for automating the
+handling of deprecation and deletion of versioned machine types.
+
+Two more patches then enable the deprecation and deletion logic
+across all versioned machines
+
+Finally we do some cleanup and document the new policy.
+
+........a tangent about VERSION file handling.......
+
+One oddity here, is that during the development and release
+candidate phases the automatic logic in this series has an off-by-1
+error.
+
+This is because when we, for example, add the "9.1" machine type
+versions, the VERSION file is still reporting '9.0.50', and then
+'9.0.9{1,2,3,4}'.
+
+IOW, during development and in rc candidates, we fail to deprecate
+and delete 1 machine type. We should already have deprecated the
+6.1 machine types, but the most recently deprecated is 6.0.
+This is pretty harmless since the final release does the right
+thing.
+
+I wonder, however, whether we would benefit from changing how we
+update the VERSION file.
+
+eg instead of re-using the micro digit to indicate a dev or rc
+snapshot, represent those explicitly. eg "9.1.0-dev" and
+"9.1.0-rc1", "9.1.0-rc2", etc in VERSION.
+
+We don't use the full QEMU_VERSION in the code in all that many
+places. It appears in some help messages for command line tools,
+and in QMP query-version response, and in a few other misc places.
+At a glance it appears all of those places would easily handle a
+tagged version.
+
+For release candidates in particular I think it would be saner
+to show the user the actual version the release is about to become,
+rather than the previous release's version. This would make the
+reported version match the rc tarball naming too which would be
+nice.
+
+Anyway, this isn't a blocker for this machine type versioning
+proposal, just a thought....
+
+Changed in v2:
+
+ - Various docs improvements and minor fixes from original
+   review
+ - Rebased and resolved conflicts with Philippe's merged
+   series
+
+Daniel P. Berrangé (14):
+  include/hw: add helpers for defining versioned machine types
+  hw/arm: convert 'virt' machine definitions to use new macros
+  hw/s390x: convert 'ccw' machine definitions to use new macros
+  hw/ppc: convert 'spapr' machine definitions to use new macros
+  hw/m68k: convert 'virt' machine definitions to use new macros
+  hw/i386: convert 'i440fx' machine definitions to use new macros
+  hw/i386: convert 'q35' machine definitions to use new macros
+  include/hw: add macros for deprecation & removal of versioned machines
+  include/hw: temporarily disable deletion of versioned machine types
+  hw: set deprecation info for all versioned machine types
+  hw: skip registration of outdated versioned machine types
+  hw/ppc: remove obsolete manual deprecation reason string of spapr
+    machines
+  hw/i386: remove obsolete manual deprecation reason string of i440fx
+    machines
+  docs: document special exception for machine type deprecation &
+    removal
+
+ docs/about/deprecated.rst  |  13 ++
+ hw/arm/virt.c              |  30 ++--
+ hw/i386/pc_piix.c          | 220 ++++++++++++---------------
+ hw/i386/pc_q35.c           | 215 +++++++++++---------------
+ hw/m68k/virt.c             |  53 ++++---
+ hw/ppc/spapr.c             |  96 ++++++------
+ hw/s390x/s390-virtio-ccw.c |  98 ++++++------
+ include/hw/boards.h        | 298 +++++++++++++++++++++++++++++++++++++
+ include/hw/i386/pc.h       |  28 ++++
+ 9 files changed, 681 insertions(+), 370 deletions(-)
+
 -- 
-2.39.2
+2.43.0
 
 
