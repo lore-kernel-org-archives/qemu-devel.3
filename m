@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0399C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 17:16:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DD56C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 17:19:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKLNa-0006dh-39; Thu, 20 Jun 2024 13:15:22 -0400
+	id 1sKLRC-0008KD-HG; Thu, 20 Jun 2024 13:19:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sKLNW-0006cc-BB
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 13:15:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sKLRA-0008JZ-Em
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 13:19:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sKLNT-0004WN-K4
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 13:15:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sKLR8-0004vp-Nv
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 13:19:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718903713;
+ s=mimecast20190719; t=1718903940;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cvReVOaxMOcLfFk/GJhrVgAzazDhgpmW/4bz55GggPg=;
- b=P5A7J6NrLCJCKWVEQiPDPUn0gBvhQHKWXgQL9BR2opeteRiaev7Iy3lOyieo3Ze7ld/Nbc
- HOk6rL5SI14NV+YTcKxFtKC0VOLcPuQw29k4si6Fyrexf8RxMk1aHaLqIs9j1ZmGGT2lmk
- gpt+vi3xbyooCewR8XJIDQpEkEYBWBM=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4HV8IXNm9fsVPDhyNHFw3KBX78cttSIyqr1tkW2rGhY=;
+ b=frFzdKeLChfd9oUUg5pYMA7BNUUlYtgKj30IyY4IK57d0t2hTJaUJCIqG3zmUbRgvvjtqQ
+ qhm4I64kmPjUoUESUH9Y1f9lOHxt1oA1V/xPmjcgzfteSpLInGahnlsdyAehfQlpTFh164
+ vtfWe0xVYYLGugIJzH3KyoqUxfyUFMk=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-394-LuJyxruaO4uRLEMr8g2EUQ-1; Thu, 20 Jun 2024 13:15:12 -0400
-X-MC-Unique: LuJyxruaO4uRLEMr8g2EUQ-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a6f4af1c655so45907466b.3
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 10:15:12 -0700 (PDT)
+ us-mta-557-qmc8FIasPoyVniVYn1E89A-1; Thu, 20 Jun 2024 13:18:56 -0400
+X-MC-Unique: qmc8FIasPoyVniVYn1E89A-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-57d22ea3e71so507734a12.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 10:18:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718903711; x=1719508511;
+ d=1e100.net; s=20230601; t=1718903935; x=1719508735;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=cvReVOaxMOcLfFk/GJhrVgAzazDhgpmW/4bz55GggPg=;
- b=Y9s5xE2Ky+Os4aqJe4r3OMFq21DEcb/lsGuKTP16R4oinbA0IpQNfY2ajmF7zS+hDG
- /Jp5ILXzTl0JwdNurzj30lDq6Xtp0fmNB8IK3sHpLZE6P/GKd5FxVRiVx+pHxDOXqRt4
- Xj3fxdWthSRuhKnvkh3JHKlu2mfId+EWxChjfTseJ4m6dCpluXvaSCI9kspEK27+kHL8
- K4tBaQT936hDwYeL2eQQiyTDZITUJha6iOW5lskoQr5FJ+sqSE7JDXSPCxWPcM9BsiTk
- ThqaXbIh5shsoB3GG4GWRD3qJQ47umTD+zVzK/5VJSKiiwuMdHlNeU8R7qkiXU+tSyWS
- 1TWQ==
+ bh=4HV8IXNm9fsVPDhyNHFw3KBX78cttSIyqr1tkW2rGhY=;
+ b=siGk0vF0aQbLrw5QJJRoM29cbV1ebpqpqRmHRp/DVLLN9nFGOG0Wl2UCTgoLXU6E/+
+ MIvXPhE6EmzahYxYJqhT61N7C0PW0+szZqNxKkyPcQtNpVWXos3JfYXHvQ92iGwsnHIw
+ ob6rOoTVYx1RMxvHfRzgXjJsZsXggBztUYUbqPaJNaSXG682yashtzlHxn2iKyOiTWVa
+ yUfW+6GAaUukeJRxWRkE+fsdxYJwRSjgtzO/Du4CbYa67C1AR2gSCMo03F3GIskmLP5y
+ KAup0C+zVeww6mxBy8gAt41z+d6CZuS1lr2KkGaqiwaCPJuZKfYd2SdhN4O/rOYWENdW
+ jVZA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXAzSN7yV1EmH6fUj6lqGfb3h+ZT8tclPlFnI7BMsyHwwFl3HHrxYT+qHyuT62koY0ILuZoNla+acedSm1dzg4PGJjkzlU=
-X-Gm-Message-State: AOJu0Yw5x72wb6AqdvTuFroeLalHmonWABRXeX0PiDjucsyXAFVvdX+0
- JpkM0HbaXdCM2FFiYuHPhxOes0w9KcpHq/Anu8d6lsNYAHoKoj7otZOJhPdD7Mv+nOz0LL+xIqB
- /ejEB2k7CA4XT8iZWsqU3eA1MQ4Y449+LfGvBjL3AjztdP1XLZHpq
-X-Received: by 2002:a17:906:f902:b0:a6e:feb5:148e with SMTP id
- a640c23a62f3a-a6fab6171f0mr366334866b.27.1718903711114; 
- Thu, 20 Jun 2024 10:15:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFPyXpnNY0SyWO4sHYdLq8eNHEnBVH/phU7MM9RicdojSub3BCzlw01liWp7UGPuWd3dgQQKA==
-X-Received: by 2002:a17:906:f902:b0:a6e:feb5:148e with SMTP id
- a640c23a62f3a-a6fab6171f0mr366332666b.27.1718903710718; 
- Thu, 20 Jun 2024 10:15:10 -0700 (PDT)
+ AJvYcCUgImkrxYpm7junyLD3mfkkajmLsH2/RW/LRAND5Xf8L2K8bEuLNCWUCdGcfEo3Z5V3zvHsfsn8qfEK3Kmo5NgVB+cMwFM=
+X-Gm-Message-State: AOJu0YwtGs4VZ6hizz/OrXgMWTHZ/Q8LzYlQtkVPBY4dwZRkWdiWvtER
+ Wk3zYItEu893TddHMA9CaqI/ocT+kRh5Tm1LmjbKuX0W1wE0cqLbXnIJq3jEQUuAXgOPxve9L+S
+ uPbDHAubkLIAojIZEDzMwQsq6TT4zy0Jgl/y2M1ANNd35RHKxa1ZB
+X-Received: by 2002:a05:6402:50c9:b0:57d:15d4:a685 with SMTP id
+ 4fb4d7f45d1cf-57d15d4a9fdmr3555230a12.40.1718903935374; 
+ Thu, 20 Jun 2024 10:18:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEVexZNb3iKApxhhE3Kvs4c6ov6DkieaxjgHpjKK9h7f0Du+GiB8N7bF0RYp9fw4ua6pbOQAg==
+X-Received: by 2002:a05:6402:50c9:b0:57d:15d4:a685 with SMTP id
+ 4fb4d7f45d1cf-57d15d4a9fdmr3555210a12.40.1718903934982; 
+ Thu, 20 Jun 2024 10:18:54 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-43-178-117.web.vodafone.de.
  [109.43.178.117]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f57b5e7b2sm782086066b.68.2024.06.20.10.15.09
+ 4fb4d7f45d1cf-57d0d9c3b7fsm1999762a12.55.2024.06.20.10.18.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Jun 2024 10:15:10 -0700 (PDT)
-Message-ID: <de6a283f-7da8-4d2f-b2ea-9a3c12e754e4@redhat.com>
-Date: Thu, 20 Jun 2024 19:15:08 +0200
+ Thu, 20 Jun 2024 10:18:54 -0700 (PDT)
+Message-ID: <fb06af10-2647-4f1b-9fbe-ab4e45a924d9@redhat.com>
+Date: Thu, 20 Jun 2024 19:18:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/12] plugins: add migration blocker
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Subject: Re: [PATCH v2 09/14] include/hw: temporarily disable deletion of
+ versioned machine types
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
- qemu-ppc@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Jamie Iles <quic_jiles@quicinc.com>,
- David Hildenbrand <david@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mark Burton <mburton@qti.qualcomm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-arm@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+Cc: Halil Pasic <pasic@linux.ibm.com>, devel@lists.libvirt.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>, David Hildenbrand <david@redhat.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marco Liebel <mliebel@qti.qualcomm.com>, Halil Pasic <pasic@linux.ibm.com>,
- qemu-s390x@nongnu.org, Cameron Esfahani <dirty@apple.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Nicholas Piggin <npiggin@gmail.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240620152220.2192768-1-alex.bennee@linaro.org>
- <20240620152220.2192768-10-alex.bennee@linaro.org>
+ David Gibson <david@gibson.dropbear.id.au>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-ppc@nongnu.org
+References: <20240620165742.1711389-1-berrange@redhat.com>
+ <20240620165742.1711389-10-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -137,10 +136,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240620152220.2192768-10-alex.bennee@linaro.org>
+In-Reply-To: <20240620165742.1711389-10-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -165,49 +164,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/06/2024 17.22, Alex Bennée wrote:
-> If the plugin in controlling time there is some state that might be
-> missing from the plugin tracking it. Migration is unlikely to work in
-> this case so lets put a migration blocker in to let the user know if
-> they try.
+On 20/06/2024 18.57, Daniel P. Berrangé wrote:
+> The new deprecation and deletion policy for versioned machine types is
+> being introduced in QEMU 9.1.0.
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Suggested-by: "Dr. David Alan Gilbert" <dave@treblig.org>
+> Under the new policy a number of old machine types (any prior to 2.12)
+> would be liable for immediate deletion which would be a violation of our
+> historical deprecation and removal policy
+> 
+> Thus automatic deletions (by skipping QOM registration) are temporarily
+> gated on existance of the env variable "QEMU_DELETE_MACHINES" / QEMU
+> version number >= 10.1.0. This allows opt-in testing of the automatic
+> deletion logic, while activating it fully in QEMU >= 10.1.0.
+> 
+> This whole commit should be reverted in the 10.1.0 dev cycle or shortly
+> thereafter.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   plugins/api.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
+>   include/hw/boards.h | 19 ++++++++++++++++++-
+>   1 file changed, 18 insertions(+), 1 deletion(-)
 > 
-> diff --git a/plugins/api.c b/plugins/api.c
-> index 4431a0ea7e..c4239153af 100644
-> --- a/plugins/api.c
-> +++ b/plugins/api.c
-> @@ -47,6 +47,8 @@
->   #include "disas/disas.h"
->   #include "plugin.h"
->   #ifndef CONFIG_USER_ONLY
-> +#include "qapi/error.h"
-> +#include "migration/blocker.h"
->   #include "exec/ram_addr.h"
->   #include "qemu/plugin-memory.h"
->   #include "hw/boards.h"
-> @@ -589,11 +591,17 @@ uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry)
->    * Time control
+> diff --git a/include/hw/boards.h b/include/hw/boards.h
+> index 187ed76646..ef6f18f2c1 100644
+> --- a/include/hw/boards.h
+> +++ b/include/hw/boards.h
+> @@ -686,11 +686,28 @@ struct MachineState {
+>    * suitable period of time has passed, it will cause
+>    * execution of the method to return, avoiding registration
+>    * of the machine
+> + *
+> + * The new deprecation and deletion policy for versioned
+> + * machine types was introduced in QEMU 9.1.0.
+> + *
+> + * Under the new policy a number of old machine types (any
+> + * prior to 2.12) would be liable for immediate deletion
+> + * which would be a violation of our historical deprecation
+> + * and removal policy
+> + *
+> + * Thus deletions are temporarily gated on existance of
+> + * the env variable "QEMU_DELETE_MACHINES" / QEMU version
+> + * number >= 10.1.0. This gate can be deleted in the 10.1.0
+> + * dev cycle
 >    */
->   static bool has_control;
-> +Error *migration_blocker;
+>   #define MACHINE_VER_DELETION(...) \
+>       do { \
+>           if (MACHINE_VER_SHOULD_DELETE(__VA_ARGS__)) { \
+> -            return; \
+> +            if (getenv("QEMU_DELETE_MACHINES") || \
+> +                QEMU_VERSION_MAJOR > 10 || (QEMU_VERSION_MAJOR == 10 && \
+> +                                            QEMU_VERSION_MINOR >= 1)) { \
+> +                return; \
+> +            } \
+>           } \
+>       } while (0)
 >   
->   const void *qemu_plugin_request_time_control(void)
->   {
->       if (!has_control) {
->           has_control = true;
-> +#ifdef CONFIG_SOFTMMU
-> +        error_setg(&migration_blocker,
-> +                   "TCG plugin time control does not support migration");
-> +        migrate_add_blocker(&migration_blocker, NULL);
-> +#endif
->           return &has_control;
->       }
->       return NULL;
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
