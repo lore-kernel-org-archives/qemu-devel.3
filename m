@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ABD4C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 17:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 276B1C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 17:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKM1y-000068-DK; Thu, 20 Jun 2024 13:57:06 -0400
+	id 1sKM1x-00005J-OB; Thu, 20 Jun 2024 13:57:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1sKM1a-0008Bk-Pd; Thu, 20 Jun 2024 13:56:43 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ id 1sKM1S-0007yv-3m; Thu, 20 Jun 2024 13:56:35 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1sKM1Y-0005Yy-3t; Thu, 20 Jun 2024 13:56:42 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45KHAkSo015034;
- Thu, 20 Jun 2024 17:56:28 GMT
+ id 1sKM1Q-0005Xc-5i; Thu, 20 Jun 2024 13:56:33 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45KHB9EW023427;
+ Thu, 20 Jun 2024 17:56:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
  from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-type:content-transfer-encoding; s=
- corp-2023-11-20; bh=VyiSjTxXvBWDE6VyDejQCgSMwl+7W/ohIHdbJvKa/E0=; b=
- JwzPXMtfelr+gCf80bCGeCkYY90hqBMHHO2govwqT4V0LnTHkqubPRv9khybjiSf
- mAEWWPGdo3xyr4skgeG5b3ON4T43ujRSCeWUT07un6UtDObWlAur3RdVpgQuyK12
- xcXWmjs3A/IWdOizdX3DheTmEXLOnSz+p+D77KaWyUUJmrC+K4J1A09eiv+ixkDG
- 9pI09qHDwscmWyzGljW6mnI2QlBeHFfwteTl1jmhKuMRe1CtR3Av3KBZ6nD0Zekk
- tNwzn4Cf7jjlRYvdoz9yYox86VZyWP3tTYPbyRMLtbH9UffctPgsvzuzNxLqcBXB
- ZXKeTOkD8PDwEsvIua69OA==
+ corp-2023-11-20; bh=DndsFHsHR7J6NPY3U3Rb2ZgwIcGLUjnmM0lSV80Nlg4=; b=
+ kRYyahRdF8UateiGg9pDE1ktiIsrXGiLw+WZ4U7A2GCzNvLdKShJymkJ6cAfL0ka
+ NnE/KK8oF/qQw6mn6kp8CJFxc8gfk6lsiRi3nKuhnoRSpH/6ja8VNsDnsc7YVrrY
+ xlndWs3nONMlGgaXyDfqL5QrTMxnERht4/vB2dqwMfXagGltTe0t21kZFYKOmRwe
+ Qq+JfFkYox3MMd7Qk9uMxPUnqcc/v8QMI43nPSwhIBajd4nlXyk3CYeRAeG1dgQj
+ choaV1oDxGu20+2tz0CMozpvICgcOMLOVBEwUUiQTP61dLkUQjd2+VG7qytF7ypv
+ SQR06kqaJTChoAVa/Zl5NA==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3yvrka02ty-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3yvrktr2vu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Jun 2024 17:56:28 +0000 (GMT)
+ Thu, 20 Jun 2024 17:56:23 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 45KHDqOD012854; Thu, 20 Jun 2024 17:56:27 GMT
+ with ESMTP id 45KHDrMH012893; Thu, 20 Jun 2024 17:56:22 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3yvrn3hnsb-1
+ 3yvrn3hnq7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 20 Jun 2024 17:56:27 +0000
+ Thu, 20 Jun 2024 17:56:22 +0000
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 45KHuF0t018715;
- Thu, 20 Jun 2024 17:56:26 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 45KHuF0p018715;
+ Thu, 20 Jun 2024 17:56:22 GMT
 Received: from jonah-ol8.us.oracle.com (dhcp-10-39-208-85.vpn.oracle.com
  [10.39.208.85])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 3yvrn3hnjv-6; Thu, 20 Jun 2024 17:56:26 +0000
+ 3yvrn3hnjv-4; Thu, 20 Jun 2024 17:56:21 +0000
+From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, raphael@enfabrica.net, kwolf@redhat.com, hreitz@redhat.com,
  jasowang@redhat.com, pbonzini@redhat.com, fam@euphon.net,
  eperezma@redhat.com, stefanha@redhat.com, qemu-block@nongnu.org,
  schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev,
  si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
-Subject: [PATCH v3 5/6] vhost,
- vhost-user: Add VIRTIO_F_IN_ORDER to vhost feature bits
-Date: Thu, 20 Jun 2024 13:56:09 -0400
-Message-ID: <20240620175612.2381019-6-jonah.palmer@oracle.com>
+Subject: [PATCH v3 3/6] virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER
+ support
+Date: Thu, 20 Jun 2024 13:56:07 -0400
+Message-ID: <20240620175612.2381019-4-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240620175612.2381019-1-jonah.palmer@oracle.com>
 References: <20240620175612.2381019-1-jonah.palmer@oracle.com>
@@ -77,18 +78,17 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
  suspectscore=0 spamscore=0 phishscore=0 adultscore=0 mlxscore=0
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2406180000 definitions=main-2406200129
-X-Proofpoint-GUID: J4brPeQv6HelHQFX4PYEyUSteL0-hOXM
-X-Proofpoint-ORIG-GUID: J4brPeQv6HelHQFX4PYEyUSteL0-hOXM
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-GUID: _-eXCp0qLDT_wyHm5Pvj21ccKOcet7QX
+X-Proofpoint-ORIG-GUID: _-eXCp0qLDT_wyHm5Pvj21ccKOcet7QX
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,123 +101,88 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonah Palmer <jonah.palmer@oracle.com>
-From:  Jonah Palmer via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for the VIRTIO_F_IN_ORDER feature across a variety of vhost
-devices.
+Add VIRTIO_F_IN_ORDER feature support for the virtqueue_fill operation.
 
-The inclusion of VIRTIO_F_IN_ORDER in the feature bits arrays for these
-devices ensures that the backend is capable of offering and providing
-support for this feature, and that it can be disabled if the backend
-does not support it.
+The goal of the virtqueue_ordered_fill operation when the
+VIRTIO_F_IN_ORDER feature has been negotiated is to search for this
+now-used element, set its length, and mark the element as filled in
+the VirtQueue's used_elems array.
 
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
+By marking the element as filled, it will indicate that this element has
+been processed and is ready to be flushed, so long as the element is
+in-order.
+
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
 Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 ---
- hw/block/vhost-user-blk.c    | 1 +
- hw/net/vhost_net.c           | 2 ++
- hw/scsi/vhost-scsi.c         | 1 +
- hw/scsi/vhost-user-scsi.c    | 1 +
- hw/virtio/vhost-user-fs.c    | 1 +
- hw/virtio/vhost-user-vsock.c | 1 +
- net/vhost-vdpa.c             | 1 +
- 7 files changed, 8 insertions(+)
+ hw/virtio/virtio.c | 44 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 43 insertions(+), 1 deletion(-)
 
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 9e6bbc6950..1dd0a8ef63 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -51,6 +51,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_IOMMU_PLATFORM,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VHOST_INVALID_FEATURE_BIT
- };
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 9cbf75f021..e1dfec4655 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -873,6 +873,46 @@ static void virtqueue_packed_fill(VirtQueue *vq, const VirtQueueElement *elem,
+     vq->used_elems[idx].ndescs = elem->ndescs;
+ }
  
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index fd1a93701a..eb0b1c06e5 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -48,6 +48,7 @@ static const int kernel_feature_bits[] = {
-     VIRTIO_F_IOMMU_PLATFORM,
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VIRTIO_NET_F_HASH_REPORT,
-     VHOST_INVALID_FEATURE_BIT
- };
-@@ -76,6 +77,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_F_IOMMU_PLATFORM,
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VIRTIO_NET_F_RSS,
-     VIRTIO_NET_F_HASH_REPORT,
-     VIRTIO_NET_F_GUEST_USO4,
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index ae26bc19a4..40e7630191 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -38,6 +38,7 @@ static const int kernel_feature_bits[] = {
-     VIRTIO_RING_F_EVENT_IDX,
-     VIRTIO_SCSI_F_HOTPLUG,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VHOST_INVALID_FEATURE_BIT
- };
++static void virtqueue_ordered_fill(VirtQueue *vq, const VirtQueueElement *elem,
++                                   unsigned int len)
++{
++    unsigned int i, steps, max_steps;
++
++    i = vq->used_idx;
++    steps = 0;
++    /*
++     * We shouldn't need to increase 'i' by more than the distance
++     * between used_idx and last_avail_idx.
++     */
++    max_steps = (vq->last_avail_idx - vq->used_idx) % vq->vring.num;
++
++    /* Search for element in vq->used_elems */
++    while (steps <= max_steps) {
++        /* Found element, set length and mark as filled */
++        if (vq->used_elems[i].index == elem->index) {
++            vq->used_elems[i].len = len;
++            vq->used_elems[i].in_order_filled = true;
++            break;
++        }
++
++        i += vq->used_elems[i].ndescs;
++        steps += vq->used_elems[i].ndescs;
++
++        if (i >= vq->vring.num) {
++            i -= vq->vring.num;
++        }
++    }
++
++    /*
++     * We should be able to find a matching VirtQueueElement in
++     * used_elems. If we don't, this is an error.
++     */
++    if (steps >= max_steps) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: %s cannot fill buffer id %u\n",
++                      __func__, vdev->name, elem->index);
++    }
++}
++
+ static void virtqueue_packed_fill_desc(VirtQueue *vq,
+                                        const VirtQueueElement *elem,
+                                        unsigned int idx,
+@@ -923,7 +963,9 @@ void virtqueue_fill(VirtQueue *vq, const VirtQueueElement *elem,
+         return;
+     }
  
-diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-index a63b1f4948..1d59951ab7 100644
---- a/hw/scsi/vhost-user-scsi.c
-+++ b/hw/scsi/vhost-user-scsi.c
-@@ -36,6 +36,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_RING_F_EVENT_IDX,
-     VIRTIO_SCSI_F_HOTPLUG,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
-     VHOST_INVALID_FEATURE_BIT
- };
- 
-diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
-index cca2cd41be..9243dbb128 100644
---- a/hw/virtio/vhost-user-fs.c
-+++ b/hw/virtio/vhost-user-fs.c
-@@ -33,6 +33,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_IOMMU_PLATFORM,
-     VIRTIO_F_RING_RESET,
-+    VIRTIO_F_IN_ORDER,
- 
-     VHOST_INVALID_FEATURE_BIT
- };
-diff --git a/hw/virtio/vhost-user-vsock.c b/hw/virtio/vhost-user-vsock.c
-index 9431b9792c..cc7e4e47b4 100644
---- a/hw/virtio/vhost-user-vsock.c
-+++ b/hw/virtio/vhost-user-vsock.c
-@@ -21,6 +21,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_RING_F_INDIRECT_DESC,
-     VIRTIO_RING_F_EVENT_IDX,
-     VIRTIO_F_NOTIFY_ON_EMPTY,
-+    VIRTIO_F_IN_ORDER,
-     VHOST_INVALID_FEATURE_BIT
- };
- 
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 85e73dd6a7..ed3185acfa 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -62,6 +62,7 @@ const int vdpa_feature_bits[] = {
-     VIRTIO_F_RING_PACKED,
-     VIRTIO_F_RING_RESET,
-     VIRTIO_F_VERSION_1,
-+    VIRTIO_F_IN_ORDER,
-     VIRTIO_NET_F_CSUM,
-     VIRTIO_NET_F_CTRL_GUEST_OFFLOADS,
-     VIRTIO_NET_F_CTRL_MAC_ADDR,
+-    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
++    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_IN_ORDER)) {
++        virtqueue_ordered_fill(vq, elem, len);
++    } else if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
+         virtqueue_packed_fill(vq, elem, len, idx);
+     } else {
+         virtqueue_split_fill(vq, elem, len, idx);
 -- 
 2.43.0
 
