@@ -4,87 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E12C3C27C79
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 10:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EDC9C27C79
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Jun 2024 10:43:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKEzY-0005N1-PZ; Thu, 20 Jun 2024 06:26:08 -0400
+	id 1sKFEz-0002X8-Pg; Thu, 20 Jun 2024 06:42:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKEzX-0005Mj-QU
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 06:26:07 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKEzQ-0003Ci-R0
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 06:26:07 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a6fc30e3237so54500166b.1
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 03:25:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718879154; x=1719483954; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1+GD1AiosH4ZlfQqVjaaQ/UFCGFvFSvfRT6gOEDeZeA=;
- b=qkB7oDz3AUQuBeHQUTJFcwYt5du4SoOvhkiAPbmDnsyKujiBCltMut+HJUQQpeohhN
- 9vkoLx3q5aksw+d/7VILYtPxaxDjZfROw4s8tnHEOBcRf1HkT4PpMewHgidpl29oS1xo
- 5cnR/dIqfrT4A2qnLzI+jenNKffivM2YMh0X+oOQItrMVf3g/AZUQ7gpTKIlerNZ24lq
- AZmqsCvvxYdk/b1S/D6WNDwmMonie/QqAalv4n4lySemn0tu9WWxNQl0Gr+YDbQzKOOr
- RQrw0SJcjT0LMPyd4fwZxQDk/K0LpU1yzX3EGAq0f4b9BB9g1PKuBDLIkV6iJmx3vj8J
- 2maQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718879154; x=1719483954;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1+GD1AiosH4ZlfQqVjaaQ/UFCGFvFSvfRT6gOEDeZeA=;
- b=DnCoS2jfc6bV44MA013Ejjys0vt9xJS65IZmykuCcQ7fG1rJs9sxKie/VdPCvL3cj7
- LAY/U8qpkbnra3L6RK0uYcANeNpo87ccauBWbSUmtlDNeP9V5vgzKevpPsKmd7yPCX5+
- ZMWrO1/+fIO4/aXRy6YvJEXborQNsEcj087q+HalqBxojazCofSsSWtvXQkN8YeBEGuM
- lbtdFN6kzBAUqa6SRLZOXqOR2rLmeVsda/h2iTnkHm/iKk/ICC/fFxJKt7be2432Soa6
- 5smTCl5yPWKvZAMiR2wHgZEAXuCjrO1iTtDmOR9jZUDUWMZlVVz77stFAUO4r34HggC7
- MXAg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZzXBnBSvW3HEyFjuagbUC66B5KmKnc5PZ94tVcDxx5ZKH8yii3GAr+nXeVQ1h0X2BTNCheOy3LWxa8YODT9YaYBI+IoQ=
-X-Gm-Message-State: AOJu0Yx/oOZCmOLL18yPmqmITVTKmVXk0smxAbDvq+qUQKwziekmU8zO
- q2eirrYQXYvo+CaslaS7pAydidAYh75XhkuBMkq27StO/JPg2hXmfvHh1v/kx8eJjAhsrdJ31JL
- L
-X-Google-Smtp-Source: AGHT+IFlSvIhhw1C8otISEgxYhiyQIqtGJhvd35qmAPP9TLvAJ+hDq+4/SA+7wSb5gWfqRoiiiRtsA==
-X-Received: by 2002:a17:907:15c2:b0:a6f:64d7:a81f with SMTP id
- a640c23a62f3a-a6fab778d3amr245397066b.59.1718879154254; 
- Thu, 20 Jun 2024 03:25:54 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.151.40])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6f56da40f6sm748936266b.43.2024.06.20.03.25.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Jun 2024 03:25:53 -0700 (PDT)
-Message-ID: <12471213-83da-4226-ba2a-2b8b6452d46b@linaro.org>
-Date: Thu, 20 Jun 2024 12:25:51 +0200
+ (Exim 4.90_1) (envelope-from <sai.pavan.boddu@amd.com>)
+ id 1sKFEs-0002SU-Ks; Thu, 20 Jun 2024 06:41:58 -0400
+Received: from mail-mw2nam12on20625.outbound.protection.outlook.com
+ ([2a01:111:f403:200a::625]
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sai.pavan.boddu@amd.com>)
+ id 1sKFEp-0005Vg-M6; Thu, 20 Jun 2024 06:41:58 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=TzXz0WT78vHa6Oa86qIcNhQTMyhTP4/fMowMuB7kART3jsXqYjKKTEhnrwKfgK9K8mbqBv+U8/PJYKkMFg2TyaaTcyyutuyx5Tys1AobLMfowwDS3+rWOGmCb6/+oWqRvWwSERDJTDzThOmuaTDChem77kfiVA4SU6CyNprZS9CMeVC5488VA3J5tmSCF8vYo4pTv1JQmV5rIXV9os3NLn8D5cb9GWLCUf36IR7B4wZ8aVQ245WdwZOXlIEZ5k9bymXg69MR/P0fJSmOBjIsGafo1Tfxm6IG233MIuw+6ga7LSjMxqAsvghzM6OM2j8EJ5CD/n95JtE6vXS2KDjv/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nWe8eKjxxxlCQGMNxbtVdRYzlX5/N/MRpgWLO52d+RA=;
+ b=Q7VqyNRwdkUOHdqr2/oVqWbcvgXHNnepjOTp/1tXYWCDn0Yd2BZcuTSY0DlwiCIy81Mp58B3SgedCDnRJX5zqbDVc8aXD3Me0SaGihc3PSdnNHGibmNRe7fR5PrEHDufhXZOsAZEXzRvfaO2IQeFh4DEylb2fW9gUmmf1OGJzORH8DVtQWNwrRxDiDmiAg2kY4uZ7JFqDI/2wCT/RkZNTR5KByhLaNaA1KggMUoBPSEH0aVUhemdOmq4oX1C1RlApe5iDadiojbUEDdOybq7nuwHUbFafvRrnBRJ8Zt53KBpUKLM5Led5LDJp9rF2nhyQhsQC1DkWLB0/kvJUUF6pA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nWe8eKjxxxlCQGMNxbtVdRYzlX5/N/MRpgWLO52d+RA=;
+ b=LK254N4wmwx5oVASENGW2zwGLtQ4zzY5N2bJ3eFkndXMmKnN5vJlMZ1xnWCq+y+qJ+6L1nbkIpHEgG7EXXA4cP1YQruA0j3a29wogcDKCmJhFbRlT06mK8XqUMq2PizF9z4ImQQe1jGwkANA8epg9ScIlidTdCjou7xFd7ROFrQ=
+Received: from MN2PR20CA0044.namprd20.prod.outlook.com (2603:10b6:208:235::13)
+ by LV3PR12MB9096.namprd12.prod.outlook.com (2603:10b6:408:198::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.20; Thu, 20 Jun
+ 2024 10:41:47 +0000
+Received: from BL6PEPF0001AB4E.namprd04.prod.outlook.com
+ (2603:10b6:208:235:cafe::d6) by MN2PR20CA0044.outlook.office365.com
+ (2603:10b6:208:235::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.33 via Frontend
+ Transport; Thu, 20 Jun 2024 10:41:47 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BL6PEPF0001AB4E.mail.protection.outlook.com (10.167.242.72) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7677.15 via Frontend Transport; Thu, 20 Jun 2024 10:41:47 +0000
+Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 20 Jun
+ 2024 05:41:46 -0500
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
+ (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 20 Jun
+ 2024 05:41:46 -0500
+Received: from xhdsaipava41.xilinx.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39 via
+ Frontend Transport; Thu, 20 Jun 2024 05:41:44 -0500
+From: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+CC: "'Edgar E . Iglesias'" <edgar.iglesias@gmail.com>, Peter Maydell
+ <peter.maydell@linaro.org>, <francisco.iglesias@amd.com>
+Subject: [PATCH v3 0/3] Add boot-mode property for zynq
+Date: Thu, 20 Jun 2024 16:11:36 +0530
+Message-ID: <20240620104139.217908-1-sai.pavan.boddu@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/timer/a9gtimer: Handle QTest mode in
- a9_gtimer_get_current_cpu
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Thomas Huth <thuth@redhat.com>, "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-References: <20240618144009.3137806-1-zheyuma97@gmail.com>
- <47a6e9d2-27f6-4e45-9de3-c4766bdf2566@linaro.org>
- <CAFEAcA82T-hS0Armp6PVBkrywfqv+-u+L4z8rtrjBpnwvE8Hxg@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA82T-hS0Armp6PVBkrywfqv+-u+L4z8rtrjBpnwvE8Hxg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+Received-SPF: None (SATLEXMB05.amd.com: sai.pavan.boddu@amd.com does not
+ designate permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB4E:EE_|LV3PR12MB9096:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1a5274c5-de57-48c0-abf4-08dc911595f3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230037|376011|36860700010|82310400023|1800799021; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?+KN5WyUpwxrtYEEhOt1jzG4ovoQs/Syf83RzTqkb9upO/2lFhn7LQos3xrTC?=
+ =?us-ascii?Q?cUs/5qc6sW9cRrBNoJUjz8F5dgYK3vl236LfmqhWBozTBtwMXMl+TeSbokxU?=
+ =?us-ascii?Q?//7IiCv/PTT6p/7tgcNunI6/ZAevKA34xiSVXB5p6IPr5CIonylT0YdCEZvz?=
+ =?us-ascii?Q?GHbD6OwrKfpzn7/OF3bKGyj4fwpmmERvZ60w1ZdeXviY1NEZvUUWb6W7JOW4?=
+ =?us-ascii?Q?oDbAd0Dc0BVka6SARg2G5PKNwdhf9GNsgzauVhNX8j5nPzg/Z4Crqi2jV0fh?=
+ =?us-ascii?Q?reXpJRfkBSHgrQ85CXUHi+OagPFlPVNAYc0i8WlHsk56O/mSkwllAH6c8v5j?=
+ =?us-ascii?Q?/vS6TiDfba0v/Wy9+W8N4sY1u2L38NFkkQnhLQ8hPa/xguA+ptIFjZbkunMn?=
+ =?us-ascii?Q?A7dwmqSyVVG8ZS3Qc3mOSlHaW9wqqPU5KIe6nXTEdqAG2eWH5o2R/zTo3Vgn?=
+ =?us-ascii?Q?lZgz8LK6gdUEsgwm2daZxfKyj/jNwfMTcIUEy0z0aepD1EhjPmlQKmheETj6?=
+ =?us-ascii?Q?8m+dWN8/EvkbIYfo0WFbWePUGcZp13BEzLEQTKHNWME7Gz4e/Flg2Uhv7krH?=
+ =?us-ascii?Q?lxc47J9olh4EurLhm2/IFFM/XmXzA2rZiX7/E1cmkXdNyFZT5nsCmypBkMfw?=
+ =?us-ascii?Q?C8s74B0VRIxUNdfnPDclC5Qrbv7AmVf7uo4jFZOSOCVtTZKEv3G2qikgJBhD?=
+ =?us-ascii?Q?lE1uo/mPziRBHvD9AGD++1C1K+Bh9pHROoSGVGRcrPQAFYnQrgkvrBFstIHS?=
+ =?us-ascii?Q?nch1EXtHJgbt2gfc/9CIpUWQSYvnwlw+Le0enITCGyhwIEyaRxIsUuDqRhIn?=
+ =?us-ascii?Q?ieYiFgbhwO5GfOVPLnUUgEGGyNH4QCKrHWZnUrQDYETMDbqNOO3zjr4M8Ddw?=
+ =?us-ascii?Q?MKKI3/jlNYtg/LZeX04nNJxxRWygdW272+X+rNhfw3DtkJBZHYs/lxYcLkeo?=
+ =?us-ascii?Q?aNs2UHxys1dUHCqM94ZEEm1hqgWohWA+/Ogbok1gYo7dAC3p57jwOH1hQccb?=
+ =?us-ascii?Q?hCVtmmRzcsXD5M5lOuVJ0hbRklhQRVh6ounIwH24ZNhfes+WIXkBcahWJ5f6?=
+ =?us-ascii?Q?UJgMMhbZOOQ9E/SVOXZLTTsP/Tv+uj4fgxmhbeGCx+SBVst/Lo6bWaoikuvE?=
+ =?us-ascii?Q?oAtRMB3TsPa7QxHJQcze9KKGUao45Ws45CoayqyFv8Hh8IScGwsPDoDVXPu5?=
+ =?us-ascii?Q?iVnkWks4IyG1WK9gWMdaS2vwNlQEDLPx0bSt2gG0JDdXmbHjbstINjP64Uhh?=
+ =?us-ascii?Q?oy+bk13DYCptlD54SMg9DSYcWOzJPk0wq2d5U6xJvL/Jl7TIxum69UN6fwHa?=
+ =?us-ascii?Q?2oFP8aUu8OmjvUFe6EazINP13OhEEAmA7aoMLC76sLlcI/MLNwc3BobROlKq?=
+ =?us-ascii?Q?tw+3ormWAZfr1kJT+f8gzjcTwDvsC5aebKRFVWiEuHIfcpgb3g=3D=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230037)(376011)(36860700010)(82310400023)(1800799021); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jun 2024 10:41:47.5257 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1a5274c5-de57-48c0-abf4-08dc911595f3
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB4E.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9096
+Received-SPF: permerror client-ip=2a01:111:f403:200a::625;
+ envelope-from=sai.pavan.boddu@amd.com;
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.3 / 5.0 requ) AC_FROM_MANY_DOTS=0.001, BAYES_00=-1.9,
+ DKIMWL_WL_HIGH=-0.144, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,38 +150,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/6/24 12:10, Peter Maydell wrote:
-> On Tue, 18 Jun 2024 at 15:51, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> On 18/6/24 16:40, Zheyu Ma wrote:
->>> This commit updates the a9_gtimer_get_current_cpu() function to handle
->>> cases where QTest is enabled. When QTest is used, it returns 0 instead
->>> of dereferencing the current_cpu, which can be NULL. This prevents the
->>> program from crashing during QTest runs.
->>>
->>> Reproducer:
->>> cat << EOF | qemu-system-aarch64 -display \
->>> none -machine accel=qtest, -m 512M -machine npcm750-evb -qtest stdio
->>> writel 0xf03fe20c 0x26d7468c
->>> EOF
->>>
->>> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
->>> ---
->>>    hw/timer/a9gtimer.c | 5 +++++
->>>    1 file changed, 5 insertions(+)
+Add a way to update the boot-mode via machine properties.
+
+Changes for V2:
+    Make boot-mode property work with string
+    Fixed few code style issues
+    Added zynq board doc.
+Changes for V3:
+    Mentioned about zynq doc in MAINTAINERS file
+    Stick to small case for mentioning boot modes in doc
+    fixed commit message to mention right property name.
 
 
->>>        if (current_cpu->cpu_index >= s->num_cpu) {
->>
->> That said, such accesses of @current_cpu from hw/ are dubious.
-> 
-> True, but I'm not sure we ever settled on the right way to avoid
-> them, did we?
+Sai Pavan Boddu (3):
+  hw/misc/zynq_slcr: Add boot-mode property
+  hw/arm/xilinx_zynq: Add boot-mode property
+  docs/system/arm: Add a doc for zynq board
 
-No we didn't, it is still in my TODO list; we might discuss it
-when I post my RFC.
+ MAINTAINERS                   |  1 +
+ docs/system/arm/xlnx-zynq.rst | 47 +++++++++++++++++++++++++++++++++++
+ docs/system/target-arm.rst    |  1 +
+ hw/arm/xilinx_zynq.c          | 31 +++++++++++++++++++++++
+ hw/misc/zynq_slcr.c           | 22 +++++++++++++++-
+ 5 files changed, 101 insertions(+), 1 deletion(-)
+ create mode 100644 docs/system/arm/xlnx-zynq.rst
 
-Regards,
+-- 
+2.34.1
 
-Phil.
 
