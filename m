@@ -4,54 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 641C4C27C4F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75C22C41513
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 16:21:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKgzu-0002gD-TV; Fri, 21 Jun 2024 12:20:22 -0400
+	id 1sKgzv-0002gb-R1; Fri, 21 Jun 2024 12:20:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=9ak7=NX=kaod.org=clg@ozlabs.org>)
- id 1sKgzs-0002Xo-Ah; Fri, 21 Jun 2024 12:20:20 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sKgzu-0002er-2v
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 12:20:22 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=9ak7=NX=kaod.org=clg@ozlabs.org>)
- id 1sKgzq-0003RB-Gg; Fri, 21 Jun 2024 12:20:20 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W5Mym1Kwhz4wcJ;
- Sat, 22 Jun 2024 02:20:16 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W5Myj6Lr3z4wc5;
- Sat, 22 Jun 2024 02:20:13 +1000 (AEST)
-Message-ID: <9c7e0930-4249-492e-86bf-77e59e873d43@kaod.org>
-Date: Fri, 21 Jun 2024 18:20:11 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sKgzr-0003RI-Db
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 12:20:21 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W5Mwx2tcSz6K98T;
+ Sat, 22 Jun 2024 00:18:41 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 59172140B38;
+ Sat, 22 Jun 2024 00:20:16 +0800 (CST)
+Received: from localhost (10.122.19.247) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 21 Jun
+ 2024 17:20:15 +0100
+Date: Fri, 21 Jun 2024 17:20:14 +0100
+To: <imammedo@redhat.com>, <mst@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, <qemu-devel@nongnu.org>, <ankita@nvidia.com>,
+ <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, Richard Henderson
+ <richard.henderson@linaro.org>
+CC: <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
+ <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
+ <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v3 qemu 00/11] acpi: NUMA nodes for CXL HB as GP +
+ complex NUMA test
+Message-ID: <20240621172014.00007b7c@huawei.com>
+In-Reply-To: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
+References: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/23] hw/sd/sdcard: Have cmd_valid_while_locked() return
- a boolean value
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>, Bin Meng <bmeng.cn@gmail.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>, qemu-block@nongnu.org
-References: <20240621080554.18986-1-philmd@linaro.org>
- <20240621080554.18986-14-philmd@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240621080554.18986-14-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=9ak7=NX=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,45 +71,22 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/21/24 10:05 AM, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On Thu, 20 Jun 2024 17:03:08 +0100
+Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
 
+> v3: Thanks to Richard for help debugging BE issue and to Igor for
+>     finding a bunch of other thing to improve via the context in
+>     the fix patch.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+I forgot to mention that his time I ran the bios tables test on
+an emulated x86_64 machine on top of an emulated s390 (with the timeouts
+massively increased as it took about 2 hours).
 
-Thanks,
-
-C.
-
-
-> ---
->   hw/sd/sd.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index c6cc1bab11..510784fc82 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -1716,7 +1716,7 @@ static sd_rsp_type_t sd_app_command(SDState *sd,
->       return sd_illegal;
->   }
->   
-> -static int cmd_valid_while_locked(SDState *sd, const uint8_t cmd)
-> +static bool cmd_valid_while_locked(SDState *sd, unsigned cmd)
->   {
->       /* Valid commands in locked state:
->        * basic class (0)
-> @@ -1730,7 +1730,7 @@ static int cmd_valid_while_locked(SDState *sd, const uint8_t cmd)
->           return cmd == 41 || cmd == 42;
->       }
->       if (cmd == 16 || cmd == 55) {
-> -        return 1;
-> +        return true;
->       }
->       return sd_cmd_class[cmd] == 0 || sd_cmd_class[cmd] == 7;
->   }
+Hopefully no more surprises!
 
 
