@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA861C27C4F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0836CC41513
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 14:17:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKf4k-0003Av-FD; Fri, 21 Jun 2024 10:17:16 -0400
+	id 1sKf4G-0002x7-0X; Fri, 21 Jun 2024 10:16:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKf4h-000392-Ch
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:17:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKf4E-0002rn-5Z
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:16:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKf4g-0002pK-18
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:17:11 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKf47-0002jX-GJ
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:16:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718979428;
+ s=mimecast20190719; t=1718979389;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TCPQmMVDHlv0MwLO73R0s8C5bxK78KjjrxBOkf7Vb2g=;
- b=GNMU7mxLkbB66csr3dDpirNthxPkKmN/pSpZAgqdCu8HUvV9LpgB7A9YyysfFwtXEeafvx
- Mui04bXIEEh2LC1krD+wGxpN0KoLiKhCbmqrBThRqJXP0r1psDA+JKp+xMJJv16JiTgiQH
- BS9xDPb1bjgg7GIaueHUjw/g5IVsAIg=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DD71SJ/2joTKGKYAAy6cWEabd3Hf61Nhx9rpWNOgxS4=;
+ b=TA8WjVqw6vzdypwgZjAcuxFMw9ZtFtJMoUbE+pcHsGZrzHO6l+v6chisCIY81EYcxNposA
+ i6fQqm5O8/q+N2eq/RSsXf2+7dg0eAWp89zbEYin077SQjFucsC0w+S76ARCINYYNUY6HH
+ 7F1DAyR4uyMNMshqiSkYyCxRDZ5Ai/w=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-523-WdbQRW5nPBipBqerhjqARw-1; Fri, 21 Jun 2024 10:17:02 -0400
-X-MC-Unique: WdbQRW5nPBipBqerhjqARw-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6b0762cfd0bso3558056d6.0
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 07:17:02 -0700 (PDT)
+ us-mta-66-Flc8ifJSNmq2cpWKhxPH6A-1; Fri, 21 Jun 2024 10:16:25 -0400
+X-MC-Unique: Flc8ifJSNmq2cpWKhxPH6A-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-79560b25fc4so14802085a.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 07:16:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718979421; x=1719584221;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TCPQmMVDHlv0MwLO73R0s8C5bxK78KjjrxBOkf7Vb2g=;
- b=U4cbNFA62C4ejQUS7WovG3P1uGA+MJ4y3+jg1+lKGH+3jLkkGgXUbNMEWHq/NXlm+t
- 3g0nK8Jy+uFL6p4G28X4JDcRMyhKZwzUZx9b2e8RQ1exz4QIlq3aTqAQ7J1PIKkaJcbH
- q+w5W72NwmkSv3GEc1OPyxxrsKoA6RGr1o86WHW+JEM3G+DpcQc/WJzfcb0D2cZ9dz2c
- MCt/WUVjVl4mb5mDjH397rsF5sibdwF9zdzp7mikEoVEsOIr3TUj6LV/Cu13OcJ1lZgi
- qU3/8U3wpwdBAUfa4brWVuq5iMopky6mnyZoxxBSaRkdphslpHs6r5LgT2M+jkrUqhRk
- 0Ztw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUvOYIKgexlg6cs+D+PS3KP6qqAKn35okUrALS7/fQEB4SltdvltFBJcbC7gixZUutf37dI0l8/ojT4vsmZbRNWWK2jAxs=
-X-Gm-Message-State: AOJu0YxZiMXYVGJaCGRri9y25iCZGuavXyAiSSCFMXCdgSmAFNbqF2J6
- +7oC0G0uiQQDeYoBv2hPpW/sA+0urXKVMdYuUBy2yq9V9KP6Yilnxod5UMpukRRqTy+0lyfuY98
- 45aBONy9Vyx4CYrAcGhxkZ83GW9n5lMRszysXJEd8RMDgUn/5dBGy
-X-Received: by 2002:ad4:4b24:0:b0:6b5:6a3:7eb with SMTP id
- 6a1803df08f44-6b506a30a0dmr78137416d6.5.1718979421516; 
- Fri, 21 Jun 2024 07:17:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHoWt5kA7MVQvCnet1XSC+xkx40S/CORMJss4Ci7pPKxHzAgbK2ra2TFenkekVXuCLxHSJIyA==
-X-Received: by 2002:ad4:4b24:0:b0:6b5:6a3:7eb with SMTP id
- 6a1803df08f44-6b506a30a0dmr78137156d6.5.1718979421067; 
- Fri, 21 Jun 2024 07:17:01 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718979384; x=1719584184;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DD71SJ/2joTKGKYAAy6cWEabd3Hf61Nhx9rpWNOgxS4=;
+ b=GVxL2sg/fZ3P7ocJu2r9WeQmHaT6B38CI/fL2ZkEzpdhALvEqD1ieDxRiC0drVqwLJ
+ cz590j/qq7LegPV3PMS5rvUHRTlKxRR/EeCBNpLu36kheKqxSgJ0Fww7QmecOb5m4sJO
+ uZcCKpaksrE8hHIowG2VpkhkXfuaxt5CsreCfeGViRuw6SywaHAHoY/eaa2ul53+u7TA
+ q7oDEWUPM+nqTr4x5FcKItF6nywZeDfrxF7clz4vglo+LY5BwlH+iCdPr32tMXP1E8cU
+ 0Olad0p5mT+I8CUAuEHBUOJde/z7cQMkGKxdPXyW1nd00Na7JQA0/+6R75Uwjp6fhpBn
+ kXyg==
+X-Gm-Message-State: AOJu0YwzkpnPWkekmJgt2WUgo5H4UFRtnEDYQpm8w7JbFYbD3p8eUJHw
+ LC5q6JeAolFOaYez4pMo2uOguVKs2yU1yV2uvdDLjPXjpJabMqOH5PzMjy4zkcqHc5hxQnaM1ey
+ b6WrQwHZed/qkNSS5I01xorTXW4WO84zYNsIxaHeAHBIaWtbjeiL2
+X-Received: by 2002:a05:620a:4709:b0:795:5ce3:a6d6 with SMTP id
+ af79cd13be357-79bb3ee09d3mr902509385a.6.1718979384151; 
+ Fri, 21 Jun 2024 07:16:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IErEjGqsUMKh+VtuMnM+a7/E37wDUKb0p5hcHSaM/gVwmIt3jKpGI5r/s7BgEhPdAGwaaxU3g==
+X-Received: by 2002:a05:620a:4709:b0:795:5ce3:a6d6 with SMTP id
+ af79cd13be357-79bb3ee09d3mr902505185a.6.1718979383563; 
+ Fri, 21 Jun 2024 07:16:23 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b51ef5ca8fsm8937526d6.119.2024.06.21.07.16.59
+ af79cd13be357-79bce9310cesm89331685a.106.2024.06.21.07.16.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Jun 2024 07:17:00 -0700 (PDT)
-Date: Fri, 21 Jun 2024 10:16:58 -0400
+ Fri, 21 Jun 2024 07:16:23 -0700 (PDT)
+Date: Fri, 21 Jun 2024 10:16:20 -0400
 From: Peter Xu <peterx@redhat.com>
-To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Thomas Huth <thuth@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] migration: Remove unused VMSTATE_ARRAY_TEST() macro
-Message-ID: <ZnWLWssCoDnALFKo@x1n>
-References: <20240621070317.9670-1-philmd@linaro.org>
- <258a78c8-dad3-40ff-8ccb-c3d1c3822131@fujitsu.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 16/16] tests/qtest/migration: Add a test for
+ mapped-ram with passing of fds
+Message-ID: <ZnWLNFwBBMrFtaKk@x1n>
+References: <20240617185731.9725-1-farosas@suse.de>
+ <20240617185731.9725-17-farosas@suse.de> <ZnCOLGWajlKxtzfo@x1n>
+ <87y16yiifn.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <258a78c8-dad3-40ff-8ccb-c3d1c3822131@fujitsu.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <87y16yiifn.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -104,19 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 21, 2024 at 08:13:35AM +0000, Zhijian Li (Fujitsu) via wrote:
+On Fri, Jun 21, 2024 at 09:33:48AM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
+> > On Mon, Jun 17, 2024 at 03:57:31PM -0300, Fabiano Rosas wrote:
+> >> Add a multifd test for mapped-ram with passing of fds into QEMU. This
+> >> is how libvirt will consume the feature.
+> >> 
+> >> There are a couple of details to the fdset mechanism:
+> >> 
+> >> - multifd needs two distinct file descriptors (not duplicated with
+> >>   dup()) so it can enable O_DIRECT only on the channels that do
+> >>   aligned IO. The dup() system call creates file descriptors that
+> >>   share status flags, of which O_DIRECT is one.
+> >> 
+> >> - the open() access mode flags used for the fds passed into QEMU need
+> >>   to match the flags QEMU uses to open the file. Currently O_WRONLY
+> >>   for src and O_RDONLY for dst.
+> >> 
+> >> Note that fdset code goes under _WIN32 because fd passing is not
+> >> supported on Windows.
+> >> 
+> >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >> ---
+> >> - dropped Peter's r-b
+> >> 
+> >> - stopped removing the fdset at the end of the tests. The migration
+> >> code should always cleanup after itself.
+> >
+> > Ah, that looks also ok.
 > 
-> On 21/06/2024 15:03, Philippe Mathieu-Daudé wrote:
-> > Last use of VMSTATE_ARRAY_TEST() was removed in commit 46baa9007f
-> > ("migration/i386: Remove old non-softfloat 64bit FP support"), we
-> > can safely get rid of it.
-> > 
-> > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> I made a mistake here. We still need to require that the management
+> layer explicitly removes the fds they added by calling qmp_remove_fd().
 > 
-> Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
+> The reason I thought it was ok to not remove the fds was that after your
+> suggestion to use monitor_fdset_free_if_empty() in patch 7, I mistakenly
+> put monitor_fdset_free() instead. So the qmp_remove_fd() was not finding
+> any fdsets and I thought that was QEMU removing everything. Which is
+> silly, because the whole purpose of the patch is to not do that.
+> 
+> I think I'll just fix this in the migration tree. It's just a revert to
+> v2 of this patch and the correction to patch 7.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Ah OK.  I thought you were talking about when QEMU exit()s, which should
+cleanup everything too.
+
+Personally I guess I kind of ignored that remove-fd api anyway being there
+or not, as it seems nobody understand why it needs to exist in the first
+place..
 
 -- 
 Peter Xu
