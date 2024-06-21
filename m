@@ -4,107 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 928A6C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 08:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1335C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 08:25:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKZTD-0006F8-3L; Fri, 21 Jun 2024 04:18:07 -0400
+	id 1sKZZj-0008PS-B2; Fri, 21 Jun 2024 04:24:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1sKZTB-0006Ee-7e; Fri, 21 Jun 2024 04:18:05 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sKZZg-0008Ox-LM
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:24:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
- id 1sKZT9-00029w-4t; Fri, 21 Jun 2024 04:18:04 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45L6T2o4021288;
- Fri, 21 Jun 2024 08:17:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- eMDQpIRQ6U4mikxtmiffxSdtAKb9Mxngrxgp8Lc0sVY=; b=km/3M5/cvQTHIcrO
- ee9eUsDOW+4L1VxJAoXizIK7yayGBv6crKStqIkEwJZANSt7fSvjM3lcGjX5fQ5Z
- GcLKxLFxV8sTGXS/t2cSINJc9EVcg0+ZpwEzIXh0iJuK9LBigPwcJQ9dY2nhCzNS
- cpKGQOh7i3g5NNJ4dACikvi58J54MCmJf2N1cACflsJEK7IZo5DuCRMxS6EspOXm
- IvWPw/mSMATojdnMVGvbm10UUyFBue7R/0H/geceZ/3YPN/N4mafRJBR2uuNI+OJ
- 6s8OxYDxYqOLJlivjvniLCz08iYI8GCq5nbXJOf8vgthqSu3GChO19/PqBsgWHJj
- T+q5fQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yw49k08fk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 21 Jun 2024 08:17:55 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45L8HtJ0022714;
- Fri, 21 Jun 2024 08:17:55 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yw49k08ff-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 21 Jun 2024 08:17:55 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45L7N0Sl030990; Fri, 21 Jun 2024 08:17:54 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3yvrssws81-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 21 Jun 2024 08:17:54 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45L8Ho2b48890294
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 21 Jun 2024 08:17:52 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 554A420043;
- Fri, 21 Jun 2024 08:17:50 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 57FB820040;
- Fri, 21 Jun 2024 08:17:47 +0000 (GMT)
-Received: from [9.195.33.84] (unknown [9.195.33.84])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 21 Jun 2024 08:17:47 +0000 (GMT)
-Message-ID: <cef472a4-da2c-449e-8f76-0b3e9105e194@linux.ibm.com>
-Date: Fri, 21 Jun 2024 13:47:45 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio: container: Fix missing allocation of
- VFIOSpaprContainer
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, harshpb@linux.ibm.com, 
- npiggin@gmail.com
-Cc: danielhb413@gmail.com, david@gibson.dropbear.id.au,
- alex.williamson@redhat.com, qemu-ppc@nongnu.org,
- zhenzhong.duan@intel.com, qemu-devel@nongnu.org
-References: <171528203026.8420.10620440513237875837.stgit@ltcd48-lp2.aus.stglabs.ibm.com>
- <11578ca8-2bb3-4504-b7b9-022c1df65942@redhat.com>
-Content-Language: en-US
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-In-Reply-To: <11578ca8-2bb3-4504-b7b9-022c1df65942@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: dwP6vjZwPMUClTpkIwd2IewkPG5-MBf9
-X-Proofpoint-ORIG-GUID: ezCO1fWh8ZFMox4dizS8UP7d0eMrYwVt
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sKZZf-0003Ix-BH
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:24:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718958286;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gJAuN/MJIKkZkJLsxF/L2OIAthjDl8A7pQXerPTdKjA=;
+ b=atlNEupbgrRK1JVC85Y16H2rySjS6Mj8NFbUuBMi0l10O4vfBhOtyljlfHwSFWBQgi6rAa
+ wurTj0IdbXKcl0PVrJYsxZlTnosW37GPlB5w6Bc0wo9CY24XAF3YH1BcTH0UVJt0VHjK88
+ JH1Vf/bG5a/XvOCtsjiky3vHBZ8rjqA=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-cx6WTd_VPQmMKdokVqEBSQ-1; Fri,
+ 21 Jun 2024 04:24:41 -0400
+X-MC-Unique: cx6WTd_VPQmMKdokVqEBSQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 086E61955E87; Fri, 21 Jun 2024 08:24:40 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.213])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8CF911956087; Fri, 21 Jun 2024 08:24:36 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jared Rossi <jrossi@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Claudio Imbrenda <imbrenda@linux.ibm.com>,
+ "Collin L . Walling" <walling@linux.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>,
+ "Jason J . Herne" <jjherne@linux.ibm.com>,
+ Marc Hartmayer <mhartmay@linux.ibm.com>
+Subject: [PATCH 2/7] hw/s390x/ipl: Provide more memory to the s390-ccw.img
+ firmware
+Date: Fri, 21 Jun 2024 10:24:17 +0200
+Message-ID: <20240621082422.136217-3-thuth@redhat.com>
+In-Reply-To: <20240621082422.136217-1-thuth@redhat.com>
+References: <20240621082422.136217-1-thuth@redhat.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-21_02,2024-06-20_04,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- spamscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999 clxscore=1011
- adultscore=0 phishscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2406210058
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=sbhat@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,46 +87,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cédric,
+We are going to link the SLOF libc into the s390-ccw.img, and this
+libc needs more memory for providing space for malloc() and friends.
+Thus bump the memory size that we reserve for the bios to 3 MiB
+instead of only 2 MiB. While we're at it, add a proper check that
+there is really enough memory assigned to the machine before blindly
+using it.
 
-On 6/20/24 6:37 PM, Cédric Le Goater wrote:
-> Shivaprasad,
->
-> On 5/9/24 9:14 PM, Shivaprasad G Bhat wrote:
->> The commit 6ad359ec29 "(vfio/spapr: Move prereg_listener into
->> spapr container)" began to use the newly introduced VFIOSpaprContainer
->> structure.
->>
->> After several refactors, today the container_of(container,
->> VFIOSpaprContainer, ABC) is used when VFIOSpaprContainer is actually
->> not allocated. On PPC64 systems, this dereference is leading to 
->> corruption
->> showing up as glibc malloc assertion during guest start when using vfio.
->>
->> Patch adds the missing allocation while also making the structure 
->> movement
->> to vfio common header file.
->>
->> Fixes: 6ad359ec29 "(vfio/spapr: Move prereg_listener into spapr 
->> container)"
->> Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
->
-> Could you please give vfio-9.1 a try ? Thanks,
->
-Yes. This is working fine for ppc64.
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/s390x/ipl.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index e934bf89d1..9362de0b6f 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -45,6 +45,7 @@
+ #define INITRD_PARM_START               0x010408UL
+ #define PARMFILE_START                  0x001000UL
+ #define ZIPL_IMAGE_START                0x009000UL
++#define BIOS_MAX_SIZE                   0x300000UL
+ #define IPL_PSW_MASK                    (PSW_MASK_32 | PSW_MASK_64)
+ 
+ static bool iplb_extended_needed(void *opaque)
+@@ -144,7 +145,14 @@ static void s390_ipl_realize(DeviceState *dev, Error **errp)
+      * even if an external kernel has been defined.
+      */
+     if (!ipl->kernel || ipl->enforce_bios) {
+-        uint64_t fwbase = (MIN(ms->ram_size, 0x80000000U) - 0x200000) & ~0xffffUL;
++        uint64_t fwbase;
++
++        if (ms->ram_size < BIOS_MAX_SIZE) {
++            error_setg(errp, "not enough RAM to load the BIOS file");
++            return;
++        }
++
++        fwbase = (MIN(ms->ram_size, 0x80000000U) - BIOS_MAX_SIZE) & ~0xffffUL;
+ 
+         bios_filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, ipl->firmware);
+         if (bios_filename == NULL) {
+-- 
+2.45.2
 
-Thank you!
-
-
-Regards,
-
-Shivaprasad
-
-
-> C.
->
-> https://github.com/legoater/qemu/commits/vfio-9.1
->
-<snip>
 
