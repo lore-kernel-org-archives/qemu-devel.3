@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AE14C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 16:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CB61C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 16:18:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKgxV-0007y9-Tt; Fri, 21 Jun 2024 12:17:53 -0400
+	id 1sKgxl-0008L7-OM; Fri, 21 Jun 2024 12:18:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=9ak7=NX=kaod.org=clg@ozlabs.org>)
- id 1sKgxT-0007wA-Lk; Fri, 21 Jun 2024 12:17:51 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1sKgxj-0008JF-CF; Fri, 21 Jun 2024 12:18:07 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=9ak7=NX=kaod.org=clg@ozlabs.org>)
- id 1sKgxS-0002zY-2E; Fri, 21 Jun 2024 12:17:51 -0400
+ id 1sKgxh-00030y-Jw; Fri, 21 Jun 2024 12:18:07 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W5Mvt54rVz4wny;
- Sat, 22 Jun 2024 02:17:46 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W5MwC2Gp2z4wcJ;
+ Sat, 22 Jun 2024 02:18:03 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W5Mvr2mXYz4wcq;
- Sat, 22 Jun 2024 02:17:44 +1000 (AEST)
-Message-ID: <4e92f197-315e-4972-9d24-3cdbdee60a59@kaod.org>
-Date: Fri, 21 Jun 2024 18:17:42 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W5Mw9001Yz4wc5;
+ Sat, 22 Jun 2024 02:18:00 +1000 (AEST)
+Message-ID: <57817b5d-1565-4163-b3bd-bf57132b219b@kaod.org>
+Date: Fri, 21 Jun 2024 18:17:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/23] hw/sd/sdcard: Use Load/Store API to fill some
- CID/CSD registers
+Subject: Re: [PATCH 07/23] hw/sd/sdcard: Remove ACMD6 handler for SPI mode
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Joel Stanley <joel@jms.id.au>, Bin Meng <bmeng.cn@gmail.com>,
  Sai Pavan Boddu <sai.pavan.boddu@amd.com>, qemu-block@nongnu.org
 References: <20240621080554.18986-1-philmd@linaro.org>
- <20240621080554.18986-7-philmd@linaro.org>
+ <20240621080554.18986-8-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240621080554.18986-7-philmd@linaro.org>
+In-Reply-To: <20240621080554.18986-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=9ak7=NX=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -68,9 +67,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/21/24 10:05 AM, Philippe Mathieu-Daudé wrote:
-> The ld/st API helps noticing CID or CSD bytes refer
-> to the same field. Multi-bytes fields are stored MSB
-> first in CID / CSD.
+> There is no ACMD6 command in SPI mode, remove the pointless
+> handler introduced in commit 946897ce18 ("sdcard: handles
+> more commands in SPI mode"). Keep sd_cmd_unimplemented()
+> since we'll reuse it later.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
@@ -83,35 +83,28 @@ C.
 
 
 > ---
->   hw/sd/sd.c | 9 ++-------
->   1 file changed, 2 insertions(+), 7 deletions(-)
+>   hw/sd/sd.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 24415cb9f0..b0cd30c657 100644
+> index b0cd30c657..e9af834a8c 100644
 > --- a/hw/sd/sd.c
 > +++ b/hw/sd/sd.c
-> @@ -393,10 +393,7 @@ static void sd_set_cid(SDState *sd)
->       sd->cid[6] = PNM[3];
->       sd->cid[7] = PNM[4];
->       sd->cid[8] = PRV;       /* Fake product revision (PRV) */
-> -    sd->cid[9] = 0xde;      /* Fake serial number (PSN) */
-> -    sd->cid[10] = 0xad;
-> -    sd->cid[11] = 0xbe;
-> -    sd->cid[12] = 0xef;
-> +    stl_be_p(&sd->cid[9], 0xdeadbeef); /* Fake serial number (PSN) */
->       sd->cid[13] = 0x00 |    /* Manufacture date (MDT) */
->           ((MDT_YR - 2000) / 10);
->       sd->cid[14] = ((MDT_YR % 10) << 4) | MDT_MON;
-> @@ -462,9 +459,7 @@ static void sd_set_csd(SDState *sd, uint64_t size)
->           sd->csd[4] = 0x5b;
->           sd->csd[5] = 0x59;
->           sd->csd[6] = 0x00;
-> -        sd->csd[7] = (size >> 16) & 0xff;
-> -        sd->csd[8] = (size >> 8) & 0xff;
-> -        sd->csd[9] = (size & 0xff);
-> +        st24_be_p(&sd->csd[7], size);
->           sd->csd[10] = 0x7f;
->           sd->csd[11] = 0x80;
->           sd->csd[12] = 0x0a;
+> @@ -1012,6 +1012,7 @@ static sd_rsp_type_t sd_cmd_illegal(SDState *sd, SDRequest req)
+>   }
+>   
+>   /* Commands that are recognised but not yet implemented. */
+> +__attribute__((unused))
+>   static sd_rsp_type_t sd_cmd_unimplemented(SDState *sd, SDRequest req)
+>   {
+>       qemu_log_mask(LOG_UNIMP, "%s: CMD%i not implemented\n",
+> @@ -2153,7 +2154,6 @@ static const SDProto sd_proto_spi = {
+>           [52 ... 54] = sd_cmd_illegal,
+>       },
+>       .acmd = {
+> -        [6]         = sd_cmd_unimplemented,
+>           [41]        = spi_cmd_SEND_OP_COND,
+>       },
+>   };
 
 
