@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08C82C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2D97C27C4F
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 15:22:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKg4c-0005oY-Gd; Fri, 21 Jun 2024 11:21:10 -0400
+	id 1sKg4L-0005n6-EQ; Fri, 21 Jun 2024 11:20:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKg4b-0005oL-3f
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:21:09 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1sKg4B-0005kd-IE
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:20:43 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKg4Z-0008TU-5t
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:21:08 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-57d0eca877cso2554515a12.2
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 08:21:06 -0700 (PDT)
+ id 1sKg49-0008MX-Jn
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:20:43 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-57cfe600cbeso2560944a12.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 08:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718983265; x=1719588065; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718983240; x=1719588040; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5/3SiSrDximBKw7nor80831wBkMaga9RuNI5ujZukjM=;
- b=SkvG8O2PQVMv8PTNlkTWIxFcbd2Aa55fiBWV3mnH+6K1KHZ8JTPskWsu7eD6XdysiU
- 07GzIXhDVkhD8SzVXfTQV710TLKMj8Dyk6eKCLn6pa2CT3ulgzpvaLCbP6F4DBzI/kkA
- k27WenzHhg930oN/YGf6YXsZTr486BefsD6dXRQZzkCmjC5eNN419Q9omym4vzhEUQgM
- mqeQO7x/DFHXVkok9x7+c/bvfi8m4Yt79JjiUpSMaaVKVMEX2thiI0/kxV2F33BWSdYr
- R6PUbGvxCW7jrg1fguMWu6zURtVxmAQ8jGI1vIIyz4fqDU69df0WZ4tUaIQ3Rolq/Y+C
- RQ+w==
+ bh=pHbVYmuZWd1OxdpX60I95J8UDkauo542zRAeutaxzk8=;
+ b=ZBXxgSvDIVE5TuLJ3PQNUylTKmASLWeRSTobXpTCvDIsDY0itMfwPnKA8b1ypdKLhi
+ dYZr2NvMFGdIkooBKqstKoX4wOtaNDQowzfHZW0wT/sMSuQqhiCLELto6dxaT4hI3/Ou
+ 9HJusF91sVM+/AbV/VbS6uaAeXNE1SrwiFTPuiaf/NTl7N3QJaa811AkbTh7vz4BrQy5
+ M6z7S2ZewcFz9QSW67DJPA1Oe+Ag8HjTWVLKhakoSMqA4KKgtpnAVVgiDkLR/uLOKm/K
+ ruvR56vcUZ0DC/L2QSZQEiPcjs19uwQnLlGeVWkDxjiUMhYEN+FxMaBA1sHEFjwEB6uL
+ TXWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718983265; x=1719588065;
+ d=1e100.net; s=20230601; t=1718983240; x=1719588040;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5/3SiSrDximBKw7nor80831wBkMaga9RuNI5ujZukjM=;
- b=fI5hian2J26fZYPDox3drtVewMwnlCa8JVxse5c/XuxBda955ceOrn4uuypddtleMF
- mUXxfOVnRT1W+MmB52hn5Q76RH31LBovaCxeeV4zscM4dEtsHZsuDueXOPuyHk7gVhsh
- 2QZXfYVS3Y2aL6sVC5cKE/jUQzAARUTzZbedyuomVo3rPHk/OFUmL6FCZ3CdlOCqI8od
- 0G0X1ea/a+aPFfUtZzZytBd/bRMKFZAunYVfIyZ6WYQgE64JpPvvyWPvySzZGTcmrpf3
- P/OIBJxYYcJyV2b4rDt0LDb21QWSxEECLvCXDCndrp2FCIMGwF2re4831uHF3ukrsX/2
- cmUA==
+ bh=pHbVYmuZWd1OxdpX60I95J8UDkauo542zRAeutaxzk8=;
+ b=DpDNsiUuO8DV9EeGF7RS47AFfVPJwnC4UW6LIfFiSs0shE452DSBk7lLz6nXYg3+br
+ giDh15w1Hs0ZHn8XvXGtEYWjVRUs3fhwOqTaJ/miDSCwab7zujaB7f+JfWp/AbuPzaSc
+ tgyytrgdmNeEk3Q726A3N59xW1LdMpOS0kCxJw2tqBkfeiBhP1g3FhpCfPiHqvlJV4fv
+ +Onp44+PoMx5UXrgFgY7MdVKvftOBkjng9/hh4gVFWTnAlKbyg+secsqKQBaq9K7FvaG
+ 8gQOIbQco8AKjmC0gC6wGTD0Cluvr++9qI6w5mWgUhTBKelLYO1R9JZqgtGLK5txNXsl
+ yspA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV89oDmYmWcrgZU6579ueLq2qStQ33fiQKuhfqREPp5ItJERmA65INBA0B0k7UxTeSTj23i2JeSULhlZWkmSkD2ZDSQfn8=
-X-Gm-Message-State: AOJu0YxgNYEwQmlNOlVbWaoAZKIvgNzl6r1/iMJMNbjmuJgu63lu31lg
- lIzO9wqoF0bjvxnZpwpv9ea1b/Yt+EXlXMPZgUqol1P/oHwmNzYteA25WhD59ZMow1dRLX6qdZe
- rybyj22f7oaiJ46MhQM6O+ZBHsp2bufxU5r27oDg1Na2+W4uZBaQ=
-X-Google-Smtp-Source: AGHT+IEDPxDXzPSJsCrSzxSVvw7HCbw+YFloWdLi1HDK2VkCzi8gAYqZkLx/JwnxfTTaUpRzNH112s2Fxzk1FrY/7C4=
-X-Received: by 2002:a50:a6da:0:b0:57c:758d:86f8 with SMTP id
- 4fb4d7f45d1cf-57d07e882c4mr6079700a12.23.1718983264883; Fri, 21 Jun 2024
- 08:21:04 -0700 (PDT)
+ AJvYcCW6nU4IXfZ+OiW7If0dtNFWqhd1wuKYUaAKB0qczyzMSIpB8jh6NJhWkG6Ag8Z88WFDQZhigE+BvFypK9rjtHDZuYXIhTg=
+X-Gm-Message-State: AOJu0YwKz8sqgdIr8tRNODg+DMklL7P5tNFzi4/LANs7JpY6RQ1zFSWW
+ g6Iocv6JT2ADsyGe9HnfznnVxQ9vXSHDzQxkgPaho3DXQ+tD+UnNdKKeFtnfR2mH59AH5TVlQgy
+ QWjIDYZ34HMaecuqWhYdP/SLMNcLDdsZhnEFAQQ==
+X-Google-Smtp-Source: AGHT+IFOVk+xciihb2GFZnC3wFhbsFdVzTF1KBHulqx05EDnRi7ti+RIRD8HH8e5IyCj1ph7AoDiPzOJm+iTF2vUWvE=
+X-Received: by 2002:a50:cdc4:0:b0:57c:6c1c:f942 with SMTP id
+ 4fb4d7f45d1cf-57d07ee7911mr5961618a12.38.1718983239918; Fri, 21 Jun 2024
+ 08:20:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240520232634.317988-1-dmamfmgm@gmail.com>
- <87cyomxmvc.fsf@draig.linaro.org>
- <CACBuX0SMvD6+vWGBv_m0rBnwgp8fbv6rHKUmbr-MWDLknz8LyA@mail.gmail.com>
- <87msnqvtpv.fsf@draig.linaro.org>
-In-Reply-To: <87msnqvtpv.fsf@draig.linaro.org>
+References: <20240618135550.3108739-1-zheyuma97@gmail.com>
+ <6030d030-cfce-4253-ad4d-f7e2a37e2957@linaro.org>
+In-Reply-To: <6030d030-cfce-4253-ad4d-f7e2a37e2957@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 21 Jun 2024 16:20:53 +0100
-Message-ID: <CAFEAcA8-gnh3sF6yPuPOfHg=C4H2=f-VYobKcXNUdMCWpdYNNw@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-ohci: Fix ohci_service_td: accept valid TDs
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Cord Amfmgm <dmamfmgm@gmail.com>, qemu-devel@nongnu.org, 
- Philippe Mathieu-Daude <philmd@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>,
- Gerd Hoffmann <kraxel@redhat.com>
+Date: Fri, 21 Jun 2024 16:20:27 +0100
+Message-ID: <CAFEAcA8NK5oEFwfnbHPd2NQvTQYauife-KLS--09L6e_mzi-zg@mail.gmail.com>
+Subject: Re: [PATCH] hw/misc/stm32l4x5_rcc: Add validation for MCOPRE and
+ MCOSEL values
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Zheyu Ma <zheyuma97@gmail.com>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
+ =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,74 +96,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Jun 2024 at 20:36, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+On Fri, 21 Jun 2024 at 16:03, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> Cord Amfmgm <dmamfmgm@gmail.com> writes:
+> On 18/6/24 15:55, Zheyu Ma wrote:
+> > This commit adds validation checks for the MCOPRE and MCOSEL values in
+> > the rcc_update_cfgr_register function. If the MCOPRE value exceeds
+> > 0b100 or the MCOSEL value exceeds 0b111, an error is logged and the
+> > corresponding clock mux is disabled. This helps in identifying and
+> > handling invalid configurations in the RCC registers.
+> >
+> > Reproducer:
+> > cat << EOF | qemu-system-aarch64 -display \
+> > none -machine accel=3Dqtest, -m 512M -machine b-l475e-iot01a -qtest \
+> > stdio
+> > writeq 0x40021008 0xffffffff
+> > EOF
+> >
+> > Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> > ---
+> >   hw/misc/stm32l4x5_rcc.c | 28 ++++++++++++++++++++--------
+> >   1 file changed, 20 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
+> > index 417bd5e85f..59d428fa66 100644
+> > --- a/hw/misc/stm32l4x5_rcc.c
+> > +++ b/hw/misc/stm32l4x5_rcc.c
+> > @@ -543,19 +543,31 @@ static void rcc_update_cfgr_register(Stm32l4x5Rcc=
+State *s)
+> >       uint32_t val;
+> >       /* MCOPRE */
+> >       val =3D FIELD_EX32(s->cfgr, CFGR, MCOPRE);
+> > -    assert(val <=3D 0b100);
+> > -    clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_MCO],
+> > -                         1, 1 << val);
+> > +    if (val > 0b100) {
+> > +        qemu_log_mask(LOG_GUEST_ERROR,
+> > +                      "%s: Invalid MCOPRE value: 0x%"PRIx32"\n",
+> > +                      __func__, val);
 >
-> > On Wed, Jun 12, 2024 at 9:21=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@l=
-inaro.org> wrote:
-> >
-> >  David Hubbard <dmamfmgm@gmail.com> writes:
-> >
-> >  > From: Cord Amfmgm <dmamfmgm@gmail.com>
-> >  >
-> >  > This changes the way the ohci emulation handles a Transfer Descripto=
-r with
-> >  > "Current Buffer Pointer" set to "Buffer End" + 1.
-> >  >
-> >  > The OHCI spec 4.3.1.2 Table 4-2 allows td.cbp to be one byte more th=
-an td.be
-> >  > to signal the buffer has zero length. Currently qemu only accepts ze=
-ro-length
-> >  > Transfer Descriptors if the td.cbp is equal to 0, while actual OHCI =
-hardware
-> >  > accepts both cases.
-> >  >
-> >  > The qemu ohci emulation has a regression in ohci_service_td. Version=
- 4.2
-> >  > and earlier matched the spec. (I haven't taken the time to bisect ex=
-actly
-> >  > where the logic was changed.)
-> >
-> >  I find it hard to characterise this as a regression because we've
-> >  basically gone from no checks to actually doing bounds checks:
-> >
-> >    1328fe0c32 (hw: usb: hcd-ohci: check len and frame_number variables)
-> >
-> >  The argument here seems to be that real hardware is laxer than the spe=
-cs
-> >  in what it accepts.
-> >
-> <snip>
-> >
-> >  With the updated commit message:
-> >
-> >  Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> >
-> > Please forgive my lack of experience on this mailing list. I don't see =
-a suggested commit message from Alex but in case that
-> > was what is being considered, here is one. Feedback welcome, also if th=
-is is not what is wanted, please just say it.
-> >
+> How the hardware handles that? I suppose it just ignores the
+> value, so I'd simply:
 >
-> Something along the lines of what you suggest here
+>            return;
+>
+> instead of disabling the clock...
+>
+> In=C3=A8s, Arnaud, what do you think?
 
-Thanks; I've picked up this patch for target-arm.next (as with
-your previous one for hcd-ohci, adjusting the Author and
-Signed-off-by lines to both read David Hubbard).
+The datasheet just says the values are reserved. The hardware
+might do anything, including behaving completely weirdly (e.g
+trying to divide the clock by something more than 16 and running
+into timing problems as a result). I suggested "disable" in review
+on the first version of this patch (you'll definitely notice the
+guest bug then ;-)).
 
-I tweaked the commit message a little bit, so the middle part reads:
+> > +        clock_mux_set_enable(&s->clock_muxes[RCC_CLOCK_MUX_MCO], false=
+);
+> > +    } else {
+> > +        clock_mux_set_factor(&s->clock_muxes[RCC_CLOCK_MUX_MCO],
+> > +                             1, 1 << val);
+> > +    }
+> >
+> >       /* MCOSEL */
+> >       val =3D FIELD_EX32(s->cfgr, CFGR, MCOSEL);
+>
+> MCOSEL is 3-bit wide, so ...
+>
+> > -    assert(val <=3D 0b111);
+>
+> ... this condition is always true (and can be removed) ...
 
-    What this patch does is loosen the qemu ohci implementation to allow a
-    zero-length packet if td.be (Buffer End) is set to td.cbp - 1, and with=
- a
-    non-zero td.cbp value.
+Yes, I noticed that. But if you look at the datasheet[*] the actual
+field in the register is 4 bits wide, because on some l4x5 SoCs
+bit 4 is used for something. So it seemed to me reasonable to have
+the guard against this, because at some point somebody might update
+the FIELD definition to match the datasheet field width.
 
-    The spec is unclear whether this is valid or not -- it is not the
-    clearly documented way to send a zero length TD (which is CBP=3DBE=3D0)=
-,
-    but it isn't specifically forbidden. Actual hw seems to be ok with it.
+[*] https://www.st.com/resource/en/reference_manual/rm0351-stm32l47xxx-stm3=
+2l48xxx-stm32l49xxx-and-stm32l4axxx-advanced-armbased-32bit-mcus-stmicroele=
+ctronics.pdf
 
 thanks
 -- PMM
