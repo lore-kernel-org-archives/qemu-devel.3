@@ -4,51 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4564C2BA18
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 02:51:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80011C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 03:28:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKUMW-0006wZ-Rk; Thu, 20 Jun 2024 22:50:53 -0400
+	id 1sKUwG-0007Ms-Fm; Thu, 20 Jun 2024 23:27:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
- id 1sKUMU-0006wQ-O5
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 22:50:50 -0400
-Received: from mx22.baidu.com ([220.181.50.185] helo=baidu.com)
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1sKUwE-0007Mi-Ok
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 23:27:46 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
- id 1sKUMR-00028j-96
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 22:50:50 -0400
-To: Igor Mammedov <imammedo@redhat.com>
-CC: "mst@redhat.com" <mst@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "berrange@redhat.com" <berrange@redhat.com>
-Subject: Re: Failed to hot-plug device to pxb bridge
-Thread-Topic: Failed to hot-plug device to pxb bridge
-Thread-Index: AQHaw4XI87/5oTfsUESpKSNFbrbm9A==
-Date: Fri, 21 Jun 2024 02:50:31 +0000
-Message-ID: <2cae6cf3c0f64b509ceed04be6a8bd70@baidu.com>
-References: <3A8D097B-3BA7-40DC-8DDF-D79B7BEE5CEE@baidu.com>,
- <20240530160919.01a3effc@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240530160919.01a3effc@imammedo.users.ipa.redhat.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.22.200.184]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1sKUwB-0007lv-0Y
+ for qemu-devel@nongnu.org; Thu, 20 Jun 2024 23:27:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1718940463; x=1750476463;
+ h=from:to:cc:subject:in-reply-to:references:date:
+ message-id:mime-version;
+ bh=17fw1GTBVOWHxEJoAbWu7804W8yc+O3OGKrAhzVIM98=;
+ b=JtRAi6TqiU1yNazsNLDist+9cJcdwRU5uuC9EXIB2XQsSsoJR+LgTd2Z
+ Q9t3c1vYgodK4DTJmfdBX4el26F5XocBxoc6nLx32PZmbXKIVN8NZssuK
+ KSMuvxT7KHE8CwrwZSQipaAp5edZ+crp6y4CkqATGdJUEbWByygB8pHu2
+ wI6tyXqcISVJ5xV1jbyIJMR1zmw56VCrsgTdqdSo9+XknKcyZMPhcsWuf
+ 31/2nQKssbXy0tbt7srSZm2uD9KJf2xBMcQPa1qgE+53f2Wj21Cw5wfbZ
+ jdxBHPcuLvljsgSu/Zq8OEn7gCn5gKwLX/BFWHgjedond1aV2EKNEYa7K Q==;
+X-CSE-ConnectionGUID: zfKn3D/2Ru+cUcA0C1ArfA==
+X-CSE-MsgGUID: 2HYiEG1/Tgapp718jafISA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11109"; a="15790548"
+X-IronPort-AV: E=Sophos;i="6.08,253,1712646000"; d="scan'208";a="15790548"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Jun 2024 20:27:39 -0700
+X-CSE-ConnectionGUID: bEA1P2dtShC0IpkoRsdbLQ==
+X-CSE-MsgGUID: y7ZKXGvVSnO7AvN2dVbO7w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,253,1712646000"; d="scan'208";a="47391227"
+Received: from unknown (HELO yhuang6-desk2.ccr.corp.intel.com)
+ ([10.238.208.55])
+ by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Jun 2024 20:27:36 -0700
+From: "Huang, Ying" <ying.huang@intel.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: <imammedo@redhat.com>,  <mst@redhat.com>,  Markus Armbruster
+ <armbru@redhat.com>,  <qemu-devel@nongnu.org>,  <ankita@nvidia.com>,
+ <marcel.apfelbaum@gmail.com>,  <philmd@linaro.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  <linuxarm@huawei.com>,  Dave Jiang
+ <dave.jiang@intel.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ <eduardo@habkost.net>,  <linux-cxl@vger.kernel.org>,  Michael Roth
+ <michael.roth@amd.com>,  Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v3 qemu 00/11] acpi: NUMA nodes for CXL HB as GP +
+ complex NUMA test
+In-Reply-To: <20240620160324.109058-1-Jonathan.Cameron@huawei.com> (Jonathan
+ Cameron's message of "Thu, 20 Jun 2024 17:03:08 +0100")
+References: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
+Date: Fri, 21 Jun 2024 11:25:44 +0800
+Message-ID: <87jzij0yfb.fsf@yhuang6-desk2.ccr.corp.intel.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-FEAS-Client-IP: 172.31.51.52
-X-FE-Last-Public-Client-IP: 100.100.100.60
-X-FE-Policy-ID: 52:10:53:SYSTEM
-Received-SPF: pass client-ip=220.181.50.185; envelope-from=gaoshiyuan@baidu.com;
- helo=baidu.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=ascii
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=ying.huang@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,126 +87,129 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Gao,Shiyuan" <gaoshiyuan@baidu.com>
-From:  "Gao,Shiyuan" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sorry for not replying earlier, I have been busy with other things.
+Hi, Jonathan,
 
-> > Hi Igor, Daniel and all:
-> >
-> >  https://lore.kernel.org/all/20220422135101.65796823@redhat.com/t/#r831=
-d589f243c24334a09995620b74408847a87a0
-> >
-> > This message discuss hotplug device to pxb bridge. At the end, Igor sug=
-gested enable shpc on pxb bridge:
-> >=A0=A0 pxb_dev_realize_common():
-> >=A0=A0=A0=A0=A0 qdev_prop_set_bit(bds, PCI_BRIDGE_DEV_PROP_SHPC, true);
+Jonathan Cameron <Jonathan.Cameron@huawei.com> writes:
+
+> v3: Thanks to Richard for help debugging BE issue and to Igor for
+>     finding a bunch of other thing to improve via the context in
+>     the fix patch.
+>     
+> - Fix the big endian host/little endian guest issue in the HID being
+>   written to the Generic Port Affinity Structure ACPI Device Handle.
+> - Fix a bug in the ordering of bus vs devfn in the BDF field which is
+>   reversed in the ACPI table wrt to QEMU's internal handling. Note the
+>   fix is minimal and refactored later in the series.
+> - Move original GI code to hw/acpi/aml-build.c and hw/acpi/pc.c as
+>   no need for a separate file and this keeps the SRAT entry building
+>   all in one place.
+> - Use properties for the pci bus number and the ACPI UID to avoid
+>   using pci internal implementation details in hw/acpi.
+> - Drop the GenericNode base object as much less code is unified with
+>   the new approach to the aml building and that approach did not bring
+>   sufficient advantages to be worthwhile after other refactors.
+>   A little more duplication occurs in v3 but the code is easier to read.
 >
+> ACPI 6.5 introduced Generic Port Affinity Structures to close a system
+> description gap that was a problem for CXL memory systems.
+> It defines an new SRAT Affinity structure (and hence allows creation of an
+> ACPI Proximity Node which can only be defined via an SRAT structure)
+> for the boundary between a discoverable fabric and a non discoverable
+> system interconnects etc.
 >
-> you can try check if hotplug gets to shpc_device_plug_cb() and what it do=
-es there
-> if it gets to the end but you don't get any reaction from guest OS
-> it might be a guest issue.
+> The HMAT data on latency and bandwidth is combined with discoverable
+> information from the CXL bus (link speeds, lane counts) and CXL devices
+> (switch port to port characteristics and USP to memory, via CDAT tables
+> read from the device).  QEMU has supported the rest of the elements
+> of this chain for a while but now the kernel has caught up and we need
+> the missing element of Generic Ports (this code has been used extensively
+> in testing and debugging that kernel support, some resulting fixes
+> currently under review).
+>
+> Generic Port Affinity Structures are very similar to the recently
+> added Generic Initiator Affinity Structures (GI) so this series
+> factors out and reuses much of that infrastructure for reuse
+> There are subtle differences (beyond the obvious structure ID change).
+>
+> - The ACPI spec example (and linux kernel support) has a Generic
+>   Port not as associated with the CXL root port, but rather with
+>   the CXL Host bridge. As a result, an ACPI handle is used (rather
+>   than the PCI SBDF option for GIs). In QEMU the easiest way
+>   to get to this is to target the root bridge PCI Bus, and
+>   conveniently the root bridge bus number is used for the UID allowing
+>   us to construct an appropriate entry.
+>
+> A key addition of this series is a complex NUMA topology example that
+> stretches the QEMU emulation code for GI, GP and nodes with just
+> CPUS, just memory, just hot pluggable memory, mixture of memory and CPUs.
+>
+> A similar test showed up a few NUMA related bugs with fixes applied for
+> 9.0 (note that one of these needs linux booted to identify that it
+> rejects the HMAT table and this test is a regression test for the
+> table generation only).
+>
+> https://lore.kernel.org/qemu-devel/2eb6672cfdaea7dacd8e9bb0523887f13b9f85ce.1710282274.git.mst@redhat.com/
+> https://lore.kernel.org/qemu-devel/74e2845c5f95b0c139c79233ddb65bb17f2dd679.1710282274.git.mst@redhat.com/
 
-I checked the guest dmesg and found that failed load shpc driver.
+When developing the Linux kernel patchset "[PATCH v3 0/3] cxl/region:
+Support to calculate memory tier abstract distance" as in [1].
 
-  [    0.966668] shpchp 0000:00:05.0: Requesting control of SHPC hotplug vi=
-a OSHP (\_SB_.PCI0.S28_)
-  [    0.968238] shpchp 0000:00:05.0: Requesting control of SHPC hotplug vi=
-a OSHP (\_SB_.PCI0)
-  [    0.969160] shpchp 0000:00:05.0: Cannot get control of SHPC hotplug
-  [    0.969876] shpchp 0000:00:06.0: Requesting control of SHPC hotplug vi=
-a OSHP (\_SB_.PCI0.S30_)
-  [    0.971454] shpchp 0000:00:06.0: Requesting control of SHPC hotplug vi=
-a OSHP (\_SB_.PCI0)
-  [    0.972376] shpchp 0000:00:06.0: Cannot get control of SHPC hotplug
-  [    0.973119] shpchp 0000:80:00.0: Requesting control of SHPC hotplug vi=
-a OSHP (\_SB_.PC80)
-  [    0.974674] shpchp 0000:80:00.0: Cannot get control of SHPC hotplug
-  [    0.979422] shpchp 0000:81:01.0: Requesting control of SHPC hotplug vi=
-a OSHP (\_SB_.PC80)
-  [    0.980948] shpchp 0000:81:01.0: Cannot get control of SHPC hotplug
-  [    0.981685] shpchp 0000:60:00.0: Requesting control of SHPC hotplug vi=
-a OSHP (\_SB_.PC60)
-  [    0.994623] shpchp 0000:60:00.0: Cannot get control of SHPC hotplug
-  [    0.995349] shpchp 0000:61:01.0: Requesting control of SHPC hotplug vi=
-a OSHP (\_SB_.PC60)
-  [    0.996891] shpchp 0000:61:01.0: Cannot get control of SHPC hotplug
-  [    0.997626] shpchp: Standard Hot Plug PCI Controller Driver version: 0=
-.4
+[1] https://lore.kernel.org/linux-cxl/20240618084639.1419629-1-ying.huang@intel.com/
 
-Read the shpc driver code, I found that before shpc_init it need check the =
-shpc capability of bridge(shpc_capable) and
-get hotplug control from firmware(acpi_get_hp_hw_control_from_firmware) in =
-shpc_probe.
+I use this patchset to test my kernel patchset and it works great!
+Thanks!
 
-Howerver it return fail in acpi_get_hp_hw_control_from_firmware. I dump the=
- acpid table, not found OSC and OSHP
-method in dsdt.dsl.
+Feel free to add my
 
-In the QEMU build_dsdt, not found build osc method in i440fx.
+Tested-by: "Huang, Ying" <ying.huang@intel.com>
 
-Putting aside this pxb scenario, I suspect that after disable acpi-pci-hotp=
-lug-with-bridge-support,
-hot-plug into the PCI bridge via SHPC can be successful in i440fx ?
+in the future versions.
 
+>
+> Jonathan Cameron (11):
+>   hw/acpi: Fix ordering of BDF in Generic Initiator PCI Device Handle.
+>   hw/acpi/GI: Fix trivial parameter alignment issue.
+>   hw/acpi: Move AML building code for Generic Initiators to aml_build.c
+>   hw/acpi: Rename build_all_acpi_generic_initiators() to
+>     build_acpi_generic_initiator()
+>   hw/pci: Add a bus property to pci_props and use for acpi/gi
+>   acpi/pci: Move Generic Initiator object handling into acpi/pci.*
+>   hw/pci-bridge: Add acpi_uid property to CXL PXB
+>   hw/acpi: Generic Port Affinity Structure support
+>   bios-tables-test: Allow for new acpihmat-generic-x test data.
+>   bios-tables-test: Add complex SRAT / HMAT test for GI GP
+>   bios-tables-test: Add data for complex numa test (GI, GP etc)
+>
+>  qapi/qom.json                               |  34 +++
+>  include/hw/acpi/acpi_generic_initiator.h    |  30 +--
+>  include/hw/acpi/aml-build.h                 |   8 +
+>  include/hw/acpi/pci.h                       |   7 +
+>  include/hw/pci/pci_bridge.h                 |   1 +
+>  hw/acpi/acpi_generic_initiator.c            | 132 +++++++++---
+>  hw/acpi/aml-build.c                         |  84 ++++++++
+>  hw/acpi/pci.c                               | 226 ++++++++++++++++++++
+>  hw/arm/virt-acpi-build.c                    |   3 +-
+>  hw/i386/acpi-build.c                        |   3 +-
+>  hw/pci-bridge/pci_expander_bridge.c         |  18 +-
+>  hw/pci/pci.c                                |  14 ++
+>  tests/qtest/bios-tables-test.c              |  96 +++++++++
+>  hw/acpi/meson.build                         |   1 -
+>  tests/data/acpi/q35/APIC.acpihmat-generic-x | Bin 0 -> 136 bytes
+>  tests/data/acpi/q35/CEDT.acpihmat-generic-x | Bin 0 -> 68 bytes
+>  tests/data/acpi/q35/DSDT.acpihmat-generic-x | Bin 0 -> 10849 bytes
+>  tests/data/acpi/q35/HMAT.acpihmat-generic-x | Bin 0 -> 360 bytes
+>  tests/data/acpi/q35/SRAT.acpihmat-generic-x | Bin 0 -> 520 bytes
+>  19 files changed, 597 insertions(+), 60 deletions(-)
+>  create mode 100644 tests/data/acpi/q35/APIC.acpihmat-generic-x
+>  create mode 100644 tests/data/acpi/q35/CEDT.acpihmat-generic-x
+>  create mode 100644 tests/data/acpi/q35/DSDT.acpihmat-generic-x
+>  create mode 100644 tests/data/acpi/q35/HMAT.acpihmat-generic-x
+>  create mode 100644 tests/data/acpi/q35/SRAT.acpihmat-generic-x
 
-> > Howerver, I tried it and the guest can't find the device on pxb bridge.=
- Add some log, QEMU use hotplug handler shpc_device_plug_cb.
-> >
-> > QEMU command line:
-> > -device pxb,bus_nr=3D96,id=3Dpci.1,numa_node=3D0,bus=3Dpci.0,addr=3D0x3
-> > -device pxb,bus_nr=3D128,id=3Dpci.2,numa_node=3D1,bus=3Dpci.0,addr=3D0x=
-4
-> > -device pci-bridge,chassis_nr=3D3,id=3Dpci.3,bus=3Dpci.0,addr=3D0x5
-> > -device pci-bridge,chassis_nr=3D4,id=3Dpci.4,bus=3Dpci.0,addr=3D0x6
-> > -device pci-bridge,chassis_nr=3D5,id=3Dpci.5,bus=3Dpci.1,addr=3D0x1
-> > -device pci-bridge,chassis_nr=3D6,id=3Dpci.6,bus=3Dpci.2,addr=3D0x1
-> >
-> > Hotplug command:
-> > {"execute":"human-monitor-command","arguments":{"command-line":"drive_a=
-dd dummy file=3D/home/test/data1.img,format=3Dqcow2,if=3Dnone,id=3Ddrive-vi=
-rtio-disk1,cache=3Dnone"}}
-> > {"execute":"device_add","arguments":{"driver":"virtio-blk-pci","scsi":"=
-off","bus":"pci.5","addr":"0x1","drive":"drive-virtio-disk1","id":"virtio-d=
-isk1"}}
-> >
-> > Some info in the guest:
-> > [root@localhost ~]# lspci -tv
-> > -+-[0000:80]---00.0-[81-82]----01.0-[82]--
-> >=A0 +-[0000:60]---00.0-[61-62]----01.0-[62]--
-> >=A0 \-[0000:00]-+-00.0=A0 Intel Corporation 440FX - 82441FX PMC [Natoma]
-> >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 +-01.0=A0 Intel Corporation 8237=
-1SB PIIX3 ISA [Natoma/Triton II]
-> >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 +-01.1=A0 Intel Corporation 8237=
-1SB PIIX3 IDE [Natoma/Triton II]
-> >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 +-01.2=A0 Intel Corporation 8237=
-1SB PIIX3 USB [Natoma/Triton II]
-> >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 +-01.3=A0 Intel Corporation 8237=
-1AB/EB/MB PIIX4 ACPI
-> >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 +-02.0=A0 Cirrus Logic GD 5446
-> >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 +-03.0=A0 Red Hat, Inc. QEMU PCI=
- Expander bridge
-> >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 +-04.0=A0 Red Hat, Inc. QEMU PCI=
- Expander bridge
-> >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 +-05.0-[01]--
-> >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 +-06.0-[02]--
-> >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 +-07.0=A0 Red Hat, Inc. Virtio n=
-etwork device
-> >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 +-08.0=A0 Red Hat, Inc. Virtio b=
-lock device
-> >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 \-09.0=A0 Red Hat, Inc. Virtio m=
-emory balloon
-> > [root@localhost boot]# grep -i 'shpc' config-3.10.0-1160.83.1.el7.x86_6=
-4
-> > CONFIG_HOTPLUG_PCI_SHPC=3Dy
-> > [root@localhost boot]# uname -r
-> > 3.10.0-1160.83.1.el7.x86_64
-> >
-> > Thanks.
-> >
-> >
->=
+--
+Best Regards,
+Huang, Ying
 
