@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC915C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 04:31:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4746C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 04:36:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKVvf-0000pG-GX; Fri, 21 Jun 2024 00:31:15 -0400
+	id 1sKW0f-00055f-Ub; Fri, 21 Jun 2024 00:36:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sKVve-0000n2-1F
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 00:31:14 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1sKW0E-0004y8-U0
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 00:35:59 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sKVvc-0001EV-3O
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 00:31:13 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1f9bf484d9fso12920725ad.1
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 21:31:11 -0700 (PDT)
+ id 1sKW0D-0002G8-GL
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 00:35:58 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1f4a5344ec7so11377255ad.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 21:35:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718944270; x=1719549070; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718944556; x=1719549356; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=iHQ90UlNrJNrsPqy+QQJgul1ZqjYrwlrZlxIUknpqJY=;
- b=eVgTWZPEb3si3Y1OQrIv2O0MslcKvS9PBbBWNrJl6URHcrt/JkCTfSexAW1bXq7Qf1
- Hh4aeMtYrjywssaPr1OxShzfFN0etxjStOED5UR92wYC4t9t+GEPF5J5QU67K0hWRIbD
- QDQxXuO3QyFU6C4i6lDK1Ix4ZdB7sEtL0Hzc+aBQ9HOk3sUArYB7mk1lH4qj3TdjU2Hn
- ji8WItQVq16GIWmUJRuMbW3H9ZMWLvue2tdO/Q9kM2aYoz/80XB2ijaKTt8Ljlipg1Lg
- SsU/FUAuPCAMO0gP/iQw7E25Bv//NdOclReuhWpeFCMJ8TV3sF11HB7mZSJUj8Gf5iEw
- 4MeQ==
+ bh=sXAhYrdRasbPI5d5sVbUMEXB1QhZEgmjvtjBDp35zS8=;
+ b=JNXclHjlfT4zEZiitkT7kbQC5mLKbfq0ynfKGMk7hiO3QGiy9tWzTUmW4WIXPU9LgP
+ Gb6yCiP4keqf5acTrH0DdNmE79PZvRGOpZImOInP7vbBePB1Ux/0spdhsxj5eAAGZhGJ
+ uc9lDKbMpxjf0r4V1njOBhIDFkjnMOgfc5TNARcMbhh3JvMEiPa2UHv7WJvQ8uoAV0hV
+ hReW50fNd/2FcNThHX8cGlmMjIrwhjVtqMR6Tww1LaqyhiP5xvHL0F/bPdNgqxY+p6qS
+ 9YZBKTgpcm8krJXuj7pgRGetG9wUSSCza5BLnHkmgJMWPxIgSlUXED0dey6LI/trQ3Sy
+ maOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718944270; x=1719549070;
+ d=1e100.net; s=20230601; t=1718944556; x=1719549356;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iHQ90UlNrJNrsPqy+QQJgul1ZqjYrwlrZlxIUknpqJY=;
- b=wq9MlpO8tzMvPhQviZ55oCgp0iZI+jd9MjvHAQWba3ugvQoGdSx5Jej6kq0YWXy0AN
- lffu30RSsdVq5udUIvglGG275TsSp60xcAJ8JyA1eEUYb8QVznrVUyqyYCE0aG/ZFUhf
- GL1zYrp/zsxvMa9UK2SaJylGfiFaPSMabWTQaJ3AVk03zyJxWJFEgEKN8Rb5BwO1OPp9
- phG2rTQK8zx4gHjARfkV4LLam/XGM4UzcCt/IY29/FbqnoVwsXDFl8Z4cTH6WWGBDvKK
- RMBOoJoIIIP6fgIKSpT/IOUhrrMapEgJecFGqIBO/1uIX4n7Um1aM6cYeR8k7ETElPAj
- RotA==
+ bh=sXAhYrdRasbPI5d5sVbUMEXB1QhZEgmjvtjBDp35zS8=;
+ b=PG7Lb1dSnk3z6HtQVeecACEn4HXlumQ8TYCQ4RcXYhxgs1anzK4X/H4RjNV0cFF1nY
+ Lrh6pXCZhzvyF1uRGp3v0HD6HARAYBIJ2lWCAokFSVdnh9ZIPEd6Gc5A6uyoO2R5gDGK
+ EFYgkufhDpzGLToQ2tb+7a1wTJjMzRw+xhiG5YoXvdboWoIl9+xZtoW30nrUaxtZg60q
+ zuJymNrySPkkOj1bYoQJgWFq2yfV60yvCK2jRTg2wNvc8ZZfzgeIOGT9j28NZq0HNbuo
+ WEWNJbg0xRvhYCTRbXm8pO60xwbnbbFbdHxV+yVt7Qoyuk6gKX4DLsI0xyuh5UkHzEXW
+ aqWg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVU7mT0YcWvkQ321B35+jJMAYKy+TNGukekr2ZRm19jz/rcfwjRXg6sllq5GYzGXYAArMBUPg66KDJpvwVvLW5bpaz1zYw=
-X-Gm-Message-State: AOJu0Yztih8g052+PHe2YILSQrbI+N3ofUa68MGgllsOxbEZx3Lohgte
- sIo8N8RsnWe0GbcXBIMz5OEKJHy/cTmnuuLc2ODDXQ9PNYbb43+L5vtuNoxyrcc=
-X-Google-Smtp-Source: AGHT+IHs1v6RDb3T+mJ/a+4q9zcYAKep5uiW68tL1mttEm4+28g4TePss3WlTyEg76YB7HnsxfEBMg==
-X-Received: by 2002:a17:902:ec83:b0:1f7:1bf3:db10 with SMTP id
- d9443c01a7336-1f9a8d5f12amr110022765ad.20.1718944270107; 
- Thu, 20 Jun 2024 21:31:10 -0700 (PDT)
+ AJvYcCUiuahrywUvCptmUuZgQJEs0YNSvG8qvvZ4vhyyVQxqlLnUv/QY5rZEjfzS8fVssAM+YviE+yxXJjoBhBNXBmEHPVG8WZo=
+X-Gm-Message-State: AOJu0YwZ9K9pMN1K4MSNOarCe/3CWc1lP66tSWSf8QddgD+wdNlDpgkG
+ auVzqXsFVZVD9VhIEAH1o432Nd6uGLXs0T4T/RL5Cpmgy69saC1plKT6VDDrb6YfScNqWGInteZ
+ S
+X-Google-Smtp-Source: AGHT+IH97tSfOOeXtEu/3JzOkIADRPCttrgY6hXElQdd9ILNYQuBTXqGtgXSueSFwZeTFXXnl2utdQ==
+X-Received: by 2002:a17:902:650d:b0:1f7:209f:ae1c with SMTP id
+ d9443c01a7336-1f9a8d4187bmr75218265ad.10.1718944555738; 
+ Thu, 20 Jun 2024 21:35:55 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.132.216])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9ebbc72e9sm4488425ad.296.2024.06.20.21.31.09
+ d9443c01a7336-1f9eb3c591bsm4635445ad.165.2024.06.20.21.35.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Jun 2024 21:31:09 -0700 (PDT)
-Message-ID: <6c36a71f-f149-4a86-a015-d2a18129ac55@linaro.org>
-Date: Thu, 20 Jun 2024 21:31:07 -0700
+ Thu, 20 Jun 2024 21:35:55 -0700 (PDT)
+Message-ID: <9127eb3a-0a95-4c72-96b9-9a6af6725c2d@linaro.org>
+Date: Thu, 20 Jun 2024 21:35:53 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/9] target/arm: Make some MTE helpers widely available
+Subject: Re: [PATCH v3 6/9] target/arm: Factor out code for setting MTE TCF0
+ field
 To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
  philmd@linaro.org, peter.maydell@linaro.org, alex.bennee@linaro.org
 References: <20240617062849.3531745-1-gustavo.romero@linaro.org>
- <20240617062849.3531745-6-gustavo.romero@linaro.org>
+ <20240617062849.3531745-7-gustavo.romero@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240617062849.3531745-6-gustavo.romero@linaro.org>
+In-Reply-To: <20240617062849.3531745-7-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,98 +101,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/16/24 23:28, Gustavo Romero wrote:
-> @@ -287,7 +256,7 @@ uint64_t HELPER(addsubg)(CPUARMState *env, uint64_t ptr,
->       return address_with_allocation_tag(ptr + offset, rtag);
->   }
->   
-> -static int load_tag1(uint64_t ptr, uint8_t *mem)
-> +inline int load_tag1(uint64_t ptr, uint8_t *mem)
->   {
->       int ofs = extract32(ptr, LOG2_TAG_GRANULE, 1) * 4;
->       return extract32(*mem, ofs, 4);
-> @@ -321,7 +290,7 @@ static void check_tag_aligned(CPUARMState *env, uint64_t ptr, uintptr_t ra)
->   }
->   
->   /* For use in a non-parallel context, store to the given nibble.  */
-> -static void store_tag1(uint64_t ptr, uint8_t *mem, int tag)
-> +inline void store_tag1(uint64_t ptr, uint8_t *mem, int tag)
->   {
->       int ofs = extract32(ptr, LOG2_TAG_GRANULE, 1) * 4;
->       *mem = deposit32(*mem, ofs, 4, tag);
+> Factor out the code used for setting the MTE TCF0 field from the prctl
+> code into a convenient function. Other subsystems, like gdbstub, need to
+> set this field as well, so keep it as a separate function to avoid
+> duplication and ensure consistency in how this field is set across the
+> board.
+> 
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>   linux-user/aarch64/target_prctl.h | 22 ++---------------
+>   target/arm/tcg/mte_user_helper.h  | 40 +++++++++++++++++++++++++++++++
 
-Move these two entirely to the header as static inline.
-In general, inline without static doesn't mean what you think.
+I'm not keen on this placement, because this is specifically linux syscall semantics.
 
-With that,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> diff --git a/target/arm/tcg/mte_helper.h b/target/arm/tcg/mte_helper.h
-> new file mode 100644
-> index 0000000000..69ad8457f8
-> --- /dev/null
-> +++ b/target/arm/tcg/mte_helper.h
-> @@ -0,0 +1,63 @@
-> +/*
-> + * ARM MemTag operation helpers.
-> + *
-> + * This code is licensed under the GNU GPL v2 or later.
-> + *
-> + * SPDX-License-Identifier: LGPL-2.1-or-later
-> + */
-> +
-> +#ifndef TARGET_ARM_MTE_H
-> +#define TARGET_ARM_MTE_H
-> +
-> +/**
-> + * allocation_tag_mem_probe:
-> + * @env: the cpu environment
-> + * @ptr_mmu_idx: the addressing regime to use for the virtual address
-> + * @ptr: the virtual address for which to look up tag memory
-> + * @ptr_access: the access to use for the virtual address
-> + * @ptr_size: the number of bytes in the normal memory access
-> + * @tag_access: the access to use for the tag memory
-> + * @probe: true to merely probe, never taking an exception
-> + * @ra: the return address for exception handling
-> + *
-> + * Our tag memory is formatted as a sequence of little-endian nibbles.
-> + * That is, the byte at (addr >> (LOG2_TAG_GRANULE + 1)) contains two
-> + * tags, with the tag at [3:0] for the lower addr and the tag at [7:4]
-> + * for the higher addr.
-> + *
-> + * Here, resolve the physical address from the virtual address, and return
-> + * a pointer to the corresponding tag byte.
-> + *
-> + * If there is no tag storage corresponding to @ptr, return NULL.
-> + *
-> + * If the page is inaccessible for @ptr_access, or has a watchpoint, there are
-> + * three options:
-> + * (1) probe = true, ra = 0 : pure probe -- we return NULL if the page is not
-> + *     accessible, and do not take watchpoint traps. The calling code must
-> + *     handle those cases in the right priority compared to MTE traps.
-> + * (2) probe = false, ra = 0 : probe, no fault expected -- the caller guarantees
-> + *     that the page is going to be accessible. We will take watchpoint traps.
-> + * (3) probe = false, ra != 0 : non-probe -- we will take both memory access
-> + *     traps and watchpoint traps.
-> + * (probe = true, ra != 0 is invalid and will assert.)
-> + */
-> +uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
-> +                                  uint64_t ptr, MMUAccessType ptr_access,
-> +                                  int ptr_size, MMUAccessType tag_access,
-> +                                  bool probe, uintptr_t ra);
-> +/**
-> + * load_tag1 - Load 1 tag (nibble) from byte
-> + * @ptr: The tagged address
-> + * @mem: The tag address (packed, 2 tags in byte)
-> + */
-> +int load_tag1(uint64_t ptr, uint8_t *mem);
-> +
-> +/**
-> + * store_tag1 - Store 1 tag (nibble) into byte
-> + * @ptr: The tagged address
-> + * @mem: The tag address (packed, 2 tags in byte)
-> + * @tag: The tag to be stored in the nibble
-> + */
-> +void store_tag1(uint64_t ptr, uint8_t *mem, int tag);
-> +
-> +#endif /* TARGET_ARM_MTE_H */
+I'm not sure what the right thing to do here, because it's not like there are any other OS 
+that support MTE at the moment, and gdb is inheriting linux's ptrace interface.
 
+I think it would be less bad if we put the header in linux-user/aarch64/ and have 
+target/arm/gdbstub.c include that if CONFIG_USER_ONLY & CONFIG_LINUX.
+
+
+r~
 
