@@ -4,88 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05826C2BA1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 15:32:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6719C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 15:43:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKgFE-0005ga-C8; Fri, 21 Jun 2024 11:32:08 -0400
+	id 1sKgPy-00026r-9n; Fri, 21 Jun 2024 11:43:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sKgFC-0005g8-IH
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:32:06 -0400
-Received: from vps-vb.mhejs.net ([37.28.154.113])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
- id 1sKgFA-0002ET-3i
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:32:06 -0400
-Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
- (envelope-from <mail@maciej.szmigiero.name>)
- id 1sKgF6-0003bX-81; Fri, 21 Jun 2024 17:32:00 +0200
-Message-ID: <dfe0384e-a765-4bfb-81c8-529329d76052@maciej.szmigiero.name>
-Date: Fri, 21 Jun 2024 17:31:54 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sKgPh-0001mh-Vs
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:42:59 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sKgPf-0004Hp-Gd
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:42:57 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-57cc1c00b97so2098306a12.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 08:42:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718984574; x=1719589374; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=IXSj+NNNgXINRu4ZC/RcR1zjLwZ2WpiPQ2GU5bGPi0c=;
+ b=luICIPFMXSpNp/rxdbgnv6s+C3wvnzvyjDTWLWv/JS73O6qGQRAeIgRPqdo0BNCL0G
+ GJpVoZ8AHB6xRMygjWB4KWnUpwkUmb42xgOrAYF2rskjt2puiD8eQnd4nqOyrBqbDvw6
+ FibKCgjDw8n+b+eTDvv0sJJs+9BRnLYT0ws/tO/kwWXk4un8nUCSfb/A3cSouU4lyi4S
+ uyKb0rdXo4EL4UG86Gm2u8VCbd8Iw19vOrADLUXR2AYeWHKseKBSVad9/0m8N0Y9cBSm
+ qJoZ5STv2sgCOQHxIfZfCZ9A+u7Xg3mZes8MKPAdasT4t5dOeXPpaKoBUpjcnCpPnWoG
+ /5qw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1718984574; x=1719589374;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IXSj+NNNgXINRu4ZC/RcR1zjLwZ2WpiPQ2GU5bGPi0c=;
+ b=VlIskB74Hk1dTqW/lyPUBrjq4Q3EWkmOj5hsVh5iKLDNZtHQdlpezb+nizENcD4VIb
+ ieUS0eGk/VL4Z9FWCtFrqJZXdffkIF2BaQAjqzEBMcmVfyigt+ncg8WYcS2FrYC2F7HR
+ zywR57JQyxOawp1WLuEbMOJ7gD6Cr0nYpHHMRpsR7HApXO07v7CWyfGz+K3MwV7hLkS5
+ dND6VPGSP4D4mqFTKTULci8Zl2pYJ3UkoKLPcIqYewdCMcvXhno2cuLTm+lFrsO0hlc2
+ 93L+p2D48tGF7GOC3+yUGtRlL9QFOUT7akoMzVtm6FhUT6UkrLteoASnqFfYb4qdX6F2
+ HDnw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVZfw3SD4zeETRA+euVR437kQjnMvkiAZ7lMnVCCQMv+4VM1o1Lo7SaMa2WGHWSE1w84cFnAbbHsDG8bEXwPGWVFAVLPQg=
+X-Gm-Message-State: AOJu0Yyel8TS/BSXJMyDXYePF/DQXzsWAC6IgCQj2FrUQP/kU1QpC+Ak
+ wX9K1wpn6NdGjbcllyNOyEfNxZgHjElbhNoeBbPoXdGNHZm0nJQtHqcPs++B5JCw24hETYdVZ6k
+ yVr0RTnExQ+MShl5pEUH+LLKq2qXuksBWLnMkUw==
+X-Google-Smtp-Source: AGHT+IFayiD+XyCR6nRLLfMFqk2ehbpw3mYKHEDExIWeo/poQp7EPrT4lUc0jt2XTNXgpgP4LVatO07VM3vpkQZ3dOw=
+X-Received: by 2002:a50:8acf:0:b0:57c:5764:15f1 with SMTP id
+ 4fb4d7f45d1cf-57d07eaab6fmr4716563a12.29.1718984573959; Fri, 21 Jun 2024
+ 08:42:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/7] migration/multifd: Introduce storage slots
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-References: <20240620212111.29319-1-farosas@suse.de>
- <f6f84518-530e-4332-8881-41a6219b8d4d@maciej.szmigiero.name>
- <87v822ibh8.fsf@suse.de>
-Content-Language: en-US, pl-PL
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <87v822ibh8.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=37.28.154.113;
- envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+References: <20240614093026.328271-1-sai.pavan.boddu@amd.com>
+ <20240614093026.328271-2-sai.pavan.boddu@amd.com>
+In-Reply-To: <20240614093026.328271-2-sai.pavan.boddu@amd.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 21 Jun 2024 16:42:43 +0100
+Message-ID: <CAFEAcA-A8xuJza+B8K3-6go=BBY+n9ruy7_FpEMTZKqKFPn+3w@mail.gmail.com>
+Subject: Re: [PATCH RFC 1/3] target/arm: Add dcc uart support
+To: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, francisco.iglesias@amd.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,74 +91,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.06.2024 17:04, Fabiano Rosas wrote:
-> "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
-> 
->> Hi Fabiano,
->>
->> On 20.06.2024 23:21, Fabiano Rosas wrote:
->>> Hi folks,
->>>
->>> First of all, apologies for the roughness of the series. I'm off for
->>> the next couple of weeks and wanted to put something together early
->>> for your consideration.
->>>
->>> This series is a refactoring (based on an earlier, off-list
->>> attempt[0]), aimed to remove the usage of the MultiFDPages_t type in
->>> the multifd core. If we're going to add support for more data types to
->>> multifd, we first need to clean that up.
->>>
->>> This time around this work was prompted by Maciej's series[1]. I see
->>> you're having to add a bunch of is_device_state checks to work around
->>> the rigidity of the code.
->>>
->>> Aside from the VFIO work, there is also the intent (coming back from
->>> Juan's ideas) to make multifd the default code path for migration,
->>> which will have to include the vmstate migration and anything else we
->>> put on the stream via QEMUFile.
->>>
->>> I have long since been bothered by having 'pages' sprinkled all over
->>> the code, so I might be coming at this with a bit of a narrow focus,
->>> but I believe in order to support more types of payloads in multifd,
->>> we need to first allow the scheduling at multifd_send_pages() to be
->>> independent of MultiFDPages_t. So here it is. Let me know what you
->>> think.
->>
->> Thanks for the patch set, I quickly glanced at these patches and they
->> definitely make sense to me.
->>
-(..)
->>> (as I said, I'll be off for a couple of weeks, so feel free to
->>> incorporate any of this code if it's useful. Or to ignore it
->>> completely).
->>
->> I guess you are targeting QEMU 9.2 rather than 9.1 since 9.1 has
->> feature freeze in about a month, correct?
->>
-> 
-> For general code improvements like this I'm not thinking about QEMU
-> releases at all. But this series is not super complex, so I could
-> imagine we merging it in time for 9.1 if we reach an agreement.
-> 
-> Are you thinking your series might miss the target? Or have concerns
-> over the stability of the refactoring? We can within reason merge code
-> based on the current framework and improve things on top, we already did
-> something similar when merging zero-page support. I don't have an issue
-> with that.
+On Fri, 14 Jun 2024 at 10:30, Sai Pavan Boddu <sai.pavan.boddu@amd.com> wrote:
+>
+> DCC is a debug port to transfer some data between debugger and
+> processor, we are using this feature to connect a chardev device.
+> Chardev frontends should be named as "dcc<cpu-index>" inorder to connect
+> to this interface.
+>
+> Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+> ---
+>  target/arm/cpu.h       | 11 +++++
+>  target/arm/internals.h |  4 ++
+>  target/arm/debug-dcc.c | 99 ++++++++++++++++++++++++++++++++++++++++++
+>  target/arm/helper.c    |  3 ++
+>  target/arm/meson.build |  1 +
+>  5 files changed, 118 insertions(+)
+>  create mode 100644 target/arm/debug-dcc.c
+>
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 3841359d0f..6b3cb8e70e 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -30,6 +30,8 @@
+>  #include "qapi/qapi-types-common.h"
+>  #include "target/arm/multiprocessing.h"
+>  #include "target/arm/gtimer.h"
+> +#include "chardev/char.h"
+> +#include "chardev/char-fe.h"
+>
+>  #ifdef TARGET_AARCH64
+>  #define KVM_HAVE_MCE_INJECTION 1
+> @@ -523,6 +525,11 @@ typedef struct CPUArchState {
+>
+>          /* NV2 register */
+>          uint64_t vncr_el2;
+> +        /*
+> +         * Debug Trace regsiters
+> +         */
+> +        uint32_t dbgdtr_tx;
+> +        uint32_t dbgdtr_rx;
+>      } cp15;
+>
+>      struct {
+> @@ -1097,6 +1104,9 @@ struct ArchCPU {
+>
+>      /* Generic timer counter frequency, in Hz */
+>      uint64_t gt_cntfrq_hz;
+> +
+> +    /* dcc chardev */
+> +    CharBackend dcc;
+>  };
+>
+>  typedef struct ARMCPUInfo {
+> @@ -2388,6 +2398,7 @@ enum arm_features {
+>       * CPU types added in future.
+>       */
+>      ARM_FEATURE_BACKCOMPAT_CNTFRQ, /* 62.5MHz timer default */
+> +    ARM_FEATURE_DCC,
 
-The reason that I asked whether you are targeting 9.1 is because my
-patch set is definitely targeting that release.
+Generally speaking we want to avoid adding new ARM_FEATURE bits
+if there's some way to identify the presence of the feature via
+the ID registers. In this case, the debug registers always exist
+as long as we have ARM_FEATURE_V7, I think. So I think we should
+always provide this as part of the registers we define in
+debug_cp_reginfo[] in debug_helper.c, rather than having a
+separate feature bit.
 
-At the same time my patch set will need to be rebased/refactored on top
-of this patch set if it is supposed to be merged for 9.1 too.
+>  };
+>
+>  static inline int arm_feature(CPUARMState *env, int feature)
+> diff --git a/target/arm/internals.h b/target/arm/internals.h
+> index 11b5da2562..2fa797c5df 100644
+> --- a/target/arm/internals.h
+> +++ b/target/arm/internals.h
+> @@ -1778,4 +1778,8 @@ uint64_t gt_get_countervalue(CPUARMState *env);
+>   * and CNTVCT_EL0 (this will be either 0 or the value of CNTVOFF_EL2).
+>   */
+>  uint64_t gt_virt_cnt_offset(CPUARMState *env);
+> +/*
+> + * Initialise Coresight Debug interface
+> + */
+> +void arm_dcc_init(ARMCPU *cpu);
+>  #endif
+> diff --git a/target/arm/debug-dcc.c b/target/arm/debug-dcc.c
+> new file mode 100644
+> index 0000000000..9144b54994
+> --- /dev/null
+> +++ b/target/arm/debug-dcc.c
+> @@ -0,0 +1,99 @@
+> +#include "qemu/osdep.h"
+> +#include "cpu.h"
+> +#include "internals.h"
+> +#include "cpregs.h"
+> +#include "chardev/char-fe.h"
+> +
+> +#define MDCCSR_EL0_RXFULL_MASK (1 << 30)
+> +#define MDCCSR_EL0_TXFULL_MASK (1 << 29)
+> +
+> +static void debug_dcc_write(CPUARMState *env, const ARMCPRegInfo *ri,
+> +                        uint64_t value)
+> +{
+> +    ARMCPU *cpu = ri->opaque;
+> +    env->cp15.dbgdtr_tx = value;
+> +
+> +    if (qemu_chr_fe_get_driver(&cpu->dcc)) {
 
-If this patch set gets merged quickly that's not really a problem.
+This is a weird function to have to call. Generally we set things
+up so that you don't need to care if there's actually anything
+connected to the chardev -- qemu_chr_fe_write() and friends will
+do nothing if there's no chardev attached to this backend.
 
-On the other hand, if another iteration(s) is/are needed AND you are
-not available in the coming weeks to work on them then there's a
-question whether we will make the required deadline.
+> +        /*
+> +         * Usually dcc is used for putc/getc calls which expect only
+> +         * 1 byte from external debugger.
+> +         * TODO: This needs to be generalized for other use-cases.
+> +         */
 
-Thanks,
-Maciej
+Is this referring to the way that the DCC is defined as a 64-bit
+(or 32-bit for AArch32) channel but we're ignoring all but the bottom
+8 bits of the values?
 
+> +        qemu_chr_fe_write_all(&cpu->dcc, (uint8_t *)&env->cp15.dbgdtr_tx, 1);
+
+The DCC has flow-control flags so we don't need to use _write_all, and
+generally we should avoid that in new code because it might block.
+
+> +    }
+> +}
+> +
+> +static uint64_t debug_dcc_read(CPUARMState *env, const ARMCPRegInfo *ri)
+> +{
+> +    uint32_t ret = 0;
+> +    ARMCPU *cpu = ri->opaque;
+> +
+> +    if (env->cp15.mdscr_el1 & MDCCSR_EL0_RXFULL_MASK) {
+> +        ret = env->cp15.dbgdtr_rx;
+> +        env->cp15.dbgdtr_rx = 0;
+> +        env->cp15.mdscr_el1 &= ~MDCCSR_EL0_RXFULL_MASK;
+> +        qemu_chr_fe_accept_input(&cpu->dcc);
+> +    }
+> +    return ret;
+> +}
+> +
+> +static const ARMCPRegInfo dcc_cp_reginfo[] = {
+> +    /* DBGDTRTX_EL0/DBGDTRRX_EL0 depend on direction */
+> +    { .name = "DBGDTR_EL0", .state = ARM_CP_STATE_AA64,
+> +      .opc0 = 2, .opc1 = 3, .crn = 0, .crm = 5, .opc2 = 0,
+> +      .access = PL0_RW, .writefn = debug_dcc_write,
+> +      .readfn = debug_dcc_read,
+> +      .type = ARM_CP_OVERRIDE, .resetvalue = 0 },
+> +    /* DBGDTRTXint/DBGDTRRXint depend on direction */
+> +    { .name = "DBGDTRint", .state = ARM_CP_STATE_AA32, .cp = 14,
+> +      .opc1 = 0, .crn = 0, .crm = 5, .opc2 = 0,
+> +      .access = PL0_RW, .writefn = debug_dcc_write,
+> +      .readfn = debug_dcc_read,
+> +      .type = ARM_CP_OVERRIDE, .resetvalue = 0 },
+> +};
+
+Other registers that need updates for a real DCC:
+ * MDCCSR_EL0
+ * OSDTRRX_EL1
+ * OSDTRTX_EL1
+
+(all of which we currently have dummy versions of in
+debug_helper.c).
+
+> +
+> +
+> +static int dcc_chr_can_read(void *opaque)
+> +{
+> +    ARMCPU *cpu = opaque;
+> +    CPUARMState *env = &cpu->env;
+> +
+> +    if (!(env->cp15.mdscr_el1 & MDCCSR_EL0_RXFULL_MASK)) {
+> +        /*
+> +         * Usually dcc is used for putc/getc calls which expect only
+> +         * 1 byte from external debugger.
+> +         * TODO: This needs to be generalized for other use-cases.
+> +         */
+> +        return 1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static void dcc_chr_read(void *opaque, const uint8_t *buf, int size)
+> +{
+> +    ARMCPU *cpu = opaque;
+> +    CPUARMState *env = &cpu->env;
+> +
+> +    env->cp15.dbgdtr_rx = *buf;
+> +    env->cp15.mdscr_el1 |= MDCCSR_EL0_RXFULL_MASK;
+> +}
+> +
+> +void arm_dcc_init(ARMCPU *cpu)
+> +{
+> +    Chardev *chr;
+> +    char *dcc_name;
+> +    CPUState *p = CPU(cpu);
+> +
+> +    dcc_name = g_strdup_printf("dcc%d", p->cpu_index);
+> +    chr = qemu_chr_find(dcc_name);
+> +    define_arm_cp_regs_with_opaque(cpu, dcc_cp_reginfo, cpu);
+> +    if (chr) {
+> +        qemu_chr_fe_init(&cpu->dcc, chr, NULL);
+> +        qemu_chr_fe_set_handlers(&cpu->dcc,
+> +                      dcc_chr_can_read,
+> +                      dcc_chr_read,
+> +                      NULL, NULL, cpu, NULL, true);
+> +    }
+> +    g_free(dcc_name);
+> +}
+
+thanks
+-- PMM
 
