@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36FA1C2BB85
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 16:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 641C4C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 16:21:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKgzh-0001w5-3n; Fri, 21 Jun 2024 12:20:09 -0400
+	id 1sKgzu-0002gD-TV; Fri, 21 Jun 2024 12:20:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=9ak7=NX=kaod.org=clg@ozlabs.org>)
- id 1sKgze-0001nc-6a; Fri, 21 Jun 2024 12:20:06 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1sKgzs-0002Xo-Ah; Fri, 21 Jun 2024 12:20:20 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=9ak7=NX=kaod.org=clg@ozlabs.org>)
- id 1sKgzc-0003ES-DK; Fri, 21 Jun 2024 12:20:05 -0400
+ id 1sKgzq-0003RB-Gg; Fri, 21 Jun 2024 12:20:20 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W5MyT74JJz4wcJ;
- Sat, 22 Jun 2024 02:20:01 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W5Mym1Kwhz4wcJ;
+ Sat, 22 Jun 2024 02:20:16 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W5MyR3yxjz4w2Q;
- Sat, 22 Jun 2024 02:19:59 +1000 (AEST)
-Message-ID: <fa032608-4fe9-4887-a3c4-b1bf6dddb3e6@kaod.org>
-Date: Fri, 21 Jun 2024 18:19:57 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W5Myj6Lr3z4wc5;
+ Sat, 22 Jun 2024 02:20:13 +1000 (AEST)
+Message-ID: <9c7e0930-4249-492e-86bf-77e59e873d43@kaod.org>
+Date: Fri, 21 Jun 2024 18:20:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/23] hw/sd/sdcard: Trace block offset in READ/WRITE data
- accesses
+Subject: Re: [PATCH 13/23] hw/sd/sdcard: Have cmd_valid_while_locked() return
+ a boolean value
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Joel Stanley <joel@jms.id.au>, Bin Meng <bmeng.cn@gmail.com>,
  Sai Pavan Boddu <sai.pavan.boddu@amd.com>, qemu-block@nongnu.org
 References: <20240621080554.18986-1-philmd@linaro.org>
- <20240621080554.18986-13-philmd@linaro.org>
+ <20240621080554.18986-14-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240621080554.18986-13-philmd@linaro.org>
+In-Reply-To: <20240621080554.18986-14-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=9ak7=NX=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -68,8 +68,6 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/21/24 10:05 AM, Philippe Mathieu-Daudé wrote:
-> Useful to detect out of bound accesses.
-> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
@@ -81,46 +79,30 @@ C.
 
 
 > ---
->   hw/sd/sd.c         | 4 ++--
->   hw/sd/trace-events | 4 ++--
->   2 files changed, 4 insertions(+), 4 deletions(-)
+>   hw/sd/sd.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
 > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 2586d15cbd..c6cc1bab11 100644
+> index c6cc1bab11..510784fc82 100644
 > --- a/hw/sd/sd.c
 > +++ b/hw/sd/sd.c
-> @@ -1868,7 +1868,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
+> @@ -1716,7 +1716,7 @@ static sd_rsp_type_t sd_app_command(SDState *sd,
+>       return sd_illegal;
+>   }
 >   
->       trace_sdcard_write_data(sd_proto(sd)->name,
->                               sd->last_cmd_name,
-> -                            sd->current_cmd, value);
-> +                            sd->current_cmd, sd->data_offset, value);
->       switch (sd->current_cmd) {
->       case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
->           sd->data[sd->data_offset ++] = value;
-> @@ -2024,7 +2024,7 @@ uint8_t sd_read_byte(SDState *sd)
->   
->       trace_sdcard_read_data(sd_proto(sd)->name,
->                              sd->last_cmd_name,
-> -                           sd->current_cmd, io_len);
-> +                           sd->current_cmd, sd->data_offset, io_len);
->       switch (sd->current_cmd) {
->       case 6:  /* CMD6:   SWITCH_FUNCTION */
->           ret = sd->data[sd->data_offset ++];
-> diff --git a/hw/sd/trace-events b/hw/sd/trace-events
-> index 724365efc3..0eee98a646 100644
-> --- a/hw/sd/trace-events
-> +++ b/hw/sd/trace-events
-> @@ -52,8 +52,8 @@ sdcard_lock(void) ""
->   sdcard_unlock(void) ""
->   sdcard_read_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
->   sdcard_write_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
-> -sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint8_t value) "%s %20s/ CMD%02d value 0x%02x"
-> -sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t length) "%s %20s/ CMD%02d len %" PRIu32
-> +sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint8_t value) "%s %20s/ CMD%02d ofs %"PRIu32" value 0x%02x"
-> +sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint32_t length) "%s %20s/ CMD%02d ofs %"PRIu32" len %" PRIu32
->   sdcard_set_voltage(uint16_t millivolts) "%u mV"
->   
->   # pxa2xx_mmci.c
+> -static int cmd_valid_while_locked(SDState *sd, const uint8_t cmd)
+> +static bool cmd_valid_while_locked(SDState *sd, unsigned cmd)
+>   {
+>       /* Valid commands in locked state:
+>        * basic class (0)
+> @@ -1730,7 +1730,7 @@ static int cmd_valid_while_locked(SDState *sd, const uint8_t cmd)
+>           return cmd == 41 || cmd == 42;
+>       }
+>       if (cmd == 16 || cmd == 55) {
+> -        return 1;
+> +        return true;
+>       }
+>       return sd_cmd_class[cmd] == 0 || sd_cmd_class[cmd] == 7;
+>   }
 
 
