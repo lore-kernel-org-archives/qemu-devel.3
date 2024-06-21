@@ -4,160 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2503AC2BA1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 09:50:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44608C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 10:17:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKauH-00085b-KM; Fri, 21 Jun 2024 05:50:09 -0400
+	id 1sKbKA-0007y4-Ny; Fri, 21 Jun 2024 06:16:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1sKauE-00084k-E4; Fri, 21 Jun 2024 05:50:06 -0400
-Received: from mail-mw2nam12on2061a.outbound.protection.outlook.com
- ([2a01:111:f403:200a::61a]
- helo=NAM12-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1sKbK8-0007xm-Oe
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 06:16:52 -0400
+Received: from esa11.hc1455-7.c3s2.iphmx.com ([207.54.90.137])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1sKauB-0001wv-O3; Fri, 21 Jun 2024 05:50:06 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Gtm4L16U+edFL/59hlvpvR7MKxtrdJ5wchKXI8Z1oWTdur4SW5wkPzRkMlFcr4Ob3geUCP4tfoC/PQfKusirM+pIQzaTaqItYX4kbLVGrc17dJVLa5e2vqBaFw6czZP2m9Y0qE2x0yj+ztKPERijl7xNgo7PO5g+c+d4uDEaQRULiwd4xnBTX5bjhJCYD3hF5jrrOCD/gRlJYkEeX0I59IIHNbzZu7OSdlSyrO43rAujq8O7TH6/7Q2nwuH99J81v9+jJ9pxwkeQn8nYW8v7SSUdbCWdH/SW/9RSyFwX6UQcjm1yMOTMyX3kGHEqXe5Mq1H2ZiIJfecPTvJR0ERrhg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=us6p6FPPifYtjo4p3jv1rSm02tN2mkuomQhW+R+Az/M=;
- b=j9NLrnhEgCldvmv1DzpVRJMqD9by1kJv0W0hkoC2Bnku342b7v4ItpNOLUwjjpUzoaT77kc7s5mDWiEJcOueN58WUhzI2vvY1do5UbY97fpYzPgz4C+elEug6wdcdeijTZ6zttPWkyLmpqtyuSXAAOA4J58GZnA6FHX0Mu/QwVWX9QpVHpXEnlDl8S1w7YpXRFi0Wb8uO+uILbH9A5FjulaMb2XkaH3+npUaOKtGAm5/odoz49qmoNX3jXsNkDbYp8qrjKXSGo4+LC0tZpYhgpAfN7YdMLzo5psygTQt8nNzp35xbNXjKLVxgZbZRMYeSipuOZjRMRvr2vZxAb444g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=us6p6FPPifYtjo4p3jv1rSm02tN2mkuomQhW+R+Az/M=;
- b=cy0v+KmUMriu2JWr9dlmdtgyAEcXFXRYwfF8chTh8mKC+aPX8ODgWHtpUX9Mh61XuznTPhzQS5aCzvVgjYnsWlsD7l5V7t9bHpQRCgk1Gr1Q1ALZJpQVSkdVec+s+h5nXRLGYlaZbFvg9c8sTySa/NXp8LRT5ti6OLl/I5ADmIY=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
- by MN2PR12MB4126.namprd12.prod.outlook.com (2603:10b6:208:199::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.21; Fri, 21 Jun
- 2024 09:49:55 +0000
-Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
- ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
- ([fe80::29bb:9aa:2a72:df1b%4]) with mapi id 15.20.7698.020; Fri, 21 Jun 2024
- 09:49:55 +0000
-Date: Fri, 21 Jun 2024 11:49:41 +0200
-From: Francisco Iglesias <francisco.iglesias@amd.com>
-To: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- "'Edgar E . Iglesias'" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>
-Subject: Re: [PATCH v3 2/3] hw/arm/xilinx_zynq: Add boot-mode property
-Message-ID: <ZnVMtVcrygtlGd2f@xse-figlesia-l2.amd.com>
-References: <20240620104139.217908-1-sai.pavan.boddu@amd.com>
- <20240620104139.217908-3-sai.pavan.boddu@amd.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240620104139.217908-3-sai.pavan.boddu@amd.com>
-X-ClientProxiedBy: FR0P281CA0210.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:ad::14) To SJ2PR12MB8739.namprd12.prod.outlook.com
- (2603:10b6:a03:549::10)
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1sKbK5-0006gl-Ea
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 06:16:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1718965009; x=1750501009;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=FL0ybe9oSjt/xHXdA51SYGX9XM4ph1qt9P2lcHNgOg4=;
+ b=cjiAtJFn8EmeF44LaUOpVNbAj0otjr0B1kS7NN9U/tk/TSVLv4RHtz3k
+ 6f7yzf7QyFjeZcPV+dp4d5RAWeOMyv8Fxvq+C4JPrJqn6tMhBx5EKYnIh
+ f3nZcNIfQWTWFq8/J97y21t8KcpiJfVxNrlGCx54rJvkd/ESF9Rqvr7Nx
+ HXKriY1J7hiTpNrJzJFkOZ3gsGUaIvzG6RZqrgPEAKBLK7xwnvpsGoiA+
+ PG2E3aC+FQmI/UQjTJ02+osN4lS4iW7l/0pXHSavbpwUgWTU1E/qYWkjz
+ rIvJp6FLMHCio98amxMfJmmAepQAopvCwmcmIfxCVCvwtmUHTBiSNsr24 w==;
+X-IronPort-AV: E=McAfee;i="6700,10204,11109"; a="143948478"
+X-IronPort-AV: E=Sophos;i="6.08,254,1712588400"; d="scan'208";a="143948478"
+Received: from unknown (HELO yto-r4.gw.nic.fujitsu.com) ([218.44.52.220])
+ by esa11.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Jun 2024 19:16:39 +0900
+Received: from yto-m3.gw.nic.fujitsu.com (yto-nat-yto-m3.gw.nic.fujitsu.com
+ [192.168.83.66])
+ by yto-r4.gw.nic.fujitsu.com (Postfix) with ESMTP id 9CAF816B906
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 19:16:37 +0900 (JST)
+Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
+ [192.51.206.22])
+ by yto-m3.gw.nic.fujitsu.com (Postfix) with ESMTP id D2CAFD969D
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 19:16:36 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 59236E5E04
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 19:16:36 +0900 (JST)
+Received: from [192.168.50.5] (unknown [10.167.226.114])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id B55371A0002;
+ Fri, 21 Jun 2024 18:16:34 +0800 (CST)
+Message-ID: <83c705ce-a013-4a88-adcd-18dbc16d88df@fujitsu.com>
+Date: Fri, 21 Jun 2024 18:16:33 +0800
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|MN2PR12MB4126:EE_
-X-MS-Office365-Filtering-Correlation-Id: b8dd99dc-dfbc-47c6-b3fa-08dc91d7816d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230037|376011|366013|1800799021;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?NnFzUFBmTWU5Wk1ZY1JkTklOempGVk5GVERkTDNNbXVUajJBRGV1Y2g1WjZx?=
- =?utf-8?B?dU52YTlvYTU2aUxmYno1dW9sdURUSno4U1J0RjM3bDFISVNrNlR2ZHYxOEd5?=
- =?utf-8?B?S3FoaUZ0VnZKcGtOZFI1Y3F3dTYzWkRvZjVvNC9idHJNeVR6TnZla1pXcGpw?=
- =?utf-8?B?cjAxMHgvaFFwR25ZZ2FlMGZOMndoZHNINEU4c2kxK3UwSnpxam53OVpnUVdi?=
- =?utf-8?B?RUNPb3hsVnBXa3FRSjVUVGV2VjM3UXFBN2JUai9SWUd4WlZOd1Mxckl5OENM?=
- =?utf-8?B?cEZzWUw0QVZsaWxYRkt2bXF6ZFJ3bWJOckVsQmRHRVBTbGtNYjcvOHFkZVJr?=
- =?utf-8?B?Yk5hNnVhZ05NckYvWDR6c29qYUF4ZEFGSEJYNWtpNGwyaGJyaTJ5eGZUbmZo?=
- =?utf-8?B?MWhKRDZhSjc5SWVIS0YxdUo1bTU5ZHlFQ3E5UkFyYTlQWUJLQ0lSbjRzT0Z3?=
- =?utf-8?B?YkszQjdIMVdXWWY3Q2tQV2JjbkhHTHY2Zk1jZFpVeVNyTFQ4Nzh2ZmVIbjlD?=
- =?utf-8?B?QWU5TCtPbTZ2dm5DaVZNYVdWd2cxb00zVllxc2ZEeUNQVThxOUVlUXZtNVZ0?=
- =?utf-8?B?UFRtOVhYdUZUWjJFMEpaYlhWTmhOWU44KzA5SGhySmFnN243RjhFSFFqNnZH?=
- =?utf-8?B?K1BpeWR3dHR0Qk5QQmY3T3VsQWpZN1pHaEdzeS9qVWR2VWNIcWlOWXhUU09B?=
- =?utf-8?B?SHBhQzI1cytJV3ZieHR5VGRFRkRRRDJFZkUwc3YwK3NJOVIzVTFuc0cyb3ln?=
- =?utf-8?B?dnAzY2NqVytVZFRDdVBWM3FBV2h6MGJBNkZnYXVoK1E2S1d0QTVhREdCSXVV?=
- =?utf-8?B?TlRiRjZINGhaT1o0czNCdjhWM1pYRUNpRDR4bXFFMlNURmc4OU5SdWJ4UU5h?=
- =?utf-8?B?MXhoZmxrTDVtU1c0aDNMMjJ1elhWbG0yaVNsOHhxalNzS3hiWWcvbFZIVVdo?=
- =?utf-8?B?QzBUWnlJTFRlcVNmQW5WeGtWSWYwQ3BVK0hhcG51V1dqNG41SHZTMDFuQkM2?=
- =?utf-8?B?M3JWUS9MZnpsWTBBeU5GNjJDMjc3YmtuSGhiMERUeFVCUmowb2hueHBHS1ZJ?=
- =?utf-8?B?YlJKQXpRWllkOWI0Q0RORTZmM2MxQlhLOE1tUisvZEM4MnVBZTB4M3RRNlZu?=
- =?utf-8?B?L05hejRWL1pvamtSTEF6eDU4QlJ4QjhzRlZrU216NDNGVjdFSmJPWW1PREp2?=
- =?utf-8?B?eWNPQW5OMjRoK0RyNWhBamp5UlVyY2diOHRKckhhU3RLck9hSE8vcU5qRHFK?=
- =?utf-8?B?ZHFtMnJncWRSTWZpQ25IaHhwdTI4dTFtSVRBMFViZWVZb2gvSTN6M2hMOCtP?=
- =?utf-8?B?Ky9YQ2ExOHpPOXdTSUZWdW11M3FBNjBKczJEaHhCZ1FGaDhzSzJHZXZaZ2dx?=
- =?utf-8?B?V21aWmE5ZDZ0bFdBd2pRdzZJOS9XWThnOXhJWkp0ZTRZcVN0cTNhWTNWK0FD?=
- =?utf-8?B?TGxjU0NiNCtGWmhNOHN2YnNZRnJIRDA2SnJUbGttM3pqcjUySUVwZXM3Y2Q4?=
- =?utf-8?B?N2R0TnJveHBWKzZoVG5RNkRSZHpsMWtUUjdlaVpRVzVIbjUvV0hIb3N2VWha?=
- =?utf-8?B?Zm9PZ2dEVmZPUXUzSHpMUUU0ZDFuRys0em1sNVJrdUY2dEx0eU8wN1VZQ1do?=
- =?utf-8?B?bjdVeVZGS3lOdG1SdTMrNVQ4TTYxeCthTk5XVWZ0djdxMmNETjh0YklRWkw1?=
- =?utf-8?B?VDgzcWlKNFpXK0owczQ5V3lyNzhPY2c5eFowUFp3SWFwakdEN2NMYm10Umo2?=
- =?utf-8?Q?WsAgl4q8Yfe3lci3dwj2uyO5JiYtTq4kYtJ1F45?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230037)(376011)(366013)(1800799021); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YjE2TXErNDIvZDloZUIyS0RaUm5xQ1I3RE85ZXRPdEJtcElibWJaVHNBd1Ro?=
- =?utf-8?B?ZGZBTlBjRjhHemxpbGNZeGpYbDZuNnpYMHpTdHY2SjVFZ0YrZFdRdXpXN1Fo?=
- =?utf-8?B?L1dISEZVQStSeHAxL1NhRm16bjJ5MnN0ZWtEREh6S3p2M2daUERGM3ZSeFBF?=
- =?utf-8?B?b2E5aFM5T1JYczBOOTZxVU5NeG44c05KbyswOHRucDNMREpzTnNIT1VxL3Zn?=
- =?utf-8?B?OS91UWlUN2doVWdJa3RSeTJvNW1taWFMcFd5djNqYVlBOVZzNmlCYXdTZTJY?=
- =?utf-8?B?TjNIb0VZZkFGVzdoUTlJazg0dHQ5TmVEQldFSmtYK1ZLQitKYThUbVZjb1hw?=
- =?utf-8?B?cjBzVWNYQ2dBV3lKRWp3UUg3bzAxK00yVTZuQzRxTU10bGxzZTFmYUpjYW5t?=
- =?utf-8?B?eTk5QmxVMUVOdFExSURlRTZTcW9SYXlPZ2VpS1N0MU1oMEF5cWptWnBwZm5x?=
- =?utf-8?B?RUtlNVVQc2l2Tm9kWjRhMmV1eHFKWnRwOWRpb1dQRTA2RHpweEFsdC82MFBR?=
- =?utf-8?B?aUhCQ3VnanRjMC9lQ3RmZWNuZWp1ejRMRDh3eXRQcEZyam8rYUN5LzB0Sm8z?=
- =?utf-8?B?U1ltaGgrdDJaVWgvQXNRWE5kcWNBVjZjeFlVaThtYkNxcTJDUWkzbkNYbXdN?=
- =?utf-8?B?VllJWTdBWk5MTHJnM21IQ295MFRGR2c4OFhKUG1QNEJTWHAwdk9pYjlyOFdo?=
- =?utf-8?B?ZnhrcFg0dDZHSGovUTZWd2hRSWhna3NUR2JONVgvazgxSHdGRUEzM1crNDdw?=
- =?utf-8?B?TlRrZ09kMjJYNFMxN3BTUFBxSWxXNFJrcTVTRktTbHFCa0RSWEhIT2hqaEZJ?=
- =?utf-8?B?VTBvaXRjL3p6bVo0cnptSVYwSDB2MzlJeThCTlI4UHZSUU5RYktuUWlvbDEr?=
- =?utf-8?B?UERhQldFYnF4Y1RZMEpjS0VVOTlSZzN4eURoaS94WWFvUHNxazVSd1U1VmRu?=
- =?utf-8?B?ZkFSQWs4SDVveGJJMjZrSlVhdVRCQTlwWmk3NTZmbWZyWDBKU0tubWx0V1E3?=
- =?utf-8?B?czRaODlhb0ZuV2N4VEx4SmdqNmZMWU5pZzhBUzJ6a0lFNDNucTU2aDJtekpN?=
- =?utf-8?B?UGluV29RZWlUSEFHL3RobDBqTS9Ba1d6aTQ2NWJyWUhMcFc5ekRjMGNmZHlp?=
- =?utf-8?B?STBzeW1lcVc1NXpKSlRVRXV1UWsyTkRMUHViZEtvejF5ZzZQaEMydlpwYzc5?=
- =?utf-8?B?ZCsvZlMvTldYcVlkMUMxZy9aRjFhZXRXMFY0VmVXOXlLQk4xTmp0dm9aaEF4?=
- =?utf-8?B?T1U3SW9sZExmOS9wNk9RdVA3b1diVXNIK1FMWHN6ekNQUUNWMGZxK1AyMHJZ?=
- =?utf-8?B?SmdTMldpWVdxRk1wL2pEOHBiSExuSkhtZGVkaFVOaENRbTl5SjFnQ2NIaXdx?=
- =?utf-8?B?ZmM0WnY4UXZBd1JJWkVFdEhhSmVQR2Vvc0FBWmxaNkhVdC9qeTQ3R1I0SVkw?=
- =?utf-8?B?c0FrN2tDMVpwWGdLdUtXZlpkaXZyaTlVcVNxaU1qR2lXZ1FieThKUE04cEFx?=
- =?utf-8?B?SlkwSjNEMndFWVpnR2VIQWJlYzl3YmdnR2NuZWNBWjMrUEJraEUraHJ4REFl?=
- =?utf-8?B?dG92cnd6dU9INlU0T3VaaVk3eXVZUkppZmpqSS8xcjM4TVk4dE9hOHhOTVNz?=
- =?utf-8?B?NVhIVlNsS2hqdGc1UHN6TVBoSlZMZzIwdkhocHZwSkI1L1B3QnhpZmFMeURH?=
- =?utf-8?B?cVR3WncvODE0UXV1SkpCSXpWSVM3R1gwazBmbGIxdWNYM0pIWVl0R3ptR1lk?=
- =?utf-8?B?bUY0M01lMnZPaDIvdzdtRUI0MVFmTXYyRzhQUXhQV2pPUnFxN1NiNzBKaUsw?=
- =?utf-8?B?blJwUm9meFFTYW9rK29BMCtTUzRDeHo0Wm9HSE5USmU3QUttRTVvUXdaa2xC?=
- =?utf-8?B?NG1sR20vaTVrK2FubnhYZ0VGQ1gwVjVkanBJTDJRc2ozU3BWN2pnbUpoSHZv?=
- =?utf-8?B?OUROamFhMlFXU08zdUZTOXdVR2VsMDFRbElhQk5iT0cySjBpQVlJOFNxaUFT?=
- =?utf-8?B?bktRaGt1MHdzZ3ZRZWVsRlhCM2k0QzJONld1NVRvekUyVThLMzNoWjdFaENq?=
- =?utf-8?B?OW85WGhKVUR5KzV3N0N5Q0dPVVc2bHg3MVk1WC9HWU1FZDZoTzJLYjFETnpi?=
- =?utf-8?Q?NozUz+BIQ3AJ38zlw5tdiyzQX?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b8dd99dc-dfbc-47c6-b3fa-08dc91d7816d
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jun 2024 09:49:55.6669 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mszuN3WntoKb34alA7ulL6rAd+Ednvg2wEAo/Tc6H9hs/9UMLrB4zcYstc+j1oXuPleHU+CQVR2uHWL3+yieZg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4126
-Received-SPF: permerror client-ip=2a01:111:f403:200a::61a;
- envelope-from=francisco.iglesias@amd.com;
- helo=NAM12-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] cxl: avoid duplicating report from MCE & device
+To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
+ dan.j.williams@intel.com, dave@stgolabs.net, ira.weiny@intel.com,
+ alison.schofield@intel.com, dave.jiang@intel.com, vishal.l.verma@intel.com,
+ Borislav Petkov <bp@alien8.de>, Tony Luck <tony.luck@intel.com>,
+ James Morse <james.morse@arm.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Robert Richter <rric@kernel.org>,
+ linux-edac@vger.kernel.org, Miaohe Lin <linmiaohe@huawei.com>,
+ Naoya Horiguchi <nao.horiguchi@gmail.com>, linux-mm@kvack.org
+References: <20240618165310.877974-1-ruansy.fnst@fujitsu.com>
+ <20240620180239.00004d41@Huawei.com>
+In-Reply-To: <20240620180239.00004d41@Huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28468.004
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28468.004
+X-TMASE-Result: 10--30.233600-10.000000
+X-TMASE-MatchedRID: OnXFgg5KIq2PvrMjLFD6eKn9fPsu8s0a2q80vLACqaeqvcIF1TcLYLBk
+ jjdoOP1bp3Z/y3zTL9+zN6XcSN8uuHerlGbz8OXFolVO7uyOCDUXivwflisSrEJsNXD374+pO+W
+ Rk1kOc5MCcJ+0x3yT8twnF1a+MpDfC5dVqsgzBjuOFfLQqF6P0tUEOicf335WUoV94zwLp3VJ9L
+ 43nm/22bqZhYf6F5ZElyW1ZrZx68b/awIuxLRW1EhwlOfYeSqxlDt5PQMgj00zAwv94MqCLh8aR
+ hKglPt8mNVEdxRO2BKiQrGQ0QrIUcfdkIlEiI2knVTWWiNp+v/0swHSFcVJ6DxzAG47ocHfBk0s
+ RysFrTA+flhazaw2+PtIw293QqFjj4s0JN6UudnfqVBdB7I8UeTuQvwGTH36sqiKlYBJQxguJaP
+ bC+kbrOmOkdLRzR1Y63smvwVtnbpFFCG8sIFUT7nHu4BcYSmtwTlc9CcHMZerwqxtE531VBFup4
+ CINH3JYGFrrc6fVM/HUvCTKXIuFlE/ARLVFdXaA3HGs3zFTqgGsbP1/fAnOf/PlfQrPF26UqOSl
+ IOIhgkKJfF2LeZOj/OKfz3NcveUOn+bl8FgKwanOYknDZ/QocMKxxeacM3vqU5CNByvM6VNMJgQ
+ uMz4JUFg+UhPNwox9J777fUg1RCR9GF2J2xqM4MbH85DUZXyudR/NJw2JHcNYpvo9xW+mI6HM5r
+ qDwqtlExlQIQeRG0=
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=207.54.90.137;
+ envelope-from=ruansy.fnst@fujitsu.com; helo=esa11.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -171,119 +108,314 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
+From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Sai,
 
-Some optional suggestions below and minor indentation correction. 
 
-On Thu, Jun 20, 2024 at 04:11:38PM +0530, Sai Pavan Boddu wrote:
-> Read boot-mode value as machine property and propagate that to
-> SLCR.BOOT_MODE register.
+在 2024/6/21 1:02, Jonathan Cameron 写道:
+> On Wed, 19 Jun 2024 00:53:10 +0800
+> Shiyang Ruan <ruansy.fnst@fujitsu.com> wrote:
 > 
-> Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-> Acked-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> ---
->  hw/arm/xilinx_zynq.c | 31 +++++++++++++++++++++++++++++++
->  1 file changed, 31 insertions(+)
+>> Background:
+>> Since CXL device is a memory device, while CPU consumes a poison page of
+>> CXL device, it always triggers a MCE by interrupt (INT18), no matter
+>> which-First path is configured.  This is the first report.  Then
+>> currently, in FW-First path, the poison event is transferred according
+>> to the following process: CXL device -> firmware -> OS:ACPI->APEI->GHES
+>>   -> CPER -> trace report.  This is the second one.  These two reports
+>> are indicating the same poisoning page, which is the so-called "duplicate
+>> report"[1].  And the memory_failure() handling I'm trying to add in
+>> OS-First path could also be another duplicate report.
+>>
+>> Hope the flow below could make it easier to understand:
+>> CPU accesses bad memory on CXL device, then
+>>   -> MCE (INT18), *always* report (1)
+>>   -> * FW-First (implemented now)
+>>        -> CXL device -> FW
+>> 	      -> OS:ACPI->APEI->GHES->CPER -> trace report (2.a)
+>>      * OS-First (not implemented yet, I'm working on it)
+>>        -> CXL device -> MSI
+>> 	      -> OS:CXL driver -> memory_failure() (2.b)
+>> so, the (1) and (2.a/b) are duplicated.
+>>
+>> (I didn't get response in my reply for [1] while I have to make patch to
+>> solve this problem, so please correct me if my understanding is wrong.)
+>>
+>> This patch adds a new notifier_block and MCE_PRIO_CXL, for CXL memdev
+>> to check whether the current poison page has been reported (if yes,
+>> stop the notifier chain, won't call the following memory_failure()
+>> to report), into `x86_mce_decoder_chain`.  In this way, if the poison
+>> page already handled(recorded and reported) in (1) or (2), the other one
+>> won't duplicate the report.  The record could be clear when
+>> cxl_clear_poison() is called.
+>>
+>> [1] https://lore.kernel.org/linux-cxl/664d948fb86f0_e8be294f8@dwillia2-mobl3.amr.corp.intel.com.notmuch/
+>>
+>> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
 > 
-> diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
-> index 7f7a3d23fbe..39f07e6dfd8 100644
-> --- a/hw/arm/xilinx_zynq.c
-> +++ b/hw/arm/xilinx_zynq.c
-> @@ -38,6 +38,7 @@
->  #include "qom/object.h"
->  #include "exec/tswap.h"
->  #include "target/arm/cpu-qom.h"
-> +#include "qapi/visitor.h"
->  
->  #define TYPE_ZYNQ_MACHINE MACHINE_TYPE_NAME("xilinx-zynq-a9")
->  OBJECT_DECLARE_SIMPLE_TYPE(ZynqMachineState, ZYNQ_MACHINE)
-> @@ -90,6 +91,7 @@ struct ZynqMachineState {
->      MachineState parent;
->      Clock *ps_clk;
->      ARMCPU *cpu[ZYNQ_MAX_CPUS];
-> +    uint8_t boot_mode;
->  };
->  
->  static void zynq_write_board_setup(ARMCPU *cpu,
-> @@ -176,6 +178,27 @@ static inline int zynq_init_spi_flashes(uint32_t base_addr, qemu_irq irq,
->      return unit;
->  }
->  
-> +static void zynq_set_boot_mode(Object *obj, const char *str,
-> +                                               Error **errp)
-> +{
-> +    ZynqMachineState *m = ZYNQ_MACHINE(obj);
-> +    uint8_t mode = 0;
-> +
-> +    if (!strcasecmp(str, "QSPI")) {
-> +        mode = 1;
-> +    } else if (!strcasecmp(str, "SD")) {
-> +        mode = 5;
-> +    } else if (!strcasecmp(str, "NOR")) {
-> +        mode = 2;
-> +    } else if (!strcasecmp(str, "JTAG")) {
+> So poison can be cleared in a number of ways and a CXL poison clear command
+> is unfortunately only one of them.  Some architectures have instructions
+> that guarantee to write a whole cacheline and can clear things as well.
+> I believe x86 does for starters.
 
-Suggestion 1 is to use strncasecmp above.
+According to the CXL Spec, to clear an error record on device, an 
+explicit clear operation is required (I think this means sending a mbox 
+command).  I'm not sure if it is able to clear device error by just 
+writing a whole cacheline.
 
-> +        mode = 0;
-> +    } else {
-> +        error_setg(errp, "bootmode %s not supported", str);
+> 
+> +CC linux-edac and related maintainers / reviewers.
+>      linux-mm and hwpoison maintainer.
+> 
+> So I think this needs a more general solution that encompasses
+> more general cleanup of poison.
+> 
+> Trivial comments inline.
 
-Suggestion 2 is to do s/bootmode/boot mode/ above (for matching the error
-message in patch 1).
+Thanks
 
-> +        return;
-> +    }
-> +    m->boot_mode = mode;
-> +}
-> +
->  static void zynq_init(MachineState *machine)
->  {
->      ZynqMachineState *zynq_machine = ZYNQ_MACHINE(machine);
-> @@ -241,6 +264,7 @@ static void zynq_init(MachineState *machine)
->      /* Create slcr, keep a pointer to connect clocks */
->      slcr = qdev_new("xilinx-zynq_slcr");
->      qdev_connect_clock_in(slcr, "ps_clk", zynq_machine->ps_clk);
-> +    qdev_prop_set_uint8(slcr, "boot-mode", zynq_machine->boot_mode);
->      sysbus_realize_and_unref(SYS_BUS_DEVICE(slcr), &error_fatal);
->      sysbus_mmio_map(SYS_BUS_DEVICE(slcr), 0, 0xF8000000);
->  
-> @@ -372,6 +396,7 @@ static void zynq_machine_class_init(ObjectClass *oc, void *data)
->          NULL
->      };
->      MachineClass *mc = MACHINE_CLASS(oc);
-> +    ObjectProperty *prop;
->      mc->desc = "Xilinx Zynq Platform Baseboard for Cortex-A9";
->      mc->init = zynq_init;
->      mc->max_cpus = ZYNQ_MAX_CPUS;
-> @@ -379,6 +404,12 @@ static void zynq_machine_class_init(ObjectClass *oc, void *data)
->      mc->ignore_memory_transaction_failures = true;
->      mc->valid_cpu_types = valid_cpu_types;
->      mc->default_ram_id = "zynq.ext_ram";
-> +    prop = object_class_property_add_str(oc, "boot-mode", NULL,
-> +                              zynq_set_boot_mode);
+> 
+> Jonathan
+> 
+> 
+>> ---
+>>   arch/x86/include/asm/mce.h |   1 +
+>>   drivers/cxl/core/mbox.c    | 130 +++++++++++++++++++++++++++++++++++++
+>>   drivers/cxl/core/memdev.c  |   6 +-
+>>   drivers/cxl/cxlmem.h       |   3 +
+>>   4 files changed, 139 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/x86/include/asm/mce.h b/arch/x86/include/asm/mce.h
+>> index dfd2e9699bd7..d8109c48e7d9 100644
+>> --- a/arch/x86/include/asm/mce.h
+>> +++ b/arch/x86/include/asm/mce.h
+>> @@ -182,6 +182,7 @@ enum mce_notifier_prios {
+>>   	MCE_PRIO_NFIT,
+>>   	MCE_PRIO_EXTLOG,
+>>   	MCE_PRIO_UC,
+>> +	MCE_PRIO_CXL,
+>>   	MCE_PRIO_EARLY,
+>>   	MCE_PRIO_CEC,
+>>   	MCE_PRIO_HIGHEST = MCE_PRIO_CEC
+>> diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+>> index 2626f3fff201..0eb3c5401e81 100644
+>> --- a/drivers/cxl/core/mbox.c
+>> +++ b/drivers/cxl/core/mbox.c
+>> @@ -4,6 +4,8 @@
+>>   #include <linux/debugfs.h>
+>>   #include <linux/ktime.h>
+>>   #include <linux/mutex.h>
+>> +#include <linux/notifier.h>
+>> +#include <asm/mce.h>
+>>   #include <asm/unaligned.h>
+>>   #include <cxlpci.h>
+>>   #include <cxlmem.h>
+>> @@ -880,6 +882,9 @@ void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
+>>   		if (cxlr)
+>>   			hpa = cxl_trace_hpa(cxlr, cxlmd, dpa);
+>>   
+>> +		if (hpa != ULLONG_MAX && cxl_mce_recorded(hpa))
+>> +			return;
+>> +
+>>   		if (event_type == CXL_CPER_EVENT_GEN_MEDIA)
+>>   			trace_cxl_general_media(cxlmd, type, cxlr, hpa,
+>>   						&evt->gen_media);
+>> @@ -1408,6 +1413,127 @@ int cxl_poison_state_init(struct cxl_memdev_state *mds)
+>>   }
+>>   EXPORT_SYMBOL_NS_GPL(cxl_poison_state_init, CXL);
+>>   
+>> +struct cxl_mce_record {
+>> +	struct list_head node;
+>> +	u64 hpa;
+>> +};
+>> +LIST_HEAD(cxl_mce_records);
+>> +DEFINE_MUTEX(cxl_mce_mutex);
+>> +
+>> +bool cxl_mce_recorded(u64 hpa)
+>> +{
+>> +	struct cxl_mce_record *cur, *next, *rec;
+>> +	int rc;
+>> +
+>> +	rc = mutex_lock_interruptible(&cxl_mce_mutex);
+> 
+> guard(mutex)(&cxl_mce_muted);
+> 
+>> +	if (rc)
+>> +		return false;
+>> +
+>> +	list_for_each_entry_safe(cur, next, &cxl_mce_records, node) {
+>> +		if (cur->hpa == hpa) {
+>> +			mutex_unlock(&cxl_mce_mutex);
+>> +			return true;
+>> +		}
+>> +	}
+>> +
+>> +	rec = kmalloc(sizeof(struct cxl_mce_record), GFP_KERNEL);
+>> +	rec->hpa = hpa;
+>> +	list_add(&cxl_mce_records, &rec->node);
+>> +
+>> +	mutex_unlock(&cxl_mce_mutex);
+>> +
+>> +	return false;
+>> +}
+>> +
+>> +void cxl_mce_clear(u64 hpa)
+>> +{
+>> +	struct cxl_mce_record *cur, *next;
+>> +	int rc;
+>> +
+>> +	rc = mutex_lock_interruptible(&cxl_mce_mutex);
+> 
+> Maybe cond_guard().
 
-Indentation on above line needs be corrected.
-
-With above corrected:
-
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+Ok, this is better.  I'll use automatic clean locks instead.
 
 
-> +    object_class_property_set_description(oc, "boot-mode",
-> +                                          "Supported boot modes:"
-> +                                          " JTAG QSPI SD NOR");
+--
+Thanks,
+Ruan.
 
-Suggestion 3 use lower case on above to match patch 3.
-
-> +    object_property_set_default_str(prop, "QSPI");
->  }
->  
->  static const TypeInfo zynq_machine_type = {
-> -- 
-> 2.34.1
+> 
+>> +	if (rc)
+>> +		return;
+>> +
+>> +	list_for_each_entry_safe(cur, next, &cxl_mce_records, node) {
+>> +		if (cur->hpa == hpa) {
+>> +			list_del(&cur->node);
+>> +			break;
+>> +		}
+>> +	}
+>> +
+>> +	mutex_unlock(&cxl_mce_mutex);
+>> +}
+>> +
+>> +struct cxl_contains_hpa_context {
+>> +	bool contains;
+>> +	u64 hpa;
+>> +};
+>> +
+>> +static int __cxl_contains_hpa(struct device *dev, void *arg)
+>> +{
+>> +	struct cxl_contains_hpa_context *ctx = arg;
+>> +	struct cxl_endpoint_decoder *cxled;
+>> +	struct range *range;
+>> +	u64 hpa = ctx->hpa;
+>> +
+>> +	if (!is_endpoint_decoder(dev))
+>> +		return 0;
+>> +
+>> +	cxled = to_cxl_endpoint_decoder(dev);
+>> +	range = &cxled->cxld.hpa_range;
+>> +
+>> +	if (range->start <= hpa && hpa <= range->end) {
+>> +		ctx->contains = true;
+>> +		return 1;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static bool cxl_contains_hpa(const struct cxl_memdev *cxlmd, u64 hpa)
+>> +{
+>> +	struct cxl_contains_hpa_context ctx = {
+>> +		.contains = false,
+>> +		.hpa = hpa,
+>> +	};
+>> +	struct cxl_port *port;
+>> +
+>> +	port = cxlmd->endpoint;
+>> +	if (port && is_cxl_endpoint(port) && cxl_num_decoders_committed(port))
+>> +		device_for_each_child(&port->dev, &ctx, __cxl_contains_hpa);
+>> +
+>> +	return ctx.contains;
+>> +}
+>> +
+>> +static int cxl_handle_mce(struct notifier_block *nb, unsigned long val,
+>> +			  void *data)
+>> +{
+>> +	struct mce *mce = (struct mce *)data;
+>> +	struct cxl_memdev_state *mds = container_of(nb, struct cxl_memdev_state,
+>> +						    mce_notifier);
+>> +	u64 hpa;
+>> +
+>> +	if (!mce || !mce_usable_address(mce))
+>> +		return NOTIFY_DONE;
+>> +
+>> +	hpa = mce->addr & MCI_ADDR_PHYSADDR;
+>> +
+>> +	/* Check if the PFN is located on this CXL device */
+>> +	if (!pfn_valid(hpa >> PAGE_SHIFT) &&
+>> +	    !cxl_contains_hpa(mds->cxlds.cxlmd, hpa))
+>> +		return NOTIFY_DONE;
+>> +
+>> +	/*
+>> +	 * Search PFN in the cxl_mce_records, if already exists, don't continue
+>> +	 * to do memory_failure() to avoid a poison address being reported
+>> +	 * more than once.
+>> +	 */
+>> +	if (cxl_mce_recorded(hpa))
+>> +		return NOTIFY_STOP;
+>> +	else
+>> +		return NOTIFY_OK;
+>> +}
+>> +
+>>   struct cxl_memdev_state *cxl_memdev_state_create(struct device *dev)
+>>   {
+>>   	struct cxl_memdev_state *mds;
+>> @@ -1427,6 +1553,10 @@ struct cxl_memdev_state *cxl_memdev_state_create(struct device *dev)
+>>   	mds->ram_perf.qos_class = CXL_QOS_CLASS_INVALID;
+>>   	mds->pmem_perf.qos_class = CXL_QOS_CLASS_INVALID;
+>>   
+>> +	mds->mce_notifier.notifier_call = cxl_handle_mce;
+>> +	mds->mce_notifier.priority = MCE_PRIO_CXL;
+>> +	mce_register_decode_chain(&mds->mce_notifier);
+>> +
+>>   	return mds;
+>>   }
+>>   EXPORT_SYMBOL_NS_GPL(cxl_memdev_state_create, CXL);
+>> diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
+>> index 0277726afd04..aa3ac89d17be 100644
+>> --- a/drivers/cxl/core/memdev.c
+>> +++ b/drivers/cxl/core/memdev.c
+>> @@ -376,10 +376,14 @@ int cxl_clear_poison(struct cxl_memdev *cxlmd, u64 dpa)
+>>   		goto out;
+>>   
+>>   	cxlr = cxl_dpa_to_region(cxlmd, dpa);
+>> -	if (cxlr)
+>> +	if (cxlr) {
+>> +		u64 hpa = cxl_trace_hpa(cxlr, cxlmd, dpa);
+>> +
+>> +		cxl_mce_clear(hpa);
+>>   		dev_warn_once(mds->cxlds.dev,
+>>   			      "poison clear dpa:%#llx region: %s\n", dpa,
+>>   			      dev_name(&cxlr->dev));
+>> +	}
+>>   
+>>   	record = (struct cxl_poison_record) {
+>>   		.address = cpu_to_le64(dpa),
+>> diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
+>> index 19aba81cdf13..fbf8d9f46984 100644
+>> --- a/drivers/cxl/cxlmem.h
+>> +++ b/drivers/cxl/cxlmem.h
+>> @@ -501,6 +501,7 @@ struct cxl_memdev_state {
+>>   	struct cxl_fw_state fw;
+>>   
+>>   	struct rcuwait mbox_wait;
+>> +	struct notifier_block mce_notifier;
+>>   	int (*mbox_send)(struct cxl_memdev_state *mds,
+>>   			 struct cxl_mbox_cmd *cmd);
+>>   };
+>> @@ -836,6 +837,8 @@ int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
+>>   int cxl_trigger_poison_list(struct cxl_memdev *cxlmd);
+>>   int cxl_inject_poison(struct cxl_memdev *cxlmd, u64 dpa);
+>>   int cxl_clear_poison(struct cxl_memdev *cxlmd, u64 dpa);
+>> +bool cxl_mce_recorded(u64 pfn);
+>> +void cxl_mce_clear(u64 pfn);
+>>   
+>>   #ifdef CONFIG_CXL_SUSPEND
+>>   void cxl_mem_active_inc(void);
 > 
 
