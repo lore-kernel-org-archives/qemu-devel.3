@@ -4,84 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC9B9C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 04:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A4D5C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 04:45:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKW2y-0006gt-0a; Fri, 21 Jun 2024 00:38:48 -0400
+	id 1sKW8q-0008Hn-FB; Fri, 21 Jun 2024 00:44:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sKW2s-0006RW-D8
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 00:38:42 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sKW8o-0008Gn-BR; Fri, 21 Jun 2024 00:44:50 -0400
+Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sKW2q-0003I9-D5
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 00:38:42 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-70435f4c330so1437537b3a.1
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 21:38:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sKW8m-0004Sg-RA; Fri, 21 Jun 2024 00:44:50 -0400
+Received: by mail-vk1-xa2d.google.com with SMTP id
+ 71dfb90a1353d-4ecf43f5537so816296e0c.0; 
+ Thu, 20 Jun 2024 21:44:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718944719; x=1719549519; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JbnYdkZoHVaSywSDipI1ub1xsTTQDuay/Y0l+sWqzKg=;
- b=wQnq+HomryBaXokgAd9atiFgHYUZ3JXknZfhVGniqaXJmBASAy+imi9Xjs7HEZHDaD
- 4LOBzKlaNZ875rPYDqtX3ZjFjyrP/CBOiB64b9Cuy+ZTCBdf4eZxjGWpOxvZ1MHkIFRN
- euofHSr1SwzBR3aiMh+8c+ELtYMwGvCk3qtnKR2MLhq3kF5kqB6S/b9mYlpOPg9S+rL2
- sPZkqibAnbJjlnX+X4eDD30xYmUN4OXYCQsqkpGim70janpMb9HLArOGEZvqz+RWaS4M
- N4gTbcdP//Syje0tuqFQY/r/xDvyvsXh3TpV0v73f+v8Q7uRZ9IWadMqgUBdDDuOEhZ2
- cWmw==
+ d=gmail.com; s=20230601; t=1718945087; x=1719549887; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9BrKFQN9H1kCp7zbO26rrNOaXRngZ7xgb3rHkXZxnXQ=;
+ b=LLwI9iVDEBlxBYOnuQL2mLapjWxujhuL2ZNxpAzfD+xnVa9Yiv69Z5nSzOLF7PI+/J
+ xMoTifzPkgIOLITjtfj7rPmHRKsE9rmq81wNjiHCKMUNu7bgBi0NPkshWOoPXLrWtNHe
+ vKUNVcZRl85y27lmTfA8wrgrVFHAmFPw/GThVoMv03flvpLZBgA+Ply4Dvr6I6frP0g7
+ uh5PQZnPA4nXC+EYQbzn2M3SFYAg/wSia2QET6eh8tWwcJSjFFCws1Sn+7YFKeHaSx3f
+ 5R12Y12SS5mYG14kY7xxXfQEbaVzDA9LKOYG5Ape/JVAF4+1STRdav8QWix2LvFWBAu5
+ R3zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718944719; x=1719549519;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JbnYdkZoHVaSywSDipI1ub1xsTTQDuay/Y0l+sWqzKg=;
- b=KHvBn8i9Ai4eBmCAsLK2m9jsRUwQ0fkh3PctnK8DJIzfAMEWvWvC8XdcuJZsqUUIar
- DG4f4yMB8QWPJ1SxLB2V7zvYZcjTswyEYFaG7e84By7u+SAbkejisQZEVEwXLmSYwk2B
- +baSaWD4cddq1JptKM7WX0LJ6GgFrzCt0c258eXWth0xYYZSfjYc7W3owzzGwfwMn0NX
- HIWwuEc2mXGEvUlYsfOHG2RbuvI5DBO2DtDdsEKeO+2UybWgeAjyKKAf6gta1htc/hl9
- VI/OcB3YxGCZGUkCRRUxy1USWKcTIjkdLEUJ86PoCygY8Zrazfxw5zZ3z1xGBZS83qav
- LgJg==
+ d=1e100.net; s=20230601; t=1718945087; x=1719549887;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9BrKFQN9H1kCp7zbO26rrNOaXRngZ7xgb3rHkXZxnXQ=;
+ b=N0tKbC9SJoiY1o8ERdoGl6u7jm2J74S02eQT2muXZApu3u+s9AKLtjVyYd4H+kdQDH
+ kmMuP29nlkZD/s1/TT3QLFbPRt//eXFk4jQfeDsid4oXOQSg9j2d2AhPXmSGP08uFeCE
+ wZDiFON2PUlTV7FnUPXBH2LRt0QLKhyLPT1kbg1NjJik/k5fgFZRz9hxk/Sm0X74qOdH
+ IaGimDh9NMEtAWQiZ5wUMYh045DWXXrAR1IQS/l2Q6O9W2vGoQtukBZgTGDxfIBvX9kS
+ f6/DudutL4zVVCESIoK/lHSOdQHcGhFMPkyOFFSRwNNc9FP8M+M/XUTBDaFo83xBaCW1
+ BVYg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXUBnhoElPiQMny8fRPgDpKJkdJrqgX9SzltMnuHV8UIgDmeKLbxqY6E0T3QCw/AqxxGaX6GBSr6cVVmhYAdinygW1FBmc=
-X-Gm-Message-State: AOJu0YxtjLRSUfCE7ev/GpaWOUMEJJnDsQ7Kgaqo3NyommWGDBiz6HYm
- p78SzA1y1zXMx1v5FrH0JMsTazEwsV3Z1diYZ+sqLRlwNaH6UoyfFMAUpfhGh40=
-X-Google-Smtp-Source: AGHT+IGujfqRQTQQAJC+jxZmqU4UjYphm6kKrmUU3r868VRvqQwvsC8SkCIzg3prs1bIvA97xSdYXg==
-X-Received: by 2002:a05:6a00:2717:b0:705:d730:1b8 with SMTP id
- d2e1a72fcca58-70629c54678mr7337637b3a.19.1718944718864; 
- Thu, 20 Jun 2024 21:38:38 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.132.216])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70651304126sm464463b3a.206.2024.06.20.21.38.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Jun 2024 21:38:38 -0700 (PDT)
-Message-ID: <9f6e6321-647c-4ba4-8997-b6243253e761@linaro.org>
-Date: Thu, 20 Jun 2024 21:38:36 -0700
+ AJvYcCV4CPvgH8akl434VphHxfEAboUcsyhfdtL8Nc9OY5cpKZIUFGlYgh2R94gA8qFHS+XjCK6zQ87qE5jS3ZydSADnpTGeqM4=
+X-Gm-Message-State: AOJu0YyLRmziK6gJ1tyReUg/whH+ivnywTS4iQse8lFC4tvJ4xZV7+Pu
+ cD9bgdVP9jPqGPHJRCb+yo7owHqalJxRjPV8ew+Sd7NWgTkeSHWlO95qeo685lFWvlMtaWCjZcy
+ KG18PONyeAO4x5KugoRDq5jTJuWE=
+X-Google-Smtp-Source: AGHT+IENyw1nBP2+nB3WAlKUuOOF90xSHrt1drFX9tmbUFkpsXuFzRUwAW770g7qfsHpWYQiAkjH9eDETChhiGndNfo=
+X-Received: by 2002:a05:6122:926:b0:4eb:ddd:4b95 with SMTP id
+ 71dfb90a1353d-4ef1a8b00c7mr9266124e0c.0.1718945086721; Thu, 20 Jun 2024
+ 21:44:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/9] gdbstub: Make get cpu and hex conversion functions
- non-internal
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- philmd@linaro.org, peter.maydell@linaro.org, alex.bennee@linaro.org
-References: <20240617062849.3531745-1-gustavo.romero@linaro.org>
- <20240617062849.3531745-8-gustavo.romero@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240617062849.3531745-8-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240608214546.226963-1-brzakbranislav@gmail.com>
+In-Reply-To: <20240608214546.226963-1-brzakbranislav@gmail.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 21 Jun 2024 14:44:20 +1000
+Message-ID: <CAKmqyKNtz5=FyQekarUO7b307NMzjy8mNJ7siGtD_ik4ME142Q@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Fix froundnx.h nanbox check
+To: Branislav Brzak <brzakbranislav@gmail.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,18 +90,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/16/24 23:28, Gustavo Romero wrote:
-> Make the gdb_first_attached_cpu and gdb_hextomem non-internal so they
-> are not confined to use only in gdbstub.c.
-> 
-> Signed-off-by: Gustavo Romero<gustavo.romero@linaro.org>
+On Sun, Jun 9, 2024 at 3:32=E2=80=AFPM Branislav Brzak <brzakbranislav@gmai=
+l.com> wrote:
+>
+> helper_froundnx_h function mistakenly uses single percision nanbox
+> check instead of the half percision one. This patch fixes the issue.
+>
+> Signed-off-by: Branislav Brzak <brzakbranislav@gmail.com>
+
+Thanks!
+
+Applied to riscv-to-apply.next
+
+Alistair
+
 > ---
->   gdbstub/internals.h        | 2 --
->   include/exec/gdbstub.h     | 5 +++++
->   include/gdbstub/commands.h | 6 ++++++
->   3 files changed, 11 insertions(+), 2 deletions(-)
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
+>  target/riscv/fpu_helper.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/riscv/fpu_helper.c b/target/riscv/fpu_helper.c
+> index 871a70a316..91b1a56d10 100644
+> --- a/target/riscv/fpu_helper.c
+> +++ b/target/riscv/fpu_helper.c
+> @@ -676,7 +676,7 @@ uint64_t helper_fround_h(CPURISCVState *env, uint64_t=
+ rs1)
+>
+>  uint64_t helper_froundnx_h(CPURISCVState *env, uint64_t rs1)
+>  {
+> -    float16 frs1 =3D check_nanbox_s(env, rs1);
+> +    float16 frs1 =3D check_nanbox_h(env, rs1);
+>      frs1 =3D float16_round_to_int(frs1, &env->fp_status);
+>      return nanbox_h(env, frs1);
+>  }
+> --
+> 2.34.1
+>
+>
 
