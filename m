@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62826C2BA1A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77DDDC41513
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 08:07:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKZIN-0005hN-P8; Fri, 21 Jun 2024 04:06:55 -0400
+	id 1sKZHv-00059p-3L; Fri, 21 Jun 2024 04:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZIM-0005gp-Er
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:06:54 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZHr-00057W-TH
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:06:23 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZIK-0008P3-VQ
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:06:54 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-365663f51adso897835f8f.1
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 01:06:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZHq-0008GQ-7r
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:06:23 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42249a4f9e4so12843885e9.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 01:06:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718957211; x=1719562011; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718957180; x=1719561980; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wIA5ZIlGPiIpZ77uW3DTdXqmrUImGJ4SmShsvIo62CI=;
- b=IAAxos6cLzcOQArJ3kHJodAxu5xFdVovG6rH+QGAFElG1saFPi/5JSienlQmbZ1h++
- JVduLjshz4b8RX4PUb8k1WroN4ybWjNA+8iCbPFapJBbtULoiAqsvMX/jRh3aTLHBHjP
- RL6UiEhS3AgEYmIaWlxKpNB+T6Y2lyqyPmSDwUpXekwp7zpZbdu8Uix173ryHBodVx+C
- YHePwZejzRw/sOfNdY/3zilcJtHA3u3JQqZpmvobniOKjYQRXPQIfzWGh2Uh80ywXoP+
- Mq4dqrqTBC1dxsqdpp4ess12L5yosYSSTMYn7NUodfkDx80kAextFZhiAOtiZTjWURT6
- cauA==
+ bh=fbChd25f9YN3YwZXuq6CJAvDiqEwoBqyQKCDjART3V0=;
+ b=AbaGj36m5az4uu41ve9BC/Tim5s49yR3lsoIRdJYgwN5imTmxraE8cf5X6yM3xZay6
+ IZcZmX4zZ+b1QMIcNWrFo4gSYjZ3i8at4buHDdyp779x2z9BWrZX/j+qrBdWrsM+7pgD
+ 9sCVtmake10yGvBBV/5U5jhTkNhi+C0Jo6b6idrlqgAGcP5gLSOmBGApHx0cZM/K05Qi
+ Hr7q9yXQWBcmLPmtHx7RtbukcPzJg/LZ+UMCl4T3OWeAKEnLM9ygn6OFdpG8/GMFM+7R
+ dti9eZfyeaJON6V2MBgM1u5pVueI5AuxvBRfdNXQrGqSIthUzqjexmQ3UA5m8Y8/BgZl
+ o0iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718957211; x=1719562011;
+ d=1e100.net; s=20230601; t=1718957180; x=1719561980;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wIA5ZIlGPiIpZ77uW3DTdXqmrUImGJ4SmShsvIo62CI=;
- b=S/lbCcX8dgelflMt3DSwUySrKPzOiAYckN+P4vnMp9+1QAp6PtFsj+uNPT3waBJQ4D
- FVDgxAB5m8JuWn49qLny5irYgjNXn0aSw9KFSWiGi7LrZZ33ZWVpRXzDW9OQaA+i7y0U
- 5EwO/MC44yN0zvusH0JS7WZc+ik8/oglZQn56D+00aVKS6g4ez0eHLVkwb6TGRHF3pyu
- sTwLcokwGROXAU4Usjp3r8B4RBY7edkR68zp/NO7BJWAIJ51xas4JKqV3KuWzZRKq/4o
- G8Fxl4FozMOlhDLq15nYy+7Y+EnlWZc9M6zwWLdjzjYPjaqzzwV7pYORNZsrjcwijovg
- wFjQ==
-X-Gm-Message-State: AOJu0Yy9cML0nL5czh+0jQGHsTVdTvEwQ2IvtOMjstvbsqeWv1iN7YQ7
- 5oU0/45e8xf275qXmOcCGf+d4DHgCZ0ABGYG0Aqhujd38Z9PjDuUWZdgiKyFX1qCCElEM5cNdTH
- 5
-X-Google-Smtp-Source: AGHT+IEgQ1U2aTmFKSvB+qWycUFCCVBOuolfpfJ25lZvfbLp7WlHJCPNuJSVNa/DAErVveirNroNDw==
-X-Received: by 2002:a05:6000:9:b0:360:775d:f917 with SMTP id
- ffacd0b85a97d-363171e2c36mr5350833f8f.4.1718957211381; 
- Fri, 21 Jun 2024 01:06:51 -0700 (PDT)
+ bh=fbChd25f9YN3YwZXuq6CJAvDiqEwoBqyQKCDjART3V0=;
+ b=aXUCYf+keP7Ldcaoi9KljzCXQrwq+n9N2M232O8N6Hi8yhnj1I8NjIaL+0ZLLNIz2x
+ Qu0y/7jGQV/89Afly76HeEHEoXg4trfbXfoaeLHKMuoS6yTY/TpbPXENPnbL40cv/yX8
+ i7IBCccL9kGAWQW8PbvC/4MgsmF72W9LHYYhrZQNykGZPLwGO/4Fg4iNsrEzlpiZKdog
+ BuD5mpxi5dIfTSPVpDqYCha3haWDayGW8Ja+8MFaEYy2DMx7Hk7SW26s2rUm5YPzZqs9
+ vUw8d0fRoiIYmf02IXjnoLxlMLuC2dpZiAFhRDST9nT7ThHlcX6MxcMJiusZBWjq8PiN
+ 0POQ==
+X-Gm-Message-State: AOJu0Yw4wsR7wvcJIcn5enP7jG+Rzzoqa23360A3xUnMAFW2WpUD220E
+ +kbPqhhW1Y5QUeCS0alpLBtjZ5jAqjNtyrzjBmi1Q10GR+Y1Zdes/xuto7qnCJvgzTHnd+82Bgo
+ b
+X-Google-Smtp-Source: AGHT+IHhhcXzKikBEYhnnB91GXmWdkc2LnzpwmX9DW1wKCZyBJ4p0NyCnqyrNxsQZg5X2a/H5AR4fg==
+X-Received: by 2002:a05:600c:1615:b0:420:2cbe:7efd with SMTP id
+ 5b1f17b1804b1-42475298bd5mr61901915e9.31.1718957180681; 
+ Fri, 21 Jun 2024 01:06:20 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.128.209])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36638d9c16esm973840f8f.57.2024.06.21.01.06.49
+ 5b1f17b1804b1-4247d0c5485sm53288665e9.21.2024.06.21.01.06.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 21 Jun 2024 01:06:51 -0700 (PDT)
+ Fri, 21 Jun 2024 01:06:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Joel Stanley <joel@jms.id.au>, Bin Meng <bmeng.cn@gmail.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>, qemu-block@nongnu.org
-Subject: [PATCH 09/23] hw/sd/sdcard: Generate random RCA value
-Date: Fri, 21 Jun 2024 10:05:40 +0200
-Message-ID: <20240621080554.18986-10-philmd@linaro.org>
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, qemu-block@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>
+Subject: [PATCH 04/23] hw/sd/sdcard: Use HWBLOCK_SHIFT definition instead of
+ magic values
+Date: Fri, 21 Jun 2024 10:05:35 +0200
+Message-ID: <20240621080554.18986-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240621080554.18986-1-philmd@linaro.org>
 References: <20240621080554.18986-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,47 +98,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than using the obscure 0x4567 magic value,
-use a real random one.
+From: Philippe Mathieu-Daudé <f4bug@amsat.org>
 
+Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ hw/sd/sd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 30239b28bc..e1f13e316a 100644
+index 331cef5779..c528c30bcf 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -46,6 +46,7 @@
- #include "qemu/error-report.h"
- #include "qemu/timer.h"
- #include "qemu/log.h"
-+#include "qemu/guest-random.h"
- #include "qemu/module.h"
- #include "sdmmc-internal.h"
- #include "trace.h"
-@@ -469,11 +470,6 @@ static void sd_set_csd(SDState *sd, uint64_t size)
-     sd->csd[15] = (sd_crc7(sd->csd, 15) << 1) | 1;
- }
+@@ -596,7 +596,7 @@ static void sd_reset(DeviceState *dev)
+     } else {
+         sect = 0;
+     }
+-    size = sect << 9;
++    size = sect << HWBLOCK_SHIFT;
  
--static void sd_set_rca(SDState *sd)
--{
--    sd->rca += 0x4567;
--}
--
- FIELD(CSR, AKE_SEQ_ERROR,               3,  1)
- FIELD(CSR, APP_CMD,                     5,  1)
- FIELD(CSR, FX_EVENT,                    6,  1)
-@@ -1055,7 +1051,7 @@ static sd_rsp_type_t sd_cmd_SEND_RELATIVE_ADDR(SDState *sd, SDRequest req)
-     case sd_identification_state:
-     case sd_standby_state:
-         sd->state = sd_standby_state;
--        sd_set_rca(sd);
-+        qemu_guest_getrandom_nofail(&sd->rca, sizeof(sd->rca));
-         return sd_r6;
+     sect = sd_addr_to_wpnum(size) + 1;
  
-     default:
+@@ -822,8 +822,8 @@ static void sd_erase(SDState *sd)
+ 
+     if (FIELD_EX32(sd->ocr, OCR, CARD_CAPACITY)) {
+         /* High capacity memory card: erase units are 512 byte blocks */
+-        erase_start *= 512;
+-        erase_end *= 512;
++        erase_start <<= HWBLOCK_SHIFT;
++        erase_end <<= HWBLOCK_SHIFT;
+         sdsc = false;
+     }
+ 
 -- 
 2.41.0
 
