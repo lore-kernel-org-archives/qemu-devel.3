@@ -4,105 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD795C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 17:56:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53103C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 17:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKiTY-0003Pt-VD; Fri, 21 Jun 2024 13:55:04 -0400
+	id 1sKiTL-0003GP-4U; Fri, 21 Jun 2024 13:54:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKiTX-0003LU-3n
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 13:55:03 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKiTH-0003Fj-RD
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 13:54:49 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKiTV-0003Lb-6V
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 13:55:02 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKiTE-0003Je-QN
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 13:54:46 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id D241721B37;
- Fri, 21 Jun 2024 17:54:59 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 8FE2521B40;
+ Fri, 21 Jun 2024 17:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718992499; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1718992483; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=k+HmQP3h3Mm2DrDGsClDzMbx0rC1gh3vI8zM8d67lXI=;
- b=NE4c6m6V8nSaEyL50t9Ebl+eTBXlddJ2jjl5RH2uo4FJF5q4pAHOCe+JRUvRGn3GKIF0sI
- SFeThs4frx4VygkFZQfuNsKMNmn2rdAu6Jx5LDUlibsGimfa6zzsMc5Xnkx+HQG6l4fxxo
- Ut3WvEKQF86k4/Sfma2GAMKIz4vbB3M=
+ bh=zqG1BJBm4U7LvvpBbGDyqk1DGPRidUb8RgqRFwNrWpY=;
+ b=Qtz1R5X1u4VqRnxN6HqQdVQrjPYnQ2IIuAZspp6Oepnf1D7DaXgZXPFJpX3BSarOdTY9/6
+ B63pOQJHJHY7o5YxhHxQAXoXmn/g2/+p2wkQVv4l+NcWWX14+0faC2RtM5nScOxTEZSCls
+ s20iHfDHV0Yb6QEHbpgUYQDfIM3aIYM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718992499;
+ s=susede2_ed25519; t=1718992483;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=k+HmQP3h3Mm2DrDGsClDzMbx0rC1gh3vI8zM8d67lXI=;
- b=VlRwAn2pFtjSwnXXYZQumXgT8nRCYjuqcXp0pHyP7L/Af47bwyPYJnzuv1laA68+ip8gfF
- 0d2GbKKFOmB/UaCQ==
+ bh=zqG1BJBm4U7LvvpBbGDyqk1DGPRidUb8RgqRFwNrWpY=;
+ b=/BKKo0iDVENF6DLcAwFdgPH+Df1j0AdSPmjJSlqAe0S+YnsswreUqlWMSEektOGr4lss/e
+ OvT4u18Itqw8YXBQ==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=NE4c6m6V;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VlRwAn2p
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718992499; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ t=1718992483; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=k+HmQP3h3Mm2DrDGsClDzMbx0rC1gh3vI8zM8d67lXI=;
- b=NE4c6m6V8nSaEyL50t9Ebl+eTBXlddJ2jjl5RH2uo4FJF5q4pAHOCe+JRUvRGn3GKIF0sI
- SFeThs4frx4VygkFZQfuNsKMNmn2rdAu6Jx5LDUlibsGimfa6zzsMc5Xnkx+HQG6l4fxxo
- Ut3WvEKQF86k4/Sfma2GAMKIz4vbB3M=
+ bh=zqG1BJBm4U7LvvpBbGDyqk1DGPRidUb8RgqRFwNrWpY=;
+ b=Qtz1R5X1u4VqRnxN6HqQdVQrjPYnQ2IIuAZspp6Oepnf1D7DaXgZXPFJpX3BSarOdTY9/6
+ B63pOQJHJHY7o5YxhHxQAXoXmn/g2/+p2wkQVv4l+NcWWX14+0faC2RtM5nScOxTEZSCls
+ s20iHfDHV0Yb6QEHbpgUYQDfIM3aIYM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718992499;
+ s=susede2_ed25519; t=1718992483;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=k+HmQP3h3Mm2DrDGsClDzMbx0rC1gh3vI8zM8d67lXI=;
- b=VlRwAn2pFtjSwnXXYZQumXgT8nRCYjuqcXp0pHyP7L/Af47bwyPYJnzuv1laA68+ip8gfF
- 0d2GbKKFOmB/UaCQ==
+ bh=zqG1BJBm4U7LvvpBbGDyqk1DGPRidUb8RgqRFwNrWpY=;
+ b=/BKKo0iDVENF6DLcAwFdgPH+Df1j0AdSPmjJSlqAe0S+YnsswreUqlWMSEektOGr4lss/e
+ OvT4u18Itqw8YXBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A4DFA13AAA;
- Fri, 21 Jun 2024 17:54:58 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2BEE513AAA;
+ Fri, 21 Jun 2024 17:54:41 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id OGaDGnK+dWZNawAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 21 Jun 2024 17:54:58 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id UCKqOGG+dWZNawAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 21 Jun 2024 17:54:41 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 12/28] migration/multifd: Add direct-io support
-Date: Fri, 21 Jun 2024 14:54:18 -0300
-Message-Id: <20240621175434.31180-13-farosas@suse.de>
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 03/28] tests/qtest/migration: Fix file migration offset check
+Date: Fri, 21 Jun 2024 14:54:09 -0300
+Message-Id: <20240621175434.31180-4-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240621175434.31180-1-farosas@suse.de>
 References: <20240621175434.31180-1-farosas@suse.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: D241721B37
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
+ RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ RCPT_COUNT_THREE(0.00)[4]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -125,175 +119,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When multifd is used along with mapped-ram, we can take benefit of a
-filesystem that supports the O_DIRECT flag and perform direct I/O in
-the multifd threads. This brings a significant performance improvement
-because direct-io writes bypass the page cache which would otherwise
-be thrashed by the multifd data which is unlikely to be needed again
-in a short period of time.
+When doing file migration, QEMU accepts an offset that should be
+skipped when writing the migration stream to the file. The purpose of
+the offset is to allow the management layer to put its own metadata at
+the start of the file.
 
-To be able to use a multifd channel opened with O_DIRECT, we must
-ensure that a certain aligment is used. Filesystems usually require a
-block-size alignment for direct I/O. The way to achieve this is by
-enabling the mapped-ram feature, which already aligns its I/O properly
-(see MAPPED_RAM_FILE_OFFSET_ALIGNMENT at ram.c).
+We have tests for this in migration-test, but only testing that the
+migration stream starts at the correct offset and not that it actually
+leaves the data intact. Unsurprisingly, there's been a bug in that
+area that the tests didn't catch.
 
-By setting O_DIRECT on the multifd channels, all writes to the same
-file descriptor need to be aligned as well, even the ones that come
-from outside multifd, such as the QEMUFile I/O from the main migration
-code. This makes it impossible to use the same file descriptor for the
-QEMUFile and for the multifd channels. The various flags and metadata
-written by the main migration code will always be unaligned by virtue
-of their small size. To workaround this issue, we'll require a second
-file descriptor to be used exclusively for direct I/O.
+Fix the tests to write some data to the offset region and check that
+it's actually there after the migration.
 
-The second file descriptor can be obtained by QEMU by re-opening the
-migration file (already possible), or by being provided by the user or
-management application (support to be added in future patches).
+While here, switch to using g_get_file_contents() which is more
+portable than mmap().
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/file.c      | 33 ++++++++++++++++++++++++++++-----
- migration/file.h      |  1 -
- migration/migration.c | 23 +++++++++++++++++++++++
- 3 files changed, 51 insertions(+), 6 deletions(-)
+ tests/qtest/migration-test.c | 79 ++++++++++++++++++++++--------------
+ 1 file changed, 48 insertions(+), 31 deletions(-)
 
-diff --git a/migration/file.c b/migration/file.c
-index a903710f06..db870f2cf0 100644
---- a/migration/file.c
-+++ b/migration/file.c
-@@ -50,12 +50,31 @@ void file_cleanup_outgoing_migration(void)
-     outgoing_args.fname = NULL;
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 0dccb4beff..0a529a527b 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -68,6 +68,7 @@ static QTestMigrationState dst_state;
+ #define QEMU_VM_FILE_MAGIC 0x5145564d
+ #define FILE_TEST_FILENAME "migfile"
+ #define FILE_TEST_OFFSET 0x1000
++#define FILE_TEST_MARKER 'X'
+ #define QEMU_ENV_SRC "QTEST_QEMU_BINARY_SRC"
+ #define QEMU_ENV_DST "QTEST_QEMU_BINARY_DST"
+ 
+@@ -1693,10 +1694,43 @@ finish:
+     test_migrate_end(from, to, args->result == MIG_TEST_SUCCEED);
  }
  
-+static void file_enable_direct_io(int *flags)
++static void file_dirty_offset_region(void)
 +{
-+#ifdef O_DIRECT
-+    *flags |= O_DIRECT;
-+#else
-+    /* it should have been rejected when setting the parameter */
-+    g_assert_not_reached();
-+#endif
++    g_autofree char *path = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
++    size_t size = FILE_TEST_OFFSET;
++    g_autofree char *data = g_new0(char, size);
++
++    memset(data, FILE_TEST_MARKER, size);
++    g_assert(g_file_set_contents(path, data, size, NULL));
 +}
 +
- bool file_send_channel_create(gpointer opaque, Error **errp)
- {
-     QIOChannelFile *ioc;
-     int flags = O_WRONLY;
-     bool ret = true;
- 
-+    if (migrate_direct_io()) {
-+        /*
-+         * Enable O_DIRECT for the secondary channels. These are used
-+         * for sending ram pages and writes should be guaranteed to be
-+         * aligned to at least page size.
-+         */
-+        file_enable_direct_io(&flags);
-+    }
-+
-     ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
-     if (!ioc) {
-         ret = false;
-@@ -117,21 +136,25 @@ static gboolean file_accept_incoming_migration(QIOChannel *ioc,
-     return G_SOURCE_REMOVE;
- }
- 
--void file_create_incoming_channels(QIOChannel *ioc, Error **errp)
-+static void file_create_incoming_channels(QIOChannel *ioc, char *filename,
-+                                          Error **errp)
- {
--    int i, fd, channels = 1;
-+    int i, channels = 1;
-     g_autofree QIOChannel **iocs = NULL;
-+    int flags = O_RDONLY;
- 
-     if (migrate_multifd()) {
-         channels += migrate_multifd_channels();
-+        if (migrate_direct_io()) {
-+            file_enable_direct_io(&flags);
-+        }
-     }
- 
-     iocs = g_new0(QIOChannel *, channels);
--    fd = QIO_CHANNEL_FILE(ioc)->fd;
-     iocs[0] = ioc;
- 
-     for (i = 1; i < channels; i++) {
--        QIOChannelFile *fioc = qio_channel_file_new_dupfd(fd, errp);
-+        QIOChannelFile *fioc = qio_channel_file_new_path(filename, flags, 0, errp);
- 
-         if (!fioc) {
-             while (i) {
-@@ -171,7 +194,7 @@ void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp)
-         return;
-     }
- 
--    file_create_incoming_channels(QIO_CHANNEL(fioc), errp);
-+    file_create_incoming_channels(QIO_CHANNEL(fioc), filename, errp);
- }
- 
- int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
-diff --git a/migration/file.h b/migration/file.h
-index 7699c04677..9f71e87f74 100644
---- a/migration/file.h
-+++ b/migration/file.h
-@@ -20,7 +20,6 @@ void file_start_outgoing_migration(MigrationState *s,
- int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp);
- void file_cleanup_outgoing_migration(void);
- bool file_send_channel_create(gpointer opaque, Error **errp);
--void file_create_incoming_channels(QIOChannel *ioc, Error **errp);
- int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
-                             int niov, RAMBlock *block, Error **errp);
- int multifd_file_recv_data(MultiFDRecvParams *p, Error **errp);
-diff --git a/migration/migration.c b/migration/migration.c
-index e1b269624c..e03c80b3aa 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -155,6 +155,16 @@ static bool migration_needs_seekable_channel(void)
-     return migrate_mapped_ram();
- }
- 
-+static bool migration_needs_extra_fds(void)
++static void file_check_offset_region(void)
 +{
++    g_autofree char *path = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
++    size_t size = FILE_TEST_OFFSET;
++    g_autofree char *expected = g_new0(char, size);
++    g_autofree char *actual = NULL;
++    uint64_t *stream_start;
++
 +    /*
-+     * When doing direct-io, multifd requires two different,
-+     * non-duplicated file descriptors so we can use one of them for
-+     * unaligned IO.
++     * Ensure the skipped offset region's data has not been touched
++     * and the migration stream starts at the right place.
 +     */
-+    return migrate_multifd() && migrate_direct_io();
++
++    memset(expected, FILE_TEST_MARKER, size);
++
++    g_assert(g_file_get_contents(path, &actual, NULL, NULL));
++    g_assert(!memcmp(actual, expected, size));
++
++    stream_start = (uint64_t *)(actual + size);
++    g_assert_cmpint(cpu_to_be64(*stream_start) >> 32, ==, QEMU_VM_FILE_MAGIC);
 +}
 +
- static bool transport_supports_seeking(MigrationAddress *addr)
+ static void test_file_common(MigrateCommon *args, bool stop_src)
  {
-     if (addr->transport == MIGRATION_ADDRESS_TYPE_FILE) {
-@@ -164,6 +174,12 @@ static bool transport_supports_seeking(MigrationAddress *addr)
-     return false;
- }
+     QTestState *from, *to;
+     void *data_hook = NULL;
++    bool check_offset = false;
  
-+static bool transport_supports_extra_fds(MigrationAddress *addr)
-+{
-+    /* file: works because QEMU can open it multiple times */
-+    return addr->transport == MIGRATION_ADDRESS_TYPE_FILE;
-+}
-+
- static bool
- migration_channels_and_transport_compatible(MigrationAddress *addr,
-                                             Error **errp)
-@@ -180,6 +196,13 @@ migration_channels_and_transport_compatible(MigrationAddress *addr,
-         return false;
-     }
+     if (test_migrate_start(&from, &to, args->listen_uri, &args->start)) {
+         return;
+@@ -1709,6 +1743,16 @@ static void test_file_common(MigrateCommon *args, bool stop_src)
+      */
+     g_assert_false(args->live);
  
-+    if (migration_needs_extra_fds() &&
-+        !transport_supports_extra_fds(addr)) {
-+        error_setg(errp,
-+                   "Migration requires a transport that allows for extra fds (e.g. file)");
-+        return false;
++    if (g_strrstr(args->connect_uri, "offset=")) {
++        check_offset = true;
++        /*
++         * This comes before the start_hook because it's equivalent to
++         * a management application creating the file and writing to
++         * it so hooks should expect the file to be already present.
++         */
++        file_dirty_offset_region();
 +    }
 +
-     return true;
+     if (args->start_hook) {
+         data_hook = args->start_hook(from, to);
+     }
+@@ -1743,6 +1787,10 @@ static void test_file_common(MigrateCommon *args, bool stop_src)
+ 
+     wait_for_serial("dest_serial");
+ 
++    if (check_offset) {
++        file_check_offset_region();
++    }
++
+ finish:
+     if (args->finish_hook) {
+         args->finish_hook(from, to, data_hook);
+@@ -1942,36 +1990,6 @@ static void test_precopy_file(void)
+     test_file_common(&args, true);
  }
  
+-static void file_offset_finish_hook(QTestState *from, QTestState *to,
+-                                    void *opaque)
+-{
+-#if defined(__linux__)
+-    g_autofree char *path = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
+-    size_t size = FILE_TEST_OFFSET + sizeof(QEMU_VM_FILE_MAGIC);
+-    uintptr_t *addr, *p;
+-    int fd;
+-
+-    fd = open(path, O_RDONLY);
+-    g_assert(fd != -1);
+-    addr = mmap(NULL, size, PROT_READ, MAP_SHARED, fd, 0);
+-    g_assert(addr != MAP_FAILED);
+-
+-    /*
+-     * Ensure the skipped offset contains zeros and the migration
+-     * stream starts at the right place.
+-     */
+-    p = addr;
+-    while (p < addr + FILE_TEST_OFFSET / sizeof(uintptr_t)) {
+-        g_assert(*p == 0);
+-        p++;
+-    }
+-    g_assert_cmpint(cpu_to_be64(*p) >> 32, ==, QEMU_VM_FILE_MAGIC);
+-
+-    munmap(addr, size);
+-    close(fd);
+-#endif
+-}
+-
+ static void test_precopy_file_offset(void)
+ {
+     g_autofree char *uri = g_strdup_printf("file:%s/%s,offset=%d", tmpfs,
+@@ -1980,7 +1998,6 @@ static void test_precopy_file_offset(void)
+     MigrateCommon args = {
+         .connect_uri = uri,
+         .listen_uri = "defer",
+-        .finish_hook = file_offset_finish_hook,
+     };
+ 
+     test_file_common(&args, false);
 -- 
 2.35.3
 
