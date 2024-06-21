@@ -4,83 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2244EC27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 16:24:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C91DC27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 16:33:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKh44-0001gs-Dp; Fri, 21 Jun 2024 12:24:40 -0400
+	id 1sKhCP-0006FY-5M; Fri, 21 Jun 2024 12:33:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmamfmgm@gmail.com>)
- id 1sKh42-0001gh-Oq
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 12:24:39 -0400
-Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dmamfmgm@gmail.com>)
- id 1sKh40-0004C7-KN
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 12:24:38 -0400
-Received: by mail-oi1-x229.google.com with SMTP id
- 5614622812f47-3c9b94951cfso1243048b6e.3
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 09:24:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718987075; x=1719591875; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=NSy+08/gALM49TOq1UTnG9oH3He4drmuunPNbyREVvg=;
- b=b2SE3skwDdQWC11CwVRNN7PoK3bujiSBo3b6Qe7s+/9n8ruemJSAagEyDj05+jGRKc
- dLtdbZMz//dP9eVec9jpmonMnAIk7ZP2HpDQA958JxsmS7K8r1S5trCGRf4cEN5qBdio
- 3PMS/4JvqD8ik6r3ka1yiiaiaZtlWbsBor/n8/JZILfF7umwyW+T05zFuWmGyz2+AKpQ
- JCNbwIwO9WbGcwe9pA7EPFSnQnIUnvn0FWBIEYNKkP/UjQbl259NdN5saRna8wkeaEF5
- 2fl9Wq29dydOm2UWtTrJc9AC8HtudKDDHYiC48Zf3tcBT78BPBSUOgmOR0D6PKSIw3ai
- ZcmQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sKhCG-0006EV-N9
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 12:33:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sKhCF-00065s-1b
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 12:33:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718987585;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=AN/hZ7ZEAr6G/U+HlwdP38fL5Bq468JQXd/pqAI6ed4=;
+ b=QbiigHHtrYpjuSvqyOczXDJhQoAbNC4MUhsbcj4LZ4TXxZQWLm6BmrbLeASCOKEOClILYl
+ kuphVK0py/gRYpRGo91R0m9RH0GBzUzJTi2tjbC1g4RLntq7sRJ3q3wixAxJxWbVrbJn7p
+ +idfj6LR6ZjdKW1JW7Wmfrn9w06Db6M=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-490-qd2Qm52qN2-gw3xalIpyCw-1; Fri, 21 Jun 2024 12:33:02 -0400
+X-MC-Unique: qd2Qm52qN2-gw3xalIpyCw-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a6f10ddb898so137215166b.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 09:33:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718987075; x=1719591875;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1718987581; x=1719592381;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NSy+08/gALM49TOq1UTnG9oH3He4drmuunPNbyREVvg=;
- b=OevPqtWV6BDkgeIz30k2bcCL1gGNPWRlIlJElk3u2oCW9m3lnLxwqwgCpVv8MPxaig
- C3d+CU4cGy1CbIGz9mxeLjZ7kZriALDs2brPyPTOK3F7lpAasDxflzeSmyj0pI9mkqIR
- 1VRm7N3/WDl1Psz4AKfdBGjNw98Yq1f4VnwhtcNWE64KfiLMkq0Khh3aQjmkJTSTmBAd
- c33A6OwSDATcwqr3JBBHqzOxPEX6uKnycTD3G57Fq7g2QOOY/ZP6yu7y0jqT86hKi80Q
- ocUESj4xchw/+JZFennrYqr7n1g2iSqgyvONwGKLIIT+esRB8rx8/+8jw8IFMZapVt1M
- 8Xvg==
+ bh=AN/hZ7ZEAr6G/U+HlwdP38fL5Bq468JQXd/pqAI6ed4=;
+ b=UlY3AfvTjpaF9I3d3Cg/WZR50zQ/MCKLjUUDF4oHpZb8GDsc8+wqCnMP5KHfbvYbnl
+ gw+uI38yjAHlSoX3Fukk0DFFrdFvLN5oGX1HLqFiIHEH3DnBWuehjkVU5NcHcMZLP4uo
+ cSwAWm8eCo4p8lo7FvZNIZ2uSqrOINehk0X6J+/m121NAqAurVNqPtdGYi8/Ldb0D3GD
+ u9qccvadkFVc4dluCP9KyTBT6OvGnYhGiea4a+RAXMkbB7UBYWvPXlW94UIm+GkPSfmN
+ XJol5ga+qWwbc/bEsdDku+MlKgMY1CEJUd6r0wqLcTS6EMKBuX5Mc5CN5UX+faPXqIMD
+ cPvw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVgAiNmSs0AZ51X1MYv6KiANXW52pWlN/ZCvATS6rSRXgQZ94sU7UGr2ebT7hfIPBdydns2dvKFWgBkyubSv2UEOT3TEes=
-X-Gm-Message-State: AOJu0Yyng8WHIWr2Av6o5LHvFu9l83emT7XWuEtXHClH5rXRGo+VHXiN
- 1xiUNPSslTSrs8cy2mKzqW4LmMgd+XWrC9U34Qw6ASq2REMWzfyPyDAPYvo8U5n7pauuKD1H8Td
- T5buRPZoSfj9QnScIEhODwVdRo+Q=
-X-Google-Smtp-Source: AGHT+IFer7oKRrXE+cLe/XkewwKq1BBUcJLp6S7OPXlMtnmhNxZM7CZAUsPaFAQ+V9X4otMd6eDnrAdPFILS62pBEe4=
-X-Received: by 2002:a05:6808:128f:b0:3d5:1f50:1891 with SMTP id
- 5614622812f47-3d51f502930mr10367676b6e.31.1718987074917; Fri, 21 Jun 2024
- 09:24:34 -0700 (PDT)
+ AJvYcCUQnvtX4D78Odx48eCOg22TWdhPqWB1XZXEpUzV3HVKLTjtwsIT8i2NhyMj6KKkoCZ2//9JwHGd4QjxnmmFQscKEN8ihG8=
+X-Gm-Message-State: AOJu0YyqmUV7I8+9C/5OhsT588jQuo4+hz1fyCedVIe1rM57qkyMykv2
+ 3njIrLgThKzwUYNVLxoOltCA7Qxzvdmm1pLYFtGny11DGLJx0xRRz7tjDixzf0NFgGGV+pWv3Gr
+ cv/03qcM4hfw7LC522jClsVKcA6Sqp/KD2JULQyWxUDNLqfAFNuJs
+X-Received: by 2002:a17:906:2f91:b0:a6f:a008:7f66 with SMTP id
+ a640c23a62f3a-a6fab61d3e3mr542818566b.26.1718987581398; 
+ Fri, 21 Jun 2024 09:33:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGKhlYA26/lpFThdhF+vx24MQc6p8ttXZwhqGDm2qyBR1DTtrpsyMIK+JyUo0yta6ILmCY+Kw==
+X-Received: by 2002:a17:906:2f91:b0:a6f:a008:7f66 with SMTP id
+ a640c23a62f3a-a6fab61d3e3mr542817666b.26.1718987581024; 
+ Fri, 21 Jun 2024 09:33:01 -0700 (PDT)
+Received: from [192.168.10.47] ([151.62.196.71])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-a6fcf560668sm99335866b.167.2024.06.21.09.33.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Jun 2024 09:33:00 -0700 (PDT)
+Message-ID: <f09cd7a7-948b-4a86-91ba-94bf4e9d3222@redhat.com>
+Date: Fri, 21 Jun 2024 18:32:59 +0200
 MIME-Version: 1.0
-References: <20240520232634.317988-1-dmamfmgm@gmail.com>
- <87cyomxmvc.fsf@draig.linaro.org>
- <CACBuX0SMvD6+vWGBv_m0rBnwgp8fbv6rHKUmbr-MWDLknz8LyA@mail.gmail.com>
- <87msnqvtpv.fsf@draig.linaro.org>
- <CAFEAcA8-gnh3sF6yPuPOfHg=C4H2=f-VYobKcXNUdMCWpdYNNw@mail.gmail.com>
-In-Reply-To: <CAFEAcA8-gnh3sF6yPuPOfHg=C4H2=f-VYobKcXNUdMCWpdYNNw@mail.gmail.com>
-From: Cord Amfmgm <dmamfmgm@gmail.com>
-Date: Fri, 21 Jun 2024 11:24:23 -0500
-Message-ID: <CACBuX0ScjkxnRBzmrpBwekV+WG4S0jsYgE_ch+TJ_fq_Xjbvfg@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-ohci: Fix ohci_service_td: accept valid TDs
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org, Philippe Mathieu-Daude <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000f95a84061b68ddba"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
- envelope-from=dmamfmgm@gmail.com; helo=mail-oi1-x229.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.359, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] exec: don't use void* in pointer arithmetic in headers
+To: Roman Kiryanov <rkir@google.com>, richard.henderson@linaro.org,
+ peter.maydell@linaro.org, qemu-devel@nongnu.org
+Cc: jansene@google.com, mett@google.com, jpcottin@google.com,
+ alex.bennee@linaro.org, berrange@redhat.com
+References: <20240620201654.598024-1-rkir@google.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20240620201654.598024-1-rkir@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,198 +142,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f95a84061b68ddba
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 6/20/24 22:16, Roman Kiryanov wrote:
+> void* pointer arithmetic is a GCC extentension
+> which could not be available in other build
+> tools (e.g. C++). This changes removes this
+> assumption.
+> 
+> Google-Bug-Id: 331190993
+> Change-Id: I5a064853429f627c17a9213910811dea4ced6174
+> Signed-off-by: Roman Kiryanov <rkir@google.com>
+> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+> v2: renamed from "use char* for pointer arithmetic"
+>      and removed all explicit extra cast with
+>      one typedef in memory.h.
+> 
+>   include/exec/memory.h | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index b1713f30b8..b616338f05 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -2795,8 +2795,10 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
+>   #define ARG1_DECL    AddressSpace *as
+>   #include "exec/memory_ldst_phys.h.inc"
+>   
+> +typedef uint8_t *MemoryRegionCachePtr;
+> +
+>   struct MemoryRegionCache {
+> -    void *ptr;
+> +    MemoryRegionCachePtr ptr;
 
-On Fri, Jun 21, 2024 at 10:21=E2=80=AFAM Peter Maydell <peter.maydell@linar=
-o.org>
-wrote:
+Just "uint8_t *ptr" is enough; thanks for testing that it's enough.
 
-> On Wed, 12 Jun 2024 at 20:36, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
-rote:
-> >
-> > Cord Amfmgm <dmamfmgm@gmail.com> writes:
-> >
-> > > On Wed, Jun 12, 2024 at 9:21=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee=
-@linaro.org>
-> wrote:
-> > >
-> > >  David Hubbard <dmamfmgm@gmail.com> writes:
-> > >
-> > >  > From: Cord Amfmgm <dmamfmgm@gmail.com>
-> > >  >
-> > >  > This changes the way the ohci emulation handles a Transfer
-> Descriptor with
-> > >  > "Current Buffer Pointer" set to "Buffer End" + 1.
-> > >  >
-> > >  > The OHCI spec 4.3.1.2 Table 4-2 allows td.cbp to be one byte more
-> than td.be
-> > >  > to signal the buffer has zero length. Currently qemu only accepts
-> zero-length
-> > >  > Transfer Descriptors if the td.cbp is equal to 0, while actual OHC=
-I
-> hardware
-> > >  > accepts both cases.
-> > >  >
-> > >  > The qemu ohci emulation has a regression in ohci_service_td.
-> Version 4.2
-> > >  > and earlier matched the spec. (I haven't taken the time to bisect
-> exactly
-> > >  > where the logic was changed.)
-> > >
-> > >  I find it hard to characterise this as a regression because we've
-> > >  basically gone from no checks to actually doing bounds checks:
-> > >
-> > >    1328fe0c32 (hw: usb: hcd-ohci: check len and frame_number variable=
-s)
-> > >
-> > >  The argument here seems to be that real hardware is laxer than the
-> specs
-> > >  in what it accepts.
-> > >
-> > <snip>
-> > >
-> > >  With the updated commit message:
-> > >
-> > >  Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> > >
-> > > Please forgive my lack of experience on this mailing list. I don't se=
-e
-> a suggested commit message from Alex but in case that
-> > > was what is being considered, here is one. Feedback welcome, also if
-> this is not what is wanted, please just say it.
-> > >
-> >
-> > Something along the lines of what you suggest here
->
-> Thanks; I've picked up this patch for target-arm.next (as with
-> your previous one for hcd-ohci, adjusting the Author and
-> Signed-off-by lines to both read David Hubbard).
->
-> I tweaked the commit message a little bit, so the middle part reads:
->
->     What this patch does is loosen the qemu ohci implementation to allow =
-a
->     zero-length packet if td.be (Buffer End) is set to td.cbp - 1, and
-> with a
->     non-zero td.cbp value.
->
->     The spec is unclear whether this is valid or not -- it is not the
->     clearly documented way to send a zero length TD (which is CBP=3DBE=3D=
-0),
->     but it isn't specifically forbidden. Actual hw seems to be ok with it=
-.
->
-> thanks
-> -- PMM
->
+Queued for the next pull request, thanks.
 
-That tweak looks great.
+Paolo
 
-Thank you for your patience working with me to get this patch into a good
-shape.
 
-This was my first attempt to contribute to qemu - really appreciate it.
+>       hwaddr xlat;
+>       hwaddr len;
+>       FlatView *fv;
 
---000000000000f95a84061b68ddba
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"></div><br><div class=3D"gmail_quote"><div=
- dir=3D"ltr" class=3D"gmail_attr">On Fri, Jun 21, 2024 at 10:21=E2=80=AFAM =
-Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org">peter.maydell=
-@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">On Wed, 12 Jun 2024 at 20:36, Alex Benn=C3=A9e &lt;<a href=3D"ma=
-ilto:alex.bennee@linaro.org" target=3D"_blank">alex.bennee@linaro.org</a>&g=
-t; wrote:<br>
-&gt;<br>
-&gt; Cord Amfmgm &lt;<a href=3D"mailto:dmamfmgm@gmail.com" target=3D"_blank=
-">dmamfmgm@gmail.com</a>&gt; writes:<br>
-&gt;<br>
-&gt; &gt; On Wed, Jun 12, 2024 at 9:21=E2=80=AFAM Alex Benn=C3=A9e &lt;<a h=
-ref=3D"mailto:alex.bennee@linaro.org" target=3D"_blank">alex.bennee@linaro.=
-org</a>&gt; wrote:<br>
-&gt; &gt;<br>
-&gt; &gt;=C2=A0 David Hubbard &lt;<a href=3D"mailto:dmamfmgm@gmail.com" tar=
-get=3D"_blank">dmamfmgm@gmail.com</a>&gt; writes:<br>
-&gt; &gt;<br>
-&gt; &gt;=C2=A0 &gt; From: Cord Amfmgm &lt;<a href=3D"mailto:dmamfmgm@gmail=
-.com" target=3D"_blank">dmamfmgm@gmail.com</a>&gt;<br>
-&gt; &gt;=C2=A0 &gt;<br>
-&gt; &gt;=C2=A0 &gt; This changes the way the ohci emulation handles a Tran=
-sfer Descriptor with<br>
-&gt; &gt;=C2=A0 &gt; &quot;Current Buffer Pointer&quot; set to &quot;Buffer=
- End&quot; + 1.<br>
-&gt; &gt;=C2=A0 &gt;<br>
-&gt; &gt;=C2=A0 &gt; The OHCI spec 4.3.1.2 Table 4-2 allows td.cbp to be on=
-e byte more than <a href=3D"http://td.be" rel=3D"noreferrer" target=3D"_bla=
-nk">td.be</a><br>
-&gt; &gt;=C2=A0 &gt; to signal the buffer has zero length. Currently qemu o=
-nly accepts zero-length<br>
-&gt; &gt;=C2=A0 &gt; Transfer Descriptors if the td.cbp is equal to 0, whil=
-e actual OHCI hardware<br>
-&gt; &gt;=C2=A0 &gt; accepts both cases.<br>
-&gt; &gt;=C2=A0 &gt;<br>
-&gt; &gt;=C2=A0 &gt; The qemu ohci emulation has a regression in ohci_servi=
-ce_td. Version 4.2<br>
-&gt; &gt;=C2=A0 &gt; and earlier matched the spec. (I haven&#39;t taken the=
- time to bisect exactly<br>
-&gt; &gt;=C2=A0 &gt; where the logic was changed.)<br>
-&gt; &gt;<br>
-&gt; &gt;=C2=A0 I find it hard to characterise this as a regression because=
- we&#39;ve<br>
-&gt; &gt;=C2=A0 basically gone from no checks to actually doing bounds chec=
-ks:<br>
-&gt; &gt;<br>
-&gt; &gt;=C2=A0 =C2=A0 1328fe0c32 (hw: usb: hcd-ohci: check len and frame_n=
-umber variables)<br>
-&gt; &gt;<br>
-&gt; &gt;=C2=A0 The argument here seems to be that real hardware is laxer t=
-han the specs<br>
-&gt; &gt;=C2=A0 in what it accepts.<br>
-&gt; &gt;<br>
-&gt; &lt;snip&gt;<br>
-&gt; &gt;<br>
-&gt; &gt;=C2=A0 With the updated commit message:<br>
-&gt; &gt;<br>
-&gt; &gt;=C2=A0 Reviewed-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.be=
-nnee@linaro.org" target=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
-&gt; &gt;<br>
-&gt; &gt; Please forgive my lack of experience on this mailing list. I don&=
-#39;t see a suggested commit message from Alex but in case that<br>
-&gt; &gt; was what is being considered, here is one. Feedback welcome, also=
- if this is not what is wanted, please just say it.<br>
-&gt; &gt;<br>
-&gt;<br>
-&gt; Something along the lines of what you suggest here<br>
-<br>
-Thanks; I&#39;ve picked up this patch for target-arm.next (as with<br>
-your previous one for hcd-ohci, adjusting the Author and<br>
-Signed-off-by lines to both read David Hubbard).<br>
-<br>
-I tweaked the commit message a little bit, so the middle part reads:<br>
-<br>
-=C2=A0 =C2=A0 What this patch does is loosen the qemu ohci implementation t=
-o allow a<br>
-=C2=A0 =C2=A0 zero-length packet if <a href=3D"http://td.be" rel=3D"norefer=
-rer" target=3D"_blank">td.be</a> (Buffer End) is set to td.cbp - 1, and wit=
-h a<br>
-=C2=A0 =C2=A0 non-zero td.cbp value.<br>
-<br>
-=C2=A0 =C2=A0 The spec is unclear whether this is valid or not -- it is not=
- the<br>
-=C2=A0 =C2=A0 clearly documented way to send a zero length TD (which is CBP=
-=3DBE=3D0),<br>
-=C2=A0 =C2=A0 but it isn&#39;t specifically forbidden. Actual hw seems to b=
-e ok with it.<br>
-<br>
-thanks<br>
--- PMM<br></blockquote><div><br></div><div>That tweak looks great.</div><di=
-v><br></div><div>Thank you for your patience working with me to get this pa=
-tch into a good shape.</div><div><br></div><div>This was my first attempt t=
-o contribute to qemu - really appreciate it.</div></div></div>
-
---000000000000f95a84061b68ddba--
 
