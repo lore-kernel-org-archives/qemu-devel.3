@@ -4,78 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD9EC27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 13:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 602E1C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 13:01:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKdro-0001i7-Rs; Fri, 21 Jun 2024 08:59:48 -0400
+	id 1sKdr0-0000p0-6S; Fri, 21 Jun 2024 08:58:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKdrn-0001XP-Bh
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 08:59:47 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKdrl-00019h-MG
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 08:59:47 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-57d1782679fso2321862a12.0
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 05:59:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718974784; x=1719579584; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+drZjJzYbee3AGMGFwQ0cOXoH69Amp2mQAD/LCIzUzk=;
- b=QsVDVackZANKU+LXoQG+OsXIiFAKB8qh2RcD+Uco5XSGHBl5wBBxsXdB4JUzz8664R
- NZVU02VZdbcTvJF2YrAo0HeIXiTUhWVumIeS/IuIWvNlJ5rci8oIjZplefXw6HOXDR35
- df+t8J6893LzUVmpP+uD4wbU1neYILowHbpaKXtm0BTy8h4bVVG/GCQFkGDH5d0D/swJ
- yD4VREqGQGHoTfXFQKBlNU47jgVUkVtBEPk/5uPcJ71NEmurD9jPqA8N6j1dqdWhy1DG
- cSxqkPaYswTLxqg3c6ewGSnGYXg/eiTohLvpKMWEJIAYiX9Ec1jnBI/aFfmMINrqjsjW
- +ZAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718974784; x=1719579584;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+drZjJzYbee3AGMGFwQ0cOXoH69Amp2mQAD/LCIzUzk=;
- b=DDQM7mTham6g2v4ARRvjFzuc6taK3QZ2tRprxQqoJaKpNqB7UlAy73TBBE6yd22oYY
- zsNCbgKD+qhjYn1nZVAry8cNkRAhRkWuL99pOiQLwyYGeow1TBrKf+/DV533SpldrAHi
- fu2bwnvDMYvEF5wLyln1pl+ht/5+wR9mh52BL01U9ehSTpT9T3Ud2sU4SjlVMZl7Xb0x
- i3vECycpV7+0l/mowKXSw7XK8d+4VBOYewoPv1x0MjnSizG4JTQ2Ri3IkAQsLFrksAV7
- kP3NXEPH4NO/0SFMW9mXifolQEdaUVfGnbo93pYYWMUNwk8mIo+VvRRHlZOuzBCZhl5z
- SK1g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXM7xZ6JPdqkAB/hdZ8MwgVQIqJhiRNBfZ9bttdiuNswk39Fm8uwZvoAwxJG+SBeeJgRqU8bylPHffnVX7NPwVomsbD+vY=
-X-Gm-Message-State: AOJu0YwKhqHnVtPEo/ciXDtLarbbKyKpi3+SbqyIjW8AY3vaC/IXGfGL
- kz49awDugq1pVlAey9MMoyxyXgEUvHBKj2zKsVMaOrj6qx7rRwbrtp5IcPWs+KB/XnqpBcxJFRi
- K6yKgNKOMZXgpPXTQOoeQTrf6zZcjEHqxz7fLjg==
-X-Google-Smtp-Source: AGHT+IFMfp1RgSDM+Td0TqwRiWqCfdw5UMql5HtQ5zm5HlKYKXKHbLvka1J69X9Oqq8Vdc0NR25bX3r/eScHq3BlohA=
-X-Received: by 2002:a50:8711:0:b0:57c:da58:51e7 with SMTP id
- 4fb4d7f45d1cf-57d07e18fa9mr5445522a12.1.1718974783830; Fri, 21 Jun 2024
- 05:59:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sKdqy-0000oR-7q
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 08:58:56 -0400
+Received: from fout6-smtp.messagingengine.com ([103.168.172.149])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sKdqw-0000y7-Gm
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 08:58:55 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+ by mailfout.nyi.internal (Postfix) with ESMTP id E120313801AE;
+ Fri, 21 Jun 2024 08:58:53 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute1.internal (MEProxy); Fri, 21 Jun 2024 08:58:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1718974733;
+ x=1719061133; bh=qJmSM1/+QGx4fJmM9mp+Dx7mU1S35gUOBnlt8xJMvx8=; b=
+ bhm/ZD+6xfmp1P+uWvpDIuU19W6GER7CcEplKybyfBSjE1mS59rZsfqDOGj6x/6v
+ sLs+cA49+0vJ6gjgmvEeGqxfEvGGx2yZccbn3metNd5kCUtBFpZrdP3bp5w5bx7j
+ hMO42ql/fj89EYuumoFeDLglbm7wCP0YXo4lBPv3aoS/HrJULUIBQQQcxfFDf6Fw
+ hjkgN0xwolOKuySc0tsptd9L74K4k35+19uMJHnsK8q1wFuBWY680oWmYGtA/qgG
+ cbJ45uUlYk4W7SwCY5N0bYd6aZFOdHwa2zY72OgM4BxEJCK7H+fkgAVSh2Nr2blh
+ OcVMDjLtoIH6gMvnwf8NcQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1718974733; x=
+ 1719061133; bh=qJmSM1/+QGx4fJmM9mp+Dx7mU1S35gUOBnlt8xJMvx8=; b=O
+ TNOecKMoEHJYxkuTFqN22SZqGZP21QsnRK8T/jESh/FXPhZNxI38qFIHZ+4cW+LY
+ 5gjkVCIS2ezx/M6SkQae7KenEyHE2d5UfpVVUjuoN0zWlQCq8ltkKifFMvlm7AnF
+ dADrrfpo5ZH/VepMWdrmqIGqsuAkNUGTBhhnJP/w7RMjsceLOVIzq6vUyFOZ5OfK
+ ERTDd9z4rtKC5kFxfbAuD4fR4Q+JyJQhAus8449BiwjwUjAtqUUP7wl6ayKZVYvE
+ 8xPlIWL/7lTuCL7NO5l9EFr+pwnJ0Ir58d7DC0qcSSRuOfncN7ksfaqP5P858HKf
+ nbGST0Z0R7cL1R9LKe0Rg==
+X-ME-Sender: <xms:DXl1Ztgnvbed47o55_NNMW3cvc9wmL9V1sg8qTXWVgVJrw9_lJ5dHA>
+ <xme:DXl1ZiAjbIAtyOV3aXhDv30y-KKiTdz0CVXo9rV4MjGxCF-btD37N3CaLNseCIH1E
+ SF4jvrHkQ7fXBce_40>
+X-ME-Received: <xmr:DXl1ZtEMeu43Axd6FvkRmRVB6qcKk6FeBtyLah-hnsO64oAQAK2Issk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeefgedgheekucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpeflihgr
+ gihunhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomheqne
+ cuggftrfgrthhtvghrnhepvedujefhfffhveekhfffkeetvefgteejkeeutdduieehieeg
+ feejtdelveejtedunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvg
+ hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdrhigrnhhg
+ sehflhihghhorghtrdgtohhm
+X-ME-Proxy: <xmx:DXl1ZiSnCoUFo1_1vVFGNtRpCo0YXAVBbVMjJLGmXdg9EeOv1dp4ng>
+ <xmx:DXl1ZqxGJ8GpYVTj58Nia2iUWzqZmCFub6G47eco1Mc1Tejvq6z5oQ>
+ <xmx:DXl1Zo47rlZ8qYqXGICYkcuL6rU6sQBB6Y9nyaEUmLSCKfu5QK_ipg>
+ <xmx:DXl1ZvyANu_iH4-Wkf2Z_qG3HwIkERgmXQre7u00YcbmTiR1_iwJgg>
+ <xmx:DXl1ZhqvTog-u-aZnHOUyFu_HNenf0ElSawtVBuT0pkicaQqrCabcxgJ>
+Feedback-ID: ifd894703:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 21 Jun 2024 08:58:52 -0400 (EDT)
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Date: Fri, 21 Jun 2024 13:58:42 +0100
+Subject: [PATCH 2/3] hw/mips/loongson3_virt: Fix condition of IPI IOCSR
+ connection
 MIME-Version: 1.0
-References: <20240618135550.3108739-1-zheyuma97@gmail.com>
-In-Reply-To: <20240618135550.3108739-1-zheyuma97@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 21 Jun 2024 13:59:32 +0100
-Message-ID: <CAFEAcA8uf-hSP7=w3om6XX7u+v_bQs_qvR1k=XhBp2bzF40Z3g@mail.gmail.com>
-Subject: Re: [PATCH] hw/misc/stm32l4x5_rcc: Add validation for MCOPRE and
- MCOSEL values
-To: Zheyu Ma <zheyuma97@gmail.com>
-Cc: Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
- =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240621-loongson3-ipi-follow-v1-2-c6e73f2b2844@flygoat.com>
+References: <20240621-loongson3-ipi-follow-v1-0-c6e73f2b2844@flygoat.com>
+In-Reply-To: <20240621-loongson3-ipi-follow-v1-0-c6e73f2b2844@flygoat.com>
+To: qemu-devel@nongnu.org
+Cc: Huacai Chen <chenhuacai@kernel.org>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Laurent Vivier <laurent@vivier.eu>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=864;
+ i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
+ bh=cofTbte/00M4qpTM7HECtdZQ9j7Dm2Dzsyya+FjtljI=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhrTSSi6/yNUdVzZ9nv4p4s1d4Y3eM7Im3dZdd+xdVvMuo
+ bs9exeZdZSyMIhxMciKKbKECCj1bWi8uOD6g6w/MHNYmUCGMHBxCsBEWnkZ/hc1sH2b4nBEZQFr
+ dtnf9dcqlt9s1J3WE/rC7M4ie8adJusYGQ6f4jb/tTJI3WDbygYBH1nx4C1ZR96ply6U3e9+dl7
+ HcUYA
+X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
+ fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
+Received-SPF: pass client-ip=103.168.172.149;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,30 +118,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 18 Jun 2024 at 14:56, Zheyu Ma <zheyuma97@gmail.com> wrote:
->
-> This commit adds validation checks for the MCOPRE and MCOSEL values in
-> the rcc_update_cfgr_register function. If the MCOPRE value exceeds
-> 0b100 or the MCOSEL value exceeds 0b111, an error is logged and the
-> corresponding clock mux is disabled. This helps in identifying and
-> handling invalid configurations in the RCC registers.
->
-> Reproducer:
-> cat << EOF | qemu-system-aarch64 -display \
-> none -machine accel=qtest, -m 512M -machine b-l475e-iot01a -qtest \
-> stdio
-> writeq 0x40021008 0xffffffff
-> EOF
->
-> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-> ---
->  hw/misc/stm32l4x5_rcc.c | 28 ++++++++++++++++++++--------
->  1 file changed, 20 insertions(+), 8 deletions(-)
+This fixes Coverity CID-1547264.
 
+Link: https://lore.kernel.org/qemu-devel/752417ad-ab72-4fed-8d1f-af41f15bc225@app.fastmail.com/
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+---
+ hw/mips/loongson3_virt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Applied to target-arm.next, thanks. (I added a line
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2356
-to the commit message.)
+diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+index 528be84bf970..80e953512a85 100644
+--- a/hw/mips/loongson3_virt.c
++++ b/hw/mips/loongson3_virt.c
+@@ -575,7 +575,7 @@ static void mips_loongson3_virt_init(MachineState *machine)
+         cpu_mips_clock_init(cpu);
+         qemu_register_reset(main_cpu_reset, cpu);
+ 
+-        if (ipi) {
++        if (!kvm_enabled()) {
+             hwaddr base = ((hwaddr)node << 44) + virt_memmap[VIRT_IPI].base;
+             base += core * 0x100;
+             qdev_connect_gpio_out(ipi, i, cpu->env.irq[6]);
 
--- PMM
+-- 
+2.43.0
+
 
