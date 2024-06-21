@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BBEDC27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 07:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2473BC2BA1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 07:07:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKYKJ-0003nm-4q; Fri, 21 Jun 2024 03:04:51 -0400
+	id 1sKYMh-0005bl-LP; Fri, 21 Jun 2024 03:07:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKYKI-0003nE-1i
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 03:04:50 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <arthurtumanyan@gmail.com>)
+ id 1sKYMe-0005ai-6O; Fri, 21 Jun 2024 03:07:17 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKYKG-0005ES-Cp
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 03:04:49 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2ec408c6d94so19968361fa.3
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 00:04:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <arthurtumanyan@gmail.com>)
+ id 1sKYMc-0005pn-0V; Fri, 21 Jun 2024 03:07:15 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a6f85f82ffeso197525166b.0; 
+ Fri, 21 Jun 2024 00:07:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718953486; x=1719558286; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=G147CzmBVRTe44+2guDyikKNInZHpzZll0uolwq//h8=;
- b=KHlF20oUsOlFG6SsUmduhO5Mi2ZNaqdMltumpo0F18W2VE8t9oD877LcJLY4decogl
- 8W7BE1F1x+N/CDCXsXZPVrO6fkypMgXwNmcVveizCDH9xqDLDCOAneALAzJUmHKHpxPV
- fPu7dD4FbsycKnvUm25BP34/kP40kW1+HFdW5nMnKef4QKspUark41piZ9yYhFO0Gd7k
- FVpMAxMyN+vKtjR2pn+wEmZ6yryRbcVCXkQkYildPQfNFlTwtc8gIwMSSugLOLg5Nkdr
- Wr3aNhyPZXhGf4j5qhKowx7NsFHKxz2VRJxQ8hIAhCmeRtw5hFnCeijzDIi+pJX1OODj
- t9dg==
+ d=gmail.com; s=20230601; t=1718953632; x=1719558432; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ORUD6LnC/VTY4eB9puSsgy+e06sWMOiVcmkT9sDwWkc=;
+ b=lj/DOtv1IQsH92fltn4NZuatEfrTXTYyk1Cjw3P6H58izMWvK/I2CbN8GnXCP205Am
+ y71ZQ5RTxE22kax0Q550Axj4dwiPHcPX2fFON1Rsg21Mnx4J7+kmWBmdB+J9Fjh0Y/w/
+ t5pauoXyWgAs7BGHltg04DgDwmeZiVzw5wxkkarkOWrygaUBFOuLVY5CKjGjtlpLrYX7
+ OdzXYO34z5PQDcaYMNHvg+LheOsVyLGoUXiMTZpigGvmTd2xs+Br77uUoFenNA4ZDc78
+ vJYtNnKPLPMAflJln/KsVwRLvisF09OcTzYT+Tv+POSOpVRPdVs+EsFv9jdMthbeQH9t
+ 1QYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718953486; x=1719558286;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1718953632; x=1719558432;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=G147CzmBVRTe44+2guDyikKNInZHpzZll0uolwq//h8=;
- b=m/FRFStfEUcak+rzFsaP5oRZ8n8+QmtqMhmSqybBTyucpiB0rjwGRTF63ujv9Mli27
- ZNy2dHKHcwLPhHjQDgYzfURrqLupQT7t8MWgI7arUYsSYeAobEWh4D8aCSPHnXxmh6SN
- tlF+FJ+kPElZKw+bZcl1ucCSfXtZ6OwP1ECXCdu+oOwgM8u518SefKjeQVyPmMUCSZBO
- zOJiNiJj70oc0Vy3Qmb6aF6HV7Xp0SmWN0EmBntuNIgLrI63E0YYVL9yj8z/WxuvJ+K9
- EvwOnWqPFkvqXruJnGvlu5/2y+PIcKLdcHNyyNBna+c4m1YuRzRK0agTZO218WpLtpSS
- krMQ==
-X-Gm-Message-State: AOJu0Yw/g4oMmsYPwVbK/PEnQ4NiuAvMPRSGPl8SaU4Gj+N1AVONAmol
- 6EVy4aiesudsRoWmHAZimMT3DhWTPfLjWsAIhXXFsZRNi7DaAXLKoZeJKsdAkKLlJdAMB7VZ4jP
- k
-X-Google-Smtp-Source: AGHT+IEkE3YsMJo99CVLZ8DLCCcoEsQh/oMZuXOMZ/c+RlqGyb5Aw9cJOq1LT1v0DKDqY+5ll3NkrA==
-X-Received: by 2002:a2e:2c1a:0:b0:2ec:1a1c:75f with SMTP id
- 38308e7fff4ca-2ec3cffc87emr45736111fa.51.1718953485871; 
- Fri, 21 Jun 2024 00:04:45 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.128.209])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42481921f16sm15084975e9.41.2024.06.21.00.04.07
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 21 Jun 2024 00:04:45 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] migration: Remove unused VMSTATE_ARRAY_TEST() macro
-Date: Fri, 21 Jun 2024 09:03:17 +0200
-Message-ID: <20240621070317.9670-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ bh=ORUD6LnC/VTY4eB9puSsgy+e06sWMOiVcmkT9sDwWkc=;
+ b=w7WzlPYCbc293eKFqcTCxUAQ2k0ABSpeo9DId/P3FCDrCEp0lOVuA1tgJT4HkBRPmN
+ tyK6SkbvD6fGuUxc3QE0lCmDJf5bQIDr0+XO5lQ95SAdSeF6SM63EOZt2SvlcVgi8j8U
+ 43i5TbZd0LJesUkfiUgelw1rz2ce8i75UC0ivEjQp4CFzg/2dbBBAeIYid3U+Z1bRpGB
+ 3IYVNAfwXLBfLdzrDCUhOmB+h/7DJ8ymYeSIrZZRCVeHeXnClnAUDVk18O/1A9r0xaRV
+ lyqq8PpS0/xEW7Cx20VOPNSkhwQ4/GD/n+1fhrdB2d5gs8PK7Ulr/zkftJSgsYWSFi6y
+ rFTg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWkgfTq5t3ly1WGXQ6oAsLx+dPE22aUAtp0cn9UcFmr/iPJ6tLXJylZL/WMIVrDlK2ebKKUYTYlZTMrDVW0F02Ccgoo3wNm1DdkmHLdcuPRgdaZQeI4NsHwOf4=
+X-Gm-Message-State: AOJu0Yxi0wE/cZeVJqG2E54bAs8rg4NbwSaEhGw4VKug8wciPhSthBDm
+ 2t4HBREjxIF612IzUdm4t/OtVq+io3C++QMzzt49vIEWBimMVJxpJH9uLKPB7pL0hql3yG+2PAk
+ TmQCDaNvzlaNBhxem1WKi6Gaknis=
+X-Google-Smtp-Source: AGHT+IE92qsdwveFQDb56jP+qo3bQQtsPbkizXQzqNyEL8BymwnudgK6q9b8bvfidlZcLhvOXVuMPZYmfOJWW9yL9Ok=
+X-Received: by 2002:a17:907:c089:b0:a6f:b193:7590 with SMTP id
+ a640c23a62f3a-a6fb19375f7mr510011966b.14.1718953632015; Fri, 21 Jun 2024
+ 00:07:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
+References: <CADueUgQh-=vmoO9kqL589Xeuf_LOM_K2Rr-rBxwe8iArdNdzsA@mail.gmail.com>
+ <6b1daa9c-6f37-4edb-86d4-782941f1bcca@redhat.com>
+ <CAFEAcA-Yda=XXspi49Z+-7bmBP-DzL2kFMg_XfNxMviHuAX18w@mail.gmail.com>
+ <CADueUgS1==4gAmNmTBLZzrnRUp9z2wxkce8+TcOeoR3w_Pg-bg@mail.gmail.com>
+In-Reply-To: <CADueUgS1==4gAmNmTBLZzrnRUp9z2wxkce8+TcOeoR3w_Pg-bg@mail.gmail.com>
+From: Arthur Tumanyan <arthurtumanyan@gmail.com>
+Date: Fri, 21 Jun 2024 11:07:00 +0400
+Message-ID: <CADueUgT4xDJft6On4j+oic65UcQRv_PcNSWJg-CcdBM8My3zow@mail.gmail.com>
+Subject: Re: How to use designware-root-port and designware-root-host devices ?
+To: peter.maydell@linaro.org
+Cc: thuth@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ andrew.smirnov@gmail.com
+Content-Type: multipart/alternative; boundary="0000000000009f2937061b6114f3"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=arthurtumanyan@gmail.com; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,37 +91,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Last use of VMSTATE_ARRAY_TEST() was removed in commit 46baa9007f
-("migration/i386: Remove old non-softfloat 64bit FP support"), we
-can safely get rid of it.
+--0000000000009f2937061b6114f3
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/migration/vmstate.h | 10 ----------
- 1 file changed, 10 deletions(-)
+Hi,
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 294d2d8486..f313f2f408 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -388,16 +388,6 @@ extern const VMStateInfo vmstate_info_qlist;
-     .offset     = vmstate_offset_varray(_state, _field, _type),      \
- }
- 
--#define VMSTATE_ARRAY_TEST(_field, _state, _num, _test, _info, _type) {\
--    .name         = (stringify(_field)),                              \
--    .field_exists = (_test),                                          \
--    .num          = (_num),                                           \
--    .info         = &(_info),                                         \
--    .size         = sizeof(_type),                                    \
--    .flags        = VMS_ARRAY,                                        \
--    .offset       = vmstate_offset_array(_state, _field, _type, _num),\
--}
--
- #define VMSTATE_SUB_ARRAY(_field, _state, _start, _num, _version, _info, _type) { \
-     .name       = (stringify(_field)),                               \
-     .version_id = (_version),                                        \
--- 
-2.41.0
+I just tried to run mcimx7d-sabre machine this way:
 
+${HOME}/cosim/usr/local/bin/qemu-system-arm -M mcimx7d-sabre -m 2G \
+-kernel ${HOME}/cosim-arm/buildroot/output/images/uImage \
+        --initrd ${HOME}/cosim-arm/buildroot/output/images/rootfs.cpio.gz \
+-nographic \
+-net nic -net user
+
+and it just prints this and do nothing: *qemu-system-arm: warning: nic
+imx.enet.1 has no peer*
+
+Based on what I see in the mcimx7d-sabre.c , it configures just very basic
+things, no PCIe at all (may be I'm wrong ;) )
+
+Is there any idea what goes wrong here ? Maybe someone has experience with
+running this machine ?
+
+Before starting to create my own virt machine I would like to know I'm not
+missing the existing ways to run this.
+
+Thanks in advance,
+Arthur
+
+
+
+
+
+On Thu, Jun 20, 2024 at 11:37=E2=80=AFPM Arthur Tumanyan <arthurtumanyan@gm=
+ail.com>
+wrote:
+
+> Thanks for the answers, I could move forward a bit more. I'm going/I need
+> to to create a "virt" machine with designware PCI controller for simulati=
+on
+> purposes. Will get back with progress in case anyone is interested in
+> results. Thank you again for your time and support.
+> Arthur
+>
+> On Thu, Jun 20, 2024, 23:05 Peter Maydell <peter.maydell@linaro.org>
+> wrote:
+>
+>> On Thu, 20 Jun 2024 at 18:34, Thomas Huth <thuth@redhat.com> wrote:
+>> >
+>> > On 20/06/2024 10.28, Arthur Tumanyan wrote:
+>> > >  From the other hand the device is declared as non pluggable:
+>> > > dc->user_creatable =3D false;
+>> >
+>> > Well, that means that you cannot use those with "-device". They can
+>> only be
+>> > instantiated via the code that creates the machine.
+>> >
+>> > > Can you please help me to use designware-root-host/port devices ?
+>> >
+>> > It seems like the i.MX7 SABRE machine is using this device, so instead
+>> of
+>> > "-M virt", you could have a try with "-M mcimx7d-sabre" (and a kernel
+>> that
+>> > supports this machine) instead.
+>>
+>> Right -- these devices are the PCIe controller that's used on the i.MX7
+>> and i.MX6 SoCs, and they're automatically created when you use a machine
+>> type that uses one of those SoCs. The "virt" board doesn't use that
+>> PCIe controller, it uses the "generic PCIe bridge" TYPE_GPEX_HOST
+>> (and you automatically get a PCIe controller when you use the virt board=
+).
+>> You can't change the PCIe controller type of a QEMU machine from
+>> the command line, you have to configure the guest to use the controller
+>> the machine type provides.
+>>
+>> thanks
+>> -- PMM
+>>
+>
+
+--0000000000009f2937061b6114f3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi,<div><br></div><div>I just tried to run mcimx7d-sabre m=
+achine this way:<br></div><div><br>${HOME}/cosim/usr/local/bin/qemu-system-=
+arm -M mcimx7d-sabre -m 2G \<br>	-kernel ${HOME}/cosim-arm/buildroot/output=
+/images/uImage \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0	--initrd ${HOME}/cosim-arm/=
+buildroot/output/images/rootfs.cpio.gz \<br>	-nographic \<br>	-net nic -net=
+ user=C2=A0<br></div><div><br></div><div>and it just prints this and do not=
+hing:=C2=A0<b>qemu-system-arm: warning: nic imx.enet.1 has no peer</b></div=
+><div><br></div><div>Based on what I see in the mcimx7d-sabre.c , it config=
+ures just very basic things, no PCIe at all (may be I&#39;m wrong ;) )</div=
+><div><br></div><div>Is there any idea what goes wrong here ? Maybe someone=
+ has experience with running this machine ?</div><div><br></div><div>Before=
+ starting to create my own virt machine I would like to know I&#39;m not mi=
+ssing the existing ways to run this.</div><div><br></div><div>Thanks in adv=
+ance,</div><div>Arthur</div><div><br></div><div><br></div><div><br></div><d=
+iv><br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D=
+"gmail_attr">On Thu, Jun 20, 2024 at 11:37=E2=80=AFPM Arthur Tumanyan &lt;<=
+a href=3D"mailto:arthurtumanyan@gmail.com">arthurtumanyan@gmail.com</a>&gt;=
+ wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><p dir=
+=3D"ltr">Thanks for the answers, I could move forward a bit more. I&#39;m g=
+oing/I need to to create a &quot;virt&quot; machine with designware PCI con=
+troller for simulation purposes. Will get back with progress in case anyone=
+ is interested in results. Thank you again for your time and support.<br>
+Arthur </p>
+<br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu=
+, Jun 20, 2024, 23:05 Peter Maydell &lt;<a href=3D"mailto:peter.maydell@lin=
+aro.org" target=3D"_blank">peter.maydell@linaro.org</a>&gt; wrote:<br></div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
+-left:1px solid rgb(204,204,204);padding-left:1ex">On Thu, 20 Jun 2024 at 1=
+8:34, Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" rel=3D"noreferrer=
+" target=3D"_blank">thuth@redhat.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; On 20/06/2024 10.28, Arthur Tumanyan wrote:<br>
+&gt; &gt;=C2=A0 From the other hand the device is declared as non pluggable=
+:<br>
+&gt; &gt; dc-&gt;user_creatable =3D false;<br>
+&gt;<br>
+&gt; Well, that means that you cannot use those with &quot;-device&quot;. T=
+hey can only be<br>
+&gt; instantiated via the code that creates the machine.<br>
+&gt;<br>
+&gt; &gt; Can you please help me to use designware-root-host/port devices ?=
+<br>
+&gt;<br>
+&gt; It seems like the i.MX7 SABRE machine is using this device, so instead=
+ of<br>
+&gt; &quot;-M virt&quot;, you could have a try with &quot;-M mcimx7d-sabre&=
+quot; (and a kernel that<br>
+&gt; supports this machine) instead.<br>
+<br>
+Right -- these devices are the PCIe controller that&#39;s used on the i.MX7=
+<br>
+and i.MX6 SoCs, and they&#39;re automatically created when you use a machin=
+e<br>
+type that uses one of those SoCs. The &quot;virt&quot; board doesn&#39;t us=
+e that<br>
+PCIe controller, it uses the &quot;generic PCIe bridge&quot; TYPE_GPEX_HOST=
+<br>
+(and you automatically get a PCIe controller when you use the virt board).<=
+br>
+You can&#39;t change the PCIe controller type of a QEMU machine from<br>
+the command line, you have to configure the guest to use the controller<br>
+the machine type provides.<br>
+<br>
+thanks<br>
+-- PMM<br>
+</blockquote></div>
+</blockquote></div>
+
+--0000000000009f2937061b6114f3--
 
