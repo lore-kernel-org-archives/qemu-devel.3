@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C25E2C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 14:42:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2580C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 14:42:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKfSc-0000vs-Ql; Fri, 21 Jun 2024 10:41:54 -0400
+	id 1sKfTG-0001gZ-Q4; Fri, 21 Jun 2024 10:42:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sKfSX-0000vX-EX
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:41:49 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sKfSV-00005w-PC
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:41:49 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1f9d9b57b90so12671475ad.0
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 07:41:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718980906; x=1719585706; darn=nongnu.org;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2EadQnRtkxnuKs9n7EVh0RBW5rPvMo6y9WTGkbjtPRQ=;
- b=Ar6XBMscMkGyrSvQ1uZ16CIidypzA1dmm+NUbjzS5XFZ8zg8g1G/WggTTgk3FODRU7
- oiltyoRE5YGkagTR36LICGYl2F5vJzfOsGTdRjC5+48bQB7XO5hlAy9+9e+XrwUXId6I
- M7M7Xc41Lb772sYZiIrcoQDkv49Yedo+Ul2JmuvguSe+LDC207njC95zT2fr1pcFEu7y
- cP3pIGPHvMbVinaEgE8gin9tA30LPpVl/Q1sqcfOJNjRz/50dZq6OE0gC4s6bZaxkHHY
- JfYp6vWHBdxKTzhHnvCuj/0RHMSK/njpYk0rVlwyiSq+Jkup2kIhqdk0qloP/Rdqwi1e
- 2SyA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKfTE-0001fm-Dx
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:42:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKfTC-0000Fr-Vo
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:42:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718980950;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GaB1QwEZMEk+G2627RoEiSCiJdca3CsBhMb/Otlq3ME=;
+ b=OK9mV19t5NfK/7Bnj/tLGLLBmkIL9Rn6SyUah+sftEyUNEKcBDtUOTAlSFmxRleTtqaTES
+ E8q0PUHDwIo50O5lHTmfB/fpsN9Jq16priL/TpgvF6Md1AFZ1yWhw3Y9eQ8wFtZxiHxKpR
+ P0+mf14AWTKpaNT5S7HzCvPWgwPQcRQ=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-610-sSFOz_zcN22rgwZCCsW_tg-1; Fri, 21 Jun 2024 10:42:28 -0400
+X-MC-Unique: sSFOz_zcN22rgwZCCsW_tg-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-43e2c5354f9so3595801cf.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 07:42:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718980906; x=1719585706;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2EadQnRtkxnuKs9n7EVh0RBW5rPvMo6y9WTGkbjtPRQ=;
- b=r8oAiiH6kSGUjThIjrFFhjS7YM8JgI7JYjPhFH22hYRoxzpl+UGTEgeYimAzOtpl+h
- uafyi49J8kM0aakP/8VG8nsh6vxlx5ELN8y0gpbzgrWIjU1x6QviWFfD/KP325uGUrcc
- 4uiNxMB+Saj9ebhFCopA/L2A0K9mLa2VZiVhHSbERUx5e2ovDf4NQ6UoRF5lmagEjVi8
- 8ojerYIqVC1vP1thoAvtcBECkNgDFLNIUjo91x2lxFaDO5X02ChVp+YUP8hAU3vbo7Qo
- D6yP73NsQhiJ/mN2wByI1awL6loVXRu8mcmTL0Gyb405YMLPEAMkCrz3oZnnk3ddsFs3
- /Ccw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUMzOUuXnZPLq91y/660IgLeB72SKrVQ6h/A3wmuuj9gE7dqwo2b7dSMECGxJaLr+l05pt1r/z4QwDWyM4yuJnlxDUIzGc=
-X-Gm-Message-State: AOJu0YyYFjBTI/slNGUtcoPvgSmqee70Gae3Tda4Mqq4AbDuRvTpWF0P
- HDr5sAtMR3/So65OmPKFdVbl4kx7897u6xqeA0EIoa1XwM+cOuH2f9qBjFnuGlrFKvZbo5HY306
- H
-X-Google-Smtp-Source: AGHT+IHXuHhxqOIhzmYF9zcL0hNBVe8xGod9J24jOhhlX5oJqsWPGVmyhwZEJJ4UavTBi7sft2B4pA==
-X-Received: by 2002:a17:903:1248:b0:1f8:3c5d:9eb with SMTP id
- d9443c01a7336-1f9aa3b1488mr104263575ad.7.1718980906349; 
- Fri, 21 Jun 2024 07:41:46 -0700 (PDT)
-Received: from [192.168.0.102] (200-207-104-144.dsl.telesp.net.br.
- [200.207.104.144]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9eb3c591bsm14816985ad.165.2024.06.21.07.41.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Jun 2024 07:41:46 -0700 (PDT)
-Subject: Re: [PATCH 1/2] target/arm: Move initialization of debug ID registers
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- alex.bennee@linaro.org
-Cc: philmd@linaro.org, peter.maydell@linaro.org
-References: <20240620181352.3590086-1-gustavo.romero@linaro.org>
- <20240620181352.3590086-2-gustavo.romero@linaro.org>
- <2af6449a-f4c2-422c-a92b-cfb11a5ae2d5@linaro.org>
-From: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <c9cb3219-b55a-e05a-7253-3ff270bb58fc@linaro.org>
-Date: Fri, 21 Jun 2024 11:41:42 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+ d=1e100.net; s=20230601; t=1718980948; x=1719585748;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GaB1QwEZMEk+G2627RoEiSCiJdca3CsBhMb/Otlq3ME=;
+ b=iUoUCm0oW97S0FWG81ANBc1xE8rFDmbzq7LbgAtDMX3MdSQmRFswmFZXtkqiIQ5QQZ
+ A6FxSaBf0uwNQJUQqXuMM69mTQP4H9WMDdcX/ki3JyQ8oXZ/Z8XBEcZatDSC3DbGtEH1
+ sJ3nhW4neNb4FbZn+0S++iSQ4kHsCTK84QTvpLkF3jiNfoLiEKNPYN5sN1Llaz7aiLTe
+ WzetA1anuJMxuJdaWbcOpkX2rNxsYSY2B2nwPlM1Cs/DzPzcVXMgn/FfiUa8S5fM77sc
+ PWgBg25quJGE9hZJ8SPz7RHN7hlxQmj9Ttj/NJpmUG+z9k0IEBsLnoszxVBTJ65HCskJ
+ L3IQ==
+X-Gm-Message-State: AOJu0Yw9W7to8skBDhag7vrHCR2NiOPKvOF8agBhqK/FU3a5zIiJrY/Z
+ C0E9WmzNaCJG1c92SUWpYUqqQLKarUMSQqXj40QMuzdXUf76k3uax7souCzpOEQKq/NYtFo79gf
+ ZWgwmCYflJWTt/K7b1qZwPLDRaMHi4aeVtYfyoj7Dkq33Q2y26vPg
+X-Received: by 2002:ad4:5ec8:0:b0:6b2:b56b:c8a5 with SMTP id
+ 6a1803df08f44-6b501ee9694mr92962836d6.5.1718980948247; 
+ Fri, 21 Jun 2024 07:42:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE8n6MOdkQFtxq/Mj7nvJ9Sg6KyGhUlOV4/Js4m/HOO9wFqtJcZRq/TK64HX/2QbriMYxL/Zw==
+X-Received: by 2002:ad4:5ec8:0:b0:6b2:b56b:c8a5 with SMTP id
+ 6a1803df08f44-6b501ee9694mr92962496d6.5.1718980947729; 
+ Fri, 21 Jun 2024 07:42:27 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b51ef31182sm9291076d6.95.2024.06.21.07.42.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 21 Jun 2024 07:42:27 -0700 (PDT)
+Date: Fri, 21 Jun 2024 10:42:25 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [RFC PATCH 1/7] migration/multifd: Reduce access to p->pages
+Message-ID: <ZnWRUbS8q1ptIpvl@x1n>
+References: <20240620212111.29319-1-farosas@suse.de>
+ <20240620212111.29319-2-farosas@suse.de>
 MIME-Version: 1.0
-In-Reply-To: <2af6449a-f4c2-422c-a92b-cfb11a5ae2d5@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-1.465,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240620212111.29319-2-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,31 +98,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
-
-On 6/20/24 3:21 PM, Richard Henderson wrote:
-> On 6/20/24 11:13, Gustavo Romero wrote:
->> @@ -1268,7 +1268,10 @@ void aarch64_max_tcg_initfn(Object *obj)
->>       t = FIELD_DP64(t, ID_AA64SMFR0, FA64, 1);     /* FEAT_SME_FA64 */
->>       cpu->isar.id_aa64smfr0 = t;
->> -    /* Replicate the same data to the 32-bit id registers.  */
->> +    /*
->> +     * Replicate the same values from the 32-bit max CPU to the 32-bit ID
->> +     * registers.
->> +     */
->>       aa32_max_features(cpu);
+On Thu, Jun 20, 2024 at 06:21:05PM -0300, Fabiano Rosas wrote:
+> I'm about to replace the p->pages pointer with an opaque pointer, so
+> do a cleanup now to reduce direct accesses to p->page, which makes the
+> next diffs cleaner.
 > 
-> I think the previous comment is more accurate.
-> 
-> There is no separate "32-bit max CPU". There is one "max CPU", which supports both 32-bit and 64-bit modes, and thus has both 32-bit and 64-bit ID registers.
-I see. In v2 I reverted to the previous comment. Thanks a lot for the review.
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Cheers,
-Gustavo
+-- 
+Peter Xu
 
-> The rest of the patch looks good.
-> 
-> 
-> r~
 
