@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E7D7C2BA1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 06:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73E68C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 06:37:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKXjM-0004O9-5v; Fri, 21 Jun 2024 02:26:40 -0400
+	id 1sKXtD-0007mX-9F; Fri, 21 Jun 2024 02:36:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKXjJ-0004Ny-T1
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 02:26:37 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKXtC-0007mK-1v
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 02:36:50 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKXjI-0006L0-Er
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 02:26:37 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3650f2e540dso1041611f8f.0
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 23:26:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKXtA-0008Bf-1o
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 02:36:49 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a6f85f82ffeso193919166b.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 23:36:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718951194; x=1719555994; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718951806; x=1719556606; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qlGAlkZfTk61bVYQBn45idrU7hvl/Gbhx/41mWlESZU=;
- b=LukHJk3EHfesID5Hompj930c99siEW7MhrNp3PwrtVMee0RWfxYJKypSYWH00sYdrx
- czbuYkYLvRfj4soY6DthlzI3bw6eIp1yUd07jUD+V0IJ8bZ3qmbGr/7cB67BVMfwWPPP
- oZ7DClQQvSF8UaPBdWj4J3NFyR8N7cCz206KZnTGTEaVnv0QaYpoNFdo1AQ/WH07LtRc
- tdfZwpQfIpYE1U5AuYYl6/7HB+FJowkJFKTFGMOyLpr4veFxA1hKvcaxOcUWrSsdibPR
- 3gh6T6vOK22ai2x3Arll6Nv8YfKV8ugtFa1R1WWq2Gv/oxMqYTwEko/ChLblOnVvjM/z
- TjqA==
+ bh=P7NsGwqjm/7EDad7tIWfUEkw3hUdKkMiiR0U4Q2Hkhc=;
+ b=A74yjuBrImEn0vcLH7EPBxMUPTuBDBHTOhO29uRKPooy6qzsioNIS/8EzJ5+afoJYj
+ JYqFQunS9sLboAsGlg3BgHszIMiyRWx4cuAgmEubi1zc8Y9CS7ABxiFBf3VOj7ucBGPF
+ iOpFIOjCybsP0y+rL0haoPDj35P4Mu6RJrl27z7mf7oWl0gN4/zb9Yy450KbSSyMCtCw
+ fFN8xuv/pBI6HGy5fQX2s/H0/zq7xhPmA37jziuLXv8CUXM1Bcwf6x80for5fFWIHJMr
+ HZwCd0/fAnLoBCWQUiTG235bg13iIU7xvWuFSLxkSIKi10vWTH6p/EKvW63C1fTtKg47
+ P4pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718951194; x=1719555994;
+ d=1e100.net; s=20230601; t=1718951806; x=1719556606;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qlGAlkZfTk61bVYQBn45idrU7hvl/Gbhx/41mWlESZU=;
- b=RGfFbphlxjhPUEurWggPTzYtX7Ez8J1htQDJBs9FNINSF1Z0+jrk1BdiCrVUYqNy12
- QzyIOivGeq4xDoLV1CJq8wp11SlSxQVjCVDiJrHdmc19EHd5FSDHYRaRUuE40FAG+yux
- GA5SKIv/49xsvulGeQ2Adz3yVBprjSRPS3pbzeWKOGM5HOGLs2R084zF7cZCPWVOVEMD
- rny6YyVnhvqbggcMR6KoB43Q3uPxUznrl15K4rCtpMWPK1aFLAzZJ5CSc21wasiD9kpj
- CrcDh6LgjBn9hnD0FVaCNRszefSrGY1ckB2ClgB7ee17xFjlueKy5BCHtbTvpbP6i/Tb
- bNrw==
-X-Gm-Message-State: AOJu0YzL//ze4tDZDC/hGk4KFXTeoZ3jmOeDl29O5KXac31LorZWXzrY
- SQP/t7YXghc/7E0qb6yRQxr5llk/Bj0ujZsnmL8RpiSCTav9S0UIck0xfGGaywc=
-X-Google-Smtp-Source: AGHT+IG9lW0xlnyDu/4lYZiVKCYxpbClvGg98Qd2lAoCukPQ7tZ/xgw4Lc4BNzv7SvR1t8PwwoWnPA==
-X-Received: by 2002:a05:6000:108:b0:360:9641:573a with SMTP id
- ffacd0b85a97d-363193c62dfmr5509260f8f.43.1718951194029; 
- Thu, 20 Jun 2024 23:26:34 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.151.40])
+ bh=P7NsGwqjm/7EDad7tIWfUEkw3hUdKkMiiR0U4Q2Hkhc=;
+ b=QrumNsgbt3wEZxwCRnUEK4cBf5kjtaqOBbuOIwHLl8srGuk+AUWyJpWTaIdIrfyisJ
+ 1CuyY2w6KiausunOdCw3VEzUoX1MBEFrX5dGC2CDXs2HmUWd4nI937PAkSSAafb6gVGD
+ wneow12yMvo5CoMOCmJvuOm+gMvhfsi1fkZ0t/HFdlLdLRqK4ao1MkNnMzu2qZApeZBM
+ 5Zdao+gJS6gCWxfK88MvWjCdlAZKRcAWZaVxmcLU+4SNryhkOgOAi/1P1oIhhlF6qoaj
+ 4s/3wiQgBtU67Tt+irxyFQrowCHiBOVKHuTu3bw+yN06Q/HSZDNXphr9uadxxMULSo1X
+ 2oTQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjJMceshjKCWJMvib36ptk8uLWncoJVnUh8VCn4bMWPor0SiPRl8u+slISZ1dOTAPiTBcwhibbriii2FA6+G6DBeiZtnw=
+X-Gm-Message-State: AOJu0Ywlc535Qz3qKAEKVEC4hw+RfV0eE+ZrNm8g39GG3WJ6AX4SCcPN
+ ZrOwwmbg3c9ya3R7s8VQnASUoC31Fr5Bu1nA4kv+OFYl1ANHwSW3tdgVVEmVvdI=
+X-Google-Smtp-Source: AGHT+IE+4Ye3xmT+YTzQMyCsP4cYiPEvvD2BdzbiLs7F6LBFT1cCLrRdD1IXKY9Fjw53fon9clHrvg==
+X-Received: by 2002:a17:907:c713:b0:a6f:54fc:d921 with SMTP id
+ a640c23a62f3a-a6fab605ee4mr579598866b.16.1718951805864; 
+ Thu, 20 Jun 2024 23:36:45 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.128.209])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36638d9bfe4sm802936f8f.53.2024.06.20.23.26.32
+ a640c23a62f3a-a6fcf56063dsm48122666b.147.2024.06.20.23.36.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Jun 2024 23:26:33 -0700 (PDT)
-Message-ID: <6297a086-7e59-4299-aabd-68cf14fc42bd@linaro.org>
-Date: Fri, 21 Jun 2024 08:26:31 +0200
+ Thu, 20 Jun 2024 23:36:45 -0700 (PDT)
+Message-ID: <2c1c5bfa-da3f-4f09-b7d7-832bcc399be2@linaro.org>
+Date: Fri, 21 Jun 2024 08:36:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: standardizing i2c device ids
-To: Patrick Leis <venture@google.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Corey Minyard <cminyard@mvista.com>, Titus Rwantare <titusr@google.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <CAO=notyY_Jc2_Xq0NeK-0zUORy1n-6yuP5M_WXWEQnaqTmVXkw@mail.gmail.com>
+Subject: Re: [PATCH v2] exec: use char* for pointer arithmetic
+To: Roman Kiryanov <rkir@google.com>, richard.henderson@linaro.org,
+ qemu-devel@nongnu.org
+Cc: jansene@google.com, mett@google.com, jpcottin@google.com
+References: <20240619000450.893463-1-rkir@google.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAO=notyY_Jc2_Xq0NeK-0zUORy1n-6yuP5M_WXWEQnaqTmVXkw@mail.gmail.com>
+In-Reply-To: <20240619000450.893463-1-rkir@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,24 +96,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Patrick,
-
-On 21/6/24 00:03, Patrick Leis wrote:
-> Corey and Peter,
+On 19/6/24 02:04, Roman Kiryanov wrote:
+> void* pointer arithmetic is not in the
+> C standard. This change allows using
+> the QEMU headers with a C++ compiler.
 > 
-> My team builds lots of configurations for Qemu boards, and one pain 
-> point has been that the qom path for a device depends on the device 
-> insertion order, child[0], child[1] and the like.  I noticed that the 
-> qdev paths for devices also exist by their device id property.  By 
-> default, this ends up being the device type name.  I was wondering if it 
-> made sense to override this with the device type plus the smbus 
-> address?  I did something similar with the i2c mux device, to resolve 
-> part of this issue.
+> Google-Bug-Id: 331190993
+> Change-Id: I5a064853429f627c17a9213910811dea4ced6174
+> Signed-off-by: Roman Kiryanov <rkir@google.com>
+> ---
+> v2: change `char*` into `char *` (add the missing space).
+> 
+>   include/exec/memory.h                 |  8 ++++----
+>   include/exec/memory_ldst_cached.h.inc | 12 ++++++------
+>   2 files changed, 10 insertions(+), 10 deletions(-)
+> 
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index d7591a60d9..a6d64e39a5 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -2839,7 +2839,7 @@ static inline uint8_t address_space_ldub_cached(MemoryRegionCache *cache,
+>   {
+>       assert(addr < cache->len);
+>       if (likely(cache->ptr)) {
+> -        return ldub_p(cache->ptr + addr);
+> +        return ldub_p((char *)cache->ptr + addr);
+>       } else {
+>           return address_space_ldub_cached_slow(cache, addr, attrs, result);
+>       }
+> @@ -2850,7 +2850,7 @@ static inline void address_space_stb_cached(MemoryRegionCache *cache,
+>   {
+>       assert(addr < cache->len);
+>       if (likely(cache->ptr)) {
+> -        stb_p(cache->ptr + addr, val);
+> +        stb_p((char *)cache->ptr + addr, val);
+>       } else {
+>           address_space_stb_cached_slow(cache, addr, val, attrs, result);
+>       }
+> @@ -3123,7 +3123,7 @@ address_space_read_cached(MemoryRegionCache *cache, hwaddr addr,
+>       assert(addr < cache->len && len <= cache->len - addr);
+>       fuzz_dma_read_cb(cache->xlat + addr, len, cache->mrs.mr);
+>       if (likely(cache->ptr)) {
+> -        memcpy(buf, cache->ptr + addr, len);
+> +        memcpy(buf, (char *)cache->ptr + addr, len);
+>           return MEMTX_OK;
+>       } else {
+>           return address_space_read_cached_slow(cache, addr, buf, len);
+> @@ -3144,7 +3144,7 @@ address_space_write_cached(MemoryRegionCache *cache, hwaddr addr,
+>   {
+>       assert(addr < cache->len && len <= cache->len - addr);
+>       if (likely(cache->ptr)) {
+> -        memcpy(cache->ptr + addr, buf, len);
+> +        memcpy((char *)cache->ptr + addr, buf, len);
+>           return MEMTX_OK;
+>       } else {
+>           return address_space_write_cached_slow(cache, addr, buf, len);
+> diff --git a/include/exec/memory_ldst_cached.h.inc b/include/exec/memory_ldst_cached.h.inc
+> index d7834f852c..9426663524 100644
+> --- a/include/exec/memory_ldst_cached.h.inc
+> +++ b/include/exec/memory_ldst_cached.h.inc
+> @@ -30,7 +30,7 @@ static inline uint16_t ADDRESS_SPACE_LD_CACHED(uw)(MemoryRegionCache *cache,
+>       assert(addr < cache->len && 2 <= cache->len - addr);
+>       fuzz_dma_read_cb(cache->xlat + addr, 2, cache->mrs.mr);
+>       if (likely(cache->ptr)) {
+> -        return LD_P(uw)(cache->ptr + addr);
+> +        return LD_P(uw)((char *)cache->ptr + addr);
+>       } else {
+>           return ADDRESS_SPACE_LD_CACHED_SLOW(uw)(cache, addr, attrs, result);
+>       }
+> @@ -42,7 +42,7 @@ static inline uint32_t ADDRESS_SPACE_LD_CACHED(l)(MemoryRegionCache *cache,
+>       assert(addr < cache->len && 4 <= cache->len - addr);
+>       fuzz_dma_read_cb(cache->xlat + addr, 4, cache->mrs.mr);
+>       if (likely(cache->ptr)) {
+> -        return LD_P(l)(cache->ptr + addr);
+> +        return LD_P(l)((char *)cache->ptr + addr);
+>       } else {
+>           return ADDRESS_SPACE_LD_CACHED_SLOW(l)(cache, addr, attrs, result);
+>       }
+> @@ -54,7 +54,7 @@ static inline uint64_t ADDRESS_SPACE_LD_CACHED(q)(MemoryRegionCache *cache,
+>       assert(addr < cache->len && 8 <= cache->len - addr);
+>       fuzz_dma_read_cb(cache->xlat + addr, 8, cache->mrs.mr);
+>       if (likely(cache->ptr)) {
+> -        return LD_P(q)(cache->ptr + addr);
+> +        return LD_P(q)((char *)cache->ptr + addr);
+>       } else {
+>           return ADDRESS_SPACE_LD_CACHED_SLOW(q)(cache, addr, attrs, result);
+>       }
+> @@ -76,7 +76,7 @@ static inline void ADDRESS_SPACE_ST_CACHED(w)(MemoryRegionCache *cache,
+>   {
+>       assert(addr < cache->len && 2 <= cache->len - addr);
+>       if (likely(cache->ptr)) {
+> -        ST_P(w)(cache->ptr + addr, val);
+> +        ST_P(w)((char *)cache->ptr + addr, val);
+>       } else {
+>           ADDRESS_SPACE_ST_CACHED_SLOW(w)(cache, addr, val, attrs, result);
+>       }
+> @@ -87,7 +87,7 @@ static inline void ADDRESS_SPACE_ST_CACHED(l)(MemoryRegionCache *cache,
+>   {
+>       assert(addr < cache->len && 4 <= cache->len - addr);
+>       if (likely(cache->ptr)) {
+> -        ST_P(l)(cache->ptr + addr, val);
+> +        ST_P(l)((char *)cache->ptr + addr, val);
+>       } else {
+>           ADDRESS_SPACE_ST_CACHED_SLOW(l)(cache, addr, val, attrs, result);
+>       }
+> @@ -98,7 +98,7 @@ static inline void ADDRESS_SPACE_ST_CACHED(q)(MemoryRegionCache *cache,
+>   {
+>       assert(addr < cache->len && 8 <= cache->len - addr);
+>       if (likely(cache->ptr)) {
+> -        ST_P(q)(cache->ptr + addr, val);
+> +        ST_P(q)((char *)cache->ptr + addr, val);
+>       } else {
+>           ADDRESS_SPACE_ST_CACHED_SLOW(q)(cache, addr, val, attrs, result);
+>       }
 
-Including Markus since we discussed this with him last year, but
-I don't remember correctly what was agreed / decided :S
-
-Regards,
-
-Phil.
+Superseded by 
+https://lore.kernel.org/qemu-devel/20240620201654.598024-1-rkir@google.com/.
 
