@@ -4,79 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0119DC27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 15:47:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68181C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 15:57:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKgTh-0004A6-GJ; Fri, 21 Jun 2024 11:47:05 -0400
+	id 1sKgcm-0007d9-Mk; Fri, 21 Jun 2024 11:56:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKgTd-00049S-Eo
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:47:03 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sKgTb-0004lg-T7
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:47:01 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a6cb130027aso137136466b.2
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 08:46:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718984817; x=1719589617; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0foJIqq89kkb1sR2lxAA/3c9445w60E9nij82OhyHSs=;
- b=PqRr0RaBV5QhP/SoeYzfyIB0sGeFZoZmBxI9Oxr/WR1bRiS5FFScJvZst8qZ5shRUC
- pYgbUOgTo2PiJrFFMa2IY/KZgye0+yYGK946hY52O3rVFsoNCqta+fdxi0ujBydHQSlQ
- EpZgo9lzruScpOOMpBR7vEsm4dAXxrrDQoFkQAyGTcnt9qnn5y2nTPDKakWVXrHRrBkM
- UEM5oR23f3Y10DVFg7AFX45QbsVWo0VTGQsYhXiArq274CJ2VOghepNxkxYC6G8bSHhH
- OekkMhaI/oE5xBnscC7MNkJnm4LCi+rUDV7ylSHD00bHVFhMiVHVOAnk0kwVoYYXHOZ2
- OL7Q==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKgch-0007Ts-9Q
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:56:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKgcf-0006eO-I9
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:56:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1718985379;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5qCVFnqO1tH//0CXREkWGX7cvKTBFtXygTZAp31h1JM=;
+ b=jAezGZuAiaf6Se+FOupNrWQSfFZ85SkE1mwGcDv86SyaeqwvhosQDT2MNcPIAM/6YJ8EBy
+ zi4saQdZNPBd/RGEtw/fttOItYrAxSLz/Hhk/BeIrSSD3jEPgxDoGOM6KIXKmRzxQSEjaG
+ KZHc7O5QJChjyZcM8skq01xcC7/AaII=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-563-MSbUeGTCNI6LqCGB_t5dFw-1; Fri, 21 Jun 2024 11:56:18 -0400
+X-MC-Unique: MSbUeGTCNI6LqCGB_t5dFw-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-79560b25fc4so16953885a.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 08:56:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718984817; x=1719589617;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0foJIqq89kkb1sR2lxAA/3c9445w60E9nij82OhyHSs=;
- b=ZudYEo5Fc1WdN6I+JDbH5hx2g7lGk5/xTLZ0urla0IzcfcjS4LCnNZJW2Rw1nR/nVn
- VnUrFfvVJvOUHvTORU9NOvV7m0YpbRikBhdllFwPC/PaWtA0nQoglB0rk4OyDSC1zZCJ
- dErSKS8/J2TrtubAswelluUJJ/Drim2zO7vP2kwjCjhbYM+dfBpRA3+nDHas8PZez0JR
- 5XW8T/CSQ5TdP7/Z2I+vlvJpauHauC+G4G6HiryEdbr6KfvUcVSq6k9oC10I/uPIfNo0
- L/XfQvPtnJfps9B/b08GOaQzPVFkP6J4IAnCzgZHiY/rHBHwlVO8UI0DYqqJFnRGR58P
- afnQ==
+ d=1e100.net; s=20230601; t=1718985377; x=1719590177;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5qCVFnqO1tH//0CXREkWGX7cvKTBFtXygTZAp31h1JM=;
+ b=RivnM5O0RdKQXoIJWA25ULwgNaQhpHQr4W3So69r3XuVub5NXmgEKWff0yFcq4FRsB
+ Ele8606aB81FNcs2cRBGzKdB5lBuhYZQP+yfBMCAvWuDdBRhV+EG5TwNiV+y7MRJGHPG
+ TGQSHA602GhRpnPm/kW7SsZwt6Mkl6GFWWnELEV1X0YWM7DaY+meCmPnolsnDVtUzZoN
+ j8T0MAn0VVHPJ+hkZSqoYAqg1EKGFVXCAfdkDeSBXsdwmiBH5vP3Xl99sh+/pC5m2tJo
+ 1HlWChIsncPa8StWDShVz7WoKrxQI+bu+GbaGmmthpYQjeuv8kope0hafoU3DRYqOnwY
+ dwBg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXEaW5jWdsI2nqypL+YNESB92vPfK1tuNZ8AayfHfwBA80RNdn/DokTVH3QO0lrvUFIgqYTpOJegGKnXoQR9LD1lNMAeKo=
-X-Gm-Message-State: AOJu0YzCrP3XgJrEtVK4kfOKAuIwQTMpJ7tGpjciR4/hVKgJXVFJWs4c
- nddRyMQEirS6EEiPoO5+kf5DwaO0C8SqDSfvqa66Q3j8oyIBlw2K6WifpoSNyVHF6wQcRXIb/+u
- LAqnwMr+jdxCu1hnh8YgfBjSyrii6JjFV24bNpA==
-X-Google-Smtp-Source: AGHT+IHc2BARzVl822q1LB8AZOncw47uQdfTk7oxqdHfqWbIi06JarTTB5Mj/gUynWYsAdLy5eeeNieFPZ2DvIUhM/E=
-X-Received: by 2002:a50:d717:0:b0:57c:b810:1062 with SMTP id
- 4fb4d7f45d1cf-57d07e421admr6442306a12.13.1718984817287; Fri, 21 Jun 2024
- 08:46:57 -0700 (PDT)
+ AJvYcCXTZcJISdyGxBBmcFPLpJeVe1oU58KRbZFIhTth1zPPaYtwkEJD1fmFwU8fs/UyoVlGokvrm4jDqmOmoOyhP5KuC56FrdM=
+X-Gm-Message-State: AOJu0YykOXfMMgpjN45nu9ky6LnH7SjsKVYt0PmdwMGEMApgdv/UBipM
+ caoRmz+uGJtk9l7qgy0Ln2BfXn+8pikI7xP9CHFdD2KWSBVg5k0O1M6F7iNeg+KdWamyoAYRp8t
+ ol+VdC5v5gL+Hu1ud4v8/k7hwk9UlSgzV/0goZqGhtb9JTUsSAiNr
+X-Received: by 2002:a05:6214:248f:b0:6b2:af3c:f710 with SMTP id
+ 6a1803df08f44-6b501e28ab3mr91561656d6.2.1718985377410; 
+ Fri, 21 Jun 2024 08:56:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEwgTkwKBJEqHeXe3Av+DmHMPchheK16JKRwpMPmfyPrsY2Q/hhYEfSKPsU/4leZXLPEjzahA==
+X-Received: by 2002:a05:6214:248f:b0:6b2:af3c:f710 with SMTP id
+ 6a1803df08f44-6b501e28ab3mr91561426d6.2.1718985376770; 
+ Fri, 21 Jun 2024 08:56:16 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b51ed175fasm9784196d6.34.2024.06.21.08.56.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 21 Jun 2024 08:56:16 -0700 (PDT)
+Date: Fri, 21 Jun 2024 11:56:12 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 0/7] migration/multifd: Introduce storage slots
+Message-ID: <ZnWinGjeZGRGVOF-@x1n>
+References: <20240620212111.29319-1-farosas@suse.de>
+ <f6f84518-530e-4332-8881-41a6219b8d4d@maciej.szmigiero.name>
+ <87v822ibh8.fsf@suse.de>
+ <dfe0384e-a765-4bfb-81c8-529329d76052@maciej.szmigiero.name>
 MIME-Version: 1.0
-References: <20240614093026.328271-1-sai.pavan.boddu@amd.com>
- <20240614093026.328271-4-sai.pavan.boddu@amd.com>
-In-Reply-To: <20240614093026.328271-4-sai.pavan.boddu@amd.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 21 Jun 2024 16:46:46 +0100
-Message-ID: <CAFEAcA-t7G0Y7GazmPV=hThRZT+w8cveNCU0kxv091+wAhXsiQ@mail.gmail.com>
-Subject: Re: [PATCH RFC 3/3] target/arm/debug_helper: Add fieldoffset for
- MDCCSR_EL0 reg
-To: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, francisco.iglesias@amd.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <dfe0384e-a765-4bfb-81c8-529329d76052@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,31 +102,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 14 Jun 2024 at 10:30, Sai Pavan Boddu <sai.pavan.boddu@amd.com> wrote:
->
-> MDCCSR_EL0 is aarch64 varient of DBGDSCRint, so utilize the same cpreg
-> offset.
->
-> Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-> ---
->  target/arm/debug_helper.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
-> index 7d856acddf..5deafa4d1f 100644
-> --- a/target/arm/debug_helper.c
-> +++ b/target/arm/debug_helper.c
-> @@ -970,7 +970,7 @@ static const ARMCPRegInfo debug_cp_reginfo[] = {
->      { .name = "MDCCSR_EL0", .state = ARM_CP_STATE_AA64,
->        .opc0 = 2, .opc1 = 3, .crn = 0, .crm = 1, .opc2 = 0,
->        .access = PL0_R, .accessfn = access_tdcc,
-> -      .type = ARM_CP_CONST, .resetvalue = 0 },
-> +      .fieldoffset = offsetof(CPUARMState, cp15.mdscr_el1)}, /* Xilinx */
+On Fri, Jun 21, 2024 at 05:31:54PM +0200, Maciej S. Szmigiero wrote:
+> On 21.06.2024 17:04, Fabiano Rosas wrote:
+> > "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+> > 
+> > > Hi Fabiano,
+> > > 
+> > > On 20.06.2024 23:21, Fabiano Rosas wrote:
+> > > > Hi folks,
+> > > > 
+> > > > First of all, apologies for the roughness of the series. I'm off for
+> > > > the next couple of weeks and wanted to put something together early
+> > > > for your consideration.
+> > > > 
+> > > > This series is a refactoring (based on an earlier, off-list
+> > > > attempt[0]), aimed to remove the usage of the MultiFDPages_t type in
+> > > > the multifd core. If we're going to add support for more data types to
+> > > > multifd, we first need to clean that up.
+> > > > 
+> > > > This time around this work was prompted by Maciej's series[1]. I see
+> > > > you're having to add a bunch of is_device_state checks to work around
+> > > > the rigidity of the code.
+> > > > 
+> > > > Aside from the VFIO work, there is also the intent (coming back from
+> > > > Juan's ideas) to make multifd the default code path for migration,
+> > > > which will have to include the vmstate migration and anything else we
+> > > > put on the stream via QEMUFile.
+> > > > 
+> > > > I have long since been bothered by having 'pages' sprinkled all over
+> > > > the code, so I might be coming at this with a bit of a narrow focus,
+> > > > but I believe in order to support more types of payloads in multifd,
+> > > > we need to first allow the scheduling at multifd_send_pages() to be
+> > > > independent of MultiFDPages_t. So here it is. Let me know what you
+> > > > think.
+> > > 
+> > > Thanks for the patch set, I quickly glanced at these patches and they
+> > > definitely make sense to me.
+> > > 
+> (..)
+> > > > (as I said, I'll be off for a couple of weeks, so feel free to
+> > > > incorporate any of this code if it's useful. Or to ignore it
+> > > > completely).
+> > > 
+> > > I guess you are targeting QEMU 9.2 rather than 9.1 since 9.1 has
+> > > feature freeze in about a month, correct?
+> > > 
+> > 
+> > For general code improvements like this I'm not thinking about QEMU
+> > releases at all. But this series is not super complex, so I could
+> > imagine we merging it in time for 9.1 if we reach an agreement.
+> > 
+> > Are you thinking your series might miss the target? Or have concerns
+> > over the stability of the refactoring? We can within reason merge code
+> > based on the current framework and improve things on top, we already did
+> > something similar when merging zero-page support. I don't have an issue
+> > with that.
+> 
+> The reason that I asked whether you are targeting 9.1 is because my
+> patch set is definitely targeting that release.
+> 
+> At the same time my patch set will need to be rebased/refactored on top
+> of this patch set if it is supposed to be merged for 9.1 too.
+> 
+> If this patch set gets merged quickly that's not really a problem.
+> 
+> On the other hand, if another iteration(s) is/are needed AND you are
+> not available in the coming weeks to work on them then there's a
+> question whether we will make the required deadline.
 
-MDCCSR_EL0 and MDSCR_EL1 aren't the same thing -- MDCCSR_EL0
-only has bits 30 and 29 (RXfull and TXfull), not the full contents
-of MDSCR_EL1.
+I think it's a bit rush to merge the vfio series in this release.  I'm not
+sure it has enough time to be properly reviewed, reposted, retested, etc.
 
-thanks
--- PMM
+I've already started looking at it, and so far I think I have doubt not
+only on agreement with Fabiano on the device_state thing which I prefer to
+avoid, but also I'm thinking of any possible way to at least make the
+worker threads generic too: a direct impact could be vDPA in the near
+future if anyone cared, while I don't want modules to create threads
+randomly during migration.
+
+Meanwhile I'm also thinking whether that "the thread needs to dump all
+data, and during iteration we can't do that" is the good reason to not
+support that during iterations.
+
+I didn't yet reply because I don't think I think all things through, but
+I'll get there.
+
+So I'm not saying that the design is problematic, but IMHO it's just not
+mature enough to assume it will land in 9.1, considering it's still a large
+one, and the first non-rfc version just posted two days ago.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
