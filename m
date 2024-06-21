@@ -4,75 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80AA7C2BA1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 04:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F4D6C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 04:21:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKVlv-0003rF-5s; Fri, 21 Jun 2024 00:21:11 -0400
+	id 1sKVmI-00044M-Qj; Fri, 21 Jun 2024 00:21:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sKVls-0003qO-Tu; Fri, 21 Jun 2024 00:21:08 -0400
-Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKVmG-0003x7-Is
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 00:21:32 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sKVlr-0007ih-JT; Fri, 21 Jun 2024 00:21:08 -0400
-Received: by mail-vs1-xe29.google.com with SMTP id
- ada2fe7eead31-48d9cbfe0ffso504871137.2; 
- Thu, 20 Jun 2024 21:21:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKVmF-0007qG-5S
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 00:21:32 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1f9de13d6baso8003615ad.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 21:21:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718943666; x=1719548466; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NI21qgnQctpoXFnxn+1MrI0WZwoSxFdwaRBCexBGSoQ=;
- b=buLbIoIURAAzRzwNnGZdz/8imhqjQ5gbYKfeSPqq2AF0br8MEDd0Xe4r2AB85M0UKf
- rBh4JOiy5FNRaZlZdKl65AbcpbJMG+EM+FBhTRf8XduAUcuEZEarj2iVmqSw9JeryvbW
- bxHujuzOgzj5tZ1HOXtdk6H3r81wv7K10gA1xS6M51tFH1om0/XGK5D1LhvVqzKHGHeg
- Xvtr90VnDEkQEL1b6c5y6l9LyLEv2zz3nBLyKKgKhlLC+b7mpil7V9X9aLcZsR9Oq4Rl
- XjKIj4JmkQvq7+csTVV9fu1LPwZOU6S2ShFS+cF4s3tQxhZMayVrWKXco+eZZvfvVK62
- cPQA==
+ d=linaro.org; s=google; t=1718943689; x=1719548489; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IJqQVbfedTquPb0+nCNC2G5Z5S+6ydxq9SYZ2N2JxKw=;
+ b=ynbAXOsYQtaOw81ou9elI5glKjEhToOGKUkgCe/PTC5xr4BHQaqeUtgnXGRjhkD5ba
+ sbAE7zwe3qlPebKuGJXcSxOeYFQA7rw/U5ZyNeJAzugvyfle0LBnLI6E23le+VN2n0CY
+ dr/yDKlsT8fDQZvTag7a4ntQKJ/qnTotlXAOWuv+QokrSij8kDBPIIof0sT7VP5Qdaxc
+ mZOaG2ECgmqcgos8izzSg7O+jUJwuZh8Rdp1Npu13ehiKiqDbOCpXWByqqyWUzgyAQUJ
+ hv2YiIOd0nFZfOCSplqvTRyxl53BZZ4X4U9Wl4I7ToEOMQpcQ5BDewf2hrXKCYTyS8D0
+ AYHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718943666; x=1719548466;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NI21qgnQctpoXFnxn+1MrI0WZwoSxFdwaRBCexBGSoQ=;
- b=WIZ0t1sDQtEtmQil0+LTm0k8r7OcTGUE6xsn7H2F3wVeKhvhQFzVJ1eRbmEGdrGK2N
- Qu7ST64Rd3yLlLhVbGTvgfCC8cZQd3G6HuScRst+t1y/mWcVolkit3Uwi4eGbxmdB8/c
- XKekioHglhZjX0xHOWL+5ua5ATiBKRr6gIIVeSonRLrIweOoBMQSS4MKRh7Byz2UxYzs
- G+LzhrTWdxwldPuGKsUb1C7im85iHxnt8u8GnI1c9fdgvzEynt0+IqxdkmNo7rFpSnpH
- IUN5StrAlEZbqDbFv/iKpLHYneljDvMu4cKRaHN6SzERrZ30Kq5JVARxmCSkc2TmP10O
- JkGA==
+ d=1e100.net; s=20230601; t=1718943689; x=1719548489;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IJqQVbfedTquPb0+nCNC2G5Z5S+6ydxq9SYZ2N2JxKw=;
+ b=BjoyeGyL38GK25ZuzE5k9rOow/J3XxVFVPAeOlcEcF0olT9LmP9TpPqN2/V5CV0L5c
+ Pw66YSBaKWsVYDKK7azaR8h4UmsGq27pWuBJlrOe4yBHhDVx5AyRQh2QLtu/4TO2mm72
+ CBRorQo1U2oklj77Q2QbcdFq0zDpZUXW216N7Lgo6JuRfdSqOIEiuWI+kJ64WFqMBe9G
+ nY6oRR2T0TRH8bslkM99QJ2EvEb5+WntjsVR9vDKve0a72OJINkQlgNE5tMr7CkyPrLv
+ bNkLiviuI7wqfl1uhcgRXH/04YKbO5OqJCjULq9rw3xpXvmro+VMEfyDw2LXXtVlNYDw
+ bm3A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXRxb14nNEiX6qzaUqGO2qt14ljk58FCgv3BPuSoYLkESmzHaCtcl+HGJSF9T/fZ9PIsa4rN8yCeldomcVRGw7kbtcMVM0=
-X-Gm-Message-State: AOJu0YzsgWiICJixOcYmg+4jgBzn2FTH+qPUZXNNfGCAyc30YTZ45a5s
- n1EKiLVO9Z30CPA6FzIzeofS20wZxiSfDLJmUDj0Eqh/b9ZRQPqeXBYDOMSJmWerhCf62dPLnk8
- 4/XmNAqZ9F3/Y9YX7wXJGJssves8=
-X-Google-Smtp-Source: AGHT+IFH3jXw/Pa+QzkR+g5TWORDnQ5S1bVBKoXpYYVA5QBczC8j2xT1Ff8Y6PxZg+owCm+ELhB1wMh1VQR45qjxAKo=
-X-Received: by 2002:a67:efd9:0:b0:48f:1674:f5a5 with SMTP id
- ada2fe7eead31-48f1674f6ffmr6574454137.18.1718943666106; Thu, 20 Jun 2024
- 21:21:06 -0700 (PDT)
+ AJvYcCVkw35fW5KbvWqSEW5ml3DLBt3fb0NhCtQ6cZIEiD/SMzTnm6Qjc6FuzbuhioqzM3i2XvS1kb+GYsUxwtvutEzN9kyTOVo=
+X-Gm-Message-State: AOJu0YxeUyhJBSUUMgJbyAwfc/ybRWuXTVeL6j8mnp9E2o6DiJ5CfevX
+ y/8iHc3QRChU6XYE/eWmjEXnIYdOeIbAHZzJ2U1f+vlOJTS385hU6RVwrMNnJYA=
+X-Google-Smtp-Source: AGHT+IGcj8a2Whr1DbYoa082s4blT2imJax8kZj2jv4mCoMVx3r2lYW8IgiqIpgWCI1T2vvcc6O36g==
+X-Received: by 2002:a17:902:d491:b0:1f6:1c1f:f32f with SMTP id
+ d9443c01a7336-1f9aa40fd32mr88515885ad.16.1718943689220; 
+ Thu, 20 Jun 2024 21:21:29 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f9eb320673sm4519255ad.78.2024.06.20.21.21.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Jun 2024 21:21:28 -0700 (PDT)
+Message-ID: <3faf6561-804f-4d1c-8204-f4bb9f7a3b94@linaro.org>
+Date: Thu, 20 Jun 2024 21:21:26 -0700
 MIME-Version: 1.0
-References: <20240608214546.226963-1-brzakbranislav@gmail.com>
-In-Reply-To: <20240608214546.226963-1-brzakbranislav@gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 21 Jun 2024 14:20:39 +1000
-Message-ID: <CAKmqyKNMO4iEsODXyAAhP7zPMUih+oM=+yEquSBxx3aDEj-kbg@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Fix froundnx.h nanbox check
-To: Branislav Brzak <brzakbranislav@gmail.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e29;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe29.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] mips: pass code of conditional trap
+To: YunQiang Su <syq@debian.org>, qemu-devel@nongnu.org
+Cc: macro@orcam.me.uk, philmd@linaro.org
+References: <20240620234633.74447-1-syq@debian.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240620234633.74447-1-syq@debian.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,38 +97,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jun 9, 2024 at 3:32=E2=80=AFPM Branislav Brzak <brzakbranislav@gmai=
-l.com> wrote:
->
-> helper_froundnx_h function mistakenly uses single percision nanbox
-> check instead of the half percision one. This patch fixes the issue.
->
-> Signed-off-by: Branislav Brzak <brzakbranislav@gmail.com>
+On 6/20/24 16:46, YunQiang Su wrote:
+> @@ -4553,7 +4559,7 @@ static void gen_trap(DisasContext *ctx, uint32_t opc,
+>           if (ctx->hflags != ctx->saved_hflags) {
+>               tcg_gen_movi_i32(hflags, ctx->hflags);
+>           }
+> -        generate_exception(ctx, EXCP_TRAP);
+> +        generate_exception_with_code(ctx, EXCP_TRAP, code);
+>           gen_set_label(l1);
+>       }
+>   }
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+There are two instances within gen_trap, one of which *does* store into error_code, but 
+that gets overwritten by do_raise_exception_err.
 
-Alistair
+Search for EXCP_TRAP.
 
-> ---
->  target/riscv/fpu_helper.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/target/riscv/fpu_helper.c b/target/riscv/fpu_helper.c
-> index 871a70a316..91b1a56d10 100644
-> --- a/target/riscv/fpu_helper.c
-> +++ b/target/riscv/fpu_helper.c
-> @@ -676,7 +676,7 @@ uint64_t helper_fround_h(CPURISCVState *env, uint64_t=
- rs1)
->
->  uint64_t helper_froundnx_h(CPURISCVState *env, uint64_t rs1)
->  {
-> -    float16 frs1 =3D check_nanbox_s(env, rs1);
-> +    float16 frs1 =3D check_nanbox_h(env, rs1);
->      frs1 =3D float16_round_to_int(frs1, &env->fp_status);
->      return nanbox_h(env, frs1);
->  }
-> --
-> 2.34.1
->
->
+
+r~
 
