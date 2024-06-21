@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2580C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 14:42:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 449C4C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 14:45:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKfTG-0001gZ-Q4; Fri, 21 Jun 2024 10:42:34 -0400
+	id 1sKfVm-0003Kk-DI; Fri, 21 Jun 2024 10:45:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKfTE-0001fm-Dx
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:42:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1sKfVj-0003JE-3f
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:45:07 -0400
+Received: from vps-vb.mhejs.net ([37.28.154.113])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKfTC-0000Fr-Vo
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:42:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718980950;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GaB1QwEZMEk+G2627RoEiSCiJdca3CsBhMb/Otlq3ME=;
- b=OK9mV19t5NfK/7Bnj/tLGLLBmkIL9Rn6SyUah+sftEyUNEKcBDtUOTAlSFmxRleTtqaTES
- E8q0PUHDwIo50O5lHTmfB/fpsN9Jq16priL/TpgvF6Md1AFZ1yWhw3Y9eQ8wFtZxiHxKpR
- P0+mf14AWTKpaNT5S7HzCvPWgwPQcRQ=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-sSFOz_zcN22rgwZCCsW_tg-1; Fri, 21 Jun 2024 10:42:28 -0400
-X-MC-Unique: sSFOz_zcN22rgwZCCsW_tg-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-43e2c5354f9so3595801cf.2
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 07:42:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718980948; x=1719585748;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GaB1QwEZMEk+G2627RoEiSCiJdca3CsBhMb/Otlq3ME=;
- b=iUoUCm0oW97S0FWG81ANBc1xE8rFDmbzq7LbgAtDMX3MdSQmRFswmFZXtkqiIQ5QQZ
- A6FxSaBf0uwNQJUQqXuMM69mTQP4H9WMDdcX/ki3JyQ8oXZ/Z8XBEcZatDSC3DbGtEH1
- sJ3nhW4neNb4FbZn+0S++iSQ4kHsCTK84QTvpLkF3jiNfoLiEKNPYN5sN1Llaz7aiLTe
- WzetA1anuJMxuJdaWbcOpkX2rNxsYSY2B2nwPlM1Cs/DzPzcVXMgn/FfiUa8S5fM77sc
- PWgBg25quJGE9hZJ8SPz7RHN7hlxQmj9Ttj/NJpmUG+z9k0IEBsLnoszxVBTJ65HCskJ
- L3IQ==
-X-Gm-Message-State: AOJu0Yw9W7to8skBDhag7vrHCR2NiOPKvOF8agBhqK/FU3a5zIiJrY/Z
- C0E9WmzNaCJG1c92SUWpYUqqQLKarUMSQqXj40QMuzdXUf76k3uax7souCzpOEQKq/NYtFo79gf
- ZWgwmCYflJWTt/K7b1qZwPLDRaMHi4aeVtYfyoj7Dkq33Q2y26vPg
-X-Received: by 2002:ad4:5ec8:0:b0:6b2:b56b:c8a5 with SMTP id
- 6a1803df08f44-6b501ee9694mr92962836d6.5.1718980948247; 
- Fri, 21 Jun 2024 07:42:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE8n6MOdkQFtxq/Mj7nvJ9Sg6KyGhUlOV4/Js4m/HOO9wFqtJcZRq/TK64HX/2QbriMYxL/Zw==
-X-Received: by 2002:ad4:5ec8:0:b0:6b2:b56b:c8a5 with SMTP id
- 6a1803df08f44-6b501ee9694mr92962496d6.5.1718980947729; 
- Fri, 21 Jun 2024 07:42:27 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b51ef31182sm9291076d6.95.2024.06.21.07.42.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Jun 2024 07:42:27 -0700 (PDT)
-Date: Fri, 21 Jun 2024 10:42:25 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Subject: Re: [RFC PATCH 1/7] migration/multifd: Reduce access to p->pages
-Message-ID: <ZnWRUbS8q1ptIpvl@x1n>
-References: <20240620212111.29319-1-farosas@suse.de>
- <20240620212111.29319-2-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <mail@maciej.szmigiero.name>)
+ id 1sKfVe-0000hg-VE
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:45:06 -0400
+Received: from MUA by vps-vb.mhejs.net with esmtps (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (Exim 4.94.2)
+ (envelope-from <mail@maciej.szmigiero.name>)
+ id 1sKfVS-0003QO-Sz; Fri, 21 Jun 2024 16:44:50 +0200
+Message-ID: <f6f84518-530e-4332-8881-41a6219b8d4d@maciej.szmigiero.name>
+Date: Fri, 21 Jun 2024 16:44:45 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240620212111.29319-2-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/7] migration/multifd: Introduce storage slots
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+References: <20240620212111.29319-1-farosas@suse.de>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <20240620212111.29319-1-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=37.28.154.113;
+ envelope-from=mail@maciej.szmigiero.name; helo=vps-vb.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,16 +100,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 20, 2024 at 06:21:05PM -0300, Fabiano Rosas wrote:
-> I'm about to replace the p->pages pointer with an opaque pointer, so
-> do a cleanup now to reduce direct accesses to p->page, which makes the
-> next diffs cleaner.
+Hi Fabiano,
+
+On 20.06.2024 23:21, Fabiano Rosas wrote:
+> Hi folks,
 > 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> First of all, apologies for the roughness of the series. I'm off for
+> the next couple of weeks and wanted to put something together early
+> for your consideration.
+> 
+> This series is a refactoring (based on an earlier, off-list
+> attempt[0]), aimed to remove the usage of the MultiFDPages_t type in
+> the multifd core. If we're going to add support for more data types to
+> multifd, we first need to clean that up.
+> 
+> This time around this work was prompted by Maciej's series[1]. I see
+> you're having to add a bunch of is_device_state checks to work around
+> the rigidity of the code.
+> 
+> Aside from the VFIO work, there is also the intent (coming back from
+> Juan's ideas) to make multifd the default code path for migration,
+> which will have to include the vmstate migration and anything else we
+> put on the stream via QEMUFile.
+> 
+> I have long since been bothered by having 'pages' sprinkled all over
+> the code, so I might be coming at this with a bit of a narrow focus,
+> but I believe in order to support more types of payloads in multifd,
+> we need to first allow the scheduling at multifd_send_pages() to be
+> independent of MultiFDPages_t. So here it is. Let me know what you
+> think.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Thanks for the patch set, I quickly glanced at these patches and they
+definitely make sense to me.
 
--- 
-Peter Xu
+I guess its latest version could be found in the repo at [2] since
+that's where the CI run mentioned below took it from?
+
+> (as I said, I'll be off for a couple of weeks, so feel free to
+> incorporate any of this code if it's useful. Or to ignore it
+> completely).
+
+I guess you are targeting QEMU 9.2 rather than 9.1 since 9.1 has
+feature freeze in about a month, correct?
+
+> CI run: https://gitlab.com/farosas/qemu/-/pipelines/1340992028
+> 
+> 0- https://github.com/farosas/qemu/commits/multifd-packet-cleanups/
+> 1- https://lore.kernel.org/r/cover.1718717584.git.maciej.szmigiero@oracle.com
+
+[2]: https://gitlab.com/farosas/qemu/-/commits/multifd-pages-decouple
+
+Thanks,
+Maciej
 
 
