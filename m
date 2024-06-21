@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCE0EC27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 08:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07FE0C2BA1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 08:07:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKZI7-0005Gn-Vj; Fri, 21 Jun 2024 04:06:40 -0400
+	id 1sKZI0-0005BS-DE; Fri, 21 Jun 2024 04:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZI4-0005Bo-EY
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:06:36 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZHy-0005An-Ce
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:06:30 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZI2-0008Iy-TU
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:06:36 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-52cd790645eso283956e87.3
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 01:06:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZHx-0008Gx-0d
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:06:30 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-52bc121fb1eso1935628e87.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 01:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718957193; x=1719561993; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718957187; x=1719561987; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=724kW79TXJGwyxkrPpGmpC8jMcTbNAzL87slxzj18o8=;
- b=z4ZdYyxHEcoC5Km3cyQh/tWqGz61JDUhMzY/mAAIUiTw/FyFoXlWUXyfKPWWhWBa2Z
- rE8Q/7HwYpnTH0aJS+uGEsIs/lZC2hiP0vrm6UExuG5DCc7G6233Y2CqLgIwx5hwIegK
- c6egxQpnofpiH2fRpyM9jskAByMKYTtHfwXkSdKSULJnWgMQ3mlNfVxAdyq1+Pbs6PnH
- Jq5nfoj25R1N6c1a5eOiXzb1bk7QwJNqO4LpdsgIlwuwVSajpN4MUjpCdJ1U/1TgDVqM
- vF7qMdITnTj1DDfFHFBD1LPrvhYKoI0cFOZTrd93CuPLF/7Q8AJZndyTgtBp6oVFeaS6
- WFEw==
+ bh=AsqEi0yMZfaJd1hK4BOnT6B+zva2T6NVwv7/H2dxiDs=;
+ b=oxgfh8HExCZk6IENBaMrpTqBaLEPkglxxT4ecUs6CvFnf6aQvzcN/3AL8G7HGJT7g/
+ K/GufHu4HEtsPLCmpl9OaIvIgW4PhiS7DQkRZ50qD3oyQHe9qr0gHE/AiUfPemTImxXF
+ 5JCZ+lf/cB7fh4pGTKRmKL0aSeZY6PYItJRFv/R3PRq7Qy8Zqbu6qbRUxZga9Xj6+CSj
+ M4bRa/QyZ2VM5+lnacaDrSbLUG87Nz3MrXkaccbAimeuZ929uxdyY87N80iO7UtmaWvr
+ xCq2PD+r8TwbKcWaUTE8FsX6LkAKd2mgOKQW9lUBB1w7SIoz118S2ReDxpbrzqx9zop+
+ m5qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718957193; x=1719561993;
+ d=1e100.net; s=20230601; t=1718957187; x=1719561987;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=724kW79TXJGwyxkrPpGmpC8jMcTbNAzL87slxzj18o8=;
- b=ZMkBq7cbN0mG2FPeZbRr9Wm03dOiJCWe/DfXj6zPZDQV3PZrdbXQ9ky3x9QvF66min
- Ekm+iMqHEzRMh0v4Q5mn0Cex971e+0ofUgCePUxRQq0MVhiEgGUV3T3LCUvbKyvqUDj9
- kvfENNsrp8fVjPJPisHC9frj0wdaLyCOcw2cJOnztRG5oq2QAxVFJA06zHo3UuL45R14
- avGMMUigEI1UUa8sIem/VtDwyCkPTe3EyC5cI07WI3b7hFMiABR6qVcemeRMROGgy46X
- xj19oxA2k2KSx8/MdyjhEez//YVoG/2XbScRqFcy714hPqpdV3gk+C2HdDUIrOPF7HrB
- RTTw==
-X-Gm-Message-State: AOJu0YwE+/1X4gSGv4tBf+x+brRzZ5AJ9c/a8KalLxcGpc3FXO8Nrz+V
- iRKSGJLzphJQsIGBOoq5Xp/Imeef9oWfzEXjHUu7z3VzUlgLxVTWJWiPocxeaxiyJO21xQNUgAy
- b
-X-Google-Smtp-Source: AGHT+IGF+RXH6ISxE641vWAocQv7AwcSVCSODQbtcRZUwnMSOBm0UvFeguDTovwJ67ffv527nJtiSg==
-X-Received: by 2002:ac2:558e:0:b0:52c:c953:3c1c with SMTP id
- 2adb3069b0e04-52ccaa600dfmr4509217e87.36.1718957192959; 
- Fri, 21 Jun 2024 01:06:32 -0700 (PDT)
+ bh=AsqEi0yMZfaJd1hK4BOnT6B+zva2T6NVwv7/H2dxiDs=;
+ b=Qy+Ufv9OIrRHGhzCiTGPdSmFiH1vNS6iiNAEnu4XJgu8a4ULVlGAs8c6nUMSHIfEmZ
+ kUTZ3T6Wt6cF5HNDAYgzWBSyJof3a7HRGG0BwXg4Z62olx57NjVkyUD1EISrwBcIuczT
+ g8W8YeqIdllh6enuEOIV0DwGDxy4mS2MPZfwzcDrq7ep50kX+1EAWdfh7gUPGKLT/J4+
+ uoFmf47grMbFX4ekH0lDPjsuYQazdCw1EXc74URI+OrdwJv5nYqcsBA/UFXOQXDEn8/2
+ QO8aKfxnOm1VNoE0NlR5KjUn/cd7TW6FU4nza4KJY+RaaLjFMjTXhvJrq04rNYCii3kO
+ nE5w==
+X-Gm-Message-State: AOJu0YxMgzmzUzFT4pLbVlcqDXHLiGy6P4C0LDRtCQE/ehofRDyWus29
+ p80oxVI7To13rn9KE4AWol+2l0UqUs9v7GTdExk7KOtt9Uj2qY4ZEkISHZWqdpKVOxiuhKnUoso
+ h
+X-Google-Smtp-Source: AGHT+IF+oecqc0QCYs+h4dF4w6KMDPV6yo2V/Jq6b9Wq4b60F2vqMqvZYuMOC5p2ZKmdzvY8GpUQrA==
+X-Received: by 2002:a19:e048:0:b0:52c:dac0:59f8 with SMTP id
+ 2adb3069b0e04-52cdac05a32mr75707e87.53.1718957186790; 
+ Fri, 21 Jun 2024 01:06:26 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.128.209])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3663a2f6f36sm968427f8f.71.2024.06.21.01.06.31
+ 5b1f17b1804b1-4247d0beb13sm52737585e9.14.2024.06.21.01.06.25
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 21 Jun 2024 01:06:32 -0700 (PDT)
+ Fri, 21 Jun 2024 01:06:26 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Joel Stanley <joel@jms.id.au>, Bin Meng <bmeng.cn@gmail.com>,
  Sai Pavan Boddu <sai.pavan.boddu@amd.com>, qemu-block@nongnu.org
-Subject: [PATCH 06/23] hw/sd/sdcard: Use Load/Store API to fill some CID/CSD
- registers
-Date: Fri, 21 Jun 2024 10:05:37 +0200
-Message-ID: <20240621080554.18986-7-philmd@linaro.org>
+Subject: [PATCH 05/23] hw/sd/sdcard: Use registerfield CSR::CURRENT_STATE
+ definition
+Date: Fri, 21 Jun 2024 10:05:36 +0200
+Message-ID: <20240621080554.18986-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240621080554.18986-1-philmd@linaro.org>
 References: <20240621080554.18986-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,42 +97,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ld/st API helps noticing CID or CSD bytes refer
-to the same field. Multi-bytes fields are stored MSB
-first in CID / CSD.
+Use registerfield-generated definitions to update card_status.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ hw/sd/sd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 24415cb9f0..b0cd30c657 100644
+index c528c30bcf..24415cb9f0 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -393,10 +393,7 @@ static void sd_set_cid(SDState *sd)
-     sd->cid[6] = PNM[3];
-     sd->cid[7] = PNM[4];
-     sd->cid[8] = PRV;       /* Fake product revision (PRV) */
--    sd->cid[9] = 0xde;      /* Fake serial number (PSN) */
--    sd->cid[10] = 0xad;
--    sd->cid[11] = 0xbe;
--    sd->cid[12] = 0xef;
-+    stl_be_p(&sd->cid[9], 0xdeadbeef); /* Fake serial number (PSN) */
-     sd->cid[13] = 0x00 |    /* Manufacture date (MDT) */
-         ((MDT_YR - 2000) / 10);
-     sd->cid[14] = ((MDT_YR % 10) << 4) | MDT_MON;
-@@ -462,9 +459,7 @@ static void sd_set_csd(SDState *sd, uint64_t size)
-         sd->csd[4] = 0x5b;
-         sd->csd[5] = 0x59;
-         sd->csd[6] = 0x00;
--        sd->csd[7] = (size >> 16) & 0xff;
--        sd->csd[8] = (size >> 8) & 0xff;
--        sd->csd[9] = (size & 0xff);
-+        st24_be_p(&sd->csd[7], size);
-         sd->csd[10] = 0x7f;
-         sd->csd[11] = 0x80;
-         sd->csd[12] = 0x0a;
+@@ -1788,8 +1788,8 @@ int sd_do_command(SDState *sd, SDRequest *req,
+          * (Do this now so they appear in r1 responses.)
+          */
+         sd->current_cmd = req->cmd;
+-        sd->card_status &= ~CURRENT_STATE;
+-        sd->card_status |= (last_state << 9);
++        sd->card_status = FIELD_DP32(sd->card_status, CSR,
++                                     CURRENT_STATE, last_state);
+     }
+ 
+ send_response:
 -- 
 2.41.0
 
