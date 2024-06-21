@@ -4,87 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B13A7C2BA1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 09:39:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B48EC27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 09:39:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKaj1-0004EA-Qw; Fri, 21 Jun 2024 05:38:32 -0400
+	id 1sKajy-0004ly-1a; Fri, 21 Jun 2024 05:39:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sKaj0-0004E1-JO
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 05:38:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1sKajv-0004af-Nn; Fri, 21 Jun 2024 05:39:27 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sKaiy-0000H4-Mf
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 05:38:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718962707;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fsuhgBMOBEdIih3tFq5SLhRjeRxsaHGzJhO82gVw7a0=;
- b=HEVpBsfr3ZeHoDA0bfgOmHuPFaoeqtP+63dEH3VF9RPiNNQg7fI6kjoSBZbao1vFgezivu
- OaU1stYkajzxzbNZKblkG6Ja0cfTzYuyOcvaQTemq4pP7BZ0k3Y3WVDx/MzJC4592r8yU3
- drArxiTcWiobuYa/gKuXSTfw+EM0aKw=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-648-oI64IMlONIazTpS9H6e_YA-1; Fri, 21 Jun 2024 05:38:25 -0400
-X-MC-Unique: oI64IMlONIazTpS9H6e_YA-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-57d1f998b44so1859648a12.0
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 02:38:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718962704; x=1719567504;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fsuhgBMOBEdIih3tFq5SLhRjeRxsaHGzJhO82gVw7a0=;
- b=qkb85H6sni3D6tCrt2GuTe/pI7O182GAW5usoRQ0U+gOuaoYQVjV8q27zcllYnijSv
- 4wfI+MR81+QUpKHnl9JCpVeRqnotLXwdR2mz3tszobjQNcJSTybHdbt7uUZ0OinvjC1I
- aOOTsRPK8ApT02dggJiDNnFkj7H4COdCtYta2R8C2eTWMV4a52zV7s1vyqQYUL067+iR
- u2a7lXwK7k3MjBdNCI1tMj3Y8IbGS+xDZfR5J8te8ghDiY+Z4SQeq+42+5AA0c07m037
- FrTuynu7zyoeYOAobP+rvxgPz4pgjm+xTVwHBOGk+RDIYHsv9WZOgdqXEKHAW4/wNh8O
- 5D5w==
-X-Gm-Message-State: AOJu0YyejXxm4fJDYIexXm2LNbN8h7QjXbWxJFuLmHbV7479A0Ij4GXt
- aE/ET85B0OA126VFnfW5tYFcwAt/L5w8l6cLW34m8t9V14sU34POkno2dcCbeL98PAK7CefXdC7
- qSjAnZjSLVRP4BQ1IGTGTVedQfgcjZAT4j42qSkr5KZi+NkGjRiblDfIGOohI
-X-Received: by 2002:a05:6402:1caa:b0:57c:f82b:d761 with SMTP id
- 4fb4d7f45d1cf-57cf82c1ff3mr6657833a12.17.1718962704032; 
- Fri, 21 Jun 2024 02:38:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFqs0I0JSqHqayIDDOUervu9wZ4gH3LQK10ox4QiH9mFeHCsZGgJWdshyg3ajIeBh6Wqzi4fw==
-X-Received: by 2002:a05:6402:1caa:b0:57c:f82b:d761 with SMTP id
- 4fb4d7f45d1cf-57cf82c1ff3mr6657813a12.17.1718962703158; 
- Fri, 21 Jun 2024 02:38:23 -0700 (PDT)
-Received: from redhat.com ([2.52.146.100]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57d3048b87esm703271a12.58.2024.06.21.02.38.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Jun 2024 02:38:22 -0700 (PDT)
-Date: Fri, 21 Jun 2024 05:38:19 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: "Chen, Jiqian" <Jiqian.Chen@amd.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "Huang, Ray" <Ray.Huang@amd.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH v11 1/2] virtio-pci: only reset pm state during resetting
-Message-ID: <20240621052334-mutt-send-email-mst@kernel.org>
-References: <20240606102205.114671-1-Jiqian.Chen@amd.com>
- <20240606102205.114671-2-Jiqian.Chen@amd.com>
- <BL1PR12MB58491ED83770E67AC98633D7E7C92@BL1PR12MB5849.namprd12.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1sKajs-0000Qq-Qe; Fri, 21 Jun 2024 05:39:27 -0400
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45L9RDA4016743;
+ Fri, 21 Jun 2024 09:39:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=j
+ Taa/lXRYaBkXrkeLULZh7cFvC3wDRGW8uPmtvTEYWg=; b=qo5E9ABn5QN1oxFJ0
+ D7n5pZlNQxi0Rey2VJHECI5fAffr4wV3egFKDQTJVHl16piJh98vEaZWB6+hxRje
+ 5Mt47QN6WFh7NqS6fX5D8z16l3qOGEBtk1fqfVg0eSpXhoexAyHpPLGTczEic/pr
+ BvYaYAHyXwi6rGJAYArXmitv5t84bivAPcVi1juFt+HmHM3oDIxXLAn4EYMvABPB
+ yZN/KtyT87FiZhUh89oSsWp0V6bk4pJO+PQMdwY6DO0sLGUC2rg59PBknqp197qD
+ ePo/1qm8C3type6q75qtH/gL51wC2wTQy0MH8p0/c8mJwauICBKcJT8T+bMIAoA4
+ rxkew==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yw5krg6ry-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Jun 2024 09:39:17 +0000 (GMT)
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45L9dGxU004797;
+ Fri, 21 Jun 2024 09:39:17 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yw5krg6rw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Jun 2024 09:39:16 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45L9DkiR025805; Fri, 21 Jun 2024 09:39:16 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3yvrqv6caj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Jun 2024 09:39:16 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45L9dAjW53215568
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 21 Jun 2024 09:39:12 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8F1F32004F;
+ Fri, 21 Jun 2024 09:39:10 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 502222004B;
+ Fri, 21 Jun 2024 09:39:10 +0000 (GMT)
+Received: from [9.152.224.131] (unknown [9.152.224.131])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 21 Jun 2024 09:39:10 +0000 (GMT)
+Message-ID: <ae2a498e-e809-424b-93f8-d4e7d646df2c@linux.ibm.com>
+Date: Fri, 21 Jun 2024 11:39:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <BL1PR12MB58491ED83770E67AC98633D7E7C92@BL1PR12MB5849.namprd12.prod.outlook.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] pc-bios/s390-ccw: Merge the netboot loader into
+ s390-ccw.img
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ Jared Rossi <jrossi@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Claudio Imbrenda <imbrenda@linux.ibm.com>,
+ "Collin L . Walling" <walling@linux.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>,
+ "Jason J . Herne" <jjherne@linux.ibm.com>,
+ Marc Hartmayer <mhartmay@linux.ibm.com>
+References: <20240621082422.136217-1-thuth@redhat.com>
+Content-Language: en-US
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <20240621082422.136217-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Hy-zmOMlkTUAIAZQLAVN_ukmGVF3R5IC
+X-Proofpoint-ORIG-GUID: G5xNElNu-uLuxwhwoq4a6aVVJOY6ojCo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-21_03,2024-06-20_04,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015
+ bulkscore=0 spamscore=0 phishscore=0 mlxlogscore=415 priorityscore=1501
+ suspectscore=0 adultscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2406210069
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,57 +121,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 21, 2024 at 09:19:11AM +0000, Chen, Jiqian wrote:
-> Hi MST,
+[...]
+>   docs/system/s390x/bootdevices.rst |  20 +++----
+>   pc-bios/s390-ccw/netboot.mak      |  62 ---------------------
+>   hw/s390x/ipl.h                    |  12 ++--
+>   pc-bios/s390-ccw/cio.h            |   2 +
+>   pc-bios/s390-ccw/iplb.h           |   4 +-
+>   pc-bios/s390-ccw/libc.h           |  89 ------------------------------
+>   pc-bios/s390-ccw/s390-ccw.h       |  10 +++-
+>   pc-bios/s390-ccw/virtio.h         |   1 -
+>   hw/s390x/ipl.c                    |  65 +++-------------------
+>   hw/s390x/s390-virtio-ccw.c        |  10 +---
+>   pc-bios/s390-ccw/bootmap.c        |   4 +-
+>   pc-bios/s390-ccw/cio.c            |   2 +-
+>   pc-bios/s390-ccw/dasd-ipl.c       |   2 +-
+>   pc-bios/s390-ccw/jump2ipl.c       |   2 +-
+>   pc-bios/s390-ccw/libc.c           |  88 -----------------------------
+>   pc-bios/s390-ccw/main.c           |  15 +++--
+>   pc-bios/s390-ccw/menu.c           |  25 ++++-----
+>   pc-bios/s390-ccw/netmain.c        |  15 +----
+>   pc-bios/s390-ccw/sclp.c           |   2 +-
+>   pc-bios/s390-ccw/virtio-blkdev.c  |   1 -
+>   pc-bios/s390-ccw/virtio-scsi.c    |   2 +-
+>   pc-bios/s390-ccw/virtio.c         |   2 +-
+>   pc-bios/meson.build               |   1 -
+>   pc-bios/s390-ccw/Makefile         |  69 +++++++++++++++++++----
+>   pc-bios/s390-netboot.img          | Bin 67232 -> 0 bytes
+
+Shouldnt you also update the s390-ccw.img file?
+
+>   25 files changed, 122 insertions(+), 383 deletions(-)
+>   delete mode 100644 pc-bios/s390-ccw/netboot.mak
+>   delete mode 100644 pc-bios/s390-ccw/libc.h
+>   delete mode 100644 pc-bios/s390-ccw/libc.c
+>   delete mode 100644 pc-bios/s390-netboot.img
 > 
-> On 2024/6/6 18:22, Jiqian Chen wrote:
-> > Fix bug imported by 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
-> > After this change, observe that QEMU may erroneously clear the power status of the device,
-> > or may erroneously clear non writable registers, such as NO_SOFT_RESET, etc.
-> > 
-> > Only state of PM_CTRL is writable.
-> > Only when flag VIRTIO_PCI_FLAG_INIT_PM is set, need to reset state.
-> > 
-> > Fixes: 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
-> > 
-> > Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
-> > ---
-> >  hw/virtio/virtio-pci.c | 8 +++++++-
-> >  1 file changed, 7 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> > index b1d02f4b3de0..1b63bcb3f15c 100644
-> > --- a/hw/virtio/virtio-pci.c
-> > +++ b/hw/virtio/virtio-pci.c
-> > @@ -2300,10 +2300,16 @@ static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
-> >      virtio_pci_reset(qdev);
-> >  
-> >      if (pci_is_express(dev)) {
-> > +        VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
-> > +
-> >          pcie_cap_deverr_reset(dev);
-> >          pcie_cap_lnkctl_reset(dev);
-> >  
-> > -        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, 0);
-> > +        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
-> > +            pci_word_test_and_clear_mask(
-> > +                dev->config + dev->exp.pm_cap + PCI_PM_CTRL,
-> > +                PCI_PM_CTRL_STATE_MASK);
-> > +        }
-> >      }
-> >  }
-> >  
-> I noticed that you merged this patch into the staging before, but then reverted it. Do you still have any concerns?
-> 
-> -- 
-> Best regards,
-> Jiqian Chen.
-
-Sorry I don't remember at this point. Normally it's because of
-test failures but I then also notify the authors ... 
-I will try to re-merge and see.
-
--- 
-MST
-
 
